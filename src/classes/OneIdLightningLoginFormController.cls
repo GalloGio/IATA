@@ -122,7 +122,7 @@ public without sharing class OneIdLightningLoginFormController {
 
 
             // if PWC or DPC user
-            if(oldPortalRedirectSet.contains(oneUser.profile.Name)){ //overrides to old portal
+            if(oldPortalRedirectSet.contains(oneUser.profile.Name) || oneUser.CNS_Account_or_Agency__c){ //overrides to old portal
                serviceName='ISSP';
                startUrl ='/ISSP_Homepage';
             }
@@ -190,6 +190,7 @@ public without sharing class OneIdLightningLoginFormController {
     public static void reactivateUser(User thisUser, String serviceName){
         thisUser.IsActive = true;
         thisUser.Portal_User_Frozen_Checkbox__c = false;
+        thisUser.UserPermissionsSFContentUser = true;
         update thisUser;
 
         if(serviceName == 'CSP'){

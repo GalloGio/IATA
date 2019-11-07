@@ -60,6 +60,16 @@ export default class AttachmentListCmp extends LightningElement {
         this.trackedAllowedFormats = value;
     }
 
+    @track trackedIsExpired;
+
+    @api
+    get expired() {
+        return this.trackedIsExpired;
+    }
+    set expired(value) {
+        this.trackedIsExpired = value;
+    }
+
    label = {
     AddNewDocuments,
     Datelabel,

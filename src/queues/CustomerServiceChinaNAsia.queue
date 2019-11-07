@@ -8,10 +8,10 @@
             <publicGroup>Hub_BJS_Key_controls_CS</publicGroup>
         </publicGroups>
         <roles>
-            <role>ChinaNAsiaAgencyManagementStaffA</role>
-            <role>ChinaNAsiaCustomerServiceManagerA</role>
-            <role>ChinaNAsiaCustomerServiceStaffA</role>
-            <role>IDFSChinaNorthAsiaRegionalOfficeA</role>
+            <role>ChinaNAsiaAgencyManagementStaff</role>
+            <role>ChinaNAsiaCustomerServiceManager</role>
+            <role>ChinaNAsiaCustomerServiceStaff</role>
+            <role>IDFSChinaNorthAsiaRegionalOffice</role>
         </roles>
     </queueMembers>
     <queueSobject>

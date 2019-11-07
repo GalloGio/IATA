@@ -356,7 +356,7 @@
                                 
                             </div>
                         </div>
-                            <div class="row padded-on-bottom">
+                            <div class="row padded-on-bottom" style="display:{!IF(agencyCategory != 'TIDS Agent','','none')};">
                                 <div class="col-md-12 padded-on-bottom">
                                     <strong>
                                         <apex:outputText escape="false" value="{!$Label.ISSP_AMS_Step0_In_Addition}" rendered="{!AND(isHOAccredited, NOT(isoCountry.ANG_Enable_NewGen__c), sector=='Travel Agent')}"/>
@@ -388,7 +388,7 @@
                             </div>
 
                             <div class="row">
-                                <div class="col-md-12" style="padding-bottom: 10px; display:{!IF(agencyCategory != 'TIDS Agent','','none')};">
+                                <div class="col-md-12" style="padding-bottom: 10px;">
                                     <apex:commandButton styleClass="iatabtn btn btn_iata_primary" onClick="checkEligibility('false');return false;" value="{!$Label.ISSP_AMS_Step0_Other_Changes}" disabled="{! revCaseOpen}"/><br/>
                                     <div style="{!IF(!revCaseOpen, 'display:block', 'display:none')}">
                                         <apex:outputText id="otherChangesNotPax" rendered="{! NOT(namPaxAgent)}" escape="false" value="{!$Label.ISSP_AMS_Step0_Other_Changes_Msg}"/>

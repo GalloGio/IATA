@@ -3101,6 +3101,13 @@ Payment required on receipt of this Payment Advice
         <shortDescription>CSP Account Domain Created</shortDescription>
         <value>Account Domain created</value>
     </labels>
+	<labels>
+        <fullName>CSP_AddOrRemove_Recipients</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_AddOrRemove_Recipients</shortDescription>
+        <value>You can manage the people that you want to be informed about this case. Add new recipients or remove existing ones.</value>
+	</labels>
     <labels>
         <fullName>CSP_Add_All</fullName>
         <categories>CS Portal</categories>
@@ -3133,6 +3140,13 @@ Payment required on receipt of this Payment Advice
         <shortDescription>CSP_Add_User</shortDescription>
         <value>Add User</value>
     </labels>
+	<labels>
+        <fullName>CSP_Airline_Changes_Access</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Airline_Changes_Access</shortDescription>
+        <value>You can submit your account details changes through the &lt;a href= "/s/support-reach-us"&gt;Reach Us Page&lt;/a&gt;</value>
+	</labels>
     <labels>
         <fullName>CSP_Announcement</fullName>
         <language>en_US</language>
@@ -3171,6 +3185,14 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP_Breadcrumb_AdvancedSearch_Title</shortDescription>
         <value>Advanced Search</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Breadcrumb_CaseDetails_Title</fullName>
+        <categories>CSPortal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Breadcrumb_CaseDetails_Title</shortDescription>
+        <value>Case Details</value>
     </labels>
     <labels>
         <fullName>CSP_Breadcrumb_CompanyProfile_Title</fullName>
@@ -3234,6 +3256,13 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP_Breadcrump_MyProfile_Title</shortDescription>
         <value>User Profile</value>
+    </labels>
+	<labels>
+        <fullName>CSP_Breadcrump_You_IATA</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Breadcrump_You_IATA</shortDescription>
+        <value>You &amp; IATA</value>
     </labels>
     <labels>
         <fullName>CSP_Cancel</fullName>
@@ -3340,6 +3369,13 @@ Payment required on receipt of this Payment Advice
         <shortDescription>CSP_Community</shortDescription>
         <value>Community</value>
     </labels>
+	<labels>
+        <fullName>CSP_CompanyAdministration_Link</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_CompanyAdministration_Link</shortDescription>
+        <value>You can submit your account details changes through the IATA Accreditation and Changes service.</value>
+	</labels>
     <labels>
         <fullName>CSP_CompanyCases</fullName>
         <language>en_US</language>
@@ -3390,6 +3426,13 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>Create_Contact_Complete_Field</shortDescription>
         <value>Complete this field.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_CreatedOn</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_CreatedOn</shortDescription>
+        <value>Created on</value>
     </labels>
     <labels>
         <fullName>CSP_DateFrom</fullName>
@@ -3610,6 +3653,14 @@ Payment required on receipt of this Payment Advice
         <shortDescription>CSP_Home_WelcomeTitle</shortDescription>
         <value>Welcome [username]</value>
     </labels>
+	<labels>
+        <fullName>CSP_LastUpdate</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LastUpdate</shortDescription>
+        <value>Last Update</value>
+    </labels>
     <labels>
         <fullName>CSP_IATA_Country</fullName>
         <language>en_US</language>
@@ -3638,6 +3689,14 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP_Manage_Portal_Users</shortDescription>
         <value>You can manage the users from the list below.</value>
+    </labels>
+	<labels>
+        <fullName>CSP_Manage_Recipients</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Manage_Recipients</shortDescription>
+        <value>Manage Recipients</value>
     </labels>
     <labels>
         <fullName>CSP_Manage_Service</fullName>
@@ -3893,6 +3952,14 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP Recent Cases Support</shortDescription>
         <value>Ongoing Cases</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Recipients</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case Details Details page</shortDescription>
+        <value>Recipients</value>
     </labels>
     <labels>
         <fullName>CSP_Record_Deleted</fullName>
@@ -4330,7 +4397,7 @@ Payment required on receipt of this Payment Advice
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_Supported_File_Extensions</shortDescription>
-        <value>You can upload pdf, jpeg, jpg, png, ppt, pptx, xls,xlsx, tif, tiff, zip files. The size should
+        <value>You can upload pdf, jpeg, jpg, png, ppt, pptx, xls, xlsx, tif, tiff, doc, docx, zip files. The size should
                         be smaller than 50 MB.</value>
     </labels>
     <labels>
@@ -4356,6 +4423,20 @@ Payment required on receipt of this Payment Advice
         <shortDescription>CSP_Title</shortDescription>
         <value>Title</value>
     </labels>
+	<labels>
+        <fullName>CSP_Travel_Agent_Accreditation_Changes_Access</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Travel_Agent_Accreditation_Changes_Access</shortDescription>
+        <value>&lt;a href=&quot;/ISSP_AMSCases&quot; target=&quot;_self&quot;&gt;Click here to directly access the IATA Accreditation and Changes&lt;/a&gt;</value>
+	</labels>
+	<labels>
+        <fullName>CSP_Travel_Agent_Accreditation_Changes_Request</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Travel_Agent_Accreditation_Changes_Request</shortDescription>
+        <value>&lt;a href=&quot;/s/manage-service?serviceId=a2ww0000001D7GOAA0&quot; target=&quot;_self&quot;&gt;Click here to request the IATA Accreditation and Changes&lt;/a&gt;</value>
+	</labels>
     <labels>
         <fullName>CSP_TypeOfCase</fullName>
         <categories>CS Portal</categories>
@@ -4371,6 +4452,27 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP_User</shortDescription>
         <value>User</value>
+    </labels>
+	<labels>
+        <fullName>CSP_YouAndIATA</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_YouAndIATA</shortDescription>
+        <value>You &amp; IATA</value>
+    </labels>
+	<labels>
+        <fullName>CSP_YouIATA_Highlights</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_YouIATA_Highlights</shortDescription>
+        <value>Selected Highlights For You</value>
+    </labels>
+    <labels>
+        <fullName>CSP_YouIATA_Highlights_Text</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_YouIATA_Highlights_Text</shortDescription>
+        <value>Here you can discover a wide variety of IATA services, publications, products, and resources on aviation industry. Specially tailored after your interests and activity history.</value>
     </labels>
     <labels>
         <fullName>CSP_Welcome_Panel_Bullet_1_Desc</fullName>
@@ -31345,51 +31447,6 @@ If you are not sure if your company based in {0} is subject to the EU laws on da
         <value>- Select the Type of your Company -</value>
     </labels>
     <labels>
-        <fullName>KPI1RT</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>KPI1RT</shortDescription>
-        <value>CasesMENA 
-CasesAmericas 
-ExternalCasesIDFSglobal 
-Cases_China_North_Asia 
-CasesEurope 
-ComplaintIDFS 
-InternalCasesEuropeSCE</value>
-    </labels>
-    <labels>
-        <fullName>KPI1Reason</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>KPI1Reason</shortDescription>
-        <value>CHC – Change of Shareholding 
-CHO / CHS – Change of Ownership / Legal Status 
-CHN - Change of Name 
-New HO 
-Financial RVW intermediaries 
-New HE lite 
-New HE standard 
-Accreditation Type 
-New EAA - Application process for European Accredited Agent</value>
-    </labels>
-    <labels>
-        <fullName>KPI2</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>KPI2</shortDescription>
-        <value>New BR / IP 
-CHL - Change of Location 
-New SA / CHV – New Code 
-Direct Debit Setup/Update 
-VMFR Setup/Update 
-CLO - Closure 
-New AE 
-FoP Management 
-New HE lite 
-Accreditation Type 
-CHG – Data Maintenance</value>
-    </labels>
-    <labels>
         <fullName>ISSP_Sender_Email</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -33030,6 +33087,51 @@ You can choose one or more of the following topics:</value>
         <protected>false</protected>
         <shortDescription>KALE_SUPPORT_EMAIL</shortDescription>
         <value>sis.servicedesk@accelya.com</value>
+    </labels>
+    <labels>
+        <fullName>KPI1RT</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>KPI1RT</shortDescription>
+        <value>CasesMENA 
+CasesAmericas 
+ExternalCasesIDFSglobal 
+Cases_China_North_Asia 
+CasesEurope 
+ComplaintIDFS 
+InternalCasesEuropeSCE</value>
+    </labels>
+    <labels>
+        <fullName>KPI1Reason</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>KPI1Reason</shortDescription>
+        <value>CHC – Change of Shareholding 
+CHO / CHS – Change of Ownership / Legal Status 
+CHN - Change of Name 
+New HO 
+Financial RVW intermediaries 
+New HE lite 
+New HE standard 
+Accreditation Type 
+New EAA - Application process for European Accredited Agent</value>
+    </labels>
+    <labels>
+        <fullName>KPI2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>KPI2</shortDescription>
+        <value>New BR / IP 
+CHL - Change of Location 
+New SA / CHV – New Code 
+Direct Debit Setup/Update 
+VMFR Setup/Update 
+CLO - Closure 
+New AE 
+FoP Management 
+New HE lite 
+Accreditation Type 
+CHG – Data Maintenance</value>
     </labels>
     <labels>
         <fullName>Kavi_email_notification_part1</fullName>
@@ -38397,6 +38499,13 @@ title,Title,Name</value>
         <value>Data Privacy</value>
     </labels>
     <labels>
+        <fullName>TSI_USA_Only</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>TSI USA Only</shortDescription>
+        <value>Travel Service Intermediaries-TSI (USA Only)</value>
+    </labels>
+    <labels>
         <fullName>Tasks_Notification</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -38803,6 +38912,14 @@ title,Title,Name</value>
         <protected>false</protected>
         <shortDescription>Support Reach Us Page Label</shortDescription>
         <value>Complete the form to see the recommended support options</value>
+    </labels>
+	<labels>
+        <fullName>csp_AdditionalDetails</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case Details Details page</shortDescription>
+        <value>Additional Details</value>
     </labels>
     <labels>
         <fullName>csp_AgencyReadOnly</fullName>
@@ -39373,6 +39490,14 @@ title,Title,Name</value>
         <value>Support</value>
     </labels>
     <labels>
+        <fullName>csp_RecipientsQuestion</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case Details Details page</shortDescription>
+        <value>Anyone else to be informed?</value>
+    </labels>
+    <labels>
         <fullName>csp_RequestService_ContactPortalAdmin_Alt</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -39738,7 +39863,7 @@ title,Title,Name</value>
         <protected>false</protected>
         <shortDescription>Support Reach Us Page Label</shortDescription>
         <value>Select the topic covering the problem.</value>
-    </labels>
+    </labels>    
     <labels>
         <fullName>days_left</fullName>
         <language>en_US</language>
@@ -40171,12 +40296,5 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <protected>false</protected>
         <shortDescription>wire transfer payment msg</shortDescription>
         <value>Your wire transfer payment has been received.</value>
-    </labels>
-	<labels>
-        <fullName>TSI_USA_Only</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>TSI USA Only</shortDescription>
-        <value>Travel Service Intermediaries-TSI (USA Only)</value>
     </labels>
 </CustomLabels>

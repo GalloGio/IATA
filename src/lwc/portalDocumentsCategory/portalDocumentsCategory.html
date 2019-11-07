@@ -5,10 +5,11 @@
             <template if:true={documentsResults}>
                 <div class="slds-grid slds-wrap slds-gutters_xx-small slds-p-vertical_xxx-small">
                     <template for:each={documentsList} for:item="keyValue" for:index="keyValueIndex">
-                        <c-portal-custom-card-container class="slds-p-bottom_medium" key={keyValue.key}>
+                        <template if:true={keyValue.show}>
+                            <c-portal-custom-card-container class="slds-p-bottom_medium" key={keyValue.key}>
 
                             <span slot="cardTitle" class="cursorPointer" onclick={categorySelected} data-item={keyValue.key}>
-                                {keyValue.key} ({keyValue.noResults})
+                                {keyValue.label} ({keyValue.noResults})
                             </span>
 
                             <template for:each={keyValue.value} for:item="record">
@@ -22,11 +23,11 @@
                                                         <lightning-icon class="darkBlueIcon" if:false={record.open} icon-name="utility:chevronright" size="xx-small" data-item={record.id}></lightning-icon>
                                                     </div>
                                                 </td>
-                                                <td key={record.id} class="underLinded secColInfo"><button class="cursorPointer buttonInfo" data-name={record.title} data-item={record.id} onclick={viewDocument}>{label.CurrencyCenter_Open}</button></td>
-                                                <td key={record.id} class="slds-text-title_bold text-black underLinded thirdColInfo">{record.title}</td>
+                                                <td key={record.id} class="underLinded secColInfo"><button class="cursorPointer buttonInfo" data-name={record.title} data-item={record.id} data-islink={record.isLink} data-url={record.url} onclick={viewDocument}>{label.CurrencyCenter_Open}</button></td>
+                                                <td key={record.id} class="slds-text-title_bold text-black underLinded thirdColInfo titleTruncation" title={record.title}>{record.title}</td>
                                                 <td key={record.id} class="underLinded fourthColInfo">{record.language}</td>
                                                 <td key={record.id} class="underLinded fourthColInfo">{record.filetype}</td>
-                                                <td key={record.id} class="underLinded"><lightning-icon class="darkBlueIcon cursorPointer" icon-name="utility:download" size="xx-small" data-name={record.title} data-item={record.id} onclick={downloadDocument}></lightning-icon></td>
+                                                <td key={record.id} class="underLinded"><lightning-icon class="cursorPointer" icon-name="utility:download" size="xx-small" data-name={record.title} data-item={record.id} onclick={downloadDocument}></lightning-icon></td>
                                             </tr>
                                             <tr if:true={record.open} data-item={record.id}>
                                                 <td class="recordDetail noPadding" colspan="6">
@@ -51,7 +52,8 @@
                                 </span>
                             </template>
 
-                        </c-portal-custom-card-container>
+                            </c-portal-custom-card-container>
+                        </template>
                     </template>
                     <div class="endOfTable"></div>
                     <div if:true={loadingMoreResults} class="spinnerContainer">

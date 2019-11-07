@@ -644,28 +644,6 @@ IF (ISPICKVAL (Campaign_focus__c,&quot;Not Specific&quot;), &quot;NS-&quot; &amp
         </sharedTo>
     </listViews>
     <listViews>
-        <fullName>LiveMarketingCampaigns</fullName>
-        <columns>CAMPAIGN.NAME</columns>
-        <columns>CAMPAIGN.START_DATE</columns>
-        <columns>CAMPAIGN.END_DATE</columns>
-        <columns>CAMPAIGN.CAMPAIGN_TYPE</columns>
-        <columns>Campaign_LOB_Focus__c</columns>
-        <columns>Campaign_Category__c</columns>
-        <columns>CAMPAIGN.NUM_LEADS</columns>
-        <columns>CORE.USERS.FIRST_NAME</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>CAMPAIGN.ACTIVE</field>
-            <operation>equals</operation>
-            <value>1</value>
-        </filters>
-        <label>Active Marketing Campaigns</label>
-        <language>en_US</language>
-        <sharedTo>
-            <group>MACSAllIATACommercial</group>
-        </sharedTo>
-    </listViews>
-    <listViews>
         <fullName>StrategicPartnershipsAll</fullName>
         <columns>CAMPAIGN.NAME</columns>
         <columns>Campaign_Category__c</columns>

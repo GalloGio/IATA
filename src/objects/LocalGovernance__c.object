@@ -1207,10 +1207,6 @@ Record Type + Group Type + ISO_Country_Name</description>
                 <default>false</default>
             </values>
             <values>
-                <fullName>JALWG</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>LCAG-C</fullName>
                 <default>false</default>
             </values>

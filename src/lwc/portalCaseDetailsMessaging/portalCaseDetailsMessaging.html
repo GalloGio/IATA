@@ -1,87 +1,94 @@
 <template>
-    <div class="customCard">
-        <template if:true={loading}>
-            <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
-        </template>
-        <template if:false={loading}>
-            <div if:true={hasMessages}>
-                
-                <div class="customBlueTitle cursorPointer" onclick={toggleCaseMessagingSection}>
+    <template if:true={loading}>
+        <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+    </template>
+    <template if:false={loading}>
+        <div if:true={hasMessages}>
+
+            <div class="customCardTitleBox cursorPointer" onclick={toggleCaseMessagingSection}>
                     <div class="slds-p-around_medium">
-                        <lightning-icon class="whiteIcon" if:true={showCaseMessagingSection} icon-name="utility:chevrondown" size="xx-small"></lightning-icon>
-                        <lightning-icon class="whiteIcon" if:false={showCaseMessagingSection} icon-name="utility:chevronright" size="xx-small"></lightning-icon>
-                        <span class="slds-p-left_large" >{label.CSP_CaseMessage_MessageTitle}</span>
+                        <lightning-icon data-msgicon class="darkBlueIcon arrowExpanded"
+                            icon-name="utility:chevronright" size="xx-small"></lightning-icon>
+                        <span class="slds-p-left_large">{label.CSP_CaseMessage_MessageTitle}</span>
                     </div>
                 </div>
 
-                <div class="slds-scrollable caseMessagesContainer" style={messagingHeight} >
-                    <div class="slds-grid slds-wrap slds-p-around_x-large messagesContainer">
+            <div class="slds-scrollable caseMessagesContainer" data-msgdiv>
+                <div class="slds-grid slds-wrap slds-p-around_x-large messagesContainer">
 
-                        <template for:each={lstMessages} for:item="message" for:index="index">
-                            <div key={message.id} if:true={message.isSelf} class="caseMessagesSelfBubbleContainer">
-                                <div class="slds-p-around_medium caseMessagesSelfBubble">
-                                    <lightning-formatted-text value={message.messageText} class="breakWord"></lightning-formatted-text>
-                                </div>
-                                <div class="slds-m-horizontal_x-small slds-m-bottom_small slds-float_right caseMessagesMyselfTimestamp">
-                                    {message.senderName},&nbsp;
-                                    <lightning-formatted-date-time value={message.timeStamp} year="numeric" month="short" day="numeric" >
-                                    </lightning-formatted-date-time>,&nbsp;
-                                    <lightning-formatted-date-time value={message.timeStamp} hour="2-digit" minute="2-digit" hour12="true">
-                                    </lightning-formatted-date-time>
-                                </div>
+                    <template for:each={lstMessages} for:item="message" for:index="index">
+                        <div key={message.id} if:true={message.isSelf} class="caseMessagesSelfBubbleContainer">
+                            <div class="slds-p-around_medium caseMessagesSelfBubble">
+                                <lightning-formatted-text value={message.messageText} class="breakWord">
+                                </lightning-formatted-text>
                             </div>
-                            <div key={message.id} if:false={message.isSelf} class="caseMessagesOtherBubbleContainer">
-                                <div class="slds-p-around_medium caseMessagesOtherBubble">
-                                    <lightning-formatted-text value={message.messageText} class="breakWord"></lightning-formatted-text>
-                                </div>
-                                <div class="slds-m-horizontal_x-small slds-m-bottom_small slds-float_left caseMessagesOtherTimestamp">
-                                    {message.senderName},&nbsp;
-                                    <lightning-formatted-date-time value={message.timeStamp} year="numeric" month="short" day="numeric" >
-                                    </lightning-formatted-date-time>,&nbsp;
-                                    <lightning-formatted-date-time value={message.timeStamp} hour="2-digit" minute="2-digit" hour12="true">
-                                    </lightning-formatted-date-time>
-                                </div>
+                            <div
+                                class="slds-m-horizontal_x-small slds-m-bottom_small slds-float_right caseMessagesMyselfTimestamp">
+                                {message.senderName},&nbsp;
+                                <lightning-formatted-date-time value={message.timeStamp} year="numeric" month="short"
+                                    day="numeric">
+                                </lightning-formatted-date-time>,&nbsp;
+                                <lightning-formatted-date-time value={message.timeStamp} hour="2-digit" minute="2-digit"
+                                    hour12="true">
+                                </lightning-formatted-date-time>
                             </div>
-                        </template>
-
-
-                    </div>
+                        </div>
+                        <div key={message.id} if:false={message.isSelf} class="caseMessagesOtherBubbleContainer">
+                            <div class="slds-p-around_medium caseMessagesOtherBubble">
+                                <lightning-formatted-text value={message.messageText} class="breakWord">
+                                </lightning-formatted-text>
+                            </div>
+                            <div
+                                class="slds-m-horizontal_x-small slds-m-bottom_small slds-float_left caseMessagesOtherTimestamp">
+                                {message.senderName},&nbsp;
+                                <lightning-formatted-date-time value={message.timeStamp} year="numeric" month="short"
+                                    day="numeric">
+                                </lightning-formatted-date-time>,&nbsp;
+                                <lightning-formatted-date-time value={message.timeStamp} hour="2-digit" minute="2-digit"
+                                    hour12="true">
+                                </lightning-formatted-date-time>
+                            </div>
+                        </div>
+                    </template>
                 </div>
-
-
             </div>
+        </div>
+
+        <div if:true={showCaseMessagingSection}>
             <div if:false={hasMessages}>
                 <div class="slds-grid slds-wrap">
-                    <div class="slds-col slds-size_1-of-2 slds-medium-size_7-of-12 slds-large-size_9-of-12 slds-p-around_medium" >
-                        <div >
-                        <div class="slds-text-heading_large" style="color:#333333" >{label.CSP_CaseMessage_MessageTitle}</div>
-                        <div class="slds-text-heading_small" style="color:#525252" >{label.CSP_CaseMessage_HelpText}</div>
+                    <div
+                        class="slds-col slds-size_1-of-2 slds-medium-size_7-of-12 slds-large-size_9-of-12 slds-p-around_medium">
+                        <div>
+                            <div class="slds-text-heading_large" style="color:#333333">
+                                {label.CSP_CaseMessage_MessageTitle}</div>
+                            <div class="slds-text-heading_small" style="color:#525252">
+                                {label.CSP_CaseMessage_HelpText}</div>
                         </div>
                     </div>
-                    <div class="slds-col slds-size_1-of-2 slds-medium-size_5-of-12 slds-large-size_3-of-12 slds-p-around_medium" >
+                    <div
+                        class="slds-col slds-size_1-of-2 slds-medium-size_5-of-12 slds-large-size_3-of-12 slds-p-around_medium">
                         <img src={conversationImageURL} />
                     </div>
                 </div>
             </div>
-            <div class="customWhiteBackground topLightGrayBorder">
+            <div class="customWhiteBackground topLightGrayBorder" if:false={trackedIsExpired}>
                 <div class="slds-grid slds-wrap slds-p-around_small messageTextareaContainer">
-                    <div class="slds-col slds-size_11-of-12" >
-                        <textarea
-                            placeholder={label.CSP_CaseMessage_InputPlaceholder}
-                            class="slds-textarea textarea"
-                            onchange={handleInputChange}
-                            onkeyup={handleKeyUp}
+                    <div class="slds-col slds-size_11-of-12">
+						<lightning-spinner alternative-text="Loading" size="small" if:true={loadingCom}></lightning-spinner>
+                        <textarea placeholder={label.CSP_CaseMessage_InputPlaceholder} class="slds-textarea textarea"
+                            onchange={handleInputChange} onkeyup={handleKeyUp}
                             disabled={messageInputLoading}>{newMessage}</textarea>
                     </div>
-                    <div class="slds-col slds-size_1-of-12 sendIcon" >
-                        <lightning-icon class="darkBlueSendButton" if:true={showSendMessageButton} icon-name="utility:send" alternative-text="Send" onclick={sendNewMessageJS}></lightning-icon>
-                        <lightning-icon class="lightBlueSendButton" if:false={showSendMessageButton} icon-name="utility:send" alternative-text="Send" ></lightning-icon>
+                    <div class="slds-col slds-size_1-of-12 sendIcon">
+                        <lightning-icon class="darkBlueSendButton" if:true={showSendMessageButton}
+                            icon-name="utility:send" alternative-text="Send" onclick={sendNewMessageJS}>
+                        </lightning-icon>
+                        <lightning-icon class="lightBlueSendButton" if:false={showSendMessageButton}
+                            icon-name="utility:send" alternative-text="Send"></lightning-icon>
                     </div>
                 </div>
             </div>
-
-
-        </template>
-    </div>
-        
+        </div>
+    </template>
 </template>

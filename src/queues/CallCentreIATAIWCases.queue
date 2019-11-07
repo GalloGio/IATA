@@ -8,8 +8,8 @@
             <publicGroup>IATAIWProjectTeam</publicGroup>
         </publicGroups>
         <roles>
-            <role>IATAInvoiceWorksA</role>
-            <role>IATAIWCallCentreA</role>
+            <role>IATAInvoiceWorks</role>
+            <role>IATAIWCallCentre</role>
         </roles>
     </queueMembers>
     <queueSobject>

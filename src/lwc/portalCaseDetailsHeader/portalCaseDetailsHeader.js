@@ -1,8 +1,13 @@
-import { LightningElement, track } from 'lwc';
+import { LightningElement, track,api } from 'lwc';
 import getCaseById from '@salesforce/apex/PortalCasesCtrl.getCaseById';
 import removeRecipient from '@salesforce/apex/PortalCasesCtrl.removeRecipient';
 import addNewRecipient from '@salesforce/apex/PortalCasesCtrl.addNewRecipient';
+import getHideForClosedCases from '@salesforce/apex/PortalCasesCtrl.getHideForClosedCases';
 import getOscarProgress from '@salesforce/apex/portal_OscarProgressBar.getOscarProgress';
+import getSurveyLink from '@salesforce/apex/PortalCasesCtrl.getSurveyLink';
+import searchContacts from '@salesforce/apex/PortalSupportReachUsCreateNewCaseCtrl.searchContacts';
+import searchAccounts from '@salesforce/apex/PortalSupportReachUsCreateNewCaseCtrl.searchAccounts';
+import getProfile from '@salesforce/apex/PortalSupportReachUsCreateNewCaseCtrl.getProfile';
 
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
@@ -10,6 +15,20 @@ import { getParamsFromPage } from'c/navigationUtils';
 
 //custom label
 import CSP_PendingCustomerCase_Warning from '@salesforce/label/c.CSP_PendingCustomerCase_Warning';
+import ISSP_Survey from '@salesforce/label/c.ISSP_Survey';
+import Open from '@salesforce/label/c.Open';
+import CSP_RecipientsQuestion from '@salesforce/label/c.CSP_RecipientsQuestion';
+import CSP_Recipients from '@salesforce/label/c.CSP_Recipients';
+import ISSP_Case_Closed_More_Than_2_Months from '@salesforce/label/c.ISSP_Case_Closed_More_Than_2_Months';
+import ISSP_CaseNumber from '@salesforce/label/c.ISSP_CaseNumber';
+import ISSP_Subject from '@salesforce/label/c.ISSP_Subject';
+import CSP_Status from '@salesforce/label/c.CSP_Status';
+import CSP_CreatedOn from '@salesforce/label/c.CSP_CreatedOn';
+import CSP_LastUpdate from '@salesforce/label/c.CSP_LastUpdate';
+import CSP_Manage_Recipients from '@salesforce/label/c.CSP_Manage_Recipients';
+import CSP_AddOrRemove_Recipients from '@salesforce/label/c.CSP_AddOrRemove_Recipients';
+import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
+import CSP_EmailAddress from '@salesforce/label/c.Email_address';
 
 export default class PortalHomeCalendar extends LightningElement {
 
@@ -18,15 +37,45 @@ export default class PortalHomeCalendar extends LightningElement {
 
     @track showManageRecipientsPopup = false;
     @track manageRecipientsOkButtonDisabled = false;
-    @track lstRecipients;
+    @track lstRecipients = [];
     @track newRecipient = '';
     @track haveRecipients = false;
+    
+    @api isExpired = false;
+    @track expiredCard;
+    @track CaseStatusClass = '';
+    @track surveyLink;
 
     @track pendingCustomerCase = false;
     pendingCustomerCaseWarningLabel = CSP_PendingCustomerCase_Warning;
 
     @track displayOscarProgressBar = false;
     @track progressStatusList = [];
+
+    //variable to control error class sent to child component
+    @track requiredClass;
+
+    //stores emails to be sent to case creation
+    caseEmails = [];
+    
+    @track labels = {
+        ISSP_Survey,
+        Open,
+        CSP_RecipientsQuestion,
+		CSP_Recipients,
+		ISSP_CaseNumber,
+		ISSP_Subject,
+        CSP_AddOrRemove_Recipients,
+		ISSP_Case_Closed_More_Than_2_Months,
+		CSP_Status,
+		CSP_CreatedOn,
+		CSP_LastUpdate,
+		CSP_Manage_Recipients,
+		CSP_EmailAddress
+    }
+
+    //Icons
+    infoIcon = CSP_PortalPath + 'CSPortal/Images/Icons/info.svg';   
 
     connectedCallback() {
         //get the parameters for this page
@@ -39,6 +88,10 @@ export default class PortalHomeCalendar extends LightningElement {
         if(this.pageParams.caseId !== undefined){
             this.getProgressBarStatus();
         }
+
+	this.getSurveyLink();
+    	this.getRelatedAccounts();
+    	this.getRelatedContacts();
     }
 
     getCaseByIdJS(){
@@ -69,18 +122,31 @@ export default class PortalHomeCalendar extends LightningElement {
                 this.haveRecipients = false;
             }
 
-            console.log('results.Status: ' , results.Status);
-
             this.loading = false;
             this.pendingCustomerCase = results.Status === 'Pending customer';
 
-            console.log('pendingCustomerCase: ' , this.pendingCustomerCase);
+            this.CaseStatusClass = results.Status.replace(/\s/g, '').replace(/_|-|\./g, '');
+
         })
         .catch(error => {
             console.log('error: ' , error);
             this.loading = false;
         });
         
+        getHideForClosedCases({ caseId : this.pageParams.caseId })
+        .then(results => {
+            this.isExpired = results; //Disable
+
+            const selectedEvent = new CustomEvent("sendexpired", {
+                detail: this.isExpired
+              });
+
+            // Dispatches the event.
+            this.dispatchEvent(selectedEvent);
+        })
+        .catch(e => {
+            console.log(e);
+        });
     }
 
     getProgressBarStatus() {
@@ -94,6 +160,78 @@ export default class PortalHomeCalendar extends LightningElement {
 
     }
 
+    //get the profile of the user
+    getProfile() {
+        getProfile()
+            .then(result => {
+                this.agentProfile = JSON.parse(JSON.stringify(result)).includes('ISS Portal Agency');
+                if (!JSON.parse(JSON.stringify(result)).includes('Admin')) {
+                    this.setPortalUserIATACode();
+                }
+            });
+    }
+
+    //gets related accounts and sets them in global var
+    getRelatedAccounts() {
+        //activate spinner
+        this.loading = true;
+        searchAccounts({ searchTerm: null })
+            .then(relatedAccountsResult => {
+
+                let allresults = JSON.parse(JSON.stringify(relatedAccountsResult));
+                this.relatedAccounts = allresults;
+
+                if (allresults.length === 1) {
+                    this.singleresult = allresults;
+                } else if (allresults.length === 0) {
+                    this.singleresult = [{ title: this.label.CSP_NoSearchResults }];
+                }
+                this.getProfile();
+
+                //activate spinner
+                this.loading = false;
+            });
+    }
+
+    //gets related contacts and sets them in global var
+    getRelatedContacts() {
+        //activate spinner
+        this.loading = true;
+        searchContacts({ searchTerm: null })
+            .then(relatedContactsResult => {
+                this.relatedContacts = JSON.parse(JSON.stringify(relatedContactsResult));
+                this.relatedContacts = this.relatedContacts.filter(obj => obj.id !== this.caseDetails.ContactId); //remove self if case owner
+                //deactivate spinner
+                this.loading = false;
+            });
+    }
+
+    //shows results upon clicking the search.
+    showEmailResults() {
+        this.template.querySelector('[data-id="emaillookup"]').setSearchResults(this.relatedContacts);
+    }
+
+    //performs search based on the input - minimum of 3 keystrokes - 300ms per search (check child component)
+    handleContactSearch(event) {
+        searchContacts(event.detail)
+            .then(results => {
+                this.template.querySelector('[data-id="emaillookup"]').setSearchResults(results);
+                this.requiredClass = '';
+            })
+            .catch((error) => {
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Search could not be performed',
+                        message: 'An error occured. Please refresh the page or contact administration',
+                        variant: 'error'
+                    })
+                );
+                //Errors usually are due to session timeout.
+                // eslint-disable-next-line no-console
+                console.log('Lookup Error: ' + error);
+            });
+    }
+
     openManageRecipientsPopup(){
         this.showManageRecipientsPopup = true;
     }
@@ -102,30 +240,30 @@ export default class PortalHomeCalendar extends LightningElement {
         this.showManageRecipientsPopup = false;
     }
     
+	get hasSurveyLink() {
+        return this.surveyLink !== undefined && this.surveyLink.length > 0;
+    }
 
     addNewRecipientButtonClick(){
+        let inputCmp = this.template.querySelector('[data-id="emaillookup"]').getSelection()[0].subtitle;
+        let comp = this.template.querySelector('[data-id="emaillookup"]');
+        comp.focus();
 
-        let inputCmp = this.template.querySelector(".newRecipientTextInput");
-        let emailIsValid = inputCmp.checkValidity();
-
-        if(emailIsValid){
-            let value = inputCmp.value;
-            this.loading = true;
-
-            addNewRecipient({ caseId : this.caseDetails.Id, newRecipientEmail : value })
+        this.loading = true;    
+        addNewRecipient({ caseId : this.caseDetails.Id, newRecipientEmail : inputCmp })
             .then(results => {
                 if(results.success === true){
+
                     //show success toast
                     const toastEvent = new ShowToastEvent({
                         title: "SUCCESS",
                         message: results.returnMessage,
                         variant: "success",
                     });
-                    this.dispatchEvent(toastEvent);
-                    this.newRecipient = '';
-                    inputCmp.value = '';
-
                     this.getCaseByIdJS();
+                    this.dispatchEvent(toastEvent);
+                    this.loading = false;
+
                 }else{
                     //show error toast
                     const toastEvent = new ShowToastEvent({
@@ -144,9 +282,8 @@ export default class PortalHomeCalendar extends LightningElement {
                 this.loading = false;
             });
 
-        }else{
-            inputCmp.reportValidity();
-        }
+            
+
     }
 
     removeRecipient(event){
@@ -163,9 +300,11 @@ export default class PortalHomeCalendar extends LightningElement {
                     message: results.returnMessage,
                     variant: "success",
                 });
-                this.dispatchEvent(toastEvent);
-
                 this.getCaseByIdJS();
+                this.dispatchEvent(toastEvent);
+                
+                this.loading = false;
+                
             }else{
                 //show error toast
                 const toastEvent = new ShowToastEvent({
@@ -183,6 +322,17 @@ export default class PortalHomeCalendar extends LightningElement {
             this.loading = false;
         });
 
+    }
+
+
+    getSurveyLink() {
+        getSurveyLink({ caseId: this.pageParams.caseId })
+            .then(result => {
+                this.surveyLink = result;
+            })
+            .catch(error => {
+                this.surveyLink = undefined;
+            });
     }
 
 

@@ -116,14 +116,14 @@ private class PortalCasesCtrlTest {
                 
                 PortalCasesCtrl.PagedResult pag = PortalCasesCtrl.getRecentCases(false, false, false);
                 
-                PortalCasesCtrl.ReturnWrapper addNewRecipientTest = PortalCasesCtrl.addNewRecipient(newCase1.Id, '');
+                DAL_WithoutSharing.ReturnWrapper addNewRecipientTest = DAL_WithoutSharing.addNewRecipient(newCase1.Id, '');
                 
-                PortalCasesCtrl.ReturnWrapper submitNewMessageTest = PortalCasesCtrl.submitNewMessage(newCase.Id, 'Test Message');
+                DAL_WithoutSharing.ReturnWrapper submitNewMessageTest = DAL_WithoutSharing.submitNewMessage(newCase.Id, 'Test Message');
             }
-            PortalCasesCtrl.ReturnWrapper addNewRecipientTest1 = PortalCasesCtrl.addNewRecipient(newCase.Id, 'testeW@csp.testclass');
-            PortalCasesCtrl.ReturnWrapper addNewRecipientTest2 = PortalCasesCtrl.addNewRecipient(newCase.Id, 'testemailNEW@csp.testclass');
+            DAL_WithoutSharing.ReturnWrapper addNewRecipientTest1 = DAL_WithoutSharing.addNewRecipient(newCase.Id, 'testeW@csp.testclass');
+            DAL_WithoutSharing.ReturnWrapper addNewRecipientTest2 = DAL_WithoutSharing.addNewRecipient(newCase.Id, 'testemailNEW@csp.testclass');
             List<PortalCasesCtrl.MessageWrapper> lstCases = PortalCasesCtrl.getCaseMessages(newCase.Id);
-            PortalCasesCtrl.ReturnWrapper removeRecipientTest = PortalCasesCtrl.removeRecipient(newCase1.Id, 'tes@test.com');
+            DAL_WithoutSharing.ReturnWrapper removeRecipientTest = DAL_WithoutSharing.removeRecipient(newCase1.Id, 'tes@test.com');
         Test.stopTest();
         
         
@@ -153,14 +153,14 @@ private class PortalCasesCtrlTest {
                 
                 PortalCasesCtrl.PagedResult pag = PortalCasesCtrl.getRecentCases(true, true, true);
                 
-                PortalCasesCtrl.ReturnWrapper addNewRecipientTest = PortalCasesCtrl.addNewRecipient(newCase1.Id, '');
+                DAL_WithoutSharing.ReturnWrapper addNewRecipientTest = DAL_WithoutSharing.addNewRecipient(newCase1.Id, '');
                 
-                PortalCasesCtrl.ReturnWrapper submitNewMessageTest = PortalCasesCtrl.submitNewMessage(newCase.Id, 'Test Message');
+                DAL_WithoutSharing.ReturnWrapper submitNewMessageTest = DAL_WithoutSharing.submitNewMessage(newCase.Id, 'Test Message');
             }
-            PortalCasesCtrl.ReturnWrapper addNewRecipientTest1 = PortalCasesCtrl.addNewRecipient(newCase.Id, 'testeW@csp.testclass');
-            PortalCasesCtrl.ReturnWrapper addNewRecipientTest2 = PortalCasesCtrl.addNewRecipient(newCase.Id, 'testemailNEW@csp.testclass');
+            DAL_WithoutSharing.ReturnWrapper addNewRecipientTest1 = DAL_WithoutSharing.addNewRecipient(newCase.Id, 'testeW@csp.testclass');
+            DAL_WithoutSharing.ReturnWrapper addNewRecipientTest2 = DAL_WithoutSharing.addNewRecipient(newCase.Id, 'testemailNEW@csp.testclass');
             List<PortalCasesCtrl.MessageWrapper> lstCases = PortalCasesCtrl.getCaseMessages(newCase.Id);
-            PortalCasesCtrl.ReturnWrapper removeRecipientTest = PortalCasesCtrl.removeRecipient(newCase1.Id, 'tes@test.com');
+            DAL_WithoutSharing.ReturnWrapper removeRecipientTest = DAL_WithoutSharing.removeRecipient(newCase1.Id, 'tes@test.com');
         Test.stopTest();
     }
     
@@ -181,18 +181,18 @@ private class PortalCasesCtrlTest {
                 
                 PortalCasesCtrl.PagedResult pag1 = PortalCasesCtrl.getFilteredCasesResultsPage(JSON.serialize(portFilterWrapper), '0', CSP_Utils.isAdmin());
                 
-                PortalCasesCtrl.ReturnWrapper addNewRecipientTest = PortalCasesCtrl.addNewRecipient(newCase1.Id, '');
+                DAL_WithoutSharing.ReturnWrapper addNewRecipientTest = DAL_WithoutSharing.addNewRecipient(newCase1.Id, '');
                 
-                PortalCasesCtrl.ReturnWrapper submitNewMessageTest = PortalCasesCtrl.submitNewMessage(newCase.Id, 'Test Message');
+                DAL_WithoutSharing.ReturnWrapper submitNewMessageTest = DAL_WithoutSharing.submitNewMessage(newCase.Id, 'Test Message');
 
 
                 PortalCasesCtrl.MessageWrapper mw = new PortalCasesCtrl.MessageWrapper();
                 
             }
-            PortalCasesCtrl.ReturnWrapper addNewRecipientTest1 = PortalCasesCtrl.addNewRecipient(newCase.Id, 'testeW@csp.testclass');
-            PortalCasesCtrl.ReturnWrapper addNewRecipientTest2 = PortalCasesCtrl.addNewRecipient(newCase.Id, 'testemailNEW@csp.testclass');
+            DAL_WithoutSharing.ReturnWrapper addNewRecipientTest1 = DAL_WithoutSharing.addNewRecipient(newCase.Id, 'testeW@csp.testclass');
+            DAL_WithoutSharing.ReturnWrapper addNewRecipientTest2 = DAL_WithoutSharing.addNewRecipient(newCase.Id, 'testemailNEW@csp.testclass');
             List<PortalCasesCtrl.MessageWrapper> lstCases = PortalCasesCtrl.getCaseMessages(newCase.Id);
-            PortalCasesCtrl.ReturnWrapper removeRecipientTest = PortalCasesCtrl.removeRecipient(newCase1.Id, 'tes@test.com');
+            DAL_WithoutSharing.ReturnWrapper removeRecipientTest = DAL_WithoutSharing.removeRecipient(newCase1.Id, 'tes@test.com');
         Test.stopTest();
     }
 
@@ -225,7 +225,7 @@ private class PortalCasesCtrlTest {
                 insert cs;
                                 
                 
-                PortalCasesCtrl.ReturnWrapper addNewRecipientTest = PortalCasesCtrl.addNewRecipient(cs.Id, 'janedanetest@test.test');
+                DAL_WithoutSharing.ReturnWrapper addNewRecipientTest = DAL_WithoutSharing.addNewRecipient(cs.Id, 'janedanetest@test.test');
                 
             }
 
@@ -409,4 +409,35 @@ private class PortalCasesCtrlTest {
         System.assert(link != null);
 
     }   
+
+    @IsTest
+    static void testGetHideForClosedCases(){
+        User usr = [SELECT Id, ContactId FROM User WHERE Email LIKE '%testemail1@csp.testclass' LIMIT 1];
+        Contact cont = [SELECT Id FROM Contact WHERE FirstName = 'John' LIMIT 1];
+        Account newAcc = [SELECT Id FROM Account LIMIT 1];
+        Case newCase = [SELECT Id FROM Case WHERE Subject = 'Case Test' LIMIT 1];
+        Case newCase1 = [SELECT Id FROM Case WHERE Subject = 'Case Test 1' LIMIT 1];
+        Case newCase3 = [SELECT Id, is_Portal_user_equal_case_contact__c FROM Case WHERE Subject = 'Bla' LIMIT 1];
+
+        Id caseRT_FDS_ICCS_Email_to_Case = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'FDS_ICCS_Email_to_Case');
+    
+        Test.startTest();
+            System.runAs(usr) {
+                Case newCase4 = new Case(Subject = 'Bla', Region__c = 'Africa & Middle East',
+                                        Origin = 'Portal', CaseArea__c = 'Accreditation',
+                                        E2CP__AdditionalCC__c = 'testqa.tcosta@yopmail.com.inactive.inactive',
+                                        RecordTypeId = caseRT_FDS_ICCS_Email_to_Case,
+                                        Visible_on_ISS_Portal__c = true, ContactId = usr.ContactId);
+                insert newCase4;
+                
+                Case getCaseTest = PortalCasesCtrl.getCaseById(newCase4.Id);
+
+                boolean expired = PortalCasesCtrl.getHideForClosedCases(newCase4.Id);
+                
+                System.assertEquals(expired,false);
+                Test.stopTest();
+        
+    }
+
+    }
 }

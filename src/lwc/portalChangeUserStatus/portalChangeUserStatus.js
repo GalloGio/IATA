@@ -19,7 +19,7 @@ import activeIdCardUserLABEL from '@salesforce/label/c.ISSP_InactiveUser_IdCard'
 import confirmContinueLABEL from '@salesforce/label/c.ISSP_SureToContinue';
 import selectPortalStatusLABEL from '@salesforce/label/c.CSP_SelectPortalStatus';
 import selectReasonLABEL from '@salesforce/label/c.CSP_selectReason';
-import reasonLABEL from '@salesforce/label/c.ICCS_Reason_Label';
+import reasonLABEL from '@salesforce/label/c.ISSP_ReasonInactivation';
 import communityLABEL from '@salesforce/label/c.CSP_Community';
 import portalStatusLABEL from '@salesforce/label/c.CSP_Portal_Status';
 import remove from '@salesforce/label/c.Button_Remove';

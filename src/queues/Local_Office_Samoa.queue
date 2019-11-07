@@ -5,8 +5,8 @@
     <name>Local Office - Samoa</name>
     <queueMembers>
         <roleAndSubordinatesInternal>
-            <roleAndSubordinateInternal>CountryManagerNewZealandI</roleAndSubordinateInternal>
-            <roleAndSubordinateInternal>StaffNewZealandI</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>CountryManagerNewZealand</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>StaffNewZealand</roleAndSubordinateInternal>
         </roleAndSubordinatesInternal>
     </queueMembers>
     <queueSobject>

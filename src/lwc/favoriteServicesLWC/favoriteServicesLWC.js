@@ -1,7 +1,6 @@
 import { LightningElement, track } from 'lwc';
 
 import getFavoriteServicesList from '@salesforce/apex/PortalServicesCtrl.getFavoriteServicesList';
-import goToOldPortalService from '@salesforce/apex/PortalServicesCtrl.goToOldPortalService';
 import paymentLinkRedirect from '@salesforce/apex/PortalServicesCtrl.paymentLinkRedirect';
 import { updateRecord } from 'lightning/uiRecordApi';
 
@@ -269,16 +268,9 @@ export default class FavoriteServicesLWC extends LightningElement {
                     //open new tab with the redirection
 
                     if (myUrl.startsWith('/')) {
-                        goToOldPortalService({ myurl: myUrl })
-                            .then(result => {
-                                //open new tab with the redirection
-                                window.open(result);
-                                this.toggleSpinner();
-                            })
-                            .catch(error => {
-                                //throws error
-                                this.error = error;
-                            });
+
+                        window.open(myUrl);
+                        this.toggleSpinner();                          
 
                     } else {
                         if (recordName.value === 'Payment Link' || recordName.value === 'Paypal') {
@@ -303,20 +295,12 @@ export default class FavoriteServicesLWC extends LightningElement {
                         }
                     }
 
-
                 } else if (myUrl !== '') {
                     //redirects on the same page
                     //method that redirects the user to the old portal maintaing the same loginId
-                    goToOldPortalService({ myurl: myUrl })
-                        .then(result => {
-                            //open new tab with the redirection
-                            window.location.href = result;
-                            this.toggleSpinner();
-                        })
-                        .catch(error => {
-                            //throws error
-                            this.error = error;
-                        });
+                    
+                    window.open(myUrl,"_self");
+                    this.toggleSpinner();
 
                 }
             }

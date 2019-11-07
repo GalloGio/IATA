@@ -491,7 +491,7 @@ public with sharing class PortalCasesCtrl {
         if(record.CNSCase__c) {
             return new Map<Id, String>{
                 record.Id =>
-                OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, '/ISSP_Case?caseId=' + record.Id + '&communityName=CNS') 
+                OneIdUtils.getOrgUrl() + OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, 'ISSP_Case?caseId=' + record.Id + '&communityName=CNS') 
             };
         }
 
@@ -500,14 +500,14 @@ public with sharing class PortalCasesCtrl {
             if(record.Reason1__c == TIP_Utils.CASE_REASON_PAYMENT_PROVIDER_MANAGMENT) {
                 return new Map<Id, String>{
                     record.Id =>
-                    OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, 'ISSP_TIP_Home?caseId=' + record.Id) 
+                    OneIdUtils.getOrgUrl() + OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, 'ISSP_TIP_Home?caseId=' + record.Id) 
                 };
             }
             
             if(record.Reason1__c == TIP_Utils.CASE_REASON_PRODUCT_MANAGEMENT) {
                 return new Map<Id, String>{
                     record.Id => 
-                    OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, '/ISSP_TIP_Home?prodId=' + record.TIP_Partner_Product__c)
+                    OneIdUtils.getOrgUrl() + OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, 'ISSP_TIP_Home?prodId=' + record.TIP_Partner_Product__c)
                 };
             }
         }
@@ -517,7 +517,7 @@ public with sharing class PortalCasesCtrl {
             if(openIFAPStatuses.contains(record.Status.toLowerCase()) && myUser.Contact.Financial_Assessment_Contact__c) {
                 return new Map<Id, String>{
                     record.Id => 
-                    OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, '/ISSP_IFAPCases?id=' + record.Id)
+                    OneIdUtils.getOrgUrl() + OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, 'ISSP_IFAPCases?id=' + record.Id)
                 };
             }
         } else if(record.RecordType.Name == 'OSCAR Communication') {
@@ -526,44 +526,44 @@ public with sharing class PortalCasesCtrl {
                     if(record.Reason1__c == AMS_Utils.CASE_REASON_FOR_MANAGEMENT || record.Reason1__c == AMS_Utils.CASE_REASON_PCI_DSS_COMPLIANT) {
                         return new Map<Id, String>{
                             record.Id => 
-                            OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, '/ISSP_ANG_PCI?caseId=' + record.Id)
+                            OneIdUtils.getOrgUrl() + OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, 'ISSP_ANG_PCI?caseId=' + record.Id)
                         }; 
                     } else if(record.Reason1__c.startsWith('New')) {
                         return new Map<Id, String>{
                             record.Id => 
-                            OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, '/ISSP_AMS_Accreditation?caseId=' + record.Id + '&step=2')
+                            OneIdUtils.getOrgUrl() + OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, 'ISSP_AMS_Accreditation?caseId=' + record.Id + '&step=2')
                         };                    
                     } else if(record.Reason1__c == 'CLO – Closure') {
                         return new Map<Id, String>{
                             record.Id => 
-                            OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, '/ISSP_ANG_VoluntaryRelinquishment?caseId=' + record.Id + '&step=1')
+                            OneIdUtils.getOrgUrl() + OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, 'ISSP_ANG_VoluntaryRelinquishment?caseId=' + record.Id + '&step=1')
                         };                    
                     } else if(record.Reason1__c == 'Bank Detail Update') {
                         return new Map<Id, String>{
                             record.Id => 
-                            OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, '/ISSP_AMS_Accreditation?caseId=' + record.Id + '&isNoticeOfChange=true&isBankAccountChange=true&step=2')
+                            OneIdUtils.getOrgUrl() + OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, 'ISSP_AMS_Accreditation?caseId=' + record.Id + '&isNoticeOfChange=true&isBankAccountChange=true&step=2')
                         };                    
                     } else {
                         return new Map<Id, String>{
                             record.Id => 
-                            OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, '/ISSP_AMS_Accreditation?caseId=' + record.Id + '&isNoticeOfChange=true&isBankAccountChange=false&step=2')
+                            OneIdUtils.getOrgUrl() + OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, 'ISSP_AMS_Accreditation?caseId=' + record.Id + '&isNoticeOfChange=true&isBankAccountChange=false&step=2')
                         };
                     }
                 } else if(((record.Origin == 'Massive FOP Creation' || record.Origin == 'FoP automatic renewal') && record.Owner.Name.startsWith('NewGen PCI')) 
                     || ((record.Reason1__c == AMS_Utils.CASE_REASON_FOR_MANAGEMENT || record.Reason1__c == AMS_Utils.CASE_REASON_PCI_DSS_COMPLIANT))) {
                     return new Map<Id, String>{
                         record.Id => 
-                        OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, '/ISSP_ANG_PCI?caseId=' + record.Id)
+                        OneIdUtils.getOrgUrl() + OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, 'ISSP_ANG_PCI?caseId=' + record.Id)
                     };
                 } else if(record.Reason1__c == 'Annual revalidation' && record.Owner.Name.startsWith('Annual Revalidation')) {
                     return new Map<Id, String>{
                         record.Id => 
-                        OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, '/ISSP_ANG_ANNUAL_REVALIDATION?caseId=' + record.Id)
+                        OneIdUtils.getOrgUrl() + OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, 'ISSP_ANG_ANNUAL_REVALIDATION?caseId=' + record.Id)
                     };
                 } else if (record.Owner.Name.startsWith('Model A Onboarding')) {
                     return new Map<Id, String>{
                         record.Id => 
-                        OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, '/ISSP_ModelA_Onboarding?caseId=' + record.Id)
+                        OneIdUtils.getOrgUrl() + OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, 'ISSP_ModelA_Onboarding?caseId=' + record.Id)
                     };
                 }
             } else {
@@ -579,14 +579,14 @@ public with sharing class PortalCasesCtrl {
             if(record.Status == 'Draft' && record.Classification_SIS__c == 'SIS Membership' && !record.isClosed && !record.Owner.Name.StartsWith('Recycle Bin')) {
                 return new Map<Id, String>{
                     record.Id => 
-                    OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, '/ISSP_SISMembershipApplicationForm?id=' + record.Id + '&step=2')
+                    OneIdUtils.getOrgUrl() + OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, 'ISSP_SISMembershipApplicationForm?id=' + record.Id + '&step=2')
                 };
             } else if((record.Status == 'Draft' || record.Status == 'Open - EDMC' || record.Status == 'Return application to customer') && 
                     apListForm != null && apListForm.contains(record.Id) &&
                     airlineRightList != null && !airlineRightList.isEmpty()) {
                         return new Map<Id, String>{
                             record.Id => 
-                            OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, '/ISSP_APProcess?caseId=' + record.Id + '&step=2')
+                            OneIdUtils.getOrgUrl() + OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, 'ISSP_APProcess?caseId=' + record.Id + '&step=2')
                         };
             }
         }
@@ -595,7 +595,7 @@ public with sharing class PortalCasesCtrl {
         if(record.Origin == 'Portal' && recordTypesSet.contains(record.RecordType.Name)) {
             return new Map<Id, String>{
                 record.Id => 
-                OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, '/ISSP_ICCS_Service?caseId=' + record.Id)
+                OneIdUtils.getOrgUrl() + OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, 'ISSP_ICCS_Service?caseId=' + record.Id)
             };
         }
 
@@ -669,7 +669,7 @@ public with sharing class PortalCasesCtrl {
                         Subtopic__c, Region__c, Reason1__c, Country_concerned__c, Account_Concerned__r.IATACode__c, 
                         Description,E2CP__AdditionalCC__c,Account_Concerned__c, Status,RecordType__c,
                         RecordType.Name, WhoClosedCase__c,WhoClosedCase__r.UserRole.Name, BSPCountry__c, AccountId,
-                        Account.Name, ContactId, Contact.FirstName, Contact.LastName, Contact.Email,Contact.Phone
+                        Account.Name, ContactId, Contact.FirstName, Contact.LastName, Contact.Email,Contact.Phone,RecordType.Id,RecordType.DeveloperName
                         FROM Case 
                         WHERE Id = :caseId];
 
@@ -677,6 +677,31 @@ public with sharing class PortalCasesCtrl {
             caseAux = buildSubject(caseAux);
         }
         return caseAux;
+    }
+
+    /**
+        Returns true if the input case has an specific RecordType
+        and is closed for more than 2 weeks
+    **/
+    @AuraEnabled
+    public static Boolean getHideForClosedCases(String caseId) {
+        set<String> validRecordtypes = new set<String>{'IDFS_Airline_Participation_Process', 'OSCAR_Communication', 'CasesMENA', 
+        'CasesAmericas', 'ExternalCasesIDFSglobal', 'Cases_China_North_Asia', 'CasesEurope', 'Cases_Global', 'ComplaintIDFS', 'Inter_DPCs'};
+        Case newCase = getCaseById(caseId);
+        boolean isMSO = isMSOcase(newCase);
+
+        List<Case> cases = 
+        [SELECT Id,RecordType.Id 
+        FROM Case 
+        WHERE 
+        RecordType.Id = :newCase.RecordType.Id
+        AND (RecordType.DeveloperName IN :validRecordtypes)];
+        
+        return ((!cases.isEmpty() && newCase.ClosedDate < Date.today().addDays(-14)) || isMSO );
+    }
+
+    private Static boolean isMSOcase(Case newCase){
+        return (newCase.RecordType.DeveloperName == 'OSCAR_Communication' && (newCase.Reason1__c == 'GSA / MSO / Handling Agent' || newCase.Subject.startsWith('MSO code ') ));
     }
 
     private Static Case buildSubject(Case caseAux){
@@ -700,7 +725,7 @@ public with sharing class PortalCasesCtrl {
         if(newCase.status != 'Closed'){
             return null;
         }
-
+        
         Id profileId = Userinfo.getProfileId();
         String profileName = [Select Id, Name from Profile where Id = :profileId].Name;
         ClosedSurvey__c csValues = ClosedSurvey__c.getInstance(newCase.RecordType__c);
@@ -716,6 +741,7 @@ public with sharing class PortalCasesCtrl {
         Boolean isToShowSurveyBtn = csValues != null && csValues.RolesAvailable__c.contains(userRole) || csValues.RolesAvailable__c.contains('All');
         Boolean matchingCaseType = caseType == null;
         Boolean surveyCompleted = false;
+        Boolean validCloseDate = newCase.ClosedDate >= Date.today().addDays(-14);
 
         List<Instant_Surveys__c> Survey_List = new List<Instant_Surveys__c>([SELECT Case_ID__c
         FROM Instant_Surveys__c
@@ -726,7 +752,7 @@ public with sharing class PortalCasesCtrl {
             surveyCompleted = true ;
         }
 
-        Boolean showLink = matchingStatus && !isPWCCase && !isDPCuser && isToShowSurveyBtn && matchingCaseType && !surveyCompleted;
+        Boolean showLink = matchingStatus && !isPWCCase && !isDPCuser && isToShowSurveyBtn && matchingCaseType && !surveyCompleted && validCloseDate;
 
         if(!showLink){
             return null;
@@ -751,193 +777,54 @@ public with sharing class PortalCasesCtrl {
     /*
     * Returns the comments for a case, given the case id
     */
-    @AuraEnabled 
-    public static List<MessageWrapper> getCaseMessages(String caseId){
-        List<MessageWrapper> lstToReturn = new List<MessageWrapper>();
-
-        List<CaseComment> lstCaseCommentsAux = [SELECT Id, ParentId, CommentBody, IsPublished, 
-                                                CreatedDate, CreatedById , CreatedBy.Name , IsDeleted
-                                                FROM CaseComment
-                                                WHERE ParentId = :caseId AND IsDeleted = false
-                                                ORDER BY CreatedDate ASC];
-        
-        if(lstCaseCommentsAux != null && !lstCaseCommentsAux.isEmpty()){
-            for(CaseComment caseCommentAux : lstCaseCommentsAux){
-                Boolean isSelfAux = caseCommentAux.CreatedById == UserInfo.getUserId();
-                lstToReturn.add(new MessageWrapper(caseCommentAux.CommentBody, 
-                                                    caseCommentAux.CreatedDate, 
-                                                    caseCommentAux.CreatedBy.Name, 
-                                                    isSelfAux, 
-                                                    caseCommentAux.Id));
-            }
-        }
-
-        return lstToReturn;
-    }
-
     @AuraEnabled
-    public static ReturnWrapper submitNewMessage(String caseId, String messageTextAux){
-        ReturnWrapper returnWrapper = new ReturnWrapper();
-        Savepoint sp = Database.setSavepoint();
-        Case caseAux = new Case();
-        caseAux.Id = caseId;
-        caseAux.New_interaction__c = 'New Comment';
-        caseAux.New_Comment_From_Connection_User__c = true;
-        CaseComment caseCommentAux = new CaseComment();
-        caseCommentAux.ParentId = caseId;
-        caseCommentAux.CommentBody = messageTextAux;
+public static List<MessageWrapper> getCaseMessages(String caseId){
+	List<MessageWrapper> lstToReturn = new List<MessageWrapper>();
 
-        try{
-            insert caseCommentAux;
-            update caseAux;
-            returnWrapper = new ReturnWrapper(true, Label.CSP_CaseMessage_SubmitSuccess, ''); 
-        }catch(Exception e){
-            Database.rollback(sp);
-            returnWrapper = new ReturnWrapper(false, e.getMessage(), '');
-        }
+	Case caseToFirstComment = [SELECT Id, Description, CreatedBy.Name, CreatedDate FROM Case WHERE Id =:caseId];
 
-        return returnWrapper;
-    }
+	List<CaseComment> lstCaseCommentsAux = [SELECT Id, ParentId, CommentBody, IsPublished,
+	                                        CreatedDate, CreatedById, CreatedBy.Name, IsDeleted
+	                                        FROM CaseComment
+	                                        WHERE ParentId = :caseId AND IsDeleted = false
+	                                                                                 ORDER BY CreatedDate ASC];
+
+	String caseDescription = caseToFirstComment.Description != null ? caseToFirstComment.Description : '';
+
+	lstToReturn.add(new MessageWrapper(caseDescription,
+	                                   caseToFirstComment.CreatedDate,
+	                                   caseToFirstComment.CreatedBy.Name,
+	                                   true,
+	                                   caseToFirstComment.Id));
+
+	if(lstCaseCommentsAux != null && !lstCaseCommentsAux.isEmpty()) {
+		for(CaseComment caseCommentAux : lstCaseCommentsAux) {
+			Boolean isSelfAux = caseCommentAux.CreatedById == UserInfo.getUserId();
+			lstToReturn.add(new MessageWrapper(caseCommentAux.CommentBody,
+			                                   caseCommentAux.CreatedDate,
+			                                   caseCommentAux.CreatedBy.Name,
+			                                   isSelfAux,
+			                                   caseCommentAux.Id));
+		}
+	}
+
+	return lstToReturn;
+}
 
     /*
     * Method that adds a new Recipient for this case
     */
     @AuraEnabled
-    public static ReturnWrapper addNewRecipient(String caseId, String newRecipientEmail){
-        ReturnWrapper returnWrapper = new ReturnWrapper();
-
-        String findEmail = newRecipientEmail.trim();
-        
-        if (findEmail == null || findEmail == ''){
-            returnWrapper.success = false;
-            returnWrapper.returnMessage = 'No email was provided. ';
-            return returnWrapper;
-        }
-
-        // find contact with input email
-        list<Contact> listContact = [SELECT Id, Email, AccountId FROM Contact WHERE Email = :findEmail AND Status__c = 'Active' LIMIT 1];
-        if (listContact.size() != 1) {
-            returnWrapper.success = false;
-            returnWrapper.returnMessage = Label.ISSP_CCOther_Wrong_Emails.replace('{0}',findEmail);
-            return returnWrapper;
-        }
-
-        Boolean isDPCUser = false;
-        Id profileId = Userinfo.getProfileId();
-        String profileName = [Select Id, Name from Profile where Id = :profileId].Name;
-        //Verify if user is a PWC profile
-        if (profileName.startsWith('ISS Portal DPC Admin') ) {  isDPCUser = true; }
-
-        //get partner user role id
-        Id PARTNER_USER_ROLE = [SELECT id FROM CaseTeamRole WHERE Name = 'Partner User Role'].Id;
-
-        //get the case
-        Case caseAux = PortalCasesCtrl.getCaseById(caseId);
-
-        // insert found contact as a team member of the case
-        Savepoint sp = Database.setSavepoint();
-        try {
-            Contact contact = listContact.get(0);
-            Id memberId = contact.Id;
-            if(isDPCUser) {
-                // only add people from Account_Concerned__c by User
-                list<User> listUser = [
-                    SELECT Id, Contact.AccountId
-                    FROM User
-                    WHERE ContactId = :contact.Id AND isActive = true AND Contact.AccountId = :caseAux.Account_Concerned__c AND Contact.User_Portal_Status__c IN ('Approved Admin', 'Approved User') ];
-                if (!listUser.isEmpty()) {
-                    memberId = listUser[0].Id;
-                } else {
-                    if (contact.AccountId != caseAux.Account_Concerned__c){
-                        //if it's DPC, a user is not found and the selected contact is not in the
-                        //same Account Concerned then we cannot continue
-
-                        returnWrapper.success = false;
-                        returnWrapper.returnMessage = 'User is now in the same account concerned';
-                        return returnWrapper;
-                    }
-                }
-            }
-            CaseTeamMember teammember = new CaseTeamMember(ParentId = caseAux.Id, MemberId = memberId, TeamRoleId = PARTNER_USER_ROLE);
-            System.debug(teammember);
-            insert teammember;
-            
-            if(caseAux.E2CP__AdditionalCC__c != null && caseAux.E2CP__AdditionalCC__c != ''){
-                caseAux.E2CP__AdditionalCC__c =  caseAux.E2CP__AdditionalCC__c + ';' + contact.Email;
-            }else{
-                caseAux.E2CP__AdditionalCC__c = contact.Email;
-            }
-            update caseAux;
-
-            returnWrapper.success = true;
-            returnWrapper.returnMessage = 'Recipient added with success!';
-
-        } catch (DMLException e) {
-            String messages = '';
-            for (Integer i = 0; i < e.getNumDml(); i++) {
-                messages += ' ' + findemail + ': ' + e.getDmlMessage(i);
-            }
-            Database.rollback(sp);
-
-            returnWrapper.success = false;
-            returnWrapper.returnMessage = messages;
-        }
-
-        return returnWrapper;
+    public static DAL_WithoutSharing.ReturnWrapper addNewRecipient(String caseId, String newRecipientEmail){
+        return DAL_WithoutSharing.addNewRecipient(caseId,newRecipientEmail);
     }
 
     /*
     * Method that removes a recipient from this case
     */
     @AuraEnabled
-    public static ReturnWrapper removeRecipient(String caseId, String recipientEmail){
-        ReturnWrapper returnWrapper = new ReturnWrapper();
-
-        String emailFiltered = recipientEmail==null ? '': recipientEmail.trim();
-
-        Case caseAux = PortalCasesCtrl.getCaseById(caseId);
-
-        Savepoint sp = Database.setSavepoint();
-        try {
-            List<String> listNews = new List<String>();
-            for (String email: caseAux.E2CP__AdditionalCC__c.split(';')) {
-                String trimEmail = email.trim();
-                if (trimEmail != emailFiltered) {
-                    listNews.add(trimEmail);
-                }
-            }
-            caseAux.E2CP__AdditionalCC__c = (String.join(listNews,';'));
-            
-            update caseAux;
-
-            //get partner user role id
-            Id PARTNER_USER_ROLE = [SELECT id FROM CaseTeamRole WHERE Name = 'Partner User Role'].Id;
-
-            list<Contact> listContact = [SELECT Id, AccountId FROM Contact WHERE email = :emailFiltered];
-            list<User> listUser = [SELECT Id, Contact.AccountId FROM User WHERE email = :emailFiltered];
-            list<CaseTeamMember> listMember = [SELECT id FROM CaseTeamMember
-                WHERE ParentId = :caseId AND TeamRoleId = :PARTNER_USER_ROLE AND (MemberId IN :listContact OR MemberId IN :listUser)];
-            if (!listMember.isEmpty()) {
-                delete listMember;
-            }
-
-            returnWrapper.success = true;
-            returnWrapper.returnMessage = 'Recipient removed with success!';
-
-        } catch (DMLException e) {
-            System.debug('ERROR delTeamMember ' + e.getMessage());
-            
-            String messages = '';
-            for (Integer i = 0; i < e.getNumDml(); i++) {
-                messages += ' ' + emailFiltered + ': ' + e.getDmlMessage(i);
-            }
-            Database.rollback(sp);
-
-            returnWrapper.success = false;
-            returnWrapper.returnMessage = messages;
-        }
-
-        return returnWrapper;
+    public static DAL_WithoutSharing.ReturnWrapper removeRecipient(String caseId, String recipientEmail){
+        return DAL_WithoutSharing.removeRecipient(caseId,recipientEmail);
     }
 
     public static String fullnameNOCFile(Case caseObj) {

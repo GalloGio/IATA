@@ -36,10 +36,11 @@
 .recipients-data {
     padding: 0 20px;
     white-space: nowrap;
-    max-width:50%;
+    max-width: 70%;
     overflow: hidden;
     text-overflow: ellipsis;
-    display:inline-block;
+    vertical-align: top;
+    display: inline-block;
 }
 
 .recipients {
@@ -49,4 +50,110 @@
 
 .recipients lightning-button{
     padding: 0 10px;
+}
+
+.expiredCard {
+    background-color: #feeebe;
+    border-color: #ffeeba;
+}
+
+.caseClosed2W{
+  font-size: 12px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  letter-spacing: normal;
+  text-transform: uppercase;
+  color: #4a4d61;
+  
+}
+
+.caseClosed2W img{
+  margin-top: -4px;
+  
+}
+
+.caseClosed2W span{
+  margin-left: 10px;
+  
+}
+
+.border_gradient {
+    position: relative;
+    z-index: 1;
+}
+
+.border_gradient:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 25%;
+    height: 60%;
+    width: 100%;
+    border-right: 1px solid #E6E6E6;
+}
+
+.border_gradient:after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 25%;
+    height: 60%;
+    width: 0%;
+    border-left: 1px solid #E6E6E6;
+}
+
+.CustomCardTitleBox_SmallText {
+    font-size: 13px;
+    font-weight: 400;
+}
+
+.expiredCard {
+    background-color: #feeebe;
+    border-color: #ffeeba;
+}
+
+.caseClosed2W{
+  width: 1060px;
+  height: 40px;
+  font-size: 12px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 40px;
+  letter-spacing: normal;
+  text-transform: uppercase;
+  color: #4a4d61;
+  
+}
+
+.caseClosed2W img{
+  margin-top: -4px;
+  
+}
+
+.caseClosed2W span{
+  margin-left: 10px;
+  
+}
+
+.recipients-box{
+    height: 150px;
+}
+
+.custom-recipients {
+    display:inline-block;
+    border-radius: 1px;
+    background-color: #f7f8fc;
+    line-height: 1.71;
+    color: #4a4d61;
+}
+
+.manage-recipients {
+    font-size: 20px;
+    line-height: 1.6;   
+}
+
+.manage-recipientsinfo {
+    line-height: 1.63;
 }
