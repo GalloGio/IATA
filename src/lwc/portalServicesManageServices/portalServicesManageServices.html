@@ -119,42 +119,30 @@
 
                                     <div class="slds-grid slds-wrap">
                                             <div class="slds-col slds-size_1-of-1">
-                                                <div class="slds-grid slds-wrap slds-grid_align-end slds-m-top_x-large slds-gutters_direct-x-small">
-                                                    <!-- FILTER -->
-                                                    <div if:false={filtered} class="slds-col slds-p-vertical_x-small">
-                                                            <button class="slds-button_icon slds-button__icon_right filterButton" onclick={openServicesFilterModal}>
-                                                                    {label.CSP_Filter}<img class="slds-float_right filterIcon" src={filterIconUrl}>
-                                                            </button>
+                                                    <div class="slds-grid slds-wrap slds-grid_align-end">
+                                                            <div class="slds-text-align_right slds-p-horizontal--xxx-small slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
+                                                                <!-- FILTER -->
+                                                                <button if:true={filtered} class="slds-button_icon filterButton fullWidth twoLines" onclick={openServicesFilterModal}>
+                                                                    {label.CSP_Filtered}
+                                                                    <img class="slds-float_right" src={filteredIconUrl}>
+                                                                </button>
+                                                                <button if:false={filtered} class="slds-button_icon filterButton fullWidth twoLines" onclick={openServicesFilterModal}>
+                                                                    {label.CSP_Filter}<img class="slds-float_right" src={filterIconUrl}>
+                                                                </button>
+                                                            </div>
+                                                            <!-- LIST VIEW -->
+                                                            <template if:true={canAddUsers}>
+                                                                    <div class="slds-text-align_right slds-p-horizontal--xxx-small slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12" if:true={showMassApprove}>    
+                                                                            <lightning-button label={label.grantAccessTitle} class="containedButton fullWidth twoLines" onclick={handleMassApproveAccess} ></lightning-button>
+                                                                    </div>
+                                                                    <div class="slds-text-align_right slds-p-horizontal--xxx-small slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12" if:true={showMassDeny}>    
+                                                                            <lightning-button label={label.denyAccessTitle} class="containedButton fullWidth twoLines" onclick={handleMassDenyAccess} ></lightning-button>
+                                                                    </div>
+                                                                    <div class="slds-text-align_right slds-p-horizontal--xxx-small slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">    
+                                                                            <lightning-button label={label.addNewUser} class="containedButton fullWidth twoLines" onclick={toggleAddUserModal} ></lightning-button>
+                                                                    </div>
+                                                            </template>
                                                     </div>
-                                                    <div if:true={filtered} class="slds-col slds-p-vertical_x-small">
-                                                        <button class="slds-button_icon slds-button__icon_right filterButton" onclick={openServicesFilterModal}>
-                                                                    {label.CSP_Filtered}<img class="slds-float_right filterIcon" src={filteredIconUrl}>
-                                                        </button>
-                                                    </div>
-                                                    <template if:true={canAddUsers}>
-                                                            <!-- MASS APPROVE -->
-                                                            <div if:true={showMassApprove} class="slds-col slds-p-vertical_x-small">
-                                                                    <lightning-button variant="brand" label={label.grantAccessTitle}
-                                                                        title={label.grantAccessTitle} class="containedButton"
-                                                                        onclick={handleMassApproveAccess}>
-                                                                    </lightning-button>
-                                                            </div>
-                                                            <!-- MASS DENY -->
-                                                            <div if:true={showMassDeny} class="slds-col  slds-p-vertical_x-small">
-                                                                    <lightning-button variant="brand" label={label.denyAccessTitle}
-                                                                        title={label.denyAccessTitle} class="containedButton"
-                                                                        onclick={handleMassDenyAccess}>
-                                                                    </lightning-button>
-                                                            </div>
-                                                            <!-- USER ADD -->
-                                                            <div class="slds-col slds-p-vertical_x-small">
-                                                                    <lightning-button variant="brand" label={label.addNewUser}
-                                                                        title={label.addNewUser} class="containedButton"
-                                                                        onclick={toggleAddUserModal}>
-                                                                    </lightning-button>
-                                                            </div>
-                                                    </template>
-                                                </div>
                                             </div>
                                             <div class="slds-col slds-size_1-of-1">
                                                 <div class="slds-grid slds-wrap">

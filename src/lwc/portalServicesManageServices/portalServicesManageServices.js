@@ -313,8 +313,8 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                 this.contactsToAddColumns = [
                     { label: 'User', fieldName: 'title', type: 'text' },
                     { label: 'Email', fieldName: 'subtitle', type: 'text' },
-                    { label: 'IATA Location Code', fieldName: 'iataCodeLocation', type: 'text' },
                     { label: 'Status', fieldName: 'status', type: 'text' },
+                    { label: 'IATA Location Code', fieldName: 'iataCodeLocation', type: 'text' },
                     { label: '', type: 'button', initialWidth: 35, typeAttributes: { label: '', variant: "base", title: 'Remove', name: 'removeContact', iconName: 'utility:delete' } }
                 ];
 
@@ -577,6 +577,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                 this.processContacList(resultList, 1);
                 this.totalNrPages = Math.ceil(resultList.length / this.PAGE_SIZE);
                 this.generatePageList();
+                this.applyFiltersModal();
             } else {
                 //searchs from db - invokes server to retrieve search result
                 searchContacts({ serviceId: this.serviceId, searchkey: searchKey }).then(result => {
@@ -586,6 +587,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                     this.totalNrPages = Math.ceil(tempSearchResult.length / this.PAGE_SIZE);
                     this.processContacList(tempSearchResult, 1);
                     this.generatePageList();
+                    this.applyFiltersModal();
                 });
             }
         } else if (searchKey === '') {
@@ -593,10 +595,12 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                 //Exit search mode
                 //restore all records already retrieved
                 this.searchMode = false;
-                this.contactList = this.contactListOg.slice();
+                this.contactList = this.globalResults.slice();
                 this.totalNrPages = this.totalNrPagesOg;
+                this.processContacList(this.contactList, 1);
                 this.generatePageList();
                 this.refreshContactPageView(1);
+                this.applyFiltersModal();
             }
         }
 
@@ -776,12 +780,12 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                 this.denyUserAccessJS(row, msg, title, true);
                 break;
             case 'ifapContact':
-                const {contactId, contactName } = row;
-                
-                goToOldIFAP({hasContact : true, contactId : contactId, contactName : contactName}).then(results => {
+                const { contactId, contactName } = row;
+
+                goToOldIFAP({ hasContact: true, contactId: contactId, contactName: contactName }).then(results => {
                     window.open(results, "_self");
                 });
-                
+
                 break;
             default:
         }
@@ -1154,6 +1158,10 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
             });
         } else {
             filters = filteredResults;
+        }
+        if((this.selectedCountry==''&&this.selectedIataCode==''&&this.selectedStatus=='')&&(this.searchText=='')){
+            this.filtered=false;
+            this.searchMode=false;
         }
         resultList = filters;
         this.contactList = [];
