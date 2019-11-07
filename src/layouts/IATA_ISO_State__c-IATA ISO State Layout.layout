@@ -30,6 +30,10 @@
                 <behavior>Edit</behavior>
                 <field>ISO_CODE_STANDARD__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Informatica_Value__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

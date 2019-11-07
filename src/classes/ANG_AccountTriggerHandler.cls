@@ -20,16 +20,8 @@ public class ANG_AccountTriggerHandler {
 		}
 		set;
 	}
-
-	public Map<Id, List<Agency_Authorization__c>> formOfPaymentsMap {
-		get {
-			if(formOfPaymentsMap == NULL){
-				formOfPaymentsMap = getFormOfPaymentsPerAccount();
-			}
-			return formOfPaymentsMap;
-		}
-		set;
-	}
+	
+	public Map<Id, Account> accountDataMap = new Map<Id, Account>();
 
 	// ************************************************************
 	// ****************** distribution methods ********************
@@ -40,9 +32,8 @@ public class ANG_AccountTriggerHandler {
 		updateRiskStatus();
 		populateIEPStatus();
 	}
-	public void onAfterInsert() {
 
-	}
+	public void onAfterInsert(){}
 
 	public void onBeforeUpdate(){
 		adjustShortName();
@@ -50,6 +41,7 @@ public class ANG_AccountTriggerHandler {
 		runRiskAssessment();
 		populateIEPStatus();
 	}
+
 	public void onAfterUpdate() {
 		updateRiskEventStatus();
 		updateRHCInformation();
@@ -62,8 +54,8 @@ public class ANG_AccountTriggerHandler {
 	}
 
 	public void onBeforeDelete(){}
-	public void onAfterDelete() {}
-
+	public void onAfterDelete(){}
+	
 	// ************************************************************
 	// ********************* action methods ***********************
 	// ************************************************************
@@ -106,7 +98,7 @@ public class ANG_AccountTriggerHandler {
 				accs.add(acc);
 			}
 		}
-		
+
 		if(!accs.isEmpty()) ANG_Risk_Helper.updateRiskStatus(accs);
 	}
 
@@ -207,11 +199,8 @@ public class ANG_AccountTriggerHandler {
 		}
 
         //Get all account data that we need to make the validations requested.
-
-		Map<Id,Account> accountDataMap = new Map<Id,Account>();
-
 		if(!downGradeBtoC.isEmpty() || isLastFinancialReviewUpgrade){
-			accountDataMap = fetchAccountData(changeCodesForRiskChangesLst);
+			this.accountDataMap = fetchAccountData(changeCodesForRiskChangesLst);
 		}
         
 		//downgrade from B to C
@@ -236,13 +225,15 @@ public class ANG_AccountTriggerHandler {
 			String source = UserInfo.getUserType() == 'PowerPartner' ? 'Portal' : 'Internal';
 
 			for(Id accId : changeCodesForRiskChangesLst){
+				
+				Account fetchedAcct = this.accountDataMap.get(accId);
 
-                if(accountDataMap.get(accId).ANG_RiskStatus__c == AMS_UTils.NOT_APPLICABLE){
+				if(fetchedAcct.ANG_RiskStatus__c == AMS_UTils.NOT_APPLICABLE){
 					System.debug('Skipping account ' + accId + ' from Change code Creation because the risk status is not available.');
 					continue; // no need to generate Change code.
 				}
-                
-				List<Agency_Authorization__c> activeOrAuthorizedFoPLst = getActiveOrAuthorizedFoPs(accId);
+		
+				List<Agency_Authorization__c> activeOrAuthorizedFoPLst = getActiveOrAuthorizedFoPs(fetchedAcct);
 
 				Account acc = newMap.get(accId);
 				changeCodes.add(new Agency_Applied_Change_code__c(
@@ -270,13 +261,16 @@ public class ANG_AccountTriggerHandler {
 		if(accountIds.isEmpty())
 			return new Map<Id,Account>();
 
+		Id aaRTId = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
+
 		return new Map<Id,Account>([Select Id, BillingCountry, Region_formula__c, Abbreviated_address__c, Abbreviated_name__c,
                     Name, BillingState, BillingCity, IATA_ISO_Country__c, Email__c, Fax, Phone, BillingPostalCode,
                     BillingStreet, CASS_Number__c, IATACode__c, Iso_State__c, License_Number__c, VAT_Number__c,
                     Is_your_firm_handling_Dangerous_Goods__c, Location_Class__c, Location_Type__c, Mobile__c,
                     Operation__c, ShippingCity, ShippingCountry, ShippingPostalCode, ShippingState, ShippingStreet,
-                    Short_Name__c, Solicitation_Flag__c, TradeName__c, VAT_Number_2__c, Website, Company_Type__c,
-					ANG_RiskStatus__c from Account where Id in :accountIds ]);
+                    Short_Name__c, Solicitation_Flag__c, TradeName__c, VAT_Number_2__c, Website, Company_Type__c, ANG_RiskStatus__c, 
+					(SELECT Id, Account__c, ANG_FormOfPayment_ID__c, Authority__c, Status__c, ISO_Country__c FROM Agency_Authorizations__r WHERE RecordTypeId = :aaRTId) 
+					from Account where Id in :accountIds]);
 	}
     
 	//the testing for this method is made on the ANG_ActivateDeactivateREBatch_Test class
@@ -316,18 +310,18 @@ public class ANG_AccountTriggerHandler {
 		List<Agency_Applied_Change_code__c> changeCodes = new List<Agency_Applied_Change_code__c>();
 		String source = UserInfo.getUserType() == 'PowerPartner' ? 'Portal' : 'Internal';
 
-		Map<Id,Account> accountDataMap = new Map<Id,Account>();
-
-		accountDataMap = fetchAccountData(toChangeCode);
+		this.accountDataMap = fetchAccountData(toChangeCode);
 
 		for(Id accId : toChangeCode){
 			
-			if(accountDataMap.get(accId).ANG_RiskStatus__c == AMS_UTils.NOT_APPLICABLE){
+			Account fetchedAcct = this.accountDataMap.get(accId);
+
+			if(fetchedAcct.ANG_RiskStatus__c == AMS_UTils.NOT_APPLICABLE){
 				System.debug('Skipping account ' + accId + ' from Change code Creation because the risk status is not available.');
 				continue; // no need to generate Change code.
 			}
 
-			List<Agency_Authorization__c> activeOrAuthorizedFoPLst = getActiveOrAuthorizedFoPs(accId);
+			List<Agency_Authorization__c> activeOrAuthorizedFoPLst = getActiveOrAuthorizedFoPs(fetchedAcct);
 
 			Account acc = newMap.get(accId);
 			changeCodes.add(new Agency_Applied_Change_code__c(
@@ -822,12 +816,30 @@ public class ANG_AccountTriggerHandler {
 
 	public void updateFormsOfPayment(){
 
+		Set<Id> acctToFetchFoPSet = new Set<Id>();
 		List<Agency_Authorization__c> agencyAuthorizationsToProcessLst = new List<Agency_Authorization__c>();
 
 		for(Account a :triggerNew){
 			if((a.Status__c == AMS_Utils.ACC_S0_TERMINATED && oldMap.get(a.id).Status__c != AMS_Utils.ACC_S0_TERMINATED) || 
-				 (a.Status__c != AMS_Utils.ACC_S0_TERMINATED && oldMap.get(a.id).Status__c == AMS_Utils.ACC_S0_TERMINATED)){
-					 agencyAuthorizationsToProcessLst.addAll(getFormOfPaymentsByAccountId(a.Id));
+				(a.Status__c != AMS_Utils.ACC_S0_TERMINATED && oldMap.get(a.id).Status__c == AMS_Utils.ACC_S0_TERMINATED)){
+				
+				Account acct = this.accountDataMap.get(a.Id);
+				if(acct == NULL){
+					//If the account was not retrieved yet 
+					//we need to fetch it
+					acctToFetchFoPSet.add(a.Id);
+				}
+				else {
+					agencyAuthorizationsToProcessLst.addAll(getformOfPayments(acct));
+				}
+			}
+		}
+
+		//Fetch the remaining accounts
+		if(!acctToFetchFoPSet.isEmpty()){
+			Map<Id, Account> remainingAccountDataMap = fetchAccountData(acctToFetchFoPSet);
+			for(Id acctId : acctToFetchFoPSet){
+				agencyAuthorizationsToProcessLst.addAll(getformOfPayments(remainingAccountDataMap.get(acctId)));
 			}
 		}
 
@@ -902,46 +914,32 @@ public class ANG_AccountTriggerHandler {
 		}
 	}
 
-	private Map<Id, List<Agency_Authorization__c>> getFormOfPaymentsPerAccount(){
+	private List<Agency_Authorization__c> getFormOfPayments(Account acct){
 
-		Map<Id, List<Agency_Authorization__c>> fopMap = new Map<Id, List<Agency_Authorization__c>>();
-
-		Id aaRTId = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
-
-		for(Agency_Authorization__c aa : [SELECT Id, Account__c, ANG_FormOfPayment_ID__c, Authority__c, Status__c, ISO_Country__c FROM Agency_Authorization__c WHERE RecordTypeId = :aaRTId AND Account__c IN :newMap.keySet()]){
+		List<Agency_Authorization__c> fopLst = acct.getSObjects('Agency_Authorizations__r');
 		
-			if(fopMap.containsKey(aa.Account__c)){
-				fopMap.get(aa.Account__c).add(aa);
-			}
-			else{
-				fopMap.put(aa.Account__c, new List<Agency_Authorization__c>{aa});
-			}
-		
+		if(fopLst != NULL){
+			return fopLst;
 		}
 
-		return fopMap;
+		return new List<Agency_Authorization__c>();
 
 	}
 
-	private List<Agency_Authorization__c> getFormOfPaymentsByAccountId(Id acctId){
-			if(formOfPaymentsMap.containsKey(acctId)){
-				return formOfPaymentsMap.get(acctId);
-			}
-			return new List<Agency_Authorization__c>();
-	}
-
-	private List<Agency_Authorization__c> getActiveOrAuthorizedFoPs(Id acctId){
+	private List<Agency_Authorization__c> getActiveOrAuthorizedFoPs(Account acct){
 		
 		List<Agency_Authorization__c> fopToReturnLst = new List<Agency_Authorization__c>();
 
-		List<Agency_Authorization__c> fopLst = getFormOfPaymentsByAccountId(acctId);
+		if(acct == NULL){
+			return fopToReturnLst;
+		}
 
-		for(Agency_Authorization__c aa : fopLst){
+		for(Agency_Authorization__c aa : getFormOfPayments(acct)){
 			if(aa.Status__c == 'Active' || aa.Status__c == 'Authorized'){
 				fopToReturnLst.add(aa);
 			}
 		}
-
+		
 		return fopToReturnLst;
 		
 	}
