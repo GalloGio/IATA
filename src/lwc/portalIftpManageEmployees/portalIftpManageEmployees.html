@@ -118,7 +118,8 @@
                             sorted-by={sortedBy} 
                             sorted-direction={sortedDirection}
                             onsort={updateColumnSorting} 
-                            onrowaction={handleRowAction}>
+                            onrowaction={handleRowAction}
+                            class="displayWrapText">
                         </lightning-datatable>
                     </div>
                     <div if:false={hasSearchResults}>
@@ -146,7 +147,7 @@
                             <span class="slds-assistive-text">Close</span>
                         </button>
                         <h2 id="modal-heading-04" class="slds-text-heading_medium slds-hyphenate">There are an inactive employee record for this employee code. 
-                            Are you sure you what to reactivate and update it?</h2>
+                            Are you sure you want to reactivate and update it?</h2>
                     </header>
                     <footer class="slds-modal__footer">
                         <lightning-button label="Reactivate and Update" variant="neutral" onclick={reactivateConfirmation}>
@@ -252,7 +253,8 @@
                                         sorted-by={sortedrecordToManageStationsListBy} 
                                         sorted-direction={sortedrecordToManageStationsListDirection}
                                         onsort={updaterecordToManageStationsListSorting}
-                                        hidden={hasNoStations}>
+                                        hidden={hasNoStations}
+                                        class="displayWrapText">
                                     </lightning-datatable>
                                 </div>
                                 <div if:true={hasNoStations}>
@@ -358,7 +360,7 @@
                             </lightning-icon>
                             <span class="slds-assistive-text">Close</span>
                         </button>
-                        <h2 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">Are you sure you what
+                        <h2 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">Are you sure you want
                             to delete this employee record?</h2>
                     </header>
                     <footer class="slds-modal__footer">
@@ -423,7 +425,7 @@
                                         columns={columnsManageEmployeeStations}
                                         onrowaction={handleManageEmployeeStationsRowAction}
                                         hidden={hasNoStations}
-                                        class='remove_focus'>
+                                        class="remove_focus displayWrapText">
                                     </lightning-datatable>
                                 </div>
                                 <div if:true={hasNoStations} class="slds-size_12-of-12" style="height: 200px;">

@@ -21,7 +21,7 @@
                 <div class="slds-col slds-m-left_x-small slds-m-right_x-small"> 
                     <lightning-combobox
                         name="aircraftType"
-                        label="Aircraft Type"
+                        label="Course"
                         value={aircraftTypeValue}
                         placeholder="Select Aircraft Type"
                         options={aircraftTypeOptions}
@@ -68,7 +68,8 @@
                         label="Expiration Date From" 
                         value={fromDateValue} 
                         min="2018-01-01"
-                        onchange={handleChangeFromDate}>
+                        onchange={handleChangeFromDate}
+                        class="displayWrapText">
                     </lightning-input>
                 </div>   
                 <div class="slds-col slds-m-left_x-small slds-m-right_x-small">
@@ -78,7 +79,8 @@
                         label="Expiration Date To" 
                         value={toDateValue}
                         min={toDateMinValue} 
-                        onchange={handleChangeToDate}>
+                        onchange={handleChangeToDate}
+                        class="displayWrapText">
                     </lightning-input>
                 </div>  
             </div> 
@@ -162,7 +164,8 @@
                                 onsort={updateColumnSorting}
                                 selected-rows={selectedRowsKeys}
                                 onrowselection={getSelectedRows}
-                                onrowaction={handleMonitorTrainingsRowAction}>
+                                onrowaction={handleMonitorTrainingsRowAction}
+                                class="displayWrapText">
                             </lightning-datatable>
                         </p>
                     </div>

@@ -10,6 +10,19 @@ public without sharing class PortalIftpUtils {
 	}
 
 	@AuraEnabled(cacheable=false)
+	public static List<Account_Contact_Role__c> getAllITPEmployees(Id accountId){
+		//cacheable=false MANDATORY
+		List<Account_Contact_Role__c> emps = [SELECT Account__c,Business_Phone__c,Company_Code__c,Contact_Role__c,
+													Contact__c, Email__c,First_Name__c,Id,Integration_Status__c,
+													Last_Name__c,Name,Personal_Email__c,Contact_Roles__c,
+													Position__c,RecordTypeId,Service_Rendered__c,Status__c,Title__c,
+													TransferFlag__c,UniqueKey__c, Details__c, Global_ID__c
+												FROM Account_Contact_Role__c
+												WHERE  Contact__r.accountid = :accountId];
+		return emps;
+	}
+
+	@AuraEnabled(cacheable=false)
 	public static UserInfoRecordsWrapper getUserInfo(){
 
 		Id userId = System.UserInfo.getUserId();
@@ -91,17 +104,17 @@ public without sharing class PortalIftpUtils {
 	}
 
 	@AuraEnabled(cacheable=true)
-	public static List<Address__c> getUserStations(){
+	public static List<Airport_Detail__c> getUserStations(){
 
-		List<Address__c> stations = [SELECT Id, City__c, Code__c, Description__c FROM Address__c ORDER BY Code__c];
+		List<Airport_Detail__c> stations = [SELECT Id, City__c, Code__c, Description__c FROM Airport_Detail__c ORDER BY Code__c];
 
 		return stations;
 	}
 
 	@AuraEnabled(cacheable=true)
-	public static List<Address__c> getAllStations(){
+	public static List<Airport_Detail__c> getAllStations(){
 
-		List<Address__c> stations = [SELECT Id, City__c, Code__c, Description__c FROM Address__c ORDER BY Code__c];
+		List<Airport_Detail__c> stations = [SELECT Id, City__c, Code__c, Description__c FROM Airport_Detail__c ORDER BY Code__c];
 
 		return stations;
 	}
@@ -117,9 +130,9 @@ public without sharing class PortalIftpUtils {
 	* @return List<Case>
 	*/
 	@AuraEnabled(cacheable=false)
-	public static List<Address__c> getITPStations(Id accountId){
-		List<Address__c> stations = [SELECT City__c, Code__c, Description__c
-									 FROM Address__c
+	public static List<Airport_Detail__c> getITPStations(Id accountId){
+		List<Airport_Detail__c> stations = [SELECT City__c, Code__c, Description__c
+									 FROM Airport_Detail__c
 									 WHERE Id in (
 											SELECT Address__c
 											FROM Role_Address__c
@@ -130,7 +143,7 @@ public without sharing class PortalIftpUtils {
 	}
 
 	@AuraEnabled(cacheable=false)
-	public static List<Address__c> getITPStations(){
+	public static List<Airport_Detail__c> getITPStations(){
 
 		Id userId = System.UserInfo.getUserId();
 
@@ -144,25 +157,25 @@ public without sharing class PortalIftpUtils {
 	is a list of stations added to that employee(Role Addresses)
 
 	* @params List<Id> employeesIDs
-	* @return Map<Id, List<Address__c>>
+	* @return Map<Id, List<Airport_Detail__c>>
 	*/
 	@AuraEnabled(cacheable=true)
-	public static Map<Id, List<Address__c>> getEmployeesStations(List<Id> employeesIDs){
+	public static Map<Id, List<Airport_Detail__c>> getEmployeesStations(List<Id> employeesIDs){
 
-		Map<Id, List<Address__c>> ret = new Map<Id, List<Address__c>>();
+		Map<Id, List<Airport_Detail__c>> ret = new Map<Id, List<Airport_Detail__c>>();
 
 		List<Role_Address__c> stations = [SELECT Account_Contact_Role__c, Address__c, Address__r.City__c, Address__r.Code__c, Address__r.Description__c
 											FROM Role_Address__c
 											WHERE Account_Contact_Role__c in :employeesIDs];
 
 		for(Role_Address__c ra : stations){
-			List<Address__c> auxaddr = new List<Address__c>();
+			List<Airport_Detail__c> auxaddr = new List<Airport_Detail__c>();
 			if(ret.containsKey(ra.Account_Contact_Role__c)){
 				auxaddr = ret.get(ra.Account_Contact_Role__c);
-				auxaddr.add( new Address__c(Id = ra.Address__c, Code__c = ra.Address__r.Code__c) );
+				auxaddr.add( new Airport_Detail__c(Id = ra.Address__c, Code__c = ra.Address__r.Code__c) );
 				ret.put(ra.Account_Contact_Role__c, auxaddr);
 			}else{
-				auxaddr.add( new Address__c(Id = ra.Address__c, Code__c = ra.Address__r.Code__c) );
+				auxaddr.add( new Airport_Detail__c(Id = ra.Address__c, Code__c = ra.Address__r.Code__c) );
 				ret.put(ra.Account_Contact_Role__c, auxaddr);
 			}
 		}
@@ -206,40 +219,39 @@ public without sharing class PortalIftpUtils {
 		return emps;
 	}
 
+	@AuraEnabled(cacheable=true)
+	public static Airport_Detail__c getITPStationEmployees(Id addressId){
+		Id userId = System.UserInfo.getUserId();
+		User userAcc = [Select id, contactId, contact.accountid from user where Id= :userId];
+		return getITPStationEmployees(userAcc.contact.accountid, addressId);
+	}
 
 	@AuraEnabled(cacheable=true)
-	public static Address__c getITPStationEmployees(Id addressId){
+	public static Airport_Detail__c getITPStationEmployees(Id accountId, Id addressId){
 
-		Id userId = System.UserInfo.getUserId();
-
-		User userAcc = [Select id, contactId, contact.accountid from user where Id= :userId];
-
-		Address__c station = [SELECT Id, City__c, Code__c, Description__c ,
+		Airport_Detail__c station = [SELECT Id, City__c, Code__c, Description__c ,
 											(SELECT Account_Contact_Role__r.Account__c,
 													Account_Contact_Role__r.Company_Code__c,
 													Account_Contact_Role__r.First_Name__c,
 													Account_Contact_Role__r.Id,
 													Account_Contact_Role__r.Last_Name__c
 											FROM Role_Addresses__r
-											WHERE Account_Contact_Role__r.Contact__r.accountid = :userAcc.contact.accountid
+											WHERE Account_Contact_Role__r.Contact__r.accountid = :accountId
 											AND Account_Contact_Role__r.Status__c <> 'Inactive')
-									 FROM Address__c
+									 FROM Airport_Detail__c
 									 WHERE Id = :addressId];
 		return station;
 	}
 
 	@AuraEnabled
-	public static List<StationRecordsWrapper> getITPStationsForDatatable(){
+	public static List<StationRecordsWrapper> getITPStationsForDatatable(Id accountId){
 
 		List<StationRecordsWrapper> retStations = new List<StationRecordsWrapper>();
 
-		Id userId = System.UserInfo.getUserId();
-
-		User userAcc = [Select id, contactId, contact.accountid from user where Id= :userId];
 
 		List<Role_Address__c> stations = [SELECT id, name, Description__c, Airport_Details__c, Address__c, Address__r.City__c, Address__r.Code__c, Address__r.Description__c, Account_Role_Service__r.Name
 											FROM Role_Address__c
-											WHERE Account_Role_Service__r.Account_Role__r.Account__c = :userAcc.contact.accountid];
+											WHERE Account_Role_Service__r.Account_Role__r.Account__c = :accountId];
 
 		for(Role_Address__c ra : stations){
 
@@ -257,6 +269,13 @@ public without sharing class PortalIftpUtils {
 		}
 
 		return retStations;
+	}
+
+	@AuraEnabled
+	public static List<StationRecordsWrapper> getITPStationsForDatatable(){
+		Id userId = System.UserInfo.getUserId();
+		User userAcc = [Select id, contactId, contact.accountid from user where Id= :userId];
+		return getITPStationsForDatatable(userAcc.contact.accountid);
 	}
 
 	/*
@@ -434,13 +453,13 @@ public without sharing class PortalIftpUtils {
 	public static InsertStationWrapper updateStation(List<Object> dataToSave, String origin){
 		List<Role_Address__c> stationsToUpdate = new List<Role_Address__c>();
 		InsertStationWrapper irw;
-		List<Address__c> ITPStationsInDatabase = getITPStations();
+		List<Airport_Detail__c> ITPStationsInDatabase = getITPStations();
 
 		for(Object rec : dataToSave){
 			Role_Address__c auxStation = (Role_Address__c)JSON.deserialize(JSON.serialize(rec ), Role_Address__c.class);
 
 			Boolean existsStationInDatabase = false;
-			for(Address__c addr : ITPStationsInDatabase){
+			for(Airport_Detail__c addr : ITPStationsInDatabase){
 				if(addr.id == auxStation.Address__c){
 					existsStationInDatabase = true;
 
@@ -461,18 +480,18 @@ public without sharing class PortalIftpUtils {
 	}
 
 	@AuraEnabled (cacheable=false)
-	public static InsertStationWrapper insertStation(List<Object> dataToSave){
+	public static InsertStationWrapper insertStation(Id accountId, List<Object> dataToSave){
 		InsertStationWrapper isw;
 		try{
 
 			List<Role_Address__c> stationsToInsert = new List<Role_Address__c>();
 
-			List<Address__c> ITPStationsInDatabase = getITPStations();
+			List<Airport_Detail__c> ITPStationsInDatabase = getITPStations(accountId);
 
 			for(Object rec : dataToSave){
 				Role_Address__c auxStation = (Role_Address__c)JSON.deserialize(JSON.serialize(rec ), Role_Address__c.class);
 				Boolean existsStation = false;
-				for(Address__c addr: ITPStationsInDatabase){
+				for(Airport_Detail__c addr: ITPStationsInDatabase){
 					if(addr.Id == auxStation.Address__c){
 						existsStation = true;
 						isw = new InsertStationWrapper( 'Station has already been added.', true);
@@ -511,17 +530,17 @@ public without sharing class PortalIftpUtils {
 
 			UserInfoRecordsWrapper ui = getUserInfo();
 
-			//SELECT Id, City__c, Code__c, Description__c FROM Address__c
-			List<Address__c> allAddr = getAllStations();
-			List<Address__c> userAddr = getITPStations();
+			//SELECT Id, City__c, Code__c, Description__c FROM Airport_Detail__c
+			List<Airport_Detail__c> allAddr = getAllStations();
+			List<Airport_Detail__c> userAddr = getITPStations(ui.accountId);
 
-			Map<String, Address__c> mAllAddr = new Map<String, Address__c>();
-			Map<String, Address__c> mUserAddr = new Map<String, Address__c>();
+			Map<String, Airport_Detail__c> mAllAddr = new Map<String, Airport_Detail__c>();
+			Map<String, Airport_Detail__c> mUserAddr = new Map<String, Airport_Detail__c>();
 
-			for(Address__c addr : allAddr){
+			for(Airport_Detail__c addr : allAddr){
 				mAllAddr.put(addr.Code__c, addr);
 			}
-			for(Address__c addr : userAddr){
+			for(Airport_Detail__c addr : userAddr){
 				mUserAddr.put(addr.Code__c, addr);
 			}
 
@@ -554,7 +573,7 @@ public without sharing class PortalIftpUtils {
 				//String code = csvFileLines[i].trim();
 
 				if(mUserAddr.containsKey(code)){
-					Address__c addr = mUserAddr.get(code);
+					Airport_Detail__c addr = mUserAddr.get(code);
 					ImportResultsWrapper irw = new ImportResultsWrapper(
 						code,
 						addr.Description__c,
@@ -564,7 +583,7 @@ public without sharing class PortalIftpUtils {
 
 					results.add(irw);
 				}else if(mAllAddr.containsKey(code)){
-					Address__c addr = mAllAddr.get(code);
+					Airport_Detail__c addr = mAllAddr.get(code);
 					stationsToInsert.add(
 							new Role_Address__c( Address__c= addr.Id,
 													Name= ui.accountName + ' ' + addr.Description__c,
@@ -628,24 +647,24 @@ public without sharing class PortalIftpUtils {
 
 			UserInfoRecordsWrapper ui = PortalIftpUtils.getUserInfo();
 
-			List<Account_Contact_Role__c> accEmps = PortalIftEmployeeRecordsManagement.getAllITPEmployees(ui.accountId);
-			List<Address__c> allAddr = getAllStations();
-			List<Address__c> userAddr = getITPStations(ui.accountId);
+			List<Account_Contact_Role__c> accEmps = getAllITPEmployees(ui.accountId);
+			List<Airport_Detail__c> allAddr = getAllStations();
+			List<Airport_Detail__c> userAddr = getITPStations(ui.accountId);
 
 
 			Map<String, Account_Contact_Role__c> mAccEmps = new Map<String, Account_Contact_Role__c>();
-			Map<String, Address__c> mAllAddr = new Map<String, Address__c>();
-			Map<String, Address__c> mUserAddr = new Map<String, Address__c>();
+			Map<String, Airport_Detail__c> mAllAddr = new Map<String, Airport_Detail__c>();
+			Map<String, Airport_Detail__c> mUserAddr = new Map<String, Airport_Detail__c>();
 
 			for(Account_Contact_Role__c emp : accEmps){
 				if(String.isNotBlank(emp.Company_Code__c)){
 					mAccEmps.put(emp.Company_Code__c, emp);
 				}
 			}
-			for(Address__c addr : allAddr){
+			for(Airport_Detail__c addr : allAddr){
 				mAllAddr.put(addr.Code__c, addr);
 			}
-			for(Address__c addr : userAddr){
+			for(Airport_Detail__c addr : userAddr){
 				mUserAddr.put(addr.Code__c, addr);
 			}
 
@@ -750,10 +769,9 @@ public without sharing class PortalIftpUtils {
 							Set<String> stationsCodes = new Set<String>();
 							auxstationsCodes = stationsCodesString.split(';');
 							if(auxstationsCodes.size() > 0){
-
 								// stations: trim codes and remove duplicates
 								for(String code: auxstationsCodes){
-									stationsCodes.add(code.trim());
+									stationsCodes.add(code.trim().toUpperCase());
 								}
 								// Check if ITP has station
 								Boolean addrInITPAddrs = false;
@@ -928,7 +946,7 @@ public without sharing class PortalIftpUtils {
 						stationsCodes = mapEmployeeStationCodes.get(key);
 						if(accountContactRoleID != null){
 							Boolean isFirstStation = true;
-							for(String code: stationsCodes ){
+							for(String code: stationsCodes){
 								Boolean exists = false;
 								if(isUpdateEmployee){
 									// Check if station to be added is already a station of that employee
@@ -957,7 +975,7 @@ public without sharing class PortalIftpUtils {
 								}
 								if(!exists){
 									if( mAllAddr.containsKey(code)){
-										Address__c station = mAllAddr.get(code);
+										Airport_Detail__c station = mAllAddr.get(code);
 										Role_Address__c roleAddressAux = new Role_Address__c();
 										roleAddressAux.Account_Contact_Role__c = accountContactRoleID;
 										roleAddressAux.Address__c = station.Id;
@@ -967,7 +985,6 @@ public without sharing class PortalIftpUtils {
 											isFirstStation = false;
 										}
 										roleAdressToInsert.add(roleAddressAux);
-										break;
 									}
 								}
 							}
@@ -1143,7 +1160,7 @@ public without sharing class PortalIftpUtils {
 			if (!csvFileLines.isEmpty()){
 
 				UserInfoRecordsWrapper ui = PortalIftpUtils.getUserInfo();
-				List<Account_Contact_Role__c> accEmps = PortalIftEmployeeRecordsManagement.getAllITPEmployees();
+				List<Account_Contact_Role__c> accEmps = getAllITPEmployees(ui.accountId);
 
 				List<Account_Contact_Role__c> accContRoleToInactive = new List<Account_Contact_Role__c>();
 				List<Contact> contactsToInactive = new List<Contact>();

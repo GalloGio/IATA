@@ -278,7 +278,8 @@ public without sharing class PortalIftEmployeeRecordsManagement {
 												Address__r.City__c,
 												Contact_Role_Certification__r.Certification__r.Name,
 												Proficiency_level__c,
-												Proficiency_Granted_By__c
+												Proficiency_Granted_By__c,
+												Proficiency_Status__c
 											FROM Role_Address__c
 											WHERE Account_Contact_Role__c = :auxAccContRol.Id
 											OR Contact_Role_Certification__r.Account_Contact_Role__c = :auxAccContRol.Id];
@@ -294,7 +295,7 @@ public without sharing class PortalIftEmployeeRecordsManagement {
 																		);
 						IftpHistoryRecordsStopStation.add(ihrec);
 					} else {
-						if(String.isNotBlank(rolAddr.Contact_Role_Certification__r.Account_Contact_Role__r.Company_Code__c)){
+						if(String.isNotBlank(rolAddr.Contact_Role_Certification__r.Account_Contact_Role__r.Company_Code__c) && rolAddr.Proficiency_Status__c.equalsIgnoreCase('ACTIVE')){
 							ihrec = portalIftpHistoryManagement.createIftpHistoryRecord(portalIftpHistoryManagement.Employee_Loose_Proficiency,
 																				rolAddr.Contact_Role_Certification__r.Account_Contact_Role__r.Company_Code__c,
 																				rolAddr.Contact_Role_Certification__r.Account_Contact_Role__r.First_Name__c,
@@ -347,12 +348,10 @@ public without sharing class PortalIftEmployeeRecordsManagement {
 
 
 	@AuraEnabled (cacheable=false)
-	public static ResultWrapper updateEmployee(Object recordToUpdate, String updateType){
+	public static ResultWrapper updateEmployee(Id accountId, Object recordToUpdate, String updateType){
 		ResultWrapper rw;
 		try{
-			PortalIftpUtils.UserInfoRecordsWrapper ui = PortalIftpUtils.getUserInfo();
-
-			List<Account_Contact_Role__c> accEmps = PortalIftpUtils.getITPEmployees(ui.accountId);
+			List<Account_Contact_Role__c> accEmps = PortalIftpUtils.getITPEmployees(accountId);
 
 			Map<String, Account_Contact_Role__c> mAccEmps = new Map<String, Account_Contact_Role__c>();
 
@@ -366,7 +365,7 @@ public without sharing class PortalIftEmployeeRecordsManagement {
 
 			Account_Contact_Role__c accCountRolInDatabase = [SELECT Id, Status__c FROM Account_Contact_Role__c WHERE Id = :employeeToUpdate.Id LIMIT 1];
 
-			if(accCountRolInDatabase.Status__c.equalsIgnoreCase('Active') || (accCountRolInDatabase.Status__c.equalsIgnoreCase('Inactive') && updateType != null && updateType == 'reactivate_and_update')){
+			if((accCountRolInDatabase.Status__c.equalsIgnoreCase('Active') && updateType != null && updateType.equalsIgnoreCase('update') )|| (accCountRolInDatabase.Status__c.equalsIgnoreCase('Inactive') && updateType != null && updateType == 'reactivate_and_update')){
 
 				// Check mandatory fields
 				if(String.isBlank(employeeToUpdate.Company_Code__c)){
@@ -395,10 +394,8 @@ public without sharing class PortalIftEmployeeRecordsManagement {
 					contactToUpdate.FirstName = employeeToUpdate.First_Name__c.trim();
 					contactToUpdate.LastName = employeeToUpdate.Last_Name__c.trim();
 					contactToUpdate.Title = (employeeToUpdate.Title__c == null)? '' : employeeToUpdate.Title__c.trim();
-					contactToUpdate.Phone = (employeeToUpdate.Business_Phone__c == null)? '' : employeeToUpdate.Business_Phone__c.trim();
+					contactToUpdate.Phone = (employeeToUpdate.Business_Phone__c == null)? '00' : employeeToUpdate.Business_Phone__c.trim();
 					contactToUpdate.Status__c = employeeToUpdate.Status__c;
-					//contactToUpdate.Email = (employeeToUpdate.Email__c == null)? '' :employeeToUpdate.Email__c.trim();
-					//contactToUpdate.Additional_Email__c = (employeeToUpdate.Personal_Email__c == null)? '' : employeeToUpdate.Personal_Email__c.trim();
 				}
 
 				Contact emptyContact = new Contact();
@@ -450,7 +447,7 @@ public without sharing class PortalIftEmployeeRecordsManagement {
 		List<IFTP_History__c> IftpHistoryRecordsStartWorkStation = new List<IFTP_History__c>();
 		List<IFTP_History__c> IftpHistoryRecordsStopWorkStation = new List<IFTP_History__c>();
 		List<IFTP_History__c> IftpHistoryRecordsLoseProficiency = new List<IFTP_History__c>();
-		List<Address__c> ItpAddressesList = PortalIftpUtils.getITPStations();
+		List<Airport_Detail__c> ItpAddressesList = PortalIftpUtils.getITPStations();
 
 		try{
 			List<String> allMessages = new List<String>();
@@ -495,7 +492,7 @@ public without sharing class PortalIftEmployeeRecordsManagement {
 
 					if(!exists){
 						Boolean isITPStation = false;
-						for(Address__c addr: ItpAddressesList){
+						for(Airport_Detail__c addr: ItpAddressesList){
 							if(addr.Id == newRec.Address__c){
 								isITPStation = true;
 							}
@@ -641,13 +638,13 @@ public without sharing class PortalIftEmployeeRecordsManagement {
 
 					String message = '';
 					if(stationIdNotITPList.size() > 0){
-						List<Address__c> addrNotInITP = [SELECT Id, Code__c FROM Address__c WHERE Id IN :stationIdNotITPList];
+						List<Airport_Detail__c> addrNotInITP = [SELECT Id, Code__c FROM Airport_Detail__c WHERE Id IN :stationIdNotITPList];
 
 
 						if(stationIdNotITPList.size() == 1){
 							message = addrNotInITP[0].Code__c + ' is no longer a station for this ITP. ' + ' Other stations updated successfully.';
 						} else{
-							for(Address__c addr : addrNotInITP){
+							for(Airport_Detail__c addr : addrNotInITP){
 								message = message + addr.Code__c + ', ';
 							}
 							message.substring(0, message.length()-3);

@@ -55,7 +55,7 @@ export default class PortalIftpManageStations extends LightningElement {
     @track showAirlinesList = false;
     @track manageAirlineValue = null;
     @track hasNoAirlines= true;
-           recordToManage = {};
+    recordToManage = {};
     @track itpStationsAirlinesMap;
     @track recordToManageNewAirlinesList = [];
            recordToManageOriginalAirlinesList = [];
@@ -105,18 +105,6 @@ export default class PortalIftpManageStations extends LightningElement {
     connectedCallback() {
 
         registerListener('stationsChanged', this.handleStationsChanged, this);
-
-        getUserInfo()
-        .then(result => {
-            let myResult = JSON.parse(JSON.stringify(result));
-            
-            this.userInfo = myResult;
- 
-        })
-        .catch(error => {
-            this.mainErrorMessage = error;
-            this.error = error;
-        }); 
 
         getAllStations()
         .then(result => {
@@ -227,54 +215,65 @@ export default class PortalIftpManageStations extends LightningElement {
         this.showSearch = true;
         this.dataRecords = false;
 
-        getITPStations()
+        getUserInfo()
         .then(result => {
-            let myResult = JSON.parse(JSON.stringify(result));
+            let myResult2 = JSON.parse(JSON.stringify(result));
+            
+            this.userInfo = myResult2;
+            getITPStations({accountId: myResult2.accountId})
+            .then(result2 => {
+                let myResult = JSON.parse(JSON.stringify(result2));
+    
+                let myTopicOptions = [];
+    
+                Object.keys(myResult).forEach(function (el) {
+                    myTopicOptions.push(myResult[el].Code__c);
+                });
+    
+                this.stationOptions = myTopicOptions;
+    
+                this.ITPStations = myResult;
+            })
+            .catch(error => {
+                this.mainErrorMessage = error;
+                this.error = error;
+            });  
 
-            let myTopicOptions = [];
-
-            Object.keys(myResult).forEach(function (el) {
-                myTopicOptions.push(myResult[el].Code__c);
+            getITPStationsForDatatable({accountId: myResult2.accountId})
+            .then(results => {
+                if(results && results.length > 0) {
+                    this.data = this.sortData('code', 'asc', JSON.parse(JSON.stringify(results)));
+                    this.dataRecords = true;
+                } else {
+                    this.dataRecords = false; 
+                }
+                this.loading = false;
+                this.cleanErrors();
+            })
+            .catch(error => {
+                this.mainErrorMessage = error;
+                this.error = error;
+                this.loading = false;
+                this.dataRecords = false;
+            });  
+    
+    
+            getItpStationsAirlines({accountId: myResult2.accountId})
+            .then(resultMap =>{
+                let myResult = JSON.parse(JSON.stringify(resultMap));
+                this.itpStationsAirlinesMap =  myResult;
+            })
+            .catch(error => {
+                this.mainErrorMessage = error;
+                this.error = error;
             });
-
-            this.stationOptions = myTopicOptions;
-
-            this.ITPStations = myResult;
- 
+     
         })
         .catch(error => {
             this.mainErrorMessage = error;
             this.error = error;
-        });  
+        }); 
 
-        getITPStationsForDatatable()
-        .then(results => {
-            if(results && results.length > 0) {
-                this.data = this.sortData('code', 'asc', JSON.parse(JSON.stringify(results)));
-                this.dataRecords = true;
-            } else {
-                this.dataRecords = false; 
-            }
-            this.loading = false;
-            this.cleanErrors();
-        })
-        .catch(error => {
-            this.mainErrorMessage = error;
-            this.error = error;
-            this.loading = false;
-            this.dataRecords = false;
-        });  
-
-
-        getItpStationsAirlines()
-        .then(resultMap =>{
-            let myResult = JSON.parse(JSON.stringify(resultMap));
-            this.itpStationsAirlinesMap =  myResult;
-        })
-        .catch(error => {
-            this.mainErrorMessage = error;
-            this.error = error;
-        });
 
         this.loading = false;
     }
@@ -286,8 +285,8 @@ export default class PortalIftpManageStations extends LightningElement {
     * ******************************************************************************/
 
     disconnectedCallback() {
-		unregisterAllListeners(this);
-	}
+        unregisterAllListeners(this);
+    }
 
     handleStationsChanged(){
         this.showSearch = true;
@@ -303,7 +302,7 @@ export default class PortalIftpManageStations extends LightningElement {
 
     handleAddStation() {
         this.loadingNew = false;
-		this.handleResetAddStationSearch();
+        this.handleResetAddStationSearch();
         this.openNewModal = true;
     }
 
@@ -416,7 +415,6 @@ export default class PortalIftpManageStations extends LightningElement {
         const { id } = row;
         const index = this.findRowIndexById(id);
         const selectedStationAirlinesList = itpStationsAirlinesMap[auxData[index].addressId];
-
         switch (actionName) {
             case 'edit':
                 this.isActionEdit = true;
@@ -514,7 +512,7 @@ export default class PortalIftpManageStations extends LightningElement {
     }
     closeNewModal() {
         this.openNewModal = false;
-		this.handleResetAddStationSearch();
+        this.handleResetAddStationSearch();
     }
 
     handleEditDeleteCancel(){
@@ -604,7 +602,7 @@ export default class PortalIftpManageStations extends LightningElement {
         }
 
         this.loadingNew = true;
-        insertStation({dataToSave: dataToSave })
+        insertStation({accountId: auxUserInfo.accountId, dataToSave: dataToSave })
         .then(results => {
             let variant;
             let mode;
@@ -646,14 +644,15 @@ export default class PortalIftpManageStations extends LightningElement {
     * ******************************************************************************/
 
     handleRequestDelete(){
-        let stationToDelete = JSON.parse(JSON.stringify(this.editData));
         this.loadingDeleteSpinner = true;
-        getITPStationEmployees({addressId: stationToDelete.addressId})
+        let stationToDelete = JSON.parse(JSON.stringify(this.editData));
+        let userInfo = JSON.parse(JSON.stringify(this.userInfo));
+
+        getITPStationEmployees({accountId: userInfo.accountId, addressId: stationToDelete.addressId})
         .then(results =>{
             let existsEmployees = false;
             //Check if there are employees working in that station for that ITP
             let stationsWithEmployees = JSON.parse(JSON.stringify(results));
-            
             if(stationsWithEmployees.Role_Addresses__r !== undefined && stationsWithEmployees.Role_Addresses__r.length > 0){
                 existsEmployees = true;
             }
@@ -691,6 +690,7 @@ export default class PortalIftpManageStations extends LightningElement {
         let auxItpStations = JSON.parse(JSON.stringify(this.ITPStations));
         let auxData = JSON.parse(JSON.stringify(this.data));
         let auxStationOptions = JSON.parse(JSON.stringify(this.stationOptions));
+        let userInfo = JSON.parse(JSON.stringify(this.userInfo));
         
         let recordToManageOriginalAirlinesList = [];
         if(this.recordToManageOriginalAirlinesList){
@@ -699,7 +699,7 @@ export default class PortalIftpManageStations extends LightningElement {
         this.openConfirmationModal = false;
         this.askForconfirmationMessage = '';
 
-        deleteStationFromItp({stationToBeDeleted: stationToDelete, stationToBeDeletedAirlinesList: recordToManageOriginalAirlinesList})
+        deleteStationFromItp({accountId:userInfo.accountId, stationToBeDeleted: stationToDelete, stationToBeDeletedAirlinesList: recordToManageOriginalAirlinesList})
         .then(results =>{
             
             let resultWrapper = JSON.parse(JSON.stringify(results));

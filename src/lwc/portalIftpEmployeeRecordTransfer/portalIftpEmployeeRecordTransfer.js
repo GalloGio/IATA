@@ -77,45 +77,45 @@ export default class PortalIftpEmployeeRecordTransfer extends LightningElement {
         .then(result => {
             let userInfo = JSON.parse(JSON.stringify(result));
             this.userInfo = userInfo;
-        })
 
-        getITPStations()
-        .then(result => {
-            let myResult = JSON.parse(JSON.stringify(result));
-            
-            let myTopicOptions = [];
-
-            Object.keys(myResult).forEach(function (el) {
-                myTopicOptions.push({ label: myResult[el].Code__c + ' - ' + myResult[el].Description__c, value: myResult[el].Code__c });
-            });
-
-            this.stationOptions = this.sortData('label', 'asc', myTopicOptions);
-
-            this.showSearchCriteria = true;
-            this.loadingSearchCriteria = false;
-
-            if(this.stationValue){
-                let stationOptions = JSON.parse(JSON.stringify(this.stationOptions));
-                let exists = false;
-                stationOptions.forEach(opt =>{
-                    if(opt.value === this.stationValue){
-                        exists = true;
+            getITPStations({accountId: userInfo.accountId})
+            .then(result2 => {
+                let myResult = JSON.parse(JSON.stringify(result2));
+                
+                let myTopicOptions = [];
+    
+                Object.keys(myResult).forEach(function (el) {
+                    myTopicOptions.push({ label: myResult[el].Code__c + ' - ' + myResult[el].Description__c, value: myResult[el].Code__c });
+                });
+    
+                this.stationOptions = this.sortData('label', 'asc', myTopicOptions);
+    
+                this.showSearchCriteria = true;
+                this.loadingSearchCriteria = false;
+    
+                if(this.stationValue){
+                    let stationOptions = JSON.parse(JSON.stringify(this.stationOptions));
+                    let exists = false;
+                    stationOptions.forEach(opt =>{
+                        if(opt.value === this.stationValue){
+                            exists = true;
+                        }
+                    })
+                    if(!exists){
+                        this.stationValue = null;
                     }
-                })
-                if(!exists){
-                    this.stationValue = null;
                 }
-            }
-        })
-        .catch(error => {
-            const event = new ShowToastEvent({
-                title: 'ITP Stations',
-                message: 'Unable to get ITP\'s Stations data from database.',
-                variant: 'error',
-                mode: 'pester'
+            })
+            .catch(error => {
+                const event = new ShowToastEvent({
+                    title: 'ITP Stations',
+                    message: 'Unable to get ITP\'s Stations data from database.',
+                    variant: 'error',
+                    mode: 'pester'
+                });
+                this.dispatchEvent(event);
             });
-            this.dispatchEvent(event);
-        });
+        })
     }
 
     disconnectedCallback() {

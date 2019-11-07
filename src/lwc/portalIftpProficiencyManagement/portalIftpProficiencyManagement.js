@@ -88,7 +88,7 @@ export default class PortalIftpProficiencyManagement extends LightningElement {
             {label: 'First Name', fieldName: 'firstName', type: 'text', sortable: true},
             {label: 'Employee Code', fieldName: 'companyNumber', type: 'text', sortable: true},
             {label: 'Aircraft type', fieldName: 'trainingName', type: 'text', sortable: true},
-            {label: 'Expiration Date', fieldName: 'expirationDate', type: 'date', sortable: true, typeAttributes: {year: "numeric", month: "long", day: "2-digit"}},
+            {label: 'Expiration Date', fieldName: 'expirationDate', type: 'date', sortable: true, typeAttributes: {year: "numeric", month: "short", day: "2-digit"}},
             {label: 'Proficiency', fieldName: 'proficiency', type: 'text', sortable: true, 
                 cellAttributes: { class: { fieldName: 'proficiencyStatus' }, iconName: { fieldName: 'proficiencyIcon' }, iconPosition: 'right' } },
             {label: 'Proficiency Granted By', fieldName: 'proficiencyGrantedBy', type: 'text', sortable: true},

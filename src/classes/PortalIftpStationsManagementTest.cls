@@ -4,7 +4,7 @@ public class PortalIftpStationsManagementTest {
         static testMethod void portalIftpStationsManagements_test1_2() {
 
         portalIftpTestClass.test_config();
-        Address__c addr = [SELECT Id, Code__c, City__c, Description__c FROM Address__c WHERE Code__c like 'FRX' Limit 1];
+        Airport_Detail__c addr = [SELECT Id, Code__c, City__c, Description__c FROM Airport_Detail__c WHERE Code__c like 'FRX' Limit 1];
 
         Account_Role_Service__c  ars_Airline = [SELECT Id, Account_Role__c, Account_Role__r.Account__c FROM Account_Role_Service__c WHERE Account_Role__r.Account__r.Name like 'Airline Account 2' Limit 1];
 
@@ -165,8 +165,8 @@ public class PortalIftpStationsManagementTest {
         User u1 = [select id from user where Email = 'test.cont3@test.com' limit 1];
         
         Id itpAccouRoleServId = [SELECT id FROM Account_Role_Service__c WHERE Account_Role__r.Account__r.name LIKE 'ITP Account'].id;
-        Id addressID = [SELECT id FROM Address__c WHERE Code__c LIKE 'GVX'].id;
-        Id addressID3 = [SELECT id FROM Address__c WHERE Code__c LIKE 'FRX'].id;
+        Id addressID = [SELECT id FROM Airport_Detail__c WHERE Code__c LIKE 'GVX'].id;
+        Id addressID3 = [SELECT id FROM Airport_Detail__c WHERE Code__c LIKE 'FRX'].id;
         
         System.runAs(u1) {
         
