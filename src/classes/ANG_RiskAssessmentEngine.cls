@@ -238,10 +238,15 @@ public class ANG_RiskAssessmentEngine{
 		Map<Id, decimal> multicountryRemittancesMap = fetchMulticountryHierarchyRemittances();
 
 		for(string accKey:accCalcMap.keySet()){ // iterate Accounts 
+			AccHelperClass acct = accInfoMap.get(accKey);
+			//Skip incorrect updates of HE risk fields on child accounts
+			//We should only update those fields on top parent locations
+			if(acct.topParent != NULL){
+				continue;
+			}
 			Account updAcc=new Account(id=accKey);
 			AccUpdList.add(updAcc);         
 			map<id,integer> groupingMap = accCalcMap.get(accKey);
-			AccHelperClass acct = accInfoMap.get(accKey);
 			updAcc.ANG_HE_RiskHistoryAssessment__c=calculateRiskHistoryAssessment(groupingMap, acct, multicountryRemittancesMap);            
 			updAcc.ANG_HE_CashCondition__c=calculateCashCondition(accKey);
 			updAcc.Financial_Review_Result__c=acct.financialReviewResult;
