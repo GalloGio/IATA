@@ -80,18 +80,18 @@
                             </div>
                             
                             <!-- notifications tab -->
-                            <div class="slds-col slds-m-horizontal_xsmall slds-p-left_x-small slds-p-vertical_xx-small headerButtonNotificationsContainer"
+                            <div class="slds-col slds-m-horizontal_medium slds-p-left_x-small slds-p-vertical_xx-small headerButtonNotificationsContainer"
                                 style={headerButtonNotificationsContainerStyle} onclick={toggleNotifications}>
+                                <img style={headerButtonNotificationsStyle} src={notificationIcon} />
                                 <div class="slds-p-horizontal_xx-small notificationNumber text-darkGray"
                                     style={notificationNumberStyle}>{numberOfNotifications}</div>
-                                <img style={headerButtonNotificationsStyle} src={notificationIcon} />
                                 <div class="headerButtonNotificationsCloseIcon" style={headerButtonNotificationsCloseIconStyle}>
                                     <div class="closeButton"> + </div>
                                 </div>
                             </div>
                             
                             <!-- notifications "popup" -->
-                            <div class="openNotifications customCardWhite slds-m-horizontal_xsmall displayTransition"
+                            <div class="openNotifications customCardWhite slds-m-horizontal_medium displayTransition"
                                 style={openNotificationsStyle}>
                                 <div style={displayBodyStyle}>
                                     <div
@@ -302,13 +302,6 @@
                                     <span class="text-xsmall text-white slds-p-right_x-small tabText">{labels.CSP_Support}</span>
                                 </div>
                             </div>
-                            <!-- You & IATA link -->
-                            <div class="slds-col slds-size_1-of-1 slds-p-vertical_xx-small spacer-border">
-                                <div class={buttonSideMenuYouIATAStyle} onclick={navigateToYouIata}>
-                                    <img class="slds-m-right_small" src={youAndIATA} />
-                                    <span class="text-xsmall text-white slds-p-right_x-small tabText">{labels.CSP_YouAndIATA}</span>
-                                </div>
-                            </div>
                             <!-- search link -->
                             <div class="slds-col slds-size_1-of-1 slds-p-vertical_xx-small spacer-border">
                                 <div class={buttonSideMenuSearchStyle} onclick={goToAdvancedSearchPage}>
@@ -412,12 +405,6 @@
                                 <img class="slds-m-right_small" src={supportIcon} />
                                 <span class="text-xsmall text-white slds-p-right_x-small tabText slds-show_large">{labels.CSP_Support}</span>
                             </div>
-
-                            <!-- You & IATA tab -->
-                            <div class={buttonYouIATAStyle} onclick={navigateToYouIata}>
-                                <img class="slds-m-right_small" src={youAndIATA} />
-                                <span class="text-xsmall text-white slds-p-right_x-small tabText slds-show_large">{labels.CSP_YouAndIATA}</span>
-                            </div>
     
                             <!-- profile menu -->
                             <div class="slds-col_bump-left headerBarButton headerButtonProfileContainer">
@@ -442,18 +429,18 @@
                             </div>
     
                             <!-- notifications tab -->
-                            <div class="slds-m-horizontal_medium slds-p-left_x-small slds-p-vertical_xx-small headerButtonNotificationsContainer"
+                            <div class="slds-m-horizontal_xsmall slds-p-vertical_xx-small headerButtonNotificationsContainer"
                                 style={headerButtonNotificationsContainerStyle} onclick={toggleNotifications}>
-                                <div class="slds-p-horizontal_xx-small notificationNumber text-darkGray"
-                                    style={notificationNumberStyle}>{numberOfNotifications}</div>
                                 <img style={headerButtonNotificationsStyle} src={notificationIcon} />
+                                <div class="slds-p-horizontal_xx-small notificationNumber text-darkGray"
+                                style={notificationNumberStyle}>{numberOfNotifications}</div>
                                 <div class="headerButtonNotificationsCloseIcon" style={headerButtonNotificationsCloseIconStyle}>
                                     <div class="closeButton"> + </div>
                                 </div>
                             </div>
     
                             <!-- notifications "popup" -->
-                            <div class="openNotifications customCardWhite slds-m-horizontal_medium"
+                            <div class="openNotifications customCardWhite slds-m-horizontal_xsmall"
                                 style={openNotificationsStyle}>
                                 <div style={displayBodyStyle}>
                                     <div

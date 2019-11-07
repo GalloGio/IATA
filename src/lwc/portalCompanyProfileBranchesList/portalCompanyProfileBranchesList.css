@@ -1,0 +1,8 @@
+.searchContainer{
+    display: flex;
+    align-items: end;
+}
+
+.fullWidth{
+    width:100%;
+}

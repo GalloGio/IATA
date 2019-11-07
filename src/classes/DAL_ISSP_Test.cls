@@ -51,28 +51,44 @@ public with sharing class DAL_ISSP_Test {
     static testMethod void getContactsAndUsers(){
         Account account = ISSP_ObjectFactory.createNewAccount();
         account.Name = 'Account1';
+        account.Status__c='Approved';
         insert account;
         Contact contact = ISSP_ObjectFactory.createNewContact();
         contact.AccountId = account.Id;
+        contact.status__C='Active';
+        contact.User_Portal_Status__c='Pending Approval';
+        
         insert contact;
 
         User portalUser = ISSP_ObjectFactory.createPortalUser(contact);
 
         List<Contact> contacts = DAL_ISSP.getContactsByAccountId(account.Id);
 
-
-        List<Contact> contacts2 = DAL_WithoutSharing.getContactsByAccountId(account.Id,0,5);
+ 
+       
+            PortalProfileCtrl.CompanyInformationContactsFiltersWrapper searchwrapper = new PortalProfileCtrl.CompanyInformationContactsFiltersWrapper();
+            searchwrapper.sortField='name';
+            searchwrapper.sortDirection='ASC';
+            searchwrapper.searchInput=null;
+            searchwrapper.firstLetter=null;
+            
+            string searchkey=JSON.serialize(searchwrapper);
+            CSP_Utils.PagedResult searchResult2= DAL_WithoutSharing.searchForCompanyContacts(searchkey,1,5,account.Id);
+       
         List<Contact> contacts3 = DAL_ISSP.getContactsByAccountId(account.Id,0,5);
 
-        List<Contact> searchResults = DAL_WithoutSharing.searchContactsByAccountId(account.Id,0,5,'test');
+        searchwrapper.searchInput='test';
+        CSP_Utils.PagedResult searchResults = DAL_WithoutSharing.searchForCompanyContacts(searchkey,0,5,account.Id);
+        
+        
         List<Contact> searchResults2 = DAL_ISSP.searchContactsByAccountId(account.Id,0,5,'test');
 
         List<User> users = DAL_ISSP.getUsersByContactId(new List<Id>{contact.Id});
 
         System.assert(!contacts.isEmpty());
-        System.assert(!contacts2.isEmpty());
+        System.assert(!searchResult2.records.isEmpty()); 
         System.assert(!contacts3.isEmpty());
-        System.assert(!searchResults.isEmpty());
+        System.assert(!searchResults.records.isEmpty());
         System.assert(!searchResults2.isEmpty());
         System.assert(!users.isEmpty());
 

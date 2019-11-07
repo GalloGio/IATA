@@ -3138,7 +3138,7 @@ Payment required on receipt of this Payment Advice
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_Airline_Changes_Access</shortDescription>
-        <value>You can submit your account details changes through the &lt;a href= "/csportal/s/support-reach-us"&gt;Reach Us Page&lt;/a&gt;</value>
+        <value>You can submit your account details changes through the &lt;a href= "/s/support-reach-us"&gt;Reach Us Page&lt;/a&gt;</value>
 	</labels>
     <labels>
         <fullName>CSP_Announcement</fullName>
@@ -3256,6 +3256,13 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP_Breadcrump_You_IATA</shortDescription>
         <value>You &amp; IATA</value>
+	</labels>
+	<labels>
+        <fullName>CSP_Buy_Online</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Buy Online</shortDescription>
+        <value>Buy Online</value>
     </labels>
     <labels>
         <fullName>CSP_Cancel</fullName>
@@ -3673,6 +3680,13 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP_IMPORTANT</shortDescription>
         <value>IMPORTANT</value>
+    </labels>
+	<labels>
+        <fullName>CSP_Learn_More</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Learn More</shortDescription>
+        <value>Learn More</value>
     </labels>
     <labels>
         <fullName>CSP_LogOut</fullName>
@@ -4470,7 +4484,7 @@ Payment required on receipt of this Payment Advice
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_Travel_Agent_Accreditation_Changes_Request</shortDescription>
-        <value>&lt;a href=&quot;/csportal/s/manage-service?serviceId=a2w3E0000002lq0QAA&quot; target=&quot;_self&quot;&gt;Click here to request the IATA Accreditation and Changes&lt;/a&gt;</value>
+        <value>&lt;a href=&quot;/s/manage-service?serviceId=a2ww0000001D7GOAA0&quot; target=&quot;_self&quot;&gt;Click here to request the IATA Accreditation and Changes&lt;/a&gt;</value>
 	</labels>
     <labels>
         <fullName>CSP_TypeOfCase</fullName>
@@ -4494,13 +4508,6 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP_YouAndIATA</shortDescription>
         <value>You &amp; IATA</value>
-    </labels>
-	<labels>
-        <fullName>CSP_YouIATA_Highlights</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP_YouIATA_Highlights</shortDescription>
-        <value>Selected Highlights For You</value>
     </labels>
     <labels>
         <fullName>CSP_YouIATA_Highlights_Text</fullName>
@@ -4572,6 +4579,13 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP_Welcome_Panel_Bullet_4_Title</shortDescription>
         <value>Get answers</value>
+    </labels>
+	<labels>
+        <fullName>CSP_YouIATA_Highlights</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_YouIATA_Highlights</shortDescription>
+        <value>Selected Highlights</value>
     </labels>
     <labels>
         <fullName>CSP_You_Dont_Have_Announcements</fullName>

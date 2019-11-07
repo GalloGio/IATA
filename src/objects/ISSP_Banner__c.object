@@ -2834,7 +2834,6 @@ _blank = new window</description>
             </valueSetDefinition>
         </valueSet>
     </fields>
-    <label>ISSP Banner</label>
     <fields>
         <fullName>banner_availability__c</fullName>
         <description>This field allows to specify if the banner is visible to all users, or only to users with id card, or only to users without id card.</description>
@@ -2865,6 +2864,7 @@ _blank = new window</description>
             </valueSetDefinition>
         </valueSet>
     </fields>
+    <label>ISSP Banner</label>
     <listViews>
         <fullName>All</fullName>
         <columns>CREATED_DATE</columns>
