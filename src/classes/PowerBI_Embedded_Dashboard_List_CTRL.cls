@@ -122,15 +122,14 @@ public with sharing class PowerBI_Embedded_Dashboard_List_CTRL {
 
     @AuraEnabled
     public static boolean checkSessionCache(Id userId, String target) {
-        String key = userId + target;
-        Cache.SessionPartition sessionPartition = Cache.Session.getPartition('local.ServiceUsage');
+        String cacheKey = userId + target;
+        Cache.SessionPartition sessionPartition = null;
+        try{
+        	sessionPartition = Cache.Session.getPartition('local.ServiceUsage');
+        } catch (Exception e) {}		
 
-        if(sessionPartition != null) {
-            if(sessionPartition.contains(key)) {
-                return true;
-            }
-        }
-        return false;
+		if(sessionPartition != null) { if(sessionPartition.contains(cacheKey)) { return true; }}
+		return false;
     }
 
 }

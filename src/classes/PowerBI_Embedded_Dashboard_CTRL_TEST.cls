@@ -177,6 +177,17 @@ public class PowerBI_Embedded_Dashboard_CTRL_TEST {
 
     }
 
+    
+    @IsTest
+    private static void checkSessionDashboardCacheCoverageTest() {
+        //can not be tested during deployment as session cache does not exist. Making coverage
+        Boolean presentInCache;
+        Test.startTest();
+        presentInCache = PowerBI_Embedded_Dashboard_CTRL.checkSessionCache(UserInfo.getUserId(), 'checkSessionCacheCoverageTest');
+        Test.stopTest();
+        System.assertEquals(false, presentInCache, 'Key is not preset in cache');
+    }
+
 
     @IsTest
     private static void getAccessToken_responseErrorTest() {
