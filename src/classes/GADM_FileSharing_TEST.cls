@@ -49,9 +49,17 @@ public class GADM_FileSharing_TEST {
 		  Valid_To__c = Date.today().addDays(2)
 		);
 		insert contentVersion;
-
-		GADM_FileSharing.assignGadmRecordType([SELECT Id, CreatedById, RecordTypeId FROM ContentVersion WHERE id =: contentVersion.Id]);
-
+		
+        ContentVersion testContent = [SELECT ContentDocumentId FROM ContentVersion where Id = :contentVersion.Id]; 
+        GADM_FileSharing.assignGadmRecordType([SELECT Id, CreatedById, RecordTypeId FROM ContentVersion WHERE id =: contentVersion.Id]);
+        
+        ContentDocumentLink contentlink=new ContentDocumentLink();
+        contentlink.LinkedEntityId=message.id;
+        contentlink.ShareType= 'C'; 
+        contentlink.ContentDocumentId=testContent.ContentDocumentId;
+        contentlink.Visibility = 'AllUsers'; 
+        insert contentlink;        
+        
 		List<ContentVersion> cvs = [SELECT Id, RecordTypeId FROM ContentVersion WHERE Id =: contentVersion.Id];
 		system.assertEquals(gadmRT, cvs[0].RecordTypeId);
 

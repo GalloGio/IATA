@@ -281,4 +281,14 @@ public class Service_Usage_Tracker_CTRL_TEST {
 
     }
 
+    @IsTest
+    private static void saveNewCacheEntry() {
+        //can not be tested during deployment as session cache does not exist. Making coverage
+        Boolean presentInCache;
+        Test.startTest();
+        presentInCache = Service_Usage_Tracker_CTRL.saveNewCacheEntry(UserInfo.getUserId(), 'checkSessionCacheCoverageTest');
+        Test.stopTest();
+        System.assertEquals(false, presentInCache, 'Key is not preset in cache');
+    }
+
 }
