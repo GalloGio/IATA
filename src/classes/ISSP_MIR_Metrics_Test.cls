@@ -12,6 +12,7 @@ private class ISSP_MIR_Metrics_Test {
 			account.Sector__c = 'Airline';
 	        insert account;
 	        Contact con1 = ISSP_ObjectFactory.createNewContact();
+			con1.PaConf_Representative__c = true;
 			con1.AccountId = account.Id;
 	        insert con1;
 	        

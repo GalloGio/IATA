@@ -27,6 +27,13 @@
                 <behavior>Readonly</behavior>
                 <field>SIDRA_logo__c</field>
             </layoutItems>
+            <layoutItems>
+                <height>50</height>
+                <page>DetailPageMessageClassicCase</page>
+                <showLabel>false</showLabel>
+                <showScrollbars>false</showScrollbars>
+                <width>100%</width>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
