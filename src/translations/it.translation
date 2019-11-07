@@ -1793,7 +1793,7 @@ la seguente procedura per completarlo :
         <name>CSP_Add_User</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Airline_Changes_Access --></label>
+        <label>Può inviare le modifiche alle informazioni del suo account attraverso la pagina &lt;a href= &apos;/s/support-reach-us&apos;&gt;Reach Us Page&lt;/a&gt;</label>
         <name>CSP_Airline_Changes_Access</name>
     </customLabels>
     <customLabels>
@@ -1817,7 +1817,7 @@ la seguente procedura per completarlo :
         <name>CSP_Breadcrumb_AdvancedSearch_Title</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Breadcrumb_CaseDetails_Title --></label>
+        <label>Dettagli della pratica</label>
         <name>CSP_Breadcrumb_CaseDetails_Title</name>
     </customLabels>
     <customLabels>
@@ -1853,7 +1853,7 @@ la seguente procedura per completarlo :
         <name>CSP_Breadcrump_MyProfile_Title</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Breadcrump_You_IATA --></label>
+        <label>Lei e IATA</label>
         <name>CSP_Breadcrump_You_IATA</name>
     </customLabels>
     <customLabels>
@@ -1913,7 +1913,7 @@ la seguente procedura per completarlo :
         <name>CSP_Community</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_CompanyAdministration_Link --></label>
+        <label>Può inviare le modifiche ai dettagli del suo account tramite il servizio Accreditamento IATA e Modifiche.</label>
         <name>CSP_CompanyAdministration_Link</name>
     </customLabels>
     <customLabels>
@@ -1945,7 +1945,7 @@ la seguente procedura per completarlo :
         <name>CSP_Create_Contact_Complete_Field</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_CreatedOn --></label>
+        <label>Creato il</label>
         <name>CSP_CreatedOn</name>
     </customLabels>
     <customLabels>
@@ -2069,7 +2069,7 @@ la seguente procedura per completarlo :
         <name>CSP_IMPORTANT</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_LastUpdate --></label>
+        <label>Ultimo aggiornamento</label>
         <name>CSP_LastUpdate</name>
     </customLabels>
     <customLabels>
@@ -2081,7 +2081,7 @@ la seguente procedura per completarlo :
         <name>CSP_Manage_Portal_Users</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Manage_Recipients --></label>
+        <label>Gestione destinatari</label>
         <name>CSP_Manage_Recipients</name>
     </customLabels>
     <customLabels>
@@ -2217,7 +2217,7 @@ la seguente procedura per completarlo :
         <name>CSP_RecentCases_Support</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case Details Details page --></label>
+        <label>Destinatari</label>
         <name>CSP_Recipients</name>
     </customLabels>
     <customLabels>
@@ -2457,11 +2457,11 @@ la seguente procedura per completarlo :
         <name>CSP_Title</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Travel_Agent_Accreditation_Changes_Access --></label>
+        <label>&lt;a href=&quot;/ISSP_AMSCases&quot; target=&quot;_self&quot;&gt;Vada qui per accedere direttamente alla sezione Modifiche e accreditamento IATA&lt;/a&gt;</label>
         <name>CSP_Travel_Agent_Accreditation_Changes_Access</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Travel_Agent_Accreditation_Changes_Request --></label>
+        <label>&lt;a href=&quot;/s/manage-service?serviceId=a2ww0000001D7GOAA0&quot; target=&quot;_self&quot;&gt; Faccia clic qui per richiedere il servizio Accreditamento IATA e Modifiche &lt;/a&gt;</label>
         <name>CSP_Travel_Agent_Accreditation_Changes_Request</name>
     </customLabels>
     <customLabels>
@@ -2505,15 +2505,15 @@ la seguente procedura per completarlo :
         <name>CSP_Welcome_Panel_Bullet_4_Title</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_YouAndIATA --></label>
+        <label>Lei e IATA</label>
         <name>CSP_YouAndIATA</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_YouIATA_Highlights --></label>
+        <label>Punti salienti selezionati per lei</label>
         <name>CSP_YouIATA_Highlights</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_YouIATA_Highlights_Text --></label>
+        <label>Qui troverà una vasta gamma di servizi IATA, pubblicazioni, prodotti e risorse nel settore dell&apos;aviazione. Appositamente studiata in base ai suoi interessi e alla cronologia delle attività.</label>
         <name>CSP_YouIATA_Highlights_Text</name>
     </customLabels>
     <customLabels>
@@ -12552,7 +12552,7 @@ la funzione &quot;Password dimenticata?&quot;</label>
         <name>ISSP_Account_not_approved</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ContactList --></label>
+        <label>Approvare</label>
         <name>ISSP_Activate</name>
     </customLabels>
     <customLabels>
@@ -13338,7 +13338,7 @@ La preghiamo di indicarci il paese per il quale richiede assistenza</label>
         <name>ISSP_Deny_Access</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Description --></label>
+        <label>Descrizione</label>
         <name>ISSP_Description</name>
     </customLabels>
     <customLabels>
@@ -14758,7 +14758,7 @@ La preghiamo di indicarci il paese per il quale richiede assistenza</label>
         <name>ISSP_MITA_Agreements_Service_Name</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ContactList --></label>
+        <label>Approvare come amministratore</label>
         <name>ISSP_MakeAdmin</name>
     </customLabels>
     <customLabels>
@@ -20451,7 +20451,7 @@ Se desideri ripristinare la password, torna alla schermata di accesso e utilizza
         <name>csp_ActionIndicator</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case Details Details page --></label>
+        <label>Ulteriori dettagli</label>
         <name>csp_AdditionalDetails</name>
     </customLabels>
     <customLabels>
@@ -20743,7 +20743,7 @@ Se desideri ripristinare la password, torna alla schermata di accesso e utilizza
         <name>csp_Query</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case Details Details page --></label>
+        <label>Qualcun altro da informare?</label>
         <name>csp_RecipientsQuestion</name>
     </customLabels>
     <customLabels>

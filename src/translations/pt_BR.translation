@@ -1792,7 +1792,7 @@
         <name>CSP_Add_User</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Airline_Changes_Access --></label>
+        <label>Você pode enviar as mudanças nas informações da sua conta através da &lt;a href= &apos;/s/support-reach-us&apos;&gt;Página Fale Conosco&lt;/a&gt;</label>
         <name>CSP_Airline_Changes_Access</name>
     </customLabels>
     <customLabels>
@@ -1816,7 +1816,7 @@
         <name>CSP_Breadcrumb_AdvancedSearch_Title</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Breadcrumb_CaseDetails_Title --></label>
+        <label>Detalhes do caso</label>
         <name>CSP_Breadcrumb_CaseDetails_Title</name>
     </customLabels>
     <customLabels>
@@ -1852,7 +1852,7 @@
         <name>CSP_Breadcrump_MyProfile_Title</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Breadcrump_You_IATA --></label>
+        <label>Você e a IATA</label>
         <name>CSP_Breadcrump_You_IATA</name>
     </customLabels>
     <customLabels>
@@ -1912,7 +1912,7 @@
         <name>CSP_Community</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_CompanyAdministration_Link --></label>
+        <label>Você pode enviar alterações nos detalhes da sua conta através do serviço Acreditação e Alterações IATA.</label>
         <name>CSP_CompanyAdministration_Link</name>
     </customLabels>
     <customLabels>
@@ -1944,7 +1944,7 @@
         <name>CSP_Create_Contact_Complete_Field</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_CreatedOn --></label>
+        <label>Criado em</label>
         <name>CSP_CreatedOn</name>
     </customLabels>
     <customLabels>
@@ -2068,7 +2068,7 @@
         <name>CSP_IMPORTANT</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_LastUpdate --></label>
+        <label>Última atualização</label>
         <name>CSP_LastUpdate</name>
     </customLabels>
     <customLabels>
@@ -2080,7 +2080,7 @@
         <name>CSP_Manage_Portal_Users</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Manage_Recipients --></label>
+        <label>Gerenciar destinatários</label>
         <name>CSP_Manage_Recipients</name>
     </customLabels>
     <customLabels>
@@ -2216,7 +2216,7 @@
         <name>CSP_RecentCases_Support</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case Details Details page --></label>
+        <label>Destinatários</label>
         <name>CSP_Recipients</name>
     </customLabels>
     <customLabels>
@@ -2456,11 +2456,11 @@
         <name>CSP_Title</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Travel_Agent_Accreditation_Changes_Access --></label>
+        <label>&lt;a href=&quot;/ISSP_AMSCases&quot; target=&quot;_self&quot;&gt;Clique aqui para acessar diretamente a seção de Validação e Alterações da IATA&lt;/a&gt;</label>
         <name>CSP_Travel_Agent_Accreditation_Changes_Access</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Travel_Agent_Accreditation_Changes_Request --></label>
+        <label>&lt;a href=&quot;/s/manage-service?serviceId=a2ww0000001D7GOAA0&quot; target=&quot;_self&quot;&gt; Clique aqui para solicitar a Acreditação e Alterações IATA &lt;/a&gt;</label>
         <name>CSP_Travel_Agent_Accreditation_Changes_Request</name>
     </customLabels>
     <customLabels>
@@ -2504,15 +2504,15 @@
         <name>CSP_Welcome_Panel_Bullet_4_Title</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_YouAndIATA --></label>
+        <label>Você e a IATA</label>
         <name>CSP_YouAndIATA</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_YouIATA_Highlights --></label>
+        <label>Destaques selecionados para você</label>
         <name>CSP_YouIATA_Highlights</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_YouIATA_Highlights_Text --></label>
+        <label>Aqui você pode descobrir uma ampla variedade de serviços, publicações, produtos e recursos da IATA no setor de aviação. Especialmente adaptado aos seus interesses e histórico de atividades.</label>
         <name>CSP_YouIATA_Highlights_Text</name>
     </customLabels>
     <customLabels>
@@ -12548,7 +12548,7 @@ and
         <name>ISSP_Account_not_approved</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ContactList --></label>
+        <label>Aprovar</label>
         <name>ISSP_Activate</name>
     </customLabels>
     <customLabels>
@@ -13334,7 +13334,7 @@ Você poderia por favor confimar de qual pais voce foi previamente atendido.</la
         <name>ISSP_Deny_Access</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Description --></label>
+        <label>Descrição</label>
         <name>ISSP_Description</name>
     </customLabels>
     <customLabels>
@@ -14754,7 +14754,7 @@ Você poderia por favor confimar de qual pais voce foi previamente atendido.</la
         <name>ISSP_MITA_Agreements_Service_Name</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ContactList --></label>
+        <label>Aprovar como administrador</label>
         <name>ISSP_MakeAdmin</name>
     </customLabels>
     <customLabels>
@@ -20448,7 +20448,7 @@ Se quiser redefinir sua senha, volte à tela de login e use a função &quot;Esq
         <name>csp_ActionIndicator</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case Details Details page --></label>
+        <label>Detalhes adicionais</label>
         <name>csp_AdditionalDetails</name>
     </customLabels>
     <customLabels>
@@ -20740,7 +20740,7 @@ Se quiser redefinir sua senha, volte à tela de login e use a função &quot;Esq
         <name>csp_Query</name>
     </customLabels>
     <customLabels>
-        <label><!-- Case Details Details page --></label>
+        <label>Mais alguém a ser informado?</label>
         <name>csp_RecipientsQuestion</name>
     </customLabels>
     <customLabels>

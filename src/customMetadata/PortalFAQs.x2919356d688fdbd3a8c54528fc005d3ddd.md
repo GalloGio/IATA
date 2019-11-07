@@ -28,11 +28,11 @@
     </values>
     <values>
         <field>DataCategoryLabel_en_US__c</field>
-        <value xsi:type="xsd:string">Product content</value>
+        <value xsi:type="xsd:string">BSP NDC API</value>
     </values>
     <values>
         <field>DataCategoryLabel_es__c</field>
-        <value xsi:type="xsd:string">Contenido del producto</value>
+        <value xsi:type="xsd:string">BSP NDC API</value>
     </values>
     <values>
         <field>DataCategoryLabel_fr__c</field>
@@ -79,12 +79,8 @@
         <value xsi:type="xsd:string">Financial_Services</value>
     </values>
     <values>
-        <field>DataCategoryVisibility__c</field>
-        <value xsi:nil="true"/>
-    </values>
-    <values>
         <field>DataSubtopicName__c</field>
-        <value xsi:type="xsd:string">Product_content_NDClink</value>
+        <value xsi:type="xsd:string">BSP_NDC_API</value>
     </values>
     <values>
         <field>DataTopicName__c</field>
