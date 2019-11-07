@@ -20166,7 +20166,7 @@ ISCHANGED(ISSP_Contact_Name__c )
     </validationRules>
     <validationRules>
         <fullName>Contact_cannot_be_created_under_MSO_offi</fullName>
-        <active>false</active>
+        <active>true</active>
         <description>FDS OPS + Account management Contact cannot be logged under MSO office, but should be under the airline account</description>
         <errorConditionFormula>AND(
 TEXT(Account.Location_Class__c) = &quot;M&quot;,
