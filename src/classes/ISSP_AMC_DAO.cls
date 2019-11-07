@@ -249,7 +249,7 @@ public class ISSP_AMC_DAO {
             caseRecord.Region__c = testAcc.Region_formula__c;
             caseRecord.BSPCountry__c = testAcc.IATA_ISO_Country__r.Name;
             caseRecord.RecordTypeId = recordTypeId;
-            caseRecord.Status = ISSP_AMC_Constants.AMC_CASE_STATUS_OPEN;
+            caseRecord.Status = ISSP_AMC_Constants.AMC_CASE_STATUS_DRAFT;
             caseRecord.Visible_on_ISS_Portal__c = true;
             caseRecord.Assign__c = true;
             
@@ -461,7 +461,7 @@ public class ISSP_AMC_DAO {
             if(saveFormUtility.errorMessages.size() == 0 && step == ISSP_AMC_Constants.AMC_SAVE_STEPSUBMIT) {
                 //TODO  
 
-                caseRecord.Status = ISSP_AMC_Constants.AMC_CASE_STATUS_SUBMITTED;
+                caseRecord.Status = ISSP_AMC_Constants.AMC_CASE_STATUS_OPEN;
                 
                 
                 //Fetching the assignment rules on case

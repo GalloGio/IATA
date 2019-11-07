@@ -95,7 +95,7 @@ public class ISSP_AMC_Apply_New_Code {
 		for(Case eachExistingCase : AMCDraftCases){
 			for(Participation_Online_Application__c participation : eachExistingCase.Participation_Online_Applications__r){
 				if (eachExistingCase.Reason1__c == ISSP_AMC_Constants.AMC_CASE_REASON_DESIGNATOR_FORM) {
-					if(eachExistingCase.Status == ISSP_AMC_Constants.AMC_CASE_STATUS_OPEN){
+					if(eachExistingCase.Status == ISSP_AMC_Constants.AMC_CASE_STATUS_DRAFT){
 						designatorApplicationId = participation.Id;
 
 					}
@@ -118,7 +118,7 @@ public class ISSP_AMC_Apply_New_Code {
 					}
 				}*/ 
                 else if (eachExistingCase.Reason1__c == ISSP_AMC_Constants.AMC_CASE_REASON_BAGGAGE_FORM) {
-					if(eachExistingCase.Status == ISSP_AMC_Constants.AMC_CASE_STATUS_OPEN){
+					if(eachExistingCase.Status == ISSP_AMC_Constants.AMC_CASE_STATUS_DRAFT){
 						baggageApplicationId = participation.Id;
 					}
 					else {
@@ -129,7 +129,7 @@ public class ISSP_AMC_Apply_New_Code {
 					}
 				} 
                 else if (eachExistingCase.Reason1__c == ISSP_AMC_Constants.AMC_CASE_REASON_ACCOUNTING_OR_PREFIX_FORM) {
-					if(eachExistingCase.Status == ISSP_AMC_Constants.AMC_CASE_STATUS_OPEN){
+					if(eachExistingCase.Status == ISSP_AMC_Constants.AMC_CASE_STATUS_DRAFT){
 						accountingOrPrefixApplicationId = participation.Id;
 					}
 					else {

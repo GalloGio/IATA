@@ -205,7 +205,8 @@ return recordTypes;
         //Id recordTypeId = getRecordTypesForObject('Case').get('Airline_Coding_Application').Id;
         List<Case> parentCases = [Select id, RecordTypeId, Type, Subject, ParentId, CaseArea__c, Region__c,
                 Reason, Status, BSPCountry__c, Description, Account.Name, Account.ACLI_SAP_Id__c,
-                ContactEmail, AccountId, ContactId, Coding_Application_Status__c, Priority, Origin, Account.Site
+                ContactEmail, AccountId, ContactId, Coding_Application_Status__c, Priority, Origin, Account.Site,
+                (SELECT SIS_First_Name__c, SIS_Last_Name__c, SIS_Email__c, SIS_Phone__c FROM Participation_Online_Applications__r)
                 FROM Case WHERE id  =: caseId
         AND RecordType.DeveloperName = 'Airline_Coding_Application'];
 
@@ -225,8 +226,11 @@ return recordTypes;
             relatedCase.ContactId = parentCase.ContactId;
             string descriptionB = 'Dear Team,' + '\n' + 'Please process DD for new applicant. Attached you will find usual documentation.' + '\n' + 'Thank you,' + '\n' + 'Coding Team';
             string descriptionC = 'Dear Colleagues,' + '\n' + 'Would you please raise a PPA for this customer with the following items (using current year price list):' + '\n' + 'Application Fee x 1' + '\n' + 'Assignment Fee x 1' + '\n' + 'BRgds,' + '\n' + 'Coding Team';
+            string descriptionF = '';
+            if(parentCase.Participation_Online_Applications__r != null && parentCase.Participation_Online_Applications__r[0] != null){
+                descriptionF = 'Dear Team,' + '\n' + 'Kindly find below information required to create the SIS Registration:' + '\n' + 'Name: ' + parentCase.Participation_Online_Applications__r[0].SIS_First_Name__c + '\n' + 'Last Name: ' + parentCase.Participation_Online_Applications__r[0].SIS_Last_Name__c + '\n' + 'Email Address : ' + parentCase.Participation_Online_Applications__r[0].SIS_Email__c + '\n' + 'Phone Number: ' + parentCase.Participation_Online_Applications__r[0].SIS_Phone__c + '\n' + 'Thank you,' + '\n' + 'Coding Team';
+            }
 
-            
             //Fetching the assignment rules on case
             AssignmentRule AR = new AssignmentRule();
             AR = [select id from AssignmentRule where SobjectType = 'Case' and Active = true limit 1];
@@ -238,7 +242,7 @@ return recordTypes;
                 relatedCase.CaseArea__c = 'Corporate Compliance';
                 relatedCase.Reason = 'New Coding Assignment';
                 relatedCase.Reason1__c = 'New Coding Assignment';
-                relatedCase.Subject = 'Due Diligence – ' + parentCase.Account.Name;
+                relatedCase.Subject = 'PPA - Due Diligence – ' + parentCase.Account.Name;
                 relatedCase.Status = 'Open';
                 relatedCase.Description = descriptionB;
                 relatedCase.RecordTypeId = recordTypeIdStageB;
@@ -250,7 +254,7 @@ return recordTypes;
                 //relatedCase.Reason = 'Customer Charge Request';
                 relatedCase.Reason = 'Customer Charge Request';
                 relatedCase.Reason1__c = 'Customer Charge Request';
-                relatedCase.Subject = 'Charge Request for ' + parentCase.Account.Name + ' – ' + parentCase.Account.ACLI_SAP_Id__c;
+                relatedCase.Subject = 'PPA - Charge Request for ' + parentCase.Account.Name + ' – ' + parentCase.Account.ACLI_SAP_Id__c;
                 relatedCase.Status = 'Open';
                 relatedCase.Description = descriptionC;
                 relatedCase.RecordTypeId = recordTypeIdStageC;
@@ -258,9 +262,10 @@ return recordTypes;
                 relatedCase.CaseArea__c = 'SIS';
                 relatedCase.Reason = 'Under discussion';
                 relatedCase.Reason1__c = 'Under discussion';
-                relatedCase.Subject = 'SIS New Register – ' + parentCase.Account.Name;
+                relatedCase.Subject = 'PPA - SIS New Register – ' + parentCase.Account.Name;
                 relatedCase.Status = 'Open';
                 relatedCase.Type = 'SIS Internal Case';
+                relatedCase.Description = descriptionF;
                 relatedCase.RecordTypeId = parentCase.RecordTypeId;
             }
 

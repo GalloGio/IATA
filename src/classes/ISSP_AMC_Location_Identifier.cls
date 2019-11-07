@@ -20,7 +20,7 @@ public without sharing class ISSP_AMC_Location_Identifier {
     public Boolean isSISUser{get;set;}
 
     public PageReference init(){
-        if(participation.Case__c != null && participation.Case__r.Status != ISSP_AMC_Constants.AMC_CASE_STATUS_OPEN){
+        if(participation.Case__c != null && participation.Case__r.Status != ISSP_AMC_Constants.AMC_CASE_STATUS_DRAFT){
             PageReference pr = new PageReference('/ISSP_Case?caseId=' + participation.Case__c + '&mid=M1S2');
             pr.setRedirect(true);
             return pr;

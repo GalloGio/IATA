@@ -215,7 +215,7 @@ public with sharing class PortalCasesCtrl {
             fieldPathSet.add(f.getFieldPath());
         }
 
-        String query = 'BSP_CASS__c, IATA_Code__c, Remittance_period__c, CaseArea__c, Contact.Name, Reason1__c, CNSCase__c, Origin, IsClosed, Classification_SIS__c, TIP_Partner_Product__c, RecordType.Name, RecordType.DeveloperName, Owner.Name, LastModifiedDate, CreatedBy.Name ';
+        String query = 'BSP_CASS__c, IATA_Code__c, Remittance_period__c, CaseArea__c, Contact.Name, Reason1__c, CNSCase__c, Origin, IsClosed, Classification_SIS__c, TIP_Partner_Product__c, RecordType.Name, RecordType.DeveloperName, Owner.Name, LastModifiedDate, CreatedBy.Name, (SELECT Id FROM Participation_Online_Applications__r) ';
         Boolean hasStatus = false;
         
         for(String fieldPath : fieldPathSet) {
@@ -597,6 +597,40 @@ public with sharing class PortalCasesCtrl {
                 record.Id => 
                 OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, '/ISSP_ICCS_Service?caseId=' + record.Id)
             };
+        }
+
+        Id participationId;
+        //Add to the query for the record variable
+        for(Participation_Online_Application__c participation : record.Participation_Online_Applications__r){
+            participationId = participation.Id;
+        }
+        /*If case was created from the ISSP portal and the status is Draft, redirect to the edit form page*/
+        if(record.RecordType.DeveloperName == 'Airline_Coding_Application' && record.Status == 'Draft'){
+            if(record.Reason1__c == ISSP_AMC_Constants.AMC_CASE_REASON_DESIGNATOR_FORM){
+                return new Map<Id, String>{
+                    record.Id => 
+                    OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, '/ISSP_AMC_Airline_Designators?participationId='+ participationId + '&mid=M3S1&retURL=/ISSP_AMC_Home')
+                };
+            }
+            else if(record.Reason1__c == ISSP_AMC_Constants.AMC_CASE_REASON_LOCATION_FORM){
+                return new Map<Id, String>{
+                    record.Id =>
+                    OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, '/ISSP_AMC_Location_Identifier?participationId=' + participationId + '&mid=M3S1&retURL=/ISSP_AMC_Home')
+                };
+            }
+            else if(record.Reason1__c == ISSP_AMC_Constants.AMC_CASE_REASON_BAGGAGE_FORM){
+                return new Map<Id, String>{
+                    record.Id => 
+                    OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, '/ISSP_AMC_Baggage_Tag_Range?participationId=' + participationId + '&mid=M3S1&retURL=/ISSP_AMC_Home')
+                };
+            }
+            else if(record.Reason1__c == ISSP_AMC_Constants.AMC_CASE_REASON_ACCOUNTING_OR_PREFIX_FORM){
+                return new Map<Id, String>{
+                    record.Id => 
+                    OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, '/ISSP_AMC_Accounting_Or_Prefix_Code?participationId=' + participationId + '&mid=M3S1&retURL=/ISSP_AMC_Home')
+                };
+            }
+           
         }
 
         /*If no match was done*/
