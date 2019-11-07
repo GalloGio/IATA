@@ -66,7 +66,7 @@
     <fields>
         <fullName>Applicable_Fee__c</fullName>
         <externalId>false</externalId>
-        <label>Applicable Fee</label>
+        <label>Total Cost</label>
         <precision>18</precision>
         <required>false</required>
         <scale>2</scale>
@@ -519,7 +519,7 @@ Completed: Process is complete</inlineHelpText>
         <fullName>ITDI_Courses_Fee__c</fullName>
         <description>IATA Training Courses Fee</description>
         <externalId>false</externalId>
-        <label>ITDI Courses Fee</label>
+        <label>IATA Training Courses Fee</label>
         <precision>12</precision>
         <required>false</required>
         <scale>2</scale>
