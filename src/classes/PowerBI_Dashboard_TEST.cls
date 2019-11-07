@@ -8,8 +8,7 @@ public class PowerBI_Dashboard_TEST {
        ApexPages.currentPage().getParameters().put('tokenType', 'tokenType'); 
         ApexPages.currentPage().getParameters().put('embedUrl', 'embedUrl'); 
         ApexPages.currentPage().getParameters().put('accessToken', 'accessToken'); 
-        ApexPages.currentPage().getParameters().put('objectId', 'objectId'); 
-        ApexPages.currentPage().getParameters().put('filterPaneEnabled', 'filterPaneEnabled'); 
+        ApexPages.currentPage().getParameters().put('objectId', 'objectId');         
        
         PowerBI_Dashboard_CTRL pageController = new PowerBI_Dashboard_CTRL();
 
@@ -18,7 +17,6 @@ public class PowerBI_Dashboard_TEST {
        System.assertEquals(pageController.embedUrl, 'embedUrl');
        System.assertEquals(pageController.accessToken, 'accessToken');
        System.assertEquals(pageController.objectId, 'objectId');
-       System.assertEquals(pageController.filterPaneEnabled, 'filterPaneEnabled');
        System.assertEquals(pageController.redirect(), null);
        Test.stopTest();
     }

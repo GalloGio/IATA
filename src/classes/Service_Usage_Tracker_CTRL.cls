@@ -3,20 +3,16 @@ public without sharing class Service_Usage_Tracker_CTRL {
 
     @AuraEnabled
     public static boolean saveNewCacheEntry(String userId, String key) {
-        boolean result = false;
-
-        String cacheKey = userId + key;
+		boolean result = false;
+		String cacheKey = userId + key;
+        Cache.SessionPartition sessionPartition = null;
+        try{
+        	sessionPartition = Cache.Session.getPartition('local.ServiceUsage');
+        } catch (Exception e) {}
         
-        Cache.SessionPartition sessionPartition = Cache.Session.getPartition('local.ServiceUsage');
-
-
-        if(sessionPartition != null) {
-            sessionPartition.put(cacheKey, true, 28800);
-            result = true;
-        }
-
-        return result;
-    }
+		if(sessionPartition != null) { sessionPartition.put(cacheKey, true, 28800); result = true; }
+		return result;
+	}
 
     @AuraEnabled
     public static boolean saveUsageTracking(Id userId, String target, String service, String type) {
