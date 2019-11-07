@@ -65,7 +65,7 @@ public without sharing class Data_Submission_List_CTRL {
         }
 
         private String retrieveNamespace(){
-            String class_name = DataTableController.class.getName();
+            String class_name = Data_Submission_List_CTRL.class.getName();
             if(class_name.countMatches('.') == 1){
                 return class_name.substringBefore('.') + '__';
             }
