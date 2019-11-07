@@ -145,7 +145,7 @@ private class PortalIftEmployeeRecordsManagementTest {
 														FROM Account_Contact_Role__c
 														WHERE Id = :employeeToUpdateAccRolId];
 
-			PortalIftEmployeeRecordsManagement.ResultWrapper res2 = PortalIftEmployeeRecordsManagement.updateEmployee(u1.Contact.AccountId,employeeToUpdate, null);
+			PortalIftEmployeeRecordsManagement.ResultWrapper res2 = PortalIftEmployeeRecordsManagement.updateEmployee(u1.Contact.AccountId,employeeToUpdate, 'update');
 			System.assert(res2.succeeded);
 
 			Contact employeeToUpdateContact_2 = new Contact(Id = employeeToUpdate.Contact__c,
@@ -166,15 +166,15 @@ private class PortalIftEmployeeRecordsManagementTest {
 														WHERE Contact__c = :employeeToUpdateContact_2.id];
 
 			employeeToUpdate_2.Company_Code__c = '';
-			PortalIftEmployeeRecordsManagement.ResultWrapper res3 = PortalIftEmployeeRecordsManagement.updateEmployee(u1.Contact.AccountId, employeeToUpdate_2, null);
+			PortalIftEmployeeRecordsManagement.ResultWrapper res3 = PortalIftEmployeeRecordsManagement.updateEmployee(u1.Contact.AccountId, employeeToUpdate_2, 'update');
 			System.assert(!res3.succeeded);
 
 			employeeToUpdate_2.Company_Code__c = 'Abc';
-			PortalIftEmployeeRecordsManagement.ResultWrapper res4 = PortalIftEmployeeRecordsManagement.updateEmployee(u1.Contact.AccountId, employeeToUpdate_2, null);
+			PortalIftEmployeeRecordsManagement.ResultWrapper res4 = PortalIftEmployeeRecordsManagement.updateEmployee(u1.Contact.AccountId, employeeToUpdate_2, 'update');
 			System.assert(!res4.succeeded);
 
 			employeeToUpdate_2.id = null;
-			PortalIftEmployeeRecordsManagement.ResultWrapper res5 = PortalIftEmployeeRecordsManagement.updateEmployee(u1.Contact.AccountId, employeeToUpdate_2, null);
+			PortalIftEmployeeRecordsManagement.ResultWrapper res5 = PortalIftEmployeeRecordsManagement.updateEmployee(u1.Contact.AccountId, employeeToUpdate_2, 'update');
 			System.assert(!res5.succeeded);
 		}
 		Test.stopTest();
