@@ -33,7 +33,7 @@ public without sharing class  ISSP_AMC_Application_And_Changes {
 		for(Case eachExistingCase : AMCDraftCases){
 			for(Participation_Online_Application__c participation : eachExistingCase.Participation_Online_Applications__r){
 				if (eachExistingCase.Reason1__c == ISSP_AMC_Constants.AMC_CASE_REASON_DESIGNATOR_FORM) {
-					if(eachExistingCase.Status == ISSP_AMC_Constants.AMC_CASE_STATUS_OPEN){
+					if(eachExistingCase.Status == ISSP_AMC_Constants.AMC_CASE_STATUS_DRAFT){
 						designatorApplicationId = participation.Id;
 
 					}
@@ -45,7 +45,7 @@ public without sharing class  ISSP_AMC_Application_And_Changes {
 						
 					}
 				} else if (eachExistingCase.Reason1__c == ISSP_AMC_Constants.AMC_CASE_REASON_LOCATION_FORM) {
-					if(eachExistingCase.Status == ISSP_AMC_Constants.AMC_CASE_STATUS_OPEN){
+					if(eachExistingCase.Status == ISSP_AMC_Constants.AMC_CASE_STATUS_DRAFT){
 						locationCodeApplicationId = participation.Id;
 					}
 					else {
@@ -54,7 +54,7 @@ public without sharing class  ISSP_AMC_Application_And_Changes {
 						}
 					}
 				} else if (eachExistingCase.Reason1__c == ISSP_AMC_Constants.AMC_CASE_REASON_BAGGAGE_FORM) {
-					if(eachExistingCase.Status == ISSP_AMC_Constants.AMC_CASE_STATUS_OPEN){
+					if(eachExistingCase.Status == ISSP_AMC_Constants.AMC_CASE_STATUS_DRAFT){
 						baggageApplicationId = participation.Id;
 					}
 					else {
@@ -64,7 +64,7 @@ public without sharing class  ISSP_AMC_Application_And_Changes {
 						}
 					}
 				} else if (eachExistingCase.Reason1__c == ISSP_AMC_Constants.AMC_CASE_REASON_ACCOUNTING_OR_PREFIX_FORM) {
-					if(eachExistingCase.Status == ISSP_AMC_Constants.AMC_CASE_STATUS_OPEN){
+					if(eachExistingCase.Status == ISSP_AMC_Constants.AMC_CASE_STATUS_DRAFT){
 						accountingOrPrefixApplicationId = participation.Id;
 					}
 					else {
@@ -290,7 +290,7 @@ public without sharing class  ISSP_AMC_Application_And_Changes {
         caseLocationCodeApplicationId = locationCase.Id;
 		locationCodeApplicationId = locationParticipation.Id;
 
-		if(caseLocationCodeApplicationId != null && locationCase.Status == ISSP_AMC_Constants.AMC_CASE_STATUS_SUBMITTED){
+		if(caseLocationCodeApplicationId != null && locationCase.Status == ISSP_AMC_Constants.AMC_CASE_STATUS_OPEN){
 			UserRecordAccess recordAccess = [SELECT RecordId, HasTransferAccess, HasReadAccess, HasEditAccess, HasDeleteAccess, HasAllAccess
                 FROM UserRecordAccess WHERE UserId = :UserInfo.getUserId() AND RecordId = :caseLocationCodeApplicationId];
 			if(!recordAccess.hasReadAccess){
