@@ -131,7 +131,7 @@
             <operation>equals</operation>
             <value>TODAY,LAST_N_DAYS:30</value>
         </filters>
-        <label>ENCODED:{!FilterNames.Task_CompletedTasks}</label>
+        <label>Recently Completed Tasks</label>
     </listViews>
     <listViews>
         <fullName>DelegatedTasks</fullName>
@@ -145,7 +145,7 @@
         <columns>LAST_UPDATE</columns>
         <columns>UPDATEDBY_USER.ALIAS</columns>
         <filterScope>Delegated</filterScope>
-        <label>ENCODED:{!FilterNames.Task_DelegatedTasks}</label>
+        <label>Delegated Tasks</label>
     </listViews>
     <listViews>
         <fullName>OpenTasks</fullName>
@@ -174,7 +174,7 @@
             <operation>greaterOrEqual</operation>
             <value>LAST_N_DAYS:30</value>
         </filters>
-        <label>ENCODED:{!FilterNames.Task_OpenTasks}</label>
+        <label>Open Tasks</label>
     </listViews>
     <listViews>
         <fullName>OverdueTasks</fullName>
@@ -203,7 +203,7 @@
             <operation>lessThan</operation>
             <value>TODAY</value>
         </filters>
-        <label>ENCODED:{!FilterNames.Task_OverdueTasks}</label>
+        <label>Overdue Tasks</label>
     </listViews>
     <listViews>
         <fullName>RecurringTasks</fullName>
@@ -222,7 +222,7 @@
             <operation>equals</operation>
             <value>1</value>
         </filters>
-        <label>ENCODED:{!FilterNames.Task_RecurringTasks}</label>
+        <label>Recurring Tasks</label>
     </listViews>
     <listViews>
         <fullName>TodaysTasks</fullName>
@@ -251,7 +251,7 @@
             <operation>equals</operation>
             <value>TODAY,LAST_N_DAYS:30</value>
         </filters>
-        <label>ENCODED:{!FilterNames.z_TodaysTasks}</label>
+        <label>Today's Tasks</label>
     </listViews>
     <listViews>
         <fullName>UnscheduledTasks</fullName>
@@ -279,7 +279,7 @@
             <field>DUE_DATE</field>
             <operation>equals</operation>
         </filters>
-        <label>ENCODED:{!FilterNames.Task_UnscheduledTasks}</label>
+        <label>Unscheduled Tasks</label>
     </listViews>
     <recordTypes>
         <fullName>Airlines_Industry_Communication</fullName>
