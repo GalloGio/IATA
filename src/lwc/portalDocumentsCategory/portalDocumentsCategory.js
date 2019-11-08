@@ -210,11 +210,17 @@ export default class PortalDocumentsCategory extends LightningElement {
     }
 
     downloadDocument(event) {
-        this.loading = true;
-        getContentDistribution({ documentName: event.target.dataset.name, documentId: event.target.dataset.item })
-            .then(results => {
-                window.open(results.ContentDownloadUrl, '_self');
-                this.loading = false;});
+		let url = event.target.dataset.url;
+
+        if(url !== undefined && url.length>0){
+            this.viewDocument(event);
+        } else{
+			this.loading = true;
+			getContentDistribution({ documentName: event.target.dataset.name, documentId: event.target.dataset.item })
+				.then(results => {
+					window.open(results.ContentDownloadUrl, '_self');
+					this.loading = false;});
+		  }
     }
 
     categorySelected(event) {
