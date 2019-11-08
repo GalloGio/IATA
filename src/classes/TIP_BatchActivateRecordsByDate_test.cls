@@ -216,49 +216,84 @@ public class TIP_BatchActivateRecordsByDate_test {
 
 	@isTest
 	public static void testBatchResults(){
-		
-		
 		TIP_BatchActivateRecordsByDate bt = new TIP_BatchActivateRecordsByDate(TIP_BatchActivateRecordsByDate.PROVIDER_TYPE);
 		Test.startTest();
 		Database.executeBatch(bt);
 		Test.stopTest();
 
-		//test providers
-		//System.assertEquals(1, [select count() from Account where Status__c = :TIP_UTils.PARTNER_STATUS_ACTIVE ]);
-		//System.assertEquals(0, [select count() from Account where Status__c = :TIP_UTils.PARTNER_STATUS_INACTIVE ]);
-		//System.assertEquals(1, [select count() from Account where Status__c = :TIP_UTils.PARTNER_STATUS_IN_PROGRESS ]);
+        Map<string, integer> accountRolesCount = new Map<string, integer>();
+		List<Account_Role__c> accountRoles = [SELECT Id, Status__c FROM Account_Role__c	WHERE Status__c = :TIP_UTils.PARTNER_STATUS_ACTIVE 
+                                              OR  Status__c = :TIP_UTils.PARTNER_STATUS_INACTIVE OR  Status__c = :TIP_UTils.PARTNER_STATUS_IN_PROGRESS];
 
-		//test account roles
-		system.debug('##ACC_ROLES: ' + [select id, Status__c, Effective_From_Date__c from Account_Role__c ]);
-		System.assertEquals(1, [select count() from Account_Role__c where Status__c = :TIP_UTils.PARTNER_STATUS_ACTIVE ]);
-		System.assertEquals(0, [select count() from Account_Role__c where Status__c = :TIP_UTils.PARTNER_STATUS_INACTIVE ]);
-		System.assertEquals(1, [select count() from Account_Role__c where Status__c = :TIP_UTils.PARTNER_STATUS_IN_PROGRESS ]);
-
-		//test products
-		
-		system.debug('##PROD: ' + [select id, PP_Payment_Product_Code__c, RecordTypeid, PP_status__c, Payment_Provider_Account_Role__r.Status__c from Partner_products__c ]);
-		System.assertEquals(1, [select count() from Partner_products__c where PP_status__c = :TIP_UTils.PARTNER_PRODUCT_STATUS_ACTIVE ]);
-		System.assertEquals(1, [select count() from Partner_products__c where PP_status__c = :TIP_UTils.PARTNER_PRODUCT_STATUS_INACTIVE ]);
-		System.assertEquals(1, [select count() from Partner_products__c where PP_status__c = :TIP_UTils.PARTNER_PRODUCT_STATUS_IN_PROGRESS ]);
-		System.assertEquals(1, [select count() from Partner_products__c where PP_status__c = :TIP_UTils.PARTNER_STATUS_TERMINATED ]);
-		
-		//test Bin Ranges 
-		system.debug('##RANGE: ' + [select id, TIP_status__c from TIP_BIN_Range__c ]);
-		System.assertEquals(1, [select count() from TIP_BIN_Range__c where TIP_Status__c = :TIP_UTils.BIN_RANGE_STATUS_ACTIVE ]);
-		System.assertEquals(1, [select count() from TIP_BIN_Range__c where TIP_Status__c = :TIP_UTils.BIN_RANGE_STATUS_INACTIVE ]);
-		System.assertEquals(1, [select count() from TIP_BIN_Range__c where TIP_Status__c = :TIP_UTils.BIN_RANGE_STATUS_IN_PROGRESS ]);
-
-		//validate dates 
-		//TIP_Bin_Range__c b = [select TIP_Effective_From_Date__c, TIP_Payment_Provider_Product__r.PP_Effective_from_Date__c from TIP_BIN_Range__c where TIP_Range_Start__c = '444444444' LIMIT 1 ];
-		//System.assertEquals(b.TIP_Payment_Provider_Product__r.PP_Effective_from_Date__c, b.TIP_Effective_From_Date__c );
-
-		//test Product Configs
-		system.debug('##CONFIG: ' + [select id, TIP_status__c from TIP_Pay_Prov_Prod_Country_Config__c ]);
-		System.assertEquals(1, [select count() from TIP_Pay_Prov_Prod_Country_Config__c where TIP_Status__c = :TIP_UTils.PARTNER_PRODUCT_CONFIG_STATUS_ACTIVE ]);
-		System.assertEquals(1, [select count() from TIP_Pay_Prov_Prod_Country_Config__c where TIP_Status__c = :TIP_UTils.PARTNER_PRODUCT_CONFIG_STATUS_INACTIVE ]);
-		System.assertEquals(1, [select count() from TIP_Pay_Prov_Prod_Country_Config__c where TIP_Status__c = :TIP_UTils.PARTNER_PRODUCT_CONFIG_STATUS_IN_PROGRESS ]);
+		for(Account_Role__c ar: accountRoles){
+			integer roleCount = accountRolesCount.get(ar.Status__c);
+			if(roleCount==null){
+				accountRolesCount.put(ar.Status__c, 1);	
+			} else {
+				roleCount++;
+			}	
+		}
+        
+		System.assertEquals(1, accountRolesCount.get(TIP_UTils.PARTNER_STATUS_ACTIVE) == null ? 0 : accountRolesCount.get(TIP_UTils.PARTNER_STATUS_ACTIVE));
+		System.assertEquals(0, accountRolesCount.get(TIP_UTils.PARTNER_STATUS_INACTIVE) == null ? 0 : accountRolesCount.get(TIP_UTils.PARTNER_STATUS_INACTIVE));
+		System.assertEquals(1, accountRolesCount.get(TIP_UTils.PARTNER_STATUS_IN_PROGRESS) == null ? 0 : accountRolesCount.get(TIP_UTils.PARTNER_STATUS_IN_PROGRESS));
 	
+		Map<string, integer> partnerProductsCount = new Map<string, integer>();
+        List<Partner_products__c> partnerProducts = [SELECT Id, PP_status__c FROM Partner_products__c WHERE PP_status__c = :TIP_UTils.PARTNER_PRODUCT_STATUS_ACTIVE OR
+                                                    PP_status__c = :TIP_UTils.PARTNER_PRODUCT_STATUS_INACTIVE OR PP_status__c = :TIP_UTils.PARTNER_PRODUCT_STATUS_IN_PROGRESS OR
+                                                    PP_status__c = :TIP_UTils.PARTNER_PRODUCT_STATUS_TERMINATED];
+        
+        for(Partner_products__c pp: partnerProducts){
+			integer ppCount = partnerProductsCount.get(pp.PP_status__c);
+			if(ppCount==null){
+				partnerProductsCount.put(pp.PP_status__c, 1);	
+			} else {
+				ppCount++;
+			}	
+		}
+        
+        System.assertEquals(1, partnerProductsCount.get(TIP_UTils.PARTNER_PRODUCT_STATUS_ACTIVE) == null ? 0 : partnerProductsCount.get(TIP_UTils.PARTNER_PRODUCT_STATUS_ACTIVE));
+        System.assertEquals(1, partnerProductsCount.get(TIP_UTils.PARTNER_PRODUCT_STATUS_INACTIVE) == null ? 0 : partnerProductsCount.get(TIP_UTils.PARTNER_PRODUCT_STATUS_INACTIVE));
+        System.assertEquals(1, partnerProductsCount.get(TIP_UTils.PARTNER_PRODUCT_STATUS_IN_PROGRESS) == null ? 0 : partnerProductsCount.get(TIP_UTils.PARTNER_PRODUCT_STATUS_IN_PROGRESS));
+        System.assertEquals(1, partnerProductsCount.get(TIP_UTils.PARTNER_PRODUCT_STATUS_TERMINATED) == null ? 0 : partnerProductsCount.get(TIP_UTils.PARTNER_PRODUCT_STATUS_TERMINATED));
+           
+		Map<string, integer> binRangeCount = new Map<string, integer>();
+        List<TIP_BIN_Range__c> binRange = [SELECT Id, TIP_Status__c FROM TIP_BIN_Range__c WHERE TIP_Status__c = :TIP_UTils.BIN_RANGE_STATUS_ACTIVE OR
+                                           TIP_Status__c = :TIP_UTils.BIN_RANGE_STATUS_INACTIVE OR TIP_Status__c = :TIP_UTils.BIN_RANGE_STATUS_IN_PROGRESS];
+        
+        for(TIP_BIN_Range__c br: binRange){
+			integer brCount = binRangeCount.get(br.TIP_Status__c);
+			if(brCount==null){
+				binRangeCount.put(br.TIP_Status__c, 1);	
+			} else {
+				brCount++;
+			}	
+		}
+        
+		System.assertEquals(1, binRangeCount.get(TIP_UTils.BIN_RANGE_STATUS_ACTIVE) == null ? 0 : binRangeCount.get(TIP_UTils.BIN_RANGE_STATUS_ACTIVE));
+        System.assertEquals(1, binRangeCount.get(TIP_UTils.BIN_RANGE_STATUS_INACTIVE) == null ? 0 : binRangeCount.get(TIP_UTils.BIN_RANGE_STATUS_INACTIVE));
+        System.assertEquals(1, binRangeCount.get(TIP_UTils.BIN_RANGE_STATUS_IN_PROGRESS) == null ? 0 : binRangeCount.get(TIP_UTils.BIN_RANGE_STATUS_IN_PROGRESS));
+    	
+        Map<string, integer> provProdCountryCount = new Map<string, integer>();
+        List<TIP_Pay_Prov_Prod_Country_Config__c> pppcList = [SELECT Id, TIP_Status__c FROM TIP_Pay_Prov_Prod_Country_Config__c 
+                                                              WHERE TIP_Status__c = :TIP_UTils.PARTNER_PRODUCT_CONFIG_STATUS_ACTIVE 
+                                                              OR TIP_Status__c = :TIP_UTils.PARTNER_PRODUCT_CONFIG_STATUS_INACTIVE 
+                                                              OR TIP_Status__c = :TIP_UTils.PARTNER_PRODUCT_CONFIG_STATUS_IN_PROGRESS];
+        
+        for(TIP_Pay_Prov_Prod_Country_Config__c pppc: pppcList){
+			integer pppcCount = provProdCountryCount.get(pppc.TIP_Status__c);
+			if(pppcCount==null){
+				provProdCountryCount.put(pppc.TIP_Status__c, 1);	
+			} else {
+				pppcCount++;
+			}	
+		}
+                                           
+        System.assertEquals(1, binRangeCount.get(TIP_UTils.PARTNER_PRODUCT_CONFIG_STATUS_ACTIVE) == null ? 0 : binRangeCount.get(TIP_UTils.PARTNER_PRODUCT_CONFIG_STATUS_ACTIVE));  
+        System.assertEquals(1, binRangeCount.get(TIP_UTils.PARTNER_PRODUCT_CONFIG_STATUS_INACTIVE) == null ? 0 : binRangeCount.get(TIP_UTils.PARTNER_PRODUCT_CONFIG_STATUS_INACTIVE));
+        System.assertEquals(1, binRangeCount.get(TIP_UTils.PARTNER_PRODUCT_CONFIG_STATUS_IN_PROGRESS) == null ? 0 : binRangeCount.get(TIP_UTils.PARTNER_PRODUCT_CONFIG_STATUS_IN_PROGRESS));	
 	}
+
 
 	@isTest
 	public static void testScheduledJobs (){
