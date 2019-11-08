@@ -56,7 +56,7 @@ public without sharing class portalProfileCustomBoxCtrl {
     public static Boolean createPortalApplicationRigth(Id contactId, List<Id> servicesIds){
         List<Portal_Application_Right__c> rigths = new List<Portal_Application_Right__c>();
         for(Id service : servicesIds){  
-            rigths.add(New Portal_Application_Right__c(Contact__c = contactId, Portal_Application__c = service));
+            rigths.add(New Portal_Application_Right__c(Contact__c = contactId, Portal_Application__c = service,	Right__c = 'Access Granted'));
         }
         try{
             insert rigths;
