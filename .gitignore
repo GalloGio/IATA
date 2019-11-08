@@ -404,3 +404,7 @@ out
 config/*
 README.md
 uncrustify.cfg
+.idea/
+.forceCode/
+.sfdx/
+.vscode/

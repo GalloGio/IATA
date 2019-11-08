@@ -353,6 +353,43 @@
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
+    <fields>
+        <fullName>Account_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>Account_Role__r.Account_name__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Account Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Contact_Account__c</fullName>
+        <description>Used for flow, to get records</description>
+        <externalId>false</externalId>
+        <formula>Contact__r.AccountId</formula>
+        <label>Contact's Account</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Functional_Role__c</fullName>
+        <externalId>false</externalId>
+        <label>Functional Role</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Functional_Roles</valueSetName>
+        </valueSet>
+    </fields>
     <label>Account Contact Role</label>
     <nameField>
         <displayFormat>ACR-{000000000}</displayFormat>
@@ -428,41 +465,4 @@
         <errorMessage>The following Contact fields cannot be empty for Primary Provider Contacts: First name, Last Name, Salutation, Title, Email &amp; Phone.</errorMessage>
     </validationRules>
     <visibility>Public</visibility>
-	<fields>
-        <fullName>Account_Name__c</fullName>
-        <externalId>false</externalId>
-        <formula>Account_Role__r.Account_name__c</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Account Name</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>Contact_Account__c</fullName>
-        <description>Used for flow, to get records</description>
-        <externalId>false</externalId>
-        <formula>Contact__r.AccountId</formula>
-        <label>Contact's Account</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>Functional_Role__c</fullName>
-        <externalId>false</externalId>
-        <label>Functional Role</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Picklist</type>
-        <valueSet>
-            <restricted>true</restricted>
-            <valueSetName>Functional_Roles</valueSetName>
-        </valueSet>
-    </fields>
 </CustomObject>
