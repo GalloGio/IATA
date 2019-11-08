@@ -62,7 +62,7 @@ public class ANG_AgencyChangesConfigHelper{
 
 	public static void setNotApplicableSteps(ANG_AgencyChangesConfig__c config, AMS_OSCAR__c oscar) {
 		if(config == null || config.TCA_Not_Applicable_Steps__c == null) return;
-		
+
 		for (String step : config.TCA_Not_Applicable_Steps__c.split(';')){
 			oscar.put(step + '__c', 'Not Applicable');
 		}

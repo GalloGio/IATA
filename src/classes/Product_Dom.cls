@@ -10,180 +10,180 @@
 public class Product_Dom {
 
 
-    /****************************************************************************************************
-        Created by CGI, Thai 2015-08-17
-            Call trigger method corresponding to trigger event
-    ****************************************************************************************************/
-    public static void triggerHandler() {
-        //*** instantiate the domain class to prevent too many static methods
-        Product_Dom exe = new Product_Dom();
+	/****************************************************************************************************
+		Created by CGI, Thai 2015-08-17
+			Call trigger method corresponding to trigger event
+	****************************************************************************************************/
+	public static void triggerHandler() {
+		//*** instantiate the domain class to prevent too many static methods
+		Product_Dom exe = new Product_Dom();
 
-        //*** call handler method corresponding to trigger event
-        if (trigger.isBefore) {
-            if (trigger.isInsert) exe.onBeforeInsert();
-            else if (trigger.isUpdate) exe.onBeforeUpdate();
-            //else if (trigger.isDelete) exe.onBeforeDelete();
-        } else if (trigger.isAfter) {
-            if (trigger.isInsert) exe.onAfterInsert();
-            else if (trigger.isUpdate) exe.onAfterUpdate();
-            //else if (trigger.isDelete) exe.onAfterDelete();
-        }
-    } //*** end of "triggerHandler"
-
-
-    /****************************************************************************************************
-        Created by CGI, Thai 2015-08-17
-            Data variables
-    ****************************************************************************************************/
-    private List<Product2> newList = new List<Product2>();
-    private List<Product2> oldList = new List<Product2>();
-    private Map<Id, Product2> newMap = new Map<Id, Product2>();
-    private Map<Id, Product2> oldMap = new Map<Id, Product2>();
+		//*** call handler method corresponding to trigger event
+		if (trigger.isBefore) {
+			if (trigger.isInsert) exe.onBeforeInsert();
+			else if (trigger.isUpdate) exe.onBeforeUpdate();
+			//else if (trigger.isDelete) exe.onBeforeDelete();
+		} else if (trigger.isAfter) {
+			if (trigger.isInsert) exe.onAfterInsert();
+			else if (trigger.isUpdate) exe.onAfterUpdate();
+			//else if (trigger.isDelete) exe.onAfterDelete();
+		}
+	} //*** end of "triggerHandler"
 
 
-    /****************************************************************************************************
-        Created by CGI, Thai 2015-08-17
-            Set trigger data to data variables
-    ****************************************************************************************************/
-    private void getData(Boolean newDataAvailable, Boolean oldDataAvailable) {
-        if (newDataAvailable) {
-
-            newList = (List<Product2>) trigger.new;
-            newMap = (Map<Id, Product2>) trigger.newMap;
-        }
-        if (oldDataAvailable) {
-            oldList = (List<Product2>) trigger.old;
-            oldMap = (Map<Id, Product2>) trigger.oldMap;
-        }
-    } //*** end of "getData"
+	/****************************************************************************************************
+		Created by CGI, Thai 2015-08-17
+			Data variables
+	****************************************************************************************************/
+	private List<Product2> newList = new List<Product2>();
+	private List<Product2> oldList = new List<Product2>();
+	private Map<Id, Product2> newMap = new Map<Id, Product2>();
+	private Map<Id, Product2> oldMap = new Map<Id, Product2>();
 
 
-    /****************************************************************************************************
-        Created by CGI, Thai 2015-08-17
-            Method for event
-    ****************************************************************************************************/
-    private void onBeforeInsert() {
+	/****************************************************************************************************
+		Created by CGI, Thai 2015-08-17
+			Set trigger data to data variables
+	****************************************************************************************************/
+	private void getData(Boolean newDataAvailable, Boolean oldDataAvailable) {
+		if (newDataAvailable) {
 
-        getData(true, false);
-
-        //*** set default values
-        Product_Svc.setDefaultValue(newList);
-        //*** set record type
-        Product_Svc.setRecordType(null, newList, true);
-        //*** set product manager based on profit center
-        Product_Svc.setProductManager(null, newList, true);
-        //-- set IsNewVersion field
-        Product_Svc.setIsNewVersion(newList);
-
-        /** Ecommerce Enhancements R2 **/
-        Product_Svc.setAcceptedPaymentMehodsDefaultValue(newList);
-        /** End INC335264**/
+			newList = (List<Product2>) trigger.new;
+			newMap = (Map<Id, Product2>) trigger.newMap;
+		}
+		if (oldDataAvailable) {
+			oldList = (List<Product2>) trigger.old;
+			oldMap = (Map<Id, Product2>) trigger.oldMap;
+		}
+	} //*** end of "getData"
 
 
-    }
-    private void onBeforeUpdate() {
-        getData(true, true);
-        //*** set record type
-        //Product_Svc.setRecordType(oldList, newList, false);
-        //*** set product manager based on profit center
-        Product_Svc.setProductManager(oldList, newList, false);
+	/****************************************************************************************************
+		Created by CGI, Thai 2015-08-17
+			Method for event
+	****************************************************************************************************/
+	private void onBeforeInsert() {
 
-        /** Ecommerce Enhancements R2 **/
-        Product_Svc.setAcceptedPaymentMehodsDefaultValue(newList);
-        /** End INC335264**/
-    }
+		getData(true, false);
 
-    private void onAfterInsert() {
-        //On demand test run
-        if (Test.isRunningTest() && Utility.getNumericSetting('Execute Trigger Product') != 1) return;
+		//*** set default values
+		Product_Svc.setDefaultValue(newList);
+		//*** set record type
+		Product_Svc.setRecordType(null, newList, true);
+		//*** set product manager based on profit center
+		Product_Svc.setProductManager(null, newList, true);
+		//-- set IsNewVersion field
+		Product_Svc.setIsNewVersion(newList);
 
-        if (Utility.getNumericSetting('Sandbox Reference Data Sync') == 1) {
-            return;
-        }
+		/** Ecommerce Enhancements R2 **/
+		Product_Svc.setAcceptedPaymentMehodsDefaultValue(newList);
+		/** End INC335264**/
 
-        getData(true, false);
 
-        //-- Send Products to Zuora
-        sendProducts2Zuora(newMap);
+	}
+	private void onBeforeUpdate() {
+		getData(true, true);
+		//*** set record type
+		//Product_Svc.setRecordType(oldList, newList, false);
+		//*** set product manager based on profit center
+		Product_Svc.setProductManager(oldList, newList, false);
 
-        //Create PriceBookEntry for Phase 1 and 2 if not exist
-        Product_Svc.createPriceBookEntry(newMap, oldMap, true);
+		/** Ecommerce Enhancements R2 **/
+		Product_Svc.setAcceptedPaymentMehodsDefaultValue(newList);
+		/** End INC335264**/
+	}
 
-    }
+	private void onAfterInsert() {
+		//On demand test run
+		if (Test.isRunningTest() && Utility.getNumericSetting('Execute Trigger Product') != 1) return;
 
-    private void onAfterUpdate() {
-        //On demand test run
-        if (Test.isRunningTest() && Utility.getNumericSetting('Execute Trigger Product') != 1) return;
-        if (Utility.getNumericSetting('Sandbox Reference Data Sync') == 1) return;
+		if (Utility.getNumericSetting('Sandbox Reference Data Sync') == 1) {
+			return;
+		}
 
-        getData(true, true);
+		getData(true, false);
 
-        Boolean isAcceptedPaymentMethodsUpdate = true;
-        for (Product2 product : newList) {
-            Product2 oldProduct = oldMap.get(product.Id);
+		//-- Send Products to Zuora
+		sendProducts2Zuora(newMap);
 
-            String oldApm = oldProduct.Accepted_Payment_Methods__c;
-            if (oldApm == null) oldApm = '';
+		//Create PriceBookEntry for Phase 1 and 2 if not exist
+		Product_Svc.createPriceBookEntry(newMap, oldMap, true);
 
-            String newApm = product.Accepted_Payment_Methods__c;
-            if (newApm == null) newApm = '';
+	}
 
-            if (newApm.equals(oldApm)) {
-                isAcceptedPaymentMethodsUpdate = false;
-                break;
-            }
-        }
+	private void onAfterUpdate() {
+		//On demand test run
+		if (Test.isRunningTest() && Utility.getNumericSetting('Execute Trigger Product') != 1) return;
+		if (Utility.getNumericSetting('Sandbox Reference Data Sync') == 1) return;
 
-        if (!isAcceptedPaymentMethodsUpdate) {
-            //Email notification
-            if (!Test.isRunningTest()) Product_Svc.emailNotification(newList, oldMap, false);
+		getData(true, true);
 
-            Map<Id, Product2> products2Send = getProductsToSend(oldMap, newMap);
-            if (products2Send.size() > 0) {
-                sendProducts2Zuora(products2Send);
-            }
+		Boolean isAcceptedPaymentMethodsUpdate = true;
+		for (Product2 product : newList) {
+			Product2 oldProduct = oldMap.get(product.Id);
 
-            //Create PriceBookEntry for Phase 1 and 2 if not exist
-            Product_Svc.createPriceBookEntry(newMap, oldMap, false);
-        }
+			String oldApm = oldProduct.Accepted_Payment_Methods__c;
+			if (oldApm == null) oldApm = '';
 
-        Product_Svc.propagateZuoraId(newMap, oldMap);
+			String newApm = product.Accepted_Payment_Methods__c;
+			if (newApm == null) newApm = '';
 
-        /** Ecommerce Enhancements R2 **/
-        Product_Svc.replicateProductAcceptedPaymentMethods(newList, oldMap);
-    }
+			if (newApm.equals(oldApm)) {
+				isAcceptedPaymentMethodsUpdate = false;
+				break;
+			}
+		}
 
-    public static Map<Id, Product2> getProductsToSend(Map<Id, Product2> productsBefore, Map<Id, Product2> productsAfter) {
-        Map<Id, Product2> products2Send = new Map<Id, Product2>();
-        List<Schema.FieldSetMember> fields = Utility.readFieldSet('Product2', 'Send_To_Zuora_Listener');
+		if (!isAcceptedPaymentMethodsUpdate) {
+			//Email notification
+			if (!Test.isRunningTest()) Product_Svc.emailNotification(newList, oldMap, false);
 
-        for (Id productId : productsAfter.keySet()) {
-            Product2 afterProduct = productsAfter.get(productId);
-            Product2 beforeProduct = productsBefore.get(productId);
-            Boolean productChanged = false;
+			Map<Id, Product2> products2Send = getProductsToSend(oldMap, newMap);
+			if (products2Send.size() > 0) {
+				sendProducts2Zuora(products2Send);
+			}
 
-            // Verify listened fields changed
-            for (Schema.FieldSetMember fsm : fields)
-                if (beforeProduct.get(fsm.getFieldPath()) != afterProduct.get(fsm.getFieldPath()))
-                    productChanged = true;
+			//Create PriceBookEntry for Phase 1 and 2 if not exist
+			Product_Svc.createPriceBookEntry(newMap, oldMap, false);
+		}
 
-            if (productChanged)
-                products2Send.put(productId, afterProduct);
-        }
+		Product_Svc.propagateZuoraId(newMap, oldMap);
 
-        return products2Send;
-    }
+		/** Ecommerce Enhancements R2 **/
+		Product_Svc.replicateProductAcceptedPaymentMethods(newList, oldMap);
+	}
 
-    public static void sendProducts2Zuora(Map<Id, Product2> productById) {
-        //-- Send Products to Zuora 
-        Integer zMax = (Test.isRunningTest()) ? 200 : Utility.getIntegerSetting('ZCALLOUT_MAX_PRODUCTS');  
-        if(productById.size() > zMax)
-            Database.executeBatch(new Product_Batch('saveZProducts', productById.values()), zMax);
-        else if(System.isFuture())
-            Product_Svc.saveZProducts(productById.keySet());
-        else
-            System.enqueueJob(new Product_Svc.saveZProductsQueueable(productById.keySet()));
-    }
+	public static Map<Id, Product2> getProductsToSend(Map<Id, Product2> productsBefore, Map<Id, Product2> productsAfter) {
+		Map<Id, Product2> products2Send = new Map<Id, Product2>();
+		List<Schema.FieldSetMember> fields = Utility.readFieldSet('Product2', 'Send_To_Zuora_Listener');
+
+		for (Id productId : productsAfter.keySet()) {
+			Product2 afterProduct = productsAfter.get(productId);
+			Product2 beforeProduct = productsBefore.get(productId);
+			Boolean productChanged = false;
+
+			// Verify listened fields changed
+			for (Schema.FieldSetMember fsm : fields)
+				if (beforeProduct.get(fsm.getFieldPath()) != afterProduct.get(fsm.getFieldPath()))
+					productChanged = true;
+
+			if (productChanged)
+				products2Send.put(productId, afterProduct);
+		}
+
+		return products2Send;
+	}
+
+	public static void sendProducts2Zuora(Map<Id, Product2> productById) {
+		//-- Send Products to Zuora
+		Integer zMax = (Test.isRunningTest()) ? 200 : Utility.getIntegerSetting('ZCALLOUT_MAX_PRODUCTS');
+		if(productById.size() > zMax)
+			Database.executeBatch(new Product_Batch('saveZProducts', productById.values()), zMax);
+		else if(System.isFuture())
+			Product_Svc.saveZProducts(productById.keySet());
+		else
+			System.enqueueJob(new Product_Svc.saveZProductsQueueable(productById.keySet()));
+	}
 
 
 } //*** end of class

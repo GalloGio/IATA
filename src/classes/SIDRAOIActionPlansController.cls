@@ -14,12 +14,12 @@ public with sharing class SIDRAOIActionPlansController {
 			this.parent = [SELECT Id FROM Operational_Improvements__c WHERE Id = :controller.getRecord().Id];
 
 			//ACAMBAS - WMO-421 - Start
-			
+
 			PageReference page = ApexPages.currentPage();
 
 			strSortField = (page.getParameters().get('strSortField') == null) ? 'CreatedDate' : page.getParameters().get('strSortField');
-        	strPreviousSortField = (page.getParameters().get('strPreviousSortField') == null) ? 'CreatedDate' : page.getParameters().get('strPreviousSortField');
-        	isSortASC = (page.getParameters().get('isSortASC') == null) ? true : Boolean.valueOf(page.getParameters().get('isSortASC'));
+			strPreviousSortField = (page.getParameters().get('strPreviousSortField') == null) ? 'CreatedDate' : page.getParameters().get('strPreviousSortField');
+			isSortASC = (page.getParameters().get('isSortASC') == null) ? true : Boolean.valueOf(page.getParameters().get('isSortASC'));
 
 			getOIActionPlans();
 
@@ -118,30 +118,30 @@ public with sharing class SIDRAOIActionPlansController {
 
 	//ACAMBAS - WMO-421 - Start
 	public void SortTable() {
-    	// Check to see if the same header was clicked twice in a row, which means the user want to sort in the opposite order
-    	system.debug('### SortTable - strSortField: ' + strSortField);
-    	system.debug('### SortTable - strPreviousSortField: ' + strPreviousSortField);
+		// Check to see if the same header was clicked twice in a row, which means the user want to sort in the opposite order
+		system.debug('### SortTable - strSortField: ' + strSortField);
+		system.debug('### SortTable - strPreviousSortField: ' + strPreviousSortField);
 
-    	if (strSortField == strPreviousSortField) {
-    		isSortASC = !isSortASC;
-    	} else {
-    		// if not, just take note of the new "previous field"
-    		strPreviousSortField = strSortField;
-    		isSortASC = true;
-    	}
+		if (strSortField == strPreviousSortField) {
+			isSortASC = !isSortASC;
+		} else {
+			// if not, just take note of the new "previous field"
+			strPreviousSortField = strSortField;
+			isSortASC = true;
+		}
 
-    	getOIActionPlans();
-    }
+		getOIActionPlans();
+	}
 
-    public void getOIActionPlans() {
-    	String queryStr = 'SELECT OI__c, Name, Met_Due_Date__c, Id, Due_Date__c, Description__c, Comment__c, Closure_Date__c, Action_Owner__c ' +
+	public void getOIActionPlans() {
+		String queryStr = 'SELECT OI__c, Name, Met_Due_Date__c, Id, Due_Date__c, Description__c, Comment__c, Closure_Date__c, Action_Owner__c ' +
 							  'FROM OI_Action_Plan__c ' +
-							  'WHERE OI__c = \'' + this.parent.Id + '\' ' + 
+							  'WHERE OI__c = \'' + this.parent.Id + '\' ' +
 							  'ORDER BY ' + strSortField + ' ' + (isSortASC ? 'ASC' : 'DESC');
 
 		this.listOIActionPlans = (list<OI_Action_Plan__c>) Database.query(queryStr);
-    }
+	}
 
-    //ACAMBAS - WMO-421 - End
+	//ACAMBAS - WMO-421 - End
 
 }

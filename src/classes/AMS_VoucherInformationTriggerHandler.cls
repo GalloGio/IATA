@@ -25,17 +25,17 @@ public with sharing class AMS_VoucherInformationTriggerHandler {
 		}
 
 		List<AggregateResult> accountVouchersMap = [SELECT  Account__c, Year__c , Count(Id) from AMS_Voucher_Information__c where Account__c = :accounts group by Account__c, Year__c  having Count(id) > 1 ];
-	    
-	    for (AggregateResult ar : accountVouchersMap)  {
 
-    			accountsWithMultipleVouchers.add(String.valueOf(ar.get('Account__c')));
+		for (AggregateResult ar : accountVouchersMap)  {
+
+				accountsWithMultipleVouchers.add(String.valueOf(ar.get('Account__c')));
 		}
 
 		for(AMS_Voucher_Information__c elem : vouchersInfo){
 
-    		if(accountsWithMultipleVouchers.contains(elem.Account__c)){
-    			elem.addError('There is already 1 Voucher Information Attached to the Account ' + elem.Account__c + ' for that year.');
-    		}
+			if(accountsWithMultipleVouchers.contains(elem.Account__c)){
+				elem.addError('There is already 1 Voucher Information Attached to the Account ' + elem.Account__c + ' for that year.');
+			}
 
 		}
 
@@ -57,7 +57,7 @@ public with sharing class AMS_VoucherInformationTriggerHandler {
 
 			yearDate = yearDate.addYears(-1);
 
-			Integer newYear = yearDate.year(); 
+			Integer newYear = yearDate.year();
 
 			allYears.add(String.valueOf(newYear));
 
@@ -86,7 +86,7 @@ public with sharing class AMS_VoucherInformationTriggerHandler {
 			List<AMS_Voucher_Information__c> vouchersTotal = vouchersInfoLastYear.get(vInfo.Account__c);
 
 			if(vouchersTotal == null){
-				
+
 				vInfo.Vouchers_Issued_Last_Year__c = 0;
 				System.debug('Seting value to zero. (1)');
 				continue;
@@ -94,7 +94,7 @@ public with sharing class AMS_VoucherInformationTriggerHandler {
 
 			AMS_Voucher_Information__c voucherFromLastYear = findVoucherFromLastYear(vouchersTotal,vInfo.Year__c);
 
-			
+
 
 			if(voucherFromLastYear == null){
 
@@ -120,7 +120,7 @@ public with sharing class AMS_VoucherInformationTriggerHandler {
 
 			yearDate = yearDate.addYears(-1);
 
-			Integer newYear = yearDate.year(); 
+			Integer newYear = yearDate.year();
 
 			if(vInfo.Year__c == String.valueOf(newYear)){
 				System.debug('Found last years vouchersInfo:' + vInfo);

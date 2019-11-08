@@ -2,7 +2,7 @@ trigger AMS_VoucherInformationTrigger on AMS_Voucher_Information__c ( after inse
 
 	if(!AMS_TriggerExecutionManager.checkExecution(AMS_Voucher_Information__c.getSObjectType(), 'AMS_VoucherInformationTrigger')) { return; }
 
-	if (Trigger.isAfter && Trigger.isUpdate) { 	
+	if (Trigger.isAfter && Trigger.isUpdate) {
 		AMS_VoucherInformationTriggerHandler.handleAfterUpdate(Trigger.new);
 	}
 
