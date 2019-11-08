@@ -4,6 +4,37 @@
         <fullName>FDS Support Assignment</fullName>
         <active>true</active>
         <ruleEntry>
+            <assignedTo>GCSTASF</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>AND(
+or(
+RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;,
+RecordType.Name = &quot;Process&quot;
+),
+ISPICKVAL(Topic__c, &quot;TASF&quot;)
+)</formula>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>SNOW_integration_to_ITS</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>AND(
+RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;,
+
+or(
+and(
+ISPICKVAL(CaseArea__c, &quot;MITA&quot;),
+ISPICKVAL(Reason1__c,&quot;Report issue / Technical Issue&quot;)
+),
+
+and(
+ISPICKVAL(CaseArea__c, &quot;ICCS&quot;),
+ISPICKVAL(Reason1__c,&quot;Report issue / Technical Issue&quot;)
+)
+
+)
+)</formula>
+        </ruleEntry>	
+        <ruleEntry>
             <assignedTo>GCS_BIS_Ops_Cargo_L3</assignedTo>
             <assignedToType>Queue</assignedToType>
             <formula>AND(
