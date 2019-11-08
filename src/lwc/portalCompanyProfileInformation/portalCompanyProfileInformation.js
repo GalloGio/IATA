@@ -57,14 +57,16 @@ export default class PortalCompanyProfileInformation extends LightningElement {
             this.portalAdminList = [];
 
             data.forEach(admin => {
-                const portalAdmin = {};
-                portalAdmin.Name = [admin.User.Contact.Salutation, admin.User.Contact.Name].filter(Boolean).join(" ");
-                if(admin.User.Contact.User_Portal_Status__c !== 'Pending Approval') {
-                    portalAdmin.Email = admin.User.Contact.Email;
-                    portalAdmin.Country = admin.User.Contact.Account.BillingCountry;
+                if(admin.User.Contact !== undefined && admin.User.Contact !== null) {
+                    const portalAdmin = {};
+                    portalAdmin.Name = [admin.User.Contact.Salutation, admin.User.Contact.Name].filter(Boolean).join(" ");
+                    if(admin.User.Contact.User_Portal_Status__c !== 'Pending Approval') {
+                        portalAdmin.Email = admin.User.Contact.Email;
+                        portalAdmin.Country = admin.User.Contact.Account.BillingCountry;
+                    }
+                    
+                    this.portalAdminList.push( portalAdmin );
                 }
-                
-                this.portalAdminList.push( portalAdmin );
             });
             this.error = undefined;
         } else if(error) {
