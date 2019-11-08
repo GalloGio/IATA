@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomPermission xmlns="http://soap.sforce.com/2006/04/metadata">
     <description>Blocks users from editing the following fields if they don’t have the permission set AMP Agency Management</description>
-    <label>AMP Agency Management</label>
+    <label>Can Edit ISOCountry VATNumber BillingAddress AgencyWWHQ RT</label>
 </CustomPermission>
