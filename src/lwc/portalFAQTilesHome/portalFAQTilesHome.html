@@ -1,0 +1,32 @@
+<template>
+    <c-portal-custom-card-container if:true={showFaqTiles}>
+
+        <span slot="cardTitle">
+            <span class="text-small">
+                {labels.CSP_FAQ_HeaderTitle}
+            </span>
+        </span>
+
+        <span slot="cardBody">
+            <div if:true={loading} class="spinnerContainer">
+                <lightning-spinner class="background-white" alternative-text="Loading"></lightning-spinner>
+            </div>
+            <div if:false={loading} class="slds-is-relative" style="overflow: hidden;">
+
+                <div class="slds-grid slds-wrap slds-gutters_xx-small slds-p-bottom_large">
+                    <template for:each={lstTiles} for:item="tile" for:index="index">
+                        <div key={tile.categoryName} class={tile.class}>
+                            <div class="background-white aroundLightGrayBorder cursorPointer heightInfo"
+                                onclick={handleTileButtonClick} data-item={tile.categoryName}>
+                                <img src={tile.imageURL} data-item={tile.categoryName} />
+                                <div class="text-small text-black text-bold" data-item={tile.categoryName}>
+                                    {tile.categoryLabel}</div>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+
+            </div>
+        </span>
+    </c-portal-custom-card-container>
+</template>
