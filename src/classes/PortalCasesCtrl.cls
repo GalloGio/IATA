@@ -215,7 +215,7 @@ public with sharing class PortalCasesCtrl {
             fieldPathSet.add(f.getFieldPath());
         }
 
-        String query = 'BSP_CASS__c, IATA_Code__c, Remittance_period__c, CaseArea__c, Contact.Name, Reason1__c, CNSCase__c, Origin, IsClosed, Classification_SIS__c, TIP_Partner_Product__c, RecordType.Name, RecordType.DeveloperName, Owner.Name, LastModifiedDate, CreatedBy.Name ';
+        String query = 'Description, BSP_CASS__c, IATA_Code__c, Remittance_period__c, CaseArea__c, Contact.Name, Reason1__c, CNSCase__c, Origin, IsClosed, Classification_SIS__c, TIP_Partner_Product__c, RecordType.Name, RecordType.DeveloperName, Owner.Name, LastModifiedDate, CreatedBy.Name ';
         Boolean hasStatus = false;
         
         for(String fieldPath : fieldPathSet) {
