@@ -28,7 +28,7 @@
     </values>
     <values>
         <field>DataCategoryLabel_en_US__c</field>
-        <value xsi:type="xsd:string">IATA Local Coordinator</value>
+        <value xsi:type="xsd:string">Local Exam Coordinator issue</value>
     </values>
     <values>
         <field>DataCategoryLabel_es__c</field>
@@ -80,7 +80,7 @@
     </values>
     <values>
         <field>DataSubtopicName__c</field>
-        <value xsi:type="xsd:string">IATA_Local_Coordinator_ssc</value>
+        <value xsi:type="xsd:string">Local_Exam_Coordinator_issue_ssc</value>
     </values>
     <values>
         <field>DataTopicName__c</field>
@@ -88,7 +88,7 @@
     </values>
     <values>
         <field>FAQsStructure__c</field>
-        <value xsi:type="xsd:boolean">false</value>
+        <value xsi:type="xsd:boolean">true</value>
     </values>
     <values>
         <field>ISO_Country_Codes1__c</field>
@@ -104,7 +104,7 @@
     </values>
     <values>
         <field>Order__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:double">7.0</value>
     </values>
     <values>
         <field>Permission_Set_Name__c</field>
