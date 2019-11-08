@@ -49,7 +49,7 @@ public without sharing class PortalPasswordHandler {
     //get user information
     public static User getUserFromEmail(String email){
         User user;
-        List<User> userList = [Select id, contactId, uid__c, userName from user where email = :email and contactId != '' and
+        List<User> userList = [Select id, contactId, uid__c, userName, contact.Preferred_Language__c from user where email = :email and contactId != '' and
                                      (isActive = true or portal_user_frozen_checkbox__c = true)];
 
         if(!userList.isEmpty()){
@@ -87,10 +87,21 @@ public without sharing class PortalPasswordHandler {
         String cleanUsername = user.userName.replace('+', plusReplacer);
         String encodedPart = 'c=' + EncodingUtil.urlEncode(EncryptString(cleanUsername + SEPARATOR + password + SEPARATOR + user.uid__c + SEPARATOR + string.valueOf(system.now())), 'UTF-8');
 
+        String languageParam = '';
+
+        if(user.contact.Preferred_Language__c != null){
+            for(Preferred_Language_on_ISS_Portal__c portalLang : Preferred_Language_on_ISS_Portal__c.getAll().values()){
+                if(user.contact.Preferred_Language__c == portalLang.language__c){
+                    languageParam = 'language=' + portalLang.languageLocalKey__c + '&';
+                    break;
+                }
+            }
+        }
+
         String prefix = '';
         List<Network> networkList = [Select id from Network where name =: 'CS Portal' Limit 1];
         if(!networkList.isEmpty()) prefix = Network.getLoginURL(networkList.get(0).Id).substring(0,Network.getLoginURL(networkList.get(0).Id).indexOf('/login'));
-        String link = prefix + '/' + pageName + '?' + encodedPart;
+        String link = prefix + '/' + pageName + '?' + languageParam + encodedPart;
         return link;
     }
 
