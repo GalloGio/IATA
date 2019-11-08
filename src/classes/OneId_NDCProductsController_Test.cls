@@ -26,7 +26,7 @@ public class OneId_NDCProductsController_Test {
         
         Id p = [SELECT id 
                 FROM profile 
-                WHERE name='Partner Community User'].id;
+                WHERE name='ISS Portal (Partner)'].id;
         
         System.runAs(createUserWithRole()){
             String roleRecordTypeId = Schema.SObjectType.Account_Role__c.getRecordTypeInfosByDeveloperName().get('Default').getRecordTypeId();

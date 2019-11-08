@@ -27,7 +27,7 @@ public class OneId_NDCRelationsController_Test {
         
         Id p = [SELECT id 
                 FROM profile 
-                WHERE name='Partner Community User'].id;
+                WHERE name='ISS Portal Airline User (Partner)'].id;
         
         System.runAs(createUserWithRole()){
             String roleRecordTypeId = Schema.SObjectType.Account_Role__c.getRecordTypeInfosByName().get('Default').getRecordTypeId();
@@ -75,7 +75,7 @@ public class OneId_NDCRelationsController_Test {
         
         Id p = [SELECT id 
                 FROM profile 
-                WHERE name='Partner Community User'].id;
+                WHERE name='ISS Portal (Partner)'].id;
         
         System.runAs(createUserWithRole()){
             String roleRecordTypeId = Schema.SObjectType.Account_Role__c.getRecordTypeInfosByName().get('Default').getRecordTypeId();

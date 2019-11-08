@@ -23,7 +23,7 @@ public class OneId_NDCMatchmakerController_Test {
 
     public static User createUserWithAccount() {
         
-        Id p = [select id from profile where name='Partner Community User'].id;
+        Id p = [select id from profile where name='ISS Portal (Partner)'].id;
         
         System.runAs(createUserWithRole()){
             String roleRecordTypeId = Schema.SObjectType.Account_Role__c.getRecordTypeInfosByDeveloperName().get('Default').getRecordTypeId();
@@ -274,7 +274,7 @@ public class OneId_NDCMatchmakerController_Test {
         
         Id p = [SELECT Id 
                 FROM profile 
-                WHERE name='Partner Community User'].id;
+                WHERE name='ISS Portal (Partner)'].id;
         
         System.runAs(createUserWithRole()){
             String roleRecordTypeId = Schema.SObjectType.Account_Role__c.getRecordTypeInfosByDeveloperName().get('Default').getRecordTypeId();
@@ -327,7 +327,7 @@ public class OneId_NDCMatchmakerController_Test {
         
         Id p = [SELECT Id 
                 FROM profile 
-                WHERE name='Partner Community User'].id;
+                WHERE name='ISS Portal (Partner)'].id;
         
         System.runAs(createUserWithRole()){
             String roleRecordTypeId = Schema.SObjectType.Account_Role__c.getRecordTypeInfosByDeveloperName().get('Default').getRecordTypeId();
@@ -404,7 +404,7 @@ public class OneId_NDCMatchmakerController_Test {
         
         Id p = [SELECT Id 
                 FROM profile 
-                WHERE name='Partner Community User'].id;
+                WHERE name='ISS Portal (Partner)'].id;
         
         System.runAs(createUserWithRole()){
             String roleRecordTypeId = Schema.SObjectType.Account_Role__c.getRecordTypeInfosByDeveloperName().get('Default').getRecordTypeId();

@@ -36,7 +36,7 @@ public class OneId_Troubleshooting_Controller_Test {
     
     public static User createNonGuestUser() {
         
-        Id p = [select id from profile where name='Partner Community User'].id;
+        Id p = [select id from profile where name='ISS Portal (Partner)'].id;
         
         System.runAs(createUserWithRole()){
             String recordTypeId = Schema.getGlobalDescribe().get('Account').getDescribe().getRecordTypeInfosByName().get('Airline Headquarters').getRecordTypeId();
