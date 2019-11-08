@@ -39,7 +39,7 @@ public without sharing class PortalResetPasswordController {
         if(system.now() > dt.addHours(8)) result.isExpired = true;
 
         if (!String.isEmpty(userName)) {
-            List<User> userList = [Select Id, Username, UID__c, contactId from user where username = :userName OR email = :userName];
+            List<User> userList = [Select Id, Username, UID__c, contactId, contact.Preferred_Language__c from user where username = :userName OR email = :userName];
             if (!userList.isEmpty()) {
                 if (userList[0].UID__c == UID) {
                     if(result.isExpired != true) userList[0].UID__c = '';
@@ -73,7 +73,7 @@ public without sharing class PortalResetPasswordController {
         String link                  = PortalPasswordHandler.generateUrl(user, password, 'resetPassword');
         Map<String, String> emailMap = PortalPasswordHandler.forgotPasswordEmailMap(user, link);
 
-        boolean success = PortalPasswordHandler.sendEmail(user.id, 'CSP_Forgot_Password_Email', emailMap);
+        boolean success = PortalPasswordHandler.sendEmail(user.id, 'CSP_Forgot_Password_Email_VF', emailMap);
         return success;
     }
 }
