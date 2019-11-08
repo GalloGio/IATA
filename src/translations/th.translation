@@ -2137,6 +2137,10 @@
         <name>CSP_Invalid_Email</name>
     </customLabels>
     <customLabels>
+        <label>วันเกิด</label>
+        <name>CSP_L2_Date_of_Birth</name>
+    </customLabels>
+    <customLabels>
         <label>ออกจากระบบ</label>
         <name>CSP_LogOut</name>
     </customLabels>
