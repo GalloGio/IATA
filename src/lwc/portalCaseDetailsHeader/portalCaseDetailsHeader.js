@@ -35,7 +35,7 @@ export default class PortalHomeCalendar extends LightningElement {
     @track lstRecipients;
     @track newRecipient = '';
     @track haveRecipients = false;
-    @api isExpired = false;
+    @track isExpired = false;
     @track expiredCard;
     @track CaseStatusClass = '';
     @track surveyLink;
