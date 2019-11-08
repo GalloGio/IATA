@@ -128,6 +128,7 @@
         <fields>NAME</fields>
         <fields>Class_Type__c</fields>
         <fields>Remittance_Frequency__c</fields>
+        <fields>ISO_State__c</fields>
         <fields>Risk_Status__c</fields>
         <fields>RHC_Amnt_Calc_Type__c</fields>
         <fields>Limit_Cash_Condition__c</fields>

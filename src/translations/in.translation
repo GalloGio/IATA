@@ -1792,6 +1792,10 @@
         <name>CSP_Add_User</name>
     </customLabels>
     <customLabels>
+        <label>Anda dapat mengirimkan perubahan rincian akun Anda melalui &lt; a href= &apos;/s/support-reach-us&apos;&gt; Halaman Hubungi Kami &lt;/a&gt;.</label>
+        <name>CSP_Airline_Changes_Access</name>
+    </customLabels>
+    <customLabels>
         <label>Pengumuman</label>
         <name>CSP_Announcement</name>
     </customLabels>
@@ -1810,6 +1814,10 @@
     <customLabels>
         <label>Pencarian Lanjutan</label>
         <name>CSP_Breadcrumb_AdvancedSearch_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Detail Kasus</label>
+        <name>CSP_Breadcrumb_CaseDetails_Title</name>
     </customLabels>
     <customLabels>
         <label>Profil Perusahaan</label>
@@ -1842,6 +1850,10 @@
     <customLabels>
         <label><!-- CSP_Breadcrump_MyProfile_Title --></label>
         <name>CSP_Breadcrump_MyProfile_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Anda &amp; IATA</label>
+        <name>CSP_Breadcrump_You_IATA</name>
     </customLabels>
     <customLabels>
         <label>Batalkan</label>
@@ -1900,6 +1912,10 @@
         <name>CSP_Community</name>
     </customLabels>
     <customLabels>
+        <label>Anda dapat mengirimkan perubahan detail akun Anda melalui layanan Akreditasi dan Perubahan IATA.</label>
+        <name>CSP_CompanyAdministration_Link</name>
+    </customLabels>
+    <customLabels>
         <label>Lihat Kasus Perusahaan Saya</label>
         <name>CSP_CompanyCases</name>
     </customLabels>
@@ -1926,6 +1942,10 @@
     <customLabels>
         <label><!-- Create_Contact_Complete_Field --></label>
         <name>CSP_Create_Contact_Complete_Field</name>
+    </customLabels>
+    <customLabels>
+        <label>Dibuat pada</label>
+        <name>CSP_CreatedOn</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_DateFrom --></label>
@@ -2048,12 +2068,20 @@
         <name>CSP_IMPORTANT</name>
     </customLabels>
     <customLabels>
+        <label>Pembaharuan Terakhir</label>
+        <name>CSP_LastUpdate</name>
+    </customLabels>
+    <customLabels>
         <label>Keluar</label>
         <name>CSP_LogOut</name>
     </customLabels>
     <customLabels>
         <label>Anda dapat mengelola pengguna-pengguna dari daftar di bawah ini.</label>
         <name>CSP_Manage_Portal_Users</name>
+    </customLabels>
+    <customLabels>
+        <label>Kelola Penerima</label>
+        <name>CSP_Manage_Recipients</name>
     </customLabels>
     <customLabels>
         <label>Kelola Layanan</label>
@@ -2186,6 +2214,10 @@
     <customLabels>
         <label>Kasus yang sedang berlangsung</label>
         <name>CSP_RecentCases_Support</name>
+    </customLabels>
+    <customLabels>
+        <label>Penerima</label>
+        <name>CSP_Recipients</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP Record Deleted --></label>
@@ -2424,6 +2456,14 @@
         <name>CSP_Title</name>
     </customLabels>
     <customLabels>
+        <label>&lt;a href=&quot;/ISSP_AMSCases&quot; target=&quot;_self&quot;&gt;Klik di sini untuk mengakses langsung Akreditasi IATA dan Perubahan&lt;/a&gt;</label>
+        <name>CSP_Travel_Agent_Accreditation_Changes_Access</name>
+    </customLabels>
+    <customLabels>
+        <label>&lt;a href=&quot;/s/manage-service?serviceId=a2ww0000001D7GOAA0&quot; target=&quot;_self&quot;&gt; Klik di sini untuk meminta akreditasi dan Perubahan IATA&lt;/a&gt;</label>
+        <name>CSP_Travel_Agent_Accreditation_Changes_Request</name>
+    </customLabels>
+    <customLabels>
         <label>Jenis Kasus</label>
         <name>CSP_TypeOfCase</name>
     </customLabels>
@@ -2462,6 +2502,18 @@
     <customLabels>
         <label><!-- CSP_Welcome_Panel_Bullet_4_Title --></label>
         <name>CSP_Welcome_Panel_Bullet_4_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Anda &amp; IATA</label>
+        <name>CSP_YouAndIATA</name>
+    </customLabels>
+    <customLabels>
+        <label>Hal - Hal Penting Terpilih Untuk Anda.</label>
+        <name>CSP_YouIATA_Highlights</name>
+    </customLabels>
+    <customLabels>
+        <label>Di sini Anda dapat menemukan berbagai layanan IATA, publikasi, produk, dan sumber daya di industri penerbangan. Didesain khusus setelah melihat minat dan riwayat aktivitas Anda.</label>
+        <name>CSP_YouIATA_Highlights_Text</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_You_Dont_Have_Announcements --></label>
@@ -12505,7 +12557,7 @@ In order to upload your financial documents, please, login to Customer Portal on
         <name>ISSP_Account_not_approved</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ContactList --></label>
+        <label>Menyetujui</label>
         <name>ISSP_Activate</name>
     </customLabels>
     <customLabels>
@@ -13292,7 +13344,7 @@ Dapatkah Anda mengkonfirmasi tentang negara manakah yang Anda butuhkan bantuan d
         <name>ISSP_Deny_Access</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Description --></label>
+        <label>Deskripsi</label>
         <name>ISSP_Description</name>
     </customLabels>
     <customLabels>
@@ -14712,7 +14764,7 @@ Dapatkah Anda mengkonfirmasi tentang negara manakah yang Anda butuhkan bantuan d
         <name>ISSP_MITA_Agreements_Service_Name</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ContactList --></label>
+        <label>Disetujui sebagai Admin.</label>
         <name>ISSP_MakeAdmin</name>
     </customLabels>
     <customLabels>
@@ -20402,6 +20454,10 @@ Jika Anda ingin mengganti kata sandi, kembali ke layar masuk lalu gunakan fungsi
         <name>csp_ActionIndicator</name>
     </customLabels>
     <customLabels>
+        <label>Detail tambahan</label>
+        <name>csp_AdditionalDetails</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Request New Service --></label>
         <name>csp_AgencyReadOnly</name>
     </customLabels>
@@ -20688,6 +20744,10 @@ Jika Anda ingin mengganti kata sandi, kembali ke layar masuk lalu gunakan fungsi
     <customLabels>
         <label>Dukungan</label>
         <name>csp_Query</name>
+    </customLabels>
+    <customLabels>
+        <label>Apakah ada yang harus diberitahu lagi?</label>
+        <name>csp_RecipientsQuestion</name>
     </customLabels>
     <customLabels>
         <label>Agen Anda saat ini tidak memiliki Akun EasyPay IATA (International Air Transport Association) yang terbuka.&lt;br/&gt;&lt;br/&gt;Silakan hubungi Penanda Tangan Resmi Kantor Pusat Anda untuk meminta mereka membuka Akun EasyPay IATA (International Air Transport Association). Sebagai Administrator Portal, Anda dapat memperbarui &lt;a href=&quot;/my-profile&quot;&gt;Informasi Pribadi&lt;/a&gt; Anda untuk menunjuk diri Anda sebagai Penanda Tangan Resmi yang Sah, atau menunjuk admin portal yang benar dari halaman &lt;a href=&quot;/company-profile&quot;&gt;Administrasi Perusahaan -&gt; Kontak&lt;/a&gt; dan meminta mereka untuk membuka akun EasyPay Anda.&lt;br/&gt;&lt;br/&gt;Silakan &lt;a href=&quot;/Support-Reach-Us&quot;&gt;kontak dukungan&lt;/a&gt; jika Anda memerlukan bantuan.</label>
