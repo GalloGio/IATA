@@ -119,6 +119,8 @@ export default class PortalDocumentsCategory extends LightningElement {
                                 category: docs[el].Document_Category__c, 
                                 language: docs[el].Language__c, 
                                 filetype: docs[el].FileType, 
+								url: docs[el].ContentUrl,
+                                isLink: docs[el].FileType === 'LINK' ? true : false,
                                 open: docs[el].Id === __documentObject.docId ? true : false});
                         }
                     });
