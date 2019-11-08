@@ -38,22 +38,22 @@
                         <!-- NORMAL USERS VIEW -->
                         <div if:false={displayAdminView} class="slds-grid slds-wrap slds-m-top_medium slds-p-around_large slds-m-bottom_xx-large customBorderlessCardWhite">
 
-                            <div class="slds-col slds-size_3-of-4">
+                            <div class="slds-col slds-size_1-of-1 slds-grid_align-end slds-medium-size_10-of-12 slds-large-size_10-of-12 slds-p-bottom_medium">
                                 <div class="text-medium text-bold">
                                     {label.aboutlb}
                                 </div>
                             </div>
 
-                            <div class="slds-col slds-size_1-of-4">
+                            <div class="slds-col slds-size_1-of-1 slds-grid_align-end slds-medium-size_2-of-12 slds-large-size_2-of-12 slds-p-bottom_medium">
                                 <div if:false={renderRequest}>
                                         <div if:true={serviceRecord.accessGranted}>
-                                                <lightning-button class=" slds-float_right containedButtonSlim"
+                                                <lightning-button class="slds-float_right containedButtonSlim"
                                                     label={label.goToServicelb} onclick={handleTopAction}>
                                                 </lightning-button>
                                             </div>
         
                                             <div if:false={serviceRecord.accessGranted}>
-                                                <lightning-button class=" slds-float_right containedButtonSlim"
+                                                <lightning-button class="slds-float_right containedButtonSlim"
                                                     label={serviceRecord.btnLabel} onclick={handleTopAction}>
                                                 </lightning-button>
                                             </div>
@@ -119,7 +119,7 @@
 
                                     <div class="slds-grid slds-wrap">
                                             <div class="slds-col slds-size_1-of-1">
-                                                    <div class="slds-grid slds-wrap slds-grid_align-end">
+                                                    <div class="slds-grid slds-wrap slds-gutters_direct-x-small slds-grid_align-end">
                                                             <div class="slds-text-align_right slds-p-horizontal--xxx-small slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
                                                                 <!-- FILTER -->
                                                                 <button if:true={filtered} class="slds-button_icon filterButton fullWidth twoLines" onclick={openServicesFilterModal}>
