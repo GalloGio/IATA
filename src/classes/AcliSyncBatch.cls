@@ -296,18 +296,6 @@ global class AcliSyncBatch implements Database.Batchable<String>, Database.State
     global void finish (Database.BatchableContext batchableContext){
         // Create the confirmation email, with the logs attached
 		Integer i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
         Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
         
         list<string> lstRecipients = new list<string>();

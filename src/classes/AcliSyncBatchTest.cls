@@ -117,6 +117,10 @@ private class AcliSyncBatchTest {
         Account EI = new Account(Name = 'Aer Lingus INTENTIONAL TYPO', Airline_designator__c = 'EI', ACLI_SAP_Id__c = '0010000141', Membership_status__c = 'Non-IATA member', RecordTypeId = AirlineHQ_RT_Id,
         			IATA_ISO_Country__c = country_i.Id);
         insert EI;
+        
+        Account EI1 = new Account(Name = 'Aer Lingus Limited', Airline_designator__c = 'EI', ACLI_SAP_Id__c = '0010000146', Membership_status__c = 'Non-IATA member', RecordTypeId = AirlineHQ_RT_Id,
+        			IATA_ISO_Country__c = country_i.Id);
+        insert EI1;
 
         Id AirlineBranch_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline_BR');
         Account BR = new Account(Name = 'Aer Lingus Branch', Airline_designator__c = 'EI', RecordTypeId = AirlineBranch_RT_Id,
@@ -186,8 +190,13 @@ private class AcliSyncBatchTest {
 
         EI = [SELECT Id, Name, billingCity, MITA_Member__c FROM Account WHERE Id = :EI.Id];
         // check that all the info was updated
-        System.AssertEquals('Aer Lingus Limited', EI.Name);
-        System.AssertEquals('DUBLIN', EI.billingCity);
+        System.AssertEquals('Aer Lingus INTENTIONAL TYPO', EI.Name);
+        System.AssertEquals(null, EI.billingCity);
+        
+        EI1 = [SELECT Id, Name, billingCity, MITA_Member__c FROM Account WHERE Id = :EI1.Id];
+        // check that all the info was updated
+        System.AssertEquals('Aer Lingus Limited', EI1.Name);
+        System.AssertEquals(null, EI.billingCity);
 
         SU = [SELECT Id, Name, billingCity, MITA_Member__c FROM Account WHERE Id = :SU.Id];
         // check that nothing changed in the account
