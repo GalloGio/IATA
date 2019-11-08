@@ -9,6 +9,7 @@ import searchContacts from '@salesforce/apex/PortalSupportReachUsCreateNewCaseCt
 import createCase from '@salesforce/apex/PortalSupportReachUsCreateNewCaseCtrl.createCase';
 import getProfile from '@salesforce/apex/PortalSupportReachUsCreateNewCaseCtrl.getProfile';
 import insertCase from '@salesforce/apex/PortalSupportReachUsCreateNewCaseCtrl.insertCase';
+import getUser from '@salesforce/apex/CSP_Utils.getLoggedUser';
 
 // Import custom labels 
 import csp_CreateNewCaseTopSubLabel from '@salesforce/label/c.csp_CreateNewCaseTopSubLabel';
@@ -137,6 +138,7 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
     topicLabel;
     @track subtopicLabel;
     countryISO;
+	userContact;
 
     //childComponent data
     childComponent;
@@ -155,6 +157,7 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
         this.validateEntryParameters();
         this.getRelatedAccounts();
         this.getRelatedContacts();
+		this.getUser();
 
     }
 
@@ -306,6 +309,13 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
 					this.setPortalUserIATACode();
             });
     }
+	
+	getUser() {
+        getUser()
+            .then(result => {
+                this.userContact = JSON.parse(JSON.stringify(result.ContactId));
+            });
+    }
 
     setPortalUserIATACode() {
         getContact()
@@ -322,7 +332,7 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
         searchContacts({ searchTerm: null })
             .then(relatedContactsResult => {
                 this.relatedContacts = JSON.parse(JSON.stringify(relatedContactsResult));
-                this.relatedContacts = this.relatedContacts.filter(obj => obj.id !== this.caseDetails.ContactId); //remove self if case owner
+                this.relatedContacts = this.relatedContacts.filter(obj => obj.id !== this.caseDetails.userContact);
                 //deactivate spinner
                 this.loading = false;
             });
