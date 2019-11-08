@@ -10,7 +10,6 @@ global without sharing class Comm_User_Helper {
   public static final string SEPARATOR = '@#@#@#';
   public static final string KEYTODECODE = 'Kg0m2vAj4VmBBviGAUehrw==';
   public static final string plusReplacer = '@@##';
-  public static final string WILDCARD = 'ALL';
 
   public static String EncryptString( String str) {
         Blob dataToEncrypt = Blob.valueOf(str);
@@ -274,19 +273,7 @@ global without sharing class Comm_User_Helper {
             // so we try to add permission to the applications (if needed)
             if (listOtherContacts.isEmpty()) {
                 // Find app names with Auto Grant Service
-                list<String> listAppNames = new list<String>();
-                for (Portal_Application_Setting__mdt setting: [
-                        SELECT id, MasterLabel,
-                            (SELECT Sector__c, Category__c
-                            FROM Portal_Application_Visibilities__r
-                            WHERE Auto_grant_service__c = true
-                            AND Sector__c = :account.Sector__c
-                            AND Category__c IN (:account.Category__c,:WILDCARD))
-                        FROM Portal_Application_Setting__mdt]) {
-                    if (setting.Portal_Application_Visibilities__r.size()>0) {
-                        listAppNames.add(setting.MasterLabel);
-                    }
-                }
+                list<String> listAppNames = PortalApplicationSettingHelper.getAutoGrantApplicationNames(account);
 
                 // give right to all found apps
                 list<Portal_Application_Right__c> listAppRight = new list<Portal_Application_Right__c>();
