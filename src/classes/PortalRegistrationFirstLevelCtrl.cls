@@ -326,8 +326,6 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
         string oneTimeUrl = generateOneTimeUrl(params);
         string userId = UserInfo.getUserId();
 
-        Map<String, String> emailMap = generateEmailBodyParamsForConfirmation(params, oneTimeUrl);
-
         string langKey = 'en_US';
         if (lang != null && lang != ''){
             for(Preferred_Language_on_ISS_Portal__c portalLang : Preferred_Language_on_ISS_Portal__c.getAll().values()){
@@ -336,6 +334,10 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
                 }
             }
         }
+
+		oneTimeUrl = oneTimeUrl + '&language=' + langKey;
+
+		Map<String, String> emailMap = generateEmailBodyParamsForConfirmation(params, oneTimeUrl);
 
         List<User> userList =  [SELECT Id FROM User WHERE languagelocalekey =:langKey LIMIT 1];
         if(!userList.isEmpty()){
