@@ -332,7 +332,7 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
         searchContacts({ searchTerm: null })
             .then(relatedContactsResult => {
                 this.relatedContacts = JSON.parse(JSON.stringify(relatedContactsResult));
-                this.relatedContacts = this.relatedContacts.filter(obj => obj.id !== this.caseDetails.userContact);
+                this.relatedContacts = this.relatedContacts.filter(obj => obj.id !== this.userContact);
                 //deactivate spinner
                 this.loading = false;
             });
@@ -352,6 +352,7 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
     handleContactSearch(event) {
         searchContacts(event.detail)
             .then(results => {
+				results = results.filter(obj => obj.id !== this.userContact);
                 this.template.querySelector('[data-id="emaillookup"]').setSearchResults(results);
                 this.requiredClass = '';
             })
