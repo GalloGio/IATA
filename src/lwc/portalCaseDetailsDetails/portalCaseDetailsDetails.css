@@ -24,3 +24,7 @@
 .documentsAccordionTransition {
     transition: height 0.8s ease;
 }
+
+.descText {
+    word-break: break-word;
+}
