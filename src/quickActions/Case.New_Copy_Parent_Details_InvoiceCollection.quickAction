@@ -73,10 +73,6 @@
         <formula>Case.Effective_time_spent__c</formula>
     </fieldOverrides>
     <fieldOverrides>
-        <field>First_Business_Day__c</field>
-        <formula>Case.First_Business_Day__c</formula>
-    </fieldOverrides>
-    <fieldOverrides>
         <field>Groups__c</field>
         <formula>TEXT(Case.Groups__c )</formula>
     </fieldOverrides>
