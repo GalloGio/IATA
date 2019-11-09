@@ -23,11 +23,11 @@
                                                         <lightning-icon class="darkBlueIcon" if:false={record.open} icon-name="utility:chevronright" size="xx-small" data-item={record.id}></lightning-icon>
                                                     </div>
                                                 </td>
-                                                <td key={record.id} class="underLinded secColInfo"><button class="cursorPointer buttonInfo" data-name={record.title} data-item={record.id} data-islink={record.isLink} data-url={record.url} onclick={viewDocument}>{label.CurrencyCenter_Open}</button></td>
+                                                <td key={record.id} class="underLinded secColInfo"><button class="cursorPointer buttonInfo" data-name={record.title} data-item={record.id} data-url={record.url} onclick={viewDocument}>{label.CurrencyCenter_Open}</button></td>
                                                 <td key={record.id} class="slds-text-title_bold text-black underLinded thirdColInfo titleTruncation" title={record.title}>{record.title}</td>
                                                 <td key={record.id} class="underLinded fourthColInfo">{record.language}</td>
                                                 <td key={record.id} class="underLinded fourthColInfo">{record.filetype}</td>
-                                                <td key={record.id} class="underLinded"><lightning-icon class="cursorPointer" icon-name="utility:download" size="xx-small" data-name={record.title} data-item={record.id} onclick={downloadDocument}></lightning-icon></td>
+                                                <td key={record.id} class="underLinded"><lightning-icon class="darkBlueIcon cursorPointer" icon-name="utility:download" size="xx-small" data-name={record.title} data-item={record.id} data-url={record.url} onclick={downloadDocument}></lightning-icon></td>
                                             </tr>
                                             <tr if:true={record.open} data-item={record.id}>
                                                 <td class="recordDetail noPadding" colspan="6">
