@@ -324,7 +324,9 @@ public class ANG_RiskEventGenerator {
 		Map<Id, ANG_Risk_Event_Type__c> types = new Map<Id, ANG_Risk_Event_Type__c>([SELECT Id, ANG_Expiration__c, Limit_Cash_conditions__c, ANG_Delay_Cash_Condition__c FROM ANG_Risk_Event_Type__c WHERE Id IN :riskTypes]);
 		Map<Id, Account> accounts = new Map<Id, Account>([SELECT Id, Top_Parent__c FROM Account WHERE Id IN :accountIds]);
 
-		for(Case c : [SELECT Id, OSCAR__c FROM Case WHERE OSCAR__c IN :oscars.keySet() AND RecordType.DeveloperName = 'OSCAR_Communication']) oscars.put(c.OSCAR__c, c.Id);
+		if(!oscars.isEmpty()){
+			for(Case c : [SELECT Id, OSCAR__c FROM Case WHERE OSCAR__c IN :oscars.keySet() AND RecordType.DeveloperName = 'OSCAR_Communication']) oscars.put(c.OSCAR__c, c.Id);
+		}
 
 		for(ANG_Agency_Risk_Event__c re : (List<ANG_Agency_Risk_Event__c>)newObjects){
 			//fetch HE account and Risk Event Type
