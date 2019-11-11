@@ -7,9 +7,9 @@
                 <div if:false={specialCard} class="triangleRight" style="width:20px;">
                     &nbsp;
                 </div>
-                <div style="display: flex;flex: 1 0 auto;align-items: center;justify-content: center;">
-                    <div style="width:100%;">
-                        <span class="text-medium text-darkGray text-bold slds-p-left_small"><slot name="cardTitle"></slot></span>
+                <div style="display: flex;flex: 1 1 auto;align-items: center; margin-left:0;">
+                    <div>
+                        <span class="text-medium text-darkGray text-bold slds-p-left_small" style="display: block; overflow: auto;"><slot name="cardTitle"></slot></span>
                     </div>
                 </div>
                 <div class="text-xxsmall slds-m-right_large">
