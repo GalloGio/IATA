@@ -151,7 +151,7 @@ public static CSP_Utils.PagedResult getSearchProfiles(String portalSearchFilterW
 
 	String searchStr = String.escapeSingleQuotes(profileFiltersWrapper.searchText);
 	String wildCardStr = '%'+searchStr+'%';
-	//String baseQuery = 'FIND \''+wildCardStr+'\' IN ALL FIELDS RETURNING ';
+
 	String baseQueryContacts = 'SELECT ID, Name, User_Portal_Status__c, ISO_Country__r.Name, Email, Account_Country__c FROM Contact ';
 	String baseQueryAccounts = 'SELECT ID, Name, IATA_ISO_Country__r.Name FROM Account ';
 	String countryPortalStatusFilter = '';
@@ -192,7 +192,7 @@ public static CSP_Utils.PagedResult getSearchProfiles(String portalSearchFilterW
 	}
 
 	List<List<SObject> > lstListResults = new List<List<SObject> > {resultsContacts,resultsAccounts};
-	System.debug(lstListResults);
+
 	if(!lstListResults.isEmpty()) {
 		result.totalItemCount = lstListResults.size() == 2 ? lstListResults[0].size() + lstListResults[1].size() : lstListResults[0].size();
 
