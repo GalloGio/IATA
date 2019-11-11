@@ -768,7 +768,6 @@ Values must be Separated by &quot;;&quot;</inlineHelpText>
         <columns>Change_Code__c</columns>
         <columns>Class_Type__c</columns>
         <columns>Reason_Code__c</columns>
-        <columns>Bulletin_Memo_Text__c</columns>
         <columns>Field1__c</columns>
         <columns>Field1Values__c</columns>
         <columns>Field2__c</columns>
@@ -779,6 +778,7 @@ Values must be Separated by &quot;;&quot;</inlineHelpText>
         <columns>Field4Values__c</columns>
         <columns>Field5__c</columns>
         <columns>Field5Values__c</columns>
+        <columns>Account_status_change__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Record_Type__c</field>
