@@ -1,25 +1,38 @@
-import { LightningElement, api } from 'lwc';
+import { LightningElement, api, track } from 'lwc';
 
 import goToOldPortalService from '@salesforce/apex/PortalServicesCtrl.goToOldPortalService';
 import updateLastModifiedService from '@salesforce/apex/PortalServicesCtrl.updateLastModifiedService';
 import paymentLinkRedirect from '@salesforce/apex/PortalServicesCtrl.paymentLinkRedirect';
+import changeIsFavoriteStatus from '@salesforce/apex/PortalServicesCtrl.changeIsFavoriteStatus';
 
 //navigation
 import { NavigationMixin } from 'lightning/navigation';
 import { navigateToPage } from 'c/navigationUtils';
+
+import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 
 //import labels
 import CSP_Services_ManageService from '@salesforce/label/c.CSP_Services_ManageService';
 import CSP_Services_GoToService from '@salesforce/label/c.CSP_Services_GoToService';
 
 export default class PortalServicesAccessGrantedCard extends NavigationMixin(LightningElement) {
+    /* Images */
+    favoriteIcon = CSP_PortalPath + 'CSPortal/Images/Icons/favorite.png';
+    notFavoriteIcon = CSP_PortalPath + 'CSPortal/Images/Icons/not_favorite.png';
 
     @api service;
+    @api showOnlyFavorites;
+
+    @track isLoading = false;
 
     label = {
         CSP_Services_ManageService,
         CSP_Services_GoToService
     };
+
+    get hasIcon(){
+        return this.service.recordService.Application_icon_URL__c !== undefined;
+    }
 
     goToManageServiceButtonClick(event) {
         let serviceAux = JSON.parse(JSON.stringify(this.service));
@@ -131,5 +144,17 @@ export default class PortalServicesAccessGrantedCard extends NavigationMixin(Lig
 
     }
 
+    changeIsFavoriteStatus(){
+        this.startLoading();
+        changeIsFavoriteStatus({portalApplicationId:this.service.recordService.Id, portalApplicationRightId:this.service.portalApplicationRightId, isFavorite: !this.service.isFavorite})
+            .then(result => {
+                if(result){
+                    this.dispatchEvent(new CustomEvent('changefavoritestatus'));
+                }
+            });
+    }
 
+    startLoading(){
+        this.dispatchEvent(new CustomEvent('startloading'));
+    }
 }

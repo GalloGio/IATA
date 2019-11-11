@@ -1,7 +1,21 @@
 <template>
 
-    <c-portal-services-card-container image-url={service.recordService.Application_icon_URL__c}
-        background-variant="white">
+    <c-portal-services-card-container background-variant="white">
+
+        <span slot="favoriteIcon">
+            <template if:true={service.isFavorite}>
+                <img src={favoriteIcon} class="favoriteIcon" onclick={changeIsFavoriteStatus}/>
+            </template>
+            <template if:false={service.isFavorite}>
+                <img src={notFavoriteIcon} class="favoriteIcon" onclick={changeIsFavoriteStatus}/>
+            </template>
+        </span>
+
+        <span slot="serviceImage">
+            <template if:true={hasIcon}>
+                <img class="slds-p-around_small serviceImageStyles" src={service.recordService.Application_icon_URL__c}/>
+            </template>
+        </span>
 
         <span slot="serviceName">
             {service.recordService.ServiceName__c}
@@ -28,6 +42,14 @@
                 onclick={goToServiceButtonClick}>
             </lightning-button>
         </span>
+
+        <div data-id="spinnerId" class="slds-spinner_container spinnerContainer" if:true={isLoading}>
+            <div class="slds-spinner slds-spinner_medium" role="status">
+                <span class="slds-assistive-text">Loading</span>
+                <div class="slds-spinner__dot-a"></div>
+                <div class="slds-spinner__dot-b"></div>
+            </div>
+        </div>        
     </c-portal-services-card-container>
 
 </template>

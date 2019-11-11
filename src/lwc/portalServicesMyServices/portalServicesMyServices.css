@@ -1,0 +1,13 @@
+.showOnlyFavorites{
+    width: 193px;
+    height: 48px;
+    border-radius: 2px;
+    font-family: AktivGrotesk;
+    font-size: 14px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.71;
+    letter-spacing: normal;
+    color: #3333ff;
+  }
