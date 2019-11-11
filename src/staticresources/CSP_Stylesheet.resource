@@ -1441,6 +1441,18 @@ lightning-datatable .slds-th__action {
 
 /* End of Profile section overrides*/
 
+.toastMessage .slds-notify_toast {
+  min-width:20rem;
+}
+
+.toastMessage .slds-notify_toast .slds-text-heading_small {
+  font-size:16px;
+}
+  
+.toastMessage .slds-notify_toast p {
+  font-size:16px;
+}
+
 .containedButtonWhite {
     background-color: #ffffff;
     transition-duration: 0.4s;

@@ -234,12 +234,8 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
         accessibilityTextLocal = contactTypeStatus.join(', ');
         this.contactTypeStatus = contactType;
         this.listSelected = contactTypeStatus;
-        
-        isAdmin().then(result => {
-            this.showEdit = (result ? true : false);
-        });
 
-        return this.accessibilityText
+        return this.accessibilityText;
     }
 
     openModal() { this.showEditModal = true; }
@@ -257,9 +253,8 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
 
     handleSucess(event) {
         this.isSaving = false;
-
+		this.dispatchEvent(new CustomEvent('refreshview'));
         this.closeModal();
-
         this.updateMembershipFunctions(event.detail);
     }
 
@@ -490,8 +485,7 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
             }
 
             let listSelected = JSON.parse(JSON.stringify(this.listSelected));
-            if (listSelected.length > 0) {
-                let contactTypeStatusLocal = JSON.parse(JSON.stringify(this.contactTypeStatus));
+            let contactTypeStatusLocal = JSON.parse(JSON.stringify(this.contactTypeStatus));
                 
                 contactTypeStatusLocal.forEach(function (item) {
                     if (listSelected.includes(item.label)) {
@@ -509,7 +503,6 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
                         item.accessibilityList = contactTypeStatusLocal;
                     }
                 });
-            }
 
             if (canSave) {
                 this.template.querySelector('lightning-record-edit-form').submit(fields);
@@ -573,21 +566,40 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     getValueSelectedTypeStatus(event) {
 
         let selected = event.target.dataset.item;
-        let type = event.target.dataset.type;
 
-        let fieldValue = JSON.parse(JSON.stringify(this.listSelected));
+        let fieldValue = JSON.parse(JSON.stringify(this.listSelected)); 
+        let fieldsToIterate = JSON.parse(JSON.stringify(this.fields)); 
+        let contactStatus = [];
 
-        if (!fieldValue.includes(selected)) {
-            fieldValue.push(selected)
-        } else {
-            for (let i = fieldValue.length - 1; i >= 0; i--) {
-                if (fieldValue[i] === selected) {
-                    fieldValue.splice(i, 1);
+        contactStatus = fieldValue;
+
+        if (!fieldValue.includes(selected)) { 
+            fieldValue.push(selected);
+            fieldsToIterate[1].accessibilityList.forEach(function (option) {
+                if (option.label == selected) {      
+                    option.checked = true;
+
+                }
+            });
+         } else {
+                for (let i = fieldValue.length - 1; i >= 0; i--) {
+                    if (fieldValue[i] === selected) {
+                        fieldValue.splice(i, 1);
+                        fieldsToIterate[1].accessibilityList.forEach(function (option) {
+                            if (option.label == selected) { 
+                                option.checked = false;
+
+                            }
+                        });
+                    }
                 }
             }
-        }
 
+        this.contactTypeStatus = fieldsToIterate[1].accessibilityList;
         this.listSelected = fieldValue;
+        this.contactStatus = fieldValue;
+        this.accessibilityText = contactStatus.join(', ');
+        this.fields = fieldsToIterate;
 
     }
     
