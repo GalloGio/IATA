@@ -4,6 +4,140 @@
         <fullName>FDS Support Assignment</fullName>
         <active>true</active>
         <ruleEntry>
+            <assignedTo>Cases_Emergency_BJS_GDC</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>AND(
+  OR(
+  ISPICKVAL(Priority , &quot;Emergency&quot;),
+  AND(
+  ISPICKVAL(Origin,&quot;Escalation&quot;),
+  OR(
+  Key_Customer_Case__c &lt;&gt; &quot; &quot;,
+  ISPICKVAL(Priority,&quot;High&quot;)
+  )
+  )
+  ),
+  OR(RecordType.DeveloperName = &quot;Cases_China_North_Asia&quot;,
+  AND(RecordType.DeveloperName =&quot;Cases_Global&quot;,ISPICKVAL(Region__c,&quot;China &amp; North Asia&quot;))),
+  OR(
+  TIMEVALUE(CreatedDate)&gt;=TIMEVALUE(&quot;01:00:00.000&quot;),
+  TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;09:00:00.000&quot;)
+  )
+  )</formula>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>Cases_Emergency_SIN_GDC</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>OR(
+AND(
+OR(RecordType.DeveloperName = &quot;ExternalCasesIDFSglobal&quot;,
+AND(RecordType.DeveloperName =&quot;Cases_Global&quot;,ISPICKVAL(Region__c,&quot;Asia &amp; Pacific&quot;))),
+
+OR(
+ISPICKVAL(Priority , &quot;Emergency&quot;),
+AND(
+ISPICKVAL(Origin,&quot;Escalation&quot;),
+OR(Key_Customer_Case__c &lt;&gt; &quot; &quot;,
+ISPICKVAL(Priority,&quot;High&quot;)
+)
+)
+),
+OR(
+TIMEVALUE(CreatedDate)&gt;=TIMEVALUE(&quot;23:00:00.000&quot;),
+TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;13:00:00.000&quot;)
+)
+),
+AND(
+OR(
+RecordType.DeveloperName = &quot;CasesEurope&quot;,
+RecordType.DeveloperName = &quot;CasesAmericas&quot;,
+RecordType.DeveloperName = &quot;CasesMENA&quot;,
+AND(RecordType.DeveloperName =&quot;Cases_Global&quot;,OR(ISPICKVAL(Region__c,&quot;Americas&quot;),ISPICKVAL(Region__c,&quot;Europe&quot;),ISPICKVAL(Region__c,&quot;Africa &amp; Middle East&quot;)))
+
+),
+OR(
+ISPICKVAL(Priority , &quot;Emergency&quot;),
+AND(
+ISPICKVAL(Origin,&quot;Escalation&quot;),
+OR(Key_Customer_Case__c &lt;&gt; &quot; &quot;,
+ISPICKVAL(Priority,&quot;High&quot;)
+)
+)
+),
+OR(
+TIMEVALUE(CreatedDate)&gt;=TIMEVALUE(&quot;22:00:00.000&quot;),
+TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;05:00:00.000&quot;)
+)
+),
+AND(
+OR(RecordType.DeveloperName = &quot;Cases_China_North_Asia&quot;,
+AND(RecordType.DeveloperName =&quot;Cases_Global&quot;,ISPICKVAL(Region__c,&quot;China &amp; North Asia&quot;))),
+
+OR(
+ISPICKVAL(Priority , &quot;Emergency&quot;),
+AND(
+ISPICKVAL(Origin,&quot;Escalation&quot;),
+OR(Key_Customer_Case__c &lt;&gt; &quot; &quot;,
+ISPICKVAL(Priority,&quot;High&quot;)
+)
+)
+),
+OR(
+TIMEVALUE(CreatedDate)&gt;=TIMEVALUE(&quot;09:00:00.000&quot;),
+TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;01:00:00.000&quot;)
+)
+)
+)</formula>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>Cases_Emergency_MAD_GDC</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>OR(
+AND(
+OR(
+RecordType.DeveloperName = &quot;CasesEurope&quot;,
+RecordType.DeveloperName = &quot;CasesAmericas&quot;,
+RecordType.DeveloperName = &quot;CasesMENA&quot;,
+AND(RecordType.DeveloperName =&quot;Cases_Global&quot;,OR(ISPICKVAL(Region__c,&quot;Americas&quot;),ISPICKVAL(Region__c,&quot;Europe&quot;),ISPICKVAL(Region__c,&quot;Africa &amp; Middle East&quot;)))
+
+),
+OR(
+ISPICKVAL(Priority , &quot;Emergency&quot;),
+AND(
+ISPICKVAL(Origin,&quot;Escalation&quot;),
+OR(Key_Customer_Case__c &lt;&gt; &quot; &quot;,
+ISPICKVAL(Priority,&quot;High&quot;)
+)
+)
+),
+OR(
+TIMEVALUE(CreatedDate)&gt;=TIMEVALUE(&quot;05:00:00.000&quot;),
+TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;22:00:00.000&quot;)
+)
+),
+AND(
+OR(
+RecordType.DeveloperName = &quot;ExternalCasesIDFSglobal&quot;,
+RecordType.DeveloperName = &quot;Cases_China_North_Asia&quot;,
+AND(RecordType.DeveloperName = &quot;Cases_Global&quot;,OR(ISPICKVAL(Region__c,&quot;China &amp; North Asia&quot;),ISPICKVAL(Region__c,&quot;Asia &amp; Pacific&quot;)))
+),
+OR(
+ISPICKVAL(Priority , &quot;Emergency&quot;),
+AND(
+ISPICKVAL(Origin,&quot;Escalation&quot;),
+OR(Key_Customer_Case__c &lt;&gt; &quot; &quot;,
+ISPICKVAL(Priority,&quot;High&quot;)
+)
+)
+),
+OR(
+TIMEVALUE(CreatedDate)&gt;=TIMEVALUE(&quot;13:00:00.000&quot;),
+TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
+)
+)
+)</formula>
+        </ruleEntry>
+        <ruleEntry>
             <assignedTo>Cases_Emirates</assignedTo>
             <assignedToType>Queue</assignedToType>
             <booleanFilter>(1 AND (2 OR 7) AND 3 AND 4) OR (1 AND 4 AND (5 OR 6))</booleanFilter>
@@ -2629,8 +2763,10 @@ RecordType.Name = &quot;Cases - Global&quot;
 ),
 or (
 ISPICKVAL(Topic__c, &quot;Weblink&quot;) ,
-ISPICKVAL(Topic__c, &quot;NDClink&quot;)
-))</formula>
+ISPICKVAL(Topic__c, &quot;NDC – New Distribution Capability&quot;),
+ Subtopic__c = &quot;BSP NDC API&quot;
+)
+)</formula>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>GCS_OnlineStore</assignedTo>
@@ -4476,130 +4612,6 @@ ISPICKVAL(Reason1__c, &quot;Credit Card Deletion&quot;)
                 <operation>equals</operation>
                 <value>Asia &amp; Pacific</value>
             </criteriaItems>
-        </ruleEntry>
-        <ruleEntry>
-            <assignedTo>Cases_Emergency_BJS_GDC</assignedTo>
-            <assignedToType>Queue</assignedToType>
-            <formula>AND( 
-OR( 
-ISPICKVAL(Priority , &quot;Emergency&quot;), 
-AND( 
-ISPICKVAL(Origin,&quot;Escalation&quot;), 
-OR( 
-Key_Customer_Case__c &lt;&gt; &quot; &quot;, 
-ISPICKVAL(Priority,&quot;High&quot;) 
-) 
-) 
-), 
-RecordType.DeveloperName = &quot;Cases_China_North_Asia&quot;, 
-OR( 
-TIMEVALUE(CreatedDate)&gt;=TIMEVALUE(&quot;01:00:00.000&quot;), 
-TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;09:00:00.000&quot;) 
-) 
-)</formula>
-        </ruleEntry>
-        <ruleEntry>
-            <assignedTo>Cases_Emergency_SIN_GDC</assignedTo>
-            <assignedToType>Queue</assignedToType>
-            <formula>OR( 
-AND( 
-RecordType.DeveloperName = &quot;ExternalCasesIDFSglobal&quot;, 
-OR( 
-ISPICKVAL(Priority , &quot;Emergency&quot;), 
-AND( 
-ISPICKVAL(Origin,&quot;Escalation&quot;), 
-OR(Key_Customer_Case__c &lt;&gt; &quot; &quot;, 
-ISPICKVAL(Priority,&quot;High&quot;) 
-) 
-) 
-), 
-OR( 
-TIMEVALUE(CreatedDate)&gt;=TIMEVALUE(&quot;23:00:00.000&quot;), 
-TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;13:00:00.000&quot;) 
-) 
-), 
-AND( 
-OR( 
-RecordType.DeveloperName = &quot;CasesEurope&quot;, 
-RecordType.DeveloperName = &quot;CasesAmericas&quot;, 
-RecordType.DeveloperName = &quot;CasesMENA&quot; 
-), 
-OR( 
-ISPICKVAL(Priority , &quot;Emergency&quot;), 
-AND( 
-ISPICKVAL(Origin,&quot;Escalation&quot;), 
-OR(Key_Customer_Case__c &lt;&gt; &quot; &quot;, 
-ISPICKVAL(Priority,&quot;High&quot;) 
-) 
-) 
-), 
-OR( 
-TIMEVALUE(CreatedDate)&gt;=TIMEVALUE(&quot;22:00:00.000&quot;), 
-TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;05:00:00.000&quot;) 
-) 
-), 
-AND( 
-RecordType.DeveloperName = &quot;Cases_China_North_Asia&quot;, 
-OR( 
-ISPICKVAL(Priority , &quot;Emergency&quot;), 
-AND( 
-ISPICKVAL(Origin,&quot;Escalation&quot;), 
-OR(Key_Customer_Case__c &lt;&gt; &quot; &quot;, 
-ISPICKVAL(Priority,&quot;High&quot;) 
-) 
-) 
-), 
-OR( 
-TIMEVALUE(CreatedDate)&gt;=TIMEVALUE(&quot;09:00:00.000&quot;), 
-TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;01:00:00.000&quot;) 
-) 
-) 
-)</formula>
-        </ruleEntry>
-        <ruleEntry>
-            <assignedTo>Cases_Emergency_MAD_GDC</assignedTo>
-            <assignedToType>Queue</assignedToType>
-            <formula>OR( 
-AND( 
-OR( 
-RecordType.DeveloperName = &quot;CasesEurope&quot;, 
-RecordType.DeveloperName = &quot;CasesAmericas&quot;, 
-RecordType.DeveloperName = &quot;CasesMENA&quot; 
-), 
-OR( 
-ISPICKVAL(Priority , &quot;Emergency&quot;), 
-AND( 
-ISPICKVAL(Origin,&quot;Escalation&quot;), 
-OR(Key_Customer_Case__c &lt;&gt; &quot; &quot;, 
-ISPICKVAL(Priority,&quot;High&quot;) 
-) 
-) 
-), 
-OR( 
-TIMEVALUE(CreatedDate)&gt;=TIMEVALUE(&quot;05:00:00.000&quot;), 
-TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;22:00:00.000&quot;) 
-) 
-), 
-AND( 
-OR( 
-RecordType.DeveloperName = &quot;ExternalCasesIDFSglobal&quot;, 
-RecordType.DeveloperName = &quot;Cases_China_North_Asia&quot; 
-), 
-OR( 
-ISPICKVAL(Priority , &quot;Emergency&quot;), 
-AND( 
-ISPICKVAL(Origin,&quot;Escalation&quot;), 
-OR(Key_Customer_Case__c &lt;&gt; &quot; &quot;, 
-ISPICKVAL(Priority,&quot;High&quot;) 
-) 
-) 
-), 
-OR( 
-TIMEVALUE(CreatedDate)&gt;=TIMEVALUE(&quot;13:00:00.000&quot;), 
-TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;) 
-) 
-) 
-)</formula>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>iiNet_Business_Team</assignedTo>
@@ -7038,7 +7050,7 @@ ISPICKVAL(Reason1__c, &quot;IEP Due Diligence&quot;)
             <template>SIS_Help_Desk/SIS_Help_Desk_Case_Assignment</template>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>garciam@iata.org</assignedTo>
+            <assignedTo>shalbakf@iata.org</assignedTo>
             <assignedToType>User</assignedToType>
             <criteriaItems>
                 <field>Case.Origin</field>

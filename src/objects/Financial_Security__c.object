@@ -247,6 +247,31 @@
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>Financial_Security_Validation_Case__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Case through which the bank (Financial institution) acknowledges that the Financial Security provided by the agency is valid.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Please fill in the case number through which the bank confirms the validity of this Financial Security</inlineHelpText>
+        <label>Financial Security Validation Case</label>
+        <lookupFilter>
+            <active>true</active>
+            <errorMessage>This field can only be filled in for Bank Guarantees</errorMessage>
+            <filterItems>
+                <field>$Source.Security_Type__c</field>
+                <operation>equals</operation>
+                <value>Bank Guarantee</value>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>Case</referenceTo>
+        <relationshipLabel>Financial Security Validation Case</relationshipLabel>
+        <relationshipName>Financial_Securities2</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>Financial_Security_Validation__c</fullName>
         <description>ACR 06749697 - This field to validate FS in order to prevent fraudulent financial securities.</description>
         <externalId>false</externalId>
@@ -2521,6 +2546,22 @@ IMAGE(&quot;/servlet/servlet.FileDownload?file=015200000011tph&quot;,&quot;Reque
 )</errorConditionFormula>
         <errorDisplayField>Expiry_Date__c</errorDisplayField>
         <errorMessage>Expiry date of the Financial Security can&apos;t be less than the Validity start date.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Financial_Security_Validation_Case</fullName>
+        <active>true</active>
+        <description>Financial Security Validation Case should be filled when switching a bank guarantee to &quot;Active&quot;</description>
+        <errorConditionFormula>AND(
+ISPICKVAL(Security_Type__c, &quot;Bank Guarantee&quot;),
+ISPICKVAL(Security_Status__c, &quot;Active&quot;),
+ISBLANK(Financial_Security_Validation_Case__c),
+OR(
+  ISNEW(),
+  ISCHANGED(Security_Status__c)
+  )
+)</errorConditionFormula>
+        <errorDisplayField>Financial_Security_Validation_Case__c</errorDisplayField>
+        <errorMessage>Please fill &quot;Financial Security Validation Case&quot; before making it active.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Financial_Security_Validation_is_mandato</fullName>

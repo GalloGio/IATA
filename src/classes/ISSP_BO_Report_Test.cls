@@ -8,6 +8,7 @@ private class ISSP_BO_Report_Test {
         insert acc;
         Contact con = ISSP_ObjectFactory.createNewContact();
         con.AccountId= acc.Id;
+        con.PaConf_Representative__c = true;
         insert con;
         User thisUser = ISSP_ObjectFactory.createPortalUser(con);
         //thisUser.Mgmt_Report_Team__c = true;
@@ -98,6 +99,7 @@ private class ISSP_BO_Report_Test {
 			insert acc;
 			Contact contact = ISSP_ObjectFactory.createNewContact();
 	        contact.AccountId = acc.Id;
+            contact.PaConf_Representative__c = true;
 	        insert contact;
 	    	Portal_Applications__c app = new Portal_Applications__c(Name = 'Management Information Report'); 
 	        insert app;
