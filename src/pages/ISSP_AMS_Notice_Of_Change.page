@@ -619,9 +619,11 @@
 			if ($j('[id$=allowedAccreditationModelSelect]')[0].selectedOptions[0].value == 'Multicountry') {
 				$j('[id$=selectHEForConversion]').css('display', 'block');
 				$j('[id$=accountsToBeConvertedPanel]').css('display', 'block');
+				$j('[id$=HEAgencyMC]').css('display', 'block');
 			} else {
 				$j('[id$=selectHEForConversion]').css('display', 'none');
 				$j('[id$=accountsToBeConvertedPanel]').css('display', 'none');
+				$j('[id$=HEAgencyMC]').css('display', 'none');
 			}
 		}
 	}
@@ -2332,12 +2334,10 @@
 
 				if (element.checked === false) {
 					addFinancialAssessmentContactItem.css('display', 'none');
-				} else {
-					if (element.value === 'Cash') {
-					addFinancialAssessmentContactItem.css('display', '');
+				} else if (element.value === 'Cash') {
+						addFinancialAssessmentContactItem.css('display', '');
 				}
 			}
-		}
 		}
 		//END NEWGEN-523
 

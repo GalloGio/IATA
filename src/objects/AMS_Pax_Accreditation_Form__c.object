@@ -952,6 +952,11 @@
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
+		<displayedFields>
+            <field>Preferred_RHC_currency__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
         <label>NG Hierarchy Conversion To MC</label>
     </fieldSets>
     <fieldSets>
@@ -2559,10 +2564,11 @@
         <fullName>Copy_Ownership_Records__c</fullName>
         <externalId>false</externalId>
         <label>Copy Ownership Records</label>
-        <required>false</required>
+        <length>100000</length>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
-        <type>TextArea</type>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
     </fields>
     <fields>
         <fullName>Copy_Ownership__c</fullName>

@@ -1,5 +1,7 @@
 public class AMS_TriggerExecutionManager {
-    
+
+	public static set<String> SET_TRIGGER_TO_SKIP = new set<String>();
+
     public static Boolean checkExecution(Schema.SObjectType sObjType, String triggerExecuting){
 
     	String triggerField;
@@ -8,6 +10,7 @@ public class AMS_TriggerExecutionManager {
     		
     		if(sObjType != null && triggerExecuting != null) {
     			
+				if (SET_TRIGGER_TO_SKIP.contains(triggerExecuting)) return false;
 		    	AMS_Trigger_Execution_Manager__c manager = AMS_Trigger_Execution_Manager__c.getInstance();
 		    	
 		    	if(manager == null) return true;		    	

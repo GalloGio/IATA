@@ -259,9 +259,15 @@ public with sharing class AMS_OSCAR_Automation {
             Boolean res = False;
 
             if (oscar != null) {
-                oscar.Financial_Assessment_requested__c = Date.today();
-                oscar.Financial_Assessment_deadline__c = Date.today() + 5;
-                res = True;
+				oscar.Financial_Assessment_requested__c = Date.today();
+
+				if(oscar.Process__c == AMS_Utils.NEWGESTANDARD || oscar.Process__c == AMS_Utils.NGCONVERSIONTOMULTICOUNTRY){
+					oscar.Financial_Assessment_deadline__c = Date.today().addDays(60);
+				} else {
+					oscar.Financial_Assessment_deadline__c = Date.today() + 5;
+				}
+
+				res = True;
             }
 
             return res;

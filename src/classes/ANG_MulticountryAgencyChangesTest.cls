@@ -390,8 +390,8 @@ private class ANG_MulticountryAgencyChangesTest {
 
 		insert new List<Account>{accountUkAE, accountUkAE_2, accountFrAE, accountFrAE_2, accountAePt_h2, accountAeSg_h2};
 
-		AMS_Agencies_Hierarchy__c hierarchy = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Multicountry Hierarchy');
-		AMS_Agencies_Hierarchy__c hierarchy_h2 = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Multicountry Hierarchy H2');
+		AMS_Agencies_Hierarchy__c hierarchy = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Multicountry Hierarchy', Main_Account__c = accountGE.Id);
+		AMS_Agencies_Hierarchy__c hierarchy_h2 = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Multicountry Hierarchy H2', Main_Account__c = accountUkGE_h2.Id);
 		
 		insert new List<AMS_Agencies_Hierarchy__c>{hierarchy, hierarchy_h2};
 		

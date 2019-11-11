@@ -415,7 +415,7 @@
                                 
                             </div>
                             </div>
-                            <div class="row padded-on-bottom">
+                            <div class="row padded-on-bottom" style="display:{!IF(agencyCategory != 'TIDS Agent','','none')};">
                                 <div class="col-md-12 padded-on-bottom">
                                     <strong>
                                         <apex:outputText escape="false" value="{!$Label.ISSP_AMS_Step0_In_Addition}" rendered="{!AND(isHOAccredited, NOT(isoCountry.ANG_Enable_NewGen__c), sector=='Travel Agent')}"/>
@@ -470,7 +470,7 @@
                             </div>
                                     
                             <div class="row">
-                                <div class="col-md-12" style="padding-bottom: 10px; display:{!IF(agencyCategory != 'TIDS Agent','','none')};">
+                                <div class="col-md-12" style="padding-bottom: 10px;">
                                     <apex:commandButton styleClass="iatabtn btn btn_iata_primary" onClick="checkEligibility('false');return false;" value="{!$Label.ISSP_AMS_Step0_Other_Changes}" disabled="{! revCaseOpen}"/><br/>
                                     <div style="{!IF(!revCaseOpen, 'display:block', 'display:none')}">
                                     <apex:outputText id="otherChangesNotPax" rendered="{! NOT(namPaxAgent)}" escape="false" value="{!$Label.ISSP_AMS_Step0_Other_Changes_Msg}"/>
@@ -527,6 +527,7 @@
                         </section>
                             
                         <section name="right-side-other-forms" id="other-forms" class="col-md-5" style="display:{!IF(OR(AND(isMultiCountryStarted, NOT(isMCAccredited)),AND(con.Account.Category__c == 'Domestic Agent', NOT(isocountry.ANG_Enable_NewGen__c))), 'none', IF(isUserAccAccredited, '', 'none'))}; margin-right: 0px; margin-left: 0px; min-height: 350px; padding-top: 20px;">
+				<div class="content-box">
                             <header>
                                 <div class="section-header">
                                     <apex:image value="{!URLFOR($Resource.ISSP_RHC_Page_Icons,'img/RHC.png')}"/>
@@ -541,7 +542,8 @@
                                     <a href="#" onclick="proceedToVMFR(); return true;">{!$Label.ISSP_AMS_Step0_VMFR}</a>
                                 </apex:outputText>
                                 </div>
-			                </div>
+				</div>
+							</div>
                         </section>
                     </div>
             </div>

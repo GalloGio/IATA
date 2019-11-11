@@ -719,12 +719,12 @@ public with sharing class ANG_AccountHierarchySelectionController {
         }
 
         ANG_AgencyChangesConfigHelper.ChangesConfig changesConfig = NULL;
-        
-        if(!pilotTypeOfChange){
+
+        if(oscar.Process__c == AMS_Utils.NGCHANGES){
             changesConfig = ANG_AgencyChangesConfigHelper.getConfig(oscar,oscar.Account__r.ANG_Accreditation_Model__c);
         }
 
-        Boolean validChangeCombination = (changesConfig != NULL || pilotTypeOfChange);
+        Boolean validChangeCombination = (changesConfig != NULL || oscar.Process__c != AMS_Utils.NGCHANGES);
 
         //display error messages and stop execution by short-circuiting the if on the save method
         if(errors.isEmpty() && validChangeCombination){
@@ -836,7 +836,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 
             for (HierarchyItem i : hierarchy.values()){
                 Id currentBSP = i.acc.IATA_ISO_Country__r.AMS_Settlement_System__c;
-                if(resultHEPerBSP.containsKey(currentBSP) && hesPerBSPs.get(currentBSP).possibleAccounts.keySet().contains(resultHEPerBSP.get(currentBSP))){
+                if(resultHEPerBSP.containsKey(currentBSP) && hesPerBSPs.containsKey(currentBSP) && hesPerBSPs.get(currentBSP).possibleAccounts.keySet().contains(resultHEPerBSP.get(currentBSP))){
                     hesPerBSPs.get(currentBSP).p.parentid = resultHEPerBSP.get(currentBSP); 
                     //hesPerBSPs.get(currentBSP).hasParentDefined = true;
                 }

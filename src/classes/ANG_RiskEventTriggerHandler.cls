@@ -74,7 +74,10 @@ public class ANG_RiskEventTriggerHandler {
     private void assessRisk() {
         
         Map<Id,Map<Id,Integer>> involvedAccounts = new Map<Id,Map<Id,Integer>>();
-        for(ANG_Agency_Risk_Event__c re : triggerNew){  
+        for(ANG_Agency_Risk_Event__c re : triggerNew){
+			
+			if(!isEligibleForRiskAssessment(re)) continue;
+
             if(re.ANG_HE_AccountId__c != null) involvedAccounts.put(re.ANG_HE_AccountId__c,null);
 
             if(Trigger.isUpdate){
@@ -87,4 +90,19 @@ public class ANG_RiskEventTriggerHandler {
 
         new ANG_RiskAssessmentEngine(involvedAccounts).assessment();
     }
+
+	private Boolean isEligibleForRiskAssessment(ANG_Agency_Risk_Event__c re){
+
+		if(Trigger.isUpdate){
+			ANG_Agency_Risk_Event__c oldRe = oldMap.get(re.Id);
+			return (re.ANG_HE_AccountId__c != oldRe.ANG_HE_AccountId__c ||
+					re.ANG_Event_Status__c != oldRe.ANG_Event_Status__c ||
+					re.ANG_Issued_Date__c != oldRe.ANG_Issued_Date__c ||
+					re.ANG_Risk_Type__c != oldRe.ANG_Risk_Type__c ||
+					re.ANG_Limit_Cash_Conditions__c != oldRe.ANG_Limit_Cash_Conditions__c);
+		}
+
+		return true;
+
+	}
 }

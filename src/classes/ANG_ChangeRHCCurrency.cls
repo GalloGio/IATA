@@ -116,7 +116,7 @@ public with sharing class ANG_ChangeRHCCurrency {
 
 			update caseToUpdate;
 			update rhc;
-			queryRHC();
+			queryRHC(true);
 			ApexPages.addMessage( new ApexPages.Message(ApexPages.Severity.INFO,'Currency Saved'));
 
 		}else{
@@ -124,13 +124,13 @@ public with sharing class ANG_ChangeRHCCurrency {
 		}
 	}
 
-	private void queryRHC(){
-		this.rhc = Database.query('SELECT Id,Name,'+String.join(new List<String>(fieldsToQuery),',') +' FROM ANG_RHC_Information__c WHERE Id = :objId LIMIT 1');
+	private void queryRHC(Boolean getName){
+		this.rhc = Database.query('SELECT Id,'+(getName ? 'Name,' : '')+String.join(new List<String>(fieldsToQuery),',') +' FROM ANG_RHC_Information__c WHERE Id = :objId LIMIT 1');
 	}
 
 	public ANG_ChangeRHCCurrency() {
 		this.objId = ApexPages.currentPage().getParameters().get('Id'); 
-		queryRHC();
+		queryRHC(false);
 		oldCurrency = rhc.CurrencyIsoCode;
 		caseToUpdate = new case();
 	}

@@ -1842,7 +1842,7 @@ public without sharing class ISSP_AMS_Accreditation {
                 amsLocationType = AMS_Utils.TYPE_PAX_AE_MULTICOUNTRY;
 
                 if(legalNames != null && newForm.AE_separate_Legal_Entity__c == 'Yes' && legalNames.contains(newForm.Account_Name__c)){
-					ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, 'To be defined'));
+					ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_ANG_Legal_Name_already_in_used));
 					return null;
 				}
 
@@ -2061,7 +2061,7 @@ public without sharing class ISSP_AMS_Accreditation {
                         saveAMSForm();
 
                         if(newForm.AE_separate_Legal_Entity__c == 'No' || newForm.AE_separate_Legal_Entity__c == null) // NEWGEN-1249 only with same legal entity have the owners from parent
-                            if (!isMultiCountryNewAE) setOwners('Branch');
+                            setOwners('Branch');
                     } else { //Insert current user as default contatc for HO applications
                         if (newCase.Reason1__c == AMS_Utils.CASE_REASON_HE_MULTICOUNTRY) {
                             newForm.Account_Name__c = hqAccount.Name;
@@ -7773,12 +7773,12 @@ system.debug('aqui sectorValue ' + sectorValue);
         } // END NEWGEN-205
 
         for(AMS_Accreditation_Contact__c amsAccCon : countAccreditationContact){ //NEWGEN-1249
-            if((newCase.Reason1__c == AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD || isMultiCountryNewAE || newCase.Reason1__c == AMS_Utils.CASE_REASON_AE_MULTICOUNTRY) && !amsAccCon.ANG_contactFromAccount__c){
+            if((newCase.Reason1__c == AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD || isMultiCountryNewAE || newCase.Reason1__c == AMS_Utils.CASE_REASON_AE_MULTICOUNTRY) && amsAccCon.ANG_contactFromAccount__c){
                 notToAdd = true;
                 break;
             }
         }
-        if (isScopeOfChangeChanged || countAccreditationContact.isEmpty() || ((newCase.Reason1__c == AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD || newCase.Reason1__c == AMS_UTILS.CASE_REASON_AE_MULTICOUNTRY) && notToAdd)) {
+        if (isScopeOfChangeChanged || countAccreditationContact.isEmpty() || ((newCase.Reason1__c == AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD || newCase.Reason1__c == AMS_UTILS.CASE_REASON_AE_MULTICOUNTRY) && ! notToAdd)) {
             for(AMS_Account_Role__c accRole: [SELECT Account__c, Active__c, Employee_Name__c, Employee_type__c, Id, Owner_Account__c,
                                                     Owner_Account__r.Name, Owner_Account__r.IATACode__c, Owner_Account__r.Email__c, Owner_Name__c, 
                                                     Percentage__c, Position__c, RecordTypeId, Title__c, Valid__c, Person__c, Person__r.First_Name__c,

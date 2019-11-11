@@ -1196,11 +1196,14 @@
     <listViews>
         <fullName>files_by_case</fullName>
         <columns>NAME</columns>
+        <columns>File_Identifier__c</columns>
+        <columns>Full_Name_Unique__c</columns>
+        <columns>Description__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Case__c</field>
             <operation>equals</operation>
-            <value>10350990</value>
+            <value>10771908</value>
         </filters>
         <label>files by case</label>
         <language>en_US</language>

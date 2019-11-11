@@ -217,7 +217,7 @@
             <apex:pageBlockSectionItem >&nbsp;</apex:pageBlockSectionItem>
 
             <apex:repeat value="{!accreditationFields}" var="field">
-                <apex:pageBlockSectionItem labelStyleClass="{!IF(isAgencyChanges, field.styleClass, '')}" dataStyleClass="{!IF(isAgencyChanges, field.styleClass, '')}" rendered="{!AND(field.rendered, field.name != 'Remittance_frequency__c', field.name != 'Preferred_RHC_currency__c', OR(!isAgencyChanges, !isStandardAgency, field.name != 'ANG_Accreditation_type__c'))}">
+                <apex:pageBlockSectionItem labelStyleClass="{!IF(OR(isAgencyChanges, isConversionFromStandardToMulticountry), field.styleClass, '')}" dataStyleClass="{!IF(OR(isAgencyChanges, isConversionFromStandardToMulticountry), field.styleClass, '')}" rendered="{!AND(field.rendered, field.name != 'Remittance_frequency__c', field.name != 'Preferred_RHC_currency__c', OR(!isAgencyChanges, !isStandardAgency, field.name != 'ANG_Accreditation_type__c'))}">
                     <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields[field.name].Label}" />
                     <apex:outputField value="{!accreditationObj[field.name]}" >
                         <apex:inlineEditSupport event="{!field.event}" showonEdit="saveButton,cancelButton" disabled="{!OR(NOT(field.inlineEdit),isCertificationOSCAR)}" />
@@ -225,7 +225,7 @@
                 </apex:pageBlockSectionItem>
 
 
-                <apex:pageBlockSectionItem labelStyleClass="{!IF(isAgencyChanges, field.styleClass, '')}" dataStyleClass="{!IF(isAgencyChanges, field.styleClass, '')}" rendered="{!AND(field.name == 'Remittance_frequency__c', allowMultipleRemittances == false)}">      
+                <apex:pageBlockSectionItem labelStyleClass="{!IF(OR(isAgencyChanges, isConversionFromStandardToMulticountry), field.styleClass, '')}" dataStyleClass="{!IF(OR(isAgencyChanges, isConversionFromStandardToMulticountry), field.styleClass, '')}" rendered="{!AND(field.name == 'Remittance_frequency__c', allowMultipleRemittances == false)}">      
                     <apex:outputLabel id="rfLabel" value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields[field.name].Label}" />
                     <apex:outputPanel >  
                         <apex:outputLabel id="outputRF" value="{!remittanceFrequencyToShow}"/> 
@@ -235,7 +235,7 @@
                     </apex:outputPanel>
                 </apex:pageBlockSectionItem>
 
-                 <apex:pageBlockSectionItem labelStyleClass="{!IF(isAgencyChanges, field.styleClass, '')}" dataStyleClass="{!IF(isAgencyChanges, field.styleClass, '')}"  rendered="{!AND(field.name == 'Remittance_frequency__c', allowMultipleRemittances == true)}">
+                 <apex:pageBlockSectionItem labelStyleClass="{!IF(OR(isAgencyChanges, isConversionFromStandardToMulticountry), field.styleClass, '')}" dataStyleClass="{!IF(OR(isAgencyChanges, isConversionFromStandardToMulticountry), field.styleClass, '')}"  rendered="{!AND(field.name == 'Remittance_frequency__c', allowMultipleRemittances == true)}">
                     <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields[field.name].Label}"/>    
                     <apex:outputPanel >
                             <apex:outputLabel id="mRFLabel" value="{!remittanceFrequencyToShow}"/>
@@ -265,7 +265,7 @@
                     </apex:outputPanel>
                 </apex:pageBlockSectionItem>
 
-                <apex:pageBlockSectionItem labelStyleClass="{!IF(isAgencyChanges, field.styleClass, '')}" dataStyleClass="{!IF(isAgencyChanges, field.styleClass, '')}"  rendered="{!AND(field.name == 'Preferred_RHC_currency__c', OR(oscarObj.Process__c == 'ANG.NEW.GE.STANDARD.1.0',oscarObj.Process__c == 'ANG.CONVERT.ST.TO.MC'))}">
+                <apex:pageBlockSectionItem labelStyleClass="{!IF(OR(isAgencyChanges, isConversionFromStandardToMulticountry), field.styleClass, '')}" dataStyleClass="{!IF(OR(isAgencyChanges, isConversionFromStandardToMulticountry), field.styleClass, '')}"  rendered="{!AND(field.name == 'Preferred_RHC_currency__c', OR(oscarObj.Process__c == 'ANG.NEW.GE.STANDARD.1.0',oscarObj.Process__c == 'ANG.CONVERT.ST.TO.MC'))}">
                     <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields[field.name].Label}"/>
                     <apex:outputPanel >
                             <apex:outputLabel id="mRFLabel" value="{!accreditationObj[field.name]}"/>

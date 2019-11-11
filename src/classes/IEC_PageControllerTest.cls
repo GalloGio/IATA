@@ -6,22 +6,20 @@ private class IEC_PageControllerTest
 	static void test_method_one() 
 	{
 		//-- Generate test data 
-		List<Product2> products = TestDataGenerator.generateProductsWithPrice(2);
+
 		User usr = IECTestUtil.createSampleGuestUserAndLogin();
 
 		System.runAs(usr)
 		{
+            Test.startTest();
+			List<Product2> products = TestDataGenerator.generateProductsWithPrice(2);
 			Test.setCurrentPage(Page.IEC_ProductList);
-
-
 			
 			//-- Add products to cookie 
 			for(Product2 p : products)
 				IECOrder_Svc.addProductToCookie(p.SAP_Material_Number__c, 1, true);
 
-
 			IEC_PageController ctrl = new IEC_PageController();
-
 
 			//-- Cart Content 
 			System.assertNotEquals(null, ctrl.cartContent);
@@ -59,8 +57,14 @@ private class IEC_PageControllerTest
 			ctrl.addConfirmMessage('Well done');
 			System.assertEquals(true, ctrl.hasConfirm);
 
+			ctrl.addWarningMessage('Test Warning');
+			System.assertEquals(true, ctrl.hasWarning);
+
+			ctrl.addWarningMessage('Test Warning', 'Test Additional Debug Message');
+			System.assertEquals(true, ctrl.hasWarning);
+
 			//Access My Service link 
-			Test.startTest();
+			
 			try{Boolean bHasAnyProdAccess = ctrl.bHasAnyProdAccess;}
 			catch(Exception ex){}
 			Test.stopTest();
@@ -70,6 +74,8 @@ private class IEC_PageControllerTest
 
 			//Mini Register
 			ctrl.miniRegister();
+
+			ctrl.csPortalCommunityRedirect();
 		}
 	}
 

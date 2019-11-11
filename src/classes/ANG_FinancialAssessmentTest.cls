@@ -287,6 +287,7 @@ private class ANG_FinancialAssessmentTest {
 			];
 
 		fs.Security_Status__c = 'Active';
+		fs.Financial_Security_Validation_Case__c = cse.Id;
 		update fs;
 
 		message = IFAP_WebService.applyCashCondition(cse.Id, cse.AccountId);
@@ -434,6 +435,7 @@ private class ANG_FinancialAssessmentTest {
 			];
 
 		fs.Security_Status__c = 'Active';
+		fs.Financial_Security_Validation_Case__c = cse.Id;
 		update fs;
 
         message = IFAP_WebService.removeCashCondition(cse.Id, cse.AccountId);

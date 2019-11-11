@@ -50,6 +50,12 @@ public with sharing class ISSP_Ctrl_Country_Requirements {
         } 
         set;
     }
+    public static String path {
+        get {
+            return Label.CSP_PortalPath;
+        }
+        set;
+    }
     public Boolean isChinaAgent {get; set;}
 
     //Check is the user has access to this service
@@ -249,6 +255,8 @@ public with sharing class ISSP_Ctrl_Country_Requirements {
 
     //Search the country Requirements aplying any active filter
     public PageReference runSearch() {
+        if(String.isBlank(typeFilter) || String.isBlank(countryFilter))
+            return null;
         String query = 'SELECT ';
         Map<String, Schema.SObjectField> objectFields = Schema.getGlobalDescribe().get('AP_Country_Requierment__c').getDescribe().fields.getMap();
 
@@ -256,8 +264,7 @@ public with sharing class ISSP_Ctrl_Country_Requirements {
            query += field + ', ';
         }
 
-        query = query.removeEnd(', ');
-        query += ' FROM AP_Country_Requierment__c ';
+        query += 'Country__r.Name FROM AP_Country_Requierment__c ';
         query += 'WHERE Line_of_business__c = \'' + typeFilter + '\' AND Country__c = \'' + countryFilter + '\' ';
         query += 'LIMIT 1';
 

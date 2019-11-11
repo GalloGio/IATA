@@ -31,6 +31,7 @@ public with sharing class ANG_AgencyChangesHelper {
 		public Set<Id> accountsChanged;
 
 		public Map<Id,AMS_Agencies_Hierarchy__c> hierarchies;
+		public Map<Id, AMS_Agencies_Hierarchy__c> hierarchiesToDeleteMap;
 
 		public AChangeStructure(){
 			relationsMap = new Map<Id, AMS_Agencies_relationhip__c>();
@@ -51,6 +52,7 @@ public with sharing class ANG_AgencyChangesHelper {
 			agencyAuthorizationToUpdateLst = new List<Agency_Authorization__c>();
 			calculateRiskAssessmentMap = new Map<Id, Map<Id, Integer>>();
 			riskAlertsToUpdateLst = new List<ANG_Risk_Alert__c>();
+			hierarchiesToDeleteMap = new Map<Id, AMS_Agencies_Hierarchy__c>();
 		}
 
 		public void addAccount(Account account){
@@ -78,7 +80,7 @@ public with sharing class ANG_AgencyChangesHelper {
 		public void addHierarchy(AMS_Agencies_Hierarchy__c hierarchy){
 			hierarchies.put(hierarchy.Id, hierarchy);
 		}
-		
+
 		public void addRhcInformationToDeactivate(ANG_RHC_Information__c rhcInfo){
 			deactivateRhcInformationLst.add(rhcInfo);
 		}
@@ -107,12 +109,16 @@ public with sharing class ANG_AgencyChangesHelper {
 		public void addRiskAlertsToUpdate(List<ANG_Risk_Alert__c> riskAlertsLst){
 			riskAlertsToUpdateLst.addAll(riskAlertsLst);
 		}
-		
+
 		public void addAccountsToRecalculateFsAmounts(Id accountId){
 			accountsToRecalculateFsAmounts.add(accountId);
 		}
 
-		public void runDeletes(){
+		public void addHierarchyToDelete(AMS_Agencies_Hierarchy__c hierarchy){
+			hierarchiesToDeleteMap.put(hierarchy.Id, hierarchy);
+		}
+
+		public void runPreDeletes(){
 
 			if(relationsToDeleteLst != NULL && !relationsToDeleteLst.isEmpty()){
 				delete relationsToDeleteLst;
@@ -124,6 +130,12 @@ public with sharing class ANG_AgencyChangesHelper {
 
 		}
 
+		public void runPostDeletes(){
+			if(hierarchiesToDeleteMap != NULL && !hierarchiesToDeleteMap.isEmpty()){
+				delete hierarchiesToDeleteMap.values();
+			}
+		}
+
 		public Boolean runUpsert(){
 
 			System.debug('[ANG_AgencyChangesHelper] Running upsert'); 
@@ -132,7 +144,7 @@ public with sharing class ANG_AgencyChangesHelper {
 
 			AMS_AgencyRelationshipTriggerHandler.AMS_HierarchyProcess = true;
 
-			runDeletes();
+			runPreDeletes();
 
 			if(relationsMap != null && !relationsMap.isEmpty()){
 				System.debug('[ANG_AgencyChangesHelper] Upserting following relations:'+relationsMap);
@@ -145,6 +157,8 @@ public with sharing class ANG_AgencyChangesHelper {
 				upsert hierarchies.values();
 				hasUpserted = true;	
 			}
+
+			runPostDeletes();
 
 			if(accountsMap != null && !accountsMap.isEmpty() && !accountsChanged.isEmpty()){
 
@@ -331,13 +345,14 @@ public with sharing class ANG_AgencyChangesHelper {
 
 						if(isMulticountry) accountIdset.add(oscar.New_Parent__c);
 
-
 						allRelationsOnHierarchy = AMS_HierarchyHelper.getAccountsHierarchies(accountIdSet);
 
-						accountHierarchyRelationships = extractAllAccounts(allRelationsOnHierarchy);
+						List<AMS_Agencies_relationhip__c> acquiredHierarchyRelationships = allRelationsOnHierarchy.get(oscar.Account__c);
+						accountHierarchyRelationships = extractAllAccounts(new Map<Id, List<AMS_Agencies_relationhip__c>>{oscar.Account__c => acquiredHierarchyRelationships});
 						accountHierarchyRelationships.add(oscar.Account__c);
-            isAllHierarchySelected = isAllHierarchySelected(oscar,accountHierarchyRelationships);
-            System.debug('[ANG_AgencyChangesHelper] isAllHierarchySelected is set to:'+isAllHierarchySelected);
+
+						isAllHierarchySelected = isAllHierarchySelected(oscar,accountHierarchyRelationships);
+						System.debug('[ANG_AgencyChangesHelper] isAllHierarchySelected is set to:'+isAllHierarchySelected);
 
 						Account acct = changesContainer.accountsMap.get(oscar.Account__c);
 
@@ -740,6 +755,8 @@ public with sharing class ANG_AgencyChangesHelper {
 
 			Account accountGE = changesContainer.accountsMap.get(oscar.Account__c);
 
+			changesContainer.addAccountToCalculateRiskAssessment(accountGE.Id);
+
 			Agency_Authorization__c geCashMethodFoP = NULL;
 
 			List<Agency_Authorization__c> formOfPaymentsLst = (List<Agency_Authorization__c>) accountGE.getSObjects('Agency_Authorizations__r');
@@ -905,8 +922,6 @@ public with sharing class ANG_AgencyChangesHelper {
 
 	public static AChangeStructure  detachTerminatedAccountsFromHierarchy(Map<Id, List<AMS_Agencies_relationhip__c>> allRelations, AChangeStructure toReturn){
 
-		Set<AMS_Agencies_Hierarchy__c> hierarchiesToDelete = new Set<AMS_Agencies_Hierarchy__c>();
-
 		Set<String> terminatedStatus = new Set <String>{AMS_Utils.ACC_S0_TERMINATED, AMS_Utils.ACC_S1_NOTACCREDITED, AMS_Utils.ACC_S2_NEWAPPLICATIONPENDING, AMS_Utils.ACC_S3_NOTINOPERATION, ''};
 		
 		List<AMS_Agencies_relationhip__c> relToDelete = new List<AMS_Agencies_relationhip__c>();
@@ -924,7 +939,7 @@ public with sharing class ANG_AgencyChangesHelper {
 					toReturn.addAccount(childAccount);
 
 					relToDelete.add(rel);
-					hierarchiesToDelete.add(new AMS_Agencies_Hierarchy__c(Id = rel.hierarchy__c));
+					toReturn.addHierarchyToDelete(new AMS_Agencies_Hierarchy__c(Id = rel.hierarchy__c));
 				}
 			
 			}
@@ -932,10 +947,6 @@ public with sharing class ANG_AgencyChangesHelper {
 
 		if(!relToDelete.isEmpty()){
 			delete relToDelete;
-		}
-
-		if(!hierarchiesToDelete.isEmpty()){
-			delete new List<AMS_Agencies_Hierarchy__c>(hierarchiesToDelete);
 		}
 		
 		return toReturn;
@@ -2146,11 +2157,17 @@ public with sharing class ANG_AgencyChangesHelper {
 	/**
 	Returns a Map of Operations for the given accounts
 	*/
-	public static Map<Id,Account> fetchAgOperationPerAccount(List<Id> accIds) {
+	public static Map<Id, List<Account>> fetchAgOperationPerAccount(List<Id> accIds) {
 
-		Map<Id,Account> bspPerAcc = new Map<Id,Account>();
-		for(Account agOp : [SELECT Id, IATA_ISO_Country__r.AMS_Settlement_System__c, IATA_ISO_Country__r.AMS_Settlement_System__r.RecordType.Name FROM Account WHERE Id in :accIds])
-			bspPerAcc.put(agOp.IATA_ISO_Country__r.AMS_Settlement_System__c,agOp);
+		Map<Id, List<Account>> bspPerAcc = new Map<Id, List<Account>>();
+		for(Account agOp : [SELECT Id, IATA_ISO_Country__r.AMS_Settlement_System__c, IATA_ISO_Country__r.AMS_Settlement_System__r.RecordType.Name FROM Account WHERE Id in :accIds]){
+			List<Account> agOpLst = bspPerAcc.get(agOp.IATA_ISO_Country__r.AMS_Settlement_System__c);
+			if(agOpLst == null){
+				agOpLst = new List<Account>();
+			}
+			agOpLst.add(agOp);
+			bspPerAcc.put(agOp.IATA_ISO_Country__r.AMS_Settlement_System__c, agOpLst);
+		}
 
 		return bspPerAcc;
 	}
@@ -2275,12 +2292,13 @@ public with sharing class ANG_AgencyChangesHelper {
     	for(List<AMS_Agencies_relationhip__c> relationsLst: relations.values())
     		for(AMS_Agencies_relationhip__c rel : relationsLst){
 
-    			toReturn.add(rel.Parent_Account__c);
-    			
-    			if(!terminatedStatus.contains(rel.Child_Account__r.Status__c))
-    				toReturn.add(rel.Child_Account__c);
+				toReturn.add(rel.Parent_Account__c);
 
-    	}
+    			if(String.isNotBlank(rel.Child_Account__r.Status__c) && !terminatedStatus.contains(rel.Child_Account__r.Status__c)){
+    				toReturn.add(rel.Child_Account__c);
+				}
+
+    		}
 
     	return toReturn;
     }

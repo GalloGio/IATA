@@ -3969,6 +3969,7 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
                 <controllingFieldValue>BANK.ACCOUNT.CHANGES</controllingFieldValue>
                 <controllingFieldValue>MAJOR.CHANGES</controllingFieldValue>
                 <controllingFieldValue>DGR.DGA</controllingFieldValue>
+                <controllingFieldValue>ANG.CONVERT.ST.TO.MC</controllingFieldValue>
                 <valueName>Authorize Approval</valueName>
             </valueSettings>
             <valueSettings>
@@ -3996,6 +3997,7 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
                 <controllingFieldValue>BANK.ACCOUNT.CHANGES</controllingFieldValue>
                 <controllingFieldValue>MAJOR.CHANGES</controllingFieldValue>
                 <controllingFieldValue>DGR.DGA</controllingFieldValue>
+                <controllingFieldValue>ANG.CONVERT.ST.TO.MC</controllingFieldValue>
                 <valueName>Authorize Disapproval</valueName>
             </valueSettings>
             <valueSettings>
@@ -4023,6 +4025,7 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
                 <controllingFieldValue>BANK.ACCOUNT.CHANGES</controllingFieldValue>
                 <controllingFieldValue>MAJOR.CHANGES</controllingFieldValue>
                 <controllingFieldValue>DGR.DGA</controllingFieldValue>
+                <controllingFieldValue>ANG.CONVERT.ST.TO.MC</controllingFieldValue>
                 <valueName>Reprocess case</valueName>
             </valueSettings>
             <valueSettings>
