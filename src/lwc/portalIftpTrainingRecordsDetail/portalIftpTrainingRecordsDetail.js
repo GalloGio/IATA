@@ -278,7 +278,7 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
 
 
         this.columns = [
-            {label: 'Last Name', fieldName: 'lastName', type: 'text', sortable: true},
+            {label: 'Last Name', fieldName: 'lastName', type: 'text', cellAttributes: { class: { fieldName: 'upperCase' }}, sortable: true},
             {label: 'First Name', fieldName: 'firstName', type: 'text', sortable: true},
             {label: 'Employee Code', fieldName: 'companyNumber', type: 'text', sortable: true},
             {label: 'Operation Type', fieldName: 'trainingName', type: 'text', sortable: true},
@@ -404,6 +404,9 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
         getTrainingRecords({searchValues: auxSearchValues, searchType: 'RecordsDetail' })
         .then(results => {
             if(results && results.length > 0) {
+                results.forEach(rec =>{
+                    rec.upperCase = 'to-upper-case';
+                });
                 this.data = results;
                 this.dataRecords = true;
             } else {
