@@ -252,8 +252,11 @@ public with sharing class ISSP_Ctrl_Country_Requirements {
 
     //Search the country Requirements aplying any active filter
     public PageReference runSearch() {
-        if(String.isBlank(typeFilter) || String.isBlank(countryFilter))
+        if(String.isBlank(typeFilter) || String.isBlank(countryFilter)) {
+			this.countryRequirement = null;
             return null;
+		}
+		
         String query = 'SELECT ';
         Map<String, Schema.SObjectField> objectFields = Schema.getGlobalDescribe().get('AP_Country_Requierment__c').getDescribe().fields.getMap();
 
