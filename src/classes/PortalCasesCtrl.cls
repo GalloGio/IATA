@@ -46,6 +46,13 @@ public with sharing class PortalCasesCtrl {
 
     private static String AGENT_ACCREDITATION_PORTAL_SERVICE = ISSP_Portal_Service_Ids__c.getInstance().AgencyAccreditation__c;
     private static Boolean isCaseFromReachUs = false;
+	
+	public static Set<String> recordTypes = new Set<String>{'Cases - Africa & Middle East', 
+    'Cases - Americas','Cases - Asia & Pacific',
+    'Cases - China & North Asia','Cases - Europe',
+    'Cases - Global','Complaint (IDFS ISS)',
+    'Process'};
+	
     /*
     *
     *
@@ -781,7 +788,7 @@ public with sharing class PortalCasesCtrl {
 public static List<MessageWrapper> getCaseMessages(String caseId){
 	List<MessageWrapper> lstToReturn = new List<MessageWrapper>();
 
-	Case caseToFirstComment = [SELECT Id, Description, CreatedBy.Name, CreatedDate FROM Case WHERE Id =:caseId];
+	Case caseToFirstComment = [SELECT Id, Description, CreatedBy.Name, CreatedDate FROM Case WHERE Id =:caseId AND RecordType__c IN :recordTypes];
 
 	List<CaseComment> lstCaseCommentsAux = [SELECT Id, ParentId, CommentBody, IsPublished,
 	                                        CreatedDate, CreatedById, CreatedBy.Name, IsDeleted
