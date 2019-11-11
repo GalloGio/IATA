@@ -29,7 +29,8 @@ public with sharing class FinancialInstitutionHandlerTest {
                 Reasonforrequest__c = 'New Application',
                 Reception_Case__c = cse.Id,
                 Expiry_Date__c = Date.today().addMonths(3),
-                Security_Type__c = 'Bank Guarantee'
+                Security_Type__c = 'Bank Guarantee',
+                Financial_Security_Validation_Case__c = cse.Id
             ));
             if (listSecurities.size()==200) {
                 insert listSecurities;

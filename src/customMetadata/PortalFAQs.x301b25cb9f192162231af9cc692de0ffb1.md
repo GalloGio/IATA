@@ -28,7 +28,7 @@
     </values>
     <values>
         <field>DataCategoryLabel_en_US__c</field>
-        <value xsi:type="xsd:string">NDClink</value>
+        <value xsi:type="xsd:string">NDC - New Distribution Capability</value>
     </values>
     <values>
         <field>DataCategoryLabel_es__c</field>
@@ -104,7 +104,7 @@
     </values>
     <values>
         <field>Order__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:double">16.0</value>
     </values>
     <values>
         <field>Permission_Set_Name__c</field>
