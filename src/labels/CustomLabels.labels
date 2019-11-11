@@ -3164,6 +3164,13 @@ Payment required on receipt of this Payment Advice
         <value>Was this article helpful?</value>
     </labels>
     <labels>
+        <fullName>CSP_Assign_New_Service</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Assign New Service</shortDescription>
+        <value>Assign New Service</value>
+    </labels>
+    <labels>
         <fullName>CSP_Branch_Offices</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
