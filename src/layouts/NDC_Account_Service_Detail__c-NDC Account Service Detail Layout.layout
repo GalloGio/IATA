@@ -149,6 +149,7 @@
                 <field>Reach_Number_of_Sellers_Connected__c</field>
             </layoutItems>
         </layoutColumns>
+        <layoutColumns/>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
     <layoutSections>
