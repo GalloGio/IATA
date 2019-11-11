@@ -10066,6 +10066,14 @@ For new applicants and returning agents who do not have their existing ID Card c
         <value>The application form can not be modified after the payment has been made</value>
     </labels>
     <labels>
+        <fullName>IDCard_NoUSServiceDescription</fullName>
+        <categories>IATA Passenger Sales Agent,TIDS Agent,Domestic Agent</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IDCard_NoUSServiceDescription</shortDescription>
+        <value>ID Card Online Platform</value>
+    </labels>
+    <labels>
         <fullName>IDCard_No_Price_Table_Found</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -10570,6 +10578,14 @@ Kindly note that home-based agents are required to coordinate with their colleag
         <protected>false</protected>
         <shortDescription>IDCard_TrxNum</shortDescription>
         <value>Transaction #:</value>
+    </labels>
+    <labels>
+        <fullName>IDCard_USServiceDescription</fullName>
+        <categories>IATAN Passenger Sales Agent (USA Only),Travel Service Intermediaries-TSI (USA Only),IATA Passenger Sales Agent</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IDCard_USServiceDescription</shortDescription>
+        <value>IATAN WebStar Online Services</value>
     </labels>
     <labels>
         <fullName>IDCard_Update_Application</fullName>
