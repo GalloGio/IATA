@@ -106,29 +106,6 @@ private class Product_Svc_Test
 	}
 
 	@isTest(seeAllData=true)
-	static void test_processZProductSaveResult()
-	{
-		Test.startTest();
-		List<Product2> products = TestDataGenerator.generateProducts(2, false);
-		List<Zuora.zObject> zobjects = TestDataGenerator.generateZProducts(2);
-
-		//Inject error
-		zobjects[1].setValue('EffectiveStartDate','');
-
-		List<Zuora.zApi.SaveResult> results = TestDataGenerator.generateSaveResults(zobjects, 'create');
-		results[0].Success = false;
-		results[0].Errors = new List<Zuora.zObject>();
-		Zuora.zObject err = new Zuora.zObject('Error');
-			err.setValue('Message', 'Invalid zObject');
-			err.setValue('Code', 'INVALID_FIELD');
-		results[0].Errors.add(err);
-
-		String result = Product_Svc.processZProductSaveResult(products, results);
-
-		Test.stopTest();
-	}
-
-	@isTest(seeAllData=true)
 	static void test_setIsNewVersion()
 	{
 		delete [select Id from Apex_Setting__c where Name = 'Zuora Exclude Product Record Type'];
