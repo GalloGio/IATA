@@ -17,7 +17,6 @@ import CSP_Breadcrumb_Services_Title from '@salesforce/label/c.CSP_Breadcrumb_Se
 import CSP_Manage_Services from '@salesforce/label/c.CSP_Manage_Services';
 import CSP_Breadcrumb_Company_Profile_Title from '@salesforce/label/c.CSP_Breadcrumb_CompanyProfile_Title';
 import CSP_Breadcrump_MyProfile_Title from '@salesforce/label/c.CSP_Breadcrump_MyProfile_Title';
-import CSP_Breadcrump_You_IATA from '@salesforce/label/c.CSP_Breadcrump_You_IATA';
 import CSP_Cases from '@salesforce/label/c.CSP_Cases';
 
 export default class PortalBreadcrumbs extends NavigationMixin(LightningElement) {
@@ -34,7 +33,6 @@ export default class PortalBreadcrumbs extends NavigationMixin(LightningElement)
         CSP_Manage_Services,
         CSP_Breadcrumb_Company_Profile_Title,
         CSP_Breadcrump_MyProfile_Title,
-        CSP_Breadcrump_You_IATA,
         CSP_Cases
     };
 
