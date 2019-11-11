@@ -529,9 +529,11 @@ export default class PortalIftpManageStations extends LightningElement {
 
         if(auxEditData.description !== undefined && auxEditData.description !== ''){ 
             dataToSave.push({ Id: auxEditData.id, Description__c: auxEditData.description, Address__c: auxEditData.addressId});
+        } else {
+            dataToSave.push({ Id: auxEditData.id, Description__c: '', Address__c: auxEditData.addressId});
         }
 
-        updateStation({dataToSave: dataToSave, origin: 'updateStation' })
+        updateStation({dataToSave: dataToSave, origin: 'updateStation', accountId: this.userInfo.accountId})
         .then(results => {
             let variant = 'error';
             let mode = 'sticky';
