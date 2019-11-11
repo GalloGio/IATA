@@ -135,10 +135,6 @@
                 <behavior>Edit</behavior>
                 <field>NDC_Type_of_Connectivity__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Seller_Website__c</field>
-            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
@@ -151,16 +147,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Reach_Number_of_Sellers_Connected__c</field>
-            </layoutItems>
-        </layoutColumns>
-        <layoutColumns>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Target_Customers__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Aggregator_Website__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
