@@ -341,12 +341,9 @@ public without sharing class WorkflowHelper {
 	//Workflow Name: Key contact Opt out
 	public static void keyContactOptOut(Contact oldContact , Contact newContact){
 
-		//For insert formula field not calculated yet. Use an auxiliar variable
-		Boolean accountManagementKeyContact = false;
-		if(oldContact == null){
-			Set<String> ceocfo = new Set<String>{'CEO', 'CFO', 'COO', 'CCO', 'CIO'};
-			accountManagementKeyContact = ceocfo.contains(newContact.CEO_CFO__c) || newContact.Membership_Main_Contact__c || (newContact.Function__c != null && newContact.Function__c != '');
-		}
+		Set<String> ceocfo = new Set<String>{'CEO', 'CFO', 'COO', 'CCO', 'CIO'};
+		//Formula field not calculated yet. Use an auxiliar variable
+		Boolean accountManagementKeyContact = ceocfo.contains(newContact.CEO_CFO__c) || newContact.Membership_Main_Contact__c || (newContact.Function__c != null && newContact.Function__c != '');
 
 		if((oldContact == null && accountManagementKeyContact)
 			|| (oldContact != null && oldContact.Account_Management_Key_Contact__c != accountManagementKeyContact)) {
