@@ -59,6 +59,12 @@ import CSP_Filtered from '@salesforce/label/c.CSP_Filtered';
 import CSP_Search_Case_Country from '@salesforce/label/c.CSP_Search_Case_Country';
 import CSP_RemoveAllFilters from '@salesforce/label/c.CSP_RemoveAllFilters';
 import CSP_Apply from '@salesforce/label/c.CSP_Apply';
+import ISSP_All from '@salesforce/label/c.ISSP_All';
+import ISSP_Access_Granted from '@salesforce/label/c.ISSP_Access_Granted';
+import ISSP_Access_Requested from '@salesforce/label/c.ISSP_Access_Requested';
+import ISSP_Access_Denied from '@salesforce/label/c.ISSP_Access_Denied';
+
+
 
 //import user id
 import Id from '@salesforce/user/Id';
@@ -142,7 +148,11 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         CSP_RemoveAllFilters,
         CSP_Apply,
         ISSP_IATA_Location_Code,
-        Status
+        Status,
+        ISSP_All,
+        ISSP_Access_Granted,
+        ISSP_Access_Requested,
+        ISSP_Access_Denied
     };
 
     //links for images
@@ -236,9 +246,9 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     globalResults = [];
     @track optionsCountry = [];
     @track optionsStatus = [
-        { label: "Access Granted", value: "Access Granted" },
-        { label: "Access Denied", value: "Access Denied" },
-        { label: "Access Requested", value: "Access Requested" }];
+        { label: this.label.ISSP_Access_Granted, value: "Access Granted" },
+        { label: this.label.ISSP_Access_Denied, value: "Access Denied" },
+        { label: this.label.ISSP_Access_Requested, value: "Access Requested" }];
 
     connectedCallback() {
 
@@ -1175,7 +1185,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     }
 
     getPickWithAllValue(picklist) {
-        let picklistAux = [{ checked: false, label: 'All', value: '' }];
+        let picklistAux = [{ checked: false, label: this.label.ISSP_All, value: '' }];
         return picklistAux.concat(picklist);
     }
 
@@ -1203,7 +1213,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                 this.selectedCountry = el.label;
             }
         });
-        if (this.selectedCountry == 'All')
+        if (this.selectedCountry == this.labels.CSP_selectReason)
             this.selectedCountry = '';
     }
 
