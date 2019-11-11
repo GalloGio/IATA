@@ -58,9 +58,13 @@
                     </lightning:layoutItem>
                     <lightning:layoutItem size="6" padding="horizontal-small"><lightning:outputField fieldName="Contact_Person__c" /></lightning:layoutItem>
                     <lightning:layoutItem size="6" padding="horizontal-small"><lightning:outputField fieldName="Contact_Email__c" /></lightning:layoutItem>
+                    <aura:if isTrue="{! v.ndcCapabilities.Company_Type__c == 'Seller'}">
+                        <lightning:layoutItem size="6" padding="horizontal-small"><lightning:outputField fieldName="Live_on_NDC__c" /></lightning:layoutItem>
+                    </aura:if>
                     <lightning:layoutItem size="6" padding="horizontal-small"><lightning:outputField fieldName="NDC_Certification_Level__c" /></lightning:layoutItem>
                     <lightning:layoutItem size="6" padding="horizontal-small"><lightning:outputField fieldName="NDC_Schema_Version__c" /></lightning:layoutItem>
                     <aura:if isTrue="{! v.ndcCapabilities.Company_Type__c == 'Aggregator'}">
+                        <lightning:layoutItem size="6" padding="horizontal-small"><lightning:outputField fieldName="Target_Customers__c" /></lightning:layoutItem>
                         <lightning:layoutItem size="6" padding="horizontal-small"><lightning:outputField fieldName="Reach_Number_of_Sellers_Connected__c" /></lightning:layoutItem>
                     </aura:if>
                 </lightning:layout>
@@ -99,7 +103,6 @@
                 <aura:if isTrue="{! v.ndcCapabilities.Company_Type__c == 'Seller'}">
                     <lightning:layoutItem size="6" padding="horizontal-small"><lightning:outputField fieldName="NDC_Seller_Type__c" /></lightning:layoutItem>
                     <lightning:layoutItem size="6" padding="horizontal-small"><lightning:outputField fieldName="NDC_Type_of_Connectivity__c" /></lightning:layoutItem>
-                    <lightning:layoutItem size="6" padding="horizontal-small"><lightning:outputField fieldName="Live_on_NDC__c" /></lightning:layoutItem>
                 </aura:if>
                 <div class="slds-m-top_medium">
                     <lightning:button disabled="{!v.disabled}" variant="brand" onclick="{! c.handleEdit}" name="edit" label="Edit" />
@@ -158,6 +161,9 @@
                     <lightning:layoutItem size="6" padding="horizontal-small">
                         <lightning:inputField class="customRequired none"  aura:id="Contact_Email__c" fieldName="Contact_Email__c"/>
                     </lightning:layoutItem>
+                    <aura:if isTrue="{! v.ndcCapabilities.Company_Type__c == 'Seller'}">
+                        <lightning:layoutItem size="6" padding="horizontal-small"><lightning:inputField fieldName="Live_on_NDC__c" /></lightning:layoutItem>
+                    </aura:if>
                     <lightning:layoutItem size="6" padding="horizontal-small"><lightning:inputField fieldName="NDC_Certification_Level__c" /></lightning:layoutItem>
                     <aura:if isTrue="{! v.ndcCapabilities.Company_Type__c == 'Airline'}">
                         <lightning:layoutItem size="6" padding="horizontal-small">
@@ -169,6 +175,7 @@
                         </aura:set>
                     </aura:if>
                     <aura:if isTrue="{! v.ndcCapabilities.Company_Type__c == 'Aggregator'}">
+                        <lightning:layoutItem size="6" padding="horizontal-small"><lightning:inputField fieldName="Target_Customers__c" /></lightning:layoutItem>
                         <lightning:layoutItem size="6" padding="horizontal-small"><lightning:inputField fieldName="Reach_Number_of_Sellers_Connected__c" /></lightning:layoutItem>
                     </aura:if>
                 </lightning:layout>
@@ -229,9 +236,6 @@
                     </lightning:layoutItem>
                     <lightning:layoutItem size="6" padding="horizontal-small">
                         <lightning:inputField class="customRequired none" aura:id="NDC_Type_of_Connectivity__c" fieldName="NDC_Type_of_Connectivity__c" />
-                    </lightning:layoutItem>
-                    <lightning:layoutItem size="6" padding="horizontal-small">
-                        <lightning:inputField class="customRequired none" aura:id="Live_on_NDC__c" fieldName="Live_on_NDC__c" />
                     </lightning:layoutItem>
                 </aura:if>
                 <div class="slds-m-top_medium">
