@@ -25,6 +25,7 @@ import CSP_Search_Documents_Category from '@salesforce/label/c.CSP_Search_Docume
 import CSP_Search_Documents_ProdType from '@salesforce/label/c.CSP_Search_Documents_ProdType';
 import CSP_Search_Documents_PubCountry from '@salesforce/label/c.CSP_Search_Documents_PubCountry';
 import CSP_Status from '@salesforce/label/c.CSP_Status';
+import ISSP_All from '@salesforce/label/c.ISSP_All';
 
 export default class PortalSearchFilters extends LightningElement {
 
@@ -43,7 +44,8 @@ export default class PortalSearchFilters extends LightningElement {
         CSP_Search_Documents_ProdType,
         CSP_Search_Documents_PubCountry,
         ICCS_Profile,
-        CSP_Status
+        CSP_Status,
+        ISSP_All
     };
 
     @api
@@ -164,7 +166,7 @@ export default class PortalSearchFilters extends LightningElement {
     }
 
     getPickWithAllValue(picklist){
-        let picklistAux = [{checked: false, label: "All", value: ""}];
+        let picklistAux = [{checked: false, label: this.label.ISSP_All, value: ""}];
         return picklistAux.concat(picklist);
     }
 
@@ -654,6 +656,7 @@ export default class PortalSearchFilters extends LightningElement {
         this.typeIsContact = event.detail.value === 'Contact';
 
         let filteringObjectAux = JSON.parse(JSON.stringify(this._filteringObject));
+        filteringObjectAux.profileComponent.profileContactStatusFilter = selectedValue === '' ? '' : filteringObject.profileComponent.profileContactStatusFilter;
         filteringObjectAux.profileComponent.profileTypeFilter = selectedValue;
         this._filteringObject = filteringObjectAux;
 
