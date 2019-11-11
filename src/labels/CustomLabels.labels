@@ -10071,7 +10071,7 @@ For new applicants and returning agents who do not have their existing ID Card c
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCard_NoUSServiceDescription</shortDescription>
-        <value>ID Card Online Platform</value>
+        <value>Apply &amp; pay for your ID Card (new, renew, change of agency) and get IATA travel agent benefits.</value>
     </labels>
     <labels>
         <fullName>IDCard_No_Price_Table_Found</fullName>
@@ -10585,7 +10585,7 @@ Kindly note that home-based agents are required to coordinate with their colleag
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCard_USServiceDescription</shortDescription>
-        <value>IATAN WebStar Online Services</value>
+        <value>Request for ID Cards, register Agents, pay Annual Service Fee, process Agency Recertification, etc</value>
     </labels>
     <labels>
         <fullName>IDCard_Update_Application</fullName>
