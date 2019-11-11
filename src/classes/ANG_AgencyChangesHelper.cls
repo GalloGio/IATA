@@ -755,6 +755,8 @@ public with sharing class ANG_AgencyChangesHelper {
 
 			Account accountGE = changesContainer.accountsMap.get(oscar.Account__c);
 
+			changesContainer.addAccountToCalculateRiskAssessment(accountGE.Id);
+
 			Agency_Authorization__c geCashMethodFoP = NULL;
 
 			List<Agency_Authorization__c> formOfPaymentsLst = (List<Agency_Authorization__c>) accountGE.getSObjects('Agency_Authorizations__r');
