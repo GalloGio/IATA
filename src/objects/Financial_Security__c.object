@@ -2529,22 +2529,6 @@ IMAGE(&quot;/servlet/servlet.FileDownload?file=015200000011tph&quot;,&quot;Reque
         <errorMessage>Financial institution is not active. Please request agent to submit a financial security from alternative provider.</errorMessage>
     </validationRules>
     <validationRules>
-        <fullName>Financial_Security_Validation_Case</fullName>
-        <active>true</active>
-        <description>Financial Security Validation Case should be filled when switching a bank guarantee to &quot;Active&quot;</description>
-        <errorConditionFormula>AND(
-ISPICKVAL(Security_Type__c, &quot;Bank Guarantee&quot;),
-ISPICKVAL(Security_Status__c, &quot;Active&quot;),
-ISBLANK(Financial_Security_Validation_Case__c),
-OR(
-  ISNEW(),
-  ISCHANGED(Security_Status__c)
-  )
-)</errorConditionFormula>
-        <errorDisplayField>Financial_Security_Validation_Case__c</errorDisplayField>
-        <errorMessage>Please fill &quot;Financial Security Validation Case&quot; before making it active.</errorMessage>
-    </validationRules>
-    <validationRules>
         <fullName>Expiry_date_greater_than_validity_start</fullName>
         <active>true</active>
         <description>Rule to ensure that the expiry date of FS is greater than validity start date</description>
@@ -2562,6 +2546,22 @@ OR(
 )</errorConditionFormula>
         <errorDisplayField>Expiry_Date__c</errorDisplayField>
         <errorMessage>Expiry date of the Financial Security can&apos;t be less than the Validity start date.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Financial_Security_Validation_Case</fullName>
+        <active>true</active>
+        <description>Financial Security Validation Case should be filled when switching a bank guarantee to &quot;Active&quot;</description>
+        <errorConditionFormula>AND(
+ISPICKVAL(Security_Type__c, &quot;Bank Guarantee&quot;),
+ISPICKVAL(Security_Status__c, &quot;Active&quot;),
+ISBLANK(Financial_Security_Validation_Case__c),
+OR(
+  ISNEW(),
+  ISCHANGED(Security_Status__c)
+  )
+)</errorConditionFormula>
+        <errorDisplayField>Financial_Security_Validation_Case__c</errorDisplayField>
+        <errorMessage>Please fill &quot;Financial Security Validation Case&quot; before making it active.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Financial_Security_Validation_is_mandato</fullName>
