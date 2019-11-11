@@ -61,6 +61,7 @@ export default class NotificationCenter extends LightningElement {
     @track portalService = '';
     @track portalServices = [];
     @track countrylist = [];
+    aplyingFilters = false;
 
     //modal
     @track showModal = false;
@@ -145,8 +146,11 @@ export default class NotificationCenter extends LightningElement {
             this.selectedRows = this.auxiliarSelected;
             this.currentPageRecords = currentPageIds;
             if (data.length < 1) {
-                this.showToast(ERROR,'Error','There are no users to be displayed');
+                this.showToast(ERROR,'Note!','There are no users to be displayed');
+            }else if(this.aplyingFilters){
+                this.showToast(SUCCESS,'Success','filters applied successfully!');
             }
+            this.aplyingFilters = false;
         } else if (error) {
             this.page = this.previousPage;
             this.showToast(ERROR,'Error',GENERAL_ERROR_MESSAGE);
@@ -187,9 +191,17 @@ export default class NotificationCenter extends LightningElement {
             this.sector = sector;
             this.countries = countryList ? countryList : [];
             this.portalService = portalService ? portalService : '';  
+            this.aplyingFilters = true;
         } else {            
             this.showToast(ERROR,'Error','No filter was changed');
         }
+    }
+
+    handleClearFilters(){    
+        this.template.querySelector(".inputSector").value = '';
+        this.template.querySelector(".inputCategory").value = '';
+        this.template.querySelector(".portalService").value = '';
+        this.template.querySelector(".contryListField").value = '';
     }
 
     handleSubmitForm(event){
@@ -342,5 +354,19 @@ export default class NotificationCenter extends LightningElement {
             mode: 'dismissable'
         });
         this.dispatchEvent(event);
+    }
+
+    toggleFilters(){
+        let elem = this.template.querySelector(".FiltersBox");
+
+        if(elem.hasAttribute('hidden')){            
+            elem.removeAttribute("hidden");
+            this.template.querySelector(".chevDown").setAttribute("hidden", true);
+            this.template.querySelector(".chevUp").removeAttribute("hidden");
+        }else{ 
+            elem.setAttribute("hidden", true);
+            this.template.querySelector(".chevDown").removeAttribute("hidden");
+            this.template.querySelector(".chevUp").setAttribute("hidden", true);
+        }
     }
 }

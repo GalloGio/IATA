@@ -1,21 +1,23 @@
 <template>
-    <div class="slds-box comp">
-        <div class="slds-m-vertical_small slds-align_absolute-center">
-            <div class="slds-text-heading_large slds-m-horizontal_small ">Notification Center</div>
-        </div>
+    <div class="comp">
         <div class=" slds-box slds-m-vertical_large" >
-            <div class="slds-box slds-m-vertical_large">
-                <div class="slds-text-heading_small">Filters</div>
-                <div class="slds-grid">
-                    <div class="slds-size_1-of-6 slds-p-right_small">
+            <div onclick={toggleFilters} class="toggleFilterButton">
+                <div class="slds-text-heading_large">Filters
+                    <span class="chevDown slds-m-left_medium"><lightning-icon icon-name="utility:chevrondown"  alternative-text="Open Filters"></lightning-icon></span>
+                    <span hidden class="chevUp slds-m-left_medium"><lightning-icon icon-name="utility:chevronup" alternative-text="CLose Filters"></lightning-icon></span>
+                </div>    
+            </div>
+            <div class="slds-box slds-m-vertical_large FiltersBox" hidden="hidden">
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-size_1-of-6 slds-p-right_small slds-p-top_x-large">
                         <lightning-record-edit-form object-api-name="Account" onsubmit={handleSubmitForm}>
                             <div class="slds-grid">
                                 <div class="slds-col slds-size_1-of-1 ">
                                     <div>
-                                        <lightning-input-field field-name="Sector__c" data-filter="sector"></lightning-input-field>
+                                        <lightning-input-field field-name="Sector__c" data-filter="sector" value={inputValue} class="inputSector"></lightning-input-field>
                                     </div>
                                     <div>
-                                        <lightning-input-field field-name="Category__c" data-filter="category"></lightning-input-field>
+                                        <lightning-input-field field-name="Category__c" data-filter="category" class="inputCategory"></lightning-input-field>
                                     </div>
                                     <div>
                                         <lightning-combobox
@@ -31,7 +33,7 @@
                             </div>
                         </lightning-record-edit-form>
                     </div>
-                    <div class="slds-size_1-of-6">
+                    <div class="slds-size_2-of-6">
                         <div class="slds-grid">
                             <div class="slds-col slds-size_1-of-1">  
                                 <lightning-dual-listbox name="country"
@@ -44,11 +46,29 @@
                                 onchange={handleCountrySelection}></lightning-dual-listbox>
                             </div>
                         </div>
+                    </div>                    
+                   
+                    <!--div class="slds-col slds-size_1-of-6"></div-->
+                    <div class="slds-col slds-size_1-of-6 slds-align_absolute-center">
+                        <div class="slds-col slds-size_4-of-6">
+                            <div class="slds-card">
+                                <div class="slds-card__body slds-card__body_inner slds-p-vertical_large slds-m-around_small">
+                                    <div class="slds-text-heading_large slds-text-align_center slds-text-color_weak">{totalRecords}</div>
+                                    <div class="slds-text-align_center slds-text-color_weak">results fetched</div>
+                                </div>
+                            </div> 
+                        </div>   
                     </div>
-                    <div class="slds-col slds-size_1-of-6 slds-align_absolute-center">                        
-                        <lightning-button variant="brand" name="filter" label="Filter results" onclick={handleFilterTable}></lightning-button>
-                    </div>
-                    <div class="slds-col slds-size_2-of-6"></div>
+                    <div class="slds-col slds-size_1-of-6 slds-align_absolute-center"> 
+                            <div>   
+                                <div class="slds-size_1-of-1 slds-m-vertical_medium slds-align_absolute-center">                    
+                                    <lightning-button variant="brand" name="filter" label="Filter results" onclick={handleFilterTable}></lightning-button>
+                                </div>
+                                <div class="slds-size_1-of-1 slds-m-vertical_medium slds-align_absolute-center">
+                                    <lightning-button name="filter" label="Clear Filters" onclick={handleClearFilters}></lightning-button>
+                                </div>
+                            </div>
+                        </div>
                     <div class="slds-col slds-size_1-of-6 slds-align_absolute-center">
                         <div>   
                             <div class="slds-size_1-of-1 slds-m-vertical_medium slds-align_absolute-center">
@@ -63,20 +83,21 @@
                     </div>
                 </div>
             </div>
-            <template if:false={error} >
+            <template if:false={error}>
                 <div class="slds-p-top_large slds-m-vertical_large">
                     <lightning-datatable data-id="myTable"
-                                         key-field="ContactId"
-                                         data={data}
-                                         show-row-number-column
-                                         selected-rows={selectedRows}
-                                         row-number-offset={offset}
-                                         onrowselection={handleRowSelection}
-                                         columns={columns}
-                                         onrowaction={handleRowAction}>
+                                        key-field="ContactId"
+                                        data={data}
+                                        show-row-number-column
+                                        selected-rows={selectedRows}
+                                        row-number-offset={offset}
+                                        onrowselection={handleRowSelection}
+                                        columns={columns}
+                                        onrowaction={handleRowAction}>
                     </lightning-datatable>
                 </div>
             </template>
+            
             <div class="slds-align_absolute-center slsd-m-vertical_large">
                 <lightning-button disabled={isFirstPage} name="previous" label="Previous" onclick={handleTableNavigation} class="slds-m-horizontal_xx-small">
                 </lightning-button>
@@ -85,6 +106,7 @@
             </div>
         </div>
     </div>
+
     
     <!-- =========== MODAL =========== -->
     <template if:true={showModal}>
