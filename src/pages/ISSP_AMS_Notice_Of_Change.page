@@ -615,12 +615,14 @@
 	}
 
 	function checkGoGlobal() {
-		if ($j('[id$=allowedAccreditationModelSelect]')[0].selectedOptions[0].value == 'Multicountry') {
-			$j('[id$=selectHEForConversion]').css('display', 'block');
-			$j('[id$=accountsToBeConvertedPanel]').css('display', 'block');
-		} else {
-			$j('[id$=selectHEForConversion]').css('display', 'none');
-			$j('[id$=accountsToBeConvertedPanel]').css('display', 'none');
+		if ({!hqAccount.ANG_IsNewGenAgency__c}) {
+			if ($j('[id$=allowedAccreditationModelSelect]')[0].selectedOptions[0].value == 'Multicountry') {
+				$j('[id$=selectHEForConversion]').css('display', 'block');
+				$j('[id$=accountsToBeConvertedPanel]').css('display', 'block');
+			} else {
+				$j('[id$=selectHEForConversion]').css('display', 'none');
+				$j('[id$=accountsToBeConvertedPanel]').css('display', 'none');
+			}
 		}
 	}
 	
