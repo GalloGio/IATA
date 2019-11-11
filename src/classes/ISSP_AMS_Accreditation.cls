@@ -1368,7 +1368,7 @@ public without sharing class ISSP_AMS_Accreditation {
             Map<String, String> countryNameByIsoCode = new Map<String, String>();
                 
             for (Account a: mcHierarchyAccounts) {
-                if (a.Status__c == 'Approved') {
+                if (a.Status__c == 'Approved' && a.Location_Type__c != 'GE') {
                     if (countryNameByIsoCode.get(a.IATA_ISO_Country__r.Name) == null) {
                         if (!countryNameByIsoCode.values().contains(a.Country_ISO_Code__c)) {
                             countryNameByIsoCode.put(a.IATA_ISO_Country__r.Name, a.Country_ISO_Code__c);
