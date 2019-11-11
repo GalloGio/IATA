@@ -35,6 +35,9 @@ private class portalProfileCustomBoxCtrlTest {
         insert newAcc2;
         insert newAcc3;
         insert newAcc4;
+
+        Portal_Applications__c pa = new Portal_Applications__c(name = 'Risk Profile and RHC');
+		insert pa;
     }
 
     @IsTest
@@ -58,5 +61,52 @@ private class portalProfileCustomBoxCtrlTest {
 
         System.assertEquals(5, lstAccounts.size());
         System.assertEquals([SELECT User_Portal_Status__c FROM Contact WHERE Id = :con2.Id][0].User_Portal_Status__c , 'Active');
+    }
+
+    @IsTest
+    static void testSearchServices(){        
+        Test.startTest();
+        List<Portal_Applications__c> aps = portalProfileCustomBoxCtrl.searchServices();
+        Test.stopTest();        
+
+        System.assertEquals(1, aps.size());
+        System.assertEquals('Risk Profile and RHC' , aps.get(0).ServiceName__c);
+    }
+
+    @IsTest
+    static void testCreatePortalApplicationRigth(){   
+
+        Contact con = [SELECT Id FROM Contact WHERE LastName = 'Doe' LIMIT 1]; 
+        Portal_Applications__c pa = [SELECT Id FROM Portal_Applications__c WHERE name = 'Risk Profile and RHC' LIMIT 1];
+
+        Test.startTest();
+            Boolean inserted = portalProfileCustomBoxCtrl.createPortalApplicationRigth(con.Id,new List<Id>{pa.Id});
+            List<Portal_Application_Right__c> rigths = [SELECT Id,Contact__c, Portal_Application__c, Right__c FROM Portal_Application_Right__c];
+        Test.stopTest();        
+
+        System.assertEquals(true, inserted);
+        System.assertEquals(1, rigths.size());
+        System.assertEquals(pa.Id, rigths.get(0).Portal_Application__c);
+        System.assertEquals(con.Id, rigths.get(0).Contact__c);
+        System.assertEquals('Access Granted', rigths.get(0).Right__c);
+    }
+
+    @IsTest
+    static void testCreatePortalApplicationRigthFail(){   
+
+        Contact con = [SELECT Id FROM Contact WHERE LastName = 'Doe' LIMIT 1]; 
+        Portal_Applications__c pa = [SELECT Id FROM Portal_Applications__c WHERE name = 'Risk Profile and RHC' LIMIT 1];
+
+        String Id = (String) pa.Id;
+        id = id.substring(0, id.length() - 1);
+        id += 'a';
+
+        Test.startTest();            
+            Boolean inserted = portalProfileCustomBoxCtrl.createPortalApplicationRigth(con.Id,new List<Id>{id});
+            List<Portal_Application_Right__c> rigths = [SELECT Id,Contact__c, Portal_Application__c, Right__c FROM Portal_Application_Right__c];
+        Test.stopTest();  
+        
+        System.assert(!inserted);
+        System.assertEquals(0, rigths.size());
     }
 }
