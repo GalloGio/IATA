@@ -85,7 +85,8 @@
     text-align: right;
 }
 @media print {
-    .text-recipients {
+    .text-recipients div,
+    .slds-text-align_right div {
         text-align: left;
     }
     .recipients-label.text-blue {
@@ -103,4 +104,4 @@
     .customCardTitleBox .size_1-of-1.slds-medium-size_8-of-12 {
         width: 66.6666666667%;
     }
-}
+}

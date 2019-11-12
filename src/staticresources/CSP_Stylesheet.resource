@@ -1759,15 +1759,18 @@ visibility: hidden;
         display: block!important;
         visibility: visible!important;
     }
+    .caseMessagesSelfBubbleContainer {
+        border: 1px solid #a2a2a2;
+        margin-bottom: 1rem;
+        width: 100%;
+    }
     .caseMessagesOtherBubbleContainer {
         border: 1px solid #e2e2e2;
         margin-bottom: 1rem;
         width: 100%;
     }
-    .caseMessagesSelfBubble.slds-p-around_medium,
-    .caseMessagesSelfBubble.slds-p-around--medium,
-    .caseMessagesOtherBubble.slds-p-around_medium,
-    .caseMessagesOtherBubble.slds-p-around--medium {
+    .caseMessagesSelfBubble,
+    .caseMessagesOtherBubble{
         padding: .5rem;
     }
     .customCard {
