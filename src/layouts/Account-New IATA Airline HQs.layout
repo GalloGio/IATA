@@ -1245,7 +1245,6 @@
         <fields>NAME</fields>
         <fields>Functional_Role__c</fields>
         <fields>Account_Roles__c</fields>
-        <fields>Business_Context__c</fields>
         <relatedList>Account_Role__c.Account__c</relatedList>
     </relatedLists>
     <relatedLists>

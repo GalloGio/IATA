@@ -772,7 +772,6 @@
         <fields>NAME</fields>
         <fields>Account_Name__c</fields>
         <fields>Functional_Role__c</fields>
-        <fields>Account_Role__c.Business_Context__c</fields>
         <fields>Account__c</fields>
         <fields>Account_Role__c.Account_Roles__c</fields>
         <relatedList>Account_Contact_Role__c.Contact__c</relatedList>

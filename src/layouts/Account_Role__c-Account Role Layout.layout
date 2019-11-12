@@ -29,10 +29,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>Business_Context__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
                 <field>Flow_Status__c</field>
             </layoutItems>
         </layoutColumns>
