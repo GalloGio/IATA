@@ -1,0 +1,178 @@
+<template>
+		<lightning-layout multiple-rows vertical-align="stretch">
+
+			<lightning-layout-item padding="around-small" size="12">
+			</lightning-layout-item>
+
+			<lightning-layout-item size="12">
+				<div class="stepText">
+					{labels.CSP_L2_Confirmation_Message}
+				</div>
+			</lightning-layout-item>
+
+			<lightning-layout-item padding="around-small" size="12">
+			</lightning-layout-item>
+
+			<lightning-layout-item class="slds-p-around_medium topLightGrayBorder customWhiteBackground slds-clearfix" size="12">
+			</lightning-layout-item>
+
+			<!------------------------------------------      Personal Details      -------------------------------------------->
+			<lightning-layout-item size="6">
+				<div class="sectionTitle">{labels.CSP_L2_Personal_Details}</div>
+				<div class="sectionDescription">{labels.CSP_L2_Personal_Details_Message}</div>
+			</lightning-layout-item>
+
+			<!--<lightning-layout-item size="6">
+				<div class="link_normal -Title slds-float_right" onclick={toProfileDetails}>{labels.CSP_L2_Back_to_Edit}</div>
+			</lightning-layout-item>-->
+
+			<lightning-layout-item size="6" class="editButtonWrapper">
+				<div class="text-xxsmall">
+					<lightning-button variant="base"
+						label={labels.CSP_L2_Back_to_Edit}
+						title={labels.CSP_L2_Back_to_Edit}
+						onclick={toProfileDetails}
+						class="blueCustomButtonLinkSmall"
+						icon-name="utility:forward"
+						icon-position="right">
+					</lightning-button>
+				</div>
+			</lightning-layout-item>
+
+			<lightning-layout-item padding="around-small" size="12">
+			</lightning-layout-item>
+
+			<lightning-layout-item size="6">
+				<div class="dataLabel">{labels.CSP_L2_Title}</div>
+				<div class="dataValue">{contactInfo.Salutation}</div>
+			</lightning-layout-item>
+
+			<lightning-layout-item size="6">
+				<div class="dataLabel">{labels.CSP_L2_Date_of_Birth}</div>
+				<div class="dataValue">{contactInfo.Birthdate}</div>
+			</lightning-layout-item>
+
+			<lightning-layout-item padding="around-small" size="12">
+			</lightning-layout-item>
+
+			<lightning-layout-item size="6">
+				<!-- <div class="dataLabel">{labels.CSP_L2_Job_Function}</div> -->
+<!--NEED NEW LABEL -->                <div class="dataLabel">Email</div>
+
+				<div class="dataValue">{contactInfo.Email}</div>
+			</lightning-layout-item>
+
+			<lightning-layout-item size="6">
+				<!-- <div class="dataLabel">{labels.CSP_L2_Job_Title}</div> -->
+<!--NEED NEW LABEL -->                <div class="dataLabel">Personal Email</div>
+				<div class="dataValue">{contactInfo.Additional_Email__c}</div>
+			</lightning-layout-item>
+
+			<lightning-layout-item padding="around-small" size="12">
+			</lightning-layout-item>
+
+			<lightning-layout-item size="6">
+					<!-- <div class="dataLabel">{labels.CSP_L2_Job_Function}</div> -->
+	<!--NEED NEW LABEL -->                <div class="dataLabel">Username</div>
+				<div class="dataValue">{contactInfo.Username}</div>
+			</lightning-layout-item>
+
+			<lightning-layout-item size="6">
+				<!-- <div class="dataLabel">{labels.CSP_L2_Job_Title}</div> -->
+<!--NEED NEW LABEL -->                <div class="dataLabel">User Id</div>
+				<div class="dataValue">{contactInfo.UserId}</div>
+			</lightning-layout-item>
+
+			<lightning-layout-item padding="around-small" size="12">
+			</lightning-layout-item>
+
+			<lightning-layout-item padding="around-small" size="12">
+			</lightning-layout-item>
+
+			<lightning-layout-item size="6">
+					<!-- <div class="dataLabel">{labels.CSP_L2_Job_Function}</div> -->
+	<!--NEED NEW LABEL -->                <div class="dataLabel">Phone</div>
+				<div class="dataValue">{contactInfo.Phone}</div>
+			</lightning-layout-item>
+
+			<lightning-layout-item size="6">
+				<!-- <div class="dataLabel">{labels.CSP_L2_Job_Title}</div> -->
+<!--NEED NEW LABEL -->                <div class="dataLabel">Work Phone</div>
+				<div class="dataValue">{contactInfo.OtherPhone}</div>
+			</lightning-layout-item>
+
+			<lightning-layout-item padding="around-small" size="12">
+			</lightning-layout-item>
+
+			<lightning-layout-item class="slds-p-around_medium topLightGrayBorder customWhiteBackground slds-clearfix" size="12">
+			</lightning-layout-item>
+
+			<template if:true={displayToS}>
+
+				<lightning-layout-item size="12">
+					<div style="display: flex;justify-content: center;align-items: start;">
+						<div style="display: flex; align-items: center;justify-content: center;">
+							<div style="max-width:20px; padding-left:5px;" >
+								<lightning-input type="checkbox" variant="label-hidden" checked={tos} onchange={handleToSChange} class="registerCheckBox"></lightning-input>
+							</div>
+						</div>
+						<div class="text-small" style="margin-left:12px; width:100%;">
+							<lightning-formatted-rich-text value={labels.CSP_LMS_Privacy_Policy} class="text-xsmall text-gray"></lightning-formatted-rich-text>
+						</div>
+					</div>
+				</lightning-layout-item>
+				<lightning-layout-item padding="around-small" size="12">
+				</lightning-layout-item>
+			</template>
+
+			<lightning-layout-item size="12">
+				<!--<lightning-button class="slds-float_right containedButton" label={labels.CSP_L2_Submit} variant="brand" onclick={submit}>-->
+					<lightning-button disabled data-id="submitButton" class="slds-float_right containedButtonDisabled" label={labels.CSP_L2_Submit} variant="brand" onclick={submit}>
+				</lightning-button>
+			</lightning-layout-item>
+
+			<lightning-layout-item padding="around-small" size="12">
+			</lightning-layout-item>
+
+		</lightning-layout>
+
+
+
+		<template if:true={openSuccessModal}>
+			<c-portal-registration-generic-modal
+				icon={successIcon}
+				title={labels.CSP_L2_Details_Saved}
+				message={labels.CSP_L2_Details_Saved_Message}
+				button1-label={labels.CSP_L2_Go_To_Homepage}
+				button2-label={labels.CSP_L2_Go_To_Service}
+				onbuttononeaction={button1Action}
+				onbuttontwoaction={closeSuccessModal}>
+			</c-portal-registration-generic-modal>
+		</template>
+
+		<template if:true={openVerificationMailSuccessModal}>
+			<!--NEED NEW LABELs -->
+				<c-portal-registration-generic-modal
+					icon={successIcon}
+					title={successModalTitle}
+					message={successModalMessage}
+					button1-label={labels.CSP_L2_Go_To_Homepage}
+					button2-label={labels.CSP_L2_Go_To_Service}
+					onbuttononeaction={button1Action}
+					onbuttontwoaction={closeVerificationMailSuccessModal}>
+				</c-portal-registration-generic-modal>
+			</template>
+
+		<template if:true={openErrorModal}>
+			<c-portal-registration-generic-modal
+				icon={errorIcon}
+				title={errorModalTitle}
+				message={errorModalMessage}
+				button1-label={labels.CSP_L2_Go_To_Homepage}
+				button2-label={labels.CSP_L2_Go_To_Service}
+				onbuttononeaction={button1Action}
+				onbuttontwoaction={closeErrorModal}>
+			</c-portal-registration-generic-modal>
+		</template>
+
+	</template>

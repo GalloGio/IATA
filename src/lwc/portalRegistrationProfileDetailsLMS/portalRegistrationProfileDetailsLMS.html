@@ -1,0 +1,396 @@
+<!-- Portal Registration Profile Details -->
+<template>
+	<lightning-layout multiple-rows vertical-align="start">
+		<!--<div class="progressBar">
+			<div class="progressItem firstItem activeItem">
+				<div class="itemIcon">
+					<!- -<lightning-icon size="x-small" icon-name="utility:check" class="slds-current-color"></lightning-icon>- ->
+				</div>
+				<div class="itemTitle"><span>Profile Details</span></div>
+			</div>
+			<div class="progressItem secondItem nextItem">
+				<div class="itemIcon"></div>
+				<div class="itemTitle"><span>Account Selection</span></div>
+			</div>
+			<div class="progressItem thirdItem nextItem">
+				<div class="itemIcon"></div>
+				<div class="itemTitle"><span>Confirmation</span></div>
+			</div>
+		</div>-->
+
+		<lightning-layout-item size="12">
+			<span class="text-medium">{labels.CSP_L2_Profile_Details}</span>
+		</lightning-layout-item>
+
+		<lightning-layout-item padding="around-small" size="12">
+		</lightning-layout-item>
+
+		<lightning-layout-item size="12">
+			<span class="fixed-text">{labels.CSP_L2_Profile_Details_Message}</span>
+		</lightning-layout-item>
+
+		<lightning-layout-item padding="around-small" size="12">
+		</lightning-layout-item>
+
+		<lightning-layout-item class="slds-p-around_medium topLightGrayBorder customWhiteBackground slds-clearfix" size="12">
+		</lightning-layout-item>
+
+		<!------------------------------------------      Profile details      -------------------------------------------->
+		<div class="profileContainer">
+		<!------------------------------------------      Salutation      -------------------------------------------->
+			<div class="profileItem">
+				<lightning-layout-item size="6" class="leftItem">
+					<div class="formLabelContainer">
+						<div class="text-xxsmall">
+							<abbr class="slds-required" title="required">* </abbr>{labels.CSP_L2_Title}
+						</div>
+					</div>
+				</lightning-layout-item>
+				<lightning-layout-item size="12">
+					<div class="slds-form-element">
+						<div class="slds-form-element__control custTextInputSmall">
+							<lightning-combobox
+								options={salutationPicklistOptions}
+								value={localContactInfo.Salutation}
+								variant="label-hidden"
+								class="cursorPointerComboBox text-xxsmall"
+								dropdown-alignment="auto"
+								onchange={changeSalutation}>
+							</lightning-combobox>
+						</div>
+					</div>
+				</lightning-layout-item>
+			</div>
+			<!------------------------------------------      Date of Birth      -------------------------------------------->
+			<div class="profileItem">
+				<lightning-layout-item size="6" class="rightItem">
+					<div class="formLabelContainer">
+						<div class="text-xxsmall">
+							<abbr class="slds-required" title="required">* </abbr>{labels.CSP_L2_Date_of_Birth}
+						</div>
+					</div>
+				</lightning-layout-item>
+				<lightning-layout-item size="12">
+					<div class="slds-form-element">
+						<div class="slds-form-element__control custTextInput custTextInputSmall">
+							<lightning-input
+								date-style="short"
+								type="date"
+								value={localContactInfo.Birthdate}
+								placeholder=" "
+								variant="label-hidden"
+								onkeyup={changeDateOfBirth}
+								onchange={changeDateOfBirth}>
+							</lightning-input>
+						</div>
+					</div>
+				</lightning-layout-item>
+
+				<lightning-layout-item padding="around-small" size="12">
+				</lightning-layout-item>
+			</div>
+
+			<!------------------------------------------      Work Email (email)      -------------------------------------------->
+			<div class="profileItemLine">
+				<lightning-layout-item size="6" >
+					<div class="formLabelContainer">
+						<div class="text-xxsmall">
+							<!--abbr class="slds-required" title="required">* </abbr>{labels.CSP_L2_Job_Function}-->
+<!--NEED NEW LABEL -->                            Email
+						</div>
+					</div>
+				</lightning-layout-item>
+				<lightning-layout-item size="12">
+					<div class="slds-form-element">
+						<div class="slds-form-element__control custTextInput custTextInputSmall">
+							<input
+								type="text"
+								class="slds-input"
+								placeholder=" "
+								value={localContactInfo.Email}
+								readonly/>
+						</div>
+					</div>
+				</lightning-layout-item>
+			</div>
+
+			<!------------------------------------------      Personal Email (additional email)      -------------------------------------------->
+			<div class="profileItemLine">
+				<lightning-layout-item size="6" >
+					<div class="formLabelContainer">
+						<div class="text-xxsmall">
+							<!--abbr class="slds-required" title="required">* </abbr>{labels.CSP_L2_Job_Function}-->
+<!--NEED NEW LABEL -->                            Personal Email
+						</div>
+					</div>
+				</lightning-layout-item>
+				<lightning-layout-item size="12">
+					<div class="slds-form-element">
+						<div class="slds-form-element__control custTextInput custTextInputSmall">
+							<input
+								type="text"
+								class="slds-input"
+								placeholder=" "
+								value={localContactInfo.Additional_Email__c}
+								onkeyup={changeAdditional_Email}
+								readonly/>
+						</div>
+					</div>
+				</lightning-layout-item>
+			</div>
+
+
+				<!-- Shipping_Address__c -->
+			<!------------------------------------------      Shipping Address       -------------------------------------------->
+			<!-- <div class="profileItemLine">
+				<lightning-layout-item size="6" >
+					<div class="formLabelContainer">
+						<div class="text-xxsmall">
+							< !--abbr class="slds-required" title="required">* </abbr>{labels.CSP_L2_Job_Function}- ->
+							Address
+						</div>
+					</div>
+				</lightning-layout-item>
+				<lightning-layout-item size="12">
+					<div class="slds-form-element">
+						<div class="slds-form-element__control custTextInput custTextInputSmall">
+							<input
+								type="text"
+								class="slds-input"
+								placeholder=" "
+								value={localContactInfo.Title}
+								onkeyup={changeTitle}/>
+						</div>
+					</div>
+				</lightning-layout-item>
+			</div>
+
+			<div class="profileItem">
+				<lightning-layout-item size="6" class="leftItem">
+					<div class="formLabelContainer">
+						<div class="text-xxsmall">
+							< !--abbr class="slds-required" title="required">* </abbr>{labels.CSP_L2_Job_Function} - ->
+							Door Number
+						</div>
+					</div>
+				</lightning-layout-item>
+				<lightning-layout-item size="12">
+					<div class="slds-form-element">
+						<div class="slds-form-element__control custTextInput custTextInputSmall">
+							<input
+								type="text"
+								class="slds-input"
+								placeholder=" "
+								value={localContactInfo.Title}
+								onkeyup={changeTitle}/>
+						</div>
+					</div>
+				</lightning-layout-item>
+			</div>
+
+			<div class="profileItem">
+				<lightning-layout-item size="6" class="rightItem">
+					<div class="formLabelContainer">
+						<div class="text-xxsmall">
+							< !--abbr class="slds-required" title="required">* </abbr>{labels.CSP_L2_Job_Function}- ->
+							Postal Code
+						</div>
+					</div>
+				</lightning-layout-item>
+				<lightning-layout-item size="12">
+					<div class="slds-form-element">
+						<div class="slds-form-element__control custTextInput custTextInputSmall">
+							<input
+								type="text"
+								class="slds-input"
+								placeholder=" "
+								value={localContactInfo.Title}
+								onkeyup={changeTitle}/>
+						</div>
+					</div>
+				</lightning-layout-item>
+			</div>
+
+			<div class="profileItem">
+				<lightning-layout-item size="6" class="leftItem">
+					<div class="formLabelContainer">
+						<div class="text-xxsmall">
+							< !--abbr class="slds-required" title="required">* </abbr>{labels.CSP_L2_Job_Function}- ->
+							City
+						</div>
+					</div>
+				</lightning-layout-item>
+				<lightning-layout-item size="12">
+					<div class="slds-form-element">
+						<div class="slds-form-element__control custTextInput custTextInputSmall">
+							<input
+								type="text"
+								class="slds-input"
+								placeholder=" "
+								value={localContactInfo.Title}
+								onkeyup={changeTitle}/>
+						</div>
+					</div>
+				</lightning-layout-item>
+			</div>
+
+			<div class="profileItem">
+				<lightning-layout-item size="6" class="rightItem">
+					<div class="formLabelContainer">
+						<div class="text-xxsmall">
+							< !--abbr class="slds-required" title="required">* </abbr>{labels.CSP_L2_Job_Function}- ->
+							State
+						</div>
+					</div>
+				</lightning-layout-item>
+				<lightning-layout-item size="12">
+					<div class="slds-form-element">
+						<div class="slds-form-element__control custTextInput custTextInputSmall">
+							<input
+								type="text"
+								class="slds-input"
+								placeholder=" "
+								value={localContactInfo.Title}
+								onkeyup={changeTitle}/>
+						</div>
+					</div>
+				</lightning-layout-item>
+			</div> -->
+
+
+			<!------------------------------------------      LMS Username       -------------------------------------------->
+			<div class="profileItem">
+				<lightning-layout-item size="6" class="leftItem">
+					<div class="formLabelContainer">
+						<div class="text-xxsmall">
+							<!--abbr class="slds-required" title="required">* </abbr>{labels.CSP_L2_Job_Function}-->
+			<!--NEED NEW LABEL -->                            Username
+						</div>
+					</div>
+				</lightning-layout-item>
+				<lightning-layout-item size="12">
+					<div class="slds-form-element">
+						<div class="slds-form-element__control custTextInput custTextInputSmall">
+							<input
+								type="text"
+								class="slds-input"
+								placeholder=" "
+								value={localContactInfo.Username}
+								onkeyup={changeUsername}/>
+						</div>
+					</div>
+				</lightning-layout-item>
+			</div>
+			<!------------------------------------------      LMS User Id     -------------------------------------------->
+			<div class="profileItem">
+				<lightning-layout-item size="6" class="rightItem">
+					<div class="formLabelContainer">
+						<div class="text-xxsmall">
+							<!-- <abbr class="slds-required" title="required">* </abbr>{labels.CSP_L2_Job_Title} -->
+<!--NEED NEW LABEL -->                            User Id
+						</div>
+					</div>
+				</lightning-layout-item>
+				<lightning-layout-item size="12">
+					<div data-id="userDiv" class="slds-form-element">
+						<div class="slds-form-element__control custTextInput custTextInputSmall">
+							<input
+								type="text"
+								class="slds-input userIdInputClass"
+								placeholder=" "
+								value={localContactInfo.UserId}
+								onkeyup={changeUserId}/>
+						</div>
+						<div class="formElementSpacer">
+							<div if:true={displayError}>
+								<div class="slds-form-element__help">{errorMessage}</div>
+							</div>
+						</div>
+						<!--<div if:true={displayError} style="height:16px;">
+						</div>-->
+					</div>
+				</lightning-layout-item>
+			</div>
+			<!------------------------------------------      Phone       -------------------------------------------->
+			<div class="profileItem">
+				<lightning-layout-item size="6" class="leftItem">
+					<div class="formLabelContainer">
+						<div class="text-xxsmall">
+							<!--abbr class="slds-required" title="required">* </abbr>{labels.CSP_L2_Job_Function}-->
+<!--NEED NEW LABEL -->                            Phone
+						</div>
+					</div>
+				</lightning-layout-item>
+				<lightning-layout-item size="12">
+					<div class="slds-form-element">
+						<div class="slds-form-element__control custTextInput custTextInputSmall">
+							<input
+								type="text"
+								class="slds-input"
+								placeholder=" "
+								value={localContactInfo.Phone}
+								onkeyup={changePhone}/>
+						</div>
+					</div>
+				</lightning-layout-item>
+			</div>
+			<!------------------------------------------      Other Phone (work)     -------------------------------------------->
+			<div class="profileItem">
+				<lightning-layout-item size="6" class="rightItem">
+					<div class="formLabelContainer">
+						<div class="text-xxsmall">
+							<!-- <abbr class="slds-required" title="required">* </abbr>{labels.CSP_L2_Job_Title} -->
+<!--NEED NEW LABEL -->                            Work Phone
+						</div>
+					</div>
+				</lightning-layout-item>
+				<lightning-layout-item size="12">
+					<div class="slds-form-element">
+						<div class="slds-form-element__control custTextInput custTextInputSmall">
+							<input
+								type="text"
+								class="slds-input"
+								placeholder=" "
+								value={localContactInfo.OtherPhone}
+								onkeyup={changeOtherPhone}/>
+						</div>
+					</div>
+				</lightning-layout-item>
+			</div>
+		</div>
+		<lightning-layout-item padding="around-small" size="12">
+		</lightning-layout-item>
+
+		<!--temporary commented
+		<lightning-layout-item padding="around-small" size="12">
+			<lightning-button class="slds-float_right containedButton" data-id="nextButton" label="Next Step / Account Selection" disabled={isNextDisabled} variant="brand"  onclick={next}>
+			</lightning-button>
+		</lightning-layout-item-->
+
+		<lightning-layout-item size="6">
+		</lightning-layout-item>
+
+		<lightning-layout-item size="6" class="nextBtn">
+				<!-- <lightning-button class="slds-float_right containedButton customBtn" data-id="nextButton" label={labels.CSP_L2_Next_Account_Selection} disabled={isNextDisabled} variant="brand"  onclick={next}> -->
+			<lightning-button class="slds-float_right containedButton customBtn" data-id="nextButton" label="Next Step / Email Validation" disabled={isNextDisabled} variant="brand"  onclick={next}>
+			</lightning-button>
+		</lightning-layout-item>
+
+
+
+		<template if:true={isAddressInformationStep}>
+				<c-portal-registration-address-information
+					account={account}
+					address={address}
+					country-id={selectedCountryId}
+					original-customer-type={originalCustomerType}
+					ongotostep={goToStep}
+					onscrolltotop={scrollToTop}
+					onstartloading={startLoading}
+					onstoploading={stopLoading}
+					oncompletionstatus={step4CompletionStatus}>
+				</c-portal-registration-address-information>
+			</template>
+
+	</lightning-layout>
+</template>

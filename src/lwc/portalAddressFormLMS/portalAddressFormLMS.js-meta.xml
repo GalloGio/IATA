@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata" fqn="portalHeader">
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>45.0</apiVersion>
+    <description>Address Form for LMS.</description>
     <isExposed>true</isExposed>
-    <masterLabel>Portal Header</masterLabel>
+    <masterLabel>Portal Address Form LMS</masterLabel>
     <targets>
         <target>lightningCommunity__Page</target>
         <target>lightningCommunity__Default</target>

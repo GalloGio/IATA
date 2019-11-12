@@ -1,0 +1,62 @@
+<template>
+    <lightning-layout multiple-rows vertical-align="stretch">
+
+        <lightning-layout-item padding="around-small" size="12">
+        </lightning-layout-item>
+
+               
+        <!------------------------------------------      Address Form      -------------------------------------------->
+        <lightning-layout-item size="12">
+            <div class="sectionTitle">{labels.CSP_L2_Business_Address_Information}</div>
+            <div class="sectionDescription">{labels.CSP_L2_Business_Address_Information_Message}</div>
+        </lightning-layout-item>
+    
+        <lightning-layout-item padding="around-small" size="12">
+        </lightning-layout-item>
+                
+    </lightning-layout>
+
+    <c-portal-address-form-l-m-s
+        country-id={countryId}
+        address={localAddress}
+        onsetvalidationstatus={setValidationStatus}
+        onstartloading={startLoading}
+        onstoploading={stopLoading}>
+    </c-portal-address-form-l-m-s>
+
+    <lightning-layout multiple-rows vertical-align="stretch">
+        <lightning-layout-item size="12" class="slds-p-around_medium topLightGrayBorder customWhiteBackground slds-clearfix">
+        </lightning-layout-item>
+
+        <!--<lightning-layout-item size="4">
+            <span class="link_normal -Title slds-float_left" onclick={toCompanyInformation} >{labels.CSP_L2_Back_to_Company_Information}</span>
+        </lightning-layout-item>-->
+
+        <lightning-layout-item size="6" class="backButtonWrapper">
+            <div class="text-xxsmall">
+  <!--NEED NEW LABEL -->
+                 <lightning-button variant="base"
+                    label="Back to Profile Details"
+                    title="Back to Profile Details"
+                    onclick={toCompanyInformation}
+                    class="blueCustomButtonLinkSmall"
+                    icon-name="utility:back" 
+                    icon-position="left">
+                </lightning-button>
+            </div>
+        </lightning-layout-item>
+
+        <lightning-layout-item size="6">
+ <!--NEED NEW LABEL -->  
+            <lightning-button class="slds-float_right containedButton customBtn" 
+                data-id="nextButton" 
+                label="Next Step / Email Validation"
+                disabled={isConfirmationButtonDisabled} 
+                variant="brand" onclick={toConfirmation}>
+            </lightning-button>
+        </lightning-layout-item>
+
+        <lightning-layout-item padding="around-small" size="12">
+        </lightning-layout-item>
+    </lightning-layout>
+</template>
