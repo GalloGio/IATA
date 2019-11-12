@@ -13,8 +13,7 @@
 				        </div>
               			<apex:pageBlock>
 		                    <apex:dataTable value="{!ownersFromMainLegalEntity}" var="owner" id="importOwnersList" styleClass="table-hover table table-condensed table-responsive" rendered="{!ownersFromMainLegalEntity.size != 0}" style="width: 100%;">
-								<apex:column headervalue="{!$ObjectType.Contact.fields.FirstName.Label}" value="{!owner.firstName}" style="text-align: left;"/>
-								<apex:column headervalue="{!$ObjectType.Contact.fields.LastName.Label}" value="{!owner.lastName}" style="text-align: left;"/>
+								<apex:column headervalue="{!$ObjectType.Contact.fields.Name.Label}" value="{!owner.name}" style="text-align: left;"/>
 								<apex:column headervalue="{!$ObjectType.Contact.fields.Phone.Label}" value="{!owner.phone}" style="text-align: left;"/>
 								<apex:column headervalue="{!$ObjectType.Contact.fields.Email.Label}" value="{!owner.email}" style="text-align: left;"/>
 								<apex:column headervalue="{!$ObjectType.AMS_Accreditation_Contact__c.fields.Financial_interest__c.Label}" value="{!owner.financialInterest}" style="text-align: left;"/>
