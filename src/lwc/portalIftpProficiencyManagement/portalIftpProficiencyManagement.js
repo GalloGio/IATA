@@ -141,44 +141,10 @@ export default class PortalIftpProficiencyManagement extends LightningElement {
 
         })
         .catch(error => {
-            console.error('getITPStations - Error : ' + error);
+            console.error('getUserInfo - Error : ' + error);
             this.mainErrorMessage = error;
             this.error = error;
         }); 
-
-        getITPStations()
-        .then(result => {
-            let myResult = JSON.parse(JSON.stringify(result));
-
-            this.itpStations = myResult;
-            let myTopicOptions = [];
-
-            Object.keys(myResult).forEach(function (el) {
-                myTopicOptions.push({ label: myResult[el].Code__c + ' - ' + myResult[el].Description__c, value: myResult[el].Code__c });
-            });
-            this.stationOptions = this.sortData('label', 'asc', myTopicOptions);
-            this.cleanErrors();
-            this.showSearchCriteria = true;
-            this.loadingSearchCriteria = false;
-            if(this.stationValue){
-                let stationOptions = JSON.parse(JSON.stringify(this.stationOptions));
-                let exists = false;
-                stationOptions.forEach(opt =>{
-                    if(opt.value === this.stationValue){
-                        exists = true;
-                    }
-                })
-                if(!exists){
-                    this.stationValue = null;
-                }
-            }
-        })
-        .catch(error => {
-            console.error('getITPStations - Error : ' + error);
-            this.mainErrorMessage = error;
-            this.error = error;
-            this.loadingSearchCriteria = false;
-        });  
     }
 
     handleChangeStation(event) {
