@@ -396,6 +396,6 @@ export default class PortalCompanyProfileContactsList extends LightningElement {
         this.contactsFilteringObject.searchInput = '';
         this.showCross = false;
         this.contactsLoaded = false;
-        this.retrieveContactsList(1);
+        this.resetContactsList();
     }
 }
