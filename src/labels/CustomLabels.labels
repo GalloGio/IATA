@@ -3819,6 +3819,14 @@ Payment required on receipt of this Payment Advice
         <value>Invalid email</value>
     </labels>
     <labels>
+        <fullName>CSP_LMS_Privacy_Policy</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP LMS Privacy Policy</shortDescription>
+        <value>I understand and agree to the &lt;a target=&quot;_blank&quot; href=&quot;https://www.iata.org/training/Pages/terms-conditions.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Training T&amp;Cs&lt;/a&gt;</value>
+    </labels>
+    <labels>
         <fullName>CSP_LogOut</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
