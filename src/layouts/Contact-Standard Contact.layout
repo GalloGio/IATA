@@ -127,10 +127,6 @@
                 <behavior>Edit</behavior>
                 <field>Record_Sharing_Criteria__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Data_Protection_Officer__c</field>
-            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -800,6 +796,10 @@
         <fields>Contact_Role_Name__c</fields>
         <fields>First_Name__c</fields>
         <fields>Last_Name__c</fields>
+        <fields>Account_Role__c.Account__c</fields>
+        <fields>Contact_Roles__c</fields>
+        <fields>Service_Rendered__c</fields>
+        <fields>RECORDTYPE</fields>
         <fields>UniqueKey__c</fields>
         <relatedList>Account_Contact_Role__c.Contact__c</relatedList>
     </relatedLists>
@@ -1092,6 +1092,10 @@
         <fields>EF_Status__c</fields>
         <fields>Role__c</fields>
         <relatedList>EF_Contact_EF_Contract__c.EF_Contact__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>Data_Submission__c.User__c</relatedList>
     </relatedLists>
     <relatedObjects>AccountId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>
