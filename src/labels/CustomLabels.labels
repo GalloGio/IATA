@@ -2998,6 +2998,14 @@ Payment required on receipt of this Payment Advice
         <value>CC</value>
     </labels>
     <labels>
+        <fullName>CSL_L2_Got_It</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSL_L2_Got_It</shortDescription>
+        <value>Got it</value>
+    </labels>
+    <labels>
         <fullName>CSP_ANG_Portal_Admin</fullName>
         <language>en_US</language>
         <protected>false</protected>
