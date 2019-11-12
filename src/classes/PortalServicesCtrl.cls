@@ -252,7 +252,7 @@ private static List<Portal_Applications__c> getPortalApplications(){
  */
 @AuraEnabled
 public static List<ServiceWrapper> getAllServices(){
-	User userAux = [SELECT Id, ContactId, Contact.Account.ANG_IEP_Status_FF__c FROM User WHERE Id = :UserInfo.getUserId()];
+	User userAux = [SELECT Id, ContactId, Contact.Account.ANG_IEP_Status_FF__c,Contact.Preferred_Language__c,LastLoginDate FROM User WHERE Id = :UserInfo.getUserId()];
 	String contactId = userAux.ContactId;
 	String iepStatus = userAux.Contact.Account.ANG_IEP_Status_FF__c;
 
@@ -274,7 +274,7 @@ public static List<ServiceWrapper> getAllServices(){
 	//iterate over the returned portal apps and create a map of services
 	Map<String,ServiceWrapper> mapServiceWrapper = new Map<String,ServiceWrapper>();
 	for(Portal_Applications__c portalAppAux : lstPortalApplications) {
-		mapServiceWrapper.put(portalAppAux.Id, new ServiceWrapper(portalAppAux, isAdmin, iepStatus, isAuthorisedSignatory, ''));
+		mapServiceWrapper.put(portalAppAux.Id, new ServiceWrapper(portalAppAux, isAdmin, iepStatus, isAuthorisedSignatory, '', userAux));
 	}
 
 	//get the portal application rights for this user
@@ -316,7 +316,7 @@ public static List<ServiceWrapper> getAllServices(){
 		//if the map of services does not contains this service yet, then add it
 		if(!mapServiceWrapper.containsKey(accessAux.Portal_Application__c)) {
 			mapServiceWrapper.put(accessAux.Portal_Application__c,
-			                      new ServiceWrapper(mapAppsAlreadyWithAccess.get(accessAux.Portal_Application__c), isAdmin, iepStatus, isAuthorisedSignatory, accessAux.Right__c));
+			                      new ServiceWrapper(mapAppsAlreadyWithAccess.get(accessAux.Portal_Application__c), isAdmin, iepStatus, isAuthorisedSignatory, accessAux.Right__c, userAux));
 		}
 	}
 
@@ -376,7 +376,7 @@ public static Map<Id,List<ServiceWrapper> > getContactsAccessGrantedServices(Map
 
 
 	System.debug('get Users '+contactToUserIds.values());
-	Map<Id,User> userInfos = new Map<Id,User>([SELECT Id,ContactId,ProfileId from User WHERE Id in: contactToUserIds.values()]);
+	Map<Id,User> userInfos = new Map<Id,User>([SELECT Id,ContactId,ProfileId,Contact.Preferred_Language__c from User WHERE Id in: contactToUserIds.values()]);
 
 	Map<String,ServiceWrapper> mapServiceWrapper = new Map<String,ServiceWrapper>();
 	for(Portal_Application_Right__c accessRight : usersGrantedList) {
@@ -389,7 +389,7 @@ public static Map<Id,List<ServiceWrapper> > getContactsAccessGrantedServices(Map
 
 		Portal_Applications__c portalAppAux = new Portal_Applications__c(Id=accessRight.Portal_Application__r.Id,Application_URL__c=accessRight.Portal_Application__r.Application_URL__c,Name=accessRight.Application_Name__c);
 
-		ServiceWrapper wrap = new ServiceWrapper(portalAppAux, isAdmin, iepStatus,false, '');
+		ServiceWrapper wrap = new ServiceWrapper(portalAppAux, isAdmin, iepStatus,false, '', userInfos.get(contactToUserIds.get(accessRight.Contact__c)));
 
 		if(!contactToServices.containsKey(accessRight.Contact__c)) {
 			contactToServices.put(accessRight.Contact__c,new List<ServiceWrapper> {wrap});
@@ -413,7 +413,7 @@ public static List<ServiceWrapper> getUserAccessGrantedServices(){
 		}
 	}
 
-	User userAux = [SELECT Id, ContactId FROM User WHERE Id = :UserInfo.getUserId()];
+	User userAux = [SELECT Id, ContactId,Contact.Preferred_Language__c FROM User WHERE Id = :UserInfo.getUserId()];
 	String contactId = userAux.ContactId;
 
 	List<Portal_Applications__c> lstPA = getNonRequestableServicesList(contactId);
@@ -422,7 +422,7 @@ public static List<ServiceWrapper> getUserAccessGrantedServices(){
 	if(!lstPA.isEmpty()) {
 		Map<String,ServiceWrapper> mapServiceWrapper = new Map<String,ServiceWrapper>();
 		for(Portal_Applications__c portalAppAux : lstPA) {
-			lstServiceWrapper.add(new ServiceWrapper(portalAppAux, false, '', false, ''));
+			lstServiceWrapper.add(new ServiceWrapper(portalAppAux, false, '', false, '', userAux));
 		}
 		lstToReturn.addAll(lstServiceWrapper);
 	}
@@ -524,6 +524,8 @@ public static ServiceWrapper getServiceDetails(string serviceId){
 		}
 	}
 
+	User user = [select Id,ContactId, Contact.Preferred_Language__c,LastLoginDate from User where Id=:Userinfo.getUserId()];
+
 	//if user is admin and does not have access to this service, it's ok to retrieve anyway
 	if(PortalServicesCtrl.isPortalAdminUser() && temp == null){
 		User userAux = [SELECT Id, ContactId, Contact.Account.ANG_IEP_Status_FF__c FROM User WHERE Id = :UserInfo.getUserId()];
@@ -537,7 +539,7 @@ public static ServiceWrapper getServiceDetails(string serviceId){
 		List<Portal_Applications__c> lstServicesAux = portalApplicationsSelector.getPortalApplicationsByApplicationsList(new Set<String>{serviceId});
 
 		if(lstServicesAux != null && !lstServicesAux.isEmpty()){
-			temp = new ServiceWrapper(lstServicesAux.get(0), isAdmin, iepStatus, isAuthorisedSignatory, '');
+			temp = new ServiceWrapper(lstServicesAux.get(0), isAdmin, iepStatus, isAuthorisedSignatory, '', user);
 			temp.totalNrContacts = PortalServicesCtrl.getTotalNrContatsRelatedToService(serviceId);
 		}
 	}
@@ -758,7 +760,7 @@ private boolean isAuthorisedSignatory {get; set;}
 
 
 
-public ServiceWrapper(Portal_Applications__c recordService, Boolean isAdmin, String iepStatus, Boolean isAuthorisedSignatory, String status){
+public ServiceWrapper(Portal_Applications__c recordService, Boolean isAdmin, String iepStatus, Boolean isAuthorisedSignatory, String status, User user){
 	this.recordService = recordService;
 	this.isEasyPayService = ANG_ISSP_PortalServiceHelper.isIepPortalService(recordService.name);
 	this.status = status;
@@ -774,17 +776,19 @@ public ServiceWrapper(Portal_Applications__c recordService, Boolean isAdmin, Str
 		this.accountNotOpenError = false;
 	}
 
-	this.serviceDescriptionLabel = getServiceDescription(recordService);
-
+	this.serviceDescriptionLabel = getServiceDescription(recordService, user);
+	
 	alignStatus(this,status);
 }
 
 }
 
-private static String getServiceDescription (Portal_Applications__c recordService) {
+private static String getServiceDescription (Portal_Applications__c recordService, User user) {
 	String description = '';
 
-	User user = [select Id,ContactId, Contact.Preferred_Language__c from User where Id=:Userinfo.getUserId()];
+	if(user == null){
+		user = [select Id,ContactId, Contact.Preferred_Language__c from User where Id=:Userinfo.getUserId()];
+	}
 
 	try {
 		LabelTranslator translator = new LabelTranslator();
@@ -799,6 +803,8 @@ private static String getServiceDescription (Portal_Applications__c recordServic
 
 	return description;
 }
+
+
 
 /**
    Returns true if current user is a Portal Admin
