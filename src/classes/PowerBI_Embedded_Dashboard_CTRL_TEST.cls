@@ -22,7 +22,7 @@ public class PowerBI_Embedded_Dashboard_CTRL_TEST {
         configsToInsert.add(configDev);
 
         PowerBI_Config__c configProd = new PowerBI_Config__c();
-        configProd.Name = 'GADM_PowerBI_Prod';
+        configProd.Name = 'GADM_PowerBI_Production';
         configProd.ClientId__c = 'some-client-id-prod';
         configProd.Tenant_Id__c = 'some-tenant-id-prod';
         configProd.Username__c = 'some.username.prod@iata.org';
