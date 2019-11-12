@@ -3460,6 +3460,20 @@ Payment required on receipt of this Payment Advice
         <value>Thank you for registering to the IATA Customer Portal. You&apos;re just one step away from getting access!</value>
     </labels>
     <labels>
+        <fullName>CSP_Email_Confirmation_Body_Part_1a</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Email Confirmation Body Part 1a</shortDescription>
+        <value>We have found an existing contact having as the personal email, the email you are trying to register with:</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Email_Confirmation_Body_Part_1b</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Email Confirmation Body Part 1b</shortDescription>
+        <value>We have found an existing contact having as the work email, the email you are trying to register with:</value>
+    </labels>
+    <labels>
         <fullName>CSP_Email_Confirmation_Body_Part_2</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
