@@ -2342,15 +2342,15 @@
 		//END NEWGEN-523
 
 		//NEWGEN-1227
-		if ((lScopeOfChange === 'HO - All Branches' || lScopeOfChange === 'HO - Selected Branches' || '{!newForm.Agency_Codes_Concerned__c}'.includes(",")) && ('{!BranchAccounts}'.match(/label=/g) || []).length > 0) {
+		if ('{!newForm.Agency_Codes_Concerned__c}'.includes(",")) {
+			checkb.prop('checked', false);
+			checkb.prop('disabled', true);
+			setWarningBoxOnHoverMC(checkb, "{!$Label.ISSP_NoC_HE_with_AEs_Warning_MC}");
+		}
+		else if ((lScopeOfChange === 'HO - All Branches' || lScopeOfChange === 'HO - Selected Branches') && ('{!BranchAccounts}'.match(/label=/g) || []).length > 0) {
 			checkb.prop('checked', false);
 			checkb.prop('disabled', true);
 			setWarningBoxOnHover(checkb, '{!$Label.ISSP_NoC_Location_Warning}');
-			setWarningBoxOnHoverMC($j('[id$=notifyChangeLocationCheckbox]'), "{!$Label.ISSP_NoC_HE_with_AEs_Warning_MC}");
-		}
-		else if ('{!newForm.Agency_Codes_Concerned__c}'.includes(",")) {
-			$j('[id$=notifyChangeLocationCheckbox]').prop('disabled', true);
-			setWarningBoxOnHoverMC($j('[id$=notifyChangeLocationCheckbox]'), "{!$Label.ISSP_NoC_HE_with_AEs_Warning_MC}");
 		}
 		//END - NEWGEN 1227
 				
