@@ -46,9 +46,10 @@
     <description>Used to extend the role of any existing account type e.g. an airline that also acts as a payment provider. A record type should be created for each type of account role required.</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
+    <enableEnhancedLookup>true</enableEnhancedLookup>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
-    <enableLicensing>false</enableLicensing>
     <enableReports>true</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
@@ -63,6 +64,16 @@ The Account Role record should be named after the functional capability for whic
         <inlineHelpText>Account Role Name to fill accordingly to the application using the record</inlineHelpText>
         <label>Account Role Name</label>
         <length>40</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Account_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Account Name</label>
+        <length>80</length>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
@@ -122,6 +133,17 @@ The Account Role record should be named after the functional capability for whic
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>GADM_Unique_Key__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <externalId>false</externalId>
+        <label>GADM Unique Key</label>
+        <length>40</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
     </fields>
     <fields>
         <fullName>HQ_Location__c</fullName>
@@ -233,6 +255,15 @@ The Account Role record should be named after the functional capability for whic
         <unique>true</unique>
     </fields>
     <label>Account Role</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Account__c</columns>
+        <columns>Account_Name__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
     <nameField>
         <displayFormat>AR-{0000}</displayFormat>
         <label>Account Role Name</label>
@@ -304,6 +335,10 @@ The Account Role record should be named after the functional capability for whic
                 <fullName>Inactive</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>Terminated</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
     </recordTypes>
     <recordTypes>
@@ -371,13 +406,19 @@ The Account Role record should be named after the functional capability for whic
                 <fullName>Inactive</fullName>
                 <default>false</default>
             </values>
-            <values>
-                <fullName>Terminated</fullName>
-                <default>false</default>
-            </values>
         </picklistValues>
     </recordTypes>
-    <searchLayouts/>
+    <searchLayouts>
+        <lookupDialogsAdditionalFields>Account_Name__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Account_Roles__c</lookupDialogsAdditionalFields>
+        <lookupFilterFields>Account_Roles__c</lookupFilterFields>
+        <lookupFilterFields>Account_Name__c</lookupFilterFields>
+        <lookupFilterFields>NAME</lookupFilterFields>
+        <searchFilterFields>Account__c</searchFilterFields>
+        <searchFilterFields>Account_Roles__c</searchFilterFields>
+        <searchResultsAdditionalFields>Account__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Account_Roles__c</searchResultsAdditionalFields>
+    </searchLayouts>
     <sharingModel>ControlledByParent</sharingModel>
     <startsWith>Vowel</startsWith>
     <validationRules>
@@ -391,7 +432,11 @@ The Account Role record should be named after the functional capability for whic
     <validationRules>
         <fullName>Primary_Contact_Mandatory</fullName>
         <active>true</active>
-        <errorConditionFormula>AND(!(ISBLANK(TEXT(Status__c))), Primary_Contact_Count__c == 0)</errorConditionFormula>
+        <errorConditionFormula>AND(
+	!(ISBLANK(TEXT(Status__c))), 
+	Primary_Contact_Count__c == 0,
+	RecordType.DeveloperName=&quot;TIP_Payment_Provider&quot;
+)</errorConditionFormula>
         <errorMessage>Please first save without the Effective From Date, ensure that a Primary Contact is identified (Account Contact Role), and only then enter the Effective From Date.</errorMessage>
     </validationRules>
     <validationRules>

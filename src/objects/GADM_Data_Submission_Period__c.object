@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableLicensing>false</enableLicensing>
+    <enableReports>false</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>In_Due_Notification__c</fullName>
+        <defaultValue>0</defaultValue>
+        <description>In due notification - no. of days before end day</description>
+        <externalId>false</externalId>
+        <inlineHelpText>In Due Notification in days</inlineHelpText>
+        <label>In Due Notification</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Months_Count__c</fullName>
+        <externalId>false</externalId>
+        <formula>MAX(1,CEILING((TestDate__c - Start_Date__c) / 365 * 12))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Months Count</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Period_Length__c</fullName>
+        <description>Period length in months</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Period length in months</inlineHelpText>
+        <label>Period Length</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Start_Date__c</fullName>
+        <description>Only month and year applies</description>
+        <externalId>false</externalId>
+        <label>Start date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Submission_Cycle_End_Day__c</fullName>
+        <externalId>false</externalId>
+        <label>Submission Cycle End Day</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Submission_Cycle_End_Month__c</fullName>
+        <externalId>false</externalId>
+        <label>Submission Cycle End Month</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Submission_Cycle_Start_Day__c</fullName>
+        <externalId>false</externalId>
+        <label>Submission Cycle Start Day</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Submission_Cycle_Start_Month__c</fullName>
+        <externalId>false</externalId>
+        <label>Submission Cycle Start Month</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TestDate__c</fullName>
+        <externalId>false</externalId>
+        <label>TestDate</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Upcoming_Notification__c</fullName>
+        <defaultValue>0</defaultValue>
+        <description>Upcoming notification - no. of days to start date</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Upcoming Notification in days</inlineHelpText>
+        <label>Upcoming Notification</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <label>GADM Data Submission Period</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Months_Count__c</columns>
+        <columns>Period_Length__c</columns>
+        <columns>Start_Date__c</columns>
+        <columns>Submission_Cycle_Start_Day__c</columns>
+        <columns>Submission_Cycle_End_Day__c</columns>
+        <columns>Submission_Cycle_End_Month__c</columns>
+        <columns>Submission_Cycle_Start_Month__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <label>GADM Data Submission Period Name</label>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>GADM Data Submission Periods</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+    <validationRules>
+        <fullName>DayIsFirstDayInMonth</fullName>
+        <active>true</active>
+        <description>Date must always be first day of month.</description>
+        <errorConditionFormula>DAY(Start_Date__c) &lt;&gt; 1</errorConditionFormula>
+        <errorDisplayField>Start_Date__c</errorDisplayField>
+        <errorMessage>Date must always be first day of month.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>InDueNotification</fullName>
+        <active>true</active>
+        <errorConditionFormula>In_Due_Notification__c &lt; 0</errorConditionFormula>
+        <errorMessage>In due notification must be equal or greater than 0.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>PeriodLenght</fullName>
+        <active>true</active>
+        <errorConditionFormula>Period_Length__c &lt; 1</errorConditionFormula>
+        <errorMessage>Period Length must be equal or greater than 1.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>SubmissionCycleEndDate</fullName>
+        <active>true</active>
+        <errorConditionFormula>Submission_Cycle_End_Day__c &lt;  Submission_Cycle_Start_Day__c</errorConditionFormula>
+        <errorMessage>Submission Cycle End Day must be equal or greater than Submission Cycle Start Day</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>SubmissionCycleEndMonth</fullName>
+        <active>true</active>
+        <errorConditionFormula>Submission_Cycle_End_Month__c   &lt;  Submission_Cycle_Start_Month__c</errorConditionFormula>
+        <errorMessage>Submission Cycle End Month must be equal or greater than Submission Cycle Start Month</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>SubmissionCycleEndtMonth_PeriondLength</fullName>
+        <active>true</active>
+        <errorConditionFormula>Submission_Cycle_End_Month__c &gt;  Period_Length__c</errorConditionFormula>
+        <errorMessage>Submission Cycle End Month must be equal or less than Period Length</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>SubmissionCycleStartDate</fullName>
+        <active>true</active>
+        <errorConditionFormula>Submission_Cycle_Start_Day__c &lt; 1</errorConditionFormula>
+        <errorMessage>Submissin Cycle Start Day must be &gt; 0</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>SubmissionCycleStartMonth</fullName>
+        <active>true</active>
+        <errorConditionFormula>Submission_Cycle_Start_Month__c &lt; 1</errorConditionFormula>
+        <errorMessage>Submission Cycle Start Month must be &gt; 0</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>SubmissionCycleStartMonth_PeriondLength</fullName>
+        <active>true</active>
+        <errorConditionFormula>Submission_Cycle_Start_Month__c &gt;  Period_Length__c</errorConditionFormula>
+        <errorMessage>Submission Cycle Start Month must be equal or less than Period Length</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Upcoming_notification</fullName>
+        <active>true</active>
+        <errorConditionFormula>Upcoming_Notification__c &lt; 0</errorConditionFormula>
+        <errorMessage>Upcoming notification must be equal or greater than 0.</errorMessage>
+    </validationRules>
+    <visibility>Public</visibility>
+</CustomObject>

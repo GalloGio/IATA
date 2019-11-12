@@ -40291,4 +40291,473 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <shortDescription>wire transfer payment msg</shortDescription>
         <value>Your wire transfer payment has been received.</value>
     </labels>
+       <labels>
+        <fullName>GADM_Access_Denied</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Access Denied</shortDescription>
+        <value>Your access to GADM service is denied.</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Access_Pending</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Access Pending</shortDescription>
+        <value>Your access to GADM service is pending.</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Account_not_active</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Account not active</shortDescription>
+        <value>Account is not active.</value>
+    </labels>
+    <labels>
+        <fullName>GADM_ChooseAnotherFile</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_ChooseAnotherFile</shortDescription>
+        <value>Please select another file to upload.</value>
+    </labels>
+    <labels>
+        <fullName>GADM_ChooseFile</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_ChooseFile</shortDescription>
+        <value>Please select file to upload.</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Data_Submission_bad_file_extension</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Data Submission bad file extension</shortDescription>
+        <value>Unexpected file extension!</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Data_Submission_empty_file</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Data Submission empty file</shortDescription>
+        <value>File is empty!</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Data_Submission_error_uploading_file</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Data Submission error uploading file</shortDescription>
+        <value>Error uploading file:</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Data_Submission_file_is_big</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Data Submission file is big</shortDescription>
+        <value>File is too large!</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Data_Submission_file_is_selected</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Data Submission file is selected</shortDescription>
+        <value>File is already selected!</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Data_Submission_file_uploaded</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Data Submission file uploaded</shortDescription>
+        <value>File uploaded successfully:</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Data_Submission_help</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Data Submission help</shortDescription>
+        <value>Need help? Contact us at: </value>
+    </labels>
+    <labels>
+        <fullName>GADM_Data_Submission_no_access</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Data Submission no access</shortDescription>
+        <value>You do not have permissions to see this page!</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Data_Submission_no_actor</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Data Submission no actor</shortDescription>
+        <value>No actor selected!</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Data_Submission_no_gadm_settings</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Data Submission no gadm settings</shortDescription>
+        <value>Unable to retrieve gadm settings!</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Data_Submission_no_permission_set</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Data Submission no permission set</shortDescription>
+        <value>Unable to verify user permission set!</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Data_Submission_no_records</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Data Submission no records</shortDescription>
+        <value>No records to display.</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Data_Submission_no_user</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Data Submission no user</shortDescription>
+        <value>No user selected!</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Data_Submission_no_valid_actor</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Data Submission no valid actor</shortDescription>
+        <value>No valid actor found!</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Data_Submission_select_actor</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Data Submission select actor</shortDescription>
+        <value>Please select an actor.</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Data_Submission_select_user</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Data Submission select user</shortDescription>
+        <value>Please select an user.</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Data_Submission_too_many_files</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Data Submission too many files</shortDescription>
+        <value>Too many files!</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Data_Submission_unexpected_error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Data Submission unexpected error</shortDescription>
+        <value>Unexpected error!</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Data_Submission_upload_error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Data Submission upload error</shortDescription>
+        <value>Error uploading file!</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Data_Submission_upload_errors</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Data Submission upload errors</shortDescription>
+        <value>Error uploading file/s:</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Data_Submission_upload_successful</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Data Submission upload successful</shortDescription>
+        <value>Upload successful.</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Data_Submission_user_search</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Data Submission user search</shortDescription>
+        <value>Search User...</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Data_Submssion_no_user_information</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Data Submssion no user information</shortDescription>
+        <value>Unable to retrieve user information!</value>
+    </labels>
+    <labels>
+        <fullName>GADM_FileAlreadyAttached</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_FileAlreadyAttached</shortDescription>
+        <value>This file is already attached!</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Ground_Service_Provider</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Ground Service Provider</shortDescription>
+        <value>Ground Service Provider</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Invite_User_invitation_error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_Invite_User_invitation_error</shortDescription>
+        <value>Unable to send invitation!</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Invite_User_invitation_no_data</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_Invite_User_invitation_no_data</shortDescription>
+        <value>Unable to get data!</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Invite_User_invitation_sent</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_Invite_User_invitation_sent</shortDescription>
+        <value>Invitation email sent.</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Invite_User_not_allowed_email_domain</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_Invite_User_not_allowed_email_domain</shortDescription>
+        <value>Email domain is not allowed for selected Actor!</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Invite_User_notification_sent</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_Invite_User_notification_sent</shortDescription>
+        <value>Notification email sent.</value>
+    </labels>
+    <labels>
+        <fullName>GADM_NoFile</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_NoFile</shortDescription>
+        <value>No file selected!</value>
+    </labels>
+    <labels>
+        <fullName>GADM_No_Access</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM No Access</shortDescription>
+        <value>You do not have access to GADM service.</value>
+    </labels>
+    <labels>
+        <fullName>GADM_PowerBI_categories_error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM PowerBI categories error</shortDescription>
+        <value>Unable to load dashboard categories</value>
+    </labels>
+    <labels>
+        <fullName>GADM_PowerBI_no_access_token</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_PowerBI_no_access_token</shortDescription>
+        <value>Unable to get application access token!</value>
+    </labels>
+    <labels>
+        <fullName>GADM_PowerBI_no_categories</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_PowerBI_no_categories</shortDescription>
+        <value>No dashboard categories found</value>
+    </labels>
+    <labels>
+        <fullName>GADM_PowerBI_no_dashboard</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_PowerBI_no_dashboard</shortDescription>
+        <value>Unable to get dashboard!</value>
+    </labels>
+    <labels>
+        <fullName>GADM_PowerBI_no_dataset_detail</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_PowerBI_no_dataset_detail</shortDescription>
+        <value>Unable to get dataset details!</value>
+    </labels>
+    <labels>
+        <fullName>GADM_PowerBI_no_embed_token</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_PowerBI_no_embed_token</shortDescription>
+        <value>Unable to get embed token!</value>
+    </labels>
+    <labels>
+        <fullName>GADM_PowerBI_no_federation_Id</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_PowerBI_no_federation_Id</shortDescription>
+        <value>Unable to get user&apos;s federation id!</value>
+    </labels>
+    <labels>
+        <fullName>GADM_PowerBI_no_report_detail</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_PowerBI_no_report_detail</shortDescription>
+        <value>Unable to get report details!</value>
+    </labels>
+    <labels>
+        <fullName>GADM_PowerBI_no_user_detail</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_PowerBI_no_user_detail</shortDescription>
+        <value>Unable to get user details!</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Power_User</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Power User</shortDescription>
+        <value>GADM Power User</value>
+    </labels>
+    <labels>
+        <fullName>GADM_User_Invitation_Mr</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_User_Invitation_Mr</shortDescription>
+        <value>Mr.</value>
+    </labels>
+    <labels>
+        <fullName>GADM_User_Invitation_Mrs</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_User_Invitation_Mrs</shortDescription>
+        <value>Mrs.</value>
+    </labels>
+    <labels>
+        <fullName>GADM_User_Invitation_Ms</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_User_Invitation_Ms</shortDescription>
+        <value>Ms.</value>
+    </labels>
+    <labels>
+        <fullName>GADM_User_Invitation_job_function_help_text</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_User_Invitation_job_function_help_text</shortDescription>
+        <value>*Select all functions that apply</value>
+    </labels>
+    <labels>
+        <fullName>GADM_User_Invitation_job_title</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_User_Invitation_job_title</shortDescription>
+        <value>Job Title</value>
+    </labels>
+    <labels>
+        <fullName>GADM_User_Invitation_none</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_User_Invitation_none</shortDescription>
+        <value>-None-</value>
+    </labels>
+    <labels>
+        <fullName>GADM_User_Invitation_user_exists</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_User_Invitation_user_exist</shortDescription>
+        <value>This Email is already registered with us.</value>
+    </labels>
+    <labels>
+        <fullName>GADM_User_Management_actor_not_available</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_User_Management_actor_not_available</shortDescription>
+        <value>Actor can not be assigned by current user.</value>
+    </labels>
+    <labels>
+        <fullName>GADM_User_Management_business_unit_not_available</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_User_Management_business_unit_not_available</shortDescription>
+        <value>Business unit can not be assigned by current user.</value>
+    </labels>
+    <labels>
+        <fullName>GADM_User_Management_cannot_edit_own_assignments</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_User_Management_ cannot_edit_own_assignments</shortDescription>
+        <value>You cannot edit your own assignments.</value>
+    </labels>
+    <labels>
+        <fullName>GADM_User_Management_domain_blocked</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_User_Management_domain_blocked</shortDescription>
+        <value>Actor can not be assigned, user email domain does not mach with allowed email domains for this actor.</value>
+    </labels>
+    <labels>
+        <fullName>GADM_User_Management_gadm_user_domain_blocked</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_User_Management_gadm_user_domain_blocked</shortDescription>
+        <value>User can not be activated for main account as user email domain does not match with allowed email domains for this actor.</value>
+    </labels>
+    <labels>
+        <fullName>GADM_User_Management_no_data</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM User Management no data</shortDescription>
+        <value>No data</value>
+    </labels>
+    <labels>
+        <fullName>GADM_User_Management_no_records</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM User Management no records</shortDescription>
+        <value>No records to display.</value>
+    </labels>
+    <labels>
+        <fullName>GADM_User_Management_role_not_editable</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_User_Management_role_not_editable</shortDescription>
+        <value>Role can not be edited.</value>
+    </labels>
+    <labels>
+        <fullName>GADM_account_contact_role_gadm_user</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM account contact role gadm user</shortDescription>
+        <value>User can have only one Account Contact Role with record type = &apos;Functional&apos; and role = &apos;GADM User&apos;!</value>
+    </labels>
+    <labels>
+        <fullName>GADM_account_not_effective</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM account not effective</shortDescription>
+        <value>Account is not effective.</value>
+    </labels>
+    <labels>
+        <fullName>GADM_active_users_reached</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM active users reached</shortDescription>
+        <value>active GADM User role/s already reached!</value>
+    </labels>
+    <labels>
+        <fullName>OneId_GADM_Troubleshooting</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId GADM Troubleshooting</shortDescription>
+        <value>Troubleshooting</value>
+    </labels>
+    <labels>
+        <fullName>GADM_User_Management_unable_to_save</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM User Management unable to save</shortDescription>
+        <value>Unable to save data!</value>
+    </labels>
 </CustomLabels>
