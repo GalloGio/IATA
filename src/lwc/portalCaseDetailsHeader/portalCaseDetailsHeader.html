@@ -98,7 +98,8 @@
                             </span>
                             <lightning-button variant="base" label={labels.CSP_Manage_Recipients}
                                 class="slds-m-horizontal_medium recipients-label text-blue button_no_margin"
-                                onclick={openManageRecipientsPopup}>
+                                onclick={openManageRecipientsPopup}
+								disabled={isExpired}>
                             </lightning-button>
                         </div>
                         <div if:true={hasSurveyLink}>
