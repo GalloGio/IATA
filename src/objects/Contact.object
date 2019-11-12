@@ -12646,6 +12646,20 @@ IF(S_Risk_RHC__c&gt;0,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000006
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>Shipping_Address__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Shipping Address</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Shipping Address</inlineHelpText>
+        <label>Shipping Address</label>
+        <referenceTo>Address__c</referenceTo>
+        <relationshipLabel>Contacts</relationshipLabel>
+        <relationshipName>Contacts</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>Skype_Call_Contact__c</fullName>
         <externalId>false</externalId>
         <formula>HYPERLINK(&quot;callto://&quot;&amp;&quot;+1&quot;&amp;Phone,&quot;Call with Skype&quot;)</formula>
