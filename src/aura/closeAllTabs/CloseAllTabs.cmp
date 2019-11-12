@@ -1,7 +1,7 @@
 <aura:component implements="flexipage:availableForAllPageTypes" access="global" >
     
     <lightning:workspaceAPI aura:id="workspace" />
-    <div class="slds-p-around_xx-small">
-        <lightning:button label="Close Tabs" onclick="{!c.closeTabs}" />
+    <div class="slds-p-around_xx-small slds-align_absolute-center">
+        <lightning:button label="{!$Label.c.Close_All_Tabs}" class="slds-size_1-of-2" onclick="{!c.closeTabs}" />
     </div>
 </aura:component>

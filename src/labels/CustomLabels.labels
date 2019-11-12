@@ -4832,6 +4832,13 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <value>Click here</value>
     </labels>
     <labels>
+        <fullName>Close_All_Tabs</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Close All Tabs</shortDescription>
+        <value>Close All Tabs</value>
+    </labels>
+    <labels>
         <fullName>Company</fullName>
         <language>en_US</language>
         <protected>false</protected>
