@@ -278,7 +278,7 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
 
 
         this.columns = [
-            {label: 'Last Name', fieldName: 'lastName', type: 'text', sortable: true},
+            {label: 'Last Name', fieldName: 'lastName', type: 'text', cellAttributes: { class: { fieldName: 'upperCase' }}, sortable: true},
             {label: 'First Name', fieldName: 'firstName', type: 'text', sortable: true},
             {label: 'Employee Code', fieldName: 'companyNumber', type: 'text', sortable: true},
             {label: 'Operation Type', fieldName: 'trainingName', type: 'text', sortable: true},
@@ -404,6 +404,9 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
         getTrainingRecords({searchValues: auxSearchValues, searchType: 'RecordsDetail' })
         .then(results => {
             if(results && results.length > 0) {
+                results.forEach(rec =>{
+                    rec.upperCase = 'to-upper-case';
+                });
                 this.data = results;
                 this.dataRecords = true;
             } else {
@@ -442,7 +445,14 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
         this.template.querySelector('c-portal-iftp-export-data').exportDataToExcel(columns, data, "EmployeesSearchResults.xls");
     }
 
+    handleExportAllDataToCSV(){
+        this.handleExportAllData('CSV');
+    }
     handleExportAllDataToExcel(){
+        this.handleExportAllData('Excel');
+    }
+
+    handleExportAllData(type){
         let auxSearchValues = {};
         // ALL Stations
         let auxStations = '';
@@ -461,8 +471,6 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
                 auxAircraftType = (auxAircraftType === '' ) ? this.certificationTypesWithLevel[i].Certification__c : auxAircraftType + ',' + this.certificationTypesWithLevel[i].Certification__c;
             }
         }
-        console.log('auxAircraftType', auxAircraftType);
-
 
         //List
         auxSearchValues = [
@@ -484,8 +492,14 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
         getAllTrainingRecordsForDetailView({searchValues: auxSearchValues, searchType: 'RecordsDetail'})
         .then(results => {
             if(results && results.length > 0) {
-                // 2nd - create excel file
-                this.template.querySelector('c-portal-iftp-export-data').exportDataToExcel(columns, results, "AllDataRequestResults.xls");
+                if(type === 'Excel'){
+                    // 2nd - create excel file
+                    this.template.querySelector('c-portal-iftp-export-data').exportDataToExcel(columns, results, "AllDataRequestResults.xls");
+                } else {
+                    if(type === 'CSV'){
+                        this.template.querySelector('c-portal-iftp-export-data').exportDataToCsv(columns, results, "TrainingRecordsDetailSearchResults.csv");
+                    }
+                }
             } else {
                 const event = new ShowToastEvent({
                     title: 'Download All Data Request Result',
@@ -511,7 +525,6 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
             this.mainErrorMessage = error;
             this.error = error;
             this.loading = false;
-        });  
+        });       
     }
-
 }

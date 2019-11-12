@@ -450,11 +450,11 @@ public without sharing class PortalIftpUtils {
 
 
 	@AuraEnabled (cacheable=false)
-	public static InsertStationWrapper updateStation(List<Object> dataToSave, String origin){
+	public static InsertStationWrapper updateStation(List<Object> dataToSave, String origin, Id accountId){
+		
 		List<Role_Address__c> stationsToUpdate = new List<Role_Address__c>();
 		InsertStationWrapper irw;
-		List<Airport_Detail__c> ITPStationsInDatabase = getITPStations();
-
+		List<Airport_Detail__c> ITPStationsInDatabase = getITPStations(accountId);
 		for(Object rec : dataToSave){
 			Role_Address__c auxStation = (Role_Address__c)JSON.deserialize(JSON.serialize(rec ), Role_Address__c.class);
 
@@ -473,8 +473,15 @@ public without sharing class PortalIftpUtils {
 		}
 
 		if(stationsToUpdate.size() > 0){
-			update stationsToUpdate;
-			irw = new InsertStationWrapper('Station\' notes updated successfully.', true);
+			try{
+				update stationsToUpdate;
+				irw = new InsertStationWrapper('Station\' notes updated successfully.', true);
+			}
+			catch (DMLException e) {
+					irw = new InsertStationWrapper( e.getMessage() , false);
+					System.debug(LoggingLevel.Error, '____ [cls PortalIftpUtils - updateStation] Exception - ' + e );
+					System.debug(LoggingLevel.Error, '____ [cls PortalIftpUtils - updateStation] Exception - ' + e.getStackTraceString() );
+			}
 		}
 		return irw;
 	}

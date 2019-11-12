@@ -58,18 +58,6 @@
                             onchange={handleChangeAircraftType} >
                         </lightning-combobox>
                     </div>
-                    <!--
-                    <div class="slds-col slds-m-left_x-small slds-m-right_x-small">
-                        <lightning-combobox
-                            name="proficiency"
-                            label="Proficiency"
-                            value={proficiencyValue}
-                            placeholder="Select Proficiency"
-                            options={proficiencyOptions}
-                            onchange={handleChangeProficiency} >
-                        </lightning-combobox>
-                    </div>
-                    -->
                 </div>
                 <div class="slds-grid slds-gutters">
                     <div class="slds-col slds-m-left_x-small">
@@ -137,11 +125,14 @@
                                     label="Download All Data as Excel file"
                                     onclick={handleExportAllDataToExcel}>
                 </lightning-button>
-
+                <lightning-button   variant="neutral" 
+                                    class="slds-m-right--x-small align_button_right_class" 
+                                    label="Download All Data as CSV file"
+                                    onclick={handleExportAllDataToCSV}>
+                </lightning-button>
             </lightning-card>
         </div>  
     </div>
-    
     <template if:true={showSearch}>
         <div class="slds-card_boundary slds-card_boundary slds-m-top_medium">
             <lightning-card>
@@ -189,6 +180,4 @@
             </lightning-card>
         </div>
     </template>
-
-
 </template>
