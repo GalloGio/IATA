@@ -64,6 +64,17 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Cost_of_Printer__c</fullName>
+        <defaultValue>0</defaultValue>
+        <externalId>false</externalId>
+        <label>Cost of Printer</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
         <fullName>Expedite_Delivery_added_to_IDCard_Price__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
@@ -250,6 +261,7 @@
         <columns>ISO_Region__c</columns>
         <columns>Type_Class_of_Agent__c</columns>
         <columns>ID_Card_Fee__c</columns>
+        <columns>Cost_of_Printer__c</columns>
         <columns>Expedite__c</columns>
         <columns>Expedite_Delivery_added_to_IDCard_Price__c</columns>
         <columns>IATA_Package__c</columns>
@@ -257,7 +269,6 @@
         <columns>LAST_UPDATE</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
-        <language>en_US</language>
     </listViews>
     <listViews>
         <fullName>Country_that_Can_Pay_by_Cheque1</fullName>
