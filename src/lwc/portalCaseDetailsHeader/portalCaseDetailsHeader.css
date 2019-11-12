@@ -85,8 +85,8 @@
     text-align: right;
 }
 @media print {
-    .slds-text-align_right div,
-    .text-recipients div {
+    .text-recipients div,
+    .slds-text-align_right div {
         text-align: left;
     }
     .recipients-label.text-blue {

@@ -1614,13 +1614,13 @@ visibility: hidden;
         display: block!important;
         visibility: visible!important;
     }
-    .caseMessagesOtherBubbleContainer {
-        border: 1px solid #e2e2e2;
+    .caseMessagesSelfBubbleContainer {
+        border: 1px solid #a2a2a2;
         margin-bottom: 1rem;
         width: 100%;
     }
-    .caseMessagesSelfBubbleContainer {
-        border: 1px solid #a2a2a2;
+    .caseMessagesOtherBubbleContainer {
+        border: 1px solid #e2e2e2;
         margin-bottom: 1rem;
         width: 100%;
     }
