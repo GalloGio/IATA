@@ -148,6 +148,11 @@ export default class PortalCompanyProfileBranchesList extends LightningElement {
         }, 500, this);
 
     }
-    
+
+    removeTextSearch() {
+        this.showCross = false;
+        this.branchesLoading = true;
+        this.resetBranchesList();
+    }
 
 }
