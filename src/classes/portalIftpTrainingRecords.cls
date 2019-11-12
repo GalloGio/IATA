@@ -1166,15 +1166,15 @@ public without sharing class portalIftpTrainingRecords {
     * @return Boolean
     */
     @AuraEnabled (cacheable=false)
-    public static Boolean updateCertificationProficiency(List<Object> dataToSave){
-        Boolean updateOK = true;
+    public static Boolean updateCertificationProficiency(List<Object> dataToSave){ 
+        Boolean updateOK = false;
         List<CertificationProficiencyWrapper> dataToUpdate = (List<CertificationProficiencyWrapper>)JSON.deserialize(JSON.serialize(dataToSave),List<CertificationProficiencyWrapper>.class);
         List<Role_Address__c> rolAddrToInsertList = new List<Role_Address__c>();
+        List<Role_Address__c> rolAddrToUpdateList = new List<Role_Address__c>();
         List<Role_Address__c> rolAddrToInactivateList = new List<Role_Address__c>();
         List<String> certificationsCodesList= new List<String>();
         List<Id> contactRolCertificationIdsList = new List<Id>();
         Id address_Id;
-
         for(CertificationProficiencyWrapper rec: dataToUpdate){
             Role_Address__c rolAddrToInsert = new Role_Address__c();
             rolAddrToInsert.Address__c = rec.address_Id;
@@ -1211,7 +1211,6 @@ public without sharing class portalIftpTrainingRecords {
                                         Contact_Role_Certification__r.Account_Contact_Role__r.Last_Name__c
                                         FROM Role_Address__c
                                         WHERE Contact_Role_Certification__c IN :contactRolCertificationIdsList
-                                        AND Proficiency_level__c = 'Yes'
                                         AND Proficiency_Status__c = 'Active'
                                         AND Address__c = :address_Id];  
 
@@ -1220,8 +1219,13 @@ public without sharing class portalIftpTrainingRecords {
             while(index < rolAddrToInsertList.size()){
                 Boolean isPresent = false;
                 for(Role_Address__c recInDatabase: proficiencyListInDatabase){
-                    if(recInDatabase.Contact_Role_Certification__c == rolAddrToInsertList[index].Contact_Role_Certification__c){
+                    if(recInDatabase.Contact_Role_Certification__c == rolAddrToInsertList[index].Contact_Role_Certification__c) { 
                         isPresent = true;
+                        if (recInDatabase.Proficiency_level__c.equalsIgnoreCase('No')){
+                            isPresent = true;
+                            recInDatabase.Proficiency_level__c = 'Yes';
+                            rolAddrToUpdateList.add(recInDatabase);
+                        }
                     }
                 }
                 if(isPresent){
@@ -1232,9 +1236,7 @@ public without sharing class portalIftpTrainingRecords {
             }
 
         }
-
         // Check if it's renewal
-
         List<Role_Address__c> existingProficiencyList = [SELECT Id, 
                                                         Address__c,
                                                         Address__r.Code__c,
@@ -1254,8 +1256,7 @@ public without sharing class portalIftpTrainingRecords {
                                                         WHERE Contact_Role_Certification__r.Certification__r.Code__c IN :certificationsCodesList
                                                         AND Proficiency_level__c = 'Yes'
                                                         AND Proficiency_Status__c = 'Active'
-                                                        AND Address__c = :address_Id];                          
-
+                                                        AND Address__c = :address_Id]; 
 
         for(Role_Address__c rolAddr: existingProficiencyList){
             for(CertificationProficiencyWrapper dataToInsert: dataToUpdate){
@@ -1268,6 +1269,7 @@ public without sharing class portalIftpTrainingRecords {
                     }
             }
         }
+
         List<IFTP_History__c> IftpHistoryRecordsToBeInserted = new List<IFTP_History__c>();
         for(Role_Address__c proficiencyRec: rolAddrToInactivateList){
             IFTP_History__c ihrec = portalIftpHistoryManagement.createIftpHistoryRecord(portalIftpHistoryManagement.Employee_Loose_Proficiency, 
@@ -1284,15 +1286,32 @@ public without sharing class portalIftpTrainingRecords {
         }
         Savepoint sp = Database.setSavepoint();
         try {
+            List<Role_Address__c> allRolAddrToUpdateList = new List<Role_Address__c>();
+            if(rolAddrToUpdateList.size() > 0){
+                allRolAddrToUpdateList.addAll(rolAddrToUpdateList);
+                for(Role_Address__c proficiencyRec: rolAddrToUpdateList){
+                    IFTP_History__c ihrec = portalIftpHistoryManagement.createIftpHistoryRecord(portalIftpHistoryManagement.Employee_Receives_Proficiency, 
+                                                                    proficiencyRec.Contact_Role_Certification__r.Account_Contact_Role__r.Company_Code__c, 
+                                                                    proficiencyRec.Contact_Role_Certification__r.Account_Contact_Role__r.First_Name__c, 
+                                                                    proficiencyRec.Contact_Role_Certification__r.Account_Contact_Role__r.Last_Name__c,
+                                                                    proficiencyRec.Address__r.Code__c,
+                                                                    proficiencyRec.Address__r.City__c,
+                                                                    proficiencyRec.Contact_Role_Certification__r.Certification__r.Name,
+                                                                    proficiencyRec.Proficiency_level__c,
+                                                                    proficiencyRec.Proficiency_Granted_By__c
+                                                                    );
+                    IftpHistoryRecordsToBeInserted.add(ihrec);
+                }
+            }
+            allRolAddrToUpdateList.addAll(rolAddrToInactivateList);
 
             
-            if(rolAddrToInactivateList.size() > 0){
-                update rolAddrToInactivateList;
+            if(allRolAddrToUpdateList.size() > 0){
+                update allRolAddrToUpdateList;
             }
 
             if(rolAddrToInsertList.size() > 0){
                 insert rolAddrToInsertList;
-
                 List<Role_Address__c> newProficiencyList = [SELECT Id, 
                                                     Address__c,
                                                     Address__r.Code__c,
@@ -1323,13 +1342,12 @@ public without sharing class portalIftpTrainingRecords {
                                                                     rolAddr.Proficiency_Granted_By__c
                                                                     );
                     IftpHistoryRecordsToBeInserted.add(ihrec);
-                }
-
-                if(IftpHistoryRecordsToBeInserted.size() > 0){
-                    portalIftpHistoryManagement.insertIntoIftpHistory(IftpHistoryRecordsToBeInserted);
-                }
+                } 
             }
-            
+            if(IftpHistoryRecordsToBeInserted.size() > 0){
+                portalIftpHistoryManagement.insertIntoIftpHistory(IftpHistoryRecordsToBeInserted);
+            }
+            updateOK = true;
 
         } catch (DMLException e) {
             Database.rollback(sp);
