@@ -1619,10 +1619,13 @@ visibility: hidden;
         margin-bottom: 1rem;
         width: 100%;
     }
-    .caseMessagesSelfBubble.slds-p-around_medium,
-    .caseMessagesSelfBubble.slds-p-around--medium,
-    .caseMessagesOtherBubble.slds-p-around_medium,
-    .caseMessagesOtherBubble.slds-p-around--medium {
+    .caseMessagesSelfBubbleContainer {
+        border: 1px solid #a2a2a2;
+        margin-bottom: 1rem;
+        width: 100%;
+    }
+    .caseMessagesSelfBubble,
+    .caseMessagesOtherBubble{
         padding: .5rem;
     }
     .customCard {
