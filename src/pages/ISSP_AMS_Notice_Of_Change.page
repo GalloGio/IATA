@@ -860,13 +860,9 @@
         								for(i = l.length -1; i >=0 ; i--) {
         									if((aux == 'Cashless' || aux == 'Multicountry') && (l[i].value === "Cashless" || l[i].value === "Multicountry")) {
         										l.remove(i);
-											}
-
-											if (l[i].value === "Multicountry" && !mcEnabled) {
+											} else if (l[i].value === "Multicountry" && !mcEnabled) {
 												l.remove(i);
-											}
-											
-        									if(aux == 'Cash' && l[i].value === "Cash") {
+											} else if(aux == 'Cash' && l[i].value === "Cash") {
 	     										l.remove(i);
 											}
         								}
@@ -1689,7 +1685,7 @@
 								<apex:outputlabel id="section5-gds" value="{!$Label.ISSP_NoC_Advise_GDS}" />
 								<apex:inputfield value="{!newForm.ISSP_AMS_GDS_with_signed_contract__c}"/>
 							</apex:pageblocksectionitem>
-						</apex:pageblocksection>   
+						</apex:pageblocksection>
 						<!--END NEWGEN-668-->
 						<apex:pageBlockSectionItem >
 							<apex:outputLabel value="{!$Label.ISSP_AMS_NoC_Provide_Registeration_Or_License}"/>
@@ -2335,7 +2331,7 @@
 				if (element.checked === false) {
 					addFinancialAssessmentContactItem.css('display', 'none');
 				} else if (element.value === 'Cash') {
-						addFinancialAssessmentContactItem.css('display', '');
+					addFinancialAssessmentContactItem.css('display', '');
 				}
 			}
 		}
