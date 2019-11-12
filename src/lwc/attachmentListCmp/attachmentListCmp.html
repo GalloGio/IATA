@@ -6,7 +6,7 @@
             resize-column-disabled=true>
         </lightning-datatable>
 
-        <div class="slds-m-top_x-large slds-border_top slds-p-top_small">
+        <div if:false={trackedIsExpired} class="slds-m-top_x-large slds-border_top slds-p-top_small">
             <span class="AddAttButtonContainer">
                 <lightning-button class="whiteButtonBlueBorder slds-p-around_small text-xsmall text-bold" label={label.AddNewDocuments}
                     onclick={handleAddAttachs}></lightning-button>
