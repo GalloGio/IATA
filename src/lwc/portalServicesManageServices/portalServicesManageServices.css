@@ -162,3 +162,46 @@
 .contactsToAdd svg{
     fill:#d2d6fe;
 }
+
+.filterIcon svg{
+    fill:#d2d6fe;
+}
+
+
+/* MODAL */
+
+.modalTitle{
+    font-size: 20px;
+    font-weight: 600;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.6;
+    letter-spacing: normal;
+    color: #333;
+}
+
+
+/* datatable changes*/
+@media only screen and (max-device-width: 760px) {
+    .usersTable table * {
+        font-size: 12px;
+      }
+    .usersTable table tr th:nth-child(1),
+    .usersTable table tr td:nth-child(1) {
+        width:24px !important;
+    }
+    .usersTable table tr th:nth-child(6),
+    .usersTable table tr td:nth-child(6) {
+        width:22px;
+    }
+
+    .usersTable table tr td:nth-child(3),
+    .usersTable table tr th:nth-child(3),
+    .usersTable table tr td:nth-child(5),
+    .usersTable table tr th:nth-child(5) {
+      display: none;
+    }
+    .slds-th__action span {
+        min-width: 100px;
+    }
+  }

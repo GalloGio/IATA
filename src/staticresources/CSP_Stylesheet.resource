@@ -1887,4 +1887,29 @@ visibility: hidden;
     animation-name: fadeOutKeyFrame;
     animation-duration: 0.3s;
 }
+/* portalServicesManagedServices table configuration for mobile */
+@media only screen and (max-device-width: 760px) {
+  .usersTable table tr td:nth-child(3),
+  .usersTable table tr th:nth-child(3),
+  .usersTable table tr td:nth-child(5),
+  .usersTable table tr th:nth-child(5) {
+    display: none;
+  }
+  .usersTable table * {
+    font-size: 12px;
+  }
+  .usersTable table tr th:first-child,
+  .usersTable table tr td:first-child {
+    width:12px !important;
+  }
+  .usersTable table tr th:last-child,
+  .usersTable table tr td:last-child {
+    width:10px !important;
+  }
+
+  th:nth-child(2) .slds-th__action span,
+  th:nth-child(4) .slds-th__action span {
+    min-width: 100px;
+  }
+}
 /*#################################*/
