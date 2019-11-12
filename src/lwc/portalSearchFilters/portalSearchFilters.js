@@ -653,10 +653,12 @@ export default class PortalSearchFilters extends LightningElement {
     handleProfileTypePickChange(event){
         let selectedValue = event.detail.value;
 
-        this.typeIsContact = event.detail.value === 'Contact';
+        if (this.isAdmin) {
+            this.typeIsContact = event.detail.value === 'Contact';
+        }
 
         let filteringObjectAux = JSON.parse(JSON.stringify(this._filteringObject));
-        filteringObjectAux.profileComponent.profileContactStatusFilter = selectedValue === '' ? '' : filteringObject.profileComponent.profileContactStatusFilter;
+        filteringObjectAux.profileComponent.profileStatusFilter = '';
         filteringObjectAux.profileComponent.profileTypeFilter = selectedValue;
         this._filteringObject = filteringObjectAux;
 
