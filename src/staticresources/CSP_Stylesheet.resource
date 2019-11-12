@@ -705,6 +705,15 @@ lightning-datatable .slds-th__action {
 }
 
 .blueCustomButtonLink, .blueCustomButtonLink button, .blueCustomButtonLink button:active, .blueCustomButtonLink button:visited, .blueCustomButtonLink button:focus {
+.outlinedButton.button-half-height,
+.outlinedButton.button-half-height button,
+.outlinedButton.button-half-height button:active,
+.outlinedButton.button-half-height button:visited,
+.outlinedButton.button-half-height button:focus,
+.outlinedButton.button-half-height button:hover  {
+  min-height: 24px;
+  font-size: 14px;
+}
 	color: #3333ff;
     fill: #3333ff;
     border: none;
