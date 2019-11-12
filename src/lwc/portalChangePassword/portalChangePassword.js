@@ -15,7 +15,7 @@ import passwordRule2Label       from '@salesforce/label/c.CSP_Password_Rule_2';
 import passwordRule3Label       from '@salesforce/label/c.CSP_Password_Rule_3';
 import passwordRule4Label       from '@salesforce/label/c.CSP_Password_Rule_4';
 import errorMessageLabel        from '@salesforce/label/c.CSP_Change_Password_Error';
-
+import locale                   from '@salesforce/i18n/locale';
 
 export default class PortalChangePassword extends LightningElement {
     @track isLoading         = false;
@@ -172,7 +172,7 @@ export default class PortalChangePassword extends LightningElement {
         if(this.buttonDisabled == false){
              ChangePassword({ currentPassword : this.currentPassword, newPassword : this.newPassword, confirmPassword : this.confirmPassword }).then(result => {
                              if(result.success == true){
-                                 navigateToPage("/secur/logout.jsp?retUrl=" + CSP_PortalPath + "changePasswordSuccess");
+                                 navigateToPage("/secur/logout.jsp?retUrl=" + CSP_PortalPath + "changePasswordSuccess?language=" + locale);
                              }
                              else{
                                  this.message = errorMessageLabel;

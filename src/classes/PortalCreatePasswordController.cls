@@ -21,10 +21,10 @@ public without sharing class PortalCreatePasswordController {
         PageReference pageRef = new PageReference(urlExtension);
         String parameters     = pageRef.getParameters().get('c');
         parameters            = Encodingutil.urlDecode(PortalPasswordHandler.DecryptString(parameters), 'UTF-8');
-
+		parameters 			  = parameters.replace(PortalPasswordHandler.plusReplacer,'+');
         //get registration information
         PortalRegistrationFirstLevelCtrl.RegistrationParameters registrationParameters = (PortalRegistrationFirstLevelCtrl.RegistrationParameters) JSON.deserialize(parameters, PortalRegistrationFirstLevelCtrl.RegistrationParameters.class);
-        registrationParameters.email  = registrationParameters.email.replace(PortalPasswordHandler.plusReplacer,'+');
+        //registrationParameters.email  = registrationParameters.email.replace(PortalPasswordHandler.plusReplacer,'+');
         result.isUserExist            = isUserExist(registrationParameters.email, registrationParameters.contactId);
         result.registrationParameters = JSON.serialize(registrationParameters);
 
