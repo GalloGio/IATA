@@ -156,6 +156,7 @@ public static CSP_Utils.PagedResult getSearchProfiles(String portalSearchFilterW
 	String baseQueryAccounts = 'SELECT ID, Name, IATA_ISO_Country__r.Name FROM Account ';
 	String countryPortalStatusFilter = '';
 	String countryFilter = '';
+	Boolean isAdmin = CSP_Utils.isAdmin();
 
 	List<SObject> resultsContacts = new List<SObject>();
 	List<SObject> resultsAccounts = new List<SObject>();
