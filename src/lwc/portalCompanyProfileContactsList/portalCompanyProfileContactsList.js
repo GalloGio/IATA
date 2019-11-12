@@ -393,7 +393,6 @@ export default class PortalCompanyProfileContactsList extends LightningElement {
     }    
 
     removeTextSearch() {
-        this.contactsFilteringObject.searchInput = '';
         this.showCross = false;
         this.contactsLoaded = false;
         this.resetContactsList();
