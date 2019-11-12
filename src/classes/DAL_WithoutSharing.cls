@@ -224,8 +224,10 @@ public static CSP_Utils.PagedResult getSearchProfiles(String portalSearchFilterW
                 for(SObject eachFilteredProfileResult : listfilteredProfiles) {
                     if(eachFilteredProfileResult.getSObjectType() == Schema.Contact.getSObjectType()) {
                         Contact eachProfileResult = (Contact)eachFilteredProfileResult;
-                        lstProfileWrapper.add(new PortalProfileCtrl.ProfileWrapper(eachProfileResult.Id,eachProfileResult.Name,eachProfileResult.User_Portal_Status__c,eachProfileResult.ISO_Country__r.Name == null ? '' : eachProfileResult.ISO_Country__r.Name, 'Contact' ));
-                    }
+						if (isAdmin || (!isAdmin && eachProfileResult.User_Portal_Status__c == 'Approved Admin')) {
+							lstProfileWrapper.add(new PortalProfileCtrl.ProfileWrapper(eachProfileResult.Id,eachProfileResult.Name,eachProfileResult.User_Portal_Status__c,eachProfileResult.ISO_Country__r.Name == null ? '' : eachProfileResult.ISO_Country__r.Name, 'Contact' ));
+						}                    
+					}
                     else if(eachFilteredProfileResult.getSObjectType() == Schema.Account.getSObjectType()) {
                         Account eachProfileResult = (Account)eachFilteredProfileResult;
                         lstProfileWrapper.add(new PortalProfileCtrl.ProfileWrapper(eachProfileResult.Id,eachProfileResult.Name,'',eachProfileResult.IATA_ISO_Country__r.Name == null ? '' : eachProfileResult.IATA_ISO_Country__r.Name, 'Account'));
