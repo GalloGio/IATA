@@ -114,11 +114,10 @@ public static List<PortalLookupSearchResult> searchContacts(String searchTerm) {
 private static List<Contact> searchRelatedContacts(String searchTerm) {
 
 	//prepare query
-	String finalQuery = 'SELECT Id, Name, Email FROM Contact '
-	                    + ' WHERE Email != \'' + CONTACT.Email + '\'';
+	String finalQuery = 'SELECT Id, Name, Email FROM Contact ';
 
 	if(String.isNotEmpty(searchTerm)) {
-		finalQuery += ' AND (Email LIKE \'%' + String.escapeSingleQuotes(searchTerm)
+		finalQuery += 'WHERE (Email LIKE \'%' + String.escapeSingleQuotes(searchTerm)
 		              + '%\' OR Name like \'%' + String.escapeSingleQuotes(searchTerm) + '%\')';
 	}
 
