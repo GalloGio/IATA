@@ -9,20 +9,11 @@
                 <h2 class="slds-p-top_medium text-xsmall removeFontWeight">{helpText}</h2>
                 <h2 class="slds-p-top_medium text-xsmall removeFontWeight">{helpText2}</h2>
             </span>
+        </span>
 
-        </span>
-        <span slot="cardButton" if:true={showButton}>
-            <lightning-button
-                variant="neutral"
-                label={label.CSP_FAQReachUsBanner_ButtonText}
-                title={label.CSP_FAQReachUsBanner_ButtonText}
-                class="reachusbutton outlinedButton slds-m-right_medium button-half-height"
-                onclick={redirectToSupport}>
-            </lightning-button>
-        </span>
         <span slot="cardButton" if:true={dataRecordsSeeAll}>
             <lightning-button variant="base" 
-                label={label.CSP_SeeAll}
+                label={label.CSP_SeeAll} 
                 title={label.CSP_SeeAll}
                 icon-name="utility:forward" 
                 icon-position="right" 
