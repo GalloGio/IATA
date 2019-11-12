@@ -1,4 +1,4 @@
-import { LightningElement,track } from 'lwc';
+import { LightningElement,track,api } from 'lwc';
 
 import goToOldIFAP from '@salesforce/apex/PortalProfileCtrl.goToOldIFAP';
 import getContactsListFields from '@salesforce/apex/PortalProfileCtrl.getContactsListFields';
