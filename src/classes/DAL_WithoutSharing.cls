@@ -1,57 +1,57 @@
 public without sharing class DAL_WithoutSharing {
 
-	private static Id USERID = Userinfo.getUserId();
+private static Id USERID = Userinfo.getUserId();
 
-	@AuraEnabled(cacheable=false)
-	public static String performCheckonPoll(String permSetSSO, Integer failedCount){
-		List<PermissionSetAssignment> permissionSetList = [SELECT Id FROM PermissionSetAssignment WHERE AssigneeId =: USERID AND PermissionSetId IN (select id from PermissionSet Where name =: permSetSSO)];
+@AuraEnabled(cacheable=false)
+public static String performCheckonPoll(String permSetSSO, Integer failedCount){
+	List<PermissionSetAssignment> permissionSetList = [SELECT Id FROM PermissionSetAssignment WHERE AssigneeId =: USERID AND PermissionSetId IN (select id from PermissionSet Where name =: permSetSSO)];
 
-		if(!permissionSetList.isEmpty()) {
-			return 'Success';
-		} else {
-			List<UserProvisioningRequest> userProvisioningList = [SELECT id FROM UserProvisioningRequest WHERE SalesforceUserId =: USERID AND State = 'Failed'];
-			if(userProvisioningList.size() != failedCount) {
-				return 'Error';
+	if(!permissionSetList.isEmpty()) {
+		return 'Success';
+	} else {
+		List<UserProvisioningRequest> userProvisioningList = [SELECT id FROM UserProvisioningRequest WHERE SalesforceUserId =: USERID AND State = 'Failed'];
+		if(userProvisioningList.size() != failedCount) {
+			return 'Error';
+		}
+	}
+	return 'Incomplete';
+}
+
+@AuraEnabled(cacheable=true)
+public static Map<String, String> getUserOptions(String portalUser){
+
+	Map<String,String> userOptions = new Map<String,String>();
+
+	List<User> userContactAccountOptions = [SELECT id, Contact.Account.ANG_IEP_Status_FF__c, Contact.Authorized_Signatory__c,
+	                                        Contact.User_Portal_Status__c, ContactId, Contact.Account.ICCS_Membership_Status__c,
+	                                        Contact.Account.Top_Parent__r.ICCS_Membership_Status__c, Contact.Account.Top_Parent__c
+	                                        FROM User WHERE Id =:portalUser];
+
+	if(!userContactAccountOptions.isEmpty()) {
+		for(User u : userContactAccountOptions) {
+			if(u.Contact.Account.ANG_IEP_Status_FF__c != null) {
+				userOptions.put('IEP_Status', u.Contact.Account.ANG_IEP_Status_FF__c);
+			}
+			if(u.Contact.Authorized_Signatory__c != null) {
+				userOptions.put('Legal_Auth_Signature', String.valueOf(u.Contact.Authorized_Signatory__c));
+			}
+			if(u.Contact.User_Portal_Status__c != null  && u.Contact.User_Portal_Status__c != '') {
+				userOptions.put('User_Portal_Status', u.Contact.User_Portal_Status__c);
+			}
+			if(u.ContactId != null) {
+				userOptions.put('User_ContactId', u.ContactId);
+			}
+			if(u.Contact.Account.Top_Parent__c != null) {
+				if(u.Contact.Account.Top_Parent__r.ICCS_Membership_Status__c == null) {
+					userOptions.put('User_ICCS_Membership_Status', u.Contact.Account.ICCS_Membership_Status__c);
+				}else if(u.Contact.Account.Top_Parent__r.ICCS_Membership_Status__c != null) {
+					userOptions.put('User_ICCS_Membership_Status', u.Contact.Account.Top_Parent__r.ICCS_Membership_Status__c);
+				}
 			}
 		}
-		return 'Incomplete';
 	}
-
-	@AuraEnabled(cacheable=true)
-	public static Map<String, String> getUserOptions(String portalUser){
-
-		Map<String,String> userOptions = new Map<String,String>();
-
-		List<User> userContactAccountOptions = [SELECT id, Contact.Account.ANG_IEP_Status_FF__c, Contact.Authorized_Signatory__c,
-												Contact.User_Portal_Status__c, ContactId, Contact.Account.ICCS_Membership_Status__c,
-												Contact.Account.Top_Parent__r.ICCS_Membership_Status__c, Contact.Account.Top_Parent__c
-												FROM User WHERE Id =:portalUser];
-
-		if(!userContactAccountOptions.isEmpty()) {
-			for(User u : userContactAccountOptions) {
-				if(u.Contact.Account.ANG_IEP_Status_FF__c != null) {
-					userOptions.put('IEP_Status', u.Contact.Account.ANG_IEP_Status_FF__c);
-				}
-				if(u.Contact.Authorized_Signatory__c != null) {
-					userOptions.put('Legal_Auth_Signature', String.valueOf(u.Contact.Authorized_Signatory__c));
-				}
-				if(u.Contact.User_Portal_Status__c != null  && u.Contact.User_Portal_Status__c != '') {
-					userOptions.put('User_Portal_Status', u.Contact.User_Portal_Status__c);
-				}
-				if(u.ContactId != null) {
-					userOptions.put('User_ContactId', u.ContactId);
-				}
-				if(u.Contact.Account.Top_Parent__c != null) {
-					if(u.Contact.Account.Top_Parent__r.ICCS_Membership_Status__c == null) {
-						userOptions.put('User_ICCS_Membership_Status', u.Contact.Account.ICCS_Membership_Status__c);
-					}else if(u.Contact.Account.Top_Parent__r.ICCS_Membership_Status__c != null) {
-						userOptions.put('User_ICCS_Membership_Status', u.Contact.Account.Top_Parent__r.ICCS_Membership_Status__c);
-					}
-				}
-			}
-		}
-		return userOptions;
-	}
+	return userOptions;
+}
 
 	/*
 	* Used in portal company profile contacts list
@@ -163,54 +163,62 @@ public without sharing class DAL_WithoutSharing {
         return [select id from Portal_Application_Right__c where Contact__c =:conId and Right__c ='Access Granted' and Application_Name__c like :str limit 1].size()>0;
     }
 
-	/* 
-    * @description Returns list of Contacts and Accounts for Profile Search
-    * @return List of List of SObjects (Accounts and Contacts) 
-    */
-	@AuraEnabled(cacheable=false)
-    public static CSP_Utils.PagedResult getSearchProfiles(String portalSearchFilterWrapper, Contact myContact) {
-		PortalSearchFilterWrapper profileFiltersWrapper = (PortalSearchFilterWrapper) JSON.deserialize(portalSearchFilterWrapper, PortalSearchFilterWrapper.class);
-        CSP_Utils.PagedResult result = new CSP_Utils.PagedResult();
+/*
+ * @description Returns list of Contacts and Accounts for Profile Search
+ * @return List of List of SObjects (Accounts and Contacts)
+ */
+@AuraEnabled(cacheable=false)
+public static CSP_Utils.PagedResult getSearchProfiles(String portalSearchFilterWrapper, Contact myContact) {
+	PortalSearchFilterWrapper profileFiltersWrapper = (PortalSearchFilterWrapper) JSON.deserialize(portalSearchFilterWrapper, PortalSearchFilterWrapper.class);
+	CSP_Utils.PagedResult result = new CSP_Utils.PagedResult();
+	List<PortalProfileCtrl.ProfileWrapper> lstProfileWrapper = new List<PortalProfileCtrl.ProfileWrapper>();
 
-		List<PortalProfileCtrl.ProfileWrapper> lstProfileWrapper = new List<PortalProfileCtrl.ProfileWrapper>();
-        
-        String searchStr = String.escapeSingleQuotes(profileFiltersWrapper.searchText);
-        String wildCardStr = '*'+searchStr+'*';
-        String baseQuery = 'FIND \''+wildCardStr+'\' IN ALL FIELDS RETURNING ';
-        String countQuery = baseQuery;
-        String countryPortalStatusFilter = '';
-        String countryFilter = '';
-        
-        Map<Id,Account> allBranches = new Map<Id,Account>([select id from account where (id =: myContact.AccountId or parentId=: myContact.AccountId or top_parent__c =: myContact.AccountId)
-			and (Status__c NOT IN ('Terminated','Not accredited', 'No longer a customer'))]);
-		Set<Id> allBranchesSet = allBranches.keySet();
+	String searchStr = String.escapeSingleQuotes(profileFiltersWrapper.searchText);
+	String wildCardStr = '%'+searchStr+'%';
 
-        countryPortalStatusFilter += ' WHERE AccountId IN :allBranchesSet ' + 
-								     ' AND User_Portal_Status__c IN (\'Pending Approval\', \'Approved Admin\', \'Approved User\') ' + 
-								     ' AND Status__c = \'Active\' ';
-        
-        if(profileFiltersWrapper.profileComponent.profileCountryFilter != null && profileFiltersWrapper.profileComponent.profileCountryFilter != '') {
-                countryPortalStatusFilter += ' AND ISO_Country__r.Name = \'' + profileFiltersWrapper.profileComponent.profileCountryFilter + '\' ';
-        }
-        if(profileFiltersWrapper.profileComponent.profileStatusFilter != null && profileFiltersWrapper.profileComponent.profileStatusFilter != '') {
-                countryPortalStatusFilter += ' AND User_Portal_Status__c = \'' + profileFiltersWrapper.profileComponent.profileStatusFilter + '\' ';
-        }
-        if (profileFiltersWrapper.profileComponent != null && profileFiltersWrapper.profileComponent.profileTypeFilter != null && profileFiltersWrapper.profileComponent.profileTypeFilter != 'Account') {
-           
-           baseQuery += profileFiltersWrapper.profileComponent.profileTypeFilter == 'Contact' ? ' Contact (Id, Name, User_Portal_Status__c, ISO_Country__r.Name ' + countryPortalStatusFilter + ' ) ' : ' Contact (Id, Name, User_Portal_Status__c, ISO_Country__r.Name ' + countryPortalStatusFilter + ' ), ';
-        }
-        
-        if(profileFiltersWrapper.profileComponent.profileCountryFilter != null && profileFiltersWrapper.profileComponent.profileCountryFilter != '') {
-            countryFilter = ' AND IATA_ISO_Country__r.Name = \'' + profileFiltersWrapper.profileComponent.profileCountryFilter + '\' ';
-        }
-        if (profileFiltersWrapper.profileComponent != null && profileFiltersWrapper.profileComponent.profileTypeFilter != null && profileFiltersWrapper.profileComponent.profileTypeFilter != 'Contact') {
-            baseQuery += ' Account (Id, Name, IATA_ISO_Country__r.Name WHERE (Id = \'' + myContact.AccountId +'\' OR ParentId = \'' + myContact.AccountId + '\' OR Top_Parent__c = \'' + myContact.AccountId +'\' ) '+ countryFilter + ') ';
-        }
-        
-        List<List<SObject> > lstListResults = Search.query(baseQuery);
-        
-        if(!lstListResults.isEmpty()) {
-            result.totalItemCount = lstListResults.size() == 2 ? lstListResults[0].size() + lstListResults[1].size() : lstListResults[0].size();
+	String baseQueryContacts = 'SELECT ID, Name, User_Portal_Status__c, ISO_Country__r.Name, Email, Account_Country__c FROM Contact ';
+	String baseQueryAccounts = 'SELECT ID, Name, IATA_ISO_Country__r.Name FROM Account ';
+	String countryPortalStatusFilter = '';
+	String countryFilter = '';
+
+	List<SObject> resultsContacts = new List<SObject>();
+	List<SObject> resultsAccounts = new List<SObject>();
+
+	Map<Id,Account> allBranches = new Map<Id,Account>([select id from account where (id =: myContact.AccountId or parentId=: myContact.AccountId or top_parent__c =: myContact.AccountId)
+	                                                   and (Status__c NOT IN ('Terminated','Not accredited', 'No longer a customer'))]);
+	Set<Id> allBranchesSet = allBranches.keySet();
+
+	baseQueryContacts += ' WHERE (Name Like \''+ wildCardStr + '\' OR Email Like \''+ wildCardStr + '\' OR ISO_Country__r.Name Like \''+ wildCardStr + '\' ) ' +
+	                     ' AND AccountId IN :allBranchesSet ' +
+	                     ' AND User_Portal_Status__c IN (\'Pending Approval\', \'Approved Admin\', \'Approved User\') ' +
+	                     ' AND Status__c = \'Active\' ';
+
+	baseQueryAccounts += ' WHERE (Name Like \''+ wildCardStr + '\' OR IATA_ISO_Country__r.Name Like \''+ wildCardStr + '\' ) ' +
+	                     ' AND (Id = \'' + myContact.AccountId + '\' OR ParentId = \'' +
+	                     +myContact.AccountId + '\' OR Top_Parent__c = \'' + myContact.AccountId +'\' ) ';
+
+
+	if(profileFiltersWrapper.profileComponent.profileCountryFilter != null && profileFiltersWrapper.profileComponent.profileCountryFilter != '') {
+		baseQueryContacts += ' AND ISO_Country__r.Name = \'' + profileFiltersWrapper.profileComponent.profileCountryFilter + '\' ';
+		baseQueryAccounts += ' AND IATA_ISO_Country__r.Name = \'' + profileFiltersWrapper.profileComponent.profileCountryFilter + '\' ';
+	}
+
+	if(profileFiltersWrapper.profileComponent.profileStatusFilter != null && profileFiltersWrapper.profileComponent.profileStatusFilter != '') {
+		baseQueryContacts += ' AND User_Portal_Status__c = \'' + profileFiltersWrapper.profileComponent.profileStatusFilter + '\' ';
+	}
+
+	if (profileFiltersWrapper.profileComponent != null && profileFiltersWrapper.profileComponent.profileTypeFilter != null && profileFiltersWrapper.profileComponent.profileTypeFilter != 'Account') {
+		resultsContacts = Database.query(baseQueryContacts);
+	}
+
+	if (profileFiltersWrapper.profileComponent != null && profileFiltersWrapper.profileComponent.profileTypeFilter != null && profileFiltersWrapper.profileComponent.profileTypeFilter != 'Contact') {
+		resultsAccounts = Database.query(baseQueryAccounts);
+	}
+
+	List<List<SObject> > lstListResults = new List<List<SObject> > {resultsContacts,resultsAccounts};
+
+	if(!lstListResults.isEmpty()) {
+		result.totalItemCount = lstListResults.size() == 2 ? lstListResults[0].size() + lstListResults[1].size() : lstListResults[0].size();
 
             for(List<SObject> listfilteredProfiles : lstListResults) {
                 for(SObject eachFilteredProfileResult : listfilteredProfiles) {
