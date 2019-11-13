@@ -234,139 +234,146 @@ export default class PortalRegistrationConfirmationLMS extends LightningElement 
 				this.stopLoading();
 			})
 			.finally(() => {
-
-				console.log('Submit - pssou createIsoCity');
-				var auxSearchValues = new Map();
-
-				auxSearchValues = [
-					this.localContactInfo.Username,
-					this.localContactInfo.UserId,
-					this.localContactInfo.lmsCourse,
-					this.street,
-					this.zip,
-					this.localAddress.countryId,
-					this.localAddress.stateId,
-					this.state,
-					this.createdCityId === '' ? this.createdCityId : this.localAddress.cityId,
-					this.city,
-					this.localAddress.isPoBox,
-					this.localContactInfo.serviceid,
-					this.localAddress.street2
-				];
-
-
-				//Move address info into ContactInfo
-				this.localContactInfo.isPoBox = this.localAddress.isPoBox;
-				this.localContactInfo.countryId = this.localAddress.countryId;
-				this.localContactInfo.countryCode = this.localAddress.countryCode;
-				this.localContactInfo.countryName = this.localAddress.countryName;
-				this.localContactInfo.stateId = this.localAddress.stateId;
-				this.localContactInfo.stateName = this.localAddress.stateName;
-				this.localContactInfo.cityId = this.localAddress.cityId;
-				this.localContactInfo.cityName = this.localAddress.cityName;
-				this.localContactInfo.street = this.localAddress.street;
-				this.localContactInfo.street2 = this.localAddress.street2;
-				this.localContactInfo.zip = this.localAddress.zip;
-
-				console.log('CHECK local contact info: ' + JSON.stringify(this.localContactInfo));
-
-				console.log('Submit - pssou mandar dados address para contactInfo');
-
-				console.log('CHECKEXTRA extraValues: ' + auxSearchValues);
-
-				if(this.flow === 'flow1' || this.flow === 'flow2'){
-					registration({con: this.localContactInfo, extraValues: auxSearchValues})
-						.then(result => {
-							console.log('registration call');
-							console.log('result: ', JSON.parse(JSON.stringify(result)));
-							if(result.isSuccess == true){
-									this.openSuccessModal = true;
-									console.log('registration successful');
-								}
-								else{
-									this.openErrorModal = true;
-									if(result.message !== ''){
-										this.errorModalMessage = result.message;
-									}else{
-										this.errorModalMessage = 'Your registration failed.';
-									}
-
-								}
-								this.stopLoading();
-							})
-							.catch(error => {
-								console.log('Error: ', JSON.parse(JSON.stringify(error)));
-								this.openErrorModal = true;
-								this.errorModalMessage = JSON.parse(JSON.stringify(error));
-								this.stopLoading();
-							});
-				}
-
-				if(this.flow === 'flow3' || this.flow === 'flow4' || this.flow === 'flow5' || this.flow === 'flow6' || this.flow === 'flow7' ){
-					// Additional_Email__c
-
-
-					// this.registrationForm.country = this.flow;
-					// this.registrationForm.firstName = this.localContactInfo.FirstName;
-					// this.registrationForm.lastName = this.localContactInfo.LastName;
-
-					// this.registrationForm.email = this.localContactInfo.Additional_Email__c;
-					// this.registrationForm.contactId = this.localContactInfo.contactId;
-					// this.registrationForm.accountId = this.localContactInfo.accountId;
-					// // this.registrationForm.lms = this.localContactInfo.LastName;
-					// this.registrationForm.existingContactId = this.localContactInfo.existingContactId;
-					// this.registrationForm.existingContactName = this.localContactInfo.existingContactName;
-					// this.registrationForm.existingContactEmail = this.localContactInfo.existingContactEmail;
-					// this.registrationForm.existingContactAccount = this.localContactInfo.existingContactAccount;
-
-					this.localContactInfo.flow = this.flow;
-					// this.registrationForm.lms = this.localContactInfo.LastName;
-					this.localContactInfo.existingContactId = this.localContactInfo.existingContactId;
-					this.localContactInfo.existingContactName = this.localContactInfo.existingContactName;
-					this.localContactInfo.existingContactEmail = this.localContactInfo.existingContactEmail;
-					this.localContactInfo.existingContactAccount = this.localContactInfo.existingContactAccount;
-
-					let contactName = this.localContactInfo.FirstName + ' ' + this.localContactInfo.LastName;
-
-					console.log('contactName: ', contactName);
-					console.log('emailAddr: ', this.localContactInfo.Additional_Email__c);
-					console.log('this.flow: ', this.flow);
-					console.log('this.localContactInfo: ', this.localContactInfo);
-					console.log('this.localContactInfo ', JSON.stringify(this.localContactInfo));
-					sendSingleEmail({contactName: contactName,
-										emailAddr: this.localContactInfo.Additional_Email__c,
-										flow:this.flow,
-										params : JSON.stringify(this.localContactInfo)})
-					.then(result => {
-						console.log('result: ', JSON.parse(JSON.stringify(result)));
-						if(result.isSuccess == true){
-								this.openVerificationMailSuccessModal = true;
-								this.successModalMessage = 'Verification Mail was sent to: '+ this.localContactInfo.Additional_Email__c+'. Please go there to complete your Registration';
-							}
-							else{
-								this.openErrorModal = true;
-								if(result.message !== ''){
-									this.errorModalMessage = result.message;
-								}else{
-									this.errorModalMessage = 'Your registration failed.';
-								}
-							}
-							this.stopLoading();
-						})
-						.catch(error => {
-							console.log('Error: ', JSON.parse(JSON.stringify(error)));
-							this.openErrorModal = true;
-							this.errorModalMessage = JSON.parse(JSON.stringify(error));
-							this.stopLoading();
-						});
-				}
-
+				this.submitRegistration();
+				
 			});
+		}else{
+			this.submitRegistration();
 		}
 
 
 
 				// register({ registrationForm : JSON.stringify(this.registrationForm),
+	}
+
+
+	submitRegistration(){
+		console.log('Submit - pssou createIsoCity');
+		var auxSearchValues = new Map();
+
+		auxSearchValues = [
+			this.localContactInfo.Username,
+			this.localContactInfo.UserId,
+			this.localContactInfo.lmsCourse,
+			this.street,
+			this.zip,
+			this.localAddress.countryId,
+			this.localAddress.stateId,
+			this.state,
+			this.createdCityId === '' ? this.createdCityId : this.localAddress.cityId,
+			this.city,
+			this.localAddress.isPoBox,
+			this.localContactInfo.serviceid,
+			this.localAddress.street2
+		];
+
+
+		//Move address info into ContactInfo
+		this.localContactInfo.isPoBox = this.localAddress.isPoBox;
+		this.localContactInfo.countryId = this.localAddress.countryId;
+		this.localContactInfo.countryCode = this.localAddress.countryCode;
+		this.localContactInfo.countryName = this.localAddress.countryName;
+		this.localContactInfo.stateId = this.localAddress.stateId;
+		this.localContactInfo.stateName = this.localAddress.stateName;
+		this.localContactInfo.cityId = this.localAddress.cityId;
+		this.localContactInfo.cityName = this.localAddress.cityName;
+		this.localContactInfo.street = this.localAddress.street;
+		this.localContactInfo.street2 = this.localAddress.street2;
+		this.localContactInfo.zip = this.localAddress.zip;
+
+		console.log('CHECK local contact info: ' + JSON.stringify(this.localContactInfo));
+
+		console.log('Submit - pssou mandar dados address para contactInfo');
+
+		console.log('CHECKEXTRA extraValues: ' + auxSearchValues);
+
+		if(this.flow === 'flow1' || this.flow === 'flow2'){
+			registration({con: this.localContactInfo, extraValues: auxSearchValues})
+				.then(result => {
+					console.log('registration call');
+					console.log('result: ', JSON.parse(JSON.stringify(result)));
+					if(result.isSuccess == true){
+							this.openSuccessModal = true;
+							console.log('registration successful');
+						}
+						else{
+							this.openErrorModal = true;
+							if(result.message !== ''){
+								this.errorModalMessage = result.message;
+							}else{
+								this.errorModalMessage = 'Your registration failed.';
+							}
+
+						}
+						this.stopLoading();
+					})
+					.catch(error => {
+						console.log('Error: ', JSON.parse(JSON.stringify(error)));
+						this.openErrorModal = true;
+						this.errorModalMessage = JSON.parse(JSON.stringify(error));
+						this.stopLoading();
+					});
+		}
+
+		if(this.flow === 'flow3' || this.flow === 'flow4' || this.flow === 'flow5' || this.flow === 'flow6' || this.flow === 'flow7' ){
+			// Additional_Email__c
+
+
+			// this.registrationForm.country = this.flow;
+			// this.registrationForm.firstName = this.localContactInfo.FirstName;
+			// this.registrationForm.lastName = this.localContactInfo.LastName;
+
+			// this.registrationForm.email = this.localContactInfo.Additional_Email__c;
+			// this.registrationForm.contactId = this.localContactInfo.contactId;
+			// this.registrationForm.accountId = this.localContactInfo.accountId;
+			// // this.registrationForm.lms = this.localContactInfo.LastName;
+			// this.registrationForm.existingContactId = this.localContactInfo.existingContactId;
+			// this.registrationForm.existingContactName = this.localContactInfo.existingContactName;
+			// this.registrationForm.existingContactEmail = this.localContactInfo.existingContactEmail;
+			// this.registrationForm.existingContactAccount = this.localContactInfo.existingContactAccount;
+
+			this.localContactInfo.flow = this.flow;
+			// this.registrationForm.lms = this.localContactInfo.LastName;
+			this.localContactInfo.existingContactId = this.localContactInfo.existingContactId;
+			this.localContactInfo.existingContactName = this.localContactInfo.existingContactName;
+			this.localContactInfo.existingContactEmail = this.localContactInfo.existingContactEmail;
+			this.localContactInfo.existingContactAccount = this.localContactInfo.existingContactAccount;
+
+			let contactName = this.localContactInfo.FirstName + ' ' + this.localContactInfo.LastName;
+
+			console.log('contactName: ', contactName);
+			console.log('emailAddr: ', this.localContactInfo.Additional_Email__c);
+			console.log('this.flow: ', this.flow);
+			console.log('this.localContactInfo: ', this.localContactInfo);
+			console.log('this.localContactInfo ', JSON.stringify(this.localContactInfo));
+			sendSingleEmail({contactName: contactName,
+								emailAddr: this.localContactInfo.Additional_Email__c,
+								flow:this.flow,
+								params : JSON.stringify(this.localContactInfo)})
+			.then(result => {
+				console.log('result: ', JSON.parse(JSON.stringify(result)));
+				if(result.isSuccess == true){
+						this.openVerificationMailSuccessModal = true;
+						this.successModalMessage = 'Verification Mail was sent to: '+ this.localContactInfo.Additional_Email__c+'. Please go there to complete your Registration';
+					}
+					else{
+						this.openErrorModal = true;
+						if(result.message !== ''){
+							this.errorModalMessage = result.message;
+						}else{
+							this.errorModalMessage = 'Your registration failed.';
+						}
+					}
+					this.stopLoading();
+				})
+				.catch(error => {
+					console.log('Error: ', JSON.parse(JSON.stringify(error)));
+					this.openErrorModal = true;
+					this.errorModalMessage = JSON.parse(JSON.stringify(error));
+					this.stopLoading();
+				});
+		}
+
 	}
 
 
