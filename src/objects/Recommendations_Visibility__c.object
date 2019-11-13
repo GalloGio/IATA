@@ -187,10 +187,13 @@
         <externalId>false</externalId>
         <formula>IF(RecordType.DeveloperName = &#39;ProductRecommendation&#39; &amp;&amp; NOT(ISBLANK(Product__c)), 
   						&#39;/iec/IEC_ProductDetails?id=&#39; + Product__r.SAP_Material_Number__c, 
-						IF(RecordType.DeveloperName = &#39;ServiceRecommendation&#39; &amp;&amp; NOT(ISBLANK(PortalService__c)), 
-									&#39;manage-service?serviceId=&#39; + PortalService__r.Id + &#39;&amp;openRequestService=true&#39;, &#39;&#39;
-								)
-					)</formula>
+						IF(RecordType.DeveloperName = &#39;ServiceRecommendation&#39; &amp;&amp; NOT(ISBLANK(PortalService__c)),
+									IF (  PortalService__r.Requestable__c ,
+													&#39;manage-service?serviceId=&#39; + PortalService__r.Id + &#39;&amp;openRequestService=true&#39;,
+													&#39;manage-service?serviceId=&#39; + PortalService__r.Id
+												), &#39;&#39;
+								) 
+		)</formula>
         <label>Action Button Link</label>
         <required>false</required>
         <trackTrending>false</trackTrending>
