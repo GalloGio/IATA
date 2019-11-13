@@ -71,12 +71,12 @@ export default class PortalHighlightCards extends LightningElement {
             this.checkRecordPerPage();
             this.loading = false;
 
-            if (this.type === 'HomePage') {
+
                 // eslint-disable-next-line @lwc/lwc/no-async-operation
                 this.refrehTimer = window.setInterval(() => {
                     this.handleNext();
                 }, 10000);
-            }
+
 
         });
 
