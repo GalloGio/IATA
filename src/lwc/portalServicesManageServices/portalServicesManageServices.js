@@ -273,7 +273,6 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         this.currentPageNumber = 1;
 
         let windowURL = window.location.href;
-        windowURL.replace('openRequestService',' ');
         windowURL = windowURL.split('?');
 
         if (windowURL[1].split('&').length > 1) {
