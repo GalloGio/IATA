@@ -1384,8 +1384,7 @@
 						                        </apex:commandLink>
                       						</apex:column>
 											<apex:column>
-                                                <!-- rendered="{!OR(newForm.AE_separate_Legal_Entity__c == 'Yes',AND(newForm.AE_separate_Legal_Entity__c == 'No',NOT(agencycon.Agency_owner__c)))}"-->
-                        						<apex:commandLink onfocus="confirmContactDelete('{!agencycon.Id}', '{!agencycon.Name}', 'contact')" styleClass="glyphicon glyphicon-trash" />
+                        						<apex:commandLink onfocus="confirmContactDelete('{!agencycon.Id}', '{!agencycon.Name}', 'contact')" styleClass="glyphicon glyphicon-trash" rendered="{!OR(newForm.AE_separate_Legal_Entity__c == 'Yes',AND(newForm.AE_separate_Legal_Entity__c == 'No',NOT(agencycon.Agency_owner__c)))}" />
                       						</apex:column>
                       						<apex:column breakBefore="true" colspan="12" style="display:none; background-color:RGB(236, 246, 249)" styleClass="tog{!agencycon.Id}" id="contactDetails">
                         						<div class="col-md-5">
