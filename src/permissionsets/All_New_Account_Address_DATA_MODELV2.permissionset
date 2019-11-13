@@ -91,11 +91,6 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
-        <field>Account_Contact_Role__c.Contact_Role_Formula__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
         <editable>true</editable>
         <field>Account_Contact_Role__c.Contact_Role__c</field>
         <readable>true</readable>
@@ -416,7 +411,7 @@
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
-        <recordType>Address_Role__c.MASTER</recordType>
+        <recordType>Address_Role__c.Master</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <userPermissions>

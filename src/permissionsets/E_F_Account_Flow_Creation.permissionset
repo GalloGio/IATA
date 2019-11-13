@@ -310,7 +310,7 @@
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
-        <recordType>Address_Role__c.MASTER</recordType>
+        <recordType>Address_Role__c.Master</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
@@ -322,7 +322,7 @@
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
-        <recordType>E_and_F_Contact_Role_Detail__c.StandardEFContact</recordType>
+        <recordType>E_and_F_Contact_Role_Detail__c.MASTER</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <tabSettings>
