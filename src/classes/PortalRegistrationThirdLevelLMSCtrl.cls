@@ -212,8 +212,8 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 			}
 			System.debug('Training_Contact_Role_Details__c - ycd: ' + ycd);
 
-			//Create ToS Acceptance TODO GET SERVICE ID
-			createToSAcceptance('a2w4E00000038NDQAY', con.Id);
+			//Create ToS Acceptance
+			createToSAcceptance(serviceid, con.Id);
 
 			//Create Portal Application Right
 
