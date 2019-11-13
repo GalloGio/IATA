@@ -293,8 +293,6 @@ public static List<ServiceWrapper> getAllServices(){
 			}
 
 			alignStatus(mapServiceWrapper.get(accessAux.Portal_Application__c),statusAux);
-			mapServiceWrapper.get(accessAux.Portal_Application__c).portalApplicationRightId = accessAux.Id;
-			mapServiceWrapper.get(accessAux.Portal_Application__c).isFavorite = accessAux.Is_Favorite__c;
 		}else{
 			appsAlreadyWithAccessIds.add(accessAux.Portal_Application__c);
 		}
