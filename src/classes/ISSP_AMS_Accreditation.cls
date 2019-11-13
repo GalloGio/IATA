@@ -2627,7 +2627,7 @@ public without sharing class ISSP_AMS_Accreditation {
     private void copyOwnersFromSelectedLegalName(Account newAcc, String parentAccId) {
         List<AMS_Account_Role__c> copiedOwners = new List<AMS_Account_Role__c>();
 
-        for (AMS_Account_Role__c aar: [SELECT Id, Name, Owner_Name__c, Title__c, Percentage__c, Contact__c, Person__c, Owner_Account__c
+        for (AMS_Account_Role__c aar: [SELECT Id, Name, Owner_Name__c, Title__c, Percentage__c, Contact__c, Person__c, Owner_Account__c, Legacy_External_ID__c
                                     FROM AMS_Account_Role__c
                                     WHERE Valid__c = true AND Account__c = :parentAccId AND Active__c = true
                                         AND RecordTypeId = :RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership')]) {
@@ -2639,7 +2639,8 @@ public without sharing class ISSP_AMS_Accreditation {
                                                                 RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership'),
                                                                 Person__c = aar.Person__c,
                                                                 Owner_Account__c = aar.Owner_Account__c,
-                                                                Account__c = newAcc.Id);
+                                                                Account__c = newAcc.Id,
+																Legacy_External_ID__c = aar.Legacy_External_ID__c);
 
             copiedOwners.add(newAar);
         }
