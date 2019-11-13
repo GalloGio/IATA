@@ -1029,6 +1029,14 @@ button.twoLines {
     height: 3.2rem;
 }
 
+.innerHeaderCss .slds-button .slds-button__icon_right,
+.innerHeaderCss .slds-button .slds-button__icon--right {
+  margin-left: 10px;
+  display: block;
+}
+.innerHeaderCss .blueCustomButtonLink .slds-button {
+  line-height: .875rem;
+}
 /* ############################################## */
 /* Text Area */
 
