@@ -47,7 +47,7 @@ public with sharing class PortalCasesCtrl {
     private static String AGENT_ACCREDITATION_PORTAL_SERVICE = ISSP_Portal_Service_Ids__c.getInstance().AgencyAccreditation__c;
     private static Boolean isCaseFromReachUs = false;
 	
-	public static Set<String> recordTypes = new Set<String>{'Cases - Africa & Middle East', 
+	public static Set<String> CaseRecordTypesDescriptionVisibleSet = new Set<String>{'Cases - Africa & Middle East', 
     'Cases - Americas','Cases - Asia & Pacific',
     'Cases - China & North Asia','Cases - Europe',
     'Cases - Global','Complaint (IDFS ISS)',
@@ -788,7 +788,7 @@ public with sharing class PortalCasesCtrl {
 public static List<MessageWrapper> getCaseMessages(String caseId){
 	List<MessageWrapper> lstToReturn = new List<MessageWrapper>();
 
-	Case caseToFirstComment = [SELECT Id, Description, CreatedBy.Name, CreatedDate FROM Case WHERE Id =:caseId AND RecordType__c IN :recordTypes];
+	Case caseToFirstComment = [SELECT Id, Description, CreatedBy.Name, CreatedDate FROM Case WHERE Id =:caseId];
 
 	List<CaseComment> lstCaseCommentsAux = [SELECT Id, ParentId, CommentBody, IsPublished,
 	                                        CreatedDate, CreatedById, CreatedBy.Name, IsDeleted
@@ -796,7 +796,7 @@ public static List<MessageWrapper> getCaseMessages(String caseId){
 	                                        WHERE ParentId = :caseId AND IsDeleted = false
 	                                                                                 ORDER BY CreatedDate ASC];
 
-	String caseDescription = caseToFirstComment.Description != null ? caseToFirstComment.Description : '';
+	String caseDescription = caseToFirstComment.Description != null && CaseRecordTypesDescriptionVisibleSet.contains(RecordType__c) ? caseToFirstComment.Description : '';
 
 	lstToReturn.add(new MessageWrapper(caseDescription,
 	                                   caseToFirstComment.CreatedDate,
