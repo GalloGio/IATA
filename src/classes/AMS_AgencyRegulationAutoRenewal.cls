@@ -10,19 +10,19 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 		this.renewalCertificatesPerAccount = renewalCertificatesPerAccount;
 	}
 
-    global Iterable<sObject> start(Database.BatchableContext bc) {
-        return agencyRegulations;
-    }
+	global Iterable<sObject> start(Database.BatchableContext bc) {
+		return agencyRegulations;
+	}
 
-    global void execute(Database.BatchableContext BC, List<AMS_Agency_Regulation__c> scope) {
-        validateCandidatesForRenewal(scope, keyContactsPerAccount, renewalCertificatesPerAccount);
-    }
+	global void execute(Database.BatchableContext BC, List<AMS_Agency_Regulation__c> scope) {
+		validateCandidatesForRenewal(scope, keyContactsPerAccount, renewalCertificatesPerAccount);
+	}
 
-    global void finish(Database.BatchableContext BC) {
+	global void finish(Database.BatchableContext BC) {
 
-    }
+	}
 
-    public static void validateCandidatesForRenewal(List<AMS_Agency_Regulation__c> regulationsRequiringRenewal, Map<Id, List<Contact>> keyContactsPerAccount, Map<String, Integer> renewalCertificatesPerAccount){
+	public static void validateCandidatesForRenewal(List<AMS_Agency_Regulation__c> regulationsRequiringRenewal, Map<Id, List<Contact>> keyContactsPerAccount, Map<String, Integer> renewalCertificatesPerAccount){
 
 		Set<Id> accts = new Set<Id>();
 		Set<Id> isoCountries = new Set<Id>();
@@ -91,13 +91,13 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 		}
 
 		Map<String, Id> countryTemplates = DGRemailTemplates('DGR');
-        OrgWideEmailAddress[] owea = [select Id from OrgWideEmailAddress where Address = 'agencymanagement@iata.org'];
+		OrgWideEmailAddress[] owea = [select Id from OrgWideEmailAddress where Address = 'agencymanagement@iata.org'];
 
 		for(AMS_Agency_Regulation__c agReg: regulationsRequiringRenewal){
 
 			Contact comCasecontact;
 
-            if(keyContactsPerAccount!=null && keyContactsPerAccount.get(agReg.Account__c)!= null && !keyContactsPerAccount.get(agReg.Account__c).isEmpty()){
+			if(keyContactsPerAccount!=null && keyContactsPerAccount.get(agReg.Account__c)!= null && !keyContactsPerAccount.get(agReg.Account__c).isEmpty()){
 				system.debug('keyContactsPerAccount ' + keyContactsPerAccount);
 				//find portal admin
 				for(Contact c: keyContactsPerAccount.get(agReg.Account__c)){
@@ -154,14 +154,14 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 						update agReg;
 					}else{
 						String sContactName = agReg.First_Name__c + ' ' +agReg.Last_Name__c;
-						
+
 						oscar = [SELECT Id, Region__c,Oscar_Communication_Case_Id__c FROM AMS_OSCAR__c WHERE Account__c = :agReg.Account__c
 										AND AMS_Online_Accreditation__r.DGR_Agency_Regulation__c = :agReg.Id
 										AND Process__c = :AMS_Utils.CERTIFICATION
 										order by CreatedDate desc
 										limit 1];
 					}
-					
+
 					System.debug('oscar: ' + oscar);
 					sendEmailAlert(keyContactsPerAccount.get(agReg.Account__c), oscar.Id, countryTemplates, oscar.Oscar_Communication_Case_Id__c, owea[0], true);
 
@@ -200,254 +200,253 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 				}
 			}
 		}
-    }
+	}
 
-    private static Boolean isCountBelowThreshold(Account accountData, Integer numberOfActiveCertificates, Integer minimumHODgrRequirements, Integer minimumBRDgrRequirements,String typeOfCertificate){
+	private static Boolean isCountBelowThreshold(Account accountData, Integer numberOfActiveCertificates, Integer minimumHODgrRequirements, Integer minimumBRDgrRequirements,String typeOfCertificate){
 
-        if(accountData.Is_your_firm_handling_Dangerous_Goods__c != 'No'){
-        	//AMSU-208
-        	if(accountData.IATA_ISO_Country__r.ISO_Code__c == 'CN' && typeOfCertificate == AMS_Utils.CERT_DGR) {
-        		if(accountData.Location_Type__c == AMS_Utils.HO) {
-        			return numberOfActiveCertificates < 2;
-    			} else {
-    				return numberOfActiveCertificates < 1;
-    			}
-        	}
+		if(accountData.Is_your_firm_handling_Dangerous_Goods__c != 'No'){
+			//AMSU-208
+			if(accountData.IATA_ISO_Country__r.ISO_Code__c == 'CN' && typeOfCertificate == AMS_Utils.CERT_DGR) {
+				if(accountData.Location_Type__c == AMS_Utils.HO) {
+					return numberOfActiveCertificates < 2;
+				} else {
+					return numberOfActiveCertificates < 1;
+				}
+			}
 
-            //India has this particular exception to the normal behaviour, no check is to be done
-            if(accountData.IATA_ISO_Country__r.ISO_Code__c == 'IN' && accountData.Location_Class__c == 'C' && accountData.Location_Type__c == AMS_Utils.BR && accountData.CASS_Number__c != null && Integer.valueOf(accountData.CASS_Number__c) >= 900 && Integer.valueOf(accountData.CASS_Number__c) <= 999)
-            	return false;
-            else if(accountData.Location_Class__c == 'C'){
-                if(accountData.Location_Type__c == AMS_Utils.HO && numberOfActiveCertificates < 2 )
-                    return true;
-                else if(accountData.Location_Type__c == AMS_Utils.BR && numberOfActiveCertificates  < 1)
-                    return true;
-            }else if(accountData.Location_Class__c == 'R'){
-                //Only America is using DGR for Cass associate.
-                if(accountData.Location_Class__c == AMS_Utils.HO && numberOfActiveCertificates < minimumHODgrRequirements )
-                    return true;
-                else if(accountData.Location_Type__c == AMS_Utils.BR && numberOfActiveCertificates < minimumBRDgrRequirements){
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
+			//India has this particular exception to the normal behaviour, no check is to be done
+			if(accountData.IATA_ISO_Country__r.ISO_Code__c == 'IN' && accountData.Location_Class__c == 'C' && accountData.Location_Type__c == AMS_Utils.BR && accountData.CASS_Number__c != null && Integer.valueOf(accountData.CASS_Number__c) >= 900 && Integer.valueOf(accountData.CASS_Number__c) <= 999)
+				return false;
+			else if(accountData.Location_Class__c == 'C'){
+				if(accountData.Location_Type__c == AMS_Utils.HO && numberOfActiveCertificates < 2 )
+					return true;
+				else if(accountData.Location_Type__c == AMS_Utils.BR && numberOfActiveCertificates  < 1)
+					return true;
+			}else if(accountData.Location_Class__c == 'R'){
+				//Only America is using DGR for Cass associate.
+				if(accountData.Location_Class__c == AMS_Utils.HO && numberOfActiveCertificates < minimumHODgrRequirements )
+					return true;
+				else if(accountData.Location_Type__c == AMS_Utils.BR && numberOfActiveCertificates < minimumBRDgrRequirements){
+					return true;
+				}
+			}
+		}
+		return false;
+	}
 
-    public static AMS_OSCAR__c createStagingArea(AMS_Agency_Regulation__c agReg, Account accountData, List<AMS_Agency_Regulation__c> regulations, Contact communicationCaseContact){
+	public static AMS_OSCAR__c createStagingArea(AMS_Agency_Regulation__c agReg, Account accountData, List<AMS_Agency_Regulation__c> regulations, Contact communicationCaseContact){
 
-        //Fetching the assignment rules on case
+		//Fetching the assignment rules on case
 		AssignmentRule AR = new AssignmentRule();
 		AR = [select id from AssignmentRule where SobjectType = 'Case' and Active = true limit 1];
 
 		//Creating the DMLOptions for "Assign using active assignment rules" checkbox
 		Database.DMLOptions dmlOpts = new Database.DMLOptions();
 		dmlOpts.assignmentRuleHeader.assignmentRuleId= AR.id;
-		
-        Case theCommunicationCase = new Case();
 
-        theCommunicationCase.RecordTypeId = AMS_Utils.RECTYPE_OSCARCOMM;
-        theCommunicationCase.CaseArea__c = 'Accreditation Process';
-        theCommunicationCase.AccountId = agReg.Account__c;
-        theCommunicationCase.Account_Concerned__c = agReg.Account__c;
-        theCommunicationCase.BSPCountry__c = accountData.BillingCountry;
-        theCommunicationCase.Reason1__c = 'Certificate ' + agReg.Type_of_certificate__c;
-        theCommunicationCase.Region__c = accountData.Region_formula__c;
-        theCommunicationCase.SAAM_Deadline_Date__c = agReg.Expiry_Date__c; //FM - AMSU-32
-        if(communicationCaseContact != null)
-            theCommunicationCase.ContactId = communicationCaseContact.Id;
-        //theCommunicationCase.Subject = 'DGR renewal - ' + accountData.Name + ' - ' + accountData.IATACode__c;
-        theCommunicationCase.setOptions(dmlOpts);
+		Case theCommunicationCase = new Case();
 
-        insert theCommunicationCase;
+		theCommunicationCase.RecordTypeId = AMS_Utils.RECTYPE_OSCARCOMM;
+		theCommunicationCase.CaseArea__c = 'Accreditation Process';
+		theCommunicationCase.AccountId = agReg.Account__c;
+		theCommunicationCase.Account_Concerned__c = agReg.Account__c;
+		theCommunicationCase.BSPCountry__c = accountData.BillingCountry;
+		theCommunicationCase.Reason1__c = 'Certificate ' + agReg.Type_of_certificate__c;
+		theCommunicationCase.Region__c = accountData.Region_formula__c;
+		theCommunicationCase.SAAM_Deadline_Date__c = agReg.Expiry_Date__c; //FM - AMSU-32
+		if(communicationCaseContact != null)
+			theCommunicationCase.ContactId = communicationCaseContact.Id;
+		//theCommunicationCase.Subject = 'DGR renewal - ' + accountData.Name + ' - ' + accountData.IATACode__c;
+		theCommunicationCase.setOptions(dmlOpts);
 
-        AMS_Pax_Accreditation_Form__c theStagingArea = new AMS_Pax_Accreditation_Form__c();
+		insert theCommunicationCase;
 
-        theStagingArea.SAAM_Case__c                             = theCommunicationCase.Id;
-        theStagingArea.Abbreviated_Address__c                   = accountData.Abbreviated_address__c;
-        theStagingArea.Abbreviated_name__c                      = accountData.Abbreviated_name__c;
-        theStagingArea.Accept_terms_and_conditions__c           = True;
-        theStagingArea.Account_Name__c                          = accountData.Name;
-        theStagingArea.Billing_State__c                         = accountData.BillingState;
-        theStagingArea.Branch_Office_City__c                    = accountData.BillingCity;
-        theStagingArea.Branch_Office_Country__c                 = accountData.IATA_ISO_Country__c;
-        theStagingArea.Branch_Office_Email__c                   = accountData.Email__c;
-        theStagingArea.Branch_Office_FAX__c                     = accountData.Fax;
-        theStagingArea.Branch_Office_Phone__c                   = accountData.Phone;
-        theStagingArea.Branch_Office_Postal_code__c             = accountData.BillingPostalCode;
-        theStagingArea.Branch_Office_Street_name_number__c      = accountData.BillingStreet;
-        theStagingArea.CASS_Number__c                           = accountData.CASS_Number__c;
-        theStagingArea.IATACode__c                              = accountData.IATACode__c;
-        theStagingArea.IATA_ISO_State__c                        = accountData.Iso_State__c;
-        theStagingArea.ISSP_AMS_License_No__c                   = accountData.License_Number__c;
-        theStagingArea.ISSP_AMS_VAT_number__c                   = accountData.VAT_Number__c;
-        theStagingArea.Is_your_firm_handling_Dangerous_Goods__c = accountData.Is_your_firm_handling_Dangerous_Goods__c;
-        theStagingArea.Location_Class__c                        = accountData.Location_Class__c;
-        theStagingArea.Location_Type__c                         = accountData.Location_Type__c;
-        theStagingArea.Mobile__c                                = accountData.Mobile__c;
-        theStagingArea.Operation__c                             = accountData.Operation__c;
-        theStagingArea.Remittance_frequency__c                  = accountData.Remittance_frequency__c;
-        theStagingArea.Shipping_City__c                         = accountData.ShippingCity;
-        theStagingArea.Shipping_Country__c                      = accountData.ShippingCountry;
-        theStagingArea.Shipping_Postal_Code__c                  = accountData.ShippingPostalCode;
-        theStagingArea.Shipping_State__c                        = accountData.ShippingState;
-        theStagingArea.Shipping_Street__c                       = accountData.ShippingStreet;
-        theStagingArea.Short_Name__c                            = accountData.Short_Name__c;
-        theStagingArea.Solicitation_Flag__c                     = accountData.Solicitation_Flag__c;
-        theStagingArea.Submitted_to_IATA__c                     = True;
-        theStagingArea.Trade_Name__c                            = accountData.TradeName__c;
-        theStagingArea.VAT_Number_2__c                          = accountData.VAT_Number_2__c;
-        theStagingArea.Website__c                               = accountData.Website;
-        theStagingArea.ISSP_AMS_Legal_Status__c                 = AMS_AgencyHelper.transformCompanyType(accountData.Company_Type__c);
-        //FM 19-07-2017 - AMSU-14 -
-        theStagingArea.DGR_Agency_Regulation__c					= agReg.Id;	
+		AMS_Pax_Accreditation_Form__c theStagingArea = new AMS_Pax_Accreditation_Form__c();
 
-        insert theStagingArea;
+		theStagingArea.SAAM_Case__c                             = theCommunicationCase.Id;
+		theStagingArea.Abbreviated_Address__c                   = accountData.Abbreviated_address__c;
+		theStagingArea.Abbreviated_name__c                      = accountData.Abbreviated_name__c;
+		theStagingArea.Accept_terms_and_conditions__c           = True;
+		theStagingArea.Account_Name__c                          = accountData.Name;
+		theStagingArea.Billing_State__c                         = accountData.BillingState;
+		theStagingArea.Branch_Office_City__c                    = accountData.BillingCity;
+		theStagingArea.Branch_Office_Country__c                 = accountData.IATA_ISO_Country__c;
+		theStagingArea.Branch_Office_Email__c                   = accountData.Email__c;
+		theStagingArea.Branch_Office_FAX__c                     = accountData.Fax;
+		theStagingArea.Branch_Office_Phone__c                   = accountData.Phone;
+		theStagingArea.Branch_Office_Postal_code__c             = accountData.BillingPostalCode;
+		theStagingArea.Branch_Office_Street_name_number__c      = accountData.BillingStreet;
+		theStagingArea.CASS_Number__c                           = accountData.CASS_Number__c;
+		theStagingArea.IATACode__c                              = accountData.IATACode__c;
+		theStagingArea.IATA_ISO_State__c                        = accountData.Iso_State__c;
+		theStagingArea.ISSP_AMS_License_No__c                   = accountData.License_Number__c;
+		theStagingArea.ISSP_AMS_VAT_number__c                   = accountData.VAT_Number__c;
+		theStagingArea.Is_your_firm_handling_Dangerous_Goods__c = accountData.Is_your_firm_handling_Dangerous_Goods__c;
+		theStagingArea.Location_Class__c                        = accountData.Location_Class__c;
+		theStagingArea.Location_Type__c                         = accountData.Location_Type__c;
+		theStagingArea.Mobile__c                                = accountData.Mobile__c;
+		theStagingArea.Operation__c                             = accountData.Operation__c;
+		theStagingArea.Remittance_frequency__c                  = accountData.Remittance_frequency__c;
+		theStagingArea.Shipping_City__c                         = accountData.ShippingCity;
+		theStagingArea.Shipping_Country__c                      = accountData.ShippingCountry;
+		theStagingArea.Shipping_Postal_Code__c                  = accountData.ShippingPostalCode;
+		theStagingArea.Shipping_State__c                        = accountData.ShippingState;
+		theStagingArea.Shipping_Street__c                       = accountData.ShippingStreet;
+		theStagingArea.Short_Name__c                            = accountData.Short_Name__c;
+		theStagingArea.Solicitation_Flag__c                     = accountData.Solicitation_Flag__c;
+		theStagingArea.Submitted_to_IATA__c                     = True;
+		theStagingArea.Trade_Name__c                            = accountData.TradeName__c;
+		theStagingArea.VAT_Number_2__c                          = accountData.VAT_Number_2__c;
+		theStagingArea.Website__c                               = accountData.Website;
+		theStagingArea.ISSP_AMS_Legal_Status__c                 = AMS_AgencyHelper.transformCompanyType(accountData.Company_Type__c);
+		//FM 19-07-2017 - AMSU-14 -
+		theStagingArea.DGR_Agency_Regulation__c					= agReg.Id;
 
-        Case caseOscar = [SELECT OwnerId FROM Case WHERE Id =: theCommunicationCase.Id LIMIT 1];
+		insert theStagingArea;
 
-        AMS_OSCAR__c theOscar = new AMS_OSCAR__c();
-        theOscar.RecordTypeId = AMS_Utils.RECTYPE_CERT;
-        theOscar.Account__c = agReg.Account__c;
-        theOscar.Process__c = AMS_Utils.CERTIFICATION; 
-        theOscar.Status__c='Accepted_Future Date'; 
-        theOscar.Change_effective_as_of__c = regulations[0].Expiry_Date__c;
-        theOscar.Oscar_Communication_Case_Id__c = theCommunicationCase.Id;
-        theOscar.Emails_reference_Id__c = AMS_Utils.caseRefId(UserInfo.getOrganizationId(), theCommunicationCase.Id);
-        theOscar.AMS_Online_Accreditation__c = theStagingArea.Id;
-        theOscar.OwnerId = caseOscar.OwnerId;
-        insert theOscar;
+		Case caseOscar = [SELECT OwnerId FROM Case WHERE Id =: theCommunicationCase.Id LIMIT 1];
 
-        system.debug('createStagingArea oscar: '+ theOscar);
+		AMS_OSCAR__c theOscar = new AMS_OSCAR__c();
+		theOscar.RecordTypeId = AMS_Utils.RECTYPE_CERT;
+		theOscar.Account__c = agReg.Account__c;
+		theOscar.Process__c = AMS_Utils.CERTIFICATION;
+		theOscar.Status__c='Accepted_Future Date';
+		theOscar.Change_effective_as_of__c = regulations[0].Expiry_Date__c;
+		theOscar.Oscar_Communication_Case_Id__c = theCommunicationCase.Id;
+		theOscar.Emails_reference_Id__c = AMS_Utils.caseRefId(UserInfo.getOrganizationId(), theCommunicationCase.Id);
+		theOscar.AMS_Online_Accreditation__c = theStagingArea.Id;
+		theOscar.OwnerId = caseOscar.OwnerId;
+		insert theOscar;
 
-        theCommunicationCase.OSCAR__c = theOscar.Id;
-        update theCommunicationCase;
+		system.debug('createStagingArea oscar: '+ theOscar);
 
-        convertExistingAgencyRegulationsToAccContact(theStagingArea.Id, regulations);
+		theCommunicationCase.OSCAR__c = theOscar.Id;
+		update theCommunicationCase;
 
-        return theOscar;
-    }
+		convertExistingAgencyRegulationsToAccContact(theStagingArea.Id, regulations);
 
-    public static void convertExistingAgencyRegulationsToAccContact(Id stagingId, List<AMS_Agency_Regulation__c> regulations){
+		return theOscar;
+	}
 
-        List<AMS_Accreditation_Contact__c> accToInsert = new List<AMS_Accreditation_Contact__c>();
+	public static void convertExistingAgencyRegulationsToAccContact(Id stagingId, List<AMS_Agency_Regulation__c> regulations){
 
-        //create trained staff accreditation contact from the existing agency regulations
-        //in the accreditation contact we save the link to the agency regulation object.
-        for(AMS_Agency_Regulation__c reg  :regulations){
+		List<AMS_Accreditation_Contact__c> accToInsert = new List<AMS_Accreditation_Contact__c>();
 
-            AMS_Accreditation_Contact__c ac = new AMS_Accreditation_Contact__c();
+		//create trained staff accreditation contact from the existing agency regulations
+		//in the accreditation contact we save the link to the agency regulation object.
+		for(AMS_Agency_Regulation__c reg  :regulations){
 
-            ac.RecordTypeId = AMS_Utils.AccreditationContactTrainedStaffRT;
-            ac.Certificate_Name__c = reg.Certificate_Name__c;
-            ac.First_Name__c = reg.First_Name__c;
-            ac.Last_Name__c = reg.Last_Name__c;
-            ac.Position_trained_staff__c = reg.Position__c;
-            ac.Type_of_Certificate__c = reg.Type_of_Certificate__c;
-            ac.AMS_Pax_Accreditation_Form__c = stagingId;
-            ac.Certificate_Issued_on__c = reg.Issued_on__c;
-            ac.Certificate_Validity__c = reg.Validity__c;
-            ac.Valid_until__c = reg.Expiry_Date__c;
-            ac.Certificate_Issuer__c = reg.Issuer__c;
-            ac.AgencyRegulation__c = reg.Id;
-            ac.Air_cargo_transport_business_exp__c = reg.Air_cargo_transport_business_exp__c;
-            ac.IATA_FIATA_training_history__c = reg.IATA_FIATA_training_history__c;
-            ac.Training_dangerous_goods_completed__c = reg.Training_dangerous_goods_completed__c;
-            ac.Registration_number__c = reg.Registration_Number__c; //AMSU-14
+			AMS_Accreditation_Contact__c ac = new AMS_Accreditation_Contact__c();
 
-            accToInsert.add(ac);
+			ac.RecordTypeId = AMS_Utils.AccreditationContactTrainedStaffRT;
+			ac.Certificate_Name__c = reg.Certificate_Name__c;
+			ac.First_Name__c = reg.First_Name__c;
+			ac.Last_Name__c = reg.Last_Name__c;
+			ac.Position_trained_staff__c = reg.Position__c;
+			ac.Type_of_Certificate__c = reg.Type_of_Certificate__c;
+			ac.AMS_Pax_Accreditation_Form__c = stagingId;
+			ac.Certificate_Issued_on__c = reg.Issued_on__c;
+			ac.Certificate_Validity__c = reg.Validity__c;
+			ac.Valid_until__c = reg.Expiry_Date__c;
+			ac.Certificate_Issuer__c = reg.Issuer__c;
+			ac.AgencyRegulation__c = reg.Id;
+			ac.Air_cargo_transport_business_exp__c = reg.Air_cargo_transport_business_exp__c;
+			ac.IATA_FIATA_training_history__c = reg.IATA_FIATA_training_history__c;
+			ac.Training_dangerous_goods_completed__c = reg.Training_dangerous_goods_completed__c;
+			ac.Registration_number__c = reg.Registration_Number__c; //AMSU-14
 
-        }
+			accToInsert.add(ac);
 
-        if(!accToInsert.isEmpty())
-            insert accToInsert;
+		}
 
-    }
+		if(!accToInsert.isEmpty())
+			insert accToInsert;
 
-    public static void sendEmailAlert(List<Contact> recipents, Id oscarId, Map<String, Id> countryTemplates, String oscarCommCaseId, OrgWideEmailAddress owea, boolean isDGR) {
+	}
+
+	public static void sendEmailAlert(List<Contact> recipents, Id oscarId, Map<String, Id> countryTemplates, String oscarCommCaseId, OrgWideEmailAddress owea, boolean isDGR) {
 
 		sendEmailAlert(recipents, oscarId, countryTemplates, oscarCommCaseId, owea, isDGR, null);
-    }
+	}
 
-    private static List<OrgWideEmailAddress> getfromAddress(Id OrgWideEmailAddressId) {  
-    		  return [select Address,DisplayName from OrgWideEmailAddress where ID = :OrgWideEmailAddressId limit 1];   
+	private static List<OrgWideEmailAddress> getfromAddress(Id OrgWideEmailAddressId) {
+			  return [select Address,DisplayName from OrgWideEmailAddress where ID = :OrgWideEmailAddressId limit 1];
 
-    } 
+	}
 
-    public static void sendEmailAlert(List<Contact> recipents, Id oscarId, Map<String, Id> countryTemplates, String oscarCommCaseId, OrgWideEmailAddress owea, boolean isDGR, Messaging.EmailFileAttachment[] attachments) {
-        Id templateId;
-        Boolean templateToIATA = false;
-        List<EmailTemplate> tempIata = new List<EmailTemplate>();
+	public static void sendEmailAlert(List<Contact> recipents, Id oscarId, Map<String, Id> countryTemplates, String oscarCommCaseId, OrgWideEmailAddress owea, boolean isDGR, Messaging.EmailFileAttachment[] attachments) {
+		Id templateId;
+		Boolean templateToIATA = false;
+		List<EmailTemplate> tempIata = new List<EmailTemplate>();
 
-        if(recipents == null)
-        {
-        	templateToIATA = true;
+		if(recipents == null)
+		{
+			templateToIATA = true;
 
-        	//getTemplate
-        	tempIata = [SELECT Id, DeveloperName, HtmlValue, Subject FROM EmailTemplate WHERE DeveloperName = 'Info_To_IATA_AMS_DGR_Renewal_Not_Sent'];
-        	
-        	//get region
-        	List<AMS_OSCAR__c> oscars = [SELECT Id, Region__c FROM AMS_OSCAR__c WHERE Id = :oscarId];
-        	String region = oscars.get(0).Region__c;
+			//getTemplate
+			tempIata = [SELECT Id, DeveloperName, HtmlValue, Subject FROM EmailTemplate WHERE DeveloperName = 'Info_To_IATA_AMS_DGR_Renewal_Not_Sent'];
 
-        	//get contact from IATA by custom setting
-        	List<IATA_Contacts_by_Region__c> customSettingValues = IATA_Contacts_by_Region__c.getall().values();
-        	List<String> emailsToSend = new List<String>();
+			//get region
+			List<AMS_OSCAR__c> oscars = [SELECT Id, Region__c FROM AMS_OSCAR__c WHERE Id = :oscarId];
+			String region = oscars.get(0).Region__c;
+
+			//get contact from IATA by custom setting
+			List<IATA_Contacts_by_Region__c> customSettingValues = IATA_Contacts_by_Region__c.getall().values();
+			List<String> emailsToSend = new List<String>();
 			for(IATA_Contacts_by_Region__c cR : customSettingValues)
 			{
 				if(cR.Region__c == region)
 					emailsToSend.add(cR.Contact_Email__c);
 			}
-        	
-        	//put the contacts in recipents list
-        	recipents = [SELECT Id, Email, AccountId, Preferred_Language__c, User_Portal_Status__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c FROM Contact WHERE Email IN :emailsToSend and IsEmailBounced = false];
-        	System.debug('IATA recipents list: ' + recipents);
-        }
 
-        if(recipents != null){
+			//put the contacts in recipents list
+			recipents = [SELECT Id, Email, AccountId, Preferred_Language__c, User_Portal_Status__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c FROM Contact WHERE Email IN :emailsToSend and IsEmailBounced = false];
+			System.debug('IATA recipents list: ' + recipents);
+		}
 
-            List<Messaging.SingleEmailMessage> mailsToSend = new List<Messaging.SingleEmailMessage>();
+		if(recipents != null){
 
-            system.debug('DGR sendEmailAlert: country templates ' + countryTemplates);
-            system.debug('DGR sendEmailAlert: recipents ' + recipents);
+			List<Messaging.SingleEmailMessage> mailsToSend = new List<Messaging.SingleEmailMessage>();
 
-            List<EmailMessage> mailsToTrackInCase = new List<EmailMessage>();
+			system.debug('DGR sendEmailAlert: country templates ' + countryTemplates);
+			system.debug('DGR sendEmailAlert: recipents ' + recipents);
 
-            //FM 24/10/2017 - AMSU-32 - when DGR case use only one mail message for all the Portal Admin, instead of a mail message per each
-            List<String> lPortalAdminsEmailsDGR = new List<String>();
-            Map<String, List<String>> mPortalAdminsEmailsDGR = new Map<String, List<String>>();
-            Map<String, Contact> mRecipientPortalAdminsEmailsDGR = new Map<String, Contact>();
+			List<EmailMessage> mailsToTrackInCase = new List<EmailMessage>();
 
-            for(Contact recipient: recipents){
+			//FM 24/10/2017 - AMSU-32 - when DGR case use only one mail message for all the Portal Admin, instead of a mail message per each
+			List<String> lPortalAdminsEmailsDGR = new List<String>();
+			Map<String, List<String>> mPortalAdminsEmailsDGR = new Map<String, List<String>>();
+			Map<String, Contact> mRecipientPortalAdminsEmailsDGR = new Map<String, Contact>();
 
-                if(!isDGR || recipient.BSP_CASS_Payment_contact__c || recipient.Financial_Assessment_Contact__c || templateToIATA){
+			for(Contact recipient: recipents){
 
-                    Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-                    mail.saveAsActivity = true;
-                    mail.setToAddresses(new List<String>{recipient.Email});
-                    if(templateToIATA){
-                    	mail.setTemplateId(tempIata.get(0).Id);
-                    } else {
-                    	mail.setTemplateId(getSpecificLangTemplate(recipient.Preferred_Language__c, countryTemplates));
-                    }
-                    mail.setTargetObjectId(recipient.Id);
-                    
-                    if(attachments != null){
-                    	mail.setFileAttachments(attachments);
+				if(!isDGR || recipient.BSP_CASS_Payment_contact__c || recipient.Financial_Assessment_Contact__c || templateToIATA){
+
+					Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+					mail.saveAsActivity = true;
+					if(templateToIATA){
+						mail.setTemplateId(tempIata.get(0).Id);
+					} else {
+						mail.setTemplateId(getSpecificLangTemplate(recipient.Preferred_Language__c, countryTemplates));
 					}
-                    mail.setWhatId(oscarId);
-                   
-                    mail.setOrgWideEmailAddressId(owea.Id);
+					mail.setTargetObjectId(recipient.Id);
 
-                    mailsToSend.add(mail);
+					if(attachments != null){
+						mail.setFileAttachments(attachments);
+					}
+					mail.setWhatId(oscarId);
 
-                //FM 07-07-2017 - AMSU-14 - added the test for the DGR in order to allow it to send the notification to multiple contacts
-                //PS - add to replicate because this method is being used by OSCAR trigger to send email that are not only related to Renewalls... otherwise I'll mess up the NewGen functionalities
-                }else if(isDGR){
+					mail.setOrgWideEmailAddressId(owea.Id);
 
-                	system.debug('DGR sendEmailAlert: isDGR ' + isDGR);
+					mailsToSend.add(mail);
 
-                	//FM 24/10/2017 - AMSU-32 
+				//FM 07-07-2017 - AMSU-14 - added the test for the DGR in order to allow it to send the notification to multiple contacts
+				//PS - add to replicate because this method is being used by OSCAR trigger to send email that are not only related to Renewalls... otherwise I'll mess up the NewGen functionalities
+				}else if(isDGR){
+
+					system.debug('DGR sendEmailAlert: isDGR ' + isDGR);
+
+					//FM 24/10/2017 - AMSU-32
 					if(recipient.User_Portal_Status__c == 'Approved Admin'){
 
 						system.debug('DGR sendEmailAlert: Entrei!! - recipient.User_Portal_Status__c ' + recipient.User_Portal_Status__c);
@@ -471,113 +470,112 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 
 
 					}else{
-                    Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-                    mail.saveAsActivity = true;
-                    mail.setToAddresses(new List<String>{recipient.Email});
-                    if(templateToIATA){
-                    	mail.setTemplateId(tempIata.get(0).Id);
-                    } else {
-                    	mail.setTemplateId(getSpecificLangTemplate(recipient.Preferred_Language__c, countryTemplates));
-                    }
-                    mail.setTargetObjectId(recipient.Id);
-                    
-                    mail.setWhatId(oscarId);
-	                   
-                    mail.setOrgWideEmailAddressId(owea.Id);
+						Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+						mail.saveAsActivity = true;
+						if(templateToIATA){
+							mail.setTemplateId(tempIata.get(0).Id);
+						} else {
+							mail.setTemplateId(getSpecificLangTemplate(recipient.Preferred_Language__c, countryTemplates));
+						}
+						mail.setTargetObjectId(recipient.Id);
 
-                    mailsToSend.add(mail);
-                }
-                }
+						mail.setWhatId(oscarId);
 
-            }
+						mail.setOrgWideEmailAddressId(owea.Id);
 
-            //FM 24/10/2017 - AMSU-32 
-            if(mPortalAdminsEmailsDGR != null && mPortalAdminsEmailsDGR.size() > 0){
-            	for(String key : mPortalAdminsEmailsDGR.keySet()){
-            		
+						mailsToSend.add(mail);
+					}
+				}
+
+			}
+
+			//FM 24/10/2017 - AMSU-32
+			if(mPortalAdminsEmailsDGR != null && mPortalAdminsEmailsDGR.size() > 0){
+				for(String key : mPortalAdminsEmailsDGR.keySet()){
+
 					system.debug('DGR sendEmailAlert: key : ' + key);
 					system.debug('DGR sendEmailAlert: List : mPortalAdminsEmailsDGR.get(key) : ' + mPortalAdminsEmailsDGR.get(key));
 
-	            	Messaging.SingleEmailMessage mailPortalAdmin = new Messaging.SingleEmailMessage();
+					Messaging.SingleEmailMessage mailPortalAdmin = new Messaging.SingleEmailMessage();
 					mailPortalAdmin.saveAsActivity = true;
-	                mailPortalAdmin.setToAddresses(mPortalAdminsEmailsDGR.get(key));
-	                if(templateToIATA){
-	                	mailPortalAdmin.setTemplateId(tempIata.get(0).Id);
-	                } else {
-	                	mailPortalAdmin.setTemplateId(getSpecificLangTemplate(key, countryTemplates));
-	                }
+					mailPortalAdmin.setToAddresses(mPortalAdminsEmailsDGR.get(key));
+					if(templateToIATA){
+						mailPortalAdmin.setTemplateId(tempIata.get(0).Id);
+					} else {
+						mailPortalAdmin.setTemplateId(getSpecificLangTemplate(key, countryTemplates));
+					}
 
-	                Contact auxCont = mRecipientPortalAdminsEmailsDGR.get(key);
-	                mailPortalAdmin.setTargetObjectId(auxCont.Id);
+					Contact auxCont = mRecipientPortalAdminsEmailsDGR.get(key);
+					mailPortalAdmin.setTargetObjectId(auxCont.Id);
 
-	                mailPortalAdmin.setWhatId(oscarId);
-	               
-	                mailPortalAdmin.setOrgWideEmailAddressId(owea.Id);
-	            	mailsToSend.add(mailPortalAdmin);
-            }
-            }
+					mailPortalAdmin.setWhatId(oscarId);
 
-            system.debug('DGR sendEmailAlert: mailsToSend : ' + mailsToSend);
+					mailPortalAdmin.setOrgWideEmailAddressId(owea.Id);
+					mailsToSend.add(mailPortalAdmin);
+				}
+			}
 
-            if(!mailsToSend.isEmpty()){
-                if(!Test.isRunningTest()) Messaging.sendEmail(mailsToSend);
-                for(Messaging.SingleEmailMessage mail: mailsToSend){
-                    EmailMessage emailMsg = new EmailMessage(); // Created a EmailMessage and copy all details from above.
-                    emailMsg.FromAddress = getfromAddress(owea.Id)[0].Address;
-                    emailMsg.FromName = getfromAddress(owea.Id)[0].DisplayName;
-                    emailMsg.ToAddress= String.join(mail.getToAddresses(), ', ');//WMO-383 save all addresses
-                    emailMsg.Subject = mail.getSubject();
-                    emailMsg.HtmlBody = mail.getHtmlBody();
-                    emailMsg.ParentId = oscarCommCaseId; //Attach with the case
-                    emailMsg.MessageDate = system.now();
-                    emailMsg.Status = '0';
-                    mailsToTrackInCase.add(emailMsg);
-                }
-                insert mailsToTrackInCase;
-            }
+			system.debug('DGR sendEmailAlert: mailsToSend : ' + mailsToSend);
 
-        }
-    }
+			if(!mailsToSend.isEmpty()){
+				if(!Test.isRunningTest()) Messaging.sendEmail(mailsToSend);
+				for(Messaging.SingleEmailMessage mail: mailsToSend){
+					EmailMessage emailMsg = new EmailMessage(); // Created a EmailMessage and copy all details from above.
+					emailMsg.FromAddress = getfromAddress(owea.Id)[0].Address;
+					emailMsg.FromName = getfromAddress(owea.Id)[0].DisplayName;
+					emailMsg.ToAddress= String.join(mail.getToAddresses(), ', ');//WMO-383 save all addresses
+					emailMsg.Subject = mail.getSubject();
+					emailMsg.HtmlBody = mail.getHtmlBody();
+					emailMsg.ParentId = oscarCommCaseId; //Attach with the case
+					emailMsg.MessageDate = system.now();
+					emailMsg.Status = '0';
+					mailsToTrackInCase.add(emailMsg);
+				}
+				insert mailsToTrackInCase;
+			}
 
-    private static Map<String, Id> DGRemailTemplates(String type){
+		}
+	}
 
-        Map<String, Id> multilangTemplates = new Map<String, Id>();
+	private static Map<String, Id> DGRemailTemplates(String type){
 
-        String devNameLike = 'AMS_' + type + '_Renewal%';
-        List<EmailTemplate> etDGR = [SELECT Id, DeveloperName, HtmlValue, Subject FROM EmailTemplate WHERE DeveloperName LIKE :devNameLike];
-        Map<String, EmailTemplate> countryTemplates = new Map<String, EmailTemplate>();
-        for(EmailTemplate et: etDGR){
-            if(!countryTemplates.containsKey(et.DeveloperName))
-                countryTemplates.put(et.DeveloperName, et);
-        }
+		Map<String, Id> multilangTemplates = new Map<String, Id>();
 
-        system.debug('CHECK countryTemplates ' + countryTemplates);
+		String devNameLike = 'AMS_' + type + '_Renewal%';
+		List<EmailTemplate> etDGR = [SELECT Id, DeveloperName, HtmlValue, Subject FROM EmailTemplate WHERE DeveloperName LIKE :devNameLike];
+		Map<String, EmailTemplate> countryTemplates = new Map<String, EmailTemplate>();
+		for(EmailTemplate et: etDGR){
+			if(!countryTemplates.containsKey(et.DeveloperName))
+				countryTemplates.put(et.DeveloperName, et);
+		}
 
-        //map template Ids with their respective language
-        List<Schema.Picklistentry> prefLanguages = Contact.getSObjectType().getDescribe().fields.getMap().get('Preferred_Language__c').getDescribe().getPickListValues();
+		system.debug('CHECK countryTemplates ' + countryTemplates);
 
-        for(Schema.Picklistentry pe: prefLanguages){
-            EmailTemplate langTemplate = countryTemplates.get('AMS_' + type + '_Renewal_' + pe.getValue());
+		//map template Ids with their respective language
+		List<Schema.Picklistentry> prefLanguages = Contact.getSObjectType().getDescribe().fields.getMap().get('Preferred_Language__c').getDescribe().getPickListValues();
 
-            //English is default and must exist in the system
-            if(langTemplate == null) langTemplate = countryTemplates.get('AMS_' + type + '_Renewal_English');
+		for(Schema.Picklistentry pe: prefLanguages){
+			EmailTemplate langTemplate = countryTemplates.get('AMS_' + type + '_Renewal_' + pe.getValue());
 
-            multilangTemplates.put(pe.getValue(), langTemplate.Id);
-        }
+			//English is default and must exist in the system
+			if(langTemplate == null) langTemplate = countryTemplates.get('AMS_' + type + '_Renewal_English');
 
-        //this should never happen unless picklist values are deleted form the Contact Preferred_Language__c
-        if(multilangTemplates.isEmpty()) multilangTemplates.put('English', countryTemplates.get('AMS_' + type + '_Renewal_English').Id);
+			multilangTemplates.put(pe.getValue(), langTemplate.Id);
+		}
 
-        system.debug(type + ' templates mapping ' + multilangTemplates);
+		//this should never happen unless picklist values are deleted form the Contact Preferred_Language__c
+		if(multilangTemplates.isEmpty()) multilangTemplates.put('English', countryTemplates.get('AMS_' + type + '_Renewal_English').Id);
 
-        return multilangTemplates;
+		system.debug(type + ' templates mapping ' + multilangTemplates);
 
-    }
+		return multilangTemplates;
 
-    //return templateId based on lang selected, default English if none is found
-    private static Id getSpecificLangTemplate(String lang, Map<String, Id> availableTemplates){
-        if(availableTemplates.get(lang) != null) return availableTemplates.get(lang);
-        else return availableTemplates.get('English');
-    }
+	}
+
+	//return templateId based on lang selected, default English if none is found
+	private static Id getSpecificLangTemplate(String lang, Map<String, Id> availableTemplates){
+		if(availableTemplates.get(lang) != null) return availableTemplates.get(lang);
+		else return availableTemplates.get('English');
+	}
 
 }
