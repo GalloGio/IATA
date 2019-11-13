@@ -655,7 +655,7 @@
         <label>Type of Connectivity</label>
         <required>false</required>
         <trackTrending>false</trackTrending>
-        <type>Picklist</type>
+        <type>MultiselectPicklist</type>
         <valueSet>
             <restricted>true</restricted>
             <valueSetDefinition>
@@ -677,6 +677,7 @@
                 </value>
             </valueSetDefinition>
         </valueSet>
+        <visibleLines>3</visibleLines>
     </fields>
     <fields>
         <fullName>NDC_Types_of_Fares__c</fullName>
@@ -914,7 +915,7 @@ INCLUDES(NDC_Forms_of_Payment_Accepted__c, &apos;Credit Cards&apos;)
         <errorConditionFormula>AND( 
 NOT(ISNEW()), 
 Company_Type__c == &apos;Seller&apos;, 
-ISBLANK(TEXT(NDC_Type_of_Connectivity__c)) 
+ISBLANK(NDC_Type_of_Connectivity__c)
 )</errorConditionFormula>
         <errorDisplayField>NDC_Type_of_Connectivity__c</errorDisplayField>
         <errorMessage>Type of Connectivity is mandatory</errorMessage>
