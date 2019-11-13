@@ -79,3 +79,7 @@
 .alphaFilterSelected{
     text-decoration: underline;
 }
+
+.rotateIcon {
+    transform: rotate(45deg);
+}
