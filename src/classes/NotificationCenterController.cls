@@ -76,6 +76,32 @@ public with sharing class NotificationCenterController {
             
         }catch(Exception e){ 
             return 'none';
-        }        
+        } 
+    }
+
+    @AuraEnabled
+    public static String sendNotificationToAll(String notificationTemplate, Boolean sendEmail, String category, String sector, List<String> countries, String portalService){
+        Notification_template__c template;
+        Id networkId;
+        try{
+            template = [SELECT Subject__c, Name, Message__c, Language__c,Type__c,Notification_color__c,Alert_Contact_By_Email__c,
+                        Expire_in_days__c, CriticalNotification__c, LanguageLocaleKey__c,Alert_Contact_By_Push_Notification__c
+                        FROM Notification_template__c 
+                        WHERE  Name = :notificationTemplate];
+
+            networkId = [SELECT Id FROM Network WHERE Name = 'CS Portal'].Id;
+
+        }catch(Exception e){ 
+            return 'TEMPLATE ERROR';
+        }
+
+        template.Alert_Contact_By_Email__c = sendEmail;
+        try{  
+            CreateNotificationsFromQueryBatch batch = new CreateNotificationsFromQueryBatch(template,networkId , category, sector, countries, portalService);
+            Database.executeBatch(batch);
+            return 'batch';
+        }catch(Exception e){ 
+            return 'none';
+        }         
     }
 }

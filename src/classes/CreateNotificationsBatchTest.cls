@@ -34,13 +34,16 @@ private class CreateNotificationsBatchTest {
             newAccount.Category__c = 'Military';
             newAccount.Is_General_Public_Account__c = true;   
             newAccount.IATA_ISO_Country__c = country.Id;
+            newAccount.Reason_for_creation__c = 'Account is missing';     
 
-             Account newAccount2 = new Account();
+
+            Account newAccount2 = new Account();
             newAccount2.Name = 'Test Account 2';
             newAccount2.Sector__c = 'Airline';
             newAccount2.Category__c = 'Cargo only';
             newAccount2.Is_General_Public_Account__c = true;      
             newAccount2.IATA_ISO_Country__c = country2.Id;        
+            newAccount2.Reason_for_creation__c = 'Account is missing';
 
             insert (new List<Account>{newAccount,newAccount2}); 
 

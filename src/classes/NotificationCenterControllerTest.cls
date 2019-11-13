@@ -16,11 +16,6 @@ private class NotificationCenterControllerTest {
             );
         insert template;
 
-        Portal_Applications__c portalApp = new Portal_Applications__c(
-            Name = 'testService'
-        );
-        insert portalApp;
-
         IATA_ISO_Country__c country = new IATA_ISO_Country__c();
         country.Name = 'Canada';
         country.ISO_Code__c = 'CA';
@@ -36,7 +31,8 @@ private class NotificationCenterControllerTest {
         newAccount.Sector__c = 'Airline';
         newAccount.Category__c = 'Military';
         newAccount.Is_General_Public_Account__c = true;   
-        newAccount.IATA_ISO_Country__c = country.Id;        
+        newAccount.IATA_ISO_Country__c = country.Id;  
+        newAccount.Reason_for_creation__c = 'Account is missing';      
 
 
         Account newAccount2 = new Account();
@@ -44,7 +40,8 @@ private class NotificationCenterControllerTest {
         newAccount2.Sector__c = 'Airline';
         newAccount2.Category__c = 'Cargo only';
         newAccount2.Is_General_Public_Account__c = true;      
-        newAccount2.IATA_ISO_Country__c = country2.Id;        
+        newAccount2.IATA_ISO_Country__c = country2.Id;   
+        newAccount2.Reason_for_creation__c = 'Account is missing';     
 
         insert (new List<Account>{newAccount,newAccount2}); 
 
@@ -70,6 +67,60 @@ private class NotificationCenterControllerTest {
         newContact2.Last_registration_notification_date__c = System.today();
 
         insert (new List<Contact>{newContact,newContact2});
+
+        Id profileId = [select Id from profile where Name=:'ISS Portal (Partner)'].Id;
+
+        User newUser = new User(alias = 'test', 
+                                email = newContact.email, 
+                                emailencodingkey = 'UTF-8', 
+                                firstname = newContact.firstName, 
+                                lastname = newContact.lastname, 
+                                languagelocalekey = 'en_US', 
+                                localesidkey = 'en_US', 
+                                contactId = newContact.Id,
+                                //FederationIdentifier = conId15,
+                                timezonesidkey = 'Asia/Dubai',
+                                Username = 'my_test_email@test.test',
+                                PortalRole = '',
+                                CommunityNickname = 'test User',
+                                ProfileId = profileId,
+                                IsActive = true);
+
+        User newUser2 = new User(alias = 'test', 
+                                email = newContact2.email, 
+                                emailencodingkey = 'UTF-8', 
+                                firstname = newContact2.firstName, 
+                                lastname = newContact2.lastname, 
+                                languagelocalekey = 'pt_BR', 
+                                localesidkey = 'pt_BR', 
+                                contactId = newContact2.Id,
+                                //FederationIdentifier = conId15,
+                                timezonesidkey = 'Asia/Dubai',
+                                Username = 'my_other_test_email@test.test',
+                                PortalRole = '',
+                                CommunityNickname = 'test2 User',
+                                ProfileId = profileId,
+                                IsActive = true);
+            
+        insert (new List<User>{newUser,newUser2});
+
+        Portal_Applications__c portalApp = new Portal_Applications__c(
+            Name = 'testService'
+        );
+
+        insert portalApp;
+
+        Portal_Application_Right__c appRight = new Portal_Application_Right__c(
+            Portal_Application__c = portalApp.Id,
+            Contact__c = newContact.Id,
+            Right__c = 'Access Granted'            
+        );
+        Portal_Application_Right__c appRight2 = new Portal_Application_Right__c(
+            Portal_Application__c = portalApp.Id,
+            Contact__c = newContact2.Id,
+            Right__c = 'Access Granted'            
+        );
+        insert (new List<Portal_Application_Right__c>{appRight,appRight2});
     }
 
     @isTest
@@ -162,7 +213,19 @@ private class NotificationCenterControllerTest {
         Test.stopTest();      
         List<Notification__c> notifications = [SELECT Id FROM Notification__c]; 
         System.assertEquals('none', result);
-        System.assertEquals(0, notifications.size());     
+        System.assertEquals(0, notifications.size()); 
+    }
 
+    @isTest 
+    static void shouldSendNotificationToAll(){
+
+        Test.startTest();
+        Notification_template__c temp = [SELECT Name FROM Notification_template__c WHERE  Identifier__c = 'test notification template'];
+        String result = NotificationCenterController.sendNotificationToAll(temp.Name,false,'Military','Airline',new List<String>{},'testService');
+        Test.stopTest(); 
+
+        List<Notification__c> notifications = [SELECT Id FROM Notification__c]; 
+        System.assertEquals('batch', result);
+        System.assert( notifications.size() >= 1);     
     }
 }

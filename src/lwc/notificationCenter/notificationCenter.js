@@ -4,13 +4,13 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 //IMPORTS FROM APEX CLASSES
 import getPortalUsers from '@salesforce/apex/UserController.getAllCspCommunityUsers';
 import countCspCommunityUsers from '@salesforce/apex/UserController.countCspCommunityUsers';
-import getFilteredCspCommunityIds from '@salesforce/apex/UserController.getFilteredCspCommunityIds';
 import getAccountCoutries from '@salesforce/apex/NotificationCenterController.getAccountCoutries';
 import getItemsPerPage from '@salesforce/apex/UserController.getItemsPerPage';
 import getSiteCompleteUrl from '@salesforce/apex/OneIdUtils.getSiteCompleteUrl';
 import getPortalServices from '@salesforce/apex/NotificationCenterController.getPortalServicesName';
 import getNotificationTemplates from '@salesforce/apex/NotificationCenterController.getInformationNotificationTemplates';
 import sendNotification from '@salesforce/apex/NotificationCenterController.sendNotification';
+import sendNotificationToAll from '@salesforce/apex/NotificationCenterController.sendNotificationToAll';
 
 
 
@@ -33,7 +33,6 @@ const FILTERED = "FILTERED";
 const SELECTED = "SELECTED";
 
 let whoToNotify = '';
-let userIds = [];
 let sendEmail = false;
 
 export default class NotificationCenter extends LightningElement {
@@ -110,19 +109,6 @@ export default class NotificationCenter extends LightningElement {
         if (data) {
             this.totalRecords = data;
             this.maxPage = Math.ceil(data/this.ITEMS_PER_PAGE);
-        } else if (error) {
-            this.showToast(ERROR,'Error',GENERAL_ERROR_MESSAGE);
-        }
-    }
-
-    @wire(getFilteredCspCommunityIds,{category: '$category',sector: '$sector',countries: '$countries',portalService:'$portalService'})
-    wiredIds({error,data}){
-        if (data) {
-            let aux = [];
-            data.forEach(row => {  
-                aux.push(row.ContactId);                
-            });
-            userIds = aux;
         } else if (error) {
             this.showToast(ERROR,'Error',GENERAL_ERROR_MESSAGE);
         }
@@ -302,7 +288,7 @@ export default class NotificationCenter extends LightningElement {
     }
 
     async handlerSendNotification(){
-                let notification =  this.template.querySelector(".notificationTemplatePicker").value;
+        let notification =  this.template.querySelector(".notificationTemplatePicker").value;
         if(!notification){
             this.showToast(ERROR,'Error!',"You have to select a notification template!");
             return;
@@ -313,22 +299,27 @@ export default class NotificationCenter extends LightningElement {
         }
 
         let contacts =  [];
-
-        if( whoToNotify === FILTERED){
-            contacts = userIds;
-        } else if(whoToNotify === SELECTED){
-            contacts = JSON.parse(JSON.stringify(this.selectedRows));
-        } else {
-            contacts.push(whoToNotify);
-        }
-
         let result;
         
-        try{
-            result = await sendNotification({notificationTemplate: notification, sendEmail:sendEmail, contactIds: contacts});
-        }catch(error){           
-            this.showToast(ERROR,'Error!',"Some error occurred and no notifications were created!  ##EXCEPTION"); 
-        }
+        if( whoToNotify === FILTERED){
+            try{
+                result = await sendNotificationToAll({notificationTemplate: notification, sendEmail:sendEmail, category: this.category,sector: this.sector ,countries: this.countries,portalService: this.portalService});
+            }catch(error){           
+                this.showToast(ERROR,'Error!',"Some error occurred and no notifications were created!"); 
+            }
+        } else {
+            if(whoToNotify === SELECTED){ 
+                contacts = JSON.parse(JSON.stringify(this.selectedRows));
+            } else {
+                contacts.push(whoToNotify);
+            }
+
+            try{
+                result = await sendNotification({notificationTemplate: notification, sendEmail:sendEmail, contactIds: contacts});
+            }catch(error){           
+                this.showToast(ERROR,'Error!',"Some error occurred and no notifications were created!  ##EXCEPTION"); 
+            }
+        }       
 
         if(result === 'TEMPLATE ERROR'){
             this.showToast(ERROR,'Notice!',"The notification template was not found!");
@@ -339,7 +330,7 @@ export default class NotificationCenter extends LightningElement {
         }else if(result ==='some'){
             this.showToast(ERROR,'Error!',"Some error occurred and only some notifications were created!"); 
         }else if (result === 'batch'){
-            this.showToast(INFO,'Notice!','Due to the great number of notification you\'re trying to create this proccess can take a while and the notifications will be created in the next minutes');
+            this.showToast(INFO,'Notice!','Due to the number of notification you\'re trying to create this proccess can take a while and the notifications will be created in the next minutes');
         }
          
         this.sendEmail = false
