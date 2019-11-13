@@ -73,6 +73,7 @@ export default class PortalCompanyProfileContactsList extends LightningElement {
     @track accountId;
     @track objectid;
     @track action = '';
+    @track showCross;
 
     @track alphaFilters = [
         {letter : 'A', selected : false},
@@ -256,7 +257,7 @@ export default class PortalCompanyProfileContactsList extends LightningElement {
 
             this.contactsLoaded = false;
             this.retrieveContactsList(1);
-
+            this.showCross = searchtext.length > 0;
         }, 500, this);
     }
 

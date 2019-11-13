@@ -11,6 +11,9 @@
                     onchange={onchangeBranchesSearchText}
                     value={branchesFilteringObject.searchInput}>
                 </lightning-input>
+                <div if:true={showCross} class="searchBarIcon slds-m-right--large">
+                    <lightning-icon class="cursorPointer rotateIcon" icon-name="utility:add" size="small" alternative-text="" onclick={removeTextSearch}></lightning-icon>
+                </div>
             </div>
         </div>  
         <div class="slds-grid slds-wrap slds-m-top_x-small">
