@@ -796,7 +796,7 @@ public static List<MessageWrapper> getCaseMessages(String caseId){
 	                                        WHERE ParentId = :caseId AND IsDeleted = false
 	                                                                                 ORDER BY CreatedDate ASC];
 
-	String caseDescription = caseToFirstComment.Description != null && CaseRecordTypesDescriptionVisibleSet.contains(RecordType__c) ? caseToFirstComment.Description : '';
+	String caseDescription = caseToFirstComment.Description != null && CaseRecordTypesDescriptionVisibleSet.contains(caseToFirstComment.RecordType__c) ? caseToFirstComment.Description : '';
 
 	lstToReturn.add(new MessageWrapper(caseDescription,
 	                                   caseToFirstComment.CreatedDate,
