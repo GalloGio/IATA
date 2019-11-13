@@ -1791,6 +1791,10 @@
         <name>CSP_Add_User</name>
     </customLabels>
     <customLabels>
+        <label>Bạn có thể gửi chi tiết thay đổi tài khoản của bạn thông qua &lt;a href= &apos;/s/support-reach-us&apos;&gt; Trang liên hệ với chúng tôi&lt;/a&gt;</label>
+        <name>CSP_Airline_Changes_Access</name>
+    </customLabels>
+    <customLabels>
         <label>Thông báo</label>
         <name>CSP_Announcement</name>
     </customLabels>
@@ -1809,6 +1813,10 @@
     <customLabels>
         <label>Tìm kiếm nâng cao</label>
         <name>CSP_Breadcrumb_AdvancedSearch_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Chi tiết Trường hợp</label>
+        <name>CSP_Breadcrumb_CaseDetails_Title</name>
     </customLabels>
     <customLabels>
         <label>Hồ sơ công ty</label>
@@ -1841,6 +1849,10 @@
     <customLabels>
         <label><!-- CSP_Breadcrump_MyProfile_Title --></label>
         <name>CSP_Breadcrump_MyProfile_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Bạn &amp; IATA</label>
+        <name>CSP_Breadcrump_You_IATA</name>
     </customLabels>
     <customLabels>
         <label>Hủy</label>
@@ -1899,6 +1911,10 @@
         <name>CSP_Community</name>
     </customLabels>
     <customLabels>
+        <label>Bạn có thể gửi các chi tiết thay đổi của tài khoản thông qua dịch vụ Cấp phép IATA và Thay đổi.</label>
+        <name>CSP_CompanyAdministration_Link</name>
+    </customLabels>
+    <customLabels>
         <label>Xem trường hợp công ty của tôi</label>
         <name>CSP_CompanyCases</name>
     </customLabels>
@@ -1925,6 +1941,10 @@
     <customLabels>
         <label><!-- Create_Contact_Complete_Field --></label>
         <name>CSP_Create_Contact_Complete_Field</name>
+    </customLabels>
+    <customLabels>
+        <label>Ngày tạo</label>
+        <name>CSP_CreatedOn</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_DateFrom --></label>
@@ -2047,12 +2067,20 @@
         <name>CSP_IMPORTANT</name>
     </customLabels>
     <customLabels>
+        <label>Cập nhật cuối cùng</label>
+        <name>CSP_LastUpdate</name>
+    </customLabels>
+    <customLabels>
         <label>Đăng xuất</label>
         <name>CSP_LogOut</name>
     </customLabels>
     <customLabels>
         <label>Bạn có thể quản lý người dùng từ danh sách dưới đây.</label>
         <name>CSP_Manage_Portal_Users</name>
+    </customLabels>
+    <customLabels>
+        <label>Quản lý Người nhận</label>
+        <name>CSP_Manage_Recipients</name>
     </customLabels>
     <customLabels>
         <label>Quản lý dịch vụ</label>
@@ -2185,6 +2213,10 @@
     <customLabels>
         <label>Các sự kiện đang diễn ra</label>
         <name>CSP_RecentCases_Support</name>
+    </customLabels>
+    <customLabels>
+        <label>Người nhận</label>
+        <name>CSP_Recipients</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP Record Deleted --></label>
@@ -2423,6 +2455,14 @@
         <name>CSP_Title</name>
     </customLabels>
     <customLabels>
+        <label>&lt;a href=&quot;/ISSP_AMSCases&quot; target=&quot;_self&quot;&gt; Xin quý khách vui lòng nhấn vào đây để truy cập trực tiếp trang Cấp giấy phép IATA và Dịch vụ thay đổi &lt;/a&gt;</label>
+        <name>CSP_Travel_Agent_Accreditation_Changes_Access</name>
+    </customLabels>
+    <customLabels>
+        <label>&lt;a href=&quot;/s/manage-service?serviceId=a2ww0000001D7GOAA0&quot; target=&quot;_self&quot;&gt; Bấm vào đây để yêu cầu dịch vụ Cấp phép IATA và Thay đổi&lt;/a&gt;</label>
+        <name>CSP_Travel_Agent_Accreditation_Changes_Request</name>
+    </customLabels>
+    <customLabels>
         <label>Loại trường hợp</label>
         <name>CSP_TypeOfCase</name>
     </customLabels>
@@ -2461,6 +2501,18 @@
     <customLabels>
         <label><!-- CSP_Welcome_Panel_Bullet_4_Title --></label>
         <name>CSP_Welcome_Panel_Bullet_4_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Bạn &amp; IATA</label>
+        <name>CSP_YouAndIATA</name>
+    </customLabels>
+    <customLabels>
+        <label>Những điểm nổi bật dành riêng cho bạn</label>
+        <name>CSP_YouIATA_Highlights</name>
+    </customLabels>
+    <customLabels>
+        <label>Tại đây bạn có thể khám phá rất nhiều dịch vụ, ấn phẩm, sản phẩm và tài nguyên của IATA về ngành hàng không. Lựa chọn đặc biệt dựa trên sở thích và lịch sử hoạt động của bạn.</label>
+        <name>CSP_YouIATA_Highlights_Text</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_You_Dont_Have_Announcements --></label>
@@ -12495,7 +12547,7 @@ and
         <name>ISSP_Account_not_approved</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ContactList --></label>
+        <label>Phê duyệt</label>
         <name>ISSP_Activate</name>
     </customLabels>
     <customLabels>
@@ -13281,7 +13333,7 @@ Xin vui lòng xác nhận bạn đã nhận được sự trợ giúp liên quan
         <name>ISSP_Deny_Access</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Description --></label>
+        <label>Miêu tả</label>
         <name>ISSP_Description</name>
     </customLabels>
     <customLabels>
@@ -14701,7 +14753,7 @@ Xin vui lòng xác nhận bạn đã nhận được sự trợ giúp liên quan
         <name>ISSP_MITA_Agreements_Service_Name</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ContactList --></label>
+        <label>Phê duyệt với tư cách Quản trị viên</label>
         <name>ISSP_MakeAdmin</name>
     </customLabels>
     <customLabels>
@@ -20395,6 +20447,10 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
         <name>csp_ActionIndicator</name>
     </customLabels>
     <customLabels>
+        <label>Các thông tin chi tiết bổ sung</label>
+        <name>csp_AdditionalDetails</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Request New Service --></label>
         <name>csp_AgencyReadOnly</name>
     </customLabels>
@@ -20681,6 +20737,10 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
     <customLabels>
         <label>Hỗ trợ</label>
         <name>csp_Query</name>
+    </customLabels>
+    <customLabels>
+        <label>Còn người nào khác cần được thông báo?</label>
+        <name>csp_RecipientsQuestion</name>
     </customLabels>
     <customLabels>
         <label>Đại lý của bạn hiện không có tài khoản IATA EasyPay mở. &lt;br/&gt; &lt;br/&gt;Vui lòng liên hệ với Người ký ủy quyền của Trụ sở chính để yêu cầu họ mở Tài khoản EasyPay của IATA. Là Quản trị viên Cổng thông tin, bạn có thể cập nhật &lt;a href=&quot;/my-profile&quot;&gt; Thông tin cá nhân &lt;/a&gt; để chỉ định mình là Người ký ủy quyền hợp pháp hoặc chỉ định người quản trị cổng thông tin chính xác từ &lt;a href=&quot;/company-profile&quot;&gt; Quản trị Công ty - &gt; Liên hệ &lt;/a&gt; và yêu cầu họ mở tài khoản EasyPay của bạn.&lt;br/&gt;&lt;br/&gt;Hãy &lt;a href=&quot;/Support-Reach-Us&quot;&gt; Liên hệ Hỗ trợ &lt;/a&gt; nếu bạn cần sự giúp đỡ.</label>

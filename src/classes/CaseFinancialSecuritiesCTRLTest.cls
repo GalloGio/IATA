@@ -57,7 +57,8 @@ private class CaseFinancialSecuritiesCTRLTest {
                                                             Reasonforrequest__c = 'Default',
                                                             Reception_Date__c = system.today(),
                                                             Security_Type__c= 'Bank Guarantee',
-                                                            Reception_Case__c = c.Id);
+                                                            Reception_Case__c = c.Id,
+                                                            Financial_Security_Validation_Case__c = c.Id);
 		insert f;     
                                      
         PageReference pageRef = Page.CaseFinancialSecurities;

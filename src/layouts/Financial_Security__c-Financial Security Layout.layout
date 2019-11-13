@@ -48,6 +48,10 @@
                 <behavior>Readonly</behavior>
                 <field>ANG_Minimum_Financial_Security__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Financial_Security_Validation_Case__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
