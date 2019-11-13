@@ -1792,6 +1792,10 @@
         <name>CSP_Add_User</name>
     </customLabels>
     <customLabels>
+        <label>Vous pouvez soumettre les changements de vos informations de compte via &lt;a href= &apos;/s/support-reach-us&apos;&gt; Page de contact &lt;/a&gt;</label>
+        <name>CSP_Airline_Changes_Access</name>
+    </customLabels>
+    <customLabels>
         <label>Annonce</label>
         <name>CSP_Announcement</name>
     </customLabels>
@@ -1810,6 +1814,10 @@
     <customLabels>
         <label>Recherche Avancée</label>
         <name>CSP_Breadcrumb_AdvancedSearch_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Détails du dossier</label>
+        <name>CSP_Breadcrumb_CaseDetails_Title</name>
     </customLabels>
     <customLabels>
         <label>Profil de la société</label>
@@ -1842,6 +1850,10 @@
     <customLabels>
         <label><!-- CSP_Breadcrump_MyProfile_Title --></label>
         <name>CSP_Breadcrump_MyProfile_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Vous et IATA</label>
+        <name>CSP_Breadcrump_You_IATA</name>
     </customLabels>
     <customLabels>
         <label>Annuler</label>
@@ -1900,6 +1912,10 @@
         <name>CSP_Community</name>
     </customLabels>
     <customLabels>
+        <label>Vous pouvez soumettre les modifications des informations de votre compte via le service accréditation et modifications IATA.</label>
+        <name>CSP_CompanyAdministration_Link</name>
+    </customLabels>
+    <customLabels>
         <label>Voir les cas de ma société</label>
         <name>CSP_CompanyCases</name>
     </customLabels>
@@ -1926,6 +1942,10 @@
     <customLabels>
         <label><!-- Create_Contact_Complete_Field --></label>
         <name>CSP_Create_Contact_Complete_Field</name>
+    </customLabels>
+    <customLabels>
+        <label>Créé le</label>
+        <name>CSP_CreatedOn</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_DateFrom --></label>
@@ -2048,12 +2068,20 @@
         <name>CSP_IMPORTANT</name>
     </customLabels>
     <customLabels>
+        <label>Dernière mise à jour</label>
+        <name>CSP_LastUpdate</name>
+    </customLabels>
+    <customLabels>
         <label>Se déconnecter</label>
         <name>CSP_LogOut</name>
     </customLabels>
     <customLabels>
         <label>Vous pouvez gérer les utilisateurs à partir de la liste ci-dessous.</label>
         <name>CSP_Manage_Portal_Users</name>
+    </customLabels>
+    <customLabels>
+        <label>Gérer les destinataires</label>
+        <name>CSP_Manage_Recipients</name>
     </customLabels>
     <customLabels>
         <label>Gérer le service</label>
@@ -2186,6 +2214,10 @@
     <customLabels>
         <label>Dossiers en cours</label>
         <name>CSP_RecentCases_Support</name>
+    </customLabels>
+    <customLabels>
+        <label>Destinataires</label>
+        <name>CSP_Recipients</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP Record Deleted --></label>
@@ -2424,6 +2456,14 @@
         <name>CSP_Title</name>
     </customLabels>
     <customLabels>
+        <label>&lt;a href=&quot;/ISSP_AMSCases&quot; target=&quot;_self&quot;&gt; Cliquez ici pour accéder directement à l&apos;accréditation IATA et aux changements &lt;/a&gt;</label>
+        <name>CSP_Travel_Agent_Accreditation_Changes_Access</name>
+    </customLabels>
+    <customLabels>
+        <label>&lt;a href=&quot;/s/manage-service?serviceId=a2ww0000001D7GOAA0&quot; target=&quot;_self&quot;&gt; Cliquez ici pour demander l&apos;accréditation et les modifications IATA &lt;/a&gt;</label>
+        <name>CSP_Travel_Agent_Accreditation_Changes_Request</name>
+    </customLabels>
+    <customLabels>
         <label>Type de cas</label>
         <name>CSP_TypeOfCase</name>
     </customLabels>
@@ -2462,6 +2502,18 @@
     <customLabels>
         <label><!-- CSP_Welcome_Panel_Bullet_4_Title --></label>
         <name>CSP_Welcome_Panel_Bullet_4_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Vous et IATA</label>
+        <name>CSP_YouAndIATA</name>
+    </customLabels>
+    <customLabels>
+        <label>Points principaux sélectionnés pour vous</label>
+        <name>CSP_YouIATA_Highlights</name>
+    </customLabels>
+    <customLabels>
+        <label>Vous pourrez y découvrir une grande variété de services, publications, produits et ressources de l&apos;IATA sur l’industrie aéronautique. Spécialement adapté à vos intérêts et à votre historique d&apos;activité.</label>
+        <name>CSP_YouIATA_Highlights_Text</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_You_Dont_Have_Announcements --></label>
@@ -12534,7 +12586,7 @@ Veuillez également noter que les informations visibles sur ICE sont mises à di
         <name>ISSP_Account_not_approved</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ContactList --></label>
+        <label>Approuver</label>
         <name>ISSP_Activate</name>
     </customLabels>
     <customLabels>
@@ -14742,7 +14794,7 @@ Pouvez-vous s&apos;il vous plaît confirmer pour quel pays vous avez déjà reç
         <name>ISSP_MITA_Agreements_Service_Name</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ContactList --></label>
+        <label>Approuver en tant qu&apos;administrateur</label>
         <name>ISSP_MakeAdmin</name>
     </customLabels>
     <customLabels>
@@ -20435,6 +20487,10 @@ Pour réinitialiser votre mot de passe, retournez à l&apos;écran de connexion 
         <name>csp_ActionIndicator</name>
     </customLabels>
     <customLabels>
+        <label>Détails supplémentaires</label>
+        <name>csp_AdditionalDetails</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Request New Service --></label>
         <name>csp_AgencyReadOnly</name>
     </customLabels>
@@ -20721,6 +20777,10 @@ Pour réinitialiser votre mot de passe, retournez à l&apos;écran de connexion 
     <customLabels>
         <label>Assistance</label>
         <name>csp_Query</name>
+    </customLabels>
+    <customLabels>
+        <label>Quelqu&apos;un d&apos;autre à informer ?</label>
+        <name>csp_RecipientsQuestion</name>
     </customLabels>
     <customLabels>
         <label>Votre Agence ne dispose pas actuellement d&apos; un compte IATA EasyPay ouvert. &lt;br/&gt;&lt;br/&gt;Veuillez contacter le signataire autorisé de votre siège social pour lui demander d&apos;ouvrir un compte IATA EasyPay. En tant qu&apos;administrateur du portail, vous pouvez soit mettre à jour vos &lt;a href = &quot;/my-profile&quot;&gt; Informations personnelles &lt;/a&gt; pour vous désigner comme signataire légalement autorisé ou affecter le bon administrateur du portail à partir de &lt;a href=&quot;/company-profile&quot;&gt;Profil -&gt; Profil de la société&lt;/a&gt; et demandez-leur d&apos;ouvrir votre compte EasyPay.&lt;br/&gt;&lt;br/&gt;S&apos;il vous plaît &lt;a href = &quot;/Support-Reach-Us&quot;&gt;contactez le Service client&lt;/a&gt; si vous avez besoin d&apos;aide.</label>
