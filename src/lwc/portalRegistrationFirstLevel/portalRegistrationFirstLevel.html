@@ -164,9 +164,9 @@
                                                 </div>
                                             </lightning-layout-item>
                                             <lightning-layout-item size="12">
-                                                <div class="slds-form-element__control custTextInput custTextInputSmall">
+                                            <div data-id={rerender} class="slds-form-element__control custTextInput custTextInputSmall">
                                                     <input data-id="phone" name="phone" class="phoneFormat slds-input" type="tel" placeholder=" "
-                                                        onkeyup={handleInputValueChange} value={registrationForm.phone}/>
+                                                        onkeyup={handlePhoneInputChange} value={registrationForm.phone} />
                                                 </div>
                                             </lightning-layout-item>
                                             <lightning-layout-item size="12">
