@@ -711,7 +711,15 @@ lightning-datatable .slds-th__action {
   font-weight: 500;
   font-size: 14px;
 }
-
+.outlinedButton.button-half-height,
+.outlinedButton.button-half-height button,
+.outlinedButton.button-half-height button:active,
+.outlinedButton.button-half-height button:visited,
+.outlinedButton.button-half-height button:focus,
+.outlinedButton.button-half-height button:hover  {
+  min-height: 24px;
+  font-size: 14px;
+}
 .blueCustomButtonLink button:hover {
 	color: #3333ff;
     fill: #3333ff;
