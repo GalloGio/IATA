@@ -744,7 +744,7 @@
         moveAll("#right-opt-operation-filter", "#left-opt-operation-filter", "value");
         moveAll("#right-opt-remittance-filter", "#left-opt-remittance-filter", "value");
         moveAll("#right-opt-country-filter", "#left-opt-country-filter", "title");
-        prepopulate("#typeFilter", "operation-filter");
+        prepopulate("#subtypeFilter", "operation-filter");
         prepopulate("#frequencyFilter", "remittance-filter");
         prepopulate("#countryFilter", "country-filter");
     }
