@@ -71,6 +71,7 @@ export default class PortalRegistrationAddressInformationLMS extends LightningEl
     }
 
     setValidationStatus(event){
+        this.getAddressInformation();
         if(this.localAddress.countryId !== '' && this.localAddress.cityName !== '' && this.localAddress.street !== ''){
             this.isConfirmationButtonDisabled = false;
         }else if(this.isConfirmationButtonDisabled !== !event.detail){
