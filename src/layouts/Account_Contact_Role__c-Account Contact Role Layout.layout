@@ -66,9 +66,9 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-				<field>RecordTypeId</field>
-			</layoutItems>
-			<layoutItems>
+                <field>RecordTypeId</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Contact_Role_Name__c</field>
             </layoutItems>
@@ -115,8 +115,8 @@
         <fields>Service__c</fields>
         <relatedList>Contact_Role_Service_Access__c.Contact_Role__c</relatedList>
     </relatedLists>
-	<relatedLists>
-		<fields>NAME</fields>
+    <relatedLists>
+        <fields>NAME</fields>
         <fields>ATC__c</fields>
         <fields>ATC_ID__c</fields>
         <relatedList>Yardstick_Contact_Details__c.Account_Contact_Role__c</relatedList>
