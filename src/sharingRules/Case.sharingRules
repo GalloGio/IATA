@@ -608,4 +608,15 @@
             <role>iPayables</role>
         </sharedFrom>
     </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>iiNet_Business_Team</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>iiNet Business Team</label>
+        <sharedTo>
+            <role>IFG_Team</role>
+        </sharedTo>
+        <sharedFrom>
+            <role>iiNet_Business_Team</role>
+        </sharedFrom>
+    </sharingOwnerRules>
 </SharingRules>
