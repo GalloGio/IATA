@@ -5,10 +5,11 @@
 /* ==============================================================================================================*/
 /* Utils & Apex & Platform
 /* ==============================================================================================================*/
-import { LightningElement, track, wire }     from 'lwc';
+import { LightningElement, track, wire, api }     from 'lwc';
 import { navigateToPage, getParamsFromPage } from'c/navigationUtils';
 import { getRecord }                         from 'lightning/uiRecordApi';
 import userId                                from '@salesforce/user/Id';
+import getContactInfo                        from '@salesforce/apex/PortalRegistrationSecondLevelCtrl.getContactInfo';
 
 /* ==============================================================================================================*/
 /* Custom Labels
@@ -27,6 +28,9 @@ export default class PortalFirstLogin extends LightningElement {
     successIcon = CSP_PortalPath + 'CSPortal/Images/Icons/success.png';
     @track isLoading = false;
     @track userName = "";
+    @track isFirstLevelUser;
+
+    @api registrationlevel; //FOR LMS L3
 
     _labels = {
         CSP_First_Login_Title,
@@ -41,6 +45,16 @@ export default class PortalFirstLogin extends LightningElement {
     }
     set labels(value) {
         this._labels = value;
+    }
+
+    connectedCallback(){
+        
+        console.log('PortalFirstLogin - connectedCallback - this.registrationlevel - ', this.registrationlevel);
+        
+        getContactInfo()
+            .then(result => {
+                this.isFirstLevelUser = result.Account.Is_General_Public_Account__c;
+            });
     }
 
     @wire(getRecord, { recordId: userId, fields: ['User.Name'] })
@@ -59,9 +73,16 @@ export default class PortalFirstLogin extends LightningElement {
     }
 
     handleAccept(){
-        console.log('closefirstloginpopup');
-        this.dispatchEvent(new CustomEvent('closefirstloginpopup'));
-        navigateToPage(CSP_PortalPath + 'registrationsecondlevel',{});
-    }
+        //Changes to accomodate LMS L3
 
+        console.log('PortalFirstLogin - handleAccept this.registrationlevel - ', this.registrationlevel);
+        if(this.registrationlevel !== undefined && this.registrationlevel === '3'){
+            console.log('triggerthirdlevelregistrationlms');
+            this.dispatchEvent(new CustomEvent('triggerthirdlevelregistrationlms'));
+        }else{
+            console.log('closefirstloginpopup');
+            this.dispatchEvent(new CustomEvent('closefirstloginpopup'));
+            navigateToPage(CSP_PortalPath + 'registrationsecondlevel',{});
+        }
+    }
 }
