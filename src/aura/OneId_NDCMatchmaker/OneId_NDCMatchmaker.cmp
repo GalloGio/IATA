@@ -65,14 +65,13 @@
                             </lightning:layoutItem>
                         </aura:set>
                     </aura:if>
-
                     <lightning:layoutItem size="6" padding="horizontal-small">
-                        <aura:if isTrue="{! v.ndcCapabilities.Company_Type__c != 'Airline'}">
+                        <aura:if isTrue="{! v.ndcCapabilities.Company_Type__c == 'Seller'}">
                             <ui:outputText class="slds-form-element__label" value="Agent Identifier" /><br />
                             <ui:outputText class="slds-form-element__static" value="{! v.usr.Account.IATACode__c}" />
-                            <aura:set attribute="else">
-                                <lightning:outputField fieldName="NDC_Travel_Agents_on_boarding_portal__c" />
-                            </aura:set>
+                        </aura:if>
+                        <aura:if isTrue="{! v.ndcCapabilities.Company_Type__c == 'Aggregator'}">
+                            <lightning:outputField fieldName="Aggregator_Identifier__c" />
                         </aura:if>
                     </lightning:layoutItem>
                     <lightning:layoutItem size="6" padding="horizontal-small">
@@ -217,12 +216,12 @@
                         </aura:set>
                     </aura:if>
                     <lightning:layoutItem size="6" padding="horizontal-small">
-                        <aura:if isTrue="{! v.ndcCapabilities.Company_Type__c != 'Airline'}">
+                        <aura:if isTrue="{! v.ndcCapabilities.Company_Type__c == 'Seller'}">
                             <ui:outputText class="slds-form-element__label" value="Agent Identifier" /><br />
                             <ui:outputText class="slds-form-element__static" value="{! v.usr.Account.IATACode__c}" />
-                            <aura:set attribute="else">
-                                <lightning:inputField fieldName="NDC_Travel_Agents_on_boarding_portal__c" />
-                            </aura:set>
+                        </aura:if>
+                        <aura:if isTrue="{! v.ndcCapabilities.Company_Type__c == 'Aggregator'}">
+                            <lightning:inputField fieldName="Aggregator_Identifier__c" />
                         </aura:if>
                     </lightning:layoutItem>
                     <lightning:layoutItem size="6" padding="horizontal-small">
