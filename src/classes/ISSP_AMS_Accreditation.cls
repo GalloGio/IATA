@@ -8134,17 +8134,23 @@ system.debug('aqui sectorValue ' + sectorValue);
         
         if (isHOAccredited) {
             if (newForm.Same_Legal_Entity_Agency_Account__c != null) {
-                for (AMS_Account_Role__c accRole: [SELECT Id, Percentage__c, Contact__r.FirstName, Contact__r.LastName, Contact__r.Email, Contact__r.Phone
+                for (AMS_Account_Role__c accRole: [SELECT Id, Percentage__c, Contact__r.FirstName, Contact__r.LastName, Contact__r.Email, Contact__r.Phone, Owner_Name__c
                                                 FROM AMS_Account_Role__c
                                                 WHERE Account__c = :newform.Same_Legal_Entity_Agency_Account__c
                                                     AND Valid__c = true 
                                                     AND Active__c = true]) {
-                    owners.add(new OwnerContact(accRole.Contact__r.Email, accRole.Contact__r.Phone, accRole.Contact__r.FirstName, accRole.Contact__r.LastName, accRole.Percentage__c));
+					String ownerName = accRole.Contact__r.FirstName + ' ' + accRole.Contact__r.LastName;
+                    
+					if (String.isBlank(ownerName)) {
+						ownerName = accRole.Owner_Name__c;
+					}
+                    
+                    owners.add(new OwnerContact(String.isBlank(accRole.Contact__r.Email) ? '-' : accRole.Contact__r.Email, String.isBlank(accRole.Contact__r.Phone) ? '-' : accRole.Contact__r.Phone, ownerName, accRole.Percentage__c));
                 }
             }
         } else {
             for (AMS_Accreditation_Contact__c accCon: executeContactQuery(dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_AGENCY_CONTACTS, AccredContactEnum.PARAMCODE_MAIN_LEGAL_OWNERS_NA, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, newForm.Same_Legal_Entity_Agency_Form__c))) {
-                owners.add(new OwnerContact(accCon.Email__c, accCon.Phone__c, accCon.First_name__c, accCon.Last_name__c, accCon.Financial_interest__c));
+                owners.add(new OwnerContact(accCon.Email__c, accCon.Phone__c, accCon.First_name__c + ' ' + accCon.Last_name__c, accCon.Financial_interest__c));
             }
         }
 
@@ -8154,15 +8160,13 @@ system.debug('aqui sectorValue ' + sectorValue);
     public class OwnerContact {
         public String email {get; set;}
         public String phone {get; set;}
-        public String firstName {get; set;}
-        public String lastName {get; set;}
+        public String name {get; set;}
         public Decimal financialInterest {get; set;}
         
-        public OwnerContact(String email, String phone, String firstName, String lastName, Decimal financialInterest) {
+        public OwnerContact(String email, String phone, String name, Decimal financialInterest) {
             this.email = email;
             this.phone = phone;
-            this.firstName = firstName;
-            this.lastName = lastName;
+            this.name = name;
 			this.financialInterest = financialInterest.setScale(2);
         }
     }
