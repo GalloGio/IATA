@@ -18,7 +18,6 @@ import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 import { reduceErrors } from 'c/ldsUtils';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
-import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 import ISSP_Pending_Approval from '@salesforce/label/c.ISSP_Pending_Approval';
 import CSP_ALPHAFILTER_All from '@salesforce/label/c.CSP_ALPHAFILTER_All';
 import CSP_ALPHAFILTER_Other from '@salesforce/label/c.CSP_ALPHAFILTER_Other';
