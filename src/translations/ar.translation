@@ -1901,7 +1901,7 @@
         <name>CSP_Create_Contact_Complete_Field</name>
     </customLabels>
     <customLabels>
-        <label>؟(IATA - هل أنتم جديدون في بوابة عملاء الاتحاد الدولي للنقل الجوي (إياتا</label>
+        <label>؟هل أنتم جديدون في بوابة عملاء الاتحاد الدولي للنقل الجوي</label>
         <name>CSP_Create_New_Account_Info</name>
     </customLabels>
     <customLabels>
@@ -1949,7 +1949,7 @@
         <name>CSP_Email</name>
     </customLabels>
     <customLabels>
-        <label>.أنت على بعد خطوة واحدة فقط للدخول .(IATA - شكرًا لك على التسجيل في بوابة عملاء الاتحاد الدولي للنقل الجوي (إياتا</label>
+        <label>.أنت على بعد خطوة واحدة فقط للدخول .لك على التسجيل في بوابة عملاء الاتحاد الدولي للنقل الجوي</label>
         <name>CSP_Email_Confirmation_Body_Part_1</name>
     </customLabels>
     <customLabels>
@@ -1973,7 +1973,7 @@
         <name>CSP_Email_Here</name>
     </customLabels>
     <customLabels>
-        <label>.(IATA - لقد تلقينا طلبك لإعادة تعيين كلمة المرور الخاصة بك في بوابة عملاء الاتحاد الدولي للنقل الجوي (إياتا</label>
+        <label>.لقد تلقينا طلبك لإعادة تعيين كلمة المرور الخاصة بك في بوابة عملاء الاتحاد الدولي للنقل الجوي</label>
         <name>CSP_Email_Password_Reset_Body_Part_1</name>
     </customLabels>
     <customLabels>
@@ -1989,15 +1989,15 @@
         <name>CSP_Email_Password_Reset_Body_Part_4</name>
     </customLabels>
     <customLabels>
-        <label>.(IATA - شكراً لكونكم جزء من الاتحاد الدولي للنقل الجوي (إياتا</label>
+        <label>.شكراً لكونكم جزء من الاتحاد الدولي للنقل الجوي</label>
         <name>CSP_Email_Signature_Part_1</name>
     </customLabels>
     <customLabels>
-        <label>(IATA - الاتحاد الدولي للنقل الجوي (إياتا</label>
+        <label>الاتحاد الدولي للنقل الجوي</label>
         <name>CSP_Email_Signature_Part_2</name>
     </customLabels>
     <customLabels>
-        <label>!(IATA - يسعدنا أن تكون معنا في بوابة عملاء الاتحاد الدولي للنقل الجوي (إياتا</label>
+        <label>!يسعدنا أن تكون معنا في بوابة عملاء الاتحاد الدولي للنقل الجوي</label>
         <name>CSP_Email_Welcome_Part_1</name>
     </customLabels>
     <customLabels>
@@ -2009,11 +2009,11 @@
         <name>CSP_Email_Welcome_Part_3</name>
     </customLabels>
     <customLabels>
-        <label>لتحسين تجربتك في استخدام بوابة عملاء الاتحاد الدولي للنقل الجوي (إياتا - IATA) ، يمكنك إكمال معلومات حسابك متى أردت ذلك. يمكنك القيام بذلك بسهولة عن طريق النقر</label>
+        <label>لتحسين تجربتك في استخدام بوابة عملاء الاتحاد الدولي للنقل الجوي ، يمكنك إكمال معلومات حسابك متى أردت ذلك. يمكنك القيام بذلك بسهولة عن طريق النقر</label>
         <name>CSP_Email_Welcome_Part_4</name>
     </customLabels>
     <customLabels>
-        <label>!(IATA - نأمل أن تستمتعوا معنا باستخدام بوابة عملاء الاتحاد الدولي للنقل الجوي (إياتا</label>
+        <label>!نأمل أن تستمتعوا معنا باستخدام بوابة عملاء الاتحاد الدولي للنقل الجوي</label>
         <name>CSP_Email_Welcome_Part_5</name>
     </customLabels>
     <customLabels>
@@ -2135,6 +2135,18 @@
     <customLabels>
         <label>عنوان البريد الإلكتروني خاطئ</label>
         <name>CSP_Invalid_Email</name>
+    </customLabels>
+    <customLabels>
+        <label>.لمطابقة ملفك الشخصي مع حساب شركتك ، نحتاج إلى مزيد من التفاصيل. سيساعدنا ذلك في التحقق مما إذا كانت شركتك مسجلة بالفعل لدى الاتحاد الدولي للنقل الجوي</label>
+        <name>CSP_L2_Account_Selection_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>.تسجيل حساب شركتك سيسمح لك بالحصول علي خدمات الاتحاد الدولي للنقل الجوي المخصصة.يمكنك بسهولة إنشاء حساب شركتك في خطوتين</label>
+        <name>CSP_L2_Company_Information_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>.أضف بياناتك الشخصية للسماح للاتحاد الدولي للنقل الجوي باقتراح محتوى وخدمات مخصصة</label>
+        <name>CSP_L2_Profile_Details_Message</name>
     </customLabels>
     <customLabels>
         <label>تسجيل الخروج</label>
@@ -2305,7 +2317,7 @@
         <name>CSP_Registration_Complete</name>
     </customLabels>
     <customLabels>
-        <label>.(IATA - قوموا بإكمال عملية التسجيل الأساسية للانضمام إلى بوابة عملاء الاتحاد الدولي للنقل الجوي (إياتا</label>
+        <label>.قوموا بإكمال عملية التسجيل الأساسية للانضمام إلى بوابة عملاء الاتحاد الدولي للنقل الجوي</label>
         <name>CSP_Registration_Description</name>
     </customLabels>
     <customLabels>
@@ -2609,15 +2621,15 @@
         <name>CSP_Welcome_Email_Subject</name>
     </customLabels>
     <customLabels>
-        <label>.يمكنكم الوصول مباشرة إلى أكثر من 60 خدمة يقدمها الاتحاد الدولي للنقل الجوي (إياتا)، تم اختيارها خصيصاً من أجلكم</label>
+        <label>.يمكنكم الوصول مباشرة إلى أكثر من 60 خدمة يقدمها الاتحاد الدولي للنقل الجوي، تم اختيارها خصيصاً من أجلكم</label>
         <name>CSP_Welcome_Panel_Bullet_1_Desc</name>
     </customLabels>
     <customLabels>
-        <label>(IATA - الوصول إلى خدمات الاتحاد الدولي للنقل الجوي (إياتا</label>
+        <label>الوصول إلى خدمات الاتحاد الدولي للنقل الجوي</label>
         <name>CSP_Welcome_Panel_Bullet_1_Title</name>
     </customLabels>
     <customLabels>
-        <label>أديروا ملف تعريف الاتحاد الدولي للنقل الجوي (إياتا - IATA) الخاص بكم وأجروا عليه أي تحديثات بسهولة.</label>
+        <label>أديروا ملف تعريف الاتحاد الدولي للنقل الجوي الخاص بكم وأجروا عليه أي تحديثات بسهولة.</label>
         <name>CSP_Welcome_Panel_Bullet_2_Desc</name>
     </customLabels>
     <customLabels>
@@ -2625,7 +2637,7 @@
         <name>CSP_Welcome_Panel_Bullet_2_Title</name>
     </customLabels>
     <customLabels>
-        <label>.(IATA - اكتشفوا مجموعة مختارة من المنشورات والدورات التدريبية وغيرها من منتجات وخدمات الاتحاد الدولي للنقل الجوي (إياتا</label>
+        <label>.اكتشفوا مجموعة مختارة من المنشورات والدورات التدريبية وغيرها من منتجات وخدمات الاتحاد الدولي للنقل الجوي</label>
         <name>CSP_Welcome_Panel_Bullet_3_Desc</name>
     </customLabels>
     <customLabels>
@@ -2633,7 +2645,7 @@
         <name>CSP_Welcome_Panel_Bullet_3_Title</name>
     </customLabels>
     <customLabels>
-        <label>.(IATA - اذهبوا لمجموعتنا الواسعة من الأسئلة والأجوبة، واحصلوا على الدعم المباشر من الاتحاد الدولي للنقل الجوي (إياتا</label>
+        <label>.اذهبوا لمجموعتنا الواسعة من الأسئلة والأجوبة، واحصلوا على الدعم المباشر من الاتحاد الدولي للنقل الجوي</label>
         <name>CSP_Welcome_Panel_Bullet_4_Desc</name>
     </customLabels>
     <customLabels>
@@ -2645,7 +2657,7 @@
         <name>CSP_Welcome_Panel_Info</name>
     </customLabels>
     <customLabels>
-        <label>(IATA - مرحبًا بكم في بوابة خدمة عملاء الاتحاد الدولي للنقل الجوي (إياتا</label>
+        <label>.مرحبًا بكم في بوابة خدمة عملاء الاتحاد الدولي للنقل الجوي</label>
         <name>CSP_Welcome_Title</name>
     </customLabels>
     <customLabels>
