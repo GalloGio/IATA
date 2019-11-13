@@ -100366,7 +100366,7 @@ OR(
 ISCHANGED(Account_Type__c),
 ISCHANGED(Website)
 ),
-NOT(CONTAINS($Profile.Name, &quot;System Administrator - automated processes&quot;)),
+NOT(CONTAINS($Profile.Name, &quot;System Administrator&quot;)),
 NOT(CONTAINS($Profile.Name, &quot;Account management team&quot;)),
 NOT(CONTAINS($Profile.Name, &quot;MER Membership&quot;))
 )</errorConditionFormula>
