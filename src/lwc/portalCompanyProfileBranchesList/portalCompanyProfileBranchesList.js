@@ -45,6 +45,7 @@ export default class PortalCompanyProfileBranchesList extends LightningElement {
     @track isFetching = false;
     @track editBasics = false;
     @track openmodel = false;
+    @track showCross = false;
 
     connectedCallback() {
 
@@ -144,7 +145,7 @@ export default class PortalCompanyProfileBranchesList extends LightningElement {
 
             this.branchesLoading = true;
             this.retrieveBranchesList(1);
-
+            this.showCross = searchtext.length > 0;
         }, 500, this);
 
     }
