@@ -212,12 +212,11 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 			}
 			System.debug('Training_Contact_Role_Details__c - ycd: ' + ycd);
 
-			//Create ToS Acceptance
-			createToSAcceptance(serviceid, con.Id);
+    		//Create Portal Application Right
+    		Portal_Applications__c pa = [SELECT Id, Name FROM Portal_Applications__c WHERE Name = 'Training Platform (LMS)' LIMIT 1];
 
-			//Create Portal Application Right
-
-			Portal_Applications__c pa = [SELECT Id, Name FROM Portal_Applications__c WHERE Name = 'Training Platform (LMS)' LIMIT 1];
+           	//Create ToS Acceptance
+			createToSAcceptance(pa.id, con.Id);
 
 			List<Portal_Application_Right__c> listPAR = [SELECT Id,Portal_Application__c,Right__c,Contact__c,Favourite_Service__c FROM Portal_Application_Right__c WHERE Contact__c = :con.Id AND Portal_Application__c = :pa.id LIMIT 1];
 			Portal_Application_Right__c portalApplicationRight = new Portal_Application_Right__c();
@@ -279,7 +278,7 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 				con.Phone = contactInfo.Phone;
 				con.OtherPhone = contactInfo.OtherPhone;
 				con.Salutation = contactInfo.Salutation;
-				con.Birthdate = Date.valueOf(contactInfo.Date_of_Birth);
+				con.Birthdate = Date.valueOf(contactInfo.Birthdate);
 
 				List<String> extraValues = new List<String>();
 				extraValues.add(contactInfo.Username);
@@ -359,7 +358,7 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 				con.Phone = contactInfo.Phone;
 				con.OtherPhone = contactInfo.OtherPhone;
 				con.Salutation = contactInfo.Salutation;
-				con.Birthdate = Date.valueOf(contactInfo.Date_of_Birth);
+				con.Birthdate = Date.valueOf(contactInfo.Birthdate);
 
 
 				List<String> extraValues = new List<String>();
@@ -389,7 +388,7 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 				con.Phone = contactInfo.Phone;
 				con.OtherPhone = contactInfo.OtherPhone;
 				con.Salutation = contactInfo.Salutation;
-				con.Birthdate = Date.valueOf(contactInfo.Date_of_Birth);
+				con.Birthdate = Date.valueOf(contactInfo.Birthdate);
 
 
 				List<String> extraValues = new List<String>();
@@ -518,6 +517,7 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 			}
 			params.FirstName = (inputMap.get('FirstName') != null) ? string.valueOf(inputMap.get('FirstName')) : '';
 			params.LastName  = (inputMap.get('LastName') != null) ? string.valueOf(inputMap.get('LastName')) : '';
+			params.Birthdate   = (inputMap.get('Birthdate') != null) ? string.valueOf(inputMap.get('Birthdate')) : '';
 			params.Date_of_Birth   = (inputMap.get('Date_of_Birth__c') != null) ? string.valueOf(inputMap.get('Date_of_Birth__c')) : '';
 			if(params.Date_of_Birth == ''){
 				params.Date_of_Birth = (inputMap.get('Date_of_Birth') != null) ? string.valueOf(inputMap.get('Date_of_Birth')) : '';
@@ -809,6 +809,7 @@ System.debug('messages: '+messages);
 		public string FirstName{get;set;}
 		public string LastName{get;set;}
 		public string Date_of_Birth{get;set;}
+		public string Birthdate{get;set;}
 		public string Phone{get;set;}
 		public string language{get;set;}
 		public string Id{get;set;}
