@@ -53,6 +53,14 @@
         <name>FRED</name>
     </customApplications>
     <customApplications>
+        <label><!-- GADM --></label>
+        <name>GADM</name>
+    </customApplications>
+    <customApplications>
+        <label><!-- GADM --></label>
+        <name>GADM_Classic</name>
+    </customApplications>
+    <customApplications>
         <label><!-- GDP --></label>
         <name>GDP</name>
     </customApplications>
@@ -1792,6 +1800,10 @@
         <name>CSP_Add_User</name>
     </customLabels>
     <customLabels>
+        <label>&lt;a href= &apos;/s/support-reach-us&apos;&gt;お問い合わせページ&lt;/a&gt;からアカウント情報変更をご入力いただけます。</label>
+        <name>CSP_Airline_Changes_Access</name>
+    </customLabels>
+    <customLabels>
         <label>お知らせ</label>
         <name>CSP_Announcement</name>
     </customLabels>
@@ -1810,6 +1822,10 @@
     <customLabels>
         <label>高度な検索</label>
         <name>CSP_Breadcrumb_AdvancedSearch_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>ケース詳細</label>
+        <name>CSP_Breadcrumb_CaseDetails_Title</name>
     </customLabels>
     <customLabels>
         <label>会社概要</label>
@@ -1842,6 +1858,10 @@
     <customLabels>
         <label><!-- CSP_Breadcrump_MyProfile_Title --></label>
         <name>CSP_Breadcrump_MyProfile_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>お客様と IATA</label>
+        <name>CSP_Breadcrump_You_IATA</name>
     </customLabels>
     <customLabels>
         <label>キャンセル</label>
@@ -1900,6 +1920,10 @@
         <name>CSP_Community</name>
     </customLabels>
     <customLabels>
+        <label>IATA認定および変更サービスをご利用いただき、アカウント詳細変更を届け出ていただけます。</label>
+        <name>CSP_CompanyAdministration_Link</name>
+    </customLabels>
+    <customLabels>
         <label>会社案件一覧を表示</label>
         <name>CSP_CompanyCases</name>
     </customLabels>
@@ -1926,6 +1950,10 @@
     <customLabels>
         <label><!-- Create_Contact_Complete_Field --></label>
         <name>CSP_Create_Contact_Complete_Field</name>
+    </customLabels>
+    <customLabels>
+        <label>作成日</label>
+        <name>CSP_CreatedOn</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_DateFrom --></label>
@@ -2048,12 +2076,20 @@
         <name>CSP_IMPORTANT</name>
     </customLabels>
     <customLabels>
+        <label>最終更新</label>
+        <name>CSP_LastUpdate</name>
+    </customLabels>
+    <customLabels>
         <label>ログアウト</label>
         <name>CSP_LogOut</name>
     </customLabels>
     <customLabels>
         <label>以下のリストからユーザーを管理することができます。</label>
         <name>CSP_Manage_Portal_Users</name>
+    </customLabels>
+    <customLabels>
+        <label>受取人の管理</label>
+        <name>CSP_Manage_Recipients</name>
     </customLabels>
     <customLabels>
         <label>サービスを管理する</label>
@@ -2186,6 +2222,10 @@
     <customLabels>
         <label>現在進行中のケース</label>
         <name>CSP_RecentCases_Support</name>
+    </customLabels>
+    <customLabels>
+        <label>受取人</label>
+        <name>CSP_Recipients</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP Record Deleted --></label>
@@ -2424,6 +2464,14 @@
         <name>CSP_Title</name>
     </customLabels>
     <customLabels>
+        <label>&lt;a href=&quot;/ISSP_AMSCases&quot; target=&quot;_self&quot;&gt;こちらをクリックして、「IATA認定と変更」に直接アクセスしてください&lt;/a&gt;</label>
+        <name>CSP_Travel_Agent_Accreditation_Changes_Access</name>
+    </customLabels>
+    <customLabels>
+        <label>&lt;a href=&quot;/s/manage-service?serviceId=a2ww0000001D7GOAA0&quot; target=&quot;_self&quot;&gt;こちらをクリックし、IATA認定及び変更をリクエストします&lt;/a&gt;</label>
+        <name>CSP_Travel_Agent_Accreditation_Changes_Request</name>
+    </customLabels>
+    <customLabels>
         <label>案件の種類</label>
         <name>CSP_TypeOfCase</name>
     </customLabels>
@@ -2462,6 +2510,18 @@
     <customLabels>
         <label><!-- CSP_Welcome_Panel_Bullet_4_Title --></label>
         <name>CSP_Welcome_Panel_Bullet_4_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>お客様とIATA</label>
+        <name>CSP_YouAndIATA</name>
+    </customLabels>
+    <customLabels>
+        <label>お客様のために厳選されたハイライト</label>
+        <name>CSP_YouIATA_Highlights</name>
+    </customLabels>
+    <customLabels>
+        <label>こちらでは、航空業界の種々多様なIATAサービス、出版物、製品、およびリソースをお探しいただけます。お客様のご興味やご活動履歴に合わせて特別に仕立てられております。</label>
+        <name>CSP_YouIATA_Highlights_Text</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_You_Dont_Have_Announcements --></label>
@@ -3442,6 +3502,270 @@
     <customLabels>
         <label><!-- FooterLeadMessage --></label>
         <name>FooterLeadMessage</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM Access Denied --></label>
+        <name>GADM_Access_Denied</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM Access Pending --></label>
+        <name>GADM_Access_Pending</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM Account not active --></label>
+        <name>GADM_Account_not_active</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM_ChooseAnotherFile --></label>
+        <name>GADM_ChooseAnotherFile</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM_ChooseFile --></label>
+        <name>GADM_ChooseFile</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM Data Submission bad file extension --></label>
+        <name>GADM_Data_Submission_bad_file_extension</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM Data Submission empty file --></label>
+        <name>GADM_Data_Submission_empty_file</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM Data Submission error uploading file --></label>
+        <name>GADM_Data_Submission_error_uploading_file</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM Data Submission file is big --></label>
+        <name>GADM_Data_Submission_file_is_big</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM Data Submission file is selected --></label>
+        <name>GADM_Data_Submission_file_is_selected</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM Data Submission file uploaded --></label>
+        <name>GADM_Data_Submission_file_uploaded</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM Data Submission help --></label>
+        <name>GADM_Data_Submission_help</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM Data Submission no access --></label>
+        <name>GADM_Data_Submission_no_access</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM Data Submission no actor --></label>
+        <name>GADM_Data_Submission_no_actor</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM Data Submission no gadm settings --></label>
+        <name>GADM_Data_Submission_no_gadm_settings</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM Data Submission no permission set --></label>
+        <name>GADM_Data_Submission_no_permission_set</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM Data Submission no records --></label>
+        <name>GADM_Data_Submission_no_records</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM Data Submission no user --></label>
+        <name>GADM_Data_Submission_no_user</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM Data Submission no valid actor --></label>
+        <name>GADM_Data_Submission_no_valid_actor</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM Data Submission select actor --></label>
+        <name>GADM_Data_Submission_select_actor</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM Data Submission select user --></label>
+        <name>GADM_Data_Submission_select_user</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM Data Submission too many files --></label>
+        <name>GADM_Data_Submission_too_many_files</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM Data Submission unexpected error --></label>
+        <name>GADM_Data_Submission_unexpected_error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM Data Submission upload error --></label>
+        <name>GADM_Data_Submission_upload_error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM Data Submission upload errors --></label>
+        <name>GADM_Data_Submission_upload_errors</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM Data Submission upload successful --></label>
+        <name>GADM_Data_Submission_upload_successful</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM Data Submission user search --></label>
+        <name>GADM_Data_Submission_user_search</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM Data Submssion no user information --></label>
+        <name>GADM_Data_Submssion_no_user_information</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM_FileAlreadyAttached --></label>
+        <name>GADM_FileAlreadyAttached</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM Ground Service Provider --></label>
+        <name>GADM_Ground_Service_Provider</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM_Invite_User_invitation_error --></label>
+        <name>GADM_Invite_User_invitation_error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM_Invite_User_invitation_no_data --></label>
+        <name>GADM_Invite_User_invitation_no_data</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM_Invite_User_invitation_sent --></label>
+        <name>GADM_Invite_User_invitation_sent</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM_Invite_User_not_allowed_email_domain --></label>
+        <name>GADM_Invite_User_not_allowed_email_domain</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM_Invite_User_notification_sent --></label>
+        <name>GADM_Invite_User_notification_sent</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM_NoFile --></label>
+        <name>GADM_NoFile</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM No Access --></label>
+        <name>GADM_No_Access</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM PowerBI categories error --></label>
+        <name>GADM_PowerBI_categories_error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM_PowerBI_no_access_token --></label>
+        <name>GADM_PowerBI_no_access_token</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM_PowerBI_no_categories --></label>
+        <name>GADM_PowerBI_no_categories</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM_PowerBI_no_dashboard --></label>
+        <name>GADM_PowerBI_no_dashboard</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM_PowerBI_no_dataset_detail --></label>
+        <name>GADM_PowerBI_no_dataset_detail</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM_PowerBI_no_embed_token --></label>
+        <name>GADM_PowerBI_no_embed_token</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM_PowerBI_no_federation_Id --></label>
+        <name>GADM_PowerBI_no_federation_Id</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM_PowerBI_no_report_detail --></label>
+        <name>GADM_PowerBI_no_report_detail</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM_PowerBI_no_user_detail --></label>
+        <name>GADM_PowerBI_no_user_detail</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM Power User --></label>
+        <name>GADM_Power_User</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM_User_Invitation_Mr --></label>
+        <name>GADM_User_Invitation_Mr</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM_User_Invitation_Mrs --></label>
+        <name>GADM_User_Invitation_Mrs</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM_User_Invitation_Ms --></label>
+        <name>GADM_User_Invitation_Ms</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM_User_Invitation_job_function_help_text --></label>
+        <name>GADM_User_Invitation_job_function_help_text</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM_User_Invitation_job_title --></label>
+        <name>GADM_User_Invitation_job_title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM_User_Invitation_none --></label>
+        <name>GADM_User_Invitation_none</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM_User_Invitation_user_exist --></label>
+        <name>GADM_User_Invitation_user_exists</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM_User_Management_actor_not_available --></label>
+        <name>GADM_User_Management_actor_not_available</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM_User_Management_business_unit_not_available --></label>
+        <name>GADM_User_Management_business_unit_not_available</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM_User_Management_ cannot_edit_own_assignments --></label>
+        <name>GADM_User_Management_cannot_edit_own_assignments</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM_User_Management_domain_blocked --></label>
+        <name>GADM_User_Management_domain_blocked</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM_User_Management_gadm_user_domain_blocked --></label>
+        <name>GADM_User_Management_gadm_user_domain_blocked</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM User Management no data --></label>
+        <name>GADM_User_Management_no_data</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM User Management no records --></label>
+        <name>GADM_User_Management_no_records</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM_User_Management_role_not_editable --></label>
+        <name>GADM_User_Management_role_not_editable</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM User Management unable to save --></label>
+        <name>GADM_User_Management_unable_to_save</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM account contact role gadm user --></label>
+        <name>GADM_account_contact_role_gadm_user</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM account not effective --></label>
+        <name>GADM_account_not_effective</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM active users reached --></label>
+        <name>GADM_active_users_reached</name>
     </customLabels>
     <customLabels>
         <label>国</label>
@@ -12497,7 +12821,7 @@ and
         <name>ISSP_Account_not_approved</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ContactList --></label>
+        <label>承認</label>
         <name>ISSP_Activate</name>
     </customLabels>
     <customLabels>
@@ -13283,7 +13607,7 @@ and
         <name>ISSP_Deny_Access</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Description --></label>
+        <label>概説</label>
         <name>ISSP_Description</name>
     </customLabels>
     <customLabels>
@@ -14703,7 +15027,7 @@ and
         <name>ISSP_MITA_Agreements_Service_Name</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ContactList --></label>
+        <label>管理者として承認</label>
         <name>ISSP_MakeAdmin</name>
     </customLabels>
     <customLabels>
@@ -18576,6 +18900,10 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
         <name>OneId_Fred_Select_Type_of_Company</name>
     </customLabels>
     <customLabels>
+        <label><!-- OneId GADM Troubleshooting --></label>
+        <name>OneId_GADM_Troubleshooting</name>
+    </customLabels>
+    <customLabels>
         <label>GSA コードと国の組み合わせで貴社を探せない場合、情報が正しく入力されていることをご確認ください。または、&lt;a href=&quot;&quot;http://theiatahub.force.com/iatapkb/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US&quot;&quot; target=&quot;&quot;_blank&quot;&quot;&gt;トラブルシューティングガイド&lt;/a&gt;を参照してください</label>
         <name>OneId_GSAWarning</name>
     </customLabels>
@@ -20395,6 +20723,10 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
         <name>csp_ActionIndicator</name>
     </customLabels>
     <customLabels>
+        <label>追加の詳細</label>
+        <name>csp_AdditionalDetails</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Request New Service --></label>
         <name>csp_AgencyReadOnly</name>
     </customLabels>
@@ -20681,6 +21013,10 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
     <customLabels>
         <label>サポート</label>
         <name>csp_Query</name>
+    </customLabels>
+    <customLabels>
+        <label>他のどなたかに通知されますか？</label>
+        <name>csp_RecipientsQuestion</name>
     </customLabels>
     <customLabels>
         <label>「代理店は、現在IATAEasyPayアカウントをお持ちでないようです。&lt;br/&gt; &lt;br/&gt;本社の署名権者に連絡を取り、IATA EasyPayアカウントの開設をリクエストしてください。ポータル管理者として、 &lt;a href=&quot;/my-profile&quot;&gt;個人情報&lt;/a&gt;を更新して ご自身を法的署名権者として指定するか、または &lt;a href=&quot;/company-profile&quot;&gt;会社の管理- &gt;連絡先&lt;/a&gt;のページから適切なポータル管理者を指定し、 ページを開いてEasyPayアカウントの開設をリクエストすることができます。&lt;br/&gt;&lt;br/&gt;お手伝いが必要な場合はお問い合わせください。&lt;a href=&quot;/Support-Reach-Us&quot;&gt;顧客サポート&lt;/a&gt;</label>
@@ -21195,6 +21531,10 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
         <name>Clicktools</name>
     </customTabs>
     <customTabs>
+        <label><!-- Data Submisssion --></label>
+        <name>Data_Submisssion</name>
+    </customTabs>
+    <customTabs>
         <label><!-- EC2 Console --></label>
         <name>EC2_Console</name>
     </customTabs>
@@ -21209,6 +21549,10 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
     <customTabs>
         <label><!-- ExactTarget --></label>
         <name>ExactTarget</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- Data Submission --></label>
+        <name>File_Upload</name>
     </customTabs>
     <customTabs>
         <label><!-- Financial Assessment Campaign --></label>
@@ -21233,6 +21577,14 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
     <customTabs>
         <label><!-- ISS Operations Loader --></label>
         <name>ISS_Operation</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- Invite User --></label>
+        <name>Invite_User</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- Invite User --></label>
+        <name>Invite_User1</name>
     </customTabs>
     <customTabs>
         <label><!-- Late Remittance Report --></label>

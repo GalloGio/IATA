@@ -207,4 +207,42 @@ private class  OneIdLightningLoginFormControllerTest {
             OneIdLightningLoginFormController.login('Test@test11111.com', 'fakepwd', null, Label.TECH_GDPR_Community_Name);
         Test.stopTest();
     }
+
+    @IsTest
+    static void testLoginToGADM_nullStartUrl() {
+        testReactivateUser();
+
+        // Create permission set if doesn't exist
+        list<PermissionSet> pss = [SELECT id FROM PermissionSet WHERE Name = 'GADM'];
+        if(pss.isEmpty()){
+            PermissionSet ps = new PermissionSet();
+            ps.Name = 'GADM';
+            ps.label = 'GADM';
+            ps.Description = 'GADM permission to access to the portal as an IATA service in One Identity';
+            insert ps;
+        }
+
+        Test.startTest();
+        OneIdLightningLoginFormController.login('Test@test11111.com', 'supersecretstring', null, 'GADM');
+        Test.stopTest();
+    }
+
+    @IsTest
+    static void testLoginToGADM() {
+        testReactivateUser();
+
+        // Create permission set if doesn't exist
+        list<PermissionSet> pss = [SELECT id FROM PermissionSet WHERE Name = 'GADM'];
+        if(pss.isEmpty()){
+            PermissionSet ps = new PermissionSet();
+            ps.Name = 'GADM';
+            ps.label = 'GADM';
+            ps.Description = 'GADM permission to access to the portal as an IATA service in One Identity';
+            insert ps;
+        }
+
+        Test.startTest();
+        OneIdLightningLoginFormController.login('Test@test11111.com', 'supersecretstring', 'someStartUrl', 'GADM');
+        Test.stopTest();
+    }
 }
