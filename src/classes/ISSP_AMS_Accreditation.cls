@@ -5658,7 +5658,7 @@ public without sharing class ISSP_AMS_Accreditation {
                 }
             }
         } else if (stepNumber == '5' && !isFromValidation) {
-            auxReqsList = [SELECT Id, Name, Requirement_text__c, File_to_Upload__c, File_Identifier2__c
+            auxReqsList = [SELECT Id, Name, Requirement_text__c, File_to_Upload__c, File_Identifier2__c, Language__c
                         FROM AMS_Accreditation_Requirement__c
                         WHERE (AMS_Accreditation_Country_CheckList__r.IATA_ISO_Country__r.ISO_Code__c = :newCase.IFAP_Country_ISO__c AND AMS_Accreditation_Country_CheckList__r.Operation__c = :sector
                             AND Location_type__c INCLUDES (:amsOfficeType) AND File_Identifier2__c = :CGO_SIGNED_CONTRACT) And Type_Of_Agent__c INCLUDES (:newForm.Agent_Type__c)
@@ -5674,7 +5674,7 @@ public without sharing class ISSP_AMS_Accreditation {
             }
         } else if (stepNumber == '5' && isFromValidation) {
             //and display Signed Contract to upload in Step E
-            auxReqsList = [SELECT Id, Name, Requirement_text__c, File_to_Upload__c, File_Identifier2__c
+            auxReqsList = [SELECT Id, Name, Requirement_text__c, File_to_Upload__c, File_Identifier2__c, Language__c
                         FROM AMS_Accreditation_Requirement__c
                         WHERE AMS_Accreditation_Country_CheckList__r.IATA_ISO_Country__r.ISO_Code__c = :newCase.IFAP_Country_ISO__c AND AMS_Accreditation_Country_CheckList__r.Operation__c = :sector
                             AND Location_type__c INCLUDES (:amsOfficeType) AND File_Identifier2__c NOT IN: excludeIdentifierSet And Type_Of_Agent__c INCLUDES (:newForm.Agent_Type__c)
