@@ -142,7 +142,7 @@ public without sharing class ISSP_Financial_Institutions {
                 Portal_Application_Right__c existingGDIPortalAppRight = gdiPortalApp.Portal_Application_Rights__r[0];
 
                 conId = existingGDIPortalAppRight.Contact__c;
-                countryIsMulticountryEnabled = existingGDIPortalAppRight.Contact__r.Account.ANG_Accreditation_Model__c == 'Multicountry';
+                countryIsMulticountryEnabled = existingGDIPortalAppRight.Contact__r.Account.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
                 agencyCountry = existingGDIPortalAppRight.Contact__r.Account.Country_ISO_Code__c;
                 agencyRegion = existingGDIPortalAppRight.Contact__r.Account.Region_formula__c;
                 countryIsGDIEnabled = (existingGDIPortalAppRight.Contact__r.Account.IATA_ISO_Country__r.ANG_GDI_Enabled__c && existingGDIPortalAppRight.Contact__r.Account.Category__c == 'IATA Passenger Sales Agent');
@@ -167,7 +167,7 @@ public without sharing class ISSP_Financial_Institutions {
                 
                 Account userAcc = currentPortalUser.Contact.Account;
                 conId = currentPortalUser.ContactId;
-                countryIsMulticountryEnabled = userAcc.ANG_Accreditation_Model__c == 'Multicountry';
+                countryIsMulticountryEnabled = userAcc.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
                 agencyCountry = userAcc.Country_ISO_Code__c;
                 agencyRegion = userAcc.Region_formula__c;
                 countryIsGDIEnabled = (userAcc.IATA_ISO_Country__r.ANG_GDI_Enabled__c && userAcc.Category__c == AMS_Utils.CATEGORY_PASSENGER_SALES_AGENT);

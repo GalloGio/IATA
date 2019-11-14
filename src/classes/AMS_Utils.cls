@@ -2515,8 +2515,8 @@ public static String getChangeCodeMemoText(String process,String changeCodeId, A
             result = result.replace('Cashless', 'GoLite');
         if (result.containsIgnoreCase('Cash'))
             result = result.replace('Cash', 'GoStandard');
-        if (result.containsIgnoreCase('Multicountry'))
-            result = result.replace('Multicountry', 'GoGlobal');
+        if (result.containsIgnoreCase(AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY))
+            result = result.replace(AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY, 'GoGlobal');
 
         return result;
 
@@ -2544,7 +2544,7 @@ public static String getChangeCodeMemoText(String process,String changeCodeId, A
         'Legacy' => 'Legacy',
         'Cashless' =>   'GoLite',
         'Cash' =>   'GoStandard',
-        'Multicountry' => 'GoGlobal'
+        AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY => 'GoGlobal'
     };
 
     public static String getCustomLabel(String labelName) {

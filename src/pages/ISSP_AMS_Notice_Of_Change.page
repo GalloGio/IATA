@@ -616,7 +616,7 @@
 
 	function checkGoGlobal() {
 		if ({!hqAccount.ANG_IsNewGenAgency__c}) {
-			if ($j('[id$=allowedAccreditationModelSelect]')[0].selectedOptions[0].value == 'Multicountry') {
+			if ($j('[id$=allowedAccreditationModelSelect]')[0].selectedOptions[0].value == '{!ACCREDITATION_MODEL_MC}') {
 				$j('[id$=selectHEForConversion]').css('display', 'block');
 				$j('[id$=accountsToBeConvertedPanel]').css('display', 'block');
 				$j('[id$=HEAgencyMC]').css('display', 'block');
@@ -802,7 +802,7 @@
 						<apex:pageBlockSection columns="1">	
 							<apex:pageBlockSectionItem labelStyle="width:26%">
 								<apex:outputLabel value="{!$Label.ANG_ISSP_AccreditationType}"/>
-								<apex:outputText value="{!IF(con.Account.ANG_Accreditation_Model__c == 'Cash', $Label.ANG_ISSP_ProductStandardAccreditationWithCash, IF(con.Account.ANG_Accreditation_Model__c == 'Multicountry', $Label.ANG_ISSP_ProductStandardAccreditationWithMultiCountry, $Label.ANG_ISSP_ProductStandardAccreditationWithNoCash))}" />
+								<apex:outputText value="{!IF(con.Account.ANG_Accreditation_Model__c == 'Cash', $Label.ANG_ISSP_ProductStandardAccreditationWithCash, IF(con.Account.ANG_Accreditation_Model__c == ACCREDITATION_MODEL_MC, $Label.ANG_ISSP_ProductStandardAccreditationWithMultiCountry, $Label.ANG_ISSP_ProductStandardAccreditationWithNoCash))}" />
 							</apex:pageBlockSectionItem>
 						</apex:pageBlockSection>
 						<apex:pageBlockSection columns="1">
@@ -858,7 +858,7 @@
 										var mcEnabled = {!con.Account.IATA_ISO_Country__r.Multicountry_Enabled__c};
         								var l = document.querySelectorAll('[id$="allowedAccreditationModelSelect"]')[0];
         								for(i = l.length -1; i >=0 ; i--) {
-        									if((aux == 'Cashless' || aux == 'Multicountry') && (l[i].value === "Cashless" || l[i].value === "Multicountry")) {
+        									if((aux == 'Cashless' || aux == '{!ACCREDITATION_MODEL_MC}') && (l[i].value === "Cashless" || l[i].value === "Multicountry")) {
         										l.remove(i);
 											} else if (l[i].value === "Multicountry" && !mcEnabled) {
 												l.remove(i);

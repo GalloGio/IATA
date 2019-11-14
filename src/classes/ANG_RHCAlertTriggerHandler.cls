@@ -270,7 +270,7 @@ public class ANG_RHCAlertTriggerHandler{
                 //ACAMBAS - NEWGEN-4466 - Start 
                 if(!String.isEmpty(config.Email_Template_Internal_Stakeholders__c)) {
                     //Ensure that the agency is a MC key
-                    if(accounts.get(a.ANG_Account__c).ANG_Accreditation_Model__c == 'Multicountry' && accounts.get(a.ANG_Account__c).Multicountry_Key_Hierarchy__c == true) {
+                    if(accounts.get(a.ANG_Account__c).ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY && accounts.get(a.ANG_Account__c).Multicountry_Key_Hierarchy__c == true) {
                         List<String> stakeholdersMailingList = getMailingListFromCustomSetting('Risk_Alert_Stakeholders__c'); 
                         sendEmailToMailingList(alertsToNotify, stakeholdersMailingList);   
                     }
@@ -362,7 +362,7 @@ public class ANG_RHCAlertTriggerHandler{
 
             if(!(ralert.recordTypeId == ANG_RHCHelper.RECTYPE_RISKALERT_RHC && (ralert.ANG_Threshold_Level__c == '100%' && ralert.ANG_Direction__c == ANG_RHCHelper.RISK_ALERT_DIRECTION_UP) || 
                  ((ralert.ANG_Threshold_Level__c == '100%' || ralert.ANG_Threshold_Level__c == '75%' || ralert.ANG_Threshold_Level__c == '50%') && ralert.ANG_Direction__c == ANG_RHCHelper.RISK_ALERT_DIRECTION_DOWN) ||
-                (accounts.get(ralert.ANG_Account__c).ANG_Accreditation_Model__c == 'Multicountry' && ralert.ANG_Direction__c == ANG_RHCHelper.RISK_ALERT_DIRECTION_DOWN)))
+                (accounts.get(ralert.ANG_Account__c).ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY && ralert.ANG_Direction__c == ANG_RHCHelper.RISK_ALERT_DIRECTION_DOWN)))
                 continue;
 
             if(ralert.ANG_Direction__c == ANG_RHCHelper.RISK_ALERT_DIRECTION_UP){

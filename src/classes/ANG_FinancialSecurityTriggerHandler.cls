@@ -414,7 +414,7 @@ public class ANG_FinancialSecurityTriggerHandler{
 			if(Trigger.isInsert || (Trigger.isUpdate && fs.CurrencyIsoCode != oldMap.get(fs.Id).CurrencyIsoCode) )
 				accsIds.add(fs.Account__c);
 		
-		Map<Id,Account> accsMap = new Map<Id,Account>([SELECT Id FROM Account WHERE Id IN :accsIds AND ANG_Accreditation_Model__c = 'Multicountry']);
+		Map<Id,Account> accsMap = new Map<Id,Account>([SELECT Id FROM Account WHERE Id IN :accsIds AND ANG_Accreditation_Model__c = :AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY]);
 
 		if(accsMap.isEmpty())
 			return;

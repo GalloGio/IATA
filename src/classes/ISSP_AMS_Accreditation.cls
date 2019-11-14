@@ -262,6 +262,8 @@ public without sharing class ISSP_AMS_Accreditation {
     public AMS_Accreditation_Contact__c trainedStaffContact {get; set;}
     public Id trainedStaffId {get; set;}
 
+    public Id ACCREDITATION_MODEL_MC = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
+
     //CNS
     public String communityName { 
         get { 
@@ -982,7 +984,7 @@ public without sharing class ISSP_AMS_Accreditation {
                     setContextualHelp(userInfo.getLanguage());
                     isStep5 = true;
 
-                    if (newForm.ANG_Accreditation_Model_to_Change__c == 'Multicountry' && isNoticeOfChange) {
+                    if (newForm.ANG_Accreditation_Model_to_Change__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY && isNoticeOfChange) {
                         if(newForm.Agency_Codes_Concerned__c != null) accountsToBeConverted = getSelectedBranchList(newForm.Agency_Codes_Concerned__c.split(','));
 
                         selectedCoutriesForNoCMC = '';
@@ -1488,7 +1490,7 @@ public without sharing class ISSP_AMS_Accreditation {
     }
 
     private Map<Id,Account> getSelectedBranchList(List<String> branchCodes) {
-        if(newForm.ANG_Accreditation_Model_to_Change__c == 'Multicountry' && isNoticeOfChange)
+        if(newForm.ANG_Accreditation_Model_to_Change__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY && isNoticeOfChange)
             return new Map<Id,Account>([SELECT Id, Name, IATA_ISO_Country__r.Name, Sector__c, IATACode__c,Location_Type__c, BillingCity, BillingState, BillingCountry, Top_Parent__r.IATACode__c, Top_Parent__r.Id, IATA_ISO_Country__r.AMS_Settlement_System__c, Country_ISO_Code__c
                 FROM Account
                 WHERE IATACode__c IN :branchCodes AND Location_Type__c = :AMS_Utils.HE
@@ -1977,7 +1979,7 @@ public without sharing class ISSP_AMS_Accreditation {
                 newCase.Type_of_customer__c = con.Account.Category__c;
             }
 
-            if(amsLocationType.contains('Standard') || amsLocationType.contains('Associate') || amsLocationType.contains('Multicountry') || isMCAccredited){
+            if(amsLocationType.contains('Standard') || amsLocationType.contains('Associate') || amsLocationType.contains(AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY) || isMCAccredited){
                 newCase.Subject = getCaseReason(newCase.Reason1__c, hqAccount.ANG_Accreditation_Model__c) + ' - ' + newCase.Country_concerned_by_the_query__c;
             } else {
                 newCase.Subject = getCaseReason(newCase.Reason1__c, hqAccount.ANG_Accreditation_Model__c) + ' - ' + getAgentTypeLabel(agentType) + ' - ' + newCase.Country_concerned_by_the_query__c;
@@ -3553,7 +3555,7 @@ public without sharing class ISSP_AMS_Accreditation {
                     newForm.ANG_Accreditation_type__c = newForm.ANG_Accreditation_Model_to_Change__c;
                 }
 
-                if (newForm.ANG_Accreditation_Model_to_Change__c == 'Multicountry') {
+                if (newForm.ANG_Accreditation_Model_to_Change__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY) {
 
                     //In case of conversion from standard to multicountry overwrite the case reason
                     newCase.Reason1__c = 'Accreditation Type';
@@ -3642,7 +3644,7 @@ public without sharing class ISSP_AMS_Accreditation {
             } else if (isNoticeOfChange && !isBankAccountChange) {
                 //NEWGEN 683
                 if (getIsAccreditationModelNotNullOrLegacy()) {
-                    if (newForm.Type_Of_Change__c == 'Yes' && newForm.ANG_Accreditation_Model_to_Change__c == 'Multicountry') {
+                    if (newForm.Type_Of_Change__c == 'Yes' && newForm.ANG_Accreditation_Model_to_Change__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY) {
                         typeOfProcess = AMS_Utils.NGCONVERSIONTOMULTICOUNTRY;
                     } else {
                         typeOfProcess = AMS_Utils.NGCHANGES;
@@ -7008,7 +7010,7 @@ public without sharing class ISSP_AMS_Accreditation {
             }
         }
 
-		if (isNoticeOfChange && newForm.ANG_Accreditation_Model_to_Change__c == 'Multicountry')
+		if (isNoticeOfChange && newForm.ANG_Accreditation_Model_to_Change__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY)
 		{
 			// all the accounts accounts
 			List<String> accounts = (newForm.Agency_Codes_Concerned__c == null ? '' : newForm.Agency_Codes_Concerned__c).split(','); // the selected accounts

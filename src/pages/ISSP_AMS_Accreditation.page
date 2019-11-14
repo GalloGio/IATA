@@ -502,7 +502,7 @@
 
         function loadMultiCountryNoC() {
             if ({!isNoticeOfChange} && {!isStep1}) {
-                if ('{!hqAccount.ANG_Accreditation_Model__c}' == 'Multicountry') {
+                if ('{!hqAccount.ANG_Accreditation_Model__c}' == '{!ACCREDITATION_MODEL_MC}') {
                     $('[id$="nocThirdQuestion"]').find("input")[1].checked = true; //default select as a temporary solution
 
                     $('[id$="nocThirdQuestion"]').find("input")[1].disabled = true;
@@ -539,7 +539,7 @@
             if ($('[id$="LocationType"]').find("input")[1].checked) { 
                 toggleCountryMultiSelection(true, false);
 
-                if ('{!hqAccount.ANG_Accreditation_Model__c}' == 'Multicountry') {
+                if ('{!hqAccount.ANG_Accreditation_Model__c}' == '{!ACCREDITATION_MODEL_MC}') {
                     $('#brcountry').text("{!$Label.ISSP_AMS_NOC_All_Countries}");
                     $('[id$="nocThirdQuestion"]').css('display', 'none');
                 } else {
@@ -550,7 +550,7 @@
             }
 
             if ($('[id$="LocationType"]').find("input")[2].checked) {
-                if ('{!hqAccount.ANG_Accreditation_Model__c}' == 'Multicountry') {
+                if ('{!hqAccount.ANG_Accreditation_Model__c}' == '{!ACCREDITATION_MODEL_MC}') {
                     toggleCountryMultiSelection(false, true);
                     $('[for$="countryconcerned"]')[0].innerText = "* {!$Label.ANG_ISSP_CountryConcerned_AEs}";
                 } else {
@@ -562,7 +562,7 @@
             }
 
             if ($('[id$="LocationType"]').find("input")[3].checked) {
-                if ('{!hqAccount.ANG_Accreditation_Model__c}' == 'Multicountry') {
+                if ('{!hqAccount.ANG_Accreditation_Model__c}' == '{!ACCREDITATION_MODEL_MC}') {
                     toggleCountryMultiSelection(false, true);
                     $('[for$="countryconcerned"]')[0].innerText = "* {!$Label.ANG_ISSP_CountryConcerned_AEs}";
                 } else {
