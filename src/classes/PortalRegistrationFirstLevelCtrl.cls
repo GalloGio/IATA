@@ -336,9 +336,8 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 	}
 
 	public static List<Contact> returnExistingContactAdditionalEmail(String additionalEmail) {
-		// Method to search contact that already exists in SALESFORCE
 		List<Contact> conList = new List<Contact>();
-		conList = [SELECT id, Name, AccountId, Email, Account.Name FROM Contact WHERE Additional_Email__c =: additionalEmail];
+		conList = [SELECT id, Name, AccountId, Email, Account.Name FROM Contact WHERE Additional_Email__c =: additionalEmail AND Status__c = 'Active'];
 		return conList;
 	}
 
