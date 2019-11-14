@@ -1,6 +1,18 @@
 @isTest
 private  class LightningConnectedAppHelper_Test {
 
+    @TestSetup
+    private static void setup() {
+
+        List<PermissionSet> permissionSets = [SELECT Id, Name FROM PermissionSet WHERE Name = 'GADM'];
+
+        if(permissionSets.isEmpty()) {
+            PermissionSet ps = new PermissionSet(Label = 'GADM', Name = 'GADM');
+            insert ps;
+        }
+
+    }
+
     static testMethod void testAuramethods() {
         LightningConnectedAppHelper.ConnectedAppsList();
         LightningConnectedAppHelper.getroles('testconnectedapp');
@@ -285,6 +297,146 @@ private  class LightningConnectedAppHelper_Test {
    
        
 
+
+    }
+
+    @IsTest
+    private static void gadmSubmitTest() {
+
+        createData();
+
+        List<PermissionSet> psIds = [SELECT Id,name FROM PermissionSet LIMIT 5];
+        Id recTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('One_Id_Service_Provider_Config__c', 'Service_Bundle');
+        One_Id_Service_Provider_Config__c bundleConfig = new One_Id_Service_Provider_Config__c(Service_Provider_Name__c = 'GADM',
+                License_Upgrade_Required__c= true,
+                Profile_Id__c='a1',
+                Description__c='some description',
+                Is_Active__c = true, Portal_Visible__c = true,
+                RecordTypeid = recTypeId, App_Picture_Url__c='oi',
+                Customer_Type_Activation__c = 'Airline');
+        insert bundleConfig;
+
+        One_Id_Service_Provider_Config__c serviceProviderConfig = new One_Id_Service_Provider_Config__c (Service_Provider_Name__c = 'GADM', Is_Active__c = true, Portal_Visible__c = true, Service_Bundle__c= bundleConfig.id, Customer_Type_Activation__c = 'Airline');
+        insert serviceProviderConfig;
+
+        One_Id_App_Config_Detail__c appConfigDetail = new One_Id_App_Config_Detail__c (One_Id_Service_Provider_Config__c= serviceProviderConfig.id, PermissionSet_SSO__c = psIds[0].name, PermissionSet_Provisioning__c = psIds[1].name );
+        insert appConfigDetail;
+
+        One_Id_App_Role_Config__c role = new One_Id_App_Role_Config__c (Role_Name__c = 'Power User', One_Id_App_Config_Detail__c = appConfigDetail.id, Role_Description__c = 'role description');
+        insert role;
+
+        One_Id_App_Role_Config__c role2 = new One_Id_App_Role_Config__c (Role_Name__c = 'GADM User', One_Id_App_Config_Detail__c = appConfigDetail.id, Role_Description__c = 'role2 description');
+        insert role2;
+
+        Account_Roles__c accountRoles = new Account_Roles__c();
+        accountRoles.Name = 'GADM Participant';
+        insert accountRoles;
+
+        Id externalRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact_Roles__c', 'External');
+
+        Contact_Roles__c contactRoles = new Contact_Roles__c();
+        contactRoles.Name = 'GADM User';
+        contactRoles.RecordTypeId = externalRecordTypeId;
+        insert contactRoles;
+
+        Contact_Roles__c contactRoles2 = new Contact_Roles__c();
+        contactRoles2.Name = 'Service Power User';
+        contactRoles2.RecordTypeId = externalRecordTypeId;
+        insert contactRoles2;
+
+        Portal_Applications__c portalApplications = new Portal_Applications__c();
+        portalApplications.Name = 'GADM';
+        insert portalApplications;
+
+        Contact_Role_Service__c gadmUserRoleService = new Contact_Role_Service__c();
+        gadmUserRoleService.Service__c = portalApplications.Id;
+        gadmUserRoleService.Contact_Role__c = contactRoles.Id;
+        insert gadmUserRoleService;
+
+        Contact_Role_Service__c powerUserRoleService = new Contact_Role_Service__c();
+        powerUserRoleService.Service__c = portalApplications.Id;
+        powerUserRoleService.Contact_Role__c = contactRoles2.Id;
+        insert powerUserRoleService;
+
+        Account_Role_Services__c accountRoleServices = new Account_Role_Services__c();
+        accountRoleServices.Portal_Service__c = portalApplications.Id;
+        accountRoleServices.Account_Roles__c = accountRoles.Id;
+        insert accountRoleServices;
+
+        User testUser = [SELECT Id FROM User WHERE Email = 'test.issp.registration@testisspregistration.com'];
+
+        Test.startTest();
+
+        System.runAs(testUser) {
+            LightningConnectedAppHelper.submit('GADM', 'Power User');
+        }
+
+        Test.stopTest();
+
+        List<Account_Contact_Role__c> accountContactRoles = [SELECT Id, Contact_Roles__r.Name FROM Account_Contact_Role__c];
+        //functional: power user, gadm user; group gadm user with parent account
+        System.assertEquals(3, accountContactRoles.size(), 'Not all Account_Contact_Role__c objects were created!');
+
+        Set<Id> roleIds = new Set<Id>();
+        Set<String> roleNames =new Set<String>();
+        for(Account_Contact_Role__c accountContactRole : accountContactRoles) {
+            roleNames.add(accountContactRole.Contact_Roles__r.Name);
+            roleIds.add(accountContactRole.Id);
+        }
+
+        System.assertEquals(true, roleNames.contains('Service Power User'), 'Account_Contact_Role__c for Power User was not created!');
+        System.assertEquals(true, roleNames.contains('GADM User'), 'Account_Contact_Role__c for GADM User was not created!');
+
+        List<Contact_Role_Service_Access__c> serviceAccesses = [SELECT Id, Status__c FROM Contact_Role_Service_Access__c WHERE Contact_Role__c IN :roleIds];
+        for(Contact_Role_Service_Access__c serviceAccess : serviceAccesses) {
+            System.assertEquals('Pending', serviceAccess.Status__c, 'Contact_Role_Service_Access__c.Status__c should be Pending!');
+        }
+
+    }
+
+
+    @IsTest
+    private static void gadmConnectedAppsListTest() {
+
+        createData();
+
+        User testUser = [SELECT Id FROM User WHERE Email = 'test.issp.registration@testisspregistration.com'];
+
+        PermissionSet permissionSet = [SELECT Id, Name FROM PermissionSet WHERE Name = 'GADM'];
+
+        Id recTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('One_Id_Service_Provider_Config__c', 'Service_Bundle');
+        One_Id_Service_Provider_Config__c bundleConfig = new One_Id_Service_Provider_Config__c(Service_Provider_Name__c = 'GADM',
+                License_Upgrade_Required__c= true,
+                Profile_Id__c='a1',
+                Description__c='some description',
+                Is_Active__c = true, Portal_Visible__c = true,
+                RecordTypeid = recTypeId, App_Picture_Url__c='oi',
+                Customer_Type_Activation__c = 'Airline');
+        insert bundleConfig;
+
+        One_Id_Service_Provider_Config__c serviceProviderConfig = new One_Id_Service_Provider_Config__c (Service_Provider_Name__c = 'GADM', Is_Active__c = true, Portal_Visible__c = true, Service_Bundle__c= bundleConfig.id, Customer_Type_Activation__c = 'Airline');
+        insert serviceProviderConfig;
+
+        One_Id_App_Config_Detail__c appConfigDetail = new One_Id_App_Config_Detail__c (One_Id_Service_Provider_Config__c= serviceProviderConfig.id, PermissionSet_SSO__c = permissionSet.Name);
+        insert appConfigDetail;
+
+        Test.startTest();
+
+        List<String> userApps;
+
+        System.runAs(testUser) {
+
+            PermissionSetAssignment psa = new PermissionSetAssignment();
+            psa.AssigneeId = testUser.Id;
+            psa.PermissionSetId = permissionSet.Id;
+            insert psa;
+
+            userApps = LightningConnectedAppHelper.ConnectedAppsList();
+        }
+
+        Test.stopTest();
+
+        System.assertEquals(false, userApps.contains('GADM'), 'GADM app should not be displayed if user has already access to it!');
 
     }
 

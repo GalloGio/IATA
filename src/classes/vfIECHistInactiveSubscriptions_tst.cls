@@ -333,6 +333,7 @@ public class vfIECHistInactiveSubscriptions_tst {
         User usr = IECTestUtil.createSampleGuestUserAndLogin(IECConstants.Account_ClientType_MemberAirline);
         
         System.runAs(usr) {
+        	Test.startTest();
             // Initialize Data for test scenario
             InitProduct();
             InitSubscription(true);
@@ -348,7 +349,7 @@ public class vfIECHistInactiveSubscriptions_tst {
                     
             pgCont.sSelectedSubscriptionId = subscription.Id;
             pgCont.selectSubscription();
-
+            Test.stopTest();
             // Test 002: Make sure the Rateplan info is swapped up to a member type
             //system.assertEquals(pgCont.idSelectedRatePlanInfo, oProductRatePlanInfo2.Id);
         }
@@ -365,6 +366,7 @@ public class vfIECHistInactiveSubscriptions_tst {
         User usr = IECTestUtil.createSampleGuestUserAndLogin(IECConstants.Account_ClientType_ThirdParty);
         
         System.runAs(usr) {
+        	Test.startTest();
             // Initialize Data for test scenario
             InitProduct();
             InitSubscription(true);
@@ -380,7 +382,7 @@ public class vfIECHistInactiveSubscriptions_tst {
                     
             pgCont.sSelectedSubscriptionId = subscription.Id;
             pgCont.selectSubscription();
-
+            Test.stopTest();
             // Test 002: Make sure the Rateplan info is swapped down to default type
             //system.assertEquals(pgCont.idSelectedRatePlanInfo, oProductRatePlanInfo.Id);
         }
@@ -397,6 +399,7 @@ public class vfIECHistInactiveSubscriptions_tst {
         User usr = IECTestUtil.createSampleGuestUserAndLogin(IECConstants.Account_ClientType_ThirdParty);
         
         System.runAs(usr) {
+        	Test.startTest();
             // Initialize Data for test scenario
             InitProduct();
             InitSubscription(true);
@@ -412,7 +415,7 @@ public class vfIECHistInactiveSubscriptions_tst {
                     
             pgCont.sSelectedSubscriptionId = subscription.Id;
             pgCont.selectSubscription();
-
+            Test.stopTest();
             // Test 001: Subscription History object should have the same values as first element on the list 
             system.assertNotEquals(pgCont.oSubscriptionHistory, null);
             system.assertEquals(pgCont.oSubscriptionHistory.Subscription_Number__c, subscription.Name);
