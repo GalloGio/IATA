@@ -86,8 +86,9 @@ export default class PortalMyProfilePage extends LightningElement {
                 mapOfValuesContactLocal.push({
                     'value': sectionMapContactLocal[i].lstFieldWrapper,
                     'key': sectionMapContactLocal[i].cardTitle,
-                    'showfunction': (sectionMapContactLocal[i].cardTitle === 'Professional'),
-                    'isEditable': sectionMapContactLocal[i].isEditable
+                    'showfunction': (sectionMapContactLocal[i].cardKey === 'Professional'),
+                    'isEditable': sectionMapContactLocal[i].isEditable,
+					'sectionKeyName': sectionMapContactLocal[i].cardKey
                 });
             }
 
