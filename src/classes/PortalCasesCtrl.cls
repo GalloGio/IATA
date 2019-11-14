@@ -26,7 +26,7 @@ public with sharing class PortalCasesCtrl {
     public static Set<Id> amsListForm;
     public static Set<Id> apListForm;
     public static Contact con;
-    public static PagedResult result;
+    public static CSP_Utils.PagedResult result;
     private static ISSP_PermissionFilterFactory.PermissionSetFilter     thePermissionSetFilter;
     private static ISSP_PermissionFilterFactory.ProfilePermissionFilter theProfilePermissionFilter;
     private static List<ISSPCaseListView__c> csCaseListViews;
@@ -93,7 +93,7 @@ public with sharing class PortalCasesCtrl {
     * @return List<Case>
     */
     @AuraEnabled(cacheable=true)
-    public static PagedResult getRecentCases(Boolean limitView, Boolean seeAll, Boolean specialCaseOption) {
+    public static CSP_Utils.PagedResult getRecentCases(Boolean limitView, Boolean seeAll, Boolean specialCaseOption) {
         seeAllCases = seeAll;
         isCaseFromReachUs = specialCaseOption;
         initialization();
@@ -207,7 +207,7 @@ public with sharing class PortalCasesCtrl {
     * @params
     * @return List<Case>
     */
-    private static PagedResult getCases(Boolean limitView) {
+    private static CSP_Utils.PagedResult getCases(Boolean limitView) {
         String queryString;
         Set<String> fieldPathSet = new Set<String>{'CaseNumber'};
 
@@ -310,7 +310,7 @@ public with sharing class PortalCasesCtrl {
         
         queryString = 'SELECT ' + query+ ' FROM Case ' + queryConditions + ' ORDER BY LastModifiedDate DESC ' + queryLimit;
 
-        result = new PagedResult();
+        result = new CSP_Utils.PagedResult();
         result.records = Database.query(queryString);
 
         for(Case c : (List<Case>) result.records){
@@ -606,24 +606,13 @@ public with sharing class PortalCasesCtrl {
         };
     }
 
-    public class PagedResult {
-        @AuraEnabled
-        public Integer totalItemCount { get;set; }        
-        @AuraEnabled
-        public SObject[] records { get;set; }
-        @AuraEnabled
-        public Boolean userAdmin { get;set; }
-        @AuraEnabled
-        public String url { get;set; }
-    }     
-
     /* 
     * @description Return cases related to logged User, used in search functionality
     * @params String searchKey
     * @return List<Case>
     */
     @AuraEnabled(cacheable=false)
-    public static PagedResult getFilteredCasesResultsPage(String searchKey, String requestedPage, Boolean isAdminUser) {
+    public static CSP_Utils.PagedResult getFilteredCasesResultsPage(String searchKey, String requestedPage, Boolean isAdminUser) {
 
         PortalSearchFilterWrapper filterWrapperAux = (PortalSearchFilterWrapper) JSON.deserialize(searchKey, PortalSearchFilterWrapper.class);
         System.debug('____ [cls PortalCasesCtrl - getFilteredCasesResultsPage] filterWrapperAux - ' + filterWrapperAux);
@@ -645,7 +634,7 @@ public with sharing class PortalCasesCtrl {
         }
         seeAllCases = isAdmin;
         
-        PagedResult pages = getRecentCases(false, isAdmin, false);
+        CSP_Utils.PagedResult pages = getRecentCases(false, isAdmin, false);
 
         return pages;
     }
