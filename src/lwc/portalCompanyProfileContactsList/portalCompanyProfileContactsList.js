@@ -46,13 +46,6 @@ export default class PortalCompanyProfileContactsList extends LightningElement {
         firstLetter: 'All'
     };
 
-    @api 
-    reloadData(){
-        //reloads Data when the Contacts tab (active) is clicked
-        if(this.contactsFilteringObject.searchInput !== ''){
-            this.removeTextSearch();
-        }
-    }
     /*@track paginationObject = {
         totalItems : 15,
         currentPage : 1,
