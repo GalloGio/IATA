@@ -609,25 +609,25 @@ public with sharing class PortalCasesCtrl {
             if(record.Reason1__c == ISSP_AMC_Constants.AMC_CASE_REASON_DESIGNATOR_FORM){
                 return new Map<Id, String>{
                     record.Id => 
-                    OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, '/ISSP_AMC_Airline_Designators?participationId='+ participationId + '&mid=M3S1&retURL=/ISSP_AMC_Home')
+                    OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, '/ISSP_AMC_Airline_Designators?mid=M3S1&participationId='+ participationId + '&retURL=/ISSP_AMC_Home')
                 };
             }
             else if(record.Reason1__c == ISSP_AMC_Constants.AMC_CASE_REASON_LOCATION_FORM){
                 return new Map<Id, String>{
                     record.Id =>
-                    OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, '/ISSP_AMC_Location_Identifier?participationId=' + participationId + '&mid=M3S1&retURL=/ISSP_AMC_Home')
+                    OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, '/ISSP_AMC_Location_Identifier?mid=M3S1&participationId=' + participationId + '&retURL=/ISSP_AMC_Home')
                 };
             }
             else if(record.Reason1__c == ISSP_AMC_Constants.AMC_CASE_REASON_BAGGAGE_FORM){
                 return new Map<Id, String>{
                     record.Id => 
-                    OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, '/ISSP_AMC_Baggage_Tag_Range?participationId=' + participationId + '&mid=M3S1&retURL=/ISSP_AMC_Home')
+                    OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, '/ISSP_AMC_Baggage_Tag_Range?mid=M3S1&participationId=' + participationId + '&retURL=/ISSP_AMC_Home')
                 };
             }
             else if(record.Reason1__c == ISSP_AMC_Constants.AMC_CASE_REASON_ACCOUNTING_OR_PREFIX_FORM){
                 return new Map<Id, String>{
                     record.Id => 
-                    OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, '/ISSP_AMC_Accounting_Or_Prefix_Code?participationId=' + participationId + '&mid=M3S1&retURL=/ISSP_AMC_Home')
+                    OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, '/ISSP_AMC_Accounting_Or_Prefix_Code?mid=M3S1&participationId=' + participationId + '&retURL=/ISSP_AMC_Home')
                 };
             }
            
