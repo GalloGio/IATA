@@ -207,7 +207,7 @@
                 if ('{!isoCountry.ANG_Enable_NewGen__c}' == 'true' && '{!isHOAccredited}' == 'false') {
                     $('#modalChooseAccreditationType').modal('toggle');
                 } else {
-                    navigateToUrl('/ISSP_AMS_Accreditation?{!if(communityName=='CNS', 'CommunityName=CNS&', '')}{!IF(con.Account.ANG_Accreditation_Model__c == 'Multicountry', 'isMultiCountryNewAE=true&isMCAccredited=true&', '')}retUrl=/ISSP_HomePage','LIST_VIEW','newCase');
+                    navigateToUrl('/ISSP_AMS_Accreditation?{!if(communityName=='CNS', 'CommunityName=CNS&', '')}{!IF(con.Account.ANG_Accreditation_Model__c == ACCREDITATION_MODEL_MC, 'isMultiCountryNewAE=true&isMCAccredited=true&', '')}retUrl=/ISSP_HomePage','LIST_VIEW','newCase');
                 }
                 return false;
             }
@@ -498,7 +498,7 @@
                                 <apex:pageBlock id="DraftCasespageblock">
                                     <apex:pageBlockTable id="DraftCases" value="{!AMSDraftCases}" var="MyAMSCases" styleClass="table" rendered="{!NOT(AMSDraftCasesIsEmpty)}">
                                         <apex:column headerValue="{!$ObjectType.Case.fields.CaseNumber.label}" rendered="{!NOT(AND(isoCountry.Enable_Notice_of_Change__c==false,NOT(BEGINS(MyAMSCases.Reason1__c, 'New'))))}">
-                                            <apex:outputLink value="/ISSP_AMS_Accreditation?caseId={!MyAMSCases.Id}&step=2{!if(communityName=='CNS', '&CommunityName=CNS', '')}{!IF(con.Account.ANG_Accreditation_Model__c == 'Multicountry', '&isMultiCountryNewAE=true&isMCAccredited=true', '')}" rendered="{!BEGINS(MyAMSCases.Reason1__c, 'New')}">{!MyAMSCases.CaseNumber}</apex:outputLink>
+                                            <apex:outputLink value="/ISSP_AMS_Accreditation?caseId={!MyAMSCases.Id}&step=2{!if(communityName=='CNS', '&CommunityName=CNS', '')}{!IF(con.Account.ANG_Accreditation_Model__c == ACCREDITATION_MODEL_MC, '&isMultiCountryNewAE=true&isMCAccredited=true', '')}" rendered="{!BEGINS(MyAMSCases.Reason1__c, 'New')}">{!MyAMSCases.CaseNumber}</apex:outputLink>
                                             
                                             <apex:outputLink value="/ISSP_AMS_Accreditation?caseId={!MyAMSCases.Id}&isNoticeOfChange=true&isBankAccountChange=true&step=2{!if(communityName=='CNS', '&CommunityName=CNS', '')}" rendered="{!MyAMSCases.Reason1__c=='Bank Detail Update'}">{!MyAMSCases.CaseNumber}</apex:outputLink>
 

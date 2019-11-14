@@ -52,8 +52,8 @@ public class ANG_ExposeAccountInfo_Masterdata_Test {
 		accountGE.IATACode__c = '43215678';
 		accountGE.Category__c = 'IATA Passenger Sales Agent';
 		accountGE.Location_Class__c = 'P';
-		accountGE.Location_Type__c = 'GE';
-		accountGE.ANG_Accreditation_Model__c = 'Multicountry';
+		accountGE.Location_Type__c = AMS_Utils.GE;
+		accountGE.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
 		accountGE.IATA_ISO_Country__c = ctry.Id;
 		accountGE.RecordTypeId = accountAgencyRT;
 		accountGE.GDI_Status__c = 'Open';
@@ -70,8 +70,8 @@ public class ANG_ExposeAccountInfo_Masterdata_Test {
 		account.IATACode__c = '12345678';
 		account.Category__c = 'IATA Passenger Sales Agent';
 		account.Location_Class__c = 'P';
-		account.Location_Type__c = 'AE';
-		account.ANG_Accreditation_Model__c = 'Multicountry';
+		account.Location_Type__c = AMS_Utils.AE;
+		account.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
 		account.IATA_ISO_Country__c = ctry.Id;
 		account.RecordTypeId = accountAgencyRT;
 		account.GDI_Status__c = 'Open';

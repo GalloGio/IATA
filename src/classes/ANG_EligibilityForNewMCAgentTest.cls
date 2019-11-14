@@ -92,9 +92,9 @@ private class ANG_EligibilityForNewMCAgentTest {
 			Name = 'GE Test Agency', 
 			RecordtypeId = agencyRecordTypeId,
 			IATA_ISO_Country__c = countryFR.Id,
-			Location_Type__c = 'GE',
+			Location_Type__c = AMS_Utils.GE,
 			Location_Class__c = 'P',
-			ANG_Accreditation_Model__c = 'Multicountry'
+			ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY
 		);
 
 		insert accountGE;
@@ -103,7 +103,7 @@ private class ANG_EligibilityForNewMCAgentTest {
 			Name='HE Test Agency', 
 			RecordtypeId = agencyRecordTypeId,
 			IATA_ISO_Country__c = countryPT.Id,
-			Location_Type__c = 'HE',
+			Location_Type__c = AMS_Utils.HE,
 			Location_Class__c = 'P',
 			Top_Parent__c = accountGE.Id,
 			ParentId = accountGE.Id
@@ -125,7 +125,7 @@ private class ANG_EligibilityForNewMCAgentTest {
 			 FROM Account
 			 WHERE
 				 Name = 'HE Test Agency' 
-			 AND Location_Type__c = 'HE'
+			 AND Location_Type__c = :AMS_Utils.HE
 			];
 
 		ANG_EligibilityForNewMulticountryAgent.EligibilityInputWrapper input = new ANG_EligibilityForNewMulticountryAgent.EligibilityInputWrapper();
@@ -148,7 +148,7 @@ private class ANG_EligibilityForNewMCAgentTest {
 
 	@isTest static void verifyIneligibleAgentHE() {
 
-		Account accountGE = [SELECT Id FROM Account WHERE Location_Type__c = 'GE'];
+		Account accountGE = [SELECT Id FROM Account WHERE Location_Type__c = :AMS_Utils.GE];
 
 		IATA_ISO_Country__c countryPT = 
 			[SELECT 
@@ -163,7 +163,7 @@ private class ANG_EligibilityForNewMCAgentTest {
 			Name='HE Ineligible Test Agency', 
 			RecordtypeId = agencyRecordTypeId,
 			IATA_ISO_Country__c = countryPT.Id,
-			Location_Type__c = 'HE',
+			Location_Type__c = AMS_Utils.HE,
 			Location_Class__c = 'P',
 			Top_Parent__c = accountGE.Id,
 			ParentId = accountGE.Id
@@ -189,7 +189,7 @@ private class ANG_EligibilityForNewMCAgentTest {
 
 	@isTest static void verifyEligibleAgentAE() {
 
-		Account accountGE = [SELECT Id FROM Account WHERE Location_Type__c = 'GE'];
+		Account accountGE = [SELECT Id FROM Account WHERE Location_Type__c = :AMS_Utils.GE];
 
 		IATA_ISO_Country__c countryMC = 
 			[SELECT 
@@ -204,7 +204,7 @@ private class ANG_EligibilityForNewMCAgentTest {
 			Name='AE Test Agency', 
 			RecordtypeId = agencyRecordTypeId,
 			IATA_ISO_Country__c = countryMC.Id,
-			Location_Type__c = 'AE',
+			Location_Type__c = AMS_Utils.AE,
 			Location_Class__c = 'P',
 			Top_Parent__c = accountGE.Id,
 			ParentId = accountGE.Id
@@ -230,7 +230,7 @@ private class ANG_EligibilityForNewMCAgentTest {
 	
 	@isTest static void verifyIneligibleAgentAE() {
 
-		Account accountGE = [SELECT Id FROM Account WHERE Location_Type__c = 'GE'];
+		Account accountGE = [SELECT Id FROM Account WHERE Location_Type__c = AMS_Utils.GE];
 
 		IATA_ISO_Country__c countryGB = 
 			[SELECT 
@@ -245,7 +245,7 @@ private class ANG_EligibilityForNewMCAgentTest {
 			Name='AE Ineligible Test Agency', 
 			RecordtypeId = agencyRecordTypeId,
 			IATA_ISO_Country__c = countryGB.Id,
-			Location_Type__c = 'AE',
+			Location_Type__c = AMS_Utils.AE,
 			Location_Class__c = 'P',
 			Top_Parent__c = accountGE.Id,
 			ParentId = accountGE.Id

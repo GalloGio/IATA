@@ -262,7 +262,9 @@ public without sharing class ISSP_AMS_Accreditation {
     public AMS_Accreditation_Contact__c trainedStaffContact {get; set;}
     public Id trainedStaffId {get; set;}
 
-    public Id ACCREDITATION_MODEL_MC = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
+	public String ACCREDITATION_MODEL_MC {
+		get { return AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;}
+	}
 
     //CNS
     public String communityName { 
@@ -1370,7 +1372,7 @@ public without sharing class ISSP_AMS_Accreditation {
             Map<String, String> countryNameByIsoCode = new Map<String, String>();
                 
             for (Account a: mcHierarchyAccounts) {
-                if (a.Status__c == 'Approved' && a.Location_Type__c != 'GE') {
+                if (a.Status__c == 'Approved' && a.Location_Type__c != AMS_Utils.GE) {
                     if (countryNameByIsoCode.get(a.IATA_ISO_Country__r.Name) == null) {
                         if (!countryNameByIsoCode.values().contains(a.Country_ISO_Code__c)) {
                             countryNameByIsoCode.put(a.IATA_ISO_Country__r.Name, a.Country_ISO_Code__c);
@@ -3721,11 +3723,11 @@ public without sharing class ISSP_AMS_Accreditation {
                     sameLegalEntityForms.add(mcform);
                 }
             } else {
-                mcForm.Location_Type__c = 'GE';
+                mcForm.Location_Type__c = AMS_Utils.GE;
                 geMCForm = mcform;
-                if (hqAccount.Location_Type__c != 'GE') {
+                if (hqAccount.Location_Type__c != AMS_Utils.GE) {
                     wasNotGE = true;
-                    hqAccount.Location_Type__c = 'GE';
+                    hqAccount.Location_Type__c = AMS_Utils.GE;
                 }
             }
 

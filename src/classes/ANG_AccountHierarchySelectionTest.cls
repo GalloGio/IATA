@@ -50,7 +50,7 @@ private class ANG_AccountHierarchySelectionTest {
 		HE.IATACode__c = '12345678';
 		HE.Category__c = 'IATA Passenger Sales Agent';
 		HE.Location_Class__c = 'P';
-		HE.Location_Type__c = 'HE';
+		HE.Location_Type__c = AMS_Utils.HE;
 		HE.ANG_Accreditation_Model__c = 'Cashless';
 		HE.IATA_ISO_Country__c = ctry.Id;
 		HE.ANG_IEP_HE_AccntNum__c = '1232132323';
@@ -67,7 +67,7 @@ private class ANG_AccountHierarchySelectionTest {
 		chinaHE.IATACode__c = '00981111';
 		chinaHE.Category__c = 'IATA Passenger Sales Agent';
 		chinaHE.Location_Class__c = 'D';
-		chinaHE.Location_Type__c = 'HE';
+		chinaHE.Location_Type__c = AMS_Utils.HE;
 		chinaHE.ANG_Accreditation_Model__c = 'Cashless';
 		chinaHE.IATA_ISO_Country__c = chinaCtry.Id;
 		chinaHE.ANG_IEP_HE_AccntNum__c = '1232132323';
@@ -554,7 +554,7 @@ private class ANG_AccountHierarchySelectionTest {
 		GE1.IATACode__c = '12345678';
 		GE1.Category__c = 'IATA Passenger Sales Agent';
 		GE1.Location_Class__c = 'P';
-		GE1.Location_Type__c = 'GE';
+		GE1.Location_Type__c = AMS_Utils.GE;
 		GE1.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
 		GE1.IATA_ISO_Country__c = ctryPT.Id;
 		GE1.ANG_IEP_HE_AccntNum__c = '1232132323';
@@ -571,7 +571,7 @@ private class ANG_AccountHierarchySelectionTest {
 		GE2.IATACode__c = '12345678';
 		GE2.Category__c = 'IATA Passenger Sales Agent';
 		GE2.Location_Class__c = 'P';
-		GE2.Location_Type__c = 'GE';
+		GE2.Location_Type__c = AMS_Utils.GE;
 		GE2.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
 		GE2.IATA_ISO_Country__c = ctryPT.Id;
 		GE2.ANG_IEP_HE_AccntNum__c = '1232132323';
@@ -593,7 +593,7 @@ private class ANG_AccountHierarchySelectionTest {
 			Short_Name__c='Account HE1 GE1',
 			Category__c = 'IATA Passenger Sales Agent',
 			Location_Class__c = 'P',
-			Location_Type__c = 'HE',
+			Location_Type__c = AMS_Utils.HE,
 			ParentId = GE1.Id,
 			Top_Parent__c = GE1.Id,
 			Status__c = AMS_Utils.ACC_S9_APPROVED
@@ -609,7 +609,7 @@ private class ANG_AccountHierarchySelectionTest {
 			Short_Name__c='Account HE2 GE2',
 			Category__c = 'IATA Passenger Sales Agent',
 			Location_Class__c = 'P',
-			Location_Type__c = 'HE',
+			Location_Type__c = AMS_Utils.HE,
 			ParentId = GE2.Id,
 			Top_Parent__c = GE2.Id,
 			Status__c = AMS_Utils.ACC_S9_APPROVED
@@ -626,7 +626,7 @@ private class ANG_AccountHierarchySelectionTest {
 			Short_Name__c='Account AE1 GE1',
 			Category__c = 'IATA Passenger Sales Agent',
 			Location_Class__c = 'P',
-			Location_Type__c = 'AE',
+			Location_Type__c = AMS_Utils.AE,
 			ParentId = GE1.Id,
 			Top_Parent__c = GE1.Id,
 			Status__c = AMS_Utils.ACC_S9_APPROVED
@@ -642,7 +642,7 @@ private class ANG_AccountHierarchySelectionTest {
 			Short_Name__c='Account AE2 GE1',
 			Category__c = 'IATA Passenger Sales Agent',
 			Location_Class__c = 'P',
-			Location_Type__c = 'AE',
+			Location_Type__c = AMS_Utils.AE,
 			ParentId = HE1.Id,
 			Top_Parent__c = GE1.Id,
 			Status__c = AMS_Utils.ACC_S9_APPROVED
@@ -658,7 +658,7 @@ private class ANG_AccountHierarchySelectionTest {
 			Short_Name__c='Account AE3 GE2',
 			Category__c = 'IATA Passenger Sales Agent',
 			Location_Class__c = 'P',
-			Location_Type__c = 'AE',
+			Location_Type__c = AMS_Utils.AE,
 			ParentId = GE2.Id,
 			Top_Parent__c = GE2.Id,
 			Status__c = AMS_Utils.ACC_S9_APPROVED
@@ -674,7 +674,7 @@ private class ANG_AccountHierarchySelectionTest {
 			Short_Name__c='Account AE4 GE2',
 			Category__c = 'IATA Passenger Sales Agent',
 			Location_Class__c = 'P',
-			Location_Type__c = 'AE',
+			Location_Type__c = AMS_Utils.AE,
 			ParentId = HE2.Id,
 			Top_Parent__c = GE2.Id,
 			Status__c = AMS_Utils.ACC_S9_APPROVED
@@ -690,7 +690,7 @@ private class ANG_AccountHierarchySelectionTest {
 			Short_Name__c='Account AE5 GE2',
 			Category__c = 'IATA Passenger Sales Agent',
 			Location_Class__c = 'P',
-			Location_Type__c = 'AE',
+			Location_Type__c = AMS_Utils.AE,
 			ParentId = HE2.Id,
 			Top_Parent__c = GE2.Id,
 			Status__c = AMS_Utils.ACC_S9_APPROVED
@@ -819,7 +819,7 @@ private class ANG_AccountHierarchySelectionTest {
 
 		ANG_AccountHierarchySelectionController controller = new ANG_AccountHierarchySelectionController(new ApexPages.StandardController(oscar));
 		for (ANG_AccountHierarchySelectionController.HierarchyItem i : controller.hierarchy.values()){
-			if (i.acc.IATA_ISO_Country__c == ctryDK.id && i.acc.Location_type__c == 'AE' ) i.selected = true;
+			if (i.acc.IATA_ISO_Country__c == ctryDK.id && i.acc.Location_type__c == AMS_Utils.AE ) i.selected = true;
 		}
 		controller.handleSelection();
 		system.debug('##ARD hesPerBSPs: ' + controller.hesPerBSPs);
@@ -835,7 +835,7 @@ private class ANG_AccountHierarchySelectionTest {
 		//aqui deve conter o erro
 
 		for (ANG_AccountHierarchySelectionController.HierarchyItem i : controller.hierarchy.values()){
-			if (i.acc.IATA_ISO_Country__c == ctryDK.id && i.acc.Location_type__c == 'HE' ) i.selected = true;
+			if (i.acc.IATA_ISO_Country__c == ctryDK.id && i.acc.Location_type__c == AMS_Utils.HE ) i.selected = true;
 		}
 		controller.handleSelection();
 		//deve setar automaticamente o HE como api
