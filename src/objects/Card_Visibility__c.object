@@ -766,11 +766,11 @@
                 <valueName>Payment Provider</valueName>
             </valueSettings>
             <valueSettings>
-                <controllingFieldValue>Freight Forwarder</controllingFieldValue>
+                <controllingFieldValue>Cargo Agent</controllingFieldValue>
                 <valueName>IATA Cargo Agent</valueName>
             </valueSettings>
             <valueSettings>
-                <controllingFieldValue>Freight Forwarder</controllingFieldValue>
+                <controllingFieldValue>Cargo Agent</controllingFieldValue>
                 <valueName>Non-IATA Cargo Agent</valueName>
             </valueSettings>
             <valueSettings>
@@ -854,7 +854,7 @@
                     <label>Financial Institution</label>
                 </value>
                 <value>
-                    <fullName>Freight Forwarder</fullName>
+                    <fullName>Cargo Agent</fullName>
                     <default>false</default>
                     <label>Freight Forwarder</label>
                 </value>
