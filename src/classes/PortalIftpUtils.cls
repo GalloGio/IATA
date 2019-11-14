@@ -38,11 +38,14 @@ public without sharing class PortalIftpUtils {
 							FROM user
 							WHERE Id= :userId];
 
+		Id accRoleRecTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Role__c', 'IFTP');
 
 		Account_Role_Service__c accRoleSrv = [SELECT Id, Account_Role_Services__r.Name,
 													Account_Role__c, Account_Role__r.Status__c, Account_Role__r.RecordType.Name
 												FROM Account_Role_Service__c
-												WHERE Account_Role__r.Account__c = :userAcc.contact.accountid];
+												WHERE Account_Role__r.Account__c = :userAcc.contact.accountid
+												AND Account_Role__r.RecordTypeId  = :accRoleRecTypeId 
+												LIMIT 1];
 
 		List<Account_Contact_Role__c> lContactRole = [SELECT Id, Contact_Role__c, Contact_Roles__c, Contact_Roles__r.Name
 													FROM Account_Contact_Role__c
