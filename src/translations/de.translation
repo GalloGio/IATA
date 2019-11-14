@@ -2141,6 +2141,374 @@
         <name>CSP_Invalid_Email</name>
     </customLabels>
     <customLabels>
+        <label>Firmenkontoinformationen</label>
+        <name>CSP_L2_Account_Information</name>
+    </customLabels>
+    <customLabels>
+        <label>Füllen Sie die folgenden Informationen aus, um Ihr Unternehmenskonto zu finden.</label>
+        <name>CSP_L2_Account_Information_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Konto-Auswahl</label>
+        <name>CSP_L2_Account_Selection</name>
+    </customLabels>
+    <customLabels>
+        <label>Um Ihr persönliches Profil mit Ihrem Unternehmenskonto abzugleichen, benötigen wir einige weitere Details. Auf diese Weise können wir überprüfen, ob Ihr Unternehmen bereits bei der International Air Transport Association (IATA) registriert ist.</label>
+        <name>CSP_L2_Account_Selection_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Wir konnten Ihre Adresse nicht finden. Klicken Sie auf die Schaltfläche Nächster Schritt, um zu bestätigen, dass Ihre Adresse korrekt ist.</label>
+        <name>CSP_L2_Address_Not_Found_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Offenbar haben Sie Ihr Profil bereits zuvor vollständig ausgefüllt, sodass wir alle erforderlichen Daten haben.</label>
+        <name>CSP_L2_Already_L2_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Alles bereit!</label>
+        <name>CSP_L2_Already_L2_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Zurück zu den Firmenkonto-Informationen</label>
+        <name>CSP_L2_Back_to_Account_Selection</name>
+    </customLabels>
+    <customLabels>
+        <label>Zurück zur „Geschäftsadresse“</label>
+        <name>CSP_L2_Back_to_Business_Address_Information</name>
+    </customLabels>
+    <customLabels>
+        <label>Zurück zu den „Unternehmensinformationen“</label>
+        <name>CSP_L2_Back_to_Company_Information</name>
+    </customLabels>
+    <customLabels>
+        <label>Gehen Sie zurück zum Bearbeiten</label>
+        <name>CSP_L2_Back_to_Edit</name>
+    </customLabels>
+    <customLabels>
+        <label>Zurück zu den Profildetails</label>
+        <name>CSP_L2_Back_to_Profile_Details</name>
+    </customLabels>
+    <customLabels>
+        <label>Profil-Vervollständigung &amp; Konto-Auswahl</label>
+        <name>CSP_L2_Banner_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Geschäftsadressinformationen</label>
+        <name>CSP_L2_Business_Address_Information</name>
+    </customLabels>
+    <customLabels>
+        <label>Bitte geben Sie Ihre Geschäftsadresse ein.</label>
+        <name>CSP_L2_Business_Address_Information_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Kategorie</label>
+        <name>CSP_L2_Category</name>
+    </customLabels>
+    <customLabels>
+        <label>Der Dienst, auf den Sie versuchen zuzugreifen, ist für Ihre gewählte Einstufung eventuell nicht verfügbar. Sie können Ihre Registrierung weiterhin abschließen, der Dienst ist jedoch danach möglicherweise nicht mehr verfügbar.</label>
+        <name>CSP_L2_Change_Categorization_Warning</name>
+    </customLabels>
+    <customLabels>
+        <label>Stadt</label>
+        <name>CSP_L2_City</name>
+    </customLabels>
+    <customLabels>
+        <label>Firmenkonto</label>
+        <name>CSP_L2_Company_Account</name>
+    </customLabels>
+    <customLabels>
+        <label>Bitte überprüfen Sie Ihre Firmendaten</label>
+        <name>CSP_L2_Company_Account_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Firmen-Information</label>
+        <name>CSP_L2_Company_Information</name>
+    </customLabels>
+    <customLabels>
+        <label>Wenn Sie Ihr Unternehmenskonto registrieren, erhalten Sie Zugriff auf maßgeschneiderte Dienstleistungen von International Air Transport Association (IATA). Sie können Ihr Unternehmenskonto ganz einfach in zwei Schritten erstellen.</label>
+        <name>CSP_L2_Company_Information_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Firmenstandort</label>
+        <name>CSP_L2_Company_Location</name>
+    </customLabels>
+    <customLabels>
+        <label>Name des Unternehmens</label>
+        <name>CSP_L2_Company_Name</name>
+    </customLabels>
+    <customLabels>
+        <label>Bestätigung</label>
+        <name>CSP_L2_Confirmation</name>
+    </customLabels>
+    <customLabels>
+        <label>Sie sind nur einen Schritt von der Erstellung Ihres vollständigen Profils entfernt. Bitte überprüfen Sie die bereitgestellten Informationen und klicken Sie auf Senden, wenn alles korrekt ist.</label>
+        <name>CSP_L2_Confirmation_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Support kontaktieren</label>
+        <name>CSP_L2_Contact_Support</name>
+    </customLabels>
+    <customLabels>
+        <label>Land</label>
+        <name>CSP_L2_Country</name>
+    </customLabels>
+    <customLabels>
+        <label>Wenn Sie Ihr Unternehmenskonto nicht finden können, können Sie ganz einfach ein Konto in zwei Schritten erstellen.</label>
+        <name>CSP_L2_Create_Account_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Neues Konto erstellen</label>
+        <name>CSP_L2_Create_New_Account</name>
+    </customLabels>
+    <customLabels>
+        <label>Geburtsdatum</label>
+        <name>CSP_L2_Date_of_Birth</name>
+    </customLabels>
+    <customLabels>
+        <label>Ihre Daten werden erfolgreich gespeichert.</label>
+        <name>CSP_L2_Details_Saved</name>
+    </customLabels>
+    <customLabels>
+        <label>Wir können Ihnen jetzt ein persönlicheres Portalerlebnis bieten! Stöbern Sie in unserem Portal und entdecken Sie maßgeschneiderte Produkte und Dienstleistungen.</label>
+        <name>CSP_L2_Details_Saved_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Sie können jetzt mit Ihrer Serviceanfrage fortfahren.</label>
+        <name>CSP_L2_Details_Saved_Service_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Sie können jetzt mit Ihrer Anfrage fortfahren.</label>
+        <name>CSP_L2_Details_Saved_Topic_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Haben Sie nicht gefunden, wonach Sie suchen?</label>
+        <name>CSP_L2_Did_Not_Find</name>
+    </customLabels>
+    <customLabels>
+        <label>Sie können ganz einfach in zwei Schritten ein Unternehmenskonto erstellen, um Ihr Profil zu vervollständigen</label>
+        <name>CSP_L2_Did_Not_Find_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Klicken Sie hier, um Ihr Profil zu vervollständigen</label>
+        <name>CSP_L2_Edit_Company_Information</name>
+    </customLabels>
+    <customLabels>
+        <label>Wir haben das International Air Transport Association (IATA) Kundenportal erschaffen, damit wir Produkte und Dienstleistungen der International Air Transport Association (IATA) speziell auf Ihre Bedürfnisse zuschneiden können. Damit wir das können, möchten wir Sie und Ihre Organisation ein bisschen besser kennenlernen.</label>
+        <name>CSP_L2_Edit_Company_Information_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>E-Mail</label>
+        <name>CSP_L2_Email_Address</name>
+    </customLabels>
+    <customLabels>
+        <label>Adresse finden</label>
+        <name>CSP_L2_Find_Address</name>
+    </customLabels>
+    <customLabels>
+        <label>Zurückgehen</label>
+        <name>CSP_L2_Go_Back</name>
+    </customLabels>
+    <customLabels>
+        <label>Zur Homepage gehen</label>
+        <name>CSP_L2_Go_To_Homepage</name>
+    </customLabels>
+    <customLabels>
+        <label>Zurück zum „Profil“</label>
+        <name>CSP_L2_Go_To_Profile</name>
+    </customLabels>
+    <customLabels>
+        <label>Zurück zum Service</label>
+        <name>CSP_L2_Go_To_Service</name>
+    </customLabels>
+    <customLabels>
+        <label>Zurück zum „Thema“</label>
+        <name>CSP_L2_Go_To_Topic</name>
+    </customLabels>
+    <customLabels>
+        <label>IATA-Code</label>
+        <name>CSP_L2_IATA_Codes</name>
+    </customLabels>
+    <customLabels>
+        <label>Ist das eine „Postfachadresse“?</label>
+        <name>CSP_L2_Is_PO_Box_Address</name>
+    </customLabels>
+    <customLabels>
+        <label>Tätigkeitsbereich</label>
+        <name>CSP_L2_Job_Function</name>
+    </customLabels>
+    <customLabels>
+        <label>Berufsbezeichnung</label>
+        <name>CSP_L2_Job_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Offizieller Name</label>
+        <name>CSP_L2_Legal_Name</name>
+    </customLabels>
+    <customLabels>
+        <label>Nächster Schritt / Konto-Auswahl</label>
+        <name>CSP_L2_Next_Account_Selection</name>
+    </customLabels>
+    <customLabels>
+        <label>Nächster Schritt / Adress-Angaben</label>
+        <name>CSP_L2_Next_Address_Information</name>
+    </customLabels>
+    <customLabels>
+        <label>Nächster Schritt / Bestätigung</label>
+        <name>CSP_L2_Next_Confirmation</name>
+    </customLabels>
+    <customLabels>
+        <label>Nein</label>
+        <name>CSP_L2_No</name>
+    </customLabels>
+    <customLabels>
+        <label>Es wurden keine passenden Ergebnisse gefunden</label>
+        <name>CSP_L2_No_Matching_Results</name>
+    </customLabels>
+    <customLabels>
+        <label>Andere</label>
+        <name>CSP_L2_Other_Sector</name>
+    </customLabels>
+    <customLabels>
+        <label>Bitte wählen Sie einen relevanten Sektor aus der Liste aus.</label>
+        <name>CSP_L2_Other_Sector_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>„Postfachnummer“</label>
+        <name>CSP_L2_PO_Box_Number</name>
+    </customLabels>
+    <customLabels>
+        <label>Persönliche Daten</label>
+        <name>CSP_L2_Personal_Details</name>
+    </customLabels>
+    <customLabels>
+        <label>Bitte überprüfen Sie Ihre persönlichen Daten</label>
+        <name>CSP_L2_Personal_Details_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Telefonnummer</label>
+        <name>CSP_L2_Phone_Number</name>
+    </customLabels>
+    <customLabels>
+        <label>Postleitzahl</label>
+        <name>CSP_L2_Postal_Code</name>
+    </customLabels>
+    <customLabels>
+        <label>Profil-Details</label>
+        <name>CSP_L2_Profile_Details</name>
+    </customLabels>
+    <customLabels>
+        <label>Fügen Sie Ihre persönlichen Daten hinzu, um Vorschläge über personalisierte Inhalte und Dienste von International Air Transport Association (IATA) zu erhalten.</label>
+        <name>CSP_L2_Profile_Details_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Ihr Profil wurde noch nicht vollständig aktualisiert.</label>
+        <name>CSP_L2_Profile_Incomplete</name>
+    </customLabels>
+    <customLabels>
+        <label>Wir haben es jedoch als Entwurf gespeichert, damit Sie später fortfahren können. Möchten Sie das Programm wirklich beenden?</label>
+        <name>CSP_L2_Profile_Incomplete_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Leider ist beim Erstellen Ihres Kontos ein Fehler aufgetreten. Um Ihnen weiterzuhelfen, wenden Sie sich bitte an unser Support-Team.</label>
+        <name>CSP_L2_Registration_Error_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Etwas ist schief gelaufen</label>
+        <name>CSP_L2_Registration_Error_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Abbrechen</label>
+        <name>CSP_L2_Requested_Modal_Cancel</name>
+    </customLabels>
+    <customLabels>
+        <label>Mein Profil vervollständigen</label>
+        <name>CSP_L2_Requested_Modal_Complete</name>
+    </customLabels>
+    <customLabels>
+        <label>Um fortzufahren, benötigen wir weitere Informationen über Sie und Ihrer Organisation. Keine Sorge, es wird nicht lange dauern!</label>
+        <name>CSP_L2_Requested_Modal_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Hallo</label>
+        <name>CSP_L2_Requested_Modal_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_L2_Required --></label>
+        <name>CSP_L2_Required</name>
+    </customLabels>
+    <customLabels>
+        <label>Suche</label>
+        <name>CSP_L2_Search</name>
+    </customLabels>
+    <customLabels>
+        <label>Bitte füllen Sie mindestens eines der beiden untenstehenden Felder aus.</label>
+        <name>CSP_L2_Search_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Suchergebnisse</label>
+        <name>CSP_L2_Search_Results</name>
+    </customLabels>
+    <customLabels>
+        <label>Wir haben über 50 Konten gefunden, die Ihren Suchkriterien entsprechen.</label>
+        <name>CSP_L2_Search_Results_Above_Limit</name>
+    </customLabels>
+    <customLabels>
+        <label>Suchkriterien verfeinern</label>
+        <name>CSP_L2_Search_Results_Above_Limit_Link</name>
+    </customLabels>
+    <customLabels>
+        <label>Bitte nutzen Sie die Funktion</label>
+        <name>CSP_L2_Search_Results_Above_Limit_Link_1</name>
+    </customLabels>
+    <customLabels>
+        <label>, um sich weniger Optionen anzeigen zu lassen.</label>
+        <name>CSP_L2_Search_Results_Above_Limit_Link_2</name>
+    </customLabels>
+    <customLabels>
+        <label>Sektor</label>
+        <name>CSP_L2_Sector</name>
+    </customLabels>
+    <customLabels>
+        <label>Auswählen</label>
+        <name>CSP_L2_Select</name>
+    </customLabels>
+    <customLabels>
+        <label>Bitte wählen Sie die richtige Adresse aus. Wenn Sie die richtige Adresse in der Liste nicht finden können, werden wir die von Ihnen eingegebene Adresse speichern. Klicken Sie auf „Nächster Schritt“, um fortzufahren.</label>
+        <name>CSP_L2_Select_Address_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Wählen Sie Ihr passendes Konto aus der Liste aus.</label>
+        <name>CSP_L2_Select_Company_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Bundesland</label>
+        <name>CSP_L2_State</name>
+    </customLabels>
+    <customLabels>
+        <label>Straße</label>
+        <name>CSP_L2_Street</name>
+    </customLabels>
+    <customLabels>
+        <label>Senden</label>
+        <name>CSP_L2_Submit</name>
+    </customLabels>
+    <customLabels>
+        <label>Titel</label>
+        <name>CSP_L2_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Handelsname</label>
+        <name>CSP_L2_Trade_Name</name>
+    </customLabels>
+    <customLabels>
+        <label>Webseite</label>
+        <name>CSP_L2_Website</name>
+    </customLabels>
+    <customLabels>
+        <label>Ja</label>
+        <name>CSP_L2_Yes</name>
+    </customLabels>
+    <customLabels>
         <label>Logout</label>
         <name>CSP_LogOut</name>
     </customLabels>
@@ -13262,7 +13630,7 @@ Bitte geben Sie an, für welches Land Sie zuletzt unsere Unterstützung erhalten
         <name>ISSP_ContactName</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Contact About IATA Courses --></label>
+        <label>Kontaktieren Sie uns bezüglich International Air Transport Association (IATA)-Kursen?</label>
         <name>ISSP_Contact_About_IATA_Courses</name>
     </customLabels>
     <customLabels>
@@ -16620,7 +16988,7 @@ Wenn Sie Ihr Passwort zurücksetzen möchten, gehen Sie bitte zum Log-in-Bildsch
         <name>ISSP_See_more</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Select --></label>
+        <label>- Auswählen - </label>
         <name>ISSP_Select</name>
     </customLabels>
     <customLabels>
@@ -20724,7 +21092,7 @@ Wenn Sie Ihr Passwort zurücksetzen möchten, gehen Sie bitte zum Log-in-Bildsch
     <customLabels>
         <label>Funktionsbezeichnung</label>
         <name>csp_My_Profile_Job_Title</name>
-s    </customLabels>
+    </customLabels>
     <customLabels>
         <label><!-- csp_Next_Step_Account_Selection --></label>
         <name>csp_Next_Step_Account_Selection</name>

@@ -2137,8 +2137,372 @@
         <name>CSP_Invalid_Email</name>
     </customLabels>
     <customLabels>
+        <label>ข้อมูลบัญชีบริษัท</label>
+        <name>CSP_L2_Account_Information</name>
+    </customLabels>
+    <customLabels>
+        <label>กรอกข้อมูลด้านล่างเพื่อค้นหาบัญชีการใช้งานของบริษัทของคุณ</label>
+        <name>CSP_L2_Account_Information_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>การเลือกบัญชี</label>
+        <name>CSP_L2_Account_Selection</name>
+    </customLabels>
+    <customLabels>
+        <label>เราต้องการรายละเอียดเพิ่มเติม เพื่อให้สามารถจับคู่โปรไฟล์ส่วนบุคคลของคุณกับบัญชีบริษัทของคุณได้. ขั้นตอนนี้จะช่วยให้เราตรวจสอบได้ว่าบริษัทของคุณได้ลงทะเบียนกับ IATA แล้วหรือไม่</label>
+        <name>CSP_L2_Account_Selection_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>เราไม่พบที่อยู่ของคุณ โปรดกดปุ่ม &quot;ขั้นตอนต่อไป&quot; เพื่อยืนยันว่าที่อยู่ของคุณถูกต้อง</label>
+        <name>CSP_L2_Address_Not_Found_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>ดูเหมือนว่าคุณเคยกรอกข้อมูลโปรไฟล์มาก่อน เราจึงมีรายละเอียดที่จำเป็นทั้งหมดแล้ว</label>
+        <name>CSP_L2_Already_L2_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>เรียบร้อยแล้ว!</label>
+        <name>CSP_L2_Already_L2_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>กลับไปที่ &quot;ข้อมูลบัญชีบริษัท&quot;</label>
+        <name>CSP_L2_Back_to_Account_Selection</name>
+    </customLabels>
+    <customLabels>
+        <label>กลับไปที่ข้อมูลที่อยู่ของธุรกิจ</label>
+        <name>CSP_L2_Back_to_Business_Address_Information</name>
+    </customLabels>
+    <customLabels>
+        <label>กลับไปที่ข้อมูลบริษัท</label>
+        <name>CSP_L2_Back_to_Company_Information</name>
+    </customLabels>
+    <customLabels>
+        <label>กลับไปที่หน้าสำหรับแก้ไข</label>
+        <name>CSP_L2_Back_to_Edit</name>
+    </customLabels>
+    <customLabels>
+        <label>กลับไปที่ &quot;รายละเอียดโปรไฟล์&quot;</label>
+        <name>CSP_L2_Back_to_Profile_Details</name>
+    </customLabels>
+    <customLabels>
+        <label>การสร้างและเพิ่มข้อมูลโปรไฟล์ &amp; การเลือกบัญชี</label>
+        <name>CSP_L2_Banner_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>ข้อมูลที่อยู่สำหรับติดต่อ</label>
+        <name>CSP_L2_Business_Address_Information</name>
+    </customLabels>
+    <customLabels>
+        <label>กรุณากรอกข้อมูลที่อยู่ธุรกิจของคุณ</label>
+        <name>CSP_L2_Business_Address_Information_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>ประเภท</label>
+        <name>CSP_L2_Category</name>
+    </customLabels>
+    <customLabels>
+        <label>บริการที่คุณขอเข้าถึงอาจไม่มีให้บริการสำหรับหมวดหมู่ที่คุณเลือก คุณยังคงสามารถลงทะเบียนให้เสร็จสิ้นได้ แต่บริการอาจไม่มีให้บริการอีกต่อไปหลังจากเสร็จสิ้น</label>
+        <name>CSP_L2_Change_Categorization_Warning</name>
+    </customLabels>
+    <customLabels>
+        <label>เมือง</label>
+        <name>CSP_L2_City</name>
+    </customLabels>
+    <customLabels>
+        <label>บัญชีบริษัท</label>
+        <name>CSP_L2_Company_Account</name>
+    </customLabels>
+    <customLabels>
+        <label>โปรดตรวจสอบรายละเอียดของบริษัทของคุณ</label>
+        <name>CSP_L2_Company_Account_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>ข้อมูลบริษัท</label>
+        <name>CSP_L2_Company_Information</name>
+    </customLabels>
+    <customLabels>
+        <label>การลงทะเบียนบัญชีบริษัทของคุณจะทำให้คุณสามารถเข้าถึงบริการของ IATA ตามที่เลือกกำหนดเองได้ คุณสามารถสร้างบัญชีบริษัทของคุณได้อย่างง่ายดายภายในสองขั้นตอน</label>
+        <name>CSP_L2_Company_Information_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>ที่ตั้งบริษัท</label>
+        <name>CSP_L2_Company_Location</name>
+    </customLabels>
+    <customLabels>
+        <label>ชื่อบริษัท</label>
+        <name>CSP_L2_Company_Name</name>
+    </customLabels>
+    <customLabels>
+        <label>การยืนยัน</label>
+        <name>CSP_L2_Confirmation</name>
+    </customLabels>
+    <customLabels>
+        <label>เหลืออีกเพียงขั้นตอนเดียวคุณก็จะสร้างโปรไฟล์ของคุณได้อย่างสมบูรณ์ โปรดตรวจสอบข้อมูลที่แจ้งไว้ หากข้อมูลทุกอย่างถูกต้อง กรุณากดปุ่ม &quot;ส่ง&quot;</label>
+        <name>CSP_L2_Confirmation_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>ติดต่อฝ่ายสนับสนุน</label>
+        <name>CSP_L2_Contact_Support</name>
+    </customLabels>
+    <customLabels>
+        <label>ประเทศ</label>
+        <name>CSP_L2_Country</name>
+    </customLabels>
+    <customLabels>
+        <label>หากคุณไม่พบบัญชีบริษัทของคุณ คุณสามารถสร้างบัญชีดังกล่าวได้อย่างง่ายดายภายในสองขั้นตอน</label>
+        <name>CSP_L2_Create_Account_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>สร้างบัญชีใหม่</label>
+        <name>CSP_L2_Create_New_Account</name>
+    </customLabels>
+    <customLabels>
         <label>วันเกิด</label>
         <name>CSP_L2_Date_of_Birth</name>
+    </customLabels>
+    <customLabels>
+        <label>ข้อมูลของคุณได้รับการบันทึกเรียบร้อยแล้ว</label>
+        <name>CSP_L2_Details_Saved</name>
+    </customLabels>
+    <customLabels>
+        <label>ขณะนี้เราสามารถนำเสนอการใช้งานพอร์ทัลที่เหมาะกับคุณเป็นการเฉพาะ! สำรวจดูพอร์ทัลของเราและค้นหาผลิตภัณฑ์และบริการที่ปรับแต่งเพิ่มเติมได้ตามความต้องการ</label>
+        <name>CSP_L2_Details_Saved_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>ขณะนี้คุณสามารถยื่นคำขอรับบริการของคุณต่อไปได้</label>
+        <name>CSP_L2_Details_Saved_Service_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>ขณะนี้คุณสามารถยื่นคำขอของคุณต่อไปได้</label>
+        <name>CSP_L2_Details_Saved_Topic_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>คุณไม่พบสิ่งที่ต้องการค้นหาใช่หรือไม่?</label>
+        <name>CSP_L2_Did_Not_Find</name>
+    </customLabels>
+    <customLabels>
+        <label>คุณสามารถสร้างบัญชีบริษัทได้อย่างง่ายดายภายในสองขั้นตอน เพื่อทำให้โปรไฟล์ของคุณสมบูรณ์</label>
+        <name>CSP_L2_Did_Not_Find_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>คลิกที่นี่ เพื่อกรอกรายละเอียดของคุณ</label>
+        <name>CSP_L2_Edit_Company_Information</name>
+    </customLabels>
+    <customLabels>
+        <label>เราได้สร้างพอร์ทัลสำหรับลูกค้าIATA เพื่อที่จะสามารถจัดผลิตภัณฑ์และบริการของ IATA ให้เหมาะสมสำหรับคุณโดยเฉพาะ เพื่อให้เราสามารถทำเช่นนั้นได้ เราอยากรู้จักคุณและองค์กรของคุณให้ดีขึ้นอีกสักเล็กน้อย</label>
+        <name>CSP_L2_Edit_Company_Information_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>อีเมล</label>
+        <name>CSP_L2_Email_Address</name>
+    </customLabels>
+    <customLabels>
+        <label>ค้นหาที่อยู่</label>
+        <name>CSP_L2_Find_Address</name>
+    </customLabels>
+    <customLabels>
+        <label>ย้อนกลับ</label>
+        <name>CSP_L2_Go_Back</name>
+    </customLabels>
+    <customLabels>
+        <label>ไปที่โฮมเพจ</label>
+        <name>CSP_L2_Go_To_Homepage</name>
+    </customLabels>
+    <customLabels>
+        <label>กลับไปที่โปรไฟล์</label>
+        <name>CSP_L2_Go_To_Profile</name>
+    </customLabels>
+    <customLabels>
+        <label>กลับไปที่ &quot;บริการ&quot;</label>
+        <name>CSP_L2_Go_To_Service</name>
+    </customLabels>
+    <customLabels>
+        <label>กลับไปที่หัวข้อ</label>
+        <name>CSP_L2_Go_To_Topic</name>
+    </customLabels>
+    <customLabels>
+        <label>รหัส IATA</label>
+        <name>CSP_L2_IATA_Codes</name>
+    </customLabels>
+    <customLabels>
+        <label>นี่คือที่อยู่ตู้ ปณ. ใช่หรือไม่?</label>
+        <name>CSP_L2_Is_PO_Box_Address</name>
+    </customLabels>
+    <customLabels>
+        <label>ฟังก์ชั่นการทำงาน</label>
+        <name>CSP_L2_Job_Function</name>
+    </customLabels>
+    <customLabels>
+        <label>ตำแหน่งงาน</label>
+        <name>CSP_L2_Job_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>ชื่อบริษัทที่จดทะเบียน</label>
+        <name>CSP_L2_Legal_Name</name>
+    </customLabels>
+    <customLabels>
+        <label>ขั้นตอนต่อไป / การเลือกบัญชี</label>
+        <name>CSP_L2_Next_Account_Selection</name>
+    </customLabels>
+    <customLabels>
+        <label>ขั้นตอนต่อไป / ข้อมูลที่อยู่</label>
+        <name>CSP_L2_Next_Address_Information</name>
+    </customLabels>
+    <customLabels>
+        <label>ขั้นตอนต่อไป / การยืนยัน</label>
+        <name>CSP_L2_Next_Confirmation</name>
+    </customLabels>
+    <customLabels>
+        <label>ไม่ใช่</label>
+        <name>CSP_L2_No</name>
+    </customLabels>
+    <customLabels>
+        <label>ไม่พบผลการค้นหาที่ตรงกัน</label>
+        <name>CSP_L2_No_Matching_Results</name>
+    </customLabels>
+    <customLabels>
+        <label>อื่นๆ</label>
+        <name>CSP_L2_Other_Sector</name>
+    </customLabels>
+    <customLabels>
+        <label>โปรดเลือกภาคที่เกี่ยวข้องจากรายการที่ปรากฏ</label>
+        <name>CSP_L2_Other_Sector_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>หมายเลขตู้ ปณ.</label>
+        <name>CSP_L2_PO_Box_Number</name>
+    </customLabels>
+    <customLabels>
+        <label>ข้อมูลส่วนบุคคล</label>
+        <name>CSP_L2_Personal_Details</name>
+    </customLabels>
+    <customLabels>
+        <label>กรุณาตรวจสอบรายละเอียดส่วนบุคคลของคุณ</label>
+        <name>CSP_L2_Personal_Details_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>หมายเลขโทรศัพท์</label>
+        <name>CSP_L2_Phone_Number</name>
+    </customLabels>
+    <customLabels>
+        <label>รหัสไปรษณีย์</label>
+        <name>CSP_L2_Postal_Code</name>
+    </customLabels>
+    <customLabels>
+        <label>รายละเอียดโปรไฟล์</label>
+        <name>CSP_L2_Profile_Details</name>
+    </customLabels>
+    <customLabels>
+        <label>เพิ่มรายละเอียดส่วนบุคคลของคุณ เพื่อให้ IATA สามารถแนะนำเนื้อหาและบริการที่เหมาะกับคุณ</label>
+        <name>CSP_L2_Profile_Details_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>โปรไฟล์ของคุณยังไม่ได้รับการอัพเดตอย่างสมบูรณ์</label>
+        <name>CSP_L2_Profile_Incomplete</name>
+    </customLabels>
+    <customLabels>
+        <label>แต่เราได้บันทึกไว้เป็นฉบับร่าง เพื่อให้คุณสามารถดำเนินการต่อได้ในภายหลัง คุณแน่ใจหรือไม่ว่าต้องการเลิกการทำงาน?</label>
+        <name>CSP_L2_Profile_Incomplete_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>ขออภัยในความไม่สะดวก เกิดข้อผิดพลาดในขณะที่เราพยายามสร้างบัญชีของคุณ เพื่อให้เราสามารถช่วยเหลือคุณเพิ่มเติมได้ โปรดติดต่อทีมสนับสนุนของเรา</label>
+        <name>CSP_L2_Registration_Error_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>มีบางอย่างผิดปกติ</label>
+        <name>CSP_L2_Registration_Error_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>ยกเลิก</label>
+        <name>CSP_L2_Requested_Modal_Cancel</name>
+    </customLabels>
+    <customLabels>
+        <label>กรอกข้อมูลโปรไฟล์ของฉันให้สมบูรณ์</label>
+        <name>CSP_L2_Requested_Modal_Complete</name>
+    </customLabels>
+    <customLabels>
+        <label>เพื่อดำเนินการต่อ เราต้องการรายละเอียดเพิ่มเติมบางอย่างเกี่ยวกับคุณและองค์กรของคุณ อย่าได้กังวล ขั้นตอนนี้ใช้เวลาไม่นาน!</label>
+        <name>CSP_L2_Requested_Modal_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>สวัสดี</label>
+        <name>CSP_L2_Requested_Modal_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_L2_Required --></label>
+        <name>CSP_L2_Required</name>
+    </customLabels>
+    <customLabels>
+        <label>ค้นหา</label>
+        <name>CSP_L2_Search</name>
+    </customLabels>
+    <customLabels>
+        <label>กรุณากรอกรายละเอียดลงในช่องว่างด้านล่างนี้อย่างน้อยหนึ่งช่อง</label>
+        <name>CSP_L2_Search_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>ผลการค้นหา</label>
+        <name>CSP_L2_Search_Results</name>
+    </customLabels>
+    <customLabels>
+        <label>เราพบบัญชีที่ตรงกับเกณฑ์การค้นหาของคุณเป็นจำนวน +50 บัญชี</label>
+        <name>CSP_L2_Search_Results_Above_Limit</name>
+    </customLabels>
+    <customLabels>
+        <label>ปรับเกณฑ์การค้นหา</label>
+        <name>CSP_L2_Search_Results_Above_Limit_Link</name>
+    </customLabels>
+    <customLabels>
+        <label>--empty--</label>
+        <name>CSP_L2_Search_Results_Above_Limit_Link_1</name>
+    </customLabels>
+    <customLabels>
+        <label>เพื่อให้เหลือตัวเลือกน้อยลง</label>
+        <name>CSP_L2_Search_Results_Above_Limit_Link_2</name>
+    </customLabels>
+    <customLabels>
+        <label>ภาค</label>
+        <name>CSP_L2_Sector</name>
+    </customLabels>
+    <customLabels>
+        <label>เลือก</label>
+        <name>CSP_L2_Select</name>
+    </customLabels>
+    <customLabels>
+        <label>กรุณาเลือกที่อยู่ที่ถูกต้อง หากคุณไม่พบที่อยู่ที่ถูกต้องจากรายการ เราจะบันทึกที่อยู่ที่คุณป้อน คลิกที่ขั้นตอนถัดไป เพื่อดำเนินการต่อ</label>
+        <name>CSP_L2_Select_Address_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>เลือกบัญชีที่ตรงกับบัญชีของคุณจากรายการที่ปรากฏ</label>
+        <name>CSP_L2_Select_Company_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>รัฐ</label>
+        <name>CSP_L2_State</name>
+    </customLabels>
+    <customLabels>
+        <label>ถนน</label>
+        <name>CSP_L2_Street</name>
+    </customLabels>
+    <customLabels>
+        <label>ส่ง</label>
+        <name>CSP_L2_Submit</name>
+    </customLabels>
+    <customLabels>
+        <label>หัวข้อ</label>
+        <name>CSP_L2_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>ชื่อบริษัทตามที่ปรากฏ</label>
+        <name>CSP_L2_Trade_Name</name>
+    </customLabels>
+    <customLabels>
+        <label>เว็บไซต์</label>
+        <name>CSP_L2_Website</name>
+    </customLabels>
+    <customLabels>
+        <label>ใช่</label>
+        <name>CSP_L2_Yes</name>
     </customLabels>
     <customLabels>
         <label>ออกจากระบบ</label>
@@ -13261,7 +13625,7 @@ and
         <name>ISSP_ContactName</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Contact About IATA Courses --></label>
+        <label>คุณต้องการติดต่อเราเกี่ยวกับหลักสูตรของ IATA ใช่หรือไม่?</label>
         <name>ISSP_Contact_About_IATA_Courses</name>
     </customLabels>
     <customLabels>
@@ -16619,7 +16983,7 @@ GSA - ตัวอักษร 3 ตัว
         <name>ISSP_See_more</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Select --></label>
+        <label>- เลือก -</label>
         <name>ISSP_Select</name>
     </customLabels>
     <customLabels>
