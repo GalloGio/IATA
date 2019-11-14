@@ -13,23 +13,35 @@
                 </lightning-input>
             </div>
         </div>
-        <div class="slds-text-align_right slds-p-horizontal_small slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_3-of-12">
+            </div>
+        </div>
+        <div class="slds-text-align_right slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_8-of-12 slds-large-size_8-of-12">
+            <div class="slds-grid slds-wrap slds-grid_align-end">
+                <div class="slds-text-align_right slds-p-horizontal--xxx-small slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_10-of-12 slds-large-size_10-of-12">
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-text-align_right slds-p-horizontal--xxx-small slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12">
             <!-- FILTER -->
-            <button if:true={filtered} class="slds-button_icon slds-button__icon_right filterButton fullWidth" onclick={openCasesFilterModal}>
+                            <button if:true={filtered} class="slds-button_icon filterButton fullWidth twoLines" onclick={openCasesFilterModal}>
                 {label.CSP_Filtered}
                 <img class="slds-float_right" src={filteredIconUrl}>
             </button>
-            <button if:false={filtered} class="slds-button_icon slds-button__icon_right filterButton fullWidth" onclick={openCasesFilterModal}>
+                            <button if:false={filtered} class="slds-button_icon filterButton fullWidth twoLines" onclick={openCasesFilterModal}>
                 {label.CSP_Filter}<img class="slds-float_right" src={filterIconUrl}>
             </button>
         </div>
         <!-- LIST VIEW -->
-        <div class="slds-text-align_right slds-p-horizontal_small slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_3-of-12">    
-            <lightning-button label={label.CSP_MyCases} class="containedButton fullWidth" onclick={changeToUserCasesTableView} if:true={viewNormalUserCasesTableViewButton}></lightning-button>
-            <lightning-button label={label.CSP_CompanyCases} class="containedButton fullWidth" onclick={changeToAdminCasesTableView} if:true={viewAdminUserCasesTableViewButton}></lightning-button>
+                        <div class="slds-text-align_right slds-p-horizontal--xxx-small slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12" if:true={viewNormalUserCasesTableViewButton}>    
+                            <lightning-button label={label.CSP_MyCases} class="containedButton fullWidth twoLines" onclick={changeToUserCasesTableView} ></lightning-button>
+                        </div>
+                        <div class="slds-text-align_right slds-p-horizontal--xxx-small slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12" if:true={viewAdminUserCasesTableViewButton}>
+                            <lightning-button label={label.CSP_CompanyCases} class="containedButton fullWidth twoLines" onclick={changeToAdminCasesTableView}></lightning-button>
+                        </div>
+                        <div class="slds-text-align_right slds-p-horizontal--xxx-small slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12">
+                            <lightning-button label="Reach Us" class="containedButton fullWidth twoLines" onclick={openReachUs}></lightning-button>
+                        </div>
+                    </div>
+                </div>
         </div>
-        <div class="slds-text-align_right slds-p-horizontal_small slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_3-of-12">
-            <lightning-button label={label.CSP_FAQReachUsBanner_ButtonText} class="containedButton fullWidth" onclick={openReachUs}></lightning-button>
         </div>
     </div>
 

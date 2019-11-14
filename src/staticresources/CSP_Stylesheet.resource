@@ -494,7 +494,10 @@ lightning-datatable .slds-th__action {
 
 /* ############################################## */
 /* Classes for the buttons */
-
+.twoLines button[type=button],
+button.twoLines {
+    min-height: 3rem!important;
+}
 .containedButtonSmaller, 
 .containedButtonSmaller button {
   -webkit-transition-duration: 0.4s; /* Safari */
@@ -625,7 +628,7 @@ lightning-datatable .slds-th__action {
 
 .containedButton-size {
     height: 56px;
-    width: 100%;
+    width: 200px;
 }
 
 .filterButton,
@@ -735,10 +738,6 @@ lightning-datatable .slds-th__action {
     color: #000000;
 }
 
-.slds-button__icon_right,
-.slds-button__icon--right {
-    margin-left: 0;
-}
 /* ############################################## */
 /* Text Sizing */
 
@@ -1030,6 +1029,14 @@ lightning-datatable .slds-th__action {
     height: 3.2rem;
 }
 
+.innerHeaderCss .slds-button .slds-button__icon_right,
+.innerHeaderCss .slds-button .slds-button__icon--right {
+  margin-left: 10px;
+  display: block;
+}
+.innerHeaderCss .blueCustomButtonLink .slds-button {
+  line-height: .875rem;
+}
 /* ############################################## */
 /* Text Area */
 
