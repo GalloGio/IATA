@@ -765,7 +765,7 @@ public static List<MessageWrapper> getCaseMessages(String caseId){
 
 	Case caseToFirstComment = [SELECT Id, Description, CreatedBy.Name, CreatedDate FROM Case WHERE Id =:caseId];
 
-	List<CaseComment> lstCaseCommentsAux = [SELECT Id, ParentId, CommentBody, IsPublished,
+	List<CaseComment> lstCaseCommentsAux = [SELECT Id, ParentId, CommentBody, IsPublished,RecordType__c,
 	                                        CreatedDate, CreatedById, CreatedBy.Name, IsDeleted
 	                                        FROM CaseComment
 	                                        WHERE ParentId = :caseId AND IsDeleted = false
