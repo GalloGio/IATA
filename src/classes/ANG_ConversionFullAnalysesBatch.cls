@@ -1,5 +1,5 @@
 global class ANG_ConversionFullAnalysesBatch implements Database.Batchable<sObject> , Database.Stateful{
-	
+
 	String query;
 
 	global List<ANG_ConversionHelper.HierarchyStructure> structures;
@@ -7,7 +7,7 @@ global class ANG_ConversionFullAnalysesBatch implements Database.Batchable<sObje
 	global Integer run;
 
 	global List<Account> totalAccounts;
-	
+
 	global List<String> columnsCSV;
 
 	global String errorsFound;
@@ -17,7 +17,7 @@ global class ANG_ConversionFullAnalysesBatch implements Database.Batchable<sObje
 	global Map<Id,Contact> contactGlobal;
 
 	global ANG_ConversionFullAnalysesBatch(List<ANG_ConversionHelper.HierarchyStructure> structuresToMigrate, String countryIn) {
-		
+
 		ANG_ConversionHelper.isMigrationToolAnalyses=true;
 
 		this.structures = structuresToMigrate;
@@ -27,7 +27,7 @@ global class ANG_ConversionFullAnalysesBatch implements Database.Batchable<sObje
 		Integer queryResults = structures.size();
 
 		this.query = 'SELECT Id from Account LIMIT ' + queryResults;
-		
+
 		this.run = -1;
 
 		totalAccounts = new List<Account>();
@@ -37,25 +37,25 @@ global class ANG_ConversionFullAnalysesBatch implements Database.Batchable<sObje
 		errorsFound = '';
 
 		contactGlobal = new Map<Id,Contact>();
-	}	
-	
+	}
+
 	global Database.QueryLocator start(Database.BatchableContext BC) {
 		return Database.getQueryLocator(query);
 	}
 
-   	global void execute(Database.BatchableContext BC, List<sObject> scope) {
+	 	global void execute(Database.BatchableContext BC, List<sObject> scope) {
 
-   		try{
+	 		try{
 
-   			this.run++;
+	 			this.run++;
 
-   			ANG_ConversionHelper.isMigrationToolAnalyses=true;
+	 			ANG_ConversionHelper.isMigrationToolAnalyses=true;
 
-	   		Set<Id> accounts = new Set<Id>();
+		 		Set<Id> accounts = new Set<Id>();
 
-	   		List<ANG_ConversionHelper.HierarchyStructure> structs = new List<ANG_ConversionHelper.HierarchyStructure>();
+		 		List<ANG_ConversionHelper.HierarchyStructure> structs = new List<ANG_ConversionHelper.HierarchyStructure>();
 
-	   		structs.add(structures.get(this.run));
+		 		structs.add(structures.get(this.run));
 
 			Map<Id,List<Account>> allAgenciesMap = ANG_ConversionHelper.fetchAllAgenciesInvolved(structs);
 
@@ -83,10 +83,10 @@ global class ANG_ConversionFullAnalysesBatch implements Database.Batchable<sObje
 			for(Account acct: accountsToUpdate){
 
 				accounts.add(acct.Id);
-				
+
 				if(acct.Location_Type__c == AMS_Utils.HE)
 					totalAccounts.add(acct);
-					
+
 			}
 
 			List<Contact> contact = [Select Id, Email, Name, User_Portal_Status__c from Contact where accountId in : accounts and User_Portal_Status__c = 'Approved Admin' LIMIT 1 ];
@@ -110,11 +110,11 @@ global class ANG_ConversionFullAnalysesBatch implements Database.Batchable<sObje
 
 		//public static Map<Account, Map<String, Integer>> getRiskForecast(Set<Account> accountsInTheHierarchy) ANG_RiskEventMigrationHelper
 	}
-	
+
 	global void finish(Database.BatchableContext BC) {
 
 		String csvFile = '';
-		
+
 		try{
 
 			for(String column:columnsCSV){
@@ -138,16 +138,9 @@ global class ANG_ConversionFullAnalysesBatch implements Database.Batchable<sObje
 				csvFile+= '"' + unNullify(acct.Location_Type__c) + '"' + ',';
 				csvFile+= '"' + unNullify(acct.Location_Class__c) + '"' + ',';
 				csvFile+= '"' + unNullify(acct.Status__c) + '"' + ',';
-				
+
 				contactEmail = null;
 				contactName = null;
-
-			/*
-				if(!acct.Contacts.isEmpty()){
-					contactEmail = acct.Contacts.get(0).Email;
-					contactName = acct.Contacts.get(0).Name;
-				}
-			*/
 
 				if(contactGlobal.get(acct.id) != null){
 
@@ -213,10 +206,11 @@ global class ANG_ConversionFullAnalysesBatch implements Database.Batchable<sObje
 
 		Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
 
-		String[] toAddress = new List<String>{'goncalvesd@iata.org',UserInfo.getUserEmail()};
+		String[] toAddress = new List<String>{'goncalvesd@iata.org'};
 
 		String subject = 'Conversion Report for ' + country;
-
+		email.setSaveAsActivity(false);
+		email.setTargetObjectId(UserInfo.getUserEmail());
 		email.setSubject(subject);
 		email.setToAddresses(toAddress);
 		email.setPlainTextBody('Conversion Report for '  + country + ' in attachment. \n\n\n ' + errorsFound);
@@ -233,7 +227,7 @@ global class ANG_ConversionFullAnalysesBatch implements Database.Batchable<sObje
 		if(o == null)
 			return '';
 
-		return String.valueOf(o);	
+		return String.valueOf(o);
 	}
-	
+
 }

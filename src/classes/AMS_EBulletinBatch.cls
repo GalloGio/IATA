@@ -39,7 +39,7 @@ global class AMS_EBulletinBatch implements Database.Batchable<sObject> {
 		return Database.getQueryLocator(query);
 	}
 
-   	global void execute(Database.BatchableContext BC, List<AMS_eBulletin_Profile__c> scope) {
+	 	global void execute(Database.BatchableContext BC, List<AMS_eBulletin_Profile__c> scope) {
 
 		List<Messaging.SingleEmailMessage> mailsToSend = new List<Messaging.SingleEmailMessage>();
 
@@ -192,7 +192,7 @@ global class AMS_EBulletinBatch implements Database.Batchable<sObject> {
 		bodyHTML = bodyHTML.replace('##USERNAME##',eBprof.User__r.name);
 		bodyHTML = bodyHTML.replace('##URL##',networkComponent);
 
-	   	mail.setHtmlBody(bodyHTML);
+		 	mail.setHtmlBody(bodyHTML);
 		mail.setPlainTextBody(bodyText);
 
 		mail.setCharset(emailTemplate.Encoding);
