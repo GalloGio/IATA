@@ -47,6 +47,7 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     @api sectionClass;
     @api headerClass;
     @api sectionTitle;
+	@api sectionName;
     @api showEdit;
     @api editBasics;
     @api allowContactDelete=false;
@@ -249,7 +250,7 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     openModal() { this.showEditModal = true; }
     
 	closeModal() { 
-        if(this.sectionTitle === 'Portal Accessibility' && !this.isSuccess){
+        if(this.sectionName === 'Portal Accessibility' && !this.isSuccess){
             this.fields = this.initialList;
         }
         this.isSuccess = false;
@@ -269,7 +270,7 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     handleSucess(event) {
         this.isSaving = false;
 		
-		if(this.sectionTitle === 'Portal Accessibility'){
+		if(this.sectionName === 'Portal Accessibility'){
             this.isSuccess = true;
             this.initialList = JSON.parse(JSON.stringify(this.fields));
         }
@@ -280,7 +281,7 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     }
 
     handleError(event) {
-		if(this.sectionTitle === 'Portal Accessibility'){
+		if(this.sectionName === 'Portal Accessibility'){
             this.isSuccess = false;       
         }
         this.isSaving = false;
@@ -653,7 +654,7 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     }
 
     get canEditBasics() {
-        let isRestrictedSection = this.sectionTitle == 'Basics' || this.sectionTitle == 'Branch Contact';
+        let isRestrictedSection = this.sectionName == 'Basics' || this.sectionName == 'Branch Contact';
         return (this.editBasics && isRestrictedSection && this.showEdit) || (!isRestrictedSection && this.showEdit);
     }
 

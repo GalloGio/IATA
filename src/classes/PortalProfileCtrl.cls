@@ -26,6 +26,14 @@ public with sharing class PortalProfileCtrl {
     PRIVATE STATIC FINAL STRING LABEL_BUSINESS_CONTACT = System.label.csp_Profile_BusinessContact;
     PRIVATE STATIC FINAL STRING LABEL_ACCESSIBILITY = System.label.csp_Profile_PortalAccessibility;
     PRIVATE STATIC FINAL STRING LABEL_PROFESSIONAL = System.label.csp_Profile_Professional;
+	
+	PRIVATE STATIC FINAL STRING LABEL_EN_BASICS = 'Basics';
+    PRIVATE STATIC FINAL STRING LABEL_EN_COMPANY_CONTACT = 'Company Contact';
+    PRIVATE STATIC FINAL STRING LABEL_EN_PERSONAL_CONTACT = 'Personal Contact';
+    PRIVATE STATIC FINAL STRING LABEL_EN_BUSINESS_CONTACT = 'Business Contact';
+    PRIVATE STATIC FINAL STRING LABEL_EN_ACCESSIBILITY = 'Portal Accessibility';
+    PRIVATE STATIC FINAL STRING LABEL_EN_PROFESSIONAL = 'Professional';
+    PRIVATE STATIC FINAL STRING LABEL_EN_PRIVACYMANAGEMENTTITLE = 'Subscriptions & Privacy';
     
     PRIVATE STATIC FINAL STRING LABEL_PRIVACYMANAGEMENTTITLE = System.Label.CSP_Profile_PrivacyManagement_Title;
     PRIVATE STATIC FINAL STRING LABEL_PRIVACYMANAGEMENTTEXT = System.label.CSP_Profile_PrivacyManagement_Text;
@@ -370,11 +378,21 @@ public static Contact contactInfo = new Contact();
 
         @AuraEnabled
         public Boolean isEditable;
+		
+		@AuraEnabled
+        public String cardKey;
 
         public CardWrapper(String cardTitleAux, List<FieldWrapper> lstFieldWrapperAux, Boolean isEditableAux){
             this.cardTitle = cardTitleAux;
             this.lstFieldWrapper = lstFieldWrapperAux;
             this.isEditable = isEditableAux;
+        }
+		
+		public CardWrapper(String cardTitleAux, List<FieldWrapper> lstFieldWrapperAux, Boolean isEditableAux, String cardKeyAux){
+            this.cardTitle = cardTitleAux;
+            this.lstFieldWrapper = lstFieldWrapperAux;
+            this.isEditable = isEditableAux;
+            this.cardKey = cardKeyAux;
         }
 
 
@@ -396,7 +414,7 @@ public static Contact contactInfo = new Contact();
         lstfw1.add(new FieldWrapper('Birthdate',true,true));
         lstfw1.add(new FieldWrapper('Title',true,true));
         lstfw1.add(new FieldWrapper('Preferred_Language__c',true,true));
-        lstCardWrapper.add(new CardWrapper(LABEL_BASICS, lstfw1, true));
+        lstCardWrapper.add(new CardWrapper(LABEL_BASICS, lstfw1, true,LABEL_EN_BASICS));
 
         //PERSONAL CARD
         List<FieldWrapper> lstfw2 = new List<FieldWrapper>();
@@ -411,13 +429,13 @@ public static Contact contactInfo = new Contact();
         lstfw2.add(new FieldWrapper('MailingState',true,true));
         lstfw2.add(new FieldWrapper('MailingStreet',true,true));
         lstfw2.add(new FieldWrapper('MailingPostalCode',true,true));
-        lstCardWrapper.add(new CardWrapper(LABEL_PERSONAL_CONTACT, lstfw2, true));
+        lstCardWrapper.add(new CardWrapper(LABEL_PERSONAL_CONTACT, lstfw2, true,LABEL_EN_PERSONAL_CONTACT));
 
         //ACCESSIBILITY CARD
         List<FieldWrapper> lstfw3 = new List<FieldWrapper>();
         lstfw3.add(new FieldWrapper('User_Portal_Status__c',false,true));
         lstfw3.add(new FieldWrapper('Authorization',false,true));
-        lstCardWrapper.add(new CardWrapper(LABEL_ACCESSIBILITY, lstfw3, true));
+        lstCardWrapper.add(new CardWrapper(LABEL_ACCESSIBILITY, lstfw3, true,LABEL_EN_ACCESSIBILITY));
 
         //PROFESSIONAL CARD
         List<FieldWrapper> lstfw4 = new List<FieldWrapper>();
@@ -427,12 +445,12 @@ public static Contact contactInfo = new Contact();
         fw = new FieldWrapper('Membership_Function__c',false,true,true);
         fw.isJobFunction = true;
         lstfw4.add(fw);
-        lstCardWrapper.add(new CardWrapper(LABEL_PROFESSIONAL, lstfw4, true));
+        lstCardWrapper.add(new CardWrapper(LABEL_PROFESSIONAL, lstfw4, true,LABEL_EN_PROFESSIONAL));
 
         //PRIVACY CARD
         List<FieldWrapper> lstfw5 = new List<FieldWrapper>();
         lstfw5.add(new FieldWrapper(LABEL_PRIVACYMANAGEMENTTITLE, LABEL_PRIVACYMANAGEMENTTEXT, LABEL_PRIVACYMANAGEMENTLINK ));
-        lstCardWrapper.add(new CardWrapper(LABEL_PRIVACYMANAGEMENTTITLE, lstfw5, false));
+        lstCardWrapper.add(new CardWrapper(LABEL_PRIVACYMANAGEMENTTITLE, lstfw5, false,LABEL_EN_PRIVACYMANAGEMENTTITLE));
 
         return lstCardWrapper;
     }
