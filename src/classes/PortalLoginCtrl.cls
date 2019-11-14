@@ -54,14 +54,14 @@ public with sharing class PortalLoginCtrl {
     }
 
     @AuraEnabled
-    public static LoginResult login(String username, String password, string landingPage) {
+    public static LoginResult login(String username, String password, string landingPage, string relayState) {
         LoginResult result = new LoginResult();
         result.userIsFrozen = false;
         string startUrl = '';
 
-        if(landingPage != null && landingPage != ''){
+        if(string.isNotBlank(landingPage)){
             landingPage = EncodingUtil.urlDecode(landingPage, 'UTF-8');
-            if(landingPage.contains(Label.CSP_PortalPath)){
+            if(landingPage.contains(Label.CSP_PortalPath) || string.isNotBlank(relayState)){
                 startUrl = landingPage;
             }else{
                 startUrl = Label.CSP_PortalPath + landingPage;
@@ -116,6 +116,10 @@ public with sharing class PortalLoginCtrl {
             }
 
             username=null != oneUser ? oneUser.Username : username;
+
+            if(string.isNotBlank(relayState)){
+                startUrl = OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, startUrl);
+            }
 
             System.PageReference pageRef = Site.login(username, password, startUrl);
 
