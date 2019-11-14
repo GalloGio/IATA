@@ -405,12 +405,75 @@
         <fullName>All</fullName>
         <columns>NAME</columns>
         <columns>DataCategoryName__c</columns>
-        <columns>DataSubtopicName__c</columns>
         <columns>DataTopicName__c</columns>
+        <columns>DataSubtopicName__c</columns>
+        <columns>DataCategoryLabel_en_US__c</columns>
         <columns>SectorExceptions__c</columns>
         <columns>CategoryExceptions__c</columns>
         <columns>Order__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
+    </listViews>
+    <listViews>
+        <fullName>Categories</fullName>
+        <columns>NAME</columns>
+        <columns>DataCategoryName__c</columns>
+        <columns>DataCategoryLabel_en_US__c</columns>
+        <columns>Order__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>DataTopicName__c</field>
+            <operation>equals</operation>
+        </filters>
+        <filters>
+            <field>DataSubtopicName__c</field>
+            <operation>equals</operation>
+        </filters>
+        <label>Categories</label>
+    </listViews>
+    <listViews>
+        <fullName>Subtopics</fullName>
+        <columns>NAME</columns>
+        <columns>DataCategoryName__c</columns>
+        <columns>DataTopicName__c</columns>
+        <columns>DataSubtopicName__c</columns>
+        <columns>DataCategoryLabel_en_US__c</columns>
+        <columns>Order__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>DataCategoryName__c</field>
+            <operation>notEqual</operation>
+        </filters>
+        <filters>
+            <field>DataTopicName__c</field>
+            <operation>notEqual</operation>
+        </filters>
+        <filters>
+            <field>DataSubtopicName__c</field>
+            <operation>notEqual</operation>
+        </filters>
+        <label>Subtopics</label>
+    </listViews>
+    <listViews>
+        <fullName>Topics</fullName>
+        <columns>NAME</columns>
+        <columns>DataCategoryName__c</columns>
+        <columns>DataTopicName__c</columns>
+        <columns>DataCategoryLabel_en_US__c</columns>
+        <columns>Order__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>DataCategoryName__c</field>
+            <operation>notEqual</operation>
+        </filters>
+        <filters>
+            <field>DataTopicName__c</field>
+            <operation>notEqual</operation>
+        </filters>
+        <filters>
+            <field>DataSubtopicName__c</field>
+            <operation>equals</operation>
+        </filters>
+        <label>Topics</label>
     </listViews>
 </CustomObject>
