@@ -2577,13 +2577,17 @@ public without sharing class ISSP_AMS_Accreditation {
         Boolean isFirstHE = accountsByBSP.get(newForm.Branch_Office_Country__r.AMS_Settlement_System__c) == null || 
             accountsByBSP.get(newForm.Branch_Office_Country__r.AMS_Settlement_System__c).isEmpty();
 
-        if (isMultiCountryNewAE || getIsAccreditationModelNotNullOrLegacy()) {
-            if (isFirstHE) {
+        if (isMultiCountryNewAE){
+            if(isFirstHE) {
                 SFDCAccount.Location_Type__c = AMS_Utils.HE;
-            } else {
+            }else {
                 SFDCAccount.Location_Type__c = AMS_Utils.AE;
             }
-        } else {
+		}
+		else if(getIsAccreditationModelNotNullOrLegacy()){
+			SFDCAccount.Location_Type__c = AMS_Utils.AE;
+		}
+        else {
             SFDCAccount.Location_Type__c = AMS_Utils.BR;
         }
 
