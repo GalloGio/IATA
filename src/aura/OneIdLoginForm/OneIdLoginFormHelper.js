@@ -213,7 +213,16 @@
         action.setCallback(this, function(a){
             var rtnValue = a.getReturnValue();
             if (rtnValue !== null && rtnValue !== undefined) {
-                window.location.href = rtnValue;
+                var redirectURL = rtnValue;
+                var startURL = event.getParam("paramsMap").startURL;
+                var RelayState = event.getParam("paramsMap").RelayState;
+                if(RelayState){
+                    redirectURL = redirectURL + '?RelayState=' + RelayState;
+                    if(startURL){
+                        redirectURL = redirectURL + '&startURL=' + startURL;
+                    }
+                }
+                window.location.href = redirectURL;
             }
         });
         $A.enqueueAction(action);
