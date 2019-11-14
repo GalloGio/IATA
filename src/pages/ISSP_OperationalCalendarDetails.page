@@ -751,11 +751,17 @@
 
     function prepopulate(fromId, toId) {
         var fromVal = $(fromId).val();
-        if(fromVal) {
+        if (fromVal=="") {
+            var elems = $("#left-opt-" + toId + " option");
+            for (var i=0; i<elems.length; i++) {
+                var selectedVal = $(elems[i]).detach();
+                $(selectedVal).appendTo("#right-opt-"+toId);
+            }
+        } else if(fromVal) {
             var elem = $("#left-opt-"+toId+" option[value='"+fromVal+"']");
             if(elem) {
                 var selectedVal = $(elem).detach();
-                $(selectedVal).appendTo("#right-opt-"+toId);    
+                $(selectedVal).appendTo("#right-opt-"+toId);
             }
         }
     }
