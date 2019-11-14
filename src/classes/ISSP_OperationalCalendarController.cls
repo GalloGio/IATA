@@ -800,7 +800,11 @@ global without sharing class ISSP_OperationalCalendarController {
 			}
 		}
 		if (operationType=='CNS') {
-			return SObjectType.operational_Calendar__c.FieldSets.ISSP_Page_Detail_For_CNS;
+			if (isAirline) {
+				return SObjectType.operational_Calendar__c.FieldSets.ISSP_Page_Detail_For_CNS_Airline;
+			} else {
+				return SObjectType.operational_Calendar__c.FieldSets.ISSP_Page_Detail_For_CNS_Agency;
+			}
 		}
 		if (operationType=='SIS') {
 			return SObjectType.operational_Calendar__c.FieldSets.ISSP_Page_Detail_For_SIS;
