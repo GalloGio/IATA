@@ -103,6 +103,8 @@ export default class PortalFAQSubtopicTiles extends LightningElement {
             subtopic: subtopicName
         };   
         this.selectedEvent('subtopicselected', subtopicInfo);
+
+        window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
     }
 
     selectedEvent(eventName, params) {
