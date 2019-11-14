@@ -3819,6 +3819,745 @@ Payment required on receipt of this Payment Advice
         <value>Invalid email</value>
     </labels>
     <labels>
+        <fullName>CSP_L2_Account_Information</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Account_Information</shortDescription>
+        <value>Company Account Info</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Account_Information_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Account_Information_Message</shortDescription>
+        <value>Fill out the information below to find your company account.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Account_Selection</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Account_Selection</shortDescription>
+        <value>Account Selection</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Account_Selection_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Account_Selection_Message</shortDescription>
+        <value>To match your personal profile with a company account we need your company details.
+Your company may have an account in IATA, so please check it first before creating a new one.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Address_Not_Found_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Address_Not_Found_Message</shortDescription>
+        <value>We could not find your address.
+Please click Next Step button to confirm that your address is correct</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Already_L2_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Already_L2_Message</shortDescription>
+        <value>It seems you already completed your profile before, so we have all the details we need.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Already_L2_Title</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Already_L2_Title</shortDescription>
+        <value>All set!</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Back_to_Account_Selection</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Back_to_Account_Selection</shortDescription>
+        <value>Back to Company Account Info</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Back_to_Business_Address_Information</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Back_to_Business_Address_Information</shortDescription>
+        <value>Back to Business Address Information</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Back_to_Company_Information</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Back_to_Company_Information</shortDescription>
+        <value>Back to Company Information</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Back_to_Edit</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Back_to_Edit</shortDescription>
+        <value>Go back to edit</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Back_to_Profile_Details</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Back_to_Profile_Details</shortDescription>
+        <value>Back to Profile Details</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Banner_Title</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Banner_Title</shortDescription>
+        <value>Profile Completion &amp; Account Selection</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Business_Address_Information</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Business_Address_Information</shortDescription>
+        <value>Business Address Information</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Business_Address_Information_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Business_Address_Information_Message</shortDescription>
+        <value>Please fill out your business address information.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Category</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Category</shortDescription>
+        <value>Category</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Change_Categorization_Warning</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Change_Categorization_Warning</shortDescription>
+        <value>The service you&apos;re requesting access to might not be available for your selected categorization. You can still finalize your registration, but the service might no longer be available after completion.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_City</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_City</shortDescription>
+        <value>City</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Company_Account</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Company_Account</shortDescription>
+        <value>Company Account</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Company_Account_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Company_Account_Message</shortDescription>
+        <value>Please check your company details</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Company_Information</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Company_Information</shortDescription>
+        <value>Company Information</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Company_Information_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Company_Information_Message</shortDescription>
+        <value>Please fill out your company information to access customized services.
+You can easily create a company account in two steps</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Company_Location</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Company_Location</shortDescription>
+        <value>Company Location</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Company_Name</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Company_Name</shortDescription>
+        <value>Company Name</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Confirmation</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Confirmation</shortDescription>
+        <value>Confirmation</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Confirmation_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Confirmation_Message</shortDescription>
+        <value>You are only one step away from updating your profile. Please check the information provided and click submit button if everthing looks correct.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Contact_Support</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Contact_Support</shortDescription>
+        <value>Contact Support</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Country</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Country</shortDescription>
+        <value>Country</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Create_Account_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Create_Account_Message</shortDescription>
+        <value>If you do not have a company account, you can easily create on in two steps</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Create_New_Account</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Create_New_Account</shortDescription>
+        <value>Create New Account</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Date_of_Birth</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Date_of_Birth</shortDescription>
+        <value>Date of Birth</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Details_Saved</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Details_Saved</shortDescription>
+        <value>Your details are saved successfully.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Details_Saved_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Details_Saved_Message</shortDescription>
+        <value>We can now offer you more personalized experience based on your profile. You can also take a look at any service &amp; training provided from IATA</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Details_Saved_Service_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Details_Saved_Service_Message</shortDescription>
+        <value>You can now continue to raise your service request.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Details_Saved_Topic_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Details_Saved_Topic_Message</shortDescription>
+        <value>You can now continue to raise your request.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Did_Not_Find</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Did_Not_Find</shortDescription>
+        <value>Did not find what you&apos;re looking for?</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Did_Not_Find_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Did_Not_Find_Message</shortDescription>
+        <value>You can easily create a company account in two steps to complete your profile</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Edit_Company_Information</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Edit_Company_Information</shortDescription>
+        <value>Click here to complete your profile</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Edit_Company_Information_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Edit_Company_Information_Message</shortDescription>
+        <value>We&apos;ve built the IATA Customer Portal so that it tailors the IATA products and services specifically for you. For us to be able to do that, we&apos;d like to know you and your organization a bit better.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Email_Address</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Email_Address</shortDescription>
+        <value>E-mail address</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Find_Address</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Find_Address</shortDescription>
+        <value>Find Address</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Go_Back</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Go_Back</shortDescription>
+        <value>Go Back</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Go_To_Homepage</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Go_To_Homepage</shortDescription>
+        <value>Go to Homepage</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Go_To_Profile</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Go_To_Profile</shortDescription>
+        <value>Go Back to Profile</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Go_To_Service</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Go_To_Service</shortDescription>
+        <value>Go Back to Service</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Go_To_Topic</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Go_To_Topic</shortDescription>
+        <value>Go Back to Topic</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_IATA_Codes</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_IATA_Codes</shortDescription>
+        <value>IATA Code</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Is_PO_Box_Address</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Is_PO_Box_Address</shortDescription>
+        <value>Is this a PO Box address?</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Job_Function</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Job_Function</shortDescription>
+        <value>Job Function</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Job_Title</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Job_Title</shortDescription>
+        <value>Job Title</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Legal_Name</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Legal_Name</shortDescription>
+        <value>Legal Name</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Next_Account_Selection</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Next_Account_Selection</shortDescription>
+        <value>Next Step / Account Selection</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Next_Address_Information</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Next_Address_Information</shortDescription>
+        <value>Next Step / Address Information</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Next_Confirmation</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Next_Confirmation</shortDescription>
+        <value>Next Step / Confirmation</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_No</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_No</shortDescription>
+        <value>No</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_No_Matching_Results</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_No_Matching_Results</shortDescription>
+        <value>There is no matching results found</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Other_Sector</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Other_Sector</shortDescription>
+        <value>Other</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Other_Sector_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Other_Sector_Message</shortDescription>
+        <value>Please select a relevant sector from the list provided.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_PO_Box_Number</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_PO_Box_Number</shortDescription>
+        <value>PO Box Number</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Personal_Details</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Personal_Details</shortDescription>
+        <value>Personal Details</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Personal_Details_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Personal_Details_Message</shortDescription>
+        <value>Please check your personal details</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Phone_Number</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Phone_Number</shortDescription>
+        <value>Phone Number</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Postal_Code</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Postal_Code</shortDescription>
+        <value>Postal Code</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Profile_Details</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Profile_Details</shortDescription>
+        <value>Profile Details</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Profile_Details_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Profile_Details_Message</shortDescription>
+        <value>Add your personal details to let IATA suggest personalized content and services</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Profile_Incomplete</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Profile_Incomplete</shortDescription>
+        <value>The profile is not fully updated yet</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Profile_Incomplete_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Profile_Incomplete_Message</shortDescription>
+        <value>But it is saved as a draft, you can continue later. Are you sure you want to quit?</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Registration_Error_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Registration_Error_Message</shortDescription>
+        <value>Unfortunately, something went wrong when creating your account. To help you further, please contact our support team.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Registration_Error_Title</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Registration_Error_Title</shortDescription>
+        <value>Error</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Requested_Modal_Cancel</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Requested_Modal_Cancel</shortDescription>
+        <value>Cancel</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Requested_Modal_Complete</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Requested_Modal_Complete</shortDescription>
+        <value>Complete My Profile</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Requested_Modal_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Requested_Modal_Message</shortDescription>
+        <value>To continue, we&apos;d need some more details about you and your organization. Don&apos;t worry, it won&apos;t take long!</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Requested_Modal_Title</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Requested_Modal_Title</shortDescription>
+        <value>Hi</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Required</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Required</shortDescription>
+        <value>Required</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Search</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Search</shortDescription>
+        <value>Search</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Search_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Search_Message</shortDescription>
+        <value>Please fill at least one of the two fields below.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Search_Results</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Search_Results</shortDescription>
+        <value>Search Results</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Search_Results_Above_Limit</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Search_Results_Above_Limit</shortDescription>
+        <value>We found +50 accounts matching your search criteria.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Search_Results_Above_Limit_Link</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Search_Results_Above_Limit_Link</shortDescription>
+        <value>Refine the search criteria</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Search_Results_Above_Limit_Link_1</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Search_Results_Above_Limit_Link_1</shortDescription>
+        <value>--empty--</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Search_Results_Above_Limit_Link_2</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Search_Results_Above_Limit_Link_2</shortDescription>
+        <value>to see fewer options.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Sector</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Sector</shortDescription>
+        <value>Sector</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Select</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Select</shortDescription>
+        <value>Select</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Select_Address_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Select_Address_Message</shortDescription>
+        <value>Please select the correct address. If you can&apos;t find the right address from the list, we&apos;ll save the one you have entered. Click Next Step to continue.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Select_Company_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Select_Company_Message</shortDescription>
+        <value>Select your company account from the list.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_State</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_State</shortDescription>
+        <value>State</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Street</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Street</shortDescription>
+        <value>Street</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Submit</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Submit</shortDescription>
+        <value>Submit</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Title</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Title</shortDescription>
+        <value>Title</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Trade_Name</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Trade_Name</shortDescription>
+        <value>Trade Name</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Website</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Website</shortDescription>
+        <value>Website</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Yes</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Yes</shortDescription>
+        <value>Yes</value>
+    </labels>
+    <labels>
         <fullName>CSP_LogOut</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
