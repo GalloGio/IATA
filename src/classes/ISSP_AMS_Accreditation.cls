@@ -4188,6 +4188,10 @@ public without sharing class ISSP_AMS_Accreditation {
 
             Pattern validEmail = Pattern.compile('([a-zA-Z0-9_\\-\\.]+)@(((\\[a-z]{1,3}\\.[a-z]{1,3}\\.[a-z]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,6}|[0-9]{1,6}))');
 
+            if (isNoticeOfChange && !newForm.Notify_Change_Location__c) {
+                newForm.Branch_Office_Email__c = null;
+            }
+            
             if (newForm.Branch_Office_Email__c != null && !validEmail.matcher(newForm.Branch_Office_Email__c).matches()) {
                 newForm.Branch_Office_Email__c.addError(Label.ISSP_AMS_Invalid_Email);
                 errorFound = true;
