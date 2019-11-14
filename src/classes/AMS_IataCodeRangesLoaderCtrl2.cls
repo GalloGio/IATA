@@ -264,7 +264,7 @@ public class AMS_IataCodeRangesLoaderCtrl2{
 						mail.setSubject('[IATA CODE GENERATION] Loader Issue cause '+b+' / '+b2+' / '+b3+' / '+b4);
 						mail.setTargetObjectId(UserInfo.getuserId()) ;
 						mail.setPlainTextBody(sb.getStringValue());
-						mail.setSaveAsActivity(true);
+						mail.setSaveAsActivity(false);
 						emails.add( mail);
 						if(!Test.isRunningTest()) Messaging.sendEmail(emails);
 				}
