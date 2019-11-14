@@ -8,6 +8,12 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
     public String reason {get; set;}
     public List<SelectOption> billingStatesList {get; set; }
 
+    public List<IATA_ISO_City__c> billingCityList;
+    
+    public String billingCity{get;set;}
+
+    public String billingCityListStr {get {return JSON.serialize(billingCityList);} set;}
+
     private map<String,list<IATA_ISO_State__c>> mapBillingStatesPerCountry;
     private User currentUser;
     
@@ -25,6 +31,7 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
     public String commParamFirst { get { if(communityName=='CNS'){ return '?CommunityName='+ communityName;} return ''; } set;}
     
     public ISSP_AMS_MSO_Request_Controller() {
+
         step = ApexPages.currentPage().getParameters().get('step');
         Id caseId = ApexPages.currentPage().getParameters().get('caseId');
         generatedIATACODE = ApexPages.currentPage().getParameters().get('iatacode');
@@ -159,6 +166,14 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
         for (IATA_ISO_State__c s : mapBillingStatesPerCountry.get(countrySelected)) {
             billingStatesList.add(new SelectOption(s.Id, s.Name));
         }
+
+    }
+
+    public void refreshCities(){
+    
+        billingCityList = new List<IATA_ISO_City__c>([SELECT Id, Name, GeonameName__c, GeonameAlternateNames__c 
+                                                      FROM Iata_Iso_City__c 
+                                                      WHERE IATA_ISO_State__c = :billingState AND IATA_ISO_State__r.IATA_ISO_Country__c = :countrySelected]);      
     }
 
     public Pagereference cancel() {
@@ -278,6 +293,8 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
                 accreditationForm.Location_Type__c = 'HO';
                 accreditationForm.IATA_ISO_State__c = billingState;
                 accreditationForm.Branch_Office_Country__c = countrySelected;
+                accreditationForm.Geoname_Billing_City__c = billingCity;
+                
                 insert accreditationForm;
 
                 oscar.AMS_Online_Accreditation__c = accreditationForm.Id;
