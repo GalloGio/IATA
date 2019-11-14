@@ -4191,7 +4191,9 @@ public without sharing class ISSP_AMS_Accreditation {
 
             Pattern validEmail = Pattern.compile('([a-zA-Z0-9_\\-\\.]+)@(((\\[a-z]{1,3}\\.[a-z]{1,3}\\.[a-z]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,6}|[0-9]{1,6}))');
 
-            if (newForm.Branch_Office_Email__c != null && !validEmail.matcher(newForm.Branch_Office_Email__c).matches()) {
+            String emailAux = (isNoticeOfChange && !newForm.Notify_Change_Location__c) ? null : newForm.Branch_Office_Email__c;
+            
+            if (emailAux != null && !validEmail.matcher(emailAux).matches()) {
                 newForm.Branch_Office_Email__c.addError(Label.ISSP_AMS_Invalid_Email);
                 errorFound = true;
             }
@@ -5659,7 +5661,7 @@ public without sharing class ISSP_AMS_Accreditation {
                 }
             }
         } else if (stepNumber == '5' && !isFromValidation) {
-            auxReqsList = [SELECT Id, Name, Requirement_text__c, File_to_Upload__c, File_Identifier2__c
+            auxReqsList = [SELECT Id, Name, Requirement_text__c, File_to_Upload__c, File_Identifier2__c, Language__c
                         FROM AMS_Accreditation_Requirement__c
                         WHERE (AMS_Accreditation_Country_CheckList__r.IATA_ISO_Country__r.ISO_Code__c = :newCase.IFAP_Country_ISO__c AND AMS_Accreditation_Country_CheckList__r.Operation__c = :sector
                             AND Location_type__c INCLUDES (:amsOfficeType) AND File_Identifier2__c = :CGO_SIGNED_CONTRACT) And Type_Of_Agent__c INCLUDES (:newForm.Agent_Type__c)
@@ -5675,7 +5677,7 @@ public without sharing class ISSP_AMS_Accreditation {
             }
         } else if (stepNumber == '5' && isFromValidation) {
             //and display Signed Contract to upload in Step E
-            auxReqsList = [SELECT Id, Name, Requirement_text__c, File_to_Upload__c, File_Identifier2__c
+            auxReqsList = [SELECT Id, Name, Requirement_text__c, File_to_Upload__c, File_Identifier2__c, Language__c
                         FROM AMS_Accreditation_Requirement__c
                         WHERE AMS_Accreditation_Country_CheckList__r.IATA_ISO_Country__r.ISO_Code__c = :newCase.IFAP_Country_ISO__c AND AMS_Accreditation_Country_CheckList__r.Operation__c = :sector
                             AND Location_type__c INCLUDES (:amsOfficeType) AND File_Identifier2__c NOT IN: excludeIdentifierSet And Type_Of_Agent__c INCLUDES (:newForm.Agent_Type__c)
