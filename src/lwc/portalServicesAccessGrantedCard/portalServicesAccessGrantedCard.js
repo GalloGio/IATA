@@ -1,11 +1,15 @@
-import { LightningElement, api } from 'lwc';
+import { LightningElement, api, wire } from 'lwc';
 
 import goToOldPortalService from '@salesforce/apex/PortalServicesCtrl.goToOldPortalService';
 import updateLastModifiedService from '@salesforce/apex/PortalServicesCtrl.updateLastModifiedService';
+import verifyCompleteL3Data from '@salesforce/apex/PortalServicesCtrl.verifyCompleteL3Data';
+import getPortalServiceId from '@salesforce/apex/PortalServicesCtrl.getPortalServiceId';
 
 //navigation
 import { NavigationMixin } from 'lightning/navigation';
 import { navigateToPage } from 'c/navigationUtils';
+import { CurrentPageReference } from 'lightning/navigation';
+import { fireEvent } from 'c/pubsub';
 
 //import labels
 import CSP_Services_ManageService from '@salesforce/label/c.CSP_Services_ManageService';
@@ -46,7 +50,7 @@ export default class PortalServicesAccessGrantedCard extends NavigationMixin(Lig
         let openWindowData = serviceAux.New_Window__c;
         let requestable = serviceAux.Requestable__c;
         let recordId = serviceAux.Id;
-
+        
         // update Last Visit Date on record
         updateLastModifiedService({ serviceId: recordId })
 
@@ -59,9 +63,9 @@ export default class PortalServicesAccessGrantedCard extends NavigationMixin(Lig
             myUrl = appFullUrlData;
             flag = true;
         }
+
         if (flag) {
             //verifies if the event target contains all data for correct redirection
-
             if (openWindowData !== null && openWindowData !== undefined) {
                 //determines if the link is to be opened on a new window or on the current
                 if (openWindowData) {
@@ -80,11 +84,39 @@ export default class PortalServicesAccessGrantedCard extends NavigationMixin(Lig
                             });
 
                     } else {
-                        if (!myUrl.startsWith('http')) {
-                            myUrl = window.location.protocol + '//' + myUrl;
+                        if(serviceAux.ServiceName__c === 'Training Platform (LMS)'){
+							getPortalServiceId({ serviceName: serviceAux.ServiceName__c })
+								.then(serviceId => {
+									console.log('service Id: ' + recordId);
+									verifyCompleteL3Data({serviceId: recordId})
+									.then(result => {
+										if(result){
+                                            console.log('to service');
+											window.open(myUrl);
+										}
+										else{
+                                            console.log('fire event')
+											fireEvent(this.pageRef, 'fireL3Registration', serviceId);
+
+										}
+										this.toggleSpinner();
+									})
+									.catch(error => {
+										this.error = error;
+									});
+								})
+								.catch(error => {
+									this.error = error;
+							});
+
+						}
+						else{
+                            if (!myUrl.startsWith('http')) {
+                                myUrl = window.location.protocol + '//' + myUrl;
+                            }
+                            window.open(myUrl);
+                            this.toggleSpinner();
                         }
-                        window.open(myUrl);
-                        this.toggleSpinner();
                     }
 
 
@@ -111,5 +143,6 @@ export default class PortalServicesAccessGrantedCard extends NavigationMixin(Lig
 
     }
 
+    @wire(CurrentPageReference) pageRef;
 
 }
