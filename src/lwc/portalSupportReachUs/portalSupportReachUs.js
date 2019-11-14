@@ -446,7 +446,7 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
         }
 
         //set the options
-        this.subTopicOptions = mySubTopicOptions.concat(mySubTopicOptionsAux.reverse());
+        this.subTopicOptions = mySubTopicOptions.concat(mySubTopicOptionsAux);
 
         //set value of Subtopic if in URL
         if ('subtopic' in this.pageParams && this.pageParams.subtopic !== '') {

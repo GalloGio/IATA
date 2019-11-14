@@ -383,6 +383,8 @@ private class PortalCasesCtrlTest {
         
         AMS_Pax_Accreditation_Form__c ams = new AMS_Pax_Accreditation_Form__c();
         ams.SAAM_Case__c = newCase4.id;
+        ams.Operation_Type__c = 'Travel_Agent';
+        ams.Notify_Change_Location__c = true;
         insert ams;
 
         AP_Process_Form__c apForm = new AP_Process_Form__c(

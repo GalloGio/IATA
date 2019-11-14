@@ -13275,7 +13275,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
             <value>Agent to be Notified</value>
         </criteriaItems>
         <description>Send a confirmation email as soon as the case is created for ID Card Application</description>
-        <triggerType>onCreateOnly</triggerType>
+        <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
         <fullName>IDCard_MassConfirmationEmail Send</fullName>
