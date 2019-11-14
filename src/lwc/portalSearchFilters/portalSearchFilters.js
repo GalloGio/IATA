@@ -5,6 +5,8 @@ import isAirlineAdmin from '@salesforce/apex/PortalCasesCtrl.isAirlineAdmin';
 import getPickListValues from '@salesforce/apex/CSP_Utils.getPickListValues';
 import typeOfCasePortalCustomPicklist from '@salesforce/apex/PortalCasesCtrl.typeOfCasePortalCustomPicklist';
 import getAllPickListValues from '@salesforce/apex/PortalFAQsCtrl.getFAQsInfo';
+import typeOfProfilePortalCustomPicklist from '@salesforce/apex/PortalProfileCtrl.typeOfProfilePortalCustomPicklist';
+import userPortalStatusCustomPicklist from '@salesforce/apex/PortalProfileCtrl.userPortalStatusCustomPicklist';
 
 //import custom labels
 import CSP_Cases from '@salesforce/label/c.CSP_Cases';
@@ -12,6 +14,7 @@ import CSP_Documents from '@salesforce/label/c.CSP_Documents';
 import CSP_FAQs_Title from '@salesforce/label/c.CSP_FAQs_Title';
 import CSP_Services_Title from '@salesforce/label/c.CSP_Services_Title';
 import CSP_Search_TopResults from '@salesforce/label/c.CSP_Search_TopResults';
+import ICCS_Profile from '@salesforce/label/c.ICCS_Profile';
 
 import CSP_Search_Case_Type from '@salesforce/label/c.CSP_Search_Case_Type';
 import CSP_Search_Case_Country from '@salesforce/label/c.CSP_Search_Case_Country';
@@ -21,6 +24,8 @@ import CSP_Search_FAQ_Subtopic from '@salesforce/label/c.CSP_Search_FAQ_Subtopic
 import CSP_Search_Documents_Category from '@salesforce/label/c.CSP_Search_Documents_Category';
 import CSP_Search_Documents_ProdType from '@salesforce/label/c.CSP_Search_Documents_ProdType';
 import CSP_Search_Documents_PubCountry from '@salesforce/label/c.CSP_Search_Documents_PubCountry';
+import CSP_Status from '@salesforce/label/c.CSP_Status';
+import ISSP_All from '@salesforce/label/c.ISSP_All';
 
 export default class PortalSearchFilters extends LightningElement {
 
@@ -37,7 +42,10 @@ export default class PortalSearchFilters extends LightningElement {
         CSP_Search_FAQ_Subtopic,
         CSP_Search_Documents_Category,
         CSP_Search_Documents_ProdType,
-        CSP_Search_Documents_PubCountry
+        CSP_Search_Documents_PubCountry,
+        ICCS_Profile,
+        CSP_Status,
+        ISSP_All
     };
 
     @api
@@ -64,6 +72,14 @@ export default class PortalSearchFilters extends LightningElement {
     @track documentProductCategoryOptions = [];
     @track documentCountryOptions = [];
 
+
+    //attributes for profile filtering
+    @track profileTypeOptions = [];
+    @track profileCountryOptions = [];
+    @track profileContactStatusOptions = [];
+    @track typeIsContact = false;
+
+    
 
     connectedCallback(){
         // get the picklists in here 
@@ -134,11 +150,23 @@ export default class PortalSearchFilters extends LightningElement {
             this.documentCountryOptions = this.getPickWithAllValue(result);
         });
 
-
+        //PROFILE
+        typeOfProfilePortalCustomPicklist({})
+        .then(result =>{
+            this.profileTypeOptions = this.getPickWithAllValue(result);
+        });
+        getPickListValues({ sobj : 'Contact', field : 'Country__c' })
+        .then(result => {
+            this.profileCountryOptions = this.getPickWithAllValue(result);
+        });
+        userPortalStatusCustomPicklist({})
+        .then(result =>{
+            this.profileContactStatusOptions = this.getPickWithAllValue(result);
+        });
     }
 
     getPickWithAllValue(picklist){
-        let picklistAux = [{checked: false, label: "All", value: ""}];
+        let picklistAux = [{checked: false, label: this.label.ISSP_All, value: ""}];
         return picklistAux.concat(picklist);
     }
 
@@ -150,10 +178,13 @@ export default class PortalSearchFilters extends LightningElement {
             filteringObjectAux.casesComponent.highlight = false;
             filteringObjectAux.faqsComponent.highlight = false;
             filteringObjectAux.documentsComponent.highlight = false;
+            filteringObjectAux.profileComponent.highlight = false;
             filteringObjectAux.servicesComponent.show = true;
             filteringObjectAux.casesComponent.show = true;
             filteringObjectAux.faqsComponent.show = true;
             filteringObjectAux.documentsComponent.show = true;
+            filteringObjectAux.profileComponent.show = true;
+            this.typeIsContact = false;
             const selectedEvent = new CustomEvent('highlightfilterchanged', { detail: filteringObjectAux });
             this.dispatchEvent(selectedEvent);
         }
@@ -179,6 +210,8 @@ export default class PortalSearchFilters extends LightningElement {
             filteringObjectAux.faqsComponent.show = false;
             filteringObjectAux.documentsComponent.highlight = false;
             filteringObjectAux.documentsComponent.show = false;
+            filteringObjectAux.profileComponent.show = false;
+            filteringObjectAux.profileComponent.highlight = false;
             const selectedEvent = new CustomEvent('highlightfilterchanged', { detail: filteringObjectAux });
             this.dispatchEvent(selectedEvent);
         }
@@ -220,6 +253,8 @@ export default class PortalSearchFilters extends LightningElement {
             filteringObjectAux.faqsComponent.show = false;
             filteringObjectAux.documentsComponent.highlight = false;
             filteringObjectAux.documentsComponent.show = false;
+            filteringObjectAux.profileComponent.show = false;
+            filteringObjectAux.profileComponent.highlight = false;
             const selectedEvent = new CustomEvent('highlightfilterchanged', { detail: filteringObjectAux });
             this.dispatchEvent(selectedEvent);
         }
@@ -281,6 +316,8 @@ export default class PortalSearchFilters extends LightningElement {
             filteringObjectAux.faqsComponent.show = true;
             filteringObjectAux.documentsComponent.highlight = false;
             filteringObjectAux.documentsComponent.show = false;
+            filteringObjectAux.profileComponent.show = false;
+            filteringObjectAux.profileComponent.highlight = false;
             const selectedEvent = new CustomEvent('highlightfilterchanged', { detail: filteringObjectAux });
             this.dispatchEvent(selectedEvent);
         }
@@ -526,6 +563,8 @@ export default class PortalSearchFilters extends LightningElement {
             filteringObjectAux.faqsComponent.show = false;
             filteringObjectAux.documentsComponent.highlight = true;
             filteringObjectAux.documentsComponent.show = true;
+            filteringObjectAux.profileComponent.show = false;
+            filteringObjectAux.profileComponent.highlight = false;
 
             // Creates the event with the contact ID data.
             const selectedEvent = new CustomEvent('highlightfilterchanged', { detail: filteringObjectAux });
@@ -589,5 +628,93 @@ export default class PortalSearchFilters extends LightningElement {
         const selectedEvent = new CustomEvent('picklistfilterchanged', { detail: filteringObjectAux });
         this.dispatchEvent(selectedEvent);
     }
+
+
+    //only shows the profile component.
+    handleProfileClick(event){
+        let filteringObjectAux = JSON.parse(JSON.stringify(this._filteringObject));
+        if(filteringObjectAux.servicesComponent.highlight === false){
+            filteringObjectAux.highlightTopResults = false;
+            filteringObjectAux.servicesComponent.highlight = false;
+            filteringObjectAux.servicesComponent.show = false;
+            filteringObjectAux.casesComponent.highlight = false;
+            filteringObjectAux.casesComponent.show = false;
+            filteringObjectAux.faqsComponent.highlight = false;
+            filteringObjectAux.faqsComponent.show = false;
+            filteringObjectAux.documentsComponent.highlight = false;
+            filteringObjectAux.documentsComponent.show = false;
+            filteringObjectAux.profileComponent.show = true;
+            filteringObjectAux.profileComponent.highlight = true;
+            const selectedEvent = new CustomEvent('highlightfilterchanged', { detail: filteringObjectAux });
+            this.dispatchEvent(selectedEvent);
+        }
+    }
+
+    handleProfileTypePickChange(event){
+        let selectedValue = event.detail.value;
+
+        if (this.isAdmin) {
+            this.typeIsContact = event.detail.value === 'Contact';
+        }
+
+        let filteringObjectAux = JSON.parse(JSON.stringify(this._filteringObject));
+        filteringObjectAux.profileComponent.profileStatusFilter = '';
+        filteringObjectAux.profileComponent.profileTypeFilter = selectedValue;
+        this._filteringObject = filteringObjectAux;
+
+        //fire the event to update the component
+        const selectedEvent = new CustomEvent('picklistfilterchanged', { detail: filteringObjectAux });
+        this.dispatchEvent(selectedEvent);
+    }
+
+    handleProfileCountryPickChange(event){
+        let selectedValue = event.detail.value;
+
+        let filteringObjectAux = JSON.parse(JSON.stringify(this._filteringObject));
+        filteringObjectAux.profileComponent.profileCountryFilter = selectedValue;
+        this._filteringObject = filteringObjectAux;
+
+        //fire the event to update the component
+        const selectedEvent = new CustomEvent('picklistfilterchanged', { detail: filteringObjectAux });
+        this.dispatchEvent(selectedEvent);
+    }
+
+    handleContactStatusPickChange(event){
+        let selectedValue = event.detail.value;
+
+        let filteringObjectAux = JSON.parse(JSON.stringify(this._filteringObject));
+        filteringObjectAux.profileComponent.profileStatusFilter = selectedValue;
+        this._filteringObject = filteringObjectAux;
+
+        //fire the event to update the component
+        const selectedEvent = new CustomEvent('picklistfilterchanged', { detail: filteringObjectAux });
+        this.dispatchEvent(selectedEvent);
+    }
+
+    get getClassForProfiles(){
+        let filteringObjectAux = JSON.parse(JSON.stringify(this._filteringObject));
+        let classToReturn = 'slds-p-around_medium background-anotherGray cursorPointer';
+        if(filteringObjectAux.profileComponent.highlight === true){
+            classToReturn = 'slds-p-around_medium background-white customLightShadow';
+        }
+        return classToReturn;
+    }
+
+    get getProfileResultsText(){
+        let filteringObjectAux = JSON.parse(JSON.stringify(this.filteringObject));
+        let returnText = '';
+        if(filteringObjectAux.profileComponent.nrResults <= 10){
+            returnText = filteringObjectAux.profileComponent.nrResults;
+        }else{
+            if(filteringObjectAux.profileComponent.highlight === true){
+                returnText = filteringObjectAux.profileComponent.nrResults;
+            }else{
+                returnText = '10+';
+            }
+        }
+        return returnText;
+    }
+
+    
 
 }

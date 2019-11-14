@@ -340,6 +340,23 @@ body {
 .rightLinkBlueBorder {
     border-right: solid 1px #1e32fa;
 }
+
+.aroundMediumGrayBorder {
+    border: solid 1px #999999;
+    border-radius: 1px;
+}
+.topMediumGrayBorder {
+    border-top: solid 1px #999999;
+}
+.leftMediumGrayBorder {
+    border-left: solid 1px #999999;
+}
+.bottomMediumGrayBorder {
+    border-bottom: solid 1px #999999;
+}
+.rightMediumGrayBorder {
+    border-right: solid 1px #999999;
+}
 /* ############################################## */
 
 
@@ -711,6 +728,10 @@ lightning-datatable .slds-th__action {
     color: #33f;
 }
 
+.buttonAlignment, .buttonAlignment button {
+    bottom: -3px;
+}
+
 .heigthInfo {
     height: 70px;
 }
@@ -831,6 +852,10 @@ lightning-datatable .slds-th__action {
 
 .text-linkBlue{
     color: #1e32fa;
+}
+
+.text-red{
+    color: #f04632;
 }
 
 .text-transparent{
@@ -1030,6 +1055,14 @@ lightning-datatable .slds-th__action {
     height: 3.2rem;
 }
 
+.innerHeaderCss .slds-button .slds-button__icon_right,
+.innerHeaderCss .slds-button .slds-button__icon--right {
+  margin-left: 10px;
+  display: block;
+}
+.innerHeaderCss .blueCustomButtonLink .slds-button {
+  line-height: .875rem;
+}
 /* ############################################## */
 /* Text Area */
 
@@ -1143,6 +1176,7 @@ lightning-datatable .slds-th__action {
 .attlist .slds-table_header-fixed_container,.attlist .slds-has-focus{
    background-color: #00000000;
    overflow-x: hidden;
+   width: 100%;
 }
 .attlist .slds-has-button-menu:hover{
   	background: #f6f7f9;
@@ -1698,3 +1732,170 @@ visibility: hidden;
     display: none;
 }
   
+.topLightGrayBorder.slds-border_top {
+    border-top-width: 0px;
+}
+.no-show {
+    display: none!important;
+    visibility: hidden!important;
+}
+@page {
+    margin: 0;
+}
+@media print {
+    #_hj_poll_container,
+    #_hj_feedback_container,
+    .no-print,
+    .userguiding-assistant-container,
+    .navBar,
+    .newHeader,
+    .newFooter,
+    .breadcrumbsHeight{
+        display: none!important;
+        visibility: hidden!important;
+    }
+    .no-show {
+        display: block!important;
+        visibility: visible!important;
+    }
+    .caseMessagesSelfBubbleContainer {
+        border: 1px solid #a2a2a2;
+        margin-bottom: 1rem;
+        width: 100%;
+    }
+    .caseMessagesOtherBubbleContainer {
+        border: 1px solid #e2e2e2;
+        margin-bottom: 1rem;
+        width: 100%;
+    }
+    .caseMessagesSelfBubble,
+    .caseMessagesOtherBubble{
+        padding: .5rem;
+    }
+    .customCard {
+        box-shadow: 0px 0px 0px #fff;
+        border-radius: 0px;
+        border: solid 0px #fff;
+        background-color: rgba(255, 255, 255, 1);
+    }
+    .topLightGrayBorder,
+    .topLightGrayBorder.slds-border_top {
+        border-top: 1px solid rgb(30, 50, 252)
+    }
+    .attlist .slds-scrollable_y {
+        min-height: 1px;
+        max-height: none;
+        height: auto;
+    }
+    .attlist table {
+        width: 100%;
+        min-width: 100%;
+        width: 100%!important;
+    }
+    .attlist thead {
+        height: 40px;
+        border-bottom: 1px solid #999; 
+    } 
+    
+    .attlist thead,
+    .attlist tbody {
+        display: block;
+        position: relative;
+        width: 100%!important;
+        min-width: 100%;
+    }
+    .attlist th:first-child {
+        display: none;
+        max-width: 1px;
+        visibility: hidden;
+    }
+    .attlist thead th:nth-child(2) {
+        min-width: 450px;
+        max-width: 450px;
+        width: 450px!important;
+    }
+    .attlist thead th:nth-child(3) {
+        min-width: 100px;
+        max-width: 100px;
+        width: 100px!important;
+    }
+    .attlist thead th:nth-child(4) {
+        min-width: 250px;
+        max-width: 250px;
+        width: 250px!important;
+    }
+    .attlist tbody td:nth-child(2) {
+        min-width: 450px;
+        max-width: 450px;
+        width: 450px!important;
+    }
+    .attlist tbody td:nth-child(3) {
+        min-width: 100px;
+        max-width: 100px;
+        width: 100px!important;
+    }
+    .attlist tbody td:nth-child(4) {
+        min-width: 250px;
+        max-width: 250px;
+        width: 250px!important;
+    }
+    .customCardTitleBox .slds-col.slds-size_1-of-1.slds-medium-size_2-of-12 {
+        width: 16.6666666667%;
+    }
+    .customCardTitleBox .slds-col.slds-size_1-of-1.slds-medium-size_8-of-12 {
+        width: 66.6666666667%;
+    }
+    .customCardTitleBox .ActionNeeded span,
+    .customCardTitleBox .Open span,
+    .customCardTitleBox .InProgress span,
+    .customCardTitleBox .Escalated span,
+    .customCardTitleBox .EscalatedInternally span,
+    .customCardTitleBox .EscalatedExternally span,
+    .customCardTitleBox .ForReviewandAcceptance span,
+    .customCardTitleBox .OnHoldExternal span,
+    .customCardTitleBox .OnHoldInternal span,
+    .customCardTitleBox .Reopen span,
+    .customCardTitleBox .ClosedNotAccepted span,
+    .customCardTitleBox .InputRequested span,
+    .customCardTitleBox .PendingReconsideration span {
+        white-space: nowrap;
+        padding: 4px 6px 2px 0px;
+    }
+}
+/* USED TO FADE IN COMPONENTS */
+
+/* Safari 4.0 - 8.0 */
+@-webkit-keyframes fadeInKeyFrame {
+    from {opacity:0;}
+    to {opacity:1;}
+}
+/* Standard syntax */
+@keyframes fadeInKeyFrame {
+    from {opacity:0;}
+    to {opacity:1;}
+}
+/* Safari 4.0 - 8.0 */
+@-webkit-keyframes fadeOutKeyFrame {
+    from {opacity:1;}
+    to {opacity:0;}
+}
+/* Standard syntax */
+@keyframes fadeOutKeyFrame {
+    from {opacity:1;}
+    to {opacity:0;}
+}
+/* if you want to fade in, use just this class */
+.fadeInCss{
+    -webkit-animation-name: fadeInKeyFrame; /* Safari 4.0 - 8.0 */
+    -webkit-animation-duration: 0.3s; /* Safari 4.0 - 8.0 */
+    animation-name: fadeInKeyFrame;
+    animation-duration: 0.3s;
+}
+/* if you want to fade out, use just this class */
+.fadeOutCss{
+    -webkit-animation-name: fadeOutKeyFrame; /* Safari 4.0 - 8.0 */
+    -webkit-animation-duration: 0.3s; /* Safari 4.0 - 8.0 */
+    animation-name: fadeOutKeyFrame;
+    animation-duration: 0.3s;
+}
+/*#################################*/

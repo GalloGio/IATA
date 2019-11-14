@@ -213,6 +213,11 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         this.pageParams = getParamsFromPage();
         if (this.pageParams) {
             this.serviceId = this.pageParams.serviceId;
+            
+            if (this.pageParams.openRequestService){
+                this.showConfirm = true;
+            }
+
         }
 
         getLoggedUser().then(userResult => {
@@ -266,6 +271,17 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         this.totalNrRecords = 0;
         this.nrLoadedRecs = 0;     //nr of loaded records
         this.currentPageNumber = 1;
+
+        let windowURL = window.location.href;
+        windowURL = windowURL.split('?');
+
+        if (windowURL[1].split('&').length > 1) {
+            let param = windowURL[1].split('&');
+            windowURL = windowURL[0] + '?' + param[0];
+        }
+
+        window.history.pushState(null, null, windowURL);
+        
 
         this.getServiceDetailsJS();
     }

@@ -74,7 +74,7 @@
                             </div>
 
                             <div class="slds-col slds-p-top_medium slds-size_1-of-1">
-                                <lightning-formatted-rich-text class="introMessage" value={serviceRecord.recordService.Service_Description__c}>
+                                <lightning-formatted-rich-text class="introMessage" value={serviceRecord.serviceDescriptionLabel}>
                                 </lightning-formatted-rich-text>
                             </div>
 
@@ -85,7 +85,7 @@
 
                             <div class="slds-col slds-size_3-of-4 slds-m-bottom_large">
                                 <div class="text-xsmall">
-                                    {serviceRecord.recordService.Service_Description__c}
+                                    {serviceRecord.serviceDescriptionLabel}
                                 </div>
                             </div>
 
