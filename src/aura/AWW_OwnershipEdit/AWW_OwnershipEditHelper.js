@@ -6,6 +6,23 @@
             {label: 'Country', fieldName: 'country', type: 'text', sortable : true}
         ]);
     },
+    initTableRemove : function(component) {
+        
+        if(component.get('v.whatType') == 'owner') {
+            var columns = [
+                {label: 'Account Name', fieldName: 'ownerLink', type: 'url', sortable : true, typeAttributes: {label: {fieldName: 'ownerName'}, target: '_blank'}},
+                {label: 'Owner Type', fieldName: 'ownerType', type: 'text', sortable : true},
+                {label: 'Percentage Held', fieldName: 'percentageTable', type: 'percent', sortable : true, typeAttributes : {maximumFractionDigits: 2, minimumFractionDigits: 2}}            
+            ];
+        }else{
+            var columns = [
+                {label: 'Account Name', fieldName: 'ownerLink', type: 'url', sortable : true, typeAttributes: {label: {fieldName: 'accountName'}, target: '_blank'}},
+                {label: 'Owner Type', fieldName: 'ownerType', type: 'text', sortable : true},
+                {label: 'Percentage Held', fieldName: 'percentageTable', type: 'percent', sortable : true, typeAttributes : {maximumFractionDigits: 2, minimumFractionDigits: 2}}            
+            ];
+        }
+        component.set('v.columnsRemove', columns);
+    },
     initModal : function(component,args) {
         component.set('v.typeOfRecord', args.typeOfRecord);
         component.set('v.operation', args.operation)
@@ -37,27 +54,90 @@
         $A.util.addClass(modal, 'slds-hide');
     },
     handleSearch : function(component,searchTerm) {
-        var action = component.get('c.searchBy');
-        action.setParams({
-            key : searchTerm,
-            accountId : component.get('v.accountId'),
-            type : component.get('v.typeOfRecord')
-        });
-
-        action.setCallback(this, function(response) {
-            var state = response.getState();
-            if (component.isValid() && state === "SUCCESS") {
-                var result = response.getReturnValue();
-                component.set('v.data', result.accounts);
-                if(result.accounts.length > 0){
-                    component.set('v.noAccount', false);
-                }else{
-                    component.set('v.noAccount', true);
+        if(component.get('v.selectedAction') == 'add'){
+            var action = component.get('c.searchBy');
+            action.setParams({
+                key : searchTerm,
+                accountId : component.get('v.accountId'),
+                type : component.get('v.typeOfRecord')
+            });
+    
+            action.setCallback(this, function(response) {
+                var state = response.getState();
+                if (component.isValid() && state === "SUCCESS") {
+                    var result = response.getReturnValue();
+                    component.set('v.data', result.accounts);
+                    if(result.accounts.length > 0){
+                        component.set('v.noAccount', false);
+                    }else{
+                        component.set('v.noAccount', true);
+                    }
                 }
+            });
+    
+            $A.enqueueAction(action);
+        }else{
+            var action = component.get('c.searchByOwners');
+            if(component.get('v.whatType') != 'owner') {
+                action = component.get('c.searchBySubsidiaries');
             }
-        });
+            action.setParams({
+                key : searchTerm,
+                accountId : component.get('v.accountId')
+            });
 
-        $A.enqueueAction(action);
+            action.setCallback(this, function(response) {
+                var state = response.getState();
+                if (component.isValid() && state === "SUCCESS") {
+                    var result = response.getReturnValue();
+                    component.set('v.data', result);
+                    if(result.accounts){
+                        if(result.accounts.length > 0){
+                            component.set('v.noAccount', false);
+                        }else{
+                            component.set('v.noAccount', true);
+                        }
+                    }
+                }        
+            });
+
+            $A.enqueueAction(action);
+            
+        }
+    },
+    removeRecord : function(component,rows) {
+        this.handleSpinner(component,'show');
+        let listIdToRemove = [];
+        for(var i=0; i<rows.length; i++) {
+            listIdToRemove.push(rows[i].ownershipRecordId);
+        }
+        var action = component.get('c.removeListRecords');
+            action.setParams({
+                listIdsToRemove : listIdToRemove
+            });
+    
+            action.setCallback(this, function(response) {
+                var state = response.getState();
+                if (component.isValid() && state === "SUCCESS") {
+                    var refreshEvt = component.getEvent('refreshTab');
+                    refreshEvt.setParams({
+                        tabName : 'ownership'
+                    });
+                    refreshEvt.fire(); 
+                    this.hideModal(component);
+                } else {
+                    var message = 'Unknown error';
+                    var errors = response.getError();
+                    if(errors && Array.isArray(errors) && errors.length > 0 && Array.isArray(errors[0].pageErrors) && errors[0].pageErrors.length > 0) {
+                        message = errors[0].pageErrors[0].message;
+                    }
+    
+                    component.set('v.errorMessage', message);
+                }
+                this.handleSpinner(component, 'hide');
+            });
+    
+            $A.enqueueAction(action);
     },
     createRecord : function(component,rows) {
         var records = [];
@@ -157,5 +237,17 @@
             return reverse * ((a>b) - (b>a));
         });
         component.set('v.data', data);
+    },
+    handleActionChange : function(component,event) {
+        var currAction = component.get('v.selectedAction');
+        var newAction = event.target.dataset.option;
+
+        if(currAction != newAction) {
+            component.set('v.selectedAction', newAction);
+            component.set('v.data', null);
+            component.set('v.removeData', null);
+            component.find('accountNameSearch').set('v.value',null);
+            component.set('v.selectedRowsCount',0);
+        }
     }
 })

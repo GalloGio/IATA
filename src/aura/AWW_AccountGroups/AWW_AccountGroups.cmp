@@ -58,24 +58,21 @@
                                     </td>
                                 </tr>
                                 <aura:iteration items="{!topGroup.childrens}" var="localGroup">
-                                    <tr id="{!localGroup.rowId}" class="slds-hide">
-                                        <td>
-                                            <div style="display: flex; white-space: normal;">
-                                                <lightning:formattedUrl label="{!localGroup.groupName}" value="{!localGroup.groupLink}" target="_blank"/>
-                                            </div>
-                                        </td>
-                                        <td><lightning:formattedText value="{!localGroup.ownerName}"/></td>
-                                        <td style="display: flex"><c:AMP_LongText text="{!localGroup.mission}"/></td>
-                                        <td colspan="5"></td>
-                                    </tr>
+                                    
                                     <aura:iteration items="{!localGroup.childrens}" var="member">
-                                        <tr id="{!member.rowId}" class="slds-hide">
-                                            <td colspan="3"></td>
-                                            <td><lightning:formattedText value="{!member.role}"/></td>
-                                            <td><lightning:formattedText value="{!member.salutation}"/></td>
-                                            <td><lightning:formattedText value="{!member.firstName}"/></td>
-                                            <td><lightning:formattedText value="{!member.lastName}"/></td>
-                                            <td>
+                                        <tr id="{!localGroup.rowId +'-'+ member.rowId}" class="slds-hide">
+                                            <td >
+                                                <div style="display: flex; white-space: normal;">
+                                                    <lightning:formattedUrl label="{!localGroup.groupName}" value="{!localGroup.groupLink}" target="_blank"/>
+                                                </div>
+                                            </td>
+                                            <td ><lightning:formattedText value="{!localGroup.ownerName}"/></td>
+                                            <td ><c:AMP_LongText text="{!localGroup.mission}"/></td>
+                                            <td ><lightning:formattedText value="{!member.role}"/></td>
+                                            <td ><lightning:formattedText value="{!member.salutation}"/></td>
+                                            <td ><lightning:formattedText value="{!member.firstName}"/></td>
+                                            <td ><lightning:formattedText value="{!member.lastName}"/></td>
+                                            <td >
                                                 <lightning:formattedText value="{!member.title}"/>
                                                 <aura:if isTrue="{!member.isRepresentative}">
                                                     <lightning:icon class="slds-m-left_xx-small" size="x-small" iconName="utility:info" alternativeText="info" />

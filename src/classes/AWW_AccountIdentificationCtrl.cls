@@ -9,7 +9,7 @@ public with sharing class AWW_AccountIdentificationCtrl {
                             AM_Account_Manager__c, AM_Account_Manager__r.Name, AM_Account_Manager__r.PPD_Tittle__c,
                             AM_Account_Manager__r.PPD_Office__c, AM_Account_Manager__r.Email, AM_Account_Manager__r.Phone,
                             AM_Account_Manager__r.MobilePhone, BillingStreet, BillingCity, BillingState, BillingPostalCode,
-                            BillingCountry, Sub_Region__c, Website, Global_ID__c
+                            BillingCountry, Sub_Region__c, Website, Global_ID__c, TradeName__c
                        FROM Account
                        WHERE Id = :accountId];
     }

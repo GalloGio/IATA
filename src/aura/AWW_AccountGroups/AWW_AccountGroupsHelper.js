@@ -36,34 +36,44 @@
     },
     displayChilds : function(component,rowId) {
         var childs = component.get('v.gridExpandedRows')[rowId];
+        var childsOfChilds = component.get('v.originalData');
         
         for(var i=0; i<childs.length; i++) {
-            document.getElementById(childs[i]).classList.remove("slds-hide");
-            var childExpandIcon = document.getElementById('expand_'+childs[i]);
-            if(childExpandIcon) {
-                childExpandIcon.classList.remove("slds-hide");
+            for(var j=0; j<childsOfChilds.length; j++) {
+                for(var h=0; h<childsOfChilds[j].childrens.length; h++) {
+                    for(var k=0; k<childsOfChilds[j].childrens[h].childrens.length; k++) {
+                        let testID = childs[i]+'-'+childsOfChilds[j].childrens[h].childrens[k].rowId;
+                        document.getElementById(testID).classList.remove("slds-hide");
+                        var childExpandIcon = document.getElementById('expand_'+testID);
+                        if(childExpandIcon) {
+                            childExpandIcon.classList.remove("slds-hide");
+                        }
+                    }
+                }
             }
         }        
     },
     hideChilds : function(component,rowId) {
         var relationsList = component.get('v.gridExpandedRows');
         var childs = relationsList[rowId];
+        var childsOfChilds = component.get('v.originalData');
         for(var i=0; i<childs.length; i++) {
-            var grandChilds = relationsList[childs[i]];
-            if(grandChilds) {
-                for(var j=0; j<grandChilds.length; j++) {
-                    document.getElementById(grandChilds[j]).classList.add("slds-hide");                 
-                }
-            }
-            document.getElementById(childs[i]).classList.add("slds-hide");
-            var expandIcon = document.getElementById('expand_'+childs[i]);
-            var collapseIcon = document.getElementById('collapse_'+childs[i]);
+            for(var j=0; j<childsOfChilds.length; j++) {
+                for(var h=0; h<childsOfChilds[j].childrens.length; h++) {
+                    for(var k=0; k<childsOfChilds[j].childrens[h].childrens.length; k++) {
+                        let testID = childs[i]+'-'+childsOfChilds[j].childrens[h].childrens[k].rowId;
+                        document.getElementById(testID).classList.add("slds-hide");
+                        var expandIcon = document.getElementById('expand_'+testID);
+                        var collapseIcon = document.getElementById('collapse_'+testID);
 
-            if(expandIcon) {
-                expandIcon.classList.add("slds-hide");
-            }
-            if(collapseIcon) {
-                collapseIcon.classList.add("slds-hide");
+                        if(expandIcon) {
+                            expandIcon.classList.add("slds-hide");
+                        }
+                        if(collapseIcon) {
+                            collapseIcon.classList.add("slds-hide");
+                        }
+                    }
+                }
             }
         }
     },

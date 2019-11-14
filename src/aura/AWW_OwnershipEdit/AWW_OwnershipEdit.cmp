@@ -5,7 +5,9 @@
     <aura:attribute name="record" type="Object"/>
     <aura:attribute name="header" type="String"/>
     <aura:attribute name="data" type="List"/>
+    <aura:attribute name="removeData" type="List"/>
     <aura:attribute name="columns" type="List"/>
+    <aura:attribute name="columnsRemove" type="List"/>
     <aura:attribute name="maxResults" type="Boolean" default="false"/>
     <aura:attribute name="errorMessage" type="String"/>
     <aura:attribute name="selectedRowsCount" type="Integer" default="0"/>
@@ -13,6 +15,8 @@
     <aura:attribute name="sortBy" type="String"/>
     <aura:attribute name="sortDirection" type="String"/>
     <aura:attribute name="noAccount" type="Boolean" default="false"/>
+    <aura:attribute name="selectedAction" type="String" default="add"/>
+    <aura:attribute name="whatType" type="String"/>
 
     <aura:method name="showModal" action="{!c.handleModalVisibility}">
         <aura:attribute name="typeOfRecord" type="String"/>
@@ -33,6 +37,10 @@
                     <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">{!v.header}</h2>
                 </header>
                 <div class="slds-modal__content slds-p-around_medium">
+                    <div class="slds-grid slds-wrap">
+                        <div class="{!'slds-col slds-p-around_x-small slds-size_1-of-2 ' + if(v.selectedAction == 'add', 'activeTab', 'inactiveTab')}" data-option="add" onclick="{!c.changeAction}">Add</div>
+                        <div class="{!'slds-col slds-p-around_x-small slds-size_1-of-2 ' + if(v.selectedAction == 'remove', 'activeTab', 'inactiveTab')}" data-option="remove" onclick="{!c.changeAction}">Remove</div>
+                    </div>
                     <aura:renderIf isTrue="{!!empty(v.errorMessage)}">
                         <ui:message  title="" severity="error">
                             <div class="slds-grid slds-gutters">
@@ -46,7 +54,7 @@
                         </ui:message>
                     </aura:renderIf>
                     <div class="slds-grid slds-gutters_direct slds-wrap">
-                        <div class="slds-col slds-size_2-of-3">
+                        <div class="{!v.selectedAction == 'add' ? 'slds-col slds-size_2-of-3': 'slds-col slds-size_3-of-3'}">
                             <aura:if isTrue="{!v.operation == 'Add'}">
                                 <lightning:input aura:id="accountNameSearch" label="Account Name" value="{!v.searchName}" onchange="{!c.search}"/>
                                 <aura:set attribute="else">
@@ -54,9 +62,11 @@
                                 </aura:set>
                             </aura:if>
                         </div>
-                        <div class="slds-col slds-size_1-of-3">
-                            <lightning:input aura:id="percentageHeld" value="{!v.record.percentage}" label="Percentage Held" type="number" step="0.01" max="100" min="0"/>
-                        </div>
+                        <aura:renderIf isTrue="{!v.selectedAction == 'add'}">
+                            <div class="slds-col slds-size_1-of-3">
+                                <lightning:input aura:id="percentageHeld" value="{!v.record.percentage}" label="Percentage Held" type="number" step="0.01" max="100" min="0"/>
+                            </div>
+                        </aura:renderIf>
                         <aura:if isTrue="{!v.noAccount}">
                             <div class="slds-col slds-size_1-of-1">
                                 <div class="slds-m-top_medium slds-table_bordered slds-border_left slds-border_right">
@@ -79,20 +89,38 @@
                                     </div>                       
                                 </ui:message>
                             </aura:if>
-                            <div class="slds-col slds-size_1-of-1">
-                                <div class="slds-m-top_medium slds-table_bordered slds-border_left slds-border_right">
-                                    <lightning:datatable 
-                                        aura:id="search-results"
-                                        keyField="accountId"
-                                        data="{!v.data}"
-                                        columns="{!v.columns}"
-                                        resizeColumnDisabled="true"
-                                        onrowselection="{!c.updateCounter}"
-                                        sortedBy="{!v.sortBy}"
-                                        sortedDirection="{!v.sortDirection}"
-                                        onsort="{!c.handleSort}"/>
+                            <aura:renderIf isTrue="{!v.selectedAction == 'add'}">
+                                <div class="slds-col slds-size_1-of-1">
+                                    <div class="slds-m-top_medium slds-table_bordered slds-border_left slds-border_right">
+                                        <lightning:datatable 
+                                            aura:id="search-results"
+                                            keyField="accountId"
+                                            data="{!v.data}"
+                                            columns="{!v.columns}"
+                                            resizeColumnDisabled="true"
+                                            onrowselection="{!c.updateCounter}"
+                                            sortedBy="{!v.sortBy}"
+                                            sortedDirection="{!v.sortDirection}"
+                                            onsort="{!c.handleSort}"/>
+                                    </div>
                                 </div>
-                            </div>
+                            </aura:renderIf>
+                            <aura:renderIf isTrue="{!v.selectedAction != 'add'}">
+                                <div class="slds-col slds-size_1-of-1">
+                                    <div class="slds-m-top_medium slds-table_bordered slds-border_left slds-border_right">
+                                        <lightning:datatable 
+                                            aura:id="search-results-remove"
+                                            keyField="ownershipRecordId"
+                                            data="{!v.data}"
+                                            columns="{!v.columnsRemove}"
+                                            resizeColumnDisabled="true"
+                                            onrowselection="{!c.updateCounter}"
+                                            sortedBy="{!v.sortBy}"
+                                            sortedDirection="{!v.sortDirection}"
+                                            onsort="{!c.handleSort}"/>
+                                    </div>
+                                </div>
+                            </aura:renderIf>
                         </aura:if>
                     </div>
                 </div>
@@ -101,7 +129,12 @@
                     <aura:if isTrue="{!and(!empty(v.searchName), v.operation == 'Add')}">                   
                         <aura:if isTrue="{!v.selectedRowsCount == 0}">
                             <aura:set attribute="else">
-                                <lightning:button variant="brand" label="Add" title="Add" onclick="{!c.save}"/>
+                                <aura:renderIf isTrue="{!v.selectedAction == 'add'}">
+                                    <lightning:button variant="brand" label="Add" title="Add" onclick="{!c.save}"/>
+                                </aura:renderIf>
+                                <aura:renderIf isTrue="{!v.selectedAction != 'add'}">
+                                    <lightning:button variant="brand" label="Remove" title="Remove" onclick="{!c.save}"/>
+                                </aura:renderIf>
                             </aura:set>
                         </aura:if>
                         <aura:set attribute="else">

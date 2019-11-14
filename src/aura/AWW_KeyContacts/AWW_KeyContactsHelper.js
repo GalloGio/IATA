@@ -47,8 +47,8 @@
     sortRecords : function(component, sortField, ascOrder) {
         var records = component.get('v.filteredData');
         records.sort(function(a,b) {
-            var t1 = a[sortField] == b[sortField],
-                t2 = a[sortField] > b[sortField];
+            var t1 = a[sortField].toLowerCase() == b[sortField].toLowerCase(),
+                t2 = a[sortField].toLowerCase() > b[sortField].toLowerCase();
             return t1? 0: (ascOrder?-1:1)*(t2?-1:1);
         });
 

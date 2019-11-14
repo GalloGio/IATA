@@ -5,10 +5,14 @@
         if(args) {
             helper.initTable(component);
             helper.initModal(component,args);
+            helper.initTableRemove(component,args);
             helper.showModal(component);
         } else {
             helper.hideModal(component);
         }
+    },
+    changeAction : function(component, event, helper) {
+        helper.handleActionChange(component, event);
     },
     search : function(component,event,helper) {
         var key = component.find('accountNameSearch').get('v.value');
@@ -37,18 +41,28 @@
                 rows.push(row);
             } else {
                 var results = component.find('search-results');
+                if(component.get('v.selectedAction') != 'add'){
+                    results = component.find('search-results-remove');
+                }
                 if(results) {
                     rows = results.getSelectedRows();
                 } else {
                     rows.push({});
                 }    
             }
-            
-            helper.createRecord(component,rows);
+            if(component.get('v.selectedAction') == 'add'){
+                helper.createRecord(component,rows);
+            }else{
+                helper.removeRecord(component,rows);
+            }
         }
     },
     updateCounter : function(component,event,helper) {
+        
         var results = component.find('search-results');
+        if(component.get('v.selectedAction') != 'add'){
+            results = component.find('search-results-remove');
+        }
         if(results) {
             component.set('v.selectedRowsCount',results.getSelectedRows().length);
         }

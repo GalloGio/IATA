@@ -19,7 +19,7 @@
                                     <lightning:input variant="label-hidden" aura:id="search-contact" name="search-contact" placeholder="Search" type="search" onchange="{!c.search}"/>
                                 </div>
                                 <div class="slds-col">
-                                    <lightning:helptext class="slds-p-left_x-small" content="Search applies to Name and Site" iconName="utility:info"/>
+                                    <lightning:helptext class="slds-p-left_x-small" content="Search applies to Name" iconName="utility:info"/>
                                 </div>                               
                             </div>
                         </div>
