@@ -1,95 +1,196 @@
-/**
- * Created by mmercier on 30.07.2019.
- */
-
 import { LightningElement, track, wire, api} from 'lwc';
 
-import getContactInfo                   from '@salesforce/apex/PortalRegistrationSecondLevelCtrl.getContactInfo';
-import getISOCountries                  from '@salesforce/apex/PortalRegistrationSecondLevelCtrl.getISOCountries';
-import getContactJobFunctionValues      from '@salesforce/apex/PortalRegistrationSecondLevelCtrl.getContactJobFunctionValues';
-import linkContactToExistingAccount     from '@salesforce/apex/PortalRegistrationSecondLevelCtrl.linkContactToExistingAccount';
+import getContactInfo                       from '@salesforce/apex/PortalRegistrationSecondLevelCtrl.getContactInfo';
+import saveContactInfo                      from '@salesforce/apex/PortalRegistrationSecondLevelCtrl.saveContactInfo';
+import getCustomerTypeFromSectorAndCategory from '@salesforce/apex/PortalRegistrationFirstLevelCtrl.getCustomerTypeFromSectorAndCategory';
 
-import getContactLabels                 from '@salesforce/apex/OneId_RegistrationProcessController.getContactLabels';
-
-import getCustomerTypeFromSectorAndCategory from '@salesforce/apex/GCS_CustomerType.getCustomerTypeFromSectorAndCategory';
-
-import getCustomerTypesList             from '@salesforce/apex/GCS_RegistrationController.getCustomerTypesList';
-import getCustomerTypePicklists_Test    from '@salesforce/apex/GCS_AccountCreation.getCustomerTypePicklists_Test';
-import getMetadataCustomerType_Test     from '@salesforce/apex/GCS_AccountCreation.getMetadataCustomerType_Test';
-import searchAccounts                   from '@salesforce/apex/GCS_RegistrationController.searchAccounts';
+import { navigateToPage} from'c/navigationUtils';
 
 //custom labels
-import jobTitle                         from '@salesforce/label/c.ISSP_Registration_JobTitle';
-import isspEnterIataCode                from '@salesforce/label/c.ISSP_Enter_IATA_Code';
-import isspEnterCompanyName             from '@salesforce/label/c.ISSP_Enter_Company_Name';
-import companyName                      from '@salesforce/label/c.ISSP_CompanyName';
-import isspCountry                      from '@salesforce/label/c.ISSP_Country';
-import isspCompanyLocation              from '@salesforce/label/c.ISSP_CompanyLocation';
-import select                           from '@salesforce/label/c.ISSP_Select';
-import oneIdNoResults                   from '@salesforce/label/c.OneId_NoResults';
-import oneIdAccountNotFound             from '@salesforce/label/c.OneId_AccountNotFound';
-import oneIdCreateNew                   from '@salesforce/label/c.OneId_CreateNew';
-import cancel                           from '@salesforce/label/c.Cancel';
-import submit                           from '@salesforce/label/c.ISSP_Submit';
+import CSP_L2_Banner_Title                  from '@salesforce/label/c.CSP_L2_Banner_Title';
+import CSP_L2_Profile_Details               from '@salesforce/label/c.CSP_L2_Profile_Details';
+import CSP_L2_Account_Selection             from '@salesforce/label/c.CSP_L2_Account_Selection';
+import CSP_L2_Confirmation                  from '@salesforce/label/c.CSP_L2_Confirmation';
+import CSP_L2_Profile_Incomplete            from '@salesforce/label/c.CSP_L2_Profile_Incomplete';
+import CSP_L2_Profile_Incomplete_Message    from '@salesforce/label/c.CSP_L2_Profile_Incomplete_Message';
+import CSP_L2_Yes                           from '@salesforce/label/c.CSP_L2_Yes';
+import CSP_L2_No                            from '@salesforce/label/c.CSP_L2_No';
+import CSP_PortalPath                       from '@salesforce/label/c.CSP_PortalPath';
 
 export default class PortalRegistrationSecondLevel extends LightningElement {
-    @track openRegistrationModal = true;
-    @track openConfirmationModal = false;
+    /* Images */
+    youAreSafeIcon = CSP_PortalPath + 'CSPortal/Images/Icons/youaresafe.png';
+    alertIcon = CSP_PortalPath + 'CSPortal/alertIcon.png';
+    homeIcon = CSP_PortalPath + 'CSPortal/Images/Icons/L2_home.png';
+    crossIcon = CSP_PortalPath + 'CSPortal/Images/Icons/L2_cross.png';
+    stepCheckedLogo = CSP_PortalPath + 'CSPortal/Images/Icons/L2_step_valid.png';
+    step1ActiveLogo = CSP_PortalPath + 'CSPortal/Images/Icons/L2_step_1_active.png';
+    step2ActiveLogo = CSP_PortalPath + 'CSPortal/Images/Icons/L2_step_2_active.png';
+    step2InactiveLogo = CSP_PortalPath + 'CSPortal/Images/Icons/L2_step_2_inactive.png';
+    step3ActiveLogo = CSP_PortalPath + 'CSPortal/Images/Icons/L2_step_3_active.png';
+    step3InactiveLogo = CSP_PortalPath + 'CSPortal/Images/Icons/L2_step_3_inactive.png';
 
-    // contact and account information
+    @api trigger;
+    @api isTriggeredByRequest = false;
+
+    @track openMessageModal = false;
+
+    // Banner logo and links getters
+    get step1Logo(){
+        if(this.step1Complete){
+            return this.stepCheckedLogo;
+        }
+        else{
+            return this.step1ActiveLogo;
+        }
+    }
+
+    get isStep1LogoChecked(){
+        return this.step1Logo === this.stepCheckedLogo;
+    }
+
+    get hasStep1Link(){
+        return this.currentStep !== 1;
+    }
+
+    get step2Logo(){
+        if(this.step2Complete){
+            return this.stepCheckedLogo;
+        }
+        if(this.step1Complete && this.step3Complete && this.step4Complete && this.currentStep !== 2){
+            return this.stepCheckedLogo;
+        }
+        if(this.currentStep === 1){
+            return this.step2InactiveLogo;
+        }
+        return this.step2ActiveLogo;
+    }
+
+    get isStep2LogoChecked(){
+        return this.step2Logo === this.stepCheckedLogo;
+    }
+
+    get hasStep2Link(){
+        if(this.currentStep === 2 || this.currentStep === 3 || this.currentStep === 4){
+            return false;
+        }
+        if(this.currentStep === 5 || (this.currentStep === 1 && this.step1Complete)){
+            return true;
+        }
+        return false;
+    }
+
+    get step2Link(){
+        if(!this.hasStep2Link){
+            return this.currentPage;
+        }
+        if(this.step2Complete || !this.step3Complete){
+            return 2;
+        }
+        return 3;
+    }
+
+    get step3Logo(){
+        if(this.currentStep === 5){
+            return this.step3ActiveLogo;
+        }
+        if(this.step1Complete && (this.step2Complete || (this.step3Complete && this.step4Complete))){
+            return this.stepCheckedLogo;
+        }
+        return this.step3InactiveLogo;
+    }
+
+    get isStep3LogoChecked(){
+        return this.step3Logo === this.stepCheckedLogo;
+    }
+
+    get hasStep3Link(){
+        return this.step3Logo === this.stepCheckedLogo;
+    }
+
+    goToProfileDetailsFromBanner(){
+        this.getCurrentStepData();
+        this.currentStep = 1;
+    }
+
+    goToAccountSelectionFromBanner(){
+        this.getCurrentStepData();
+        this.currentStep = this.step2Link;
+    }
+
+    goToConfirmationFromBanner(){
+        this.getCurrentStepData();
+        this.currentStep = 5;
+    }
+
+    /*
+        1 : Profile Details
+        2 : Account Selection
+        3 : Account Creation - Company Information
+        4 : Account Creation - Address Information
+        5 : Confirmation
+    */
+   @track currentStep = 1;
+
+   @track isLoading = false;
+
+    // Collected information
+    selectedAccountId = '';
+    selectedCountryId;
+    selectedCustomerType;
+    searchResults;
+    address = {
+        'isPoBox':false,
+        'countryId':'',
+        'countryCode':'',
+        'countryName':'',
+        'stateId':'',
+        'stateName':'',
+        'cityId':'',
+        'cityName':'',
+        'street':'',
+        'zip':'',
+        'validationStatus':0,
+        'checkPerformed':false,
+        'inputModified':true,
+        'geonameWarning1':'',
+        'geonameWarning2':'',
+        'addressSuggestions':[]
+    };
+
+    account = {
+        'legalName':'',
+        'tradeName':'',
+        'phone':'',
+        'email':'',
+        'website':'',
+        'customerType':'',
+        'customerTypeSector':'',
+        'customerTypeCategory':'',
+        'sector':'',
+        'category':''
+    };
+
     @track contactInfo;
     @track contactFound;
-    @track functionLabel;
-    @track contactLabels;
-    @track selectedAccountId = null;
-    @track isJobFunctionMissing = false;
-    @track isJobTitleMissing = false;
 
-    // job function variables
-    @track jobFunctionsPicklistOptions;
-
-    scrollToBottom = false;
+    landingPage;
 
     // customer type variables
-    @track customerTypePicklistOptions;
-    @track selectedCustomerType;
+    originalCustomerType;
     @track selectedMetadataCustomerType;
-    @track isSelectedCustomerTypeNull;
     @track isCustomerTypeGeneralPublic;
-    @track displayCountryPicklist;
-    @track displayUserSearch;
-    @track displayIataCodeSearch;
-
-    // country variables
-    @track isoCountriesPicklistOptions;
-    @track selectedCountryId = '';
-
-    //search variables
-    @track iataCodeInput = '';
-    @track accountNameInput ='';
-    @track accountFounds = false;
-    @track displaySearchResults = false;
-    @track displayCreateNew = false;
-    @track numberOfFields = 1;
-    @track searchResults;
-
-    @track showAccountCreation = false;
-    @track showAccountSelection = true;
 
     // label variables
     _labels = {
-        jobTitle,
-        isspEnterIataCode,
-        isspEnterCompanyName,
-        companyName,
-        isspCountry,
-        isspCompanyLocation,
-        select,
-        oneIdNoResults,
-        oneIdAccountNotFound,
-        oneIdCreateNew,
-        cancel,
-        submit
+        CSP_L2_Banner_Title,
+        CSP_L2_Profile_Details,
+        CSP_L2_Account_Selection,
+        CSP_L2_Confirmation,
+        CSP_L2_Profile_Incomplete,
+        CSP_L2_Profile_Incomplete_Message,
+        CSP_L2_Yes,
+        CSP_L2_No
     }
     get labels() {
         return this._labels;
@@ -98,27 +199,14 @@ export default class PortalRegistrationSecondLevel extends LightningElement {
         this._labels = value;
     }
 
-    @track isLoading = false;
-    get submitDisabled() {
-        return this.selectedAccountId == null;
-    }
-
-    @track errorMessage = "";
-
-    triggerL2Registration(event){
-        this.openRegistrationModal = true;
-    }
-
-    renderedCallback() {
-        if(this.scrollToBottom){
-//            alert('scroll to bottom');
-            this.scrollToBottom = false;
-                    let scrollobjective = this.template.querySelector('[data-name="searchResultWrapper"]');
-                    scrollobjective.scrollIntoView({ behavior: 'smooth' });
-        }
+    scrollToTop(){
+        let scrollobjective = this.template.querySelector('[data-name="top"]');
+        scrollobjective.scrollIntoView({ behavior: 'smooth', block:'start' });
     }
 
     connectedCallback() {
+        // hide page scrollbar to prevent having 2 scrollbars
+        document.body.style.overflow = 'hidden';
 
         // Retrieve Contact information
         getContactInfo()
@@ -130,267 +218,182 @@ export default class PortalRegistrationSecondLevel extends LightningElement {
                     return;
                 }
 
+                // set up cached data
+                var countryName = this.contactInfo.Account.IATA_ISO_Country__r.Name;
+                if(countryName.toLowerCase() === 'no country'){
+                    this.selectedCountryId = '';
+                }
+                else{
+                    this.selectedCountryId = this.contactInfo.Account.IATA_ISO_Country__r.Id;
+                }
+
                 if(this.contactInfo.Title == undefined){
                     this.contactInfo.Title = null;
                 }
 
-                // Retrieve contact fields labels
-                getContactLabels()
+                if(this.contactInfo.Account.Sector__c === 'General Public'){
+                    this.selectedCustomerType = '';
+                    this.originalCustomerType = '';
+                }
+                else{
+                    getCustomerTypeFromSectorAndCategory({sector : this.contactInfo.Account.Sector__c, category : this.contactInfo.Account.Category__c})
                     .then(result => {
-                        this.contactLabels = result;
-                        this.functionLabel = result['Membership_Function__c'];
-                    })
-                    .catch((error) => {
-                        alert("Error in getContactLabels : " + error.body.message);
+                        this.selectedCustomerType = result;
+                        this.originalCustomerType = result;
                     });
-
-                // Retrieve Job Functions list
-                // Pre-select Job Functions of Contact
-                getContactJobFunctionValues({selectedContactJobFunctions : this.contactInfo.Membership_Function__c})
-                    .then(result => {
-                        this.jobFunctionsPicklistOptions = result;
-                    })
-                    .catch((error) => {
-                        alert("Error in getContactJobFunctionValues : " + error.body.message);
-                    });
-
-                getCustomerTypeFromSectorAndCategory({sector : this.contactInfo.Account.Sector__c, category : this.contactInfo.Account.Category__c})
-                    .then(result => {
-                        this.setCustomerType(result);
-                    })
-                    .catch((error) => {
-                        alert("Error in getCustomerTypeFromSectorAndCategory : " + error.body.message);
-                    });
-
-                // Retrieve Iso Countries list
-                // Pre-select country of Contact's Account
-                getISOCountries({countryId : this.contactInfo.Account.IATA_ISO_Country__r.Id})
-                    .then(result => {
-                        this.isoCountriesPicklistOptions = result;
-                        // Store the "NO COUNTRY" record Id to prevent the user doing the search if the value is selected
-                        // This record should be the first on in the list
-                        this.noCountryId = result[0].country.Id;
-                        this.selectedCountryId = this.contactInfo.Account.IATA_ISO_Country__r.Id;
-                     })
-                    .catch((error) => {
-                        alert("Error in getISOCountries : " + error.body.message);
-                    });
-
-            })
-            .catch((error) => {
-                alert("Error in getContactInfo : " + error.body.message);
+                }
             });
-    }
-
-
-    // Events handling
-
-    changeSelectedJobFunctions(event){
-        let options = event.target.options;
-        var selectedOpts = [];
-
-        for (var i = 0; i < options.length; i++) {
-            if (options[i].selected) {
-                selectedOpts.push(options[i].value);
-            }
         }
-        this.contactInfo.Membership_Function__c = selectedOpts.join(';');
 
-        // If job function is not empty, remove the error message potentially displayed
-        if(selectedOpts.length > 0){
-            this.isJobFunctionMissing = false;
-            this.template.querySelector(".jobFunctionDiv").classList.remove('slds-has-error');
-        }
-    }
-
-    changeTitle(event){
-        this.contactInfo.Title = event.target.value;
-        // If job title is not empty, remove the error message potentially displayed
-        if(event.target.value != ''){
-            this.isJobTitleMissing = false;
-            this.template.querySelector(".jobTitleDiv").classList.remove('slds-has-error');
-        }
-    }
-
-    changeSelectedCustomerType(event) {
+    startLoading(){
         this.isLoading = true;
+    }
 
-        this.setCustomerType(event.target.value);
-
-        this.resetSearchResults();
-
+    stopLoading(){
         this.isLoading = false;
-    }
-
-    setCustomerType(customerType){
-        this.selectedCustomerType = customerType;
-        if(this.selectedCustomerType == '- Select -'){
-            this.selectedCustomerType = null;
-            this.selectedMetadataCustomerType = null;
-            this.displayCountryPicklist = false;
-            this.isCustomerTypeGeneralPublic = false;
-            this.displayUserSearch = false;
-            this.displayIataCodeSearch = false;
-            this.displayCreateNew = false;
-        }
-        else{
-            // Retrieve customer type
-            getMetadataCustomerType_Test({customerTypeKey:this.selectedCustomerType})
-                .then(result => {
-                    this.selectedMetadataCustomerType = result;
-                    this.displayCountryPicklist = this.selectedMetadataCustomerType != null && this.selectedMetadataCustomerType.Display_Country__c;
-                    this.isCustomerTypeGeneralPublic = this.selectedMetadataCustomerType != null && this.selectedMetadataCustomerType.Parent__c == 'General_Public_Sector';
-                    this.displayUserSearch = this.selectedMetadataCustomerType != null && this.selectedMetadataCustomerType.Search_Option__c == 'User Search' && this.selectedCountryId != '' && this.selectedCountryId != this.noCountryId;
-                    this.displayIataCodeSearch = this.selectedMetadataCustomerType != null && this.selectedMetadataCustomerType.Fields_Targeted_Partial_Match__c !== undefined || this.selectedMetadataCustomerType.Fields_Targeted_Exact_Match__c !== undefined;
-                    this.displayCreateNew = this.selectedMetadataCustomerType != null && this.selectedMetadataCustomerType.Can_Account_Be_Created__c;
-                })
-                .catch((error) => {
-                    alert("Error in getMetadataCustomerType_Test : " + error.body.message);
-                });
-        }
-
-        // Update customer type picklists
-        getCustomerTypePicklists_Test({leaf:this.selectedCustomerType})
-            .then(result => {
-                this.customerTypePicklistOptions = result;
-            })
-            .catch((error) => {
-                alert("Error in getCustomerTypePicklists_Test : " + error.body.message);
-            });
-    }
-
-    changeSelectedCountry(event){
-        this.selectedCountryId = event.target.value;
-
-        // calling this because the displayUserSearch value is depending on the selectedCountryId
-        this.setCustomerType(this.selectedCustomerType);
-
-        this.resetSearchResults();
-    }
-
-    searchOnAccountName(event){
-        this.accountNameInput = event.target.value;
-        this.search();
-    }
-
-    searchOnIataCode(event){
-        this.iataCodeInput = event.target.value;
-        this.search();
-    }
-
-    search(){
-        this.selectedAccountId = null;
-
-        if(this.iataCodeInput.length >= 2 || this.accountNameInput.length >= 3) {
-            this.isLoading = true;
-
-            searchAccounts({
-                    customerTypeKey: this.selectedCustomerType,
-                    countryId: this.selectedCountryId,
-                    userInputIataCodes: this.iataCodeInput,
-                    userInputCompanyName: this.accountNameInput
-                })
-                .then(result => {
-                    this.searchResults = result;
-                    this.accountFounds = this.searchResults.totalAccounts > 0;
-                    this.numberOfFields = this.searchResults.fieldLabels.length;
-                    this.displaySearchResults = true;
-                    this.isLoading = false;
-                    this.scrollToBottom = true;
-//                    let scrollobjective = this.template.querySelector('[data-name="searchResultWrapper2"]');
-//                    scrollobjective.scrollIntoView({ behavior: 'smooth' });
-                })
-                .catch((error) => {
-                    alert("Error in searchAccounts : " + error.body.message);
-                    this.displaySearchResults = false;
-                    this.isLoading = false;
-                });
-        }
-        else{
-            this.displaySearchResults = false;
-        }
-        let divElement = this.template.querySelectorAll('.scrollable-body')[0];
-        let divToTop = this.template.querySelectorAll('.results')[0].offsetTop;
-//        window.scrollTo({ top: divToTop, left: 0, behavior: 'smooth' });
-//        divElement.scrollTo({ top: divToTop, left: 0, behavior: 'smooth' });
-//        divElement.scrollTop = 1520;
-
-    }
-
-    resetSearchResults(){
-        this.selectedAccountId = null;
-        this.iataCodeInput = '';
-        this.accountNameInput = '';
-        this.searchResults = null;
-        this.displaySearchResults = false;
-        this.accountFounds = false;
-        this.numberOfFields = 1;
-    }
-
-    createNew(){
-        this.showAccountSelection = false;
-        this.displaySearchResults = false;
-        this.showAccountCreation = true;
-    }
-
-    selectAccount(event){
-        this.selectedAccountId = event.target.getAttribute('data-id');
-        this.displaySearchResults = false;
-        this.accountNameInput = event.target.getAttribute('data-name');
-    }
-
-    submit(){
-        if(!this.checkMandatoryFields()){
-            return;
-        }
-
-        this.isLoading = true;
-
-        // The user selected an existing account
-        if(this.selectedAccountId != null){
-            linkContactToExistingAccount({con: this.contactInfo, accountId : this.selectedAccountId})
-                .then(result => {
-                    this.openRegistrationModal = false;
-                    this.openConfirmationModal = true;
-                    this.isLoading = false;
-                })
-                .catch(error => {
-                    alert("Error in submit : " + error.message);
-                    this.isLoading = false;
-                });
-        }
-    }
-
-    closeConfirmationModal(){
-        this.dispatchEvent(
-            new CustomEvent('closesecondlevelregistration')
-        );
-        window.location.reload();
-    }
-
-    checkMandatoryFields(){
-        // Job function
-        var functionMissing = !(this.template.querySelector(".jobFunctionInput").validity.valid);
-        this.isJobFunctionMissing = functionMissing;
-        if(functionMissing){
-            this.template.querySelector(".jobFunctionDiv").classList.add('slds-has-error');
-        }
-
-        // Job title
-        var titleMissing = !(this.template.querySelector(".jobTitleInput").validity.valid);
-        this.isJobTitleMissing = titleMissing;
-        if(titleMissing){
-            this.template.querySelector(".jobTitleDiv").classList.add('slds-has-error');
-        }
-
-        // return true if OK
-        return !(functionMissing || titleMissing);
     }
 
     cancel(){
         this.dispatchEvent(
             new CustomEvent('closesecondlevelregistration')
         );
-//        window.location.reload();
+    }
+
+
+    /* NAVIGATION METHODS */
+
+    @track step1Complete = false;
+    @track step2Complete = false;
+    @track step3Complete = false;
+    @track step4Complete = false;
+
+    step1CompletionStatus(event){
+        this.step1Complete = event.detail;
+    }
+
+    step2CompletionStatus(event){
+        this.step2Complete = event.detail;
+    }
+
+    step3CompletionStatus(event){
+        this.step3Complete = event.detail;
+    }
+
+    step4CompletionStatus(event){
+        this.step4Complete = event.detail;
+    }
+
+    getCurrentStepData(){
+        // Profile Details
+        if(this.currentStep === 1){
+            var contactInfo = this.template.querySelector('c-portal-registration-profile-details').getContactInfo();
+            this.contactInfo = JSON.parse(JSON.stringify(contactInfo));
+        }
+        // Account Selection
+        else if(this.currentStep === 2){
+            var accountSelectionInfos = this.template.querySelector('c-portal-registration-account-selection').getAccountSelectionInfos();
+
+            this.selectedCustomerType = accountSelectionInfos.get('customerType');
+            this.selectedCountryId = accountSelectionInfos.get('countryId');
+            this.selectedAccountId = accountSelectionInfos.get('accountId');
+    
+            var searchResults = this.template.querySelector('c-portal-registration-account-selection').getSearchResults();
+            
+            if(searchResults !== undefined){
+                this.searchResults = JSON.parse(JSON.stringify(searchResults));
+            }
+        }
+        // Company Information
+        else if(this.currentStep === 3){
+            var companyInformation= this.template.querySelector('c-portal-registration-company-information').getCompanyInformation();
+
+            this.account = JSON.parse(JSON.stringify(companyInformation));
+            this.selectedCustomerType = companyInformation.customerType;    
+        }
+        // Address Information
+        else if(this.currentStep === 4){
+            var addressInformation = this.template.querySelector('c-portal-registration-address-information').getAddressInformation();
+            this.address = JSON.parse(JSON.stringify(addressInformation));
+        }
+    }
+
+    goToStep(event){
+        var futureStep = parseInt(event.detail);
+        this.getCurrentStepData();
+        this.currentStep = futureStep;
+    }
+
+    get isProfileInformationStep(){
+        return this.currentStep === 1;
+    }
+
+    get isAccountSelectionStep(){
+        return this.currentStep === 2;
+    }
+
+    get isCompanyInformationStep(){
+        return this.currentStep === 3;
+    }
+
+    get isAddressInformationStep(){
+        return this.currentStep === 4;
+    }
+
+    get isConfirmationStep(){
+        return this.currentStep === 5;
+    }
+
+    get isAccountStep(){
+        return this.currentStep === 2 || this.currentStep === 3 || this.currentStep === 4;
+    }
+
+    openSaveAndClosePopup(){
+        this.setSaveAndClosePopup('same');
+    }
+
+    openSaveAndGoToHomePopup(){
+        this.setSaveAndClosePopup('homepage');
+    }
+
+    setSaveAndClosePopup(page){
+        this.startLoading();
+        if(this.isProfileInformationStep){
+            // retrieve profile details
+            var contactInfo = this.template.querySelector('c-portal-registration-profile-details').getContactInfo();
+            this.contactInfo = JSON.parse(JSON.stringify(contactInfo));
+        }
+
+        //save contact info
+        saveContactInfo({con : this.contactInfo})
+        .then(result => {
+            this.landingPage = page;
+            this.openMessageModal = true;
+            this.stopLoading();
+        });
+    }
+
+    cancel(){
+        this.openMessageModal = false;
+    }
+
+    saveAndClose(){
+        this.openMessageModal = false;
+        if(this.landingPage == 'same'){
+            document.body.style.overflow = 'auto';
+            this.dispatchEvent(new CustomEvent('closesecondlevelregistration'));
+        }
+        else if(this.landingPage == 'homepage'){
+            navigateToPage(CSP_PortalPath,{});
+        }
+    }
+
+    secondLevelRegistrationCompletedAction1(){
+        document.body.style.overflow = 'auto';
+        this.dispatchEvent(new CustomEvent('secondlevelregistrationcompletedactionone'));
+    }
+
+    secondLevelRegistrationCompletedAction2(){
+        document.body.style.overflow = 'auto';
+        this.dispatchEvent(new CustomEvent('secondlevelregistrationcompletedactiontwo'));
     }
 }

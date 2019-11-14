@@ -13,7 +13,19 @@
     </template>
 
     <template if:true={displayFirstLogin}>
-        <c-portal-first-login onclosefirstloginpopup={hideFirstLogin}></c-portal-first-login>
+        <c-portal-first-login registrationlevel={registrationlevel}
+                            onclosefirstloginpopup={hideFirstLogin} 
+                            ontriggersecondlevelregistration={triggerSecondLevelRegistration}>
+        </c-portal-first-login>
+    </template>
+
+    <template if:true={displaySecondLevelRegistration}>
+        <c-portal-registration-second-level 
+            trigger={level2RegistrationTrigger}
+            is-triggered-by-request={isTriggeredByRequest}
+            onclosesecondlevelregistration={closeSecondLevelRegistration} 
+            onsecondlevelregistrationcompletedactiontwo={secondLevelRegistrationCompleted}>
+        </c-portal-registration-second-level>
     </template>
 
     <div class="headerContainer">

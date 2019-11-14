@@ -216,7 +216,7 @@ private static List<Portal_Applications__c> getPortalApplications(){
 	String conditionStr = PortalServicesCtrl.getConditionFromSelectedView(selectedView);
 
 	String extraQueryFields = ' CreatedDate, Application_URL__c, Cannot_be_managed_by_portal_admin__c, New_Window__c,ServiceName__c, Service_Description_Label__c, '+
-								'ANG_Restrict_by_Agency_Sector__c, ANG_Accredited_Agents_Only__c, Application_icon_URL__c, Requestable__c';
+								'ANG_Restrict_by_Agency_Sector__c, ANG_Accredited_Agents_Only__c, Application_icon_URL__c, Requestable__c, Requires_Level2_Registration__c';
 	String finalQuery = 'SELECT '+ extraQueryFields + fieldsStr+ ' FROM Portal_Applications__c ' + conditionStr + ' ORDER BY Name ASC ';
 
 	System.debug('getPortalApplications finalQuery : ' + finalQuery);

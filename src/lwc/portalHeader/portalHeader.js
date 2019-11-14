@@ -12,6 +12,7 @@ import increaseNotificationView from '@salesforce/apex/PortalHeaderCtrl.increase
 import goToManageService from '@salesforce/apex/PortalHeaderCtrl.goToManageService';
 import goToOldChangePassword from '@salesforce/apex/PortalHeaderCtrl.goToOldChangePassword';
 import redirectChangePassword from '@salesforce/apex/PortalHeaderCtrl.redirectChangePassword';
+import getContactInfo from '@salesforce/apex/PortalRegistrationSecondLevelCtrl.getContactInfo';
 
 import redirectfromPortalHeader from '@salesforce/apex/CSP_Utils.redirectfromPortalHeader';
 
@@ -59,6 +60,10 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
     @track displayFirstLogin = false;
     @track firstLogin = false;
 
+    // l2 registration
+    level2RegistrationTrigger = 'homepage';
+    isTriggeredByRequest = false;
+    
     @wire(getRecord, { recordId: Id, fields: [User_ToU_accept, Portal_Registration_Required] })
     WiregetUserRecord(result) {
         if (result.data) {
@@ -253,6 +258,9 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
 
         });
 
+        getContactInfo().then(result => {
+            this.displayCompanyTab = !result.Account.Is_General_Public_Account__c;
+        });
     }
 
     redirectChangePassword() {
@@ -570,4 +578,19 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
         return toReturn;
     }
 
+    @track displaySecondLevelRegistration = false;
+
+    triggerSecondLevelRegistration(){
+        this.displayFirstLogin = false;
+        this.firstLogin = false;
+        this.displaySecondLevelRegistration= true;
+    }
+
+    closeSecondLevelRegistration(){
+        this.displaySecondLevelRegistration = false;
+    }
+
+    secondLevelRegistrationCompleted(){
+        navigateToPage(CSP_PortalPath,{});
+    }
 }

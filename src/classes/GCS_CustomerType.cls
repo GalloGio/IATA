@@ -4,13 +4,14 @@ public class GCS_CustomerType implements Comparable{
         get{
             if(customLabels == null){
                 customLabels = new Map<String,String>{
-                        'Category' => Label.ISSP_MyProfile_CATEGORY,
-                        'Sector' => Label.ISSP_MyProfile_SECTOR,
+						'Category' => Label.CSP_L2_Category,
+						'Sector' => Label.CSP_L2_Sector,
                         'Select' => Label.ISSP_Select,
                         'Other' => Label.ISSP_Other,
                         'Student' => Label.ISSP_Contact_About_IATA_Courses,
                         'Yes' => Label.ISSP_Yes,
-                        'No' => Label.ISSP_No
+						'No' => Label.ISSP_No,
+						'TSI_USA_Only' => Label.TSI_USA_Only
                 };
             }
             return customLabels;
@@ -151,25 +152,6 @@ public class GCS_CustomerType implements Comparable{
         sortCustomerTypesList(customerTypeList);        
 
         return customerTypeList;
-    }
-
-    @AuraEnabled
-    public static String getCustomerTypeFromSectorAndCategory(String sector, String category){
-        System.debug('sector-category "' + sector + '"-"' + category + '"');
-        if(sector == null || category == null){
-            return null;
-        }
-
-        List<GCS_CustomerType> customerTypesList = getCustomerTypesMap().values();
-        for(GCS_CustomerType customerType : customerTypesList){
-            System.debug('"' + customerType.metadataCustomerType.Created_Account_Sector__c + '"-"' + customerType.metadataCustomerType.Created_Account_Category__c + '"');
-            if(customerType.metadataCustomerType.Created_Account_Sector__c == sector && customerType.metadataCustomerType.Created_Account_Category__c == category){
-                System.debug('found : ' + customerType.metadataCustomerType.DeveloperName);
-                return customerType.metadataCustomerType.DeveloperName;
-            }
-        }
-        System.debug('NOT found');
-        return null;
     }
 
     private static void sortCustomerTypesList(List<GCS_CustomerType> customerTypeList){
