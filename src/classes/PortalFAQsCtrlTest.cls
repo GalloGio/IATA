@@ -114,16 +114,6 @@ public class PortalFAQsCtrlTest {
         Test.stopTest();
     }
 
-    @isTest static void testGetArticles() {
-        User testUser = [SELECT Id FROM User WHERE Email LIKE '%testemail1@csp.testclass' LIMIT 1];
-
-        Test.startTest();
-        System.runAs(testUser) {
-            List<FAQ__kav> article = PortalFAQsCtrl.getArticles('IEP_Support__c');
-            List<FAQ__kav> articleByLanguage = PortalFAQsCtrl.getArticlesByLanguage('IEP_Support__c', 'en_US');
-        }
-    }
-
     @isTest static void testArticleFeedback() {
         User testUser = [SELECT Id FROM User WHERE Email LIKE '%testemail1@csp.testclass' LIMIT 1];
         FAQ__kav kavObj = [SELECT Id, Title, ArticleNumber FROM FAQ__kav WHERE Title = 'Sample Article Portal Test' LIMIT 1];
