@@ -1014,6 +1014,39 @@ public static String serviceWrapperRedirect(String serviceId){
 		return portalAdmins;
 	}
 
+@AuraEnabled(cacheable=false)
+public static Boolean massDenyAccess(List<String> contactIds,string serviceId, String reason) {
+	List<Portal_Application_Right__c> psaToUpdate = new List<Portal_Application_Right__c>();
+
+	// Retrieve Portal Application Rights for Service ID and Contact IDs
+	List<Portal_Application_Right__c> psaList = [SELECT Id, Right__c, Access_Status_Reason__c,LastModifiedDate
+	                                             FROM Portal_Application_Right__c
+	                                             WHERE Portal_Application__c = :serviceId AND Contact__c IN :contactIds];
+
+	if(psaList == null || psaList.isEmpty()) {
+		throw new portalServiceException(Label.ISSP_ANG_GenericError + ' EMPTY');
+	}
+	
+	for(Portal_Application_Right__c psa : psaList) {
+		psa.Right__c = PortalServicesCtrl.PORTAL_ACCESS_DENIED;
+		psa.Access_Status_Reason__c = reason;
+
+		psaToUpdate.add(psa);
+	}
+
+	// Records to update
+	if(psaToUpdate != null && !psaToUpdate.isEmpty()) {
+		try {
+			update psaToUpdate;
+		} catch(Exception e) {
+			throw new portalServiceException(Label.ISSP_ANG_GenericError);
+		}
+	}
+
+	return true;
+}
+
+
 // Denys Acccess to a portal service from the manage service page by an portal administrator
 @AuraEnabled(cacheable=false)
 public static Boolean denyAccess(String contactId,string serviceId, String reason, Boolean isFromContactTable) {
@@ -1049,6 +1082,76 @@ public static Boolean denyAccess(String contactId,string serviceId, String reaso
 
 }
 
+// Grants Acccess to a portal service from the manage service page by an portal administrator
+@AuraEnabled(cacheable=false)
+public static Boolean massGrantAccess(List<String> contactIds, String serviceId, String reason) {
+	// retrieves the record with the request
+	List<Portal_Application_Right__c> psal = [SELECT Id, Right__c, Access_Status_Reason__c, LastModifiedDate, Contact__c
+	                                          FROM Portal_Application_Right__c
+	                                          WHERE Portal_Application__c = :serviceId AND Contact__c IN :contactIds];
+
+	if(psal.isEmpty()) {
+		System.debug(LoggingLevel.ERROR, 'PSA is null (2) [serviceId : ' + serviceId + ' - contactIds : ' + contactIds + '] ');
+		throw new portalServiceException(Label.ISSP_ANG_GenericError);
+	}
+
+	Map<Id, Contact> contactsMap = new Map<Id, Contact>();
+	for(Contact con : [SELECT Id, User_Portal_Status__c, (SELECT Id FROM Users) FROM Contact WHERE Id IN :contactIds]) {
+		contactsMap.put(con.Id, con);
+	}
+	if(contactsMap.isEmpty()) {
+		System.debug(LoggingLevel.ERROR, 'PSA is null (2) [serviceId : ' + serviceId + ' - contactIds : ' + contactIds + '] ');
+		throw new portalServiceException(Label.ISSP_ANG_GenericError);
+	}
+
+	List<Portal_Application_Right__c> appRightsToUpdate = new List<Portal_Application_Right__c>();
+	Map<String, Contact> contactsToUpdateMap = new Map<String, Contact>();
+	Set<Id> contactsToStatusChangeList = new Set<Id>();
+
+	for(Portal_Application_Right__c psa : psal) {
+		if(psa.Contact__c != null) {
+			Contact contact = contactsMap.get(psa.Contact__c);
+
+			if (contact.User_Portal_Status__c == PortalServicesCtrl.PORTAL_USER_PENDING_APPR) {
+				// Pending Approval
+				contact.User_Portal_Status__c = PortalServicesCtrl.PORTAL_USER_APPROVED;
+				
+				contactsToUpdateMap.put(contact.Id, contact);
+			} else if (contact.users.isEmpty()) {
+				// No USer
+				contactsToStatusChangeList.add(contact.Id);
+				
+			}
+		}
+
+		psa.Right__c = PortalServicesCtrl.PORTAL_ACCESS_GRANTED;
+		psa.Access_Status_Reason__c = reason;
+		appRightsToUpdate.add(psa);
+	}
+	
+	try {
+		update contactsToUpdateMap.values();
+		
+		ISSP_EditPortalServiceAccessExt.updateUserProfiles(new List<String>(contactsToUpdateMap.keySet()));
+	} catch(exception e) {
+		throw new portalServiceException(Label.ISSP_ANG_GenericError);
+	}
+
+	if(contactsToStatusChangeList != null && !contactsToStatusChangeList.isEmpty()) {
+		ISSP_ContactList ctrl = new ISSP_ContactList();
+
+		//generates user active with the portal
+		ctrl.processMultiplePortalUserStatusChange(contactsToStatusChangeList, PortalServicesCtrl.PORTAL_USER_APPROVED, 'Active');
+	}
+	
+	try {
+		update appRightsToUpdate;
+	} catch(Exception e) {
+		throw new portalServiceException(Label.ISSP_ANG_GenericError);
+	}
+	
+	return true;
+}
 
 // Grants Acccess to a portal service from the manage service page by an portal administrator
 @AuraEnabled(cacheable=false)
