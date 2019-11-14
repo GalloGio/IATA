@@ -788,7 +788,7 @@ public with sharing class PortalCasesCtrl {
 public static List<MessageWrapper> getCaseMessages(String caseId){
 	List<MessageWrapper> lstToReturn = new List<MessageWrapper>();
 
-	Case caseToFirstComment = [SELECT Id, Description, CreatedBy.Name, CreatedDate FROM Case WHERE Id =:caseId];
+	Case caseToFirstComment = [SELECT Id, Description, CreatedBy.Name, CreatedDate,RecordType__c FROM Case WHERE Id =:caseId];
 
 	List<CaseComment> lstCaseCommentsAux = [SELECT Id, ParentId, CommentBody, IsPublished,
 	                                        CreatedDate, CreatedById, CreatedBy.Name, IsDeleted
