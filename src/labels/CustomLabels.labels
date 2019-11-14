@@ -25562,6 +25562,13 @@ Can you please confirm which country you&apos;ve previously received support for
         <value>Document Category</value>
     </labels>
     <labels>
+        <fullName>ISSP_FS_Link</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FS_Link</shortDescription>
+        <value>http://portal.iata.org/ISSP_FinancialSecInformation?MainNav=FinInfo&amp;subNav=financial_securities&amp;mid=M5S3</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Documents</fullName>
         <categories>Portal Resources</categories>
         <language>en_US</language>
