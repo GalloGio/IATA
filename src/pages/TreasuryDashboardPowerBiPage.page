@@ -1,0 +1,60 @@
+<apex:page id="TreasuryDashboardPowerBiPage" controller="TreasuryDashboardPowerBiPageCtrl" showHeader="false" showChat="false" sideBar="false" action="{!redirect}">
+
+    <apex:includeScript value="{!$Resource.PBIJS}"/>
+
+    <div>
+        <div id="dashboard" style="position:absolute; height:100%; width:100%"></div>
+    </div>
+
+    <style type="text/css">
+
+            iframe {
+                border:none;
+            }
+
+        </style>
+
+
+    <script>
+
+        let element = document.getElementById('dashboard');
+
+        let models = window['powerbi-client'].models;
+        let obj = "{!objectId}";
+        let token = "{!accessToken}";
+        let type = "{!tokenType}";
+
+        let typeOfToken = 0;
+        if(type === 'Aad') {
+            typeOfToken = models.TokenType.Aad;
+        }
+        if(type === 'Embed') {
+            typeOfToken = models.TokenType.Embed;
+        }
+
+        console.log('models:: ' + models);
+        console.log('objectId:: ' + obj);
+        console.log('accessToken:: ' + token);
+		console.log('embedUrl'+ "{!embedUrl}");
+		console.log('tokenType'+ "{!tokenType}");
+        var embedConfiguration = {
+            id: "{!objectId}",
+            type: "report",
+            embedUrl: "{!embedUrl}",
+            tokenType: typeOfToken,
+            pageView: "actualSize",
+            accessToken: "{!accessToken}",
+            settings : {
+                filterPaneEnabled: false,
+                navContentPaneEnabled: false,
+                background: models.BackgroundType.Transparent
+            }
+        };
+
+        var report = powerbi.embed(element, embedConfiguration);
+
+        </script>
+
+
+
+</apex:page>

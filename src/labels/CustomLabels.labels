@@ -4357,6 +4357,13 @@ Payment required on receipt of this Payment Advice
         <value>Title</value>
     </labels>
     <labels>
+        <fullName>CSP_Treasury_Dashboard</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Treasury Dashboard</shortDescription>
+        <value>Treasury Dashboard</value>
+    </labels>
+    <labels>
         <fullName>CSP_TypeOfCase</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -38478,6 +38485,209 @@ title,Title,Name</value>
         <protected>false</protected>
         <shortDescription>Transfer Attachments</shortDescription>
         <value>Transfer Attachments</value>
+    </labels>
+    <labels>
+        <fullName>Treasury_Dashboard_BSP</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Treasury Dashboard BSP</shortDescription>
+        <value>BSP</value>
+    </labels>
+    <labels>
+        <fullName>Treasury_Dashboard_BSP_Long</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Treasury Dashboard BSP Long</shortDescription>
+        <value>Billing and Settlement Plan (BSP)</value>
+    </labels>
+    <labels>
+        <fullName>Treasury_Dashboard_Bank_Holidays</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Treasury Dashboard Bank Holidays</shortDescription>
+        <value>Bank holidays</value>
+    </labels>
+    <labels>
+        <fullName>Treasury_Dashboard_Bank_Holidays_URL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Treasury Dashboard Bank Holidays URL</shortDescription>
+        <value>http://www.bank-holidays.com</value>
+    </labels>
+    <labels>
+        <fullName>Treasury_Dashboard_CASS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Treasury Dashboard CASS</shortDescription>
+        <value>CASS</value>
+    </labels>
+    <labels>
+        <fullName>Treasury_Dashboard_CASS_Long</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Treasury Dashboard CASS Long</shortDescription>
+        <value>Cargo Accounts Settlement Systems (CASS)</value>
+    </labels>
+    <labels>
+        <fullName>Treasury_Dashboard_Central_Banks_World_Wide</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Treasury Dashboard Central Banks World Wide</shortDescription>
+        <value>Central Banks World Wide</value>
+    </labels>
+    <labels>
+        <fullName>Treasury_Dashboard_Central_Banks_World_Wide_URL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Treasury Dashboard Central Banks World Wide URL</shortDescription>
+        <value>http://www.bis.org/cbanks.htm</value>
+    </labels>
+    <labels>
+        <fullName>Treasury_Dashboard_Currency_Center</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Treasury Dashboard Currency Center</shortDescription>
+        <value>Currency Center</value>
+    </labels>
+    <labels>
+        <fullName>Treasury_Dashboard_Currency_Center_URL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Treasury Dashboard Currency Center URL</shortDescription>
+        <value>https://portal.iata.org/myservices/ISSP_CurrencyCenterHome</value>
+    </labels>
+    <labels>
+        <fullName>Treasury_Dashboard_Exchange_Rates</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Treasury Dashboard Exchange Rates</shortDescription>
+        <value>Exchange rates</value>
+    </labels>
+    <labels>
+        <fullName>Treasury_Dashboard_Exchange_Rates_Long</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Treasury Dashboard Exchange Rates Long</shortDescription>
+        <value>Exchange Rates Services</value>
+    </labels>
+    <labels>
+        <fullName>Treasury_Dashboard_FX_Rates</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Treasury Dashboard FX Rates</shortDescription>
+        <value>FX Rates</value>
+    </labels>
+    <labels>
+        <fullName>Treasury_Dashboard_FX_Rates_URL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Treasury Dashboard FX Rates URL</shortDescription>
+        <value>http://www.oanda.com/currency/converter/</value>
+    </labels>
+    <labels>
+        <fullName>Treasury_Dashboard_Header_Text</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Treasury Dashboard Header Text</shortDescription>
+        <value>One Source. Global View.</value>
+    </labels>
+    <labels>
+        <fullName>Treasury_Dashboard_ICCS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Treasury Dashboard ICCS</shortDescription>
+        <value>ICCS</value>
+    </labels>
+    <labels>
+        <fullName>Treasury_Dashboard_ICCS_Long</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Treasury Dashboard ICCS Long</shortDescription>
+        <value>IATA Currency Clearance Service (ICCS)</value>
+    </labels>
+    <labels>
+        <fullName>Treasury_Dashboard_ICH</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Treasury Dashboard ICH</shortDescription>
+        <value>ICH</value>
+    </labels>
+    <labels>
+        <fullName>Treasury_Dashboard_ICH_Long</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Treasury Dashboard ICH Long</shortDescription>
+        <value>IATA Clearing House (ICH)</value>
+    </labels>
+    <labels>
+        <fullName>Treasury_Dashboard_Links</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Treasury Dashboard Links</shortDescription>
+        <value>Useful Links</value>
+    </labels>
+    <labels>
+        <fullName>Treasury_Dashboard_Market_News</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Treasury Dashboard Market News</shortDescription>
+        <value>Market News</value>
+    </labels>
+    <labels>
+        <fullName>Treasury_Dashboard_Market_News_URL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Treasury Dashboard Market News URL</shortDescription>
+        <value>http://www.bloomberg.com</value>
+    </labels>
+    <labels>
+        <fullName>Treasury_Dashboard_Premium_Dashboard</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Treasury Dashboard Premium Dashboard</shortDescription>
+        <value>Premium</value>
+    </labels>
+    <labels>
+        <fullName>Treasury_Dashboard_Service_Name</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Treasury Dashboard Service Name</shortDescription>
+        <value>Treasury Dashboard</value>
+    </labels>
+    <labels>
+        <fullName>Treasury_Dashboard_Standard_Dashboard</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Treasury Dashboard Standard Dashboard</shortDescription>
+        <value>Standard</value>
+    </labels>
+    <labels>
+        <fullName>Treasury_Dashboard_Terms_Of_Use</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Treasury Dashboard Terms Of Use</shortDescription>
+        <value>Terms of Use</value>
+    </labels>
+    <labels>
+        <fullName>Treasury_Dashboard_Terms_of_Use_URL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Treasury Dashboard Terms of Use URL</shortDescription>
+        <value>https://www.iata.org/Pages/terms.aspx</value>
+    </labels>
+    <labels>
+        <fullName>Treasury_Dashboard_User_Guide</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Treasury Dashboard User Guide</shortDescription>
+        <value>User Guide</value>
+    </labels>
+    <labels>
+        <fullName>Treasury_Dashboard_User_Guide_URL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Treasury Dashboard User Guide URL</shortDescription>
+        <value>https://iata--c.eu3.content.force.com/servlet/servlet.FileDownload?file=015w0000002P5Dl</value>
     </labels>
     <labels>
         <fullName>Trust_Weaver</fullName>

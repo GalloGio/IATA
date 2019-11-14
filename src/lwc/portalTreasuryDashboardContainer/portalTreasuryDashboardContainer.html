@@ -1,0 +1,71 @@
+<template>
+
+    <div class="background-superLightGray">
+
+            <c-portal-page-container>
+
+                <span slot="componentContent">
+
+                    <div class="slds-grid slds-wrap slds-gutters_direct-medium">
+                        <!-- IFRAMES -->
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_4-of-5 slds-p-vertical_x-large" >
+
+                            <c-portal-treasury-dashboard-iframes-container ></c-portal-treasury-dashboard-iframes-container>
+
+                        </div>
+
+                        <!-- INSIDE LINKS AND CONTACT US -->
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-5 slds-p-vertical_x-large " >
+
+                            <c-portal-treasury-dashboard-link-tiles ></c-portal-treasury-dashboard-link-tiles>
+
+                            <c-portal-treasury-dashboard-contact-us ></c-portal-treasury-dashboard-contact-us>
+
+                        </div>
+
+
+                        <!-- OUTSIDE LINKS -->
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-p-vertical_x-large" >
+
+                            <c-portal-treasury-dashboard-footer ></c-portal-treasury-dashboard-footer>
+
+                        </div>
+                    </div>
+
+                </span>
+
+            </c-portal-page-container>
+
+    </div>
+
+
+
+    <!--<template if:true={hasTwoFactor}>
+
+        <c-portal-treasury-dashboard-header></c-portal-treasury-dashboard-header>
+
+        <c-portal-page-container>
+
+            <span slot="componentContent">
+
+                <c-portal-treasury-dashboard-iframe is-standard-user={isStandardUser} is-premium-user={isPremiumUser} user-id={userId}></c-portal-treasury-dashboard-iframe>
+
+                <c-portal-treasury-dashboard-footer ></c-portal-treasury-dashboard-footer>
+
+            </span>
+
+        </c-portal-page-container>
+
+
+
+    </template>
+
+
+    <template if:true={loading}>
+        <div class="slds-m-around_xx-large slds-is-relative">
+            <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+        </div>
+    </template>-->
+
+
+</template>
