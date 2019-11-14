@@ -202,6 +202,7 @@ return recordTypes;
 
         Id recordTypeIdStageC = Schema.SObjectType.Case.RecordTypeInfosByName.get('Invoicing Collection Cases').RecordTypeId;
         Id recordTypeIdStageB = Schema.SObjectType.Case.RecordTypeInfosByName.get('Internal Cases (IDFS ISS)').RecordTypeId;
+        Id recordTypeIdStageF = Schema.SObjectType.Case.RecordTypeInfosByName.get('IDFS Airline Participation Process').RecordTypeId;
         //Id recordTypeId = getRecordTypesForObject('Case').get('Airline_Coding_Application').Id;
         List<Case> parentCases = [Select id, RecordTypeId, Type, Subject, ParentId, CaseArea__c, Region__c,
                 Reason, Status, BSPCountry__c, Description, Account.Name, Account.ACLI_SAP_Id__c,
@@ -266,7 +267,7 @@ return recordTypes;
                 relatedCase.Status = 'Open';
                 relatedCase.Type = 'SIS Internal Case';
                 relatedCase.Description = descriptionF;
-                relatedCase.RecordTypeId = parentCase.RecordTypeId;
+                relatedCase.RecordTypeId = recordTypeIdStageF;
             }
 
             try{
