@@ -1,7 +1,9 @@
 import { LightningElement, track } from 'lwc';
+import idOfUser from '@salesforce/user/Id';
 import getCaseById from '@salesforce/apex/PortalCasesCtrl.getCaseById';
 import removeRecipient from '@salesforce/apex/PortalCasesCtrl.removeRecipient';
 import addNewRecipient from '@salesforce/apex/PortalCasesCtrl.addNewRecipient';
+import isUserLevelOne from '@salesforce/apex/PortalSupportReachUsCreateNewCaseCtrl.isUserLevelOne';
 
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
@@ -24,13 +26,40 @@ export default class PortalHomeCalendar extends LightningElement {
     @track pendingCustomerCase = false;
     pendingCustomerCaseWarningLabel = CSP_PendingCustomerCase_Warning;
 
+	//is the user a Level1 user? If he has not completed level 2 registration he is not
+	@track Level1User = false;
+
+
+	//the logged user's id
+    userId = idOfUser;
+    
     connectedCallback() {
         //get the parameters for this page
         this.pageParams = getParamsFromPage();
 
         if(this.pageParams.caseId !== undefined){
             this.getCaseByIdJS();
-        }   
+        }
+
+	    this.isLevelOneUser();
+    }   
+
+	 isLevelOneUser(){
+        isUserLevelOne({userId: this.userId}).then(result => {
+            this.Level1User = result;
+        }).catch(error => {
+            //throws error
+            this.error = error;
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: this.label.PKB2_js_error,
+                    message: this.label.ISSP_ANG_GenericError,
+                    variant: 'error'
+                })
+            );
+            // eslint-disable-next-line no-console
+            console.log('Error: ', error);
+        });
     }
 
     getCaseByIdJS(){
@@ -163,4 +192,7 @@ export default class PortalHomeCalendar extends LightningElement {
     }
 
 
+    get manageRecipients(){
+        return this.haveRecipients && !this.Level1User;
+    }
 }
