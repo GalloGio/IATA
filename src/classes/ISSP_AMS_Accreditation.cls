@@ -8140,9 +8140,19 @@ system.debug('aqui sectorValue ' + sectorValue);
                                                 WHERE Account__c = :newform.Same_Legal_Entity_Agency_Account__c
                                                     AND Valid__c = true 
                                                     AND Active__c = true]) {
-					String ownerName = accRole.Contact__r.FirstName + ' ' + accRole.Contact__r.LastName;
+					String ownerName;
                     
-					if (String.isBlank(ownerName)) {
+					if (!String.isBlank(accRole.Contact__r.FirstName)) {
+						ownerName = accRole.Contact__r.FirstName + ' ' + accRole.Contact__r.LastName;
+                    
+						if (!String.isBlank(accRole.Contact__r.LastName)) {
+							ownerName += ' ' + accRole.Contact__r.LastName
+						}
+					}
+
+					if (String.isBlank(ownerName) && !String.isBlank(accRole.Contact__r.LastName)) {
+						ownerName = accRole.Contact__r.LastName
+					} else {
 						ownerName = accRole.Owner_Name__c;
 					}
                     
