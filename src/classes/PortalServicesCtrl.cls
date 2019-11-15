@@ -8,7 +8,6 @@ Public static final String PORTAL_USER_PENDING_APPR='Pending Approval';
 Public static final String PORTAL_USER_APPROVED='Approved User';
 Public static final String PORTAL_ADMIN_APPROVED='Approved Admin';
 Public static final String PORTAL_EXTERNAL_ACCESS_GRANTED='External Access Granted';
-Public static final String WILDCARD = 'ALL';
 
 public class portalServiceException extends Exception {}
 
@@ -37,7 +36,7 @@ public static List<Portal_Applications__c> getNonRequestableServicesList(String 
 	portalApplicationList = Database.query(query);
 
 	// Second search based in Custom Metadata for all those remaining apps
-	List<String> requestableAppNameList = getVisibleApplicationNames(con.Account);
+	List<String> requestableAppNameList = PortalApplicationSettingHelper.getVisibleApplicationNames(con.Account);
 	query = 'SELECT ' + queryFields +
 	        ' FROM Portal_Applications__c' +
 	        ' WHERE Id NOT IN :portalApplicationList' +
@@ -231,7 +230,7 @@ private static List<Portal_Applications__c> getPortalApplications(){
 
 	// Second search based in Custom Metadata for all those remaining apps
 	User userAux = [SELECT Id, contact.account.Sector__c, contact.account.Category__c FROM User WHERE Id = :UserInfo.getUserId()];
-	List<String> requestableAppNameList = getVisibleApplicationNames(userAux.Contact.Account);
+	List<String> requestableAppNameList = PortalApplicationSettingHelper.getVisibleApplicationNames(userAux.Contact.Account);
 
 	finalQuery = 'SELECT ' + extraQueryFields + fieldsStr +
 	             +' FROM Portal_Applications__c'
@@ -1011,31 +1010,6 @@ public static String serviceWrapperRedirect(String serviceId){
 
 		return portalAdmins;
 	}
-
-/**
-    Returns a list of all visible application names for the input account
-    according to the Custom Metadata Portal_Application_Setting__mdt
- **/
-@TestVisible
-private static List<String> getVisibleApplicationNames(Account account) {
-	// Get the list of services visible for thi input account based on the Custom metadata Portal_Application_Setting__mdt
-	List<String> requestableAppNameList = new List<String>();
-	if (account==null) return requestableAppNameList;
-	for (Portal_Application_Setting__mdt setting: [
-		     SELECT id, MasterLabel,
-		     (SELECT Sector__c, Category__c
-		      FROM Portal_Application_Visibilities__r
-		      WHERE is_Visible__c = true
-		                            AND Sector__c = :account.Sector__c
-		                                            AND Category__c IN (:account.Category__c,:WILDCARD))
-		     FROM Portal_Application_Setting__mdt]) {
-		if (setting.Portal_Application_Visibilities__r.size()>0) {
-			requestableAppNameList.add(setting.MasterLabel);
-		}
-	}
-	return requestableAppNameList;
-}
-
 
 // Denys Acccess to a portal service from the manage service page by an portal administrator
 @AuraEnabled(cacheable=false)

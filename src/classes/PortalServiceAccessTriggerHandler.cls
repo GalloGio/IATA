@@ -342,7 +342,13 @@ public without sharing class PortalServiceAccessTriggerHandler {
             contact.Available_Services__c = String.join(listServices,';');
             contact.Available_Services_Images__c = String.join(listImages,' ');
         }
-        update listContact;
+        AMS_TriggerExecutionManager.SET_TRIGGER_TO_SKIP.add('GlobalContactTrigger');
+        if (System.isQueueable()) {
+            update listContact;
+        } else {
+            System.enqueueJob(new AsyncDML_Util(listContact, AsyncDML_Util.DML_UPDATE, false));
+        }
+        AMS_TriggerExecutionManager.SET_TRIGGER_TO_SKIP.remove('GlobalContactTrigger');
     }
 
 }

@@ -1792,6 +1792,10 @@
         <name>CSP_Add_User</name>
     </customLabels>
     <customLabels>
+        <label>&lt;a href= &apos;/s/support-reach-us&apos;&gt;문의 페이지&lt;/a&gt;를 통해 계정 정보 변경 사항을 제출하시면 됩니다.</label>
+        <name>CSP_Airline_Changes_Access</name>
+    </customLabels>
+    <customLabels>
         <label>공지 사항</label>
         <name>CSP_Announcement</name>
     </customLabels>
@@ -1810,6 +1814,10 @@
     <customLabels>
         <label>고급 검색</label>
         <name>CSP_Breadcrumb_AdvancedSearch_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>사례 세부 사항</label>
+        <name>CSP_Breadcrumb_CaseDetails_Title</name>
     </customLabels>
     <customLabels>
         <label>회사 프로필</label>
@@ -1842,6 +1850,10 @@
     <customLabels>
         <label><!-- CSP_Breadcrump_MyProfile_Title --></label>
         <name>CSP_Breadcrump_MyProfile_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>고객님 &amp; 국제항공운송협회 (IATA)</label>
+        <name>CSP_Breadcrump_You_IATA</name>
     </customLabels>
     <customLabels>
         <label>취소</label>
@@ -1900,6 +1912,10 @@
         <name>CSP_Community</name>
     </customLabels>
     <customLabels>
+        <label>국제항공운송협회 (IATA) 인증 및 변경 서비스를 통해 귀하의 계정 세부 사항 변경을 제출하실 수 있습니다.</label>
+        <name>CSP_CompanyAdministration_Link</name>
+    </customLabels>
+    <customLabels>
         <label>내 회사 사례보기</label>
         <name>CSP_CompanyCases</name>
     </customLabels>
@@ -1926,6 +1942,10 @@
     <customLabels>
         <label><!-- Create_Contact_Complete_Field --></label>
         <name>CSP_Create_Contact_Complete_Field</name>
+    </customLabels>
+    <customLabels>
+        <label>생성 날짜</label>
+        <name>CSP_CreatedOn</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_DateFrom --></label>
@@ -2048,12 +2068,20 @@
         <name>CSP_IMPORTANT</name>
     </customLabels>
     <customLabels>
+        <label>마지막 업데이트</label>
+        <name>CSP_LastUpdate</name>
+    </customLabels>
+    <customLabels>
         <label>로그아웃</label>
         <name>CSP_LogOut</name>
     </customLabels>
     <customLabels>
         <label>아래 목록에서 사용자를 관리하실 수 있습니다.</label>
         <name>CSP_Manage_Portal_Users</name>
+    </customLabels>
+    <customLabels>
+        <label>받는 사람 관리</label>
+        <name>CSP_Manage_Recipients</name>
     </customLabels>
     <customLabels>
         <label>서비스 관리</label>
@@ -2186,6 +2214,10 @@
     <customLabels>
         <label>진행중인 사례</label>
         <name>CSP_RecentCases_Support</name>
+    </customLabels>
+    <customLabels>
+        <label>받는 사람</label>
+        <name>CSP_Recipients</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP Record Deleted --></label>
@@ -2424,6 +2456,14 @@
         <name>CSP_Title</name>
     </customLabels>
     <customLabels>
+        <label>&lt;a href=&quot;/ISSP_AMSCases&quot; target=&quot;_self&quot;&gt;여기를 클릭하여 국제항공운송협회 (IATA) 인증 및 변경에 직접 액세스하세요.&lt;/a&gt;</label>
+        <name>CSP_Travel_Agent_Accreditation_Changes_Access</name>
+    </customLabels>
+    <customLabels>
+        <label>&lt;a href=&quot;/s/manage-service?serviceId=a2ww0000001D7GOAA0&quot; target=&quot;_self&quot;&gt; 국제항공운송협회 (IATA) 인증 및 변경을 요청하려면 여기를 클릭&lt;/a&gt;</label>
+        <name>CSP_Travel_Agent_Accreditation_Changes_Request</name>
+    </customLabels>
+    <customLabels>
         <label>케이스 유형</label>
         <name>CSP_TypeOfCase</name>
     </customLabels>
@@ -2462,6 +2502,18 @@
     <customLabels>
         <label><!-- CSP_Welcome_Panel_Bullet_4_Title --></label>
         <name>CSP_Welcome_Panel_Bullet_4_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>고객 &amp; 국제항공운송협회 (IATA)</label>
+        <name>CSP_YouAndIATA</name>
+    </customLabels>
+    <customLabels>
+        <label>고객님을 위해 엄선된 서비스</label>
+        <name>CSP_YouIATA_Highlights</name>
+    </customLabels>
+    <customLabels>
+        <label>여기에서 항공 산업과 괸련된 다양한 국제항공운송협회 (IATA) 서비스, 출판물, 제품 및 자료를 확인할 수 있습니다. 고객님의 관심사 및 활동 내역에 따라 특별히 엄선되었습니다.</label>
+        <name>CSP_YouIATA_Highlights_Text</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_You_Dont_Have_Announcements --></label>
@@ -12499,7 +12551,7 @@ ICE의 업데이트 되는 정보들은 타사에서 24 시간의 간격을 두�
         <name>ISSP_Account_not_approved</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ContactList --></label>
+        <label>승인</label>
         <name>ISSP_Activate</name>
     </customLabels>
     <customLabels>
@@ -13285,7 +13337,7 @@ IATA로부터 다음 국가에 대한 도움을 받으신 적이 있습니까?</
         <name>ISSP_Deny_Access</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Description --></label>
+        <label>설명</label>
         <name>ISSP_Description</name>
     </customLabels>
     <customLabels>
@@ -14705,7 +14757,7 @@ IATA로부터 다음 국가에 대한 도움을 받으신 적이 있습니까?</
         <name>ISSP_MITA_Agreements_Service_Name</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ContactList --></label>
+        <label>관리자로 승인</label>
         <name>ISSP_MakeAdmin</name>
     </customLabels>
     <customLabels>
@@ -20396,6 +20448,10 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <name>csp_ActionIndicator</name>
     </customLabels>
     <customLabels>
+        <label>추가 세부 사항</label>
+        <name>csp_AdditionalDetails</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Request New Service --></label>
         <name>csp_AgencyReadOnly</name>
     </customLabels>
@@ -20682,6 +20738,10 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
     <customLabels>
         <label>지원</label>
         <name>csp_Query</name>
+    </customLabels>
+    <customLabels>
+        <label>다른 사람에게 알려야 합니까?</label>
+        <name>csp_RecipientsQuestion</name>
     </customLabels>
     <customLabels>
         <label>귀하의 에이전시는 현재 열린 국제항공운송협회 (IATA) EasyPay를 계정을 가지고 있지 않습니다.본사의 공인 서명인에게 국제항공운송협회 (IATA) EasyPay 계좌 개설을 요청하십시오. 포털 관리자로서 귀하는 &lt;a href = &quot;/my-profile&quot;&gt; 개인 정보 &lt;/a&gt; 귀하를 Legal Authorized Signatory로 지명하거나, 아래에서 올바른 포털 관리자로 임명하려면 &lt;a href= &quot;/company-profile&quot;&gt; 회사 관리 - &gt; 연락처 &lt;/a&gt; 페이지 그리고 귀하의 EasyPay 계좌 개설을 요청하십시오.&lt;br/&gt;&lt;br/&gt;도움이 필요하시면 지원 문의에 연락하십시오.&lt;a href=&quot;/Support-Reach-Us&quot;&gt;고객 지원&lt;/a&gt;</label>

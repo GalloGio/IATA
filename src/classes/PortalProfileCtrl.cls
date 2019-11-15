@@ -94,6 +94,135 @@ public static Contact contactInfo = new Contact();
 		set;
 	}
 
+	@AuraEnabled
+	public static ApexMessageHandling approve(String contactList, String approvalStatus) {
+		List<ContactWrapper> filtersWrapper = (List<ContactWrapper>) JSON.deserialize(contactList, List<ContactWrapper>.class);
+
+        Set <Id> contactIds = new Set <Id>();
+        for (ContactWrapper thisContactRecord : filtersWrapper){
+            if (thisContactRecord.selected){
+                contactIds.add(thisContactRecord.contact.Id);
+            }
+        }
+
+		if (!contactIds.isEmpty()) {
+            return processMultiplePortalUserStatusChange(contactIds, approvalStatus, 'Active');
+		}
+
+        return new ApexMessageHandling(false, Label.ISSP_SelectOneContact);
+	}
+
+	@AuraEnabled
+	public static ApexMessageHandling inactivate(String contactList, String reasonToInactive) {
+		List<ContactWrapper> filtersWrapper = (List<ContactWrapper>) JSON.deserialize(contactList, List<ContactWrapper>.class);
+		Set<Id> contactIds = new Set<Id>();
+		String productMessage;
+
+		for (contactWrapper thisContactRecord : filtersWrapper) {
+            if (thisContactRecord.selected) {
+                if (thisContactRecord.hasProducts) {
+                    if (String.isNotBlank(productMessage)) {
+                        productMessage = Label.ISSP_InactiveUser_Subscription_Portal;
+                    }
+                    productMessage = productMessage + '</br>' + thisContactRecord.contact.Name;
+                }
+
+            	contactIds.add(thisContactRecord.contact.Id);
+            }
+		}
+
+		if (String.isNotBlank(productMessage)) {
+			return new ApexMessageHandling(false, productMessage);
+		} else {
+			List <Portal_Application_Right__c> appList =
+				[SELECT Id, Application_Name__c, Contact__r.Name, Contact__c
+				FROM Portal_Application_Right__c
+				WHERE Right__c = 'Access Granted' AND Contact__c IN :contactIds
+				AND Portal_Application__r.Critical_Service__c = true
+				ORDER BY Contact__c];
+
+			//ACAMBAS - TIP-282 Start
+			List <Account_Contact_Role__c> primaryConList =
+				[SELECT Id, Contact__c, Contact__r.Name
+					FROM Account_Contact_Role__c
+					WHERE Contact__c IN :contactIds AND is_primary__c = true];
+			//ACAMBAS - TIP-282 End
+
+			if(!appList.isEmpty()) {
+				String message = Label.ISSP_UserInactivation_ServiceMsg_4;
+				String currentConId;
+
+				for (Portal_Application_Right__c thisAppRight : appList) {
+					if (String.isNotBlank(currentConId)) {
+						currentConId = thisAppRight.Contact__c;
+						message += '<br/> - ' + thisAppRight.Contact__r.Name;
+						message += ': ' + thisAppRight.Application_Name__c;
+					} else if (currentConId != thisAppRight.Contact__c) {
+						currentConId = thisAppRight.Contact__c;
+						message += '<br/> - ' + thisAppRight.Contact__r.Name;
+						message += ': ' + thisAppRight.Application_Name__c;
+					} else {
+						message += ', ' + thisAppRight.Application_Name__c;
+					}
+				}
+
+				message += Label.ISSP_UserInactivation_ServiceMsg_2;
+				message += Label.ISSP_UserInactivation_ServiceMsg_3;
+
+				return new ApexMessageHandling(false, message);
+
+			} else if(!primaryConList.isEmpty()) {
+				String message = Label.ISSP_UserInactivation_ServiceMsg_4;
+				String currentConId;
+
+				for (Account_Contact_Role__c thisPrimaryContact : primaryConList) {
+					if (String.isNotBlank(currentConId)) {
+						currentConId = thisPrimaryContact.Contact__c;
+						message += '<br/> - ' + thisPrimaryContact.Contact__r.Name;
+					}
+					else if (currentConId != thisPrimaryContact.Contact__c){
+						currentConId = thisPrimaryContact.Contact__c;
+						message += '<br/> - ' + thisPrimaryContact.Contact__r.Name;
+					}
+				}
+
+				message += ': ' + Label.ISSP_UserInactivation_ServiceMsg_5;
+
+				return new ApexMessageHandling(false, message);				
+			} else {
+				return processMultiplePortalUserStatusChange(contactIds, 'Deactivated', reasonToInactive);
+			}
+		}
+    }
+
+	private static ApexMessageHandling processMultiplePortalUserStatusChange(Set<Id> contactIds, String action, String inactivationReason){
+        List <Contact> processContactList = [SELECT Id, Name, User_Portal_Status__c, Email FROM Contact WHERE Id IN :contactIds];
+
+        if (!processContactList.isEmpty()) {
+            for (Contact thisContact : processContactList) {
+                String currentStatus = processContactList[0].User_Portal_Status__c;
+
+                if (currentStatus == '' || currentStatus == null) {
+                    currentStatus = 'New user';
+                }
+
+                String theAction = ISSP_PortalUserStatusChange.actionsMap.get(currentStatus).get(action);
+                Savepoint sPointContact = Database.setSavepoint();
+
+                String theResult = ISSP_PortalUserStatusChange.runAction(thisContact.Id, thisContact.Email, theAction, action, inactivationReason, null);
+
+                if (String.isNotBlank(theResult)) {
+                    Database.rollback(sPointContact);
+					return new ApexMessageHandling(false, theResult);
+                }
+            }
+        } else {
+            return new ApexMessageHandling(false, 'No Contact found.');
+        }
+		
+		return new ApexMessageHandling();
+    }        
+
     /**
     * Todo: Implement contact search.
     * With infinite scrolling, search currently only filters records that are already on the client.
@@ -119,53 +248,67 @@ public static Contact contactInfo = new Contact();
         return wrappers;
     }
 
-    private static List<ContactWrapper> getContactWrappers(List<Contact> contacts){
-        List<ContactWrapper> wrappers = new List<ContactWrapper>();
-        List<Id> contactIds = new List<Id>();
-        List<User> users = new List<User>();
-        Map<Id,Contact> contactIdtoContact = new Map<Id,Contact>();
+	private static List<ContactWrapper> getContactWrappers(List<Contact> contacts){
+		List<ContactWrapper> wrappers = new List<ContactWrapper>();
 
-        Map<Id,List<PortalServicesCtrl.ServiceWrapper>> contactToServices = new Map<Id,List<PortalServicesCtrl.ServiceWrapper>>();
+		if(!contacts.isEmpty()) {
+			List<Id> contactIds = new List<Id>();
+			Map<Id,Contact> contactIdtoContact = new Map<Id,Contact>();
+			for(Contact c :contacts) {
+				contactIds.add(c.Id);
+				contactIdtoContact.put(c.Id,c);
+			}
 
-        if(!contacts.isEmpty()){
-            for(Contact c :contacts){
-                contactIds.add(c.Id);
-                contactIdtoContact.put(c.Id,c);
-            }
+			List<User> users = new List<User>();
+			users = DAL_ISSP.getUsersByContactId(contactIds);
 
-            users = DAL_ISSP.getUsersByContactId(contactIds);
+			Map<Id,Id> contactToUser = new Map<Id,Id>();
+			for(User u :users) {
+				contactToUser.put(u.ContactId,u.Id);
+			}
 
-            Map<Id,Id> contactToUser = new Map<Id,Id>();
-            for(User u :users){
-                contactToUser.put(u.ContactId,u.Id);
-            }
+			Map<Id,List<PortalServicesCtrl.ServiceWrapper> > contactToServices = new Map<Id,List<PortalServicesCtrl.ServiceWrapper> >();
+			contactToServices = PortalServicesCtrl.getContactsAccessGrantedServices(contactToUser);
 
-            contactToServices = PortalServicesCtrl.getContactsAccessGrantedServices(contactToUser);
+			Set<Id> contactsWithIdCard = new Set<Id>();
+			for(Id_Card__c idcard : [SELECT Related_Contact__c FROM Id_Card__c WHERE Related_Contact__c IN :contactIds]) {
+				contactsWithIdCard.add(idcard.Related_Contact__c);
+			}
+			
+			Set<Id> contactsWithSubscription = new Set<Id>();
+			for(IEC_Subscription_History__c subs : [SELECT Related_Contact__c FROM IEC_Subscription_History__c WHERE Related_Contact__c IN :contactIds]) {
+				contactsWithSubscription.add(subs.Related_Contact__c);
+			}
 
-            ContactWrapper wrapper;
-            for(User u :users){
-                wrapper = new ContactWrapper();
-                wrapper.contact = contactIdtoContact.get(u.ContactId);
-                wrapper.contactUser = u;
-                wrapper.services = contactToServices.get(u.ContactId);
+			ContactWrapper wrapper;
+			for(User u :users) {
+				wrapper = new ContactWrapper();
+				wrapper.contact = contactIdtoContact.get(u.ContactId);
+				wrapper.contactUser = u;
+				wrapper.services = contactToServices.get(u.ContactId);
+				wrapper.selected = false;
+				wrapper.hasIdCard = contactsWithIdCard.contains(u.ContactId);
+                wrapper.hasProducts = contactsWithIdCard.contains(u.ContactId);
 
-                wrappers.add(wrapper);
-            }
+				wrappers.add(wrapper);
+			}
 
-            for(Contact c: contacts){
-                if(!contactToUser.containsKey(c.Id)){
-                    wrapper = new ContactWrapper();
-                    wrapper.contact = c;
-                    wrapper.services = new List<PortalServicesCtrl.ServiceWrapper>();
-                    wrappers.add(wrapper);
-                }
-            }
-        }
+			for(Contact c: contacts) {
+				if(!contactToUser.containsKey(c.Id)) {
+					wrapper = new ContactWrapper();
+					wrapper.contact = c;
+					wrapper.services = new List<PortalServicesCtrl.ServiceWrapper>();
+					wrapper.selected = false;
+					wrapper.hasIdCard = contactsWithIdCard.contains(c.Id);
+                    wrapper.hasProducts = contactsWithIdCard.contains(c.Id);
+                    
+					wrappers.add(wrapper);
+				}
+			}
+		}
 
-
-
-        return wrappers;
-    }
+		return wrappers;
+	}
 
 
     @AuraEnabled
@@ -202,16 +345,20 @@ public static Contact contactInfo = new Contact();
         return branches;
     }
 
-    public class ContactWrapper{
-        @AuraEnabled
-        public Contact contact;
-
-        @AuraEnabled
-        public User contactUser;
-
-        @AuraEnabled
-        public List<PortalServicesCtrl.ServiceWrapper> services;
-    }
+	public class ContactWrapper {
+		@AuraEnabled
+		public Contact contact;
+		@AuraEnabled
+		public User contactUser;
+		@AuraEnabled
+		public List<PortalServicesCtrl.ServiceWrapper> services;
+		@AuraEnabled
+		public Boolean hasIdCard;
+		@AuraEnabled
+		public Boolean hasProducts;
+		@AuraEnabled
+		public Boolean selected;
+	}
 
     public class CardWrapper{
 
@@ -660,7 +807,7 @@ public static Contact contactInfo = new Contact();
 
         wrapperMap.put(rowsFields,new List<FieldWrapper>());
         for(String fieldName : toRow){
-            wrapperMap.get(rowsFields).add(new FieldWrapper(fieldName,true,true,'underLinded inactive cursorPointer',fieldLabels.get(fieldName)));
+            wrapperMap.get(rowsFields).add(new FieldWrapper(fieldName,true,true,'underLined inactive cursorPointer',fieldLabels.get(fieldName)));
         }
 
         wrapperMap.put(viewFields,new List<FieldWrapper>());
@@ -785,18 +932,18 @@ public static Contact contactInfo = new Contact();
         wrapperMap.get(sectionBranchContact).add(new FieldWrapper('BillingCountry',false,true));
 
         for(String fieldName : toRow){
-            wrapperMap.get(rowsFields).add(new FieldWrapper(fieldName,true,true,'underLinded inactive cursorPointer',fieldLabels.get(fieldName)));
+            wrapperMap.get(rowsFields).add(new FieldWrapper(fieldName,true,true,'underLined inactive cursorPointer',fieldLabels.get(fieldName)));
         }
 
 
         wrapperMap.put(viewFields,new List<FieldWrapper>());
         for(String fieldName : toView){
-            wrapperMap.get(viewFields).add(new FieldWrapper(fieldName,true,true,'underLinded inactive cursorPointer',fieldLabels.get(fieldName)));
+            wrapperMap.get(viewFields).add(new FieldWrapper(fieldName,true,true,'underLined inactive cursorPointer',fieldLabels.get(fieldName)));
         }
 
         wrapperMap.put(editFields,new List<FieldWrapper>());
         for(String fieldName : toEdit){
-            wrapperMap.get(editFields).add(new FieldWrapper(fieldName,true,true,'underLinded inactive cursorPointer',fieldLabels.get(fieldName)));
+            wrapperMap.get(editFields).add(new FieldWrapper(fieldName,true,true,'underLined inactive cursorPointer',fieldLabels.get(fieldName)));
         }
 
         return wrapperMap;
