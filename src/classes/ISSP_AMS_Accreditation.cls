@@ -8201,9 +8201,9 @@ system.debug('aqui sectorValue ' + sectorValue);
         for(Account a : getBranchList(true)){
             if (isNoticeOfChange) {
                 if (isMCAccredited) {
-                    if (newForm.Scope_of_Change__c != 'HO - All Branches') {
-                    if (!mcCountryIsos.contains(a.Country_ISO_Code__c)) {
-                        continue;
+                    if (newForm.Scope_of_Change__c != 'HO - All Branches' && isStep3) {
+                        if (!mcCountryIsos.contains(a.Country_ISO_Code__c)) {
+                            continue;
                         }
                     }
                 } else {
