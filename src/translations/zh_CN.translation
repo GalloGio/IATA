@@ -1913,6 +1913,38 @@
         <name>CSP_Cases</name>
     </customLabels>
     <customLabels>
+        <label>更改电子邮件地址</label>
+        <name>CSP_Change_Email</name>
+    </customLabels>
+    <customLabels>
+        <label>更改密码</label>
+        <name>CSP_Change_Password</name>
+    </customLabels>
+    <customLabels>
+        <label>无法设置新密码。</label>
+        <name>CSP_Change_Password_Error</name>
+    </customLabels>
+    <customLabels>
+        <label>请输入当前的密码，然后设置一个新密码并确认。</label>
+        <name>CSP_Change_Password_Info_1</name>
+    </customLabels>
+    <customLabels>
+        <label>密码应包含 10 个或更多字符，至少包括一个大写字母、一个数字和一个符号（！ @ # $ % * () _ + ^ &amp;）</label>
+        <name>CSP_Change_Password_Info_2</name>
+    </customLabels>
+    <customLabels>
+        <label>请查看电子邮件以获取访问详细信息</label>
+        <name>CSP_Check_Email</name>
+    </customLabels>
+    <customLabels>
+        <label>密码设置成功。</label>
+        <name>CSP_Chg_Pass_Success_Msg_1</name>
+    </customLabels>
+    <customLabels>
+        <label>您可以使用新密码登录。</label>
+        <name>CSP_Chg_Pass_Success_Msg_2</name>
+    </customLabels>
+    <customLabels>
         <label>社区</label>
         <name>CSP_Community</name>
     </customLabels>
@@ -1929,12 +1961,20 @@
         <name>CSP_CompanyProfile</name>
     </customLabels>
     <customLabels>
+        <label>完成您的个人档案</label>
+        <name>CSP_Complete_Profile</name>
+    </customLabels>
+    <customLabels>
         <label>您确定要为&lt;b&gt;{1}&lt;/b&gt;拒绝对&lt;b&gt;{0}&lt;/b&gt;的访问权限吗？</label>
         <name>CSP_Confirm_Deny_User_Access</name>
     </customLabels>
     <customLabels>
         <label>您确定要为&lt;b&gt;{1}&lt;/b&gt;授予对&lt;b&gt;{0}&lt;/b&gt;的访问权限吗？</label>
         <name>CSP_Confirm_Grant_User_Access</name>
+    </customLabels>
+    <customLabels>
+        <label>国际航空运输协会 (IATA) 客户电子邮件确认</label>
+        <name>CSP_Confirmation_Email_Subject</name>
     </customLabels>
     <customLabels>
         <label>您的{0}访问请求已发送给门户网站管理员。如果您对此过程有任何疑问或要求，可以联系以下管理员：</label>
@@ -1961,6 +2001,26 @@
         <name>CSP_DateTo</name>
     </customLabels>
     <customLabels>
+        <label>IATA 客户门户 的新成员？</label>
+        <name>CSP_Create_New_Account_Info</name>
+    </customLabels>
+    <customLabels>
+        <label>创建新账户</label>
+        <name>CSP_Create_New_Account_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>创建密码</label>
+        <name>CSP_Create_Password</name>
+    </customLabels>
+    <customLabels>
+        <label>无法设置新密码。请再试一次。</label>
+        <name>CSP_Create_Password_Error</name>
+    </customLabels>
+    <customLabels>
+        <label>尊敬的用户</label>
+        <name>CSP_Dear</name>
+    </customLabels>
+    <customLabels>
         <label>拒绝用户访问</label>
         <name>CSP_Deny_User_Access_Title</name>
     </customLabels>
@@ -1985,6 +2045,22 @@
         <name>CSP_Documents_PubliCountry</name>
     </customLabels>
     <customLabels>
+        <label>电子邮件地址</label>
+        <name>CSP_Email</name>
+    </customLabels>
+    <customLabels>
+        <label>感谢您注册 IATA 客户门户。再一个步骤就能获得访问权限了！</label>
+        <name>CSP_Email_Confirmation_Body_Part_1</name>
+    </customLabels>
+    <customLabels>
+        <label>请确认您的电子邮件地址，方法是点击</label>
+        <name>CSP_Email_Confirmation_Body_Part_2</name>
+    </customLabels>
+    <customLabels>
+        <label>出于安全原因，此链接有效期为 8 个小时。在链接过期后，您将必须重新提交请求。</label>
+        <name>CSP_Email_Confirmation_Body_Part_3</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP Email Domain Error Message --></label>
         <name>CSP_Email_Domain_Error_Message</name>
     </customLabels>
@@ -2001,6 +2077,82 @@
         <name>CSP_Error_while_delete_record</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Email Footer Image --></label>
+        <name>CSP_Email_Footer_Image</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Header Image --></label>
+        <name>CSP_Email_Header_Image</name>
+    </customLabels>
+    <customLabels>
+        <label>这里</label>
+        <name>CSP_Email_Here</name>
+    </customLabels>
+    <customLabels>
+        <label>我们已收到您重置 IATA 客户门户密码的请求。</label>
+        <name>CSP_Email_Password_Reset_Body_Part_1</name>
+    </customLabels>
+    <customLabels>
+        <label>请点击</label>
+        <name>CSP_Email_Password_Reset_Body_Part_2</name>
+    </customLabels>
+    <customLabels>
+        <label>设置新密码。</label>
+        <name>CSP_Email_Password_Reset_Body_Part_3</name>
+    </customLabels>
+    <customLabels>
+        <label>出于安全原因，此链接有效期为 8 个小时。在链接过期后，您将必须重新提交请求。</label>
+        <name>CSP_Email_Password_Reset_Body_Part_4</name>
+    </customLabels>
+    <customLabels>
+        <label>感谢您加入 IATA 。</label>
+        <name>CSP_Email_Signature_Part_1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Signature Part 2 --></label>
+        <name>CSP_Email_Signature_Part_2</name>
+    </customLabels>
+    <customLabels>
+        <label>我们很高兴您能加入我们的 IATA 客户门户！</label>
+        <name>CSP_Email_Welcome_Part_1</name>
+    </customLabels>
+    <customLabels>
+        <label>IATA 客户门户包含了专门为您量身定制的实用服务、产品信息、实用提示和技巧。您可以使用它轻松联系我们的客户服务团队，包括实时聊天或从我们的在线商店进行直接购买。这是您的 IATA 的大门！</label>
+        <name>CSP_Email_Welcome_Part_2</name>
+    </customLabels>
+    <customLabels>
+        <label>&lt;a href=&quot;{!Portal_Url}&quot;&gt;带我到门户网站！&lt;/a&gt;</label>
+        <name>CSP_Email_Welcome_Part_3</name>
+    </customLabels>
+    <customLabels>
+        <label>为了进一步提高您的 IATA 客户门户体验，您可以随时填写您的帐户信息。您可以轻松完成，方法是点击</label>
+        <name>CSP_Email_Welcome_Part_4</name>
+    </customLabels>
+    <customLabels>
+        <label>我们希望您喜欢我们的 IATA 客户门户！</label>
+        <name>CSP_Email_Welcome_Part_5</name>
+    </customLabels>
+    <customLabels>
+        <label>您似乎已经是门户网站用户了。请用您的密码登录。</label>
+        <name>CSP_Existing_User_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>请检查您的电子邮件，然后单击“创建密码”链接。</label>
+        <name>CSP_Expired_Email_Success_Msg</name>
+    </customLabels>
+    <customLabels>
+        <label>验证链接已过期。</label>
+        <name>CSP_Expired_Link_Msg_1</name>
+    </customLabels>
+    <customLabels>
+        <label>出于安全原因，验证链接将在8小时后失效。</label>
+        <name>CSP_Expired_Link_Msg_2</name>
+    </customLabels>
+    <customLabels>
+        <label>请检查您的电子邮件，然后单击“创建密码”链接。</label>
+        <name>CSP_Expired_Reset_Password_Msg</name>
+    </customLabels>
+    <customLabels>
         <label>联系我们</label>
         <name>CSP_FAQReachUsBanner_ButtonText</name>
     </customLabels>
@@ -2015,6 +2167,10 @@
     <customLabels>
         <label>常见问题</label>
         <name>CSP_FAQ_HeaderTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>前往我们的常见问题</label>
+        <name>CSP_FAQ_Label</name>
     </customLabels>
     <customLabels>
         <label>选择一个主要类别</label>
@@ -2053,8 +2209,44 @@
         <name>CSP_Filtered</name>
     </customLabels>
     <customLabels>
+        <label>您的帐户已成功创建！ 您现在已经可以发现我们的门户网站的功能。有关更多个性化内容，请填写您的个人档案。</label>
+        <name>CSP_First_Login_Desc</name>
+    </customLabels>
+    <customLabels>
+        <label>欢迎登机</label>
+        <name>CSP_First_Login_Title</name>
+    </customLabels>
+    <customLabels>
         <label>专属于您</label>
         <name>CSP_ForYou</name>
+    </customLabels>
+    <customLabels>
+        <label>忘记密码？</label>
+        <name>CSP_Forgot_Password</name>
+    </customLabels>
+    <customLabels>
+        <label>似乎我们没有注册到您的电子邮件地址的用户。您可以轻松创建新账户。</label>
+        <name>CSP_Forgot_Password_Error_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>请输入您的注册电子邮件地址以重置密码。我们将重置链接发送到您的电子邮件地址。</label>
+        <name>CSP_Forgot_Password_Info</name>
+    </customLabels>
+    <customLabels>
+        <label>请先检查您的垃圾邮件文件夹。如果您在垃圾邮件文件夹中找不到任何内容，请点击&quot;再试一次&quot;再次尝试重置密码。</label>
+        <name>CSP_Forgot_Password_Retry_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>没有收到电子邮件？</label>
+        <name>CSP_Forgot_Password_Retry_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>请检查您的电子邮件地址，然后点击密码重置链接</label>
+        <name>CSP_Forgot_Password_Success_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>由于您在过去 90 天内未登录，我们已向您发送一封包含新密码的电子邮件。</label>
+        <name>CSP_Frozen_User_Message</name>
     </customLabels>
     <customLabels>
         <label>授予用户访问权限</label>
@@ -2077,8 +2269,424 @@
         <name>CSP_LastUpdate</name>
     </customLabels>
     <customLabels>
+        <label>无效的电子邮件地址</label>
+        <name>CSP_Invalid_Email</name>
+    </customLabels>
+    <customLabels>
+        <label>公司账户信息</label>
+        <name>CSP_L2_Account_Information</name>
+    </customLabels>
+    <customLabels>
+        <label>填写以下信息以找到您的公司账户。</label>
+        <name>CSP_L2_Account_Information_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>账户选择</label>
+        <name>CSP_L2_Account_Selection</name>
+    </customLabels>
+    <customLabels>
+        <label>为了使您的个人资料与公司账户匹配，我们需要更多详细信息。这将帮助我们检查您的公司是否已在 IATA 注册。</label>
+        <name>CSP_L2_Account_Selection_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>我们找不到您的地址。请点击下一步按钮以确认您的地址是否正确。</label>
+        <name>CSP_L2_Address_Not_Found_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>看来您之前已经完成了个人资料，所以我们已经有了所需的所有详细信息。</label>
+        <name>CSP_L2_Already_L2_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>一切就绪！</label>
+        <name>CSP_L2_Already_L2_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>返回公司账户信息</label>
+        <name>CSP_L2_Back_to_Account_Selection</name>
+    </customLabels>
+    <customLabels>
+        <label>返回公司地址信息</label>
+        <name>CSP_L2_Back_to_Business_Address_Information</name>
+    </customLabels>
+    <customLabels>
+        <label>返回公司信息</label>
+        <name>CSP_L2_Back_to_Company_Information</name>
+    </customLabels>
+    <customLabels>
+        <label>返回编辑</label>
+        <name>CSP_L2_Back_to_Edit</name>
+    </customLabels>
+    <customLabels>
+        <label>返回个人资料详细信息</label>
+        <name>CSP_L2_Back_to_Profile_Details</name>
+    </customLabels>
+    <customLabels>
+        <label>个人资料填写与账户选择</label>
+        <name>CSP_L2_Banner_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>企业地址信息</label>
+        <name>CSP_L2_Business_Address_Information</name>
+    </customLabels>
+    <customLabels>
+        <label>请填写您的公司地址信息。</label>
+        <name>CSP_L2_Business_Address_Information_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>类别</label>
+        <name>CSP_L2_Category</name>
+    </customLabels>
+    <customLabels>
+        <label>您请求访问的服务可能无法用于您选择的分类。您仍然可以完成注册，但完成后可能不再提供该服务。</label>
+        <name>CSP_L2_Change_Categorization_Warning</name>
+    </customLabels>
+    <customLabels>
+        <label>城市</label>
+        <name>CSP_L2_City</name>
+    </customLabels>
+    <customLabels>
+        <label>公司账户</label>
+        <name>CSP_L2_Company_Account</name>
+    </customLabels>
+    <customLabels>
+        <label>请检查您的公司详细信息</label>
+        <name>CSP_L2_Company_Account_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>公司信息</label>
+        <name>CSP_L2_Company_Information</name>
+    </customLabels>
+    <customLabels>
+        <label>注册公司账户将使您能够访问定制的 IATA 服务。 您可以使用两个步骤轻松创建公司账户。</label>
+        <name>CSP_L2_Company_Information_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>公司所在地</label>
+        <name>CSP_L2_Company_Location</name>
+    </customLabels>
+    <customLabels>
+        <label>公司名</label>
+        <name>CSP_L2_Company_Name</name>
+    </customLabels>
+    <customLabels>
+        <label>确认</label>
+        <name>CSP_L2_Confirmation</name>
+    </customLabels>
+    <customLabels>
+        <label>再一个步骤就可以创建完整的个人资料。请检查提供的信息，如果一切正确，请点击提交。</label>
+        <name>CSP_L2_Confirmation_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>联系支持</label>
+        <name>CSP_L2_Contact_Support</name>
+    </customLabels>
+    <customLabels>
+        <label>国家</label>
+        <name>CSP_L2_Country</name>
+    </customLabels>
+    <customLabels>
+        <label>如果找不到公司账户，则可以使用两个步骤轻松创建。</label>
+        <name>CSP_L2_Create_Account_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>建立新账户</label>
+        <name>CSP_L2_Create_New_Account</name>
+    </customLabels>
+    <customLabels>
+        <label>出生日期</label>
+        <name>CSP_L2_Date_of_Birth</name>
+    </customLabels>
+    <customLabels>
+        <label>您的详细信息已成功保存。</label>
+        <name>CSP_L2_Details_Saved</name>
+    </customLabels>
+    <customLabels>
+        <label>现在，我们可以为您提供更加个性化的门户体验！ 浏览我们的门户网站，发现更多量身定制的产品和服务。</label>
+        <name>CSP_L2_Details_Saved_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>现在，您可以继续提出服务请求。</label>
+        <name>CSP_L2_Details_Saved_Service_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>您现在可以继续提出请求。</label>
+        <name>CSP_L2_Details_Saved_Topic_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>找不到您想找的内容？</label>
+        <name>CSP_L2_Did_Not_Find</name>
+    </customLabels>
+    <customLabels>
+        <label>您可以使用两个步骤轻松创建公司账户，以完成您的个人资料</label>
+        <name>CSP_L2_Did_Not_Find_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>点击这里填写您的个人资料</label>
+        <name>CSP_L2_Edit_Company_Information</name>
+    </customLabels>
+    <customLabels>
+        <label>我们建立 IATA 客户门户网站，旨在为您提供个性化的 IATA 产品和服务。为了能实现这一目标，我们希望更好地了解您及所在机构的情况。</label>
+        <name>CSP_L2_Edit_Company_Information_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>电子邮箱</label>
+        <name>CSP_L2_Email_Address</name>
+    </customLabels>
+    <customLabels>
+        <label>查找地址</label>
+        <name>CSP_L2_Find_Address</name>
+    </customLabels>
+    <customLabels>
+        <label>返回</label>
+        <name>CSP_L2_Go_Back</name>
+    </customLabels>
+    <customLabels>
+        <label>前往首页</label>
+        <name>CSP_L2_Go_To_Homepage</name>
+    </customLabels>
+    <customLabels>
+        <label>返回个人资料</label>
+        <name>CSP_L2_Go_To_Profile</name>
+    </customLabels>
+    <customLabels>
+        <label>返回服务</label>
+        <name>CSP_L2_Go_To_Service</name>
+    </customLabels>
+    <customLabels>
+        <label>返回主题</label>
+        <name>CSP_L2_Go_To_Topic</name>
+    </customLabels>
+    <customLabels>
+        <label>IATA 代码</label>
+        <name>CSP_L2_IATA_Codes</name>
+    </customLabels>
+    <customLabels>
+        <label>这是邮政信箱地址吗？</label>
+        <name>CSP_L2_Is_PO_Box_Address</name>
+    </customLabels>
+    <customLabels>
+        <label>工作职能</label>
+        <name>CSP_L2_Job_Function</name>
+    </customLabels>
+    <customLabels>
+        <label>职称</label>
+        <name>CSP_L2_Job_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>法定名称</label>
+        <name>CSP_L2_Legal_Name</name>
+    </customLabels>
+    <customLabels>
+        <label>下一步/账户选择</label>
+        <name>CSP_L2_Next_Account_Selection</name>
+    </customLabels>
+    <customLabels>
+        <label>下一步/地址信息</label>
+        <name>CSP_L2_Next_Address_Information</name>
+    </customLabels>
+    <customLabels>
+        <label>下一步/确认</label>
+        <name>CSP_L2_Next_Confirmation</name>
+    </customLabels>
+    <customLabels>
+        <label>不是</label>
+        <name>CSP_L2_No</name>
+    </customLabels>
+    <customLabels>
+        <label>找不到匹配的结果</label>
+        <name>CSP_L2_No_Matching_Results</name>
+    </customLabels>
+    <customLabels>
+        <label>其他</label>
+        <name>CSP_L2_Other_Sector</name>
+    </customLabels>
+    <customLabels>
+        <label>请从提供的列表中选择相关行业。</label>
+        <name>CSP_L2_Other_Sector_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>邮政信箱号码</label>
+        <name>CSP_L2_PO_Box_Number</name>
+    </customLabels>
+    <customLabels>
+        <label>个人详细信息</label>
+        <name>CSP_L2_Personal_Details</name>
+    </customLabels>
+    <customLabels>
+        <label>请检查您的个人详细信息</label>
+        <name>CSP_L2_Personal_Details_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>电话号码</label>
+        <name>CSP_L2_Phone_Number</name>
+    </customLabels>
+    <customLabels>
+        <label>邮政编码</label>
+        <name>CSP_L2_Postal_Code</name>
+    </customLabels>
+    <customLabels>
+        <label>个人资料详细信息</label>
+        <name>CSP_L2_Profile_Details</name>
+    </customLabels>
+    <customLabels>
+        <label>添加个人详细信息，以使 IATA 提供个性化的内容和服务。</label>
+        <name>CSP_L2_Profile_Details_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>您的个人资料尚未完全更新。</label>
+        <name>CSP_L2_Profile_Incomplete</name>
+    </customLabels>
+    <customLabels>
+        <label>但是我们会将其保存为草稿，以便您以后可以继续填写。您确定要退出吗？</label>
+        <name>CSP_L2_Profile_Incomplete_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>很遗憾，创建您的帐户时发生了问题。为了进一步帮助您，请联系我们的支持团队。</label>
+        <name>CSP_L2_Registration_Error_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>发生问题了</label>
+        <name>CSP_L2_Registration_Error_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>取消</label>
+        <name>CSP_L2_Requested_Modal_Cancel</name>
+    </customLabels>
+    <customLabels>
+        <label>完成我的个人资料</label>
+        <name>CSP_L2_Requested_Modal_Complete</name>
+    </customLabels>
+    <customLabels>
+        <label>要继续处理，我们需要有关您和您的组织的更多详细信息。不用担心，这不会花很长的时间！</label>
+        <name>CSP_L2_Requested_Modal_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>您好</label>
+        <name>CSP_L2_Requested_Modal_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_L2_Required --></label>
+        <name>CSP_L2_Required</name>
+    </customLabels>
+    <customLabels>
+        <label>搜索</label>
+        <name>CSP_L2_Search</name>
+    </customLabels>
+    <customLabels>
+        <label>请至少填写以下两个中的一个字段。</label>
+        <name>CSP_L2_Search_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>搜索结果</label>
+        <name>CSP_L2_Search_Results</name>
+    </customLabels>
+    <customLabels>
+        <label>我们找到了50多个符合您搜索条件的帐户。</label>
+        <name>CSP_L2_Search_Results_Above_Limit</name>
+    </customLabels>
+    <customLabels>
+        <label>缩小搜索范围</label>
+        <name>CSP_L2_Search_Results_Above_Limit_Link</name>
+    </customLabels>
+    <customLabels>
+        <label>--empty--</label>
+        <name>CSP_L2_Search_Results_Above_Limit_Link_1</name>
+    </customLabels>
+    <customLabels>
+        <label>看到较少选项。</label>
+        <name>CSP_L2_Search_Results_Above_Limit_Link_2</name>
+    </customLabels>
+    <customLabels>
+        <label>行业</label>
+        <name>CSP_L2_Sector</name>
+    </customLabels>
+    <customLabels>
+        <label>选择</label>
+        <name>CSP_L2_Select</name>
+    </customLabels>
+    <customLabels>
+        <label>请选择正确的地址。如果您从列表中找不到正确的地址，我们将保存您输入的地址。点击下一步继续。</label>
+        <name>CSP_L2_Select_Address_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>从列表中选择匹配的账户。</label>
+        <name>CSP_L2_Select_Company_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>州</label>
+        <name>CSP_L2_State</name>
+    </customLabels>
+    <customLabels>
+        <label>街</label>
+        <name>CSP_L2_Street</name>
+    </customLabels>
+    <customLabels>
+        <label>提交</label>
+        <name>CSP_L2_Submit</name>
+    </customLabels>
+    <customLabels>
+        <label>标题</label>
+        <name>CSP_L2_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>商号</label>
+        <name>CSP_L2_Trade_Name</name>
+    </customLabels>
+    <customLabels>
+        <label>网站</label>
+        <name>CSP_L2_Website</name>
+    </customLabels>
+    <customLabels>
+        <label>是</label>
+        <name>CSP_L2_Yes</name>
+    </customLabels>
+    <customLabels>
         <label>登出</label>
         <name>CSP_LogOut</name>
+    </customLabels>
+    <customLabels>
+        <label>现在登录</label>
+        <name>CSP_Login_Now</name>
+    </customLabels>
+    <customLabels>
+        <label>几天前，您注册加入了 国际航空运输协会（IATA）客户门户网站——谢谢，欢迎您的加盟！</label>
+        <name>CSP_Lvl2_Reminder_1</name>
+    </customLabels>
+    <customLabels>
+        <label>我们建立 IATA 客户门户网站，旨在为您提供个性化的 IATA 产品和服务。为了能实现这一目标，我们希望更好地了解您及所在机构的情况。</label>
+        <name>CSP_Lvl2_Reminder_2</name>
+    </customLabels>
+    <customLabels>
+        <label>为此，我们提供了如下更方便快捷的途径——只需  &lt;strong&gt;&lt;a href=[URL]&gt;点击这里填写您的个人资料&lt;/a&gt;&lt;/strong&gt; 。</label>
+        <name>CSP_Lvl2_Reminder_3</name>
+    </customLabels>
+    <customLabels>
+        <label>您将尊享：</label>
+        <name>CSP_Lvl2_Reminder_4</name>
+    </customLabels>
+    <customLabels>
+        <label>· 直接进入（访问）量身定制的服务</label>
+        <name>CSP_Lvl2_Reminder_5</name>
+    </customLabels>
+    <customLabels>
+        <label>· 精心组织的 IATA 知识和标准数据库的完整访问权限</label>
+        <name>CSP_Lvl2_Reminder_6</name>
+    </customLabels>
+    <customLabels>
+        <label>· IATA 客服专家的专业支持</label>
+        <name>CSP_Lvl2_Reminder_7</name>
+    </customLabels>
+    <customLabels>
+        <label>· 和更多！</label>
+        <name>CSP_Lvl2_Reminder_8</name>
+    </customLabels>
+    <customLabels>
+        <label>&lt;strong&gt;&lt;a href=[URL]&gt;点击这里填写您的个人资料&lt;/a&gt;&lt;/strong&gt;</label>
+        <name>CSP_Lvl2_Reminder_9</name>
+    </customLabels>
+    <customLabels>
+        <label>充分利用 国际航空运输协会 (IATA) 客户门户 – 完成您的个人资料！</label>
+        <name>CSP_Lvl2_Reminder_Subject</name>
     </customLabels>
     <customLabels>
         <label>您可以从下面的列表中管理用户。</label>
@@ -2109,8 +2717,8 @@
         <name>CSP_Name</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_NewContactProfile --></label>
-        <name>CSP_NewContactProfile</name>
+        <label>下一个</label>
+        <name>CSP_Next</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_NewServiceUserMessage --></label>
@@ -2123,6 +2731,10 @@
     <customLabels>
         <label>没有要显示的相关帐户。</label>
         <name>CSP_NoAccount</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_NewContactProfile --></label>
+        <name>CSP_NewContactProfile</name>
     </customLabels>
     <customLabels>
         <label>您现在没有任何案例。</label>
@@ -2153,12 +2765,36 @@
         <name>CSP_Payment</name>
     </customLabels>
     <customLabels>
+        <label>密码</label>
+        <name>CSP_Password</name>
+    </customLabels>
+    <customLabels>
+        <label>最少 10 个字符</label>
+        <name>CSP_Password_Rule_1</name>
+    </customLabels>
+    <customLabels>
+        <label>至少 1 个大写字母</label>
+        <name>CSP_Password_Rule_2</name>
+    </customLabels>
+    <customLabels>
+        <label>至少 1 个数字</label>
+        <name>CSP_Password_Rule_3</name>
+    </customLabels>
+    <customLabels>
+        <label>至少 1 个符号（！ @＃$％*（）_ + ^ &amp;）</label>
+        <name>CSP_Password_Rule_4</name>
+    </customLabels>
+    <customLabels>
         <label>我们需要您的意见来继续处理您的案例。</label>
         <name>CSP_PendingCustomerCase_Warning</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_Period --></label>
         <name>CSP_Period</name>
+    </customLabels>
+    <customLabels>
+        <label>个人信息</label>
+        <name>CSP_Personal_Information</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_PortalPath --></label>
@@ -2169,8 +2805,16 @@
         <name>CSP_Portal_Administrators</name>
     </customLabels>
     <customLabels>
+        <label>门户网站登录目前已停用。感谢您的理解。</label>
+        <name>CSP_Portal_Login_Disabled_Message</name>
+    </customLabels>
+    <customLabels>
         <label>门户状态</label>
         <name>CSP_Portal_Status</name>
+    </customLabels>
+    <customLabels>
+        <label>我同意 IATA 的 &lt;a target=&quot;_blank&quot; href=&quot;https://www.iata.org/Pages/privacy.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;隐私政策&lt;/a&gt; 和 &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-portal/Pages/terms.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;使用条款。&lt;/a&gt;</label>
+        <name>CSP_Privacy_Policy</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_Profile_PrivacyManagement_Link --></label>
@@ -2229,6 +2873,26 @@
         <name>CSP_Record_Deleted</name>
     </customLabels>
     <customLabels>
+        <label>注册成功完成</label>
+        <name>CSP_Registration_Complete</name>
+    </customLabels>
+    <customLabels>
+        <label>完成基本注册流程以加入 IATA 客户门户。</label>
+        <name>CSP_Registration_Description</name>
+    </customLabels>
+    <customLabels>
+        <label>门户网站注册目前已停用。感谢您的理解。</label>
+        <name>CSP_Registration_Disabled_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>您正在尝试以现有用户注册，请更改电子邮件或单击&quot;登录&quot;按钮前往登录页面</label>
+        <name>CSP_Registration_Existing_User_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>请先检查您的垃圾邮件文件夹。如果在垃圾邮件文件夹中找不到任何内容，请点击&quot;重试&quot;按钮尝试重新注册。</label>
+        <name>CSP_Registration_Retry_Message</name>
+    </customLabels>
+    <customLabels>
         <label>相关文章</label>
         <name>CSP_RelatedArticles</name>
     </customLabels>
@@ -2249,8 +2913,48 @@
         <name>CSP_Request_Service</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Resend Verification Email --></label>
+        <name>CSP_Resend_Verification_Email</name>
+    </customLabels>
+    <customLabels>
+        <label>重设密码</label>
+        <name>CSP_Reset_Password</name>
+    </customLabels>
+    <customLabels>
+        <label>重置您的 国际航空运输协会 (IATA) 客户门户密码</label>
+        <name>CSP_Reset_Password_Email_Subject</name>
+    </customLabels>
+    <customLabels>
+        <label>请输入新密码。</label>
+        <name>CSP_Reset_Password_Info_1</name>
+    </customLabels>
+    <customLabels>
+        <label>密码应包含：</label>
+        <name>CSP_Reset_Password_Info_2</name>
+    </customLabels>
+    <customLabels>
+        <label>已经成功更改密码。</label>
+        <name>CSP_Reset_Password_Success_Msg_1</name>
+    </customLabels>
+    <customLabels>
+        <label>可以使用新密码登录。</label>
+        <name>CSP_Reset_Password_Success_Msg_2</name>
+    </customLabels>
+    <customLabels>
+        <label>您的电脑 IP 地址已被确定来自美国当局列出的禁运国家之一。&lt;br/&gt;支持我们客户门户的平台遵守美国法规，因此，我们目前无法为您当前的 IP 地址提供访问客户门户的权限。&lt;br/&gt;&lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;点击这里与我们联系。&lt;/a&gt;</label>
+        <name>CSP_Restricted_Login_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>限制登录</label>
+        <name>CSP_Restricted_Login_Title</name>
+    </customLabels>
+    <customLabels>
         <label>保存</label>
         <name>CSP_Save</name>
+    </customLabels>
+    <customLabels>
+        <label>保存并登录</label>
+        <name>CSP_Save_Login</name>
     </customLabels>
     <customLabels>
         <label>按文档详细信息搜索</label>
@@ -2425,6 +3129,10 @@
         <name>CSP_Settings</name>
     </customLabels>
     <customLabels>
+        <label>现在跳过</label>
+        <name>CSP_Skip</name>
+    </customLabels>
+    <customLabels>
         <label>状态</label>
         <name>CSP_Status</name>
     </customLabels>
@@ -2433,7 +3141,7 @@
         <name>CSP_Submit</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Success --></label>
+        <label>成功！</label>
         <name>CSP_Success</name>
     </customLabels>
     <customLabels>
@@ -2469,6 +3177,18 @@
         <name>CSP_Travel_Agent_Accreditation_Changes_Request</name>
     </customLabels>
     <customLabels>
+        <label>故障排除</label>
+        <name>CSP_Troubleshooting</name>
+    </customLabels>
+    <customLabels>
+        <label>如需更多帮助，请查看</label>
+        <name>CSP_Troubleshooting_Info</name>
+    </customLabels>
+    <customLabels>
+        <label>再试一次</label>
+        <name>CSP_Try_Again</name>
+    </customLabels>
+    <customLabels>
         <label>案例类型</label>
         <name>CSP_TypeOfCase</name>
     </customLabels>
@@ -2477,36 +3197,52 @@
         <name>CSP_User</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Welcome_Panel_Bullet_1_Desc --></label>
+        <label>发生意外错误！</label>
+        <name>CSP_Unexcepted_Error</name>
+    </customLabels>
+    <customLabels>
+        <label>欢迎使用 国际航空运输协会 (IATA) 客户门户</label>
+        <name>CSP_Welcome_Email_Subject</name>
+    </customLabels>
+    <customLabels>
+        <label>直接访问 60 多种特地为您准备的 IATA 服务。</label>
         <name>CSP_Welcome_Panel_Bullet_1_Desc</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Welcome_Panel_Bullet_1_Title --></label>
+        <label>访问 IATA 服务</label>
         <name>CSP_Welcome_Panel_Bullet_1_Title</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Welcome_Panel_Bullet_2_Desc --></label>
+        <label>轻松管理和更新您的 IATA 配置文件。</label>
         <name>CSP_Welcome_Panel_Bullet_2_Desc</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Welcome_Panel_Bullet_2_Title --></label>
+        <label>获取最新消息</label>
         <name>CSP_Welcome_Panel_Bullet_2_Title</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Welcome_Panel_Bullet_3_Desc --></label>
+        <label>了解出版物、培训和其他 IATA 产品和服务的选择。</label>
         <name>CSP_Welcome_Panel_Bullet_3_Desc</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Welcome_Panel_Bullet_3_Title --></label>
+        <label>寻找特别优惠</label>
         <name>CSP_Welcome_Panel_Bullet_3_Title</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Welcome_Panel_Bullet_4_Desc --></label>
+        <label>访问我们广泛收集的问题和答案；并获得 IATA 直接支持。</label>
         <name>CSP_Welcome_Panel_Bullet_4_Desc</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Welcome_Panel_Bullet_4_Title --></label>
+        <label>获得答案</label>
         <name>CSP_Welcome_Panel_Bullet_4_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>访问和管理所有 IATA 服务。查阅不同产品的信息，获得有关任何主题的支持。在此为您服务。</label>
+        <name>CSP_Welcome_Panel_Info</name>
+    </customLabels>
+    <customLabels>
+        <label>欢迎来到 IATA 客户门户网站</label>
+        <name>CSP_Welcome_Title</name>
     </customLabels>
     <customLabels>
         <label>您和 IATA</label>
@@ -2701,7 +3437,7 @@
         <name>ConfirmSendRecycleBin</name>
     </customLabels>
     <customLabels>
-        <label><!-- Confirm password --></label>
+        <label>确认密码</label>
         <name>Confirm_password</name>
     </customLabels>
     <customLabels>
@@ -3225,7 +3961,7 @@
         <name>CurrencyCenter_def_TTBS</name>
     </customLabels>
     <customLabels>
-        <label><!-- Current password --></label>
+        <label>当前密码</label>
         <name>Current_password</name>
     </customLabels>
     <customLabels>
@@ -13415,7 +14151,7 @@ and
         <name>ISSP_ContactName</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Contact About IATA Courses --></label>
+        <label>您是否联系有关国际航空运输协会 (IATA) 课程？</label>
         <name>ISSP_Contact_About_IATA_Courses</name>
     </customLabels>
     <customLabels>
@@ -16815,7 +17551,7 @@ and
         <name>ISSP_See_more</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Select --></label>
+        <label>- 选择 -</label>
         <name>ISSP_Select</name>
     </customLabels>
     <customLabels>
@@ -18291,7 +19027,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>Location</name>
     </customLabels>
     <customLabels>
-        <label><!-- Login --></label>
+        <label>登录</label>
         <name>Login</name>
     </customLabels>
     <customLabels>
@@ -18411,7 +19147,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>NewGenApp_ServiceRequested</name>
     </customLabels>
     <customLabels>
-        <label><!-- New password --></label>
+        <label>新密码</label>
         <name>New_password</name>
     </customLabels>
     <customLabels>
@@ -18503,7 +19239,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>OneId_Account_Association</name>
     </customLabels>
     <customLabels>
-        <label><!-- OneId_Account Creation --></label>
+        <label>帐户创建</label>
         <name>OneId_Account_Creation</name>
     </customLabels>
     <customLabels>
@@ -18567,7 +19303,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>OneId_CreateNew</name>
     </customLabels>
     <customLabels>
-        <label><!-- OneId_CreateNewAccount --></label>
+        <label>创建新账户</label>
         <name>OneId_CreateNewAccount</name>
     </customLabels>
     <customLabels>
@@ -18975,7 +19711,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>OneId_Login</name>
     </customLabels>
     <customLabels>
-        <label><!-- OneId_LoginFail --></label>
+        <label>您的登录尝试失败。确保电子邮件地址和密码正确无误。</label>
         <name>OneId_LoginFail</name>
     </customLabels>
     <customLabels>
@@ -19047,7 +19783,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>OneId_Online_Help_Link</name>
     </customLabels>
     <customLabels>
-        <label><!-- OneId_Password --></label>
+        <label>密码</label>
         <name>OneId_Password</name>
     </customLabels>
     <customLabels>
@@ -19874,7 +20610,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>PKB2_search_to_long</name>
     </customLabels>
     <customLabels>
-        <label><!-- PKB2: Contact Us Send Email --></label>
+        <label>重新发送验证邮件</label>
         <name>PKB2_send_mail</name>
     </customLabels>
     <customLabels>
@@ -20960,6 +21696,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
     <customLabels>
         <label>职称</label>
         <name>csp_My_Profile_Job_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- csp_Next_Step_Account_Selection --></label>
+        <name>csp_Next_Step_Account_Selection</name>
     </customLabels>
     <customLabels>
         <label><!-- Request New Service --></label>

@@ -1,0 +1,134 @@
+<!-- Portal Registration Profile Details -->
+<template>
+    
+    <lightning-layout multiple-rows vertical-align="start">
+        <div class="IEFixDisplayContainer">
+            <lightning-layout-item size="12" class="topLabel IEFixDisplay">
+                <span class="fixed-text">{labels.CSP_L2_Profile_Details_Message}</span>
+            </lightning-layout-item>
+            
+            <lightning-layout-item class="slds-p-around_medium topLightGrayBorder customWhiteBackground slds-clearfix IEFixDisplay" size="12">
+            </lightning-layout-item>
+
+            <!------------------------------------------      Profile details      -------------------------------------------->
+            <div class="profileContainer">
+            <!------------------------------------------      Salutation      -------------------------------------------->        
+                <div class="profileItem">
+                    <lightning-layout-item size="6" class="leftItem">
+                        <div class="formLabelContainer">
+                            <div class="text-xxsmall">
+                                {labels.CSP_L2_Title}
+                            </div>
+                        </div>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12">
+                        <div class="slds-form-element">
+                            <div class="slds-form-element__control custTextInputSmall">
+                                <lightning-combobox 
+                                    options={salutationPicklistOptions} 
+                                    value={localContactInfo.Salutation}
+                                    variant="label-hidden"
+                                    class="cursorPointerComboBox text-xxsmall"
+                                    dropdown-alignment="auto" 
+                                    onchange={changeSalutation}>
+                                </lightning-combobox>
+                            </div>
+                        </div>
+                    </lightning-layout-item>
+                </div>
+                <!------------------------------------------      Date of Birth      -------------------------------------------->
+                <div class="profileItem">
+                    <lightning-layout-item size="6" class="rightItem">
+                        <div class="formLabelContainer">
+                            <div class="text-xxsmall">
+                                {labels.CSP_L2_Date_of_Birth}
+                            </div>
+                        </div>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12">
+                        <div class="slds-form-element">
+                            <div class="slds-form-element__control custTextInput custTextInputSmall">
+                                <lightning-input 
+                                    date-style="short" 
+                                    type="date" 
+                                    value={localContactInfo.Birthdate} 
+                                    placeholder=" " 
+                                    variant="label-hidden"
+                                    onkeyup={changeDateOfBirth}
+                                    onchange={changeDateOfBirth}
+                                    icon-name="utility:back"
+                                    icon-position="left"
+                                    max={today}>
+                                </lightning-input>
+                            </div>
+                        </div>
+                    </lightning-layout-item>
+
+                    <lightning-layout-item padding="around-small" size="12">
+                            <svg class="slds-icon slds-input__icon slds-input__icon_right slds-icon-text-default" aria-hidden="true">
+                                    <use xlink:href={alertIcon}></use>
+                                </svg>
+                    </lightning-layout-item>
+                </div>
+                <!------------------------------------------      Job Function      -------------------------------------------->
+                <div class="profileItem">  
+                    <lightning-layout-item size="6" class="leftItem">
+                        <div class="formLabelContainer">
+                            <div class="text-xxsmall">
+                                {labels.CSP_L2_Job_Function}<abbr class="slds-required" title="required">*</abbr>
+                            </div>
+                        </div>
+                    </lightning-layout-item>
+
+                    <lightning-layout-item size="12">
+                        <div class="slds-form-element">
+                            <div class="slds-form-element__control custTextInputSmall">
+                                <lightning-combobox 
+                                    options={jobFunctionsPicklistOptions}
+                                    value={localContactInfo.Membership_Function__c}
+                                    variant="label-hidden"
+                                    class="cursorPointerComboBox text-xxsmall"
+                                    dropdown-alignment="auto" 
+                                    onchange={changeSelectedJobFunctions}>
+                                </lightning-combobox>
+                            </div>
+                        </div>
+                    </lightning-layout-item>
+                </div>
+                <!------------------------------------------      Job Title      -------------------------------------------->
+                <div class="profileItem">
+                    <lightning-layout-item size="6" class="rightItem">
+                        <div class="formLabelContainer">
+                            <div class="text-xxsmall">
+                                {labels.CSP_L2_Job_Title}<abbr class="slds-required" title="required">*</abbr>
+                            </div>
+                        </div>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12">
+                        <div class="slds-form-element">
+                            <div class="slds-form-element__control custTextInput custTextInputSmall">
+                                <input 
+                                    type="text" 
+                                    class="slds-input" 
+                                    placeholder=" " 
+                                    value={localContactInfo.Title} 
+                                    onkeyup={changeTitle}/>
+                            </div>
+                        </div>
+                    </lightning-layout-item>
+                </div>
+            </div>
+            <lightning-layout-item padding="around-small" size="12" class="IEFixDisplay">
+            </lightning-layout-item>
+        
+            <lightning-layout-item size="6" class="IEFixDisplay">
+            </lightning-layout-item>
+        
+            <lightning-layout-item size="6" class="nextBtn IEFixDisplay">
+                <lightning-button class="slds-float_right containedButton customBtn" data-id="nextButton" label={labels.CSP_L2_Next_Account_Selection} disabled={isNextDisabled} variant="brand"  onclick={next}>
+                </lightning-button>
+            </lightning-layout-item>
+        </div>
+    </lightning-layout>
+
+</template>

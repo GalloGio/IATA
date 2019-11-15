@@ -1,0 +1,204 @@
+<!--
+ - Created by ukaya01 on 27/06/2019.
+ -->
+
+<!-- Portal Login -->
+<template>
+
+
+    <c-portal-login-container preventrefresh=false>
+        <span slot="pageBody">
+            <div if:true={showLoginForm}>
+                <c-portal-custom-card-container>
+
+                    <span slot="cardTitle">
+                        <span class="text-medium">{labels.Login}</span>
+                    </span>
+
+                    <span slot="cardBody">
+                        <div class="slds-card__body" style="padding-top:8px;">
+                            <div style="min-height:40px;" if:true={showPageMessage} class="text-xxsmall">
+                                {pageMessage}
+                                <div style="padding: 1.5rem;"></div>
+                            </div>
+                            <div if:true={config.isUsernamePasswordEnabled} class="IEFixDisplay">
+                                    <lightning-layout multiple-rows vertical-align="end" class="IEFixDisplay">
+                                        <div class="IEFixDisplay">
+                                            <lightning-layout-item size="12">
+                                                <div class="formElementContainer">
+                                                    <div class="formLabelContainer">
+                                                        <div class="text-xxsmall">
+                                                            {labels.CSP_Email}
+                                                        </div>
+                                                    </div>
+                                                    <div if:true={isEmailFieldReadOnly} class="text-xxsmall" >
+                                                        <lightning-button variant="base"
+                                                                        label={labels.CSP_Change_Email}
+                                                                        title={labels.CSP_Change_Email}
+                                                                        onclick={handleChangeEmail}
+                                                                        class="blueCustomButtonLinkSmall">
+                                                        </lightning-button>
+                                                    </div>
+                                                </div>
+                                            </lightning-layout-item>
+                                            <lightning-layout-item size="12">
+                                                <div data-id="emailDiv" class="slds-form-element">
+                                                    <div class="slds-form-element__control custTextInput custTextInputSmall">
+                                                        <input type="text" value={email} data-id="emailInput" placeholder=" " required="" class="slds-input"
+                                                            onkeyup={handleEmailChange} onfocusout={handleEmailFocusOut} readonly={isEmailFieldReadOnly} />
+                                                    </div>
+                                                    <div if:true={isEmailInvalid}>
+                                                        <div class="slds-form-element__help">{labels.CSP_Invalid_Email}</div>
+                                                    </div>
+                                                </div>
+                                            </lightning-layout-item>
+                                            <lightning-layout-item size="12">
+                                                <div class="formElementSpacer">
+                                                </div>
+                                            </lightning-layout-item>
+                                            <lightning-layout-item size="12">
+                                                <div class="formElementContainer">
+                                                    <div class="formLabelContainer">
+                                                        <div class="text-xxsmall text-gray">
+                                                            {labels.CSP_Password}
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <lightning-button variant="base"
+                                                                        label={labels.CSP_Forgot_Password}
+                                                                        title={labels.CSP_Forgot_Password}
+                                                                        onclick={handleNavigateToForgotPassword}
+                                                                        class="blueCustomButtonLinkSmall">
+                                                        </lightning-button>
+                                                    </div>
+                                                </div>
+                                            </lightning-layout-item>
+
+                                            <lightning-layout-item size="12">
+                                                <div data-id="passwordDiv" class="slds-form-element">
+                                                    <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon_right custTextInput custTextInputSmall" >
+                                                        <input type={passwordInputType} value={password} data-id="passwordInput"  placeholder=" " onkeyup={handlePasswordChange}
+                                                            onfocusout={handlePasswordFocusOut} class="slds-input inputHasError" autocomplete="off" />
+                                                        <button class="slds-button slds-button_icon slds-input__icon slds-input__icon_right showPasswordButton" title="" onclick={handleShowPassword} disabled={isPasswordIconDisabled}>
+                                                            <img src={svgURL} data-id="passwordIcon" class="slds-button__icon slds-icon-text-light showPasswordIcon showPasswordIconDisabled" aria-hidden="true">
+                                                            <!-- <input type="image" data-id="passwordIcon" style="border:none !important;" class="slds-button__icon slds-icon-text-light showPasswordIcon showPasswordIconDisabled" src={svgURL} /> -->
+                                                            <span class="slds-assistive-text"></span>
+                                                        </button>
+                                                    </div>
+                                                    <div style="height:48px;">
+                                                        <div if:true={showError}>
+                                                            <div class="slds-form-element__help">{errorMessage}</div>
+                                                        </div>
+                                                    </div>
+                                                    <div if:true={showError} style="height:16px;">
+                                                    </div>
+                                                </div>
+                                            </lightning-layout-item>
+
+                                            <lightning-layout-item size="12">
+                                                <div>
+                                                    <lightning-button data-id="loginButton" label={labels.Login} variant="brand"  disabled={loginButtonDisabled} onclick={handleLogin} class="containedButtonDisabled">
+                                                    </lightning-button>
+                                                </div>
+                                            </lightning-layout-item>
+                                            <lightning-layout-item size="12">
+                                                <div style="height:64px;">
+                                                </div>
+                                            </lightning-layout-item>
+
+                                            <template if:true={displayTroubleshooting}>
+                                                <lightning-layout-item padding="" size="12">
+
+                                                    <p class="text-xsmall textAlignCenter"> {labels.CSP_Troubleshooting_Info}</p>
+                                                    <p class="text-xsmall textAlignCenter">
+                                                        <lightning-button variant="base" label={labels.CSP_Troubleshooting} class="blueCustomButtonLinkLogin" onclick={handleNavigateToTroubleshooting}></lightning-button>
+                                                    </p>
+
+
+                                                    <!--
+                                                    <lightning-layout-item size="12">
+                                                        <div class="textAlignCenter text-xsmall text-gray">
+                                                            For further help
+                                                        </div>
+                                                    </lightning-layout-item>
+                                                    <div class="textAlignCenter text-xsmall">
+                                                        please check &nbsp;
+                                                        <lightning-button variant="base"
+                                                                        label={labels.CSP_Troubleshooting}
+                                                                        title={labels.CSP_Troubleshooting}
+                                                                        onclick={handleNavigateToTroubleshooting}
+                                                                        class="blueCustomButtonLinkLogin">
+                                                        </lightning-button>
+                                                    </div>
+                                                    -->
+
+                                                </lightning-layout-item>
+
+                                                <lightning-layout-item size="12">
+                                                <div style="height:24px;">
+                                                </div>
+                                            </lightning-layout-item>
+                                            </template>
+
+
+                                            <template if:true={config.isSelfRegistrationEnabled}>
+
+                                                <lightning-layout-item size="12">
+                                                    <div class="containerBorderTop" style="height:24px;">
+
+                                                    </div>
+                                                    <div class="textAlignCenter text-xsmall text-gray">
+                                                        {labels.CSP_Create_New_Account_Info}
+                                                    </div>
+                                                </lightning-layout-item>
+                                                <lightning-layout-item size="12">
+                                                    <div class="textAlignCenter text-xxsmall">
+                                                        <lightning-button variant="base"
+                                                                        label={labels.CSP_Create_New_Account_Label}
+                                                                        title={labels.CSP_Create_New_Account_Label}
+                                                                        onclick={handleNavigateToSelfRegister}
+                                                                        class="blueCustomButtonLinkSmall">
+                                                        </lightning-button>
+                                                    </div>
+                                                    <div style="height:41px;">
+                                                    </div>
+                                                </lightning-layout-item>
+                                            </template>
+                                        </div>
+                                    </lightning-layout>
+                                </div>
+                        </div>
+                    </span>
+
+                </c-portal-custom-card-container>
+            </div>
+            <div if:true={isFrozen}>
+                <div style="padding-top:100px;">
+                    <c-portal-informative-message-box>
+                        <span slot="message">
+                            <lightning-formatted-rich-text value={labels.CSP_Frozen_User_Message} class="text-small text-gray fixed-text"></lightning-formatted-rich-text>
+                        </span>
+                    </c-portal-informative-message-box>
+                </div>
+            </div>
+            <div if:true={isLoginDisabled}>
+                <div style="padding-top:100px;">
+                    <c-portal-informative-message-box>
+                        <span slot="message">
+                            <lightning-formatted-rich-text value={labels.CSP_Portal_Login_Disabled_Message} class="text-small text-gray fixed-text"></lightning-formatted-rich-text>
+                        </span>
+                    </c-portal-informative-message-box>
+                </div>
+            </div>
+        </span>
+    </c-portal-login-container>
+
+    <div data-id="spinnerId" class="slds-spinner_container" if:true={isLoading}>
+        <div class="slds-spinner slds-spinner_medium" role="status">
+            <span class="slds-assistive-text"></span>
+            <div class="slds-spinner__dot-a"></div>
+            <div class="slds-spinner__dot-b"></div>
+        </div>
+    </div>
+
+</template>

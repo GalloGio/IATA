@@ -245,4 +245,12 @@ private class  OneIdLightningLoginFormControllerTest {
         OneIdLightningLoginFormController.login('Test@test11111.com', 'supersecretstring', 'someStartUrl', 'GADM');
         Test.stopTest();
     }
+    
+    @isTest
+    public static void testGetCustomerPortalUrl(){
+        Test.startTest();
+        string url = OneIdLightningLoginFormController.getCustomerPortalUrl();
+        Test.stopTest();
+        System.assertNotEquals(url, null);
+    }
 }

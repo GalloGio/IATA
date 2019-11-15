@@ -408,6 +408,12 @@ public without sharing class OneIdLightningLoginFormController {
         Auth.AuthConfiguration authConfig = new Auth.AuthConfiguration(networkId,'');
         return authConfig;
     }
+
+    @AuraEnabled
+    public static string getCustomerPortalUrl(){
+        string url = OneIdUtils.getSiteCompleteUrl(OneIdUtils.Mode.CSP) + Label.CSP_PortalPath;
+        return url;
+    }
 	
 	//EM - To be removed
 	public static void fakemethod () {
