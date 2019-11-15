@@ -120,5 +120,7 @@ export default class PortalFAQSubtopicTiles extends LightningElement {
 
         const selectedEvent = new CustomEvent('categorieschange', { detail: __faqObject });
         this.dispatchEvent(selectedEvent);
+
+        window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
     }
 }
