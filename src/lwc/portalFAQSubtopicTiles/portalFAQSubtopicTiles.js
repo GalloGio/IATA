@@ -111,17 +111,7 @@ export default class PortalFAQSubtopicTiles extends LightningElement {
         });
 
         this.subTopicTiles = [];
-        this.subTopicTiles = tempSubTopics;      
-        
-        //portalFAQPage handles the event and send parameters to portalFAQArticleAccordion to show the articles under selected subtopic
-        let subtopicInfo = {
-            topic: this.topic,
-            subtopic: subtopicName
-        };   
-        this.selectedEvent('subtopicselected', subtopicInfo);
-
-        window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-    }
+        this.subTopicTiles = tempSubTopics;
 
         let __faqObject = JSON.parse(JSON.stringify(this._faqObject));
         __faqObject.category = '';
@@ -130,5 +120,7 @@ export default class PortalFAQSubtopicTiles extends LightningElement {
 
         const selectedEvent = new CustomEvent('categorieschange', { detail: __faqObject });
         this.dispatchEvent(selectedEvent);
+
+        window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
     }
 }
