@@ -198,7 +198,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     @track isAdmin = false;
     @track serviceName = false;
     @track isAgency = false;
-    
+
     @track contactTableColums = [];
     @track contactsToAddColumns = [];
     @track showConfirmPopup = false;
@@ -1327,6 +1327,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     handleResetFilters() {
         this.selectedStatus = "";
         this.selectedCountry = "";
+        this.selectedCountryValue='';
         this.selectedIataCode = "";
         this.searchText = "";
         this.searchKey="";
