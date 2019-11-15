@@ -669,14 +669,10 @@ public class ANG_AccountTriggerHandler {
 		);
 		Database.SaveResult sr = EventBus.publish(evt);
 
-		if (sr.isSuccess())
-		{
-			System.debug('Successfully published ANG_Multicountry_GE_Downgrade__e event for: ' + geAccounts);
-		}
-		else
+		if (! sr.isSuccess())
 		{
 			for (Database.Error err : sr.getErrors())
-				System.debug('Error returned: ' + err.getStatusCode() + ' - ' + err.getMessage());
+				System.debug(loggingLevel.ERROR, '____ [cls ANG_AccountTriggerHandler - launchPlatformEventForMulticoutryDowngrade] Error returned: ' + err.getStatusCode() + ' - ' + err.getMessage());
 		}
 	}
 
