@@ -35,4 +35,5 @@ trigger Training_Contact_Role_Details on Training_Contact_Role_Details__c (after
 
         update lUsers;
     }
+    
 }
