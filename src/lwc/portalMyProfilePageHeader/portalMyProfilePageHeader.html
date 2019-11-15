@@ -2,7 +2,7 @@
 
     <c-portal-page-container style-class="dark">
         <span slot="componentContent">
-            <div style="min-width:300px;">
+            <div>
 
                 <!-- Breadcrumbs -->
                 <div class="breadcrumbsPosition">
@@ -30,24 +30,33 @@
 
                             <!-- Header My Profile Info -->
                             <div class="slds-grid slds-wrap slds-gutters_medium slds-p-vertical_x-large headerMyProfile" >
-                                <div class="slds-col slds-size_3-of-3 slds-medium-size_3-of-3 slds-large-size_3-of-3 ">
+                                <div class="headerProfileImage">
+                                    <div class="profileImageContainer">
+                                        <!--<img src={alertIcon} width="160px">-->
+                                    </div>
+                                    
+                                </div>
+                                <div class="headerProfileContent">
+                                    <div class="slds-col slds-size_3-of-3 slds-medium-size_3-of-3 slds-large-size_3-of-3 profileContactName">
                                     <div class="text-medium text-bold text-darkGray"> {contact.Name} </div>
                                 </div>
 
-                                <!-- Labels -->
-                                <div class="slds-col slds-size_1-of-3 slds-medium-size_1-of-3 slds-large-size_1-of-3">
-                                    <div class="fieldLabel"> {labels.csp_My_Profile_Job_Title} </div>
-                                    <div class="fieldValue"> {contact.Title} </div>
-                                </div>
-                                <div class="slds-col slds-size_1-of-3 slds-medium-size_1-of-3 slds-large-size_1-of-3">
-                                    <div class="fieldLabel"> {labels.csp_My_Profile_Company} </div>
-                                    <div class="fieldValue"> {contact.DSE__DS_Company__c} </div>
-                                </div>
-                                <div class="slds-col slds-size_1-of-3 slds-medium-size_1-of-3 slds-large-size_1-of-3 ">
-                                    <div class="fieldLabel"> {labels.csp_My_Profile_Email} </div>
-                                    <div class="fieldValue"> {contact.Email} </div>
+                                    <!-- Labels -->
+                                    <div class="slds-col slds-size_1-of-3 slds-medium-size_1-of-3 slds-large-size_1-of-3 contentItem">
+                                        <div class="fieldLabel"> {labels.csp_My_Profile_Job_Title} </div>
+                                        <div class="fieldValue"> {contact.Title} </div>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-3 slds-medium-size_1-of-3 slds-large-size_1-of-3 contentItem">
+                                        <div class="fieldLabel"> {labels.csp_My_Profile_Company} </div>
+                                        <div class="fieldValue"> {contact.DSE__DS_Company__c} </div>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-3 slds-medium-size_1-of-3 slds-large-size_1-of-3 contentItem">
+                                        <div class="fieldLabel"> {labels.csp_My_Profile_Email} </div>
+                                        <div class="fieldValue"> {contact.Email} </div>
+                                    </div>
                                 </div>
                             </div>
+
 
                             <template if:true={isFirstLevelUser}>
                                 <div class="slds-grid slds-wrap slds-gutters_medium slds-p-vertical_x-large headerMessage">
@@ -74,7 +83,6 @@
                                     </div>
                                 </div>
                             </template>
-
 
                         </div>
                     </template>

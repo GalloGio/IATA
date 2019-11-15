@@ -468,8 +468,9 @@ lightning-datatable .slds-th__action {
     color: #ffffff;
     min-height: 40px;
     width: 220px;
-    word-break: break-all;
+    word-break: break-word;
     border: none;
+    display: inline-block;
 }
 .containedButton button:hover {
 	border-radius: 1px;
@@ -485,7 +486,7 @@ lightning-datatable .slds-th__action {
     color: #ffffff;
     min-height: 40px;
     width: 220px;
-    word-break: break-all;
+    word-break: break-word;
     border: none;
 }
 
@@ -506,6 +507,7 @@ lightning-datatable .slds-th__action {
     min-height: 40px;
     word-break: break-word;
     border: none;
+    display: inline-block;
 }
 .containedButtonSlim button:hover {
 	border-radius: 1px;
@@ -599,6 +601,7 @@ lightning-datatable .slds-th__action {
   	letter-spacing: normal;
   	text-align: center;
   	color: #3333ff;
+    display: inline-block;
 }
 .outlinedButton button:hover {
 	-webkit-transition-duration: 0.4s; /* Safari */
@@ -1535,11 +1538,11 @@ visibility: hidden;
     letter-spacing: normal;
     text-align: center;
     color: #ffffff;
-    min-height: 40px;
     word-break: break-all;
     border: none;
-    height: 56px;
+    min-height: 56px;
     width: 100%;
+    display: inline-block;
 }
 
 .containedButtonLogin button:hover {
@@ -1554,11 +1557,11 @@ visibility: hidden;
     letter-spacing: normal;
     text-align: center;
     color: #ffffff;
-    min-height: 40px;
     word-break: break-all;
     border: none;
-	height: 56px;
+	min-height: 56px;
     width: 100%;
+    display: inline-block;
 }
 
 .custTextInput input{
@@ -1628,6 +1631,7 @@ visibility: hidden;
   	color: #3333ff;
     width: 100%;
     box-shadow: none; 
+    display: inline-block;
 }
 
 .languageSelection .slds-combobox_container input[role="textbox"]{
@@ -1669,6 +1673,10 @@ visibility: hidden;
     font-weight: 500;
     font-size: 14px;
     box-shadow: none;
+}
+
+.blueCustomButtonLinkSmall .slds-button__icon_right, .blueCustomButtonLinkSmall .slds-button__icon--right{
+    margin-left: .5rem;
 }
 
 .blueCustomButtonLinkLogin, .blueCustomButtonLinkLogin button, .blueCustomButtonLinkLogin button:active, .blueCustomButtonLinkLogin button:visited, .blueCustomButtonLinkLogin button:focus {
@@ -1749,7 +1757,7 @@ visibility: hidden;
 }
 
 .customBtn button{
-    padding: 16px 0;
+    padding: 16px 12px;
 }
 
 .customBtn[disabled], .customBtn button:disabled{
@@ -1786,3 +1794,26 @@ visibility: hidden;
 .topLabel{
     padding: 32px 0;
 }
+.headerProgressBarWrapper .headerProgressBar .slds-progress-bar{
+    border-radius: 8px;
+}
+
+.headerProgressBarWrapper .headerProgressBar .slds-progress-bar__value{
+    border-radius: 8px;
+    width: 50%;
+    background: linear-gradient(to right, rgba(56, 86, 235, 0.6), #3856eb);
+}
+
+/* Removes the icon from IE input */
+input::-ms-clear {  display: none; width : 0; height: 0; }
+input::-ms-reveal {  display: none; width : 0; height: 0; }
+
+.IEFixDisplayContainer{
+    width: 100%;
+    display: inline-block;
+}
+
+.IEFixDisplay{
+    display: inline-block;
+}
+
