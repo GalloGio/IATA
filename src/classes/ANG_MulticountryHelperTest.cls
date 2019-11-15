@@ -720,7 +720,7 @@ private class ANG_MulticountryHelperTest {
 		// the child cases are created from the batch which is not executed, but have to be registered
 		List<AsyncApexJob> batches = [SELECT Id, Status, MethodName, ApexClass.Name, createddate
 									  FROM AsyncApexJob
-									  WHERE ApexClass.Name = 'ANG_MulticoutryGEDowngradeBatch'];
+									  WHERE ApexClass.Name = 'ANG_RiskStatusDowngradeBatch'];
 		System.assertEquals(1, batches.size(), 'Should have scheduled a Batch job');
 
 		List<Case> cases = [SELECT Id, Account_Concerned__c FROM Case];
@@ -749,7 +749,7 @@ private class ANG_MulticountryHelperTest {
 		update accountGE;
 		
 		Test.startTest();
-		ANG_MulticoutryGEDowngradeBatch batch = new ANG_MulticoutryGEDowngradeBatch(new Set<Id> { accounts.get(0).Id });
+		ANG_RiskStatusDowngradeBatch batch = new ANG_RiskStatusDowngradeBatch(new Set<Id> { accounts.get(0).Id });
 		Id batchId = Database.executeBatch(batch);
 		Test.stopTest();
 

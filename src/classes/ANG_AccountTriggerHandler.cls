@@ -664,15 +664,15 @@ public class ANG_AccountTriggerHandler {
 		if (geAccounts.isEmpty())
 			return;
 		
-		ANG_Multicountry_GE_Downgrade__e evt = new ANG_Multicountry_GE_Downgrade__e(
-           GE_Accounts__c = JSON.serialize(geAccounts)
+		ANG_Risk_Status_Downgrade__e evt = new ANG_Risk_Status_Downgrade__e(
+			Accounts__c = JSON.serialize(geAccounts)
 		);
 		Database.SaveResult sr = EventBus.publish(evt);
 
 		if (! sr.isSuccess())
 		{
 			for (Database.Error err : sr.getErrors())
-				System.debug(loggingLevel.ERROR, '____ [cls ANG_AccountTriggerHandler - launchPlatformEventForMulticoutryDowngrade] Error returned: ' + err.getStatusCode() + ' - ' + err.getMessage());
+				System.debug(LoggingLevel.ERROR, '____ [cls ANG_AccountTriggerHandler - launchPlatformEventForRiskStatusDowngrade] Error returned: ' + err.getStatusCode() + ' - ' + err.getMessage());
 		}
 	}
 

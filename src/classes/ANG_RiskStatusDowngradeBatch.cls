@@ -1,16 +1,15 @@
-public class ANG_MulticoutryGEDowngradeBatch
-	implements Database.Batchable<SObject>, Database.Stateful
+public class ANG_RiskStatusDowngradeBatch implements Database.Batchable<SObject>, Database.Stateful
 {
-	private Set<Id> geAccounts;
+	private Set<Id> accounts;
 
-	public ANG_MulticoutryGEDowngradeBatch(Set<Id> geAccounts)
+	public ANG_RiskStatusDowngradeBatch(Set<Id> accounts)
 	{
-		this.geAccounts = geAccounts;
+		this.accounts = accounts;
 	}
 
 	public List<Account> start(Database.BatchableContext BC)
 	{
-		return ANG_MulticountryHelper.getChildHEAccounts(geAccounts).values();
+		return ANG_MulticountryHelper.getChildHEAccounts(accounts).values();
 	}
 
 	public void execute(Database.BatchableContext BC, List<SObject> scope)
