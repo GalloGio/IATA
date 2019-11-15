@@ -723,7 +723,7 @@ public without sharing class AMS_EBulletinReportHelper {
 
 				else if(fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(LOCATIONTYPE) && cc.Account__r.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY){
 					if(strVal == AMS_Utils.GE) strVal = AMS_Utils.HE;
-					else if(strVal == AMS_Utils.HE || strVal == AMS_Utils.AE) strVal = AMS_Utils.AE
+					else if(strVal == AMS_Utils.HE || strVal == AMS_Utils.AE) strVal = AMS_Utils.AE;
 				}
 
 				else if(fieldsList.get(position - customFieldsCounter) == nameApiNameMap.get(GOGLOBALXREF)) {

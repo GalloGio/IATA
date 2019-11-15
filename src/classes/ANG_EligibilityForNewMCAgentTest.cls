@@ -230,7 +230,7 @@ private class ANG_EligibilityForNewMCAgentTest {
 	
 	@isTest static void verifyIneligibleAgentAE() {
 
-		Account accountGE = [SELECT Id FROM Account WHERE Location_Type__c = AMS_Utils.GE];
+		Account accountGE = [SELECT Id FROM Account WHERE Location_Type__c = :AMS_Utils.GE];
 
 		IATA_ISO_Country__c countryGB = 
 			[SELECT 
