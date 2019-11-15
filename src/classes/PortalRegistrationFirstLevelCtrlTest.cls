@@ -190,17 +190,17 @@ public class PortalRegistrationFirstLevelCtrlTest {
 
         Test.StartTest();
 
-        PortalRegistrationFirstLevelCtrl.UserInformation userInfo1 = PortalRegistrationFirstLevelCtrl.getUserInformationFromEmail('contact1@bucketairline.com');
+        PortalRegistrationFirstLevelCtrl.UserInformation userInfo1 = PortalRegistrationFirstLevelCtrl.getUserInformationFromEmail('contact1@bucketairline.com' , null);
         System.assertEquals(userInfo1.hasExistingContact == true, true);
         System.assertEquals(userInfo1.hasExistingUser == true, true);
         System.assertEquals(userInfo1.isEmailAddressAvailable == false, true);
 
-        PortalRegistrationFirstLevelCtrl.UserInformation userInfo2 = PortalRegistrationFirstLevelCtrl.getUserInformationFromEmail('contact2@bucketairline.com');
+        PortalRegistrationFirstLevelCtrl.UserInformation userInfo2 = PortalRegistrationFirstLevelCtrl.getUserInformationFromEmail('contact2@bucketairline.com', null);
         System.assertEquals(userInfo2.hasExistingContact == true, true);
         System.assertEquals(userInfo2.hasExistingUser == false, true);
         System.assertEquals(userInfo2.isEmailAddressAvailable == true, true);
 
-        PortalRegistrationFirstLevelCtrl.UserInformation userInfo3 = PortalRegistrationFirstLevelCtrl.getUserInformationFromEmail('newcontact1@bucketairline.com');
+        PortalRegistrationFirstLevelCtrl.UserInformation userInfo3 = PortalRegistrationFirstLevelCtrl.getUserInformationFromEmail('newcontact1@bucketairline.com', null);
         System.assertEquals(userInfo3.hasExistingContact == false, true);
         System.assertEquals(userInfo3.hasExistingUser == false, true);
         System.assertEquals(userInfo3.isEmailAddressAvailable == true, true);
@@ -230,7 +230,9 @@ public class PortalRegistrationFirstLevelCtrlTest {
 
         string customerTypeJson = '{}';
 
-        PortalRegistrationFirstLevelCtrl.RegistrationResult result = PortalRegistrationFirstLevelCtrl.simulateRegister(registrationJson, customerTypeJson, con.Id, con.AccountId);
+        string userInfoJson = '{}';
+
+        PortalRegistrationFirstLevelCtrl.RegistrationResult result = PortalRegistrationFirstLevelCtrl.simulateRegister(registrationJson, customerTypeJson, con.Id, con.AccountId, userInfoJson);
         System.assertEquals(result.isSuccess == true, true);
 
         registrationJson = '{"category": "",' +
@@ -245,7 +247,7 @@ public class PortalRegistrationFirstLevelCtrlTest {
                 '"selectedCustomerType": "",' +
                 '"termsAndUsage": false}';
 
-        result = PortalRegistrationFirstLevelCtrl.simulateRegister(registrationJson, customerTypeJson, con.Id, con.AccountId);
+        result = PortalRegistrationFirstLevelCtrl.simulateRegister(registrationJson, customerTypeJson, con.Id, con.AccountId, userInfoJson);
         System.assertEquals(result.isSuccess == false, true);
 
         Test.stopTest();
@@ -287,10 +289,12 @@ public class PortalRegistrationFirstLevelCtrlTest {
                 '"Parent__c": "Airline",' +
                 '"Search_Option__c": "User Search",' +
                 '"Type__c": "Category"}';
+        
+        string userInfoJson = '{}';
 
 
-        PortalRegistrationFirstLevelCtrl.RegistrationResult result = PortalRegistrationFirstLevelCtrl.simulateRegister(registrationJson, customerTypeJson, null, null);
-        system.debug('result: ' + result);
+        PortalRegistrationFirstLevelCtrl.RegistrationResult result = PortalRegistrationFirstLevelCtrl.simulateRegister(registrationJson, customerTypeJson, null, null, userInfoJson);
+        system.debug('CHECK result: ' + result);
         System.assertEquals(result.isSuccess == true, true);
 
         registrationJson = '{"category": "Passenger_and_Cargo",' +
@@ -305,7 +309,8 @@ public class PortalRegistrationFirstLevelCtrlTest {
                 '"selectedCustomerType": "Passenger_and_Cargo",' +
                 '"termsAndUsage": true}';
 
-        result = PortalRegistrationFirstLevelCtrl.simulateRegister(registrationJson, customerTypeJson, null, null);
+        result = PortalRegistrationFirstLevelCtrl.simulateRegister(registrationJson, customerTypeJson, null, null, userInfoJson);
+        system.debug('CHECK result: ' + result);
         System.assertEquals(result.isSuccess == false, true);
 
         Test.stopTest();
@@ -348,8 +353,10 @@ public class PortalRegistrationFirstLevelCtrlTest {
                 '"Search_Option__c": "User Search",' +
                 '"Type__c": "Category"}';
 
+        string userInfoJson = '{}';
 
-        PortalRegistrationFirstLevelCtrl.RegistrationResult result = PortalRegistrationFirstLevelCtrl.simulateRegister(registrationJson, customerTypeJson, null, null);
+
+        PortalRegistrationFirstLevelCtrl.RegistrationResult result = PortalRegistrationFirstLevelCtrl.simulateRegister(registrationJson, customerTypeJson, null, null, userInfoJson);
         system.debug('result: ' + result);
         System.assertEquals(result.isSuccess == true, true);
 

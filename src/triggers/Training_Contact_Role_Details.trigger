@@ -11,10 +11,15 @@ trigger Training_Contact_Role_Details on Training_Contact_Role_Details__c (after
         Map<Id,Id> acr_vs_contact = new Map<Id,Id>(); 
 
         for(Training_Contact_Role_Details__c  tcrd : Trigger.new){
-            if(tcrd.UserId__c!=null && tcrd.UserId__c != '' && trigger.oldMap.get(tcrd.Id).UserId__c != tcrd.UserId__c){
-                // ag.Cass_Number__c = AMS_AgencyHelper.resizeNumericString(ag.Cass_Number__c,3);
+            if(Trigger.isInsert){
                 acrIds.add(tcrd.Account_Contact_Role__c);
                 toUpdate.put(tcrd.Account_Contact_Role__c, tcrd);
+            }else{
+                if(tcrd.UserId__c!=null && tcrd.UserId__c != '' && trigger.oldMap.get(tcrd.Id).UserId__c != tcrd.UserId__c){
+                    // ag.Cass_Number__c = AMS_AgencyHelper.resizeNumericString(ag.Cass_Number__c,3);
+                    acrIds.add(tcrd.Account_Contact_Role__c);
+                    toUpdate.put(tcrd.Account_Contact_Role__c, tcrd);
+                }
             }
         }
         
@@ -35,5 +40,4 @@ trigger Training_Contact_Role_Details on Training_Contact_Role_Details__c (after
 
         update lUsers;
     }
-    
 }

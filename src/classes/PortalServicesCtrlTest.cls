@@ -609,4 +609,30 @@ public class PortalServicesCtrlTest {
         }
     }
 
+    @isTest
+    public static void PortalServicesCtrlTest_verifyL3Data() {
+        
+        Contact c = [select id,email,firstname,lastname,name from contact where lastName = 'ContactTest4'];
+
+        User portalUser = ISSP_ObjectFactory.createPortalUser(c);
+
+        List<Portal_Applications__c> portalServicelist=[select id from Portal_Applications__c where Name ='serviceTest3'];
+        Term_and_Condition__c tos = new Term_and_Condition__c(NewGenApp_PortalService__c = portalServicelist.get(0).id, Is_Latest__c = true, Status__c = 'Final', Effective_Start_Date__c = Date.today());
+        insert tos;
+        Term_and_Condition_Acceptance__c tosAccept = new Term_and_Condition_Acceptance__c(Is_Accepted__c = true, Term_Condition__c = tos.Id, Contact__c = c.Id);
+        insert tosAccept;
+
+        System.runAs(portalUser) {
+            
+            Test.StartTest();    
+            Boolean result = PortalServicesCtrl.verifyCompleteL3Data(portalServicelist.get(0).id);
+            //false because not all required contact information is populated
+            system.assert(!result);
+
+            String id = PortalServicesCtrl.getPortalServiceId('serviceTest3');
+            system.assert(portalServicelist.get(0).id == id);
+            Test.StopTest();
+        }
+    }
+
 }
