@@ -49,16 +49,18 @@
                     
                 </div>
                 <div class="slds-col slds-size_1-of-1 slds-medium-size_7-of-12 slds-large-size_7-of-12 slds-p-around_medium recipients" >
-                    <div if:true={haveRecipients} class="recipients-container">
-                        <span class="recipients-label">Recipients</span>
-                        <div class="recipients-data">
-                            {caseDetails.E2CP__AdditionalCC__c}
+		            <div if:true={manageRecipients}>
+                        <div if:true={haveRecipients} class="recipients-container">
+                            <span class="recipients-label">Recipients</span>
+                            <div class="recipients-data">
+                                {caseDetails.E2CP__AdditionalCC__c}
+                            </div>
+                            <lightning-button variant="base" label="Manage Recipients" onclick={openManageRecipientsPopup} ></lightning-button>
                         </div>
-                        <lightning-button variant="base" label="Manage Recipients" onclick={openManageRecipientsPopup} ></lightning-button>
-                    </div>
-                    <div if:false={haveRecipients}>
-                        Anyone else to be informed?
-                        <lightning-button variant="base" label="Manage Recipients" onclick={openManageRecipientsPopup} ></lightning-button>
+                        <div if:false={haveRecipients}>
+                            Anyone else to be informed?
+                            <lightning-button variant="base" label="Manage Recipients" onclick={openManageRecipientsPopup} ></lightning-button>
+                        </div>                    
                     </div>
                 </div>
             </div>
