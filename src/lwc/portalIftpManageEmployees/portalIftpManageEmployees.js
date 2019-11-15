@@ -433,7 +433,7 @@ export default class PortalIftpManageEmployees extends LightningElement {
             let allITPEmployees = JSON.parse(JSON.stringify(result));
             let existsInactive = false;
             allITPEmployees.forEach(emp => {
-                if(emp.Company_Code__c.trim().toLowerCase() === this.employeeToInsert.code.trim().toLowerCase() && emp.Status__c ==='Inactive'){
+                if(emp.Company_Code__c && emp.Company_Code__c.trim().toLowerCase() === this.employeeToInsert.code.trim().toLowerCase() && emp.Status__c ==='Inactive'){
                     existsInactive = true;
                     this.employeeToInsert.id = emp.Id;
                     this.employeeToInsert.contactId = emp.Contact__c;

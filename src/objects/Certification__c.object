@@ -173,11 +173,19 @@
         <externalId>true</externalId>
         <label>ExtKey</label>
         <length>50</length>
+        <fullName>Level_2_Certificate__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Level 2 Certificate</label>
+        <referenceTo>Certification__c</referenceTo>
+        <relationshipLabel>Related certificate</relationshipLabel>
+        <relationshipName>Certifications</relationshipName>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>true</unique>
+        <type>Lookup</type>
     </fields>
     <fields>
         <fullName>Status__c</fullName>

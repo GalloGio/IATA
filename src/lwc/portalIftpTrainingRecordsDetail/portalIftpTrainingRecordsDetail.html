@@ -48,7 +48,6 @@
                         </lightning-combobox>  
                     </div>
                     <div class="slds-col slds-m-left_x-small slds-m-right_x-small">
-                    <!-- <div class="slds-col slds-m-left_x-small"> -->
                         <lightning-combobox
                             name="aircraftType"
                             label="Operation Type"
@@ -63,42 +62,22 @@
                     <div class="slds-col slds-m-left_x-small">
                         <lightning-combobox
                             name="experiationstatus"
-                            label="Expiration Status"
+                            label="Training Status"
                             value={experiationstatusValue}
                             placeholder="Select Expiration Status"
                             options={experiationstatusOptions}
                             onchange={handleChangeExperiationstatus} >
                         </lightning-combobox>
                     </div>
-                    <div class="slds-col slds-m-left_x-small">
-                        <lightning-combobox
-                            name="datePeriod"
-                            label="Period"
-                            value={datePeriodValue}
-                            placeholder="Select a Period"
-                            options={datePeriodOptions}
-                            onchange={handleChangedatePeriod} >
-                        </lightning-combobox>
-                    </div>   
-                    <div class="slds-col slds-m-left_x-small">
-                        <lightning-input 
-                            type="date" 
-                            name="fromDate" 
-                            label="Expiration Date From" 
-                            value={fromDateValue} 
-                            min="2018-01-01"
-                            onchange={handleChangeFromDate}
-                            class="displayWrapText">
-                        </lightning-input>
-                    </div>    
                     <div class="slds-col slds-m-left_x-small slds-m-right_x-small">
                         <lightning-input 
                             type="date" 
                             name="toDate" 
-                            label="Expiration Date To" 
+                            label="Expiration Date" 
                             value={toDateValue}
                             min={toDateMinValue} 
                             onchange={handleChangeToDate}
+                            disabled={isNotEditable}
                             class="displayWrapText">
                         </lightning-input>
                     </div>  

@@ -24,17 +24,17 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
     @track showSearch = false;
     @track stationValue;
     @track itpValue;
-    @track experiationstatusValue;
+    @track experiationstatusValue = 'All';
     @track aircraftTypeValue = 'All Level 2';
     @track levelValue = 'Level 2';
 
-    @track datePeriodValue;
     @track fromDateValue;
     @track fromDateMinValue = new Date(2019, 0, 1);
     @track fromDateMaxValue;
     @track toDateValue;
     @track toDateMinValue;
     @track toDateMaxValue;
+    @track isNotEditable = true;
 
 
     @track stationOptions;
@@ -46,8 +46,12 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
     get experiationstatusOptions() {
         return [
             { label: 'All', value: 'All' },
-            { label: 'Active', value: 'Active' },
+            { label: 'Not Expired', value: 'Not Expired' },
             { label: 'Expired', value: 'Expired' },
+            { label: 'Expired in 30 days', value: 'Expired in 30 days' },
+            { label: 'Expired in 60 days', value: 'Expired in 60 days' },
+            { label: 'Expired in 90 days', value: 'Expired in 90 days' },
+            { label: 'Manual', value: 'Manual' }
         ];
     }
 
@@ -58,17 +62,7 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
             { label: 'All', value: 'All' },
         ];
     }
-
-    get datePeriodOptions() {
-        return [
-            { label: 'None', value: '0' },
-            { label: '30 Days', value: '30' },
-            { label: '60 Days', value: '60' },
-            { label: '90 Days', value: '90' },
-        ];
-    }
-
-    
+ 
     get dataRecords() {
         return this.dataRecords;
     } 
@@ -96,6 +90,28 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
     }
     handleChangeExperiationstatus(event) {
         this.experiationstatusValue = event.detail.value;
+        let today = new Date();
+        let toDateValue = today;
+
+        if(this.experiationstatusValue === 'Expired in 30 days'){
+            toDateValue.setDate(today.getDate() + 30);
+        } 
+        else 
+        {
+            if(this.experiationstatusValue === 'Expired in 60 days'){
+                toDateValue.setDate(today.getDate() + 60);
+        }  else {
+                if(this.experiationstatusValue === 'Expired in 90 days'){
+                    toDateValue.setDate(today.getDate() + 90);
+                }
+            }
+        }
+        this.toDateValue = toDateValue.getFullYear()+'-'+(toDateValue.getMonth()+1)+'-'+toDateValue.getDate();
+        if(this.experiationstatusValue === 'Manual'){
+            this.isNotEditable = false;
+        } else {
+            this.isNotEditable = true;
+        }
     }
     handleChangeAircraftType(event) {
         this.aircraftTypeValue = event.detail.value;
@@ -136,46 +152,6 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
         this.aircraftTypeOptions = this.sortData('label', 'asc', myTopicOptions);            
     }
 
-    handleChangedatePeriod(event) {
-
-        this.datePeriodValue = event.detail.value;
-
-        let todaysDate = new Date(new Date().getFullYear(),new Date().getMonth() , new Date().getDate());
-
-        let todaysDatePlus = new Date();
-        
-        todaysDatePlus.setDate(todaysDate.getDate() + parseInt(this.datePeriodValue));
-    
-        let todaysDateFormatted = todaysDate.getFullYear() + "-" + (todaysDate.getMonth() + 1) + "-" + todaysDate.getDate();
-        let todaysDatePlusFormatted = todaysDatePlus.getFullYear() + "-" + (todaysDatePlus.getMonth() + 1) + "-" + todaysDatePlus.getDate();
-    
-        switch(this.datePeriodValue){
-            case '30':
-            case '60':
-            case '90':
-                this.fromDateValue = undefined;
-                //this.fromDateValue = todaysDateFormatted;
-                //this.toDateMinValue = this.fromDateValue;
-                this.toDateValue = todaysDatePlusFormatted;
-                break;
-            default:
-                this.fromDateValue = undefined;
-                this.toDateMinValue = undefined;
-                this.toDateValue = undefined;
-        }
-
-    }
-
-        
-    handleChangeFromDate(event) {
-        this.fromDateValue = event.detail.value;
-        this.toDateMinValue = this.fromDateValue;
-
-        if(this.toDateValue < this.toDateMinValue){
-            this.toDateValue = '';
-        }
-    }
-
     handleChangeToDate(event) {
         this.toDateValue = event.detail.value;
     }
@@ -198,14 +174,30 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
 
 
         if(allValid){
-            this.showSearch = true;
-            if(this.itpOptions !== undefined && this.itpOptions.length === 0 ){
-                this.dataRecords = false;
-                this.loading = false;
-            } else {
-                this.handleSearch();
+            let isToDateValueOk = true;
+            if(this.experiationstatusValue === 'Manual'){
+                let today = new Date();
+                today = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+                if(!this.toDateValue || this.toDateValue <= today){
+                    isToDateValueOk = false;
+                    const event = new ShowToastEvent({
+                        title: 'Search Training Records Result',
+                        message: 'For Training Status \'Manual\' the Expiration Date must be greater then today. ',
+                        variant: 'warning',
+                        mode: 'sticky'
+                    });
+                    this.dispatchEvent(event);
+                }
             }
-
+            if(isToDateValueOk){
+                this.showSearch = true;
+                if(this.itpOptions !== undefined && this.itpOptions.length === 0 ){
+                    this.dataRecords = false;
+                    this.loading = false;
+                } else {
+                    this.handleSearch();
+                }
+            }
         }
     }
 
@@ -213,7 +205,7 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
         this.stationValue = null;
         this.itpValue = null;
         this.itpOptions = [];
-        this.experiationstatusValue = undefined;
+        this.experiationstatusValue = 'All';
         this.aircraftTypeValue = 'All Level 2';
         let myTopicOptions = [{ label: '- All Level 2 -', value: 'All Level 2'}];
         this.certificationTypesWithLevel.forEach(cert =>{
@@ -225,35 +217,37 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
         this.levelValue = 'Level 2';
         this.fromDateValue = undefined;
         this.fromDateMaxValue = undefined;
-        this.toDateValue = undefined;
+        let today = new Date();
+        this.toDateValue = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();;
         this.toDateMinValue = undefined;
-        this.datePeriodValue = undefined;
         this.showSearch = false;
         this.cleanErrors();
         
     }
 
     connectedCallback() {
+        let toDateValue = new Date();
+        this.toDateValue = toDateValue.getFullYear()+'-'+(toDateValue.getMonth()+1)+'-'+toDateValue.getDate();
 
-       getAirlineITPsByStation()
-       .then(result => {
-           let myResult = JSON.parse(JSON.stringify(result));
-           
-           let myTopicOptions = [];
+        getAirlineITPsByStation()
+        .then(result => {
+            let myResult = JSON.parse(JSON.stringify(result));
+            
+            let myTopicOptions = [];
 
-           Object.keys(myResult).forEach(function (el) {
-               myTopicOptions.push({ label: myResult[el][0].Address__r.Code__c + ' - ' + myResult[el][0].Address__r.Description__c, value: myResult[el][0].Address__r.Code__c });
-           });
-           
-           this.stationOptions = this.sortData('label', 'asc', myTopicOptions);
-           this.itpBYStationMap = myResult;
-   
-       })
-       .catch(error => {
-           console.log('getAirlineITPsByStation - Error : ', error);
-           this.mainErrorMessage = error;
-           this.error = error;
-       }); 
+            Object.keys(myResult).forEach(function (el) {
+                myTopicOptions.push({ label: myResult[el][0].Address__r.Code__c + ' - ' + myResult[el][0].Address__r.Description__c, value: myResult[el][0].Address__r.Code__c });
+            });
+            
+            this.stationOptions = this.sortData('label', 'asc', myTopicOptions);
+            this.itpBYStationMap = myResult;
+    
+        })
+        .catch(error => {
+            console.log('getAirlineITPsByStation - Error : ', error);
+            this.mainErrorMessage = error;
+            this.error = error;
+        }); 
         
         getCertificationTypesWithLevel({certificationType: 'Aircraft'})
         .then(result => {
@@ -331,42 +325,41 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
     }
 
     handleSearch(){
-        
-        //var auxSearchValues = new Map();
-        var auxSearchValues = {};
-        var i;
+        //let auxSearchValues = new Map();
+        let auxSearchValues = {};
+        let i;
         // It is mandatory to choose one station, and one station only, checked before intering this method
-        var auxStations = (this.stationValue == null) ? 'null' : this.stationValue;
-        var auxItp = (this.itpValue == null) ? 'null' : this.itpValue;
+        let auxStations = (this.stationValue == null) ? 'null' : this.stationValue;
+        let auxItp = (this.itpValue == null) ? 'null' : this.itpValue;
 
-        var auxExperiationstatus = (this.experiationstatusValue == null) ? 'null' : this.experiationstatusValue;
-        var auxAircraftType = (this.aircraftTypeValue == null) ? 'null' : this.aircraftTypeValue;
-        //var auxProficiency = (this.proficiencyValue == null) ? 'null' : this.proficiencyValue;
-        var auxLevel = (this.levelValue == null) ? 'null' : this.levelValue;
-        var auxProficiency = 'Yes';
-        var auxFromDate = (this.fromDateValue == null) ? 'null' : this.fromDateValue;
-        var auxToDate = (this.toDateValue == null) ? 'null' : this.toDateValue;
-       
+        let auxExperiationstatus = (this.experiationstatusValue == null) ? 'null' : this.experiationstatusValue;
+        let auxAircraftType = (this.aircraftTypeValue == null) ? 'null' : this.aircraftTypeValue;
+        //let auxProficiency = (this.proficiencyValue == null) ? 'null' : this.proficiencyValue;
+        let auxLevel = (this.levelValue == null) ? 'null' : this.levelValue;
+        let auxProficiency = 'Yes';
+        let auxFromDate = (this.fromDateValue == null) ? 'null' : this.fromDateValue;
+        let auxToDate = (this.toDateValue === null) ? 'null' : this.toDateValue;
+
+        if(this.experiationstatusValue === 'All' || this.experiationstatusValue === 'Not Expired' ){
+            auxToDate = 'null';
+        }
+    
         if(!this.itpValue || this.itpValue === 'All'){
             for(i=0; i < this.itpOptions.length; i++){
                 if(this.itpOptions[i].value === 'All'){
                     auxItp = '';
                 }else{
-                   auxItp = (auxItp === '' ) ? this.itpOptions[i].value : auxItp + ',' + this.itpOptions[i].value;
+                auxItp = (auxItp === '' ) ? this.itpOptions[i].value : auxItp + ',' + this.itpOptions[i].value;
                 }
             }
         }
 
-        if(this.experiationstatusValue === 'All'){
-            for(i=0; i < this.experiationstatusOptions.length; i++){
-                if(this.experiationstatusOptions[i].value === 'All'){
-                    auxExperiationstatus = '';
-                }else{
-                    auxExperiationstatus = (auxExperiationstatus === '' ) ? this.experiationstatusOptions[i].value : auxExperiationstatus + ',' + this.experiationstatusOptions[i].value;
-                }
-            }
+        if(this.experiationstatusValue === 'Not Expired'){
+            auxExperiationstatus = 'Active';
+        } else{
+            auxExperiationstatus = 'Active, Expired';
         }
-
+        
         if(this.aircraftTypeValue === 'All' || this.aircraftTypeValue === 'All Level 2' || this.aircraftTypeValue === 'All Level 3'){
             auxAircraftType = '';
             for(i=0; i < this.aircraftTypeOptions.length; i++){
@@ -384,7 +377,7 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
                 }
             }
         }
-   
+
         //List
         auxSearchValues = [
             auxStations,
@@ -399,7 +392,6 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
             auxLevel
         ];
 
-        
         this.loading = true;
         getTrainingRecords({searchValues: auxSearchValues, searchType: 'RecordsDetail' })
         .then(results => {
@@ -419,7 +411,7 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
             this.error = error;
             this.loading = false;
             this.dataRecords = false;
-        });     
+        });    
     }
 
     cleanErrors(){
@@ -497,7 +489,7 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
                     this.template.querySelector('c-portal-iftp-export-data').exportDataToExcel(columns, results, "AllDataRequestResults.xls");
                 } else {
                     if(type === 'CSV'){
-                        this.template.querySelector('c-portal-iftp-export-data').exportDataToCsv(columns, results, "TrainingRecordsDetailSearchResults.csv");
+                        this.template.querySelector('c-portal-iftp-export-data').exportDataToCsv(columns, results, "AllDataRequestResults.csv");
                     }
                 }
             } else {
