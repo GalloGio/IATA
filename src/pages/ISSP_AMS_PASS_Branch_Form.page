@@ -676,9 +676,17 @@
                                         <apex:column headerValue="{!$ObjectType.Contact.fields.Phone.Label}" value="{!agencycon.Phone__c}"/>
                                         <apex:column headerValue="{!$ObjectType.Contact.fields.Email.Label}" value="{!agencycon.Email__c}"/>
                                         <apex:column headerValue="{!CASE(ownerLabelType, 'shareholder', $Label.ISSP_AMS_Shareholder, 'partner', $Label.ISSP_AMS_Partner, $Label.ISSP_AMS_Owner)}" value="{!agencycon.Agency_owner__c}" id="ownerTitle" style="text-align:center" rendered="{!newForm.Map_Company_Type_to_Legal_Status__c!=$Label.ISSP_AMS_LS_Government}"/>
-                                        <apex:column value="{!agencycon.PASS_contact__c}" style="text-align:center">
+                                        <!-- <apex:column value="{!agencycon.PASS_contact__c}" style="text-align:center"> 
                                             <apex:facet name="header"><apex:outputText escape="false" value="{!$Label.ISSP_AMS_PASS_Contact}"/></apex:facet>
+                                        </apex:column> -->
+                                        
+                                        <apex:column value="{!agencycon.PASS_admin__c}" style="text-align:center">
+                                            <apex:facet name="header"><apex:outputText escape="false" value="{!$Label.ISSP_AMS_PASS_Admin}"><apex:image value="/img/msg_icons/info16.png" style="float:left" title="{!txtHelpPassAdmin}" html-data-html="true" html-data-placement="top" html-data-toggle="tooltip"/></apex:outputText></apex:facet>
                                         </apex:column>
+                                        <apex:column value="{!agencycon.PASS_user__c}" style="text-align:center">
+                                            <apex:facet name="header"><apex:outputText escape="false" value="{!$Label.ISSP_AMS_PASS_User}"><apex:image value="/img/msg_icons/info16.png" style="float:left" title="{!txtHelpPassUser}" html-data-html="true" html-data-placement="top" html-data-toggle="tooltip"/></apex:outputText></apex:facet>
+                                        </apex:column>
+                                       
                                         <apex:column id="roleTitle" value="{!agencycon.Agency_role__c}" style="text-align:center">
                                             <apex:facet name="header"><apex:outputText escape="false" value="{!CASE(roleLabelType, 'director', $Label.ISSP_AMS_Director, $Label.ISSP_AMS_Manager)}"/></apex:facet>
                                         </apex:column>
@@ -1025,10 +1033,20 @@
                                     <div class="modal-body">
                                         <apex:pageBlock id="contactBlock">
                                             <apex:pageBlockSection id="contactSection" columns="4">
-                                                <apex:pageBlockSectionItem labelStyle="white-space: nowrap;font-size:110%" dataStyle="width:15%">
+                                                <!-- <apex:pageBlockSectionItem labelStyle="white-space: nowrap;font-size:110%" dataStyle="width:15%">
                                                     <apex:outputLabel >{!$Label.ISSP_AMS_PASS_Contact}</apex:outputLabel>
                                                     <apex:inputField value="{!newContact.PASS_contact__c}" />
+                                                </apex:pageBlockSectionItem> -->
+                                               
+                                                <apex:pageBlockSectionItem labelStyle="white-space: nowrap;font-size:110%" dataStyle="width:15%">
+                                                    <apex:outputLabel >{!$Label.ISSP_AMS_PASS_Admin}</apex:outputLabel>
+                                                    <apex:inputField value="{!newContact.PASS_admin__c}" />
                                                 </apex:pageBlockSectionItem>
+                                                <apex:pageBlockSectionItem labelStyle="white-space: nowrap;font-size:110%" dataStyle="width:15%">
+                                                    <apex:outputLabel >{!$Label.ISSP_AMS_PASS_User}</apex:outputLabel>
+                                                    <apex:inputField value="{!newContact.PASS_user__c}" />
+                                                </apex:pageBlockSectionItem>
+                                                
                                                 <apex:pageBlockSectionItem id="contactItemDom" labelStyle="white-space: nowrap;font-size:110%" dataStyle="width:15%">
                                                     <apex:outputLabel id="roleContactTitle" escape="false" value="{!CASE(roleLabelType, 'director', $Label.ISSP_AMS_Director, $Label.ISSP_AMS_Manager)}"/>
                                                     <apex:inputField value="{!newContact.Agency_role__c}" id="dom" />
@@ -1192,10 +1210,11 @@
                                                     <apex:outputLabel id="ownerContactTitle">{!CASE(ownerLabelType, 'shareholder', $Label.ISSP_AMS_Shareholder, 'partner', $Label.ISSP_AMS_Partner, $Label.ISSP_AMS_Owner)}</apex:outputLabel>
                                                     <apex:inputCheckBox value="{!newContact.Agency_owner__c}" disabled="true"/>
                                                 </apex:pageBlockSectionItem>
-                                                <apex:pageBlockSectionItem labelStyle="white-space: nowrap;font-size:110%" dataStyle="width:15%">
+                                                <!-- <apex:pageBlockSectionItem labelStyle="white-space: nowrap;font-size:110%" dataStyle="width:15%">
                                                     <apex:outputLabel >{!$Label.ISSP_AMS_PASS_Contact}</apex:outputLabel>
                                                     <apex:inputField value="{!newContact.PASS_contact__c}" />
-                                                </apex:pageBlockSectionItem>
+                                                </apex:pageBlockSectionItem> -->
+                                                
                                                 <apex:pageBlockSectionItem id="contactItemDom" labelStyle="white-space: nowrap;font-size:110%" dataStyle="width:15%">
                                                     <apex:outputLabel id="roleContactTitle" escape="false" value="{!CASE(roleLabelType, 'director', $Label.ISSP_AMS_Director, $Label.ISSP_AMS_Manager)}"/>
                                                     <apex:inputField value="{!newContact.Agency_role__c}" id="dom"/>
@@ -1204,6 +1223,16 @@
                                                     <apex:outputLabel >{!$ObjectType.AMS_Accreditation_Contact__c.fields.Authorised_signatory__c.Label}</apex:outputLabel>
                                                     <apex:inputField value="{!newContact.Authorised_signatory__c}" />
                                                 </apex:pageBlockSectionItem>
+                                                
+                                                <apex:pageBlockSectionItem labelStyle="white-space: nowrap;font-size:110%" dataStyle="width:15%">
+                                                    <apex:outputLabel >{!$Label.ISSP_AMS_PASS_Admin}</apex:outputLabel>
+                                                    <apex:inputField value="{!newContact.PASS_admin__c}" />
+                                                </apex:pageBlockSectionItem>
+                                                <apex:pageBlockSectionItem labelStyle="white-space: nowrap;font-size:110%" dataStyle="width:15%">
+                                                    <apex:outputLabel >{!$Label.ISSP_AMS_PASS_User}</apex:outputLabel>
+                                                    <apex:inputField value="{!newContact.PASS_user__c}" /> 
+                                                </apex:pageBlockSectionItem>
+                                               
                                                 <apex:pageBlockSectionItem labelStyle="white-space: nowrap;font-size:110%" rendered="{!amsOfficeType=='HO'}">
                                                     <apex:outputLabel >{!$ObjectType.AMS_Accreditation_Contact__c.fields.Financial_Assessment_Contact__c.Label}</apex:outputLabel>
                                                     <apex:inputField value="{!newContact.Financial_Assessment_Contact__c}" />

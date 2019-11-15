@@ -165,7 +165,11 @@
                                 <apex:facet name="header">{!$Label.ISSP_AMS_Roles_and_Responsibilities}</apex:facet>
                                 <apex:outputText rendered="{!agencycon.Agency_owner__c}" value="{!CASE(ownerLabelType, 'shareholder', $Label.ISSP_AMS_Shareholder, 'partner', $Label.ISSP_AMS_Partner, $Label.ISSP_AMS_Owner)}:"/><apex:image value="/img/checkbox_checked.gif" rendered="{!agencycon.Agency_owner__c}"/><br/>
                                 <apex:outputText rendered="{!agencycon.PASS_contact__c}" value="PASS Contact:"/><apex:image value="/img/checkbox_checked.gif" rendered="{!agencycon.PASS_contact__c}"/><br/>
-                                <apex:outputText rendered="{!agencycon.Agency_role__c}" escape="false" value="{!CASE(roleLabelType, 'director', $Label.ISSP_AMS_Director, $Label.ISSP_AMS_Manager)}:"/><apex:image value="/img/checkbox_checked.gif" rendered="{!agencycon.Agency_role__c}"/><br/>
+                                
+                                <apex:outputText rendered="{!agencycon.PASS_admin__c}" value="{!$Label.ISSP_AMS_PASS_Admin}:"/><apex:image value="/img/checkbox_checked.gif" rendered="{!agencycon.PASS_admin__c}"/><br/>
+                                <apex:outputText rendered="{!agencycon.PASS_user__c}" value="{!$Label.ISSP_AMS_PASS_User}:"/><apex:image value="/img/checkbox_checked.gif" rendered="{!agencycon.PASS_user__c}"/><br/>
+                            
+                                <apex:outputText rendered="{!agencycon.Agency_role__c}" escape="false" value="{!CASE(roleLabelType, 'director', $Label.ISSP_AMS_Director, $Label.ISSP_AMS_Manager)}:"/><apex:image value="/img/checkbox_checked.gif" rendered="{!agencycon.Agency_role__c}"/><br/> 
                                 <apex:outputText rendered="{!agencycon.Authorised_signatory__c}" value="{!$Label.ISSP_AMS_Authorised_Sig}:" escape="false"/><apex:image value="/img/checkbox_checked.gif" rendered="{!agencycon.Authorised_signatory__c}"/><br/>
                             </apex:column>
                         </apex:dataTable>
