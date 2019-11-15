@@ -380,17 +380,6 @@ The Account Role record should be named after the functional capability for whic
         </valueSet>
     </fields>
     <fields>
-        <fullName>Account_name__c</fullName>
-        <externalId>false</externalId>
-        <formula>Account__r.Name</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Account name</label>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
         <fullName>Functional_Role__c</fullName>
         <externalId>false</externalId>
         <label>Functional Role</label>
