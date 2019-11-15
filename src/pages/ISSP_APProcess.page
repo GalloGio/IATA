@@ -257,9 +257,9 @@
                                         </apex:outputPanel>
                                         
                                         <div class="form-group">
-                                            <label for="description" class="col-sm-2 control-label">* Description</label>
+                                            <label for="description" class="col-sm-2 control-label"> Description</label>
                                             <div class="col-sm-10">
-                                                <apex:inputField id="description" styleClass="form-control" value="{!newCase.Description}" required="true"/>
+                                                <apex:inputField id="description" styleClass="form-control" value="{!newCase.Description}" />
                                             </div>
                                         </div>    
                                     </apex:pageBlock>
