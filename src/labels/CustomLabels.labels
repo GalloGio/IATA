@@ -4697,7 +4697,7 @@ You can easily create a company account in two steps</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP New Account To Address</shortDescription>
-        <value>test</value>
+        <value>test@iata.org</value>
     </labels>
     <labels>
         <fullName>CSP_Next</fullName>

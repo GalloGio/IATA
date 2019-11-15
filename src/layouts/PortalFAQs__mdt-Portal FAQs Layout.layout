@@ -26,6 +26,10 @@
                 <behavior>Edit</behavior>
                 <field>Permission_Set_Name__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Requires_Level2_Registration__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

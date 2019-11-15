@@ -6124,6 +6124,80 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
             </valueSetDefinition>
         </valueSet>
     </fields>
+	<fields>
+        <fullName>Business_City_Name__c</fullName>
+        <description>Business City Name</description>
+        <externalId>false</externalId>
+        <label>Business City Name</label>
+        <length>40</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Business_City__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>City of the Account&apos;s Business Address</description>
+        <externalId>false</externalId>
+        <label>Business City</label>
+        <referenceTo>IATA_ISO_City__c</referenceTo>
+        <relationshipLabel>Accounts with Business City</relationshipLabel>
+        <relationshipName>Accounts_with_Billing_City</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Business_PO Box__c</fullName>
+        <description>PO Box of the Account&apos;s Business Address</description>
+        <externalId>false</externalId>
+        <label>Business PO Box</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Business_Postal_Code__c</fullName>
+        <description>Postal Code for the Account&apos;s Business Address</description>
+        <externalId>false</externalId>
+        <label>Business Postal Code</label>
+        <length>20</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Business_State_Name__c</fullName>
+        <description>Business State Name</description>
+        <externalId>false</externalId>
+        <label>Business State Name</label>
+        <length>80</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Business_Street__c</fullName>
+        <description>Street of the Account&apos;s Business Address</description>
+        <externalId>false</externalId>
+        <label>Business Street</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
     <fields>
         <fullName>CAMP_Agreement__c</fullName>
         <description>FDS. Agency Accounts. Used to track Agent compliance / submission of executed CAMP Agreements and to follow up with Agents pending submission of agreements to IATA.</description>

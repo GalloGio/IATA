@@ -35,7 +35,7 @@
   width: 100%;
   min-height: 150px;
   margin-bottom: 2rem;
-  background-color: #ffff;
+  background-color: #fff;
 }
 
 .imagespacer {
@@ -52,4 +52,50 @@
 .headerMyProfile {
   padding: 1rem;
   max-width: 800px;
+}
+
+.headerMessage{
+  width: 100%;
+  padding: 2rem;
+  margin: 0;
+}
+
+.messageContainer{
+  width: 100%;
+  background-color: #f7f8fc;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.headerMessageContent{
+  padding: 20px;
+  align-items: center;
+  flex-wrap: nowrap;
+  width: 100%;
+  margin: 0;
+}
+
+.headerProgressBarWrapper{
+  margin-bottom: 10px;
+}
+
+.warningIconWrapper{
+  padding-right: 0;
+  padding-left: 0;
+  min-width: 60px;
+}
+
+.warningIcon{
+  margin: auto;
+  display: block;
+}
+
+@media only screen and (max-width: 800px) {
+  .warningIconWrapper{
+    display: none;
+  }
+
+  .headerProfileImage{
+    margin: auto;
+  }
 }
