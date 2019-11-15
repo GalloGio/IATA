@@ -161,7 +161,7 @@ global with sharing class ANG_ConversionHelper {
 			allHierarchies.add(relationShip.Hierarchy__c);
 		}
 
-		List<Account> allAccountsSingleHierarchyHOorTerminatedAgencies = [SELECT Id, Name,Purge_Flag__c, Financial_Review_Result__c, Location_Type__c,IATACode__c, Status__c, RecordType.Name, IATA_ISO_Country__r.BSP_Country_free_text__c, IATA_ISO_Country__r.ISO_Code__c, IATA_ISO_Country__r.BSP__c,IATA_ISO_Country__r.Name,Sector__c, Top_Parent__c, Top_Parent__r.IATA_ISO_Country__r.BSP__c,Top_Parent__r.IATA_ISO_Country__r.Name,  Expiry_Date__c, Location_Class__c from Account where IATA_ISO_Country__r.Name = :country and Id not in:allAgencies AND ((Location_Type__c in :TOPLEVELLOCATIONTYPES and Sector__c in:ALLOWEDSECTORS and RecordTypeId in:ALLOWEDRECORDTYPES and Location_Class__c in:ALLOWEDLOCATIONCLASSES AND Status__c != :AMS_Utils.ACC_S0_TERMINATED) OR (Status__c = :AMS_Utils.ACC_S0_TERMINATED and Sector__c in:ALLOWEDSECTORS and Location_Class__c in:ALLOWEDLOCATIONCLASSES and Location_Type__c not in:LOCATIONTYPESNEWGEN)) ];
+		List<Account> allAccountsSingleHierarchyHOorTerminatedAgencies = [SELECT Id, Name,Purge_Flag__c, Financial_Review_Result__c, Location_Type__c,IATACode__c, Status__c, RecordType.Name, IATA_ISO_Country__r.BSP_Country_free_text__c, IATA_ISO_Country__r.ISO_Code__c, IATA_ISO_Country__r.BSP__c,IATA_ISO_Country__r.Name,Sector__c, Top_Parent__c, Top_Parent__r.IATA_ISO_Country__r.BSP__c,Top_Parent__r.IATA_ISO_Country__r.Name,  Expiry_Date__c, Location_Class__c, Category__c from Account where IATA_ISO_Country__r.Name = :country and Id not in:allAgencies AND ((Location_Type__c in :TOPLEVELLOCATIONTYPES and Sector__c in:ALLOWEDSECTORS and RecordTypeId in:ALLOWEDRECORDTYPES and Location_Class__c in:ALLOWEDLOCATIONCLASSES AND Status__c != :AMS_Utils.ACC_S0_TERMINATED) OR (Status__c = :AMS_Utils.ACC_S0_TERMINATED and Sector__c in:ALLOWEDSECTORS and Location_Class__c in:ALLOWEDLOCATIONCLASSES and Location_Type__c not in:LOCATIONTYPESNEWGEN)) ];
 
 		for(Account acct: allAccountsSingleHierarchyHOorTerminatedAgencies){
 
@@ -181,7 +181,7 @@ global with sharing class ANG_ConversionHelper {
 			allAgencies.add(acct.Id);
 		}
 
-		List<Account> allAccountsSingleHierarchyBR = [SELECT Id, Name, Purge_Flag__c, Location_Class__c, Location_Type__c, Financial_Review_Result__c,IATACode__c, Status__c, RecordType.Name, IATA_ISO_Country__r.BSP_Country_free_text__c,IATA_ISO_Country__r.BSP__c,IATA_ISO_Country__r.ISO_Code__c ,IATA_ISO_Country__r.Name,Sector__c, Top_Parent__c, Expiry_Date__c from Account where Location_Type__c in :LOCATIONTYPESBRS and ParentId  = null and IATA_ISO_Country__r.Name = :country and RecordTypeId in:ALLOWEDRECORDTYPES and Sector__c in:ALLOWEDSECTORS and Location_Class__c in:ALLOWEDLOCATIONCLASSES and Id not in:allAgencies];
+		List<Account> allAccountsSingleHierarchyBR = [SELECT Id, Name, Purge_Flag__c, Location_Class__c, Location_Type__c, Financial_Review_Result__c,IATACode__c, Status__c, RecordType.Name, IATA_ISO_Country__r.BSP_Country_free_text__c,IATA_ISO_Country__r.BSP__c,IATA_ISO_Country__r.ISO_Code__c ,IATA_ISO_Country__r.Name,Sector__c, Top_Parent__c, Expiry_Date__c, Category__c from Account where Location_Type__c in :LOCATIONTYPESBRS and ParentId  = null and IATA_ISO_Country__r.Name = :country and RecordTypeId in:ALLOWEDRECORDTYPES and Sector__c in:ALLOWEDSECTORS and Location_Class__c in:ALLOWEDLOCATIONCLASSES and Id not in:allAgencies];
 
 		for(Account acct: allAccountsSingleHierarchyBR){
 			if(acct.Status__c == AMS_Utils.ACC_S0_TERMINATED){
@@ -773,7 +773,7 @@ global with sharing class ANG_ConversionHelper {
 				accountIdsToSearch.add(struct.topParentId);
 		}
 
-		List<Account> accountsSearched = [SELECT Id, Name, Top_Parent__c, Top_Parent__r.Location_Type__c, Location_Type__c, Location_Class__c, ParentId, Status__c, IATA_ISO_Country__r.BSP_Country_free_text__c, IATA_ISO_Country__r.BSP__c, IATA_ISO_Country__r.ISO_Code__c, Remittance_frequency__c, Financial_Review_Result__c, IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode, ANG_RiskStatus__c, ANG_Accreditation_Model__c, Email__c,ANG_CashCondition__c, IATACode__c, (select Id, ANG_Financial_Security__c, ANG_RHC_Amount__c from RHC_Informations__r), Guaranteed_amount__c,IATA_ISO_Country__r.CurrencyIsoCode, ANG_IEP_Status__c, CNS_Agency__c, RecordTypeId from Account where Id in :accountIdsToSearch];
+		List<Account> accountsSearched = [SELECT Id, Name, Top_Parent__c, Top_Parent__r.Location_Type__c, Location_Type__c, Location_Class__c, ParentId, Status__c, IATA_ISO_Country__r.BSP_Country_free_text__c, IATA_ISO_Country__r.BSP__c, IATA_ISO_Country__r.ISO_Code__c, Remittance_frequency__c, Financial_Review_Result__c, IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode, ANG_RiskStatus__c, ANG_Accreditation_Model__c, Email__c,ANG_CashCondition__c, IATACode__c, (select Id, ANG_Financial_Security__c, ANG_RHC_Amount__c from RHC_Informations__r), Guaranteed_amount__c,IATA_ISO_Country__r.CurrencyIsoCode, ANG_IEP_Status__c, CNS_Agency__c, RecordTypeId, Sector__c , Category__c from Account where Id in :accountIdsToSearch];
 
 		Map<Id,Account> accountsSearchedMap = new Map<Id,Account>();
 
@@ -971,7 +971,7 @@ global with sharing class ANG_ConversionHelper {
 			}
 			
 			// we are not getting all the relations and we need them to adjust the actual hierarchy.
-			Map<Id,Account> accountsSearched = new Map<Id,Account>([SELECT Id, Name, Top_Parent__c, Top_Parent__r.Location_Type__c, Location_Type__c, Location_Class__c, ParentId, Status__c, IATA_ISO_Country__r.BSP_Country_free_text__c, IATA_ISO_Country__r.BSP__c, IATA_ISO_Country__r.ISO_Code__c, Remittance_frequency__c, Financial_Review_Result__c, IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode, ANG_RiskStatus__c, ANG_Accreditation_Model__c, Email__c,ANG_CashCondition__c, IATACode__c, (select Id, ANG_Financial_Security__c, ANG_RHC_Amount__c from RHC_Informations__r), Guaranteed_amount__c from Account where Id in :accountNotSearch]);
+			Map<Id,Account> accountsSearched = new Map<Id,Account>([SELECT Id, Name, Top_Parent__c, Top_Parent__r.Location_Type__c, Location_Type__c, Location_Class__c, ParentId, Status__c, IATA_ISO_Country__r.BSP_Country_free_text__c, IATA_ISO_Country__r.BSP__c, IATA_ISO_Country__r.ISO_Code__c, Remittance_frequency__c, Financial_Review_Result__c, IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode, ANG_RiskStatus__c, ANG_Accreditation_Model__c, Email__c,ANG_CashCondition__c, IATACode__c, (select Id, ANG_Financial_Security__c, ANG_RHC_Amount__c from RHC_Informations__r), Guaranteed_amount__c, Sector__c, Category__c from Account where Id in :accountNotSearch]);
 
 
 			For(AMS_Agencies_relationhip__c rel: relsToUpdate){
@@ -1279,7 +1279,7 @@ global with sharing class ANG_ConversionHelper {
         
         ID FormOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
         
-        List<Account> acctToInsert = [SELECT Id, IATACode__c, Status__c, Purge_Flag__c, Is_PCI_compliant__c, ANG_PCI_compliance_expiry_date__c from Account where Id in:accts];
+        List<Account> acctToInsert = [SELECT Id, IATACode__c, Status__c, Purge_Flag__c, Is_PCI_compliant__c, ANG_PCI_compliance_expiry_date__c, Sector__c, Category__c from Account where Id in:accts];
         
         String statusAA, statusCC = null;
 
@@ -1313,7 +1313,7 @@ global with sharing class ANG_ConversionHelper {
         Map<Id,Agency_Applied_Change_code__c> mapAACCAccounts = new Map<Id,Agency_Applied_Change_code__c>();
 
         //Accounts are reQueried to avoid conflicts with Risk Assessment (performed on an earlier step)
-		List<Account> accounts = [SELECT Id, Status__c, CNS_Agency__c, (SELECT Reason_Code__c, Reason_Description__c,Account__r.Status__c FROM Agencies_Applied_Change_codes__r WHERE Active__c = TRUE ORDER BY CreatedDate DESC) FROM Account WHERE Id in :accountsToApply];
+		List<Account> accounts = [SELECT Id, Status__c, CNS_Agency__c, Location_Class__c, Category__c, (SELECT Reason_Code__c, Reason_Description__c,Account__r.Status__c, Account__r.Sector__c, Account__r.Category__c, Account__r.Location_Class__c FROM Agencies_Applied_Change_codes__r WHERE Active__c = TRUE ORDER BY CreatedDate DESC) FROM Account WHERE Id in :accountsToApply];
 
 		for(Account a : accounts){
 			if(!a.Agencies_Applied_Change_codes__r.isEmpty()) mapAACCAccounts.put(a.Id,a.Agencies_Applied_Change_codes__r[0]);

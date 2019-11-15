@@ -561,7 +561,7 @@ global class ANG_OscarProcessHelper {
             	Map<Id,Account> listAccount;
             	if(!accrConPerAccount.keySet().isEmpty() && !(accrConPerAccount.keySet().size() == 1 && accrConPerAccount.keySet().contains(acc.Id))){
 
-            		listAccount = new Map<Id,Account>([SELECT Id, Has_a_Financial_Assessment_Contact__c, Has_an_Administrator_User_Portal__c,
+            		listAccount = new Map<Id,Account>([SELECT Id, Has_a_Financial_Assessment_Contact__c, Has_an_Administrator_User_Portal__c, Location_Class__c, Sector__c , Category__c,
 																	(SELECT Financial_Assessment_Contact__c, User_Portal_Status__c FROM Contacts WHERE Id NOT IN: conIds)
 																	FROM Account
 																	WHERE id IN: accrConPerAccount.keySet()]);
@@ -701,7 +701,7 @@ global class ANG_OscarProcessHelper {
 
         try {
 
-			Account accnt = [SELECT Id, Status__c, CNS_Agency__c,
+			Account accnt = [SELECT Id, Status__c, CNS_Agency__c, Location_Class__c, Sector__c, Category__c,
 									(SELECT Id, Reason_Code__c, Reason_Description__c
 									 FROM Agencies_Applied_Change_codes__r 
 									 WHERE Active__c = true)
@@ -736,7 +736,7 @@ global class ANG_OscarProcessHelper {
 	//ACAMBAS - NEWGEN-4822 - Start
 	private static void createChangeCodeOnChildrenAccounts(AMS_Oscar__c theOSCAR, String changeCodeId) {
 
-		List<Account> childrenAccounts = [SELECT Id, Status__c, CNS_Agency__c,
+		List<Account> childrenAccounts = [SELECT Id, Status__c, CNS_Agency__c, Location_Class__c, Sector__c, Category__c,
 												(SELECT Id, Reason_Code__c, Reason_Description__c
 									 			 FROM Agencies_Applied_Change_codes__r 
 									 			 WHERE Active__c = true) 
@@ -875,7 +875,7 @@ global class ANG_OscarProcessHelper {
 				for(AgencyAuthorizationOBject aaObject: aaObjectSet)
 					accountIdsChanged.add(aaObject.AccountId);
 
-				Map<Id,Account> accountToCreateCC = new Map<ID, Account>([Select Id, Status__c, CNS_Agency__c from Account where Id in :accountIdsChanged]);
+				Map<Id,Account> accountToCreateCC = new Map<ID, Account>([Select Id, Status__c, CNS_Agency__c, Sector__c, Category__c from Account where Id in :accountIdsChanged]);
 
 				Map<String,Set<Account>> ccAccountsMap = new Map<String,Set<Account>>();
 

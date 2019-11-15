@@ -373,7 +373,7 @@ public with sharing class ANG_AgencyChangesHelper {
 
 				if (containsChange(New List<String>{AMS_Utils.ANG_HIERARCHY},oscar.ANG_Type_Of_Change__c)) {
 
-					hierarchyAccs = new Map<Id,Account>([SELECT Id, ANG_FA_Opt_out__c, CNS_Agency__c FROM Account WHERE Id = :oscar.New_parent__c OR Top_Parent__c = :oscar.New_parent__c]);
+					hierarchyAccs = new Map<Id,Account>([SELECT Id, ANG_FA_Opt_out__c, CNS_Agency__c, Location_Class__c, Sector__c , Category__c FROM Account WHERE Id = :oscar.New_parent__c OR Top_Parent__c = :oscar.New_parent__c]);
 					
 					// If opt-out is not applicable we'll put the value of the new parent
 					if(oscar.ANG_FA_Opt_out__c == 'Not Applicable'){ 
@@ -401,7 +401,7 @@ public with sharing class ANG_AgencyChangesHelper {
 				}else if (applyOptOutFA || (oscar.ANG_FA_Opt_out__c == 'Opt-Out' || oscar.ANG_FA_Opt_out__c == 'Opt-In' && containsChange(new List<String>(AMS_Utils.ANG_OSCAR_MAJOR_CHANGES_PROCESSES), oscar.ANG_Type_Of_Change__c))){
 
 					String hierTopParent = changesContainer.accountsMap.get(oscar.Account__c).Top_Parent__c == null ? changesContainer.accountsMap.get(oscar.Account__c).Id : changesContainer.accountsMap.get(oscar.Account__c).Top_Parent__c;
-					hierarchyAccs = new Map<Id,Account>([SELECT Id, ANG_FA_Opt_out__c, CNS_Agency__c FROM Account WHERE Id = :hierTopParent OR Top_Parent__c = :hierTopParent]);
+					hierarchyAccs = new Map<Id,Account>([SELECT Id, ANG_FA_Opt_out__c, CNS_Agency__c, Location_Class__c, Sector__c , Category__c FROM Account WHERE Id = :hierTopParent OR Top_Parent__c = :hierTopParent]);
 
 					changesContainer = applyFAOptOut(oscar, changesContainer, hierarchyAccs.values(), null);
 
@@ -568,7 +568,7 @@ public with sharing class ANG_AgencyChangesHelper {
 
 			if(rel.Child_Account__c == oscarToProcess.Account__c){
 				
-				Account parentAccount = [Select Id, Location_Type__c, ParentId, ANG_IEP_HE_AccntNum__c, ANG_IEP_Status__c, ANG_HE_CashCondition__c, ANG_HE_RiskHistoryAssessment__c, ANG_HE_RiskStatus__c, Financial_Review_Result__c, CNS_Agency__c, Financial_Assessment_Points__c, (SELECT Id, ANG_AccountId__c FROM RHC_Informations__r) From Account where Id =:rel.Parent_Account__c];
+				Account parentAccount = [Select Id, Location_Type__c, ParentId, ANG_IEP_HE_AccntNum__c, ANG_IEP_Status__c, ANG_HE_CashCondition__c, ANG_HE_RiskHistoryAssessment__c, ANG_HE_RiskStatus__c, Financial_Review_Result__c, CNS_Agency__c, Financial_Assessment_Points__c, Location_Class__c, Sector__c , Category__c, (SELECT Id, ANG_AccountId__c FROM RHC_Informations__r) From Account where Id =:rel.Parent_Account__c];
 
 				parentAccount.Location_Type__c = AMS_Utils.AE;
 				parentAccount.ParentId = oscarToProcess.Account__c;
@@ -649,12 +649,12 @@ public with sharing class ANG_AgencyChangesHelper {
 			//Map<Id,Account> accountsMap;
 
 			if(newHEaccount == null)
-				newHEaccount = [Select Id , ANG_Accreditation_Model__c, Remittance_frequency__c, CNS_Agency__c, ANG_FA_Opt_out__c from Account where Id = :oscarToProcess.New_parent__c];
+				newHEaccount = [Select Id , ANG_Accreditation_Model__c, Remittance_frequency__c, CNS_Agency__c, ANG_FA_Opt_out__c, Location_Class__c, Sector__c , Category__c from Account where Id = :oscarToProcess.New_parent__c];
 
 			Account oscarAccount = toReturn.accountsMap.get(oscarToProcess.Account__c);
 
 			if(oscarAccount == null)
-				oscarAccount = [Select Id , ANG_Accreditation_Model__c, Remittance_frequency__c, CNS_Agency__c from Account where Id = :oscarToProcess.Account__c];
+				oscarAccount = [Select Id , ANG_Accreditation_Model__c, Remittance_frequency__c, CNS_Agency__c, Location_Class__c, Sector__c , Category__c from Account where Id = :oscarToProcess.Account__c];
 
 			if(!doesItContainAccreditationType && newHEaccount.ANG_Accreditation_Model__c != oscarAccount.ANG_Accreditation_Model__c){
 
@@ -1276,7 +1276,7 @@ public with sharing class ANG_AgencyChangesHelper {
 		
 		List<Agency_Authorization__c> toUpsert = new List<Agency_Authorization__c>();
 
-		List<Account> accs = [SELECT ID,Country_ISO_Code__c, (SELECT Id ,Account__c, Status__c FROM Agency_Authorizations__r
+		List<Account> accs = [SELECT ID,Country_ISO_Code__c, Location_Class__c, Sector__c , Category__c, (SELECT Id ,Account__c, Status__c FROM Agency_Authorizations__r
 															  WHERE ANG_FormOfPayment_ID__c = 'CA' and Status__c != 'Active' and RecordType.DeveloperName = 'FormOfPayment')
 							FROM ACCOUNT WHERE ID IN :accountsAffected];
 
@@ -1434,7 +1434,8 @@ public with sharing class ANG_AgencyChangesHelper {
 		        Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c,
 		        Due_Diligence_Status__c, IATA_ISO_Shipping_State__r.Name, ISO_State__r.Name,IATA_ISO_Country__r.Name,IATA_ISO_Country__r.Due_diligence_mandatory__c,IATA_ISO_Shipping_Country__c,IATA_ISO_Shipping_Country__r.Name,
 		        IATA_ISO_Billing_State__c,IATA_ISO_Billing_State__r.Name, ANG_Accreditation_Model__c, IATA_ISO_Country__r.CurrencyIsoCode, Is_PCI_compliant__c,IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode, 
-		        ANG_IsNewGenAgency__c, ANG_FA_Opt_out__c, CNS_Agency__c, ANG_PCI_compliance_expiry_date__c, IATA_ISO_Country__r.AMS_Settlement_System__r.ANG_RHC_Amount_Equals_FS__c, IATA_ISO_Country__r.AMS_Settlement_System__r.Remittance_Frequency_per_State__c, Covered_Ownership__c, Financial_Assessment_Points__c, IATA_ISO_Country__r.ANG_RHC_LocationType__c
+		        ANG_IsNewGenAgency__c, ANG_FA_Opt_out__c, CNS_Agency__c, ANG_PCI_compliance_expiry_date__c, IATA_ISO_Country__r.AMS_Settlement_System__r.ANG_RHC_Amount_Equals_FS__c, IATA_ISO_Country__r.AMS_Settlement_System__r.Remittance_Frequency_per_State__c, Covered_Ownership__c, Financial_Assessment_Points__c, IATA_ISO_Country__r.ANG_RHC_LocationType__c,
+				Sector__c , Category__c
 		         FROM Account WHERE Id IN :accountIds]);
 	}
 
@@ -1479,7 +1480,7 @@ public with sharing class ANG_AgencyChangesHelper {
 	public static Map<Id,Account> fetchAgOperationPerAccount(List<Id> accIds) {
 
 		Map<Id,Account> bspPerAcc = new Map<Id,Account>();
-		for(Account agOp : [SELECT Id, IATA_ISO_Country__r.AMS_Settlement_System__c, IATA_ISO_Country__r.AMS_Settlement_System__r.RecordType.Name FROM Account WHERE Id in :accIds])
+		for(Account agOp : [SELECT Id, IATA_ISO_Country__r.AMS_Settlement_System__c, IATA_ISO_Country__r.AMS_Settlement_System__r.RecordType.Name, Location_Class__c, Sector__c , Category__c FROM Account WHERE Id in :accIds])
 			bspPerAcc.put(agOp.IATA_ISO_Country__r.AMS_Settlement_System__c,agOp);
 
 		return bspPerAcc;
@@ -1507,6 +1508,9 @@ public with sharing class ANG_AgencyChangesHelper {
 		for(Account acc: oscarAgencies)
 			accountIds.add(acc.Id);
 
+		// get Additional Account Fields Location_Class__c, Status__c, Sector__c , Category__c
+		Map<Id, Account> accountInfoMap = new Map<Id,Account>([SELECT Id, Location_Class__c, Status__c, Sector__c , Category__c FROM Account WHERE Id IN :accountIds]);
+
 		// get the forms of payment for all accounts involved in the changes to display on eBulletin
 		Map<Id,List<Agency_Authorization__c>> fOPs = AMS_ChangeCodesHelper.fetchFormsOfPayment(accountIds);
 
@@ -1519,7 +1523,7 @@ public with sharing class ANG_AgencyChangesHelper {
 		system.debug('[ANG_AgencyChangesHelper] Change Codes:'+ changeCodes);
 
 		Integer index = 0;
-
+	
 		for (AMS_OSCAR_JSON.ChangeCode cc : changeCodes) {
 
 			Id accId = oscarAgencies.get(index).Id;
@@ -1545,7 +1549,8 @@ public with sharing class ANG_AgencyChangesHelper {
             
             if(cc.Name == 'COR'){
             	for(Account ac : oscarAgencies){//when changeCode = COR, same change code for all Acc
-            		changeCodeResult = AMS_ChangeCodesHelper.createAAChangeCode(objectChangesByChangeCode,cc, oscars.get(0), ac, isActive, fOPs.get(accId));
+            		//changeCodeResult = AMS_ChangeCodesHelper.createAAChangeCode(objectChangesByChangeCode,cc, oscars.get(0), ac, isActive, fOPs.get(accId));
+					changeCodeResult = AMS_ChangeCodesHelper.createAAChangeCode(objectChangesByChangeCode,cc, oscars.get(0), accountInfoMap.get(ac.Id), isActive, fOPs.get(accId));
             		changesContainer.addChangeCode(changeCodeResult.changeCode);
 
 					aaccHistoryToProcess.put(accId, changeCodeResult);
@@ -1556,7 +1561,8 @@ public with sharing class ANG_AgencyChangesHelper {
             	}
             }
             else{
-				changeCodeResult = AMS_ChangeCodesHelper.createAAChangeCode(objectChangesByChangeCode,cc, oscars.get(0), oscarAgencies.get(index), isActive, fOPs.get(accId));
+				//changeCodeResult = AMS_ChangeCodesHelper.createAAChangeCode(objectChangesByChangeCode,cc, oscars.get(0), oscarAgencies.get(index), isActive, fOPs.get(accId));
+				changeCodeResult = AMS_ChangeCodesHelper.createAAChangeCode(objectChangesByChangeCode,cc, oscars.get(0), accountInfoMap.get(oscarAgencies.get(index).id), isActive, fOPs.get(accId));
             	changesContainer.addChangeCode(changeCodeResult.changeCode);
 
 				aaccHistoryToProcess.put(accId, changeCodeResult);

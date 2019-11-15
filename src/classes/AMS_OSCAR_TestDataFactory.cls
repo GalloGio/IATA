@@ -24,7 +24,8 @@ public with sharing class AMS_OSCAR_TestDataFactory
 		Account a1 = new Account(
                                 IATA_ISO_Country__c = ctry.id,
                                 RecordTypeId = accountRT,
-            					IATACode__c='1234567',
+            					//IATACode__c='1234567',
+								IATACode__c='1234566',
             					Name='Test1 Agency',
             					Short_Name__c='Test1 Agency',
                                 Sector__c = AMS_Utils.SECTOR_PASSENGER,

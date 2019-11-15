@@ -242,6 +242,7 @@ public class AMS_2_MDM_WebserviceTest {
         agencyContentA1.ShippingCountry = 'Test';
         agencyContentA1.IATACode__c = '1000123';
         agencyContentA1.Sector__c = 'Travel Agent';
+        agencyContentA1.REASON_FOR_CREATION__C = 'Created by customer';
         update agencyContentA1;
         String r = AMS_2_MDM_Webservice.sendAgencyECC(agencyContentA1.Id , oscar.Id );
 

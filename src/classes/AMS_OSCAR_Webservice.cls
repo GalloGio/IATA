@@ -95,7 +95,7 @@ global class AMS_OSCAR_Webservice {
 
             ID IFAPcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
 
-            List<AMS_OSCAR__c> oscar = [select Name, Account__c, Account__r.BillingCountry, Account__r.Type, Account__r.Name from AMS_OSCAR__c where Id = : oscarId];
+            List<AMS_OSCAR__c> oscar = [select Name, Account__c, Account__r.BillingCountry, Account__r.Type, Account__r.Name, Account__r.Sector__c, Account__r.Category__c from AMS_OSCAR__c where Id = : oscarId];
             if (oscar != null && oscar.size() > 0) {
                 String accountId = oscar[0].Account__c;
 
@@ -181,7 +181,7 @@ global class AMS_OSCAR_Webservice {
 
             ID InternalCaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'InternalCasesEuropeSCE');
 
-            List<Case> cases = [select Id, OSCAR__r.Account__r.IATA_ISO_Country__r.Name, OSCAR__r.AMS_Online_Accreditation__r.Account_Name__c, OSCAR__r.Account__r.Name from Case where OSCAR__c = : oscar.Id AND ( (ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' ) OR (Parent.RecordType.Name = 'OSCAR Communication' AND Parent.Reason1__c ='Annual revalidation')) limit 1];
+            List<Case> cases = [select Id, OSCAR__r.Account__r.IATA_ISO_Country__r.Name, OSCAR__r.AMS_Online_Accreditation__r.Account_Name__c, OSCAR__r.Account__r.Name, OSCAR__r.Account__r.Sector__c, OSCAR__r.Account__r.Category__c from Case where OSCAR__c = : oscar.Id AND ( (ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' ) OR (Parent.RecordType.Name = 'OSCAR Communication' AND Parent.Reason1__c ='Annual revalidation')) limit 1];
 
             if (cases == null || cases.isEmpty()) {
                 result = 'Could not find a the Oscar Communication case related to this OSCAR.';
@@ -235,7 +235,7 @@ global class AMS_OSCAR_Webservice {
     WebService static String createChangeCodeNEW(String oscarId) {
 
         try {
-            List<AMS_OSCAR__c> oscar = [select Account__c, Account__r.CNS_Agency__c, Business_Process__c, Process__c, AMS_Online_Accreditation__c, recordTypeID, Is_NewGen__c from AMS_OSCAR__c where Id = : oscarId];
+            List<AMS_OSCAR__c> oscar = [select Account__c, Account__r.CNS_Agency__c, Business_Process__c, Process__c, AMS_Online_Accreditation__c, recordTypeID, Is_NewGen__c, Account__r.Sector__c, Account__r.Category__c from AMS_OSCAR__c where Id = : oscarId];
 
             AMS_OSCAR__c theOSCAR = oscar[0];
 
@@ -252,7 +252,7 @@ global class AMS_OSCAR_Webservice {
             changeCode.status  = n.Account_status_change__c;
             changeCode.publishedOnEBulletin = n.Published_in_bulletin__c;
 
-            Account acct = new Account(Id = theOSCAR.Account__c);
+            Account acct = new Account(Id = theOSCAR.Account__c, Sector__c = theOSCAR.Account__r.Sector__c, Category__c = theOSCAR.Account__r.Category__c);
             AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {theOSCAR}, new List<Account> {acct}, true);
 
             return 'OK';
@@ -266,7 +266,7 @@ global class AMS_OSCAR_Webservice {
     **/
     private static Case findOscarParentCase(Id oscarId) {
         List<Case> cases = [
-            SELECT Id, AccountId, Account.Type, ContactId, Region__c, Reason1__c, BSPCountry__c, Account.Accumulated_Irregularities__c,
+            SELECT Id, AccountId, Account.Type, Account.Sector__c, Account.Category__c, ContactId, Region__c, Reason1__c, BSPCountry__c, Account.Accumulated_Irregularities__c,
             SIDRA_Lite_Reason__c, NOT_Date__c, BusinessHoursId,
             oscar__r.Step6__c, oscar__r.Step9__c, oscar__r.Step11__c, oscar__r.Step12__c, oscar__r.Step14__c, oscar__r.Step26__c, oscar__r.Step35__c,
             oscar__r.RPM_Approval__c, oscar__r.Step44__c, oscar__r.Process__c
@@ -381,7 +381,7 @@ global class AMS_OSCAR_Webservice {
 
             ID commisionerCaseRecType = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');//SAAM
 
-            List<AMS_OSCAR__c> oscar = [select Name, Account__c, Account__r.Location_Class__c, Account__r.Name, Account__r.IATA_ISO_Country__r.Region__c, Account__r.IATA_ISO_Country__r.Name from AMS_OSCAR__c where Id = : oscarId];
+            List<AMS_OSCAR__c> oscar = [select Name, Account__c, Account__r.Location_Class__c, Account__r.Name, Account__r.IATA_ISO_Country__r.Region__c, Account__r.IATA_ISO_Country__r.Name, Account__r.Sector__c, Account__r.Category__c from AMS_OSCAR__c where Id = : oscarId];
             if (oscar != null && oscar.size() > 0) {
 
                 /*Not applicable, comissioner case can be created to passenger agencies on some situations
@@ -429,7 +429,7 @@ global class AMS_OSCAR_Webservice {
 
             ID fsReleaseRT = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');//SAAM
 
-            List<AMS_OSCAR__c> oscar = [select Name, Account__c, Account__r.Location_Class__c, Account__r.Name, Account__r.IATA_ISO_Country__c, Account__r.IATA_ISO_Country__r.Region__c, Account__r.IATA_ISO_Country__r.Name, Account__r.Category__c from AMS_OSCAR__c where Id = : oscarId];
+            List<AMS_OSCAR__c> oscar = [select Name, Account__c, Account__r.Location_Class__c, Account__r.Name, Account__r.IATA_ISO_Country__c, Account__r.IATA_ISO_Country__r.Region__c, Account__r.IATA_ISO_Country__r.Name, Account__r.Sector__c, Account__r.Category__c from AMS_OSCAR__c where Id = : oscarId];
             if (oscar != null && oscar.size() > 0) {
 
                 List<Case> cases = [select Id, ContactId from Case where OSCAR__c = :oscar[0].Id AND ( ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' ) limit 1];
@@ -497,7 +497,7 @@ global class AMS_OSCAR_Webservice {
             //creates change code
             //Account acct = new Account(Id = agencyId);
             //TD 2080607: CNS
-            Account acct = [Select id, CNS_Agency__c, Status__c from account where id = :AgencyId];
+            Account acct = [Select id, CNS_Agency__c, Status__c, Sector__c, Category__c from account where id = :AgencyId];
             AMS_OSCAR__c oscar = new AMS_OSCAR__c(Id = oscarId);
 
             List<Agency_Applied_Change_code__c> accountActiveChangeCode = [SELECT Reason_Code__c, Reason_Description__c,Account__r.Status__c FROM Agency_Applied_Change_code__c WHERE Account__c =: agencyId AND Active__c = TRUE];
