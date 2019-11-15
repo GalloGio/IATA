@@ -42,12 +42,14 @@ private class RegistrationComunicationsControllerTest {
         newAccount.Sector__c = 'Airline';
         newAccount.Category__c = 'Military';
         newAccount.Is_General_Public_Account__c = true;        
+        newAccount.Reason_for_creation__c = 'Account is missing';     
 
         Account newAccount2 = new Account();
         newAccount2.Name = 'Test Account 2';
         newAccount2.Sector__c = 'Airline';
         newAccount2.Category__c = 'Cargo only';
         newAccount2.Is_General_Public_Account__c = true;      
+        newAccount2.Reason_for_creation__c = 'Account is missing';    
 
         insert (new List<Account>{newAccount,newAccount2}); 
 

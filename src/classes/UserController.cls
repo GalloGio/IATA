@@ -29,8 +29,6 @@ public with sharing class UserController {
             query += ' AND Contact.Preferred_Language__c = \'' + string.escapeSingleQuotes(preferredLanguage) + '\'' ;
         }
         query += ' LIMIT ' + ITEMS_PER_PAGE + ' OFFSET ' + ITEMS_PER_PAGE * (page-1);
-        System.debug('VALINHO QUERY');
-        System.debug(query);
         List<User> result = Database.query(query);
         return result;
     }
