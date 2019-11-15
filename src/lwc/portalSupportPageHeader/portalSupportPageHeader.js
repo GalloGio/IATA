@@ -25,6 +25,7 @@ export default class PortalSupportPageHeader extends NavigationMixin(LightningEl
 
     @track loadingLangs = true;
     @track language = 'en_US';
+	@track langOptions = [];
 
     //links for images
     backgroundIcon = CSP_PortalPath + 'CSPortal/Images/Backgrounds/FAQsBackground.jpg';
