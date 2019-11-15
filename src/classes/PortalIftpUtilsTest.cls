@@ -86,7 +86,7 @@ public class PortalIftpUtilsTest {
 
 	static testMethod void portalIftpUtils_test1_2() {
 
-		User u2 = [select id, profile.name from user where Email = 'test.cont3@test.com' limit 1];
+		User u2 = [select id,Contact.AccountId, profile.name from user where Email = 'test.cont3@test.com' limit 1];
 
 		Id empItpId = [SELECT ContentDocumentId FROM ContentVersion WHERE Title = 'Emp Ins Document'].ContentDocumentId;
 		Id empItpId2 = [SELECT ContentDocumentId FROM ContentVersion WHERE Title = 'Emp Ins Document2'].ContentDocumentId;
@@ -104,7 +104,7 @@ public class PortalIftpUtilsTest {
 				i++;
 				roleAddr.Description__c = 'test upd ' + i;
 			}
-			PortalIftpUtils.InsertStationWrapper updStationWrapper = PortalIftpUtils.updateStation(roleAddrList3, null);
+			PortalIftpUtils.InsertStationWrapper updStationWrapper = PortalIftpUtils.updateStation(roleAddrList3, null, u2.Contact.AccountId);
 			System.assert(updStationWrapper.succeeded);
 
 			Airport_Detail__c addr = PortalIftpUtils.getITPStationEmployees(add2Id);
