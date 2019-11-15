@@ -433,7 +433,7 @@ export default class PortalCompanyProfileContactsList extends LightningElement {
         let downloadElement = document.createElement('a');
 
         // This  encodeURI encodes special characters, except: , / ? : @ & = + $ # (Use encodeURIComponent() to encode these characters).
-        downloadElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csvString);
+        downloadElement.href = 'data:text/csv;charset=utf-8,%EF%BB%BF' + encodeURIComponent(csvString);
         downloadElement.target = '_self';
         // CSV File Name
         downloadElement.download = 'exportContacts.csv';
