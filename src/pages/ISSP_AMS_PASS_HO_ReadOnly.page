@@ -171,6 +171,14 @@
                           <td style="border: 0;"><img src="/img/checkbox_{! IF(agencycon.Id == newForm.ISSP_AMS_Invoicing_Contact__c,'','un')}checked.gif"/></td>
                           <td style="border: 0;"><apex:outputText escape="false" value="{!$Label.ISSP_AMS_Invoicing_Contact}"/></td>
                       </tr>
+                      <tr style="{!IF(amsOfficeType == 'HO','','display:none;')}">
+                          <td style="border: 0;"><img src="/img/checkbox_{! IF(agencycon.PASS_admin__c,'','un')}checked.gif"/></td>
+                          <td style="border: 0;"><apex:outputText escape="false" value="{!$Label.ISSP_AMS_PASS_Admin}"/></td>
+                      </tr>
+                      <tr style="{!IF(amsOfficeType == 'HO','','display:none;')}">
+                        <td style="border: 0;"><img src="/img/checkbox_{! IF(agencycon.PASS_user__c,'','un')}checked.gif"/></td>
+                        <td style="border: 0;"><apex:outputText escape="false" value="{!$Label.ISSP_AMS_PASS_User}"/></td>
+                    </tr>
                   </table>                  
               </apex:column>
               <!--

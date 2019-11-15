@@ -75,6 +75,8 @@ public without sharing class ISSP_AMS_PASS_Accreditation {
     public string txtHelpGrossSales {get; set;}
     public string txtHelpTrainedStaffOrganization {get; set;} //FM - AMSU-20
     public string txtHelpTrainedStaffReference {get; set;} //FM - AMSU-20
+    public String txtHelpPassAdmin {get; set;}
+    public String txtHelpPassUser {get; set;}
 
     //Labels to come up in user's portal language (and not lang set on VF page)
     public string txtLocalAgencyDetailsTitle {get; set;}
@@ -1407,7 +1409,7 @@ public without sharing class ISSP_AMS_PASS_Accreditation {
                       Phone__c, PhoneNational__c, FAX__c, FAXNational__c, Financial_Assessment_Contact__c, Job_title__c, Mobile__c, MobileNational__c, Time_devoted_to_Agency_business__c, Agencies_prev_worked_for__c,
                       Prev_Job1_Position__c, Prev_Job1_From__c, Prev_Job1_IATA_accredited__c, Prev_Job1_IATA_code__c, Prev_Job1_Employer__c, Prev_Job1_Address__c, CASS_contact__c, Number_Of_Shares__c,
                       Prev_Job2_Position__c, Prev_Job2_From__c, Prev_Job2_IATA_accredited__c, Prev_Job2_IATA_code__c, Prev_Job2_Employer__c, Prev_Job2_Address__c, AMS_ContactId__c, AMS_OwnershipId__c, Authorised_to_make_customs_declarations__c,
-                PASS_contact__c
+                      PASS_admin__c, PASS_user__c
                       FROM AMS_Accreditation_Contact__c
                       WHERE Id = : editContactId];
 
@@ -1817,9 +1819,9 @@ public without sharing class ISSP_AMS_PASS_Accreditation {
 
             SYSTEM.DEBUG('accountId for OSCAR: ' + accountId);
 
-            if (newCase.RecordTypeId == OSCAR_RECORD_TYPE_ID)
+            if (newCase.RecordTypeId == OSCAR_RECORD_TYPE_ID){
                 OSCARIntegration(accountId, newForm.Id, typeOfProcess, newCase.Id);
-
+	    }	
              //Send std Case Confirmation email
             SYSTEM.DEBUG('Pre-Send Confirm: ' + isNoticeOfChange);
 
@@ -2496,7 +2498,7 @@ public without sharing class ISSP_AMS_PASS_Accreditation {
                 Prev_Job1_Position__c, Prev_Job1_From__c, Prev_Job1_IATA_accredited__c, Prev_Job1_IATA_code__c, Prev_Job1_Employer__c, Prev_Job1_Address__c,
                 Prev_Job2_Position__c, Prev_Job2_From__c, Prev_Job2_IATA_accredited__c, Prev_Job2_IATA_code__c, Prev_Job2_Employer__c, Prev_Job2_Address__c, Duplicate_contact_exists__c,
                 Portal_administrator__c, Contact_Id__c,Contact__c, AMS_OwnershipId__c, AMS_ContactId__c, Authorised_to_make_customs_declarations__c, Local_First_name__c, Local_Last_name__c,
-                PASS_contact__c
+                PASS_admin__c, PASS_user__c
                 FROM AMS_Accreditation_Contact__c
                 WHERE AMS_Pax_Accreditation_Form__r.Id = :newForm.Id AND  RecordType.DeveloperName = 'Person'
                 ORDER BY Agency_owner__c DESC, Name ASC
@@ -3404,7 +3406,8 @@ public without sharing class ISSP_AMS_PASS_Accreditation {
     private boolean validateForm(boolean includeErrorMsgs) {
         boolean errorFound = false;
         Integer cntAuthorisedSig;
-        Integer cntContact;
+        Integer cntAdmin;
+        Integer cntMultiplePASS;
 
         system.debug('aqui  amsOfficeType ' +  amsOfficeType);
         system.debug('aqui  sectorValue ' +  sectorValue);
@@ -3414,8 +3417,16 @@ public without sharing class ISSP_AMS_PASS_Accreditation {
 
         refreshCntIFAPContacts();
 
-        cntContact = [SELECT COUNT() FROM AMS_Accreditation_Contact__c
-                          WHERE AMS_Pax_Accreditation_Form__c = :newForm.Id AND PASS_contact__c = true];
+        /*cntContact = [SELECT COUNT() FROM AMS_Accreditation_Contact__c
+                          WHERE AMS_Pax_Accreditation_Form__c = :newForm.Id AND PASS_contact__c = true];*/
+
+
+        cntAdmin = [SELECT COUNT() FROM AMS_Accreditation_Contact__c
+                        WHERE AMS_Pax_Accreditation_Form__c = :newForm.Id AND PASS_admin__c = true];
+
+        cntMultiplePASS = [SELECT COUNT() FROM AMS_Accreditation_Contact__c
+                            WHERE AMS_Pax_Accreditation_Form__c = :newForm.Id AND PASS_admin__c = true AND PASS_user__c = true];
+
 
         system.debug('validateForm - cntAuthorisedSig: ' + cntAuthorisedSig);
         system.debug('validateForm - cntContact: ' + cntContact);
@@ -3449,12 +3460,28 @@ public without sharing class ISSP_AMS_PASS_Accreditation {
                 errorFound = true;
             }
 
-            if (cntContact == 0) {
+
+           if(cntAdmin == 0) {
+                ApexPages.Message myMsg;
+                myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Validation_PASS_Admin);
+                ApexPages.addMessage(myMsg);
+                errorFound = true;
+            }
+
+            if(cntMultiplePASS > 0) {
+                ApexPages.Message myMsg;
+                myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Validation_PASS_User);
+                ApexPages.addMessage(myMsg);
+                errorFound = true;
+            }
+
+
+            /*if (cntContact == 0) {
                 ApexPages.Message myMsg;
                 myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, 'Please designate at least one PASS Contact.');
                 ApexPages.addMessage(myMsg);
                 errorFound = true;
-            }
+            }*/
 
             if (cntAuthorisedSig == 0) {
                 ApexPages.Message myMsg;
@@ -3581,12 +3608,28 @@ public without sharing class ISSP_AMS_PASS_Accreditation {
                 errorFound = true;
             }
 
-            if (cntContact == 0) {
+
+            if(cntAdmin == 0) {
+                ApexPages.Message myMsg;
+                myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Validation_PASS_Admin);
+                ApexPages.addMessage(myMsg);
+                errorFound = true;
+            }
+
+            if(cntMultiplePASS > 0) {
+                ApexPages.Message myMsg;
+                myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Validation_PASS_User);
+                ApexPages.addMessage(myMsg);
+                errorFound = true;
+            }
+
+
+            /*if (cntContact == 0) {
                 ApexPages.Message myMsg;
                 myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, 'Please designate at least one PASS Contact.');
                 ApexPages.addMessage(myMsg);
                 errorFound = true;
-            }
+            }*/
 
             if (cntAuthorisedSig == 0) {
                 ApexPages.Message myMsg;
@@ -3797,6 +3840,25 @@ public without sharing class ISSP_AMS_PASS_Accreditation {
                 txtHelpTrainedStaffReference = (String)hlp.get(fldName);
             }
         }
+
+        hlp = ISSP_AMS_Contextual_Help__c.getValues('PASS_ADMIN');
+        if (hlp != null) {
+            if ((String)hlp.get(fldName) != null) {
+                txtHelpPassAdmin = (String)hlp.get(fldName);
+            } else {
+                txtHelpPassAdmin = (String)hlp.get(fldName);
+            }
+        }
+
+        hlp = ISSP_AMS_Contextual_Help__c.getValues('PASS_USER');
+        if (hlp != null) {
+            if ((String)hlp.get(fldName) != null) {
+                txtHelpPassUser = (String)hlp.get(fldName);
+            } else {
+                txtHelpPassUser = (String)hlp.get(fldName);
+            }
+        }
+
 
         txtLocalAgencyDetailsTitle = Label.ISSP_AMS_Local_Details_Title_PASS_BRANCH;
         txtLocalAgencyDetailsPleaseEnter = Label.ISSP_AMS_Local_Details_Please_Enter_PASS;

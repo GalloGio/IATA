@@ -703,10 +703,20 @@
 				                            <apex:column style="text-align:center">
 				                                <apex:facet name="header"><apex:outputText escape="false" style="float:left" value="&nbsp;{!$Label.ISSP_AMS_Portal_Admin}"><apex:image value="/img/msg_icons/info16.png" style="float:left" title="{!txtHelpPortalAdmin}" html-data-html="true" html-data-placement="top" html-data-toggle="tooltip"/></apex:outputText></apex:facet>
 				                                <input type="radio" name="portaladmin" id="{!agencycon.id}" VALUE="{!agencycon.id}" onclick="updateFieldValue(this,'{!$Component.PortalAdminId}');"/>
-				                            </apex:column>
-				                            <apex:column value="{!agencycon.PASS_contact__c}" style="text-align:center">
-				                                <apex:facet name="header"><apex:outputText escape="false" value="{!$Label.ISSP_AMS_PASS_Contact}"/></apex:facet>
-				                            </apex:column>
+											</apex:column>
+											<!--
+												<apex:column value="{!agencycon.PASS_contact__c}" style="text-align:center">
+													<apex:facet name="header"><apex:outputText escape="false" value="{!$Label.ISSP_AMS_PASS_Contact}"/></apex:facet>
+												</apex:column>
+											-->
+											
+											<apex:column value="{!agencycon.PASS_admin__c}" style="text-align:center">
+				                                <apex:facet name="header"><apex:outputText escape="false" value="{!$Label.ISSP_AMS_PASS_Admin}"><apex:image value="/img/msg_icons/info16.png" style="float:left" title="{!txtHelpPassAdmin}" html-data-html="true" html-data-placement="top" html-data-toggle="tooltip"/></apex:outputText></apex:facet>
+											</apex:column>
+											<apex:column value="{!agencycon.PASS_user__c}" style="text-align:center">
+												<apex:facet name="header"><apex:outputText escape="false" value="{!$Label.ISSP_AMS_PASS_User}"><apex:image value="/img/msg_icons/info16.png" style="float:left" title="{!txtHelpPassUser}" html-data-html="true" html-data-placement="top" html-data-toggle="tooltip"/></apex:outputText></apex:facet>
+											</apex:column>
+											
 				                            <apex:column style="text-align:center">
 				                                <apex:facet name="header"><apex:outputText escape="false" style="float:left" value="&nbsp;{!$Label.ISSP_AMS_Invoicing_Contact}"></apex:outputText></apex:facet>
 				                                <input type="radio" name="invoicingcontact" id="radio{!agencycon.id}" VALUE="{!agencycon.id}" onclick="updateFieldValue(this,'{!$Component.InvoicingContactId}');"/>
@@ -830,11 +840,23 @@
 					        <apex:pageBlockSectionItem labelStyle="white-space: nowrap;font-size:110%" dataStyle="width:15%">
 					            <apex:outputLabel >{!$ObjectType.AMS_Accreditation_Contact__c.fields.Authorised_signatory__c.Label}</apex:outputLabel>
 					            <apex:inputField value="{!newContact.Authorised_signatory__c}" />
-					        </apex:pageBlockSectionItem>              
-					        <apex:pageBlockSectionItem labelStyle="white-space: nowrap;font-size:110%" dataStyle="width:15%">
-					            <apex:outputLabel >{!$Label.ISSP_AMS_PASS_Contact}</apex:outputLabel>
-					            <apex:inputField value="{!newContact.PASS_contact__c}" />
-					        </apex:pageBlockSectionItem>
+							</apex:pageBlockSectionItem> 
+							<!--             
+								<apex:pageBlockSectionItem labelStyle="white-space: nowrap;font-size:110%" dataStyle="width:15%">
+									<apex:outputLabel >{!$Label.ISSP_AMS_PASS_Contact}</apex:outputLabel>
+									<apex:inputField value="{!newContact.PASS_contact__c}" />
+								</apex:pageBlockSectionItem>
+							-->
+							
+							<apex:pageBlockSectionItem labelStyle="white-space: nowrap;font-size:110%" dataStyle="width:15%">
+					            <apex:outputLabel >{!$Label.ISSP_AMS_PASS_Admin}</apex:outputLabel>
+					            <apex:inputField value="{!newContact.PASS_admin__c}" />
+							</apex:pageBlockSectionItem>
+							<apex:pageBlockSectionItem labelStyle="white-space: nowrap;font-size:110%" dataStyle="width:15%">
+					            <apex:outputLabel >{!$Label.ISSP_AMS_PASS_User}</apex:outputLabel>
+					            <apex:inputField value="{!newContact.PASS_user__c}" />
+							</apex:pageBlockSectionItem>
+							
 					    </apex:pageBlockSection>
 					      <table>
 					          <tr><td class="bg-info" colspan="3">{!$Label.ISSP_AMS_Step3_PersonModal_CheckBoxes}</td></tr>

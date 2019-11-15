@@ -88,6 +88,8 @@ public without sharing class ISSP_AMS_Accreditation {
     public string txtHelpGrossSales {get; set;}
     public string txtHelpTrainedStaffOrganization {get; set;} //FM - AMSU-20
     public string txtHelpTrainedStaffReference {get; set;} //FM - AMSU-20
+    public String txtHelpPassAdmin {get; set;}
+    public String txtHelpPassUser {get; set;}
 
     //Labels to come up in user's portal language (and not lang set on VF page)
     public string txtLocalAgencyDetailsTitle {get; set;}
@@ -4114,7 +4116,7 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                 Prev_Job1_Position__c, Prev_Job1_From__c, Prev_Job1_IATA_accredited__c, Prev_Job1_IATA_code__c, Prev_Job1_Employer__c, Prev_Job1_Address__c,
                 Prev_Job2_Position__c, Prev_Job2_From__c, Prev_Job2_IATA_accredited__c, Prev_Job2_IATA_code__c, Prev_Job2_Employer__c, Prev_Job2_Address__c, Duplicate_contact_exists__c,
                 Portal_administrator__c, Contact_Id__c,Contact__c, AMS_OwnershipId__c, AMS_ContactId__c, Authorised_to_make_customs_declarations__c, Local_First_name__c, Local_Last_name__c,
-                PASS_Contact__c
+                PASS_Contact__c, PASS_admin__c, PASS_user__c
                 FROM AMS_Accreditation_Contact__c
                 WHERE AMS_Pax_Accreditation_Form__r.Id = :newForm.Id AND  RecordType.DeveloperName = 'Person'
                 ORDER BY Agency_owner__c DESC, Name ASC
@@ -7096,6 +7098,25 @@ System.DEBUG('validateCharactersInForm  - 4 - errorFound: '+errorFound);
                 txtHelpTrainedStaffReference = (String)hlp.get(fldName);
             }
         }
+
+        hlp = ISSP_AMS_Contextual_Help__c.getValues('PASS_ADMIN');
+        if (hlp != null) {
+            if ((String)hlp.get(fldName) != null) {
+                txtHelpPassAdmin = (String)hlp.get(fldName);
+            } else {
+                txtHelpPassAdmin = (String)hlp.get(fldName);
+            }
+        }
+
+        hlp = ISSP_AMS_Contextual_Help__c.getValues('PASS_USER');
+        if (hlp != null) {
+            if ((String)hlp.get(fldName) != null) {
+                txtHelpPassUser = (String)hlp.get(fldName);
+            } else {
+                txtHelpPassUser = (String)hlp.get(fldName);
+            }
+        }
+
 
         txtLocalAgencyDetailsTitle = Label.ISSP_AMS_Local_Details_Title;
         txtLocalAgencyDetailsPleaseEnter = Label.ISSP_AMS_Local_Details_Please_Enter;
