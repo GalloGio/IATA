@@ -1080,6 +1080,9 @@ global without sharing class ISSP_APProcess {
 
     public Pagereference goToStep2(){
         if(isPassAirline){
+            // Delete country unused files - PASS
+            deleteUnusedCountryFiles();
+
             passParam='&airline=PASS';
             if(isStep3){
                 return new Pagereference('/ISSP_APProcess?caseId='+newCase.Id+'&step=1'+passParam); 
@@ -1242,6 +1245,20 @@ global without sharing class ISSP_APProcess {
         }
         if(!AFList.isEmpty()){
             insert AFList;
+        }
+        
+
+    }
+
+    /**
+        Deletes unused country attachments - PASS
+    **/
+    private static void deleteUnusedAttachment(Set<Id> attachmentToDeleteSet) {
+        if(attachmentToDeleteSet != null && attachmentToDeleteSet.size() > 0) {
+            List<AmazonFile__c> attachmentToDeleteList = new List<AmazonFile__c>([SELECT Id, Full_Name_Unique__c FROM AmazonFile__c WHERE Id IN :attachmentToDeleteSet]);
+            for (AmazonFile__c attRecord:attachmentToDeleteList) {
+                deleteAmazonAttachment(attRecord.Id, attRecord.Full_Name_Unique__c);
+            }
         }
     }
     /**
@@ -1693,6 +1710,60 @@ public pagereference UploadFile(){
         }
         return attachmentList;
     }
+
+    // Delete country unused files - PASS
+    private void deleteUnusedCountryFiles() {
+        Set<Id> attachmentToDeleteSet = new Set<Id>();
+        List<AmazonFile__c> attchAmazon = getAttachAmazonList();
+        List<String> isocodeList = new List<String>();
+        Boolean attachmentWithContry;
+        if(!string.isEmpty(newCase.Country_Concerned__c)){
+            isocodeList = newCase.Country_Concerned__c.split(';');
+        } else {
+            isocodeList.add(newCase.IFAP_Country_ISO__c);
+        }
+
+        for(AmazonFile__c amazonRecord:attchAmazon){
+            attachmentWithContry = false;
+            for(String country : isocodeList){
+                if(amazonRecord.Name.startsWith(country)){
+                    attachmentWithContry=true;
+                }
+            }
+            if(!attachmentWithContry) {
+                attachmentToDeleteSet.add(amazonRecord.Id);
+            }
+        }
+        if (attachmentToDeleteSet.size() > 0) {
+            ISSP_APProcess.deleteUnusedAttachment(attachmentToDeleteSet);
+        }
+    }
+
+    //get Amazon country files - PASS
+    public List<AmazonFile__c> getAttachAmazonList(){
+        List<AmazonFile__c> attachmentList=new List<AmazonFile__c>();
+        attachmentList = [SELECT Id, Name,Full_Name_Unique__c,Source__c,File_Identifier_picklist__c,Size_MB__c,RecordTypeId FROM AmazonFile__c WHERE Case__c=:vCaseId];
+        return attachmentList;
+    }
+
+    
+    /**
+		Delete a file in Amazon Bucket, including AmazonFile object in Amazon - PASS
+	**/
+    @future(callout=true)
+	private static void deleteAmazonAttachment(String strId, String fullName) {
+		try {
+            
+			Id sObjectId = Id.ValueOf(strId);
+            WrapperAttach attach = WrapperAttach.getAmazonAttachment( sObjectId, fullName);
+            attach.moveToBucket();
+
+		} catch (Exception e) {
+            System.debug('PASS deleteAmazonAttachment ' + e.getMessage());
+			throw e;
+		}
+	}
+    
     ///Keeping these lines to avoid deployment issues, can be removed after successful prod deployment
   
     public string strParentLegalName {get; set;}
