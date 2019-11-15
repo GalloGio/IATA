@@ -9,6 +9,8 @@ import searchContacts from '@salesforce/apex/PortalSupportReachUsCreateNewCaseCt
 import createCase from '@salesforce/apex/PortalSupportReachUsCreateNewCaseCtrl.createCase';
 import getProfile from '@salesforce/apex/PortalSupportReachUsCreateNewCaseCtrl.getProfile';
 import insertCase from '@salesforce/apex/PortalSupportReachUsCreateNewCaseCtrl.insertCase';
+import isUserLevelOne from '@salesforce/apex/PortalSupportReachUsCreateNewCaseCtrl.isUserLevelOne';
+
 
 // Import custom labels 
 import csp_CreateNewCaseTopSubLabel from '@salesforce/label/c.csp_CreateNewCaseTopSubLabel';
@@ -126,6 +128,9 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
     //does the user have an Agent profile?
     @track relatedAccounts;
 
+    //is the user a Level1 user? If he has not completed level 2 registration he is not
+    @track Level1User = false;
+
     //store parameters in globals for later use
     category;
     topic;
@@ -149,10 +154,29 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
 
     //Same as doInit() on aura
     connectedCallback() {
+        this.isLevelOneUser();
         this.validateEntryParameters();
         this.getRelatedAccounts();
         this.getRelatedContacts();
 
+    }
+
+    isLevelOneUser(){
+        isUserLevelOne({userId: this.userId}).then(result => {
+            this.Level1User = result;
+        }).catch(error => {
+            //throws error
+            this.error = error;
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: this.label.PKB2_js_error,
+                    message: this.label.ISSP_ANG_GenericError,
+                    variant: 'error'
+                })
+            );
+            // eslint-disable-next-line no-console
+            console.log('Error: ', error);
+        });
     }
 
     //validates the entry parameters coming from the URL. 
