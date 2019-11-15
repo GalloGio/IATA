@@ -33,11 +33,15 @@ trigger Account_Contact_Role on Account_Contact_Role__c (after delete, after ins
                     acr.UniqueKey__c = TIP_Utils.AccountContactRoleGenerateUniquekey(acr);
                 }
             }
+
+            Account_Contact_Role_Helper.generateGadmUniqueKey(Trigger.new);
+            Account_Contact_Role_Helper.checkForGadmUserRole(Trigger.new);
         }
     }
-
-    //Trigger the platform events
+    
+    //Trigger the platform events    
     if(trigger.isAfter){
+        ShareObjectsToExternalUsers.shareObjectsByRoleOnAccountContactRoleChange(Trigger.new ,Trigger.oldMap);
         if((Limits.getLimitQueueableJobs() - Limits.getQueueableJobs()) > 0 && !System.isFuture() && !System.isBatch()) {
             System.enqueueJob(new PlatformEvents_Helper((trigger.isDelete?trigger.OldMap:Trigger.newMap), 'AccountContactRole__e', 'Account_Contact_Role__c', trigger.isInsert, trigger.isUpdate, trigger.isDelete, trigger.isUndelete));
         } else {

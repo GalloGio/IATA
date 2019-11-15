@@ -90,7 +90,7 @@ private class IDCardUtilTest {
         
         insert pt;
         
-        Price_Table__c[] listPriceTables = [Select ID, IATA_Package__c, ID_Card_Fee__c, Type_Class_of_Agent__c, Expedite__c, Name From Price_Table__c p where p.Type_Class_of_Agent__c = 'TIDS' and p.ISO_Country__r.Name = 'Canada'];
+        Price_Table__c[] listPriceTables = [Select ID, IATA_Package__c, ID_Card_Fee__c, Type_Class_of_Agent__c, Expedite__c, Name, Cost_of_Printer__c From Price_Table__c p where p.Type_Class_of_Agent__c = 'TIDS' and p.ISO_Country__r.Name = 'Canada'];
         
         if (listPriceTables == null || listPriceTables.size() == 0) {
             throw new IDCardApplicationException();
@@ -372,7 +372,7 @@ private class IDCardUtilTest {
         
         insert pt;
         
-        Price_Table__c[] listPriceTables = [Select ID, ID_Card_Fee__c,IATA_Package__c,  Type_Class_of_Agent__c, Expedite__c, Name From Price_Table__c p where p.Type_Class_of_Agent__c = 'TIDS' and p.ISO_Country__r.Name = 'Canada'];
+        Price_Table__c[] listPriceTables = [Select ID, ID_Card_Fee__c,IATA_Package__c,  Type_Class_of_Agent__c, Expedite__c, Name, Cost_of_Printer__c From Price_Table__c p where p.Type_Class_of_Agent__c = 'TIDS' and p.ISO_Country__r.Name = 'Canada'];
         
         if (listPriceTables == null || listPriceTables.size() == 0) {
             throw new IDCardApplicationException();

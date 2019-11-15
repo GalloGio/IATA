@@ -31,6 +31,24 @@
                 <behavior>Readonly</behavior>
                 <field>Flow_Status__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Account_Name__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Effective_From_Date__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Effective_To_Date__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Status__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -80,6 +98,7 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Account_Role_Services__c</fields>
         <relatedList>Account_Role_Service__c.Account_Role__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -88,6 +107,23 @@
         <fields>Detailed_Account_Role__c</fields>
         <fields>E_and_F_Status__c</fields>
         <relatedList>E_and_F_Account_Role_Detail__c.Account_Role__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>Contact_Name__c</fields>
+        <fields>Contact_Roles__c</fields>
+        <fields>Contact_Role_Name__c</fields>
+        <fields>NAME</fields>
+        <fields>Service_Rendered__c</fields>
+        <fields>Email__c</fields>
+        <fields>Account__c</fields>
+        <fields>Title__c</fields>
+        <fields>First_Name__c</fields>
+        <fields>Last_Name__c</fields>
+        <relatedList>Account_Contact_Role__c.Account_Role__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>UIS_Account_Role_Details__c.Account_Role__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>

@@ -40,10 +40,10 @@
         </assignmentItems>
     </assignments>
     <constants>
-        <name>TYPE_INSERT</name>
+        <name>TYPE_CREATE</name>
         <dataType>String</dataType>
         <value>
-            <stringValue>Insert</stringValue>
+            <stringValue>Create</stringValue>
         </value>
     </constants>
     <decisions>

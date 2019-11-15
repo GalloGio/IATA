@@ -102136,27 +102136,6 @@ ISBLANK( ParentId )
         <errorMessage>The &quot;Verified&quot; value is available if a Business address is created.</errorMessage>
     </validationRules>
     <validationRules>
-        <fullName>EF_VerificationStatus_Creation_ChangeRT</fullName>
-        <active>true</active>
-        <description>At creation time and Record Type change, an account which is not a standard account needs to be verified</description>
-        <errorConditionFormula>AND(
-     OR( RecordTypeDeveloperName__c = &apos;Airport&apos;,
-         RecordTypeDeveloperName__c = &apos;Branch&apos;,
-         RecordTypeDeveloperName__c = &apos;Operator&apos;,
-         RecordTypeDeveloperName__c = &apos;Others&apos;
-     ),
-               
-     OR( ISNEW(),
-         ISCHANGED (RecordTypeId)
-     ),
-
-     OR(ISPICKVAL(Verification_Status__c,&apos;Unverified&apos;),
-        ISPICKVAL(Verification_Status__c,&quot;&quot;)
-     )
-)</errorConditionFormula>
-        <errorMessage>The account needs to be verified.</errorMessage>
-    </validationRules>
-    <validationRules>
         <fullName>EF_VerificationStatus_LegalName</fullName>
         <active>true</active>
         <description>The &quot;Verified&quot; value is available if the E&amp;F account have a Legal Name (except Airport)</description>

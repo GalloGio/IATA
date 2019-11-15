@@ -72,6 +72,7 @@
 					"con" : c.get("v.contact"),
 					"acc" : c.get("v.account"),
 					"serviceName" : c.get("v.serviceName"),
+					"serviceSpecificParams" : {"isPowerUser" : c.get("v.isGadmPowerUser")},
 					"cityAndStateIds" : cityAndStateIds
 				});
 			

@@ -149,11 +149,23 @@
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableLicensing>false</enableLicensing>
-    <enableReports>true</enableReports>
-    <enableSearch>false</enableSearch>
+    <enableReports>false</enableReports>
+    <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>ControlledByParent</externalSharingModel>
+    <fields>
+        <fullName>Account_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>HYPERLINK(&apos;/&apos;+Account_Role__r.Account__c, Account_Role__r.Account__r.Name, &apos;_self&apos;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Account</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
     <fields>
         <fullName>Account_Role__c</fullName>
         <description>Reference to the Account Role</description>
@@ -196,6 +208,18 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Contact_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>Contact__r.LastName +&apos;, &apos;+ Contact__r.FirstName</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Contact_Role_Name__c</fullName>
         <description>A functional role that a Contact belonging to an Account may assume when interacting with an IATA Salesforce functional capability. This designation technically supports the provisioning and delivery of IATA Salesforce functional capabilities.</description>
         <externalId>false</externalId>
@@ -229,6 +253,19 @@
             </valueSetDefinition>
         </valueSet>
         <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Contact_Roles__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Contact Roles</label>
+        <referenceTo>Contact_Roles__c</referenceTo>
+        <relationshipLabel>Account Contacts Role</relationshipLabel>
+        <relationshipName>Account_Contacts_Role</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
     </fields>
     <fields>
         <fullName>Contact__c</fullName>
@@ -307,6 +344,11 @@
             <valueSetDefinition>
                 <sorted>true</sorted>
                 <value>
+                    <fullName>GADM</fullName>
+                    <default>false</default>
+                    <label>GADM</label>
+                </value>
+                <value>
                     <fullName>Other</fullName>
                     <default>false</default>
                     <label>Other</label>
@@ -336,7 +378,7 @@
         <description>use to uniquely identify a record and to prevent duplicates</description>
         <externalId>true</externalId>
         <label>UniqueKey</label>
-        <length>50</length>
+        <length>70</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -403,6 +445,18 @@
         </valueSet>
     </fields>
     <label>Account Contact Role</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Contact__c</columns>
+        <columns>Service_Rendered__c</columns>
+        <columns>Account_Role__c</columns>
+        <columns>Contact_Roles__c</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>RECORDTYPE</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
     <nameField>
         <displayFormat>ACR-{000000000}</displayFormat>
         <label>Account Contact Role Id</label>
@@ -411,6 +465,58 @@
     </nameField>
     <pluralLabel>Account Contacts Role</pluralLabel>
     <recordTypeTrackHistory>false</recordTypeTrackHistory>
+    <recordTypes>
+        <fullName>Functional</fullName>
+        <active>true</active>
+        <description>Relates to the role of the Contact when interacting within the context of the IATA Customer Portal</description>
+        <label>Functional</label>
+        <picklistValues>
+            <picklist>Contact_Role__c</picklist>
+            <values>
+                <fullName>Primary Contact</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Service_Rendered__c</picklist>
+            <values>
+                <fullName>GADM</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TIP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Group</fullName>
+        <active>true</active>
+        <description>Group (for participation in cross company/account groupings such as alliances).</description>
+        <label>Group</label>
+        <picklistValues>
+            <picklist>Contact_Role__c</picklist>
+            <values>
+                <fullName>Primary Contact</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Service_Rendered__c</picklist>
+            <values>
+                <fullName>GADM</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TIP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
     <recordTypes>
         <fullName>Master</fullName>
         <active>true</active>
@@ -426,7 +532,7 @@
         <picklistValues>
             <picklist>Service_Rendered__c</picklist>
             <values>
-                <fullName>Other</fullName>
+                <fullName>GADM</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -450,24 +556,27 @@
         <picklistValues>
             <picklist>Service_Rendered__c</picklist>
             <values>
+                <fullName>GADM</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>TIP</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
     </recordTypes>
     <searchLayouts>
-        <lookupDialogsAdditionalFields>Contact_And_Functional_Role__c</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>Contact__c</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>First_Name__c</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>Last_Name__c</lookupDialogsAdditionalFields>
-        <lookupPhoneDialogsAdditionalFields>Contact_And_Functional_Role__c</lookupPhoneDialogsAdditionalFields>
-        <searchResultsAdditionalFields>Contact_And_Functional_Role__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Title__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Contact__c</searchResultsAdditionalFields>
+        <customTabListAdditionalFields>Contact_Name__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Account_Role__c</customTabListAdditionalFields>
+        <lookupDialogsAdditionalFields>Contact_Name__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Email__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Contact_Roles__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Service_Rendered__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Account_Name__c</lookupDialogsAdditionalFields>
+        <searchResultsAdditionalFields>Account__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Account_Role__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>First_Name__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Last_Name__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Functional_Role__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Account_Name__c</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>ControlledByParent</sharingModel>
     <validationRules>
