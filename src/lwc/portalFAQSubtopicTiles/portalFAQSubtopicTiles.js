@@ -111,7 +111,17 @@ export default class PortalFAQSubtopicTiles extends LightningElement {
         });
 
         this.subTopicTiles = [];
-        this.subTopicTiles = tempSubTopics;
+        this.subTopicTiles = tempSubTopics;      
+        
+        //portalFAQPage handles the event and send parameters to portalFAQArticleAccordion to show the articles under selected subtopic
+        let subtopicInfo = {
+            topic: this.topic,
+            subtopic: subtopicName
+        };   
+        this.selectedEvent('subtopicselected', subtopicInfo);
+
+        window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+    }
 
         let __faqObject = JSON.parse(JSON.stringify(this._faqObject));
         __faqObject.category = '';
