@@ -63,8 +63,6 @@ public without sharing class LiveAgentPostChatController {
 
                 return lang;
         }
-			return lang;
-		}
 		set;
 	}
 	
