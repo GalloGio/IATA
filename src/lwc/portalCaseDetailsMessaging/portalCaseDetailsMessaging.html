@@ -75,6 +75,7 @@
             <div class="customWhiteBackground topLightGrayBorder">
                 <div class="slds-grid slds-wrap slds-p-around_small messageTextareaContainer">
                     <div class="slds-col slds-size_11-of-12">
+						<lightning-spinner alternative-text="Loading" size="small" if:true={loadingCom}></lightning-spinner>
                         <textarea placeholder={label.CSP_CaseMessage_InputPlaceholder} class="slds-textarea textarea"
                             onchange={handleInputChange} onkeyup={handleKeyUp}
                             disabled={messageInputLoading}>{newMessage}</textarea>
