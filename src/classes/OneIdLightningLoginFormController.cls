@@ -411,7 +411,7 @@ public without sharing class OneIdLightningLoginFormController {
 
     @AuraEnabled
     public static string getCustomerPortalUrl(){
-        string url = OneIdUtils.getSiteCompleteUrl(OneIdUtils.Mode.CSP) + Label.CSP_PortalPath;
+        string url = OneIdUtils.getSiteCompleteUrl(OneIdUtils.Mode.CSP) + Label.CSP_PortalPath + 'login';
         return url;
     }
 	
