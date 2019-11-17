@@ -200,8 +200,8 @@ public static CSP_Utils.PagedResult getSearchProfiles(String portalSearchFilterW
 
 
 	if(profileFiltersWrapper.profileComponent.profileCountryFilter != null && profileFiltersWrapper.profileComponent.profileCountryFilter != '') {
-		baseQueryContacts += ' AND ISO_Country__r.Name = \'' + profileFiltersWrapper.profileComponent.profileCountryFilter + '\' ';
-		baseQueryAccounts += ' AND IATA_ISO_Country__r.Name = \'' + profileFiltersWrapper.profileComponent.profileCountryFilter + '\' ';
+		baseQueryContacts += ' AND ISO_Country__r.ISO_Code__c = \'' + profileFiltersWrapper.profileComponent.profileCountryFilter + '\' ';
+		baseQueryAccounts += ' AND IATA_ISO_Country__r.ISO_Code__c = \'' + profileFiltersWrapper.profileComponent.profileCountryFilter + '\' ';
 	}
 
 	if(profileFiltersWrapper.profileComponent.profileStatusFilter != null && profileFiltersWrapper.profileComponent.profileStatusFilter != '') {
