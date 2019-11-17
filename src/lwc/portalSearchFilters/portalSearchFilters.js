@@ -7,6 +7,7 @@ import typeOfCasePortalCustomPicklist from '@salesforce/apex/PortalCasesCtrl.typ
 import getAllPickListValues from '@salesforce/apex/PortalFAQsCtrl.getFAQsInfo';
 import typeOfProfilePortalCustomPicklist from '@salesforce/apex/PortalProfileCtrl.typeOfProfilePortalCustomPicklist';
 import userPortalStatusCustomPicklist from '@salesforce/apex/PortalProfileCtrl.userPortalStatusCustomPicklist';
+import getCountryList from '@salesforce/apex/PortalSupportReachUsCtrl.getCountryList';
 
 //import custom labels
 import CSP_Cases from '@salesforce/label/c.CSP_Cases';
@@ -155,10 +156,15 @@ export default class PortalSearchFilters extends LightningElement {
         .then(result =>{
             this.profileTypeOptions = this.getPickWithAllValue(result);
         });
-        getPickListValues({ sobj : 'Contact', field : 'Country__c' })
-        .then(result => {
-            this.profileCountryOptions = this.getPickWithAllValue(result);
-        });
+        getCountryList()
+            .then(result => {
+                let auxmyCountryOptions = [];
+
+                Object.keys(result).forEach(function (el) {
+                    auxmyCountryOptions.push({ checked: false, label: result[el], value: el });
+                });
+                this.profileCountryOptions = this.getPickWithAllValue(auxmyCountryOptions);
+            });
         userPortalStatusCustomPicklist({})
         .then(result =>{
             this.profileContactStatusOptions = this.getPickWithAllValue(result);
