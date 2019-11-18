@@ -30,12 +30,34 @@ public without sharing class LightningConnectedAppHelper {
                 }
                 values.addAll(uniqueApps);
             }
+
+            if(!values.isEmpty()) {
+                if(hasUserAccessToGadm()) {
+                    for(integer i = 0; i < values.size(); i++) {
+                        if(values[i] == 'GADM') {
+                            values.remove(i);
+                            break;
+                        }
+                    }
+                }
+            }
+
+
         }catch(Exception err){
             System.debug(err);
         }
 
-
 	    return values;
+    }
+
+    private static boolean hasUserAccessToGadm() {
+        List<One_Id_App_Config_Detail__c> apps = OneIdProvisioningDAO.getAppPermissionSetListForAppicker('GADM');
+        if(! apps.isEmpty()) {
+            String permissionSetName = apps[0].PermissionSet_SSO__c;
+            List<PermissionSetAssignment> assignments = [SELECT Id FROM PermissionSetAssignment WHERE PermissionSet.Name = :permissionSetName AND AssigneeId = :UserInfo.getUserId()];
+            return assignments.size() > 0;
+        }
+        return false;
     }
 
     @AuraEnabled
@@ -163,6 +185,9 @@ public without sharing class LightningConnectedAppHelper {
 
                 for(One_Id_App_Config_Detail__c app : apps){
 
+                    if(connectedapp == 'GADM') {
+                        permissionsetToAssignNames.add(app.PermissionSet_SSO__c);
+                    }else{
                     permissionsetToAssignNames.add(app.PermissionSet_Provisioning__c);
 
                     One_Id_User_Applications__c anUserApp = new One_Id_User_Applications__c();
@@ -176,6 +201,7 @@ public without sharing class LightningConnectedAppHelper {
                     
                     anUserApp.App_Key__c  = LightningConnectedAppHelper.OneIdBuildUserAppKey(anUserApp);
                     userAppsIn.add(anUserApp);
+                    }
                 }
             }
 
@@ -195,8 +221,23 @@ public without sharing class LightningConnectedAppHelper {
                     LightningConnectedAppHelper.massAssignPermissionSets(usrList, permissionsetToAssign);
                     */
                     //Insert userAppsIn;
+                    if(connectedapp == 'GADM') {
+                        massAssignPermissionSets(new List<Id> {UserInfo.getUserId()}, permissionsetToAssign);
+                        //add methods to create roles etc.
+                        User currentUser = [SELECT Id, ContactId, AccountId FROM User WHERE Id = :UserInfo.getUserId()];
+                        System.debug('current user:: ' + currentUser);
+                        Account acc = [SELECT Id FROM Account WHERE Id = :currentUser.AccountId];
+                        Contact con = [SELECT Id FROM Contact WHERE Id = :currentUser.ContactId];
+                        Boolean isPowerUser = (role == 'Power User');
+
+                        Account_Role__c accountRole = OneId_RegistrationHelper_GADM.createAccountRole(acc);
+                        OneId_RegistrationHelper_GADM.createContactRole(con, accountRole, isPowerUser);
+
+                    }else{
                     String serialized = JSON.serialize(userAppsIn);
                     LightningConnectedAppHelper.createUserApps(serialized);
+                    }
+
                 }
 			}
 		}

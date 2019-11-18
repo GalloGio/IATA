@@ -18,7 +18,7 @@
         });
 		$A.enqueueAction(action);
 	},
-    
+
      openStep: function(cmp, step) {
         cmp.set("v.activeSection", step);
      },
@@ -26,14 +26,19 @@
       loadInvitationInfo: function(cmp, invitationId) {
           // Get invitation info and fill fiels but let it editable
               var action = cmp.get("c.loadInvitationInfo");
-                  action.setParams({            
+                  action.setParams({
                   "invitationId": invitationId
               });
               action.setCallback(this, function(resp) {
                 var invitationWrap = resp.getReturnValue();
                 // Fill contact
                 cmp.set("v.contact", invitationWrap);
-                //cmp.set("v.account", invitationWrap.account);
+                //Fill accountId for GADM
+                let accountId = invitationWrap.AccountId;
+                let serviceName = cmp.get('v.serviceName');
+                if(! $A.util.isEmpty(accountId) && serviceName === 'GADM') {
+                    cmp.set('v.gadmAccountId', accountId);
+                }
               });
               $A.enqueueAction(action);
         },

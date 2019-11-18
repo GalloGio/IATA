@@ -585,8 +585,19 @@ public with sharing class IDCardTestData{
         iataISOCountry1.ISO_Code_Numeric__c = 990;
         iataISOCountry1.Region__c = 'Americas';
         iataISOCountry1.SLA_Type__c = 'SET4';
+        
+        IATA_ISO_Country__c iataISOCountry2 = new IATA_ISO_Country__c ();
+        iataISOCountry2.Name = 'United States of America';
+        iataISOCountry2.AIMS_Area_ID__c = '2';
+        iataISOCountry2.AIMS_Area_Name__c = 'USA';
+        iataISOCountry2.Case_BSP_Country__c = 'USA';
+        iataISOCountry2.ISO_Code__c = 'US';
+        iataISOCountry2.ISO_Code_Numeric__c = 991;
+        iataISOCountry2.Region__c = 'Americas';
+        iataISOCountry2.SLA_Type__c = 'SET4';
                 
         IDCards_IATAISOCountries.add(iataISOCountry1);
+        IDCards_IATAISOCountries.add(iataISOCountry2);
     	insert IDCards_IATAISOCountries;
     	
         Price_Table__c priceTable1 = new Price_Table__c();
@@ -611,7 +622,7 @@ public with sharing class IDCardTestData{
         priceTable2.Region__c = 'IDCA';
         priceTable2.Type_Class_of_Agent__c = 'Passenger';
         
-         Price_Table__c priceTable3 = new Price_Table__c();
+        Price_Table__c priceTable3 = new Price_Table__c();
         priceTable3.Can_Pay_by_Cheque__c = false;
         priceTable3.CurrencyIsoCode = 'CAD';
         priceTable3.Expedite__c = 23.0;
@@ -621,6 +632,28 @@ public with sharing class IDCardTestData{
         priceTable3.ISO_Country__c = IDCards_IATAISOCountries[0].Id;
         priceTable3.Region__c = 'IDCA';
         priceTable3.Type_Class_of_Agent__c = 'Domestic';
+    	
+        Price_Table__c priceTable4 = new Price_Table__c();
+        priceTable4.Can_Pay_by_Cheque__c = false;
+        priceTable4.CurrencyIsoCode = 'CAD';
+        priceTable4.Expedite__c = 23.0;
+        priceTable4.Expedite_Delivery_added_to_IDCard_Price__c = false;
+        priceTable4.IATA_Package__c = 180;
+        priceTable4.ID_Card_Fee__c = 55;
+        priceTable4.ISO_Country__c = IDCards_IATAISOCountries[1].Id;
+        priceTable4.Region__c = 'IDCA';
+        priceTable4.Type_Class_of_Agent__c = 'TIDS';
+        
+        Price_Table__c priceTable5 = new Price_Table__c();
+        priceTable5.Can_Pay_by_Cheque__c = false;
+        priceTable5.CurrencyIsoCode = 'CAD';
+        priceTable5.Expedite__c = 23.0;
+        priceTable5.Expedite_Delivery_added_to_IDCard_Price__c = false;
+        priceTable5.IATA_Package__c = 160;
+        priceTable5.ID_Card_Fee__c = 35;
+        priceTable5.ISO_Country__c = IDCards_IATAISOCountries[1].Id;
+        priceTable5.Region__c = 'IDCA';
+        priceTable5.Type_Class_of_Agent__c = 'Passenger';
         
         Promotion__c promotion1 = new Promotion__c();
         promotion1.Promotion_Value__c = 50;
@@ -656,6 +689,8 @@ public with sharing class IDCardTestData{
             */    
     	IDCards_Price_Tables.add(priceTable1);
     	IDCards_Price_Tables.add(priceTable2);
+    	IDCards_Price_Tables.add(priceTable4);
+    	IDCards_Price_Tables.add(priceTable5);
     	
     	IDCards_Promotions.add(promotion1);
     	
