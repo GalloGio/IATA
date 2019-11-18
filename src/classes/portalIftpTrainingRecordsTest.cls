@@ -35,8 +35,8 @@ public class portalIftpTrainingRecordsTest {
 		List<String> searchValues = new List<String>();
 		searchValues.add('PTX');   //auxStations,
 		searchValues.add('null');   //auxItp,
-		searchValues.add('null');   //auxExpirationStatus,
-		searchValues.add('null');   //auxAircraftType,
+		searchValues.add('Active, Expired');   //auxExpirationStatus,
+		searchValues.add(strAircraftTypes);   //auxAircraftType,
 		searchValues.add('null');   //auxProficiency,
 		searchValues.add('null');   //auxFromDate,
 		searchValues.add('null');   //auxToDate,
@@ -48,10 +48,10 @@ public class portalIftpTrainingRecordsTest {
 		List<String> searchValues2 = new List<String>();
 		searchValues2.add('All my associated stations');   //auxStations,
 		searchValues2.add('null');   //auxItp,
-		searchValues2.add('Active,Expired');   //auxExpirationStatus,
+		searchValues2.add('Active, Expired');   //auxExpirationStatus,
 		searchValues2.add(strAircraftTypes);   //auxAircraftType,
 		searchValues2.add('null');   //auxProficiency,
-		searchValues2.add(DateTime.Now().addDays(-25).format('yyyy-MM-dd'));   //auxFromDate,
+		searchValues2.add('null');   //auxFromDate,
 		searchValues2.add(DateTime.Now().addDays(25).format('yyyy-MM-dd'));   //auxToDate,
 		searchValues2.add('null');   //place holder for firstName
 		searchValues2.add('null');   //place holder for lastName
@@ -60,7 +60,7 @@ public class portalIftpTrainingRecordsTest {
 		List<String> searchValues3 = new List<String>();
 		searchValues3.add('null');   //auxStations,
 		searchValues3.add('null');   //auxItp,
-		searchValues3.add('null');   //auxExpirationStatus,
+		searchValues3.add('Active, Expired');   //auxExpirationStatus,
 		searchValues3.add('null');   //auxAircraftType,
 		searchValues3.add('null');   //auxProficiency,
 		searchValues3.add('null');   //auxFromDate,

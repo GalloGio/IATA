@@ -43,7 +43,6 @@ public without sharing class portalIftpTrainingRecords {
 	public static List<TrainingRecordsWrapper> getTrainingRecordsForMonitorTrainings(List<String> searchValues, String searchType){
 
 		List<TrainingRecordsWrapper> ltrWrapper = new List<TrainingRecordsWrapper>();
-
 		Boolean loggedUserHasAssociatedStations = false;
 		String auxStationsOptions = searchValues[0];
 		String auxExperiationstatusOptions = searchValues[2];
@@ -78,7 +77,6 @@ public without sharing class portalIftpTrainingRecords {
 		if(auxStationsOptions == 'null'
 			|| !auxStationsOptions.equalsIgnoreCase('All my associated stations')
 			|| (auxStationsOptions.equalsIgnoreCase('All my associated stations') && loggedUserHasAssociatedStations) ){
-
 			Set<String> lExperiationstatus = (auxExperiationstatusOptions != 'null') ? new Set<String>(auxExperiationstatusOptions.split(',')) :  new Set<String>();
 			Set<String> lAircraftType = (auxAircraftTypeOptions != 'null') ? new Set<String>(auxAircraftTypeOptions.split(',')) :  new Set<String>();
 			String lEmployeeCode= (auxEmployeeCode != 'null') ? auxEmployeeCode : null;
@@ -141,6 +139,7 @@ public without sharing class portalIftpTrainingRecords {
 			sQuery += conditionsCertification;
 
 			List<Contact_Role_Certification__c> certifications =  Database.query(sQuery);
+			System.debug('### certifications' + certifications);
 
 			// Get Employees Primary Station
 			List<Role_Address__c> employeesWithPrimaryStation = [SELECT Account_Contact_Role__c,
@@ -151,7 +150,6 @@ public without sharing class portalIftpTrainingRecords {
 																	FROM Role_Address__c
 																	WHERE Account_Contact_Role__c IN :empIds
 																	AND Primary__c = TRUE];
-
 			Map<Id, String> employeePrimaryStationMap = new Map<Id, String>();
 			for(Role_Address__c rec: employeesWithPrimaryStation){
 				if(rec.Primary__c){
@@ -187,10 +185,8 @@ public without sharing class portalIftpTrainingRecords {
 
 			for(Id employeeId : certificationsByEmployeeIdCertificateIdMap.keySet()){
 				Map<Id, Contact_Role_Certification__c> innerMap = certificationsByEmployeeIdCertificateIdMap.get(employeeId);
-
 				for(Id assessmentId : innerMap.keySet()){
 					Contact_Role_Certification__c cert = innerMap.get(assessmentId);
-				//for(Contact_Role_Certification__c cert : certifications){
 					Boolean createRecord = false;
 					if(dToDate != null  && cert.Expiration_Date__c < dToDate){
 						createRecord = true;
