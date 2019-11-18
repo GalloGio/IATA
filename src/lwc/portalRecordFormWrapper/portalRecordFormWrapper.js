@@ -711,4 +711,4 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
         });
     }
 
-}}
+}
