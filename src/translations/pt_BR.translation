@@ -14278,6 +14278,10 @@ Você poderia por favor confimar de qual pais voce foi previamente atendido.</la
         <name>ISSP_FDS_UnselectAll</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_FS_Link --></label>
+        <name>ISSP_FS_Link</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_Fax --></label>
         <name>ISSP_Fax</name>
     </customLabels>
