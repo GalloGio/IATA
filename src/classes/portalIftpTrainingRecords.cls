@@ -79,12 +79,10 @@ public without sharing class portalIftpTrainingRecords {
 			|| !auxStationsOptions.equalsIgnoreCase('All my associated stations')
 			|| (auxStationsOptions.equalsIgnoreCase('All my associated stations') && loggedUserHasAssociatedStations) ){
 
-			//Set<String> lStations = (auxStationsOptions != 'null') ? new Set<String>(auxStationsOptions.split(',')) :  new Set<String>();
 			Set<String> lExperiationstatus = (auxExperiationstatusOptions != 'null') ? new Set<String>(auxExperiationstatusOptions.split(',')) :  new Set<String>();
 			Set<String> lAircraftType = (auxAircraftTypeOptions != 'null') ? new Set<String>(auxAircraftTypeOptions.split(',')) :  new Set<String>();
 			String lEmployeeCode= (auxEmployeeCode != 'null') ? auxEmployeeCode : null;
 
-			Date dFromDate = (auxFromDate != 'null') ?  Date.valueOf(auxFromDate) : null;
 			Date dToDate = (auxToDate != 'null') ? Date.valueOf(auxToDate) : null;
 
 			PortalIftpUtils.UserInfoRecordsWrapper ui = PortalIftpUtils.getUserInfo();
@@ -130,17 +128,6 @@ public without sharing class portalIftpTrainingRecords {
 				lConditionsCertification.add('Certification__c in :lAircraftType');
 			} else {
 				lConditionsCertification.add('Certification__c in (SELECT Certification__c FROM IFTP_Certification_Detail__c where General_Training__c != null)');
-			}
-
-			if(lExperiationstatus != null && lExperiationstatus.size() > 0){
-				lConditionsCertification.add('Expiration_Status__c in :lExperiationstatus');
-			}
-
-			if(dFromDate != null ){
-				lConditionsCertification.add('Expiration_Date__c >= :dFromDate');
-			}
-			if(dToDate != null ){
-				lConditionsCertification.add('Expiration_Date__c <= :dToDate');
 			}
 
 			for(String sCond : lConditionsCertification){
@@ -204,29 +191,46 @@ public without sharing class portalIftpTrainingRecords {
 				for(Id assessmentId : innerMap.keySet()){
 					Contact_Role_Certification__c cert = innerMap.get(assessmentId);
 				//for(Contact_Role_Certification__c cert : certifications){
-
-					TrainingRecordsWrapper trw = new TrainingRecordsWrapper(
-						cert.Id,
-						cert.Account_Contact_Role__c,
-						cert.Account_Contact_Role__r.First_Name__c,
-						cert.Account_Contact_Role__r.Last_Name__c,
-						cert.Account_Contact_Role__r.Company_Code__c ,
-						cert.Certification__r.Name,
-						cert.Account_Contact_Role__r.Contact__r.account.name,
-						cert.Expiration_Status__c,
-						cert.Expiration_Date__c,
-						'',   //proficiency,
-						'',
-						'',   //addressCode,
-						'',   //auxIndicator,
-						'',   //auxIndicatorStatus,
-						'',
-						''
-						);
-						trw.days = System.today().daysBetween(trw.expirationDate);
-						trw.primaryStation = employeePrimaryStationMap.get(cert.Account_Contact_Role__c);
-						trw.enrolled = cert.Enrolled__c;
-					ltrWrapper.add(trw);
+					Boolean createRecord = false;
+					if(dToDate != null  && cert.Expiration_Date__c < dToDate){
+						createRecord = true;
+					} else{
+						if(dToDate == null){
+							if(lExperiationstatus.size() > 1){
+								//all
+								createRecord = true;
+							} else {
+								//not expired
+								if(lExperiationstatus.size() == 1 && cert.Expiration_Status__c.equalsIgnoreCase('Active')){
+									createRecord = true;
+								}
+							}
+						}
+					}
+					if(createRecord){
+						TrainingRecordsWrapper trw = new TrainingRecordsWrapper(
+							cert.Id,
+							cert.Account_Contact_Role__c,
+							cert.Account_Contact_Role__r.First_Name__c,
+							cert.Account_Contact_Role__r.Last_Name__c,
+							cert.Account_Contact_Role__r.Company_Code__c ,
+							cert.Certification__r.Name,
+							cert.Account_Contact_Role__r.Contact__r.account.name,
+							cert.Expiration_Status__c,
+							cert.Expiration_Date__c,
+							'',   //proficiency,
+							'',
+							'',   //addressCode,
+							'',   //auxIndicator,
+							'',   //auxIndicatorStatus,
+							'',
+							''
+							);
+							trw.days = System.today().daysBetween(trw.expirationDate);
+							trw.primaryStation = employeePrimaryStationMap.get(cert.Account_Contact_Role__c);
+							trw.enrolled = cert.Enrolled__c;
+						ltrWrapper.add(trw);
+					}
 				}
 			}
 		}

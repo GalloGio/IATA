@@ -13,11 +13,10 @@ import getUserInfo from '@salesforce/apex/PortalIftpUtils.getUserInfo';
 export default class PortalIftpMonitorTrainings extends LightningElement {
     @track stationValue;
     @track stationOptions;
-    @track expirationStatusValue;
+    @track expirationStatusValue = 'All';
     @track employeeCodeValue;
     @track aircraftTypeValue = 'All';
     @track aircraftTypeOptions;
-    @track datePeriodValue;
     @track fromDateValue;
     @track fromDateMinValue = new Date(2019, 0, 1);
     @track fromDateMaxValue;
@@ -37,21 +36,17 @@ export default class PortalIftpMonitorTrainings extends LightningElement {
     @track selectedRows;
     @track selectedRowsKeys;
     @track showDatatableButtons = false;
+    @track isNotEditable = true;
 
     get expirationStatusOptions() {
         return [
             { label: 'All', value: 'All' },
-            { label: 'Active', value: 'Active' },
+            { label: 'Not Expired', value: 'Not Expired' },
             { label: 'Expired', value: 'Expired' },
-        ];
-    }
-
-    get datePeriodOptions() {
-        return [
-            { label: 'None', value: '0' },
-            { label: '30 Days', value: '30' },
-            { label: '60 Days', value: '60' },
-            { label: '90 Days', value: '90' },
+            { label: 'Expired in 30 days', value: 'Expired in 30 days' },
+            { label: 'Expired in 60 days', value: 'Expired in 60 days' },
+            { label: 'Expired in 90 days', value: 'Expired in 90 days' },
+            { label: 'Manual', value: 'Manual' }
         ];
     }
 
@@ -110,6 +105,8 @@ export default class PortalIftpMonitorTrainings extends LightningElement {
 
     connectedCallback() {
         registerListener('stationsChanged', this.handleStationsChanged, this);
+        let toDateValue = new Date();
+        this.toDateValue = toDateValue.getFullYear()+'-'+(toDateValue.getMonth()+1)+'-'+toDateValue.getDate();
 
         this.initData();
     }
@@ -170,6 +167,28 @@ export default class PortalIftpMonitorTrainings extends LightningElement {
     }
     handleChangeExpirationStatus(event) {
         this.expirationStatusValue = event.detail.value;
+        let today = new Date();
+        let toDateValue = today;
+        
+        if(this.expirationStatusValue === 'Expired in 30 days'){
+            toDateValue.setDate(today.getDate() + 30);
+        } 
+        else 
+        {
+            if(this.expirationStatusValue === 'Expired in 60 days'){
+                toDateValue.setDate(today.getDate() + 60);
+        }  else {
+                if(this.expirationStatusValue === 'Expired in 90 days'){
+                    toDateValue.setDate(today.getDate() + 90);
+                }
+            }
+        }
+        this.toDateValue = toDateValue.getFullYear()+'-'+(toDateValue.getMonth()+1)+'-'+toDateValue.getDate();
+        if(this.expirationStatusValue === 'Manual'){
+            this.isNotEditable = false;
+        } else {
+            this.isNotEditable = true;
+        }
     }
     handleChangeAircraftType(event) {
         this.aircraftTypeValue = event.detail.value;
@@ -178,47 +197,7 @@ export default class PortalIftpMonitorTrainings extends LightningElement {
     handleChangeEmployeeCodeValue(event){
         this.employeeCodeValue = event.detail.value;
     }
-
-    handleChangeDatePeriod(event) {
-
-        this.datePeriodValue = event.detail.value;
-
-        let todaysDate = new Date(new Date().getFullYear(),new Date().getMonth() , new Date().getDate());
-
-        let todaysDatePlus = new Date();
-        
-        // eslint-disable-next-line radix
-        todaysDatePlus.setDate(todaysDate.getDate() + parseInt(this.datePeriodValue) );
-    
-        //let todaysDateFormatted = todaysDate.getFullYear() + "-" + (todaysDate.getMonth() + 1) + "-" + todaysDate.getDate();
-        let todaysDatePlusFormatted = todaysDatePlus.getFullYear() + "-" + (todaysDatePlus.getMonth() + 1) + "-" + todaysDatePlus.getDate();
-    
-        switch(this.datePeriodValue){
-            case '30':
-            case '60':
-            case '90':
-                this.fromDateValue = undefined;
-                //this.fromDateValue = todaysDateFormatted;
-                //this.toDateMinValue = this.fromDateValue;
-                this.toDateValue = todaysDatePlusFormatted;
-                break;
-            default:
-                this.fromDateValue = undefined;
-                this.toDateMinValue = undefined;
-                this.toDateValue = undefined;
-        }
-
-    }
-    
-    handleChangeFromDate(event) {
-        this.fromDateValue = event.detail.value;
-        this.toDateMinValue = this.fromDateValue;
-
-        if(this.toDateValue < this.toDateMinValue){
-            this.toDateValue = '';
-        }
-    }
-    
+   
     handleChangeToDate(event) {
         this.toDateValue = event.detail.value;
     }
@@ -228,19 +207,35 @@ export default class PortalIftpMonitorTrainings extends LightningElement {
 
         this.error = [];
         this.mainErrorMessage = '';
-
-        if(this.error.length === 0){
-            this.showSearch = true;
-            this.cleanErrors();
-            this.handleSearch();
-        }else{
-            this.mainErrorMessage = 'Need to fill the required fields';
+        let isToDateValueOk = true;
+        if(this.expirationStatusValue === 'Manual'){
+            let today = new Date();
+            today = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+            if(!this.toDateValue || this.toDateValue <= today){
+                isToDateValueOk = false;
+                const event = new ShowToastEvent({
+                    title: 'Monitor Trainings Result',
+                    message: 'For Course Status \'Manual\' the Expiration Date must be greater then today. ',
+                    variant: 'warning',
+                    mode: 'sticky'
+                });
+                this.dispatchEvent(event);
+            }
+        }
+        if(isToDateValueOk){
+            if(this.error.length === 0){
+                this.showSearch = true;
+                this.cleanErrors();
+                this.handleSearch();
+            }else{
+                this.mainErrorMessage = 'Need to fill the required fields';
+            }
         }
     }
 
     handleSearch(){
         this.loading = true;
-        let auxSearchValues = new Map();
+        let auxSearchValues = {};
         let i;
         let auxStation = (this.stationValue == null) ? 'null' : this.stationValue;
         let auxItp = (this.itpValue == null) ? 'null' : this.itpValue;
@@ -250,14 +245,13 @@ export default class PortalIftpMonitorTrainings extends LightningElement {
         let auxToDate = (this.toDateValue == null) ? 'null' : this.toDateValue;
         let auxEmployeeCode = (this.employeeCodeValue == null) ? 'null' : this.employeeCodeValue.trim();
 
-        if(this.expirationStatusValue === 'All'){
-            for(i=0; i < this.expirationStatusOptions.length; i++){
-                if(this.expirationStatusOptions[i].value === 'All'){
-                    auxExpirationStatus = '';
-                }else{
-                    auxExpirationStatus = (auxExpirationStatus === '' ) ? this.expirationStatusOptions[i].value : auxExpirationStatus + ',' + this.expirationStatusOptions[i].value;
-                }
-            }
+        if(this.expirationStatusValue === 'All' || this.expirationStatusValue === 'Not Expired' ){
+            auxToDate = 'null';
+        }
+        if(this.expirationStatusValue === 'Not Expired'){
+            auxExpirationStatus = 'Active';
+        } else{
+            auxExpirationStatus = 'Active, Expired';
         }
 
         if(this.aircraftTypeValue === 'All'){
@@ -283,7 +277,7 @@ export default class PortalIftpMonitorTrainings extends LightningElement {
             'null',                 //place holder for lastName
             auxEmployeeCode
         ];
-       
+        
         getTrainingRecords({searchValues: auxSearchValues, searchType: 'MonitorTrainings' })
         .then(results => {
 
@@ -312,7 +306,7 @@ export default class PortalIftpMonitorTrainings extends LightningElement {
             this.error = error;
             this.loading = false;
             this.dataRecords = false;
-        });          
+        });        
     }
 
 
@@ -321,13 +315,13 @@ export default class PortalIftpMonitorTrainings extends LightningElement {
         this.fullData = null;
         this.originalData = null;
         this.stationValue = undefined;
-        this.expirationStatusValue = undefined;
+        this.expirationStatusValue = 'All';
         this.aircraftTypeValue = 'All';
         this.employeeCodeValue = undefined;
-        this.datePeriodValue = undefined;
         this.fromDateValue = undefined;
         this.fromDateMaxValue = undefined;
-        this.toDateValue = undefined;
+        let today = new Date();
+        this.toDateValue = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
         this.toDateMinValue = undefined;
         this.showSearch = false;
         this.selectedRows = null;
