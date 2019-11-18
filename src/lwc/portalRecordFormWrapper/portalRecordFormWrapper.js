@@ -239,11 +239,11 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
         });
         }
 
-        accessibilityTextLocal = contactTypeStatus.join(', ');
+        accessibilityText = contactTypeStatus.join(', ');
         this.contactTypeStatus = contactType;
         this.listSelected = contactTypeStatus;
 
-        return this.accessibilityText
+        return this.accessibilityText;
     }
 
     openModal() { this.showEditModal = true; }
