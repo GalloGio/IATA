@@ -630,7 +630,7 @@ public without sharing class OneId_RegistrationProcessController {
         Savepoint sp = Database.setSavepoint();
         try {
 
-			String returnedString = createContactAndAccount(con,acc,serviceName,l1UserExists);
+			String returnedString = createContactAndAccount(con,acc,serviceName, serviceSpecificParams,l1UserExists);
             System.debug('@SMH'+returnedString);
             if (returnedString.contains('line:')){
                 // Error during creation of contact and user
@@ -698,7 +698,7 @@ public without sharing class OneId_RegistrationProcessController {
         return true;
     }
 
-    private static String createContactAndAccount (Contact con, Account acc, String servName, Boolean l1UserExists) {
+    private static String createContactAndAccount (Contact con, Account acc, String servName, serviceSpecificParams, Boolean l1UserExists) {
         system.debug('createContactAndAccount starting contact -->  ' + con);
         system.debug('createContactAndAccount starting account -- ' + acc);
 
