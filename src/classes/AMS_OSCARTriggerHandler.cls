@@ -3636,7 +3636,7 @@ public class AMS_OSCARTriggerHandler {
                     }
                 }
 
-				if (updatedOSCAR.Process__c == AMS_Utils.NGCONVERSIONTOMULTICOUNTRY && updatedOSCAR.STEP11__c <> 'Passed') {
+				if (updatedOSCAR.Process__c == AMS_Utils.NGCONVERSIONTOMULTICOUNTRY && updatedOSCAR.STEP11__c <> AMS_Utils.PASSED) {
 					updatedOSCAR.addError('Approval can\'t be set if "Conduct Financial Review" step is not Passed.');
 				}
 
