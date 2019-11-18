@@ -53,6 +53,7 @@ public with sharing class ANG_AgencyChangesHelper {
 			calculateRiskAssessmentMap = new Map<Id, Map<Id, Integer>>();
 			riskAlertsToUpdateLst = new List<ANG_Risk_Alert__c>();
 			hierarchiesToDeleteMap = new Map<Id, AMS_Agencies_Hierarchy__c>();
+			moveFsAndRiskEventsMap = new Map<Id, Id>();
 		}
 
 		public void addAccount(Account account){
@@ -112,6 +113,10 @@ public with sharing class ANG_AgencyChangesHelper {
 
 		public void addAccountsToRecalculateFsAmounts(Id accountId){
 			accountsToRecalculateFsAmounts.add(accountId);
+		}
+
+		public void addAccountsToMoveRiskEventsAndFs(Id oldParentId, Id newParentId){
+			moveFsAndRiskEventsMap.put(oldParentId, newParentId);
 		}
 
 		public void addHierarchyToDelete(AMS_Agencies_Hierarchy__c hierarchy){
@@ -310,7 +315,7 @@ public with sharing class ANG_AgencyChangesHelper {
 				String prevAccreditationModel = changesContainer.accountsMap.get(oscar.Account__c).ANG_Accreditation_Model__c;
 
 				/** NEWGEN-5848 PREVENT Copy Data to Account if Multicountry Change of Hierarchy*/
-				if(!(oscar.ANG_Type_Of_Change__c == AMS_Utils.ANG_HIERARCHY && oscarOnlineAccreditation != null && oscarOnlineAccreditation.ANG_Accreditation_type__c == 'Multicountry'))
+				if(!(oscar.ANG_Type_Of_Change__c == AMS_Utils.ANG_HIERARCHY && oscarOnlineAccreditation != null && oscarOnlineAccreditation.ANG_Accreditation_type__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY))
 				changesContainer = applyChangeOfFields(oscar, accountIdsInvolvedSet, changesContainer, oscarOnlineAccreditation);
 
 				System.debug('[ANG_AgencyChangesHelper] changesContainer are:'+changesContainer);
@@ -508,7 +513,7 @@ public with sharing class ANG_AgencyChangesHelper {
 					config = ANG_AgencyChangesConfigHelper.getConfig(oscar,changesContainer.accountsMap.get(oscar.Account__c).ANG_Accreditation_Model__c);
 
 				/** NEWGEN-5848 PREVENT Copy Data to Account if Multicountry Change of Hierarchy*/
-				if(!(oscar.ANG_Type_Of_Change__c == AMS_Utils.ANG_HIERARCHY && oscarOnlineAccreditation != null && oscarOnlineAccreditation.ANG_Accreditation_type__c == 'Multicountry'))
+				if(!(oscar.ANG_Type_Of_Change__c == AMS_Utils.ANG_HIERARCHY && oscarOnlineAccreditation != null && oscarOnlineAccreditation.ANG_Accreditation_type__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY))
 				changesContainer = applyChangeOfFields(oscar, accountIdsInvolvedSet, changesContainer, oscarOnlineAccreditation);
 
 				changesContainer = generateNewGenChangeCodes(oscar, config, accountsCurrentChangeCode, AMS_Utils.APPROVAL, accountIdsInvolvedSet, changesContainer);

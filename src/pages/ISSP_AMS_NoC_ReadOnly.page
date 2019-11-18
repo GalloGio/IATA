@@ -80,9 +80,9 @@
                             <apex:outputtext rendered="{!OR(newForm.Scope_of_Change__c=='HO - Selected Branches',newForm.Scope_of_Change__c=='Selected Branches Only')}">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.IATACode__c.Label}</apex:outputtext>
                             <apex:outputText rendered="{!OR(newForm.Scope_of_Change__c=='HO - Selected Branches',newForm.Scope_of_Change__c=='Selected Branches Only')}" value="{!IF(newForm.Scope_of_Change__c=='HO - Selected Branches', accountConcerned.IATACode__c + ', ' + agencyCodesConcernedForPDF, agencyCodesConcernedForPDF)}"/>         
                             <apex:outputText value="{!$Label.ISSP_CountryConcerned}"/> 
-                            <apex:outputText value="{!amsAllLangCountryLabel}" rendered="{!AND(newForm.ANG_Accreditation_Model_to_Change__c != 'Multicountry', con.Account.ANG_Accreditation_Model__c != 'Multicountry')}"/>
-                            <apex:outputText value="{!selectedCoutriesForNoCMC}" rendered="{!AND(newForm.ANG_Accreditation_Model_to_Change__c == 'Multicountry', con.Account.ANG_Accreditation_Model__c != 'Multicountry')}"/>
-                            <apex:outputText value="{!amsAllLangCountryLabelForMC}" rendered="{!con.Account.ANG_Accreditation_Model__c == 'Multicountry'}"/>
+                            <apex:outputText value="{!amsAllLangCountryLabel}" rendered="{!AND(newForm.ANG_Accreditation_Model_to_Change__c != ACCREDITATION_MODEL_MC, con.Account.ANG_Accreditation_Model__c != ACCREDITATION_MODEL_MC)}"/>
+                            <apex:outputText value="{!selectedCoutriesForNoCMC}" rendered="{!AND(newForm.ANG_Accreditation_Model_to_Change__c == ACCREDITATION_MODEL_MC, con.Account.ANG_Accreditation_Model__c != ACCREDITATION_MODEL_MC)}"/>
+                            <apex:outputText value="{!amsAllLangCountryLabelForMC}" rendered="{!con.Account.ANG_Accreditation_Model__c == ACCREDITATION_MODEL_MC}"/>
                     </apex:panelGrid>
               </apex:pageBlockSection>
         
@@ -141,7 +141,7 @@
                                     <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ANG_Accreditation_Model_to_Change__c.Label}"/>
                                     <apex:outputText value="{!IF(newForm.ANG_Accreditation_Model_to_Change__c == 'Cash', $Label.ANG_ISSP_ProductStandardAccreditationWithCash, IF(newForm.ANG_Accreditation_Model_to_Change__c == 'Cashless', $Label.ANG_ISSP_ProductStandardAccreditationWithNoCash, $Label.ANG_ISSP_ProductStandardAccreditationWithMultiCountry))}"></apex:outputText>
                                 </apex:panelGrid>
-                                <apex:outputPanel rendered="{!newForm.ANG_Accreditation_Model_to_Change__c == 'Multicountry'}">
+                                <apex:outputPanel rendered="{!newForm.ANG_Accreditation_Model_to_Change__c == ACCREDITATION_MODEL_MC}">
                                     <apex:outputPanel id="accountsToBeConvertedPanel">
                                         <apex:pageBlockTable value="{!accountsToBeConverted}" var="acc" rendered="{!accountsToBeConverted.size > 0}" style="margin-top: 20px;">
                                             <apex:column value="{!acc.Name}"/>

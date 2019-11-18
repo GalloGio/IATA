@@ -5,6 +5,8 @@ public class ANG_MulticountryConversionAccountSelCtrl {
 
 	@TestVisible
 	private static final String COUNTRY_NOT_MULTICOUNTRY = '{0} is not enabled for Multicountry. Please remove the accounts in this country';
+
+	private static final String INVALID_SELECTION = 'Select HE Accounts: Value does not exist or does not match filter criteria.';
 	
 	public class SelectedAccountWrapper implements Comparable {
 		
@@ -326,6 +328,12 @@ public class ANG_MulticountryConversionAccountSelCtrl {
 		if (selectedHE != null)
 		{
 			List<Account> accountLst = getAccounts(selectedHE);
+
+			if (accountLst.isEmpty())
+			{
+				ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, INVALID_SELECTION));
+				return null;
+			}
 
 			// validate if it is a multicountry enabled country
 			if (! isValidCountry(accountLst))

@@ -78,7 +78,7 @@ private class ISSP_AMS_Accreditation_Test {
                                         RecordTypeId = rtIdBr,
                                         BillingCountry = 'Portugal',
                                         IATA_ISO_Country__c = country3.Id,
-                                        ANG_Accreditation_Model__c = 'Multicountry');
+                                        ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY);
 
         Account mcbranchAcc = new Account(Name = 'MultiBranch',
                                         Location_Type__c = 'HE',

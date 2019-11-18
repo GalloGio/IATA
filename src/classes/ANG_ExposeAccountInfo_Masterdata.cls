@@ -11,7 +11,7 @@ public without sharing class ANG_ExposeAccountInfo_Masterdata {
 	
 	public static final Set<String> dueDiligenceIEPChangeCodes = new Set<String>{'MBDIL','MAPDF','MaddY', AMS_Utils.MBPDD_CHANGE_CODE};
 	public static final string CurrencyBSP = 'BspCurrency';
-	public static final string CurrencyMulticountry = 'Multicountry';
+	public static final string CurrencyMulticountry = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
 
 	/***************************************
 				Constructor
@@ -338,7 +338,7 @@ public without sharing class ANG_ExposeAccountInfo_Masterdata {
 				//Risk Info
 				for(ANG_RHC_Information__c rhc:acc.RHC_Informations__r){
 					this.RHCInfo = new RHCInfoClass(acc.ANG_RiskStatus__c, rhc.ANG_RHC_Amount__c, acc.IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode, rhc.ANG_Financial_Security__c);
-					if(this.AccreditationType == 'Multicountry') {
+					if(this.AccreditationType == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY) {
 						lsCurrencies.add(new theCurrency(CurrencyMulticountry, rhc.CurrencyIsoCode));
 					}
 				}

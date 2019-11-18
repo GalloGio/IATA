@@ -324,7 +324,7 @@ private class ANG_MulticountryHelperTest {
 			IATA_ISO_Country__c = accountGE.IATA_ISO_Country__c,
 			Location_Type__c = AMS_Utils.HE,
 			Location_Class__c = 'P',
-			ANG_Accreditation_Model__c = 'Multicountry',
+			ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY,
 			ParentId = accountGE.Id
 		);
 		
@@ -342,7 +342,7 @@ private class ANG_MulticountryHelperTest {
 			IATA_ISO_Country__c = countryUK.Id,
 			Location_Type__c = AMS_Utils.HE,
 			Location_Class__c = 'P',
-			ANG_Accreditation_Model__c = 'Multicountry',
+			ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY,
 			ParentId = accountGE.Id
 		);
 		
@@ -359,7 +359,7 @@ private class ANG_MulticountryHelperTest {
 			IATA_ISO_Country__c = countryFR.Id,
 			Location_Type__c = AMS_Utils.AE,
 			Location_Class__c = 'P',
-			ANG_Accreditation_Model__c = 'Multicountry',
+			ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY,
 			ParentId = accountGE.Id
 		);
 		
@@ -391,7 +391,7 @@ private class ANG_MulticountryHelperTest {
 			IATA_ISO_Country__c = countryPT.id,
 			Location_Type__c = AMS_Utils.GE,
 			Location_Class__c = 'P',
-			ANG_Accreditation_Model__c = 'Multicountry'
+			ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY
 		);
 		
 		try{
@@ -720,7 +720,7 @@ private class ANG_MulticountryHelperTest {
 		// the child cases are created from the batch which is not executed, but have to be registered
 		List<AsyncApexJob> batches = [SELECT Id, Status, MethodName, ApexClass.Name, createddate
 									  FROM AsyncApexJob
-									  WHERE ApexClass.Name = 'ANG_MulticoutryGEDowngradeBatch'];
+									  WHERE ApexClass.Name = 'ANG_RiskStatusDowngradeBatch'];
 		System.assertEquals(1, batches.size(), 'Should have scheduled a Batch job');
 
 		List<Case> cases = [SELECT Id, Account_Concerned__c FROM Case];
@@ -749,7 +749,7 @@ private class ANG_MulticountryHelperTest {
 		update accountGE;
 		
 		Test.startTest();
-		ANG_MulticoutryGEDowngradeBatch batch = new ANG_MulticoutryGEDowngradeBatch(new Set<Id> { accounts.get(0).Id });
+		ANG_RiskStatusDowngradeBatch batch = new ANG_RiskStatusDowngradeBatch(new Set<Id> { accounts.get(0).Id });
 		Id batchId = Database.executeBatch(batch);
 		Test.stopTest();
 
@@ -786,7 +786,7 @@ private class ANG_MulticountryHelperTest {
 
 		Account acct = accountLst.get(0);
 
-		acct.ANG_Accreditation_Model__c = 'Multicountry';
+		acct.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
 		acct.IATACode__c = '99999999';
 		update acct;
 
@@ -906,7 +906,7 @@ private class ANG_MulticountryHelperTest {
 
 		Account accountGE = accountLst.get(0);
 
-		accountGE.ANG_Accreditation_Model__c = 'Multicountry';
+		accountGE.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
 		accountGE.IATACode__c = '99999999';
 		update accountGE;
 
@@ -983,7 +983,7 @@ private class ANG_MulticountryHelperTest {
 
 		Account accountGE = accountLst.get(0);
 
-		accountGE.ANG_Accreditation_Model__c = 'Multicountry';
+		accountGE.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
 		accountGE.IATACode__c = '99999999';
 		update accountGE;
 

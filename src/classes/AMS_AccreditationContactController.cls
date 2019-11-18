@@ -1303,6 +1303,7 @@ public with sharing class AMS_AccreditationContactController {
         trainedStaffWrapper = new List<TrainedStaffWrapper>();
         
         delete [Select Id from AMS_Accreditation_Contact__c where AMS_Pax_Accreditation_Form__c =:this.aoa.Id];
+		forDeletion.clear();
 
 		String result = ANG_MulticountryHelper.cloneOwnersFromParentAccount(this.aoa.Id);
         

@@ -111,24 +111,35 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
 
         For(String entity: sortTechnicalLogs(technicalLogsMap.keySet())){
 
-            if(entity == 'Account')
-                processRollbackAccounts(technicalLogsMap.get(entity));
-            else if(entity == 'Contact')
-                processRollbackContacts(technicalLogsMap.get(entity));
-            else if(entity == 'AMS_Account_Role__c')
-                processRollbackRoles(technicalLogsMap.get(entity));
-            else if(entity == 'Agency_Authorization__c')
-                processRollbackFops(technicalLogsMap.get(entity));
-            else if(entity == 'ANG_RHC_Information__c')
-                rhcMapping.putAll(processRollbackRHCs(technicalLogsMap.get(entity)));
-            else if(entity == 'Financial_Security__c')
-                processRollbackFSs(technicalLogsMap.get(entity));
-            else if(entity == 'ANG_Agency_Risk_Event__c')
-                processRollbackREs(technicalLogsMap.get(entity));
-            else if(entity == 'Portal_Application_Right__c')
-                processRollbackPortalAppRights(technicalLogsMap.get(entity));
-            else if(entity == 'ANG_Risk_Alert__c')
-                processRollbackRiskAlert(technicalLogsMap.get(entity), rhcMapping);
+			switch on entity.toUpperCase() {
+				when 'ACCOUNT'{
+					processRollbackAccounts(technicalLogsMap.get(entity));
+				}
+				when 'CONTACT'{
+					processRollbackContacts(technicalLogsMap.get(entity));
+				}
+				when 'AMS_ACCOUNT_ROLE__C'{
+					processRollbackRoles(technicalLogsMap.get(entity));
+				}
+				when 'AGENCY_AUTHORIZATION__C'{
+					processRollbackFops(technicalLogsMap.get(entity));
+				}
+				when 'ANG_RHC_INFORMATION__C'{
+					rhcMapping.putAll(processRollbackRHCs(technicalLogsMap.get(entity)));
+				}
+				when 'FINANCIAL_SECURITY__C'{
+					processRollbackFSs(technicalLogsMap.get(entity));
+				}
+				when 'ANG_AGENCY_RISK_EVENT__C'{
+					processRollbackREs(technicalLogsMap.get(entity));
+				}
+				when 'PORTAL_APPLICATION_RIGHT__C'{
+					processRollbackPortalAppRights(technicalLogsMap.get(entity));
+				}
+				when 'ANG_RISK_ALERT__C'{
+					processRollbackRiskAlert(technicalLogsMap.get(entity), rhcMapping);
+				}
+			}
         }
 
         if(technicalLogsMap.get('AMS_Agencies_Hierarchy__c') != null || technicalLogsMap.get('AMS_Agencies_relationhip__c') != null || isHierarchyChange)

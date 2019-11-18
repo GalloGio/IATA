@@ -440,6 +440,8 @@ private class AMS_RecordCreatorWebserviceTest {
 
 		System.assertEquals(details.size(),2);
 
+		acct4.Location_Type__c = AMS_Utils.AE;
+		
 		AMS_RecordCreatorWebservice.createProcessDetailsForConversion(oscarId, new List<Account> { acct4 });
 		details = [SELECT Id from AMS_Process_Detail__c where OSCAR__c = :oscarId and RecordType.Developername = 'Agency_Involved'];
 		System.assertEquals(3, details.size());

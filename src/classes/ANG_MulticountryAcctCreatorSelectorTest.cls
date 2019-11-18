@@ -35,10 +35,10 @@ private class ANG_MulticountryAcctCreatorSelectorTest {
 		Id caseRT = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 		
 		List<Account> accountList = new List<Account>();
-		Account a1 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountRT ,Name='NewgenAgency GE',Short_Name__c='NewgenAgency GE', Location_Class__c = 'P', Location_Type__c = 'GE', Remittance_frequency__c = 'M', Sector__C = 'Travel Agent' , Category__C = 'Non-IATA Passenger Agent', Reason_for_creation__c = 'Account is missing' , Company_Type__c = 'A');
+		Account a1 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountRT ,Name='NewgenAgency GE',Short_Name__c='NewgenAgency GE', Location_Class__c = 'P', Location_Type__c = AMS_Utils.GE, Remittance_frequency__c = 'M', Sector__C = 'Travel Agent' , Category__C = 'Non-IATA Passenger Agent', Reason_for_creation__c = 'Account is missing' , Company_Type__c = 'A');
 		insert a1;
 		
-		Account newBSPCountryAcc = new Account(IATA_ISO_Country__c = ctry2.Id, ParentId = a1.Id, Top_Parent__c = a1.Id, RecordTypeId = accountRT ,Name='NewgenAgency HE 1',Short_Name__c='NewgenAgency HE', Location_Class__c = 'P', Location_Type__c = 'HE', Remittance_frequency__c = 'M', Sector__C = 'Travel Agent' , Category__C = 'Non-IATA Passenger Agent', Reason_for_creation__c = 'Account is missing' , Company_Type__c = 'A');
+		Account newBSPCountryAcc = new Account(IATA_ISO_Country__c = ctry2.Id, ParentId = a1.Id, Top_Parent__c = a1.Id, RecordTypeId = accountRT ,Name='NewgenAgency HE 1',Short_Name__c='NewgenAgency HE', Location_Class__c = 'P', Location_Type__c = AMS_Utils.HE, Remittance_frequency__c = 'M', Sector__C = 'Travel Agent' , Category__C = 'Non-IATA Passenger Agent', Reason_for_creation__c = 'Account is missing' , Company_Type__c = 'A');
 		insert newBSPCountryAcc;
 		
 		Contact co1 = new Contact(AccountId = a1.id, Firstname = 'John', Lastname='Rambo', Phone = '666123456', MobilePhone = '911111111', Email = 'rambo.johnj@test.com', Financial_Assessment_Contact__c = false);
@@ -71,7 +71,7 @@ private class ANG_MulticountryAcctCreatorSelectorTest {
 		theAccreditation.Remittance_frequency__c='M';
 		theAccreditation.Solicitation_Flag__c=false;
 		theAccreditation.Location_Class__c='P';
-		theAccreditation.Location_Type__c='GE';
+		theAccreditation.Location_Type__c=AMS_Utils.GE;
 		theAccreditation.SAAM_Case__c=oscarCase.Id;
 		theAccreditation.ISSP_Branch_AccountId__c = a1.Id;
 
@@ -370,7 +370,7 @@ private class ANG_MulticountryAcctCreatorSelectorTest {
 
 		for (ANG_MulticountryHierarchySelectionCrtl.HierarchyItem it : hierarchyValues) {
 			it.main = false;
-			if(it.acc.Location_type__c == 'GE') it.isHE = true;
+			if(it.acc.Location_type__c == AMS_Utils.GE) it.isHE = true;
 		}
 
 		ANG_MulticountryHierarchySelectionCrtl.HierarchyItem itemPT = hierarchy.get(ctryPt.Name)[0];

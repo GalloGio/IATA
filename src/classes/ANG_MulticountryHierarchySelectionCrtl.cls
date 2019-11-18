@@ -509,7 +509,7 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 
 		Id accountGEId;
 		for(Account acct: acctLst){
-			if(acct.Location_type__c == 'GE')
+			if(acct.Location_type__c == AMS_Utils.GE)
 				accountGEId = acct.Id;
 		}
 
@@ -519,7 +519,7 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 			alreadyCreatedRelations.add(String.valueof(ar.Child_Account__c)+String.valueOf(ar.Parent_Account__c));
 
 		if(acctLst.size() < 2){
-			if(acctLst.size() == 1 && acctLst.get(0).location_type__C == 'GE'){
+			if(acctLst.size() == 1 && acctLst.get(0).location_type__C == AMS_Utils.GE){
 				AMS_Agencies_Hierarchy__c hierarchy = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy', Main_Account__c = accountGEId);
 				insert hierarchy;
 			}

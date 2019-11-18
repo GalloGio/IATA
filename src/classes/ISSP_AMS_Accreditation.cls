@@ -262,6 +262,10 @@ public without sharing class ISSP_AMS_Accreditation {
     public AMS_Accreditation_Contact__c trainedStaffContact {get; set;}
     public Id trainedStaffId {get; set;}
 
+	public String ACCREDITATION_MODEL_MC {
+		get { return AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;}
+	}
+
     //CNS
     public String communityName { 
         get { 
@@ -982,7 +986,7 @@ public without sharing class ISSP_AMS_Accreditation {
                     setContextualHelp(userInfo.getLanguage());
                     isStep5 = true;
 
-                    if (newForm.ANG_Accreditation_Model_to_Change__c == 'Multicountry' && isNoticeOfChange) {
+                    if (newForm.ANG_Accreditation_Model_to_Change__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY && isNoticeOfChange) {
                         if(newForm.Agency_Codes_Concerned__c != null) accountsToBeConverted = getSelectedBranchList(newForm.Agency_Codes_Concerned__c.split(','));
 
                         selectedCoutriesForNoCMC = '';
@@ -1368,7 +1372,7 @@ public without sharing class ISSP_AMS_Accreditation {
             Map<String, String> countryNameByIsoCode = new Map<String, String>();
                 
             for (Account a: mcHierarchyAccounts) {
-                if (a.Status__c == 'Approved' && a.Location_Type__c != 'GE') {
+                if (a.Status__c == 'Approved' && a.Location_Type__c != AMS_Utils.GE) {
                     if (countryNameByIsoCode.get(a.IATA_ISO_Country__r.Name) == null) {
                         if (!countryNameByIsoCode.values().contains(a.Country_ISO_Code__c)) {
                             countryNameByIsoCode.put(a.IATA_ISO_Country__r.Name, a.Country_ISO_Code__c);
@@ -1488,7 +1492,7 @@ public without sharing class ISSP_AMS_Accreditation {
     }
 
     private Map<Id,Account> getSelectedBranchList(List<String> branchCodes) {
-        if(newForm.ANG_Accreditation_Model_to_Change__c == 'Multicountry' && isNoticeOfChange)
+        if(newForm.ANG_Accreditation_Model_to_Change__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY && isNoticeOfChange)
             return new Map<Id,Account>([SELECT Id, Name, IATA_ISO_Country__r.Name, Sector__c, IATACode__c,Location_Type__c, BillingCity, BillingState, BillingCountry, Top_Parent__r.IATACode__c, Top_Parent__r.Id, IATA_ISO_Country__r.AMS_Settlement_System__c, Country_ISO_Code__c
                 FROM Account
                 WHERE IATACode__c IN :branchCodes AND Location_Type__c = :AMS_Utils.HE
@@ -1977,7 +1981,7 @@ public without sharing class ISSP_AMS_Accreditation {
                 newCase.Type_of_customer__c = con.Account.Category__c;
             }
 
-            if(amsLocationType.contains('Standard') || amsLocationType.contains('Associate') || amsLocationType.contains('Multicountry') || isMCAccredited){
+            if(amsLocationType.contains('Standard') || amsLocationType.contains('Associate') || amsLocationType.contains(AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY) || isMCAccredited){
                 newCase.Subject = getCaseReason(newCase.Reason1__c, hqAccount.ANG_Accreditation_Model__c) + ' - ' + newCase.Country_concerned_by_the_query__c;
             } else {
                 newCase.Subject = getCaseReason(newCase.Reason1__c, hqAccount.ANG_Accreditation_Model__c) + ' - ' + getAgentTypeLabel(agentType) + ' - ' + newCase.Country_concerned_by_the_query__c;
@@ -2575,13 +2579,17 @@ public without sharing class ISSP_AMS_Accreditation {
         Boolean isFirstHE = accountsByBSP.get(newForm.Branch_Office_Country__r.AMS_Settlement_System__c) == null || 
             accountsByBSP.get(newForm.Branch_Office_Country__r.AMS_Settlement_System__c).isEmpty();
 
-        if (isMultiCountryNewAE || getIsAccreditationModelNotNullOrLegacy()) {
-            if (isFirstHE) {
+        if (isMultiCountryNewAE){
+            if(isFirstHE) {
                 SFDCAccount.Location_Type__c = AMS_Utils.HE;
-            } else {
+            }else {
                 SFDCAccount.Location_Type__c = AMS_Utils.AE;
             }
-        } else {
+		}
+		else if(getIsAccreditationModelNotNullOrLegacy()){
+			SFDCAccount.Location_Type__c = AMS_Utils.AE;
+		}
+        else {
             SFDCAccount.Location_Type__c = AMS_Utils.BR;
         }
 
@@ -2627,7 +2635,7 @@ public without sharing class ISSP_AMS_Accreditation {
     private void copyOwnersFromSelectedLegalName(Account newAcc, String parentAccId) {
         List<AMS_Account_Role__c> copiedOwners = new List<AMS_Account_Role__c>();
 
-        for (AMS_Account_Role__c aar: [SELECT Id, Name, Owner_Name__c, Title__c, Percentage__c, Contact__c, Person__c, Owner_Account__c
+        for (AMS_Account_Role__c aar: [SELECT Id, Name, Owner_Name__c, Title__c, Percentage__c, Contact__c, Person__c, Owner_Account__c, Legacy_External_ID__c
                                     FROM AMS_Account_Role__c
                                     WHERE Valid__c = true AND Account__c = :parentAccId AND Active__c = true
                                         AND RecordTypeId = :RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership')]) {
@@ -2639,7 +2647,8 @@ public without sharing class ISSP_AMS_Accreditation {
                                                                 RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership'),
                                                                 Person__c = aar.Person__c,
                                                                 Owner_Account__c = aar.Owner_Account__c,
-                                                                Account__c = newAcc.Id);
+                                                                Account__c = newAcc.Id,
+																Legacy_External_ID__c = aar.Legacy_External_ID__c);
 
             copiedOwners.add(newAar);
         }
@@ -3552,7 +3561,7 @@ public without sharing class ISSP_AMS_Accreditation {
                     newForm.ANG_Accreditation_type__c = newForm.ANG_Accreditation_Model_to_Change__c;
                 }
 
-                if (newForm.ANG_Accreditation_Model_to_Change__c == 'Multicountry') {
+                if (newForm.ANG_Accreditation_Model_to_Change__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY) {
 
                     //In case of conversion from standard to multicountry overwrite the case reason
                     newCase.Reason1__c = 'Accreditation Type';
@@ -3641,7 +3650,7 @@ public without sharing class ISSP_AMS_Accreditation {
             } else if (isNoticeOfChange && !isBankAccountChange) {
                 //NEWGEN 683
                 if (getIsAccreditationModelNotNullOrLegacy()) {
-                    if (newForm.Type_Of_Change__c == 'Yes' && newForm.ANG_Accreditation_Model_to_Change__c == 'Multicountry') {
+                    if (newForm.Type_Of_Change__c == 'Yes' && newForm.ANG_Accreditation_Model_to_Change__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY) {
                         typeOfProcess = AMS_Utils.NGCONVERSIONTOMULTICOUNTRY;
                     } else {
                         typeOfProcess = AMS_Utils.NGCHANGES;
@@ -3714,11 +3723,11 @@ public without sharing class ISSP_AMS_Accreditation {
                     sameLegalEntityForms.add(mcform);
                 }
             } else {
-                mcForm.Location_Type__c = 'GE';
+                mcForm.Location_Type__c = AMS_Utils.GE;
                 geMCForm = mcform;
-                if (hqAccount.Location_Type__c != 'GE') {
+                if (hqAccount.Location_Type__c != AMS_Utils.GE) {
                     wasNotGE = true;
-                    hqAccount.Location_Type__c = 'GE';
+                    hqAccount.Location_Type__c = AMS_Utils.GE;
                 }
             }
 
@@ -7009,7 +7018,7 @@ public without sharing class ISSP_AMS_Accreditation {
             }
         }
 
-		if (isNoticeOfChange && newForm.ANG_Accreditation_Model_to_Change__c == 'Multicountry')
+		if (isNoticeOfChange && newForm.ANG_Accreditation_Model_to_Change__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY)
 		{
 			// all the accounts accounts
 			List<String> accounts = (newForm.Agency_Codes_Concerned__c == null ? '' : newForm.Agency_Codes_Concerned__c).split(','); // the selected accounts

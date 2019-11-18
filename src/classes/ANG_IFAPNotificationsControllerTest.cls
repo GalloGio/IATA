@@ -30,7 +30,7 @@ private class ANG_IFAPNotificationsControllerTest {
 		accountGE.IATA_ISO_Country__c = countryPT.Id;
 		accountGE.RecordTypeId = agencyRecordTypeId;
 		accountGE.IATACode__c = '99999999';
-		accountGE.ANG_Accreditation_Model__c = 'Multicountry';
+		accountGE.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
 		accountGE.Type = 'IATA Passenger Sales Agent';
 		insert accountGE;
 

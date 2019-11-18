@@ -65,7 +65,7 @@ private class ANG_ChangeRHCCurrencyTest {
 		accountGE.IATACode__c = '999999999';
 		accountGE.Reason__c = '91-ACCREDITED-MEET-STANDARDS';
 		accountGE.Status__c = 'Approved';
-		accountGE.ANG_Accreditation_Model__c = 'Multicountry';
+		accountGE.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
 		accountGE.Remittance_frequency__c = 'M';
 		insert accountGE;
 
@@ -79,7 +79,7 @@ private class ANG_ChangeRHCCurrencyTest {
 		accountHE.IATACode__c = '999999998';
 		accountHE.Reason__c = '91-ACCREDITED-MEET-STANDARDS';
 		accountHE.Status__c = 'Approved';
-		accountHE.ANG_Accreditation_Model__c = 'Multicountry';
+		accountHE.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
 		accountHE.Remittance_frequency__c = 'M';
 
 		Account accountAE = new Account();
@@ -92,7 +92,7 @@ private class ANG_ChangeRHCCurrencyTest {
 		accountAE.IATACode__c = '999999997';
 		accountAE.Reason__c = '91-ACCREDITED-MEET-STANDARDS';
 		accountAE.Status__c = 'Approved';
-		accountAE.ANG_Accreditation_Model__c = 'Multicountry';
+		accountAE.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
 		accountAE.Remittance_frequency__c = 'M';
 
 		insert new List<Account>{accountHE, accountAE};

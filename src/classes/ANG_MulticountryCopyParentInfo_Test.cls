@@ -50,7 +50,7 @@ public class ANG_MulticountryCopyParentInfo_Test {
 			Website = 'Website GE',
 			VAT_Number__c = 'Vat Number GE',
 			Iso_State__c = isos.id,
-			ANG_Accreditation_Model__c = 'Multicountry',
+			ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY,
 			Remittance_frequency__c = 'V'
 		);
 
@@ -126,7 +126,7 @@ public class ANG_MulticountryCopyParentInfo_Test {
 
 		AMS_Oscar__c oscar = childOscar[0];
 
-		System.assertEquals('Multicountry', oscar.AMS_Online_Accreditation__r.ANG_Accreditation_type__c);
+		System.assertEquals(AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY, oscar.AMS_Online_Accreditation__r.ANG_Accreditation_type__c);
 
 	}
 

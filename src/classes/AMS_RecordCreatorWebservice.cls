@@ -151,6 +151,7 @@ global without sharing class AMS_RecordCreatorWebservice {
             pd.Oscar__c = oscarId;
             pd.Account__c = acc.Id;
             pd.RecordTypeId = rtAgencyInvolved;
+			pd.ANG_Location_Type_Conversion__c = acc.Location_Type__c;
             processDetailLst.add(pd);
 		}
         

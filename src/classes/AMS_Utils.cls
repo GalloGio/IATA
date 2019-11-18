@@ -2511,12 +2511,12 @@ public static String getChangeCodeMemoText(String process,String changeCodeId, A
         if (result == null)
             return null;
 
-        if (result.containsIgnoreCase('Cashless'))
-            result = result.replace('Cashless', 'GoLite');
-        if (result.containsIgnoreCase('Cash'))
-            result = result.replace('Cash', 'GoStandard');
-        if (result.containsIgnoreCase('Multicountry'))
-            result = result.replace('Multicountry', 'GoGlobal');
+        if (result.containsIgnoreCase(AMS_Utils.ACCREDITATIONMODEL_CASHLESS))
+            result = result.replace(AMS_Utils.ACCREDITATIONMODEL_CASHLESS, 'GoLite');
+        if (result.containsIgnoreCase(AMS_Utils.ACCREDITATIONMODEL_CASH))
+            result = result.replace(AMS_Utils.ACCREDITATIONMODEL_CASH, 'GoStandard');
+        if (result.containsIgnoreCase(AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY))
+            result = result.replace(AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY, 'GoGlobal');
 
         return result;
 
@@ -2541,10 +2541,10 @@ public static String getChangeCodeMemoText(String process,String changeCodeId, A
     }
 
     public static Map<String, String> officialAccreditationTypeMap = new Map<String, String> {
-        'Legacy' => 'Legacy',
-        'Cashless' =>   'GoLite',
-        'Cash' =>   'GoStandard',
-        'Multicountry' => 'GoGlobal'
+        ACCREDITATIONMODEL_LEGACY => 'Legacy',
+        ACCREDITATIONMODEL_CASHLESS => 'GoLite',
+        ACCREDITATIONMODEL_CASH => 'GoStandard',
+        ACCREDITATIONMODEL_MULTICOUNTRY => 'GoGlobal'
     };
 
     public static String getCustomLabel(String labelName) {

@@ -531,7 +531,7 @@ global class ANG_OscarProcessHelper {
             }
 
             //Initialize Risk Fields
-            if(acc.ANG_Accreditation_Model__c == 'Cashless' || acc.ANG_Accreditation_Model__c == 'Cash' || acc.ANG_Accreditation_Model__c == 'Multicountry') {
+            if(acc.ANG_Accreditation_Model__c == 'Cashless' || acc.ANG_Accreditation_Model__c == 'Cash' || acc.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY) {
             	acc.ANG_HE_CashCondition__c = false;
             	acc.ANG_HE_RiskHistoryAssessment__c = 'Not Applicable';
             	acc.ANG_HE_RiskStatus__c = 'Not Applicable';
