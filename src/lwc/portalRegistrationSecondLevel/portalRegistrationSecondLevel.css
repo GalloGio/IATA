@@ -83,7 +83,7 @@
     font-weight: 500;
     text-align: center;
     color: #fff;
-    font-family: AktivGrotesk;
+    font-family: DaMaWebFont;
 }
 
 .headerHome, .headerClose{
@@ -121,41 +121,6 @@
     justify-content: center;
 }
 
-.previousItem{
-    color: #289632;
-  }
-  
-.previousItem .itemIcon:before{
-    content: '';
-}
-
-.activeItem .itemIcon{
-    background-color: #289632;
-    color: #fff;
-}
-
-.nextItem .itemIcon{
-    background-color: #cccccc;
-    border: 2px solid #cccccc;
-    color: #fff;   
-}
-
-.nextItem .itemTitle span{
-    color: #cccccc;
-}
-
-.firstItem .itemIcon:before{
-    content: '1';
-}
-
-.secondItem .itemIcon:before{
-    content: '2';
-}
-
-.thirdItem .itemIcon:before{
-    content: '3';
-}
-
 .itemTitle{
     display: flex;
     align-items: center;
@@ -167,6 +132,10 @@
     font-stretch: normal;
     letter-spacing: normal;
     color: #525252;
+}
+
+.itemClickable{
+    cursor: pointer;
 }
 
 .spinnerContainer{

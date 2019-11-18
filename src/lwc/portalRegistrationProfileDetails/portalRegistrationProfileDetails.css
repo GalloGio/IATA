@@ -176,41 +176,6 @@
     justify-content: center;
 }
 
-.previousItem{
-    color: #289632;
-  }
-  
-.previousItem .itemIcon:before{
-    content: '';
-}
-
-.activeItem .itemIcon{
-    background-color: #289632;
-    color: #fff;
-}
-
-.nextItem .itemIcon{
-    background-color: #cccccc;
-    border: 2px solid #cccccc;
-    color: #fff;   
-}
-
-.nextItem .itemTitle span{
-    color: #cccccc;
-}
-
-.firstItem .itemIcon:before{
-    content: '1';
-}
-
-.secondItem .itemIcon:before{
-    content: '2';
-}
-
-.thirdItem .itemIcon:before{
-    content: '3';
-}
-
 .itemTitle span{
     font-size: 16px;
     font-style: normal;
@@ -225,4 +190,10 @@
 
 .topLabel{
     padding: 32px 0;
+}
+.calendarIcon{
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 15px;
 }

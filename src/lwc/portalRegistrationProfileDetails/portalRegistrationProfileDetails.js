@@ -19,6 +19,7 @@ export default class PortalRegistrationProfileDetails extends LightningElement {
     @api contactInfo;
     @track localContactInfo;
     alertIcon = CSP_PortalPath + 'CSPortal/alertIcon.png';
+    calendarIcon = CSP_PortalPath + 'CSPortal/Images/Icons/calendar.svg';
 
     /* Picklist options */
     @track salutationPicklistOptions;

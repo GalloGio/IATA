@@ -14,7 +14,7 @@
             <div class="profileContainer">
             <!------------------------------------------      Salutation      -------------------------------------------->        
                 <div class="profileItem">
-                    <lightning-layout-item size="6" class="leftItem">
+                    <lightning-layout-item size="6">
                         <div class="formLabelContainer">
                             <div class="text-xxsmall">
                                 {labels.CSP_L2_Title}
@@ -38,7 +38,7 @@
                 </div>
                 <!------------------------------------------      Date of Birth      -------------------------------------------->
                 <div class="profileItem">
-                    <lightning-layout-item size="6" class="rightItem">
+                    <lightning-layout-item size="6">
                         <div class="formLabelContainer">
                             <div class="text-xxsmall">
                                 {labels.CSP_L2_Date_of_Birth}
@@ -47,8 +47,8 @@
                     </lightning-layout-item>
                     <lightning-layout-item size="12">
                         <div class="slds-form-element">
-                            <div class="slds-form-element__control custTextInput custTextInputSmall">
-                                <lightning-input 
+                            <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon_right custTextInput custTextInputSmall">
+                               <!-- <lightning-input 
                                     date-style="short" 
                                     type="date" 
                                     value={localContactInfo.Birthdate} 
@@ -59,7 +59,18 @@
                                     icon-name="utility:back"
                                     icon-position="left"
                                     max={today}>
+                                </lightning-input>-->
+                                <lightning-input 
+                                    date-style="short" 
+                                    type="date" 
+                                    value={localContactInfo.Birthdate} 
+                                    placeholder=" " 
+                                    variant="label-hidden"
+                                    onkeyup={changeDateOfBirth}
+                                    onchange={changeDateOfBirth}
+                                    max={today}>
                                 </lightning-input>
+                                <img src={calendarIcon} height="24" width="24" class="calendarIcon">
                             </div>
                         </div>
                     </lightning-layout-item>
@@ -72,7 +83,7 @@
                 </div>
                 <!------------------------------------------      Job Function      -------------------------------------------->
                 <div class="profileItem">  
-                    <lightning-layout-item size="6" class="leftItem">
+                    <lightning-layout-item size="6">
                         <div class="formLabelContainer">
                             <div class="text-xxsmall">
                                 {labels.CSP_L2_Job_Function}<abbr class="slds-required" title="required">*</abbr>
@@ -97,7 +108,7 @@
                 </div>
                 <!------------------------------------------      Job Title      -------------------------------------------->
                 <div class="profileItem">
-                    <lightning-layout-item size="6" class="rightItem">
+                    <lightning-layout-item size="6">
                         <div class="formLabelContainer">
                             <div class="text-xxsmall">
                                 {labels.CSP_L2_Job_Title}<abbr class="slds-required" title="required">*</abbr>

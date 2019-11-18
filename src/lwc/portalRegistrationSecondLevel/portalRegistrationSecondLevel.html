@@ -22,7 +22,7 @@
                             </template>
                         </div>
                         <template if:true={hasStep1Link}>
-                            <div class="itemTitle" onclick={goToProfileDetailsFromBanner}><span>{labels.CSP_L2_Profile_Details}</span></div>
+                            <div class="itemTitle itemClickable" onclick={goToProfileDetailsFromBanner}><span>{labels.CSP_L2_Profile_Details}</span></div>
                         </template>
                         <template if:false={hasStep1Link}>
                             <div class="itemTitle"><span>{labels.CSP_L2_Profile_Details}</span></div>
@@ -38,7 +38,7 @@
                             </template>
                         </div>
                         <template if:true={hasStep2Link}>
-                            <div class="itemTitle" onclick={goToAccountSelectionFromBanner}><span>{labels.CSP_L2_Account_Selection}</span></div>
+                            <div class="itemTitle itemClickable" onclick={goToAccountSelectionFromBanner}><span>{labels.CSP_L2_Account_Selection}</span></div>
                         </template>
                         <template if:false={hasStep2Link}>
                             <div class="itemTitle"><span>{labels.CSP_L2_Account_Selection}</span></div>
@@ -54,7 +54,7 @@
                             </template>
                         </div>
                         <template if:true={hasStep3Link}>
-                            <div class="itemTitle" onclick={goToConfirmationFromBanner}><span>{labels.CSP_L2_Confirmation}</span></div>
+                            <div class="itemTitle itemClickable" onclick={goToConfirmationFromBanner}><span>{labels.CSP_L2_Confirmation}</span></div>
                         </template>
                         <template if:false={hasStep3Link}>
                             <div class="itemTitle"><span>{labels.CSP_L2_Confirmation}</span></div>
