@@ -8155,12 +8155,12 @@ system.debug('aqui sectorValue ' + sectorValue);
 						ownerName = accRole.Contact__r.FirstName + ' ' + accRole.Contact__r.LastName;
                     
 						if (!String.isBlank(accRole.Contact__r.LastName)) {
-							ownerName += ' ' + accRole.Contact__r.LastName
+							ownerName += ' ' + accRole.Contact__r.LastName;
 						}
 					}
 
 					if (String.isBlank(ownerName) && !String.isBlank(accRole.Contact__r.LastName)) {
-						ownerName = accRole.Contact__r.LastName
+						ownerName = accRole.Contact__r.LastName;
 					} else {
 						ownerName = accRole.Owner_Name__c;
 					}
