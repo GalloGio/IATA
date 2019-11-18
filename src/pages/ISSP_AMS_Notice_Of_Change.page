@@ -615,7 +615,7 @@
 	}
 
 	function checkGoGlobal() {
-		if ({!hqAccount.ANG_IsNewGenAgency__c}) {
+		if ({!newForm.ANG_IsNewGenAgency__c}) {
 			if ($j('[id$=allowedAccreditationModelSelect]')[0].selectedOptions[0].value == 'Multicountry') {
 				$j('[id$=selectHEForConversion]').css('display', 'block');
 				$j('[id$=accountsToBeConvertedPanel]').css('display', 'block');
