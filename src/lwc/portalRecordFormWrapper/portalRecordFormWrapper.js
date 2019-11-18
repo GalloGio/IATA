@@ -47,7 +47,6 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     @api sectionClass;
     @api headerClass;
     @api sectionTitle;
-    @api showEdit;
     @api editBasics;
     @api allowContactDelete=false;
 
@@ -76,6 +75,7 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     @track fieldsValid = true;
     @track fieldsLocal;
     @track jobFunctions;
+    @track showEditTrack;
     @track removeContact = false;
 
     timeout = null;
@@ -181,10 +181,10 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
         }
         
         isAdmin().then(result => {
-            this.showEdit = result && this.showEdit;
+            this.showEditTrack = result && this.showEditTrack;
             if (this._labels.CompanyInformation.trim() === this.tabName.trim()){
 				this.isAdminUser = result;
-                this.showEdit = true;
+                this.showEditTrack = true;
                 this.editBasics = true;
             }
         });
@@ -234,10 +234,6 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
         accessibilityTextLocal = contactTypeStatus.join(', ');
         this.contactTypeStatus = contactType;
         this.listSelected = contactTypeStatus;
-        
-        isAdmin().then(result => {
-            this.showEdit = (result ? true : false);
-        });
 
         return this.accessibilityText
     }
@@ -617,8 +613,8 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     }
 
     get canEditBasics() {
-        let isRestrictedSection = this.sectionTitle == 'Basics' || this.sectionTitle == 'Branch Contact';
-        return (this.editBasics && isRestrictedSection && this.showEdit) || (!isRestrictedSection && this.showEdit);
+        let isRestrictedSection = this.sectionName == 'Basics' || this.sectionName == 'Branch Contact';
+        return (this.editBasics && isRestrictedSection && this.showEditTrack) || (!isRestrictedSection && this.showEditTrack);
     }
 
     get hasIdCard() {
