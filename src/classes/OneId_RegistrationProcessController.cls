@@ -698,7 +698,7 @@ public without sharing class OneId_RegistrationProcessController {
         return true;
     }
 
-    private static String createContactAndAccount (Contact con, Account acc, String servName, serviceSpecificParams, Boolean l1UserExists) {
+    private static String createContactAndAccount (Contact con, Account acc, String servName, Map<String, String> serviceSpecificParams, Boolean l1UserExists) {
         system.debug('createContactAndAccount starting contact -->  ' + con);
         system.debug('createContactAndAccount starting account -- ' + acc);
 
