@@ -50,13 +50,6 @@ export default class PortalCompanyProfileContactsList extends LightningElement {
         firstLetter: 'All'
     };
 
-    @api 
-    reloadData(){
-        //reloads Data when the Contacts tab (active) is clicked
-        if(this.contactsFilteringObject.searchInput !== ''){
-            this.removeTextSearch();
-        }
-    }
     /*@track paginationObject = {
         totalItems : 15,
         currentPage : 1,
@@ -229,7 +222,7 @@ export default class PortalCompanyProfileContactsList extends LightningElement {
                 contact.LocationCode = '';
             }
 
-            if (user !== undefined) {
+            if (user !== undefined && user !== null && user.LastLoginDate !== undefined && user.LastLoginDate !== null) {
                 if (user.hasOwnProperty('LastLoginDate')) {
                     if (user.LastLoginDate != null) {
                         let lastLogin = new Date(user.LastLoginDate);
