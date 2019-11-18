@@ -127,15 +127,6 @@
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>Acknowledge_Sent_Date__c</fullName>
-        <externalId>false</externalId>
-        <label>Acknowledge Sent Date</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>DateTime</type>
-    </fields>
-    <fields>
         <fullName>Account__c</fullName>
         <description>SARA</description>
         <externalId>false</externalId>
@@ -159,6 +150,15 @@
         <trackTrending>false</trackTrending>
         <type>MasterDetail</type>
         <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Acknowledge_Sent_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Acknowledge Sent Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
     </fields>
     <fields>
         <fullName>Acknowledgment_sent__c</fullName>
@@ -2742,7 +2742,6 @@ NOT( ISPICKVAL( Security_Type__c , &quot;Manifestacion de Bienes&quot;) )
         <availability>online</availability>
         <displayType>button</displayType>
         <encodingKey>UTF-8</encodingKey>
-        <height>600</height>
         <linkType>url</linkType>
         <masterLabel>Send Acknowledgement</masterLabel>
         <openType>replace</openType>
