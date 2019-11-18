@@ -409,7 +409,7 @@ export default class PortalIftpProficiencyManagement extends LightningElement {
                 recordTosave.certification_code = auxData[el].trainingCode;
                 recordTosave.certification_name = auxData[el].trainingName;
                 dataToSave.push(recordTosave);
-            }
+            } 
         });
 
         this.loading = true;
@@ -421,7 +421,7 @@ export default class PortalIftpProficiencyManagement extends LightningElement {
                 this.cleanErrors();
             
                 Object.keys(auxData).forEach(function (el) {
-                    if(auxData[el].setProficiency){ 
+                    if(auxData[el].setProficiency && auxData[el].setProficiency === 'Yes'){ 
                         auxData[el].proficiency = auxData[el].setProficiency;
                         auxData[el].setProficiency = '';
                         auxData[el].proficiencyStatus = 'Success';
@@ -464,7 +464,11 @@ export default class PortalIftpProficiencyManagement extends LightningElement {
        
         for(i=0; i < this.selectedRows.length; i++){
             index = this.findRowIndexById(this.selectedRows[i].uniqueRowId);
-            auxData[index].setProficiency = 'Yes';
+            if(auxData[index].proficiency === 'Yes'){
+                auxData[index].setProficiency = 'Already Proficient';
+            } else {
+                auxData[index].setProficiency = 'Yes';
+            }
         }
         this.data = auxData;
     }
