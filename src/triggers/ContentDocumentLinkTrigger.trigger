@@ -1,3 +1,4 @@
+
 trigger ContentDocumentLinkTrigger on ContentDocumentLink (before insert, before update, before delete, after insert, after update, after delete, after undelete) {
     
     ContentDocumentLinkTriggerHandler handler = new ContentDocumentLinkTriggerHandler();
@@ -17,4 +18,8 @@ trigger ContentDocumentLinkTrigger on ContentDocumentLink (before insert, before
                 
         if(Trigger.isUnDelete) handler.onUndelete();           
     }      
+
+    if(Trigger.IsBefore && Trigger.IsInsert){
+        ContentDocumentLinkTriggerHandler.shareExternally(trigger.new);
+    }
 }
