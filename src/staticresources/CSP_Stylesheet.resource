@@ -651,10 +651,6 @@ button.twoLines {
   border: none;
 }
 
-.fullWidth, .fullWidth button, .fullWidth button:active, .fullWidth button:visited, .fullWidth button:focus, .fullWidth button:hover {
-    width: 100%;
-}
-
 .outlinedButton, .outlinedButton button, .outlinedButton button:active, .outlinedButton button:visited, .outlinedButton button:focus{
     -webkit-transition-duration: 0.4s; /* Safari */
   	transition-duration: 0.4s;
@@ -1498,6 +1494,10 @@ button.twoLines {
     border: none;
     display: inline-block;
     min-height: 40px;
+}
+
+.fullWidth, .fullWidth button, .fullWidth button:active, .fullWidth button:visited, .fullWidth button:focus, .fullWidth button:hover {
+    width: 100%;
 }
 
 /* Custom picklist Support Reach Us*/
