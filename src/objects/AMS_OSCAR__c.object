@@ -65285,11 +65285,14 @@ NOT( OR( ISPICKVAL(Account__r.Location_Class__c,&quot;P&quot;),ISPICKVAL(Account
         NOT(INCLUDES(Type_of_change__c, &quot;Ownership to IATA Agent&quot;)),
         NOT(INCLUDES(Type_of_change__c, &quot;Legal status&quot;)),
         NOT(INCLUDES(Type_of_change__c, &quot;Location&quot;)),
+        NOT(INCLUDES(Type_of_change__c, &quot;Location with inspection&quot;)),
         NOT(INCLUDES(Type_of_change__c, &quot;Major Shareholding&quot;)),
         NOT(INCLUDES(Type_of_change__c, &quot;VMFR&quot;)),
+        NOT(INCLUDES(Type_of_change__c, &quot;Location type&quot;)),
         NOT(INCLUDES(Type_of_change__c, &quot;Name&quot;)),
-        NOT(INCLUDES(Type_of_change__c, &quot;CNS - Removal of trade name&quot;)),
-        NOT(INCLUDES(Type_of_change__c, &quot;Location with inspection&quot;))
+        NOT(INCLUDES(Type_of_change__c, &quot;Minor Shareholding&quot;)),
+        NOT(INCLUDES(Type_of_change__c, &quot;CNS - Removal of trade name&quot;))
+        
     ),
     OR(
         ISPICKVAL(Status__c, &quot;Pending Approval&quot;),
