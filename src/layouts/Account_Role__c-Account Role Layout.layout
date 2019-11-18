@@ -35,8 +35,6 @@
                 <behavior>Edit</behavior>
                 <field>Account_Name__c</field>
             </layoutItems>
-        </layoutColumns>
-        <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Effective_From_Date__c</field>
