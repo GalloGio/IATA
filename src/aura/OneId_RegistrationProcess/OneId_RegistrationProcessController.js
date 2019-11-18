@@ -79,5 +79,11 @@
             $A.util.toggleClass(cmp.find("registrationComplete"), "slds-hide");
         }
 
-    }
+    },
+
+    setGadmPowerUser : function(component, event) {
+        let isPowerUser = event.getParam('isPowerUser');
+        component.set('v.isGadmPowerUser', isPowerUser);
+    },
+
 })

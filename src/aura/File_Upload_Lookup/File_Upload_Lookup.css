@@ -1,0 +1,14 @@
+@font-face {
+    font-family: 'aktiv-grotesk';
+    src: "{!$Resource.GADM_Portal/fonts/OTF/AktivGrotesk-Regular.otf}";
+}
+
+.THIS .iconUser{
+    margin-right:0.5rem;
+}
+
+.THIS .custom_font {
+    font-font-family: aktiv-grotesk !important;
+    color:#666666 !important;
+    font-size:15px !important;
+}

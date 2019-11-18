@@ -13275,7 +13275,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
             <value>Agent to be Notified</value>
         </criteriaItems>
         <description>Send a confirmation email as soon as the case is created for ID Card Application</description>
-        <triggerType>onCreateOnly</triggerType>
+        <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
         <fullName>IDCard_MassConfirmationEmail Send</fullName>
@@ -13736,7 +13736,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <formula>AND(  SIDRA_exchange_rate_updated__c,  RecordType.DeveloperName = &apos;SIDRA&apos;,  Short_Payment_Amount_USD__c &gt; 50,  NOT(ISPICKVAL( IRR_Withdrawal_Reason__c , &quot;IATA Charges&quot;)),   OR(AND(  ISPICKVAL( BSP_CASS__c , &quot;BSP&quot;),  CreatedDate &gt; DATETIMEVALUE( &quot;2015-01-01 00:00:00&quot;),  Short_Payment_Amount__c &lt;= (Billing_Amount__c*5/100),  Short_Payment_Amount_USD__c &lt;= 150000 ),   AND(ISPICKVAL( BSP_CASS__c , &quot;CASS&quot;),  CreatedDate &gt; DATETIMEVALUE( &quot;2017-07-18 00:00:00&quot;),  Short_Payment_Amount__c &lt;= (Billing_Amount__c*1/100),  Short_Payment_Amount_USD__c &lt;= 10000)))</formula>
+        <formula>AND(   		SIDRA_exchange_rate_updated__c,   		RecordType.DeveloperName = &apos;SIDRA&apos;,   		OR( 			AND(ISPICKVAL( BSP_CASS__c , &quot;CASS&quot;), Short_Payment_Amount_USD__c &gt; 50), 			AND(ISPICKVAL( BSP_CASS__c , &quot;BSP&quot;), Short_Payment_Amount_USD__c &gt; 50, Settlement_Model__c = &quot;Funds Received&quot;), 			AND(ISPICKVAL( BSP_CASS__c , &quot;BSP&quot;), Short_Payment_Amount_USD__c &gt; 1000, Settlement_Model__c = &quot;Reported Sales&quot;) 		),   		NOT(ISPICKVAL( IRR_Withdrawal_Reason__c , &quot;IATA Charges&quot;)),    		OR( 			AND(ISPICKVAL( BSP_CASS__c , &quot;BSP&quot;),  CreatedDate &gt; DATETIMEVALUE( &quot;2015-01-01 00:00:00&quot;),  Short_Payment_Amount__c &lt;= (Billing_Amount__c*5/100),  Short_Payment_Amount_USD__c &lt;= 150000 ),    			AND(ISPICKVAL( BSP_CASS__c , &quot;CASS&quot;),  CreatedDate &gt; DATETIMEVALUE( &quot;2017-07-18 00:00:00&quot;),  Short_Payment_Amount__c &lt;= (Billing_Amount__c*1/100),  Short_Payment_Amount_USD__c &lt;= 10000)) 	)</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -13758,7 +13758,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <formula>AND ( 		SIDRA_exchange_rate_updated__c,    		TEXT(IRR_Withdrawal_Reason__c)  &lt;&gt;  &apos;IATA Charges&apos;,  		OR(  			RecordType.DeveloperName = &apos;SIDRA&apos;,         			RecordType.DeveloperName = &apos;SIDRA_BR&apos;  		),  		CreatedDate &gt; DATETIMEVALUE( &quot;2012-09-30 00:00:00&quot;),  		Short_Payment_Amount_USD__c &gt; 1,      		ROUND(Short_Payment_Amount_USD__c,2) &lt;= 50 )</formula>
+        <formula>AND ( 		 		SIDRA_exchange_rate_updated__c,    		 		TEXT(IRR_Withdrawal_Reason__c)  &lt;&gt;  &apos;IATA Charges&apos;,  		 		OR(  			 			RecordType.DeveloperName = &apos;SIDRA&apos;,         			 			RecordType.DeveloperName = &apos;SIDRA_BR&apos;  		 			),  		 		CreatedDate &gt; DATETIMEVALUE( &quot;2012-09-30 00:00:00&quot;),  		 		Short_Payment_Amount_USD__c &gt; 1,    		OR( 			AND(ROUND(Short_Payment_Amount_USD__c,2) &lt;= 50, ISPICKVAL( BSP_CASS__c , &quot;CASS&quot;)), 			AND(ROUND(Short_Payment_Amount_USD__c,2) &lt;= 50, ISPICKVAL( BSP_CASS__c , &quot;BSP&quot;),  Settlement_Model__c = &quot;Funds Received&quot;),  			AND(ROUND(Short_Payment_Amount_USD__c,2) &lt;= 1000, ISPICKVAL( BSP_CASS__c , &quot;BSP&quot;), Settlement_Model__c = &quot;Reported Sales&quot;)   			)   		 		 		)</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
