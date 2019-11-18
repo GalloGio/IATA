@@ -48,7 +48,6 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     @api headerClass;
     @api sectionTitle;
 	@api sectionName;
-    @api showEdit;
     @api editBasics;
     @api allowContactDelete=false;
 
@@ -656,7 +655,7 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
 
     get canEditBasics() {
         let isRestrictedSection = this.sectionName == 'Basics' || this.sectionName == 'Branch Contact';
-        return (this.editBasics && isRestrictedSection && this.showEdit) || (!isRestrictedSection && this.showEdit);
+        return (this.editBasics && isRestrictedSection && this.showEditTrack) || (!isRestrictedSection && this.showEditTrack);
     }
 
     get hasIdCard() {
