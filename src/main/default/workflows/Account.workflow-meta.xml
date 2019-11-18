@@ -1,0 +1,4 @@
+        <formula>AND(RecordType.DeveloperName = &#39;IATA_Airline&#39;, 
+ISPICKVAL(ACLI_Status__c, &#39;Active Company&#39;), 
+NOT(ISPICKVAL(PRIORVALUE(ACLI_Status__c), &#39;Inactive Company&#39;)), 
+OR(ISCHANGED(ACLI_Status__c), ISCHANGED(RecordTypeId)))</formula>
