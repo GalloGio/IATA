@@ -431,7 +431,7 @@ public class ANG_MulticountryHelper {
 			swapWrapper.newGE = firstAccount.Id;
 			swapWrapper.bspOldGE = secondAccount.IATA_ISO_Country__r.AMS_Settlement_System__c;
 			swapWrapper.bspNewGE = firstAccount.IATA_ISO_Country__r.AMS_Settlement_System__c;
-			toReturn.moveFsAndRiskEventsMap = new Map<Id,Id>{secondAccount.Id => firstAccount.Id};
+			toReturn.addAccountsToMoveRiskEventsAndFs(secondAccount.Id, firstAccount.Id);
 		}
 		//If we are swapping a GE we store the new GE Id, the old GE BSP and the new GE BSP
 		else if(secondAccount.Location_Type__c == AMS_Utils.GE){
@@ -439,7 +439,7 @@ public class ANG_MulticountryHelper {
 			swapWrapper.newGE = secondAccount.Id;
 			swapWrapper.bspOldGE = firstAccount.IATA_ISO_Country__r.AMS_Settlement_System__c;
 			swapWrapper.bspNewGE = secondAccount.IATA_ISO_Country__r.AMS_Settlement_System__c;
-			toReturn.moveFsAndRiskEventsMap = new Map<Id,Id>{firstAccount.Id => secondAccount.Id};
+			toReturn.addAccountsToMoveRiskEventsAndFs(firstAccount.Id, secondAccount.Id);
 		}
 		else if(firstAccount.Location_Type__c == AMS_Utils.HE){
 			swapRelatedFields(firstAccount, secondAccount);

@@ -115,7 +115,7 @@ global without sharing class ANG_RollbackEngineHelper implements Queueable{
 				when 'ACCOUNT'{
 					processRollbackAccounts(technicalLogsMap.get(entity));
 				}
-				when 'CONTACT'{x
+				when 'CONTACT'{
 					processRollbackContacts(technicalLogsMap.get(entity));
 				}
 				when 'AMS_ACCOUNT_ROLE__C'{

@@ -198,10 +198,11 @@ private class ANG_MulticountryRHCTest {
 		ANG_RHCHelper.createRHCInfo(new Set<Id>{accountGE.Id}, false);
 
 		Financial_Institution__c fi = new Financial_Institution__c(
-			Name = 'Financial Institution', 
+			Name = 'Bank', 
 			Region__c = 'Europe', 
 			Country__c = 'Portugal', 
-			Institution_Type__c = 'Bank'
+			Institution_Type__c = 'Bank',
+			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Financial_Institution__c', 'Generic_FI')
 		);
 
 		insert fi;
@@ -213,18 +214,15 @@ private class ANG_MulticountryRHCTest {
 	@isTest static void rhcCashConditionCalculationTest(){
 		
 		Financial_Institution__c fi = 
-			[SELECT 
-				Id 
+			[SELECT Id 
 			 FROM Financial_Institution__c 
 			 LIMIT 1
 			];
 
 		Account accountGE = 
-			[SELECT 
-				Id 
+			[SELECT Id 
 			 FROM Account 
-			 WHERE 
-			 	Location_Type__c = :AMS_Utils.GE 
+			 WHERE Location_Type__c = :AMS_Utils.GE 
 			 LIMIT 1
 			];
 
@@ -246,7 +244,8 @@ private class ANG_MulticountryRHCTest {
 			Region__c = 'Europe', 
 			Reception_Date__c = System.today(), 
 			Reasonforrequest__c = 'New Application',
-			Reception_Case__c = cc.Id
+			Reception_Case__c = cc.Id,
+			Financial_Security_Validation_Case__c = cc.Id
 		);
 
 		insert fs; 
@@ -260,8 +259,7 @@ private class ANG_MulticountryRHCTest {
 				Id, 
 				ANG_RHC_Amount_Forecasted__c 
 			 FROM ANG_RHC_Information__c 
-			 WHERE 
-			 	ANG_AccountId__c = :accountGE.Id
+			 WHERE ANG_AccountId__c = :accountGE.Id
 			];
 
 		System.assertEquals(fs.Amount__c, rhcInfo.ANG_RHC_Amount_Forecasted__c);
@@ -271,18 +269,15 @@ private class ANG_MulticountryRHCTest {
 	@isTest static void rhcFormulaCalculationTest(){
 		
 		Financial_Institution__c fi = 
-			[SELECT 
-				Id 
+			[SELECT Id 
 			 FROM Financial_Institution__c 
 			 LIMIT 1
 			];
 
 		Account accountGE = 
-			[SELECT 
-				Id 
+			[SELECT Id 
 			 FROM Account 
-			 WHERE 
-			 	Location_Type__c = :AMS_Utils.GE 
+			 WHERE Location_Type__c = :AMS_Utils.GE 
 			 LIMIT 1
 			];
 
@@ -300,7 +295,8 @@ private class ANG_MulticountryRHCTest {
 			Region__c = 'Europe', 
 			Reception_Date__c = System.today(), 
 			Reasonforrequest__c = 'New Application',
-			Reception_Case__c = cc.Id
+			Reception_Case__c = cc.Id,
+			Financial_Security_Validation_Case__c = cc.Id
 		);
 
 		insert fs; 
@@ -316,8 +312,7 @@ private class ANG_MulticountryRHCTest {
 				Id, 
 				ANG_RHC_Amount_Forecasted__c 
 			 FROM ANG_RHC_Information__c 
-			 WHERE 
-			 	ANG_AccountId__c = :accountGE.Id
+			 WHERE ANG_AccountId__c = :accountGE.Id
 			];
 
 		System.assertEquals(fs.Amount__c, rhcInfo.ANG_RHC_Amount_Forecasted__c);
@@ -332,8 +327,7 @@ private class ANG_MulticountryRHCTest {
 				ANG_RHC_Amount_Provisional__c, 
 				ANG_Exceeding_Financial_Security__c 
 			 FROM ANG_RHC_Information__c 
-			 WHERE 
-			 	ANG_AccountId__c = :accountGE.Id
+			 WHERE ANG_AccountId__c = :accountGE.Id
 			];
 
 		System.assertEquals((rhcInfo.ANG_RHC_Amount_Provisional__c + rhcInfo.ANG_Exceeding_Financial_Security__c), rhcInfo.ANG_RHC_Amount_Forecasted__c);
@@ -349,8 +343,7 @@ private class ANG_MulticountryRHCTest {
 				ANG_RHC_Amount_Provisional__c, 
 				ANG_Exceeding_Financial_Security__c 
 			 FROM ANG_RHC_Information__c 
-			 WHERE 
-			 	ANG_AccountId__c = :accountGE.Id
+			 WHERE ANG_AccountId__c = :accountGE.Id
 			];
 
 		System.assertEquals(fs.Amount__c, rhcInfo.ANG_RHC_Amount_Forecasted__c);
@@ -362,19 +355,15 @@ private class ANG_MulticountryRHCTest {
 	@isTest static void rhcEffectiveNewGeRiskEventGenerationTest(){
 
 		Financial_Institution__c fi = 
-			[SELECT 
-				Id 
-			 FROM 
-			 	Financial_Institution__c 
+			[SELECT Id 
+			 FROM Financial_Institution__c 
 			 LIMIT 1
 			];
 
 		Account accountGE = 
-			[SELECT 
-				Id 
+			[SELECT Id 
 			 FROM Account 
-			 WHERE 
-			 	Location_Type__c = :AMS_Utils.GE 
+			 WHERE Location_Type__c = :AMS_Utils.GE 
 			 LIMIT 1
 			];
 
@@ -392,7 +381,8 @@ private class ANG_MulticountryRHCTest {
 			Region__c = 'Europe', 
 			Reception_Date__c = System.today(), 
 			Reasonforrequest__c = 'New Application',
-			Reception_Case__c = cc.Id
+			Reception_Case__c = cc.Id,
+			Financial_Security_Validation_Case__c = cc.Id
 		);
 
 		insert fs; 
