@@ -541,11 +541,11 @@ public without sharing class OneId_RegistrationProcessController {
     }
     @AuraEnabled
     public static boolean registration(Account acc, Contact con, String serviceName, Boolean l1UserExists){
-        return registration(acc, con, serviceName, new Map<String, String>());
+        return registration(acc, con, serviceName, new Map<String, String>(), l1UserExists);
     }
 
     @AuraEnabled
-    public static boolean registration(Account acc, Contact con, String serviceName, Map<String, String> serviceSpecificParams){
+    public static boolean registration(Account acc, Contact con, String serviceName, Map<String, String> serviceSpecificParams, Boolean l1UserExists){
 
         system.debug('OneId registration process starting...');
         system.debug('account  --> ' + acc);
@@ -882,14 +882,14 @@ public without sharing class OneId_RegistrationProcessController {
 
 	@future
 	public static void addDefaultAppRights(Id conId, Id accId){
-		Contact con = [SELECT Id FROM Contact WHERE Id =: conId];
+		Contact con = [SELECT Id, AccountId FROM Contact WHERE Id =: conId];
 
 		if(accId == null){
 			Comm_User_Helper.addDefaultAppRights(con, null);
 		}
 		else{
 			Account acc = [SELECT Id, Sector__c, Category__c FROM Account WHERE Id =: accId];
-			Comm_User_Helper.addDefaultAppRights(con, null);
+			Comm_User_Helper.addDefaultAppRights(con, acc);
 		}
 	} 
 
