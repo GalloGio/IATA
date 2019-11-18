@@ -404,3 +404,10 @@ out
 config/*
 README.md
 uncrustify.cfg
+force.json
+.forceignore
+sfdx-project.json
+.forceCode/
+.sfdx/
+.vscode/
+src/lwc/jsconfig.json
