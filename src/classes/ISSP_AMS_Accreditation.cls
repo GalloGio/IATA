@@ -8149,9 +8149,19 @@ system.debug('aqui sectorValue ' + sectorValue);
                                                 WHERE Account__c = :newform.Same_Legal_Entity_Agency_Account__c
                                                     AND Valid__c = true 
                                                     AND Active__c = true]) {
-					String ownerName = accRole.Contact__r.FirstName + ' ' + accRole.Contact__r.LastName;
+					String ownerName;
                     
-					if (String.isBlank(ownerName)) {
+					if (!String.isBlank(accRole.Contact__r.FirstName)) {
+						ownerName = accRole.Contact__r.FirstName + ' ' + accRole.Contact__r.LastName;
+                    
+						if (!String.isBlank(accRole.Contact__r.LastName)) {
+							ownerName += ' ' + accRole.Contact__r.LastName
+						}
+					}
+
+					if (String.isBlank(ownerName) && !String.isBlank(accRole.Contact__r.LastName)) {
+						ownerName = accRole.Contact__r.LastName
+					} else {
 						ownerName = accRole.Owner_Name__c;
 					}
                     
@@ -8210,8 +8220,10 @@ system.debug('aqui sectorValue ' + sectorValue);
         for(Account a : getBranchList(true)){
             if (isNoticeOfChange) {
                 if (isMCAccredited) {
-                    if (!mcCountryIsos.contains(a.Country_ISO_Code__c)) {
-                        continue;
+                    if (newForm.Scope_of_Change__c != 'HO - All Branches' && isStep3) {
+                        if (!mcCountryIsos.contains(a.Country_ISO_Code__c)) {
+                            continue;
+                        }
                     }
                 } else {
                     if (a.Country_ISO_Code__c != newCase.IFAP_Country_ISO__c) {
