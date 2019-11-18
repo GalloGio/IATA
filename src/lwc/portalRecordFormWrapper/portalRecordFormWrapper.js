@@ -124,6 +124,14 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     
     get labels() { return this._labels; }
     set labels(value) { this._labels = value; }
+	
+	@api 
+    get showEdit(){
+        return this.showEditTrack;
+    }
+    set showEdit(val){
+        this.showEditTrack=val;
+    }
 
     emptyStaticServices = 'emptyStaticServices';
     emptyServices = 'emptyServices';
