@@ -1,12 +1,15 @@
 <apex:page showHeader="false" sidebar="false" applyHtmlTag="fasle" applyBodyTag="false" standardStylesheets="false" renderAs="pdf" controller="AMS_CertificateForPrintController">
-	<html>
+<html>
 	<head>
 		<title>Certificate</title>
 
 		<style>
 				@page{
 					size: A4 landscape;
-					margin: :0.1in;
+					margin-left: 1cm;
+					margin-right: 2cm;
+					margin-top: 0.1in;
+					margin-bottom: 0in;
 				}
 	
 				.tabeStyle{
@@ -19,7 +22,7 @@
 		<apex:repeat value="{!certificates}" var="page">
 			<apex:repeat value="{!page}" var="acc">
 				<table class="tabeStyle" id="myTable">
-					<tr style="height: 223px;">
+					<tr style="height: 180px;">
 						<td style="width: 50%;">
 							<div class="headerImg">
 								
@@ -35,21 +38,29 @@
 					</tr>
 					<tr  style="height: 223px;">
 						<td colspan="2">
-							<div style="height:50px;font-size: 2.7em;">
+							<div style="height:103px;">
+							</div>
+							<div style="height:50px;font-size: 2.9em;">
 								<apex:outputText value="{!acc.Name}"/>
 							</div>
-							<div style="height:70px;font-size: 25px;">
+							<div style="font-weight: bold;height:22px;font-size: 2.9em;">
+							</div>
+							<div style="height:70px;font-size: 30px;">
 								<apex:outputText value="{!acc.TradeName__c}"/><br></br>
 								<apex:outputText value="{!acc.BillingCity}"/>,&nbsp;<apex:outputText value="{!acc.IATA_ISO_Country__r.Name}"/>
 							</div>
-							<div  style="height:40px;">
+							<div  style="height:6px;">
+							</div>
+							<div  style="height:40px;font-size: 20px;">
+							</div>
+							<div  style="height:18px;">
 							</div>
 							<div  style="height:40px;">
-								<table>
+								<table style="margin-left: -2px">
 									<tr>
-										<td style="width:33.3%;font-size: 13px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<apex:outputText value="{!acc.IATACode__c}"/></td>
-										<td style="width:300px;font-size: 13px;"></td>
-										<td style="width:33.3%;font-size: 13px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {!allLabels['CertificateValidity'].Certificate_Validity__c}</td>
+										<td style="width:40%;font-size: 11px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<apex:outputText value="{!acc.IATACode__c}"/></td>
+										<td style="width:43%;font-size: 11px;"></td>
+										<td style="width:20%;font-size: 11px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {!allLabels['CertificateValidity'].Certificate_Validity__c}</td>
 									</tr>
 								</table>
 							</div>
@@ -69,16 +80,8 @@
 									</td>
 								</tr>
 								<tr style="position: relative;">
-									<td style="font-size: 10px;width:200px;">
-										
-									</td>
-									<td style="width:20px;">
-									</td>
-									<td style="font-size: 10px;width:170px;margin-left:20px;">
-										
-									</td>
-									<td>
-										<div style="position: absolute;color: #dddddd;opacity: 0.2;font-size: 9em;font-weight: bold;top:-80%;z-index: -999;">
+									<td style="height:180px;">
+										<div style="position: absolute;color: #dddddd;opacity: 0.2;font-size: 9em;font-weight: bold;top: 30%;z-index: -999;">
 											{!IF(ISBLANK($CurrentPage.Parameters.year), YEAR(TODAY()), $CurrentPage.Parameters.year)}
 										</div>
 									</td>
