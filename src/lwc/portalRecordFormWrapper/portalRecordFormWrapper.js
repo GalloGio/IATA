@@ -77,6 +77,7 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     @track fieldsValid = true;
     @track fieldsLocal;
     @track jobFunctions;
+    @track showEditTrack;
     @track removeContact = false;
 	@track firstEntry = false;
     @track initialList = [];
@@ -185,10 +186,10 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
         }
         
         isAdmin().then(result => {
-            this.showEdit = result && this.showEdit;
+            this.showEditTrack = result && this.showEditTrack;
             if (this._labels.CompanyInformation.trim() === this.tabName.trim()){
 				this.isAdminUser = result;
-                this.showEdit = true;
+                this.showEditTrack = true;
                 this.editBasics = true;
             }
         });
@@ -711,4 +712,4 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
         });
     }
 
-}
+}}

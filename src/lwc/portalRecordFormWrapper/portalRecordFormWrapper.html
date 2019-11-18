@@ -571,18 +571,22 @@
 
                                     <!-- Popup Footer -->
                                     <div
-                                        class="slds-p-around_medium topLightGrayBorder customWhiteBackground slds-clearfix footer-btn-wrapper">
+                                        class="slds-grid slds-p-around_medium topLightGrayBorder customWhiteBackground slds-clearfix footer-btn-wrapper">
 
                                         <a onclick={removeUser} if:true={allowContactDelete}><div class="removeLink">{removeContactLabel}</div></a>
+										
+										<div class="slds-col slds-size_6-of-12">
+                                            <lightning-button
+                                                class="containedButton containedButtonWhite fullWidth"
+                                                disabled={isSaving} label={labels.CancelLabel} variant=""
+                                                onclick={closeModal}></lightning-button>
+                                            </div>
 
-                                        <lightning-button class="slds-float_right containedButton"
+                                        <div class="slds-col slds-size_6-of-12">
+                                        <lightning-button class="containedButton fullWidth"
                                             label={labels.SaveLabel} type="submit" disabled={canSave} variant="brand">
                                         </lightning-button>
-
-                                        <lightning-button
-                                            class="slds-float_right  containedButtonWhite slds-m-right_medium cancel-btn"
-                                            disabled={isSaving} label={labels.CancelLabel} variant=""
-                                            onclick={closeModal}></lightning-button>
+                                        </div>
                                     </div>
                                 </lightning-record-edit-form>
                             </div>
