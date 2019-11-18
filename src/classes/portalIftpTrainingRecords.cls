@@ -374,7 +374,6 @@ public without sharing class portalIftpTrainingRecords {
 		Map<Id, Map<Id, List<Contact_Role_Certification__c>>> certificationsByEmployeeIdCertificateIdMap = new Map<Id, Map<Id, List<Contact_Role_Certification__c>>>();
 		for(Contact_Role_Certification__c cert : certifications){
 			if(!(searchType != null && searchType.equalsIgnoreCase('ProficiencyManagement') && cert.Expiration_Date__c < System.today())){
-				System.debug('cert.Certification__r.Level_2_Certificate__c' + cert.Certification__r.Level_2_Certificate__c);
 				if(cert.Certification__r.Level_2_Certificate__c != null){
 					parentCertIdSet.add(cert.Certification__r.Level_2_Certificate__c);
 					employeeIdSet.add(cert.Account_Contact_Role__c);
@@ -567,9 +566,6 @@ public without sharing class portalIftpTrainingRecords {
 									for(Role_Address__c rol: parentAssessmentsList){
 										if(assessment.Account_Contact_Role__c == rol.Contact_Role_Certification__r.Account_Contact_Role__c
 											&& assessment.Certification__r.Level_2_Certificate__c == rol.Contact_Role_Certification__r.Certification__c){
-											System.debug('parentAssessmentsList' + parentAssessmentsList);
-											System.debug('parentAssessmentsList[0]' + parentAssessmentsList[0]);
-											System.debug('assessment' + assessment);
 											isRecordValid = true;
 										}
 									}
@@ -749,7 +745,7 @@ public without sharing class portalIftpTrainingRecords {
 	*/
 	@AuraEnabled (cacheable=false)
 	public static List<TrainingRecordsWrapper> getTrainingRecordsDetail(List<String> searchValues, String searchType){
-
+		Boolean isToCheckValidParentCertificate = false;
 		//String auxStationsOptions = searchValues[0];
 		String lStation = searchValues[0];
 		String auxItpOptions = searchValues[1];
@@ -768,12 +764,20 @@ public without sharing class portalIftpTrainingRecords {
 		Date dToDate = (auxToDate != 'null') ? Date.valueOf(auxToDate) : null;
 		Set<String> lLevel = (auxLevelOptions != 'null') ? new Set<String>(auxLevelOptions.split(',')) :  new Set<String>();
 
+		if(lLevel.contains('Level 3')){
+			isToCheckValidParentCertificate = true;
+		}
+
 
 		PortalIftpUtils.UserInfoRecordsWrapper ui = PortalIftpUtils.getUserInfo();
 
 		Set<Id> empIds = new Set<Id>();
+		Set<Id> parentCertIdSet = new Set<Id>();
+		Set<Id> employeeIdSetOfParentCert = new Set<Id>();
+		List<Role_Address__c> parentAssessmentsList  = new List<Role_Address__c>();
+
 		String sQuery = 'SELECT Id, Name, Account_Contact_Role__c, Account_Contact_Role__r.First_Name__c, Account_Contact_Role__r.Last_Name__c, ';
-		sQuery += 'Account_Contact_Role__r.Company_Code__c , Certification__c, Certification__r.Name, ';
+		sQuery += 'Account_Contact_Role__r.Company_Code__c , Certification__c, Certification__r.Name, Certification__r.Level_2_Certificate__c, ';
 		sQuery += 'Account_Contact_Role__r.Contact__r.account.name, Expiration_Status__c, Expiration_Date__c, CreatedDate, Stopped__c ';
 		sQuery += ', (SELECT Id, Name, Proficiency_level__c, Proficiency_Granted_By__c, Proficiency_Status__c, Start_Date__c, Address__c, Address__r.Code__c FROM Role_Addresses__r) ';
 		sQuery += 'FROM Contact_Role_Certification__c ';
@@ -850,6 +854,10 @@ public without sharing class portalIftpTrainingRecords {
 		//Get Employees ID's
 		for(Contact_Role_Certification__c cert : certifications){
 			empIds.add(cert.Account_Contact_Role__c);
+			if(cert.Certification__r.Level_2_Certificate__c != null){
+				parentCertIdSet.add(cert.Certification__r.Level_2_Certificate__c);
+				employeeIdSetOfParentCert.add(cert.Account_Contact_Role__c);
+			}
 		}
 
 		// For Level 3 Prerequisite
@@ -860,7 +868,18 @@ public without sharing class portalIftpTrainingRecords {
 																									WHERE General_Training__c LIKE 'Yes'
 																									AND Prerequisite_Level__c LIKE:'Level 3')
 																		ORDER BY Expiration_Date__c ];
-
+		if(parentCertIdSet.size() > 0 && lstation != null && !lstation.equalsIgnoreCase('null')){			
+			parentAssessmentsList = [   SELECT Id, Name, Contact_Role_Certification__r.Account_Contact_Role__c,
+												Contact_Role_Certification__r.Certification__c, Contact_Role_Certification__r.Expiration_Date__c,
+												Contact_Role_Certification__r.Certification__r.Name, Contact_Role_Certification__r.Expiration_Status__c
+										FROM Role_Address__c
+										WHERE Contact_Role_Certification__r.Account_Contact_Role__c IN :employeeIdSetOfParentCert
+										AND Contact_Role_Certification__r.Certification__c IN :parentCertIdSet
+										AND Proficiency_level__c = 'Yes'
+										AND Proficiency_Status__c = 'Active'
+										AND Address__r.Code__c = :lstation];
+		}
+		
 		// For Level 2 Prerequisite
 		List<Contact_Role_Certification__c> lGeneralTrainingLevel2 = new List<Contact_Role_Certification__c>();
 		lGeneralTrainingLevel2 = [SELECT  Id,Account_Contact_Role__c, Name, Certification__r.Name, Expiration_Status__c, Expiration_Date__c
@@ -882,8 +901,7 @@ public without sharing class portalIftpTrainingRecords {
 					certLevel = rec.Prerequisite_Level__c;
 					break;
 				}
-			}
-
+			}		
 			String auxIndicator = '';
 			String auxIndicatorPrereq = '';
 			Date auxIndicatorExpiration = null;
@@ -908,6 +926,7 @@ public without sharing class portalIftpTrainingRecords {
 				}
 			}
 			if(certLevel.equalsIgnoreCase('Level 3')){
+				//General Trainings
 				for(Contact_Role_Certification__c genCert : lGeneralTrainingLevel3){
 					if(genCert.Account_Contact_Role__c == cert.Account_Contact_Role__c){
 						if(auxIndicatorExpiration == null
@@ -923,6 +942,19 @@ public without sharing class portalIftpTrainingRecords {
 							auxIndicatorPrereq = genCert.Certification__r.Name;
 							auxIndicatorExpiration = genCert.Expiration_Date__c;
 							auxIndicatorStatus = genCert.Expiration_Status__c;
+						}
+					}
+				}
+				// Level 2 matching/parent assessment
+				for(Role_Address__c rol: parentAssessmentsList){
+					if(cert.Account_Contact_Role__c == rol.Contact_Role_Certification__r.Account_Contact_Role__c
+						&& cert.Certification__r.Level_2_Certificate__c == rol.Contact_Role_Certification__r.Certification__c){
+						if(auxIndicatorExpiration == null || (rol.Contact_Role_Certification__r.Expiration_Date__c < auxIndicatorExpiration)){
+							DateTime DT = DateTime.newInstance(rol.Contact_Role_Certification__r.Expiration_Date__c.year() , rol.Contact_Role_Certification__r.Expiration_Date__c.month(), rol.Contact_Role_Certification__r.Expiration_Date__c.day());
+							auxIndicator = rol.Contact_Role_Certification__r.Certification__r.Name  + ' - ' + DT.format('MMM d, yyyy');
+							auxIndicatorPrereq = rol.Contact_Role_Certification__r.Certification__r.Name ;
+							auxIndicatorExpiration = rol.Contact_Role_Certification__r.Expiration_Date__c;
+							auxIndicatorStatus = rol.Contact_Role_Certification__r.Expiration_Status__c;
 						}
 					}
 				}
