@@ -3635,6 +3635,11 @@ public class AMS_OSCARTriggerHandler {
                         ANG_ChinaConversionsHelper.deleteRiskEvents(updatedOscar.account__c);
                     }
                 }
+
+				if (updatedOSCAR.Process__c == AMS_Utils.NGCONVERSIONTOMULTICOUNTRY && updatedOSCAR.STEP11__c <> 'Passed') {
+					updatedOSCAR.addError('Approval can\'t be set if "Conduct Financial Review" step is not Passed.');
+				}
+
                 //ACAMBAS - NEWGEN-4445 - End
             }
 
