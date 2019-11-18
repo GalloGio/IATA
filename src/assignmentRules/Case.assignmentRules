@@ -19,10 +19,8 @@
   ),
   OR(RecordType.DeveloperName = &quot;Cases_China_North_Asia&quot;,
   AND(RecordType.DeveloperName =&quot;Cases_Global&quot;,ISPICKVAL(Region__c,&quot;China &amp; North Asia&quot;))),
-  OR(
-  TIMEVALUE(CreatedDate)&gt;=TIMEVALUE(&quot;01:00:00.000&quot;),
+  TIMEVALUE(CreatedDate)&gt;=TIMEVALUE(&quot;00:00:00.000&quot;),
   TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;09:00:00.000&quot;)
-  )
   )</formula>
         </ruleEntry>
         <ruleEntry>
