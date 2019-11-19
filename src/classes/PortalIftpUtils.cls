@@ -1596,10 +1596,13 @@ public without sharing class PortalIftpUtils {
 			Role_Address__c roleAddress = [SELECT Id,
 											Contact_Role_Certification__r.Account_Contact_Role__r.Company_Code__c,
 											Contact_Role_Certification__r.Account_Contact_Role__r.First_Name__c,
+											Contact_Role_Certification__r.Account_Contact_Role__r.Contact__r.AccountId,
 											Contact_Role_Certification__r.Account_Contact_Role__r.Last_Name__c, Address__r.City__c,
 											Address__r.Code__c, Contact_Role_Certification__r.Certification__r.Name,
 											Proficiency_level__c, Proficiency_Granted_By__c
 										  FROM Role_Address__c WHERE Id=:roleAddressId];
+
+			Account itpAcc = [SELECT name FROM Account WHERE id = :roleAddress.Contact_Role_Certification__r.Account_Contact_Role__r.Contact__r.AccountId LIMIT 1];
 
 		if(roleAddress.Proficiency_level__c == 'No'){
 			throw new AuraHandledException('Proficiency level is already set to No');
@@ -1615,7 +1618,7 @@ public without sharing class PortalIftpUtils {
 
 			IFTP_History__c iftpH = new IFTP_History__c();
 			iftpH.Event_Type__c = String.valueOf(portalIftpHistoryManagement.Employee_Loose_Proficiency);
-			iftpH.ITP_Name__c = 'IATA INTERNAL USER';
+			iftpH.ITP_Name__c = itpAcc.name; 
 			iftpH.Employee_Code__c = roleAddress.Contact_Role_Certification__r.Account_Contact_Role__r.Company_Code__c;
 			iftpH.Employee_First_Name__c = roleAddress.Contact_Role_Certification__r.Account_Contact_Role__r.First_Name__c;
 			iftpH.Employee_Last_Name__c = roleAddress.Contact_Role_Certification__r.Account_Contact_Role__r.Last_Name__c;
