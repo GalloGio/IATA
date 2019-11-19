@@ -85,22 +85,25 @@
                         </span>
                     </div>
                     <div class="customWhiteBackground">
-                        <lightning-layout multiple-rows class="slds-p-horizontal_medium" pull-to-boundary="medium" horizontal-align="spread">
+                        <div class="slds-p-horizontal_medium">
 
                             <!-- Country pick -->
-                            <lightning-layout-item class="slds-p-around_xx-small" size="12" flexibility="grow">
-                                <div class="slds-p-horizontal_large slds-p-vertical_medium" >
+                            <div class="slds-p-around_xx-small">
+                                <div class="slds-p-horizontal_large slds-p-vertical_medium">
                                     <lightning-combobox
-                                        class="cursorPointerComboBox text-xxsmall customPickList "
+                                        class="cursorPointerComboBox text-xxsmall customPickList"
                                         label={label.CSP_Search_Case_Country} value={filteringObject.casesComponent.caseCountryFilter}
                                         placeholder=" " options={countryPickOptions}
                                         onchange={countryPickOnchangeHandler}>
                                     </lightning-combobox>
                                 </div>
-                            </lightning-layout-item>
+                            </div>
+                        </div>
+
+                            <div class="slds-grid slds-p-horizontal_medium">
 
                             <!-- Creation Date (from) -->
-                            <lightning-layout-item  class="slds-p-around_xx-small" size="6" flexibility="grow">
+                            <div class="slds-col slds-size_1-of-2 slds-p-around_xx-small">
                                 <div class="slds-p-horizontal_large slds-p-vertical_medium" >
                                     <lightning-input 
                                         class="customPickList dateField" 
@@ -110,34 +113,34 @@
                                         label={label.CSP_DateFrom}>
                                     </lightning-input>
                                 </div>
-                            </lightning-layout-item>
+                            </div>
 
                             <!-- Creation Date (to) -->
-                            <lightning-layout-item class="slds-p-around_xx-small" size="6" flexibility="grow">
-                                <div class="slds-p-horizontal_large slds-p-vertical_medium" >
-                                    <lightning-input 
-                                        class="customPickList dateField" 
-                                        type="date" 
-                                        onchange={dateToOnchangeHandler}
-                                        value={filteringObject.casesComponent.dateToFilter}
-                                        label={label.CSP_DateTo}>
-                                    </lightning-input>
-                                </div>  
-                            </lightning-layout-item>
+                                <div class="slds-col slds-size_1-of-2 slds-p-around_xx-small">
+                                    <div class="slds-p-horizontal_large slds-p-vertical_medium" >
+                                        <lightning-input 
+                                            class="customPickList dateField" 
+                                            type="date" 
+                                            onchange={dateToOnchangeHandler}
+                                            value={filteringObject.casesComponent.dateToFilter}
+                                            label={label.CSP_DateTo}>
+                                        </lightning-input>
+                                    </div>  
+                                </div>
+                            </div>
 
                             <!-- Contacts pick -->
-                            <lightning-layout-item class="slds-p-around_xx-small" size="12" flexibility="grow">
+                            <div class="slds-p-around_xx-small">
                                 <div class="slds-p-horizontal_large slds-p-vertical_medium" if:true={viewContactsFilterPicklist}>
                                     <lightning-combobox
-                                        class="cursorPointerComboBox text-xxsmall customPickList "
+                                        class="cursorPointerComboBox text-xxsmall customPickList"
                                         label={label.ISSP_Contact} value={filteringObject.casesComponent.caseContactFilter}
                                         placeholder=" " options={contactPickOptions}
                                         onchange={contactPickOnchangeHandler}>
                                     </lightning-combobox>
                                 </div>
-                            </lightning-layout-item>
+                            </div>
 
-                        </lightning-layout>
                         <!-- BUTTON -->
                         <div class="slds-align_absolute-center slds-p-around_large slds-grid slds-wrap topLightGrayBorder" style="text-align: center;">
                             <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
