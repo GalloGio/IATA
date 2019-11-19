@@ -3,7 +3,7 @@ public class AMS_OSCARTriggerHandler {
     //*************************************
     //************ variables **************
     //*************************************
-
+    @testVisible
     class AMSException extends Exception {}
     
     private static ID rtAgencyInvolved = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Process_Detail__c', 'Agency_Involved');
@@ -4790,8 +4790,8 @@ public class AMS_OSCARTriggerHandler {
         for(String key : iataCodes.keySet())
             ANG_RME_Alert_Service.requestGDIEndorsementCertificate(key,iataCodes.get(key));
         
-    }         
-
+    }
+/*
     // to be removed
   public void fakeMethod(){
     Integer i = 0;
@@ -5140,6 +5140,6 @@ public class AMS_OSCARTriggerHandler {
     i=0;
     i=0;
   }
- 
+ */
 
 }

@@ -7,7 +7,6 @@ public class AmazonRestTest {
     createCredentials('IFAP');
 
     AmazonRest.getFile('Test File Name', AmazonCredentials.getCredentials('IFAP'));
-	AmazonRest.fakemethod();
   }
 
   static testMethod void listBucketTest(){
@@ -25,9 +24,23 @@ public class AmazonRestTest {
 
     // AmazonRest.getFile(Filename,AmazonCredentials.getCredentials('IFAP'));
     AmazonRest.make_sig('',AmazonCredentials.getCredentials('IFAP'));
-    AmazonRest.genPublicExpiringAWSLink('', AmazonCredentials.getCredentials('IFAP'), 10 );
+    AmazonRest.genPublicExpiringAWSLink('teste_File', AmazonCredentials.getCredentials('IFAP'), 10 );
     //AmazonRest.copyFile(AmazonCredentials sourceCredentials, String sourceFilename, AmazonCredentials destCredentials, string destFilename)
   }
+
+  static testMethod void Exception_listBucketTest(){
+    CaseChildHelper.noValidationsOnTrgCAseIFAP = true; /* later I switch it to false to fully emulate production envinroment */
+    
+    createCredentials('IFAP');
+   
+    String result = AmazonRest.genPublicExpiringAWSLink('', AmazonCredentials.getCredentials('IFAP'), 10 );
+
+    Test.startTest();
+      System.assertEquals(result, null);
+    Test.stopTest();
+   
+  }
+
 
   static testMethod void deleteTest(){
     CaseChildHelper.noValidationsOnTrgCAseIFAP = true; /* later I switch it to false to fully emulate production envinroment */
@@ -96,5 +109,45 @@ public class AmazonRestTest {
     };  
 
     insert AWS_KEYs;
+  }
+
+  static testMethod void copyTest() {
+    
+    CaseChildHelper.noValidationsOnTrgCAseIFAP = true; //later I switch it to false to fully emulate production envinroment
+          
+    createCredentials('IFAP');//GenericAttach
+      
+    String sourceFilename = 'IFAP/afile';
+    String destFilename = 'IFAP/dest';
+    AmazonCredentials cred = AmazonCredentials.getCredentials('IFAP');
+      
+    Boolean resultCopy = AmazonRest.copyFile(cred, sourceFilename, cred, destFilename);
+      
+    Test.startTest();
+      
+      System.assert(resultCopy, true);
+      
+    Test.stopTest();
+  }
+
+  Static testMethod void deleteFilesTest(){
+
+    CaseChildHelper.noValidationsOnTrgCAseIFAP = true; // later I switch it to false to fully emulate production envinroment
+      
+    createCredentials('IFAP');
+      
+    Set<String> fileNames = new Set<String>();
+      fileNames.add('IFAP/afile');
+      fileNames.add('IFAP');
+    AmazonCredentials cred = AmazonCredentials.getCredentials('IFAP');
+    String folder = 'test folder';
+      
+    Boolean doneDeleteFiles = AmazonRest.deleteFiles(fileNames, folder, cred);
+      
+    Test.startTest();
+
+      System.assert(doneDeleteFiles,true);
+        
+    Test.stopTest();
   }
 }

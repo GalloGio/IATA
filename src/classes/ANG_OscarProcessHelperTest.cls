@@ -146,10 +146,7 @@ private class ANG_OscarProcessHelperTest {
 	}
 
 	@isTest static void testIATACodeGenerationOKNoDueDiligenceCase() {
-
-		ANG_OscarProcessHelper aoph = new ANG_OscarProcessHelper();
-		aoph.fakemethod();
-
+		
 		System.debug('Starting testIATACodeGenerationOKNoDueDiligenceCase');
 
 		AMS_OSCAR__c oscar = [Select Id, Account__c, AMS_Online_Accreditation__c FROM AMS_OSCAR__c LIMIT 1];
@@ -696,7 +693,6 @@ private class ANG_OscarProcessHelperTest {
 
 			Test.startTest();
 
-			//Contact co2 = new Contact(AccountId = a1.id, Firstname = 'John1', Lastname='Rambo', Phone = '666123456', MobilePhone = '911111111', Email = 'rambo.john1j@test.com', User_Portal_Status__c = 'Approved Admin');
 			Contact co1 = new Contact(AccountId = a1.id, Firstname = 'John', Lastname='Rambo', Phone = '666123456', MobilePhone = '911111111', Email = 'rambo.johnj4@test.com');
 			Contact co3 = new Contact(AccountId = a1.id, Firstname = 'John2', Lastname='Rambo', Phone = '666123456', MobilePhone = '911111111', Email = 'rambo.john2j@test.com', Financial_Assessment_Contact__c = true);
 			Contact co4 = new Contact(AccountId = a1.id, Firstname = 'John3', Lastname='Rambo', Phone = '666123456', MobilePhone = '911111111', Email = 'rambo.john3j@test.com', BSP_CASS_Payment_contact__c = true);
@@ -710,10 +706,29 @@ private class ANG_OscarProcessHelperTest {
 
 			System.debug(contactsOrdered);
 
-			//System.assertEquals(co2, contactsOrdered.get(0));
 			System.assertEquals(co3, contactsOrdered.get(0));
 			System.assertEquals(co4, contactsOrdered.get(1));
 			System.assertEquals(co1, contactsOrdered.get(2));
+
+			Test.stopTest();
+
+		}
+		
+		@isTest static void testFetchKeyContactApprovalAdmin() {
+			
+			IATA_ISO_Country__c ctry = [Select Id from IATA_ISO_Country__c where Name='France'];
+			Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
+
+			Account a1 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountRT ,Name='NewGenAgency',Short_Name__c='NewGenAgency', Location_Class__c = 'P', Location_Type__c = 'HE', Remittance_frequency__c = 'M', Sector__C = 'Travel Agent' , Category__C = 'IATA Passenger Sales Agent', Reason_for_creation__c = 'Account is missing' , Company_Type__c = 'A', IATACode__c = '1234567', Status__c = 'Approved');
+			insert a1;
+
+			Test.startTest();
+
+			Contact co2 = new Contact(AccountId = a1.id, Firstname = 'John1', Lastname='Rambo', Phone = '666123456', MobilePhone = '911111111', Email = 'rambo.john1j@test.com', User_Portal_Status__c = 'Approved Admin');
+			insert co2;
+				
+			String approvedUserPortal = co2.User_Portal_Status__c;
+			System.assertEquals(approvedUserPortal, 'Approved Admin');
 
 			Test.stopTest();
 
@@ -1031,4 +1046,71 @@ private class ANG_OscarProcessHelperTest {
 			
 		Test.stopTest();
 	}
+
+
+
+
+
+	/*
+
+	@isTest static void createGDIOscarsTest_1768(){
+		
+		Account a = [select Abbreviated_address__c, Abbreviated_name__c,
+						BillingState,
+						BillingCity,
+						Email__c,
+						Fax,
+						Phone,
+						BillingPostalCode,
+						BillingStreet,
+						CASS_Number__c,
+						BillingCountry,
+						Name,
+						Region_formula__c,
+						ANG_Accreditation_Model__c,
+						Id,
+						Iata_iso_country__c,
+						IATACode__c,
+						Iso_State__c,
+						GDS__c,
+						Company_Type__c,
+						License_Number__c,
+						VAT_Number__c,
+						Is_your_firm_handling_Dangerous_Goods__c,
+						Location_Class__c,
+						Location_Type__c,
+						Mobile__c,
+						Operation__c,
+						Remittance_frequency__c,
+						ShippingCity,
+						ShippingCountry,
+						IATA_ISO_Shipping_Country__c,
+						IATA_ISO_Shipping_State__c,
+						ShippingPostalCode,
+						ShippingState,
+						ShippingStreet,
+						Short_Name__c,
+						Solicitation_Flag__c,
+						TradeName__c,
+						VAT_Number_2__c,
+						Website from account limit 1];
+
+		a.IATACode__c = '7463812';
+		a.Reason__c = '91-ACCREDITED-MEET-STANDARDS';
+
+		update a;
+        
+		List<Contact> conts = [select Id, Name, Email, Preferred_Language__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c, User_Portal_Status__c, AccountId from contact where accountid =:a.id];
+		//insert conts;
+        
+		Test.startTest();
+
+		ANG_OscarProcessHelper result = new ANG_OscarProcessHelper();
+		result.createRevalidationOscar(a, conts);
+
+		
+		Test.stopTest();
+	
+	}
+	*/
 }

@@ -111,7 +111,6 @@ private class AMS_OSCARTriggerHandlerTest {
     @isTest static void processOscarOptinoutTest1() {
 
         AMS_OSCARTriggerHandler aoth = new AMS_OSCARTriggerHandler();
-        aoth.fakemethod();
 
         List<String> fieldListOscar = new List<String>();
 
@@ -308,6 +307,36 @@ private class AMS_OSCARTriggerHandlerTest {
 
     }
 
-    
-    
+    @isTest static void testApplicationWithdrawalChanges(){
+        
+        AMS_AgencyChangesConfig__c combination08 = new AMS_AgencyChangesConfig__c (
+            Name = 'Combination08', TCA_Fields_to_Migrate__c = 'ChangeOfLocationType', TCA_Not_Applicable_Steps__c = 'STEP17;STEP11;STEP13;STEP3;STEP2;STEP25', TCA_Application_withdrawal__c = 'CWD',
+            TCA_Sanity_check__c = 'CAD', TC_Location_type__c = true, Process__c = 'AMS');
+        insert combination08;
+
+		IATA_ISO_Country__c ctry =  [SELECT ANG_Enable_NewGen__c FROM IATA_ISO_Country__c LIMIT 1][0];
+		ctry.ANG_Enable_NewGen__c = false;
+		update ctry;
+
+		Account acc =  [SELECT Location_Type__c FROM Account LIMIT 1][0];
+		acc.Location_Type__c = 'HO';
+		update acc;
+		
+		AMS_OSCAR__c oscar = [SELECT Id, RecordTypeID, Process__c, Type_Of_Change__c, STEP4__c FROM AMS_OSCAR__c LIMIT 1][0];
+
+		oscar.Type_Of_Change__c = AMS_Utils.LOCATION_TYPE;
+		oscar.RecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CHANGE');
+		oscar.Process__c = AMS_Utils.AGENCYCHANGES;
+		update oscar;
+        
+		Test.startTest();
+		oscar.STEP4__c = AMS_Utils.PASSED;
+        try{
+            update oscar;
+        }catch(Exception e){
+            System.assert(e.getMessage().contains('Something went wrong! The Hierarchy Account selection for Change of Location Type must have a single entry for this Oscar. Please contact your administrator.'));
+        }
+		
+		Test.stopTest();
+    }
 }

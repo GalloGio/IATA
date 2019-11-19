@@ -6,7 +6,6 @@
         // Instantiate a new controller with all parameters in the page
         CommunitiesLandingController controller = new CommunitiesLandingController();
         controller.forwardToStartPage();
-		controller.fakemethod();
       }
     
      @IsTest(SeeAllData=true) public static void testCommunitiesLandingControllerGDPR() {
@@ -16,4 +15,17 @@
         CommunitiesLandingController controller = new CommunitiesLandingController();
         controller.forwardToStartPage();
       }
+
+    @IsTest(SeeAllData=true) public static void testCommunitiesLandingControllerISSP() {
+        // Instantiate a new controller with all parameters in the page
+        Test.setCurrentPageReference(new PageReference('Page.CommunitiesLanding')); 
+        System.currentPageReference().getParameters().put('serviceName', 'ISSP');
+        System.currentPageReference().getParameters().put('startUrl', 'ISSP');
+        CommunitiesLandingController controller = new CommunitiesLandingController();
+        controller.forwardToStartPage();
+        
+        System.currentPageReference().getParameters().put('startUrl', null);
+        controller.forwardToStartPage();
+      }
+
 }
