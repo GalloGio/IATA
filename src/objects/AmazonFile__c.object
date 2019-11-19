@@ -1182,7 +1182,6 @@
         <columns>Case__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
-        <language>en_US</language>
     </listViews>
     <listViews>
         <fullName>CasesACCEuropeOffOnshore_AmazonFile</fullName>

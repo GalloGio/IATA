@@ -14,7 +14,7 @@ public with sharing class DAL_ISSP {
         return
             [SELECT Id, Username, ContactId, Email, Portal_User_Frozen__c,
                 IsActive, Portal_User_Frozen_Checkbox__c, Contact.Community__c,
-                Profile.Name
+                Profile.Name,CNS_Account_or_Agency__c
                FROM User
               WHERE (Username=: nameOrEmail
                  OR email =: nameOrEmail)

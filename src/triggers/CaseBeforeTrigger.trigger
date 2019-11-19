@@ -1791,8 +1791,26 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                             nbCasesSA ++;
                         }
                     }
-                    
-                    if (nbCasesSA >= 3) {
+                    //WMO-717 
+                    //Change the accumulation of 4 to 3 occurrences within 12 months period of both (Small Amount) and/or (Minor Error Policy) BSP only
+                    //The new rule will reset the counter of 3 occurrences starting the day we go live
+                    Decimal selectedNumberForCassOrBSP = 3;
+                    if(CASSAccumulationOccurrences__c.getInstance().Number_Of_Occurrences__c != null){
+                        selectedNumberForCassOrBSP = CASSAccumulationOccurrences__c.getInstance().Number_Of_Occurrences__c;
+                    }
+                    if(CaseOccurrencesGoliveDate__c.getInstance().Go_Live_Date__c != null){
+                        if(Date.today() > CaseOccurrencesGoliveDate__c.getInstance().Go_Live_Date__c){
+                            if(mCase.Settlement_Model__c == 'Reported Sales' && mCase.BSP_CASS__c == 'BSP' && BSPAccumulationOccurrences__c.getInstance().Reported_Sales_Number_Of_Occurrences__c != null){
+                                selectedNumberForCassOrBSP = BSPAccumulationOccurrences__c.getInstance().Reported_Sales_Number_Of_Occurrences__c;
+                            }else if(mCase.Settlement_Model__c == 'Funds Received' && mCase.BSP_CASS__c == 'BSP' && BSPAccumulationOccurrences__c.getInstance().Number_Of_Occurrences__c != null){
+                                selectedNumberForCassOrBSP = BSPAccumulationOccurrences__c.getInstance().Number_Of_Occurrences__c;
+                            }else if(mCase.BSP_CASS__c == 'BSP' && BSPAccumulationOccurrences__c.getInstance().Number_Of_Occurrences__c != null){
+                                selectedNumberForCassOrBSP = BSPAccumulationOccurrences__c.getInstance().Number_Of_Occurrences__c;
+                            }
+                        }
+                    }
+
+                    if (nbCasesSA >= selectedNumberForCassOrBSP) {
                         mCase.Action_needed_Small_Amount__c = true;
                         mCase.IRR_Withdrawal_Reason__c = null;
                         mCase.Propose_Irregularity__c = Datetime.now();
