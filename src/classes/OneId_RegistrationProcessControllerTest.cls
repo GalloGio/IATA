@@ -839,4 +839,14 @@ private class OneId_RegistrationProcessControllerTest {
          List<Account> lacc5 = OneId_RegistrationProcessController.getAccountsBySectorAndCategory('Airline Supplier', 'testcat', country.Id, 'TEST');
        
      }
+     
+     @isTest
+     public static void testGetCustomerPortalUrl(){
+        insert new ISSP_CS__c(Name = 'IdentityPortal',Value__c = 'identity');
+        insert new ISSP_CS__c(Name = 'Host',Value__c = 'host');
+        Test.startTest();
+        string url = OneId_RegistrationProcessController.getCustomerPortalUrl();
+        Test.stopTest();
+        System.assertNotEquals(url, null);
+     }
 }

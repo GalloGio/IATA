@@ -1,0 +1,97 @@
+<!--
+   - Created by pvavruska on 8/7/2019.
+   -->
+<!-- Portal Registration Account Creation -->
+<template>
+    <div class="accCreationWrapper slds-m-top_medium" data-name="accCreationWrapper">
+            <span class="text-medium">Create New Account</span>
+        <div class="slds-card__body">
+                  <!-- MESSAGE -->
+                  <div style="min-height:40px;" if:true={showPageMessage} class="text-xxsmall">
+                     <!-- {messages} -->
+                     <div style="padding: 1.5rem;"></div>
+                  </div>
+                  <div>
+                     <lightning-layout multiple-rows vertical-align="end">
+                        <template for:each={accountFields} for:item="field">
+                           <lightning-layout-item size="12" key={field.label}>
+                              <div style="display: flex;justify-content: center;align-items: center;">
+                                 <div style="display: flex;flex: 1 0 auto;align-items: center;justify-content: center;">
+                                    <template if:false={field.isAddress}>
+                                            <template if:true={field.required}>
+                                                    <abbr class="slds-required" title="required">* </abbr>
+                                        </template>
+                                       <div style="width:100%;" class="text-xxsmall text-gray">
+                                          {field.label}
+                                       </div>
+                                    </template>
+
+                                     <template if:true={field.isAddress}>
+                                       <div style="width:100%;" class="text-small text-gray">
+                                          {field.label}
+                                       </div>
+                                    </template>
+                                 </div>
+                                 <div class="text-xxsmall" >
+                                    <!-- right side text -->
+                                 </div>
+                              </div>
+                           </lightning-layout-item>
+
+                            <!-- ADDRESS FIELD -->
+                            <template if:true={field.isAddress}>
+
+                              <div key={field.fieldName} class="maxWidth">
+                                  <c-portal-address-form country={selectedCountryId}>
+                                  </c-portal-address-form>
+
+                              </div>
+                           </template>
+
+                               <template if:true={field.isText}>
+                                 <lightning-layout-item size="12" key={field.fieldName}>
+                                    <div class="slds-form-element">
+                                       <div class="slds-form-element__control custTextInput custTextInputSmall">
+                                          <input type="text" value={field.value} data-id={field.fieldName} required={field.required} placeholder="" class="slds-input" onchange={handleFieldChange}/>
+                                       </div>
+                                    </div>
+                                 </lightning-layout-item>
+                              </template>
+
+                               <lightning-layout-item padding="around-large" size="12" key={field.spacerKey}>
+                                 <div></div>
+                              </lightning-layout-item>
+                           </template>
+
+                     </lightning-layout>
+                  </div>
+
+
+
+                  <lightning-button variant="base"
+                                    label="Ok"
+                                    title="Ok"
+                                    onclick={validate}
+                                    class="blueCustomButtonLinkSmall">
+                  </lightning-button>
+
+            </div>
+            <!--
+               Legal Name (mandatory) (is pre-populated based on what the user entered in the previous step PI2019-404: Level 2 Account SelectionIN PROGRESS)
+               Trade Name
+               Business Address (mandatory) - For the mapping of the Address fields we will use a new set of fields
+                   Country -is pre-populated based on what the user entered in the previous step PI2019-404: Level 2 Account SelectionIN PROGRESS
+                   State/Province
+                   City
+                   Zip/Postal Code
+
+                   (The entered Business Address will be validated against address doctor, but if not successful, it will just show a warning; it will be possible to submit the form even if the address is not validated)
+
+               Office Phone (mandatory)
+               Website
+               Email-->
+
+    <!--</div>
+    </div>-->
+    </div>
+</template>

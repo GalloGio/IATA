@@ -1916,6 +1916,38 @@
         <name>CSP_Cases</name>
     </customLabels>
     <customLabels>
+        <label>メールを変更する</label>
+        <name>CSP_Change_Email</name>
+    </customLabels>
+    <customLabels>
+        <label>パスワードの変更</label>
+        <name>CSP_Change_Password</name>
+    </customLabels>
+    <customLabels>
+        <label>新しいパスワードを設定できませんでした。</label>
+        <name>CSP_Change_Password_Error</name>
+    </customLabels>
+    <customLabels>
+        <label>現在のパスワードを入力してから、新しいパスワードを設定して確認してください。</label>
+        <name>CSP_Change_Password_Info_1</name>
+    </customLabels>
+    <customLabels>
+        <label>パスワードは10文字以上で、大文字、数字、記号（！ @＃$％*（）_ + ^ &amp;）が最低1つずつ必要です。</label>
+        <name>CSP_Change_Password_Info_2</name>
+    </customLabels>
+    <customLabels>
+        <label>メールを確認してアクセスの詳細を取得してください</label>
+        <name>CSP_Check_Email</name>
+    </customLabels>
+    <customLabels>
+        <label>パスワードが正常に設定されました。</label>
+        <name>CSP_Chg_Pass_Success_Msg_1</name>
+    </customLabels>
+    <customLabels>
+        <label>新しいパスワードでログインできます。</label>
+        <name>CSP_Chg_Pass_Success_Msg_2</name>
+    </customLabels>
+    <customLabels>
         <label>コミュニティ</label>
         <name>CSP_Community</name>
     </customLabels>
@@ -1932,12 +1964,20 @@
         <name>CSP_CompanyProfile</name>
     </customLabels>
     <customLabels>
+        <label>プロフィールを完了させる</label>
+        <name>CSP_Complete_Profile</name>
+    </customLabels>
+    <customLabels>
         <label>&lt; b &gt; {1} &lt; / b &gt; のために &lt;b&gt; {0} &lt; / b &gt;へのアクセスを拒否してもよろしいですか。</label>
         <name>CSP_Confirm_Deny_User_Access</name>
     </customLabels>
     <customLabels>
         <label>&lt; b &gt; {1} &lt; / b &gt;のために&lt; b &gt; {0} &lt; / b &gt;へのアクセスを許可しますか。</label>
         <name>CSP_Confirm_Grant_User_Access</name>
+    </customLabels>
+    <customLabels>
+        <label>IATAカスタマーポータルのメールでの確認</label>
+        <name>CSP_Confirmation_Email_Subject</name>
     </customLabels>
     <customLabels>
         <label>{0}アクセスのリクエストがポータル管理者に配信されました。プロセスについてご質問やご要望がございましたら、以下の管理者までご連絡ください。</label>
@@ -1964,6 +2004,26 @@
         <name>CSP_DateTo</name>
     </customLabels>
     <customLabels>
+        <label>IATAカスタマーポータルは初めてですか？</label>
+        <name>CSP_Create_New_Account_Info</name>
+    </customLabels>
+    <customLabels>
+        <label>新しいアカウントを作成する</label>
+        <name>CSP_Create_New_Account_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>パスワードの作成</label>
+        <name>CSP_Create_Password</name>
+    </customLabels>
+    <customLabels>
+        <label>新しいパスワードを設定できませんでした。もう一度やり直してください。</label>
+        <name>CSP_Create_Password_Error</name>
+    </customLabels>
+    <customLabels>
+        <label>こんにちは</label>
+        <name>CSP_Dear</name>
+    </customLabels>
+    <customLabels>
         <label>ユーザーアクセスを拒否する</label>
         <name>CSP_Deny_User_Access_Title</name>
     </customLabels>
@@ -1988,6 +2048,22 @@
         <name>CSP_Documents_PubliCountry</name>
     </customLabels>
     <customLabels>
+        <label>メール</label>
+        <name>CSP_Email</name>
+    </customLabels>
+    <customLabels>
+        <label>IATAカスタマーポータルにご登録いただきありがとうございます。アクセスを得るまで、あともう一歩です。</label>
+        <name>CSP_Email_Confirmation_Body_Part_1</name>
+    </customLabels>
+    <customLabels>
+        <label>以下をクリックして、メールアドレスをご確認ください</label>
+        <name>CSP_Email_Confirmation_Body_Part_2</name>
+    </customLabels>
+    <customLabels>
+        <label>セキュリティ上の理由により、このリンクの有効期限は8時間です。有効期限が切れた後は、リクエストを再送信していだく必要がございます。</label>
+        <name>CSP_Email_Confirmation_Body_Part_3</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP Email Domain Error Message --></label>
         <name>CSP_Email_Domain_Error_Message</name>
     </customLabels>
@@ -2004,6 +2080,82 @@
         <name>CSP_Error_while_delete_record</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Email Footer Image --></label>
+        <name>CSP_Email_Footer_Image</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Header Image --></label>
+        <name>CSP_Email_Header_Image</name>
+    </customLabels>
+    <customLabels>
+        <label>こちらです</label>
+        <name>CSP_Email_Here</name>
+    </customLabels>
+    <customLabels>
+        <label>IATAカスタマーポータルのパスワードをリセットするためのリクエストを受け取りました。</label>
+        <name>CSP_Email_Password_Reset_Body_Part_1</name>
+    </customLabels>
+    <customLabels>
+        <label>新しいパスワードを設定するには、</label>
+        <name>CSP_Email_Password_Reset_Body_Part_2</name>
+    </customLabels>
+    <customLabels>
+        <label>してください。</label>
+        <name>CSP_Email_Password_Reset_Body_Part_3</name>
+    </customLabels>
+    <customLabels>
+        <label>セキュリティ上の理由により、このリンクの有効期限は8時間です。有効期限が切れた後は、リクエストを再送信していただく必要がございます。</label>
+        <name>CSP_Email_Password_Reset_Body_Part_4</name>
+    </customLabels>
+    <customLabels>
+        <label>IATAをご利用いただきありがとうございます。</label>
+        <name>CSP_Email_Signature_Part_1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Signature Part 2 --></label>
+        <name>CSP_Email_Signature_Part_2</name>
+    </customLabels>
+    <customLabels>
+        <label>IATAカスタマーポータルをご利用いただきありがとうございます。</label>
+        <name>CSP_Email_Welcome_Part_1</name>
+    </customLabels>
+    <customLabels>
+        <label>IATAカスタマーポータルでは、便利なサービス、製品に関する情報、お客様の用途に応じた有益なヒントやこつを満載しております。ライブチャット、もしくはオンラインストアからの直接購入などに使用し、カスタマーサービスチームまで簡単にご連絡いただけます。お客様のIATAへのゲートです</label>
+        <name>CSP_Email_Welcome_Part_2</name>
+    </customLabels>
+    <customLabels>
+        <label>&lt;a href=&quot;{!Portal_Url}&quot;&gt;ポータルに連れて行ってください&lt;/a&gt;</label>
+        <name>CSP_Email_Welcome_Part_3</name>
+    </customLabels>
+    <customLabels>
+        <label>IATAカスタマーポータルでのご体験を更に向上させるため、いつでもアカウント情報を完了していただくことができます。以下をクリックして簡単に行っていただけます</label>
+        <name>CSP_Email_Welcome_Part_4</name>
+    </customLabels>
+    <customLabels>
+        <label>IATAカスタマーポータルを気に入っていただければ幸いです。</label>
+        <name>CSP_Email_Welcome_Part_5</name>
+    </customLabels>
+    <customLabels>
+        <label>既にポータルユーザーであるようです。パスワードでログインしてください。</label>
+        <name>CSP_Existing_User_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>メールを確認して、パスワードの作成リンクをクリックしてください。</label>
+        <name>CSP_Expired_Email_Success_Msg</name>
+    </customLabels>
+    <customLabels>
+        <label>確認リンクの有効期限が切れています。</label>
+        <name>CSP_Expired_Link_Msg_1</name>
+    </customLabels>
+    <customLabels>
+        <label>セキュリティのため、確認リンクは8時間経過すると無効になります。</label>
+        <name>CSP_Expired_Link_Msg_2</name>
+    </customLabels>
+    <customLabels>
+        <label>メールを確認して、パスワードの作成リンクをクリックしてください。</label>
+        <name>CSP_Expired_Reset_Password_Msg</name>
+    </customLabels>
+    <customLabels>
         <label>弊社までご連絡ください</label>
         <name>CSP_FAQReachUsBanner_ButtonText</name>
     </customLabels>
@@ -2018,6 +2170,10 @@
     <customLabels>
         <label>よくあるご質問</label>
         <name>CSP_FAQ_HeaderTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>よくある質問にアクセスする</label>
+        <name>CSP_FAQ_Label</name>
     </customLabels>
     <customLabels>
         <label>主なカテゴリーを1つ選択</label>
@@ -2056,8 +2212,44 @@
         <name>CSP_Filtered</name>
     </customLabels>
     <customLabels>
+        <label>アカウントが正常に作成されました！ ポータルの機能を探索していただけます。より個人化されたコンテンツについては、プロフィールを完了させてください。</label>
+        <name>CSP_First_Login_Desc</name>
+    </customLabels>
+    <customLabels>
+        <label>ようこそ</label>
+        <name>CSP_First_Login_Title</name>
+    </customLabels>
+    <customLabels>
         <label>あなた様に</label>
         <name>CSP_ForYou</name>
+    </customLabels>
+    <customLabels>
+        <label>パスワードをお忘れですか？</label>
+        <name>CSP_Forgot_Password</name>
+    </customLabels>
+    <customLabels>
+        <label>メールでユーザーが登録されていないようです。新しいアカウントを簡単に作成することが出来ます。</label>
+        <name>CSP_Forgot_Password_Error_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>登録したメールアドレスを入力してパスワードをリセットしてください。リセットリンクをメールでお送りします。</label>
+        <name>CSP_Forgot_Password_Info</name>
+    </customLabels>
+    <customLabels>
+        <label>最初にスパムフォルダーを確認してください。スパムフォルダーで見つからない場合は、「再試行する」をクリックしてパスワードをリセットしてください。</label>
+        <name>CSP_Forgot_Password_Retry_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>メールを受信しませんでしたか？</label>
+        <name>CSP_Forgot_Password_Retry_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>メールを確認し、パスワードリセットリンクをクリックしてください</label>
+        <name>CSP_Forgot_Password_Success_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>過去90日間ログインしていないため、新しいパスワードをメールでお送りしました。</label>
+        <name>CSP_Frozen_User_Message</name>
     </customLabels>
     <customLabels>
         <label>ユーザーアクセス権を付与する</label>
@@ -2080,8 +2272,424 @@
         <name>CSP_LastUpdate</name>
     </customLabels>
     <customLabels>
+        <label>無効なメール</label>
+        <name>CSP_Invalid_Email</name>
+    </customLabels>
+    <customLabels>
+        <label>企業アカウント情報</label>
+        <name>CSP_L2_Account_Information</name>
+    </customLabels>
+    <customLabels>
+        <label>以下の情報を入力して、会社のアカウントを見つけます。</label>
+        <name>CSP_L2_Account_Information_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>アカウントの選択</label>
+        <name>CSP_L2_Account_Selection</name>
+    </customLabels>
+    <customLabels>
+        <label>個人プロフィールを会社のアカウントと一致させるには、さらに詳細が必要です。 これは、あなたの会社がすでにIATAに登録されているかどうかを確認するのに役立ちます。</label>
+        <name>CSP_L2_Account_Selection_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>住所が見つかりませんでした。 次のステップボタンをクリックして、住所が正しいことを確認してください。</label>
+        <name>CSP_L2_Address_Not_Found_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>お客様は既にプロフィール登録を完了されているようですので、必要な詳細はすべていただいております。</label>
+        <name>CSP_L2_Already_L2_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>準備が整いました。</label>
+        <name>CSP_L2_Already_L2_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>企業アカウント情報に戻る</label>
+        <name>CSP_L2_Back_to_Account_Selection</name>
+    </customLabels>
+    <customLabels>
+        <label>会社の住所に戻ります</label>
+        <name>CSP_L2_Back_to_Business_Address_Information</name>
+    </customLabels>
+    <customLabels>
+        <label>会社情報に戻ります</label>
+        <name>CSP_L2_Back_to_Company_Information</name>
+    </customLabels>
+    <customLabels>
+        <label>編集に戻る</label>
+        <name>CSP_L2_Back_to_Edit</name>
+    </customLabels>
+    <customLabels>
+        <label>プロフィールの詳細に戻る</label>
+        <name>CSP_L2_Back_to_Profile_Details</name>
+    </customLabels>
+    <customLabels>
+        <label>プロフィールの完了&amp;アカウントの選択</label>
+        <name>CSP_L2_Banner_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>会社の所在地情報</label>
+        <name>CSP_L2_Business_Address_Information</name>
+    </customLabels>
+    <customLabels>
+        <label>会社の住所を記入してください。</label>
+        <name>CSP_L2_Business_Address_Information_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>カテゴリー</label>
+        <name>CSP_L2_Category</name>
+    </customLabels>
+    <customLabels>
+        <label>アクセスをリクエストしているサービスは、選択したカテゴリーでは利用できない可能性があります。それでも登録を完了することはできますが、完了後にサービスが利用できなくなる可能性があります。</label>
+        <name>CSP_L2_Change_Categorization_Warning</name>
+    </customLabels>
+    <customLabels>
+        <label>市区町村</label>
+        <name>CSP_L2_City</name>
+    </customLabels>
+    <customLabels>
+        <label>企業アカウント</label>
+        <name>CSP_L2_Company_Account</name>
+    </customLabels>
+    <customLabels>
+        <label>会社の詳細を確認してください</label>
+        <name>CSP_L2_Company_Account_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>企業情報</label>
+        <name>CSP_L2_Company_Information</name>
+    </customLabels>
+    <customLabels>
+        <label>企業アカウントを登録すると、カスタマイズされたIATAサービスにアクセスできます。 2つのステップで簡単に会社のアカウントを作成できます。</label>
+        <name>CSP_L2_Company_Information_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>会社の所在地</label>
+        <name>CSP_L2_Company_Location</name>
+    </customLabels>
+    <customLabels>
+        <label>会社名</label>
+        <name>CSP_L2_Company_Name</name>
+    </customLabels>
+    <customLabels>
+        <label>確認</label>
+        <name>CSP_L2_Confirmation</name>
+    </customLabels>
+    <customLabels>
+        <label>プロフィールの完成まであと一歩です。入力された情報を確認し、すべてが正しければ [送信] をクリックしてください。</label>
+        <name>CSP_L2_Confirmation_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>お問い合わせ</label>
+        <name>CSP_L2_Contact_Support</name>
+    </customLabels>
+    <customLabels>
+        <label>国</label>
+        <name>CSP_L2_Country</name>
+    </customLabels>
+    <customLabels>
+        <label>会社のアカウントが見つからない場合は、2つのステップで簡単に作成できます。</label>
+        <name>CSP_L2_Create_Account_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>新しいアカウントを作成する</label>
+        <name>CSP_L2_Create_New_Account</name>
+    </customLabels>
+    <customLabels>
+        <label>生年月日</label>
+        <name>CSP_L2_Date_of_Birth</name>
+    </customLabels>
+    <customLabels>
+        <label>詳細が正常に保存されました。</label>
+        <name>CSP_L2_Details_Saved</name>
+    </customLabels>
+    <customLabels>
+        <label>よりカスタマイズされたポータルエクスペリエンスを提供できるようになりました！ ポータルをご覧いただき、さらにカスタマイズされた製品やサービスをお楽しみください。</label>
+        <name>CSP_L2_Details_Saved_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>これで、引き続きサービスのリクエストを提起することができます。</label>
+        <name>CSP_L2_Details_Saved_Service_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>これで、引き続きリクエストを提起することができます。</label>
+        <name>CSP_L2_Details_Saved_Topic_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>お探しのものが見つかりませんでしたか？</label>
+        <name>CSP_L2_Did_Not_Find</name>
+    </customLabels>
+    <customLabels>
+        <label>会社のアカウントを2ステップで簡単に作成して、プロフィールを完成させることができます</label>
+        <name>CSP_L2_Did_Not_Find_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>ここをクリックして、プロフィール情報の入力をお願いいたします</label>
+        <name>CSP_L2_Edit_Company_Information</name>
+    </customLabels>
+    <customLabels>
+        <label>弊社では、IATA製品とサービスをお客様向けにカスタマイズできるよう、IATAカスタマーポータルを構築いたしました。弊社からお客様により適切なお世話をさせていただくために、お客様および御社についてさらに詳しくお知らせいただきたいと存じます。</label>
+        <name>CSP_L2_Edit_Company_Information_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>メール</label>
+        <name>CSP_L2_Email_Address</name>
+    </customLabels>
+    <customLabels>
+        <label>住所を検索</label>
+        <name>CSP_L2_Find_Address</name>
+    </customLabels>
+    <customLabels>
+        <label>戻る</label>
+        <name>CSP_L2_Go_Back</name>
+    </customLabels>
+    <customLabels>
+        <label>ホームページへ</label>
+        <name>CSP_L2_Go_To_Homepage</name>
+    </customLabels>
+    <customLabels>
+        <label>プロフィールに戻ります</label>
+        <name>CSP_L2_Go_To_Profile</name>
+    </customLabels>
+    <customLabels>
+        <label>サービスに戻る</label>
+        <name>CSP_L2_Go_To_Service</name>
+    </customLabels>
+    <customLabels>
+        <label>トピックに戻ります</label>
+        <name>CSP_L2_Go_To_Topic</name>
+    </customLabels>
+    <customLabels>
+        <label>IATAコード</label>
+        <name>CSP_L2_IATA_Codes</name>
+    </customLabels>
+    <customLabels>
+        <label>これは私書箱の住所ですか</label>
+        <name>CSP_L2_Is_PO_Box_Address</name>
+    </customLabels>
+    <customLabels>
+        <label>職務権限</label>
+        <name>CSP_L2_Job_Function</name>
+    </customLabels>
+    <customLabels>
+        <label>肩書き</label>
+        <name>CSP_L2_Job_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>正式名称</label>
+        <name>CSP_L2_Legal_Name</name>
+    </customLabels>
+    <customLabels>
+        <label>次の手順 / アカウントの選択</label>
+        <name>CSP_L2_Next_Account_Selection</name>
+    </customLabels>
+    <customLabels>
+        <label>次のステップ / 住所情報</label>
+        <name>CSP_L2_Next_Address_Information</name>
+    </customLabels>
+    <customLabels>
+        <label>次のステップ / 確認</label>
+        <name>CSP_L2_Next_Confirmation</name>
+    </customLabels>
+    <customLabels>
+        <label>いいえ</label>
+        <name>CSP_L2_No</name>
+    </customLabels>
+    <customLabels>
+        <label>一致する結果は見つかりませんでした</label>
+        <name>CSP_L2_No_Matching_Results</name>
+    </customLabels>
+    <customLabels>
+        <label>その他</label>
+        <name>CSP_L2_Other_Sector</name>
+    </customLabels>
+    <customLabels>
+        <label>提供されたリストから関連する部門を選択してください。</label>
+        <name>CSP_L2_Other_Sector_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>私書箱番号</label>
+        <name>CSP_L2_PO_Box_Number</name>
+    </customLabels>
+    <customLabels>
+        <label>個人情報</label>
+        <name>CSP_L2_Personal_Details</name>
+    </customLabels>
+    <customLabels>
+        <label>個人情報をご確認ください</label>
+        <name>CSP_L2_Personal_Details_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>電話番号</label>
+        <name>CSP_L2_Phone_Number</name>
+    </customLabels>
+    <customLabels>
+        <label>郵便番号</label>
+        <name>CSP_L2_Postal_Code</name>
+    </customLabels>
+    <customLabels>
+        <label>プロフィールの詳細</label>
+        <name>CSP_L2_Profile_Details</name>
+    </customLabels>
+    <customLabels>
+        <label>個人情報を追加して、IATAがパーソナライズされたコンテンツとサービスを提案できるようにしましょう。</label>
+        <name>CSP_L2_Profile_Details_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>プロフィールはまだ完全には更新されていません。</label>
+        <name>CSP_L2_Profile_Incomplete</name>
+    </customLabels>
+    <customLabels>
+        <label>ただし、後で続行できるように、下書きとして保存しました。本当にやめますか？</label>
+        <name>CSP_L2_Profile_Incomplete_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>残念ながら、アカウントの作成時に問題が発生しました。さらにサポートが必要な場合は、サポートチームまでお問い合わせください。</label>
+        <name>CSP_L2_Registration_Error_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>何か問題が発生したようです</label>
+        <name>CSP_L2_Registration_Error_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>キャンセルする</label>
+        <name>CSP_L2_Requested_Modal_Cancel</name>
+    </customLabels>
+    <customLabels>
+        <label>プロフィールを完成する</label>
+        <name>CSP_L2_Requested_Modal_Complete</name>
+    </customLabels>
+    <customLabels>
+        <label>続行するには、あなたとあなたの組織に関する詳細が必要です。長くはかかりませんので、ご安心ください。</label>
+        <name>CSP_L2_Requested_Modal_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>こんにちは</label>
+        <name>CSP_L2_Requested_Modal_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_L2_Required --></label>
+        <name>CSP_L2_Required</name>
+    </customLabels>
+    <customLabels>
+        <label>検索</label>
+        <name>CSP_L2_Search</name>
+    </customLabels>
+    <customLabels>
+        <label>以下の2つの項目のうち少なくとも1つを入力してください。</label>
+        <name>CSP_L2_Search_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>検索結果</label>
+        <name>CSP_L2_Search_Results</name>
+    </customLabels>
+    <customLabels>
+        <label>検索条件に一致するアカウントが+50個見つかりました。</label>
+        <name>CSP_L2_Search_Results_Above_Limit</name>
+    </customLabels>
+    <customLabels>
+        <label>検索条件を絞り込み</label>
+        <name>CSP_L2_Search_Results_Above_Limit_Link</name>
+    </customLabels>
+    <customLabels>
+        <label>--empty--</label>
+        <name>CSP_L2_Search_Results_Above_Limit_Link_1</name>
+    </customLabels>
+    <customLabels>
+        <label>より少ないオプションを表示します。</label>
+        <name>CSP_L2_Search_Results_Above_Limit_Link_2</name>
+    </customLabels>
+    <customLabels>
+        <label>部門</label>
+        <name>CSP_L2_Sector</name>
+    </customLabels>
+    <customLabels>
+        <label>選択</label>
+        <name>CSP_L2_Select</name>
+    </customLabels>
+    <customLabels>
+        <label>正しい住所を選択してください。リストから正しい住所が見つからない場合は、入力されたものを弊社で保存させていただきます。「次のステップ」 をクリックして続行します。</label>
+        <name>CSP_L2_Select_Address_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>リストから一致するアカウントを選択します。</label>
+        <name>CSP_L2_Select_Company_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>都道府県</label>
+        <name>CSP_L2_State</name>
+    </customLabels>
+    <customLabels>
+        <label>番地</label>
+        <name>CSP_L2_Street</name>
+    </customLabels>
+    <customLabels>
+        <label>入力</label>
+        <name>CSP_L2_Submit</name>
+    </customLabels>
+    <customLabels>
+        <label>敬称</label>
+        <name>CSP_L2_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>企業名</label>
+        <name>CSP_L2_Trade_Name</name>
+    </customLabels>
+    <customLabels>
+        <label>ウェブサイト</label>
+        <name>CSP_L2_Website</name>
+    </customLabels>
+    <customLabels>
+        <label>はい</label>
+        <name>CSP_L2_Yes</name>
+    </customLabels>
+    <customLabels>
         <label>ログアウト</label>
         <name>CSP_LogOut</name>
+    </customLabels>
+    <customLabels>
+        <label>ログインする</label>
+        <name>CSP_Login_Now</name>
+    </customLabels>
+    <customLabels>
+        <label>数日前、お客様からはIATAカスタマーポータルの一員となるためのご登録をいただき、ありがとうございました。</label>
+        <name>CSP_Lvl2_Reminder_1</name>
+    </customLabels>
+    <customLabels>
+        <label>弊社では、IATA製品とサービスをお客様向けにカスタマイズできるよう、IATAカスタマーポータルを構築いたしました。弊社からお客様により適切なお世話をさせていただくために、お客様および御社についてさらに詳しくお知らせいただきたいと存じます。</label>
+        <name>CSP_Lvl2_Reminder_2</name>
+    </customLabels>
+    <customLabels>
+        <label>&lt;strong&gt;&lt;a href=[URL]&gt;ここをクリックして&lt;/a&gt;&lt;/strong&gt;プロフィール情報を入力していただくだけで、簡単にできます。</label>
+        <name>CSP_Lvl2_Reminder_3</name>
+    </customLabels>
+    <customLabels>
+        <label>お客様にとっての利点</label>
+        <name>CSP_Lvl2_Reminder_4</name>
+    </customLabels>
+    <customLabels>
+        <label>・カスタマイズされたサービスに直通</label>
+        <name>CSP_Lvl2_Reminder_5</name>
+    </customLabels>
+    <customLabels>
+        <label>・特別に精選されたIATAの知識および基準へのフルアクセス</label>
+        <name>CSP_Lvl2_Reminder_6</name>
+    </customLabels>
+    <customLabels>
+        <label>・IATAサービスプロフェッショナルからの専門サポート</label>
+        <name>CSP_Lvl2_Reminder_7</name>
+    </customLabels>
+    <customLabels>
+        <label>・ この他にも様々な特典がございます</label>
+        <name>CSP_Lvl2_Reminder_8</name>
+    </customLabels>
+    <customLabels>
+        <label>&lt;strong&gt;&lt;a href=[URL]&gt;ここをクリックして、プロフィール情報の入力をお願いいたします&lt;/a&gt;&lt;/strong&gt;</label>
+        <name>CSP_Lvl2_Reminder_9</name>
+    </customLabels>
+    <customLabels>
+        <label>IATAカスタマーポータルを最大限に活用してくださいプロフィールを完成させてください。</label>
+        <name>CSP_Lvl2_Reminder_Subject</name>
     </customLabels>
     <customLabels>
         <label>以下のリストからユーザーを管理することができます。</label>
@@ -2110,6 +2718,10 @@
     <customLabels>
         <label>名前</label>
         <name>CSP_Name</name>
+    </customLabels>
+    <customLabels>
+        <label>次へ</label>
+        <name>CSP_Next</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_NewContactProfile --></label>
@@ -2156,12 +2768,36 @@
         <name>CSP_Payment</name>
     </customLabels>
     <customLabels>
+        <label>パスワード</label>
+        <name>CSP_Password</name>
+    </customLabels>
+    <customLabels>
+        <label>10文字以上</label>
+        <name>CSP_Password_Rule_1</name>
+    </customLabels>
+    <customLabels>
+        <label>大文字1つ以上</label>
+        <name>CSP_Password_Rule_2</name>
+    </customLabels>
+    <customLabels>
+        <label>数字1つ以上</label>
+        <name>CSP_Password_Rule_3</name>
+    </customLabels>
+    <customLabels>
+        <label>記号（！ @＃$％*（）_ + ^ &amp;）1つ以上</label>
+        <name>CSP_Password_Rule_4</name>
+    </customLabels>
+    <customLabels>
         <label>お客様の案件を進めさせていただく際に、お客様のご意見が必要です。</label>
         <name>CSP_PendingCustomerCase_Warning</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_Period --></label>
         <name>CSP_Period</name>
+    </customLabels>
+    <customLabels>
+        <label>個人情報</label>
+        <name>CSP_Personal_Information</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_PortalPath --></label>
@@ -2172,8 +2808,17 @@
         <name>CSP_Portal_Administrators</name>
     </customLabels>
     <customLabels>
+        <label>ポータルログインは現在無効になっています。ご理解いただきありがとうございます。</label>
+        <name>CSP_Portal_Login_Disabled_Message</name>
+    </customLabels>
+    <customLabels>
         <label>ポータルのステータス</label>
         <name>CSP_Portal_Status</name>
+    </customLabels>
+    <customLabels>
+        <label>IATAの &lt;a target=&quot;_blank&quot; href=&quot;https://www.iata.org/Pages/privacy.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;プライバシーポリシー&lt;/a&gt;
+と &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-portal/Pages/terms.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;利用規約&lt;/a&gt;に同意します。&lt;/a&gt;</label>
+        <name>CSP_Privacy_Policy</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_Profile_PrivacyManagement_Link --></label>
@@ -2232,6 +2877,26 @@
         <name>CSP_Record_Deleted</name>
     </customLabels>
     <customLabels>
+        <label>登録が正常に完了しました</label>
+        <name>CSP_Registration_Complete</name>
+    </customLabels>
+    <customLabels>
+        <label>IATAカスタマーポータルへ参加するには、基本的な登録処理を完了してください。</label>
+        <name>CSP_Registration_Description</name>
+    </customLabels>
+    <customLabels>
+        <label>ポータルの登録は現在無効になっております。ご理解いただきありがとうございます。</label>
+        <name>CSP_Registration_Disabled_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>既存のユーザーを使用して登録しようとしています。メールアドレスを変更するか、ログインボタンをクリックして、ログインページに移動してください</label>
+        <name>CSP_Registration_Existing_User_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>最初にスパムフォルダをご確認ください。スパムフォルダーに何も見つからない場合は、「再試行」 ボタンをクリックして、再度ご登録ください。</label>
+        <name>CSP_Registration_Retry_Message</name>
+    </customLabels>
+    <customLabels>
         <label>関連記事</label>
         <name>CSP_RelatedArticles</name>
     </customLabels>
@@ -2252,8 +2917,48 @@
         <name>CSP_Request_Service</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Resend Verification Email --></label>
+        <name>CSP_Resend_Verification_Email</name>
+    </customLabels>
+    <customLabels>
+        <label>パスワードを再設定する</label>
+        <name>CSP_Reset_Password</name>
+    </customLabels>
+    <customLabels>
+        <label>IATAカスタマーポータルのパスワードをリセットする</label>
+        <name>CSP_Reset_Password_Email_Subject</name>
+    </customLabels>
+    <customLabels>
+        <label>新しいパスワードを入力してください。</label>
+        <name>CSP_Reset_Password_Info_1</name>
+    </customLabels>
+    <customLabels>
+        <label>パスワードには以下を含める必要があります:</label>
+        <name>CSP_Reset_Password_Info_2</name>
+    </customLabels>
+    <customLabels>
+        <label>パスワードが正常に変更されました。</label>
+        <name>CSP_Reset_Password_Success_Msg_1</name>
+    </customLabels>
+    <customLabels>
+        <label>新しいパスワードでログインできます。</label>
+        <name>CSP_Reset_Password_Success_Msg_2</name>
+    </customLabels>
+    <customLabels>
+        <label>お使いのコンピューターのIPは、米国当局による通商禁止としてリストされている国のいずれかを起源としていることが確認されました。&lt;br/&gt;カスタマーポータルをサポートするプラットフォームはこの米国の規制に準拠しているため、現在のIPアドレスからカスタマーポータルへのアクセスを提供することはできません。&lt;br/&gt;&lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;こちらをクリックしてお問い合わせください。&lt;/a&gt;</label>
+        <name>CSP_Restricted_Login_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>制限付きログイン</label>
+        <name>CSP_Restricted_Login_Title</name>
+    </customLabels>
+    <customLabels>
         <label>保存する</label>
         <name>CSP_Save</name>
+    </customLabels>
+    <customLabels>
+        <label>保存してログイン</label>
+        <name>CSP_Save_Login</name>
     </customLabels>
     <customLabels>
         <label>文書の詳細で検索する</label>
@@ -2428,6 +3133,10 @@
         <name>CSP_Settings</name>
     </customLabels>
     <customLabels>
+        <label>飛ばして進む</label>
+        <name>CSP_Skip</name>
+    </customLabels>
+    <customLabels>
         <label>ステータス</label>
         <name>CSP_Status</name>
     </customLabels>
@@ -2436,7 +3145,7 @@
         <name>CSP_Submit</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Success --></label>
+        <label>成功</label>
         <name>CSP_Success</name>
     </customLabels>
     <customLabels>
@@ -2472,6 +3181,18 @@
         <name>CSP_Travel_Agent_Accreditation_Changes_Request</name>
     </customLabels>
     <customLabels>
+        <label>トラブルシューティングをご確認ください</label>
+        <name>CSP_Troubleshooting</name>
+    </customLabels>
+    <customLabels>
+        <label>その他のヘルプは</label>
+        <name>CSP_Troubleshooting_Info</name>
+    </customLabels>
+    <customLabels>
+        <label>再試行する</label>
+        <name>CSP_Try_Again</name>
+    </customLabels>
+    <customLabels>
         <label>案件の種類</label>
         <name>CSP_TypeOfCase</name>
     </customLabels>
@@ -2480,36 +3201,52 @@
         <name>CSP_User</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Welcome_Panel_Bullet_1_Desc --></label>
+        <label>予期せぬエラーが発生しました。</label>
+        <name>CSP_Unexcepted_Error</name>
+    </customLabels>
+    <customLabels>
+        <label>IATAカスタマーポータルへようこそ</label>
+        <name>CSP_Welcome_Email_Subject</name>
+    </customLabels>
+    <customLabels>
+        <label>お客様の為に特別に選択された、60を超えるIATAサービスに直接アクセスすることが出来ます。</label>
         <name>CSP_Welcome_Panel_Bullet_1_Desc</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Welcome_Panel_Bullet_1_Title --></label>
+        <label>IATAのサービスにアクセスする</label>
         <name>CSP_Welcome_Panel_Bullet_1_Title</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Welcome_Panel_Bullet_2_Desc --></label>
+        <label>IATAのプロファイルを簡単に管理、および更新することが出来ます。</label>
         <name>CSP_Welcome_Panel_Bullet_2_Desc</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Welcome_Panel_Bullet_2_Title --></label>
+        <label>最新情報を得る</label>
         <name>CSP_Welcome_Panel_Bullet_2_Title</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Welcome_Panel_Bullet_3_Desc --></label>
+        <label>出版物、トレーニング、その他のIATA製品とサービスをご覧ください。</label>
         <name>CSP_Welcome_Panel_Bullet_3_Desc</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Welcome_Panel_Bullet_3_Title --></label>
+        <label>スペシャルオファーを見つける</label>
         <name>CSP_Welcome_Panel_Bullet_3_Title</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Welcome_Panel_Bullet_4_Desc --></label>
+        <label>豊富な質問と回答にアクセスし、IATAから直接サポートをお受けください。</label>
         <name>CSP_Welcome_Panel_Bullet_4_Desc</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Welcome_Panel_Bullet_4_Title --></label>
+        <label>回答を得る</label>
         <name>CSP_Welcome_Panel_Bullet_4_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>全てのIATAサービスにアクセスして管理してください。様々な製品に関する情報を参照し、あらゆるトピックに関するサポートをお受けください。こちらになります。</label>
+        <name>CSP_Welcome_Panel_Info</name>
+    </customLabels>
+    <customLabels>
+        <label>IATAカスタマーポータルへようこそ</label>
+        <name>CSP_Welcome_Title</name>
     </customLabels>
     <customLabels>
         <label>お客様とIATA</label>
@@ -2704,7 +3441,7 @@
         <name>ConfirmSendRecycleBin</name>
     </customLabels>
     <customLabels>
-        <label><!-- Confirm password --></label>
+        <label>パスワードを確認する</label>
         <name>Confirm_password</name>
     </customLabels>
     <customLabels>
@@ -3228,7 +3965,7 @@
         <name>CurrencyCenter_def_TTBS</name>
     </customLabels>
     <customLabels>
-        <label><!-- Current password --></label>
+        <label>現在のパスワード</label>
         <name>Current_password</name>
     </customLabels>
     <customLabels>
@@ -13419,7 +14156,7 @@ and
         <name>ISSP_ContactName</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Contact About IATA Courses --></label>
+        <label>IATAのコースについてのお問い合わせですか。</label>
         <name>ISSP_Contact_About_IATA_Courses</name>
     </customLabels>
     <customLabels>
@@ -16827,7 +17564,7 @@ IATAコードをお持ちでない場合は、［顧客タイプ］に［その�
         <name>ISSP_See_more</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Select --></label>
+        <label>選択</label>
         <name>ISSP_Select</name>
     </customLabels>
     <customLabels>
@@ -18304,7 +19041,7 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
         <name>Location</name>
     </customLabels>
     <customLabels>
-        <label><!-- Login --></label>
+        <label>ログイン</label>
         <name>Login</name>
     </customLabels>
     <customLabels>
@@ -18424,7 +19161,7 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
         <name>NewGenApp_ServiceRequested</name>
     </customLabels>
     <customLabels>
-        <label><!-- New password --></label>
+        <label>新しいパスワード</label>
         <name>New_password</name>
     </customLabels>
     <customLabels>
@@ -18516,7 +19253,7 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
         <name>OneId_Account_Association</name>
     </customLabels>
     <customLabels>
-        <label><!-- OneId_Account Creation --></label>
+        <label>アカウントの作成</label>
         <name>OneId_Account_Creation</name>
     </customLabels>
     <customLabels>
@@ -18580,7 +19317,7 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
         <name>OneId_CreateNew</name>
     </customLabels>
     <customLabels>
-        <label><!-- OneId_CreateNewAccount --></label>
+        <label>新しいアカウントを作成する</label>
         <name>OneId_CreateNewAccount</name>
     </customLabels>
     <customLabels>
@@ -18988,7 +19725,7 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
         <name>OneId_Login</name>
     </customLabels>
     <customLabels>
-        <label><!-- OneId_LoginFail --></label>
+        <label>ログインに失敗しました。メールとパスワードが正しいことを確認してください。</label>
         <name>OneId_LoginFail</name>
     </customLabels>
     <customLabels>
@@ -19060,7 +19797,7 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
         <name>OneId_Online_Help_Link</name>
     </customLabels>
     <customLabels>
-        <label><!-- OneId_Password --></label>
+        <label>パスワード</label>
         <name>OneId_Password</name>
     </customLabels>
     <customLabels>
@@ -19887,7 +20624,7 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
         <name>PKB2_search_to_long</name>
     </customLabels>
     <customLabels>
-        <label><!-- PKB2: Contact Us Send Email --></label>
+        <label>確認メールの再送信</label>
         <name>PKB2_send_mail</name>
     </customLabels>
     <customLabels>
@@ -20973,6 +21710,10 @@ IATA財務ダッシュボードは資金計画やキャッシュ・フロー予�
     <customLabels>
         <label>肩書</label>
         <name>csp_My_Profile_Job_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- csp_Next_Step_Account_Selection --></label>
+        <name>csp_Next_Step_Account_Selection</name>
     </customLabels>
     <customLabels>
         <label><!-- Request New Service --></label>

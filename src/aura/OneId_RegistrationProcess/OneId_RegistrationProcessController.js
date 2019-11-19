@@ -48,6 +48,10 @@
                 
             }
 
+            if(servName == 'ISSP' || servName == 'CSP'){
+                helper.redirectToCustomerPortal(c, e);
+            }
+
         }
     },
     section1 : function(cmp, evt, hlp) {
