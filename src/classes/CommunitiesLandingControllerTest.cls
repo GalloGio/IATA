@@ -2,13 +2,13 @@
  * An apex page controller that takes the user to the right start page based on credentials or lack thereof
  */
 @IsTest public with sharing class CommunitiesLandingControllerTest {
-	@IsTest(SeeAllData=true) public static void testCommunitiesLandingController() {
+	@IsTest public static void testCommunitiesLandingController() {
 		// Instantiate a new controller with all parameters in the page
 		CommunitiesLandingController controller = new CommunitiesLandingController();
 		controller.forwardToStartPage();
 	  }
 	
-	 @IsTest(SeeAllData=true) public static void testCommunitiesLandingControllerGDPR() {
+	 @IsTest public static void testCommunitiesLandingControllerGDPR() {
 		// Instantiate a new controller with all parameters in the page
 		Test.setCurrentPageReference(new PageReference('Page.CommunitiesLanding')); 
 		System.currentPageReference().getParameters().put('serviceName', Label.TECH_GDPR_Community_Name);
@@ -16,7 +16,7 @@
 		controller.forwardToStartPage();
 	  }
 
-	@IsTest(SeeAllData=true) public static void testCommunitiesLandingControllerISSP() {
+	@IsTest public static void testCommunitiesLandingControllerISSP() {
 		// Instantiate a new controller with all parameters in the page
 		Test.setCurrentPageReference(new PageReference('Page.CommunitiesLanding')); 
 		System.currentPageReference().getParameters().put('serviceName', 'ISSP');
