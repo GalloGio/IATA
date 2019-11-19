@@ -33,14 +33,12 @@ public with sharing class ContactSyncUtilsTest {
 		accounts.add(new Account(
 				Name = 'standardAccount',
 				RecordTypeId = standardAccountRtId,
-				Sector__c = 'Accommodation',
-				Category__c = 'Other'
+				Sector__c = 'Accommodation'
 		));
 		accounts.add(new Account(
 				Name = 'airportAccount',
 				RecordTypeId = CustomerSyncUtils.ACCOUNT_RECORDTYPEID_AIRPORT,
 				Sector__c = 'Accommodation',
-				Category__c = 'Other',
 				IATACode__c = 'OX',
 				Verification_Status__c = 'Verified',
 				IATA_ISO_Country__c = iataIsoCountry.Id,
@@ -56,8 +54,7 @@ public with sharing class ContactSyncUtilsTest {
 				RecordTypeId = standardAccountRtId,
 				Hierarchy_Level__c = CustomerSyncUtils.ACCOUNT_HIERARCHY_LEVEL_BRANCH,
 				ParentId = accounts.get(0).Id,
-				Sector__c = 'Accommodation',
-				Category__c = 'Other'
+				Sector__c = 'Accommodation'
 		));
 		insert accounts.get(2);
 

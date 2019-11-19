@@ -4,13 +4,14 @@ private class FlowGetSalesAreasInvocableTest {
 	@TestSetup static void generateTestData(){
 		User admin = TestUtilities.createAdminUser();
 
-		List<PermissionSetAssignment> permissionSetAssignments = new List<PermissionSetAssignment>();
-		for(PermissionSet permissionSet : [SELECT Id FROM PermissionSet
-		WHERE Name = 'E_F_Account_Flow_Creation'
-		OR Name = 'All_New_Account_Address_DATA_MODELV2']){
-			permissionSetAssignments.add(new PermissionSetAssignment(PermissionSetId = permissionSet.Id, AssigneeId = admin.Id));
-		}
-		insert permissionSetAssignments;
+		//permissions
+		CustomPermission cp = [SELECT Id FROM CustomPermission WHERE DeveloperName='E_F_Account_Flow_Creation'];
+		PermissionSet pS = new PermissionSet(Name ='Test', Label ='Test');
+		insert pS;
+		SetupEntityAccess sep = new SetupEntityAccess(ParentId =pS.Id, SetupEntityId=cp.Id);
+		insert sep;
+		PermissionSetAssignment pSA = new PermissionSetAssignment(PermissionSetId = pS.Id, AssigneeId = admin.Id);
+		insert pSA;
 
 		System.runAs(admin){
 
@@ -35,7 +36,6 @@ private class FlowGetSalesAreasInvocableTest {
 					Business_State_Name__c = 'Quebec',
 					IATA_ISO_Country__c = iataIsoCountry.Id,
 					Legal_name__c = 'test account',
-					Verification_Status__c = 'Verified',
 					VAT_Number__c = 'vatnum'
 			);
 			insert acc;
