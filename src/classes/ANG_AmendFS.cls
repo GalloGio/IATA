@@ -1,4 +1,6 @@
 global class ANG_AmendFS implements Process.Plugin {
+    public class ANG_AmendFSException extends Exception {}
+
     global Process.PluginResult invoke(Process.PluginRequest request){
         double  NewFSAmount     = (double)  request.inputParameters.get('NewFSAmount');
         string  SelectedCaseId    = (string)  request.inputParameters.get('SelectedCaseId');
@@ -6,6 +8,7 @@ global class ANG_AmendFS implements Process.Plugin {
         string  FSToCloneId     = (string)  request.inputParameters.get('FSToCloneId');
         datetime  ExpiryDate      = (Datetime)  request.inputParameters.get('ExpiryDate');
         boolean UnlimitedValidity = (boolean) request.inputParameters.get('UnlimitedValidity');
+        string  FSValidationCase  = (string)  request.inputParameters.get('FSValidationCase');
         
         string sResult = 'KO';
         string sMessage = '';
@@ -30,6 +33,13 @@ global class ANG_AmendFS implements Process.Plugin {
         fsCloned.Expiry_Date__c = ExpiryDate==null?null:date.newinstance(ExpiryDate.year(), ExpiryDate.month(), ExpiryDate.day());
         fsCloned.Unlimited_Security__c = UnlimitedValidity;
         fsCloned.Remarks__c = fs.name;
+        if (fs.Security_Type__c=='Bank Guarantee') {
+          list<Case> listCase = [SELECT Id FROM Case WHERE CaseNumber = :FSValidationCase];
+          if (listCase.isEmpty()) {
+            throw new ANG_AmendFSException('Financial security Validation Case ' + FSValidationCase + ' not found. Go to previous page and select a valid Case Number');
+          }
+          fsCloned.Financial_Security_Validation_Case__c = listCase[0].Id;
+        }
       insert fsCloned;
       
       CreatedFSId = fsCloned.Id;
@@ -73,7 +83,8 @@ global class ANG_AmendFS implements Process.Plugin {
                 new Process.PluginDescribeResult.InputParameter('SelectedCurrency', Process.PluginDescribeResult.ParameterType.STRING, true),      
                 new Process.PluginDescribeResult.InputParameter('ExpiryDate', Process.PluginDescribeResult.ParameterType.DATETIME, true),
                 new Process.PluginDescribeResult.InputParameter('UnlimitedValidity', Process.PluginDescribeResult.ParameterType.BOOLEAN, true),
-                new Process.PluginDescribeResult.InputParameter('FSToCloneId', Process.PluginDescribeResult.ParameterType.STRING, true)
+                new Process.PluginDescribeResult.InputParameter('FSToCloneId', Process.PluginDescribeResult.ParameterType.STRING, true),
+                new Process.PluginDescribeResult.InputParameter('FSValidationCase', Process.PluginDescribeResult.ParameterType.STRING, true)
             };
         
         result.outputParameters = new List<Process.PluginDescribeResult.OutputParameter> {
