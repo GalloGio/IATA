@@ -139,7 +139,6 @@ public without sharing class portalIftpTrainingRecords {
 			sQuery += conditionsCertification;
 
 			List<Contact_Role_Certification__c> certifications =  Database.query(sQuery);
-			System.debug('### certifications' + certifications);
 
 			// Get Employees Primary Station
 			List<Role_Address__c> employeesWithPrimaryStation = [SELECT Account_Contact_Role__c,
