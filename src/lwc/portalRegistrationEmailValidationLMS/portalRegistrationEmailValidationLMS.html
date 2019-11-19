@@ -1,238 +1,238 @@
 <template>
-    <lightning-layout multiple-rows vertical-align="stretch">
-            <!--<div class="progressBar">
-                    <div class="progressItem firstItem previousItem">
-                        <div class="itemIcon">
-                            <lightning-icon size="x-small" icon-name="utility:check" class="slds-current-color"></lightning-icon>
-                        </div>
-                        <div class="itemTitle"><span>Profile Details</span></div>
-                    </div>
-                    <div class="progressItem secondItem activeItem">
-                        <div class="itemIcon"></div>
-                        <div class="itemTitle"><span>Account Selection</span></div>
-                    </div>
-                    <div class="progressItem thirdItem nextItem">
-                        <div class="itemIcon"></div>
-                        <div class="itemTitle"><span>Confirmation</span></div>
-                    </div>
-                </div>-->
-        <lightning-layout-item size="12">
-            <span class="text-medium">Email Validation</span>
-        </lightning-layout-item>
-    
-        
-        <lightning-layout-item size="12">
-            <!-- <div class="sectionDescription">{labels.CSP_L2_Account_Selection_Message}</div> -->
- <!--NEED NEW LABEL -->           <div class="sectionDescription">To Validate your personal email with a existing contact we need 
-                    your personal email before creating a new one.
-            </div>
+	<lightning-layout multiple-rows vertical-align="stretch">
+			<!--<div class="progressBar">
+					<div class="progressItem firstItem previousItem">
+						<div class="itemIcon">
+							<lightning-icon size="x-small" icon-name="utility:check" class="slds-current-color"></lightning-icon>
+						</div>
+						<div class="itemTitle"><span>Profile Details</span></div>
+					</div>
+					<div class="progressItem secondItem activeItem">
+						<div class="itemIcon"></div>
+						<div class="itemTitle"><span>Account Selection</span></div>
+					</div>
+					<div class="progressItem thirdItem nextItem">
+						<div class="itemIcon"></div>
+						<div class="itemTitle"><span>Confirmation</span></div>
+					</div>
+				</div>-->
+		<lightning-layout-item size="12">
+			<span class="text-medium">Email Validation</span>
+		</lightning-layout-item>
 
-            <!--div class="sectionDescription">Your company may have an account in IATA, so please check it first before creating a new one.</div-->
-        </lightning-layout-item>
 
-        <lightning-layout-item padding="around-small" size="12">
-        </lightning-layout-item>
-            
-        <lightning-layout-item class="slds-p-around_small topLightGrayBorder customWhiteBackground slds-clearfix" size="12">
-        </lightning-layout-item>
+		<lightning-layout-item size="12">
+			<!-- <div class="sectionDescription">{labels.CSP_L2_Account_Selection_Message}</div> -->
+ <!--NEED NEW LABEL -->           <div class="sectionDescription">To Validate your personal email with a existing contact we need
+					your personal email before creating a new one.
+			</div>
 
-        <lightning-layout-item size="12">
-            <!-- <div class="sectionTitle">{labels.CSP_L2_Account_Information}</div> -->
+			<!--div class="sectionDescription">Your company may have an account in IATA, so please check it first before creating a new one.</div-->
+		</lightning-layout-item>
+
+		<lightning-layout-item padding="around-small" size="12">
+		</lightning-layout-item>
+
+		<lightning-layout-item class="slds-p-around_small topLightGrayBorder customWhiteBackground slds-clearfix" size="12">
+		</lightning-layout-item>
+
+		<lightning-layout-item size="12">
+			<!-- <div class="sectionTitle">{labels.CSP_L2_Account_Information}</div> -->
 <!--NEED NEW LABEL -->             <div class="sectionTitle">Email Info</div>
-            <!-- <div class="sectionDescription">{labels.CSP_L2_Account_Information_Message}</div> -->
+			<!-- <div class="sectionDescription">{labels.CSP_L2_Account_Information_Message}</div> -->
 <!--NEED NEW LABEL -->             <div class="sectionDescription">Anwser and Fill out the information below.</div>
-        </lightning-layout-item>
+		</lightning-layout-item>
 
-        <lightning-layout-item padding="around-small" size="12">
-        </lightning-layout-item>
-        <!------------------------------------------      Profile details      -------------------------------------------->
-        <div class="companyInfoContainer">
-        <!------------------------------------------      Customer Type      -------------------------------------------->
-           
+		<lightning-layout-item padding="around-small" size="12">
+		</lightning-layout-item>
+		<!------------------------------------------      Profile details      -------------------------------------------->
+		<div class="companyInfoContainer">
+		<!------------------------------------------      Customer Type      -------------------------------------------->
 
-                    <div class="infoItem" >
-                        <lightning-layout-item size="12" >
-                            <div class="formLabelContainer">
-                                <div class="text-xxsmall">
-                                    <!-- <abbr class="slds-required" title="required">* </abbr>{item.label} -->
+
+					<div class="infoItem" >
+						<lightning-layout-item size="12" >
+							<div class="formLabelContainer">
+								<div class="text-xxsmall">
+									<!-- <abbr class="slds-required" title="required">* </abbr>{item.label} -->
 <!--NEED NEW LABEL -->                                    Is your user email your personal email ?
-                                </div>
-                            </div>
-                        </lightning-layout-item>
-                        <lightning-layout-item size="12" >
-                            <div class="slds-form-element">
-                                <div class="slds-form-element__control custTextInputSmall">
-                                    <lightning-combobox
-                                        options={PersonalEmailOptions}
-                                        value={isPersonalEmail}
-                                        variant="label-hidden"
-                                        class="cursorPointerComboBox text-xxsmall"
-                                        dropdown-alignment="auto"
-                                        onchange={changeIsPersonalEmail}>
-                                    </lightning-combobox>
-                                </div>
-                            </div>
-                        </lightning-layout-item>
-                    </div>
-           
-            <!-- ----------------------------------------      Personal Email      ------------------------------------------ -->
-            <template if:true={personalEmailVisibility}>
-                <div class="infoItemLine" >
-                    
-                    <lightning-layout-item size="12">
-                        <div class="formLabelContainer">
-                            <div class="text-xxsmall">
-                                <!-- {labels.CSP_L2_Company_Name} -->
-    <!--NEED NEW LABEL -->                             Personal Email
-                            </div>
-                        </div>
-                    </lightning-layout-item>
-                    <lightning-layout-item size="12">
-                        <div class="slds-form-element">
-                            <div class="slds-form-element__control custTextInput custTextInputSmall">
-                                <input 
-                                    type="text"  
-                                    class="slds-input" 
-                                    placeholder=" " 
-                                    value={personalEmailInput}
-                                    onkeyup={changePersonalEmail}/>
-                            </div>
-                        </div>
-                    </lightning-layout-item>
-                </div>
-            </template>
-        
+								</div>
+							</div>
+						</lightning-layout-item>
+						<lightning-layout-item size="12" >
+							<div class="slds-form-element">
+								<div class="slds-form-element__control custTextInputSmall">
+									<lightning-combobox
+										options={PersonalEmailOptions}
+										value={isPersonalEmail}
+										variant="label-hidden"
+										class="cursorPointerComboBox text-xxsmall"
+										dropdown-alignment="auto"
+										onchange={changeIsPersonalEmail}>
+									</lightning-combobox>
+								</div>
+							</div>
+						</lightning-layout-item>
+					</div>
 
-            <!-- ----------------------------------------      Work Email      ------------------------------------------ -->
-            <template if:true={workEmailVisibility}>
-                <div class="infoItemLine" >
-                    
-                    <lightning-layout-item size="12">
-                        <div class="formLabelContainer">
-                            <div class="text-xxsmall">
-                                <!-- {labels.CSP_L2_Company_Name} -->
-    <!--NEED NEW LABEL -->                             Work Email
-                            </div>
-                        </div>
-                    </lightning-layout-item>
-                    <lightning-layout-item size="12">
-                        <div class="slds-form-element">
-                            <div class="slds-form-element__control custTextInput custTextInputSmall">
-                                <input 
-                                    type="text"  
-                                    class="slds-input" 
-                                    placeholder=" " 
-                                    value={workEmailInput}
-                                    onkeyup={changeWorkEmail}/>
-                            </div>
-                        </div>
-                    </lightning-layout-item>
-                </div>
-            </template>
+			<!-- ----------------------------------------      Personal Email      ------------------------------------------ -->
+			<template if:true={personalEmailVisibility}>
+				<div class="infoItemLine" >
 
-            <!-- ----------------------------------------      Existing user/personal email      ------------------------------------------ -->
-            <template if:true={existingUsernameVisibility}>
-                    
-                <div class="infoItemLine" >
-                    
-                    <lightning-layout-item size="12">
-                        <div class="formLabelContainer">
-                            <div class="sectionDescription">
-                                <!-- {labels.CSP_L2_Company_Name} -->
-    <!--NEED NEW LABEL -->      You are trying to register with an existing user, please change the email or click login button to go to the login page
-                            </div>
-                        </div>
-                    </lightning-layout-item>
-                    <lightning-button variant="base" label="Login" class="slds-p-right_small blueCustomButtonLinkSmall" onclick={handleNavigateToLogin}></lightning-button>
-                </div>
-            </template>
-            <template if:true={existingPersonalUsernameVisibility}>
-                    
-                <div class="infoItemLine" >
-                    
-                    <lightning-layout-item size="12">
-                        <div class="formLabelContainer">
-                            <div class="sectionDescription">
-                                <!-- {labels.CSP_L2_Company_Name} -->
-    <!--NEED NEW LABEL -->      We have found an existing contact having as the personal email, the email you are trying to register with:
-                            </div>
-                        </div>
-                    </lightning-layout-item>
-                    <lightning-layout-item size="12">
-                        <div class="slds-form-element">
-                            <div class="sectionDescription">
-                                    <br> Contact Email: <b>{userInfo.existingContactEmail}</b>
-                            </div>
-                        </div>
-                    </lightning-layout-item>
-                    <lightning-layout-item size="12">
-                            <div class="formLabelContainer">
-                                <div class="sectionDescription">
-                                    <!-- {labels.CSP_L2_Company_Name} -->
-        <!--NEED NEW LABEL -->      <br>If you are still working for {userInfo.existingContactAccount}, please click login button to the portal using the email above.
-                                </div>
-                            </div>
-                        </lightning-layout-item>
-                        <lightning-button variant="base" label="Login" class="slds-p-right_small blueCustomButtonLinkSmall" onclick={handleNavigateToLogin}></lightning-button>
-              
+					<lightning-layout-item size="12">
+						<div class="formLabelContainer">
+							<div class="text-xxsmall">
+								<!-- {labels.CSP_L2_Company_Name} -->
+	<!--NEED NEW LABEL -->                             Personal Email
+							</div>
+						</div>
+					</lightning-layout-item>
+					<lightning-layout-item size="12">
+						<div class="slds-form-element">
+							<div class="slds-form-element__control custTextInput custTextInputSmall">
+								<input
+									type="text"
+									class="slds-input"
+									placeholder=" "
+									value={personalEmailInput}
+									onkeyup={changePersonalEmail}/>
+							</div>
+						</div>
+					</lightning-layout-item>
+				</div>
+			</template>
 
-                </div>
-            </template>
-                
 
+			<!-- ----------------------------------------      Work Email      ------------------------------------------ -->
+			<template if:true={workEmailVisibility}>
+				<div class="infoItemLine" >
+
+					<lightning-layout-item size="12">
+						<div class="formLabelContainer">
+							<div class="text-xxsmall">
+								<!-- {labels.CSP_L2_Company_Name} -->
+	<!--NEED NEW LABEL -->                             Work Email
+							</div>
+						</div>
+					</lightning-layout-item>
+					<lightning-layout-item size="12">
+						<div class="slds-form-element">
+							<div class="slds-form-element__control custTextInput custTextInputSmall">
+								<input
+									type="text"
+									class="slds-input"
+									placeholder=" "
+									value={workEmailInput}
+									onkeyup={changeWorkEmail}/>
+							</div>
+						</div>
+					</lightning-layout-item>
+				</div>
+			</template>
+
+			<!-- ----------------------------------------      Existing user/personal email      ------------------------------------------ -->
+			<template if:true={existingUsernameVisibility}>
+
+				<div class="infoItemLine" >
+
+					<lightning-layout-item size="12">
+						<div class="formLabelContainer">
+							<div class="sectionDescription">
+								<!-- {labels.CSP_L2_Company_Name} -->
+	<!--NEED NEW LABEL -->      You are trying to register with an existing user, please change the email or click login button to go to the login page
+							</div>
+						</div>
+					</lightning-layout-item>
+					<lightning-button variant="base" label="Login" class="slds-p-right_small blueCustomButtonLinkSmall" onclick={handleNavigateToLogin}></lightning-button>
+				</div>
+			</template>
+			<template if:true={existingPersonalUsernameVisibility}>
+
+				<div class="infoItemLine" >
+
+					<lightning-layout-item size="12">
+						<div class="formLabelContainer">
+							<div class="sectionDescription">
+								<!-- {labels.CSP_L2_Company_Name} -->
+	<!--NEED NEW LABEL -->      We have found an existing contact having as the personal email, the email you are trying to register with:
+							</div>
+						</div>
+					</lightning-layout-item>
+					<lightning-layout-item size="12">
+						<div class="slds-form-element">
+							<div class="sectionDescription">
+									<br> Contact Email: <b>{userInfo.existingContactEmail}</b>
+							</div>
+						</div>
+					</lightning-layout-item>
+					<lightning-layout-item size="12">
+							<div class="formLabelContainer">
+								<div class="sectionDescription">
+									<!-- {labels.CSP_L2_Company_Name} -->
+		<!--NEED NEW LABEL -->      <br>If you are still working for {userInfo.existingContactAccount}, please click login button to the portal using the email above.
+								</div>
+							</div>
+						</lightning-layout-item>
+						<lightning-button variant="base" label="Login" class="slds-p-right_small blueCustomButtonLinkSmall" onclick={handleNavigateToLogin}></lightning-button>
+
+
+				</div>
+			</template>
 
 
 
 
 
-            <div data-id="emailDiv" class="slds-form-element">
-                <div class="formElementSpacer">
-                    <div if:true={displayError}>
-                        <div class="slds-form-element__help">{errorMessage}</div>
-                    </div>
-                </div>
-                <div if:true={displayError} style="height:16px;">
-                </div>
-            </div>    
-        </div>
-    
-        
-        <template if:true={isCategorizationModified}>
-            <lightning-layout-item size="12">
-                <div>
-                    Please note that the service you're requesting access might be uneligible for this categorization. You can anyway finalize your registration with this categorization, but in that case, the request access to the desired service will not be triggered.
-                </div>
-            </lightning-layout-item>
-        </template>
 
-        <lightning-layout-item size="6" class="backButtonWrapper">
-            <template if:false={searchPerformed}>
-                <div class="text-xxsmall">
-                    <lightning-button variant="base"
-                                    label={labels.CSP_L2_Back_to_Profile_Details}
-                                    title={labels.CSP_L2_Back_to_Profile_Details}
-                                    onclick={previous}
-                                    class="blueCustomButtonLinkSmall"
-                                    icon-name="utility:back" 
-                                    icon-position="left">
-                    </lightning-button>
-                </div>
-            </template>
-        </lightning-layout-item>
 
- <!--NEED NEW LABEL --> 
-        <lightning-layout-item size="6">
-            <lightning-button class="slds-float_right containedButton customBtn" data-id="nextButton" label={labels.CSP_L2_Next_Confirmation} disabled={blockConfirmation} variant="brand" onclick={next}>
-            </lightning-button>
-        </lightning-layout-item>
+			<div data-id="emailDiv" class="slds-form-element">
+				<div class="formElementSpacer">
+					<div if:true={displayError}>
+						<div class="slds-form-element__help">{errorMessage}</div>
+					</div>
+				</div>
+				<div if:true={displayError} style="height:16px;">
+				</div>
+			</div>
+		</div>
 
-        <!-- <lightning-layout-item size="6" class="nextBtn">
-            <lightning-button class="slds-float_right containedButton customBtn" label={labels.CSP_L2_Search} disabled={isSearchDisabled} variant="brand" onclick={search}>
-            </lightning-button>
-        </lightning-layout-item> -->
 
-        <lightning-layout-item padding="around-small" size="12">
-        </lightning-layout-item>
-            
-    </lightning-layout>
+		<template if:true={isCategorizationModified}>
+			<lightning-layout-item size="12">
+				<div>
+					Please note that the service you're requesting access might be uneligible for this categorization. You can anyway finalize your registration with this categorization, but in that case, the request access to the desired service will not be triggered.
+				</div>
+			</lightning-layout-item>
+		</template>
+
+		<lightning-layout-item size="6" class="backButtonWrapper">
+			<template if:false={searchPerformed}>
+				<div class="text-xxsmall">
+					<lightning-button variant="base"
+									label={labels.CSP_L2_Back_to_Profile_Details}
+									title={labels.CSP_L2_Back_to_Profile_Details}
+									onclick={previous}
+									class="blueCustomButtonLinkSmall"
+									icon-name="utility:back"
+									icon-position="left">
+					</lightning-button>
+				</div>
+			</template>
+		</lightning-layout-item>
+
+ <!--NEED NEW LABEL -->
+		<lightning-layout-item size="6">
+			<lightning-button class="slds-float_right containedButton customBtn" data-id="nextButton" label={labels.CSP_L2_Next_Confirmation} disabled={blockConfirmation} variant="brand" onclick={next}>
+			</lightning-button>
+		</lightning-layout-item>
+
+		<!-- <lightning-layout-item size="6" class="nextBtn">
+			<lightning-button class="slds-float_right containedButton customBtn" label={labels.CSP_L2_Search} disabled={isSearchDisabled} variant="brand" onclick={search}>
+			</lightning-button>
+		</lightning-layout-item> -->
+
+		<lightning-layout-item padding="around-small" size="12">
+		</lightning-layout-item>
+
+	</lightning-layout>
 </template>

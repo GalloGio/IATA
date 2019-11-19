@@ -15,8 +15,8 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 	}
 
 	@AuraEnabled
-    public static Training_Contact_Role_Details__c getLMSContactInfo(String lms) {
-        User loggedUser = CSP_Utils.getLoggedUser();
+	public static Training_Contact_Role_Details__c getLMSContactInfo(String lms) {
+		User loggedUser = CSP_Utils.getLoggedUser();
 
 		String RECTYPE_lms = '';
 		String RECTYPE_Trainee_YASContDet = RecordTypeSingleton.getInstance().getRecordTypeId('Training_Contact_Role_Details__c', 'Yardstick_Trainee');
@@ -27,18 +27,18 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 
 		Training_Contact_Role_Details__c tcrd = new Training_Contact_Role_Details__c();
 
-		
-        List<Training_Contact_Role_Details__c> con = [SELECT Id, Username__c, UserId__c, Preferred_Course__c, RecordTypeId
+
+		List<Training_Contact_Role_Details__c> con = [SELECT Id, Username__c, UserId__c, Preferred_Course__c, RecordTypeId
 														FROM Training_Contact_Role_Details__c
-														WHERE Account_Contact_Role__r.Contact__c = :loggedUser.contactId 
+														WHERE Account_Contact_Role__r.Contact__c = :loggedUser.contactId
 														LIMIT 1];
 
-        if(con.isEmpty()){
-            return null;
-        }
+		if(con.isEmpty()){
+			return null;
+		}
 
-        return con[0];
-    }
+		return con[0];
+	}
 
 	@AuraEnabled
 	public static returnWrapper getParameters(String urlExtension){
@@ -212,10 +212,10 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 			}
 			System.debug('Training_Contact_Role_Details__c - ycd: ' + ycd);
 
-    		//Create Portal Application Right
-    		Portal_Applications__c pa = [SELECT Id, Name FROM Portal_Applications__c WHERE Name = 'Training Platform (LMS)' LIMIT 1];
+			//Create Portal Application Right
+			Portal_Applications__c pa = [SELECT Id, Name FROM Portal_Applications__c WHERE Name = 'Training Platform (LMS)' LIMIT 1];
 
-           	//Create ToS Acceptance
+		   	//Create ToS Acceptance
 			createToSAcceptance(pa.id, con.Id);
 
 			List<Portal_Application_Right__c> listPAR = [SELECT Id,Portal_Application__c,Right__c,Contact__c,Favourite_Service__c FROM Portal_Application_Right__c WHERE Contact__c = :con.Id AND Portal_Application__c = :pa.id LIMIT 1];
@@ -782,25 +782,25 @@ System.debug('messages: '+messages);
 	}
 
 	@AuraEnabled
-    public static Boolean getLMSTermAndConditionAcceptance(String serviceId, Id contactId) {
-       
-	    if(serviceId == 'yas'){
+	public static Boolean getLMSTermAndConditionAcceptance(String serviceId, Id contactId) {
+
+		if(serviceId == 'yas'){
 			Portal_Applications__c pa = [SELECT Id, Name FROM Portal_Applications__c WHERE Name = 'Training Platform (LMS)' LIMIT 1];
 			serviceId = pa.Id;
 		}
-		
+
 		List<Term_and_Condition__c> tos = [SELECT Id FROM Term_and_Condition__c WHERE NewGenApp_PortalService__c =:serviceId AND Is_Latest__c = true AND Status__c = 'Final'];
 		system.assert(tos.size() == 1, 'Terms of Service data integrity compromised. Found none more than one active ToS for the service.');
-		
-        //check if the tos has already been accepted
+
+		//check if the tos has already been accepted
 		List<Term_and_Condition_Acceptance__c> tosAccept = [SELECT Id, Is_Accepted__c FROM Term_and_Condition_Acceptance__c WHERE Term_Condition__c =:tos[0].Id AND Contact__c =: contactId];
 
-        if(tosAccept.isEmpty()){
-            return false;
-        }
+		if(tosAccept.isEmpty()){
+			return false;
+		}
 
-        return tosAccept[0].Is_Accepted__c;
-    }
+		return tosAccept[0].Is_Accepted__c;
+	}
 
 	public class UserInformationWrapper{
 		public string Email{get;set;}

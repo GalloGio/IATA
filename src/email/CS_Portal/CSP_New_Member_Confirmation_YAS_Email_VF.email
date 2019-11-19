@@ -1,5 +1,5 @@
 <messaging:emailTemplate subject="IATA Customer Portal Email Confirmation" recipientType="User" language="{!recipient.languagelocalekey}">
 <messaging:plainTextEmailBody >
-    <c:CSP_YAS_Confirmation_Email />
+	<c:CSP_YAS_Confirmation_Email />
 </messaging:plainTextEmailBody>
 </messaging:emailTemplate>

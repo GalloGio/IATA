@@ -213,7 +213,7 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 					this.address.zip = this.contactInfo.Shipping_Address__r.Postal_Code__c;
 				}
 
-				
+
 
 			})
 		.catch((error) => {

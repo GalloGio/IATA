@@ -4,82 +4,82 @@
 
 public without sharing class PortalCreatePasswordController {
 
-    public class returnWrapper{
-        @AuraEnabled
-        public String registrationParameters {get;set;}
-        @AuraEnabled
-        public boolean isUserExist {get;set;}
-        @AuraEnabled
-        public boolean isExpired {get;set;}
+	public class returnWrapper{
+		@AuraEnabled
+		public String registrationParameters {get;set;}
+		@AuraEnabled
+		public boolean isUserExist {get;set;}
+		@AuraEnabled
+		public boolean isExpired {get;set;}
 
-    }
+	}
 
-    @AuraEnabled
-    public static returnWrapper getParameters(String urlExtension){
-        returnWrapper result  = new returnWrapper();
-        result.isExpired      = false;
-        PageReference pageRef = new PageReference(urlExtension);
-        String parameters     = pageRef.getParameters().get('c');
-        parameters            = Encodingutil.urlDecode(PortalPasswordHandler.DecryptString(parameters), 'UTF-8');
+	@AuraEnabled
+	public static returnWrapper getParameters(String urlExtension){
+		returnWrapper result  = new returnWrapper();
+		result.isExpired      = false;
+		PageReference pageRef = new PageReference(urlExtension);
+		String parameters     = pageRef.getParameters().get('c');
+		parameters            = Encodingutil.urlDecode(PortalPasswordHandler.DecryptString(parameters), 'UTF-8');
 
-        //get registration information
-        PortalRegistrationFirstLevelCtrl.RegistrationParameters registrationParameters = (PortalRegistrationFirstLevelCtrl.RegistrationParameters) JSON.deserialize(parameters, PortalRegistrationFirstLevelCtrl.RegistrationParameters.class);
-        registrationParameters.email  = registrationParameters.email.replace(PortalPasswordHandler.plusReplacer,'+');
-        result.isUserExist            = isUserExist(registrationParameters.email, registrationParameters.contactId);
-        result.registrationParameters = JSON.serialize(registrationParameters);
+		//get registration information
+		PortalRegistrationFirstLevelCtrl.RegistrationParameters registrationParameters = (PortalRegistrationFirstLevelCtrl.RegistrationParameters) JSON.deserialize(parameters, PortalRegistrationFirstLevelCtrl.RegistrationParameters.class);
+		registrationParameters.email  = registrationParameters.email.replace(PortalPasswordHandler.plusReplacer,'+');
+		result.isUserExist            = isUserExist(registrationParameters.email, registrationParameters.contactId);
+		result.registrationParameters = JSON.serialize(registrationParameters);
 
-        if(system.now() > datetime.valueOf(registrationParameters.registrationTime).addHours(8)) result.isExpired = true;
+		if(system.now() > datetime.valueOf(registrationParameters.registrationTime).addHours(8)) result.isExpired = true;
 
-        return result;
-    }
+		return result;
+	}
 
-    @AuraEnabled
-    public static boolean isUserExist(String email, String contactId) {
-        boolean isExist = false;
-        if(contactId == null || contactId == ''){
-            List<Contact> contactList = [Select id from contact where email =: email];
-            if(!contactList.isEmpty()) isExist = true;
-        }
+	@AuraEnabled
+	public static boolean isUserExist(String email, String contactId) {
+		boolean isExist = false;
+		if(contactId == null || contactId == ''){
+			List<Contact> contactList = [Select id from contact where email =: email];
+			if(!contactList.isEmpty()) isExist = true;
+		}
 
-        List<User> userList = [Select id from user where email =: email];
-        if(!userList.isEmpty()) isExist = true;
-        return isExist;
-    }
+		List<User> userList = [Select id from user where email =: email];
+		if(!userList.isEmpty()) isExist = true;
+		return isExist;
+	}
 
-    @AuraEnabled
-    public static PortalRegistrationFirstLevelCtrl.RegistrationResult createUserAndSetPassword(String paramStr, String password){
-        PortalRegistrationFirstLevelCtrl.RegistrationParameters params = (PortalRegistrationFirstLevelCtrl.RegistrationParameters) JSON.deserialize(paramStr, PortalRegistrationFirstLevelCtrl.RegistrationParameters.class);
-        PortalRegistrationFirstLevelCtrl.RegistrationResult result     = PortalRegistrationFirstLevelCtrl.register(params, password);
+	@AuraEnabled
+	public static PortalRegistrationFirstLevelCtrl.RegistrationResult createUserAndSetPassword(String paramStr, String password){
+		PortalRegistrationFirstLevelCtrl.RegistrationParameters params = (PortalRegistrationFirstLevelCtrl.RegistrationParameters) JSON.deserialize(paramStr, PortalRegistrationFirstLevelCtrl.RegistrationParameters.class);
+		PortalRegistrationFirstLevelCtrl.RegistrationResult result     = PortalRegistrationFirstLevelCtrl.register(params, password);
 
-        String startUrl = Label.CSP_PortalPath;
-        if(result.isSuccess == true){
-            try{
-                System.Debug('PortalRegistrationFirstLevelCtrl.RegistrationResult createUserAndSetPassword - params' + params);
-                System.Debug('PortalRegistrationFirstLevelCtrl.RegistrationResult createUserAndSetPassword - params.lms' + params.lms);
-                System.Debug('PortalRegistrationFirstLevelCtrl.RegistrationResult createUserAndSetPassword - params.lmsCourse' + params.lmsCourse);
-                //YAS Reg -
-                String lmsParam = ((String)params.lms).toLowerCase(); 
-                if(lmsParam.indexOf('yas') != -1){
-                    startUrl += '?firstLogin=true&lms=yas&lmsCourse='+(String)params.lmsCourse;
-                } else                
-                    if(result.isGeneralPublicAccount == true) startUrl += '?firstLogin=true';
-                
-                System.PageReference pageRef = Site.login(result.username, password, startUrl);
-                result.message = pageRef.getUrl();
-            }
-            catch(Exception ex){
-                result.isSuccess = false;
-            }
-        }
-        return result;
-    }
+		String startUrl = Label.CSP_PortalPath;
+		if(result.isSuccess == true){
+			try{
+				System.Debug('PortalRegistrationFirstLevelCtrl.RegistrationResult createUserAndSetPassword - params' + params);
+				System.Debug('PortalRegistrationFirstLevelCtrl.RegistrationResult createUserAndSetPassword - params.lms' + params.lms);
+				System.Debug('PortalRegistrationFirstLevelCtrl.RegistrationResult createUserAndSetPassword - params.lmsCourse' + params.lmsCourse);
+				//YAS Reg -
+				String lmsParam = ((String)params.lms).toLowerCase();
+				if(lmsParam.indexOf('yas') != -1){
+					startUrl += '?firstLogin=true&lms=yas&lmsCourse='+(String)params.lmsCourse;
+				} else
+					if(result.isGeneralPublicAccount == true) startUrl += '?firstLogin=true';
 
-    @AuraEnabled
-    public static boolean resendEmail(String paramStr) {
-        PortalRegistrationFirstLevelCtrl.RegistrationParameters params = (PortalRegistrationFirstLevelCtrl.RegistrationParameters) JSON.deserialize(paramStr, PortalRegistrationFirstLevelCtrl.RegistrationParameters.class);
-        params.registrationTime = string.valueOf(system.now());
-        boolean success = PortalRegistrationFirstLevelCtrl.sendRegistrationEmailVF(params,'');
-        return success;
-    }
+				System.PageReference pageRef = Site.login(result.username, password, startUrl);
+				result.message = pageRef.getUrl();
+			}
+			catch(Exception ex){
+				result.isSuccess = false;
+			}
+		}
+		return result;
+	}
+
+	@AuraEnabled
+	public static boolean resendEmail(String paramStr) {
+		PortalRegistrationFirstLevelCtrl.RegistrationParameters params = (PortalRegistrationFirstLevelCtrl.RegistrationParameters) JSON.deserialize(paramStr, PortalRegistrationFirstLevelCtrl.RegistrationParameters.class);
+		params.registrationTime = string.valueOf(system.now());
+		boolean success = PortalRegistrationFirstLevelCtrl.sendRegistrationEmailVF(params,'');
+		return success;
+	}
 
 }

@@ -1,50 +1,50 @@
 <apex:component controller="CSP_Email_Controller" id="CSP_YAS_Confirmation_Email" access="global">
 
-    <html>
-        <head>
-            <style>
-              body{
-            font-family:"Open Sans","GillSansMT","Lucida Sans Unicode", "Lucida Grande", sans-serif;
-            color:#004577;
-              }
+	<html>
+		<head>
+			<style>
+			  body{
+			font-family:"Open Sans","GillSansMT","Lucida Sans Unicode", "Lucida Grande", sans-serif;
+			color:#004577;
+			  }
 
-              div.main{
-                  margin:auto;
-                  width:90%;
-              }
-              hr{
-              color:#0A4279;
-              }
-           </style>
-        </head>
+			  div.main{
+				  margin:auto;
+				  width:90%;
+			  }
+			  hr{
+			  color:#0A4279;
+			  }
+		   </style>
+		</head>
 
-        <body>
-            <div class="main">
-                <table width="640px">
-                    <tr>
-                        <td colspan="3"><img src="{!HeaderUrl}"/></td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <p>{!$Label.CSP_Dear} {!FirstName},</p>
-                            <p>{!ExistingContactUsername}</p>
-                            <i>Contact Name: {!ExistingContactName}</i><br/>
-                            <i>Contact Email: {!ExistingContactEmail}</i><br/>
-                            <i>Account Name: {!ExistingContactAccount}</i><br/>
-                            <p>If you are still working for {!ExistingContactAccount}, please login to the portal using the username above.</p>
-                            <p>Otherwise please click <b><a href="{!CommunityUrl}">{!$Label.CSP_Email_Here}</a></b> to validate your email address.</p>
-                            <p>Note that if you proceed with new registration all training records associated with the existing contact will be moved to your new user.</p>
-                            <p>{!$Label.CSP_Email_Confirmation_Body_Part_3}</p>
-                            <p>{!$Label.CSP_Email_Signature_Part_1}</p>
-                            <p>{!$Label.CSP_Email_Signature_Part_2}</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="3"><img src="{!FooterUrl}"/></td> 
-                    </tr>
-                </table>
-            </div>
-        </body>
-    </html>
+		<body>
+			<div class="main">
+				<table width="640px">
+					<tr>
+						<td colspan="3"><img src="{!HeaderUrl}"/></td>
+					</tr>
+					<tr>
+						<td>
+							<p>{!$Label.CSP_Dear} {!FirstName},</p>
+							<p>{!ExistingContactUsername}</p>
+							<i>Contact Name: {!ExistingContactName}</i><br/>
+							<i>Contact Email: {!ExistingContactEmail}</i><br/>
+							<i>Account Name: {!ExistingContactAccount}</i><br/>
+							<p>If you are still working for {!ExistingContactAccount}, please login to the portal using the username above.</p>
+							<p>Otherwise please click <b><a href="{!CommunityUrl}">{!$Label.CSP_Email_Here}</a></b> to validate your email address.</p>
+							<p>Note that if you proceed with new registration all training records associated with the existing contact will be moved to your new user.</p>
+							<p>{!$Label.CSP_Email_Confirmation_Body_Part_3}</p>
+							<p>{!$Label.CSP_Email_Signature_Part_1}</p>
+							<p>{!$Label.CSP_Email_Signature_Part_2}</p>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3"><img src="{!FooterUrl}"/></td>
+					</tr>
+				</table>
+			</div>
+		</body>
+	</html>
 
 </apex:component>

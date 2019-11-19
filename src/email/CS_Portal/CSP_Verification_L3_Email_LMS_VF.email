@@ -1,5 +1,5 @@
 <messaging:emailTemplate subject="Email Validation" recipientType="User" language="{!recipient.languagelocalekey}" >
 <messaging:plainTextEmailBody >
-    <c:CSP_Verification_L3_Email_LMS />
+	<c:CSP_Verification_L3_Email_LMS />
 </messaging:plainTextEmailBody>
 </messaging:emailTemplate>

@@ -88,7 +88,7 @@ export default class PortalRegistrationProfileDetailsLMS extends LightningElemen
 			this.localContactInfo.Username = this.contactInfoLMS.Username__c != undefined ? this.contactInfoLMS.Username__c : '';
 			this.localContactInfo.UserId = this.contactInfoLMS.UserId__c != undefined ? this.contactInfoLMS.UserId__c : '';
 			this.localContactInfo.lmsCourse = this.contactInfoLMS.Preferred_Course__c != undefined ? this.contactInfoLMS.Preferred_Course__c : '';
-								
+
 			console.log('connectedCallback getContactInfo - this.contactInfo - ',this.contactInfo );
 			console.log('connectedCallback getContactInfo - this.address - ',this.address );
 		})

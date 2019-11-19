@@ -235,7 +235,7 @@ export default class PortalRegistrationConfirmationLMS extends LightningElement 
 			})
 			.finally(() => {
 				this.submitRegistration();
-				
+
 			});
 		}else{
 			this.submitRegistration();

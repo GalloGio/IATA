@@ -274,7 +274,7 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
 						.catch(error => {
 							this.error = error;
 						});
-					
+
 				}
 
 			}else if(pageParams.lmsflow.indexOf('flow') > -1){
