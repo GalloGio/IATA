@@ -65,7 +65,7 @@ public without sharing class GCS_RegistrationController{
 		System.debug('Found accounts : '+accs.size());
 
 		if(!accs.isEmpty()){
-			return OneId_RegistrationProcessController.registration(accs.get(0), con, serviceName);
+			return OneId_RegistrationProcessController.registration(accs.get(0), con, serviceName, false);
 		}
 
 		return false;
