@@ -100,7 +100,9 @@ public without sharing class PortalPasswordHandler {
 
         String prefix = '';
         List<Network> networkList = [Select id from Network where name =: 'CS Portal' Limit 1];
-        if(!networkList.isEmpty()) prefix = Network.getLoginURL(networkList.get(0).Id).substring(0,Network.getLoginURL(networkList.get(0).Id).indexOf('/login'));
+        if(!test.isRunningTest()){
+            if(!networkList.isEmpty()) prefix = Network.getLoginURL(networkList.get(0).Id).substring(0,Network.getLoginURL(networkList.get(0).Id).indexOf('/login'));
+        }
         String link = prefix + '/' + pageName + '?' + languageParam + encodedPart;
         return link;
     }
