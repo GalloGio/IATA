@@ -128,6 +128,14 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     
     get labels() { return this._labels; }
     set labels(value) { this._labels = value; }
+	
+	@api 
+    get showEdit(){
+        return this.showEditTrack;
+    }
+    set showEdit(val){
+        this.showEditTrack=val;
+    }
 
     emptyStaticServices = 'emptyStaticServices';
     emptyServices = 'emptyServices';
@@ -186,7 +194,7 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
         
         isAdmin().then(result => {
             this.showEditTrack = result && this.showEditTrack;
-            if (this._labels.CompanyInformation.trim() === this.tabName.trim()){
+            if (this._labels.CompanyInformation.trim() === this.tabName.trim()){	
 				this.isAdminUser = result;
                 this.showEditTrack = true;
                 this.editBasics = true;
@@ -240,7 +248,7 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
         });
         }
 
-        accessibilityTextLocal = contactTypeStatus.join(', ');
+        accessibilityText = contactTypeStatus.join(', ');
         this.contactTypeStatus = contactType;
         this.listSelected = contactTypeStatus;
 
