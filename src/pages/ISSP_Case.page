@@ -379,7 +379,7 @@
                                         <apex:outputlabel value="{!$Label.ISSP_Who_to_contact}" />
                                         <apex:outputpanel layout="block" styleclass="requiredInput">
                                             <apex:outputpanel layout="block" styleclass="requiredBlock" />
-                                            <apex:selectlist styleclass="form-control"
+                                            <apex:selectlist styleclass="form-control" label="{!$Label.ISSP_Who_to_contact}"
                                                 value="{!whoToContact}" required="true" multiselect="false" size="1"
                                                 onchange="autofillCCOthers(this);">
                                                 <apex:selectoptions value="{!lst_whoToContact}" />
@@ -502,11 +502,11 @@
                                                 <apex:actionSupport event="onchange" reRender="subtypePicklist"/>
                                             </apex:inputField>
                                         </apex:pageblocksectionitem>
-                                        <apex:inputField id="subtypePicklist" value="{!newCase.Sub_Type__c}" required="false" rendered="{!isDPCUser}" styleclass="form-control" />
+                                        <apex:inputField id="subtypePicklist" value="{!newCase.Sub_Type__c}" required="false" rendered="{!isDPCUser}" styleclass="form-control" html-disabled="{!IF(isCloneDPC,true,false)}"/>
 
                                         <apex:inputfield value="{!newCase.BSP_s_concerned__c}" label="{!$Label.ISSP_BSP_Concerned}" required="false" rendered="{!isDPCUser}" styleclass="form-control" />
 
-                                        <apex:inputfield value="{!newCase.Priority}" required="true" rendered="{!isDPCUser}" styleclass="form-control" />
+                                        <apex:inputfield label="Priority" value="{!newCase.Priority}" required="true" rendered="{!isDPCUser}" styleclass="form-control"/>
 
                                         <!-- CC Others info -->
                                         <apex:pageblocksectionitem rendered="{!isDPCUser}">
