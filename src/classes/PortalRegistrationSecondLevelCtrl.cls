@@ -108,6 +108,8 @@ public without sharing class PortalRegistrationSecondLevelCtrl {
 			OneId_RegistrationProcessController.updateUserProfile(con, acc2, false);
 
 			OneId_RegistrationProcessController.addDefaultAppRights(con.Id, null);
+			
+			ISSP_CreateNotification.SendEmailToPortalAdminNewContact(new List<Contact>{con});
 
 			return true;
 		}
