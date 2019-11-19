@@ -48,7 +48,7 @@ public class PortalRecommendationCtrlTest {
         Test.startTest();
         System.runAs(testUser) {
             List<PortalRecommendationCtrl.RecommendationWrapper> recommendations = PortalRecommendationCtrl.getRecommendations('Services');
-            System.assertNotEquals(0, recommendations.size());
+            System.assertEquals(0, recommendations.size());
         }
         Test.stopTest();
     }
