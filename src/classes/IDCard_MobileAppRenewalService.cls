@@ -339,6 +339,8 @@ public with sharing class IDCard_MobileAppRenewalService
     {
         String idCardType = getAccountType(requestInformation.account);
 
+		if (requestInformation.isUSAgent)
+			IDCardUtil.IdCardAIMSrt = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card__c', 'WebStar');
         upsert IDCardUtil.CreateIDCardObjectFromApplication(
             requestInformation.newIDCA, requestInformation.contact, idCardType);
 
