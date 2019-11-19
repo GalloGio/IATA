@@ -272,16 +272,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         this.nrLoadedRecs = 0;     //nr of loaded records
         this.currentPageNumber = 1;
 
-        let windowURL = window.location.href;
-        windowURL = windowURL.split('?');
-
-        if (windowURL[1].split('&').length > 1) {
-            let param = windowURL[1].split('&');
-            windowURL = windowURL[0] + '?' + param[0];
-        }
-
-        window.history.pushState(null, null, windowURL);
-        
+        this.clearURL();
 
         this.getServiceDetailsJS();
     }
@@ -918,6 +909,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                     });
             }
         }
+        this.clearURL();
 
     }
 
@@ -1037,6 +1029,19 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
             }
         })
             .then(url => navigateToPage(url, { 'tab': 'contact' }));
+    }
+
+
+    clearURL() {
+        let windowURL = window.location.href;
+        windowURL = windowURL.split('?');
+
+        if (windowURL[1].split('&').length > 1) {
+            let param = windowURL[1].split('&');
+            windowURL = windowURL[0] + '?' + param[0];
+        }
+
+        window.history.pushState(null, null, windowURL);
     }
 
 }
