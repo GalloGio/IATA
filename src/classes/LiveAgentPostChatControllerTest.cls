@@ -46,7 +46,11 @@ private class LiveAgentPostChatControllerTest {
 			String js = System.JSON.serialize(details);
 			pg.getParameters().put('chatDetails',js);
 
-			Test.setCurrentPage(pg);
+			Test.setCurrentPage(pg);			
+
+			Cookie cookie = new Cookie('chatlanguage', 'en', null, -1, false);
+			ApexPages.currentPage().setCookies(new Cookie[]{cookie});
+
 			LiveAgentPostChatController ctrl = new LiveAgentPostChatController();
 
 			System.assert(ctrl.lang == 'en');
