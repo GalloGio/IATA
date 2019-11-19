@@ -7,6 +7,7 @@ import typeOfCasePortalCustomPicklist from '@salesforce/apex/PortalCasesCtrl.typ
 import getAllPickListValues from '@salesforce/apex/PortalFAQsCtrl.getFAQsInfo';
 import typeOfProfilePortalCustomPicklist from '@salesforce/apex/PortalProfileCtrl.typeOfProfilePortalCustomPicklist';
 import userPortalStatusCustomPicklist from '@salesforce/apex/PortalProfileCtrl.userPortalStatusCustomPicklist';
+import getCountryList from '@salesforce/apex/PortalSupportReachUsCtrl.getCountryList';
 
 //import custom labels
 import CSP_Cases from '@salesforce/label/c.CSP_Cases';
@@ -25,6 +26,7 @@ import CSP_Search_Documents_Category from '@salesforce/label/c.CSP_Search_Docume
 import CSP_Search_Documents_ProdType from '@salesforce/label/c.CSP_Search_Documents_ProdType';
 import CSP_Search_Documents_PubCountry from '@salesforce/label/c.CSP_Search_Documents_PubCountry';
 import CSP_Status from '@salesforce/label/c.CSP_Status';
+import ISSP_All from '@salesforce/label/c.ISSP_All';
 
 export default class PortalSearchFilters extends LightningElement {
 
@@ -43,7 +45,8 @@ export default class PortalSearchFilters extends LightningElement {
         CSP_Search_Documents_ProdType,
         CSP_Search_Documents_PubCountry,
         ICCS_Profile,
-        CSP_Status
+        CSP_Status,
+        ISSP_All
     };
 
     @api
@@ -153,10 +156,15 @@ export default class PortalSearchFilters extends LightningElement {
         .then(result =>{
             this.profileTypeOptions = this.getPickWithAllValue(result);
         });
-        getPickListValues({ sobj : 'Contact', field : 'Country__c' })
-        .then(result => {
-            this.profileCountryOptions = this.getPickWithAllValue(result);
-        });
+        getCountryList()
+            .then(result => {
+                let auxmyCountryOptions = [];
+
+                Object.keys(result).forEach(function (el) {
+                    auxmyCountryOptions.push({ checked: false, label: result[el], value: el });
+                });
+                this.profileCountryOptions = this.getPickWithAllValue(auxmyCountryOptions);
+            });
         userPortalStatusCustomPicklist({})
         .then(result =>{
             this.profileContactStatusOptions = this.getPickWithAllValue(result);
@@ -164,7 +172,7 @@ export default class PortalSearchFilters extends LightningElement {
     }
 
     getPickWithAllValue(picklist){
-        let picklistAux = [{checked: false, label: "All", value: ""}];
+        let picklistAux = [{checked: false, label: this.label.ISSP_All, value: ""}];
         return picklistAux.concat(picklist);
     }
 
@@ -651,9 +659,12 @@ export default class PortalSearchFilters extends LightningElement {
     handleProfileTypePickChange(event){
         let selectedValue = event.detail.value;
 
-        this.typeIsContact = event.detail.value === 'Contact';
+        if (this.isAdmin) {
+            this.typeIsContact = event.detail.value === 'Contact';
+        }
 
         let filteringObjectAux = JSON.parse(JSON.stringify(this._filteringObject));
+        filteringObjectAux.profileComponent.profileStatusFilter = '';
         filteringObjectAux.profileComponent.profileTypeFilter = selectedValue;
         this._filteringObject = filteringObjectAux;
 

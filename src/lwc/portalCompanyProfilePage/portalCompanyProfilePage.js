@@ -7,14 +7,14 @@ import { getParamsFromPage } from 'c/navigationUtils';
 import { reduceErrors } from 'c/ldsUtils';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
-import ISSP_CompanyInformation from '@salesforce/label/c.ISSP_CompanyInformation';
+import CompanyInformation from '@salesforce/label/c.ISSP_CompanyInformation';
 import NoAccount from '@salesforce/label/c.CSP_NoAccount';
 import CSP_Branch_Offices from '@salesforce/label/c.CSP_Branch_Offices';
 import ISSP_Contacts from '@salesforce/label/c.ISSP_Contacts';
 
-export default class PortalCompanyProfilePageTest extends LightningElement {
+export default class PortalCompanyProfilePage extends LightningElement {
 
-    labels = { ISSP_CompanyInformation, NoAccount, CSP_Branch_Offices, ISSP_Contacts };
+    labels = { CompanyInformation, NoAccount, CSP_Branch_Offices, ISSP_Contacts };
 
     @track isAdmin = false;
     @track userLoaded = false;

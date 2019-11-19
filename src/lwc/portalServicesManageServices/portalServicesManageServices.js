@@ -380,6 +380,8 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         this.selectedCountry = '';
         this.selectedIataCode = '';
 
+        this.clearURL();
+
         this.getServiceDetailsJS();
     }
 
@@ -1154,6 +1156,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                     });
             }
         }
+        this.clearURL();
 
     }
 
@@ -1363,6 +1366,18 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 
     closeServicesFilterModal() {
         this.viewServicesFiltersModal = false;
+    }
+
+    clearURL() {
+        let windowURL = window.location.href;
+        windowURL = windowURL.split('?');
+
+        if (windowURL[1].split('&').length > 1) {
+            let param = windowURL[1].split('&');
+            windowURL = windowURL[0] + '?' + param[0];
+        }
+
+        window.history.pushState(null, null, windowURL);
     }
 
 }

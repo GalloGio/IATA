@@ -10,3 +10,13 @@
 .rotateIcon {
     transform: rotate(45deg);
 }
+
+.inputFilter {
+    display: flex;
+    align-items: center;
+}
+
+.inputFilter lightning-input {
+    width: 100%;
+    margin-top: -1px;
+}

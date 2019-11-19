@@ -7,7 +7,7 @@ import searchForCompanyContacts from '@salesforce/apex/PortalProfileCtrl.searchF
 import getLoggedUser from '@salesforce/apex/CSP_Utils.getLoggedUser';
 import LANG from '@salesforce/i18n/lang';
 
-import csp_Find_Branch from '@salesforce/label/c.csp_Find_Branch';
+import csp_Find_Contact from '@salesforce/label/c.csp_Find_Contact';
 import ISSP_Inactivate from '@salesforce/label/c.ISSP_Inactivate';
 import ISSP_Activate from '@salesforce/label/c.ISSP_Activate';
 import ISSP_Assign_IFAP from '@salesforce/label/c.ISSP_Assign_IFAP';
@@ -18,6 +18,10 @@ import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 import { reduceErrors } from 'c/ldsUtils';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
+import ISSP_Pending_Approval from '@salesforce/label/c.ISSP_Pending_Approval';
+import CSP_ALPHAFILTER_All from '@salesforce/label/c.CSP_ALPHAFILTER_All';
+import CSP_ALPHAFILTER_Other from '@salesforce/label/c.CSP_ALPHAFILTER_Other';
+
 export default class PortalCompanyProfileContactsList extends LightningElement {
 
     //icons
@@ -26,12 +30,15 @@ export default class PortalCompanyProfileContactsList extends LightningElement {
     lang = LANG;
 
     label = {
-        csp_Find_Branch,
+        csp_Find_Contact,
         ISSP_Activate,
         ISSP_Inactivate,
         ISSP_Assign_IFAP,
         csp_CreateNewContact,
-        ISSP_Download
+        ISSP_Download,
+        ISSP_Pending_Approval,
+        CSP_ALPHAFILTER_All,
+        CSP_ALPHAFILTER_Other
     };
 
     @api 
@@ -45,10 +52,10 @@ export default class PortalCompanyProfileContactsList extends LightningElement {
     @track contactsLoaded = false;
 
     @track contactsFilteringObject = {
-        searchInput : '',
-        sortField : 'Name',
-        sortDirection : 'ASC',
-        firstLetter : 'All'
+        searchInput: '',
+        sortField: 'Name',
+        sortDirection: 'ASC',
+        firstLetter: 'All'
     };
 
  
@@ -75,43 +82,74 @@ export default class PortalCompanyProfileContactsList extends LightningElement {
     @track action = '';
     @track showCross = false;
 
-    @track alphaFilters = [
-        {letter : 'A', selected : false},
-        {letter : 'B', selected : false},
-        {letter : 'C', selected : false},
-        {letter : 'D', selected : false},
-        {letter : 'E', selected : false},
-        {letter : 'F', selected : false},
-        {letter : 'G', selected : false},
-        {letter : 'H', selected : false},
-        {letter : 'I', selected : false},
-        {letter : 'J', selected : false},
-        {letter : 'K', selected : false},
-        {letter : 'L', selected : false},
-        {letter : 'M', selected : false},
-        {letter : 'N', selected : false},
-        {letter : 'O', selected : false},
-        {letter : 'P', selected : false},
-        {letter : 'Q', selected : false},
-        {letter : 'R', selected : false},
-        {letter : 'S', selected : false},
-        {letter : 'T', selected : false},
-        {letter : 'U', selected : false},
-        {letter : 'V', selected : false},
-        {letter : 'W', selected : false},
-        {letter : 'X', selected : false},
-        {letter : 'Y', selected : false},
-        {letter : 'Z', selected : false},
-        {letter : 'Other', selected : false},
-        {letter : 'All', selected : true}
+    @track alphaFiltersNormal = [
+        { value:'A', label: 'A', selected: false },
+        { value:'B', label: 'B', selected: false },
+        { value:'C', label: 'C', selected: false },
+        { value:'D', label: 'D', selected: false },
+        { value:'E', label: 'E', selected: false },
+        { value:'F', label: 'F', selected: false },
+        { value:'G', label: 'G', selected: false },
+        { value:'H', label: 'H', selected: false },
+        { value:'I', label: 'I', selected: false },
+        { value:'J', label: 'J', selected: false },
+        { value:'K', label: 'K', selected: false },
+        { value:'L', label: 'L', selected: false },
+        { value:'M', label: 'M', selected: false },
+        { value:'N', label: 'N', selected: false },
+        { value:'O', label: 'O', selected: false },
+        { value:'P', label: 'P', selected: false },
+        { value:'Q', label: 'Q', selected: false },
+        { value:'R', label: 'R', selected: false },
+        { value:'S', label: 'S', selected: false },
+        { value:'T', label: 'T', selected: false },
+        { value:'U', label: 'U', selected: false },
+        { value:'V', label: 'V', selected: false },
+        { value:'W', label: 'W', selected: false },
+        { value:'X', label: 'X', selected: false },
+        { value:'Y', label: 'Y', selected: false },
+        { value:'Z', label: 'Z', selected: false },
+        { value:'Other', label: this.label.CSP_ALPHAFILTER_Other, selected: false },
+        { value:'All', label: this.label.CSP_ALPHAFILTER_All, selected: true }
     ];
 
-    connectedCallback(){
+    @track alphaFiltersMobile = [
+        { value:'All', label: this.label.CSP_ALPHAFILTER_All, selected: true },
+        { value:'Other', label: this.label.CSP_ALPHAFILTER_Other, selected: false },
+        { value:'A', label: 'A', selected: false },
+        { value:'B', label: 'B', selected: false },
+        { value:'C', label: 'C', selected: false },
+        { value:'D', label: 'D', selected: false },
+        { value:'E', label: 'E', selected: false },
+        { value:'F', label: 'F', selected: false },
+        { value:'G', label: 'G', selected: false },
+        { value:'H', label: 'H', selected: false },
+        { value:'I', label: 'I', selected: false },
+        { value:'J', label: 'J', selected: false },
+        { value:'K', label: 'K', selected: false },
+        { value:'L', label: 'L', selected: false },
+        { value:'M', label: 'M', selected: false },
+        { value:'N', label: 'N', selected: false },
+        { value:'O', label: 'O', selected: false },
+        { value:'P', label: 'P', selected: false },
+        { value:'Q', label: 'Q', selected: false },
+        { value:'R', label: 'R', selected: false },
+        { value:'S', label: 'S', selected: false },
+        { value:'T', label: 'T', selected: false },
+        { value:'U', label: 'U', selected: false },
+        { value:'V', label: 'V', selected: false },
+        { value:'W', label: 'W', selected: false },
+        { value:'X', label: 'X', selected: false },
+        { value:'Y', label: 'Y', selected: false },
+        { value:'Z', label: 'Z', selected: false }
+    ];
+
+    connectedCallback() {
 
         getContactsListFields().then(result => {
             let sectionMap = JSON.parse(JSON.stringify(result));
-            sectionMap.VIEW.forEach( element => {
-                if(element.fieldName === 'ISSP_Account_Name__c') {
+            sectionMap.VIEW.forEach(element => {
+                if (element.fieldName === 'ISSP_Account_Name__c') {
                     element.canChangeAccount = true;
                 }
             });
@@ -189,13 +227,13 @@ export default class PortalCompanyProfileContactsList extends LightningElement {
 
             if (contact.Account.RecordType.Name === 'Airline Headquarters' || contact.Account.RecordType.Name === 'Airline Branch') {
                 contact.LocationCode = (contact.hasOwnProperty('IATA_Code__c') ? contact.IATA_Code__c : '') + (contact.hasOwnProperty('Account_site__c') ? ' (' + contact.Account_site__c + ')' : '') + ')';
-            } else if (contact.hasOwnProperty('IATA_Code__c') && contact.IATA_Code__c !== null ) {
+            } else if (contact.hasOwnProperty('IATA_Code__c') && contact.IATA_Code__c !== null) {
                 contact.LocationCode = contact.IATA_Code__c + (contact.Account.hasOwnProperty('BillingCity') ? ' (' + contact.Account.BillingCity + ')' : '');
             } else {
                 contact.LocationCode = '';
             }
 
-            if (user !== undefined) {
+            if (user !== undefined && user !== null && user.LastLoginDate !== undefined && user.LastLoginDate !== null) {
                 if (user.hasOwnProperty('LastLoginDate')) {
                     if (user.LastLoginDate != null) {
                         let lastLogin = new Date(user.LastLoginDate);
@@ -261,15 +299,32 @@ export default class PortalCompanyProfileContactsList extends LightningElement {
         }, 500, this);
     }
 
-    changeAlphaFilterLetter(event){
+    handleChangeAlphaFilterNormal(event){
         let filterLetter = event.target.dataset.item;
         //console.log('filterLetter: ' , filterLetter);
+        this.changeAlphaFilterLetter(filterLetter);
+    }
 
-        let alphaFiltersAux = JSON.parse(JSON.stringify(this.alphaFilters));
-        for(let i = 0; i < alphaFiltersAux.length; i++ ){
-            alphaFiltersAux[i].selected = alphaFiltersAux[i].letter === filterLetter;
+    handleChangeAlphaFilterMobile(event){
+        let selectedOption = event.detail.value;
+        this.changeAlphaFilterLetter(selectedOption);
+    }
+
+    changeAlphaFilterLetter(filterLetter) {
+        //change normal version 
+        let alphaFiltersAux = JSON.parse(JSON.stringify(this.alphaFiltersNormal));
+        for (let i = 0; i < alphaFiltersAux.length; i++) {
+            alphaFiltersAux[i].selected = alphaFiltersAux[i].value === filterLetter;
         }
-        this.alphaFilters = alphaFiltersAux;
+        this.alphaFiltersNormal = alphaFiltersAux;
+
+        //change mobile version
+        let alphaFiltersMobileAux = JSON.parse(JSON.stringify(this.alphaFiltersMobile));
+        for (let i = 0; i < alphaFiltersMobileAux.length; i++) {
+            alphaFiltersMobileAux[i].selected = alphaFiltersMobileAux[i].value === filterLetter;
+        }
+        this.alphaFiltersMobile = alphaFiltersMobileAux;
+
         this.contactsFilteringObject.firstLetter = filterLetter;
         this.contactsLoaded = false;
         this.showManageButtons = false;
@@ -382,7 +437,7 @@ export default class PortalCompanyProfileContactsList extends LightningElement {
         let downloadElement = document.createElement('a');
 
         // This  encodeURI encodes special characters, except: , / ? : @ & = + $ # (Use encodeURIComponent() to encode these characters).
-        downloadElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csvString);
+        downloadElement.href = 'data:text/csv;charset=utf-8,%EF%BB%BF' + encodeURIComponent(csvString);
         downloadElement.target = '_self';
         // CSV File Name
         downloadElement.download = 'exportContacts.csv';
