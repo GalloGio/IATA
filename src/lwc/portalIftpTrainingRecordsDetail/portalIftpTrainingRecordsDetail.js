@@ -218,7 +218,7 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
         this.fromDateValue = undefined;
         this.fromDateMaxValue = undefined;
         let today = new Date();
-        this.toDateValue = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();;
+        this.toDateValue = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
         this.toDateMinValue = undefined;
         this.showSearch = false;
         this.cleanErrors();
