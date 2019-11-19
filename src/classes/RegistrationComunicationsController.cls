@@ -49,53 +49,9 @@ public without sharing class RegistrationComunicationsController {
 
     private static Boolean sendSingleEmail(Id contactId){   
         //MAX 150 adresses     
-        try{            
-            //Get address
-            contact contact = [Select Email,Name FROM Contact Where Id = :contactId];  
-            String address = contact.Email; 
-
-            if(address == null){
-                return false;
-            }
-
-            //Get email template and orgWideEmail
-            EmailTemplate emailTemplate = [SELECT Id,Subject,Description,HtmlValue,DeveloperName,Body FROM EmailTemplate WHERE DeveloperName = 'CSP_Registration_L2_Email_VF'];
-            OrgWideEmailAddress orgWideEmail  = [SELECT Id,Address FROM OrgWideEmailAddress WHERE Address='noreply@iata.org' Limit 1];    
-
-            Id userId = [Select Id FROM User WHERE ContactId = :contactId].Id;     
-
-            //Messaging.SingleEmailMessage message = new Messaging.SingleEmailMessage();
-            Messaging.SingleEmailMessage message = Messaging.renderStoredEmailTemplate(emailTemplate.Id, userId, null);
-
-            message.setReplyTo('noreply@iata.org'); 
-            message.setUseSignature(false); 
-            message.setBccSender(false); 
-            message.setSaveAsActivity(false);  
-            message.setTemplateID(emailTemplate.Id);      
-            if(orgWideEmail != null){
-                message.setOrgWideEmailAddressId(orgWideEmail.Id);
-            }else{
-                message.setSenderDisplayName('IATA Noreply');
-            }                    
-             
-            message.setTargetObjectId(userId);          
-            message.setToAddresses(new List<String>{address});
-            
-            String plainBody = message.getPlainTextBody();
-
-            if(plainBody != null) {
-                plainBody = plainBody.replace('[CustomerName]', contact.Name).replace('[URL]','"'+  getPortalProfileUrl() +'" target="_blank"');
-                message.setHtmlBody(plainBody);
-            }        
-
-            Messaging.SingleEmailMessage[] messages = new List<Messaging.SingleEmailMessage> {message};
-            Messaging.SendEmailResult[] results = Messaging.sendEmail(messages);
-
-            if (results[0].success){
-                return true;
-            } else {
-                return false;
-            }
+        try{         
+            List<Boolean> results = RegistrationLvl2Email.sendSingleEmail(new List<Id>{contactId});     
+            return results.get(0);               
         }catch(Exception e ){
             return false;
         }
