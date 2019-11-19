@@ -190,8 +190,8 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
         
         isAdmin().then(result => {
             this.showEditTrack = result && this.showEditTrack;
-				this.isAdminUser = result;
             if (this._labels.CompanyInformation.trim() === this.tabName.trim()){	
+				this.isAdminUser = result;
                 this.showEditTrack = true;
                 this.editBasics = true;
             }
