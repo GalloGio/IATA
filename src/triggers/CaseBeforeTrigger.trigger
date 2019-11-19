@@ -2284,4 +2284,8 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
     }
     
     /*Internal methods Case_FSM_Handle_NonCompliance_BI_BU*/
+
+    //HK TR18-174 - Move all fields updates on Case to the trigger
+    if (Trigger.isInsert || Trigger.isUpdate)
+        WorkflowHelper.performActions(WorkflowHelper.CASE_TYPE);
 }
