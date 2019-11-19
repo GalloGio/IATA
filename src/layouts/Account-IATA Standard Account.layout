@@ -79,6 +79,18 @@
                 <behavior>Readonly</behavior>
                 <field>Number_of_GDP_Billing_accounts__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Business_Street__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Business_City__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Business_Postal_Code__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -176,6 +188,22 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>IATA_ISO_Billing_State__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>IATA_ISO_Country__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Iso_State__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>DSE__DS_Country_ISO_Code__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Phone</field>
             </layoutItems>
             <layoutItems>
@@ -195,6 +223,14 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>ShippingAddress</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>IATA_ISO_Shipping_Country__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>IATA_ISO_Shipping_State__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -627,11 +663,13 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Is_Newgen_Relation__c</fields>
         <fields>Hierarchy__c</fields>
         <relatedList>AMS_Agencies_relationhip__c.Child_Account__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Is_Newgen_Relation__c</fields>
         <fields>Hierarchy__c</fields>
         <relatedList>AMS_Agencies_relationhip__c.Parent_Account__c</relatedList>
     </relatedLists>

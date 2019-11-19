@@ -1,12 +1,17 @@
 <template>
 
-    <c-portal-custom-card-container>
+    <c-portal-custom-card-container special-card={specialCase}>
 
         <span slot="cardTitle">
-            <span class="text-small">{label.CSP_RecentCases}</span>
+            <span class={titleCss}> {title} </span>
+
+            <span if:true={specialCase} class="slds-text-align_center">
+                <h2 class="slds-p-top_medium text-xsmall removeFontWeight">{helpText}</h2>
+                <h2 class="slds-p-top_medium text-xsmall removeFontWeight">{helpText2}</h2>
+            </span>
         </span>
 
-        <span slot="cardButton" if:true={dataRecords}>
+        <span slot="cardButton" if:true={dataRecordsSeeAll}>
             <lightning-button variant="base" 
                 label={label.CSP_SeeAll} 
                 title={label.CSP_SeeAll}
@@ -18,40 +23,26 @@
         </span>
 
         <span slot="cardBody">
-            <div class="cardBodyContent">
+            <div class={cardBodyContent}>
                 <div if:true={loading} class="spinnerContainer">
                     <lightning-spinner class="background-white" alternative-text="Loading"></lightning-spinner>
                 </div>
                 <div if:false={loading}>
-                    <div if:true={dataRecords}>
+                    <div if:true={dataRecords} class={tableClass}>
                         <lightning-datatable
                             key-field="Id"
+                            class={rowHeight}
                             data={data}
                             columns={columns}
                             data-id="tableList"
-                            hide-checkbox-column>
+                            hide-checkbox-column
+                            resize-column-disabled>
                         </lightning-datatable>
                     </div>
                     <div if:false={dataRecords}>
-                        <div class="noRecentCases slds-text-align_center">
-                            <div>
-                                <img src={noCasesImg}/>
-                            </div>
-                            <span class="text-medium text-darkGray slds-p-around_small">
-                                {label.CSP_NoCases1}
-                            </span>
-                            <span class="text-xsmall text-lightGray">
-                                {label.CSP_NoCases2}
-                            </span>
-                            <span class="noCasesUrls slds-p-around_large">
-                                <span class="text-xxsmall text-linkBlue cursorPointer" onclick={navigateToLinkOne}>{label.CSP_Question1}</span>
-                                <br />
-                                <span class="text-xxsmall text-linkBlue cursorPointer" onclick={navigateToLinkTwo}>{label.CSP_Question2}</span>
-                                <!--<a href={label.CSP_Question1URL}>{label.CSP_Question1}</a>-->
-                                <!--<a href={label.CSP_Question2URL}>{label.CSP_Question2}</a>-->
-                            </span>
-                        </div>
+                        <c-portal-no-cases-banner></c-portal-no-cases-banner>
                     </div>
+
                 </div>
             </div>
         </span>

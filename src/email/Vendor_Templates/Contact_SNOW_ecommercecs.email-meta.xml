@@ -4,7 +4,7 @@
     <encodingKey>UTF-8</encodingKey>
     <name>Contact SNOW ecommercecs</name>
     <style>none</style>
-    <subject>{!Case.Thread_Id} {!Case.Topic__c} {!Case.Subtopic__c} [ecommercecs]</subject>
+    <subject>{!Case.CaseNumber} {!Case.Thread_Id} [ecommercecs]</subject>
     <type>text</type>
     <uiType>Aloha</uiType>
 </EmailTemplate>

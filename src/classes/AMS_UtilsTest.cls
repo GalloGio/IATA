@@ -232,7 +232,7 @@ private class AMS_UtilsTest {
         AMS_OSCAR__c OSCAR = new AMS_OSCAR__c(STEP1__c = 'In Progress', Account__c = a1.id);
         insert OSCAR;
 
-        AMS_OSCAR__c OSCAR2 = new AMS_OSCAR__c(STEP1__c = 'In Progress', Account__c = a1.id);
+        AMS_OSCAR__c OSCAR2 = new AMS_OSCAR__c(STEP1__c = 'In Progress', Account__c = a1.id, Bank_Guarantee_requested__c= Date.today());
         insert OSCAR2;
 
         Case oscarCase = new Case(Oscar__c = oscar.Id, RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication'));

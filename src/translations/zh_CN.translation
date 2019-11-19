@@ -213,6 +213,10 @@
         <name>AMS_DQ_Enter_Valid_City</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMS DQ First Suggestion --></label>
+        <name>AMS_DQ_First_Suggestion</name>
+    </customLabels>
+    <customLabels>
         <label>匹配地址已找到。</label>
         <name>AMS_DQ_Found_Addr</name>
     </customLabels>
@@ -785,6 +789,10 @@
         <name>ANG_ISSP_AFP_NoCreditCardMessage</name>
     </customLabels>
     <customLabels>
+        <label><!-- ANG_ISSP_ASD_HelpText --></label>
+        <name>ANG_ISSP_ASD_HelpText</name>
+    </customLabels>
+    <customLabels>
         <label>认证类型</label>
         <name>ANG_ISSP_AccreditationType</name>
     </customLabels>
@@ -803,6 +811,18 @@
     <customLabels>
         <label>联合实体：</label>
         <name>ANG_ISSP_AssociateEntity</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- BOP --></label>
+        <name>ANG_ISSP_BOP</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- BOP Access Link --></label>
+        <name>ANG_ISSP_BOP_Access</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_ISSP_BOP_China_URL --></label>
+        <name>ANG_ISSP_BOP_China_URL</name>
     </customLabels>
     <customLabels>
         <label><!-- Case reason used in the case subject --></label>
@@ -1137,6 +1157,10 @@
         <name>ANG_ISSP_ProductComparisonFeature10Tooltip</name>
     </customLabels>
     <customLabels>
+        <label><!-- ANG_ISSP_ProductComparisonFeature11 --></label>
+        <name>ANG_ISSP_ProductComparisonFeature11</name>
+    </customLabels>
+    <customLabels>
         <label>功能1提示信息</label>
         <name>ANG_ISSP_ProductComparisonFeature1Tooltip</name>
     </customLabels>
@@ -1285,6 +1309,10 @@
         <name>ANG_ISSP_RHC_Information</name>
     </customLabels>
     <customLabels>
+        <label><!-- ANG ISSP RHC Information China --></label>
+        <name>ANG_ISSP_RHC_Information_China</name>
+    </customLabels>
+    <customLabels>
         <label>请求更新余额</label>
         <name>ANG_ISSP_RHC_Request_Balance_Update</name>
     </customLabels>
@@ -1431,6 +1459,10 @@
     <customLabels>
         <label><!-- Account information updated --></label>
         <name>Account_information_updated</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Accreditation date --></label>
+        <name>Accreditation_date</name>
     </customLabels>
     <customLabels>
         <label><!-- Action --></label>
@@ -1717,6 +1749,10 @@
         <name>CC</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_AMS_StepFinal_In_Addition2 --></label>
+        <name>CSP_AMS_StepFinal_In_Addition2</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_ANG_Portal_Admin --></label>
         <name>CSP_ANG_Portal_Admin</name>
     </customLabels>
@@ -1733,12 +1769,36 @@
         <name>CSP_Accept_Terms_Error</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Account Domain Created --></label>
+        <name>CSP_Account_Domain_Created</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Add_All --></label>
+        <name>CSP_Add_All</name>
+    </customLabels>
+    <customLabels>
         <label>添加新文档</label>
         <name>CSP_Add_New_Documents</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_Add_New_User --></label>
+        <name>CSP_Add_New_User</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Add_User --></label>
+        <name>CSP_Add_User</name>
+    </customLabels>
+    <customLabels>
+        <label>您可以通过&lt;a href= &apos;/s/support-reach-us&apos;&gt;联系我们页面&lt;/a&gt;提交您的帐户信息变更</label>
+        <name>CSP_Airline_Changes_Access</name>
+    </customLabels>
+    <customLabels>
         <label>公告</label>
         <name>CSP_Announcement</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Apply --></label>
+        <name>CSP_Apply</name>
     </customLabels>
     <customLabels>
         <label>本文是否有帮助？</label>
@@ -1751,6 +1811,10 @@
     <customLabels>
         <label>高级搜索</label>
         <name>CSP_Breadcrumb_AdvancedSearch_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>案件详情</label>
+        <name>CSP_Breadcrumb_CaseDetails_Title</name>
     </customLabels>
     <customLabels>
         <label>公司简介</label>
@@ -1783,6 +1847,10 @@
     <customLabels>
         <label><!-- CSP_Breadcrump_MyProfile_Title --></label>
         <name>CSP_Breadcrump_MyProfile_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>您和 IATA</label>
+        <name>CSP_Breadcrump_You_IATA</name>
     </customLabels>
     <customLabels>
         <label>取消</label>
@@ -1829,12 +1897,20 @@
         <name>CSP_CaseNumber</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_Case_Currency --></label>
+        <name>CSP_Case_Currency</name>
+    </customLabels>
+    <customLabels>
         <label>案例</label>
         <name>CSP_Cases</name>
     </customLabels>
     <customLabels>
         <label>社区</label>
         <name>CSP_Community</name>
+    </customLabels>
+    <customLabels>
+        <label>您可以通过 IATA 认证和更改服务提交帐户详细信息变更。</label>
+        <name>CSP_CompanyAdministration_Link</name>
     </customLabels>
     <customLabels>
         <label>查看我的公司案例</label>
@@ -1857,8 +1933,24 @@
         <name>CSP_Confirmed_Requested_Service_Message</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_Continue --></label>
+        <name>CSP_Continue</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Create_Contact_Complete_Field --></label>
         <name>CSP_Create_Contact_Complete_Field</name>
+    </customLabels>
+    <customLabels>
+        <label>创建于</label>
+        <name>CSP_CreatedOn</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_DateFrom --></label>
+        <name>CSP_DateFrom</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_DateTo --></label>
+        <name>CSP_DateTo</name>
     </customLabels>
     <customLabels>
         <label>拒绝用户访问</label>
@@ -1885,8 +1977,20 @@
         <name>CSP_Documents_PubliCountry</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Email Domain Error Message --></label>
+        <name>CSP_Email_Domain_Error_Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Error Creating Record --></label>
+        <name>CSP_Error_Creating_Record</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_Error_Message_Mandatory_Fields_Contact --></label>
         <name>CSP_Error_Message_Mandatory_Fields_Contact</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Error while delete record --></label>
+        <name>CSP_Error_while_delete_record</name>
     </customLabels>
     <customLabels>
         <label>联系我们</label>
@@ -1933,6 +2037,14 @@
         <name>CSP_FeedbackTitle</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_Filter --></label>
+        <name>CSP_Filter</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Filtered --></label>
+        <name>CSP_Filtered</name>
+    </customLabels>
+    <customLabels>
         <label>专属于您</label>
         <name>CSP_ForYou</name>
     </customLabels>
@@ -1945,12 +2057,28 @@
         <name>CSP_Home_WelcomeTitle</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_IATA_Country --></label>
+        <name>CSP_IATA_Country</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_IMPORTANT --></label>
+        <name>CSP_IMPORTANT</name>
+    </customLabels>
+    <customLabels>
+        <label>最后更新</label>
+        <name>CSP_LastUpdate</name>
+    </customLabels>
+    <customLabels>
         <label>登出</label>
         <name>CSP_LogOut</name>
     </customLabels>
     <customLabels>
         <label>您可以从下面的列表中管理用户。</label>
         <name>CSP_Manage_Portal_Users</name>
+    </customLabels>
+    <customLabels>
+        <label>管理收件者</label>
+        <name>CSP_Manage_Recipients</name>
     </customLabels>
     <customLabels>
         <label>管理服务</label>
@@ -1961,12 +2089,28 @@
         <name>CSP_Manage_Services</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_Manage_Services --></label>
+        <name>CSP_Manage_Services_NoIEPAccount</name>
+    </customLabels>
+    <customLabels>
         <label>查看我的案例</label>
         <name>CSP_MyCases</name>
     </customLabels>
     <customLabels>
         <label>名称</label>
         <name>CSP_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_NewContactProfile --></label>
+        <name>CSP_NewContactProfile</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_NewServiceUserMessage --></label>
+        <name>CSP_NewServiceUserMessage</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP New Email Domain --></label>
+        <name>CSP_New_Email_Domain</name>
     </customLabels>
     <customLabels>
         <label>没有要显示的相关帐户。</label>
@@ -1997,16 +2141,44 @@
         <name>CSP_OperationalCalendar_SeeMonthlyLink</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_Payment --></label>
+        <name>CSP_Payment</name>
+    </customLabels>
+    <customLabels>
         <label>我们需要您的意见来继续处理您的案例。</label>
         <name>CSP_PendingCustomerCase_Warning</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Period --></label>
+        <name>CSP_Period</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_PortalPath --></label>
         <name>CSP_PortalPath</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_Portal_Administrators --></label>
+        <name>CSP_Portal_Administrators</name>
+    </customLabels>
+    <customLabels>
         <label>门户状态</label>
         <name>CSP_Portal_Status</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Profile_PrivacyManagement_Link --></label>
+        <name>CSP_Profile_PrivacyManagement_Link</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Profile_PrivacyManagement_Text --></label>
+        <name>CSP_Profile_PrivacyManagement_Text</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Profile_PrivacyManagement_Title --></label>
+        <name>CSP_Profile_PrivacyManagement_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Profile_PrivacyManagement_URL --></label>
+        <name>CSP_Profile_PrivacyManagement_URL</name>
     </customLabels>
     <customLabels>
         <label>什么是案例，我什么时候需要它？</label>
@@ -2029,8 +2201,40 @@
         <name>CSP_RecentCases</name>
     </customLabels>
     <customLabels>
+        <label>您的问题与正在进行的案例有关吗？</label>
+        <name>CSP_RecentCases_HelpText</name>
+    </customLabels>
+    <customLabels>
+        <label>如果没有，请向下滚动以与我们联系。</label>
+        <name>CSP_RecentCases_HelpText2</name>
+    </customLabels>
+    <customLabels>
+        <label>正在进行的案例</label>
+        <name>CSP_RecentCases_Support</name>
+    </customLabels>
+    <customLabels>
+        <label>收件者</label>
+        <name>CSP_Recipients</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Record Deleted --></label>
+        <name>CSP_Record_Deleted</name>
+    </customLabels>
+    <customLabels>
         <label>相关文章</label>
         <name>CSP_RelatedArticles</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Remittantce_Date --></label>
+        <name>CSP_Remittantce_Date</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_RemoveAllFilters --></label>
+        <name>CSP_RemoveAllFilters</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_RemoveContact_Reason --></label>
+        <name>CSP_RemoveContact_Reason</name>
     </customLabels>
     <customLabels>
         <label>请求服务</label>
@@ -2221,6 +2425,10 @@
         <name>CSP_Submit</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Success --></label>
+        <name>CSP_Success</name>
+    </customLabels>
+    <customLabels>
         <label>支持</label>
         <name>CSP_Support</name>
     </customLabels>
@@ -2245,8 +2453,64 @@
         <name>CSP_Title</name>
     </customLabels>
     <customLabels>
+        <label>&lt;a href=&quot;/ISSP_AMSCases&quot; target=&quot;_self&quot;&gt;点击这里直接访问 IATA 认证和更改&lt;/a&gt;</label>
+        <name>CSP_Travel_Agent_Accreditation_Changes_Access</name>
+    </customLabels>
+    <customLabels>
+        <label>&lt;a href=&quot;/s/manage-service?serviceId=a2ww0000001D7GOAA0&quot; target=&quot;_self&quot;&gt;点击这里请求 IATA 认证和更改&lt;/a&gt;</label>
+        <name>CSP_Travel_Agent_Accreditation_Changes_Request</name>
+    </customLabels>
+    <customLabels>
         <label>案例类型</label>
         <name>CSP_TypeOfCase</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_User --></label>
+        <name>CSP_User</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Welcome_Panel_Bullet_1_Desc --></label>
+        <name>CSP_Welcome_Panel_Bullet_1_Desc</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Welcome_Panel_Bullet_1_Title --></label>
+        <name>CSP_Welcome_Panel_Bullet_1_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Welcome_Panel_Bullet_2_Desc --></label>
+        <name>CSP_Welcome_Panel_Bullet_2_Desc</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Welcome_Panel_Bullet_2_Title --></label>
+        <name>CSP_Welcome_Panel_Bullet_2_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Welcome_Panel_Bullet_3_Desc --></label>
+        <name>CSP_Welcome_Panel_Bullet_3_Desc</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Welcome_Panel_Bullet_3_Title --></label>
+        <name>CSP_Welcome_Panel_Bullet_3_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Welcome_Panel_Bullet_4_Desc --></label>
+        <name>CSP_Welcome_Panel_Bullet_4_Desc</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Welcome_Panel_Bullet_4_Title --></label>
+        <name>CSP_Welcome_Panel_Bullet_4_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>您和 IATA</label>
+        <name>CSP_YouAndIATA</name>
+    </customLabels>
+    <customLabels>
+        <label>为您精选的重点服务</label>
+        <name>CSP_YouIATA_Highlights</name>
+    </customLabels>
+    <customLabels>
+        <label>您可以在这里发现各种 IATA 服务、出版物、产品和航空业的资源。根据您的兴趣和活动历史纪录特别定制。</label>
+        <name>CSP_YouIATA_Highlights_Text</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_You_Dont_Have_Announcements --></label>
@@ -9869,6 +10133,10 @@ and
         <name>ISSP_AMS_NoC_PDF_Title</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_NoC_Partner --></label>
+        <name>ISSP_AMS_NoC_Partner</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS NoC Percent Ownership --></label>
         <name>ISSP_AMS_NoC_Percent_Ownership</name>
     </customLabels>
@@ -11801,6 +12069,10 @@ and
         <name>ISSP_ANG_Country_Req</name>
     </customLabels>
     <customLabels>
+        <label><!-- Type of Agency --></label>
+        <name>ISSP_ANG_Country_Reqs_Type_Of_Agency</name>
+    </customLabels>
+    <customLabels>
         <label>整个层次结构</label>
         <name>ISSP_ANG_ENTIRE_HIERARCHY</name>
     </customLabels>
@@ -12273,7 +12545,7 @@ and
         <name>ISSP_Account_not_approved</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ContactList --></label>
+        <label>批准</label>
         <name>ISSP_Activate</name>
     </customLabels>
     <customLabels>
@@ -12751,6 +13023,14 @@ and
         <name>ISSP_Change_Request_Description</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP China Domestic --></label>
+        <name>ISSP_China_Domestic</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP China International --></label>
+        <name>ISSP_China_International</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_Email --></label>
         <name>ISSP_ClickHereLogIn</name>
     </customLabels>
@@ -13051,7 +13331,7 @@ and
         <name>ISSP_Deny_Access</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Description --></label>
+        <label>描述</label>
         <name>ISSP_Description</name>
     </customLabels>
     <customLabels>
@@ -14123,6 +14403,46 @@ and
         <name>ISSP_IDCard_Valid_To</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_IDFS_Title_01 --></label>
+        <name>ISSP_IDFS_Title_01</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_IDFS_Title_02 --></label>
+        <name>ISSP_IDFS_Title_02</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_IDFS_Title_03 --></label>
+        <name>ISSP_IDFS_Title_03</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_IDFS_Title_04 --></label>
+        <name>ISSP_IDFS_Title_04</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_IDFS_Title_05 --></label>
+        <name>ISSP_IDFS_Title_05</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_IDFS_Title_06 --></label>
+        <name>ISSP_IDFS_Title_06</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_IDFS_Title_07 --></label>
+        <name>ISSP_IDFS_Title_07</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_IDFS_Title_08 --></label>
+        <name>ISSP_IDFS_Title_08</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_IDFS_Title_09 --></label>
+        <name>ISSP_IDFS_Title_09</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_IDFS_Title_10 --></label>
+        <name>ISSP_IDFS_Title_10</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP IFACP Endorsement Changes --></label>
         <name>ISSP_IFACP_Endorsement_Changes</name>
     </customLabels>
@@ -14431,7 +14751,7 @@ and
         <name>ISSP_MITA_Agreements_Service_Name</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ContactList --></label>
+        <label>以管理员身分批准</label>
         <name>ISSP_MakeAdmin</name>
     </customLabels>
     <customLabels>
@@ -15285,6 +15605,10 @@ and
         <name>ISSP_RHC_HUB_AFP_Cash</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP RHC HUB AFP China --></label>
+        <name>ISSP_RHC_HUB_AFP_China</name>
+    </customLabels>
+    <customLabels>
         <label>信用卡</label>
         <name>ISSP_RHC_HUB_AFP_Credit_Card</name>
     </customLabels>
@@ -15387,6 +15711,10 @@ and
     <customLabels>
         <label>请输入您的姓氏</label>
         <name>ISSP_Registration_Error_LastName</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Registration Error LegalName --></label>
+        <name>ISSP_Registration_Error_LegalName</name>
     </customLabels>
     <customLabels>
         <label>请选择您所在的国家</label>
@@ -17104,6 +17432,18 @@ IATA 财务仪表板是动态的，在网页上的一个反应信息的工具，
     <customLabels>
         <label><!-- KALE_SUPPORT_EMAIL --></label>
         <name>KALE_SUPPORT_EMAIL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- KPI1RT --></label>
+        <name>KPI1RT</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- KPI1Reason --></label>
+        <name>KPI1Reason</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- KPI2 --></label>
+        <name>KPI2</name>
     </customLabels>
     <customLabels>
         <label><!-- Kavi email notification part 1 --></label>
@@ -19486,6 +19826,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>Priority_4_Trivial_Defects</name>
     </customLabels>
     <customLabels>
+        <label><!-- ProcessEffAge --></label>
+        <name>ProcessEffAge</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Product --></label>
         <name>Product</name>
     </customLabels>
@@ -19612,6 +19956,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
     <customLabels>
         <label><!-- Remaining_Owners --></label>
         <name>Remaining_Owners</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Remittance frequency --></label>
+        <name>Remittance_frequency</name>
     </customLabels>
     <customLabels>
         <label><!-- Renewal_Number --></label>
@@ -19870,6 +20218,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>TECH_GDPR_Network_Name</name>
     </customLabels>
     <customLabels>
+        <label><!-- TSI USA Only --></label>
+        <name>TSI_USA_Only</name>
+    </customLabels>
+    <customLabels>
         <label>任务</label>
         <name>Tasks_Notification</name>
     </customLabels>
@@ -20066,6 +20418,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>contacting_us</name>
     </customLabels>
     <customLabels>
+        <label><!-- Account Relocation --></label>
+        <name>csp_AccountRelocateSuccess</name>
+    </customLabels>
+    <customLabels>
         <label>认证程序</label>
         <name>csp_Accreditation_Process</name>
     </customLabels>
@@ -20080,6 +20436,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
     <customLabels>
         <label>填写表单以查看推荐的支持选项</label>
         <name>csp_ActionIndicator</name>
+    </customLabels>
+    <customLabels>
+        <label>额外详细信息</label>
+        <name>csp_AdditionalDetails</name>
     </customLabels>
     <customLabels>
         <label><!-- Request New Service --></label>
@@ -20370,6 +20730,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>csp_Query</name>
     </customLabels>
     <customLabels>
+        <label>还有其他需要通知的对象吗？</label>
+        <name>csp_RecipientsQuestion</name>
+    </customLabels>
+    <customLabels>
         <label>您的代理机构目前没有开立的 IATA EasyPay 帐户&lt;br/&gt;&lt;br/&gt;。请联系您总部的授权签署人，要求他们开立一个 IATA EasyPay 帐户。作为门户网站管理员，您可以更新您的 &lt;a href=&quot;/my-profile&quot;&gt;个人信息&lt;/a&gt; 以将自己指定为法定授权签署人，或从 &lt;a href=&quot;/company-profile&quot;&gt;公司管理 -&gt; 联系人&lt;/a&gt; 页面分配正确的门户网站管理员并要求他们开立您的 EasyPay 帐户。&lt;br/&gt;&lt;br/&gt;如果您需要帮助，请&lt;a href=&quot;/Support-Reach-Us&quot;&gt;联系支持部门&lt;/a&gt;。</label>
         <name>csp_RequestService_ContactPortalAdmin_Alt</name>
     </customLabels>
@@ -20396,6 +20760,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
     <customLabels>
         <label>销售付款</label>
         <name>csp_Sales_Payment</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Support Reach Us Page Label --></label>
+        <name>csp_SearchNotPerformed</name>
     </customLabels>
     <customLabels>
         <label><!-- Request New Service --></label>

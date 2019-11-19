@@ -103,6 +103,13 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
     /*Maps, Sets, Lists*/
     /***********************************************************************************************************************************************************/
     /*Share trigger code*/
+
+	/** WMO-564 **/
+	if(Trigger.isUpdate) {
+		CaseProcessTypeHelper.processOSCAREffAge(Trigger.new, Trigger.oldMap);
+	}
+	
+
     /*trgCaseIFAP_AfterInsertDeleteUpdateUndelete Trigger*/
 	if(trgCaseIFAP_AfterInsertDeleteUpdateUndelete && !CaseChildHelper.noValidationsOnTrgCAseIFAP){
         System.debug('____ [cls CaseAfterTrigger - trgCaseIFAP_AfterInsertDeleteUpdateUndelete]');
@@ -833,7 +840,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 /*Trigger.isUpdate*/
 	else if (Trigger.isUpdate) {
 		
-		/*Risk Event Management*/
+		/*Risk Event Management - deprecated according to US NEWGEN-5656
 		List<Id> updatedIFAPS = new List<Id>();
 		for(Case c : Trigger.New){
 			if(c.RecordTypeId == IFAPcaseRecordTypeID && String.isNotBlank(c.Financial_Review_Result__c) && String.isBlank(Trigger.oldMap.get(c.Id).Financial_Review_Result__c)){
@@ -852,7 +859,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 			}
 		}
   		
-  		/*Risk Event Management*/
+  		Risk Event Management - deprecated according to US NEWGEN-5656 */
 
         /*trgCaseIFAP_AfterInsertDeleteUpdateUndelete Trigger.isUpdate*/
 		if(trgCaseIFAP_AfterInsertDeleteUpdateUndelete){

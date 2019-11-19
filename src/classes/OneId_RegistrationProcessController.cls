@@ -35,7 +35,7 @@ public without sharing class OneId_RegistrationProcessController {
 		}
 		else if(sector == 'Airline Supplier'){
 			recordTypesSet = '(\'Others\',\'Standard_Account\')';
-			categoryFilter = ' AND Category__c in (\'Global Distribution System\',\'Content Aggregator\')';
+			categoryFilter = ' AND Category__c in (\'Global Distribution System\',\'Content Aggregator\', \'System Solutions Provider\')';
 		}
 		
 		if(recordTypesSet == ''){
@@ -277,7 +277,7 @@ public without sharing class OneId_RegistrationProcessController {
             || (acc.Sector__c == 'Travel Agent' 
                 && ((acc.Category__c == 'IATA Passenger Sales Agent'&& (acc.RecordType.DeveloperName == 'IATA_Agency' || acc.RecordType.DeveloperName == 'Standard_Account')) || (acc.Category__c == 'Non-IATA Travel Agent' && (acc.RecordType.DeveloperName == 'Non_IATA_Agency' || acc.RecordType.DeveloperName == 'Standard_Account'))))
             || (acc.Sector__c == 'Airline Supplier' 
-                && (acc.Category__c == 'Global Distribution System' || acc.Category__c == 'Content Aggregator')
+                && (acc.Category__c == 'Global Distribution System' || acc.Category__c == 'Content Aggregator' || acc.Category__c== 'System Solutions Provider')
                 && (acc.RecordType.DeveloperName == 'Others' || acc.RecordType.DeveloperName == 'Standard_Account'));
         return isEligible;
     }
@@ -932,7 +932,7 @@ public without sharing class OneId_RegistrationProcessController {
     }
    @AuraEnabled
     public static StatesAndAlternateNames getStates(String country){
-        List<IATA_ISO_State__c> liis =  [SELECT ID, Name, GeonameAsciiName__c, (SELECT IATA_ISO_State__r.Name, GeonameHierarchy_label__c, Name FROM IATA_ISO_Cities__r ) FROM IATA_ISO_State__c WHERE IATA_ISO_Country__r.Name = :country AND Valid_for_Address__c = true ORDER BY IATA_ISO_Country__r.Name];
+        List<IATA_ISO_State__c> liis =  [SELECT ID, Name, GeonameAsciiName__c, (SELECT IATA_ISO_State__r.Name, GeonameName__c, GeonameHierarchy_label__c, Name FROM IATA_ISO_Cities__r ) FROM IATA_ISO_State__c WHERE IATA_ISO_Country__r.Name = :country AND Valid_for_Address__c = true ORDER BY IATA_ISO_Country__r.Name];
         Map<ID, IATA_ISO_City__c> ma = new Map<ID,IATA_ISO_City__c>([SELECT GeonameAlternateNames__c FROM IATA_ISO_City__c WHERE IATA_ISO_State__r.IATA_ISO_Country__r.Name = :country]);
         StatesAndAlternateNames states = new StatesAndAlternateNames(liis, ma);
 
@@ -954,18 +954,6 @@ public without sharing class OneId_RegistrationProcessController {
         
     }
 
-    @AuraEnabled
-    public static String getAllCities(String country){
-        String allCities = '';
-        
-        for(IATA_ISO_City__c iic : [SELECT Name FROM IATA_ISO_City__c WHERE IATA_ISO_State__r.IATA_ISO_Country__r.Name != :country] ){
-            allCities += iic.Name+', ';
-        }
-        
-        Integer allCitiesSize = allCities.length(); 
-        
-        return allCitiesSize > 0 ? allCities.substring(0,allCitiesSize-2):null;
-    } 
     /* Manuel Conde commented this... 
 
     public static void increaseCodeCoverage(){

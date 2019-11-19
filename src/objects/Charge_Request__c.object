@@ -1496,6 +1496,16 @@ Please check for ICH membership under www.iata.org/ich.</inlineHelpText>
                     <label>PDP / PTA Assignment Fee - 701924</label>
                 </value>
                 <value>
+                    <fullName>SFTP_CASS - 801290</fullName>
+                    <default>false</default>
+                    <label>SFTP_CASS - 801290</label>
+                </value>
+                <value>
+                    <fullName>TAXRPT_CASS – 753034</fullName>
+                    <default>false</default>
+                    <label>TAXRPT_CASS – 753034</label>
+                </value>
+                <value>
                     <fullName>TEST_CASS</fullName>
                     <default>false</default>
                     <label>TEST_CASS - 800678</label>
@@ -1652,6 +1662,14 @@ Please check for ICH membership under www.iata.org/ich.</inlineHelpText>
                 <controllingFieldValue>CASS</controllingFieldValue>
                 <controllingFieldValue>CNS</controllingFieldValue>
                 <valueName>CNSFEE_JOIN</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>CASS</controllingFieldValue>
+                <valueName>SFTP_CASS - 801290</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>CASS</controllingFieldValue>
+                <valueName>TAXRPT_CASS – 753034</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>CASS</controllingFieldValue>
@@ -2081,6 +2099,16 @@ Treasury Dashboard Set-up Fee (800964) : 3500</inlineHelpText>
                     <default>false</default>
                     <label>2700</label>
                 </value>
+                <value>
+                    <fullName>1,160.80</fullName>
+                    <default>false</default>
+                    <label>1,160.80</label>
+                </value>
+                <value>
+                    <fullName>30.00</fullName>
+                    <default>false</default>
+                    <label>30.00</label>
+                </value>
             </valueSetDefinition>
             <valueSettings>
                 <controllingFieldValue>TEST_FILE</controllingFieldValue>
@@ -2279,6 +2307,14 @@ Treasury Dashboard Set-up Fee (800964) : 3500</inlineHelpText>
             <valueSettings>
                 <controllingFieldValue>ETTEST_FILE – 800975</controllingFieldValue>
                 <valueName>2700</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>SFTP_CASS - 801290</controllingFieldValue>
+                <valueName>1,160.80</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>TAXRPT_CASS – 753034</controllingFieldValue>
+                <valueName>30.00</valueName>
             </valueSettings>
         </valueSet>
     </fields>

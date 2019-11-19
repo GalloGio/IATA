@@ -1,6 +1,6 @@
 import { LightningElement, api, track } from 'lwc';
-import getArticles from '@salesforce/apex/PortalFAQsCtrl.getArticles';
-import getFAQsInfo from '@salesforce/apex/PortalFAQsCtrl.getFAQsInfo';
+import getArticlesByLanguage from '@salesforce/apex/PortalFAQsCtrl.getArticlesByLanguage';
+import getFAQsInfoByLanguage from '@salesforce/apex/PortalFAQsCtrl.getFAQsInfoByLanguage';
 import createFeedback from '@salesforce/apex/PortalFAQsCtrl.createFeedback';
 import getArticlesFeedback from '@salesforce/apex/PortalFAQsCtrl.getArticlesFeedback';
 import randomUUID from '@salesforce/apex/CSP_Utils.randomUUID';
@@ -8,7 +8,6 @@ import getArticleTitle from '@salesforce/apex/PortalFAQsCtrl.getArticleTitle';
 import getFilteredFAQsResultsPage from '@salesforce/apex/PortalFAQsCtrl.getFilteredFAQsResultsPage';
 
 import { NavigationMixin } from 'lightning/navigation';
-import { navigateToPage } from'c/navigationUtils';
 
 import CSP_ArticleHelpful from '@salesforce/label/c.CSP_ArticleHelpful';
 import CSP_ThanksFeedback from '@salesforce/label/c.CSP_ThanksFeedback';
@@ -17,7 +16,7 @@ import CSP_FeedbackBody from '@salesforce/label/c.CSP_FeedbackBody';
 import CSP_FeedbackBody2 from '@salesforce/label/c.CSP_FeedbackBody2';
 import CSP_Submit from '@salesforce/label/c.CSP_Submit';
 import CSP_Cancel from '@salesforce/label/c.CSP_Cancel';
-import csp_GoToSupport from '@salesforce/label/c.csp_GoToSupport';
+import csp_GoToSupport from '@salesforce/label/c.CSP_Continue';
 import CSP_SearchFAQ from '@salesforce/label/c.CSP_SearchFAQ';
 
 import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
@@ -36,6 +35,9 @@ export default class PortalFAQArticleAccordion extends NavigationMixin(Lightning
     }
     @api category;
     @api articleView;
+    @api language;
+    @track loading = true;
+    @track userInfo = {};
     @track _topic = [];
     @track _subTopic;
     @track childs;
@@ -49,13 +51,14 @@ export default class PortalFAQArticleAccordion extends NavigationMixin(Lightning
     @track counter;
     @track renderConfirmation = false;
     @track searchText;
+    
     searchIconUrl = CSP_PortalPath + 'CSPortal/Images/Icons/searchColored.svg';
 
     @api
     get topic() {
         return this._topic;
     }
-    set topic(value) {
+    set topic(value) {        
         if(value !== undefined) {
             let topicAux = JSON.parse(JSON.stringify(value));
             
@@ -96,6 +99,9 @@ export default class PortalFAQArticleAccordion extends NavigationMixin(Lightning
 
     // GET COOKIE SESSION AND INITIALIZE LIST OF ARTICLES
     connectedCallback() {
+        this.userInfo.language = this.language;
+        this.userInfo.guestUser = this.language !== undefined ? true : false;
+        
         let cookie = this.getCookie('PKB2SessionId');
         
         if(this.articleView !== undefined && this.articleView.q !== undefined) {
@@ -117,13 +123,15 @@ export default class PortalFAQArticleAccordion extends NavigationMixin(Lightning
 
     // DEFINE WHICH METHOD TO LOAD BASED ON CATEGORY, A SPECIFIC ARTICLE OR FROM SEARCH PARAM
     redirectionTo() {
-        if(this.category !== undefined) {
+        if(this.category !== undefined) {            
             this.renderFAQs(); // RENDER ARTICLES FROM DEEPEST SUBTOPICS
         } else if(this.articleView !== undefined) {
             if(this.articleView.q !== undefined) {
                 let filteringObject = {};
                 filteringObject.searchText = this.articleView.q;
-    
+                filteringObject.language = this.language;
+                filteringObject.guestUser = this.language !== undefined ? true : false;
+                
                 /* SAME METHOD USED IN SEARCH FUNCTIONALITY
                 RETRIEVE ARTICLES WITH SEARCH TERMS OCURRIENCES IN TITLE AND SUMMARY FIELDS */
                 getFilteredFAQsResultsPage({ searchKey : JSON.stringify(filteringObject), requestedPage : '0'})
@@ -139,6 +147,8 @@ export default class PortalFAQArticleAccordion extends NavigationMixin(Lightning
                     .then(resultsTitle => {
                         let filteringObject = {};
                         filteringObject.searchText = resultsTitle;
+                        filteringObject.language = this.language;
+                        filteringObject.guestUser = this.language !== undefined ? true : false;
 
                         this.renderSearchArticles(JSON.stringify(filteringObject));
                     });
@@ -148,9 +158,11 @@ export default class PortalFAQArticleAccordion extends NavigationMixin(Lightning
 
     // RELATED TO SUPPORT VIEW CATEGORY PAGE, GETTING THE DEEPEST SUBTOPICS TO RENDER ARTICLES FOR A SPECIFIC CATEGORY
     renderFAQs() {
-        getFAQsInfo()
+        
+        getFAQsInfoByLanguage({ lang : this.language })
             .then(results => {
                 let result = JSON.parse(JSON.stringify(results));
+
                 let childs = [];
                 
                 let tempCategoryName = this.category; //Contains selected category from portalFAQPage
@@ -164,8 +176,6 @@ export default class PortalFAQArticleAccordion extends NavigationMixin(Lightning
                 });
                 this.childs = childs;
                 this.createParameter(childs);
-    
-                this.loading = false;
             });        
     }
 
@@ -181,7 +191,8 @@ export default class PortalFAQArticleAccordion extends NavigationMixin(Lightning
     }
 
     // HANDLE CALLBACK TO BUILD ARTICLE'S LIST, WITH AN OPEN ARTICLE, ARTICLE'S FEEDBACK AND A LIST OF RELATED ARTICLES
-    handleCallback(results) {        
+    handleCallback(results) {
+        this.loading = true;       
         let res = JSON.parse(JSON.stringify(results));
     
         this.articleIds = [];
@@ -220,6 +231,7 @@ export default class PortalFAQArticleAccordion extends NavigationMixin(Lightning
         this.articles = tempArticles;
         this.articleIds = tempArticleIds; // SET OF IDS USED TO SEARCH ARTICLE'S FEEDBACK
         this.articleInfo = articleSelected; // RENDER RELATED ARTICLES
+        this.loading = false;
 
         this.articlesFeedback();        
     }
@@ -239,10 +251,11 @@ export default class PortalFAQArticleAccordion extends NavigationMixin(Lightning
 
     // GET SPECIFIC ARTICLES FOR A GIVEN CATEGORY/TOPIC/SUBTOPIC
     getArticlesFromParams(selectedParams) {
-        getArticles({ selectedParams : selectedParams })
+        getArticlesByLanguage({ selectedParams : selectedParams, lang : this.language })
             .then(result => {
                 this.articles = [];
                 if(result.length) {
+                    this.loading = true;
                     let res = JSON.parse(JSON.stringify(result));
 
                     this.articleIds = [];
@@ -260,8 +273,9 @@ export default class PortalFAQArticleAccordion extends NavigationMixin(Lightning
                     this.articleIds = tempArticleIds; // SET OF IDS USED TO SEARCH ARTICLE'S FEEDBACK
     
                     this.articlesFeedback();
-                }                
-            });        
+                }
+                this.loading = false;
+            });
     }
     
     // GET ARTICLE'S FEEDBACKS ACCORDING TO SESSION COOKIE AND ARTICLES BEING DISPLAYED
@@ -277,11 +291,12 @@ export default class PortalFAQArticleAccordion extends NavigationMixin(Lightning
                         if(articleVals[i].id === res[j].Article_ID__c) {
                             articleVals[i].feedback = true;
                             break;
-                        }                        
+                        }
                     }
                 }
         
                 this.articles = articleVals;
+                this.loading = false;
             });
     }
 
@@ -317,6 +332,8 @@ export default class PortalFAQArticleAccordion extends NavigationMixin(Lightning
                 if(this.searchText.length > 3) {
                     let filteringObject = {};
                     filteringObject.searchText = this.searchText;
+                    filteringObject.language = this.language;
+                    filteringObject.guestUser = this.language !== undefined ? true : false;
 
                     this.renderSearchArticles(JSON.stringify(filteringObject));
                 }
@@ -373,15 +390,6 @@ export default class PortalFAQArticleAccordion extends NavigationMixin(Lightning
         this.renderedModal = !this.renderedModal;
         
         if(this.renderedModal) this.feedbackStatus(event);
-    }
-
-    redirectSupport() {
-        this[NavigationMixin.GenerateUrl]({
-            type: "standard__namedPage",
-            attributes: {
-                pageName: "support"
-            }})
-        .then(url => navigateToPage(url, {}));
     }
 
     setCookie(name, value, days) {

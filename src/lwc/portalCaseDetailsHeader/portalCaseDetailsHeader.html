@@ -11,24 +11,43 @@
                 </span>
                 <span class="text-uppercase slds-p-left_medium text-bold text-xxxsmall text-gray">{pendingCustomerCaseWarningLabel}</span>
             </div>
-            <div class="slds-grid slds-wrap customCardTitleBox">
-                <div class="slds-col slds-size_1-of-1 slds-medium-size_2-of-12 slds-large-size_2-of-12 slds-p-around_medium" >
-                    <span style="color: #9a9eb0;">Case Number</span><br/>
+            <div class="slds-grid slds-wrap customCardTitleBox CustomCardTitleBox_SmallText">
+                <div
+                    class="slds-col slds-size_1-of-1 slds-medium-size_2-of-12 slds-large-size_2-of-12 slds-p-around_medium">
+                    <span style="color: #9a9eb0;">{labels.ISSP_CaseNumber}</span><br />
                     <span style="font-size: 1.3rem;font-weight: 400;">{caseDetails.CaseNumber}</span>
                 </div>
-                <div class="slds-col slds-size_1-of-1 slds-medium-size_8-of-12 slds-large-size_8-of-12 slds-p-around_medium" style="border-right: 1px solid #9a9eb0;border-left: 1px solid #9a9eb0;" >
-                    <span style="color: #9a9eb0;">Subject</span><br/>
+                <div
+                    class="slds-col slds-size_1-of-1 slds-medium-size_8-of-12 slds-large-size_8-of-12 slds-p-around_medium border_gradient">
+                    <span style="color: #9a9eb0;">{labels.ISSP_Subject}</span><br />
                     <span style="font-size: 1.3rem;font-weight: 400;">{caseDetails.Subject}</span>
                 </div>
-                <div class="slds-col slds-size_1-of-1 slds-medium-size_2-of-12 slds-large-size_2-of-12 slds-p-around_medium" >
-                    <span style="color: #9a9eb0;">Status</span><br/>
-                    <span style="font-size: 1.3rem;font-weight: 400;">{caseDetails.Portal_Case_Status__c}</span>
+                <div
+                    class="slds-col slds-size_1-of-1 slds-medium-size_2-of-12 slds-large-size_2-of-12 slds-p-around_medium">
+                    <span style="color: #9a9eb0;">{labels.CSP_Status}</span><br />
+                    <div>
+                        <div class={CaseStatusClass} style="display:flex">
+                            <span>{caseDetails.Portal_Case_Status__c}</span>
+                        </div>
+                    </div>
+
                 </div>
+
+                <!-- Portal Oscar Progress Bar  -->
+                
+                <template if:true={displayOscarProgressBar}>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-m-vertical_medium text-xxxsmall" >
+                        <c-portal-oscar-progress-bar progress-status-list={progressStatusList} ></c-portal-oscar-progress-bar>
+                    </div>
+                </template>
+                
+
             </div>
+
             <div class="slds-grid slds-wrap">
                 <div class="slds-col slds-size_1-of-1 slds-medium-size_5-of-12 slds-large-size_5-of-12 slds-p-around_medium" >
                     <div>
-                        <span style="color: #9a9eb0;">Created on &nbsp;</span>
+                        <span style="color: #9a9eb0;">{labels.CSP_CreatedOn}&nbsp;</span>
                         <span>
                             <lightning-formatted-date-time value={caseDetails.CreatedDate} year="numeric" month="short" day="numeric" >
                             </lightning-formatted-date-time>,&nbsp;
@@ -38,7 +57,7 @@
                         </span>
                     </div>
                     <div>
-                        <span style="color: #9a9eb0;">Last Update &nbsp;</span>
+                        <span style="color: #9a9eb0;">{labels.CSP_LastUpdate} &nbsp;</span>
                         <span>
                             <lightning-formatted-date-time value={caseDetails.LastModifiedDate} year="numeric" month="short" day="numeric" >
                             </lightning-formatted-date-time>,&nbsp;
@@ -46,19 +65,37 @@
                             </lightning-formatted-date-time>
                         </span>
                     </div>
-                    
+
                 </div>
-                <div class="slds-col slds-size_1-of-1 slds-medium-size_7-of-12 slds-large-size_7-of-12 slds-p-around_medium recipients" >
-                    <div if:true={haveRecipients} class="recipients-container">
-                        <span class="recipients-label">Recipients</span>
-                        <div class="recipients-data">
-                            {caseDetails.E2CP__AdditionalCC__c}
+                <div
+                    class="slds-col slds-size_1-of-1 slds-medium-size_7-of-12 slds-large-size_7-of-12 slds-p-around_medium">
+                    <div style="float: right; max-width: 100%;">
+                        <div if:true={haveRecipients}>
+                            <span class="recipients-label">{labels.CSP_Recipients}</span>
+                            <div class="recipients-data">
+                                {caseDetails.E2CP__AdditionalCC__c}
+                            </div>
+                            <lightning-button variant="base" label={labels.CSP_Manage_Recipients}
+                                class="slds-m-horizontal_medium recipients-label text-blue button_no_margin"
+                                onclick={openManageRecipientsPopup}>
+                            </lightning-button>
                         </div>
-                        <lightning-button variant="base" label="Manage Recipients" onclick={openManageRecipientsPopup} ></lightning-button>
-                    </div>
-                    <div if:false={haveRecipients}>
-                        Anyone else to be informed?
-                        <lightning-button variant="base" label="Manage Recipients" onclick={openManageRecipientsPopup} ></lightning-button>
+                        <div if:false={haveRecipients}>
+                            <span class="recipients-label">
+                                {labels.CSP_RecipientsQuestion}
+                            </span>
+                            <lightning-button variant="base" label={labels.CSP_Manage_Recipients}
+                                class="slds-m-horizontal_medium recipients-label text-blue button_no_margin"
+                                onclick={openManageRecipientsPopup}>
+                            </lightning-button>
+                        </div>
+                        <div if:true={hasSurveyLink}>
+                            <span class="grey recipients-label">{labels.ISSP_Survey}</span>
+                            <span>
+                                <a class=" slds-m-left_large text-blue" href={surveyLink}
+                                    target="_blank">{labels.Open}</a>
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -72,7 +109,7 @@
             <div class="customPopupInteriorHalfScreenCentered">
                 <!-- Popup Header -->
                 <div class="slds-p-around_medium" style="font-size: 20px;font-weight: 500;font-style: normal;font-stretch: normal;line-height: 1.6;letter-spacing: normal;color: #333333;">
-                    Manage Recipients
+					{labels.CSP_Manage_Recipients}
                 </div>
 
                 <!-- Popup Body -->
@@ -84,14 +121,14 @@
                     line-height: 1.63;
                     letter-spacing: normal;
                     color: #525252;">
-                        You can manage the people that you want to be informed about this case. 
+                        You can manage the people that you want to be informed about this case.
                         Add new recipients or remove existing ones.
                     </div>
 
                     <div class="slds-p-around_small" style="font-size: 14px; font-weight: normal; font-style: normal; font-stretch: normal; line-height: 1.43; letter-spacing: normal; color: #525252;">
                         E-mail Adress
                     </div>
-                    <div class="aroundLightGrayBorder slds-p-around_small" >
+                    <div class="aroundLightGrayBorder slds-p-around_small">
                         <lightning-input
                             name="newRecipientTextInput"
                             class="hideInputLabel borderlessInput newRecipientTextInput" 
@@ -99,10 +136,10 @@
                             value={newRecipient}
                             style="display: inline-block;width: 80%;" 
                             type="email" >
-                        </lightning-input >
+                        </lightning-input>
                         <lightning-button label="Add" variant="neutral" onclick={addNewRecipientButtonClick} style="display: inline-block;float: right;"></lightning-button>
                     </div>
-                    <div class="slds-m-top_large" style="min-height:150px;" >
+                    <div class="slds-m-top_large" style="min-height:150px;">
 
                         <template for:each={lstRecipients} for:item="recipient">
                             <span key={recipient.id} class="slds-p-around_x-small slds-m-around_xx-small" style="display:inline-block;border-radius: 1px;background-color: #f7f8fc;font-size: 14px; font-weight: normal; font-style: normal; font-stretch: normal; line-height: 1.71; letter-spacing: normal;color: #4a4d61;">
@@ -122,9 +159,9 @@
                 </div>
 
             </div>
-              
+
         </div>
 
     </template>
-    
+
 </template>

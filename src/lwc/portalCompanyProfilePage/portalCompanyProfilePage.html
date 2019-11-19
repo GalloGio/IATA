@@ -62,8 +62,8 @@
                                         <template for:each={mapOfValues} for:item="keyValue">
                                             <c-portal-record-form-wrapper key={keyValue.key} object-name="Account"
                                                 record-id={loggedUser.Contact.AccountId} fields={keyValue.value}
-                                                show-edit={showEdit} class="section" section-title={keyValue.key}
-                                                data-name={keyValue.key} edit-basics={editBasics}
+                                                show-edit={canEditAccount} class="section" section-title={keyValue.key}
+                                                data-name={keyValue.key} edit-basics={editBasics} tab-name={tabName}
                                                 section-class="slds-p-vertical_xx-large slds-p-horizontal_x-large customBorderlessCardWhite slds-m-bottom_medium section">
                                             </c-portal-record-form-wrapper>
                                         </template>
@@ -71,6 +71,29 @@
                                         <div class="endOfPage"></div>
 
                                     </template>
+
+                                    <!-- Portal Administrators -->
+                                    <c-portal-profile-section data-name="adminContacts" class-name="slds-p-vertical_xx-large slds-p-horizontal_x-large customBorderlessCardWhite slds-m-bottom_medium section" class="section">
+                                        <span slot="sectionTitle">{labels.CSP_Portal_Administrators}</span>
+                                        
+                                        <span slot="sectionActions">
+                                        </span>
+
+                                        <span slot="componentContent">
+                                            <div if:true={hasPortalAdmins} class="adminContactsTable">
+                                                <lightning-datatable
+                                                    key-field="Id"
+                                                    data={portalAdminList}
+                                                    columns={portalAdminColumns}
+                                                    hide-checkbox-column="true">
+                                                </lightning-datatable>
+                                            </div>
+                                            <div if:false={hasPortalAdmins}>
+                                                {labels.NoResults}
+                                            </div>
+                                        </span>
+                                    </c-portal-profile-section>
+
                                 </div>
                             </div>
                         </template>
@@ -78,31 +101,22 @@
                         <!-- Profile: Branch Offices-->
                         <template if:true={tab1Active}>
                             <template if:true={branchesLoaded}>
-
-                                <div class="slds-clearfix slds-m-top_xx-large slds-m-bottom_medium">
-                                    <div class="slds-float_left class borderedSearch">
-                                        <div class="slds-show_inline-block">
-                                            <img src={searchColored} height="42"
-                                                width="42" class="slds-p-left_small">
-                                        </div>
-
-                                        <div class="slds-show_inline-block">
-                                            <div class="fullWidth">
-                                                <lightning-input name="branch-search" type="text"
-                                                    placeholder={labels.FindBranch}
-                                                    onchange={onchangeSearchInputBranches}
-                                                    class="borderlessInput grayInputBackground searchInput">
-                                                </lightning-input>
-                                            </div>
-                                        </div>
+                                <div class="slds-col slds-grid slds-wrap slds-p-top_medium slds-m-bottom_medium slds-size_1-of-1">
+                                    <div class=" slds-col slds-p-top_xx-large bottomLightGrayBorder searchContainer">
+                                        <img src={searchColored} height="24" width="24" />
+                                        <lightning-input name="branch-search"
+                                            type="text"
+                                            placeholder={labels.FindBranch}
+                                            class="hideInputLabel borderlessInput grayInputBackground text-xsmall"
+                                            onchange={onchangeSearchInputBranches}>
+                                        </lightning-input>
                                     </div>
-                                </div>
-
+                                </div>  
                                 <div class="slds-grid slds-wrap slds-m-top_x-small">
                                     <c-portal-contact-list is-account="true" object-name="Account" class="fullWidth"
                                         fields-list={branchFields} fields-list-to-create={fieldsListToCreate}
                                         default-sort="TradeName__c" records={branches} openmodel={openmodel} recordid={recordid}
-                                        objectid={accountid} fetching={isFetching} onsearchrecords={searchRecords} show-edit={editBasics}>
+                                        objectid={accountid} fetching={isFetching} onsearchrecords={searchRecords} show-edit={canEditAccount} search-key={searchTextBranches}>
                                     </c-portal-contact-list>
                                 </div>
                             </template>
@@ -118,41 +132,64 @@
                         <template if:true={tab2Active}>
 
                             <template if:true={contactsLoaded}>
+                                <lightning-layout multiple-rows class="slds-text-align_right slds-m-top_x-large slds-gutters_xx-small slds-p-around_xx-small" pull-to-boundary="small" horizontal-align="spread">
 
-                                <div class="slds-clearfix slds-m-top_xx-large slds-m-bottom_medium">
-                                    <div class="slds-float_left borderedSearch">
-                                        <div class="slds-show_inline-block">
-                                            <img src={searchColored} height="42"
-                                                width="42" class="slds-p-left_small">
+                                    <!-- SEARCH -->
+                                    <lightning-layout-item class="slds-p-around_xx-small" size="12" flexibility="grow" medium-device-size="6" large-device-size="3">
+                                        <div class="bottomLightGrayBorder slds-m-around_small inputFilter">
+                                            <img src={searchColored}>
+                                            <lightning-input name="contact-search" type="text" value={searchValue}
+                                                placeholder={labels.FindContact}
+                                                onchange={onchangeSearchInputContacts}
+                                                class="borderlessInput hideInputLabel grayInputBackground grayInputPlaceholder searchStyle">
+                                            </lightning-input>
                                         </div>
+                                    </lightning-layout-item>
 
-                                        <div class="slds-show_inline-block">
-                                            <div class="fullWidth">
-                                                <lightning-input name="contact-search" type="text" value={searchValue}
-                                                    placeholder={labels.FindContact}
-                                                    onchange={onchangeSearchInputContacts}
-                                                    class="borderlessInput grayInputBackground searchInput">
-                                                </lightning-input>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <lightning-layout-item class="slds-p-around_xx-small" size="12" flexibility="auto" medium-device-size="6" large-device-size="9">
+                                        
+                                        <!-- APPROVE -->
+                                        <lightning-layout-item class="slds-text-align_right" size="4" flexibility="auto" medium-device-size="4" large-device-size="2">
+                                            <lightning-button if:true={showManageButtons} variant="brand" label={labels.ISSP_Activate}
+                                                class="containedButtonSmaller" onclick={grantAccess} data-item="approve">
+                                            </lightning-button>
+                                        </lightning-layout-item>
 
-                                    <div class="slds-float_right">
-                                        <!-- LABELS -->
-                                        <lightning-button variant="brand" label={labels.NewContact}
-                                            title="Create New Contact" disabled={contactsNotLoaded}
-                                            onclick={createContact} class="slds-float_right containedButton">
-                                        </lightning-button>
-                                    </div>
-                                </div>
+                                        <!-- DECLINE -->
+                                        <lightning-layout-item class="slds-text-align_right" size="4" flexibility="auto" medium-device-size="4" large-device-size="2">
+                                            <lightning-button if:true={showManageButtons} variant="brand" label={labels.ISSP_Inactivate}
+                                                class="containedButtonSmaller" onclick={denyAccess} data-item="inactive">
+                                            </lightning-button>
+                                        </lightning-layout-item>
+
+                                        <!-- ASSESSMENT CONTRACT -->
+                                        <lightning-layout-item class="slds-text-align_right" size="4" flexibility="auto" medium-device-size="4" large-device-size="2">
+                                            <lightning-button variant="brand" label={labels.ISSP_Assign_IFAP}
+                                                title={labels.ISSP_Assign_IFAP} onclick={navigateToIFAP}
+                                                class="containedButtonSmaller">
+                                            </lightning-button>
+                                        </lightning-layout-item>
+
+                                        <!-- LIST VIEW -->
+                                        <lightning-layout-item class="slds-text-align_right" size="4" flexibility="auto" medium-device-size="4" large-device-size="2">    
+                                            <lightning-button variant="brand" label={labels.NewContact} 
+                                                title="Create New Contact" disabled={contactsNotLoaded}
+                                                onclick={createContact} class="containedButtonSmaller">
+                                            </lightning-button>
+                                        </lightning-layout-item>
+
+                                    </lightning-layout-item>
+
+                                </lightning-layout>
 
                                 <div class="slds-grid slds-wrap slds-m-top_x-small">
                                     <c-portal-contact-list is-account="false" object-name="Contact" class="fullWidth"
                                         default-sort="Name" fields-list={contactFields}
-                                        fields-list-to-create={fieldsListToCreate} records={contacts}
+                                        fields-list-to-create={fieldsListToCreate} records={contacts} wrapper={contactsWrapper}
                                         openmodel={openmodel} recordid={recordid} accountid={accountid}
                                         objectid={objectid} ongetcontacts={getContacts} fetching={isFetching}
-                                        onrefreshview={refreshview} onsearchrecords={searchRecords}>
+                                        onrefreshview={refreshview} onsearchrecords={searchRecords} search-key={searchTextContacts} onmanageusers={manageUsers}
+                                        action-name={action}>
                                     </c-portal-contact-list>
 
                                 </div>

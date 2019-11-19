@@ -1,5 +1,10 @@
 import { LightningElement, track, wire, api } from 'lwc';
 
+// language
+import userId from '@salesforce/user/Id';
+import changeUserLanguage from '@salesforce/apex/CSP_Utils.changeUserLanguage';
+import getCommunityAvailableLanguages from '@salesforce/apex/CSP_Utils.getCommunityAvailableLanguages';
+
 //navigation
 import { NavigationMixin, CurrentPageReference } from 'lightning/navigation';
 import { navigateToPage, getPageName } from 'c/navigationUtils';
@@ -21,6 +26,8 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent'
 //custom labels
 import ISSP_Services from '@salesforce/label/c.ISSP_Services';
 import CSP_Support from '@salesforce/label/c.CSP_Support';
+import CSP_YouAndIATA from '@salesforce/label/c.CSP_YouAndIATA';
+import CSP_Breadcrumb_AdvancedSearch_Title from '@salesforce/label/c.CSP_Breadcrumb_AdvancedSearch_Title';
 import ICCS_Profile from '@salesforce/label/c.ICCS_Profile';
 import ISSP_MyProfile from '@salesforce/label/c.ISSP_MyProfile';
 import CSP_CompanyProfile from '@salesforce/label/c.CSP_CompanyProfile';
@@ -53,6 +60,48 @@ import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 
 
 export default class PortalHeader extends NavigationMixin(LightningElement) {
+    // language
+    @track selectedLang = 'en_US';
+    @track langOptions = [];
+    @track chagingLang = false;
+    @track loadingLangs = true;
+    @track userId = userId;
+
+    @wire(getRecord, { recordId: "$userId", fields: ['User.LanguageLocaleKey'] })
+    getUserLang(result) {
+        if (result.data) {
+            let data = JSON.parse(JSON.stringify(result.data));
+            if (data.fields) {
+                this.selectedLang = data.fields.LanguageLocaleKey.value;
+            }
+        }
+    }
+
+    handleChangeLang(event) {
+        this.chagingLang = true;
+        let lang = event.detail.value;
+        changeUserLanguage({lang}).then(() => {
+            window.location.reload(); // Review this
+        }).catch(error => {
+            console.error('Error changeUserLanguage', error);
+            this.chagingLang = false;
+        });
+    }
+
+    getLanguagesOptions() {
+        this.loadingLangs = true;
+        getCommunityAvailableLanguages().then(result => {
+            if (result) {
+                this.langOptions = result;
+            }
+            this.loadingLangs = false;
+        }).catch(error => {
+            console.error('Error getCommunityAvailableLanguages', error);
+            this.loadingLangs = false;
+        });
+    }
+
+    // terms
     @track displayAcceptTerms = true;
 
     @wire(getRecord, { recordId: Id, fields: [User_ToU_accept] })
@@ -68,6 +117,7 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
         }
     }
 
+    // company tab on profile
     @track displayCompanyTab = false;
 
     @wire(getRecord, { recordId: Id, fields: [AccountSector] })
@@ -84,10 +134,12 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
         }
     }
 
-
+    // labels
     _labels = {
         ISSP_Services,
         CSP_Support,
+        CSP_YouAndIATA,
+        CSP_Breadcrumb_AdvancedSearch_Title,
         ICCS_Profile,
         ISSP_MyProfile,
         CSP_CompanyProfile,
@@ -118,18 +170,23 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
 
     //links for images
     logoIcon = CSP_PortalPath + 'CSPortal/Images/Logo/group.svg';
+    logoWhiteIcon = CSP_PortalPath + 'CSPortal/Images/Logo/group_white.svg';
     servicesIcon = CSP_PortalPath + 'CSPortal/Images/Icons/service-white.svg';
     supportIcon = CSP_PortalPath + 'CSPortal/Images/Icons/support-white.svg';
+    youAndIATA = CSP_PortalPath + 'CSPortal/Images/Icons/youiata-white.svg';
     profileIcon = CSP_PortalPath + 'CSPortal/Images/Icons/profile-white.svg';
     profileIconBlue = CSP_PortalPath + 'CSPortal/Images/Icons/profile-blue.svg';
     arrowIcon = CSP_PortalPath + 'CSPortal/Images/Icons/arrow-down-white.svg';
     arrowIconBlue = CSP_PortalPath + 'CSPortal/Images/Icons/arrow-down-blue.svg';
     notificationIcon = CSP_PortalPath + 'CSPortal/Images/Icons/notification-white.svg';
     searchWhiteIcon = CSP_PortalPath + 'CSPortal/Images/Icons/searchWhite.svg';
+    mobileMenuIcon = CSP_PortalPath + 'CSPortal/Images/Icons/menu.svg';
 
     //notifications
     @track numberOfNotifications;
     @track openNotifications = false;
+    @track openSideBarMenu = false;
+    @track openSideBarMenuProfile = false;
     @track notification;
 
     //notification Center Tab
@@ -150,10 +207,11 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
     @track userAdmin;
 
     //style variables for notifications
+    @track sideMenuBarStyle;
     @track headerButtonNotificationsContainerStyle;
     @track headerButtonNotificationsCloseIconStyle;
     @track headerButtonNotificationsStyle;
-    @track notificationNumberStyle;
+    @track notificationNumberStyle='display: none;';
     @track openNotificationsStyle;
     @track displayBodyStyle;
     @track displayNotificationStyle;
@@ -165,8 +223,19 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
 
     @track mainBackground = 'z-index: 9999;';
 
+    @track mobileMenuStyle = 'headerBarButton';
     @track buttonServiceStyle = 'slds-m-left_xx-large slds-p-left_x-small headerBarButton buttonService';
+    @track buttonYouIATAStyle = 'slds-m-left_medium slds-p-left_x-small headerBarButton buttonYouIATA';
     @track buttonSupportStyle = 'slds-m-left_medium slds-p-left_x-small headerBarButton buttonSupport';
+    @track buttonSideMenuServiceStyle = 'headerBarButton buttonService';
+    @track buttonSideMenuYouIATAStyle = 'headerBarButton buttonYouIATA';
+    @track buttonSideMenuSupportStyle = 'headerBarButton buttonSupport';
+    @track buttonSideMenuSearchStyle = 'headerBarButton buttonSearch';
+    @track buttonSideMenuProfileStyle = 'headerBarButton buttonProfile';
+    @track buttonSideMenuCompanyStyle = 'headerBarButton buttonCompany';
+    @track buttonSideMenuCasesStyle = 'headerBarButton buttonCases';
+    @track buttonSideMenuResetPwStyle = 'headerBarButton buttonResetPw';
+    @track buttonSideMenuLogoutStyle = 'headerBarButton buttonLogout';
 
     @track trackedIsInOldPortal;
 
@@ -184,6 +253,8 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
     }
 
     connectedCallback() {
+        
+        this.getLanguagesOptions();
 
         isAdmin().then(result => {
             this.userAdmin = result;
@@ -223,7 +294,10 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
 
             if (this.numberOfNotifications === "0" || this.numberOfNotifications === 0) {
                 this.notificationNumberStyle = 'display: none;';
-            }
+            }else{
+				this.notificationNumberStyle = 'display: inline;';
+				this.headerButtonNotificationsStyle='display: inline;vertical-align:top;';
+			}
 
         });
 
@@ -255,7 +329,8 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
 
     // Check if we are in the Old/New Portal
     navigationCheck(pageNameToNavigate, currentService) {
-
+        
+        this.closeSideMenu();
         if (this.trackedIsInOldPortal) {
             redirectfromPortalHeader({ pageName: currentService }).then(result => {
                 window.location.href = result;
@@ -263,7 +338,6 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
         } else {
             this.navigateToOtherPage(pageNameToNavigate);
         }
-
     }
 
     navigateToHomePage() {
@@ -279,6 +353,10 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
     navigateToSupport() {
         this.navigationCheck("support", "support");
         //this.navigateToOtherPage("support");
+    }
+
+    navigateToYouIata() {
+        this.navigationCheck("youIATA", "youIATA");
     }
 
     navigateToMyProfile() {
@@ -322,17 +400,47 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
             this.notificationNumberStyle = 'display: none;';
             this.openNotificationsStyle = 'display: block;';
             this.showBackdrop = true;
-            this.displayBodyStyle = 'width: 35vw';
+            this.displayBodyStyle = '';
             this.displayNotificationStyle = 'width: 100%'
+            this.closeSideMenu();
         } else {
             this.headerButtonNotificationsContainerStyle = 'z-index: 100;';
             this.headerButtonNotificationsCloseIconStyle = 'display: none; ';
-            this.headerButtonNotificationsStyle = 'display: block;';
-            this.notificationNumberStyle = (this.numberOfNotifications === 0 ? 'display: none;' : 'display: block;');
+            this.headerButtonNotificationsStyle = 'display: inline;vertical-align:top;';
+            this.notificationNumberStyle = (this.numberOfNotifications === 0 ? 'display: none;' : 'display: inline;');
             this.openNotificationsStyle = 'display: none;';
             this.showBackdrop = false;
         }
            
+    }
+
+    toggleSideMenu()
+    {
+        this.openSideBarMenu = ! this.openSideBarMenu;
+
+        if (this.openSideBarMenu) {
+            this.sideMenuBarStyle = 'display: block; width: 300px;';
+        } else {
+            this.sideMenuBarStyle = 'width: 0px;';
+        }
+    }
+
+    toggleSideMenuProfile()
+    {
+        this.openSideBarMenuProfile = ! this.openSideBarMenuProfile;
+
+        if (this.openSideBarMenuProfile) {
+            this.sideMenuBarProfileStyle = 'display: block; height: 240px;';
+        } else {
+            this.sideMenuBarProfileStyle = 'height: 1px;';
+        }
+    }
+
+    closeSideMenu()
+    {
+        if (this.openSideBarMenu) {
+            this.toggleSideMenu();
+        }
     }
 
     onClickAllNotificationsView(event) {
@@ -429,26 +537,44 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
 
     handlePageRefChanged() {
         let pagename = getPageName();
+        
+        this.buttonServiceStyle = this.buttonServiceStyle.replace(/selectedButton/g, '');
+        this.buttonYouIATAStyle = this.buttonYouIATAStyle.replace(/selectedButton/g, '');
+        this.buttonSupportStyle = this.buttonSupportStyle.replace(/selectedButton/g, '');
+        this.buttonSideMenuServiceStyle = this.buttonSideMenuServiceStyle.replace(/selectedButton/g, '');
+        this.buttonSideMenuYouIATAStyle = this.buttonSideMenuYouIATAStyle.replace(/selectedButton/g,'');
+        this.buttonSideMenuSupportStyle = this.buttonSideMenuSupportStyle.replace(/selectedButton/g, '');
+        this.buttonSideMenuSearchStyle = this.buttonSideMenuSearchStyle.replace(/selectedButton/g, '');
+        this.buttonSideMenuProfileStyle = this.buttonSideMenuProfileStyle.replace(/selectedButton/g, '');
+        this.buttonSideMenuCompanyStyle = this.buttonSideMenuCompanyStyle.replace(/selectedButton/g, '');
+        this.buttonSideMenuCasesStyle = this.buttonSideMenuCasesStyle.replace(/selectedButton/g, '');
+
         if (pagename) {
             getBreadcrumbs({ pageName: pagename })
                 .then(results => {
                     let breadCrumbs = JSON.parse(JSON.stringify(results));
-                    if (breadCrumbs && breadCrumbs[1] && (breadCrumbs[1].DeveloperName === 'services' || breadCrumbs[1].DeveloperName === 'support')) {
+                    if (breadCrumbs && breadCrumbs[1])
+                    {
                         if (breadCrumbs[1].DeveloperName === 'services') {
                             this.buttonServiceStyle = `${this.buttonServiceStyle} selectedButton`;
-                            this.buttonSupportStyle = this.buttonSupportStyle.replace(/selectedButton/g, '');
+                            this.buttonSideMenuServiceStyle = `${this.buttonSideMenuServiceStyle} selectedButton`;
+                        } else if (breadCrumbs[1].DeveloperName === 'youIATA') {
+                            this.buttonYouIATAStyle = `${this.buttonYouIATAStyle} selectedButton`;
+                            this.buttonSideMenuYouIATAStyle = `${this.buttonSideMenuYouIATAStyle} selectedButton`;
                         } else if (breadCrumbs[1].DeveloperName === 'support') {
-                            this.buttonServiceStyle = this.buttonServiceStyle.replace(/selectedButton/g, '');
                             this.buttonSupportStyle = `${this.buttonSupportStyle} selectedButton`;
+                            this.buttonSideMenuSupportStyle = `${this.buttonSideMenuSupportStyle} selectedButton`;
+                        } else if (breadCrumbs[1].DeveloperName === 'advanced_search') {
+                            this.buttonSideMenuSearchStyle = `${this.buttonSideMenuSearchStyle} selectedButton`;
+                        } else if (breadCrumbs[1].DeveloperName === 'my_profile') {
+                            this.buttonSideMenuProfileStyle = `${this.buttonSideMenuProfileStyle} selectedButton`;
+                        } else if (breadCrumbs[1].DeveloperName === 'company_profile') {
+                            this.buttonSideMenuCompanyStyle = `${this.buttonSideMenuCompanyStyle} selectedButton`;
+                        } else if (breadCrumbs[1].DeveloperName === 'cases_list') {
+                            this.buttonSideMenuCasesStyle = `${this.buttonSideMenuCasesStyle} selectedButton`;
                         }
-                    } else {
-                        this.buttonServiceStyle = this.buttonServiceStyle.replace(/selectedButton/g, '');
-                        this.buttonSupportStyle = this.buttonSupportStyle.replace(/selectedButton/g, '');
                     }
                 });
-        } else {
-            this.buttonServiceStyle = this.buttonServiceStyle.replace(/selectedButton/g, '');
-            this.buttonSupportStyle = this.buttonSupportStyle.replace(/selectedButton/g, '');
         }
     }
 

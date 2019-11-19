@@ -1,5 +1,37 @@
 public with sharing class CSP_Utils {
 
+    public class LoginConfig {
+        @AuraEnabled
+        public String selfRegistrationUrl {get;set;}
+    }
+
+    @AuraEnabled
+    public static LoginConfig getAuthConfig(){
+        Id networkId = Network.getNetworkId();
+        Auth.AuthConfiguration authConfig = new Auth.AuthConfiguration(networkId,'');
+
+        LoginConfig config = new LoginConfig();
+        config.selfRegistrationUrl = authConfig.getSelfRegistrationUrl();
+
+        return config;
+    }    
+
+    /* 
+    * @description Indicates whether the current user isn’t logged in to the community.
+    * @params
+    * @return Boolean
+    */    
+    @AuraEnabled
+    public static Boolean isGuestUser(){
+        return Auth.CommunitiesUtil.isGuestUser();
+    } 
+
+    public static String toDatetime(Date dte) {
+        DateTime dtAndTime = DateTime.newInstanceGmt(dte.year(), dte.month(), dte.day(), 0, 0, 0);
+
+        return dtAndTime.format('yyyy-MM-dd\'T\'hh:mm:ss\'Z\'');
+    }
+
     /* 
     * @description Return field labels. It needs to pass the sObject and the necessary fields to retrieve
     * @params String sObjectType, List<String> sObjectFields
@@ -31,7 +63,10 @@ public with sharing class CSP_Utils {
     @AuraEnabled
     public static User getLoggedUser() {
         
-        User loggedUser = [SELECT Id, Profile.Name, contactId, Contact.Account.Top_Parent__c, Contact.AccountId, Contact.User_Portal_Status__c 
+        User loggedUser = [SELECT Id, Profile.Name, contactId, Contact.Account.Top_Parent__c, Contact.Account.Category__c, 
+                                    Contact.Account.Sector__c, Contact.Account.Parent.Category__c, Contact.Account.Top_Parent__r.Category__c, 
+                                    Contact.Account.ParentId, Contact.Account.RecordType.DeveloperName, Contact.Account.Status__c, 
+                                    Contact.AccountId, Contact.User_Portal_Status__c  
                            FROM User
                            WHERE Id =: UserInfo.getUserId()];
         
@@ -334,6 +369,16 @@ public with sharing class CSP_Utils {
     public static String redirectfromPortalHeader(String pageName) {
         String host = ISSP_Constant.customSetingMap.get('HostCSP');
         return 'https://' + host + pageName;
+    }
+
+     /* 
+    * @description Return if the user is an Airline User
+    * @return boolean is airline user
+    */
+    @AuraEnabled
+    public static Boolean isAirlineUser() {
+        User loggedUser = getLoggedUser();
+        return loggedUser.Profile.Name.contains('Airline');
     }
 
 

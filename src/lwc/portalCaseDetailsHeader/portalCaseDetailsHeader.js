@@ -2,6 +2,8 @@ import { LightningElement, track } from 'lwc';
 import getCaseById from '@salesforce/apex/PortalCasesCtrl.getCaseById';
 import removeRecipient from '@salesforce/apex/PortalCasesCtrl.removeRecipient';
 import addNewRecipient from '@salesforce/apex/PortalCasesCtrl.addNewRecipient';
+import getOscarProgress from '@salesforce/apex/portal_OscarProgressBar.getOscarProgress';
+import getSurveyLink from '@salesforce/apex/PortalCasesCtrl.getSurveyLink';
 
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
@@ -9,7 +11,16 @@ import { getParamsFromPage } from'c/navigationUtils';
 
 //custom label
 import CSP_PendingCustomerCase_Warning from '@salesforce/label/c.CSP_PendingCustomerCase_Warning';
-
+import ISSP_Survey from '@salesforce/label/c.ISSP_Survey';
+import Open from '@salesforce/label/c.Open';
+import CSP_RecipientsQuestion from '@salesforce/label/c.CSP_RecipientsQuestion';
+import CSP_Recipients from '@salesforce/label/c.CSP_Recipients';
+import ISSP_CaseNumber from '@salesforce/label/c.ISSP_CaseNumber';
+import ISSP_Subject from '@salesforce/label/c.ISSP_Subject';
+import CSP_Status from '@salesforce/label/c.CSP_Status';
+import CSP_CreatedOn from '@salesforce/label/c.CSP_CreatedOn';
+import CSP_LastUpdate from '@salesforce/label/c.CSP_LastUpdate';
+import CSP_Manage_Recipients from '@salesforce/label/c.CSP_Manage_Recipients';
 export default class PortalHomeCalendar extends LightningElement {
 
     @track loading = true;
@@ -20,9 +31,27 @@ export default class PortalHomeCalendar extends LightningElement {
     @track lstRecipients;
     @track newRecipient = '';
     @track haveRecipients = false;
+    @track CaseStatusClass = '';
+    @track surveyLink;
 
     @track pendingCustomerCase = false;
     pendingCustomerCaseWarningLabel = CSP_PendingCustomerCase_Warning;
+
+    @track displayOscarProgressBar = false;
+    @track progressStatusList = [];
+    
+    @track labels = {
+        ISSP_Survey,
+        Open,
+        CSP_RecipientsQuestion,
+		CSP_Recipients,
+		ISSP_CaseNumber,
+		ISSP_Subject,
+		CSP_Status,
+		CSP_CreatedOn,
+		CSP_LastUpdate,
+		CSP_Manage_Recipients
+    }
 
     connectedCallback() {
         //get the parameters for this page
@@ -30,13 +59,23 @@ export default class PortalHomeCalendar extends LightningElement {
 
         if(this.pageParams.caseId !== undefined){
             this.getCaseByIdJS();
-        }   
+        }
+        
+        if(this.pageParams.caseId !== undefined){
+            this.getProgressBarStatus();
+        }
+
+	this.getSurveyLink();
     }
 
     getCaseByIdJS(){
         getCaseById({ caseId : this.pageParams.caseId })
         .then(results => {
             this.caseDetails = results;
+
+            if(this.caseDetails.CreatedBy === undefined){
+                this.caseDetails.CreatedBy.Name = 'IATA Internal User';
+            }
 
             if(results.E2CP__AdditionalCC__c !== undefined 
                 && results.E2CP__AdditionalCC__c !== null && 
@@ -62,6 +101,8 @@ export default class PortalHomeCalendar extends LightningElement {
             this.loading = false;
             this.pendingCustomerCase = results.Status === 'Pending customer';
 
+            this.CaseStatusClass = results.Status.replace(/\s/g, '').replace(/_|-|\./g, '');
+
             console.log('pendingCustomerCase: ' , this.pendingCustomerCase);
         })
         .catch(error => {
@@ -69,6 +110,17 @@ export default class PortalHomeCalendar extends LightningElement {
             this.loading = false;
         });
         
+    }
+
+    getProgressBarStatus() {
+        getOscarProgress({ caseId : this.pageParams.caseId })
+        .then(results => {
+            if (results.length > 0){
+                this.displayOscarProgressBar = true;
+                this.progressStatusList = results;
+            }
+        });
+
     }
 
     openManageRecipientsPopup(){
@@ -79,6 +131,9 @@ export default class PortalHomeCalendar extends LightningElement {
         this.showManageRecipientsPopup = false;
     }
     
+	get hasSurveyLink() {
+        return this.surveyLink !== undefined && this.surveyLink.length > 0;
+    }
 
     addNewRecipientButtonClick(){
 
@@ -160,6 +215,17 @@ export default class PortalHomeCalendar extends LightningElement {
             this.loading = false;
         });
 
+    }
+
+
+    getSurveyLink() {
+        getSurveyLink({ caseId: this.pageParams.caseId })
+            .then(result => {
+                this.surveyLink = result;
+            })
+            .catch(error => {
+                this.surveyLink = undefined;
+            });
     }
 
 

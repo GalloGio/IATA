@@ -239,7 +239,10 @@
         <fields>ANG_Portal_Service_Role__c</fields>
         <fields>Account.ACC_RECORDTYPE</fields>
         <fields>CREATED_DATE</fields>
+        <fields>Last_Visit_Date__c</fields>
         <relatedList>Portal_Application_Right__c.Portal_Application__c</relatedList>
+        <sortField>Last_Visit_Date__c</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>

@@ -436,7 +436,7 @@
             <field>ISSP_AMS_Total_Current_Ownership__c</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
-            </displayedFields>
+        </displayedFields>
         <label>AMS_CorrectionSingleAccount</label>
     </fieldSets>
     <fieldSets>
@@ -1970,7 +1970,7 @@
         <fullName>ANG_IsNewGenAgency__c</fullName>
         <description>To show information to analyst. To simplify triggers and classes.</description>
         <externalId>false</externalId>
-        <formula>(Branch_Office_Country__r.ANG_Enable_NewGen__c &amp;&amp; OR(TEXT(Location_Class__c) = &apos;P&apos;, TEXT(Location_Class__c) = &apos;D&apos;)) || (Branch_Office_Country__r.Enable_NewGen_Pilot__c &amp;&amp; OR(TEXT(Location_Type__c) = &apos;HE&apos;, TEXT(Location_Type__c) = &apos;AE&apos;, TEXT(Location_Type__c) = &apos;GE&apos;) &amp;&amp; TEXT(Location_Class__c) = &apos;D&apos;)</formula>
+        <formula>AND(Branch_Office_Country__r.ANG_Enable_NewGen__c  , OR(TEXT(Location_Class__c) = &apos;P&apos;, TEXT(Location_Class__c) = &apos;D&apos;))</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Is New Gen Agency</label>
         <trackHistory>false</trackHistory>
@@ -2544,10 +2544,11 @@
         <fullName>Copy_Ownership_Records__c</fullName>
         <externalId>false</externalId>
         <label>Copy Ownership Records</label>
-        <required>false</required>
+        <length>100000</length>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
-        <type>TextArea</type>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
     </fields>
     <fields>
         <fullName>Copy_Ownership__c</fullName>

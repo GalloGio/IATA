@@ -213,6 +213,10 @@
         <name>AMS_DQ_Enter_Valid_City</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMS DQ First Suggestion --></label>
+        <name>AMS_DQ_First_Suggestion</name>
+    </customLabels>
+    <customLabels>
         <label>일치하는 주소가 발견되었습니다.</label>
         <name>AMS_DQ_Found_Addr</name>
     </customLabels>
@@ -785,6 +789,10 @@
         <name>ANG_ISSP_AFP_NoCreditCardMessage</name>
     </customLabels>
     <customLabels>
+        <label><!-- ANG_ISSP_ASD_HelpText --></label>
+        <name>ANG_ISSP_ASD_HelpText</name>
+    </customLabels>
+    <customLabels>
         <label>인가 유형</label>
         <name>ANG_ISSP_AccreditationType</name>
     </customLabels>
@@ -803,6 +811,18 @@
     <customLabels>
         <label>하위 조직:</label>
         <name>ANG_ISSP_AssociateEntity</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- BOP --></label>
+        <name>ANG_ISSP_BOP</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- BOP Access Link --></label>
+        <name>ANG_ISSP_BOP_Access</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_ISSP_BOP_China_URL --></label>
+        <name>ANG_ISSP_BOP_China_URL</name>
     </customLabels>
     <customLabels>
         <label><!-- Case reason used in the case subject --></label>
@@ -1137,6 +1157,10 @@
         <name>ANG_ISSP_ProductComparisonFeature10Tooltip</name>
     </customLabels>
     <customLabels>
+        <label><!-- ANG_ISSP_ProductComparisonFeature11 --></label>
+        <name>ANG_ISSP_ProductComparisonFeature11</name>
+    </customLabels>
+    <customLabels>
         <label>기능 1 - 도구 설명</label>
         <name>ANG_ISSP_ProductComparisonFeature1Tooltip</name>
     </customLabels>
@@ -1285,6 +1309,10 @@
         <name>ANG_ISSP_RHC_Information</name>
     </customLabels>
     <customLabels>
+        <label><!-- ANG ISSP RHC Information China --></label>
+        <name>ANG_ISSP_RHC_Information_China</name>
+    </customLabels>
+    <customLabels>
         <label>잔액 업데이트 요청</label>
         <name>ANG_ISSP_RHC_Request_Balance_Update</name>
     </customLabels>
@@ -1431,6 +1459,10 @@
     <customLabels>
         <label><!-- Account information updated --></label>
         <name>Account_information_updated</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Accreditation date --></label>
+        <name>Accreditation_date</name>
     </customLabels>
     <customLabels>
         <label><!-- Action --></label>
@@ -1720,6 +1752,10 @@
         <name>CC</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_AMS_StepFinal_In_Addition2 --></label>
+        <name>CSP_AMS_StepFinal_In_Addition2</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_ANG_Portal_Admin --></label>
         <name>CSP_ANG_Portal_Admin</name>
     </customLabels>
@@ -1736,12 +1772,36 @@
         <name>CSP_Accept_Terms_Error</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Account Domain Created --></label>
+        <name>CSP_Account_Domain_Created</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Add_All --></label>
+        <name>CSP_Add_All</name>
+    </customLabels>
+    <customLabels>
         <label>새 문서 추가</label>
         <name>CSP_Add_New_Documents</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_Add_New_User --></label>
+        <name>CSP_Add_New_User</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Add_User --></label>
+        <name>CSP_Add_User</name>
+    </customLabels>
+    <customLabels>
+        <label>&lt;a href= &apos;/s/support-reach-us&apos;&gt;문의 페이지&lt;/a&gt;를 통해 계정 정보 변경 사항을 제출하시면 됩니다.</label>
+        <name>CSP_Airline_Changes_Access</name>
+    </customLabels>
+    <customLabels>
         <label>공지 사항</label>
         <name>CSP_Announcement</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Apply --></label>
+        <name>CSP_Apply</name>
     </customLabels>
     <customLabels>
         <label>이 글이 도움이 되었나요?</label>
@@ -1754,6 +1814,10 @@
     <customLabels>
         <label>고급 검색</label>
         <name>CSP_Breadcrumb_AdvancedSearch_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>사례 세부 사항</label>
+        <name>CSP_Breadcrumb_CaseDetails_Title</name>
     </customLabels>
     <customLabels>
         <label>회사 프로필</label>
@@ -1786,6 +1850,10 @@
     <customLabels>
         <label><!-- CSP_Breadcrump_MyProfile_Title --></label>
         <name>CSP_Breadcrump_MyProfile_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>고객님 &amp; 국제항공운송협회 (IATA)</label>
+        <name>CSP_Breadcrump_You_IATA</name>
     </customLabels>
     <customLabels>
         <label>취소</label>
@@ -1832,12 +1900,20 @@
         <name>CSP_CaseNumber</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_Case_Currency --></label>
+        <name>CSP_Case_Currency</name>
+    </customLabels>
+    <customLabels>
         <label>사례</label>
         <name>CSP_Cases</name>
     </customLabels>
     <customLabels>
         <label>커뮤니티</label>
         <name>CSP_Community</name>
+    </customLabels>
+    <customLabels>
+        <label>국제항공운송협회 (IATA) 인증 및 변경 서비스를 통해 귀하의 계정 세부 사항 변경을 제출하실 수 있습니다.</label>
+        <name>CSP_CompanyAdministration_Link</name>
     </customLabels>
     <customLabels>
         <label>내 회사 사례보기</label>
@@ -1860,8 +1936,24 @@
         <name>CSP_Confirmed_Requested_Service_Message</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_Continue --></label>
+        <name>CSP_Continue</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Create_Contact_Complete_Field --></label>
         <name>CSP_Create_Contact_Complete_Field</name>
+    </customLabels>
+    <customLabels>
+        <label>생성 날짜</label>
+        <name>CSP_CreatedOn</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_DateFrom --></label>
+        <name>CSP_DateFrom</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_DateTo --></label>
+        <name>CSP_DateTo</name>
     </customLabels>
     <customLabels>
         <label>사용자 액세스 거부</label>
@@ -1888,8 +1980,20 @@
         <name>CSP_Documents_PubliCountry</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Email Domain Error Message --></label>
+        <name>CSP_Email_Domain_Error_Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Error Creating Record --></label>
+        <name>CSP_Error_Creating_Record</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_Error_Message_Mandatory_Fields_Contact --></label>
         <name>CSP_Error_Message_Mandatory_Fields_Contact</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Error while delete record --></label>
+        <name>CSP_Error_while_delete_record</name>
     </customLabels>
     <customLabels>
         <label>문의하기</label>
@@ -1936,6 +2040,14 @@
         <name>CSP_FeedbackTitle</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_Filter --></label>
+        <name>CSP_Filter</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Filtered --></label>
+        <name>CSP_Filtered</name>
+    </customLabels>
+    <customLabels>
         <label>귀하를 위해</label>
         <name>CSP_ForYou</name>
     </customLabels>
@@ -1948,12 +2060,28 @@
         <name>CSP_Home_WelcomeTitle</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_IATA_Country --></label>
+        <name>CSP_IATA_Country</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_IMPORTANT --></label>
+        <name>CSP_IMPORTANT</name>
+    </customLabels>
+    <customLabels>
+        <label>마지막 업데이트</label>
+        <name>CSP_LastUpdate</name>
+    </customLabels>
+    <customLabels>
         <label>로그아웃</label>
         <name>CSP_LogOut</name>
     </customLabels>
     <customLabels>
         <label>아래 목록에서 사용자를 관리하실 수 있습니다.</label>
         <name>CSP_Manage_Portal_Users</name>
+    </customLabels>
+    <customLabels>
+        <label>받는 사람 관리</label>
+        <name>CSP_Manage_Recipients</name>
     </customLabels>
     <customLabels>
         <label>서비스 관리</label>
@@ -1964,12 +2092,28 @@
         <name>CSP_Manage_Services</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_Manage_Services --></label>
+        <name>CSP_Manage_Services_NoIEPAccount</name>
+    </customLabels>
+    <customLabels>
         <label>내 사례보기</label>
         <name>CSP_MyCases</name>
     </customLabels>
     <customLabels>
         <label>이름</label>
         <name>CSP_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_NewContactProfile --></label>
+        <name>CSP_NewContactProfile</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_NewServiceUserMessage --></label>
+        <name>CSP_NewServiceUserMessage</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP New Email Domain --></label>
+        <name>CSP_New_Email_Domain</name>
     </customLabels>
     <customLabels>
         <label>표시할 관련 계정이 없습니다.</label>
@@ -2000,16 +2144,44 @@
         <name>CSP_OperationalCalendar_SeeMonthlyLink</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_Payment --></label>
+        <name>CSP_Payment</name>
+    </customLabels>
+    <customLabels>
         <label>사례를 진행하려면 귀하의 의견을 필요로 합니다.</label>
         <name>CSP_PendingCustomerCase_Warning</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Period --></label>
+        <name>CSP_Period</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_PortalPath --></label>
         <name>CSP_PortalPath</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_Portal_Administrators --></label>
+        <name>CSP_Portal_Administrators</name>
+    </customLabels>
+    <customLabels>
         <label>포털 상태</label>
         <name>CSP_Portal_Status</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Profile_PrivacyManagement_Link --></label>
+        <name>CSP_Profile_PrivacyManagement_Link</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Profile_PrivacyManagement_Text --></label>
+        <name>CSP_Profile_PrivacyManagement_Text</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Profile_PrivacyManagement_Title --></label>
+        <name>CSP_Profile_PrivacyManagement_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Profile_PrivacyManagement_URL --></label>
+        <name>CSP_Profile_PrivacyManagement_URL</name>
     </customLabels>
     <customLabels>
         <label>사례란 무엇이며 언제 필요합니까?</label>
@@ -2032,8 +2204,40 @@
         <name>CSP_RecentCases</name>
     </customLabels>
     <customLabels>
+        <label>귀하의 질문이 진행중인 사례와 관련이 있습니까?</label>
+        <name>CSP_RecentCases_HelpText</name>
+    </customLabels>
+    <customLabels>
+        <label>그렇지 않은 경우 아래로 스크롤하여 문의하세요.</label>
+        <name>CSP_RecentCases_HelpText2</name>
+    </customLabels>
+    <customLabels>
+        <label>진행중인 사례</label>
+        <name>CSP_RecentCases_Support</name>
+    </customLabels>
+    <customLabels>
+        <label>받는 사람</label>
+        <name>CSP_Recipients</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Record Deleted --></label>
+        <name>CSP_Record_Deleted</name>
+    </customLabels>
+    <customLabels>
         <label>관련 기사</label>
         <name>CSP_RelatedArticles</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Remittantce_Date --></label>
+        <name>CSP_Remittantce_Date</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_RemoveAllFilters --></label>
+        <name>CSP_RemoveAllFilters</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_RemoveContact_Reason --></label>
+        <name>CSP_RemoveContact_Reason</name>
     </customLabels>
     <customLabels>
         <label>서비스 요청</label>
@@ -2224,6 +2428,10 @@
         <name>CSP_Submit</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Success --></label>
+        <name>CSP_Success</name>
+    </customLabels>
+    <customLabels>
         <label>지원</label>
         <name>CSP_Support</name>
     </customLabels>
@@ -2248,8 +2456,64 @@
         <name>CSP_Title</name>
     </customLabels>
     <customLabels>
+        <label>&lt;a href=&quot;/ISSP_AMSCases&quot; target=&quot;_self&quot;&gt;여기를 클릭하여 국제항공운송협회 (IATA) 인증 및 변경에 직접 액세스하세요.&lt;/a&gt;</label>
+        <name>CSP_Travel_Agent_Accreditation_Changes_Access</name>
+    </customLabels>
+    <customLabels>
+        <label>&lt;a href=&quot;/s/manage-service?serviceId=a2ww0000001D7GOAA0&quot; target=&quot;_self&quot;&gt; 국제항공운송협회 (IATA) 인증 및 변경을 요청하려면 여기를 클릭&lt;/a&gt;</label>
+        <name>CSP_Travel_Agent_Accreditation_Changes_Request</name>
+    </customLabels>
+    <customLabels>
         <label>케이스 유형</label>
         <name>CSP_TypeOfCase</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_User --></label>
+        <name>CSP_User</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Welcome_Panel_Bullet_1_Desc --></label>
+        <name>CSP_Welcome_Panel_Bullet_1_Desc</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Welcome_Panel_Bullet_1_Title --></label>
+        <name>CSP_Welcome_Panel_Bullet_1_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Welcome_Panel_Bullet_2_Desc --></label>
+        <name>CSP_Welcome_Panel_Bullet_2_Desc</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Welcome_Panel_Bullet_2_Title --></label>
+        <name>CSP_Welcome_Panel_Bullet_2_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Welcome_Panel_Bullet_3_Desc --></label>
+        <name>CSP_Welcome_Panel_Bullet_3_Desc</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Welcome_Panel_Bullet_3_Title --></label>
+        <name>CSP_Welcome_Panel_Bullet_3_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Welcome_Panel_Bullet_4_Desc --></label>
+        <name>CSP_Welcome_Panel_Bullet_4_Desc</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Welcome_Panel_Bullet_4_Title --></label>
+        <name>CSP_Welcome_Panel_Bullet_4_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>고객 &amp; 국제항공운송협회 (IATA)</label>
+        <name>CSP_YouAndIATA</name>
+    </customLabels>
+    <customLabels>
+        <label>고객님을 위해 엄선된 서비스</label>
+        <name>CSP_YouIATA_Highlights</name>
+    </customLabels>
+    <customLabels>
+        <label>여기에서 항공 산업과 괸련된 다양한 국제항공운송협회 (IATA) 서비스, 출판물, 제품 및 자료를 확인할 수 있습니다. 고객님의 관심사 및 활동 내역에 따라 특별히 엄선되었습니다.</label>
+        <name>CSP_YouIATA_Highlights_Text</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_You_Dont_Have_Announcements --></label>
@@ -9874,6 +10138,10 @@ and
         <name>ISSP_AMS_NoC_PDF_Title</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_NoC_Partner --></label>
+        <name>ISSP_AMS_NoC_Partner</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS NoC Percent Ownership --></label>
         <name>ISSP_AMS_NoC_Percent_Ownership</name>
     </customLabels>
@@ -11806,6 +12074,10 @@ and
         <name>ISSP_ANG_Country_Req</name>
     </customLabels>
     <customLabels>
+        <label><!-- Type of Agency --></label>
+        <name>ISSP_ANG_Country_Reqs_Type_Of_Agency</name>
+    </customLabels>
+    <customLabels>
         <label>전체 계층 구조</label>
         <name>ISSP_ANG_ENTIRE_HIERARCHY</name>
     </customLabels>
@@ -12279,7 +12551,7 @@ ICE의 업데이트 되는 정보들은 타사에서 24 시간의 간격을 두�
         <name>ISSP_Account_not_approved</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ContactList --></label>
+        <label>승인</label>
         <name>ISSP_Activate</name>
     </customLabels>
     <customLabels>
@@ -12757,6 +13029,14 @@ IATA로부터 다음 국가에 대한 도움을 받으신 적이 있습니까?</
         <name>ISSP_Change_Request_Description</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP China Domestic --></label>
+        <name>ISSP_China_Domestic</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP China International --></label>
+        <name>ISSP_China_International</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_Email --></label>
         <name>ISSP_ClickHereLogIn</name>
     </customLabels>
@@ -13057,7 +13337,7 @@ IATA로부터 다음 국가에 대한 도움을 받으신 적이 있습니까?</
         <name>ISSP_Deny_Access</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Description --></label>
+        <label>설명</label>
         <name>ISSP_Description</name>
     </customLabels>
     <customLabels>
@@ -14129,6 +14409,46 @@ IATA로부터 다음 국가에 대한 도움을 받으신 적이 있습니까?</
         <name>ISSP_IDCard_Valid_To</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_IDFS_Title_01 --></label>
+        <name>ISSP_IDFS_Title_01</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_IDFS_Title_02 --></label>
+        <name>ISSP_IDFS_Title_02</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_IDFS_Title_03 --></label>
+        <name>ISSP_IDFS_Title_03</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_IDFS_Title_04 --></label>
+        <name>ISSP_IDFS_Title_04</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_IDFS_Title_05 --></label>
+        <name>ISSP_IDFS_Title_05</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_IDFS_Title_06 --></label>
+        <name>ISSP_IDFS_Title_06</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_IDFS_Title_07 --></label>
+        <name>ISSP_IDFS_Title_07</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_IDFS_Title_08 --></label>
+        <name>ISSP_IDFS_Title_08</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_IDFS_Title_09 --></label>
+        <name>ISSP_IDFS_Title_09</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_IDFS_Title_10 --></label>
+        <name>ISSP_IDFS_Title_10</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP IFACP Endorsement Changes --></label>
         <name>ISSP_IFACP_Endorsement_Changes</name>
     </customLabels>
@@ -14437,7 +14757,7 @@ IATA로부터 다음 국가에 대한 도움을 받으신 적이 있습니까?</
         <name>ISSP_MITA_Agreements_Service_Name</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ContactList --></label>
+        <label>관리자로 승인</label>
         <name>ISSP_MakeAdmin</name>
     </customLabels>
     <customLabels>
@@ -15291,6 +15611,10 @@ IATA 고객 포털(IATA Customer Portal) 등록 과정에 계속 문제가 발�
         <name>ISSP_RHC_HUB_AFP_Cash</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP RHC HUB AFP China --></label>
+        <name>ISSP_RHC_HUB_AFP_China</name>
+    </customLabels>
+    <customLabels>
         <label>신용 카드</label>
         <name>ISSP_RHC_HUB_AFP_Credit_Card</name>
     </customLabels>
@@ -15393,6 +15717,10 @@ IATA 고객 포털(IATA Customer Portal) 등록 과정에 계속 문제가 발�
     <customLabels>
         <label>귀하의 성을 입력하십시오.</label>
         <name>ISSP_Registration_Error_LastName</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Registration Error LegalName --></label>
+        <name>ISSP_Registration_Error_LegalName</name>
     </customLabels>
     <customLabels>
         <label>귀하의 국가를 선택하십시오</label>
@@ -17115,6 +17443,18 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
     <customLabels>
         <label><!-- KALE_SUPPORT_EMAIL --></label>
         <name>KALE_SUPPORT_EMAIL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- KPI1RT --></label>
+        <name>KPI1RT</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- KPI1Reason --></label>
+        <name>KPI1Reason</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- KPI2 --></label>
+        <name>KPI2</name>
     </customLabels>
     <customLabels>
         <label><!-- Kavi email notification part 1 --></label>
@@ -19496,6 +19836,10 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <name>Priority_4_Trivial_Defects</name>
     </customLabels>
     <customLabels>
+        <label><!-- ProcessEffAge --></label>
+        <name>ProcessEffAge</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Product --></label>
         <name>Product</name>
     </customLabels>
@@ -19622,6 +19966,10 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
     <customLabels>
         <label><!-- Remaining_Owners --></label>
         <name>Remaining_Owners</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Remittance frequency --></label>
+        <name>Remittance_frequency</name>
     </customLabels>
     <customLabels>
         <label><!-- Renewal_Number --></label>
@@ -19880,6 +20228,10 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <name>TECH_GDPR_Network_Name</name>
     </customLabels>
     <customLabels>
+        <label><!-- TSI USA Only --></label>
+        <name>TSI_USA_Only</name>
+    </customLabels>
+    <customLabels>
         <label>과제들</label>
         <name>Tasks_Notification</name>
     </customLabels>
@@ -20076,6 +20428,10 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <name>contacting_us</name>
     </customLabels>
     <customLabels>
+        <label><!-- Account Relocation --></label>
+        <name>csp_AccountRelocateSuccess</name>
+    </customLabels>
+    <customLabels>
         <label>인증 프로세스</label>
         <name>csp_Accreditation_Process</name>
     </customLabels>
@@ -20090,6 +20446,10 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
     <customLabels>
         <label>양식을 작성하셔서 권장되는 지원 옵션을 확인하십시오.</label>
         <name>csp_ActionIndicator</name>
+    </customLabels>
+    <customLabels>
+        <label>추가 세부 사항</label>
+        <name>csp_AdditionalDetails</name>
     </customLabels>
     <customLabels>
         <label><!-- Request New Service --></label>
@@ -20380,6 +20740,10 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <name>csp_Query</name>
     </customLabels>
     <customLabels>
+        <label>다른 사람에게 알려야 합니까?</label>
+        <name>csp_RecipientsQuestion</name>
+    </customLabels>
+    <customLabels>
         <label>귀하의 에이전시는 현재 열린 국제항공운송협회 (IATA) EasyPay를 계정을 가지고 있지 않습니다.본사의 공인 서명인에게 국제항공운송협회 (IATA) EasyPay 계좌 개설을 요청하십시오. 포털 관리자로서 귀하는 &lt;a href = &quot;/my-profile&quot;&gt; 개인 정보 &lt;/a&gt; 귀하를 Legal Authorized Signatory로 지명하거나, 아래에서 올바른 포털 관리자로 임명하려면 &lt;a href= &quot;/company-profile&quot;&gt; 회사 관리 - &gt; 연락처 &lt;/a&gt; 페이지 그리고 귀하의 EasyPay 계좌 개설을 요청하십시오.&lt;br/&gt;&lt;br/&gt;도움이 필요하시면 지원 문의에 연락하십시오.&lt;a href=&quot;/Support-Reach-Us&quot;&gt;고객 지원&lt;/a&gt;</label>
         <name>csp_RequestService_ContactPortalAdmin_Alt</name>
     </customLabels>
@@ -20406,6 +20770,10 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
     <customLabels>
         <label>판매 대금</label>
         <name>csp_Sales_Payment</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Support Reach Us Page Label --></label>
+        <name>csp_SearchNotPerformed</name>
     </customLabels>
     <customLabels>
         <label><!-- Request New Service --></label>

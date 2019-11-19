@@ -147,6 +147,22 @@ body {
     fill: #1e32fa;
 }
 
+.blackIcon svg {
+  fill: black;
+}
+
+.orangeIcon svg {
+  fill: #ed7756;
+}
+
+.greenIcon svg {
+  fill: #289632;
+}
+
+.redIcon svg {
+  fill: red;
+}
+
 .whiteIcon svg {
     fill: #FFFFFF;
 }
@@ -244,15 +260,12 @@ body {
 .lightBlueSendButton svg {
     fill:#a5adfd;
 }
-.caseMessagesContainer{
-    height: 350px;
-}
+
 .caseMessagesSelfBubble{
     background-color: #525252;
     color:#FFFFFF;
     border-radius: 1px;
     font-size: 14px;
-    text-align: right;
   	font-weight: normal;
   	font-style: normal;
   	font-stretch: normal;
@@ -358,7 +371,9 @@ lightning-datatable .slds-th__action {
 .Pendingcustomer lightning-primitive-cell-wrapper lightning-formatted-text, .ClosedRejected lightning-primitive-cell-wrapper lightning-formatted-text, 
 .ClosedDisapproved lightning-primitive-cell-wrapper lightning-formatted-text, .ClosedWithdrawn lightning-primitive-cell-wrapper lightning-formatted-text, 
 .AcceptedPendingBG lightning-primitive-cell-wrapper lightning-formatted-text, .AcceptedPendingDocs lightning-primitive-cell-wrapper lightning-formatted-text, 
-.AcceptedPendingAgreement lightning-primitive-cell-wrapper lightning-formatted-text, .Returnapplicationtocustomer lightning-primitive-cell-wrapper lightning-formatted-text{
+.AcceptedPendingAgreement lightning-primitive-cell-wrapper lightning-formatted-text, .Returnapplicationtocustomer lightning-primitive-cell-wrapper lightning-formatted-text,
+.Pendingcustomer span, .ClosedRejected span, .ClosedDisapproved span, .ClosedWithdrawn span, .AcceptedPendingBG span,
+.AcceptedPendingDocs span, .AcceptedPendingAgreement span, .Returnapplicationtocustomer span {
     background-color: #ffa499;
     padding: 4px 6px 2px 6px;
     border-radius: 1px;
@@ -371,13 +386,15 @@ lightning-datatable .slds-th__action {
     vertical-align: middle;
 }
 
-.Open lightning-primitive-cell-wrapper lightning-formatted-text, .InProgress lightning-primitive-cell-wrapper lightning-formatted-text, 
+.Open lightning-primitive-cell-wrapper lightning-formatted-text, .InProgress lightning-primitive-cell-wrapper lightning-formatted-text, .Inprogress lightning-primitive-cell-wrapper lightning-formatted-text,
 .Escalated lightning-primitive-cell-wrapper lightning-formatted-text, .EscalatedInternally lightning-primitive-cell-wrapper lightning-formatted-text, 
 .EscalatedExternally lightning-primitive-cell-wrapper lightning-formatted-text, .ForReviewandAcceptance lightning-primitive-cell-wrapper lightning-formatted-text, 
 .OnHoldExternal lightning-primitive-cell-wrapper lightning-formatted-text, .OnHoldInternal lightning-primitive-cell-wrapper lightning-formatted-text, 
 .Reopen lightning-primitive-cell-wrapper lightning-formatted-text, .ClosedNotAccepted lightning-primitive-cell-wrapper lightning-formatted-text, 
 .InputRequested lightning-primitive-cell-wrapper lightning-formatted-text, .PendingReconsideration lightning-primitive-cell-wrapper lightning-formatted-text,
-.ActionNeeded lightning-primitive-cell-wrapper lightning-formatted-text {
+.ActionNeeded lightning-primitive-cell-wrapper lightning-formatted-text, .ActionNeeded span, .Open span, .InProgress span, .Escalated span,
+.EscalatedInternally span, .EscalatedExternally span, .ForReviewandAcceptance span, .OnHoldExternal span, .OnHoldInternal span,
+.Reopen span, .ClosedNotAccepted span, .InputRequested span, .PendingReconsideration span, .Inprogress span{
     background-color: #fac832;
     padding: 4px 6px 2px 6px;
     border-radius: 1px;
@@ -391,7 +408,8 @@ lightning-datatable .slds-th__action {
 }
 
 .Closed lightning-primitive-cell-wrapper lightning-formatted-text, .AcceptedFutureDate lightning-primitive-cell-wrapper lightning-formatted-text, 
-.Submitted lightning-primitive-cell-wrapper lightning-formatted-text{
+.Submitted lightning-primitive-cell-wrapper lightning-formatted-text,
+.Closed span, .AcceptedFutureDate span, .Submitted span {
     background-color: #b1e8b5;
     padding: 4px 6px 2px 6px;
     border-radius: 1px;
@@ -404,7 +422,8 @@ lightning-datatable .slds-th__action {
     vertical-align: middle;
 }
 
-.Draft lightning-primitive-cell-wrapper lightning-formatted-text, .OpenEDMC lightning-primitive-cell-wrapper lightning-formatted-text{
+.Draft lightning-primitive-cell-wrapper lightning-formatted-text, .OpenEDMC lightning-primitive-cell-wrapper lightning-formatted-text,
+.Draft span, .OpenEDMC span{
     background-color: #f0f2f5;
     padding: 4px 6px 2px 6px;
     border-radius: 1px;
@@ -417,15 +436,27 @@ lightning-datatable .slds-th__action {
     vertical-align: middle;
 }
 /* ############################################## */
+@media only screen and (max-device-width: 480px){
+  td.cellHidden{
+    display: none;
+  }
+  .casesListWrapper .slds-scrollable_y{
+    width: unset !important;
+  }
 
+  .casesListWrapper table{
+    width: 100% !important;
+  }
+}
 
+/* ############################################## */
 
 /* ############################################## */
 /* Casses for the popups */
 
 .modal {
   position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
+  z-index: 2; /* Sit on top */
   padding-top: 100px; /* Location of the box */
   padding-bottom: 50px;
   left: 0;
@@ -440,17 +471,52 @@ lightning-datatable .slds-th__action {
 
 .customPopupInteriorHalfScreenCentered {
     background-color: #F7F8FA;
-    width: 50%;
+    width: 35%;
     margin: auto;
     box-shadow: 5px 5px 20px #808080;
     border-radius: 1px;
     border: solid 1px #e2e2e2;
 }
 
+@media only screen and (max-width: 1000px) {
+    .customPopupInteriorHalfScreenCentered {
+        width: 80%;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .customPopupInteriorHalfScreenCentered {
+        width: 90%;
+    }
+}
+
 /* ############################################## */
 
 /* ############################################## */
 /* Classes for the buttons */
+
+.containedButtonSmaller, 
+.containedButtonSmaller button {
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+  border-radius: 1px;
+  box-shadow: 0 6px 16px 0 rgba(56, 86, 235, 0.24),
+    0 1px 2px 0 rgba(56, 86, 235, 0.16);
+  background-color: #3333ff;
+  font-size: 16px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
+  text-align: center;
+  color: #ffffff;
+  min-height: 50px;
+  width: 200px;
+  word-break: break-word;
+  border: none;
+  display: inline-block;
+}
 
 .containedButton, .containedButton button, .containedButton button:active, .containedButton button:visited, .containedButton button:focus {
     -webkit-transition-duration: 0.4s; /* Safari */
@@ -468,8 +534,9 @@ lightning-datatable .slds-th__action {
     color: #ffffff;
     min-height: 40px;
     width: 220px;
-    word-break: break-all;
+    word-break: break-word;
     border: none;
+    display: inline-block;
 }
 .containedButton button:hover {
 	border-radius: 1px;
@@ -485,8 +552,19 @@ lightning-datatable .slds-th__action {
     color: #ffffff;
     min-height: 40px;
     width: 220px;
-    word-break: break-all;
+    word-break: break-word;
     border: none;
+}
+
+.containedButton button:disabled, .containedButton button:disabled:hover, .containedButton:disabled, .containedButton.disabledButton {
+    background-color: #f7f8fa;
+    color: #999999;
+    box-shadow: none;
+}
+@media screen and (max-width: 400px){
+  .reachusButton.containedButton button{
+    width: unset;
+  }
 }
 
 .containedButtonSlim, .containedButtonSlim button, .containedButtonSlim button:active, .containedButtonSlim button:visited, .containedButtonSlim button:focus {
@@ -541,46 +619,37 @@ lightning-datatable .slds-th__action {
     color: #33f;
     min-height: 40px;
     height: 56px;
-    width: 200px;
+    width: 220px;
     word-break: normal;
 }
 
 .containedButton-size {
     height: 56px;
-    width: 200px;
+    width: 100%;
 }
 
-.filterButton, .filterButton button, .filterButton button:active, .filterButton button:visited, .filterButton button:focus{
-    -webkit-transition-duration: 0.4s; /* Safari */
-  	transition-duration: 0.4s;
-    border-radius: 2px;
-  	background-color: #D0D6FA;
-    font-size: 14px;
-    font-weight: 500;
-    font-style: normal;
-    font-stretch: normal;
-    line-height: 1.71;
-    letter-spacing: normal;
-    text-align: left;
-    color: #3333ff;
-    min-height: 40px;
-    word-break: break-all;
-    border: none;
+.filterButton,
+.filterButton button,
+.filterButton button:active {
+  background-color: #d0d6fa;
+  transition-duration: 0.4s;
+  border-radius: 1px;
+  font-size: 16px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
+  text-align: center;
+  color: #3333ff;
+  min-height: 40px;
+  width: 220px;
+  word-break: break-all;
+  border: none;
 }
-.filterButton button:hover {
-	border-radius: 2px;
-    background-color: #D0D6FF;
-    font-size: 14px;
-    font-weight: 500;
-    font-style: normal;
-    font-stretch: normal;
-    line-height: 1.71;
-    letter-spacing: normal;
-    text-align: left;
-    color: #3333ff;
-    min-height: 40px;
-    word-break: break-all;
-    border: none;
+
+.fullWidth, .fullWidth button, .fullWidth button:active, .fullWidth button:visited, .fullWidth button:focus, .fullWidth button:hover {
+    width: 100%;
 }
 
 .outlinedButton, .outlinedButton button, .outlinedButton button:active, .outlinedButton button:visited, .outlinedButton button:focus{
@@ -654,10 +723,22 @@ lightning-datatable .slds-th__action {
   height: 66px;
 }
 
+.rowHeight .slds-hint-parent {
+  height: 30px;
+}
+
+.rowHeight .slds-table_header-fixed_container.slds-scrollable_x {
+  overflow: unset;
+}
+
 .text-black lightning-formatted-url a {
     color: #000000;
 }
 
+.slds-button__icon_right,
+.slds-button__icon--right {
+    margin-left: 0;
+}
 /* ############################################## */
 /* Text Sizing */
 
@@ -846,7 +927,7 @@ lightning-datatable .slds-th__action {
     left: 0px;
 }
 .slds-combobox_container .slds-input__icon_right lightning-primitive-icon:after{
-    content: '';
+    content: "";
     position: absolute;
     border-top: 6px solid #fff;
     border-bottom: 0;
@@ -856,7 +937,7 @@ lightning-datatable .slds-th__action {
     left: 0px;
 }
 .slds-combobox_container .slds-is-open .slds-input__icon_right lightning-primitive-icon:after{
-    content: '';
+    content: "";
     position: absolute;
     border-top: 0;
     border-bottom: 6px solid #fff;
@@ -864,6 +945,50 @@ lightning-datatable .slds-th__action {
     border-right: 5px solid transparent;
     top: 8px;
     left: 0px;
+}
+
+.languageSelection .slds-combobox_container
+  .slds-input__icon_right
+  lightning-primitive-icon:after {
+    content: "";
+    position: absolute;
+    border-top: 0;
+    border-bottom: 6px solid transparent;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    top: 8px;
+    left: 0px;
+  }
+
+.languageSelection .slds-combobox_container
+  .slds-is-open
+  .slds-input__icon_right
+  lightning-primitive-icon:after {
+    content: "";
+    position: absolute;
+    border-top: 0;
+    border-bottom: 6px solid transparent;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    top: 8px;
+    left: 0px;
+  }
+
+.languageSelection .slds-combobox_container input[role="textbox"]{
+    border:none;
+    background-color: transparent;
+}
+
+.languageSelection .slds-combobox_container input[role="textbox"]:not(:placeholder-shown) {
+    background-color: transparent;
+}
+
+.languageSelection .slds-combobox_container input[role="textbox"] {
+    height: 32px;
+    color: #3333ff;
+    font-size: 14px;
+    font-weight: 500;
+    text-align: center;
 }
 
 .slds-combobox_container lightning-base-combobox-item:hover,
@@ -1174,13 +1299,56 @@ lightning-datatable .slds-th__action {
 }
 
 .labelValue .slds-checkbox .slds-form-element__label {
-    font-size: 14px;
-    font-weight: 500;
-    font-style: normal;
-    font-stretch: normal;
-    line-height: 2.4;
-    letter-spacing: normal;
-    color: #525252;
+    display:none;
+}
+
+.textValue .slds-checkbox_standalone {
+  cursor: pointer;
+}
+
+.textValue input[type="checkbox"] {
+  box-sizing: border-box;
+  padding: 0;
+}
+
+.textValue .slds-checkbox_standalone input{
+  font-size: 1rem;
+  opacity: 0;
+  position: absolute;
+}
+
+.textValue .slds-checkbox_faux {
+	border-radius:0;
+    position: relative;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    right: 2px;
+    top: -4px;
+    vertical-align: middle;
+    background-color: inherit;
+    color: blue;
+    border: 1px solid blue;
+}
+
+.textValue .slds-checkbox_standalone input:checked + .slds-checkbox_faux:after{
+  content: "";
+  display: block;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 14px;
+  height: 14px;
+  background-color: blue;
+  transform:none;
+}
+
+.textValue .slds-checkbox_standalone input:checked + .slds-checkbox_faux{
+  border-color: blue;
+}
+
+.textValue .slds-checkbox_faux{
+  transform: scale(0.75);
 }
 
 .textValue .slds-form-element__static {
@@ -1292,7 +1460,8 @@ lightning-datatable .slds-th__action {
     border: none;
 }
 
-.containedButtonWhite button {
+.containedButtonWhite button,
+.containedButtonWhite button:hover {
     background-color: #ffffff;
     transition-duration: 0.4s;
     border-radius: 1px;
@@ -1308,6 +1477,8 @@ lightning-datatable .slds-th__action {
     width: 220px;
     word-break: break-all;
     border: none;
+    display: inline-block;
+    min-height: 40px;
 }
 
 /* Custom picklist Support Reach Us*/
@@ -1321,6 +1492,14 @@ lightning-datatable .slds-th__action {
 .customPickList input:focus{
     border-color: #e6e6e6;
     box-shadow: none;
+}
+
+/* Date input */
+.dateField input {
+    background-color: #f7f8fa;
+    border-radius: 1px;
+    cursor: pointer;
+    border-color: #d4d4d4;
 }
 
 /* Custom card sizing Support Reach Us*/
@@ -1407,6 +1586,10 @@ visibility: hidden;
     background-image: url(/csportal/s/CSPortal/Images/Icons/more.svg);
 }
 
+.removeArrowFromButtonMenu button > :nth-child(2) {
+  display: none;
+}
+
 .introMessage span a {
     color: #3333ff;
 }
@@ -1417,8 +1600,8 @@ visibility: hidden;
 }
 
 /* USER INACTIVE POPUP */
-#div>.siteforcePanelsContainer{
-    z-index: 5000;
+.siteforcePanelsContainer>div{
+    z-index: 5000 !important;
 }
 
 .headerContainerShadow {
@@ -1442,3 +1625,76 @@ visibility: hidden;
     opacity: 0.1;
     background-image: linear-gradient(256deg, rgba(0, 0, 0, 0), #000000);
 }
+
+/* Mobile side menu select language styles */
+
+.sideBar .langSelect,
+.sideBar .langSelect input[role="textbox"],
+.sideBar .langSelect div[role="listbox"] {
+    background-color: #1e32fa;
+    border-radius: 0;
+}
+
+.sideBar .langSelect input[role="textbox"] {
+    border: 0;
+    cursor: pointer;
+    width: 140px;
+    text-align: center;
+}
+
+.sideBar .langSelect div[role="listbox"] {
+    max-width: unset;
+    width: 140px;
+}
+
+.sideBar .changingLangSpinner .slds-spinner_container {
+   position: fixed;
+}
+
+.sideBar .langSelect .slds-form-element__label {
+   display: none;
+}
+
+.sideBar .slds-combobox_container lightning-base-combobox-item:hover,
+.sideBar .slds-combobox_container lightning-base-combobox-item[aria-selected="true"] {
+    color: #1e32fa;
+}
+
+.sideBar .slds-combobox_container .slds-input__icon_right lightning-primitive-icon:before {
+    border-top: 6px solid #fff;
+    border-bottom: 0;
+}
+.sideBar .slds-combobox_container .slds-is-open .slds-input__icon_right lightning-primitive-icon:before {
+    border-bottom: 6px solid #fff;
+    border-top: 0;
+}
+.sideBar .slds-combobox_container .slds-input__icon_right lightning-primitive-icon:after {
+    border-top: 6px solid #1e32fa;
+    border-bottom: 0;
+}
+.sideBar .slds-combobox_container .slds-is-open .slds-input__icon_right lightning-primitive-icon:after {
+    border-bottom: 6px solid #1e32fa;
+    border-top: 0;
+}
+
+.sideBar .slds-combobox_container input[role="textbox"] {
+	height: 32px;
+}
+
+.sideBar .slds-combobox_container .slds-input__icon_right lightning-primitive-icon svg {
+    fill: #fff;
+}
+
+.button_no_margin button{
+    margin: -10px !important;
+}
+
+.blueLink a {
+	color: #1e32fa;
+}
+
+/*-- Hides search icons from inputs in Edge and IE --*/
+.searchBarBar input[type="text"]::-ms-clear {
+    display: none;
+}
+  
