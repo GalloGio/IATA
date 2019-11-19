@@ -177,11 +177,16 @@ private class AWW_AgencyManagementTest {
 	@isTest static void testHeadOffices() {
 		Account wwAccount = [SELECT Id FROM Account WHERE RecordType.DeveloperName = 'Agency_WW_HQ'];
 		Account agency = [SELECT Id FROM Account WHERE RecordType.DeveloperName = 'IATA_Agency'];
+		List<Id> listAcc = new List<Id>();
+		listAcc.add(agency.id);
 		Test.startTest();
 		AWW_HeadOfficesCtrl.getHeadOffices(wwAccount.Id);
 		AWW_HeadOfficesCtrl.searchAccounts('Test', wwAccount.Id, 'remove');
 		AWW_HeadOfficesCtrl.getAgencyHierarchy(agency.Id);
 		AWW_HeadOfficesCtrl.getUserAccessRightsAMPAgencyManagement();
+		Apexpages.StandardController sc = new Apexpages.StandardController(wwAccount);
+		AWW_HeadOfficesCtrl ext = new AWW_HeadOfficesCtrl(sc);
+		AWW_HeadOfficesCtrl.applyChangesToHierarchy(null,listAcc,'remove');
 		Test.stopTest();
 	}
 
@@ -221,5 +226,47 @@ private class AWW_AgencyManagementTest {
 		System.assertEquals(0, objectives.size());
 		Test.stopTest();
 	}    
+	
+	@isTest static void canEditOtherTypeofSubsidiariesTest() {
+		List<PermissionSet> permissions = [SELECT Id, Name FROM PermissionSet WHERE Name IN ('AMP_Manage_Account_Ownership')];
+		List<PermissionSetAssignment> assignedPermissions = [SELECT Id FROM PermissionSetAssignment WHERE  AssigneeId = :UserInfo.getUserId() AND PermissionSetId IN :permissions];
+		if(!assignedPermissions.isEmpty()) {
+			delete assignedPermissions;
+		}
 
+		Test.startTest();
+		Boolean userAccessRight = AWW_AccountIdentificationCtrl.canEditOtherTypeofSubsidiaries();
+		System.assertEquals(false, userAccessRight);
+
+		PermissionSetAssignment p1 = new PermissionSetAssignment(
+			AssigneeId= UserInfo.getUserId(),
+			PermissionSetId= permissions[0].Id
+		);
+		insert p1;
+		userAccessRight = AWW_AccountIdentificationCtrl.canEditOtherTypeofSubsidiaries();
+		System.assertEquals(true, userAccessRight);
+
+		Test.stopTest();
+	}    
+	@isTest static void haveAMPAgencyManagement() {
+		List<PermissionSet> permissions = [SELECT Id, Name FROM PermissionSet WHERE Name IN ('AMP_Agency_Management')];
+		List<PermissionSetAssignment> assignedPermissions = [SELECT Id FROM PermissionSetAssignment WHERE  AssigneeId = :UserInfo.getUserId() AND PermissionSetId IN :permissions];
+		if(!assignedPermissions.isEmpty()) {
+			delete assignedPermissions;
+		}
+
+		Test.startTest();
+		Boolean userAccessRight = AWW_AccountIdentificationCtrl.haveAMPAgencyManagement();
+		System.assertEquals(false, userAccessRight);
+
+		PermissionSetAssignment p1 = new PermissionSetAssignment(
+			AssigneeId= UserInfo.getUserId(),
+			PermissionSetId= permissions[0].Id
+		);
+		insert p1;
+		userAccessRight = AWW_AccountIdentificationCtrl.haveAMPAgencyManagement();
+		System.assertEquals(true, userAccessRight);
+
+		Test.stopTest();
+	}  
 }
