@@ -39,8 +39,8 @@ public without sharing class RegistrationLvl2Email {
             message.setToAddresses(new List<String>{address});
             
             Id networkId = [SELECT Id FROM Network WHERE Name = 'CS Portal'].Id;
-            string url = Network.getLoginURL(networkId).substring(0,Network.getLoginURL(networkId).indexOf('login'));
-            url = url + 'my-profile?triggerL2=true';
+            string url = Network.getLoginURL(networkId).substring(0,Network.getLoginURL(networkId).lastIndexOf('/'));
+            url = url + '/my-profile?triggerL2=true';
 
             
             String plainBody = message.getPlainTextBody();

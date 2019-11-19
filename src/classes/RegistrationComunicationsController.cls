@@ -309,7 +309,7 @@ public without sharing class RegistrationComunicationsController {
         Id networkId = [SELECT Id FROM Network WHERE Name = 'CS Portal'].Id;
         string url = '';
         if(!test.isRunningTest()){
-            Network.getLoginURL(networkId).substring(0,Network.getLoginURL(networkId).indexOf('login'));
+            Network.getLoginURL(networkId).substring(0,Network.getLoginURL(networkId).lastIndexOf('/'));
         }
         url = url + 'my-profile?triggerL2=true';
         return url;

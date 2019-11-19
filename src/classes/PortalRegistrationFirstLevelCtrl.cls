@@ -351,7 +351,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
     public static boolean sendRegistrationEmailVF(RegistrationParameters params, string userId){
         Boolean result = false;
         String portalUrl = '';
-        if(Network.getNetworkId() != null) portalUrl = Network.getLoginURL(Network.getNetworkId()).substring(0,Network.getLoginURL(Network.getNetworkId()).indexOf('/login'));
+        if(Network.getNetworkId() != null) portalUrl = Network.getLoginURL(Network.getNetworkId()).substring(0,Network.getLoginURL(Network.getNetworkId()).lastIndexOf('/'));
         string profileUrl = portalUrl + '/my-profile?triggerL2=true';
 
         if (userId == null || userId == ''){
