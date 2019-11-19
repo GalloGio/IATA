@@ -218,8 +218,7 @@ export default class PortalRegistrationAccountSelection extends LightningElement
                     value: ''
                 });
                 
-                //Starting from 1 to remove the "NO COUNTRY" option
-                for (var i = 1; i < result.countryList.length; i++) {
+                for (var i = 0; i < result.countryList.length; i++) {
                     countriesList.push({
                         label: result.countryList[i].Name,
                         value: result.countryList[i].Id
