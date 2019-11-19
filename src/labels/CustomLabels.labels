@@ -4715,7 +4715,7 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CaseValidation - Area</shortDescription>
-        <value>Accreditation,Airlines GSA/MSO,Airline Management,BSPlink/ASD,Cargo Operations,CASSlink,Customer Portal Enquiry,IATA General Information,iiNet,Invoicing,myIATA,Passenger Operations,Passenger Stock Management,Product Enquiry,Remittance &amp; Settlement,Risk Management,TIESS Support, MITA, Coding, Your VOICE - Annual Survey,IBSPs Migration, TASF, E&amp;F Services,E&amp;F Operations,Easy Pay,NewGen ISS,E&amp;F,SIS,ICH,iiNet,AirportIS,SIS Dispute/Correspondence,SIS e-Invoicing,SIS Fees,SIS File Submission,SIS Invoice Creation,SIS ISPG,SIS Receive invoices/Files,SIS Release Notes,SIS Reports,SIS User Guide,CargoIS,Direct Data Solutions (DDS),GAP,MarketIS,PaxIS,Airline Joining,Airline Leaving,New application - forms, procedures, fees</value>
+        <value>Accreditation,Airlines GSA/MSO,Airline Management,BSPlink/ASD,Cargo Operations,CASSlink,Customer Portal Enquiry,IATA General Information,iiNet,Invoicing,myIATA,Passenger Operations,Passenger Stock Management,Product Enquiry,Remittance &amp; Settlement,Risk Management,TIESS Support, MITA, Coding, Your VOICE - Annual Survey,IBSPs Migration, TASF, E&amp;F Services,E&amp;F Operations,Easy Pay,NewGen ISS,E&amp;F,SIS,ICH,iiNet,AirportIS,SIS Dispute/Correspondence,SIS e-Invoicing,SIS Fees,SIS File Submission,SIS Invoice Creation,SIS ISPG,SIS Receive invoices/Files,SIS Release Notes,SIS Reports,SIS User Guide,CargoIS,Direct Data Solutions (DDS),GAP,MarketIS,PaxIS,Airline Joining,Airline Leaving,New application - forms, procedures, fees,Agency Risk Management</value>
     </labels>
     <labels>
         <fullName>CaseValidation_Area2</fullName>
@@ -25562,6 +25562,13 @@ Can you please confirm which country you&apos;ve previously received support for
         <value>Document Category</value>
     </labels>
     <labels>
+        <fullName>ISSP_FS_Link</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FS_Link</shortDescription>
+        <value>http://portal.iata.org/ISSP_FinancialSecInformation?MainNav=FinInfo&amp;subNav=financial_securities&amp;mid=M5S3</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Documents</fullName>
         <categories>Portal Resources</categories>
         <language>en_US</language>
@@ -26823,6 +26830,13 @@ Please add below all your company valid email domains, including different ones 
         <protected>false</protected>
         <shortDescription>ISSP_FDS_UnselectAll</shortDescription>
         <value>Unselect All</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FS_Link</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FS_Link</shortDescription>
+        <value>http://portal.iata.org/ISSP_FinancialSecInformation?MainNav=FinInfo&amp;subNav=financial_securities&amp;mid=M5S3</value>
     </labels>
     <labels>
         <fullName>ISSP_Fax</fullName>
