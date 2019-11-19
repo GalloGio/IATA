@@ -8467,7 +8467,7 @@ The sum of percentage cannot exceed 100%</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCard_CardType_DigCardNo</shortDescription>
-        <value>No, digital card only</value>
+        <value>No</value>
     </labels>
     <labels>
         <fullName>IDCard_CardType_PhysCard</fullName>
@@ -8481,14 +8481,14 @@ The sum of percentage cannot exceed 100%</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCard_CardType_PhysCardYes</shortDescription>
-        <value>Yes, send me a physical card</value>
+        <value>Yes</value>
     </labels>
     <labels>
         <fullName>IDCard_CardType_WishToRecieve</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCard_CardType_WishToRecieve</shortDescription>
-        <value>Do you wish to receive the physical ID Card? Additional fees may apply</value>
+        <value>Would you like to receive a printed ID Card? Additional fees may apply.</value>
     </labels>
     <labels>
         <fullName>IDCard_CaseDetails</fullName>
@@ -8686,7 +8686,7 @@ Accepted documents for independent travel consultant/contractor/broker are:&lt;b
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCard CheckoutConfirm CC</shortDescription>
-        <value>Payment information</value>
+        <value>Payment method</value>
     </labels>
     <labels>
         <fullName>IDCard_CheckoutConfirm_Cheque</fullName>
@@ -8970,6 +8970,13 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <value>Details</value>
     </labels>
     <labels>
+        <fullName>IDCard_Discount</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IDCard Discount</shortDescription>
+        <value>Discount</value>
+    </labels>
+    <labels>
         <fullName>IDCard_DisplayedName_RemainingCharacter</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -9044,14 +9051,14 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCard_ExpediteFee</shortDescription>
-        <value>Expedite Fee</value>
+        <value>Expedited delivery fee</value>
     </labels>
     <labels>
         <fullName>IDCard_Expedite_Delivery</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCard_Expedite_Delivery</shortDescription>
-        <value>Certified/Expedite</value>
+        <value>Expedited delivery</value>
     </labels>
     <labels>
         <fullName>IDCard_Expedite_Note</fullName>
@@ -9067,7 +9074,7 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCard_Expedite_Text</shortDescription>
-        <value>Your printed ID Card should be delivered to the agency address within 2 - 6 weeks; however, you can choose to pay for expedited delivery (4 – 8 business days)</value>
+        <value>Your printed ID Card will be delivered to your agency’s address within 2 – 6 weeks unless you opt for expedited delivery (4 – 8 business days). Expedited delivery includes shipment tracking upon request.</value>
     </labels>
     <labels>
         <fullName>IDCard_ExportCSV</fullName>
@@ -9075,6 +9082,13 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <protected>false</protected>
         <shortDescription>IDCard ExportCSV</shortDescription>
         <value>Export as CSV</value>
+    </labels>
+    <labels>
+        <fullName>IDCard_fee</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ID Card fee</shortDescription>
+        <value>ID Card fee</value>
     </labels>
     <labels>
         <fullName>IDCard_FeeApplicable_Label</fullName>
@@ -9095,7 +9109,7 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCard_FeesPhysical</shortDescription>
-        <value>Physical Card fee</value>
+        <value>Shipping and handling fee</value>
     </labels>
     <labels>
         <fullName>IDCard_FileUploadSuccess</fullName>
@@ -9920,6 +9934,13 @@ Should you have any question about payment by bank transfer, please visit &lt;a 
         <value>Purchase confirmation</value>
     </labels>
     <labels>
+        <fullName>IDCard_PromotionCode</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IDCard_PromotionCode</shortDescription>
+        <value>Promo code</value>
+    </labels>
+    <labels>
         <fullName>IDCard_Question_New_Or_Change</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -10464,7 +10485,7 @@ Your ID Card application manager has been informed of your request.</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCard rejected</shortDescription>
-        <value>Rejected Applications</value>
+        <value>Rejected applications</value>
     </labels>
     <labels>
         <fullName>ID_Card_Account_Not_Found</fullName>
@@ -10786,7 +10807,7 @@ Your ID Card application manager has been informed of your request.</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ID Card Package Travel Professionals 1</shortDescription>
-        <value>Take advantage of the reduced price for any two of the following IATA Training courses. &lt;u&gt; The price will be added to the Fees below &lt;/u&gt;. Upon approval of your ID Card application, you will be contacted by IATA Training for access to the selected courses.</value>
+        <value>As a “thank you” for ordering your ID Card, you may purchase two of the following IATA Training distance learning courses for only USD 150 (savings of up to 80%). You will receive instructions to access your courses once your ID Card application has been approved.</value>
     </labels>
     <labels>
         <fullName>ID_Card_Package_Travel_Professionals_2</fullName>
@@ -10904,7 +10925,7 @@ and
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ID_Card_Training_Fee</shortDescription>
-        <value>IATA Training fee: 2 Courses</value>
+        <value>IATA Training fee (2 courses)</value>
     </labels>
     <labels>
         <fullName>ID_Card_Upload_Proof</fullName>
@@ -37915,7 +37936,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Total_Cost</shortDescription>
-        <value>Total Cost</value>
+        <value>Total cost</value>
     </labels>
     <labels>
         <fullName>Total_Price</fullName>

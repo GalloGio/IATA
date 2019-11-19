@@ -560,19 +560,22 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
             if(IDCard_MobileAppRenewalService.US_COUNTRY_ISO_CODES.contains(priceTable.ISO_Country__r.ISO_Code__c)){
                 app.Card_Type__c = 'digital';
                 isToPrint = false;
-            } 
+            }
             app.Applicable_Fee__c = IDCardUtil.GetApplicableFee(priceTable, isReissue, false, isITDIPackage, null, isToPrint);
+            Map<String, decimal> detailledFees = new Map<String, decimal>();
+            detailledFees = IDCardUtil.GetDetailledFees(priceTable, isReissue, false, isITDIPackage, null, null, isToPrint);
+            app.Physical_Card_Fee__c = detailledFees.get('PhysCardFee');
             if(validatedApplication.keyset().contains(app.Id)){
-           
-            if (app.ID_Card_Fee__c != null)
-                tPrice += app.Applicable_Fee__c;
-            
-            deliveryPrice += priceTable.Cost_of_Printer__c;
-            idCardFee += priceTable.ID_Card_Fee__c;
-            coursesFee += app.ITDI_Courses_Fee__c;
-            
-            if (app.CurrencyIsoCode != null)
-                appsCurrency = app.CurrencyIsoCode;
+                
+                if (app.ID_Card_Fee__c != null)
+                    tPrice += app.Applicable_Fee__c;
+                
+                if(app.Card_Type__c == 'plastic') deliveryPrice += app.Physical_Card_Fee__c;
+                idCardFee += app.ID_Card_Fee__c;
+                coursesFee += app.ITDI_Courses_Fee__c;
+                
+                if (app.CurrencyIsoCode != null)
+                    appsCurrency = app.CurrencyIsoCode;
 
             }
         }
@@ -590,6 +593,13 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
                                   Decimal.valueOf(Double.valueOf(app.Tax_2_Value__c.split(' ', 0)[0])).setScale(2));
 
         
+    }
+    
+    public void processAllDigital(){
+        for (ID_Card_Application__c app : pendingApplications) {
+            app.Card_Type__c = 'digital';
+        }
+        calculateAllPrices();
     }
 
     private boolean isApplicationValid(ID_Card_Application__c app) {

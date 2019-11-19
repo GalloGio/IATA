@@ -103,7 +103,7 @@
 												  <td>
 												  	<p style="display:{!IF(isNotDigitalOnly[application.Id],'block','none')}">
 													<apex:actionRegion >
-												  	<apex:selectList id="cardTypeSelect" size="1" value="{!application.Card_Type__c}">
+												  	<apex:selectList id="cardTypeSelect" size="1" value="{!application.Card_Type__c}" styleClass="cardTypeSelect">
                                             			<apex:selectOptions value="{!cardTypeList}"/>
                                                 			<apex:actionSupport event="onchange"  status="Loading"  action="{!calculateAllPrices}"  reRender="appFee, pageHeader"/>
                                         				</apex:selectList>
@@ -131,11 +131,11 @@
 		                    <div  style="padding: 10px;border-left:solid 1px  gray;float:right;width:15%;">
 		                        <apex:outputPanel id="pageHeader">
 		                             
-									 <p><b>{!$Label.ID_Card_Fees}:</b>  {!idCardFee} {!appsCurrency}</p>
-		                             <p><b>{!$Label.IDCard_FeesPhysical}:</b>  {!deliveryPrice} {!appsCurrency}</p>
-									 <p><b>{!$Label.ID_Card_Training_Fee}:</b>  {!coursesFee} {!appsCurrency}</p>
-									 <p><b>{!$Label.ID_Card_Taxes}:</b> {!vatPrice} {!appsCurrency}</p>
-									 <p><b>{!$Label.Total_Cost}:</b> {!tPrice} {!appsCurrency}</p>
+									 <p><b>{!$Label.IDCard_Fee}:</b>  {!appsCurrency} {!idCardFee}</p>
+		                             <p><b>{!$Label.IDCard_FeesPhysical}:</b>  {!appsCurrency} {!deliveryPrice}</p>
+									 <p><b>{!$Label.ID_Card_Training_Fee}:</b>  {!appsCurrency} {!coursesFee}</p>
+									 <p><b>{!$Label.ID_Card_Taxes}:</b>  {!appsCurrency} {!vatPrice}</p>
+									 <p><b>{!$Label.Total_Cost}:</b>  {!appsCurrency} {!tPrice}</p>
 		                             <p><b>{!$Label.IDCard_rejected}:</b>  {!rejectedSize}</p>
 									 
 		                            
@@ -170,6 +170,8 @@
 		                    <apex:actionFunction status="Loading"  action="{!validateAllApplication}" name="validateAllApplication" rerender="pageHeader"  >
 		                    </apex:actionFunction>
 							<apex:actionFunction status="Loading"  action="{!calculateAllPrices}" name="calculateAllPrices" rerender="appFee, pageHeader"  >
+		                    </apex:actionFunction>
+    						<apex:actionFunction status="Loading"  action="{!processAllDigital}" name="processAllDigital" rerender="appFee, pageHeader"  >
 		                    </apex:actionFunction>
 		               </apex:form>
 		            </div>
@@ -215,10 +217,11 @@
 					var checkBox = document.getElementById('allDigital');
         			var allRows = $("#pendingApplicationTable").DataTable().column(5).nodes();
 					if (checkBox.checked){
-						$('[id$="cardTypeSelect"]').val('digital');
+						$.each($(allRows).find(".cardTypeSelect"),function(){
+	                    	this.value = 'digital';
+                   		});
+                        processAllDigital();
 					}
-                    
-		            calculateAllPrices();
 		       }
 		      
 		      
