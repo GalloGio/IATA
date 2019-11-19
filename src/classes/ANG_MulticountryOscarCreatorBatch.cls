@@ -95,6 +95,7 @@ global class ANG_MulticountryOscarCreatorBatch implements Database.Batchable<sOb
 
 				stagingArea = new AMS_Pax_Accreditation_Form__c(Id=accountAccreditationFormsMap.get(acct.Id).Id);
 				stagingArea.SAAM_Case__c = newCaseMC.Id;
+				stagingArea.Location_Type__c = acct.Location_Type__c;
 				update stagingArea;
 
 			}else{
