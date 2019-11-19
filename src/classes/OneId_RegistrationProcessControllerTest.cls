@@ -842,6 +842,8 @@ private class OneId_RegistrationProcessControllerTest {
      
      @isTest
      public static void testGetCustomerPortalUrl(){
+        insert new ISSP_CS__c(Name = 'IdentityPortal',Value__c = 'identity');
+        insert new ISSP_CS__c(Name = 'Host',Value__c = 'host');
         Test.startTest();
         string url = OneId_RegistrationProcessController.getCustomerPortalUrl();
         Test.stopTest();
