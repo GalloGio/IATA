@@ -10,10 +10,10 @@ public without sharing class WorkflowHelper {
 	private  static final Id AIRLINEBRRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline_BR') ;
 
 	//Case Record Types
-    private static final ID DPCSYSTEMRT = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Application_Change_Request');
-    private static final ID DPCSYSTEMSLOCKEDRT = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Application_Change_Request_DPC_Systems_locked');
-    private static final ID INTERNALCASESRT = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'InternalCasesEuropeSCE');
-    private static final ID OPERATIONALMANAGEMENTHORT = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Case_Operational_Management_Head_Office');
+	private static final ID DPCSYSTEMRT = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Application_Change_Request');
+	private static final ID DPCSYSTEMSLOCKEDRT = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Application_Change_Request_DPC_Systems_locked');
+	private static final ID INTERNALCASESRT = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'InternalCasesEuropeSCE');
+	private static final ID OPERATIONALMANAGEMENTHORT = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Case_Operational_Management_Head_Office');
 
 	private static Set<String> accountTypes = new Set<String>{'GSA General Sales Agent','IATA Passenger Sales Agent','SSI','TIDS Agent','ERSP Agent','Domestic Agent','Associations','Handling Agent','NISI','Airline Point of Sale','MSO Member Sales Office'};
 
@@ -28,10 +28,10 @@ public without sharing class WorkflowHelper {
 				System.debug('[WorkflowHelper]: ended process work for:'+objectType); 
 			}
 			when 'Case' {
-                System.debug('[WorkflowHelper]: starting to process work for:'+objectType); 
-                performActionsCase();
-                System.debug('[WorkflowHelper]: ended process work for:'+objectType); 
-            }
+				System.debug('[WorkflowHelper]: starting to process work for:'+objectType); 
+				performActionsCase();
+				System.debug('[WorkflowHelper]: ended process work for:'+objectType); 
+			}
 			when else{
 				System.debug(LoggingLevel.ERROR,'[WorkflowHelper]: object was not identified so no job to perform here:'+objectType); 
 			}
@@ -79,34 +79,34 @@ public without sharing class WorkflowHelper {
 
 	public static void performActionsCase(){
 
-        // runs on both Update and Insert
+		// runs on both Update and Insert
 
-        Map<Id,sObject> oldMap = trigger.oldMap;
-        List<sObject> newMap = trigger.new;
+		Map<Id,sObject> oldMap = trigger.oldMap;
+		List<sObject> newMap = trigger.new;
 
-        Case oldCase;
-        Case newCase;
+		Case oldCase;
+		Case newCase;
 
-        for(sObject cse: newMap){
-            
-            newCase = (Case)cse;
-            oldCase = oldMap == null ? null : oldMap.get(cse.Id) == null ? null : (Case)oldMap.get(cse.Id);
+		for(sObject cse: newMap){
+			
+			newCase = (Case)cse;
+			oldCase = oldMap == null ? null : oldMap.get(cse.Id) == null ? null : (Case)oldMap.get(cse.Id);
 
-            if(Trigger.isInsert){
-                changeCaseOriginToFax(newCase);
-                updateRecordTypeToLocked(newCase);
-                updateRTExternalInternal(newCase);
-            }
+			if(Trigger.isInsert){
+				changeCaseOriginToFax(newCase);
+				updateRecordTypeToLocked(newCase);
+				updateRTExternalInternal(newCase);
+			}
 
-            updateACCADatetimeCaseEscalated(oldCase, newCase);
-            updateACCADatetimeCaseScheduled(oldCase, newCase);
-            updateACCADatetimeCaseCompleted(oldCase, newCase);
-            uncheckNewCommentforACCA(oldCase, newCase);
-            updateStatusToEscalated(oldCase, newCase);
-            updateDPCStatus(oldCase, newCase);
-            updateCSRScheduled(oldCase, newCase);
-        }
-    }
+			updateACCADatetimeCaseEscalated(oldCase, newCase);
+			updateACCADatetimeCaseScheduled(oldCase, newCase);
+			updateACCADatetimeCaseCompleted(oldCase, newCase);
+			uncheckNewCommentforACCA(oldCase, newCase);
+			updateStatusToEscalated(oldCase, newCase);
+			updateDPCStatus(oldCase, newCase);
+			updateCSRScheduled(oldCase, newCase);
+		}
+	}
 
 	//Updates the field Industry in the travel agent accounts that are uploaded from AIMS
 	//Workflow Name: AIMS: Update Industry - travel agents
@@ -338,95 +338,95 @@ public without sharing class WorkflowHelper {
 
 	/*CASE ACTIONS START*/
 
-    //Change Case Origin to Fax
-    //Workflow Name: SCE Infofax cases
-    public static void changeCaseOriginToFax(Case newCase){
+	//Change Case Origin to Fax
+	//Workflow Name: SCE Infofax cases
+	public static void changeCaseOriginToFax(Case newCase){
 
-        if(newCase.Subject != null && newCase.Subject.left(23) == 'Infofax recibido desde:')
-            newCase.Origin = 'Fax';
-    }
+		if(newCase.Subject != null && newCase.Subject.left(23) == 'Infofax recibido desde:')
+			newCase.Origin = 'Fax';
+	}
 
 	//Updates the ACCA: Date/Time Opened field with the time the case was escalated to ACCA
-    //Workflow Name: ACCA: Date/Time case was escalated
-    public static void updateACCADatetimeCaseEscalated(Case oldCase, Case newCase){
+	//Workflow Name: ACCA: Date/Time case was escalated
+	public static void updateACCADatetimeCaseEscalated(Case oldCase, Case newCase){
 
-        if(newCase.Escalate_to_ACCA__c && (oldCase == null || !oldCase.Escalate_to_ACCA__c))
-            newCase.ACCA_Date_Time_New__c = Datetime.now();
-    }
+		if(newCase.Escalate_to_ACCA__c && (oldCase == null || !oldCase.Escalate_to_ACCA__c))
+			newCase.ACCA_Date_Time_New__c = Datetime.now();
+	}
 
 	//Updates the ACCA: Date/Time Scheduled field with the time the case was scheduled
-    //Workflow Name: ACCA: Date/Time case was scheduled
-    public static void updateACCADatetimeCaseScheduled(Case oldCase, Case newCase){
+	//Workflow Name: ACCA: Date/Time case was scheduled
+	public static void updateACCADatetimeCaseScheduled(Case oldCase, Case newCase){
 
-        if((newCase.Planned_End_CR__c != null || newCase.Planned_Start_CR__c != null) && (oldCase == null || oldCase.Planned_End_CR__c != newCase.Planned_End_CR__c || oldCase.Planned_Start_CR__c != newCase.Planned_Start_CR__c))
-            newCase.ACCA_Date_Time_Scheduled__c = Datetime.now();
-    }
+		if((newCase.Planned_End_CR__c != null || newCase.Planned_Start_CR__c != null) && (oldCase == null || oldCase.Planned_End_CR__c != newCase.Planned_End_CR__c || oldCase.Planned_Start_CR__c != newCase.Planned_Start_CR__c))
+			newCase.ACCA_Date_Time_Scheduled__c = Datetime.now();
+	}
 
 	//Updates the ACCA: Date/Time Opened field with the time the case was escalated to ACCA
-    //Workflow Name: ACCA: Date/Time case was completed
-    public static void updateACCADatetimeCaseCompleted(Case oldCase, Case newCase){
+	//Workflow Name: ACCA: Date/Time case was completed
+	public static void updateACCADatetimeCaseCompleted(Case oldCase, Case newCase){
 
-        if((newCase.CR_Status__c == 'Completed' || newCase.Escalated_Status_ACCA__c == 'Completed') && (oldCase == null || oldCase.CR_Status__c != newCase.CR_Status__c || oldCase.Escalated_Status_ACCA__c != newCase.Escalated_Status_ACCA__c))
-            newCase.ACCA_Date_Time_Completed__c = Datetime.now();
-    }
+		if((newCase.CR_Status__c == 'Completed' || newCase.Escalated_Status_ACCA__c == 'Completed') && (oldCase == null || oldCase.CR_Status__c != newCase.CR_Status__c || oldCase.Escalated_Status_ACCA__c != newCase.Escalated_Status_ACCA__c))
+			newCase.ACCA_Date_Time_Completed__c = Datetime.now();
+	}
 
 	//Changes the Record Type of a CR for DPC to enable a page layout with the fields entered by the requestor locked from editing.
-    //Workflow Name: ACR: DPC Change Record Type
-    public static void updateRecordTypeToLocked(Case newCase){
+	//Workflow Name: ACR: DPC Change Record Type
+	public static void updateRecordTypeToLocked(Case newCase){
 
-        if(newCase.RecordTypeId == DPCSYSTEMRT)
-            newCase.RecordTypeId = DPCSYSTEMSLOCKEDRT;
-    }
+		if(newCase.RecordTypeId == DPCSYSTEMRT)
+			newCase.RecordTypeId = DPCSYSTEMSLOCKEDRT;
+	}
 
 	//Removes case from ACCA: New comment added view when case is completed by ACCA
-    //Workflow Name: ACCA: Uncheck new comment for ACCA
-    public static void uncheckNewCommentforACCA(Case oldCase, Case newCase){
+	//Workflow Name: ACCA: Uncheck new comment for ACCA
+	public static void uncheckNewCommentforACCA(Case oldCase, Case newCase){
 
-        if(newCase.Escalated_Status_ACCA__c == 'Completed' && newCase.New_Comment_for_ACCA__c && (oldCase == null || oldCase.Escalated_Status_ACCA__c != newCase.Escalated_Status_ACCA__c || !oldCase.New_Comment_for_ACCA__c))
-            newCase.New_Comment_for_ACCA__c = false;
-    }
+		if(newCase.Escalated_Status_ACCA__c == 'Completed' && newCase.New_Comment_for_ACCA__c && (oldCase == null || oldCase.Escalated_Status_ACCA__c != newCase.Escalated_Status_ACCA__c || !oldCase.New_Comment_for_ACCA__c))
+			newCase.New_Comment_for_ACCA__c = false;
+	}
 
 	//Update the Case Status to Escalated when the Escalated Status DPC is set to 'Reopened by IATA'
-    //Workflow Name: ACCA: Update Case Status when ACCA case is reopened
-    public static void updateStatusToEscalated(Case oldCase, Case newCase){
+	//Workflow Name: ACCA: Update Case Status when ACCA case is reopened
+	public static void updateStatusToEscalated(Case oldCase, Case newCase){
 
-        if(newCase.Escalated_Status_ACCA__c == 'Reopend by IATA' && (oldCase == null || oldCase.Escalated_Status_ACCA__c != newCase.Escalated_Status_ACCA__c))
-            newCase.Status = '2.0 IE approved - Escalated DPC for PQ';
-    }
+		if(newCase.Escalated_Status_ACCA__c == 'Reopend by IATA' && (oldCase == null || oldCase.Escalated_Status_ACCA__c != newCase.Escalated_Status_ACCA__c))
+			newCase.Status = '2.0 IE approved - Escalated DPC for PQ';
+	}
 
 	//Updates the Escalated Status DPC 'DPC Investigating' once the 'DPC Owner' has been selected.
-    //Workflow Name: ACCA: Update Escalated Status DCP with DPC Investigating
-    public static void updateDPCStatus(Case oldCase, Case newCase){
+	//Workflow Name: ACCA: Update Escalated Status DCP with DPC Investigating
+	public static void updateDPCStatus(Case oldCase, Case newCase){
 
-        if(newCase.ACCA_Owner__c != null && (oldCase == null || oldCase.ACCA_Owner__c != newCase.ACCA_Owner__c))
-            newCase.Escalated_Status_ACCA__c = '2.0 DPC Investigating';
-    }
+		if(newCase.ACCA_Owner__c != null && (oldCase == null || oldCase.ACCA_Owner__c != newCase.ACCA_Owner__c))
+			newCase.Escalated_Status_ACCA__c = '2.0 DPC Investigating';
+	}
 
 	//Once one or both the Planned Start (CR) and Planned End (CR) case fields are filled, the Escalated Status ACCA shall be changed
-    //Workflow Name: ACCA: Update Escalated Status DPC with CSR Scheduled and CSR Status with Scheduled
-    public static void updateCSRScheduled(Case oldCase, Case newCase){
+	//Workflow Name: ACCA: Update Escalated Status DPC with CSR Scheduled and CSR Status with Scheduled
+	public static void updateCSRScheduled(Case oldCase, Case newCase){
 
-        if((newCase.Planned_Start_CR__c != null || newCase.Planned_End_CR__c != null) && newCase.CR_Status__c == null){
-            newCase.CR_Status__c = 'Scheduled';
-            newCase.Escalated_Status_ACCA__c = 'CSR Scheduled';
-        }
-    }
+		if((newCase.Planned_Start_CR__c != null || newCase.Planned_End_CR__c != null) && newCase.CR_Status__c == null){
+			newCase.CR_Status__c = 'Scheduled';
+			newCase.Escalated_Status_ACCA__c = 'CSR Scheduled';
+		}
+	}
 
 	//Rule to define if a case is an internal or external query.
-    //Workflow Name: Internal split for OPS Mgt cases AND External split for OPS Mgt cases
-    public static void updateRTExternalInternal(Case newCase){
+	//Workflow Name: Internal split for OPS Mgt cases AND External split for OPS Mgt cases
+	public static void updateRTExternalInternal(Case newCase){
 
-        Set<String> caseOrigins = new Set<String>{'E-mail to Case - EMD Testing', 
-                                                'E-mail to Case - BSPlink', 
-                                                'E-mail to Case - TSP Certification', 
-                                                'E-mail to Case - BSP Support', 
-                                                'E-mail to Case - SNAP', 
-                                                'E-mail to Case - CASSlink GVA', 
-                                                'E-mail to Case - Cargolink'};
+		Set<String> caseOrigins = new Set<String>{'E-mail to Case - EMD Testing', 
+												'E-mail to Case - BSPlink', 
+												'E-mail to Case - TSP Certification', 
+												'E-mail to Case - BSP Support', 
+												'E-mail to Case - SNAP', 
+												'E-mail to Case - CASSlink GVA', 
+												'E-mail to Case - Cargolink'};
 
-        if(caseOrigins.contains(newCase.Origin))
-            newCase.RecordTypeId = newCase.SuppliedEmail != null && newCase.SuppliedEmail.contains('iata') ? INTERNALCASESRT : OPERATIONALMANAGEMENTHORT;
-    }
+		if(caseOrigins.contains(newCase.Origin))
+			newCase.RecordTypeId = newCase.SuppliedEmail != null && newCase.SuppliedEmail.contains('iata') ? INTERNALCASESRT : OPERATIONALMANAGEMENTHORT;
+	}
 
 	/*CASE ACTIONS END*/
 
