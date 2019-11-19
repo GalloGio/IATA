@@ -243,7 +243,7 @@ export default class PortalIftpMonitorTrainings extends LightningElement {
         let auxAircraftType = (this.aircraftTypeValue == null) ? 'null' : this.aircraftTypeValue;
         let auxFromDate = (this.fromDateValue == null) ? 'null' : this.fromDateValue;
         let auxToDate = (this.toDateValue == null) ? 'null' : this.toDateValue;
-        let auxEmployeeCode = (this.employeeCodeValue == null) ? 'null' : this.employeeCodeValue.trim();
+        let auxEmployeeCode = (!this.employeeCodeValue) ? 'null' : this.employeeCodeValue.trim();
 
         if(this.expirationStatusValue === 'All' || this.expirationStatusValue === 'Not Expired' ){
             auxToDate = 'null';
@@ -277,7 +277,7 @@ export default class PortalIftpMonitorTrainings extends LightningElement {
             'null',                 //place holder for lastName
             auxEmployeeCode
         ];
-        
+
         getTrainingRecords({searchValues: auxSearchValues, searchType: 'MonitorTrainings' })
         .then(results => {
 
