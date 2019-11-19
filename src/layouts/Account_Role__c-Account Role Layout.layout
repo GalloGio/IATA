@@ -25,15 +25,8 @@
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
-                <emptySpace>true</emptySpace>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Flow_Status__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Account_Name__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -107,9 +100,6 @@
         <relatedList>E_and_F_Account_Role_Detail__c.Account_Role__c</relatedList>
     </relatedLists>
     <relatedLists>
-        <fields>Contact_Name__c</fields>
-        <fields>Contact_Roles__c</fields>
-        <fields>Contact_Role_Name__c</fields>
         <fields>NAME</fields>
         <fields>Service_Rendered__c</fields>
         <fields>Email__c</fields>
@@ -117,6 +107,9 @@
         <fields>Title__c</fields>
         <fields>First_Name__c</fields>
         <fields>Last_Name__c</fields>
+        <fields>Contact_Name__c</fields>
+        <fields>Contact_Roles__c</fields>
+        <fields>Contact_Role_Name__c</fields>
         <relatedList>Account_Contact_Role__c.Account_Role__c</relatedList>
     </relatedLists>
     <relatedLists>
