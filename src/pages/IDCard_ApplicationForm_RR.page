@@ -1002,7 +1002,6 @@ accept="application/pdf" />
                                         </tr>
                                     </table>
                                     
-                                        <apex:outputText id="noteExpedite" value="{!$Label.IDCard_Expedite_Note}" label="" rendered="{!AND(IsExpediteAvailable, IDCardApplicationRR.Card_Type__c == 'plastic')}"/>  
                                 </apex:actionRegion>
                                 <script> 
                                 var tableStyle = document.getElementById('expediteTable').style;
@@ -1021,7 +1020,7 @@ accept="application/pdf" />
                             <br />
                             
                             <apex:outputLabel styleClass="labelCol" escape="false"
-                                              value="{!$Label.ID_Card_Package_Travel_Professionals_1}<br/>{!$Label.ID_Card_Package_Travel_Professionals_2}" />
+                                              value="{!$Label.ID_Card_Package_Travel_Professionals_1}" />
                             <apex:actionRegion >                        
                                 <table>
                                     <tr>
@@ -1090,7 +1089,7 @@ reRender="panelApplicableFee, ErrorMsgs" />
                             
                             <apex:actionRegion >                      
                                 <apex:pageBlockSection id="panelApplicableFee" columns="2">                         
-                                    <apex:inputField id="txtPromotionCode"  value="{!IDCardApplicationRR.Promotion_Code__c}"   styleclass="outputText2"  onfocus="setMaxLength('{!$Component.txtPromotionCode}', 6);">
+                                    <apex:inputField id="txtPromotionCode" label="{!$Label.IDCard_PromotionCode}" value="{!IDCardApplicationRR.Promotion_Code__c}"   styleclass="outputText2"  onfocus="setMaxLength('{!$Component.txtPromotionCode}', 6);">
                                         <apex:actionSupport event="onblur"  action="{!CalculateApplicationFee}"  reRender="panelApplicableFee, ErrorMsgs" status="saveStatus"/>
                                     </apex:inputField>
                                     <apex:outputText />

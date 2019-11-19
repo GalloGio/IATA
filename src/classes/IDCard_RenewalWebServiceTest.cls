@@ -1189,7 +1189,7 @@ public class IDCard_RenewalWebServiceTest
         System.debug('Id Card: ' + idCard);
         if (isUSAgent)
             idCard.ID_Card_Application__c = null; // any previous US card don't have an IDCA
-        insert idCard;
+        upsert idCard;
 
         if (isUSAgent)
         {
@@ -1217,7 +1217,7 @@ public class IDCard_RenewalWebServiceTest
         // id card
         Id_Card__c idCard = IDCardUtil.CreateIDCardObjectFromApplication(testData.IDCards_IDCardApplications[5], contact);
         System.debug('Id Card: ' + idCard);
-        insert idCard;
+        upsert idCard;
     }
 
     private static void setRenewalCard(Boolean setSpecializationFieldsOnIDC)
@@ -1244,7 +1244,7 @@ public class IDCard_RenewalWebServiceTest
         }
 
         System.debug('Id Card renewal: ' + idCard);
-        insert idCard;
+        upsert idCard;
     }
 
     private static void setNewUSAgentCard(Boolean createContact, String webstarKey)

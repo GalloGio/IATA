@@ -1004,7 +1004,7 @@ rendered="{!isEmployee}" accept="application/pdf" />
                                     </td>                                     
                                 </tr>
                             </table>
-                            <apex:outputText id="NoteExpedite" value="{!$Label.IDCard_Expedite_Note}" label="" rendered="{!AND(IsExpediteAvailable, IDCardApplicationNR.Card_Type__c == 'plastic')}"/>  
+
                         </apex:actionRegion>
                         <script> 
                         var tableStyle = document.getElementById('expediteTable').style; 
@@ -1024,7 +1024,7 @@ rendered="{!isEmployee}" accept="application/pdf" />
                     </strong>
                     <br />
                     <apex:outputLabel styleClass="labelCol" escape="false"
-                                      value="{!$Label.ID_Card_Package_Travel_Professionals_1}<br/>{!$Label.ID_Card_Package_Travel_Professionals_2}" />
+                                      value="{!$Label.ID_Card_Package_Travel_Professionals_1}" />
                     <apex:actionRegion >
                         <table>
                             <tr>
@@ -1086,7 +1086,7 @@ rendered="{!isEmployee}" accept="application/pdf" />
                     <apex:actionRegion >
                         <apex:pageBlockSection id="panelApplicableFee" columns="2">
                             
-                            <apex:inputField id="txtPromotionCode" value="{!IDCardApplicationNR.Promotion_Code__c}" style="width:6em" onfocus="setMaxLength('{!$Component.txtPromotionCode}', 6);">
+                            <apex:inputField id="txtPromotionCode" label="{!$Label.IDCard_PromotionCode}" value="{!IDCardApplicationNR.Promotion_Code__c}" style="width:6em" onfocus="setMaxLength('{!$Component.txtPromotionCode}', 6);">
                                 <apex:actionSupport event="onblur"  action="{!CalculateApplicationFee}"   reRender="panelApplicableFee, ErrorMsgs"  status="saveStatus"/>
                             </apex:inputField>
                             <apex:outputText />

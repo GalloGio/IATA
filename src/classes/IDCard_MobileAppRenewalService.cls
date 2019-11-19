@@ -339,7 +339,7 @@ public with sharing class IDCard_MobileAppRenewalService
     {
         String idCardType = getAccountType(requestInformation.account);
 
-        insert IDCardUtil.CreateIDCardObjectFromApplication(
+        upsert IDCardUtil.CreateIDCardObjectFromApplication(
             requestInformation.newIDCA, requestInformation.contact, idCardType);
 
         Boolean closeCase = CARD_TYPE_DIGITAL.equals(requestInformation.newIDCA.Card_Type__c) || requestInformation.isUSAgent;

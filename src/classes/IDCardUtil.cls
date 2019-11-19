@@ -894,9 +894,6 @@ global with sharing class IDCardUtil {
                 idCard.Card_Code__c = 'TACB';
             } else { idCard.Card_Code__c = 'TACT'; }
 
-            if (theContact != null) {
-                idCard.Related_Contact__c = theContact.Id;
-            }
             if (IDCard_MobileAppRenewalService.CARD_TYPE_DIGITAL.equals(idCard.Card_Type__c))
             {
                 idCard.Is_Expedite__c = false;
@@ -904,7 +901,18 @@ global with sharing class IDCardUtil {
                 idCard.Sent_to_AIMS_on__c = System.now();
                 idCard.Received_From_AIMS__c = System.now();
             }
- 
+            ID_Card__c lastIdCard;
+            if (theContact != null) {
+                idCard.Related_Contact__c = theContact.Id;
+                lastIdCard = LastIdCardForGivenContact(theContact);
+            }
+
+            if(lastIdCard != null) {
+                idCard.Id = lastIdCard.Id;
+                if(lastIdCard.Valid_To_Date__c < Date.today())
+                    idCard.Valid_From_Date__c = lastIdCard.Valid_From_Date__c;
+            }
+
             system.debug(LoggingLevel.ERROR, '[CreateIDCardObjectFromApplication] return ' + idcard);
             return idCard;
         } catch (Exception ex) {
@@ -1587,7 +1595,7 @@ global with sharing class IDCardUtil {
                         System.debug(LoggingLevel.ERROR, '[UpdateCaseToApproved_Rejected]  calling the method for id card creation');
 
                         idCardNew = IDCardUtil.CreateIDCardObjectFromApplication(application, contacts[0], accountType);
-                        insert idCardNew;
+                        upsert idCardNew;
                     }
 
                     //@@ and c.RecordTypeID =: IDCardContactRecordTypeID
@@ -1612,18 +1620,6 @@ global with sharing class IDCardUtil {
                     if (application.Type_of_application__c == IDCardUtil.APPLICATIONTYPE_REPLACEMENT) {
                         Account theAccount = GetAccountObjectFromIATACode(application.IATA_Code__c);
                         theContact.AccountId = theAccount.Id;
-                    }
-
-                    // Change the status of the old card to "Cancelled" (only on reissue => Lost/stolen) and change of agency
-                    if (application.Type_of_application__c == IDCardUtil.APPLICATIONTYPE_REISSUE || application.Type_of_application__c == IDCardUtil.APPLICATIONTYPE_REPLACEMENT) {
-                        //find old card to cancel it
-                        ID_Card__c[] idCards = [Select Card_Status__c, MustSyncWithAIMS__c, Valid_To_Date__c From ID_Card__c where Related_Contact__c = :theContact.Id AND Card_Status__c = : CARDSTATUS_VALID order by CreatedDate desc];
-                        if (idCards != null && idCards.size() > 0) {
-                            idCards[0].Card_Status__c = IDCardUtil.CARDSTATUS_CANCELED;
-                            idCards[0].Cancellation_Date__c = Date.Today();
-                            //fidCards[0].MustSyncWithAIMS__c = true;
-                            update idcards[0];
-                        }
                     }
 
                     //update contact after cancelling existing card to avoid validation rule on active cards in case of name change.
