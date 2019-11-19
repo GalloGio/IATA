@@ -38,7 +38,7 @@
                 </div>
                 <!------------------------------------------      Date of Birth      -------------------------------------------->
                 <div class="profileItem">
-                    <lightning-layout-item size="6">
+                    <!--lightning-layout-item size="6">
                         <div class="formLabelContainer">
                             <div class="text-xxsmall">
                                 {labels.CSP_L2_Date_of_Birth}
@@ -48,18 +48,6 @@
                     <lightning-layout-item size="12">
                         <div class="slds-form-element">
                             <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon_right custTextInput custTextInputSmall">
-                               <!-- <lightning-input 
-                                    date-style="short" 
-                                    type="date" 
-                                    value={localContactInfo.Birthdate} 
-                                    placeholder=" " 
-                                    variant="label-hidden"
-                                    onkeyup={changeDateOfBirth}
-                                    onchange={changeDateOfBirth}
-                                    icon-name="utility:back"
-                                    icon-position="left"
-                                    max={today}>
-                                </lightning-input>-->
                                 <lightning-input 
                                     date-style="short" 
                                     type="date" 
@@ -79,7 +67,7 @@
                             <svg class="slds-icon slds-input__icon slds-input__icon_right slds-icon-text-default" aria-hidden="true">
                                     <use xlink:href={alertIcon}></use>
                                 </svg>
-                    </lightning-layout-item>
+                    </lightning-layout-item-->
                 </div>
                 <!------------------------------------------      Job Function      -------------------------------------------->
                 <div class="profileItem">  
