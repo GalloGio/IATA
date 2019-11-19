@@ -537,7 +537,7 @@ public without sharing class OneId_RegistrationProcessController {
             }
         }
 
-        return OneId_RegistrationProcessController.registration(acc, con, serviceName);
+        return OneId_RegistrationProcessController.registration(acc, con, serviceName, false);
     }
     @AuraEnabled
     public static boolean registration(Account acc, Contact con, String serviceName, Boolean l1UserExists){
