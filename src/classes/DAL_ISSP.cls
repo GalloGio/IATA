@@ -6,9 +6,8 @@ public with sharing class DAL_ISSP {
         List<User> users = [select Id,ContactId,contact.IFG_User_Status__c,Contact.AccountId,
 		Contact.Name, Contact.Account.Category__c, contact.IFG_Production__c, contact.IFG_PreProduction__c, Profile.Id, Profile.Name
         from User where Id =:userId];
-        if (users.size() > 0)
-            return users[0];
-        return null;
+        
+        return users.isEmpty() ? null : users[0];
     }
 
     public static list<User> getUserListByNameOrEmail(String nameOrEmail) {
@@ -49,12 +48,11 @@ public with sharing class DAL_ISSP {
 					Account.Top_Parent__r.Location_Type__c , Account.Region_formula__c,PhoneNational__c,FAXNational__c,MobileNational__c,Account.IATA_ISO_Country__r.Enable_Minor_Changes_from_Portal__c,
 					ID_Card_Holder__c, Account.DDS_status__c, Account.DDS_Last_Update_Date__c,Account.PhoneNational__c,Account.FAXNational__c,
                     Account.Location_Class__c, Account.CNS_Account__c,Account.IATA_ISO_Country__r.ANG_Portal_Service__c, Account.ANG_IEP_Status_FF__c, Account.Quality__c,Account.ANG_Accreditation_Model__c,Account.Legal_name__c,
-		            Authorized_Signatory__c, Account.ANG_FA_Opt_out__c, Account.IATA_ISO_Country__r.ANG_Enable_NewGen__c, Account.Top_Parent__r.Legal_name__c, Account.Top_Parent__r.Name_on_AOC__c, Account.Name_on_AOC__c, Account.GDP_Opt_In__c, Account.Country_ISO_Code__c,Account.ANG_IsNewGenAgency__c
+		            Authorized_Signatory__c, Account.ANG_FA_Opt_out__c, Account.IATA_ISO_Country__r.ANG_Enable_NewGen__c, Account.Top_Parent__r.Legal_name__c, Account.Top_Parent__r.Name_on_AOC__c, Account.Name_on_AOC__c, Account.GDP_Opt_In__c,Account.Country_ISO_Code__c,Account.ANG_IsNewGenAgency__c,
+                    Account.IATA_ISO_Country__r.Multicountry_Enabled__c
                     from Contact where Id=:contactId];
-        if (contacts.size() > 0)
-            return contacts[0];
-        return null;
-
+        
+        return contacts.isEmpty() ? null : contacts[0];
     }
 
     public static List<Contact> getContactsByAccountId(Id accountId){
@@ -63,11 +61,8 @@ public with sharing class DAL_ISSP {
                 User_Portal_Status__c, MobilePhone, Preferred_Language__c,Salutation,Airline_Contact_Type__c, Services__c,
                 Area__c,AccountId, Account.Name,IATA_Code__c,Account.Location_Type__c,Account.IATA_ISO_Country__r.Name
         from Contact where AccountId=:accountId];
-        if(!contacts.isEmpty()){
-            return contacts;
-        }
-
-        return new List<Contact>();
+        
+        return contacts.isEmpty() ? new List<Contact>() : contacts;
     }
 
     public static List<Contact> getContactsByAccountId(Id accountId, Integer offset, Integer batchSize){
@@ -90,11 +85,7 @@ public with sharing class DAL_ISSP {
                 Area__c,AccountId, Account.Name,IATA_Code__c,Account.Location_Type__c,Account.IATA_ISO_Country__r.Name
         from Contact where AccountId IN:accountIds ORDER BY Name ASC LIMIT:batchSize OFFSET :offset ];
 
-        if(!contacts.isEmpty()){
-            return contacts;
-        }
-
-        return new List<Contact>();
+        return contacts.isEmpty() ? new List<Contact>() : contacts;
     }
 
     public static List<Contact> searchContactsByAccountId(Id accountId, Integer offset, Integer batchSize, String queryString){
@@ -122,11 +113,7 @@ public with sharing class DAL_ISSP {
         and (FirstName LIKE :wildString OR LastName LIKE :wildString OR Name LIKE :wildString OR Email LIKE :wildString OR Name = :queryString)
         ORDER BY Name ASC LIMIT:batchSize OFFSET :offset ];
 
-        if(!contacts.isEmpty()){
-            return contacts;
-        }
-
-        return new List<Contact>();
+        return contacts.isEmpty() ? new List<Contact>() : contacts;
     }
 
 
@@ -140,7 +127,6 @@ public with sharing class DAL_ISSP {
                 (TeamMemberRole='Portal Administrator' or TeamMemberRole='Portal Regional Administrator')];
 
         return teamMembers;
-
     }
 
     public static Case getCase(String caseId) {
@@ -171,10 +157,8 @@ public with sharing class DAL_ISSP {
                 Action_Person__c, Detailed_Description__c, Source_of_Case__c, IsClosed, Remittance_period__c, BSP_CASS__c,
                 OSCAR__c, Oscar__r.Process__c
                 FROM Case where Id=:caseId];
-        if (cases.size() > 0)
-            return cases[0];
-        return null;
-
+        
+        return cases.isEmpty() ? null : cases[0];
     }
 
     public static boolean visibilityOnIATACertificate(String accCategory, String accStatus){

@@ -38,7 +38,7 @@ public class ANG_RHCInformationTriggerHandler{
 				updatedFlagsForRHCEqsFS.add(rhc);
 
 		if (!updatedFlagsForRHCEqsFS.isEmpty()) ANG_RHCHelper.calculateRHCAmount(updatedFlagsForRHCEqsFS);
-        
+		
 		assessOscarAccreditationForecastRHC(filterByIATACode(triggerNew));
 
 	}
@@ -79,9 +79,9 @@ public class ANG_RHCInformationTriggerHandler{
 		map<id,ANG_RHC_Information__c> accRhcMap = new map<id,ANG_RHC_Information__c>();
 		for(ANG_RHC_Information__c rhc:triggerNew){
 			if(Trigger.isInsert || Trigger.isUpdate && rhc.currencyIsoCode != oldMap.get(rhc.id).currencyIsoCode){				
-			accIdSet.add(rhc.ANG_AccountId__c);
-			accRhcMap.put(rhc.ANG_AccountId__c,rhc);
-		}
+				accIdSet.add(rhc.ANG_AccountId__c);
+				accRhcMap.put(rhc.ANG_AccountId__c,rhc);
+			}
 		}
 
 		if(!accIdSet.isEmpty()){
@@ -92,10 +92,7 @@ public class ANG_RHCInformationTriggerHandler{
 			list<Financial_Security__c> fsList= new list<Financial_Security__c>();
 			for(id accid :accFSmap.KeySet()){
 				ANG_Risk_Helper.convertFSAmountToTargetCur(accFSmap.get(accid),accRhcMap.get(accid).CurrencyIsoCode);
-				accRhcMap.get(accid).ANG_Financial_Security__c =ANG_Risk_Helper.sumFSConvertedAmounts(accFSmap.get(accid));
-				
-				//only updates the minimum FS on update rhc record
-				if(Trigger.isUpdate)accRhcMap.get(accid).ANG_Minimum_Financial_Security__c =ANG_Risk_Helper.currencyConverter(oldMap.get(accRhcMap.get(accid).id).currencyIsoCode,accRhcMap.get(accid).ANG_Minimum_Financial_Security__c,accRhcMap.get(accid).currencyIsoCode);
+				accRhcMap.get(accid).ANG_Financial_Security__c = ANG_Risk_Helper.sumFSConvertedAmounts(accFSmap.get(accid));
 				fsList.addAll(accFSmap.get(accid));
 			}
 			if(!fsList.isEmpty()){
@@ -144,26 +141,26 @@ public class ANG_RHCInformationTriggerHandler{
 		}*/
 
 		if(!accIds.isEmpty()) {
-            if(Limits.getLimitQueueableJobs() <= Limits.getQueueableJobs()) { 
-                Database.executeBatch(new ANG_UpdateRHCInformationBatch(accIds, ANG_UpdateRHCInformationBatch.Process.CONSUMED, false, 1));
-            } else {
-                if(System.isBatch() && Limits.getQueueableJobs() == 1) {
-                    Datetime execTime = Datetime.now().addSeconds(5);
-                    String hour = String.valueOf(execTime.hour());
-                    String min = String.valueOf(execTime.minute()); 
-                    String ss = String.valueOf(execTime.second());
-                    String nextFireTime = ss + ' ' + min + ' ' + hour + ' * * ?';
-                    System.schedule('ANG_UpdateRHCInformationScheduler ' + String.valueOf(Math.random()), nextFireTime, 
-                        new ANG_UpdateRHCInformationScheduler(accIds, ANG_UpdateRHCInformationBatch.Process.CONSUMED, false, 1));
-                } else {
-                    System.enqueueJob(new ANG_UpdateRHCInformationQueueable(accIds, ANG_UpdateRHCInformationBatch.Process.CONSUMED, false, 1));
-                }               
-            }
-        }        	
+			if(Limits.getLimitQueueableJobs() <= Limits.getQueueableJobs()) { 
+				Database.executeBatch(new ANG_UpdateRHCInformationBatch(accIds, ANG_UpdateRHCInformationBatch.Process.CONSUMED, false, 1));
+			} else {
+				if(System.isBatch() && Limits.getQueueableJobs() == 1) {
+					Datetime execTime = Datetime.now().addSeconds(5);
+					String hour = String.valueOf(execTime.hour());
+					String min = String.valueOf(execTime.minute()); 
+					String ss = String.valueOf(execTime.second());
+					String nextFireTime = ss + ' ' + min + ' ' + hour + ' * * ?';
+					System.schedule('ANG_UpdateRHCInformationScheduler ' + String.valueOf(Math.random()), nextFireTime, 
+						new ANG_UpdateRHCInformationScheduler(accIds, ANG_UpdateRHCInformationBatch.Process.CONSUMED, false, 1));
+				} else {
+					System.enqueueJob(new ANG_UpdateRHCInformationQueueable(accIds, ANG_UpdateRHCInformationBatch.Process.CONSUMED, false, 1));
+				}               
+			}
+		}        	
 	}
 
-    public static void assessOscarAccreditationForecastRHC(List<ANG_RHC_Information__c> rhcLst){
-        
+  	public static void assessOscarAccreditationForecastRHC(List<ANG_RHC_Information__c> rhcLst){
+		
 		if(!AMS_OscarTriggerHandler.applyRHCForecast || rhcLst.size() > 1)
 			return;
 
@@ -178,25 +175,19 @@ public class ANG_RHCInformationTriggerHandler{
 
 	private void handleRhcUpdate(){
 
-		//Need to fetch the countries to check the country specifics 
-		Set<ID> setAccountIDs = new Set<ID>();
-		Map<ID,ID> mapAccountIDsPerIsoCountriesIDs = new Map<ID,ID>();
-
-		for(ANG_RHC_Information__c rhc : triggerNew) setAccountIDs.add(rhc.ANG_AccountId__c);
-
-		for(Account acc: [SELECT ID, IATA_ISO_Country__c FROM Account WHERE ID IN :setAccountIDs]) mapAccountIDsPerIsoCountriesIDs.put(acc.id, acc.IATA_ISO_Country__c);
-
-
 		Set<Id> toNotify = new Set<Id>();
 		
 		for(ANG_RHC_Information__c rhc : triggerNew){
 			if(!ANG_RHCHelper.updateNotificationAlreadySent.contains(rhc.ANG_AccountId__c) && rhc.ANG_RHC_Amount_Forecasted__c != oldMap.get(rhc.Id).ANG_RHC_Amount_Forecasted__c){
-				
-				Boolean sendNotification = true;
-				
-				for(AMS_Country_Specific_Attribute__c att : IATAIsoCountryDAO.getIsoCountriesByIds(new Set<ID>{mapAccountIDsPerIsoCountriesIDs.get(rhc.ANG_AccountId__c)}).get(0).AMS_Country_Specific_Attributes__r)
-					if (att.recordtypeid == AMS_Utils.RECTYPE_CSA_RISK_NOTIFICATION && att.Block_notification_on_RHC_amount_update__c) sendNotification = false;
-				
+				Boolean sendNotification = true;	
+
+				for(AMS_Country_Specific_Attribute__c att : IATAIsoCountryDAO.getIsoCountryByIsoCodes(new Set<String>{rhc.ANG_Account_Country_ISO_Code__c}).get(0).AMS_Country_Specific_Attributes__r){
+					if(att.recordtypeid == AMS_Utils.RECTYPE_CSA_RISK_NOTIFICATION && att.Block_notification_on_RHC_amount_update__c){
+						sendNotification = false;
+						break;
+					}
+				}
+
 				if(sendNotification) toNotify.add(rhc.ANG_AccountId__c);
 			}
 		}
@@ -206,5 +197,4 @@ public class ANG_RHCInformationTriggerHandler{
 		}
 
 	}
-
 }

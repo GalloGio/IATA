@@ -1093,4 +1093,93 @@ private class ANG_RollbackEngineHelperTest {
 		*/
 
 	}
+
+
+	@isTest static void RollbackTest8() {
+
+		Test.startTest();
+
+		setupData(false);
+
+		IATA_ISO_Country__c ctry = [Select Id from IATA_ISO_Country__c];
+
+        Id accountAgencyRT = AMS_Utils.RECTYPE_IATAAGENCY;
+        Account a1 = new Account(
+			Is_PCI_compliant__c = 'Yes',
+			ANG_HE_RiskStatus__c = 'B',
+			ANG_HE_RiskHistoryAssessment__c = 'Passed',
+			Remittance_frequency__c = 'Monthly',
+			IATA_ISO_Country__c = ctry.id,
+			RecordTypeId = accountAgencyRT,
+			IATACode__c='1234001',
+			Location_Type__c='HE',
+			Name='Test1 Agency OK NEW BIG BOSS',
+			Short_Name__c='Test1 Agency',
+			Sector__c = 'Travel Agent',
+			Location_Class__c = 'P',
+			Category__c = 'IATA Passenger Sales Agent',
+			Site = '123400',
+			Status__c = 'Approved',
+			ANG_Accreditation_Model__c = 'Cash',
+			Company_Type__c = 'A',
+			Email__c='ltg23@fefff2.com',
+			Website = 'wwww.asdasidsss12233.pt',
+			VAT_Number__c = '111222333',
+			License_Number__c = '111222333',
+			TradeName__c = 'Test1 Agency OK'
+			);
+
+		insert a1;
+
+		Account heAccount = [SELECT id, Name FROM Account Where Location_Type__c =: AMS_Utils.HE AND IATAcode__c = '1234561' LIMIT 1];
+
+		ANG_Risk_Alert__c rtsAlert = new ANG_Risk_Alert__c(
+        		ANG_Account__c = heAccount.id,
+        		ANG_Agent_Sales__c = 1234567,
+        		ANG_EventId__c = 'RTS Alert - Test1 Agency OK',
+        		ANG_Severity__c = 'Red'
+        	);
+		insert rtsAlert;
+
+		AMS_Agencies_Hierarchy__c hierarchy = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy2');
+		insert hierarchy;
+
+		insert new AMS_Agencies_relationhip__c(Is_Newgen_Relation__c = true,Parent_Account__c = a1.Id, Hierarchy__c = hierarchy.Id);
+
+		AMS_OSCAR__c oscar = [Select Id from AMS_OSCAR__c];
+		oscar.ANG_Type_Of_Change__c = AMS_Utils.ANG_HIERARCHY;
+		oscar.New_parent__c = a1.Id;
+
+		update oscar;
+
+        Test.StopTest();
+
+		rtsAlert = new ANG_Risk_Alert__c(
+				Id = rtsAlert.Id,
+        		ANG_Account__c = a1.id,
+        		Monitored_Account__c = heAccount.id,
+        		ANG_Agent_Sales__c = 1234567,
+        		ANG_EventId__c = 'RTS Alert - Test1 Agency OK',
+        		ANG_Severity__c = 'Red'
+        	);
+		update rtsAlert;
+
+		heAccount.ParentId = a1.Id;
+		heAccount.Top_Parent__c = a1.Id;
+		update heAccount;
+
+		insert new AMS_Agencies_relationhip__c(Is_Newgen_Relation__c = true,Parent_Account__c = a1.Id, Child_Account__c = heAccount.Id, Hierarchy__c = hierarchy.Id);
+
+		ANG_RollbackEngineHelper reh = new ANG_RollbackEngineHelper(oscar.Id);
+		reh.setNewParentHierarchyId(a1.Id);
+
+		reh.executeAdhoc();
+
+		List<ANG_Risk_Alert__c> riskAlertRollback = [SELECT ID, ANG_Account__c, Monitored_Account__c, ANG_Agent_Sales__c, ANG_EventId__c, ANG_Severity__c FROM ANG_Risk_Alert__c];
+
+		System.assertEquals(1,riskAlertRollback.size());
+		System.assertEquals(heAccount.id, riskAlertRollback.get(0).ANG_Account__c);
+
+	}
+
 }

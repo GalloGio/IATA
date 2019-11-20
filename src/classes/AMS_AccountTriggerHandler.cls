@@ -1,5 +1,5 @@
 public class AMS_AccountTriggerHandler {
-    
+
     public static Set<String> minorChangesAccountFields = new Set<String> {
                 'phone',
                 'fax',
@@ -22,13 +22,14 @@ public class AMS_AccountTriggerHandler {
     public static Integer runningVCU = 0;
 
     public static void handleBeforeInsert(List<Account> accs){
+
         Set<String> disallowedSources = new Set<String>();
         disallowedSources.add('AIMS1');
         disallowedSources.add('AIMS2');
         disallowedSources.add('AIMS3');
         disallowedSources.add('WebStar');
         disallowedSources.add('DataLoader');
-
+        
         for(Account ag : accs){
             validateCharacters(ag);//AMSU-179
             if(!disallowedSources.contains(ag.Source_System__c)){
@@ -40,13 +41,18 @@ public class AMS_AccountTriggerHandler {
                     }
                 }
             }
+
         }
+
     }
 
     public static void handleAfterInsert(List<Account> accs){
         //Operations assignment update:
         //we want to set all operation to a dedicated Operation based on their Countries
         List<Account> operationHelpercandidate = new List<Account>();
+
+        Set<Id> parentIdSet = new Set<Id>();
+        List<Account> accountLst = new List<Account>();
 
         for(Account ag: accs){
             if(ag.Sector__c == 'Travel Agent' || ag.Sector__c == 'Cargo Agent'){
@@ -55,6 +61,22 @@ public class AMS_AccountTriggerHandler {
                     operationHelpercandidate.add(ag);
                 }
             }
+
+            if(ANG_MulticountryHelper.shouldRunMulticountryValidations(ag)){
+                accountLst.add(ag);
+                if(String.isBlank(ag.ParentId))
+                    parentIdSet.add(ag.ID);
+                else
+                    parentIdSet.add(ag.ParentId);
+            }
+
+        }
+
+        //Ideally this would be done on BeforeInsert
+        //However, doing this on AfterInsert we only have to perform a single query
+        //This simplifies the necessary logic plus allows reusability for the AfterUpdate
+        if(!accountLst.isEmpty()){
+            ANG_MulticountryHelper.processMulticountryValidations(accs, parentIdSet);
         }
 
         if(operationHelpercandidate != null && operationHelpercandidate.size()>0){
@@ -75,6 +97,7 @@ public class AMS_AccountTriggerHandler {
             }
             if(ag.Status__c!= null && ag.Status__c!=oldMap.get(ag.Id).Status__c)
                 ag.Date_Organisation_Status_attained__c = Date.today();
+        
         }
 
        System.debug('Start CASS verification');
@@ -97,6 +120,26 @@ public class AMS_AccountTriggerHandler {
         handleDDUpdates(accs, oldMap);
         // copy information to related regulation objects if Is_your_firm_handling_Dangerous_Goods__c changed
         copyHandlingInformationToRegulations(accs, oldMap);
+
+        Set<Id> parentIdSet = new Set<Id>();
+        List<Account> accountLst = new List<Account>();
+
+        for(Account acct : accs){
+            if(ANG_MulticountryHelper.shouldRunMulticountryValidations(acct)){
+                accountLst.add(acct);
+                if(String.isBlank(acct.ParentId))
+                    parentIdSet.add(acct.ID);
+                else
+                    parentIdSet.add(acct.ParentId);
+            }
+        }
+
+        //Ideally this would be done on BeforeUpdate
+        //However, doing this on AfterUpdate we only have to perform a single query
+        //This simplifies the necessary logic plus allows reusability for the AfterInsert
+        if(!accountLst.isEmpty()){
+            ANG_MulticountryHelper.processMulticountryValidations(accs, parentIdSet);
+        }
 
     }
 

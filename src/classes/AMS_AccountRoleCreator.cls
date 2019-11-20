@@ -60,7 +60,8 @@ public with sharing class AMS_AccountRoleCreator
         Set<Id> contactToGetIds = new Set<Id>();                                         
         Set<Id> rolesWithPersonsId = new Set<Id>();
         Map<Id,AMS_Account_Role__c> rolesToUpsert = new Map<Id,AMS_Account_Role__c>(); //key is Id for Roles already existant and the accreditation contact id for the new ones        
-        Map<String,Contact> contactsToUpsert = new Map<String,Contact>(); //key is Id for Contacts already existant and the accreditation contact id for the new ones        
+        Map<String,Contact> contactsToUpsert = new Map<String,Contact>(); //key is Id for Contacts already existant and the accreditation contact id for the new ones     
+        Map<String,AccreditationContactBucket> contactsToSearch = new Map<String,AccreditationContactBucket>(); //used for conversion STtoMC OSCARs that came from portal     
         Map<Id,Account> companiesToUpsert = new Map<Id,Account>(); //key is the accreditation contact id as they don't have a id yet        
         Map<Id,AMS_Accreditation_Contact__c> accreditationContactsToUpdate = new Map<Id,AMS_Accreditation_Contact__c>();    
         Map<Id,Id> accreditationContactWithRole = new Map<Id,Id>();
@@ -185,8 +186,13 @@ public with sharing class AMS_AccountRoleCreator
 
                 } else {
 
-                    bucket.createNewContact();
-                    contactsToUpsert.put(bucket.accreditationContact.Email__c, bucket.contact);
+                    if(bucket.oscar.process__c == AMS_Utils.MCAE ){ //should also check by case originl = portal
+                        contactsToSearch.put(bucket.accreditationContact.Email__c, bucket);
+                    }
+                    else{
+                        bucket.createNewContact();
+                        contactsToUpsert.put(bucket.accreditationContact.Email__c, bucket.contact);
+                    }
                 }                
             }
 
@@ -224,6 +230,20 @@ public with sharing class AMS_AccountRoleCreator
 
         //upsert contacts
         AMS_Utils.runningContactInsertUpdateFromOSCAR = true;
+
+        if(!contactsToSearch.isEmpty()){
+            for(Contact c :[SELECT id, Email FROM CONTACT WHERE EMAIL IN :contactsToSearch.keyset()]){
+                contactsToUpsert.put(c.email, c);
+                contactsToSearch.remove(c.Email);
+            }
+
+            //the remaining ones dont have a contact created
+            for(AccreditationContactBucket bucket : contactsToSearch.values()){
+                bucket.createNewContact();
+                contactsToUpsert.put(bucket.accreditationContact.Email__c, bucket.contact);
+            }
+        } 
+
         upsert contactsToUpsert.values();
         AMS_Utils.runningContactInsertUpdateFromOSCAR = false;
 

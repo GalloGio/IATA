@@ -440,6 +440,12 @@ private class AMS_RecordCreatorWebserviceTest {
 
 		System.assertEquals(details.size(),2);
 
+		acct4.Location_Type__c = AMS_Utils.AE;
+		
+		AMS_RecordCreatorWebservice.createProcessDetailsForConversion(oscarId, new List<Account> { acct4 });
+		details = [SELECT Id from AMS_Process_Detail__c where OSCAR__c = :oscarId and RecordType.Developername = 'Agency_Involved'];
+		System.assertEquals(3, details.size());
+
 		Test.stopTest();
 	}
 
@@ -607,6 +613,39 @@ private class AMS_RecordCreatorWebserviceTest {
 		AMS_Pax_Accreditation_Form__c accr = [SELECT Id from AMS_Pax_Accreditation_Form__c where SAAM_Case__c = :caseCom.Id];
 
 		String oscarId = AMS_RecordCreatorWebservice.createAccreditation(acct.Id,accr.Id,'ANG.FS.OPTINOUT',caseCom.Id);
+		
+		Test.stopTest();
+	}
+
+	@isTest
+	public static void testRecordType()
+	{
+		Test.startTest();
+
+		AMS_RecordCreatorWebservice.fetchOscarRecordType(AMS_Utils.COR);
+		AMS_RecordCreatorWebservice.fetchOscarRecordType(AMS_Utils.AGENCYCHANGES);
+		AMS_RecordCreatorWebservice.fetchOscarRecordType(AMS_Utils.VOLRELINQUISH);
+		AMS_RecordCreatorWebservice.fetchOscarRecordType(AMS_Utils.VOLRELINQUISH_CA);
+		AMS_RecordCreatorWebservice.fetchOscarRecordType(AMS_Utils.BANKACCCHANGES);
+		AMS_RecordCreatorWebservice.fetchOscarRecordType(AMS_Utils.CERTIFICATION);
+		AMS_RecordCreatorWebservice.fetchOscarRecordType(AMS_Utils.IEPBANKACCOUNTSETUP);
+		AMS_RecordCreatorWebservice.fetchOscarRecordType(AMS_Utils.IEPMODELAACCOUNTSETUP);
+		AMS_RecordCreatorWebservice.fetchOscarRecordType(AMS_Utils.IEPMODELBACCOUNTSETUP);
+		AMS_RecordCreatorWebservice.fetchOscarRecordType(AMS_Utils.PCI_COMPLIANT);
+		AMS_RecordCreatorWebservice.fetchOscarRecordType(AMS_Utils.IEPMODELBPLUSACCOUNTSETUP);
+		AMS_RecordCreatorWebservice.fetchOscarRecordType(AMS_Utils.NEWHELITE);
+		AMS_RecordCreatorWebservice.fetchOscarRecordType(AMS_Utils.NEWHESTANDARD);
+		AMS_RecordCreatorWebservice.fetchOscarRecordType(AMS_Utils.NEWGESTANDARD);
+		AMS_RecordCreatorWebservice.fetchOscarRecordType(AMS_Utils.NEWAE);
+		AMS_RecordCreatorWebservice.fetchOscarRecordType(AMS_Utils.MCAE);
+		AMS_RecordCreatorWebservice.fetchOscarRecordType(AMS_Utils.NGCHANGES);
+		AMS_RecordCreatorWebservice.fetchOscarRecordType(AMS_Utils.NGCORRECTION);
+		AMS_RecordCreatorWebservice.fetchOscarRecordType(AMS_Utils.NGFOP);
+		AMS_RecordCreatorWebservice.fetchOscarRecordType(AMS_Utils.NGVR);
+		AMS_RecordCreatorWebservice.fetchOscarRecordType(AMS_Utils.NGOPTINOUT);
+		AMS_RecordCreatorWebservice.fetchOscarRecordType(AMS_Utils.NGANNUALREVAL);
+		AMS_RecordCreatorWebservice.fetchOscarRecordType(AMS_Utils.NGGE);
+		AMS_RecordCreatorWebservice.fetchOscarRecordType(AMS_Utils.NGGDI);
 		
 		Test.stopTest();
 	}

@@ -127,7 +127,7 @@ global with sharing class ANG_ConversionHelper {
 			}
 		}
 
-		system.debug('Total of valid agencies is:'+allAgenciesGlobal.size());
+		system.debug('[ANG_ConversionHelper] Total of valid agencies is:'+allAgenciesGlobal.size());
 
 		return new ControllerLightStructure(ANG_ConversionHelper.fetchStatistics(structure,countryName));
             
@@ -203,7 +203,7 @@ global with sharing class ANG_ConversionHelper {
 		// fetch all the agencies that are belonging to other countries
 		List<AMS_Agencies_relationhip__c> brAbroadInDiffCountries = [SELECT Id, Hierarchy__r.RecordType.Name, Hierarchy__r.Name,Hierarchy__r.Migrated__c, Hierarchy__c, Child_Account__c, Parent_Account__r.IATACode__c, Parent_Account__r.Status__c, Parent_Account__r.Purge_Flag__c, Child_Account__r.IATACode__c, Child_Account__r.Purge_Flag__c, Child_Account__r.Top_Parent__c, Child_Account__r.Financial_Review_Result__c, Child_Account__r.ParentId, Child_Account__r.Location_Type__c, Child_Account__r.Status__c, Child_Account__r.RecordType.Name, Child_Account__r.IATA_ISO_Country__r.Name,Child_Account__r.IATA_ISO_Country__r.BSP_Country_free_text__c,Parent_Account__r.IATA_ISO_Country__r.BSP_Country_free_text__c,Child_Account__r.Top_Parent__r.IATA_ISO_Country__r.BSP_Country_free_text__c, Parent_Account__r.Top_Parent__r.IATA_ISO_Country__r.BSP_Country_free_text__c,Child_Account__r.IATA_ISO_Country__r.BSP__c,Parent_Account__r.IATA_ISO_Country__r.BSP__c,Child_Account__r.Top_Parent__r.IATA_ISO_Country__r.BSP__c, Parent_Account__r.Top_Parent__r.IATA_ISO_Country__r.BSP__c,Child_Account__r.IATA_ISO_Country__r.ISO_Code__c ,Parent_Account__r.IATA_ISO_Country__r.ISO_Code__c ,Child_Account__r.Top_Parent__r.IATA_ISO_Country__r.ISO_Code__c , Parent_Account__r.Top_Parent__r.IATA_ISO_Country__r.ISO_Code__c ,Child_Account__r.Sector__c, Child_Account__r.Top_Parent__r.IATACode__c, Child_Account__r.Top_Parent__r.Location_Type__c, Child_Account__r.Top_Parent__r.Name, Child_Account__r.Top_Parent__r.Status__c, Child_Account__r.Top_Parent__r.RecordType.Name, Child_Account__r.Top_Parent__r.Financial_Review_Result__c, Child_Account__r.Top_Parent__r.IATA_ISO_Country__r.Name,Child_Account__r.Top_Parent__r.Sector__c, Child_Account__r.Top_Parent__r.Top_Parent__c, Parent_Account__c, Parent_Account__r.Location_Type__c, Child_Account__r.Top_Parent__r.Purge_Flag__c, Child_Account__r.Expiry_Date__c, Parent_Account__r.Expiry_Date__c, Child_Account__r.Top_Parent__r.Expiry_Date__c, Child_Account__r.Location_Class__c, Parent_Account__r.Location_Class__c, Child_Account__r.Top_Parent__r.Location_Class__c, Parent_Account__r.Top_Parent__r.Location_Class__c from AMS_Agencies_relationhip__c where Child_Account__r.IATA_ISO_Country__r.Name = :country and Child_Account__r.Top_Parent__r.IATA_ISO_Country__r.Name <> :country and Child_Account__r.Sector__c in:ALLOWEDSECTORS and Child_Account__r.Location_Class__c in:ALLOWEDLOCATIONCLASSES and Hierarchy__r.Migrated__c = false and Child_Account__c not in:allAgencies];
 
-		System.debug('brAbroadInDiffCountries are:'+brAbroadInDiffCountries);
+		System.debug('[ANG_ConversionHelper] brAbroadInDiffCountries are:'+brAbroadInDiffCountries);
 
 		for(AMS_Agencies_relationhip__c relationShip: brAbroadInDiffCountries){
 			
@@ -217,7 +217,7 @@ global with sharing class ANG_ConversionHelper {
 			}
 			
 			if(toReturn.get(relationShip.Hierarchy__c) == null){
-				system.debug('Child_Account__r.Top_Parent__r.IATA_ISO_Country__r.Name is ' + relationShip.Child_Account__r.IATA_ISO_Country__r.Name);
+				system.debug('[ANG_ConversionHelper] Child_Account__r.Top_Parent__r.IATA_ISO_Country__r.Name is ' + relationShip.Child_Account__r.IATA_ISO_Country__r.Name);
 				toReturn.put(relationShip.Hierarchy__c,createNewBrAbroadByCountryHierarchyStructure(relationShip,relationShip.Child_Account__r.IATA_ISO_Country__r.Name));
 			}
 			else{
@@ -235,9 +235,9 @@ global with sharing class ANG_ConversionHelper {
 		}
 
 
-		System.debug('All hierarchies:'+allHierarchies.size());
+		System.debug('[ANG_ConversionHelper] All hierarchies:'+allHierarchies.size());
 		
-		System.debug('All HO Single Accounts:'+allAccountsSingleHierarchyHOorTerminatedAgencies.size());
+		System.debug('[ANG_ConversionHelper] All HO Single Accounts:'+allAccountsSingleHierarchyHOorTerminatedAgencies.size());
 
 		return toReturn;
 	}
@@ -443,38 +443,38 @@ global with sharing class ANG_ConversionHelper {
 
 	public static void printStatistics(ANG_ConversionHelper.StatisticGeneratorStructure struct){
 
-		System.debug('----------------------------------');
-		System.debug('Total Hierarchies:'+struct.totalHierarchies);
-		System.debug('Total Valid Hierarchies:'+struct.totalValidHierarchies);
-		System.debug('Total Invalid Hierarchies:'+struct.totalInvalidHierarchies);
-		System.debug('Total Migrated Hierarchies (not included single agencies):'+struct.totalMigratedHierarchies);
+		System.debug('[ANG_ConversionHelper] ----------------------------------');
+		System.debug('[ANG_ConversionHelper] Total Hierarchies:'+struct.totalHierarchies);
+		System.debug('[ANG_ConversionHelper] Total Valid Hierarchies:'+struct.totalValidHierarchies);
+		System.debug('[ANG_ConversionHelper] Total Invalid Hierarchies:'+struct.totalInvalidHierarchies);
+		System.debug('[ANG_ConversionHelper] Total Migrated Hierarchies (not included single agencies):'+struct.totalMigratedHierarchies);
 
-		System.debug('Valid Hierarchies');
+		System.debug('[ANG_ConversionHelper] Valid Hierarchies');
 
 		for(ANG_ConversionHelper.HierarchyStructure hStructure: struct.validHierarchies.values()){
 
-			System.debug(hStructure.nameTopParent + ' || ' + hStructure.iataCodeTopParent + ' || Hierarchy Id:' + hStructure.hierarchyId );
+			System.debug('[ANG_ConversionHelper] ' + hStructure.nameTopParent + ' || ' + hStructure.iataCodeTopParent + ' || Hierarchy Id:' + hStructure.hierarchyId );
 
 		}
 
-		System.debug('::: Invalid Hierarchies :::');
+		System.debug('[ANG_ConversionHelper] ::: Invalid Hierarchies :::');
 
 		Set<Integer> errorValues = struct.inValidHierarchies.keySet();
 
 		for(Integer errorValue: errorValues){
 
-			System.debug('-'+errorMessages.get(errorValue)+'-');
+			System.debug('[ANG_ConversionHelper] ' + '-'+errorMessages.get(errorValue)+'-');
 
 			for(ANG_ConversionHelper.HierarchyStructure hStructure: struct.inValidHierarchies.get(errorValue)){
 
-				System.debug('IATA Code:' + hStructure.iataCodeTopParent + ' || Hierarchy Id:' + hStructure.hierarchyId);
+				System.debug('[ANG_ConversionHelper] '+'IATA Code:' + hStructure.iataCodeTopParent + ' || Hierarchy Id:' + hStructure.hierarchyId);
 
 			}
 			
 
 		}
 
-		System.debug('---------------------------------');
+		System.debug('[ANG_ConversionHelper] ---------------------------------');
 
 
 	}
@@ -633,7 +633,7 @@ global with sharing class ANG_ConversionHelper {
 
 	public static Set<Account> migrateStructures(List<ANG_ConversionHelper.HierarchyStructure> structures){
 
-		System.debug('Preparing to convert:'+structures);
+		System.debug('[ANG_ConversionHelper] Preparing to convert:'+structures);
 
 		ANG_ConversionHelper.isMigrationTool=true;//skip agencyEventGenerator
 
@@ -677,7 +677,11 @@ global with sharing class ANG_ConversionHelper {
 
 			hierarchy = allHierarchiesInvolvedMap.get(struct.hierarchyId);
 
+			System.debug('[ANG_ConversionHelper] Preparing to change structure :'+struct);
+
 			container = changeStructure(struct,allAgenciesFinalMap,hierarchy);
+
+			System.debug('[ANG_ConversionHelper] Structure migrated :'+container);
 
 			accountsToUpdate.addAll(container.accountsToUpdate);
 			accountsToUpdate.addAll(container.accountsSplitedToUpdate);
@@ -712,21 +716,38 @@ global with sharing class ANG_ConversionHelper {
 
 		if(container != null)
 			reHelper = new ANG_RiskEventMigrationHelper(container.accountsToUpdate);
-	
+
 		update new List<Account>(accountsToUpdate);
 	
 		if(reHelper != null)
 			insert reHelper.convertChangeCodesToRiskEvents();
 
+		System.debug('[ANG_ConversionHelper] RelationsToUpdate are :' + relationsToUpdate);
+		
 		update new List<AMS_Agencies_relationhip__c>(relationsToUpdate);
+
+		System.debug('[ANG_ConversionHelper] hierarchiesToUpdate are :' + hierarchiesToUpdate);
 
 		update new List<AMS_Agencies_Hierarchy__c>(hierarchiesToUpdate);
 
+		System.debug('[ANG_ConversionHelper] relationsToInsert are :' + relationsToInsert);
+
 		insert new List<AMS_Agencies_relationhip__c>(relationsToInsert);
+
+		System.debug('[ANG_ConversionHelper] relationsToDelete are :' + relationsToDelete);
+
+		delete new List<AMS_Agencies_relationhip__c>(relationsToDelete);
+
+		System.debug('[ANG_ConversionHelper] hierarchiesToDelete are :' + hierarchiesToDelete);
 
 		delete new List<AMS_Agencies_Hierarchy__c>(hierarchiesToDelete);
 
-		delete new List<AMS_Agencies_relationhip__c>(relationsToDelete);
+		//now that we have performed all the migration, we should fix the hierarchies.
+		/**NEWGEN-5751 */
+		hierarchiesToUpdate = updateNewgenHierarchies(accountsToUpdate);
+
+		if(hierarchiesToUpdate <> null && !hierarchiesToUpdate.isEmpty())
+			upsert new List<AMS_Agencies_Hierarchy__c>(hierarchiesToUpdate);
 
 		ANG_RHCHelper.createRHCInfo(topParents, false); //as per NEWGEN-2487
 
@@ -743,6 +764,59 @@ global with sharing class ANG_ConversionHelper {
 
 	}
 
+	public static Set<AMS_Agencies_Hierarchy__c> updateNewgenHierarchies(Set<Account> accounts){
+
+		Set<Id> accountsToProcess = new Set<Id>();
+
+		for(Account acct: accounts){
+			if(acct.Location_Type__c == AMS_Utils.HE){
+				accountsToProcess.add(acct.Id);
+			}
+		}
+
+		if(accountsToProcess.isEmpty())
+			return null ;
+
+		Map<Id,Id> accountsHierarchies = new Map<Id,Id>();
+		Set<Id> accountsAlreadyAdjusted = new Set<Id>();
+
+		for(AMS_Agencies_relationhip__c rel: [Select Id, Hierarchy__c, Hierarchy__r.Main_Account__c,Parent_Account__c from AMS_Agencies_relationhip__c where Parent_Account__c in:accountsToProcess]){
+			
+			if(accountsHierarchies.get(rel.Parent_Account__c) <> null)
+				continue;
+
+			if(rel.Hierarchy__r.Main_Account__c <> null){
+				accountsAlreadyAdjusted.add(rel.Hierarchy__r.Main_Account__c);
+			}else{
+				accountsHierarchies.put(rel.Parent_Account__c,rel.Hierarchy__c);
+			}
+		}
+
+		AMS_Agencies_Hierarchy__c hierarchy;
+
+		Set<AMS_Agencies_Hierarchy__c> hierarchiesToUpsert = new Set<AMS_Agencies_Hierarchy__c>();
+
+		for(Id acctId: accountsToProcess){
+			
+			hierarchy = null;
+
+			if(accountsHierarchies.get(acctId) <> null){ // need update the hierachy
+				hierarchy = new AMS_Agencies_Hierarchy__c(Id = accountsHierarchies.get(acctId), Hierarchy_Name__c = 'Hierarchy');
+				hierarchy.Migrated__c = true;
+				hierarchy.Main_Account__c = acctId;
+			}else if(!accountsAlreadyAdjusted.contains(acctId)){ // single account that needs an hierarchy
+				hierarchy = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy');
+				hierarchy.Migrated__c = true;
+				hierarchy.Main_Account__c = acctId;
+			}
+
+			if(hierarchy <> null)
+				hierarchiesToUpsert.add(hierarchy);
+		}
+
+		return hierarchiesToUpsert;
+
+	}
 
 	public static Set<Account> filterByStatus(Set<Account> accounts){
 
@@ -818,11 +892,11 @@ global with sharing class ANG_ConversionHelper {
 		}
 
 		
-		System.debug('Found these hierarchyIdsToSearch Id:' + hierarchyIdsToSearch);
+		System.debug('[ANG_ConversionHelper] Found these hierarchyIdsToSearch Id:' + hierarchyIdsToSearch);
 
 		List<AMS_Agencies_Hierarchy__c> hierarchiesSearched = [SELECT Id, Migrated__c from AMS_Agencies_Hierarchy__c where Id in :hierarchyIdsToSearch];
 
-		System.debug('Found these:' + hierarchiesSearched);
+		System.debug('[ANG_ConversionHelper] Found these:' + hierarchiesSearched);
 
 		Map<Id,AMS_Agencies_Hierarchy__c> hierarchiesSearchedMap = new Map<Id,AMS_Agencies_Hierarchy__c>();
 
@@ -842,7 +916,8 @@ global with sharing class ANG_ConversionHelper {
 	public static ANG_ConversionHelper.MigrationContainer changeStructure(ANG_ConversionHelper.HierarchyStructure struct, Map<Id,Account> allAgencies, AMS_Agencies_Hierarchy__c hierarchy){
 
 
-	
+		System.debug('[ANG_ConversionHelper] Entering changeStructure with struct:'+struct);
+
 					//TODO : Pick up all accounts to be updated and proccess them again in relation to Risk Status
 			/*
 			
@@ -880,11 +955,11 @@ global with sharing class ANG_ConversionHelper {
 
 			List<Account> accountsToCreateNewHierarchy = new List<Account>();
 
-			System.debug('struct.relations is currently:'+struct.relations);
+			System.debug('[ANG_ConversionHelper] struct.relations is currently:'+struct.relations);
 
 			struct.relations = reOrderListForStatus(struct.relations);
 
-			System.debug('struct.relations is now:'+struct.relations);
+			System.debug('[ANG_ConversionHelper] struct.relations is now:'+struct.relations);
 
 			for(AMS_Agencies_relationhip__c rel: struct.relations){ // first extract all accounts involved.
 
@@ -892,12 +967,15 @@ global with sharing class ANG_ConversionHelper {
 					struct.topParentId = rel.Child_Account__c;
 
 				accountsToCreateNewHierarchy.add(allAgencies.get(rel.Child_Account__c));
+				rel.Hierarchy__c = null;
 				relationsToDelete.add(rel);
 
 
 			}
 
 			if(struct.relations.size() == 1){
+
+				System.debug('[ANG_ConversionHelper] struct relations size is 1:');
 
 				Id soloId = struct.relations.get(0).Child_Account__c;
 
@@ -976,6 +1054,7 @@ global with sharing class ANG_ConversionHelper {
 
 			For(AMS_Agencies_relationhip__c rel: relsToUpdate){
 
+				rel.Hierarchy__c = null;
 				relationsToDelete.add(rel);
 				relationsToAdd.add(new AMS_Agencies_relationhip__c(Parent_Account__c = rel.Parent_Account__r.Top_Parent__c, Child_Account__c = rel.Child_Account__c, Hierarchy__c = struct.HierarchyId));
 				hierarchyToDeleteAux = false;
@@ -1012,7 +1091,7 @@ global with sharing class ANG_ConversionHelper {
 			} else {
 
 				if(TOPLEVELLOCATIONTYPES.contains(allAgencies.get(struct.topParentId).Location_Type__c))
-					allAgencies.get(struct.topParentId).Location_Type__c = 'HE';			
+					allAgencies.get(struct.topParentId).Location_Type__c = 'HE';
 				else
 					allAgencies.get(struct.topParentId).Location_Type__c = 'AE';		
 
@@ -1033,10 +1112,13 @@ global with sharing class ANG_ConversionHelper {
 			}
 		} else{
 
+				System.debug('[ANG_ConversionHelper] Migration is not either BR Abroad or Single Hierarchy');
+				
 				for(AMS_Agencies_relationhip__c rel: struct.relations){
 
 					if(allAgencies.get(rel.Child_Account__c).Location_Class__c == TIDSLOCALTIONCLASS || !validateBSPAttributes(allAgencies.get(rel.Child_Account__c).IATA_ISO_Country__r.BSP_Country_free_text__c, allAgencies.get(rel.Child_Account__c).IATA_ISO_Country__r.ISO_Code__c, allAgencies.get(rel.Child_Account__r.Top_Parent__c).IATA_ISO_Country__r.BSP_Country_free_text__c,allAgencies.get(rel.Child_Account__r.Top_Parent__c).IATA_ISO_Country__r.ISO_Code__c)){
                         relationsTidsToSplit.add(rel);
+						
 						if(struct.relations.size() == 1)
 							hierarchyToDelete = true; // this need to be changed. Not only with 1 hierarchy we need to delete it.
 					}
@@ -1106,6 +1188,8 @@ global with sharing class ANG_ConversionHelper {
 
 		Map<String,List<AMS_Agencies_relationhip__c>> relationsToSplitByBSPCountry = splitRelationsByBSPCountry(relationsTidsToSplit,allAgencies);
 
+		System.debug('[ANG_ConversionHelper] relationsToSplitByBSPCountry are:'+relationsToSplitByBSPCountry);
+
 		for(List<AMS_Agencies_relationhip__c> relationsTidsToSplitPerCountry: relationsToSplitByBSPCountry.values()){
 
 			boolean parentAdded = false;
@@ -1116,15 +1200,15 @@ global with sharing class ANG_ConversionHelper {
 			Set<AMS_Agencies_relationhip__c> relationsTidsToSplitPerCountrySet = new Set<AMS_Agencies_relationhip__c>();
 			relationsTidsToSplitPerCountrySet.addAll(relationsTidsToSplitPerCountry);
 
-			System.debug('Relations to relationsTidsToSplitPerCountrySet are:'+relationsTidsToSplitPerCountrySet);
+			System.debug('[ANG_ConversionHelper] Relations to relationsTidsToSplitPerCountrySet are:'+relationsTidsToSplitPerCountrySet);
 
 			List<AMS_Agencies_relationhip__c> relationsTidsToSplitLst = reOrderListForStatusSet(relationsTidsToSplitPerCountrySet);
 
-			System.debug('Relations to Split are:'+relationsTidsToSplitLst);
+			System.debug('[ANG_ConversionHelper] Relations to Split are:'+relationsTidsToSplitLst);
 
 			for(AMS_Agencies_relationhip__c rel: relationsTidsToSplitLst){
 
-				System.debug('Analysing rel:'+rel);
+				System.debug('[ANG_ConversionHelper] Analysing rel:'+rel);
 
 				if(!parentAdded){
 					parentAdded = true;
@@ -1137,14 +1221,15 @@ global with sharing class ANG_ConversionHelper {
 					if(relationsToCreate && !isMigrationToolAnalyses){
 						newHierarchy = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy');
 						insert newHierarchy;
+						System.debug('[ANG_ConversionHelper] Since relationsToCreate is '+relationsToCreate + ' and isMigrationToolAnalyses is '+ isMigrationToolAnalyses + ' , lets create an hierarhcy with id:'+newHierarchy.Id);
 					}
 
 				}else{
 
 					if(allAgencies.get(rel.Child_Account__c).ParentId == allAgencies.get(rel.Child_Account__c).Top_Parent__c){
 						
-						System.debug('parentRel.Child_Account__c is ' + parentRel.Child_Account__c);
-						System.debug('allAgencies.get(parentRel.Child_Account__c).Id is:'+allAgencies.get(parentRel.Child_Account__c).Id);
+						System.debug('[ANG_ConversionHelper] parentRel.Child_Account__c is ' + parentRel.Child_Account__c);
+						System.debug('[ANG_ConversionHelper] allAgencies.get(parentRel.Child_Account__c).Id is:'+allAgencies.get(parentRel.Child_Account__c).Id);
 
 						allAgencies.get(rel.Child_Account__c).ParentId = allAgencies.get(parentRel.Child_Account__c).Id;
 						relationsToAdd.add(new AMS_Agencies_relationhip__c(Parent_Account__c = parentRel.Child_Account__c, Child_Account__c = rel.Child_account__c, Hierarchy__c = newHierarchy.id));
@@ -1160,6 +1245,9 @@ global with sharing class ANG_ConversionHelper {
 
 				accountsSplitedToUpdate.add(allAgencies.get(rel.Child_Account__c));
 
+				System.debug('[ANG_ConversionHelper] Adding relation to delete:'+rel);
+
+				rel.Hierarchy__c = null;
 				relationsToDelete.add(rel);
 
 				if(!accountsToUpdate.contains(allAgencies.get(rel.Child_Account__r.Top_Parent__c))){
@@ -1180,7 +1268,7 @@ global with sharing class ANG_ConversionHelper {
 
 					allAgencies.get(rel.Child_Account__r.Top_Parent__c).Organization_Last_Change_Date__c = System.today();
 
-					System.debug('Adding accounts to update :' + allAgencies.get(rel.Child_Account__r.Top_Parent__c));
+					System.debug('[ANG_ConversionHelper] Adding accounts to update :' + allAgencies.get(rel.Child_Account__r.Top_Parent__c));
 
 					accountsToUpdate.add(allAgencies.get(rel.Child_Account__r.Top_Parent__c));	
 				}
@@ -1188,7 +1276,6 @@ global with sharing class ANG_ConversionHelper {
 
 			if(!hierarchyToDelete)
 				hierarchyToDelete = isToDeleteHierarchy(struct,relationsToDelete);
-			
 		}
 
 		return new ANG_ConversionHelper.MigrationContainer(struct,accountsToUpdate,accountsSplitedToUpdate,relationsToUpdate,hierarchy,relationsToDelete,relationsToAdd,hierarchyToDelete);
@@ -1370,8 +1457,8 @@ global with sharing class ANG_ConversionHelper {
 
 		Boolean hierarchyToDelete;
 
-		public migrationContainer(ANG_ConversionHelper.HierarchyStructure structIn,Set<Account> accountsToUpdateIn, Set<Account> accountsSplitedToUpdateIn, Set<AMS_Agencies_relationhip__c> relationsToUpdateIn, AMS_Agencies_Hierarchy__c hierarchyIn,Set<AMS_Agencies_relationhip__c> relationsToDeleteIn,Set<AMS_Agencies_relationhip__c> relationsToAddIn, boolean hierarchyToDeleteIn){
-
+		public migrationContainer(ANG_ConversionHelper.HierarchyStructure structIn,Set<Account> accountsToUpdateIn, Set<Account> accountsSplitedToUpdateIn, Set<AMS_Agencies_relationhip__c> relationsToUpdateIn,AMS_Agencies_Hierarchy__c hierarchyIn,Set<AMS_Agencies_relationhip__c> relationsToDeleteIn,Set<AMS_Agencies_relationhip__c> relationsToAddIn, boolean hierarchyToDeleteIn){
+			
 			struct = structIn;
 			accountsToUpdate = accountsToUpdateIn;
 			accountsSplitedToUpdate = accountsSplitedToUpdateIn;
@@ -1507,7 +1594,7 @@ global with sharing class ANG_ConversionHelper {
 
 		public HierarchyStructure(AMS_Agencies_relationhip__c relationShip, String countryABRIn){
 
-			system.debug('Addind HierarchyStructure:' + relationShip + ' with country:' + countryABRIn);
+			system.debug('[ANG_ConversionHelper] Addind HierarchyStructure:' + relationShip + ' with country:' + countryABRIn);
 			if(allAgencies == null)
 				allAgencies = new Set<Id>();
 
@@ -1544,7 +1631,7 @@ global with sharing class ANG_ConversionHelper {
 			allAgencies.add(relationShip.Parent_Account__c);
 
 			if(iataCodeTopParent != relationShip.Child_Account__r.Top_Parent__r.IATACode__c){
-				System.debug('Warning, in the hierarchy ' + hierarchyId + ' there are different top parents:' + iataCodeTopParent + ' and ' + relationShip.Child_Account__r.Top_Parent__r.IATACode__c);
+				System.debug('[ANG_ConversionHelper] Warning, in the hierarchy ' + hierarchyId + ' there are different top parents:' + iataCodeTopParent + ' and ' + relationShip.Child_Account__r.Top_Parent__r.IATACode__c);
 				this.errorCategory = DIFFERENTTOPPARENT;
 			}
 

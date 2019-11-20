@@ -23,11 +23,13 @@ global class AmazonFinancialCtrl {
     'Closed_Non compliance'
   };
 
+  private static Boolean isInternalSfdcRequest = false;
+
   public boolean canUploadAndDelete {
     get {
-      if (cse == null || cse.id == null) return true;
-      Case thiscse = [Select id, Status from Case where id = :cse.id];
-      return caseStatusUploadAllowed.contains(thiscse.Status);
+      if(cse == null || cse.id == null) return true;
+      if(!isInternalSfdcRequest && cse.Financial_Review_type__c == 'Multicountry Annual') return false;
+      return caseStatusUploadAllowed.contains(cse.Status);
     }
     set;
   }
@@ -164,9 +166,10 @@ global class AmazonFinancialCtrl {
     }
   }  
 
-  public AmazonFinancialCtrl( ApexPages.StandardController controller) {
+  public AmazonFinancialCtrl(ApexPages.StandardController controller) {
     try {
-
+	  
+	  isInternalSfdcRequest = true;
       techinicalProb = false;
 
       //Apexpages.currentPage().getHeaders().put('X-UA-Compatible', 'IE=EmulateIE9');

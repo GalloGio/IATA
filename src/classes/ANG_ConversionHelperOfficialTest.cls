@@ -61,7 +61,7 @@ private class ANG_ConversionHelperOfficialTest {
 		System.debug('[ANG_ConversionHelperEnhancedTestTest1] Finish  Printing Statistics after migration');
 
 		List<Account> accounts = [SELECT Id, Name, Status__c, Location_Class__c, Location_Type__c, RecordType.DeveloperName, Sector__c, ParentId, Top_Parent__c, IATACode__c FROM Account];
-		List<AMS_Agencies_Hierarchy__c> hierarchies = [SELECT Id, Name, Migrated__c FROM AMS_Agencies_Hierarchy__c];
+		List<AMS_Agencies_Hierarchy__c> hierarchies = [SELECT Id, Name, Migrated__c, Main_Account__c FROM AMS_Agencies_Hierarchy__c];
 		List<AMS_Agencies_relationhip__c> relations = [SELECT Id, Parent_Account__c, Child_Account__c, Hierarchy__c from AMS_Agencies_relationhip__c];
 
 		System.debug('[ANG_ConversionHelperEnhancedTestTest1] Accounts:'+accounts);
@@ -98,6 +98,9 @@ private class ANG_ConversionHelperOfficialTest {
 		System.assertEquals(a1.Id,accountsMap.get('HIERARCHY1 Agency SA1 OK').ParentId);
 
 		System.assertEquals(1,hierarchies.size());
+
+		System.assertEquals(accountsMap.get('Agency HO').Id,hierarchies.get(0).Main_Account__c);
+
 		System.assertEquals(3,relations.size());
 
 	}
@@ -577,7 +580,7 @@ private class ANG_ConversionHelperOfficialTest {
 		System.debug('[ANG_ConversionHelperEnhancedTestTest3] Finish  Printing Statistics after migration');
 
 		List<Account> accounts = [SELECT Id, Name, Status__c, Location_Class__c, Location_Type__c, RecordType.DeveloperName, Sector__c, ParentId, Top_Parent__c, IATACode__c FROM Account];
-		List<AMS_Agencies_Hierarchy__c> hierarchies = [SELECT Id, Name, Migrated__c FROM AMS_Agencies_Hierarchy__c];
+		List<AMS_Agencies_Hierarchy__c> hierarchies = [SELECT Id, Name, Migrated__c,Main_Account__c FROM AMS_Agencies_Hierarchy__c];
 		List<AMS_Agencies_relationhip__c> relations = [SELECT Id, Parent_Account__c, Child_Account__c, Hierarchy__c from AMS_Agencies_relationhip__c];
 
 		System.debug('[ANG_ConversionHelperEnhancedTestTest3] Accounts:'+accounts);
@@ -624,6 +627,9 @@ private class ANG_ConversionHelperOfficialTest {
 		System.assertEquals(a1.Id,accountsMap.get('Agency SA2').ParentId);
 
 		System.assertEquals(1,hierarchies.size());
+
+		System.assertEquals(accountsMap.get('Agency HO').Id,hierarchies.get(0).Main_Account__c);
+
 		System.assertEquals(5,relations.size());
 
 	}
@@ -760,7 +766,7 @@ private class ANG_ConversionHelperOfficialTest {
 		System.debug('hierarchies are:'+hierarchies);
 		System.debug('relations are:'+relations);
 
-		System.assertEquals(1,hierarchies.size());
+		System.assertEquals(2,hierarchies.size());
 		
 		System.assertNotEquals(hierarchy.Id,hierarchies.get(0).Id);
 
@@ -818,7 +824,7 @@ private class ANG_ConversionHelperOfficialTest {
 
 		List<AMS_Agencies_Hierarchy__c> hierarchies = [Select Id from AMS_Agencies_Hierarchy__c];
 
-		System.assertEquals(1,hierarchies.size());
+		System.assertEquals(2,hierarchies.size());
 		
 		System.assertNotEquals(hierarchy.Id,hierarchies.get(0).Id);
 	}

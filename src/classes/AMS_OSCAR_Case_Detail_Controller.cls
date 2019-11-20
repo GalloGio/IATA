@@ -14,26 +14,37 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
     public Boolean isCargoAgency{get;set;}
     public Boolean isCertificationOSCAR{get;set;}
     public Boolean isNewGenProcess{get;set;}
-    public Boolean isNewAE { get{ return (oscarObj.Process__c == AMS_Utils.NEWAE);}set;}
+    public Boolean isNewAE{get{return (oscarObj.Process__c == AMS_Utils.NEWAE);}set;}
+    public Boolean isNewMulticountryAE{get{return (oscarObj.Process__c == AMS_Utils.MCAE);}set;}
+    public Boolean isAEAccount{get{return (oscarObj.Location_Type__c == AMS_Utils.AE);}set;}
     public Boolean displayErrorMsg{get{return false;} set;}
     public Boolean showStagingArea {get; set;}
-
+    
     private Id rfPerStateBspId;
-    public Boolean rfPerState{get{
 
-        if(AMS_Utils.oscarNewGenNewAppProcesses.contains(oscarObj.Process__c)){
-            List<IATA_ISO_Country__c> countries = IATAIsoCountryDAO.getIsoCountriesByIds(new Set<Id>{accreditationObj.Branch_Office_Country__c});
+    public Boolean rfPerState
+    {
+        get
+        {
+            if (rfPerState != null)
+                return rfPerState;
+
+			if(accreditationObj != NULL && accreditationObj.Branch_Office_Country__c != NULL){
+				List<IATA_ISO_Country__c> countries = IATAIsoCountryDAO.getIsoCountriesByIds(new Set<Id>{accreditationObj.Branch_Office_Country__c});
+				
+				if(!countries.isEmpty()){
+					IATA_ISO_Country__c cntry = countries.get(0);
+					rfPerStateBspId = cntry.AMS_Settlement_System__c;
+					rfPerState = cntry.AMS_Settlement_System__r.Remittance_Frequency_per_State__c;
+					return rfPerState;
+				}
+			}
             
-            if(!countries.isEmpty()){
-                IATA_ISO_Country__c cntry = countries.get(0);
-                rfPerStateBspId = cntry.AMS_Settlement_System__c;
-                return cntry.AMS_Settlement_System__r.Remittance_Frequency_per_State__c;
-            }
+            rfPerState = false;
+            return rfPerState;
         }
-        
-        return false;
-        
-    }set;}
+        set;
+    }
 
     private Set<Id> hierarchyAccountIds = new Set<Id>();
     private Map<Id, Account> hierarchyAccountsMap = new Map<Id, Account>();
@@ -124,8 +135,26 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
                 , AMS_Pax_Accreditation_Form__c.Is_your_firm_handling_Dangerous_Goods__c
                 , AMS_Pax_Accreditation_Form__c.ANG_IsNewGenAgency__c
                 , AMS_Pax_Accreditation_Form__c.ANG_Accreditation_type__c
+                , AMS_Pax_Accreditation_Form__c.Preferred_RHC_currency__c
             };
         }
+    }
+
+    public List<SelectOption> getItemsForPreferredRHC() {
+        List<SelectOption> op = new List<SelectOption>();
+        op.add(new SelectOption('', '--None--'));
+        for(ANG_RHC_Currencies__c c: ANG_RHC_Currencies__c.getall().values())
+            op.add(new SelectOption(c.Name, c.Currency_Name__c));
+        return op;
+    }
+
+    //NEWGEN-5859
+    public List<SelectOption> getAvailableAccModel() {
+        List<SelectOption> op = new List<SelectOption>();
+        op.add(new SelectOption('', '--None--'));
+        for(String accModel: AMS_OSCAR_Case_Detail_Controller.standardAccreditationModel)
+            op.add(new SelectOption(accModel, accModel));
+        return op;
     }
 
     public static Set<String> hidenFieldsNewgenApplications = new Set<String>{};
@@ -150,7 +179,8 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
             String sCorrectionType_of_change = '';
 
             if(oscarObj != null && oscarObj.Type_of_change__c != null) editableFields = AMS_AgencyChangesConfigHelper.getFieldsToMigrate(oscarObj.Type_of_change__c);
-            if(oscarObj != null && oscarObj.ANG_Type_of_change__c != null) editableFields = ANG_AgencyChangesConfigHelper.getFieldsToMigrate(oscarObj.ANG_Type_of_change__c);
+            if(oscarObj != null && oscarObj.ANG_Type_of_change__c != null && !isConversionFromStandardToMulticountry) editableFields = ANG_AgencyChangesConfigHelper.getFieldsToMigrate(oscarObj.ANG_Type_of_change__c);
+            if(oscarObj != null && oscarObj.ANG_Type_of_change__c != null && isConversionFromStandardToMulticountry) editableFields = ANG_AgencyChangesConfigHelper.getFieldsToMigrate(oscarObj.ANG_Type_of_change__c+'_CONVERSION');
 
             //FM AMSU-1
             //AMSU-151 (AMSU-1) - added chech for isVATnumberSpecialCase in order to use the new 
@@ -198,6 +228,10 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
 
     private Boolean isEditable(String fieldName){
 
+        if(this.oscarObj.ANG_Type_of_change__c == AMS_Utils.ANG_HIERARCHY && accreditationObj != null && accreditationObj.ANG_Accreditation_type__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY && !isConversionFromStandardToMulticountry){
+			return false;
+		}
+		
         //Enforce non editable fields for newgen processes.  NEWGEN-1862/NEWGEN-3387: Don't enforce for newgen changes/correction
         if(this.oscarObj.Account__r.ANG_IsNewGenAgency__c && (this.oscarObj.Process__c != AMS_Utils.NGCHANGES && this.oscarObj.Process__c != AMS_Utils.NGCORRECTION))
             if(notEditableForNEWGEN.contains(fieldName))
@@ -207,10 +241,17 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
         if(fieldName == 'IATACode__c') return false;
         //if(fieldName == 'Location_Class__c' && isNewGenProcess) return false;
         //if(fieldName == 'Location_Type__c' && isNewGenProcess) return false;
-        if(fieldName == 'ANG_Accreditation_Type__c' && isNewGenProcess && !isAgencyChanges) return false;
-        if(fieldName == 'Remittance_frequency__c' && isNewGenProcess && oscarObj.Process__c == AMS_Utils.NEWAE && rfPerState == false) return false;     
-        if(fieldName == 'Location_Type__c' && !isAgencyChanges && accreditationObj.Location_Type__c == AMS_Utils.HO && !String.isBlank(accreditationObj.IATACode__c)) return false; //AC-ENHC0012276
-        if(!isAgencyChanges && !isAgencyCorrection) return true;
+        if(fieldName == 'ANG_Accreditation_Type__c' && isNewGenProcess && !isAgencyChanges) return false;  
+		if(fieldName == 'Location_Type__c' && !isAgencyChanges && accreditationObj.Location_Type__c == AMS_Utils.HO && !String.isBlank(accreditationObj.IATACode__c)) return false; //AC-ENHC0012276
+        if(!isAgencyChanges && !isAgencyCorrection  && !isConversionFromStandardToMulticountry) return true;
+        if (fieldName == 'Remittance_frequency__c'
+            && isNewGenProcess
+            && !isConversionFromStandardToMulticountry
+            && ((oscarObj.Process__c == AMS_Utils.NEWAE && ! rfPerState)
+                || (oscarObj.Process__c == AMS_Utils.MCAE && isAEAccount && ! rfPerState)))
+        {
+            return false;
+        }
 
         //check per field
         return editableFields.contains(fieldName);
@@ -238,7 +279,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
         } set;
     }
 
-    private Map<Id,Account> agencyOperations{
+    private Map<Id, List<Account>> agencyOperations{
         get{
             if(this.agencyOperations == null)
                 this.agencyOperations = ANG_AgencyChangesHelper.fetchAgOperationPerAccount(new List<Id>{oscarObj.Account__c});
@@ -247,6 +288,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
         }set;
     }
 
+	@TestVisible
     private List<SelectOption> populateRightOptions(List<String> split) {
 
         List<SelectOption> rightopts = new List<SelectOption>();
@@ -301,17 +343,6 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
             return getRfPicklistValuesAMS();    
         }
         
-        List<ANG_BSP_Attributes__c> issOp = new List<ANG_BSP_Attributes__c>();
-
-        if(rfPerState){
-            issOp = [SELECT Id, BSP__r.Remittance_Frequency_per_State__c, Remittance_Frequency__c 
-                                                FROM ANG_BSP_Attributes__c 
-                                                WHERE ISO_State__c =: accreditationObj.IATA_ISO_State__c 
-                                                AND RecordType.DeveloperName = 'Remittance_Frequency'
-                                                AND BSP__c = :rfPerStateBspId
-                                                AND Class_Type__c = :accreditationObj.Location_Class__c];
-        }
-        
         List<SelectOption> rfPicklistValues = new List<SelectOption>();
         Set<String> rightOptions;
         Set<String> auxOptions = new Set<String>();
@@ -326,43 +357,43 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
                     rightOptions.add('');
                 }
                 
+                if (rfPerState)
+                {
+                    List<ANG_BSP_Attributes__c> issOp = [SELECT Id, BSP__r.Remittance_Frequency_per_State__c, Remittance_Frequency__c 
+                                                        FROM ANG_BSP_Attributes__c 
+                                                        WHERE ISO_State__c =: accreditationObj.IATA_ISO_State__c 
+                                                        AND RecordType.DeveloperName = 'Remittance_Frequency'
+                                                        AND BSP__c = :rfPerStateBspId
+                                                        AND Class_Type__c = :accreditationObj.Location_Class__c];
+                
+                    if (! issOp.isEmpty())
+                    {
+                        rfPicklistValues.add(new SelectOption (issOp[0].Remittance_Frequency__c, getPicklistLabels('AMS_Pax_Accreditation_Form__c','Remittance_frequency__c').get(issOp[0].Remittance_Frequency__c)));
+                        return rfPicklistValues;
+                    }
+                }
 
                // for new HE Accreditations get the values from the BSP configuration of all BSP operation codes related to this country
-                if(oscarObj.Process__c == AMS_Utils.NEWHELITE || oscarObj.Process__c == AMS_Utils.NEWHESTANDARD) {
+                if(oscarObj.Process__c == AMS_Utils.MCAE || oscarObj.Process__c == AMS_Utils.NEWHELITE || oscarObj.Process__c == AMS_Utils.NEWHESTANDARD || oscarObj.Process__c == AMS_Utils.NEWGESTANDARD || oscarObj.Process__c == AMS_Utils.NGCONVERSIONTOMULTICOUNTRY) {
 
-                    if(rfPerState){
-                        if(!issOp.isEmpty()){
-                            rfPicklistValues.add(new SelectOption (issOp[0].Remittance_Frequency__c, getPicklistLabels('AMS_Pax_Accreditation_Form__c','Remittance_frequency__c').get(issOp[0].Remittance_Frequency__c)));
-                        }
-                    } else {
-                        for(AMS_Settlement_System__c operation :operations) {
-                            for(ANG_BSP_Attributes__c attribute : operation.BSP_Attributes__r) {
-                                if(!auxOptions.contains(attribute.Remittance_Frequency__c)){                               
-                                    rfPicklistValues.add(new SelectOption (attribute.Remittance_Frequency__c, getPicklistLabels('AMS_Pax_Accreditation_Form__c','Remittance_frequency__c').get(attribute.Remittance_Frequency__c)));                               
-                                    //prevent duplication
-                                    auxOptions.add(attribute.Remittance_Frequency__c);
-                                }
+                    for(AMS_Settlement_System__c operation :operations) {
+                        for(ANG_BSP_Attributes__c attribute : operation.BSP_Attributes__r) {
+                            if(!auxOptions.contains(attribute.Remittance_Frequency__c)){                               
+                                rfPicklistValues.add(new SelectOption (attribute.Remittance_Frequency__c, getPicklistLabels('AMS_Pax_Accreditation_Form__c','Remittance_frequency__c').get(attribute.Remittance_Frequency__c)));                               
+                                //prevent duplication
+                                auxOptions.add(attribute.Remittance_Frequency__c);
                             }
                         }
                     }
 
                 // for New AE, remittance frequency is populated from the Parent Account and picklist values are restricted to the value of the parent
-                }else if(oscarObj.Process__c == AMS_Utils.NEWAE) {
+                }else if(oscarObj.Process__c == AMS_Utils.NEWAE || oscarObj.Process__c == AMS_Utils.MCAE) {
 
-                    if(rfPerState){
-                        if(!issOp.isEmpty()) {
-                            rfPicklistValues.add(new SelectOption (issOp[0].Remittance_Frequency__c, getPicklistLabels('AMS_Pax_Accreditation_Form__c','Remittance_frequency__c').get(issOp[0].Remittance_Frequency__c)));
-                        }
-                    } else if(oscarObj.Account__r.Top_Parent__r.Remittance_Frequency__c != null )
-                        rfPicklistValues.add(new SelectOption (oscarObj.Account__r.Top_Parent__r.Remittance_Frequency__c, getPicklistLabels('AMS_Pax_Accreditation_Form__c','Remittance_frequency__c').get( oscarObj.Account__r.Top_Parent__r.Remittance_Frequency__c)));                 
+                    rfPicklistValues.add(new SelectOption (oscarObj.Account__r.Top_Parent__r.Remittance_Frequency__c, getPicklistLabels('AMS_Pax_Accreditation_Form__c','Remittance_frequency__c').get( oscarObj.Account__r.Top_Parent__r.Remittance_Frequency__c)));                 
                 
                 // for changes and corrections populate only with BSP attributes of operation codes related with the current account
                 }else if((oscarObj.Process__c == AMS_Utils.COR || oscarObj.Process__c == AMS_Utils.NGCHANGES || oscarObj.Process__c == AMS_Utils.NGCORRECTION) && isEditable('Remittance_frequency__c')) {
-                    if(rfPerState){
-                        if(!issOp.isEmpty()) {
-                            rfPicklistValues.add(new SelectOption (issOp[0].Remittance_Frequency__c, getPicklistLabels('AMS_Pax_Accreditation_Form__c','Remittance_frequency__c').get(issOp[0].Remittance_Frequency__c)));
-                        }
-                    }else if(!agencyOperations.isEmpty()){                     
+                    if(!agencyOperations.isEmpty()){
                         for(AMS_Settlement_System__c opCode: operations) {
                             //Make sure attributes are related with the current account
                             if(agencyOperations.keySet().contains(opCode.id)) {
@@ -413,6 +444,11 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
         }
         private set;
     }
+
+	public Boolean isConversionFromStandardToMulticountry { 
+		get { return oscarObj.Process__c == AMS_Utils.NGCONVERSIONTOMULTICOUNTRY;}
+		set;
+	}
 
     public Boolean isOSCARCorrection{
         get{
@@ -602,6 +638,11 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
 
     public Boolean hasEditableFields{
         get{
+
+            if(oscarObj.ANG_Type_of_change__c == AMS_Utils.ANG_HIERARCHY && accreditationObj != null && accreditationObj.ANG_Accreditation_type__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY && !isConversionFromStandardToMulticountry){
+                return false;
+            }
+            
             Boolean editable = false;
             for(FormField field : accreditationFields) if(field.inlineEdit) editable = true;
 
@@ -620,6 +661,17 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
 
     public static final Set<String> notEditableForNEWGEN = new Set<String>{'Location_Class__c','Location_Type__c','CASS_Number__c','Abbreviated_Address__c'};
 
+    //NEWGEN-5859
+    private static final Set<String> standardAccreditationModel = new Set<String>{AMS_Utils.ACCREDITATIONMODEL_CASHLESS,AMS_Utils.ACCREDITATIONMODEL_CASH};
+
+    public Boolean isStandardAgency{
+        get {
+            isStandardAgency = standardAccreditationModel.contains(oscarObj.Account__r.ANG_Accreditation_Model__c);
+            return isStandardAgency;
+        }
+        set;
+    }
+    //NEWGEN-5859-END
 
     // The extension constructor initializes the private member
     // variable oscarObj by using the getRecord method from the standard
@@ -636,7 +688,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
             this.accreditationObj = fetchAccreditationFields(this.oscarObj.AMS_Online_Accreditation__c);
             this.isCargoAgency = AMS_Utils.LocationClassDGR.contains(accreditationObj.Location_Class__c);
             this.isCertificationOSCAR = oscarObj.Process__c == AMS_Utils.CERTIFICATION;
-            this.isNewGenProcess = AMS_Utils.oscarNewGenProcesses.contains(oscarObj.Process__c);
+            this.isNewGenProcess = AMS_Utils.oscarNewGenProcesses.contains(oscarObj.Process__c); 
  
         }else{
             System.debug('## Could not fetch any Oscar or does not have an accreditation object');
@@ -672,8 +724,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
             pendingCases = 
                 [SELECT 
                     COUNT() 
-                 FROM
-                    Case
+                 FROM Case
                  WHERE
                      AccountId IN :hierarchyAccountIds 
                  AND RecordType.DeveloperName = 'OSCAR_Communication' 
@@ -736,7 +787,9 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
                         Account__r.IATA_ISO_Country__r.Name,AMS_Online_Accreditation__c,Account__c,Account__r.Name,Process__c, Type_of_change__c, Account__r.ANG_IsNewGenAgency__c, 
                         ANG_Type_of_change__c, Account__r.Top_Parent__r.Remittance_Frequency__c, Account__r.Iso_State__c,
                         AMS_Target_Agency__c, Account__r.Is_Branch_Abroad__c, STEP6__c, //FM AMSU-1
-                        Account__r.IATA_ISO_Country__r.ISO_Code__c, Location_Class__c, Account__r.Location_Class__c //AMSU-151 
+                        Account__r.IATA_ISO_Country__r.ISO_Code__c, Location_Class__c, Account__r.Location_Class__c, //AMSU-151 
+                        Location_Type__c,  //NEWGEN-4850
+                        Account__r.ANG_Accreditation_Model__c //NEWGEN-5859
                         FROM AMS_OSCAR__c where id = :idToSearch LIMIT 1];
 
         if(oSCARs.isEmpty()) return null;
@@ -763,10 +816,10 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
 
             if(accreditationObj != null){ 
 
-                if(accreditationObj.Branch_Office_Country__r.AMS_Settlement_System__r.Remittance_Frequency_per_State__c 
-                    && oscarObj.ANG_Type_Of_Change__c == AMS_Utils.ANG_LOCATION && oscarObj.Account__r.Iso_State__c != accreditationObj.IATA_ISO_State__c){
-
-                    accreditationObj.Remittance_frequency__c = [SELECT Id, BSP__r.Remittance_Frequency_per_State__c, Remittance_Frequency__c 
+                if (accreditationObj.Branch_Office_Country__r.AMS_Settlement_System__r.Remittance_Frequency_per_State__c 
+                    && oscarObj.ANG_Type_Of_Change__c == AMS_Utils.ANG_LOCATION)
+                {
+                    accreditationObj.Remittance_frequency__c = [SELECT Id, Remittance_Frequency__c 
                                          FROM ANG_BSP_Attributes__c 
                                          WHERE ISO_State__c =: accreditationObj.IATA_ISO_State__c 
                                          AND RecordType.DeveloperName = 'Remittance_Frequency'][0].Remittance_Frequency__c;
@@ -802,7 +855,6 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
     public void cancel(){
         this.saveAction = true;
     } 
-
 
     public class FormField {
         public String name { get; set; }

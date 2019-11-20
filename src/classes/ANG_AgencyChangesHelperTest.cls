@@ -26,13 +26,14 @@ public class ANG_AgencyChangesHelperTest {
 		account.ANG_HE_RiskHistoryAssessment__c = 'Not Applicable';
 		account.ANG_HE_RiskStatus__c = 'Not Applicable';
 		account.RecordTypeId = accountAgencyRT;
+		account.Status__c = 'Approved';
 
 		insert account;
 		
 		List<Account> accountList = new List<Account>();
-		Account a1 = new Account(IATA_ISO_Country__c = ctry.id, ANG_IEP_Status__c = null, ANG_Accreditation_Model__c = 'Cashless' ,RecordTypeId = accountAgencyRT, IATACode__c='12345671',Name='Account AE1 H1',Short_Name__c='Account AE1 H1',Category__c = 'IATA Passenger Sales Agent',Location_Class__c = 'P',Location_Type__c = 'AE', ParentId = account.Id);
-		Account a2 = new Account(IATA_ISO_Country__c = ctry.id, ANG_IEP_Status__c = null, ANG_Accreditation_Model__c = 'Cashless' , RecordTypeId = accountAgencyRT, IATACode__c='12345672',Name='Account AE2 H1',Short_Name__c='Account AE2 H1',Category__c = 'IATA Passenger Sales Agent',Location_Class__c = 'P',Location_Type__c = 'AE', ParentId = account.Id);
-		Account a3 = new Account(IATA_ISO_Country__c = ctry.id, ANG_IEP_Status__c = null, ANG_Accreditation_Model__c = 'Cashless' , RecordTypeId = accountAgencyRT, IATACode__c='12345673',Name='Account AE3 H1',Short_Name__c='Account AE3 H1',Category__c = 'IATA Passenger Sales Agent',Location_Class__c = 'P',Location_Type__c = 'AE', ParentId = account.Id);
+		Account a1 = new Account(Status__c = 'Approved', IATA_ISO_Country__c = ctry.id, ANG_IEP_Status__c = null, ANG_Accreditation_Model__c = 'Cashless' ,RecordTypeId = accountAgencyRT, IATACode__c='12345671',Name='Account AE1 H1',Short_Name__c='Account AE1 H1',Category__c = 'IATA Passenger Sales Agent',Location_Class__c = 'P',Location_Type__c = 'AE', ParentId = account.Id);
+		Account a2 = new Account(Status__c = 'Approved', IATA_ISO_Country__c = ctry.id, ANG_IEP_Status__c = null, ANG_Accreditation_Model__c = 'Cashless' , RecordTypeId = accountAgencyRT, IATACode__c='12345672',Name='Account AE2 H1',Short_Name__c='Account AE2 H1',Category__c = 'IATA Passenger Sales Agent',Location_Class__c = 'P',Location_Type__c = 'AE', ParentId = account.Id);
+		Account a3 = new Account(Status__c = 'Approved', IATA_ISO_Country__c = ctry.id, ANG_IEP_Status__c = null, ANG_Accreditation_Model__c = 'Cashless' , RecordTypeId = accountAgencyRT, IATACode__c='12345673',Name='Account AE3 H1',Short_Name__c='Account AE3 H1',Category__c = 'IATA Passenger Sales Agent',Location_Class__c = 'P',Location_Type__c = 'AE', ParentId = account.Id);
 		
 		accountList.add(a1);
 		accountList.add(a2);
@@ -469,7 +470,7 @@ public class ANG_AgencyChangesHelperTest {
 		System.debug('[performChangeOfLocationTypeScenario1]- Relations are:'+relsToCheck);
 		System.debug('[performChangeOfLocationTypeScenario1]- Hierarchies are:'+hierarchies);
 		
-		System.assertEquals(1,hierarchies.size());
+		System.assertEquals(2,hierarchies.size());
 		System.assertEquals(3,relsToCheck.size());
 
 		Integer parentAccountOriginal = 0;
@@ -587,7 +588,7 @@ public class ANG_AgencyChangesHelperTest {
 		System.debug('[performChangeOfLocationTypeScenario1]- Relations are:'+relsToCheck);
 		System.debug('[performChangeOfLocationTypeScenario1]- Hierarchies are:'+hierarchies);
 		
-		System.assertEquals(1,hierarchies.size());
+		System.assertEquals(2,hierarchies.size());
 		System.assertEquals(4,relsToCheck.size());
 
 		Integer parentAccountOriginal = 0;
@@ -717,7 +718,7 @@ public class ANG_AgencyChangesHelperTest {
 		System.debug('[performChangeOfLocationTypeScenario1]- Relations are:'+relsToCheck);
 		System.debug('[performChangeOfLocationTypeScenario1]- Hierarchies are:'+hierarchies);
 		
-		System.assertEquals(1,hierarchies.size());
+		System.assertEquals(2,hierarchies.size());
 		System.assertEquals(5,relsToCheck.size());
 
 		Integer parentAccountOriginal = 0;
@@ -976,43 +977,43 @@ public class ANG_AgencyChangesHelperTest {
                            TC_Legal_status__c = false, TC_Location__c = false, 
                            TC_Minor_Shareholding__c = false, TC_Legal_Name__c = true, TC_Ownership__c = false, TC_Hierarchy__c = false,
                            TC_Major_Shareholding__c = false,  TC_VMFR__c = false,
-                           TCA_Sanity_check__c = 'CON', TCA_Application_withdrawal__c = 'CWD'));
+                           TCA_Sanity_check__c = 'CON', TCA_Application_withdrawal__c = 'CWD',Valid_Accreditation_Models__c='ALL'));
         customsettings.add(new ANG_AgencyChangesConfig__c(Name = 'ChangeLocationType', TC_Location_type__c = true,
                            TC_Legal_status__c = false, TC_Location__c = false, 
                            TC_Minor_Shareholding__c = false, TC_Legal_Name__c = false, TC_Ownership__c = false, TC_Hierarchy__c = false,
                            TC_Major_Shareholding__c = false, TC_VMFR__c = false,
-                           TCA_Sanity_check__c = 'CAD', TCA_Application_withdrawal__c = 'CWD'));
+                           TCA_Sanity_check__c = 'CAD', TCA_Application_withdrawal__c = 'CWD',Valid_Accreditation_Models__c='ALL'));
         customsettings.add(new ANG_AgencyChangesConfig__c(Name = 'ChangeLocation', TC_Location_type__c = false,
                            TC_Legal_status__c = false, TC_Location__c = true, 
                            TC_Minor_Shareholding__c = false, TC_Legal_Name__c = false, TC_Ownership__c = false, TC_Hierarchy__c = false,
                            TC_Major_Shareholding__c = false, TC_VMFR__c = false,
-                           TCA_Sanity_check__c = 'CHL', TCA_Application_withdrawal__c = 'CWD'));
+                           TCA_Sanity_check__c = 'CHL', TCA_Application_withdrawal__c = 'CWD',Valid_Accreditation_Models__c='ALL'));
         customsettings.add(new ANG_AgencyChangesConfig__c(Name = 'ChangeOwnership', TC_Location_type__c = false,
                            TC_Legal_status__c = false, TC_Location__c = false, 
                            TC_Minor_Shareholding__c = false, TC_Legal_Name__c = false, TC_Ownership__c = true, TC_Hierarchy__c = false,
                            TC_Major_Shareholding__c = false, TC_VMFR__c = false,
-                           TCA_Sanity_check__c = 'CHI', TCA_Application_withdrawal__c = 'CWD'));
+                           TCA_Sanity_check__c = 'CHI', TCA_Application_withdrawal__c = 'CWD',Valid_Accreditation_Models__c='ALL'));
         customsettings.add(new ANG_AgencyChangesConfig__c(Name = 'ChangeLegal', TC_Location_type__c = false,
                            TC_Legal_status__c = true, TC_Location__c = false, 
                            TC_Minor_Shareholding__c = false, TC_Legal_Name__c = false, TC_Ownership__c = false, TC_Hierarchy__c = false,
                            TC_Major_Shareholding__c = false, TC_VMFR__c = false,
-                           TCA_Sanity_check__c = 'CHS', TCA_Application_withdrawal__c = 'CWD'));
+                           TCA_Sanity_check__c = 'CHS', TCA_Application_withdrawal__c = 'CWD',Valid_Accreditation_Models__c='ALL'));
         customsettings.add(new ANG_AgencyChangesConfig__c(Name = 'ChangeOwnershipNonIATA', TC_Location_type__c = false,
                            TC_Legal_status__c = false, TC_Location__c = false, 
                            TC_Minor_Shareholding__c = false, TC_Legal_Name__c = false, TC_Ownership__c = false, TC_Hierarchy__c = false,
                            TC_Major_Shareholding__c = false, TC_VMFR__c = false,
-                           TCA_Sanity_check__c = 'CHO', TCA_Application_withdrawal__c = 'CWD'));
+                           TCA_Sanity_check__c = 'CHO', TCA_Application_withdrawal__c = 'CWD',Valid_Accreditation_Models__c='ALL'));
         customsettings.add(new ANG_AgencyChangesConfig__c(Name = 'ChangeMajorShareholding', TC_Location_type__c = false,
                            TC_Legal_status__c = false, TC_Location__c = false, 
                            TC_Minor_Shareholding__c = false, TC_Legal_Name__c = false, TC_Ownership__c = false, TC_Hierarchy__c = false,
                            TC_Major_Shareholding__c = true, TC_VMFR__c = false,
-                           TCA_Sanity_check__c = 'CHC', TCA_Application_withdrawal__c = 'CWD'));
+                           TCA_Sanity_check__c = 'CHC', TCA_Application_withdrawal__c = 'CWD',Valid_Accreditation_Models__c='ALL'));
 
         customsettings.add(new ANG_AgencyChangesConfig__c(Name = 'ChangeMix', TC_Location_type__c = false,
                            TC_Legal_status__c = false, TC_Location__c = true, 
                            TC_Minor_Shareholding__c = false, TC_Legal_Name__c = true, TC_Ownership__c = false,
                            TC_Major_Shareholding__c = false, TC_VMFR__c = false,
-                           TCA_Sanity_check__c = 'CNL', TCA_Application_withdrawal__c = 'CWD', TCA_Manager_approval__c = 'MCF'));
+                           TCA_Sanity_check__c = 'CNL', TCA_Application_withdrawal__c = 'CWD', TCA_Manager_approval__c = 'MCF',Valid_Accreditation_Models__c='ALL'));
 
         insert customsettings;
 
@@ -1735,43 +1736,43 @@ public class ANG_AgencyChangesHelperTest {
                            TC_Legal_status__c = false, TC_Location__c = false, 
                            TC_Minor_Shareholding__c = false, TC_Legal_Name__c = true, TC_Ownership__c = false, TC_Hierarchy__c = false,
                            TC_Major_Shareholding__c = false,  TC_VMFR__c = false,
-                           TCA_Sanity_check__c = 'CON', TCA_Application_withdrawal__c = 'CWD'));
+                           TCA_Sanity_check__c = 'CON', TCA_Application_withdrawal__c = 'CWD',Valid_Accreditation_Models__c='ALL'));
         customsettings.add(new ANG_AgencyChangesConfig__c(Name = 'ChangeLocationType', TC_Location_type__c = true,
                            TC_Legal_status__c = false, TC_Location__c = false, 
                            TC_Minor_Shareholding__c = false, TC_Legal_Name__c = false, TC_Ownership__c = false, TC_Hierarchy__c = false,
                            TC_Major_Shareholding__c = false, TC_VMFR__c = false,
-                           TCA_Sanity_check__c = 'CAD', TCA_Application_withdrawal__c = 'CWD'));
+                           TCA_Sanity_check__c = 'CAD', TCA_Application_withdrawal__c = 'CWD',Valid_Accreditation_Models__c='ALL'));
         customsettings.add(new ANG_AgencyChangesConfig__c(Name = 'ChangeLocation', TC_Location_type__c = false,
                            TC_Legal_status__c = false, TC_Location__c = true, 
                            TC_Minor_Shareholding__c = false, TC_Legal_Name__c = false, TC_Ownership__c = false, TC_Hierarchy__c = false,
                            TC_Major_Shareholding__c = false, TC_VMFR__c = false,
-                           TCA_Sanity_check__c = 'CHL', TCA_Application_withdrawal__c = 'CWD'));
+                           TCA_Sanity_check__c = 'CHL', TCA_Application_withdrawal__c = 'CWD',Valid_Accreditation_Models__c='ALL'));
         customsettings.add(new ANG_AgencyChangesConfig__c(Name = 'ChangeOwnership', TC_Location_type__c = false,
                            TC_Legal_status__c = false, TC_Location__c = false, 
                            TC_Minor_Shareholding__c = false, TC_Legal_Name__c = false, TC_Ownership__c = true, TC_Hierarchy__c = false,
                            TC_Major_Shareholding__c = false, TC_VMFR__c = false,
-                           TCA_Sanity_check__c = 'CHI', TCA_Application_withdrawal__c = 'CWD'));
+                           TCA_Sanity_check__c = 'CHI', TCA_Application_withdrawal__c = 'CWD',Valid_Accreditation_Models__c='ALL'));
         customsettings.add(new ANG_AgencyChangesConfig__c(Name = 'ChangeLegal', TC_Location_type__c = false,
                            TC_Legal_status__c = true, TC_Location__c = false, 
                            TC_Minor_Shareholding__c = false, TC_Legal_Name__c = false, TC_Ownership__c = false, TC_Hierarchy__c = false,
                            TC_Major_Shareholding__c = false, TC_VMFR__c = false,
-                           TCA_Sanity_check__c = 'CHS', TCA_Application_withdrawal__c = 'CWD'));
+                           TCA_Sanity_check__c = 'CHS', TCA_Application_withdrawal__c = 'CWD',Valid_Accreditation_Models__c='ALL'));
         customsettings.add(new ANG_AgencyChangesConfig__c(Name = 'ChangeOwnershipNonIATA', TC_Location_type__c = false,
                            TC_Legal_status__c = false, TC_Location__c = false, 
                            TC_Minor_Shareholding__c = false, TC_Legal_Name__c = false, TC_Ownership__c = false, TC_Hierarchy__c = false,
                            TC_Major_Shareholding__c = false, TC_VMFR__c = false,
-                           TCA_Sanity_check__c = 'CHO', TCA_Application_withdrawal__c = 'CWD'));
+                           TCA_Sanity_check__c = 'CHO', TCA_Application_withdrawal__c = 'CWD',Valid_Accreditation_Models__c='ALL'));
         customsettings.add(new ANG_AgencyChangesConfig__c(Name = 'ChangeMajorShareholding', TC_Location_type__c = false,
                            TC_Legal_status__c = false, TC_Location__c = false, 
                            TC_Minor_Shareholding__c = false, TC_Legal_Name__c = false, TC_Ownership__c = false, TC_Hierarchy__c = false,
                            TC_Major_Shareholding__c = true, TC_VMFR__c = false,
-                           TCA_Sanity_check__c = 'CHC', TCA_Application_withdrawal__c = 'CWD'));
+                           TCA_Sanity_check__c = 'CHC', TCA_Application_withdrawal__c = 'CWD',Valid_Accreditation_Models__c='ALL'));
 
         customsettings.add(new ANG_AgencyChangesConfig__c(Name = 'ChangeMix', TC_Location_type__c = false,
                            TC_Legal_status__c = false, TC_Location__c = true, 
                            TC_Minor_Shareholding__c = false, TC_Legal_Name__c = true, TC_Ownership__c = false,
                            TC_Major_Shareholding__c = false, TC_VMFR__c = false,
-                           TCA_Sanity_check__c = 'CNL', TCA_Application_withdrawal__c = 'CWD', TCA_Manager_approval__c = 'MCF'));
+                           TCA_Sanity_check__c = 'CNL', TCA_Application_withdrawal__c = 'CWD', TCA_Manager_approval__c = 'MCF',Valid_Accreditation_Models__c='ALL'));
 
         insert customsettings;
 
@@ -1779,6 +1780,10 @@ public class ANG_AgencyChangesHelperTest {
 
 		Account a1 = [Select Id, IATACode__c,IATA_ISO_Country__c,Location_Class__c, Location_Type__c, ANG_IEP_HE_AccntNum__c, ANG_IEP_Status__c, ANG_HE_CashCondition__c, ANG_HE_RiskHistoryAssessment__c, ANG_HE_RiskStatus__c from Account where Name = 'Account AE1 H1'];
 		Account he1 = [Select Id, IATACode__c, IATA_ISO_Country__c,Location_Class__c,Location_Type__c, ANG_IEP_HE_AccntNum__c, ANG_IEP_Status__c, ANG_HE_CashCondition__c, ANG_HE_RiskHistoryAssessment__c, ANG_HE_RiskStatus__c from Account where Name = 'Main HE Account H1'];
+
+		Id rtsRiskAlertRT = RecordTypeSingleton.getInstance().getRecordTypeId('ANG_Risk_Alert__c', 'Risk_Alert_RTS');
+		ANG_Risk_Alert__c rtsRiskAlert = new ANG_Risk_Alert__c(ANG_EventId__c = 'RTS Alert - HE', ANG_Account__c = he1.id, RecordTypeId = rtsRiskAlertRT, ANG_Severity__c = 'Orange');
+ 		insert rtsRiskAlert;
 
 		Id oscarRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_Agency_Changes');
 
@@ -1875,6 +1880,19 @@ public class ANG_AgencyChangesHelperTest {
 
 		ANG_AgencyChangesHelper.generateLNFChangeCode(oscar, new Map<Id, Agency_Applied_Change_code__c>{a1.Id => aacc1}, changesContainer);
 
+		Map<ID, Account> accountMapAfterChange = new Map<ID, Account>([SELECT ID, Name, (SELECT ID, ANG_Account__c, Monitored_Account__c FROM Risk_Alerts__r)
+												FROM Account 
+												Where ID = :he1.ID OR ID = :a1.ID]);
+
+		Account newMainAccount = accountMapAfterChange.get(a1.ID);
+		List<ANG_Risk_Alert__c> riskAlertList = newMainAccount.Risk_Alerts__r;
+		System.assertEquals(1, riskAlertList.size());
+		System.assertEquals(he1.ID, riskAlertList.get(0).Monitored_Account__c);
+		System.assertEquals(a1.ID, riskAlertList.get(0).ANG_Account__c);
+
+		Account newAEAccount = accountMapAfterChange.get(he1.ID);
+		System.assertEquals(0, newAEAccount.Risk_Alerts__r.size());
+
 		Test.stopTest();
 
 	}
@@ -1916,49 +1934,49 @@ public class ANG_AgencyChangesHelperTest {
                            TC_Legal_status__c = false, TC_Location__c = false, 
                            TC_Minor_Shareholding__c = false, TC_Legal_Name__c = true, TC_Ownership__c = false, TC_Hierarchy__c = false,
                            TC_Major_Shareholding__c = false,  TC_VMFR__c = false,
-                           TCA_Sanity_check__c = 'CON', TCA_Application_withdrawal__c = 'CWD'));
+                           TCA_Sanity_check__c = 'CON', TCA_Application_withdrawal__c = 'CWD',Valid_Accreditation_Models__c='ALL'));
         customsettings.add(new ANG_AgencyChangesConfig__c(Name = 'ChangeLocationType', TC_Location_type__c = true,
                            TC_Legal_status__c = false, TC_Location__c = false, 
                            TC_Minor_Shareholding__c = false, TC_Legal_Name__c = false, TC_Ownership__c = false, TC_Hierarchy__c = false,
                            TC_Major_Shareholding__c = false, TC_VMFR__c = false,
-                           TCA_Sanity_check__c = 'CAD', TCA_Application_withdrawal__c = 'CWD'));
+                           TCA_Sanity_check__c = 'CAD', TCA_Application_withdrawal__c = 'CWD',Valid_Accreditation_Models__c='ALL'));
         customsettings.add(new ANG_AgencyChangesConfig__c(Name = 'ChangeLocation', TC_Location_type__c = false,
                            TC_Legal_status__c = false, TC_Location__c = true, 
                            TC_Minor_Shareholding__c = false, TC_Legal_Name__c = false, TC_Ownership__c = false, TC_Hierarchy__c = false,
                            TC_Major_Shareholding__c = false, TC_VMFR__c = false,
-                           TCA_Sanity_check__c = 'CHL', TCA_Application_withdrawal__c = 'CWD'));
+                           TCA_Sanity_check__c = 'CHL', TCA_Application_withdrawal__c = 'CWD',Valid_Accreditation_Models__c='ALL'));
         customsettings.add(new ANG_AgencyChangesConfig__c(Name = 'ChangeOwnership', TC_Location_type__c = false,
                            TC_Legal_status__c = false, TC_Location__c = false, 
                            TC_Minor_Shareholding__c = false, TC_Legal_Name__c = false, TC_Ownership__c = true, TC_Hierarchy__c = false,
                            TC_Major_Shareholding__c = false, TC_VMFR__c = false,
-                           TCA_Sanity_check__c = 'CHI', TCA_Application_withdrawal__c = 'CWD'));
+                           TCA_Sanity_check__c = 'CHI', TCA_Application_withdrawal__c = 'CWD',Valid_Accreditation_Models__c='ALL'));
         customsettings.add(new ANG_AgencyChangesConfig__c(Name = 'ChangeLegal', TC_Location_type__c = false,
                            TC_Legal_status__c = true, TC_Location__c = false, 
                            TC_Minor_Shareholding__c = false, TC_Legal_Name__c = false, TC_Ownership__c = false, TC_Hierarchy__c = false,
                            TC_Major_Shareholding__c = false, TC_VMFR__c = false,
-                           TCA_Sanity_check__c = 'CHS', TCA_Application_withdrawal__c = 'CWD'));
+                           TCA_Sanity_check__c = 'CHS', TCA_Application_withdrawal__c = 'CWD',Valid_Accreditation_Models__c='ALL'));
         customsettings.add(new ANG_AgencyChangesConfig__c(Name = 'ChangeOwnershipNonIATA', TC_Location_type__c = false,
                            TC_Legal_status__c = false, TC_Location__c = false, 
                            TC_Minor_Shareholding__c = false, TC_Legal_Name__c = false, TC_Ownership__c = false, TC_Hierarchy__c = false,
                            TC_Major_Shareholding__c = false, TC_VMFR__c = false,
-                           TCA_Sanity_check__c = 'CHO', TCA_Application_withdrawal__c = 'CWD'));
+                           TCA_Sanity_check__c = 'CHO', TCA_Application_withdrawal__c = 'CWD',Valid_Accreditation_Models__c='ALL'));
         customsettings.add(new ANG_AgencyChangesConfig__c(Name = 'ChangeMajorShareholding', TC_Location_type__c = false,
                            TC_Legal_status__c = false, TC_Location__c = false, 
                            TC_Minor_Shareholding__c = false, TC_Legal_Name__c = false, TC_Ownership__c = false, TC_Hierarchy__c = false,
                            TC_Major_Shareholding__c = true, TC_VMFR__c = false,
-                           TCA_Sanity_check__c = 'CHC', TCA_Application_withdrawal__c = 'CWD'));
+                           TCA_Sanity_check__c = 'CHC', TCA_Application_withdrawal__c = 'CWD',Valid_Accreditation_Models__c='ALL'));
 
         customsettings.add(new ANG_AgencyChangesConfig__c(Name = 'ChangeMix', TC_Location_type__c = false,
                            TC_Legal_status__c = false, TC_Location__c = true, 
                            TC_Minor_Shareholding__c = false, TC_Legal_Name__c = true, TC_Ownership__c = false,
                            TC_Major_Shareholding__c = false, TC_VMFR__c = false,
-                           TCA_Sanity_check__c = 'CNL', TCA_Application_withdrawal__c = 'CWD', TCA_Manager_approval__c = 'MCF'));
+                           TCA_Sanity_check__c = 'CNL', TCA_Application_withdrawal__c = 'CWD', TCA_Manager_approval__c = 'MCF',Valid_Accreditation_Models__c='ALL'));
 
         customsettings.add(new ANG_AgencyChangesConfig__c(Name = 'ChangeMixAll', TC_Location_type__c = true,
                    TC_Legal_status__c = false, TC_Location__c = true, TC_Accreditation_Type__c = false,
                    TC_Minor_Shareholding__c = false, TC_Legal_Name__c = false, TC_Ownership__c = false,
                    TC_Major_Shareholding__c = false, TC_VMFR__c = true,
-                   TCA_Sanity_check__c = 'CNL', TCA_Application_withdrawal__c = 'CWD', TCA_Manager_approval__c = 'MCF',TC_Hierarchy__c = true));
+                   TCA_Sanity_check__c = 'CNL', TCA_Application_withdrawal__c = 'CWD', TCA_Manager_approval__c = 'MCF',TC_Hierarchy__c = true,Valid_Accreditation_Models__c='ALL'));
 
         insert customsettings;
 
@@ -2092,49 +2110,49 @@ public class ANG_AgencyChangesHelperTest {
                            TC_Legal_status__c = false, TC_Location__c = false, 
                            TC_Minor_Shareholding__c = false, TC_Legal_Name__c = true, TC_Ownership__c = false, TC_Hierarchy__c = false,
                            TC_Major_Shareholding__c = false,  TC_VMFR__c = false,
-                           TCA_Sanity_check__c = 'CON', TCA_Application_withdrawal__c = 'CWD'));
+                           TCA_Sanity_check__c = 'CON', TCA_Application_withdrawal__c = 'CWD',Valid_Accreditation_Models__c='ALL'));
         customsettings.add(new ANG_AgencyChangesConfig__c(Name = 'ChangeLocationType', TC_Location_type__c = true,
                            TC_Legal_status__c = false, TC_Location__c = false, 
                            TC_Minor_Shareholding__c = false, TC_Legal_Name__c = false, TC_Ownership__c = false, TC_Hierarchy__c = false,
                            TC_Major_Shareholding__c = false, TC_VMFR__c = false,
-                           TCA_Sanity_check__c = 'CAD', TCA_Application_withdrawal__c = 'CWD'));
+                           TCA_Sanity_check__c = 'CAD', TCA_Application_withdrawal__c = 'CWD',Valid_Accreditation_Models__c='ALL'));
         customsettings.add(new ANG_AgencyChangesConfig__c(Name = 'ChangeLocation', TC_Location_type__c = false,
                            TC_Legal_status__c = false, TC_Location__c = true, 
                            TC_Minor_Shareholding__c = false, TC_Legal_Name__c = false, TC_Ownership__c = false, TC_Hierarchy__c = false,
                            TC_Major_Shareholding__c = false, TC_VMFR__c = false,
-                           TCA_Sanity_check__c = 'CHL', TCA_Application_withdrawal__c = 'CWD'));
+                           TCA_Sanity_check__c = 'CHL', TCA_Application_withdrawal__c = 'CWD',Valid_Accreditation_Models__c='ALL'));
         customsettings.add(new ANG_AgencyChangesConfig__c(Name = 'ChangeOwnership', TC_Location_type__c = false,
                            TC_Legal_status__c = false, TC_Location__c = false, 
                            TC_Minor_Shareholding__c = false, TC_Legal_Name__c = false, TC_Ownership__c = true, TC_Hierarchy__c = false,
                            TC_Major_Shareholding__c = false, TC_VMFR__c = false,
-                           TCA_Sanity_check__c = 'CHI', TCA_Application_withdrawal__c = 'CWD'));
+                           TCA_Sanity_check__c = 'CHI', TCA_Application_withdrawal__c = 'CWD',Valid_Accreditation_Models__c='ALL'));
         customsettings.add(new ANG_AgencyChangesConfig__c(Name = 'ChangeLegal', TC_Location_type__c = false,
                            TC_Legal_status__c = true, TC_Location__c = false, 
                            TC_Minor_Shareholding__c = false, TC_Legal_Name__c = false, TC_Ownership__c = false, TC_Hierarchy__c = false,
                            TC_Major_Shareholding__c = false, TC_VMFR__c = false,
-                           TCA_Sanity_check__c = 'CHS', TCA_Application_withdrawal__c = 'CWD'));
+                           TCA_Sanity_check__c = 'CHS', TCA_Application_withdrawal__c = 'CWD',Valid_Accreditation_Models__c='ALL'));
         customsettings.add(new ANG_AgencyChangesConfig__c(Name = 'ChangeOwnershipNonIATA', TC_Location_type__c = false,
                            TC_Legal_status__c = false, TC_Location__c = false, 
                            TC_Minor_Shareholding__c = false, TC_Legal_Name__c = false, TC_Ownership__c = false, TC_Hierarchy__c = false,
                            TC_Major_Shareholding__c = false, TC_VMFR__c = false,
-                           TCA_Sanity_check__c = 'CHO', TCA_Application_withdrawal__c = 'CWD'));
+                           TCA_Sanity_check__c = 'CHO', TCA_Application_withdrawal__c = 'CWD',Valid_Accreditation_Models__c='ALL'));
         customsettings.add(new ANG_AgencyChangesConfig__c(Name = 'ChangeMajorShareholding', TC_Location_type__c = false,
                            TC_Legal_status__c = false, TC_Location__c = false, 
                            TC_Minor_Shareholding__c = false, TC_Legal_Name__c = false, TC_Ownership__c = false, TC_Hierarchy__c = false,
                            TC_Major_Shareholding__c = true, TC_VMFR__c = false,
-                           TCA_Sanity_check__c = 'CHC', TCA_Application_withdrawal__c = 'CWD'));
+                           TCA_Sanity_check__c = 'CHC', TCA_Application_withdrawal__c = 'CWD',Valid_Accreditation_Models__c='ALL'));
 
         customsettings.add(new ANG_AgencyChangesConfig__c(Name = 'ChangeMix', TC_Location_type__c = false,
                            TC_Legal_status__c = false, TC_Location__c = true, 
                            TC_Minor_Shareholding__c = false, TC_Legal_Name__c = true, TC_Ownership__c = false,
                            TC_Major_Shareholding__c = false, TC_VMFR__c = false,
-                           TCA_Sanity_check__c = 'CNL', TCA_Application_withdrawal__c = 'CWD', TCA_Manager_approval__c = 'MCF'));
+                           TCA_Sanity_check__c = 'CNL', TCA_Application_withdrawal__c = 'CWD', TCA_Manager_approval__c = 'MCF',Valid_Accreditation_Models__c='ALL'));
 
         customsettings.add(new ANG_AgencyChangesConfig__c(Name = 'ChangeMixAll', TC_Location_type__c = false,
                    TC_Legal_status__c = false, TC_Location__c = true, TC_Accreditation_Type__c = false,
                    TC_Minor_Shareholding__c = false, TC_Legal_Name__c = false, TC_Ownership__c = false,
                    TC_Major_Shareholding__c = false, TC_VMFR__c = false,
-                   TCA_Sanity_check__c = 'CNL', TCA_Application_withdrawal__c = 'CWD', TCA_Manager_approval__c = 'MCF',TC_Hierarchy__c = false));
+                   TCA_Sanity_check__c = 'CNL', TCA_Application_withdrawal__c = 'CWD', TCA_Manager_approval__c = 'MCF',TC_Hierarchy__c = false,Valid_Accreditation_Models__c='ALL'));
 
         insert customsettings;
 
@@ -2354,49 +2372,49 @@ public class ANG_AgencyChangesHelperTest {
                            TC_Legal_status__c = false, TC_Location__c = false, 
                            TC_Minor_Shareholding__c = false, TC_Legal_Name__c = true, TC_Ownership__c = false, TC_Hierarchy__c = false,
                            TC_Major_Shareholding__c = false,  TC_VMFR__c = false,
-                           TCA_Sanity_check__c = 'CON', TCA_Application_withdrawal__c = 'CWD'));
+                           TCA_Sanity_check__c = 'CON', TCA_Application_withdrawal__c = 'CWD',Valid_Accreditation_Models__c='ALL'));
         customsettings.add(new ANG_AgencyChangesConfig__c(Name = 'ChangeLocationType', TC_Location_type__c = true,
                            TC_Legal_status__c = false, TC_Location__c = false, 
                            TC_Minor_Shareholding__c = false, TC_Legal_Name__c = false, TC_Ownership__c = false, TC_Hierarchy__c = false,
                            TC_Major_Shareholding__c = false, TC_VMFR__c = false,
-                           TCA_Sanity_check__c = 'CAD', TCA_Application_withdrawal__c = 'CWD'));
+                           TCA_Sanity_check__c = 'CAD', TCA_Application_withdrawal__c = 'CWD',Valid_Accreditation_Models__c='ALL'));
         customsettings.add(new ANG_AgencyChangesConfig__c(Name = 'ChangeLocation', TC_Location_type__c = false,
                            TC_Legal_status__c = false, TC_Location__c = true, 
                            TC_Minor_Shareholding__c = false, TC_Legal_Name__c = false, TC_Ownership__c = false, TC_Hierarchy__c = false,
                            TC_Major_Shareholding__c = false, TC_VMFR__c = false,
-                           TCA_Sanity_check__c = 'CHL', TCA_Application_withdrawal__c = 'CWD'));
+                           TCA_Sanity_check__c = 'CHL', TCA_Application_withdrawal__c = 'CWD',Valid_Accreditation_Models__c='ALL'));
         customsettings.add(new ANG_AgencyChangesConfig__c(Name = 'ChangeOwnership', TC_Location_type__c = false,
                            TC_Legal_status__c = false, TC_Location__c = false, 
                            TC_Minor_Shareholding__c = false, TC_Legal_Name__c = false, TC_Ownership__c = true, TC_Hierarchy__c = false,
                            TC_Major_Shareholding__c = false, TC_VMFR__c = false,
-                           TCA_Sanity_check__c = 'CHI', TCA_Application_withdrawal__c = 'CWD'));
+                           TCA_Sanity_check__c = 'CHI', TCA_Application_withdrawal__c = 'CWD',Valid_Accreditation_Models__c='ALL'));
         customsettings.add(new ANG_AgencyChangesConfig__c(Name = 'ChangeLegal', TC_Location_type__c = false,
                            TC_Legal_status__c = true, TC_Location__c = false, 
                            TC_Minor_Shareholding__c = false, TC_Legal_Name__c = false, TC_Ownership__c = false, TC_Hierarchy__c = false,
                            TC_Major_Shareholding__c = false, TC_VMFR__c = false,
-                           TCA_Sanity_check__c = 'CHS', TCA_Application_withdrawal__c = 'CWD'));
+                           TCA_Sanity_check__c = 'CHS', TCA_Application_withdrawal__c = 'CWD',Valid_Accreditation_Models__c='ALL'));
         customsettings.add(new ANG_AgencyChangesConfig__c(Name = 'ChangeOwnershipNonIATA', TC_Location_type__c = false,
                            TC_Legal_status__c = false, TC_Location__c = false, 
                            TC_Minor_Shareholding__c = false, TC_Legal_Name__c = false, TC_Ownership__c = false, TC_Hierarchy__c = false,
                            TC_Major_Shareholding__c = false, TC_VMFR__c = false,
-                           TCA_Sanity_check__c = 'CHO', TCA_Application_withdrawal__c = 'CWD'));
+                           TCA_Sanity_check__c = 'CHO', TCA_Application_withdrawal__c = 'CWD',Valid_Accreditation_Models__c='ALL'));
         customsettings.add(new ANG_AgencyChangesConfig__c(Name = 'ChangeMajorShareholding', TC_Location_type__c = false,
                            TC_Legal_status__c = false, TC_Location__c = false, 
                            TC_Minor_Shareholding__c = false, TC_Legal_Name__c = false, TC_Ownership__c = false, TC_Hierarchy__c = false,
                            TC_Major_Shareholding__c = true, TC_VMFR__c = false,
-                           TCA_Sanity_check__c = 'CHC', TCA_Application_withdrawal__c = 'CWD'));
+                           TCA_Sanity_check__c = 'CHC', TCA_Application_withdrawal__c = 'CWD',Valid_Accreditation_Models__c='ALL'));
 
         customsettings.add(new ANG_AgencyChangesConfig__c(Name = 'ChangeMix', TC_Location_type__c = false,
                            TC_Legal_status__c = false, TC_Location__c = true, 
                            TC_Minor_Shareholding__c = false, TC_Legal_Name__c = true, TC_Ownership__c = false,
                            TC_Major_Shareholding__c = false, TC_VMFR__c = false,
-                           TCA_Sanity_check__c = 'CNL', TCA_Application_withdrawal__c = 'CWD', TCA_Manager_approval__c = 'MCF'));
+                           TCA_Sanity_check__c = 'CNL', TCA_Application_withdrawal__c = 'CWD', TCA_Manager_approval__c = 'MCF',Valid_Accreditation_Models__c='ALL'));
 
         customsettings.add(new ANG_AgencyChangesConfig__c(Name = 'ChangeMixAll', TC_Location_type__c = false,
                    TC_Legal_status__c = false, TC_Location__c = true, TC_Accreditation_Type__c = false,
                    TC_Minor_Shareholding__c = false, TC_Legal_Name__c = false, TC_Ownership__c = false,
                    TC_Major_Shareholding__c = false, TC_VMFR__c = false,
-                   TCA_Sanity_check__c = 'CNL', TCA_Application_withdrawal__c = 'CWD', TCA_Manager_approval__c = 'MCF',TC_Hierarchy__c = false));
+                   TCA_Sanity_check__c = 'CNL', TCA_Application_withdrawal__c = 'CWD', TCA_Manager_approval__c = 'MCF',TC_Hierarchy__c = false,Valid_Accreditation_Models__c='ALL'));
 
         insert customsettings;
 
@@ -2537,7 +2555,7 @@ public class ANG_AgencyChangesHelperTest {
                    TC_Legal_status__c = false, TC_Location__c = false, TC_Accreditation_Type__c = false,
                    TC_Minor_Shareholding__c = false, TC_Legal_Name__c = false, TC_Ownership__c = false,
                    TC_Major_Shareholding__c = false, TC_VMFR__c = false,
-                   TCA_Sanity_check__c = 'CNL', TCA_Application_withdrawal__c = 'CWD', TCA_Manager_approval__c = 'MCF',TC_Hierarchy__c = true));
+                   TCA_Sanity_check__c = 'CNL', TCA_Application_withdrawal__c = 'CWD', TCA_Manager_approval__c = 'MCF',TC_Hierarchy__c = true,Valid_Accreditation_Models__c='ALL'));
 
         insert customsettings;
 
@@ -2676,7 +2694,7 @@ public class ANG_AgencyChangesHelperTest {
                    TC_Legal_status__c = false, TC_Location__c = false, TC_Accreditation_Type__c = false,
                    TC_Minor_Shareholding__c = false, TC_Legal_Name__c = false, TC_Ownership__c = false,
                    TC_Major_Shareholding__c = false, TC_VMFR__c = false,
-                   TCA_Sanity_check__c = 'CNL', TCA_Application_withdrawal__c = 'CWD', TCA_Manager_approval__c = 'MCF',TC_Hierarchy__c = true));
+                   TCA_Sanity_check__c = 'CNL', TCA_Application_withdrawal__c = 'CWD', TCA_Manager_approval__c = 'MCF',TC_Hierarchy__c = true,Valid_Accreditation_Models__c='ALL'));
 
         insert customsettings;
 
@@ -2813,6 +2831,7 @@ public class ANG_AgencyChangesHelperTest {
         changeLocationTypeDiffLegalEnt.TCA_Sanity_check__c = 'CDL';
         changeLocationTypeDiffLegalEnt.TCA_Manager_approval__c = 'CDF';
         changeLocationTypeDiffLegalEnt.TCA_Application_withdrawal__c = 'CWD';
+        changeLocationTypeDiffLegalEnt.Valid_Accreditation_Models__c = 'ALL';
 
         insert new List<ANG_AgencyChangesConfig__c>{changeLocationTypeDiffLegalEnt};
 

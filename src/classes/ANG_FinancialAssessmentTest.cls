@@ -305,8 +305,7 @@ private class ANG_FinancialAssessmentTest {
 			[SELECT
 				Id,
 				ANG_Limit_Cash_Conditions__c
-			 FROM
-			 	ANG_Agency_Risk_Event__c
+			 FROM ANG_Agency_Risk_Event__c
 			 WHERE
 			 	ANG_Risk_Type__r.Name = 'Fail Financial Statements'
 			 AND 
@@ -453,8 +452,7 @@ private class ANG_FinancialAssessmentTest {
 			[SELECT
 				Id,
 				ANG_Limit_Cash_Conditions__c
-			 FROM
-			 	ANG_Agency_Risk_Event__c
+			 FROM ANG_Agency_Risk_Event__c
 			 WHERE
 			 	ANG_Risk_Type__r.Name = 'Fail Financial Statements'
 			 AND 

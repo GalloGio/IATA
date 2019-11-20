@@ -95,22 +95,25 @@ global class AMS_OSCAR_Webservice {
 
             ID IFAPcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
 
-            List<AMS_OSCAR__c> oscar = [select Name, Account__c, Account__r.BillingCountry, Account__r.Type, Account__r.Name from AMS_OSCAR__c where Id = : oscarId];
-            if (oscar != null && oscar.size() > 0) {
-                String accountId = oscar[0].Account__c;
+            List<AMS_OSCAR__c> oscarLst = [select Name, Account__c, Account__r.ANG_Accreditation_Model__c, Account__r.BillingCountry, Account__r.Type, Account__r.Name from AMS_OSCAR__c where Id = : oscarId];
+            if (oscarLst != null && oscarLst.size() > 0) {
+
+                AMS_OSCAR__c oscar = oscarLst[0];
+
+                String accountId = oscar.Account__c;
 
                 if (accountId == null) {
                     result = 'Could not find an account related to this OSCAR.';
                     return 'ERROR: ' + result;
                 }
                 //account must have billing country
-                String billingCountry = oscar[0].Account__r.BillingCountry;
+                String billingCountry = oscar.Account__r.BillingCountry;
                 if (billingCountry == null) {
                     result = 'Could not find a billing country on the account related to this OSCAR.';
                     return 'ERROR: ' + result;
                 }
 
-                String accountType = oscar[0].Account__r.Type;
+                String accountType = oscar.Account__r.Type;
                 if (accountType == null || !Pattern.matches('IATA Cargo Agent|IATA Passenger Sales Agent|CASS Associate', accountType)) {
                     result = 'The type of account related to this oscar must be one of the following: IATA Cargo Agent|IATA Passenger Sales Agent|CASS Associate';
                     return 'ERROR: ' + result;
@@ -123,7 +126,7 @@ global class AMS_OSCAR_Webservice {
                     return 'ERROR: ' + result;
                 }
 
-                List<Case> cases = [select Id, Reason1__c from Case where OSCAR__c = : oscar[0].Id AND ( ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' ) limit 1];
+                List<Case> cases = [select Id, Reason1__c from Case where OSCAR__c = : oscar.Id AND ( ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' ) limit 1];
 
                 if (cases == null || cases.isEmpty()) {
                     result = 'Could not find a the Oscar Communication case related to this OSCAR.';
@@ -133,18 +136,23 @@ global class AMS_OSCAR_Webservice {
                 Case oscarCommCase = cases[0];
 
                 Date currentDate = Date.today();
-                Case ifapCase = new Case(RecordTypeId = IFAPcaseRecordTypeID, ParentId = oscarCommCase.Id, AccountId = oscar[0].Account__c,
-                                         Subject = oscarCommCase.Reason1__c + ' - ' + oscar[0].Account__r.Name, Status = 'Agent to be Notified',
-                                         Deadline_Date__c = currentDate + 5, ContactId = ifapContact[0].Id, OSCAR__c = oscar[0].Id, Financial_Assessment_requested__c = currentDate);
+                Case ifapCase = new Case(RecordTypeId = IFAPcaseRecordTypeID, ParentId = oscarCommCase.Id, AccountId = oscar.Account__c,
+                                         Subject = oscarCommCase.Reason1__c + ' - ' + oscar.Account__r.Name, Status = 'Agent to be Notified',
+                                         Deadline_Date__c = currentDate + 5, ContactId = ifapContact[0].Id, OSCAR__c = oscar.Id, Financial_Assessment_requested__c = currentDate);
+                
+                if(oscar.Account__r.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY){
+                    ifapCase.Deadline_Date__c = currentDate.addDays(60);
+                    ifapCase.Financial_Review_Type__c = AMS_Utils.FINANCIAL_REVIEW_MULTICOUNTRY_ANNUAL;
+                }
 
                 insert ifapCase;
 
-                oscar[0].STEP11__c = 'In Progress';
+                oscar.STEP11__c = 'In Progress';
                 update oscar;
 
                 //OSCAR Name will be equal to the CaseNumber, so instead of querying the ifap Case for its CaseNumber
                 //we simply return the OSCAR Name
-                return ifapCase.Id + ':' + oscar[0].Name;
+                return ifapCase.Id + ':' + oscar.Name;
 
             }
 
@@ -528,48 +536,64 @@ global class AMS_OSCAR_Webservice {
             List<AMS_OSCAR__c> oscar = [select Risk_event_creation_date__c, RPM_Approval__c, Process__c, RecordTypeId, ANG_Type_Of_Change__c, Is_NewGen__c, ANG_Change_Entity_Location__c, Change_of_Entity_Location_within_EU__c, Account__r.ANG_Accreditation_Model__c, Account__r.Location_type__c, AMS_Online_Accreditation__r.Location_Type__c, Account__c from AMS_OSCAR__c where Id =: oscarId];
 
             if(oscar!=null && oscar.size()>0){
+                
+                AMS_OSCAR__c currentOscar = oscar[0];
 
-                if((oscar[0].Process__c == AMS_Utils.NEWHESTANDARD || (oscar[0].Process__c == AMS_Utils.NGCHANGES && ANG_AgencyChangesHelper.containsChange(new List<String>(AMS_Utils.changesRequiringManagerApproval),oscar[0].ANG_Type_Of_Change__c))) && oscar[0].RPM_Approval__c != AMS_Utils.AUTH_APPROVAL)
+                if((currentOscar.Process__c == AMS_Utils.NEWHESTANDARD || currentOscar.Process__c == AMS_Utils.NEWGESTANDARD || currentOscar.Process__c == AMS_Utils.NGCONVERSIONTOMULTICOUNTRY || (currentOscar.Process__c == AMS_Utils.NGCHANGES && ANG_AgencyChangesHelper.containsChange(new List<String>(AMS_Utils.changesRequiringManagerApproval), currentOscar.ANG_Type_Of_Change__c))) && currentOscar.RPM_Approval__c != AMS_Utils.AUTH_APPROVAL)
                     return 'Error - In order to generate a risk event you need to have the Manager Approval.';
 
-                oscar[0].Risk_event_creation_date__c = System.today();
-                oscar[0].STEP36__c = 'Passed';
+                currentOscar.Risk_event_creation_date__c = System.today();
+                currentOscar.STEP36__c = 'Passed';
                 
                 boolean isNGNewAccreditation = 
-                        oscar[0].RecordTypeId == AMS_Utils.RECTYPE_NEWHE &&
-                        oscar[0].Is_NewGen__c &&
-                        oscar[0].RPM_Approval__c == AMS_Utils.AUTH_APPROVAL &&
-                        oscar[0].Risk_event_creation_date__c == System.Today() &&
-                        oscar[0].Process__c == AMS_Utils.NEWHESTANDARD;
-
+                        currentOscar.RecordTypeId == AMS_Utils.RECTYPE_NEWHE &&
+                        currentOscar.Is_NewGen__c &&
+                        currentOscar.RPM_Approval__c == AMS_Utils.AUTH_APPROVAL &&
+                        currentOscar.Risk_event_creation_date__c == System.Today() &&
+                        currentOscar.Process__c == AMS_Utils.NEWHESTANDARD;
+                
                 boolean isNGNewChangeAccreditationTypeCash = 
-                        oscar[0].RecordTypeId == AMS_Utils.RECTYPE_NGCHANGES &&
-                        oscar[0].Is_NewGen__c &&
-                        oscar[0].RPM_Approval__c == AMS_Utils.AUTH_APPROVAL &&
-                        oscar[0].Risk_event_creation_date__c == System.Today() &&
-                        oscar[0].Process__c == AMS_Utils.NGCHANGES &&
-                        oscar[0].ANG_Type_Of_Change__c == AMS_Utils.ANG_ACCREDITATION_TYPE &&
-                        oscar[0].Account__r.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_CASH;
+                        currentOscar.RecordTypeId == AMS_Utils.RECTYPE_NGCHANGES &&
+                        currentOscar.Is_NewGen__c &&
+                        currentOscar.RPM_Approval__c == AMS_Utils.AUTH_APPROVAL &&
+                        currentOscar.Risk_event_creation_date__c == System.Today() &&
+                        currentOscar.Process__c == AMS_Utils.NGCHANGES &&
+                        currentOscar.ANG_Type_Of_Change__c == AMS_Utils.ANG_ACCREDITATION_TYPE &&
+                        currentOscar.Account__r.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_CASH;
 
                 boolean isNGChangeOfHierarchyWithNewRHC =
-                        oscar[0].RecordTypeId == AMS_Utils.RECTYPE_NGCHANGES &&
-                        oscar[0].Is_NewGen__c &&
-                        oscar[0].RPM_Approval__c == AMS_Utils.AUTH_APPROVAL &&
-                        oscar[0].Risk_event_creation_date__c == System.Today() &&
-                        oscar[0].Process__c == AMS_Utils.NGCHANGES &&
-                        oscar[0].ANG_Type_Of_Change__c == AMS_Utils.ANG_HIERARCHY &&
-                        oscar[0].Account__r.Location_type__c == AMS_Utils.HE &&
-                        oscar[0].AMS_Online_Accreditation__r.Location_Type__c == AMS_Utils.AE;
+                        currentOscar.RecordTypeId == AMS_Utils.RECTYPE_NGCHANGES &&
+                        currentOscar.Is_NewGen__c &&
+                        currentOscar.RPM_Approval__c == AMS_Utils.AUTH_APPROVAL &&
+                        currentOscar.Risk_event_creation_date__c == System.Today() &&
+                        currentOscar.Process__c == AMS_Utils.NGCHANGES &&
+                        currentOscar.ANG_Type_Of_Change__c == AMS_Utils.ANG_HIERARCHY &&
+                        currentOscar.Account__r.Location_type__c == AMS_Utils.HE &&
+                        currentOscar.AMS_Online_Accreditation__r.Location_Type__c == AMS_Utils.AE;
 
-                
-                if(isNGNewAccreditation || isNGNewChangeAccreditationTypeCash || isNGChangeOfHierarchyWithNewRHC)
+                Boolean isNewGEAccreditation = 
+                        currentOscar.RecordTypeId == AMS_Utils.RECTYPE_NEWGE &&
+                        currentOscar.Is_NewGen__c &&
+                        currentOscar.RPM_Approval__c == AMS_Utils.AUTH_APPROVAL &&
+                        currentOscar.Risk_event_creation_date__c == System.Today() &&
+                        currentOscar.Process__c == AMS_Utils.NEWGESTANDARD;
+
+                Boolean isConversionToMulticountry = 
+                        currentOscar.RecordTypeId == AMS_Utils.RECTYPE_NGCONVERSIONTOMULTICOUNTRY &&
+                        currentOscar.Is_NewGen__c &&
+                        currentOscar.RPM_Approval__c == AMS_Utils.AUTH_APPROVAL &&
+                        currentOscar.Risk_event_creation_date__c == System.Today() &&
+                        currentOscar.Process__c == AMS_Utils.NGCONVERSIONTOMULTICOUNTRY;
+
+                if(isNGNewAccreditation || isNGNewChangeAccreditationTypeCash || isNGChangeOfHierarchyWithNewRHC || isNewGEAccreditation || isConversionToMulticountry){
                     AMS_OscarTriggerHandler.applyRHCForecast = true;
+                }
     
-                update oscar;
+                update currentOscar;
                 
                 if(isNGChangeOfHierarchyWithNewRHC){
                 
-                    ANG_RHC_Information__c rhcInfo = [Select Id, ANG_RHC_Amount__c , ANG_RHC_Amount_Forecasted__c from ANG_RHC_Information__c where ANG_AccountId__c = :oscar[0].Account__c LIMIT 1];
+                    ANG_RHC_Information__c rhcInfo = [Select Id, ANG_RHC_Amount__c , ANG_RHC_Amount_Forecasted__c from ANG_RHC_Information__c where ANG_AccountId__c = :currentOscar.Account__c LIMIT 1];
                 	
                     if(rhcInfo.ANG_RHC_Amount__c <> rhcInfo.ANG_RHC_Amount_Forecasted__c)
                         update rhcInfo;
@@ -581,9 +605,9 @@ global class AMS_OSCAR_Webservice {
                 
                 if(rskEventLst.isEmpty()){
 
-                    if(isNGNewAccreditation){
+                    if(isNGNewAccreditation || isNewGEAccreditation || isConversionToMulticountry){
 
-                        ANG_RHC_Information__c rhcInfo = [Select Id, ANG_RHC_Amount__c , ANG_RHC_Amount_Forecasted__c from ANG_RHC_Information__c where ANG_AccountId__c = :oscar[0].Account__c LIMIT 1];
+                        ANG_RHC_Information__c rhcInfo = [Select Id, ANG_RHC_Amount__c , ANG_RHC_Amount_Forecasted__c from ANG_RHC_Information__c where ANG_AccountId__c = :currentOscar.Account__c LIMIT 1];
 
                         if(rhcInfo.ANG_RHC_Amount__c <> rhcInfo.ANG_RHC_Amount_Forecasted__c){
                             AMS_OscarTriggerHandler.applyRHCForecast = true;                

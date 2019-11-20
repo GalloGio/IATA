@@ -29,8 +29,8 @@
         AMS_ChangeCodes__c cc2 = new AMS_ChangeCodes__c(Integration_RecId__c = 'C', Name = 'FIN-AMS', Change_Code__c = 'FIN');
         upsert new List<AMS_ChangeCodes__c>{cc1, cc2};
         
-		Portal_Applications__c pa = new Portal_Applications__c(name = 'Risk Profile and RHC');
-		insert pa;
+        Portal_Applications__c pa = new Portal_Applications__c(name = 'Risk Profile and RHC');
+        insert pa;
     }
 
     @isTest static void insertOSCARTest() {
@@ -72,7 +72,7 @@
     @isTest static void updateOSCARTestOKFirstStep() {
 
         AMS_OSCAR_TestDataFactory.createOSCARwithInspectionsTestData();
-		loadCredentials();
+        loadCredentials();
 
         Test.startTest();
         Account a = [SELECT id from Account where Name = 'Test1 Agency' LIMIT 1];
@@ -322,7 +322,7 @@
     @isTest static void updateOSCARTestNOKSecondStep() {
 
         AMS_OSCAR_TestDataFactory.createOSCARwithInspectionsTestData();
-		loadCredentials();
+        loadCredentials();
 
         Test.startTest();
         
@@ -815,7 +815,7 @@
         );
         insert attc;
         
-	ID newRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CHANGE');
+    ID newRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CHANGE');
 
         /*** AMSU-180 ***/
         AMS_Accreditation_Contact__c owner = new AMS_Accreditation_Contact__c(
@@ -1041,7 +1041,7 @@
         dgr.Type_Of_Certificate__c = AMS_Utils.CERT_DGR;
         update dgr;        
         Test.startTest();
-		
+        
         /*** AMSU-34 ***/
         AmazonFile__c file = new AmazonFile__c(Full_Name_Unique__c= 'Test', Case__c= oscar.Cases__r[0].Id); 
         insert file;
@@ -1354,7 +1354,7 @@
         insert stt;
 
         AMS_OSCAR_TestDataFactory.createOSCARwithInspectionsTestData();
-		loadCredentials();
+        loadCredentials();
 
         Test.startTest();
 
@@ -1574,7 +1574,7 @@
         System.assertNotEquals(true, notifications.isEmpty());
 
     }
-	
+    
     /*** AMSU-193 ***/
     @isTest static void prepopulateRF() {
         AMS_Settlement_System__c bspSG = new AMS_Settlement_System__c(

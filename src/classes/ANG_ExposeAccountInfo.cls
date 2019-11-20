@@ -19,10 +19,10 @@ global without sharing class ANG_ExposeAccountInfo {
     @HttpGet
     global static void doGet(){
         set<string> setValidAccountType = new set<string>{'Agency'};	//Valid account type
-        set<string> setValidCaller = new set<string>{ANG_RestServiceHelper.Caller_GDI};			//Valid caller
+        set<string> setValidCaller = new set<string>{ANG_RestServiceHelper.Caller_GDI, ANG_RestServiceHelper.Caller_Mulesoft};			//Valid caller
         map<string,string> mapAccountTypeRT = new map<string,string>{'Agency' => 'IATA_Agency'};	//Map from account type to account record-type developername
         set<string> setValidAttachmentType = new set<string>{'FinancialStatement'};		//Valid type of attachments to search for
-        set<string> setValidRequest = new set<string>{ANG_RestServiceHelper.URIRequest_AccountFiles, ANG_RestServiceHelper.URIRequest_AccountFinancialInfo};    //Valid type of request, part of URI
+        set<string> setValidRequest = new set<string>{ANG_RestServiceHelper.URIRequest_AccountFiles, ANG_RestServiceHelper.URIRequest_AccountFinancialInfo, ANG_RestServiceHelper.URIRequest_AccountMasterdata};    //Valid type of request, part of URI
         
         try{
             RestRequest req = RestContext.request;
@@ -45,6 +45,8 @@ global without sharing class ANG_ExposeAccountInfo {
             string AttachmentType = req.params.get('attachmentType'); //Type of attachments to search for and to return
             string Caller = req.params.get('caller');	//Name of the caller (e.g. GDI) 
             string AccountType = req.params.get('accountType'); //e.g.: Agency
+            string changeCode = req.params.get('changeCode');
+            string MDMode = string.isBlank(req.params.get('mode'))?'F':req.params.get('mode');  //How to retrieve masterdata: F = full hierarchy. S = Single agency. P = Single agency with parent and top parent. No reference to parent/children, but FULL payload
 
             /*** verification ***/
             if(IATACode==null || IATACode== ''){
@@ -111,14 +113,22 @@ global without sharing class ANG_ExposeAccountInfo {
                 }
             }
 
+            if(Caller == ANG_RestServiceHelper.Caller_Mulesoft){
+                if(requestType==ANG_RestServiceHelper.URIRequest_AccountMasterdata){
+                    lsAccnt = ANG_ExposeAccountInfo_Masterdata.QueryAgencyToProcess(MDMode, IATACode);
+                }
+            }
+
 			if(lsAccnt== null || lsAccnt.isEmpty()){
                 ANG_RestServiceHelper.GenerateResponse(json.serialize(new ANG_RestServiceHelper.ErrorPayload('404', AccountType + ' ' + IATACode + ' not found')), 404);
                 return;
             }
             
             if(lsAccnt.size()>1){
-                ANG_RestServiceHelper.GenerateResponse(json.serialize(new ANG_RestServiceHelper.ErrorPayload('409', 'Multiple records found with IATA Code ' + IATACode + ' !') ), 409);
-                return;
+                if(!(Caller == ANG_RestServiceHelper.Caller_Mulesoft && requestType==ANG_RestServiceHelper.URIRequest_AccountMasterdata && MDMode=='F')){
+                    ANG_RestServiceHelper.GenerateResponse(json.serialize(new ANG_RestServiceHelper.ErrorPayload('409', 'Multiple records found with IATA Code ' + IATACode + ' !') ), 409);
+                    return;
+                }
             }
             
             Account accnt = lsAccnt.get(0);
@@ -139,6 +149,10 @@ global without sharing class ANG_ExposeAccountInfo {
                     ANG_ExposeAccountInfo_FinancialInfo.ANG_ExposeAccountInfo_FinancialInfo(accnt, Caller, AccountType);
                 }
             }*/
+
+            //Allow only mulesoft to fetch master data
+            if(requestType==ANG_RestServiceHelper.URIRequest_AccountMasterdata && caller == ANG_RestServiceHelper.Caller_Mulesoft)
+                ANG_ExposeAccountInfo_Masterdata.ANG_ExposeAccountInfo_Masterdata(new Map<Id, Account>(lsAccnt), MDMode, changeCode);
            
             if(requestType==ANG_RestServiceHelper.URIRequest_AccountFiles)
                 ANG_ExposeAccountInfo_Files.ANG_ExposeAccountInfo_Files(accnt, AttachmentType, AccountType, Caller);

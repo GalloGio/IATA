@@ -29,7 +29,7 @@ private class ANG_Risk_Helper_Test{
         
         Test.startTest();
 
-            System.enqueueJob(new ANG_Risk_Helper.FutureHandler(riskList));
+            System.enqueueJob(new ANG_Risk_Helper.FutureHandler(riskList, null));
             System.enqueueJob(new ANG_Risk_Helper.FutureHandler(riskMap));
 
         Test.stopTest();

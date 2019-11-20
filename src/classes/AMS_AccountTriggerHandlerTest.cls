@@ -110,11 +110,9 @@ private class AMS_AccountTriggerHandlerTest {
 
 		insert hierarchiesToInsert;
 
-
 		AMS_Agencies_relationhip__c ar1 = new AMS_Agencies_relationhip__c(Relationship_details__c='Test',Hierarchy__c=ah1.id,Child_Account__c=acc2.id,Parent_Account__c=acc1.id);
 		AMS_Agencies_relationhip__c ar2 = new AMS_Agencies_relationhip__c(Relationship_details__c='Test',Hierarchy__c=ah1.id,Child_Account__c=acc3.id,Parent_Account__c=acc1.id);
 		AMS_Agencies_relationhip__c ar3 = new AMS_Agencies_relationhip__c(Relationship_details__c='Test',Hierarchy__c=ah1.id,Child_Account__c=acc4.id,Parent_Account__c=acc1.id);
-
 
 		AMS_Agencies_relationhip__c ar1d = new AMS_Agencies_relationhip__c(Relationship_details__c='Test',Hierarchy__c=ah2.id,Child_Account__c=acc2d.id,Parent_Account__c=acc1d.id);
 		AMS_Agencies_relationhip__c ar2d = new AMS_Agencies_relationhip__c(Relationship_details__c='Test',Hierarchy__c=ah2.id,Child_Account__c=acc3d.id,Parent_Account__c=acc1d.id);
@@ -132,7 +130,6 @@ private class AMS_AccountTriggerHandlerTest {
 
 		insert rels;
 	}
-
 
 	@isTest static void verifychangeCassNumberError() {
 		
@@ -166,8 +163,6 @@ private class AMS_AccountTriggerHandlerTest {
 				System.debug('The Account name '+ acc.Name + ' does not have parent id ');
 			}
 		}
-
-	   
 
 		if(!accountListToUpdate.isEmpty()){
 			try{
@@ -216,8 +211,6 @@ private class AMS_AccountTriggerHandlerTest {
 			}
 		}
 
-		
-
 		if(!accountListToUpdate.isEmpty()){
 			update accountListToUpdate;
 		}
@@ -227,7 +220,6 @@ private class AMS_AccountTriggerHandlerTest {
 		
 		Test.StopTest();
 	}
-
 
 	//Test the trigger trgAccount
 	static testMethod void test_trgAccount() {

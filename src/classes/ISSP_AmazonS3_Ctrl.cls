@@ -15,6 +15,7 @@ global class ISSP_AmazonS3_Ctrl {
     String storageFolder;
 
     public Id id {get; set;}
+    public Id formId {get; set;}
 
     public STATIC FINAL String DEFAULT_MAX_FILESIZE = '25';
     public STATIC FINAL String DEFAULT_ALLOWED_EXTS = 'pdf';
@@ -33,6 +34,26 @@ global class ISSP_AmazonS3_Ctrl {
     public string message {get; private set;}
     public boolean archived {get; private set;}
     
+	private static List<String> AMAZON_FILES_QUERY_FIELDS = new List<String>{
+		'Id',
+		'Size_MB__c', 
+		'Name', 
+		'Full_Name_Unique__c', 
+		'CreatedDate', 
+		'CreatedById', 
+		'CreatedBy.Name', 
+		'Case__c', 
+		'File_Identifier__c', 
+		'Review_Status__c'
+	};
+
+	private static final String AMAZON_FILES_QUERY = String.format(
+		'SELECT {0} FROM AmazonFile__c WHERE ', 
+		new List<String>{
+			String.join(AMAZON_FILES_QUERY_FIELDS, ', ')
+		}
+	);
+
     public String currentIdentifier {
         get;
         set {
@@ -40,13 +61,21 @@ global class ISSP_AmazonS3_Ctrl {
             if(String.isBlank(value)) return; 
             if(currentIdentifier!=null) return;
             currentIdentifier = value;
-            list<AmazonFile__c> listAmazonFile = [
-                Select Id
-                From AmazonFile__c
-                Where Case__c = :this.cse.Id
-                AND File_Identifier__c = :currentIdentifier
-            ];
-            this.countFiles = listAmazonFile.size();
+            
+			Id caseId = this.cse.Id;
+			Id formId = this.formId;
+
+			String query = AMAZON_FILES_QUERY;
+			query += ' Case__c = :caseId';
+			query += ' AND File_Identifier__c = :currentIdentifier';
+
+			if (this.cse.Reason1__c == AMS_Utils.CASE_REASON_HE_MULTICOUNTRY) {
+				query += ' AND Form__c = :formId';
+			}
+
+			List<AmazonFile__c> listAmazonFile = (List<AmazonFile__c>) Database.query(query);
+
+			this.countFiles = listAmazonFile.size();
         }
     }
     public Integer countFiles {private set; get;}
@@ -69,6 +98,10 @@ global class ISSP_AmazonS3_Ctrl {
         system.debug('aqui ApexPages.currentPage() ' + ApexPages.currentPage());
         if(ApexPages.currentPage().getParameters().containsKey('caseId')){
             id = ApexPages.currentPage().getParameters().get('caseId');
+        }
+
+        if(ApexPages.currentPage().getParameters().containsKey('formId')){
+            formId = ApexPages.currentPage().getParameters().get('formId');
         }
 
         system.debug('ON 1 ID: ' + id);
@@ -125,6 +158,7 @@ global class ISSP_AmazonS3_Ctrl {
 
     public ISSP_AmazonS3_Ctrl(ISSP_AMS_Accreditation amsCtrl) {
         this.Id = amsCtrl.newCase.Id;
+        this.formId = amsCtrl.newForm.Id;
 
         if(this.id== null)
         return;
@@ -277,13 +311,21 @@ global class ISSP_AmazonS3_Ctrl {
 
     public map<String, List<AmazonFileAMS>> refreshAmazonFileMap() {
 
-        list<AmazonFile__c> listAmazonFile = [
-            Select Size_MB__c, Name, Full_Name_Unique__c, CreatedDate, CreatedById, CreatedBy.Name, Case__c , File_Identifier__c, Review_Status__c
-            From AmazonFile__c
-            Where Case__c = :this.cse.Id AND isPublic__c = true AND Review_Status__c != 'Rejected Closed'
-        ];
+		Id caseId = this.cse.Id;
+		Id formId = this.formId;
 
-        SYSTEM.DEBUG('RETRIEVED listAmazonFile size:' + listAmazonFile.size());
+		String query = AMAZON_FILES_QUERY;
+		query += ' Case__c = :caseId';
+		query += ' AND isPublic__c = true';
+		query += ' AND Review_Status__c != \'' + AMS_Utils.REJECTED_CLOSED + '\'';
+
+		if (this.cse.Reason1__c == AMS_Utils.CASE_REASON_HE_MULTICOUNTRY) {
+			query += ' AND Form__c = :formId';
+		}
+
+		List<AmazonFile__c> listAmazonFile = (List<AmazonFile__c>) Database.query(query);
+
+		SYSTEM.DEBUG('RETRIEVED listAmazonFile size:' + listAmazonFile.size());
 
         amazonFileMap = new Map<String, list<AmazonFileAMS>>();
         AmazonFileAMS newAmazonFile;
@@ -406,12 +448,17 @@ global class ISSP_AmazonS3_Ctrl {
     public String getUniqueFileNames() {
          String ufn;
 
-        //Get File identifiers for AmzonFile records assoc. with case
-        list<AmazonFile__c> listAmazonFile = [
-            Select Size_MB__c, Name, Full_Name_Unique__c, CreatedDate, CreatedById, CreatedBy.Name, Case__c , File_Identifier__c, Review_Status__c
-            From AmazonFile__c
-            Where Case__c = :cse.Id
-        ];
+		Id caseId = this.cse.Id;
+		Id formId = this.formId;
+
+		String query = AMAZON_FILES_QUERY + ' Case__c = :caseId';
+
+		if (this.cse.Reason1__c == AMS_Utils.CASE_REASON_HE_MULTICOUNTRY) {
+			query += ' AND Form__c = :formId';
+		}
+
+		//Get File identifiers for AmzonFile records assoc. with case
+		List<AmazonFile__c> listAmazonFile = (List<AmazonFile__c>) Database.query(query);
 
         SYSTEM.DEBUG('RETRIEVED listAmazonFile size:' + listAmazonFile.size());
 
@@ -428,29 +475,34 @@ global class ISSP_AmazonS3_Ctrl {
         return ufn;
     }
 
-    /**
-        Check is file Name is already in the related files
-    **/
-    @RemoteAction
-    global static Boolean isFileNameUnique(Id caseId, String filename) {
-        list<AmazonFile__c> listAmazonFile = [
-            SELECT Id
-            FROM AmazonFile__c
-            WHERE Case__c = :caseId
-            AND Name = :filename
-        ];
-        return listAmazonFile.isEmpty();
-    }
+	/**
+		Check is file Name is already in the related files
+	**/
+	@RemoteAction
+	global static Boolean isFileNameUnique(Id caseId, String filename, String formId) {
+
+		String query = AMAZON_FILES_QUERY;
+		query += ' Case__c = :caseId';
+		query += ' AND Name = :filename';
+
+		if (String.isNotBlank(formId)) {
+			query += ' AND Form__c = :formId';
+		}
+
+		List<AmazonFile__c> listAmazonFile = (List<AmazonFile__c>) Database.query(query);
+
+		return listAmazonFile.isEmpty();
+	}
 
     /**
         Creates a new Amazon file record for the related Case
     **/
     @RemoteAction
-    global static Boolean createAmazonFileObject(Id caseId, String filename, Long fielsize, String fileid) {
+    global static Boolean createAmazonFileObject(Id caseId, String filename, String formId, Long fielsize, String fileid) {
         try {
             Case cse = [SELECT Id, Status FROM Case WHERE Id = :caseId];
 
-            String baseFolder = FOLDER_STEM + String.valueOf(caseId) + '/';
+            String baseFolder = FOLDER_STEM + String.valueOf(caseId) + String.valueOf(formId) + '/';
 
             AmazonFile__c amazonFile = new AmazonFile__c(
                 Name = filename,
@@ -463,6 +515,11 @@ global class ISSP_AmazonS3_Ctrl {
                 isPublic__c = true,
                 Case__c = cse.Id
             );
+
+            if (!String.isBlank(formId)) {
+                amazonFile.Form__c = formId;
+            }
+
             insert amazonFile;
 
             if(cse.Status!='Draft') {
@@ -497,6 +554,11 @@ global class ISSP_AmazonS3_Ctrl {
                 isPublic__c = true,
                 Case__c = Id
             );
+
+            if (!String.isBlank(formId)) {
+                amazonFile.Form__c = formId;
+            }
+
             insert amazonFile;
 
             if(cse.Status!='Draft') {

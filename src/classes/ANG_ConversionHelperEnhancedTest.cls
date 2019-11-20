@@ -757,7 +757,7 @@ private class ANG_ConversionHelperEnhancedTest {
 
         Id accountAgencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
-        Account a1 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234561',Location_Type__c='HO',Name='Agency HO TERMINATED 2017',Short_Name__c='Agency HO TERMINATED 2017', Sector__c = 'Travel Agent', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S9_APPROVED);
+        Account a1 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234561',Location_Type__c='HO',Name='Agency HO APPROVED',Short_Name__c='Agency HO APPROVED', Sector__c = 'Travel Agent', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S9_APPROVED);
 
         insert a1;
 
@@ -797,14 +797,16 @@ private class ANG_ConversionHelperEnhancedTest {
 
 		List<Account> accounts = [SELECT Id, IATACode__c, Name, Location_Class__c, Location_Type__c, ParentId, Top_Parent__c FROM Account];
 		List<AMS_Agencies_relationhip__c> rels = [SELECT Id, Child_Account__c, Parent_Account__c, Hierarchy__c FROM AMS_Agencies_relationhip__c];
-		List<AMS_Agencies_Hierarchy__c> hiers = [SELECT Id, Name FROM AMS_Agencies_Hierarchy__c];
+		List<AMS_Agencies_Hierarchy__c> hiers = [SELECT Id, Name, Main_Account__c FROM AMS_Agencies_Hierarchy__c];
 
 		System.debug('accounts are:'+accounts);
 		System.debug('rels are:'+rels);
 		System.debug('hiers are:'+hiers);
 
 		System.assertEquals(0,rels.size());
-		System.assertEquals(0,hiers.size());
+		System.assertEquals(1,hiers.size());
+
+		System.assertEquals(a1.id,hiers.get(0).Main_Account__c);
 
 	}
 
@@ -858,14 +860,16 @@ private class ANG_ConversionHelperEnhancedTest {
 
 		List<Account> accounts = [SELECT Id, IATACode__c, Name, Location_Class__c, Location_Type__c, ParentId, Top_Parent__c FROM Account];
 		List<AMS_Agencies_relationhip__c> rels = [SELECT Id, Child_Account__c, Parent_Account__c, Hierarchy__c FROM AMS_Agencies_relationhip__c];
-		List<AMS_Agencies_Hierarchy__c> hiers = [SELECT Id, Name FROM AMS_Agencies_Hierarchy__c];
+		List<AMS_Agencies_Hierarchy__c> hiers = [SELECT Id, Name, Main_Account__c FROM AMS_Agencies_Hierarchy__c];
 
 		System.debug('accounts are:'+accounts);
 		System.debug('rels are:'+rels);
 		System.debug('hiers are:'+hiers);
 
 		System.assertEquals(0,rels.size());
-		System.assertEquals(0,hiers.size());
+		System.assertEquals(1,hiers.size());
+
+		System.assertEquals(a1.id,hiers.get(0).Main_Account__c);
 
 	}
 
@@ -930,10 +934,12 @@ private class ANG_ConversionHelperEnhancedTest {
 
 		List<Account> accounts = [SELECT Id, IATACode__c, Name, Location_Class__c, Location_Type__c, ParentId, Top_Parent__c FROM Account];
 		List<AMS_Agencies_relationhip__c> rels = [SELECT Id, Child_Account__c, Parent_Account__c, Hierarchy__c FROM AMS_Agencies_relationhip__c];
-		List<AMS_Agencies_Hierarchy__c> hiers = [SELECT Id, Name FROM AMS_Agencies_Hierarchy__c];
+		List<AMS_Agencies_Hierarchy__c> hiers = [SELECT Id, Name, Main_Account__c FROM AMS_Agencies_Hierarchy__c];
 
 		System.assertEquals(3,rels.size());
 		System.assertEquals(2,hiers.size());
+
+		System.assertNotEquals(hiers.get(0).Main_Account__c,hiers.get(1).Main_Account__c);
 
 	}
 
@@ -974,9 +980,11 @@ private class ANG_ConversionHelperEnhancedTest {
 
 		Test.stopTest();
 
-		List<AMS_Agencies_Hierarchy__c> hierarchies = [Select Id from AMS_Agencies_Hierarchy__c];
+		List<AMS_Agencies_Hierarchy__c> hierarchies = [Select Id, Main_Account__c from AMS_Agencies_Hierarchy__c];
 
-		System.assertEquals(0,hierarchies.size());
+		System.assertEquals(2,hierarchies.size());
+
+		System.assertNotEquals(hierarchies.get(0).Main_Account__c,hierarchies.get(1).Main_Account__c);
 
 		System.debug([SELECT Id, ANG_AccountId__c, ANG_AccountId__r.Name from ANG_RHC_Information__c where RecordTypeId = :ANG_RHCHelper.RECTYPE_STDRHCINFO]);
 	}
@@ -1180,10 +1188,12 @@ private class ANG_ConversionHelperEnhancedTest {
 
 		Test.stopTest();
 
-		List<AMS_Agencies_Hierarchy__c> hierarchies = [Select Id from AMS_Agencies_Hierarchy__c];
+		List<AMS_Agencies_Hierarchy__c> hierarchies = [Select Id, Main_Account__c from AMS_Agencies_Hierarchy__c];
 
-		System.assertEquals(1,hierarchies.size());
+		System.assertEquals(2,hierarchies.size());
 		
+		System.assertNotEquals(hierarchies.get(0).Main_Account__c,hierarchies.get(1).Main_Account__c);
+
 		System.debug('[ANG_ConversionHelperEnhancedTestTest17]'+[SELECT Id, Name, Status__c, Location_Class__c, Location_Type__c, RecordType.DeveloperName, Sector__c, ParentId, Top_Parent__c, IATACode__c FROM Account]);
 
 		System.assertNotEquals(hierarchy.Id,hierarchies.get(0).Id);
@@ -1687,7 +1697,7 @@ private class ANG_ConversionHelperEnhancedTest {
 
 		List<Account> accounts = [SELECT Id, IATACode__c, Name, Location_Class__c, Location_Type__c, ParentId, Top_Parent__c FROM Account];
 		List<AMS_Agencies_relationhip__c> rels = [SELECT Id, Child_Account__c, Parent_Account__c, Hierarchy__c FROM AMS_Agencies_relationhip__c];
-		List<AMS_Agencies_Hierarchy__c> hiers = [SELECT Id, Migrated__c, Name FROM AMS_Agencies_Hierarchy__c];
+		List<AMS_Agencies_Hierarchy__c> hiers = [SELECT Id, Migrated__c, Name, Main_Account__c,Main_Account__r.Name  FROM AMS_Agencies_Hierarchy__c];
 
 		Map<String,Account> mapAccount = new Map<String,Account>();
 
@@ -1702,7 +1712,7 @@ private class ANG_ConversionHelperEnhancedTest {
 		System.assertEquals('HO' , mapAccount.get('Agency HO').Location_Type__c);
 
 		System.assertEquals(1 , rels.size());
-		System.assertEquals(1 , hiers.size());
+		System.assertEquals(2 , hiers.size());
 
 		System.assertEquals(null , mapAccount.get('Agency BR (P) 1').ParentId);
 		System.assertEquals(null , mapAccount.get('Agency BR (P) 1').Top_Parent__c);
@@ -1717,8 +1727,15 @@ private class ANG_ConversionHelperEnhancedTest {
 		System.debug('rels are:'+rels);
 		System.debug('hiers are:'+hiers);
 
-		System.assertEquals(false , hiers.get(0).Migrated__c);
-
+		if(hiers.get(0).Main_account__r.Name == 'Agency BR (P) 1'){
+			System.assertEquals(true , hiers.get(0).Migrated__c);
+			System.assertEquals(a2.Id , hiers.get(0).Main_Account__c);
+			System.assertEquals(false , hiers.get(1).Migrated__c);
+		}else{
+			System.assertEquals(false , hiers.get(0).Migrated__c);
+			System.assertEquals(true , hiers.get(1).Migrated__c);
+			System.assertEquals(null , hiers.get(0).Main_Account__c);
+		}
 	}
 
 	@isTest static void ANG_ConversionHelperEnhancedTestTest25() {
@@ -1970,7 +1987,7 @@ private class ANG_ConversionHelperEnhancedTest {
 		System.assertEquals('HO', mapAccount.get('Agency BR (P) 2').Location_Type__c);
 
 		System.assertEquals(4 , rels.size());
-		System.assertEquals(1 , hiers.size());
+		System.assertEquals(2 , hiers.size());
 
 		System.assertNotEquals(hierarchy.Id, hiers.get(0).Id);
 
@@ -2072,7 +2089,7 @@ private class ANG_ConversionHelperEnhancedTest {
 		System.assertEquals('HE' , mapAccount.get('Agency HO').Location_Type__c);
 
 		System.assertEquals(4 , rels.size());
-		System.assertEquals(1 , hiers.size());
+		System.assertEquals(2 , hiers.size());
 
 		System.assertNotEquals(hierarchy.Id, hiers.get(0).Id);
 
@@ -2348,7 +2365,7 @@ private class ANG_ConversionHelperEnhancedTest {
 		System.assertEquals('HO', mapAccount.get('Agency BR (P) 2').Location_Type__c);
 
 		System.assertEquals(5 , rels.size());
-		System.assertEquals(1 , hiers.size());
+		System.assertEquals(2 , hiers.size());
 
 		System.assertNotEquals(hierarchy.Id, hiers.get(0).Id);
 
@@ -2444,7 +2461,7 @@ private class ANG_ConversionHelperEnhancedTest {
 		System.assertEquals('HO', mapAccount.get('Agency SA (P) 1').Location_Type__c);
 
 		System.assertEquals(1 , rels.size());
-		System.assertEquals(1 , hiers.size());
+		System.assertEquals(2 , hiers.size());
 
 		System.assertNotEquals(hierarchy.Id, hiers.get(0).Id);
 

@@ -24,6 +24,7 @@ public without sharing class ISSP_Financial_Institutions {
     private String agencyCountry {get; set;}
     private String agencyRegion {get; set;}
     public Boolean countryIsGDIEnabled {get; private set;}
+    public Boolean countryIsMulticountryEnabled {get; private set;}
     public Boolean gdiAppRightGranted {
         get {
             if (gdiAppRightGranted == null) gdiAppRightGranted = false;
@@ -118,7 +119,9 @@ public without sharing class ISSP_Financial_Institutions {
     public ISSP_Financial_Institutions() {}
 
     private List<Financial_Institution__c> fetchFinancialInstitutions() {
-        List<Portal_Applications__c> portalAppList = [SELECT Id, Application_URL__c, (SELECT Id, Contact__c, Contact__r.Account.Country_ISO_Code__c, Right__c, Contact__r.Account.Region_formula__c, Contact__r.Account.IATA_ISO_Country__r.ANG_GDI_Enabled__c, Contact__r.Account.Category__c
+        List<Portal_Applications__c> portalAppList = [SELECT Id, Application_URL__c, (SELECT Id, Contact__c, Contact__r.Account.Country_ISO_Code__c, Right__c, Contact__r.Account.Region_formula__c, 
+                                                                                        Contact__r.Account.IATA_ISO_Country__r.ANG_GDI_Enabled__c, Contact__r.Account.Category__c,
+                                                                                        Contact__r.Account.IATA_ISO_Country__r.Multicountry_Enabled__c, Contact__r.Account.ANG_Accreditation_Model__c
                                                                                       FROM Portal_Application_Rights__r 
                                                                                       WHERE Contact__c IN (SELECT ContactId 
                                                                                                            FROM User 
@@ -139,6 +142,7 @@ public without sharing class ISSP_Financial_Institutions {
                 Portal_Application_Right__c existingGDIPortalAppRight = gdiPortalApp.Portal_Application_Rights__r[0];
 
                 conId = existingGDIPortalAppRight.Contact__c;
+                countryIsMulticountryEnabled = existingGDIPortalAppRight.Contact__r.Account.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
                 agencyCountry = existingGDIPortalAppRight.Contact__r.Account.Country_ISO_Code__c;
                 agencyRegion = existingGDIPortalAppRight.Contact__r.Account.Region_formula__c;
                 countryIsGDIEnabled = (existingGDIPortalAppRight.Contact__r.Account.IATA_ISO_Country__r.ANG_GDI_Enabled__c && existingGDIPortalAppRight.Contact__r.Account.Category__c == 'IATA Passenger Sales Agent');
@@ -154,13 +158,16 @@ public without sharing class ISSP_Financial_Institutions {
                 User currentPortalUser = [SELECT Id, ContactId, Contact.Account.Country_ISO_Code__c, 
                                             Contact.Account.Region_formula__c, Contact.Account.IATA_ISO_Country__r.ANG_GDI_Enabled__c, 
                                             Contact.Account.Category__c, Contact.Account.Sector__c, Contact.Account.Status__c,
-                                            Contact.Financial_Assessment_Contact__c, Contact.User_Portal_Status__c
+                                            Contact.Financial_Assessment_Contact__c, Contact.User_Portal_Status__c,
+                                            Contact.Account.IATA_ISO_Country__r.Multicountry_Enabled__c,
+                                            Contact.Account.ANG_Accreditation_Model__c
                                           FROM User 
                                           WHERE Id = :UserInfo.getUserId() 
                                           LIMIT 1];
                 
                 Account userAcc = currentPortalUser.Contact.Account;
                 conId = currentPortalUser.ContactId;
+                countryIsMulticountryEnabled = userAcc.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
                 agencyCountry = userAcc.Country_ISO_Code__c;
                 agencyRegion = userAcc.Region_formula__c;
                 countryIsGDIEnabled = (userAcc.IATA_ISO_Country__r.ANG_GDI_Enabled__c && userAcc.Category__c == AMS_Utils.CATEGORY_PASSENGER_SALES_AGENT);

@@ -1,7 +1,7 @@
-trigger AMS_AgencyHierarchyTrigger on AMS_Agencies_Hierarchy__c (after update) {
-	if(Trigger.isUpdate){
-		//FM - 22-09-2016 - stop creating "agency update" Records
-        //AMS_AgencyUpdateHelper.agencyRelathionshipUpdate(Trigger.new);
-	}
-    
+trigger AMS_AgencyHierarchyTrigger on AMS_Agencies_Hierarchy__c (before insert, before update, before delete) {
+	
+	if(!AMS_TriggerExecutionManager.checkExecution(AMS_Agencies_Hierarchy__c.getSObjectType(), 'AMS_AgencyHierarchyTrigger')) { return; }
+
+	AMS_AgencyHierarchyTriggerHandler.runHandler('AMS_AgencyHierarchyTriggerHandler');
+	
 }

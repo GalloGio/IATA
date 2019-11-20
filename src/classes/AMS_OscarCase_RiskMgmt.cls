@@ -136,7 +136,7 @@ public class AMS_OscarCase_RiskMgmt {
 
 
 		//get all accounts and respective change codes created previously for the same case
-        Map<Id,Account> mapAccounts = new Map<Id,Account>([SELECT Id, ParentId, Parent.ParentId, CNS_Agency__c, ANG_IsNewGenAgency__c, Default_date__c, Status__c, Reason__c, Previous_Reason__c, PreviousStatus__c, Location_Class__c, Expiry_Date__c, 
+        Map<Id,Account> mapAccounts = new Map<Id,Account>([SELECT Id, ParentId, Parent.ParentId, CNS_Agency__c, ANG_IsNewGenAgency__c, Default_date__c, Status__c, Reason__c, Previous_Reason__c, PreviousStatus__c, Location_Class__c, Expiry_Date__c, Location_Type__c, ANG_Accreditation_Model__c,
 													 	(SELECT Id, Change_code__c, AccountNewStatus__c, AccountPreviousStatus__c, PreviousReason__c, Reason_Code__c, Reason_Description__c, CreatedDate, Created_Date_To_Show__c,
 													 	RecordType.DeveloperName, Irregularities_Expired__c, Account__c, Effective_Date__c, Operation__c, Irregularity_Type__c, Irregularities_Points__c, SIDRA_Case__c
 													 	FROM Agencies_Applied_Change_codes__r
@@ -286,8 +286,9 @@ public class AMS_OscarCase_RiskMgmt {
 		for(Case cs : changeCodesToCreatePerCase.keySet()){
 			for(AMS_ChangeCodes__c ccToCreate : changeCodesToCreatePerCase.get(cs)){
 				Agency_Applied_Change_code__c aacc;
+                Account currentAcc = mapAccounts.get(cs.AccountId);
+                Id caseHOId = parentAccPerCase.get(cs.Id);
 				if(ccToCreate.Apply_to_hierarchy__c){
-					Id caseHOId = parentAccPerCase.get(cs.Id);
 
 					aacc = CreateChangeCode(cs, ccToCreate, mapAccounts.get(caseHOId), mapAccounts.get(caseHOId).CNS_Agency__c, fOPsMap.get(cs.AccountId));
 
@@ -298,7 +299,6 @@ public class AMS_OscarCase_RiskMgmt {
 							Account accAux = mapAccounts.get(acctID);
 
 							if(acctID != caseHOId && (accAux.Location_Class__c != 'T' || (accAux.Location_Class__c == 'T' && setTidsChangeCode.contains(ccToCreate.Change_Code__c)))){
-
 								Agency_Applied_Change_code__c aaccAux = aacc.clone(false, true, false, false);
 								applyChangeCodeToAllHierarchy(aaccAux, accAux, ccToCreate, accAux.CNS_Agency__c, cs, mapAccounts.get(caseHOId));
 								lsAACC.add(aaccAux);
@@ -310,7 +310,9 @@ public class AMS_OscarCase_RiskMgmt {
 						aacc.Bulletin_Information__c = extraMemoText != null ? (aacc.Bulletin_Information__c + ' ' + extraMemoText) : aacc.Bulletin_Information__c;
 					}
 
-				} else{
+				} else if(currentAcc.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY && currentAcc.Location_Type__c != AMS_Utils.GE && ccToCreate.Apply_to_hierarchy__c == false){
+					aacc = CreateChangeCode(cs, ccToCreate, mapAccounts.get(caseHOId), mapAccounts.get(caseHOId).CNS_Agency__c, fOPsMap.get(cs.AccountId));
+				} else {
 					aacc = CreateChangeCode(cs, ccToCreate, mapAccounts.get(cs.AccountId), mapAccounts.get(cs.AccountId).CNS_Agency__c, fOPsMap.get(cs.AccountId));
 
 				}

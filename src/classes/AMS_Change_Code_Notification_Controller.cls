@@ -9,7 +9,12 @@ public with sharing class AMS_Change_Code_Notification_Controller {
         caseId = stdController.getId(); 
         isSidra = false;
 
-        list<Case> lstCases = [SELECT Id, RecordType.DeveloperName, Remittance_Period__c, Status, AccountId, Account.Name, OSCAR__c FROM Case WHERE Id = :caseId];
+        list<Case> lstCases = [SELECT Id, RecordType.DeveloperName, Remittance_Period__c, Status, AccountId, 
+                               Account.Name, Account.IATACode__c, Account.Location_Type__c, 
+                               Account.Top_Parent__r.Name, Account.Top_Parent__r.IATACode__c, 
+                               Account.ANG_Accreditation_Model__c, OSCAR__c 
+                               FROM Case 
+                               WHERE Id = :caseId];
         if (!lstCases.isEmpty()) {
             currentCase = lstCases[0];
 
@@ -21,8 +26,6 @@ public with sharing class AMS_Change_Code_Notification_Controller {
     }
 
     public void setNotificationMessage() {
-
-        list<Case> lstCases = [SELECT Id, RecordType.DeveloperName, Remittance_Period__c, AccountId, Status, Account.Name, OSCAR__c FROM Case WHERE Id = :caseId];
 
         if (currentCase != null) {
             list<Agency_Applied_Change_code__c> lstRecentChangeCodes = new list<Agency_Applied_Change_code__c>();
@@ -118,40 +121,16 @@ public with sharing class AMS_Change_Code_Notification_Controller {
                         }
                     }
 		        }
+                if(currentCase.Account.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY){
+                    String geData = Label.SIDRA_GE_Info + ' ';
+                    if(currentCase.Account.Location_Type__c == AMS_Utils.GE) {
+                        geData = geData + currentCase.Account.IATACode__c + ' ' + currentCase.Account.Name;
+                    } else {
+                        geData = geData + currentCase.Account.Top_Parent__r.IATACode__c + ' ' + currentCase.Account.Top_Parent__r.Name;
+                    }
+                    ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO, geData));
+                }
 	        }
         }
     }
-
-	//EM - To be removed
-	public static void fakemethod () {
-		Integer i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-	}
 }

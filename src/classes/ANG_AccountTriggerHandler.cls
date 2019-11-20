@@ -91,7 +91,7 @@ public class ANG_AccountTriggerHandler {
 	private void updateRiskStatus() {
 
 		List<Account> accs = new List<Account>();
-		Set<String> topLocationTypes = new Set<String>{AMS_Utils.HE, AMS_Utils.HO, AMS_Utils.AO};
+		Set<String> topLocationTypes = new Set<String>{AMS_Utils.HE, AMS_Utils.GE, AMS_Utils.HO, AMS_Utils.AO};
 
 		for(Account acc : triggerNew){
 			if(topLocationTypes.contains(acc.Location_Type__c) && (Trigger.isInsert || hasChangedValuesAccount(oldMap.get(acc.Id), acc))){
@@ -204,7 +204,14 @@ public class ANG_AccountTriggerHandler {
 		}
         
 		//downgrade from B to C
-		if(!downGradeBtoC.isEmpty()) createVMFROscars(downGradeBtoC, rhcContacts);
+		if (! downGradeBtoC.isEmpty())
+		{
+			// NEWGEN-4460 - also update the child multicountry HE accounts
+			Set<Id> multicountryGEAccounts = getGEAccountIds(downGradeBtoC);
+			launchPlatformEventForMulticoutryDowngrade(multicountryGEAccounts);
+
+			createVMFROscars(downGradeBtoC, rhcContacts);
+		}
 
 		//downgrade of cash conditions from "Fail Financial Statements" Risk Event
 		if(!createFOP.isEmpty()) createFOPOscar(createFOP, rhcContacts);
@@ -492,7 +499,8 @@ public class ANG_AccountTriggerHandler {
 		private AMS_Pax_Accreditation_Form__c stagingArea;
 	}
 
-	private void createVMFROscars(List<Account> accounts, Map<Id, Id> contacts){
+	public void createVMFROscars(List<Account> accounts, Map<Id, Id> contacts)
+	{
 		//used on manageDowngrades to create VFMR oscars with all the necessary objects
 		try{
 			//to prevent errors on test classes
@@ -502,7 +510,7 @@ public class ANG_AccountTriggerHandler {
 									TC_Legal_status__c = false, TC_Location__c = false, TC_Location_type__c = false,
 									TC_Minor_Shareholding__c = false, TC_Legal_Name__c = false,  TC_Hierarchy__c = false,
 									TC_Major_Shareholding__c = false, TC_Ownership__c = false,
-									TCA_Sanity_check__c = 'CHI', TCA_Application_withdrawal__c = 'CWD');
+									TCA_Sanity_check__c = 'CHI', TCA_Application_withdrawal__c = 'CWD',Valid_Accreditation_Models__c='ALL');
 				}
 			}
 
@@ -549,11 +557,17 @@ public class ANG_AccountTriggerHandler {
 			insert cases;
 
 			//populate field with operation with BSP attributes more frequent
-			String remitFreq = getHighestRemittanceFrequency(accounts);
+			Map<Id, String> remitFreqsMap = getHighestRemittanceFrequencies(accounts);
 
 			//create staging areas
 			List<AMS_Pax_Accreditation_Form__c> stgAreas = new List<AMS_Pax_Accreditation_Form__c>();
-			for(Account acc : accounts){
+			for(Account acc : accounts)
+			{
+				String currentRemitFreq = '';
+				if (remitFreqsMap.containsKey(acc.Id)){
+					currentRemitFreq = remitFreqsMap.get(acc.Id);
+				}
+
 				AMS_Pax_Accreditation_Form__c stgArea = new AMS_Pax_Accreditation_Form__c();
 
 				stgArea.SAAM_Case__c                             = objects.get(acc.Id).commCase.Id;
@@ -579,7 +593,7 @@ public class ANG_AccountTriggerHandler {
 				stgArea.Location_Type__c                         = acc.Location_Type__c;
 				stgArea.Mobile__c                                = acc.Mobile__c;
 				stgArea.Operation__c                             = acc.Operation__c;
-				stgArea.Remittance_frequency__c                  = remitFreq;
+				stgArea.Remittance_frequency__c                  = currentRemitFreq;
 				stgArea.Shipping_City__c                         = acc.ShippingCity;
 				stgArea.Shipping_Country__c                      = acc.ShippingCountry;
 				stgArea.Shipping_Postal_Code__c                  = acc.ShippingPostalCode;
@@ -615,6 +629,45 @@ public class ANG_AccountTriggerHandler {
             //ServiceNow_Helper.sendRequestToSNOW('Salesforce', 'ANG_AccountTriggerHandler', 'createVMFROscars', 'SFDC', 'SFDC',  e.getMessage(), 'false', 'System', 'Salesforce.com', 'Salesforce.com', 'Infrastructure Services', 'Salesforce Support', '2', '2', '2', 'Failure');
         	ServiceNow_Helper.sendRequestToSNOWSFDC('SNOW11',e);
         }
+	}
+	
+	private Set<Id> getGEAccountIds(List<Account> accounts)
+	{
+		Set<Id> geAccountIds = new Set<Id>();
+
+		// get the GE accounts
+		for (Account a : accounts)
+		{
+			if (AMS_Utils.GE.equals(a.Location_Type__c))
+				geAccountIds.add(a.Id);
+		}
+
+		// look for the child HE accounts
+		return geAccountIds;
+	}
+
+	private List<Account> getMulticountryAccounts(List<Account> accounts)
+	{
+		List<Account> ret = new List<Account>();
+
+		for (Account a : accounts)
+		{
+			if (ANG_MulticountryHelper.isMulticountryAccount(a))
+				ret.add(a);
+		}
+
+		return ret;
+	}
+	
+	private void launchPlatformEventForMulticoutryDowngrade(Set<Id> geAccounts)
+	{
+		if (geAccounts.isEmpty())
+			return;
+		
+		ANG_Risk_Status_Downgrade__e evt = new ANG_Risk_Status_Downgrade__e(
+			Accounts__c = JSON.serialize(geAccounts)
+		);
+		EventBus.publish(evt);
 	}
 
 	private void createFOPOscar(List<Account> accounts, Map<Id, Id> contacts) {
@@ -672,34 +725,43 @@ public class ANG_AccountTriggerHandler {
 			ServiceNow_Helper.sendRequestToSNOWSFDC('SNOW12',e);
 		}
 	}
-
+	
 	/**
-	returns the highest value for remittance Frequency existing on the BSP configurations related with the operation codes that are linked to the accounts
+	returns the highest value for remittance Frequency existing on the BSP configurations related linked to the accounts
 	*/
-	private String getHighestRemittanceFrequency(List<Account> accs){
+	private Map<Id, String> getHighestRemittanceFrequencies(List<Account> accs)
+	{
+		if (accs.isEmpty())
+			return new Map<Id, String>();
 		
-		String remitFreq = '';
 		List<Id> accsIds = new List<Id>();
-
 		for (Account a: accs)
 			accsIds.add(a.Id);
 
-		Map<Id,Account> agOpMap = ANG_AgencyChangesHelper.fetchAgOperationPerAccount(accsIds);
-		List<AMS_Settlement_System__c> ops = ANG_AgencyChangesHelper.fetchOperationConfiguration(RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Settlement_System__c','BSP'),
-		 agOpMap.keySet());
+		Map<Id, List<Account>> agOpMap = ANG_AgencyChangesHelper.fetchAgOperationPerAccount(accsIds);
+		List<AMS_Settlement_System__c> ops = ANG_AgencyChangesHelper.fetchOperationConfiguration(
+			RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Settlement_System__c', 'BSP'),
+		 	agOpMap.keySet());
 
-		Integer aux = 0;
-		for(AMS_Settlement_System__c op: ops){
-			for(ANG_BSP_Attributes__c attr : op.BSP_Attributes__r){
-
-				if((Integer)attr.Remittances_Per_Year__c > aux){
-					aux = (Integer)attr.Remittances_Per_Year__c;
-					remitFreq = attr.Remittance_Frequency__c;
+		Map<Id, String> freqMap = new Map<Id, String>();
+	
+		Map<Id, ANG_BSP_Attributes__c> attrMap = new Map<Id, ANG_BSP_Attributes__c>();
+		for (AMS_Settlement_System__c op : ops)
+		{
+			List<Account> acctLst = agOpMap.get(op.Id);
+			
+			for(Account acct : acctLst){
+				ANG_BSP_Attributes__c aux = null;
+				for (ANG_BSP_Attributes__c attr : op.BSP_Attributes__r)
+				{
+					if (aux == null || (Integer) attr.Remittances_Per_Year__c > aux.Remittances_Per_Year__c)
+						aux = attr;
 				}
+				freqMap.put(acct.Id, (aux == null ? '' : aux.Remittance_Frequency__c));
 			}
 		}
 
-		return remitFreq;
+		return freqMap;
 	}
 
 	private void createIEPModelAOscars(){
@@ -826,11 +888,14 @@ public class ANG_AccountTriggerHandler {
 				Boolean sendNotification = true;
 				
 				//no need to iterate the Iso Countries, just passing the ID of the current account. Getting the first Element
-				for(AMS_Country_Specific_Attribute__c att : IATAIsoCountryDAO.getIsoCountriesByIds(new Set<ID>{acc.IATA_ISO_Country__c}).get(0).AMS_Country_Specific_Attributes__r)
-					if (att.recordtypeid == AMS_Utils.RECTYPE_CSA_RISK_NOTIFICATION && att.Block_notification_on_Risk_Status_update__c) sendNotification = false;
+				for(AMS_Country_Specific_Attribute__c att : IATAIsoCountryDAO.getIsoCountriesByIds(new Set<ID>{acc.IATA_ISO_Country__c}).get(0).AMS_Country_Specific_Attributes__r){
+					if (att.recordtypeid == AMS_Utils.RECTYPE_CSA_RISK_NOTIFICATION && att.Block_notification_on_Risk_Status_update__c){
+						sendNotification = false;
+						break;
+					}
+				}
 				
 				if(sendNotification) toNotify.add(acc.Id);
-
 			}
 		}
 
