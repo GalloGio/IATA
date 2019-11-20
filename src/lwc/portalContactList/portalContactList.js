@@ -15,8 +15,8 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 import BasicsSection from '@salesforce/label/c.csp_Basics_Section_label';
 import CSP_NoSearchResults from '@salesforce/label/c.CSP_NoSearchResults';
-import CSP_Search_NoResults_text1 from '@salesforce/label/c.CSP_Search_NoResults_text1';
-import CSP_Search_NoResults_text2 from '@salesforce/label/c.CSP_Search_NoResults_text2';
+import CSP_Contacts_NoResults_text1 from '@salesforce/label/c.CSP_Contacts_NoResults_text1';
+import CSP_Contacts_NoResults_text2 from '@salesforce/label/c.CSP_Contacts_NoResults_text2';
 import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 import ISSP_ReasonInactivation from '@salesforce/label/c.ISSP_ReasonInactivation';
 import CSP_selectReason from '@salesforce/label/c.CSP_selectReason';
@@ -36,8 +36,8 @@ export default class PortalContactList extends LightningElement {
     _labels = { 
         BasicsSection, 
         CSP_NoSearchResults, 
-        CSP_Search_NoResults_text1, 
-        CSP_Search_NoResults_text2, 
+        CSP_Contacts_NoResults_text1, 
+        CSP_Contacts_NoResults_text2, 
         ISSP_ContactList_HoverPopup_Text, 
         ISSP_ReasonInactivation, 
         CSP_selectReason,
@@ -114,6 +114,15 @@ export default class PortalContactList extends LightningElement {
 
     set searchKey(value){
         this._searchKey = value;
+    }
+
+    @api
+    get searchLetter(){
+        return this._searchLetter;
+    }
+
+    set searchLetter(value){
+        this._searchLetter = value;
     }
 
 
@@ -762,6 +771,19 @@ export default class PortalContactList extends LightningElement {
 
         this.pageRecords = pageRecordsAux;
         this.loading = false;
+    }
+
+    get searchNoResultsString(){
+
+        let strToReturn = '';
+
+        if(this._searchKey !== undefined && this._searchKey !== null && this._searchKey !== ''){
+            strToReturn = this._searchKey;
+        } else if(this._searchLetter !== undefined && this._searchLetter !== null && this._searchLetter !== ''){
+            strToReturn = this._searchLetter;
+        }
+
+        return strToReturn;
     }
 
 }
