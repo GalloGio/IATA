@@ -1,5 +1,5 @@
 <template>
-    <div class="slds-grid slds-wrap slds-gutters_medium slds-p-top_x-large">
+    <div class="slds-grid slds-wrap slds-gutters_direct-medium slds-p-top_x-large">
         <!-- Search bar and buttons -->
         <div class="slds-text-align_right slds-p-horizontal_small slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_3-of-12">
             <div class="bottomLightGrayBorder slds-m-vertical_small inputFilter">
@@ -13,22 +13,20 @@
                 </lightning-input>
             </div>
         </div>
-            </div>
-        </div>
-        <div class="slds-text-align_right slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_8-of-12 slds-large-size_8-of-12">
+        <div class="slds-text-align_right slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_9-of-12">
             <div class="slds-grid slds-wrap slds-grid_align-end">
-                <div class="slds-text-align_right slds-p-horizontal--xxx-small slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_10-of-12 slds-large-size_10-of-12">
-                    <div class="slds-grid slds-wrap">
+                <div class="slds-text-align_right slds-p-horizontal_none slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_10-of-12 slds-large-size_10-of-12">
+                    <div class="slds-grid slds-wrap slds-grid_align-end">
                         <div class="slds-text-align_right slds-p-horizontal--xxx-small slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12">
             <!-- FILTER -->
                             <button if:true={filtered} class="slds-button_icon filterButton fullWidth twoLines" onclick={openCasesFilterModal}>
-                {label.CSP_Filtered}
-                <img class="slds-float_right" src={filteredIconUrl}>
-            </button>
+                                {label.CSP_Filtered}
+                                <img class="slds-float_right" src={filteredIconUrl}>
+                            </button>
                             <button if:false={filtered} class="slds-button_icon filterButton fullWidth twoLines" onclick={openCasesFilterModal}>
-                {label.CSP_Filter}<img class="slds-float_right" src={filterIconUrl}>
-            </button>
-        </div>
+                                {label.CSP_Filter}<img class="slds-float_right" src={filterIconUrl}>
+                            </button>
+                        </div>
         <!-- LIST VIEW -->
                         <div class="slds-text-align_right slds-p-horizontal--xxx-small slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12" if:true={viewNormalUserCasesTableViewButton}>    
                             <lightning-button label={label.CSP_MyCases} class="containedButton fullWidth twoLines" onclick={changeToUserCasesTableView} ></lightning-button>
@@ -41,7 +39,7 @@
                         </div>
                     </div>
                 </div>
-        </div>
+            </div>
         </div>
     </div>
 
