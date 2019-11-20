@@ -1,0 +1,336 @@
+<template>
+    <lightning-layout multiple-rows vertical-align="stretch">
+        <div class="IEFixDisplayContainer">
+            <lightning-layout-item size="12" class="topLabel IEFixDisplay">
+                <div class="stepText">{labels.CSP_L2_Confirmation_Message}</div>
+            </lightning-layout-item>
+
+            <lightning-layout-item class="slds-p-around_medium topLightGrayBorder customWhiteBackground slds-clearfix IEFixDisplay" size="12">
+            </lightning-layout-item>
+        
+            <!------------------------------------------      Personal Details      -------------------------------------------->
+            <div class="sectionHeaderContainer">
+                <lightning-layout-item size="6" class="IEFixDisplay">
+                    <div class="sectionTitle">{labels.CSP_L2_Personal_Details}</div>
+                    <div class="sectionDescription">{labels.CSP_L2_Personal_Details_Message}</div>
+                </lightning-layout-item>
+
+            <!--<lightning-layout-item size="6">
+                <div class="link_normal -Title slds-float_right" onclick={toProfileDetails}>{labels.CSP_L2_Back_to_Edit}</div>
+            </lightning-layout-item>-->
+
+                <lightning-layout-item size="6" class="editButtonWrapper IEFixDisplay">
+                    <div class="text-xxsmall">
+                        <lightning-button variant="base"
+                            label={labels.CSP_L2_Back_to_Edit}                       
+                            title={labels.CSP_L2_Back_to_Edit}
+                            onclick={toProfileDetails}
+                            class="blueCustomButtonLinkSmall"
+                            icon-name="utility:forward" 
+                            icon-position="right">
+                        </lightning-button>
+                    </div>
+                </lightning-layout-item>
+            </div>
+            <lightning-layout-item padding="around-small" size="12" class="IEFixDisplay">
+            </lightning-layout-item>
+            <div class="fieldContainer">
+                <lightning-layout-item size="6" class="fieldItem IEFixDisplay">
+                    <div class="dataLabel">{labels.CSP_L2_Title}</div>
+                    <div class="dataValue itemValue">{contactInfo.Salutation}</div>
+                </lightning-layout-item>
+
+                <lightning-layout-item size="6" class="fieldItem IEFixDisplay">
+                    <div class="dataLabel">{labels.CSP_L2_Date_of_Birth}</div>
+                    <div class="dataValue itemValue">{contactInfo.Birthdate}</div>
+                </lightning-layout-item>
+
+                <lightning-layout-item size="6" class="fieldItem IEFixDisplay">
+                    <div class="dataLabel">{labels.CSP_L2_Job_Function}</div>
+                    <div class="dataValue itemValue">{contactInfo.Membership_Function__c}</div>
+                </lightning-layout-item>
+
+                <lightning-layout-item size="6" class="fieldItem IEFixDisplay">
+                    <div class="dataLabel">{labels.CSP_L2_Job_Title}</div>
+                    <div class="dataValue itemValue">{contactInfo.Title}</div>
+                </lightning-layout-item>
+            </div>
+            <lightning-layout-item padding="around-small" size="12" class="IEFixDisplay">
+            </lightning-layout-item>
+
+            <lightning-layout-item class="slds-p-around_medium topLightGrayBorder customWhiteBackground slds-clearfix IEFixDisplay" size="12">
+            </lightning-layout-item>
+                
+            <!------------------------------------------      Company Account      -------------------------------------------->
+            <template if:true={isExistingAccountSelected}>
+                <template if:true={selectedAccountSet}>
+                    <div class="sectionHeaderContainer">
+                        <lightning-layout-item size="6" class="IEFixDisplay">
+                            <div class="sectionTitle">{labels.CSP_L2_Company_Account}</div>
+                            <div class="sectionDescription">{labels.CSP_L2_Company_Account_Message}</div>
+                        </lightning-layout-item>
+
+                        <!--<lightning-layout-item size="6">
+                            <div class="link_normal -Title slds-float_right" onclick={toAccountSelection} >{labels.CSP_L2_Back_to_Account_Selection}</div>
+                        </lightning-layout-item>-->
+                        
+                        <lightning-layout-item size="6" class="editButtonWrapper IEFixDisplay">
+                            <div class="text-xxsmall">
+                                <lightning-button variant="base"
+                                    label={labels.CSP_L2_Back_to_Edit}              
+                                    title={labels.CSP_L2_Back_to_Edit}
+                                    onclick={toAccountSelection}
+                                    class="blueCustomButtonLinkSmall"
+                                    icon-name="utility:forward" 
+                                    icon-position="right">
+                                </lightning-button>
+                            </div>
+                        </lightning-layout-item>                       
+                    </div>
+                    <lightning-layout-item padding="around-small" size="12" class="IEFixDisplay">
+                    </lightning-layout-item>
+
+                    <!--<template if:true={isCategorizationModified}>
+                        <lightning-layout-item size="12" class="sectionDescription">
+                            <img src={alertIcon} height="36" width="36"/>{labels.CSP_L2_Change_Categorization_Warning}
+                        </lightning-layout-item>
+        
+                        <lightning-layout-item padding="around-small" size="12">
+                        </lightning-layout-item>
+                    </template>-->
+                        <template if:true={isCategorizationModified}>
+                            <lightning-layout-item size="12" class="sectionDescription warningMessage IEFixDisplay">
+                                <img src={alertIcon} height="36" width="36" class="warningIcon"/>
+                                <p class="warningContent">{labels.CSP_L2_Change_Categorization_Warning}</p>
+                            </lightning-layout-item>
+            
+                            <lightning-layout-item size="12" class="IEFixDisplay">
+                            </lightning-layout-item>
+                        </template>
+                        <div class="fieldContainer"> 
+                            <template for:each={selectedAccountFields} for:item="field">
+                                <lightning-layout-item key={field.label} size="6" class="fieldItem fullWidthItem IEFixDisplay"> 
+                                    <div class="dataLabel">{field.label}</div>
+                                    <div class="dataValue itemValue">{field.value}</div>
+                                </lightning-layout-item>
+
+                                <!--<template if:true={field.addSeparator} >
+                                    <lightning-layout-item padding="around-small" size="12" key={field.label}>
+                                    </lightning-layout-item>
+                                </template>-->
+                            </template>
+                        </div>
+                    <div class="buttonsContainer">
+                        <lightning-layout-item size="6" class="backButtonWrapper">
+                            <div class="text-xxsmall">
+                                <lightning-button variant="base"
+                                    label={labels.CSP_L2_Back_to_Account_Selection}              
+                                    title={labels.CSP_L2_Back_to_Account_Selection}
+                                    onclick={toAccountSelection}
+                                    class="blueCustomButtonLinkSmall"
+                                    icon-name="utility:back" 
+                                    icon-position="left">
+                                </lightning-button>
+                            </div>
+                        </lightning-layout-item>
+
+                        <lightning-layout-item size="6">
+                            <lightning-button class="slds-float_right containedButton customBtn" label={labels.CSP_L2_Submit} variant="brand" onclick={submit}>
+                            </lightning-button>
+                        </lightning-layout-item>
+                    </div>
+                    <lightning-layout-item padding="around-small" size="12" class="IEFixDisplay">
+                    </lightning-layout-item>
+            
+                </template>
+            </template>
+
+            <template if:false={isExistingAccountSelected}>
+                <div class="sectionHeaderContainer">
+                    <lightning-layout-item size="6" class="IEFixDisplay">
+                        <div class="sectionTitle">{labels.CSP_L2_Company_Account}</div>
+                    </lightning-layout-item>
+
+                    <!--<lightning-layout-item size="6">
+                        <div class="link_normal -Title slds-float_right" onclick={toCompanyInformation} >{labels.CSP_L2_Back_to_Edit}</div>
+                    </lightning-layout-item>-->
+
+                    <lightning-layout-item size="6" class="editButtonWrapper IEFixDisplay">
+                        <div class="text-xxsmall">
+                            <lightning-button variant="base"
+                                label={labels.CSP_L2_Back_to_Edit}           
+                                title={labels.CSP_L2_Back_to_Edit}
+                                onclick={toCompanyInformation}
+                                class="blueCustomButtonLinkSmall"    
+                                icon-name="utility:forward" 
+                                icon-position="right">
+                            </lightning-button>
+                        </div>
+                    </lightning-layout-item>
+                </div>
+                <lightning-layout-item size="6" class="IEFixDisplay">
+                    <div class="sectionDescription">{labels.CSP_L2_Company_Account_Message}</div>
+                </lightning-layout-item>
+
+                <lightning-layout-item size="6" class="IEFixDisplay">
+                </lightning-layout-item>
+
+                <lightning-layout-item padding="around-small" size="12" class="IEFixDisplay">
+                </lightning-layout-item>
+                
+                <lightning-layout-item size="12" class="IEFixDisplay">
+                    <div class="sectionSubTitle">1. {labels.CSP_L2_Company_Information}</div>
+                </lightning-layout-item>
+
+                <lightning-layout-item padding="around-small" size="12" class="IEFixDisplay">
+                </lightning-layout-item>
+                <div class="fieldContainer">
+                    <lightning-layout-item size="6" class="fieldItem IEFixDisplay">
+                        <div class="dataLabel">{labels.CSP_L2_Sector}</div>
+                        <div class="dataValue itemValue">{account.sector}</div>
+                    </lightning-layout-item>
+                
+                    <lightning-layout-item size="6" class="fieldItem IEFixDisplay">
+                        <div class="dataLabel">{labels.CSP_L2_Category}</div>
+                        <div class="dataValue itemValue">{account.category}</div>
+                    </lightning-layout-item>
+
+                    <lightning-layout-item size="6" class="fieldItem IEFixDisplay">
+                        <div class="dataLabel">{labels.CSP_L2_Trade_Name}</div>
+                        <div class="dataValue itemValue">{account.tradeName}</div>
+                    </lightning-layout-item>
+                
+                    <lightning-layout-item size="6" class="fieldItem IEFixDisplay">
+                        <div class="dataLabel">{labels.CSP_L2_Legal_Name}</div>
+                        <div class="dataValue itemValue">{account.legalName}</div>
+                    </lightning-layout-item>
+                    
+                    <lightning-layout-item size="6" class="fieldItem IEFixDisplay">
+                        <div class="dataLabel">{labels.CSP_L2_Phone_Number}</div>
+                        <div class="dataValue itemValue">{account.phone}</div>
+                    </lightning-layout-item>
+                
+                    <lightning-layout-item size="6" class="fieldItem IEFixDisplay">
+                        <div class="dataLabel">{labels.CSP_L2_Email_Address}</div>
+                        <div class="dataValue itemValue">{account.email}</div>
+                    </lightning-layout-item>
+
+                    <lightning-layout-item size="12" class="fieldItem IEFixDisplay">
+                        <div class="dataLabel">{labels.CSP_L2_Website}</div>
+                        <div class="dataValue itemValue">{account.website}</div>
+                    </lightning-layout-item>
+                </div>
+                <lightning-layout-item padding="around-small" size="12" class="IEFixDisplay">
+                </lightning-layout-item>
+                    
+                <lightning-layout-item size="12" class="IEFixDisplay">
+                    <div class="sectionSubTitle">2. {labels.CSP_L2_Business_Address_Information}</div>
+                </lightning-layout-item>
+
+                <lightning-layout-item padding="around-small" size="12" class="IEFixDisplay">
+                </lightning-layout-item>
+                
+                <template if:true={address.isPoBox}>
+                    <lightning-layout-item size="6" class="IEFixDisplay">
+                        <lightning-input 
+                            type="checkbox"
+                            data-fieldname="IsPoBox"
+                            disabled
+                            class="text-xxsmall"
+                            checked={address.isPoBox}
+                            label={labels.CSP_L2_Is_PO_Box_Address}>
+                        </lightning-input>
+                    </lightning-layout-item>
+
+                    <lightning-layout-item padding="around-small" size="12" class="IEFixDisplay">
+                    </lightning-layout-item>
+                </template>
+
+                <div class="fieldContainer">
+                    <lightning-layout-item size="6" class="fieldItem IEFixDisplay">
+                        <div class="dataLabel">{labels.CSP_L2_Country}</div>
+                        <div class="dataValue itemValue">{address.countryName}</div>
+                    </lightning-layout-item>
+                    
+                    <lightning-layout-item size="6" class="fieldItem IEFixDisplay">
+                        <div class="dataLabel">{labels.CSP_L2_State}</div>
+                        <div class="dataValue itemValue">{state}</div>
+                    </lightning-layout-item>
+            
+                    <lightning-layout-item size="6" class="fieldItem IEFixDisplay">
+                        <div class="dataLabel">{labels.CSP_L2_City}</div>
+                        <div class="dataValue itemValue">{city}</div>
+                    </lightning-layout-item>
+
+                    <lightning-layout-item size="6" class="fieldItem IEFixDisplay">
+                        <div class="dataLabel">{labels.CSP_L2_Postal_Code}</div>
+                        <div class="dataValue itemValue">{zip}</div>
+                    </lightning-layout-item>
+                
+                    <lightning-layout-item size="6" class="fieldItem IEFixDisplay">
+                        <template if:true={address.isPoBox}>
+                            <div class="dataLabel">{labels.CSP_L2_PO_Box_Number}</div>
+                        </template>
+                        <template if:false={address.isPoBox}>
+                            <div class="dataLabel">{labels.CSP_L2_Street}</div>
+                        </template>
+                        <div class="dataValue itemValue">{street}</div>
+                    </lightning-layout-item>
+                </div>            
+                <lightning-layout-item padding="around-small" size="12" class="IEFixDisplay">
+                </lightning-layout-item>    
+
+                <!--<lightning-layout-item size="6">
+                    <div class="link_normal -Title slds-float_left" onclick={toAddressInformation} >{labels.CSP_L2_Back_to_Business_Address_Information}</div>
+                </lightning-layout-item>-->
+                <div class="buttonsContainer">
+                    <lightning-layout-item size="6" class="backButtonWrapper">
+                        <div class="text-xxsmall">
+                            <lightning-button variant="base"
+                                label={labels.CSP_L2_Back_to_Business_Address_Information}
+                                title={labels.CSP_L2_Back_to_Business_Address_Information}
+                                onclick={toAddressInformation}
+                                class="blueCustomButtonLinkSmall"
+                                icon-name="utility:back" 
+                                icon-position="left">
+                            </lightning-button>
+                        </div>
+                    </lightning-layout-item>
+            
+                    <lightning-layout-item size="6">
+                        <lightning-button class="slds-float_right containedButton customBtn" label={labels.CSP_L2_Submit} variant="brand" onclick={submit}>
+                        </lightning-button>
+                    </lightning-layout-item>
+                </div>
+                <lightning-layout-item padding="around-small" size="12" class="IEFixDisplay">
+                </lightning-layout-item>
+            
+            </template>
+        </div>
+    </lightning-layout>
+
+    <template if:true={openSuccessModal}>
+        <c-portal-registration-generic-modal
+            icon={successIcon}
+            title={labels.CSP_L2_Details_Saved}
+            message={successModalMessage}
+            button1-label={successModalButton1Label}
+            button2-label={successModalButton2Label}
+            onbuttononeaction={button1Action}
+            onbuttontwoaction={button2Action}>
+        </c-portal-registration-generic-modal>
+    </template>
+
+    <template if:true={openErrorModal}>
+        <c-portal-registration-generic-modal
+            icon={alertIcon}
+            title={labels.CSP_L2_Registration_Error_Title}
+            message={labels.CSP_L2_Registration_Error_Message}
+            button1-label={labels.CSP_L2_Go_Back}
+            button2-label={labels.CSP_L2_Contact_Support}
+            onbuttononeaction={closeErrorModal}
+            onbuttontwoaction={contactSupport}>
+        </c-portal-registration-generic-modal>
+    </template>    
+
+</template>
