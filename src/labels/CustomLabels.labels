@@ -3428,6 +3428,22 @@ Payment required on receipt of this Payment Advice
         <value>Your {0} access request has been sent to your company’s portal administrators. &lt;br/&gt;Your portal administrator can be fund under your</value>
     </labels>
     <labels>
+        <fullName>CSP_Contacts_NoResults_text1</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Contacts_NoResults_text1</shortDescription>
+        <value>No Results</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Contacts_NoResults_text2</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Contacts_NoResults_text2</shortDescription>
+        <value>Sorry, no results found for</value>
+    </labels>
+    <labels>
         <fullName>CSP_Continue</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>

@@ -571,19 +571,15 @@
                                     </div>
 
                                     <!-- Popup Footer -->
-                                    <div
-                                        class="slds-p-around_medium topLightGrayBorder customWhiteBackground slds-clearfix footer-btn-wrapper">
-
-                                        <a onclick={removeUser} if:true={allowContactDelete}><div class="removeLink">{removeContactLabel}</div></a>
-
-                                        <lightning-button class="slds-float_right containedButton"
-                                            label={labels.SaveLabel} type="submit" disabled={canSave} variant="brand">
-                                        </lightning-button>
-
-                                        <lightning-button
-                                            class="slds-float_right  containedButtonWhite slds-m-right_medium cancel-btn"
-                                            disabled={isSaving} label={labels.CancelLabel} variant=""
-                                            onclick={closeModal}></lightning-button>
+                                <div class="slds-p-around_large topLightGrayBorder customWhiteBackground">
+                                    <div class="slds-grid slds-wrap slds-gutters_medium slds-grid--vertical-stretch">
+                                        <div class="slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2">    
+                                            <lightning-button class="baseButton newLinkButton buttonMinHeightMedium text-xsmall fullWidth" label={labels.CancelLabel} variant="neutral" onclick={closeModal}></lightning-button>
+                                        </div>
+                                        <div class="slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2">
+                                            <lightning-button class="baseButton newContainedButton buttonMinHeightMedium text-xsmall fullWidth" label={labels.SaveLabel} variant="neutral" onclick={applyFiltersModal} type="submit" disabled={canSave}></lightning-button>
+                                        </div>
+                                    </div>
                                     </div>
                                 </lightning-record-edit-form>
                             </div>
