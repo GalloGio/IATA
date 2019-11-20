@@ -220,8 +220,6 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
 	}
 
     get accessibilityGetter() {
-
-        let accessibilityTextLocal = '';
         let contactTypeStatus = [];
         let contactType = [];
         let fieldsToIterate = JSON.parse(JSON.stringify(this.fields));
@@ -239,7 +237,7 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
         });
         }
 
-        accessibilityText = contactTypeStatus.join(', ');
+        this.accessibilityText = contactTypeStatus.join(', ');
         this.contactTypeStatus = contactType;
         this.listSelected = contactTypeStatus;
 
