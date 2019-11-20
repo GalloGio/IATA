@@ -49,6 +49,7 @@ public class PortalRecommendationCtrlTest {
         System.runAs(testUser) {
             List<PortalRecommendationCtrl.RecommendationWrapper> recommendations = PortalRecommendationCtrl.getRecommendations('Services');
             System.assertEquals(0, recommendations.size());
+            PortalRecommendationCtrl.getBaseURL();
         }
         Test.stopTest();
     }
