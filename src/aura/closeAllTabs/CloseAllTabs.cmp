@@ -1,7 +1,21 @@
 <aura:component implements="flexipage:availableForAllPageTypes" access="global" >
-    
+
+    <lightning:utilityBarAPI aura:id="utilitybar"/>
     <lightning:workspaceAPI aura:id="workspace" />
+    <aura:attribute name="columns" type="List" default="[]"/>
+    <aura:attribute name="tabsList" type="List" default="[]"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
     <div class="slds-p-around_xx-small slds-align_absolute-center">
         <lightning:button label="{!$Label.c.Close_All_Tabs}" class="slds-size_1-of-2" onclick="{!c.closeTabs}" />
+    </div>
+    <div class="slds-p-around_xx-small slds-align_absolute-center">
+            <lightning:datatable
+            columns="{! v.columns }"
+            data="{! v.tabsList }"
+            keyField="tabId"
+            onrowaction="{! c.handleRowAction }"
+            hideCheckboxColumn="true"
+            />
     </div>
 </aura:component>

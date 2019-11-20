@@ -38507,6 +38507,20 @@ title,Title,Name</value>
         <value>Travel Service Intermediaries-TSI (USA Only)</value>
     </labels>
     <labels>
+        <fullName>Tab_Name</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Tab_Name</shortDescription>
+        <value>Tab Name</value>
+    </labels>
+    <labels>
+        <fullName>Tab_Close</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Tab_Close</shortDescription>
+        <value>Click To Close Tab</value>
+    </labels>
+    <labels>
         <fullName>Tasks_Notification</fullName>
         <language>en_US</language>
         <protected>false</protected>
