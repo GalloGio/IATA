@@ -12,8 +12,8 @@ public class PlatformEvents_Helper {
     }
     
     public static void publishEvents(Map<Id,sObject> ObjectMap, string PE_Name, string ObjSource, boolean bIsInsert, boolean bIsUpdate, boolean bIsDelete, boolean bIsUndelete){
-    	//Map that stores the name of the platform event based on the type of object received
-    	map<string, string> PEObjName = new map<String,String>{
+        //Map that stores the name of the platform event based on the type of object received
+        map<string, string> PEObjName = new map<String,String>{
                 'Account' => 'Account__e',
                 'Contact' => 'Contact__e',
                 'Account_Contact_Role__c' => 'AccountContactRole__e',
@@ -21,10 +21,11 @@ public class PlatformEvents_Helper {
                 'Partner_products__c' => 'PartnerProduct__e',
                 'TIP_Pay_Prov_Prod_Country_Config__c' => 'Product_Country_Config__e',
                 'TIP_BIN_Range__c' => 'Product_Bin_Range__e',
-                'Remote_Invocation__c' => 'RemoteInvocation__e'
-		};
+                'Remote_Invocation__c' => 'RemoteInvocation__e',
+                'Training_Contact_Role_Details__c' => 'Training_Contact_Role_Detail__e'
+        };
           
-    	
+        
         string sEventType = '';
         if(bIsInsert) sEventType = 'Create';
         if(bIsUpdate) sEventType = 'Update';
@@ -40,20 +41,21 @@ public class PlatformEvents_Helper {
             List<RecordType> rtList = RecordTypeSingleton.getInstance().getRecordTypesBySObject(ObjSource);
             
             if(ObjSource == 'Account'){
-            	rtList.addAll(RecordTypeSingleton.getInstance().getRecordTypesBySObject('Account_Role__c'));
-            	InternalObjectMap = getAccountRoleToPublish(ObjectMap);
+                rtList.addAll(RecordTypeSingleton.getInstance().getRecordTypesBySObject('Account_Role__c'));
+                InternalObjectMap = getAccountRoleToPublish(ObjectMap);
             }
             else if( ObjSource =='Contact'){
                 rtList.addAll(RecordTypeSingleton.getInstance().getRecordTypesBySObject('Account_Contact_Role__c'));
-            	InternalObjectMap = getAccountContactRoleToPublish(ObjectMap);
+                InternalObjectMap = getAccountContactRoleToPublish(ObjectMap);
             }
             else InternalObjectMap = ObjectMap;
             
             List<SObject> lstSObjs = new list<SObject>();
             
             for(Id ObjId : InternalObjectMap.keySet()){
-            	map<string, string> MapMapping = getMappingMap(PEObjName.get(string.valueOf(ObjId.getsobjecttype())));
-            	if(MapMapping==null) continue;
+
+                map<string, string> MapMapping = getMappingMap(PEObjName.get(string.valueOf(ObjId.getsobjecttype())));
+                if(MapMapping==null) continue;
                 SObject sObj = getSchemaInfo(PEObjName.get(string.valueOf(ObjId.getsobjecttype()))).newSObject();
                 for(string FieldSource:MapMapping.keyset()){
                     if(FieldSource=='Recordtype')
@@ -68,7 +70,6 @@ public class PlatformEvents_Helper {
                 
                 lstSObjs.add(sObj);
             }
-        
             
             if (!Test.isRunningTest()) {
                 for (Database.SaveResult sr : EventBus.publish(lstSObjs)) {
@@ -110,7 +111,7 @@ public class PlatformEvents_Helper {
         }
         
         if(sObj=='Contact__e' || sObj=='Product_Bin_Range__e' || sObj=='PartnerProduct__e' 
-        	|| sObj=='Product_Country_Config__e' || sObj=='AccountContactRole__e' || sObj=='AccountRole__e' || sObj=='RemoteInvocation__e'){
+            || sObj=='Product_Country_Config__e' || sObj=='AccountContactRole__e' || sObj=='AccountRole__e' || sObj=='RemoteInvocation__e' || sObj=='Training_Contact_Role_Detail__e'){
             return new map<String,String>{
                 'Id' => 'RecordId__c',
                 'Recordtype' => 'RecordType__c',
@@ -135,27 +136,28 @@ public class PlatformEvents_Helper {
     
     //In case there is an Account Role related to TIP, it enrich the map with it
     private static Map<Id,sObject> getAccountRoleToPublish(Map<Id,sObject> mapAccnt){
-    	map<id, sObject> mapToRet = new map<id, sObject>();
-    	mapToRet.putAll(mapAccnt);
+        map<id, sObject> mapToRet = new map<id, sObject>();
+        mapToRet.putAll(mapAccnt);
 
         if(mapAccnt.keyset().isEmpty()) return mapToRet;
 
-    	for(Account_Role__c AccntRole: [select id, RecordTypeId, Account__c from Account_Role__c where Account__c in:mapAccnt.keyset() and recordtypeId=:TIP_UTILS.ACCOUNT_ROLE_PAYMENT_PROVIDER_RECORDTYPE_ID]){
-    		mapToRet.put(accntRole.Id, AccntRole);
-    	}
-    	return mapToRet;
+        for(Account_Role__c AccntRole: [select id, RecordTypeId, Account__c from Account_Role__c where Account__c in:mapAccnt.keyset() and recordtypeId=:TIP_UTILS.ACCOUNT_ROLE_PAYMENT_PROVIDER_RECORDTYPE_ID]){
+            mapToRet.put(accntRole.Id, AccntRole);
+        }
+        return mapToRet;
     }
     
      //In case there is an Account Contact Role related to TIP, it enrich the map with it
     private static Map<Id,sObject> getAccountContactRoleToPublish(Map<Id,sObject> mapCnt){
-    	map<id, sObject> mapToRet = new map<id, sObject>();
-    	mapToRet.putAll(mapCnt);
+        map<id, sObject> mapToRet = new map<id, sObject>();
+        mapToRet.putAll(mapCnt);
 
         if(mapCnt.keyset().isEmpty()) return mapToRet;
         
-    	for(Account_Contact_Role__c AccntConRole: [select id, RecordTypeId, Account__c from Account_Contact_Role__c where Account__c in:mapCnt.keyset() and Service_Rendered__c = 'TIP']){
-    		mapToRet.put(AccntConRole.Id, AccntConRole);
-    	}
-    	return mapToRet;
+        for(Account_Contact_Role__c AccntConRole: [select id, RecordTypeId, Account__c from Account_Contact_Role__c where Account__c in:mapCnt.keyset() and Service_Rendered__c = 'TIP']){
+            mapToRet.put(AccntConRole.Id, AccntConRole);
+        }
+        return mapToRet;
     }
+    
 }
