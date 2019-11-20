@@ -1,5 +1,5 @@
 import { api, LightningElement, track, wire } from 'lwc';
-import getAllAttachments from '@salesforce/apex/AttachmentListCtrl.getAllAttachmentsByParentIdAndPortal';
+import getAllAttachments from '@salesforce/apex/AttachmentListCtrl.getAllAttachmentsPortal';
 import checkIfSaamSidra from '@salesforce/apex/AttachmentListCtrl.checkIfSidraSaamOSCAR';
 import getExpiringLinkWithRecId from '@salesforce/apex/AttachmentListCtrl.getExpiringLinkWithRecId';
 import redirectToOldPortal from '@salesforce/apex/CSP_Utils.redirectToOldPortal';
