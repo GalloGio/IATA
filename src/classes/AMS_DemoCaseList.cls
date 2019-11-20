@@ -87,14 +87,14 @@ public class AMS_DemoCaseList {
 	}
 
 	//Get all remaning cases that don't belong to the previous lists
-    public List<Case> getRemaningCases(){
-        if(filterRemaining == 'Closed')
-            return [select id, CaseNumber, Reason1__c, CreatedDate, Status, Case_Age_Days__c from Case where AccountId =: this.ag.id and RecordTypeID = :remainingRT and isClosed = true];
-        else if(filterRemaining == 'Open')
-            return [select id, CaseNumber, Reason1__c, CreatedDate, Status, Case_Age_Days__c from Case where AccountId =: this.ag.id and RecordTypeID = :remainingRT and isClosed = false];
+	public List<Case> getRemaningCases(){
+		if(filterRemaining == 'Closed')
+			return [select id, CaseNumber, Reason1__c, CreatedDate, Status, Case_Age_Days__c from Case where AccountId =: this.ag.id and RecordTypeID = :remainingRT and isClosed = true];
+		else if(filterRemaining == 'Open')
+			return [select id, CaseNumber, Reason1__c, CreatedDate, Status, Case_Age_Days__c from Case where AccountId =: this.ag.id and RecordTypeID = :remainingRT and isClosed = false];
 
-        return [select id, CaseNumber, Reason1__c, CreatedDate, Status, Case_Age_Days__c from Case where AccountId =: this.ag.id and RecordTypeID = :remainingRT];
-    }
+		return [select id, CaseNumber, Reason1__c, CreatedDate, Status, Case_Age_Days__c from Case where AccountId =: this.ag.id and RecordTypeID = :remainingRT];
+	}
 
 	public List<SelectOption> getItems() {
 		List<SelectOption> options = new List<SelectOption>();
