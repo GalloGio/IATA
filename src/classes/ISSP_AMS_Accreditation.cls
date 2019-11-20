@@ -8170,7 +8170,21 @@ system.debug('aqui sectorValue ' + sectorValue);
             }
         } else {
             for (AMS_Accreditation_Contact__c accCon: executeContactQuery(dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_AGENCY_CONTACTS, AccredContactEnum.PARAMCODE_MAIN_LEGAL_OWNERS_NA, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, newForm.Same_Legal_Entity_Agency_Form__c))) {
-                owners.add(new OwnerContact(accCon.Email__c, accCon.Phone__c, accCon.First_name__c + ' ' + accCon.Last_name__c, accCon.Financial_interest__c));
+				String ownerName;
+                    
+                if (!String.isBlank(accCon.FirstName)) {
+                    ownerName = accCon.FirstName + ' ' + accCon.LastName;
+                
+                    if (!String.isBlank(accCon.LastName)) {
+                        ownerName += ' ' + accCon.LastName;
+                    }
+                }
+
+                if (String.isBlank(ownerName) && !String.isBlank(accCon.LastName)) {
+                    ownerName = accCon.LastName;
+                }
+                
+                owners.add(new OwnerContact(accCon.Email__c, accCon.Phone__c, ownerName, accCon.Financial_interest__c));
             }
         }
 
