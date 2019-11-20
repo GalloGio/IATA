@@ -896,7 +896,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
         String encodedPart = 'c=' + EncodingUtil.urlEncode(encryptedStr, 'UTF-8');
 
         String prefix = '';
-        if(Network.getNetworkId() != null) prefix = Network.getLoginURL(Network.getNetworkId()).substring(0,Network.getLoginURL(Network.getNetworkId()).indexOf('/login'));
+        if(Network.getNetworkId() != null) prefix = Network.getLoginURL(Network.getNetworkId()).substring(0,Network.getLoginURL(Network.getNetworkId()).lastIndexOf('/'));
         String oneTimeUrl = prefix + '/' + 'createPassword' + '?' + encodedPart;
         return oneTimeUrl;
 
