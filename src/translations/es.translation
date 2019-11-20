@@ -4844,7 +4844,7 @@ Por favor, si es la primera vez que usted solicita una tarjeta de identificació
     </customLabels>
     <customLabels>
         <label>Cargo por tarjeta de identificación IATA</label>
-        <name>IDCard_Fee</name>
+        <name>IDCard_fee</name>
     </customLabels>
     <customLabels>
         <label>Tarifa aplicable</label>

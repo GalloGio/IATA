@@ -4845,7 +4845,7 @@ Veuillez, si c&apos;est la première fois que vous faites une demande de carte d
     </customLabels>
     <customLabels>
         <label>Frais pour la carte d’identité</label>
-        <name>IDCard_Fee</name>
+        <name>IDCard_fee</name>
     </customLabels>
     <customLabels>
         <label>Frais applicables</label>
