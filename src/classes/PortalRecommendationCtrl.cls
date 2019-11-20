@@ -128,4 +128,10 @@ public with sharing class PortalRecommendationCtrl {
             this.actionType = actionType;
         }
     }
+
+    @AuraEnabled
+    public static String getBaseURL() {
+        return URL.getSalesforceBaseUrl().toExternalForm();
+    } 
+
 }
