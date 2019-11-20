@@ -197,7 +197,7 @@ public without sharing class OneId_RegistrationProcessController {
 
             if(serviceName != 'FRED' && serviceName != 'NDCMM'){
                 isAlreadyContact = true;
-                Boolean userCreated = registration(returnRelatedAcc(conList.get(0).AccountId), conList.get(0), serviceName, new Map<String,String>());
+                Boolean userCreated = registration(returnRelatedAcc(conList.get(0).AccountId), conList.get(0), serviceName, new Map<String,String>(), false);
 
                 if(userCreated == true){
                     userInformation.isContactInserted = true;
