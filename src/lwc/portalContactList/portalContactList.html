@@ -235,7 +235,7 @@
                                     </template>
 
                                     <!-- Inactive Options -->
-                                    <lightning-layout-item class="slds-p-around_xx-small" size="12" flexibility="grow">
+                                    <lightning-layout-item class="slds-p-vertical-medium" size="12" flexibility="grow">
                                         <div class="slds-p-horizontal_large slds-p-vertical_medium" >
                                             <lightning-combobox
                                                 placeholder={labels.CSP_selectReason} value="Inactive Reason"
@@ -248,8 +248,8 @@
 
                                 <!-- ACTION BUTTON -->
                                 <div class="slds-align_absolute-center slds-p-around_large topLightGrayBorder">
-                                    <lightning-button variant="brand" label={labels.ISSP_Confirm}
-                                        onclick={processInactive} disabled={noSelected} class="slds-m-right_medium containedButton">
+                                    <lightning-button class="baseButton newContainedButton buttonMinHeightMedium text-xsmall fullWidth" 
+                                        label={labels.ISSP_Confirm} variant="neutral" onclick={processInactive} disabled={noSelected}>
                                     </lightning-button>
                                 </div>
                             </div>
@@ -267,9 +267,9 @@
                 <div class="slds-p-vertical_medium slds-text-align_center">
                         <img src={searchIconNoResultsUrl} />
                         <div class="text-small text-bold text-linkBlue">
-                            {_labels.CSP_Search_NoResults_text1}</div>
-                        <div class="text-xxsmall text-gray">{_labels.CSP_Search_NoResults_text2} <span
-                                class="text-bold text-darkGray">"{_searchKey}"</span></div>
+                            {_labels.CSP_Contacts_NoResults_text1}</div>
+                        <div class="text-xxsmall text-gray">{_labels.CSP_Contacts_NoResults_text2} <span
+                                class="text-bold text-darkGray">"{searchNoResultsString}"</span></div>
                     </div>
             </div>
         </template>

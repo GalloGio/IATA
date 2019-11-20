@@ -22,12 +22,17 @@ public class PortalRecommendationCtrlTest {
 
             User usr = ISSP_ObjectFactory.createPortalUser(con);
 
+            Product2 prd = new Product2(
+            name ='PRd1'
+            );
+			
+            insert prd;
             Id recommendationRT = RecordTypeSingleton.getInstance().getRecordTypeId('Recommendations_Visibility__c', 'ServiceRecommendation');
             Recommendations_Visibility__c recommendation = new Recommendations_Visibility__c(
                 IsActive__c = true,
                 StartDate__c = Date.today().addDays(-2),
                 EndDate__c = Date.today().addDays(2),
-                RecordTypeId = recommendationRT
+                Product__c=prd.id
             );
             insert recommendation;
 
@@ -47,7 +52,7 @@ public class PortalRecommendationCtrlTest {
 
         Test.startTest();
         System.runAs(testUser) {
-            List<PortalRecommendationCtrl.RecommendationWrapper> recommendations = PortalRecommendationCtrl.getRecommendations('Services');
+            List<PortalRecommendationCtrl.RecommendationWrapper> recommendations = PortalRecommendationCtrl.getRecommendations('');
             System.assertEquals(0, recommendations.size());
             PortalRecommendationCtrl.getBaseURL();
         }
