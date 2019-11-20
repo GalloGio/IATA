@@ -8172,16 +8172,16 @@ system.debug('aqui sectorValue ' + sectorValue);
             for (AMS_Accreditation_Contact__c accCon: executeContactQuery(dynamicAccredContactListQuery(AccredContactEnum.PARAMCODE_AGENCY_CONTACTS, AccredContactEnum.PARAMCODE_MAIN_LEGAL_OWNERS_NA, AccredContactEnum.PARAMCODE_OWNERSHIP_SUMMARY, newForm.Same_Legal_Entity_Agency_Form__c))) {
 				String ownerName;
                     
-                if (!String.isBlank(accCon.FirstName)) {
-                    ownerName = accCon.FirstName + ' ' + accCon.LastName;
+                if (!String.isBlank(accCon.First_Name__c)) {
+                    ownerName = accCon.First_Name__c + ' ' + accCon.Last_Name__c;
                 
-                    if (!String.isBlank(accCon.LastName)) {
-                        ownerName += ' ' + accCon.LastName;
+                    if (!String.isBlank(accCon.Last_Name__c)) {
+                        ownerName += ' ' + accCon.Last_Name__c;
                     }
                 }
 
-                if (String.isBlank(ownerName) && !String.isBlank(accCon.LastName)) {
-                    ownerName = accCon.LastName;
+                if (String.isBlank(ownerName) && !String.isBlank(accCon.Last_Name__c)) {
+                    ownerName = accCon.Last_Name__c;
                 }
                 
                 owners.add(new OwnerContact(accCon.Email__c, accCon.Phone__c, ownerName, accCon.Financial_interest__c));
