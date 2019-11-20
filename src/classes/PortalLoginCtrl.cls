@@ -126,6 +126,14 @@ public with sharing class PortalLoginCtrl {
             result.isSuccess = true;
             result.sessionUrl = pageRef.getUrl();
 
+			if(result.isSuccess == true){
+				try{
+					PortalFAQsSharingCtrl.validateUserFAQsPermissions(oneUser.Id);
+				}catch(Exception e){
+					return result;
+				}
+			}
+
             return result;
         }
         catch (Exception ex) {
