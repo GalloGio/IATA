@@ -73,6 +73,8 @@ export default class PortalSearchProfileList extends NavigationMixin(LightningEl
 
     @track loadingMoreResults = false;
 
+    @track savedColumns = [];
+
     fieldLabels = [
         'Name', 'User_Portal_Status__c', 'Country__c',
     ];
@@ -86,6 +88,7 @@ export default class PortalSearchProfileList extends NavigationMixin(LightningEl
                     { label: results.Country__c, fieldName: 'profileCountry', type: 'text' },
                     { label: this.label.CSP_Search_Case_Type, fieldName: 'profileType', type: 'text' },
                 ];
+                this.savedColumns = JSON.parse(JSON.stringify(this.columns));
             });
 
         document.addEventListener('scroll', () => {
@@ -169,7 +172,16 @@ export default class PortalSearchProfileList extends NavigationMixin(LightningEl
             .then(myResults => {
                 let results = JSON.parse(JSON.stringify(myResults));
                 let recordsString = JSON.parse(results.recordsString);
-                
+
+                let filteringObjectAux = JSON.parse(JSON.stringify(this.filteringObject));
+                //used when filter is set to Companies. Removes the Portal Status Collumn. Resets if not.
+                if (filteringObjectAux.profileComponent.profileTypeFilter === 'Account') {
+                    this.columns.splice(1, 1);
+                }
+                else {
+                    this.columns = JSON.parse(JSON.stringify(this.savedColumns));
+                }
+
                 filteringObjectAux.profileComponent.nrResults = recordsString.length;
 
                 if (recordsString) {
