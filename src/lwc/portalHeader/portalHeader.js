@@ -218,7 +218,6 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
 	}
 
 	connectedCallback() {
-		console.log('portalHeader - connectedCallback - INIT' );
 
 		registerListener('fireL3Registration', this.handleMissingData, this);
 
@@ -234,30 +233,20 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
 			}
 		}
 
-		console.log('portalHeader - connectedCallback - Start L3' );
-		console.log('portalHeader - connectedCallback - pageParams:' + pageParams);
-		console.log('portalHeader - connectedCallback - pageParams.firstLogin:' + pageParams.firstLogin);
-		console.log('portalHeader - connectedCallback - pageParams.lms:' + pageParams.lms);
 		// FOR LMS L3
 		if(pageParams !== undefined &&
 			(pageParams.lms !== undefined || pageParams.lmsflow !== undefined ) ){
-				console.log('portalHeader - connectedCallback - IF L3' );
 			if(pageParams.lms === 'yas'){
-				console.log('portalHeader - connectedCallback - IF LMS YAS' );
 				if(pageParams.firstLogin == "true"){
 					this.thirdLoginLMS = true;
 					this.registrationlevel = '3';
 					this.displayFirstLogin = true;
 				}else{
-					console.log('portalHeader - getPortalServiceId - start' );
 					getPortalServiceId({ serviceName: 'Training Platform (LMS)' })
 						.then(serviceId => {
-							console.log('service Id: ' + serviceId);
 							verifyCompleteL3Data({serviceId: serviceId})
 							.then(result => {
-								console.log('verifyCompleteL3Data result: ', result);
 								if(result){
-									console.log('window.open!! ');
 									window.open('https://getyardstick.com');
 								}
 								else{
@@ -265,7 +254,6 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
 									this.registrationlevel = '3';
 									this.displayFirstLogin = true;
 								}
-								// this.toggleSpinner();
 							})
 							.catch(error => {
 								this.error = error;
@@ -278,7 +266,6 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
 				}
 
 			}else if(pageParams.lmsflow.indexOf('flow') > -1){
-				console.log('portalHeader - connectedCallback - IF LMS FLOW' );
 				this.thirdLoginLMS = true;
 				this.registrationlevel = '3';
 				this.displayFirstLogin = false;
@@ -286,12 +273,6 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
 			}
 
 		}
-		console.log('portalHeader - connectedCallback - pageParams.firstLogin:' + pageParams.firstLogin);
-		console.log('portalHeader - connectedCallback - pageParams.lms:' + pageParams.lms);
-		console.log('portalHeader - connectedCallback - pageParams.lmsflow:' + pageParams.lmsflow);
-		console.log('portalHeader - connectedCallback - this.firstLogin:' + this.firstLogin);
-		console.log('portalHeader - connectedCallback - this.thirdLoginLMS:' + this.thirdLoginLMS);
-		console.log('portalHeader - connectedCallback - this.registrationlevel:' + this.registrationlevel);
 		this.redirectChangePassword();
 
 		getNotifications().then(result => {
@@ -343,7 +324,6 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
 	handleMissingData(payload) {
 		this.displayThirdLevelRegistrationLMS = true;
 		this.serviceid = payload;
-		console.log('CHECK payload service Id: ' + this.serviceid);
 	}
 
 	redirectChangePassword() {

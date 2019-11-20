@@ -7,16 +7,9 @@ import { LightningElement, track, api} from 'lwc';
 /* Utils & Apex & Platform
 /* ==============================================================================================================*/
 import { navigateToPage, getParamsFromPage }    from 'c/navigationUtils';
-// import { loadScript, loadStyle }                from 'lightning/platformResourceLoader';
 import RegistrationUtils                        from 'c/registrationUtils';
-// import { ShowToastEvent }                       from 'lightning/platformShowToastEvent';
 
 import getUserInformationFromEmail              from '@salesforce/apex/PortalRegistrationFirstLevelCtrl.getUserInformationFromEmail';
-// import getUserInformationFromAdditionalEmail    from '@salesforce/apex/PortalRegistrationFirstLevelCtrl.getUserInformationFromAdditionalEmail';
-// import getISOCountries                  from '@salesforce/apex/PortalRegistrationSecondLevelCtrl.getISOCountries';
-// import getCustomerTypePicklists    from '@salesforce/apex/GCS_AccountCreation.getCustomerTypePicklistsForL2';
-// import getMetadataCustomerType     from '@salesforce/apex/GCS_AccountCreation.getMetadataCustomerTypeForL2';
-// import searchAccounts                   from '@salesforce/apex/GCS_RegistrationController.searchAccounts';
 
 //custom labels
 import CSP_L2_Account_Selection_Message from '@salesforce/label/c.CSP_L2_Account_Selection_Message';
@@ -47,10 +40,6 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 	alertIcon = CSP_PortalPath + 'alertIcon.png';
 
 	@api customerType;
-	// @api countryId;
-	// @api accountId;
-	// @api isTriggeredByRequest;
-	// @api searchResults;
 	@api contactInfo;
 	@api flow;
 
@@ -65,36 +54,17 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 	@track existingPersonalUsernameVisibility;
 	@track validated = false;
 
-	// @track customerTypesList;
-
-	// country variables
-	// @track localCountryId;
-
 	/* Picklist options */
 	@track isoCountriesPicklistOptions;
 
 	// customer type variables
 	@track customerType;
-	// @track selectedCustomerTypeMetadata;
-	// @track isCategorizationSearchable;
-	// @track isIataCodeSearchDisabled;
 
-	// @track selectedAccountId;
 	@track isPersonalEmail;
 
-
-	// get accountNotSelected(){
-	//     return this.selectedAccountId === '';
-	// }
-
 	// search inputs
-	// @track iataCodeInput = '';
 	@track personalEmailInput ='';
 	@track workEmailInput ='';
-
-	// get isSearchDisabled(){
-	//     return !this.isCategorizationSearchable || (this.iataCodeInput.length < 2 && this.accountNameInput.length < 3) || this.localCountryId === '' || !this.inputModified;
-	// }
 
 	get blockConfirmation(){
 
@@ -110,17 +80,6 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 
 	}
 
-	// flag to warn user requesting access to a service/topic
-	// @track isCategorizationModified = false;
-
-	//search results variables
-	// @track localSearchResults;
-	// @track resultsToDisplay;
-	// resultsPerPage = 10;
-	// @track currentPage = 1;
-	// @track pageNumbersBeforeCurrent;
-	// @track pageNumbersAfterCurrent;
-
 	get PersonalEmailOptions() {
 		return [
 			{ label: 'Yes', value: 'yes' },
@@ -133,28 +92,11 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 	}
 
 	get workEmailVisibility(){
-		// this.customerType === '' - equals General Public Account
 		return this.isPersonalEmail === 'yes' && this.customerType !== ''? true : false;
 	}
 
-	// get accountFounds(){
-	//     return this.localSearchResults !== undefined && this.localSearchResults.totalAccounts > 0;
-	// }
-
-	// get numberOfFields(){
-	//     if(this.localSearchResults === undefined){
-	//         return 0;
-	//     }
-	//     return this.localSearchResults.fieldLabels.length;
-	// }
-
 	@track inputModified = true;
 
-	// get searchPerformed(){
-	//     return this.localSearchResults !== undefined;
-	// }
-
-	// label variables
 	_labels = {
 		CSP_L2_Account_Selection_Message,
 		CSP_L2_Account_Information,
@@ -192,7 +134,6 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 			this.lms = pageParams.lms;
 		}
 
-		// this.customerType === '' - equals General Public Account
 		if(this.customerType === ''){
 			this.setCustomerType(null);
 		}
@@ -219,8 +160,7 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 	/* Events handler methods */
 	setCustomerType(customerType){
 		this.selectedCustomerType = customerType;
-
-	 }
+	}
 
 	changeIsPersonalEmail(event) {
 		this.isPersonalEmail = event.target.value;
@@ -245,9 +185,6 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 
 
 	handleNavigateToLogin() {
-		console.log('handleNavigateToLogin - this.personalEmailInput: ', this.personalEmailInput);
-		console.log('handleNavigateToLogin - this.workEmailInput: ', this.workEmailInput);
-		console.log('handleNavigateToLogin - this.userInfo: ', this.userInfo);
 		if(this.userInfo.hasExistingContactPersonalEmail || this.userInfo.hasExistingContact){
 			if(this.personalEmailInput.length > 0 || this.workEmailInput.length > 0 ){
 				let params = {};
@@ -258,14 +195,11 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 				}
 				params.redirect = 1;
 				navigateToPage("/secur/logout.jsp?retUrl=" + CSP_PortalPath + "login",params);
-				// navigateToPage(CSP_PortalPath + 'login',params);
 			}else{
 				navigateToPage("/secur/logout.jsp?retUrl=" + CSP_PortalPath + "login");
-				// navigateToPage(CSP_PortalPath + 'login');
 			}
 		}else{
 			navigateToPage("/secur/logout.jsp?retUrl=" + CSP_PortalPath + "login");
-			// navigateToPage(CSP_PortalPath + 'login');
 		}
 
 	}
@@ -281,8 +215,6 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 			this.dispatchEvent(new CustomEvent('next'));
 		}else{
 
-			//
-			// if(this.isPersonalEmail === 'yes' && this.customerType === ''){
 			if(this.isPersonalEmail === 'yes' && this.localContactInfo.Account.Is_General_Public_Account__c === true){
 				this.localContactInfo.Additional_Email__c = this.localContactInfo.Email;
 				this.flow = 'flow2';
@@ -316,7 +248,6 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 
 					this.startLoading();
 					RegistrationUtilsJs.checkEmailIsValid(`${auxEmail}`).then(result=> {
-						console.log('result: ', result);
 						if(result == false){
 							this._showEmailValidationError(true, this.labels.CSP_Invalid_Email);
 							this.isLoading = false;
@@ -335,15 +266,10 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 									//2) If there is an existing contact but not a user with that email -> Terms and conditions and submit
 									//button is displayed on the form.
 									// getUserInformationFromEmail({ email : auxEmail}).then(result3 => {
-
-									console.log('auxEmail: ', auxEmail);
-									console.log('this.lms: ', this.lms);
 									getUserInformationFromEmail({ email : auxEmail, LMSRedirectFrom: this.lms}).then(result3 => {
 
 										var userInfo = JSON.parse(JSON.stringify(result3));
-										console.log('userInfo: ', userInfo);
 										this.userInfo = userInfo;
-										console.log('this.flow: ', this.flow);
 
 										if(userInfo.hasExistingContact == true){
 											this.existingUsernameVisibility = true;
@@ -355,7 +281,6 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 												if(this.flow === 'flow5'){
 													this.flow = 'flow6';
 												}
-												console.log('userInfo.contactId: ', userInfo.contactId);
 
 												this.localContactInfo.existingContactId = userInfo.contactId;
 												this.localContactInfo.existingContactAccount = userInfo.existingContactAccount;
@@ -382,8 +307,6 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 													if(this.flow === 'flow5'){
 														this.flow = 'flow7';
 													}
-
-													console.log('userInfo.contactId: ', userInfo.contactId);
 
 													this.localContactInfo.hasExistingContact = userInfo.hasExistingContact;
 													this.localContactInfo.hasExistingUser = userInfo.hasExistingUser;

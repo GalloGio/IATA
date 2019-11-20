@@ -54,9 +54,6 @@ public without sharing class PortalCreatePasswordController {
 		String startUrl = Label.CSP_PortalPath;
 		if(result.isSuccess == true){
 			try{
-				System.Debug('PortalRegistrationFirstLevelCtrl.RegistrationResult createUserAndSetPassword - params' + params);
-				System.Debug('PortalRegistrationFirstLevelCtrl.RegistrationResult createUserAndSetPassword - params.lms' + params.lms);
-				System.Debug('PortalRegistrationFirstLevelCtrl.RegistrationResult createUserAndSetPassword - params.lmsCourse' + params.lmsCourse);
 				//YAS Reg -
 				String lmsParam = ((String)params.lms).toLowerCase();
 				if(lmsParam.indexOf('yas') != -1){

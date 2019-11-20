@@ -10,12 +10,7 @@ import getContactInfo               from '@salesforce/apex/PortalRegistrationSec
 import getParameters                from '@salesforce/apex/PortalRegistrationThirdLevelLMSCtrl.getParameters';
 import completeRegistration                from '@salesforce/apex/PortalRegistrationThirdLevelLMSCtrl.completeRegistration';
 
-
-// import getCustomerTypeFromSectorAndCategory from '@salesforce/apex/GCS_CustomerType.getCustomerTypeFromSectorAndCategory';
-
 import { navigateToPage, getParamsFromPage } from'c/navigationUtils';
-
-//import isServiceAvailableForCategorization  from '@salesforce/apex/GCS_RegistrationController.isServiceAvailableForCategorization';
 
 //custom labels
 import CSP_L2_Banner_Title              from '@salesforce/label/c.CSP_L2_Banner_Title';
@@ -85,19 +80,6 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 		'addressSuggestions':[]
 	};
 
-	// account = {
-	//     'legalName':'',
-	//     'tradeName':'',
-	//     'phone':'',
-	//     'email':'',
-	//     'website':'',
-	//     'customerType':'',
-	//     'customerTypeSector':'',
-	//     'customerTypeCategory':'',
-	//     'sector':'',
-	//     'category':''
-	// };
-
 	@track contactInfo;
 	@track contactFound;
 	@track flow;
@@ -132,7 +114,6 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 
 	connectedCallback() {
 		document.body.setAttribute('style', 'overflow: hidden;');
-		console.log('callback ServiceId: ' + this.serviceid);
 		let pageParams = getParamsFromPage();
 
 		// Retrieve Contact information
@@ -140,8 +121,6 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 			.then(result => {
 				this.contactInfo = result;
 				this.contactFound = this.contactInfo != null;
-
-				console.log('connectedCallback - getContactInfo - this.contactInfo: ',this.contactInfo);
 
 				if(!this.contactFound){
 					return;
@@ -183,8 +162,6 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 				this.contactInfo.serviceid = this.serviceid;
 
 				//Address Info
-				console.log('connectedCallback getContactInfo - start this.address ');
-				console.log('CHECK1 connectedCallback getContactInfo - this.contactInfo - ',JSON.stringify(this.contactInfo) );
 				if(this.contactInfo.Shipping_Address__c != null &&
 					this.contactInfo.Shipping_Address__c != undefined &&
 					this.contactInfo.Shipping_Address__c !== ''){
@@ -237,11 +214,8 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 				this.isResLoading = true;
 
 				var sPageURL = ''+ window.location;
-				console.log('sPageURL: ',sPageURL);
 				getParameters({ urlExtension : sPageURL }).then(result => {
-					// this.registrationParams = JSON.stringify(JSON.parse(result.registrationParameters));
 					this.contactInfo = JSON.parse(result.userInfo);
-					console.log('CHECK2 connectedCallback getParameters: this.contactInfo : ', JSON.stringify(this.contactInfo) );
 					completeRegistration({params: JSON.stringify(this.contactInfo) })
 						.then(result2 => {
 							console.log('result: ', JSON.parse(JSON.stringify(result)));
@@ -258,8 +232,6 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 							this.errorModalMessage = JSON.parse(JSON.stringify(error));
 							this.isResLoading = false;
 						});
-					console.log('this.registrationParams: ',this.contactInfo);
-					console.log('this.registrationParams.email: ',this.contactInfo.Email);
 				})
 
 
@@ -308,14 +280,11 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 		else if(this.currentStep === 4){
 			var addressInformation = this.template.querySelector('c-portal-registration-address-information-l-m-s').getAddressInformation();
 			this.address = JSON.parse(JSON.stringify(addressInformation));
-			console.log('getCurrentStepData this.address - ',this.address );
 		}
 	}
 
 	goToStep(event){
-		console.log('goToStep INIT');
 		var futureStep = parseInt(event.detail);
-		console.log('goToStep futureStep - ',futureStep );
 		this.getCurrentStepData();
 		this.currentStep = futureStep;
 	}
@@ -356,29 +325,6 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 
 		this.currentStep = 2;
 	}
-
-	// fromCompanyInformationToAddressInformation(){
-	//     var companyInformation= this.template.querySelector('c-portal-registration-company-information').getCompanyInformation();
-
-	//     this.account = JSON.parse(JSON.stringify(companyInformation));
-	//     this.selectedCustomerType = companyInformation.customerType;
-
-	//     this.currentStep = 4;
-	// }
-
-	// fromAddressInformationToCompanyInformation(){
-	//     var addressInformation = this.template.querySelector('c-portal-registration-address-information').getAddressInformation();
-	//     this.address = JSON.parse(JSON.stringify(addressInformation));
-
-	//     this.currentStep = 3;
-	// }
-
-	// fromAddressInformationToConfirmation(){
-	//     var addressInformation = this.template.querySelector('c-portal-registration-address-information').getAddressInformation();
-	//     this.address = JSON.parse(JSON.stringify(addressInformation));
-
-	//     this.currentStep = 5;
-	// }
 
 	fromConfirmationToProfileDetails(){
 		this.currentStep = 1;
@@ -432,14 +378,8 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 		this.openMessageModal = true;
 	}
 
-	// cancel(){
-	//     this.openMessageModal = false;
-	// }
-
 	saveAndClose(){
 		// To do save contact info
-
-
 		this.openMessageModal = false;
 		if(this.landingPage == 'same'){
 			this.dispatchEvent(new CustomEvent('closesecondlevelregistration'));

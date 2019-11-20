@@ -47,20 +47,11 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 		String parameters     = pageRef.getParameters().get('c');
 		parameters            = Encodingutil.urlDecode(PortalPasswordHandler.DecryptString(parameters), 'UTF-8');
 
-
-		System.debug('pageRef.getParameters().get(c): ' + pageRef.getParameters().get('c'));
-		System.debug('parameters: ' + parameters);
-
 		//get registration information
 		UserInformationWrapper registrationParameters = (UserInformationWrapper) JSON.deserialize(parameters, UserInformationWrapper.class);
 
-		System.debug('registrationParameters: ' + registrationParameters);
-		System.debug('registrationParameters.Additional_Email: ' + registrationParameters.Additional_Email);
-		System.debug('registrationParameters.Email: ' + registrationParameters.Email);
 		registrationParameters.Additional_Email = registrationParameters.Additional_Email.replace('@@##', '+');
 		registrationParameters.Email = registrationParameters.Email.replace('@@##', '+');
-		System.debug('registrationParameters.Additional_Email: ' + registrationParameters.Additional_Email);
-		System.debug('registrationParameters.Email: ' + registrationParameters.Email);
 		result.userInfo = JSON.serialize(registrationParameters);
 
 
@@ -70,19 +61,10 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 	@AuraEnabled
 	public static RegistrationResult registration(Contact con, List<String> extraValues){
 
-		// System.debug('ACCOUNT : ' + acc);
-		// Boolean success = OneId_RegistrationProcessController.registration(acc,con, 'ISSP', true);
-
-		// if(!success){
-		//     return false;
-		// }
 		RegistrationResult result = new RegistrationResult();
 		Savepoint sp = Database.setSavepoint();
 
 		try{
-			System.debug('[PortalRegistrationThirdLevelLMSCtrl] registration : INIT ');
-			System.debug('[PortalRegistrationThirdLevelLMSCtrl] registration : extraValues : ' + extraValues);
-			System.debug('[PortalRegistrationThirdLevelLMSCtrl] registration : con : ' + con);
 
 			String sUsername = extraValues[0];
 			String sUserId = extraValues[1];
@@ -98,11 +80,8 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 			String serviceid = extraValues[11];
 			String sStreet2 = extraValues[12];
 
-			System.debug('CHECK sStreet2: ' + sStreet2);
-
 			String RECTYPE_Master_AccRole = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Role__c', 'Master');
 			String RECTYPE_Master_AccContRole = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'Master');
-			// String RECTYPE_Trainee_YASContDet = RecordTypeSingleton.getInstance().getRecordTypeId('Yardstick_Contact_Details__c', 'Yardstick_Trainee');
 			String RECTYPE_Trainee_YASContDet = RecordTypeSingleton.getInstance().getRecordTypeId('Training_Contact_Role_Details__c', 'Yardstick_Trainee');
 
 
@@ -136,13 +115,10 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 			addr.Type__c = 'Shipping';
 
 			if(listAddr.size() > 0){
-				System.debug('Address__c already exists, update!!!');
 				addr.Id = listAddr[0].Id;
 
 				update addr;
 			}else{
-				System.debug('NEW Account_Role__c!!!');
-
 				insert addr;
 			}
 
@@ -157,26 +133,21 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 			Account_Role__c ar = new Account_Role__c();
 
 			if(listAR.size() > 0){
-				System.debug('Account_Role__c already exists!!!');
 				ar = listAR[0];
 			}else{
-				System.debug('NEW Account_Role__c!!!');
 				ar.Account__c = con.AccountId;
 				ar.RecordTypeId = RECTYPE_Master_AccRole;
 				ar.Account_Role_Name__c =  'Yardstick';
 				insert ar;
 			}
-			System.debug('Account_Role__c - ar: ' + ar);
 
 			//Create Account Contact Role if not existing
 			List<Account_Contact_Role__c> listACR = [SELECT Id,Account_Role__c,Contact__c,Contact_Role_Name__c,RecordTypeId FROM Account_Contact_Role__c WHERE Contact__c = :con.Id AND Contact_Role_Name__c = 'Yardstick' LIMIT 1];
 			Account_Contact_Role__c acr = new Account_Contact_Role__c();
 
 			if(listACR.size() > 0){
-				System.debug('Account_Contact_Role__c already exists!!!');
 				acr = listACR[0];
 			}else{
-				System.debug('NEW Account_Contact_Role__c!!!');
 				acr.Account_Role__c = ar.Id;
 				acr.Contact__c = con.Id;
 				acr.Contact_Role_Name__c = 'Yardstick';
@@ -185,14 +156,12 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 
 				insert acr;
 			}
-			System.debug('Account_Contact_Role__c - acr: ' + acr);
 
 			//Create Yardstick Contact Role Detail
 			List<Training_Contact_Role_Details__c> listYCD = [SELECT Id,RecordTypeId,Account_Contact_Role__c,Username__c,UserId__c,Preferred_Course__c FROM Training_Contact_Role_Details__c WHERE Account_Contact_Role__c = :acr.Id LIMIT 1];
 			Training_Contact_Role_Details__c ycd = new Training_Contact_Role_Details__c();
 
 			if(listYCD.size() > 0){
-			   System.debug('Training_Contact_Role_Details__c already exists!!!');
 				 ycd = listYCD[0];
 				ycd.Username__c = sUsername;
 				ycd.UserId__c = sUserId;
@@ -201,7 +170,6 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 				update ycd;
 
 			}else{
-				System.debug('NEW Training_Contact_Role_Details__c!!!');
 				ycd.Account_Contact_Role__c = acr.Id;
 				ycd.RecordTypeId = RECTYPE_Trainee_YASContDet;
 				ycd.Username__c = sUsername;
@@ -210,7 +178,6 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 
 				insert ycd;
 			}
-			System.debug('Training_Contact_Role_Details__c - ycd: ' + ycd);
 
 			//Create Portal Application Right
 			Portal_Applications__c pa = [SELECT Id, Name FROM Portal_Applications__c WHERE Name = 'Training Platform (LMS)' LIMIT 1];
@@ -236,8 +203,6 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 			Contact updatedContact = [SELECT Id, Name, Email, AccountId, Account.TradeName__c, Account.Legal_name__c, Account.Billing_Address_formated__c, Account.Phone, Account.Sector__c, Account.Category__c
 										FROM Contact WHERE Id =: con.Id];
 
-			//GCS_AccountCreation.sendEmailNotification(updatedContact);
-			System.debug('SUCCESS : ');
 			result.isSuccess = true;
 			result.message = 'Regitration Completed!';
 
@@ -262,12 +227,6 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 
 		try{
 			UserInformationWrapper contactInfo = getDataToMail(params);
-
-			System.debug('[PortalRegistrationThirdLevelLMSCtrl] completeRegistration : contactInfo : ' + contactInfo);
-			System.debug('[PortalRegistrationThirdLevelLMSCtrl] completeRegistration : contactInfo.Email : ' + contactInfo.Email);
-			System.debug('[PortalRegistrationThirdLevelLMSCtrl] completeRegistration : contactInfo.Additional_Email : ' + contactInfo.Additional_Email);
-			System.debug('[PortalRegistrationThirdLevelLMSCtrl] completeRegistration : contactInfo.flow : ' + contactInfo.flow);
-
 
 			if(contactInfo.flow == 'flow3'){
 
@@ -297,59 +256,7 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 
 				return registration(con, extraValues);
 			}
-			// if(contactInfo.flow == 'flow4' || contactInfo.flow == 'flow6'){
 
-			//     //Get user to Merge
-			//     Contact con = [SELECT Id,AccountId,Email,Additional_Email__c,Phone,OtherPhone,Salutation,Birthdate,Shipping_Address__c
-			//                     FROM Contact WHERE Id = :contactInfo.existingContactId];
-			//     con.FirstName = contactInfo.FirstName;
-			//     con.LastName = contactInfo.LastName;
-			//     con.Email = contactInfo.Additional_Email;
-			//     con.Additional_Email__c = contactInfo.Email;
-			//     con.Shipping_Address__c = contactInfo.Shipping_Address != ''? contactInfo.Shipping_Address : null;
-			//     con.Phone = contactInfo.Phone;
-			//     con.OtherPhone = contactInfo.OtherPhone;
-			//     con.Salutation = contactInfo.Salutation;
-			//     if(contactInfo.User_Portal_Status != null && contactInfo.User_Portal_Status == 'Pending'){
-			//         con.User_Portal_Status__c = 'Pending Approval';
-			//     }
-			//     con.Birthdate = Date.valueOf(contactInfo.Date_of_Birth);
-
-			//     Contact conToInactivate = [SELECT Id,status__c,FirstName,LastName,
-			//                                         AccountId,Email,Additional_Email__c,Phone,
-			//                                         OtherPhone,Salutation,Birthdate,Shipping_Address__c
-			//                                 FROM Contact WHERE Id = :contactInfo.Id];
-
-			//     conToInactivate.FirstName = conToInactivate.FirstName + ' - inactive';
-			//     conToInactivate.LastName = conToInactivate.LastName + ' - inactive';
-			//     conToInactivate.Email = conToInactivate.Email + '.inactive';
-			//     if(conToInactivate.Additional_Email__c != null && conToInactivate.Additional_Email__c != ''){
-			//         conToInactivate.Additional_Email__c = conToInactivate.Additional_Email__c + '.inactive';
-			//     }
-
-			//     // conToInactivate.status__c = 'Inactive';
-			//     update conToInactivate;
-
-			//     Set<String> conIdSet = new Set<String>();
-			//     conIdSet.add(conToInactivate.Id);
-			//     PortalRegistrationFirstLevelCtrl.futureDeactivateUsers(conIdSet);
-
-
-			//     List<String> extraValues = new List<String>();
-			//     extraValues.add(contactInfo.Username);
-			//     extraValues.add(contactInfo.UserId);
-			//     extraValues.add(contactInfo.lmsCourse);
-			//     extraValues.add(contactInfo.street);
-			//     extraValues.add(contactInfo.zip);
-			//     extraValues.add(contactInfo.countryId);
-			//     extraValues.add(contactInfo.stateId);
-			//     extraValues.add(contactInfo.stateName);
-			//     extraValues.add(contactInfo.cityId);
-			//     extraValues.add(contactInfo.cityName);
-			//     extraValues.add(contactInfo.isPoBox);
-
-			//     return registration(con, extraValues);
-			// }
 			if(contactInfo.flow == 'flow5'){
 				Contact con = [SELECT Id,AccountId,Email,Additional_Email__c,Phone,OtherPhone,Salutation,Birthdate,Shipping_Address__c FROM Contact WHERE Id = :contactInfo.Id];
 				con.Email = contactInfo.Email;
@@ -411,11 +318,8 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 				Set<String> contIds = new Set<String>();
 				contIds.add(contactInfo.existingContactId);
 				contIds.add(con.Id);
-				System.debug('[PortalRegistrationThirdLevelLMSCtrl] completeRegistration : contIds : ' + contIds);
-
 
 				if(regRes.isSuccess){
-
 
 					//Getting existing Account Contact Role to set it up to the new Contact
 					List<Account_Contact_Role__c> listACR = [SELECT Id,Account_Role__c,Contact__c,Contact_Role_Name__c,RecordTypeId
@@ -425,8 +329,6 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 					Account_Contact_Role__c acrNew = new Account_Contact_Role__c();
 					Account_Contact_Role__c acrOld = new Account_Contact_Role__c();
 
-					System.debug('[PortalRegistrationThirdLevelLMSCtrl] completeRegistration : listACR : ' + listACR);
-
 					for(Account_Contact_Role__c acr : listACR){
 						if(acr.Contact__c == con.Id){
 							acrNew = acr;
@@ -434,11 +336,8 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 							acrOld = acr;
 						}
 					}
-					System.debug('[PortalRegistrationThirdLevelLMSCtrl] completeRegistration : acrNew : ' + acrNew);
-					System.debug('[PortalRegistrationThirdLevelLMSCtrl] completeRegistration : acrOld : ' + acrOld);
 
 					if(acrNew != null && acrOld != null){
-						// acr = listACR[0];
 
 						acrOld.Contact__c = con.Id;
 						acrOld.Account_Role__c = acrNew.Account_Role__c;
@@ -456,7 +355,6 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 					Training_Contact_Role_Details__c ycd = new Training_Contact_Role_Details__c();
 
 					if(listYCD.size() > 0){
-					System.debug('Training_Contact_Role_Details__c already exists!!!');
 						ycd = listYCD[0];
 						ycd.Username__c = contactInfo.Username != ''? contactInfo.Username : ycd.Username__c;
 						ycd.UserId__c = contactInfo.UserId != ''? contactInfo.UserId : ycd.UserId__c;
@@ -563,12 +461,9 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 			params.zip = (inputMap.get('zip') != null) ? string.valueOf(inputMap.get('zip')) : '';
 			params.serviceid = (inputMap.get('serviceid') != null) ? string.valueOf(inputMap.get('serviceid')) : '';
 			params.street2 = (inputMap.get('street2') != null) ? string.valueOf(inputMap.get('street2')) : '';
-			System.debug('CHECK params.street2: ' + params.street2);
 			return params;
 
 		}catch(Exception e){
-
-
 			return null;
 		}
 
@@ -595,15 +490,7 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 		RegistrationResult result = new RegistrationResult();
 		//MAX 150 adresses
 		try{
-
-			System.debug('contactName: ' + contactName);
-			System.debug('emailAddr: ' + emailAddr);
-			System.debug('flow: ' + flow);
-			System.debug('params: ' + params);
-
 			//Get address
-			// Contact contact = [SELECT Name, Email FROM CONTACT WHERE Id = :contactId];
-			// String address = contact.Email;
 			String address = emailAddr;
 
 			if(address == null){
@@ -634,10 +521,6 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 											WHERE DeveloperName = :sEmailTemplateName];
 			OrgWideEmailAddress orgWideEmail  = [SELECT Id,Address FROM OrgWideEmailAddress WHERE Address='noreply@iata.org' Limit 1];
 
-			// Id userId = [Select Id FROM User WHERE ContactId = :contactId].Id;
-
-			//Messaging.SingleEmailMessage message = new Messaging.SingleEmailMessage();
-			// Messaging.SingleEmailMessage message = Messaging.renderStoredEmailTemplate(emailTemplate.Id, userId, null);
 			Messaging.SingleEmailMessage message = Messaging.renderStoredEmailTemplate(emailTemplate.Id, null, null);
 
 			message.setReplyTo('noreply@iata.org');
@@ -651,7 +534,6 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 				message.setSenderDisplayName('IATA Noreply');
 			}
 
-			// message.setTargetObjectId(userId);
 			message.setToAddresses(new List<String>{address});
 
 
@@ -666,7 +548,6 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 					String footerImageUrl;
 					Map<String,Id> docNameIdMap = new Map<String,Id>();
 
-					// {!$Label.CSP_Email_Confirmation_Body_Part_1a}
 					String sEmail_Confirmation_Body = '';
 					if(wUserInfo.hasExistingContactPersonalEmail != null && wUserInfo.hasExistingContactPersonalEmail != '' && Boolean.valueOf( wUserInfo.hasExistingContactPersonalEmail)){
 						sEmail_Confirmation_Body = Label.CSP_Email_Confirmation_Body_Part_1a;
@@ -708,16 +589,13 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 						plainBody = plainBody.replace(key, (mapBodyParams.get(key) == null) ? '' : mapBodyParams.get(key));
 					}
 				}else{
-					// plainBody = plainBody.replace('[CustomerName]', contact.Name).replace('[URL]','"'+ url +'" target="_blank"');
 					plainBody = plainBody.replace('[CustomerName]', contactName).replace('[URL]',sURL);
 				}
 
 			}
 			message.setHtmlBody(plainBody);
 
-System.debug('message: '+message);
 			Messaging.SingleEmailMessage[] messages = new List<Messaging.SingleEmailMessage> {message};
-System.debug('messages: '+messages);
 			Messaging.SendEmailResult[] results = Messaging.sendEmail(messages);
 
 			if (results[0].success){

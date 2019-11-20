@@ -59,8 +59,6 @@ export default class PortalRegistrationConfirmationLMS extends LightningElement 
 	@api contactInfo;
 	@api flow;
 	@api address;
-	// @api searchResults;
-	// @api selectedAccountId;
 
 	@track street;
 	@track street2;
@@ -70,9 +68,6 @@ export default class PortalRegistrationConfirmationLMS extends LightningElement 
 	@track tos;
 
 	createdCityId;
-
-	// selectedAccount;
-	// @track selectedAccountSet = false;
 
 	@track openSuccessModal = false;
 	@track openVerificationMailSuccessModal = false;
@@ -143,11 +138,6 @@ export default class PortalRegistrationConfirmationLMS extends LightningElement 
 		this.localContactInfo = JSON.parse(JSON.stringify(this.contactInfo));
 		this.localAddress = JSON.parse(JSON.stringify(this.address));
 
-		console.log('this.localContactInfo: ',this.localContactInfo);
-		console.log('this.localAddress: ',this.localAddress);
-		console.log('this.flow: ',this.flow);
-
-
 		this.street = this.localAddress.street;
 		this.street2 = this.localAddress.street2;
 		this.zip = this.localAddress.zip;
@@ -170,7 +160,6 @@ export default class PortalRegistrationConfirmationLMS extends LightningElement 
 
 		getLMSTermAndConditionAcceptance({serviceId: service, contactId:this.localContactInfo.Id})
 		.then(result => {
-			console.log('CHECK1 connectedCallback getLMSTermAndConditionAcceptance - result - ',result );
 			this.tos = result;
 
 			var submitButton = this.template.querySelector('[data-id="submitButton"]');
@@ -184,21 +173,11 @@ export default class PortalRegistrationConfirmationLMS extends LightningElement 
 				submitButton.classList.add('containedButtonDisabled');
 				submitButton.disabled = true;
 			}
-			console.log('connectedCallback getContactInfo - this.tos - ',this.tos );
 		})
 		.catch((error) => {
 			this.openMessageModalFlowRegister = true;
 			this.message = 'Your registration failed. An Error Occurred - ' + error;
-			console.log('Error: ', JSON.parse(JSON.stringify(error)));
-			console.log('Error2: ', error);
 		});
-
-		console.log('this.street: ',this.street);
-		console.log('this.street2: ',this.street2);
-		console.log('this.zip: ',this.zip);
-		console.log('this.state: ',this.state);
-		console.log('this.city: ',this.city);
-
 
 	}
 
@@ -212,10 +191,6 @@ export default class PortalRegistrationConfirmationLMS extends LightningElement 
 	}
 
 	submit(){
-		console.log('Submit - this.localContactInfo:',this.localContactInfo);
-		console.log('Submit - this.flow:',this.flow);
-		console.log('Submit - this.localAddress:',this.localAddress);
-		console.log('Submit - this.localAddress.isPoBox:',this.localAddress.isPoBox);
 
 		this.startLoading();
 
@@ -224,7 +199,6 @@ export default class PortalRegistrationConfirmationLMS extends LightningElement 
 			createIsoCity({name : this.localAddress.cityName, stateId: this.localAddress.stateId, isPoBox: this.localAddress.isPoBox})
 			.then(result => {
 				this.createdCityId = result;
-				console.log('Submit - this.createdCityId:',this.createdCityId);
 			})
 			.catch(error => {
 				console.log('Error: ', error);
@@ -241,14 +215,10 @@ export default class PortalRegistrationConfirmationLMS extends LightningElement 
 			this.submitRegistration();
 		}
 
-
-
-				// register({ registrationForm : JSON.stringify(this.registrationForm),
 	}
 
 
 	submitRegistration(){
-		console.log('Submit - pssou createIsoCity');
 		var auxSearchValues = new Map();
 
 		auxSearchValues = [
@@ -267,7 +237,6 @@ export default class PortalRegistrationConfirmationLMS extends LightningElement 
 			this.localAddress.street2
 		];
 
-
 		//Move address info into ContactInfo
 		this.localContactInfo.isPoBox = this.localAddress.isPoBox;
 		this.localContactInfo.countryId = this.localAddress.countryId;
@@ -281,20 +250,11 @@ export default class PortalRegistrationConfirmationLMS extends LightningElement 
 		this.localContactInfo.street2 = this.localAddress.street2;
 		this.localContactInfo.zip = this.localAddress.zip;
 
-		console.log('CHECK local contact info: ' + JSON.stringify(this.localContactInfo));
-
-		console.log('Submit - pssou mandar dados address para contactInfo');
-
-		console.log('CHECKEXTRA extraValues: ' + auxSearchValues);
-
 		if(this.flow === 'flow1' || this.flow === 'flow2'){
 			registration({con: this.localContactInfo, extraValues: auxSearchValues})
 				.then(result => {
-					console.log('registration call');
-					console.log('result: ', JSON.parse(JSON.stringify(result)));
 					if(result.isSuccess == true){
 							this.openSuccessModal = true;
-							console.log('registration successful');
 						}
 						else{
 							this.openErrorModal = true;
@@ -308,7 +268,6 @@ export default class PortalRegistrationConfirmationLMS extends LightningElement 
 						this.stopLoading();
 					})
 					.catch(error => {
-						console.log('Error: ', JSON.parse(JSON.stringify(error)));
 						this.openErrorModal = true;
 						this.errorModalMessage = JSON.parse(JSON.stringify(error));
 						this.stopLoading();
@@ -316,24 +275,8 @@ export default class PortalRegistrationConfirmationLMS extends LightningElement 
 		}
 
 		if(this.flow === 'flow3' || this.flow === 'flow4' || this.flow === 'flow5' || this.flow === 'flow6' || this.flow === 'flow7' ){
-			// Additional_Email__c
-
-
-			// this.registrationForm.country = this.flow;
-			// this.registrationForm.firstName = this.localContactInfo.FirstName;
-			// this.registrationForm.lastName = this.localContactInfo.LastName;
-
-			// this.registrationForm.email = this.localContactInfo.Additional_Email__c;
-			// this.registrationForm.contactId = this.localContactInfo.contactId;
-			// this.registrationForm.accountId = this.localContactInfo.accountId;
-			// // this.registrationForm.lms = this.localContactInfo.LastName;
-			// this.registrationForm.existingContactId = this.localContactInfo.existingContactId;
-			// this.registrationForm.existingContactName = this.localContactInfo.existingContactName;
-			// this.registrationForm.existingContactEmail = this.localContactInfo.existingContactEmail;
-			// this.registrationForm.existingContactAccount = this.localContactInfo.existingContactAccount;
 
 			this.localContactInfo.flow = this.flow;
-			// this.registrationForm.lms = this.localContactInfo.LastName;
 			this.localContactInfo.existingContactId = this.localContactInfo.existingContactId;
 			this.localContactInfo.existingContactName = this.localContactInfo.existingContactName;
 			this.localContactInfo.existingContactEmail = this.localContactInfo.existingContactEmail;
@@ -341,17 +284,11 @@ export default class PortalRegistrationConfirmationLMS extends LightningElement 
 
 			let contactName = this.localContactInfo.FirstName + ' ' + this.localContactInfo.LastName;
 
-			console.log('contactName: ', contactName);
-			console.log('emailAddr: ', this.localContactInfo.Additional_Email__c);
-			console.log('this.flow: ', this.flow);
-			console.log('this.localContactInfo: ', this.localContactInfo);
-			console.log('this.localContactInfo ', JSON.stringify(this.localContactInfo));
 			sendSingleEmail({contactName: contactName,
 								emailAddr: this.localContactInfo.Additional_Email__c,
 								flow:this.flow,
 								params : JSON.stringify(this.localContactInfo)})
 			.then(result => {
-				console.log('result: ', JSON.parse(JSON.stringify(result)));
 				if(result.isSuccess == true){
 						this.openVerificationMailSuccessModal = true;
 						this.successModalMessage = 'Verification Mail was sent to: '+ this.localContactInfo.Additional_Email__c+'. Please go there to complete your Registration';
@@ -379,8 +316,6 @@ export default class PortalRegistrationConfirmationLMS extends LightningElement 
 
 
 	closeSuccessModal(){
-
-		//navigateToPage(CSP_PortalPath,{});
 
 		// We'll have to create a second method with a second event (go to homepage or remain on the current one)
 		// this.dispatchEvent(new CustomEvent('secondlevelregistrationcompleted'));
@@ -417,7 +352,6 @@ export default class PortalRegistrationConfirmationLMS extends LightningElement 
 
 	handleToSChange(event){
 		this.tos = event.target.checked;
-		console.log('handleToSChange - this.tos: ', this.tos);
 
 		var submitButton = this.template.querySelector('[data-id="submitButton"]');
 		if(this.tos){

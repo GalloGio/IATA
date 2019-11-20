@@ -1075,7 +1075,6 @@ public static Boolean grantAccess(string contactId,string serviceId,string reaso
 	@AuraEnabled(cacheable=false)
 	public static String getPortalServiceId(string serviceName){
 
-		system.debug('serviceName: ' + serviceName);
 		List<Portal_Applications__c> pas = [SELECT Id FROM Portal_Applications__c WHERE Name =: serviceName];
 		system.assert(pas.size() == 1, 'Service data integrity excpetion. None or more than one service was found.');
 

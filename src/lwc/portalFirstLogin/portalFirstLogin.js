@@ -49,8 +49,6 @@ export default class PortalFirstLogin extends LightningElement {
 
 	connectedCallback(){
 
-		console.log('PortalFirstLogin - connectedCallback - this.registrationlevel - ', this.registrationlevel);
-
 		getContactInfo()
 			.then(result => {
 				this.isFirstLevelUser = result.Account.Is_General_Public_Account__c;
@@ -59,7 +57,6 @@ export default class PortalFirstLogin extends LightningElement {
 
 	@wire(getRecord, { recordId: userId, fields: ['User.Name'] })
 	WireGetUserRecord(result) {
-		console.log('result: ', result);
 		if (result.data) {
 			let user = JSON.parse(JSON.stringify(result.data));
 			let userName = user.fields.Name.value;
@@ -68,19 +65,14 @@ export default class PortalFirstLogin extends LightningElement {
 	}
 
 	handleCloseModal(){
-		console.log('closefirstloginpopup');
 		this.dispatchEvent(new CustomEvent('closefirstloginpopup'));
 	}
 
 	handleAccept(){
 		//Changes to accomodate LMS L3
-
-		console.log('PortalFirstLogin - handleAccept this.registrationlevel - ', this.registrationlevel);
 		if(this.registrationlevel !== undefined && this.registrationlevel === '3'){
-			console.log('triggerthirdlevelregistrationlms');
 			this.dispatchEvent(new CustomEvent('triggerthirdlevelregistrationlms'));
 		}else{
-			console.log('closefirstloginpopup');
 			this.dispatchEvent(new CustomEvent('closefirstloginpopup'));
 			navigateToPage(CSP_PortalPath + 'registrationsecondlevel',{});
 		}

@@ -294,7 +294,6 @@ public class PortalRegistrationFirstLevelCtrlTest {
 
 
 		PortalRegistrationFirstLevelCtrl.RegistrationResult result = PortalRegistrationFirstLevelCtrl.simulateRegister(registrationJson, customerTypeJson, null, null, userInfoJson);
-		system.debug('CHECK result: ' + result);
 		System.assertEquals(result.isSuccess == true, true);
 
 		registrationJson = '{"category": "Passenger_and_Cargo",' +
@@ -310,7 +309,6 @@ public class PortalRegistrationFirstLevelCtrlTest {
 				'"termsAndUsage": true}';
 
 		result = PortalRegistrationFirstLevelCtrl.simulateRegister(registrationJson, customerTypeJson, null, null, userInfoJson);
-		system.debug('CHECK result: ' + result);
 		System.assertEquals(result.isSuccess == false, true);
 
 		Test.stopTest();

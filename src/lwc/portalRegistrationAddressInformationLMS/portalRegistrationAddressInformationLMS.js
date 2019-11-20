@@ -55,18 +55,14 @@ export default class PortalRegistrationAddressInformationLMS extends LightningEl
 
 	connectedCallback() {
 		this.localAddress = JSON.parse(JSON.stringify(this.address));
-		console.log('connectedCallback - this.localAddress - ',this.localAddress );
 		this.dispatchEvent(new CustomEvent('scrolltotop'));
 	}
 
 	toCompanyInformation(){
-		console.log('toCompanyInformation click - step 1');
 		this.dispatchEvent(new CustomEvent('gotostep', {detail:'1'}));
 	}
 
 	toConfirmation(){
-		console.log('toConfirmation click - step 2');
-		console.log('toConfirmation click - this.localAddress - ',this.localAddress );
 		this.dispatchEvent(new CustomEvent('gotostep', {detail:'2'}));
 	}
 
@@ -92,7 +88,6 @@ export default class PortalRegistrationAddressInformationLMS extends LightningEl
 	getAddressInformation(){
 		let addressInformation = this.template.querySelector('c-portal-address-form-l-m-s').getAddressInformation();
 		this.localAddress = JSON.parse(JSON.stringify(addressInformation));
-		console.log('getAddressInformation - this.localAddress - ',this.localAddress );
 		let addressSelected = false;
 		for(var i = 0 ; i < this.localAddress.addressSuggestions.length; i++){
 			if(this.localAddress.addressSuggestions[i].isSelected){

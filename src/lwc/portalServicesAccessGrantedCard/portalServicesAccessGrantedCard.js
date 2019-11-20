@@ -87,15 +87,12 @@ export default class PortalServicesAccessGrantedCard extends NavigationMixin(Lig
 						if(serviceAux.ServiceName__c === 'Training Platform (LMS)'){
 							getPortalServiceId({ serviceName: serviceAux.ServiceName__c })
 								.then(serviceId => {
-									console.log('service Id: ' + recordId);
 									verifyCompleteL3Data({serviceId: recordId})
 									.then(result => {
 										if(result){
-											console.log('to service');
 											window.open(myUrl);
 										}
 										else{
-											console.log('fire event')
 											fireEvent(this.pageRef, 'fireL3Registration', serviceId);
 
 										}

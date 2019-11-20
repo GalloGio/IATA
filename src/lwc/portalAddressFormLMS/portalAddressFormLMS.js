@@ -281,20 +281,12 @@ export default class PortalAddressFormLMS extends LightningElement {
 	}
 
 	handleStateChange(stateValue, clearInputs){
-		console.log('stateValue :',stateValue)
-		console.log('clearInputs :',clearInputs)
-		console.log('this.provinceAndCitiesEnabled :',this.provinceAndCitiesEnabled)
 		if(this.provinceAndCitiesEnabled){
 			let state = this.stateData.states.find(function (state2) {
-				console.log('state2.Id :',state2.Id)
-				console.log('state2.Name :',state2.Name)
 				return state2.Id === stateValue || state2.Name === stateValue;
 			});
-			console.log('state :',state)
 			this.localAddress.stateName = state !== undefined ? state.Name : '';
 			this.localAddress.stateId = state !== undefined ? state.Id : '';
-
-			// this.localAddress.stateId = stateValue;
 		}
 		else{
 			this.localAddress.stateName = stateValue;
@@ -308,9 +300,6 @@ export default class PortalAddressFormLMS extends LightningElement {
 			this.localAddress.street2 = '';
 			this.localAddress.zip = '';
 		}
-
-		console.log('this.localAddress.stateName :',this.localAddress.stateName)
-		console.log('this.localAddress.stateId :', this.localAddress.stateId)
 
 	}
 
@@ -419,127 +408,6 @@ export default class PortalAddressFormLMS extends LightningElement {
 	get isValidationStatus4(){
 		return this.localAddress.validationStatus === 4;
 	}
-
-	/* Address Doctor */
-	/*checkAddress(){
-		this.localAddress.addressSuggestions = [];
-		this.localAddress.checkPerformed = true;
-
-		this.localAddress.inputModified = false;
-		this.setValidationStatus(this.localAddress.validationStatus);
-
-		// If province and cities is enabled for the selected country, check if the selected values match existing ones
-		// Display warning messages if not
-		if(this.provinceAndCitiesEnabled){
-			let data = this.stateData.idAndAlternateNames;
-			let cityMatches = false;
-			let cityAndStateMatches = false;
-			// Loop on all cities
-			for(let key in data) {
-				// Preventing unexcepted data
-				if (data.hasOwnProperty(key)) {
-					// Build the city array with alternate names
-					let cityName = data[key].Name;
-					if(data[key].GeonameName__c !== undefined && data[key].GeonameName__c !== null && data[key].GeonameName__c !== ''){
-						cityName += ',' + data[key].GeonameName__c;
-					}
-					if(data[key].GeonameAlternateNames__c !== undefined && data[key].GeonameAlternateNames__c !== null && data[key].GeonameAlternateNames__c !== ''){
-						cityName += ',' + data[key].GeonameAlternateNames__c;
-					}
-					let cityNameArray = cityName.toLowerCase().split(',');
-
-					// Check if city name matches
-					if(cityNameArray.includes(this.localAddress.cityName.toLowerCase())){
-
-						cityMatches = true;
-						// Check if state matches
-						if(this.localAddress.stateId !== undefined && this.localAddress.stateId !== null && this.localAddress.stateId !== ''){
-
-							if(data[key].IATA_ISO_State__r.Id === this.localAddress.stateId){
-									cityAndStateMatches = true;
-							}
-						}
-					}
-				}
-			}
-
-			if(!cityMatches){
-				let firstWarningLabel = AMS_DQ_City_Not_in_Database;
-				this.localAddress.geonameWarning1 = firstWarningLabel.replace('{0}', this.localAddress.cityName);
-				this.localAddress.geonameWarning2 = AMS_DQ_Review_City;
-
-				this.setValidationStatus(4);
-
-				// we don't call address doctor
-				this.performingSearch = true;
-				return;
-			}
-			else if(!cityAndStateMatches){
-				let firstWarningLabel = AMS_DQ_City_in_Another_State;
-				this.localAddress.geonameWarning1 = firstWarningLabel.replace('{0}', this.localAddress.cityName);
-				this.localAddress.geonameWarning2 = AMS_DQ_Review_State_or_City;
-
-				this.setValidationStatus(4);
-
-				// we don't call address doctor
-				this.performingSearch = true;
-				return;
-			}
-
-			//TO DO : DATA Quality Feedback (check validateRequiredFields method in OneId_ISSP_AccountCreationController.js)
-			// mayb this needs to be (also) done after the call to address doctor, based on the address selected
-		}
-
-		this.search();
-	}
-
-
-	search() {
-		let addressInfo = {
-			street : this.localAddress.street,
-			locality : this.localAddress.cityName,
-			postalCode : this.localAddress.zip,
-			province : this.localAddress.stateName,
-			countryCode : this.localAddress.countryCode
-		};
-
-		this.startLoading();
-
-		validateAddress({"info":JSON.stringify(addressInfo)})
-			.then(result=>{
-				let suggestions = [];
-
-				result.forEach((address,index,arr) => {
-					address.title = address.street;
-					address.title += address
-					.locality === undefined || address.locality.length === 0 ? '' : (', '+address.locality);
-					address.title += address.province === undefined || address.province.length === 0 ? '' : (', '+address.province);
-					address.title += address.postalCode === undefined || address.postalCode.length === 0 ? '' : (', '+address.postalCode);
-					address.key = index;
-					address.isSelected = false;
-
-					suggestions.push(address);
-				});
-
-				if(suggestions.length === 0){
-					this.setValidationStatus(3);
-				}
-				else if(suggestions.length > 1){
-					this.setValidationStatus(2);
-				}
-				else{
-					this.setValidationStatus(1);
-				}
-
-				this.currentPage = 1;
-				this.localAddress.addressSuggestions = suggestions;
-				this.generateResultsToDisplay(false);
-
-				this.stopLoading();
-
-				this.performingSearch = true;
-			});
-	}*/
 
 	changeSelectedAddress(event){
 		var index = parseInt(event.target.getAttribute('data-id'));
