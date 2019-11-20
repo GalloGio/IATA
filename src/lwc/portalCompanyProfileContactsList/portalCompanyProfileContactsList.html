@@ -3,45 +3,38 @@
 
         <div class="slds-grid slds-wrap">
             <div class="slds-col slds-size_1-of-1">
-                <div class="slds-grid slds-wrap slds-grid_align-end slds-m-top_x-large slds-gutters_direct-x-small">
+                <div class="slds-grid slds-wrap slds-grid_align-end slds-m-top_x-large slds-gutters_direct-x-small slds-grid--vertical-stretch">
 
-					<!-- DOWNLOAD CSV -->
+                    <!-- DOWNLOAD CSV -->
                     <div class="slds-col slds-order_1 slds-small-order_1 slds-size_1-of-1 slds-small-size_1-of-1 slds-medium-size_2-of-12 slds-large-size_1-of-5 slds-p-vertical_medium" >
-                        <div class="slds-text-align_center text-bold text-xsmall text-linkBlue cursorPointer" style="text-overflow: ellipsis;white-space: nowrap;overflow: hidden;" onclick={getAllContactsToExport}>
+                        <div class="slds-text-align_right text-bold text-xsmall text-linkBlue cursorPointer fullHeight" style="text-overflow: ellipsis;white-space: nowrap;overflow: hidden;" onclick={getAllContactsToExport}>
                             {label.ISSP_Download}
                             <lightning-icon class="slds-p-left_small darkBlueIcon cursorPointer" icon-name="utility:download" size="x-small"></lightning-icon>
                         </div>
                     </div>
 
-
                     <!-- APPROVE -->
                     <div if:true={showManageButtons} class="slds-col slds-order_4 slds-small-order_2 slds-size_1-of-1 slds-small-size_1-of-1 slds-medium-size_2-of-12 slds-large-size_1-of-5 slds-p-vertical_x-small">
-                        <lightning-button variant="brand" label={label.ISSP_Activate}
-                            class="containedButtonSmaller fullWidth" onclick={grantAccess} data-item="approve">
-                        </lightning-button>
+                        <lightning-button class="baseButton newContainedButton buttonMinHeightMedium text-xsmall fullWidth fullHeight" 
+                            label={label.ISSP_Activate} variant="neutral" onclick={grantAccess} data-item="approve"></lightning-button>
                     </div>
 
                     <!-- DECLINE -->
                     <div if:true={showManageButtons} class="slds-col slds-order_5 slds-small-order_3 slds-size_1-of-1 slds-small-size_1-of-1 slds-medium-size_2-of-12 slds-large-size_1-of-5 slds-p-vertical_x-small">
-                        <lightning-button variant="brand" label={label.ISSP_Inactivate}
-                            class="containedButtonSmaller fullWidth" onclick={denyAccess} data-item="inactive">
-                        </lightning-button>
+                        <lightning-button class="baseButton newContainedButton buttonMinHeightMedium text-xsmall fullWidth fullHeight" 
+                            label={label.ISSP_Inactivate} variant="neutral" onclick={denyAccess} data-item="inactive"></lightning-button>
                     </div>
 
                     <!-- ASSESSMENT CONTRACT -->
                     <div class="slds-col slds-order_3 slds-small-order_4 slds-size_1-of-1 slds-small-size_1-of-1 slds-medium-size_2-of-12 slds-large-size_1-of-5 slds-p-vertical_x-small">
-                        <lightning-button variant="brand" label={label.ISSP_Assign_IFAP}
-                            title={label.ISSP_Assign_IFAP} onclick={navigateToIFAP}
-                            class="containedButtonSmaller fullWidth">
-                        </lightning-button>
+                        <lightning-button class="baseButton newContainedButton buttonMinHeightMedium text-xsmall fullWidth fullHeight" 
+                            label={label.ISSP_Assign_IFAP} variant="neutral" onclick={navigateToIFAP}></lightning-button>
                     </div>
 
                     <!-- NEW CONTACT -->
                     <div class="slds-col slds-order_2 slds-small-order_5 slds-size_1-of-1 slds-small-size_1-of-1 slds-medium-size_2-of-12 slds-large-size_1-of-5 slds-p-vertical_x-small">
-                        <lightning-button variant="brand" label={label.csp_CreateNewContact} 
-                            title={label.csp_CreateNewContact} disabled={contactsNotLoaded}
-                            onclick={createContact} class="containedButtonSmaller fullWidth">
-                        </lightning-button>
+                        <lightning-button class="baseButton newContainedButton buttonMinHeightMedium text-xsmall fullWidth fullHeight" 
+                            label={label.csp_CreateNewContact} variant="neutral" onclick={createContact} disabled={contactsNotLoaded}></lightning-button>
                     </div>
 
                 </div>
@@ -98,7 +91,7 @@
                 openmodel={openmodel} recordid={recordid} accountid={accountid}
                 objectid={objectid} ongetcontacts={resetContactsList} fetching={contactsNotLoaded}
                 onrefreshview={resetContactsList} onsearchrecords={resetContactsList} search-key={contactsFilteringObject.searchInput} onmanageusers={manageUsers}
-                action-name={action}>
+                action-name={action} search-letter={contactsFilteringObject.firstLetter}>
             </c-portal-contact-list>
 
         </div>

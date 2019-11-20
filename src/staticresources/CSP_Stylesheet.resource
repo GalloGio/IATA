@@ -743,6 +743,15 @@ lightning-datatable .slds-th__action {
     width: 100%;
 }
 
+.fullHeight,
+.fullHeight button,
+.fullHeight button:active,
+.fullHeight button:visited,
+.fullHeight button:focus,
+.fullHeight button:hover {
+  height: 100%;
+}
+
 .outlinedButton, .outlinedButton button, .outlinedButton button:active, .outlinedButton button:visited, .outlinedButton button:focus{
     -webkit-transition-duration: 0.4s; /* Safari */
   	transition-duration: 0.4s;
