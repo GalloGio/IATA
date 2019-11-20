@@ -10,7 +10,7 @@
             </lightning-icon>
         </span>
         <span slot="serviceDescription">
-            <lightning-formatted-rich-text value={service.recordService.Service_Description__c} class="breakWord">
+            <lightning-formatted-rich-text value={service.serviceDescriptionLabel} class="breakWord">
             </lightning-formatted-rich-text>
         </span>
         <template if:true={service.recordService.Requestable__c}>

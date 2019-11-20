@@ -3060,6 +3060,22 @@ Payment required on receipt of this Payment Advice
         <value>CC</value>
     </labels>
     <labels>
+        <fullName>CSP_ALPHAFILTER_All</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_ALPHAFILTER_All</shortDescription>
+        <value>All</value>
+    </labels>
+    <labels>
+        <fullName>CSP_ALPHAFILTER_Other</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_ALPHAFILTER_Other</shortDescription>
+        <value>Other</value>
+    </labels>
+    <labels>
         <fullName>CSP_AMS_StepFinal_In_Addition2</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -3256,6 +3272,13 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP_Breadcrump_You_IATA</shortDescription>
         <value>You &amp; IATA</value>
+	</labels>
+	<labels>
+        <fullName>CSP_Buy_Online</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Buy Online</shortDescription>
+        <value>Buy Online</value>
     </labels>
     <labels>
         <fullName>CSP_Cancel</fullName>
@@ -3354,6 +3377,12 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP_Cases</shortDescription>
         <value>Cases</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Case_Details</fullName>
+        <language>en_US</language>
+        <shortDescription>CSP_Case_Details</shortDescription>
+        <value>Case-Detail_</value>
     </labels>
     <labels>
         <fullName>CSP_Change_Email</fullName>
@@ -4059,6 +4088,13 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP Invalid Email</shortDescription>
         <value>Invalid email</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Learn_More</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Learn More</shortDescription>
+        <value>Learn More</value>
     </labels>
     <labels>
         <fullName>CSP_L2_Account_Information</fullName>
@@ -5092,6 +5128,14 @@ You can easily create a company account in two steps</value>
         <value>At least 1 symbol (! @ # $ % * ( ) _ + ^ &amp;)</value>
     </labels>
     <labels>
+        <fullName>CSP_PendingApproval</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_PendingApproval</shortDescription>
+        <value>The record is not Draft or is Pending approval</value>
+    </labels>
+    <labels>
         <fullName>CSP_PendingCustomerCase_Warning</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -5143,6 +5187,18 @@ You can easily create a company account in two steps</value>
         <protected>false</protected>
         <shortDescription>CSP_Portal_Status</shortDescription>
         <value>Portal Status</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Print</fullName>
+        <language>en_US</language>
+        <shortDescription>CSP_Print</shortDescription>
+        <value>Print</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Printed_date</fullName>
+        <language>en_US</language>
+        <shortDescription>CSP_Printed_date</shortDescription>
+        <value>Printed date</value>
     </labels>
     <labels>
         <fullName>CSP_Privacy_Policy</fullName>
@@ -5793,6 +5849,22 @@ Click &lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.as
         <shortDescription>CSP_Submit</shortDescription>
         <value>Submit</value>
     </labels>
+    <labels>
+        <fullName>CSP_SubmitApproval</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_SubmitApproval</shortDescription>
+        <value>Submit for Approval</value>
+    </labels>
+    <labels>
+        <fullName>CSP_SubmittedApproval</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_SubmittedApproval</shortDescription>
+        <value>The record was submitted for approval</value>
+    </labels>       
     <labels>
         <fullName>CSP_Success</fullName>
         <categories>CS Portal</categories>
