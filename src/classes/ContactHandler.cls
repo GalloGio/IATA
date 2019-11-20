@@ -227,7 +227,7 @@ public class ContactHandler{
         // insert app rights
         System.debug('___grantAccessToPortalApps listAppRight ' + listAppRight);
         if (listAppRight.isEmpty()) return;
-        if (listNews.size()==1) {
+        if (listNews.size()==1 || System.isQueueable()) {
             Database.SaveResult result = Database.insert(listAppRight[0], false);
             System.debug('___grantAccessToPortalApps listAppRight ' + result.isSuccess());
             for (Database.Error error: result.getErrors()) {
@@ -345,7 +345,7 @@ public class ContactHandler{
         LIST_REVOKE_APPS = new list<Portal_Application_Right__c>();
         System.debug('___accessToPortalAppsAfter listRights ' + listRights);
         if (listRights.isEmpty()) return;
-        if (listNews.size()==1) {
+        if (listNews.size()==1 || System.isQueueable()) {
             Database.UpsertResult result = Database.upsert(listRights[0], false);
             System.debug('___accessToPortalAppsAfter listAppRight ' + result);
             for (Database.Error error: result.getErrors()) {
