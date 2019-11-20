@@ -2,59 +2,26 @@
 <template>
 
     <!-- IFRAMES CONTAINER -->
-    <template if:false={loading}>
+    <div class="slds-grid slds-wrap slds-gutters_direct-medium">
 
-        <div class="slds-grid slds-wrap slds-gutters_direct-medium">
+        <!-- STANDARD DASHBOARD -->
+        <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-m-vertical_small">
 
-            <template if:true={isStandardUser}>
-
-                <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-m-vertical_small">
-
-                    <c-portal-treasury-dashboard-iframe application-name={applicationName} report-name={reportName} user-id={userId}></c-portal-treasury-dashboard-iframe>
-
-                </div>
-
-                <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-m-vertical_small">
-
-                    <c-portal-treasury-dashboard-iframe application-name={applicationName} report-name={premiumReportName} user-id={userId} contact-id={contactId} shrink=true is-premium-user={isPremiumUser} td-premium-service={tdPremiumService}></c-portal-treasury-dashboard-iframe>
-
-                </div>
-
-            </template>
-
-
-            <template if:true={isPremiumUser}>
-
-                <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-m-vertical_small">
-
-                    <c-portal-treasury-dashboard-iframe application-name={applicationName} report-name={reportName} user-id={userId}></c-portal-treasury-dashboard-iframe>
-
-                </div>
-
-
-                <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-m-vertical_small">
-
-                    <c-portal-treasury-dashboard-iframe application-name={applicationName} report-name={premiumReportName} user-id={userId} shrink=true contact-id={contactId} is-premium-user={isPremiumUser} td-premium-service={tdPremiumService}></c-portal-treasury-dashboard-iframe>
-
-                </div>
-
-            </template>
+            <c-portal-treasury-dashboard-iframe application-name={applicationName} report-name={reportName} user-id={userId}></c-portal-treasury-dashboard-iframe>
 
         </div>
+        <!-- STANDARD DASHBOARD END -->
 
-    </template>
+        <!-- PREMIUM DASHBOARD -->
+        <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-m-vertical_small">
+
+            <c-portal-treasury-dashboard-iframe application-name={applicationName} report-name={premiumReportName} user-id={userId} contact-id={contactId} is-premium-user={isPremiumUser} td-premium-service={tdPremiumService}></c-portal-treasury-dashboard-iframe>
+
+        </div>
+        <!-- PREMIUM DASHBOARD END -->
+
+    </div>
     <!-- IFRAMES CONTAINER END -->
-
-
-    <!-- SPINNER -->
-    <template if:true={loading}>
-
-        <div class="slds-m-around_xx-large">
-            <lightning-spinner class="spinnerContainer" alternative-text="Loading" size="medium"></lightning-spinner>
-        </div>
-
-    </template>
-    <!-- SPINNER END -->
 
 
 </template>

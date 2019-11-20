@@ -51,6 +51,8 @@ export default class PortalTreasuryDashboardLinkTiles extends LightningElement {
     @track modalBody;
     @track openModal;
 
+    scrollbarWidth;
+
 
     @track loading = true;
     iconLink = CSP_PortalPath + 'CSPortal/Images/Support/Documents.svg';
@@ -68,23 +70,36 @@ export default class PortalTreasuryDashboardLinkTiles extends LightningElement {
         this.loading = false;
     }
 
+    //get scrollbar width
+    renderedCallback() {
+
+        if(! this.scrollbarWidth) {
+            let inner = this.template.querySelector('.inner');
+            let outer = this.template.querySelector('.outer');
+            if(inner && outer) {
+                this.scrollbarWidth = outer.offsetWidth - inner.offsetWidth;
+                outer.classList.add('slds-hide');
+            }
+        }
+
+    }
+
 
     createLinks() {
         let links = [];
-        links.push({name: this.labels.userGuide, address: 'isspAddress'});
-        links.push({name: this.labels.currencyCenter, address: 'gadmAddress'});
-        links.push({name: this.labels.iccs, address: 'gadmAddress'});
-        links.push({name: this.labels.ich, address: 'gadmAddress'});
-        links.push({name: this.labels.bsp, address: 'gadmAddress'});
-        links.push({name: this.labels.cass, address: 'gadmAddress'});
-        links.push({name: this.labels.exchangeRates, address: 'gadmAddress'});
+        links.push({name: this.labels.userGuide});
+        links.push({name: this.labels.currencyCenter});
+        links.push({name: this.labels.iccs});
+        links.push({name: this.labels.ich});
+        links.push({name: this.labels.bsp});
+        links.push({name: this.labels.cass});
+        links.push({name: this.labels.exchangeRates});
         return links;
     }
 
 
     linkClicked(event) {
         let selectedLink = event.target.dataset.item;
-        console.log('selectedLink:: ', selectedLink);
         if(selectedLink) {
             if (selectedLink === this.labels.userGuide) {
                 this.navigateToUserGuide();
@@ -135,12 +150,16 @@ export default class PortalTreasuryDashboardLinkTiles extends LightningElement {
         this.modalHeader = headerText;
         this.modalBody = bodyText;
         this.openModal = true;
+        /*prevent page body from jumping to left/right when modal is open*/
         document.body.style.overflow = 'hidden';
+        document.body.style.paddingRight = this.scrollbarWidth + 'px';
     }
 
     closeModal() {
         this.openModal = false;
+        /*prevent page body from jumping to left/right when modal is open*/
         document.body.style.overflow = 'auto';
+        document.body.style.paddingRight = 0;
     }
 
     iccsBodyText = '<h4>Simplifying the business of airline treasury.</h4>' +

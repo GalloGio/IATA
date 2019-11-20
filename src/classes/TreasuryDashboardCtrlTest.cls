@@ -37,6 +37,9 @@ public class TreasuryDashboardCtrlTest {
 
         insert usersToInsert;
 
+        ISSP_Record_Type_Mgmt__c rtMgmt = new ISSP_Record_Type_Mgmt__c (Name = 'Treasury Dashboard', Record_Type_Name__c = 'FDS_ICCS_Email_to_Case');
+        insert rtMgmt;
+
         Portal_Applications__c portalApplication = new Portal_Applications__c();
         portalApplication.Name = 'Treasury Dashboard';
         portalApplication.TD_Included_Dashboards__c = 'ISSP_TD_1;ISSP_TD_2;ISSP_TD_3;ISSP_TD_4';
@@ -167,6 +170,29 @@ public class TreasuryDashboardCtrlTest {
         Test.stopTest();
 
         System.assertEquals('ok', testResult, 'Unexpected test result! Should be "ok"!');
+
+    }
+
+    @IsTest
+    private static void getCaseRecordTypeIdTest() {
+
+        User testUser = [SELECT Id, ContactId FROM User WHERE Email = 'petr.novak.test.xyz@somedomain.xyz.com'];
+
+        String caseRecordType = '';
+
+        Test.startTest();
+
+        System.runAs(testUser) {
+            caseRecordType = TreasuryDashboardCtrl.getCaseRecordTypeId();
+        }
+
+        Test.stopTest();
+
+        ISSP_Record_Type_Mgmt__c rtMgmt =  ISSP_Record_Type_Mgmt__c.getValues('Treasury Dashboard');
+        String expectedRecordType = RecordTypeSingleton.getInstance().getRecordTypeId('Case', rtMgmt.Record_Type_Name__c);
+
+        System.assertEquals(expectedRecordType, caseRecordType, 'Wrong case record type retrieved!');
+
 
     }
 

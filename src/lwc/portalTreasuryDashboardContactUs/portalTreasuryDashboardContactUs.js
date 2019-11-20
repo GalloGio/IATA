@@ -5,25 +5,38 @@ import { LightningElement, track, api } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
 import { navigateToPage } from'c/navigationUtils';
 
+import gerCaseRecordTypeId from '@salesforce/apex/TreasuryDashboardCtrl.getCaseRecordTypeId';
 
 import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 
 export default class PortalTreasuryDashboardContactUs extends NavigationMixin(LightningElement) {
 
-    @track supportReachUsURL;
-    @api category;
-    @api topic;
-    @api subTopic;
+    @track supportReachUsCreateNewCaseURL;
+    @track loading = true;
+
+    //case record type id
+    recordTypeId;
 
     conversationImageURL = CSP_PortalPath + 'CSPortal/Images/Icons/messageBallons.svg';
 
     connectedCallback() {
-        this[NavigationMixin.GenerateUrl]({
-            type: "standard__namedPage",
-            attributes: {
-                pageName: "support-reach-us"
-            }})
-        .then(url => this.supportReachUsURL = url);
+        gerCaseRecordTypeId()
+            .then(result => {
+                if(result !== undefined && result !== null) {
+                    this.recordTypeId = result;
+                    this[NavigationMixin.GenerateUrl]({
+                            type: "comm__namedPage",
+                            attributes: {
+                                pageName: "support-reach-us-create-new-case"
+                            }})
+                        .then(url => this.supportReachUsCreateNewCaseURL = url);
+                }
+                this.loading = false;
+
+            })
+            .catch(error => {
+                console.log('PortalTreasuryDashboardContactUs error: ', JSON.parse(error).body.message);
+            });
 
     }
 
@@ -33,17 +46,13 @@ export default class PortalTreasuryDashboardContactUs extends NavigationMixin(Li
         event.stopPropagation();
 
         let params = {};
-        if(this.category !== undefined && this.category !== null) {
-            params.category = this.category;
-        }
-        if(this.topic !== undefined && this.topic !== null) {
-            params.topic = this.topic;
-        }
-        if(this.subTopic !== undefined && this.subTopic !== null) {
-            params.subtopic = this.subTopic;
+        if(this.recordTypeId !== undefined && this.recordTypeId !== null) {
+            params.recordTypeId = this.recordTypeId;
+            params.concerncase=false;
+            params.emergency=false;
         }
 
-        navigateToPage(this.supportReachUsURL, params);
+        navigateToPage(this.supportReachUsCreateNewCaseURL, params);
     }
 
 }

@@ -32,11 +32,7 @@
             typeOfToken = models.TokenType.Embed;
         }
 
-        console.log('models:: ' + models);
-        console.log('objectId:: ' + obj);
-        console.log('accessToken:: ' + token);
-		console.log('embedUrl'+ "{!embedUrl}");
-		console.log('tokenType'+ "{!tokenType}");
+
         var embedConfiguration = {
             id: "{!objectId}",
             type: "report",

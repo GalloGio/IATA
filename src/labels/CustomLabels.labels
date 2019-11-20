@@ -38687,7 +38687,7 @@ title,Title,Name</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Treasury Dashboard User Guide URL</shortDescription>
-        <value>https://iata--c.eu3.content.force.com/servlet/servlet.FileDownload?file=015w0000002P5Dl</value>
+        <value>https://iata--c.eu12.content.force.com/servlet/servlet.FileDownload?file=015w0000002P5Dl</value>
     </labels>
     <labels>
         <fullName>Trust_Weaver</fullName>

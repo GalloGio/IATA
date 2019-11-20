@@ -1,18 +1,28 @@
 
 <template>
 
-    <div class="contactUsCard">
-        <div class="slds-grid slds-wrap">
-            <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-1 contactUsDiv" >
-                <lightning-button label="Contact Us" variant="base" class="contactUsButton"></lightning-button>
-            </div>
-            <div class="slds-col slds-size_1-of-1 slds-p-around_medium ballonsContainer" >
-                <div class="ballons">
-                    <img src={conversationImageURL} />
+    <!-- CONTACT US CONTAINER -->
+    <template if:false={loading}>
+        <div class="contactUsCard">
+            <div class="slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-1 contactUsDiv" >
+                    <span label="Contact Us"  class="contactUsButton" onclick={redirectToSupport}>Contact Us</span>
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-p-around_medium ballonsContainer" >
+                    <div class="ballons">
+                        <img src={conversationImageURL} />
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </template>
+
+    <!-- SPINNER -->
+    <template if:true={loading}>
+        <div class="slds-m-around_xx-large slds-is-relative contactUsDiv">
+            <lightning-spinner class="spinnerContainer" alternative-text="Loading" size="medium"></lightning-spinner>
+        </div>
+    </template>
 
 
 </template>

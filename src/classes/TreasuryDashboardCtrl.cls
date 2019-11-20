@@ -118,4 +118,18 @@ public without sharing class TreasuryDashboardCtrl {
         return 'ok';
     }
 
+    @AuraEnabled
+    public static String getCaseRecordTypeId() {
+        String caseRecordTypeId = '';
+
+        ISSP_Record_Type_Mgmt__c rtMgmt =  ISSP_Record_Type_Mgmt__c.getValues('Treasury Dashboard');
+        if (rtMgmt != null){
+            if (rtMgmt.Record_Type_Name__c != null){
+                caseRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', rtMgmt.Record_Type_Name__c);
+            }
+        }
+
+        return caseRecordTypeId;
+    }
+
 }

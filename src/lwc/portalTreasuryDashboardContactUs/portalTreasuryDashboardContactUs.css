@@ -1,7 +1,7 @@
 .contactUsCard {
   position: relative;
   border:none;
-  margin-top:35px;
+  margin-top: 6rem;
   background-color:#FFFFFF;
   box-shadow: 5px 5px 20px #999999;
   background-color: #ffffff;
@@ -32,4 +32,9 @@
     line-height: 1.5;
     letter-spacing: normal;
     text-align:center;
+    cursor:pointer;
+}
+
+.spinnerContainer {
+    background-color: #f0f2f5 !important;
 }
