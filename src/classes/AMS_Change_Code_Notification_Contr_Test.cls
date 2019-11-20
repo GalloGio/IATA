@@ -5,83 +5,82 @@ private class AMS_Change_Code_Notification_Contr_Test {
 	static void makeData(){
 
 		Id conRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
-        Id agcRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
-        Id airRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
+		Id agcRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+		Id airRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
 
 		IATA_ISO_Country__c isoc = new IATA_ISO_Country__c(Name = 'Test', ISO_Code__c = 'TS');
 		insert isoc;
 
 		Account airlineAccount = new Account(
-				RecordTypeId = airRtId,
-				Name = 'Airline',
-				IATACode__c = '123',
-                Airline_designator__c='AA',
-                IATA_ISO_Country__c = isoc.Id
+			RecordTypeId = airRtId,
+			Name = 'Airline',
+			IATACode__c = '123',
+			Airline_designator__c='AA',
+			IATA_ISO_Country__c = isoc.Id,
+			ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY
 		);
 
 		Account msoAccount =  new Account (
-				RecordTypeId = agcRtId,
-				Name = 'Agency',
-				Location_Class__c = 'M',
-				IATA_ISO_Country__c = isoc.Id,
-				Status__c = 'Approved'
+			RecordTypeId = agcRtId,
+			Name = 'Agency',
+			Location_Class__c = 'M',
+			IATA_ISO_Country__c = isoc.Id,
+			Status__c = 'Approved'
 		);
+
 		insert new List<Account> {airlineAccount, msoAccount};
 
+
 		Contact con = new Contact (
-				AccountId = airlineAccount.id,
-				RecordTypeId = conRtId,
-				LastName = 'portalUser',
-				FirstName = 'firstname',
-				Phone = '123456789',
-				User_Portal_Status__c = 'Approved User'
-		);
+			AccountId = airlineAccount.id,
+			RecordTypeId = conRtId,
+			LastName = 'portalUser',
+			FirstName = 'firstname',
+			Phone = '123456789',
+			User_Portal_Status__c = 'Approved User'
+			);
 		insert con;
 
-		Id caseRecrdType = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
+		AMS_OSCAR__c oscar = new AMS_OSCAR__c();
+			oscar.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'VOLUNTARY_RELINQUISHMENT');
+			oscar.Name = 'tempName'; 
+			oscar.Process__c = AMS_Utils.VOLRELINQUISH_CA;
+			oscar.Account__c = msoAccount.Id;
+		insert oscar;
 
-		Case ccase1 = new Case();
-				ccase1.AccountId = msoAccount.Id;
-				ccase1.ContactId = con.Id;
-				ccase1.RecordTypeId = caseRecrdType;
-				ccase1.Status = 'Open';
-				ccase1.Remittance_Period__c='20180604W';
-        		ccase1.Late_Payment_Date__c = Date.today();	
-        		ccase1.Account_Concerned__c = msoAccount.Id;
-		insert ccase1;
+		Case oscarCase = new Case();
+			oscarCase.AccountId = airlineAccount.Id;
+			oscarCase.ContactId = con.Id;
+			oscarCase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
+			oscarCase.OSCAR__c = oscar.Id;
+			oscarCase.Status = 'Open';
+			oscarCase.Account_Concerned__c = msoAccount.Id;
+		insert oscarCase;
 
 		Case ccase = new Case();
-				ccase.AccountId = msoAccount.Id;
-				ccase.ContactId = con.Id;
-				ccase.RecordTypeId = caseRecrdType;
-				ccase.Status = 'Open';
-				ccase.Remittance_Period__c='20180615W';
-        		ccase.Late_Payment_Date__c = Date.today();	
-        		ccase.Account_Concerned__c = msoAccount.Id;
+			ccase.AccountId = airlineAccount.Id;
+			ccase.ContactId = con.Id;
+			ccase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
+			ccase.Status = 'Open';
+			ccase.Late_Payment_Date__c = Date.today();
+			ccase.Account_Concerned__c = msoAccount.Id;
 		insert ccase;
 
-		AMS_OSCAR__c oscar = new AMS_OSCAR__c();
-        oscar.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'VOLUNTARY_RELINQUISHMENT');
-        oscar.Name = 'tempName'; 
-        oscar.Process__c = AMS_Utils.VOLRELINQUISH_CA;
-        oscar.Account__c = msoAccount.Id;
-        insert oscar;
+		Agency_Applied_Change_code__c ccodeOscar = new Agency_Applied_Change_code__c();
+			ccodeOscar.Change_Code__c = 'TER';
+			ccodeOscar.OSCAR__c = oscar.Id;
+			ccodeOscar.Account__c = msoAccount.Id;
 
-        Case oscarCase = new Case();
-        oscarCase.AccountId = airlineAccount.Id;
-        oscarCase.ContactId = con.Id; 
-        oscarCase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
-        oscarCase.OSCAR__c = oscar.Id;
-        oscarCase.Status = 'Open';
-        oscarCase.Account_Concerned__c = msoAccount.Id;
-        insert oscarCase;
+		Agency_Applied_Change_code__c ccode = new Agency_Applied_Change_code__c();
+			ccode.Change_Code__c = 'TER';
+			ccode.SIDRA_Case__c = ccase.Id;
+			ccode.Account__c = msoAccount.Id;
 
-        Agency_Applied_Change_code__c ccode= new Agency_Applied_Change_code__c();
-        ccode.Change_Code__c = 'TER';
-        ccode.OSCAR__c = oscar.Id;
-        ccode.Account__c = msoAccount.Id;
-    	insert ccode;
+		insert new List<Agency_Applied_Change_code__c> {ccodeOscar, ccode};
+		
+		Id caseRecrdType = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
 
+				
 		Amazon_Cred__c Amazon_Cred =  new Amazon_Cred__c(name = 'GenericAttach', Prod_Configuration__c = 'adevconf' , Dev_Configuration__c = 'adevconf');
 		insert Amazon_Cred;
 		Amazon_Cred__c Amazon_Cred2 =  new Amazon_Cred__c(name = 'RecycleBin', Prod_Configuration__c = 'adevconf' , Dev_Configuration__c = 'adevconf');
@@ -113,10 +112,24 @@ private class AMS_Change_Code_Notification_Contr_Test {
 		);
 		insert acctS;
 
+		Account_Statement__c acctS1 = new Account_Statement__c(
+				Period__c ='20180604W',
+				Operation__c='SA_BSP_Y_SAR_I',
+				Name ='test_random',
+				Account__c = airlineAccount.Id,
+				Amount_to_be_Paid__c = 13737.04,
+				Balance__c= 13737.04,
+				Billing_Amount__c = 13737.04,
+				Paid__c = 0,
+				Remittance_Date__c = Date.newInstance(2018, 7, 15),
+				Key__c = 'test_random'
+		);
+		insert acctS1;
+
 		AmazonFile__c azFile = new AmazonFile__c(
-				Name='ICE POP' + ' ' + '20180615W' + ' ' + '13737.04',
+				Name='ICE POP' + ' ' + '20180604W' + ' ' + '13737.040',
 				RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AmazonFile__c', 'File'),
-				Remittance_Period__c = '20180615W',
+				Remittance_Period__c = '20180604W',
 				Category__c = 'ICE POP',
 				File_Identifier_picklist__c = 'ICE_POP',
 				Account__c = msoAccount.Id,
@@ -128,9 +141,11 @@ private class AMS_Change_Code_Notification_Contr_Test {
 	
 	@isTest static void test_Oscar_notification() {
 		
+		IATA_ISO_Country__c isoc = [SELECT Id FROM IATA_ISO_Country__c LIMIT 1];
+	
 		Case oscarCase = [Select Id From Case Where Remittance_Period__c = null Limit 1];
 
-        Test.startTest();
+		Test.startTest();
 
 			ApexPages.StandardController stdController = new ApexPages.StandardController(oscarCase);
 			AMS_Change_Code_Notification_Controller ctrl = new AMS_Change_Code_Notification_Controller(stdController);
@@ -140,23 +155,37 @@ private class AMS_Change_Code_Notification_Contr_Test {
 	}
 
 	@isTest static void test_Case_notification() {
-
+	
+		IATA_ISO_Country__c isoc = [SELECT Id FROM IATA_ISO_Country__c LIMIT 1];
+	
 		Case ccase = [Select Id From Case Limit 1];
-        
+		
 		Test.startTest();
 
-	    	ApexPages.StandardController stdController = new ApexPages.StandardController(ccase);
-	        AMS_Change_Code_Notification_Controller ctrl = new AMS_Change_Code_Notification_Controller(stdController);
+			ApexPages.StandardController stdController = new ApexPages.StandardController(ccase);
+			AMS_Change_Code_Notification_Controller ctrl = new AMS_Change_Code_Notification_Controller(stdController);
 			//AMS_Change_Code_Notification_Controller.fakemethod();
-	        ctrl.setNotificationMessage();
-        
+			ctrl.setNotificationMessage();
+		
 		Test.stopTest();
 
 	}
 
 	@isTest static void test_Attachment_notification() {
 
-		Case ccase = [Select Id From Case Where Remittance_Period__c = '20180615W'];
+		IATA_ISO_Country__c isoc = [SELECT Id FROM IATA_ISO_Country__c LIMIT 1];
+	
+		Case ccase = [Select Id From Case LIMIT 1];
+		ccase.Remittance_Period__c = '20180604W';
+		update ccase;
+
+		Technical_Logs__c notif1 = new Technical_Logs__c();
+		notif1.Record__c = ccase.Id;
+		notif1.Log__c = 'some notification';
+		Technical_Logs__c notif2 = new Technical_Logs__c();
+		notif2.Record__c = ccase.Id;
+		notif2.Log__c = 'NOT';
+		insert new List<Technical_Logs__c> { notif1, notif2 };
 
 		Test.startTest();
 			ApexPages.StandardController stdController = new ApexPages.StandardController(ccase);
@@ -171,17 +200,19 @@ private class AMS_Change_Code_Notification_Contr_Test {
 
 	@isTest static void test_Amazon_File() {
 	
-        Case ccase = [Select Id,Remittance_Period__c, AccountId  From Case Where Remittance_Period__c = '20180604W'];
-        
-        AmazonFile__c  amazonFile = new AmazonFile__c();
-            amazonFile.Name = 'ICE POP 20180604W 13737.040';
-        	amazonFile.Account__c = ccase.AccountId;
-        	amazonFile.Full_Name_Unique__c = 'cristianaFabio_test';
-        insert amazonFile;
+		Case ccase2 = [Select Id,Remittance_Period__c, AccountId  From Case LIMIT 1];
+		ccase2.Remittance_Period__c = '20180604W';
+		update ccase2;
+		
+		AmazonFile__c  amazonFile = new AmazonFile__c();
+			amazonFile.Name = 'ICE POP 20180604W 13737.040';
+			amazonFile.Account__c = ccase2.AccountId;
+			amazonFile.Full_Name_Unique__c = 'cristianaFabio_test';
+		insert amazonFile;
 			
 		Test.startTest();
-                	
-			ApexPages.StandardController stdController = new ApexPages.StandardController(ccase);
+					
+			ApexPages.StandardController stdController = new ApexPages.StandardController(ccase2);
 
 			AMS_Change_Code_Notification_Controller ctrl = new AMS_Change_Code_Notification_Controller(stdController);
 
@@ -190,21 +221,23 @@ private class AMS_Change_Code_Notification_Contr_Test {
 		Test.stopTest();
 	}
 
-    
+	
 	@isTest static void test_Check_Logs() {
 		 
-        Case ccase = [Select Id,Remittance_Period__c, AccountId  From Case Where Remittance_Period__c = '20180604W'];
-        
+		Case ccase2 = [Select Id,Remittance_Period__c, AccountId  From Case LIMIT 1];
+		ccase2.Remittance_Period__c = '20180604W';
+		update ccase2;
+
 		Technical_Logs__c techLog = new Technical_Logs__c();
-        techLog.Record__c = ccase.Id;
+		techLog.Record__c = ccase2.Id;
 		techLog.Log__c = 'Error for test';
 		insert techLog;
-        
-		System.assertEquals(ccase.Remittance_Period__c, '20180604W');
+		
+		System.assertEquals(ccase2.Remittance_Period__c, '20180604W');
 
 		Test.startTest();
-        	
-			ApexPages.StandardController stdController = new ApexPages.StandardController(ccase);
+			
+			ApexPages.StandardController stdController = new ApexPages.StandardController(ccase2);
 
 			AMS_Change_Code_Notification_Controller ctrl = new AMS_Change_Code_Notification_Controller(stdController);
 
