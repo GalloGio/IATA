@@ -74,4 +74,43 @@ private class IEC_WebService_tst {
         // compare Title field
         system.assertEquals('Sith Lord', oContact.Title, 'The field title should be updated accordingly');
     }
+
+    @isTest
+    static void testUpdateUserProfile() {
+
+
+        /** COUNTRIES */
+        
+        
+        IATA_ISO_Country__c switzerland = [SELECT Id from IATA_ISO_Country__c WHERE Name='Switzerland' LIMIT 1];
+
+        Account swiss = new Account(
+            Name = 'TEST AIRLINE', 
+            Sector__c='Airline',
+            Category__c='Passenger only',
+            IATACode__c = '057', 
+            IATA_ISO_Country__c = switzerland.Id,
+            Reason_for_creation__c = 'Created by customer',
+            recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline')
+        );
+
+        insert swiss;
+
+        /** CONTACT */
+        Contact con = new Contact(
+            FirstName = 'Test',
+            LastName = 'L1 Contact',
+            Email = 'test@test.test',
+            Community__c = 'ISS Customer Portal',
+            AccountId = swiss.Id
+        );
+        insert con;
+
+        /** USER */
+        User portalUser = ISSP_ObjectFactory.createPortalUser(con);
+
+        portalUser = [select Id, ProfileId from User where id =: portalUser.Id];
+
+        IEC_WebService.updateUserProfile(portalUser.Id, portalUser.ProfileId);
+    }
 }
