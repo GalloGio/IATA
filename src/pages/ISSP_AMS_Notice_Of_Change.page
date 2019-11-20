@@ -2270,6 +2270,7 @@
 			var whereToAppend = where.parent().parent().next().children().last();
 			// where.parent() because disabled elements does not have mouse events
 			where.parent().hover(function() {
+				removeMessage();
 				whereToAppend.append(getWarningBox(warningMessage));
 			}, function() {
 				removeMessage();
@@ -2287,6 +2288,7 @@
 
 			where.parent().hover(function() {
 				if (!where[0].checked) {
+					removeMessage();
 					whereToAppend.append(getWarningBox(warningMessage));
 				}
 			}, function() {
