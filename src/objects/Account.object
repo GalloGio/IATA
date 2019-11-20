@@ -14263,7 +14263,7 @@ J-Joint Vent</inlineHelpText>
         <fullName>Location_Type__c</fullName>
         <description>Field used to determine the Location Type of travel agents (used in Americas)</description>
         <externalId>false</externalId>
-        <label>Location Type</label>
+        <label>Agency Location Type</label>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
@@ -100228,23 +100228,22 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <lookupPhoneDialogsAdditionalFields>ACCOUNT.PHONE1</lookupPhoneDialogsAdditionalFields>
         <lookupPhoneDialogsAdditionalFields>ACCOUNT.ADDRESS1_CITY</lookupPhoneDialogsAdditionalFields>
         <lookupPhoneDialogsAdditionalFields>ACCOUNT.ADDRESS1_COUNTRY</lookupPhoneDialogsAdditionalFields>
-        <searchFilterFields>Field_Head_Office__c</searchFilterFields>
-        <searchFilterFields>IATA_Member__c</searchFilterFields>
+        <searchFilterFields>ACCOUNT.RECORDTYPE</searchFilterFields>
+        <searchFilterFields>Membership_status__c</searchFilterFields>
         <searchFilterFields>IATA_ISO_Country__c</searchFilterFields>
         <searchFilterFields>Sector__c</searchFilterFields>
         <searchFilterFields>Strategic_Partners__c</searchFilterFields>
         <searchFilterFields>Location_Type__c</searchFilterFields>
         <searchFilterFields>Category__c</searchFilterFields>
-        <searchFilterFields>ICCS_Membership_Status__c</searchFilterFields>
         <searchResultsAdditionalFields>ACCOUNT.NAME</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Quality__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>ACCOUNT.RECORDTYPE</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Sector__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Category__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>ACCOUNT.SITE</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>ACCOUNT.ADDRESS1_COUNTRY</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Membership_status__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Strategic_Partners__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>IATA_ISO_Country__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Location_Type__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Status__c</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>Private</sharingModel>
     <validationRules>

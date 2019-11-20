@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>FIRST_NAME</field>
+    </columns>
+    <columns>
+        <field>LAST_NAME</field>
+    </columns>
+    <columns>
+        <field>PROFILE</field>
+    </columns>
+    <columns>
+        <field>USERNAME</field>
+    </columns>
+    <columns>
+        <field>ALIAS</field>
+    </columns>
+    <columns>
+        <field>ACTIVE</field>
+    </columns>
+    <columns>
+        <field>LAST_LOGIN</field>
+    </columns>
+    <currency>USD</currency>
+    <description>The user&apos;s profiles should be assigned according to the account record type, sector or category depending on their status - User or Admin.
+Profile NOT equal to &apos;ISS Portal Agency Delegated Admin User&apos;</description>
+    <filter>
+        <booleanFilter>(1 OR 2) AND 3 AND 4</booleanFilter>
+        <criteriaItems>
+            <column>ACCOUNT_RECORDTYPE</column>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Account.IATA_Agency</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Account.Sector__c</column>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Cargo Agent,Freight Forwarder</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Contact.User_Portal_Status__c</column>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Approved Admin,Administrator</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>User.Profile_Name__c</column>
+            <isUnlocked>true</isUnlocked>
+            <operator>notEqual</operator>
+            <value>ISS Portal Agency Delegated Admin User</value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
+    <format>Tabular</format>
+    <name>Portal Users with Delegated Admin User</name>
+    <params>
+        <name>active</name>
+        <value>active</value>
+    </params>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>User</reportType>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <sortColumn>LAST_LOGIN</sortColumn>
+    <sortOrder>Desc</sortOrder>
+    <timeFrameFilter>
+        <dateColumn>LAST_LOGIN</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

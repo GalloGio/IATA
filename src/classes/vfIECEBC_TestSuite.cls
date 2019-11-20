@@ -1553,7 +1553,7 @@ public class vfIECEBC_TestSuite {
             PageReference pr = con.unsubscribe();
             
             // Schedule the test job
-            String jobId = System.schedule('SchdlIECEBCEmailExclusionRelation',
+            String jobId = System.schedule('SchdlIECEBCEmailExclusionRelation'+System.now(),
                                            CRON_EXP,
                                            new SchdlIECEBCEmailExclusionRelation());
             

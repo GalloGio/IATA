@@ -14281,6 +14281,10 @@ IATA로부터 다음 국가에 대한 도움을 받으신 적이 있습니까?</
         <name>ISSP_FDS_UnselectAll</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_FS_Link --></label>
+        <name>ISSP_FS_Link</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_Fax --></label>
         <name>ISSP_Fax</name>
     </customLabels>

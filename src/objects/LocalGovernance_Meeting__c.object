@@ -176,7 +176,7 @@
         <fullName>Remittance_Frequency_Reviewed__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
-        <inlineHelpText>Only applicable if not weekly remittance is implemented.</inlineHelpText>
+        <inlineHelpText>Only applicable if weekly remittance is not implemented in the market(s).</inlineHelpText>
         <label>Remittance Frequency Reviewed</label>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
@@ -186,7 +186,6 @@
         <fullName>VMFR__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
-        <inlineHelpText>Pls check this box if VMFR is implemented in your market!</inlineHelpText>
         <label>VMFR</label>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
