@@ -1,0 +1,123 @@
+.nrResultsSpinner {
+    position: relative;
+    display: inline-block;
+    margin: 6px 8px;
+    width: 16px;
+    vertical-align: middle;
+}
+div[name=bg-box] {
+    display: block;
+    left: 14px;
+    top: 14px;
+    width: 15px;
+    height: 15px;
+    position: absolute;
+    z-index: 1;
+}
+div[name=bg-box-2] {
+    display: block;
+    left: 22px;
+    top: 14px;
+    width: 15px;
+    height: 15px;
+    position: absolute;
+    z-index: 1;
+}
+.seeMore {
+    width: 100%;
+    height: 80px;
+    cursor: pointer;
+}
+.show-results-card {
+    overflow-y: auto;
+}
+.bg-white {
+    background-color: white;
+}
+.bg-light-grey {
+    background-color: #f7f8fa;
+}
+.slds-hover {
+    z-index: 2;
+}
+.slds-grey_box-label {
+    display: inline-block;
+    background-color: #f0f2f5;
+}
+.categId-2 {
+    background-color: #289632;
+}
+.categId-5 {
+    background-color: #f050c8;
+}
+.categId-3 {
+    background-color: #f04632;
+}
+.categId-1 {
+    background-color: #fac832;
+}
+.categId-4 {
+    background-color: #1e32fa;
+}
+.search-result-card {
+    min-height: calc(100% - .5rem);
+    position: relative;
+}
+.search-result-card:hover {
+    background: #f7f7f7;
+    border: 1px solid  #d4d4d4;
+    cursor: pointer;
+}
+.search-result-card:hover .slds-grey_box-label {
+    background: #fff;
+}
+.search-result-card h2 {
+    font-size: 1rem;
+    color: #333333;
+}
+.search-result-card p {
+    color: #525252;
+    font-size: .875rem;
+    line-height: 1.43rem;
+}
+.search-result-card h2.slds-truncate-twolines {
+    max-height: 3rem;
+    max-width: 100%;
+    overflow: hidden;
+    white-space: normal;
+}
+.search-result-card h2.slds-truncate-twolines::after {
+    position: relative;
+    white-space: normal;
+    text-overflow: ellipsis;
+    bottom: 5px;
+    right: -10px;
+}
+.slds-border_top.customCardWhite.search-result-card {
+    box-shadow: none;
+}
+@media only screen and (max-width: 767px) {
+    .search-result-card h2 {
+        font-size: .875rem;
+        line-height: 1.4rem;
+        color: #333333;
+    }
+    .search-result-card p {
+        color: #525252;
+        font-size: .75rem;
+        line-height: 1rem;
+    }
+    .search-result-card h2.slds-truncate-twolines {
+        max-height: 2.8rem;
+        max-width: 100%;
+        overflow: hidden;
+        white-space: normal;
+    }
+    .search-result-card h2.slds-truncate-twolines::after {
+        position: absolute;
+        white-space: normal;
+        text-overflow: ellipsis;
+        bottom: 5px;
+        right: -10px;
+    }
+}

@@ -33,7 +33,7 @@
                 </span>
             </div>
             <div>
-                <lightning-button if:true={filteringObject.advancedSearch} class="outlinedButton slds-p-right_small" variant="neutral" 
+                <lightning-button if:true={filteringObject.advancedSearch} class="outlinedButton slds-p-right_small slds-show_medium" variant="neutral" 
                     label={label.CSP_Search_AdvancedSearch} title={label.CSP_Search_AdvancedSearch} 
                     icon-name="utility:settings" icon-position="right" onclick={goToAdvancedSearch}>
                 </lightning-button>
@@ -46,22 +46,15 @@
             <div style={resultsClass}>
                 <!-- COMPONENTS SECTION -->
                 <div class="slds-grid slds-gutters_direct-medium slds-wrap slds-p-vertical_medium">
-
-                    <div class={leftColumnClass}>
-                        <div class="slds-m-vertical_medium">
-                            <c-portal-search-cases-list filtering-object-parent={filteringObject} onfilterchanged={handlefilterchanged}></c-portal-search-cases-list>
-                        </div>
-                        <div class="slds-m-vertical_medium">
-                            <c-portal-search-f-a-q-list filtering-object-parent={filteringObject} onfilterchanged={handlefilterchanged}></c-portal-search-f-a-q-list>
-                        </div>
-                    </div>
-
-                    <div class={rightColumnClass}>
-                        <div class="slds-m-vertical_medium">
-                            <c-portal-search-documents-list filtering-object-parent={filteringObject} onfilterchanged={handlefilterchanged}></c-portal-search-documents-list>
-                        </div>
-                        <div class="slds-m-vertical_medium">
-                            <c-portal-search-services-list filtering-object-parent={filteringObject} onfilterchanged={handlefilterchanged}></c-portal-search-services-list>
+                    <div class="slds-col slds-size_1-of-1">
+                        <div class="slds-m-around_medium">
+                            <c-portal-search-results-list filtering-object-parent={filteringObject} onfilterchanged={handlefilterchanged}></c-portal-search-results-list>
+                            <div class="slds-m-vertical_small text-center text-blue">
+                                <span if:true={filteringObject.advancedSearch}
+                                    title={label.ISSP_See_more} 
+                                    onclick={goToAdvancedSearch}>{label.ISSP_See_more}
+                            </span>
+                            </div>
                         </div>
                     </div>
                 </div>

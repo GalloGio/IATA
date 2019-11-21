@@ -182,6 +182,9 @@ export default class PortalSearchBar extends NavigationMixin(LightningElement) {
     }
 
     removeTextSearch() {
+        if(this.filteringObject.searchText !== ''){
+            this.template.querySelector('c-portal-search-results-list').reloadData();
+        }
         this.filteringObject.searchText = '';
         this.searchText = '';
         this.showCross = false;
