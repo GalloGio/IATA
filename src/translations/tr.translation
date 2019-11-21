@@ -1989,18 +1989,6 @@
         <name>CSP_Create_Contact_Complete_Field</name>
     </customLabels>
     <customLabels>
-        <label>Tarihinde düzenlendi</label>
-        <name>CSP_CreatedOn</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- CSP_DateFrom --></label>
-        <name>CSP_DateFrom</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- CSP_DateTo --></label>
-        <name>CSP_DateTo</name>
-    </customLabels>
-    <customLabels>
         <label>IATA Müşteri Portalı‘nda yeni misiniz?</label>
         <name>CSP_Create_New_Account_Info</name>
     </customLabels>
@@ -2015,6 +2003,18 @@
     <customLabels>
         <label>Yeni şifreniz ayarlanamadı. Lütfen tekrar deneyin.</label>
         <name>CSP_Create_Password_Error</name>
+    </customLabels>
+    <customLabels>
+        <label>Tarihinde düzenlendi</label>
+        <name>CSP_CreatedOn</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_DateFrom --></label>
+        <name>CSP_DateFrom</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_DateTo --></label>
+        <name>CSP_DateTo</name>
     </customLabels>
     <customLabels>
         <label>Sayın</label>
@@ -2063,18 +2063,6 @@
     <customLabels>
         <label><!-- CSP Email Domain Error Message --></label>
         <name>CSP_Email_Domain_Error_Message</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- CSP Error Creating Record --></label>
-        <name>CSP_Error_Creating_Record</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- CSP_Error_Message_Mandatory_Fields_Contact --></label>
-        <name>CSP_Error_Message_Mandatory_Fields_Contact</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- CSP Error while delete record --></label>
-        <name>CSP_Error_while_delete_record</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP Email Footer Image --></label>
@@ -2131,6 +2119,18 @@
     <customLabels>
         <label>Umarız IATA Müşteri Portalımızdan hoşnut kalırsınız!</label>
         <name>CSP_Email_Welcome_Part_5</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Error Creating Record --></label>
+        <name>CSP_Error_Creating_Record</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Error_Message_Mandatory_Fields_Contact --></label>
+        <name>CSP_Error_Message_Mandatory_Fields_Contact</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Error while delete record --></label>
+        <name>CSP_Error_while_delete_record</name>
     </customLabels>
     <customLabels>
         <label>Görünüşe göre siz zaten bir portal kullanıcısısınız. Lütfen şifrenizle giriş yapın.</label>
@@ -2265,10 +2265,6 @@
         <name>CSP_IMPORTANT</name>
     </customLabels>
     <customLabels>
-        <label>Son Güncelleme</label>
-        <name>CSP_LastUpdate</name>
-    </customLabels>
-    <customLabels>
         <label>Geçersiz e-posta</label>
         <name>CSP_Invalid_Email</name>
     </customLabels>
@@ -2285,7 +2281,7 @@
         <name>CSP_L2_Account_Selection</name>
     </customLabels>
     <customLabels>
-        <label>Kişisel profilinizi şirket hesabınızla eşleştirmek için daha fazla ayrıntıya ihtiyacımız var. Bu, şirketinizin zaten IATA &#39;da kayıtlı olup olmadığını kontrol etmemize yardımcı olacaktır.</label>
+        <label>Kişisel profilinizi şirket hesabınızla eşleştirmek için daha fazla ayrıntıya ihtiyacımız var. Bu, şirketinizin zaten IATA &apos;da kayıtlı olup olmadığını kontrol etmemize yardımcı olacaktır.</label>
         <name>CSP_L2_Account_Selection_Message</name>
     </customLabels>
     <customLabels>
@@ -2305,11 +2301,11 @@
         <name>CSP_L2_Back_to_Account_Selection</name>
     </customLabels>
     <customLabels>
-        <label>İş Adres Bilgisi&#39;ne Geri Dönün</label>
+        <label>İş Adres Bilgisi&apos;ne Geri Dönün</label>
         <name>CSP_L2_Back_to_Business_Address_Information</name>
     </customLabels>
     <customLabels>
-        <label>Şirket Bilgisi&#39;ne Geri Dönün</label>
+        <label>Şirket Bilgisi&apos;ne Geri Dönün</label>
         <name>CSP_L2_Back_to_Company_Information</name>
     </customLabels>
     <customLabels>
@@ -2373,7 +2369,7 @@
         <name>CSP_L2_Confirmation</name>
     </customLabels>
     <customLabels>
-        <label>Tam profilinizi oluşturmaktan sadece bir adım uzaktasınız. Lütfen verilen bilgileri kontrol edin ve her şey doğruysa Gönderin&#39;i tıklayın.</label>
+        <label>Tam profilinizi oluşturmaktan sadece bir adım uzaktasınız. Lütfen verilen bilgileri kontrol edin ve her şey doğruysa Gönderin&apos;i tıklayın.</label>
         <name>CSP_L2_Confirmation_Message</name>
     </customLabels>
     <customLabels>
@@ -2425,7 +2421,7 @@
         <name>CSP_L2_Edit_Company_Information</name>
     </customLabels>
     <customLabels>
-        <label>IATA Müşteri Portalı'nı, IATA'nın ürün ve hizmetlerini size özel oluşturması için kurduk. Bunu yapabilmemiz için sizi ve kurumunuzu biraz daha iyi tanımak istiyoruz.</label>
+        <label>IATA Müşteri Portalı&apos;nı, IATA&apos;nın ürün ve hizmetlerini size özel oluşturması için kurduk. Bunu yapabilmemiz için sizi ve kurumunuzu biraz daha iyi tanımak istiyoruz.</label>
         <name>CSP_L2_Edit_Company_Information_Message</name>
     </customLabels>
     <customLabels>
@@ -2445,7 +2441,7 @@
         <name>CSP_L2_Go_To_Homepage</name>
     </customLabels>
     <customLabels>
-        <label>Profil&#39;e geri dönün</label>
+        <label>Profil&apos;e geri dönün</label>
         <name>CSP_L2_Go_To_Profile</name>
     </customLabels>
     <customLabels>
@@ -2529,7 +2525,7 @@
         <name>CSP_L2_Profile_Details</name>
     </customLabels>
     <customLabels>
-        <label>IATA &#39;nin kişiselleştirilmiş içerik ve hizmetler önermesi için kişisel bilgilerinizi ekleyiniz.</label>
+        <label>IATA &apos;nin kişiselleştirilmiş içerik ve hizmetler önermesi için kişisel bilgilerinizi ekleyiniz.</label>
         <name>CSP_L2_Profile_Details_Message</name>
     </customLabels>
     <customLabels>
@@ -2605,7 +2601,7 @@
         <name>CSP_L2_Select</name>
     </customLabels>
     <customLabels>
-        <label>Lütfen doğru adresi seçiniz. Listeden doğru adresi bulamazsanız, girdiğiniz adresi kaydederiz. Devam etmek için Sonraki Adım&#39;a tıklayın.</label>
+        <label>Lütfen doğru adresi seçiniz. Listeden doğru adresi bulamazsanız, girdiğiniz adresi kaydederiz. Devam etmek için Sonraki Adım&apos;a tıklayın.</label>
         <name>CSP_L2_Select_Address_Message</name>
     </customLabels>
     <customLabels>
@@ -2641,6 +2637,10 @@
         <name>CSP_L2_Yes</name>
     </customLabels>
     <customLabels>
+        <label>Son Güncelleme</label>
+        <name>CSP_LastUpdate</name>
+    </customLabels>
+    <customLabels>
         <label>Çıkış Yap</label>
         <name>CSP_LogOut</name>
     </customLabels>
@@ -2649,11 +2649,11 @@
         <name>CSP_Login_Now</name>
     </customLabels>
     <customLabels>
-        <label>Birkaç gün önce, IATA Müşteri Portalı&#39;nın bir katılımcısı olmak için kaydoldunuz - teşekkür ederiz ve hoş geldiniz!</label>
+        <label>Birkaç gün önce, IATA Müşteri Portalı&apos;nın bir katılımcısı olmak için kaydoldunuz - teşekkür ederiz ve hoş geldiniz!</label>
         <name>CSP_Lvl2_Reminder_1</name>
     </customLabels>
     <customLabels>
-        <label>IATA Müşteri Portalı&#39;nı, IATA&#39;nın ürün ve hizmetlerini size özel oluşturması için kurduk. Bunu yapabilmemiz için sizi ve kurumunuzu biraz daha iyi tanımak istiyoruz.</label>
+        <label>IATA Müşteri Portalı&apos;nı, IATA&apos;nın ürün ve hizmetlerini size özel oluşturması için kurduk. Bunu yapabilmemiz için sizi ve kurumunuzu biraz daha iyi tanımak istiyoruz.</label>
         <name>CSP_Lvl2_Reminder_2</name>
     </customLabels>
     <customLabels>
@@ -2685,7 +2685,7 @@
         <name>CSP_Lvl2_Reminder_9</name>
     </customLabels>
     <customLabels>
-        <label>IATA Müşteri Portalı&#39;ndan en iyi şekilde yararlanın - Profilinizi tamamlayın!</label>
+        <label>IATA Müşteri Portalı&apos;ndan en iyi şekilde yararlanın - Profilinizi tamamlayın!</label>
         <name>CSP_Lvl2_Reminder_Subject</name>
     </customLabels>
     <customLabels>
@@ -2717,10 +2717,6 @@
         <name>CSP_Name</name>
     </customLabels>
     <customLabels>
-        <label>Sonraki</label>
-        <name>CSP_Next</name>
-    </customLabels>
-    <customLabels>
         <label><!-- CSP_NewContactProfile --></label>
         <name>CSP_NewContactProfile</name>
     </customLabels>
@@ -2729,8 +2725,16 @@
         <name>CSP_NewServiceUserMessage</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP New Account To Address --></label>
+        <name>CSP_New_Account_To_Address</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP New Email Domain --></label>
         <name>CSP_New_Email_Domain</name>
+    </customLabels>
+    <customLabels>
+        <label>Sonraki</label>
+        <name>CSP_Next</name>
     </customLabels>
     <customLabels>
         <label>Gösterilecek ilgili hesap yok.</label>
@@ -2761,10 +2765,6 @@
         <name>CSP_OperationalCalendar_SeeMonthlyLink</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Payment --></label>
-        <name>CSP_Payment</name>
-    </customLabels>
-    <customLabels>
         <label>Şifre</label>
         <name>CSP_Password</name>
     </customLabels>
@@ -2783,6 +2783,10 @@
     <customLabels>
         <label>En az 1 sembol (! @ # $% * () _ + ^ &amp;)</label>
         <name>CSP_Password_Rule_4</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Payment --></label>
+        <name>CSP_Payment</name>
     </customLabels>
     <customLabels>
         <label>Sorgunuza devam etmek için bilginize ihtiyacımız var.</label>
@@ -3193,12 +3197,12 @@
         <name>CSP_TypeOfCase</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_User --></label>
-        <name>CSP_User</name>
-    </customLabels>
-    <customLabels>
         <label>Beklenmeyen bir hata oluştu!</label>
         <name>CSP_Unexcepted_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_User --></label>
+        <name>CSP_User</name>
     </customLabels>
     <customLabels>
         <label>IATA Müşteri Portalı&apos;na hoşgeldiniz</label>
@@ -22426,6 +22430,10 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
     <customTabs>
         <label><!-- Projects Calendar --></label>
         <name>UAT_Calendar</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- Unregistered users --></label>
+        <name>Unregistered_users</name>
     </customTabs>
     <customTabs>
         <label><!-- Voucher Management --></label>

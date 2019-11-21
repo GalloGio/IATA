@@ -12232,7 +12232,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
             <name>X1st_email_on_CS_escalated_case</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>

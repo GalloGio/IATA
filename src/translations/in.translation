@@ -1992,18 +1992,6 @@
         <name>CSP_Create_Contact_Complete_Field</name>
     </customLabels>
     <customLabels>
-        <label>Dibuat pada</label>
-        <name>CSP_CreatedOn</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- CSP_DateFrom --></label>
-        <name>CSP_DateFrom</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- CSP_DateTo --></label>
-        <name>CSP_DateTo</name>
-    </customLabels>
-    <customLabels>
         <label>Baru menggunakan Portal Pelanggan IATA?</label>
         <name>CSP_Create_New_Account_Info</name>
     </customLabels>
@@ -2018,6 +2006,18 @@
     <customLabels>
         <label>Kata sandi baru Anda tidak dapat diatur. Tolong dicoba lagi.</label>
         <name>CSP_Create_Password_Error</name>
+    </customLabels>
+    <customLabels>
+        <label>Dibuat pada</label>
+        <name>CSP_CreatedOn</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_DateFrom --></label>
+        <name>CSP_DateFrom</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_DateTo --></label>
+        <name>CSP_DateTo</name>
     </customLabels>
     <customLabels>
         <label>Yth</label>
@@ -2066,18 +2066,6 @@
     <customLabels>
         <label><!-- CSP Email Domain Error Message --></label>
         <name>CSP_Email_Domain_Error_Message</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- CSP Error Creating Record --></label>
-        <name>CSP_Error_Creating_Record</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- CSP_Error_Message_Mandatory_Fields_Contact --></label>
-        <name>CSP_Error_Message_Mandatory_Fields_Contact</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- CSP Error while delete record --></label>
-        <name>CSP_Error_while_delete_record</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP Email Footer Image --></label>
@@ -2134,6 +2122,18 @@
     <customLabels>
         <label>Kami harap Anda menikmati Portal Pelanggan IATA kami!</label>
         <name>CSP_Email_Welcome_Part_5</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Error Creating Record --></label>
+        <name>CSP_Error_Creating_Record</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Error_Message_Mandatory_Fields_Contact --></label>
+        <name>CSP_Error_Message_Mandatory_Fields_Contact</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Error while delete record --></label>
+        <name>CSP_Error_while_delete_record</name>
     </customLabels>
     <customLabels>
         <label>Sepertinya Anda sudah menjadi pengguna portal. Silakan masuk dengan kata sandi Anda.</label>
@@ -2266,10 +2266,6 @@
     <customLabels>
         <label><!-- CSP_IMPORTANT --></label>
         <name>CSP_IMPORTANT</name>
-    </customLabels>
-    <customLabels>
-        <label>Pembaharuan Terakhir</label>
-        <name>CSP_LastUpdate</name>
     </customLabels>
     <customLabels>
         <label>Email tidak valid</label>
@@ -2644,6 +2640,10 @@
         <name>CSP_L2_Yes</name>
     </customLabels>
     <customLabels>
+        <label>Pembaharuan Terakhir</label>
+        <name>CSP_LastUpdate</name>
+    </customLabels>
+    <customLabels>
         <label>Keluar</label>
         <name>CSP_LogOut</name>
     </customLabels>
@@ -2720,10 +2720,6 @@
         <name>CSP_Name</name>
     </customLabels>
     <customLabels>
-        <label>Berikutnya</label>
-        <name>CSP_Next</name>
-    </customLabels>
-    <customLabels>
         <label><!-- CSP_NewContactProfile --></label>
         <name>CSP_NewContactProfile</name>
     </customLabels>
@@ -2732,8 +2728,16 @@
         <name>CSP_NewServiceUserMessage</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP New Account To Address --></label>
+        <name>CSP_New_Account_To_Address</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP New Email Domain --></label>
         <name>CSP_New_Email_Domain</name>
+    </customLabels>
+    <customLabels>
+        <label>Berikutnya</label>
+        <name>CSP_Next</name>
     </customLabels>
     <customLabels>
         <label>Tidak ada Akun terkait untuk ditampilkan.</label>
@@ -2764,10 +2768,6 @@
         <name>CSP_OperationalCalendar_SeeMonthlyLink</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Payment --></label>
-        <name>CSP_Payment</name>
-    </customLabels>
-    <customLabels>
         <label>Kata sandi</label>
         <name>CSP_Password</name>
     </customLabels>
@@ -2786,6 +2786,10 @@
     <customLabels>
         <label>Paling tidak 1 simbol (! @ # $% * () _ + ^ &amp;)</label>
         <name>CSP_Password_Rule_4</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Payment --></label>
+        <name>CSP_Payment</name>
     </customLabels>
     <customLabels>
         <label>Kami membutuhkan masukan Anda untuk melanjutkan kasus Anda.</label>
@@ -3173,16 +3177,16 @@ dan &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-port
         <name>CSP_Title</name>
     </customLabels>
     <customLabels>
-        <label>penyelesaian masalah</label>
-        <name>CSP_Troubleshooting</name>
-    </customLabels>
-    <customLabels>
         <label>&lt;a href=&quot;/ISSP_AMSCases&quot; target=&quot;_self&quot;&gt;Klik di sini untuk mengakses langsung Akreditasi IATA dan Perubahan&lt;/a&gt;</label>
         <name>CSP_Travel_Agent_Accreditation_Changes_Access</name>
     </customLabels>
     <customLabels>
         <label>&lt;a href=&quot;/s/manage-service?serviceId=a2ww0000001D7GOAA0&quot; target=&quot;_self&quot;&gt; Klik di sini untuk meminta akreditasi dan Perubahan IATA&lt;/a&gt;</label>
         <name>CSP_Travel_Agent_Accreditation_Changes_Request</name>
+    </customLabels>
+    <customLabels>
+        <label>penyelesaian masalah</label>
+        <name>CSP_Troubleshooting</name>
     </customLabels>
     <customLabels>
         <label>Periksa untuk bantuan lebih lanjut</label>
@@ -3197,12 +3201,12 @@ dan &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-port
         <name>CSP_TypeOfCase</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_User --></label>
-        <name>CSP_User</name>
-    </customLabels>
-    <customLabels>
         <label>Terjadi kesalahan yang tak terduga!</label>
         <name>CSP_Unexcepted_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_User --></label>
+        <name>CSP_User</name>
     </customLabels>
     <customLabels>
         <label>Selamat datang di Portal Pelanggan IATA</label>
@@ -22425,6 +22429,10 @@ Jika Anda ingin mengganti kata sandi, kembali ke layar masuk lalu gunakan fungsi
     <customTabs>
         <label><!-- Projects Calendar --></label>
         <name>UAT_Calendar</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- Unregistered users --></label>
+        <name>Unregistered_users</name>
     </customTabs>
     <customTabs>
         <label><!-- Voucher Management --></label>

@@ -1989,18 +1989,6 @@
         <name>CSP_Create_Contact_Complete_Field</name>
     </customLabels>
     <customLabels>
-        <label>สร้างเมื่อ</label>
-        <name>CSP_CreatedOn</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- CSP_DateFrom --></label>
-        <name>CSP_DateFrom</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- CSP_DateTo --></label>
-        <name>CSP_DateTo</name>
-    </customLabels>
-    <customLabels>
         <label>ยังใหม่กับพอร์ทัลสำหรับลูกค้าของ IATA ใช่ไหม?</label>
         <name>CSP_Create_New_Account_Info</name>
     </customLabels>
@@ -2015,6 +2003,18 @@
     <customLabels>
         <label>ไม่สามารถตั้งรหัสผ่านชุดใหม่ได้ กรุณาลองใหม่อีกครั้ง</label>
         <name>CSP_Create_Password_Error</name>
+    </customLabels>
+    <customLabels>
+        <label>สร้างเมื่อ</label>
+        <name>CSP_CreatedOn</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_DateFrom --></label>
+        <name>CSP_DateFrom</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_DateTo --></label>
+        <name>CSP_DateTo</name>
     </customLabels>
     <customLabels>
         <label>เรียน</label>
@@ -2063,18 +2063,6 @@
     <customLabels>
         <label><!-- CSP Email Domain Error Message --></label>
         <name>CSP_Email_Domain_Error_Message</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- CSP Error Creating Record --></label>
-        <name>CSP_Error_Creating_Record</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- CSP_Error_Message_Mandatory_Fields_Contact --></label>
-        <name>CSP_Error_Message_Mandatory_Fields_Contact</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- CSP Error while delete record --></label>
-        <name>CSP_Error_while_delete_record</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP Email Footer Image --></label>
@@ -2131,6 +2119,18 @@
     <customLabels>
         <label>เราหวังว่าคุณจะเพลิดเพลินกับพอร์ทัลสำหรับลูกค้า IATA ของเรา!</label>
         <name>CSP_Email_Welcome_Part_5</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Error Creating Record --></label>
+        <name>CSP_Error_Creating_Record</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Error_Message_Mandatory_Fields_Contact --></label>
+        <name>CSP_Error_Message_Mandatory_Fields_Contact</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Error while delete record --></label>
+        <name>CSP_Error_while_delete_record</name>
     </customLabels>
     <customLabels>
         <label>ดูเหมือนว่าคุณเป็นผู้ใช้พอร์ทัลอยู่แล้ว โปรดเข้าสู่ระบบด้วยรหัสผ่านของคุณ</label>
@@ -2263,10 +2263,6 @@
     <customLabels>
         <label><!-- CSP_IMPORTANT --></label>
         <name>CSP_IMPORTANT</name>
-    </customLabels>
-    <customLabels>
-        <label>อัปเดตล่าสุด</label>
-        <name>CSP_LastUpdate</name>
     </customLabels>
     <customLabels>
         <label>อีเมลไม่ถูกต้อง</label>
@@ -2641,6 +2637,10 @@
         <name>CSP_L2_Yes</name>
     </customLabels>
     <customLabels>
+        <label>อัปเดตล่าสุด</label>
+        <name>CSP_LastUpdate</name>
+    </customLabels>
+    <customLabels>
         <label>ออกจากระบบ</label>
         <name>CSP_LogOut</name>
     </customLabels>
@@ -2717,10 +2717,6 @@
         <name>CSP_Name</name>
     </customLabels>
     <customLabels>
-        <label>ต่อไป</label>
-        <name>CSP_Next</name>
-    </customLabels>
-    <customLabels>
         <label><!-- CSP_NewContactProfile --></label>
         <name>CSP_NewContactProfile</name>
     </customLabels>
@@ -2729,8 +2725,16 @@
         <name>CSP_NewServiceUserMessage</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP New Account To Address --></label>
+        <name>CSP_New_Account_To_Address</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP New Email Domain --></label>
         <name>CSP_New_Email_Domain</name>
+    </customLabels>
+    <customLabels>
+        <label>ต่อไป</label>
+        <name>CSP_Next</name>
     </customLabels>
     <customLabels>
         <label>ไม่ปรากฏบัญชีที่เกี่ยวข้อง</label>
@@ -2761,10 +2765,6 @@
         <name>CSP_OperationalCalendar_SeeMonthlyLink</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Payment --></label>
-        <name>CSP_Payment</name>
-    </customLabels>
-    <customLabels>
         <label>รหัสผ่าน</label>
         <name>CSP_Password</name>
     </customLabels>
@@ -2783,6 +2783,10 @@
     <customLabels>
         <label>สัญลักษณ์ อย่างน้อย 1 ตัว (! @ # $% * () _ + ^ &amp;)</label>
         <name>CSP_Password_Rule_4</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Payment --></label>
+        <name>CSP_Payment</name>
     </customLabels>
     <customLabels>
         <label>เราต้องการข้อมูลของคุณ เพื่อดำเนินการกับคำร้องของ คุณ</label>
@@ -3193,12 +3197,12 @@
         <name>CSP_TypeOfCase</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_User --></label>
-        <name>CSP_User</name>
-    </customLabels>
-    <customLabels>
         <label>เกิดข้อผิดพลาดที่ไม่คาดคิดขึ้น!</label>
         <name>CSP_Unexcepted_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_User --></label>
+        <name>CSP_User</name>
     </customLabels>
     <customLabels>
         <label>ยินดีต้อนรับสู่พอร์ทัลสำหรับลูกค้าIATA (สมาคมการขนส่งทางอากาศระหว่างประเทศ)</label>
@@ -22418,6 +22422,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
     <customTabs>
         <label><!-- Projects Calendar --></label>
         <name>UAT_Calendar</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- Unregistered users --></label>
+        <name>Unregistered_users</name>
     </customTabs>
     <customTabs>
         <label><!-- Voucher Management --></label>

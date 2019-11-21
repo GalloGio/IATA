@@ -6137,6 +6137,18 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Business_City_Name__c</fullName>
+        <description>Business City Name</description>
+        <externalId>false</externalId>
+        <label>Business City Name</label>
+        <length>40</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Business_City__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <description>City of the Account&apos;s Business Address</description>
