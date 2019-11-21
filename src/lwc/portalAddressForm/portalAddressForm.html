@@ -1,0 +1,352 @@
+<template>
+    <lightning-layout multiple-rows vertical-align="stretch">
+        <div  class="IEFixDisplayContainer">
+            <!-- Is PO Box -->
+            <lightning-layout-item size="6" class="IEFixDisplay">
+                <div class="slds-form-element">
+                    <div class="slds-form-element__control custTextInput custTextInputSmall">
+                        <lightning-input 
+                            type="checkbox"
+                            data-fieldname="IsPoBox"
+                            class="text-xxsmall"
+                            checked={localAddress.isPoBox}
+                            onchange={handleFieldChange}
+                            label={labels.CSP_L2_Is_PO_Box_Address}>
+                        </lightning-input>
+                    </div>
+                </div>
+            </lightning-layout-item>
+
+            <lightning-layout-item padding="around-small" size="12" class="IEFixDisplay">
+            </lightning-layout-item>
+                    
+            <!-- COUNTRY -->
+            <lightning-layout-item size="6" class="addressItem IEFixDisplay">
+                <div class="formLabelContainer">
+                    <div class="text-xxsmall">
+                        {labels.CSP_L2_Country}<abbr class="slds-required" title="required">*</abbr>
+                    </div>
+                </div>
+                    
+                <div class="slds-form-element">
+                    <div class="slds-form-element__control custTextInputSmall">
+                        <lightning-combobox 
+                            class="cursorPointerComboBox text-xxsmall"
+                            value={localAddress.countryId}
+                            variant="label-hidden"
+                            options={countryOptions}
+                            data-fieldname="Country"
+                            dropdown-alignment="auto"
+                            onchange={handleFieldChange}>
+                        </lightning-combobox>
+                    </div>
+                </div>
+            </lightning-layout-item>
+
+            <!-- STATE -->
+            <lightning-layout-item size="6" class="addressItem IEFixDisplay">
+                <div class="formLabelContainer">
+                    <div class="text-xxsmall">
+                        {labels.CSP_L2_State}
+                        <template if:true={isStateRequired}>
+                            <abbr class="slds-required" title="required">*</abbr>
+                        </template>
+                    </div>
+                </div>
+
+                <template if:true={displayStateComboBox}>
+                    <div class="slds-form-element">
+                        <div class="slds-form-element__control custTextInputSmall">
+                            <lightning-combobox 
+                                class="cursorPointerComboBox text-xxsmall"
+                                value={localAddress.stateId}
+                                variant="label-hidden"
+                                options={stateOptions}
+                                data-fieldname="StateId"
+                                dropdown-alignment="auto"
+                                onchange={handleFieldChange}>
+                            </lightning-combobox>
+                        </div>
+                    </div>
+                </template>
+
+                <template if:false={displayStateComboBox}>
+                    <div class="slds-form-element">
+                        <div class="slds-form-element__control custTextInput custTextInputSmall">
+                            <input 
+                                type="text"
+                                data-id="stateName"
+                                class="slds-input"
+                                placeholder=" "
+                                data-address="true"
+                                data-fieldname="StateName"
+                                value={localAddress.stateName}
+                                autocomplete="no"
+                                onkeyup={handleFieldChange}/>
+                        </div>
+                    </div>
+                </template>
+            </lightning-layout-item>
+
+            <!-- CITY INPUT WITH SUGGESTIONS -->
+            <lightning-layout-item size="6" class="addressItem IEFixDisplay">
+                <div class="formLabelContainer">
+                    <div class="text-xxsmall">
+                        {labels.CSP_L2_City}<abbr class="slds-required" title="required">*</abbr>
+                    </div>
+                </div>
+
+                <div class="slds-form-element">
+                    <div class="slds-form-element__control custTextInput custTextInputSmall">
+                        <input 
+                            id="cityInput"
+                            name="cityInput"
+                            type="text"
+                            list="cities"
+                            data-id="cityName"
+                            class="slds-input"
+                            placeholder=" "
+                            data-address="true"
+                            key={localAddress.countryId}
+                            data-fieldname="City"
+                            value={localAddress.cityName}
+                            autocomplete="no"
+                            onkeyup={handleCityKey}
+                            onblur={hideCities}
+                            onchange={hideCities}/>
+
+                        <template if:true={showCitySuggestions}>
+                            <div id="listbox" role="listbox" tabindex="0" class="contactListbox slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_fluid customMaxHeight slds-scrollable_y">
+                                <ul role="presentation">
+                                    <template for:each={citySuggestions} for:item="city">
+                                        <li 
+                                            key={city.value} 
+                                            role="presentation" 
+                                            class="slds-listbox__item citySuggestion"
+                                            data-value={city.value} 
+                                            data-name={city.name} 
+                                            data-stateid={city.stateid}>
+
+                                            <div class="slds-media slds-listbox__option slds-listbox__option_entity slds-listbox__option_has-meta slds-grid"
+                                                data-value={city.value} data-name={city.name} data-stateid={city.stateid}
+                                                role="option" onmousedown={handleCityChange}>
+
+                                                <div data-value={city.value} data-name={city.name} data-stateid={city.stateid} class="slds-col breakWord">
+                                                    {city.label}
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </template>
+                                </ul>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+            </lightning-layout-item>
+
+            <!-- ZIP -->
+            <lightning-layout-item size="6" class="addressItem IEFixDisplay">
+                <div class="formLabelContainer">
+                    <div class="text-xxsmall">
+                        {labels.CSP_L2_Postal_Code}
+                        <template if:true={isZipRequired}>
+                            <abbr class="slds-required" title="required">*</abbr>
+                        </template>
+                    </div>
+                </div>
+
+                <div class="slds-form-element">
+                    <div class="slds-form-element__control custTextInput custTextInputSmall">
+                        <input 
+                            type="text"
+                            data-id="zip"
+                            class="slds-input"
+                            placeholder=" "
+                            data-fieldname="Zip"
+                            value={localAddress.zip}
+                            autocomplete="no"
+                            onkeyup={handleFieldChange}/>
+                    </div>
+                </div>
+            </lightning-layout-item>
+                
+            <!-- STREET -->
+            <lightning-layout-item size="6" class="addressItem IEFixDisplay">
+                <div class="formLabelContainer">
+                    <div class="text-xxsmall">
+                        <template if:true={localAddress.isPoBox}>
+                            {labels.CSP_L2_PO_Box_Number}
+                        </template>
+                        <template if:false={localAddress.isPoBox}>
+                            {labels.CSP_L2_Street}
+                        </template>
+                        <abbr class="slds-required" title="required">*</abbr>
+                    </div>
+                </div>
+                
+                <div class="slds-form-element">
+                    <div class="slds-form-element__control custTextInput custTextInputSmall">
+                        <input 
+                            type="text"
+                            data-id="street"
+                            class="slds-input"
+                            placeholder=" "
+                            data-fieldname="Street"
+                            value={localAddress.street}
+                            onkeyup={handleFieldChange}
+                            autocomplete="no"/>
+                    </div>
+                </div>
+            </lightning-layout-item>
+
+            <lightning-layout-item padding="around-small" size="6" class="IEFixDisplay">
+            </lightning-layout-item>
+
+            <lightning-layout-item padding="around-small" size="6" class="IEFixDisplay">
+            </lightning-layout-item>
+
+            <lightning-layout-item size="6" class="IEFixDisplay">
+                <template if:true={localAddress.inputModified}>
+                    <lightning-button class="slds-float_right containedButton customBtn" label={labels.CSP_L2_Find_Address} disabled={isValidationButtonDisabled} variant="brand" onclick={checkAddress}>
+                    </lightning-button>
+                </template>
+                <template if:false={localAddress.inputModified}>
+                    <lightning-button class="slds-float_right containedButton customBtn outlinedBtn" label={labels.CSP_L2_Find_Address} variant="brand">
+                    </lightning-button>
+                </template>
+            </lightning-layout-item>
+            
+            <lightning-layout-item padding="around-small" size="12" class="IEFixDisplay">
+            </lightning-layout-item>
+        
+            <div data-name="searchDiv" class="searchContainer">
+                <template if:true={localAddress.checkPerformed}>
+                    <template if:true={hasSuggestions}>
+                        <lightning-layout-item size="12" class="slds-p-around_medium customWhiteBackground slds-clearfix searchTitleContainer IEFixDisplay">
+                            <div class="SearchResultsDescription">{labels.CSP_L2_Select_Address_Message}</div>
+                        </lightning-layout-item>
+
+                        <lightning-layout-item size="12" class="tableContainer IEFixDisplay">
+                            <div style="display: flex;justify-content: center;align-items: center;">
+                                <div style="display: flex;flex: 1 1 auto;align-items: center;justify-content: center;">
+                                    <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-col slds-size_1-of-1 slds-m-vertical_medium slds-table">
+                                        <thead>
+                                            <tr class="slds-p-vertical_x-large text-xsmall openTransition">
+                                                <th class="ResultTableHeader wrap" scope="col">
+                                                    {labels.CSP_L2_Street}
+                                                </th>
+                                                <th class="ResultTableHeader wrap" scope="col">
+                                                    {labels.CSP_L2_City}
+                                                </th>
+                                                <th class="ResultTableHeader wrap" scope="col">
+                                                    {labels.CSP_L2_Postal_Code}
+                                                </th>
+                                                <th class="ResultTableHeader wrap" scope="col">
+                                                    {labels.CSP_L2_State}
+                                                </th>
+                                                <th class="ResultTableHeader ResultTableHeaderSelect wrap textAlignCenter" scope="col">
+                                                    {labels.CSP_L2_Select}
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <template for:each={resultsToDisplay} for:item="address">
+                                                <tr key={address.key} class="slds-p-vertical_x-large text-xsmall openTransition">
+                                                    <td class="ResultTableData wrap" >{address.street}</td>
+                                                    <td class="ResultTableData wrap" >{address.locality}</td>
+                                                    <td class="ResultTableData wrap" >{address.postalCode}</td>
+                                                    <td class="ResultTableData wrap" >{address.province}</td>
+                                                    <td class="radioBtn" data-id={address.key} style="text-align: center;">
+                                                        <lightning-input type="radio" data-id={address.key} checked={address.isSelected} onclick={changeSelectedAddress}>
+                                                        </lightning-input>
+                                                    </td>
+                                                </tr>
+                                            </template>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </lightning-layout-item>
+
+                        <lightning-layout-item size="12" class="paginationContainer IEFixDisplay">
+                                <template if:true={isFirstPage}>
+                                    <img src={arrowFirstLightgrey} class="page" height="24" width="24">
+                                    <img src={arrowPreviousLightgrey} class="page" height="24" width="24">
+                                </template>
+        
+                                <template if:false={isFirstPage}>
+                                    <img src={arrowFirst} class="page activeIcon" height="24" width="24" onclick={goToFirstPage}>
+                                    <img src={arrowPrevious} class="page activeIcon" height="24" width="24" onclick={goToPreviousPage}>
+                                </template>
+        
+                                <template for:each={pageNumbersBeforeCurrent} for:item="pageNumber">
+                                    <div key={pageNumber} data-id={pageNumber} onclick={goToPage} class="otherPages">
+                                        {pageNumber}
+                                    </div>
+                                </template>
+        
+                                <div class="currentPage">
+                                    {currentPage}
+                                </div>
+        
+                                <template for:each={pageNumbersAfterCurrent} for:item="pageNumber">
+                                    <div key={pageNumber} data-id={pageNumber} onclick={goToPage} class="otherPages">
+                                        {pageNumber}
+                                    </div>
+                                </template>
+        
+                                <template if:true={isLastPage}>
+                                    <img src={arrowNextLightgrey} class="page" height="24" width="24">
+                                    <img src={arrowLastLightgrey} class="page" height="24" width="24">
+                                </template>
+        
+                                <template if:false={isLastPage}>
+                                    <img src={arrowNext} class="page activeIcon" height="24" width="24" onclick={goToNextPage}>
+                                    <img src={arrowLast} class="page activeIcon" height="24" width="24" onclick={goToLastPage}>
+                                </template>
+                            </lightning-layout-item>
+                    </template>
+
+                    <template if:false={hasSuggestions}>
+
+                        <template if:true={isValidationStatus4}>
+                            <lightning-layout-item size="12" class="slds-p-around_medium topLightGrayBorder customWhiteBackground slds-clearfix IEFixDisplay">
+                            </lightning-layout-item>
+
+                            <lightning-layout-item size="12" class="textAlignCenter noResultsIcon IEFixDisplay">
+                                <img src={alertIcon} height="72" width="72">
+                            </lightning-layout-item>
+
+                            <lightning-layout-item size="12" class="noResultsDescription IEFixDisplay">
+                                <div class="textAlignCenter NoResultLabel">
+                                    <div class="NoResultDescription">{localAddress.geonameWarning1}<br/>{localAddress.geonameWarning2}</div>
+                                </div>
+                            </lightning-layout-item>
+                        </template>
+
+                        <template if:false={isValidationStatus4}>
+                            <lightning-layout-item size="12" class="slds-p-around_medium topLightGrayBorder customWhiteBackground slds-clearfix IEFixDisplay">
+                            </lightning-layout-item>
+
+                            <lightning-layout-item size="12" class="textAlignCenter noResultsIcon IEFixDisplay">
+                                <img src={alertIcon} height="72" width="72">
+                            </lightning-layout-item>
+
+                            <lightning-layout-item size="12" class="noResultsTitle IEFixDisplay">
+                                <div class="textAlignCenter NoResultLabel">
+                                    <div>{labels.CSP_L2_No_Matching_Results}</div>
+                                </div>
+                            </lightning-layout-item>
+        
+                            <lightning-layout-item size="12" class="noResultsDescription IEFixDisplay">
+                                <div class="textAlignCenter NoResultLabel">
+                                    <div class="NoResultDescription">{labels.CSP_L2_Address_Not_Found_Message}</div>
+                                </div>
+                            </lightning-layout-item>                            
+                        </template>
+                    </template>
+                </template>
+            </div>
+        </div>
+    </lightning-layout>
+</template>

@@ -1916,6 +1916,38 @@
         <name>CSP_Cases</name>
     </customLabels>
     <customLabels>
+        <label>Ganti e-mail</label>
+        <name>CSP_Change_Email</name>
+    </customLabels>
+    <customLabels>
+        <label>Ganti kata sandi.</label>
+        <name>CSP_Change_Password</name>
+    </customLabels>
+    <customLabels>
+        <label>Kata sandi baru Anda tidak dapat diatur.</label>
+        <name>CSP_Change_Password_Error</name>
+    </customLabels>
+    <customLabels>
+        <label>Silakan masukkan kata sandi Anda saat ini, lalu ganti dengan yang baru dan konfirmasi.</label>
+        <name>CSP_Change_Password_Info_1</name>
+    </customLabels>
+    <customLabels>
+        <label>Kata sandi harus memiliki setidaknya 10 karakter atau lebih dan harus termasuk setidaknya satu huruf besar, angka dan simbol (! @ # $% * () _ + ^ &amp;)&quot;</label>
+        <name>CSP_Change_Password_Info_2</name>
+    </customLabels>
+    <customLabels>
+        <label>Silakan periksa email Anda untuk mendapatkan detail akses Anda.</label>
+        <name>CSP_Check_Email</name>
+    </customLabels>
+    <customLabels>
+        <label>Kata sandi berhasil diatur.</label>
+        <name>CSP_Chg_Pass_Success_Msg_1</name>
+    </customLabels>
+    <customLabels>
+        <label>Anda sekarang dapat menggunakan kata sandi baru untuk masuk.</label>
+        <name>CSP_Chg_Pass_Success_Msg_2</name>
+    </customLabels>
+    <customLabels>
         <label>Komunitas</label>
         <name>CSP_Community</name>
     </customLabels>
@@ -1932,12 +1964,20 @@
         <name>CSP_CompanyProfile</name>
     </customLabels>
     <customLabels>
+        <label>Lengkapi Profil Anda.</label>
+        <name>CSP_Complete_Profile</name>
+    </customLabels>
+    <customLabels>
         <label>Apakah Anda yakin ingin menolak akses ke &lt;b&gt;{0}&lt;/b&gt; untuk &lt;b&gt;{1}&lt;/b&gt;?</label>
         <name>CSP_Confirm_Deny_User_Access</name>
     </customLabels>
     <customLabels>
         <label>Apakah Anda yakin ingin memberikan akses ke &lt;b&gt;{0}&lt;/b&gt; untuk &lt;b&gt;{1}&lt;/b&gt;?</label>
         <name>CSP_Confirm_Grant_User_Access</name>
+    </customLabels>
+    <customLabels>
+        <label>IATA Portal Pelanggan Email konfirmasi</label>
+        <name>CSP_Confirmation_Email_Subject</name>
     </customLabels>
     <customLabels>
         <label>Permintaan akses {0} Anda telah dikirimkan ke administrator portal. Jika Anda memiliki pertanyaan atau permintaan tentang prosesnya, Anda dapat menghubungi administrator di bawah ini:</label>
@@ -1964,6 +2004,26 @@
         <name>CSP_DateTo</name>
     </customLabels>
     <customLabels>
+        <label>Baru menggunakan Portal Pelanggan IATA?</label>
+        <name>CSP_Create_New_Account_Info</name>
+    </customLabels>
+    <customLabels>
+        <label>Buat Akun Baru</label>
+        <name>CSP_Create_New_Account_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>Buat Kata Sandi.</label>
+        <name>CSP_Create_Password</name>
+    </customLabels>
+    <customLabels>
+        <label>Kata sandi baru Anda tidak dapat diatur. Tolong dicoba lagi.</label>
+        <name>CSP_Create_Password_Error</name>
+    </customLabels>
+    <customLabels>
+        <label>Yth</label>
+        <name>CSP_Dear</name>
+    </customLabels>
+    <customLabels>
         <label>Tolak Akses Pengguna</label>
         <name>CSP_Deny_User_Access_Title</name>
     </customLabels>
@@ -1988,6 +2048,22 @@
         <name>CSP_Documents_PubliCountry</name>
     </customLabels>
     <customLabels>
+        <label>E-mail</label>
+        <name>CSP_Email</name>
+    </customLabels>
+    <customLabels>
+        <label>Terima kasih telah mendaftar ke Portal Pelanggan IATA (International Air Transport Association). Anda tinggal selangkah lagi untuk mendapatkan akses!</label>
+        <name>CSP_Email_Confirmation_Body_Part_1</name>
+    </customLabels>
+    <customLabels>
+        <label>Harap konfirmasikan alamat email Anda dengan mengklik</label>
+        <name>CSP_Email_Confirmation_Body_Part_2</name>
+    </customLabels>
+    <customLabels>
+        <label>Demi alasan keamanan, tautan ini hanya berlaku selama 8 jam. Setelah batas waktu habis, Anda harus mengirimkan kembali permintaan Anda.</label>
+        <name>CSP_Email_Confirmation_Body_Part_3</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP Email Domain Error Message --></label>
         <name>CSP_Email_Domain_Error_Message</name>
     </customLabels>
@@ -2004,6 +2080,82 @@
         <name>CSP_Error_while_delete_record</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Email Footer Image --></label>
+        <name>CSP_Email_Footer_Image</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Header Image --></label>
+        <name>CSP_Email_Header_Image</name>
+    </customLabels>
+    <customLabels>
+        <label>di sini</label>
+        <name>CSP_Email_Here</name>
+    </customLabels>
+    <customLabels>
+        <label>Kami telah menerima permintaan Anda untuk mengatur ulang kata sandi Portal Pelanggan IATA Anda.</label>
+        <name>CSP_Email_Password_Reset_Body_Part_1</name>
+    </customLabels>
+    <customLabels>
+        <label>Silakan klik</label>
+        <name>CSP_Email_Password_Reset_Body_Part_2</name>
+    </customLabels>
+    <customLabels>
+        <label>untuk mengatur kata sandi baru.</label>
+        <name>CSP_Email_Password_Reset_Body_Part_3</name>
+    </customLabels>
+    <customLabels>
+        <label>Demi alasan keamanan, tautan ini hanya berlaku selama 8 jam. Setelah batas waktu habis, Anda harus mengirimkan kembali permintaan Anda.</label>
+        <name>CSP_Email_Password_Reset_Body_Part_4</name>
+    </customLabels>
+    <customLabels>
+        <label>Terima kasih telah menjadi bagian dari IATA.</label>
+        <name>CSP_Email_Signature_Part_1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Signature Part 2 --></label>
+        <name>CSP_Email_Signature_Part_2</name>
+    </customLabels>
+    <customLabels>
+        <label>Kami senang Anda bersama kami di Portal Pelanggan IATA (International Air Transport Association)!</label>
+        <name>CSP_Email_Welcome_Part_1</name>
+    </customLabels>
+    <customLabels>
+        <label>Portal Pelanggan IATA penuh dengan layanan yang bermanfaat, informasi produk, tips dan trik berguna yang dirancang khusus untuk Anda. Anda dapat menggunakannya untuk menghubungi Tim Layanan Pelanggan kami dengan mudah, termasuk layanan live chat atau membeli langsung dari toko online kami. Inilah gerbang Anda ke IATA!</label>
+        <name>CSP_Email_Welcome_Part_2</name>
+    </customLabels>
+    <customLabels>
+        <label>&lt;a href=&quot;{!Portal_Url}&quot;&gt;Bawa saya ke Portal!&lt;/a&gt;</label>
+        <name>CSP_Email_Welcome_Part_3</name>
+    </customLabels>
+    <customLabels>
+        <label>Untuk lebih meningkatkan pengalaman Portal Pelanggan IATA Anda, Anda dapat melengkapi informasi akun Anda kapan pun Anda mau. Anda dapat dengan mudah melakukannya dengan mengklik</label>
+        <name>CSP_Email_Welcome_Part_4</name>
+    </customLabels>
+    <customLabels>
+        <label>Kami harap Anda menikmati Portal Pelanggan IATA kami!</label>
+        <name>CSP_Email_Welcome_Part_5</name>
+    </customLabels>
+    <customLabels>
+        <label>Sepertinya Anda sudah menjadi pengguna portal. Silakan masuk dengan kata sandi Anda.</label>
+        <name>CSP_Existing_User_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Silakan periksa email Anda dan klik tautan untuk membuat kata sandi.</label>
+        <name>CSP_Expired_Email_Success_Msg</name>
+    </customLabels>
+    <customLabels>
+        <label>Tautan verifikasi sudah kadaluwarsa.</label>
+        <name>CSP_Expired_Link_Msg_1</name>
+    </customLabels>
+    <customLabels>
+        <label>Demi keamanan, tautan verifikasi kadaluwarsa setelah 8 jam.</label>
+        <name>CSP_Expired_Link_Msg_2</name>
+    </customLabels>
+    <customLabels>
+        <label>Silakan periksa email Anda dan klik tautan untuk membuat kata sandi.</label>
+        <name>CSP_Expired_Reset_Password_Msg</name>
+    </customLabels>
+    <customLabels>
         <label>Hubungi Kami</label>
         <name>CSP_FAQReachUsBanner_ButtonText</name>
     </customLabels>
@@ -2018,6 +2170,10 @@
     <customLabels>
         <label>Pertanyaan yang Sering Diajukan</label>
         <name>CSP_FAQ_HeaderTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>Buka FAQ kami</label>
+        <name>CSP_FAQ_Label</name>
     </customLabels>
     <customLabels>
         <label>Pilih salah satu kategori utama</label>
@@ -2056,8 +2212,44 @@
         <name>CSP_Filtered</name>
     </customLabels>
     <customLabels>
+        <label>Akun Anda berhasil dibuat! Anda sudah dapat menemukan fitur Portal kami sekarang. Untuk konten yang lebih personal, silakan lengkapi profil Anda.</label>
+        <name>CSP_First_Login_Desc</name>
+    </customLabels>
+    <customLabels>
+        <label>Selamat datang.</label>
+        <name>CSP_First_Login_Title</name>
+    </customLabels>
+    <customLabels>
         <label>Untuk Anda</label>
         <name>CSP_ForYou</name>
+    </customLabels>
+    <customLabels>
+        <label>Lupa kata sandi?</label>
+        <name>CSP_Forgot_Password</name>
+    </customLabels>
+    <customLabels>
+        <label>Sepertinya kami tidak memiliki pengguna yang terdaftar dengan email Anda. Anda dapat dengan mudah membuat akun baru.</label>
+        <name>CSP_Forgot_Password_Error_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Silakan masukkan alamat email yang terdaftar untuk mengubah kata sandi Anda. Kami akan mengirimkan tautan setel ulang ke email Anda.</label>
+        <name>CSP_Forgot_Password_Info</name>
+    </customLabels>
+    <customLabels>
+        <label>Silakan periksa folder spam Anda terlebih dahulu. Jika Anda tidak dapat menemukan apa pun di folder spam, silakan kembali coba setel ulang kata sandi dengan mengklik Coba Lagi.</label>
+        <name>CSP_Forgot_Password_Retry_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Tidak menerima email?</label>
+        <name>CSP_Forgot_Password_Retry_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Silakan periksa email Anda dan klik tautan setel ulang kata sandi</label>
+        <name>CSP_Forgot_Password_Success_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Karena Anda tidak login dalam 90 hari terakhir, kami telah mengirimi Anda email dengan kata sandi baru.</label>
+        <name>CSP_Frozen_User_Message</name>
     </customLabels>
     <customLabels>
         <label>Berikan Akses Pengguna</label>
@@ -2080,8 +2272,424 @@
         <name>CSP_LastUpdate</name>
     </customLabels>
     <customLabels>
+        <label>Email tidak valid</label>
+        <name>CSP_Invalid_Email</name>
+    </customLabels>
+    <customLabels>
+        <label>Info Akun Perusahaan</label>
+        <name>CSP_L2_Account_Information</name>
+    </customLabels>
+    <customLabels>
+        <label>Isi informasi di bawah ini untuk menemukan akun perusahaan Anda.</label>
+        <name>CSP_L2_Account_Information_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Pemilihan Akun</label>
+        <name>CSP_L2_Account_Selection</name>
+    </customLabels>
+    <customLabels>
+        <label>Untuk mencocokkan profil pribadi Anda dengan akun perusahaan Anda, kami memerlukan beberapa detail lainnya. Ini akan membantu kami memeriksa apakah perusahaan Anda sudah terdaftar dengan IATA (International Air Transport Association).</label>
+        <name>CSP_L2_Account_Selection_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Kami tidak dapat menemukan alamat Anda. Silakan klik tombol Langkah Berikutnya untuk mengonfirmasi bahwa alamat Anda benar.</label>
+        <name>CSP_L2_Address_Not_Found_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Sepertinya Anda sudah melengkapi profil Anda sebelumnya, jadi kami sudah memiliki semua detail yang kami butuhkan.</label>
+        <name>CSP_L2_Already_L2_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Semua sudah Siap!</label>
+        <name>CSP_L2_Already_L2_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Kembali ke Info Akun Perusahaan</label>
+        <name>CSP_L2_Back_to_Account_Selection</name>
+    </customLabels>
+    <customLabels>
+        <label>Kembali ke Informasi Alamat Bisnis</label>
+        <name>CSP_L2_Back_to_Business_Address_Information</name>
+    </customLabels>
+    <customLabels>
+        <label>Kembali ke Informasi Perusahaan</label>
+        <name>CSP_L2_Back_to_Company_Information</name>
+    </customLabels>
+    <customLabels>
+        <label>Kembali mengedit</label>
+        <name>CSP_L2_Back_to_Edit</name>
+    </customLabels>
+    <customLabels>
+        <label>Kembali ke Detail Profil</label>
+        <name>CSP_L2_Back_to_Profile_Details</name>
+    </customLabels>
+    <customLabels>
+        <label>Penyelesaian pengisian Profil &amp; Pemilihan Akun</label>
+        <name>CSP_L2_Banner_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Informasi Alamat Bisnis</label>
+        <name>CSP_L2_Business_Address_Information</name>
+    </customLabels>
+    <customLabels>
+        <label>Silakan isi informasi alamat bisnis Anda.</label>
+        <name>CSP_L2_Business_Address_Information_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Kategori</label>
+        <name>CSP_L2_Category</name>
+    </customLabels>
+    <customLabels>
+        <label>Layanan yang Anda minta aksesnya mungkin tidak tersedia untuk kategorisasi yang Anda pilih. Anda masih dapat menyelesaikan pendaftaran Anda, tetapi layanan tersebut mungkin tidak lagi tersedia setelah selesai.</label>
+        <name>CSP_L2_Change_Categorization_Warning</name>
+    </customLabels>
+    <customLabels>
+        <label>Kota</label>
+        <name>CSP_L2_City</name>
+    </customLabels>
+    <customLabels>
+        <label>Akun Perusahaan</label>
+        <name>CSP_L2_Company_Account</name>
+    </customLabels>
+    <customLabels>
+        <label>Silakan periksa rincian perusahaan Anda</label>
+        <name>CSP_L2_Company_Account_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Informasi perusahaan</label>
+        <name>CSP_L2_Company_Information</name>
+    </customLabels>
+    <customLabels>
+        <label>Mendaftarkan akun perusahaan Anda akan memberi Anda akses ke layanan IATA (International Air Transport Association) yang disesuaikan. Anda dapat dengan mudah membuat akun perusahaan dalam dua langkah.</label>
+        <name>CSP_L2_Company_Information_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Lokasi Perusahaan</label>
+        <name>CSP_L2_Company_Location</name>
+    </customLabels>
+    <customLabels>
+        <label>Nama Perusahaan</label>
+        <name>CSP_L2_Company_Name</name>
+    </customLabels>
+    <customLabels>
+        <label>Konfirmasi</label>
+        <name>CSP_L2_Confirmation</name>
+    </customLabels>
+    <customLabels>
+        <label>Anda hanya tinggal satu langkah lagi untuk membuat profil lengkap Anda. Silakan periksa informasi yang disediakan dan klik Kirim jika semuanya benar.</label>
+        <name>CSP_L2_Confirmation_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Kontak Dukungan</label>
+        <name>CSP_L2_Contact_Support</name>
+    </customLabels>
+    <customLabels>
+        <label>Negara</label>
+        <name>CSP_L2_Country</name>
+    </customLabels>
+    <customLabels>
+        <label>Jika Anda tidak dapat menemukan akun perusahaan Anda, Anda dapat dengan mudah membuat akun perusahaan Anda dengan dua langkah mudah.</label>
+        <name>CSP_L2_Create_Account_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Buat akun baru</label>
+        <name>CSP_L2_Create_New_Account</name>
+    </customLabels>
+    <customLabels>
+        <label>Tanggal lahir</label>
+        <name>CSP_L2_Date_of_Birth</name>
+    </customLabels>
+    <customLabels>
+        <label>Detail Anda berhasil disimpan.</label>
+        <name>CSP_L2_Details_Saved</name>
+    </customLabels>
+    <customLabels>
+        <label>Kami sekarang dapat menawarkan Anda pengalaman Portal yang lebih personal! Jelajahi Portal kami dan temukan lebih banyak produk dan layanan yang disesuaikan.</label>
+        <name>CSP_L2_Details_Saved_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Anda sekarang dapat melanjutkan meningkatkan permintaan layanan Anda.</label>
+        <name>CSP_L2_Details_Saved_Service_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Anda sekarang dapat melanjutkan meningkatkan permintaan Anda.</label>
+        <name>CSP_L2_Details_Saved_Topic_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Tidak menemukan yang Anda cari?</label>
+        <name>CSP_L2_Did_Not_Find</name>
+    </customLabels>
+    <customLabels>
+        <label>Anda dapat dengan mudah membuat akun perusahaan dalam dua langkah untuk melengkapi profil Anda.</label>
+        <name>CSP_L2_Did_Not_Find_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Klik di sini untuk melengkapi profil Anda</label>
+        <name>CSP_L2_Edit_Company_Information</name>
+    </customLabels>
+    <customLabels>
+        <label>Kami telah membuat Portal Pelanggan IATA untuk menyesuaikan produk dan layanan IATA, khusus untuk Anda. Agar kami dapat melakukan itu dengan lebih baik, kami ingin mengenal Anda dan organisasi Anda.</label>
+        <name>CSP_L2_Edit_Company_Information_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Surel</label>
+        <name>CSP_L2_Email_Address</name>
+    </customLabels>
+    <customLabels>
+        <label>Cari Alamat</label>
+        <name>CSP_L2_Find_Address</name>
+    </customLabels>
+    <customLabels>
+        <label>Kembali</label>
+        <name>CSP_L2_Go_Back</name>
+    </customLabels>
+    <customLabels>
+        <label>Kembali ke Beranda</label>
+        <name>CSP_L2_Go_To_Homepage</name>
+    </customLabels>
+    <customLabels>
+        <label>Kembali ke Profil</label>
+        <name>CSP_L2_Go_To_Profile</name>
+    </customLabels>
+    <customLabels>
+        <label>Kembali ke Layanan</label>
+        <name>CSP_L2_Go_To_Service</name>
+    </customLabels>
+    <customLabels>
+        <label>Kembali ke Topik</label>
+        <name>CSP_L2_Go_To_Topic</name>
+    </customLabels>
+    <customLabels>
+        <label>Kode IATA</label>
+        <name>CSP_L2_IATA_Codes</name>
+    </customLabels>
+    <customLabels>
+        <label>Apakah ini alamat PO Box?</label>
+        <name>CSP_L2_Is_PO_Box_Address</name>
+    </customLabels>
+    <customLabels>
+        <label>Fungsi Pekerjaan</label>
+        <name>CSP_L2_Job_Function</name>
+    </customLabels>
+    <customLabels>
+        <label>Judul pekerjaan</label>
+        <name>CSP_L2_Job_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Nama Hukum</label>
+        <name>CSP_L2_Legal_Name</name>
+    </customLabels>
+    <customLabels>
+        <label>Langkah Berikutnya / Pemilihan Akun</label>
+        <name>CSP_L2_Next_Account_Selection</name>
+    </customLabels>
+    <customLabels>
+        <label>Langkah Berikutnya / Alamat Informasi</label>
+        <name>CSP_L2_Next_Address_Information</name>
+    </customLabels>
+    <customLabels>
+        <label>Langkah Berikutnya / Konfirmasi</label>
+        <name>CSP_L2_Next_Confirmation</name>
+    </customLabels>
+    <customLabels>
+        <label>Tidak</label>
+        <name>CSP_L2_No</name>
+    </customLabels>
+    <customLabels>
+        <label>Tidak ditemukan hasil yang cocok.</label>
+        <name>CSP_L2_No_Matching_Results</name>
+    </customLabels>
+    <customLabels>
+        <label>Lainnya</label>
+        <name>CSP_L2_Other_Sector</name>
+    </customLabels>
+    <customLabels>
+        <label>Silakan pilih sektor yang relevan dari daftar yang disediakan.</label>
+        <name>CSP_L2_Other_Sector_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Nomor PO Box</label>
+        <name>CSP_L2_PO_Box_Number</name>
+    </customLabels>
+    <customLabels>
+        <label>Data pribadi</label>
+        <name>CSP_L2_Personal_Details</name>
+    </customLabels>
+    <customLabels>
+        <label>Silakan periksa detail pribadi Anda</label>
+        <name>CSP_L2_Personal_Details_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Nomor telepon</label>
+        <name>CSP_L2_Phone_Number</name>
+    </customLabels>
+    <customLabels>
+        <label>Kode Pos</label>
+        <name>CSP_L2_Postal_Code</name>
+    </customLabels>
+    <customLabels>
+        <label>Profil lengkap</label>
+        <name>CSP_L2_Profile_Details</name>
+    </customLabels>
+    <customLabels>
+        <label>Tambahkan detail pribadi Anda untuk mengizinkan IATA (International Air Transport Association) menyarankan konten dan layanan yang dipersonalisasi.</label>
+        <name>CSP_L2_Profile_Details_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Profil Anda belum sepenuhnya diperbarui.</label>
+        <name>CSP_L2_Profile_Incomplete</name>
+    </customLabels>
+    <customLabels>
+        <label>Namun kami menyimpannya sebagai konsep agar Anda dapat melanjutkannya nanti. Anda yakin ingin berhenti?</label>
+        <name>CSP_L2_Profile_Incomplete_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Sayangnya, ada yang salah saat membuat akun Anda. Untuk bantuan lebih lanjut, silakan hubungi tim dukungan kami.</label>
+        <name>CSP_L2_Registration_Error_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Ada yang salah</label>
+        <name>CSP_L2_Registration_Error_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Batalkan</label>
+        <name>CSP_L2_Requested_Modal_Cancel</name>
+    </customLabels>
+    <customLabels>
+        <label>Lengkapi Profil Saya</label>
+        <name>CSP_L2_Requested_Modal_Complete</name>
+    </customLabels>
+    <customLabels>
+        <label>Untuk melanjutkan, kami membutuhkan detail lebih lanjut tentang Anda dan organisasi Anda. Jangan khawatir, itu tidak akan membutuhkan waktu lama!</label>
+        <name>CSP_L2_Requested_Modal_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Hai</label>
+        <name>CSP_L2_Requested_Modal_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_L2_Required --></label>
+        <name>CSP_L2_Required</name>
+    </customLabels>
+    <customLabels>
+        <label>Pencarian</label>
+        <name>CSP_L2_Search</name>
+    </customLabels>
+    <customLabels>
+        <label>Harap isi setidaknya satu dari dua bidang di bawah ini.</label>
+        <name>CSP_L2_Search_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Hasil Pencarian</label>
+        <name>CSP_L2_Search_Results</name>
+    </customLabels>
+    <customLabels>
+        <label>Kami menemukan +50 akun yang cocok dengan kriteria pencarian Anda.</label>
+        <name>CSP_L2_Search_Results_Above_Limit</name>
+    </customLabels>
+    <customLabels>
+        <label>Pertajam Kriteria Pencarian</label>
+        <name>CSP_L2_Search_Results_Above_Limit_Link</name>
+    </customLabels>
+    <customLabels>
+        <label>--empty--</label>
+        <name>CSP_L2_Search_Results_Above_Limit_Link_1</name>
+    </customLabels>
+    <customLabels>
+        <label>untuk melihat lebih sedikit opsi.</label>
+        <name>CSP_L2_Search_Results_Above_Limit_Link_2</name>
+    </customLabels>
+    <customLabels>
+        <label>Sektor</label>
+        <name>CSP_L2_Sector</name>
+    </customLabels>
+    <customLabels>
+        <label>Pilih</label>
+        <name>CSP_L2_Select</name>
+    </customLabels>
+    <customLabels>
+        <label>Silakan pilih alamat yang benar. Jika Anda tidak dapat menemukan alamat yang benar dari daftar, kami akan menyimpan alamat yang Anda masukkan. Klik Langkah Berikutnya untuk melanjutkan.</label>
+        <name>CSP_L2_Select_Address_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Pilih akun yang cocok dengan Anda dari daftar.</label>
+        <name>CSP_L2_Select_Company_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Negara</label>
+        <name>CSP_L2_State</name>
+    </customLabels>
+    <customLabels>
+        <label>Jalan</label>
+        <name>CSP_L2_Street</name>
+    </customLabels>
+    <customLabels>
+        <label>Kirimkan</label>
+        <name>CSP_L2_Submit</name>
+    </customLabels>
+    <customLabels>
+        <label>Judul</label>
+        <name>CSP_L2_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Nama dagang</label>
+        <name>CSP_L2_Trade_Name</name>
+    </customLabels>
+    <customLabels>
+        <label>Situs web</label>
+        <name>CSP_L2_Website</name>
+    </customLabels>
+    <customLabels>
+        <label>Ya</label>
+        <name>CSP_L2_Yes</name>
+    </customLabels>
+    <customLabels>
         <label>Keluar</label>
         <name>CSP_LogOut</name>
+    </customLabels>
+    <customLabels>
+        <label>Masuk sekarang juga.</label>
+        <name>CSP_Login_Now</name>
+    </customLabels>
+    <customLabels>
+        <label>Beberapa hari yang lalu, Anda mendaftar untuk menjadi bagian dari Portal Pelanggan IATA. Terima kasih dan selamat datang!</label>
+        <name>CSP_Lvl2_Reminder_1</name>
+    </customLabels>
+    <customLabels>
+        <label>Kami telah membuat Portal Pelanggan IATA untuk menyesuaikan produk dan layanan IATA, khusus untuk Anda. Agar kami dapat melakukan itu dengan lebih baik, kami ingin mengenal Anda dan organisasi Anda.</label>
+        <name>CSP_Lvl2_Reminder_2</name>
+    </customLabels>
+    <customLabels>
+        <label>Kami telah membuatnya mudah dan cepat - hanya dengan &lt;strong&gt;&lt;a href=[URL]&gt; klik di sini untuk melengkapi profil Anda &lt;/a&gt;&lt;/strong&gt;.</label>
+        <name>CSP_Lvl2_Reminder_3</name>
+    </customLabels>
+    <customLabels>
+        <label>Anda akan mendapatkan:</label>
+        <name>CSP_Lvl2_Reminder_4</name>
+    </customLabels>
+    <customLabels>
+        <label>· Entri Langsung untuk Layanan yang Disesuaikan.</label>
+        <name>CSP_Lvl2_Reminder_5</name>
+    </customLabels>
+    <customLabels>
+        <label>· Akses Penuh ke Kurasi Pengetahuan &amp; Standar IATA (International Air Transport Association)</label>
+        <name>CSP_Lvl2_Reminder_6</name>
+    </customLabels>
+    <customLabels>
+        <label>· Dukungan Khusus dari Layanan Profesional IATA (International Air Transport Association)</label>
+        <name>CSP_Lvl2_Reminder_7</name>
+    </customLabels>
+    <customLabels>
+        <label>· Dan masih banyak lagi!</label>
+        <name>CSP_Lvl2_Reminder_8</name>
+    </customLabels>
+    <customLabels>
+        <label>&lt;strong&gt;&lt;a href=[URL]&gt;Klik di sini untuk melengkapi profil Anda&lt;/a&gt;&lt;/strong&gt;</label>
+        <name>CSP_Lvl2_Reminder_9</name>
+    </customLabels>
+    <customLabels>
+        <label>Dapatkan hasil maksimal dari IATA Portal Pelanggan - Lengkapi Profil Anda!</label>
+        <name>CSP_Lvl2_Reminder_Subject</name>
     </customLabels>
     <customLabels>
         <label>Anda dapat mengelola pengguna-pengguna dari daftar di bawah ini.</label>
@@ -2110,6 +2718,10 @@
     <customLabels>
         <label>Nama</label>
         <name>CSP_Name</name>
+    </customLabels>
+    <customLabels>
+        <label>Berikutnya</label>
+        <name>CSP_Next</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_NewContactProfile --></label>
@@ -2156,12 +2768,36 @@
         <name>CSP_Payment</name>
     </customLabels>
     <customLabels>
+        <label>Kata sandi</label>
+        <name>CSP_Password</name>
+    </customLabels>
+    <customLabels>
+        <label>Minimal 10 karakter</label>
+        <name>CSP_Password_Rule_1</name>
+    </customLabels>
+    <customLabels>
+        <label>Setidaknya 1 huruf besar</label>
+        <name>CSP_Password_Rule_2</name>
+    </customLabels>
+    <customLabels>
+        <label>Setidaknya 1 angka</label>
+        <name>CSP_Password_Rule_3</name>
+    </customLabels>
+    <customLabels>
+        <label>Paling tidak 1 simbol (! @ # $% * () _ + ^ &amp;)</label>
+        <name>CSP_Password_Rule_4</name>
+    </customLabels>
+    <customLabels>
         <label>Kami membutuhkan masukan Anda untuk melanjutkan kasus Anda.</label>
         <name>CSP_PendingCustomerCase_Warning</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_Period --></label>
         <name>CSP_Period</name>
+    </customLabels>
+    <customLabels>
+        <label>Informasi pribadi.</label>
+        <name>CSP_Personal_Information</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_PortalPath --></label>
@@ -2172,8 +2808,17 @@
         <name>CSP_Portal_Administrators</name>
     </customLabels>
     <customLabels>
+        <label>Login Portal saat ini dinonaktifkan. Terima kasih atas pengertian Anda.</label>
+        <name>CSP_Portal_Login_Disabled_Message</name>
+    </customLabels>
+    <customLabels>
         <label>Status Portal</label>
         <name>CSP_Portal_Status</name>
+    </customLabels>
+    <customLabels>
+        <label>Saya setuju dengan IATA &lt;a target=&quot;_blank&quot; href=&quot;https://www.iata.org/Pages/privacy.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Kebijakan Privasi&lt;/a&gt;
+dan &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-portal/Pages/terms.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Syarat Penggunaan. &lt;/a&gt;</label>
+        <name>CSP_Privacy_Policy</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_Profile_PrivacyManagement_Link --></label>
@@ -2232,6 +2877,26 @@
         <name>CSP_Record_Deleted</name>
     </customLabels>
     <customLabels>
+        <label>Pendaftaran selesai dengan sukses</label>
+        <name>CSP_Registration_Complete</name>
+    </customLabels>
+    <customLabels>
+        <label>Selesaikan proses pendaftaran dasar untuk bergabung dengan Portal Pelanggan IATA.</label>
+        <name>CSP_Registration_Description</name>
+    </customLabels>
+    <customLabels>
+        <label>Portal Pendaftaran saat ini dinonaktifkan. Terima kasih atas pengertian Anda.</label>
+        <name>CSP_Registration_Disabled_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Anda mencoba mendaftar menggunakan pengguna yang sudah ada, silakan ubah email atau klik tombol masuk untuk menuju ke Halaman Masuk</label>
+        <name>CSP_Registration_Existing_User_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Silakan periksa folder spam Anda terlebih dahulu. Jika Anda tidak dapat menemukan apa pun di folder spam, silakan coba mendaftar lagi dengan mengklik tombol Coba Lagi.</label>
+        <name>CSP_Registration_Retry_Message</name>
+    </customLabels>
+    <customLabels>
         <label>Artikel Terkait</label>
         <name>CSP_RelatedArticles</name>
     </customLabels>
@@ -2252,8 +2917,48 @@
         <name>CSP_Request_Service</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Resend Verification Email --></label>
+        <name>CSP_Resend_Verification_Email</name>
+    </customLabels>
+    <customLabels>
+        <label>Atur Ulang Kata Sandi</label>
+        <name>CSP_Reset_Password</name>
+    </customLabels>
+    <customLabels>
+        <label>Setel ulang kata sandi Anda untuk Portal Pelanggan IATA</label>
+        <name>CSP_Reset_Password_Email_Subject</name>
+    </customLabels>
+    <customLabels>
+        <label>Silakan masukkan kata sandi baru Anda.</label>
+        <name>CSP_Reset_Password_Info_1</name>
+    </customLabels>
+    <customLabels>
+        <label>Kata sandi harus mengandung:</label>
+        <name>CSP_Reset_Password_Info_2</name>
+    </customLabels>
+    <customLabels>
+        <label>Kata sandi Anda telah berhasil diubah.</label>
+        <name>CSP_Reset_Password_Success_Msg_1</name>
+    </customLabels>
+    <customLabels>
+        <label>Anda sekarang dapat masuk dengan kata sandi baru Anda.</label>
+        <name>CSP_Reset_Password_Success_Msg_2</name>
+    </customLabels>
+    <customLabels>
+        <label>IP komputer Anda teridentifikasi sebagai sumber dari salah satu negara yang ada di daftar embargo oleh otoritas AS.&lt;br/&gt;Platform yang mendukung Portal Pelanggan kami sesuai dengan peraturan AS, oleh karena itu saat ini kami belum dapat memberikan akses ke Portal Pelanggan melalui alamat IP Anda.&lt;br/&gt;&lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Klik di &lt;/a&gt;sini untuk menghubungi kami.</label>
+        <name>CSP_Restricted_Login_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Login Terbatas</label>
+        <name>CSP_Restricted_Login_Title</name>
+    </customLabels>
+    <customLabels>
         <label>Simpan</label>
         <name>CSP_Save</name>
+    </customLabels>
+    <customLabels>
+        <label>Simpan &amp; Masuk</label>
+        <name>CSP_Save_Login</name>
     </customLabels>
     <customLabels>
         <label>Cari berdasarkan perincian dokumen</label>
@@ -2428,6 +3133,10 @@
         <name>CSP_Settings</name>
     </customLabels>
     <customLabels>
+        <label>Lewati Untuk Sekarang ini.</label>
+        <name>CSP_Skip</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_Status --></label>
         <name>CSP_Status</name>
     </customLabels>
@@ -2436,7 +3145,7 @@
         <name>CSP_Submit</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Success --></label>
+        <label>Berhasil</label>
         <name>CSP_Success</name>
     </customLabels>
     <customLabels>
@@ -2464,12 +3173,24 @@
         <name>CSP_Title</name>
     </customLabels>
     <customLabels>
+        <label>penyelesaian masalah</label>
+        <name>CSP_Troubleshooting</name>
+    </customLabels>
+    <customLabels>
         <label>&lt;a href=&quot;/ISSP_AMSCases&quot; target=&quot;_self&quot;&gt;Klik di sini untuk mengakses langsung Akreditasi IATA dan Perubahan&lt;/a&gt;</label>
         <name>CSP_Travel_Agent_Accreditation_Changes_Access</name>
     </customLabels>
     <customLabels>
         <label>&lt;a href=&quot;/s/manage-service?serviceId=a2ww0000001D7GOAA0&quot; target=&quot;_self&quot;&gt; Klik di sini untuk meminta akreditasi dan Perubahan IATA&lt;/a&gt;</label>
         <name>CSP_Travel_Agent_Accreditation_Changes_Request</name>
+    </customLabels>
+    <customLabels>
+        <label>Periksa untuk bantuan lebih lanjut</label>
+        <name>CSP_Troubleshooting_Info</name>
+    </customLabels>
+    <customLabels>
+        <label>Coba Lagi</label>
+        <name>CSP_Try_Again</name>
     </customLabels>
     <customLabels>
         <label>Jenis Kasus</label>
@@ -2480,36 +3201,52 @@
         <name>CSP_User</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Welcome_Panel_Bullet_1_Desc --></label>
+        <label>Terjadi kesalahan yang tak terduga!</label>
+        <name>CSP_Unexcepted_Error</name>
+    </customLabels>
+    <customLabels>
+        <label>Selamat datang di Portal Pelanggan IATA</label>
+        <name>CSP_Welcome_Email_Subject</name>
+    </customLabels>
+    <customLabels>
+        <label>Akses langsung ke lebih dari 60 layanan IATA, dipilih khusus untuk Anda.</label>
         <name>CSP_Welcome_Panel_Bullet_1_Desc</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Welcome_Panel_Bullet_1_Title --></label>
+        <label>Akses layanan IATA</label>
         <name>CSP_Welcome_Panel_Bullet_1_Title</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Welcome_Panel_Bullet_2_Desc --></label>
+        <label>Kelola dan perbaharui profil IATA Anda dengan mudah.</label>
         <name>CSP_Welcome_Panel_Bullet_2_Desc</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Welcome_Panel_Bullet_2_Title --></label>
+        <label>Tetap terkini</label>
         <name>CSP_Welcome_Panel_Bullet_2_Title</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Welcome_Panel_Bullet_3_Desc --></label>
+        <label>Temukan pilihan publikasi, pelatihan, serta produk dan layanan IATA lainnya.</label>
         <name>CSP_Welcome_Panel_Bullet_3_Desc</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Welcome_Panel_Bullet_3_Title --></label>
+        <label>Temukan penawaran khusus</label>
         <name>CSP_Welcome_Panel_Bullet_3_Title</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Welcome_Panel_Bullet_4_Desc --></label>
+        <label>Akses berbagai kumpulan pertanyaan &amp; jawaban kami; dan dapatkan bantuan langsung dari IATA.</label>
         <name>CSP_Welcome_Panel_Bullet_4_Desc</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Welcome_Panel_Bullet_4_Title --></label>
+        <label>Dapatkan jawaban</label>
         <name>CSP_Welcome_Panel_Bullet_4_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Akses dan kelola semua layanan IATA Anda. Konsultasikan informasi tentang berbagai macam produk dan dapatkan bantuan untuk berbagai hal. Berikut untuk Anda.</label>
+        <name>CSP_Welcome_Panel_Info</name>
+    </customLabels>
+    <customLabels>
+        <label>Selamat datang di Portal Pelanggan IATA</label>
+        <name>CSP_Welcome_Title</name>
     </customLabels>
     <customLabels>
         <label>Anda &amp; IATA</label>
@@ -2704,7 +3441,7 @@
         <name>ConfirmSendRecycleBin</name>
     </customLabels>
     <customLabels>
-        <label><!-- Confirm password --></label>
+        <label>Konfirmasi sandi yang baru</label>
         <name>Confirm_password</name>
     </customLabels>
     <customLabels>
@@ -3228,7 +3965,7 @@
         <name>CurrencyCenter_def_TTBS</name>
     </customLabels>
     <customLabels>
-        <label><!-- Current password --></label>
+        <label>Kata sandi saat ini</label>
         <name>Current_password</name>
     </customLabels>
     <customLabels>
@@ -13428,7 +14165,7 @@ Dapatkah Anda mengkonfirmasi tentang negara manakah yang Anda butuhkan bantuan d
         <name>ISSP_ContactName</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Contact About IATA Courses --></label>
+        <label>Apakah Anda menghubungi kami tentang kursus IATA?</label>
         <name>ISSP_Contact_About_IATA_Courses</name>
     </customLabels>
     <customLabels>
@@ -14286,6 +15023,10 @@ Dapatkah Anda mengkonfirmasi tentang negara manakah yang Anda butuhkan bantuan d
     <customLabels>
         <label><!-- ISSP_FDS_UnselectAll --></label>
         <name>ISSP_FDS_UnselectAll</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FS_Link --></label>
+        <name>ISSP_FS_Link</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_Fax --></label>
@@ -16834,7 +17575,7 @@ Jika Anda ingin mengganti kata sandi, kembali ke layar masuk lalu gunakan fungsi
         <name>ISSP_See_more</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Select --></label>
+        <label>- Pilih -</label>
         <name>ISSP_Select</name>
     </customLabels>
     <customLabels>
@@ -18307,7 +19048,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>Location</name>
     </customLabels>
     <customLabels>
-        <label><!-- Login --></label>
+        <label>Masuk</label>
         <name>Login</name>
     </customLabels>
     <customLabels>
@@ -18427,7 +19168,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>NewGenApp_ServiceRequested</name>
     </customLabels>
     <customLabels>
-        <label><!-- New password --></label>
+        <label>Kata sandi baru</label>
         <name>New_password</name>
     </customLabels>
     <customLabels>
@@ -18519,7 +19260,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>OneId_Account_Association</name>
     </customLabels>
     <customLabels>
-        <label><!-- OneId_Account Creation --></label>
+        <label>Pembuatan akun</label>
         <name>OneId_Account_Creation</name>
     </customLabels>
     <customLabels>
@@ -18583,7 +19324,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>OneId_CreateNew</name>
     </customLabels>
     <customLabels>
-        <label><!-- OneId_CreateNewAccount --></label>
+        <label>Buat akun baru</label>
         <name>OneId_CreateNewAccount</name>
     </customLabels>
     <customLabels>
@@ -18991,7 +19732,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>OneId_Login</name>
     </customLabels>
     <customLabels>
-        <label><!-- OneId_LoginFail --></label>
+        <label>Upaya login Anda gagal. Pastikan email dan kata sandi sudah benar.</label>
         <name>OneId_LoginFail</name>
     </customLabels>
     <customLabels>
@@ -19063,7 +19804,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>OneId_Online_Help_Link</name>
     </customLabels>
     <customLabels>
-        <label><!-- OneId_Password --></label>
+        <label>Kata sandi</label>
         <name>OneId_Password</name>
     </customLabels>
     <customLabels>
@@ -19890,7 +20631,7 @@ Jika Anda ingin mengganti kata sandi, kembali ke layar masuk lalu gunakan fungsi
         <name>PKB2_search_to_long</name>
     </customLabels>
     <customLabels>
-        <label><!-- PKB2: Contact Us Send Email --></label>
+        <label>Kirim Ulang Surel Verifikasi</label>
         <name>PKB2_send_mail</name>
     </customLabels>
     <customLabels>
@@ -20976,6 +21717,10 @@ Jika Anda ingin mengganti kata sandi, kembali ke layar masuk lalu gunakan fungsi
     <customLabels>
         <label>Jabatan Pekerjaan</label>
         <name>csp_My_Profile_Job_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- csp_Next_Step_Account_Selection --></label>
+        <name>csp_Next_Step_Account_Selection</name>
     </customLabels>
     <customLabels>
         <label><!-- Request New Service --></label>

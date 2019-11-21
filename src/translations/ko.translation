@@ -1916,6 +1916,38 @@
         <name>CSP_Cases</name>
     </customLabels>
     <customLabels>
+        <label>이메일 변경</label>
+        <name>CSP_Change_Email</name>
+    </customLabels>
+    <customLabels>
+        <label>비밀번호 변경</label>
+        <name>CSP_Change_Password</name>
+    </customLabels>
+    <customLabels>
+        <label>새 비밀번호를 설정할 수 없습니다.</label>
+        <name>CSP_Change_Password_Error</name>
+    </customLabels>
+    <customLabels>
+        <label>현재 비밀번호를 입력한 다음 새 비밀번호를 설정하고 이를 확인하십시오.</label>
+        <name>CSP_Change_Password_Info_1</name>
+    </customLabels>
+    <customLabels>
+        <label>암호는 10자 이상으로 이루어져야 하며 최소 대문자 1개, 숫자 1개, 기호 1개가 들어가야 합니다 (! @ # $ % * () _ + ^ &amp;)</label>
+        <name>CSP_Change_Password_Info_2</name>
+    </customLabels>
+    <customLabels>
+        <label>접근 세부 정보를 얻으려면 고객님의 이메일을 확인하십시오</label>
+        <name>CSP_Check_Email</name>
+    </customLabels>
+    <customLabels>
+        <label>비밀번호가 성공적으로 설정되었습니다.</label>
+        <name>CSP_Chg_Pass_Success_Msg_1</name>
+    </customLabels>
+    <customLabels>
+        <label>새 비밀번호를 사용하여 로그인할 수 있습니다.</label>
+        <name>CSP_Chg_Pass_Success_Msg_2</name>
+    </customLabels>
+    <customLabels>
         <label>커뮤니티</label>
         <name>CSP_Community</name>
     </customLabels>
@@ -1932,12 +1964,20 @@
         <name>CSP_CompanyProfile</name>
     </customLabels>
     <customLabels>
+        <label>프로필 완성</label>
+        <name>CSP_Complete_Profile</name>
+    </customLabels>
+    <customLabels>
         <label>&lt; B &gt; {1} &lt; / B &gt;를 위한&lt; B &gt; {0} &lt; / B &gt; 액세스를 거부하시겠습니까 ?</label>
         <name>CSP_Confirm_Deny_User_Access</name>
     </customLabels>
     <customLabels>
         <label>&lt; B &gt; {1} &lt; / B &gt; 에 대한 액세스 권한을 &lt; B &gt; {0} &lt; / B &gt; 에 부여하시겠습니까?</label>
         <name>CSP_Confirm_Grant_User_Access</name>
+    </customLabels>
+    <customLabels>
+        <label>국제항공운송협회 (IATA) 고객 포털 이메일 확인</label>
+        <name>CSP_Confirmation_Email_Subject</name>
     </customLabels>
     <customLabels>
         <label>{0} 액세스 요청이 포털 관리자에게 전달되었습니다. 프로세스에 대한 질문이나 요청이 있으시면 아래의 관리자에게 문의하십시오.</label>
@@ -1964,6 +2004,26 @@
         <name>CSP_DateTo</name>
     </customLabels>
     <customLabels>
+        <label>국제항공운송협회 (IATA) 고객 포털을 처음 사용하십니까?</label>
+        <name>CSP_Create_New_Account_Info</name>
+    </customLabels>
+    <customLabels>
+        <label>새 계정 만들기</label>
+        <name>CSP_Create_New_Account_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>비밀번호 생성</label>
+        <name>CSP_Create_Password</name>
+    </customLabels>
+    <customLabels>
+        <label>새 비밀번호를 설정할 수 없습니다. 다시 시도하십시오.</label>
+        <name>CSP_Create_Password_Error</name>
+    </customLabels>
+    <customLabels>
+        <label>친애하는 고객님께</label>
+        <name>CSP_Dear</name>
+    </customLabels>
+    <customLabels>
         <label>사용자 액세스 거부</label>
         <name>CSP_Deny_User_Access_Title</name>
     </customLabels>
@@ -1988,6 +2048,22 @@
         <name>CSP_Documents_PubliCountry</name>
     </customLabels>
     <customLabels>
+        <label>이메일</label>
+        <name>CSP_Email</name>
+    </customLabels>
+    <customLabels>
+        <label>국제항공운송협회 (IATA)  고객 포털에 등록해 주셔서 감사합니다. 등록을 마치기까지 딱 한 발짝이 남아있습니다.</label>
+        <name>CSP_Email_Confirmation_Body_Part_1</name>
+    </customLabels>
+    <customLabels>
+        <label>다음을 클릭하여 이메일 주소를 인증하세요</label>
+        <name>CSP_Email_Confirmation_Body_Part_2</name>
+    </customLabels>
+    <customLabels>
+        <label>보안상의 이유로 이 링크는 8시간 동안 유효합니다. 시간제한이 만료되면 재요청하셔야 합니다.</label>
+        <name>CSP_Email_Confirmation_Body_Part_3</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP Email Domain Error Message --></label>
         <name>CSP_Email_Domain_Error_Message</name>
     </customLabels>
@@ -2004,6 +2080,82 @@
         <name>CSP_Error_while_delete_record</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Email Footer Image --></label>
+        <name>CSP_Email_Footer_Image</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Header Image --></label>
+        <name>CSP_Email_Header_Image</name>
+    </customLabels>
+    <customLabels>
+        <label>이 링크</label>
+        <name>CSP_Email_Here</name>
+    </customLabels>
+    <customLabels>
+        <label>국제항공운송협회 (IATA)  고객 포털  비밀번호 재설정 요청이 접수되었습니다.</label>
+        <name>CSP_Email_Password_Reset_Body_Part_1</name>
+    </customLabels>
+    <customLabels>
+        <label>다음을 클릭하세요</label>
+        <name>CSP_Email_Password_Reset_Body_Part_2</name>
+    </customLabels>
+    <customLabels>
+        <label>새 비밀번호를 설정하기 위해.</label>
+        <name>CSP_Email_Password_Reset_Body_Part_3</name>
+    </customLabels>
+    <customLabels>
+        <label>보안상의 이유로 이 링크는 8시간 동안 유효합니다. 시간 제한이 만료되면 재요청하셔야 합니다.</label>
+        <name>CSP_Email_Password_Reset_Body_Part_4</name>
+    </customLabels>
+    <customLabels>
+        <label>국제항공운송협회 (IATA) 에 참여해 주셔서 감사합니다.</label>
+        <name>CSP_Email_Signature_Part_1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Signature Part 2 --></label>
+        <name>CSP_Email_Signature_Part_2</name>
+    </customLabels>
+    <customLabels>
+        <label>고객님께서 국제항공운송협회 (IATA)  고객 포털에서 저희와 함께 하게 되어 기쁩니다!</label>
+        <name>CSP_Email_Welcome_Part_1</name>
+    </customLabels>
+    <customLabels>
+        <label>국제항공운송협회 (IATA)  고객 포털에는 유용한 서비스, 제품 정보, 유용한 팁 및 정보가 포함되어 있습니다. 이를 사용해 실시간 채팅이나 온라인 상점에서 직접 구매하는 등 고객 서비스 팀에 쉽게 연락하실 수 있습니다. 국제항공운송협회 (IATA)에 들어가는 문과 같습니다!</label>
+        <name>CSP_Email_Welcome_Part_2</name>
+    </customLabels>
+    <customLabels>
+        <label>&lt;a href=&quot;{!Portal_Url}&quot;&gt;포털로 데려다 주세요!&lt;/a&gt;</label>
+        <name>CSP_Email_Welcome_Part_3</name>
+    </customLabels>
+    <customLabels>
+        <label>국제항공운송협회 (IATA)  고객 포털 사용  경험을 더욱 향상하기 위해 원하시는 때 언제든 계정 정보를 완성하실 수 있습니다. 다음을 클릭하여 쉽게 그렇게 하실 수 있습니다</label>
+        <name>CSP_Email_Welcome_Part_4</name>
+    </customLabels>
+    <customLabels>
+        <label>저희는 귀하가 저희의 국제항공운송협회 (IATA)  고객 포털을 즐기시길 바랍니다!</label>
+        <name>CSP_Email_Welcome_Part_5</name>
+    </customLabels>
+    <customLabels>
+        <label>이미 포털 사용자인 것 같습니다. 비밀번호로 로그인하세요.</label>
+        <name>CSP_Existing_User_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>이메일을 확인하고 비밀번호 생성 링크를 클릭하십시오.</label>
+        <name>CSP_Expired_Email_Success_Msg</name>
+    </customLabels>
+    <customLabels>
+        <label>확인 링크가 만료되었습니다.</label>
+        <name>CSP_Expired_Link_Msg_1</name>
+    </customLabels>
+    <customLabels>
+        <label>보안상의 이유로 확인 링크는 8시간 후에 만료됩니다.</label>
+        <name>CSP_Expired_Link_Msg_2</name>
+    </customLabels>
+    <customLabels>
+        <label>이메일을 확인하고 비밀번호 생성 링크를 클릭하십시오.</label>
+        <name>CSP_Expired_Reset_Password_Msg</name>
+    </customLabels>
+    <customLabels>
         <label>문의하기</label>
         <name>CSP_FAQReachUsBanner_ButtonText</name>
     </customLabels>
@@ -2018,6 +2170,10 @@
     <customLabels>
         <label>자주 묻는 질문</label>
         <name>CSP_FAQ_HeaderTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>FAQ로 이동</label>
+        <name>CSP_FAQ_Label</name>
     </customLabels>
     <customLabels>
         <label>주요 카테고리 중 하나를 선택</label>
@@ -2056,8 +2212,44 @@
         <name>CSP_Filtered</name>
     </customLabels>
     <customLabels>
+        <label>계정이 성공적으로 생성되었습니다! 포털 기능을 이미 사용하실 수 있습니다. 더욱 개인화된 콘텐츠를 원하시면 프로필을 완성해 주십시오.</label>
+        <name>CSP_First_Login_Desc</name>
+    </customLabels>
+    <customLabels>
+        <label>가입을 환영합니다.</label>
+        <name>CSP_First_Login_Title</name>
+    </customLabels>
+    <customLabels>
         <label>귀하를 위해</label>
         <name>CSP_ForYou</name>
+    </customLabels>
+    <customLabels>
+        <label>비밀번호를 잊으셨나요?</label>
+        <name>CSP_Forgot_Password</name>
+    </customLabels>
+    <customLabels>
+        <label>고객님의 이메일로 등록된 사용자가 없습니다. 새 계정을 쉽게 만들 수 있습니다.</label>
+        <name>CSP_Forgot_Password_Error_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>비밀번호를 재설정하려면 등록된 이메일 주소를 입력하세요. 이메일로 재설정 링크를 보내드립니다.</label>
+        <name>CSP_Forgot_Password_Info</name>
+    </customLabels>
+    <customLabels>
+        <label>먼저 스팸 폴더를 확인하세요. 스팸 폴더에서 찾을 수 없다면 다시 시도를 클릭하여 비밀번호를 다시 재설정해보세요.</label>
+        <name>CSP_Forgot_Password_Retry_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>이메일을 받지 못했습니까?</label>
+        <name>CSP_Forgot_Password_Retry_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>이메일을 확인하고 비밀번호 재설정 링크를 클릭하세요</label>
+        <name>CSP_Forgot_Password_Success_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>지난 90일 동안 로그인하지 않았기 때문에 새 비밀번호가 포함된 이메일을 보냈습니다.</label>
+        <name>CSP_Frozen_User_Message</name>
     </customLabels>
     <customLabels>
         <label>사용자 액세스 권한 부여</label>
@@ -2080,8 +2272,424 @@
         <name>CSP_LastUpdate</name>
     </customLabels>
     <customLabels>
+        <label>잘못된 이메일</label>
+        <name>CSP_Invalid_Email</name>
+    </customLabels>
+    <customLabels>
+        <label>회사 계정 정보</label>
+        <name>CSP_L2_Account_Information</name>
+    </customLabels>
+    <customLabels>
+        <label>아래 정보를 작성하여 회사 계정을 찾으십시오.</label>
+        <name>CSP_L2_Account_Information_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>계정 선택</label>
+        <name>CSP_L2_Account_Selection</name>
+    </customLabels>
+    <customLabels>
+        <label>귀하의 개인 프로필을 회사 계정과 일치시키려면 더 자세한 정보가 필요합니다. 이를 통해 귀사가 국제항공운송협회 (IATA)에 이미 등록되어 있는지 확인할 수 있습니다.</label>
+        <name>CSP_L2_Account_Selection_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>주소를 찾을 수 없습니다. 다음 단계 버튼을 클릭하여 주소가 올바른지 확인하십시오.</label>
+        <name>CSP_L2_Address_Not_Found_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>이미 프로필을 완성하신 것으로 보입니다. 저희는 필요한 세부 정보를 모두 가지고 있습니다.</label>
+        <name>CSP_L2_Already_L2_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>준비가 다 되었습니다!</label>
+        <name>CSP_L2_Already_L2_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>회사 계정 정보로 돌아가기</label>
+        <name>CSP_L2_Back_to_Account_Selection</name>
+    </customLabels>
+    <customLabels>
+        <label>사업장 주소 정보로 돌아가기</label>
+        <name>CSP_L2_Back_to_Business_Address_Information</name>
+    </customLabels>
+    <customLabels>
+        <label>회사 정보로 돌아가기</label>
+        <name>CSP_L2_Back_to_Company_Information</name>
+    </customLabels>
+    <customLabels>
+        <label>편집으로 돌아가기</label>
+        <name>CSP_L2_Back_to_Edit</name>
+    </customLabels>
+    <customLabels>
+        <label>프로필 정보로 돌아가기</label>
+        <name>CSP_L2_Back_to_Profile_Details</name>
+    </customLabels>
+    <customLabels>
+        <label>프로필 완성 &amp; 계정 선택</label>
+        <name>CSP_L2_Banner_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>사업장 주소 정보</label>
+        <name>CSP_L2_Business_Address_Information</name>
+    </customLabels>
+    <customLabels>
+        <label>사업장 주소 정보를 작성하십시오.</label>
+        <name>CSP_L2_Business_Address_Information_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>범주</label>
+        <name>CSP_L2_Category</name>
+    </customLabels>
+    <customLabels>
+        <label>선택하신 카테고리에서는 고객님께서 권한을 요청한 서비스의 이용이 불가할 수 있습니다. 그래도 등록 완료는 가능합니다. 다만 완료 후에 서비스 이용이 불가할 수 있습니다.</label>
+        <name>CSP_L2_Change_Categorization_Warning</name>
+    </customLabels>
+    <customLabels>
+        <label>도시</label>
+        <name>CSP_L2_City</name>
+    </customLabels>
+    <customLabels>
+        <label>회사 계정</label>
+        <name>CSP_L2_Company_Account</name>
+    </customLabels>
+    <customLabels>
+        <label>회사 정보를 확인하십시오</label>
+        <name>CSP_L2_Company_Account_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>회사 정보</label>
+        <name>CSP_L2_Company_Information</name>
+    </customLabels>
+    <customLabels>
+        <label>회사 계정을 등록하면 맞춤형 국제항공운송협회 (IATA) 서비스를 이용하실 수 있습니다. 두가지 단계를 통해 회사 계정을 쉽게 만들 수 있습니다.</label>
+        <name>CSP_L2_Company_Information_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>회사 위치</label>
+        <name>CSP_L2_Company_Location</name>
+    </customLabels>
+    <customLabels>
+        <label>회사 이름</label>
+        <name>CSP_L2_Company_Name</name>
+    </customLabels>
+    <customLabels>
+        <label>확인</label>
+        <name>CSP_L2_Confirmation</name>
+    </customLabels>
+    <customLabels>
+        <label>프로필을 완성하기까지 얼마 남지 않았습니다. 제공된 정보를 확인하고 모든 것이 정확하면 제출을 클릭하십시오.</label>
+        <name>CSP_L2_Confirmation_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>지원 문의</label>
+        <name>CSP_L2_Contact_Support</name>
+    </customLabels>
+    <customLabels>
+        <label>국가</label>
+        <name>CSP_L2_Country</name>
+    </customLabels>
+    <customLabels>
+        <label>회사 계정을 찾을 수 없으면 두가지 단계를 통해 쉽게 계정을 만들 수 있습니다.</label>
+        <name>CSP_L2_Create_Account_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>새로운 계정 만들기</label>
+        <name>CSP_L2_Create_New_Account</name>
+    </customLabels>
+    <customLabels>
+        <label>생년월일</label>
+        <name>CSP_L2_Date_of_Birth</name>
+    </customLabels>
+    <customLabels>
+        <label>세부 사항이 성공적으로 저장되었습니다.</label>
+        <name>CSP_L2_Details_Saved</name>
+    </customLabels>
+    <customLabels>
+        <label>이제 더욱 더 정확한 맞춤형 포털 경험을 제공해 드릴 수 있습니다! 저희의 포털을 탐색하고 더욱 더 정확한 맞춤형 제품 및 서비스를 확인하세요.</label>
+        <name>CSP_L2_Details_Saved_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>이제 고객님의 서비스 요청을 계속 진행할 수 있습니다.</label>
+        <name>CSP_L2_Details_Saved_Service_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>이제 고객님의 요청을 계속 진행할 수 있습니다.</label>
+        <name>CSP_L2_Details_Saved_Topic_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>찾고 있는 것을 찾지 못하셨습니까?</label>
+        <name>CSP_L2_Did_Not_Find</name>
+    </customLabels>
+    <customLabels>
+        <label>귀하의 프로필을 완성하기 위해 두가지 단계로 회사 계정을 쉽게 만드실 수 있습니다</label>
+        <name>CSP_L2_Did_Not_Find_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>프로필을 완료하시려면 여기를 클릭하십시오.</label>
+        <name>CSP_L2_Edit_Company_Information</name>
+    </customLabels>
+    <customLabels>
+        <label>저희는 고객님께 맞는 제품과 서비스를 제공해 드리기 위해 IATA 고객 포털을 구축했습니다. 저희가 그렇게 할 수 있도록 고객님과 고객님의 소속을 조금 더 잘 알고 싶습니다.</label>
+        <name>CSP_L2_Edit_Company_Information_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>이메일</label>
+        <name>CSP_L2_Email_Address</name>
+    </customLabels>
+    <customLabels>
+        <label>주소 찾기</label>
+        <name>CSP_L2_Find_Address</name>
+    </customLabels>
+    <customLabels>
+        <label>돌아 가기</label>
+        <name>CSP_L2_Go_Back</name>
+    </customLabels>
+    <customLabels>
+        <label>홈페이지로 이동</label>
+        <name>CSP_L2_Go_To_Homepage</name>
+    </customLabels>
+    <customLabels>
+        <label>프로필로 돌아가기</label>
+        <name>CSP_L2_Go_To_Profile</name>
+    </customLabels>
+    <customLabels>
+        <label>서비스로 돌아가기</label>
+        <name>CSP_L2_Go_To_Service</name>
+    </customLabels>
+    <customLabels>
+        <label>주제로 돌아가기</label>
+        <name>CSP_L2_Go_To_Topic</name>
+    </customLabels>
+    <customLabels>
+        <label>국제항공운송협회 (IATA) 코드</label>
+        <name>CSP_L2_IATA_Codes</name>
+    </customLabels>
+    <customLabels>
+        <label>이 주소는 사서함 주소입니까?</label>
+        <name>CSP_L2_Is_PO_Box_Address</name>
+    </customLabels>
+    <customLabels>
+        <label>직무</label>
+        <name>CSP_L2_Job_Function</name>
+    </customLabels>
+    <customLabels>
+        <label>직책</label>
+        <name>CSP_L2_Job_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>법적 이름</label>
+        <name>CSP_L2_Legal_Name</name>
+    </customLabels>
+    <customLabels>
+        <label>다음 단계 / 계정 선택</label>
+        <name>CSP_L2_Next_Account_Selection</name>
+    </customLabels>
+    <customLabels>
+        <label>다음 단계 / 주소 정보</label>
+        <name>CSP_L2_Next_Address_Information</name>
+    </customLabels>
+    <customLabels>
+        <label>다음 단계 / 확인</label>
+        <name>CSP_L2_Next_Confirmation</name>
+    </customLabels>
+    <customLabels>
+        <label>아니요</label>
+        <name>CSP_L2_No</name>
+    </customLabels>
+    <customLabels>
+        <label>일치하는 결과가 없습니다</label>
+        <name>CSP_L2_No_Matching_Results</name>
+    </customLabels>
+    <customLabels>
+        <label>기타</label>
+        <name>CSP_L2_Other_Sector</name>
+    </customLabels>
+    <customLabels>
+        <label>제공된 목록에서 관련 분야를 선택하십시오.</label>
+        <name>CSP_L2_Other_Sector_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>사서함 번호</label>
+        <name>CSP_L2_PO_Box_Number</name>
+    </customLabels>
+    <customLabels>
+        <label>개인 정보</label>
+        <name>CSP_L2_Personal_Details</name>
+    </customLabels>
+    <customLabels>
+        <label>개인 정보를 확인하십시오</label>
+        <name>CSP_L2_Personal_Details_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>휴대전화 번호</label>
+        <name>CSP_L2_Phone_Number</name>
+    </customLabels>
+    <customLabels>
+        <label>우편 번호</label>
+        <name>CSP_L2_Postal_Code</name>
+    </customLabels>
+    <customLabels>
+        <label>프로필 정보</label>
+        <name>CSP_L2_Profile_Details</name>
+    </customLabels>
+    <customLabels>
+        <label>국제항공운송협회 (IATA)가 귀하의 맞춤형 콘텐츠 및 서비스를 제안해 드릴 수 있도록 개인 정보를 추가하십시오.</label>
+        <name>CSP_L2_Profile_Details_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>귀하의 프로필이 아직 완전히 업데이트되지 않았습니다.</label>
+        <name>CSP_L2_Profile_Incomplete</name>
+    </customLabels>
+    <customLabels>
+        <label>하지만 나중에 계속하실 수 있도록 임시 보관함에 저장했습니다. 종료하시겠습니까?</label>
+        <name>CSP_L2_Profile_Incomplete_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>유감스럽게도,  계정을 만들 때 문제가 발생했습니다. 자세한 내용은 지원팀에 문의하세요.</label>
+        <name>CSP_L2_Registration_Error_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>문제가 발생했습니다</label>
+        <name>CSP_L2_Registration_Error_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>취소</label>
+        <name>CSP_L2_Requested_Modal_Cancel</name>
+    </customLabels>
+    <customLabels>
+        <label>내 프로필 완성하기</label>
+        <name>CSP_L2_Requested_Modal_Complete</name>
+    </customLabels>
+    <customLabels>
+        <label>계속하기 위해서는 고객님과 고객님의 조직에 대한 더 자세한 정보가 필요합니다. 걱정하지 마세요. 오래 걸리지 않을 것입니다!</label>
+        <name>CSP_L2_Requested_Modal_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>안녕하세요</label>
+        <name>CSP_L2_Requested_Modal_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_L2_Required --></label>
+        <name>CSP_L2_Required</name>
+    </customLabels>
+    <customLabels>
+        <label>검색</label>
+        <name>CSP_L2_Search</name>
+    </customLabels>
+    <customLabels>
+        <label>아래의 두 입력란 중 한 개 이상을 작성하세요.</label>
+        <name>CSP_L2_Search_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>검색 결과</label>
+        <name>CSP_L2_Search_Results</name>
+    </customLabels>
+    <customLabels>
+        <label>귀하의 검색 기준과 일치하는 50개 이상의 계정을 찾았습니다.</label>
+        <name>CSP_L2_Search_Results_Above_Limit</name>
+    </customLabels>
+    <customLabels>
+        <label>검색 기준을 수정하세요</label>
+        <name>CSP_L2_Search_Results_Above_Limit_Link</name>
+    </customLabels>
+    <customLabels>
+        <label>더 적은 옵션을 보시려면</label>
+        <name>CSP_L2_Search_Results_Above_Limit_Link_1</name>
+    </customLabels>
+    <customLabels>
+        <label>.</label>
+        <name>CSP_L2_Search_Results_Above_Limit_Link_2</name>
+    </customLabels>
+    <customLabels>
+        <label>부문</label>
+        <name>CSP_L2_Sector</name>
+    </customLabels>
+    <customLabels>
+        <label>선택</label>
+        <name>CSP_L2_Select</name>
+    </customLabels>
+    <customLabels>
+        <label>올바른 주소를 선택하십시오. 목록에 올바른 주소가 없는 경우에는 고객님께서 입력하신 주소가 저장됩니다. 계속하려면 다음 단계를 클릭하세요.</label>
+        <name>CSP_L2_Select_Address_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>목록에서 일치하는 계정을 선택하십시오.</label>
+        <name>CSP_L2_Select_Company_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>주</label>
+        <name>CSP_L2_State</name>
+    </customLabels>
+    <customLabels>
+        <label>도로</label>
+        <name>CSP_L2_Street</name>
+    </customLabels>
+    <customLabels>
+        <label>제출</label>
+        <name>CSP_L2_Submit</name>
+    </customLabels>
+    <customLabels>
+        <label>제목</label>
+        <name>CSP_L2_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>상표명</label>
+        <name>CSP_L2_Trade_Name</name>
+    </customLabels>
+    <customLabels>
+        <label>웹사이트</label>
+        <name>CSP_L2_Website</name>
+    </customLabels>
+    <customLabels>
+        <label>네</label>
+        <name>CSP_L2_Yes</name>
+    </customLabels>
+    <customLabels>
         <label>로그아웃</label>
         <name>CSP_LogOut</name>
+    </customLabels>
+    <customLabels>
+        <label>지금 로그인하기</label>
+        <name>CSP_Login_Now</name>
+    </customLabels>
+    <customLabels>
+        <label>며칠 전에 국제항공운송협회 (IATA) 고객 포털의 회원으로 가입해주셔서 감사드리며, 회원이 되신 것을 환영합니다!</label>
+        <name>CSP_Lvl2_Reminder_1</name>
+    </customLabels>
+    <customLabels>
+        <label>저희는 고객님께 맞는 제품과 서비스를 제공해 드리기 위해 IATA 고객 포털을 구축했습니다. 저희가 그렇게 할 수 있도록 고객님과 고객님의 소속을 조금 더 잘 알고 싶습니다.</label>
+        <name>CSP_Lvl2_Reminder_2</name>
+    </customLabels>
+    <customLabels>
+        <label>저희가 그것을 쉽고 빠르게 만들었습니다. &lt;strong&gt;&lt;a href=[URL]&gt;프로필을 완료하시려면 여기를 클릭하십시오.&lt;/a&gt;&lt;/strong&gt;</label>
+        <name>CSP_Lvl2_Reminder_3</name>
+    </customLabels>
+    <customLabels>
+        <label>고객님께서는 다음 혜택을 얻으실 수 있습니다.</label>
+        <name>CSP_Lvl2_Reminder_4</name>
+    </customLabels>
+    <customLabels>
+        <label>· 맞춤형 서비스를 위한 직계 접속 권한</label>
+        <name>CSP_Lvl2_Reminder_5</name>
+    </customLabels>
+    <customLabels>
+        <label>· 선별된 국제항공운송협회 (IATA) 지식 &amp; 표준에 대한 전체 액세스</label>
+        <name>CSP_Lvl2_Reminder_6</name>
+    </customLabels>
+    <customLabels>
+        <label>· 국제항공운송협회 (IATA) 서비스 전문가의 전문화된 지원</label>
+        <name>CSP_Lvl2_Reminder_7</name>
+    </customLabels>
+    <customLabels>
+        <label>· 그리고 더 있습니다!</label>
+        <name>CSP_Lvl2_Reminder_8</name>
+    </customLabels>
+    <customLabels>
+        <label>&lt;strong&gt;&lt;a href=[URL]&gt;프로필을 완료하시려면 여기를 클릭하십시오.&lt;/a&gt;&lt;/strong&gt;</label>
+        <name>CSP_Lvl2_Reminder_9</name>
+    </customLabels>
+    <customLabels>
+        <label>국제항공운송협회 (IATA) 고객 포털을 최대한 활용하세요 – 프로필을 완성하세요!</label>
+        <name>CSP_Lvl2_Reminder_Subject</name>
     </customLabels>
     <customLabels>
         <label>아래 목록에서 사용자를 관리하실 수 있습니다.</label>
@@ -2110,6 +2718,10 @@
     <customLabels>
         <label>이름</label>
         <name>CSP_Name</name>
+    </customLabels>
+    <customLabels>
+        <label>다음</label>
+        <name>CSP_Next</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_NewContactProfile --></label>
@@ -2156,12 +2768,36 @@
         <name>CSP_Payment</name>
     </customLabels>
     <customLabels>
+        <label>비밀번호</label>
+        <name>CSP_Password</name>
+    </customLabels>
+    <customLabels>
+        <label>최소 10자</label>
+        <name>CSP_Password_Rule_1</name>
+    </customLabels>
+    <customLabels>
+        <label>대문자 1개 이상</label>
+        <name>CSP_Password_Rule_2</name>
+    </customLabels>
+    <customLabels>
+        <label>숫자 1개 이상</label>
+        <name>CSP_Password_Rule_3</name>
+    </customLabels>
+    <customLabels>
+        <label>기호 1개 이상 (! @ # $ % * ( ) _ + ^ &amp;)</label>
+        <name>CSP_Password_Rule_4</name>
+    </customLabels>
+    <customLabels>
         <label>사례를 진행하려면 귀하의 의견을 필요로 합니다.</label>
         <name>CSP_PendingCustomerCase_Warning</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_Period --></label>
         <name>CSP_Period</name>
+    </customLabels>
+    <customLabels>
+        <label>개인 정보</label>
+        <name>CSP_Personal_Information</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_PortalPath --></label>
@@ -2172,8 +2808,16 @@
         <name>CSP_Portal_Administrators</name>
     </customLabels>
     <customLabels>
+        <label>포털 로그인은 현재 비활성화되어 있습니다. 이해해 주셔서 감사합니다.</label>
+        <name>CSP_Portal_Login_Disabled_Message</name>
+    </customLabels>
+    <customLabels>
         <label>포털 상태</label>
         <name>CSP_Portal_Status</name>
+    </customLabels>
+    <customLabels>
+        <label>IATA 의 &lt;a target=&quot;_blank&quot; href=&quot;https://www.iata.org/Pages/privacy.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;개인 정보 보호 정책&lt;/a&gt; 과 &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-portal/Pages/terms.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;이용 약관&lt;/a&gt;에 동의합니다.</label>
+        <name>CSP_Privacy_Policy</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_Profile_PrivacyManagement_Link --></label>
@@ -2232,6 +2876,26 @@
         <name>CSP_Record_Deleted</name>
     </customLabels>
     <customLabels>
+        <label>등록이 성공적으로 완료되었습니다</label>
+        <name>CSP_Registration_Complete</name>
+    </customLabels>
+    <customLabels>
+        <label>기본 등록 절차를 완료하여 국제항공운송협회 (IATA) 고객 포털에 가입하세요.</label>
+        <name>CSP_Registration_Description</name>
+    </customLabels>
+    <customLabels>
+        <label>포털 등록이 현재 비활성화되어 있습니다. 이해해 주셔서 감사합니다.</label>
+        <name>CSP_Registration_Disabled_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>고객님께서 사용하시려는 계정은 이미 사용중입니다. 로그인 페이지로 이동하시려면 이메일을 바꾸시거나 로그인 버튼을 누르십시오</label>
+        <name>CSP_Registration_Existing_User_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>먼저 스팸 폴더를 확인하세요. 스팸 폴더에서 찾으실 수 없는 경우 다시 시도 버튼을 클릭하여 다시 등록하세요.</label>
+        <name>CSP_Registration_Retry_Message</name>
+    </customLabels>
+    <customLabels>
         <label>관련 기사</label>
         <name>CSP_RelatedArticles</name>
     </customLabels>
@@ -2252,8 +2916,48 @@
         <name>CSP_Request_Service</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Resend Verification Email --></label>
+        <name>CSP_Resend_Verification_Email</name>
+    </customLabels>
+    <customLabels>
+        <label>암호 재설정</label>
+        <name>CSP_Reset_Password</name>
+    </customLabels>
+    <customLabels>
+        <label>국제항공운송협회 (IATA) 고객 포털의 비밀번호 재설정</label>
+        <name>CSP_Reset_Password_Email_Subject</name>
+    </customLabels>
+    <customLabels>
+        <label>새 비밀번호를 입력하십시오.</label>
+        <name>CSP_Reset_Password_Info_1</name>
+    </customLabels>
+    <customLabels>
+        <label>비밀번호는 다음을 포함해야 합니다:</label>
+        <name>CSP_Reset_Password_Info_2</name>
+    </customLabels>
+    <customLabels>
+        <label>비밀번호가 성공적으로 변경되었습니다.</label>
+        <name>CSP_Reset_Password_Success_Msg_1</name>
+    </customLabels>
+    <customLabels>
+        <label>새 비밀번호로 로그인할 수 있습니다.</label>
+        <name>CSP_Reset_Password_Success_Msg_2</name>
+    </customLabels>
+    <customLabels>
+        <label>고객님의 컴퓨터 IP가 미국 당국에 의해 금지된 국가 중 하나에서 접근된 것으로 확인되었습니다.&lt;br/&gt; 고객 포털을 지원하는 플랫폼은 이 미국 규정을 준수하므로 현재 IP 주소에서 고객 포털을 이용할 수 없습니다.&lt;br/&gt;&lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;연락하려면 여기를 클릭하세요.&lt;/a&gt;</label>
+        <name>CSP_Restricted_Login_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>제한된 로그인</label>
+        <name>CSP_Restricted_Login_Title</name>
+    </customLabels>
+    <customLabels>
         <label>저장</label>
         <name>CSP_Save</name>
+    </customLabels>
+    <customLabels>
+        <label>저장 &amp; 로그인</label>
+        <name>CSP_Save_Login</name>
     </customLabels>
     <customLabels>
         <label>문서 세부 사항으로 검색</label>
@@ -2428,6 +3132,10 @@
         <name>CSP_Settings</name>
     </customLabels>
     <customLabels>
+        <label>일단 보류</label>
+        <name>CSP_Skip</name>
+    </customLabels>
+    <customLabels>
         <label>상태</label>
         <name>CSP_Status</name>
     </customLabels>
@@ -2436,7 +3144,7 @@
         <name>CSP_Submit</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Success --></label>
+        <label>성공</label>
         <name>CSP_Success</name>
     </customLabels>
     <customLabels>
@@ -2472,6 +3180,18 @@
         <name>CSP_Travel_Agent_Accreditation_Changes_Request</name>
     </customLabels>
     <customLabels>
+        <label>문제 해결</label>
+        <name>CSP_Troubleshooting</name>
+    </customLabels>
+    <customLabels>
+        <label>자세한 도움말 확인</label>
+        <name>CSP_Troubleshooting_Info</name>
+    </customLabels>
+    <customLabels>
+        <label>다시 시도</label>
+        <name>CSP_Try_Again</name>
+    </customLabels>
+    <customLabels>
         <label>케이스 유형</label>
         <name>CSP_TypeOfCase</name>
     </customLabels>
@@ -2480,36 +3200,52 @@
         <name>CSP_User</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Welcome_Panel_Bullet_1_Desc --></label>
+        <label>예기치 않은 오류가 발생했습니다!</label>
+        <name>CSP_Unexcepted_Error</name>
+    </customLabels>
+    <customLabels>
+        <label>국제항공운송협회 (IATA) 고객 포털에 오신 것을 환영합니다</label>
+        <name>CSP_Welcome_Email_Subject</name>
+    </customLabels>
+    <customLabels>
+        <label>고객님을 위해 특별히 선택한 60개 이상의 국제항공운송협회 (IATA) 서비스를 직접 사용하세요.</label>
         <name>CSP_Welcome_Panel_Bullet_1_Desc</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Welcome_Panel_Bullet_1_Title --></label>
+        <label>국제항공운송협회 (IATA) 서비스 이용</label>
         <name>CSP_Welcome_Panel_Bullet_1_Title</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Welcome_Panel_Bullet_2_Desc --></label>
+        <label>국제항공운송협회 (IATA) 프로필을 쉽게 관리하고 업데이트하세요.</label>
         <name>CSP_Welcome_Panel_Bullet_2_Desc</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Welcome_Panel_Bullet_2_Title --></label>
+        <label>최신 상태 유지</label>
         <name>CSP_Welcome_Panel_Bullet_2_Title</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Welcome_Panel_Bullet_3_Desc --></label>
+        <label>다양한 출판물, 교육 및 기타 국제항공운송협회 (IATA) 제품 및 서비스를 찾아보세요.</label>
         <name>CSP_Welcome_Panel_Bullet_3_Desc</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Welcome_Panel_Bullet_3_Title --></label>
+        <label>특별 제안 찾기</label>
         <name>CSP_Welcome_Panel_Bullet_3_Title</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Welcome_Panel_Bullet_4_Desc --></label>
+        <label>광범위한 질문 &amp; 답변 모음을 이용하시고 국제항공운송협회 (IATA)로부터 직접 지원을 받으세요.</label>
         <name>CSP_Welcome_Panel_Bullet_4_Desc</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Welcome_Panel_Bullet_4_Title --></label>
+        <label>답변 찾기</label>
         <name>CSP_Welcome_Panel_Bullet_4_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>국제항공운송협회 (IATA)의 모든 서비스를 이용하고 관리하세요. 제품들에 대한 정보를 상담하고 모든 항목에 대한 지원을 받으세요. 여기에 있습니다.</label>
+        <name>CSP_Welcome_Panel_Info</name>
+    </customLabels>
+    <customLabels>
+        <label>국제항공운송협회 (IATA) 고객 포털에 오신 것을 환영합니다</label>
+        <name>CSP_Welcome_Title</name>
     </customLabels>
     <customLabels>
         <label>고객 &amp; 국제항공운송협회 (IATA)</label>
@@ -2704,7 +3440,7 @@
         <name>ConfirmSendRecycleBin</name>
     </customLabels>
     <customLabels>
-        <label><!-- Confirm password --></label>
+        <label>비밀번호 확인</label>
         <name>Confirm_password</name>
     </customLabels>
     <customLabels>
@@ -3228,7 +3964,7 @@
         <name>CurrencyCenter_def_TTBS</name>
     </customLabels>
     <customLabels>
-        <label><!-- Current password --></label>
+        <label>현재 비밀번호</label>
         <name>Current_password</name>
     </customLabels>
     <customLabels>
@@ -13421,7 +14157,7 @@ IATA로부터 다음 국가에 대한 도움을 받으신 적이 있습니까?</
         <name>ISSP_ContactName</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Contact About IATA Courses --></label>
+        <label>국제항공운송협회 (IATA) 과정과 관련하여 저희에게 연락하셨습니까?</label>
         <name>ISSP_Contact_About_IATA_Courses</name>
     </customLabels>
     <customLabels>
@@ -14279,6 +15015,10 @@ IATA로부터 다음 국가에 대한 도움을 받으신 적이 있습니까?</
     <customLabels>
         <label><!-- ISSP_FDS_UnselectAll --></label>
         <name>ISSP_FDS_UnselectAll</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FS_Link --></label>
+        <name>ISSP_FS_Link</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_Fax --></label>
@@ -16826,7 +17566,7 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <name>ISSP_See_more</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Select --></label>
+        <label>선택</label>
         <name>ISSP_Select</name>
     </customLabels>
     <customLabels>
@@ -18301,7 +19041,7 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <name>Location</name>
     </customLabels>
     <customLabels>
-        <label><!-- Login --></label>
+        <label>로그인</label>
         <name>Login</name>
     </customLabels>
     <customLabels>
@@ -18421,7 +19161,7 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <name>NewGenApp_ServiceRequested</name>
     </customLabels>
     <customLabels>
-        <label><!-- New password --></label>
+        <label>새 비밀번호</label>
         <name>New_password</name>
     </customLabels>
     <customLabels>
@@ -18513,7 +19253,7 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <name>OneId_Account_Association</name>
     </customLabels>
     <customLabels>
-        <label><!-- OneId_Account Creation --></label>
+        <label>계정 생성하기</label>
         <name>OneId_Account_Creation</name>
     </customLabels>
     <customLabels>
@@ -18577,7 +19317,7 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <name>OneId_CreateNew</name>
     </customLabels>
     <customLabels>
-        <label><!-- OneId_CreateNewAccount --></label>
+        <label>새 계정 만들기</label>
         <name>OneId_CreateNewAccount</name>
     </customLabels>
     <customLabels>
@@ -18985,7 +19725,7 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <name>OneId_Login</name>
     </customLabels>
     <customLabels>
-        <label><!-- OneId_LoginFail --></label>
+        <label>로그인에 실패했습니다. 이메일과 비밀번호가 올바른지 확인하세요.</label>
         <name>OneId_LoginFail</name>
     </customLabels>
     <customLabels>
@@ -19057,7 +19797,7 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <name>OneId_Online_Help_Link</name>
     </customLabels>
     <customLabels>
-        <label><!-- OneId_Password --></label>
+        <label>비밀번호</label>
         <name>OneId_Password</name>
     </customLabels>
     <customLabels>
@@ -19884,7 +20624,7 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <name>PKB2_search_to_long</name>
     </customLabels>
     <customLabels>
-        <label><!-- PKB2: Contact Us Send Email --></label>
+        <label>확인 메일 재전송</label>
         <name>PKB2_send_mail</name>
     </customLabels>
     <customLabels>
@@ -20970,6 +21710,10 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
     <customLabels>
         <label>직위</label>
         <name>csp_My_Profile_Job_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- csp_Next_Step_Account_Selection --></label>
+        <name>csp_Next_Step_Account_Selection</name>
     </customLabels>
     <customLabels>
         <label><!-- Request New Service --></label>

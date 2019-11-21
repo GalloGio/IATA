@@ -674,6 +674,7 @@ lightning-datatable .slds-th__action {
     min-height: 40px;
     word-break: break-word;
     border: none;
+    display: inline-block;
 }
 .containedButtonSlim button:hover {
 	border-radius: 1px;
@@ -767,6 +768,7 @@ lightning-datatable .slds-th__action {
   	letter-spacing: normal;
   	text-align: center;
   	color: #3333ff;
+    display: inline-block;
 }
 .outlinedButton button:hover {
 	-webkit-transition-duration: 0.4s; /* Safari */
@@ -1690,6 +1692,14 @@ lightning-datatable .slds-th__action {
     width: 100%;
 }
 
+/* Login portal header select language styles */
+.loginHeaderWrapper .slds-input__icon_right lightning-primitive-icon:after{
+    border-top-color: #f0f2f5;
+}
+.loginHeaderWrapper .slds-combobox_container .slds-is-open .slds-input__icon_right lightning-primitive-icon:after{
+    border-bottom-color: #f0f2f5;
+}
+
 .serviceContactList .slds-dropdown{
     border-radius: 0;
 }
@@ -1814,6 +1824,368 @@ visibility: hidden;
     display: none;
 }
 
+/*--------------------------------------------------*/
+.inputFieldStyle input {
+  	line-height: 37px;
+    border-radius: 0.1rem;
+    border: 1px solid #d3d3d352;
+}
+
+.hideInputLabel label{
+    display: none !important;
+}
+
+.buttonWidth button{
+    width : 100%;
+    border: 1px solid #d3d3d352;
+    line-height: 37px;
+}
+
+.loginButton button{
+    width: 100%;
+    margin-bottom: 15px;
+    font-size: 12px;
+    /* background-color:blue; */
+    color: white;
+}
+
+.loginButton button:disabled{
+    width: 100%;
+    margin-bottom: 15px;
+    font-size: 12px;
+    background-color: #d3d3d352;
+    color: gray;
+}
+
+.fixedLineHeight input{
+    line-height: 45px;
+}
+
+.fixedLineHeight button{
+    line-height: 45px;
+}
+
+.fixed-text{
+    font-size: 16px;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.63;
+    letter-spacing: normal;
+    color: #525252;
+}
+
+.containedButtonDisabled, .containedButtonDisabled button, .containedButtonDisabled button:disabled {
+    -webkit-transition-duration: 0.4s; /* Safari */
+  	transition-duration: 0.4s;
+    border-radius: 1px;
+  	background-color: #f7f8fa;
+    font-size: 16px;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.5;
+    letter-spacing: normal;
+    text-align: center;
+    color: #999999;
+    height: 56px;
+    width: 100%;
+    word-break: break-all;
+    border: none;
+    box-shadow: none;
+}
+
+.containedButtonLogin, .containedButtonLogin button, .containedButtonLogin button:active, .containedButtonLogin button:visited, .containedButtonLogin button:focus {
+    -webkit-transition-duration: 0.4s; /* Safari */
+  	transition-duration: 0.4s;
+    border-radius: 1px;
+  	box-shadow: 0 6px 16px 0 rgba(56, 86, 235, 0.24), 0 1px 2px 0 rgba(56, 86, 235, 0.16);
+  	background-color: #3333ff;
+    font-size: 16px;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.5;
+    letter-spacing: normal;
+    text-align: center;
+    color: #ffffff;
+    word-break: break-all;
+    border: none;
+    min-height: 56px;
+    width: 100%;
+    display: inline-block;
+}
+
+.containedButtonLogin button:hover {
+	border-radius: 1px;
+    box-shadow: 0 6px 16px 0 rgba(56, 86, 235, 0.24), 0 1px 2px 0 rgba(56, 86, 235, 0.16);
+    background-color: #1e32fa;
+    font-size: 16px;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.5;
+    letter-spacing: normal;
+    text-align: center;
+    color: #ffffff;
+    word-break: break-all;
+    border: none;
+	min-height: 56px;
+    width: 100%;
+    display: inline-block;
+}
+
+.custTextInput input{
+    border-radius: 1px;
+    border: solid 1px #e6e6e6;
+    background-color: #ffffff;
+    height: 52px;
+    /*font-size: 16px;*/
+}
+
+.custTextInputXsmall input{
+    font-size: 16px;
+}
+
+.custTextInputXsmall input[readonly]{
+    font-size: 16px;
+}
+
+.custTextInputSmall input{
+    font-size: 18px;
+}
+
+.custTextInputSmall input[readonly]{
+    font-size: 18px;
+}
+
+.custTextInput input[readonly]{
+    color: #999999;
+    padding: 0 1rem 0 .75rem;
+    border-radius: 1px;
+	/*border-color: #e6e6e6;*/
+    height: 52px;
+}
+
+.custTextInput input:focus{
+    border: solid 2px rgba(30, 50, 250, 0.6);
+}
+	
+.custTextInput input:disabled {
+  border:none;
+}
+
+.custTextInput input:not(:placeholder-shown) {
+    background-color: #f7f8fa;
+}
+
+.greyLine {
+  height: 2px;
+  background-color: #e6e6e6;
+}
+
+.outlinedButtonLogin button, .outlinedButtonLogin button:hover, .outlinedButtonLogin button:focus, .outlinedButtonLogin button:active{
+    -webkit-transition-duration: 0.4s; /* Safari */
+  	transition-duration: 0.4s;
+    min-height: 56px;
+    word-break: break-all;
+    border-radius: 1px;
+  	border: solid 1px #1e32fa;
+  	background-color: #ffffff;
+    font-size: 16px;
+  	font-weight: 500;
+  	font-style: normal;
+  	font-stretch: normal;
+  	line-height: 1.5;
+  	letter-spacing: normal;
+  	text-align: center;
+  	color: #3333ff;
+    width: 100%;
+    box-shadow: none; 
+    display: inline-block;
+}
+
+.languageSelection .slds-combobox_container input[role="textbox"]{
+    border:none;
+    background-color: transparent;
+}
+
+.languageSelection .slds-combobox_container input[role="textbox"]:not(:placeholder-shown) {
+    background-color: transparent;
+}
+
+.languageSelection .slds-combobox_container input[role="textbox"] {
+	height: 32px;
+    color: #3333ff;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.languageSelectWrapper .slds-combobox_container input[role="textbox"]{
+    text-align: right !important;
+}
+
+.languageSelectWrapper .slds-input__icon-group_right .slds-input__icon_right{
+    padding-top: 2px;
+}
+
+.blueCustomButtonLinkMedium, .blueCustomButtonLinkMedium button, .blueCustomButtonLinkMedium button:active, .blueCustomButtonLinkMedium button:visited, .blueCustomButtonLinkMedium button:focus {
+    color: #3333ff;
+    fill: #3333ff;
+    border: none;
+    font-size: 16px;
+    box-shadow: none;
+}
+
+.blueCustomButtonLinkSmall, .blueCustomButtonLinkSmall button, .blueCustomButtonLinkSmall button:active, .blueCustomButtonLinkSmall button:visited, .blueCustomButtonLinkSmall button:focus {
+	color: #3333ff;
+    fill: #3333ff;
+    border: none;
+    font-weight: 500;
+    font-size: 14px;
+    box-shadow: none;
+}
+
+.blueCustomButtonLinkSmall .slds-button__icon_right, .blueCustomButtonLinkSmall .slds-button__icon--right{
+    margin-left: .5rem;
+}
+
+.blueCustomButtonLinkLogin, .blueCustomButtonLinkLogin button, .blueCustomButtonLinkLogin button:active, .blueCustomButtonLinkLogin button:visited, .blueCustomButtonLinkLogin button:focus {
+    color: #3333ff;
+    fill: #3333ff;
+    border: none;
+    text-decoration: underline;
+    box-shadow: none;
+    font-size: 16px;
+    font-weight: normal;
+}
+
+.grayInfoText {
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.43;
+  letter-spacing: normal;
+  color: #999999;
+}
+
+.loginSelect .slds-select{
+	height: 52px;
+    border-radius: 1px;
+    cursor: pointer;
+}
+
+.slds-has-error .slds-input{
+    border-radius: 1px !important;
+    border: solid 2px rgba(240, 70, 50, 0.8) !important;
+    box-shadow: none !important;
+}
+
+.slds-has-error .slds-form-element__help {
+	color: rgba(240, 70, 50, 0.8) !important;
+}
+
+.registerCheckBox .slds-checkbox .slds-checkbox_faux {
+    width: 14px !important;
+    height: 14px !important;
+    border: 1px solid #3333ff !important;
+}
+
+.registrationPopup {
+    background-color: #F7F8FA;
+    width: 100%;
+    max-width: 448px;
+    margin: auto;
+    box-shadow: 5px 5px 20px #808080;
+    border-radius: 1px;
+    /*border: solid 1px #e2e2e2;*/
+}
+
+.registrationComboBox .slds-combobox_container input[role="textbox"]{
+	border-color: #e6e6e6;
+}
+
+.welcomePopup {
+	background-color: #F7F8FA;
+    width: 100%;
+    max-width: 544px;
+    margin: auto;
+    box-shadow: 5px 5px 20px #808080;
+    border-radius: 1px;
+}
+
+.itemWelcome > .slds-slot{
+    display: inline-flex;
+    width: 100%;
+}
+
+.customBtn,
+.customBtn button,
+.customBtn:hover,
+.customBtn button:hover{
+    width: 100% !important;
+}
+
+.customBtn button{
+    padding: 16px 12px;
+}
+
+.customBtn[disabled], .customBtn button:disabled{
+    -webkit-transition-duration: 0.4s; /* Safari */
+  	transition-duration: 0.4s;
+    border-radius: 1px;
+  	background-color: #f7f8fa;
+    font-size: 16px;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.5;
+    letter-spacing: normal;
+    text-align: center;
+    color: #999999;
+    width: 100%;
+    word-break: break-all;
+    border: none;
+    box-shadow: none;
+    cursor: not-allowed;
+}
+
+.registration-modal .background-white>.slds-p-top_x-large.slds-p-bottom_x-small{
+    display: none;
+}
+
+.outlinedBtn button, .outlinedBtn button:hover{
+    background-color: #fff !important;
+    color: #1e32fa !important;
+    box-shadow: none !important;
+    border: 1px solid #1e32fa !important;
+}
+
+.topLabel{
+    padding: 32px 0;
+}
+.headerProgressBarWrapper .headerProgressBar .slds-progress-bar{
+    border-radius: 8px;
+}
+
+.headerProgressBarWrapper .headerProgressBar .slds-progress-bar__value{
+    border-radius: 8px;
+    width: 50%;
+    background: linear-gradient(to right, rgba(56, 86, 235, 0.6), #3856eb);
+}
+
+/* Removes the icon from IE input */
+input::-ms-clear {  display: none; width : 0; height: 0; }
+input::-ms-reveal {  display: none; width : 0; height: 0; }
+
+.IEFixDisplayContainer{
+    width: 100%;
+    display: inline-block;
+}
+
+.IEFixDisplay{
+    display: inline-block;
+}
 
 /* Used for fill three dots and arrow on manage services page */
 .requestedButtonCls svg[data-key="threedots_vertical"], 
@@ -1990,3 +2362,4 @@ visibility: hidden;
     animation-duration: 0.3s;
 }
 /*#################################*/
+

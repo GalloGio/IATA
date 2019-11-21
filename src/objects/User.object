@@ -1008,6 +1008,23 @@ If( Contact.Account.ICH_Member__c = true,&quot;ICH&quot;, &quot;&quot;)</formula
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Is_Account_s_sector_General_Public__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( ISNULL(ContactId), false,  TEXT(Contact.Account.Sector__c) == &#39;General Public&#39;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Is Account&#39;s sector General Public</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Is_General_Public_User__c</fullName>
+        <description>Field is checked if the User&#39;s account is a General Public Account</description>
+        <externalId>false</externalId>
+        <formula>IF( ISNULL(ContactId), false, Contact.Account.Is_General_Public_Account__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Is General Public User</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Is_Kavi_Internal_User__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
@@ -2045,6 +2062,15 @@ If( Contact.Account.ICH_Member__c = true,&quot;ICH&quot;, &quot;&quot;)</formula
         <trackFeedHistory>false</trackFeedHistory>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Portal_Registration_Required__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>For customer portal users created from existing contact records, this field is used to force users to confirm registration information on the customer portal</description>
+        <externalId>false</externalId>
+        <label>Portal Registration Required</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>Portal_User_Frozen_Checkbox__c</fullName>

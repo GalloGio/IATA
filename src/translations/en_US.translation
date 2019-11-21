@@ -2081,6 +2081,50 @@
         <name>CSP_LogOut</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Login Now --></label>
+        <name>CSP_Login_Now</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Lvl2 Reminder 1 --></label>
+        <name>CSP_Lvl2_Reminder_1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Lvl2 Reminder 2 --></label>
+        <name>CSP_Lvl2_Reminder_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Lvl2 Reminder 3 --></label>
+        <name>CSP_Lvl2_Reminder_3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Lvl2 Reminder 4 --></label>
+        <name>CSP_Lvl2_Reminder_4</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Lvl2 Reminder 5 --></label>
+        <name>CSP_Lvl2_Reminder_5</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Lvl2 Reminder 6 --></label>
+        <name>CSP_Lvl2_Reminder_6</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Lvl2 Reminder 7 --></label>
+        <name>CSP_Lvl2_Reminder_7</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Lvl2 Reminder 8 --></label>
+        <name>CSP_Lvl2_Reminder_8</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Lvl2 Reminder 9 --></label>
+        <name>CSP_Lvl2_Reminder_9</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Lvl2 Reminder Subject --></label>
+        <name>CSP_Lvl2_Reminder_Subject</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_Manage_Portal_Users --></label>
         <name>CSP_Manage_Portal_Users</name>
     </customLabels>
@@ -14259,6 +14303,10 @@
     <customLabels>
         <label><!-- ISSP_FDS_UnselectAll --></label>
         <name>ISSP_FDS_UnselectAll</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_FS_Link --></label>
+        <name>ISSP_FS_Link</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_Fax --></label>

@@ -1,7 +1,9 @@
 import { LightningElement, track, wire } from 'lwc';
 
 import getUserAvailableServices from '@salesforce/apex/PortalServicesCtrl.getUserAvailableServices';
+import getContactInfo from '@salesforce/apex/PortalRegistrationSecondLevelCtrl.getContactInfo';
 import getRecommendations from '@salesforce/apex/PortalRecommendationCtrl.getRecommendations';
+
 import { refreshApex } from '@salesforce/apex';
 
 export default class PortalServicesAvailableServicesList extends LightningElement {
@@ -9,17 +11,28 @@ export default class PortalServicesAvailableServicesList extends LightningElemen
     @track componentLoading = true;
 
     @track lstServicesGranted = [];
+
+    @track isFirstLevelUser;
+
     @track highlightList;
     @track specialCase = true;
 
-    @wire(getUserAvailableServices, {})
-    wiredGetUsers(results) {
+    @wire( getUserAvailableServices,{})
+    wiredGetUsers(results){
         this.lstServicesGranted = results.data;
         this.componentLoading = false;
     }
 
-    connectedCallback() {
-        getRecommendations().then(result => {
+    connectedCallback(){
+        getContactInfo()
+            .then(result => {
+                this.isFirstLevelUser = result.Account.Is_General_Public_Account__c;
+            })
+            .catch((error) => {
+                console.log('Error: ', JSON.parse(JSON.stringify(error)));
+            });
+
+	getRecommendations().then(result => {
             this.highlightList = result;
         });  
     }
