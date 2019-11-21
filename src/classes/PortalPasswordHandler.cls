@@ -50,7 +50,7 @@ public without sharing class PortalPasswordHandler {
     public static User getUserFromEmail(String email){
         User user;
         List<User> userList = [Select id, contactId, uid__c, userName, contact.Preferred_Language__c from user where email = :email and contactId != '' and
-                                     (isActive = true or portal_user_frozen_checkbox__c = false)];
+                                      isActive = true];
 
         if(!userList.isEmpty()){
             user = userList.get(0);
