@@ -270,7 +270,7 @@ public class ANG_RHCAlertTriggerHandler{
                 //ACAMBAS - NEWGEN-4466 - Start 
                 if(!String.isEmpty(config.Email_Template_Internal_Stakeholders__c)) {
                     //Ensure that the agency is a MC key
-                    if(accounts.get(a.ANG_Account__c).ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY && accounts.get(a.ANG_Account__c).Multicountry_Key_Hierarchy__c == true) {
+                    if(accounts.get(a.ANG_Account__c).ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY && accounts.get(a.ANG_Account__c).Multicountry_Key_Hierarchy__c) {
                         List<String> stakeholdersMailingList = getMailingListFromCustomSetting('Risk_Alert_Stakeholders__c'); 
                         sendEmailToMailingList(alertsToNotify, stakeholdersMailingList);   
                     }
@@ -612,11 +612,9 @@ public class ANG_RHCAlertTriggerHandler{
         
         Map<Id,Operational_Calendar__c> mapAccountOpCalendar = fetchCalendar(allRiskAlerts);
 
-        AssignmentRule AR = new AssignmentRule();
-        AR = [select id from AssignmentRule where SobjectType = 'Case' and Active = true limit 1];
         //Creating the DMLOptions for "Assign using active assignment rules" checkbox
         Database.DMLOptions dmlOpts = new Database.DMLOptions();
-        dmlOpts.assignmentRuleHeader.assignmentRuleId= AR.id;
+        dmlOpts.assignmentRuleHeader.useDefaultRule = true;
         
         List<Messaging.SingleEmailMessage> emailLst = new List<Messaging.SingleEmailMessage>();
 
