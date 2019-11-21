@@ -671,6 +671,16 @@ NOT(CONTAINS($User.Customer_type__c,&quot;Agency&quot;))
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Requires_Level2_Registration__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Indicates if L2 registration is necessary to request access to this service</description>
+        <externalId>false</externalId>
+        <label>Requires Level2 Registration</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Restricted_App__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>

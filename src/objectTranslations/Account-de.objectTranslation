@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label>Kategorie</label>
+        <name>Category__c</name>
+        <picklistValues>
+            <masterLabel>ANSP</masterLabel>
+            <translation>ANSP</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Airline Alliance</masterLabel>
+            <translation>Airline Alliance</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Box Office</masterLabel>
+            <translation>Theaterkasse</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Coordinator</masterLabel>
+            <translation>Koordinator</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Landmark</masterLabel>
+            <translation>Sehenswürdigkeit</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Park (Theme Park)</masterLabel>
+            <translation>Park (Freizeitpark)</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Payment Provider</masterLabel>
+            <translation>Zahlungsanbieter</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Provider</masterLabel>
+            <translation>Anbieter</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sightseeing</masterLabel>
+            <translation>Sightseeing</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Transfer Service</masterLabel>
+            <translation>Transfer-Service</translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label>Sektor</label>
+        <name>Sector__c</name>
+        <picklistValues>
+            <masterLabel>Accommodation</masterLabel>
+            <translation>Unterkunft</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Airline</masterLabel>
+            <translation>Fluggesellschaft</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Airline Supplier</masterLabel>
+            <translation>Fluggesellschafts-Anbieter</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Association</masterLabel>
+            <translation>Verband</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Equipment Manufacturer</masterLabel>
+            <translation>Gerätehersteller</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Financial Institution</masterLabel>
+            <translation>Finanz-Institution</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Freight Forwarder</masterLabel>
+            <translation>Spediteur</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>General Public</masterLabel>
+            <translation>Allgemeine Öffentlichkeit</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>General Sales Agent</masterLabel>
+            <translation>General Sales Agent</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Governmental Institution</masterLabel>
+            <translation>Regierungsinstitution</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Holding Company</masterLabel>
+            <translation>Holding-Gesellschaft</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Infrastructure Partner</masterLabel>
+            <translation>Infrastruktur-Partner</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Media</masterLabel>
+            <translation>Medien</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Non-Airline Transportation</masterLabel>
+            <translation>Transport ohne Fluggesellschaft</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Recreational</masterLabel>
+            <translation>Freizeit</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Training</masterLabel>
+            <translation>Schulung</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Travel Agent</masterLabel>
+            <translation>Reisevermittler</translation>
+        </picklistValues>
+    </fields>
+</CustomObjectTranslation>
