@@ -1,10 +1,10 @@
 /**
-* Tests for class 
+* Tests for class
 * ANG_EligibilityForNewMulticountryAgent
 */
 @isTest
 private class ANG_EligibilityForNewMCAgentTest {
-	
+
 	private static Id agencyRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
 	@testSetup static void setup(){
@@ -50,8 +50,8 @@ private class ANG_EligibilityForNewMCAgentTest {
 
 		IATA_ISO_Country__c countryPT = new IATA_ISO_Country__c(
 			Name = 'Portugal',
-			ISO_Code__c = 'PT', 
-			Region__c = 'Europe', 
+			ISO_Code__c = 'PT',
+			Region__c = 'Europe',
 			ANG_Enable_NewGen__c = true,
 			AMS_Settlement_System__c = bsp_pt.Id,
 			Multicountry_Enabled__c = true
@@ -59,8 +59,8 @@ private class ANG_EligibilityForNewMCAgentTest {
 
 		IATA_ISO_Country__c countryGB = new IATA_ISO_Country__c(
 			Name = 'United Kingdom',
-			ISO_Code__c = 'GB', 
-			Region__c = 'Europe', 
+			ISO_Code__c = 'GB',
+			Region__c = 'Europe',
 			ANG_Enable_NewGen__c = true,
 			AMS_Settlement_System__c = bsp_gb.Id,
 			Multicountry_Enabled__c = true
@@ -68,8 +68,8 @@ private class ANG_EligibilityForNewMCAgentTest {
 
 		IATA_ISO_Country__c countryFR = new IATA_ISO_Country__c(
 			Name = 'France',
-			ISO_Code__c = 'FR', 
-			Region__c = 'Europe', 
+			ISO_Code__c = 'FR',
+			Region__c = 'Europe',
 			ANG_Enable_NewGen__c = true,
 			AMS_Settlement_System__c = bsp_fr.Id,
 					Multicountry_Enabled__c = true
@@ -77,19 +77,19 @@ private class ANG_EligibilityForNewMCAgentTest {
 
 		IATA_ISO_Country__c countryMC = new IATA_ISO_Country__c(
 			Name = 'Monaco',
-			ISO_Code__c = 'MC', 
-			Region__c = 'Europe', 
+			ISO_Code__c = 'MC',
+			Region__c = 'Europe',
 			ANG_Enable_NewGen__c = true,
 			AMS_Settlement_System__c = bsp_fr.Id,
 			Multicountry_Enabled__c = true
 		);
 
 		List<IATA_ISO_Country__c> countryLst = new List<IATA_ISO_Country__c>{countryPT, countryGB, countryFR, countryMC};
-		
+
 		insert countryLst;
 
 		Account accountGE = new Account(
-			Name = 'GE Test Agency', 
+			Name = 'GE Test Agency',
 			RecordtypeId = agencyRecordTypeId,
 			IATA_ISO_Country__c = countryFR.Id,
 			Location_Type__c = AMS_Utils.GE,
@@ -100,7 +100,7 @@ private class ANG_EligibilityForNewMCAgentTest {
 		insert accountGE;
 
 		Account accountHE = new Account(
-			Name='HE Test Agency', 
+			Name='HE Test Agency',
 			RecordtypeId = agencyRecordTypeId,
 			IATA_ISO_Country__c = countryPT.Id,
 			Location_Type__c = AMS_Utils.HE,
@@ -110,21 +110,21 @@ private class ANG_EligibilityForNewMCAgentTest {
 		);
 
 		insert accountHE;
-		
+
 	}
 
 	@isTest static void verifyEligibleAgentHE(){
 
-		Account accountHE = 
-			[SELECT 
-				Id, 
-				ParentId, 
-				Location_Type__c, 
+		Account accountHE =
+			[SELECT
+				Id,
+				ParentId,
+				Location_Type__c,
 				Location_Class__c,
 				IATA_ISO_Country__r.AMS_Settlement_System__c
 			 FROM Account
 			 WHERE
-				 Name = 'HE Test Agency' 
+				 Name = 'HE Test Agency'
 			 AND Location_Type__c = :AMS_Utils.HE
 			];
 
@@ -150,17 +150,17 @@ private class ANG_EligibilityForNewMCAgentTest {
 
 		Account accountGE = [SELECT Id FROM Account WHERE Location_Type__c = :AMS_Utils.GE];
 
-		IATA_ISO_Country__c countryPT = 
-			[SELECT 
-				Id, 
-				AMS_Settlement_System__c 
-			 FROM IATA_ISO_Country__c 
-			 WHERE 
+		IATA_ISO_Country__c countryPT =
+			[SELECT
+				Id,
+				AMS_Settlement_System__c
+			 FROM IATA_ISO_Country__c
+			 WHERE
 				ISO_Code__c = 'PT'
 			];
 
 		Account accountHE = new Account(
-			Name='HE Ineligible Test Agency', 
+			Name='HE Ineligible Test Agency',
 			RecordtypeId = agencyRecordTypeId,
 			IATA_ISO_Country__c = countryPT.Id,
 			Location_Type__c = AMS_Utils.HE,
@@ -191,17 +191,17 @@ private class ANG_EligibilityForNewMCAgentTest {
 
 		Account accountGE = [SELECT Id FROM Account WHERE Location_Type__c = :AMS_Utils.GE];
 
-		IATA_ISO_Country__c countryMC = 
-			[SELECT 
-				Id, 
-				AMS_Settlement_System__c 
-			 FROM IATA_ISO_Country__c 
-			 WHERE 
+		IATA_ISO_Country__c countryMC =
+			[SELECT
+				Id,
+				AMS_Settlement_System__c
+			 FROM IATA_ISO_Country__c
+			 WHERE
 				ISO_Code__c = 'MC'
 			];
 
 		Account accountAE = new Account(
-			Name='AE Test Agency', 
+			Name='AE Test Agency',
 			RecordtypeId = agencyRecordTypeId,
 			IATA_ISO_Country__c = countryMC.Id,
 			Location_Type__c = AMS_Utils.AE,
@@ -227,22 +227,22 @@ private class ANG_EligibilityForNewMCAgentTest {
 		system.assert(output.isParentInSameBSP, 'The agent should be in the same BSP as the parent');
 
 	}
-	
+
 	@isTest static void verifyIneligibleAgentAE() {
 
 		Account accountGE = [SELECT Id FROM Account WHERE Location_Type__c = :AMS_Utils.GE];
 
-		IATA_ISO_Country__c countryGB = 
-			[SELECT 
-				Id, 
-				AMS_Settlement_System__c 
-			 FROM IATA_ISO_Country__c 
-			 WHERE 
+		IATA_ISO_Country__c countryGB =
+			[SELECT
+				Id,
+				AMS_Settlement_System__c
+			 FROM IATA_ISO_Country__c
+			 WHERE
 				ISO_Code__c = 'GB'
 			];
 
 		Account accountIneligibleAE = new Account(
-			Name='AE Ineligible Test Agency', 
+			Name='AE Ineligible Test Agency',
 			RecordtypeId = agencyRecordTypeId,
 			IATA_ISO_Country__c = countryGB.Id,
 			Location_Type__c = AMS_Utils.AE,
@@ -266,7 +266,7 @@ private class ANG_EligibilityForNewMCAgentTest {
 
 		system.assert(!output.isAgentEligible, 'The agent should NOT be eligible for multicountry.');
 		system.assert(!output.isParentInSameBSP, 'The agent should NOT be in the same BSP as the parent');
-	
+
 	}
 
 }

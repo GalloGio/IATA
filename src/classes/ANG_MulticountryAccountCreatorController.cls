@@ -1,9 +1,9 @@
 public with sharing class ANG_MulticountryAccountCreatorController {
-	
+
 	public Integer accIndex {get;set;}
 	public boolean isHierarchyMulticountry {get;set;}
 	public Boolean hasErrors { get; set;}
-	
+
 	public List<SelectOption> getItems() {
 
 		List<SelectOption> options = new List<SelectOption>();
@@ -11,7 +11,7 @@ public with sharing class ANG_MulticountryAccountCreatorController {
 		options.add(new SelectOption('D','D'));
 		return options;
 	}
-	
+
 	public Boolean closeTab{
 		get{
 			if(closeTab == null) closeTab = false;
@@ -74,7 +74,7 @@ public with sharing class ANG_MulticountryAccountCreatorController {
 	}
 
 	public ANG_MulticountryAccountCreatorController(ApexPages.StandardController stdController){
-				
+
 		if(!Test.isRunningTest())
 			stdController.addFields(new List<String>(oscarFields));
 
@@ -82,7 +82,7 @@ public with sharing class ANG_MulticountryAccountCreatorController {
 		oscar = (AMS_OSCAR__c)stdController.getRecord();
 
 		if(Test.isRunningTest())
-		   oscar =  [Select Id, Account__c, Process__c, Step6__c, STEP45__c, ANG_Hierarchy_Created__c from AMS_OSCAR__c where Id =:oscarId];
+			 oscar =  [Select Id, Account__c, Process__c, Step6__c, STEP45__c, ANG_Hierarchy_Created__c from AMS_OSCAR__c where Id =:oscarId];
 
 		listAccount = new list<Account>();
 
@@ -96,7 +96,7 @@ public with sharing class ANG_MulticountryAccountCreatorController {
 	}
 
 	public void addAccount(){
-		
+
 		Account acc = new Account();
 		listAccount.add(acc);
 	}
@@ -104,7 +104,7 @@ public with sharing class ANG_MulticountryAccountCreatorController {
 	public boolean saveAccount() {
 		try{
 			For(Account acct : listAccount){
-	
+
 				if(acct.id == null){
 					acct.ParentId = mainAccount.Id;
 					acct.Top_Parent__c = mainAccount.Id;
@@ -131,7 +131,7 @@ public with sharing class ANG_MulticountryAccountCreatorController {
 			if(Test.isRunningTest())
 				integer intTest =1/0;//exception for catch test coverage
 
-			return !hasErrors;	
+			return !hasErrors;
 
 		}
 		catch(Exception e){
@@ -144,11 +144,11 @@ public with sharing class ANG_MulticountryAccountCreatorController {
 			return false;
 		}
 	}
-	
+
 	public PageReference removeAccount() {
-		
+
 		Account acct = listAccount.remove(accIndex);
-		
+
 		if(acct.id != null){
 			acct.name = 'toDeleteAccount';
 			acct.IATA_ISO_Country__c = new IATA_ISO_Country__c().id;
@@ -156,7 +156,7 @@ public with sharing class ANG_MulticountryAccountCreatorController {
 		}
 		return null;
 	}
-	
+
 	public void submitHierarchy(){
 
 		hasErrors = false;
@@ -166,18 +166,18 @@ public with sharing class ANG_MulticountryAccountCreatorController {
 
 		try{
 			if(checkMulticountry()){
-				
+
 				oscar.ANG_Hierarchy_Created__c = true;
-				
+
 				upsert listAccount;
 				update oscar;
-				
+
 				closeTab = true;
 			}
 			else{
 				hasErrors = true;
 				ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.Error,'You need at least 2 accounts from different countries to have a multicountry hierarchy');
-				ApexPages.addMessage(myMsg);   
+				ApexPages.addMessage(myMsg);
 			}
 			if(Test.isRunningTest())
 				integer intTest =1/0;//exception for catch test coverage
@@ -188,19 +188,19 @@ public with sharing class ANG_MulticountryAccountCreatorController {
 			ApexPages.addMessage(myMsg);
 		}
 	}
-	
+
 	private boolean checkMulticountry(){
-		
+
 		isHierarchyMulticountry = false;
 		if(listAccount.isEmpty()){
 			return isHierarchyMulticountry;
 		}
-		
+
 		for(Account ac: listAccount){
 			if(mainAccount.IATA_ISO_Country__c != ac.IATA_ISO_Country__c)
 				isHierarchyMulticountry = true;
 		}
-		
+
 		return isHierarchyMulticountry;
 	}
 }

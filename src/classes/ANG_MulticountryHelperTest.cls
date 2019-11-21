@@ -1,5 +1,5 @@
 @isTest
-private class ANG_MulticountryHelperTest {	
+private class ANG_MulticountryHelperTest {
 
 	@testSetup static void setup(){
 
@@ -26,7 +26,7 @@ private class ANG_MulticountryHelperTest {
 		insert new List<AMS_Settlement_System__c>{bspPT, bspGB, bspFR};
 
 		IATA_ISO_Country__c countryPT = new IATA_ISO_Country__c();
-		
+
 		countryPT.Name = 'Portugal';
 		countryPT.ISO_Code__c = 'PT';
 		countryPT.ANG_Enable_NewGen__c = true;
@@ -34,7 +34,7 @@ private class ANG_MulticountryHelperTest {
 		countryPT.Multicountry_Enabled__c = true;
 
 		IATA_ISO_Country__c countryUK = new IATA_ISO_Country__c();
-		
+
 		countryUK.Name = 'United Kingdom';
 		countryUK.ISO_Code__c = 'GB';
 		countryUK.ANG_Enable_NewGen__c = true;
@@ -42,7 +42,7 @@ private class ANG_MulticountryHelperTest {
 		countryUK.Multicountry_Enabled__c = true;
 
 		IATA_ISO_Country__c countryFR = new IATA_ISO_Country__c();
-		
+
 		countryFR.Name = 'France';
 		countryFR.ISO_Code__c = 'FR';
 		countryFR.ANG_Enable_NewGen__c = true;
@@ -106,7 +106,7 @@ private class ANG_MulticountryHelperTest {
 		Account accountAEUK = makeAccount('S Account AE UK', accountHEUK.Id, AMS_Utils.AE, countryUK.Id,
 			'12341235', ANG_Risk_Helper.RISK_STATUS_B);
 		insert accountAEUK;
-		
+
 		Account accountAEUK2 = makeAccount('S Account 2 AE UK', accountHEUK.Id, AMS_Utils.AE, countryUK.Id,
 			'12341236', ANG_Risk_Helper.RISK_STATUS_B);
 		insert accountAEUK2;
@@ -141,7 +141,7 @@ private class ANG_MulticountryHelperTest {
 		Account accountAEUK = makeAccount('MC Account AE UK', accountHEUK.Id, AMS_Utils.AE, countryUK.Id,
 			'12312348', ANG_Risk_Helper.RISK_STATUS_B);
 		insert accountAEUK;
-		
+
 		Account accountAEUK2 = makeAccount('MC Account 2 AE UK', accountHEUK.Id, AMS_Utils.AE, countryUK.Id,
 			'12312349', ANG_Risk_Helper.RISK_STATUS_B);
 		insert accountAEUK2;
@@ -169,10 +169,10 @@ private class ANG_MulticountryHelperTest {
 	@isTest static void allowIATACodeGenerationTest(){
 
 		List<Account> accountLst = new List<Account>(
-			[SELECT 
-				Id 
-			 FROM Account 
-			 WHERE 
+			[SELECT
+				Id
+			 FROM Account
+			 WHERE
 				Name IN ('Multicountry HE UK', 'Multicountry GE PT')
 			 ORDER BY
 				Name ASC
@@ -189,7 +189,7 @@ private class ANG_MulticountryHelperTest {
 		insert oscar;
 
 		Case cse = new Case(
-			RecordTypeId = AMS_Utils.RECTYPE_OSCARCOMM, 
+			RecordTypeId = AMS_Utils.RECTYPE_OSCARCOMM,
 			AccountId = accountHE.Id,
 			Oscar__c = oscar.Id
 		);
@@ -201,7 +201,7 @@ private class ANG_MulticountryHelperTest {
 		AMS_OSCAR__c oscarWithRels = [SELECT Account__c, Account__r.Parent.Status__c FROM AMS_OSCAR__c];
 
 		Boolean allowIATACodeGeneration = ANG_MulticountryHelper.allowIATACodeGeneration(oscarWithRels);
-		
+
 		System.assert(!allowIATACodeGeneration, 'Should not allow the IATA code generation.');
 
 		Account accountGE = accountLst.get(0);
@@ -212,8 +212,8 @@ private class ANG_MulticountryHelperTest {
 		update accountGE;
 
 		Agency_Applied_Change_code__c changeCodeApplied = new Agency_Applied_Change_code__c(
-			Account__c = accountGE.Id, 
-			Change_Code__c = 'NEW', 
+			Account__c = accountGE.Id,
+			Change_Code__c = 'NEW',
 			Sent_to_external_system__c = false
 		);
 
@@ -222,7 +222,7 @@ private class ANG_MulticountryHelperTest {
 		oscarWithRels = [SELECT Account__c, Account__r.Parent.Status__c FROM AMS_OSCAR__c];
 
 		allowIATACodeGeneration = ANG_MulticountryHelper.allowIATACodeGeneration(oscarWithRels);
-		
+
 		System.assert(allowIATACodeGeneration, 'Should allow the IATA code generation.');
 
 		Test.stopTest();
@@ -232,10 +232,10 @@ private class ANG_MulticountryHelperTest {
 	@isTest static void allowApprovalStepTest(){
 
 		List<Account> accountLst = new List<Account>(
-			[SELECT 
-				Id 
-			 FROM Account 
-			 WHERE 
+			[SELECT
+				Id
+			 FROM Account
+			 WHERE
 				Name IN ('Multicountry AE PT', 'Multicountry GE PT')
 			 ORDER BY
 				Name ASC
@@ -252,7 +252,7 @@ private class ANG_MulticountryHelperTest {
 		insert oscar;
 
 		Case cse = new Case(
-			RecordTypeId = AMS_Utils.RECTYPE_OSCARCOMM, 
+			RecordTypeId = AMS_Utils.RECTYPE_OSCARCOMM,
 			AccountId = accountAE.Id,
 			Oscar__c = oscar.Id
 		);
@@ -262,21 +262,21 @@ private class ANG_MulticountryHelperTest {
 		Test.startTest();
 
 		Boolean allowApproval = ANG_MulticountryHelper.allowApprovalStep(oscar);
-		
+
 		System.assert(!allowApproval, 'Should not allow the approval step.');
 
 		Account accountGE = accountLst.get(1);
 
 		Agency_Applied_Change_code__c changeCodeApplied = new Agency_Applied_Change_code__c(
-			Account__c = accountGE.Id, 
-			Change_Code__c = 'FIN', 
+			Account__c = accountGE.Id,
+			Change_Code__c = 'FIN',
 			Sent_to_external_system__c = false
 		);
 
 		insert changeCodeApplied;
 
 		allowApproval = ANG_MulticountryHelper.allowApprovalStep(oscar);
-		
+
 		System.assert(allowApproval, 'Should allow the approval step.');
 
 		Test.stopTest();
@@ -288,11 +288,11 @@ private class ANG_MulticountryHelperTest {
 		Id standardAcctRecId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
 
 		List<IATA_ISO_Country__c> countriesLst = new List<IATA_ISO_Country__c>(
-			[SELECT 
-				Id, 
-				Name 
-			 FROM IATA_ISO_Country__c 
-			 ORDER BY 
+			[SELECT
+				Id,
+				Name
+			 FROM IATA_ISO_Country__c
+			 ORDER BY
 				Name ASC
 			]
 		);
@@ -315,7 +315,7 @@ private class ANG_MulticountryHelperTest {
 
 		Account accountGE = accountLst.get(0);
 		Account accountHE = accountLst.get(1);
-		
+
 		Test.startTest();
 
 		Account HESameGEBSPCountry = new Account(
@@ -327,7 +327,7 @@ private class ANG_MulticountryHelperTest {
 			ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY,
 			ParentId = accountGE.Id
 		);
-		
+
 		try{
 			insert HESameGEBSPCountry;
 		}
@@ -345,15 +345,15 @@ private class ANG_MulticountryHelperTest {
 			ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY,
 			ParentId = accountGE.Id
 		);
-		
-		try{        
+
+		try{
 			insert HESameCountry;
 		}
 		catch(Exception e){
 			Boolean expectedExceptionThrown =  e.getMessage().contains(Label.ANG_Multicountry_Already_Has_Locations_Only_Allow_AE_With_Correct_HE_Error);
 			System.assert(expectedExceptionThrown, 'Should throw \'' + Label.ANG_Multicountry_Already_Has_Locations_Only_Allow_AE_With_Correct_HE_Error + '\'.');
-		} 
-		
+		}
+
 		Account AECountry = new Account(
 			Name = 'Validation trigger AE with no HE',
 			IATA_ISO_Country__c = countryFR.Id,
@@ -362,8 +362,8 @@ private class ANG_MulticountryHelperTest {
 			ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY,
 			ParentId = accountGE.Id
 		);
-		
-		try{       
+
+		try{
 			insert AECountry;
 		}
 		catch(Exception e){
@@ -373,7 +373,7 @@ private class ANG_MulticountryHelperTest {
 
 		accountHE.IATA_ISO_Country__c = countryPT.id;
 
-		try{   
+		try{
 			update accountHE;
 		}
 		catch(Exception e){
@@ -381,7 +381,7 @@ private class ANG_MulticountryHelperTest {
 			System.assert(expectedExceptionThrown, 'Should throw \'' + Label.ANG_Multicountry_Already_Has_Locations_Only_Allow_AE_Error + '\'.');
 		}
 
-		// Test country is not a Multicountry Enable 
+		// Test country is not a Multicountry Enable
 		countryPT.Multicountry_Enabled__c = false;
 		update countryPT;
 
@@ -393,7 +393,7 @@ private class ANG_MulticountryHelperTest {
 			Location_Class__c = 'P',
 			ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY
 		);
-		
+
 		try{
 			insert GEnotMulticountryEnabled;
 		}
@@ -409,8 +409,8 @@ private class ANG_MulticountryHelperTest {
 	@isTest static void testmulticountryAccountHasRemittenceFrequencyEmpty() {
 
 		List<Account> accountLst = new List<Account>(
-			[SELECT Id 
-			 FROM Account 
+			[SELECT Id
+			 FROM Account
 			 WHERE  Name IN ('Multicountry HE UK')
 			 ORDER BY Name ASC
 			]);
@@ -426,7 +426,7 @@ private class ANG_MulticountryHelperTest {
 		insert oscar;
 
 		Case cse = new Case(
-			RecordTypeId = AMS_Utils.RECTYPE_OSCARCOMM, 
+			RecordTypeId = AMS_Utils.RECTYPE_OSCARCOMM,
 			AccountId = accountHE.Id,
 			Oscar__c = oscar.Id
 		);
@@ -434,12 +434,12 @@ private class ANG_MulticountryHelperTest {
 		insert cse;
 
 		AMS_Pax_Accreditation_Form__c paxAccreditation = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = cse.Id);
-		insert paxAccreditation; 
+		insert paxAccreditation;
 
 		oscar.AMS_Online_Accreditation__c = paxAccreditation.id;
 		update oscar;
 
-		AMS_Oscar__c oscar2 = [SELECT Id, Account__c, Process__c, Location_Type__c, AMS_Online_Accreditation__c 
+		AMS_Oscar__c oscar2 = [SELECT Id, Account__c, Process__c, Location_Type__c, AMS_Online_Accreditation__c
 								FROM AMS_Oscar__c WHERE Account__c = : accountHE.Id limit 1];
 
 		Test.startTest();
@@ -447,19 +447,19 @@ private class ANG_MulticountryHelperTest {
 		Boolean hasRF = ANG_MulticountryHelper.multicountryAccountHasRemittenceFrequencyEmpty(oscar2);
 
 		Test.stopTest();
-		
-		//Has empty Remittance Frequency 
-		System.assert(hasRF); 
+
+		//Has empty Remittance Frequency
+		System.assert(hasRF);
 
 	}
 
 	@isTest static void cloneOwnersFromParentAccountTest() {
 
 		List<Account> accountLst = new List<Account>(
-			[SELECT 
+			[SELECT
 				Id , ParentId, Name
-			 FROM Account 
-			 WHERE 
+			 FROM Account
+			 WHERE
 				Name IN ('Multicountry HE UK', 'Multicountry GE PT')
 			 ORDER BY
 				Name ASC
@@ -477,7 +477,7 @@ private class ANG_MulticountryHelperTest {
 		insert oscar;
 
 		Case cse = new Case(
-			RecordTypeId = AMS_Utils.RECTYPE_OSCARCOMM, 
+			RecordTypeId = AMS_Utils.RECTYPE_OSCARCOMM,
 			AccountId = accountGE.Id,
 			Oscar__c = oscar.Id
 		);
@@ -493,7 +493,7 @@ private class ANG_MulticountryHelperTest {
 		insert c1;
 
 		Id ownerRtId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
-		
+
 		AMS_Account_Role__c accountRole = new AMS_Account_Role__c(recordTypeId = ownerRtId, Account__c = accountGE.Id, Person__c = null, Contact__c = c1.Id, Percentage__c=100.0);
 		insert accountRole;
 
@@ -501,7 +501,7 @@ private class ANG_MulticountryHelperTest {
 
 		Contact c2 = new Contact(AccountId = accountAE.id, Firstname = 'firstNAme', Lastname='LastNAme', Phone = '911111111', MobilePhone = '911111111', Email = 'test2@test.com', Financial_Assessment_Contact__c = false);
 		insert c2;
-		
+
 		AMS_Account_Role__c accountRoleAE = new AMS_Account_Role__c(recordTypeId = ownerRtId, Account__c = accountAE.Id, Person__c = null, Contact__c = c1.Id, Percentage__c=100.0);
 		insert accountRoleAE;
 
@@ -514,7 +514,7 @@ private class ANG_MulticountryHelperTest {
 		insert oscarAE;
 
 		Case cseAE = new Case(
-			RecordTypeId = AMS_Utils.RECTYPE_OSCARCOMM, 
+			RecordTypeId = AMS_Utils.RECTYPE_OSCARCOMM,
 			AccountId = accountAE.Id,
 			Oscar__c = oscarAE.Id
 		);
@@ -567,23 +567,23 @@ private class ANG_MulticountryHelperTest {
 	@isTest static void riskAssessmentCalcNewHeMulticountryTest(){
 
 		AMS_ChangeCodes__c finChgCode = new AMS_ChangeCodes__c(
-			Name = 'FIN-AMS', 
-			Change_Code__c = 'FIN', 
-			Reason_Code__c = '', 
-			Reason_Code_Description__c = '', 
+			Name = 'FIN-AMS',
+			Change_Code__c = 'FIN',
+			Reason_Code__c = '',
+			Reason_Code_Description__c = '',
 			Account_status_change__c = '',
 			Integration_RecId__c = 'C'
 		);
 		insert finChgCode;
 
 		List<Account> accountLst = new List<Account>(
-			[SELECT 
+			[SELECT
 				Id,
 				ISO_State__c,
 				IATA_ISO_Country__c,
 				ANG_HE_RiskHistoryAssessment__c
-			 FROM Account 
-			 WHERE 
+			 FROM Account
+			 WHERE
 				Name IN ('Multicountry HE UK', 'Multicountry GE PT')
 			 ORDER BY
 				Name ASC
@@ -598,14 +598,14 @@ private class ANG_MulticountryHelperTest {
 		update accountGE;
 
 		Agency_Applied_Change_code__c changeCodeAppliedNew = new Agency_Applied_Change_code__c(
-			Account__c = accountGE.Id, 
-			Change_Code__c = 'NEW', 
+			Account__c = accountGE.Id,
+			Change_Code__c = 'NEW',
 			Sent_to_external_system__c = false
 		);
 
 		Agency_Applied_Change_code__c changeCodeAppliedFin = new Agency_Applied_Change_code__c(
-			Account__c = accountGE.Id, 
-			Change_Code__c = 'FIN', 
+			Account__c = accountGE.Id,
+			Change_Code__c = 'FIN',
 			Sent_to_external_system__c = false
 		);
 
@@ -624,13 +624,13 @@ private class ANG_MulticountryHelperTest {
 		insert oscar;
 
 		Case cse = new Case(
-			RecordTypeId = AMS_Utils.RECTYPE_OSCARCOMM, 
+			RecordTypeId = AMS_Utils.RECTYPE_OSCARCOMM,
 			AccountId = accountHE.Id,
 			Oscar__c = oscar.Id
 		);
 
 		insert cse;
-	
+
 		AMS_Pax_Accreditation_Form__c theAccreditation = new AMS_Pax_Accreditation_Form__c();
 		theAccreditation.Account_Name__c='NEWGEN HE';
 		theAccreditation.ISSP_AMS_Legal_Status__c='Association';
@@ -648,8 +648,8 @@ private class ANG_MulticountryHelperTest {
 		theAccreditation.Location_Class__c='P';
 		theAccreditation.Location_Type__c='HE';
 		theAccreditation.SAAM_Case__c=cse.Id;
-		theAccreditation.ISSP_Branch_AccountId__c = accountHE.Id;		
-		insert theAccreditation; 
+		theAccreditation.ISSP_Branch_AccountId__c = accountHE.Id;
+		insert theAccreditation;
 
 		oscar.AMS_Online_Accreditation__c = theAccreditation.id;
 		update oscar;
@@ -660,8 +660,8 @@ private class ANG_MulticountryHelperTest {
 		update accountHE;
 
 		changeCodeAppliedNew = new Agency_Applied_Change_code__c(
-			Account__c = accountHE.Id, 
-			Change_Code__c = 'NEW', 
+			Account__c = accountHE.Id,
+			Change_Code__c = 'NEW',
 			Sent_to_external_system__c = false
 		);
 
@@ -675,7 +675,7 @@ private class ANG_MulticountryHelperTest {
 		oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
 
 		update oscar;
-		
+
 		accountGE = [SELECT Id, ANG_HE_RiskHistoryAssessment__c FROM Account WHERE Id = :accountGE.Id];
 		system.assertEquals(accountGE.ANG_HE_RiskHistoryAssessment__c, 'Passed', 'The risk history assessment should pass');
 
@@ -686,8 +686,8 @@ private class ANG_MulticountryHelperTest {
 	@isTest
 	public static void testGetChildHEAccounts()
 	{
-		Map<Id, Account> accountIds = new Map<Id, Account>([SELECT Id FROM Account 
-			 							  					WHERE Name IN ('MC Account GE PT', 'S Account HE UK')]);
+		Map<Id, Account> accountIds = new Map<Id, Account>([SELECT Id FROM Account
+			 													WHERE Name IN ('MC Account GE PT', 'S Account HE UK')]);
 
 		Test.startTest();
 		Map<Id, Account> accounts = ANG_MulticountryHelper.getChildHEAccounts(accountIds.keySet());
@@ -698,37 +698,37 @@ private class ANG_MulticountryHelperTest {
 		List<String> names = new List<String>();
 		for (Account a : accounts.values())
 			names.add(a.Name);
-		
+
 		System.assert(names.contains('MC Account HE UK'), '"MC Account HE UK" account not found');
 	}
 
 	@isTest
 	public static void testMulticountryDowngrade_Event()
 	{
-		List<Account> accounts = [SELECT Id FROM Account 
-								  WHERE Name IN ('MC Account GE PT')
-								  ORDER BY Name ASC];
+		List<Account> accounts = [SELECT Id FROM Account
+									WHERE Name IN ('MC Account GE PT')
+									ORDER BY Name ASC];
 
 		Account accountGE = accounts.get(0);
 		accountGE.Financial_Review_Result__c = ANG_Risk_Helper.FR_UNSATISFACTORY;
 		accountGE.ANG_HE_RiskStatus__c = ANG_Risk_Helper.RISK_STATUS_C;
-		
+
 		Test.startTest();
 		update accountGE;
 		Test.stopTest();
 
 		// the child cases are created from the batch which is not executed, but have to be registered
 		List<AsyncApexJob> batches = [SELECT Id, Status, MethodName, ApexClass.Name, createddate
-									  FROM AsyncApexJob
-									  WHERE ApexClass.Name = 'ANG_RiskStatusDowngradeBatch'];
+										FROM AsyncApexJob
+										WHERE ApexClass.Name = 'ANG_RiskStatusDowngradeBatch'];
 		System.assertEquals(1, batches.size(), 'Should have scheduled a Batch job');
 
 		List<Case> cases = [SELECT Id, Account_Concerned__c FROM Case];
 		System.assertEquals(1, cases.size()); // 1 for each GE
 
-		Map<Id, Account> accountIds = new Map<Id, Account>([SELECT Id FROM Account 
-										   WHERE Name IN ('MC Account GE PT')]);
-		
+		Map<Id, Account> accountIds = new Map<Id, Account>([SELECT Id FROM Account
+											 WHERE Name IN ('MC Account GE PT')]);
+
 		for (Case c : cases)
 		{
 			System.assert(accountIds.keySet().contains(c.Account_Concerned__c),
@@ -739,15 +739,15 @@ private class ANG_MulticountryHelperTest {
 	@isTest
 	public static void testMulticountryDowngrade_Batch()
 	{
-		List<Account> accounts = [SELECT Id FROM Account 
-								  WHERE Name IN ('MC Account GE PT')
-								  ORDER BY Name ASC];
+		List<Account> accounts = [SELECT Id FROM Account
+									WHERE Name IN ('MC Account GE PT')
+									ORDER BY Name ASC];
 
 		Account accountGE = accounts.get(0);
 		accountGE.Financial_Review_Result__c = ANG_Risk_Helper.FR_UNSATISFACTORY;
 		accountGE.ANG_HE_RiskStatus__c = ANG_Risk_Helper.RISK_STATUS_C;
 		update accountGE;
-		
+
 		Test.startTest();
 		ANG_RiskStatusDowngradeBatch batch = new ANG_RiskStatusDowngradeBatch(new Set<Id> { accounts.get(0).Id });
 		Id batchId = Database.executeBatch(batch);
@@ -756,9 +756,9 @@ private class ANG_MulticountryHelperTest {
 		List<Case> cases = [SELECT Id, Account_Concerned__c FROM Case];
 		System.assertEquals(2, cases.size()); // 1 for each GE and 1 for each child HE accounts
 
-		Map<Id, Account> accountIds = new Map<Id, Account>([SELECT Id FROM Account 
-										   WHERE Name IN ('MC Account GE PT', 'MC Account HE UK')]);
-		
+		Map<Id, Account> accountIds = new Map<Id, Account>([SELECT Id FROM Account
+											 WHERE Name IN ('MC Account GE PT', 'MC Account HE UK')]);
+
 		for (Case c : cases)
 		{
 			System.assert(accountIds.keySet().contains(c.Account_Concerned__c),
@@ -770,7 +770,7 @@ private class ANG_MulticountryHelperTest {
 	static void createIfapForMulticountryAgentTest(){
 
 		List<Account> accountLst = new List<Account>(
-			[SELECT 
+			[SELECT
 				Id,
 				Name,
 				ISO_State__c,
@@ -791,12 +791,12 @@ private class ANG_MulticountryHelperTest {
 		update acct;
 
 		Contact cont = new Contact(
-			AccountId = acct.id, 
-			Firstname = 'Richard', 
-			Lastname = 'Vaughan', 
-			Phone = '666123456', 
-			MobilePhone = '911111111', 
-			Email = 'richard.vaughan@test.com', 
+			AccountId = acct.id,
+			Firstname = 'Richard',
+			Lastname = 'Vaughan',
+			Phone = '666123456',
+			MobilePhone = '911111111',
+			Email = 'richard.vaughan@test.com',
 			Financial_Assessment_Contact__c = true
 		);
 
@@ -806,7 +806,7 @@ private class ANG_MulticountryHelperTest {
 
 		AMS_OSCAR__c oscar = new AMS_OSCAR__c(
 			Account__c = acct.Id,
-			Process__c = AMS_Utils.NGCHANGES, 
+			Process__c = AMS_Utils.NGCHANGES,
 			RecordTypeId = AMS_Utils.RECTYPE_NGCHANGES,
 			Status__c = 'Open'
 		);
@@ -844,15 +844,15 @@ private class ANG_MulticountryHelperTest {
 		insert staging;
 
 		AMS_Accreditation_Contact__c acontact = new AMS_Accreditation_Contact__c(
-			AMS_Pax_Accreditation_Form__c = staging.Id, 
-			First_name__c = 'Richard', 
-			Last_name__c = 'Vaughan', 
-			Agency_owner__c = true, 
-			Email__c = 'richard.vaughan@test.com', 
+			AMS_Pax_Accreditation_Form__c = staging.Id,
+			First_name__c = 'Richard',
+			Last_name__c = 'Vaughan',
+			Agency_owner__c = true,
+			Email__c = 'richard.vaughan@test.com',
 			PhoneNational__c = '123123123',
-			Phone__c = '123123123', 
-			Contact__c = cont.Id, 
-			Financial_interest__c = 100, 
+			Phone__c = '123123123',
+			Contact__c = cont.Id,
+			Financial_interest__c = 100,
 			RecordTypeId = AMS_Utils.AccreditationContactPersonRT
 		);
 
@@ -883,14 +883,14 @@ private class ANG_MulticountryHelperTest {
 		system.assertEquals(pdLst.size(), 1, 'There must be a single process detail record with the record type \'Multicountry Yearly Financial Review\'');
 
 		Test.stopTest();
-		
+
 	}
 
 	@isTest static void updateFinancialReviewResultMulticountryTest(){
 		CaseChildHelper.noValidationsOnTrgCAseIFAP  = true;
 
 		List<Account> accountLst = new List<Account>(
-			[SELECT 
+			[SELECT
 				Id,
 				Name,
 				ISO_State__c,
@@ -911,12 +911,12 @@ private class ANG_MulticountryHelperTest {
 		update accountGE;
 
 		Contact cont = new Contact(
-			AccountId = accountGE.Id, 
-			Firstname = 'Richard', 
-			Lastname = 'Vaughan', 
-			Phone = '666123456', 
-			MobilePhone = '911111111', 
-			Email = 'richard.vaughan@test.com', 
+			AccountId = accountGE.Id,
+			Firstname = 'Richard',
+			Lastname = 'Vaughan',
+			Phone = '666123456',
+			MobilePhone = '911111111',
+			Email = 'richard.vaughan@test.com',
 			Financial_Assessment_Contact__c = true
 		);
 		insert cont;
@@ -933,7 +933,7 @@ private class ANG_MulticountryHelperTest {
 		ifap.ArchivedDate__c = Date.today();
 		ifap.Financial_Review_Type__c = AMS_Utils.FINANCIAL_REVIEW_MULTICOUNTRY_ANNUAL;
 		insert ifap;
-		
+
 		Test.startTest();
 
 		ifap.Financial_Assessment_Points__c = 70;
@@ -944,11 +944,11 @@ private class ANG_MulticountryHelperTest {
 
 		update ifap;
 
-		accountGE = 
-			[SELECT 
-				Id, 
-				Financial_Review_Result__c, 
-				Assessment_Performed_Date__c, 
+		accountGE =
+			[SELECT
+				Id,
+				Financial_Review_Result__c,
+				Assessment_Performed_Date__c,
 				Financial_Assessment_Points__c
 			FROM Account
 			WHERE
@@ -967,7 +967,7 @@ private class ANG_MulticountryHelperTest {
 		CaseChildHelper.noValidationsOnTrgCAseIFAP  = true;
 
 		List<Account> accountLst = new List<Account>(
-			[SELECT 
+			[SELECT
 				Id,
 				Name,
 				ISO_State__c,
@@ -988,12 +988,12 @@ private class ANG_MulticountryHelperTest {
 		update accountGE;
 
 		Contact cont = new Contact(
-			AccountId = accountGE.Id, 
-			Firstname = 'Richard', 
-			Lastname = 'Vaughan', 
-			Phone = '666123456', 
-			MobilePhone = '911111111', 
-			Email = 'richard.vaughan@test.com', 
+			AccountId = accountGE.Id,
+			Firstname = 'Richard',
+			Lastname = 'Vaughan',
+			Phone = '666123456',
+			MobilePhone = '911111111',
+			Email = 'richard.vaughan@test.com',
 			Financial_Assessment_Contact__c = true
 		);
 		insert cont;
@@ -1010,7 +1010,7 @@ private class ANG_MulticountryHelperTest {
 		ifap.ArchivedDate__c = Date.today();
 		ifap.Financial_Review_Type__c = AMS_Utils.FINANCIAL_REVIEW_MULTICOUNTRY_ANNUAL;
 		insert ifap;
-		
+
 		Test.startTest();
 
 		ifap.Financial_Assessment_Points__c = 70;
@@ -1022,11 +1022,11 @@ private class ANG_MulticountryHelperTest {
 
 		update ifap;
 
-		accountGE = 
-			[SELECT 
-				Id, 
-				Financial_Review_Result__c, 
-				Assessment_Performed_Date__c, 
+		accountGE =
+			[SELECT
+				Id,
+				Financial_Review_Result__c,
+				Assessment_Performed_Date__c,
 				Financial_Assessment_Points__c
 			FROM Account
 			WHERE
@@ -1045,9 +1045,9 @@ private class ANG_MulticountryHelperTest {
 	public static void testIsAccountInMulticountryCountry()
 	{
 		List<Account> accounts = [SELECT Id, IATA_ISO_Country__c
-								  FROM Account 
-								  WHERE Name IN ('MC Account GE PT')
-								  ORDER BY Name ASC];
+									FROM Account
+									WHERE Name IN ('MC Account GE PT')
+									ORDER BY Name ASC];
 		Test.startTest();
 		List<IATA_ISO_Country__c> countries = ANG_MulticountryHelper.getAccountCountry(accounts);
 		for (IATA_ISO_Country__c c : countries)

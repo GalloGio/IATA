@@ -28,7 +28,7 @@ global class ANG_RME_Alert_Service {
 		//Used only on RTS ALert
 		public String RTSSeverity;
 		public Decimal AgentSales;
-		
+
 		//Used on INT 033: Request Provisional RHC (button)
 		public String title;
 		public String transactionId;
@@ -101,7 +101,7 @@ global class ANG_RME_Alert_Service {
 		'edsState_cashSales_shift_L3M_P3M' => 'Shift of FoP',
 		'edsState_market_intelligence' => 'Market Intelligence'
 	};
-	
+
 	private static void setResponse(String message, Integer statusCode){
 		setResponse(message, null, statusCode);
 	}
@@ -115,7 +115,7 @@ global class ANG_RME_Alert_Service {
 		if(String.isNotBlank(message)) result.description = message;
 		if(String.isNotBlank(stackTrace)) result.trace = stackTrace;
 
-		result.summary[0].status = String.valueOf(statusCode); 
+		result.summary[0].status = String.valueOf(statusCode);
 		if(String.isNotBlank(message)) result.summary[0].description = message;
 	}
 
@@ -146,7 +146,7 @@ global class ANG_RME_Alert_Service {
 
 			if(accs.isEmpty()) 								setResponse('No agent found with IATA Code '+req.iataCode, 404);
 
-			//handle Real Time Sales alert request 
+			//handle Real Time Sales alert request
 			else if(req.eventType == 'RTSAlert') 			saveRTSAlert(req, accs[0].Id);
 
 			else if(req.eventType == 'EDSAlert'){
@@ -228,8 +228,8 @@ global class ANG_RME_Alert_Service {
 			ANG_EventId__c = req.eventId,
 			ANG_RME_Last_Update__c = req.eventTime
 		);
-    	insert rtsAlert;
-    	setResponse(null, 202);
+		insert rtsAlert;
+		setResponse(null, 202);
 	}
 
 	private static Boolean validateRTSAlert(RHCMessage req) {
@@ -237,7 +237,7 @@ global class ANG_RME_Alert_Service {
 		// validate fields required
 		if (String.isBlank(req.rtsSeverity) || req.agentSales == null || String.isBlank(req.eventId)) {
 			setResponse('Required values missing: '
-				+ (String.isBlank(req.rtsSeverity) ? 'rtsSeverity ' : '') 
+				+ (String.isBlank(req.rtsSeverity) ? 'rtsSeverity ' : '')
 				+ (req.agentSales == null ? 'agentSales ' : '' )
 				+ (String.isBlank(req.eventId) ? 'eventId ' : '')
 				, 400);
@@ -247,10 +247,10 @@ global class ANG_RME_Alert_Service {
 		//validate severity value - check if exists on picklist
 		String severPLvals = '';
 		for (Schema.PicklistEntry entry :ANG_Risk_Alert__c.ANG_Severity__c.getDescribe().getPicklistValues()){
-				
+
 			if(String.isBlank(severPLvals))
 				severPLvals = entry.getValue();
-			else 
+			else
 				severPLvals += ',' + entry.getValue();
 		}
 
@@ -269,7 +269,7 @@ global class ANG_RME_Alert_Service {
 
 		if (!currencyPLvals.contains(req.storedBaseCurrency)){
 			setResponse('Invalid storedBaseCurrency: "'+req.storedBaseCurrency+'". Currency code must have 3 upper case characters.', 400);
-			return false; 
+			return false;
 		}
 
 		return true;
@@ -277,8 +277,8 @@ global class ANG_RME_Alert_Service {
 	}
 
 	private static Boolean validateEDSAlert(RHCMessage req){
-	
-		Boolean missingEventId = String.isBlank(req.eventId); 
+
+		Boolean missingEventId = String.isBlank(req.eventId);
 		Boolean missingRules = (req.triggeredRules == NULL || req.triggeredRules.isEmpty());
 
 		if(missingEventId || missingRules){
@@ -288,7 +288,7 @@ global class ANG_RME_Alert_Service {
 				400);
 
 			return false;
-		
+
 		}
 
 		return true;
@@ -305,7 +305,7 @@ global class ANG_RME_Alert_Service {
 		String agentCurrentStanding = '';
 
 		for(AgentStates agentState : req.agentStates){
-			
+
 			if(agentState.state == 'consumedRHC_USD'){
 				openCashPosition = Decimal.valueOf(agentState.value);
 				continue;
@@ -327,32 +327,32 @@ global class ANG_RME_Alert_Service {
 			ANG_Triggered_Rules__c = String.join(req.triggeredRules, ';'),
 			ANG_Agent_current_standing__c = agentCurrentStanding
 		);
-    	
+
 		insert edsAlert;
 
-    	setResponse(null, 202);
-	
+		setResponse(null, 202);
+
 	}
 
 	global class WebserviceResult {
 		webservice Boolean isSuccess;
 		webservice String description;
 		webservice String iataCode;
-		webservice ISSP_Web_Service_Log__c log; 
+		webservice ISSP_Web_Service_Log__c log;
 
 		private RHCMessage res;
 
 		private WebserviceResult(){
 			isSuccess = true;
 		}
-        
-        public RHCMessage getResultMessage(){
-            return this.res;
-        }
-		
-        public void setResultMessage(RHCMessage inRes){
-            this.res = inRes;
-        }
+
+		public RHCMessage getResultMessage(){
+			return this.res;
+		}
+
+		public void setResultMessage(RHCMessage inRes){
+			this.res = inRes;
+		}
 	}
 
 	public static WebserviceResult testWebserviceResult(){
@@ -369,14 +369,14 @@ global class ANG_RME_Alert_Service {
 	webservice static WebserviceResult requestBalanceUpdate(String accountId){
 
 		Account acc = [SELECT Id, IATACode__c, (SELECT Id, CurrencyIsoCode, ANG_RHC_Amount__c, ANG_AccountId__c, ANG_RHC_Amount_Forecasted__c FROM RHC_Informations__r) FROM Account where Id = :accountId];
-        
-        WebserviceResult result = doRequest(acc.IATACode__c, 'BTN_Bal', null, false); //results are saved on the private varible "result"
+
+		WebserviceResult result = doRequest(acc.IATACode__c, 'BTN_Bal', null, false); //results are saved on the private varible "result"
 
 		if(result.isSuccess) {
 			Decimal toround = acc.RHC_Informations__r[0].ANG_RHC_Amount__c;
 			Integer decimalPlaces = (result.res.storedRHCValue).scale();
 			Decimal rounded = toRound.setScale(decimalPlaces, RoundingMode.HALF_UP);
-			
+
 			system.debug('rounded value :: ' + rounded + ' |  result storedRHCValue :: ' +  result.res.storedRHCValue + ' | Decimal Places :: ' +  decimalPlaces);
 
 			if(result.res.iataCode != acc.IATACode__c){
@@ -411,7 +411,7 @@ global class ANG_RME_Alert_Service {
 		//
 		// To reset the singleton for future calls
 		//
-		log = null;	
+		log = null;
 
 		return result;
 	}
@@ -425,17 +425,17 @@ global class ANG_RME_Alert_Service {
 
 
 		Account acc = [SELECT Id, IATACode__c, Location_Type__c, (SELECT Id, CurrencyIsoCode, ANG_RHC_Amount__c, ANG_AccountId__c FROM RHC_Informations__r) FROM Account where Id = :accountId];
-		
+
 		WebserviceResult result = doRequest(acc.IATACode__c, 'BTN_Prov', acc.Location_Type__c); //results are saved on the private varible "result"
 
 		if(result.isSuccess){
 
-			if(result.res.iataCode != acc.IATACode__c){ 
+			if(result.res.iataCode != acc.IATACode__c){
 				log.Error_Code__c = 'Iata Code Mismatch';
 				//ServiceNow_Helper.sendRequestToSNOW('Mulesoft', 'INT_033', 'requestBalanceUpdate', 'featurespace-system-service', 'RME', accountId + ' ' + log.Error_Code__c, String.valueOf(result), 'Connectivity', 'Salesforce.com', 'Salesforce.com', 'Infrastructure Services', 'Mulesoft Support', '2', '2', '2', 'Failure');
 				ServiceNow_Helper.sendRequestToSNOWRME('SNOW6', acc.IATACode__c, log, result);
 			}
-			else if (result.res.storedBaseCurrency != acc.RHC_Informations__r[0].CurrencyIsoCode){ 
+			else if (result.res.storedBaseCurrency != acc.RHC_Informations__r[0].CurrencyIsoCode){
 				log.Error_Code__c = 'Currency Mismatch';
 				//ServiceNow_Helper.sendRequestToSNOW('Mulesoft', 'INT_033', 'requestBalanceUpdate', 'featurespace-system-service', 'RME', accountId + ' ' + log.Error_Code__c, String.valueOf(result), 'Connectivity', 'Salesforce.com', 'Salesforce.com', 'Infrastructure Services', 'Mulesoft Support', '2', '2', '2', 'Failure');
 				ServiceNow_Helper.sendRequestToSNOWRME('SNOW7', acc.IATACode__c, log, result);
@@ -462,7 +462,7 @@ global class ANG_RME_Alert_Service {
 		//
 		// To reset the singleton for future calls
 		//
-		log = null;	
+		log = null;
 
 		return result;
 	}
@@ -475,7 +475,7 @@ global class ANG_RME_Alert_Service {
 
 		if(result.isSuccess){
 
-			if(result.res.iataCode != iataCode){ 
+			if(result.res.iataCode != iataCode){
 				log.Error_Code__c = 'Iata Code Mismatch';
 				ServiceNow_Helper.sendRequestToSNOWRME('SNOW19',iataCode, log, result);
 			}
@@ -486,7 +486,7 @@ global class ANG_RME_Alert_Service {
 		//
 		// To reset the singleton for future calls
 		//
-		log = null;	
+		log = null;
 
 	}
 
@@ -510,12 +510,12 @@ global class ANG_RME_Alert_Service {
 		req.setHeader('Content-Type', 'application/json');
 		req.setMethod(params.Action__c);
 		req.setTimeout(120000);
-        if(!String.isBlank(locType)){
-            Boolean isGE = (locType == AMS_Utils.GE);
-            req.setEndpoint('callout:' + params.Named_Credential__c + params.Credential__c.replace('{agencyId}', iataCode).replace('{offerId}',offerId) + '?client_id=' + params.client_id__c + '&client_secret=' + params.client_secret__c + '&isGe=' + isGE);
-        } else {
-            req.setEndpoint('callout:' + params.Named_Credential__c + params.Credential__c.replace('{agencyId}', iataCode).replace('{offerId}',offerId) + '?client_id=' + params.client_id__c + '&client_secret=' + params.client_secret__c );
-        }
+		if(!String.isBlank(locType)){
+			Boolean isGE = (locType == AMS_Utils.GE);
+			req.setEndpoint('callout:' + params.Named_Credential__c + params.Credential__c.replace('{agencyId}', iataCode).replace('{offerId}',offerId) + '?client_id=' + params.client_id__c + '&client_secret=' + params.client_secret__c + '&isGe=' + isGE);
+		} else {
+			req.setEndpoint('callout:' + params.Named_Credential__c + params.Credential__c.replace('{agencyId}', iataCode).replace('{offerId}',offerId) + '?client_id=' + params.client_id__c + '&client_secret=' + params.client_secret__c );
+		}
 
 		System.debug(loggingLevel.FINE, '____ [cls ANG_RME_Alert_Service - doRequest] req - ' + req);
 
@@ -557,7 +557,7 @@ global class ANG_RME_Alert_Service {
 		}
 
 		log.Success__c = result.isSuccess;
-		
+
 		if(commitLog)
 			insert log;
 
@@ -565,7 +565,7 @@ global class ANG_RME_Alert_Service {
 
 		System.debug(loggingLevel.FINE, '____ [cls ANG_RME_Alert_Service - doRequest] log - ' + log);
 		System.debug(loggingLevel.FINE, '____ [cls ANG_RME_Alert_Service - doRequest] result - ' + result);
-		
+
 		return result;
 	}
 }

@@ -40,8 +40,8 @@ public class ANG_MulticountryCopyParentInfo_Test {
 
 		//Create Account - GE - PT
 		Account geAccount = new Account(Name = 'Multicountry GE PT',
-			Location_Type__c = AMS_Utils.GE, 
-			Location_Class__c = 'P', 
+			Location_Type__c = AMS_Utils.GE,
+			Location_Class__c = 'P',
 			IATA_ISO_Country__c = countryPT.Id,
 			RecordTypeId = agencyAcctRecId,
 			Company_Type__c = 'A',
@@ -56,7 +56,7 @@ public class ANG_MulticountryCopyParentInfo_Test {
 
 		insert geAccount;
 
-		//Create Account - AE - PT 
+		//Create Account - AE - PT
 		Account aeAccount = new Account(Name = 'Multicountry AE PT',
 			ParentId = geAccount.Id,
 			Location_Type__c = AMS_Utils.AE,
@@ -64,16 +64,16 @@ public class ANG_MulticountryCopyParentInfo_Test {
 			IATA_ISO_Country__c = countryPT.Id,
 			RecordTypeId = agencyAcctRecId
 		);
- 	
+
  		insert aeAccount;
-		
+
 		Case cseGE = new Case(
-			RecordTypeId = AMS_Utils.RECTYPE_OSCARCOMM, 
+			RecordTypeId = AMS_Utils.RECTYPE_OSCARCOMM,
 			AccountId = geAccount.Id
 		);
 
 		Case cseAE = new Case(
-			RecordTypeId = AMS_Utils.RECTYPE_OSCARCOMM, 
+			RecordTypeId = AMS_Utils.RECTYPE_OSCARCOMM,
 			AccountId = aeAccount.Id
 		);
 
@@ -110,7 +110,7 @@ public class ANG_MulticountryCopyParentInfo_Test {
 		List<ID> accountIdList = new List<Id>(new Map<Id, Account>([SELECT ID FROM Account WHERE Name = 'Multicountry GE PT']).keySet());
 
 		// startTest/stopTest block to force async processes to run in the test.
-		Test.startTest();   
+		Test.startTest();
 
 		System.enqueueJob(new ANG_MulticountryCopyParentInfo(accountIdList,'NEW'));
 
@@ -136,7 +136,7 @@ public class ANG_MulticountryCopyParentInfo_Test {
 		List<ID> accountIdList = new List<Id>(new Map<Id, Account>([SELECT ID FROM Account WHERE Name = 'Multicountry GE PT']).keySet());
 
 		// startTest/stopTest block to force async processes to run in the test.
-		Test.startTest();   
+		Test.startTest();
 
 		System.enqueueJob(new ANG_MulticountryCopyParentInfo(accountIdList, 'FIN'));
 

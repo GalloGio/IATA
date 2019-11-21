@@ -7,9 +7,9 @@ global class ANG_HierarchyUpdaterBatch implements Database.Batchable<sObject>, D
 	String query;
 	//Record Types for the Account
 	public static final String ACCOUNT_AGENCY_RT     = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
-	  
+
 	public static final Set<String> ALLOWEDRECORDTYPES = new Set<String>{ACCOUNT_AGENCY_RT};
-   
+
 	public static final Set<String> INACTIVEAGENCYSTATUS = new Set<String>{AMS_Utils.ACC_S1_NOTACCREDITED,'Not Accredited',AMS_Utils.ACC_S3_NOTINOPERATION,'',null};
 
 	global Map<Id, String> errorMap {get; set;}
@@ -38,14 +38,14 @@ global class ANG_HierarchyUpdaterBatch implements Database.Batchable<sObject>, D
 	}
 
 	/** This batch will do the following
-	
+
 		- Search all the HE Accounts in the system (or a particular Set if we pass it as an argument)
 		- Check if they already have an Hierarchy associated with them
 			if not, we will fill the value on Main_Account__C
 			if they are standalones, we need to create a new hierarchy with the value Main_Account__c filled
 	 */
 	global void execute(Database.BatchableContext BC, List<sObject> scope) {
-		
+
 		Account acct;
 
 		List<AMS_Agencies_Hierarchy__c> hierarchiesToUpsert = new List<AMS_Agencies_Hierarchy__c>();
@@ -91,12 +91,12 @@ global class ANG_HierarchyUpdaterBatch implements Database.Batchable<sObject>, D
 			}
 		}
 	}
- 
+
 	global void finish(Database.BatchableContext BC){
-		
+
 		System.debug('[ANG_HierarchyUpdaterBatch] finishing job with id '+BC.getJobId());
 
-		//Send an email to the User after your batch completes 
+		//Send an email to the User after your batch completes
 		if(!errorMap.isEmpty() || executeReport){
 
 			System.debug('[ANG_HierarchyUpdaterBatch] Finished batch with ' + errorMap.size() + ' errors.');
@@ -106,18 +106,18 @@ global class ANG_HierarchyUpdaterBatch implements Database.Batchable<sObject>, D
 						NumberOfErrors, CreatedBy.Email
 						FROM AsyncApexJob
 						WHERE id = :BC.getJobId()];
-			
-			
+
+
 			String body = !executeReport ? 'Your batch job '
 			 + 'ANG_HierarchyUpdaterBatch '
-			 + 'has finished. \n' 
+			 + 'has finished. \n'
 			 + 'There were '
 			 + errorMap.size()
 			 + ' errors. Please find the error list attached to the email.'
 			:
 			'Your report '
 			 + 'ANG_HierarchyUpdaterBatch '
-			 + 'has finished. \n' 
+			 + 'has finished. \n'
 			 + 'There are '
 			 + totalReport.size()
 			 + ' records to be upserted. Please find the record list attached to the email.';
@@ -136,28 +136,28 @@ global class ANG_HierarchyUpdaterBatch implements Database.Batchable<sObject>, D
 					string err = errorMap.get(id);
 					string recordString = '"'+id+'","'+IdToSObjectMap.get(id)+'","'+err+'"\n';
 					finalstr = finalstr + recordString;
-				} 
+				}
 			}else{
 				finalstr = 'Account IATA Code, Hierarchy Id \n';
 				subject = 'Hierarchy Updater - Apex Report List';
 				attName = 'Hierarchy Report.csv';
 
 				System.debug('totalReport is:'+totalReport);
-				
+
 				for(String record  : totalReport){
 					string recordString = record+'\n';
 					finalstr = finalstr + recordString;
-				} 
+				}
 			}
 
 			// Define the email
-			Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage(); 
-			
-			// Create the email attachment	 
+			Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
+
+			// Create the email attachment
 			Messaging.EmailFileAttachment efa = new Messaging.EmailFileAttachment();
 			efa.setFileName(attName);
 			efa.setBody(Blob.valueOf(finalstr));
-			
+
 			// Sets the paramaters of the email
 			email.setSubject( subject );
 			email.setToAddresses( new String[] {a.CreatedBy.Email} );
@@ -165,12 +165,12 @@ global class ANG_HierarchyUpdaterBatch implements Database.Batchable<sObject>, D
 			email.setFileAttachments(new Messaging.EmailFileAttachment[] {efa});
 
 			if(!Test.isRunningTest()){
-				Messaging.SendEmailResult [] r = 
-					Messaging.sendEmail(new Messaging.SingleEmailMessage[] {email});	
+				Messaging.SendEmailResult [] r =
+					Messaging.sendEmail(new Messaging.SingleEmailMessage[] {email});
 			}
 
 		}
-	} 
+	}
 
 	global String fetchGeneralHierarchyQuery(){
 		return 'Select Id, IATACODE__c , (select Id, Main_account__c from Main_Accounts__r), (select Id, hierarchy__c, Child_Account__c, Child_Account__r.Top_Parent__c from AMS_Agencies_relationships1__r limit 1) from Account where IATACODE__c <> null and ParentId = null and Location_type__c in (\'HE\',\'GE\') and Location_Class__c in (\'P\',\'D\') and recordTypeId in:ALLOWEDRECORDTYPES and Status__c not in :INACTIVEAGENCYSTATUS AND Purge_Flag__c = false LIMIT 50000';

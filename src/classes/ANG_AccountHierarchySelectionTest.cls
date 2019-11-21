@@ -4,44 +4,44 @@ private class ANG_AccountHierarchySelectionTest {
 	private static void loadCredentials() {
 		EF_AttachmentListController.runningForEF = false;
 
-        Amazon_Cred__c Amazon_Cred =  new Amazon_Cred__c(name = 'IFAP', Prod_Configuration__c = 'adevconf' , Dev_Configuration__c = 'adevconf');
-        Amazon_Cred__c GenericAttach =  new Amazon_Cred__c(name = 'GenericAttach', Prod_Configuration__c = 'adevconf' , Dev_Configuration__c = 'adevconf');
-        Amazon_Cred__c recycleBin =  new Amazon_Cred__c(name = 'RecycleBin', Prod_Configuration__c = 'adevconf' , Dev_Configuration__c = 'adevconf');
-        List<Amazon_Cred__c> creds = new List<Amazon_Cred__c>();
-        creds.add(Amazon_Cred);
-        creds.add(GenericAttach);
-        creds.add(recycleBin);
-        insert creds;
+				Amazon_Cred__c Amazon_Cred =  new Amazon_Cred__c(name = 'IFAP', Prod_Configuration__c = 'adevconf' , Dev_Configuration__c = 'adevconf');
+				Amazon_Cred__c GenericAttach =  new Amazon_Cred__c(name = 'GenericAttach', Prod_Configuration__c = 'adevconf' , Dev_Configuration__c = 'adevconf');
+				Amazon_Cred__c recycleBin =  new Amazon_Cred__c(name = 'RecycleBin', Prod_Configuration__c = 'adevconf' , Dev_Configuration__c = 'adevconf');
+				List<Amazon_Cred__c> creds = new List<Amazon_Cred__c>();
+				creds.add(Amazon_Cred);
+				creds.add(GenericAttach);
+				creds.add(recycleBin);
+				insert creds;
 
 
-        list<AWSKey__c> AWS_KEYs = new list<AWSKey__c>{
-            new AWSKey__c(
-                name = 'adevconf',
-                Key__c = 'asd', 
-                Secret__c = 'asd',  
-                IAS_configuration_name__c = 'asdas', 
-                IAS_Access_Point__c = 'asd',
-                Bucket__c = 'asd',
-                AWS_ENDPOINT_URL__c = 'asd')
-        };
-        insert AWS_KEYs;
-    }
+				list<AWSKey__c> AWS_KEYs = new list<AWSKey__c>{
+						new AWSKey__c(
+								name = 'adevconf',
+								Key__c = 'asd',
+								Secret__c = 'asd',
+								IAS_configuration_name__c = 'asdas',
+								IAS_Access_Point__c = 'asd',
+								Bucket__c = 'asd',
+								AWS_ENDPOINT_URL__c = 'asd')
+				};
+				insert AWS_KEYs;
+		}
 
 	@testSetup static void createData() {
 		// call data creating classes and other setup
-		// data created here must be queried in order 
+		// data created here must be queried in order
 		// to be accessed on test methods
 
 		IATA_ISO_Country__c ctry 	  = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US', ANG_Enable_NewGen__c = true);
 		IATA_ISO_Country__c chinaCtry = new IATA_ISO_Country__c (Name='	China (People\'s Republic of)',ISO_Code__c='CN', ANG_Enable_NewGen__c = true, Enable_NewGen_Pilot__c = true);
-		
+
 		insert new List<IATA_ISO_Country__c>{ctry, chinaCtry};
 
 		IATA_ISO_State__c stt 	   = new IATA_ISO_State__c(Name= 'Test', ISO_Code__c = 'TS', IATA_ISO_Country__c = ctry.Id);
 		IATA_ISO_State__c anhuiStt = new IATA_ISO_State__c(Name= 'ANHUI PROVINCE', ISO_Code__c = 'CN12', IATA_ISO_Country__c = chinaCtry.Id);
-		
+
 		insert new List<IATA_ISO_State__c>{stt, anhuiStt};
-		
+
 		Id accountAgencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
 		Account HE = new Account();
@@ -60,7 +60,7 @@ private class ANG_AccountHierarchySelectionTest {
 		HE.ANG_HE_RiskStatus__c = 'Not Applicable';
 		HE.RecordTypeId = accountAgencyRT;
 
-		Account chinaHE = new Account(); 
+		Account chinaHE = new Account();
 
 		chinaHE.Name = 'Main China HE Account';
 		chinaHE.Sector__c = 'Travel Agent';
@@ -78,14 +78,14 @@ private class ANG_AccountHierarchySelectionTest {
 		chinaHE.RecordTypeId = accountAgencyRT;
 
 		insert new List<Account>{HE, chinaHE};
-		
+
 		Account AE = new Account(IATA_ISO_Country__c = ctry.id, ANG_IEP_Status__c = null, ANG_Accreditation_Model__c = 'Cashless' ,RecordTypeId = accountAgencyRT, IATACode__c='12345671',Name='Account AE1 H1',Short_Name__c='Account AE1 H1',Category__c = 'IATA Passenger Sales Agent',Location_Class__c = 'P',Location_Type__c = 'AE', ParentId = HE.Id, Status__c = AMS_Utils.ACC_S9_APPROVED);
 
 		Account chinaAE = new Account();
 		chinaAE.IATA_ISO_Country__c = chinaCtry.id;
 		chinaAE.ANG_IEP_Status__c = null;
 		chinaAE.ANG_Accreditation_Model__c = 'Cashless';
-		chinaAE.RecordTypeId = accountAgencyRT; 
+		chinaAE.RecordTypeId = accountAgencyRT;
 		chinaAE.IATACode__c='12345671';
 		chinaAE.Name='Account China AE1 H1';
 		chinaAE.Short_Name__c='Account China AE1 H1';
@@ -93,12 +93,12 @@ private class ANG_AccountHierarchySelectionTest {
 		chinaAE.Location_Class__c = 'P';
 		chinaAE.Location_Type__c = 'AE';
 		chinaAE.ParentId = chinaHE.Id;
-		
+
 		Account chinaAE2 = new Account();
 		chinaAE2.IATA_ISO_Country__c = chinaCtry.id;
 		chinaAE2.ANG_IEP_Status__c = null;
 		chinaAE2.ANG_Accreditation_Model__c = 'Cashless';
-		chinaAE2.RecordTypeId = accountAgencyRT; 
+		chinaAE2.RecordTypeId = accountAgencyRT;
 		chinaAE2.IATACode__c='12345674';
 		chinaAE2.Name='Account China AE2 H1';
 		chinaAE2.Short_Name__c='Account China AE2 H1';
@@ -115,14 +115,14 @@ private class ANG_AccountHierarchySelectionTest {
 		insert new List<AMS_Agencies_Hierarchy__c>{h, chinaNHC};
 
 		AMS_Agencies_relationhip__c r1 = new AMS_Agencies_relationhip__c(Is_Newgen_Relation__c = true, Child_Account__c = AE.Id , Parent_Account__c = HE.Id, Hierarchy__c = h.Id);
-		
+
 		AMS_Agencies_relationhip__c aRelChinaAe1 = new AMS_Agencies_relationhip__c();
 
 		aRelChinaAe1.Is_Newgen_Relation__c = true;
 		aRelChinaAe1.Child_Account__c = chinaAE2.Id;
 		aRelChinaAe1.Parent_Account__c = chinaHE.Id;
 		aRelChinaAe1.Hierarchy__c = chinaNHC.Id;
-		
+
 		AMS_Agencies_relationhip__c aRelChinaAe2 = new AMS_Agencies_relationhip__c();
 
 		aRelChinaAe2.Is_Newgen_Relation__c = true;
@@ -133,7 +133,7 @@ private class ANG_AccountHierarchySelectionTest {
 		insert new List<AMS_Agencies_relationhip__c>{r1, aRelChinaAe1, aRelChinaAe2};
 
 		Contact co1 = new Contact(AccountId = AE.id, Firstname = 'teste1', Lastname='test1', Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com', Financial_Assessment_Contact__c = false);
-		
+
 		Contact contactChina = new Contact();
 		contactChina.AccountId = chinaHE.Id;
 		contactChina.Firstname = 'Bob';
@@ -147,52 +147,52 @@ private class ANG_AccountHierarchySelectionTest {
 		//Agency changes configuration settings
 		List<ANG_AgencyChangesConfig__c> customsettings = new List<ANG_AgencyChangesConfig__c>();
 		customsettings.add(new ANG_AgencyChangesConfig__c(Name = 'ChangeName', TC_Location_type__c = false,
-						   TC_Legal_status__c = false, TC_Location__c = false, 
-						   TC_Minor_Shareholding__c = false, TC_Legal_Name__c = true, TC_Ownership__c = false, TC_Hierarchy__c = false,
-						   TC_Major_Shareholding__c = false,  TC_VMFR__c = false,
-						   TCA_Sanity_check__c = 'CON', TCA_Application_withdrawal__c = 'CWD',Valid_Accreditation_Models__c='ALL'));
+							 TC_Legal_status__c = false, TC_Location__c = false,
+							 TC_Minor_Shareholding__c = false, TC_Legal_Name__c = true, TC_Ownership__c = false, TC_Hierarchy__c = false,
+							 TC_Major_Shareholding__c = false,  TC_VMFR__c = false,
+							 TCA_Sanity_check__c = 'CON', TCA_Application_withdrawal__c = 'CWD',Valid_Accreditation_Models__c='ALL'));
 		customsettings.add(new ANG_AgencyChangesConfig__c(Name = 'ChangeLocationType', TC_Location_type__c = true,
-						   TC_Legal_status__c = false, TC_Location__c = false, 
-						   TC_Minor_Shareholding__c = false, TC_Legal_Name__c = false, TC_Ownership__c = false, TC_Hierarchy__c = false,
-						   TC_Major_Shareholding__c = false, TC_VMFR__c = false,
-						   TCA_Sanity_check__c = 'CAD', TCA_Application_withdrawal__c = 'CWD',Valid_Accreditation_Models__c='ALL'));
+							 TC_Legal_status__c = false, TC_Location__c = false,
+							 TC_Minor_Shareholding__c = false, TC_Legal_Name__c = false, TC_Ownership__c = false, TC_Hierarchy__c = false,
+							 TC_Major_Shareholding__c = false, TC_VMFR__c = false,
+							 TCA_Sanity_check__c = 'CAD', TCA_Application_withdrawal__c = 'CWD',Valid_Accreditation_Models__c='ALL'));
 		customsettings.add(new ANG_AgencyChangesConfig__c(Name = 'ChangeLocation', TC_Location_type__c = false,
-						   TC_Legal_status__c = false, TC_Location__c = true, 
-						   TC_Minor_Shareholding__c = false, TC_Legal_Name__c = false, TC_Ownership__c = false, TC_Hierarchy__c = false,
-						   TC_Major_Shareholding__c = false, TC_VMFR__c = false,
-						   TCA_Sanity_check__c = 'CHL', TCA_Application_withdrawal__c = 'CWD',Valid_Accreditation_Models__c='ALL'));
+							 TC_Legal_status__c = false, TC_Location__c = true,
+							 TC_Minor_Shareholding__c = false, TC_Legal_Name__c = false, TC_Ownership__c = false, TC_Hierarchy__c = false,
+							 TC_Major_Shareholding__c = false, TC_VMFR__c = false,
+							 TCA_Sanity_check__c = 'CHL', TCA_Application_withdrawal__c = 'CWD',Valid_Accreditation_Models__c='ALL'));
 		customsettings.add(new ANG_AgencyChangesConfig__c(Name = 'ChangeOwnership', TC_Location_type__c = false,
-						   TC_Legal_status__c = false, TC_Location__c = false, 
-						   TC_Minor_Shareholding__c = false, TC_Legal_Name__c = false, TC_Ownership__c = true, TC_Hierarchy__c = false,
-						   TC_Major_Shareholding__c = false, TC_VMFR__c = false,
-						   TCA_Sanity_check__c = 'CHI', TCA_Application_withdrawal__c = 'CWD',Valid_Accreditation_Models__c='ALL'));
+							 TC_Legal_status__c = false, TC_Location__c = false,
+							 TC_Minor_Shareholding__c = false, TC_Legal_Name__c = false, TC_Ownership__c = true, TC_Hierarchy__c = false,
+							 TC_Major_Shareholding__c = false, TC_VMFR__c = false,
+							 TCA_Sanity_check__c = 'CHI', TCA_Application_withdrawal__c = 'CWD',Valid_Accreditation_Models__c='ALL'));
 		customsettings.add(new ANG_AgencyChangesConfig__c(Name = 'ChangeLegal', TC_Location_type__c = false,
-						   TC_Legal_status__c = true, TC_Location__c = false, 
-						   TC_Minor_Shareholding__c = false, TC_Legal_Name__c = false, TC_Ownership__c = false, TC_Hierarchy__c = false,
-						   TC_Major_Shareholding__c = false, TC_VMFR__c = false,
-						   TCA_Sanity_check__c = 'CHS', TCA_Application_withdrawal__c = 'CWD',Valid_Accreditation_Models__c='ALL'));
+							 TC_Legal_status__c = true, TC_Location__c = false,
+							 TC_Minor_Shareholding__c = false, TC_Legal_Name__c = false, TC_Ownership__c = false, TC_Hierarchy__c = false,
+							 TC_Major_Shareholding__c = false, TC_VMFR__c = false,
+							 TCA_Sanity_check__c = 'CHS', TCA_Application_withdrawal__c = 'CWD',Valid_Accreditation_Models__c='ALL'));
 		customsettings.add(new ANG_AgencyChangesConfig__c(Name = 'ChangeOwnershipNonIATA', TC_Location_type__c = false,
-						   TC_Legal_status__c = false, TC_Location__c = false, 
-						   TC_Minor_Shareholding__c = false, TC_Legal_Name__c = false, TC_Ownership__c = false, TC_Hierarchy__c = false,
-						   TC_Major_Shareholding__c = false, TC_VMFR__c = false,
-						   TCA_Sanity_check__c = 'CHO', TCA_Application_withdrawal__c = 'CWD',Valid_Accreditation_Models__c='ALL'));
+							 TC_Legal_status__c = false, TC_Location__c = false,
+							 TC_Minor_Shareholding__c = false, TC_Legal_Name__c = false, TC_Ownership__c = false, TC_Hierarchy__c = false,
+							 TC_Major_Shareholding__c = false, TC_VMFR__c = false,
+							 TCA_Sanity_check__c = 'CHO', TCA_Application_withdrawal__c = 'CWD',Valid_Accreditation_Models__c='ALL'));
 		customsettings.add(new ANG_AgencyChangesConfig__c(Name = 'ChangeMajorShareholding', TC_Location_type__c = false,
-						   TC_Legal_status__c = false, TC_Location__c = false, 
-						   TC_Minor_Shareholding__c = false, TC_Legal_Name__c = false, TC_Ownership__c = false, TC_Hierarchy__c = false,
-						   TC_Major_Shareholding__c = true, TC_VMFR__c = false,
-						   TCA_Sanity_check__c = 'CHC', TCA_Application_withdrawal__c = 'CWD',Valid_Accreditation_Models__c='ALL'));
+							 TC_Legal_status__c = false, TC_Location__c = false,
+							 TC_Minor_Shareholding__c = false, TC_Legal_Name__c = false, TC_Ownership__c = false, TC_Hierarchy__c = false,
+							 TC_Major_Shareholding__c = true, TC_VMFR__c = false,
+							 TCA_Sanity_check__c = 'CHC', TCA_Application_withdrawal__c = 'CWD',Valid_Accreditation_Models__c='ALL'));
 
 		customsettings.add(new ANG_AgencyChangesConfig__c(Name = 'ChangeMix', TC_Location_type__c = false,
-						   TC_Legal_status__c = false, TC_Location__c = true, 
-						   TC_Minor_Shareholding__c = false, TC_Legal_Name__c = true, TC_Ownership__c = false,
-						   TC_Major_Shareholding__c = false, TC_VMFR__c = false,
-						   TCA_Sanity_check__c = 'CNL', TCA_Application_withdrawal__c = 'CWD', TCA_Manager_approval__c = 'MCF',Valid_Accreditation_Models__c='ALL'));
+							 TC_Legal_status__c = false, TC_Location__c = true,
+							 TC_Minor_Shareholding__c = false, TC_Legal_Name__c = true, TC_Ownership__c = false,
+							 TC_Major_Shareholding__c = false, TC_VMFR__c = false,
+							 TCA_Sanity_check__c = 'CNL', TCA_Application_withdrawal__c = 'CWD', TCA_Manager_approval__c = 'MCF',Valid_Accreditation_Models__c='ALL'));
 
 		customsettings.add(new ANG_AgencyChangesConfig__c(Name = 'ChangeMixAll', TC_Location_type__c = true,
-						   TC_Legal_status__c = false, TC_Location__c = true, TC_Accreditation_Type__c = false,
-						   TC_Minor_Shareholding__c = false, TC_Legal_Name__c = false, TC_Ownership__c = false,
-						   TC_Major_Shareholding__c = false, TC_VMFR__c = true,
-						   TCA_Sanity_check__c = 'CNL', TCA_Application_withdrawal__c = 'CWD', TCA_Manager_approval__c = 'MCF',TC_Hierarchy__c = true,Valid_Accreditation_Models__c='ALL'));
+							 TC_Legal_status__c = false, TC_Location__c = true, TC_Accreditation_Type__c = false,
+							 TC_Minor_Shareholding__c = false, TC_Legal_Name__c = false, TC_Ownership__c = false,
+							 TC_Major_Shareholding__c = false, TC_VMFR__c = true,
+							 TCA_Sanity_check__c = 'CNL', TCA_Application_withdrawal__c = 'CWD', TCA_Manager_approval__c = 'MCF',TC_Hierarchy__c = true,Valid_Accreditation_Models__c='ALL'));
 
 		insert customsettings;
 
@@ -205,7 +205,7 @@ private class ANG_AccountHierarchySelectionTest {
 		AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = AE.id, New_parent__c = AE.id, recordTypeId = oscarRT, Process__c = 'ANG.MAJOR.CHANGES.1.0' );
 
 		Id chinaConversionsRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_Agency_Changes_China');
-		
+
 		AMS_OSCAR__c chinaConversionOscar = new AMS_OSCAR__c();
 
 		chinaConversionOscar.Account__c = chinaHE.id;
@@ -229,7 +229,7 @@ private class ANG_AccountHierarchySelectionTest {
 		List<AMS_Process_Detail__c> agenciesinvolved = new List<AMS_Process_Detail__c>();
 
 		agenciesinvolved.add(new AMS_Process_Detail__c(RecordTypeId = rtAgencyInvolved, Oscar__c = oscar.Id, Account__c = HE.Id));
-		
+
 		insert agenciesinvolved;
 
 		String OSCAR_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
@@ -337,9 +337,9 @@ private class ANG_AccountHierarchySelectionTest {
 
 		update new List<AMS_OSCAR__c>{oscar, chinaPendingOscar};
 
-		insert new AMS_Accreditation_Contact__c(Agency_Owner__c = true, Financial_interest__c = 100, 
-			AMS_Pax_Accreditation_Form__c = stagingArea.Id, Company__c = HE.Id, First_name__c='NameToUse1', Last_name__c='Last1', 
-			Job_title__c='ABC1', Mobile__c='+4112345671', Phone__c='3424322341', Email__c='unique@email1.com', 
+		insert new AMS_Accreditation_Contact__c(Agency_Owner__c = true, Financial_interest__c = 100,
+			AMS_Pax_Accreditation_Form__c = stagingArea.Id, Company__c = HE.Id, First_name__c='NameToUse1', Last_name__c='Last1',
+			Job_title__c='ABC1', Mobile__c='+4112345671', Phone__c='3424322341', Email__c='unique@email1.com',
 			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Person'));
 	}
 
@@ -402,20 +402,20 @@ private class ANG_AccountHierarchySelectionTest {
 
 		Test.startTest();
 
-		AMS_OSCAR__c oscar = 
+		AMS_OSCAR__c oscar =
 			[SELECT
-				Id, 
-				STEP6__c, 
-				Account__c, 
+				Id,
+				STEP6__c,
+				Account__c,
 				Process__c,
 				RecordTypeId,
-				New_parent__c, 
-				ANG_Type_Of_Change__c, 
+				New_parent__c,
+				ANG_Type_Of_Change__c,
 				Change_of_location_type_behavior__c,
 				Account__r.ANG_Accreditation_Model__c
-			 FROM AMS_OSCAR__c 
-			 WHERE 
-			 	ANG_Type_Of_Change__c = :AMS_Utils.CONVERTTOLEGACY 
+			 FROM AMS_OSCAR__c
+			 WHERE
+			 	ANG_Type_Of_Change__c = :AMS_Utils.CONVERTTOLEGACY
 			 LIMIT 1
 			];
 
@@ -436,15 +436,15 @@ private class ANG_AccountHierarchySelectionTest {
 		con.save();
 
 		ApexPages.Message[] pageMessages = ApexPages.getMessages();
-		
+
 		System.assertEquals(2, pageMessages.size());
 
 		Boolean messageFound = false;
 
 		for(ApexPages.Message message : pageMessages) {
-			
+
 			system.debug('MESSAGE DETAIL: ' + message.getDetail());
-			
+
 			if(message.getDetail().contains('The conversion must be applied to a hierarchy of Domestic agents. Please proceed with a change of location type before processing the conversion.')){
 				messageFound = true;
 				break;
@@ -464,24 +464,24 @@ private class ANG_AccountHierarchySelectionTest {
 		delete [SELECT Id, Subject FROM Case WHERE SUbject like '%Account China AE1 H1%' LIMIT 1];
 
 		Account acct = [SELECT Id, Location_Class__c FROM Account WHERE Name = 'Account China AE1 H1' LIMIT 1];
-		
+
 		acct.Location_Class__c = 'D';
 		update acct;
 
-		AMS_OSCAR__c oscar = 
+		AMS_OSCAR__c oscar =
 			[SELECT
-				Id, 
-				STEP6__c, 
-				Account__c, 
+				Id,
+				STEP6__c,
+				Account__c,
 				Process__c,
 				RecordTypeId,
-				New_parent__c, 
-				ANG_Type_Of_Change__c, 
+				New_parent__c,
+				ANG_Type_Of_Change__c,
 				Change_of_location_type_behavior__c,
-				Account__r.ANG_Accreditation_Model__c	 
-			 FROM AMS_OSCAR__c 
-			 WHERE 
-			 	ANG_Type_Of_Change__c = :AMS_Utils.CONVERTTOLEGACY 
+				Account__r.ANG_Accreditation_Model__c
+			 FROM AMS_OSCAR__c
+			 WHERE
+			 	ANG_Type_Of_Change__c = :AMS_Utils.CONVERTTOLEGACY
 			 LIMIT 1
 			];
 
@@ -496,20 +496,20 @@ private class ANG_AccountHierarchySelectionTest {
 
 		Map<Id, ANG_AccountHierarchySelectionController.HierarchyItem> hierarchy = con.hierarchy;
 		List<ANG_AccountHierarchySelectionController.HierarchyItem> hierarchyValues = con.hierarchyValues;
-		
+
 		Test.startTest();
 			con.save();
 		Test.stopTest();
 
 		ApexPages.Message[] pageMessages = ApexPages.getMessages();
-		
+
 		system.debug(pageMessages);
 
 		System.assertEquals(0, pageMessages.size());
 
 	}
 
-	
+
 	@isTest
 	static void hierarchySelectionForMulticountryChanges(){
 
@@ -543,9 +543,9 @@ private class ANG_AccountHierarchySelectionTest {
 		IATA_ISO_State__c sttES = new IATA_ISO_State__c(Name= 'Spain', ISO_Code__c = 'ES', IATA_ISO_Country__c = ctryES.Id);
 		IATA_ISO_State__c sttDK = new IATA_ISO_State__c(Name= 'Denmark', ISO_Code__c = 'DK', IATA_ISO_Country__c = ctryDK.Id);
 		//IATA_ISO_State__c sttFR = new IATA_ISO_State__c(Name= 'France', ISO_Code__c = 'FR', IATA_ISO_Country__c = ctryPT.Id);
-		
+
 		insert new List<IATA_ISO_State__c>{sttPT, sttES, sttDK};//, sttFR};
-		
+
 		Id accountAgencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
 		Account GE1 = new Account();
@@ -708,7 +708,7 @@ private class ANG_AccountHierarchySelectionTest {
 			Parent_Account__c = GE1.Id,
 			Hierarchy__c = hierarchyGE1.Id
 		);
-		
+
 
 		AMS_Agencies_relationhip__c r2 = new AMS_Agencies_relationhip__c(
 			Is_Newgen_Relation__c = true,
@@ -716,7 +716,7 @@ private class ANG_AccountHierarchySelectionTest {
 			Parent_Account__c = GE1.Id,
 			Hierarchy__c = hierarchyGE1.Id
 		);
-		
+
 
 		AMS_Agencies_relationhip__c r3 = new AMS_Agencies_relationhip__c(
 			Is_Newgen_Relation__c = true,
@@ -756,14 +756,14 @@ private class ANG_AccountHierarchySelectionTest {
 		insert new List<AMS_Agencies_relationhip__c>{r1, r2, r3, r4, r6, r7};
 
 		Test.startTest();
-	
+
 		AMS_OSCAR__c oscar = new AMS_OSCAR__c(Account__c = GE2.id,
 		 New_parent__c = GE1.id,
 		 recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c','ANG_Agency_Changes'),
 		 Process__c = 'ANG.MAJOR.CHANGES.1.0' );
 		insert oscar;
-		
-		
+
+
 		Contact contactGE2 = new Contact(AccountId = GE2.id,
 		 Firstname = 'teste2', Lastname='test2', Phone = '911111111', MobilePhone = '911111111', Email = 'testGE2@test.com', Financial_Assessment_Contact__c = false);
 		insert contactGE2;
@@ -842,7 +842,7 @@ private class ANG_AccountHierarchySelectionTest {
 		controller.save();
 
 		AMS_OSCAR__c osc =  [SELECT HE_per_BSP_Mapping__c FROM AMS_OSCAR__C WHERE ID = :oscar.id];
-		
+
 		system.debug('##ARD FINAL result to assert: ' + osc.HE_per_BSP_Mapping__c);
 		Test.stopTest();
 	}

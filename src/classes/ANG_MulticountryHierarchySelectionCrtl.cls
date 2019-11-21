@@ -1,6 +1,6 @@
 public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 
-    @TestVisible
+	@TestVisible
 	private String oscarId{
 		get{
 			if(String.isEmpty(oscarId)) oscarId = ApexPages.currentPage().getParameters().get('Id');
@@ -22,7 +22,7 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 					, 'AMS_Online_Accreditation__c'
 					, 'Oscar_Communication_Case_Id__c'
 				};
-			} 
+			}
 			return oscarFields;
 		}
 		set;
@@ -37,7 +37,7 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 					accountFields.add(field);
 				}
 				accountFields.add('IATA_ISO_Country__r.Name');
-				accountFields.add('IATA_ISO_Country__r.AMS_Settlement_System__r.Name'); 
+				accountFields.add('IATA_ISO_Country__r.AMS_Settlement_System__r.Name');
 			}
 			return accountFields;
 		}
@@ -132,17 +132,17 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 		get{
 			if(oscar.ANG_Type_Of_Change__c != null){
 
-				if(tocList.contains(AMS_Utils.ANG_HIERARCHY)) 
+				if(tocList.contains(AMS_Utils.ANG_HIERARCHY))
 					return true;
-			
+
 			}
-			
+
 			oscar.New_parent__c = null;
 			return false;
 		}
 		set;
 	}
-	
+
 	public Boolean showTopPanel{
 		get{
 			return oscar.RecordTypeId != AMS_Utils.RECTYPE_NEWGENFOP;
@@ -217,7 +217,7 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 					Boolean main = (a.Id == oscar.Account__c);
 
 					if(a.Location_Type__c == null) a.Location_Type__c = AMS_Utils.AE;
-					
+
 					else if(isConversionProcess && main) a.Location_Type__c = AMS_Utils.GE;
 
 					else if(isConversionProcess && mapHierarchyProcessDetail.get(a.id).ANG_Location_Type_Conversion__c != null)
@@ -249,7 +249,7 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 				return hierarchyValues;
 
 			List<HierarchyItem> toReturn = new List<HierarchyItem>();
-			
+
 			for(List<HierarchyItem> listItem: hierarchy.values())
 				toReturn.addAll(listItem);
 
@@ -257,7 +257,7 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 		}
 	}
 
-    @TestVisible
+	@TestVisible
 	private Integer rowsPerPage = 100;
 
 	public Integer currentPage{
@@ -269,13 +269,13 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 		}
 		set;
 	}
-	
+
 	public Integer totalPages{
 		get{
 			return hierarchyValuesForDisplay.size();
 		}
 	}
-	
+
 	public List<List<HierarchyItem>> hierarchyValuesForDisplay{
 		get{
 			if(hierarchyValuesForDisplay == null){
@@ -320,7 +320,7 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 		oscar = (AMS_OSCAR__c)stdController.getRecord();
 
 		if(Test.isRunningTest()) oscar =  [Select Id, RecordTypeId, Account__c, Process__c, Step6__c, ANG_Type_Of_Change__c, STEP45__c, ANG_Hierarchy_Created__c, AMS_Online_Accreditation__c from AMS_OSCAR__c where Id =:oscarId];
-	
+
 	}
 
 
@@ -338,7 +338,7 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 					oscar.Account__c = hi.acc.Id;
 					oscarMainAccount = oscar.Account__c;
 				}
-				
+
 			}
 		}
 	}
@@ -363,22 +363,22 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 		return null;
 	}
 
-	public Boolean getDisablePrevious() { 
+	public Boolean getDisablePrevious() {
 		//this will disable the previous and beginning buttons
 		return (currentPage <= 0);
 	}
-	
+
 	public Boolean getDisableNext() { //this will disable the next and end buttons
 		return (currentPage >= hierarchyValuesForDisplay.size()-1);
 	}
-	
+
 	public void save(){
 
 		if([Select Id, STEP45__C from AMS_OSCAR__c where Id = :oscarId].get(0).STEP45__C == AMS_Utils.PASSED){
 			ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, 'The hierarchy structure is already confirmed, you cannot change it.'));
 			return;
 		}
-			
+
 
 		adjustHierarchy();
 
@@ -390,7 +390,7 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 				adjustAccountsParentship();
 
 				List<Account> accountsToUpdate = fetchAccounts();
-				
+
 				if(!accountsToUpdate.isEmpty()){
 					AMS_AgencyRelationshipTriggerHandler.AMS_HierarchyProcess = true;
 					update accountsToUpdate;
@@ -399,10 +399,10 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 				}
 
 				oscar.Step45__c = AMS_Utils.PASSED;
-				
+
 				Case caseToUpdate;
 				AMS_Pax_Accreditation_Form__c accreditationForm;
-				
+
 				selectMain();
 
 				if(oscarMainAccount != null){
@@ -425,7 +425,7 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 				}
 
 				Set<Id> acctId = new Set<Id>();
-				
+
 				for(Account a: accountsToUpdate)
 					acctId.Add(a.id);
 
@@ -434,7 +434,7 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 					acctId = new Set<Id>{accountIdToTest};
 				}
 
-				ANG_MulticountryOscarCreatorBatch myBatchObject = new ANG_MulticountryOscarCreatorBatch(AcctId); 
+				ANG_MulticountryOscarCreatorBatch myBatchObject = new ANG_MulticountryOscarCreatorBatch(AcctId);
 				Id batchId = Database.executeBatch(myBatchObject,1);
 
 			} catch(Exception e) {
@@ -446,17 +446,17 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 		}
 	}
 
-	
+
 	public void saveConversion(){
 
 		//Check which account were changed
 		checkChangesOnConversionHierarchy();
-	
+
 		if(performValidations()){
 
 			Savepoint sp = Database.setSavepoint();
 			try {
-	
+
 				AMS_Pax_Accreditation_Form__c accreditationForm = [Select Id, SAAM_Case__c, Location_Type__c from AMS_Pax_Accreditation_Form__c where Id =:oscar.AMS_Online_Accreditation__c];
 				Account account = mapHierarchyAccounts.get(oscar.Account__c);
 				selectMain();
@@ -479,13 +479,13 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 				}
 				else if(accreditationForm.Location_Type__c != account.Location_type__c) {
 					accreditationForm.Location_Type__c = account.Location_type__c;
-					update accreditationForm; //enforce the new location type 
+					update accreditationForm; //enforce the new location type
 				}
 
 				List<AMS_Process_Detail__c> processDetails = new List<AMS_Process_Detail__c>();
 
 				for(HierarchyItem item : hierarchyValues){
-					if(mapHierarchyProcessDetail.get(item.acc.ID) != null) 
+					if(mapHierarchyProcessDetail.get(item.acc.ID) != null)
 						processDetails.add(mapHierarchyProcessDetail.get(item.acc.ID));
 				}
 
@@ -503,7 +503,7 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 				System.debug(loggingLevel.ERROR, '____ [cls AMS_AccountHierarchySelectionController - saveConversion] error - ' + e.getMessage());
 			}
 		}
-	} 
+	}
 
 	private void createHierarchy(List<Account> acctLst){
 
@@ -534,7 +534,7 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 		for(Account acct: acctLst){
 			if(acct.Location_Type__c == AMS_Utils.GE)
 				continue;
-			
+
 			if(!alreadyCreatedRelations.contains(String.valueof(acct.Id)+String.valueof(acct.ParentId)))
 				relsToInsert.add(new AMS_Agencies_relationhip__c(Parent_Account__c = acct.ParentId, Child_Account__c = acct.Id, Hierarchy__c = hierarchy.Id, Is_Newgen_Relation__c = true));
 		}
@@ -581,23 +581,23 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 
 				if(item.isAE){
 					if(acctIdHEinBSP == null){
-						item.acc.ParentId = acctIdGEinBSP; 
+						item.acc.ParentId = acctIdGEinBSP;
 						item.wasChanged = true;
 					}else{
 						item.acc.ParentId = acctIdHEinBSP;
 						item.wasChanged = true;
-					}					
+					}
 				}else if(item.isHE){
 						item.acc.ParentId = acctIdGEinBSP;
 						item.wasChanged = true;
 				}
 
 				if(!item.isTopParent){
-					item.acc.Top_Parent__c = acctIdGEinBSP;						
+					item.acc.Top_Parent__c = acctIdGEinBSP;
 					item.wasChanged = true;
 				}else{
 					item.acc.Top_Parent__c = null;
-					item.acc.ParentId = null;						
+					item.acc.ParentId = null;
 					item.wasChanged = true;
 				}
 
@@ -620,7 +620,7 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 				item.acc.Location_type__c = AMS_Utils.AE;
 				item.wasChanged = true;
 				item.isTopParent = false;
-			
+
 			}
 			if(!item.isHE && !item.isAE){
 				item.acc.Location_type__c = AMS_Utils.GE;
@@ -635,7 +635,7 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 
 		AMS_Process_Detail__c cloneProcess;
 		Account oldMainAccount;
-		
+
 		List<AMS_Process_Detail__c> pdLst = mapHierarchyProcessDetail.values();
 
 		mapHierarchyProcessDetail.clear();
@@ -643,27 +643,27 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 		integer i=0;
 
 		for(HierarchyItem item: hierarchyValues){
-			
+
 			if(!item.isHE && !item.isAE){
 				item.acc.Location_type__c = AMS_Utils.GE;
 				continue;
 			}
 
 			AMS_Process_Detail__c currentPD = pdLst.get(i);
-			
+
 			currentPD.account__c = item.acc.Id;
 
 			if(item.isHE){
 				currentPD.ANG_Location_Type_Conversion__c = AMS_Utils.HE;
 				item.acc.Location_type__c = AMS_Utils.HE;
-			} 
+			}
 			else {
 				currentPD.ANG_Location_Type_Conversion__c = AMS_Utils.AE;
 				item.acc.Location_type__c = AMS_Utils.AE;
 			}
 
 			mapHierarchyProcessDetail.put(currentPD.account__c, currentPD);
-			
+
 			i++;
 
 		}
@@ -695,7 +695,7 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 			ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, 'There should be at least 2 BSPs involved in the hierarchy.'));
 			return false;
 		}
-        
+
 		for(BSPAttributes bspAtt: bspMap.values()){
 
 			if(isConversionProcess){
@@ -709,7 +709,7 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 					toReturn = false;
 				}
 			}
-					
+
 			if(bspAtt.numberOfHE > 1){
 				ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, 'There should only be one HE per BSP.'));
 				toReturn = false;
@@ -725,7 +725,7 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 	}
 
 	public class BSPAttributes{
-			
+
 		Set<String> agencyStatusToBeAlone = new Set<String>{AMS_Utils.ACC_S0_TERMINATED, AMS_Utils.ACC_S4_LISTED, AMS_Utils.ACC_S3_NOTINOPERATION, AMS_Utils.ACC_S1_NOTACCREDITED, ''};
 
 		public Integer numberOfHE;
@@ -758,7 +758,7 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 			if(a.Location_Type__c == AMS_Utils.AE)
 				this.numberOfAE++;
 			if(a.Location_Type__c == AMS_Utils.GE)
-				this.isGE = true;		
+				this.isGE = true;
 		}
 	}
 

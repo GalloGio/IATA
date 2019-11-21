@@ -42,7 +42,7 @@ public class ANG_AgencyChangesConfigHelper{
 	}
 
 	public static ChangesConfig getConfig(AMS_OSCAR__c oscar, String accreditationModel) {
-		
+
 		ChangesConfig c = null;
 
 		if(oscar.Process__c == 'BANK.ACCOUNT.CHANGES'){
@@ -50,7 +50,7 @@ public class ANG_AgencyChangesConfigHelper{
 		}
 		else if(oscar.Process__c == AMS_Utils.NGCONVERSIONTOMULTICOUNTRY){
 			c = getConfig(CONVERSION_STANDARD_TO_MULTICOUNTRY, accreditationModel);
-		} 
+		}
 		else{
 			c = getConfig(oscar.ANG_Type_Of_Change__c, accreditationModel);
 		}
@@ -58,9 +58,9 @@ public class ANG_AgencyChangesConfigHelper{
 		if(c == null){
 			oscar.addError('Type of Change contains an invalid combination of values.');
 		}
-		
+
 		return c;
-			
+
 	}
 
 	public static ChangesConfig getConfig(String typesOfChange, String accreditationModel) {
@@ -72,7 +72,7 @@ public class ANG_AgencyChangesConfigHelper{
 
 
 			if (isSelectedTypeOfChangeValid(typesOfChange, config) && (config.config.Valid_Accreditation_Models__c == 'ALL' || config.config.Valid_Accreditation_Models__c.split(';').contains(accreditationModel) ) ) {
-				return config;	
+				return config;
 			}
 		}
 		return null;
@@ -91,7 +91,7 @@ public class ANG_AgencyChangesConfigHelper{
 
 	public static void setNotApplicableSteps(ANG_AgencyChangesConfig__c config, AMS_OSCAR__c oscar) {
 		if(config == null || config.TCA_Not_Applicable_Steps__c == null) return;
-		
+
 		for (String step : config.TCA_Not_Applicable_Steps__c.split(';')){
 			oscar.put(step + '__c', 'Not Applicable');
 		}

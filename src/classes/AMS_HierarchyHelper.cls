@@ -11,8 +11,8 @@ global class AMS_HierarchyHelper {
 
 		if(!accountsIds.isEmpty()) {
 			for (AMS_Agencies_relationhip__c h : [SELECT Hierarchy__c, Hierarchy__r.Main_Account__c, Parent_Account__c, Parent_Account__r.IATACode__c, Child_Account__c, Child_Account__r.IATACode__c
-			                                      FROM AMS_Agencies_relationhip__c 
-			                                      WHERE Parent_Account__c IN :accountsIds OR Child_Account__c IN :accountsIds ]) {
+																						FROM AMS_Agencies_relationhip__c
+																						WHERE Parent_Account__c IN :accountsIds OR Child_Account__c IN :accountsIds ]) {
 
 				system.debug(LoggingLevel.ERROR, 'getAccountsHierarchies() --> trovo hierarchy ' + h.ID);
 				if (hierarchyToAccounts.get(h.Hierarchy__c) == null)
@@ -38,16 +38,16 @@ global class AMS_HierarchyHelper {
 		//AMSU-134 added HO_Flag__c,Parent_agency__c, Child_Agency__c, Is_Newgen_Relation__c
 		if(hierarchyToAccounts.keyset().isEmpty()) return result;
 
-		for (AMS_Agencies_relationhip__c r : [SELECT Hierarchy__c,Hierarchy__r.Main_Account__c, Parent_Account__c, Parent_Account__r.IATACode__c, Child_Account__c, Child_Account__r.IATACode__c, 
-												Parent_Account__r.Location_Type__c,  Child_Account__r.Location_Type__c,  
+		for (AMS_Agencies_relationhip__c r : [SELECT Hierarchy__c,Hierarchy__r.Main_Account__c, Parent_Account__c, Parent_Account__r.IATACode__c, Child_Account__c, Child_Account__r.IATACode__c,
+												Parent_Account__r.Location_Type__c,  Child_Account__r.Location_Type__c,
 												Child_Account__r.Status__c, Parent_Account__r.Status__c, Child_Account__r.Reason__c, Parent_Account__r.Reason__c,
 												HO_Flag__c, Parent_agency__c, Child_Agency__c, Is_Newgen_Relation__c, Parent_Account__r.ParentId,
-												Parent_Account__r.IATA_ISO_Country__r.AMS_Settlement_System__c, Parent_Account__r.Name, 
+												Parent_Account__r.IATA_ISO_Country__r.AMS_Settlement_System__c, Parent_Account__r.Name,
 												Child_Account__r.IATA_ISO_Country__r.AMS_Settlement_System__c, Child_Account__r.Name,
 												Parent_Account__r.Remittance_frequency__c, Child_Account__r.Remittance_frequency__c,
-												Parent_Account__r.ANG_FA_Opt_out__c, Child_Account__r.ANG_FA_Opt_out__c 
-		                                      FROM AMS_Agencies_relationhip__c
-		                                      WHERE Hierarchy__c IN :hierarchyToAccounts.keyset() ]) {
+												Parent_Account__r.ANG_FA_Opt_out__c, Child_Account__r.ANG_FA_Opt_out__c
+																					FROM AMS_Agencies_relationhip__c
+																					WHERE Hierarchy__c IN :hierarchyToAccounts.keyset() ]) {
 
 			system.debug(LoggingLevel.ERROR, 'getAccountsHierarchies() --> found relationship ' + r);
 			for (Id theAccountId : hierarchyToAccounts.get(r.Hierarchy__c)) {
@@ -67,7 +67,7 @@ global class AMS_HierarchyHelper {
 		// loop over all the relationships and switch the child with the parent
 		List<AMS_Agencies_relationhip__c> relToUpdate = new List<AMS_Agencies_relationhip__c>();
 		if(hierarchyRelationships.isEmpty()) return new HierarchyStruct(relToUpdate, null, null, null);
- 
+
 		Id hierarchyHO = getHierarchyHO(hierarchyRelationships);
 		System.debug('Hierarchy HO: ' + accounts.get(hierarchyHO).Name + ' ('+accounts.get(hierarchyHO).IATACode__c+')');
 
@@ -314,7 +314,7 @@ global class AMS_HierarchyHelper {
 					hierarchyToDelete = rel.Hierarchy__c;
 
 				//BRs under the oldHO will move under the targetHO
-				if ((rel.Parent_Account__c == oldHO && rel.Child_Account__r.Location_Type__c == AMS_Utils.BR && rel.Child_Account__r.Status__c != AMS_Utils.ACC_S0_TERMINATED) 
+				if ((rel.Parent_Account__c == oldHO && rel.Child_Account__r.Location_Type__c == AMS_Utils.BR && rel.Child_Account__r.Status__c != AMS_Utils.ACC_S0_TERMINATED)
 					|| (rel.Parent_Account__c == oldHO && rel.Child_Account__r.Location_Type__c == AMS_Utils.SA && rel.Child_Account__r.Status__c == AMS_Utils.ACC_S1_NOTACCREDITED)){
 					rel.Parent_Account__c = targetHO;
 					rel.Hierarchy__c = newHierarchyName;
@@ -338,7 +338,7 @@ global class AMS_HierarchyHelper {
 			//still need to create a new relation to move the oldHO under the targetHO
 			res.relationsToInsert = new List<AMS_Agencies_relationhip__c>();
 			res.relationsToInsert.add(new AMS_Agencies_relationhip__c(Hierarchy__c = newHierarchyName, Parent_Account__c = targetHO,
-			                          Child_Account__c = oldHO));
+																Child_Account__c = oldHO));
 
 			if(!accountsToUpdate.isEmpty())
 				update accountsToUpdate;
@@ -461,11 +461,11 @@ global class AMS_HierarchyHelper {
 
 			//whenever a child agency (active) is left without a parent an error should be raised
 			if (a.Location_Type__c != AMS_Utils.HO && a.Location_Type__c != AMS_Utils.AO && !agenciesNotMigrated.contains(a.ParentId) &&
-			        a.Status__c != AMS_Utils.ACC_S0_TERMINATED && a.Status__c != AMS_Utils.ACC_S1_NOTACCREDITED)
+							a.Status__c != AMS_Utils.ACC_S0_TERMINATED && a.Status__c != AMS_Utils.ACC_S1_NOTACCREDITED)
 
 				errorMessage += (errorMessage == '' ? '' : '\n' ) +
-				                'Cannot leave the agency ' + a.Name + ' with IATA code ' + a.IATAcode__c + ' as a standalone ' + a.Location_Type__c + ' agency, ' +
-				                'because it has status ' + a.Status__c;
+												'Cannot leave the agency ' + a.Name + ' with IATA code ' + a.IATAcode__c + ' as a standalone ' + a.Location_Type__c + ' agency, ' +
+												'because it has status ' + a.Status__c;
 		}
 
 
@@ -478,12 +478,12 @@ global class AMS_HierarchyHelper {
 			Id parentId = rel.Parent_Account__c;
 			Id childId = rel.Child_Account__c;
 			//only active hierarchy agencies are to be considered
-			Account parent = accounts.get(parentId); 
+			Account parent = accounts.get(parentId);
 			Account child = accounts.get(childId);
 			if (parent !=null && parent.Status__c != AMS_Utils.ACC_S0_TERMINATED && parent.Status__c != AMS_Utils.ACC_S1_NOTACCREDITED && !agenciesSelected.contains(parentId)){
 				return false;
 			}
-			if (child !=null && child.Status__c != AMS_Utils.ACC_S0_TERMINATED && child.Status__c != AMS_Utils.ACC_S1_NOTACCREDITED && child.Status__c != null && !agenciesSelected.contains(childId)){				
+			if (child !=null && child.Status__c != AMS_Utils.ACC_S0_TERMINATED && child.Status__c != AMS_Utils.ACC_S1_NOTACCREDITED && child.Status__c != null && !agenciesSelected.contains(childId)){
 				return false;
 			}
 		}
@@ -495,13 +495,13 @@ global class AMS_HierarchyHelper {
 			Id parentId = rel.Parent_Account__c;
 			Id childId = rel.Child_Account__c;
 			//only active hierarchy agencies are to be considered
-			Account parent = accounts.get(parentId); 
+			Account parent = accounts.get(parentId);
 			Account child = accounts.get(childId);
 			if(child.Is_Branch_Abroad__c != 'Yes'){
 				if (parent !=null && parent.Status__c != AMS_Utils.ACC_S0_TERMINATED && parent.Status__c != AMS_Utils.ACC_S1_NOTACCREDITED && !agenciesSelected.contains(parentId)){
 					return false;
 				}
-				if (child !=null && child.Status__c != AMS_Utils.ACC_S0_TERMINATED && child.Status__c != AMS_Utils.ACC_S1_NOTACCREDITED && child.Status__c != null && !agenciesSelected.contains(childId)){				
+				if (child !=null && child.Status__c != AMS_Utils.ACC_S0_TERMINATED && child.Status__c != AMS_Utils.ACC_S1_NOTACCREDITED && child.Status__c != null && !agenciesSelected.contains(childId)){
 					return false;
 				}
 			}
@@ -876,14 +876,14 @@ global class AMS_HierarchyHelper {
 	}
 
 	public class AccountStruct{
-		
-	    public String parentIATACode;
-	    public String locationType;
 
-	    public AccountStruct(String parentIATACode, String locationType) {
-	        this.parentIATACode = parentIATACode;
-	        this.locationType = locationType;
-	    }
+			public String parentIATACode;
+			public String locationType;
+
+			public AccountStruct(String parentIATACode, String locationType) {
+					this.parentIATACode = parentIATACode;
+					this.locationType = locationType;
+			}
 	}
 
 }

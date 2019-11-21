@@ -9,7 +9,7 @@ public with sharing class ANG_ChangeRHCCurrency {
 		get{
 			if(sObjDesc==null)
 				sObjDesc = ANG_RHC_Information__c.SObjectType.getDescribe();
-				
+
 			return sObjDesc;
 		}
 		set;
@@ -23,7 +23,7 @@ public with sharing class ANG_ChangeRHCCurrency {
 			return fieldsSet;
 		}
 		set;
-	} 
+	}
 
 	public Boolean isEdit{
 		get{
@@ -36,7 +36,7 @@ public with sharing class ANG_ChangeRHCCurrency {
 	}
 
 	public List<FieldWrapper> displayFields{get; set;}
-	
+
 	public Case caseToUpdate {get; set;}
 
 	private Set<String> fieldsToQuery{
@@ -91,7 +91,7 @@ public with sharing class ANG_ChangeRHCCurrency {
 		//ANG_RHCHelper.calculateRHCAmount(new List<ANG_RHC_Information__c>{rhc});
 		rhc.recalculateFormulas();
 		oldCurrency = rhc.CurrencyIsoCode;
-		
+
 	}
 
 	public void toggleEditMode(){
@@ -102,7 +102,7 @@ public with sharing class ANG_ChangeRHCCurrency {
 		if(caseToUpdate.ParentId != null){
 
 			List<case> cse = [Select Id, CaseNumber, Subject, Reason1__c, CaseArea__c FROM Case Where Id = :caseToUpdate.ParentId and recordTypeId = :AMS_Utils.RECTYPE_SAAM];
-			
+
 			if (cse.isEmpty()){
 				ApexPages.addMessage( new ApexPages.Message(ApexPages.Severity.ERROR,'Incorrect Case Number'));
 				return;
@@ -129,15 +129,15 @@ public with sharing class ANG_ChangeRHCCurrency {
 	}
 
 	public ANG_ChangeRHCCurrency() {
-		this.objId = ApexPages.currentPage().getParameters().get('Id'); 
+		this.objId = ApexPages.currentPage().getParameters().get('Id');
 		queryRHC(false);
 		oldCurrency = rhc.CurrencyIsoCode;
 		caseToUpdate = new case();
 	}
 
 	public class FieldWrapper{
-		public String name {get; set;} 
-		public String label {get; set;} 
+		public String name {get; set;}
+		public String label {get; set;}
 
 		public FieldWrapper(String name, String label){
 			this.name = name;
