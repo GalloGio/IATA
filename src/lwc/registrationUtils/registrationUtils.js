@@ -15,6 +15,7 @@ export default class RegistrationUtils {
 
                 let resp = {};
                 resp.isRestricted = false;
+                resp.countryCode = 'CH';
                 resolve(resp);
             }
             /*
