@@ -1911,7 +1911,7 @@ public without sharing class ISSP_AMS_Accreditation {
                 return null;
             }*/
 
-            if ((newCase.Reason1__c == AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD || isMultiCountryNewAE || newCase.Reason1__c == AMS_Utils.CASE_REASON_AE_MULTICOUNTRY) && newForm.AE_separate_Legal_Entity__c == null) {
+            if (sectorValue == 'Travel_Agent' && (newCase.Reason1__c == AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD || isMultiCountryNewAE || newCase.Reason1__c == AMS_Utils.CASE_REASON_AE_MULTICOUNTRY) && newForm.AE_separate_Legal_Entity__c == null) {
                 ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_IS_Separate_Entity_Null));
                 return null;
             }
