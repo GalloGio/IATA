@@ -572,14 +572,28 @@
 
                                     <!-- Popup Footer -->
                                 <div class="slds-p-around_large topLightGrayBorder customWhiteBackground">
-                                    <div class="slds-grid slds-wrap slds-gutters_medium slds-grid--vertical-stretch">
-                                        <div class="slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2">    
-                                            <lightning-button class="baseButton newLinkButton buttonMinHeightMedium text-xsmall fullWidth" label={labels.CancelLabel} variant="neutral" onclick={closeModal}></lightning-button>
-                                        </div>
-                                        <div class="slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2">
-                                            <lightning-button class="baseButton newContainedButton buttonMinHeightMedium text-xsmall fullWidth" label={labels.SaveLabel} variant="neutral" onclick={applyFiltersModal} type="submit" disabled={canSave}></lightning-button>
+                                    <div if:false={allowContactDelete}>
+                                        <div class="slds-grid slds-wrap slds-gutters_medium slds-grid--vertical-stretch">
+                                            <div class="slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2">    
+                                                <lightning-button class="baseButton newLinkButton buttonMinHeightMedium text-xsmall fullWidth" label={labels.CancelLabel} variant="neutral" onclick={closeModal}></lightning-button>
+                                            </div>
+                                            <div class="slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2">
+                                                <lightning-button class="baseButton newContainedButton buttonMinHeightMedium text-xsmall fullWidth" label={labels.SaveLabel} variant="neutral" onclick={applyFiltersModal} type="submit" disabled={canSave}></lightning-button>
+                                            </div>
                                         </div>
                                     </div>
+                                    <div if:true={allowContactDelete}>
+                                        <div class="slds-grid slds-wrap slds-gutters_medium slds-grid--vertical-stretch">
+                                            <div class="slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_1-of-3 slds-large-size_1-of-3">    
+                                                <lightning-button class="baseButton newLinkButton buttonMinHeightMedium text-xsmall fullWidth" label={removeContactLabel} variant="neutral" onclick={removeUser}></lightning-button>
+                                            </div>
+                                            <div class="slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_1-of-3 slds-large-size_1-of-3">    
+                                                <lightning-button class="baseButton newLinkButton buttonMinHeightMedium text-xsmall fullWidth" label={labels.CancelLabel} variant="neutral" onclick={closeModal}></lightning-button>
+                                            </div>
+                                            <div class="slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_1-of-3 slds-large-size_1-of-3">
+                                                <lightning-button class="baseButton newContainedButton buttonMinHeightMedium text-xsmall fullWidth" label={labels.SaveLabel} variant="neutral" onclick={applyFiltersModal} type="submit" disabled={canSave}></lightning-button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </lightning-record-edit-form>
                             </div>
