@@ -22,7 +22,7 @@
     }
 
     @bottom-center{
-        content : "Tel. +1-800-7166-326 / Fax +1-514-874-9659 / E-mail custserv@iata.org";
+        content : "Tel: (Toll free) +1 800 716 6326 / Tel: +1 (514) 390 6726 / +41 (22) 770 2751 / E-mail: ymq-cds@iata.org";
         font-size: 80%;
     }
 

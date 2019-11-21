@@ -189,7 +189,7 @@ private class OneId_RegistrationProcessControllerTest {
             Account a = new Account(name = 'TEST ACCOUNT',Sector__c='Travel Agent', Category__c='Non-IATA Travel Agent',IATA_ISO_Country__c = country.Id);
             Contact c = new Contact(firstname='firstname', lastname = 'lastname',Salutation = 'sig', email='xpto@lls.com');
 
-            OneId_RegistrationProcessController.registration(a,c,serviceName, new Map<String, String>());
+            OneId_RegistrationProcessController.registration(a,c,serviceName, new Map<String, String>(), false);
             OneId_RegistrationProcessController.checkIsUsernameIsAvailableInGlobalSalesforce('xpto@lls.com', OneId_RegistrationProcessController.returnExistingContact('xpto@lls.com'));
             OneId_RegistrationProcessController.getAccountLabels();
             OneId_RegistrationProcessController.getSectors();
@@ -235,7 +235,7 @@ private class OneId_RegistrationProcessControllerTest {
             
             Contact c = new Contact(firstname='firstname', lastname = 'lastname',Salutation = 'sig', email='xpto@lls.com');
 
-            OneId_RegistrationProcessController.registration(a,c,serviceName, new Map<String, String>());
+            OneId_RegistrationProcessController.registration(a,c,serviceName, new Map<String, String>(), false);
 
         Test.stopTest();
 
@@ -279,7 +279,7 @@ private class OneId_RegistrationProcessControllerTest {
             Account acc1child = new Account(Name='testAccount1 child', Type='IATA Passenger Sales Agent', Location_Type__c = 'AO', ParentId = acc1.Id);
             Contact c = new Contact(firstname='firstname', lastname = 'lastname',Salutation = 'sig', email='xpto@lls.com');
 
-            OneId_RegistrationProcessController.registration(acc1child,c,serviceName, new Map<String, String>());
+            OneId_RegistrationProcessController.registration(acc1child,c,serviceName, new Map<String, String>(), false);
 
         Test.stopTest();
 
@@ -323,7 +323,7 @@ private class OneId_RegistrationProcessControllerTest {
             
             Contact c = new Contact(firstname='firstname', lastname = 'lastname',Salutation = 'sig', email='xpto@lls.com');
 
-            OneId_RegistrationProcessController.registration(acc1,c,serviceName, new Map<String, String>());
+            OneId_RegistrationProcessController.registration(acc1,c,serviceName, new Map<String, String>(), false);
 
         Test.stopTest();
 
@@ -421,7 +421,7 @@ private class OneId_RegistrationProcessControllerTest {
          
              Contact c = new Contact(firstname='firstname', lastname = 'lastname',Salutation = 'sig', email='tip@lls.com');
 
-             OneId_RegistrationProcessController.registration(a,c,serviceName, new Map<String, String>());
+             OneId_RegistrationProcessController.registration(a,c,serviceName, new Map<String, String>(), false);
 			 //OneId_RegistrationProcessController.increaseCodeCoverage();
            
          Test.stopTest();
@@ -485,7 +485,7 @@ private class OneId_RegistrationProcessControllerTest {
 
         Contact c = new Contact(firstname='firstname', lastname = 'lastname',Salutation = 'sig', email='xpto@lls.com');
 
-        OneId_RegistrationProcessController.registration(acc1,c,serviceName, new Map<String, String>{'isPowerUser' =>'true'});
+        OneId_RegistrationProcessController.registration(acc1,c,serviceName, new Map<String, String>{'isPowerUser' =>'true'}, false);
 
         Test.stopTest();
     }
@@ -561,9 +561,9 @@ private class OneId_RegistrationProcessControllerTest {
 
                 Test.startTest();
 
-                        OneId_RegistrationProcessController.registration(a,c,serviceName);
+                        OneId_RegistrationProcessController.registration(a,c,serviceName, false);
                         OneId_RegistrationProcessController.getUserInformationFromEmail(c.email,'FRED');
-                        OneId_RegistrationProcessController.registration(a,c,'NDCMM');
+                        OneId_RegistrationProcessController.registration(a,c,'NDCMM', false);
                         OneId_RegistrationProcessController.getUserInformationFromEmail(con.email,'NDCMM');
                     	OneId_RegistrationProcessController.getUserInformationFromEmail(c.email,'ISSP');
 
@@ -838,5 +838,15 @@ private class OneId_RegistrationProcessControllerTest {
          List<Account> lacc4 = OneId_RegistrationProcessController.getAccountsBySectorAndCategory('Non-IATA Travel Agent', 'testcat', country.Id, 'TEST');
          List<Account> lacc5 = OneId_RegistrationProcessController.getAccountsBySectorAndCategory('Airline Supplier', 'testcat', country.Id, 'TEST');
        
+     }
+     
+     @isTest
+     public static void testGetCustomerPortalUrl(){
+        insert new ISSP_CS__c(Name = 'IdentityPortal',Value__c = 'identity');
+        insert new ISSP_CS__c(Name = 'Host',Value__c = 'host');
+        Test.startTest();
+        string url = OneId_RegistrationProcessController.getCustomerPortalUrl();
+        Test.stopTest();
+        System.assertNotEquals(url, null);
      }
 }

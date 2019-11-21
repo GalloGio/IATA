@@ -6146,6 +6146,18 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
             </valueSetDefinition>
         </valueSet>
     </fields>
+	<fields>
+        <fullName>Business_City_Name__c</fullName>
+        <description>Business City Name</description>
+        <externalId>false</externalId>
+        <label>Business City Name</label>
+        <length>40</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
     <fields>
         <fullName>Bulletin_Headquarter__c</fullName>
         <externalId>false</externalId>
@@ -6173,11 +6185,35 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>Business_PO_Box__c</fullName>
+        <description>PO Box of the Account&apos;s Business Address</description>
+        <externalId>false</externalId>
+        <label>Business PO Box</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Business_Postal_Code__c</fullName>
         <description>Postal Code for the Account&apos;s Business Address</description>
         <externalId>false</externalId>
         <label>Business Postal Code</label>
         <length>20</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Business_State_Name__c</fullName>
+        <description>Business State Name</description>
+        <externalId>false</externalId>
+        <label>Business State Name</label>
+        <length>80</length>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
@@ -13639,6 +13675,16 @@ Approval: Key Contact can see pending request approve it one by one</inlineHelpT
         <description>set to true in a trigger based on the logic: for China &gt;=3 non-expired certificates, for HO &gt;=2, for BR &gt;=1</description>
         <externalId>false</externalId>
         <label>Is DGR Compliant</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Is_General_Public_Account__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Indicates if the Account is a General Public account</description>
+        <externalId>false</externalId>
+        <label>Is General Public Account</label>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
@@ -100451,7 +100497,7 @@ OR(
 ISCHANGED(Account_Type__c),
 ISCHANGED(Website)
 ),
-NOT(CONTAINS($Profile.Name, &quot;System Administrator - automated processes&quot;)),
+NOT(CONTAINS($Profile.Name, &quot;System Administrator&quot;)),
 NOT(CONTAINS($Profile.Name, &quot;Account management team&quot;)),
 NOT(CONTAINS($Profile.Name, &quot;MER Membership&quot;))
 )</errorConditionFormula>

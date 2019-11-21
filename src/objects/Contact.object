@@ -9049,6 +9049,15 @@ IF( INCLUDES(Function__c, &apos;Training&apos;),41,
         <fullName>LastCUUpdateDate</fullName>
     </fields>
     <fields>
+        <fullName>Last_registration_notification_date__c</fullName>
+        <description>This field saves the lat day this contact was notified to finish the level 2 registration on CS Portal</description>
+        <externalId>false</externalId>
+        <label>Last registration notification date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Date</type>
+    </fields>
+    <fields>
         <fullName>Last_synchronization__c</fullName>
         <description>AIMS-&gt;AMS Last synchronization Date</description>
         <externalId>false</externalId>
@@ -20303,7 +20312,7 @@ Account.RecordType.DeveloperName = &quot;IATA_Agency&quot;
     </validationRules>
     <validationRules>
         <fullName>Contact_cannot_change_his_portal_status</fullName>
-        <active>true</active>
+        <active>false</active>
         <errorConditionFormula>AND(
    TEXT(PRIORVALUE(User_Portal_Status__c)) &lt;&gt; TEXT(User_Portal_Status__c),
    $User.ContactId  =  Id 
