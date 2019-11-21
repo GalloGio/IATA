@@ -316,12 +316,17 @@ public virtual class IEC_PageController
 
     public PageReference csPortalCommunityRedirect(){
        String urlPath;
+	   String host = String.ValueOF(ISSP_CS__c.getValues('Host').value__c);
        String urlRedirect = '/s/support-reach-us?category=Publications&topic=IATA_Store';
 
-       urlPath = OneIdUtils.getCommunityRedirection (OneIdUtils.Mode.CSP, urlRedirect);
-       
+	   if(!CSP_Utils.isGuestUser()){
+		   urlPath = OneIdUtils.getCommunityRedirection (OneIdUtils.Mode.CSP, urlRedirect);
+	   }
+	   else{
+		   urlPath =  URL.getSalesforceBaseUrl().toExternalForm() + '/identity/s/login/?language=en_US&serviceName=CSP&startURL=' + urlRedirect.replace('&topic=IATA_Store','%26topic=IATA_Store');
+	   }
+
        PageReference cspPage = new PageReference(urlPath);
-       cspPage.setRedirect(true);
        return cspPage;
    }
 

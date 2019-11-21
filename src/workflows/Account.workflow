@@ -622,7 +622,7 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         </actions>
         <active>true</active>
         <description>Sends a notification email when an airline becomes active for the first time</description>
-        <formula>AND(RecordType.DeveloperName = &apos;IATA_Airline&apos;,  ISPICKVAL(ACLI_Status__c, &apos;Active Company&apos;) )</formula>
+        <formula>AND(RecordType.DeveloperName = &apos;IATA_Airline&apos;, ISPICKVAL(ACLI_Status__c, &apos;Active Company&apos;), NOT(ISPICKVAL(PRIORVALUE(ACLI_Status__c), &apos;Inactive Company&apos;)), OR(ISCHANGED(ACLI_Status__c), ISCHANGED(RecordTypeId)))</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
