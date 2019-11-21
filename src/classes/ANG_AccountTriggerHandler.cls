@@ -667,13 +667,7 @@ public class ANG_AccountTriggerHandler {
 		ANG_Risk_Status_Downgrade__e evt = new ANG_Risk_Status_Downgrade__e(
 			Accounts__c = JSON.serialize(geAccounts)
 		);
-		Database.SaveResult sr = EventBus.publish(evt);
-
-		if (! sr.isSuccess())
-		{
-			for (Database.Error err : sr.getErrors())
-				System.debug(LoggingLevel.ERROR, '____ [cls ANG_AccountTriggerHandler - launchPlatformEventForRiskStatusDowngrade] Error returned: ' + err.getStatusCode() + ' - ' + err.getMessage());
-		}
+		EventBus.publish(evt);
 	}
 
 	private void createFOPOscar(List<Account> accounts, Map<Id, Id> contacts) {
