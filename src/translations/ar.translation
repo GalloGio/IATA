@@ -1913,6 +1913,38 @@
         <name>CSP_Cases</name>
     </customLabels>
     <customLabels>
+        <label>تغيير عنوان البريد الإلكتروني</label>
+        <name>CSP_Change_Email</name>
+    </customLabels>
+    <customLabels>
+        <label>تغيير كلمة المرور</label>
+        <name>CSP_Change_Password</name>
+    </customLabels>
+    <customLabels>
+        <label>.لم نتمكن من تعيين كلمة مروركم الجديدة</label>
+        <name>CSP_Change_Password_Error</name>
+    </customLabels>
+    <customLabels>
+        <label>.الرجاء إدخال كلمة المرور الحالية، ثم تعيين كلمة مرور جديدة وتأكيدها</label>
+        <name>CSP_Change_Password_Info_1</name>
+    </customLabels>
+    <customLabels>
+        <label>(&amp; ^ + _ () * %$ # @ !) يجب أن تحتوي كلمة المرور على 10 أحرف أو أكثر بما في ذلك حرف كبير واحد على الأقل ورقم ورمز</label>
+        <name>CSP_Change_Password_Info_2</name>
+    </customLabels>
+    <customLabels>
+        <label>يرجى التحقق من بريدكم الإلكتروني للحصول على تفاصيل الوصول الخاصة بكم</label>
+        <name>CSP_Check_Email</name>
+    </customLabels>
+    <customLabels>
+        <label>.تم تعيين كلمة المرور بنجاح</label>
+        <name>CSP_Chg_Pass_Success_Msg_1</name>
+    </customLabels>
+    <customLabels>
+        <label>.يمكنكم استخدام كلمة المرور الجديدة لتسجيل الدخول</label>
+        <name>CSP_Chg_Pass_Success_Msg_2</name>
+    </customLabels>
+    <customLabels>
         <label>المجتمع</label>
         <name>CSP_Community</name>
     </customLabels>
@@ -1929,12 +1961,20 @@
         <name>CSP_CompanyProfile</name>
     </customLabels>
     <customLabels>
+        <label>أكمل ملفك الشخصي</label>
+        <name>CSP_Complete_Profile</name>
+    </customLabels>
+    <customLabels>
         <label>هل أنتم متأكدون من رغبتكم برفض إمكانية الوصول إلى &lt;b&gt;{0}&lt;/b&gt;  ل &lt;b&gt;{1}&lt;/b&gt;؟</label>
         <name>CSP_Confirm_Deny_User_Access</name>
     </customLabels>
     <customLabels>
         <label>هل أنتم متأكدون أنكم تريدون منح حق الوصول إلى &lt;b &gt; {0} &lt; / b &gt; ل &lt; b &gt; {1} &lt; / b &gt; ؟</label>
         <name>CSP_Confirm_Grant_User_Access</name>
+    </customLabels>
+    <customLabels>
+        <label>تأكيد البريد الإلكتروني في بوابة عملاء إياتا</label>
+        <name>CSP_Confirmation_Email_Subject</name>
     </customLabels>
     <customLabels>
         <label>تم إيصال طلب تمكين وصولكم ل {0} إلى مسؤولي البوابة. إذا كان لديكم أي أسئلة أو طلبات تتعلق بهذه العملية ، فيمكنكم التواصل مع أحد المسؤولين أدناه:</label>
@@ -1949,6 +1989,22 @@
         <name>CSP_Create_Contact_Complete_Field</name>
     </customLabels>
     <customLabels>
+        <label>؟هل أنتم جديدون في بوابة عملاء الاتحاد الدولي للنقل الجوي</label>
+        <name>CSP_Create_New_Account_Info</name>
+    </customLabels>
+    <customLabels>
+        <label>إنشاء حساب جديد</label>
+        <name>CSP_Create_New_Account_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>إنشاء كلمة مرور</label>
+        <name>CSP_Create_Password</name>
+    </customLabels>
+    <customLabels>
+        <label>.لم نتمكن من تعيين كلمة مروركم الجديدة. الرجاء المحاولة مرة أخرى</label>
+        <name>CSP_Create_Password_Error</name>
+    </customLabels>
+    <customLabels>
         <label>تم إنشاؤها في</label>
         <name>CSP_CreatedOn</name>
     </customLabels>
@@ -1959,6 +2015,10 @@
     <customLabels>
         <label><!-- CSP_DateTo --></label>
         <name>CSP_DateTo</name>
+    </customLabels>
+    <customLabels>
+        <label>عميلنا العزيز</label>
+        <name>CSP_Dear</name>
     </customLabels>
     <customLabels>
         <label>رفض وصول المستخدم</label>
@@ -1985,8 +2045,80 @@
         <name>CSP_Documents_PubliCountry</name>
     </customLabels>
     <customLabels>
+        <label>البريد الإلكتروني</label>
+        <name>CSP_Email</name>
+    </customLabels>
+    <customLabels>
+        <label>.أنت على بعد خطوة واحدة فقط للدخول .لك على التسجيل في بوابة عملاء الاتحاد الدولي للنقل الجوي</label>
+        <name>CSP_Email_Confirmation_Body_Part_1</name>
+    </customLabels>
+    <customLabels>
+        <label>يرجى تأكيد عنوان بريدك الإلكتروني من خلال النقر</label>
+        <name>CSP_Email_Confirmation_Body_Part_2</name>
+    </customLabels>
+    <customLabels>
+        <label>.لأسباب أمنية، هذا الرابط صالح لمدة 8 ساعات. بعد انتهاء الوقت المحدد، يجب عليك إعادة تقديم طلبك</label>
+        <name>CSP_Email_Confirmation_Body_Part_3</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP Email Domain Error Message --></label>
         <name>CSP_Email_Domain_Error_Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Footer Image --></label>
+        <name>CSP_Email_Footer_Image</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Header Image --></label>
+        <name>CSP_Email_Header_Image</name>
+    </customLabels>
+    <customLabels>
+        <label>هنا</label>
+        <name>CSP_Email_Here</name>
+    </customLabels>
+    <customLabels>
+        <label>.لقد تلقينا طلبك لإعادة تعيين كلمة المرور الخاصة بك في بوابة عملاء الاتحاد الدولي للنقل الجوي</label>
+        <name>CSP_Email_Password_Reset_Body_Part_1</name>
+    </customLabels>
+    <customLabels>
+        <label>من فضلك اضغط</label>
+        <name>CSP_Email_Password_Reset_Body_Part_2</name>
+    </customLabels>
+    <customLabels>
+        <label>.لتعيين كلمة مرور جديدة</label>
+        <name>CSP_Email_Password_Reset_Body_Part_3</name>
+    </customLabels>
+    <customLabels>
+        <label>.لأسباب أمنية ، هذا الرابط صالح لمدة 8 ساعات. بعد انتهاء الوقت المحدد ، يجب عليك إعادة تقديم طلبك</label>
+        <name>CSP_Email_Password_Reset_Body_Part_4</name>
+    </customLabels>
+    <customLabels>
+        <label>.شكراً لكونكم جزء من الاتحاد الدولي للنقل الجوي</label>
+        <name>CSP_Email_Signature_Part_1</name>
+    </customLabels>
+    <customLabels>
+        <label>الاتحاد الدولي للنقل الجوي</label>
+        <name>CSP_Email_Signature_Part_2</name>
+    </customLabels>
+    <customLabels>
+        <label>!يسعدنا أن تكون معنا في بوابة عملاء الاتحاد الدولي للنقل الجوي</label>
+        <name>CSP_Email_Welcome_Part_1</name>
+    </customLabels>
+    <customLabels>
+        <label>!(بوابة عملاء الاتحاد الدولي للنقل الجوي (إياتا) بها الكثير من الخدمات المفيدة، ومعلومات المنتج، ونصائح وأساليب مفيدة معدَّة خصيصا لك. يمكنك استخدامها للتواصل مع فريق خدمة العملاء لدينا بسهولة، بما في ذلك الدردشة الحية أو الشراء مباشرة من متجرنا على الإنترنت. انها بوابتك إلى الاتحاد الدولي للنقل الجوي (إياتا</label>
+        <name>CSP_Email_Welcome_Part_2</name>
+    </customLabels>
+    <customLabels>
+        <label>&lt;a href=&quot;{!Portal_Url}&quot;&gt;!إنتقل إلى البوابة&lt;/a&gt;</label>
+        <name>CSP_Email_Welcome_Part_3</name>
+    </customLabels>
+    <customLabels>
+        <label>لتحسين تجربتك في استخدام بوابة عملاء الاتحاد الدولي للنقل الجوي ، يمكنك إكمال معلومات حسابك متى أردت ذلك. يمكنك القيام بذلك بسهولة عن طريق النقر</label>
+        <name>CSP_Email_Welcome_Part_4</name>
+    </customLabels>
+    <customLabels>
+        <label>!نأمل أن تستمتعوا معنا باستخدام بوابة عملاء الاتحاد الدولي للنقل الجوي</label>
+        <name>CSP_Email_Welcome_Part_5</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP Error Creating Record --></label>
@@ -1999,6 +2131,26 @@
     <customLabels>
         <label><!-- CSP Error while delete record --></label>
         <name>CSP_Error_while_delete_record</name>
+    </customLabels>
+    <customLabels>
+        <label>.يبدو أن لديكم بالفعل حساب مستخدم للبوابة. يرجى تسجيل الدخول باستخدام كلمة المرور الخاصة بكم</label>
+        <name>CSP_Existing_User_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>.يرجى التحقق من بريدكم الإلكتروني والنقر على رابط إنشاء كلمة المرور</label>
+        <name>CSP_Expired_Email_Success_Msg</name>
+    </customLabels>
+    <customLabels>
+        <label>.انتهت صلاحية رابط التحقق</label>
+        <name>CSP_Expired_Link_Msg_1</name>
+    </customLabels>
+    <customLabels>
+        <label>.لأسباب أمنية، تنتهي صلاحية رابط التحقق بعد 8 ساعات</label>
+        <name>CSP_Expired_Link_Msg_2</name>
+    </customLabels>
+    <customLabels>
+        <label>.يرجى التحقق من بريدكم الإلكتروني والنقر على رابط إنشاء كلمة المرور</label>
+        <name>CSP_Expired_Reset_Password_Msg</name>
     </customLabels>
     <customLabels>
         <label>التواصل معنا</label>
@@ -2015,6 +2167,10 @@
     <customLabels>
         <label>الأسئلة المكررة</label>
         <name>CSP_FAQ_HeaderTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>الانتقال إلى أسئلتنا الشائعة</label>
+        <name>CSP_FAQ_Label</name>
     </customLabels>
     <customLabels>
         <label>اختر واحدة من الفئات الرئيسية</label>
@@ -2053,8 +2209,44 @@
         <name>CSP_Filtered</name>
     </customLabels>
     <customLabels>
+        <label>.تم إنشاء حسابكم بنجاح! يمكنكم الآن اكتشاف ميزات بوابتنا. للمزيد من المحتوى المخصص، يرجى إكمال ملفكم الشخصي</label>
+        <name>CSP_First_Login_Desc</name>
+    </customLabels>
+    <customLabels>
+        <label>مرحباً بكم معنا</label>
+        <name>CSP_First_Login_Title</name>
+    </customLabels>
+    <customLabels>
         <label>من أجلك</label>
         <name>CSP_ForYou</name>
+    </customLabels>
+    <customLabels>
+        <label>هل نسيتم كلمة المرور؟</label>
+        <name>CSP_Forgot_Password</name>
+    </customLabels>
+    <customLabels>
+        <label>.يبدو أنه ليس لدينا مستخدم مسجل لعنوان بريدكم الإلكتروني. يمكنكم إنشاء حساب جديد بسهولة</label>
+        <name>CSP_Forgot_Password_Error_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>.يرجى إدخال عنوان بريدكم الإلكتروني المسجل لإعادة تعيين كلمة المرور الخاصة بكم. سنرسل لكم رابط إعادة التعيين إلى بريدكم الإلكتروني</label>
+        <name>CSP_Forgot_Password_Info</name>
+    </customLabels>
+    <customLabels>
+        <label>.&quot;الرجاء التحقق من مجلد البريد العشوائي الخاص بكم أولاً. إذا لم تتمكنوا من العثور على أي شيء في مجلد البريد العشوائي، فيُرجى محاولة إعادة تعيين كلمة المرور مرة أخرى بالنقر فوق &quot;حاول مجدداً</label>
+        <name>CSP_Forgot_Password_Retry_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>لم تستلموا بريدًا إلكترونيًا؟</label>
+        <name>CSP_Forgot_Password_Retry_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>يرجى التحقق من بريدكم الإلكتروني والنقر على رابط إعادة تعيين كلمة المرور</label>
+        <name>CSP_Forgot_Password_Success_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>.نظرًا لأنكم لم تقوموا بتسجيل الدخول في آخر 90 يوماً ، فقد أرسلنا لكم رسالة بريد إلكتروني تحتوي كلمة مرور جديدة</label>
+        <name>CSP_Frozen_User_Message</name>
     </customLabels>
     <customLabels>
         <label>منح وصول للمستخدم</label>
@@ -2073,12 +2265,428 @@
         <name>CSP_IMPORTANT</name>
     </customLabels>
     <customLabels>
+        <label>عنوان البريد الإلكتروني خاطئ</label>
+        <name>CSP_Invalid_Email</name>
+    </customLabels>
+    <customLabels>
+        <label>معلومات حساب الشركة</label>
+        <name>CSP_L2_Account_Information</name>
+    </customLabels>
+    <customLabels>
+        <label>.املأ المعلومات أدناه للعثور على حساب شركتك</label>
+        <name>CSP_L2_Account_Information_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>إختيار الحساب</label>
+        <name>CSP_L2_Account_Selection</name>
+    </customLabels>
+    <customLabels>
+        <label>.(IATA - لمطابقة ملفك الشخصي مع حساب شركتك ، نحتاج إلى مزيد من التفاصيل. سيساعدنا ذلك في التحقق مما إذا كانت شركتك مسجلة بالفعل لدى الاتحاد الدولي للنقل الجوي (إياتا</label>
+        <name>CSP_L2_Account_Selection_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>.لم نتمكن من العثور على عنوانك.الرجاء النقر على زر &quot;الخطوة التالية&quot; لتأكيد صحة عنوانك</label>
+        <name>CSP_L2_Address_Not_Found_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>يبدو أنك أكملت ملفك الشخصي بالفعل من قبل، لذلك لدينا كل التفاصيل التي نحتاجها.</label>
+        <name>CSP_L2_Already_L2_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>كل شيئ جاهز!</label>
+        <name>CSP_L2_Already_L2_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>العودة إلى معلومات حساب الشركة</label>
+        <name>CSP_L2_Back_to_Account_Selection</name>
+    </customLabels>
+    <customLabels>
+        <label>العودة إلى معلومات عنوان العمل</label>
+        <name>CSP_L2_Back_to_Business_Address_Information</name>
+    </customLabels>
+    <customLabels>
+        <label>العودة إلى معلومات الشركة</label>
+        <name>CSP_L2_Back_to_Company_Information</name>
+    </customLabels>
+    <customLabels>
+        <label>العودة إلى التعديل</label>
+        <name>CSP_L2_Back_to_Edit</name>
+    </customLabels>
+    <customLabels>
+        <label>العودة إلى تفاصيل الملف الشخصي</label>
+        <name>CSP_L2_Back_to_Profile_Details</name>
+    </customLabels>
+    <customLabels>
+        <label>استكمال الملف الشخصي &amp; اختيار الحساب</label>
+        <name>CSP_L2_Banner_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>بيانات عنوان العمل</label>
+        <name>CSP_L2_Business_Address_Information</name>
+    </customLabels>
+    <customLabels>
+        <label>.يرجى ملء بيانات عنوان عملكم</label>
+        <name>CSP_L2_Business_Address_Information_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>القطاع</label>
+        <name>CSP_L2_Category</name>
+    </customLabels>
+    <customLabels>
+        <label>.قد لا تكون الخدمة التي تطلبون الوصول إليها متاحة للتصنيف الذي حددتموه. لا يزال بإمكانكم إتمام تسجيلكم ، ولكن قد لا تكون الخدمة متوفرة بعد الانتهاء</label>
+        <name>CSP_L2_Change_Categorization_Warning</name>
+    </customLabels>
+    <customLabels>
+        <label>المدينة</label>
+        <name>CSP_L2_City</name>
+    </customLabels>
+    <customLabels>
+        <label>حساب الشركة</label>
+        <name>CSP_L2_Company_Account</name>
+    </customLabels>
+    <customLabels>
+        <label>يرجى التحقق من بيانات شركتك</label>
+        <name>CSP_L2_Company_Account_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>معلومات الشركة</label>
+        <name>CSP_L2_Company_Information</name>
+    </customLabels>
+    <customLabels>
+        <label>.تسجيل حساب شركتك سيسمح لك بالحصول علي خدمات الاتحاد الدولي للنقل الجوي (إياتا) المخصصة.يمكنك بسهولة إنشاء حساب شركتك في خطوتين</label>
+        <name>CSP_L2_Company_Information_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>موقع الشركة</label>
+        <name>CSP_L2_Company_Location</name>
+    </customLabels>
+    <customLabels>
+        <label>اسم الشركة</label>
+        <name>CSP_L2_Company_Name</name>
+    </customLabels>
+    <customLabels>
+        <label>تأكيد</label>
+        <name>CSP_L2_Confirmation</name>
+    </customLabels>
+    <customLabels>
+        <label>.أنت على بعد خطوة واحدة من إنشاء ملفك الشخصي الكامل. يرجى التحقق من المعلومات المقدمة والنقر فوق إرسال إذا كان كل شيء صحيحاً</label>
+        <name>CSP_L2_Confirmation_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>الاتصال بالدعم</label>
+        <name>CSP_L2_Contact_Support</name>
+    </customLabels>
+    <customLabels>
+        <label>البلد</label>
+        <name>CSP_L2_Country</name>
+    </customLabels>
+    <customLabels>
+        <label>.إذا لم تتمكن من العثور على حساب شركتك ، يمكنك بسهولة إنشاء حساب من خطوتين</label>
+        <name>CSP_L2_Create_Account_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>إنشاء حساب جديد</label>
+        <name>CSP_L2_Create_New_Account</name>
+    </customLabels>
+    <customLabels>
+        <label>تاريخ الميلاد</label>
+        <name>CSP_L2_Date_of_Birth</name>
+    </customLabels>
+    <customLabels>
+        <label>.تم حفظ بياناتك بنجاح</label>
+        <name>CSP_L2_Details_Saved</name>
+    </customLabels>
+    <customLabels>
+        <label>.يمكننا الآن أن نقدم لك تجربة أكثر تخصيصاً للبوابة! تصفح موقعنا واكتشف المزيد من المنتجات والخدمات المُعدة خصيصاً لك</label>
+        <name>CSP_L2_Details_Saved_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>.مكنكم الآن المتابعة لتقديم طلب الخدمة الخاص بكم</label>
+        <name>CSP_L2_Details_Saved_Service_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>.يمكنكم الآن المتابعة لتقديم طلبكم</label>
+        <name>CSP_L2_Details_Saved_Topic_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>لم تجد ما تبحث عنه؟</label>
+        <name>CSP_L2_Did_Not_Find</name>
+    </customLabels>
+    <customLabels>
+        <label>.يمكنك بسهولة إنشاء حساب شركة في خطوتين لإكمال ملفك الشخصي</label>
+        <name>CSP_L2_Did_Not_Find_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>انقروا هنا لإكمال ملفكم الشخصي</label>
+        <name>CSP_L2_Edit_Company_Information</name>
+    </customLabels>
+    <customLabels>
+        <label>لقد صممنا بوابة عملاء إياتا بحيث تُكيّف منتجات وخدمات إياتا خصيصًا لكم. لكي نتمكن من القيام بذلك، نود أن نتعرف عليكم وعلى مؤسستكم أفضل قليلاً.</label>
+        <name>CSP_L2_Edit_Company_Information_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>البريد الإلكتروني</label>
+        <name>CSP_L2_Email_Address</name>
+    </customLabels>
+    <customLabels>
+        <label>إيجاد العنوان</label>
+        <name>CSP_L2_Find_Address</name>
+    </customLabels>
+    <customLabels>
+        <label>الرجوع</label>
+        <name>CSP_L2_Go_Back</name>
+    </customLabels>
+    <customLabels>
+        <label>الذهاب إلى الصفحة الرئيسية</label>
+        <name>CSP_L2_Go_To_Homepage</name>
+    </customLabels>
+    <customLabels>
+        <label>العودة إلى الملف الشخصي</label>
+        <name>CSP_L2_Go_To_Profile</name>
+    </customLabels>
+    <customLabels>
+        <label>العودة إلى الخدمة</label>
+        <name>CSP_L2_Go_To_Service</name>
+    </customLabels>
+    <customLabels>
+        <label>العودة إلى الموضوع</label>
+        <name>CSP_L2_Go_To_Topic</name>
+    </customLabels>
+    <customLabels>
+        <label>IATA رمز</label>
+        <name>CSP_L2_IATA_Codes</name>
+    </customLabels>
+    <customLabels>
+        <label>هل هذا عنوان صندوق بريد؟</label>
+        <name>CSP_L2_Is_PO_Box_Address</name>
+    </customLabels>
+    <customLabels>
+        <label>المهام الوظيفية</label>
+        <name>CSP_L2_Job_Function</name>
+    </customLabels>
+    <customLabels>
+        <label>المسمى الوظيفي</label>
+        <name>CSP_L2_Job_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>الاسم القانوني</label>
+        <name>CSP_L2_Legal_Name</name>
+    </customLabels>
+    <customLabels>
+        <label>الخطوة التالية / إختيار الحساب</label>
+        <name>CSP_L2_Next_Account_Selection</name>
+    </customLabels>
+    <customLabels>
+        <label>الخطوة التالية / معلومات العنوان</label>
+        <name>CSP_L2_Next_Address_Information</name>
+    </customLabels>
+    <customLabels>
+        <label>الخطوة التالية / تأكيد</label>
+        <name>CSP_L2_Next_Confirmation</name>
+    </customLabels>
+    <customLabels>
+        <label>لا</label>
+        <name>CSP_L2_No</name>
+    </customLabels>
+    <customLabels>
+        <label>لا توجد نتائج مطابقة</label>
+        <name>CSP_L2_No_Matching_Results</name>
+    </customLabels>
+    <customLabels>
+        <label>أخرى</label>
+        <name>CSP_L2_Other_Sector</name>
+    </customLabels>
+    <customLabels>
+        <label>.يرجى اختيار القطاع ذي الصلة من القائمة المقدمة</label>
+        <name>CSP_L2_Other_Sector_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>رقم صندوق البريد</label>
+        <name>CSP_L2_PO_Box_Number</name>
+    </customLabels>
+    <customLabels>
+        <label>البيانات الشخصية</label>
+        <name>CSP_L2_Personal_Details</name>
+    </customLabels>
+    <customLabels>
+        <label>يرجى التحقق من بياناتك الشخصية</label>
+        <name>CSP_L2_Personal_Details_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>رقم الهاتف</label>
+        <name>CSP_L2_Phone_Number</name>
+    </customLabels>
+    <customLabels>
+        <label>الرمز البريدي</label>
+        <name>CSP_L2_Postal_Code</name>
+    </customLabels>
+    <customLabels>
+        <label>تفاصيل الملف الشخصي</label>
+        <name>CSP_L2_Profile_Details</name>
+    </customLabels>
+    <customLabels>
+        <label>.أضف بياناتك الشخصية للسماح للاتحاد الدولي للنقل الجوي (إياتا) باقتراح محتوى وخدمات مخصصة</label>
+        <name>CSP_L2_Profile_Details_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>.لم يتم تحديث ملفك الشخصي بالكامل حتى الآن</label>
+        <name>CSP_L2_Profile_Incomplete</name>
+    </customLabels>
+    <customLabels>
+        <label>لكننا حفظناه كمسودة حتى تتمكن من المتابعة لاحقًا. هل أنت متأكد من أنك تريد الخروج؟</label>
+        <name>CSP_L2_Profile_Incomplete_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>لسوء الحظ؛ حدث خطأ ما عند إنشاء حسابك. يُرجى الاتصال بفريق الدعم الخاص بنا لمساعدتك أكثر</label>
+        <name>CSP_L2_Registration_Error_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>هناك خطأ ما</label>
+        <name>CSP_L2_Registration_Error_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>إلغاء</label>
+        <name>CSP_L2_Requested_Modal_Cancel</name>
+    </customLabels>
+    <customLabels>
+        <label>إكمال ملفي الشخصي</label>
+        <name>CSP_L2_Requested_Modal_Complete</name>
+    </customLabels>
+    <customLabels>
+        <label>!للمتابعة ، نحتاج إلى مزيد من التفاصيل عنك وعن مؤسستكم. لا تقلق ، لن يستغرق ذلك وقتًا طويلاً</label>
+        <name>CSP_L2_Requested_Modal_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>مرحبًا</label>
+        <name>CSP_L2_Requested_Modal_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_L2_Required --></label>
+        <name>CSP_L2_Required</name>
+    </customLabels>
+    <customLabels>
+        <label>:البحث</label>
+        <name>CSP_L2_Search</name>
+    </customLabels>
+    <customLabels>
+        <label>يرجى ملء واحد على الأقل من الحقلين أدناه.</label>
+        <name>CSP_L2_Search_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>نتائج البحث</label>
+        <name>CSP_L2_Search_Results</name>
+    </customLabels>
+    <customLabels>
+        <label>وجدنا أكثر من 50 حسابًا يطابق معايير البحث التي حددتها.</label>
+        <name>CSP_L2_Search_Results_Above_Limit</name>
+    </customLabels>
+    <customLabels>
+        <label>حدد معايير البحث</label>
+        <name>CSP_L2_Search_Results_Above_Limit_Link</name>
+    </customLabels>
+    <customLabels>
+        <label>--empty--</label>
+        <name>CSP_L2_Search_Results_Above_Limit_Link_1</name>
+    </customLabels>
+    <customLabels>
+        <label>لرؤية عدد أقل من الخيارات.</label>
+        <name>CSP_L2_Search_Results_Above_Limit_Link_2</name>
+    </customLabels>
+    <customLabels>
+        <label>القطاع</label>
+        <name>CSP_L2_Sector</name>
+    </customLabels>
+    <customLabels>
+        <label>إختيار</label>
+        <name>CSP_L2_Select</name>
+    </customLabels>
+    <customLabels>
+        <label>.يرجى اختيار العنوان الصحيح. إذا لم تتمكنوا من العثور على العنوان الصحيح من القائمة، فسنحفظ العنوان الذي أدخلتموه. يرجى النقر على الخطوة التالية للمتابعة</label>
+        <name>CSP_L2_Select_Address_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>.قم بإختيار الحساب المطابق لك من القائمة</label>
+        <name>CSP_L2_Select_Company_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>الولاية</label>
+        <name>CSP_L2_State</name>
+    </customLabels>
+    <customLabels>
+        <label>الشارع</label>
+        <name>CSP_L2_Street</name>
+    </customLabels>
+    <customLabels>
+        <label>إرسال</label>
+        <name>CSP_L2_Submit</name>
+    </customLabels>
+    <customLabels>
+        <label>العنوان</label>
+        <name>CSP_L2_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>الاسم التجاري</label>
+        <name>CSP_L2_Trade_Name</name>
+    </customLabels>
+    <customLabels>
+        <label> الموقع الإلكتروني</label>
+        <name>CSP_L2_Website</name>
+    </customLabels>
+    <customLabels>
+        <label>نعم</label>
+        <name>CSP_L2_Yes</name>
+    </customLabels>
+    <customLabels>
         <label>آخر تحديث</label>
         <name>CSP_LastUpdate</name>
     </customLabels>
     <customLabels>
         <label>تسجيل الخروج</label>
         <name>CSP_LogOut</name>
+    </customLabels>
+    <customLabels>
+        <label>تسجيل الدخول الآن</label>
+        <name>CSP_Login_Now</name>
+    </customLabels>
+    <customLabels>
+        <label>.قبل بضعة أيام، قمتم بالتسجيل لتصبحوا جزءً من بوابة عملاء الاتحاد الدولي للنقل الجوي، شكرًا لكم ونرحب بكم</label>
+        <name>CSP_Lvl2_Reminder_1</name>
+    </customLabels>
+    <customLabels>
+        <label>.لقد صممنا بوابة عملاء إياتا بحيث تُكيّف منتجات وخدمات إياتا خصيصًا لكم. لكي نتمكن من القيام بذلك، نود أن نتعرف عليكم وعلى مؤسستكم أفضل قليلاً</label>
+        <name>CSP_Lvl2_Reminder_2</name>
+    </customLabels>
+    <customLabels>
+        <label>&lt;strong&gt;&lt;a href=[URL]&gt;انقروا هنا لإكمال ملفكم الشخصي&lt;/a&gt;&lt;/strong&gt; جعلنا الأمر سهلاً وسريعاً، فقط</label>
+        <name>CSP_Lvl2_Reminder_3</name>
+    </customLabels>
+    <customLabels>
+        <label>:سوف تحصلون على</label>
+        <name>CSP_Lvl2_Reminder_4</name>
+    </customLabels>
+    <customLabels>
+        <label>الدخول المباشر للخدمات المخصصة -</label>
+        <name>CSP_Lvl2_Reminder_5</name>
+    </customLabels>
+    <customLabels>
+        <label>الوصول الكامل إلى معلومات و معايير إياتا المنسقة -</label>
+        <name>CSP_Lvl2_Reminder_6</name>
+    </customLabels>
+    <customLabels>
+        <label>دعم متخصص من إياتا لخدمة المهنيين -</label>
+        <name>CSP_Lvl2_Reminder_7</name>
+    </customLabels>
+    <customLabels>
+        <label>!وأكثر -</label>
+        <name>CSP_Lvl2_Reminder_8</name>
+    </customLabels>
+    <customLabels>
+        <label>&lt;strong&gt;&lt;a href=[URL]&gt;انقروا هنا لإكمال ملفكم الشخصي&lt;/a&gt;&lt;/strong&gt;</label>
+        <name>CSP_Lvl2_Reminder_9</name>
+    </customLabels>
+    <customLabels>
+        <label>!احصل على أقصى استفادة من بوابة عملاء إياتا - أكمل ملفك الشخصي</label>
+        <name>CSP_Lvl2_Reminder_Subject</name>
     </customLabels>
     <customLabels>
         <label>يمكنكم إدارة المستخدمين من القائمة أدناه.</label>
@@ -2117,8 +2725,16 @@
         <name>CSP_NewServiceUserMessage</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP New Account To Address --></label>
+        <name>CSP_New_Account_To_Address</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP New Email Domain --></label>
         <name>CSP_New_Email_Domain</name>
+    </customLabels>
+    <customLabels>
+        <label>التالي</label>
+        <name>CSP_Next</name>
     </customLabels>
     <customLabels>
         <label>لا يوجد حساب مرتبط لعرضه.</label>
@@ -2149,6 +2765,26 @@
         <name>CSP_OperationalCalendar_SeeMonthlyLink</name>
     </customLabels>
     <customLabels>
+        <label>كلمة المرور</label>
+        <name>CSP_Password</name>
+    </customLabels>
+    <customLabels>
+        <label>10 أحرف كحد أدنى</label>
+        <name>CSP_Password_Rule_1</name>
+    </customLabels>
+    <customLabels>
+        <label>حرف واحد كبير على الأقل</label>
+        <name>CSP_Password_Rule_2</name>
+    </customLabels>
+    <customLabels>
+        <label>رقم واحد على الأقل</label>
+        <name>CSP_Password_Rule_3</name>
+    </customLabels>
+    <customLabels>
+        <label>(&amp; ^ + _ () * %$ # @ !) رمز واحد على الأقل</label>
+        <name>CSP_Password_Rule_4</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_Payment --></label>
         <name>CSP_Payment</name>
     </customLabels>
@@ -2161,6 +2797,10 @@
         <name>CSP_Period</name>
     </customLabels>
     <customLabels>
+        <label>معلومات شخصية</label>
+        <name>CSP_Personal_Information</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_PortalPath --></label>
         <name>CSP_PortalPath</name>
     </customLabels>
@@ -2169,8 +2809,16 @@
         <name>CSP_Portal_Administrators</name>
     </customLabels>
     <customLabels>
+        <label>!تسجيل الدخول للبوابة معطل حالياً. شكرًا على تفهمكم</label>
+        <name>CSP_Portal_Login_Disabled_Message</name>
+    </customLabels>
+    <customLabels>
         <label>حالة البوابة</label>
         <name>CSP_Portal_Status</name>
+    </customLabels>
+    <customLabels>
+        <label>.الخاصة بالاتحاد الدولي للنقل الجوي &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-portal/Pages/terms.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;شروط الاستخدام&lt;/a&gt;و &lt;a target=&quot;_blank&quot; href=&quot;https://www.iata.org/Pages/privacy.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;سياسة الخصوصية&lt;/a&gt; أوافق على</label>
+        <name>CSP_Privacy_Policy</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_Profile_PrivacyManagement_Link --></label>
@@ -2229,6 +2877,26 @@
         <name>CSP_Record_Deleted</name>
     </customLabels>
     <customLabels>
+        <label>اكتمل التسجيل بنجاح</label>
+        <name>CSP_Registration_Complete</name>
+    </customLabels>
+    <customLabels>
+        <label>.قوموا بإكمال عملية التسجيل الأساسية للانضمام إلى بوابة عملاء الاتحاد الدولي للنقل الجوي</label>
+        <name>CSP_Registration_Description</name>
+    </customLabels>
+    <customLabels>
+        <label>!تم تعطيل تسجيل البوابة حاليًا. شكرًا لكم على تفهمكم</label>
+        <name>CSP_Registration_Disabled_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>أنتم تحاولون التسجيل من خلال اسم مستخدم موجود بالفعل، يرجى تغيير البريد الإلكتروني أو النقر فوق زر تسجيل الدخول للانتقال إلى صفحة تسجيل الدخول</label>
+        <name>CSP_Registration_Existing_User_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>.&quot;الرجاء التحقق من مجلد البريد العشوائي الخاص بك أولاً. إذا لم تتمكن من العثور على أي شيء في مجلد البريد العشوائي، فالرجاء محاولة التسجيل مرة أخرى بالنقر فوق زر &quot;حاول مرة أخرى</label>
+        <name>CSP_Registration_Retry_Message</name>
+    </customLabels>
+    <customLabels>
         <label>مقالات ذات صلة</label>
         <name>CSP_RelatedArticles</name>
     </customLabels>
@@ -2249,8 +2917,48 @@
         <name>CSP_Request_Service</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Resend Verification Email --></label>
+        <name>CSP_Resend_Verification_Email</name>
+    </customLabels>
+    <customLabels>
+        <label>إعادة تعيين كلمة المرور</label>
+        <name>CSP_Reset_Password</name>
+    </customLabels>
+    <customLabels>
+        <label>أعد ضبط كلمة المرور الخاصة بك في بوابة عملاء إياتا</label>
+        <name>CSP_Reset_Password_Email_Subject</name>
+    </customLabels>
+    <customLabels>
+        <label>.الرجاء إدخال كلمة مروركم الجديدة</label>
+        <name>CSP_Reset_Password_Info_1</name>
+    </customLabels>
+    <customLabels>
+        <label>:يجب أن تحتوي كلمة المرور على</label>
+        <name>CSP_Reset_Password_Info_2</name>
+    </customLabels>
+    <customLabels>
+        <label>.تم تغيير كلمة مروركم بنجاح</label>
+        <name>CSP_Reset_Password_Success_Msg_1</name>
+    </customLabels>
+    <customLabels>
+        <label>.يمكنكم تسجيل الدخول باستخدام كلمة المرور الجديدة</label>
+        <name>CSP_Reset_Password_Success_Msg_2</name>
+    </customLabels>
+    <customLabels>
+        <label>&lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;.الرجاء النقر هنا للاتصال بنا&lt;/a&gt; .تم تحديد مصدر عنوان (آيبي) لجهاز الكمبيوتر الخاص بكم على أنه في إحدى الدول المدرجة على قائمة الحظر من قبل السلطات الأمريكية. يتوافق النظام الأساسي الذي يدعم بوابة عملائنا مع لوائح الولايات المتحدة، وبالتالي، لا يمكننا حاليًا توفير الوصول إلى بوابة العملاء من عنوان (آيبي) الحالي الخاص بكم</label>
+        <name>CSP_Restricted_Login_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>تسجيل الدخول مُقيّد</label>
+        <name>CSP_Restricted_Login_Title</name>
+    </customLabels>
+    <customLabels>
         <label>حفظ</label>
         <name>CSP_Save</name>
+    </customLabels>
+    <customLabels>
+        <label>الحفظ وتسجيل الدخول</label>
+        <name>CSP_Save_Login</name>
     </customLabels>
     <customLabels>
         <label>البحث باستخدام تفاصيل الوثيقة</label>
@@ -2425,6 +3133,10 @@
         <name>CSP_Settings</name>
     </customLabels>
     <customLabels>
+        <label>تخطى هذا في الوقت الراهن</label>
+        <name>CSP_Skip</name>
+    </customLabels>
+    <customLabels>
         <label>الحالة</label>
         <name>CSP_Status</name>
     </customLabels>
@@ -2433,7 +3145,7 @@
         <name>CSP_Submit</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Success --></label>
+        <label>تم بنجاح</label>
         <name>CSP_Success</name>
     </customLabels>
     <customLabels>
@@ -2469,44 +3181,72 @@
         <name>CSP_Travel_Agent_Accreditation_Changes_Request</name>
     </customLabels>
     <customLabels>
+        <label>استكشاف الأخطاء وإصلاحها</label>
+        <name>CSP_Troubleshooting</name>
+    </customLabels>
+    <customLabels>
+        <label>لمزيد من المساعدة تحققوا من</label>
+        <name>CSP_Troubleshooting_Info</name>
+    </customLabels>
+    <customLabels>
+        <label>حاول مجدداً</label>
+        <name>CSP_Try_Again</name>
+    </customLabels>
+    <customLabels>
         <label>نوع القضية</label>
         <name>CSP_TypeOfCase</name>
+    </customLabels>
+    <customLabels>
+        <label>!حدث خطأ غير متوقع</label>
+        <name>CSP_Unexcepted_Error</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_User --></label>
         <name>CSP_User</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Welcome_Panel_Bullet_1_Desc --></label>
+        <label>مرحبًا بكم في بوابة عملاء إياتا</label>
+        <name>CSP_Welcome_Email_Subject</name>
+    </customLabels>
+    <customLabels>
+        <label>.يمكنكم الوصول مباشرة إلى أكثر من 60 خدمة يقدمها الاتحاد الدولي للنقل الجوي، تم اختيارها خصيصاً من أجلكم</label>
         <name>CSP_Welcome_Panel_Bullet_1_Desc</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Welcome_Panel_Bullet_1_Title --></label>
+        <label>الوصول إلى خدمات الاتحاد الدولي للنقل الجوي</label>
         <name>CSP_Welcome_Panel_Bullet_1_Title</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Welcome_Panel_Bullet_2_Desc --></label>
+        <label>أديروا ملف تعريف الاتحاد الدولي للنقل الجوي الخاص بكم وأجروا عليه أي تحديثات بسهولة.</label>
         <name>CSP_Welcome_Panel_Bullet_2_Desc</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Welcome_Panel_Bullet_2_Title --></label>
+        <label>ابقوا على اطلاع بآخر المستجدات</label>
         <name>CSP_Welcome_Panel_Bullet_2_Title</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Welcome_Panel_Bullet_3_Desc --></label>
+        <label>.اكتشفوا مجموعة مختارة من المنشورات والدورات التدريبية وغيرها من منتجات وخدمات الاتحاد الدولي للنقل الجوي</label>
         <name>CSP_Welcome_Panel_Bullet_3_Desc</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Welcome_Panel_Bullet_3_Title --></label>
+        <label>اعثروا على عروض خاصة</label>
         <name>CSP_Welcome_Panel_Bullet_3_Title</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Welcome_Panel_Bullet_4_Desc --></label>
+        <label>.اذهبوا لمجموعتنا الواسعة من الأسئلة والأجوبة، واحصلوا على الدعم المباشر من الاتحاد الدولي للنقل الجوي</label>
         <name>CSP_Welcome_Panel_Bullet_4_Desc</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Welcome_Panel_Bullet_4_Title --></label>
+        <label>احصلوا على إجابات عن أسئلتكم</label>
         <name>CSP_Welcome_Panel_Bullet_4_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>.احصلوا على ميزة الوصول إلى جميع خدمات الاتحاد الدولي للنقل الجوي (إياتا) الخاصة بكم وإدارتها. طالعوا معلومات المنتجات المختلفة واحصلوا على الدعم حول أي موضوع. نحن هنا من أجلكم</label>
+        <name>CSP_Welcome_Panel_Info</name>
+    </customLabels>
+    <customLabels>
+        <label>.مرحبًا بكم في بوابة خدمة عملاء الاتحاد الدولي للنقل الجوي</label>
+        <name>CSP_Welcome_Title</name>
     </customLabels>
     <customLabels>
         <label>أنت و إياتا</label>
@@ -2701,7 +3441,7 @@
         <name>ConfirmSendRecycleBin</name>
     </customLabels>
     <customLabels>
-        <label><!-- Confirm password --></label>
+        <label>تأكيد كلمة المرور</label>
         <name>Confirm_password</name>
     </customLabels>
     <customLabels>
@@ -3225,7 +3965,7 @@
         <name>CurrencyCenter_def_TTBS</name>
     </customLabels>
     <customLabels>
-        <label><!-- Current password --></label>
+        <label>كلمة المرور الحالية</label>
         <name>Current_password</name>
     </customLabels>
     <customLabels>
@@ -13415,7 +14155,7 @@ and
         <name>ISSP_ContactName</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Contact About IATA Courses --></label>
+        <label>هل تتصل بنا بخصوص دورات IATA ؟</label>
         <name>ISSP_Contact_About_IATA_Courses</name>
     </customLabels>
     <customLabels>
@@ -16815,7 +17555,7 @@ and
         <name>ISSP_See_more</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Select --></label>
+        <label>- اختيار -</label>
         <name>ISSP_Select</name>
     </customLabels>
     <customLabels>
@@ -18291,7 +19031,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>Location</name>
     </customLabels>
     <customLabels>
-        <label><!-- Login --></label>
+        <label>تسجيل الدخول</label>
         <name>Login</name>
     </customLabels>
     <customLabels>
@@ -18411,7 +19151,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>NewGenApp_ServiceRequested</name>
     </customLabels>
     <customLabels>
-        <label><!-- New password --></label>
+        <label>كلمة المرور الجديدة</label>
         <name>New_password</name>
     </customLabels>
     <customLabels>
@@ -18503,7 +19243,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>OneId_Account_Association</name>
     </customLabels>
     <customLabels>
-        <label><!-- OneId_Account Creation --></label>
+        <label>إنشاء حساب</label>
         <name>OneId_Account_Creation</name>
     </customLabels>
     <customLabels>
@@ -18567,7 +19307,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>OneId_CreateNew</name>
     </customLabels>
     <customLabels>
-        <label><!-- OneId_CreateNewAccount --></label>
+        <label>إنشاء حساب جديد</label>
         <name>OneId_CreateNewAccount</name>
     </customLabels>
     <customLabels>
@@ -18975,7 +19715,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>OneId_Login</name>
     </customLabels>
     <customLabels>
-        <label><!-- OneId_LoginFail --></label>
+        <label>.فشلت محاولتكم لتسجيل الدخول. تأكدوا من صحة عنوان البريد الإلكتروني وكلمة المرور</label>
         <name>OneId_LoginFail</name>
     </customLabels>
     <customLabels>
@@ -19047,7 +19787,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>OneId_Online_Help_Link</name>
     </customLabels>
     <customLabels>
-        <label><!-- OneId_Password --></label>
+        <label>كلمة السر</label>
         <name>OneId_Password</name>
     </customLabels>
     <customLabels>
@@ -19874,7 +20614,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>PKB2_search_to_long</name>
     </customLabels>
     <customLabels>
-        <label><!-- PKB2: Contact Us Send Email --></label>
+        <label>إعادة إرسال بريد التحقق</label>
         <name>PKB2_send_mail</name>
     </customLabels>
     <customLabels>
@@ -20962,6 +21702,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>csp_My_Profile_Job_Title</name>
     </customLabels>
     <customLabels>
+        <label><!-- csp_Next_Step_Account_Selection --></label>
+        <name>csp_Next_Step_Account_Selection</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Request New Service --></label>
         <name>csp_NoPortalServiceNameFound</name>
     </customLabels>
@@ -21664,6 +22408,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
     <customTabs>
         <label><!-- Projects Calendar --></label>
         <name>UAT_Calendar</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- Unregistered users --></label>
+        <name>Unregistered_users</name>
     </customTabs>
     <customTabs>
         <label><!-- Voucher Management --></label>

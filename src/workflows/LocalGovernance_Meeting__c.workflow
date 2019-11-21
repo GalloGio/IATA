@@ -5,6 +5,9 @@
         <description>ALWG/LCAG-C - send notification to meeting owner that Legal has signed off agenda</description>
         <protected>false</protected>
         <recipients>
+            <type>owner</type>
+        </recipients>
+        <recipients>
             <recipient>reckmannr@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -19,6 +22,9 @@
         <fullName>ALWG_LCAG_C_send_notification_to_meeting_owner_that_Legal_has_signed_off_minutes</fullName>
         <description>ALWG/LCAG-C - send notification to meeting owner that Legal has signed off minutes</description>
         <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
         <recipients>
             <recipient>reckmannr@iata.org</recipient>
             <type>user</type>
@@ -39,6 +45,9 @@
             <type>group</type>
         </recipients>
         <recipients>
+            <type>owner</type>
+        </recipients>
+        <recipients>
             <recipient>reckmannr@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -56,6 +65,9 @@
         <recipients>
             <recipient>LG_meeting_alerts</recipient>
             <type>group</type>
+        </recipients>
+        <recipients>
+            <type>owner</type>
         </recipients>
         <recipients>
             <recipient>reckmannr@iata.org</recipient>
@@ -111,6 +123,9 @@
         <description>ALWG - send notification to meeting owner that Legal has rejected the agenda</description>
         <protected>false</protected>
         <recipients>
+            <type>owner</type>
+        </recipients>
+        <recipients>
             <recipient>reckmannr@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -126,6 +141,9 @@
         <description>ALWG - send notification to meeting owner that Legal has rejected the minutes</description>
         <protected>false</protected>
         <recipients>
+            <type>owner</type>
+        </recipients>
+        <recipients>
             <recipient>reckmannr@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -140,6 +158,9 @@
         <fullName>APJC_send_notification_to_meeting_owner_that_Legal_has_rejected_the_agenda</fullName>
         <description>APJC - send notification to meeting owner that Legal has rejected the agenda</description>
         <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
         <recipients>
             <recipient>alvarengam@iata.org</recipient>
             <type>user</type>
@@ -160,6 +181,9 @@
         <description>APJC - send notification to meeting owner that Legal has rejected the minutes</description>
         <protected>false</protected>
         <recipients>
+            <type>owner</type>
+        </recipients>
+        <recipients>
             <recipient>alvarengam@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -178,6 +202,9 @@
         <fullName>APJC_send_notification_to_meeting_owner_that_Legal_has_signed_off_APJC_agenda</fullName>
         <description>APJC - send notification to meeting owner that Legal has signed off APJC agenda</description>
         <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
         <recipients>
             <field>Meeting_Responsible__c</field>
             <type>userLookup</type>
@@ -205,11 +232,10 @@
             <type>group</type>
         </recipients>
         <recipients>
-            <recipient>alvarengam@iata.org</recipient>
-            <type>user</type>
+            <type>owner</type>
         </recipients>
         <recipients>
-            <recipient>tan-torrj@iata.org</recipient>
+            <recipient>alvarengam@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -232,11 +258,10 @@
             <type>group</type>
         </recipients>
         <recipients>
-            <recipient>alvarengam@iata.org</recipient>
-            <type>user</type>
+            <type>owner</type>
         </recipients>
         <recipients>
-            <recipient>tan-torrj@iata.org</recipient>
+            <recipient>alvarengam@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
