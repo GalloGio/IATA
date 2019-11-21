@@ -239,6 +239,38 @@ public class AMS_OSCARTriggerHandler {
         /*** AMSU-193 ***/
         prepopulateRFrequencyStgArea((List<AMS_OSCAR__c>) Trigger.new, (Map<Id, AMS_OSCAR__c>) Trigger.oldMap);
         handleAgentsAutomaticallyOptOutFromFA();
+        //WMO-728
+        resetDossierReceptionDate((List<AMS_OSCAR__c>)Trigger.New, (Map<Id, AMS_OSCAR__c>) Trigger.oldMap);
+    }
+
+    private static void resetDossierReceptionDate(List<AMS_OSCAR__c> oscarLst, Map<Id, AMS_OSCAR__c> oldMap){
+        //Get AMS OSCAR reset dossier reception Custom Setting Values
+        Map<String, AMS_OSCAR_reset_dossier_reception__c> resetDossierReceptionDate_CSList = AMS_OSCAR_reset_dossier_reception__c.getall();
+        List<AMS_Oscar__c> oscarListToUpdate = new List<AMS_Oscar__c>();
+        Set<Id> oscarListToReset = new Set<Id>();
+        Map<String, String> oscarRelatedCases = new Map<String,String>();
+
+        for(AMS_OSCAR__c oscar : oscarLst){
+            if(resetDossierReceptionDate_CSList.containsKey(oldMap.get(oscar.Id).Status__c)){
+                oscarListToReset.add(oscar.Id);
+                oscarRelatedCases.put(oscar.Id, oscar.Oscar_Communication_Case_Id__c);
+            }
+        }
+
+        Map<Id,Case> cases = new Map<Id,Case>([SELECT Id, isClosed FROM Case WHERE Id in :oscarRelatedCases.values()]);
+
+        if(!oscarListToReset.isEmpty()){
+            for(AMS_OSCAR__c oscar : [SELECT Id, Dossier_Reception_Date__c, Oscar_Communication_Case_Id__c FROM AMS_Oscar__c WHERE Id in :oscarListToReset]){
+                Boolean oscarRelatedCaseStatus = cases.get(oscar.Oscar_Communication_Case_Id__c).isClosed;
+                if(!oscarRelatedCaseStatus){
+                    oscar.Dossier_Reception_Date__c = Date.today();
+                    oscarListToUpdate.add(oscar);
+                }
+            }
+        }
+
+        if(!oscarListToUpdate.isEmpty()) update oscarListToUpdate;
+        
     }
 	
     private static void handleAgentsAutomaticallyOptOutFromFA(){
@@ -2182,7 +2214,7 @@ public class AMS_OSCARTriggerHandler {
         if(typeOfChange.contains('VMFR')) 
             return 'VMFR Setup/Update';
         if(typeOfChange.contains('Minor shareholding')) 
-            return 'CHG – Data Maintenance';
+            return 'MCH – Minor Change of Shareholding';
         if(typeOfChange.contains('Hierarchy')) 
             return 'Change of Hierarchy';
         if(typeOfChange.contains('Accreditation type'))
