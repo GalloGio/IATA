@@ -5,7 +5,7 @@ public class PortalRecommendationCtrlTest {
         Id airlineRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
 
         User thisUser = [SELECT Id FROM User WHERE Id = :UserInfo.getUserId()];
-        System.runAs(thisUser) {
+        
             Account acc = ISSP_ObjectFactory.createNewAccount();
             acc.Name = 'Account Test Recommendation Visibility';
             acc.Sector__c = 'Airline';
@@ -21,7 +21,7 @@ public class PortalRecommendationCtrlTest {
             insert con;
 
             User usr = ISSP_ObjectFactory.createPortalUser(con);
-
+            System.runAs(usr) {
             Product2 prd = new Product2(
             name ='PRd1'
             );
@@ -53,7 +53,7 @@ public class PortalRecommendationCtrlTest {
         Test.startTest();
         System.runAs(testUser) {
             List<PortalRecommendationCtrl.RecommendationWrapper> recommendations = PortalRecommendationCtrl.getRecommendations('');
-            System.assertEquals(0, recommendations.size());
+            System.assertEquals(1, recommendations.size());
             PortalRecommendationCtrl.getBaseURL();
         }
         Test.stopTest();

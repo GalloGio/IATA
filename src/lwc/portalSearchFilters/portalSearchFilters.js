@@ -8,6 +8,7 @@ import getAllPickListValues from '@salesforce/apex/PortalFAQsCtrl.getFAQsInfo';
 import typeOfProfilePortalCustomPicklist from '@salesforce/apex/PortalProfileCtrl.typeOfProfilePortalCustomPicklist';
 import userPortalStatusCustomPicklist from '@salesforce/apex/PortalProfileCtrl.userPortalStatusCustomPicklist';
 import getCountryList from '@salesforce/apex/PortalSupportReachUsCtrl.getCountryList';
+import isAdmin from '@salesforce/apex/CSP_Utils.isAdmin';
 
 //import custom labels
 import CSP_Cases from '@salesforce/label/c.CSP_Cases';
@@ -80,13 +81,20 @@ export default class PortalSearchFilters extends LightningElement {
     @track profileContactStatusOptions = [];
     @track typeIsContact = false;
 
-    
+    //is this a portal Admin?
+    @track isPortalAdmin = false;
 
     connectedCallback(){
         // get the picklists in here 
         
         //SERVICES
         //no picks for services
+
+        //check if is a portal admin
+        isAdmin()
+        .then(result => {
+            this.isPortalAdmin = result;
+        });
 
         //CASES
         isAirlineAdmin({})
@@ -659,7 +667,7 @@ export default class PortalSearchFilters extends LightningElement {
     handleProfileTypePickChange(event){
         let selectedValue = event.detail.value;
 
-        if (this.isAdmin) {
+        if (this.isPortalAdmin) {
             this.typeIsContact = event.detail.value === 'Contact';
         }
 
