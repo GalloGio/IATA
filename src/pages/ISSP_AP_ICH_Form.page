@@ -16,7 +16,7 @@
         twistSection($(".showListButton")[0]);
     });
     function setInvalidClass(jobj) {
-       if(jobj.text()=="") {
+       if(jobj.text()=="" || jobj.text()=='{!$Label.ISSP_SELECT_COUNTRY}') {
            jobj.addClass("invalid");
        } else {
            jobj.removeClass("invalid");
