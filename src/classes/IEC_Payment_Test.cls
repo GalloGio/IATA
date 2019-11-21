@@ -112,10 +112,8 @@ private class IEC_Payment_Test {
 		IEC_ConfirmOrderController controller;
 
 		setup();
-
-		createOrder();
-
 		Test.startTest();
+		createOrder();
 
 		System.runAs(user) {
 			Test.setCurrentPage(Page.IEC_ConfirmOrder);
@@ -300,10 +298,8 @@ private class IEC_Payment_Test {
 		IEC_ConfirmOrderController controller;
 
 		setup();
-
-		createOrder();
-
 		Test.startTest();
+		createOrder();
 
 		System.runAs(user) {
 			Test.setCurrentPage(Page.IEC_ConfirmOrder);

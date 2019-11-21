@@ -12,7 +12,7 @@ public class IEC_PublicationsSubscriptionsCtrl_Test {
 
 		IEC_PublicationsSubscriptionsController pubSub = new IEC_PublicationsSubscriptionsController();
 		pubSub.pageLoad();
-
+		Test.startTest();
 		System.runAs(usr){
 			//Create location for the customer
 			Location_Svc.initializeDefaultLocations(new List<Id>{usr.ContactId});
@@ -49,7 +49,7 @@ public class IEC_PublicationsSubscriptionsCtrl_Test {
 			IEC_EventSubscription_Sel eveSubSel = new IEC_EventSubscription_Sel();
 			eveSubSel.getEventSubscriptionById(new set<Id>{eveSubscription.Id});
 		}
-		
-
+		Test.stopTest();
+	
 	}
 }

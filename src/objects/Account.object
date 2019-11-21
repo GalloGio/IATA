@@ -6124,6 +6124,18 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
             </valueSetDefinition>
         </valueSet>
     </fields>
+	<fields>
+        <fullName>Business_City_Name__c</fullName>
+        <description>Business City Name</description>
+        <externalId>false</externalId>
+        <label>Business City Name</label>
+        <length>40</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
     <fields>
         <fullName>Business_City_Name__c</fullName>
         <description>Business City Name</description>
@@ -100411,7 +100423,7 @@ OR(
 ISCHANGED(Account_Type__c),
 ISCHANGED(Website)
 ),
-NOT(CONTAINS($Profile.Name, &quot;System Administrator - automated processes&quot;)),
+NOT(CONTAINS($Profile.Name, &quot;System Administrator&quot;)),
 NOT(CONTAINS($Profile.Name, &quot;Account management team&quot;)),
 NOT(CONTAINS($Profile.Name, &quot;MER Membership&quot;))
 )</errorConditionFormula>
