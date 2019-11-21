@@ -3501,29 +3501,6 @@ Payment required on receipt of this Payment Advice
         <value>Complete this field.</value>
     </labels>
     <labels>
-        <fullName>CSP_CreatedOn</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP_CreatedOn</shortDescription>
-        <value>Created on</value>
-    </labels>
-    <labels>
-        <fullName>CSP_DateFrom</fullName>
-        <categories>CS Portal</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP_DateFrom</shortDescription>
-        <value>Creation Date (from)</value>
-    </labels>
-    <labels>
-        <fullName>CSP_DateTo</fullName>
-        <categories>CS Portal</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP_DateTo</shortDescription>
-        <value>Creation Date (to)</value>
-    </labels>
-    <labels>
         <fullName>CSP_Create_New_Account_Info</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -3554,6 +3531,29 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP Create Password Error</shortDescription>
         <value>Your new password could not be set. Please try again.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_CreatedOn</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_CreatedOn</shortDescription>
+        <value>Created on</value>
+    </labels>
+    <labels>
+        <fullName>CSP_DateFrom</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_DateFrom</shortDescription>
+        <value>Creation Date (from)</value>
+    </labels>
+    <labels>
+        <fullName>CSP_DateTo</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_DateTo</shortDescription>
+        <value>Creation Date (to)</value>
     </labels>
     <labels>
         <fullName>CSP_Dear</fullName>
@@ -3611,35 +3611,6 @@ Payment required on receipt of this Payment Advice
         <value>Publication Countries</value>
     </labels>
     <labels>
-        <fullName>CSP_Email_Domain_Error_Message</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP Email Domain Error Message</shortDescription>
-        <value>* Add Domains without &quot;@&quot;.</value>
-    </labels>
-    <labels>
-        <fullName>CSP_Error_Creating_Record</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP Error Creating Record</shortDescription>
-        <value>Error Creating Record</value>
-    </labels>
-    <labels>
-        <fullName>CSP_Error_Message_Mandatory_Fields_Contact</fullName>
-        <categories>CS Portal</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP_Error_Message_Mandatory_Fields_Contact</shortDescription>
-        <value>Please fill all the mandatory fields</value>
-    </labels>
-    <labels>
-        <fullName>CSP_Error_while_delete_record</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP Error while delete record</shortDescription>
-        <value>Error While Deleting Record</value>
-    </labels>
-    <labels>
         <fullName>CSP_Email</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -3670,6 +3641,13 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP Email Confirmation Body Part 3</shortDescription>
         <value>For security reasons, this link is valid for 8 hours. After the time limit has expired, you will have to resubmit your request.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Email_Domain_Error_Message</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Email Domain Error Message</shortDescription>
+        <value>* Add Domains without &quot;@&quot;.</value>
     </labels>
     <labels>
         <fullName>CSP_Email_Footer_Image</fullName>
@@ -3782,6 +3760,28 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP Email Welcome Part 5</shortDescription>
         <value>We hope you enjoy our IATA Customer Portal!</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Error_Creating_Record</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Error Creating Record</shortDescription>
+        <value>Error Creating Record</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Error_Message_Mandatory_Fields_Contact</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Error_Message_Mandatory_Fields_Contact</shortDescription>
+        <value>Please fill all the mandatory fields</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Error_while_delete_record</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Error while delete record</shortDescription>
+        <value>Error While Deleting Record</value>
     </labels>
     <labels>
         <fullName>CSP_Existing_User_Message</fullName>
@@ -4043,14 +4043,6 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP_IMPORTANT</shortDescription>
         <value>IMPORTANT</value>
-    </labels>
-    <labels>
-        <fullName>CSP_LastUpdate</fullName>
-        <categories>CS Portal</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP_LastUpdate</shortDescription>
-        <value>Last Update</value>
     </labels>
     <labels>
         <fullName>CSP_Invalid_Email</fullName>
@@ -4800,6 +4792,14 @@ You can easily create a company account in two steps</value>
         <value>Yes</value>
     </labels>
     <labels>
+        <fullName>CSP_LastUpdate</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LastUpdate</shortDescription>
+        <value>Last Update</value>
+    </labels>
+    <labels>
         <fullName>CSP_LogOut</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -4974,19 +4974,19 @@ You can easily create a company account in two steps</value>
         <value>test@iata.org</value>
     </labels>
     <labels>
+        <fullName>CSP_New_Email_Domain</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP New Email Domain</shortDescription>
+        <value>New email domain</value>
+    </labels>
+    <labels>
         <fullName>CSP_Next</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP Next</shortDescription>
         <value>Next</value>
-    </labels>
-    <labels>
-        <fullName>CSP_New_Email_Domain</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP New Email Domain</shortDescription>
-        <value>New email domain</value>
     </labels>
     <labels>
         <fullName>CSP_NoAccount</fullName>
@@ -5045,13 +5045,6 @@ You can easily create a company account in two steps</value>
         <value>See Monthly</value>
     </labels>
     <labels>
-        <fullName>CSP_Payment</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP_Payment</shortDescription>
-        <value>Payment</value>
-    </labels>
-    <labels>
         <fullName>CSP_Password</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -5090,6 +5083,13 @@ You can easily create a company account in two steps</value>
         <protected>false</protected>
         <shortDescription>CSP Password Rule 4</shortDescription>
         <value>At least 1 symbol (! @ # $ % * ( ) _ + ^ &amp;)</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Payment</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Payment</shortDescription>
+        <value>Payment</value>
     </labels>
     <labels>
         <fullName>CSP_PendingCustomerCase_Warning</fullName>
@@ -5896,19 +5896,19 @@ Click &lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.as
         <value>Type of case</value>
     </labels>
     <labels>
+        <fullName>CSP_Unexcepted_Error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Unexcepted_Error</shortDescription>
+        <value>An unexpected error occured!</value>
+    </labels>
+    <labels>
         <fullName>CSP_User</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_User</shortDescription>
         <value>User</value>
-    </labels>
-    <labels>
-        <fullName>CSP_Unexcepted_Error</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP_Unexcepted_Error</shortDescription>
-        <value>An unexpected error occured!</value>
     </labels>
     <labels>
         <fullName>CSP_Welcome_Email_Subject</fullName>
