@@ -31,7 +31,7 @@ public class PortalFAQsCtrlTest {
             
             //retrieve master article Id created on FAQ__kav record insertion
             //in order to get the KnowledgeArticleId
-            kavObj = [SELECT Title, PublishStatus, KnowledgeArticleId FROM FAQ__kav WHERE Id = :kavObj.Id];
+            kavObj = [SELECT KnowledgeArticleId FROM FAQ__kav WHERE Id = :kavObj.Id];
             //publish it
             KbManagement.PublishingService.publishArticle(kavObj.KnowledgeArticleId, true);
 
@@ -74,7 +74,6 @@ public class PortalFAQsCtrlTest {
 
     @isTest static void testGetArticles() {
         User testUser = [SELECT Id FROM User WHERE Email LIKE '%testemail1@csp.testclass' LIMIT 1];
-        FAQ__kav kavObj = [SELECT Id, KnowledgeArticleId, Title, ArticleNumber, PublishStatus FROM FAQ__kav WHERE Title = 'Sample Article Portal Test' LIMIT 1];
 
         Test.startTest();
         System.runAs(testUser) {
@@ -97,6 +96,49 @@ public class PortalFAQsCtrlTest {
             List<PKB_Article_Feedback_Deflection__c> articleFeedback = PortalFAQsCtrl.getArticlesFeedback('(\''+kavObj.Id+'\')', sessionCookie);
             System.assertNotEquals(0, articleFeedback.size());
         }
+        Test.stopTest();
+    }
+
+    @isTest static void testUpdateArticleCategoriesAndApproval() {
+        FAQ__kav kavObj = [SELECT Id, Categories__c, PublishStatus, ValidationStatus FROM FAQ__kav WHERE Title = 'Sample Article Portal Test' LIMIT 1];
+        
+        Test.startTest();
+            ApexMessageHandling articleToUpdate;
+            articleToUpdate = PortalFAQsCtrl.updateArticleCategories(new List<Id>{ kavObj.Id });
+            System.assertEquals(false, articleToUpdate.isSuccess);
+
+            FAQ__kav articleToSubmit = new FAQ__kav();
+            articleToSubmit.Title = 'Sample Article Portal Test Draft';
+            articleToSubmit.UrlName = 'Sample-Article-Portal-Test-Draft';
+            articleToSubmit.Summary = 'Summary';
+            articleToSubmit.ValidationStatus = 'Not Validated';
+            insert articleToSubmit;
+            
+            DescribeDataCategoryGroupResult[] results = Schema.describeDataCategoryGroups(new String[] {'KnowledgeArticleVersion'});
+
+            FAQ__DataCategorySelection tempCat = new FAQ__DataCategorySelection();
+            tempCat.DataCategoryGroupName = results[0].getName();
+            tempCat.DataCategoryName = 'RHC';
+            tempCat.ParentId = articleToSubmit.Id;
+
+            FAQ__DataCategorySelection tempCat2 = new FAQ__DataCategorySelection();
+            tempCat2.DataCategoryGroupName = results[0].getName();
+            tempCat2.DataCategoryName = 'CargoIS';
+            tempCat2.ParentId = articleToSubmit.Id;
+            insert new List<FAQ__DataCategorySelection>{ tempCat, tempCat2 };
+
+            articleToUpdate = PortalFAQsCtrl.updateArticleCategories(new List<Id>{ articleToSubmit.Id });
+            System.assertEquals(true, articleToUpdate.isSuccess);
+
+            FAQ__kav kavObjUpdated = [SELECT Categories__c, PublishStatus, ValidationStatus FROM FAQ__kav WHERE Id = :articleToSubmit.Id LIMIT 1];
+            System.assertNotEquals(null, kavObjUpdated.Categories__c);
+
+            try {
+                PortalFAQsCtrl.submitArticleForApproval(null, articleToSubmit.Id, UserInfo.getUserId(), 'This is a comment.');
+            } catch(Exception e) {
+                System.assert(e.getMessage().contains('No applicable approval process was found'), e.getMessage());
+                PortalFAQsCtrl.submitArticleForApproval('KnowledgeFAQArticles', articleToSubmit.Id, UserInfo.getUserId(), 'This is a comment.');
+            }
         Test.stopTest();
     }
 }
