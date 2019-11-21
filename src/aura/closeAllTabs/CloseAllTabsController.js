@@ -1,7 +1,7 @@
 ({
     doInit : function(component, event, helper) {
         var columns = [
-            {label: $A.get("{!$Label.c.Tab_Name"), fieldName: 'tabName', type: 'text'},
+            {label: $A.get("{!$Label.c.Tab_Name"), fieldName: 'tabName', type: 'text', cellAttributes: { alignment: "center"}},
             {label: $A.get("{!$Label.c.ISSP_AMC_CLOSE}"), type: 'button-icon', typeAttributes: { iconName: 'utility:close', variant: 'bare', name: 'delete_tab', title: $A.get("{!$Label.c.Tab_Close}")}, cellAttributes: { alignment: "center"}},
         ];
         component.set('v.columns', columns)
