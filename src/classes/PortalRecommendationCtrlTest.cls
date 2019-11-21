@@ -5,7 +5,7 @@ public class PortalRecommendationCtrlTest {
         Id airlineRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
 
         User thisUser = [SELECT Id FROM User WHERE Id = :UserInfo.getUserId()];
-        System.runAs(thisUser) {
+        
             Account acc = ISSP_ObjectFactory.createNewAccount();
             acc.Name = 'Account Test Recommendation Visibility';
             acc.Sector__c = 'Airline';
@@ -21,7 +21,7 @@ public class PortalRecommendationCtrlTest {
             insert con;
 
             User usr = ISSP_ObjectFactory.createPortalUser(con);
-
+            System.runAs(usr) {
             Product2 prd = new Product2(
             name ='PRd1'
             );
