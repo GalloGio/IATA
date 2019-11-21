@@ -2000,7 +2000,7 @@ public class AMS_OSCARTriggerHandler {
 
 				if(tocList.contains(AMS_Utils.LOCATION) || tocList.contains(AMS_Utils.LOCATION_INSPECTION)){
 					/*if(!oscarAccount.Location_Type__c.equalsIgnoreCase(AMS_Utils.SA)){
-						oscar.AMS_Target_Agency__c.addError('A change of location for an agency which is not an â€œSAâ€? cannot specify a target agency');
+						oscar.AMS_Target_Agency__c.addError('A change of location for an agency which is not an "SA" cannot specify a target agency');
 						validationsPassed=false;
 					}
 					else */if((tocList.contains(AMS_Utils.OWNERSHIP_IATA) || tocList.contains(AMS_Utils.OWNERSHIP_NON_IATA)) && oscarAccount.Location_Type__c.equalsIgnoreCase(AMS_Utils.SA)){
@@ -2009,7 +2009,7 @@ public class AMS_OSCARTriggerHandler {
 					}
 
 				}
-				//Target agency -> A validation must ensure that only accounts with location type â€œHOâ€? or â€œBRâ€? should be selected.
+				//Target agency -> A validation must ensure that only accounts with location type "HO" or "BR" should be selected.
 				Account target = accounts.get(oscar.AMS_Target_Agency__c);
 				if(target != null)
 					if(target.Location_Type__c != AMS_Utils.BR && target.Location_Type__c != AMS_Utils.HO && target.Location_Type__c != AMS_Utils.AO){
