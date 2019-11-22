@@ -77,7 +77,8 @@ public without sharing class PowerBiCtrl {
         List<String> datasets;
     }
 
-    private static PowerBI_Config__c getPowerBICredentials(String configurationName) {
+    @AuraEnabled
+    public static PowerBI_Config__c getPowerBICredentials(String configurationName) {
         PowerBI_Cred__c powerBiCred = PowerBI_Cred__c.getInstance(configurationName);
         if(powerBiCred != null) {
             String credName = UserInfo.getOrganizationId().substring(0,15) == '00D2000000008TF'  ? powerBiCred.Prod_Configuration__c : powerBiCred.Dev_Configuration__c;
@@ -133,12 +134,11 @@ public without sharing class PowerBiCtrl {
 
 
     @AuraEnabled
-    public static OAuthResult getAccessToken(String applicationName) {
+    public static OAuthResult getAccessToken(PowerBI_Config__c conf) {
 
         Cache.OrgPartition orgPartition = null;
         OAuthResult result = new OAuthResult();
 
-        PowerBI_Config__c conf = getPowerBICredentials(applicationName);
         if(conf == null) {
             return null;
         }
@@ -217,21 +217,21 @@ public without sharing class PowerBiCtrl {
             return null;
         }
 
-        Http h = new Http();
+        HttpRequest req = new HttpRequest();
+        req.setEndpoint('callout:'+conf.Named_Credentials__c + '/' + conf.Tenant_Id__c+'/oauth2/token');
+
         String sBody=
                 'grant_type=password'
                         + '&client_id=' + EncodingUtil.urlEncode(conf.ClientId__c, 'UTF-8')
                         + '&resource=' + EncodingUtil.urlEncode(conf.Resource__c, 'UTF-8')
-                        + '&username='+conf.Username__c
-                        + '&password='+conf.Password__c;
+                        + '&username={!$Credential.Username}'
+                        + '&password={!$Credential.Password}';
 
-        HttpRequest req = new HttpRequest();
-
-        req.setEndpoint('https://login.microsoftonline.com/'+conf.Tenant_Id__c+'/oauth2/token');
         req.setMethod('POST');
         req.setHeader('Content-Type', 'application/x-www-form-urlencoded');
         req.setBody(sBody);
 
+        Http h = new Http();
         HttpResponse res = h.send(req);
         OAuthResult result = (OAuthResult)(JSON.deserialize(res.getBody(), OAuthResult.class));
 
@@ -264,22 +264,21 @@ public without sharing class PowerBiCtrl {
             refreshToken = (String)orgPartition.get(POWERBI_REFRESH_TOKEN + conf.Application_Identifier__c);
         }
 
-        Http h = new Http();
+        HttpRequest req = new HttpRequest();
+        req.setEndpoint('callout:'+conf.Named_Credentials__c + '/' + conf.Tenant_Id__c+'/oauth2/token');
         String sBody=
                 'grant_type=refresh_token'
                         + '&refresh_token=' + EncodingUtil.urlEncode(refreshToken, 'UTF-8')
                         + '&client_id=' + EncodingUtil.urlEncode(conf.ClientId__c, 'UTF-8')
                         + '&resource=' + EncodingUtil.urlEncode(conf.Resource__c, 'UTF-8')
-                        + '&username='+conf.Username__c
-                        + '&password='+conf.Password__c;
+                        + '&username={!$Credential.Username}'
+                        + '&password={!$Credential.Password}';
 
-        HttpRequest req = new HttpRequest();
-
-        req.setEndpoint('https://login.microsoftonline.com/'+conf.Tenant_Id__c+'/oauth2/token');
         req.setMethod('POST');
         req.setHeader('Content-Type', 'application/x-www-form-urlencoded');
         req.setBody(sBody);
 
+        Http h = new Http();
         HttpResponse res = h.send(req);
         OAuthResult result = (OAuthResult)(JSON.deserialize(res.getBody(), OAuthResult.class));
         if(orgPartition != null) {
@@ -295,11 +294,11 @@ public without sharing class PowerBiCtrl {
 
 
     @AuraEnabled
-    public static DatasetDetailResult getDataset(String accessToken, String datasetId) {
+    public static DatasetDetailResult getDataset(String accessToken, String datasetId, PowerBI_Config__c conf) {
         Http h = new Http();
         HttpRequest req = new HttpRequest();
 
-        req.setEndpoint('https://api.powerbi.com/v1.0/myorg/datasets/' +datasetId);
+        req.setEndpoint(conf.Details_Resource__c + '/v1.0/myorg/datasets/' +datasetId);
         req.setMethod('GET');
         req.setHeader('Authorization', 'Bearer ' + accessToken);
 
@@ -312,12 +311,12 @@ public without sharing class PowerBiCtrl {
 
 
     @AuraEnabled
-    public static ReportDetailResult getReportsDetails(String accessToken, String reportId) {
+    public static ReportDetailResult getReportsDetails(String accessToken, String reportId, PowerBI_Config__c conf) {
 
         Http h = new Http();
         HttpRequest req = new HttpRequest();
 
-        req.setEndpoint('https://api.powerbi.com/v1.0/myorg/reports/' +reportId);
+        req.setEndpoint(conf.Details_Resource__c + '/v1.0/myorg/reports/' +reportId);
         req.setMethod('GET');
         req.setHeader('Authorization', 'Bearer ' + accessToken);
 
@@ -329,7 +328,7 @@ public without sharing class PowerBiCtrl {
     }
 
     @AuraEnabled
-    public static EmbedTokenResult getEmbedToken(String accessToken, String userId, String groupId, String reportId, String datasetId) {
+    public static EmbedTokenResult getEmbedToken(String accessToken, String userId, String groupId, String reportId, String datasetId, PowerBI_Config__c conf) {
 
         IdentityData identityData = new IdentityData();
         identityData.username = userId;
@@ -345,7 +344,7 @@ public without sharing class PowerBiCtrl {
         Http h = new Http();
         HttpRequest req = new HttpRequest();
 
-        req.setEndpoint('https://api.powerbi.com/v1.0/myorg/groups/' + groupId + '/reports/' + reportId + '/GenerateToken');
+        req.setEndpoint(conf.Details_Resource__c + '/v1.0/myorg/groups/' + groupId + '/reports/' + reportId + '/GenerateToken');
         req.setMethod('POST');
         req.setHeader('Authorization', 'Bearer ' + accessToken);
         req.setHeader('Content-Type', 'application/json');

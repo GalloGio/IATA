@@ -19,6 +19,8 @@ public class PowerBiCtrlTest {
         configDev.Resource__c = 'https://analysis.windows.net/powerbi/api';
         configDev.Password__c = 'some-password';
         configDev.Application_Identifier__c = 'TDdev';
+        configDev.Details_Resource__c = 'https://api.powerbi.com/v1.0/myorg';
+        configDev.Report_Resource__c = 'https://app.powerbi.com';
         configsToInsert.add(configDev);
 
         PowerBI_Config__c configProd = new PowerBI_Config__c();
@@ -29,6 +31,8 @@ public class PowerBiCtrlTest {
         configProd.Resource__c = 'https://analysis.windows.net/powerbi/api';
         configProd.Password__c = 'some-password-prod';
         configProd.Application_Identifier__c = 'TDprod';
+        configProd.Details_Resource__c = 'https://api.powerbi.com/v1.0/myorg';
+        configProd.Report_Resource__c = 'https://app.powerbi.com';
         configsToInsert.add(configProd);
 
         insert configsToInsert;
@@ -120,7 +124,22 @@ public class PowerBiCtrlTest {
     }
 
 
+    @IsTest
+    private static void getPowerBICredentialsTest() {
 
+        User testUser = [SELECT Id FROM User WHERE Email = 'petr.novak.test@somedomain.com'];
+
+        PowerBI_Config__c config = null;
+
+        Test.startTest();
+            System.runAs(testUser) {
+                config = PowerBiCtrl.getPowerBICredentials('TreasuryDashboard');
+            }
+        Test.stopTest();
+
+        System.assertEquals(false, config == null, 'PowerBI config should not be null!');
+
+    }
 
 
     @IsTest
@@ -136,7 +155,8 @@ public class PowerBiCtrlTest {
         System.runAs(testUser) {
 
             Test.setMock(HttpCalloutMock.class, new PowerBICalloutMockProvider());
-            result = PowerBiCtrl.getAccessToken('TreasuryDashboard');
+            PowerBI_Config__c config = PowerBiCtrl.getPowerBICredentials('TreasuryDashboard');
+            result = PowerBiCtrl.getAccessToken(config);
 
         }
 
@@ -179,7 +199,8 @@ public class PowerBiCtrlTest {
         System.runAs(testUser) {
 
             Test.setMock(HttpCalloutMock.class, new PowerBICalloutMockProvider());
-            result = PowerBiCtrl.getAccessToken('TreasuryDashboard');
+            PowerBI_Config__c config = PowerBiCtrl.getPowerBICredentials('TreasuryDashboard');
+            result = PowerBiCtrl.getAccessToken(config);
 
         }
 
@@ -224,7 +245,8 @@ public class PowerBiCtrlTest {
         System.runAs(testUser) {
 
             Test.setMock(HttpCalloutMock.class, new PowerBICalloutMockProvider());
-            result = PowerBiCtrl.getAccessToken('TreasuryDashboard');
+            PowerBI_Config__c config = PowerBiCtrl.getPowerBICredentials('TreasuryDashboard');
+            result = PowerBiCtrl.getAccessToken(config);
 
         }
 
@@ -251,7 +273,8 @@ public class PowerBiCtrlTest {
 
             try{
                 Test.setMock(HttpCalloutMock.class, new PowerBICalloutMockProvider.PowerBItokenErrorMock());
-                PowerBiCtrl.getAccessToken('TreasuryDashboard');
+                PowerBI_Config__c config = PowerBiCtrl.getPowerBICredentials('TreasuryDashboard');
+                PowerBiCtrl.getAccessToken(config);
 
             }catch(Exception e) {
                 errorMessage = e.getMessage();
@@ -305,8 +328,8 @@ public class PowerBiCtrlTest {
         System.runAs(testUser) {
 
             Test.setMock(HttpCalloutMock.class, new PowerBICalloutMockProvider());
-
-            result = PowerBiCtrl.getDataset('access_token', 'datasetId');
+            PowerBI_Config__c config = PowerBiCtrl.getPowerBICredentials('TreasuryDashboard');
+            result = PowerBiCtrl.getDataset('access_token', 'datasetId', config);
         }
 
         Test.stopTest();
@@ -331,8 +354,8 @@ public class PowerBiCtrlTest {
         System.runAs(testUser) {
 
             Test.setMock(HttpCalloutMock.class, new PowerBICalloutMockProvider());
-
-            result = PowerBiCtrl.getReportsDetails('access_token', 'reportId');
+            PowerBI_Config__c config = PowerBiCtrl.getPowerBICredentials('TreasuryDashboard');
+            result = PowerBiCtrl.getReportsDetails('access_token', 'reportId',config);
         }
 
         Test.stopTest();
@@ -357,8 +380,8 @@ public class PowerBiCtrlTest {
         System.runAs(testUser) {
 
             Test.setMock(HttpCalloutMock.class, new PowerBICalloutMockProvider());
-
-            result = PowerBiCtrl.getEmbedToken('access_token', 'federationId', 'groupId', 'reportId', 'datasetId');
+            PowerBI_Config__c config = PowerBiCtrl.getPowerBICredentials('TreasuryDashboard');
+            result = PowerBiCtrl.getEmbedToken('access_token', 'federationId', 'groupId', 'reportId', 'datasetId',config);
         }
 
         Test.stopTest();

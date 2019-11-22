@@ -6,6 +6,7 @@ import getDatasetDetail from '@salesforce/apex/PowerBiCtrl.getDataset';
 import getEmbedToken from '@salesforce/apex/PowerBiCtrl.getEmbedToken';
 import getReportConfigDetails from '@salesforce/apex/PowerBiCtrl.getReportConfigDetails';
 import newPremiumAccessRequest from '@salesforce/apex/TreasuryDashboardCtrl.premiumAccessRequest';
+import getPowerBICredentials from '@salesforce/apex/PowerBiCtrl.getPowerBICredentials';
 
 //labels
 import ISSP_Access_Requested from '@salesforce/label/c.ISSP_Access_Requested';
@@ -79,7 +80,7 @@ export default class PortalTreasuryDashboardIframe extends LightningElement {
     }
 
 
-    isCloned = false;
+    powerBiConfig;
     groupId;
     reportId;
     accessToken;
@@ -104,116 +105,147 @@ export default class PortalTreasuryDashboardIframe extends LightningElement {
         this.showCollapse = this.isPremiumDashboard;
         this.showEnlarge = !this.isPremiumDashboard || (this.isPremiumDashboard && this.isPremiumUser);
 
-        getReportConfigDetails({reportName: this.reportName})
+        getPowerBICredentials({configurationName: this.applicationName})
             .then(result => {
 
-                this.reportId = result.reportId;
-                this.groupId = result.groupId;
+                this.powerBiConfig = result;
 
-                if(this.reportId != undefined && this.groupId != undefined) {
+                if(this.powerBiConfig) {
 
-                    getAccessToken({ applicationName: this.applicationName})
+                    getReportConfigDetails({reportName: this.reportName})
                         .then(result => {
 
-                            this.accessToken = result.access_token;
+                            this.reportId = result.reportId;
+                            this.groupId = result.groupId;
 
-                            if(this.accessToken) {
+                            if(this.reportId != undefined && this.groupId != undefined) {
 
-                                getReportDetails({ accessToken: this.accessToken, reportId: this.reportId})
+                                getAccessToken({ conf: this.powerBiConfig})
                                     .then(result => {
 
-                                        this.datasetId = result.datasetId;
+                                        this.accessToken = result.access_token;
 
-                                        if(this.datasetId) {
+                                        if(this.accessToken) {
 
-                                            getDatasetDetail({accessToken: this.accessToken, datasetId: this.datasetId})
+                                            getReportDetails({ accessToken: this.accessToken, reportId: this.reportId, conf: this.powerBiConfig})
                                                 .then(result => {
 
-                                                    this.identityNeeded = result.isEffectiveIdentityRequired;
+                                                    this.datasetId = result.datasetId;
 
-                                                    if(this.identityNeeded) {
+                                                    if(this.datasetId) {
 
-                                                        let tokenType = 'Aad';
+                                                        getDatasetDetail({accessToken: this.accessToken, datasetId: this.datasetId, conf: this.powerBiConfig})
+                                                            .then(result => {
 
-                                                        //identity not needed
-                                                        if(this.identityNeeded == 'false') {
-                                                            this.createSrcAddress(this.reportId, this.groupId, this.accessToken, this.reportId, tokenType);
-                                                        }
+                                                                this.identityNeeded = result.isEffectiveIdentityRequired;
 
+                                                                if(this.identityNeeded) {
 
-                                                        //identity needed
-                                                        if(this.identityNeeded == 'true') {
-                                                            tokenType = 'Embed';
+                                                                    let tokenType = 'Aad';
 
-                                                            getEmbedToken({ accessToken: this.accessToken, userId: this.userId, groupId: this.groupId, reportId: this.reportId, datasetId: this.datasetId})
-                                                                .then(result => {
-
-                                                                    this.embedToken =  result.token;
-
-                                                                    if(this.embedToken) {
-
-                                                                        this.createSrcAddress(this.reportId, this.groupId, this.embedToken, this.reportId, tokenType);
-
-                                                                    }else{
-                                                                        this.loading = false;
+                                                                    //identity not needed
+                                                                    if(this.identityNeeded == 'false') {
+                                                                        this.createSrcAddress(this.reportId, this.groupId, this.accessToken, this.reportId, tokenType, this.powerBiConfig);
                                                                     }
 
-                                                                })
-                                                                //getEmbedToken error
-                                                                .catch(error =>{
-                                                                    this.loading = false;
-                                                                });
 
-                                                        }
-                                                    //identityNeeded is undefined
+                                                                    //identity needed
+                                                                    if(this.identityNeeded == 'true') {
+                                                                        tokenType = 'Embed';
+
+                                                                        getEmbedToken({ accessToken: this.accessToken, userId: this.userId, groupId: this.groupId, reportId: this.reportId, datasetId: this.datasetId, conf: this.powerBiConfig})
+                                                                            .then(result => {
+
+                                                                                this.embedToken =  result.token;
+
+                                                                                if(this.embedToken) {
+
+                                                                                    this.createSrcAddress(this.reportId, this.groupId, this.embedToken, this.reportId, tokenType, this.powerBiConfig);
+
+                                                                                }else{
+                                                                                    this.loading = false;
+                                                                                    this.logMessage('Embed token is empty!');
+                                                                                }
+
+                                                                            })
+                                                                            //getEmbedToken error
+                                                                            .catch(error =>{
+                                                                                this.loading = false;
+                                                                                this.logError(error);
+                                                                            });
+
+                                                                    }
+                                                                //identityNeeded is undefined
+                                                                }else{
+                                                                    this.loading = false;
+                                                                    this.logMessage('IdenityNeeded is empty!');
+                                                                }
+
+                                                            })
+                                                            //getDatasetDetail error
+                                                            .catch(error => {
+                                                                this.loading = false;
+                                                                this.logError(error);
+                                                            });
+                                                    //datasetId is undefined
                                                     }else{
                                                         this.loading = false;
-
+                                                        this.logMessage('DatasetId is empty!');
                                                     }
-
+                                                //getReportDetails error
                                                 })
-                                                //getDatasetDetail error
                                                 .catch(error => {
                                                     this.loading = false;
-
+                                                    this.logError(error);
                                                 });
-                                        //datasetId is undefined
+
+                                        //access token is undefined
                                         }else{
                                             this.loading = false;
-
+                                            this.logMessage('Access token is empty!');
                                         }
-                                    //getReportDetails error
+                                    //access token error
                                     })
                                     .catch(error => {
                                         this.loading = false;
-
+                                        this.logError(error);
                                     });
-
-                            //access token is undefined
+                            //groupId or reportId is undefined
                             }else{
                                 this.loading = false;
-
+                                this.logMessage('GroupId/ReportId is empty!');
                             }
-                        //access token error
+                        //getReportConfigDetails error
                         })
                         .catch(error => {
                             this.loading = false;
+                            this.logError(error);
+                        })
 
-                        });
-                //groupId or reportId is undefined
+                //powerBiConfig is undefined
                 }else{
                     this.loading = false;
-
+                    this.logMessage('PowerBiConfig is empty!');
                 }
-            //getReportConfigDetails error
+            //getPowerBICredentials error
             })
             .catch(error => {
                 this.loading = false;
+                this.logError(error);
+            });
 
-            })
+
 
     }
 
+
+    logError(error) {
+        console.log('Iframe error: ', JSON.parse(JSON.stringify(error)).body.message);
+    }
+
+    logMessage(message) {
+        console.log('Iframe error: ', message);
+    }
 
 
     //get scrollbar width
@@ -231,9 +263,9 @@ export default class PortalTreasuryDashboardIframe extends LightningElement {
     }
 
 
-    createSrcAddress(reportId, groupId, accessToken, objectId, tokenType) {
-        let address= '/TreasuryDashboardPowerBiPage?embedUrl='+encodeURIComponent('https://app.powerbi.com/reportEmbed?reportId=' + reportId
-                                        + '&groupId=' + groupId)+'+&accessToken='+accessToken+'&objectId='+objectId+'&tokenType='+tokenType;
+    createSrcAddress(reportId, groupId, accessToken, objectId, tokenType, conf) {
+        let address= '/TreasuryDashboardPowerBiPage?embedUrl='+encodeURIComponent(conf.Report_Resource__c + '?reportId=' + reportId
+                                        + '&groupId=' + groupId) +'+&accessToken='+accessToken+'&objectId='+objectId+'&tokenType='+tokenType;
         this.powerBiSource = address;
         this.loading = false;
     }
