@@ -60,6 +60,8 @@ export default class PortalCaseDetailsDetails extends LightningElement {
     set isexpired(value) {
         this.trackedIsExpired = value;
 	}
+	
+	@track caseobres;
 
     @track labels = {
         AddDocumentsMsg,
@@ -281,6 +283,10 @@ export default class PortalCaseDetailsDetails extends LightningElement {
     updateNdocs(event) {
         //sets nr of docs in panel
         this.nrDocs = event.detail.ndocs;
+        if(this.nrDocs == 0 && this.trackedIsExpired){   
+            this.template.querySelector('[data-docicon]').setAttribute('class', 'hideDocsIcon');
+        } 
+
     }
 
     toggleCaseDetailsSection() {
@@ -289,9 +295,17 @@ export default class PortalCaseDetailsDetails extends LightningElement {
     }
 
     toggleDocumentsDetailsSection() {
-        this.toggleCollapsed('[data-docdiv]', 'collapsed');
-        this.toggleCollapsed('[data-docicon]', 'arrowExpanded');
-        this.showAddDocsModal = false;
+        if(!this.trackedIsExpired){
+            this.toggleCollapsed('[data-docdiv]', 'collapsed');
+            this.toggleCollapsed('[data-docicon]', 'arrowExpanded');
+            this.showAddDocsModal = false;
+        } else{
+            if(this.nrDocs != 0) {
+                this.toggleCollapsed('[data-docdiv]', 'collapsed');
+                this.toggleCollapsed('[data-docicon]', 'arrowExpanded');
+                this.showAddDocsModal = false;
+            }
+        }
     }
 
     toggleDescriptionSection() {
