@@ -1,8 +1,4 @@
 /**
- * Created by LBERB on 22/10/2019.
- */
-
-/**
  * Handle Contact (Contact, Account Contact Role, Address Role Business Context) synchronization logic to SAP/DMS
  */
 public with sharing class ContactSyncUtils extends SObjectSyncUtils {
@@ -89,7 +85,6 @@ public with sharing class ContactSyncUtils extends SObjectSyncUtils {
 				}
 			}
 			when else {
-				// TODO throw exception with Custom Label
 				throw new ContactSyncException(String.format('This process does not support the SObject {0}', new List<String>{sObjects.get(0).getSObjectType().getDescribe().getName()}));
 			}
 		}

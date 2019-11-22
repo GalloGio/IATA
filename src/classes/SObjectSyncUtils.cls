@@ -1,7 +1,3 @@
-/**
- * Created by LBERB on 22/10/2019.
- */
-
 public virtual with sharing class SObjectSyncUtils {
 
 	public class SObjectSyncException extends Exception {}
@@ -66,7 +62,6 @@ public virtual with sharing class SObjectSyncUtils {
 		if(fieldsToCheckOnUpdate.containsKey(sObjectName)){
 			return fieldsToCheckOnUpdate.get(sObjectName);
 		} else {
-			// TODO throw exception with Custom Label
 			throw new SObjectSyncException(String.format('This process does not support the SObject {0}', new List<String>{sobj.getSObjectType().getDescribe().getName()}));
 		}
 	}

@@ -1,7 +1,3 @@
-/**
- * Created by LBERB on 17/10/2019.
- */
-
 trigger AccountRelationshipTrigger on Account_Relationship__c (after delete, after insert, after undelete, after update, before delete, before insert, before update) {
 	AccountRelationshipTriggerHandler handler = new AccountRelationshipTriggerHandler();
 

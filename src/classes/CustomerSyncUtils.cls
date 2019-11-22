@@ -1,8 +1,4 @@
 /**
- * Created by LBERB on 17/10/2019.
- */
-
-/**
  * Handle Customer (Account, Account Relationship, Address, Address Role, Address Role Business Context) synchronization logic to SAP/DMS
  */
 public with sharing class CustomerSyncUtils extends SObjectSyncUtils {
@@ -184,7 +180,6 @@ public with sharing class CustomerSyncUtils extends SObjectSyncUtils {
 				query += 'Address_Role__r.Address__r.Account__c IN :ids AND Id';
 			}
 			when else {
-				// TODO throw exception with Custom Label
 				throw new CustomerSyncException(String.format('This process does not support the SObject {0}', new List<String>{
 						sObjects.get(0).getSObjectType().getDescribe().getName()
 				}));

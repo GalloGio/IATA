@@ -1,7 +1,3 @@
-/**
- * Created by LBERB on 23/10/2019.
- */
-
 @IsTest
 public with sharing class ContactSyncUtilsTest {
 
