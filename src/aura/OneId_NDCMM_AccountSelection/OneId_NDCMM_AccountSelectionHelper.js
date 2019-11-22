@@ -26,8 +26,7 @@
 		else if(sector == 'Airline Supplier'){
             // Setting a default non-empty value, the categories picklist won't be displayed
             // This value will be used if the user creates a new account
-            var categories = ['Global Distribution System','System Solutions Provider'];
-            c.set("v.categories", categories);
+            c.set("v.category", 'Content Aggregator');
 		}
         else{
             var categories = [];

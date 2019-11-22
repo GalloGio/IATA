@@ -55,7 +55,7 @@
                             </ui:inputSelect>
                         </div>
                     </div>
-                    <!--<aura:if isTrue="{! and(v.sector != '', v.sector != 'Airline Supplier')}">-->
+                    <aura:if isTrue="{! and(v.sector != '', v.sector != 'Airline Supplier')}">
                         <div class="slds-form-element slds-m-bottom_medium slds-size_1-of-1">
                             <label class="slds-form-element__label"><abbr class="slds-required" title="required">*</abbr>Category</label>
                             <div class="slds-form-element__control">
@@ -67,7 +67,7 @@
                                 </ui:inputSelect>
                             </div>
                         </div>
-                    <!--</aura:if>-->
+                    </aura:if>
                     
                     <div class="slds-form-element slds-m-bottom_medium slds-size_1-of-1">
                         <label class="slds-form-element__label"><abbr class="slds-required" title="required">*</abbr>{!$Label.c.ISSP_CompanyLocation}</label>
