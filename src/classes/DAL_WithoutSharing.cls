@@ -52,50 +52,73 @@ public static Map<String, String> getUserOptions(String portalUser){
 	return userOptions;
 }
 
-public static List<Contact> getContactsByAccountId(Id accountId, Integer offset, Integer batchSize){
-	//Fetch all account branches/HQs to return a complete hierarchy of account's contacts.
-	Map<Id,Account> allBranches = new Map<Id,Account>([select id from account where (id =: accountId or parentId=: accountId or top_parent__c =: accountId)
-        and (Status__c NOT IN ('Terminated','Not accredited', 'No longer a customer'))]);
+	/*
+	* Used in portal company profile contacts list
+	* Search for either a specific contact name or nothing.
+	* Currently pagination is beeing done at the component side.
+	*/
+	public static CSP_Utils.PagedResult searchForCompanyContacts(String companybranchFilterWrapper, Integer requestedPage, Integer batchSize, Id accountId){
+        PortalProfileCtrl.CompanyInformationContactsFiltersWrapper filtersWrapper = (PortalProfileCtrl.CompanyInformationContactsFiltersWrapper) JSON.deserialize(companybranchFilterWrapper, PortalProfileCtrl.CompanyInformationContactsFiltersWrapper.class);
 
-	List<Contact> contacts = [select Id, Name, FirstName, LastName, Title, Email, Phone, Fax, OtherPhone,Type_of_Contact__c,
-	                          OtherCity, OtherStreet, OtherState,OtherPostalCode, OtherCountry, Function__c, Membership_Function__c,
-	                          User_Portal_Status__c, MobilePhone, Preferred_Language__c,Salutation,Airline_Contact_Type__c, Services__c,
-	                          Area__c,AccountId, Account.Name,IATA_Code__c,Account.Location_Type__c,Account.IATA_ISO_Country__r.Name,
-                              Account_site__c, Account.RecordTypeId, Account.RecordType.Name, Account.BillingCity 
-	                          from Contact where AccountId IN:allBranches.keySet() and Status__c = 'Active' AND User_Portal_Status__c IN ('Pending Approval', 'Approved Admin', 'Approved User', '') 
-							  ORDER BY SortingOrder__c LIMIT:batchSize OFFSET :offset ];
+		//Fetch all account branches/HQs to return a complete hierarchy of account's contacts.
+		Map<Id,Account> allBranches = new Map<Id,Account>([select id from account where (id =: accountId or parentId=: accountId or top_parent__c =: accountId)
+			and (Status__c NOT IN ('Terminated','Not accredited', 'No longer a customer'))]);
+		Set<Id> allBranchesSet = allBranches.keySet();
 
-	if(!contacts.isEmpty()) {
-		return contacts;
-	}
+        String baseQuery = 'SELECT Id, Name, FirstName, LastName, Title, Email, Phone, Fax, OtherPhone,Type_of_Contact__c, ' +
+								'OtherCity, OtherStreet, OtherState,OtherPostalCode, OtherCountry, Function__c, Membership_Function__c, ' +
+								'User_Portal_Status__c, MobilePhone, Preferred_Language__c,Salutation,Airline_Contact_Type__c, Services__c, ' +
+								'Area__c,AccountId, Account.Name,IATA_Code__c,Account.Location_Type__c,Account.IATA_ISO_Country__r.Name, ' +
+								'Account.RecordTypeId,Account.RecordType.Name ' + 
+								'FROM Contact ';
+        /*String baseQueryCount = 'SELECT COUNT() ' + 
+                                'FROM Contact ';*/
+		String conditionsQuery = 'WHERE AccountId IN :allBranchesSet ' + 
+								 'AND User_Portal_Status__c IN (\'Pending Approval\', \'Approved Admin\', \'Approved User\') ' + 
+								 'AND Status__c = \'Active\' ';
 
-	return new List<Contact>();
-}
+        
 
-public static List<Contact> searchContactsByAccountId(Id accountId, Integer offset, Integer batchSize, String queryString){
-	String wildString = queryString +'%';
+        if(filtersWrapper != null) {
+            // evaluate filter if they exist 
+            if(!String.isBlank(filtersWrapper.searchInput)){
+                String searchText = '%' + String.escapeSingleQuotes(filtersWrapper.searchInput) + '%';
+                conditionsQuery += ' AND (FirstName LIKE \'' + searchText + '\' OR LastName LIKE \'' + searchText + '\' OR Name LIKE \'' + searchText + '\' OR Email LIKE \'' + searchText + '\' OR Name LIKE \'' + searchText + '\' ) ';
+            }
 
-	//Fetch all account branches/HQs to return a complete hierarchy of account's contacts.
-	Map<Id,Account> allBranches = new Map<Id,Account>([select id from account where (id =: accountId or parentId=: accountId or top_parent__c =: accountId)
-        and (Status__c NOT IN ('Terminated','Not accredited', 'No longer a customer'))]);
+			if(!String.isBlank(filtersWrapper.firstLetter)){
+                String searchText = String.escapeSingleQuotes(filtersWrapper.firstLetter) + '%';
+                //conditionsQuery += ' AND (FirstName LIKE \'' + searchText + '\' ) ';
 
-	List<Contact> contacts = [select Id, Name, FirstName, LastName, Title, Email, Phone, Fax, OtherPhone,Type_of_Contact__c,
-	                          OtherCity, OtherStreet, OtherState,OtherPostalCode, OtherCountry, Function__c, Membership_Function__c,
-	                          User_Portal_Status__c, MobilePhone, Preferred_Language__c,Salutation,Airline_Contact_Type__c, Services__c,
-	                          Area__c,AccountId, Account.Name,IATA_Code__c,Account.Location_Type__c,Account.IATA_ISO_Country__r.Name,Account.RecordTypeId,Account.RecordType.Name
-	                          from Contact
-	                          where AccountId IN:allBranches.keySet()
-	                          and (FirstName LIKE :wildString OR LastName LIKE :wildString OR Name LIKE :wildString OR Email LIKE :wildString OR Name = :queryString)
-                              and Status__c = 'Active'
-	                          ORDER BY Name ASC LIMIT:batchSize OFFSET :offset ];
+				if (filtersWrapper.firstLetter != 'All' && filtersWrapper.firstLetter != 'Other'){
+					conditionsQuery += ' AND Name like \'' + String.escapeSingleQuotes(filtersWrapper.firstLetter) + '%\' ';
+				}
+                else if (filtersWrapper.firstLetter == 'Other'){
+					conditionsQuery += ' AND (Name < \'A\' OR Name > \'Z\') AND (NOT Name LIKE \'Z%\') ';
+				}
+            }
+        }
 
-	if(!contacts.isEmpty()) {
-		return contacts;
-	}
+        String orderQuery = ''; 
+        if(requestedPage == 0){ //just for the first time
+            orderQuery = ' ORDER BY ' + filtersWrapper.sortField + ' ' + filtersWrapper.sortDirection + ' ';
+        }
 
-	return new List<Contact>();
-}
-	  @AuraEnabled
+        //pagination 
+        /*Integer offset = requestedPage * batchSize;
+        String offsetQuery = ' LIMIT ' + batchSize + ' OFFSET ' + offset + ' ';*/ 
+
+        CSP_Utils.PagedResult pageResult = new CSP_Utils.PagedResult();
+	    pageResult.records = Database.query(baseQuery + conditionsQuery + orderQuery /*+ offsetQuery*/);
+        /*if(requestedPage == 0){
+            //first page -> get total count
+            pageResult.totalItemCount = Database.countQuery(baseQueryCount + conditionsQuery);
+        }*/
+
+        return pageResult;
+    }
+
+	@AuraEnabled
     public static List<Account> getRelatedAccounts(String finalQuery){
 
 	    return Database.query(finalQuery);
@@ -127,7 +150,7 @@ public static List<Contact> searchContactsByAccountId(Id accountId, Integer offs
 		}
 	
 	}
-	
+
 	/* 
     * @description Return if a specific user has Access to a specific service
     * @return boolean 
@@ -138,4 +161,106 @@ public static List<Contact> searchContactsByAccountId(Id accountId, Integer offs
 		if(conId==null) conId=CSP_Utils.getLoggedUser().contactId; // if conId, checks current user
         return [select id from Portal_Application_Right__c where Contact__c =:conId and Right__c ='Access Granted' and Application_Name__c like :str limit 1].size()>0;
     }
+
+	/*
+	 * @description Returns list of Contacts and Accounts for Profile Search
+	 * @return List of List of SObjects (Accounts and Contacts)
+	 */
+	@AuraEnabled(cacheable=false)
+	public static CSP_Utils.PagedResult getSearchProfiles(String portalSearchFilterWrapper, Contact myContact) {
+		PortalSearchFilterWrapper profileFiltersWrapper = (PortalSearchFilterWrapper) JSON.deserialize(portalSearchFilterWrapper, PortalSearchFilterWrapper.class);
+		CSP_Utils.PagedResult result = new CSP_Utils.PagedResult();
+		List<PortalProfileCtrl.ProfileWrapper> lstProfileWrapper = new List<PortalProfileCtrl.ProfileWrapper>();
+
+		String searchStr = String.escapeSingleQuotes(profileFiltersWrapper.searchText);
+		String wildCardStr = '%'+searchStr+'%';
+
+		String baseQueryContacts = 'SELECT ID, Name, User_Portal_Status__c, ISO_Country__r.Name, Email, Account.BillingCountry, Account.Country_ISO_Code__c FROM Contact ';
+		String baseQueryAccounts = 'SELECT ID, Name, IATA_ISO_Country__r.Name, Country_ISO_Code__c FROM Account ';
+		String countryPortalStatusFilter = '';
+		String countryFilter = '';
+		Boolean isAdmin = CSP_Utils.isAdmin();
+
+		List<AccountTeamMember> test = PortalServicesCtrl.getPortalAdmins();
+
+		Set<Id> myContactsIDs = new Set<Id>();
+
+		for(AccountTeamMember t : test) {
+			myContactsIDs.add(t.User.ContactId);
+		}
+
+		List<SObject> resultsContacts = new List<SObject>();
+		List<SObject> resultsAccounts = new List<SObject>();
+
+		Map<Id,Account> allBranches = new Map<Id,Account>([select id from account where (id =: myContact.AccountId or parentId=: myContact.AccountId or top_parent__c =: myContact.AccountId)
+		                                                   and (Status__c NOT IN ('Terminated','Not accredited', 'No longer a customer'))]);
+		Set<Id> allBranchesSet = allBranches.keySet();
+
+		if(isAdmin) {
+			baseQueryContacts += ' WHERE (((Name Like \''+ wildCardStr + '\' OR Email Like \''+ wildCardStr + '\' OR Account.BillingCountry Like \''+ wildCardStr + '\' ) ' +
+			                     ' AND User_Portal_Status__c IN (\'Pending Approval\', \'Approved Admin\', \'Approved User\') ' +
+			                     ' AND Status__c = \'Active\' AND AccountId IN :allBranchesSet ) OR ' +
+			                     ' ((Name Like \''+ wildCardStr + '\' OR Email Like \''+ wildCardStr + '\' OR Account.BillingCountry Like \''+ wildCardStr + '\' ) ' +
+			                     ' AND ID IN :myContactsIDs '+
+			                     ' AND User_Portal_Status__c = \'Approved Admin\' ' +
+			                     ' AND Status__c = \'Active\' )) ';
+		}else{
+			baseQueryContacts += ' WHERE (Name Like \''+ wildCardStr + '\' OR Email Like \''+ wildCardStr + '\' OR Account.BillingCountry Like \''+ wildCardStr + '\' ) ' +
+			                     ' AND ID IN :myContactsIDs'+
+			                     ' AND User_Portal_Status__c = \'Approved Admin\' ' +
+			                     ' AND Status__c = \'Active\' ';
+		}
+
+		baseQueryAccounts += ' WHERE (Name Like \''+ wildCardStr + '\' OR IATA_ISO_Country__r.Name Like \''+ wildCardStr + '\' ) ' +
+		                     ' AND (Id = \'' + myContact.AccountId + '\' OR ParentId = \'' +
+		                     +myContact.AccountId + '\' OR Top_Parent__c = \'' + myContact.AccountId +'\' ) ';
+
+
+		if(profileFiltersWrapper.profileComponent.profileCountryFilter != null && profileFiltersWrapper.profileComponent.profileCountryFilter != '') {
+			baseQueryContacts += ' AND Account.Country_ISO_Code__c = \'' + profileFiltersWrapper.profileComponent.profileCountryFilter + '\' ';
+			baseQueryAccounts += ' AND Country_ISO_Code__c = \'' + profileFiltersWrapper.profileComponent.profileCountryFilter + '\' ';
+		}
+
+		if(profileFiltersWrapper.profileComponent.profileStatusFilter != null && profileFiltersWrapper.profileComponent.profileStatusFilter != '') {
+			baseQueryContacts += ' AND User_Portal_Status__c = \'' + profileFiltersWrapper.profileComponent.profileStatusFilter + '\' ';
+		}
+
+		if (profileFiltersWrapper.profileComponent != null && profileFiltersWrapper.profileComponent.profileTypeFilter != null && profileFiltersWrapper.profileComponent.profileTypeFilter != 'Account') {
+			resultsContacts = Database.query(baseQueryContacts);
+		}
+
+		if (profileFiltersWrapper.profileComponent != null && profileFiltersWrapper.profileComponent.profileTypeFilter != null && profileFiltersWrapper.profileComponent.profileTypeFilter != 'Contact') {
+			resultsAccounts = Database.query(baseQueryAccounts);
+		}
+
+		List<List<SObject> > lstListResults = new List<List<SObject> > {resultsContacts,resultsAccounts};
+
+		if(!lstListResults.isEmpty()) {
+			result.totalItemCount = lstListResults.size() == 2 ? lstListResults[0].size() + lstListResults[1].size() : lstListResults[0].size();
+
+			for(List<SObject> listfilteredProfiles : lstListResults) {
+				for(SObject eachFilteredProfileResult : listfilteredProfiles) {
+					if(eachFilteredProfileResult.getSObjectType() == Schema.Contact.getSObjectType()) {
+						Contact eachProfileResult = (Contact)eachFilteredProfileResult;
+						if (isAdmin || (!isAdmin && eachProfileResult.User_Portal_Status__c == 'Approved Admin')) {
+							lstProfileWrapper.add(new PortalProfileCtrl.ProfileWrapper(eachProfileResult.Id,
+							                                                           eachProfileResult.Name,
+							                                                           eachProfileResult.User_Portal_Status__c,
+							                                                           eachProfileResult.ISO_Country__r.Name == null ?
+							                                                           (eachProfileResult.Account.BillingCountry == null ? '' :
+							                                                            eachProfileResult.Account.BillingCountry) :
+							                                                           eachProfileResult.ISO_Country__r.Name, 'Contact' ));
+						}
+					}
+					else if(eachFilteredProfileResult.getSObjectType() == Schema.Account.getSObjectType()) {
+						Account eachProfileResult = (Account)eachFilteredProfileResult;
+						lstProfileWrapper.add(new PortalProfileCtrl.ProfileWrapper(eachProfileResult.Id,eachProfileResult.Name,'',eachProfileResult.IATA_ISO_Country__r.Name == null ? '' : eachProfileResult.IATA_ISO_Country__r.Name, 'Account'));
+					}
+				}
+			}
+			result.recordsString = JSON.Serialize(lstProfileWrapper);
+		}
+
+		return result;
+	}
 }

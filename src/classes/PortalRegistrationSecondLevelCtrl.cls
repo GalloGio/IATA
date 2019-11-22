@@ -80,6 +80,8 @@ public without sharing class PortalRegistrationSecondLevelCtrl {
 		}
 
 		try{
+			PortalFAQsSharingCtrl.validateUserFAQsPermissions(UserInfo.getUserId());
+
 			Contact updatedContact = [SELECT Id, Name, Email, AccountId, Account.TradeName__c, Account.Legal_name__c, Account.Billing_Address_formated__c, Account.Phone, Account.Sector__c, Account.Category__c FROM Contact WHERE Id =: con.Id];
 
 			sendEmailNotification(updatedContact);
@@ -104,6 +106,8 @@ public without sharing class PortalRegistrationSecondLevelCtrl {
 			con.AccountId = acc2.Id;
 			con.User_Portal_Status__c = 'Pending Approval';
 			update con;
+
+			PortalFAQsSharingCtrl.validateUserFAQsPermissions(UserInfo.getUserId());
 
 			OneId_RegistrationProcessController.updateUserProfile(con, acc2, false);
 

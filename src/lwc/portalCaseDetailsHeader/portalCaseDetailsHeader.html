@@ -67,41 +67,37 @@
                     </div>
 
                 </div>
-                <div
-                    class="slds-col slds-size_1-of-1 slds-medium-size_7-of-12 slds-large-size_7-of-12 slds-p-around_medium">
-                    <div style="float: right; max-width: 100%;">
-                    <div if:true={manageRecipients}>
-                        <div if:true={haveRecipients}>
-                            <span class="recipients-label">{labels.CSP_Recipients}</span>
-                            <div class="recipients-data">
-                                {caseDetails.E2CP__AdditionalCC__c}
-                            </div>
-                            <lightning-button variant="base" label={labels.CSP_Manage_Recipients}
-                                class="slds-m-horizontal_medium recipients-label text-blue button_no_margin"
-                                onclick={openManageRecipientsPopup}>
-                            </lightning-button>
-                        </div>
-                        <div if:false={haveRecipients}>
-                            <span class="recipients-label">
-                                {labels.CSP_RecipientsQuestion}
-                            </span>
-                            <lightning-button variant="base" label={labels.CSP_Manage_Recipients}
-                                class="slds-m-horizontal_medium recipients-label text-blue button_no_margin"
-                                onclick={openManageRecipientsPopup}>
-                            </lightning-button>
-                        </div>
-                    </div>
-                        
-                        <div if:true={hasSurveyLink}>
-                            <span class="grey recipients-label">{labels.ISSP_Survey}</span>
-                            <span>
-                                <a class=" slds-m-left_large text-blue" href={surveyLink}
-                                    target="_blank">{labels.Open}</a>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_7-of-12 slds-large-size_7-of-12 slds-p-around_medium text-recipients">
+					<div if:true={manageRecipients}>
+							<div if:true={haveRecipients} class="slds-size_1-of-1">
+								<span class="recipients-label">{labels.CSP_Recipients}</span>
+								<div class="recipients-data">
+									{caseDetails.E2CP__AdditionalCC__c}
+								</div>
+								<lightning-button variant="base" label={labels.CSP_Manage_Recipients}
+									class="slds-m-horizontal_medium recipients-label text-blue button_no_margin"
+									onclick={openManageRecipientsPopup}>
+								</lightning-button>
+							</div>
+							<div if:false={haveRecipients}>
+								<span class="recipients-label">
+									{labels.CSP_RecipientsQuestion}
+								</span>
+								<lightning-button variant="base" label={labels.CSP_Manage_Recipients}
+									class="slds-m-horizontal_medium recipients-label text-blue button_no_margin"
+									onclick={openManageRecipientsPopup}>
+								</lightning-button>
+							</div>
+					</div>
+					<div if:true={hasSurveyLink}>
+						<span class="grey recipients-label">{labels.ISSP_Survey}</span>
+						<span>
+							<a class=" slds-m-left_large text-blue" href={surveyLink}
+								target="_blank">{labels.Open}</a>
+						</span>
+					</div>	
+				</div>
+			</div>
         </template>
     </div>
 

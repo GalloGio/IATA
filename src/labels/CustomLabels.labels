@@ -3060,6 +3060,22 @@ Payment required on receipt of this Payment Advice
         <value>CC</value>
     </labels>
     <labels>
+        <fullName>CSP_ALPHAFILTER_All</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_ALPHAFILTER_All</shortDescription>
+        <value>All</value>
+    </labels>
+    <labels>
+        <fullName>CSP_ALPHAFILTER_Other</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_ALPHAFILTER_Other</shortDescription>
+        <value>Other</value>
+    </labels>
+    <labels>
         <fullName>CSP_AMS_StepFinal_In_Addition2</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -3258,6 +3274,13 @@ Payment required on receipt of this Payment Advice
         <value>You &amp; IATA</value>
     </labels>
     <labels>
+        <fullName>CSP_Buy_Online</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Buy Online</shortDescription>
+        <value>Buy Online</value>
+    </labels>
+    <labels>
         <fullName>CSP_Cancel</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -3346,6 +3369,13 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP_Case_Currency</shortDescription>
         <value>Case Currency</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Case_Details</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Case_Details</shortDescription>
+        <value>Case-Detail_</value>
     </labels>
     <labels>
         <fullName>CSP_Cases</fullName>
@@ -3484,6 +3514,22 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP_Confirmed_Requested_Service_Message</shortDescription>
         <value>Your {0} access request has been sent to your company’s portal administrators. &lt;br/&gt;Your portal administrator can be fund under your</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Contacts_NoResults_text1</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Contacts_NoResults_text1</shortDescription>
+        <value>No Results</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Contacts_NoResults_text2</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Contacts_NoResults_text2</shortDescription>
+        <value>Sorry, no results found for</value>
     </labels>
     <labels>
         <fullName>CSP_Continue</fullName>
@@ -4800,6 +4846,13 @@ You can easily create a company account in two steps</value>
         <value>Last Update</value>
     </labels>
     <labels>
+        <fullName>CSP_Learn_More</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Learn More</shortDescription>
+        <value>Learn More</value>
+    </labels>
+    <labels>
         <fullName>CSP_LogOut</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -5092,6 +5145,14 @@ You can easily create a company account in two steps</value>
         <value>Payment</value>
     </labels>
     <labels>
+        <fullName>CSP_PendingApproval</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_PendingApproval</shortDescription>
+        <value>The record is not Draft or is Pending approval</value>
+    </labels>
+    <labels>
         <fullName>CSP_PendingCustomerCase_Warning</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -5143,6 +5204,20 @@ You can easily create a company account in two steps</value>
         <protected>false</protected>
         <shortDescription>CSP_Portal_Status</shortDescription>
         <value>Portal Status</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Print</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Print</shortDescription>
+        <value>Print</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Printed_date</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Printed_date</shortDescription>
+        <value>Printed date</value>
     </labels>
     <labels>
         <fullName>CSP_Privacy_Policy</fullName>
@@ -5792,6 +5867,22 @@ Click &lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.as
         <protected>false</protected>
         <shortDescription>CSP_Submit</shortDescription>
         <value>Submit</value>
+    </labels>
+    <labels>
+        <fullName>CSP_SubmitApproval</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_SubmitApproval</shortDescription>
+        <value>Submit for Approval</value>
+    </labels>
+    <labels>
+        <fullName>CSP_SubmittedApproval</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_SubmittedApproval</shortDescription>
+        <value>The record was submitted for approval</value>
     </labels>
     <labels>
         <fullName>CSP_Success</fullName>
@@ -37747,7 +37838,7 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_Online Help Link</shortDescription>
-        <value>http://extranet.iata.org/registration/pages/loginproblem.aspx</value>
+        <value>http://www.iata.org/customer-portal/Pages/contactus-v2.aspx</value>
     </labels>
     <labels>
         <fullName>OneId_Password</fullName>
