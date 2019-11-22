@@ -28,7 +28,6 @@
 }
 
 .resultsContentDiv {
-    background-color:#f7f8fa;
     position:absolute;
     width:calc(100% + 20px);
     z-index:4001;
@@ -52,15 +51,7 @@
 .slds-backdrop{
     z-index: 4000;
 }
-
-.rotateIcon {
-transform: rotate(45deg);
-}
   
 .marginTop {
 margin-top: 3px;
-}
-
-.text-center {
-    text-align: center;
 }

@@ -24,7 +24,7 @@
             </div>
 
             <div if:true={showCross} class="searchBarIcon slds-m-right--large">
-                <lightning-icon class="cursorPointer rotateIcon" icon-name="utility:add" size="small" alternative-text="" onclick={removeTextSearch}></lightning-icon>
+                <lightning-icon class="cursorPointer rotateIcon45Deg" icon-name="utility:add" size="small" alternative-text="" onclick={removeTextSearch}></lightning-icon>
             </div>
             
             <div>
@@ -33,7 +33,7 @@
                 </span>
             </div>
             <div>
-                <lightning-button if:true={filteringObject.advancedSearch} class="outlinedButton slds-p-right_small slds-show_medium" variant="neutral" 
+                <lightning-button if:true={filteringObject.advancedSearch} class="baseButton buttonMinHeightMedium slds-p-right_small slds-show_medium" variant="neutral" 
                     label={label.CSP_Search_AdvancedSearch} title={label.CSP_Search_AdvancedSearch} 
                     icon-name="utility:settings" icon-position="right" onclick={goToAdvancedSearch}>
                 </lightning-button>
@@ -41,7 +41,7 @@
         </div>
         
         <!-- RESULTS DIV -->
-        <div if:true={showHoverResults} class="resultsContentDiv"> 
+        <div if:true={showHoverResults} class="resultsContentDiv cardStyle"> 
 
             <div style={resultsClass}>
                 <!-- COMPONENTS SECTION -->
@@ -49,7 +49,7 @@
                     <div class="slds-col slds-size_1-of-1">
                         <div class="slds-m-around_medium">
                             <c-portal-search-results-list filtering-object-parent={filteringObject} onfilterchanged={handlefilterchanged}></c-portal-search-results-list>
-                            <div class="slds-m-vertical_small text-center text-blue">
+                            <div class="slds-m-vertical_small slds-text-align_center text-blue">
                                 <span if:true={filteringObject.advancedSearch}
                                     title={label.ISSP_See_more} 
                                     onclick={goToAdvancedSearch}>{label.ISSP_See_more}

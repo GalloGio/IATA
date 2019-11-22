@@ -36,7 +36,6 @@ export default class PortalSearchResultList extends NavigationMixin(LightningEle
                 valueAux.faqsComponent.faqCategoryFilter !== filteringObjectAux.faqsComponent.faqCategoryFilter ||
                 valueAux.faqsComponent.faqTopicFilter !== filteringObjectAux.faqsComponent.faqTopicFilter ||
                 valueAux.faqsComponent.faqSubtopicFilter !== filteringObjectAux.faqsComponent.faqSubtopicFilter) {
-                console.log('parent filtering obj', valueAux);
                 this.searchWithNewFilters();
             }
         } else {
@@ -410,7 +409,6 @@ export default class PortalSearchResultList extends NavigationMixin(LightningEle
 
     renderArticle(event) {
         let params = {};
-        console.log('redirect');
         let url = event.target.attributes.getNamedItem('data-url').value;
         window.location = url;
     }

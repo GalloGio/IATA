@@ -31,12 +31,6 @@ div[name=bg-box-2] {
 .show-results-card {
     overflow-y: auto;
 }
-.bg-white {
-    background-color: white;
-}
-.bg-light-grey {
-    background-color: #f7f8fa;
-}
 .slds-hover {
     z-index: 2;
 }

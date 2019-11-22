@@ -1990,3 +1990,12 @@ visibility: hidden;
     animation-duration: 0.3s;
 }
 /*#################################*/
+
+/* ############################################## */
+/* Transformation & Animation Classes */
+
+.rotateIcon45Deg{
+  transform: rotate(45deg);
+}
+
+/* ############################################## */
