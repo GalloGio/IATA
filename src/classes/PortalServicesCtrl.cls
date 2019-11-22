@@ -332,6 +332,8 @@ public static List<ServiceWrapper> getAllServices(){
 		if(!mapServiceWrapper.containsKey(accessAux.Portal_Application__c)) {
 			mapServiceWrapper.put(accessAux.Portal_Application__c,
 			                      new ServiceWrapper(mapAppsAlreadyWithAccess.get(accessAux.Portal_Application__c), isAdmin, iepStatus, isAuthorisedSignatory, accessAux.Right__c));
+			mapServiceWrapper.get(accessAux.Portal_Application__c).portalApplicationRightId = accessAux.Id;
+			mapServiceWrapper.get(accessAux.Portal_Application__c).isFavorite = accessAux.Is_Favorite__c;
 		}
 	}
 
@@ -421,10 +423,13 @@ public static List<ServiceWrapper> getUserAccessGrantedServices(){
 
 	List<ServiceWrapper> lstAllServices = PortalServicesCtrl.getAllServices();
 
+	Set<Id> serviceIds = new Set<Id>();
+
 	List<ServiceWrapper> lstToReturn = new List<ServiceWrapper>();
 	for(ServiceWrapper serviceWrapperAux : lstAllServices) {
 		if(serviceWrapperAux.status == PortalServicesCtrl.PORTAL_ACCESS_GRANTED) {
 			lstToReturn.add(serviceWrapperAux);
+			serviceIds.add(serviceWrapperAux.recordService.Id);
 		}
 	}
 
@@ -445,15 +450,17 @@ public static List<ServiceWrapper> getUserAccessGrantedServices(){
 		Set<Id> keySet = portalServiceAccessesMap.keySet();
 
 		for(Portal_Applications__c portalAppAux : lstPA) {
-			ServiceWrapper wrappedService = new ServiceWrapper(portalAppAux, false, '', false, '');
-			if(keySet.contains(portalAppAux.Id)){
-				wrappedService.isFavorite = portalServiceAccessesMap.get(portalAppAux.Id).Is_Favorite__c;
-				wrappedService.portalApplicationRightId = portalServiceAccessesMap.get(portalAppAux.Id).Id;
+			if(! serviceIds.contains(portalAppAux.Id)){
+				ServiceWrapper wrappedService = new ServiceWrapper(portalAppAux, false, '', false, '');
+				if(keySet.contains(portalAppAux.Id)){
+					wrappedService.isFavorite = portalServiceAccessesMap.get(portalAppAux.Id).Is_Favorite__c;
+					wrappedService.portalApplicationRightId = portalServiceAccessesMap.get(portalAppAux.Id).Id;
+				}
+				else{
+					wrappedService.isFavorite = false;
+				}
+				lstServiceWrapper.add(wrappedService);
 			}
-			else{
-				wrappedService.isFavorite = false;
-			}
-			lstServiceWrapper.add(wrappedService);
 		}
 		lstToReturn.addAll(lstServiceWrapper);
 	}
