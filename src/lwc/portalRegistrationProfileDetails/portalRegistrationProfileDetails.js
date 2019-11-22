@@ -111,11 +111,15 @@ export default class PortalRegistrationProfileDetails extends LightningElement {
                 
                 // keep 1st selected value if it exists
                 let jobFunctions = this.localContactInfo.Membership_Function__c;
-                let splittedJobFunctions = jobFunctions.split(';');
 
-                if(splittedJobFunctions.length > 0){
-                    this.localContactInfo.Membership_Function__c = splittedJobFunctions[0];
+                if(jobFunctions !== undefined){
+                    let splittedJobFunctions = jobFunctions.split(';');
+
+                    if(splittedJobFunctions.length > 0){
+                        this.localContactInfo.Membership_Function__c = splittedJobFunctions[0];
+                    }
                 }
+
                 this.checkCompletion();
             })
             .catch((error) => {
