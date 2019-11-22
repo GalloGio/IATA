@@ -1,29 +1,17 @@
-/*
-* Company    : HARDIS Bordeaux
-* Created on : 18-10-2019
-* Author     : BTH
-*/
 @IsTest
 private class AddressRoleBusinessContextEventHdlTest {
 	@TestSetup static void generateTestData(){
 		User admin = TestUtilities.createAdminUser();
 
-		List<PermissionSetAssignment> permissionSetAssignments = new List<PermissionSetAssignment>();
-		for(PermissionSet permissionSet : [SELECT Id FROM PermissionSet
-		WHERE Name = 'E_F_Account_Flow_Creation'
-		OR Name = 'All_New_Account_Address_DATA_MODELV2']){
-			permissionSetAssignments.add(new PermissionSetAssignment(PermissionSetId = permissionSet.Id, AssigneeId = admin.Id));
-		}
-		insert permissionSetAssignments;
+		CustomPermission cp = [SELECT Id FROM CustomPermission WHERE DeveloperName='E_F_Account_Flow_Creation'];
+		PermissionSet pS = new PermissionSet(Name ='Test', Label ='Test');
+		insert pS;
+		SetupEntityAccess sep = new SetupEntityAccess(ParentId =pS.Id, SetupEntityId=cp.Id);
+		insert sep;
+		PermissionSetAssignment pSA = new PermissionSetAssignment(PermissionSetId = pS.Id, AssigneeId = admin.Id);
+		insert pSA;
 
 		System.runAs(admin){
-
-			//metadatas
-			//Functional_Role__mdt : must exist in org (Label = 'E&F', DeveloperName = 'EAF')
-			//Business_Context_Configuration__mdt : must exist in org (Label = 'E&F Account Flow Creation', DeveloperName = 'E_F_Account_Flow_Creation', Account_Create_Permission_Name__c = 'E_F_Account_Flow_Creation')
-			//Sales_Area_Mapping__mdt : must exist in org
-
-			//datas
 			IATA_ISO_Country__c iataIsoCountry = new IATA_ISO_Country__c(Name = 'Canada', ISO_Code__c = 'CA', ISO_Code_Numeric__c = 999, Region__c = 'Americas', Sub_Region__c = 'Can-Ber', ISS_Office_Location__c = 'Canada');
 			insert iataIsoCountry;
 
@@ -39,7 +27,6 @@ private class AddressRoleBusinessContextEventHdlTest {
 					Business_State_Name__c = 'Quebec',
 					IATA_ISO_Country__c = iataIsoCountry.Id,
 					Legal_name__c = 'test account',
-					Verification_Status__c = 'Verified',
 					VAT_Number__c = 'vatnum'
 			);
 			insert account;

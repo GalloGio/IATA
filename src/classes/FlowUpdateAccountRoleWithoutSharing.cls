@@ -1,12 +1,7 @@
-/*
-* Company    : HARDIS Bordeaux
-* Created on : 14-08-2019
-* Author     : BTH
-*/
 public without sharing class FlowUpdateAccountRoleWithoutSharing {
 	@InvocableMethod(
-			label = 'Update an account role without sharing'
-			description = 'Allow user to update an account role, bypassing the sharing rules'
+		label = 'Update an account role without sharing'
+		description = 'Allow user to update an account role, bypassing the sharing rules'
 	)
 	public static List<Response> execute(List<Request> requests){
 		List<Account_Role__c> accountRolesToUpdate = new List<Account_Role__c>();
@@ -26,13 +21,13 @@ public without sharing class FlowUpdateAccountRoleWithoutSharing {
 
 	public class Request {
 		@InvocableVariable(
-				label = 'Account role Id'
-				description = 'Id of Account role to update without sharing'
+			label = 'Account role Id'
+			description = 'Id of Account role to update without sharing'
 		)
 		public Id accountRoleId;
 		@InvocableVariable(
-				label = 'Flow status'
-				description = 'Flow status to set'
+			label = 'Flow status'
+			description = 'Flow status to set'
 		)
 		public String flowStatus;
 	}
@@ -40,8 +35,8 @@ public without sharing class FlowUpdateAccountRoleWithoutSharing {
 
 	public class Response {
 		@InvocableVariable(
-				label = 'Account role after update'
-				description = 'Account role after update'
+			label = 'Account role after update'
+			description = 'Account role after update'
 		)
 		public Account_Role__c accountRoleAfterDml;
 

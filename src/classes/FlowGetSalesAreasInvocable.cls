@@ -1,7 +1,7 @@
 public with sharing class FlowGetSalesAreasInvocable {
 	@InvocableMethod(
 			label = 'Get Sales Area'
-			description = 'Get Sales Area based on the business context'
+			description = 'Get sales areas for an account based on custom permissions for the running user and the business context selected'
 	)
 	public static List<Response> execute(List<Request> requests){
 		List<Response> responses = new List<Response>();
@@ -29,7 +29,7 @@ public with sharing class FlowGetSalesAreasInvocable {
 	public class Response {
 		@InvocableVariable(
 				label = 'Sales area available'
-				description = 'List sales area available to select'
+				description = 'Concatenation of the list of sales areas available'
 		)
 		public String salesAreaAvailable;
 

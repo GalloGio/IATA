@@ -1,10 +1,4 @@
-/*
-* Company    : HARDIS Bordeaux
-* Created on : 18-10-2019
-* Author     : BTH
-*/
 public without sharing class AddressRoleBusinessContextEventHandler {
-
 	public void OnAfterInsert(List<AddressRoleBusinessContext__e> addressRoleBusinessContextEvents){
 		createIntegrationLog(addressRoleBusinessContextEvents);
 	}

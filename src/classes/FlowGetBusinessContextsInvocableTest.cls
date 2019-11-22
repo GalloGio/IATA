@@ -1,10 +1,8 @@
 @IsTest
 private class FlowGetBusinessContextsInvocableTest {
-
 	@TestSetup static void generateTestData(){
 		User admin = TestUtilities.createAdminUser();
 
-		//permissions
 		CustomPermission cp = [SELECT Id FROM CustomPermission WHERE DeveloperName='E_F_Account_Flow_Creation'];
 		PermissionSet pS = new PermissionSet(Name ='Test', Label ='Test');
 		insert pS;
@@ -14,13 +12,6 @@ private class FlowGetBusinessContextsInvocableTest {
 		insert pSA;
 
 		System.runAs(admin){
-
-			//metadatas
-			//Functional_Role__mdt : must exist in org (Label = 'E&F', DeveloperName = 'EAF')
-			//Business_Context_Configuration__mdt : must exist in org (Label = 'E&F Account Flow Creation', DeveloperName = 'E_F_Account_Flow_Creation', Account_Create_Permission_Name__c = 'E_F_Account_Flow_Creation')
-			//Sales_Area_Mapping__mdt : must exist in org
-
-			//datas
 			IATA_ISO_Country__c iataIsoCountry = new IATA_ISO_Country__c(Name = 'Canada', ISO_Code__c = 'CA', ISO_Code_Numeric__c = 999, Region__c = 'Americas', Sub_Region__c = 'Can-Ber', ISS_Office_Location__c = 'Canada');
 			insert iataIsoCountry;
 
@@ -122,7 +113,7 @@ private class FlowGetBusinessContextsInvocableTest {
 			List<FlowGetBusinessContextsInvocable.Response> responses = FlowGetBusinessContextsInvocable.execute(requests);
 			Test.stopTest();
 
-			System.assertEquals(false, responses[0].businessContextAvailable.contains('E&F')); //since accR.Flow_Status__c == 'Pending'
+			System.assertEquals(false, responses[0].businessContextAvailable.contains('E&F'));
 		}
 	}
 

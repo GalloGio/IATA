@@ -1,12 +1,7 @@
-/*
-* Company    : HARDIS Bordeaux
-* Created on : 18-10-2019
-* Author     : BTH
-*/
 public without sharing class FlowUpdateARBCWithoutSharing {
 	@InvocableMethod(
-			label = 'Update an Address Role Business Context without sharing'
-			description = 'Allow user to update an Address Role Business Context, bypassing the sharing rules'
+		label = 'Update an Address Role Business Context without sharing'
+		description = 'Allow user to update an Address Role Business Context, bypassing the sharing rules'
 	)
 	public static List<Response> execute(List<Request> requests){
 		List<Address_Role_Business_Context__c> arbcToUpdate = new List<Address_Role_Business_Context__c>();
@@ -23,8 +18,8 @@ public without sharing class FlowUpdateARBCWithoutSharing {
 
 	public class Request {
 		@InvocableVariable(
-				label = 'Address Role Business Context Id'
-				description = 'Id of Address Role Business Context to update without sharing'
+			label = 'Address Role Business Context Id'
+			description = 'Id of Address Role Business Context to update without sharing'
 		)
 		public Id addressRoleBusinessContextId;
 		@InvocableVariable(
@@ -37,8 +32,8 @@ public without sharing class FlowUpdateARBCWithoutSharing {
 
 	public class Response {
 		@InvocableVariable(
-				label = 'Account role after update'
-				description = 'Account role after update'
+			label = 'Account role after update'
+			description = 'Account role after update'
 		)
 		public Address_Role_Business_Context__c arbcAfterDml;
 
