@@ -3,13 +3,21 @@
     <div if:true={componentLoading} class="spinnerContainer">
         <lightning-spinner class="background-superLightGray" alternative-text="Loading"></lightning-spinner>
     </div>
+    
+    <div class="slds-m-top--xx-large slds-m-bottom--small customLightShadow">
+        <c-portal-highlight-cards special-case={specialCase} type="Services"></c-portal-highlight-cards>
+    </div>
 
     <div if:false={componentLoading} class="slds-grid slds-wrap slds-gutters_direct-small">
 
         <template for:each={lstServicesGranted} for:item="serviceGranted">
             <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2 slds-m-vertical_small" key={serviceGranted.Id}>
-
-                <c-portal-services-available-services-list-card onservicegranted={handleServiceGranted} service={serviceGranted}></c-portal-services-available-services-list-card>
+                <c-portal-services-available-services-list-card 
+                    is-first-level-user={isFirstLevelUser} 
+                    requires-second-level-registration={serviceGranted.recordService.Requires_Level2_Registration__c}
+                    onservicegranted={handleServiceGranted} 
+                    service={serviceGranted}>
+                </c-portal-services-available-services-list-card>
 
             </div>
         </template>
