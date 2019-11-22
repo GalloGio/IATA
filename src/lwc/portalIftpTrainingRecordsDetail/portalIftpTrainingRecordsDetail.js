@@ -1,5 +1,7 @@
-import { LightningElement, track, api } from 'lwc';
+import { LightningElement, track, api, wire } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import { CurrentPageReference } from 'lightning/navigation';
+import { fireEvent } from 'c/pubsub';
 
 import getTrainingRecords from '@salesforce/apex/portalIftpTrainingRecords.getTrainingRecordsDetail';
 import getCertificationTypesWithLevel from '@salesforce/apex/PortalIftpUtils.getCertificationTypesWithLevel';
@@ -42,6 +44,8 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
     @track itpOptions;
     @track aircraftTypeOptions;
            certificationTypesWithLevel;
+
+    @wire(CurrentPageReference) pageRef;
     
     get experiationstatusOptions() {
         return [
@@ -247,6 +251,7 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
             console.log('getAirlineITPsByStation - Error : ', error);
             this.mainErrorMessage = error;
             this.error = error;
+            fireEvent(this.pageRef, 'errorEvent', error);  
         }); 
         
         getCertificationTypesWithLevel({certificationType: 'Aircraft'})
@@ -268,6 +273,7 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
         .catch(error => {
             this.mainErrorMessage = error;
             this.error = error;
+            fireEvent(this.pageRef, 'errorEvent', error);  
         });  
 
 
@@ -411,6 +417,7 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
             this.error = error;
             this.loading = false;
             this.dataRecords = false;
+            fireEvent(this.pageRef, 'errorEvent', error);  
         });    
     }
 
@@ -517,6 +524,7 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
             this.mainErrorMessage = error;
             this.error = error;
             this.loading = false;
+            fireEvent(this.pageRef, 'errorEvent', error);  
         });       
     }
 }

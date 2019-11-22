@@ -1,7 +1,7 @@
 import { LightningElement, track, wire } from 'lwc';
 import { CurrentPageReference } from 'lightning/navigation';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-import { registerListener, unregisterAllListeners} from 'c/pubsub';
+import { registerListener, unregisterAllListeners, fireEvent} from 'c/pubsub';
 
 import getCertificationTypes from '@salesforce/apex/PortalIftpUtils.getCertificationTypes';
 import getITPStations from '@salesforce/apex/PortalIftpUtils.getITPStations';
@@ -151,14 +151,18 @@ export default class PortalIftpMonitorTrainings extends LightningElement {
                 this.loading = false;
             })
             .catch(error => {
-                console.error('getITPStations - Error : ' + error);
+                console.error('getITPStations - Error : ', error);
                 this.loading = false;
+                this.mainErrorMessage = error;
+                this.error = error;
+                fireEvent(this.pageRef, 'errorEvent', error); 
             }); 
         })
         .catch(error => {
-            console.error('getITPStations - Error : ' + error);
+            console.error('getITPStations - Error : ', error);
             this.mainErrorMessage = error;
             this.error = error;
+            fireEvent(this.pageRef, 'errorEvent', error);  
         });  
     }
 
@@ -306,6 +310,7 @@ export default class PortalIftpMonitorTrainings extends LightningElement {
             this.error = error;
             this.loading = false;
             this.dataRecords = false;
+            fireEvent(this.pageRef, 'errorEvent', error);  
         });        
     }
 
@@ -492,7 +497,8 @@ export default class PortalIftpMonitorTrainings extends LightningElement {
                     this.dispatchEvent(event);
 
                     this.loading = false;
-    
+                    this.error = error;
+                    fireEvent(this.pageRef, 'errorEvent', error); 
                 }); 
 
 

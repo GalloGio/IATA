@@ -1,6 +1,9 @@
-import { LightningElement, api, track } from 'lwc';
+import { LightningElement, api, track, wire } from 'lwc';
+import { CurrentPageReference } from 'lightning/navigation';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { NavigationMixin } from 'lightning/navigation';
 import { reduceErrors } from 'c/ldsUtils';
+import { registerListener, unregisterAllListeners, fireEvent} from 'c/pubsub';
 
 import getUserInfo from '@salesforce/apex/PortalIftpUtils.getUserInfo';
 import getRedirectURL from '@salesforce/apex/PortalIftpUtils.getRedirectURL';
@@ -11,6 +14,8 @@ export default class portalIftpTabs extends NavigationMixin(LightningElement) {
 
     @track error;
     @track mainErrorMessage;
+
+    @wire(CurrentPageReference) pageRef;
 
     /*
         Regular USER:
@@ -59,17 +64,12 @@ export default class portalIftpTabs extends NavigationMixin(LightningElement) {
     }
     
     connectedCallback() {
-        console.log('INIT connectedCallback');
 
         getUserInfo()
         .then(result => {
-            console.log(result);
             let myResult = JSON.parse(JSON.stringify(result));
             
             this.userInfo = myResult;
-            console.log('-- [portalIftpTabs - getUserInfo] this.userInfo - ',  this.userInfo);
-
-            
 
             // //Check User Access, for both ITP User and Airline User
             // this.userInfo.accountRoleStatus === 'Active' - Not able to set to Airline users since these don't have acc cont roles
@@ -98,9 +98,17 @@ export default class portalIftpTabs extends NavigationMixin(LightningElement) {
             }else{
                 this.mainErrorMessage = error;
                 this.error = error;
+                fireEvent(this.pageRef, 'errorEvent', error);  
             }
         });
+        
+        registerListener('errorEvent', this.removeAccessToIFTPIfLoggedOut, this);
     }
+
+    disconnectedCallback() {
+		// unsubscribe from bearListUpdate event
+		unregisterAllListeners(this);
+	}
 
     /**
      * User management
@@ -167,7 +175,35 @@ export default class portalIftpTabs extends NavigationMixin(LightningElement) {
             console.error('handleRedirect - Error : ' + error);
             this.mainErrorMessage = error;
             this.error = error;
+            fireEvent(this.pageRef, 'errorEvent', error);  
         });
+    }
+
+    removeAccessToIFTPIfLoggedOut(error){
+        let error2 =JSON.parse(JSON.stringify(error));
+        if (error.body && typeof error.body.message === 'string'){
+            let msg = error2.body.message;
+            if(msg.includes('logged out')){
+                this.showManageEmployees			= false;
+                this.showManageStations          	= false;
+                this.showEmployeeRecordsTransfer 	= false;
+                this.showProficiencyManagement   	= false;
+                this.showUploadOJT               	= false;
+                this.showImportStation           	= false;
+                this.showImportEmployees         	= false;
+                this.showMonitorTrainings           = false;
+                this.showProficiencyReports         = false;
+                
+                this.showTrainingRecordsDetail   	= false;
+                this.showTrainingRecordsSummary  	= false;
+
+                this.isITPUser = false;
+                this.isAirlineUser = false;
+                this.mainErrorMessage = 'You have been logged out. Please login again. ';
+                this.error = true;
+                this.showLMSButton();
+            }
+        } 
     }
 
 }

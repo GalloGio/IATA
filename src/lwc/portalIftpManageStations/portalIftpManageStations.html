@@ -16,7 +16,7 @@
                     <template if:true={loading}>
                         <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
                     </template>
-                    <template if:false={loading}>
+                    <template if:true={showStations}>
                         <div class="slds-p-around_medium slds-grid slds-wrap slds-gutters_x-small">
                             <div class="slds-col">
                                 <lightning-button

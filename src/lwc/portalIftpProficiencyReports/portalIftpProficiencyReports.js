@@ -1,4 +1,6 @@
-import { LightningElement, track } from 'lwc';
+import { LightningElement, track, wire} from 'lwc';
+import { CurrentPageReference } from 'lightning/navigation';
+import { fireEvent } from 'c/pubsub';
 
 import getProficiencyReport from '@salesforce/apex/portalIftpHistoryManagement.getProficiencyReport';
 import getUserInfo from '@salesforce/apex/PortalIftpUtils.getUserInfo';
@@ -30,6 +32,8 @@ export default class portalIftpProficiencyReports extends LightningElement {
     @track showDatatableButtons = false;
            userInfo; 
 
+    @wire(CurrentPageReference) pageRef;
+    
     get monthOptions() {
         return [
             { label: 'January', value: '1' },
@@ -96,6 +100,7 @@ export default class portalIftpProficiencyReports extends LightningElement {
                             console.error('portalIftpProficiencyReports - getUserInfo - Error : ' + error);
                             this.mainErrorMessage = error;
                             this.error = error;
+                            fireEvent(this.pageRef, 'errorEvent', error);  
                         });  
         
                         this.columns = [
@@ -128,6 +133,7 @@ export default class portalIftpProficiencyReports extends LightningElement {
                             console.error('portalIftpProficiencyReports - getAllITP - Error : ' + error);
                             this.mainErrorMessage = error;
                             this.error = error;
+                            fireEvent(this.pageRef, 'errorEvent', error);  
                         });  
 
                         this.columns = [
@@ -144,6 +150,7 @@ export default class portalIftpProficiencyReports extends LightningElement {
                 console.error('portalIftpProficiencyReports - getAllITP - Error : ' + error);
                 this.mainErrorMessage = error;
                 this.error = error;
+                fireEvent(this.pageRef, 'errorEvent', error);  
             });  
         
     }
@@ -210,6 +217,7 @@ export default class portalIftpProficiencyReports extends LightningElement {
                 this.error = error;
                 this.loading = false;
                 this.dataRecords = false;
+                fireEvent(this.pageRef, 'errorEvent', error);  
             });  
 
         }else{
@@ -253,6 +261,7 @@ export default class portalIftpProficiencyReports extends LightningElement {
                             this.error = error;
                             this.loading = false;
                             this.dataRecords = false;
+                            fireEvent(this.pageRef, 'errorEvent', error);  
                         });  
                 }
             }

@@ -1,4 +1,6 @@
-import { LightningElement, track } from 'lwc';
+import { LightningElement, track, wire } from 'lwc';
+import { CurrentPageReference } from 'lightning/navigation';
+import { fireEvent } from 'c/pubsub';
 
 import getTrainingRecords from '@salesforce/apex/portalIftpTrainingRecords.getTrainingRecordsDetail';
 import getCertificationTypesWithLevel from '@salesforce/apex/PortalIftpUtils.getCertificationTypesWithLevel';
@@ -39,6 +41,8 @@ export default class PortalIftpTrainingRecordsSummary extends LightningElement {
                                 ];
     @track openStationsModal = false;
     @track loadingSpinner = false;
+
+    @wire(CurrentPageReference) pageRef;
     
     get proficiencyOptions() {
         return [
@@ -151,6 +155,7 @@ export default class PortalIftpTrainingRecordsSummary extends LightningElement {
             console.error('getAllStations - Error : ' + error);
             this.mainErrorMessage = error;
             this.error = error;
+            fireEvent(this.pageRef, 'errorEvent', error);  
         }); 
 
         getCertificationTypesWithLevel({certificationType: 'Aircraft'})
@@ -176,6 +181,7 @@ export default class PortalIftpTrainingRecordsSummary extends LightningElement {
             console.error('getITPStations - Error : ' + error);
             this.mainErrorMessage = error;
             this.error = error;
+            fireEvent(this.pageRef, 'errorEvent', error);  
         }); 
 
 
@@ -239,6 +245,7 @@ export default class PortalIftpTrainingRecordsSummary extends LightningElement {
             this.error = error;
             this.loading = false;
             this.dataRecords = false;
+            fireEvent(this.pageRef, 'errorEvent', error);  
         });  
     }
 

@@ -27,19 +27,17 @@ export default class PortalIftpImportStations extends LightningElement {
         
         getUserInfo()
             .then(result => {
-                console.log(result);
                 let myResult = JSON.parse(JSON.stringify(result));
                 
                 this.userInfo = myResult;
-                console.log(' this.userInfo: ',  this.userInfo);
-                console.log(' this.userInfo.accountRole: ',  this.userInfo.accountRole);
                 this.myRecordId = this.userInfo.accountRole;
 
             })
             .catch(error => {
-                console.log('getITPStations - Error : ' + error);
+                console.error('getITPStations - Error : ' + error);
                 this.mainErrorMessage = error;
                 this.error = error;
+                fireEvent(this.pageRef, 'errorEvent', error);  
             });  
 
 
@@ -58,16 +56,11 @@ export default class PortalIftpImportStations extends LightningElement {
         const uploadedFiles = JSON.parse(JSON.stringify(event.detail));
         
         let docId = uploadedFiles[0].documentId;
-        console.log('PortalIftpImportStations - handleUploadFinish - uploadedFiles: ',uploadedFiles );
-        console.log('PortalIftpImportStations - handleUploadFinish - uploadedFiles.documentId: ', uploadedFiles[0].documentId);
         
         this.showSearch = true;
         
         importStationsCSVFile({fileId: docId })
             .then(results => {
-                console.log('handleSearch - results : ' + results);
-                console.log('handleSearch - results.length : ' + results.length);
-                console.log('handleSearch - results:1 : ' + results[1]);
                 if(results && results.length > 0) {
                     this.data = this.sortData('code', 'asc', results);
                     this.dataRecords = true;
@@ -79,9 +72,10 @@ export default class PortalIftpImportStations extends LightningElement {
 
             })
             .catch(error => {
-                console.log('getITPStations - Error : ' + error);
+                console.error('getITPStations - Error : ' + error);
                 this.mainErrorMessage = error;
                 this.error = error;
+                fireEvent(this.pageRef, 'errorEvent', error);  
             });      
     }
 

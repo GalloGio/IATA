@@ -1,7 +1,7 @@
 import { LightningElement, track, wire } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { CurrentPageReference } from 'lightning/navigation';
-import { registerListener, unregisterAllListeners } from 'c/pubsub';
+import { registerListener, unregisterAllListeners, fireEvent} from 'c/pubsub';
 
 import getEmployeeRecords from '@salesforce/apex/portalIftpEmployeeCtrl.getEmployeeRecords';
 import getITPStations from '@salesforce/apex/PortalIftpUtils.getITPStations';
@@ -114,8 +114,17 @@ export default class PortalIftpEmployeeRecordTransfer extends LightningElement {
                     mode: 'pester'
                 });
                 this.dispatchEvent(event);
+                this.mainErrorMessage = error;
+                this.error = error;
+                fireEvent(this.pageRef, 'errorEvent', error);  
             });
         })
+        .catch(error => {
+            console.error('getUserInfo - Error : ' + error);
+            this.mainErrorMessage = error;
+            this.error = error;
+            fireEvent(this.pageRef, 'errorEvent', error);  
+        }); 
     }
 
     disconnectedCallback() {
@@ -194,8 +203,6 @@ export default class PortalIftpEmployeeRecordTransfer extends LightningElement {
         recordRequestTransfer.firstName = auxData[index].firstName;
         recordRequestTransfer.lastName = auxData[index].lastName;
         recordRequestTransfer.acrId = auxData[index].name;
-
-        console.log('recordRequestTransfer', recordRequestTransfer);
 
         switch(actionName){
             case 'askForTransfer':
@@ -307,6 +314,9 @@ export default class PortalIftpEmployeeRecordTransfer extends LightningElement {
                 });
                 this.dispatchEvent(event);
                 this.loadingModal = false;
+                this.mainErrorMessage = error;
+                this.error = error;
+                fireEvent(this.pageRef, 'errorEvent', error);  
             });
         } else{
             this.loadingModal = false;
@@ -361,6 +371,9 @@ export default class PortalIftpEmployeeRecordTransfer extends LightningElement {
                 mode: 'pester'
             });
             this.dispatchEvent(event);
+            this.mainErrorMessage = error;
+            this.error = error;
+            fireEvent(this.pageRef, 'errorEvent', error);  
         }); 
     }
 

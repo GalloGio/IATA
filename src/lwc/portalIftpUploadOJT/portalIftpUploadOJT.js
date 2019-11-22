@@ -1,4 +1,6 @@
-import { LightningElement, track } from 'lwc';
+import { LightningElement, track, wire } from 'lwc';
+import { CurrentPageReference } from 'lightning/navigation';
+import { fireEvent } from 'c/pubsub';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import getUserInfo from '@salesforce/apex/PortalIftpUtils.getUserInfo';
 import manageUploadGlobalOJT from '@salesforce/apex/PortalIftpUtils.manageUploadGlobalOJT';
@@ -16,6 +18,8 @@ export default class PortalIftpUploadOJT extends LightningElement {
     @track data;
     @track loadingSpinner = false;
 
+    @wire(CurrentPageReference) pageRef;
+
     connectedCallback(){
         
         getUserInfo()
@@ -30,6 +34,7 @@ export default class PortalIftpUploadOJT extends LightningElement {
             console.error('PortalIftpUploadOJT - getUserInfo - Error : ' + error);
             this.mainErrorMessage = error;
             this.error = error;
+            fireEvent(this.pageRef, 'errorEvent', error);
         });  
     }
 
@@ -59,6 +64,12 @@ export default class PortalIftpUploadOJT extends LightningElement {
                 this.dispatchEvent(event);
             } 
             this.loadingSpinner = false;
-        });
+        })
+        .catch(error => {
+            console.error('getUserInfo - Error : ' + error);
+            this.mainErrorMessage = error;
+            this.error = error;
+            fireEvent(this.pageRef, 'errorEvent', error);
+        }); 
     }
 }

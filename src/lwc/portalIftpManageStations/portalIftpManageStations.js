@@ -24,7 +24,7 @@ export default class PortalIftpManageStations extends LightningElement {
     @track loadingNew = false;
     @track loadingManageAirlinesSpinner = false;
     @track loadingDeleteSpinner = false;
-    
+    @track showStations = false;
     @track error;
     @track mainErrorMessage;
     @track data;
@@ -123,6 +123,7 @@ export default class PortalIftpManageStations extends LightningElement {
         .catch(error => {
             this.mainErrorMessage = error;
             this.error = error;
+            fireEvent(this.pageRef, 'errorEvent', error);  
         });  
 
         getAllIftpAirlines()
@@ -139,6 +140,7 @@ export default class PortalIftpManageStations extends LightningElement {
         .catch(error => {
             this.mainErrorMessage = error;
             this.error = error;
+            fireEvent(this.pageRef, 'errorEvent', error);  
         });
 
         this.initData(); 
@@ -213,6 +215,7 @@ export default class PortalIftpManageStations extends LightningElement {
     initData(){
         this.loading = true;
         this.showSearch = true;
+        this.showStations = false;
         this.dataRecords = false;
 
         getUserInfo()
@@ -237,10 +240,12 @@ export default class PortalIftpManageStations extends LightningElement {
             .catch(error => {
                 this.mainErrorMessage = error;
                 this.error = error;
+                fireEvent(this.pageRef, 'errorEvent', error);  
             });  
 
             getITPStationsForDatatable({accountId: myResult2.accountId})
             .then(results => {
+                this.showStations = true;
                 if(results && results.length > 0) {
                     this.data = this.sortData('code', 'asc', JSON.parse(JSON.stringify(results)));
                     this.dataRecords = true;
@@ -251,10 +256,12 @@ export default class PortalIftpManageStations extends LightningElement {
                 this.cleanErrors();
             })
             .catch(error => {
+                this.showStations = true;
                 this.mainErrorMessage = error;
                 this.error = error;
                 this.loading = false;
                 this.dataRecords = false;
+                fireEvent(this.pageRef, 'errorEvent', error);  
             });  
     
     
@@ -266,12 +273,14 @@ export default class PortalIftpManageStations extends LightningElement {
             .catch(error => {
                 this.mainErrorMessage = error;
                 this.error = error;
+                fireEvent(this.pageRef, 'errorEvent', error);  
             });
      
         })
         .catch(error => {
             this.mainErrorMessage = error;
             this.error = error;
+            fireEvent(this.pageRef, 'errorEvent', error);  
         }); 
 
 
@@ -575,6 +584,7 @@ export default class PortalIftpManageStations extends LightningElement {
             this.loadingEditSpinner = false;
             this.closeModal();
             this.isActionEdit = false;
+            fireEvent(this.pageRef, 'errorEvent', error);  
         });  
 
     }
