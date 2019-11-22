@@ -1,10 +1,6 @@
-<!--
- - Created by pvavruska on 6/4/2019.
- -->
-
 <!-- Portal Contact List -->
 <template>
-    <div class="slds-p-vertical_large customBorderlessCardWhite">
+    <div class="slds-p-vertical_large customBorderlessCardWhite" style="overflow-y:auto;">
 
         <!-- OPEN MODAL -->
         <template if:true={openmodel}>
@@ -27,14 +23,16 @@
                     <thead>
                         <tr>
                             <th class="tableLefty"></th>
-                            <th class="underLined">
-                                <lightning-input 
-                                    type="checkbox"  
-                                    name="options"
-                                    checked={allContactsSelected}
-                                    onchange={handleRadioAllOptions}>
-                                </lightning-input>
-                            </th>
+                            <template if:false={isAccount}>
+                                <th class="underLined">
+                                    <lightning-input 
+                                        type="checkbox"  
+                                        name="options"
+                                        checked={allContactsSelected}
+                                        onchange={handleRadioAllOptions}>
+                                    </lightning-input>
+                                </th>
+                            </template>
                             <th class="underLined">
                                 <!-- arrow spacer -->
                             </th>
@@ -48,26 +46,30 @@
                                         icon-name="utility:arrowdown" size="xx-small" data-name={field.fieldName}>></lightning-icon>
                                 </th>
                             </template>
-                            <th class="underLined">
-                                <!-- three dots icon (contact access) -->
-                            </th>
+                            <template if:false={isAccount}>
+                                <th class="underLined">
+                                    <!-- three dots icon (contact access) -->
+                                </th>
+                            </template>
                             <th class="tableLefty"></th>
                         </tr>
                     </thead>
 
-                    <template for:each={records} for:item="record" for:index="index">
+                    <template for:each={pageRecords} for:item="record" for:index="index">
                         <tbody key={record.Id}>
                             <tr>
                                 <td class="tableLefty"></td>
-                                <td class="underLined">
-                                    <lightning-input 
-                                        type="checkbox" 
-                                        name="options"
-                                        checked={record.selected} 
-                                        data-item={record.Id} 
-                                        onchange={handleRadioOptions}>
-                                    </lightning-input>
-                                </td>
+                                <template if:false={isAccount}>
+                                    <td class="underLined">
+                                        <lightning-input 
+                                            type="checkbox" 
+                                            name="options"
+                                            checked={record.selected} 
+                                            data-item={record.Id} 
+                                            onchange={handleRadioOptions}>
+                                        </lightning-input>
+                                    </td>
+                                </template>
                                 <td class="underLined chevronColumn" onclick={openRecordDetail} data-item={index}>
                                     <div class="cursorPointer inline-block">
                                         <lightning-icon class="darkBlueIcon" if:true={record.open}
@@ -94,6 +96,7 @@
                                         </span>
                                     </td>
                                 </template>
+                                <template if:false={isAccount}>
                                 <td class="underLined">
                                     <lightning-button-menu
                                         class="removeArrowFromButtonMenu"        
@@ -123,6 +126,7 @@
                                             </lightning-menu-item>
                                     </lightning-button-menu>
                                 </td>
+                                </template>
                                 <td class="tableLefty"></td>
                             </tr>
 
@@ -178,6 +182,10 @@
                         <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
                     </div>
                 </template>
+
+                <!-- PAGINATION -->
+                <c-portal-paginator pagination-object-parent={paginationObject} onselectedpage={handleSelectedPage}></c-portal-paginator>
+
             </template>
         </template>
 
@@ -227,7 +235,7 @@
                                     </template>
 
                                     <!-- Inactive Options -->
-                                    <lightning-layout-item class="slds-p-around_xx-small" size="12" flexibility="grow">
+                                    <lightning-layout-item class="slds-p-vertical-medium" size="12" flexibility="grow">
                                         <div class="slds-p-horizontal_large slds-p-vertical_medium" >
                                             <lightning-combobox
                                                 placeholder={labels.CSP_selectReason} value="Inactive Reason"
@@ -240,8 +248,8 @@
 
                                 <!-- ACTION BUTTON -->
                                 <div class="slds-align_absolute-center slds-p-around_large topLightGrayBorder">
-                                    <lightning-button variant="brand" label={labels.ISSP_Confirm}
-                                        onclick={processInactive} disabled={noSelected} class="slds-m-right_medium containedButton">
+                                    <lightning-button class="baseButton newContainedButton buttonMinHeightMedium text-xsmall fullWidth" 
+                                        label={labels.ISSP_Confirm} variant="neutral" onclick={processInactive} disabled={noSelected}>
                                     </lightning-button>
                                 </div>
                             </div>
@@ -259,9 +267,9 @@
                 <div class="slds-p-vertical_medium slds-text-align_center">
                         <img src={searchIconNoResultsUrl} />
                         <div class="text-small text-bold text-linkBlue">
-                            {_labels.CSP_Search_NoResults_text1}</div>
-                        <div class="text-xxsmall text-gray">{_labels.CSP_Search_NoResults_text2} <span
-                                class="text-bold text-darkGray">"{_searchKey}"</span></div>
+                            {_labels.CSP_Contacts_NoResults_text1}</div>
+                        <div class="text-xxsmall text-gray">{_labels.CSP_Contacts_NoResults_text2} <span
+                                class="text-bold text-darkGray">"{searchNoResultsString}"</span></div>
                     </div>
             </div>
         </template>

@@ -3060,6 +3060,22 @@ Payment required on receipt of this Payment Advice
         <value>CC</value>
     </labels>
     <labels>
+        <fullName>CSP_ALPHAFILTER_All</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_ALPHAFILTER_All</shortDescription>
+        <value>All</value>
+    </labels>
+    <labels>
+        <fullName>CSP_ALPHAFILTER_Other</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_ALPHAFILTER_Other</shortDescription>
+        <value>Other</value>
+    </labels>
+    <labels>
         <fullName>CSP_AMS_StepFinal_In_Addition2</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -3256,6 +3272,13 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP_Breadcrump_You_IATA</shortDescription>
         <value>You &amp; IATA</value>
+	</labels>
+	<labels>
+        <fullName>CSP_Buy_Online</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Buy Online</shortDescription>
+        <value>Buy Online</value>
     </labels>
     <labels>
         <fullName>CSP_Cancel</fullName>
@@ -3356,6 +3379,12 @@ Payment required on receipt of this Payment Advice
         <value>Cases</value>
     </labels>
     <labels>
+        <fullName>CSP_Case_Details</fullName>
+        <language>en_US</language>
+        <shortDescription>CSP_Case_Details</shortDescription>
+        <value>Case-Detail_</value>
+    </labels>
+    <labels>
         <fullName>CSP_Community</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -3404,6 +3433,22 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP_Confirmed_Requested_Service_Message</shortDescription>
         <value>Your {0} access request has been sent to your company’s portal administrators. &lt;br/&gt;Your portal administrator can be fund under your</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Contacts_NoResults_text1</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Contacts_NoResults_text1</shortDescription>
+        <value>No Results</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Contacts_NoResults_text2</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Contacts_NoResults_text2</shortDescription>
+        <value>Sorry, no results found for</value>
     </labels>
     <labels>
         <fullName>CSP_Continue</fullName>
@@ -3646,6 +3691,14 @@ Payment required on receipt of this Payment Advice
         <shortDescription>CSP_Home_WelcomeTitle</shortDescription>
         <value>Welcome [username]</value>
     </labels>
+	<labels>
+        <fullName>CSP_LastUpdate</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LastUpdate</shortDescription>
+        <value>Last Update</value>
+    </labels>
     <labels>
         <fullName>CSP_IATA_Country</fullName>
         <language>en_US</language>
@@ -3660,13 +3713,12 @@ Payment required on receipt of this Payment Advice
         <shortDescription>CSP_IMPORTANT</shortDescription>
         <value>IMPORTANT</value>
     </labels>
-    <labels>
-        <fullName>CSP_LastUpdate</fullName>
-        <categories>CS Portal</categories>
+	<labels>
+        <fullName>CSP_Learn_More</fullName>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>CSP_LastUpdate</shortDescription>
-        <value>Last Update</value>
+        <shortDescription>CSP Learn More</shortDescription>
+        <value>Learn More</value>
     </labels>
     <labels>
         <fullName>CSP_LogOut</fullName>
@@ -3817,6 +3869,14 @@ Payment required on receipt of this Payment Advice
         <value>Payment</value>
     </labels>
     <labels>
+        <fullName>CSP_PendingApproval</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_PendingApproval</shortDescription>
+        <value>The record is not Draft or is Pending approval</value>
+    </labels>    
+    <labels>
         <fullName>CSP_PendingCustomerCase_Warning</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -3852,6 +3912,18 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP_Portal_Status</shortDescription>
         <value>Portal Status</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Print</fullName>
+        <language>en_US</language>
+        <shortDescription>CSP_Print</shortDescription>
+        <value>Print</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Printed_date</fullName>
+        <language>en_US</language>
+        <shortDescription>CSP_Printed_date</shortDescription>
+        <value>Printed date</value>
     </labels>
     <labels>
         <fullName>CSP_Profile_PrivacyManagement_Link</fullName>
@@ -4361,6 +4433,22 @@ Payment required on receipt of this Payment Advice
         <shortDescription>CSP_Submit</shortDescription>
         <value>Submit</value>
     </labels>
+    <labels>
+        <fullName>CSP_SubmitApproval</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_SubmitApproval</shortDescription>
+        <value>Submit for Approval</value>
+    </labels>
+    <labels>
+        <fullName>CSP_SubmittedApproval</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_SubmittedApproval</shortDescription>
+        <value>The record was submitted for approval</value>
+    </labels>       
     <labels>
         <fullName>CSP_Success</fullName>
         <language>en_US</language>
