@@ -214,7 +214,7 @@ public with sharing class IECSubscriptionManager_tst {
 	// NOTE: the SeeAllData flag is required when code is creating Zuora.zObject
 	@isTest(SeeAllData=true)
 	static void testCreditCardSubscribe() {
-		
+		Test.startTest();
 		//setupData(false);
 		Integer iQuantity = 1;
 		IEC_Shopping_Cart__c cart;
@@ -264,14 +264,14 @@ public with sharing class IECSubscriptionManager_tst {
 		// doesnt work, dont know why...
 		//system.assertEquals(oTnCProduct1.Id, oSubHist.Accepted_Terms_and_Conditions__c, 'The appropriate Terms_and_Conditions__c should be saved');
 		system.assertEquals(IECConstants.parsePaymentMethodEnumToPicklistValue(ePmType), oSubHist.Selected_Payment_Method__c, 'The appropriate Payment method should be saved');
-    	
+    	 Test.stopTest();
 	}
 	
 	// NOTE: the SeeAllData flag is required when code is creating Zuora.zObject
 	@isTest(SeeAllData=true)
 	static void testICHSubscribe() {
 		//setupData(false);
-		
+		Test.startTest();
 		User usr = IECTestUtil.createSampleGuestUserAndLogin();
     	System.runAs(usr) {
     		// create a shopping cart with an item
@@ -290,6 +290,7 @@ public with sharing class IECSubscriptionManager_tst {
 			
 			system.assert(listResults != null && listResults.size() == 1, 'A SubscribeResult should be returned from the subscribe() call');
     	}
+        Test.stopTest();
 	}
 	
 	// NOTE: the SeeAllData flag is required when code is creating Zuora.zObject

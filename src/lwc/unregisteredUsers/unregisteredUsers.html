@@ -1,0 +1,81 @@
+<template>
+    <div class="slds-box comp">
+        <div class="slds-m-vertical_small slds-align_absolute-center">
+            <div class="slds-text-heading_large slds-m-horizontal_small ">General public users</div>
+        </div>
+        <div class=" slds-box slds-m-vertical_large" >  
+            <div class="slds-box slds-m-vertical_large">             
+                <div class="slds-text-heading_small">Filters</div>   
+                <div class="slds-grid">
+                    <div class="slds-size_1-of-6">            
+                        <lightning-record-edit-form object-api-name="Account" onsubmit={handleSubmitAccountFilters}>
+                            <lightning-messages></lightning-messages>
+                            <div class="slds-grid">
+                                <div class="slds-col slds-size_1-of-1">
+                                    <div>
+                                        <lightning-input-field field-name="Sector__c" data-filter="sector"></lightning-input-field>
+                                    </div>
+                                    <div>
+                                        <lightning-input-field field-name="Category__c" data-filter="category"></lightning-input-field>
+                                    </div>
+                                </div>                           
+                            </div>
+                        </lightning-record-edit-form>
+                    </div>
+                    <div class="slds-size_1-of-6">            
+                        <lightning-record-edit-form object-api-name="Contact" onsubmit={handleSubmitContactFilters}>
+                            <lightning-messages></lightning-messages>
+                            <div class="slds-grid">
+                                <div class="slds-col slds-size_1-of-1">
+                                    <div>
+                                        <lightning-input-field field-name="Country__c" data-filter="country"></lightning-input-field>
+                                    </div>
+                                    <div>
+                                        <lightning-input-field field-name="Preferred_Language__c" data-filter="language"></lightning-input-field>
+                                    </div>
+                                </div>                        
+                            </div>
+                        </lightning-record-edit-form>
+                    </div>
+                    <div class="slds-col slds-size_1-of-6 slds-align_absolute-center">                            
+                        <lightning-button variant="brand" name="filter" label="Filter" onclick={handleFilterTable}>
+                        </lightning-button>                            
+                    </div> 
+                    <div class="slds-col slds-size_2-of-6"></div>
+                    <div class="slds-col slds-size_1-of-6 slds-align_absolute-center">   
+                        <div>
+                            <div class="slds-size_1-of-1 slds-m-vertical_medium slds-align_absolute-center">                         
+                                <lightning-button variant="brand" name="notifySelect" label="Notify Selected" onclick={handleNotifySelected}>
+                                </lightning-button> 
+                            </div>
+                            <div class="slds-size_1-of-1 slds-m-vertical_medium slds-align_absolute-center">
+                                <lightning-button variant="brand" name="notifyAll" label="Notify All" onclick={handleNotifyAll}>
+                                </lightning-button> 
+                            </div> 
+                        </div>                          
+                    </div>                      
+                </div> 
+            </div>     
+            <template if:false={error} >
+                <div class="slds-p-top_large slds-m-vertical_large">
+                    <lightning-datatable data-id="myTable"
+                        key-field="ContactId" 
+                        data={data} 
+                        show-row-number-column   
+                        selected-rows={selectedRows}                      
+                        row-number-offset={offset}
+                        onrowselection={handleRowSelection}
+                        columns={columns} 
+                        onrowaction={handleRowAction}>
+                    </lightning-datatable>
+                </div>                
+            </template>
+            <div class="slds-align_absolute-center slsd-m-vertical_large">                
+                <lightning-button disabled={isFirstPage} name="previous" label="Previous" onclick={handleNavigation} class="slds-m-horizontal_xx-small">                
+                </lightning-button>  
+                <lightning-button disabled={isLastPage} name="next" label="Next" onclick={handleNavigation} class="slds-m-horizontal_xx-small">
+                </lightning-button>                
+            </div>
+        </div>
+    </div>
+</template>
