@@ -8201,7 +8201,7 @@ system.debug('aqui sectorValue ' + sectorValue);
             this.email = email;
             this.phone = phone;
             this.name = name;
-			this.financialInterest = financialInterest.setScale(2);
+			this.financialInterest = (financialInterest != null) ? financialInterest.setScale(2) : financialInterest;
         }
     }
 
