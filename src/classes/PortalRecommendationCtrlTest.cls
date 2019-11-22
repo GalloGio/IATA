@@ -5,7 +5,7 @@ public class PortalRecommendationCtrlTest {
         Id airlineRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
 
         User thisUser = [SELECT Id FROM User WHERE Id = :UserInfo.getUserId()];
-        System.runAs(thisUser) {
+        
             Account acc = ISSP_ObjectFactory.createNewAccount();
             acc.Name = 'Account Test Recommendation Visibility';
             acc.Sector__c = 'Airline';
@@ -21,13 +21,18 @@ public class PortalRecommendationCtrlTest {
             insert con;
 
             User usr = ISSP_ObjectFactory.createPortalUser(con);
-
+            System.runAs(usr) {
+            Product2 prd = new Product2(
+            name ='PRd1'
+            );
+			
+            insert prd;
             Id recommendationRT = RecordTypeSingleton.getInstance().getRecordTypeId('Recommendations_Visibility__c', 'ServiceRecommendation');
             Recommendations_Visibility__c recommendation = new Recommendations_Visibility__c(
                 IsActive__c = true,
                 StartDate__c = Date.today().addDays(-2),
                 EndDate__c = Date.today().addDays(2),
-                RecordTypeId = recommendationRT
+                Product__c=prd.id
             );
             insert recommendation;
 
@@ -47,8 +52,9 @@ public class PortalRecommendationCtrlTest {
 
         Test.startTest();
         System.runAs(testUser) {
-            List<PortalRecommendationCtrl.RecommendationWrapper> recommendations = PortalRecommendationCtrl.getRecommendations('Services');
-            System.assertNotEquals(0, recommendations.size());
+            List<PortalRecommendationCtrl.RecommendationWrapper> recommendations = PortalRecommendationCtrl.getRecommendations('');
+            System.assertEquals(1, recommendations.size());
+            PortalRecommendationCtrl.getBaseURL();
         }
         Test.stopTest();
     }

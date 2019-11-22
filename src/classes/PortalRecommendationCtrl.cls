@@ -116,16 +116,22 @@ public with sharing class PortalRecommendationCtrl {
 		@AuraEnabled
 		String actionType {get; set;}
 
-		public RecommendationWrapper(String imgURL, String type, String title, String text, String informationButton, String informationButtonLink, String actionButton, String actionButtonLink, String actionType) {
-			this.imgURL = imgURL;
-			this.type = type;
-			this.title = title;
-			this.text = text;
-			this.informationButton = informationButton;
-			this.informationButtonLink = informationButtonLink;
-			this.actionButton = actionButton;
-			this.actionButtonLink = actionButtonLink;
-			this.actionType = actionType;
-		}
-	}
+        public RecommendationWrapper(String imgURL, String type, String title, String text, String informationButton, String informationButtonLink, String actionButton, String actionButtonLink, String actionType) {
+            this.imgURL = imgURL;
+            this.type = type;
+            this.title = title;
+            this.text = text;
+            this.informationButton = informationButton;
+            this.informationButtonLink = informationButtonLink;
+            this.actionButton = actionButton;
+            this.actionButtonLink = actionButtonLink;
+            this.actionType = actionType;
+        }
+    }
+
+    @AuraEnabled
+    public static String getBaseURL() {
+	return URL.getSalesforceBaseUrl().toExternalForm();
+    } 
+
 }
