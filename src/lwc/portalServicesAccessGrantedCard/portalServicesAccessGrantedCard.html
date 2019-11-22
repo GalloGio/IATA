@@ -4,10 +4,14 @@
 
         <span slot="favoriteIcon">
             <template if:true={service.isFavorite}>
-                <img src={favoriteIcon} class="favoriteIcon" onclick={changeIsFavoriteStatus}/>
+                <span title={label.CSP_Services_RemoveFavorite}>
+                    <img src={favoriteIcon} alt={label.CSP_Services_RemoveFavorite} class="favoriteIcon" onclick={changeIsFavoriteStatus}/>
+                </span>
             </template>
             <template if:false={service.isFavorite}>
-                <img src={notFavoriteIcon} class="favoriteIcon" onclick={changeIsFavoriteStatus}/>
+                <span title={label.CSP_Services_AddFavorite}>
+                    <img src={notFavoriteIcon} alt={label.CSP_Services_AddFavorite} class="favoriteIcon" onclick={changeIsFavoriteStatus}/>
+                </span>
             </template>
         </span>
 

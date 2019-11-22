@@ -14,6 +14,8 @@ import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 //import labels
 import CSP_Services_ManageService from '@salesforce/label/c.CSP_Services_ManageService';
 import CSP_Services_GoToService from '@salesforce/label/c.CSP_Services_GoToService';
+import CSP_Services_AddFavorite from '@salesforce/label/c.CSP_Services_AddFavorite';
+import CSP_Services_RemoveFavorite from '@salesforce/label/c.CSP_Services_RemoveFavorite';
 
 export default class PortalServicesAccessGrantedCard extends NavigationMixin(LightningElement) {
     /* Images */
@@ -27,7 +29,9 @@ export default class PortalServicesAccessGrantedCard extends NavigationMixin(Lig
 
     label = {
         CSP_Services_ManageService,
-        CSP_Services_GoToService
+        CSP_Services_GoToService,
+        CSP_Services_AddFavorite,
+        CSP_Services_RemoveFavorite
     };
 
     get hasIcon(){
