@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      body{
+	font-family:"Open Sans","GillSansMT","Lucida Sans Unicode", "Lucida Grande", sans-serif;
+	color:#004577;
+      }
+      
+      div.main{
+          margin:auto;
+          width:90%;
+      }
+   </style>
+  </head>
+
+  <body>
+     <div class="main">
+         <table width="640px">
+            <tr>
+                <td>
+                   <p>A new account has been registered. For full details go to:
+                   <a>{!accountUrl}</a> </p>
+                
+                   <p>Requester: {!contactName} - {!contactEmail}</p> 
+                   <span>Details:</span></br>
+                   <span>{!tradeName}</span></br>
+                   <span>{!legalName}</span></br>
+                   <span>{!address}</span></br>
+                   <span>{!phoneNumber}</span>
+               </td>
+            </tr>
+       </table>
+     </div>
+  </body>
+</html>

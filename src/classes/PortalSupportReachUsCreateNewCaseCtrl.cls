@@ -280,4 +280,10 @@ private static void createCaseTeamMemberList(Case cse, list<Contact> listContact
 	}
 	insert listCaseTeam;
 }
+
+	//Checks if user is a level 1 user (haven't completed level 2 registration)
+	@AuraEnabled
+	public static Boolean isUserLevelOne(Id userId){
+		return  [SELECT Contact.Account.Is_General_Public_Account__c  FROM User WHERE Id = :userId].Contact.Account.Is_General_Public_Account__c;
+	}
 }

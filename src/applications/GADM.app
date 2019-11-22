@@ -21,6 +21,7 @@
     <tabs>GADM_Data_Submission_Period__c</tabs>
     <tabs>Service_Notification__c</tabs>
     <tabs>File_Upload</tabs>
+    <tabs>IATA_ISO_City__c</tabs>
     <uiType>Lightning</uiType>
     <utilityBar>GADM_UtilityBar</utilityBar>
 </CustomApplication>
