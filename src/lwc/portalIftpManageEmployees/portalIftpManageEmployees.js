@@ -255,9 +255,10 @@ export default class PortalIftpManageEmployees extends LightningElement {
 
         })
         .catch(error => {
-            console.error('getITPStations - Error : ' + error);
+            console.error('getUserInfo - Error : ', error);
             this.mainErrorMessage = error;
             this.error = error;
+            fireEvent(this.pageRef, 'errorEvent', error);  
         }); 
     }
 

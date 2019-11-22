@@ -41,6 +41,7 @@ export default class PortalIftpImportEmployees extends LightningElement {
                 console.error('PortalIftpImportEmployees - getUserInfo - Error : ' + error);
                 this.mainErrorMessage = error;
                 this.error = error;
+                fireEvent(this.pageRef, 'errorEvent', error);  
             });  
 
 
@@ -98,6 +99,7 @@ export default class PortalIftpImportEmployees extends LightningElement {
                 this.mainErrorMessage = error;
                 this.error = error;
                 this.loading = false;
+                fireEvent(this.pageRef, 'errorEvent', error);  
             });      
     }
 
@@ -130,6 +132,7 @@ export default class PortalIftpImportEmployees extends LightningElement {
             console.error('handleUploadInactivateFinish - Error : ' + error);
             this.mainErrorMessage = error;
             this.error = error;
+            fireEvent(this.pageRef, 'errorEvent', error);  
         });
     }
 

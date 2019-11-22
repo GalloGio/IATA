@@ -24,9 +24,9 @@ public without sharing class PortalIftpUtils {
 
 	@AuraEnabled(cacheable=false)
 	public static UserInfoRecordsWrapper getUserInfo(){
-
+		UserInfoRecordsWrapper userInfo;
+		
 		Id userId = System.UserInfo.getUserId();
-
 		Id contactRoleId = null;
 		String contactRole = null;
 		String PortalContactRoles = null;
@@ -38,8 +38,13 @@ public without sharing class PortalIftpUtils {
 							FROM user
 							WHERE Id= :userId];
 
+		if(userAcc.ContactId == null){
+			CalloutException e = new CalloutException();
+			e.setMessage('You have been logged out. Please login again. ');
+			throw e;
+		}
 		Id accRoleRecTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Role__c', 'IFTP');
-
+	
 		Account_Role_Service__c accRoleSrv = [SELECT Id, Account_Role_Services__r.Name,
 													Account_Role__c, Account_Role__r.Status__c, Account_Role__r.RecordType.Name
 												FROM Account_Role_Service__c
@@ -71,7 +76,7 @@ public without sharing class PortalIftpUtils {
 			PortalContactRoles = lContactRole[0].Contact_Roles__r.Name;
 		}
 
-		UserInfoRecordsWrapper userInfo = new UserInfoRecordsWrapper(
+		userInfo = new UserInfoRecordsWrapper(
 			userId,
 			userAcc.contact.accountid,
 			accRoleSrv.Account_Role__c,
@@ -101,7 +106,6 @@ public without sharing class PortalIftpUtils {
 		userInfo.contactId = userAcc.contactId;
 		userInfo.accountRegion = userAcc.Contact.Account.Region_formula__c;
 		userInfo.accountCountry = userAcc.Contact.Account.IATA_ISO_Country__r.Name;
-
 
 		return userInfo;
 	}

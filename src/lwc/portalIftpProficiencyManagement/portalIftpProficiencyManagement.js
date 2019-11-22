@@ -1,7 +1,7 @@
 import { LightningElement, track, wire } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { CurrentPageReference } from 'lightning/navigation';
-import { registerListener, unregisterAllListeners} from 'c/pubsub';
+import { registerListener, unregisterAllListeners, fireEvent} from 'c/pubsub';
 
 import getTrainingRecords from '@salesforce/apex/portalIftpTrainingRecords.getTrainingRecordsForProficiencyManagement';
 import updateCertificationProficiency from '@salesforce/apex/portalIftpTrainingRecords.updateCertificationProficiency';
@@ -81,6 +81,7 @@ export default class PortalIftpProficiencyManagement extends LightningElement {
                 console.error('getCertificationTypes - Error : ' + error);
                 this.mainErrorMessage = error;
                 this.error = error;
+                fireEvent(this.pageRef, 'errorEvent', error);  
             });  
 
         this.columns = [
@@ -150,6 +151,7 @@ export default class PortalIftpProficiencyManagement extends LightningElement {
                     this.mainErrorMessage = error;
                     this.error = error;
                     this.loadingSearchCriteria = false;
+                    fireEvent(this.pageRef, 'errorEvent', error);  
                 }); 
             }
 
@@ -158,6 +160,7 @@ export default class PortalIftpProficiencyManagement extends LightningElement {
             console.error('getUserInfo - Error : ' + error);
             this.mainErrorMessage = error;
             this.error = error;
+            fireEvent(this.pageRef, 'errorEvent', error);  
         }); 
 
  
@@ -375,6 +378,7 @@ export default class PortalIftpProficiencyManagement extends LightningElement {
             this.error = error;
             this.loading = false;
             this.dataRecords = false;
+            fireEvent(this.pageRef, 'errorEvent', error);  
         });  
     }
 
@@ -442,6 +446,7 @@ export default class PortalIftpProficiencyManagement extends LightningElement {
             this.mainErrorMessage = error;
             this.error = error;
             this.loading = false;
+            fireEvent(this.pageRef, 'errorEvent', error);  
         });  
     }
 
