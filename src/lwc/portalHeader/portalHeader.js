@@ -17,6 +17,7 @@ import increaseNotificationView from '@salesforce/apex/PortalHeaderCtrl.increase
 import goToManageService from '@salesforce/apex/PortalHeaderCtrl.goToManageService';
 import goToOldChangePassword from '@salesforce/apex/PortalHeaderCtrl.goToOldChangePassword';
 import redirectChangePassword from '@salesforce/apex/PortalHeaderCtrl.redirectChangePassword';
+import getLoggedUser from '@salesforce/apex/CSP_Utils.getLoggedUser';
 
 import redirectfromPortalHeader from '@salesforce/apex/CSP_Utils.redirectfromPortalHeader';
 
@@ -254,6 +255,24 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
 
     connectedCallback() {
         
+        let cookie = this.getCookie('user_guiding');
+        
+        if(cookie === undefined || cookie === null || cookie === '') {
+            getLoggedUser()
+            .then(results => {
+                if(results.Contact !== undefined) {
+                    let userPortalStatus = results.Contact.User_Portal_Status__c !== undefined ? results.Contact.User_Portal_Status__c : '';
+                    let accountCategory = results.Contact.Account !== undefined && results.Contact.Account.Category__c !== undefined ? results.Contact.Account.Category__c : '';
+                    let accountSector = results.Contact.Account !== undefined && results.Contact.Account.Sector__c !== undefined ? results.Contact.Account.Sector__c : '';
+                    let isoCode = results.Contact.ISO_Country__r !== undefined && results.Contact.ISO_Country__r.ISO_Code__c !== undefined ? results.Contact.ISO_Country__r.ISO_Code__c : '';
+                    
+                    let userCookie = JSON.stringify(userPortalStatus + '-' + accountCategory + '-' + accountSector + '-' + isoCode);
+
+                    this.setCookie('user_guiding', userCookie, 1);
+                }
+            });
+        }
+
         this.getLanguagesOptions();
 
         isAdmin().then(result => {
@@ -644,6 +663,27 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
             }
         }
         return toReturn;
+    }
+
+    setCookie(name, value, days) {
+        let expires = "";
+        if (days) {
+          let date = new Date();
+          date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+          expires = "; expires=" + date.toUTCString();
+        }
+        document.cookie = name + "=" + (value || "") + expires + "; path=/";
+    }
+      
+    getCookie(name) {
+        let nameEQ = name + "=";
+        let ca = document.cookie.split(';');
+        for (let i = 0; i < ca.length; i++) {
+          let c = ca[i];
+          while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+          if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+        }
+        return null;
     }
 
 }
