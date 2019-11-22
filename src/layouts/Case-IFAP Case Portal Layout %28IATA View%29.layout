@@ -121,6 +121,13 @@
         <label>Agent Information</label>
         <layoutColumns>
             <layoutItems>
+                <height>50</height>
+                <page>ANG_IFAP_Notifications</page>
+                <showLabel>false</showLabel>
+                <showScrollbars>false</showScrollbars>
+                <width>100%</width>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Key_Customer_Case__c</field>
             </layoutItems>
@@ -150,6 +157,9 @@
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
+            <layoutItems>
+                <emptySpace>true</emptySpace>
+            </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
                 <field>ContactId</field>
@@ -234,8 +244,12 @@
                 <field>Third_FA_non_Compliance_Date__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>Submitted_Date__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Financial_Assessment_deadline__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -248,6 +262,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>SIDRA_Exclude_from_report_exceptions__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Exception_approved_on__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -611,6 +629,15 @@
         <fields>Financial_Institution__c</fields>
         <fields>Remarks__c</fields>
         <relatedList>Financial_Security__c.Reception_Case__c</relatedList>
+    </relatedLists>
+	<relatedLists>
+        <excludeButtons>MassChangeOwner</excludeButtons>
+        <excludeButtons>New</excludeButtons>
+        <fields>NAME</fields>
+        <fields>AMS_Financial_Review_First_Quarter__c</fields>
+        <fields>AMS_Financial_Review_Second_Quarter__c</fields>
+        <fields>AMS_Financial_Review_Third_Quarter__c</fields>
+        <relatedList>AMS_Process_Detail__c.Case__c</relatedList>
     </relatedLists>
     <relatedLists>
         <relatedList>RelatedCommentsList</relatedList>

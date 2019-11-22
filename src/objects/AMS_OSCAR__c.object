@@ -357,6 +357,50 @@
         </valueSet>
     </fields>
     <fields>
+        <fullName>ANG_GFA_Change_Assessment__c</fullName>
+        <description>GFA Change Assessment</description>
+        <externalId>false</externalId>
+        <label>GFA Change Assessment</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Low</fullName>
+                    <default>false</default>
+                    <label>Low</label>
+                </value>
+                <value>
+                    <fullName>Medium</fullName>
+                    <default>false</default>
+                    <label>Medium</label>
+                </value>
+                <value>
+                    <fullName>High</fullName>
+                    <default>false</default>
+                    <label>High</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>ANG_Hierarchy_Created__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>For Multi-country, checkbox to verify if user already defined the hierarchy before the oscar inits</description>
+        <externalId>false</externalId>
+        <inlineHelpText>For Multi-country, checkbox to verify if user already defined the hierarchy before the oscar inits</inlineHelpText>
+        <label>Hierarchy Created</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>ANG_PCI_compliance_expiry_date__c</fullName>
         <description>PCI compliance expiry date</description>
         <externalId>false</externalId>
@@ -2841,6 +2885,28 @@ IF(Financial_Assessment_received__c - Financial_Assessment_requested__c =6, TEXT
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
+   <fields>
+        <fullName>Generate_risk_event_MC__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Flag to know if we should generate a Risk Event - In case of a Change of Hierarchy that involves a Split</description>
+        <externalId>false</externalId>
+        <label>Generate risk event (MC)</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>HE_per_BSP_Mapping__c</fullName>
+        <externalId>false</externalId>
+        <label>HE per BSP Mapping</label>
+        <length>11048</length>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
     <fields>
         <fullName>IATACode__c</fullName>
         <externalId>false</externalId>
@@ -3315,9 +3381,40 @@ IF(Local_Inspection_received__c - Local_Inspection_requested__c =6, TEXT(4), TEX
     <fields>
         <fullName>New_parent__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
-        <description>On a change of hierarchy process this field determines which will be the new parent of the agencies that are changing to another hierarchy</description>
+        <description>On a change of hierarchy process this field determines which will be the new parent of the agencies that are changing to another hierarchy.
+    On a conversion from Standard to Multicountry this field is used as an auxiliary lookup to add standard hierarchies to the account selection page using the conditions on the lookup filter (only if the oscar process is ANG.CONVERT.ST.TO.MC)</description>
         <externalId>false</externalId>
         <label>New parent</label>
+        <lookupFilter>
+            <active>true</active>
+            <booleanFilter>1 OR (2 AND 3 AND 4 AND 5)</booleanFilter>
+            <filterItems>
+                <field>$Source.Process__c</field>
+                <operation>notEqual</operation>
+                <value>ANG.CONVERT.ST.TO.MC</value>
+            </filterItems>
+            <filterItems>
+                <field>Account.ANG_Accreditation_Model__c</field>
+                <operation>equals</operation>
+                <value>Cash</value>
+            </filterItems>
+            <filterItems>
+                <field>Account.Location_Type__c</field>
+                <operation>equals</operation>
+                <value>HE</value>
+            </filterItems>
+            <filterItems>
+                <field>Account.Status__c</field>
+                <operation>notEqual</operation>
+                <value>Listed, Not accreditated, Not in operation, Terminated,</value>
+            </filterItems>
+            <filterItems>
+                <field>$Source.Process__c</field>
+                <operation>equals</operation>
+                <value>ANG.CONVERT.ST.TO.MC</value>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
         <referenceTo>Account</referenceTo>
         <relationshipLabel>OSCARs (New parent)</relationshipLabel>
         <relationshipName>OSCARs2</relationshipName>
@@ -3740,9 +3837,24 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
                     <label>ANG.MAJOR.CHANGES.CHINA.1.0</label>
                 </value>
                 <value>
+                    <fullName>ANG.NEW.GE.STANDARD.1.0</fullName>
+                    <default>false</default>
+                    <label>ANG.NEW.GE.STANDARD.1.0</label>
+                </value>
+                <value>
+                    <fullName>ANG.MULTICOUNTRY.AE.1.0</fullName>
+                    <default>false</default>
+                    <label>ANG.MULTICOUNTRY.AE.1.0</label>
+                </value>
+                <value>
                     <fullName>IEP.MODEL.B.PLUS.ACCOUNT.SETUP</fullName>
                     <default>false</default>
                     <label>IEP.MODEL.B.PLUS.ACCOUNT.SETUP</label>
+                </value>
+                <value>
+                    <fullName>ANG.CONVERT.ST.TO.MC</fullName>
+                    <default>false</default>
+                    <label>ANG.CONVERT.ST.TO.MC</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -3812,8 +3924,10 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
                 <controllingFieldValue>NEW.GSA.1.0</controllingFieldValue>
                 <controllingFieldValue>NEW.GSSA.1.0</controllingFieldValue>
                 <controllingFieldValue>NEW.AHA.1.0</controllingFieldValue>
+                <controllingFieldValue>ANG.NEW.GE.STANDARD.1.0</controllingFieldValue>
                 <controllingFieldValue>NEW.SA.1.0</controllingFieldValue>
                 <controllingFieldValue>NEW.AHA.1.0.BSP</controllingFieldValue>
+                <controllingFieldValue>ANG.MULTICOUNTRY.AE.1.0</controllingFieldValue>
                 <controllingFieldValue>NEW.GSA.1.0.BSP</controllingFieldValue>
                 <controllingFieldValue>NEW.HO.1.0</controllingFieldValue>
                 <controllingFieldValue>NEW.BR</controllingFieldValue>
@@ -3824,6 +3938,7 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
                 <controllingFieldValue>BANK.ACCOUNT.CHANGES</controllingFieldValue>
                 <controllingFieldValue>MAJOR.CHANGES</controllingFieldValue>
                 <controllingFieldValue>DGR.DGA</controllingFieldValue>
+                <controllingFieldValue>ANG.CONVERT.ST.TO.MC</controllingFieldValue>
                 <valueName>Authorize Approval</valueName>
             </valueSettings>
             <valueSettings>
@@ -3837,8 +3952,10 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
                 <controllingFieldValue>NEW.GSA.1.0</controllingFieldValue>
                 <controllingFieldValue>NEW.GSSA.1.0</controllingFieldValue>
                 <controllingFieldValue>NEW.AHA.1.0</controllingFieldValue>
+                <controllingFieldValue>ANG.NEW.GE.STANDARD.1.0</controllingFieldValue>
                 <controllingFieldValue>NEW.SA.1.0</controllingFieldValue>
                 <controllingFieldValue>NEW.AHA.1.0.BSP</controllingFieldValue>
+                <controllingFieldValue>ANG.MULTICOUNTRY.AE.1.0</controllingFieldValue>
                 <controllingFieldValue>NEW.GSA.1.0.BSP</controllingFieldValue>
                 <controllingFieldValue>NEW.HO.1.0</controllingFieldValue>
                 <controllingFieldValue>NEW.BR</controllingFieldValue>
@@ -3849,6 +3966,7 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
                 <controllingFieldValue>BANK.ACCOUNT.CHANGES</controllingFieldValue>
                 <controllingFieldValue>MAJOR.CHANGES</controllingFieldValue>
                 <controllingFieldValue>DGR.DGA</controllingFieldValue>
+                <controllingFieldValue>ANG.CONVERT.ST.TO.MC</controllingFieldValue>
                 <valueName>Authorize Disapproval</valueName>
             </valueSettings>
             <valueSettings>
@@ -3862,8 +3980,10 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
                 <controllingFieldValue>NEW.GSA.1.0</controllingFieldValue>
                 <controllingFieldValue>NEW.GSSA.1.0</controllingFieldValue>
                 <controllingFieldValue>NEW.AHA.1.0</controllingFieldValue>
+                <controllingFieldValue>ANG.NEW.GE.STANDARD.1.0</controllingFieldValue>
                 <controllingFieldValue>NEW.SA.1.0</controllingFieldValue>
                 <controllingFieldValue>NEW.AHA.1.0.BSP</controllingFieldValue>
+                <controllingFieldValue>ANG.MULTICOUNTRY.AE.1.0</controllingFieldValue>
                 <controllingFieldValue>NEW.GSA.1.0.BSP</controllingFieldValue>
                 <controllingFieldValue>NEW.HO.1.0</controllingFieldValue>
                 <controllingFieldValue>NEW.BR</controllingFieldValue>
@@ -3874,6 +3994,7 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
                 <controllingFieldValue>BANK.ACCOUNT.CHANGES</controllingFieldValue>
                 <controllingFieldValue>MAJOR.CHANGES</controllingFieldValue>
                 <controllingFieldValue>DGR.DGA</controllingFieldValue>
+                <controllingFieldValue>ANG.CONVERT.ST.TO.MC</controllingFieldValue>
                 <valueName>Reprocess case</valueName>
             </valueSettings>
             <valueSettings>
@@ -7105,6 +7226,42 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
         </valueSet>
     </fields>
     <fields>
+        <fullName>STEP45__c</fullName>
+        <description>Use in the GE process for the GoGlobal Hierarchy selection - Confirm the hierarchy structure</description>
+        <externalId>false</externalId>
+        <label>STEP45</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Passed</fullName>
+                    <default>false</default>
+                    <label>Passed</label>
+                </value>
+                <value>
+                    <fullName>Failed</fullName>
+                    <default>false</default>
+                    <label>Failed</label>
+                </value>
+                <value>
+                    <fullName>Not Applicable</fullName>
+                    <default>false</default>
+                    <label>Not Applicable</label>
+                </value>
+                <value>
+                    <fullName>In Progress</fullName>
+                    <default>false</default>
+                    <label>In Progress</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
         <fullName>STEP46__c</fullName>
         <externalId>false</externalId>
         <label>STEP46</label>
@@ -8029,6 +8186,16 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Update Portal Setup</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Update_account_if_Key_multicountry__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Update account if Key multicountry</label>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -11705,6 +11872,25 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>STEP45__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>STEP46__c</picklist>
             <values>
                 <fullName>Failed</fullName>
@@ -15056,6 +15242,25 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>STEP45__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>STEP46__c</picklist>
             <values>
                 <fullName>Failed</fullName>
@@ -18352,6 +18557,25 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
         </picklistValues>
         <picklistValues>
             <picklist>STEP44__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP45__c</picklist>
             <values>
                 <fullName>Failed</fullName>
                 <default>false</default>
@@ -21733,6 +21957,25 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>STEP45__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>STEP46__c</picklist>
             <values>
                 <fullName>Failed</fullName>
@@ -25082,6 +25325,25 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
         </picklistValues>
         <picklistValues>
             <picklist>STEP44__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP45__c</picklist>
             <values>
                 <fullName>Failed</fullName>
                 <default>false</default>
@@ -28537,6 +28799,25 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
         </picklistValues>
         <picklistValues>
             <picklist>STEP44__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP45__c</picklist>
             <values>
                 <fullName>Failed</fullName>
                 <default>false</default>
@@ -35541,6 +35822,25 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>STEP45__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>STEP46__c</picklist>
             <values>
                 <fullName>Failed</fullName>
@@ -38928,6 +39228,25 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>STEP45__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>STEP46__c</picklist>
             <values>
                 <fullName>Failed</fullName>
@@ -42218,6 +42537,25 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
         </picklistValues>
         <picklistValues>
             <picklist>STEP44__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP45__c</picklist>
             <values>
                 <fullName>Failed</fullName>
                 <default>false</default>
@@ -45691,6 +46029,25 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>STEP45__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>STEP46__c</picklist>
             <values>
                 <fullName>Failed</fullName>
@@ -47795,6 +48152,25 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
         </picklistValues>
         <picklistValues>
             <picklist>STEP44__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP45__c</picklist>
             <values>
                 <fullName>Failed</fullName>
                 <default>false</default>
@@ -49934,6 +50310,25 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>STEP45__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>STEP46__c</picklist>
             <values>
                 <fullName>Failed</fullName>
@@ -52030,6 +52425,25 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>STEP45__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>STEP46__c</picklist>
             <values>
                 <fullName>Failed</fullName>
@@ -54020,6 +54434,25 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
         </picklistValues>
         <picklistValues>
             <picklist>STEP44__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP45__c</picklist>
             <values>
                 <fullName>Failed</fullName>
                 <default>false</default>
@@ -56038,6 +56471,25 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
         </picklistValues>
         <picklistValues>
             <picklist>STEP44__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP45__c</picklist>
             <values>
                 <fullName>Failed</fullName>
                 <default>false</default>
@@ -59355,6 +59807,25 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
         </picklistValues>
         <picklistValues>
             <picklist>STEP44__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP45__c</picklist>
             <values>
                 <fullName>Failed</fullName>
                 <default>false</default>
@@ -62764,6 +63235,25 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>STEP45__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>STEP46__c</picklist>
             <values>
                 <fullName>Failed</fullName>
@@ -64746,6 +65236,25 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>STEP45__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>STEP46__c</picklist>
             <values>
                 <fullName>Failed</fullName>
@@ -65135,7 +65644,7 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
         <fullName>ANG_Block_sanity_check</fullName>
         <active>true</active>
         <description>Cannot set sanity check as &quot;Passed&quot; if the &quot;change effective as of&quot; is empty or in the future</description>
-        <errorConditionFormula>TEXT(Process__c)  = &apos;ANG.MAJOR.CHANGES.1.0&apos; &amp;&amp;  TEXT(STEP6__c) = &apos;Passed&apos;  &amp;&amp;  (Change_effective_as_of__c &gt;  TODAY() || ISBLANK(Change_effective_as_of__c))</errorConditionFormula>
+        <errorConditionFormula>OR(ISPICKVAL(Process__c, &apos;ANG.CONVERT.ST.TO.MC&apos;), ISPICKVAL(Process__c, &apos;ANG.MAJOR.CHANGES.1.0&apos;)) &amp;&amp; TEXT(STEP6__c) = &apos;Passed&apos;  &amp;&amp;  (Change_effective_as_of__c &gt;  TODAY() || ISBLANK(Change_effective_as_of__c))</errorConditionFormula>
         <errorMessage>Cannot set sanity check as &quot;Passed&quot; if the &quot;Change effective as of&quot; is empty or in the future</errorMessage>
     </validationRules>
     <validationRules>
@@ -65196,7 +65705,8 @@ NOT(ISPICKVAL(STEP35__c, &quot;Passed&quot;)),
 OR(
 ISPICKVAL(Process__c, &quot;ANG.MAJOR.CHANGES.1.0&quot;),
 ISPICKVAL(Process__c, &quot;ANG.NEW.HE.LITE.1.0&quot;),
-ISPICKVAL(Process__c, &quot;ANG.NEW.HE.STANDARD.1.0&quot;)
+ISPICKVAL(Process__c, &quot;ANG.NEW.HE.STANDARD.1.0&quot;),
+ISPICKVAL(Process__c, &quot;ANG.NEW.GE.STANDARD.1.0&quot;)
 )
 )</errorConditionFormula>
         <errorMessage>If &quot;Request financial security&quot; step is set to passed and &quot;Confirm financial security received&quot; is not set to passed then the Manager is not allowed to approve the OSCAR</errorMessage>
@@ -65415,10 +65925,16 @@ NOT( OR( ISPICKVAL(Account__r.Location_Class__c,&quot;P&quot;),ISPICKVAL(Account
         <masterLabel>Edit the accounts involved</masterLabel>
         <openType>onClickJavaScript</openType>
         <protected>false</protected>
-        <url>if (sforce.console.isInConsole()) { 
-   srcUp(&quot;/apex/ANG_AccountHierarchySelection?id={!AMS_OSCAR__c.Id}&quot;);
+        <url>var targetUrl = &quot;/apex/ANG_AccountHierarchySelection?id={!AMS_OSCAR__c.Id}&quot;;
+
+if(&quot;{!AMS_OSCAR__c.Process__c}&quot; == &quot;ANG.CONVERT.ST.TO.MC&quot;){
+targetUrl = &quot;/apex/ANG_MulticountryConversionAccountSelect?Id={!AMS_OSCAR__c.Id}&quot;;
+}
+
+if (sforce.console.isInConsole()) { 
+srcUp(targetUrl);
 } else { 
-   window.open(&quot;/apex/ANG_AccountHierarchySelection?id={!AMS_OSCAR__c.Id}&quot;);
+window.open(targetUrl);
 }</url>
     </webLinks>
     <webLinks>
@@ -65527,5 +66043,19 @@ window.open(&quot;/apex/AMS_OSCAR_Attachment_List?id={!AMS_OSCAR__c.Id}&quot;);
         <protected>false</protected>
         <requireRowSelection>true</requireRowSelection>
         <url>javascript:srcUp(&quot;/apex/OSCARWizzardFlowPage&quot;);</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Open_Account_Creator</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Open Account Creator</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>if (sforce.console.isInConsole()) { 
+srcUp(&quot;/apex/ANG_MulticountryAccountCreator?id={!AMS_OSCAR__c.Id}&quot;); 
+} else { 
+window.open(&quot;/apex/ANG_MulticountryAccount?id={!AMS_OSCAR__c.Id}&quot;); 
+}</url>
     </webLinks>
 </CustomObject>
