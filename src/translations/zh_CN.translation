@@ -1757,6 +1757,14 @@
         <name>CC</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_ALPHAFILTER_All --></label>
+        <name>CSP_ALPHAFILTER_All</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_ALPHAFILTER_Other --></label>
+        <name>CSP_ALPHAFILTER_Other</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_AMS_StepFinal_In_Addition2 --></label>
         <name>CSP_AMS_StepFinal_In_Addition2</name>
     </customLabels>
@@ -1861,6 +1869,10 @@
         <name>CSP_Breadcrump_You_IATA</name>
     </customLabels>
     <customLabels>
+        <label>网上购物</label>
+        <name>CSP_Buy_Online</name>
+    </customLabels>
+    <customLabels>
         <label>取消</label>
         <name>CSP_Cancel</name>
     </customLabels>
@@ -1907,6 +1919,10 @@
     <customLabels>
         <label><!-- CSP_Case_Currency --></label>
         <name>CSP_Case_Currency</name>
+    </customLabels>
+    <customLabels>
+        <label>案例详情</label>
+        <name>CSP_Case_Details</name>
     </customLabels>
     <customLabels>
         <label>案例</label>
@@ -1979,6 +1995,14 @@
     <customLabels>
         <label>您的{0}访问请求已发送给门户网站管理员。如果您对此过程有任何疑问或要求，可以联系以下管理员：</label>
         <name>CSP_Confirmed_Requested_Service_Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Contacts_NoResults_text1 --></label>
+        <name>CSP_Contacts_NoResults_text1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Contacts_NoResults_text2 --></label>
+        <name>CSP_Contacts_NoResults_text2</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_Continue --></label>
@@ -2641,6 +2665,10 @@
         <name>CSP_LastUpdate</name>
     </customLabels>
     <customLabels>
+        <label>了解更多</label>
+        <name>CSP_Learn_More</name>
+    </customLabels>
+    <customLabels>
         <label>登出</label>
         <name>CSP_LogOut</name>
     </customLabels>
@@ -2789,6 +2817,10 @@
         <name>CSP_Payment</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_PendingApproval --></label>
+        <name>CSP_PendingApproval</name>
+    </customLabels>
+    <customLabels>
         <label>我们需要您的意见来继续处理您的案例。</label>
         <name>CSP_PendingCustomerCase_Warning</name>
     </customLabels>
@@ -2815,6 +2847,14 @@
     <customLabels>
         <label>门户状态</label>
         <name>CSP_Portal_Status</name>
+    </customLabels>
+    <customLabels>
+        <label>打印</label>
+        <name>CSP_Print</name>
+    </customLabels>
+    <customLabels>
+        <label>打印的日期</label>
+        <name>CSP_Printed_date</name>
     </customLabels>
     <customLabels>
         <label>我同意 IATA 的 &lt;a target=&quot;_blank&quot; href=&quot;https://www.iata.org/Pages/privacy.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;隐私政策&lt;/a&gt; 和 &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-portal/Pages/terms.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;使用条款。&lt;/a&gt;</label>
@@ -3143,6 +3183,14 @@
     <customLabels>
         <label>提交</label>
         <name>CSP_Submit</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_SubmitApproval --></label>
+        <name>CSP_SubmitApproval</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_SubmittedApproval --></label>
+        <name>CSP_SubmittedApproval</name>
     </customLabels>
     <customLabels>
         <label>成功！</label>
