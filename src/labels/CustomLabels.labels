@@ -3272,8 +3272,8 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP_Breadcrump_You_IATA</shortDescription>
         <value>You &amp; IATA</value>
-	</labels>
-	<labels>
+    </labels>
+    <labels>
         <fullName>CSP_Buy_Online</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -3371,18 +3371,19 @@ Payment required on receipt of this Payment Advice
         <value>Case Currency</value>
     </labels>
     <labels>
+        <fullName>CSP_Case_Details</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Case_Details</shortDescription>
+        <value>Case-Detail_</value>
+    </labels>
+    <labels>
         <fullName>CSP_Cases</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_Cases</shortDescription>
         <value>Cases</value>
-    </labels>
-    <labels>
-        <fullName>CSP_Case_Details</fullName>
-        <language>en_US</language>
-        <shortDescription>CSP_Case_Details</shortDescription>
-        <value>Case-Detail_</value>
     </labels>
     <labels>
         <fullName>CSP_Change_Email</fullName>
@@ -4096,13 +4097,6 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP Invalid Email</shortDescription>
         <value>Invalid email</value>
-    </labels>
-    <labels>
-        <fullName>CSP_Learn_More</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP Learn More</shortDescription>
-        <value>Learn More</value>
     </labels>
     <labels>
         <fullName>CSP_L2_Account_Information</fullName>
@@ -4852,6 +4846,13 @@ You can easily create a company account in two steps</value>
         <value>Last Update</value>
     </labels>
     <labels>
+        <fullName>CSP_Learn_More</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Learn More</shortDescription>
+        <value>Learn More</value>
+    </labels>
+    <labels>
         <fullName>CSP_LogOut</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -5207,12 +5208,14 @@ You can easily create a company account in two steps</value>
     <labels>
         <fullName>CSP_Print</fullName>
         <language>en_US</language>
+        <protected>false</protected>
         <shortDescription>CSP_Print</shortDescription>
         <value>Print</value>
     </labels>
     <labels>
         <fullName>CSP_Printed_date</fullName>
         <language>en_US</language>
+        <protected>false</protected>
         <shortDescription>CSP_Printed_date</shortDescription>
         <value>Printed date</value>
     </labels>
@@ -5880,7 +5883,7 @@ Click &lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.as
         <protected>false</protected>
         <shortDescription>CSP_SubmittedApproval</shortDescription>
         <value>The record was submitted for approval</value>
-    </labels>       
+    </labels>
     <labels>
         <fullName>CSP_Success</fullName>
         <categories>CS Portal</categories>
@@ -37835,7 +37838,7 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_Online Help Link</shortDescription>
-        <value>http://extranet.iata.org/registration/pages/loginproblem.aspx</value>
+        <value>http://www.iata.org/customer-portal/Pages/contactus-v2.aspx</value>
     </labels>
     <labels>
         <fullName>OneId_Password</fullName>

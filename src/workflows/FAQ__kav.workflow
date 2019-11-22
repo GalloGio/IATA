@@ -8,7 +8,7 @@
             <type>creator</type>
         </recipients>
         <senderType>CurrentUser</senderType>
-        <template>unfiled$public/FAQ_Validated</template>
+        <template>FAQ/FAQ_Validated</template>
     </alerts>
     <fieldUpdates>
         <fullName>Check_New_Article</fullName>

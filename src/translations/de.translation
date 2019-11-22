@@ -1761,6 +1761,14 @@
         <name>CC</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_ALPHAFILTER_All --></label>
+        <name>CSP_ALPHAFILTER_All</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_ALPHAFILTER_Other --></label>
+        <name>CSP_ALPHAFILTER_Other</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_AMS_StepFinal_In_Addition2 --></label>
         <name>CSP_AMS_StepFinal_In_Addition2</name>
     </customLabels>
@@ -1865,6 +1873,10 @@
         <name>CSP_Breadcrump_You_IATA</name>
     </customLabels>
     <customLabels>
+        <label>Online kaufen</label>
+        <name>CSP_Buy_Online</name>
+    </customLabels>
+    <customLabels>
         <label>Stornieren</label>
         <name>CSP_Cancel</name>
     </customLabels>
@@ -1911,6 +1923,10 @@
     <customLabels>
         <label><!-- CSP_Case_Currency --></label>
         <name>CSP_Case_Currency</name>
+    </customLabels>
+    <customLabels>
+        <label>Falldetails</label>
+        <name>CSP_Case_Details</name>
     </customLabels>
     <customLabels>
         <label>Fälle</label>
@@ -1983,6 +1999,14 @@
     <customLabels>
         <label>Ihre {0} Zugriffsanfrage wurde an die Administratoren des Portals übermittelt. Wenn Sie Fragen oder Wünsche zu diesem Vorgang haben, können Sie sich an einen der folgenden Administratoren wenden:</label>
         <name>CSP_Confirmed_Requested_Service_Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Contacts_NoResults_text1 --></label>
+        <name>CSP_Contacts_NoResults_text1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Contacts_NoResults_text2 --></label>
+        <name>CSP_Contacts_NoResults_text2</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_Continue --></label>
@@ -2645,6 +2669,10 @@
         <name>CSP_LastUpdate</name>
     </customLabels>
     <customLabels>
+        <label>Mehr erfahren</label>
+        <name>CSP_Learn_More</name>
+    </customLabels>
+    <customLabels>
         <label>Logout</label>
         <name>CSP_LogOut</name>
     </customLabels>
@@ -2793,6 +2821,10 @@
         <name>CSP_Payment</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_PendingApproval --></label>
+        <name>CSP_PendingApproval</name>
+    </customLabels>
+    <customLabels>
         <label>Wir benötigen Ihre Eingaben, um mit Ihrem Fall fortzufahren.</label>
         <name>CSP_PendingCustomerCase_Warning</name>
     </customLabels>
@@ -2819,6 +2851,14 @@
     <customLabels>
         <label>Portalstatus</label>
         <name>CSP_Portal_Status</name>
+    </customLabels>
+    <customLabels>
+        <label>Drucken</label>
+        <name>CSP_Print</name>
+    </customLabels>
+    <customLabels>
+        <label>Druckdatum</label>
+        <name>CSP_Printed_date</name>
     </customLabels>
     <customLabels>
         <label>Ich stimme mit International Air Transport Association (IATA)s 
@@ -3149,6 +3189,14 @@ und &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-port
     <customLabels>
         <label>Einreichen</label>
         <name>CSP_Submit</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_SubmitApproval --></label>
+        <name>CSP_SubmitApproval</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_SubmittedApproval --></label>
+        <name>CSP_SubmittedApproval</name>
     </customLabels>
     <customLabels>
         <label>Erfolgreicher Abschluss</label>
