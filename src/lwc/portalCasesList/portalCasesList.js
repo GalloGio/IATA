@@ -371,4 +371,15 @@ export default class PortalCasesList extends NavigationMixin(LightningElement) {
         return picklistAux.concat(picklist);
     }
 
+    handleSelectedPage(event) {
+        //the event contains the selected page
+        this.loading = true;
+        let requestedPage = event.detail;
+        this.pageNumber = requestedPage - 1;
+        let paginationObjectAux = JSON.parse(JSON.stringify(this.paginationObject));
+        paginationObjectAux.currentPage = requestedPage;
+        this.paginationObject = paginationObjectAux;
+        this.retrieveResultsFromServer();
+    }
+
 }
