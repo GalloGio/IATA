@@ -1427,6 +1427,24 @@ public static Boolean grantAccess(string contactId,string serviceId,string reaso
 				return true;
 			}
 			return false;
+
+		}
+		catch(Exception ex){
+			System.debug('ERROR ' + ex.getMessage());
+			return false;
+		}
+	}
+
+	@AuraEnabled
+	public static Boolean createPortalApplicationRight(String portalApplicationId){
+		try{
+			Portal_Application_Right__c par = new Portal_Application_Right__c(
+				Portal_Application__c = portalApplicationId,
+				Contact__c = DAL_ISSP.getUser(Userinfo.getUserId()).ContactId,
+				Last_Visit_Date__c = Datetime.now()
+			);
+			insert par;
+			return true;
 		}
 		catch(Exception ex){
 			System.debug('ERROR ' + ex.getMessage());

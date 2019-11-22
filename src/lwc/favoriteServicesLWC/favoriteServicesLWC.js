@@ -4,6 +4,7 @@ import getFavoriteServicesList from '@salesforce/apex/PortalServicesCtrl.getFavo
 import goToOldPortalService from '@salesforce/apex/PortalServicesCtrl.goToOldPortalService';
 import paymentLinkRedirect from '@salesforce/apex/PortalServicesCtrl.paymentLinkRedirect';
 import changeIsFavoriteStatus from '@salesforce/apex/PortalServicesCtrl.changeIsFavoriteStatus';
+import createPortalApplicationRight from '@salesforce/apex/PortalServicesCtrl.createPortalApplicationRight';
 
 import { updateRecord } from 'lightning/uiRecordApi';
 
@@ -247,8 +248,9 @@ export default class FavoriteServicesLWC extends LightningElement {
         const requestable = event.target.attributes.getNamedItem('data-requestable');
         const recordId = event.target.attributes.getNamedItem('data-recordid');
         const recordName = event.target.attributes.getNamedItem('data-recordname');
-        if (requestable.value === 'true') {
-            // update Last Visit Date on record only if the clicked service is requestable
+        if (recordId !== null) {
+            alert(recordId.value);
+            // update Last Visit Date on record only if portal application right exists
             // Create the recordInput object
             const fields = {};
             fields.Id = recordId.value;
@@ -256,6 +258,13 @@ export default class FavoriteServicesLWC extends LightningElement {
             const recordInput = { fields };
 
             updateRecord(recordInput)
+                .then(() => {
+                    console.info('Updated Last Visit Date successfully!');
+                });
+        }
+        else{
+            const pa = event.target.attributes.getNamedItem('data-application-id');
+            createPortalApplicationRight({portalApplicationId:pa.value})
                 .then(() => {
                     console.info('Updated Last Visit Date successfully!');
                 });
