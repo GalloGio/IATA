@@ -1,0 +1,26 @@
+<template>
+    <div class="slds-grid slds-wrap containerHeight">
+        <div class="slds-col slds-large-size_1-of-1 slds-medium-size_1-of-1 slds-small-size_1-of-1 slds-order--1 slds-large-order--1 slds-medium-order--1 bodyContent" >
+            <div class="contentWrapper">
+                <div class="customPaddingHeader">
+                    <c-portal-login-header onlanguagechange={handleLanguageChange} preventrefresh=false></c-portal-login-header>
+                </div>
+                <div class="slds-grid slds-grid_align-center">
+                    <div style="max-width:448px; width:100%;" class="customPadding">
+                        <div class="slds-p-bottom_large logoMobile">
+                            <img src={logoIcon}/>
+                        </div>
+                        <slot name="pageBody"></slot>
+                    </div>
+                </div>
+                <div class="loginFooter">
+                    <div class="footerlinks">
+                        <a class="leftLink" href={labels.csp_Footer_Privacy_URL}>{labels.ISSP_Registration_Privacy}</a>
+                        <span>|</span>
+                        <a class="rightLink" href={labels.csp_Footer_Legal_URL}>{labels.ISSP_Registration_Legal}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

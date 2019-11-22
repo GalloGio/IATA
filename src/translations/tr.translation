@@ -1757,6 +1757,14 @@
         <name>CC</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_ALPHAFILTER_All --></label>
+        <name>CSP_ALPHAFILTER_All</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_ALPHAFILTER_Other --></label>
+        <name>CSP_ALPHAFILTER_Other</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_AMS_StepFinal_In_Addition2 --></label>
         <name>CSP_AMS_StepFinal_In_Addition2</name>
     </customLabels>
@@ -1861,6 +1869,10 @@
         <name>CSP_Breadcrump_You_IATA</name>
     </customLabels>
     <customLabels>
+        <label>Çevrim içi satın alın</label>
+        <name>CSP_Buy_Online</name>
+    </customLabels>
+    <customLabels>
         <label>İptal et</label>
         <name>CSP_Cancel</name>
     </customLabels>
@@ -1909,8 +1921,44 @@
         <name>CSP_Case_Currency</name>
     </customLabels>
     <customLabels>
+        <label>Vaka Detayları</label>
+        <name>CSP_Case_Details</name>
+    </customLabels>
+    <customLabels>
         <label>Sorgular</label>
         <name>CSP_Cases</name>
+    </customLabels>
+    <customLabels>
+        <label>E-posta adresinizi değiştirin</label>
+        <name>CSP_Change_Email</name>
+    </customLabels>
+    <customLabels>
+        <label>Şifre Değiştirin</label>
+        <name>CSP_Change_Password</name>
+    </customLabels>
+    <customLabels>
+        <label>Yeni şifreniz ayarlanamadı.</label>
+        <name>CSP_Change_Password_Error</name>
+    </customLabels>
+    <customLabels>
+        <label>Lütfen mevcut şifrenizi girin, sonra yeni bir şifre ayarlayın ve onaylayın.</label>
+        <name>CSP_Change_Password_Info_1</name>
+    </customLabels>
+    <customLabels>
+        <label>Şifre en az bir büyük harf, bir rakam ve bir sembol içeren 10 veya daha fazla karakter içermelidir. (!@ # $% * () _ + ^ &amp;)</label>
+        <name>CSP_Change_Password_Info_2</name>
+    </customLabels>
+    <customLabels>
+        <label>Erişim bilgilerinizi almak için lütfen e-postanızı kontrol edin</label>
+        <name>CSP_Check_Email</name>
+    </customLabels>
+    <customLabels>
+        <label>Şifre başarıyla ayarlandı.</label>
+        <name>CSP_Chg_Pass_Success_Msg_1</name>
+    </customLabels>
+    <customLabels>
+        <label>Giriş yapmak için yeni şifrenizi kullanabilirsiniz.</label>
+        <name>CSP_Chg_Pass_Success_Msg_2</name>
     </customLabels>
     <customLabels>
         <label>Topluluk</label>
@@ -1929,6 +1977,10 @@
         <name>CSP_CompanyProfile</name>
     </customLabels>
     <customLabels>
+        <label>Profilinizi Tamamlayın</label>
+        <name>CSP_Complete_Profile</name>
+    </customLabels>
+    <customLabels>
         <label>&lt;b&gt;{1}&lt;/b&gt; için &lt;b&gt;{0}&lt;/b&gt; işlemine erişimi reddetmek istediğinizden emin misiniz?</label>
         <name>CSP_Confirm_Deny_User_Access</name>
     </customLabels>
@@ -1937,8 +1989,20 @@
         <name>CSP_Confirm_Grant_User_Access</name>
     </customLabels>
     <customLabels>
+        <label>IATA Müşteri Portalı E-posta Onayı</label>
+        <name>CSP_Confirmation_Email_Subject</name>
+    </customLabels>
+    <customLabels>
         <label>{0} erişim isteğiniz portal yöneticilerine iletildi. İşlemle ilgili herhangi bir sorunuz veya talebiniz varsa, aşağıdaki bir yöneticiyle iletişime geçebilirsiniz:</label>
         <name>CSP_Confirmed_Requested_Service_Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Contacts_NoResults_text1 --></label>
+        <name>CSP_Contacts_NoResults_text1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Contacts_NoResults_text2 --></label>
+        <name>CSP_Contacts_NoResults_text2</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_Continue --></label>
@@ -1947,6 +2011,22 @@
     <customLabels>
         <label><!-- Create_Contact_Complete_Field --></label>
         <name>CSP_Create_Contact_Complete_Field</name>
+    </customLabels>
+    <customLabels>
+        <label>IATA Müşteri Portalı‘nda yeni misiniz?</label>
+        <name>CSP_Create_New_Account_Info</name>
+    </customLabels>
+    <customLabels>
+        <label>Yeni hesap oluşturun</label>
+        <name>CSP_Create_New_Account_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>Şifre oluşturun</label>
+        <name>CSP_Create_Password</name>
+    </customLabels>
+    <customLabels>
+        <label>Yeni şifreniz ayarlanamadı. Lütfen tekrar deneyin.</label>
+        <name>CSP_Create_Password_Error</name>
     </customLabels>
     <customLabels>
         <label>Tarihinde düzenlendi</label>
@@ -1959,6 +2039,10 @@
     <customLabels>
         <label><!-- CSP_DateTo --></label>
         <name>CSP_DateTo</name>
+    </customLabels>
+    <customLabels>
+        <label>Sayın</label>
+        <name>CSP_Dear</name>
     </customLabels>
     <customLabels>
         <label>Kullanıcı Erişimini Reddedin</label>
@@ -1985,8 +2069,80 @@
         <name>CSP_Documents_PubliCountry</name>
     </customLabels>
     <customLabels>
+        <label>E-posta</label>
+        <name>CSP_Email</name>
+    </customLabels>
+    <customLabels>
+        <label>IATA Müşteri Portalı&apos;na kaydolduğunuz için teşekkür ederiz. Erişim almanıza sadece bir adım kaldı!</label>
+        <name>CSP_Email_Confirmation_Body_Part_1</name>
+    </customLabels>
+    <customLabels>
+        <label>Lütfen e-posta adresinizi</label>
+        <name>CSP_Email_Confirmation_Body_Part_2</name>
+    </customLabels>
+    <customLabels>
+        <label>Güvenlik sebepleri nedeniyle bu link 8 saat geçerli olacaktır. Linkin süresi dolduktan sonra, isteğinizi tekrar göndermeniz gerekecektir.</label>
+        <name>CSP_Email_Confirmation_Body_Part_3</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP Email Domain Error Message --></label>
         <name>CSP_Email_Domain_Error_Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Footer Image --></label>
+        <name>CSP_Email_Footer_Image</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Header Image --></label>
+        <name>CSP_Email_Header_Image</name>
+    </customLabels>
+    <customLabels>
+        <label>yapabilirsiniz</label>
+        <name>CSP_Email_Here</name>
+    </customLabels>
+    <customLabels>
+        <label>IATA Müşteri Portalı şifrenizi sıfırlama isteğiniz bize ulaştı.</label>
+        <name>CSP_Email_Password_Reset_Body_Part_1</name>
+    </customLabels>
+    <customLabels>
+        <label>Yeni bir şifre</label>
+        <name>CSP_Email_Password_Reset_Body_Part_2</name>
+    </customLabels>
+    <customLabels>
+        <label>lütfen buraya tıklayın.</label>
+        <name>CSP_Email_Password_Reset_Body_Part_3</name>
+    </customLabels>
+    <customLabels>
+        <label>Güvenlik sebepleri nedeniyle bu link 8 saat geçerli olacaktır. Linkin süresi dolduktan sonra, isteğinizi yeniden göndermeniz gerekecektir.</label>
+        <name>CSP_Email_Password_Reset_Body_Part_4</name>
+    </customLabels>
+    <customLabels>
+        <label>IATA&apos;in bir parçası olduğunuz için teşekkür ederiz.</label>
+        <name>CSP_Email_Signature_Part_1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Signature Part 2 --></label>
+        <name>CSP_Email_Signature_Part_2</name>
+    </customLabels>
+    <customLabels>
+        <label>IATA Müşteri Portalımızda bizimle olmanızdan mutluluk duyuyoruz.</label>
+        <name>CSP_Email_Welcome_Part_1</name>
+    </customLabels>
+    <customLabels>
+        <label>IATA Müşteri Portalı; size özel olarak hazırlanmış faydalı hizmetler, ürün bilgileri, yararlı ipuçları ve püf noktaları ile doludur. Portalı canlı sohbet veya çevrimiçi mağazamızdan doğrudan alışveriş de yapmak dahil olmak üzere, Müşteri Hizmetleri Ekibimizle kolayca iletişim kurmak için kullanabilirsiniz. Burası IATA&apos;e (Uluslararası Hava Taşımacılığı Birliği) açılan kapınızdır!</label>
+        <name>CSP_Email_Welcome_Part_2</name>
+    </customLabels>
+    <customLabels>
+        <label>&lt;a href=&quot;{!Portal_Url}&quot;&gt;Beni Portala götürün!&lt;/a&gt;</label>
+        <name>CSP_Email_Welcome_Part_3</name>
+    </customLabels>
+    <customLabels>
+        <label>IATA Müşteri Portalı deneyiminizi daha da geliştirmek için, istediğiniz zaman hesap bilgilerinizi tamamlayabilirsiniz. Buraya tıklayarak bunu kolayca</label>
+        <name>CSP_Email_Welcome_Part_4</name>
+    </customLabels>
+    <customLabels>
+        <label>Umarız IATA Müşteri Portalımızdan hoşnut kalırsınız!</label>
+        <name>CSP_Email_Welcome_Part_5</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP Error Creating Record --></label>
@@ -1999,6 +2155,26 @@
     <customLabels>
         <label><!-- CSP Error while delete record --></label>
         <name>CSP_Error_while_delete_record</name>
+    </customLabels>
+    <customLabels>
+        <label>Görünüşe göre siz zaten bir portal kullanıcısısınız. Lütfen şifrenizle giriş yapın.</label>
+        <name>CSP_Existing_User_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Lütfen e-postanızı kontrol edin ve şifre oluştur bağlantısını tıklayın.</label>
+        <name>CSP_Expired_Email_Success_Msg</name>
+    </customLabels>
+    <customLabels>
+        <label>Doğrulama bağlantısının süresi doldu.</label>
+        <name>CSP_Expired_Link_Msg_1</name>
+    </customLabels>
+    <customLabels>
+        <label>Güvenlik nedeniyle, doğrulama bağlantısının geçerliliği 8 saat sonra sona eriyor.</label>
+        <name>CSP_Expired_Link_Msg_2</name>
+    </customLabels>
+    <customLabels>
+        <label>Lütfen e-postanızı kontrol edin ve şifre oluştur bağlantısını tıklayın.</label>
+        <name>CSP_Expired_Reset_Password_Msg</name>
     </customLabels>
     <customLabels>
         <label>Bize Ulaşın</label>
@@ -2015,6 +2191,10 @@
     <customLabels>
         <label>Sık Sorulan Sorular</label>
         <name>CSP_FAQ_HeaderTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>SSS bölümümüze gidin</label>
+        <name>CSP_FAQ_Label</name>
     </customLabels>
     <customLabels>
         <label>Ana kategorilerden birini seçin</label>
@@ -2053,8 +2233,44 @@
         <name>CSP_Filtered</name>
     </customLabels>
     <customLabels>
+        <label>Hesabınız başarıyla oluşturuldu! Portal özelliklerimizi şimdiden keşfedebilirsiniz. Daha fazla kişiselleştirilmiş içerik için lütfen profilinizi tamamlayın.</label>
+        <name>CSP_First_Login_Desc</name>
+    </customLabels>
+    <customLabels>
+        <label>Aramıza hoşgeldiniz</label>
+        <name>CSP_First_Login_Title</name>
+    </customLabels>
+    <customLabels>
         <label>Sizin İçin</label>
         <name>CSP_ForYou</name>
+    </customLabels>
+    <customLabels>
+        <label>Parolanızı mı unuttunuz?</label>
+        <name>CSP_Forgot_Password</name>
+    </customLabels>
+    <customLabels>
+        <label>E-postanız için kayıtlı bir kullanıcımız yok gibi görünüyor. Kolayca yeni bir hesap oluşturabilirsiniz.</label>
+        <name>CSP_Forgot_Password_Error_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Şifrenizi sıfırlamak için lütfen kayıtlı e-posta adresinizi girin. E-postanıza bir sıfırlama bağlantısı göndereceğiz.</label>
+        <name>CSP_Forgot_Password_Info</name>
+    </customLabels>
+    <customLabels>
+        <label>Lütfen önce spam klasörünüzü kontrol edin. Spam klasöründe hiçbir şey bulamazsanız, lütfen Tekrar Dene&apos;ye tıklayarak şifrenizi tekrar sıfırlamayı deneyin.</label>
+        <name>CSP_Forgot_Password_Retry_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Bir e-posta almadınız mı?</label>
+        <name>CSP_Forgot_Password_Retry_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Lütfen e-postanızı kontrol edin ve şifre sıfırlama bağlantısını tıklayın</label>
+        <name>CSP_Forgot_Password_Success_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Son 90 gün içerisinde giriş yapmadığınızdan, size yeni şifre içeren bir e-posta gönderdik.</label>
+        <name>CSP_Frozen_User_Message</name>
     </customLabels>
     <customLabels>
         <label>Kullanıcıya Erişim İzni Verin</label>
@@ -2073,12 +2289,432 @@
         <name>CSP_IMPORTANT</name>
     </customLabels>
     <customLabels>
+        <label>Geçersiz e-posta</label>
+        <name>CSP_Invalid_Email</name>
+    </customLabels>
+    <customLabels>
+        <label>Şirket Hesap Bilgisi</label>
+        <name>CSP_L2_Account_Information</name>
+    </customLabels>
+    <customLabels>
+        <label>Şirket hesabınızı bulmak için aşağıdaki bilgileri doldurun.</label>
+        <name>CSP_L2_Account_Information_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Hesap Seçimi</label>
+        <name>CSP_L2_Account_Selection</name>
+    </customLabels>
+    <customLabels>
+        <label>Kişisel profilinizi şirket hesabınızla eşleştirmek için daha fazla ayrıntıya ihtiyacımız var. Bu, şirketinizin zaten IATA &apos;da kayıtlı olup olmadığını kontrol etmemize yardımcı olacaktır.</label>
+        <name>CSP_L2_Account_Selection_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Adresinizi bulamadık. Adresinizin doğru olduğunu onaylamak için lütfen Sonraki Adım düğmesini tıklayın.</label>
+        <name>CSP_L2_Address_Not_Found_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Profilinizi daha önce tamamladığınız görülüyor bu yüzden ihtiyacımız olan tüm bilgiler elimizde</label>
+        <name>CSP_L2_Already_L2_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Her şey hazır!</label>
+        <name>CSP_L2_Already_L2_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Şirket Hesap Bilgisine Geri Dönün</label>
+        <name>CSP_L2_Back_to_Account_Selection</name>
+    </customLabels>
+    <customLabels>
+        <label>İş Adres Bilgisi&apos;ne Geri Dönün</label>
+        <name>CSP_L2_Back_to_Business_Address_Information</name>
+    </customLabels>
+    <customLabels>
+        <label>Şirket Bilgisi&apos;ne Geri Dönün</label>
+        <name>CSP_L2_Back_to_Company_Information</name>
+    </customLabels>
+    <customLabels>
+        <label>Düzenlemeye geri dönün</label>
+        <name>CSP_L2_Back_to_Edit</name>
+    </customLabels>
+    <customLabels>
+        <label>Profil Detaylarına Geri Dönün</label>
+        <name>CSP_L2_Back_to_Profile_Details</name>
+    </customLabels>
+    <customLabels>
+        <label>Profil Tamamlama &amp; Hesap Seçimi</label>
+        <name>CSP_L2_Banner_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>İş Adresi Bilgileri</label>
+        <name>CSP_L2_Business_Address_Information</name>
+    </customLabels>
+    <customLabels>
+        <label>Lütfen işletme adres bilgilerinizi doldurun.</label>
+        <name>CSP_L2_Business_Address_Information_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Kategori</label>
+        <name>CSP_L2_Category</name>
+    </customLabels>
+    <customLabels>
+        <label>Erişmek istediğiniz hizmet, seçtiğiniz sınıflandırma için kullanılamayabilir. Kaydınızı yine de tamamlayabilirsiniz, ancak, tamamlandıktan sonra hizmet artık kullanılamayabilir.</label>
+        <name>CSP_L2_Change_Categorization_Warning</name>
+    </customLabels>
+    <customLabels>
+        <label>Şehir</label>
+        <name>CSP_L2_City</name>
+    </customLabels>
+    <customLabels>
+        <label>Şirket Hesabı</label>
+        <name>CSP_L2_Company_Account</name>
+    </customLabels>
+    <customLabels>
+        <label>Lütfen şirket bilgilerinizi kontrol edin</label>
+        <name>CSP_L2_Company_Account_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Şirket Bilgisi</label>
+        <name>CSP_L2_Company_Information</name>
+    </customLabels>
+    <customLabels>
+        <label>Şirket hesabınızı kaydetmek, özelleştirilmiş IATA servislerine erişiminizi sağlayacaktır. Şirket hesabınızı iki adımda kolayca oluşturabilirsiniz.</label>
+        <name>CSP_L2_Company_Information_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Şirketin Konumu</label>
+        <name>CSP_L2_Company_Location</name>
+    </customLabels>
+    <customLabels>
+        <label>Şirket Adı</label>
+        <name>CSP_L2_Company_Name</name>
+    </customLabels>
+    <customLabels>
+        <label>Onay</label>
+        <name>CSP_L2_Confirmation</name>
+    </customLabels>
+    <customLabels>
+        <label>Tam profilinizi oluşturmaktan sadece bir adım uzaktasınız. Lütfen verilen bilgileri kontrol edin ve her şey doğruysa Gönderin&apos;i tıklayın.</label>
+        <name>CSP_L2_Confirmation_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>İletişim Desteği</label>
+        <name>CSP_L2_Contact_Support</name>
+    </customLabels>
+    <customLabels>
+        <label>Ülke</label>
+        <name>CSP_L2_Country</name>
+    </customLabels>
+    <customLabels>
+        <label>Şirket hesabınızı bulamazsanız, iki adımda kolayca bir tane oluşturabilirsiniz.</label>
+        <name>CSP_L2_Create_Account_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Yeni Hesap Oluşturun</label>
+        <name>CSP_L2_Create_New_Account</name>
+    </customLabels>
+    <customLabels>
+        <label>Doğum Tarihi</label>
+        <name>CSP_L2_Date_of_Birth</name>
+    </customLabels>
+    <customLabels>
+        <label>Bilgileriniz başarıyla kaydedildi.</label>
+        <name>CSP_L2_Details_Saved</name>
+    </customLabels>
+    <customLabels>
+        <label>Artık size daha kişiselleştirilmiş bir Portal deneyimi sunabiliriz! Portalımıza göz atın ve daha size özel ürünleri ve hizmetleri keşfedin.</label>
+        <name>CSP_L2_Details_Saved_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Artık hizmet talebinizi iletmeye devam edebilirsiniz.</label>
+        <name>CSP_L2_Details_Saved_Service_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Artık isteğinizi yükseltmeye devam edebilirsiniz.</label>
+        <name>CSP_L2_Details_Saved_Topic_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Aradığınızı bulamadınız mı?</label>
+        <name>CSP_L2_Did_Not_Find</name>
+    </customLabels>
+    <customLabels>
+        <label>Profilinizi tamamlamak için iki adımda kolayca bir şirket hesabı oluşturabilirsiniz</label>
+        <name>CSP_L2_Did_Not_Find_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Profilinizi tamamlamak için buraya tıklayın</label>
+        <name>CSP_L2_Edit_Company_Information</name>
+    </customLabels>
+    <customLabels>
+        <label>IATA Müşteri Portalı&apos;nı, IATA&apos;nın ürün ve hizmetlerini size özel oluşturması için kurduk. Bunu yapabilmemiz için sizi ve kurumunuzu biraz daha iyi tanımak istiyoruz.</label>
+        <name>CSP_L2_Edit_Company_Information_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>E-posta</label>
+        <name>CSP_L2_Email_Address</name>
+    </customLabels>
+    <customLabels>
+        <label>Adresi Bulun</label>
+        <name>CSP_L2_Find_Address</name>
+    </customLabels>
+    <customLabels>
+        <label>Geri Dön</label>
+        <name>CSP_L2_Go_Back</name>
+    </customLabels>
+    <customLabels>
+        <label>Ana Sayfaya Gidin</label>
+        <name>CSP_L2_Go_To_Homepage</name>
+    </customLabels>
+    <customLabels>
+        <label>Profil&apos;e geri dönün</label>
+        <name>CSP_L2_Go_To_Profile</name>
+    </customLabels>
+    <customLabels>
+        <label>Hizmete Geri Dönün</label>
+        <name>CSP_L2_Go_To_Service</name>
+    </customLabels>
+    <customLabels>
+        <label>Konuya Geri Dönün</label>
+        <name>CSP_L2_Go_To_Topic</name>
+    </customLabels>
+    <customLabels>
+        <label>IATA Kodu</label>
+        <name>CSP_L2_IATA_Codes</name>
+    </customLabels>
+    <customLabels>
+        <label>Bu bir Posta Kutusu adresi mi?</label>
+        <name>CSP_L2_Is_PO_Box_Address</name>
+    </customLabels>
+    <customLabels>
+        <label>Görev Tanımı</label>
+        <name>CSP_L2_Job_Function</name>
+    </customLabels>
+    <customLabels>
+        <label>İş Ünvanı</label>
+        <name>CSP_L2_Job_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Yasal İsim</label>
+        <name>CSP_L2_Legal_Name</name>
+    </customLabels>
+    <customLabels>
+        <label>Sonraki Adım / Hesap Seçimi</label>
+        <name>CSP_L2_Next_Account_Selection</name>
+    </customLabels>
+    <customLabels>
+        <label>Sonraki Adım / Adres Bilgileri</label>
+        <name>CSP_L2_Next_Address_Information</name>
+    </customLabels>
+    <customLabels>
+        <label>Sonraki Adım / Onay</label>
+        <name>CSP_L2_Next_Confirmation</name>
+    </customLabels>
+    <customLabels>
+        <label>Hayır</label>
+        <name>CSP_L2_No</name>
+    </customLabels>
+    <customLabels>
+        <label>Eşleşen sonuç bulunamadı</label>
+        <name>CSP_L2_No_Matching_Results</name>
+    </customLabels>
+    <customLabels>
+        <label>Diğer</label>
+        <name>CSP_L2_Other_Sector</name>
+    </customLabels>
+    <customLabels>
+        <label>Lütfen verilen listeden ilgili sektörü seçin.</label>
+        <name>CSP_L2_Other_Sector_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Posta Kutusu Numarası</label>
+        <name>CSP_L2_PO_Box_Number</name>
+    </customLabels>
+    <customLabels>
+        <label>Kişisel Detaylar</label>
+        <name>CSP_L2_Personal_Details</name>
+    </customLabels>
+    <customLabels>
+        <label>Lütfen kişisel bilgilerinizi kontrol edin</label>
+        <name>CSP_L2_Personal_Details_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Telefon Numarası</label>
+        <name>CSP_L2_Phone_Number</name>
+    </customLabels>
+    <customLabels>
+        <label>Posta Kodu</label>
+        <name>CSP_L2_Postal_Code</name>
+    </customLabels>
+    <customLabels>
+        <label>Profil Detayları</label>
+        <name>CSP_L2_Profile_Details</name>
+    </customLabels>
+    <customLabels>
+        <label>IATA &apos;nin kişiselleştirilmiş içerik ve hizmetler önermesi için kişisel bilgilerinizi ekleyiniz.</label>
+        <name>CSP_L2_Profile_Details_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Profiliniz henüz tam olarak güncellenmedi.</label>
+        <name>CSP_L2_Profile_Incomplete</name>
+    </customLabels>
+    <customLabels>
+        <label>Ama daha sonra devam edebilmeniz için taslak olarak kaydettik. Çıkmak istediğinizden emin misiniz?</label>
+        <name>CSP_L2_Profile_Incomplete_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Ne yazık ki hesabınızı oluştururken bir şeyler ters gitti. Size daha fazla yardım edebilmemiz için lütfen destek ekibimize başvurun.</label>
+        <name>CSP_L2_Registration_Error_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Bir şeyler ters gitti</label>
+        <name>CSP_L2_Registration_Error_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>İptal Et</label>
+        <name>CSP_L2_Requested_Modal_Cancel</name>
+    </customLabels>
+    <customLabels>
+        <label>Profilimi Tamamla</label>
+        <name>CSP_L2_Requested_Modal_Complete</name>
+    </customLabels>
+    <customLabels>
+        <label>Devam etmek için siz ve kuruluşunuz hakkında daha fazla bilgiye ihtiyacımız var. Endişelenmeyin, bu uzun sürmez!</label>
+        <name>CSP_L2_Requested_Modal_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Merhaba</label>
+        <name>CSP_L2_Requested_Modal_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_L2_Required --></label>
+        <name>CSP_L2_Required</name>
+    </customLabels>
+    <customLabels>
+        <label>Arama</label>
+        <name>CSP_L2_Search</name>
+    </customLabels>
+    <customLabels>
+        <label>Lütfen aşağıda bulunan iki alandan en az birini doldurun.</label>
+        <name>CSP_L2_Search_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Arama Sonuçları</label>
+        <name>CSP_L2_Search_Results</name>
+    </customLabels>
+    <customLabels>
+        <label>Aradığınız kriterlere uygun +50 hesap bulundu.</label>
+        <name>CSP_L2_Search_Results_Above_Limit</name>
+    </customLabels>
+    <customLabels>
+        <label>Arama Kriterlerini Daraltın</label>
+        <name>CSP_L2_Search_Results_Above_Limit_Link</name>
+    </customLabels>
+    <customLabels>
+        <label>Daha az seçenek görmek için</label>
+        <name>CSP_L2_Search_Results_Above_Limit_Link_1</name>
+    </customLabels>
+    <customLabels>
+        <label>.</label>
+        <name>CSP_L2_Search_Results_Above_Limit_Link_2</name>
+    </customLabels>
+    <customLabels>
+        <label>Sektör</label>
+        <name>CSP_L2_Sector</name>
+    </customLabels>
+    <customLabels>
+        <label>Seçin</label>
+        <name>CSP_L2_Select</name>
+    </customLabels>
+    <customLabels>
+        <label>Lütfen doğru adresi seçiniz. Listeden doğru adresi bulamazsanız, girdiğiniz adresi kaydederiz. Devam etmek için Sonraki Adım&apos;a tıklayın.</label>
+        <name>CSP_L2_Select_Address_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Eşleşen hesabınızı listeden seçin.</label>
+        <name>CSP_L2_Select_Company_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Bölge</label>
+        <name>CSP_L2_State</name>
+    </customLabels>
+    <customLabels>
+        <label>Sokak</label>
+        <name>CSP_L2_Street</name>
+    </customLabels>
+    <customLabels>
+        <label>Gönderin</label>
+        <name>CSP_L2_Submit</name>
+    </customLabels>
+    <customLabels>
+        <label>Ünvan</label>
+        <name>CSP_L2_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Ticari Ünvan</label>
+        <name>CSP_L2_Trade_Name</name>
+    </customLabels>
+    <customLabels>
+        <label>Web Sitesi</label>
+        <name>CSP_L2_Website</name>
+    </customLabels>
+    <customLabels>
+        <label>Evet</label>
+        <name>CSP_L2_Yes</name>
+    </customLabels>
+    <customLabels>
         <label>Son Güncelleme</label>
         <name>CSP_LastUpdate</name>
     </customLabels>
     <customLabels>
+        <label>Daha fazla bilgi edinin</label>
+        <name>CSP_Learn_More</name>
+    </customLabels>
+    <customLabels>
         <label>Çıkış Yap</label>
         <name>CSP_LogOut</name>
+    </customLabels>
+    <customLabels>
+        <label>Şimdi giriş yapın</label>
+        <name>CSP_Login_Now</name>
+    </customLabels>
+    <customLabels>
+        <label>Birkaç gün önce, IATA Müşteri Portalı&apos;nın bir katılımcısı olmak için kaydoldunuz - teşekkür ederiz ve hoş geldiniz!</label>
+        <name>CSP_Lvl2_Reminder_1</name>
+    </customLabels>
+    <customLabels>
+        <label>IATA Müşteri Portalı&apos;nı, IATA&apos;nın ürün ve hizmetlerini size özel oluşturması için kurduk. Bunu yapabilmemiz için sizi ve kurumunuzu biraz daha iyi tanımak istiyoruz.</label>
+        <name>CSP_Lvl2_Reminder_2</name>
+    </customLabels>
+    <customLabels>
+        <label>Bunu kolay ve hızlı hale getirdik  &lt;strong&gt;&lt;a href=[URL]&gt;profilinizi tamamlamak için burayı tıklamanız yeterli&lt;/a&gt;&lt;/strong&gt;.</label>
+        <name>CSP_Lvl2_Reminder_3</name>
+    </customLabels>
+    <customLabels>
+        <label>Şunlara sahip olacaksınız:</label>
+        <name>CSP_Lvl2_Reminder_4</name>
+    </customLabels>
+    <customLabels>
+        <label>· Özel Hizmetler için Doğrudan Giriş</label>
+        <name>CSP_Lvl2_Reminder_5</name>
+    </customLabels>
+    <customLabels>
+        <label>· Düzenlenen IATA (Uluslararası Hava Taşımacılığı Birliği) Bilgi &amp; Standartlarına tam erişim</label>
+        <name>CSP_Lvl2_Reminder_6</name>
+    </customLabels>
+    <customLabels>
+        <label>· IATA (Uluslararası Hava Taşımacılığı Birliği) Servis Uzmanlarından Özel Destek</label>
+        <name>CSP_Lvl2_Reminder_7</name>
+    </customLabels>
+    <customLabels>
+        <label>· Ve dahası!</label>
+        <name>CSP_Lvl2_Reminder_8</name>
+    </customLabels>
+    <customLabels>
+        <label>&lt;strong&gt;&lt;a href=[URL]&gt;Profilinizi tamamlamak için buraya tıklayın&lt;/a&gt;&lt;/strong&gt;</label>
+        <name>CSP_Lvl2_Reminder_9</name>
+    </customLabels>
+    <customLabels>
+        <label>IATA Müşteri Portalı&apos;ndan en iyi şekilde yararlanın - Profilinizi tamamlayın!</label>
+        <name>CSP_Lvl2_Reminder_Subject</name>
     </customLabels>
     <customLabels>
         <label>kullanıcılarrı aşağıdaki listeden yönetebilirsiniz.</label>
@@ -2117,8 +2753,16 @@
         <name>CSP_NewServiceUserMessage</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP New Account To Address --></label>
+        <name>CSP_New_Account_To_Address</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP New Email Domain --></label>
         <name>CSP_New_Email_Domain</name>
+    </customLabels>
+    <customLabels>
+        <label>Sonraki</label>
+        <name>CSP_Next</name>
     </customLabels>
     <customLabels>
         <label>Gösterilecek ilgili hesap yok.</label>
@@ -2149,8 +2793,32 @@
         <name>CSP_OperationalCalendar_SeeMonthlyLink</name>
     </customLabels>
     <customLabels>
+        <label>Şifre</label>
+        <name>CSP_Password</name>
+    </customLabels>
+    <customLabels>
+        <label>Minimum 10 karakter</label>
+        <name>CSP_Password_Rule_1</name>
+    </customLabels>
+    <customLabels>
+        <label>En az 1 büyük harf</label>
+        <name>CSP_Password_Rule_2</name>
+    </customLabels>
+    <customLabels>
+        <label>En az 1 numara</label>
+        <name>CSP_Password_Rule_3</name>
+    </customLabels>
+    <customLabels>
+        <label>En az 1 sembol (! @ # $% * () _ + ^ &amp;)</label>
+        <name>CSP_Password_Rule_4</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_Payment --></label>
         <name>CSP_Payment</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_PendingApproval --></label>
+        <name>CSP_PendingApproval</name>
     </customLabels>
     <customLabels>
         <label>Sorgunuza devam etmek için bilginize ihtiyacımız var.</label>
@@ -2161,6 +2829,10 @@
         <name>CSP_Period</name>
     </customLabels>
     <customLabels>
+        <label>Kişisel Bilgiler</label>
+        <name>CSP_Personal_Information</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_PortalPath --></label>
         <name>CSP_PortalPath</name>
     </customLabels>
@@ -2169,8 +2841,24 @@
         <name>CSP_Portal_Administrators</name>
     </customLabels>
     <customLabels>
+        <label>Portal Girişi şu anda devre dışı. Anlayışınız için teşekkür ederiz.</label>
+        <name>CSP_Portal_Login_Disabled_Message</name>
+    </customLabels>
+    <customLabels>
         <label>Portal Durumu</label>
         <name>CSP_Portal_Status</name>
+    </customLabels>
+    <customLabels>
+        <label>Yazdır</label>
+        <name>CSP_Print</name>
+    </customLabels>
+    <customLabels>
+        <label>Yazdırma tarihi</label>
+        <name>CSP_Printed_date</name>
+    </customLabels>
+    <customLabels>
+        <label>IATA (Uluslararası Hava Taşımacılığı Birliği)&apos;nin &lt;a target=&quot;_blank&quot; href=&quot;https://www.iata.org/Pages/privacy.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Gizlilik Politikası&lt;/a&gt; ve &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-portal/Pages/terms.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Kullanım Koşulları&apos;nı&lt;/a&gt; kabul ediyorum.</label>
+        <name>CSP_Privacy_Policy</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_Profile_PrivacyManagement_Link --></label>
@@ -2229,6 +2917,26 @@
         <name>CSP_Record_Deleted</name>
     </customLabels>
     <customLabels>
+        <label>Kayıt başarıyla tamamlandı</label>
+        <name>CSP_Registration_Complete</name>
+    </customLabels>
+    <customLabels>
+        <label>IATA Müşteri Portalı&apos;na katılmak için temel kayıt işlemini tamamlayın.</label>
+        <name>CSP_Registration_Description</name>
+    </customLabels>
+    <customLabels>
+        <label>Portal Kaydı şu anda devre dışıdır. Anlayışınız için teşekkür ederiz.</label>
+        <name>CSP_Registration_Disabled_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Mevcut bir kullanıcıyla kaydolmaya çalışıyorsunuz, giriş sayfasına gitmek için e-postayı değiştirin veya giriş yap düğmesine tıklayın.</label>
+        <name>CSP_Registration_Existing_User_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Lütfen önce spam klasörünüzü kontrol ediniz. Spam klasörünüzde hiçbir şey bulamazsanız, lütfen Tekrar Dene düğmesine tıklayarak tekrar kaydolmayı deneyin.</label>
+        <name>CSP_Registration_Retry_Message</name>
+    </customLabels>
+    <customLabels>
         <label>İlgili Makaleler</label>
         <name>CSP_RelatedArticles</name>
     </customLabels>
@@ -2249,8 +2957,48 @@
         <name>CSP_Request_Service</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Resend Verification Email --></label>
+        <name>CSP_Resend_Verification_Email</name>
+    </customLabels>
+    <customLabels>
+        <label>Şifreyi yenileyin</label>
+        <name>CSP_Reset_Password</name>
+    </customLabels>
+    <customLabels>
+        <label>IATA Müşteri Portalı şifrenizi sıfırlayın</label>
+        <name>CSP_Reset_Password_Email_Subject</name>
+    </customLabels>
+    <customLabels>
+        <label>Lütfen yeni şifrenizi girin.</label>
+        <name>CSP_Reset_Password_Info_1</name>
+    </customLabels>
+    <customLabels>
+        <label>Şifre şunları içermelidir:</label>
+        <name>CSP_Reset_Password_Info_2</name>
+    </customLabels>
+    <customLabels>
+        <label>Şifreniz başarıyla değiştirildi.</label>
+        <name>CSP_Reset_Password_Success_Msg_1</name>
+    </customLabels>
+    <customLabels>
+        <label>Yeni şifreniz ile giriş yapabilirsiniz.</label>
+        <name>CSP_Reset_Password_Success_Msg_2</name>
+    </customLabels>
+    <customLabels>
+        <label>Bilgisayarınızın IP’sinin kaynağı, ABD yetkilileri tarafından ambargolu olarak listelenen ülkelerden birinde olarak tanımlandı.&lt;br/&gt;Müşteri Portalımızı destekleyen platform bu ABD düzenlemelerine uygundur ve dolayısıyla şu anki IP adresinizden Müşteri Portalına erişim sağlayamıyoruz. &lt;br/&gt;Bize ulaşmak için &lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;buraya tıklayın&lt;/a&gt;.</label>
+        <name>CSP_Restricted_Login_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Sınırlı Giriş</label>
+        <name>CSP_Restricted_Login_Title</name>
+    </customLabels>
+    <customLabels>
         <label>Kaydedin</label>
         <name>CSP_Save</name>
+    </customLabels>
+    <customLabels>
+        <label>Kaydedin &amp; Giriş Yapın</label>
+        <name>CSP_Save_Login</name>
     </customLabels>
     <customLabels>
         <label>Belge ayrıntılarına göre arayın</label>
@@ -2425,6 +3173,10 @@
         <name>CSP_Settings</name>
     </customLabels>
     <customLabels>
+        <label>Şimdilik Atla</label>
+        <name>CSP_Skip</name>
+    </customLabels>
+    <customLabels>
         <label>Durum</label>
         <name>CSP_Status</name>
     </customLabels>
@@ -2433,7 +3185,15 @@
         <name>CSP_Submit</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Success --></label>
+        <label><!-- CSP_SubmitApproval --></label>
+        <name>CSP_SubmitApproval</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_SubmittedApproval --></label>
+        <name>CSP_SubmittedApproval</name>
+    </customLabels>
+    <customLabels>
+        <label>Başarılı</label>
         <name>CSP_Success</name>
     </customLabels>
     <customLabels>
@@ -2469,44 +3229,72 @@
         <name>CSP_Travel_Agent_Accreditation_Changes_Request</name>
     </customLabels>
     <customLabels>
+        <label>sorun giderme</label>
+        <name>CSP_Troubleshooting</name>
+    </customLabels>
+    <customLabels>
+        <label>Daha fazla yardım için şuraya bakın</label>
+        <name>CSP_Troubleshooting_Info</name>
+    </customLabels>
+    <customLabels>
+        <label>Tekrar Deneyin</label>
+        <name>CSP_Try_Again</name>
+    </customLabels>
+    <customLabels>
         <label>Sorgunun Türü</label>
         <name>CSP_TypeOfCase</name>
+    </customLabels>
+    <customLabels>
+        <label>Beklenmeyen bir hata oluştu!</label>
+        <name>CSP_Unexcepted_Error</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_User --></label>
         <name>CSP_User</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Welcome_Panel_Bullet_1_Desc --></label>
+        <label>IATA Müşteri Portalı&apos;na hoşgeldiniz</label>
+        <name>CSP_Welcome_Email_Subject</name>
+    </customLabels>
+    <customLabels>
+        <label>Sizin için özel olarak seçilmiş 60&apos;tan fazla IATA servisine doğrudan erişin.</label>
         <name>CSP_Welcome_Panel_Bullet_1_Desc</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Welcome_Panel_Bullet_1_Title --></label>
+        <label>IATA hizmetlerine erişim</label>
         <name>CSP_Welcome_Panel_Bullet_1_Title</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Welcome_Panel_Bullet_2_Desc --></label>
+        <label>IATA profilinizi kolayca yönetin ve güncelleyin.</label>
         <name>CSP_Welcome_Panel_Bullet_2_Desc</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Welcome_Panel_Bullet_2_Title --></label>
+        <label>Güncel kalın</label>
         <name>CSP_Welcome_Panel_Bullet_2_Title</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Welcome_Panel_Bullet_3_Desc --></label>
+        <label>Yayınlar, eğitimler ve diğer IATA ürün ve hizmetlerinden oluşan seçkiyi keşfedin.</label>
         <name>CSP_Welcome_Panel_Bullet_3_Desc</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Welcome_Panel_Bullet_3_Title --></label>
+        <label>Özel teklifler bulun</label>
         <name>CSP_Welcome_Panel_Bullet_3_Title</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Welcome_Panel_Bullet_4_Desc --></label>
+        <label>Kapsamlı soru &amp; cevap koleksiyonumuza erişin; ve IATA’dan doğrudan destek alın.</label>
         <name>CSP_Welcome_Panel_Bullet_4_Desc</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Welcome_Panel_Bullet_4_Title --></label>
+        <label>Cevapları alın</label>
         <name>CSP_Welcome_Panel_Bullet_4_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Tüm IATA hizmetlerinize erişin ve yönetin. Farklı ürünler hakkında bilgi isteyin ve herhangi bir konuda destek alın. Burada, sizin için.</label>
+        <name>CSP_Welcome_Panel_Info</name>
+    </customLabels>
+    <customLabels>
+        <label>IATA Müsteri Portalı’na Hoşgeldiniz</label>
+        <name>CSP_Welcome_Title</name>
     </customLabels>
     <customLabels>
         <label>Siz &amp; IATA</label>
@@ -2701,7 +3489,7 @@
         <name>ConfirmSendRecycleBin</name>
     </customLabels>
     <customLabels>
-        <label><!-- Confirm password --></label>
+        <label>Şifreyi Onayla</label>
         <name>Confirm_password</name>
     </customLabels>
     <customLabels>
@@ -3225,7 +4013,7 @@
         <name>CurrencyCenter_def_TTBS</name>
     </customLabels>
     <customLabels>
-        <label><!-- Current password --></label>
+        <label>Mevcut şifre</label>
         <name>Current_password</name>
     </customLabels>
     <customLabels>
@@ -13412,7 +14200,7 @@ Lütfen daha önce hangi ülke için destek aldığınızı doğrulayın:</label
         <name>ISSP_ContactName</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Contact About IATA Courses --></label>
+        <label>IATA (Uluslararası Hava Taşımacılığı Birliği) dersleri hakkında mı bizimle iletişim kuruyorsunuz?</label>
         <name>ISSP_Contact_About_IATA_Courses</name>
     </customLabels>
     <customLabels>
@@ -16830,7 +17618,7 @@ Parolanızı sıfırlamak isterseniz lütfen giriş ekranına geri dönün ve �
         <name>ISSP_See_more</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Select --></label>
+        <label>-Seçin-</label>
         <name>ISSP_Select</name>
     </customLabels>
     <customLabels>
@@ -18311,7 +19099,7 @@ IATA Müşteri Portalına kaydolurken sorun yaşamaya devam ederseniz, lütfen &
         <name>Location</name>
     </customLabels>
     <customLabels>
-        <label><!-- Login --></label>
+        <label>Oturum açma</label>
         <name>Login</name>
     </customLabels>
     <customLabels>
@@ -18431,7 +19219,7 @@ IATA Müşteri Portalına kaydolurken sorun yaşamaya devam ederseniz, lütfen &
         <name>NewGenApp_ServiceRequested</name>
     </customLabels>
     <customLabels>
-        <label><!-- New password --></label>
+        <label>Yeni şifre gir</label>
         <name>New_password</name>
     </customLabels>
     <customLabels>
@@ -18523,7 +19311,7 @@ IATA Müşteri Portalına kaydolurken sorun yaşamaya devam ederseniz, lütfen &
         <name>OneId_Account_Association</name>
     </customLabels>
     <customLabels>
-        <label><!-- OneId_Account Creation --></label>
+        <label>Hesap Oluşturma</label>
         <name>OneId_Account_Creation</name>
     </customLabels>
     <customLabels>
@@ -18587,7 +19375,7 @@ IATA Müşteri Portalına kaydolurken sorun yaşamaya devam ederseniz, lütfen &
         <name>OneId_CreateNew</name>
     </customLabels>
     <customLabels>
-        <label><!-- OneId_CreateNewAccount --></label>
+        <label>Yeni hesap oluşturun</label>
         <name>OneId_CreateNewAccount</name>
     </customLabels>
     <customLabels>
@@ -18995,7 +19783,7 @@ IATA Müşteri Portalına kaydolurken sorun yaşamaya devam ederseniz, lütfen &
         <name>OneId_Login</name>
     </customLabels>
     <customLabels>
-        <label><!-- OneId_LoginFail --></label>
+        <label>Giriş denemeniz başarısız oldu. E-postanın ve şifrenin doğru olduğundan emin olun.</label>
         <name>OneId_LoginFail</name>
     </customLabels>
     <customLabels>
@@ -19067,7 +19855,7 @@ IATA Müşteri Portalına kaydolurken sorun yaşamaya devam ederseniz, lütfen &
         <name>OneId_Online_Help_Link</name>
     </customLabels>
     <customLabels>
-        <label><!-- OneId_Password --></label>
+        <label>Şifre</label>
         <name>OneId_Password</name>
     </customLabels>
     <customLabels>
@@ -19894,7 +20682,7 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
         <name>PKB2_search_to_long</name>
     </customLabels>
     <customLabels>
-        <label><!-- PKB2: Contact Us Send Email --></label>
+        <label>Doğrulama Postasını yeniden gönder</label>
         <name>PKB2_send_mail</name>
     </customLabels>
     <customLabels>
@@ -20984,6 +21772,10 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
         <name>csp_My_Profile_Job_Title</name>
     </customLabels>
     <customLabels>
+        <label><!-- csp_Next_Step_Account_Selection --></label>
+        <name>csp_Next_Step_Account_Selection</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Request New Service --></label>
         <name>csp_NoPortalServiceNameFound</name>
     </customLabels>
@@ -21686,6 +22478,10 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
     <customTabs>
         <label><!-- Projects Calendar --></label>
         <name>UAT_Calendar</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- Unregistered users --></label>
+        <name>Unregistered_users</name>
     </customTabs>
     <customTabs>
         <label><!-- Voucher Management --></label>

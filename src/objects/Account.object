@@ -6125,6 +6125,18 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
         </valueSet>
     </fields>
     <fields>
+        <fullName>Business_City_Name__c</fullName>
+        <description>Business City Name</description>
+        <externalId>false</externalId>
+        <label>Business City Name</label>
+        <length>40</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Business_City__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <description>City of the Account&apos;s Business Address</description>
@@ -6139,11 +6151,35 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>Business_PO_Box__c</fullName>
+        <description>PO Box of the Account&apos;s Business Address</description>
+        <externalId>false</externalId>
+        <label>Business PO Box</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Business_Postal_Code__c</fullName>
         <description>Postal Code for the Account&apos;s Business Address</description>
         <externalId>false</externalId>
         <label>Business Postal Code</label>
         <length>20</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Business_State_Name__c</fullName>
+        <description>Business State Name</description>
+        <externalId>false</externalId>
+        <label>Business State Name</label>
+        <length>80</length>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
@@ -13601,6 +13637,16 @@ Approval: Key Contact can see pending request approve it one by one</inlineHelpT
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Is_General_Public_Account__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Indicates if the Account is a General Public account</description>
+        <externalId>false</externalId>
+        <label>Is General Public Account</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Is_PCI_compliant__c</fullName>
         <description>Determines if an agency is PCI Compliant</description>
         <externalId>false</externalId>
@@ -14264,7 +14310,7 @@ J-Joint Vent</inlineHelpText>
         <fullName>Location_Type__c</fullName>
         <description>Field used to determine the Location Type of travel agents (used in Americas)</description>
         <externalId>false</externalId>
-        <label>Location Type</label>
+        <label>Agency Location Type</label>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
@@ -19711,17 +19757,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>Business_City_Name__c</fullName>
-        <externalId>false</externalId>
-        <label>Business City</label>
-        <length>255</length>
-        <required>false</required>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
         <fullName>Business_Geo_Coordinates__c</fullName>
         <description>This is the Latitude and Longitude of where an Account is physically located.</description>
         <displayLocationInDecimal>false</displayLocationInDecimal>
@@ -19732,28 +19767,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Location</type>
-    </fields>
-    <fields>
-        <fullName>Business_Po_Box__c</fullName>
-        <externalId>false</externalId>
-        <label>Business PO Box</label>
-        <length>255</length>
-        <required>false</required>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>Business_State_Name__c</fullName>
-        <externalId>false</externalId>
-        <label>Business State</label>
-        <length>255</length>
-        <required>false</required>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-        <type>Text</type>
-        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Hierarchy_Level__c</fullName>
@@ -101330,23 +101343,22 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <lookupPhoneDialogsAdditionalFields>ACCOUNT.PHONE1</lookupPhoneDialogsAdditionalFields>
         <lookupPhoneDialogsAdditionalFields>ACCOUNT.ADDRESS1_CITY</lookupPhoneDialogsAdditionalFields>
         <lookupPhoneDialogsAdditionalFields>ACCOUNT.ADDRESS1_COUNTRY</lookupPhoneDialogsAdditionalFields>
-        <searchFilterFields>Field_Head_Office__c</searchFilterFields>
-        <searchFilterFields>IATA_Member__c</searchFilterFields>
+        <searchFilterFields>ACCOUNT.RECORDTYPE</searchFilterFields>
+        <searchFilterFields>Membership_status__c</searchFilterFields>
         <searchFilterFields>IATA_ISO_Country__c</searchFilterFields>
         <searchFilterFields>Sector__c</searchFilterFields>
         <searchFilterFields>Strategic_Partners__c</searchFilterFields>
         <searchFilterFields>Location_Type__c</searchFilterFields>
         <searchFilterFields>Category__c</searchFilterFields>
-        <searchFilterFields>ICCS_Membership_Status__c</searchFilterFields>
         <searchResultsAdditionalFields>ACCOUNT.NAME</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Quality__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>ACCOUNT.RECORDTYPE</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Sector__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Category__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>ACCOUNT.SITE</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>ACCOUNT.ADDRESS1_COUNTRY</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Location_Type__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Status__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Membership_status__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Strategic_Partners__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>IATA_ISO_Country__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Location_Type__c</searchResultsAdditionalFields>																	
     </searchLayouts>
     <sharingModel>Private</sharingModel>
     <validationRules>
@@ -101468,7 +101480,7 @@ OR(
 ISCHANGED(Account_Type__c),
 ISCHANGED(Website)
 ),
-NOT(CONTAINS($Profile.Name, &quot;System Administrator - automated processes&quot;)),
+NOT(CONTAINS($Profile.Name, &quot;System Administrator&quot;)),
 NOT(CONTAINS($Profile.Name, &quot;Account management team&quot;)),
 NOT(CONTAINS($Profile.Name, &quot;MER Membership&quot;))
 )</errorConditionFormula>
