@@ -522,7 +522,14 @@
                 $('[id$=isSameLegal]').first().insertAfter($('[id$=countrySelection').first());
                 populateLegalAndSeparateFields();
                 enableDisableLegalName();
+
+                if ('{!sectorValue}' === 'Cargo_Agent'){
+                    $('#brcountry').show();
+                    $('#brabroadcountries').hide();
+                } else {
                 $('[id$=officetypelist]').prop('disabled', true);
+            }
+                
             }
         }
 
