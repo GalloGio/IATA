@@ -605,20 +605,10 @@ public class AMS_OSCARTriggerHandler {
 
         Set<Id> oscarAccountIds = new Set<Id>();
 
-        /**WMO-728*/
-        Map<Id,AMS_Oscar__c> oscarsToResetDossier = new Map<Id,AMS_Oscar__c>();
-        Map<String, AMS_OSCAR_reset_dossier_reception__c> resetDossierReceptionDate_CSList = AMS_OSCAR_reset_dossier_reception__c.getall();
-        
         for (AMS_OSCAR__c oscar : oscarsToInsert){
             oscarAccountIds.add(oscar.Account__c);
             addAccountId(oscar.Account__c);
-            if(!resetDossierReceptionDate_CSList.isEmpty()){
-                if(resetDossierReceptionDate_CSList.containsKey(oldOscars.get(oscar.Id).Status__c)){
-                    oscarsToResetDossier.put(oscar.Id, oscar);
-                }
-            }
         }
-        /**WMO-728*/
 
         AMS_OSCAR_JSONHelper helper = null;
         boolean resultLoad = false;
@@ -708,25 +698,11 @@ public class AMS_OSCARTriggerHandler {
 
         }
 
-        List<Case> allCases = new List<Case>();
-        if(!oscarsToCreateAuth.isEmpty() || !oscarsToResetDossier.isEmpty()){
-            allCases = [SELECT Id, CaseNumber, OSCAR__c, OSCAR__r.Name, Oscar__r.Account__c, Contact.Email, OSCAR__r.Country_ISO_Code__c, isClosed FROM Case WHERE OSCAR__c IN :oscarsToCreateAuth OR OSCAR__c IN :oscarsToResetDossier.keySet()];
-        }
-        /**WMO-728*/
-        if(!oscarsToResetDossier.isEmpty()){
-             for(Case cse : allCases) {
-                 AMS_Oscar__c oscarToUpdate = oscarsToResetDossier.get(cse.Oscar__c);
-                 if(oscarToUpdate != null && !cse.isClosed){
-                    oscarToUpdate.Dossier_Reception_Date__c = Date.Today();
-                 }
-             }
-        }
-
         /*** AMSU-31 Start ***/
         if(!oscarsToCreateAuth.isEmpty()) {
+            List<Case> cases = [SELECT Id, CaseNumber, OSCAR__c, OSCAR__r.Name, Oscar__r.Account__c, Contact.Email, OSCAR__r.Country_ISO_Code__c FROM Case WHERE OSCAR__c IN :oscarsToCreateAuth];
             List<Agency_Authorization__c> agenciesAuth = new List<Agency_Authorization__c>(); 
-            for(Case cse : allCases) {
-
+            for(Case cse : cases) {
                 if(cse.CaseNumber != cse.OSCAR__r.Name || AMS_Utils.setChinaCountries.contains(cse.OSCAR__r.Country_ISO_Code__c)) {
                     continue;
                 }
@@ -2090,7 +2066,7 @@ public class AMS_OSCARTriggerHandler {
                 c.Process_Start_Date__c = updatedOSCAR.Termination_Date__c;
                 caseChanged = true;
             }
-            if((newMap.get(updatedOSCAR.Id).Process__c == AMS_Utils.NGCHANGES || newMap.get(updatedOSCAR.Id).Process__c == AMS_Utils.AGENCYCHANGES) && newMap.get(updatedOSCAR.Id).ANG_Type_Of_Change__c != oldMap.get(updatedOSCAR.Id).ANG_Type_Of_Change__c ){
+            if((newMap.get(updatedOSCAR.Id).Process__c == AMS_Utils.NGCHANGES && newMap.get(updatedOSCAR.Id).ANG_Type_Of_Change__c != oldMap.get(updatedOSCAR.Id).ANG_Type_Of_Change__c) || (newMap.get(updatedOSCAR.Id).Process__c == AMS_Utils.AGENCYCHANGES && newMap.get(updatedOSCAR.Id).Type_Of_Change__c != oldMap.get(updatedOSCAR.Id).Type_Of_Change__c)){
                 
                 String newReason = (newMap.get(updatedOSCAR.Id).Process__c == AMS_Utils.NGCHANGES ? fetchCaseReason(newMap.get(updatedOSCAR.Id).ANG_Type_Of_Change__c):fetchCaseReason(newMap.get(updatedOSCAR.Id).Type_of_change__c));
 

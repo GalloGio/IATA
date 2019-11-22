@@ -160,5 +160,29 @@ public with sharing class CaseProcessTypeHelper {
             }
         }
     }
+    /**WMO-728*/
+    public static void resetOscarDossierReceptionDate(List<Case> cases, Map<Id,Case> oldMap){
+
+        Id oscarComRTId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
+        Map<String, AMS_OSCAR_reset_dossier_reception__c> resetDossierReceptionDate_CSList = AMS_OSCAR_reset_dossier_reception__c.getall();
+        Set<Id> oscarsToResetDossier = new Set<Id>();
+        List<AMS_OSCAR__c> oscarsToUpdate = new List<AMS_OSCAR__c>();
+
+        if(!resetDossierReceptionDate_CSList.isEmpty()){
+            for(Case cs : cases){
+                if(cs.Oscar__c != null && cs.RecordTypeId == oscarComRTId && resetDossierReceptionDate_CSList.containsKey(oldMap.get(cs.Id).Status) && !cs.isClosed){
+                    oscarsToResetDossier.add(cs.Oscar__c);
+                }
+            }
+            
+            if(!oscarsToResetDossier.isEmpty()){
+                for(AMS_OSCAR__c oscar : [SELECT Id, Dossier_Reception_Date__c FROM AMS_OSCAR__c WHERE Id in: oscarsToResetDossier]){
+                    oscar.Dossier_Reception_Date__c = Date.today();
+                    oscarsToUpdate.add(oscar);
+                }
+                update oscarsToUpdate;
+            }
+        }
+    }
 
  }
