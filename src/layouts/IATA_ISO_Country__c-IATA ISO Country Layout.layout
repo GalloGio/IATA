@@ -510,6 +510,8 @@
         <fields>NAME</fields>
         <fields>ISO_Code__c</fields>
         <fields>IEC_Valid_SAP__c</fields>
+        <fields>GeonameAsciiName__c</fields>
+        <fields>GeonameName__c</fields>
         <relatedList>IATA_ISO_State__c.IATA_ISO_Country__c</relatedList>
     </relatedLists>
     <relatedLists>

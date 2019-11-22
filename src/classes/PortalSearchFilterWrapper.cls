@@ -21,6 +21,8 @@ public class PortalSearchFilterWrapper {
     public servicesComponent servicesComponent {get; set;}
     @AuraEnabled
     public documentsComponent documentsComponent {get; set;}
+    @AuraEnabled
+    public profileComponent profileComponent {get; set;}
 
     public PortalSearchFilterWrapper(){}
 
@@ -115,6 +117,29 @@ public class PortalSearchFilterWrapper {
         public String documentCountryFilter {get; set;}
 
         public documentsComponent(){}
+    }
+
+    /* 
+        For the profile filter component
+    */
+    public class profileComponent {
+
+        @AuraEnabled
+        public Boolean show {get; set;}
+        @AuraEnabled
+        public Boolean loading {get; set;}
+        @AuraEnabled
+        public Boolean highlight {get; set;}
+        @AuraEnabled
+        public String nrResults {get; set;}
+        @AuraEnabled
+        public String profileTypeFilter {get; set;}
+        @AuraEnabled
+        public String profileCountryFilter {get; set;}
+        @AuraEnabled
+        public String profileStatusFilter {get; set;}
+
+        public profileComponent(){}
     }
 
 }
