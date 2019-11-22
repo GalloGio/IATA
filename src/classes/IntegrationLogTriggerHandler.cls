@@ -1,16 +1,11 @@
-/*
-* Company    : HARDIS Bordeaux
-* Created on : 21-10-2019
-* Author     : BTH
-*/
 public without sharing class IntegrationLogTriggerHandler {
 	@TestVisible private static List<Subflow_SAP__e> sapEvents = new List<Subflow_SAP__e>();
 
 	public static void OnAfterUpdate(List<Integration_Log__c> integrationLogs, Map<Id, Integration_Log__c> oldIntegrationLogById){
-		spreadStatusUpdateToFlow(integrationLogs, oldIntegrationLogById);
+		spreadStatusUpdateToFlowAccountContextActivationSAP(integrationLogs, oldIntegrationLogById);
 	}
 
-	private static void spreadStatusUpdateToFlow(List<Integration_Log__c> integrationLogs, Map<Id, Integration_Log__c> oldIntegrationLogById){
+	private static void spreadStatusUpdateToFlowAccountContextActivationSAP(List<Integration_Log__c> integrationLogs, Map<Id, Integration_Log__c> oldIntegrationLogById){
 		for(Integration_Log__c integrationLog : integrationLogs){
 			Integration_Log__c oldIntegrationLog = oldIntegrationLogById.get(integrationLog.Id);
 			if(isLinkedToAddressRoleBusinessContext(integrationLog)

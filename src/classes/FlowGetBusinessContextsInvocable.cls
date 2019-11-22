@@ -1,7 +1,7 @@
 public with sharing class FlowGetBusinessContextsInvocable {
 	@InvocableMethod(
 			label = 'Get Available Business Context'
-			description = 'Get Available Business Context'
+			description = 'Get available business contexts for an account based on custom permissions for the running user'
 	)
 	public static List<Response> execute(List<Request> requests){
 		List<Response> responses = new List<Response>();
@@ -22,8 +22,8 @@ public with sharing class FlowGetBusinessContextsInvocable {
 
 	public class Response {
 		@InvocableVariable(
-				label = 'Business context available'
-				description = 'List business context available to select'
+				label = 'Business contexts available'
+				description = 'Concatenation of the list of business contexts available'
 		)
 		public String businessContextAvailable;
 
