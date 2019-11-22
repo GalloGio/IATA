@@ -1,7 +1,3 @@
-/**
- * Created by LBERB on 18/10/2019.
- */
-
 @IsTest
 public with sharing class CustomerSyncUtilsTest {
 

@@ -1,7 +1,3 @@
-/**
- * Created by LBERB on 11/10/2019.
- */
-
 trigger AddressRoleBusinessContextTrigger on Address_Role_Business_Context__c (after delete, after insert, after undelete, after update, before delete, before insert, before update) {
 	AddressRoleBusinessContextTriggerHandler handler = new AddressRoleBusinessContextTriggerHandler();
 
