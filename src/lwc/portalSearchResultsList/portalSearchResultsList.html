@@ -1,6 +1,6 @@
 <template>
 
-    <div if:true={showComponent} class="cardStyle">
+    <div if:true={showComponent} class="background-anotherGray">
 
         <span slot="cardBody">
 
@@ -32,8 +32,8 @@
                                         </div>
                                     </div>
                                     <div class="slds-col slds-size_1-of-6 slds-align_absolute-center" data-item={article.Id} data-url={article.url} onclick={renderArticle}>
-                                        <lightning-button variant="base" icon-name="utility:forward" size="x-small"
-                                            class="blueCustomButtonLink cursorPointer" data-item={article.Id} data-url={article.url} onclick={renderArticle}>
+                                        <lightning-button icon-name="utility:forward" size="x-small"
+                                            class="baseButton newLinkButton buttonMinHeightMedium text-xsmall fullWidth cursorPointer" data-item={article.Id} data-url={article.url} onclick={renderArticle}>
                                         </lightning-button>
                                     </div>
                                 </div>
@@ -63,8 +63,8 @@
                                         </div>
                                     </div>
                                     <div class="slds-col slds-size_2-of-12 slds-align_absolute-center slds-text-align_right" data-item={article.Id} data-url={article.url} onclick={renderArticle}>
-                                        <lightning-button variant="base" icon-name="utility:forward" size="x-small"
-                                            class="blueCustomButtonLink cursorPointer" data-item={article.Id} data-url={article.url} onclick={renderArticle}>
+                                        <lightning-button icon-name="utility:forward" size="x-small"
+                                            class="baseButton newLinkButton buttonMinHeightMedium text-xsmall fullWidth cursorPointer" data-item={article.Id} data-url={article.url} onclick={renderArticle}>
                                         </lightning-button>
                                     </div>
                                 </div>
@@ -81,10 +81,17 @@
                         <lightning-spinner class="background-white" alternative-text="Loading"></lightning-spinner>
                     </div>
                 </div>
-                <div if:false={viewResults}
-                    class="slds-p-vertical_small slds-text-align_center text-small text-bold text-linkBlue">
-                    {label.CSP_NoSearchResults}
+                <div if:false={viewResults}>
+                    <div if:false={menuSearch}
+                        class="slds-p-vertical_small slds-text-align_center text-small text-bold text-linkBlue">
+                        {label.CSP_NoSearchResults}
+                    </div>
+                    <div if:true={menuSearch}
+                        class="slds-p-vertical_small slds-text-align_center text-small text-bold text-linkBlue background-white">
+                        {label.CSP_NoSearchResults}
+                    </div>
                 </div>
+
             </div>
         </span>
 
