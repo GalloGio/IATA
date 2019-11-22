@@ -1,11 +1,15 @@
-/*
-* Company    : HARDIS Bordeaux
-* Created on : 22-10-2019
-* Author     : BTH
-*/
 public inherited sharing class BusinessContextUtils {
 	public static final String PENDING_STATUS = 'Pending';
 
+	/**
+	* This method is used to retrieve the list of business contexts or sales areas available for the current user, based on custom permission and Business_Context_Configuration__mdt
+	* It is coupled with the FlowPicklist lightning component which deconcatenate the values to render them as a picklist values
+	* @param useCase BC for Business Context, SA for Sales Area.
+	* @param userId Id of the user
+	* @param accountId Id of the account
+	* @param selectedBusinessContext required if useCase is 'SA', the query for the sales areas will be filtered on the business context
+	* @return a contenation of "value:label;" business contexts or sales areas
+	*/
 	public static String getFlowPicklistValues(String useCase, Id userId, Id accountId, String selectedBusinessContext){
 		String flowPicklistValues = '';
 		Set<String> customPermissionNames = getCustomPermissionAssignedOnCurrentUser(userId);
@@ -36,22 +40,19 @@ public inherited sharing class BusinessContextUtils {
 						SELECT SetupEntityId
 						FROM SetupEntityAccess
 						WHERE SetupEntityType = 'CustomPermission'
-						AND ParentId IN :getPermissionSetAssignedOnCurrentUser(userId)
+						AND ParentId IN :getPermissionSetIdsAssignedOnCurrentUser(userId)
 				)]){
 			customPermissionName.add(custPerm.DeveloperName);
 		}
 		return customPermissionName;
 	}
 
-	private static Set<Id> getPermissionSetAssignedOnCurrentUser(Id userId){
-		return new Map<Id, PermissionSet>([
-				SELECT Id FROM PermissionSet
-				WHERE Id IN (
-						SELECT PermissionSetId
-						FROM PermissionSetAssignment
-						WHERE AssigneeId = :userId
-				)
-		]).keySet();
+	private static Set<Id> getPermissionSetIdsAssignedOnCurrentUser(Id userId){
+		Set<Id> permissionSetIds = new Set<Id>();
+		for(PermissionSetAssignment psa : [SELECT PermissionSetId FROM PermissionSetAssignment WHERE AssigneeId = :userId]){
+			permissionSetIds.add(psa.PermissionSetId);
+		}
+		return permissionSetIds;
 	}
 
 	private static Map<String, Set<String>> getAvailableSalesAreasByBusinessContext(String useCase, Id accountId, Set<String> customPermissionNames, String selectedBusinessContext){
