@@ -20,48 +20,9 @@ public with sharing class CustomerSyncUtils extends SObjectSyncUtils {
 		Branch
 	}
 
-	private static Map<String, List<String>> FIELDS_TO_CHECK_ON_UPDATE = new Map<String, List<String>>{
-		'Account' => new List<String>{
-			'EF_SIS_Designator__c',
-			'EF_SIS_Code__c',
-			'Category__c',
-			'Sector__c',
-			'Legal_name__c',
-			'Name',
-			'VAT_Number_2__c',
-			'VAT_Number__c',
-			'Email__c',
-			'Phone'
-		},
-		'Account_Relationship__c' => new List<String>{
-			'Child_Account__c',
-			'Parent_Account__c'
-		},
-		'Address__c' => new List<String>{
-			'Street__c',
-			'Po_Box__c',
-			'Postal_Code__c',
-			'City_Name__c',
-			'Country__c',
-			'Geo_Coordinates__Latitude__s',
-			'Geo_Coordinates__Longitude__s',
-			'State_Name__c',
-			'Account__c'
-		},
-		'Address_Role__c' => new List<String>{
-			'SIS_Location_ID__c',
-			'Role_Type__c',
-			'Address__c'
-		},
-		'Address_Role_Business_Context__c' => new List<String>{
-			'Account_Activation_Context_Status__c',
-			'Address_Role__c',
-			'Business_Context__c'
-		}
-	};
-
 	public CustomerSyncUtils() {
-		this.fieldsToCheckOnUpdate.putAll(FIELDS_TO_CHECK_ON_UPDATE);
+		this.getFieldsToCheckOnUpdate(SObjectSyncUtils.Context.Customer);
+
 		this.accounts = new Map<Id, Account>();
 		this.synchronizedAccountIds = new Set<Id>();
 		this.airportAuthIdByAiportId = new Map<Id, Id>();

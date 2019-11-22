@@ -9,25 +9,8 @@ public with sharing class ContactSyncUtils extends SObjectSyncUtils {
 
 	public class ContactSyncException extends Exception {}
 
-	private static Map<String, List<String>> FIELDS_TO_CHECK_ON_UPDATE = new Map<String, List<String>>{
-		'Contact' => new List<String>{
-			'Title',
-			'FirstName',
-			'LastName',
-			'Phone',
-			'Email'
-		},
-		'Account_Contact_Role__c' => new List<String>{
-			'Functional_Role__c',
-			'Contact__c'
-		},
-		'Address_Role_Business_Context__c' => new List<String>{
-			'Account_Activation_Context_Status__c'
-		}
-	};
-
 	public ContactSyncUtils() {
-		this.fieldsToCheckOnUpdate.putAll(FIELDS_TO_CHECK_ON_UPDATE);
+		this.getFieldsToCheckOnUpdate(SObjectSyncUtils.Context.Contact);
 	}
 
 	/**
