@@ -492,6 +492,19 @@ Completed: Process is complete</inlineHelpText>
         </valueSet>
     </fields>
     <fields>
+        <fullName>ID_Card__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>ID Card</label>
+        <referenceTo>ID_Card__c</referenceTo>
+        <relationshipLabel>ID Card Applications</relationshipLabel>
+        <relationshipName>ID_Card_Applications</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>ID_Card_Fee__c</fullName>
         <description>Fee for the card.</description>
         <externalId>false</externalId>

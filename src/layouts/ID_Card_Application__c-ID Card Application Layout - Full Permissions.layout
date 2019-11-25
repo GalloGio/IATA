@@ -61,6 +61,10 @@
                 <behavior>Edit</behavior>
                 <field>Case_Number__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ID_Card__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -391,14 +395,6 @@
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
-    <relatedLists>
-        <fields>NAME</fields>
-        <fields>Card_Status__c</fields>
-        <fields>Nature_of_ID_Card__c</fields>
-        <fields>Valid_To_Date__c</fields>
-        <fields>Cancellation_Date__c</fields>
-        <relatedList>ID_Card__c.ID_Card_Application__c</relatedList>
-    </relatedLists>
     <relatedLists>
         <relatedList>RelatedNoteList</relatedList>
     </relatedLists>

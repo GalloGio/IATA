@@ -443,7 +443,7 @@ two record types:
         <fullName>ID_Card_Application__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
-        <label>ID Card Application</label>
+        <label>Latest ID Card Application</label>
         <referenceTo>ID_Card_Application__c</referenceTo>
         <relationshipLabel>ID Cards</relationshipLabel>
         <relationshipName>ID_Cards</relationshipName>

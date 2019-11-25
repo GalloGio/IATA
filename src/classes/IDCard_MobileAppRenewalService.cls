@@ -343,9 +343,12 @@ public with sharing class IDCard_MobileAppRenewalService
 
 		if (requestInformation.isUSAgent)
 			IDCardUtil.IdCardAIMSrt = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card__c', 'WebStar');
-        upsert IDCardUtil.CreateIDCardObjectFromApplication(
+        ID_Card__c idCard = IDCardUtil.CreateIDCardObjectFromApplication(
             requestInformation.newIDCA, requestInformation.contact, idCardType);
-
+        upsert idCard;
+        requestInformation.newIDCA.ID_Card__c = idCard.Id;
+        update requestInformation.newIDCA;
+        
         Boolean closeCase = CARD_TYPE_DIGITAL.equals(requestInformation.newIDCA.Card_Type__c) || requestInformation.isUSAgent;
 
         Case c2 = requestInformation.idcaCase;

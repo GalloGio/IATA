@@ -1596,6 +1596,8 @@ global with sharing class IDCardUtil {
 
                         idCardNew = IDCardUtil.CreateIDCardObjectFromApplication(application, contacts[0], accountType);
                         upsert idCardNew;
+                        application.ID_Card__c = idCardNew.Id;
+                        update application;
                     }
 
                     //@@ and c.RecordTypeID =: IDCardContactRecordTypeID
