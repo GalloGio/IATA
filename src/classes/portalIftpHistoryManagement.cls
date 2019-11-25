@@ -124,8 +124,6 @@ public without sharing class portalIftpHistoryManagement {
 	@AuraEnabled (cacheable=false)
 	public static List<ITPReportWrapper> getProficiencyReport(String itpName, String monthValue, String yearValue){
 
-		System.debug('[portalIftpHistoryManagement - getProficiencyReport]: INTI');
-
 		Map<String,String> results = new Map<String,String>();
 
 
@@ -155,11 +153,6 @@ public without sharing class portalIftpHistoryManagement {
 																AND CreatedDate < :checkDate
 																AND Event_Type__c in ('1','2')
 																ORDER BY Employee_Code__c, Address_Code__c, CreatedDate];
-
-		System.debug('[portalIftpHistoryManagement - getProficiencyReport]: itpName:' + itpName);
-		System.debug('[portalIftpHistoryManagement - getProficiencyReport]: checkDate:' + checkDate);
-		System.debug('[portalIftpHistoryManagement - getProficiencyReport]: workingEmployeesList:' + workingEmployeesList);
-		System.debug('[portalIftpHistoryManagement - getProficiencyReport]: workingEmployeesList.Size():' + workingEmployeesList.Size());
 
 		String currentEmp = '';
 		Set<String> workingEmp = new Set<String>();
@@ -209,7 +202,6 @@ public without sharing class portalIftpHistoryManagement {
 		if(isWorking){
 			workingEmp.add(currentEmp);
 		}
-		System.debug('[portalIftpHistoryManagement - getProficiencyReport]: workingEmp:' + workingEmp);
 
 		// Get Proficiency Employees List
 		List<IFTP_History__c> proficiencyEmployeesList = [SELECT ITP_Name__c,
@@ -224,9 +216,6 @@ public without sharing class portalIftpHistoryManagement {
 																AND Event_Type__c in ('5','6')
 																AND Employee_Code__c IN :workingEmp
 																ORDER BY Employee_Code__c, Address_Code__c, CreatedDate];
-
-		System.debug('[portalIftpHistoryManagement - getProficiencyReport]: proficiencyEmployeesList:' + proficiencyEmployeesList);
-		System.debug('[portalIftpHistoryManagement - getProficiencyReport]: proficiencyEmployeesList.Size():' + proficiencyEmployeesList.Size());
 
 		currentEmp = '';
 		Map<String,Set<String>> mapProfEmp = new Map<String,Set<String>>();
@@ -283,15 +272,9 @@ public without sharing class portalIftpHistoryManagement {
 			}
 		}
 
-		System.debug('[portalIftpHistoryManagement - getProficiencyReport]: mapProfEmp:' + mapProfEmp);
-
-
 		//Get All certifications
 		List<IFTP_Certification_Detail__c> preReqCerts = [SELECT Certification__c, General_Training__c, Prerequisite_Level__c, Name
 			FROM IFTP_Certification_Detail__c];
-
-		System.debug('[portalIftpHistoryManagement - getProficiencyReport]: preReqCerts:' + preReqCerts);
-		System.debug('[portalIftpHistoryManagement - getProficiencyReport]: preReqCerts.size():' + preReqCerts.size());
 
 		Set<Id> listCert = new Set<Id>();
 		Set<Id> listCertL2 = new Set<Id>();
@@ -346,17 +329,6 @@ public without sharing class portalIftpHistoryManagement {
 							GROUP BY Account_Contact_Role__r.Company_Code__c,
 								Certification__c, Certification__r.Code__c, Certification__r.Name ];
 
-		//IFTP-313 - remove the expiry date filter
-		// List<AggregateResult> lContRoleCerts = [SELECT Account_Contact_Role__r.Company_Code__c,
-		//                         Certification__c, Certification__r.Code__c, Certification__r.Name
-		//                     FROM Contact_Role_Certification__c
-		//                     WHERE Account_Contact_Role__r.Company_Code__c IN :workingEmp
-		//                     AND Account_Contact_Role__r.Contact__r.AccountId = :accId.Id
-		//                     AND Certification__c IN :listCert
-		//                     AND createddate < :checkDateNextMonth
-		//                     AND Expiration_Date__c > :checkDatePreviousMonth
-		//                     GROUP BY Account_Contact_Role__r.Company_Code__c,
-		//                         Certification__c, Certification__r.Code__c, Certification__r.Name ];
 	   List<AggregateResult> lContRoleCerts = [SELECT Account_Contact_Role__r.Company_Code__c,
 								Certification__c, Certification__r.Code__c, Certification__r.Name
 							FROM Contact_Role_Certification__c
@@ -366,9 +338,6 @@ public without sharing class portalIftpHistoryManagement {
 							AND createddate < :checkDateNextMonth
 							GROUP BY Account_Contact_Role__r.Company_Code__c,
 								Certification__c, Certification__r.Code__c, Certification__r.Name ];
-
-		System.debug('[portalIftpHistoryManagement - getProficiencyReport]: lContRoleCerts:' + lContRoleCerts);
-		System.debug('[portalIftpHistoryManagement - getProficiencyReport]: lContRoleCerts:' + lContRoleCerts.size());
 
 		currentEmp = '';
 		Integer numberModules = 0;
@@ -404,16 +373,12 @@ public without sharing class portalIftpHistoryManagement {
 
 		}
 
-		System.debug('[portalIftpHistoryManagement - getProficiencyReport]: empModules:' + empModules);
-
-
 		//add remaining working employees with 0 certifications to the list of empModules
 		for(String rec : workingEmp){
 			if(!empModules.containsKey(rec)){
 				empModules.put(rec, 0);
 			}
 		}
-		System.debug('[portalIftpHistoryManagement - getProficiencyReport]: empModules:' + empModules);
 
 		//Check Last User from previous cycle
 		//empModules.put(currentEmp, numberModules);
@@ -422,11 +387,9 @@ public without sharing class portalIftpHistoryManagement {
 
 		for(String rec : empModules.keySet() ){
 			String ikey = String.valueOf(empModules.get(rec));
-			System.debug('[portalIftpHistoryManagement - getProficiencyReport]: ikey:' + ikey);
 
 			if(empType != null){
 				String sEmpType = empType.containsKey(rec) ? empType.get(rec) : '' ;
-				System.debug('[portalIftpHistoryManagement - getProficiencyReport]: sEmpType:' + sEmpType);
 				if(sEmpType.contains('ITP Training Coordinator') && !sEmpType.contains('ITP Trainee')  && ikey == '0' && !hasCert.contains(rec)){
 					continue;
 				}
@@ -434,16 +397,12 @@ public without sharing class portalIftpHistoryManagement {
 
 			if(mapResults.containsKey(ikey)){
 				Integer aux = ((Integer)mapResults.get(ikey));
-				System.debug('[portalIftpHistoryManagement - getProficiencyReport]: aux:' + aux);
 				aux = aux+1;
-				System.debug('[portalIftpHistoryManagement - getProficiencyReport]: aux:' + aux);
 				mapResults.put(ikey,aux);
 			}else{
 				mapResults.put(ikey,1);
 			}
 		}
-
-		System.debug('[portalIftpHistoryManagement - getProficiencyReport]: mapResults:' + mapResults);
 
 		List<ITPReportWrapper> resultList = new List<ITPReportWrapper>();
 
@@ -456,65 +415,9 @@ public without sharing class portalIftpHistoryManagement {
 			}
 		}
 
-
-
-		// for(String rec : mapResults.keySet() ){
-		//     resultList.add(new ITPReportWrapper(itpName, rec, String.valueOf(mapResults.get(rec))));
-		// }
-
-		// resultList.add(new ITPReportWrapper('Menzies', '1', '5'));
-		// resultList.add(new ITPReportWrapper('Menzies', '2', '4'));
-		// resultList.add(new ITPReportWrapper('Menzies', '3', '7'));
-		// resultList.add(new ITPReportWrapper('Menzies', '4', '2'));
-		// resultList.add(new ITPReportWrapper('Menzies', '5', '1'));
-		// resultList.add(new ITPReportWrapper('Menzies', '6', '1'));
-		// resultList.add(new ITPReportWrapper('Menzies', '7', '2'));
-		// resultList.add(new ITPReportWrapper('Menzies', '8', '2'));
-		// resultList.add(new ITPReportWrapper('Menzies', '9', '1'));
-
 		return resultList;
 
 	}
-
-	// private boolean certExists(List<certWrapper> listRec, certWrapper rec){
-	//     Boolean result = false;
-	//     for(certWrapper aux: listRec){
-	//         if(aux.station == rec.station && aux.certification == rec.certification && aux.proficiency == rec.proficiency){
-	//             result = true;
-	//             break;
-	//         }
-	//     }
-	//     return result;
-	// }
-
-	// private List<certWrapper> addCertificate(List<certWrapper> listRec, certWrapper rec){
-	//     if(!certExists(listRec,rec)){
-	//         listRec.add(rec);
-	//     }
-	//     return listRec;
-	// }
-
-	// private List<certWrapper> removeCertificate(List<certWrapper> listRec, certWrapper rec){
-	//     // for(certWrapper aux: listRec){
-	//     for(Integer i = 0; i < listRec.size(); i++){
-	//         if(listRec.get(i).station == rec.station && listRec.get(i).certification == rec.certification && listRec.get(i).proficiency == rec.proficiency){
-	//             listRec.remove(i);
-	//             break;
-	//         }
-	//     }
-	//     return listRec;
-	// }
-
-	// private List<certWrapper> removeAllStationCertificate(List<certWrapper> listRec, String station){
-	//     // for(certWrapper aux: listRec){
-	//     for(Integer i = 0; i < listRec.size(); i++){
-	//         if(listRec.get(i).station == station){
-	//             listRec.remove(i);
-	//         }
-	//     }
-	//     return listRec;
-	// }
-
 
 	public class LoggedUserInfoWrapper {
 		@AuraEnabled
@@ -533,21 +436,6 @@ public without sharing class portalIftpHistoryManagement {
 			this.logged_user_name_Str = logged_user_last_name.toUpperCase() + ', ' + logged_user_first_name;
 		}
 	}
-
-	// public class certWrapper {
-	//     @AuraEnabled
-	//     public String station {get;set;}
-	//     @AuraEnabled
-	//     public String certification {get;set;}
-	//     @AuraEnabled
-	//     public String proficiency {get;set;}
-
-	//     public certWrapper(String station, String certification, String proficiency){
-	//         this.station = station;
-	//         this.certification = certification;
-	//         this.proficiency = proficiency;
-	//     }
-	// }
 
 	public class ITPReportWrapper {
 		@AuraEnabled
