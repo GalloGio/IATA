@@ -1,4 +1,5 @@
 <template>
+    <template if:true={internalUser}>
 
         <div if:true={showBackdrop} class="slds-backdrop slds-backdrop_open" style={mainBackground} onclick={close}></div>
     
@@ -634,3 +635,4 @@
             </div>
         </div>
     </template>
+</template>

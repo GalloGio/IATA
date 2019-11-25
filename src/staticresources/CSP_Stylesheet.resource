@@ -947,6 +947,62 @@ lightning-datatable .slds-th__action {
     left: 0px;
 }
 
+.icon-combobox .slds-combobox_container
+  .slds-input__icon_right
+  lightning-primitive-icon:before {
+  content: "";
+  position: absolute;
+  border-top: 6px solid #fff;
+  border-bottom: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  top: 7px;
+}
+
+.icon-combobox .slds-combobox_container
+  .slds-is-open
+  .slds-input__icon_right
+  lightning-primitive-icon:before {
+  content: "";
+  position: absolute;
+  border-top: 0;
+  border-bottom: 6px solid #fff;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  top: 7px;
+}
+
+.icon-combobox .slds-combobox_container
+  .slds-input__icon_right
+  lightning-primitive-icon:after {
+  content: "";
+  position: absolute;
+  border-top: 6px solid rgb(93, 107, 248);
+  border-bottom: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  top: 4px;
+}
+
+
+.icon-combobox .slds-combobox_container
+  .slds-is-open
+  .slds-input__icon_right
+  lightning-primitive-icon:after {
+  content: "";
+  position: absolute;
+  border-top: 0;
+  border-bottom: 6px solid rgb(93, 107, 248);
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  top: 10px;
+}
+
+.icon-combobox .slds-input__icon-group_right {
+  left: 0.475rem;
+  width: 0.875rem;
+}
+
 .languageSelection .slds-combobox_container
   .slds-input__icon_right
   lightning-primitive-icon:after {
@@ -1028,6 +1084,14 @@ lightning-datatable .slds-th__action {
 
 .customCombobox input {
     height: 3.2rem;
+}
+
+.combobox-categories .slds-combobox_container input {
+  background-color: transparent !important;
+  color: #FFFFFF;
+  margin-top: -2%;
+  margin-bottom: 0%;
+  margin-left: 2%;
 }
 
 /* ############################################## */
@@ -1437,6 +1501,14 @@ lightning-datatable .slds-th__action {
     line-height: 1.63;
     letter-spacing: normal;
     color: #9a9eb0;
+}
+
+.textSize .slds-form-element__control {
+  font-size: 32px;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.25;
+  letter-spacing: normal;
 }
 
 /* End of Profile section overrides*/

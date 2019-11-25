@@ -17,6 +17,7 @@ import increaseNotificationView from '@salesforce/apex/PortalHeaderCtrl.increase
 import goToManageService from '@salesforce/apex/PortalHeaderCtrl.goToManageService';
 import goToOldChangePassword from '@salesforce/apex/PortalHeaderCtrl.goToOldChangePassword';
 import redirectChangePassword from '@salesforce/apex/PortalHeaderCtrl.redirectChangePassword';
+import isGuestUser from '@salesforce/apex/CSP_Utils.isGuestUser';
 
 import redirectfromPortalHeader from '@salesforce/apex/CSP_Utils.redirectfromPortalHeader';
 
@@ -66,6 +67,7 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
     @track chagingLang = false;
     @track loadingLangs = true;
     @track userId = userId;
+    @track internalUser = false;
 
     @wire(getRecord, { recordId: "$userId", fields: ['User.LanguageLocaleKey'] })
     getUserLang(result) {
@@ -253,6 +255,10 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
     }
 
     connectedCallback() {
+
+        isGuestUser().then(results => {            
+            this.internalUser = !results;
+        });
         
         this.getLanguagesOptions();
 
