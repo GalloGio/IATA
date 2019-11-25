@@ -1,0 +1,6 @@
+<table border="0" cellpadding="5" width="550" cellspacing="5" height="400" >
+<tr valign="top" height="400" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[<div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><font face="arial" style="font-size: 12pt;"><span style="font-size: 12pt;">Dear&nbsp;</span>{!ApprovalRequest.Process_Approver}<span style="font-size: 12pt;">,</span></font><div style="font-size: 12pt;"><br></div><div style="font-size: 12pt;">Please note that your Airline Coding Application process number&nbsp;<span style="background-color: rgb(255, 255, 255);">{!IATA_Process_Orchestrator_Step_Action__c.Associated_Case__c}</span>&nbsp;has been rejected.</div><div style="font-size: 12pt;"><div style="font-size: 12pt;"><br></div><div style="font-size: 12pt;"><span style="background-color: rgb(255, 255, 255);">Link for the rejected record: {!IATA_Process_Orchestrator_Step_Action__c.Link}</span></div></div></div>]]></td>
+</tr>
+</table>

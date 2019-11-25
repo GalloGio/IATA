@@ -43,12 +43,20 @@
     </entryCriteria>
     <finalApprovalActions>
         <action>
+            <name>ACLI_Approve_Code_Assignment_Approved</name>
+            <type>Alert</type>
+        </action>
+        <action>
             <name>Update_Status_field_to_Completed</name>
             <type>FieldUpdate</type>
         </action>
     </finalApprovalActions>
     <finalApprovalRecordLock>true</finalApprovalRecordLock>
     <finalRejectionActions>
+        <action>
+            <name>ACLI_Approve_Code_Assignment_Rejected</name>
+            <type>Alert</type>
+        </action>
         <action>
             <name>Update_Status_field_to_Fail</name>
             <type>FieldUpdate</type>
