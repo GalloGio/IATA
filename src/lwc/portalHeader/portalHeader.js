@@ -255,7 +255,7 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
 
     connectedCallback() {
         
-        let cookie = this.getCookie('user_guiding');
+        let cookie = this.getCookie('userguiding_user-status');
         
         if(cookie === undefined || cookie === null || cookie === '') {
             getLoggedUser()
@@ -266,9 +266,10 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
                     let accountSector = results.Contact.Account !== undefined && results.Contact.Account.Sector__c !== undefined ? results.Contact.Account.Sector__c : '';
                     let isoCode = results.Contact.ISO_Country__r !== undefined && results.Contact.ISO_Country__r.ISO_Code__c !== undefined ? results.Contact.ISO_Country__r.ISO_Code__c : '';
                     
-                    let userCookie = JSON.stringify(userPortalStatus + '-' + accountCategory + '-' + accountSector + '-' + isoCode);
-
-                    this.setCookie('user_guiding', userCookie, 1);
+                    this.setCookie('userguiding_acc_categ', accountCategory, 1);
+                    this.setCookie('userguiding_acc_sector', accountSector, 1);
+                    this.setCookie('userguiding_iso-code', isoCode, 1);
+                    this.setCookie('userguiding_user-status', userPortalStatus, 1);
                 }
             });
         }
