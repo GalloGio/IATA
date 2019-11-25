@@ -107,7 +107,7 @@ public with sharing class PortalDocumentsController {
                     'ContentSize, Language__c, ContentDocumentId, Document_Category__c, Country_of_publication__c, ContentUrl, ICH_Member_Only__c'+
                 ' FROM ContentVersion';
 
-        queryConditions = ' WHERE IsLatest = true AND Title LIKE \'%'+ String.escapeSingleQuotes(searchKey) +'%\'';
+        queryConditions = ' WHERE IsLatest = true AND(Title LIKE \'%'+ String.escapeSingleQuotes(searchKey) +'%\' OR Description LIKE \'%'+ String.escapeSingleQuotes(searchKey) +'%\')';
 
         if(String.isNotBlank(category)) queryConditions += ' AND Document_Category__c = \''+ String.escapeSingleQuotes(category) +'\'';
         if(String.isNotBlank(prodCat)) queryConditions += ' AND Product_Category__c LIKE \'%'+ String.escapeSingleQuotes(prodCat) +'%\'';
