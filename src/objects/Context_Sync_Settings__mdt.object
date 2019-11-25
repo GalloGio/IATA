@@ -2,6 +2,7 @@
 <CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
     <fields>
         <fullName>Context__c</fullName>
+        <description>One type of platform event is sent by context</description>
         <externalId>false</externalId>
         <fieldManageability>SubscriberControlled</fieldManageability>
         <label>Context</label>
@@ -26,6 +27,7 @@
     </fields>
     <fields>
         <fullName>Fields_To_Check_On_Update__c</fullName>
+        <description>On update platform event are sent only on certain fields modification</description>
         <externalId>false</externalId>
         <fieldManageability>SubscriberControlled</fieldManageability>
         <inlineHelpText>Fields must be separated by comma.</inlineHelpText>
@@ -36,6 +38,7 @@
     </fields>
     <fields>
         <fullName>Object__c</fullName>
+        <description>This must contain Object API Name concerned by the synchronisation</description>
         <externalId>false</externalId>
         <fieldManageability>SubscriberControlled</fieldManageability>
         <label>Object</label>
