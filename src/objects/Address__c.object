@@ -224,6 +224,7 @@
     </fields>
     <fields>
         <fullName>TechUpdate_AddressFlow__c</fullName>
+        <description>Used to bypass VR when update is done by addresscreation flow</description>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Tech Update Address Flow</label>
