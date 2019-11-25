@@ -316,6 +316,10 @@
     color: #333333;
 }
 
+.floatItem{
+    float: right;
+}
+
 @media only screen and (max-width: 800px) {
     .addressItem{
         width: 100%;

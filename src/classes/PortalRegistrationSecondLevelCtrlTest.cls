@@ -80,7 +80,7 @@ public class PortalRegistrationSecondLevelCtrlTest {
 		Contact con = new Contact(
 			FirstName = 'Test',
 			LastName = 'L1 Contact',
-			Email = 'test@test.test',
+			Email = 'test' + DateTime.now().getTime() + '@test.test',
 			Community__c = 'ISS Customer Portal',
 			AccountId = gp.Id
 		);

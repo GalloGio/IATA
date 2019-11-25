@@ -9,7 +9,16 @@ import isDisposableCheckActive from '@salesforce/apex/PortalRegistrationUtils.is
 export default class RegistrationUtils {
 
     getUserLocation(){
+
         return new Promise(
+            (resolve, reject) => {
+
+                let resp = {};
+                resp.isRestricted = false;
+                resp.countryCode = 'CH';
+                resolve(resp);
+            }
+            /*
             (resolve, reject) => {
                 var request = new XMLHttpRequest();
                 request.open('GET', "https://api.ipify.org?format=jsonp=", true);
@@ -35,6 +44,7 @@ export default class RegistrationUtils {
                 }
                 request.send();
             }
+            */
         );
     }
 
