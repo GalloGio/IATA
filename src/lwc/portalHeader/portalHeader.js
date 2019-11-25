@@ -181,7 +181,7 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
 
     //links for images
     logoIcon = CSP_PortalPath + 'CSPortal/Images/Logo/group.svg';
-    logoWhiteIcon = CSP_PortalPath + 'CSPortal/Images/Logo/just_logo_white.svg';
+    logoWhiteIcon = CSP_PortalPath + 'CSPortal/Images/Logo/logo-group-white.svg';
     servicesIcon = CSP_PortalPath + 'CSPortal/Images/Icons/service-white.svg';
     supportIcon = CSP_PortalPath + 'CSPortal/Images/Icons/support-white.svg';
     youAndIATA = CSP_PortalPath + 'CSPortal/Images/Icons/youiata-white.svg';
