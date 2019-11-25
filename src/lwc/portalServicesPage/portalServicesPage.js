@@ -102,6 +102,7 @@ export default class PortalServicesPage extends LightningElement {
                 tabsAux[i].active=true;
             }else{
                 tabsAux[i].active=false;
+                tabsAux[i].style="";
             }
         }
 
@@ -121,6 +122,7 @@ export default class PortalServicesPage extends LightningElement {
                 tabsAux[i].active=true;
             }else{
                 tabsAux[i].active=false;
+                tabsAux[i].style="";
             }
         }
 
