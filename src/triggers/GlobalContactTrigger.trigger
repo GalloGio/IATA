@@ -1,11 +1,5 @@
 trigger GlobalContactTrigger on Contact (after delete, after insert, after undelete, after update, before delete, before insert, before update) {   
-    ContactTriggerHandler contactTriggerHandler = new ContactTriggerHandler();
-
     if(!AMS_TriggerExecutionManager.checkExecution(Contact.getSObjectType(), 'GlobalContactTrigger')) { return; }
-
-    if (Trigger.isUpdate && Trigger.isAfter) {
-        contactTriggerHandler.OnAfterUpdate(Trigger.old, Trigger.new, Trigger.newMap);
-    }
 
     ID standardContactRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
 
@@ -689,5 +683,9 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
     		PlatformEvents_Helper.publishEvents((trigger.isDelete?trigger.OldMap:Trigger.newMap), 'Contact__e', 'Contact', trigger.isInsert, trigger.isUpdate, trigger.isDelete, trigger.isUndelete);
 		}
     }
-    /*AFTER*/
+
+    ContactTriggerHandler contactTriggerHandler = new ContactTriggerHandler();
+    if (Trigger.isUpdate && Trigger.isAfter) {
+        contactTriggerHandler.OnAfterUpdate(Trigger.old, Trigger.new, Trigger.newMap);
+    }
 }
