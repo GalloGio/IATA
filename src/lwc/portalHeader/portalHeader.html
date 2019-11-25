@@ -1,4 +1,5 @@
 <template>
+    <template if:true={internalUser}>
 
         <div if:true={showBackdrop} class="slds-backdrop slds-backdrop_open" style={mainBackground} onclick={close}></div>
     
@@ -428,7 +429,6 @@
                                 <img class="slds-m-right_small" src={supportIcon} />
                                 <span class="text-xsmall text-white slds-p-right_x-small tabText slds-show_large">{labels.CSP_Support}</span>
                             </div>
-
                             <!-- profile menu -->
                             <div class="slds-col_bump-left headerBarButton headerButtonProfileContainer">
                                 <img class="slds-m-left_x-small headerButtonProfileIcon" src={profileIcon} />
