@@ -1,8 +1,8 @@
 <template>
-    <div class="slds-grid slds-wrap slds-gutters_medium slds-p-top_x-large">
+    <lightning-layout multiple-rows class="slds-m-top_x-large" pull-to-boundary="medium" horizontal-align="spread">
         <!-- Search bar and buttons -->
-        <div class="slds-text-align_right slds-p-horizontal_small slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_3-of-12">
-            <div class="bottomLightGrayBorder slds-m-vertical_small inputFilter">
+        <lightning-layout-item class="slds-p-around_xx-small" size="12" flexibility="grow" large-device-size="5" medium-device-size="6" style="width: 35%;">
+            <div class="bottomLightGrayBorder slds-m-around_small inputFilter">
                 <img src={searchIconUrl}>
                 <lightning-input name="newRecipientTextInput"
                     placeholder={label.CSP_SearchingOn}
@@ -12,29 +12,30 @@
                     value={filteringObject.searchText}>
                 </lightning-input>
             </div>
-        </div>
-        <div class="slds-text-align_right slds-p-horizontal_small slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_3-of-12">
-            <!-- FILTER -->
-            <button if:true={filtered} class="slds-button_icon slds-button__icon_right filterButton fullWidth" onclick={openCasesFilterModal}>
-                {label.CSP_Filtered}
-                <img class="slds-float_right" src={filteredIconUrl}>
-            </button>
-            <button if:false={filtered} class="slds-button_icon slds-button__icon_right filterButton fullWidth" onclick={openCasesFilterModal}>
-                {label.CSP_Filter}<img class="slds-float_right" src={filterIconUrl}>
-            </button>
-        </div>
-        <!-- LIST VIEW -->
-        <div class="slds-text-align_right slds-p-horizontal_small slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_3-of-12">    
-            <lightning-button label={label.CSP_MyCases} class="containedButton fullWidth" onclick={changeToUserCasesTableView} if:true={viewNormalUserCasesTableViewButton}></lightning-button>
-            <lightning-button label={label.CSP_CompanyCases} class="containedButton fullWidth" onclick={changeToAdminCasesTableView} if:true={viewAdminUserCasesTableViewButton}></lightning-button>
-        </div>
-        <div class="slds-text-align_right slds-p-horizontal_small slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_3-of-12">
-            <lightning-button label={label.CSP_FAQReachUsBanner_ButtonText} class="containedButton fullWidth" onclick={openReachUs}></lightning-button>
-        </div>
-    </div>
+        </lightning-layout-item>
+        <lightning-layout-item class="slds-text-align_right slds-p-around_xx-small" size="12" flexibility="auto" large-device-size="7" medium-device-size="9" style="width: 65%;">
+            <lightning-layout-item class="slds-text-align_right paddingRight" size="3" flexibility="auto" small-device-size="3" medium-device-size="3">
+                <!-- FILTER -->
+                <button if:true={filtered} class="slds-m-right_small slds-button_icon slds-button__icon_right filterButton" onclick={openCasesFilterModal}>
+                    {label.CSP_Filtered}<img class="slds-float_right" src={filteredIconUrl}>
+                </button>
+                <button if:false={filtered} class="slds-m-right_small slds-button_icon slds-button__icon_right filterButton" onclick={openCasesFilterModal}>
+                    {label.CSP_Filter}<img class="slds-float_right" src={filterIconUrl}>
+                </button>
+            </lightning-layout-item>
+            <!-- LIST VIEW -->
+            <lightning-layout-item class="slds-text-align_right paddingRight" size="3" flexibility="auto" small-device-size="3" medium-device-size="3">    
+                <lightning-button label={label.CSP_MyCases} class="containedButton" onclick={changeToUserCasesTableView} if:true={viewNormalUserCasesTableViewButton}></lightning-button>
+                <lightning-button label={label.CSP_CompanyCases} class="containedButton" onclick={changeToAdminCasesTableView} if:true={viewAdminUserCasesTableViewButton}></lightning-button>
+            </lightning-layout-item>
+            <lightning-layout-item class="slds-text-align_right paddingRight" size="3" flexibility="auto" small-device-size="3" medium-device-size="3">
+                    <lightning-button label="Reach Us" class="containedButton" onclick={openReachUs}></lightning-button>
+            </lightning-layout-item>
+        </lightning-layout-item>
+    </lightning-layout>
 
     <!-- Cases list datatable -->
-    <div class="customCardWhite slds-m-vertical_small">
+    <div class="customCardWhite">
         <div class="slds-m-around_medium">
             <div if:true={loading} class="spinnerContainer">
                 <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
@@ -88,7 +89,7 @@
                             </lightning-layout-item>
 
                             <!-- Creation Date (from) -->
-                            <lightning-layout-item  class="slds-p-around_xx-small" size="6" flexibility="grow">
+                            <lightning-layout-item class="slds-p-around_xx-small" size="6" flexibility="grow">
                                 <div class="slds-p-horizontal_large slds-p-vertical_medium" >
                                     <lightning-input 
                                         class="customPickList dateField" 
