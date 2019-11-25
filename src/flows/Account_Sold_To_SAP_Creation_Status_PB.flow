@@ -1,67 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
-    <actionCalls>
-        <processMetadataValues>
-            <name>ActionCallType</name>
-            <value>
-                <stringValue>flow</stringValue>
-            </value>
-        </processMetadataValues>
-        <processMetadataValues>
-            <name>flowSelection</name>
-            <value>
-                <stringValue>Account Sold to SAP Creation Status</stringValue>
-            </value>
-        </processMetadataValues>
-        <name>myRule_1_A1</name>
-        <label>launch flow</label>
-        <locationX>100</locationX>
-        <locationY>200</locationY>
-        <actionName>Account_Sold_to_SAP_Creation_Status</actionName>
-        <actionType>flow</actionType>
-        <inputParameters>
-            <processMetadataValues>
-                <name>dataType</name>
-                <value>
-                    <stringValue>String</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>isRequired</name>
-                <value>
-                    <booleanValue>false</booleanValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>leftHandSideLabel</name>
-                <value>
-                    <stringValue>AccountInputID</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>maxOccurs</name>
-                <value>
-                    <numberValue>1.0</numberValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>objectType</name>
-                <value>
-                    <stringValue></stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>rightHandSideType</name>
-                <value>
-                    <stringValue>Formula</stringValue>
-                </value>
-            </processMetadataValues>
-            <name>AccountInputID</name>
-            <value>
-                <elementReference>formula_2_myRule_1_A1_1983609159</elementReference>
-            </value>
-        </inputParameters>
-    </actionCalls>
     <decisions>
         <processMetadataValues>
             <name>index</name>
@@ -145,18 +83,7 @@
             <label>Soldt To created in SAP ?</label>
         </rules>
     </decisions>
-    <formulas>
-        <processMetadataValues>
-            <name>originalFormula</name>
-            <value>
-                <stringValue>[Address_Role_Business_Context__c].Address_Role__c.Address__c.Account__c.Id </stringValue>
-            </value>
-        </processMetadataValues>
-        <name>formula_2_myRule_1_A1_1983609159</name>
-        <dataType>String</dataType>
-        <expression>{!myVariable_current.Address_Role__r.Address__r.Account__r.Id}</expression>
-    </formulas>
-    <interviewLabel>Account_Sold_To_SAP_Creation_Status_PB-1_InterviewLabel</interviewLabel>
+    <interviewLabel>Account_Sold_To_SAP_Creation_Status_PB-2_InterviewLabel</interviewLabel>
     <label>Account Sold To SAP Creation Status PB</label>
     <processMetadataValues>
         <name>ObjectType</name>
@@ -183,6 +110,86 @@
         </value>
     </processMetadataValues>
     <processType>Workflow</processType>
+    <recordUpdates>
+        <processMetadataValues>
+            <name>evaluationType</name>
+            <value>
+                <stringValue>always</stringValue>
+            </value>
+        </processMetadataValues>
+        <processMetadataValues>
+            <name>extraTypeInfo</name>
+        </processMetadataValues>
+        <processMetadataValues>
+            <name>isChildRelationship</name>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </processMetadataValues>
+        <processMetadataValues>
+            <name>reference</name>
+            <value>
+                <stringValue>[Address_Role_Business_Context__c].Address Role.Address.Account</stringValue>
+            </value>
+        </processMetadataValues>
+        <processMetadataValues>
+            <name>referenceTargetField</name>
+        </processMetadataValues>
+        <name>myRule_1_A1</name>
+        <label>Update account</label>
+        <locationX>100</locationX>
+        <locationY>200</locationY>
+        <filters>
+            <processMetadataValues>
+                <name>implicit</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </processMetadataValues>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>myVariable_current.Address_Role__r.Address__r.Account__c</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>String</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Sold_To_Completed</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideReferenceTo</name>
+                <value>
+                    <stringValue></stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>String</stringValue>
+                </value>
+            </processMetadataValues>
+            <field>Sold_To_Completed__c</field>
+            <value>
+                <stringValue>Completed</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Account</object>
+    </recordUpdates>
     <startElementReference>myDecision</startElementReference>
     <status>Active</status>
     <variables>
