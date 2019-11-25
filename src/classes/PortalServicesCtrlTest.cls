@@ -253,7 +253,7 @@ public class PortalServicesCtrlTest {
 
         Id rtHQ =  RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
 	    
-        MyAirline = new Account(
+        Account MyAirline = new Account(
 		RecordTypeId = rtHQ,
 		Name='MyAirline',
 		ACLI_Status__c = 'Active Company',
