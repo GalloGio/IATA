@@ -37,19 +37,23 @@ private class PortalCasesCtrlTest {
         Portal_Applications__c pa = new Portal_Applications__c(Name = TIP_Utils.PORTAL_SERVICE_NAME_TIP);
         Portal_Applications__c pa1 = new Portal_Applications__c(Name = 'Airline Joinings Test');
         Portal_Applications__c pa2 = new Portal_Applications__c(name = 'Agency Service Test');
-        insert new List<Portal_Applications__c>{pa, pa1, pa2};
+		Portal_Applications__c pa3 = new Portal_Applications__c(name = 'IATA Airlines and Location Codes');
+        insert new List<Portal_Applications__c>{pa, pa1, pa2, pa3};
         
         ISSP_Portal_Service_Ids__c psi = new ISSP_Portal_Service_Ids__c(
             TIP_Portal_Service_Id__c = pa.Id,
             AirlineParticipation__c = String.valueOf(pa1.Id).substring(0, 15),
-            AgencyAccreditation__c = String.valueOf(pa2.Id).substring(0, 15)
+            AgencyAccreditation__c = String.valueOf(pa2.Id).substring(0, 15),
+			ACLI_IATA_Airlines_and_Location_Codes_Na__c = pa3.Name,
+			ACLI_IATA_Airlines_and_Location_Codes__c = String.valueOf(pa3.Id).substring(0, 15)
         );
         insert psi;
         
         Portal_Application_Right__c right1 = new Portal_Application_Right__c(Contact__c = newCon1.Id, Right__c = 'Access Granted', Portal_Application__c = pa.Id);
         Portal_Application_Right__c right2 = new Portal_Application_Right__c(Contact__c = newCon1.Id, Right__c = 'Access Granted', Portal_Application__c = pa1.Id);
         Portal_Application_Right__c right3 = new Portal_Application_Right__c(Contact__c = newCon1.Id, Right__c = 'Access Granted', Portal_Application__c = pa2.Id);
-        insert new List<Portal_Application_Right__c>{right1, right2, right3};
+		Portal_Application_Right__c right4 = new Portal_Application_Right__c(Contact__c = newCon1.Id, Right__c = 'Access Granted', Portal_Application__c = pa3.Id);
+        insert new List<Portal_Application_Right__c>{right1, right2, right3, right4};
         
         ISSPCaseListView__c customSet = new ISSPCaseListView__c();
         customSet.Name = 'ISSP_MyRecentCases';
@@ -364,6 +368,126 @@ private class PortalCasesCtrlTest {
            
         Test.stopTest();
     }
+
+	@isTest
+	static void testHandleResult12(){	
+
+		User usr = [SELECT Id, ContactId FROM User WHERE Email LIKE '%testemail1@csp.testclass' LIMIT 1];
+
+		Id caseRT_airlineCodingApplication = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Airline_Coding_Application');
+
+		Test.startTest();
+		System.runAs(usr) {
+			Case newCase4 = new Case(Subject = 'Bla', Region__c = 'Europe', Status='Draft',
+									Origin = 'Portal', CaseArea__c = 'Airline Coding Application', Reason1__c='Location ID Form',
+									RecordTypeId = caseRT_airlineCodingApplication,
+									Visible_on_ISS_Portal__c = true, ContactId = usr.ContactId);
+			insert newCase4;
+			
+				
+			Participation_Online_Application__c participation = new Participation_Online_Application__c();
+			participation.Case__c = newCase4.Id;
+			insert participation;
+
+			Case getCaseTest = PortalCasesCtrl.getCaseById(newCase4.Id);
+
+			List<CSP_Utils.PickListWrapper> caseTypeOptions = PortalCasesCtrl.typeOfCasePortalCustomPicklist();
+			
+			PortalCasesCtrl.PagedResult pag = PortalCasesCtrl.getRecentCases(false, false, false);
+			
+		}
+		Test.stopTest();
+	}
+
+	@isTest
+	static void testHandleResult13(){	
+
+		User usr = [SELECT Id, ContactId FROM User WHERE Email LIKE '%testemail1@csp.testclass' LIMIT 1];
+
+		Id caseRT_airlineCodingApplication = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Airline_Coding_Application');
+
+		Test.startTest();
+		System.runAs(usr) {
+			Case newCase4 = new Case(Subject = 'Bla', Region__c = 'Europe', Status='Draft',
+									Origin = 'Portal', CaseArea__c = 'Airline Coding Application', Reason1__c='Designator Form',
+									RecordTypeId = caseRT_airlineCodingApplication,
+									Visible_on_ISS_Portal__c = true, ContactId = usr.ContactId);
+			insert newCase4;
+			
+				
+			Participation_Online_Application__c participation = new Participation_Online_Application__c();
+			participation.Case__c = newCase4.Id;
+			insert participation;
+
+			Case getCaseTest = PortalCasesCtrl.getCaseById(newCase4.Id);
+
+			List<CSP_Utils.PickListWrapper> caseTypeOptions = PortalCasesCtrl.typeOfCasePortalCustomPicklist();
+			
+			PortalCasesCtrl.PagedResult pag = PortalCasesCtrl.getRecentCases(false, false, false);
+			
+		}
+		Test.stopTest();
+	}
+
+	@isTest
+	static void testHandleResult14(){	
+
+		User usr = [SELECT Id, ContactId FROM User WHERE Email LIKE '%testemail1@csp.testclass' LIMIT 1];
+
+		Id caseRT_airlineCodingApplication = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Airline_Coding_Application');
+
+		Test.startTest();
+		System.runAs(usr) {
+			Case newCase4 = new Case(Subject = 'Bla', Region__c = 'Europe', Status='Draft',
+									Origin = 'Portal', CaseArea__c = 'Airline Coding Application', Reason1__c='Baggage Tag Identifier Codes',
+									RecordTypeId = caseRT_airlineCodingApplication,
+									Visible_on_ISS_Portal__c = true, ContactId = usr.ContactId);
+			insert newCase4;
+			
+				
+			Participation_Online_Application__c participation = new Participation_Online_Application__c();
+			participation.Case__c = newCase4.Id;
+			insert participation;
+
+			Case getCaseTest = PortalCasesCtrl.getCaseById(newCase4.Id);
+
+			List<CSP_Utils.PickListWrapper> caseTypeOptions = PortalCasesCtrl.typeOfCasePortalCustomPicklist();
+			
+			PortalCasesCtrl.PagedResult pag = PortalCasesCtrl.getRecentCases(false, false, false);
+			
+		}
+		Test.stopTest();
+	}
+
+	@isTest
+	static void testHandleResult15(){	
+
+		User usr = [SELECT Id, ContactId FROM User WHERE Email LIKE '%testemail1@csp.testclass' LIMIT 1];
+
+		Id caseRT_airlineCodingApplication = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Airline_Coding_Application');
+
+		Test.startTest();
+		System.runAs(usr) {
+			Case newCase4 = new Case(Subject = 'Bla', Region__c = 'Europe', Status='Draft',
+									Origin = 'Portal', CaseArea__c = 'Airline Coding Application', Reason1__c='3 Digit Form',
+									RecordTypeId = caseRT_airlineCodingApplication,
+									Visible_on_ISS_Portal__c = true, ContactId = usr.ContactId);
+			insert newCase4;
+			
+				
+			Participation_Online_Application__c participation = new Participation_Online_Application__c();
+			participation.Case__c = newCase4.Id;
+			insert participation;
+
+			Case getCaseTest = PortalCasesCtrl.getCaseById(newCase4.Id);
+
+			List<CSP_Utils.PickListWrapper> caseTypeOptions = PortalCasesCtrl.typeOfCasePortalCustomPicklist();
+			
+			PortalCasesCtrl.PagedResult pag = PortalCasesCtrl.getRecentCases(false, false, false);
+			
+		}
+		Test.stopTest();
+	}
 
     private static void createOscar(string caseReason,string caseArea,string caseStatus,Id contactId,string devName){
         Id oscarRTId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', devName);
