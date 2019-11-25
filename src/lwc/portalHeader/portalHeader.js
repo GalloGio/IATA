@@ -61,12 +61,23 @@ import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 
 
 export default class PortalHeader extends NavigationMixin(LightningElement) {
+
+    @api showServices = false;
+    @api showCases = false;
+    @api showFAQs = false;
+    @api showDocuments = false;
+    @api showAdvancedSearch = false;
+    @api language;
+    @api searchBarPlaceholder;
+
+    @track filteringObject;
     // language
     @track selectedLang = 'en_US';
     @track langOptions = [];
     @track chagingLang = false;
     @track loadingLangs = true;
     @track userId = userId;
+    @track internalUser = false;
 
     @wire(getRecord, { recordId: "$userId", fields: ['User.LanguageLocaleKey'] })
     getUserLang(result) {
@@ -181,11 +192,13 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
     arrowIconBlue = CSP_PortalPath + 'CSPortal/Images/Icons/arrow-down-blue.svg';
     notificationIcon = CSP_PortalPath + 'CSPortal/Images/Icons/notification-white.svg';
     searchWhiteIcon = CSP_PortalPath + 'CSPortal/Images/Icons/searchWhite.svg';
+    searchBlueIcon = CSP_PortalPath + 'CSPortal/Images/Icons/searchBlue.svg';
     mobileMenuIcon = CSP_PortalPath + 'CSPortal/Images/Icons/menu.svg';
 
     //notifications
     @track numberOfNotifications;
     @track openNotifications = false;
+    @track openSearch = false;
     @track openSideBarMenu = false;
     @track openSideBarMenuProfile = false;
     @track notification;
@@ -204,6 +217,8 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
     @track baseURL;
     @track showBackdrop = false;
 
+    @track showHoverResults = false;
+
     //User Type
     @track userAdmin;
 
@@ -216,11 +231,18 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
     @track openNotificationsStyle;
     @track displayBodyStyle;
     @track displayNotificationStyle;
+    //style variables for search
+    @track headerButtonSearchContainerStyle;
+    @track headerButtonSearchCloseIconStyle;
+    @track headerButtonSearchStyle;
+    @track openSearchStyle;
+    @track displayBodyStyle;
+    @track displaySearchStyle;
     //
     @track checkDisplayBodyStyle
 
     // MODAL
-    @track openmodel = false;
+    @track openmodal = false;
 
     @track mainBackground = 'z-index: 9999;';
 
@@ -315,7 +337,7 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
                 this.notificationNumberStyle = 'display: none;';
             }else{
 				this.notificationNumberStyle = 'display: inline;';
-				this.headerButtonNotificationsStyle='display: inline;vertical-align:top;';
+				this.headerButtonNotificationsStyle='display: inline; vertical-align:top;';
 			}
 
         });
@@ -425,9 +447,32 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
         } else {
             this.headerButtonNotificationsContainerStyle = 'z-index: 100;';
             this.headerButtonNotificationsCloseIconStyle = 'display: none; ';
-            this.headerButtonNotificationsStyle = 'display: inline;vertical-align:top;';
+            this.headerButtonNotificationsStyle = 'display: inline; vertical-align:top;';
             this.notificationNumberStyle = (this.numberOfNotifications === 0 ? 'display: none;' : 'display: inline;');
             this.openNotificationsStyle = 'display: none;';
+            this.showBackdrop = false;
+        }
+           
+    }
+    //method to change the style when the user clicks on the search
+    toggleSearch() {
+        this.openSearch = !this.openSearch;
+
+        if (this.openSearch) {
+            this.headerButtonSearchContainerStyle = 'background-color: #ffffff; z-index: 10000; padding-right: 6px; padding-left: 6px; padding-top: 6px; padding-bottom:90px; margin-top: 0; margin-bottom: 0;';
+            this.headerButtonSearchCloseIconStyle = 'display: flex; align-items: center; justify-content: center;';
+            this.headerButtonSearchStyle = 'display: none;';
+            this.openSearchStyle = 'display: block;';
+            this.showBackdrop = true;
+            this.displayBodyStyle = '';
+            this.displaySearchStyle = 'width: 100%';
+            this.closeSideMenu();
+            
+        } else {
+            this.headerButtonSearchContainerStyle = 'z-index: 100;';
+            this.headerButtonSearchCloseIconStyle = 'display: none; ';
+            this.headerButtonSearchStyle = 'display: block; vertical-align:top;';
+            this.openSearchStyle = 'display: none;';
             this.showBackdrop = false;
         }
            
@@ -470,12 +515,12 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
         this.notificationsView(event);
 
         this.mainBackground = "z-index: 10004;";
-        this.openmodel = true;
+        this.openmodal = true;
     }
 
     closeModal() {
         this.mainBackground = "z-index: 10000;";
-        this.openmodel = false;
+        this.openmodal = false;
     }
 
     notificationsView(event) {
@@ -620,7 +665,9 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
             this.openNotifications = true;
             this.toggleNotifications();
         }
-
+        if (this.openSearch) {
+            this.toggleSearch();
+        }
     }
 
     get totalNotification() {
