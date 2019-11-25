@@ -250,6 +250,27 @@ public class PortalServicesCtrlTest {
         cSettings.add(cSetting2);
 
         insert cSettings;
+
+        Id rtHQ =  RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
+	    
+        Account MyAirline = new Account(
+		RecordTypeId = rtHQ,
+		Name='MyAirline',
+		ACLI_Status__c = 'Active Company',
+		MITA_Member__c = true,
+		BIETA_Member__c = true,
+		Airline_designator__c = 'AA',
+		IATACode__c = '123',
+		Airline_Prefix__c = '456');
+	    insert MyAirline;
+
+	    Contact newCon = ISSP_ObjectFactory.createNewContact();
+	    newCon.AccountId = MyAirline.Id;
+	    newCon.Email='testemail1@csp.testclass';
+	    newCon.User_Portal_Status__c = 'Approved Admin';
+	    insert newCon;
+
+	    User newUser = ISSP_ObjectFactory.createPortalUser(newCon);
     }
     
     
@@ -306,7 +327,7 @@ public class PortalServicesCtrlTest {
             PortalSearchFilterWrapper psfwrapper= new PortalSearchFilterWrapper();
             
             psfwrapper.searchText = '' + ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_MSTS;
-            PortalServicesCtrl.PagedResult results = PortalServicesCtrl.getUserFilteredServices(JSON.serialize(psfwrapper), '0');
+            CSP_Utils.PagedResult results = PortalServicesCtrl.getUserFilteredServices(JSON.serialize(psfwrapper), '0');
             System.assertEquals(results.totalItemCount == 1, true);
             
             Test.StopTest();
@@ -739,6 +760,25 @@ public static void PortalServicesCtrlTest_CreateNewPortalAccess(){
 	User portalUser = ISSP_ObjectFactory.createPortalUser(c);
 
 	String test = PortalServicesCtrl.CreateNewPortalAccess(contactIds, portalServicelist[0].id, PortalServiceRole);
+}
+
+@IsTest static void testPortalGlobalSearch() {
+
+	User testUser = [SELECT Id FROM User WHERE Email LIKE '%testemail1@csp.testclass' LIMIT 1];
+
+	Test.startTest();
+	System.runAs(testUser) {
+		CSP_Utils.PagedResult test = new CSP_Utils.PagedResult();
+
+		PortalSearchFilterWrapper.servicesComponent servCmp = new PortalSearchFilterWrapper.servicesComponent();
+		servCmp.show = true;
+		PortalSearchFilterWrapper filtersWrapper = new PortalSearchFilterWrapper();
+		filtersWrapper.searchText = 'Test';
+		filtersWrapper.servicesComponent = servCmp;
+
+		test = PortalGlobalSearchCtrl.portalGlobalSearch(JSON.serialize(filtersWrapper), 'Services');
+	}
+	Test.stopTest();
 }
 
 }

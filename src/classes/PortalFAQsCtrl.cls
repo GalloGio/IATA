@@ -208,13 +208,13 @@ public with sharing class PortalFAQsCtrl {
         @refinedSearchSerialized - is a serialized filter object sent from the LWC controller for further filtering 
     */
     @AuraEnabled (cacheable=true)
-    public static PagedResult getFilteredFAQsResultsPage(String searchKey, String requestedPage){
+    public static CSP_Utils.PagedResult getFilteredFAQsResultsPage(String searchKey, String requestedPage){
         PortalSearchFilterWrapper filtersWrapper = (PortalSearchFilterWrapper) JSON.deserialize(searchKey, PortalSearchFilterWrapper.class);
         Integer requestedPageAux = integer.valueof(requestedPage);
         System.debug(LoggingLevel.FINE, '[cls PortalFAQsCtrl - getFilteredFAQsResultsPage] filtersWrapper - ' + filtersWrapper);
         List<FAQ__kav> lstToReturn = new List<FAQ__kav>();
         //Create an empty default return object
-        PagedResult result = new PagedResult();
+        CSP_Utils.PagedResult result = new CSP_Utils.PagedResult();
         result.records = lstToReturn;
         result.totalItemCount = 0;
 
@@ -293,13 +293,6 @@ public with sharing class PortalFAQsCtrl {
         }
         
         return result;
-    }
-
-    public class PagedResult {
-        @AuraEnabled
-        public Integer totalItemCount { get;set; }        
-        @AuraEnabled
-        public SObject[] records { get;set; }
     }
 
     /*

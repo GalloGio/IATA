@@ -448,7 +448,7 @@ public static Integer RESULTS_PER_PAGE = 10;
 		@refinedSearchSerialized - is a serialized filter object sent from the LWC controller for further filtering
  */
 @AuraEnabled (cacheable=false)
-public static PagedResult getUserFilteredServices(String searchKey, String requestedPage){
+public static CSP_Utils.PagedResult getUserFilteredServices(String searchKey, String requestedPage){
 
 	PortalSearchFilterWrapper filtersWrapper = (PortalSearchFilterWrapper) JSON.deserialize(searchKey, PortalSearchFilterWrapper.class);
 
@@ -487,22 +487,11 @@ public static PagedResult getUserFilteredServices(String searchKey, String reque
 		lstToReturn.add(lstFiltered.get(i));
 	}
 
-	PagedResult result = new PagedResult();
+	CSP_Utils.PagedResult result = new CSP_Utils.PagedResult();
 	result.records = lstToReturn;
 	result.totalItemCount = lstToReturn.size();
 
 	return result;
-}
-
-public class PagedResult {
-@AuraEnabled
-public Integer totalItemCount { get; set; }
-@AuraEnabled
-public SObject[] records { get; set; }
-@AuraEnabled
-public Boolean userAdmin { get; set; }
-@AuraEnabled
-public String url { get; set; }
 }
 
 @AuraEnabled (cacheable=false)

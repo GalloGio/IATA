@@ -52,6 +52,15 @@ export default class PortalSearchBarGlobalComponent extends LightningElement {
                 documentCategoryFilter : "",
                 documentProductCategoryFilter : "",
                 documentCountryFilter : ""
+            },
+            profileComponent : {
+                show : true,
+                loading : true,
+                highlight : false,
+                nrResults : 0,
+                profileTypeFilter : "",
+                profileCountryFilter : "",
+                profileContactStatusFilter : ""
             }
         };
 

@@ -2,15 +2,15 @@ public with sharing class PortalDocumentsController {
 
     public static Integer RESULTS_PER_PAGE = 10;
     public static Integer requestedPageNumber;
-    public static PagedResult result;
+    public static CSP_Utils.PagedResult result;
 
     /* 
     * @description Main method that returns a list of ContentVersion records based on user level access
     * @params String searchKey, String category, String prodCat, String publiCountry, Integer requestedPage
-    * @return PagedResult
+    * @return CSP_Utils.PagedResult
     */
     @AuraEnabled(cacheable=true)
-    public static PagedResult getSearchDocuments(String searchKey, String category, String prodCat, String publiCountry, Integer requestedPage, String docId) {
+    public static CSP_Utils.PagedResult getSearchDocuments(String searchKey, String category, String prodCat, String publiCountry, Integer requestedPage, String docId) {
         String UserPortalStatus;
         String UserPortalCountry;
         String UserPortalRegion;
@@ -136,7 +136,7 @@ public with sharing class PortalDocumentsController {
             }
         }
 
-        result = new PagedResult();
+        result = new CSP_Utils.PagedResult();
         if(requestedPage == 0) {
             result.totalItemCount = Database.countQuery('SELECT COUNT() FROM ContentVersion' + queryConditions);
         }
@@ -217,11 +217,4 @@ public with sharing class PortalDocumentsController {
 
         return retDocs;
     }
-
-    public class PagedResult {
-        @AuraEnabled
-        public Integer totalItemCount { get;set; }       
-        @AuraEnabled
-        public SObject[] records { get;set; }
-    }    
 }

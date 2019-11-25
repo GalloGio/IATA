@@ -57,7 +57,7 @@ public class PortalFAQsCtrlTest {
             filtersWrapper.searchText = 'Test Publish Online';
             filtersWrapper.faqsComponent = null;
             filtersWrapper.language = 'en_US';
-            PortalFAQsCtrl.PagedResult resultsWithoutSubtopic = PortalFAQsCtrl.getFilteredFAQsResultsPage(JSON.serialize(filtersWrapper), '0');
+            CSP_Utils.PagedResult resultsWithoutSubtopic = PortalFAQsCtrl.getFilteredFAQsResultsPage(JSON.serialize(filtersWrapper), '0');
 
             filtersWrapper.language = '';
             resultsWithoutSubtopic = PortalFAQsCtrl.getFilteredFAQsResultsPage(JSON.serialize(filtersWrapper), '0');
@@ -66,7 +66,7 @@ public class PortalFAQsCtrlTest {
             faqsComponent.faqSubtopicsList = new List<String>{'IEP_Support'};
             filtersWrapper.faqsComponent = faqsComponent;
             filtersWrapper.language = 'en_US';
-            PortalFAQsCtrl.PagedResult resultsWithSubtopic = PortalFAQsCtrl.getFilteredFAQsResultsPage(JSON.serialize(filtersWrapper), '1');
+            CSP_Utils.PagedResult resultsWithSubtopic = PortalFAQsCtrl.getFilteredFAQsResultsPage(JSON.serialize(filtersWrapper), '1');
         }
         Test.stopTest();
     }
@@ -139,5 +139,27 @@ public class PortalFAQsCtrlTest {
                 PortalFAQsCtrl.submitArticleForApproval('KnowledgeFAQArticles', articleToSubmit.Id, UserInfo.getUserId(), 'This is a comment.');
             }
         Test.stopTest();
+    }
+
+    @isTest static void portalGlobalSearch() {
+        
+	    User testUser = [SELECT Id FROM User WHERE Email LIKE '%testemail1@csp.testclass' LIMIT 1];
+    
+	    Test.startTest();
+	    System.runAs(testUser) {
+	    	CSP_Utils.PagedResult test = new CSP_Utils.PagedResult();
+    
+	    	PortalSearchFilterWrapper.faqsComponent faqsComponent = new PortalSearchFilterWrapper.faqsComponent();
+	    	faqsComponent.faqSubtopicsList = new List<String> {'Travel'};
+	    	faqsComponent.show = true;
+    
+	    	PortalSearchFilterWrapper filtersWrapper = new PortalSearchFilterWrapper();
+	    	filtersWrapper.searchText = 'Travel';
+	    	filtersWrapper.faqsComponent = faqsComponent;
+	    	filtersWrapper.language = 'en_US';
+    
+	    	test = PortalGlobalSearchCtrl.portalGlobalSearch(JSON.serialize(filtersWrapper), 'FAQS');
+	    }
+	    Test.stopTest();
     }
 }
