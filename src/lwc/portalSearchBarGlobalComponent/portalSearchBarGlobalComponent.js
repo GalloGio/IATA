@@ -20,6 +20,7 @@ export default class PortalSearchBarGlobalComponent extends LightningElement {
             highlightTopResults : false,
             advancedSearch : this.showAdvancedSearch,
             language : this.language,
+            numberOfResults: 9,
             servicesComponent : {
                 show : this.showServices,
                 highlight : false,
