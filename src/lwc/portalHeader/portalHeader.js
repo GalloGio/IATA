@@ -60,12 +60,23 @@ import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 
 
 export default class PortalHeader extends NavigationMixin(LightningElement) {
+
+    @api showServices = false;
+    @api showCases = false;
+    @api showFAQs = false;
+    @api showDocuments = false;
+    @api showAdvancedSearch = false;
+    @api language;
+    @api searchBarPlaceholder;
+
+    @track filteringObject;
     // language
     @track selectedLang = 'en_US';
     @track langOptions = [];
     @track chagingLang = false;
     @track loadingLangs = true;
     @track userId = userId;
+    @track internalUser = false;
 
     @wire(getRecord, { recordId: "$userId", fields: ['User.LanguageLocaleKey'] })
     getUserLang(result) {
@@ -224,6 +235,7 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
     @track headerButtonSearchCloseIconStyle;
     @track headerButtonSearchStyle;
     @track openSearchStyle;
+    @track displayBodyStyle;
     @track displaySearchStyle;
     //
     @track checkDisplayBodyStyle
