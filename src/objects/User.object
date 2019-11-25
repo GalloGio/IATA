@@ -2276,6 +2276,18 @@ Currently (26/10/15) used to identify which user haven&apos;t complete the suppo
         <unique>false</unique>
     </fields>
     <fields>
+    <fields>
+        <fullName>Yardstick_UserId__c</fullName>
+        <description>Yardstick UserId</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Yardstick UserId</inlineHelpText>
+        <label>Yardstick UserId</label>
+        <length>10</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
         <fullName>dgai__active_user_settings__c</fullName>
         <defaultValue>false</defaultValue>
         <deprecated>false</deprecated>
