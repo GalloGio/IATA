@@ -260,9 +260,9 @@ return recordTypes;
                 relatedCase.Description = descriptionC;
                 relatedCase.RecordTypeId = recordTypeIdStageC;
             }else if(stage == 'Stage F'){
-                relatedCase.CaseArea__c = 'SIS';
-                relatedCase.Reason = 'Under discussion';
-                relatedCase.Reason1__c = 'Under discussion';
+                relatedCase.CaseArea__c = 'Airline Change';
+                relatedCase.Reason = 'SIS Client';
+                relatedCase.Reason1__c = 'SIS Client';
                 relatedCase.Subject = 'SIS New Register – ' + parentCase.Account.Name;
                 relatedCase.Status = 'Open';
                 relatedCase.Type = 'SIS Internal Case';
