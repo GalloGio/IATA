@@ -69,6 +69,9 @@ export default class PortalRegistrationConfirmationLMS extends LightningElement 
 
 	createdCityId;
 
+	// selectedAccount;
+	// @track selectedAccountSet = false;
+
 	@track openSuccessModal = false;
 	@track openVerificationMailSuccessModal = false;
 	@track openErrorModal = false;
@@ -177,6 +180,7 @@ export default class PortalRegistrationConfirmationLMS extends LightningElement 
 		.catch((error) => {
 			this.openMessageModalFlowRegister = true;
 			this.message = 'Your registration failed. An Error Occurred - ' + error;
+			console.log('Error: ', JSON.parse(JSON.stringify(error)));
 		});
 
 	}
@@ -191,7 +195,6 @@ export default class PortalRegistrationConfirmationLMS extends LightningElement 
 	}
 
 	submit(){
-
 		this.startLoading();
 
 		// Check first if we need to create a Geoname city
@@ -201,7 +204,6 @@ export default class PortalRegistrationConfirmationLMS extends LightningElement 
 				this.createdCityId = result;
 			})
 			.catch(error => {
-				console.log('Error: ', error);
 				console.log('Error: ', JSON.parse(JSON.stringify(error)));
 				this.openErrorModal = true;
 				this.errorModalMessage = JSON.parse(JSON.stringify(error));
@@ -209,12 +211,15 @@ export default class PortalRegistrationConfirmationLMS extends LightningElement 
 			})
 			.finally(() => {
 				this.submitRegistration();
-
+				
 			});
 		}else{
 			this.submitRegistration();
 		}
 
+
+
+				// register({ registrationForm : JSON.stringify(this.registrationForm),
 	}
 
 
@@ -237,6 +242,7 @@ export default class PortalRegistrationConfirmationLMS extends LightningElement 
 			this.localAddress.street2
 		];
 
+
 		//Move address info into ContactInfo
 		this.localContactInfo.isPoBox = this.localAddress.isPoBox;
 		this.localContactInfo.countryId = this.localAddress.countryId;
@@ -250,7 +256,8 @@ export default class PortalRegistrationConfirmationLMS extends LightningElement 
 		this.localContactInfo.street2 = this.localAddress.street2;
 		this.localContactInfo.zip = this.localAddress.zip;
 
-		if(this.flow === 'flow1' || this.flow === 'flow2'){
+
+		if(this.flow === 'flow0' || this.flow === 'flow1' || this.flow === 'flow2'){
 			registration({con: this.localContactInfo, extraValues: auxSearchValues})
 				.then(result => {
 					if(result.isSuccess == true){
@@ -268,6 +275,7 @@ export default class PortalRegistrationConfirmationLMS extends LightningElement 
 						this.stopLoading();
 					})
 					.catch(error => {
+						console.log('Error: ', JSON.parse(JSON.stringify(error)));
 						this.openErrorModal = true;
 						this.errorModalMessage = JSON.parse(JSON.stringify(error));
 						this.stopLoading();
@@ -317,8 +325,6 @@ export default class PortalRegistrationConfirmationLMS extends LightningElement 
 
 	closeSuccessModal(){
 
-		// We'll have to create a second method with a second event (go to homepage or remain on the current one)
-		// this.dispatchEvent(new CustomEvent('secondlevelregistrationcompleted'));
 		this.openSuccessModal = false;
 	}
 
@@ -352,7 +358,7 @@ export default class PortalRegistrationConfirmationLMS extends LightningElement 
 
 	handleToSChange(event){
 		this.tos = event.target.checked;
-
+	
 		var submitButton = this.template.querySelector('[data-id="submitButton"]');
 		if(this.tos){
 			submitButton.classList.remove('containedButtonDisabled');

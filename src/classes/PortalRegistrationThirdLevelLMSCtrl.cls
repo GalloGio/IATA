@@ -47,6 +47,8 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 		String parameters     = pageRef.getParameters().get('c');
 		parameters            = Encodingutil.urlDecode(PortalPasswordHandler.DecryptString(parameters), 'UTF-8');
 
+
+
 		//get registration information
 		UserInformationWrapper registrationParameters = (UserInformationWrapper) JSON.deserialize(parameters, UserInformationWrapper.class);
 
@@ -142,6 +144,7 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 			}
 
 			//Create Account Contact Role if not existing
+			//TO DO FM: Change query to use Functional Role
 			List<Account_Contact_Role__c> listACR = [SELECT Id,Account_Role__c,Contact__c,Contact_Role_Name__c,RecordTypeId FROM Account_Contact_Role__c WHERE Contact__c = :con.Id AND Contact_Role_Name__c = 'Yardstick' LIMIT 1];
 			Account_Contact_Role__c acr = new Account_Contact_Role__c();
 
@@ -162,7 +165,7 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 			Training_Contact_Role_Details__c ycd = new Training_Contact_Role_Details__c();
 
 			if(listYCD.size() > 0){
-				 ycd = listYCD[0];
+				ycd = listYCD[0];
 				ycd.Username__c = sUsername;
 				ycd.UserId__c = sUserId;
 				ycd.Preferred_Course__c = sCourse;
@@ -178,7 +181,7 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 
 				insert ycd;
 			}
-
+			
 			//Create Portal Application Right
 			Portal_Applications__c pa = [SELECT Id, Name FROM Portal_Applications__c WHERE Name = 'Training Platform (LMS)' LIMIT 1];
 
@@ -203,6 +206,7 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 			Contact updatedContact = [SELECT Id, Name, Email, AccountId, Account.TradeName__c, Account.Legal_name__c, Account.Billing_Address_formated__c, Account.Phone, Account.Sector__c, Account.Category__c
 										FROM Contact WHERE Id =: con.Id];
 
+			//GCS_AccountCreation.sendEmailNotification(updatedContact);
 			result.isSuccess = true;
 			result.message = 'Regitration Completed!';
 
@@ -210,8 +214,6 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 		catch(Exception e){
 			result.isSuccess = false;
 			result.message = 'An Error Occurred - '+ e.getStackTraceString() ;
-			System.debug('[PortalRegistrationThirdLevelLMSCtrl] registration : Exception : ' + e);
-			System.debug('[PortalRegistrationThirdLevelLMSCtrl] registration : Exception stack : ' + e.getStackTraceString());
 			Database.rollback(sp);
 			return result;
 		}
@@ -285,7 +287,154 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 
 				return registration(con, extraValues);
 			}
-			if(contactInfo.flow == 'flow4' || contactInfo.flow == 'flow6' || contactInfo.flow == 'flow7'){
+			if(contactInfo.flow == 'flow4'){
+
+				//Inactivate the registering Contact
+				Contact conToInactivate = [SELECT Id,status__c,FirstName,LastName,
+													AccountId,Email,Additional_Email__c,Phone,
+													OtherPhone,Salutation,Birthdate,Shipping_Address__c
+											FROM Contact WHERE Id = :contactInfo.Id];
+
+				conToInactivate.FirstName = conToInactivate.FirstName + ' - inactive';
+				conToInactivate.LastName = conToInactivate.LastName + ' - inactive';
+				conToInactivate.Email = conToInactivate.Email + '.inactive';
+				if(conToInactivate.Additional_Email__c != null && conToInactivate.Additional_Email__c != ''){
+					conToInactivate.Additional_Email__c = conToInactivate.Additional_Email__c + '.inactive';
+				}
+
+				// conToInactivate.status__c = 'Inactive';
+				update conToInactivate;
+
+				Contact con = [SELECT Id,AccountId,Email,Additional_Email__c,Phone,OtherPhone,Salutation,Birthdate,Shipping_Address__c
+								FROM Contact WHERE Id = :contactInfo.existingContactId];
+				con.Email = contactInfo.Email;
+				con.Additional_Email__c = contactInfo.Additional_Email;
+				con.Shipping_Address__c = contactInfo.Shipping_Address != ''? contactInfo.Shipping_Address : null;
+				con.Phone = contactInfo.Phone;
+				con.OtherPhone = contactInfo.OtherPhone;
+				con.Salutation = contactInfo.Salutation;
+				con.Birthdate = Date.valueOf(contactInfo.Birthdate);
+
+
+				List<String> extraValues = new List<String>();
+				extraValues.add(contactInfo.Username);
+				extraValues.add('');
+				extraValues.add(contactInfo.lmsCourse);
+				extraValues.add(contactInfo.street);
+				extraValues.add(contactInfo.zip);
+				extraValues.add(contactInfo.countryId);
+				extraValues.add(contactInfo.stateId);
+				extraValues.add(contactInfo.stateName);
+				extraValues.add(contactInfo.cityId);
+				extraValues.add(contactInfo.cityName);
+				extraValues.add(contactInfo.isPoBox);
+				extraValues.add(contactInfo.serviceid);
+				extraValues.add(contactInfo.street2);
+
+				RegistrationResult regRes = registration(con, extraValues);
+
+				Set<String> contIds = new Set<String>();
+				contIds.add(contactInfo.Id);
+				contIds.add(con.Id);
+	
+				if(regRes.isSuccess){
+
+					//Getting existing Account Contact Role from the new Contact to set it up to on the old contact
+					//TO DO FM: Change query to use Functional Role
+					List<Account_Contact_Role__c> listACR = [SELECT Id,Account_Role__c,Contact__c,Contact_Role_Name__c,RecordTypeId
+															FROM Account_Contact_Role__c
+															WHERE Contact__c in :contIds
+															AND Contact_Role_Name__c = 'Yardstick'];
+					Account_Contact_Role__c acrNew = new Account_Contact_Role__c();
+					Account_Contact_Role__c acrOld = new Account_Contact_Role__c();
+
+					for(Account_Contact_Role__c acr : listACR){
+						if(acr.Contact__c == contactInfo.Id){
+							acrNew = acr;
+						}else if(acr.Contact__c == contactInfo.existingContactId){
+							acrOld = acr;
+						}
+					}
+
+					Set<String> acrIds = new Set<String>();
+					acrIds.add(acrNew.Id);
+					acrIds.add(acrOld.Id);
+
+					//Create Yardstick Contact Role Detail
+					List<Training_Contact_Role_Details__c> listYCD = [SELECT Id,RecordTypeId,Account_Contact_Role__c,Username__c,UserId__c,Preferred_Course__c
+																	FROM Training_Contact_Role_Details__c
+																	WHERE Account_Contact_Role__c in :acrIds];
+					Training_Contact_Role_Details__c ycdOld = new Training_Contact_Role_Details__c();
+					Training_Contact_Role_Details__c ycdNew = new Training_Contact_Role_Details__c();
+
+					for(Training_Contact_Role_Details__c ycd : listYCD){
+						if(ycd.Account_Contact_Role__c == acrNew.Id){
+							ycdNew = ycd;
+						}else if(ycd.Account_Contact_Role__c == acrOld.Id){
+							ycdOld = ycd;
+						}
+					}
+
+					//Check if Training_Contact_Role_Details__c exist on the contact to keep
+					if(ycdOld != null){
+
+						List<Contact_Role_Certification__c> listCRC = [SELECT Id,Training_Contact_Role_Detail__c
+																	FROM Contact_Role_Certification__c
+																	WHERE Training_Contact_Role_Detail__c = :ycdNew.Id];
+
+						if(listCRC.size() > 0){
+							for(Contact_Role_Certification__c crc : listCRC){
+								crc.Training_Contact_Role_Detail__c = ycdOld.Id;
+							}
+							update listCRC;
+						}
+
+						List<Course_Assignment__c> listCA = [SELECT Id,Training_Contact_Role_Detail__c
+																	FROM Course_Assignment__c
+																	WHERE Training_Contact_Role_Detail__c = :ycdNew.Id];
+
+						if(listCA.size() > 0){
+							for(Course_Assignment__c ca : listCA){
+								ca.Training_Contact_Role_Detail__c = ycdOld.Id;
+							}
+							update listCA;
+						}
+
+						if(ycdNew != null){
+							delete ycdNew;
+						}
+
+
+						ycdOld.Username__c = contactInfo.Username != ''? contactInfo.Username : ycdOld.Username__c;
+						ycdOld.UserId__c = contactInfo.UserId != ''? contactInfo.UserId : ycdOld.UserId__c;
+						ycdOld.Preferred_Course__c = contactInfo.lmsCourse != ''? contactInfo.lmsCourse : ycdOld.Preferred_Course__c;
+						update ycdOld;
+
+
+					}else{
+						ycdNew.Account_Contact_Role__c = acrOld.Id;
+						ycdNew.Username__c = contactInfo.Username != ''? contactInfo.Username : ycdNew.Username__c;
+						ycdNew.UserId__c = contactInfo.UserId != ''? contactInfo.UserId : ycdNew.UserId__c;
+						ycdNew.Preferred_Course__c = contactInfo.lmsCourse != ''? contactInfo.lmsCourse : ycdNew.Preferred_Course__c;
+
+						update ycdNew;
+					}
+
+					//Delete Account Contact Role from the registering Contact
+					if(acrNew != null){
+						delete acrNew;
+					}
+
+					Set<String> conIdSet = new Set<String>();
+					conIdSet.add(conToInactivate.Id);
+					PortalRegistrationFirstLevelCtrl.futureDeactivateUsers(conIdSet);
+
+					regRes.isSuccess = true;
+					regRes.message = 'Regitration Completed!';
+				}
+				return regRes;
+			}
+			if(contactInfo.flow == 'flow6' || contactInfo.flow == 'flow7'){
 
 				Contact con = [SELECT Id,AccountId,Email,Additional_Email__c,Phone,OtherPhone,Salutation,Birthdate,Shipping_Address__c
 								FROM Contact WHERE Id = :contactInfo.Id];
@@ -318,10 +467,11 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 				Set<String> contIds = new Set<String>();
 				contIds.add(contactInfo.existingContactId);
 				contIds.add(con.Id);
-
+		
 				if(regRes.isSuccess){
 
 					//Getting existing Account Contact Role to set it up to the new Contact
+					//TO DO FM: Change query to use Functional Role
 					List<Account_Contact_Role__c> listACR = [SELECT Id,Account_Role__c,Contact__c,Contact_Role_Name__c,RecordTypeId
 															FROM Account_Contact_Role__c
 															WHERE Contact__c in :contIds
@@ -336,9 +486,9 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 							acrOld = acr;
 						}
 					}
-
+	
 					if(acrNew != null && acrOld != null){
-
+			
 						acrOld.Contact__c = con.Id;
 						acrOld.Account_Role__c = acrNew.Account_Role__c;
 						update acrOld;
@@ -464,6 +614,8 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 			return params;
 
 		}catch(Exception e){
+
+
 			return null;
 		}
 
@@ -490,7 +642,10 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 		RegistrationResult result = new RegistrationResult();
 		//MAX 150 adresses
 		try{
+
 			//Get address
+			// Contact contact = [SELECT Name, Email FROM CONTACT WHERE Id = :contactId];
+			// String address = contact.Email;
 			String address = emailAddr;
 
 			if(address == null){
@@ -535,7 +690,6 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 			}
 
 			message.setToAddresses(new List<String>{address});
-
 
 			String plainBody = message.getPlainTextBody();
 
@@ -589,6 +743,7 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 						plainBody = plainBody.replace(key, (mapBodyParams.get(key) == null) ? '' : mapBodyParams.get(key));
 					}
 				}else{
+					// plainBody = plainBody.replace('[CustomerName]', contact.Name).replace('[URL]','"'+ url +'" target="_blank"');
 					plainBody = plainBody.replace('[CustomerName]', contactName).replace('[URL]',sURL);
 				}
 
@@ -596,6 +751,7 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 			message.setHtmlBody(plainBody);
 
 			Messaging.SingleEmailMessage[] messages = new List<Messaging.SingleEmailMessage> {message};
+
 			Messaging.SendEmailResult[] results = Messaging.sendEmail(messages);
 
 			if (results[0].success){
@@ -679,6 +835,44 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 
 		return tosAccept[0].Is_Accepted__c;
 	}
+
+	// @future
+	// public static void updateUserId(List<Training_Contact_Role_Details__c> newTCRD, Map<Id,sObject> old, Boolean isInsert ){
+	// 	Set<Id> acrIds = new Set<Id>();
+	// 	Set<Id> contactIds = new Set<Id>();
+	// 	Map<Id,Training_Contact_Role_Details__c> toUpdate = new Map<Id,Training_Contact_Role_Details__c>();
+	// 	Map<Id,Id> acr_vs_contact = new Map<Id,Id>();
+
+	// 	for(Training_Contact_Role_Details__c  tcrd : newTCRD){
+	// 		if(isInsert){
+	// 			acrIds.add(tcrd.Account_Contact_Role__c);
+	// 			toUpdate.put(tcrd.Account_Contact_Role__c, tcrd);
+	// 		}else{
+	// 			if(tcrd.UserId__c!=null && tcrd.UserId__c != '' && old.get(tcrd.Id).UserId__c != tcrd.UserId__c){
+	// 				// ag.Cass_Number__c = AMS_AgencyHelper.resizeNumericString(ag.Cass_Number__c,3);
+	// 				acrIds.add(tcrd.Account_Contact_Role__c);
+	// 				toUpdate.put(tcrd.Account_Contact_Role__c, tcrd);
+	// 			}
+	// 		}
+	// 	}
+
+	// 	List<Account_Contact_Role__c> listACR = [SELECT Id, Contact__c FROM Account_Contact_Role__c WHERE Id in :acrIds];
+
+	// 	for(Account_Contact_Role__c  acr : listACR){
+	// 		contactIds.add(acr.Contact__c);
+	// 		acr_vs_contact.put(acr.Contact__c, acr.Id);
+	// 	}
+
+	// 	List<User> lUsers = [SELECT Id, ContactId, Yardstick_UserId__c FROM User WHERE ContactId in :contactIds];
+
+	// 	for(User u : lUsers){
+	// 		Id  acrID =  acr_vs_contact.get(u.ContactId);
+	// 		Training_Contact_Role_Details__c trcd2 = toUpdate.get(acrID);
+	// 		u.Yardstick_UserId__c = trcd2.UserId__c;
+	// 	}
+
+	// 	update lUsers;
+	// }
 
 	public class UserInformationWrapper{
 		public string Email{get;set;}

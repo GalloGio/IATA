@@ -1,21 +1,6 @@
 <template>
 	<lightning-layout multiple-rows vertical-align="stretch">
-			<!--<div class="progressBar">
-					<div class="progressItem firstItem previousItem">
-						<div class="itemIcon">
-							<lightning-icon size="x-small" icon-name="utility:check" class="slds-current-color"></lightning-icon>
-						</div>
-						<div class="itemTitle"><span>Profile Details</span></div>
-					</div>
-					<div class="progressItem secondItem activeItem">
-						<div class="itemIcon"></div>
-						<div class="itemTitle"><span>Account Selection</span></div>
-					</div>
-					<div class="progressItem thirdItem nextItem">
-						<div class="itemIcon"></div>
-						<div class="itemTitle"><span>Confirmation</span></div>
-					</div>
-				</div>-->
+
 		<lightning-layout-item size="12">
 			<span class="text-medium">Email Validation</span>
 		</lightning-layout-item>
@@ -47,33 +32,90 @@
 		</lightning-layout-item>
 		<!------------------------------------------      Profile details      -------------------------------------------->
 		<div class="companyInfoContainer">
-		<!------------------------------------------      Customer Type      -------------------------------------------->
+		<!------------------------------------------      Is your user email your personal email ?      -------------------------------------------->
 
+			<template if:true={isPersonalEmailVisibility}>
+				<div class="infoItem" >
+					<lightning-layout-item size="12" >
+						<div class="formLabelContainer">
+							<div class="text-xxsmall">
+								<!-- <abbr class="slds-required" title="required">* </abbr>{item.label} -->
+<!--NEED NEW LABEL -->                                    Is your user email your personal email?
+							</div>
+						</div>
+					</lightning-layout-item>
+					<lightning-layout-item size="12" >
+						<div class="slds-form-element">
+							<div class="slds-form-element__control custTextInputSmall">
+								<lightning-combobox
+									options={PersonalEmailOptions}
+									value={isPersonalEmail}
+									variant="label-hidden"
+									class="cursorPointerComboBox text-xxsmall"
+									dropdown-alignment="auto"
+									onchange={changeIsPersonalEmail}>
+								</lightning-combobox>
+							</div>
+						</div>
+					</lightning-layout-item>
+				</div>
+			</template>
 
-					<div class="infoItem" >
-						<lightning-layout-item size="12" >
-							<div class="formLabelContainer">
-								<div class="text-xxsmall">
-									<!-- <abbr class="slds-required" title="required">* </abbr>{item.label} -->
-<!--NEED NEW LABEL -->                                    Is your user email your personal email ?
-								</div>
+			<!-- ----------------------------------------      Personal and Work Email Reversed      ------------------------------------------ -->
+            <template if:true={reverseEmailVisibility}>
+                <div class="infoItem" >
+					<lightning-layout-item size="12" >
+						<div class="formLabelContainer">
+							<div class="text-xxsmall">
+								<!-- <abbr class="slds-required" title="required">* </abbr>{item.label} -->
+<!--NEED NEW LABEL -->                                    Are personal and work email reversed?
 							</div>
-						</lightning-layout-item>
-						<lightning-layout-item size="12" >
-							<div class="slds-form-element">
-								<div class="slds-form-element__control custTextInputSmall">
-									<lightning-combobox
-										options={PersonalEmailOptions}
-										value={isPersonalEmail}
-										variant="label-hidden"
-										class="cursorPointerComboBox text-xxsmall"
-										dropdown-alignment="auto"
-										onchange={changeIsPersonalEmail}>
-									</lightning-combobox>
-								</div>
+						</div>
+					</lightning-layout-item>
+					<lightning-layout-item size="12" >
+						<div class="slds-form-element">
+							<div class="slds-form-element__control custTextInputSmall">
+								<lightning-combobox
+									options={PersonalEmailOptions}
+									value={isReverseEmail}
+									variant="label-hidden"
+									class="cursorPointerComboBox text-xxsmall"
+									dropdown-alignment="auto"
+									onchange={changeReverseEmail}>
+								</lightning-combobox>
 							</div>
-						</lightning-layout-item>
-					</div>
+						</div>
+					</lightning-layout-item>
+				</div>
+			</template>
+
+			<!-- ----------------------------------------      Work Email      ------------------------------------------ -->
+			<template if:true={workEmailVisibility}>
+				<div class="infoItemLine" >
+
+					<lightning-layout-item size="12">
+						<div class="formLabelContainer">
+							<div class="text-xxsmall">
+								<!-- {labels.CSP_L2_Company_Name} -->
+	<!--NEED NEW LABEL -->                             Work Email
+							</div>
+						</div>
+					</lightning-layout-item>
+					<lightning-layout-item size="12">
+						<div class="slds-form-element">
+							<div class="slds-form-element__control custTextInput custTextInputSmall">
+								<input
+									type="text"
+									class="slds-input"
+									placeholder=" "
+									value={workEmailInput}
+									onkeyup={changeWorkEmail}/>
+							</div>
+						</div>
+					</lightning-layout-item>
+				</div>
+			</template>
+
 
 			<!-- ----------------------------------------      Personal Email      ------------------------------------------ -->
 			<template if:true={personalEmailVisibility}>
@@ -103,33 +145,7 @@
 			</template>
 
 
-			<!-- ----------------------------------------      Work Email      ------------------------------------------ -->
-			<template if:true={workEmailVisibility}>
-				<div class="infoItemLine" >
-
-					<lightning-layout-item size="12">
-						<div class="formLabelContainer">
-							<div class="text-xxsmall">
-								<!-- {labels.CSP_L2_Company_Name} -->
-	<!--NEED NEW LABEL -->                             Work Email
-							</div>
-						</div>
-					</lightning-layout-item>
-					<lightning-layout-item size="12">
-						<div class="slds-form-element">
-							<div class="slds-form-element__control custTextInput custTextInputSmall">
-								<input
-									type="text"
-									class="slds-input"
-									placeholder=" "
-									value={workEmailInput}
-									onkeyup={changeWorkEmail}/>
-							</div>
-						</div>
-					</lightning-layout-item>
-				</div>
-			</template>
-
+			
 			<!-- ----------------------------------------      Existing user/personal email      ------------------------------------------ -->
 			<template if:true={existingUsernameVisibility}>
 
@@ -173,15 +189,10 @@
 								</div>
 							</div>
 						</lightning-layout-item>
-						<lightning-button variant="base" label="Login" class="slds-p-right_small blueCustomButtonLinkSmall" onclick={handleNavigateToLogin}></lightning-button>
-
+			
 
 				</div>
 			</template>
-
-
-
-
 
 
 
@@ -226,10 +237,6 @@
 			</lightning-button>
 		</lightning-layout-item>
 
-		<!-- <lightning-layout-item size="6" class="nextBtn">
-			<lightning-button class="slds-float_right containedButton customBtn" label={labels.CSP_L2_Search} disabled={isSearchDisabled} variant="brand" onclick={search}>
-			</lightning-button>
-		</lightning-layout-item> -->
 
 		<lightning-layout-item padding="around-small" size="12">
 		</lightning-layout-item>
