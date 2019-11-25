@@ -2051,7 +2051,11 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
                             //Create idCard From Application 
                             idCard = IDCardUtil.CreateIDCardObjectFromApplication(application, theContact, theAccount);
 
-                            if (idCard != null) upsert idCard;
+                            if (idCard != null){
+                                upsert idCard;
+                                application.ID_Card__c = idCard.Id;
+                                update application;
+                            } 
 
                         }else{
                             theContact = contactMap.get(aCase.ContactId);
