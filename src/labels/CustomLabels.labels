@@ -10585,7 +10585,7 @@ Kindly note that home-based agents are required to coordinate with their colleag
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCard_USServiceDescription</shortDescription>
-        <value>Request for ID Cards, register Agents, pay Annual Service Fee, process Agency Recertification, etc</value>
+        <value>(For US agents only) Request for ID Cards, register Agents, pay Annual Service Fee, process Agency Recertification, etc</value>
     </labels>
     <labels>
         <fullName>IDCard_Update_Application</fullName>
