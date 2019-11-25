@@ -85,7 +85,7 @@
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
             <name>Yes1</name>
-            <conditionLogic>or</conditionLogic>
+            <conditionLogic>(1 OR 2) AND 3</conditionLogic>
             <conditions>
                 <leftValueReference>oscar.Bank_Guarantee_requested__c</leftValueReference>
                 <operator>IsNull</operator>
@@ -98,6 +98,13 @@
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>oscar.Dossier_Reception_Date__c</leftValueReference>
+                <operator>LessThan</operator>
+                <rightValue>
+                    <elementReference>BankGuaranteeOrAgreementDate</elementReference>
                 </rightValue>
             </conditions>
             <connector>
@@ -150,6 +157,13 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>oscar.Dossier_Reception_Date__c</leftValueReference>
+                <operator>LessThan</operator>
+                <rightValue>
+                    <elementReference>oscar.Payment_requested__c</elementReference>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Subtract_Payment_Time</targetReference>
             </connector>
@@ -177,6 +191,13 @@
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>oscar.Dossier_Reception_Date__c</leftValueReference>
+                <operator>LessThan</operator>
+                <rightValue>
+                    <elementReference>oscar.Reconsideration_date__c</elementReference>
                 </rightValue>
             </conditions>
             <connector>
@@ -225,6 +246,11 @@
 	) - {!oscar.Agreement_requested__c}
 )</expression>
         <scale>2</scale>
+    </formulas>
+    <formulas>
+        <name>BankGuaranteeOrAgreementDate</name>
+        <dataType>Date</dataType>
+        <expression>IF({!oscar.Bank_Guarantee_requested__c} &gt; {!oscar.Agreement_requested__c}, {!oscar.Bank_Guarantee_requested__c} , {!oscar.Agreement_requested__c})</expression>
     </formulas>
     <formulas>
         <name>BankGuaranteeTime</name>
@@ -310,7 +336,13 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
-    <startElementReference>Is_CLO_Closure</startElementReference>
+    <start>
+        <locationX>50</locationX>
+        <locationY>50</locationY>
+        <connector>
+            <targetReference>Is_CLO_Closure</targetReference>
+        </connector>
+    </start>
     <status>Active</status>
     <variables>
         <name>case_record</name>
