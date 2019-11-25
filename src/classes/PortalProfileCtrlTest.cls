@@ -261,4 +261,25 @@ public with sharing class PortalProfileCtrlTest {
 		}
 	}
 
+	@IsTest static void testPortalGlobalSearch() {
+
+		User testUser = [SELECT Id FROM User WHERE Email LIKE '%testemail1@csp.testclass' LIMIT 1];
+
+		Test.startTest();
+		System.runAs(testUser) {
+			CSP_Utils.PagedResult test = new CSP_Utils.PagedResult();
+
+			PortalGlobalSearchCtrl.GlobalSearchWrapper testGSW = new PortalGlobalSearchCtrl.GlobalSearchWrapper('test','test','test','test','test');
+
+			PortalSearchFilterWrapper.profileComponent profileCmp = new PortalSearchFilterWrapper.profileComponent();
+			profileCmp.show = true;
+			PortalSearchFilterWrapper filtersWrapper = new PortalSearchFilterWrapper();
+			filtersWrapper.searchText = 'Test';
+			filtersWrapper.profileComponent = profileCmp;
+
+			test = PortalGlobalSearchCtrl.portalGlobalSearch(JSON.serialize(filtersWrapper), 'Profiles');
+		}
+		Test.stopTest();
+	}
+
 }
