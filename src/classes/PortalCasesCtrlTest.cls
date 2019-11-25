@@ -409,4 +409,26 @@ private class PortalCasesCtrlTest {
         System.assert(link != null);
 
     }   
+
+    @IsTest static void testPortalGlobalSearch() {
+
+	User testUser = [SELECT Id FROM User WHERE Email LIKE '%testemail1@csp.testclass' LIMIT 1];
+
+	Test.startTest();
+	System.runAs(testUser) {
+		CSP_Utils.PagedResult test = new CSP_Utils.PagedResult();
+		List<CSP_Utils.PickListWrapper> caseTypeOptions = PortalCasesCtrl.typeOfCasePortalCustomPicklist();
+
+		PortalSearchFilterWrapper.casesComponent casesCmp = new PortalSearchFilterWrapper.casesComponent();
+		casesCmp.caseTypeFilter = caseTypeOptions[0].value;
+		casesCmp.caseCountryFilter = 'Portugal';
+		casesCmp.show = true;
+		PortalSearchFilterWrapper filtersWrapper = new PortalSearchFilterWrapper();
+		filtersWrapper.searchText = 'Bla';
+		filtersWrapper.casesComponent = casesCmp;
+
+		test = PortalGlobalSearchCtrl.portalGlobalSearch(JSON.serialize(filtersWrapper), 'Cases');
+	}
+	Test.stopTest();
+}
 }

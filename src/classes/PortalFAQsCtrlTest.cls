@@ -173,4 +173,26 @@ public class PortalFAQsCtrlTest {
             }
         Test.stopTest();
     }
+
+    @isTest static void portalGlobalSearch() {
+        
+	    User testUser = [SELECT Id FROM User WHERE Email LIKE '%testemail1@csp.testclass' LIMIT 1];
+    
+	    Test.startTest();
+	    System.runAs(testUser) {
+	    	CSP_Utils.PagedResult test = new CSP_Utils.PagedResult();
+    
+	    	PortalSearchFilterWrapper.faqsComponent faqsComponent = new PortalSearchFilterWrapper.faqsComponent();
+	    	faqsComponent.faqSubtopicsList = new List<String> {'Travel'};
+	    	faqsComponent.show = true;
+    
+	    	PortalSearchFilterWrapper filtersWrapper = new PortalSearchFilterWrapper();
+	    	filtersWrapper.searchText = 'Travel';
+	    	filtersWrapper.faqsComponent = faqsComponent;
+	    	filtersWrapper.language = 'en_US';
+    
+	    	test = PortalGlobalSearchCtrl.portalGlobalSearch(JSON.serialize(filtersWrapper), 'FAQS');
+	    }
+	    Test.stopTest();
+    }
 }
