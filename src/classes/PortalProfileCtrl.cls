@@ -1109,10 +1109,20 @@ public static Contact contactInfo = new Contact();
         }
     }
 
+    //returns a JSON String with the ProfileWrapper list.
     @AuraEnabled (cacheable=false)
     public static CSP_Utils.PagedResult getFilteredProfileResultsPage(String profileFilterWrapper){
         
-        CSP_Utils.PagedResult filteredProfiles = DAL_WithoutSharing.getSearchProfiles(profileFilterWrapper, myContact);
+        CSP_Utils.PagedResult filteredProfiles = DAL_WithoutSharing.getSearchProfiles(profileFilterWrapper, myContact, '');
+        
+        return filteredProfiles;
+    }
+
+    //returns a JSON String with the ProfileWrapper list.
+    @AuraEnabled (cacheable=false)
+    public static CSP_Utils.PagedResult getFilteredProfileResultsPageWithLimit(String profileFilterWrapper, String limitQuery){
+        
+        CSP_Utils.PagedResult filteredProfiles = DAL_WithoutSharing.getSearchProfiles(profileFilterWrapper, myContact, limitQuery);
         
         return filteredProfiles;
     }

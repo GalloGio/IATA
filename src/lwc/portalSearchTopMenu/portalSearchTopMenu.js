@@ -10,19 +10,11 @@ import CSP_Search_NoResults_text2 from '@salesforce/label/c.CSP_Search_NoResults
 import CSP_Search_NoResults_text3 from '@salesforce/label/c.CSP_Search_NoResults_text3';
 
 import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
+import Button_Open_search_field from '@salesforce/label/c.Button_Open_search_field';
 
-export default class PortalSearchBar extends NavigationMixin(LightningElement) {
+export default class PortalSearchTopMenu extends NavigationMixin(LightningElement) {
 
-    //these are the filters passed from the search
-    @api
-    get filteringObjectParent() {
-        return this.filteringObject;
-    }
-    set filteringObjectParent(value) {
-        this.filteringObject = value;
-        
-        this.setColumnsClass();
-    }
+    @api searchBarPlaceholder;
 
     @api placeholder;
 
@@ -35,14 +27,15 @@ export default class PortalSearchBar extends NavigationMixin(LightningElement) {
 
     @track showHoverResults = false;
 
-    @track showBackdrop = false;
+    @track showBackdrop = true;
 
     timeout = null;
-
-    @track searchText = "";
+    
+    @track searchText = '';
+    @track showCross = true;
     
     //clone of the filtering object passed from the parent
-    @track filteringObject;
+    @track filteringObject = {};
 
     searchIconUrl = CSP_PortalPath + 'CSPortal/Images/Icons/searchColored.svg';
     searchIconNoResultsUrl = CSP_PortalPath + 'CSPortal/Images/Icons/searchNoResult.svg';
@@ -55,43 +48,60 @@ export default class PortalSearchBar extends NavigationMixin(LightningElement) {
     @track noResultsClass = 'display: none;';
     @track resultsClass = 'display: none;';
 
-    setColumnsClass(){
-        let filteringObjectAux = JSON.parse(JSON.stringify(this.filteringObject));
+    connectedCallback() {
 
-        this.leftColumnClass = 'slds-col slds-size_1-of-1 slds-large-size_2-of-3';
-        this.rightColumnClass = 'slds-col slds-size_1-of-1 slds-large-size_1-of-3';
+        let filteringObjectAux = {
+            showAllComponents : true,
+            searchText : "",
+            highlightTopResults : false,
+            advancedSearch : true,
+            language : '',
+            numberOfResults: 5,
+            servicesComponent : {
+                show : true,
+                highlight : false,
+                loading : true,
+                nrResults : 0
+            },
+            casesComponent : {
+                show : true,
+                loading : true,
+                highlight : false,
+                nrResults : 0,
+                caseTypeFilter : "",
+                caseCountryFilter : ""
+            },
+            faqsComponent : {
+                show : true,
+                loading : true,
+                highlight : false,
+                nrResults : 0,
+                faqCategoryFilter : "",
+                faqTopicFilter : "",
+                faqSubtopicFilter : "",
+                faqSubtopicsList : []
+            },
+            documentsComponent : {
+                show : true,
+                loading : true,
+                highlight : false,
+                nrResults : 0,
+                documentCategoryFilter : "",
+                documentProductCategoryFilter : "",
+                documentCountryFilter : ""
+            },
+            profileComponent : {
+                show : true,
+                loading : true,
+                highlight : false,
+                profileContactStatusFilter: "",
+                profileCountryFilter: "",
+                profileTypeFilter: "",
+                nrResults : 0
+            }
+        };
 
-        if((filteringObjectAux.casesComponent.show || filteringObjectAux.faqsComponent.show) && (!filteringObjectAux.documentsComponent.show && !filteringObjectAux.servicesComponent.show)){
-            this.leftColumnClass = 'slds-col slds-size_1-of-1';
-            this.rightColumnClass = 'slds-col slds-size_1-of-1';
-        }
-
-        if((!filteringObjectAux.casesComponent.show && !filteringObjectAux.faqsComponent.show) && (filteringObjectAux.documentsComponent.show || filteringObjectAux.servicesComponent.show)){
-            this.leftColumnClass = 'slds-col slds-size_1-of-1';
-            this.rightColumnClass = 'slds-col slds-size_1-of-1';
-        }
-
-    }
-
-    closeSearch(){
-        this.searchText = "";
-        this.showHoverResults = false;
-        this.showBackdrop = false;
-    }
-
-    onkeyupSearchInput(event){
-        let keyEntered = event.keyCode;
-        //console.log(keyEntered);
-
-        //if enter
-        if(this.filteringObject.advancedSearch && keyEntered === 13){
-            this.navigateToAdvancedSearchPage();
-        } 
-
-        //if escape
-        if(keyEntered === 27){
-            this.closeSearch();
-        }
+        this.filteringObject = filteringObjectAux;
     }
 
     goToAdvancedSearch(event){
@@ -114,9 +124,6 @@ export default class PortalSearchBar extends NavigationMixin(LightningElement) {
         .then(url => navigateToPage(url, params));
     }
 
-    onclickSearchInput(){
-        this.showBackdrop = true;
-    }
     onchangeSearchInput(event){
         this.searchText = event.target.value;
         
@@ -139,11 +146,10 @@ export default class PortalSearchBar extends NavigationMixin(LightningElement) {
             if(this.searchText.length > 0){
                 this.showHoverResults = true;
                 let objAux = JSON.parse(JSON.stringify(this.filteringObject));
-
+                console.log('search text - ', objAux);
                 objAux.searchText = this.searchText + "";
                 objAux.showAllComponents = true;
                 this.filteringObject = objAux;
-                //console.log(objAux);
             }else{
                 this.showHoverResults = false;
             }
@@ -180,11 +186,8 @@ export default class PortalSearchBar extends NavigationMixin(LightningElement) {
         }
         
     }
-
+    
     removeTextSearch() {
-        if(this.filteringObject.searchText !== ''){
-            this.template.querySelector('c-portal-search-results-list').reloadData();
-        }
         this.filteringObject.searchText = '';
         this.searchText = '';
         this.showCross = false;
