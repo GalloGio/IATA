@@ -276,6 +276,10 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
     }
 
     connectedCallback() {
+
+        isGuestUser().then(results => {            
+            this.internalUser = !results;
+        });
         
         let cookie = this.getCookie('userguiding_user-status');
         
