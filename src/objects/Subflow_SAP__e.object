@@ -5,6 +5,7 @@
     <eventType>HighVolume</eventType>
     <fields>
         <fullName>Address_Role_Business_Context_Id__c</fullName>
+        <description>Id of the address role business context which has started the flow &quot;Account Context Activation SAP Process&quot;.</description>
         <externalId>false</externalId>
         <isFilteringDisabled>false</isFilteringDisabled>
         <isNameField>false</isNameField>
@@ -17,6 +18,7 @@
     </fields>
     <fields>
         <fullName>Integration_Log_Id__c</fullName>
+        <description>Id of the Integration Log where this platform event has been created .</description>
         <externalId>false</externalId>
         <isFilteringDisabled>false</isFilteringDisabled>
         <isNameField>false</isNameField>
@@ -29,4 +31,5 @@
     </fields>
     <label>Subflow SAP</label>
     <pluralLabel>Subflows SAP</pluralLabel>
+    <publishBehavior>PublishImmediately</publishBehavior>
 </CustomObject>

@@ -156,6 +156,7 @@
     <externalSharingModel>ControlledByParent</externalSharingModel>
     <fields>
         <fullName>Account_Name__c</fullName>
+        <description>It returns the name account associated to the account role. Used in flows.</description>
         <externalId>false</externalId>
         <formula>HYPERLINK(&apos;/&apos;+Account_Role__r.Account__c, Account_Role__r.Account__r.Name, &apos;_self&apos;)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -201,6 +202,31 @@
         <externalId>false</externalId>
         <formula>Contact__r.Phone</formula>
         <label>Phone</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Contact_Account__c</fullName>
+        <description>Used for flow, to get records</description>
+        <externalId>false</externalId>
+        <formula>Contact__r.AccountId</formula>
+        <label>Contact&apos;s Account</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Contact_And_Functional_Role__c</fullName>
+        <description>Concatenation of the contact firstname and functional role of the account role, it is used to display a secondary field when the user is looking for a contact role in a lookup field.</description>
+        <externalId>false</externalId>
+        <formula>Contact__r.FirstName &amp;&quot; &quot;&amp;  Contact__r.LastName &amp;&quot; - &quot;&amp;  TEXT( Account_Role__r.Functional_Role__c )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Contact and Functional role</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -307,6 +333,19 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Functional_Role__c</fullName>
+        <externalId>false</externalId>
+        <label>Functional Role</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Functional_Roles</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
         <fullName>Last_Name__c</fullName>
         <description>Last name of the related contact</description>
         <externalId>false</externalId>
@@ -395,43 +434,6 @@
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
-    <fields>
-        <fullName>Contact_Account__c</fullName>
-        <description>Used for flow, to get records</description>
-        <externalId>false</externalId>
-        <formula>Contact__r.AccountId</formula>
-        <label>Contact's Account</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>Contact_And_Functional_Role__c</fullName>
-        <externalId>false</externalId>
-        <formula>Contact__r.FirstName &amp;" "&amp;  Contact__r.LastName &amp;" - "&amp;  TEXT( Account_Role__r.Functional_Role__c )</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Contact and Functional role</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>Functional_Role__c</fullName>
-        <externalId>false</externalId>
-        <label>Functional Role</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Picklist</type>
-        <valueSet>
-            <restricted>true</restricted>
-            <valueSetName>Functional_Roles</valueSetName>
-        </valueSet>
-    </fields>
     <label>Account Contact Role</label>
     <listViews>
         <fullName>All</fullName>
@@ -466,6 +468,13 @@
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Functional_Role__c</picklist>
+            <values>
+                <fullName>E%26F</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Service_Rendered__c</picklist>
             <values>
                 <fullName>GADM</fullName>
@@ -486,6 +495,13 @@
             <picklist>Contact_Role__c</picklist>
             <values>
                 <fullName>Primary Contact</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Functional_Role__c</picklist>
+            <values>
+                <fullName>E%26F</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -518,6 +534,13 @@
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Functional_Role__c</picklist>
+            <values>
+                <fullName>E%26F</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Service_Rendered__c</picklist>
             <values>
                 <fullName>GADM</fullName>
@@ -538,6 +561,13 @@
             <picklist>Contact_Role__c</picklist>
             <values>
                 <fullName>Primary Contact</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Functional_Role__c</picklist>
+            <values>
+                <fullName>E%26F</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

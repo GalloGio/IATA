@@ -97,6 +97,7 @@
     </fields>
     <fields>
         <fullName>Count_Roles_Billing__c</fullName>
+        <description>Count the number of address role where the type is Billing.</description>
         <externalId>false</externalId>
         <label>Count_Roles_Billing</label>
         <summaryFilterItems>
@@ -111,6 +112,7 @@
     </fields>
     <fields>
         <fullName>Count_Roles_Business__c</fullName>
+        <description>Count the number of address role where the type is Business.</description>
         <externalId>false</externalId>
         <label>Count_Roles_Business</label>
         <summaryFilterItems>
@@ -125,7 +127,7 @@
     </fields>
     <fields>
         <fullName>Count_Roles_Shipping__c</fullName>
-        <description>to be used in VR</description>
+        <description>Count the number of address role where the type is Shipping.</description>
         <externalId>false</externalId>
         <label>Count_Roles_Shipping</label>
         <summaryFilterItems>

@@ -217,6 +217,18 @@ The Account Role record should be named after the functional capability for whic
         <visibleLines>3</visibleLines>
     </fields>
     <fields>
+        <fullName>DisplayAccount_FunctionalRole__c</fullName>
+        <description>Concatenation of the account name and functional role, it is used to display a secondary field when the user is looking for an account role in a lookup field.</description>
+        <externalId>false</externalId>
+        <formula>Account__r.Name &amp;&quot; &quot;&amp; TEXT(Functional_Role__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Account and Functional Role</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Effective_From_Date__c</fullName>
         <description>Account role becomes active from this date</description>
         <externalId>false</externalId>
@@ -233,6 +245,43 @@ The Account Role record should be named after the functional capability for whic
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Flow_Status__c</fullName>
+        <description>Status used in the flow &quot;Full Customer Creation&quot;, identify if the account has started the flow (pending status) and finished the flow (completed status)</description>
+        <externalId>false</externalId>
+        <label>Flow status</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Pending</fullName>
+                    <default>false</default>
+                    <label>Pending</label>
+                </value>
+                <value>
+                    <fullName>Completed</fullName>
+                    <default>false</default>
+                    <label>Completed</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Functional_Role__c</fullName>
+        <externalId>false</externalId>
+        <label>Functional Role</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Functional_Roles</valueSetName>
+        </valueSet>
     </fields>
     <fields>
         <fullName>GADM_Unique_Key__c</fullName>
@@ -354,54 +403,6 @@ The Account Role record should be named after the functional capability for whic
         <type>Text</type>
         <unique>true</unique>
     </fields>
-    <fields>
-        <fullName>Flow_Status__c</fullName>
-        <description>Status used in the flow "Full Customer Creation", identify if the account has started the flow (pending status) and finished the flow (completed status)</description>
-        <externalId>false</externalId>
-        <label>Flow status</label>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Picklist</type>
-        <valueSet>
-            <restricted>true</restricted>
-            <valueSetDefinition>
-                <sorted>false</sorted>
-                <value>
-                    <fullName>Pending</fullName>
-                    <default>false</default>
-                    <label>Pending</label>
-                </value>
-                <value>
-                    <fullName>Completed</fullName>
-                    <default>false</default>
-                    <label>Completed</label>
-                </value>
-            </valueSetDefinition>
-        </valueSet>
-    </fields>
-    <fields>
-        <fullName>Functional_Role__c</fullName>
-        <externalId>false</externalId>
-        <label>Functional Role</label>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Picklist</type>
-        <valueSet>
-            <restricted>true</restricted>
-            <valueSetName>Functional_Roles</valueSetName>
-        </valueSet>
-    </fields>
-    <fields>
-        <fullName>DisplayAccount_FunctionalRole__c</fullName>
-        <externalId>false</externalId>
-        <formula>Account__r.Name &amp;" "&amp; TEXT(Functional_Role__c)</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Account and Functional Role</label>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
     <label>Account Role</label>
     <listViews>
         <fullName>All</fullName>
@@ -423,6 +424,24 @@ The Account Role record should be named after the functional capability for whic
         <active>true</active>
         <description>For records migrated and synchronized with Amsterdam Publications system.</description>
         <label>Amsterdam Publications</label>
+        <picklistValues>
+            <picklist>Flow_Status__c</picklist>
+            <values>
+                <fullName>Completed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pending</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Functional_Role__c</picklist>
+            <values>
+                <fullName>E%26F</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
         <picklistValues>
             <picklist>Provider_Type__c</picklist>
             <values>
@@ -458,6 +477,24 @@ The Account Role record should be named after the functional capability for whic
         <fullName>Default</fullName>
         <active>true</active>
         <label>Default</label>
+        <picklistValues>
+            <picklist>Flow_Status__c</picklist>
+            <values>
+                <fullName>Completed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pending</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Functional_Role__c</picklist>
+            <values>
+                <fullName>E%26F</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
         <picklistValues>
             <picklist>Provider_Type__c</picklist>
             <values>
@@ -495,6 +532,24 @@ The Account Role record should be named after the functional capability for whic
         <description>Master recordType</description>
         <label>Master</label>
         <picklistValues>
+            <picklist>Flow_Status__c</picklist>
+            <values>
+                <fullName>Completed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pending</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Functional_Role__c</picklist>
+            <values>
+                <fullName>E%26F</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Provider_Type__c</picklist>
             <values>
                 <fullName>Closed Loop</fullName>
@@ -529,6 +584,24 @@ The Account Role record should be named after the functional capability for whic
         <fullName>TIP_Payment_Provider</fullName>
         <active>true</active>
         <label>Payment Provider</label>
+        <picklistValues>
+            <picklist>Flow_Status__c</picklist>
+            <values>
+                <fullName>Completed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pending</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Functional_Role__c</picklist>
+            <values>
+                <fullName>E%26F</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
         <picklistValues>
             <picklist>Provider_Type__c</picklist>
             <values>

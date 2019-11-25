@@ -51,6 +51,7 @@
     <externalSharingModel>ControlledByParent</externalSharingModel>
     <fields>
         <fullName>AccountHierarchyLevel__c</fullName>
+        <description>It returns the hierarchy level from the account related to the address.</description>
         <externalId>false</externalId>
         <formula>TEXT(Address__r.Account__r.Hierarchy_Level__c)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>

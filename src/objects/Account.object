@@ -19819,6 +19819,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
     </fields>
     <fields>
         <fullName>IATA_Iso_Country_Name__c</fullName>
+        <description>Display the name of the IATA_Iso_Country__c lookup field. Used for flows.</description>
         <externalId>false</externalId>
         <formula>IATA_ISO_Country__r.Name</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -19839,7 +19840,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
     </fields>
     <fields>
         <fullName>RecordTypeDeveloperName__c</fullName>
-        <description>Used for flow, avoid requesting record type table</description>
+        <description>Used for flow, avoid requesting record type table. It returns the record type developer name of the account.</description>
         <externalId>false</externalId>
         <formula>RecordType.DeveloperName</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -19859,15 +19860,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>TechUpdate_AddressFlow__c</fullName>
-        <defaultValue>false</defaultValue>
-        <externalId>false</externalId>
-        <label>Tech Update Address Flow</label>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>Verification_Status__c</fullName>

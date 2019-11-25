@@ -5,6 +5,7 @@
     <eventType>HighVolume</eventType>
     <fields>
         <fullName>Account_Id__c</fullName>
+        <description>Id of the account which has started the flow &quot;Account Context Activation Compliance Process&quot;.</description>
         <externalId>false</externalId>
         <isFilteringDisabled>false</isFilteringDisabled>
         <isNameField>false</isNameField>
@@ -17,6 +18,7 @@
     </fields>
     <fields>
         <fullName>Case_Number__c</fullName>
+        <description>Case number of the case which has been created in the flow &quot;Account Context Activation Compliance Process&quot;.</description>
         <externalId>false</externalId>
         <isFilteringDisabled>false</isFilteringDisabled>
         <isNameField>false</isNameField>
@@ -29,4 +31,5 @@
     </fields>
     <label>Subflow Compliance</label>
     <pluralLabel>Subflows Compliance</pluralLabel>
+    <publishBehavior>PublishImmediately</publishBehavior>
 </CustomObject>
