@@ -249,7 +249,6 @@ export default class FavoriteServicesLWC extends LightningElement {
         const recordId = event.target.attributes.getNamedItem('data-recordid');
         const recordName = event.target.attributes.getNamedItem('data-recordname');
         if (recordId !== null) {
-            alert(recordId.value);
             // update Last Visit Date on record only if portal application right exists
             // Create the recordInput object
             const fields = {};
