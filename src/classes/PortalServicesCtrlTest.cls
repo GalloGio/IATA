@@ -741,4 +741,27 @@ public static void PortalServicesCtrlTest_CreateNewPortalAccess(){
 	String test = PortalServicesCtrl.CreateNewPortalAccess(contactIds, portalServicelist[0].id, PortalServiceRole);
 }
 
+@isTest
+public static void PortalServicesCtrlTest_getAvailableServicesForNewContact(){
+
+	Contact c = [select id,email,firstname,lastname,name from contact where lastName = 'ContactTest'];
+
+    User portalUser = ISSP_ObjectFactory.createPortalUser(c);        
+    List<Portal_Applications__c> services = new List<Portal_Applications__c>(); 
+    System.runAs(portalUser) {
+        Test.StartTest();
+        services =  PortalServicesCtrl.getAvailableServicesForNewContact();           
+        Test.StopTest();
+    }
+    
+    for(Portal_Applications__c service : services){
+        if(service.Cannot_be_managed_by_portal_admin__c){
+            System.assert(false);
+        }
+    }
+    System.assert(true);
 }
+
+}
+
+           
