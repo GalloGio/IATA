@@ -2363,3 +2363,18 @@ input::-ms-reveal {  display: none; width : 0; height: 0; }
 }
 /*#################################*/
 
+.showOnlyFavorites, .showOnlyFavorites button, .showOnlyFavorites button:active, .showOnlyFavorites button:visited, .showOnlyFavorites button:focus, .showOnlyFavorites button:hover{
+    width: 165px;
+    height: 48px;
+    border-radius: 0;
+    border: 0;
+    background-color: #d0d7fb;
+    font-family: AktivGrotesk;
+    font-size: 14px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.71;
+    letter-spacing: normal;
+    color: #3333ff;
+  }

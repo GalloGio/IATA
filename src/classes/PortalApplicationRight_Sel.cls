@@ -8,7 +8,8 @@ public with sharing class PortalApplicationRight_Sel extends Selector {
             Portal_Application_Right__c.Contact__c,
             Portal_Application_Right__c.Right__c,
             Portal_Application_Right__c.Technical_Provisioning_Status__c,
-            Portal_Application_Right__c.IsSCIMIFG__c
+            Portal_Application_Right__c.IsSCIMIFG__c,
+			Portal_Application_Right__c.Is_Favorite__c
 		};
 	}
 

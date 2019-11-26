@@ -3,6 +3,9 @@ import { LightningElement, track } from 'lwc';
 import getFavoriteServicesList from '@salesforce/apex/PortalServicesCtrl.getFavoriteServicesList';
 import goToOldPortalService from '@salesforce/apex/PortalServicesCtrl.goToOldPortalService';
 import paymentLinkRedirect from '@salesforce/apex/PortalServicesCtrl.paymentLinkRedirect';
+import changeIsFavoriteStatus from '@salesforce/apex/PortalServicesCtrl.changeIsFavoriteStatus';
+import createPortalApplicationRight from '@salesforce/apex/PortalServicesCtrl.createPortalApplicationRight';
+
 import { updateRecord } from 'lightning/uiRecordApi';
 
 //Navigation
@@ -13,7 +16,13 @@ import CSP_SeeAll from '@salesforce/label/c.CSP_SeeAll';
 import csp_Request_New_Service from '@salesforce/label/c.csp_Request_New_Service';
 import CSP_FavoriteServices_Title from '@salesforce/label/c.CSP_FavoriteServices_Title';
 
+import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
+
 export default class FavoriteServicesLWC extends LightningElement {
+    /* Images */
+    favoriteIcon = CSP_PortalPath + 'CSPortal/Images/Icons/favorite.png';
+    notFavoriteIcon = CSP_PortalPath + 'CSPortal/Images/Icons/not_favorite.png';
+
     //track variables
 
     @track maxSize;
@@ -124,6 +133,13 @@ export default class FavoriteServicesLWC extends LightningElement {
                 this.auxResult[i].extIconClass = 'slds-current-color noExtIconClass';
             }
 
+            if(counter === 2 || counter === 4){
+                this.auxResult[i].favoriteDivClass = 'halfOneRemClass';
+            }
+            else{
+                this.auxResult[i].favoriteDivClass = 'oneRemClass';
+            }
+
             pageListAux.push(this.auxResult[i]);
             counter++;
 
@@ -232,8 +248,8 @@ export default class FavoriteServicesLWC extends LightningElement {
         const requestable = event.target.attributes.getNamedItem('data-requestable');
         const recordId = event.target.attributes.getNamedItem('data-recordid');
         const recordName = event.target.attributes.getNamedItem('data-recordname');
-        if (requestable.value === 'true') {
-            // update Last Visit Date on record only if the clicked service is requestable
+        if (recordId !== null) {
+            // update Last Visit Date on record only if portal application right exists
             // Create the recordInput object
             const fields = {};
             fields.Id = recordId.value;
@@ -241,6 +257,13 @@ export default class FavoriteServicesLWC extends LightningElement {
             const recordInput = { fields };
 
             updateRecord(recordInput)
+                .then(() => {
+                    console.info('Updated Last Visit Date successfully!');
+                });
+        }
+        else{
+            const pa = event.target.attributes.getNamedItem('data-application-id');
+            createPortalApplicationRight({portalApplicationId:pa.value})
                 .then(() => {
                     console.info('Updated Last Visit Date successfully!');
                 });
@@ -346,6 +369,24 @@ export default class FavoriteServicesLWC extends LightningElement {
 
     goToAvailableServices() {
         navigateToPage("services?tab=availableServices");
+    }
+
+    changeIsFavoriteStatus(event){
+        this.isLoading = true;
+        let par = event.currentTarget.getAttribute('data-id');
+        let pa = event.currentTarget.getAttribute('data-application-id');
+        let currentFavoriteStatus = event.currentTarget.getAttribute('data-is-favorite');
+
+        if(par === 'undefined'){
+            par = null;
+        }
+
+        changeIsFavoriteStatus({portalApplicationId:pa, portalApplicationRightId:par, isFavorite: (currentFavoriteStatus === 'false')})
+            .then(result => {
+                if(result){
+                    this.connectedCallback();
+                }
+            });
     }
 
 }

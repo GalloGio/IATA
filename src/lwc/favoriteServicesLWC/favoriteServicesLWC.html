@@ -31,12 +31,27 @@
                                 <template for:each={favoriteServices} for:item='favoriteServicesRow'>
                                     <div class="slds-col slds-size_1-of-3" key={favoriteServicesRow}>
                                         <template for:each={favoriteServicesRow} for:item="favoriteServicesTile">
+                                            <div    class={favoriteServicesTile.favoriteDivClass} 
+                                                    data-id={favoriteServicesTile.Id} 
+                                                    data-application-id={favoriteServicesTile.Portal_Application__r.Id} 
+                                                    data-is-favorite={favoriteServicesTile.Is_Favorite__c}
+                                                    key={favoriteServicesTile.id} 
+                                                    onclick={changeIsFavoriteStatus}>
+                                                <template if:true={favoriteServicesTile.Is_Favorite__c}>
+                                                    <img src={favoriteIcon} class="favoriteIcon"/>
+                                                </template>
+                                                <template if:false={favoriteServicesTile.Is_Favorite__c}>
+                                                    <img src={notFavoriteIcon} class="favoriteIcon"/>
+                                                </template>
+                                            </div>
+
                                             <article class={favoriteServicesTile.myclass} key={favoriteServicesTile.id}
                                                 onclick={redirect} data-appurl={favoriteServicesTile.Application_Start_URL__c}
                                                 data-requestable={favoriteServicesTile.Portal_Application__r.Requestable__c}
                                                 data-appfullurl={favoriteServicesTile.Portal_Application__r.Application_URL__c}
                                                 data-openwindow={favoriteServicesTile.Portal_Application__r.New_Window__c}
                                                 data-recordid={favoriteServicesTile.Id}
+                                                data-application-id={favoriteServicesTile.Portal_Application__r.Id}
                                                 data-recordname={favoriteServicesTile.serviceName}>
                                                 <div class="noPointerEvents">
                                                     <div class="extDivHeight">

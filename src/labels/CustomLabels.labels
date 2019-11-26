@@ -5733,6 +5733,14 @@ Click &lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.as
         <value>Access Requested</value>
     </labels>
     <labels>
+        <fullName>CSP_Services_AddFavorite</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Services_AddFavorite</shortDescription>
+        <value>Add Favorite</value>
+    </labels>
+    <labels>
         <fullName>CSP_Services_AvailableServicesHelpText</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -5821,12 +5829,36 @@ Click &lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.as
         <value>Service Request</value>
     </labels>
     <labels>
+        <fullName>CSP_Services_RemoveFavorite</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Services_RemoveFavorite</shortDescription>
+        <value>Remove Favorite</value>
+    </labels>
+    <labels>
         <fullName>CSP_Services_ServiceInformation</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_Services_ServiceInformation</shortDescription>
         <value>Service Information</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Services_ShowAll</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Services_ShowAll</shortDescription>
+        <value>Show All</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Services_ShowOnlyFavorites</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Services_ShowOnlyFavorites</shortDescription>
+        <value>Show Only Favorites</value>
     </labels>
     <labels>
         <fullName>CSP_Services_Title</fullName>
