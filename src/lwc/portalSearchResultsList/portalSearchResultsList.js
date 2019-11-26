@@ -288,7 +288,7 @@ export default class PortalSearchResultList extends NavigationMixin(LightningEle
         for (let i = 0; i < this.filteringObject.numberOfResults; i++) {
 
             if (this.caseResults && this.caseResults.length > i && aggregateResults.length < this.filteringObject.numberOfResults) {
-                let urlaux = "" + window.location.href + "case-details?caseId=" + this.caseResults[i].Id;
+                let urlaux = "" + window.location.href.replace(location.pathname, '/csportal/s/') + "case-details?caseId=" + this.caseResults[i].Id;
                 let caseRes = {
                     "id": this.caseResults[i].Id,
                     "category": "Cases",
@@ -300,7 +300,7 @@ export default class PortalSearchResultList extends NavigationMixin(LightningEle
                 aggregateResults.push(caseRes);
             }
             if (this.faqsResults && this.faqsResults.length > i && aggregateResults.length < this.filteringObject.numberOfResults) {
-                let urlaux = '' + window.location.href + 'faq-article?q=' + filteringObjectAux.searchText + '&id1=' + this.faqsResults[i].Id;
+                let urlaux = '' + window.location.href.replace(location.pathname, '/csportal/s/') + 'faq-article?q=' + filteringObjectAux.searchText + '&id1=' + this.faqsResults[i].Id;
                 let faq = {
                     "id": this.faqsResults[i].Id,
                     "category": "FAQ",
@@ -312,7 +312,7 @@ export default class PortalSearchResultList extends NavigationMixin(LightningEle
                 aggregateResults.push(faq);
             }
             if (this.servicesResults && this.servicesResults.length > i && aggregateResults.length < this.filteringObject.numberOfResults) {
-                let urlaux = "" + window.location.href + "manage-service?serviceId=" + this.servicesResults[i].Id;
+                let urlaux = "" + window.location.href.replace(location.pathname, '/csportal/s/') + "manage-service?serviceId=" + this.servicesResults[i].Id;
                 let serviceRes = {
                     "id": this.servicesResults[i].Id,
                     "category": "Services",
@@ -324,7 +324,7 @@ export default class PortalSearchResultList extends NavigationMixin(LightningEle
                 aggregateResults.push(serviceRes);
             }
             if (this.documentsResults && this.documentsResults.length > i && aggregateResults.length < this.filteringObject.numberOfResults) {
-                let urlaux = "" + window.location.href + "documents-search?searchText=" + filteringObjectAux.searchText + "&docId=" + this.documentsResults[i].Id;
+                let urlaux = "" + window.location.href.replace(location.pathname, '/csportal/s/') + "documents-search?searchText=" + filteringObjectAux.searchText + "&docId=" + this.documentsResults[i].Id;
                 let doc = {
                     "id": this.documentsResults[i].Id,
                     "category": "Documents",
@@ -342,7 +342,7 @@ export default class PortalSearchResultList extends NavigationMixin(LightningEle
                     "title": retrievedAccounts[i].profileName,
                     "description": retrievedAccounts[i].profileType,
                     "class": "categId-4",
-                    "url": window.location.href.replace('/csportal/s/','')  + retrievedAccounts[i].profileUrl
+                    "url": window.location.href.replace(location.pathname, '') + retrievedAccounts[i].profileUrl
                 }
                 aggregateResults.push(acc);
             }
@@ -353,7 +353,7 @@ export default class PortalSearchResultList extends NavigationMixin(LightningEle
                     "title": retrievedContacts[i].profileName,
                     "description": retrievedContacts[i].profileType,
                     "class": "categId-4",
-                    "url": window.location.href.replace('/csportal/s/','') + retrievedContacts[i].profileUrl
+                    "url": window.location.href.replace(location.pathname, '') + retrievedContacts[i].profileUrl
                 }
                 aggregateResults.push(cont);
             }
