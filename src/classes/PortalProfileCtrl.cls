@@ -1160,7 +1160,7 @@ public static Contact contactInfo = new Contact();
             }
             else{
                 this.profileType = profileTypeAux; //set it to "Contact"
-                this.profileUrl = profileIdAux == myContact.Id ? System.Label.CSP_PortalPath + 'my-profile' : System.Label.CSP_PortalPath + 'company-profile?contact='+profileIdAux;
+                this.profileUrl = profileIdAux == myContact.Id ? System.Label.CSP_PortalPath + 'my-profile' : System.Label.CSP_PortalPath + 'company-profile?tab=contact&contact='+profileIdAux;
             }
         }
     }
