@@ -289,7 +289,7 @@ export default class PortalSearchResultList extends NavigationMixin(LightningEle
 
             if (this.caseResults && this.caseResults.length > i && aggregateResults.length < this.filteringObject.numberOfResults) {
                 let urlaux = "" + window.location.href + "case-details?caseId=" + this.caseResults[i].Id;
-                let test = {
+                let caseRes = {
                     "id": this.caseResults[i].Id,
                     "category": "Cases",
                     "title": this.caseResults[i].CaseNumber,
@@ -297,11 +297,11 @@ export default class PortalSearchResultList extends NavigationMixin(LightningEle
                     "class": "categId-1",
                     "url": urlaux
                 };
-                aggregateResults.push(test);
+                aggregateResults.push(caseRes);
             }
             if (this.faqsResults && this.faqsResults.length > i && aggregateResults.length < this.filteringObject.numberOfResults) {
-                let urlaux = '' + window.location.href + 'faq-article?q=' + filteringObjectAux.searchText + '&id1=' + this.servicesResults[i].Id;
-                let test = {
+                let urlaux = '' + window.location.href + 'faq-article?q=' + filteringObjectAux.searchText + '&id1=' + this.faqsResults[i].Id;
+                let faq = {
                     "id": this.faqsResults[i].Id,
                     "category": "FAQ",
                     "title": this.faqsResults[i].Title,
@@ -309,11 +309,11 @@ export default class PortalSearchResultList extends NavigationMixin(LightningEle
                     "class": "categId-2",
                     "url": urlaux
                 };
-                aggregateResults.push(test);
+                aggregateResults.push(faq);
             }
             if (this.servicesResults && this.servicesResults.length > i && aggregateResults.length < this.filteringObject.numberOfResults) {
                 let urlaux = "" + window.location.href + "manage-service?serviceId=" + this.servicesResults[i].Id;
-                let test = {
+                let serviceRes = {
                     "id": this.servicesResults[i].Id,
                     "category": "Services",
                     "title": this.servicesResults[i].Name,
@@ -321,11 +321,11 @@ export default class PortalSearchResultList extends NavigationMixin(LightningEle
                     "class": "categId-3",
                     "url": urlaux
                 }
-                aggregateResults.push(test);
+                aggregateResults.push(serviceRes);
             }
             if (this.documentsResults && this.documentsResults.length > i && aggregateResults.length < this.filteringObject.numberOfResults) {
                 let urlaux = "" + window.location.href + "documents-search?searchText=" + filteringObjectAux.searchText + "&docId=" + this.documentsResults[i].Id;
-                let test = {
+                let doc = {
                     "id": this.documentsResults[i].Id,
                     "category": "Documents",
                     "title": this.documentsResults[i].Title,
@@ -333,35 +333,29 @@ export default class PortalSearchResultList extends NavigationMixin(LightningEle
                     "class": "categId-5",
                     "url": urlaux
                 }
-                aggregateResults.push(test);
+                aggregateResults.push(doc);
             }
             if (retrievedAccounts && retrievedAccounts.length > i && aggregateResults.length < this.filteringObject.numberOfResults) {
-                let urlaux = "" + window.location.href + "company-profile?account=" + retrievedAccounts[i].profileId;
-                let test = {
+                let acc = {
                     "id": retrievedAccounts[i].profileId,
                     "category": "Profile",
                     "title": retrievedAccounts[i].profileName,
                     "description": retrievedAccounts[i].profileType,
                     "class": "categId-4",
-                    "url": urlaux
+                    "url": window.location.href.replace('/csportal/s/','')  + retrievedAccounts[i].profileUrl
                 }
-                aggregateResults.push(test);
+                aggregateResults.push(acc);
             }
             if (retrievedContacts && retrievedContacts.length > i && aggregateResults.length < this.filteringObject.numberOfResults) {
-                let urlaux = '';
-                if (retrievedContacts[i].profilePortalStatus === 'Administrator') {
-                    urlaux = "" + window.location.href + "my-profile";
-                } else if (retrievedContacts[i].profilePortalStatus === 'Active')
-                    urlaux = "" + window.location.href + "company-profile?contact=" + retrievedContacts[i].profileId;
-                let test = {
+                let cont = {
                     "id": retrievedContacts[i].profileId,
                     "category": "Profile",
                     "title": retrievedContacts[i].profileName,
                     "description": retrievedContacts[i].profileType,
                     "class": "categId-4",
-                    "url": urlaux
+                    "url": window.location.href.replace('/csportal/s/','') + retrievedContacts[i].profileUrl
                 }
-                aggregateResults.push(test);
+                aggregateResults.push(cont);
             }
         }
 
