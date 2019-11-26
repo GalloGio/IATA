@@ -34,6 +34,8 @@
   	<aura:attribute type="List" name="agencyTypes" access="private"/> 
 	<aura:attribute type="Boolean" name="showCreateNew" default="false" />
 
+	<aura:attribute name="isGadmPowerUser" type="Boolean"/>
+
 	<aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
 
 	<aura:if isTrue="{!v.search}">

@@ -7,7 +7,7 @@ import getCommunityAvailableLanguages from '@salesforce/apex/CSP_Utils.getCommun
 
 //navigation
 import { NavigationMixin, CurrentPageReference } from 'lightning/navigation';
-import { navigateToPage, getPageName } from 'c/navigationUtils';
+import { navigateToPage, getPageName, getParamsFromPage } from 'c/navigationUtils';
 import getBreadcrumbs from '@salesforce/apex/PortalBreadcrumbCtrl.getBreadcrumbs';
 
 //notification apex method
@@ -17,6 +17,7 @@ import increaseNotificationView from '@salesforce/apex/PortalHeaderCtrl.increase
 import goToManageService from '@salesforce/apex/PortalHeaderCtrl.goToManageService';
 import goToOldChangePassword from '@salesforce/apex/PortalHeaderCtrl.goToOldChangePassword';
 import redirectChangePassword from '@salesforce/apex/PortalHeaderCtrl.redirectChangePassword';
+import getContactInfo from '@salesforce/apex/PortalRegistrationSecondLevelCtrl.getContactInfo';
 import isGuestUser from '@salesforce/apex/CSP_Utils.isGuestUser';
 
 import redirectfromPortalHeader from '@salesforce/apex/CSP_Utils.redirectfromPortalHeader';
@@ -56,6 +57,7 @@ import { getRecord } from 'lightning/uiRecordApi';
 import Id from '@salesforce/user/Id';
 import User_ToU_accept from '@salesforce/schema/User.ToU_accepted__c';
 import AccountSector from '@salesforce/schema/User.Contact.Account.Sector__c';
+import Portal_Registration_Required from '@salesforce/schema/User.Portal_Registration_Required__c';
 
 import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 
@@ -115,15 +117,37 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
 
     // terms
     @track displayAcceptTerms = true;
+    @track displayRegistrationConfirmation = false;
+    @track displayFirstLogin = false;
+    @track firstLogin = false;
 
-    @wire(getRecord, { recordId: Id, fields: [User_ToU_accept] })
+    // l2 registration
+    level2RegistrationTrigger = 'homepage';
+    isTriggeredByRequest = false;
+    
+    @wire(getRecord, { recordId: Id, fields: [User_ToU_accept, Portal_Registration_Required] })
     WiregetUserRecord(result) {
         if (result.data) {
             let user = JSON.parse(JSON.stringify(result.data));
             let acceptTerms = user.fields.ToU_accepted__c.value;
+            let registrationRequired = user.fields.Portal_Registration_Required__c.value;
             let currentURL = window.location.href;
             if (currentURL.includes(this.labels.PortalName)) {
                 this.displayAcceptTerms = acceptTerms;
+            }
+
+            console.log('displayAcceptTerms: ', this.displayAcceptTerms);
+            console.log('firstLogin: ', this.firstLogin);
+            console.log('registrationRequired: ', registrationRequired);
+
+            if(acceptTerms == true){
+                if(registrationRequired == true){
+                    this.displayRegistrationConfirmation = true;
+                }else{
+                    if(this.firstLogin == true){
+                        this.displayFirstLogin = true;
+                    }
+                }
             }
 
         }
@@ -287,6 +311,13 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
             this.userAdmin = result;
         });
 
+        let pageParams = getParamsFromPage();
+        if(pageParams !== undefined && pageParams.firstLogin !== undefined){
+            if(pageParams.firstLogin == "true"){
+                this.firstLogin = true;
+            }
+        }
+
         this.redirectChangePassword();
 
         getNotifications().then(result => {
@@ -328,6 +359,9 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
 
         });
 
+        getContactInfo().then(result => {
+            this.displayCompanyTab = !result.Account.Is_General_Public_Account__c;
+        });
     }
 
     redirectChangePassword() {
@@ -409,9 +443,13 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
 
     }
 
+    navigateToCspChangePassword() {
+        this.navigationCheck("changePassword", "changePassword");
+    }
+
     //user logout
     logOut() {
-        navigateToPage("/secur/logout.jsp");
+        navigateToPage("/secur/logout.jsp?retUrl=" + CSP_PortalPath + "login");
     }
 
 
@@ -646,6 +684,19 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
 
     }
 
+    confirmRegistration() {
+        const fields = {};
+        fields.Id = Id;
+        fields.Portal_Registration_Required__c = false;
+        const recordInput = { fields };
+
+        updateRecord(recordInput)
+            .then(() => {
+                window.location.reload();
+                //this.displayRegistrationConfirmation = false;
+        });
+    }
+
     close() {
         if (this.openNotifications) {
             this.openNotifications = true;
@@ -654,6 +705,15 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
         if (this.openSearch) {
             this.toggleSearch();
         }
+    }
+
+    hideRegistration() {
+        this.displayRegistrationConfirmation = false;
+    }
+
+    hideFirstLogin() {
+        this.displayFirstLogin = false;
+        this.firstLogin = false;
     }
 
     get totalNotification() {
@@ -698,6 +758,22 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
         return toReturn;
     }
 
+    @track displaySecondLevelRegistration = false;
+
+    triggerSecondLevelRegistration(){
+        this.displayFirstLogin = false;
+        this.firstLogin = false;
+        this.displaySecondLevelRegistration= true;
+    }
+
+    closeSecondLevelRegistration(){
+        this.displaySecondLevelRegistration = false;
+    }
+
+    secondLevelRegistrationCompleted(){
+        navigateToPage(CSP_PortalPath,{});
+    }
+
     setCookie(name, value, days) {
         let expires = "";
         if (days) {
@@ -718,5 +794,4 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
         }
         return null;
     }
-
 }

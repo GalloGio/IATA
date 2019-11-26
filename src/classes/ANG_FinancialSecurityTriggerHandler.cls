@@ -246,7 +246,7 @@ public class ANG_FinancialSecurityTriggerHandler{
 						//The list of financial securities per account are ordered by LastModifiedDate (DESC) 
 						//(see query from fetchAccountsInformation method)  
 						for(Financial_Security__c lmFS : acct.Financial_Securities__r){
-							if(ANG_Risk_Helper.FS_STATUS_FOR_SUM_SET.contains(lmFS.Security_Status__c)){
+							if(ANG_Risk_Helper.FS_STATUS_FOR_SUM_SET.contains(lmFS.Security_Status__c) && lmFs.ANG_Minimum_Financial_Security__c != null){
 								lastModifiedFs = lmFs;
 								break;
 							}
@@ -308,9 +308,9 @@ public class ANG_FinancialSecurityTriggerHandler{
 				String rhcKey = accId + ANG_RHCHelper.RHC_INFO_STD_RT;
 				setMinFinancialSecurityAmountOnRHC(accId, rhcKey, minFsAmountAggregatedByParent.get(accId));
 			}
-			else {
+			else if(ANG_Risk_Helper.FS_STATUS_FOR_SUM_SET.contains(fs.Security_Status__c) && fs.ANG_Financial_Security_Currency__c != NULL) {
 				String rhcKey = fs.Account__c + ANG_RHCHelper.RHC_INFO_STD_RT;
-				decimal minFsAmount = (ANG_Risk_Helper.FS_STATUS_FOR_SUM_SET.contains(fs.Security_Status__c) && fs.ANG_Financial_Security_Currency__c != NULL) ? ANG_Risk_Helper.currencyConverter(fs.ANG_Financial_Security_Currency__c, fs.ANG_Minimum_Financial_Security__c,ANG_Risk_Helper.accCurMap.get(fs.Account__c)!=null?ANG_Risk_Helper.accCurMap.get(fs.Account__c):fs.ANG_Financial_Security_Currency__c) : null;
+				decimal minFsAmount = ANG_Risk_Helper.currencyConverter(fs.ANG_Financial_Security_Currency__c, fs.ANG_Minimum_Financial_Security__c,ANG_Risk_Helper.accCurMap.get(fs.Account__c)!=null?ANG_Risk_Helper.accCurMap.get(fs.Account__c):fs.ANG_Financial_Security_Currency__c);
 				setMinFinancialSecurityAmountOnRHC(acct.Id, rhcKey, minFsAmount);
 			}
 

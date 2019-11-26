@@ -12,8 +12,12 @@
 
         <template for:each={lstServicesGranted} for:item="serviceGranted">
             <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2 slds-m-vertical_small" key={serviceGranted.Id}>
-
-                <c-portal-services-available-services-list-card onservicegranted={handleServiceGranted} service={serviceGranted}></c-portal-services-available-services-list-card>
+                <c-portal-services-available-services-list-card 
+                    is-first-level-user={isFirstLevelUser} 
+                    requires-second-level-registration={serviceGranted.recordService.Requires_Level2_Registration__c}
+                    onservicegranted={handleServiceGranted} 
+                    service={serviceGranted}>
+                </c-portal-services-available-services-list-card>
 
             </div>
         </template>

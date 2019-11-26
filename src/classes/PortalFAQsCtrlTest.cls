@@ -82,6 +82,7 @@ public class PortalFAQsCtrlTest {
 
     @isTest static void testGetFAQs() {
         User testUser = [SELECT Id FROM User WHERE Email LIKE '%testemail1@csp.testclass' LIMIT 1];
+        FAQ__kav kavObj = [SELECT Id, Title, ArticleNumber, PublishStatus FROM FAQ__kav WHERE Title = 'Sample Article Portal Test' LIMIT 1];
 
         Test.startTest();
         System.runAs(testUser) {
@@ -116,7 +117,7 @@ public class PortalFAQsCtrlTest {
 
     @isTest static void testArticleFeedback() {
         User testUser = [SELECT Id FROM User WHERE Email LIKE '%testemail1@csp.testclass' LIMIT 1];
-        FAQ__kav kavObj = [SELECT Id, Title, ArticleNumber FROM FAQ__kav WHERE Title = 'Sample Article Portal Test' LIMIT 1];
+        FAQ__kav kavObj = [SELECT Id, Title, ArticleNumber, PublishStatus FROM FAQ__kav WHERE Title = 'Sample Article Portal Test' LIMIT 1];
 
         Test.startTest();
         System.runAs(testUser) {

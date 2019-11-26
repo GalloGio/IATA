@@ -778,14 +778,14 @@ Values must be Separated by &quot;;&quot;</inlineHelpText>
         <columns>Field4Values__c</columns>
         <columns>Field5__c</columns>
         <columns>Field5Values__c</columns>
-        <columns>Account_status_change__c</columns>
+        <columns>Bulletin_Memo_Text__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Record_Type__c</field>
             <operation>equals</operation>
             <value>SIDRA_Lite</value>
         </filters>
-        <label>SIDRA_Lite</label>
+        <label>SIDRALite</label>
         <language>en_US</language>
         <sharedTo>
             <allInternalUsers></allInternalUsers>

@@ -977,12 +977,16 @@ public static List<MessageWrapper> getCaseMessages(String caseId){
         Boolean isOnlineOSCARCase = false;
         Boolean isTravelAccreditation = false;
         Boolean isSidraCase = false;
+        Boolean isNoticeOfChange = false;
 
-        List <AMS_Pax_Accreditation_Form__c> amsList = [SELECT Id, Operation_Type__c FROM AMS_Pax_Accreditation_Form__c WHERE SAAM_Case__c = :caseObj.Id];
+        List <AMS_Pax_Accreditation_Form__c> amsList = [SELECT Id, Operation_Type__c, Notify_Change_Accreditation_Type__c, Notify_Change_Legal_Details__c, Notify_Change_Location__c, Notify_Change_Ownership__c FROM AMS_Pax_Accreditation_Form__c WHERE SAAM_Case__c = :caseObj.Id];
         if (!amsList.isEmpty()){
             isOnlineOSCARCase = true;
             if (amsList[0].Operation_Type__c != null && amsList[0].Operation_Type__c.StartsWith('Travel_Agent')) {
                 isTravelAccreditation = true;
+            }
+            if(amsList[0].Notify_Change_Accreditation_Type__c || amsList[0].Notify_Change_Legal_Details__c || amsList[0].Notify_Change_Location__c || amsList[0].Notify_Change_Ownership__c) {
+                isNoticeOfChange = true;
             }
         }
 
@@ -1005,7 +1009,7 @@ public static List<MessageWrapper> getCaseMessages(String caseId){
             isSidraCase = true;
         }
 
-        OptionWrapper optToReturn = new OptionWrapper(isAdmin, isOnlineOSCARCase, showAccreditation, isMSOcase, isTravelAccreditation, fullnameNOCFile, isSidraCase);
+        OptionWrapper optToReturn = new OptionWrapper(isAdmin, isOnlineOSCARCase, showAccreditation, isMSOcase, isTravelAccreditation, fullnameNOCFile, isSidraCase, isNoticeOfChange);
         return optToReturn;
     }
 
@@ -1021,6 +1025,9 @@ public static List<MessageWrapper> getCaseMessages(String caseId){
         public Boolean showAccreditation {get; set;}
 
         @AuraEnabled
+        public Boolean isNoticeOfChange {get; set;}
+
+        @AuraEnabled
         public Boolean isMSOcase {get; set;}
 
         @AuraEnabled
@@ -1032,7 +1039,7 @@ public static List<MessageWrapper> getCaseMessages(String caseId){
         @AuraEnabled
         public Boolean isSidraCase {get; set;}
 
-        public OptionWrapper(Boolean isAdmin, Boolean isOnlineOSCARCase, Boolean showAccreditation, Boolean isMSOcase, Boolean isTravelAccreditation, String fullnameNOCFile, Boolean isSidraCase){
+        public OptionWrapper(Boolean isAdmin, Boolean isOnlineOSCARCase, Boolean showAccreditation, Boolean isMSOcase, Boolean isTravelAccreditation, String fullnameNOCFile, Boolean isSidraCase, Boolean isNoticeOfChange){
             this.isAdmin = isAdmin;
             this.isOnlineOSCARCase = isOnlineOSCARCase;
             this.showAccreditation = showAccreditation;
@@ -1040,6 +1047,7 @@ public static List<MessageWrapper> getCaseMessages(String caseId){
             this.isTravelAccreditation = isTravelAccreditation;
             this.fullnameNOCFile = fullnameNOCFile;
             this.isSidraCase = isSidraCase;
+            this.isNoticeOfChange = isNoticeOfChange;
         }
     }
 

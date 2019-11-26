@@ -42,11 +42,10 @@ public static Map<String, String> getUserOptions(String portalUser){
 				userOptions.put('User_ContactId', u.ContactId);
 			}
 			if(u.Contact.Account.Top_Parent__c != null) {
-				if(u.Contact.Account.Top_Parent__r.ICCS_Membership_Status__c == null) {
-					userOptions.put('User_ICCS_Membership_Status', u.Contact.Account.ICCS_Membership_Status__c);
-				}else if(u.Contact.Account.Top_Parent__r.ICCS_Membership_Status__c != null) {
-					userOptions.put('User_ICCS_Membership_Status', u.Contact.Account.Top_Parent__r.ICCS_Membership_Status__c);
-				}
+				userOptions.put('User_ICCS_Membership_Status', u.Contact.Account.Top_Parent__r.ICCS_Membership_Status__c);
+			}
+			else{
+				userOptions.put('User_ICCS_Membership_Status', u.Contact.Account.ICCS_Membership_Status__c);
 			}
 		}
 	}

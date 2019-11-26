@@ -3272,8 +3272,8 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP_Breadcrump_You_IATA</shortDescription>
         <value>You &amp; IATA</value>
-	</labels>
-	<labels>
+    </labels>
+    <labels>
         <fullName>CSP_Buy_Online</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -3371,6 +3371,13 @@ Payment required on receipt of this Payment Advice
         <value>Case Currency</value>
     </labels>
     <labels>
+        <fullName>CSP_Case_Details</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Case_Details</shortDescription>
+        <value>Case-Detail_</value>
+    </labels>
+    <labels>
         <fullName>CSP_Cases</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -3379,10 +3386,68 @@ Payment required on receipt of this Payment Advice
         <value>Cases</value>
     </labels>
     <labels>
-        <fullName>CSP_Case_Details</fullName>
+        <fullName>CSP_Change_Email</fullName>
+        <categories>CS Portal</categories>
         <language>en_US</language>
-        <shortDescription>CSP_Case_Details</shortDescription>
-        <value>Case-Detail_</value>
+        <protected>false</protected>
+        <shortDescription>CSP Change Email</shortDescription>
+        <value>Change Email</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Change_Password</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Change Password</shortDescription>
+        <value>Change Password</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Change_Password_Error</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Change Password Error</shortDescription>
+        <value>Your new password could not be set. Please try again.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Change_Password_Info_1</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Change Password Info 1</shortDescription>
+        <value>Please enter your current password, then set a new one and confirm it.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Change_Password_Info_2</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Change Password Info 2</shortDescription>
+        <value>The password should contain 10 or more characters including at least an uppercase letter, a number and a symbol (! @ # $ %  * () _ + ^ &amp;)</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Check_Email</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Check Email</shortDescription>
+        <value>Please check your email to get your access details.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Chg_Pass_Success_Msg_1</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Chg Pass Success Msg 1</shortDescription>
+        <value>Your new password set successfully.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Chg_Pass_Success_Msg_2</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Chg Pass Success Msg 2</shortDescription>
+        <value>You can use your new password to log in.</value>
     </labels>
     <labels>
         <fullName>CSP_Community</fullName>
@@ -3414,6 +3479,14 @@ Payment required on receipt of this Payment Advice
         <value>Company Profile</value>
     </labels>
     <labels>
+        <fullName>CSP_Complete_Profile</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Complete Profile</shortDescription>
+        <value>Complete Your Profile</value>
+    </labels>
+    <labels>
         <fullName>CSP_Confirm_Deny_User_Access</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -3426,6 +3499,14 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP_Confirm_Grant_User_Access</shortDescription>
         <value>Are you sure you want to grant the access to &lt;b&gt;{0}&lt;/b&gt; for &lt;b&gt;{1}&lt;/b&gt;?</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Confirmation_Email_Subject</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Confirmation Email Subject</shortDescription>
+        <value>IATA Customer Portal Email Confirmation</value>
     </labels>
     <labels>
         <fullName>CSP_Confirmed_Requested_Service_Message</fullName>
@@ -3466,6 +3547,38 @@ Payment required on receipt of this Payment Advice
         <value>Complete this field.</value>
     </labels>
     <labels>
+        <fullName>CSP_Create_New_Account_Info</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Create New Account Info</shortDescription>
+        <value>New to the IATA Customer Portal?</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Create_New_Account_Label</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Create New Account Label</shortDescription>
+        <value>Create New Account</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Create_Password</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP  Create Password</shortDescription>
+        <value>Create Password</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Create_Password_Error</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Create Password Error</shortDescription>
+        <value>Your new password could not be set. Please try again.</value>
+    </labels>
+    <labels>
         <fullName>CSP_CreatedOn</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -3487,6 +3600,14 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP_DateTo</shortDescription>
         <value>Creation Date (to)</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Dear</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Dear</shortDescription>
+        <value>Dear</value>
     </labels>
     <labels>
         <fullName>CSP_Deny_User_Access_Title</fullName>
@@ -3536,11 +3657,155 @@ Payment required on receipt of this Payment Advice
         <value>Publication Countries</value>
     </labels>
     <labels>
+        <fullName>CSP_Email</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Email</shortDescription>
+        <value>Email</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Email_Confirmation_Body_Part_1</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Email Confirmation Body Part 1</shortDescription>
+        <value>Thank you for registering to the IATA Customer Portal. You&apos;re just one step away from getting access!</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Email_Confirmation_Body_Part_2</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Email Confirmation Body Part 2</shortDescription>
+        <value>Please confirm your email address by clicking</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Email_Confirmation_Body_Part_3</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Email Confirmation Body Part 3</shortDescription>
+        <value>For security reasons, this link is valid for 8 hours. After the time limit has expired, you will have to resubmit your request.</value>
+    </labels>
+    <labels>
         <fullName>CSP_Email_Domain_Error_Message</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP Email Domain Error Message</shortDescription>
         <value>* Add Domains without &quot;@&quot;.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Email_Footer_Image</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Email Footer Image</shortDescription>
+        <value>CSP Email Footer Image</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Email_Header_Image</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Email Header Image</shortDescription>
+        <value>CSP Email Header Image</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Email_Here</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Email_Here</shortDescription>
+        <value>here</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Email_Password_Reset_Body_Part_1</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Email Password Reset Body Part 1</shortDescription>
+        <value>We have received your request to reset your IATA Customer Portal password.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Email_Password_Reset_Body_Part_2</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Email Password Reset Body Part 2</shortDescription>
+        <value>Please click</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Email_Password_Reset_Body_Part_3</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Email Password Reset Body Part 3</shortDescription>
+        <value>to set a new password.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Email_Password_Reset_Body_Part_4</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Email Password Reset Body Part 4</shortDescription>
+        <value>For security reasons, this link is valid for 8 hours. After the time limis has expired, you will have to resubmit your request.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Email_Signature_Part_1</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Email Signature Part 1</shortDescription>
+        <value>Thanks for being part of IATA.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Email_Signature_Part_2</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Email Signature Part 2</shortDescription>
+        <value>IATA</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Email_Welcome_Part_1</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Email Welcome Part 1</shortDescription>
+        <value>We are happy to have you with us in our IATA Customer Portal!</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Email_Welcome_Part_2</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Email Welcome Part 2</shortDescription>
+        <value>The IATA Customer Portal is packed with useful services, product information, useful tips and tricks specially tailored for you. You can use it to contact our Customer Services Team easily, including live chat or directly purchase from our online store. It&apos;s your gate to IATA!</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Email_Welcome_Part_3</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Email Welcome Part 3</shortDescription>
+        <value>&lt;a href=&quot;{!Portal_Url}&quot;&gt;Take me to the Portal!&lt;/a&gt;</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Email_Welcome_Part_4</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Email Welcome Part 4</shortDescription>
+        <value>To enhance your IATA Customer Portal experience even more, you can complete your account information whenever you want to. You can easily do so by clicking</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Email_Welcome_Part_5</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Email Welcome Part 5</shortDescription>
+        <value>We hope you enjoy our IATA Customer Portal!</value>
     </labels>
     <labels>
         <fullName>CSP_Error_Creating_Record</fullName>
@@ -3563,6 +3828,46 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP Error while delete record</shortDescription>
         <value>Error While Deleting Record</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Existing_User_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Existing User Message</shortDescription>
+        <value>It seems you are already a portal user. Please login with your password.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Expired_Email_Success_Msg</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Expired Email Success Msg</shortDescription>
+        <value>Please check your e-mail and click on the create password link.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Expired_Link_Msg_1</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Expired Link Msg 1</shortDescription>
+        <value>The verification link has expired.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Expired_Link_Msg_2</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Expired Link Msg 2</shortDescription>
+        <value>For security reasons, the verification link expires after 8 hours.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Expired_Reset_Password_Msg</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Expired Reset Password Msg</shortDescription>
+        <value>Please check your e-mail and click on the reset password link.</value>
     </labels>
     <labels>
         <fullName>CSP_FAQReachUsBanner_ButtonText</fullName>
@@ -3595,6 +3900,14 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP_FAQ_HeaderTitle</shortDescription>
         <value>Frequently Asked Questions</value>
+    </labels>
+    <labels>
+        <fullName>CSP_FAQ_Label</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP FAQ Label</shortDescription>
+        <value>Go to our FAQ</value>
     </labels>
     <labels>
         <fullName>CSP_FAQ_Subtitle</fullName>
@@ -3669,12 +3982,84 @@ Payment required on receipt of this Payment Advice
         <value>Filtered</value>
     </labels>
     <labels>
+        <fullName>CSP_First_Login_Desc</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP First Login Desc</shortDescription>
+        <value>Your account is created successfully. You can discover the portal features now. Please complete your profile to get more personalized content</value>
+    </labels>
+    <labels>
+        <fullName>CSP_First_Login_Title</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP First Login Title</shortDescription>
+        <value>Welcome on board</value>
+    </labels>
+    <labels>
         <fullName>CSP_ForYou</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_ForYou</shortDescription>
         <value>For You</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Forgot_Password</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Forgot Password</shortDescription>
+        <value>Forgot Password?</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Forgot_Password_Error_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Forgot Password Error Message</shortDescription>
+        <value>Seems we don&apos;t have a user registered for your email. You can easily create a new account.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Forgot_Password_Info</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Forgot Password Info</shortDescription>
+        <value>Please enter your registered e-mail address to reset your password. We&apos;ll send you a reset link to your email.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Forgot_Password_Retry_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Forgot Password Retry Message</shortDescription>
+        <value>Please check your spam folder first. If you can&apos;t find anything in the spam folder, please try to reset your password again clicking Try Again.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Forgot_Password_Retry_Title</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Forgot Password Retry Title</shortDescription>
+        <value>Didn&apos;t receive an email?</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Forgot_Password_Success_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Forgot Password Success Message</shortDescription>
+        <value>Please check your email and click on the password reset link</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Frozen_User_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Frozen User Message</shortDescription>
+        <value>Since you have not logged in the last 90 days, we’ve sent you an email with a new password.</value>
     </labels>
     <labels>
         <fullName>CSP_Grant_User_Access_Title</fullName>
@@ -3691,14 +4076,6 @@ Payment required on receipt of this Payment Advice
         <shortDescription>CSP_Home_WelcomeTitle</shortDescription>
         <value>Welcome [username]</value>
     </labels>
-	<labels>
-        <fullName>CSP_LastUpdate</fullName>
-        <categories>CS Portal</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP_LastUpdate</shortDescription>
-        <value>Last Update</value>
-    </labels>
     <labels>
         <fullName>CSP_IATA_Country</fullName>
         <language>en_US</language>
@@ -3713,7 +4090,762 @@ Payment required on receipt of this Payment Advice
         <shortDescription>CSP_IMPORTANT</shortDescription>
         <value>IMPORTANT</value>
     </labels>
-	<labels>
+    <labels>
+        <fullName>CSP_Invalid_Email</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Invalid Email</shortDescription>
+        <value>Invalid email</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Account_Information</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Account_Information</shortDescription>
+        <value>Company Account Info</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Account_Information_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Account_Information_Message</shortDescription>
+        <value>Fill out the information below to find your company account.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Account_Selection</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Account_Selection</shortDescription>
+        <value>Account Selection</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Account_Selection_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Account_Selection_Message</shortDescription>
+        <value>To match your personal profile with a company account we need your company details.
+Your company may have an account in IATA, so please check it first before creating a new one.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Address_Not_Found_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Address_Not_Found_Message</shortDescription>
+        <value>We could not find your address.
+Please click Next Step button to confirm that your address is correct</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Already_L2_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Already_L2_Message</shortDescription>
+        <value>It seems you already completed your profile before, so we have all the details we need.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Already_L2_Title</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Already_L2_Title</shortDescription>
+        <value>All set!</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Back_to_Account_Selection</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Back_to_Account_Selection</shortDescription>
+        <value>Back to Company Account Info</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Back_to_Business_Address_Information</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Back_to_Business_Address_Information</shortDescription>
+        <value>Back to Business Address Information</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Back_to_Company_Information</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Back_to_Company_Information</shortDescription>
+        <value>Back to Company Information</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Back_to_Edit</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Back_to_Edit</shortDescription>
+        <value>Go back to edit</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Back_to_Profile_Details</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Back_to_Profile_Details</shortDescription>
+        <value>Back to Profile Details</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Banner_Title</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Banner_Title</shortDescription>
+        <value>Profile Completion &amp; Account Selection</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Business_Address_Information</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Business_Address_Information</shortDescription>
+        <value>Business Address Information</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Business_Address_Information_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Business_Address_Information_Message</shortDescription>
+        <value>Please fill out your business address information.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Category</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Category</shortDescription>
+        <value>Category</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Change_Categorization_Warning</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Change_Categorization_Warning</shortDescription>
+        <value>The service you&apos;re requesting access to might not be available for your selected categorization. You can still finalize your registration, but the service might no longer be available after completion.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_City</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_City</shortDescription>
+        <value>City</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Company_Account</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Company_Account</shortDescription>
+        <value>Company Account</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Company_Account_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Company_Account_Message</shortDescription>
+        <value>Please check your company details</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Company_Information</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Company_Information</shortDescription>
+        <value>Company Information</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Company_Information_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Company_Information_Message</shortDescription>
+        <value>Please fill out your company information to access customized services.
+You can easily create a company account in two steps</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Company_Location</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Company_Location</shortDescription>
+        <value>Company Location</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Company_Name</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Company_Name</shortDescription>
+        <value>Company Name</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Confirmation</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Confirmation</shortDescription>
+        <value>Confirmation</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Confirmation_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Confirmation_Message</shortDescription>
+        <value>You are only one step away from updating your profile. Please check the information provided and click submit button if everthing looks correct.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Contact_Support</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Contact_Support</shortDescription>
+        <value>Contact Support</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Country</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Country</shortDescription>
+        <value>Country</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Create_Account_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Create_Account_Message</shortDescription>
+        <value>If you do not have a company account, you can easily create on in two steps</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Create_New_Account</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Create_New_Account</shortDescription>
+        <value>Create New Account</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Date_of_Birth</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Date_of_Birth</shortDescription>
+        <value>Date of Birth</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Details_Saved</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Details_Saved</shortDescription>
+        <value>Your details are saved successfully.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Details_Saved_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Details_Saved_Message</shortDescription>
+        <value>We can now offer you more personalized experience based on your profile. You can also take a look at any service &amp; training provided from IATA</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Details_Saved_Service_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Details_Saved_Service_Message</shortDescription>
+        <value>You can now continue to raise your service request.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Details_Saved_Topic_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Details_Saved_Topic_Message</shortDescription>
+        <value>You can now continue to raise your request.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Did_Not_Find</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Did_Not_Find</shortDescription>
+        <value>Did not find what you&apos;re looking for?</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Did_Not_Find_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Did_Not_Find_Message</shortDescription>
+        <value>You can easily create a company account in two steps to complete your profile</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Edit_Company_Information</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Edit_Company_Information</shortDescription>
+        <value>Click here to complete your profile</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Edit_Company_Information_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Edit_Company_Information_Message</shortDescription>
+        <value>We&apos;ve built the IATA Customer Portal so that it tailors the IATA products and services specifically for you. For us to be able to do that, we&apos;d like to know you and your organization a bit better.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Email_Address</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Email_Address</shortDescription>
+        <value>E-mail address</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Find_Address</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Find_Address</shortDescription>
+        <value>Find Address</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Go_Back</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Go_Back</shortDescription>
+        <value>Go Back</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Go_To_Homepage</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Go_To_Homepage</shortDescription>
+        <value>Go to Homepage</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Go_To_Profile</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Go_To_Profile</shortDescription>
+        <value>Go Back to Profile</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Go_To_Service</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Go_To_Service</shortDescription>
+        <value>Go Back to Service</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Go_To_Topic</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Go_To_Topic</shortDescription>
+        <value>Go Back to Topic</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_IATA_Codes</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_IATA_Codes</shortDescription>
+        <value>IATA Code</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Is_PO_Box_Address</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Is_PO_Box_Address</shortDescription>
+        <value>Is this a PO Box address?</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Job_Function</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Job_Function</shortDescription>
+        <value>Job Function</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Job_Title</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Job_Title</shortDescription>
+        <value>Job Title</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Legal_Name</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Legal_Name</shortDescription>
+        <value>Legal Name</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Next_Account_Selection</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Next_Account_Selection</shortDescription>
+        <value>Next Step / Account Selection</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Next_Address_Information</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Next_Address_Information</shortDescription>
+        <value>Next Step / Address Information</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Next_Confirmation</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Next_Confirmation</shortDescription>
+        <value>Next Step / Confirmation</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_No</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_No</shortDescription>
+        <value>No</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_No_Matching_Results</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_No_Matching_Results</shortDescription>
+        <value>There is no matching results found</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Other_Sector</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Other_Sector</shortDescription>
+        <value>Other</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Other_Sector_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Other_Sector_Message</shortDescription>
+        <value>Please select a relevant sector from the list provided.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_PO_Box_Number</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_PO_Box_Number</shortDescription>
+        <value>PO Box Number</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Personal_Details</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Personal_Details</shortDescription>
+        <value>Personal Details</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Personal_Details_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Personal_Details_Message</shortDescription>
+        <value>Please check your personal details</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Phone_Number</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Phone_Number</shortDescription>
+        <value>Phone Number</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Postal_Code</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Postal_Code</shortDescription>
+        <value>Postal Code</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Profile_Details</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Profile_Details</shortDescription>
+        <value>Profile Details</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Profile_Details_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Profile_Details_Message</shortDescription>
+        <value>Add your personal details to let IATA suggest personalized content and services</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Profile_Incomplete</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Profile_Incomplete</shortDescription>
+        <value>The profile is not fully updated yet</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Profile_Incomplete_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Profile_Incomplete_Message</shortDescription>
+        <value>But it is saved as a draft, you can continue later. Are you sure you want to quit?</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Registration_Error_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Registration_Error_Message</shortDescription>
+        <value>Unfortunately, something went wrong when creating your account. To help you further, please contact our support team.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Registration_Error_Title</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Registration_Error_Title</shortDescription>
+        <value>Something went wrong</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Requested_Modal_Cancel</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Requested_Modal_Cancel</shortDescription>
+        <value>Cancel</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Requested_Modal_Complete</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Requested_Modal_Complete</shortDescription>
+        <value>Complete My Profile</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Requested_Modal_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Requested_Modal_Message</shortDescription>
+        <value>To continue, we&apos;d need some more details about you and your organization. Don&apos;t worry, it won&apos;t take long!</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Requested_Modal_Title</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Requested_Modal_Title</shortDescription>
+        <value>Hi</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Required</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Required</shortDescription>
+        <value>Required</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Search</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Search</shortDescription>
+        <value>Search</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Search_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Search_Message</shortDescription>
+        <value>Please fill at least one of the two fields below.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Search_Results</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Search_Results</shortDescription>
+        <value>Search Results</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Search_Results_Above_Limit</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Search_Results_Above_Limit</shortDescription>
+        <value>We found +50 accounts matching your search criteria.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Search_Results_Above_Limit_Link</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Search_Results_Above_Limit_Link</shortDescription>
+        <value>Refine the search criteria</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Search_Results_Above_Limit_Link_1</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Search_Results_Above_Limit_Link_1</shortDescription>
+        <value>--empty--</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Search_Results_Above_Limit_Link_2</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Search_Results_Above_Limit_Link_2</shortDescription>
+        <value>to see fewer options.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Sector</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Sector</shortDescription>
+        <value>Sector</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Select</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Select</shortDescription>
+        <value>Select</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Select_Address_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Select_Address_Message</shortDescription>
+        <value>Please select the correct address. If you can&apos;t find the right address from the list, we&apos;ll save the one you have entered. Click Next Step to continue.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Select_Company_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Select_Company_Message</shortDescription>
+        <value>Select your company account from the list.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_State</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_State</shortDescription>
+        <value>State</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Street</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Street</shortDescription>
+        <value>Street</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Submit</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Submit</shortDescription>
+        <value>Submit</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Title</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Title</shortDescription>
+        <value>Title</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Trade_Name</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Trade_Name</shortDescription>
+        <value>Trade Name</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Website</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Website</shortDescription>
+        <value>Website</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Yes</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Yes</shortDescription>
+        <value>Yes</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LastUpdate</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LastUpdate</shortDescription>
+        <value>Last Update</value>
+    </labels>
+    <labels>
         <fullName>CSP_Learn_More</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -3727,6 +4859,94 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP_LogOut</shortDescription>
         <value>Log Out</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Login_Now</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Login Now</shortDescription>
+        <value>Login Now</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Lvl2_Reminder_1</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Lvl2 Reminder 1</shortDescription>
+        <value>Some days ago, you signed up to form part of the IATA Customer Portal - thank you and welcome!</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Lvl2_Reminder_2</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Lvl2 Reminder 2</shortDescription>
+        <value>We´ve built the IATA Customer Portal so that it tailors the IATA products and services specifically for you. For us to be able to do that, we´d like to know you and your organization a bit better.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Lvl2_Reminder_3</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Lvl2 Reminder 3</shortDescription>
+        <value>We´ve made it easy and fast – just &lt;strong&gt;&lt;a href=[URL]&gt;click here to complete your profile&lt;/a&gt;&lt;/strong&gt;.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Lvl2_Reminder_4</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Lvl2 Reminder 4</shortDescription>
+        <value>You´ll get:</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Lvl2_Reminder_5</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Lvl2 Reminder 5</shortDescription>
+        <value>· Direct Entry for Tailored Services</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Lvl2_Reminder_6</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Lvl2 Reminder 6</shortDescription>
+        <value>· Full Access to Curated IATA Knowledge &amp; Standards</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Lvl2_Reminder_7</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Lvl2 Reminder 7</shortDescription>
+        <value>· Specialized Support from IATA Service Professionals</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Lvl2_Reminder_8</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Lvl2 Reminder 8</shortDescription>
+        <value>· And more!</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Lvl2_Reminder_9</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Lvl2 Reminder 9</shortDescription>
+        <value>&lt;strong&gt;&lt;a href=[URL]&gt;Click here to complete your profile&lt;/a&gt;&lt;/strong&gt;</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Lvl2_Reminder_Subject</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Lvl2 Reminder Subject</shortDescription>
+        <value>Get the most out of the IATA Customer Portal – Complete you Profile!</value>
     </labels>
     <labels>
         <fullName>CSP_Manage_Portal_Users</fullName>
@@ -3799,11 +5019,27 @@ Payment required on receipt of this Payment Advice
         <value>You can search and add new portal users to this service. If the user you are looking for is not a portal contact yet, you can create for them</value>
     </labels>
     <labels>
+        <fullName>CSP_New_Account_To_Address</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP New Account To Address</shortDescription>
+        <value>test@iata.org</value>
+    </labels>
+    <labels>
         <fullName>CSP_New_Email_Domain</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP New Email Domain</shortDescription>
         <value>New email domain</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Next</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Next</shortDescription>
+        <value>Next</value>
     </labels>
     <labels>
         <fullName>CSP_NoAccount</fullName>
@@ -3862,6 +5098,46 @@ Payment required on receipt of this Payment Advice
         <value>See Monthly</value>
     </labels>
     <labels>
+        <fullName>CSP_Password</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Password</shortDescription>
+        <value>Password</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Password_Rule_1</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Password Rule 1</shortDescription>
+        <value>Minimum 10 characters</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Password_Rule_2</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Password Rule 2</shortDescription>
+        <value>At least 1 upper-case letter</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Password_Rule_3</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Password Rule 3</shortDescription>
+        <value>At least 1 number</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Password_Rule_4</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Password Rule 4</shortDescription>
+        <value>At least 1 symbol (! @ # $ % * ( ) _ + ^ &amp;)</value>
+    </labels>
+    <labels>
         <fullName>CSP_Payment</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -3875,7 +5151,7 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP_PendingApproval</shortDescription>
         <value>The record is not Draft or is Pending approval</value>
-    </labels>    
+    </labels>
     <labels>
         <fullName>CSP_PendingCustomerCase_Warning</fullName>
         <categories>CS Portal</categories>
@@ -3890,6 +5166,14 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP_Period</shortDescription>
         <value>Period</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Personal_Information</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Personal Information</shortDescription>
+        <value>Personal Information</value>
     </labels>
     <labels>
         <fullName>CSP_PortalPath</fullName>
@@ -3907,6 +5191,14 @@ Payment required on receipt of this Payment Advice
         <value>Portal Administrators</value>
     </labels>
     <labels>
+        <fullName>CSP_Portal_Login_Disabled_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Portal Login Disabled Message</shortDescription>
+        <value>Portal Login is currently disabled. Thank you for your understanding.</value>
+    </labels>
+    <labels>
         <fullName>CSP_Portal_Status</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -3916,14 +5208,27 @@ Payment required on receipt of this Payment Advice
     <labels>
         <fullName>CSP_Print</fullName>
         <language>en_US</language>
+        <protected>false</protected>
         <shortDescription>CSP_Print</shortDescription>
         <value>Print</value>
     </labels>
     <labels>
         <fullName>CSP_Printed_date</fullName>
         <language>en_US</language>
+        <protected>false</protected>
         <shortDescription>CSP_Printed_date</shortDescription>
         <value>Printed date</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Privacy_Policy</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Privacy Policy</shortDescription>
+        <value>I agree with IATA&apos;s
+&lt;a target=&quot;_blank&quot; href=&quot;https://www.iata.org/Pages/privacy.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Privacy Policy&lt;/a&gt;
+ and
+&lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-portal/Pages/terms.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Terms of Use.&lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>CSP_Profile_PrivacyManagement_Link</fullName>
@@ -4034,6 +5339,46 @@ Payment required on receipt of this Payment Advice
         <value>Account Domain is Deleted</value>
     </labels>
     <labels>
+        <fullName>CSP_Registration_Complete</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Registration Complete</shortDescription>
+        <value>Registration completed successfully</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Registration_Description</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Registration Description</shortDescription>
+        <value>Complete the basic registration process to join IATA Customer Portal.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Registration_Disabled_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Registration Disabled Message</shortDescription>
+        <value>Portal Registration is currently disabled. Thank you for your understanding.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Registration_Existing_User_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Registration Existing User Message</shortDescription>
+        <value>You are trying to register with an existing user, please change the email or click login button to go to the login page</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Registration_Retry_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Registration Retry Message</shortDescription>
+        <value>Please check your spam folder first. If you can&apos;t find anything in the spam folder, please try to register again by clicking Try Again button.</value>
+    </labels>
+    <labels>
         <fullName>CSP_RelatedArticles</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -4071,12 +5416,94 @@ Payment required on receipt of this Payment Advice
         <value>Request Service</value>
     </labels>
     <labels>
+        <fullName>CSP_Resend_Verification_Email</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Resend Verification Email</shortDescription>
+        <value>Resend Verification Mail</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Reset_Password</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Reset Password</shortDescription>
+        <value>Reset Password</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Reset_Password_Email_Subject</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Reset Password Email Subject</shortDescription>
+        <value>Reset your password for IATA Customer Portal</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Reset_Password_Info_1</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Reset Password Info 1</shortDescription>
+        <value>Please enter your new password.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Reset_Password_Info_2</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Reset Password Info 2</shortDescription>
+        <value>The password should contain:</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Reset_Password_Success_Msg_1</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Reset Password Success Msg 1</shortDescription>
+        <value>Your password has been changed successfully.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Reset_Password_Success_Msg_2</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Reset Password Success Msg 2</shortDescription>
+        <value>You can login with your new password.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Restricted_Login_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Restricted Login Message</shortDescription>
+        <value>Your computer IP has been identified as sourcing from one of the countries listed as embargoed by U.S. authorities. &lt;br/&gt;
+The platform supporting our Customer Portal complies with this U.S. regulations and thus, we are currently unable to provide access to Customer Portal from your current IP address. &lt;br/&gt;
+Click &lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;here&lt;/a&gt; to contact us.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Restricted_Login_Title</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Restricted Login Title</shortDescription>
+        <value>Restricted Login</value>
+    </labels>
+    <labels>
         <fullName>CSP_Save</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_Save</shortDescription>
         <value>Save</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Save_Login</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Save Login</shortDescription>
+        <value>Save &amp; Login</value>
     </labels>
     <labels>
         <fullName>CSP_SearchDocuments</fullName>
@@ -4418,6 +5845,14 @@ Payment required on receipt of this Payment Advice
         <value>Settings</value>
     </labels>
     <labels>
+        <fullName>CSP_Skip</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Skip</shortDescription>
+        <value>Skip for Now</value>
+    </labels>
+    <labels>
         <fullName>CSP_Status</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -4448,9 +5883,10 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP_SubmittedApproval</shortDescription>
         <value>The record was submitted for approval</value>
-    </labels>       
+    </labels>
     <labels>
         <fullName>CSP_Success</fullName>
+        <categories>CS Portal</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP Success</shortDescription>
@@ -4519,12 +5955,43 @@ Payment required on receipt of this Payment Advice
         <value>&lt;a href=&quot;/s/manage-service?serviceId=a2ww0000001D7GOAA0&quot; target=&quot;_self&quot;&gt;Click here to request the IATA Accreditation and Changes&lt;/a&gt;</value>
     </labels>
     <labels>
+        <fullName>CSP_Troubleshooting</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Troubleshooting</shortDescription>
+        <value>troubleshooting</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Troubleshooting_Info</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Troubleshooting Info</shortDescription>
+        <value>For more help check</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Try_Again</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Try Again</shortDescription>
+        <value>Try Again</value>
+    </labels>
+    <labels>
         <fullName>CSP_TypeOfCase</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_TypeOfCase</shortDescription>
         <value>Type of case</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Unexcepted_Error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Unexcepted_Error</shortDescription>
+        <value>An unexpected error occured!</value>
     </labels>
     <labels>
         <fullName>CSP_User</fullName>
@@ -4534,26 +6001,12 @@ Payment required on receipt of this Payment Advice
         <shortDescription>CSP_User</shortDescription>
         <value>User</value>
     </labels>
-	<labels>
-        <fullName>CSP_YouAndIATA</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP_YouAndIATA</shortDescription>
-        <value>You &amp; IATA</value>
-    </labels>
-    <labels>
-        <fullName>CSP_YouIATA_Highlights_Text</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP_YouIATA_Highlights_Text</shortDescription>
-        <value>Here you can discover a wide variety of IATA services, publications, products, and resources on aviation industry. Specially tailored after your interests and activity history.</value>
-    </labels>
     <labels>
         <fullName>CSP_Welcome_Panel_Bullet_1_Desc</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>CSP_Welcome_Panel_Bullet_1_Desc</shortDescription>
+        <shortDescription>CSP Welcome Panel Bullet 1 Desc</shortDescription>
         <value>Directly access more than 60 IATA services, specially selected for you.</value>
     </labels>
     <labels>
@@ -4561,7 +6014,7 @@ Payment required on receipt of this Payment Advice
         <categories>CS Portal</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>CSP_Welcome_Panel_Bullet_1_Title</shortDescription>
+        <shortDescription>CSP Welcome Panel Bullet 1 Title</shortDescription>
         <value>Access IATA services</value>
     </labels>
     <labels>
@@ -4569,7 +6022,7 @@ Payment required on receipt of this Payment Advice
         <categories>CS Portal</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>CSP_Welcome_Panel_Bullet_2_Desc</shortDescription>
+        <shortDescription>CSP Welcome Panel Bullet 2 Desc</shortDescription>
         <value>Easily manage and update your IATA profile.</value>
     </labels>
     <labels>
@@ -4577,7 +6030,7 @@ Payment required on receipt of this Payment Advice
         <categories>CS Portal</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>CSP_Welcome_Panel_Bullet_2_Title</shortDescription>
+        <shortDescription>CSP Welcome Panel Bullet 2 Title</shortDescription>
         <value>Stay up to date</value>
     </labels>
     <labels>
@@ -4585,7 +6038,7 @@ Payment required on receipt of this Payment Advice
         <categories>CS Portal</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>CSP_Welcome_Panel_Bullet_3_Desc</shortDescription>
+        <shortDescription>CSP Welcome Panel Bullet 3 Desc</shortDescription>
         <value>Discover the selection of publications, trainings and other IATA products and services.</value>
     </labels>
     <labels>
@@ -4593,7 +6046,7 @@ Payment required on receipt of this Payment Advice
         <categories>CS Portal</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>CSP_Welcome_Panel_Bullet_3_Title</shortDescription>
+        <shortDescription>CSP Welcome Panel Bullet 3 Title</shortDescription>
         <value>Find special offers</value>
     </labels>
     <labels>
@@ -4601,7 +6054,7 @@ Payment required on receipt of this Payment Advice
         <categories>CS Portal</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>CSP_Welcome_Panel_Bullet_4_Desc</shortDescription>
+        <shortDescription>CSP Welcome Panel Bullet 4 Desc</shortDescription>
         <value>Access our extensive collection of questions &amp; answers; and get direct support from IATA.</value>
     </labels>
     <labels>
@@ -4609,8 +6062,46 @@ Payment required on receipt of this Payment Advice
         <categories>CS Portal</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>CSP_Welcome_Panel_Bullet_4_Title</shortDescription>
+        <shortDescription>CSP Welcome Panel Bullet 4 Title</shortDescription>
         <value>Get answers</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Welcome_Panel_Info</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Welcome Panel Info</shortDescription>
+        <value>Access and manage all your IATA services. Consult information about different products and get support about any subject. Here, for you.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Welcome_Title</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Welcome Title</shortDescription>
+        <value>Welcome to the&amp;lt;br/&amp;gt;
+IATA Customer Portal</value>
+    </labels>
+    <labels>
+        <fullName>CSP_YouAndIATA</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_YouAndIATA</shortDescription>
+        <value>You &amp; IATA</value>
+    </labels>
+    <labels>
+        <fullName>CSP_YouIATA_Highlights</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_YouIATA_Highlights</shortDescription>
+        <value>Selected Highlights For You</value>
+    </labels>
+    <labels>
+        <fullName>CSP_YouIATA_Highlights_Text</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_YouIATA_Highlights_Text</shortDescription>
+        <value>Here you can discover a wide variety of IATA services, publications, products, and resources on aviation industry. Specially tailored after your interests and activity history.</value>
     </labels>
     <labels>
         <fullName>CSP_You_Dont_Have_Announcements</fullName>
@@ -4796,7 +6287,7 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CaseValidation - Area</shortDescription>
-        <value>Accreditation,Airlines GSA/MSO,Airline Management,BSPlink/ASD,Cargo Operations,CASSlink,Customer Portal Enquiry,IATA General Information,iiNet,Invoicing,myIATA,Passenger Operations,Passenger Stock Management,Product Enquiry,Remittance &amp; Settlement,Risk Management,TIESS Support, MITA, Coding, Your VOICE - Annual Survey,IBSPs Migration, TASF, E&amp;F Services,E&amp;F Operations,Easy Pay,NewGen ISS,E&amp;F,SIS,ICH,iiNet,AirportIS,SIS Dispute/Correspondence,SIS e-Invoicing,SIS Fees,SIS File Submission,SIS Invoice Creation,SIS ISPG,SIS Receive invoices/Files,SIS Release Notes,SIS Reports,SIS User Guide,CargoIS,Direct Data Solutions (DDS),GAP,MarketIS,PaxIS,Airline Joining,Airline Leaving,New application - forms, procedures, fees</value>
+        <value>Accreditation,Airlines GSA/MSO,Airline Management,BSPlink/ASD,Cargo Operations,CASSlink,Customer Portal Enquiry,IATA General Information,iiNet,Invoicing,myIATA,Passenger Operations,Passenger Stock Management,Product Enquiry,Remittance &amp; Settlement,Risk Management,TIESS Support, MITA, Coding, Your VOICE - Annual Survey,IBSPs Migration, TASF, E&amp;F Services,E&amp;F Operations,Easy Pay,NewGen ISS,E&amp;F,SIS,ICH,iiNet,AirportIS,SIS Dispute/Correspondence,SIS e-Invoicing,SIS Fees,SIS File Submission,SIS Invoice Creation,SIS ISPG,SIS Receive invoices/Files,SIS Release Notes,SIS Reports,SIS User Guide,CargoIS,Direct Data Solutions (DDS),GAP,MarketIS,PaxIS,Airline Joining,Airline Leaving,New application - forms, procedures, fees,Agency Risk Management</value>
     </labels>
     <labels>
         <fullName>CaseValidation_Area2</fullName>
@@ -6451,6 +7942,468 @@ You can choose one or more of the following topics:</value>
         <protected>false</protected>
         <shortDescription>FooterLeadMessage</shortDescription>
         <value>Our mission is to represent, lead and serve the airline industry</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Access_Denied</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Access Denied</shortDescription>
+        <value>Your access to GADM service is denied.</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Access_Pending</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Access Pending</shortDescription>
+        <value>Your access to GADM service is pending.</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Account_not_active</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Account not active</shortDescription>
+        <value>Account is not active.</value>
+    </labels>
+    <labels>
+        <fullName>GADM_ChooseAnotherFile</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_ChooseAnotherFile</shortDescription>
+        <value>Please select another file to upload.</value>
+    </labels>
+    <labels>
+        <fullName>GADM_ChooseFile</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_ChooseFile</shortDescription>
+        <value>Please select file to upload.</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Data_Submission_bad_file_extension</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Data Submission bad file extension</shortDescription>
+        <value>Unexpected file extension!</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Data_Submission_empty_file</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Data Submission empty file</shortDescription>
+        <value>File is empty!</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Data_Submission_error_uploading_file</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Data Submission error uploading file</shortDescription>
+        <value>Error uploading file:</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Data_Submission_file_is_big</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Data Submission file is big</shortDescription>
+        <value>File is too large!</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Data_Submission_file_is_selected</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Data Submission file is selected</shortDescription>
+        <value>File is already selected!</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Data_Submission_file_uploaded</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Data Submission file uploaded</shortDescription>
+        <value>File uploaded successfully:</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Data_Submission_help</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Data Submission help</shortDescription>
+        <value>Need help? Contact us at:</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Data_Submission_no_access</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Data Submission no access</shortDescription>
+        <value>You do not have permissions to see this page!</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Data_Submission_no_actor</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Data Submission no actor</shortDescription>
+        <value>No actor selected!</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Data_Submission_no_gadm_settings</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Data Submission no gadm settings</shortDescription>
+        <value>Unable to retrieve gadm settings!</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Data_Submission_no_permission_set</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Data Submission no permission set</shortDescription>
+        <value>Unable to verify user permission set!</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Data_Submission_no_records</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Data Submission no records</shortDescription>
+        <value>No records to display.</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Data_Submission_no_user</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Data Submission no user</shortDescription>
+        <value>No user selected!</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Data_Submission_no_valid_actor</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Data Submission no valid actor</shortDescription>
+        <value>No valid actor found!</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Data_Submission_select_actor</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Data Submission select actor</shortDescription>
+        <value>Please select an actor.</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Data_Submission_select_user</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Data Submission select user</shortDescription>
+        <value>Please select an user.</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Data_Submission_too_many_files</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Data Submission too many files</shortDescription>
+        <value>Too many files!</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Data_Submission_unexpected_error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Data Submission unexpected error</shortDescription>
+        <value>Unexpected error!</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Data_Submission_upload_error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Data Submission upload error</shortDescription>
+        <value>Error uploading file!</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Data_Submission_upload_errors</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Data Submission upload errors</shortDescription>
+        <value>Error uploading file/s:</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Data_Submission_upload_successful</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Data Submission upload successful</shortDescription>
+        <value>Upload successful.</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Data_Submission_user_search</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Data Submission user search</shortDescription>
+        <value>Search User...</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Data_Submssion_no_user_information</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Data Submssion no user information</shortDescription>
+        <value>Unable to retrieve user information!</value>
+    </labels>
+    <labels>
+        <fullName>GADM_FileAlreadyAttached</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_FileAlreadyAttached</shortDescription>
+        <value>This file is already attached!</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Ground_Service_Provider</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Ground Service Provider</shortDescription>
+        <value>Ground Service Provider</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Invite_User_invitation_error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_Invite_User_invitation_error</shortDescription>
+        <value>Unable to send invitation!</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Invite_User_invitation_no_data</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_Invite_User_invitation_no_data</shortDescription>
+        <value>Unable to get data!</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Invite_User_invitation_sent</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_Invite_User_invitation_sent</shortDescription>
+        <value>Invitation email sent.</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Invite_User_not_allowed_email_domain</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_Invite_User_not_allowed_email_domain</shortDescription>
+        <value>Email domain is not allowed for selected Actor!</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Invite_User_notification_sent</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_Invite_User_notification_sent</shortDescription>
+        <value>Notification email sent.</value>
+    </labels>
+    <labels>
+        <fullName>GADM_NoFile</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_NoFile</shortDescription>
+        <value>No file selected!</value>
+    </labels>
+    <labels>
+        <fullName>GADM_No_Access</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM No Access</shortDescription>
+        <value>You do not have access to GADM service.</value>
+    </labels>
+    <labels>
+        <fullName>GADM_PowerBI_categories_error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM PowerBI categories error</shortDescription>
+        <value>Unable to load dashboard categories</value>
+    </labels>
+    <labels>
+        <fullName>GADM_PowerBI_no_access_token</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_PowerBI_no_access_token</shortDescription>
+        <value>Unable to get application access token!</value>
+    </labels>
+    <labels>
+        <fullName>GADM_PowerBI_no_categories</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_PowerBI_no_categories</shortDescription>
+        <value>No dashboard categories found</value>
+    </labels>
+    <labels>
+        <fullName>GADM_PowerBI_no_dashboard</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_PowerBI_no_dashboard</shortDescription>
+        <value>Unable to get dashboard!</value>
+    </labels>
+    <labels>
+        <fullName>GADM_PowerBI_no_dataset_detail</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_PowerBI_no_dataset_detail</shortDescription>
+        <value>Unable to get dataset details!</value>
+    </labels>
+    <labels>
+        <fullName>GADM_PowerBI_no_embed_token</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_PowerBI_no_embed_token</shortDescription>
+        <value>Unable to get embed token!</value>
+    </labels>
+    <labels>
+        <fullName>GADM_PowerBI_no_federation_Id</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_PowerBI_no_federation_Id</shortDescription>
+        <value>Unable to get user&apos;s federation id!</value>
+    </labels>
+    <labels>
+        <fullName>GADM_PowerBI_no_report_detail</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_PowerBI_no_report_detail</shortDescription>
+        <value>Unable to get report details!</value>
+    </labels>
+    <labels>
+        <fullName>GADM_PowerBI_no_user_detail</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_PowerBI_no_user_detail</shortDescription>
+        <value>Unable to get user details!</value>
+    </labels>
+    <labels>
+        <fullName>GADM_Power_User</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Power User</shortDescription>
+        <value>GADM Power User</value>
+    </labels>
+    <labels>
+        <fullName>GADM_User_Invitation_Mr</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_User_Invitation_Mr</shortDescription>
+        <value>Mr.</value>
+    </labels>
+    <labels>
+        <fullName>GADM_User_Invitation_Mrs</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_User_Invitation_Mrs</shortDescription>
+        <value>Mrs.</value>
+    </labels>
+    <labels>
+        <fullName>GADM_User_Invitation_Ms</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_User_Invitation_Ms</shortDescription>
+        <value>Ms.</value>
+    </labels>
+    <labels>
+        <fullName>GADM_User_Invitation_job_function_help_text</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_User_Invitation_job_function_help_text</shortDescription>
+        <value>*Select all functions that apply</value>
+    </labels>
+    <labels>
+        <fullName>GADM_User_Invitation_job_title</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_User_Invitation_job_title</shortDescription>
+        <value>Job Title</value>
+    </labels>
+    <labels>
+        <fullName>GADM_User_Invitation_none</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_User_Invitation_none</shortDescription>
+        <value>-None-</value>
+    </labels>
+    <labels>
+        <fullName>GADM_User_Invitation_user_exists</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_User_Invitation_user_exist</shortDescription>
+        <value>This Email is already registered with us.</value>
+    </labels>
+    <labels>
+        <fullName>GADM_User_Management_actor_not_available</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_User_Management_actor_not_available</shortDescription>
+        <value>Actor can not be assigned by current user.</value>
+    </labels>
+    <labels>
+        <fullName>GADM_User_Management_business_unit_not_available</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_User_Management_business_unit_not_available</shortDescription>
+        <value>Business unit can not be assigned by current user.</value>
+    </labels>
+    <labels>
+        <fullName>GADM_User_Management_cannot_edit_own_assignments</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_User_Management_ cannot_edit_own_assignments</shortDescription>
+        <value>You cannot edit your own assignments.</value>
+    </labels>
+    <labels>
+        <fullName>GADM_User_Management_domain_blocked</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_User_Management_domain_blocked</shortDescription>
+        <value>Actor can not be assigned, user email domain does not mach with allowed email domains for this actor.</value>
+    </labels>
+    <labels>
+        <fullName>GADM_User_Management_gadm_user_domain_blocked</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_User_Management_gadm_user_domain_blocked</shortDescription>
+        <value>User can not be activated for main account as user email domain does not match with allowed email domains for this actor.</value>
+    </labels>
+    <labels>
+        <fullName>GADM_User_Management_no_data</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM User Management no data</shortDescription>
+        <value>No data</value>
+    </labels>
+    <labels>
+        <fullName>GADM_User_Management_no_records</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM User Management no records</shortDescription>
+        <value>No records to display.</value>
+    </labels>
+    <labels>
+        <fullName>GADM_User_Management_role_not_editable</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM_User_Management_role_not_editable</shortDescription>
+        <value>Role can not be edited.</value>
+    </labels>
+    <labels>
+        <fullName>GADM_User_Management_unable_to_save</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM User Management unable to save</shortDescription>
+        <value>Unable to save data!</value>
+    </labels>
+    <labels>
+        <fullName>GADM_account_contact_role_gadm_user</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM account contact role gadm user</shortDescription>
+        <value>User can have only one Account Contact Role with record type = &apos;Functional&apos; and role = &apos;GADM User&apos;!</value>
+    </labels>
+    <labels>
+        <fullName>GADM_account_not_effective</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM account not effective</shortDescription>
+        <value>Account is not effective.</value>
+    </labels>
+    <labels>
+        <fullName>GADM_active_users_reached</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM active users reached</shortDescription>
+        <value>active GADM User role/s already reached!</value>
     </labels>
     <labels>
         <fullName>GeneralPublicLocation</fullName>
@@ -24194,8 +26147,7 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_CalendarDisclaimer</shortDescription>
-        <value>Note: The calendar for this market contains local dpecific dates that are not reflected in this application. 
-Please make sure you download the full pdf version of the Calendar for your market by clicking on the support tab and then selecting calendars under documents on the right hand side of the page.</value>
+        <value>Note: There are Local Specific Dates in the Calendar for this operation. Please download the full version of the Calendar in the Resource Center, Document Tab.</value>
     </labels>
     <labels>
         <fullName>ISSP_CampaignNotification_Confirm</fullName>
@@ -26443,6 +28395,13 @@ Please add below all your company valid email domains, including different ones 
         <protected>false</protected>
         <shortDescription>ISSP_FDS_UnselectAll</shortDescription>
         <value>Unselect All</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_FS_Link</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_FS_Link</shortDescription>
+        <value>http://portal.iata.org/ISSP_FinancialSecInformation?MainNav=FinInfo&amp;subNav=financial_securities&amp;mid=M5S3</value>
     </labels>
     <labels>
         <fullName>ISSP_Fax</fullName>
@@ -35568,6 +37527,13 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <value>- Select the Type of Organization -</value>
     </labels>
     <labels>
+        <fullName>OneId_GADM_Troubleshooting</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId GADM Troubleshooting</shortDescription>
+        <value>Troubleshooting</value>
+    </labels>
+    <labels>
         <fullName>OneId_GSAWarning</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -35864,7 +37830,7 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_Online Help Link</shortDescription>
-        <value>http://extranet.iata.org/registration/pages/loginproblem.aspx</value>
+        <value>http://www.iata.org/customer-portal/Pages/contactus-v2.aspx</value>
     </labels>
     <labels>
         <fullName>OneId_Password</fullName>
@@ -39476,6 +41442,13 @@ title,Title,Name</value>
         <protected>false</protected>
         <shortDescription>csp My Profile Job Title</shortDescription>
         <value>Job Title</value>
+    </labels>
+    <labels>
+        <fullName>csp_Next_Step_Account_Selection</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>csp_Next_Step_Account_Selection</shortDescription>
+        <value>Next Step / Account Selection</value>
     </labels>
     <labels>
         <fullName>csp_NoPortalServiceNameFound</fullName>

@@ -22,9 +22,11 @@ private class ISSP_internal_Case_topic_subtopic_TEST {
         con.AccountId= child.Id;
 		con.Email = 'Test@test11.com';
         insert con;
-        System.debug('con Id: ' + con.Id);
-         User newUser = ISSP_ObjectFactory.createPortalUser(con);
-        System.debug('newUser Id: ' + newUser.Id);
+		Test.startTest();
+        User newUser = ISSP_ObjectFactory.createPortalUser(con);
+		Faq2CaseTest.assignPermissionSet(newUser.id,Faq2CaseTest.fullFAQVisibilityPermissionsetId);
+		Test.stopTest();
+		 
         con.OwnerId = newUser.Id;
         update con;
 
@@ -34,7 +36,7 @@ private class ISSP_internal_Case_topic_subtopic_TEST {
 
 		 System.debug('SOS1 c ' + c);
 
-        Test.startTest();
+        
 		
 		ISSP_FAQ2Case_Record_Type__c cs_rt = new ISSP_FAQ2Case_Record_Type__c();
 		cs_rt.Name =	'CSRT1'; 
@@ -75,7 +77,7 @@ private class ISSP_internal_Case_topic_subtopic_TEST {
 			ctrl.ChangemodeMethod();			
 		}
 
-		Test.stopTest();
+		
 	}
 
 
