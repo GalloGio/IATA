@@ -742,7 +742,9 @@ NOT(CONTAINS($User.Customer_type__c,&quot;Agency&quot;))
 &quot;Currency Center&quot;, $Label.ISSP_CurrencyCenter,
 &quot;Risk Profile and RHC&quot;, IF($User.ANG_Customer_Country_ISO__c = &quot;CN&quot;, $Label.ANG_ISSP_RHC_Information_China, $Label.ANG_ISSP_RHC_Information),
 &quot;ICCS&quot;,&quot;ICCS&quot;,
-Name 
+&quot;IATAN Online Services&quot;, $Label.ISSP_IdCard_US,
+&quot;ID Card Online Platform&quot;, $Label.ISSP_IdCard_NonUS,
+Name
 )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Service</label>

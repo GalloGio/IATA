@@ -5328,6 +5328,10 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <name>IDCard_NoModificationAllowed</name>
     </customLabels>
     <customLabels>
+        <label>IDカードの申請と支払い（新規、更新、代理店の変更）を行い、IATA旅行代理店の特典を得ましょう。</label>
+        <name>IDCard_NoUSServiceDescription</name>
+    </customLabels>
+    <customLabels>
         <label><!-- IDCard No Price Table Found --></label>
         <name>IDCard_No_Price_Table_Found</name>
     </customLabels>
@@ -5616,6 +5620,10 @@ Kindly note that home-based agents are required to coordinate with their colleag
     <customLabels>
         <label><!-- IDCard_TrxNum --></label>
         <name>IDCard_TrxNum</name>
+    </customLabels>
+    <customLabels>
+        <label>（米国のエージェント向け）IDカードのリクエスト、エージェントの登録、年間サービス料の支払い、代理店の再認定など</label>
+        <name>IDCard_USServiceDescription</name>
     </customLabels>
     <customLabels>
         <label><!-- IDCard Update Application --></label>
@@ -14517,6 +14525,14 @@ and
     <customLabels>
         <label>こちらのご変更はあなたのIDカードへ反映されませんのでご注意下さい。IDカードのご変更に関しては、ID Card Platformへログインをして下さい。</label>
         <name>ISSP_IdCard_Name_Warning</name>
+    </customLabels>
+    <customLabels>
+        <label>IDカードオンラインプラットフォーム</label>
+        <name>ISSP_IdCard_NonUS</name>
+    </customLabels>
+    <customLabels>
+        <label>IATANオンラインサービス</label>
+        <name>ISSP_IdCard_US</name>
     </customLabels>
     <customLabels>
         <label>処理中</label>

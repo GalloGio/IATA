@@ -5321,6 +5321,10 @@
         <name>IDCard_NoModificationAllowed</name>
     </customLabels>
     <customLabels>
+        <label>Kimlik Kartınız için başvuruda bulunup ödeme yapın (yeni, yenileme, acente değişikliği) ve IATA seyahat acentesi avantajlarından yararlanın.</label>
+        <name>IDCard_NoUSServiceDescription</name>
+    </customLabels>
+    <customLabels>
         <label><!-- IDCard No Price Table Found --></label>
         <name>IDCard_No_Price_Table_Found</name>
     </customLabels>
@@ -5607,6 +5611,10 @@
     <customLabels>
         <label><!-- IDCard_TrxNum --></label>
         <name>IDCard_TrxNum</name>
+    </customLabels>
+    <customLabels>
+        <label>(ABD Acenteleri için) Kimlik Kartı, Acenteleri kaydetme, Yıllık Hizmet Ücreti ödemesi, Acente Belgelendirme süreci, vb. talepler</label>
+        <name>IDCard_USServiceDescription</name>
     </customLabels>
     <customLabels>
         <label><!-- IDCard Update Application --></label>
@@ -14511,6 +14519,14 @@ Lütfen daha önce hangi ülke için destek aldığınızı doğrulayın:</label
     <customLabels>
         <label>Adınızda yapılacak bir değişiklik ID Card’ınıza yansıtılmayacaktır. ID Card’ınız üzerinde değişiklik yapmak için, lütfen Kimlik Kartı platformuna giriş yapın.</label>
         <name>ISSP_IdCard_Name_Warning</name>
+    </customLabels>
+    <customLabels>
+        <label>Kimlik Kartı Çevrimiçi Platformu</label>
+        <name>ISSP_IdCard_NonUS</name>
+    </customLabels>
+    <customLabels>
+        <label>IATAN Çevrimiçi Hizmetler</label>
+        <name>ISSP_IdCard_US</name>
     </customLabels>
     <customLabels>
         <label>İşlem halinde</label>

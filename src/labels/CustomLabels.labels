@@ -27499,6 +27499,22 @@ this is the tiess topic help</value>
         <value>Please, note that a change to your name will not be reflected on your ID Card. For changing it on ID Card, please, login to ID Card platform.</value>
     </labels>
     <labels>
+        <fullName>ISSP_IdCard_NonUS</fullName>
+        <categories>IATA Passenger Sales Agent,TIDS Agent,Domestic Agent</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_IdCard_NonUS</shortDescription>
+        <value>ID Card Online Platform</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_IdCard_US</fullName>
+        <categories>IATAN Passenger Sales Agent (USA Only),Travel Service Intermediaries-TSI (USA Only),IATA Passenger Sales Agent</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_IdCard_US</shortDescription>
+        <value>IATAN Online Services</value>
+    </labels>
+    <labels>
         <fullName>ISSP_In_Progress</fullName>
         <categories>Portal</categories>
         <language>en_US</language>
