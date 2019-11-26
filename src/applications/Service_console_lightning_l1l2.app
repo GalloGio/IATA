@@ -1057,9 +1057,13 @@
     <tabs>standard-Dashboard</tabs>
     <tabs>standard-OmniSupervisorLightning</tabs>
     <tabs>standard-File</tabs>
+    <tabs>IATA_ISO_City__c</tabs>
     <uiType>Lightning</uiType>
     <utilityBar>Service_console_lightning_UtilityBar</utilityBar>
     <workspaceConfig>
+        <mappings>
+            <tab>IATA_ISO_City__c</tab>
+        </mappings>
         <mappings>
             <fieldName>Cargo_Agency__c</fieldName>
             <tab>standard-Account</tab>

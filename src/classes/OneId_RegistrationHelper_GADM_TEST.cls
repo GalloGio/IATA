@@ -233,7 +233,7 @@ public class OneId_RegistrationHelper_GADM_TEST {
         Test.startTest();
 
 
-        OneId_RegistrationProcessController.registration(acc1, testContact, serviceName, new Map<String, String>{'isPowerUser' =>'true'});
+        OneId_RegistrationProcessController.registration(acc1, testContact, serviceName, new Map<String, String>{'isPowerUser' =>'true'}, false);
 
         Test.stopTest();
 
@@ -250,7 +250,7 @@ public class OneId_RegistrationHelper_GADM_TEST {
         Test.startTest();
 
 
-        OneId_RegistrationProcessController.registration(acc1, testContact, serviceName, new Map<String, String>{'isPowerUser' =>'true'});
+        OneId_RegistrationProcessController.registration(acc1, testContact, serviceName, new Map<String, String>{'isPowerUser' =>'true'}, false);
 
         Test.stopTest();
 

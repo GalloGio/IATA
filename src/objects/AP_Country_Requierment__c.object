@@ -590,6 +590,11 @@
                     <default>false</default>
                     <label>ANG</label>
                 </value>
+                <value>
+                    <fullName>AMD</fullName>
+                    <default>false</default>
+                    <label>AMD</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
         <visibleLines>8</visibleLines>

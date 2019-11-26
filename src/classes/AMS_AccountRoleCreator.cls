@@ -330,8 +330,10 @@ public with sharing class AMS_AccountRoleCreator
         }
 
         //clone the roles for the new BRs
-        for(Id brAcc : accountsToCloneOwnersFromHO)
-            listClonesRoles.addAll(assignOwners(brAcc, oldRolesPerAccount.get(newChildWithParent.get(brAcc))));
+        for(Id brAcc : accountsToCloneOwnersFromHO){
+            List<AMS_Account_Role__c> accRolesList = oldRolesPerAccount.get(newChildWithParent.get(brAcc));
+            listClonesRoles.addAll(assignOwners(brAcc, accRolesList == null ? new List<AMS_Account_Role__c>() : accRolesList));
+        }
         
         //add a termination date to the previous roles
         rolesToUpsert.putAll(updateRolesTerminationDate(rolesToUpsert, oldRolesPerAccount, accountsToChangeOwners, accountToCheckOwners, rolesToCorrect));
