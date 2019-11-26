@@ -170,80 +170,126 @@ export default class PortalSearchResultList extends NavigationMixin(LightningEle
         this.dispatchEvent(selectedEvent);
 
         let searchCases = new Promise((resolve, reject) => {
-            portalGlobalSearch({ filterWrapperAux: JSON.stringify(filteringObjectAux), searchObject: 'Cases' })
-                .then(results => {
-                    if (results && results.records && results.records.length > 0) {
-                        this.caseResults = JSON.parse(JSON.stringify(results.records));
-                    }
-                    let error = false;
-                    if (!error)
-                        resolve(this.caseResults);
-                    else
-                        reject();
-                });
+            let error = false;
+            if (!error)
+                resolve();
+            else
+                reject();
         });
-
         let searchFAQS = new Promise((resolve, reject) => {
-            portalGlobalSearch({ filterWrapperAux: JSON.stringify(filteringObjectAux), searchObject: 'FAQS' })
-                .then(results => {
-                    if (results && results.records && results.records.length > 0) {
-                        this.faqsResults = JSON.parse(JSON.stringify(results.records));
-                    }
-                    let error = false;
-                    if (!error)
-                        resolve(this.faqsResults);
-                    else
-                        reject();
-                });
+            let error = false;
+            if (!error)
+                resolve();
+            else
+                reject();
         });
-
         let searchServices = new Promise((resolve, reject) => {
-            portalGlobalSearch({ filterWrapperAux: JSON.stringify(filteringObjectAux), searchObject: 'Services' })
-                .then(results => {
-                    if (results && results.records && results.records.length > 0) {
-                        this.servicesResults = JSON.parse(JSON.stringify(results.records));
-                    }
-                    let error = false;
-                    if (!error)
-                        resolve(this.servicesResults);
-                    else
-                        reject();
-                });
+            let error = false;
+            if (!error)
+                resolve();
+            else
+                reject();
         });
-
         let searchDocuments = new Promise((resolve, reject) => {
-            portalGlobalSearch({ filterWrapperAux: JSON.stringify(filteringObjectAux), searchObject: 'Documents' })
-                .then(results => {
-                    if (results && results.records && results.records.length > 0) {
-                        this.documentsResults = JSON.parse(JSON.stringify(results.records));
-                    }
-                    let error = false;
-                    if (!error)
-                        resolve(this.documentsResults);
-                    else
-                        reject();
-                });
+            let error = false;
+            if (!error)
+                resolve();
+            else
+                reject();
+        });
+        let searchProfiles = new Promise((resolve, reject) => {
+            let error = false;
+            if (!error)
+                resolve();
+            else
+                reject();
         });
 
-        let searchProfiles = new Promise((resolve, reject) => {
-            portalGlobalSearch({ filterWrapperAux: JSON.stringify(filteringObjectAux), searchObject: 'Profiles' })
-                .then(results => {
-                    if (results && results.recordsString !== '') {
-                        let allProfileResultsUnparsed = [];
-                        let allProfileResultsParsed = [];
-                        allProfileResultsUnparsed = JSON.parse(results.recordsString);
-                        for (let i in allProfileResultsUnparsed) {
-                            allProfileResultsParsed.push(allProfileResultsUnparsed[i]);
+        if (filteringObjectAux.casesComponent.show) {
+            searchCases = new Promise((resolve, reject) => {
+                portalGlobalSearch({ filterWrapperAux: JSON.stringify(filteringObjectAux), searchObject: 'Cases' })
+                    .then(results => {
+                        if (results && results.records && results.records.length > 0) {
+                            this.caseResults = JSON.parse(JSON.stringify(results.records));
                         }
-                        this.profilesResults = allProfileResultsParsed;
-                    }
-                    let error = false;
-                    if (!error)
-                        resolve(this.profilesResults);
-                    else
-                        reject();
-                });
-        });
+                        let error = false;
+                        if (!error)
+                            resolve(this.caseResults);
+                        else
+                            reject();
+                    });
+            });
+        }
+
+        if (filteringObjectAux.faqsComponent.show) {
+            searchFAQS = new Promise((resolve, reject) => {
+                portalGlobalSearch({ filterWrapperAux: JSON.stringify(filteringObjectAux), searchObject: 'FAQS' })
+                    .then(results => {
+                        if (results && results.records && results.records.length > 0) {
+                            this.faqsResults = JSON.parse(JSON.stringify(results.records));
+                        }
+                        let error = false;
+                        if (!error)
+                            resolve(this.faqsResults);
+                        else
+                            reject();
+                    });
+            });
+        }
+
+        if (filteringObjectAux.servicesComponent.show) {
+            searchServices = new Promise((resolve, reject) => {
+                portalGlobalSearch({ filterWrapperAux: JSON.stringify(filteringObjectAux), searchObject: 'Services' })
+                    .then(results => {
+                        if (results && results.records && results.records.length > 0) {
+                            this.servicesResults = JSON.parse(JSON.stringify(results.records));
+                        }
+                        let error = false;
+                        if (!error)
+                            resolve(this.servicesResults);
+                        else
+                            reject();
+                    });
+            });
+        }
+
+        if (filteringObjectAux.documentsComponent.show) {
+            searchDocuments = new Promise((resolve, reject) => {
+                portalGlobalSearch({ filterWrapperAux: JSON.stringify(filteringObjectAux), searchObject: 'Documents' })
+                    .then(results => {
+                        if (results && results.records && results.records.length > 0) {
+                            this.documentsResults = JSON.parse(JSON.stringify(results.records));
+                        }
+                        let error = false;
+                        if (!error)
+                            resolve(this.documentsResults);
+                        else
+                            reject();
+                    });
+            });
+        }
+
+        if (filteringObjectAux.profileComponent.show) {
+            searchProfiles = new Promise((resolve, reject) => {
+                portalGlobalSearch({ filterWrapperAux: JSON.stringify(filteringObjectAux), searchObject: 'Profiles' })
+                    .then(results => {
+                        if (results && results.recordsString && results.recordsString !== '') {
+                            let allProfileResultsUnparsed = [];
+                            let allProfileResultsParsed = [];
+                            allProfileResultsUnparsed = JSON.parse(results.recordsString);
+                            for (let i in allProfileResultsUnparsed) {
+                                allProfileResultsParsed.push(allProfileResultsUnparsed[i]);
+                            }
+                            this.profilesResults = allProfileResultsParsed;
+                        }
+                        let error = false;
+                        if (!error)
+                            resolve(this.profilesResults);
+                        else
+                            reject();
+                    });
+            });
+        }
 
         //Show Spinner, Show Options Panel, Get Live Agent, Scroll window down, Hide Spinner
         Promise.all([
@@ -284,6 +330,7 @@ export default class PortalSearchResultList extends NavigationMixin(LightningEle
         }
 
         let filteringObjectAux = JSON.parse(JSON.stringify(this.filteringObject));
+        filteringObjectAux.faqsComponent.show = true;
 
         for (let i = 0; i < this.filteringObject.numberOfResults; i++) {
 
