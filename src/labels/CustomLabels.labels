@@ -3450,6 +3450,14 @@ Payment required on receipt of this Payment Advice
         <value>You can use your new password to log in.</value>
     </labels>
     <labels>
+        <fullName>CSP_Close</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Close</shortDescription>
+        <value>Close</value>
+    </labels>
+    <labels>
         <fullName>CSP_Community</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -4070,6 +4078,14 @@ Payment required on receipt of this Payment Advice
         <value>Since you have not logged in the last 90 days, we’ve sent you an email with a new password.</value>
     </labels>
     <labels>
+        <fullName>CSP_Go_to_Webstar</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Go to Webstar</shortDescription>
+        <value>Go to Webstar</value>
+    </labels>
+    <labels>
         <fullName>CSP_Grant_User_Access_Title</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -4152,6 +4168,15 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP_IMPORTANT</shortDescription>
         <value>IMPORTANT</value>
+    </labels>
+    <labels>
+		<fullName>CSP_IATAN_Register_Info</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP IATAN Register Info</shortDescription>
+        <value>To create an “IATAN Passenger Sales Agent (US only)” or “Travel Service Intermediaries TSI (US only)” account, you can request the creation of your company account through &lt;a href=&quot;https://webstar.iatan.org/WebStarExtranetWEB/login.jsp?token=void&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Webstar&lt;/a&gt;.&lt;br/&gt;
+Once the registration is finalized in Webstar, you will be able to identify your organization in the IATA Customer Portal.</value>
     </labels>
     <labels>
         <fullName>CSP_Invalid_Email</fullName>
