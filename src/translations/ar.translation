@@ -1997,6 +1997,10 @@
         <name>CSP_Confirmed_Requested_Service_Message</name>
     </customLabels>
     <customLabels>
+        <label>سيؤثر تغيير اسم ملفك الشخصي على صلاحية بطاقة هويتك. يُرجى التواصل مع فريق خدمة العملاء لدينا لتغيير اسم ملفك الشخصي</label>
+        <name>CSP_Contact_Id_Card_Error_Msg</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_Contacts_NoResults_text1 --></label>
         <name>CSP_Contacts_NoResults_text1</name>
     </customLabels>
@@ -2291,6 +2295,30 @@
     <customLabels>
         <label>عنوان البريد الإلكتروني خاطئ</label>
         <name>CSP_Invalid_Email</name>
+    </customLabels>
+    <customLabels>
+        <label>الاسم على بطاقة الهوية</label>
+        <name>CSP_IDCard_Name</name>
+    </customLabels>
+    <customLabels>
+        <label>انقر هنا لرؤية صورة بطاقة الهوية الخاصة بك</label>
+        <name>CSP_IDCard_Photo</name>
+    </customLabels>
+    <customLabels>
+        <label>صورة فوتوغرافية</label>
+        <name>CSP_IDCard_Photo_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>الحالة</label>
+        <name>CSP_IDCard_Status</name>
+    </customLabels>
+    <customLabels>
+        <label>تاريخ الانتهاء</label>
+        <name>CSP_IDCard_Valid_To</name>
+    </customLabels>
+    <customLabels>
+        <label>رقم بطاقة الهوية</label>
+        <name>CSP_IDCard_Ver_Number</name>
     </customLabels>
     <customLabels>
         <label>معلومات حساب الشركة</label>

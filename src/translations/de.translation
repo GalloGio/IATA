@@ -2005,6 +2005,10 @@
         <name>CSP_Contacts_NoResults_text1</name>
     </customLabels>
     <customLabels>
+        <label>Das Ändern Ihres Profilnamens wirkt sich auf die Gültigkeit Ihres Personalausweises aus. Bitte nehmen Sie Kontakt mit unserem Kundenserviceteam auf, um Ihren Profilnamen zu ändern</label>
+        <name>CSP_Contact_Id_Card_Error_Msg</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_Contacts_NoResults_text2 --></label>
         <name>CSP_Contacts_NoResults_text2</name>
     </customLabels>
@@ -2287,6 +2291,30 @@
     <customLabels>
         <label><!-- CSP_IATA_Country --></label>
         <name>CSP_IATA_Country</name>
+    </customLabels>
+    <customLabels>
+        <label>Name auf dem Ausweis</label>
+        <name>CSP_IDCard_Name</name>
+    </customLabels>
+    <customLabels>
+        <label>Klicken Sie hier, um das Foto Ihres Ausweises zu sehen</label>
+        <name>CSP_IDCard_Photo</name>
+    </customLabels>
+    <customLabels>
+        <label>Foto</label>
+        <name>CSP_IDCard_Photo_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP IDCard Status --></label>
+        <name>CSP_IDCard_Status</name>
+    </customLabels>
+    <customLabels>
+        <label>Ablaufdatum (gültig bis)</label>
+        <name>CSP_IDCard_Valid_To</name>
+    </customLabels>
+    <customLabels>
+        <label>VER-Nummer des Ausweises</label>
+        <name>CSP_IDCard_Ver_Number</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_IMPORTANT --></label>

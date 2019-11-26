@@ -3524,6 +3524,14 @@ Payment required on receipt of this Payment Advice
         <value>No Results</value>
     </labels>
     <labels>
+        <fullName>CSP_Contact_Id_Card_Error_Msg</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Contact Id Card Error Msg</shortDescription>
+        <value>Changing your profile name will impact the validity of your ID Card. Please contact our Customer Service Team to change your profile name.</value>
+    </labels>
+    <labels>
         <fullName>CSP_Contacts_NoResults_text2</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -4075,6 +4083,61 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP_Home_WelcomeTitle</shortDescription>
         <value>Welcome [username]</value>
+    </labels>
+    <labels>
+        <fullName>CSP_IDCard_Name</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP IDCard Name</shortDescription>
+        <value>Name on the ID Card</value>
+    </labels>
+    <labels>
+        <fullName>CSP_IDCard_Photo</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP IDCard Photo</shortDescription>
+        <value>Click here to see your ID Card photo</value>
+    </labels>
+    <labels>
+        <fullName>CSP_IDCard_Photo_Title</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP IDCard Photo Title</shortDescription>
+        <value>Photo</value>
+    </labels>
+    <labels>
+        <fullName>CSP_IDCard_Status</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP IDCard Status</shortDescription>
+        <value>ID Card Status</value>
+    </labels>
+    <labels>
+        <fullName>CSP_IDCard_Valid_To</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP IdCard Valid To</shortDescription>
+        <value>ID Card Expiry Date</value>
+    </labels>
+    <labels>
+        <fullName>CSP_IDCard_Ver_Number</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP IDCard Ver Number</shortDescription>
+        <value>ID Card VER Number</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Id_Card</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Id Card</shortDescription>
+        <value>ID Card</value>
     </labels>
     <labels>
         <fullName>CSP_IATA_Country</fullName>
