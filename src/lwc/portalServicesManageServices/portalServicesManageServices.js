@@ -191,7 +191,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     @track showSpinner = false;
 
     @track componentLoading = true;
-
+    @track allLabel = "";
 
     @track isAdmin = false;
     @track serviceName = false;
@@ -238,13 +238,14 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     @track viewServicesFiltersModal = false;
     filterIconUrl = CSP_PortalPath + 'CSPortal/Images/Icons/filter.svg';
     filteredIconUrl = CSP_PortalPath + 'CSPortal/Images/Icons/filtered.svg';
-    selectedCountry = "";
-    selectedCountryValue = '';
-    selectedStatus = "";
-    selectedIataCode = "";
+    @track selectedCountry = "";
+    @track selectedCountryValue = '';
+    @track selectedStatus = "";
+    @track selectedIataCode = "";
     @track searchKey = '';
-    globalResults = [];
+    @track globalResults = [];
     @track optionsCountry = [];
+    @track optionsIATACodes = [];
     @track optionsStatus = [
         { label: this.label.ISSP_Access_Granted, value: "Access Granted" },
         { label: this.label.ISSP_Access_Denied, value: "Access Denied" },
@@ -281,8 +282,8 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                 
                 this.airlineUser = isAirlineUser();
                 getCountryList()
-                    .then(result => {
-                        let myResult = JSON.parse(JSON.stringify(result));
+                    .then(result2 => {
+                        let myResult = JSON.parse(JSON.stringify(result2));
                         let myCountryOptions = [];
                         let auxmyCountryOptions = [];
                         Object.keys(myResult).forEach(function (el) {
@@ -293,6 +294,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                         myCountryOptions = myCountryOptions.concat(auxmyCountryOptions);
 
                         this.optionsCountry = this.getPickWithAllValue(myCountryOptions);
+                        this.allLabel = this.optionsCountry[0].label;
                     });
                 this.optionsStatus = this.getPickWithAllValue(this.optionsStatus);
                 //If Airline user - Country ELSE IATACODE
@@ -605,9 +607,8 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                 //Exit search mode
                 //restore all records already retrieved
                 this.searchMode = false;
-                this.contactList = this.globalResults.slice();
+                this.contactList = this.contactListOg.slice();
                 this.totalNrPages = this.totalNrPagesOg;
-                this.processContacList(this.contactList, 1);
                 this.generatePageList();
                 this.refreshContactPageView(1);
                 this.applyFiltersModal();
@@ -1147,41 +1148,108 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     /*  -- FILTER MODAL -- */
     applyFiltersModal() {
         let resultList = [];
-        let filteredResults = [];
-        let filters = [];
-        if (this.selectedCountry != '' || this.selectedIataCode != '' || this.selectedStatus != '') {
+        let filteredResults = this.contactList.slice();
+
+        if (this.selectedCountry != '' || this.selectedIataCode != '' || this.selectedStatus != '' || this.searchKey != '') {
+            filteredResults = [];
             this.searchMode = true;
-            this.filtered = true;
+
+            if ((this.selectedCountry == '' || this.selectedCountry == this.allLabel) && (this.selectedIataCode == '' || this.selectedIataCode == this.allLabel) && (this.selectedStatus == '' || this.selectedStatus == this.allLabel)){
+                this.filtered = false;
+            } else{ this.filtered = true;}
+
             this.globalResults.forEach(el => {
-                if ((el.serviceRight == this.selectedStatus && this.selectedStatus != '') || (el.country == this.selectedCountry && this.selectedCountry != '') || (el.iataCodeLoc == this.selectedIataCode && this.selectedIataCode != '')) {
-                    filteredResults.push(el);
+
+                if(!this.airlineUser){ //Iata Code and Status
+                    if(this.selectedStatus != '' && this.selectedIataCode != ''){
+                        if ((el.serviceRight == this.selectedStatus || this.selectedStatus == this.allLabel) && (el.iataCodeLoc == this.selectedIataCode || this.selectedIataCode == this.allLabel)){
+                            if(this.searchKeyField(el)){
+                                filteredResults.push(el);
+                            }
+                        }
+                    }
+
+                    if(this.selectedStatus != '' && this.selectedIataCode == ''){
+                        if (el.serviceRight == this.selectedStatus || this.selectedStatus == this.allLabel){
+                            if(this.searchKeyField(el)){
+                                filteredResults.push(el);
+                            }
+                        }
+                    }
+
+                    if(this.selectedIataCode != '' && this.selectedStatus == ''){
+                        if (el.iataCodeLoc == this.selectedIataCode || this.selectedIataCode == this.allLabel){
+                            if(this.searchKeyField(el)){
+                                filteredResults.push(el);
+                            }
+                        }
+                    }
+
+                    if(this.selectedStatus == '' && this.selectedIataCode == ''){
+                        if(this.searchKeyField(el)){
+                            filteredResults.push(el);
+                        }
+                    }
+                }   
+                
+                else{ //Status & Country
+                    if(this.selectedStatus != '' && this.selectedCountry != ''){
+                        if ((el.serviceRight == this.selectedStatus || this.selectedStatus == this.allLabel) && (el.country == this.selectedCountry || this.selectedCountry == this.allLabel)){
+                            if(this.searchKeyField(el)){
+                                filteredResults.push(el);
+                            }
+                        }
+                    }
+
+                    if(this.selectedStatus != '' && this.selectedCountry == ''){
+                        if (el.serviceRight == this.selectedStatus || this.selectedStatus == this.allLabel){
+                            if(this.searchKeyField(el)){
+                                filteredResults.push(el);
+                            }
+                        }
+                    }
+
+                    if(this.selectedCountry != '' && this.selectedStatus == ''){
+                        if (el.country == this.selectedCountry || this.selectedCountry == this.allLabel){
+                            if(this.searchKeyField(el)){
+                                filteredResults.push(el);
+                            }
+                        }
+                    }
+
+                    if(this.selectedStatus == '' && this.selectedCountry == ''){
+                        if(this.searchKeyField(el)){
+                            filteredResults.push(el);
+                        }
+                    }
                 }
+
             });
-        } else {
-            filteredResults = this.globalResults;
-        }
-        if (this.searchKey != '') {
-            filteredResults.forEach(elem => {
-                if (elem.contactName.toLowerCase().search(this.searchKey) != -1 || elem.iataCodeLoc.toLowerCase().search(this.searchKey) != -1 || elem.emailAddress.toLowerCase().search(this.searchKey) != -1) {
-                    filters.push(elem);
-                }
-            });
-        } else {
-            filters = filteredResults;
-        }
-        if((this.selectedCountry==''&&this.selectedIataCode==''&&this.selectedStatus=='')&&(this.searchText=='')){
-            this.filtered=false;
-            this.searchMode=false;
-        }
-        resultList = filters;
+
+        resultList = filteredResults;
         this.contactList = [];
         this.contactList = resultList;
         this.processContacList(resultList, 1);
         this.totalNrPages = Math.ceil(resultList.length / this.PAGE_SIZE);
         this.generatePageList();
 
+        } else {
+            this.contactList = this.globalResults; 
+            this.processContacList(this.contactList, 1);
+            this.totalNrPages = Math.ceil(this.contactList.length / this.PAGE_SIZE);
+            this.generatePageList();
+
+        }
+        
         //close modal
         this.closeServicesFilterModal();
+    }
+
+    searchKeyField(elem) {
+        if (this.searchKey != '') {
+            return (elem.contactName.toLowerCase().search(this.searchKey) != -1 || elem.iataCodeLoc.toLowerCase().search(this.searchKey) != -1 || elem.emailAddress.toLowerCase().search(this.searchKey) != -1);
+        }
+            return true;
     }
 
     getPickWithAllValue(picklist) {
@@ -1190,20 +1258,20 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     }
 
     handleResetFilters() {
-        this.selectedStatus = "";
-        this.selectedCountry = "";
-        this.selectedCountryValue='';
-        this.selectedIataCode = "";
-        this.searchText = "";
-        this.searchKey="";
+        this.selectedStatus = '';
+        this.selectedCountry = '';
+        this.selectedCountryValue = '';
+        this.selectedIataCode = '';
         this.filtered = false;
         this.searchMode = false;
-        this.contactList = this.globalResults;
+        this.contactList = this.globalResults; 
         this.processContacList(this.globalResults, 1);
         this.totalNrPages = Math.ceil(this.globalResults.length / this.PAGE_SIZE);
         this.generatePageList();
         //close modal
-        this.closeServicesFilterModal();
+        this.applyFiltersModal();
+       
+        
     }
 
     handleChangeCountryFilter(event) {
@@ -1214,12 +1282,26 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                 this.selectedCountry = el.label;
             }
         });
-        if (this.selectedCountry == this.labels.CSP_selectReason)
-            this.selectedCountry = '';
+        
+    }
+
+    handleChangeIataCodeFilter(event) {
+        this.selectedIataCode = '';
+        this.selectedIataCodeValue = event.detail.value;
+
+        this.optionsCountry.forEach(el => {
+            if (el.value == this.selectedIataCodeValue) {
+                this.selectedIataCode = el.label;
+            }
+        });
+        
     }
 
     handleChangeStatusFilter(event) {
         this.selectedStatus = event.detail.value;
+        if(this.selectedStatus == this.allLabel){
+            this.selectedStatus = '';
+        }
     }
 
     openServicesFilterModal() {
