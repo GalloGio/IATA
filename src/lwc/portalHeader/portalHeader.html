@@ -76,7 +76,7 @@
                             <!-- home tab -->
                             <div class="slds-col slds-size_2-of-6 slds-text-align_center">
                                 <span onclick={navigateToHomePage}>
-                                    <img src={logoWhiteIcon}>
+                                    <img src={logoWhiteIcon} class="mobileLogoWhite">
                                 </span>
                             </div>
                             
@@ -289,12 +289,10 @@
                                 <div if:true={openSearch} class="openSearch customCardWhite slds-m-horizontal_medium slds-text-body_small"
                                     style={openSearchStyle}>
                                     <div style={displayBodyStyle}>
-                                            <div if:true={userAdmin}>
-                                                <!-- ALL Search TAB-->
-                                                <div>
-                                                    <c-portal-search-top-menu></c-portal-search-top-menu>
-                                                </div>
-                                            </div>
+                                        <!-- ALL Search TAB-->
+                                        <div>
+                                            <c-portal-search-top-menu></c-portal-search-top-menu>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -660,12 +658,10 @@
                             <div if:true={openSearch} class="openSearch customCardWhite slds-m-horizontal_medium"
                                 style={openSearchStyle}>
                                 <div style={displayBodyStyle}>
-                                        <div if:true={userAdmin}>
-                                            <!-- ALL Search TAB-->
-                                            <div>
-                                                <c-portal-search-top-menu></c-portal-search-top-menu>
-                                            </div>
-                                        </div>
+                                    <!-- ALL Search TAB-->
+                                    <div>
+                                        <c-portal-search-top-menu></c-portal-search-top-menu>
+                                    </div>
                                 </div>
                             </div>
                         </div>
