@@ -1277,6 +1277,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 		}
 
 		//deactivate user
+		if(existingConId != null && existingConId != '')
 		futureDeactivateUsers(new Set<String>{existingConId});
 	}
 
