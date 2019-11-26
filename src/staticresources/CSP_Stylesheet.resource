@@ -1628,6 +1628,11 @@ lightning-datatable .slds-th__action {
   letter-spacing: normal;
 }
 
+@media only screen and (max-width: 767px) {
+  .textSize.text-xxxsmall .slds-form-element__control {
+      font-size: 1.2rem;
+  }
+}
 /* End of Profile section overrides*/
 
 .containedButtonWhite {
