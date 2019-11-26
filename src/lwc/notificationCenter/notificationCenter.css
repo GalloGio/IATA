@@ -1,69 +1,69 @@
 .comp {
-    background-color: rgb(255, 255, 255);
+	background-color: rgb(255, 255, 255);
 }
 
 .slds-modal__content {
-    min-height: 350px;
+	min-height: 350px;
 }
 
 .sendButton {
-    position: relative ;
-    top: 100px ;
+	position: relative ;
+	top: 100px ;
 }
 
 .toggleFilterButton {
-    cursor: pointer;
+	cursor: pointer;
 }
 
 .FiltersBox {
-    animation: fadeIn ease 0.5s;
-    -webkit-animation: fadeIn ease 0.5s;
-    -moz-animation: fadeIn ease 0.5s;
-    -o-animation: fadeIn ease 0.5s;
-    -ms-animation: fadeIn ease 0.5s;
-  }  
-  
-  @keyframes fadeIn{
-    0% {
-      opacity:0;
-    }
-    100% {
-      opacity:1;
-    }
-  }
-  
-  @-moz-keyframes fadeIn {
-    0% {
-      opacity:0;
-    }
-    100% {
-      opacity:1;
-    }
-  }
-  
-  @-webkit-keyframes fadeIn {
-    0% {
-      opacity:0;
-    }
-    100% {
-      opacity:1;
-    }
-  }
-  
-  @-o-keyframes fadeIn {
-    0% {
-      opacity:0;
-    }
-    100% {
-      opacity:1;
-    }
-  }
-  
-  @-ms-keyframes fadeIn {
-    0% {
-      opacity:0;
-    }
-    100% {
-      opacity:1;
-    }
-  }
+	animation: fadeIn ease 0.5s;
+	-webkit-animation: fadeIn ease 0.5s;
+	-moz-animation: fadeIn ease 0.5s;
+	-o-animation: fadeIn ease 0.5s;
+	-ms-animation: fadeIn ease 0.5s;
+}
+
+@keyframes fadeIn{
+	0% {
+		opacity:0;
+	}
+	100% {
+		opacity:1;
+	}
+}
+
+@-moz-keyframes fadeIn {
+	0% {
+		opacity:0;
+	}
+	100% {
+		opacity:1;
+	}
+}
+
+@-webkit-keyframes fadeIn {
+	0% {
+		opacity:0;
+	}
+	100% {
+		opacity:1;
+	}
+}
+
+@-o-keyframes fadeIn {
+	0% {
+		opacity:0;
+	}
+	100% {
+		opacity:1;
+	}
+}
+
+@-ms-keyframes fadeIn {
+	0% {
+		opacity:0;
+	}
+	100% {
+		opacity:1;
+	}
+}
