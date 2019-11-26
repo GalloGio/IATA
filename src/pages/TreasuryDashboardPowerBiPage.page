@@ -43,7 +43,7 @@
             settings : {
                 filterPaneEnabled: false,
                 navContentPaneEnabled: false,
-                background: models.BackgroundType.Transparent
+                //background: models.BackgroundType.Transparent
             }
         };
 
