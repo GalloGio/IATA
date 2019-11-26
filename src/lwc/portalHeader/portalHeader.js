@@ -291,11 +291,13 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
                     let accountCategory = results.Contact.Account !== undefined && results.Contact.Account.Category__c !== undefined ? results.Contact.Account.Category__c : '';
                     let accountSector = results.Contact.Account !== undefined && results.Contact.Account.Sector__c !== undefined ? results.Contact.Account.Sector__c : '';
                     let isoCode = results.Contact.ISO_Country__r !== undefined && results.Contact.ISO_Country__r.ISO_Code__c !== undefined ? results.Contact.ISO_Country__r.ISO_Code__c : '';
+                    let jobFunction = results.Contact.Membership_Function__c.replace(/;/g, ',');
                     
                     this.setCookie('userguiding_acc_categ', accountCategory, 1);
                     this.setCookie('userguiding_acc_sector', accountSector, 1);
                     this.setCookie('userguiding_iso-code', isoCode, 1);
                     this.setCookie('userguiding_user-status', userPortalStatus, 1);
+                    this.setCookie('userguiding_job-function', jobFunction, 1);
                 }
             });
         }
