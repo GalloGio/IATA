@@ -150,6 +150,21 @@ public with sharing class AMP_IssuesAndPrioritiesExtension {
       return null;
   }
 
+    @AuraEnabled
+    public static Boolean getHaveAMPIssuesAndPriorities() {
+        List<PermissionSetAssignment> permissions = [
+            SELECT PermissionSet.Name
+            FROM PermissionSetAssignment 
+            WHERE AssigneeId = :UserInfo.getUserId() AND PermissionSet.Name IN ('AMP_Issues_and_Priorities')
+        ];
+
+        if(permissions.isEmpty()) {
+            return false;
+        } else {
+            return (permissions[0].PermissionSet.Name == 'AMP_Issues_and_Priorities' ? true : false);
+        }
+    }
+
   @AuraEnabled
   public static Boolean getCanEdit() {
       Boolean canEdit = true;

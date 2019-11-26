@@ -1,0 +1,56 @@
+<aura:component controller="AWW_AccountHeaderCtrl">
+    <aura:attribute name="accountId" type="Id"/>
+    <aura:attribute name="record" type="Account"/>
+
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
+
+    <div class="slds-page-header slds-box">
+        <div class="slds-grid slds-wrap slds-grid_pull-padded">
+            <div class="slds-col_padded slds-size_1-of-3 slds-m-bottom_medium">
+                <div class="slds-media">
+                    <div class="slds-media__figure">
+                        <img src="/resource/AMP_logo" />
+                    </div>
+                    <div class="slds-media__body">
+                        <p class="slds-text-heading_label">Account</p>
+                        <h1 class="slds-text-heading_small">{!v.record.Name}</h1>  
+                    </div>
+                </div>
+            </div>
+            <div class="slds-col_padded slds-size_1-of-3 slds-m-bottom_medium">
+            </div>
+            <div class="slds-col_padded slds-size_1-of-3 slds-m-bottom_medium">
+                <lightning:button class="slds-size_1-of-2 slds-float_right" label="Back to Classic View" title="Back to Classic View" onclick="{!c.backToClassic}"/>
+            </div>
+            <div class="slds-col_padded slds-size_1-of-7">
+                <p class="slds-text-heading_label">Record Type</p>
+                <ui:outputText value="{!v.record.RecordType.Name}"/>
+            </div>
+            <div class="slds-col_padded slds-size_1-of-7">
+                <p class="slds-text-heading_label">Verified</p>
+                <ui:outputRichText value="{!v.record.Quality__c}"/>  
+            </div>
+            <div class="slds-col_padded slds-size_1-of-7">
+                <p class="slds-text-heading_label">Country</p>
+                <ui:outputText value="{!v.record.IATA_ISO_Country__r.Name}"/>  
+            </div>
+            <div class="slds-col_padded slds-size_1-of-7">
+                <p class="slds-text-heading_label">Sector</p>
+                <ui:outputText value="{!v.record.Sector__c}"/> 
+            </div>
+            <div class="slds-col_padded slds-size_1-of-7">
+                <p class="slds-text-heading_label">Category</p>
+                <ui:outputText value="{!v.record.Category__c}"/>
+            </div>
+            <div class="slds-col_padded slds-size_1-of-7">
+                <p class="slds-text-heading_label">Account Type</p>
+                <ui:outputText value="{!v.record.Account_Type__c}"/>
+            </div>
+            <div class="slds-col_padded slds-size_1-of-7">
+                <p class="slds-text-heading_label">Agency Business Model</p>
+                <ui:outputText value="{!v.record.Agency_Business_Model__c}"/>
+            </div>
+        </div>
+    </div>
+    
+</aura:component>
