@@ -143,7 +143,7 @@ private class AMS_Change_Code_Notification_Contr_Test {
 		
 		IATA_ISO_Country__c isoc = [SELECT Id FROM IATA_ISO_Country__c LIMIT 1];
 	
-		Case oscarCase = [Select Id From Case Where Remittance_Period__c = null Limit 1];
+		Case oscarCase = [SELECT Id FROM Case WHERE Remittance_Period__c = null LIMIT 1];
 
 		Test.startTest();
 
@@ -152,13 +152,14 @@ private class AMS_Change_Code_Notification_Contr_Test {
 			ctrl.setNotificationMessage();
 		
 		Test.stopTest();
+
 	}
 
 	@isTest static void test_Case_notification() {
 	
 		IATA_ISO_Country__c isoc = [SELECT Id FROM IATA_ISO_Country__c LIMIT 1];
 	
-		Case ccase = [Select Id From Case Limit 1];
+		Case ccase = [SELECT Id FROM Case LIMIT 1];
 		
 		Test.startTest();
 
@@ -175,9 +176,11 @@ private class AMS_Change_Code_Notification_Contr_Test {
 
 		IATA_ISO_Country__c isoc = [SELECT Id FROM IATA_ISO_Country__c LIMIT 1];
 	
-		Case ccase = [Select Id From Case LIMIT 1];
+		Case ccase = [SELECT Id FROM Case LIMIT 1];
 		ccase.Remittance_Period__c = '20180604W';
 		update ccase;
+
+		System.assertEquals(ccase.Remittance_Period__c, '20180604W');
 
 		Technical_Logs__c notif1 = new Technical_Logs__c();
 		notif1.Record__c = ccase.Id;
@@ -200,7 +203,7 @@ private class AMS_Change_Code_Notification_Contr_Test {
 
 	@isTest static void test_Amazon_File() {
 	
-		Case ccase2 = [Select Id,Remittance_Period__c, AccountId  From Case LIMIT 1];
+		Case ccase2 = [SELECT Id,Remittance_Period__c, AccountId  FROM Case LIMIT 1];
 		ccase2.Remittance_Period__c = '20180604W';
 		update ccase2;
 		
@@ -209,7 +212,9 @@ private class AMS_Change_Code_Notification_Contr_Test {
 			amazonFile.Account__c = ccase2.AccountId;
 			amazonFile.Full_Name_Unique__c = 'cristianaFabio_test';
 		insert amazonFile;
-			
+		
+		System.assertEquals(ccase2.Remittance_Period__c, '20180604W');
+		
 		Test.startTest();
 					
 			ApexPages.StandardController stdController = new ApexPages.StandardController(ccase2);
@@ -224,7 +229,7 @@ private class AMS_Change_Code_Notification_Contr_Test {
 	
 	@isTest static void test_Check_Logs() {
 		 
-		Case ccase2 = [Select Id,Remittance_Period__c, AccountId  From Case LIMIT 1];
+		Case ccase2 = [SELECT Id,Remittance_Period__c, AccountId  FROM Case LIMIT 1];
 		ccase2.Remittance_Period__c = '20180604W';
 		update ccase2;
 

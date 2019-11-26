@@ -25,7 +25,6 @@ public class AmazonRestTest {
 		// AmazonRest.getFile(Filename,AmazonCredentials.getCredentials('IFAP'));
 		AmazonRest.make_sig('',AmazonCredentials.getCredentials('IFAP'));
 		AmazonRest.genPublicExpiringAWSLink('teste_File', AmazonCredentials.getCredentials('IFAP'), 10 );
-		//AmazonRest.copyFile(AmazonCredentials sourceCredentials, String sourceFilename, AmazonCredentials destCredentials, string destFilename)
 	}
 
 	static testMethod void Exception_listBucketTest(){
@@ -113,9 +112,9 @@ public class AmazonRestTest {
 
 	static testMethod void copyTest() {
 
-		CaseChildHelper.noValidationsOnTrgCAseIFAP = true; //later I switch it to false to fully emulate production envinroment
+		CaseChildHelper.noValidationsOnTrgCAseIFAP = true;
 
-		createCredentials('IFAP');//GenericAttach
+		createCredentials('IFAP');
 
 		String sourceFilename = 'IFAP/afile';
 		String destFilename = 'IFAP/dest';
@@ -132,7 +131,7 @@ public class AmazonRestTest {
 
 	Static testMethod void deleteFilesTest(){
 
-		CaseChildHelper.noValidationsOnTrgCAseIFAP = true; // later I switch it to false to fully emulate production envinroment
+		CaseChildHelper.noValidationsOnTrgCAseIFAP = true;
 
 		createCredentials('IFAP');
 

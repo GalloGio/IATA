@@ -23,9 +23,16 @@
 		System.currentPageReference().getParameters().put('startUrl', 'ISSP');
 		CommunitiesLandingController controller = new CommunitiesLandingController();
 		controller.forwardToStartPage();
-		
-		System.currentPageReference().getParameters().put('startUrl', null);
+
+		System.currentPageReference().getParameters().put('startUrl', 'ISSP');
 		controller.forwardToStartPage();
-	  }
+
+		PageReference pRef = controller.forwardToStartPage();
+		string startUrl = ApexPages.currentPage().getParameters().get('startUrl');
+		pRef.getParameters().get('startUrl');
+	
+		System.assertEquals(startUrl, 'ISSP');
+
+	}
 
 }
