@@ -1394,6 +1394,10 @@ global without sharing class ISSP_APProcess {
         if (this.hqaccount.ICH_Member__c) {
             return new list<String>();
         }
+        //ICH not yet available for Minor database changes
+        if (this.strChangeType=='Minor database changes') {
+            return new list<String>();
+        }
         //if sector is airline then prefix code and designator are mandatory
         if (this.hqaccount.Sector__c=='Airline' && (String.IsEmpty(this.hqaccount.Airline_Prefix__c) || String.IsEmpty(this.hqaccount.Airline_designator__c))) {
             return new list<String>();
