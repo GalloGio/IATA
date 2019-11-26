@@ -48,11 +48,6 @@ public without sharing class portalProfileCustomBoxCtrl {
     }
 
     @AuraEnabled
-    public static List<Portal_Applications__c> searchServices(){
-        return [SELECT Id, Application_icon__c, ServiceName__c FROM Portal_Applications__c WHERE Cannot_be_managed_by_portal_admin__c = false];
-    }
-
-    @AuraEnabled
     public static Boolean createPortalApplicationRigth(Id contactId, List<Id> servicesIds){
         List<Portal_Application_Right__c> rigths = new List<Portal_Application_Right__c>();
         for(Id service : servicesIds){  

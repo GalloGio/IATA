@@ -5,7 +5,7 @@ import getPickListValues from '@salesforce/apex/CSP_Utils.getPickListValues';
 import createUserForContact from '@salesforce/apex/ISSP_PortalUserStatusChange.preformActionNewPortal';
 import getAccounts from '@salesforce/apex/portalProfileCustomBoxCtrl.getAccounts';
 import updateUserStatus from '@salesforce/apex/portalProfileCustomBoxCtrl.updateUserStatus';
-import searchServices from '@salesforce/apex/portalProfileCustomBoxCtrl.searchServices';
+import searchServices from '@salesforce/apex/PortalServicesCtrl.getAvailableServicesForNewContact';
 import createPortalApplicationRigth from '@salesforce/apex/portalProfileCustomBoxCtrl.createPortalApplicationRigth';
 
 import New_Contact_Profile from '@salesforce/label/c.CSP_cpcc_New_Contact_Profile';
@@ -26,6 +26,7 @@ import CSP_Error_Message_Mandatory_Fields_Contact from '@salesforce/label/c.CSP_
 import Service_Access from '@salesforce/label/c.CSP_Service_Access';
 import Assign_Service_Access from '@salesforce/label/c.CSP_Assign_New_Service';
 import Search from '@salesforce/label/c.Placeholder_Search';
+import NoResults from '@salesforce/label/c.CSP_NoSearchResults';
 
 
 
@@ -92,7 +93,8 @@ export default class PortalProfileCustomBox extends LightningElement {
         CSP_Error_Message_Mandatory_Fields_Contact,
         Service_Access,
         Assign_Service_Access,
-        Search
+        Search,
+        NoResults
     };
 
     get labels() {
@@ -101,6 +103,10 @@ export default class PortalProfileCustomBox extends LightningElement {
 
     set labels(value) {
         this._labels = value;
+    }
+
+    get placeholder(){
+        return this.services.length > 0 ? this.labels.Search : this.labels.NoResults;
     }
 
     @track numberHasError = false;

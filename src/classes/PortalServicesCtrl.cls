@@ -267,7 +267,7 @@ public static List<ServiceWrapper> getAllServices(){
 
 	List<String> lstPortalApplicationRightStatus = new List<String> {PortalServicesCtrl.PORTAL_ACCESS_GRANTED, PortalServicesCtrl.PORTAL_ACCESS_REQUESTED, PortalServicesCtrl.PORTAL_ACCESS_DENIED};
 
-	//get portal applications for this user by enforcing custom setting for services list view
+	//get portal applications for this user by enforcing custom setting for services list view and by services custom metadata
 	List<Portal_Applications__c> lstPortalApplications = PortalServicesCtrl.getPortalApplications();
 
 	//iterate over the returned portal apps and create a map of services
@@ -276,7 +276,7 @@ public static List<ServiceWrapper> getAllServices(){
 		mapServiceWrapper.put(portalAppAux.Id, new ServiceWrapper(portalAppAux, isAdmin, iepStatus, isAuthorisedSignatory, ''));
 	}
 
-	//get the portal application rights for this user
+	//get the portal application rights for this user (all: granted, request and denied)
 	PortalApplicationRight_Sel portalApplicationRightSelector = new PortalApplicationRight_Sel();
 	List<Portal_Application_Right__c> userGrantedList = portalApplicationRightSelector.getPortalApplicationRightsByContactIdAndRightsList(contactId, lstPortalApplicationRightStatus);
 
@@ -1340,6 +1340,19 @@ public static Boolean grantAccess(string contactId,string serviceId,string reaso
 		}else{
 			return 'Failure';
 		}
+	}
+
+	//This method is used when a portal admin is creating a new contact in the portal
+	//It should retun all the services that he can assign to the contact he is creating
+	@AuraEnabled(cacheable=true)
+	public static List<Portal_Applications__c> getAvailableServicesForNewContact(){
+		List<Portal_Applications__c> services = getPortalApplications();
+		for(Portal_Applications__c service : services){
+			if(service.Cannot_be_managed_by_portal_admin__c){
+				services.remove(services.indexOf(service));
+			}
+		}
+		return services;
 	}
 
 }

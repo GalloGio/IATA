@@ -141,7 +141,7 @@
                                 <c-portal-search-lookup-component onsearch={handleServiceSearch}
                                     item-name="servicesearch" data-id="servicesearch" hide-icon=true is-multi-entry 
                                     onservicesearch={showServiceResults}
-                                    placeholder={labels.Search} onselectionchange={addNewServiceButtonClick}>
+                                    placeholder={placeholder} onselectionchange={addNewServiceButtonClick}>
                                 </c-portal-search-lookup-component>
                                 <div class="slds-m-top_large slds-scrollable_y recipients-box">
                                     <template for:each={lstServices} for:item="service">
