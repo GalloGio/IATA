@@ -165,7 +165,7 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>NewAddress.Country__c</assignToReference>
+            <assignToReference>NewAddress.IATA_ISO_Country__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>BusinessCountry</elementReference>
@@ -207,7 +207,7 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>NewAddress.Po_Box__c</assignToReference>
+            <assignToReference>NewAddress.PO_Box__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>BusinessPoBox</elementReference>
@@ -230,7 +230,7 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>NewAddress.Country__c</assignToReference>
+            <assignToReference>NewAddress.IATA_ISO_Country__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>BusinessCountry</elementReference>
@@ -272,7 +272,7 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>NewAddress.Po_Box__c</assignToReference>
+            <assignToReference>NewAddress.PO_Box__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>BusinessPoBox</elementReference>
@@ -295,7 +295,7 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>NewAddress.Country__c</assignToReference>
+            <assignToReference>NewAddress.IATA_ISO_Country__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>BusinessCountry</elementReference>
@@ -337,7 +337,7 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>NewAddress.Po_Box__c</assignToReference>
+            <assignToReference>NewAddress.PO_Box__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>BusinessPoBox</elementReference>
@@ -376,7 +376,7 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>ExistingAddress.Country__c</assignToReference>
+            <assignToReference>ExistingAddress.IATA_ISO_Country__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>BusinessCountry</elementReference>
@@ -411,7 +411,7 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>ExistingAddress.Po_Box__c</assignToReference>
+            <assignToReference>ExistingAddress.PO_Box__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>BusinessPoBox</elementReference>
@@ -434,7 +434,7 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>ExistingAddress.Country__c</assignToReference>
+            <assignToReference>ExistingAddress.IATA_ISO_Country__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>BusinessCountry</elementReference>
@@ -469,7 +469,7 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>ExistingAddress.Po_Box__c</assignToReference>
+            <assignToReference>ExistingAddress.PO_Box__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>BusinessPoBox</elementReference>
@@ -492,7 +492,7 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>ExistingAddress.Country__c</assignToReference>
+            <assignToReference>ExistingAddress.IATA_ISO_Country__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>BusinessCountry</elementReference>
@@ -527,7 +527,7 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>ExistingAddress.Po_Box__c</assignToReference>
+            <assignToReference>ExistingAddress.PO_Box__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>BusinessPoBox</elementReference>
@@ -550,7 +550,7 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>ExistingAddress.Country__c</assignToReference>
+            <assignToReference>ExistingAddress.IATA_ISO_Country__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>BusinessCountry</elementReference>
@@ -585,7 +585,7 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>ExistingAddress.Po_Box__c</assignToReference>
+            <assignToReference>ExistingAddress.PO_Box__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>BusinessPoBox</elementReference>
@@ -608,7 +608,7 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>ExistingAddress.Country__c</assignToReference>
+            <assignToReference>ExistingAddress.IATA_ISO_Country__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>BusinessCountry</elementReference>
@@ -643,7 +643,7 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>ExistingAddress.Po_Box__c</assignToReference>
+            <assignToReference>ExistingAddress.PO_Box__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>BusinessPoBox</elementReference>
@@ -1132,7 +1132,7 @@
         <object>Address__c</object>
         <outputReference>CollectionExistingNonBusinessAddress</outputReference>
         <queriedFields>Id</queriedFields>
-        <queriedFields>Country__c</queriedFields>
+        <queriedFields>IATA_ISO_Country__c</queriedFields>
     </recordLookups>
     <recordLookups>
         <name>GetAllExistingNonBusinessAddress_0</name>
@@ -1160,7 +1160,7 @@
         <object>Address__c</object>
         <outputReference>CollectionExistingNonBusinessAddress</outputReference>
         <queriedFields>Id</queriedFields>
-        <queriedFields>Country__c</queriedFields>
+        <queriedFields>IATA_ISO_Country__c</queriedFields>
     </recordLookups>
     <recordLookups>
         <name>GetExistingAddressRole</name>
@@ -1228,7 +1228,7 @@
         <object>Address__c</object>
         <outputReference>ExistingAddress</outputReference>
         <queriedFields>Id</queriedFields>
-        <queriedFields>Country__c</queriedFields>
+        <queriedFields>IATA_ISO_Country__c</queriedFields>
         <queriedFields>Street__c</queriedFields>
         <queriedFields>Postal_Code__c</queriedFields>
         <queriedFields>Geo_Coordinates__Latitude__s</queriedFields>
@@ -1264,7 +1264,7 @@
         <object>Address__c</object>
         <outputReference>ExistingAddress</outputReference>
         <queriedFields>Id</queriedFields>
-        <queriedFields>Country__c</queriedFields>
+        <queriedFields>IATA_ISO_Country__c</queriedFields>
         <queriedFields>Street__c</queriedFields>
         <queriedFields>Postal_Code__c</queriedFields>
         <queriedFields>Geo_Coordinates__Latitude__s</queriedFields>
@@ -1300,7 +1300,7 @@
         <object>Address__c</object>
         <outputReference>ExistingAddress</outputReference>
         <queriedFields>Id</queriedFields>
-        <queriedFields>Country__c</queriedFields>
+        <queriedFields>IATA_ISO_Country__c</queriedFields>
         <queriedFields>Street__c</queriedFields>
         <queriedFields>Postal_Code__c</queriedFields>
         <queriedFields>Geo_Coordinates__Latitude__s</queriedFields>

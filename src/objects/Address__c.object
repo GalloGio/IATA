@@ -39,6 +39,7 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
+    <description>Transversal Object used to store data of different types of addresses.</description>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
@@ -70,18 +71,6 @@
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>Citylookup__c</fullName>
-        <deleteConstraint>SetNull</deleteConstraint>
-        <externalId>false</externalId>
-        <label>City lookup</label>
-        <referenceTo>IATA_ISO_City__c</referenceTo>
-        <relationshipLabel>Addresses</relationshipLabel>
-        <relationshipName>Addresses</relationshipName>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Lookup</type>
     </fields>
     <fields>
         <fullName>Contact__c</fullName>
@@ -141,9 +130,11 @@
         <type>Summary</type>
     </fields>
     <fields>
-        <fullName>Country__c</fullName>
-        <deleteConstraint>SetNull</deleteConstraint>
+        <fullName>IATA_ISO_Country__c</fullName>
+        <deleteConstraint>Restrict</deleteConstraint>
+        <description>Populated by a workflow rule when the Country Reference is changed.</description>
         <externalId>false</externalId>
+        <inlineHelpText>Populated by a workflow rule when the Country Reference is changed.</inlineHelpText>
         <label>Country</label>
         <referenceTo>IATA_ISO_Country__c</referenceTo>
         <relationshipLabel>Addresses</relationshipLabel>
@@ -171,8 +162,10 @@
         <type>Checkbox</type>
     </fields>
     <fields>
-        <fullName>Po_Box__c</fullName>
+        <fullName>PO_Box__c</fullName>
+        <description>check if address is PO Box</description>
         <externalId>false</externalId>
+        <inlineHelpText>check if address is PO Box</inlineHelpText>
         <label>PO Box</label>
         <length>255</length>
         <required>false</required>
@@ -201,18 +194,6 @@
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>Statelookup__c</fullName>
-        <deleteConstraint>SetNull</deleteConstraint>
-        <externalId>false</externalId>
-        <label>Statelookup</label>
-        <referenceTo>IATA_ISO_State__c</referenceTo>
-        <relationshipLabel>Addresses</relationshipLabel>
-        <relationshipName>Addresses</relationshipName>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Lookup</type>
-    </fields>
-    <fields>
         <fullName>Street__c</fullName>
         <externalId>false</externalId>
         <label>Street</label>
@@ -238,8 +219,9 @@
         <label>All</label>
     </listViews>
     <nameField>
-        <displayFormat>Add-{0000000}</displayFormat>
-        <label>Address Name</label>
+        <displayFormat>Address-{00000000}</displayFormat>
+        <label>Address Number</label>
+        <trackHistory>false</trackHistory>
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Addresses</pluralLabel>
@@ -277,7 +259,7 @@
     or(ISCHANGED( Street__c),
        ISCHANGED( Postal_Code__c ),
        ISCHANGED( City_Name__c ),
-       ISCHANGED( Country__c ),
+       ISCHANGED( IATA_ISO_Country__c ),
        ISCHANGED( State_Name__c ),
        ISCHANGED( Geo_Coordinates__Latitude__s ),
        ISCHANGED( Geo_Coordinates__Longitude__s )
@@ -310,7 +292,7 @@
         <errorConditionFormula>AND(
  Is_Business_Address__c =false,
 NOT(ISBLANK(Street__c)),
-NOT(ISBLANK(Po_Box__c))
+NOT(ISBLANK(PO_Box__c))
 )</errorConditionFormula>
         <errorMessage>You can not fill Street and PO Number fields at the same time</errorMessage>
     </validationRules>
