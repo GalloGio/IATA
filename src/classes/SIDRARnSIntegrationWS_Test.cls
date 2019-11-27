@@ -625,16 +625,20 @@ private class SIDRARnSIntegrationWS_Test {
 
         Financial_Security__c fs1 = new Financial_Security__c(Security_Type__c = 'Bank Guarantee', Unlimited_Security__c = true,Reception_Case__c = c.id,
                                                               Reasonforrequest__c = 'Previous Security Update',Reception_Date__c = myDate, Account__c = acc1.id,
-                                                              Region__c = 'Europe', Amount__c = 1000, CurrencyIsoCode = 'EUR', Financial_Institution__c = fi.id);
+                                                              Region__c = 'Europe', Amount__c = 1000, CurrencyIsoCode = 'EUR', Financial_Institution__c = fi.id,
+                                                              Financial_Security_Validation_Case__c=c.Id);
         Financial_Security__c fs2 = new Financial_Security__c(Security_Type__c = 'Bank Guarantee', Unlimited_Security__c = true,Reception_Case__c = c.id,
                                                               Reasonforrequest__c = 'Previous Security Update',Reception_Date__c = myDate, Account__c = acc1.id,
-                                                              Region__c = 'Europe', Amount__c = 1000, CurrencyIsoCode = 'USD', Financial_Institution__c = fi.id);
+                                                              Region__c = 'Europe', Amount__c = 1000, CurrencyIsoCode = 'USD', Financial_Institution__c = fi.id,
+                                                              Financial_Security_Validation_Case__c=c.Id);
         Financial_Security__c fs3 = new Financial_Security__c(Security_Type__c = 'Bank Guarantee', Unlimited_Security__c = true,Reception_Case__c = c.id,
                                                               Reasonforrequest__c = 'Previous Security Update',Reception_Date__c = myDate, Account__c = acc2.id,
-                                                              Region__c = 'Europe', Amount__c = 1000, CurrencyIsoCode = 'EUR', Financial_Institution__c = fi.id);
+                                                              Region__c = 'Europe', Amount__c = 1000, CurrencyIsoCode = 'EUR', Financial_Institution__c = fi.id,
+                                                              Financial_Security_Validation_Case__c=c.Id);
         Financial_Security__c fs4 = new Financial_Security__c(Security_Type__c = 'Bank Guarantee', Unlimited_Security__c = true,Reception_Case__c = c.id,
                                                               Reasonforrequest__c = 'Previous Security Update',Reception_Date__c = myDate, Account__c = acc2.id,
-                                                              Region__c = 'Europe', Amount__c = 1000, CurrencyIsoCode = 'USD', Financial_Institution__c = fi.id);
+                                                              Region__c = 'Europe', Amount__c = 1000, CurrencyIsoCode = 'USD', Financial_Institution__c = fi.id,
+                                                              Financial_Security_Validation_Case__c=c.Id);
         insert fs1;
         insert fs2;
         insert fs3;

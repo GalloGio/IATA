@@ -1,0 +1,9 @@
+.stickyNav{
+    position:sticky;
+    top:5rem;
+}
+
+.adminContactsTable {
+    max-height: 330px;
+    display: flex;
+}

@@ -474,7 +474,7 @@ public class AMS_OscarCase_RiskMgmt {
         // added new field to change code Calculate_BG_to_HO__c , and if is true and is Top Parent we will put the financial security on new the new field (Financial_Security__c) of the Agency Applied Change Code
         AACC.Financial_Security__c = (cc.Calculate_BG_to_HO__c && isHO && mapFinancialSecurity.containsKey(AccountId)) ? GenerateFinancialSecurity(mapFinancialSecurity.get(AccountId)) : '';
 		AACC.Outstanding_Amount__c = (cc.Calculate_Outstanding_Amount__c && cse.Outstanding_Amount__c != null) ? string.valueOf(cse.Outstanding_Amount__c) : '';
-		AACC.Irregularity_Sequence__c = (cc.Generate_Irregularity_Sequence__c && isHO && !mapIRRS.get(AccountId).isEmpty()) ? GenerateIrregularitySequence(mapIRRS.get(AccountId),cse) : '';
+		AACC.Irregularity_Sequence__c = (cc.Generate_Irregularity_Sequence__c && isHO && mapIRRS.get(AccountId) != null && !mapIRRS.get(AccountId).isEmpty()) ? GenerateIrregularitySequence(mapIRRS.get(AccountId),cse) : '';
 		AACC.End_of_Grace_Period_Date__c = (cc.Calculate_End_Grace_Period_Date__c && cse.End_of_Grace_Period_Date__c != null) ? GenerateDateForBulletin(cse.End_of_Grace_Period_Date__c) : '';
 		AACC.Termination_Date__c = (cc.Calculate_Termination_Date__c && cse.Termination_date__c != null) ? GenerateDateForBulletin(cse.Termination_date__c) : '';
 		AACC.Forms_of_Payment__c = AMS_ChangeCodesHelper.generateFOPString(fOPs, cse.Account.ANG_IsNewGenAgency__c, cc.Change_Code__c);
@@ -749,9 +749,10 @@ public class AMS_OscarCase_RiskMgmt {
 
 		for(Id acctId : setAccntToClear){
 			for(Agency_applied_change_code__c cc: mapAccountsWithCCs.get(acctId).Agencies_Applied_Change_codes__r){
-				if(cc.RecordType.DeveloperName == 'Irregularities' && !cc.Irregularities_Expired__c)
+				if(cc.RecordType.DeveloperName == 'Irregularities' && !cc.Irregularities_Expired__c){
 					cc.Irregularities_Expired__c = true;
 					irrsToExp.put(cc.Id, cc);
+				}
 			}
 		}
 	}
