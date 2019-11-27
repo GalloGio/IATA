@@ -293,6 +293,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         this.totalNrRecords = 0;
         this.nrLoadedRecs = 0;     //nr of loaded records
         this.currentPageNumber = 1;
+		this.selectedRecords = [];
 
         this.getServiceDetailsJS();
     }
