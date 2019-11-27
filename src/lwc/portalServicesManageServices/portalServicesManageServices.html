@@ -141,7 +141,7 @@
                                                     <div class="bottomLightGrayBorder slds-m-around_small inputFilter" style="display: flex;">
                                                             <img src={searchIconUrl} height="24" width="24" />
                                                             <lightning-input name="newRecipientTextInput" placeholder={label.searchContactPlaceholder}
-                                                                class="hideInputLabel borderlessInput grayInputPlaceholder"
+                                                                class="hideInputLabel borderlessInput grayInputPlaceholder fullWidth"
                                                             value={searchText} onchange={searchRecord}>
                                                             </lightning-input>
                                                     </div>
@@ -161,7 +161,7 @@
                                             class="serviceContactList"> 
                                         </lightning-datatable>
                                         <!-- PAGINATION -->
-                                        <!-- <c-portal-paginator pagination-object-parent={paginationObject} onselectedpage={handleSelectedPage}></c-portal-paginator> -->
+                                        
                                         <c-paginator
                                                 page-number={currentPageNumber}
                                                 page-size={PAGE_SIZE}
@@ -375,53 +375,41 @@
     </div>
 
     <!-- FILTER MODAL -->
-    <div if:true={viewServicesFiltersModal}>
-        <section aria-modal="true" class="slds-modal slds-fade-in-open" style="z-index: 10000;">
-            <div class="modal">
-                <div class="customPopupInteriorHalfScreenCentered">
-                    <!-- Popup Header -->
-                    <div class="slds-p-horizontal_large slds-p-vertical_medium headerTitle">
-                            <span class="modalTitle">{label.CSP_Filter}</span>
-                            <span class="slds-float_right slds-m-horizontal_x-small close-mark" onclick={closeServicesFilterModal}>
-                                <lightning-icon icon-name="utility:close" size="x-small" class="cursorPointer"
-                                    onclick={closeServicesFilterModal}></lightning-icon>
-                            </span>
+    <div if:true={viewServicesFiltersModal} >
+        <c-portal-popup-container size="half">
+            <span slot="modalHeader">
+                <span class="modalTitle">{label.CSP_Filter}</span>
+                <span class="slds-float_right slds-m-horizontal_x-small close-mark" onclick={closeServicesFilterModal}>
+                    <lightning-icon icon-name="utility:close" size="x-small" class="cursorPointer"
+                        onclick={closeServicesFilterModal}></lightning-icon>
+                </span>
+            </span>
+
+            <span slot="modalBody">
+                <div class="slds-grid slds-wrap slds-gutters_medium slds-grid--vertical-stretch">
+                    <div class="slds-p-vertical_xx-small slds-col slds-size_1-of-1" if:true={airlineUser}>
+                        <lightning-combobox name="countryComboBox" label={label.CSP_Search_Case_Country} value={selectedCountryValue} options={optionsCountry} style="margin-bottom:5px;" onchange={handleChangeCountryFilter}></lightning-combobox>
                     </div>
-                    <div class="customWhiteBackground slds-p-around_small">
-                            <lightning-layout multiple-rows class="slds-p-horizontal_medium" pull-to-boundary="medium" horizontal-align="spread">
-                                <div class="slds-col slds-size_1-of-1 slds-p-vertical_medium" if:true={airlineUser}>
-                            <lightning-layout-item class="slds-p-around_xx-small" size="12" flexibility="grow">
-                                <lightning-combobox name="countryComboBox" label={label.CSP_Search_Case_Country} value={selectedCountryValue} options={optionsCountry} style="margin-bottom:5px;" onchange={handleChangeCountryFilter}></lightning-combobox>
-                            </lightning-layout-item>
-                        </div>
-                        <div class="slds-col slds-size_1-of-1 slds-p-vertical_medium" if:false={airlineUser}>
-                            <lightning-layout-item class="slds-p-around_xx-small" size="12" flexibility="grow">
-                                <lightning-combobox name="iataCodeComboBox" label={label.ISSP_IATA_Location_Code} style="margin-bottom:5px;" onchange={handleChangeIataCodeFilter}></lightning-combobox>
-                            </lightning-layout-item>
-                        </div>
-                        <div class="slds-col slds-size_1-of-1 slds-p-vertical_medium">
-                                <lightning-layout-item class="slds-p-around_xx-small" size="12" flexibility="grow">
-                                        <lightning-combobox name="statusComboBox" label={label.Status} placeholder=" " value={selectedStatus} options={optionsStatus} style="margin-bottom:5px;" onchange={handleChangeStatusFilter}></lightning-combobox>
-                                </lightning-layout-item>
-                        </div>
-                            </lightning-layout>
-                            <!-- BUTTON -->
-                            <div class="slds-align_absolute-center slds-p-around_large slds-grid slds-wrap topLightGrayBorder" style="text-align: center;">
-                                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
-                                    <lightning-button variant="base" label={label.CSP_RemoveAllFilters}
-                                        onclick={handleResetFilters} class="slds-p-right_small blueCustomButtonLink">
-                                    </lightning-button>
-                                </div>
-                                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
-                                    <lightning-button variant="brand" label={label.CSP_Apply}
-                                        onclick={applyFiltersModal} class="slds-m-right_medium containedButton fullWidth">
-                                    </lightning-button>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="slds-p-vertical_xx-small slds-col slds-size_1-of-1" if:false={airlineUser}>
+                        <lightning-combobox name="iataCodeComboBox" label={label.ISSP_IATA_Location_Code} style="margin-bottom:5px;" onchange={handleChangeIataCodeFilter}></lightning-combobox>
+                    </div>
+                    <div class="slds-p-vertical_xx-small slds-col slds-size_1-of-1">
+                        <lightning-combobox name="statusComboBox" label={label.Status} placeholder=" " value={selectedStatus} options={optionsStatus} style="margin-bottom:5px;" onchange={handleChangeStatusFilter}></lightning-combobox>
+                    </div>
                 </div>
-            </div>
-        </section>
+            </span>
+
+            <span slot="modalFooter">
+                <div class="slds-grid slds-wrap slds-gutters_medium slds-grid--vertical-stretch">
+                    <div class="slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2">    
+                        <lightning-button class="baseButton newLinkButton buttonMinHeightMedium text-xsmall fullWidth" label={label.CSP_RemoveAllFilters} variant="neutral" onclick={handleResetFilters}></lightning-button>
+                    </div>
+                    <div class="slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2">
+                        <lightning-button class="baseButton newContainedButton buttonMinHeightMedium text-xsmall fullWidth" label={label.CSP_Apply} variant="neutral" onclick={applyFiltersModal}></lightning-button>
+                    </div>
+                </div>
+            </span>
+        </c-portal-popup-container>
     </div>
 
     <!-- REQUEST/ENABLE NEW SERVICE MODAL -->
