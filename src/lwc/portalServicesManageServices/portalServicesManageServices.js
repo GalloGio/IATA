@@ -378,6 +378,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         this.selectedStatus = '';
         this.selectedCountry = '';
         this.selectedIataCode = '';
+	this.selectedRecords = [];
 
         this.clearURL();
 
