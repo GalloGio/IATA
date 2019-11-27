@@ -54,6 +54,30 @@
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>ReadWrite</externalSharingModel>
     <fields>
+        <fullName>AMS_Financial_Review_First_Quarter__c</fullName>
+        <externalId>false</externalId>
+        <label>Financial Review First Quarter</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>AMS_Financial_Review_Second_Quarter__c</fullName>
+        <externalId>false</externalId>
+        <label>Financial Review Second Quarter</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>AMS_Financial_Review_Third_Quarter__c</fullName>
+        <externalId>false</externalId>
+        <label>Financial Review Third Quarter</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
         <fullName>AMS_IATAcode__c</fullName>
         <externalId>false</externalId>
         <formula>Account__r.IATACode__c</formula>
@@ -63,6 +87,36 @@
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ANG_Location_Type_Conversion__c</fullName>
+        <description>Allow the definition of the location type in a standard account to Multicountry hierarchy</description>
+        <externalId>false</externalId>
+        <label>ANG_Location_Type_Conversion</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>GE</fullName>
+                    <default>false</default>
+                    <label>GE</label>
+                </value>
+                <value>
+                    <fullName>HE</fullName>
+                    <default>false</default>
+                    <label>HE</label>
+                </value>
+                <value>
+                    <fullName>AE</fullName>
+                    <default>false</default>
+                    <label>AE</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Account__c</fullName>
@@ -122,6 +176,21 @@ Account__c))</formula>
         <fullName>Agency_Involved</fullName>
         <active>true</active>
         <label>Agency Involved</label>
+        <picklistValues>
+            <picklist>ANG_Location_Type_Conversion__c</picklist>
+            <values>
+                <fullName>AE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HE</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
     </recordTypes>
     <recordTypes>
         <fullName>CaseRelatedAgencies</fullName>
@@ -129,13 +198,33 @@ Account__c))</formula>
         <description>Used for agencies</description>
         <label>CaseRelatedAgencies</label>
     </recordTypes>
+    <recordTypes>
+        <fullName>Multicountry_Yearly_Financial_Review</fullName>
+        <active>true</active>
+        <label>Multicountry Yearly Financial Review</label>
+        <picklistValues>
+            <picklist>ANG_Location_Type_Conversion__c</picklist>
+            <values>
+                <fullName>AE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HE</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
     <validationRules>
         <fullName>AMS_BlockInsertOscarAccount</fullName>
         <active>true</active>
         <description>Does not allow the Account related to the OSCAR to be added</description>
-        <errorConditionFormula>Account__r.Id = OSCAR__r.Account__r.Id</errorConditionFormula>
+        <errorConditionFormula>AND(Account__c != null, Account__r.Id = OSCAR__r.Account__r.Id)</errorConditionFormula>
         <errorMessage>The account related to the OSCAR cannot be inserted on this list</errorMessage>
     </validationRules>
     <visibility>Public</visibility>
