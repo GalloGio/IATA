@@ -280,7 +280,9 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                 }
 
                 
-                this.airlineUser = isAirlineUser();
+                isAirlineUser().then(result => {
+                    this.airlineUser = result;
+					
                 getCountryList()
                     .then(result2 => {
                         let myResult = JSON.parse(JSON.stringify(result2));
