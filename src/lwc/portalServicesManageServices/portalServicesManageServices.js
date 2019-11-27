@@ -449,7 +449,6 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         getContacts({ serviceId: this.serviceId, offset: this.nrLoadedRecs })
             .then(result => {
                 let resultData = JSON.parse(JSON.stringify(result));
-                console.log('data from server: ', resultData);
                 resultData = this.sortResults(resultData);
                 this.globalResults = resultData;
                 this.initialPageLoad(resultData, this.serviceRecord.totalNrContacts);
@@ -1088,7 +1087,6 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 
         } else if (this.isIEPService && (this.radioOption !== undefined || this.radioOption !== null)) {
 
-            console.log(this.contactsToAdd);
             const contactsToAddIDs = this.contactsToAdd.map(function (el) { return el.id; });
             const serviceid = this.serviceId;
             const roleSelected = this.radioOption;
@@ -1240,7 +1238,6 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         getContactsForAssignment({ serviceId: this.serviceId }).then(result => {
 
             let availableContacts = JSON.parse(JSON.stringify(result));
-            console.log('getContacts results', this.availableContacts)
             let toAdd = JSON.parse(JSON.stringify(this.contactsToAdd));
 
             let available = availableContacts.filter(function (c) {
@@ -1441,14 +1438,8 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     }
 
     handleChangeIataCodeFilter(event) {
-        this.selectedIataCode = '';
         this.selectedIataCodeValue = event.detail.value;
-
-        this.optionsCountry.forEach(el => {
-            if (el.value == this.selectedIataCodeValue) {
-                this.selectedIataCode = el.label;
-            }
-        });
+        this.selectedIataCode = this.selectedIataCodeValue;
         
     }
 
