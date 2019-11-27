@@ -426,6 +426,24 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                 this.canAddUsers = result;
             });
     }
+	
+	populateIataCodeDropdown(contactList){		
+		if(contactList==undefined)return;
+
+		let optionslist=JSON.parse(JSON.stringify(this.optionsIATACodes));
+		for(let i=0;i<contactList.length;i++){
+
+			let iatacode=contactList[i].iataCodeLoc;
+
+			let exists=optionslist.find(el=>el.value==iatacode);
+			if(exists== undefined){
+				optionslist.push({ checked: false, label: iatacode, value: iatacode });
+			}
+		}
+		this.optionsIATACodes=optionslist.slice();
+
+
+	}
 
     getContactsForPage() {
         getContacts({ serviceId: this.serviceId, offset: this.nrLoadedRecs })
@@ -445,6 +463,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                 //this.showSpinner = false;
                 this.componentLoading = false;
                 this.checkMassActionButtons();
+				this.populateIataCodeDropdown(resultData);
 
             });
     }
@@ -570,6 +589,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
             this.loadingContacts = true;
             getContacts({ serviceId: this.serviceId, offset: this.nrLoadedRecs }).then(result => {
                 let resultData = JSON.parse(JSON.stringify(result));
+				this.populateIataCodeDropdown(resultData);
                 this.processContacList(resultData, currentPage);
                 this.generatePageList();
                 this.refreshContactPageView(currentPage);
@@ -1446,17 +1466,17 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     closeServicesFilterModal() {
         this.viewServicesFiltersModal = false;
     }
-
-    clearURL() {
+	
+	clearURL() {
         let windowURL = window.location.href;
         windowURL = windowURL.split('?');
 
         if (windowURL[1].split('&').length > 1) {
             let param = windowURL[1].split('&');
             windowURL = windowURL[0] + '?' + param[0];
+            window.history.pushState(null, null, windowURL);
         }
 
-        window.history.pushState(null, null, windowURL);
     }
 
 }
