@@ -1255,13 +1255,13 @@ public static Boolean grantAccess(string contactId,string serviceId,string reaso
 		}
 		
 
-		String contactsQuery = 'SELECT Id, Name , AccountId, Email, User_Portal_Status__c, '+
-			'(select id, Right__c from Portal_Application_Rights__r where Portal_Application__c =\''+ ServiceId + '\'),'+
-			' Contact.IATA_Code__c , Account.IATA_ISO_Country__r.Name , Account.BillingCity ,'+
-			' Account.IATACode__c  from Contact' +
-			' WHERE User_Portal_Status__c NOT IN (\'Inactive\', \'Rejected\', \'Deactivated\')' +
-			' AND Community__c != null' +
-			' AND Email != null' +
+        String contactsQuery = 'SELECT Id, Name , AccountId, Email,Contact.Account_Country__c, User_Portal_Status__c, '+
+            '(select id, Right__c from Portal_Application_Rights__r where Portal_Application__c =\''+ ServiceId + '\'),'+
+            ' Contact.IATA_Code__c , Account.IATA_ISO_Country__r.Name , Account.BillingCity ,'+
+            ' Account.IATACode__c  from Contact' +
+            ' WHERE User_Portal_Status__c NOT IN (\'Inactive\', \'Rejected\', \'Deactivated\')' +
+            ' AND Community__c != null' +
+            ' AND Email != null' +
 			' AND Id NOT IN :alreadyAssignedContactIds ';
 			
 		if(!String.isBlank(queryString)){
