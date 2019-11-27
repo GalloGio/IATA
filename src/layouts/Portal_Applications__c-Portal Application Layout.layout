@@ -236,6 +236,7 @@
         <fields>Contact.Account_Country__c</fields>
         <fields>Contact.CNTC_FIRST_NAME</fields>
         <fields>Contact.NAME</fields>
+        <fields>Contact.User_Portal_Status__c</fields>
         <fields>Right__c</fields>
         <fields>ANG_Portal_Service_Role__c</fields>
         <fields>Account.ACC_RECORDTYPE</fields>
