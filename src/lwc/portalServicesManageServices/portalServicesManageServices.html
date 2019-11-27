@@ -391,7 +391,7 @@
                         <lightning-combobox name="countryComboBox" label={label.CSP_Search_Case_Country} value={selectedCountryValue} options={optionsCountry} style="margin-bottom:5px;" onchange={handleChangeCountryFilter}></lightning-combobox>
                     </div>
                     <div class="slds-p-vertical_xx-small slds-col slds-size_1-of-1" if:false={airlineUser}>
-                        <lightning-combobox name="iataCodeComboBox" label={label.ISSP_IATA_Location_Code} style="margin-bottom:5px;" onchange={handleChangeIataCodeFilter}></lightning-combobox>
+                        <lightning-combobox name="iataCodeComboBox" label={label.ISSP_IATA_Location_Code} value={selectedIataCode} options={optionsIATACodes} style="margin-bottom:5px;" onchange={handleChangeIataCodeFilter}></lightning-combobox>
                     </div>
                     <div class="slds-p-vertical_xx-small slds-col slds-size_1-of-1">
                         <lightning-combobox name="statusComboBox" label={label.Status} placeholder=" " value={selectedStatus} options={optionsStatus} style="margin-bottom:5px;" onchange={handleChangeStatusFilter}></lightning-combobox>
