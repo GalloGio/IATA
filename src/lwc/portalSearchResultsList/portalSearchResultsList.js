@@ -13,6 +13,7 @@ import CSP_NoSearchResults from '@salesforce/label/c.CSP_NoSearchResults';
 import CSP_FAQs_Title from '@salesforce/label/c.CSP_FAQs_Title';
 import CSP_Title from '@salesforce/label/c.CSP_Title';
 import ISSP_See_more from '@salesforce/label/c.ISSP_See_more';
+import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 
 export default class PortalSearchResultList extends NavigationMixin(LightningElement) {
 
@@ -78,7 +79,8 @@ export default class PortalSearchResultList extends NavigationMixin(LightningEle
         CSP_SeeAll,
         CSP_FAQs_Title,
         CSP_Title,
-        ISSP_See_more
+        ISSP_See_more,
+        CSP_PortalPath
     };
 
     //clone of the filtering object passed from the parent
@@ -170,80 +172,126 @@ export default class PortalSearchResultList extends NavigationMixin(LightningEle
         this.dispatchEvent(selectedEvent);
 
         let searchCases = new Promise((resolve, reject) => {
-            portalGlobalSearch({ filterWrapperAux: JSON.stringify(filteringObjectAux), searchObject: 'Cases' })
-                .then(results => {
-                    if (results && results.records && results.records.length > 0) {
-                        this.caseResults = JSON.parse(JSON.stringify(results.records));
-                    }
-                    let error = false;
-                    if (!error)
-                        resolve(this.caseResults);
-                    else
-                        reject();
-                });
+            let error = false;
+            if (!error)
+                resolve();
+            else
+                reject();
         });
-
         let searchFAQS = new Promise((resolve, reject) => {
-            portalGlobalSearch({ filterWrapperAux: JSON.stringify(filteringObjectAux), searchObject: 'FAQS' })
-                .then(results => {
-                    if (results && results.records && results.records.length > 0) {
-                        this.faqsResults = JSON.parse(JSON.stringify(results.records));
-                    }
-                    let error = false;
-                    if (!error)
-                        resolve(this.faqsResults);
-                    else
-                        reject();
-                });
+            let error = false;
+            if (!error)
+                resolve();
+            else
+                reject();
         });
-
         let searchServices = new Promise((resolve, reject) => {
-            portalGlobalSearch({ filterWrapperAux: JSON.stringify(filteringObjectAux), searchObject: 'Services' })
-                .then(results => {
-                    if (results && results.records && results.records.length > 0) {
-                        this.servicesResults = JSON.parse(JSON.stringify(results.records));
-                    }
-                    let error = false;
-                    if (!error)
-                        resolve(this.servicesResults);
-                    else
-                        reject();
-                });
+            let error = false;
+            if (!error)
+                resolve();
+            else
+                reject();
         });
-
         let searchDocuments = new Promise((resolve, reject) => {
-            portalGlobalSearch({ filterWrapperAux: JSON.stringify(filteringObjectAux), searchObject: 'Documents' })
-                .then(results => {
-                    if (results && results.records && results.records.length > 0) {
-                        this.documentsResults = JSON.parse(JSON.stringify(results.records));
-                    }
-                    let error = false;
-                    if (!error)
-                        resolve(this.documentsResults);
-                    else
-                        reject();
-                });
+            let error = false;
+            if (!error)
+                resolve();
+            else
+                reject();
+        });
+        let searchProfiles = new Promise((resolve, reject) => {
+            let error = false;
+            if (!error)
+                resolve();
+            else
+                reject();
         });
 
-        let searchProfiles = new Promise((resolve, reject) => {
-            portalGlobalSearch({ filterWrapperAux: JSON.stringify(filteringObjectAux), searchObject: 'Profiles' })
-                .then(results => {
-                    if (results && results.recordsString !== '') {
-                        let allProfileResultsUnparsed = [];
-                        let allProfileResultsParsed = [];
-                        allProfileResultsUnparsed = JSON.parse(results.recordsString);
-                        for (let i in allProfileResultsUnparsed) {
-                            allProfileResultsParsed.push(allProfileResultsUnparsed[i]);
+        if (filteringObjectAux.casesComponent.show) {
+            searchCases = new Promise((resolve, reject) => {
+                portalGlobalSearch({ filterWrapperAux: JSON.stringify(filteringObjectAux), searchObject: 'Cases' })
+                    .then(results => {
+                        if (results && results.records && results.records.length > 0) {
+                            this.caseResults = JSON.parse(JSON.stringify(results.records));
                         }
-                        this.profilesResults = allProfileResultsParsed;
-                    }
-                    let error = false;
-                    if (!error)
-                        resolve(this.profilesResults);
-                    else
-                        reject();
-                });
-        });
+                        let error = false;
+                        if (!error)
+                            resolve(this.caseResults);
+                        else
+                            reject();
+                    });
+            });
+        }
+
+        if (filteringObjectAux.faqsComponent.show) {
+            searchFAQS = new Promise((resolve, reject) => {
+                portalGlobalSearch({ filterWrapperAux: JSON.stringify(filteringObjectAux), searchObject: 'FAQS' })
+                    .then(results => {
+                        if (results && results.records && results.records.length > 0) {
+                            this.faqsResults = JSON.parse(JSON.stringify(results.records));
+                        }
+                        let error = false;
+                        if (!error)
+                            resolve(this.faqsResults);
+                        else
+                            reject();
+                    });
+            });
+        }
+
+        if (filteringObjectAux.servicesComponent.show) {
+            searchServices = new Promise((resolve, reject) => {
+                portalGlobalSearch({ filterWrapperAux: JSON.stringify(filteringObjectAux), searchObject: 'Services' })
+                    .then(results => {
+                        if (results && results.records && results.records.length > 0) {
+                            this.servicesResults = JSON.parse(JSON.stringify(results.records));
+                        }
+                        let error = false;
+                        if (!error)
+                            resolve(this.servicesResults);
+                        else
+                            reject();
+                    });
+            });
+        }
+
+        if (filteringObjectAux.documentsComponent.show) {
+            searchDocuments = new Promise((resolve, reject) => {
+                portalGlobalSearch({ filterWrapperAux: JSON.stringify(filteringObjectAux), searchObject: 'Documents' })
+                    .then(results => {
+                        if (results && results.records && results.records.length > 0) {
+                            this.documentsResults = JSON.parse(JSON.stringify(results.records));
+                        }
+                        let error = false;
+                        if (!error)
+                            resolve(this.documentsResults);
+                        else
+                            reject();
+                    });
+            });
+        }
+
+        if (filteringObjectAux.profileComponent.show) {
+            searchProfiles = new Promise((resolve, reject) => {
+                portalGlobalSearch({ filterWrapperAux: JSON.stringify(filteringObjectAux), searchObject: 'Profiles' })
+                    .then(results => {
+                        if (results && results.recordsString && results.recordsString !== '') {
+                            let allProfileResultsUnparsed = [];
+                            let allProfileResultsParsed = [];
+                            allProfileResultsUnparsed = JSON.parse(results.recordsString);
+                            for (let i in allProfileResultsUnparsed) {
+                                allProfileResultsParsed.push(allProfileResultsUnparsed[i]);
+                            }
+                            this.profilesResults = allProfileResultsParsed;
+                        }
+                        let error = false;
+                        if (!error)
+                            resolve(this.profilesResults);
+                        else
+                            reject();
+                    });
+            });
+        }
 
         //Show Spinner, Show Options Panel, Get Live Agent, Scroll window down, Hide Spinner
         Promise.all([
@@ -284,54 +332,51 @@ export default class PortalSearchResultList extends NavigationMixin(LightningEle
         }
 
         let filteringObjectAux = JSON.parse(JSON.stringify(this.filteringObject));
+        filteringObjectAux.faqsComponent.show = true;
 
         for (let i = 0; i < this.filteringObject.numberOfResults; i++) {
 
             if (this.caseResults && this.caseResults.length > i && aggregateResults.length < this.filteringObject.numberOfResults) {
-                let urlaux = "" + window.location.href + "case-details?caseId=" + this.caseResults[i].Id;
                 let caseRes = {
                     "id": this.caseResults[i].Id,
                     "category": "Cases",
                     "title": this.caseResults[i].CaseNumber,
                     "description": this.caseResults[i].Subject,
                     "class": "categId-1",
-                    "url": urlaux
+                    "url": "case-details?caseId=" + this.caseResults[i].Id
                 };
                 aggregateResults.push(caseRes);
             }
             if (this.faqsResults && this.faqsResults.length > i && aggregateResults.length < this.filteringObject.numberOfResults) {
-                let urlaux = '' + window.location.href + 'faq-article?q=' + filteringObjectAux.searchText + '&id1=' + this.faqsResults[i].Id;
                 let faq = {
                     "id": this.faqsResults[i].Id,
                     "category": "FAQ",
                     "title": this.faqsResults[i].Title,
                     "description": "",
                     "class": "categId-2",
-                    "url": urlaux
+                    "url": 'faq-article?q=' + filteringObjectAux.searchText + '&id1=' + this.faqsResults[i].Id
                 };
                 aggregateResults.push(faq);
             }
             if (this.servicesResults && this.servicesResults.length > i && aggregateResults.length < this.filteringObject.numberOfResults) {
-                let urlaux = "" + window.location.href + "manage-service?serviceId=" + this.servicesResults[i].Id;
                 let serviceRes = {
                     "id": this.servicesResults[i].Id,
                     "category": "Services",
                     "title": this.servicesResults[i].Name,
                     "description": this.servicesResults[i].Description__c,
                     "class": "categId-3",
-                    "url": urlaux
+                    "url": "manage-service?serviceId=" + this.servicesResults[i].Id
                 }
                 aggregateResults.push(serviceRes);
             }
             if (this.documentsResults && this.documentsResults.length > i && aggregateResults.length < this.filteringObject.numberOfResults) {
-                let urlaux = "" + window.location.href + "documents-search?searchText=" + filteringObjectAux.searchText + "&docId=" + this.documentsResults[i].Id;
                 let doc = {
                     "id": this.documentsResults[i].Id,
                     "category": "Documents",
                     "title": this.documentsResults[i].Title,
                     "description": this.documentsResults[i].Description,
                     "class": "categId-5",
-                    "url": urlaux
+                    "url": "documents-search?searchText=" + filteringObjectAux.searchText + "&docId=" + this.documentsResults[i].Id
                 }
                 aggregateResults.push(doc);
             }
@@ -342,7 +387,7 @@ export default class PortalSearchResultList extends NavigationMixin(LightningEle
                     "title": retrievedAccounts[i].profileName,
                     "description": retrievedAccounts[i].profileType,
                     "class": "categId-4",
-                    "url": window.location.href.replace('/csportal/s/','')  + retrievedAccounts[i].profileUrl
+                    "url": retrievedAccounts[i].profileUrl
                 }
                 aggregateResults.push(acc);
             }
@@ -353,7 +398,7 @@ export default class PortalSearchResultList extends NavigationMixin(LightningEle
                     "title": retrievedContacts[i].profileName,
                     "description": retrievedContacts[i].profileType,
                     "class": "categId-4",
-                    "url": window.location.href.replace('/csportal/s/','') + retrievedContacts[i].profileUrl
+                    "url": retrievedContacts[i].profileUrl
                 }
                 aggregateResults.push(cont);
             }
@@ -378,7 +423,6 @@ export default class PortalSearchResultList extends NavigationMixin(LightningEle
 
         const selectedEvent = new CustomEvent('filterchanged', { detail: { object: filteringObjectAux, componentName: "faqsComponent" } });
         this.dispatchEvent(selectedEvent);
-
         this.filteringObject = filteringObjectAux;
     }
 
@@ -402,8 +446,53 @@ export default class PortalSearchResultList extends NavigationMixin(LightningEle
     }
 
     renderArticle(event) {
-        let params = {};
+        let filteringObjectAux = JSON.parse(JSON.stringify(this.filteringObject));
         let url = event.target.attributes.getNamedItem('data-url').value;
-        window.location = url;
+        let category = event.target.attributes.getNamedItem('data-category').value;
+        let thePage;
+        let params = {};
+        if (category === 'Cases') {
+            thePage = 'case-details'
+            params.caseId = url.replace('case-details?caseId=', '');
+        }
+        if (category === 'FAQ') {
+            thePage = 'faq-article'
+            params.q = filteringObjectAux.searchText;
+            params.id1 = url.replace('faq-article?q=' + filteringObjectAux.searchText + '&id1=', '');
+        }
+        if (category === 'Documents') {
+            thePage = 'documents-search'
+            params.searchText = filteringObjectAux.searchText;
+            params.docId = url.replace("documents-search?searchText=" + filteringObjectAux.searchText + "&docId=", '');
+        }
+        if (category === 'Services') {
+            thePage = 'manage-service';
+            params.serviceId = url.replace('manage-service?serviceId=', '');
+        }
+        if (category === 'Profile') {
+            if (url.includes('company-profile?account=')) {
+                thePage = 'company-profile';
+                params.account = url.replace(this.label.CSP_PortalPath + 'company-profile?account=', '');
+            }
+            else if (url.includes('company-profile?tab=contact&contact=')) {
+                thePage = 'company-profile';
+                params.contact = url.replace(this.label.CSP_PortalPath + 'company-profile?tab=contact&contact=', '');
+                params.tab = 'contact';
+            }
+            else if (url.includes('company-profile')) {
+                thePage = 'company-profile';
+            }
+            else if (url.includes('my-profile')) {
+                thePage = 'my-profile';
+            }
+        }
+
+        this[NavigationMixin.GenerateUrl]({
+            type: "standard__namedPage",
+            attributes: {
+                pageName: thePage
+            }
+        })
+            .then(url => navigateToPage(url, params));
     }
 }
