@@ -247,7 +247,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     @track searchKey = '';
     @track globalResults = [];
     @track optionsCountry = [];
-    @track optionsIATACodes = [];
+    @track optionsIATACodes = [{ checked: false, label:  this.label.ISSP_All, value: ''}];
     @track optionsStatus = [
         { label: this.label.ISSP_Access_Granted, value: "Access Granted" },
         { label: this.label.ISSP_Access_Denied, value: "Access Denied" },
