@@ -6465,6 +6465,10 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <name>IDCard_NoModificationAllowed</name>
     </customLabels>
     <customLabels>
+        <label>สมัครและชำระค่าบัตรประจำตัวของท่าน (ทำบัตรใหม่, ต่ออายุบัตร, การเปลี่ยนแปลงของตัวแทน) และรับผลประโยชน์สำหรับตัวแทนการท่องเที่ยวของ IATA</label>
+        <name>IDCard_NoUSServiceDescription</name>
+    </customLabels>
+    <customLabels>
         <label><!-- IDCard No Price Table Found --></label>
         <name>IDCard_No_Price_Table_Found</name>
     </customLabels>
@@ -6753,6 +6757,10 @@ Kindly note that home-based agents are required to coordinate with their colleag
     <customLabels>
         <label><!-- IDCard_TrxNum --></label>
         <name>IDCard_TrxNum</name>
+    </customLabels>
+    <customLabels>
+        <label>(สำหรับตัวแทนในสหรัฐอเมริกา) ขอบัตรประจำตัว, ลงทะเบียนตัวแทน, ชำระค่าธรรมเนียมรายปี, ดำเนินการต่ออายุใบรับรองของตัวแทน ฯลฯ</label>
+        <name>IDCard_USServiceDescription</name>
     </customLabels>
     <customLabels>
         <label><!-- IDCard Update Application --></label>
@@ -15659,6 +15667,14 @@ and
     <customLabels>
         <label>โปรดทราบว่าการเปลี่ยนแปลงชื่อของคุณ จะยังไม่ปรากฏในบัตรประจำตัวของคุณ หากคุณต้องการเปลี่ยนสามารถจัดการได้ที่แพลตฟอร์ม บัตรประจำตัว</label>
         <name>ISSP_IdCard_Name_Warning</name>
+    </customLabels>
+    <customLabels>
+        <label>แพลตฟอร์มออนไลน์สำหรับบัตรประจำตัว</label>
+        <name>ISSP_IdCard_NonUS</name>
+    </customLabels>
+    <customLabels>
+        <label>บริการออนไลน์ของ IATAN</label>
+        <name>ISSP_IdCard_US</name>
     </customLabels>
     <customLabels>
         <label>กำลังดำเนินการ</label>

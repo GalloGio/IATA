@@ -6463,6 +6463,10 @@
         <name>IDCard_NoModificationAllowed</name>
     </customLabels>
     <customLabels>
+        <label>Подайте заявку и оплатите свою идентификационную карту (получение новой, продление старой карты, смена агентства) и воспользуйтесь преимуществами предоставляемыми туристическим агентам Международной ассоциацией воздушного транспорта (IATA).</label>
+        <name>IDCard_NoUSServiceDescription</name>
+    </customLabels>
+    <customLabels>
         <label><!-- IDCard No Price Table Found --></label>
         <name>IDCard_No_Price_Table_Found</name>
     </customLabels>
@@ -6749,6 +6753,10 @@
     <customLabels>
         <label><!-- IDCard_TrxNum --></label>
         <name>IDCard_TrxNum</name>
+    </customLabels>
+    <customLabels>
+        <label>(для агентов базирующихся в США) Запрос на получение идентификационной карты, регистрация агентов, оплата годовых взносов за обслуживание, переаттестация агентств, и т. д.</label>
+        <name>IDCard_USServiceDescription</name>
     </customLabels>
     <customLabels>
         <label><!-- IDCard Update Application --></label>
@@ -15658,6 +15666,14 @@ IATA стремится обеспечить высочайшее качеств
     <customLabels>
         <label>Обратите внимание, что изменение вашего имени не будет отражено на вашей идентификационной карте. Чтобы изменить его на идентификационной карте, войдите на платформу идентификационных карт.</label>
         <name>ISSP_IdCard_Name_Warning</name>
+    </customLabels>
+    <customLabels>
+        <label>Интернет-платформа идентификационной карты</label>
+        <name>ISSP_IdCard_NonUS</name>
+    </customLabels>
+    <customLabels>
+        <label>Онлайн услуги IATAN</label>
+        <name>ISSP_IdCard_US</name>
     </customLabels>
     <customLabels>
         <label>Выполняется</label>
