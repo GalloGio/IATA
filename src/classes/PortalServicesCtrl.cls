@@ -1458,4 +1458,18 @@ public static Boolean grantAccess(string contactId,string serviceId,string reaso
 			return false;
 		}
 	}
+
+	//This method is used when a portal admin is creating a new contact in the portal
+	//It should retun all the services that he can assign to the contact he is creating
+	@AuraEnabled(cacheable=true)
+	public static List<Portal_Applications__c> getAvailableServicesForNewContact(){
+		List<Portal_Applications__c> services = getPortalApplications();
+		for(Portal_Applications__c service : services){
+			if(service.Cannot_be_managed_by_portal_admin__c){
+				services.remove(services.indexOf(service));
+			}
+		}
+		return services;
+	}
+
 }
