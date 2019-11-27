@@ -6465,6 +6465,10 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <name>IDCard_NoModificationAllowed</name>
     </customLabels>
     <customLabels>
+        <label>.قدِّم وادفع للحصول على بطاقة الهوية الخاصة بك (جديد، تجديد، تغير الوكالة) واحصل على فوائد وكيل السفر إياتا</label>
+        <name>IDCard_NoUSServiceDescription</name>
+    </customLabels>
+    <customLabels>
         <label><!-- IDCard No Price Table Found --></label>
         <name>IDCard_No_Price_Table_Found</name>
     </customLabels>
@@ -6753,6 +6757,10 @@ Kindly note that home-based agents are required to coordinate with their colleag
     <customLabels>
         <label><!-- IDCard_TrxNum --></label>
         <name>IDCard_TrxNum</name>
+    </customLabels>
+    <customLabels>
+        <label>(للوكلاء الأمريكيين) طلب بطاقات هوية، تسجيل الوكلاء، دفع رسوم الخدمة السنوية، عملية إعادة تأكيد الشهادة للوكالة، إلخ</label>
+        <name>IDCard_USServiceDescription</name>
     </customLabels>
     <customLabels>
         <label><!-- IDCard Update Application --></label>
@@ -15657,6 +15665,14 @@ and
     <customLabels>
         <label>يرجى الانتباه إلى أن أي تغيير لاسم المستخدم لن ينعكس على بطاقة الأياتا. إن كنت ترغب بتغيير الاسم على البطاقة، يرجى التوجه للبوابة الخاصة ببطاقات الأياتا.</label>
         <name>ISSP_IdCard_Name_Warning</name>
+    </customLabels>
+    <customLabels>
+        <label>منصة الإنترنت لبطاقة الهوية</label>
+        <name>ISSP_IdCard_NonUS</name>
+    </customLabels>
+    <customLabels>
+        <label>خدمات إياتا عبر الإنترنت</label>
+        <name>ISSP_IdCard_US</name>
     </customLabels>
     <customLabels>
         <label>قيد التقدم</label>

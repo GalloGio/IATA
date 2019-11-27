@@ -6468,6 +6468,10 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <name>IDCard_NoModificationAllowed</name>
     </customLabels>
     <customLabels>
+        <label>Inscreva-se e pague a sua carteira de identidade (nova, renovada, mudança de agência) e obtenha os benefícios dos agentes de viagens da IATA.</label>
+        <name>IDCard_NoUSServiceDescription</name>
+    </customLabels>
+    <customLabels>
         <label><!-- IDCard No Price Table Found --></label>
         <name>IDCard_No_Price_Table_Found</name>
     </customLabels>
@@ -6756,6 +6760,10 @@ Kindly note that home-based agents are required to coordinate with their colleag
     <customLabels>
         <label><!-- IDCard_TrxNum --></label>
         <name>IDCard_TrxNum</name>
+    </customLabels>
+    <customLabels>
+        <label>(Para agentes dos EUA) Solicitação de carteiras de identidade, registro de Agentes, pagamento de taxa anual de serviço, processo de recertificação de agência etc.</label>
+        <name>IDCard_USServiceDescription</name>
     </customLabels>
     <customLabels>
         <label><!-- IDCard Update Application --></label>
@@ -15660,6 +15668,14 @@ Você poderia por favor confimar de qual pais voce foi previamente atendido.</la
     <customLabels>
         <label>Por favor, note que uma mudança em seu nome nao sera refletida no seu cartão de identificação IATA. Para fazer esta mudança em seu cartão de identificação, ingresse na plataforma ID card.</label>
         <name>ISSP_IdCard_Name_Warning</name>
+    </customLabels>
+    <customLabels>
+        <label>Plataforma Online de Carteira de Identidade</label>
+        <name>ISSP_IdCard_NonUS</name>
+    </customLabels>
+    <customLabels>
+        <label>Serviços Online IATAN</label>
+        <name>ISSP_IdCard_US</name>
     </customLabels>
     <customLabels>
         <label>Em andamento</label>

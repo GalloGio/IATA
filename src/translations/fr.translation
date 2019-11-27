@@ -6486,6 +6486,10 @@ Pour les agents qui souhaitent renouveler, réémettre la carte en raison de per
         <name>IDCard_NoModificationAllowed</name>
     </customLabels>
     <customLabels>
+        <label>Appliquez &amp; payez votre carte d&apos;identité (nouvelle, renouveler, changer d&apos;agence) et obtenez les avantages d&apos; agent de voyages IATA.</label>
+        <name>IDCard_NoUSServiceDescription</name>
+    </customLabels>
+    <customLabels>
         <label>Aucun prix trouvé pour le pays {0} et le type d&apos;agent {1}</label>
         <name>IDCard_No_Price_Table_Found</name>
     </customLabels>
@@ -6773,6 +6777,10 @@ Veuillez noter que les agents à domicile sont tenus de coordonner avec leurs co
     <customLabels>
         <label>Numéro de transaction:</label>
         <name>IDCard_TrxNum</name>
+    </customLabels>
+    <customLabels>
+        <label>(Pour les agents américains) Demande de cartes d&apos;identité, agents d&apos;enregistrement, paiement des frais de service annuels, processus de recertification d&apos;agence, etc.</label>
+        <name>IDCard_USServiceDescription</name>
     </customLabels>
     <customLabels>
         <label><!-- IDCard Update Application --></label>
@@ -15697,6 +15705,14 @@ Pouvez-vous s&apos;il vous plaît confirmer pour quel pays vous avez déjà reç
     <customLabels>
         <label>Veuillez noter qu&apos;un changement de votre nom ne sera pas répercuter sur votre Carte ID. Afin de changer votre carte ID, veuillez accéder à la plateforme de carte ID.</label>
         <name>ISSP_IdCard_Name_Warning</name>
+    </customLabels>
+    <customLabels>
+        <label>Plateforme en ligne pour cartes d&apos;identité</label>
+        <name>ISSP_IdCard_NonUS</name>
+    </customLabels>
+    <customLabels>
+        <label>Services en ligne IATAN</label>
+        <name>ISSP_IdCard_US</name>
     </customLabels>
     <customLabels>
         <label>En cours</label>

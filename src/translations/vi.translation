@@ -6467,6 +6467,10 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <name>IDCard_NoModificationAllowed</name>
     </customLabels>
     <customLabels>
+        <label>Đăng ký &amp; thanh toán cho Thẻ ID của quý khách (tạo mới, gia hạn, thay đổi đại lý) và nhận các phúc lợi của Đại lý du lịch IATA.</label>
+        <name>IDCard_NoUSServiceDescription</name>
+    </customLabels>
+    <customLabels>
         <label><!-- IDCard No Price Table Found --></label>
         <name>IDCard_No_Price_Table_Found</name>
     </customLabels>
@@ -6755,6 +6759,10 @@ Kindly note that home-based agents are required to coordinate with their colleag
     <customLabels>
         <label><!-- IDCard_TrxNum --></label>
         <name>IDCard_TrxNum</name>
+    </customLabels>
+    <customLabels>
+        <label>(dành cho Đại lý Hoa Kỳ) Yêu cầu Thẻ ID, đăng ký Đại lý, trả Phí dịch vụ hàng năm, quy trình Tái chứng nhận Đại lý, v.v.</label>
+        <name>IDCard_USServiceDescription</name>
     </customLabels>
     <customLabels>
         <label><!-- IDCard Update Application --></label>
@@ -15659,6 +15667,14 @@ Xin vui lòng xác nhận bạn đã nhận được sự trợ giúp liên quan
     <customLabels>
         <label>Xin lưu ý, thay đổi tên của bạn sẽ không được phản ánh trên thẻ ID của bạn. Để thay đổi tên trên thẻ ID Card, xin vui lòng đăng nhập vào ID Card platform</label>
         <name>ISSP_IdCard_Name_Warning</name>
+    </customLabels>
+    <customLabels>
+        <label>Nền tảng Thẻ ID Trực tuyến</label>
+        <name>ISSP_IdCard_NonUS</name>
+    </customLabels>
+    <customLabels>
+        <label>Dịch vụ Trực tuyến của IATAN</label>
+        <name>ISSP_IdCard_US</name>
     </customLabels>
     <customLabels>
         <label>Đang xử lý</label>
