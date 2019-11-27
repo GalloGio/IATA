@@ -56,7 +56,7 @@
     <externalSharingModel>ReadWrite</externalSharingModel>
     <fieldSets>
         <fullName>ISSP_Page_Detail_For_BSP_Agency</fullName>
-        <description>ISSP_OperationCalendarDetails.page uses this Field Set to show colums in a table, but only for Agencies and BSP</description>
+        <description>ISSP_OperationCalendarDetails.page uses this Field Set to show columns in a table, but only for Agencies and BSP</description>
         <displayedFields>
             <field>Period_Code__c</field>
             <isFieldManaged>false</isFieldManaged>
@@ -96,7 +96,7 @@
     </fieldSets>
     <fieldSets>
         <fullName>ISSP_Page_Detail_For_BSP_Airline</fullName>
-        <description>ISSP_OperationCalendarDetails.page uses this Field Set to show colums in a table, but only for Airline and BSP</description>
+        <description>ISSP_OperationCalendarDetails.page uses this Field Set to show columns in a table, but only for Airline and BSP</description>
         <displayedFields>
             <field>Period_Code__c</field>
             <isFieldManaged>false</isFieldManaged>
@@ -141,7 +141,7 @@
     </fieldSets>
     <fieldSets>
         <fullName>ISSP_Page_Detail_For_CASS_Agency</fullName>
-        <description>ISSP_OperationCalendarDetails.page uses this Field Set to show colums in a table, but only for Agencies and CASS</description>
+        <description>ISSP_OperationCalendarDetails.page uses this Field Set to show columns in a table, but only for Agencies and CASS</description>
         <displayedFields>
             <field>Period_Code__c</field>
             <isFieldManaged>false</isFieldManaged>
@@ -186,7 +186,7 @@
     </fieldSets>
     <fieldSets>
         <fullName>ISSP_Page_Detail_For_CASS_Airline</fullName>
-        <description>ISSP_OperationCalendarDetails.page uses this Field Set to show colums in a table, but only for Airlines and CASS</description>
+        <description>ISSP_OperationCalendarDetails.page uses this Field Set to show columns in a table, but only for Airlines and CASS</description>
         <displayedFields>
             <field>Period_Code__c</field>
             <isFieldManaged>false</isFieldManaged>
@@ -243,6 +243,261 @@
             <isRequired>false</isRequired>
         </displayedFields>
         <label>ISSP Page Detail For CASS Airline</label>
+    </fieldSets>
+    <fieldSets>
+        <fullName>ISSP_Page_Detail_For_CNS_Airline</fullName>
+        <description>ISSP_OperationCalendarDetails.page uses this Field Set to show columns in a table, but only for CNS and Airline Users</description>
+        <displayedFields>
+            <field>Period_Code__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>First_Day__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Last_Day__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Airline_Input_Upload_Cut_Off__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Billing_Availability__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Remittance_Day__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Rebill_Period__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>ISSP Page Detail For CNS Airline</label>
+    </fieldSets>
+    <fieldSets>
+        <fullName>ISSP_Page_Detail_For_CNS_Agency</fullName>
+        <description>ISSP_OperationCalendarDetails.page uses this Field Set to show columns in a table, but only for CNS and Agency users</description>
+        <displayedFields>
+            <field>Period_Code__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>First_Day__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Last_Day__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Airline_Input_Upload_Cut_Off__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Billing_Availability__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Remittance_Day__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>ISSP Page Detail For CNS Agency</label>
+    </fieldSets>
+    <fieldSets>
+        <fullName>ISSP_Page_Detail_For_ICCS</fullName>
+        <description>ISSP_OperationCalendarDetails.page uses this Field Set to show columns in a table, but only for ICCS calendar types</description>
+        <displayedFields>
+            <field>Country__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Period_Code__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>First_Day__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Last_Day__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>BSP_Settlement_Date__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Cycle__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>ICCS_Cycle_Start_Date__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>ICCS_Settlement_Date__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>ISSP Page Detail For ICCS</label>
+    </fieldSets>
+    <fieldSets>
+        <fullName>ISSP_Page_Detail_For_SIS</fullName>
+        <description>ISSP_OperationCalendarDetails.page uses this Field Set to show columns in a table, but only for SIS calendar types</description>
+        <displayedFields>
+            <field>Submission_Open__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Submission_Deadline__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Billing_Output_Generation__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Supporting_Documents_Link_Deadline__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>ISSP Page Detail For SIS</label>
+    </fieldSets>
+    <fieldSets>
+        <fullName>ISSP_Page_Detail_For_SIS_ACH</fullName>
+        <description>ISSP_OperationCalendarDetails.page uses this Field Set to show columns in a table, but only for SIS calendar types + ACH information</description>
+        <displayedFields>
+            <field>Submission_Open__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Submission_Deadline__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Billing_Output_Generation__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Supporting_Documents_Link_Deadline__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Protest_Deadline_ACH_Transactions__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Settlement_Sheet_Posting_Date__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Settlement_Day_ACH_Transactions__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Protest_Deadline_IATA_Transactions__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Settlement_Sheet_Posting_Date_IATA_Tran__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Settlement_Day_IATA_Transactions__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>ISSP Page Detail For SIS+ACH</label>
+    </fieldSets>
+    <fieldSets>
+        <fullName>ISSP_Page_Detail_For_SIS_ICH</fullName>
+        <description>ISSP_OperationCalendarDetails.page uses this Field Set to show columns in a table, but only for SIS calendar types + ICH information</description>
+        <displayedFields>
+            <field>Submission_Open__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Submission_Deadline__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Billing_Output_Generation__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Supporting_Documents_Link_Deadline__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Advice_Day__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Protest_Deadline__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Early_Call_Day__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Call_Day__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Settlement_Day_Associated_Members__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Suspension_Day__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>ISSP Page Detail For SIS+ICH</label>
     </fieldSets>
     <fieldSets>
         <fullName>ISSP_Page_Hover_For_BSP_Agency</fullName>
@@ -318,21 +573,6 @@
             <isRequired>false</isRequired>
         </displayedFields>
         <displayedFields>
-            <field>CASS_reports_Availability__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Agent_Correction_Cut_Off__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Airline_Correction_Response_Cut_Off__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
             <field>Billing_Availability__c</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
@@ -363,17 +603,7 @@
             <isRequired>false</isRequired>
         </displayedFields>
         <displayedFields>
-            <field>CASS_reports_Availability__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Agent_Correction_Cut_Off__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Airline_Correction_Response_Cut_Off__c</field>
+            <field>Rebill_Period__c</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
@@ -394,6 +624,70 @@
         </displayedFields>
         <label>ISSP Page Hover For CASS Airline</label>
     </fieldSets>
+    <fieldSets>
+        <fullName>ISSP_Page_Hover_For_ICCS</fullName>
+        <description>ISSP_OperationCalendar.page uses this Field Set to show a description in hover popup, but only for ICCS events</description>
+        <displayedFields>
+            <field>BSP_Settlement_Date__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>ICCS_Cycle_Start_Date__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>ICCS_Settlement_Date__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>ISSP Page Hover For ICCS</label>
+    </fieldSets>
+    <fieldSets>
+        <fullName>ISSP_Page_Hover_For_SIS</fullName>
+        <description>ISSP_OperationCalendar.page uses this Field Set to show a description in hover popup, but only for SIS events</description>
+        <displayedFields>
+            <field>Submission_Open__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Submission_Deadline__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Billing_Output_Generation__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Supporting_Documents_Link_Deadline__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Settlement_Day_Associated_Members__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Settlement_Day_ACH_Transactions__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>ISSP Page Hover For SIS</label>
+    </fieldSets>
+    <fields>
+        <fullName>Advice_Day__c</fullName>
+        <externalId>false</externalId>
+        <label>Advice Day</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
     <fields>
         <fullName>Agent_Correction_Cut_Off__c</fullName>
         <description>Deadline for the agent to make corrections</description>
@@ -434,6 +728,16 @@
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>BSP_Settlement_Date__c</fullName>
+        <description>Field to be used only for ICCS Recordtype</description>
+        <externalId>false</externalId>
+        <label>BSP Settlement Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
         <fullName>Billing_Availability__c</fullName>
         <description>Date of when the billing BSP/CASS is available to the agent to pay</description>
         <externalId>false</externalId>
@@ -442,6 +746,15 @@
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Billing_Output_Generation__c</fullName>
+        <externalId>false</externalId>
+        <label>Billing Output Generation</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
     </fields>
     <fields>
         <fullName>CASS_reports_Availability__c</fullName>
@@ -454,6 +767,40 @@
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>Call_Day__c</fullName>
+        <externalId>false</externalId>
+        <label>Call Day</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Country__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Direct relation with IATA ISO Country, used only for certain RTs</description>
+        <externalId>false</externalId>
+        <label>IATA ISO Country</label>
+        <referenceTo>IATA_ISO_Country__c</referenceTo>
+        <relationshipLabel>Operational Calendars</relationshipLabel>
+        <relationshipName>Operational_Calendars</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Cycle__c</fullName>
+        <externalId>false</externalId>
+        <label>Cycle</label>
+        <length>3</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>EP_Settlement_date__c</fullName>
         <externalId>false</externalId>
         <label>EP Settlement date</label>
@@ -461,6 +808,15 @@
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Early_Call_Day__c</fullName>
+        <externalId>false</externalId>
+        <label>Early Call Day</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
     </fields>
     <fields>
         <fullName>ExternalId__c</fullName>
@@ -491,6 +847,26 @@
         <label>HAR Day</label>
         <required>false</required>
         <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>ICCS_Cycle_Start_Date__c</fullName>
+        <description>Field to be used only for ICCS Recordtype</description>
+        <externalId>false</externalId>
+        <label>ICCS Cycle Start Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>ICCS_Settlement_Date__c</fullName>
+        <description>Field to be used only for ICCS Recordtype</description>
+        <externalId>false</externalId>
+        <label>ICCS Settlement Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
@@ -584,6 +960,21 @@
                     <default>false</default>
                     <label>CASS Import</label>
                 </value>
+                <value>
+                    <fullName>SIS</fullName>
+                    <default>false</default>
+                    <label>SIS</label>
+                </value>
+                <value>
+                    <fullName>BSP</fullName>
+                    <default>false</default>
+                    <label>BSP</label>
+                </value>
+                <value>
+                    <fullName>CASS</fullName>
+                    <default>false</default>
+                    <label>CASS</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
@@ -600,6 +991,52 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Protest_Deadline_ACH_Transactions__c</fullName>
+        <externalId>false</externalId>
+        <label>Protest Deadline (ACH)</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Protest_Deadline_IATA_Transactions__c</fullName>
+        <externalId>false</externalId>
+        <label>Protest Deadline (IATA)</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Protest_Deadline__c</fullName>
+        <externalId>false</externalId>
+        <label>Protest Deadline</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Rebill_Period__c</fullName>
+        <description>To be used for CNS calendar and for Airlines only</description>
+        <externalId>false</externalId>
+        <label>Rebill Period</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Recap_Sheet_Submission_Deadline__c</fullName>
+        <externalId>false</externalId>
+        <label>Recap Sheet Submission Deadline</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
         <fullName>Remittance_Day__c</fullName>
         <description>remittance date</description>
         <externalId>false</externalId>
@@ -610,6 +1047,33 @@
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>Settlement_Day_ACH_Transactions__c</fullName>
+        <externalId>false</externalId>
+        <label>Settlement Day (ACH)</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Settlement_Day_Associated_Members__c</fullName>
+        <externalId>false</externalId>
+        <label>Settlement Day (Associated Members)</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Settlement_Day_IATA_Transactions__c</fullName>
+        <externalId>false</externalId>
+        <label>Settlement Day (IATA)</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
         <fullName>Settlement_Day__c</fullName>
         <externalId>false</externalId>
         <label>Settlement Day</label>
@@ -617,6 +1081,62 @@
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Settlement_Sheet_Posting_Date_IATA_Tran__c</fullName>
+        <externalId>false</externalId>
+        <label>Settlement Sheet Posting Date (IATA)</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Settlement_Sheet_Posting_Date__c</fullName>
+        <description>Settlement Sheet Posting Date (ACH Transactions)</description>
+        <externalId>false</externalId>
+        <label>Settlement Sheet Posting Date (ACH)</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Submission_Deadline__c</fullName>
+        <description>Submission Deadline For ICH/ACH Invoices</description>
+        <externalId>false</externalId>
+        <label>Submission Deadline</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Submission_Open__c</fullName>
+        <externalId>false</externalId>
+        <label>Submission Open</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Supporting_Documents_Link_Deadline__c</fullName>
+        <externalId>false</externalId>
+        <label>Supporting Documents Link Deadline</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Suspension_Day__c</fullName>
+        <externalId>false</externalId>
+        <label>Suspension Day</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
     </fields>
     <fields>
         <fullName>Visible_on_the_portal__c</fullName>
@@ -643,6 +1163,7 @@
     <listViews>
         <fullName>All</fullName>
         <columns>NAME</columns>
+        <columns>RECORDTYPE</columns>
         <columns>ISS_operation__c</columns>
         <columns>Operation_Code__c</columns>
         <columns>Period_Code__c</columns>
@@ -655,6 +1176,34 @@
         <columns>frequency_code__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>All_ICCS</fullName>
+        <columns>NAME</columns>
+        <columns>Cycle__c</columns>
+        <columns>Country__c</columns>
+        <columns>Remittance_Day__c</columns>
+        <columns>frequency_code__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>operational_Calendar__c.ICCS_Calendar</value>
+        </filters>
+        <label>All ICCS</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>All_SIS</fullName>
+        <columns>NAME</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>operational_Calendar__c.SIS_Calendar</value>
+        </filters>
+        <label>All SIS</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -708,6 +1257,23 @@
     <pluralLabel>Operational Calendars</pluralLabel>
     <recordTypeTrackHistory>true</recordTypeTrackHistory>
     <recordTypes>
+        <fullName>ICCS_Calendar</fullName>
+        <active>true</active>
+        <description>used to host ICCS Calendars</description>
+        <label>ICCS Calendar</label>
+        <picklistValues>
+            <picklist>Operation_Type__c</picklist>
+            <values>
+                <fullName>BSP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CASS</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
         <fullName>ISS_Calendar</fullName>
         <active>true</active>
         <description>used to host ISS (BSP and CASS) Calendars</description>
@@ -729,6 +1295,19 @@
             <values>
                 <fullName>CASS Import</fullName>
                 <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>SIS_Calendar</fullName>
+        <active>true</active>
+        <description>used to host SIS Calendars</description>
+        <label>SIS Calendar</label>
+        <picklistValues>
+            <picklist>Operation_Type__c</picklist>
+            <values>
+                <fullName>SIS</fullName>
+                <default>true</default>
             </values>
         </picklistValues>
     </recordTypes>
