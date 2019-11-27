@@ -163,7 +163,7 @@
     
         <!-- Bank Mandate upload for GBP, EUR and USD -->
         <apex:outputPanel rendered="{!NOT(show2bankMandate)}">
-            <apex:iframe scrolling="false" height="190px" rendered="{!!readOnly}" src="/ISSP_FormUpload?caseId={!ctrl.newCase.Id}&reqCnt=5&reqRequired=Mandatory&reqName={!URLENCODE('Bank Mandate Form')}&reqDescription={!URLENCODE('(Please download, complete, sign and print on Company letterhead each banking mandate form listed below)')}&reqIdentifier=BankMandate1&onlyOne=true"
+            <apex:iframe scrolling="true" height="190px" rendered="{!!readOnly}" src="/ISSP_FormUpload?caseId={!ctrl.newCase.Id}&reqCnt=5&reqRequired=Mandatory&reqName={!URLENCODE('Bank Mandate Form')}&reqDescription={!URLENCODE('(Please download, complete, sign and print on Company letterhead each banking mandate form listed below)')}&reqIdentifier=BankMandate1&onlyOne=true"
             />
             <apex:outputText styleclass="bold" value="{!IF(FIND('BankMandate1',ctrl.listUploadedFileIds)=0,'File not uploaded','File uploaded')}: Bank Mandate"
                 rendered="{!readOnly}" />

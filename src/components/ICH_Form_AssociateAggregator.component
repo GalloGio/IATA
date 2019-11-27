@@ -155,7 +155,7 @@
             <apex:outputText></apex:outputText>
             <tr>
                 <td colspan="4" class="required">
-                    <apex:iframe scrolling="false" height="190px" src="/ISSP_FormUpload?caseId={!ctrl.newform.Case__c}&reqCnt=3&reqRequired=Mandatory&reqName={!URLENCODE('List of shareholders')}&reqDescription={!URLENCODE('It has to be an official document or on company’s letterhead, signed by an officer of the company, company stamped and dated,
+                    <apex:iframe scrolling="true" height="190px" src="/ISSP_FormUpload?caseId={!ctrl.newform.Case__c}&reqCnt=3&reqRequired=Mandatory&reqName={!URLENCODE('List of shareholders')}&reqDescription={!URLENCODE('It has to be an official document or on company’s letterhead, signed by an officer of the company, company stamped and dated,
                                     including the percentage of ownership/number of shares owned.')}&reqIdentifier=ShareholdersList&onlyOne=false"
                     />
                     <apex:outputText value="{!IF(FIND('ShareholdersList',ctrl.listUploadedFileIds)=0,'File not uploaded','File uploaded')}: List of shareholders"
@@ -166,7 +166,7 @@
             <apex:outputText></apex:outputText>
             <tr>
                 <td colspan="4" class="required">
-                    <apex:iframe scrolling="false" height="180px" src="/ISSP_FormUpload?caseId={!ctrl.newform.Case__c}&reqCnt=4&reqRequired=Mandatory&reqName={!URLENCODE('Shareholders information')}&reqDescription={!URLENCODE('For each shareholder and officer include a copy of their valid passport, complete legal name, nationality, date of birth
+                    <apex:iframe scrolling="true" height="180px" src="/ISSP_FormUpload?caseId={!ctrl.newform.Case__c}&reqCnt=4&reqRequired=Mandatory&reqName={!URLENCODE('Shareholders information')}&reqDescription={!URLENCODE('For each shareholder and officer include a copy of their valid passport, complete legal name, nationality, date of birth
                                     and passport number.')}&reqIdentifier=Shareholders_information&onlyOne=false" />
                     <apex:outputText value="{!IF(FIND('Shareholders_information',ctrl.listUploadedFileIds)=0,'File not uploaded','File uploaded')}: Shareholders information"
                         rendered="{!readOnly}" styleclass="bold" />
