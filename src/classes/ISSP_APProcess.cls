@@ -1195,7 +1195,7 @@ global without sharing class ISSP_APProcess {
                 listMandatoryFiles.add('FormOfApplicationAndConcurrence');
             }
         }
-        if (isICH) {
+        if (isICH && strAreaType=='Airline Joining') {
             listMandatoryFiles.add('SignedICHForm');
             if (!getIsSISMember() && getShowISPAForm()) {
                 listMandatoryFiles.add('SignedSISISPAForm');

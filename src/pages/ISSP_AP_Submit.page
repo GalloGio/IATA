@@ -328,7 +328,7 @@
             <!-- ICH Submit section -->
             <apex:outputPanel id="ich-section" rendered="{!isICH}">
 
-                <apex:pageBlockSection columns="1" collapsible="false">
+                <apex:pageBlockSection columns="1" collapsible="false" rendered="{!strAreaType=='Airline Joining'}">
                     <apex:facet name="header">
                         <apex:outputpanel >
                             Form Summary
