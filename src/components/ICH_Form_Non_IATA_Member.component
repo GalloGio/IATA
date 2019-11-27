@@ -563,7 +563,7 @@
                 <apex:actionRegion>
                     <apex:selectRadio styleClass="radio-currency-clearance required" layout="pageDirection" value="{!ctrl.newform.ICH_Currency_of_Settlement__c}"
                         onchange="forceUpdateSection7();">
-                        <apex:selectOption itemValue="GBP" itemLabel="Entirely in GBP; therefore on Advice Day the charges submitted into clearance (in the currency of clearance) for Zone B, C and D in USD would be converted into GBP using the exchange rate on Advice Day and Zone A GBP would remain the GBP amountsubmitted into clearance, therefore arriving at one GBP payable or receivable amount."
+                        <apex:selectOption itemValue="GBP" itemLabel="Entirely in GBP; therefore on Advice Day the charges submitted into clearance (in the currency of clearance) for Zone B, C and D in USD would be converted into GBP using the exchange rate on Advice Day and Zone A GBP would remain the GBP amount submitted into clearance, therefore arriving at one GBP payable or receivable amount."
                         />
                         <apex:selectOption itemValue="USD" itemLabel="Entirely in USD; therefore on Advice Day the charges submitted into clearance (in the currency of clearance) for Zone B, C and D in USD remain the USD amount submitted into clearance and Zone A GBP would be converted into USD on Advice Day, using the exchange rate on Advice Day, therefore arriving at one USD payable or receivable amount."
                         />
@@ -606,7 +606,7 @@
             </apex:outputPanel>
         </apex:outputPanel>
         <apex:outputPanel rendered="{!readOnly}">
-            <apex:outputText styleclass="bold" value="Entirely in GBP; therefore on Advice Day the charges submitted into clearance (in the currency of clearance) for Zone B, C and D in USD would be converted into GBP using the exchange rate on Advice Day and Zone A GBP would remain the GBP amountsubmitted into clearance, therefore arriving at one GBP payable or receivable amount."
+            <apex:outputText styleclass="bold" value="Entirely in GBP; therefore on Advice Day the charges submitted into clearance (in the currency of clearance) for Zone B, C and D in USD would be converted into GBP using the exchange rate on Advice Day and Zone A GBP would remain the GBP amount submitted into clearance, therefore arriving at one GBP payable or receivable amount."
                 rendered="{!ctrl.newform.ICH_Currency_of_Settlement__c=='GBP'}" />
             <apex:outputText styleclass="bold" value="Entirely in USD; therefore on Advice Day the charges submitted into clearance (in the currency of clearance) for Zone B, C and D in USD remain the USD amount submitted into clearance and Zone A GBP would be converted into USD on Advice Day, using the exchange rate on Advice Day, therefore arriving at one USD payable or receivable amount."
                 rendered="{!ctrl.newform.ICH_Currency_of_Settlement__c=='USD'}" />
