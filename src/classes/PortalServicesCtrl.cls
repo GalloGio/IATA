@@ -1035,7 +1035,7 @@ public static Boolean massDenyAccess(List<String> contactIds,string serviceId, S
 	List<Portal_Application_Right__c> psaToUpdate = new List<Portal_Application_Right__c>();
 
 	// Retrieve Portal Application Rights for Service ID and Contact IDs
-	List<Portal_Application_Right__c> psaList = [SELECT Id, Right__c, Access_Status_Reason__c,LastModifiedDate
+	List<Portal_Application_Right__c> psaList = [SELECT Id, Right__c, Access_Status_Reason__c,LastModifiedDate,Contact__c
 	                                             FROM Portal_Application_Right__c
 	                                             WHERE Portal_Application__c = :serviceId AND Contact__c IN :contactIds];
 
