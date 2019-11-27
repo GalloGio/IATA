@@ -63,6 +63,10 @@
                 <behavior>Edit</behavior>
                 <field>ID_Card_Status__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Portal_Case_Status__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
