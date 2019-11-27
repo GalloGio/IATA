@@ -247,7 +247,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     @track searchKey = '';
     @track globalResults = [];
     @track optionsCountry = [];
-    @track optionsIATACodes = [];
+    @track optionsIATACodes = [{ checked: false, label:  this.label.ISSP_All, value: ''}];
     @track optionsStatus = [
         { label: this.label.ISSP_Access_Granted, value: "Access Granted" },
         { label: this.label.ISSP_Access_Denied, value: "Access Denied" },
@@ -426,12 +426,29 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                 this.canAddUsers = result;
             });
     }
+	
+	populateIataCodeDropdown(contactList){		
+		if(contactList==undefined)return;
+
+		let optionslist=JSON.parse(JSON.stringify(this.optionsIATACodes));
+		for(let i=0;i<contactList.length;i++){
+
+			let iatacode=contactList[i].iataCodeLoc;
+
+			let exists=optionslist.find(el=>el.value==iatacode);
+			if(exists== undefined){
+				optionslist.push({ checked: false, label: iatacode, value: iatacode });
+			}
+		}
+		this.optionsIATACodes=optionslist.slice();
+
+
+	}
 
     getContactsForPage() {
         getContacts({ serviceId: this.serviceId, offset: this.nrLoadedRecs })
             .then(result => {
                 let resultData = JSON.parse(JSON.stringify(result));
-                console.log('data from server: ', resultData);
                 resultData = this.sortResults(resultData);
                 this.globalResults = resultData;
                 this.initialPageLoad(resultData, this.serviceRecord.totalNrContacts);
@@ -445,6 +462,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                 //this.showSpinner = false;
                 this.componentLoading = false;
                 this.checkMassActionButtons();
+				this.populateIataCodeDropdown(resultData);
 
             });
     }
@@ -570,6 +588,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
             this.loadingContacts = true;
             getContacts({ serviceId: this.serviceId, offset: this.nrLoadedRecs }).then(result => {
                 let resultData = JSON.parse(JSON.stringify(result));
+				this.populateIataCodeDropdown(resultData);
                 this.processContacList(resultData, currentPage);
                 this.generatePageList();
                 this.refreshContactPageView(currentPage);
@@ -1068,7 +1087,6 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 
         } else if (this.isIEPService && (this.radioOption !== undefined || this.radioOption !== null)) {
 
-            console.log(this.contactsToAdd);
             const contactsToAddIDs = this.contactsToAdd.map(function (el) { return el.id; });
             const serviceid = this.serviceId;
             const roleSelected = this.radioOption;
@@ -1220,7 +1238,6 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         getContactsForAssignment({ serviceId: this.serviceId }).then(result => {
 
             let availableContacts = JSON.parse(JSON.stringify(result));
-            console.log('getContacts results', this.availableContacts)
             let toAdd = JSON.parse(JSON.stringify(this.contactsToAdd));
 
             let available = availableContacts.filter(function (c) {
@@ -1421,14 +1438,8 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     }
 
     handleChangeIataCodeFilter(event) {
-        this.selectedIataCode = '';
         this.selectedIataCodeValue = event.detail.value;
-
-        this.optionsCountry.forEach(el => {
-            if (el.value == this.selectedIataCodeValue) {
-                this.selectedIataCode = el.label;
-            }
-        });
+        this.selectedIataCode = this.selectedIataCodeValue;
         
     }
 
@@ -1446,17 +1457,17 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     closeServicesFilterModal() {
         this.viewServicesFiltersModal = false;
     }
-
-    clearURL() {
+	
+	clearURL() {
         let windowURL = window.location.href;
         windowURL = windowURL.split('?');
 
         if (windowURL[1].split('&').length > 1) {
             let param = windowURL[1].split('&');
             windowURL = windowURL[0] + '?' + param[0];
+            window.history.pushState(null, null, windowURL);
         }
 
-        window.history.pushState(null, null, windowURL);
     }
 
 }
