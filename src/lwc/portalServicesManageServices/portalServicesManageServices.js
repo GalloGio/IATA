@@ -318,12 +318,6 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 						];
 					}
 
-
-					//Remove column IATA Code (Location) if User Account is not an Agency
-					if(!this.isAgency) {
-						this.contactTableColums = this.contactTableColums.slice(0, 2).concat(this.contactTableColums.slice(3));
-					}
-
 					this.contactsToAddColumns = [
 						{ label: 'User', fieldName: 'title', type: 'text' },
 						{ label: 'Email', fieldName: 'subtitle', type: 'text' },
@@ -610,7 +604,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                 //Exit search mode
                 //restore all records already retrieved
                 this.searchMode = false;
-                this.contactList = this.contactListOg.slice();
+                this.contactList = this.globalResults.slice();
                 this.totalNrPages = this.totalNrPagesOg;
                 this.generatePageList();
                 this.refreshContactPageView(1);
