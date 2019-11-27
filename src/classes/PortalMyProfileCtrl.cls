@@ -30,6 +30,16 @@ public without sharing class PortalMyProfileCtrl {
         return wrapper;
     }
 
+    @AuraEnabled
+    public static List<Training_Contact_Role_Details__c> getContactTrainingInfo() {
+        User loggedUser = CSP_Utils.getLoggedUser();
+
+        List<Training_Contact_Role_Details__c> trainingsList = [SELECT Id, Name, RecordTypeId, Account_Contact_Role__r.Contact__c, Training_Name__c, Training_School__c, Training_Type__c, Completion_Date__c FROM Training_Contact_Role_Details__c
+                                                    WHERE Account_Contact_Role__r.Contact__c = :loggedUser.contactId];
+
+        return trainingsList;
+    }
+
 
     public class ContactWrapper{
         @AuraEnabled

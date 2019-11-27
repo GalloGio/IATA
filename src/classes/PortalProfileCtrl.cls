@@ -239,6 +239,22 @@ public with sharing class PortalProfileCtrl {
     }
 
     // OBJECT - FIELD NAME - EDITABLE - VISIBLE - SECTION;
+    public static Map<String,List<FieldWrapper>> TrainingFields() {
+
+        FieldWrapper fw;
+
+        Map<String,List<FieldWrapper>> wrapperMap = new Map<String,List<FieldWrapper>>();
+        wrapperMap.put('Training and Certifications',new List<FieldWrapper>());
+
+        wrapperMap.get('Training and Certifications').add(new FieldWrapper('Training_Name__c',true,true));
+        wrapperMap.get('Training and Certifications').add(new FieldWrapper('Training_School__c',true,true));
+        wrapperMap.get('Training and Certifications').add(new FieldWrapper('Training_Type__c',true,true));
+        wrapperMap.get('Training and Certifications').add(new FieldWrapper('Completion_Date__c',true,true));
+
+        return wrapperMap;
+    }
+
+    // OBJECT - FIELD NAME - EDITABLE - VISIBLE - SECTION;
     public static Map<String, List<FieldWrapper>> ContactFieldsAcc() {
         Map<String,List<FieldWrapper>> wrapperMap = new Map<String,List<FieldWrapper>>();
         wrapperMap.put(LABEL_BUSINESS_CONTACT,new List<FieldWrapper>());
@@ -280,6 +296,8 @@ public with sharing class PortalProfileCtrl {
             sectionMap = ContactFields();
         } else if (type == 'MyProfileAccFields') {
             sectionMap = ContactFieldsAcc();
+        } else if (type == 'MyTrainings') {
+            sectionMap = TrainingFields();
         } else {
             sectionMap = AccountFields();
         }
