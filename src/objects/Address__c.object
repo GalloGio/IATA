@@ -162,7 +162,7 @@
         <type>Checkbox</type>
     </fields>
     <fields>
-        <fullName>PO_Box__c</fullName>
+        <fullName>PO_Box_Address__c</fullName>
         <description>check if address is PO Box</description>
         <externalId>false</externalId>
         <inlineHelpText>check if address is PO Box</inlineHelpText>
@@ -292,7 +292,7 @@
         <errorConditionFormula>AND(
  Is_Business_Address__c =false,
 NOT(ISBLANK(Street__c)),
-NOT(ISBLANK(PO_Box__c))
+NOT(ISBLANK(PO_Box_Address__c))
 )</errorConditionFormula>
         <errorMessage>You can not fill Street and PO Number fields at the same time</errorMessage>
     </validationRules>

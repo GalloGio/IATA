@@ -64,7 +64,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>PO_Box__c</field>
+                <field>PO_Box_Address__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>

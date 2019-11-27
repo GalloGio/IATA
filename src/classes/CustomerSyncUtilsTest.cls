@@ -129,7 +129,7 @@ public with sharing class CustomerSyncUtilsTest {
 			addressRoleBusinessContext.Address_Role__r.SIS_Location_ID__c = 'Main';
 			update addressRoleBusinessContext.Address_Role__r;
 
-			addressRoleBusinessContext.Address_Role__r.Address__r.Po_Box__c = '1';
+			addressRoleBusinessContext.Address_Role__r.Address__r.PO_Box_Address__c = '1';
 			update addressRoleBusinessContext.Address_Role__r.Address__r;
 
 			addressRoleBusinessContext.Address_Role__r.Address__r.Account__r.Business_City_Name__c = 'City1';
