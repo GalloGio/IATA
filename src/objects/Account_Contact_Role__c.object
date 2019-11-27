@@ -44,11 +44,11 @@
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
     <description>Related to the Account Role, used to designate an existing contact, under the account, that acts as a primary contact for the associated type of account role.</description>
-	<enableActivities>false</enableActivities>
+    <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
-    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
+    <enableLicensing>false</enableLicensing>
     <enableReports>false</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
@@ -112,13 +112,14 @@
         <externalId>false</externalId>
         <formula>Contact__r.LastName +&apos;, &apos;+ Contact__r.FirstName</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Name</label><required>false</required>
+        <label>Name</label>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
     </fields>
-	<fields>
+    <fields>
         <fullName>Contact_Role_Name__c</fullName>
         <description>A functional role that a Contact belonging to an Account may assume when interacting with an IATA Salesforce functional capability. This designation technically supports the provisioning and delivery of IATA Salesforce functional capabilities.</description>
         <externalId>false</externalId>
@@ -246,12 +247,11 @@
                     <fullName>GADM</fullName>
                     <default>false</default>
                     <label>GADM</label>
-				</value>
-				<value>
+                </value>
+                <value>
                     <fullName>Other</fullName>
                     <default>false</default>
                     <label>Other</label>
-
                 </value>
                 <value>
                     <fullName>TIP</fullName>
@@ -321,30 +321,6 @@
         <active>true</active>
         <description>Relates to the role of the Contact when interacting within the context of the IATA Customer Portal</description>
         <label>Functional</label>
-		<picklistValues>
-            <picklist>Contact_Role__c</picklist>
-            <values>
-                <fullName>Primary Contact</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Service_Rendered__c</picklist>
-            <values>
-                <fullName>GADM</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>TIP</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-    </recordTypes>
-	<recordTypes>
-        <fullName>Master</fullName>
-        <active>true</active>
-        <description>Master RecordType</description>
-        <label>Master</label>
         <picklistValues>
             <picklist>Contact_Role__c</picklist>
             <values>
@@ -380,10 +356,34 @@
             <picklist>Service_Rendered__c</picklist>
             <values>
                 <fullName>GADM</fullName>
-				<default>false</default>
-			</values>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TIP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Master</fullName>
+        <active>true</active>
+        <description>Master RecordType</description>
+        <label>Master</label>
+        <picklistValues>
+            <picklist>Contact_Role__c</picklist>
+            <values>
+                <fullName>Primary Contact</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Service_Rendered__c</picklist>
+            <values>
+                <fullName>GADM</fullName>
                 <default>false</default>
             </values>
             <values>

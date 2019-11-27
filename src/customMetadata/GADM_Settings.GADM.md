@@ -24,11 +24,11 @@
     </values>
     <values>
         <field>IATA_Email_Contact__c</field>
-        <value xsi:type="xsd:string">pavel.pop@isobar.com</value>
+        <value xsi:type="xsd:string">gadm@iata.org</value>
     </values>
     <values>
         <field>Max_File_Size_MB__c</field>
-        <value xsi:type="xsd:double">10.0</value>
+        <value xsi:type="xsd:double">25.0</value>
     </values>
     <values>
         <field>Max_Files_Count__c</field>
@@ -36,6 +36,6 @@
     </values>
     <values>
         <field>Permitted_File_Extensions__c</field>
-        <value xsi:type="xsd:string">csv;xml;txt</value>
+        <value xsi:type="xsd:string">csv;xml</value>
     </values>
 </CustomMetadata>

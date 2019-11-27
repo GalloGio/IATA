@@ -95,7 +95,7 @@
         <fullName>ANG_isToUpdateRHC__c</fullName>
         <description>Technical field to help control the rhc record update on financial security triggerhandler</description>
         <externalId>false</externalId>
-        <formula>(ISPICKVAL(Account__r.Location_Type__c,&apos;HE&apos;) || (ISPICKVAL(Account__r.Location_Type__c,&apos;AE&apos;) &amp;&amp; ISPICKVAL(Account__r.IATA_ISO_Country__r.ANG_RHC_LocationType__c, &apos;Include all AEs&apos;))) &amp;&amp; ISPICKVAL(Account__r.ANG_Accreditation_Model__c,&apos;Cash&apos;)</formula>
+        <formula>(ISPICKVAL(Account__r.Location_Type__c,&apos;GE&apos;) || ISPICKVAL(Account__r.Location_Type__c,&apos;HE&apos;) || (ISPICKVAL(Account__r.Location_Type__c,&apos;AE&apos;) &amp;&amp; ISPICKVAL(Account__r.IATA_ISO_Country__r.ANG_RHC_LocationType__c, &apos;Include all AEs&apos;))) &amp;&amp; (ISPICKVAL(Account__r.ANG_Accreditation_Model__c,&apos;Cash&apos;) || ISPICKVAL(Account__r.ANG_Accreditation_Model__c,&apos;Multicountry&apos;))</formula>
         <label>Update RHC</label>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -150,6 +150,15 @@
         <trackTrending>false</trackTrending>
         <type>MasterDetail</type>
         <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Acknowledge_Sent_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Acknowledge Sent Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
     </fields>
     <fields>
         <fullName>Acknowledgment_sent__c</fullName>
@@ -241,6 +250,31 @@
         <referenceTo>Financial_Institution__c</referenceTo>
         <relationshipLabel>Financial Securities</relationshipLabel>
         <relationshipName>Financial_Securities</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Financial_Security_Validation_Case__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Case through which the bank (Financial institution) acknowledges that the Financial Security provided by the agency is valid.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Please fill in the case number through which the bank confirms the validity of this Financial Security</inlineHelpText>
+        <label>Financial Security Validation Case</label>
+        <lookupFilter>
+            <active>true</active>
+            <errorMessage>This field can only be filled in for Bank Guarantees</errorMessage>
+            <filterItems>
+                <field>$Source.Security_Type__c</field>
+                <operation>equals</operation>
+                <value>Bank Guarantee</value>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>Case</referenceTo>
+        <relationshipLabel>Financial Security Validation Case</relationshipLabel>
+        <relationshipName>Financial_Securities2</relationshipName>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -756,6 +790,15 @@ AND(ISPICKVAL(Region__c , &quot;China &amp; north Asia&quot;), ISPICKVAL(Securit
                 </value>
             </valueSetDefinition>
         </valueSet>
+    </fields>
+    <fields>
+        <fullName>Send_FS_acknowledgment__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Send FS acknowledgment</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>Source__c</fullName>
@@ -2523,6 +2566,22 @@ IMAGE(&quot;/servlet/servlet.FileDownload?file=015200000011tph&quot;,&quot;Reque
         <errorMessage>Expiry date of the Financial Security can&apos;t be less than the Validity start date.</errorMessage>
     </validationRules>
     <validationRules>
+        <fullName>Financial_Security_Validation_Case</fullName>
+        <active>false</active>
+        <description>Financial Security Validation Case should be filled when switching a bank guarantee to &quot;Active&quot;</description>
+        <errorConditionFormula>AND(
+ISPICKVAL(Security_Type__c, &quot;Bank Guarantee&quot;),
+ISPICKVAL(Security_Status__c, &quot;Active&quot;),
+ISBLANK(Financial_Security_Validation_Case__c),
+OR(
+  ISNEW(),
+  ISCHANGED(Security_Status__c)
+  )
+)</errorConditionFormula>
+        <errorDisplayField>Financial_Security_Validation_Case__c</errorDisplayField>
+        <errorMessage>Please fill &quot;Financial Security Validation Case&quot; before making it active.</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>Financial_Security_Validation_is_mandato</fullName>
         <active>true</active>
         <description>ACR 06749697 - A validation rule to force the user update the field &quot;Financial Security Validation&quot;</description>
@@ -2677,5 +2736,16 @@ NOT( ISPICKVAL( Security_Type__c , &quot;Manifestacion de Bienes&quot;) )
         <showsLocation>false</showsLocation>
         <showsStatus>false</showsStatus>
         <url>https://composer.congamerge.com/composer8/index.html?sessionId={!API.Session_ID}&amp;serverUrl={!API.Partner_Server_URL_290}&amp;id={!Financial_Security__c.Id}&amp;fp0=1&amp;ds1=0&amp;ds5=0&amp;LG3=2&amp;OFN=IATA+Notification+Letter+-+{!Financial_Security__c.IATA_code__c}&amp;ds4=0&amp;ReportId=00O20000003q4lt</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Send_Acknowledgement</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <linkType>url</linkType>
+        <masterLabel>Send Acknowledgement</masterLabel>
+        <openType>replace</openType>
+        <protected>false</protected>
+        <url>/flow/Send_Acknowledgement_For_Financial_Security?recordId={!Financial_Security__c.Id}&amp;retURL=/{!Financial_Security__c.Id}</url>
     </webLinks>
 </CustomObject>

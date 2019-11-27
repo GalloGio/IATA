@@ -128,9 +128,12 @@ public without sharing class OneIdLightningLoginFormController {
 
 
             // if PWC or DPC user
-            if(oldPortalRedirectSet.contains(oneUser.profile.Name)){ //overrides to old portal
+            if(oldPortalRedirectSet.contains(oneUser.profile.Name) || oneUser.CNS_Account_or_Agency__c){ //overrides to old portal
                serviceName='ISSP';
                startUrl ='/ISSP_Homepage';
+			   
+			   if(oneUser.CNS_Account_or_Agency__c) startUrl+='?communityName=CNS';
+			   
             }
                 
             username=null != oneUser ? oneUser.Username : username;
@@ -404,6 +407,19 @@ public without sharing class OneIdLightningLoginFormController {
         Id networkId = Network.getNetworkId();
         Auth.AuthConfiguration authConfig = new Auth.AuthConfiguration(networkId,'');
         return authConfig;
+    }
+
+    @AuraEnabled
+    public static string getCustomerPortalUrl(){
+		string url = '';
+		List<Network> networkList = [Select id from Network where name =: 'CS Portal' Limit 1];
+		if(!test.isRunningTest()){
+			if(!networkList.isEmpty()){
+				url = Network.getLoginURL(networkList.get(0).Id).substring(0,Network.getLoginURL(networkList.get(0).Id).lastIndexOf('/'));
+				url = url + '/login';
+			}
+		}
+        return url;
     }
 	
 	//EM - To be removed

@@ -46,15 +46,25 @@
     <description>Used to extend the role of any existing account type e.g. an airline that also acts as a payment provider. A record type should be created for each type of account role required.</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
-    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableEnhancedLookup>true</enableEnhancedLookup>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
+    <enableLicensing>false</enableLicensing>
     <enableReports>true</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>ControlledByParent</externalSharingModel>
+    <fields>
+        <fullName>Account_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Account Name</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
     <fields>
         <fullName>Account_Role_Name__c</fullName>
         <description>A functional role that an Account may assume when interacting with an IATA Salesforce functional capability. This designation technically supports the provisioning of IATA Salesforce functional capabilities.
@@ -64,16 +74,6 @@ The Account Role record should be named after the functional capability for whic
         <inlineHelpText>Account Role Name to fill accordingly to the application using the record</inlineHelpText>
         <label>Account Role Name</label>
         <length>40</length>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>Account_Name__c</fullName>
-        <externalId>false</externalId>
-        <label>Account Name</label>
-        <length>80</length>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>

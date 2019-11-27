@@ -137,7 +137,7 @@ private class OneId_NDCMM_AccountSelection_CTRL_TEST {
         
         system.runAs(guestUser) {
             OneId_RegistrationProcessController.UserInformation info = OneId_RegistrationProcessController.getUserInformationFromEmail('new@test.com', 'NDCMM');
-            OneId_RegistrationProcessController.registration(airline, newContact, 'NDCMM');
+            OneId_RegistrationProcessController.registration(airline, newContact, 'NDCMM', false);
         }
         
     }
@@ -192,7 +192,7 @@ private class OneId_NDCMM_AccountSelection_CTRL_TEST {
 
  
             OneId_RegistrationProcessController.getUserInformation('NDCMM');
-            OneId_RegistrationProcessController.registration(airline, airlineContact, 'NDCMM');
+            OneId_RegistrationProcessController.registration(airline, airlineContact, 'NDCMM', false);
         }
     }
 
@@ -220,7 +220,7 @@ private class OneId_NDCMM_AccountSelection_CTRL_TEST {
 
  
             OneId_RegistrationProcessController.getUserInformation('NDCMM');
-            OneId_RegistrationProcessController.registration(seller, sellerContact, 'NDCMM');
+            OneId_RegistrationProcessController.registration(seller, sellerContact, 'NDCMM', false);
         }
     }
 
@@ -248,7 +248,7 @@ private class OneId_NDCMM_AccountSelection_CTRL_TEST {
 
  
             OneId_RegistrationProcessController.getUserInformation('NDCMM');
-            OneId_RegistrationProcessController.registration(aggregator, aggregatorContact, 'NDCMM');
+            OneId_RegistrationProcessController.registration(aggregator, aggregatorContact, 'NDCMM', false);
         }
     }
 

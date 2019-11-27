@@ -24,107 +24,6 @@ public with sharing class PortalFAQsCtrl {
         return convertStructure(DescribeDataCategoryGroupStructures.getPublicFaqsStructure(lang));               
     }
 
-    @AuraEnabled(cacheable=false)
-    public static void updateMetadata(String strNewMetadata){
-        List<MetadataWrapper> lstNewMetadata =  (List<MetadataWrapper>)JSON.deserialize(strNewMetadata , List<MetadataWrapper>.class);
-
-        List<PortalFAQs__mdt> lstCurrentMetadata = DescribeDataCategoryGroupStructures.getAllFAQs();
-        List<DescribeDataCategoryGroupStructures.FAQCategoryWrapper> lstFAQsStructure = DescribeDataCategoryGroupStructures.getFAQDataCategorySetupStructure();
-        String userLanguage = UserInfo.getLanguage();
-
-        List<CustomMetadataCallback.CustomMetadataType> customMetadataToUpsert = new List<CustomMetadataCallback.CustomMetadataType>();
-
-        for(MetadataWrapper metaAux : lstNewMetadata){
-            PortalFAQs__mdt metaFound = null;
-
-            for(PortalFAQs__mdt currentMetaAux : lstCurrentMetadata){                
-                if( (String.isNotBlank(metaAux.categoryName) && String.isBlank(metaAux.topicName) && String.isBlank(metaAux.subtopicName) && currentMetaAux.DataCategoryName__c == metaAux.categoryName) ||
-                    (String.isNotBlank(metaAux.categoryName) && String.isNotBlank(metaAux.topicName) && String.isBlank(metaAux.subtopicName) && currentMetaAux.DataCategoryName__c == metaAux.categoryName && currentMetaAux.DataTopicName__c == metaAux.topicName) || 
-                    (String.isNotBlank(metaAux.categoryName) && String.isNotBlank(metaAux.topicName) && String.isNotBlank(metaAux.subtopicName) && currentMetaAux.DataCategoryName__c == metaAux.categoryName && currentMetaAux.DataTopicName__c == metaAux.topicName && currentMetaAux.DataSubtopicName__c == metaAux.subtopicName)
-                ){
-                    metaFound = currentMetaAux; 
-                    break;
-                }
-            }
-
-
-            if(metaFound != null){
-                // update just the order and active fields, because the other are the same
-                CustomMetadataCallback.CustomMetadataType cmdtDT = new CustomMetadataCallback.CustomMetadataType(); 
-                cmdtDT.strMDTAndRecord = 'PortalFAQs__mdt.' + metaFound.DeveloperName;
-                cmdtDT.strMasterLabel = metaFound.MasterLabel;
-                cmdtDT.fieldLIST = new List<String>{ 'Order__c', 'Active__c'};
-                cmdtDT.valueLIST = new List<Object>{ Integer.valueof(metaAux.order), true};
-                customMetadataToUpsert.add(cmdtDT);
-            }else{
-                //insert new meta
-                
-                //new category
-                if(String.isNotBlank(metaAux.categoryName) && String.isBlank(metaAux.topicName) && String.isBlank(metaAux.subtopicName)){
-                    
-                    String hashBase64SHA1 = EncodingUtil.convertToHex(Crypto.generateDigest('SHA1',Blob.valueOf(metaAux.categoryName)));
-                    String label = DescribeDataCategoryGroupStructures.getLabelFromDescribe('' + metaAux.categoryName, null, null, 'category', lstFAQsStructure );
-
-                    CustomMetadataCallback.CustomMetadataType cmdtDT = new CustomMetadataCallback.CustomMetadataType(); 
-                    cmdtDT.strMDTAndRecord = 'PortalFAQs__mdt.' + 'x' + hashBase64SHA1.substring(0,34);
-                    cmdtDT.strMasterLabel = '' + 'x' + hashBase64SHA1.substring(0,34);
-                    cmdtDT.fieldLIST = new List<String>{'DataCategoryName__c', 'FAQsStructure__c', 'Order__c', 'Active__c', 'DataCategoryLabel_'+ userLanguage + '__c'};
-                    cmdtDT.valueLIST = new List<Object>{'' + metaAux.categoryName, true, Integer.valueof(metaAux.order), true, '' + label};
-                    customMetadataToUpsert.add(cmdtDT);
-
-                }
-
-                //new topic
-                if(String.isNotBlank(metaAux.categoryName) && String.isNotBlank(metaAux.topicName) && String.isBlank(metaAux.subtopicName)){
-                    
-                    String hashBase64SHA1 = EncodingUtil.convertToHex(Crypto.generateDigest('SHA1', Blob.valueOf(metaAux.categoryName + metaAux.topicName)));
-                    String label = DescribeDataCategoryGroupStructures.getLabelFromDescribe('' + metaAux.categoryName, '' + metaAux.topicName, null, 'topic', lstFAQsStructure );
-
-                    CustomMetadataCallback.CustomMetadataType cmdtDT = new CustomMetadataCallback.CustomMetadataType(); 
-                    cmdtDT.strMDTAndRecord = 'PortalFAQs__mdt.' + 'x' + hashBase64SHA1.substring(0,34);
-                    cmdtDT.strMasterLabel = '' + 'x' + hashBase64SHA1.substring(0,34);
-                    cmdtDT.fieldLIST = new List<String>{'DataCategoryName__c', 'DataTopicName__c', 'FAQsStructure__c', 'Order__c', 'Active__c', 'DataCategoryLabel_'+ userLanguage + '__c'};
-                    cmdtDT.valueLIST = new List<Object>{'' + metaAux.categoryName, '' + metaAux.topicName, true, Integer.valueof(metaAux.order), true, '' + label};
-                    customMetadataToUpsert.add(cmdtDT);
-
-                }
-
-                //new subtopic
-                if(String.isNotBlank(metaAux.categoryName) && String.isNotBlank(metaAux.topicName) && String.isNotBlank(metaAux.subtopicName)){
-                    
-                    String hashBase64SHA1 = EncodingUtil.convertToHex(Crypto.generateDigest('SHA1',Blob.valueOf(metaAux.categoryName + metaAux.topicName + metaAux.subtopicName)));
-                    String label = DescribeDataCategoryGroupStructures.getLabelFromDescribe('' + metaAux.categoryName, '' + metaAux.topicName, '' + metaAux.subtopicName, 'subtopic', lstFAQsStructure );
-
-                    CustomMetadataCallback.CustomMetadataType cmdtDT = new CustomMetadataCallback.CustomMetadataType(); 
-                    cmdtDT.strMDTAndRecord = 'PortalFAQs__mdt.' + 'x' + hashBase64SHA1.substring(0,34);
-                    cmdtDT.strMasterLabel = '' + 'x' + hashBase64SHA1.substring(0,34);
-                    cmdtDT.fieldLIST = new List<String>{'DataCategoryName__c', 'DataTopicName__c', 'DataSubtopicName__c', 'FAQsStructure__c', 'Order__c', 'Active__c', 'DataCategoryLabel_'+ userLanguage + '__c'};
-                    cmdtDT.valueLIST = new List<Object>{'' + metaAux.categoryName, '' + metaAux.topicName,'' + metaAux.subtopicName, true, Integer.valueof(metaAux.order), true, '' + label};
-                    customMetadataToUpsert.add(cmdtDT);
-
-                }
-
-
-            }
-        }
-
-        CustomMetadataCallback.Upsert_MDT_Value(customMetadataToUpsert);
-    }
-
-    public class MetadataWrapper{
-        @AuraEnabled
-        public String categoryName {get; set;}
-        @AuraEnabled
-        public String topicName {get; set;}
-        @AuraEnabled
-        public String subtopicName {get; set;}
-        @AuraEnabled
-        public String order {get; set;}
-
-        public MetadataWrapper(){}
-
-    }
-
     private static List<DescribeDataCategoryGroupStructures.DataCategoryWrapper> convertStructure(List<DescribeDataCategoryGroupStructures.FAQCategoryWrapper> lstToConvert){
         List<DescribeDataCategoryGroupStructures.DataCategoryWrapper> lstToReturn = new List<DescribeDataCategoryGroupStructures.DataCategoryWrapper>();
 
@@ -251,7 +150,7 @@ public with sharing class PortalFAQsCtrl {
             
             String queryPartOne = 'FIND \'' + String.escapeSingleQuotes(filtersWrapper.searchText) + '\' IN ALL FIELDS '+
                            'RETURNING FAQ__kav(Id, ArticleNumber, Title, Answer__c WHERE PublishStatus = \'online\'';
-            String queryLanguage = filtersWrapper.guestUser != null && filtersWrapper.guestUser ? ' AND Language = \'' + filtersWrapper.language + '\'' : '';
+            String queryLanguage = filtersWrapper.guestUser != null && filtersWrapper.guestUser ? ' AND Language = \'' + filtersWrapper.language + '\'' : ' AND Language = \'' + UserInfo.getLanguage() + '\'';
             String queryPartTwo = ' WITH DATA CATEGORY FAQs__c BELOW ' + levels ;
 
 
@@ -281,7 +180,7 @@ public with sharing class PortalFAQsCtrl {
                 Integer offset = requestedPageAux * PortalFAQsCtrl.RESULTS_PER_PAGE;
                 String offsetQuery = ' LIMIT ' + PortalFAQsCtrl.RESULTS_PER_PAGE + ' OFFSET ' + offset + ')';
 
-                String finalQuery = queryPartOne + offsetQuery;
+                String finalQuery = queryPartOne + ' AND Language = \'' + UserInfo.getLanguage() + '\'' + offsetQuery;
                 if(String.isNotBlank(queryPartTwo)) finalQuery += queryPartTwo;
                 
 				System.debug(LoggingLevel.FINE, '[cls PortalFAQsCtrl - getFilteredFAQsResultsPage] finalQuery - ' + finalQuery);
@@ -302,4 +201,61 @@ public with sharing class PortalFAQsCtrl {
         public SObject[] records { get;set; }
     }
 
+    /*
+    * @description Used in Submit for Approval Quick Action on FAQ__kav. Update field Categories according to selected Article Categories.
+    * @params List<Id> articleTypeIds
+    * @return ApexMessageHandling
+    */
+    @AuraEnabled
+    public static ApexMessageHandling updateArticleCategories(List<Id> articleTypeIds) {
+        List<FAQ__kav> lstArticleType =
+            [SELECT Id, Categories__c
+            FROM FAQ__kav
+            WHERE Id IN:articleTypeIds AND PublishStatus = 'Draft' AND ValidationStatus != 'Pending publication'];
+
+        if(!lstArticleType.isEmpty()) {
+            List<FAQ__DataCategorySelection> lstDC =
+                [SELECT ParentId, DataCategoryName
+                FROM FAQ__DataCategorySelection
+                WHERE ParentId IN:articleTypeIds];
+
+            Map<Id, String> datacategoryNameMap = new Map<Id, String>();
+            String str;
+            for(FAQ__DataCategorySelection dcObj:lstDC) {
+                if(datacategoryNameMap.containsKey(dcObj.ParentId)) {
+                    str = datacategoryNameMap.get(dcObj.ParentId);
+                    datacategoryNameMap.put(dcObj.ParentId, str + ',' + dcObj.DataCategoryName);
+                }
+                else {
+                    datacategoryNameMap.put(dcObj.ParentId, dcObj.DataCategoryName);
+                }
+            }
+
+            for(FAQ__kav artObj:lstArticleType) {
+                if(datacategoryNameMap.containsKey(artObj.Id)) {
+                    artObj.Categories__c = datacategoryNameMap.get(artObj.Id);
+                }
+            }
+
+            try {
+                update lstArticleType;
+                return new ApexMessageHandling();
+            } catch(DmlException e) {
+                return new ApexMessageHandling(false, e.getMessage());
+            }   
+        } else {
+            return new ApexMessageHandling(false, Label.CSP_PendingApproval);
+        }
+    }
+
+    /*
+    * @description Submit a record for approval.
+    * @params String approvalNameOrId, Id recordId, Id userId, String comments
+    * @return
+    */
+    @AuraEnabled
+    public static void submitArticleForApproval(String approvalNameOrId, Id recordId, Id userId, String comments) {
+        // Contains generic methods related to Approval Process, which can be used just passing params
+        AMS_OSCAR_ApprovalHelper.submit(approvalNameOrId, recordId, userId, comments);
+    }
 }

@@ -94,7 +94,7 @@
         <fields>Last_Name__c</fields>
         <relatedList>Account_Contact_Role__c.Account_Role__c</relatedList>
     </relatedLists>
-	<relatedLists>
+    <relatedLists>
         <fields>NAME</fields>
         <relatedList>UIS_Account_Role_Details__c.Account_Role__c</relatedList>
     </relatedLists>

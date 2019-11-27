@@ -51,6 +51,19 @@ Each record stands for a combination of values (account sector and category) whe
         <unique>false</unique>
     </fields>
     <label>Portal Application Visibility</label>
+    <listViews>
+        <fullName>All_w_details</fullName>
+        <columns>Parent__c</columns>
+        <columns>MasterLabel</columns>
+        <columns>DeveloperName</columns>
+        <columns>Sector__c</columns>
+        <columns>Category__c</columns>
+        <columns>Is_Visible__c</columns>
+        <columns>Auto_grant_service__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All w details</label>
+        <language>en_US</language>
+    </listViews>
     <pluralLabel>Portal Application Visibilities</pluralLabel>
     <visibility>Public</visibility>
 </CustomObject>
