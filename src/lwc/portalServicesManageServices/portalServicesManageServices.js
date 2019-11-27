@@ -309,55 +309,50 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                 isAirlineUser().then(result => {
                     this.airlineUser = result;
 					
-                getCountryList()
-                    .then(result2 => {
-                        let myResult = JSON.parse(JSON.stringify(result2));
-                        let myCountryOptions = [];
-                        let auxmyCountryOptions = [];
-                        Object.keys(myResult).forEach(function (el) {
-                            auxmyCountryOptions.push({ label: myResult[el], value: el });
-                        });
-                        //used to order alphabetically
-                        auxmyCountryOptions.sort((a, b) => { return (a.label).localeCompare(b.label) });
-                        myCountryOptions = myCountryOptions.concat(auxmyCountryOptions);
+					getCountryList()
+						.then(result2 => {
+							let myResult = JSON.parse(JSON.stringify(result2));
+							let myCountryOptions = [];
+							let auxmyCountryOptions = [];
+							Object.keys(myResult).forEach(function (el) {
+								auxmyCountryOptions.push({ label: myResult[el], value: el });
+							});
+							//used to order alphabetically
+							auxmyCountryOptions.sort((a, b) => { return (a.label).localeCompare(b.label) });
+							myCountryOptions = myCountryOptions.concat(auxmyCountryOptions);
 
-                        this.optionsCountry = this.getPickWithAllValue(myCountryOptions);
-                        this.allLabel = this.optionsCountry[0].label;
-                    });
-                this.optionsStatus = this.getPickWithAllValue(this.optionsStatus);
-                //If Airline user - Country ELSE IATACODE
-                if (this.airlineUser) {
-                    this.contactTableColums = [
-                        { label: CSP_User, fieldName: 'contactName', type: 'text' },
-                        { label: Email, fieldName: 'emailAddress', type: 'text' },
-                        { label: Status, fieldName: 'serviceRight', type: 'text' },
-                        { label: Country, fieldName: 'country', type: 'text' },
-                        { type: 'action', typeAttributes: { iconName: 'utility:delete', disabled: true, rowActions: this.getRowActions } }
-                    ];
-                } else {
-                    this.contactTableColums = [
-                        { label: CSP_User, fieldName: 'contactName', type: 'text' },
-                        { label: Email, fieldName: 'emailAddress', type: 'text' },
-                        { label: Status, fieldName: 'serviceRight', type: 'text' },
-                        { label: ISSP_IATA_Location_Code, fieldName: 'iataCodeLoc', type: 'text' },
-                        { type: 'action', typeAttributes: { iconName: 'utility:delete', disabled: true, rowActions: this.getRowActions } }
-                    ];
-                }
+							this.optionsCountry = this.getPickWithAllValue(myCountryOptions);
+							this.allLabel = this.optionsCountry[0].label;
+						});
+					this.optionsStatus = this.getPickWithAllValue(this.optionsStatus);
+					//If Airline user - Country ELSE IATACODE
+					if (this.airlineUser) {
+						this.contactTableColums = [
+							{ label: CSP_User, fieldName: 'contactName', type: 'text' },
+							{ label: Email, fieldName: 'emailAddress', type: 'text' },
+							{ label: Status, fieldName: 'serviceRight', type: 'text' },
+							{ label: Country, fieldName: 'country', type: 'text' },
+							{ type: 'action', typeAttributes: { iconName: 'utility:delete', disabled: true, rowActions: this.getRowActions } }
+						];
+					} else {
+						this.contactTableColums = [
+							{ label: CSP_User, fieldName: 'contactName', type: 'text' },
+							{ label: Email, fieldName: 'emailAddress', type: 'text' },
+							{ label: Status, fieldName: 'serviceRight', type: 'text' },
+							{ label: ISSP_IATA_Location_Code, fieldName: 'iataCodeLoc', type: 'text' },
+							{ type: 'action', typeAttributes: { iconName: 'utility:delete', disabled: true, rowActions: this.getRowActions } }
+						];
+					}
 
+					this.contactsToAddColumns = [
+						{ label: 'User', fieldName: 'title', type: 'text' },
+						{ label: 'Email', fieldName: 'subtitle', type: 'text' },
+						{ label: 'Status', fieldName: 'status', type: 'text' },
+						{ label: 'IATA Location Code', fieldName: 'iataCodeLocation', type: 'text' },
+						{ label: '', type: 'button', initialWidth: 35, typeAttributes: { label: '', variant: "base", title: 'Remove', name: 'removeContact', iconName: 'utility:delete' } }
+					];
 
-                //Remove column IATA Code (Location) if User Account is not an Agency
-                if(!this.isAgency) {
-                    this.contactTableColums = this.contactTableColums.slice(0, 2).concat(this.contactTableColums.slice(3));
-                }
-
-                this.contactsToAddColumns = [
-                    { label: 'User', fieldName: 'title', type: 'text' },
-                    { label: 'Email', fieldName: 'subtitle', type: 'text' },
-                    { label: 'Status', fieldName: 'status', type: 'text' },
-                    { label: 'IATA Location Code', fieldName: 'iataCodeLocation', type: 'text' },
-                    { label: '', type: 'button', initialWidth: 35, typeAttributes: { label: '', variant: "base", title: 'Remove', name: 'removeContact', iconName: 'utility:delete' } }
-                ];
-
+			});
 
             }
         });
@@ -637,7 +632,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                 //Exit search mode
                 //restore all records already retrieved
                 this.searchMode = false;
-                this.contactList = this.contactListOg.slice();
+                this.contactList = this.globalResults.slice();
                 this.totalNrPages = this.totalNrPagesOg;
                 this.generatePageList();
                 this.refreshContactPageView(1);
