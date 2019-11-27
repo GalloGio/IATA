@@ -163,26 +163,6 @@
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>
     <fields>
-        <fullName>Account_Categories__c</fullName>
-        <externalId>false</externalId>
-        <label>Account Categories</label>
-        <length>100</length>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>Account_Sector__c</fullName>
-        <externalId>false</externalId>
-        <label>Account Sector</label>
-        <length>100</length>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
         <fullName>CategoryExceptions__c</fullName>
         <externalId>false</externalId>
         <label>Category Exceptions</label>
@@ -392,6 +372,14 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Requires_Level2_Registration__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Requires Level 2 Registration</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>SectorExceptions__c</fullName>
         <externalId>false</externalId>
         <label>Sector Exceptions</label>
@@ -400,6 +388,15 @@
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Setup__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Indicates if a record is from Data Category Visibility or manually generated.</description>
+        <externalId>false</externalId>
+        <label>Setup</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
     </fields>
     <listViews>
         <fullName>All</fullName>
@@ -419,6 +416,7 @@
         <columns>NAME</columns>
         <columns>DataCategoryName__c</columns>
         <columns>DataCategoryLabel_en_US__c</columns>
+        <columns>Setup__c</columns>
         <columns>Order__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
@@ -438,6 +436,7 @@
         <columns>DataTopicName__c</columns>
         <columns>DataSubtopicName__c</columns>
         <columns>DataCategoryLabel_en_US__c</columns>
+        <columns>Setup__c</columns>
         <columns>Order__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
@@ -460,6 +459,7 @@
         <columns>DataCategoryName__c</columns>
         <columns>DataTopicName__c</columns>
         <columns>DataCategoryLabel_en_US__c</columns>
+        <columns>Setup__c</columns>
         <columns>Order__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
