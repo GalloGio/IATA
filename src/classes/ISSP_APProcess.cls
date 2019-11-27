@@ -2284,6 +2284,12 @@ global without sharing class ISSP_APProcess {
         String docname = MAP_ICH_DOC_TERMS.get(this.newCase.Classification_SIS__c);
         return getDocumentName(docname);
     }
+    public String getICHGenericTermsAndConditionsUrl() {
+        return getDocumentUrl('ICH_Terms_And_Conditions');
+    }
+    public String getICHGenericTermsAndConditionsName() {
+        return getDocumentName('ICH_Terms_And_Conditions');
+    }
 
     public String getAssociateAggregatorMemberApplicationUrl() {
         return getDocumentUrl('Associate_Aggregator_Member_App');

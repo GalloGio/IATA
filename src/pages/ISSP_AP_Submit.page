@@ -438,20 +438,29 @@
                         <div class="modalBackground"></div>
                         <div class="modalPanel">
                             <apex:pageBlock id="contactBlock">
-                                <object
-                                        data="/servlet/servlet.FileDownload?file=0151l000000EPsp"
+                                <apex:outputPanel rendered="{!ICHGenericTermsAndConditionsUrl!=null}">
+                                    <div class="center">
+                                        <img src="{!URLFOR($Resource.PDF_icon_large)}" style="vertical-align:middle"/>
+                                        <apex:outputLink value="{!ICHGenericTermsAndConditionsUrl}" style="color:#31708f; text-decoration: underline;" target="_new">
+                                            {!ICHGenericTermsAndConditionsName}
+                                        </apex:outputLink>
+                                    </div>
+                                    <object
+                                        data="{!ICHGenericTermsAndConditionsUrl}"
                                         style="height:500px; width:98%; margin:10px;"
                                         type="application/pdf"
-                                        />
+                                    />
+                                </apex:outputPanel>
+
                                 <div class="center">
                                     <apex:outputLabel value="I have read and accept Terms and Conditions" style="padding:1em;"/>
                                     <apex:inputField value="{!newForm.Accept_terms_and_conditions__c}" styleclass="required" style="vertical-align: text-bottom;"/>
                                 </div>
-                            <!-- BUTTON SECTION -->
-                            <apex:pageBlockButtons location="bottom">
-                                <apex:commandButton styleclass="apbutton" action="{!hideTermsConditionsPopup}" value="Cancel" rerender="ich-section" status="WaitingStatus"/>
-                                <apex:commandButton styleclass="apbutton" action="{!goToFinalStep}" value="Submit to IATA" rerender="ich-modal" status="WaitingStatus"/>
-                            </apex:pageBlockButtons>
+                                <!-- BUTTON SECTION -->
+                                <apex:pageBlockButtons location="bottom">
+                                    <apex:commandButton styleclass="apbutton" action="{!hideTermsConditionsPopup}" value="Cancel" rerender="ich-section" status="WaitingStatus"/>
+                                    <apex:commandButton styleclass="apbutton" action="{!goToFinalStep}" value="Submit to IATA" rerender="ich-modal" status="WaitingStatus"/>
+                                </apex:pageBlockButtons>
 
                             </apex:pageBlock>
                         </div>

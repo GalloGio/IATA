@@ -1739,6 +1739,8 @@ private class ISSP_APProcess_Test
             insert listCountrySpecs;
             ctrl.getICHTermsAndConditionsUrl();
             ctrl.getICHTermsAndConditionsName();
+            ctrl.getICHGenericTermsAndConditionsUrl();
+            ctrl.getICHGenericTermsAndConditionsName();
             ctrl.getAssociateAggregatorMemberApplicationUrl();
             ctrl.getAssociateAggregatorMemberApplicationName();
             ctrl.getICHCurrencyClearanceOptions();
