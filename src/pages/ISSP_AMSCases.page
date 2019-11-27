@@ -442,7 +442,7 @@
 
                             <div class="row" style="padding-top: 20px;">
                                 <div class="col-md-12">
-                                    <input type="button" class="btn btn_iata_primary" onClick="multiCountryNewAE();" value="Add New Associate Entity"/>
+                                    <input type="button" class="btn btn_iata_primary" onClick="multiCountryNewAE();" value="{!$Label.ISSP_Add_New_Associate_Entity}"/>
                                 </div>
                             </div>
 
