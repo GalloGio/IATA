@@ -1806,6 +1806,17 @@ NOT($Permission.Modify_Local_Group_Owners)
         <errorMessage>The group can have either a Division or a Region - but not both at the same time</errorMessage>
     </validationRules>
     <validationRules>
+        <fullName>Industry_Group_Ownership</fullName>
+        <active>true</active>
+        <description>Avoid users from changing owner of Local groups since queue ownership is being used email alerts for Local group meetings</description>
+        <errorConditionFormula>AND(
+  ISCHANGED(OwnerId),
+  NOT($Permission.Industry_Group_Ownership_Change),
+  RecordType.DeveloperName = &quot;Local_Groups&quot;
+)</errorConditionFormula>
+        <errorMessage>You are not allowed to change ownership of an industry group. Please contact a System administrator or Account management team.</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>Name_of_Reg_Div_Group_cant_be_modified</fullName>
         <active>true</active>
         <description>Name of the group cannot be modified after being approved</description>
