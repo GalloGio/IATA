@@ -1,7 +1,7 @@
 <template>
     <lightning-layout multiple-rows class="slds-m-top_x-large" pull-to-boundary="medium" horizontal-align="spread">
         <!-- Search bar and buttons -->
-        <lightning-layout-item class="slds-p-around_xx-small" size="12" flexibility="grow" large-device-size="6" medium-device-size="6">
+        <lightning-layout-item class="slds-p-around_xx-small" size="12" flexibility="grow" large-device-size="5" medium-device-size="6" style="width: 35%;">
             <div class="bottomLightGrayBorder slds-m-around_small inputFilter">
                 <img src={searchIconUrl}>
                 <lightning-input name="newRecipientTextInput"
@@ -13,20 +13,23 @@
                 </lightning-input>
             </div>
         </lightning-layout-item>
-        <lightning-layout-item class="slds-text-align_right slds-p-around_xx-small" size="12" flexibility="auto" large-device-size="6" medium-device-size="6">
-            <lightning-layout-item class="slds-text-align_right noPadding" size="3" flexibility="auto" small-device-size="3" medium-device-size="3">
+        <lightning-layout-item class="slds-text-align_right slds-p-around_xx-small" size="12" flexibility="auto" large-device-size="7" medium-device-size="9" style="width: 65%;">
+            <lightning-layout-item class="slds-text-align_right paddingRight" size="3" flexibility="auto" small-device-size="3" medium-device-size="3">
                 <!-- FILTER -->
-                <button if:true={filtered} class="slds-button slds-button_icon slds-button__icon_right filterButton" onclick={openCasesFilterModal}>
-                    {label.CSP_Filtered}<img style="padding-left: 7rem;" src={filteredIconUrl}>
+                <button if:true={filtered} class="slds-m-right_small slds-button_icon slds-button__icon_right filterButton" onclick={openCasesFilterModal}>
+                    {label.CSP_Filtered}<img class="slds-float_right" src={filteredIconUrl}>
                 </button>
-                <button if:false={filtered} class="slds-button slds-button_icon slds-button__icon_right filterButton" onclick={openCasesFilterModal}>
-                    {label.CSP_Filter}<img style="padding-left: 7rem;" src={filterIconUrl}>
+                <button if:false={filtered} class="slds-m-right_small slds-button_icon slds-button__icon_right filterButton" onclick={openCasesFilterModal}>
+                    {label.CSP_Filter}<img class="slds-float_right" src={filterIconUrl}>
                 </button>
             </lightning-layout-item>
             <!-- LIST VIEW -->
-            <lightning-layout-item class="slds-text-align_right noPadding" size="3" flexibility="auto" small-device-size="3" medium-device-size="3">    
-                <lightning-button label={label.CSP_MyCases} class="containedButton slds-m-left_small" onclick={changeToUserCasesTableView} if:true={viewNormalUserCasesTableViewButton}></lightning-button>
-                <lightning-button label={label.CSP_CompanyCases} class="containedButton slds-m-left_small" onclick={changeToAdminCasesTableView} if:true={viewAdminUserCasesTableViewButton}></lightning-button>
+            <lightning-layout-item class="slds-text-align_right paddingRight" size="3" flexibility="auto" small-device-size="3" medium-device-size="3">    
+                <lightning-button label={label.CSP_MyCases} class="containedButton" onclick={changeToUserCasesTableView} if:true={viewNormalUserCasesTableViewButton}></lightning-button>
+                <lightning-button label={label.CSP_CompanyCases} class="containedButton" onclick={changeToAdminCasesTableView} if:true={viewAdminUserCasesTableViewButton}></lightning-button>
+            </lightning-layout-item>
+            <lightning-layout-item class="slds-text-align_right paddingRight" size="3" flexibility="auto" small-device-size="3" medium-device-size="3">
+                    <lightning-button label="Reach Us" class="containedButton" onclick={openReachUs}></lightning-button>
             </lightning-layout-item>
         </lightning-layout-item>
     </lightning-layout>

@@ -61,6 +61,10 @@
                 <behavior>Edit</behavior>
                 <field>AMS_Default_State__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Informatica_Value__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -258,6 +262,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>ANG_Enable_NewGen__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Multicountry_Enabled__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -505,7 +513,9 @@
     <relatedLists>
         <fields>NAME</fields>
         <fields>ISO_Code__c</fields>
-        <fields>IEC_Valid_SAP__c</fields>
+        <fields>GeonameAsciiName__c</fields>
+        <fields>GeonameName__c</fields>
+        <fields>Valid_for_Address__c</fields>
         <relatedList>IATA_ISO_State__c.IATA_ISO_Country__c</relatedList>
     </relatedLists>
     <relatedLists>

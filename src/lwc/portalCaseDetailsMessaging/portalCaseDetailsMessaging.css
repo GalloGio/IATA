@@ -27,7 +27,8 @@ textarea:focus{
 }
 
 .caseMessagesSelfBubbleContainer, .caseMessagesOtherBubbleContainer {
-    max-width: 60%;
+    /* max-width: 60%; */
+    min-width: 30%;
 }
 
 .caseMessagesSelfBubbleContainer {
@@ -48,28 +49,39 @@ textarea:focus{
     position: relative;   
 }
 
-.caseMessagesSelfBubble:after {
-    content: "";
-    position: absolute;
-    border-bottom: 8px solid #525252;
-    border-left: 8px solid #525252;
-    border-right: 8px solid transparent;
-    border-top: 8px solid transparent;
-    top: calc(100% - 16px);
-    right: -15px;
-}
-
-.caseMessagesOtherBubble:after {
-    content: "";
-    position: absolute;
-    border-bottom: 8px solid #ffffff;
-    border-left: 8px solid transparent;
-    border-right: 8px solid #ffffff;
-    border-top: 8px solid transparent;
-    top: calc(100% - 16px);
-    left: -15px;
-}
-
 .breakWord{
     word-break: break-all;
+}
+
+.collapsed{
+    visibility: collapse;
+    display: none;
+}
+
+.arrowExpanded{
+    transform: rotate(90deg);
+}
+@media print {
+    .caseMessagesContainer {
+        display: block;
+        height: auto; 
+        visibility: visible;
+    }
+    .caseMessagesContainer .colalpsed {
+        display: block;
+        height: auto; 
+        visibility: visible;
+    }
+    .slds-icon-utility-chevronright.arrowExpanded{
+        transform: rotate(90deg);
+    }
+    .slds-icon-utility-chevronright{
+        transform: rotate(90deg);
+    }
+    .customCard {
+        box-shadow: 0px 0px 0px #fff;
+        border-radius: 0px;
+        border: solid 0px #fff;
+        background-color: rgba(255, 255, 255, 1);
+    }
 }

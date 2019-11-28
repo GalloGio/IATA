@@ -1,0 +1,42 @@
+<!--
+ - Created by ppop on 8/7/2019.
+ -->
+<aura:component description="GADM_RelatedFilesCategorizedLists" controller="GADM_RelatedFilesCategorizedLists_CTRL" implements="flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes">
+    <aura:attribute name="fileCategories" type="Set"/>
+    <aura:attribute name="files" type="List"/>
+    <aura:attribute name="objectIds" type="List"/>
+    <aura:attribute name="isPopup" type="boolean" default="false"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.initializeComponent}"/>
+    <!-- IF MODAL WINDOW IS OPENED, ONE ID LOGO AND SERVICE PROFILE MENU IS DISPLAYED OVER THE POPUP DIALOG -->
+    <!-- THIS HTML HACK IS THE ONLY WAY HOW TO PUSH THE HEADER COMPONENTS INTO BACKGROUND AND THAN BACK TO THEIR ORIGINAL POSITION ONCE MODAL IS CLOSED-->
+    <!-- COMPONENT NEEDS TO BE IN VERSION 40 AS IN LATER VERSIONS style IS NOT SUPPORTED-->
+    <aura:attribute name="cssStyle" type="String"/>
+    <style>{!v.cssStyle}</style>
+    <aura:if isTrue="{!not(empty(v.fileCategories))}">
+            <lightning:tabset variant="scoped">
+                <aura:iteration items="{!v.fileCategories}" var="category">
+                    <lightning:tab label="{!category}">
+                        <div class="tabContainer">
+                            <aura:iteration items="{!v.files}" var="file" indexVar="key">
+                                <aura:if isTrue="{!file.category == category}">
+                                    <div class="fileline">
+                                        <span><lightning:icon  size="small" iconName="{!file.fileType}" alternativeText="Audio file"/></span>
+                                        <span class="marginLeft">{!file.fileName}</span>
+                                        <span class="marginLeft floatRight">
+                                            <a href="{!file.link}">download</a>
+                                        </span>
+                                        <aura:if isTrue="{!file.preview != ''}">
+                                        <span class="marginLeft floatRight">
+                                            <a href="{!file.preview}" target="_blank">preview</a>
+                                        </span>
+                                        </aura:if>
+                                    </div>
+                                </aura:if>
+                            </aura:iteration>
+                        </div>
+                    </lightning:tab>
+                </aura:iteration>
+            </lightning:tabset>
+    </aura:if>
+</aura:component>

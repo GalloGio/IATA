@@ -6,7 +6,29 @@
             <c-portal-accept-terms oncloseacceptterms={logOut} onacceptterms={acceptTerms}></c-portal-accept-terms>
         </template>
     
-        <div class="headerContainer borderTransition">
+    <template if:true={displayRegistrationConfirmation}>
+        <c-portal-registration-first-level-confirmation oncloseregistrationpopup={logOut} onhideregistrationpopup={hideRegistration}
+                                                        onconfirmregistration={confirmRegistration}>
+        </c-portal-registration-first-level-confirmation>
+    </template>
+
+    <template if:true={displayFirstLogin}>
+        <c-portal-first-login registrationlevel={registrationlevel}
+                            onclosefirstloginpopup={hideFirstLogin} 
+                            ontriggersecondlevelregistration={triggerSecondLevelRegistration}>
+        </c-portal-first-login>
+    </template>
+
+    <template if:true={displaySecondLevelRegistration}>
+        <c-portal-registration-second-level 
+            trigger={level2RegistrationTrigger}
+            is-triggered-by-request={isTriggeredByRequest}
+            onclosesecondlevelregistration={closeSecondLevelRegistration} 
+            onsecondlevelregistrationcompletedactiontwo={secondLevelRegistrationCompleted}>
+        </c-portal-registration-second-level>
+    </template>
+
+<div class="headerContainer borderTransition">
             <div class="slds-grid slds-wrap maxWidthHeader">
     
                 <!-- MODAL -->
@@ -82,9 +104,9 @@
                             <!-- notifications tab -->
                             <div class="slds-col slds-m-horizontal_medium slds-p-left_x-small slds-p-vertical_xx-small headerButtonNotificationsContainer"
                                 style={headerButtonNotificationsContainerStyle} onclick={toggleNotifications}>
+                                <img style={headerButtonNotificationsStyle} src={notificationIcon} />
                                 <div class="slds-p-horizontal_xx-small notificationNumber text-darkGray"
                                     style={notificationNumberStyle}>{numberOfNotifications}</div>
-                                <img style={headerButtonNotificationsStyle} src={notificationIcon} />
                                 <div class="headerButtonNotificationsCloseIcon" style={headerButtonNotificationsCloseIconStyle}>
                                     <div class="closeButton"> + </div>
                                 </div>
@@ -422,25 +444,25 @@
                                     <span class="slds-p-around_small text-xsmall text-black profileOption"
                                         onclick={navigateToCases}>{labels.CSP_Cases}</span>
                                     <span class="slds-p-around_small text-xsmall text-black profileOption"
-                                        onclick={navigateToChangePassword}> {labels.ISSP_Reset_Password} </span>
+                                    onclick={navigateToCspChangePassword}> {labels.ISSP_Reset_Password} </span>
                                     <span class="slds-p-around_small text-xsmall text-black profileOption"
                                         onclick={logOut}>{labels.CSP_LogOut}</span>
                                 </div>
                             </div>
     
                             <!-- notifications tab -->
-                            <div class="slds-m-horizontal_medium slds-p-left_x-small slds-p-vertical_xx-small headerButtonNotificationsContainer"
+                            <div class="slds-m-horizontal_xsmall slds-p-vertical_xx-small headerButtonNotificationsContainer"
                                 style={headerButtonNotificationsContainerStyle} onclick={toggleNotifications}>
-                                <div class="slds-p-horizontal_xx-small notificationNumber text-darkGray"
-                                    style={notificationNumberStyle}>{numberOfNotifications}</div>
                                 <img style={headerButtonNotificationsStyle} src={notificationIcon} />
+                                <div class="slds-p-horizontal_xx-small notificationNumber text-darkGray"
+                                style={notificationNumberStyle}>{numberOfNotifications}</div>
                                 <div class="headerButtonNotificationsCloseIcon" style={headerButtonNotificationsCloseIconStyle}>
                                     <div class="closeButton"> + </div>
                                 </div>
                             </div>
     
                             <!-- notifications "popup" -->
-                            <div class="openNotifications customCardWhite slds-m-horizontal_medium"
+                            <div class="openNotifications customCardWhite slds-m-horizontal_xsmall"
                                 style={openNotificationsStyle}>
                                 <div style={displayBodyStyle}>
                                     <div

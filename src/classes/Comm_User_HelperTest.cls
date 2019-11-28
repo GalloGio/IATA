@@ -72,10 +72,11 @@ private class Comm_User_HelperTest {
 
         ISSP_CS__c issc = new ISSP_CS__c(name = 'ISS_Portal_Airline_User', value__c = prof.id);
         ISSP_CS__c issc2 = new ISSP_CS__c(name = 'HostIEC', value__c = 'asite');
+		ISSP_CS__c issc3 = new ISSP_CS__c(name = 'Host', value__c = 'asite');
 
 
 
-        insert issc;insert issc2;
+        insert new list<ISSP_CS__c>{issc,issc2,issc3};
         
 
 
@@ -150,6 +151,7 @@ private class Comm_User_HelperTest {
         Comm_User_Helper.getUserListByNameOrEmail(con.email);
         Comm_User_Helper.getUserListByNameOrEmail2(con.email);
         Comm_User_Helper.resetPasswordComm(con.id, 'ISSP',false);
+        Comm_User_Helper.resetPasswordComm(con.id, 'CNS',false);
         Comm_User_Helper.resetPasswordISSPContact(con.id);
         Profile p = [SELECT Id FROM Profile WHERE Name='Standard User']; 
 
