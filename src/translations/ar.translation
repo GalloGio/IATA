@@ -353,6 +353,10 @@
         <name>AMS_OSCAR_Action18</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMS_OSCAR_Action19 --></label>
+        <name>AMS_OSCAR_Action19</name>
+    </customLabels>
+    <customLabels>
         <label><!-- AMS OSCAR Action2 --></label>
         <name>AMS_OSCAR_Action2</name>
     </customLabels>
@@ -447,6 +451,10 @@
     <customLabels>
         <label><!-- AMS_OSCAR_GDI_fees --></label>
         <name>AMS_OSCAR_GDI_fees</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS_OSCAR_GOGLOBAL --></label>
+        <name>AMS_OSCAR_GOGLOBAL</name>
     </customLabels>
     <customLabels>
         <label><!-- AMS OSCAR MASTERDATA --></label>
@@ -661,6 +669,10 @@
         <name>AMS_OSCAR_STEP44</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMS_OSCAR_STEP45 --></label>
+        <name>AMS_OSCAR_STEP45</name>
+    </customLabels>
+    <customLabels>
         <label><!-- AMS OSCAR STEP46 --></label>
         <name>AMS_OSCAR_STEP46</name>
     </customLabels>
@@ -735,6 +747,10 @@
     <customLabels>
         <label>* هل هذا الكيان المنتسب هو كيان قانوني مستقل عن الكيان الرئيسي؟</label>
         <name>ANG_AE_separate_Legal_Entity</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_AE_separate_Legal_Entity_MultiCountry --></label>
+        <name>ANG_AE_separate_Legal_Entity_MultiCountry</name>
     </customLabels>
     <customLabels>
         <label><!-- ANG_Conversion_Tool_Error_10 --></label>
@@ -905,6 +921,10 @@
         <name>ANG_ISSP_CountryConcerned</name>
     </customLabels>
     <customLabels>
+        <label><!-- ANG_ISSP_CountryConcerned_AEs --></label>
+        <name>ANG_ISSP_CountryConcerned_AEs</name>
+    </customLabels>
+    <customLabels>
         <label>العودة إلى مقارنة أنواع الاعتماد</label>
         <name>ANG_ISSP_CountryRequirementsGoBack</name>
     </customLabels>
@@ -971,6 +991,14 @@
     <customLabels>
         <label>قائمة المؤسسات المالية التي توفر تأمين الضمان المالي في بلدكم</label>
         <name>ANG_ISSP_GDI_Breadcrumb</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_ISSP_GDI_Learn_More --></label>
+        <name>ANG_ISSP_GDI_Learn_More</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_ISSP_GDI_Learn_More_Text --></label>
+        <name>ANG_ISSP_GDI_Learn_More_Text</name>
     </customLabels>
     <customLabels>
         <label>التوجُّه إلى بوابة GDI</label>
@@ -1075,6 +1103,22 @@
     <customLabels>
         <label><!-- ANG_ISSP_Min_Users_With_Role_Error_Msg --></label>
         <name>ANG_ISSP_Min_Users_With_Role_Error_Msg2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_ISSP_Multicountry_Question --></label>
+        <name>ANG_ISSP_Multicountry_Question</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_ISSP_Multicountry_Submit_Message1 --></label>
+        <name>ANG_ISSP_Multicountry_Submit_Message1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_ISSP_Multicountry_Submit_Message2 --></label>
+        <name>ANG_ISSP_Multicountry_Submit_Message2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_ISSP_Multicountry_Submit_Message_New_AE --></label>
+        <name>ANG_ISSP_Multicountry_Submit_Message_New_AE</name>
     </customLabels>
     <customLabels>
         <label>لإدارة الطلب يرجى النقر هنا.</label>
@@ -1269,6 +1313,10 @@
         <name>ANG_ISSP_ProductStandardAccreditationWithCash</name>
     </customLabels>
     <customLabels>
+        <label><!-- ANG_ISSP_ProductStandardAccreditationWithMultiCountry --></label>
+        <name>ANG_ISSP_ProductStandardAccreditationWithMultiCountry</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ANG_ISSP_ProductStandardAccreditationWithNoCash --></label>
         <name>ANG_ISSP_ProductStandardAccreditationWithNoCash</name>
     </customLabels>
@@ -1363,6 +1411,26 @@
     <customLabels>
         <label>البريد الإلكتروني</label>
         <name>ANG_ISSP_e_mail_address</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG Multicountry Already Has Locations Only Allow AE Error --></label>
+        <name>ANG_Multicountry_Already_Has_Locations_Only_Allow_AE_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG Multicountry Already Has Locations Only Allow AE With Correct HE Error --></label>
+        <name>ANG_Multicountry_Already_Has_Locations_Only_Allow_AE_With_Correct_HE_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG Multicountry Already Has Locations Only Allow HE Error --></label>
+        <name>ANG_Multicountry_Already_Has_Locations_Only_Allow_HE_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG Multicountry Process Parent Account Error --></label>
+        <name>ANG_Multicountry_Process_Parent_Account_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_NEW_GE_lock --></label>
+        <name>ANG_NEW_GE_lock</name>
     </customLabels>
     <customLabels>
         <label><!-- ANG_NON_COMPLIANCE --></label>
@@ -9193,6 +9261,10 @@ and
         <name>ISSP_AMS_Add_Company</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS Add Contact --></label>
+        <name>ISSP_AMS_Add_Contact</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS Add Director --></label>
         <name>ISSP_AMS_Add_Director</name>
     </customLabels>
@@ -9267,6 +9339,10 @@ and
     <customLabels>
         <label>كيان منتسب جديد - GoLite</label>
         <name>ISSP_AMS_Associate_Entity_Cashless</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Associate Entity Cashless --></label>
+        <name>ISSP_AMS_Associate_Entity_Multicountry</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS Authorised Sig --></label>
@@ -9629,6 +9705,10 @@ and
         <name>ISSP_AMS_CONFIRM_DISCARD</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS CONFIRM DISCARD APPLICATION --></label>
+        <name>ISSP_AMS_CONFIRM_DISCARD_APPLICATION</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_Title_Capacity --></label>
         <name>ISSP_AMS_Capacity</name>
     </customLabels>
@@ -9891,6 +9971,10 @@ and
     <customLabels>
         <label>انتباه! بنسخِ معلومات مِلكية إلى وكالةٍ ما فإنكم ستحذفون بذلك أي معلومات مِلكية موجودة حول الوكالة المستهدفة.</label>
         <name>ISSP_AMS_Copy_Ownership_Warning</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Country Not Selected --></label>
+        <name>ISSP_AMS_Country_Not_Selected</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS Country Select --></label>
@@ -10237,6 +10321,10 @@ and
         <name>ISSP_AMS_Head_Entity_Cash</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS Head Entity Multicountry --></label>
+        <name>ISSP_AMS_Head_Entity_Multicountry</name>
+    </customLabels>
+    <customLabels>
         <label>كيان رئيسي جديد - GoLite</label>
         <name>ISSP_AMS_Head_Entity_No_Cash</name>
     </customLabels>
@@ -10277,12 +10365,24 @@ and
         <name>ISSP_AMS_IS_GSA</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS IS Legal Name Blank --></label>
+        <name>ISSP_AMS_IS_Legal_Name_Selected_Blank</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS IS Legal Name Null --></label>
+        <name>ISSP_AMS_IS_Legal_Name_Selected_Null</name>
+    </customLabels>
+    <customLabels>
         <label>يرجى الاختيار إذا كان الكيان المنتسب كياناً قانونياً منفصلاً.</label>
         <name>ISSP_AMS_IS_Separate_Entity_Null</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS If Approved Gross Amnt --></label>
         <name>ISSP_AMS_If_Approved_Gross_Amnt</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Info Accreditation Types --></label>
+        <name>ISSP_AMS_Info_Accreditation_Types</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS International --></label>
@@ -10861,6 +10961,14 @@ and
         <name>ISSP_AMS_Month_September</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_Multicountry_Submit_Button --></label>
+        <name>ISSP_AMS_Multicountry_Submit_Button</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NOC_All_Countries --></label>
+        <name>ISSP_AMS_NOC_All_Countries</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS NOC Current Legal details --></label>
         <name>ISSP_AMS_NOC_Current_Legal_details</name>
     </customLabels>
@@ -11263,6 +11371,10 @@ and
     <customLabels>
         <label><!-- ISSP_AMS_NoC_Roles_and_Responsabilities --></label>
         <name>ISSP_AMS_NoC_Roles_and_Responsabilities</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_Search_Entity_Conversion --></label>
+        <name>ISSP_AMS_NoC_Search_Entity_Conversion</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_NoC_Signature --></label>
@@ -11683,6 +11795,10 @@ and
     <customLabels>
         <label><!-- ISSP AMS Section 2 SubSection 2 --></label>
         <name>ISSP_AMS_Section_2_SubSection_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Select AEs --></label>
+        <name>ISSP_AMS_Select_AEs</name>
     </customLabels>
     <customLabels>
         <label>اختر الحسابات المستهدفة</label>
@@ -12341,6 +12457,10 @@ and
         <name>ISSP_AMS_Step3_Indicate_GDSs</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_Step3_Cashless_Location --></label>
+        <name>ISSP_AMS_Step3_Multicountry_Location</name>
+    </customLabels>
+    <customLabels>
         <label>العنوان الكامل للمقر الذي تم التقدم بطلب اعتماده</label>
         <name>ISSP_AMS_Step3_Office_FullAddress</name>
     </customLabels>
@@ -12399,6 +12519,10 @@ and
     <customLabels>
         <label><!-- ISSP AMS Step5 ProgressBar CNS --></label>
         <name>ISSP_AMS_Step5_ProgressBar_CNS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step5_ProgressBar_Validate_Data --></label>
+        <name>ISSP_AMS_Step5_ProgressBar_Validate_Data</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS Step5 ReviewBeforeSubmit --></label>
@@ -12591,6 +12715,10 @@ and
     <customLabels>
         <label><!-- ISSP AMS Validation Financial Contact --></label>
         <name>ISSP_AMS_Validation_Financial_Contact</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Validation MC Conversion Countries --></label>
+        <name>ISSP_AMS_Validation_MC_Conversion_Countries</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS Validation Percent Ownership --></label>
@@ -13089,6 +13217,10 @@ and
         <name>ISSP_ANG_Branch_Office_address_details</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP ANG Branch Office contact details --></label>
+        <name>ISSP_ANG_Branch_Office_contact_details</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Link to the IATAs CheckACode page --></label>
         <name>ISSP_ANG_CODE_SEARCH_CHECK_A_CODE_LINK</name>
     </customLabels>
@@ -13155,6 +13287,10 @@ and
     <customLabels>
         <label>مسودة طلب اعتماد الوكالة للكيان الرئيسي GoLite</label>
         <name>ISSP_ANG_Email_HE_Cashless_Subject</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP ANG Email HE Multicountry Subject --></label>
+        <name>ISSP_ANG_Email_HE_Multicountry</name>
     </customLabels>
     <customLabels>
         <label>تفعيل طرق الدفع ببطاقات الائتمان لرقم (أرقام) الكود</label>
@@ -13229,12 +13365,20 @@ and
         <name>ISSP_ANG_Iata_Codes_Relinquish</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_ANG_Import_Directors --></label>
+        <name>ISSP_ANG_Import_Directors</name>
+    </customLabels>
+    <customLabels>
         <label>يرجى اختيار مكتب فرعي واحد على الأقل</label>
         <name>ISSP_ANG_Least_One_Branch</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_ANG_LeftNav_Section1_AE_Details --></label>
         <name>ISSP_ANG_LeftNav_Section1_AE_Details</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ANG_Legal_Name_already_in_used --></label>
+        <name>ISSP_ANG_Legal_Name_already_in_used</name>
     </customLabels>
     <customLabels>
         <label><!-- Branch to Shipping --></label>
@@ -13255,6 +13399,14 @@ and
     <customLabels>
         <label><!-- Must Add Users To Service --></label>
         <name>ISSP_ANG_MustAddUsersToService</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- NOC_GOGLOBAL_Info --></label>
+        <name>ISSP_ANG_NOC_GOGLOBAL_Info</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Third NoC Question --></label>
+        <name>ISSP_ANG_NOC_Type_Of_Change</name>
     </customLabels>
     <customLabels>
         <label>كيان منتسب واحد أو أكثر</label>
@@ -13475,6 +13627,30 @@ and
     <customLabels>
         <label>&lt;p&gt;أتنازل بهذا طوعاً عن اعتماد IATA الخاص بالمواقع المعتمدة المُدرَجة أعلاه&lt;/p&gt;</label>
         <name>ISSP_ANG_VR_Disclaimer</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Validate Agency Details --></label>
+        <name>ISSP_ANG_Validate_Agency_Details</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ANG_View_And_Modify_Owners --></label>
+        <name>ISSP_ANG_View_And_Modify_Owners</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ANG_View_Owners --></label>
+        <name>ISSP_ANG_View_Owners</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ANG_Import --></label>
+        <name>ISSP_ANG_View_Owners_Info</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ANG_Import --></label>
+        <name>ISSP_ANG_View_Owners_Modify</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ANG_View_Owners_Tooltip --></label>
+        <name>ISSP_ANG_View_Owners_Tooltip</name>
     </customLabels>
     <customLabels>
         <label>التنازل الطوعي</label>
@@ -15995,6 +16171,10 @@ and
         <name>ISSP_NoC_HE_with_AEs_Warning</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP NoC HE with AEs Warning --></label>
+        <name>ISSP_NoC_HE_with_AEs_Warning_MC</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP NoC Head Entity Becoming a AE --></label>
         <name>ISSP_NoC_Head_Entity_Becoming_a_AE</name>
     </customLabels>
@@ -18144,6 +18324,10 @@ and
     <customLabels>
         <label>شكراً لتقديمكم طلب التنازل الطوعي</label>
         <name>ISSP_VR_Case_Submited</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Validated --></label>
+        <name>ISSP_Validated</name>
     </customLabels>
     <customLabels>
         <label>النسخة</label>
@@ -21048,6 +21232,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
     <customLabels>
         <label><!-- SIDRA Automated Case Message --></label>
         <name>SIDRA_Automated_Case_Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- SIDRA_GE_Info --></label>
+        <name>SIDRA_GE_Info</name>
     </customLabels>
     <customLabels>
         <label><!-- SIS --></label>
