@@ -119,13 +119,13 @@ private class ANG_OscarProcessHelperTest {
 				Name = 'PCR', Change_Code__c = 'PCR', Integration_RecId__c = 'C',Bulletin_Memo_Text__c = 'Agent has complied to Agency Rules. Cash payment methods are reinstated.'
 			),
 			new AMS_ChangeCodes__c(
-				Name = 'CCA', Change_Code__c = 'CCA', Integration_RecId__c = 'C',Bulletin_Memo_Text__c = 'Agent is restricted FROM using Card form of payment method due to <SIDRA Lite Reason>.'
+				Name = 'CCA', Change_Code__c = 'CCA', Integration_RecId__c = 'C',Bulletin_Memo_Text__c = 'Agent is restricted from using Card form of payment method due to <SIDRA Lite Reason>.'
 			),
 			new AMS_ChangeCodes__c(
-				Name = 'CCR', Change_Code__c = 'CCR', Integration_RecId__c = 'C',Bulletin_Memo_Text__c = 'Agent is restricted FROM using Cash and Card payment methods due to <SIDRA Lite Reason>.'
+				Name = 'CCR', Change_Code__c = 'CCR', Integration_RecId__c = 'C',Bulletin_Memo_Text__c = 'Agent is restricted from using Cash and Card payment methods due to <SIDRA Lite Reason>.'
 			),
 			new AMS_ChangeCodes__c(
-				Name = 'FPR', Change_Code__c = 'FPR', Integration_RecId__c = 'C',Bulletin_Memo_Text__c = 'Agent is restricted FROM using Cash form of payment method due to <SIDRA Lite Reason>.'
+				Name = 'FPR', Change_Code__c = 'FPR', Integration_RecId__c = 'C',Bulletin_Memo_Text__c = 'Agent is restricted from using Cash form of payment method due to <SIDRA Lite Reason>.'
 			),
 			new AMS_ChangeCodes__c(
 				Name = 'NEW-AMS', Change_Code__c = 'NEW', Integration_RecId__c = 'A'
@@ -136,7 +136,7 @@ private class ANG_OscarProcessHelperTest {
 				Integration_RecId__c = 'C', 
 				Reason_Code__c = '43', 
 				Reason_Code_Description__c = 'Voluntary relinquishment', 
-				Bulletin_Memo_Text__c = 'Agent is upgrading FROM Domestic to International', 
+				Bulletin_Memo_Text__c = 'Agent is upgrading from Domestic to International', 
 				Published_in_bulletin__c = true,
 				Account_status_change__c = '4'
 			)

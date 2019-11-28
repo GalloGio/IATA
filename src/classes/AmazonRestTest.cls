@@ -28,15 +28,13 @@ public class AmazonRestTest {
 	}
 
 	static testMethod void Exception_listBucketTest(){
-		CaseChildHelper.noValidationsOnTrgCAseIFAP = true; /* later I switch it to false to fully emulate production envinroment */
+		CaseChildHelper.noValidationsOnTrgCAseIFAP = true;
 
 		createCredentials('IFAP');
 
 		String result = AmazonRest.genPublicExpiringAWSLink('', AmazonCredentials.getCredentials('IFAP'), 10 );
 
-		Test.startTest();
 		System.assertEquals(result, null);
-		Test.stopTest();
 
 	}
 
@@ -122,11 +120,7 @@ public class AmazonRestTest {
 
 		Boolean resultCopy = AmazonRest.copyFile(cred, sourceFilename, cred, destFilename);
 
-		Test.startTest();
-
-		System.assert(resultCopy, true);
-
-		Test.stopTest();
+		System.assert(resultCopy);
 	}
 
 	Static testMethod void deleteFilesTest(){
@@ -143,10 +137,7 @@ public class AmazonRestTest {
 
 		Boolean doneDeleteFiles = AmazonRest.deleteFiles(fileNames, folder, cred);
 
-		Test.startTest();
+		System.assert(doneDeleteFiles);
 
-		System.assert(doneDeleteFiles,true);
-
-		Test.stopTest();
 	}
 }
