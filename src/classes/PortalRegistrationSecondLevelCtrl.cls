@@ -46,9 +46,9 @@ public without sharing class PortalRegistrationSecondLevelCtrl {
 	}
 
 	@AuraEnabled
-	public static List<PortalFAQs__mdt> getL2Topics(){
-		List<PortalFAQs__mdt> topics = [SELECT Id, DataTopicName__c
-										FROM PortalFAQs__mdt
+	public static List<PortalKnowledge__c> getL2Topics(){
+		List<PortalKnowledge__c> topics = [SELECT Id, DataTopicName__c
+										FROM PortalKnowledge__c
 										WHERE DataCategoryName__c <> ''
 										AND DataTopicName__c <> ''
 										AND DataSubtopicName__c = ''
