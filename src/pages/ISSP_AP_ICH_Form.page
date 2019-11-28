@@ -144,7 +144,7 @@
                     checkInput = checkInput.children[0];
                 }
                 $(checkInput).removeClass("blink-me");
-                if (!checkInput.checkValidity()) {
+                if (!checkInput.checkValidity() || checkInput.value=="") {
                     var input = $(checkInput);
                     input.focus();
                     input.addClass("blink-me");
