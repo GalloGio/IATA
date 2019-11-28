@@ -427,6 +427,15 @@
                                             </div>
                                         </apex:outputPanel>
                                 </apex:actionRegion>
+
+                                <apex:outputPanel styleClass="billingStreetPanel">
+                                    <label for="countryconcerned" class="col-lg-2" style="padding-top:6px; text-align: right; font-size: 91%; padding-right: 0px;">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Branch_Office_City__c.Label}</label>
+
+                                    <div class="col-lg-10" >
+					                <apex:inputField id="billingCity" required="true" value="{!accreditationForm.Branch_Office_City__c}"/>
+					            </div>
+                                </apex:outputPanel>
+
                                 <apex:outputPanel id="billingStreetPanel2" styleClass="billingStreetPanel">
                                     <label for="billingstate" class="col-lg-2" style="text-align: right; font-size: 91%; padding-right: 0px;">
                                     {!$Label.ISSP_AMS_MSO_GSA_Address}</label>
@@ -451,14 +460,7 @@
 					            </div>
                                     </apex:outputPanel>
                                 <!--/div-->
-
-                                <apex:outputPanel styleClass="billingStreetPanel">
-                                    <label for="countryconcerned" class="col-lg-2" style="padding-top:6px; text-align: right; font-size: 91%; padding-right: 0px;">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Branch_Office_City__c.Label}</label>
-
-                                    <div class="col-lg-10" >
-					                <apex:inputField id="billingCity" required="true" value="{!accreditationForm.Branch_Office_City__c}"/>
-					            </div>
-                                </apex:outputPanel>
+                                
 
                                 <apex:outputPanel styleClass="billingStreetPanel">
                                     <label for="countryconcerned" class="col-lg-2" style="padding-top:6px; text-align: right; font-size: 91%; padding-right: 0px;">{!$Label.ISSP_Office_Phone}</label>
@@ -557,15 +559,6 @@
                                     </div>
                                 </apex:outputPanel>
 
-                                <apex:outputPanel id="billingStreetPanel" styleClass="billingStreetPanel">
-                                    <label for="billingstate" class="col-lg-2" style="text-align: right; font-size: 91%; padding-right: 0px;">
-                                    {!$Label.ISSP_AMS_MSO_GSA_Address}</label>
-                                    
-                                    <div class="col-lg-10">
-	                                <apex:outputField id="billingStreet" value="{!accreditationForm.Branch_Office_Street_name_number__c}"/>
-	                            </div>
-                                </apex:outputPanel>
-
                                 <apex:outputPanel styleClass="billingStreetPanel">
                                         <label for="countryconcerned" class="col-lg-2" style=" text-align: right; font-size: 91%; padding-right: 0px;">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Branch_Office_Postal_code__c.Label}</label>
                                                                             
@@ -588,6 +581,15 @@
                                         {!accreditationForm.Branch_Office_City__c}                                      
 	                            </div>
                                 </apex:outputPanel>
+
+                                <apex:outputPanel id="billingStreetPanel" styleClass="billingStreetPanel">
+                                    <label for="billingstate" class="col-lg-2" style="text-align: right; font-size: 91%; padding-right: 0px;">
+                                    {!$Label.ISSP_AMS_MSO_GSA_Address}</label>
+                                    
+                                    <div class="col-lg-10">
+	                                <apex:outputField id="billingStreet" value="{!accreditationForm.Branch_Office_Street_name_number__c}"/>
+	                            </div>
+                                </apex:outputPanel>                                
 
 
                                 <apex:outputPanel styleClass="billingStreetPanel">
@@ -842,57 +844,61 @@
                     currentFocus = -1;
                 }
             });
+            
+            billingCityElement.addEventListener('blur', function(e){
+                closeAllLists(e.target);
+            });
 
             function addActive (x) {                            
-                    /*a function to classify an item as "active":*/
-                    if (!x) return false;
-                    /*start by removing the "active" class on all items:*/
-                    removeActive(x);
-                    
-                    if (currentFocus >= x.length) currentFocus = 0;
-                    if (currentFocus < 0) currentFocus = (x.length - 1);
-                    /*add class "autocomplete-active":*/
-                    x[currentFocus].classList.add("autocomplete-active");
-                    }
-                    
-                function removeActive (x) {
-                    
-                    /*a function to remove the "active" class from all autocomplete items:*/
-                    for (var i = 0; i < x.length; i++) {
-                        x[i].classList.remove("autocomplete-active");
-                    }
+                /*a function to classify an item as "active":*/
+                if (!x) return false;
+                /*start by removing the "active" class on all items:*/
+                removeActive(x);
+                
+                if (currentFocus >= x.length) currentFocus = 0;
+                if (currentFocus < 0) currentFocus = (x.length - 1);
+                /*add class "autocomplete-active":*/
+                x[currentFocus].classList.add("autocomplete-active");
                 }
                 
-                function closeAllLists(elmnt) {
-                    let inp = billingCityElement.value;
-                    /*close all autocomplete lists in the document,
-                    except the one passed as an argument:*/
-                    var x = document.getElementsByClassName("autocomplete-items");  
+            function removeActive (x) {
+                
+                /*a function to remove the "active" class from all autocomplete items:*/
+                for (var i = 0; i < x.length; i++) {
+                    x[i].classList.remove("autocomplete-active");
+                }
+            }
+            
+            function closeAllLists(elmnt) {
+                let inp = billingCityElement.value;
+                /*close all autocomplete lists in the document,
+                except the one passed as an argument:*/
+                var x = document.getElementsByClassName("autocomplete-items");  
 
-                    for (var i = 0; i < x.length; i++) {
-                        if (elmnt != x[i] && elmnt != inp) {
-                            x[i].parentNode.removeChild(x[i]);
-                        }
+                for (var i = 0; i < x.length; i++) {
+                    if (elmnt != x[i] && elmnt != inp) {
+                        x[i].parentNode.removeChild(x[i]);
                     }
                 }
+            }
 
-                function setBilling(){
-                    if(cityChanged){
-                        let billingCityInput = document.querySelector('[id$=billingCity]').value.toUpperCase();                    
-                        let billingCityId = predictions[billingCityInput]?predictions[billingCityInput]['Id']:null;                    
-                        document.querySelector('[id$=hiddenBillingCityId]').value = billingCityId;
-                    }                    
-                }
+            function setBilling(){
+                if(cityChanged){
+                    let billingCityInput = document.querySelector('[id$=billingCity]').value.toUpperCase();                    
+                    let billingCityId = predictions[billingCityInput]?predictions[billingCityInput]['Id']:null;                    
+                    document.querySelector('[id$=hiddenBillingCityId]').value = billingCityId;
+                }                    
+            }
 
-                function clearCity(){
-                    document.querySelector('[id$=billingCity]').value = '';
-                    document.querySelector('[id$=hiddenBillingCityId]').value = null;
-                    cityChanged = false;
-                    predictions = {};
-                }
-                document.addEventListener("click", function (e) {                              
-                    closeAllLists(e.target);                    
-                });
+            function clearCity(){
+                document.querySelector('[id$=billingCity]').value = '';
+                document.querySelector('[id$=hiddenBillingCityId]').value = null;
+                cityChanged = false;
+                predictions = {};
+            }
+            document.addEventListener("click", function (e) {                              
+                closeAllLists(e.target);                    
+            });
         </script>
     </body>  
 </html>

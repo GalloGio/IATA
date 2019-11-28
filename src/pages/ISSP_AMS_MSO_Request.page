@@ -378,7 +378,7 @@
                             <apex:actionStatus id="buttonLoadingStep1">
                                 <apex:facet name="stop"><apex:outputPanel >
                                     <apex:commandButton styleclass="btn btn-default" style="padding-top:6px;margin-right:8px" action="{!cancel}" value="{!$Label.ISSP_Cancel}" immediate="true" status="buttonLoadingStep1" reRender="newMSOform"/>
-                                    <apex:commandButton styleclass="btn btn-default" action="{!save}" value="{!$Label.ISSP_Next}" status="buttonLoadingStep1" />
+                                    <apex:commandButton styleclass="btn btn-default" action="{!save}" value="{!$Label.ISSP_Next}" status="buttonLoadingStep1" onclick="setBilling();"/>
                                 </apex:outputPanel></apex:facet>
                                 <apex:facet name="start"><apex:outputPanel >
                                     <apex:commandButton styleclass="btn btn-default" style="margin-right:8px" value="{!$Label.ISSP_Cancel}..." disabled="true" reRender="newMSOform"/>
@@ -421,13 +421,21 @@
                                     <div class="col-lg-10" >
                                         <div class="requiredInput">
                                             <div class="requiredBlock"></div>                          
-                                                <apex:selectList id="billingstate2" required="false" styleClass="form-control" style="width:40%" value="{!billingState}" size="1" onchange="refreshCities();">
+                                                <apex:selectList id="billingstate2" required="false" styleClass="form-control" style="width:40%" value="{!billingState}" size="1" onchange="clearCity(); refreshCities();">
                                                     <apex:selectOptions value="{!billingStatesList}"/>
                                             </apex:selectList>
                                         </div>
                                     </div>
                                 </apex:outputPanel>
                             </apex:actionRegion>
+                            
+                            <apex:outputPanel styleClass="billingStreetPanel">
+                                <label for="countryconcerned" class="col-lg-2" style="padding-top:6px; text-align: right; font-size: 91%; padding-right: 0px;">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Branch_Office_City__c.Label}</label>
+
+                                <div class="col-lg-10" >
+                                <apex:inputField id="billingCity" required="true" value="{!accreditationForm.Branch_Office_City__c}"/>
+                            </div>
+                            </apex:outputPanel>
 
                             <apex:outputPanel id="billingStreetPanel2" styleClass="billingStreetPanel">
                                     <label for="billingstate" class="col-lg-2" style="text-align: right; font-size: 91%; padding-right: 0px;">
@@ -451,13 +459,7 @@
                             </div>
                             </apex:outputPanel>
 
-                            <apex:outputPanel styleClass="billingStreetPanel">
-                                <label for="countryconcerned" class="col-lg-2" style="padding-top:6px; text-align: right; font-size: 91%; padding-right: 0px;">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Branch_Office_City__c.Label}</label>
-
-                                <div class="col-lg-10" >
-                                <apex:inputField id="billingCity" required="true" value="{!accreditationForm.Branch_Office_City__c}"/>
-                            </div>
-                            </apex:outputPanel>
+                            
 
                             <apex:outputPanel styleClass="billingStreetPanel">
                                 <label for="countryconcerned" class="col-lg-2" style="padding-top:6px; text-align: right; font-size: 91%; padding-right: 0px;">{!$Label.ISSP_Office_Phone}</label>
@@ -656,11 +658,8 @@
 
                         </div>
                     </apex:pageBlock>
-
-                    <apex:actionFunction name="setBillingCityId" reRender="">
-                        <apex:param name="bcid" assignTo="{!billingCity}" value=""/>
-                    </apex:actionFunction>
-
+                    
+                        <apex:inputHidden id="hiddenBillingCityId" value="{!billingCity}"/>
                     </apex:form>   
 
                 </div>
@@ -684,9 +683,14 @@
             let billingCityElement = document.querySelector('[id$=billingCity]');
             let currentFocus = -1;
             let billingCityId;
+            let predictions = {};
+            let cityChanged = false;
+            
+            billingCityElement.setAttribute('autocomplete', 'off');
 
             billingCityElement.addEventListener('input', function(){
-            
+                predictions = {};
+                cityChanged = true;
                 let a, b, count = 0, inputValue = this.value;
                 
                 /*close any already open lists of autocompleted values*/
@@ -710,6 +714,7 @@
                         createDiv(cityList, i, inputValue, a);
                        
                         count++;
+                        predictions[cityList[i]["Name"].toUpperCase()] = cityList[i];
                        }else{
                         count = 0;
                         break;
@@ -719,7 +724,7 @@
                         /*create a DIV element for each matching element:*/
                        if(count < 5){
                         createDiv(cityList, i, inputValue, a);
-                        
+                        predictions[cityList[i]["Name"].toUpperCase()] = cityList[i];
                         count++;
                        }else{
                         count = 0;
@@ -785,6 +790,10 @@
                 }
             });
 
+            billingCityElement.addEventListener('blur', function(e){
+                closeAllLists(e.target);
+            });
+
             function addActive (x) {                            
                     /*a function to classify an item as "active":*/
                     if (!x) return false;
@@ -797,32 +806,46 @@
                     x[currentFocus].classList.add("autocomplete-active");
                     }
                     
-                function removeActive (x) {
-                    
-                    /*a function to remove the "active" class from all autocomplete items:*/
-                    for (var i = 0; i < x.length; i++) {
-                        x[i].classList.remove("autocomplete-active");
-                    }
-                }
+            function removeActive (x) {
                 
-                function closeAllLists(elmnt) {
-                    let inp = billingCityElement.value;
-                    /*close all autocomplete lists in the document,
-                    except the one passed as an argument:*/
-                    var x = document.getElementsByClassName("autocomplete-items");  
+                /*a function to remove the "active" class from all autocomplete items:*/
+                for (var i = 0; i < x.length; i++) {
+                    x[i].classList.remove("autocomplete-active");
+                }
+            }
+            
+            function closeAllLists(elmnt) {
+                let inp = billingCityElement.value;
+                /*close all autocomplete lists in the document,
+                except the one passed as an argument:*/
+                var x = document.getElementsByClassName("autocomplete-items");  
 
-                    for (var i = 0; i < x.length; i++) {
-                        if (elmnt != x[i] && elmnt != inp) {
-                            x[i].parentNode.removeChild(x[i]);
-                        }
+                for (var i = 0; i < x.length; i++) {
+                    if (elmnt != x[i] && elmnt != inp) {
+                        x[i].parentNode.removeChild(x[i]);
                     }
                 }
+            }                
 
-                billingCityElement.addEventListener('blur', function(e){
-                    
-                    setBillingCityId(billingCityId);
-                });                
+            function setBilling(){
+                if(cityChanged){
+                    let billingCityInput = document.querySelector('[id$=billingCity]').value.toUpperCase();                    
+                    let billingCityId = predictions[billingCityInput]?predictions[billingCityInput]['Id']:null;                    
+                    document.querySelector('[id$=hiddenBillingCityId]').value = billingCityId;
+                }                    
+            }
 
+            function clearCity(){
+                document.querySelector('[id$=billingCity]').value = '';
+                document.querySelector('[id$=hiddenBillingCityId]').value = null;
+                cityChanged = false;
+                predictions = {};
+            }
+            
+            document.addEventListener("click", function (e) {                              
+                closeAllLists(e.target);                    
+            });
+                
         </script>
     </body>  
 </html>
