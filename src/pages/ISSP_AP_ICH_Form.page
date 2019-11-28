@@ -318,7 +318,7 @@
                             </apex:pageBlockSectionItem>
                             <apex:pageBlockSectionItem >
                                 <apex:outputLabel value="{!$Label.Phone}"/>
-                                <apex:inputField value="{!selectedContact.Phone__c}"/>
+                                <apex:inputField styleclass="required" value="{!selectedContact.Phone__c}"/>
                             </apex:pageBlockSectionItem>
 
                             <apex:pageBlockSectionItem >
