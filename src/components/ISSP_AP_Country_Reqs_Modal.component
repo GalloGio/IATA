@@ -92,10 +92,10 @@
         <apex:outputPanel rendered="{!ctrl.countryRequirement.ICH_Requirements__c!=null}">
             <apex:outputText value="{!ctrl.countryRequirement.ICH_Requirements__c}" escape="false"/>
         </apex:outputPanel>
-        <apex:outputPanel rendered="{!ctrl.countryRequirement.ISPA_Requirements__c!=null}">
+        <apex:outputPanel rendered="{!AND(ctrl.countryRequirement.ISPA_Requirements__c!=null,NOT(ctrl.isSISMember))}">
             <apex:outputText value="{!ctrl.countryRequirement.ISPA_Requirements__c}" escape="false"/>
         </apex:outputPanel>
-        <apex:outputPanel rendered="{!ctrl.countryRequirement.ISUA_Requirements__c!=null}">
+        <apex:outputPanel rendered="{!AND(ctrl.countryRequirement.ISUA_Requirements__c!=null,NOT(ctrl.isSISMember))}">
             <apex:outputText value="{!ctrl.countryRequirement.ISUA_Requirements__c}" escape="false"/>
         </apex:outputPanel>
     </apex:outputPanel>
