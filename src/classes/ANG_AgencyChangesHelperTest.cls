@@ -2179,6 +2179,7 @@ public class ANG_AgencyChangesHelperTest {
 		oscarCase.BSPCountry__c = 'US';
 		oscarCase.Account_Concerned__c = he1.Id;
 		oscarCase.Region__c = 'Europe';
+		oscarCase.Process__c = AMS_Utils.NGCORRECTION;		
 
 		cases.add(oscarCase);
 
@@ -2194,6 +2195,7 @@ public class ANG_AgencyChangesHelperTest {
 		oscarCase2.BSPCountry__c = 'US';
 		oscarCase2.Account_Concerned__c = he1.Id;
 		oscarCase2.Region__c = 'Europe';
+		oscarCase2.Process__c = AMS_Utils.NGCORRECTION;
 
 		cases.add(oscarCase2);
 
@@ -2252,7 +2254,7 @@ public class ANG_AgencyChangesHelperTest {
         pg.getParameters().put('Id', oscar.Id);
 
 
-        oscar.STEP6__c = 'Passed';
+		oscar.STEP6__c = 'Passed';
 		oscar.Change_effective_as_of__c = System.today();
 		oscar.Is_PCI_compliant__c = 'Yes';
 		oscar.ANG_PCI_compliance_expiry_date__c = System.today();
@@ -2315,27 +2317,27 @@ public class ANG_AgencyChangesHelperTest {
 				VAT_Number_2__c = '111222333',
 				ANG_Accreditation_type__c = 'Cashless',
 				ISSP_AMS_GDS_with_signed_contract__c = 'Amadeus'
-                );
+		);
 
-        insert stagingArea2;
-		
+		insert stagingArea2;
+
 
         oscar2.AMS_Online_Accreditation__c = stagingArea2.Id;
         oscar2.ANG_Type_Of_Change__c = AMS_Utils.ANG_LOCATION;
         update oscar2;
 
-        accreditationContacts = new List<AMS_Accreditation_Contact__c>();
+		accreditationContacts = new List<AMS_Accreditation_Contact__c>();
 
-        personAccreditationRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Person');
+		personAccreditationRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Person');
 
-        accreditationContacts.add(new AMS_Accreditation_Contact__c(Agency_Owner__c = true, Financial_interest__c = 100, AMS_Pax_Accreditation_Form__c = stagingArea2.Id, Company__c = he1.Id, First_name__c='NameToUse2', Last_name__c='Last1', Job_title__c='ABC1', Mobile__c='+4112345671', Phone__c='3424322341', Email__c='unique2@email1.com', RecordTypeId=personAccreditationRT));
+		accreditationContacts.add(new AMS_Accreditation_Contact__c(Agency_Owner__c = true, Financial_interest__c = 100, AMS_Pax_Accreditation_Form__c = stagingArea2.Id, Company__c = he1.Id, First_name__c='NameToUse2', Last_name__c='Last1', Job_title__c='ABC1', Mobile__c='+4112345671', Phone__c='3424322341', Email__c='unique2@email1.com', RecordTypeId=personAccreditationRT));
 
-        insert accreditationContacts;
+		insert accreditationContacts;
 
-        pg = Page.ANG_AccountHierarchySelection;
-        pg.getParameters().put('Id', oscar2.Id);
+		pg = Page.ANG_AccountHierarchySelection;
+		pg.getParameters().put('Id', oscar2.Id);
 
-        oscar2.STEP6__c = 'Passed';
+		oscar2.STEP6__c = 'Passed';
 		oscar2.Change_effective_as_of__c = System.today();
 		oscar2.Is_PCI_compliant__c = 'Yes';
 		oscar2.ANG_PCI_compliance_expiry_date__c = System.today();
