@@ -44,7 +44,7 @@
         <div class="col-md-4">
         </div>
         <div class="col-md-4">
-            <input type="button" class="btn btn_iata_primary" onClick="discardMCApplication();" value="Discard Application" style="float: right;"/>
+            <input type="button" class="btn btn_iata_primary" onClick="discardMCApplication();" value="{!$Label.ISSP_ANG_DISCARD_APPLICATION}" style="float: right;"/>
         </div>
     </div>
 

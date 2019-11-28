@@ -16528,6 +16528,14 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <value>Are you sure you want to discard your application?</value>
     </labels>
     <labels>
+        <fullName>ISSP_ANG_DISCARD_APPLICATION</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_DISCARD_APPLICATION</shortDescription>
+        <value>Discard Application</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Capacity</fullName>
         <language>en_US</language>
         <protected>false</protected>
