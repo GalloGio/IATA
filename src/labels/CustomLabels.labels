@@ -4090,7 +4090,7 @@ Payment required on receipt of this Payment Advice
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP Go to Webstar</shortDescription>
-        <value>IATAN Online Service</value>
+        <value>Go to Webstar</value>
     </labels>
     <labels>
         <fullName>CSP_Grant_User_Access_Title</fullName>
@@ -4166,9 +4166,8 @@ Payment required on receipt of this Payment Advice
         <fullName>CSP_IATA_Country</fullName>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>CSP IATAN Register Info</shortDescription>
-        <value>&lt;p&gt;To create an “IATAN Passenger Sales Agent (US only)” or “Travel Service Intermediaries TSI (US only)” account,you can request the creation of your company account through &lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Webstar&lt;/a&gt;.&lt;/p&gt;&lt;/br&gt;
-&lt;p&gt;Once the registration is finalized in Webstar, you will be able to identify your organization in the IATA Customer Portal.&lt;/p&gt;</value>
+        <shortDescription>CSP_IATA_Country</shortDescription>
+        <value>IATA Country</value>
     </labels>
     <labels>
         <fullName>CSP_IMPORTANT</fullName>
