@@ -59,8 +59,6 @@ public with sharing class ISSP_WS_SIS_Callout_Common {
     
     public static String addressToString(Address address) {
         String str = nvl(address.getStreet()).normalizeSpace();
-        str += ', ' + nvl(address.getState()).normalizeSpace();
-        str += ', ' + nvl(address.getCountry()).normalizeSpace();
         return cleanSpecialChars(str);
     }
     
