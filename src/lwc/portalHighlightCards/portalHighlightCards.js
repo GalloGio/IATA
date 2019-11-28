@@ -4,23 +4,25 @@ import getRecommendations from '@salesforce/apex/PortalRecommendationCtrl.getRec
 
 import CSP_YouIATA_Highlights from '@salesforce/label/c.CSP_YouIATA_Highlights';
 
-import CSPortal from '@salesforce/resourceUrl/CSPortal';
-
 export default class PortalHighlightCards extends LightningElement {
 
     //global variables
     @track maxSize = 3;
     @track page = 1;
     @track sliderIcons = [];
+    @track windowWidth = window.innerWidth;
+    @track sliderPosition = "left: 0px;";
+    @track classCardNumber = "slds-col slds-size_1-of-12 slds-is-relative";
 
     @track labels = {
         CSP_YouIATA_Highlights
     };
 
-    @track recordsPerPage = 0;
+    @track recordsPerPageLocal = 0;
 
     @track highlightListToIterate = [];
-
+    @track highlightListToIterateMobile = [];
+    
     @track highlightList = [];
     @api type;
 
@@ -29,55 +31,32 @@ export default class PortalHighlightCards extends LightningElement {
 
     @track loading = true;
 
-    @track isForRefreshTimer = false;
     @track refrehTimer;
-
     @track firstPosition;
 
     @track swipe = "slds-grid slds-wrap slds-align--absolute-center slds-gutters_direct-medium slds-is-relative swipeClass swipeMove";
     @track cardMove = "margin-left: 0; opacity: 1";
 
-    @track showHighlights = true;
-
     connectedCallback() {
-
-        getRecommendations({ 'type': this.type }).then(result => {
+        
+        getRecommendations({'type' : this.type}).then(result => {
             let resultsLocal = JSON.parse(JSON.stringify(result));
 
-            if (resultsLocal.length <= 0)
-                this.showHighlights = false;
-
             resultsLocal.forEach(function (highlight) {
-                let servicesImage = CSPortal + '/Images/ServiceHighlight.JPG';
-                let productImage = CSPortal + '/Images/ProductHighlight.JPG';
-
-                let iconImage;
-
-                if (highlight.imgURL === undefined || highlight.imgURL === null) {
-                    if (highlight.actionType === 'PRODUCT') {
-                        iconImage = productImage;
-                    } else if (highlight.actionType === 'SERVICE') {
-                        iconImage = servicesImage;
-                    }
-                } else {
-                    iconImage = highlight.imgURL;
-                }
-                
-                highlight.imgURL = 'background-image: url("' + iconImage + '");background-position: center;background-repeat: no-repeat;background-size: cover;height:130px;';
-
+                highlight.imgURL = 'background-image: url("' + highlight.imgURL + '");background-position: center;background-repeat: no-repeat;background-size: cover;height:130px;';
             });
 
             this.highlightList = resultsLocal;
             this.checkRecordPerPage();
             this.loading = false;
 
-
+            if (this.type === 'HomePage' && this.windowWidth >= 768) {
                 // eslint-disable-next-line @lwc/lwc/no-async-operation
-                this.refrehTimer = window.setInterval(() => {
+                window.setInterval(() => {
                     this.handleNext();
                 }, 10000);
-
-
+            }
+            
         });
 
         if (this.type === 'Services') {
@@ -94,25 +73,21 @@ export default class PortalHighlightCards extends LightningElement {
     /* Check the number of records to Display per page.*/
     checkRecordPerPage() {
         let windowWidth = window.innerWidth;
-        let recordsPerPageLocal = 0;
         if (windowWidth >= 1024) {
-            recordsPerPageLocal = 3;
+            this.recordsPerPageLocal = 3;
         } else if (windowWidth >= 768) {
-            recordsPerPageLocal = 2;
+            this.recordsPerPageLocal = 2;
         } else {
-            recordsPerPageLocal = 1;
+            this.recordsPerPageLocal = 1;
         }
 
-        if (this.recordsPerPage !== recordsPerPageLocal) {
-            this.recordsPerPage = recordsPerPageLocal;
-            let totalRecords = this.highlightList.length;
-            let maxSizeLocal = totalRecords / recordsPerPageLocal;
-            this.page = 1;
-            this.maxSize = Math.ceil(maxSizeLocal);
+        let totalRecords = this.highlightList.length;
+        let maxSizeLocal = totalRecords / this.recordsPerPageLocal;
+        this.page = 1;
+        this.maxSize = Math.ceil(maxSizeLocal);
 
-            this.sliderIconsRenderer();
-            this.getRecordPerPage();
-        }
+        this.sliderIconsRenderer();
+        this.getRecordPerPage();
     }
 
     calculateHighlightPerPage() {
@@ -123,25 +98,14 @@ export default class PortalHighlightCards extends LightningElement {
     getRecordPerPage() {
         let highlightListLocal = JSON.parse(JSON.stringify(this.highlightList));
 
-        let end = (this.page * this.recordsPerPage);
-        let start = end - this.recordsPerPage;
+        let end = (this.page * this.recordsPerPageLocal);
+        let start = end - this.recordsPerPageLocal;
 
         this.highlightListToIterate = highlightListLocal.slice(start, end);
+        this.highlightListToIterateMobile = highlightListLocal;
+        this.classCardNumber = "slds-col slds-size_1-of-"+(this.highlightListToIterateMobile.length)+" slds-is-relative";
+        this.sliderPosition = "width:"+(this.highlightListToIterateMobile.length * this.windowWidth * 0.8)+"px;";
 
-        // eslint-disable-next-line @lwc/lwc/no-async-operation
-        setTimeout(() => {
-            this.cardMove = "margin-left: 0; opacity: 0";
-        }, 300);
-
-        // eslint-disable-next-line @lwc/lwc/no-async-operation
-        setTimeout(() => {
-            this.cardMove = "margin-left: 0; opacity: 1";
-        }, 1300);
-    }
-
-    handlePreviousPage() {
-        this.isForRefreshTimer = true;
-        this.handlePrevious();
     }
 
     //method that changes the rendering of the services to the previous 3 elements on the auxResult list
@@ -152,23 +116,8 @@ export default class PortalHighlightCards extends LightningElement {
             this.page = this.maxSize;
         }
 
-        if (this.isForRefreshTimer) {
-            clearInterval(this.refrehTimer);
-            // eslint-disable-next-line @lwc/lwc/no-async-operation
-            this.refrehTimer = window.setInterval(() => {
-                this.handleNext();
-            }, 10000);
-
-            this.isForRefreshTimer = false;
-        }
-
         this.sliderIconsRenderer();
         this.getRecordPerPage();
-    }
-
-    handleNextPage() {
-        this.isForRefreshTimer = true;
-        this.handleNext();
     }
 
     //method that changes the rendering of the services to the next 3 elements on the auxResult list
@@ -177,15 +126,6 @@ export default class PortalHighlightCards extends LightningElement {
             this.page = this.page + 1;
         } else {
             this.page = 1;
-        }
-
-        if (this.isForRefreshTimer) {
-            clearInterval(this.refrehTimer);
-            // eslint-disable-next-line @lwc/lwc/no-async-operation
-            this.refrehTimer = window.setInterval(() => {
-                this.handleNext();
-            }, 10000);
-            this.isForRefreshTimer = false;
         }
 
         this.sliderIconsRenderer();
@@ -203,28 +143,4 @@ export default class PortalHighlightCards extends LightningElement {
             this.sliderIcons.push({ className });
         }
     }
-
-    touchStart(event) {
-        this.firstPosition = event.touches[0].clientX;
-    }
-
-    touchMove(event) {
-        let position = event.touches[0].clientX;
-        if (this.firstPosition) {
-            if (this.firstPosition > position) {
-                if ((this.firstPosition - position) > 50) {
-                    this.firstPosition = null;
-                    this.cardMove = "margin-left: -100vw; opacity: 0.3";
-                    this.handleNextPage();
-                }
-            } else {
-                if ((position - this.firstPosition) > 50) {
-                    this.firstPosition = null;
-                    this.cardMove = "margin-left: 100vw; opacity: 0.3";
-                    this.handlePreviousPage();
-                }
-            }
-        }
-    }
-
 }
