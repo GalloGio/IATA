@@ -28,6 +28,8 @@ import CSP_L2_RegistrationFailed_LMS                   from '@salesforce/label/c
 import CSP_L2_Registration_Failed_LMS                   from '@salesforce/label/c.CSP_L2_Registration_Failed_LMS';
 import CSP_L2_SucessUpdate_LMS                   from '@salesforce/label/c.CSP_L2_SucessUpdate_LMS';
 import CSP_L3_NewLoginEmail_LMS                   from '@salesforce/label/c.CSP_L3_NewLoginEmail_LMS';
+import OneId_Contact_Association_Validation                   from '@salesforce/label/c.OneId_Contact_Association_Validation';
+import CSP_L3_Header_Title                   from '@salesforce/label/c.CSP_L3_Header_Title';
 
 
 export default class PortalRegistrationThirdLevelLMS extends LightningElement {
@@ -114,7 +116,9 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 		CSP_L2_RegistrationFailed_LMS,
 		CSP_L2_Registration_Failed_LMS,
 		CSP_L2_SucessUpdate_LMS,
-		CSP_L3_NewLoginEmail_LMS
+		CSP_L3_NewLoginEmail_LMS,
+		OneId_Contact_Association_Validation,
+		CSP_L3_Header_Title
 	}
 	get labels() {
 		return this._labels;
