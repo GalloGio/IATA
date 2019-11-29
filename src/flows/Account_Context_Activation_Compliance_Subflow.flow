@@ -411,7 +411,13 @@ Date of last clearance (Date_of_last_clearance__c) within the last 12 months</de
         <outputReference>DueDiligenceQueue</outputReference>
         <queriedFields>Id</queriedFields>
     </recordLookups>
-    <startElementReference>Is_Account_compliant</startElementReference>
+    <start>
+        <locationX>50</locationX>
+        <locationY>50</locationY>
+        <connector>
+            <targetReference>Is_Account_compliant</targetReference>
+        </connector>
+    </start>
     <status>Active</status>
     <variables>
         <name>Account</name>
@@ -436,14 +442,6 @@ Date of last clearance (Date_of_last_clearance__c) within the last 12 months</de
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>Account</objectType>
-    </variables>
-    <variables>
-        <name>ContactRoles</name>
-        <dataType>SObject</dataType>
-        <isCollection>true</isCollection>
-        <isInput>true</isInput>
-        <isOutput>false</isOutput>
-        <objectType>Account_Contact_Role__c</objectType>
     </variables>
     <variables>
         <name>DueDiligenceQueue</name>
@@ -475,8 +473,8 @@ Date of last clearance (Date_of_last_clearance__c) within the last 12 months</de
         <name>SublowComplianceEvent</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
-        <isInput>true</isInput>
-        <isOutput>true</isOutput>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
         <objectType>Subflow_Compliance__e</objectType>
     </variables>
     <waits>

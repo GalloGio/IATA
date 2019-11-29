@@ -40,7 +40,7 @@
         </assignmentItems>
     </assignments>
     <constants>
-        <name>TYPE_CREATE</name>
+        <name>TYPE_INSERT</name>
         <dataType>String</dataType>
         <value>
             <stringValue>Create</stringValue>
@@ -152,7 +152,13 @@
         <queriedFields>Status__c</queriedFields>
         <queriedFields>Status_Detail__c</queriedFields>
     </recordLookups>
-    <startElementReference>Publish_Address_Role_Business_Context_Event</startElementReference>
+    <start>
+        <locationX>50</locationX>
+        <locationY>50</locationY>
+        <connector>
+            <targetReference>Publish_Address_Role_Business_Context_Event</targetReference>
+        </connector>
+    </start>
     <status>Active</status>
     <variables>
         <name>Account</name>
