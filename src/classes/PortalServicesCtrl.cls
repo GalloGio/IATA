@@ -1036,8 +1036,8 @@ public static Boolean massDenyAccess(List<String> contactIds,string serviceId, S
 
 	// Retrieve Portal Application Rights for Service ID and Contact IDs
 	List<Portal_Application_Right__c> psaList = [SELECT Id, Right__c, Access_Status_Reason__c,LastModifiedDate,Contact__c
-	                                             FROM Portal_Application_Right__c
-	                                             WHERE Portal_Application__c = :serviceId AND Contact__c IN :contactIds];
+												 FROM Portal_Application_Right__c
+												 WHERE Portal_Application__c = :serviceId AND Contact__c IN :contactIds];
 
 	if(psaList == null || psaList.isEmpty()) {
 		throw new portalServiceException(Label.ISSP_ANG_GenericError + ' EMPTY');
@@ -1103,8 +1103,8 @@ public static Boolean denyAccess(String contactId,string serviceId, String reaso
 public static Boolean massGrantAccess(List<String> contactIds, String serviceId, String reason) {
 	// retrieves the record with the request
 	List<Portal_Application_Right__c> psal = [SELECT Id, Right__c, Access_Status_Reason__c, LastModifiedDate, Contact__c
-	                                          FROM Portal_Application_Right__c
-	                                          WHERE Portal_Application__c = :serviceId AND Contact__c IN :contactIds];
+											  FROM Portal_Application_Right__c
+											  WHERE Portal_Application__c = :serviceId AND Contact__c IN :contactIds];
 
 	if(psal.isEmpty()) {
 		System.debug(LoggingLevel.ERROR, 'PSA is null (2) [serviceId : ' + serviceId + ' - contactIds : ' + contactIds + '] ');
@@ -1255,13 +1255,13 @@ public static Boolean grantAccess(string contactId,string serviceId,string reaso
 		}
 		
 
-        String contactsQuery = 'SELECT Id, Name , AccountId, Email,Contact.Account_Country__c, User_Portal_Status__c, '+
-            '(select id, Right__c from Portal_Application_Rights__r where Portal_Application__c =\''+ ServiceId + '\'),'+
-            ' Contact.IATA_Code__c , Account.IATA_ISO_Country__r.Name , Account.BillingCity ,'+
-            ' Account.IATACode__c  from Contact' +
-            ' WHERE User_Portal_Status__c NOT IN (\'Inactive\', \'Rejected\', \'Deactivated\')' +
-            ' AND Community__c != null' +
-            ' AND Email != null' +
+		String contactsQuery = 'SELECT Id, Name , AccountId, Email,Contact.Account_Country__c, User_Portal_Status__c, '+
+			'(select id, Right__c from Portal_Application_Rights__r where Portal_Application__c =\''+ ServiceId + '\'),'+
+			' Contact.IATA_Code__c , Account.IATA_ISO_Country__r.Name , Account.BillingCity ,'+
+			' Account.IATACode__c  from Contact' +
+			' WHERE User_Portal_Status__c NOT IN (\'Inactive\', \'Rejected\', \'Deactivated\')' +
+			' AND Community__c != null' +
+			' AND Email != null' +
 			' AND Id NOT IN :alreadyAssignedContactIds ';
 			
 		if(!String.isBlank(queryString)){
@@ -1282,10 +1282,10 @@ public static Boolean grantAccess(string contactId,string serviceId,string reaso
 
 			extraFields = new Map<String,String>();
 
-            extraFields.put('iataCodeLocation',iataCodeLocation);
-            extraFields.put('status',contact.User_Portal_Status__c);
+			extraFields.put('iataCodeLocation',iataCodeLocation);
+			extraFields.put('status',contact.User_Portal_Status__c);
 			extraFields.put('country',contact.Account_Country__c);
-            res.setExtraFields(extraFields);
+			res.setExtraFields(extraFields);
 
 			results.add(res);
 		}
