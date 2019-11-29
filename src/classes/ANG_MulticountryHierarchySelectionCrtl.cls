@@ -37,6 +37,8 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 					accountFields.add(field);
 				}
 				accountFields.add('IATA_ISO_Country__r.Name');
+				accountFields.add('IATA_ISO_Country__r.ISO_Code__c');
+				accountFields.add('IATA_ISO_Country__r.Region__c');
 				accountFields.add('IATA_ISO_Country__r.AMS_Settlement_System__r.Name'); 
 			}
 			return accountFields;
@@ -395,39 +397,100 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 					AMS_AgencyRelationshipTriggerHandler.AMS_HierarchyProcess = true;
 					update accountsToUpdate;
 					createHierarchy(accountsToUpdate);
-					closeTab = true;
 				}
 
 				oscar.Step45__c = AMS_Utils.PASSED;
-				
-				Case caseToUpdate;
-				AMS_Pax_Accreditation_Form__c accreditationForm;
-				
+								
 				selectMain();
 
 				if(oscarMainAccount != null){
 					oscar.Account__c = oscarMainAccount;
-					accreditationForm = [Select Id, SAAM_Case__c from AMS_Pax_Accreditation_Form__c where Id =:oscar.AMS_Online_Accreditation__c];
-					caseToUpdate = new Case(Id = accreditationForm.SAAM_Case__c);
-					caseToUpdate.AccountId = oscar.Account__c;
-					accreditationForm.HO_Account__c = oscar.Account__c;
-					Account account = mapHierarchyAccounts.get(oscar.Account__c);
-					Map<String,Object> fieldsOfObject = ANG_MulticountryHelper.buildStagingAreaFieldsObject(account);
-					accreditationForm.Account_Name__c = account.Name;
+				}
+
+				Account mainAccount = mapHierarchyAccounts.get(oscar.Account__c);
+
+				Id oscarCaseId = null;
+				if(String.isNotBlank(oscar.Oscar_Communication_Case_Id__c)){
+					oscarCaseId = Id.valueOf(oscar.Oscar_Communication_Case_Id__c);
+				}
+				else{
+					oscarCaseId = [SELECT Id FROM Case WHERE OSCAR__c = :oscar.Id].Id;
+				}
+
+				List<AMS_Pax_Accreditation_Form__c> accreditationFormsLst = new List<AMS_Pax_Accreditation_Form__c>(
+					[SELECT
+						Id,
+						SAAM_Case__c,
+						HO_Account__c,
+						SAAM_Case__r.Origin,
+						ISSP_Branch_AccountId__c
+					FROM AMS_Pax_Accreditation_Form__c
+					WHERE SAAM_Case__c = :oscarCaseId
+					]
+				);
+					
+				//Assuming that we always have several staging records 
+				//when the oscar is created from the portal 
+				//and a single record when created internally
+				if(accreditationFormsLst.size() == 1 && oscarMainAccount != null){
+
+					AMS_Pax_Accreditation_Form__c accreditationForm = accreditationFormsLst.get(0);
+
+					Map<String,Object> fieldsOfObject = ANG_MulticountryHelper.buildStagingAreaFieldsObject(mainAccount);
+					accreditationForm.Account_Name__c = mainAccount.Name;
 					accreditationForm = (AMS_Pax_Accreditation_Form__c)ANG_EntityCreator.addFieldsToObject((sObject)accreditationForm, fieldsOfObject);
+
+				}
+				else if(accreditationFormsLst.size() > 1 && oscarMainAccount != null){
+					
+					Map<Id, AMS_Pax_Accreditation_Form__c> accreditationFormsMap = new Map<Id, AMS_Pax_Accreditation_Form__c>();
+
+					for(AMS_Pax_Accreditation_Form__c form : accreditationFormsLst){
+						Id acctId = String.isNotBlank(form.HO_Account__c) ? Id.valueOf(form.HO_Account__c) : Id.valueOf(form.ISSP_Branch_AccountId__c);
+						accreditationFormsMap.put(acctId, form);
+					} 
+
+					for(Account acct : accountsToUpdate){
+						AMS_PAX_Accreditation_Form__c form = accreditationFormsMap.get(acct.Id);
+
+						form.ISSP_Branch_AccountId__c = acct.Location_Type__c != AMS_Utils.GE ? String.valueOf(acct.Id) : '';
+						form.HO_Account__c = acct.Location_Type__c == AMS_Utils.GE ? acct.Id : null; 
+						form.ANG_Accreditation_type__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
+						form.Location_Type__c = acct.Location_Type__c;
+						form.Same_Legal_Entity_Agency_Form__c = null;
+						form.Same_Legal_Entity_Agency_Id__c = null;
+						form.AE_separate_Legal_Entity__c = null;
+						form.ANG_AE_SameLegal__c = null;
+						
+						if(acct.Id == oscar.Account__c){
+							oscar.AMS_Online_Accreditation__c = form.Id;
+						}
+
+					}
+
 				}
 
 				update oscar;
 
 				if(oscarMainAccount != null){
-					update caseToUpdate;
-					update accreditationForm;
+					update new Case(
+						Id = oscarCaseId,
+						AccountId = oscar.Account__c,
+						BSPCountry__c = mainAccount.IATA_ISO_Country__r.Name,
+						Region__c = mainAccount.IATA_ISO_Country__r.Region__c,
+						Country_concerned_by_the_query__c = mainAccount.IATA_ISO_Country__r.Name,
+						IFAP_Country_ISO__c = mainAccount.IATA_ISO_Country__r.ISO_Code__c
+					);
+					update accreditationFormsLst;
 				}
 
 				Set<Id> acctId = new Set<Id>();
 				
-				for(Account a: accountsToUpdate)
-					acctId.Add(a.id);
+				for(Account a: accountsToUpdate){
+					if(a.Location_Type__c != AMS_Utils.GE){
+						acctId.add(a.id);
+					}
+				}
 
 				if(Test.isRunningTest()){
 					Id accountIdToTest =  (new list<ID>(acctId))[0];
@@ -437,10 +500,13 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 				ANG_MulticountryOscarCreatorBatch myBatchObject = new ANG_MulticountryOscarCreatorBatch(AcctId); 
 				Id batchId = Database.executeBatch(myBatchObject,1);
 
+				closeTab = true;
+
 			} catch(Exception e) {
+				closeTab = false;
 				Database.rollback(sp);
 				//DML Exceptions are sometimes displayed on the page
-				if(e.getTypeName() != 'System.DmlException' || !ApexPages.hasMessages()) ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, 'Couldn\'t save changes '+ e.getMessage()));
+				if(e.getTypeName() != 'System.DmlException' || !ApexPages.hasMessages()) ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, 'Couldn\'t save changes: '+ e.getMessage()));
 				System.debug(loggingLevel.ERROR, '____ [cls AMS_AccountHierarchySelectionController - save] error - ' + e.getMessage());
 			}
 		}

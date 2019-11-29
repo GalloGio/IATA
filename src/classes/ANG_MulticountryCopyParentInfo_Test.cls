@@ -104,33 +104,6 @@ public class ANG_MulticountryCopyParentInfo_Test {
 		insert new List<AMS_Oscar__c>{oscarGE,oscarAE};
 	}
 
-
-	@isTest static void testCopyDataAfterIATACodeGenerationStep(){
-
-		List<ID> accountIdList = new List<Id>(new Map<Id, Account>([SELECT ID FROM Account WHERE Name = 'Multicountry GE PT']).keySet());
-
-		// startTest/stopTest block to force async processes to run in the test.
-		Test.startTest();   
-
-		System.enqueueJob(new ANG_MulticountryCopyParentInfo(accountIdList,'NEW'));
-
-		Test.stopTest();
-
-		//Validate if the Data was copy from Parent Account to Child Staging Area
-		List<AMS_Oscar__c> childOscar = [SELECT Id, AMS_Online_Accreditation__r.Trade_Name__c,
-										AMS_Online_Accreditation__r.Short_Name__c, AMS_Online_Accreditation__r.Website__c,
-										AMS_Online_Accreditation__r.ISSP_AMS_VAT_number__c, AMS_Online_Accreditation__r.ANG_Accreditation_type__c,
-										AMS_Online_Accreditation__r.Location_Class__c, AMS_Online_Accreditation__r.Branch_Office_Country__r.Name,
-										AMS_Online_Accreditation__r.IATA_ISO_State__r.Name, AMS_Online_Accreditation__r.ISSP_AMS_Legal_Status__c
-										FROM AMS_Oscar__c WHERE Account__r.ParentId =:accountIdList.get(0)];
-
-		AMS_Oscar__c oscar = childOscar[0];
-
-		System.assertEquals(AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY, oscar.AMS_Online_Accreditation__r.ANG_Accreditation_type__c);
-
-	}
-
-
 	@isTest static void testCopyDataAfterApprovalStep(){
 
 		List<ID> accountIdList = new List<Id>(new Map<Id, Account>([SELECT ID FROM Account WHERE Name = 'Multicountry GE PT']).keySet());
