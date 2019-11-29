@@ -34,10 +34,9 @@
 
 		<lightning-layout-item size="6" class="backButtonWrapper">
 			<div class="text-xxsmall">
-  <!--NEED NEW LABEL -->
 				 <lightning-button variant="base"
-					label="Back to Profile Details"
-					title="Back to Profile Details"
+					label={labels.CSP_L2_Back_to_Profile_Details}
+					title={labels.CSP_L2_Back_to_Profile_Details}
 					onclick={toCompanyInformation}
 					class="blueCustomButtonLinkSmall"
 					icon-name="utility:back"
@@ -47,10 +46,9 @@
 		</lightning-layout-item>
 
 		<lightning-layout-item size="6">
- <!--NEED NEW LABEL -->
 			<lightning-button class="slds-float_right containedButton customBtn"
 				data-id="nextButton"
-				label="Next Step / Email Validation"
+				label={labels.CSP_Next_LMS}
 				disabled={isConfirmationButtonDisabled}
 				variant="brand" onclick={toConfirmation}>
 			</lightning-button>

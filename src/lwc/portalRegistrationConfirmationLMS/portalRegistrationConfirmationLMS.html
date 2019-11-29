@@ -56,16 +56,16 @@
 			</lightning-layout-item>
 
 			<lightning-layout-item size="6">
-				<!-- <div class="dataLabel">{labels.CSP_L2_Job_Function}</div> -->
-<!--NEED NEW LABEL -->                <div class="dataLabel">Email</div>
-
-				<div class="dataValue">{contactInfo.Email}</div>
+				<!-- <div class="dataLabel">{labels.CSP_L2_Job_Title}</div> -->
+                <div class="dataLabel">{labels.CSP_L3_PersonalEmail_LMS}</div>
+				<div class="dataValue">{contactInfo.Additional_Email__c}</div>
 			</lightning-layout-item>
 
 			<lightning-layout-item size="6">
-				<!-- <div class="dataLabel">{labels.CSP_L2_Job_Title}</div> -->
-<!--NEED NEW LABEL -->                <div class="dataLabel">Personal Email</div>
-				<div class="dataValue">{contactInfo.Additional_Email__c}</div>
+				<!-- <div class="dataLabel">{labels.CSP_L2_Job_Function}</div> -->
+	            <div class="dataLabel">{labels.CSP_L3_LoginEmail_LMS}</div>
+
+				<div class="dataValue">{contactInfo.Email}</div>
 			</lightning-layout-item>
 
 			<lightning-layout-item padding="around-small" size="12">
@@ -73,13 +73,13 @@
 
 			<lightning-layout-item size="6">
 					<!-- <div class="dataLabel">{labels.CSP_L2_Job_Function}</div> -->
-	<!--NEED NEW LABEL -->                <div class="dataLabel">Username</div>
+	                <div class="dataLabel">{labels.CSP_L3_Username_LMS}</div>
 				<div class="dataValue">{contactInfo.Username}</div>
 			</lightning-layout-item>
 
 			<lightning-layout-item size="6">
 				<!-- <div class="dataLabel">{labels.CSP_L2_Job_Title}</div> -->
-<!--NEED NEW LABEL -->                <div class="dataLabel">User Id</div>
+                <div class="dataLabel">{labels.CSP_L3_UserId_LMS}</div>
 				<div class="dataValue">{contactInfo.UserId}</div>
 			</lightning-layout-item>
 
@@ -91,13 +91,13 @@
 
 			<lightning-layout-item size="6">
 					<!-- <div class="dataLabel">{labels.CSP_L2_Job_Function}</div> -->
-	<!--NEED NEW LABEL -->                <div class="dataLabel">Phone</div>
+	               <div class="dataLabel">{labels.CSP_L3_Phone_LMS}</div>
 				<div class="dataValue">{contactInfo.Phone}</div>
 			</lightning-layout-item>
 
 			<lightning-layout-item size="6">
 				<!-- <div class="dataLabel">{labels.CSP_L2_Job_Title}</div> -->
-<!--NEED NEW LABEL -->                <div class="dataLabel">Work Phone</div>
+                <div class="dataLabel">{labels.CSP_L3_WorkPhone_LMS}</div>
 				<div class="dataValue">{contactInfo.OtherPhone}</div>
 			</lightning-layout-item>
 
@@ -137,7 +137,6 @@
 		</lightning-layout>
 
 
-
 		<template if:true={openSuccessModal}>
 			<c-portal-registration-generic-modal
 				icon={successIcon}
@@ -151,7 +150,6 @@
 		</template>
 
 		<template if:true={openVerificationMailSuccessModal}>
-			<!--NEED NEW LABELs -->
 				<c-portal-registration-generic-modal
 					icon={successIcon}
 					title={successModalTitle}

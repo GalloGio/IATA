@@ -3,7 +3,6 @@ import { LightningElement,api,track } from 'lwc';
 /* APEX METHODS */
 import getISOCountries  from '@salesforce/apex/GCS_RegistrationController.getISOCountries';
 import getCountryStates from '@salesforce/apex/GCS_AccountCreation.getStates';
-import validateAddress  from '@salesforce/apex/PortalRegistrationSecondLevelCtrl.checkAddress';
 
 /* LABELS*/
 import CSP_L2_Country                   from '@salesforce/label/c.CSP_L2_Country';
@@ -20,10 +19,7 @@ import CSP_L2_Select                    from '@salesforce/label/c.CSP_L2_Select'
 import CSP_L2_No_Matching_Results       from '@salesforce/label/c.CSP_L2_No_Matching_Results';
 import CSP_L2_Address_Not_Found_Message from '@salesforce/label/c.CSP_L2_Address_Not_Found_Message';
 import CSP_PortalPath                   from '@salesforce/label/c.CSP_PortalPath';
-import AMS_DQ_City_Not_in_Database      from '@salesforce/label/c.AMS_DQ_City_Not_in_Database';
-import AMS_DQ_Review_City               from '@salesforce/label/c.AMS_DQ_Review_City';
-import AMS_DQ_City_in_Another_State     from '@salesforce/label/c.AMS_DQ_City_in_Another_State';
-import AMS_DQ_Review_State_or_City      from '@salesforce/label/c.AMS_DQ_Review_State_or_City';
+
 
 export default class PortalAddressFormLMS extends LightningElement {
 	/* Images */
@@ -73,18 +69,14 @@ export default class PortalAddressFormLMS extends LightningElement {
 	@track pageNumbersBeforeCurrent;
 	@track pageNumbersAfterCurrent;
 
-
 	// flags
 	@track provinceAndCitiesEnabled;
-//TEMP    @track isStateRequired;
-//TEMP    @track isZipRequired;
 
 	get isStateRequired(){
 		return this.provinceAndCitiesEnabled;
 	}
 
 	get displayStateComboBox(){
-//TEMP        return this.provinceAndCitiesEnabled || this.isStateRequired;
 		return this.provinceAndCitiesEnabled;
 	}
 
@@ -233,12 +225,10 @@ export default class PortalAddressFormLMS extends LightningElement {
 		this.localAddress.countryCode = country.ISO_Code__c;
 		this.localAddress.countryName = country.Name;
 
-//TEMP        if(country === undefined || (country.Region_Province_and_Cities_Enabled__c === false && country.State_Province_Mandatory__c)){
 		if(country === undefined || country.Region_Province_and_Cities_Enabled__c === false ){
 			this.stateOptions = [];
 			this.provinceAndCitiesEnabled = false;
-//TEMP            this.isStateRequired = false;
-//TEMP            this.isZipRequired = false;
+
 			// maybe we need to reset the state and all other fields
 
 			let state = '';

@@ -1,10 +1,7 @@
 /* eslint-disable no-alert */
 /* eslint-disable vars-on-top */
-/**
- * Created by mmercier on 30.07.2019.
- */
 
-import { LightningElement, track, wire, api} from 'lwc';
+import { LightningElement, track, api} from 'lwc';
 
 import getContactInfo               from '@salesforce/apex/PortalRegistrationSecondLevelCtrl.getContactInfo';
 import getParameters                from '@salesforce/apex/PortalRegistrationThirdLevelLMSCtrl.getParameters';
@@ -22,6 +19,16 @@ import CSP_L2_Profile_Incomplete_Message              from '@salesforce/label/c.
 import CSP_L2_Yes              from '@salesforce/label/c.CSP_L2_Yes';
 import CSP_L2_No              from '@salesforce/label/c.CSP_L2_No';
 import CSP_PortalPath                   from '@salesforce/label/c.CSP_PortalPath';
+import CSP_L3_Note_LMS                   from '@salesforce/label/c.CSP_L3_Note_LMS';
+import CSP_L3_UpdatingProfileP1_LMS                   from '@salesforce/label/c.CSP_L3_UpdatingProfileP1_LMS';
+import CSP_L3_ProfileUpdate_LMS                   from '@salesforce/label/c.CSP_L3_ProfileUpdate_LMS';
+import CSP_L3_UpdatingProfileP2_LMS                   from '@salesforce/label/c.CSP_L3_UpdatingProfileP2_LMS';
+import CSP_L3_HomePage_LMS                   from '@salesforce/label/c.CSP_L3_HomePage_LMS';
+import CSP_L2_RegistrationFailed_LMS                   from '@salesforce/label/c.CSP_L2_RegistrationFailed_LMS';
+import CSP_L2_Registration_Failed_LMS                   from '@salesforce/label/c.CSP_L2_Registration_Failed_LMS';
+import CSP_L2_SucessUpdate_LMS                   from '@salesforce/label/c.CSP_L2_SucessUpdate_LMS';
+import CSP_L3_NewLoginEmail_LMS                   from '@salesforce/label/c.CSP_L3_NewLoginEmail_LMS';
+
 
 export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 	/* Images */
@@ -98,7 +105,16 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 		CSP_L2_Profile_Incomplete,
 		CSP_L2_Profile_Incomplete_Message,
 		CSP_L2_Yes,
-		CSP_L2_No
+		CSP_L2_No,
+		CSP_L3_Note_LMS,
+		CSP_L3_ProfileUpdate_LMS,
+		CSP_L3_UpdatingProfileP1_LMS,
+		CSP_L3_UpdatingProfileP2_LMS,
+		CSP_L3_HomePage_LMS,
+		CSP_L2_RegistrationFailed_LMS,
+		CSP_L2_Registration_Failed_LMS,
+		CSP_L2_SucessUpdate_LMS,
+		CSP_L3_NewLoginEmail_LMS
 	}
 	get labels() {
 		return this._labels;
@@ -114,6 +130,7 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 
 	connectedCallback() {
 		document.body.setAttribute('style', 'overflow: hidden;');
+		
 		let pageParams = getParamsFromPage();
 
 		// Retrieve Contact information
@@ -187,56 +204,92 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 					this.address.cityName = this.contactInfo.Shipping_Address__r.City__c !== undefined? this.contactInfo.Shipping_Address__r.City__c : '';
 					this.address.street = this.contactInfo.Shipping_Address__r.Street__c;
 					this.address.street2 = this.contactInfo.Shipping_Address__r.Street2__c !== undefined? this.contactInfo.Shipping_Address__r.Street2__c : '';
-					this.address.zip = this.contactInfo.Shipping_Address__r.Postal_Code__c;
+					this.address.zip = this.contactInfo.Shipping_Address__r.Postal_Code__c !== undefined? this.contactInfo.Shipping_Address__r.Postal_Code__c : '';
 				}
 
-
+				
 
 			})
 		.catch((error) => {
 			this.openMessageModalFlowRegister = true;
-			this.message = 'Your registration failed. An Error Occurred - ' + error;
+			this.message = CSP_L2_RegistrationFailed_LMS + error;
 			console.log('Error: ', JSON.parse(JSON.stringify(error)));
-			console.log('Error2: ', error);
 		});
 
 		// FOR LMS L3
 		if(pageParams !== undefined && pageParams.lmsflow !== undefined ){
 
 			if(pageParams.lmsflow.indexOf('flow') > -1){
+				var boldStr = CSP_L3_Note_LMS;
 				this.registerData = false;
+				
+				this.title=CSP_L3_ProfileUpdate_LMS;
+				// this.message=CSP_L3_UpdatingProfileInitialMessage_LMS; 
 
-				this.title="Profile Update"
-				this.message="Updating profile Information, switching email data"
-				this.button1Label="Homepage";
+				if(pageParams.lmsflow === 'flow3'){
+					this.message=CSP_L3_UpdatingProfileP1_LMS + '<br>' + boldStr + '<br>' + CSP_L3_UpdatingProfileP2_LMS;
+				}
+				if(pageParams.lmsflow === 'flow4'){
+					this.message=CSP_L3_UpdatingProfileP1_LMS + '<br>' + boldStr + '<br>' + CSP_L3_UpdatingProfileP2_LMS;
+				}
+				if(pageParams.lmsflow === 'flow5'){
+					this.message=CSP_L3_UpdatingProfileP1_LMS + '<br>' + boldStr + '<br>' + CSP_L3_UpdatingProfileP2_LMS;
+				}
+				if(pageParams.lmsflow === 'flow6'){
+					this.message=CSP_L3_UpdatingProfileP1_LMS + '<br>' + boldStr + '<br>' + CSP_L3_UpdatingProfileP2_LMS;
+				}
+				if(pageParams.lmsflow === 'flow7'){
+					this.message=CSP_L3_UpdatingProfileP1_LMS + '<br>' + boldStr + '<br>' + CSP_L3_UpdatingProfileP2_LMS;
+				}
+
+				this.button1Label= CSP_L3_HomePage_LMS;
 
 				this.openMessageModalFlowRegister = true;
 				this.isResLoading = true;
 
 				var sPageURL = ''+ window.location;
+				
 				getParameters({ urlExtension : sPageURL }).then(result => {
 					this.contactInfo = JSON.parse(result.userInfo);
+					
+					if(pageParams.lmsflow === 'flow3'){
+						this.message=CSP_L3_UpdatingProfileP1_LMS + '<br>' + boldStr + '<br>' + CSP_L3_UpdatingProfileP2_LMS + '<br>' + CSP_L3_NewLoginEmail_LMS + ' <b>' + this.contactInfo.Email + '</b>';
+					}
+					if(pageParams.lmsflow === 'flow4'){
+						this.message=CSP_L3_UpdatingProfileP1_LMS + '<br>' + boldStr + '<br>' + CSP_L3_UpdatingProfileP2_LMS + '<br>' + CSP_L3_NewLoginEmail_LMS + ' <b>' + this.contactInfo.Email + '</b>';
+					}
+					if(pageParams.lmsflow === 'flow5'){
+						this.message=CSP_L3_UpdatingProfileP1_LMS + '<br>' + boldStr + '<br>' + CSP_L3_UpdatingProfileP2_LMS + '<br>' + CSP_L3_NewLoginEmail_LMS + ' <b>' + this.contactInfo.Email + '</b>';
+					}
+					if(pageParams.lmsflow === 'flow6'){
+						this.message=CSP_L3_UpdatingProfileP1_LMS + '<br>' + boldStr + '<br>' + CSP_L3_UpdatingProfileP2_LMS + '<br>' + CSP_L3_NewLoginEmail_LMS + ' <b>' + this.contactInfo.Email + '</b>';
+					}
+					if(pageParams.lmsflow === 'flow7'){
+						this.message=CSP_L3_UpdatingProfileP1_LMS + '<br>' + boldStr + '<br>' + CSP_L3_UpdatingProfileP2_LMS + '<br>' + CSP_L3_NewLoginEmail_LMS + ' <b>' + this.contactInfo.Email + '</b>';
+					}
+
 					completeRegistration({params: JSON.stringify(this.contactInfo) })
-						.then(result2 => {
-							console.log('result: ', JSON.parse(JSON.stringify(result)));
-							if(result2.isSuccess == true){
-								this.message="Successfully Updated profile Information"
+					.then(result2 => {
+
+						if(result2.isSuccess == true){
+							if(pageParams.lmsflow === 'flow7'){
+								this.message = this.message + '<br><br>' + CSP_L2_SucessUpdate_LMS + '<br>' + CSP_L3_NewLoginEmail_LMS + ' <b>' + this.contactInfo.Email + '</b>';
+							}else{
+								this.message = this.message + '<br><br>' + CSP_L2_SucessUpdate_LMS;
 							}
-							else{
-								this.message = 'Your registration failed. \n'+result2.message;
-							}
-							this.isResLoading = false;
-						})
-						.catch(error => {
-							console.log('Error: ', JSON.parse(JSON.stringify(error)));
-							this.errorModalMessage = JSON.parse(JSON.stringify(error));
-							this.isResLoading = false;
-						});
+							
+						}
+						else{
+							this.message = CSP_L2_Registration_Failed_LMS+'\n'+result2.message;
+						}
+						this.isResLoading = false;
+					})
+					.catch(error => {
+						console.log('Error: ', JSON.parse(JSON.stringify(error)));
+						this.errorModalMessage = JSON.parse(JSON.stringify(error));
+						this.isResLoading = false;
+					});
 				})
-
-
-
-
 			}
 		}
 	}
@@ -380,6 +433,8 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 
 	saveAndClose(){
 		// To do save contact info
+
+
 		this.openMessageModal = false;
 		if(this.landingPage == 'same'){
 			this.dispatchEvent(new CustomEvent('closesecondlevelregistration'));
@@ -390,7 +445,8 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 	}
 
 	secondLevelRegistrationCompletedAction1(){
-		this.dispatchEvent(new CustomEvent('secondlevelregistrationcompletedactionone'));
+		this.openMessageModal = false;
+		navigateToPage(CSP_PortalPath,{});
 	}
 
 	secondLevelRegistrationCompletedAction2(){

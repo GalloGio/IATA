@@ -8,8 +8,7 @@
 
 		<lightning-layout-item size="12">
 			<!-- <div class="sectionDescription">{labels.CSP_L2_Account_Selection_Message}</div> -->
- <!--NEED NEW LABEL -->           <div class="sectionDescription">To Validate your personal email with a existing contact we need
-					your personal email before creating a new one.
+        	   <div class="sectionDescription">{labels.CSP_L2_EmailValidationDescri_LMS}
 			</div>
 
 			<!--div class="sectionDescription">Your company may have an account in IATA, so please check it first before creating a new one.</div-->
@@ -23,9 +22,9 @@
 
 		<lightning-layout-item size="12">
 			<!-- <div class="sectionTitle">{labels.CSP_L2_Account_Information}</div> -->
-<!--NEED NEW LABEL -->             <div class="sectionTitle">Email Info</div>
+             <div class="sectionTitle">{labels.CSP_L3_EmailInformation_LMS}</div>
 			<!-- <div class="sectionDescription">{labels.CSP_L2_Account_Information_Message}</div> -->
-<!--NEED NEW LABEL -->             <div class="sectionDescription">Anwser and Fill out the information below.</div>
+             <div class="sectionDescription">{labels.CSP_L3_CompleteInformation_LMS}</div>
 		</lightning-layout-item>
 
 		<lightning-layout-item padding="around-small" size="12">
@@ -40,7 +39,7 @@
 						<div class="formLabelContainer">
 							<div class="text-xxsmall">
 								<!-- <abbr class="slds-required" title="required">* </abbr>{item.label} -->
-<!--NEED NEW LABEL -->                                    Is your user email your personal email?
+								{labels.CSP_L3_IsPersonalEmail_LMS}
 							</div>
 						</div>
 					</lightning-layout-item>
@@ -68,7 +67,7 @@
 						<div class="formLabelContainer">
 							<div class="text-xxsmall">
 								<!-- <abbr class="slds-required" title="required">* </abbr>{item.label} -->
-<!--NEED NEW LABEL -->                                    Are personal and work email reversed?
+                                    {labels.CSP_L3_IsReversedEmail_LMS}
 							</div>
 						</div>
 					</lightning-layout-item>
@@ -97,7 +96,7 @@
 						<div class="formLabelContainer">
 							<div class="text-xxsmall">
 								<!-- {labels.CSP_L2_Company_Name} -->
-	<!--NEED NEW LABEL -->                             Work Email
+	                             {labels.CSP_L3_WorkEmail_LMS}
 							</div>
 						</div>
 					</lightning-layout-item>
@@ -123,9 +122,9 @@
 
 					<lightning-layout-item size="12">
 						<div class="formLabelContainer">
-							<div class="text-xxsmall">
+							<div class="text-xxsmall"> 
 								<!-- {labels.CSP_L2_Company_Name} -->
-	<!--NEED NEW LABEL -->                             Personal Email
+								{labels.CSP_L_PersonalEmail_LMS}
 							</div>
 						</div>
 					</lightning-layout-item>
@@ -155,7 +154,7 @@
 						<div class="formLabelContainer">
 							<div class="sectionDescription">
 								<!-- {labels.CSP_L2_Company_Name} -->
-	<!--NEED NEW LABEL -->      You are trying to register with an existing user, please change the email or click login button to go to the login page
+								{labels.CSP_L3_ExistingUser_LMS}
 							</div>
 						</div>
 					</lightning-layout-item>
@@ -170,26 +169,27 @@
 						<div class="formLabelContainer">
 							<div class="sectionDescription">
 								<!-- {labels.CSP_L2_Company_Name} -->
-	<!--NEED NEW LABEL -->      We have found an existing contact having as the personal email, the email you are trying to register with:
+								{labels.CSP_L3_ExistingContact_LMS}
 							</div>
 						</div>
 					</lightning-layout-item>
 					<lightning-layout-item size="12">
 						<div class="slds-form-element">
 							<div class="sectionDescription">
-									<br> Contact Email: <b>{userInfo.existingContactEmail}</b>
+									<br> Personal Email: <b>{userInfo.existingContactEmail}</b>
 							</div>
 						</div>
 					</lightning-layout-item>
 					<lightning-layout-item size="12">
 							<div class="formLabelContainer">
 								<div class="sectionDescription">
-									<!-- {labels.CSP_L2_Company_Name} -->
-		<!--NEED NEW LABEL -->      <br>If you are still working for {userInfo.existingContactAccount}, please click login button to the portal using the email above.
+									<!-- {labels.CSP_L2_Company_Name} -->  
+		     <br>{labels.CSP_L3_StillWorkingP1_LMS} {userInfo.existingContactAccount}, {labels.CSP_L3_StillWorkingP2_LMS}
 								</div>
 							</div>
 						</lightning-layout-item>
-			
+						<!-- <lightning-button variant="base" label="Login" class="slds-p-right_small blueCustomButtonLinkSmall" onclick={handleNavigateToLogin}></lightning-button> -->
+
 
 				</div>
 			</template>
@@ -231,12 +231,10 @@
 			</template>
 		</lightning-layout-item>
 
- <!--NEED NEW LABEL -->
 		<lightning-layout-item size="6">
 			<lightning-button class="slds-float_right containedButton customBtn" data-id="nextButton" label={labels.CSP_L2_Next_Confirmation} disabled={blockConfirmation} variant="brand" onclick={next}>
 			</lightning-button>
 		</lightning-layout-item>
-
 
 		<lightning-layout-item padding="around-small" size="12">
 		</lightning-layout-item>

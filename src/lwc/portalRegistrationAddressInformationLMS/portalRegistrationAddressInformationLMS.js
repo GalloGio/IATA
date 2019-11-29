@@ -15,6 +15,7 @@ import CSP_L2_Website from '@salesforce/label/c.CSP_L2_Website';
 import CSP_L2_Business_Address_Information_Message from '@salesforce/label/c.CSP_L2_Business_Address_Information_Message';
 import CSP_L2_Back_to_Company_Information from '@salesforce/label/c.CSP_L2_Back_to_Company_Information';
 import CSP_L2_Next_Confirmation from '@salesforce/label/c.CSP_L2_Next_Confirmation';
+import CSP_Next_LMS from '@salesforce/label/c.CSP_Next_LMS';
 
 export default class PortalRegistrationAddressInformationLMS extends LightningElement {
 
@@ -44,7 +45,8 @@ export default class PortalRegistrationAddressInformationLMS extends LightningEl
 		CSP_L2_Website,
 		CSP_L2_Business_Address_Information_Message,
 		CSP_L2_Back_to_Company_Information,
-		CSP_L2_Next_Confirmation
+		CSP_L2_Next_Confirmation,
+		CSP_Next_LMS
 	}
 	get labels() {
 		return this._labels;

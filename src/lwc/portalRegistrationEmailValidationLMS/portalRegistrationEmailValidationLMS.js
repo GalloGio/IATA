@@ -6,7 +6,7 @@ import { LightningElement, track, api} from 'lwc';
 /* ==============================================================================================================*/
 /* Utils & Apex & Platform
 /* ==============================================================================================================*/
-import { navigateToPage, getParamsFromPage }    from 'c/navigationUtils';
+import { getParamsFromPage }    from 'c/navigationUtils';
 import RegistrationUtils                        from 'c/registrationUtils';
 
 import getUserInformationFromEmail              from '@salesforce/apex/PortalRegistrationFirstLevelCtrl.getUserInformationFromEmail';
@@ -31,8 +31,17 @@ import CSP_L2_Create_New_Account from '@salesforce/label/c.CSP_L2_Create_New_Acc
 import CSP_L2_Next_Confirmation from '@salesforce/label/c.CSP_L2_Next_Confirmation';
 import CSP_L2_Company_Name from '@salesforce/label/c.CSP_L2_Company_Name';
 import CSP_L2_No_Matching_Results from '@salesforce/label/c.CSP_L2_No_Matching_Results';
-// import CSP_Invalid_Email from '@salesforce/label/c.CSP_Invalid_Email';
-// import CSP_Registration_Existing_User_Message   from '@salesforce/label/c.CSP_Registration_Existing_User_Message';
+import CSP_L2_EmailValidationDescri_LMS from '@salesforce/label/c.CSP_L2_EmailValidationDescri_LMS';
+import CSP_L3_EmailInformation_LMS from '@salesforce/label/c.CSP_L3_EmailInformation_LMS';
+import CSP_L3_CompleteInformation_LMS from '@salesforce/label/c.CSP_L3_CompleteInformation_LMS';
+import CSP_L3_IsPersonalEmail_LMS from '@salesforce/label/c.CSP_L3_IsPersonalEmail_LMS';
+import CSP_L3_IsReversedEmail_LMS from '@salesforce/label/c.CSP_L3_IsReversedEmail_LMS';
+import CSP_L3_WorkEmail_LMS from '@salesforce/label/c.CSP_L3_WorkEmail_LMS';
+import CSP_L_PersonalEmail_LMS from '@salesforce/label/c.CSP_L_PersonalEmail_LMS';
+import CSP_L3_ExistingUser_LMS from '@salesforce/label/c.CSP_L3_ExistingUser_LMS';
+import CSP_L3_ExistingContact_LMS from '@salesforce/label/c.CSP_L3_ExistingContact_LMS';
+import CSP_L3_StillWorkingP1_LMS from '@salesforce/label/c.CSP_L3_StillWorkingP1_LMS';
+import CSP_L3_StillWorkingP2_LMS from '@salesforce/label/c.CSP_L3_StillWorkingP2_LMS';
 import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 
 export default class PortalRegistrationEmailValidationLMS extends LightningElement {
@@ -43,7 +52,7 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 	@api contactInfo;
 	@api flow;
 
-	@track errorMessage = "";
+	@track errorMessage = ""; 
 	@track displayError = false;
 	@track displaySubmitError = false;
 	@track localContactInfo;
@@ -74,9 +83,6 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 
 		let res = true;
 		if(
-			// (this.isPersonalEmail === 'no' && this.personalEmailInput !== '') ||
-			// (this.isPersonalEmail === 'yes' && this.customerType === '') ||
-			// (this.isPersonalEmail === 'yes' && this.customerType !== '' && this.workEmailInput !== '')
 
 			(this.isPersonalEmail === 'no' && this.personalEmailInput !== '') ||
 			(this.isPersonalEmail === 'yes' && this.localContactInfo.Account.Is_General_Public_Account__c === true) ||
@@ -88,9 +94,6 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 		return res;
 
 	}
-
-	// flag to warn user requesting access to a service/topic
-	// @track isCategorizationModified = false;
 
 	get PersonalEmailOptions() {
 		return [
@@ -136,7 +139,18 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 		CSP_L2_Next_Confirmation,
 		CSP_L2_Did_Not_Find,
 		CSP_L2_Did_Not_Find_Message,
-		CSP_L2_No_Matching_Results
+		CSP_L2_No_Matching_Results,
+		CSP_L2_EmailValidationDescri_LMS,
+		CSP_L3_EmailInformation_LMS,
+		CSP_L3_CompleteInformation_LMS,
+		CSP_L3_IsPersonalEmail_LMS,
+		CSP_L3_IsReversedEmail_LMS,
+		CSP_L3_WorkEmail_LMS,
+		CSP_L_PersonalEmail_LMS,
+		CSP_L3_ExistingUser_LMS,
+		CSP_L3_ExistingContact_LMS,
+		CSP_L3_StillWorkingP1_LMS,
+		CSP_L3_StillWorkingP2_LMS
 	}
 	get labels() {
 		return this._labels;
@@ -231,8 +245,6 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 			this.dispatchEvent(new CustomEvent('next'));
 		}else{
 
-			//
-			// if(this.isPersonalEmail === 'yes' && this.customerType === ''){
 			if(this.isPersonalEmail === 'yes' && this.localContactInfo.Account.Is_General_Public_Account__c === true){
 				this.localContactInfo.Additional_Email__c = this.localContactInfo.Email;
 				this.flow = 'flow2';
@@ -289,7 +301,7 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 
 										var userInfo = JSON.parse(JSON.stringify(result3));
 										this.userInfo = userInfo;
-						
+
 										if(userInfo.hasExistingContact == true){
 											this.existingUsernameVisibility = true;
 											if(userInfo.hasExistingUser == true){
@@ -300,7 +312,7 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 												if(this.flow === 'flow5'){
 													this.flow = 'flow6';
 												}
-						
+
 												this.localContactInfo.existingContactId = userInfo.contactId;
 												this.localContactInfo.existingContactAccount = userInfo.existingContactAccount;
 												this.localContactInfo.hasExistingContact = userInfo.hasExistingContact;
@@ -326,8 +338,6 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 													if(this.flow === 'flow5'){
 														this.flow = 'flow7';
 													}
-
-													console.log('userInfo.contactId: ', userInfo.contactId);
 
 													this.localContactInfo.hasExistingContact = userInfo.hasExistingContact;
 													this.localContactInfo.hasExistingUser = userInfo.hasExistingUser;

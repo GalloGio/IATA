@@ -1,34 +1,34 @@
 <apex:component id="CSP_Verification_L3_Email_LMS" access="global">
-	<html>
+    <html>
 
-	<head>
-		<style>
-			body {
-				font-family: "Open Sans", "GillSansMT", "Lucida Sans Unicode", "Lucida Grande", sans-serif;
-				color: #004577;
-			}
+    <head>
+        <style>
+            body {
+                font-family: "Open Sans", "GillSansMT", "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+                color: #004577;
+            }
 
-			div.main {
-				margin: auto;
-				width: 90%;
-			}
+            div.main {
+                margin: auto;
+                width: 90%;
+            }
 
-			hr {
-				color: #0A4279;
-			}
-		</style>
-	</head>
+            hr {
+                color: #0A4279;
+            }
+        </style>
+    </head>
 
-	<body>
-		<div class="main">
-			<p>{!$Label.CSP_Dear} [CustomerName],</p>
-			<p>please click the link below to validate your email address</p>
-			<p>We´ve made it easy and fast – just click <a href="[URL]" target="_blank">here</a> to complete your profile</p>
-			<p>Thanks for being part of IATA.</p>
-			<p>IATA</p>
-		</div>
-	</body>
+    <body>
+        <div class="main">
+            <p>{!$Label.CSP_Dear} [CustomerName],</p>
+            <p>please click the link below to validate your email address</p>
+            <p>We´ve made it easy and fast – just click <a href="[URL]" target="_blank">here</a> to complete your profile</p>
+            <p>Thanks for being part of IATA.</p>
+            <p>IATA</p>
+        </div>
+    </body>
 
-	</html>
+    </html>
 
 </apex:component>

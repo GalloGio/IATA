@@ -1,220 +1,209 @@
 <template>
-	<template if:true={registerData}>
-		<div class="registration-modal">
-			<!--img
-				src="img/bspcass.svg"
-				class="BSPCASS"-->
-			<div data-name="top" class="banner">
-				<div class="header">
-					<div class="headerHome">
-						<img src={homeIcon} height="24" width="24" onclick={openSaveAndGoToHomePopup}>
-					</div>
-					<!-- <div class="headerTitle">{labels.CSP_L2_Banner_Title}</div> -->
-	<!--NEED NEW LABEL -->
-					<div class="headerTitle">Profile Completion &amp; Email Validation</div>
+    <template if:true={registerData}>
+        <div class="registration-modal">
+            <!--img 
+                src="img/bspcass.svg"
+                class="BSPCASS"-->
+            <div data-name="top" class="banner">
+                <div class="header">
+                    <div class="headerHome">
+                        <img src={homeIcon} height="24" width="24" onclick={openSaveAndGoToHomePopup}>
+                    </div>
+                    <!-- <div class="headerTitle">{labels.CSP_L2_Banner_Title}</div> -->
+    <!--NEED NEW LABEL -->
+                    <div class="headerTitle">Profile Completion &amp; Email Validation</div>
+                    
+                    <div class="headerClose">
+                        <img src={crossIcon} height="30" width="30" onclick={openSaveAndClosePopup}>
+                    </div>
+                </div>
+                <div class="progressBarContainer">
+                    <div class="progressBar">
+                        <div class="progressItem">
+                            <div class="itemIcon">
+                                <template if:true={isProfileInformationStep}>
+                                    <img src={step1Active} height="24" width="24">
+                                    <!--<lightning-icon size="x-small" icon-name="utility:check" class="slds-current-color"></lightning-icon>-->
+                                </template>
+                                <template if:false={isProfileInformationStep}>
+                                    <img src={stepValid} class="validIcon" height="50" width="50">
+                                    <!--<lightning-icon size="x-small" icon-name="utility:check" class="slds-current-color"></lightning-icon>-->
+                                </template>
+                            </div>
+                            <!-- <div class="itemTitle"><span>{labels.CSP_L2_Profile_Details}</span></div> -->
+    <!--NEED NEW LABEL -->
+                            <div class="itemTitle"><span>Profile Details</span></div>
+                        </div>
+                        <div class="progressItem">
+                            <div class="itemIcon">
+                                <template if:true={isProfileInformationStep}>
+                                    <img src={step2Inactive} height="24" width="24">
+                                </template>
+                                <template if:true={isAccountStep}>
+                                    <img src={step2Active} height="24" width="24">
+                                </template>
+                                <template if:true={isConfirmationStep}>
+                                    <img src={stepValid} class="validIcon" height="50" width="50">
+                                </template>
+                            </div>
+    <!--NEED NEW LABEL -->
+                            <!-- <div class="itemTitle"><span>{labels.CSP_L2_Account_Selection}</span></div> -->
+                            <div class="itemTitle"><span>Email validation</span></div>
+                        </div>
+                        <div class="progressItem">
+                            <div class="itemIcon">
+                                <img src={step3Inactive} height="24" width="24">
+                            </div>
+                            <div class="itemTitle"><span>{labels.CSP_L2_Confirmation}</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="customLightShadow customPopupInterior60PercentScreenCentered slds-is-relative">
+                <span slot="pageBody">
+                    <c-portal-custom-card-container>
+                        <span slot="cardBody">
+                            <!--div class="scrollable-body"-->
+                            <div>
+                                <template if:true={contactFound}>
+                                    <template if:true={isProfileInformationStep}>
+                                        <c-portal-registration-profile-details-l-m-s
+                                            contact-info={contactInfo}
+                                            onnext={fromProfileDetailsToAccountSelection}
+                                            onstartloading={startLoading}
+                                            onstoploading={stopLoading}
+                                            onscrolltotop={scrollToTop}>
+                                        </c-portal-registration-profile-details-l-m-s>
+                                    </template>
+                                    <template if:true={isAddressInformationStep}>
+                                            <c-portal-registration-address-information-l-m-s
+                                                account={account}
+                                                address={address}
+                                                country-id={selectedCountryId}
+                                                original-customer-type={originalCustomerType}
+                                                ongotostep={goToStep}
+                                                onscrolltotop={scrollToTop}
+                                                onstartloading={startLoading}
+                                                onstoploading={stopLoading}
+                                                oncompletionstatus={step4CompletionStatus}>
+                                            </c-portal-registration-address-information-l-m-s>
+                                        </template>
+                                    <template if:true={isEmailValidationStep}>
+                                        <c-portal-registration-email-validation-l-m-s
+                                            contact-info={contactInfo}
+                                            flow={flow}
+                                            customer-type={selectedCustomerType}
+                                            country-id={selectedCountryId}
+                                            account-id={selectedAccountId}
+                                            search-results={searchResults}
+                                            is-triggered-by-request={isTriggeredByRequest}
+                                            onprevious={fromAccountSelectionToProfileDetails}
+                                            onnext={fromAccountSelectionToConfirmation}
+                                            oncreateaccount={fromAccountSelectionToCompanyInformation}
+                                            onstartloading={startLoading}
+                                            onstoploading={stopLoading}
+                                            onscrolltotop={scrollToTop}>
+                                        </c-portal-registration-email-validation-l-m-s>
+                                    </template>
+                                    <template if:true={isConfirmationStep}>
+                                        <c-portal-registration-confirmation-l-m-s
+                                            contact-info={contactInfo}
+                                            flow={flow}
+                                            trigger={trigger}
+                                            address={address}
+                                            account={account}
+                                            search-results={searchResults}
+                                            selected-account-id={selectedAccountId}
+                                            country-id={selectedCountryId}
+                                            ontoprofiledetails={fromConfirmationToProfileDetails}
+                                            ontoaccountselection={fromConfirmationToAccountSelection}
+                                            ontocompanyinformation={fromConfirmationToCompanyInformation}
+                                            ontoaddressinformation={fromConfirmationToAddressInformation}
+                                            onprevious={fromConfirmationToAddressInformation}
+                                            onstartloading={startLoading}
+                                            onstoploading={stopLoading}
+                                            onsecondlevelregistrationcompletedactionone={secondLevelRegistrationCompletedAction1}
+                                            onsecondlevelregistrationcompletedactiontwo={secondLevelRegistrationCompletedAction2}
+                                            onscrolltotop={scrollToTop}>
+                                        </c-portal-registration-confirmation-l-m-s>
+                                    </template>
+                                </template>
+                            </div>
+                        </span>
+                    </c-portal-custom-card-container>        
+                </span>
+                
+            </div>
 
-					<div class="headerClose">
-						<img src={crossIcon} height="30" width="30" onclick={openSaveAndClosePopup}>
-					</div>
-				</div>
-				<div class="progressBarContainer">
-					<div class="progressBar">
-						<div class="progressItem">
-							<div class="itemIcon">
-								<template if:true={isProfileInformationStep}>
-									<img src={step1Active} height="24" width="24">
-									<!--<lightning-icon size="x-small" icon-name="utility:check" class="slds-current-color"></lightning-icon>-->
-								</template>
-								<template if:false={isProfileInformationStep}>
-									<img src={stepValid} class="validIcon" height="50" width="50">
-									<!--<lightning-icon size="x-small" icon-name="utility:check" class="slds-current-color"></lightning-icon>-->
-								</template>
-							</div>
-							<!-- <div class="itemTitle"><span>{labels.CSP_L2_Profile_Details}</span></div> -->
-	<!--NEED NEW LABEL -->
-							<div class="itemTitle"><span>Profile Details</span></div>
-						</div>
-						<div class="progressItem">
-							<div class="itemIcon">
-								<template if:true={isProfileInformationStep}>
-									<img src={step2Inactive} height="24" width="24">
-								</template>
-								<template if:true={isAccountStep}>
-									<img src={step2Active} height="24" width="24">
-								</template>
-								<template if:true={isConfirmationStep}>
-									<img src={stepValid} class="validIcon" height="50" width="50">
-								</template>
-							</div>
-	<!--NEED NEW LABEL -->
-							<!-- <div class="itemTitle"><span>{labels.CSP_L2_Account_Selection}</span></div> -->
-							<div class="itemTitle"><span>Email validation</span></div>
-						</div>
-						<div class="progressItem">
-							<div class="itemIcon">
-								<img src={step3Inactive} height="24" width="24">
-							</div>
-							<div class="itemTitle"><span>{labels.CSP_L2_Confirmation}</span></div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="customLightShadow customPopupInterior60PercentScreenCentered slds-is-relative">
-				<span slot="pageBody">
-					<c-portal-custom-card-container>
-						<span slot="cardBody">
-							<!--div class="scrollable-body"-->
-							<div>
-								<template if:true={contactFound}>
-									<template if:true={isProfileInformationStep}>
-										<c-portal-registration-profile-details-l-m-s
-											contact-info={contactInfo}
-											onnext={fromProfileDetailsToAccountSelection}
-											onstartloading={startLoading}
-											onstoploading={stopLoading}
-											onscrolltotop={scrollToTop}>
-										</c-portal-registration-profile-details-l-m-s>
-									</template>
-									<template if:true={isAddressInformationStep}>
-											<c-portal-registration-address-information-l-m-s
-												account={account}
-												address={address}
-												country-id={selectedCountryId}
-												original-customer-type={originalCustomerType}
-												ongotostep={goToStep}
-												onscrolltotop={scrollToTop}
-												onstartloading={startLoading}
-												onstoploading={stopLoading}
-												oncompletionstatus={step4CompletionStatus}>
-											</c-portal-registration-address-information-l-m-s>
-										</template>
-									<template if:true={isEmailValidationStep}>
-										<c-portal-registration-email-validation-l-m-s
-											contact-info={contactInfo}
-											flow={flow}
-											customer-type={selectedCustomerType}
-											country-id={selectedCountryId}
-											account-id={selectedAccountId}
-											search-results={searchResults}
-											is-triggered-by-request={isTriggeredByRequest}
-											onprevious={fromAccountSelectionToProfileDetails}
-											onnext={fromAccountSelectionToConfirmation}
-											oncreateaccount={fromAccountSelectionToCompanyInformation}
-											onstartloading={startLoading}
-											onstoploading={stopLoading}
-											onscrolltotop={scrollToTop}>
-										</c-portal-registration-email-validation-l-m-s>
-									</template>
-									<template if:true={isConfirmationStep}>
-										<c-portal-registration-confirmation-l-m-s
-											contact-info={contactInfo}
-											flow={flow}
-											trigger={trigger}
-											address={address}
-											account={account}
-											search-results={searchResults}
-											selected-account-id={selectedAccountId}
-											country-id={selectedCountryId}
-											ontoprofiledetails={fromConfirmationToProfileDetails}
-											ontoaccountselection={fromConfirmationToAccountSelection}
-											ontocompanyinformation={fromConfirmationToCompanyInformation}
-											ontoaddressinformation={fromConfirmationToAddressInformation}
-											onprevious={fromConfirmationToAddressInformation}
-											onstartloading={startLoading}
-											onstoploading={stopLoading}
-											onsecondlevelregistrationcompletedactionone={secondLevelRegistrationCompletedAction1}
-											onsecondlevelregistrationcompletedactiontwo={secondLevelRegistrationCompletedAction2}
-											onscrolltotop={scrollToTop}>
-										</c-portal-registration-confirmation-l-m-s>
-									</template>
-								</template>
-							</div>
-						</span>
-					</c-portal-custom-card-container>
-				</span>
+           <div data-id="spinnerId" class="slds-spinner_container spinnerContainer" if:true={isLoading}>
+                <div class="slds-spinner slds-spinner_medium" role="status">
+                    <span class="slds-assistive-text">Loading</span>
+                    <div class="slds-spinner__dot-a"></div>
+                    <div class="slds-spinner__dot-b"></div>
+                </div>
+            </div>
+        </div>
+        <template if:true={openMessageModal}>
+                <c-portal-registration-generic-modal
+                    icon={alertIcon}
+                    title={labels.CSP_L2_Profile_Incomplete}
+                    message={labels.CSP_L2_Profile_Incomplete_Message}
+                    button1-label={labels.CSP_L2_Yes}
+                    button2-label={labels.CSP_L2_No}
+                    onbuttononeaction={saveAndClose}
+                    onbuttontwoaction={cancel}>
+                </c-portal-registration-generic-modal>
+            </template>
+    </template>
 
-			</div>
-
-			<div data-id="spinnerId" class="slds-spinner_container spinnerContainer" if:true={isLoading}>
-				<div class="slds-spinner slds-spinner_medium" role="status">
-					<span class="slds-assistive-text">Loading</span>
-					<!--span-- class="slds-assistive-text">{labels.LoadingLabel}</span-->
-					<div class="slds-spinner__dot-a"></div>
-					<div class="slds-spinner__dot-b"></div>
-				</div>
-			</div>
-		</div>
-		<template if:true={openMessageModal}>
-				<c-portal-registration-generic-modal
-					icon={alertIcon}
-					title={labels.CSP_L2_Profile_Incomplete}
-					message={labels.CSP_L2_Profile_Incomplete_Message}
-					button1-label={labels.CSP_L2_Yes}
-					button2-label={labels.CSP_L2_No}
-					onbuttononeaction={saveAndClose}
-					onbuttontwoaction={cancel}>
-				</c-portal-registration-generic-modal>
-			</template>
-	</template>
-	<template if:true={openMessageModalFlowRegister}>
-		<!-- <c-portal-registration-generic-modal
-			icon={alertIcon}
-			title="Profile Update"
-			message="Updating profile Information, switching email data"
-			button1-label={labels.CSP_L2_Yes}
-			button2-label={labels.CSP_L2_No}
-			onbuttononeaction={saveAndClose}
-			onbuttontwoaction={cancel}>
-		</c-portal-registration-generic-modal> -->
-		<div class="outer">
-				<div class="middle">
-					<div class="modal2">
-						<div class="customPopupInteriorQuarterScreenCentered">
-							<template if:true={isIconDefined}>
-								<div class="icon">
-									<img src={icon} height="96" width="96" class="slds-p-left_small">
-								</div>
-							</template>
-							<div class="slds-m-horizontal_x-large">
-								<div class="cardBodyContent">
-									<div class="slds-card__header">
-										<div class="slds-p-bottom_x-small textAlignCenter">
-											<span class="text-medium text-darkGray text-bold">
-												<span>{title}</span>
-											</span>
-										</div>
-										<div class="slds-card__header slds-p-bottom_x-small textAlignCenter" >
-											<div class="slds-p-bottom_medium">
-												<span class="fixed-text text-gray">{message}</span>
-											</div>
-											<div class="mySpinner" if:true={isResLoading}>
-											<div data-id="spinnerId" class="slds-spinner_container">
-													<div class="slds-spinner slds-spinner_medium" role="status">
-														<div class="slds-spinner__dot-a"></div>
-														<div class="slds-spinner__dot-b"></div>
-													</div>
-												</div>
-											</div>
-											<div class="topLightGrayBorder buttonsWrapper">
-
-												<div class="buttonContainer">
-													<lightning-button class="containedButton customBtn btnModal" label={button1Label} variant="neutral"  onclick={button1Action} >
-													</lightning-button>
-												</div>
-												<br/>
-												<!-- <div class="buttonContainer">
-													<lightning-button class="containedButton customBtn btnModal" label={button2Label} variant="brand"  onclick={button2Action} >
-													</lightning-button>
-												</div> -->
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-
-						</div>
-					</div>
-				</div>
-			</div>
-	</template>
+    <!-- Registration Modal - occurs comming from the validation of the email upon the L3 Registration data update -->
+    <template if:true={openMessageModalFlowRegister}>
+   
+        <div class="outer">
+                <div class="middle">
+                    <div class="modal2">
+                        <div class="customPopupInteriorQuarterScreenCentered">
+                            <template if:true={isIconDefined}>
+                                <div class="icon">
+                                    <img src={icon} height="96" width="96" class="slds-p-left_small">
+                                </div>
+                            </template>
+                            <div class="slds-m-horizontal_x-large">
+                                <div class="cardBodyContent">
+                                    <div class="slds-card__header">
+                                        <div class="slds-p-bottom_x-small textAlignCenter">
+                                            <span class="text-medium text-darkGray text-bold">
+                                                <span>{title}</span>
+                                            </span>
+                                        </div>
+                                        <div class="slds-card__header slds-p-bottom_x-small textAlignCenter buttonContainer100" >
+                                            <div class="slds-p-bottom_medium">
+                                                <span class="fixed-text text-gray ProfileUpdateMessage"><lightning-formatted-rich-text  value={message}></lightning-formatted-rich-text></span>
+                                            </div>
+                                            <div class="mySpinnerProfileUpdate" if:true={isResLoading}>
+                                                <div data-id="spinnerId" class="slds-spinner_container mySpinnerProfileUpdateBackground">
+                                                    <div class="slds-spinner slds-spinner_medium" role="status">
+                                                        <div class="slds-spinner__dot-a"></div>
+                                                        <div class="slds-spinner__dot-b"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="topLightGrayBorder buttonsWrapper">
+        
+                                                <div class="buttonContainer100">
+                                                    <lightning-button class="containedButton customBtn btnModal" label={button1Label} variant="neutral"  onclick={button1Action} >
+                                                    </lightning-button>
+                                                </div>
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </template>
 </template>

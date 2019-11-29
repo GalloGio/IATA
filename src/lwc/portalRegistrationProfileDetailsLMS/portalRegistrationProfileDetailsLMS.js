@@ -3,7 +3,6 @@ import { LightningElement, track, api} from 'lwc';
 
 /* eslint-disable no-alert */
 /* eslint-disable vars-on-top */
-//import getContactJobFunctionValues      from '@salesforce/apex/PortalRegistrationSecondLevelCtrl.getContactJobFunctionValues';
 import validateYasUserId                 from '@salesforce/apex/PortalRegistrationThirdLevelLMSCtrl.validateYasUserId';
 import getLMSContactInfo               from '@salesforce/apex/PortalRegistrationThirdLevelLMSCtrl.getLMSContactInfo';
 
@@ -18,8 +17,17 @@ import CSP_L2_Profile_Details from '@salesforce/label/c.CSP_L2_Profile_Details';
 import CSP_L2_Title from '@salesforce/label/c.CSP_L2_Title';
 import CSP_L2_Date_of_Birth from '@salesforce/label/c.CSP_L2_Date_of_Birth';
 import CSP_L2_Job_Function from '@salesforce/label/c.CSP_L2_Job_Function';
-import CSP_L2_Job_Title from '@salesforce/label/c.CSP_L2_Job_Title';
+import CSP_L2_Job_Title from '@salesforce/label/c.CSP_L2_Job_Title'; 
 import CSP_L2_Next_Account_Selection from '@salesforce/label/c.CSP_L2_Next_Account_Selection';
+import CSP_L_LoginEmail_LMS from '@salesforce/label/c.CSP_L_LoginEmail_LMS';
+import CSP_L_PersonalEmail_LMS from '@salesforce/label/c.CSP_L_PersonalEmail_LMS';
+import CSP_L_TrainingEmail_LMS from '@salesforce/label/c.CSP_L_TrainingEmail_LMS';
+import CSP_L_TrainingUser_LMS from '@salesforce/label/c.CSP_L_TrainingUser_LMS';
+import CSP_L_Phone_LMS from '@salesforce/label/c.CSP_L_Phone_LMS';
+import CSP_L_WorkPhone_LMS from '@salesforce/label/c.CSP_L_WorkPhone_LMS';
+import CSP_Next_LMS from '@salesforce/label/c.CSP_Next_LMS';
+import CSP_L2_RegistrationFailed_LMS from '@salesforce/label/c.CSP_L2_RegistrationFailed_LMS';
+import CSP_L2_IdAlready_LMS from '@salesforce/label/c.CSP_L2_IdAlready_LMS';
 
 
 /** The delay used when debouncing input filters. */
@@ -27,11 +35,16 @@ const DELAY = 350;
 
 export default class PortalRegistrationProfileDetailsLMS extends LightningElement {
 	@api contactInfo;
-	@api isUserIdValid;
+	
+	@track isUserIdValid;
+	@track isBirthdateValid;
+	
 	@track localContactInfo;
 	@track contactInfoLMS;
-	@track errorMessage = "";
-	@track displayError = false;
+	@track errorMessageUserId = "";
+	@track displayErrorUserId = false;
+	@track errorMessageBirthdate = "";
+	@track displayErrorBirthdate = false;
 
 	/* Picklist options */
 	@track salutationPicklistOptions;
@@ -49,7 +62,17 @@ export default class PortalRegistrationProfileDetailsLMS extends LightningElemen
 		CSP_L2_Date_of_Birth,
 		CSP_L2_Job_Function,
 		CSP_L2_Job_Title,
-		CSP_L2_Next_Account_Selection
+		CSP_L2_Next_Account_Selection,
+		CSP_L_LoginEmail_LMS,
+		CSP_L_PersonalEmail_LMS,
+		CSP_L_TrainingEmail_LMS,
+		CSP_L_TrainingUser_LMS,
+		CSP_L_Phone_LMS,
+		CSP_L_WorkPhone_LMS,
+		CSP_Next_LMS,
+		CSP_L2_RegistrationFailed_LMS,
+		CSP_L2_IdAlready_LMS
+
 	}
 	get labels() {
 		return this._labels;
@@ -59,9 +82,11 @@ export default class PortalRegistrationProfileDetailsLMS extends LightningElemen
 	}
 
 	get isNextDisabled(){
+		
 		return (this.localContactInfo.Salutation === '' || this.localContactInfo.Salutation === null || this.localContactInfo.Salutation === undefined)
 				|| (this.localContactInfo.Birthdate === '' || this.localContactInfo.Birthdate === null || this.localContactInfo.Birthdate === undefined)
-				|| (this.isUserIdValid === false);
+				|| (this.localContactInfo.Phone === '' || this.localContactInfo.Phone === null || this.localContactInfo.Phone === undefined)
+				|| (this.isUserIdValid === false) || (this.isBirthdateValid === false);
 	}
 
 	connectedCallback() {
@@ -72,15 +97,26 @@ export default class PortalRegistrationProfileDetailsLMS extends LightningElemen
 
 		getLMSContactInfo({lms:'yas'})
 		.then(result2 => {
-			this.contactInfoLMS = result2;
+			if(result2 !== undefined){
+				this.contactInfoLMS = result2;
 
-			this.localContactInfo.Username = this.contactInfoLMS.Username__c != undefined ? this.contactInfoLMS.Username__c : '';
-			this.localContactInfo.UserId = this.contactInfoLMS.UserId__c != undefined ? this.contactInfoLMS.UserId__c : '';
-			this.localContactInfo.lmsCourse = this.contactInfoLMS.Preferred_Course__c != undefined ? this.contactInfoLMS.Preferred_Course__c : '';
+				this.localContactInfo.Username = this.contactInfoLMS.Username__c !== undefined ? this.contactInfoLMS.Username__c : '';
+				this.localContactInfo.UserId = this.contactInfoLMS.UserId__c !== undefined ? this.contactInfoLMS.UserId__c : '';
+				this.localContactInfo.lmsCourse = this.contactInfoLMS.Preferred_Course__c !== undefined ? this.contactInfoLMS.Preferred_Course__c : '';
+			}else{
+				this.localContactInfo.Username = '';
+				this.localContactInfo.UserId = '';
+				this.localContactInfo.lmsCourse = '';
+			}
+								
 		})
 		.catch((error) => {
+			this.localContactInfo.Username = '';
+			this.localContactInfo.UserId = '';
+			this.localContactInfo.lmsCourse = '';
+
 			this.openMessageModalFlowRegister = true;
-			this.message = 'Your registration failed. An Error Occurred - ' + error;
+			this.message = CSP_L2_RegistrationFailed_LMS + error;
 			console.log('Error: ', JSON.parse(JSON.stringify(error)));
 			console.log('Error2: ', error);
 		});
@@ -104,6 +140,12 @@ export default class PortalRegistrationProfileDetailsLMS extends LightningElemen
 	changeDateOfBirth(event){
 		// Check which Contact field we're supposed to update : Date_of_Birth__c or Birthdate
 		this.localContactInfo.Birthdate = event.target.value;
+		
+		window.clearTimeout(this.delayTimeout);
+		// eslint-disable-next-line @lwc/lwc/no-async-operation
+		this.delayTimeout = setTimeout(() => {
+			this.validateBirthdate();
+		}, DELAY);
 	}
 
 	changeSelectedJobFunctions(event){
@@ -172,18 +214,55 @@ export default class PortalRegistrationProfileDetailsLMS extends LightningElemen
 			var userDiv = this.template.querySelector('[data-id="userDiv"]');
 			if(!this.isUserIdValid){
 				userDiv.classList.add('slds-has-error');
-				this.errorMessage = 'The input user Id is already being used.';
-				this.displayError = true;
+				this.errorMessageUserId = CSP_L2_IdAlready_LMS;
+				this.displayErrorUserId = true;
 			}else{
 				userDiv.classList.remove('slds-has-error');
-				this.errorMessage = '';
-				this.displayError = false;
+				this.errorMessageUserId = '';
+				this.displayErrorUserId = false;
 			}
 		})
 		.catch((error) => {
 			console.log('Error: ', JSON.parse(JSON.stringify(error)));
 		});
 	}
+
+	validateBirthdate(){
+		this.isBirthdateValid = true;
+
+		let today = new Date();
+
+		let uBirthdate = new Date(this.localContactInfo.Birthdate);
+
+		let age = today.getFullYear() - uBirthdate.getFullYear();
+		let m = today.getMonth() - uBirthdate.getMonth();
+		if (m < 0 || (m === 0 && today.getDate() < uBirthdate.getDate())) {
+			age--;
+		}    
+
+		if( age < 18 ){
+			this.isBirthdateValid = false;
+		}
+
+		var inputCmp = this.template.querySelector(".birthdateInputClass");
+		inputCmp.setCustomValidity('');
+		if(this.isBirthdateValid === false) {
+			inputCmp.setCustomValidity("");
+		}
+		inputCmp.reportValidity();
+
+		var birthdateDiv = this.template.querySelector('[data-id="birthdateDiv"]');
+		if(!this.isBirthdateValid){
+			birthdateDiv.classList.add('slds-has-error');
+			this.errorMessageBirthdate = 'The Date must be over 18.';
+			this.displayErrorBirthdate = true;
+		}else{
+			birthdateDiv.classList.remove('slds-has-error');
+			this.errorMessageBirthdate = '';
+			this.displayErrorBirthdate = false;
+		}
+	}
+
 	@api
 	getContactInfo(){
 		return this.localContactInfo;

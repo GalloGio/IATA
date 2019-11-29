@@ -111,7 +111,7 @@
 							data-fieldname="City"
 							value={localAddress.cityName}
 							autocomplete="no"
-							onkeyup={handleFieldChange}
+							onkeyup={handleCityKey}
 							onblur={hideCities}
 							onchange={hideCities}/>
 
@@ -178,7 +178,7 @@
 							{labels.CSP_L2_PO_Box_Number}
 						</template>
 						<template if:false={localAddress.isPoBox}>
-							Street 1
+                            {labels.CSP_L2_Street} 1
 						</template>
 						<abbr class="slds-required" title="required">*</abbr>
 					</div>
@@ -205,7 +205,7 @@
 				<template if:false={localAddress.isPoBox}>
 					<div class="formLabelContainer">
 						<div class="text-xxsmall">
-							Street 2
+							{labels.CSP_L2_Street} 2
 						</div>
 					</div>
 

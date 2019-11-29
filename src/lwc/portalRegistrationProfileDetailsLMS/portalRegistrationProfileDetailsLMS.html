@@ -1,22 +1,6 @@
 <!-- Portal Registration Profile Details -->
 <template>
 	<lightning-layout multiple-rows vertical-align="start">
-		<!--<div class="progressBar">
-			<div class="progressItem firstItem activeItem">
-				<div class="itemIcon">
-					<!- -<lightning-icon size="x-small" icon-name="utility:check" class="slds-current-color"></lightning-icon>- ->
-				</div>
-				<div class="itemTitle"><span>Profile Details</span></div>
-			</div>
-			<div class="progressItem secondItem nextItem">
-				<div class="itemIcon"></div>
-				<div class="itemTitle"><span>Account Selection</span></div>
-			</div>
-			<div class="progressItem thirdItem nextItem">
-				<div class="itemIcon"></div>
-				<div class="itemTitle"><span>Confirmation</span></div>
-			</div>
-		</div>-->
 
 		<lightning-layout-item size="12">
 			<span class="text-medium">{labels.CSP_L2_Profile_Details}</span>
@@ -71,17 +55,23 @@
 					</div>
 				</lightning-layout-item>
 				<lightning-layout-item size="12">
-					<div class="slds-form-element">
+					<div data-id="birthdateDiv" class="slds-form-element">
 						<div class="slds-form-element__control custTextInput custTextInputSmall">
 							<lightning-input
 								date-style="short"
 								type="date"
 								value={localContactInfo.Birthdate}
+								class="birthdateInputClass"
 								placeholder=" "
 								variant="label-hidden"
 								onkeyup={changeDateOfBirth}
 								onchange={changeDateOfBirth}>
 							</lightning-input>
+						</div>
+						<div class="formElementSpacer">
+							<div if:true={displayErrorBirthdate}>
+								<div class="slds-form-element__help">{errorMessageBirthdate}</div>
+							</div>
 						</div>
 					</div>
 				</lightning-layout-item>
@@ -95,8 +85,7 @@
 				<lightning-layout-item size="6" >
 					<div class="formLabelContainer">
 						<div class="text-xxsmall">
-							<!--abbr class="slds-required" title="required">* </abbr>{labels.CSP_L2_Job_Function}-->
-<!--NEED NEW LABEL -->                            Email
+				           {labels.CSP_L_LoginEmail_LMS}
 						</div>
 					</div>
 				</lightning-layout-item>
@@ -119,8 +108,7 @@
 				<lightning-layout-item size="6" >
 					<div class="formLabelContainer">
 						<div class="text-xxsmall">
-							<!--abbr class="slds-required" title="required">* </abbr>{labels.CSP_L2_Job_Function}-->
-<!--NEED NEW LABEL -->                            Personal Email
+							{labels.CSP_L_PersonalEmail_LMS}
 						</div>
 					</div>
 				</lightning-layout-item>
@@ -139,132 +127,12 @@
 				</lightning-layout-item>
 			</div>
 
-
-				<!-- Shipping_Address__c -->
-			<!------------------------------------------      Shipping Address       -------------------------------------------->
-			<!-- <div class="profileItemLine">
-				<lightning-layout-item size="6" >
-					<div class="formLabelContainer">
-						<div class="text-xxsmall">
-							< !--abbr class="slds-required" title="required">* </abbr>{labels.CSP_L2_Job_Function}- ->
-							Address
-						</div>
-					</div>
-				</lightning-layout-item>
-				<lightning-layout-item size="12">
-					<div class="slds-form-element">
-						<div class="slds-form-element__control custTextInput custTextInputSmall">
-							<input
-								type="text"
-								class="slds-input"
-								placeholder=" "
-								value={localContactInfo.Title}
-								onkeyup={changeTitle}/>
-						</div>
-					</div>
-				</lightning-layout-item>
-			</div>
-
-			<div class="profileItem">
-				<lightning-layout-item size="6" class="leftItem">
-					<div class="formLabelContainer">
-						<div class="text-xxsmall">
-							< !--abbr class="slds-required" title="required">* </abbr>{labels.CSP_L2_Job_Function} - ->
-							Door Number
-						</div>
-					</div>
-				</lightning-layout-item>
-				<lightning-layout-item size="12">
-					<div class="slds-form-element">
-						<div class="slds-form-element__control custTextInput custTextInputSmall">
-							<input
-								type="text"
-								class="slds-input"
-								placeholder=" "
-								value={localContactInfo.Title}
-								onkeyup={changeTitle}/>
-						</div>
-					</div>
-				</lightning-layout-item>
-			</div>
-
-			<div class="profileItem">
-				<lightning-layout-item size="6" class="rightItem">
-					<div class="formLabelContainer">
-						<div class="text-xxsmall">
-							< !--abbr class="slds-required" title="required">* </abbr>{labels.CSP_L2_Job_Function}- ->
-							Postal Code
-						</div>
-					</div>
-				</lightning-layout-item>
-				<lightning-layout-item size="12">
-					<div class="slds-form-element">
-						<div class="slds-form-element__control custTextInput custTextInputSmall">
-							<input
-								type="text"
-								class="slds-input"
-								placeholder=" "
-								value={localContactInfo.Title}
-								onkeyup={changeTitle}/>
-						</div>
-					</div>
-				</lightning-layout-item>
-			</div>
-
-			<div class="profileItem">
-				<lightning-layout-item size="6" class="leftItem">
-					<div class="formLabelContainer">
-						<div class="text-xxsmall">
-							< !--abbr class="slds-required" title="required">* </abbr>{labels.CSP_L2_Job_Function}- ->
-							City
-						</div>
-					</div>
-				</lightning-layout-item>
-				<lightning-layout-item size="12">
-					<div class="slds-form-element">
-						<div class="slds-form-element__control custTextInput custTextInputSmall">
-							<input
-								type="text"
-								class="slds-input"
-								placeholder=" "
-								value={localContactInfo.Title}
-								onkeyup={changeTitle}/>
-						</div>
-					</div>
-				</lightning-layout-item>
-			</div>
-
-			<div class="profileItem">
-				<lightning-layout-item size="6" class="rightItem">
-					<div class="formLabelContainer">
-						<div class="text-xxsmall">
-							< !--abbr class="slds-required" title="required">* </abbr>{labels.CSP_L2_Job_Function}- ->
-							State
-						</div>
-					</div>
-				</lightning-layout-item>
-				<lightning-layout-item size="12">
-					<div class="slds-form-element">
-						<div class="slds-form-element__control custTextInput custTextInputSmall">
-							<input
-								type="text"
-								class="slds-input"
-								placeholder=" "
-								value={localContactInfo.Title}
-								onkeyup={changeTitle}/>
-						</div>
-					</div>
-				</lightning-layout-item>
-			</div> -->
-
-
 			<!------------------------------------------      LMS Username       -------------------------------------------->
 			<div class="profileItem">
 				<lightning-layout-item size="6" class="leftItem">
 					<div class="formLabelContainer">
 						<div class="text-xxsmall">
-							<!--abbr class="slds-required" title="required">* </abbr>{labels.CSP_L2_Job_Function}-->
-			<!--NEED NEW LABEL -->                            Username
+                           {labels.CSP_L_TrainingEmail_LMS}
 						</div>
 					</div>
 				</lightning-layout-item>
@@ -286,8 +154,7 @@
 				<lightning-layout-item size="6" class="rightItem">
 					<div class="formLabelContainer">
 						<div class="text-xxsmall">
-							<!-- <abbr class="slds-required" title="required">* </abbr>{labels.CSP_L2_Job_Title} -->
-<!--NEED NEW LABEL -->                            User Id
+                           {labels.CSP_L_TrainingUser_LMS}
 						</div>
 					</div>
 				</lightning-layout-item>
@@ -302,12 +169,10 @@
 								onkeyup={changeUserId}/>
 						</div>
 						<div class="formElementSpacer">
-							<div if:true={displayError}>
-								<div class="slds-form-element__help">{errorMessage}</div>
+							<div if:true={displayErrorUserId}>
+								<div class="slds-form-element__help">{errorMessageUserId}</div>
 							</div>
 						</div>
-						<!--<div if:true={displayError} style="height:16px;">
-						</div>-->
 					</div>
 				</lightning-layout-item>
 			</div>
@@ -316,8 +181,7 @@
 				<lightning-layout-item size="6" class="leftItem">
 					<div class="formLabelContainer">
 						<div class="text-xxsmall">
-							<!--abbr class="slds-required" title="required">* </abbr>{labels.CSP_L2_Job_Function}-->
-<!--NEED NEW LABEL -->                            Phone
+							<abbr class="slds-required" title="required">* </abbr>{labels.CSP_L_Phone_LMS}
 						</div>
 					</div>
 				</lightning-layout-item>
@@ -339,8 +203,7 @@
 				<lightning-layout-item size="6" class="rightItem">
 					<div class="formLabelContainer">
 						<div class="text-xxsmall">
-							<!-- <abbr class="slds-required" title="required">* </abbr>{labels.CSP_L2_Job_Title} -->
-<!--NEED NEW LABEL -->                            Work Phone
+				           	{labels.CSP_L_WorkPhone_LMS}
 						</div>
 					</div>
 				</lightning-layout-item>
@@ -361,22 +224,13 @@
 		<lightning-layout-item padding="around-small" size="12">
 		</lightning-layout-item>
 
-		<!--temporary commented
-		<lightning-layout-item padding="around-small" size="12">
-			<lightning-button class="slds-float_right containedButton" data-id="nextButton" label="Next Step / Account Selection" disabled={isNextDisabled} variant="brand"  onclick={next}>
-			</lightning-button>
-		</lightning-layout-item-->
-
 		<lightning-layout-item size="6">
 		</lightning-layout-item>
 
 		<lightning-layout-item size="6" class="nextBtn">
-				<!-- <lightning-button class="slds-float_right containedButton customBtn" data-id="nextButton" label={labels.CSP_L2_Next_Account_Selection} disabled={isNextDisabled} variant="brand"  onclick={next}> -->
-			<lightning-button class="slds-float_right containedButton customBtn" data-id="nextButton" label="Next Step / Email Validation" disabled={isNextDisabled} variant="brand"  onclick={next}>
+			<lightning-button class="slds-float_right containedButton customBtn" data-id="nextButton" label={labels.CSP_Next_LMS} disabled={isNextDisabled} variant="brand"  onclick={next}>
 			</lightning-button>
 		</lightning-layout-item>
-
-
 
 		<template if:true={isAddressInformationStep}>
 				<c-portal-registration-address-information

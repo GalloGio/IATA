@@ -15,8 +15,8 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 	}
 
 	@AuraEnabled
-	public static Training_Contact_Role_Details__c getLMSContactInfo(String lms) {
-		User loggedUser = CSP_Utils.getLoggedUser();
+    public static Training_Contact_Role_Details__c getLMSContactInfo(String lms) {
+        User loggedUser = CSP_Utils.getLoggedUser();
 
 		String RECTYPE_lms = '';
 		String RECTYPE_Trainee_YASContDet = RecordTypeSingleton.getInstance().getRecordTypeId('Training_Contact_Role_Details__c', 'Yardstick_Trainee');
@@ -27,18 +27,18 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 
 		Training_Contact_Role_Details__c tcrd = new Training_Contact_Role_Details__c();
 
-
-		List<Training_Contact_Role_Details__c> con = [SELECT Id, Username__c, UserId__c, Preferred_Course__c, RecordTypeId
+		
+        List<Training_Contact_Role_Details__c> con = [SELECT Id, Username__c, UserId__c, Preferred_Course__c, RecordTypeId
 														FROM Training_Contact_Role_Details__c
-														WHERE Account_Contact_Role__r.Contact__c = :loggedUser.contactId
+														WHERE Account_Contact_Role__r.Contact__c = :loggedUser.contactId 
 														LIMIT 1];
 
-		if(con.isEmpty()){
-			return null;
-		}
+        if(con.isEmpty() || con.size() < 1){
+            return null;
+        }
 
-		return con[0];
-	}
+        return con[0];
+    }
 
 	@AuraEnabled
 	public static returnWrapper getParameters(String urlExtension){
@@ -46,8 +46,6 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 		PageReference pageRef = new PageReference(urlExtension);
 		String parameters     = pageRef.getParameters().get('c');
 		parameters            = Encodingutil.urlDecode(PortalPasswordHandler.DecryptString(parameters), 'UTF-8');
-
-
 
 		//get registration information
 		UserInformationWrapper registrationParameters = (UserInformationWrapper) JSON.deserialize(parameters, UserInformationWrapper.class);
@@ -85,7 +83,6 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 			String RECTYPE_Master_AccRole = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Role__c', 'Master');
 			String RECTYPE_Master_AccContRole = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'Master');
 			String RECTYPE_Trainee_YASContDet = RecordTypeSingleton.getInstance().getRecordTypeId('Training_Contact_Role_Details__c', 'Yardstick_Trainee');
-
 
 			List<Address__c> listAddr = [SELECT City_Reference__c, City__c, Country_Reference__c, Country__c,
 											Id,PO_Box__c,Postal_Code__c,State_Reference__c,State__c,Street__c, Street2__c
@@ -130,8 +127,11 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 			update con;
 
 			//Create Account Role if not existing
-
-			List<Account_Role__c> listAR = [SELECT Id,Account__c,RecordTypeId FROM Account_Role__c WHERE Account__c = :con.AccountId AND Account_Role_Name__c = 'Yardstick' LIMIT 1];
+			//TO DO FM: Change query to use Functional Role
+			List<Account_Role__c> listAR = [SELECT Id,Account__c,RecordTypeId 
+											FROM Account_Role__c 
+											WHERE Account__c = :con.AccountId 
+											AND Account_Role_Name__c = 'Training' LIMIT 1];
 			Account_Role__c ar = new Account_Role__c();
 
 			if(listAR.size() > 0){
@@ -139,13 +139,16 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 			}else{
 				ar.Account__c = con.AccountId;
 				ar.RecordTypeId = RECTYPE_Master_AccRole;
-				ar.Account_Role_Name__c =  'Yardstick';
+				ar.Account_Role_Name__c =  'Training';
 				insert ar;
 			}
 
 			//Create Account Contact Role if not existing
 			//TO DO FM: Change query to use Functional Role
-			List<Account_Contact_Role__c> listACR = [SELECT Id,Account_Role__c,Contact__c,Contact_Role_Name__c,RecordTypeId FROM Account_Contact_Role__c WHERE Contact__c = :con.Id AND Contact_Role_Name__c = 'Yardstick' LIMIT 1];
+			List<Account_Contact_Role__c> listACR = [SELECT Id,Account_Role__c,Contact__c,Contact_Role_Name__c,RecordTypeId 
+														FROM Account_Contact_Role__c 
+														WHERE Contact__c = :con.Id 
+														AND Contact_Role_Name__c = 'Trainee' LIMIT 1];
 			Account_Contact_Role__c acr = new Account_Contact_Role__c();
 
 			if(listACR.size() > 0){
@@ -153,7 +156,7 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 			}else{
 				acr.Account_Role__c = ar.Id;
 				acr.Contact__c = con.Id;
-				acr.Contact_Role_Name__c = 'Yardstick';
+				acr.Contact_Role_Name__c = 'Trainee';
 				acr.RecordTypeId = RECTYPE_Master_AccContRole;
 				acr.Service_Rendered__c = 'Other';
 
@@ -165,7 +168,7 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 			Training_Contact_Role_Details__c ycd = new Training_Contact_Role_Details__c();
 
 			if(listYCD.size() > 0){
-				ycd = listYCD[0];
+				 ycd = listYCD[0];
 				ycd.Username__c = sUsername;
 				ycd.UserId__c = sUserId;
 				ycd.Preferred_Course__c = sCourse;
@@ -181,11 +184,11 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 
 				insert ycd;
 			}
-			
-			//Create Portal Application Right
-			Portal_Applications__c pa = [SELECT Id, Name FROM Portal_Applications__c WHERE Name = 'Training Platform (LMS)' LIMIT 1];
 
-		   	//Create ToS Acceptance
+    		//Create Portal Application Right
+    		Portal_Applications__c pa = [SELECT Id, Name FROM Portal_Applications__c WHERE Name = 'Training Platform (LMS)' LIMIT 1];
+
+           	//Create ToS Acceptance
 			createToSAcceptance(pa.id, con.Id);
 
 			List<Portal_Application_Right__c> listPAR = [SELECT Id,Portal_Application__c,Right__c,Contact__c,Favourite_Service__c FROM Portal_Application_Right__c WHERE Contact__c = :con.Id AND Portal_Application__c = :pa.id LIMIT 1];
@@ -206,7 +209,18 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 			Contact updatedContact = [SELECT Id, Name, Email, AccountId, Account.TradeName__c, Account.Legal_name__c, Account.Billing_Address_formated__c, Account.Phone, Account.Sector__c, Account.Category__c
 										FROM Contact WHERE Id =: con.Id];
 
-			//GCS_AccountCreation.sendEmailNotification(updatedContact);
+			String loggedUserId = UserInfo.getUserId(); 
+
+			PermissionSet psYardstick = [SELECT Id FROM PermissionSet WHERE Name = 'Yardstick' LIMIT 1];
+
+			List<PermissionSetAssignment> listPSA = [SELECT Id FROM PermissionSetAssignment 
+											WHERE PermissionSetId = :psYardstick.Id
+											AND AssigneeId = :loggedUserId]; 
+			
+			if(listPSA.size() <= 0){
+				assignPermissionSet(psYardstick.Id, (Id)loggedUserId);
+			}
+
 			result.isSuccess = true;
 			result.message = 'Regitration Completed!';
 
@@ -214,6 +228,8 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 		catch(Exception e){
 			result.isSuccess = false;
 			result.message = 'An Error Occurred - '+ e.getStackTraceString() ;
+			System.debug('[PortalRegistrationThirdLevelLMSCtrl] registration : Exception : ' + e);
+			System.debug('[PortalRegistrationThirdLevelLMSCtrl] registration : Exception stack : ' + e.getStackTraceString());
 			Database.rollback(sp);
 			return result;
 		}
@@ -344,7 +360,7 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 					List<Account_Contact_Role__c> listACR = [SELECT Id,Account_Role__c,Contact__c,Contact_Role_Name__c,RecordTypeId
 															FROM Account_Contact_Role__c
 															WHERE Contact__c in :contIds
-															AND Contact_Role_Name__c = 'Yardstick'];
+															AND Contact_Role_Name__c = 'Trainee'];
 					Account_Contact_Role__c acrNew = new Account_Contact_Role__c();
 					Account_Contact_Role__c acrOld = new Account_Contact_Role__c();
 
@@ -355,7 +371,7 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 							acrOld = acr;
 						}
 					}
-
+	
 					Set<String> acrIds = new Set<String>();
 					acrIds.add(acrNew.Id);
 					acrIds.add(acrOld.Id);
@@ -377,7 +393,7 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 
 					//Check if Training_Contact_Role_Details__c exist on the contact to keep
 					if(ycdOld != null){
-
+	
 						List<Contact_Role_Certification__c> listCRC = [SELECT Id,Training_Contact_Role_Detail__c
 																	FROM Contact_Role_Certification__c
 																	WHERE Training_Contact_Role_Detail__c = :ycdNew.Id];
@@ -392,7 +408,7 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 						List<Course_Assignment__c> listCA = [SELECT Id,Training_Contact_Role_Detail__c
 																	FROM Course_Assignment__c
 																	WHERE Training_Contact_Role_Detail__c = :ycdNew.Id];
-
+						
 						if(listCA.size() > 0){
 							for(Course_Assignment__c ca : listCA){
 								ca.Training_Contact_Role_Detail__c = ycdOld.Id;
@@ -403,21 +419,21 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 						if(ycdNew != null){
 							delete ycdNew;
 						}
-
-
+						
+						
 						ycdOld.Username__c = contactInfo.Username != ''? contactInfo.Username : ycdOld.Username__c;
 						ycdOld.UserId__c = contactInfo.UserId != ''? contactInfo.UserId : ycdOld.UserId__c;
 						ycdOld.Preferred_Course__c = contactInfo.lmsCourse != ''? contactInfo.lmsCourse : ycdOld.Preferred_Course__c;
 						update ycdOld;
 
-
+						
 					}else{
 						ycdNew.Account_Contact_Role__c = acrOld.Id;
 						ycdNew.Username__c = contactInfo.Username != ''? contactInfo.Username : ycdNew.Username__c;
 						ycdNew.UserId__c = contactInfo.UserId != ''? contactInfo.UserId : ycdNew.UserId__c;
 						ycdNew.Preferred_Course__c = contactInfo.lmsCourse != ''? contactInfo.lmsCourse : ycdNew.Preferred_Course__c;
 
-						update ycdNew;
+						update ycdNew; 
 					}
 
 					//Delete Account Contact Role from the registering Contact
@@ -488,7 +504,6 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 					}
 	
 					if(acrNew != null && acrOld != null){
-			
 						acrOld.Contact__c = con.Id;
 						acrOld.Account_Role__c = acrNew.Account_Role__c;
 						update acrOld;
@@ -637,15 +652,12 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 
 
 	@AuraEnabled
-	// public static List<Boolean> sendSingleEmail(Id contactId){
 	public static RegistrationResult sendSingleEmail(String contactName, String emailAddr, String flow, String params){
 		RegistrationResult result = new RegistrationResult();
 		//MAX 150 adresses
 		try{
 
 			//Get address
-			// Contact contact = [SELECT Name, Email FROM CONTACT WHERE Id = :contactId];
-			// String address = contact.Email;
 			String address = emailAddr;
 
 			if(address == null){
@@ -661,7 +673,7 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 			UserInformationWrapper wUserInfo = getDataToMail(params);
 			String encodedData = generateEncoded(wUserInfo);
 			if(encodedData != ''){
-				sURL = sURL + '&'+encodedData; //&c=wwrtweref
+				sURL = sURL + '&'+encodedData; 
 			}
 
 			String sEmailTemplateName = 'CSP_Verification_L3_Email_LMS_VF';
@@ -743,7 +755,6 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 						plainBody = plainBody.replace(key, (mapBodyParams.get(key) == null) ? '' : mapBodyParams.get(key));
 					}
 				}else{
-					// plainBody = plainBody.replace('[CustomerName]', contact.Name).replace('[URL]','"'+ url +'" target="_blank"');
 					plainBody = plainBody.replace('[CustomerName]', contactName).replace('[URL]',sURL);
 				}
 
@@ -751,7 +762,6 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 			message.setHtmlBody(plainBody);
 
 			Messaging.SingleEmailMessage[] messages = new List<Messaging.SingleEmailMessage> {message};
-
 			Messaging.SendEmailResult[] results = Messaging.sendEmail(messages);
 
 			if (results[0].success){
@@ -816,64 +826,32 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 	}
 
 	@AuraEnabled
-	public static Boolean getLMSTermAndConditionAcceptance(String serviceId, Id contactId) {
-
-		if(serviceId == 'yas'){
+    public static Boolean getLMSTermAndConditionAcceptance(String serviceId, Id contactId) {
+       
+	    if(serviceId == 'yas'){
 			Portal_Applications__c pa = [SELECT Id, Name FROM Portal_Applications__c WHERE Name = 'Training Platform (LMS)' LIMIT 1];
 			serviceId = pa.Id;
 		}
-
+		
 		List<Term_and_Condition__c> tos = [SELECT Id FROM Term_and_Condition__c WHERE NewGenApp_PortalService__c =:serviceId AND Is_Latest__c = true AND Status__c = 'Final'];
 		system.assert(tos.size() == 1, 'Terms of Service data integrity compromised. Found none more than one active ToS for the service.');
-
-		//check if the tos has already been accepted
+		
+        //check if the tos has already been accepted
 		List<Term_and_Condition_Acceptance__c> tosAccept = [SELECT Id, Is_Accepted__c FROM Term_and_Condition_Acceptance__c WHERE Term_Condition__c =:tos[0].Id AND Contact__c =: contactId];
 
-		if(tosAccept.isEmpty()){
-			return false;
-		}
+        if(tosAccept.isEmpty()){
+            return false;
+        }
 
-		return tosAccept[0].Is_Accepted__c;
-	}
+        return tosAccept[0].Is_Accepted__c;
+    }
 
-	// @future
-	// public static void updateUserId(List<Training_Contact_Role_Details__c> newTCRD, Map<Id,sObject> old, Boolean isInsert ){
-	// 	Set<Id> acrIds = new Set<Id>();
-	// 	Set<Id> contactIds = new Set<Id>();
-	// 	Map<Id,Training_Contact_Role_Details__c> toUpdate = new Map<Id,Training_Contact_Role_Details__c>();
-	// 	Map<Id,Id> acr_vs_contact = new Map<Id,Id>();
-
-	// 	for(Training_Contact_Role_Details__c  tcrd : newTCRD){
-	// 		if(isInsert){
-	// 			acrIds.add(tcrd.Account_Contact_Role__c);
-	// 			toUpdate.put(tcrd.Account_Contact_Role__c, tcrd);
-	// 		}else{
-	// 			if(tcrd.UserId__c!=null && tcrd.UserId__c != '' && old.get(tcrd.Id).UserId__c != tcrd.UserId__c){
-	// 				// ag.Cass_Number__c = AMS_AgencyHelper.resizeNumericString(ag.Cass_Number__c,3);
-	// 				acrIds.add(tcrd.Account_Contact_Role__c);
-	// 				toUpdate.put(tcrd.Account_Contact_Role__c, tcrd);
-	// 			}
-	// 		}
-	// 	}
-
-	// 	List<Account_Contact_Role__c> listACR = [SELECT Id, Contact__c FROM Account_Contact_Role__c WHERE Id in :acrIds];
-
-	// 	for(Account_Contact_Role__c  acr : listACR){
-	// 		contactIds.add(acr.Contact__c);
-	// 		acr_vs_contact.put(acr.Contact__c, acr.Id);
-	// 	}
-
-	// 	List<User> lUsers = [SELECT Id, ContactId, Yardstick_UserId__c FROM User WHERE ContactId in :contactIds];
-
-	// 	for(User u : lUsers){
-	// 		Id  acrID =  acr_vs_contact.get(u.ContactId);
-	// 		Training_Contact_Role_Details__c trcd2 = toUpdate.get(acrID);
-	// 		u.Yardstick_UserId__c = trcd2.UserId__c;
-	// 	}
-
-	// 	update lUsers;
-	// }
-
+	@future
+    private static void assignPermissionSet(Id yasId, Id userId){
+        PermissionSetAssignment psa = new PermissionSetAssignment(PermissionSetId = yasId, AssigneeId = userId);
+        insert psa;
+    }
+	
 	public class UserInformationWrapper{
 		public string Email{get;set;}
 		public string Additional_Email{get;set;}

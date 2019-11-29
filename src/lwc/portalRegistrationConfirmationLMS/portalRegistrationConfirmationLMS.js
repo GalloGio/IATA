@@ -48,6 +48,16 @@ import CSP_L2_State from '@salesforce/label/c.CSP_L2_State';
 import CSP_L2_City from '@salesforce/label/c.CSP_L2_City';
 import CSP_L2_Postal_Code from '@salesforce/label/c.CSP_L2_Postal_Code';
 import CSP_LMS_Privacy_Policy from '@salesforce/label/c.CSP_LMS_Privacy_Policy';
+import CSP_L3_LoginEmail_LMS from '@salesforce/label/c.CSP_L3_LoginEmail_LMS';
+import CSP_L3_PersonalEmail_LMS from '@salesforce/label/c.CSP_L3_PersonalEmail_LMS';
+import CSP_L3_Username_LMS from '@salesforce/label/c.CSP_L3_Username_LMS';
+import CSP_L3_UserId_LMS from '@salesforce/label/c.CSP_L3_UserId_LMS';
+import CSP_L3_Phone_LMS from '@salesforce/label/c.CSP_L3_Phone_LMS';
+import CSP_L3_WorkPhone_LMS from '@salesforce/label/c.CSP_L3_WorkPhone_LMS';
+import CSP_L2_Registration_Failed_LMS from '@salesforce/label/c.CSP_L2_Registration_Failed_LMS';
+import CSP_L2_RegistrationFailed_LMS from '@salesforce/label/c.CSP_L2_RegistrationFailed_LMS';
+import CSP_L2_VerificationToP1_LMS from '@salesforce/label/c.CSP_L2_VerificationToP1_LMS';
+import CSP_L2_VerificationToP2_LMS from '@salesforce/label/c.CSP_L2_VerificationToP2_LMS';
 
 export default class PortalRegistrationConfirmationLMS extends LightningElement {
 	/* Images */
@@ -128,7 +138,17 @@ export default class PortalRegistrationConfirmationLMS extends LightningElement 
 		ISSP_CompanyName,
 		ISSP_MyProfile_CATEGORY,
 		ISSP_MyProfile_SECTOR,
-		CSP_LMS_Privacy_Policy
+		CSP_LMS_Privacy_Policy,
+		CSP_L3_LoginEmail_LMS,
+		CSP_L3_PersonalEmail_LMS,
+		CSP_L3_Username_LMS,
+		CSP_L3_UserId_LMS,
+		CSP_L3_Phone_LMS,
+		CSP_L3_WorkPhone_LMS,
+		CSP_L2_Registration_Failed_LMS,
+		CSP_L2_RegistrationFailed_LMS,
+		CSP_L2_VerificationToP1_LMS,
+		CSP_L2_VerificationToP2_LMS
 	}
 	get labels() {
 		return this._labels;
@@ -179,7 +199,7 @@ export default class PortalRegistrationConfirmationLMS extends LightningElement 
 		})
 		.catch((error) => {
 			this.openMessageModalFlowRegister = true;
-			this.message = 'Your registration failed. An Error Occurred - ' + error;
+			this.message = CSP_L2_RegistrationFailed_LMS + error;
 			console.log('Error: ', JSON.parse(JSON.stringify(error)));
 		});
 
@@ -268,7 +288,7 @@ export default class PortalRegistrationConfirmationLMS extends LightningElement 
 							if(result.message !== ''){
 								this.errorModalMessage = result.message;
 							}else{
-								this.errorModalMessage = 'Your registration failed.';
+								this.errorModalMessage = CSP_L2_Registration_Failed_LMS;
 							}
 
 						}
@@ -299,14 +319,14 @@ export default class PortalRegistrationConfirmationLMS extends LightningElement 
 			.then(result => {
 				if(result.isSuccess == true){
 						this.openVerificationMailSuccessModal = true;
-						this.successModalMessage = 'Verification Mail was sent to: '+ this.localContactInfo.Additional_Email__c+'. Please go there to complete your Registration';
+						this.successModalMessage = CSP_L2_VerificationToP1_LMS+ this.localContactInfo.Additional_Email__c+CSP_L2_VerificationToP2_LMS;
 					}
 					else{
 						this.openErrorModal = true;
 						if(result.message !== ''){
 							this.errorModalMessage = result.message;
 						}else{
-							this.errorModalMessage = 'Your registration failed.';
+							this.errorModalMessage = CSP_L2_RegistrationFailed_LMS;
 						}
 					}
 					this.stopLoading();
@@ -358,7 +378,7 @@ export default class PortalRegistrationConfirmationLMS extends LightningElement 
 
 	handleToSChange(event){
 		this.tos = event.target.checked;
-	
+
 		var submitButton = this.template.querySelector('[data-id="submitButton"]');
 		if(this.tos){
 			submitButton.classList.remove('containedButtonDisabled');

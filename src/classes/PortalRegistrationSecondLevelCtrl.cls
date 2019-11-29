@@ -28,9 +28,10 @@ public without sharing class PortalRegistrationSecondLevelCtrl {
 									Shipping_Address__c, Shipping_Address__r.city__c, Shipping_Address__r.City_Reference__c,
 									Shipping_Address__r.State__c, Shipping_Address__r.State_Reference__c,
 									Shipping_Address__r.State_Reference__r.iso_code__c,
-									Shipping_Address__r.PO_Box__c,
+									Shipping_Address__r.PO_Box__c, Shipping_Address__r.PO_Box_Number__c,
 									Shipping_Address__r.Country__c, Shipping_Address__r.Country_Reference__c,
-									Shipping_Address__r.Street__c, Shipping_Address__r.Street2__c, Shipping_Address__r.Postal_Code__c
+                                    Shipping_Address__r.Street__c, Shipping_Address__r.Postal_Code__c,
+									Shipping_Address__r.Street2__c
 		FROM Contact
 		WHERE Id = :loggedUser.contactId];
 
