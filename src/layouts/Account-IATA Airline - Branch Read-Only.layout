@@ -488,7 +488,7 @@
         <fields>City_Name__c</fields>
         <fields>Postal_Code__c</fields>
         <fields>Street__c</fields>
-        <fields>Po_Box__c</fields>
+        <fields>PO_Box_Address__c</fields>
         <relatedList>Address__c.Account__c</relatedList>
     </relatedLists>
     <relatedLists>
