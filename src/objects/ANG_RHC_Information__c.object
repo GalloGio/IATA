@@ -118,36 +118,6 @@
         </displayedFields>
         <label>Request Provisional</label>
     </fieldSets>
-	<fieldSets>
-        <fullName>Display_On_Currency</fullName>
-        <description>ANG_ChangeRHCCurrency page: controls the fields to be displayed</description>
-        <displayedFields>
-            <field>ANG_AccountId__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>ANG_IATA_Code__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>CurrencyIsoCode</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>ANG_RHC_Amount__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>ANG_RHC_Amount_Provisional__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <label>Display On Currency</label>
-    </fieldSets>
     <fields>
         <fullName>ANG_AccountId__c</fullName>
         <description>Holds the id of the account to wich the RHC record is related.</description>

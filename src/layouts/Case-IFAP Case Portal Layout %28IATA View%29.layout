@@ -630,15 +630,6 @@
         <fields>Remarks__c</fields>
         <relatedList>Financial_Security__c.Reception_Case__c</relatedList>
     </relatedLists>
-	<relatedLists>
-        <excludeButtons>MassChangeOwner</excludeButtons>
-        <excludeButtons>New</excludeButtons>
-        <fields>NAME</fields>
-        <fields>AMS_Financial_Review_First_Quarter__c</fields>
-        <fields>AMS_Financial_Review_Second_Quarter__c</fields>
-        <fields>AMS_Financial_Review_Third_Quarter__c</fields>
-        <relatedList>AMS_Process_Detail__c.Case__c</relatedList>
-    </relatedLists>
     <relatedLists>
         <excludeButtons>MassChangeOwner</excludeButtons>
         <excludeButtons>New</excludeButtons>
