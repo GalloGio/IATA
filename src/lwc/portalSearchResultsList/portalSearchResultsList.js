@@ -354,7 +354,7 @@ export default class PortalSearchResultList extends NavigationMixin(LightningEle
                     "title": this.faqsResults[i].Title,
                     "description": "",
                     "class": "categId-2",
-                    "url": 'faq-article?q=' + filteringObjectAux.searchText + '&id1=' + this.faqsResults[i].Id
+                    "url": 'q=' + filteringObjectAux.searchText + '&id1=' + this.faqsResults[i].Id
                 };
                 aggregateResults.push(faq);
             }
@@ -456,9 +456,9 @@ export default class PortalSearchResultList extends NavigationMixin(LightningEle
             params.caseId = url.replace('case-details?caseId=', '');
         }
         if (category === 'FAQ') {
-            thePage = 'faq-article'
+            thePage = filteringObjectAux.advancedSearch ? 'support-view-article' : 'faq-article';
             params.q = filteringObjectAux.searchText;
-            params.id1 = url.replace('faq-article?q=' + filteringObjectAux.searchText + '&id1=', '');
+            params.id1 = url.replace('q=' + filteringObjectAux.searchText + '&id1=', '');
         }
         if (category === 'Documents') {
             thePage = 'documents-search'
