@@ -890,6 +890,21 @@
         <label>NG Acreditation Type</label>
     </fieldSets>
     <fieldSets>
+        <fullName>ANG_accreditationtype_CONVERSION</fullName>
+        <description>fields to be migrated when we have a change of hierarchy</description>
+        <displayedFields>
+            <field>Remittance_frequency__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Preferred_RHC_currency__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>NG Hierarchy Conversion To MC</label>
+    </fieldSets>
+    <fieldSets>
         <fullName>ANG_hierarchy</fullName>
         <description>fields to be migrated when we have a change of hierarchy</description>
         <displayedFields>
@@ -4993,6 +5008,28 @@ X-Handling Agents and Shipping Lines</inlineHelpText>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Phone</type>
+    </fields>
+    <fields>
+        <fullName>MultiCountry_Countries_Concerned__c</fullName>
+        <externalId>false</externalId>
+        <label>MultiCountry Countries Concerned</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Multicountry_Apply_Language__c</fullName>
+        <externalId>false</externalId>
+        <label>Multicountry Apply Language</label>
+        <length>30</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>N_Code__c</fullName>
@@ -21475,6 +21512,17 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
             <values>
                 <fullName>InProgress</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_of_Change__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

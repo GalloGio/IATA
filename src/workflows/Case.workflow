@@ -10447,7 +10447,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/31/2013 7:00 PM</value>
+            <value>12/31/2013 8:00 PM</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Account_Billing_Country__c</field>
@@ -10560,7 +10560,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/31/2013 7:00 PM</value>
+            <value>12/31/2013 8:00 PM</value>
         </criteriaItems>
         <description>Workflow rule used to send IS for Agency Risk Management processes</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
@@ -10618,7 +10618,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/31/2013 7:00 PM</value>
+            <value>12/31/2013 8:00 PM</value>
         </criteriaItems>
         <description>Workflow rule used to send IS for Agency Risk Management processes</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
@@ -10671,7 +10671,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/31/2013 7:00 PM</value>
+            <value>12/31/2013 8:00 PM</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Account_Billing_Country__c</field>
@@ -10734,7 +10734,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/31/2013 7:00 PM</value>
+            <value>12/31/2013 8:00 PM</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Account_Billing_Country__c</field>
@@ -10792,7 +10792,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/31/2013 7:00 PM</value>
+            <value>12/31/2013 8:00 PM</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Account_Billing_Country__c</field>
@@ -10850,7 +10850,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/31/2013 7:00 PM</value>
+            <value>12/31/2013 8:00 PM</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Account_Billing_Country__c</field>
@@ -10908,7 +10908,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/31/2013 7:00 PM</value>
+            <value>12/31/2013 8:00 PM</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Account_Billing_Country__c</field>
@@ -10966,7 +10966,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/31/2013 7:00 PM</value>
+            <value>12/31/2013 8:00 PM</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Account_Billing_Country__c</field>
@@ -11024,7 +11024,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/31/2013 7:00 PM</value>
+            <value>12/31/2013 8:00 PM</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Account_Billing_Country__c</field>
@@ -11082,7 +11082,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/31/2013 7:00 PM</value>
+            <value>12/31/2013 8:00 PM</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Account_Billing_Country__c</field>
@@ -11140,7 +11140,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/31/2013 7:00 PM</value>
+            <value>12/31/2013 8:00 PM</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Account_Billing_Country__c</field>
@@ -11198,7 +11198,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/31/2013 7:00 PM</value>
+            <value>12/31/2013 8:00 PM</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Account_Billing_Country__c</field>
@@ -11256,7 +11256,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/31/2013 7:00 PM</value>
+            <value>12/31/2013 8:00 PM</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Account_Billing_Country__c</field>
@@ -11314,7 +11314,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/31/2013 7:00 PM</value>
+            <value>12/31/2013 8:00 PM</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Account_Billing_Country__c</field>
@@ -11372,7 +11372,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/31/2013 7:00 PM</value>
+            <value>12/31/2013 8:00 PM</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Account_Billing_Country__c</field>
@@ -13625,7 +13625,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/20/2013 1:00 AM</value>
+            <value>12/20/2013 2:00 AM</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.BSPCountry__c</field>
@@ -13699,7 +13699,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterThan</operation>
-            <value>9/29/2012 7:00 PM</value>
+            <value>9/29/2012 8:00 PM</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Short_Payment_Amount_USD__c</field>
@@ -13857,7 +13857,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <criteriaItems>
             <field>Case.Confirmation_moneys_not_received__c</field>
             <operation>greaterThan</operation>
-            <value>9/1/2013 7:00 PM</value>
+            <value>9/1/2013 8:00 PM</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.DEF_Approval_Rejection__c</field>
@@ -13897,7 +13897,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <criteriaItems>
             <field>Case.Confirmation_moneys_not_received__c</field>
             <operation>greaterThan</operation>
-            <value>9/1/2013 7:00 PM</value>
+            <value>9/1/2013 8:00 PM</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.DEF_Approval_Rejection__c</field>
@@ -15630,7 +15630,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>5/30/2016 7:00 PM</value>
+            <value>5/30/2016 8:00 PM</value>
         </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>

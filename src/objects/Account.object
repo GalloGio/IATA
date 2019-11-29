@@ -6147,6 +6147,18 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
         </valueSet>
     </fields>
     <fields>
+        <fullName>Bulletin_Headquarter__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Account name to publish in bulletin for multicountry hierarchies that have headquarter in a non-NewGen country</inlineHelpText>
+        <label>eBulletin Multicountry Headquarter</label>
+        <length>50</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Business_City_Name__c</fullName>
         <description>Business City Name</description>
         <externalId>false</externalId>
@@ -100835,6 +100847,18 @@ PRIORVALUE( Total_Value_Won_Opportunities__c ) = Total_Value_Won_Opportunities__
 Source_System__c &lt;&gt;&apos;AIMS&apos; 
 )</errorConditionFormula>
         <errorMessage>Head office account can be edited only by administrator, please contact your administrator</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Edit_Identify_Multicountry_for_GE_only</fullName>
+        <active>true</active>
+        <description>The &quot;Identify as Multicountry Key Hierarchy&quot; field can only be edited in Accounts with location type GE.</description>
+        <errorConditionFormula>AND(
+  ISCHANGED( Identify_as_Multicountry_Key_Hierarchy__c ),
+  Identify_as_Multicountry_Key_Hierarchy__c = true,
+  NOT(ISPICKVAL( Location_Type__c , &apos;GE&apos;))
+)</errorConditionFormula>
+        <errorDisplayField>Identify_as_Multicountry_Key_Hierarchy__c</errorDisplayField>
+        <errorMessage>This field can only be amended from the Global Entity (GE)</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Enforce_HE_Parent_on_AE_Account</fullName>
