@@ -15,8 +15,8 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 import BasicsSection from '@salesforce/label/c.csp_Basics_Section_label';
 import CSP_NoSearchResults from '@salesforce/label/c.CSP_NoSearchResults';
-import CSP_Search_NoResults_text1 from '@salesforce/label/c.CSP_Search_NoResults_text1';
-import CSP_Search_NoResults_text2 from '@salesforce/label/c.CSP_Search_NoResults_text2';
+import CSP_Contacts_NoResults_text1 from '@salesforce/label/c.CSP_Contacts_NoResults_text1';
+import CSP_Contacts_NoResults_text2 from '@salesforce/label/c.CSP_Contacts_NoResults_text2';
 import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 import ISSP_ReasonInactivation from '@salesforce/label/c.ISSP_ReasonInactivation';
 import CSP_selectReason from '@salesforce/label/c.CSP_selectReason';
@@ -36,8 +36,8 @@ export default class PortalContactList extends LightningElement {
     _labels = { 
         BasicsSection, 
         CSP_NoSearchResults, 
-        CSP_Search_NoResults_text1, 
-        CSP_Search_NoResults_text2, 
+        CSP_Contacts_NoResults_text1, 
+        CSP_Contacts_NoResults_text2, 
         ISSP_ContactList_HoverPopup_Text, 
         ISSP_ReasonInactivation, 
         CSP_selectReason,
@@ -85,6 +85,13 @@ export default class PortalContactList extends LightningElement {
     @track contactsSelected = [];
     @track allContactsSelected = false;
 
+    @track paginationObject = {
+        totalItems : 10,
+        currentPage : 1,
+        pageSize : 10,
+        maxPages : 3
+    }
+
     searchIconNoResultsUrl = CSP_PortalPath + 'CSPortal/Images/Icons/searchNoResult.svg';
 
     /* Dynamic fields*/
@@ -107,6 +114,15 @@ export default class PortalContactList extends LightningElement {
 
     set searchKey(value){
         this._searchKey = value;
+    }
+
+    @api
+    get searchLetter(){
+        return this._searchLetter;
+    }
+
+    set searchLetter(value){
+        this._searchLetter = value;
     }
 
 
@@ -204,10 +220,10 @@ export default class PortalContactList extends LightningElement {
         this.openId = null;
         let recordIndex = parseInt(event.target.dataset.item, 10);
 
-        let records = JSON.parse(JSON.stringify(this.records));
+        let records = JSON.parse(JSON.stringify(this.pageRecords));
 
         for (let i = 0; i < records.length; i++) {
-            if (recordIndex == i && (records[i].open === undefined || records[i].open === false)) {
+            if (recordIndex === i && (records[i].open === undefined || records[i].open === false)) {
                 this.openId = records[i].Id;
                 records[i].open = true;
             } else {
@@ -215,7 +231,7 @@ export default class PortalContactList extends LightningElement {
             }
         }
 
-        this.records = records;
+        this.pageRecords = records;
     }
 
     get noSelected() {
@@ -368,7 +384,7 @@ export default class PortalContactList extends LightningElement {
         } else {
             inactivate({ contactList : JSON.stringify(this.contactsWrapper), reasonToInactive : this.inactiveReason })
                 .then(results => {
-                    this.loading = false;
+                    
                     if(results.isSuccess) {
                         const toastEvent = new ShowToastEvent({
                             title: this._labels.CSP_Success,
@@ -385,7 +401,7 @@ export default class PortalContactList extends LightningElement {
                     
                 })
                 .catch(error => {
-                    this.loading = false;
+                    
                     const toastEvent = new ShowToastEvent({
                         title: _labels.PKB2_js_error,
                         message: reduceErrors(error).join(', '),
@@ -418,8 +434,8 @@ export default class PortalContactList extends LightningElement {
         }
 
         this.contactsSelected = fieldValue;
-
-        let records = JSON.parse(JSON.stringify(this.records));
+        
+        let records = JSON.parse(JSON.stringify(this.pageRecords));
 
         for (let i = 0; i < records.length; i++) {
             if(records[i].Id === contactSelected) {
@@ -428,8 +444,8 @@ export default class PortalContactList extends LightningElement {
             }
         }
 
-        this.records = records;
-        
+        this.pageRecords = records;
+
         if(this.allContactsSelected && this.contactsSelected.length === 0) this.allContactsSelected = false;
 
         this.dispatchEvent(new CustomEvent('manageusers', { detail: this.contactsSelected.length }));
@@ -449,7 +465,7 @@ export default class PortalContactList extends LightningElement {
 
         this.contactsWrapper = recordsWrapper;
         
-        let records = JSON.parse(JSON.stringify(this.records));
+        let records = JSON.parse(JSON.stringify(this.pageRecords));
 
         for (let i = 0; i < records.length; i++) {
             if(this.allContactsSelected) {
@@ -460,7 +476,7 @@ export default class PortalContactList extends LightningElement {
             }
         }
 
-        this.records = records;
+        this.pageRecords = records;
 
         if(this.allContactsSelected) {
             this.allContactsSelected = false;
@@ -491,7 +507,7 @@ export default class PortalContactList extends LightningElement {
             }
     
             this.contactsWrapper = recordsWrapper;
-
+            
             let records = JSON.parse(JSON.stringify(this.records));
 
             for (let i = 0; i < records.length; i++) {
@@ -582,6 +598,7 @@ export default class PortalContactList extends LightningElement {
             this.originalRecords = records;
         }
 
+        this.resetPagination();
 
     }
 
@@ -706,7 +723,67 @@ export default class PortalContactList extends LightningElement {
     }
 
     refreshview() {
-        this.dispatchEvent(new CustomEvent('refreshview'));
+        // Timeout used to get the updated values from Apex. Otherwise the list was refreshed without the updated values.
+        clearTimeout(this.timeout);
+        
+        this.timeout = setTimeout(() => {
+            
+            this.dispatchEvent(new CustomEvent('refreshview'));
+        }, 1000, this);
+    }
+
+    //pagination methods
+
+    @track pageRecords = [];
+
+    resetPagination(){
+
+        this.paginationObject = {
+            totalItems : this.records.length,
+            currentPage : 1,
+            pageSize : 10,
+            maxPages : 3
+        }
+
+        this.pageRecords = [];
+        this.processPage();
+    }
+
+    handleSelectedPage(event){
+        //the event contains the selected page
+        this.loading = true;
+        this.allContactsSelected = false;
+        let requestedPage = event.detail;
+        let paginationObjectAux = JSON.parse(JSON.stringify(this.paginationObject)); 
+        paginationObjectAux.currentPage = requestedPage;
+        this.paginationObject = paginationObjectAux;
+        this.processPage();
+    }
+
+    processPage(){
+        let pageRecordsAux = [];
+        let realRequestedPage = this.paginationObject.currentPage-1;
+        let offset = realRequestedPage * this.paginationObject.pageSize;
+        let offsetLimit = offset + this.paginationObject.pageSize;
+        for(let i = offset; i < this.records.length && i < offsetLimit ; i++){
+            pageRecordsAux.push(this.records[i]);
+        }
+
+        this.pageRecords = pageRecordsAux;
+        this.loading = false;
+    }
+
+    get searchNoResultsString(){
+
+        let strToReturn = '';
+
+        if(this._searchKey !== undefined && this._searchKey !== null && this._searchKey !== ''){
+            strToReturn = this._searchKey;
+        } else if(this._searchLetter !== undefined && this._searchLetter !== null && this._searchLetter !== ''){
+            strToReturn = this._searchLetter;
+        }
+
+        return strToReturn;
     }
 
 }
