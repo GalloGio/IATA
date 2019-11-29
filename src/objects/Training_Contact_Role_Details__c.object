@@ -267,13 +267,6 @@
         <active>true</active>
         <description>Yardstick Trainee</description>
         <label>Yardstick Trainee</label>
-        <picklistValues>
-            <picklist>Training_Type__c</picklist>
-            <values>
-                <fullName>Ground Services</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
     </recordTypes>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
