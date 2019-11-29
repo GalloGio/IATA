@@ -193,14 +193,6 @@
         <type>Lookup</type>
     </fields>
     <fields>
-        <fullName>Completion_Date__c</fullName>
-        <externalId>false</externalId>
-        <label>Completion Date</label>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Date</type>
-    </fields>
-    <fields>
         <fullName>Preferred_Course__c</fullName>
         <description>Training Preferred Course</description>
         <externalId>false</externalId>
@@ -225,45 +217,6 @@
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
-    </fields>
-    <fields>
-        <fullName>Training_Name__c</fullName>
-        <externalId>false</externalId>
-        <label>Training Name</label>
-        <length>255</length>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>Training_School__c</fullName>
-        <externalId>false</externalId>
-        <label>Training School</label>
-        <length>255</length>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>Training_Type__c</fullName>
-        <externalId>false</externalId>
-        <label>Training Type</label>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Picklist</type>
-        <valueSet>
-            <restricted>true</restricted>
-            <valueSetDefinition>
-                <sorted>false</sorted>
-                <value>
-                    <fullName>Ground Services</fullName>
-                    <default>false</default>
-                    <label>Ground Services</label>
-                </value>
-            </valueSetDefinition>
-        </valueSet>
     </fields>
     <fields>
         <fullName>UserId__c</fullName>

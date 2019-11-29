@@ -35,27 +35,16 @@
                         </template>
                     </template>
 
-                    <!-- <template if:true={mapOfValuesTraining}>
+                    <template if:true={mapOfValuesTraining}>
                         <template for:each={mapOfValuesTraining} for:item="keyValue">
                             <c-portal-multi-record-form-wrapper key={keyValue.key} object-name="Course_Assignment__c" static-fields={contactTrainingInfo}
-                                record-ids={contactTrainingIds} fields={keyValue.value} show-edit="true" edit-basics="true"
+                                record-ids={contactTrainingIds} completed-record-ids={contactTrainingIds} in-progress-record-ids={contactTrainingIds} fields={keyValue.value} show-edit="true" edit-basics="true"
                                 class="section" section-title={keyValue.key} data-name={keyValue.key}
                                 services={services} onrefreshview={refreshview} is-for-edit="true" showfunction={keyValue.showfunction}
                                 section-class="slds-p-vertical_xx-large slds-p-horizontal_x-large customBorderlessCardWhite slds-m-bottom_medium section">
                             </c-portal-multi-record-form-wrapper>
                         </template>
                     </template>
-
-                    <template if:true={mapOfValuesCertification}>
-                        <template for:each={mapOfValuesCertification} for:item="keyValue">
-                            <c-portal-multi-record-form-wrapper key={keyValue.key} object-name="Contact_Role_Certification__c" static-fields={contactCertificationInfo}
-                                record-ids={contactCertificationIds} fields={keyValue.value} show-edit="true" edit-basics="true"
-                                class="section" section-title={keyValue.key} data-name={keyValue.key}
-                                services={services} onrefreshview={refreshview} is-for-edit="true" showfunction={keyValue.showfunction}
-                                section-class="slds-p-vertical_xx-large slds-p-horizontal_x-large customBorderlessCardWhite slds-m-bottom_medium section">
-                            </c-portal-multi-record-form-wrapper>
-                        </template>
-                    </template> -->
 
                 </div>
             </div>

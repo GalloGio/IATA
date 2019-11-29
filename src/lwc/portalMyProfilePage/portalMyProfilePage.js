@@ -6,7 +6,6 @@ import getServices from '@salesforce/apex/PortalServicesCtrl.getUserAccessGrante
 
 import getContactDetails from '@salesforce/apex/PortalMyProfileCtrl.getContactInfo';
 import getContactTrainingDetails from '@salesforce/apex/PortalMyProfileCtrl.getContactTrainingInfo';
-import getContactCertifications from '@salesforce/apex/PortalMyProfileCtrl.getContactCertificationInfo';
 
 
 export default class PortalMyProfilePage extends LightningElement {
@@ -20,23 +19,19 @@ export default class PortalMyProfilePage extends LightningElement {
     @track services = [];
     @track contactInfo;
     @track contactTrainingInfo;
-    @track contactCertificationInfo;
     @track contactTrainingIds;
-    @track contactCertificationIds;
 
     @track handleScrolling = true;
     @track currentSection;
     @track sectionMapContact = [];
     @track sectionMapAccount = [];
     @track sectionMapTraining = [];
-    @track sectionMapCertification = [];
 
     @track loggedUser;
 
     @track mapOfValuesContact = [];
     @track mapOfValuesAccount = [];
     @track mapOfValuesTraining = [];
-    @track mapOfValuesCertification = [];
 
     connectedCallback() {
 
@@ -69,14 +64,6 @@ export default class PortalMyProfilePage extends LightningElement {
             this.contactTrainingIds = trainings.map(a => a.Id);
         });
 
-        getContactCertifications().then(result => {
-            let trainings = result;
-
-            this.contactCertificationInfo = trainings;
-
-            this.contactCertificationIds = trainings.map(a => a.Id);
-        });
-
     }
 
     renderedCallback() {
@@ -96,11 +83,6 @@ export default class PortalMyProfilePage extends LightningElement {
             for (let key in this.sectionMapTraining) {
                 navItems.push({ label: key, value: key, open: true });
             }
-
-            for (let key in this.sectionMapCertification) {
-                navItems.push({ label: key, value: key, open: true });
-            }
-
 
             leftNav.navItems = navItems;
             leftNav.activesection = 'Basics';
@@ -146,24 +128,6 @@ export default class PortalMyProfilePage extends LightningElement {
 
         });
 
-        getFieldsMap({ type: 'MyCertifications' }).then(result => {
-
-            this.sectionMapCertification = JSON.parse(JSON.stringify(result));
-
-            let sectionMap = this.sectionMapCertification;
-
-            let localMap = [];
-            for (let key in this.sectionMapCertification) {
-
-                if (sectionMap.hasOwnProperty(key)) {
-                    let value = sectionMap[key];
-                    localMap.push({'value': value, 'key': key});
-
-                }
-            }
-            this.mapOfValuesCertification = localMap;
-
-        });
     }
 
 

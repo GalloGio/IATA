@@ -31,6 +31,8 @@ export default class PortalMultiRecordFormWrapper extends NavigationMixin(Lightn
 
     @api editFields;
     @api recordIds;
+    @api inProgressRecordIds;
+    @api completedRecordIds;
     @api objectName;
     @api showEditModal = false;
     @api isLoading;
