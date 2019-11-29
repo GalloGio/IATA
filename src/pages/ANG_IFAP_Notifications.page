@@ -1,0 +1,3 @@
+<apex:page standardController="Case" extensions="ANG_IFAPNotificationsController" showHeader="true" action="{!setNotificationMessage}">
+  <apex:pageMessages escape="false" rendered="{!isKeyMulticountryIFAP}"></apex:pageMessages> 
+</apex:page>
