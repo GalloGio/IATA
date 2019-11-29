@@ -244,12 +244,22 @@ public with sharing class PortalProfileCtrl {
         FieldWrapper fw;
 
         Map<String,List<FieldWrapper>> wrapperMap = new Map<String,List<FieldWrapper>>();
-        wrapperMap.put('Training and Certifications',new List<FieldWrapper>());
+        wrapperMap.put('Trainings',new List<FieldWrapper>());
+        wrapperMap.get('Trainings').add(new FieldWrapper('Training_Name__c',true,true));
+        wrapperMap.get('Trainings').add(new FieldWrapper('Status__c',true,true));
+        wrapperMap.get('Trainings').add(new FieldWrapper('School_Name__c',true,true));
+        return wrapperMap;
+    }
 
-        wrapperMap.get('Training and Certifications').add(new FieldWrapper('Training_Name__c',true,true));
-        wrapperMap.get('Training and Certifications').add(new FieldWrapper('Training_School__c',true,true));
-        wrapperMap.get('Training and Certifications').add(new FieldWrapper('Training_Type__c',true,true));
-        wrapperMap.get('Training and Certifications').add(new FieldWrapper('Completion_Date__c',true,true));
+    // OBJECT - FIELD NAME - EDITABLE - VISIBLE - SECTION;
+    public static Map<String,List<FieldWrapper>> CertificationsFields() {
+
+        FieldWrapper fw;
+
+        Map<String,List<FieldWrapper>> wrapperMap = new Map<String,List<FieldWrapper>>();
+        wrapperMap.put('Certifications',new List<FieldWrapper>());
+        wrapperMap.get('Certifications').add(new FieldWrapper('Certification_Name__c',true,true));
+        wrapperMap.get('Certifications').add(new FieldWrapper('Status__c',true,true));
 
         return wrapperMap;
     }
@@ -298,6 +308,8 @@ public with sharing class PortalProfileCtrl {
             sectionMap = ContactFieldsAcc();
         } else if (type == 'MyTrainings') {
             sectionMap = TrainingFields();
+        }else if (type == 'MyCertifications') {
+            sectionMap = CertificationsFields();
         } else {
             sectionMap = AccountFields();
         }

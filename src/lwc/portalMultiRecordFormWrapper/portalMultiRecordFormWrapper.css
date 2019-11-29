@@ -134,3 +134,21 @@ input[type="checkbox"] {
 .greyBackgroundColor {
   background-color: whitesmoke;
 }
+
+.yellowBackgroundColor {
+  background-color: lightyellow;
+}
+
+.greenBackgroundColor {
+  background-color: #ecffeb;
+}
+
+.subTitle {
+  font-size: 16px;
+  font-weight: 600;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.6;
+  letter-spacing: normal;
+  color: #333333;
+}

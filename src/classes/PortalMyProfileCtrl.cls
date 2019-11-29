@@ -31,11 +31,21 @@ public without sharing class PortalMyProfileCtrl {
     }
 
     @AuraEnabled
-    public static List<Training_Contact_Role_Details__c> getContactTrainingInfo() {
+    public static List<Course_Assignment__c> getContactTrainingInfo() {
         User loggedUser = CSP_Utils.getLoggedUser();
 
-        List<Training_Contact_Role_Details__c> trainingsList = [SELECT Id, Name, RecordTypeId, Account_Contact_Role__r.Contact__c, Training_Name__c, Training_School__c, Training_Type__c, Completion_Date__c FROM Training_Contact_Role_Details__c
-                                                    WHERE Account_Contact_Role__r.Contact__c = :loggedUser.contactId];
+        List<Course_Assignment__c> trainingsList = [SELECT Id, Name, Status__c FROM Course_Assignment__c
+                                                    WHERE Training_Contact_Role_Detail__r.Account_Contact_Role__r.Contact__c = :loggedUser.contactId];
+
+        return trainingsList;
+    }
+
+    @AuraEnabled
+    public static List<Contact_Role_Certification__c> getContactCertificationInfo() {
+        User loggedUser = CSP_Utils.getLoggedUser();
+
+        List<Contact_Role_Certification__c> trainingsList = [SELECT Id, Status__c, Name, Certification__r.Name FROM Contact_Role_Certification__c
+                                                    WHERE Training_Contact_Role_Detail__r.Account_Contact_Role__r.Contact__c = :loggedUser.contactId];
 
         return trainingsList;
     }

@@ -2,9 +2,12 @@
 <template>
 
     <c-portal-profile-section class-name={sectionClass} header-class={headerClass}>
-        <span slot="sectionTitle">{sectionTitle}</span>
+        <span slot="sectionTitle" class="slds-p-bottom_small">{sectionTitle}</span>
         
         <span slot="componentContent">
+            <div class="slds-p-around_x-small yellowBackgroundColor subTitle">In Progress</div>
+            <div class="slds-p-around_small">No trainings in progress.</div>
+            <div class="slds-p-around_x-small greenBackgroundColor subTitle">Completed</div>
             <template for:each={recordIds} for:item="recordId">
             <!-- VIEW RECORD -->
                 
