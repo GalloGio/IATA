@@ -878,6 +878,8 @@ global with sharing class IDCardUtil {
             idcard.VER_Number__c = objApp.VER_Number__c;
             //set sync to true
             idCard.MustSyncWithAIMS__c = true;
+            idCard.Sent_to_AIMS_on__c = null;
+            idCard.Received_From_AIMS__c = null;
 
             if (IdCardAIMSrt == null)
                 IdCardAIMSrt = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card__c', 'AIMS');
