@@ -7,6 +7,7 @@ export default class PortalSearchBarGlobalComponent extends LightningElement {
     @api showFAQs = false;
     @api showDocuments = false;
     @api showAdvancedSearch = false;
+    @api showProfiles = false;
     @api language;
     @api searchBarPlaceholder;
 
@@ -55,7 +56,7 @@ export default class PortalSearchBarGlobalComponent extends LightningElement {
                 documentCountryFilter : ""
             },
             profileComponent : {
-                show : true,
+                show : this.showProfiles,
                 loading : true,
                 highlight : false,
                 nrResults : 0,
