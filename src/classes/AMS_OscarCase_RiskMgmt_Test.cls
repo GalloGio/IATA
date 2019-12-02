@@ -370,7 +370,7 @@ private class AMS_OscarCase_RiskMgmt_Test {
         insert cc;
         Financial_Institution__c FI = new Financial_Institution__c(Name = 'FI1', INSTITUTION_TYPE__C='Bank');
         insert FI;
-        Financial_Security__c FS = new Financial_Security__c(CURRENCYISOCODE='USD', Account__c=a.Id, AMOUNT__C=3000, EXPIRY_DATE__C=system.Today().AddDays(100), FINANCIAL_INSTITUTION__c=FI.Id, SECURITY_STATUS__C='Active', Security_Type__c='Bank Guarantee', Region__c ='Europe', Reception_Date__c=system.today(), Reasonforrequest__c='New Application', Reception_Case__c=cc.Id);
+        Financial_Security__c FS = new Financial_Security__c(CURRENCYISOCODE='USD', Account__c=a.Id, AMOUNT__C=3000, EXPIRY_DATE__C=system.Today().AddDays(100), FINANCIAL_INSTITUTION__c=FI.Id, SECURITY_STATUS__C='Active', Security_Type__c='Bank Guarantee', Region__c ='Europe', Reception_Date__c=system.today(), Reasonforrequest__c='New Application', Reception_Case__c=cc.Id, Financial_Security_Validation_Case__c=cc.Id);
         insert FS;
         
         test.StartTest();

@@ -1,0 +1,66 @@
+<aura:component description="Data_Submission_Detail">
+
+    <aura:attribute name="data" type="Object[]" description="Data submission record to display" />
+    <aura:attribute name="userTimeZone" type="String" default=""/>
+
+    <aura:registerEvent name="Data_Submission_Event" type="c:Data_Submission_Event"/>
+
+    <div class="page_container">
+
+        <div class="slds-grid slds-wrap">
+
+            <div class="slds-size_1-of-1">
+                <!-- MAIN CONTENT-->
+                <div class="slds-col_padded slds-size_1-of-1">
+                    <h2>Detail Information</h2>
+                </div>
+
+                <div class="slds-grid slds-wrap slds-col--padded slds-size_1-of-1">
+
+                    <aura:iteration items="{!v.data}" var="field">
+                        <aura:if isTrue="{! not(empty(field.value))}">
+
+                            <aura:if isTrue="{!or(not(empty(field.value)), not(empty(field.label)))}">
+                                <div class="{!(field.field_type == 'TEXTAREA' ? 'slds-size_1-of-1 ' : 'slds-size_1-of-2 ') + 'slds-col--padded slds-p-bottom--large slds-size_1-of-1'}">
+                                    <label class="slds-form-element__label labels" >{!field.label == 'Date' ? field.label + ' ' + v.userTimeZone : field.label}</label>
+                                    <aura:if isTrue="{!field.field_type == 'TEXTAREA'}">
+
+                                        <p><lightning:formattedText value="{!field.value}"/></p>
+
+                                        <aura:set attribute="else">
+                                            <aura:if isTrue="{!field.field_type == 'DATETIME'}"><br/>
+                                                <ui:outputDateTime value="{!field.value}" format="DD/MM/YYYY HH:MM:SS"/>
+                                                <aura:set attribute="else">
+                                                    <p><lightning:formattedText value="{!field.value}"/></p>
+                                                </aura:set>
+
+                                            </aura:if>
+
+                                        </aura:set>
+                                    </aura:if>
+                                </div>
+                            </aura:if>
+                        </aura:if>
+                    </aura:iteration>
+
+                </div>
+
+                <div class="slds-col--padded slds-size_1-of-1">
+                    <div class="chooseButton">
+                        <button class="btn btn-primary btn-grey" onclick="{! c.fireBackEvt }">Back</button>
+                    </div>
+                </div>
+
+            </div>
+
+
+
+
+        </div>
+
+
+    </div>
+
+
+
+</aura:component>

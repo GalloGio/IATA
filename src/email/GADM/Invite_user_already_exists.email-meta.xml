@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <name>Invite user - already exists</name>
+    <style>none</style>
+    <subject>Welcome to GADM</subject>
+    <textOnly>Dear {!IF(Contact.LastName= &quot;&quot;, &quot;User&quot;, Contact.FirstName + &apos; &apos;+ Contact.LastName )}, 
+
+*account* has requested you sign up for the GADM service.
+Click on  *link*, and follow these  instructions to request access to the GADM service.
+
+GADM Team
+gadm@iata.org</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>
