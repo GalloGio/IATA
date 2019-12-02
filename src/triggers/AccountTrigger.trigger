@@ -73,12 +73,6 @@ trigger AccountTrigger on Account (before insert, after insert, after update, be
 		ISSP_SIS_AccountHandler.beforeUpdate(Trigger.newMap, Trigger.oldMap);
 	}
 
-	AccountTriggerHandler accountTriggerHandler = new AccountTriggerHandler();
-
-	if (Trigger.isUpdate && Trigger.isAfter) {
-		accountTriggerHandler.OnAfterUpdate(Trigger.old, Trigger.new, Trigger.newMap);
-	}
-
 	//Trigger the platform events
 	if (trigger.isAfter) {
 		if ((Limits.getLimitQueueableJobs() - Limits.getQueueableJobs()) > 0 && !ANG_ConversionHelper.isMigrationTool && !System.isFuture() && !System.isBatch()) {
@@ -91,5 +85,10 @@ trigger AccountTrigger on Account (before insert, after insert, after update, be
 	//HK TR18-150 - Move all fields updates (workflows) on Account, Case and Contact to the trigger
 	if (Trigger.isBefore && (Trigger.isInsert || Trigger.isUpdate)) {
 		WorkflowHelper.performActions(WorkflowHelper.ACCOUNT_TYPE);
+	}
+
+	AccountTriggerHandler accountTriggerHandler = new AccountTriggerHandler();
+	if (Trigger.isUpdate && Trigger.isAfter) {
+		accountTriggerHandler.OnAfterUpdate(Trigger.old, Trigger.new, Trigger.newMap);
 	}
 }
