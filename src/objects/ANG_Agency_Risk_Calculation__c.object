@@ -673,51 +673,6 @@
         </picklistValues>
     </recordTypes>
     <recordTypes>
-        <fullName>Remittance_Frequency_Values</fullName>
-        <active>true</active>
-        <description>Record type to track the value that each type of remittance frequency has for multicountry</description>
-        <label>Remittance Frequency Values</label>
-        <picklistValues>
-            <picklist>ANG_Remittance_Frequency__c</picklist>
-            <values>
-                <fullName>B</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>D</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>F</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>M</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>R</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>S</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>T</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>V</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>W</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-    </recordTypes>
-    <recordTypes>
         <fullName>Risk_Status_Assessment</fullName>
         <active>true</active>
         <label>Risk Status Assessment</label>

@@ -233,26 +233,6 @@ Account__c))</formula>
             </values>
         </picklistValues>
     </recordTypes>
-    <recordTypes>
-        <fullName>Multicountry_Yearly_Financial_Review</fullName>
-        <active>true</active>
-        <label>Multicountry Yearly Financial Review</label>
-        <picklistValues>
-            <picklist>ANG_Location_Type_Conversion__c</picklist>
-            <values>
-                <fullName>AE</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>GE</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>HE</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-    </recordTypes>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
     <validationRules>
