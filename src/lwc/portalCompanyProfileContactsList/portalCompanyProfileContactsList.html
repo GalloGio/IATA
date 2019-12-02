@@ -100,8 +100,18 @@
         <!--<c-portal-paginator pagination-object-parent={paginationObject} onselectedpage={handleSelectedPage}></c-portal-paginator>-->
     </div>
 
-    <div if:false={contactsLoaded} class="spinnerContainer fadeInCss">
-        <lightning-spinner class="background-superLightGray" alternative-text="Loading"></lightning-spinner>
+
+    <div if:false={contactsLoaded} class="slds-grid spinnerContainer slds-p-horizontal_medium slds-p-top_medium" >
+		<div  class="slds-col slds-size--1-of-1 text-xsmall text-blue">			
+			
+			<p><lightning-icon class="slds-p-right_x-small" variant="warning"  icon-name="utility:warning" size="small" alternative-text=""></lightning-icon>
+				We are having a planned maintenance on this page and it might take up to 2 minutes to load for companies with large number of users.</p> 
+			<p>The page will go back to full performance in a couple of days. Thanks for your understanding.</p>
+			
+		</div>
+		<div class="slds-col slds-size--1-of-1 fadeInCss" style="height:300px">
+			<lightning-spinner class="background-superLightGray" style="top:100px;" alternative-text="Loading"></lightning-spinner>
+		</div>
     </div>
     
 </template>
