@@ -1,5 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>ACLI_Approve_Code_Assignment_Approved</fullName>
+        <description>ACLI - Approve Code Assignment - Approved</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>All/ACLI_Approve_Code_Assignment_Approved</template>
+    </alerts>
+    <alerts>
+        <fullName>ACLI_Approve_Code_Assignment_Rejected</fullName>
+        <description>ACLI - Approve Code Assignment - Rejected</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>All/ACLI_Approve_Code_Assignment_Rejected</template>
+    </alerts>
     <fieldUpdates>
         <fullName>Update_Status_field_to_Completed</fullName>
         <field>Status__c</field>
