@@ -69,6 +69,11 @@
                     component.set('v.data', result.accounts);
                     if(result.accounts.length > 0){
                         component.set('v.noAccount', false);
+                        if(result.accounts.length >= 15){
+                            component.set('v.maxResults', true);
+                        }else{
+                            component.set('v.maxResults', false);
+                        }
                     }else{
                         component.set('v.noAccount', true);
                     }
