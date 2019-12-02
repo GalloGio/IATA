@@ -840,14 +840,12 @@
                     /*and simulate a click on the "active" item:*/
                     if (x) x[currentFocus].click();
                     }				
-                }else{
+                } else if (e.key === 'Tab'){
+                    closeAllLists();
+                } else {
                     currentFocus = -1;
                 }
-            });
-            
-            billingCityElement.addEventListener('blur', function(e){
-                closeAllLists(e.target);
-            });
+            });            
 
             function addActive (x) {                            
                 /*a function to classify an item as "active":*/
