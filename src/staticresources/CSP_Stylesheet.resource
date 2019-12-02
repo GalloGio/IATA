@@ -1200,6 +1200,10 @@ lightning-datatable .slds-th__action {
   margin-left: 2%;
 }
 
+.combobox-list-options .slds-listbox {
+  width: auto;
+}
+
 .innerHeaderCss .slds-button .slds-button__icon_right,
 .innerHeaderCss .slds-button .slds-button__icon--right {
   margin-left: 10px;
