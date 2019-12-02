@@ -372,6 +372,9 @@
 
     
     
+    function retAddressCompUrl(){
+        return 'https://iata--newportal--dse.cs18.visual.force.com/apex/DS_AccountDQPage?id=' + '{!con.AccountId}' + '&isdtp=vw';
+    }
 
     var ownerModalFields = [];
     ownerModalFields[0] = "{!$Component.cargonewContact.contactBlock.contactStreet}";

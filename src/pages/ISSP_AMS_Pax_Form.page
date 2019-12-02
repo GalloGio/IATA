@@ -355,7 +355,9 @@
         setHeaderLabels(theValue.toLowerCase());
     }
     
-
+    function retAddressCompUrl(){
+        return 'https://iata--newportal--dse.cs18.visual.force.com/apex/DS_AccountDQPage?id=' + '{!con.AccountId}' + '&isdtp=vw';
+    }
 
     var ownerModalFields = [];
     ownerModalFields[0] = "{!$Component.newContact.contactBlock.contactStreet}";
@@ -371,7 +373,7 @@
         document.getElementById(ownerModalFields[3]).value = '{!JSENCODE(amsCountryLabel)}';
         document.getElementById(ownerModalFields[3]).disabled = true;
         
-
+        console.log('vHQAccountId: ' + retAddressCompUrl());
     });
 
     function toggleModalContactFields(ownerId, managerId, prevWorkId) {
