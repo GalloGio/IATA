@@ -69,7 +69,7 @@ global class ISSP_AmazonS3_Ctrl {
 			query += ' Case__c = :caseId';
 			query += ' AND File_Identifier__c = :currentIdentifier';
 
-			if (this.cse.Reason1__c == AMS_Utils.CASE_REASON_HE_MULTICOUNTRY) {
+			if (this.cse.Reason1__c == AMS_Utils.CASE_REASON_HE_MULTICOUNTRY && String.isNotBlank(formId)){
 				query += ' AND Form__c = :formId';
 			}
 
@@ -264,14 +264,18 @@ global class ISSP_AmazonS3_Ctrl {
         this.refreshReviewStatusMap();
     }
 
-    public String getStorageFolder() {
-        system.debug('aqui getStorageFolder ...');
-        Id idVal;
-        String FOLDER = FOLDER_STEM;
+	public String getStorageFolder() {
+		system.debug('aqui getStorageFolder ...');
+		String FOLDER = FOLDER_STEM;
 
-        idVal = cse.Id;
-        return FOLDER + String.valueOf(idVal) + '/';
-    }
+		String idVal = String.valueOf(cse.Id);
+		
+		if(String.isNotBlank(this.formId)){
+			idVal += String.valueOf(this.formId);
+		}
+
+		return FOLDER + idVal + '/';
+	}
 
     public String getCaseStatus() {
         return this.cse.Status;
@@ -319,7 +323,7 @@ global class ISSP_AmazonS3_Ctrl {
 		query += ' AND isPublic__c = true';
 		query += ' AND Review_Status__c != \'' + AMS_Utils.REJECTED_CLOSED + '\'';
 
-		if (this.cse.Reason1__c == AMS_Utils.CASE_REASON_HE_MULTICOUNTRY) {
+		if (this.cse.Reason1__c == AMS_Utils.CASE_REASON_HE_MULTICOUNTRY && String.isNotBlank(formId)) {
 			query += ' AND Form__c = :formId';
 		}
 
@@ -453,7 +457,7 @@ global class ISSP_AmazonS3_Ctrl {
 
 		String query = AMAZON_FILES_QUERY + ' Case__c = :caseId';
 
-		if (this.cse.Reason1__c == AMS_Utils.CASE_REASON_HE_MULTICOUNTRY) {
+		if (this.cse.Reason1__c == AMS_Utils.CASE_REASON_HE_MULTICOUNTRY && String.isNotBlank(formId)){
 			query += ' AND Form__c = :formId';
 		}
 

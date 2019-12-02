@@ -497,7 +497,7 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 					acctId = new Set<Id>{accountIdToTest};
 				}
 
-				ANG_MulticountryOscarCreatorBatch myBatchObject = new ANG_MulticountryOscarCreatorBatch(AcctId); 
+				ANG_MulticountryOscarCreatorBatch myBatchObject = new ANG_MulticountryOscarCreatorBatch(oscarCaseId, AcctId); 
 				Id batchId = Database.executeBatch(myBatchObject,1);
 
 				closeTab = true;
