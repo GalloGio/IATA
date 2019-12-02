@@ -566,9 +566,10 @@ public class PortalServicesCtrlTest {
         System.runAs(portalUser) {
             Test.StartTest();    
             List<PortalServicesCtrl.ContactWrapper> cw = PortalServicesCtrl.getContactsAndStatusRelatedToServiceList(portalServicelist[0].id,3);
-            List<PortalServicesCtrl.ContactWrapper> cw2 = PortalServicesCtrl.searchContactsInService(portalServicelist[0].id,'serv'); 
-            List<PortalServicesCtrl.ServiceWrapper> sw3 = PortalServicesCtrl.getUserAvailableServices(); 
-            
+			List<PortalServicesCtrl.ContactWrapper> cw2 = PortalServicesCtrl.searchContactsInService(portalServicelist[0].id,'serv','','','');
+			List<PortalServicesCtrl.ContactWrapper> cw3 = PortalServicesCtrl.searchContactsInService(portalServicelist[0].id,'serv','test','test','test');
+			List<PortalServicesCtrl.ContactWrapper> cw4 = PortalServicesCtrl.searchContactsInService(portalServicelist[0].id,'serv','test','','');
+			List<PortalServicesCtrl.ServiceWrapper> sw3 = PortalServicesCtrl.getUserAvailableServices();            
             Test.StopTest();
         }
     }
