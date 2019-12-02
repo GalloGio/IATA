@@ -26,7 +26,7 @@ public with sharing class AMS_AccountRoleCreator
 
     public static final Set<String> processesBlockedToMigrateOwners = new Set<String>{'NEW.BR' ,'NEW.BR.ABROAD','NEW.TIDS.1.0','NEW.MSO.1.0','NEW.GSA.1.0','NEW.GSSA.1.0','NEW.AHA.1.0','NEW.SA.1.0','NEW.AHA.1.0.BSP','NEW.GSA.1.0.BSP'};
 
-    public static final Set<String> allowedLocationTypesForNewProcesses = new Set<String>{'HO', 'AO', 'HE', 'AE', 'GE'};
+    public static final Set<String> allowedLocationTypesForNewProcesses = new Set<String>{AMS_Utils.HO, AMS_Utils.AO, AMS_Utils.HE, AMS_Utils.AE, AMS_Utils.GE};
 
     public static boolean isAccountRoleCreationRunning = false;
     public static Map<Id,Double> totalCoveredOwnershipByAccount = new Map<Id,Double>();

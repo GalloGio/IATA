@@ -532,12 +532,13 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 					oscar.Account__c = oscarMainAccount;
 					Case caseToUpdate = new Case(Id = accreditationForm.SAAM_Case__c);
 					caseToUpdate.AccountId = oscar.Account__c;
-					accreditationForm.HO_Account__c = oscar.Account__c;
 					account = mapHierarchyAccounts.get(oscar.Account__c);
 					Map<String,Object> fieldsOfObject = ANG_MulticountryHelper.buildStagingAreaFieldsObject(account);
-					accreditationForm.Account_Name__c = account.Name;
 					accreditationForm = (AMS_Pax_Accreditation_Form__c)ANG_EntityCreator.addFieldsToObject((sObject)accreditationForm, fieldsOfObject);
+					accreditationForm.HO_Account__c = oscar.Account__c;
+					accreditationForm.Account_Name__c = account.Name;
 					accreditationForm.Remittance_Frequency__c = account.Remittance_Frequency__c;
+					accreditationForm.ANG_Accreditation_type__c = account.ANG_Accreditation_Model__c;
 
 					update oscar;
 					update caseToUpdate;
