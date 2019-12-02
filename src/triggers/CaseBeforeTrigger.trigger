@@ -157,6 +157,9 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 			CaseProcessTypeHelper.processKPI(Trigger.new, Trigger.oldMap);
 		}
 
+		/** WMO-424 **/
+		CaseVisibilityEngine.execute(Trigger.new);
+
 		// assigns default email address to be used on send email quick action
 		//follows same logic as current classic functionality
 		for(Case c: trigger.new){
@@ -316,9 +319,9 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 			System.debug('____ [cls CaseBeforeTrigger - trgICCSCaseValidation]');
 
 			//For FDS_ICCS_Bank_Account_Management, a check is only performed for delete bank account cases
-			final string INS = 'ICCS – Assign Product';
-			final string UPD = 'ICCS – Update Payment Instructions';
-			final string DEL = 'ICCS – Delete Bank Account';
+			final string INS = 'ICCS â€“ Assign Product';
+			final string UPD = 'ICCS â€“ Update Payment Instructions';
+			final string DEL = 'ICCS â€“ Delete Bank Account';
 			List<Case> ICCSProductManagementCases = new List<Case>();
 			List<Case> ICCSBankAccountManagementCases = new List<Case>();
 			Boolean ThereAreICCSCaseClosing = false;
@@ -355,10 +358,10 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 
 					// I check the condition of workflow "ICCS: BA Creation Set Status In progress When Doc Received"
 					} else if (c.RecordTypeId == RT_ICCS_BA_Id && !String.isBlank(String.valueOf(c.Documentation_Complete__c))
-						   && c.CaseArea__c == 'ICCS – Create Bank Account' && c.ICCS_Bank_Account__c != null
+						   && c.CaseArea__c == 'ICCS â€“ Create Bank Account' && c.ICCS_Bank_Account__c != null
 						   // the same condition should not be true for the old case
 						   && !(oc.RecordTypeId == RT_ICCS_BA_Id && !String.isBlank(String.valueOf(oc.Documentation_Complete__c))
-								&& oc.CaseArea__c == 'ICCS – Create Bank Account' && oc.ICCS_Bank_Account__c != null)) {
+								&& oc.CaseArea__c == 'ICCS â€“ Create Bank Account' && oc.ICCS_Bank_Account__c != null)) {
 						c.Status = 'In progress';
 					}
 
