@@ -164,6 +164,7 @@
     <visibility>Public</visibility>
     <fields>
         <fullName>CategoryExceptions__c</fullName>
+        <description>Use this field to exclude account categories from some data category</description>
         <externalId>false</externalId>
         <label>Category Exceptions</label>
         <length>255</length>
@@ -174,9 +175,10 @@
     </fields>
     <fields>
         <fullName>DataCategoryLabel_ar__c</fullName>
+        <description>Label for Arabic</description>
         <externalId>false</externalId>
         <label>DataCategoryLabel_ar</label>
-        <length>100</length>
+        <length>150</length>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
@@ -184,9 +186,10 @@
     </fields>
     <fields>
         <fullName>DataCategoryLabel_de__c</fullName>
+        <description>Label for German</description>
         <externalId>false</externalId>
         <label>DataCategoryLabel_de</label>
-        <length>100</length>
+        <length>150</length>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
@@ -194,9 +197,10 @@
     </fields>
     <fields>
         <fullName>DataCategoryLabel_en_US__c</fullName>
+        <description>Label for English</description>
         <externalId>false</externalId>
         <label>DataCategoryLabel_en_US</label>
-        <length>100</length>
+        <length>150</length>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
@@ -204,9 +208,10 @@
     </fields>
     <fields>
         <fullName>DataCategoryLabel_es__c</fullName>
+        <description>Label for Spanish</description>
         <externalId>false</externalId>
         <label>DataCategoryLabel_es</label>
-        <length>100</length>
+        <length>150</length>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
@@ -214,9 +219,10 @@
     </fields>
     <fields>
         <fullName>DataCategoryLabel_fr__c</fullName>
+        <description>Label for French</description>
         <externalId>false</externalId>
         <label>DataCategoryLabel_fr</label>
-        <length>100</length>
+        <length>150</length>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
@@ -224,9 +230,10 @@
     </fields>
     <fields>
         <fullName>DataCategoryLabel_in__c</fullName>
+        <description>Label for Indonesian</description>
         <externalId>false</externalId>
         <label>DataCategoryLabel_in</label>
-        <length>100</length>
+        <length>150</length>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
@@ -234,9 +241,10 @@
     </fields>
     <fields>
         <fullName>DataCategoryLabel_it__c</fullName>
+        <description>Label for Italian</description>
         <externalId>false</externalId>
         <label>DataCategoryLabel_it</label>
-        <length>100</length>
+        <length>150</length>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
@@ -244,9 +252,10 @@
     </fields>
     <fields>
         <fullName>DataCategoryLabel_ja__c</fullName>
+        <description>Label for Japanese</description>
         <externalId>false</externalId>
         <label>DataCategoryLabel_ja</label>
-        <length>100</length>
+        <length>150</length>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
@@ -254,9 +263,10 @@
     </fields>
     <fields>
         <fullName>DataCategoryLabel_ko__c</fullName>
+        <description>Label for Korean</description>
         <externalId>false</externalId>
         <label>DataCategoryLabel_ko</label>
-        <length>100</length>
+        <length>150</length>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
@@ -264,9 +274,10 @@
     </fields>
     <fields>
         <fullName>DataCategoryLabel_pt_BR__c</fullName>
+        <description>Label for Portuguese</description>
         <externalId>false</externalId>
         <label>DataCategoryLabel_pt_BR</label>
-        <length>100</length>
+        <length>150</length>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
@@ -274,9 +285,10 @@
     </fields>
     <fields>
         <fullName>DataCategoryLabel_ru__c</fullName>
+        <description>Label for Russian</description>
         <externalId>false</externalId>
         <label>DataCategoryLabel_ru</label>
-        <length>100</length>
+        <length>150</length>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
@@ -284,9 +296,10 @@
     </fields>
     <fields>
         <fullName>DataCategoryLabel_th__c</fullName>
+        <description>Label for Thai</description>
         <externalId>false</externalId>
         <label>DataCategoryLabel_th</label>
-        <length>100</length>
+        <length>150</length>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
@@ -294,9 +307,10 @@
     </fields>
     <fields>
         <fullName>DataCategoryLabel_TR__c</fullName>
+        <description>Label for Turkish</description>
         <externalId>false</externalId>
         <label>DataCategoryLabel_TR</label>
-        <length>100</length>
+        <length>150</length>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
@@ -304,9 +318,10 @@
     </fields>
     <fields>
         <fullName>DataCategoryLabel_vi__c</fullName>
+        <description>Label for Vietnamese</description>
         <externalId>false</externalId>
         <label>DataCategoryLabel_vi</label>
-        <length>100</length>
+        <length>150</length>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
@@ -314,9 +329,10 @@
     </fields>
     <fields>
         <fullName>DataCategoryLabel_zh_CN__c</fullName>
+        <description>Label for Chinese</description>
         <externalId>false</externalId>
         <label>DataCategoryLabel_zh_CN</label>
-        <length>100</length>
+        <length>150</length>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
@@ -324,9 +340,10 @@
     </fields>
     <fields>
         <fullName>DataCategoryName__c</fullName>
+        <description>Name of the category in the structure</description>
         <externalId>false</externalId>
         <label>Data Category Name</label>
-        <length>100</length>
+        <length>150</length>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
@@ -334,9 +351,10 @@
     </fields>
     <fields>
         <fullName>DataSubtopicName__c</fullName>
+        <description>Name of the subtopic in the structure</description>
         <externalId>false</externalId>
         <label>Data Subtopic Name</label>
-        <length>100</length>
+        <length>150</length>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
@@ -344,9 +362,10 @@
     </fields>
     <fields>
         <fullName>DataTopicName__c</fullName>
+        <description>Name of the topic in the structure</description>
         <externalId>false</externalId>
         <label>Data Topic Name</label>
-        <length>100</length>
+        <length>150</length>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
@@ -355,6 +374,7 @@
     <fields>
         <fullName>FAQsStructure__c</fullName>
         <defaultValue>false</defaultValue>
+        <description>Determinates if it&#39;s a element related to Data Category Setup, manually created or not.</description>
         <externalId>false</externalId>
         <label>FAQs Structure</label>
         <trackTrending>false</trackTrending>
@@ -362,6 +382,7 @@
     </fields>
     <fields>
         <fullName>Order__c</fullName>
+        <description>Indicates the order to appear the categories on Portal.</description>
         <externalId>false</externalId>
         <label>Order</label>
         <precision>4</precision>
@@ -374,6 +395,7 @@
     <fields>
         <fullName>Requires_Level2_Registration__c</fullName>
         <defaultValue>false</defaultValue>
+        <description>Indicates a topic that is a must to complete the L2 registration</description>
         <externalId>false</externalId>
         <label>Requires Level 2 Registration</label>
         <trackTrending>false</trackTrending>
@@ -381,6 +403,7 @@
     </fields>
     <fields>
         <fullName>SectorExceptions__c</fullName>
+        <description>Use this field to exclude account sectors from some data category</description>
         <externalId>false</externalId>
         <label>Sector Exceptions</label>
         <length>255</length>
