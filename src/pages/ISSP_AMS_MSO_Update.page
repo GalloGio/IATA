@@ -738,6 +738,8 @@
             let predictions = {};
             let cityChanged = false;
             
+            billingCityElement.setAttribute('autocomplete', 'new-city');
+            
             billingCityElement.addEventListener('input', function(){
                 predictions = {};
                 cityChanged = true;
