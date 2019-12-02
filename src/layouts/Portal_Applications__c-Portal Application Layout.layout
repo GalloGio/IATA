@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <excludeButtons>Share</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
         <customLabel>false</customLabel>
@@ -55,7 +56,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>GDPR_PrivacyStatement__c</field>
+                <field>Requires_Level2_Registration__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -122,10 +123,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Auto_approved_for__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>ICH_Airline__c</field>
             </layoutItems>
             <layoutItems>
@@ -143,6 +140,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>VisibleCNS__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Visible__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -164,6 +165,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Cannot_be_managed_by_portal_admin__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Auto_approved_for__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -235,25 +240,12 @@
         <fields>Contact.Account_Country__c</fields>
         <fields>Contact.CNTC_FIRST_NAME</fields>
         <fields>Contact.NAME</fields>
+        <fields>Contact.User_Portal_Status__c</fields>
         <fields>Right__c</fields>
         <fields>ANG_Portal_Service_Role__c</fields>
         <fields>Account.ACC_RECORDTYPE</fields>
         <fields>CREATED_DATE</fields>
-        <fields>Last_Visit_Date__c</fields>
         <relatedList>Portal_Application_Right__c.Portal_Application__c</relatedList>
-        <sortField>Last_Visit_Date__c</sortField>
-        <sortOrder>Desc</sortOrder>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <fields>Version_Number__c</fields>
-        <fields>Is_Latest__c</fields>
-        <fields>Effective_Start_Date__c</fields>
-        <relatedList>Term_and_Condition__c.NewGenApp_PortalService__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <relatedList>Account_Role_Services__c.Portal_Service__c</relatedList>
     </relatedLists>
     <relatedLists>
         <excludeButtons>New</excludeButtons>

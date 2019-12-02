@@ -329,9 +329,13 @@
     <tabs>Participation_Online_Application__c</tabs>
     <tabs>Participation_Application_Requirement__c</tabs>
     <tabs>Participant_Online_App_Requirement__c</tabs>
+    <tabs>IATA_ISO_City__c</tabs>
     <uiType>Lightning</uiType>
     <utilityBar>ACLI_UtilityBar</utilityBar>
     <workspaceConfig>
+        <mappings>
+            <tab>IATA_ISO_City__c</tab>
+        </mappings>
         <mappings>
             <tab>Participant_Online_App_Requirement__c</tab>
         </mappings>

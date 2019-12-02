@@ -1,0 +1,15 @@
+.THIS .bodyHeader p{
+    font-size: 20px;
+    color: black;
+    line-height: 22px;
+    font-family: AktivGrotesk-Bold;
+}
+
+.THIS .bodyText {
+    padding-bottom: 20px;
+    padding-top: 5px;
+    font-family: AktivGrotesk-Regular;
+    font-size: 15px;
+    line-height: 22px;
+    color: black;
+}

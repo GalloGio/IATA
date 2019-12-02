@@ -752,29 +752,39 @@ public with sharing class PortalCasesCtrl {
     /*
     * Returns the comments for a case, given the case id
     */
-    @AuraEnabled 
-    public static List<MessageWrapper> getCaseMessages(String caseId){
-        List<MessageWrapper> lstToReturn = new List<MessageWrapper>();
+    @AuraEnabled
+public static List<MessageWrapper> getCaseMessages(String caseId){
+	List<MessageWrapper> lstToReturn = new List<MessageWrapper>();
 
-        List<CaseComment> lstCaseCommentsAux = [SELECT Id, ParentId, CommentBody, IsPublished, 
-                                                CreatedDate, CreatedById , CreatedBy.Name , IsDeleted
-                                                FROM CaseComment
-                                                WHERE ParentId = :caseId AND IsDeleted = false
-                                                ORDER BY CreatedDate ASC];
-        
-        if(lstCaseCommentsAux != null && !lstCaseCommentsAux.isEmpty()){
-            for(CaseComment caseCommentAux : lstCaseCommentsAux){
-                Boolean isSelfAux = caseCommentAux.CreatedById == UserInfo.getUserId();
-                lstToReturn.add(new MessageWrapper(caseCommentAux.CommentBody, 
-                                                    caseCommentAux.CreatedDate, 
-                                                    caseCommentAux.CreatedBy.Name, 
-                                                    isSelfAux, 
-                                                    caseCommentAux.Id));
-            }
-        }
+	Case caseToFirstComment = [SELECT Id, Description, CreatedBy.Name, CreatedDate FROM Case WHERE Id =:caseId];
 
-        return lstToReturn;
-    }
+	List<CaseComment> lstCaseCommentsAux = [SELECT Id, ParentId, CommentBody, IsPublished,
+	                                        CreatedDate, CreatedById, CreatedBy.Name, IsDeleted
+	                                        FROM CaseComment
+	                                        WHERE ParentId = :caseId AND IsDeleted = false
+	                                                                                 ORDER BY CreatedDate ASC];
+
+	String caseDescription = caseToFirstComment.Description != null ? caseToFirstComment.Description : '';
+
+	lstToReturn.add(new MessageWrapper(caseDescription,
+	                                   caseToFirstComment.CreatedDate,
+	                                   caseToFirstComment.CreatedBy.Name,
+	                                   true,
+	                                   caseToFirstComment.Id));
+
+	if(lstCaseCommentsAux != null && !lstCaseCommentsAux.isEmpty()) {
+		for(CaseComment caseCommentAux : lstCaseCommentsAux) {
+			Boolean isSelfAux = caseCommentAux.CreatedById == UserInfo.getUserId();
+			lstToReturn.add(new MessageWrapper(caseCommentAux.CommentBody,
+			                                   caseCommentAux.CreatedDate,
+			                                   caseCommentAux.CreatedBy.Name,
+			                                   isSelfAux,
+			                                   caseCommentAux.Id));
+		}
+	}
+
+	return lstToReturn;
+}
 
     @AuraEnabled
     public static ReturnWrapper submitNewMessage(String caseId, String messageTextAux){
@@ -978,12 +988,16 @@ public with sharing class PortalCasesCtrl {
         Boolean isOnlineOSCARCase = false;
         Boolean isTravelAccreditation = false;
         Boolean isSidraCase = false;
+        Boolean isNoticeOfChange = false;
 
-        List <AMS_Pax_Accreditation_Form__c> amsList = [SELECT Id, Operation_Type__c FROM AMS_Pax_Accreditation_Form__c WHERE SAAM_Case__c = :caseObj.Id];
+        List <AMS_Pax_Accreditation_Form__c> amsList = [SELECT Id, Operation_Type__c, Notify_Change_Accreditation_Type__c, Notify_Change_Legal_Details__c, Notify_Change_Location__c, Notify_Change_Ownership__c FROM AMS_Pax_Accreditation_Form__c WHERE SAAM_Case__c = :caseObj.Id];
         if (!amsList.isEmpty()){
             isOnlineOSCARCase = true;
             if (amsList[0].Operation_Type__c != null && amsList[0].Operation_Type__c.StartsWith('Travel_Agent')) {
                 isTravelAccreditation = true;
+            }
+            if(amsList[0].Notify_Change_Accreditation_Type__c || amsList[0].Notify_Change_Legal_Details__c || amsList[0].Notify_Change_Location__c || amsList[0].Notify_Change_Ownership__c) {
+                isNoticeOfChange = true;
             }
         }
 
@@ -1006,7 +1020,7 @@ public with sharing class PortalCasesCtrl {
             isSidraCase = true;
         }
 
-        OptionWrapper optToReturn = new OptionWrapper(isAdmin, isOnlineOSCARCase, showAccreditation, isMSOcase, isTravelAccreditation, fullnameNOCFile, isSidraCase);
+        OptionWrapper optToReturn = new OptionWrapper(isAdmin, isOnlineOSCARCase, showAccreditation, isMSOcase, isTravelAccreditation, fullnameNOCFile, isSidraCase, isNoticeOfChange);
         return optToReturn;
     }
 
@@ -1022,6 +1036,9 @@ public with sharing class PortalCasesCtrl {
         public Boolean showAccreditation {get; set;}
 
         @AuraEnabled
+        public Boolean isNoticeOfChange {get; set;}
+
+        @AuraEnabled
         public Boolean isMSOcase {get; set;}
 
         @AuraEnabled
@@ -1033,7 +1050,7 @@ public with sharing class PortalCasesCtrl {
         @AuraEnabled
         public Boolean isSidraCase {get; set;}
 
-        public OptionWrapper(Boolean isAdmin, Boolean isOnlineOSCARCase, Boolean showAccreditation, Boolean isMSOcase, Boolean isTravelAccreditation, String fullnameNOCFile, Boolean isSidraCase){
+        public OptionWrapper(Boolean isAdmin, Boolean isOnlineOSCARCase, Boolean showAccreditation, Boolean isMSOcase, Boolean isTravelAccreditation, String fullnameNOCFile, Boolean isSidraCase, Boolean isNoticeOfChange){
             this.isAdmin = isAdmin;
             this.isOnlineOSCARCase = isOnlineOSCARCase;
             this.showAccreditation = showAccreditation;
@@ -1041,6 +1058,7 @@ public with sharing class PortalCasesCtrl {
             this.isTravelAccreditation = isTravelAccreditation;
             this.fullnameNOCFile = fullnameNOCFile;
             this.isSidraCase = isSidraCase;
+            this.isNoticeOfChange = isNoticeOfChange;
         }
     }
 

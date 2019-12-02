@@ -133,9 +133,14 @@ public without sharing class ISSP_ChangePassword {
                     else if(serviceName == 'NDCMM'){
                         pageRef = new PageReference(OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.IDENTITY,'/s/ndcmm?serviceName=NDCMM' + commParam));
                     }
+                    else if(serviceName == 'dataprivacy'){
+                        pageRef = new PageReference(OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.GDPR,'/s'));
+                    }
                     else{
                         pageref = new PageReference(OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.IDENTITY,'/s/?'+serviceNameParam));
                     }
+                    
+					if (communityName=='CNS') pageRef = new PageReference(OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, '/?CommunityName='+communityName));
                     
                     if (tempPass) updateUsers();
                 }

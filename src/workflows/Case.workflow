@@ -4088,6 +4088,66 @@
         <template>Approval_notifications_DPC_Systems/Rejection_of_CR</template>
     </alerts>
     <alerts>
+        <fullName>Warning</fullName>
+        <description>Warning First Contact with Client</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>ISS_Portal/Owner_notification_of_new_comment</template>
+    </alerts>
+    <alerts>
+        <fullName>Warning2_First_Contact_with_Client</fullName>
+        <description>Warning First Contact with Client</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>ISS_Portal/Owner_notification_of_new_comment</template>
+    </alerts>
+    <alerts>
+        <fullName>WarningEmail_Maximum_Case_Age_with_IATA</fullName>
+        <description>WarningEmail Maximum Case Age with IATA</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>ISS_Portal/Owner_notification_of_new_comment</template>
+    </alerts>
+    <alerts>
+        <fullName>Warning_Email_Maximum_Case_Age_with_IATA</fullName>
+        <description>WarningEmail Maximum Case Age with IATA</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>ISS_Portal/Owner_notification_of_new_comment</template>
+    </alerts>
+    <alerts>
+        <fullName>Warning_First_Contact_with_Client</fullName>
+        <description>Warning First Contact with Client</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>ISS_Portal/Owner_notification_of_new_comment</template>
+    </alerts>
+    <alerts>
+        <fullName>Warning_Maximum_Age_with_IATA</fullName>
+        <description>WarningEmail Maximum Case Age with IATA</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>ISS_Portal/Owner_notification_of_new_comment</template>
+    </alerts>
+    <alerts>
         <fullName>X1st_email_on_CS_escalated_case</fullName>
         <description>1st email on CS escalated case</description>
         <protected>false</protected>
@@ -10387,7 +10447,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/31/2013 7:00 PM</value>
+            <value>12/31/2013 8:00 PM</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Account_Billing_Country__c</field>
@@ -10500,7 +10560,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/31/2013 7:00 PM</value>
+            <value>12/31/2013 8:00 PM</value>
         </criteriaItems>
         <description>Workflow rule used to send IS for Agency Risk Management processes</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
@@ -10558,7 +10618,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/31/2013 7:00 PM</value>
+            <value>12/31/2013 8:00 PM</value>
         </criteriaItems>
         <description>Workflow rule used to send IS for Agency Risk Management processes</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
@@ -10611,7 +10671,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/31/2013 7:00 PM</value>
+            <value>12/31/2013 8:00 PM</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Account_Billing_Country__c</field>
@@ -10674,7 +10734,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/31/2013 7:00 PM</value>
+            <value>12/31/2013 8:00 PM</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Account_Billing_Country__c</field>
@@ -10732,7 +10792,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/31/2013 7:00 PM</value>
+            <value>12/31/2013 8:00 PM</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Account_Billing_Country__c</field>
@@ -10790,7 +10850,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/31/2013 7:00 PM</value>
+            <value>12/31/2013 8:00 PM</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Account_Billing_Country__c</field>
@@ -10848,7 +10908,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/31/2013 7:00 PM</value>
+            <value>12/31/2013 8:00 PM</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Account_Billing_Country__c</field>
@@ -10906,7 +10966,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/31/2013 7:00 PM</value>
+            <value>12/31/2013 8:00 PM</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Account_Billing_Country__c</field>
@@ -10964,7 +11024,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/31/2013 7:00 PM</value>
+            <value>12/31/2013 8:00 PM</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Account_Billing_Country__c</field>
@@ -11022,7 +11082,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/31/2013 7:00 PM</value>
+            <value>12/31/2013 8:00 PM</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Account_Billing_Country__c</field>
@@ -11080,7 +11140,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/31/2013 7:00 PM</value>
+            <value>12/31/2013 8:00 PM</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Account_Billing_Country__c</field>
@@ -11138,7 +11198,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/31/2013 7:00 PM</value>
+            <value>12/31/2013 8:00 PM</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Account_Billing_Country__c</field>
@@ -11196,7 +11256,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/31/2013 7:00 PM</value>
+            <value>12/31/2013 8:00 PM</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Account_Billing_Country__c</field>
@@ -11254,7 +11314,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/31/2013 7:00 PM</value>
+            <value>12/31/2013 8:00 PM</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Account_Billing_Country__c</field>
@@ -11312,7 +11372,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/31/2013 7:00 PM</value>
+            <value>12/31/2013 8:00 PM</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Account_Billing_Country__c</field>
@@ -12172,7 +12232,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
             <name>X1st_email_on_CS_escalated_case</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
@@ -13215,7 +13275,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
             <value>Agent to be Notified</value>
         </criteriaItems>
         <description>Send a confirmation email as soon as the case is created for ID Card Application</description>
-        <triggerType>onCreateOnly</triggerType>
+        <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
         <fullName>IDCard_MassConfirmationEmail Send</fullName>
@@ -13565,7 +13625,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>12/20/2013 1:00 AM</value>
+            <value>12/20/2013 2:00 AM</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.BSPCountry__c</field>
@@ -13639,7 +13699,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterThan</operation>
-            <value>9/29/2012 7:00 PM</value>
+            <value>9/29/2012 8:00 PM</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Short_Payment_Amount_USD__c</field>
@@ -13676,7 +13736,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <formula>AND(  SIDRA_exchange_rate_updated__c,  RecordType.DeveloperName = &apos;SIDRA&apos;,  Short_Payment_Amount_USD__c &gt; 50,  NOT(ISPICKVAL( IRR_Withdrawal_Reason__c , &quot;IATA Charges&quot;)),   OR(AND(  ISPICKVAL( BSP_CASS__c , &quot;BSP&quot;),  CreatedDate &gt; DATETIMEVALUE( &quot;2015-01-01 00:00:00&quot;),  Short_Payment_Amount__c &lt;= (Billing_Amount__c*5/100),  Short_Payment_Amount_USD__c &lt;= 150000 ),   AND(ISPICKVAL( BSP_CASS__c , &quot;CASS&quot;),  CreatedDate &gt; DATETIMEVALUE( &quot;2017-07-18 00:00:00&quot;),  Short_Payment_Amount__c &lt;= (Billing_Amount__c*1/100),  Short_Payment_Amount_USD__c &lt;= 10000)))</formula>
+        <formula>AND(   		SIDRA_exchange_rate_updated__c,   		RecordType.DeveloperName = &apos;SIDRA&apos;,   		OR( 			AND(ISPICKVAL( BSP_CASS__c , &quot;CASS&quot;), Short_Payment_Amount_USD__c &gt; 50), 			AND(ISPICKVAL( BSP_CASS__c , &quot;BSP&quot;), Short_Payment_Amount_USD__c &gt; 50, Settlement_Model__c = &quot;Funds Received&quot;), 			AND(ISPICKVAL( BSP_CASS__c , &quot;BSP&quot;), Short_Payment_Amount_USD__c &gt; 1000, Settlement_Model__c = &quot;Reported Sales&quot;) 		),   		NOT(ISPICKVAL( IRR_Withdrawal_Reason__c , &quot;IATA Charges&quot;)),    		OR( 			AND(ISPICKVAL( BSP_CASS__c , &quot;BSP&quot;),  CreatedDate &gt; DATETIMEVALUE( &quot;2015-01-01 00:00:00&quot;),  Short_Payment_Amount__c &lt;= (Billing_Amount__c*5/100),  Short_Payment_Amount_USD__c &lt;= 150000 ),    			AND(ISPICKVAL( BSP_CASS__c , &quot;CASS&quot;),  CreatedDate &gt; DATETIMEVALUE( &quot;2017-07-18 00:00:00&quot;),  Short_Payment_Amount__c &lt;= (Billing_Amount__c*1/100),  Short_Payment_Amount_USD__c &lt;= 10000)) 	)</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -13698,7 +13758,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <formula>AND ( 		SIDRA_exchange_rate_updated__c,    		TEXT(IRR_Withdrawal_Reason__c)  &lt;&gt;  &apos;IATA Charges&apos;,  		OR(  			RecordType.DeveloperName = &apos;SIDRA&apos;,         			RecordType.DeveloperName = &apos;SIDRA_BR&apos;  		),  		CreatedDate &gt; DATETIMEVALUE( &quot;2012-09-30 00:00:00&quot;),  		Short_Payment_Amount_USD__c &gt; 1,      		ROUND(Short_Payment_Amount_USD__c,2) &lt;= 50 )</formula>
+        <formula>AND ( 		 		SIDRA_exchange_rate_updated__c,    		 		TEXT(IRR_Withdrawal_Reason__c)  &lt;&gt;  &apos;IATA Charges&apos;,  		 		OR(  			 			RecordType.DeveloperName = &apos;SIDRA&apos;,         			 			RecordType.DeveloperName = &apos;SIDRA_BR&apos;  		 			),  		 		CreatedDate &gt; DATETIMEVALUE( &quot;2012-09-30 00:00:00&quot;),  		 		Short_Payment_Amount_USD__c &gt; 1,    		OR( 			AND(ROUND(Short_Payment_Amount_USD__c,2) &lt;= 50, ISPICKVAL( BSP_CASS__c , &quot;CASS&quot;)), 			AND(ROUND(Short_Payment_Amount_USD__c,2) &lt;= 50, ISPICKVAL( BSP_CASS__c , &quot;BSP&quot;),  Settlement_Model__c = &quot;Funds Received&quot;),  			AND(ROUND(Short_Payment_Amount_USD__c,2) &lt;= 1000, ISPICKVAL( BSP_CASS__c , &quot;BSP&quot;), Settlement_Model__c = &quot;Reported Sales&quot;)   			)   		 		 		)</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -13797,7 +13857,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <criteriaItems>
             <field>Case.Confirmation_moneys_not_received__c</field>
             <operation>greaterThan</operation>
-            <value>9/1/2013 7:00 PM</value>
+            <value>9/1/2013 8:00 PM</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.DEF_Approval_Rejection__c</field>
@@ -13837,7 +13897,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <criteriaItems>
             <field>Case.Confirmation_moneys_not_received__c</field>
             <operation>greaterThan</operation>
-            <value>9/1/2013 7:00 PM</value>
+            <value>9/1/2013 8:00 PM</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.DEF_Approval_Rejection__c</field>
@@ -15333,6 +15393,11 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <operation>equals</operation>
             <value>Submitted</value>
         </criteriaItems>
+        <criteriaItems>
+            <field>Case.Financial_Review_Type__c</field>
+            <operation>notEqual</operation>
+            <value>Multicountry Annual</value>
+        </criteriaItems>
         <description>When the case status changes to Submitted, the new case field  FA Submitted date field is automatically updated</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
@@ -15565,7 +15630,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.CreatedDate</field>
             <operation>greaterOrEqual</operation>
-            <value>5/30/2016 7:00 PM</value>
+            <value>5/30/2016 8:00 PM</value>
         </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
@@ -15675,7 +15740,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.Reason1__c</field>
             <operation>notEqual</operation>
-            <value>PCI DSS Compliant</value>
+            <value>PCI DSS Compliant,New HE Multicountry</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Reason1__c</field>

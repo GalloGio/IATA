@@ -315,6 +315,22 @@
                                             <div
                                                 class="slds-grid slds-wrap slds-gutters_medium slds-p-vertical_x-large slds-p-around_small">
 
+                                                <lightning-messages>
+                                                </lightning-messages>
+
+                                                <template if:true={showHelpText}>
+													<div if:false={isAirline}>
+														<div class="slds-p-horizontal_medium slds-p-vertical_small text-xxsmall blueLink">
+															<lightning-formatted-rich-text value={labels.CSP_CompanyAdministration_Link} ></lightning-formatted-rich-text><br/>
+															<lightning-formatted-rich-text value={linkToDoChanges} ></lightning-formatted-rich-text><br/>
+															
+														</div>
+													</div>
+                                                    <div if:true={isAirline} class="slds-p-horizontal_medium slds-p-vertical_small text-xxsmall blueLink">
+                                                        <lightning-formatted-rich-text value={labels.CSP_Airline_Changes_Access} ></lightning-formatted-rich-text>
+                                                    </div>
+                                                </template>
+
                                                 <!-- Display same fields for edit -->
                                                 <template if:false={haveEditFields}>
                                                     <template for:each={fields} for:item="field">
@@ -555,20 +571,31 @@
                                     </div>
 
                                     <!-- Popup Footer -->
-                                    <div
-                                        class="slds-p-around_medium topLightGrayBorder customWhiteBackground slds-clearfix footer-btn-wrapper">
-
-                                        <a onclick={removeUser} if:true={allowContactDelete}><div class="removeLink">{removeContactLabel}</div></a>
-
-                                        <lightning-button class="slds-float_right containedButton"
-                                            label={labels.SaveLabel} type="submit" disabled={canSave} variant="brand">
-                                        </lightning-button>
-
-                                        <lightning-button
-                                            class="slds-float_right  containedButtonWhite slds-m-right_medium cancel-btn"
-                                            disabled={isSaving} label={labels.CancelLabel} variant=""
-                                            onclick={closeModal}></lightning-button>
+                                <div class="slds-p-around_large topLightGrayBorder customWhiteBackground">
+                                    <div if:false={allowContactDelete}>
+                                        <div class="slds-grid slds-wrap slds-gutters_medium slds-grid--vertical-stretch">
+                                            <div class="slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2">    
+                                                <lightning-button class="baseButton newLinkButton buttonMinHeightMedium text-xsmall fullWidth" label={labels.CancelLabel} variant="neutral" onclick={closeModal}></lightning-button>
+                                            </div>
+                                            <div class="slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2">
+                                                <lightning-button class="baseButton newContainedButton buttonMinHeightMedium text-xsmall fullWidth" label={labels.SaveLabel} variant="neutral" onclick={applyFiltersModal} type="submit" disabled={canSave}></lightning-button>
+                                            </div>
+                                        </div>
                                     </div>
+                                    <div if:true={allowContactDelete}>
+                                        <div class="slds-grid slds-wrap slds-gutters_medium slds-grid--vertical-stretch">
+                                            <div class="slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_1-of-3 slds-large-size_1-of-3">    
+                                                <lightning-button class="baseButton newLinkButton buttonMinHeightMedium text-xsmall fullWidth" label={removeContactLabel} variant="neutral" onclick={removeUser}></lightning-button>
+                                            </div>
+                                            <div class="slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_1-of-3 slds-large-size_1-of-3">    
+                                                <lightning-button class="baseButton newLinkButton buttonMinHeightMedium text-xsmall fullWidth" label={labels.CancelLabel} variant="neutral" onclick={closeModal}></lightning-button>
+                                            </div>
+                                            <div class="slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_1-of-3 slds-large-size_1-of-3">
+                                                <lightning-button class="baseButton newContainedButton buttonMinHeightMedium text-xsmall fullWidth" label={labels.SaveLabel} variant="neutral" onclick={applyFiltersModal} type="submit" disabled={canSave}></lightning-button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 </lightning-record-edit-form>
                             </div>
                         </template>
