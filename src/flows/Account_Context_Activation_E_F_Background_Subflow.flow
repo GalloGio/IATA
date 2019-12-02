@@ -417,7 +417,13 @@
         <outputReference>AccountRoleDetailRecordTypeId</outputReference>
         <queriedFields>Id</queriedFields>
     </recordLookups>
-    <startElementReference>Compliance_Subflow</startElementReference>
+    <start>
+        <locationX>50</locationX>
+        <locationY>50</locationY>
+        <connector>
+            <targetReference>Compliance_Subflow</targetReference>
+        </connector>
+    </start>
     <status>Active</status>
     <subflows>
         <name>Compliance_Subflow</name>
@@ -432,12 +438,6 @@
             <name>Account</name>
             <value>
                 <elementReference>Account</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>ContactRoles</name>
-            <value>
-                <elementReference>ContactRoles</elementReference>
             </value>
         </inputAssignments>
         <outputAssignments>
