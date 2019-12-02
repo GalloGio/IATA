@@ -245,6 +245,41 @@
         <label>ISSP Page Detail For CASS Airline</label>
     </fieldSets>
     <fieldSets>
+        <fullName>ISSP_Page_Detail_For_CNS_Agency</fullName>
+        <description>ISSP_OperationCalendarDetails.page uses this Field Set to show columns in a table, but only for CNS and Agency users</description>
+        <displayedFields>
+            <field>Period_Code__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>First_Day__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Last_Day__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Airline_Input_Upload_Cut_Off__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Billing_Availability__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Remittance_Day__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>ISSP Page Detail For CNS Agency</label>
+    </fieldSets>
+    <fieldSets>
         <fullName>ISSP_Page_Detail_For_CNS_Airline</fullName>
         <description>ISSP_OperationCalendarDetails.page uses this Field Set to show columns in a table, but only for CNS and Airline Users</description>
         <displayedFields>
@@ -283,41 +318,6 @@
             <isRequired>false</isRequired>
         </displayedFields>
         <label>ISSP Page Detail For CNS Airline</label>
-    </fieldSets>
-    <fieldSets>
-        <fullName>ISSP_Page_Detail_For_CNS_Agency</fullName>
-        <description>ISSP_OperationCalendarDetails.page uses this Field Set to show columns in a table, but only for CNS and Agency users</description>
-        <displayedFields>
-            <field>Period_Code__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>First_Day__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Last_Day__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Airline_Input_Upload_Cut_Off__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Billing_Availability__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Remittance_Day__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <label>ISSP Page Detail For CNS Agency</label>
     </fieldSets>
     <fieldSets>
         <fullName>ISSP_Page_Detail_For_ICCS</fullName>
