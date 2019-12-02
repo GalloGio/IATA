@@ -30,12 +30,12 @@ public class FinancialSecurityExpiredBatchTest {
 
         Financial_Security__c FS1 = new Financial_Security__c(CURRENCYISOCODE = 'USD', Account__c = a.Id, AMOUNT__C = 3000, EXPIRY_DATE__C = system.Today().AddDays(-100),
                 FINANCIAL_INSTITUTION__c = FI.Id, SECURITY_STATUS__C = 'Active', Security_Type__c = 'Bank Guarantee', Region__c = 'Europe', Reception_Date__c = system.today(),
-                Reasonforrequest__c = 'New Application', Reception_Case__c = c.Id);
+                Reasonforrequest__c = 'New Application', Reception_Case__c = c.Id, Financial_Security_Validation_Case__c = c.Id);
         insert FS1;
 
         Financial_Security__c FS2 = new Financial_Security__c(CURRENCYISOCODE = 'USD', Account__c = a.Id, AMOUNT__C = 3000, EXPIRY_DATE__C = system.Today().AddDays(-100),
                 FINANCIAL_INSTITUTION__c = FI.Id, SECURITY_STATUS__C = 'Active', Security_Type__c = 'Bank Guarantee', Region__c = 'Asia & Pacific', Reception_Date__c = system.today(),
-                Reasonforrequest__c = 'New Application', Reception_Case__c = c.Id);
+                Reasonforrequest__c = 'New Application', Reception_Case__c = c.Id, Financial_Security_Validation_Case__c = c.Id);
         insert FS2;        
 
         

@@ -53,6 +53,8 @@ public without sharing class AMS_Utils {
 	public static final String SA = 'SA';
 	public static final String HE = 'HE';
 	public static final String AE = 'AE';
+	public static final String GE = 'GE';
+
 
 	public static final String PORTAL_APP_ACCESS_GRANTED = 'Access Granted';
 	public static final String PORTAL_APP_ACCESS_REQUESTED = 'Access Requested';
@@ -72,13 +74,13 @@ public without sharing class AMS_Utils {
 	public static final String new_SA           = 'NEW.SA.1.0'      ;
 
 	//Processes of type CHANGES
-	public static final String COR              = 'CORRECTION.1.0'  ;
-	public static final String AGENCYCHANGES    = 'MAJOR.CHANGES'   ;
-	public static final String VOLRELINQUISH    = 'VR.1.0'          ;
-	public static final String VOLRELINQUISH_CA = 'VR.1.0.CA'       ;
-	public static final String BANKACCCHANGES   = 'BANK.ACCOUNT.CHANGES';
-	public static final String CERTIFICATION    = 'CERTIFICATION.1.0';
-	public static final String IEPBANKACCOUNTSETUP = 'IEP.BANK.ACCOUNT.SETUP';
+	public static final String COR                   = 'CORRECTION.1.0'  ;
+	public static final String AGENCYCHANGES         = 'MAJOR.CHANGES'   ;
+	public static final String VOLRELINQUISH         = 'VR.1.0'          ;
+	public static final String VOLRELINQUISH_CA      = 'VR.1.0.CA'       ;
+	public static final String BANKACCCHANGES        = 'BANK.ACCOUNT.CHANGES';
+	public static final String CERTIFICATION         = 'CERTIFICATION.1.0';
+	public static final String IEPBANKACCOUNTSETUP   = 'IEP.BANK.ACCOUNT.SETUP';
 	public static final String IEPMODELAACCOUNTSETUP = 'IEP.MODEL.A.ACCOUNT.SETUP';
 	public static final String IEPMODELBACCOUNTSETUP = 'IEP.MODEL.B.ACCOUNT.SETUP';
 	public static final String IEPMODELBPLUSACCOUNTSETUP = 'IEP.MODEL.B.PLUS.ACCOUNT.SETUP';
@@ -87,16 +89,22 @@ public without sharing class AMS_Utils {
 	//Process of type NewGen
 	public static final String NEWHELITE        = 'ANG.NEW.HE.LITE.1.0';
 	public static final String NEWHESTANDARD    = 'ANG.NEW.HE.STANDARD.1.0';
+	public static final String NEWGESTANDARD    = 'ANG.NEW.GE.STANDARD.1.0';
 	public static final String NEWAE            = 'ANG.NEW.AE.1.0';
+	public static final String MCAE             = 'ANG.MULTICOUNTRY.AE.1.0';
 	public static final String NGCHANGES        = 'ANG.MAJOR.CHANGES.1.0';
 	public static final String NGCORRECTION     = 'NGCORRECTION.1.0';
 	public static final String NGFOP            = 'ANG.FOPMANAGEMENT.1.0';
 	public static final String NGVR             = 'VR.1.0';
 	public static final String NGOPTINOUT       = 'ANG.FS.OPTINOUT';
 	public static final String NGANNUALREVAL    = 'ANG.ANNUAL.REVALIDATION';
+	public static final String NGGE             = 'ANG.NEW.GE.STANDARD.1.0';
 	public static final String NGGDI            = 'ANG.GDI.1.0';
 
 	public static final String NGCHINACONVERSION  = 'ANG.MAJOR.CHANGES.CHINA.1.0'; //ACAMBAS - NEWGEN-4445
+
+
+	public static final String NGCONVERSIONTOMULTICOUNTRY = 'ANG.CONVERT.ST.TO.MC';
 
 	public static final String CONVERTTONEWGENPILOT = 'Conversion to GoLite'; //ACAMBAS - NEWGEN-4445
 	public static final String CONVERTTOLEGACY = 'Conversion to Domestic with Cash'; //ACAMBAS - NEWGEN-4445
@@ -120,17 +128,16 @@ public without sharing class AMS_Utils {
 
 	//AMSU-162
 	public static final Set<String> AMS_ProcessesAddressToValidate = new Set<String> {new_HO, new_BR, new_BR_ABROAD, new_TIDS, new_GSA, new_GSA_BSP, new_GSSA, new_AHA, new_AHA_BSP, new_SA, new_MSO};
-
 	//AMSU-180
 	public static final Set<String> oscarAMSProcesses_ValidateOwnership = new Set <String>{new_HO, AGENCYCHANGES, new_TIDS, COR};
 
-	public static final Set<String> oscarNewGenProcesses = new Set <String>{NEWHELITE, NEWHESTANDARD, NEWAE, NGCHANGES, NGCORRECTION, NGOPTINOUT, NGFOP};
-	public static final Set<String> oscarNewGenNewAppProcesses = new Set <String>{NEWHELITE, NEWHESTANDARD, NEWAE};
+	public static final Set<String> oscarNewGenProcesses = new Set <String>{NEWHELITE, NEWHESTANDARD, NEWGESTANDARD, NEWAE, MCAE, NGCHANGES, NGCORRECTION, NGOPTINOUT, NGFOP, NGCONVERSIONTOMULTICOUNTRY};
+	public static final Set<String> oscarNewGenNewAppProcesses = new Set <String>{NEWHELITE, NEWHESTANDARD, NEWGESTANDARD,NEWAE, MCAE};
 
 	public static final Set<String> changesRequiringManagerApproval = new Set<String>{ANG_LEGAL_NAME,ANG_LEGAL_STATUS,ANG_MAJOR_SHAREHOLDING,
 																					ANG_LOCATION_TYPE_DIFFLEGALENTITY,ANG_OWNERSHIP,ANG_HIERARCHY,ANG_ACCREDITATION_TYPE};
 
-	public static final Set<String> oscarPCICompliantMigrationProcesses = new Set <String>{NEWHESTANDARD,NEWHELITE, NEWAE, NGCORRECTION};
+	public static final Set<String> oscarPCICompliantMigrationProcesses = new Set <String>{NEWHESTANDARD, NEWGESTANDARD, NEWHELITE, NEWAE, MCAE, NGCORRECTION};
 	public static final Set<String> oscarPCICompliantValidationAttachement = new Set <String>{'Yes','Nil CC','Corporate Card'};
 	public static final Set<String> oscarPCICompliantValidationExpiryDate = new Set <String>{'Yes','Nil CC'};
 
@@ -151,8 +158,10 @@ public without sharing class AMS_Utils {
 	public static final String RECTYPE_NEW          = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NEW');
 	public static final String RECTYPE_CHANGE       = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CHANGE');
 	public static final String RECTYPE_CERT         = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CERTIFICATION');
+	public static final String RECTYPE_NEWGE              = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_New_GE');
 	public static final String RECTYPE_NEWHE        = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_New_HE');
 	public static final String RECTYPE_NEWAE        = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_New_AE');
+	public static final String RECTYPE_MCAE               = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_Multicountry_AE');
 	public static final String RECTYPE_NGCHANGES    = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_Agency_Changes');
 	public static final String RECTYPE_NGCORRECTION = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NGCORRECTION');
 	public static final String RECTYPE_CORRECTION   = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CORRECTION');
@@ -166,6 +175,8 @@ public without sharing class AMS_Utils {
 	public static final String RECTYPE_GDI          = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c','ANG_GDI_SETUP');
 	public static final String RECTYPE_CHINA        = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_Agency_Changes_China');
 
+	public static final String RECTYPE_NGCONVERSIONTOMULTICOUNTRY = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_Convert_ST_To_MC');
+
 	public static final String RECTYPE_OSCARCOMM    = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 	public static final String RECTYPE_SIDRALITE    = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA_Lite');
 	public static final String RECTYPE_SAAM         = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');
@@ -178,7 +189,7 @@ public without sharing class AMS_Utils {
 
 	public static final String RECTYPE_IEP_MODEL_A  = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Requirement__c','IEP_Model_A');
 
-	public static final String RECTYPE_BSP          = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Settlement_System__c', 'BSP');
+	public static final String RECTYPE_BSP = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Settlement_System__c', 'BSP');
 
 	public static final String RECTYPE_GDI_FS       = RecordTypeSingleton.getInstance().getRecordTypeId('Opportunity','GDI_FinancialSecurity');
 	public static final String RECTYPE_NEWGEN_CHANGES_PAX = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'New_Gen_Changes');
@@ -189,7 +200,7 @@ public without sharing class AMS_Utils {
 	//AMS Country Specific Attribute
 	public static final String RECTYPE_CSA_RISK_NOTIFICATION   = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Country_Specific_Attribute__c','Risk_Notification');
 
-	public static final Set<String> oscarAMSProcesses = new Set <String>{new_HO,new_BR,new_BR_ABROAD,new_TIDS,new_MSO,new_GSA,new_GSA_BSP,new_GSSA,new_AHA,new_AHA_BSP,new_SA, COR,NEWHELITE,NEWHESTANDARD};
+	public static final Set<String> oscarAMSProcesses = new Set <String>{new_HO,new_BR,new_BR_ABROAD,new_TIDS,new_MSO,new_GSA,new_GSA_BSP,new_GSSA,new_AHA,new_AHA_BSP,new_SA, COR,NEWHELITE,NEWHESTANDARD, NEWGESTANDARD, MCAE};
 
 	public static final Set<String> IEP_PROCESSES = new Set<String>{IEPBANKACCOUNTSETUP, IEPMODELAACCOUNTSETUP, IEPMODELBACCOUNTSETUP,IEPMODELBPLUSACCOUNTSETUP};
 
@@ -227,12 +238,15 @@ public without sharing class AMS_Utils {
 
 	public static final String NEWFORM_AGENTTYPE_CASH = 'Standard with Cash';
 	public static final String NEWFORM_AGENTTYPE_NO_CASH = 'Standard no Cash';
+	public static final String NEWFORM_AGENTTYPE_MULTICOUNTRY = 'Multicountry';
 	public static final String CASE_REASON_HE_STANDARD = 'New HE standard';
 	public static final String CASE_REASON_HE_LITE = 'New HE lite';
+	public static final String CASE_REASON_HE_MULTICOUNTRY = 'New HE Multicountry';
 	public static final String CASE_REASON_ASSOCIATE_ENTITY_STANDARD = 'New AE';
 	public static final String CASE_REASON_NEW_HO = 'New HO';
 	public static final String CASE_REASON_AE_STANDARD = 'New AE standard';
 	public static final String CASE_REASON_AE_LITE = 'New AE lite';
+	public static final String CASE_REASON_AE_MULTICOUNTRY = 'New AE Multicountry';
 
 	public static final String CASE_REASON_BR_ABROAD = 'New BR Abroad';
 	public static final String CASE_REASON_BR_IP = 'New BR / IP';
@@ -242,6 +256,10 @@ public without sharing class AMS_Utils {
 	public static final String CASE_REASON_VR_CLOSURE = 'CLO - Closure';
 	public static final String CASE_REASON_OPT_OUT = 'Financial review opt-in / opt-out';
 	public static final String CASE_REASON_PCI_DSS_COMPLIANT = 'PCI DSS Compliant';
+
+	public static final String FINANCIAL_REVIEW_MULTICOUNTRY_ANNUAL = 'Multicountry Annual';
+	public static final String FA_RESULT_UNSATISFACTORY_UPDATE_FS = 'Unsatisfactory - Update Financial Security';
+	public static final String FA_RESULT_SATISFACTORY_NO_ACTION = 'Satisfactory - No Action';
 
 	// Case - Origin
 	public static final String CASE_ORIGIN_PORTAL = 'Portal';
@@ -290,10 +308,11 @@ public without sharing class AMS_Utils {
 	public static final Set<String> LocationClassCARGO = new Set<String>{'C','I','Q','R'};
 	public static final Set<String> LocationClassDGR = new Set<String>{'C','R'};
 	public static final Set<String> LocationClassPASSENGER = new Set<String>{'P','T','M','X','G','D'};
-	public static final Set<String> LocationTypeAllHOTypes = new Set<String>{'EP','AO','SP','AA','HO','HE'};
+	public static final Set<String> LocationTypeAllHOTypes = new Set<String>{'EP','AO','SP','AA','HO','HE', 'GE'};
 
 	public static final String AGENTTYPE_WITHCASH = 'Standard with Cash';
 	public static final String AGENTTYPE_NOCASH = 'Standard no Cash';
+	public static final String AGENTTYPE_MULTICOUNTRY = 'Multicountry';
 
 	//Account - ANG_Accreditation_Model__c
 	public static final String ACCREDITATIONMODEL_CASH = 'Cash';
@@ -330,8 +349,11 @@ public without sharing class AMS_Utils {
 	public static final String TYPE_PAX_HO = buildOfficeType(CASE_REASON_NEW_HO, ACCREDITATIONMODEL_LEGACY);
 	public static final String TYPE_HE_ST_CASH = buildOfficeType(CASE_REASON_HE_STANDARD, AGENTTYPE_WITHCASH);
 	public static final String TYPE_HE_LITE_NO_CASH = buildOfficeType(CASE_REASON_HE_LITE, AGENTTYPE_NOCASH);
-	public static final Set<String> processesANGrequiredAttachValidation = new Set<String>{NEWHELITE,NEWHESTANDARD,NEWAE,NGCHANGES};
+	public static final String TYPE_HE_MULTICOUNTRY = buildOfficeType(CASE_REASON_HE_MULTICOUNTRY, AGENTTYPE_MULTICOUNTRY);
+	public static final Set<String> processesANGrequiredAttachValidation = new Set<String>{NEWHELITE,NEWHESTANDARD,NEWGESTANDARD,NEWAE,MCAE,NGCHANGES,NGCONVERSIONTOMULTICOUNTRY};
+	public static final String TYPE_PAX_AE_MULTICOUNTRY = buildOfficeType(CASE_REASON_ASSOCIATE_ENTITY_STANDARD, AGENTTYPE_MULTICOUNTRY);
 	public static final Set<String> processesAMSrequiredAttachValidation = new Set<String>{new_HO,new_BR,AGENCYCHANGES,CERTIFICATION,VOLRELINQUISH,PCI_COMPLIANT}; //AMSU-34
+
 
 	public static final String OPEN = 'Open';
 	public static final String NO_IEP_ACCOUNT = 'No IEP Account';
@@ -360,6 +382,8 @@ public without sharing class AMS_Utils {
 	public static final String APP_WITHDRAWN = '11-APPLICATION WITHDRAWN';
 
 	public static final String MBPDD_CHANGE_CODE = 'MBPDD';
+
+	public static final Set<String> TOPLOCATIONSNEWGEN = new Set<String>{'HE','GE'};
 
 	public static String ENCRYPTION_KEY {
 		get {
@@ -1262,6 +1286,10 @@ public without sharing class AMS_Utils {
 
 			return ACCREDITATIONMODEL_CASH;
 
+		}else if(oscarProcess == NEWGESTANDARD || oscarProcess == MCAE){
+
+			return ACCREDITATIONMODEL_MULTICOUNTRY;
+
 		}
 
 		return oldAccountValue;
@@ -1954,48 +1982,52 @@ public without sharing class AMS_Utils {
 		return (getChangeCodeMemoText(process, changeCodeId, null));
 	}
 
-	//Get Change Code memo Text (All this configs should be passed for a Custom Setting)
-	//TD 2018067 - added custom setting field in input
-	public static String getChangeCodeMemoText(String process,String changeCodeId, AMS_ChangeCodes__c CCConfig) {
-		if(changeCodeId.indexOf('-CNS-')>-1){
-			//CNS PROCESS. GET BULLETIN MEMO TEXT FROM CHANGE CODE CONFIGURATION
-			if(CCConfig==null)	CCConfig = AMS_ChangeCodes__c.getInstance(changeCodeId);
+//Get Change Code memo Text (All this configs should be passed for a Custom Setting)
+//TD 2018067 - added custom setting field in input
+public static String getChangeCodeMemoText(String process,String changeCodeId, AMS_ChangeCodes__c CCConfig) {
+	if(changeCodeId.indexOf('-CNS-')>-1){
+		//CNS PROCESS. GET BULLETIN MEMO TEXT FROM CHANGE CODE CONFIGURATION
+		if(CCConfig==null)  CCConfig = AMS_ChangeCodes__c.getInstance(changeCodeId);
 
-			if(CCConfig!=null){
-				string sMemoText = (string.isBlank(CCConfig.Bulletin_Memo_Text__c)?'':CCConfig.Bulletin_Memo_Text__c)
-									+ (string.isBlank(CCConfig.Bulletin_Memo_Text2__c)?'':CCConfig.Bulletin_Memo_Text2__c)
-									+ (string.isBlank(CCConfig.Bulletin_Memo_Text3__c)?'':CCConfig.Bulletin_Memo_Text3__c);
-				if(string.isNotBlank(sMemoText))
-					return sMemoText = sMemoText.toUpperCase();
-			}
-			return '';
-		}else{
-			//UNTOUCHED FOR NON CNS PROCESSES
-			String memoText = 'New application';
-
-			if (process == new_HO || process == new_BR_ABROAD){
-				if(changeCodeId != 'NWD') memoText += ' - Head Office';
-			}else if (process == new_BR){
-				memoText += ' - Branch';
-			}else if (process == NEWHELITE || process == NEWHESTANDARD){
-				if(changeCodeId != 'NEW' && changeCodeId != 'NWD') memoText += ' - Head Entity';
-			}else if (process == NEWAE){
-				if(changeCodeId != 'NEW' && changeCodeId != 'NWD') memoText += ' - Associate Entity';
-			}else if (process == new_TIDS){
-				memoText += ' - TIDS';
-			}else if (process == new_SA){
-				memoText += ' - SA';
-			}else if (process == new_GSSA){
-				memoText += ' - GSSA';
-			}else if (process == new_GSA_BSP || process == new_GSA){
-				memoText += ' - GSA';
-			}else if (process == new_AHA_BSP || process == new_AHA){
-				memoText += ' - AHA';
-			}
-
-			return memoText + ' ' + getStatusDescFromChangeCode(changeCodeId);
+		if(CCConfig!=null){
+			string sMemoText = (string.isBlank(CCConfig.Bulletin_Memo_Text__c)?'':CCConfig.Bulletin_Memo_Text__c)
+								+ (string.isBlank(CCConfig.Bulletin_Memo_Text2__c)?'':CCConfig.Bulletin_Memo_Text2__c)
+								+ (string.isBlank(CCConfig.Bulletin_Memo_Text3__c)?'':CCConfig.Bulletin_Memo_Text3__c);
+			if(string.isNotBlank(sMemoText))
+				return sMemoText = sMemoText.toUpperCase();
 		}
+		return '';
+	}else{
+		//UNTOUCHED FOR NON CNS PROCESSES
+		String memoText = 'New application';
+
+		//Commented as CNS has been moved above
+		//if(changeCodeId == 'FIN-CNS-C') memoText = 'New Endorsment';
+		//if(changeCodeId.endsWithIgnoreCase('CNS-R')) return '';
+
+		if (process == new_HO || process == new_BR_ABROAD){
+			if(changeCodeId != 'NWD') memoText += ' - Head Office';
+		}else if (process == new_BR){
+			memoText += ' - Branch';
+		}else if (process == NEWHELITE || process == NEWHESTANDARD){
+			if(changeCodeId != 'NEW' && changeCodeId != 'NWD') memoText += ' - Head Entity';
+		}else if (process == NEWAE || process == MCAE){
+			if(changeCodeId != 'NEW' && changeCodeId != 'NWD') memoText += ' - Associate Entity';
+		}else if (process == new_TIDS){
+			memoText += ' - TIDS';
+		}else if (process == new_SA){
+			memoText += ' - SA';
+		}else if (process == new_GSSA){
+			memoText += ' - GSSA';
+		}else if (process == new_GSA_BSP || process == new_GSA){
+			memoText += ' - GSA';
+		}else if (process == new_AHA_BSP || process == new_AHA){
+			memoText += ' - AHA';
+		}
+
+		return memoText + ' ' + getStatusDescFromChangeCode(changeCodeId);
 	}
+}
 
 
 	// Converts a base64 string into a list of integers representing the encoded bytes
@@ -2463,12 +2495,12 @@ public without sharing class AMS_Utils {
 		if (result == null)
 			return null;
 
-		if (result.containsIgnoreCase('Cashless'))
-			result = result.replace('Cashless', 'GoLite');
-		if (result.containsIgnoreCase('Cash'))
-			result = result.replace('Cash', 'GoStandard');
-		if (result.containsIgnoreCase('Multicountry'))
-			result = result.replace('Multicountry', 'GoGlobal');
+		if (result.containsIgnoreCase(AMS_Utils.ACCREDITATIONMODEL_CASHLESS))
+			result = result.replace(AMS_Utils.ACCREDITATIONMODEL_CASHLESS, 'GoLite');
+		if (result.containsIgnoreCase(AMS_Utils.ACCREDITATIONMODEL_CASH))
+			result = result.replace(AMS_Utils.ACCREDITATIONMODEL_CASH, 'GoStandard');
+		if (result.containsIgnoreCase(AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY))
+			result = result.replace(AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY, 'GoGlobal');
 
 		return result;
 
@@ -2493,10 +2525,10 @@ public without sharing class AMS_Utils {
 	}
 
 	public static Map<String, String> officialAccreditationTypeMap = new Map<String, String> {
-		'Legacy' => 'Legacy',
-		'Cashless' =>   'GoLite',
-		'Cash' =>   'GoStandard',
-		'Multicountry' => 'GoGlobal'
+		ACCREDITATIONMODEL_LEGACY => 'Legacy',
+		ACCREDITATIONMODEL_CASHLESS => 'GoLite',
+		ACCREDITATIONMODEL_CASH => 'GoStandard',
+		ACCREDITATIONMODEL_MULTICOUNTRY => 'GoGlobal'
 	};
 
 	public static String getCustomLabel(String labelName) {
@@ -2627,6 +2659,25 @@ public without sharing class AMS_Utils {
 	}
 
 	public static final List<Schema.FieldSetMember> STAGING_AREA_FIELDS_TO_VALIDATE = SObjectType.AMS_Pax_Accreditation_Form__c.FieldSets.STAGING_AREA_FIELDS_TO_VALIDATE.getFields();
+
+	//Validates if the financial security currency is allowed
+	public static void runCurrencyValidations(List<SObject> objects, String currencyFieldName){
+		Map<String,ANG_RHC_Currencies__c> currencyConfs = ANG_RHC_Currencies__c.getall();
+		List<ANG_RHC_Currencies__c> currencyLst = currencyConfs.values();
+		currencyLst.sort();
+
+		String allowedCurrencies = '';
+		for(ANG_RHC_Currencies__c conf : currencyLst){
+			allowedCurrencies +='<br/>'+conf.name +' - '+conf.Currency_Name__c;
+		}
+
+		for(SObject obj :objects){
+			if(!currencyConfs.containsKey(String.valueOf(obj.get(currencyFieldName)))){
+				obj.addError('The Financial Security Currency selected is not allowed. Currently allowed currencies are: <br/>'+allowedCurrencies, false);
+			}
+		}
+	}
+
 	/*** AMSU-166 End ***/
 
 	/*** AMSU-179 ***/
@@ -2634,6 +2685,7 @@ public without sharing class AMS_Utils {
 
 	/*** AMSU-173 ***/
 	public static final Set<String> CLASS_REQ_CASS_NUMBER = new Set<String> {'C', 'I', 'R', 'Q', 'G'};
+
 
 	/*** AMSU-195 Start ***/
 	/**
@@ -2690,6 +2742,29 @@ public without sharing class AMS_Utils {
 		}
 
 		return message;
+
+	}
+
+	public static Boolean assignFormOfPaymentStatus(Agency_Authorization__c aa, String pciCompliant){
+
+		Set<String> ccPciCompliantSet = new Set<String>{'Yes', 'Corporate Card'};
+
+		if(aa.ANG_FormOfPayment_ID__c == 'CC' && aa.Status__c != 'Active' && ccPciCompliantSet.contains(pciCompliant)){
+			aa.Status__c = 'Active';
+			return true;
+		}
+
+		if(aa.ANG_FormOfPayment_ID__c == 'CC' && aa.Status__c != 'Non-Active' && !ccPciCompliantSet.contains(pciCompliant)){
+			aa.Status__c = 'Non-Active';
+			return true;
+		}
+
+		if((aa.ANG_FormOfPayment_ID__c == 'CA' || aa.ANG_FormOfPayment_ID__c == 'EP') && aa.Status__c != 'Active'){
+			aa.Status__c = 'Active';
+			return true;
+		}
+
+		return false;
 
 	}
 

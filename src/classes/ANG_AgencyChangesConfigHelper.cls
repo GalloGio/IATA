@@ -1,5 +1,7 @@
 public class ANG_AgencyChangesConfigHelper{
 
+	private static String CONVERSION_STANDARD_TO_MULTICOUNTRY = 'Conversion Multicountry';
+
 	public class ChangesConfig {
 		public ANG_AgencyChangesConfig__c config;
 		public Set<String> changeCombination;
@@ -39,23 +41,39 @@ public class ANG_AgencyChangesConfigHelper{
 		return tocList.equals(config.changeCombination);
 	}
 
-	public static ChangesConfig getConfig(AMS_OSCAR__c oscar) {
+	public static ChangesConfig getConfig(AMS_OSCAR__c oscar, String accreditationModel) {
 
-		if(oscar.Process__c == 'BANK.ACCOUNT.CHANGES') return null;
-		else{
-			ChangesConfig c = getConfig(oscar.ANG_Type_Of_Change__c);
+		ChangesConfig c = null;
 
-			if(c == null) oscar.addError('Type of Change contains an invalid combination of values.');
-
-			return c;
+		if(oscar.Process__c == 'BANK.ACCOUNT.CHANGES'){
+			return null;
 		}
+		else if(oscar.Process__c == AMS_Utils.NGCONVERSIONTOMULTICOUNTRY){
+			c = getConfig(CONVERSION_STANDARD_TO_MULTICOUNTRY, accreditationModel);
+		}
+		else{
+			c = getConfig(oscar.ANG_Type_Of_Change__c, accreditationModel);
+		}
+
+		if(c == null){
+			oscar.addError('Type of Change contains an invalid combination of values.');
+		}
+
+		return c;
+
 	}
 
-	public static ChangesConfig getConfig(String typesOfChange) {
+	public static ChangesConfig getConfig(String typesOfChange, String accreditationModel) {
+
 
 		System.debug(loggingLevel.FINE, '____ [cls AMS_AgencyChangesConfigHelper - getConfig] oscar.Type_of_change__c - ' + typesOfChange);
 		for (ChangesConfig config : agencyChangesConfigData) {
-			if (isSelectedTypeOfChangeValid(typesOfChange, config)) return config;
+
+
+
+			if (isSelectedTypeOfChangeValid(typesOfChange, config) && (config.config.Valid_Accreditation_Models__c == 'ALL' || config.config.Valid_Accreditation_Models__c.split(';').contains(accreditationModel) ) ) {
+				return config;
+			}
 		}
 		return null;
 	}

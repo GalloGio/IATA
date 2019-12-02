@@ -190,7 +190,7 @@ public with sharing class IFAP_BusinessRules {
 		System.debug('created cases : ' + cBatch.caseList);
 	}
 
-	public static Map<ID, Boolean> IsStatusCanBeSelected(Boolean isOnCaseCreation, Map<Case, Case> UpdatedCases, Profile currentUserProfile, Boolean isAuthorizedUser) {
+		public static Map<ID, Boolean> IsStatusCanBeSelected(Boolean isOnCaseCreation, Map<Case, Case> UpdatedCases, Profile currentUserProfile, Boolean isAuthorizedUser) {
 
 		Map<ID, Boolean> mapCaseStatusCanBeSelected = new Map<ID, Boolean>();
 		Map<ID, Case> mapCaseActionNeeded = new Map<ID, Case>();

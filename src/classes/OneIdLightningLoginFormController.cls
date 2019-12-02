@@ -93,6 +93,10 @@ public without sharing class OneIdLightningLoginFormController {
 						 pageLink = '/s/login/SelfRegister?language=en_US&serviceName=NDCMM';
 					}
 
+					if( String.isNotBlank(serviceName) && serviceName == 'GADM'){
+						pageLink = '/s/login/SelfRegister?language=en_US&serviceName=GADM';
+					}
+
 				}else if( String.isNotBlank(serviceName) && serviceName == 'ISSP'){
 					 //pageLink = '/ISSP_Homepage';
 					 //Let's leverage "standard" page's controller doing the magic. Just add the param, redirection will be done by the page controller
@@ -103,6 +107,8 @@ public without sharing class OneIdLightningLoginFormController {
 					pageLink = '/apex/CommunitiesLanding?serviceName='+Label.TECH_GDPR_Community_Name;
 				}else if( String.isNotBlank(serviceName) && serviceName == 'NDCMM'){
 					pageLink = '/s/ndcmm?serviceName=NDCMM';
+				}else if( String.isNotBlank(serviceName) && serviceName == 'GADM') {
+					pageLink = '/s/gadm?serviceName=GADM';
 				}
 
 				if (oneUser.Portal_User_Frozen_Checkbox__c){
@@ -122,9 +128,12 @@ public without sharing class OneIdLightningLoginFormController {
 
 
 			// if PWC or DPC user
-			if(oldPortalRedirectSet.contains(oneUser.profile.Name)){ //overrides to old portal
+			if(oldPortalRedirectSet.contains(oneUser.profile.Name) || oneUser.CNS_Account_or_Agency__c){ //overrides to old portal
 			   serviceName='ISSP';
 			   startUrl ='/ISSP_Homepage';
+
+			   if(oneUser.CNS_Account_or_Agency__c) startUrl+='?communityName=CNS';
+
 			}
 
 			username=null != oneUser ? oneUser.Username : username;
@@ -370,6 +379,19 @@ public without sharing class OneIdLightningLoginFormController {
 		Id networkId = Network.getNetworkId();
 		Auth.AuthConfiguration authConfig = new Auth.AuthConfiguration(networkId,'');
 		return authConfig;
+	}
+
+	@AuraEnabled
+	public static string getCustomerPortalUrl(){
+		string url = '';
+		List<Network> networkList = [Select id from Network where name =: 'CS Portal' Limit 1];
+		if(!test.isRunningTest()){
+			if(!networkList.isEmpty()){
+				url = Network.getLoginURL(networkList.get(0).Id).substring(0,Network.getLoginURL(networkList.get(0).Id).lastIndexOf('/'));
+				url = url + '/login';
+			}
+		}
+		return url;
 	}
 
 	//EM - To be removed

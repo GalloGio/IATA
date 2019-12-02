@@ -8,10 +8,16 @@ public class AccountRoleHandler {
 
     public void onBeforeInsert() {
         updatePaymentProviderStatus();
+        updateAccountName();
+        //checkForGadmDuplicatesInsert();
+        fillGadmUniqueKey(true, false);
     }
 
     public void onBeforeUpdate() {
         updatePaymentProviderStatus();
+        updateAccountName();
+        //checkForGadmDuplicatesUpdate();
+        fillGadmUniqueKey(false, true);
     }
 
     public void onAfterUpdate() {
@@ -20,6 +26,21 @@ public class AccountRoleHandler {
 
     public void onAfterDelete() {
         manageAccountAsPaymentProvider();
+    }
+
+    public void updateAccountName(){
+        Set<Id> accIds = new Set<Id>();
+        for(Account_Role__c ar : triggerNew) {
+            accIds.add(ar.Account__c);
+        }
+
+        Map<Id, Account> accsNameMap = new Map<Id, Account>([SELECT Id, Name From Account WHERE Id=:accIds]);
+        for(Account_Role__c ar : triggerNew) {
+            Account acc = accsNameMap.get(ar.Account__c);
+            if (acc != null){
+                ar.Account_Name__c = acc.Name;
+            }
+        }
     }
 
     public void updatePaymentProviderStatus() {
@@ -77,6 +98,115 @@ public class AccountRoleHandler {
         }
 
         upsert accountsToProcess;
+
+    }
+
+    /*public void checkForGadmDuplicatesInsert() {
+
+        List<Account_Roles__c> gadmParticipantRole = [SELECT Id FROM Account_Roles__c WHERE Name = 'GADM Participant' LIMIT 1];
+        if(! gadmParticipantRole.isEmpty()) {
+
+            Set<Id> accountIds = new Set<Id>();
+            for(Account_Role__c accountRole : triggerNew) {
+                if(accountRole.Account_Roles__c == gadmParticipantRole[0].Id) {
+                    accountIds.add(accountRole.Account__c);
+                }
+
+            }
+
+            List<Account_Role__c> existingAccountRoles = [SELECT Id, Account__c, Account__r.Name FROM Account_Role__c WHERE Account__c = :accountIds AND Account_Roles__c = :gadmParticipantRole[0].Id];
+            System.debug('existingAccountRoles:: ' + existingAccountRoles);
+            Map<Id, List<Account_Role__c>> accountToAccountRolesMap = new Map<Id, List<Account_Role__c>>();
+            for(Account_Role__c role : existingAccountRoles) {
+                if(accountToAccountRolesMap.get(role.Account__c) == null) {
+                    accountToAccountRolesMap.put(role.Account__c, new List<Account_Role__c>{role});
+                }else{
+                    accountToAccountRolesMap.get(role.Account__c).add(role);
+                }
+            }
+            System.debug('accountToAccountRolesMap:: ' + accountToAccountRolesMap);
+
+            for(Account_Role__c accountRole : triggerNew) {
+                if(accountToAccountRolesMap.get(accountRole.Account__c) != null) {
+                    accountRole.addError('Record for ' +accountToAccountRolesMap.get(accountRole.Account__c)[0].Account__r.Name + ' and GADM Participant role already exists!');
+                }
+            }
+
+        }
+
+    }
+
+    public void checkForGadmDuplicatesUpdate() {
+
+        List<Account_Roles__c> gadmParticipantRole = [SELECT Id FROM Account_Roles__c WHERE Name = 'GADM Participant' LIMIT 1];
+        if(! gadmParticipantRole.isEmpty()) {
+
+            Set<Id> accountIds = new Set<Id>();
+            for(Account_Role__c accountRole : triggerNew) {
+                if(accountRole.Account_Roles__c == gadmParticipantRole[0].Id) {
+                    Account_Role__c oldObj = oldMap.get(accountRole.Id);
+                    if((oldObj.Account_Roles__c != accountRole.Account_Roles__c) || (oldObj.Account__c != accountRole.Account__c)) {
+                        accountIds.add(accountRole.Account__c);
+                    }
+
+                }
+
+            }
+
+            List<Account_Role__c> existingAccountRoles = [SELECT Id, Account__c, Account__r.Name FROM Account_Role__c WHERE Account__c = :accountIds AND Account_Roles__c = :gadmParticipantRole[0].Id];
+            System.debug('existingAccountRoles:: ' + existingAccountRoles);
+            Map<Id, List<Account_Role__c>> accountToAccountRolesMap = new Map<Id, List<Account_Role__c>>();
+            for(Account_Role__c role : existingAccountRoles) {
+                if(accountToAccountRolesMap.get(role.Account__c) == null) {
+                    accountToAccountRolesMap.put(role.Account__c, new List<Account_Role__c>{role});
+                }else{
+                    accountToAccountRolesMap.get(role.Account__c).add(role);
+                }
+            }
+            System.debug('accountToAccountRolesMap:: ' + accountToAccountRolesMap);
+
+            for(Account_Role__c accountRole : triggerNew) {
+                if(accountToAccountRolesMap.get(accountRole.Account__c) != null) {
+                    accountRole.addError('Record for ' +accountToAccountRolesMap.get(accountRole.Account__c)[0].Account__r.Name + ' and GADM Participant role already exists!');
+                }
+            }
+
+        }
+
+    }*/
+
+
+    public void fillGadmUniqueKey(Boolean isInsert, Boolean isUpdate) {
+        if(isInsert) {
+
+            List<Account_Roles__c> gadmParticipantRole = [SELECT Id FROM Account_Roles__c WHERE Name = 'GADM Participant' LIMIT 1];
+            if(! gadmParticipantRole.isEmpty()) {
+
+                for(Account_Role__c accountRole : triggerNew) {
+                    if(accountRole.Account_Roles__c == gadmParticipantRole[0].Id) {
+                        accountRole.GADM_Unique_Key__c = String.valueOf(accountRole.Account__c).left(15) + '_' + String.valueOf(accountRole.Account_Roles__c).left(15);
+                    }
+                }
+            }
+
+        }
+
+
+        if(isUpdate) {
+            List<Account_Roles__c> gadmParticipantRole = [SELECT Id FROM Account_Roles__c WHERE Name = 'GADM Participant' LIMIT 1];
+            if(! gadmParticipantRole.isEmpty()) {
+
+                for(Account_Role__c accountRole : triggerNew) {
+                    if(accountRole.Account_Roles__c == gadmParticipantRole[0].Id) {
+                        accountRole.GADM_Unique_Key__c = String.valueOf(accountRole.Account__c).left(15) + '_' + String.valueOf(accountRole.Account_Roles__c).left(15);
+                    }else{
+                        accountRole.GADM_Unique_Key__c = '';
+                    }
+                }
+
+            }
+
+        }
 
     }
 

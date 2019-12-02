@@ -139,7 +139,7 @@ public with sharing class ISSP_AccountTriggerHandler
 					if (!mapMessageByGroupField.isEmpty() && !lstContacts.isEmpty())
 					{
 				   		//send notification for each account contacs.
-						ISSP_NotificationUtilities.sendNotification(lstContacts, notificationTemplate, mapMessageByGroupField, 'AccountId');
+						ISSP_NotificationUtilities.sendNotification(lstContacts, notificationTemplate, mapMessageByGroupField, null, 'AccountId');
 					}
 				}
 			}
