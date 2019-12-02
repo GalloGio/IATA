@@ -56,7 +56,7 @@ public class PortalRegistrationThirdLevelLMSCtrlTest{
 
 		Test.startTest();
 
-			String paramsJSON3= '{"flow":"flow3","Id":"' + c.Id + '","Birthdate":"2019-11-04","stateId":"' + isoState[0].Id + '","existingContactId":"' + c2.Id + '","hasExistingContact":"true"}';
+			String paramsJSON3= '{"flow":"flow3","Id":"' + c.Id + '","Birthdate":"2019-11-04","stateId":"' + isoState[0].Id + '","existingContactId":"' + c2.Id + '","hasExistingContact":"true","Phone":"21212121"}}';
 
 			PortalRegistrationThirdLevelLMSCtrl.completeRegistration(paramsJSON3);
 			PortalRegistrationThirdLevelLMSCtrl.RegistrationResult res = PortalRegistrationThirdLevelLMSCtrl.completeRegistration(paramsJSON3);
@@ -92,7 +92,7 @@ public class PortalRegistrationThirdLevelLMSCtrlTest{
 
 		Test.startTest();
 
-		String paramsJSON4 = '{"flow":"flow4","Id":"' + c.Id + '","Birthdate":"2019-11-04","stateId":"' + isoState[0].Id + '","existingContactId":"' + c2.Id + '"}';
+		String paramsJSON4 = '{"flow":"flow4","Id":"' + c.Id + '","Birthdate":"2019-11-04","stateId":"' + isoState[0].Id + '","existingContactId":"' + c2.Id + '","Phone":"21212121"}}';
 		PortalRegistrationThirdLevelLMSCtrl.RegistrationResult res = PortalRegistrationThirdLevelLMSCtrl.completeRegistration(paramsJSON4);
 
 		system.assert(res.isSuccess);
@@ -120,7 +120,7 @@ public class PortalRegistrationThirdLevelLMSCtrlTest{
 
 		Test.startTest();
 
-		String paramsJSON5 = '{"flow":"flow5","Id":"' + c.Id + '","Birthdate":"2019-11-04","stateId":"' + isoState[0].Id + '","existingContactId":"' + c2.Id + '"}';
+		String paramsJSON5 = '{"flow":"flow5","Id":"' + c.Id + '","Birthdate":"2019-11-04","stateId":"' + isoState[0].Id + '","existingContactId":"' + c2.Id + '","Phone":"21212121"}';
 		PortalRegistrationThirdLevelLMSCtrl.RegistrationResult res = PortalRegistrationThirdLevelLMSCtrl.completeRegistration(paramsJSON5);
 
 		system.assert(res.isSuccess);
