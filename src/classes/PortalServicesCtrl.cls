@@ -558,10 +558,19 @@ public static List<ContactWrapper> getContactsAndStatusRelatedToServiceList(stri
 
 
 //searchs for a specific set of records bsed by criteria.
-// this method only used when not alll records are loaded on the client side
 @AuraEnabled (cacheable=false)
-public static List<ContactWrapper> searchContactsInService(string serviceId,string searchkey){
-	string filter=' AND (contact__r.name LIKE \'%'+searchkey +'%\' or contact__r.email like \'%{0}%\' or contact__r.account.IATACode__c like \'%{0}%\' or contact__r.account.BillingCity like \'%{0}%\')'.replace('{0}',searchkey);
+public static List<ContactWrapper> searchContactsInService(string serviceId,string searchkey,string filter1,string filter1_2,string filter2){
+	string filter=' AND (contact__r.name LIKE \'%'+searchkey +'%\' OR contact__r.email LIKE \'%{0}%\' OR contact__r.account.IATACode__c LIKE \'%{0}%\' OR contact__r.account.BillingCity LIKE \'%{0}%\' OR contact__r.account.IATA_ISO_Country__r.Name LIKE \'%{0}%\' )'.replace('{0}',searchkey);
+	
+	if(filter1 != '' && filter1 != 'All' && filter1_2 != ''){
+		filter += 'AND contact__r.account.IATACode__c =\'' + filter1 + '\' AND contact__r.account.BillingCity =\'' + filter1_2 + '\' ';
+	} else if(filter1 != '' && filter1 != 'All' && filter1_2 == '') {
+		filter += 'AND contact__r.account.IATA_ISO_Country__r.Name =\'' + filter1 + '\'';
+	}
+
+	if(filter2 != '' && filter2 != 'All')
+		filter += 'AND Right__c =\'' + filter2 + '\'';
+
 	return getContactsAndStatusRelatedToServiceList(serviceId,null,filter);
 }
 
