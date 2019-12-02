@@ -1,6 +1,5 @@
 public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 	public PortalRegistrationThirdLevelLMSCtrl() {
-
 	}
 
 	public class returnWrapper{
