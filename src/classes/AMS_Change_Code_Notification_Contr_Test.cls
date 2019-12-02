@@ -16,8 +16,7 @@ private class AMS_Change_Code_Notification_Contr_Test {
 			Name = 'Airline',
 			IATACode__c = '123',
 			Airline_designator__c='AA',
-			IATA_ISO_Country__c = isoc.Id,
-			ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY
+			IATA_ISO_Country__c = isoc.Id
 		);
 
 		Account msoAccount =  new Account (
@@ -65,21 +64,8 @@ private class AMS_Change_Code_Notification_Contr_Test {
 			ccase.Late_Payment_Date__c = Date.today();
 			ccase.Account_Concerned__c = msoAccount.Id;
 		insert ccase;
-
-		Agency_Applied_Change_code__c ccodeOscar = new Agency_Applied_Change_code__c();
-			ccodeOscar.Change_Code__c = 'TER';
-			ccodeOscar.OSCAR__c = oscar.Id;
-			ccodeOscar.Account__c = msoAccount.Id;
-
-		Agency_Applied_Change_code__c ccode = new Agency_Applied_Change_code__c();
-			ccode.Change_Code__c = 'TER';
-			ccode.SIDRA_Case__c = ccase.Id;
-			ccode.Account__c = msoAccount.Id;
-
-		insert new List<Agency_Applied_Change_code__c> {ccodeOscar, ccode};
 		
 		Id caseRecrdType = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
-
 				
 		Amazon_Cred__c Amazon_Cred =  new Amazon_Cred__c(name = 'GenericAttach', Prod_Configuration__c = 'adevconf' , Dev_Configuration__c = 'adevconf');
 		insert Amazon_Cred;
@@ -165,7 +151,6 @@ private class AMS_Change_Code_Notification_Contr_Test {
 
 			ApexPages.StandardController stdController = new ApexPages.StandardController(ccase);
 			AMS_Change_Code_Notification_Controller ctrl = new AMS_Change_Code_Notification_Controller(stdController);
-			//AMS_Change_Code_Notification_Controller.fakemethod();
 			ctrl.setNotificationMessage();
 		
 		Test.stopTest();
@@ -173,10 +158,9 @@ private class AMS_Change_Code_Notification_Contr_Test {
 	}
 
 	@isTest static void test_Attachment_notification() {
-
-		IATA_ISO_Country__c isoc = [SELECT Id FROM IATA_ISO_Country__c LIMIT 1];
 	
-		Case ccase = [SELECT Id FROM Case LIMIT 1];
+		Case ccase = [SELECT Id, AccountId, Account_Concerned__c FROM Case WHERE RecordTypeId =: RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA') LIMIT 1];
+		ccase.AccountId = ccase.Account_Concerned__c;
 		ccase.Remittance_Period__c = '20180604W';
 		update ccase;
 
@@ -202,19 +186,27 @@ private class AMS_Change_Code_Notification_Contr_Test {
 	}
 
 	@isTest static void test_Amazon_File() {
-	
-		Case ccase2 = [SELECT Id,Remittance_Period__c, AccountId  FROM Case LIMIT 1];
-		ccase2.Remittance_Period__c = '20180604W';
-		update ccase2;
+	  
+		Account  airlineAccount  = [SELECT Id FROM Account WHERE Name = 'Airline' LIMIT 1];
+		Account  msoAccount  = [SELECT Id FROM Account WHERE Name = 'Agency' LIMIT 1];
+		Contact con  = [SELECT Id FROM Contact LIMIT 1];
+		
+		Case ccase2 = new Case();
+			ccase2.AccountId = airlineAccount.Id;
+			ccase2.ContactId = con.Id;
+			ccase2.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
+			ccase2.Status = 'Open';
+			ccase2.Remittance_Period__c='20180604W';
+			ccase2.Late_Payment_Date__c = Date.today();  
+			ccase2.Account_Concerned__c = airlineAccount.Id;
+		insert ccase2;
 		
 		AmazonFile__c  amazonFile = new AmazonFile__c();
 			amazonFile.Name = 'ICE POP 20180604W 13737.040';
 			amazonFile.Account__c = ccase2.AccountId;
 			amazonFile.Full_Name_Unique__c = 'cristianaFabio_test';
 		insert amazonFile;
-		
-		System.assertEquals(ccase2.Remittance_Period__c, '20180604W');
-		
+			
 		Test.startTest();
 					
 			ApexPages.StandardController stdController = new ApexPages.StandardController(ccase2);
@@ -228,11 +220,11 @@ private class AMS_Change_Code_Notification_Contr_Test {
 
 	
 	@isTest static void test_Check_Logs() {
-		 
+		
 		Case ccase2 = [SELECT Id,Remittance_Period__c, AccountId  FROM Case LIMIT 1];
 		ccase2.Remittance_Period__c = '20180604W';
-		update ccase2;
-
+	 	update ccase2;
+ 
 		Technical_Logs__c techLog = new Technical_Logs__c();
 		techLog.Record__c = ccase2.Id;
 		techLog.Log__c = 'Error for test';
@@ -250,5 +242,32 @@ private class AMS_Change_Code_Notification_Contr_Test {
 
 		Test.stopTest();
 
+	}
+
+	
+	@isTest
+	public static void test_Case_multicountry()
+	{
+		Case ccase = [SELECT Id, AccountId, Account_Concerned__c FROM Case WHERE RecordTypeId =: RecordTypeSingleton.getInstance().getRecordTypeId('Case','SIDRA') LIMIT 1];
+		
+		Account acc1 = [SELECT Id, ANG_Accreditation_Model__c FROM Account WHERE Id =: ccase.AccountId LIMIT 1];
+		acc1.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
+		update acc1;
+		
+		Agency_Applied_Change_code__c ccode = new Agency_Applied_Change_code__c();
+		ccode.Change_Code__c = 'TER';
+		ccode.SIDRA_Case__c = ccase.Id;
+		ccode.Account__c = ccase.Account_Concerned__c;
+		insert ccode;
+
+		Test.startTest();
+
+		ApexPages.StandardController stdController = new ApexPages.StandardController(ccase);
+
+		AMS_Change_Code_Notification_Controller ctrl = new AMS_Change_Code_Notification_Controller(stdController);
+
+		ctrl.setNotificationMessage();
+
+		Test.stopTest();
 	}
 }
