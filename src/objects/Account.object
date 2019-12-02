@@ -19832,18 +19832,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>Business_Geo_Coordinates__c</fullName>
-        <description>This is the Latitude and Longitude of where an Account is physically located.</description>
-        <displayLocationInDecimal>false</displayLocationInDecimal>
-        <externalId>false</externalId>
-        <label>Business Geo-Coordinates</label>
-        <required>false</required>
-        <scale>2</scale>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-        <type>Location</type>
-    </fields>
-    <fields>
         <fullName>Hierarchy_Level__c</fullName>
         <defaultValue>&quot;Single Location&quot;</defaultValue>
         <externalId>false</externalId>
@@ -19936,6 +19924,15 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TechUpdate_AddressFlow__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Tech Update Address Flow</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>Verification_Status__c</fullName>
