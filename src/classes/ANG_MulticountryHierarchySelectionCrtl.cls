@@ -446,7 +446,7 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 					Map<Id, AMS_Pax_Accreditation_Form__c> accreditationFormsMap = new Map<Id, AMS_Pax_Accreditation_Form__c>();
 
 					for(AMS_Pax_Accreditation_Form__c form : accreditationFormsLst){
-						Id acctId = String.isNotBlank(form.HO_Account__c) ? Id.valueOf(form.HO_Account__c) : Id.valueOf(form.ISSP_Branch_AccountId__c);
+						Id acctId = form.HO_Account__c != null ? form.HO_Account__c : Id.valueOf(form.ISSP_Branch_AccountId__c);
 						accreditationFormsMap.put(acctId, form);
 					} 
 
