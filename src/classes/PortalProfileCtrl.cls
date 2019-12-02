@@ -293,8 +293,8 @@ public with sharing class PortalProfileCtrl {
 			sectionMap = ContactFields();
 		} else if (type == 'MyProfileAccFields') {
 			sectionMap = ContactFieldsAcc();
-		} else if (type == 'MyTrainings') {
-			sectionMap = TrainingFields();
+		/*} else if (type == 'MyTrainings') {
+			sectionMap = TrainingFields();*/
 		} else {
 			sectionMap = AccountFields();
 		}
