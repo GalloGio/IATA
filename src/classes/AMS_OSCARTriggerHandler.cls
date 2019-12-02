@@ -37,7 +37,7 @@ public class AMS_OSCARTriggerHandler {
 	public static Map<String, String> oscarExternalLabels {
 		get {
 			return new Map<String, String> {
-				'STEP1__c'  => System.Label.AMS_OSCAR_STEP1,
+				'STEP1__c' => System.Label.AMS_OSCAR_STEP1,
 				'STEP10__c' => System.Label.AMS_OSCAR_STEP10,
 				'STEP11__c' => System.Label.AMS_OSCAR_STEP11,
 				'STEP12__c' => System.Label.AMS_OSCAR_STEP12,
@@ -48,20 +48,20 @@ public class AMS_OSCARTriggerHandler {
 				'STEP17__c' => System.Label.AMS_OSCAR_STEP17,
 				'STEP18__c' => System.Label.AMS_OSCAR_STEP18,
 				'STEP19__c' => System.Label.AMS_OSCAR_STEP19,
-				'STEP2__c'  => System.Label.AMS_OSCAR_STEP2,
+				'STEP2__c' => System.Label.AMS_OSCAR_STEP2,
 				'STEP20__c' => System.Label.AMS_OSCAR_STEP20,
 				'STEP21__c' => System.Label.AMS_OSCAR_STEP21,
 				'STEP22__c' => System.Label.AMS_OSCAR_STEP22,
 				'STEP23__c' => System.Label.AMS_OSCAR_STEP23,
 				'STEP24__c' => System.Label.AMS_OSCAR_STEP24,
 				'STEP25__c' => System.Label.AMS_OSCAR_STEP25,
-				'STEP3__c'  => System.Label.AMS_OSCAR_STEP3,
-				'STEP4__c'  => System.Label.AMS_OSCAR_STEP4,
-				'STEP5__c'  => System.Label.AMS_OSCAR_STEP5,
-				'STEP6__c'  => System.Label.AMS_OSCAR_STEP6,
-				'STEP7__c'  => System.Label.AMS_OSCAR_STEP7,
-				'STEP8__c'  => System.Label.AMS_OSCAR_STEP8,
-				'STEP9__c'  => System.Label.AMS_OSCAR_STEP9,
+				'STEP3__c' => System.Label.AMS_OSCAR_STEP3,
+				'STEP4__c' => System.Label.AMS_OSCAR_STEP4,
+				'STEP5__c' => System.Label.AMS_OSCAR_STEP5,
+				'STEP6__c' => System.Label.AMS_OSCAR_STEP6,
+				'STEP7__c' => System.Label.AMS_OSCAR_STEP7,
+				'STEP8__c' => System.Label.AMS_OSCAR_STEP8,
+				'STEP9__c' => System.Label.AMS_OSCAR_STEP9,
 				'STEP41__c' => System.Label.AMS_OSCAR_STEP41,
 				'STEP42__c' => System.Label.AMS_OSCAR_STEP42
 			};
@@ -3241,6 +3241,11 @@ public class AMS_OSCARTriggerHandler {
 					}
 				}
 				/*** AMSU-161 End ***/
+
+				//INC482850 - GDS Mandatory field - New Accreditation & Newgen Changes & Corrections
+				if((isNewgenAccreditation || oscar.Process__c == AMS_Utils.NGCHANGES || oscar.Process__c == AMS_Utils.NGCORRECTION) && String.isEmpty(allOnlineAccr.get(oscar.AMS_Online_Accreditation__c).ISSP_AMS_GDS_with_signed_contract__c)){
+					oscar.addError('The GDS should be populated. Please fill the GDS on the OSCAR central panel before passing the sanity check');
+				}
 
 				//ACAMBAS - NEWGEN-4784 - Start
 				if(oscar.Process__c == AMS_Utils.NGCHINACONVERSION) {

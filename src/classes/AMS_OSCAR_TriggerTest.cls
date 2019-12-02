@@ -239,23 +239,24 @@
 
 		AMS_Pax_Accreditation_Form__c theAccreditation = new AMS_Pax_Accreditation_Form__c(RecordTypeId = rtNew);
 
-		theAccreditation.Account_Name__c='NEWGEN-559 HE5';
-		theAccreditation.ISSP_AMS_Legal_Status__c='Association';
-		theAccreditation.Branch_Office_Country__c= ctry.Id;
-		theAccreditation.Branch_Office_Street_name_number__c='sdfsdf';
-		theAccreditation.Branch_Office_City__c='sdfsdfdf';
-		theAccreditation.IATA_ISO_State__c= stt.Id;
-		theAccreditation.Branch_Office_Email__c='sdfsdfgdg@f3434.com';
-		theAccreditation.Branch_Office_Phone__c='123123123';
-		theAccreditation.ISSP_AMS_Premises_located_at_airport__c='No';
-		theAccreditation.Abbreviated_name__c='NEWGEN-559 HE5';
-		theAccreditation.Abbreviated_Address__c='sdfsdf';
-		theAccreditation.Remittance_frequency__c='M';
-		theAccreditation.Solicitation_Flag__c=false;
-		theAccreditation.Location_Class__c='P';
-		theAccreditation.Location_Type__c='HE';
-		theAccreditation.SAAM_Case__c=oscarCase.Id;
-		theAccreditation.Account_Name__c = a1.Id;
+        theAccreditation.Account_Name__c='NEWGEN-559 HE5';
+        theAccreditation.ISSP_AMS_Legal_Status__c='Association';
+        theAccreditation.Branch_Office_Country__c= ctry.Id;
+        theAccreditation.Branch_Office_Street_name_number__c='sdfsdf';
+        theAccreditation.Branch_Office_City__c='sdfsdfdf';
+        theAccreditation.IATA_ISO_State__c= stt.Id;
+        theAccreditation.Branch_Office_Email__c='sdfsdfgdg@f3434.com';
+        theAccreditation.Branch_Office_Phone__c='123123123';
+        theAccreditation.ISSP_AMS_Premises_located_at_airport__c='No';
+        theAccreditation.Abbreviated_name__c='NEWGEN-559 HE5';
+        theAccreditation.Abbreviated_Address__c='sdfsdf';
+        theAccreditation.Remittance_frequency__c='M';
+        theAccreditation.Solicitation_Flag__c=false;
+        theAccreditation.Location_Class__c='P';
+        theAccreditation.Location_Type__c='HE';
+        theAccreditation.SAAM_Case__c=oscarCase.Id;
+        theAccreditation.Account_Name__c = a1.Id;
+        theAccreditation.ISSP_AMS_GDS_with_signed_contract__c = 'Amadeus';
 
 		insert theAccreditation;
 
@@ -611,23 +612,24 @@
 
 		AMS_Pax_Accreditation_Form__c theAccreditation = new AMS_Pax_Accreditation_Form__c(RecordTypeId = rtNew);
 
-		theAccreditation.Account_Name__c='NEWGEN-559 HE5';
-		theAccreditation.ISSP_AMS_Legal_Status__c='Association';
-		theAccreditation.Branch_Office_Country__c= ctry.Id;
-		theAccreditation.Branch_Office_Street_name_number__c='sdfsdf';
-		theAccreditation.Branch_Office_City__c='sdfsdfdf';
-		theAccreditation.IATA_ISO_State__c= stt.Id;
-		theAccreditation.Branch_Office_Email__c='sdfsdfgdg@f3434.com';
-		theAccreditation.Branch_Office_Phone__c='123123123';
-		theAccreditation.ISSP_AMS_Premises_located_at_airport__c='No';
-		theAccreditation.Abbreviated_name__c='NEWGEN-559 HE5';
-		theAccreditation.Abbreviated_Address__c='sdfsdf';
-		theAccreditation.Remittance_frequency__c='M';
-		theAccreditation.Solicitation_Flag__c=false;
-		theAccreditation.Location_Class__c='P';
-		theAccreditation.Location_Type__c='HE';
-		theAccreditation.SAAM_Case__c=oscarCase.Id;
-		theAccreditation.Account_Name__c = a1.Id;
+        theAccreditation.Account_Name__c='NEWGEN-559 HE5';
+        theAccreditation.ISSP_AMS_Legal_Status__c='Association';
+        theAccreditation.Branch_Office_Country__c= ctry.Id;
+        theAccreditation.Branch_Office_Street_name_number__c='sdfsdf';
+        theAccreditation.Branch_Office_City__c='sdfsdfdf';
+        theAccreditation.IATA_ISO_State__c= stt.Id;
+        theAccreditation.Branch_Office_Email__c='sdfsdfgdg@f3434.com';
+        theAccreditation.Branch_Office_Phone__c='123123123';
+        theAccreditation.ISSP_AMS_Premises_located_at_airport__c='No';
+        theAccreditation.Abbreviated_name__c='NEWGEN-559 HE5';
+        theAccreditation.Abbreviated_Address__c='sdfsdf';
+        theAccreditation.Remittance_frequency__c='M';
+        theAccreditation.Solicitation_Flag__c=false;
+        theAccreditation.Location_Class__c='P';
+        theAccreditation.Location_Type__c='HE';
+        theAccreditation.SAAM_Case__c=oscarCase.Id;
+        theAccreditation.Account_Name__c = a1.Id;
+        theAccreditation.ISSP_AMS_GDS_with_signed_contract__c = 'Amadeus';
 
 		insert theAccreditation;
 
@@ -1116,13 +1118,14 @@
 		);
 		insert attc;
 
-		AMS_Pax_Accreditation_Form__c stagingArea = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = newCase.Id, Account_Name__c=aBr.Name, Short_Name__c=aBr.Short_Name__c,            IATA_ISO_State__c=stt.Id,
-			Branch_Office_Country__c= ctry.Id,
-			Shipping_ISO_State__c = stt.Id,
-			Shipping_ISO_Country__c = ctry.Id,
-			Shipping_Street__c = 'street',
-			Shipping_City__c = 'city'
-			);
+        AMS_Pax_Accreditation_Form__c stagingArea = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = newCase.Id, Account_Name__c=aBr.Name, Short_Name__c=aBr.Short_Name__c,            IATA_ISO_State__c=stt.Id,
+            Branch_Office_Country__c= ctry.Id,
+            Shipping_ISO_State__c = stt.Id,
+            Shipping_ISO_Country__c = ctry.Id,
+            Shipping_Street__c = 'street',
+            Shipping_City__c = 'city',
+            ISSP_AMS_GDS_with_signed_contract__c = 'Amadeus'
+            );
 
 		insert stagingArea;
 
@@ -1215,21 +1218,22 @@
 		insert newCase;
 		Test.startTest();
 
-		Attachment attc = new Attachment(
-		  OwnerId = UserInfo.getUserId(),
-		  IsPrivate = true,
-		  ParentId = newCase.Id,
-		  Body = Blob.valueOf('Test'),
-		  Name = 'test'
-		);
-		insert attc;
-		AMS_Pax_Accreditation_Form__c stagingArea = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = newCase.Id, Account_Name__c=aHo.Name, Short_Name__c=aHo.Short_Name__c,
-			IATA_ISO_State__c=stt.Id,
-			Branch_Office_Country__c= ctry.Id,
-			Shipping_ISO_State__c = stt.Id,
-			Shipping_ISO_Country__c = ctry.Id,
-			Shipping_Street__c = 'street',
-			Shipping_City__c = 'city' );
+        Attachment attc = new Attachment(
+          OwnerId = UserInfo.getUserId(),
+          IsPrivate = true,
+          ParentId = newCase.Id,
+          Body = Blob.valueOf('Test'),
+          Name = 'test'
+        );
+        insert attc;
+        AMS_Pax_Accreditation_Form__c stagingArea = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = newCase.Id, Account_Name__c=aHo.Name, Short_Name__c=aHo.Short_Name__c,
+            IATA_ISO_State__c=stt.Id,
+            Branch_Office_Country__c= ctry.Id,
+            Shipping_ISO_State__c = stt.Id,
+            Shipping_ISO_Country__c = ctry.Id,
+            Shipping_Street__c = 'street',
+            Shipping_City__c = 'city',
+            ISSP_AMS_GDS_with_signed_contract__c = 'Amadeus' );
 
 		insert stagingArea;
 
@@ -1296,23 +1300,24 @@
 		dmo.assignmentRuleHeader.useDefaultRule= false;
 		newCase.setOptions(dmo);
 
-		insert newCase;
-
-		Attachment attc = new Attachment(
-		  OwnerId = UserInfo.getUserId(),
-		  IsPrivate = true,
-		  ParentId = newCase.Id,
-		  Body = Blob.valueOf('Test'),
-		  Name = 'test'
-		);
-		insert attc;
-		AMS_Pax_Accreditation_Form__c stagingArea = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = newCase.Id, Account_Name__c=a.Name, Short_Name__c=a.Short_Name__c ,
-			IATA_ISO_State__c=stt.Id,
-			Branch_Office_Country__c= ctry.Id,
-			Shipping_ISO_State__c = stt.Id,
-			Shipping_ISO_Country__c = ctry.Id,
-			Shipping_Street__c = 'street',
-			Shipping_City__c = 'city');
+        insert newCase;
+        
+        Attachment attc = new Attachment(
+          OwnerId = UserInfo.getUserId(),
+          IsPrivate = true,
+          ParentId = newCase.Id,
+          Body = Blob.valueOf('Test'),
+          Name = 'test'
+        );
+        insert attc;
+        AMS_Pax_Accreditation_Form__c stagingArea = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = newCase.Id, Account_Name__c=a.Name, Short_Name__c=a.Short_Name__c ,
+            IATA_ISO_State__c=stt.Id,
+            Branch_Office_Country__c= ctry.Id,
+            Shipping_ISO_State__c = stt.Id,
+            Shipping_ISO_Country__c = ctry.Id,
+            Shipping_Street__c = 'street',
+            Shipping_City__c = 'city',
+            ISSP_AMS_GDS_with_signed_contract__c = 'Amadeus');
 
 		insert stagingArea;
 
@@ -1403,17 +1408,18 @@
 		AMS_OSCARTriggerHandler.allOnlineAccr = null;
 
 
-		AMS_Pax_Accreditation_Form__c stagingArea = new AMS_Pax_Accreditation_Form__c(
-			SAAM_Case__c = newCase.Id,
-			Account_Name__c=aBr.Name,
-			Short_Name__c=aBr.Short_Name__c,
-			IATA_ISO_State__c=stt.Id,
-			Branch_Office_Country__c= ctry.Id,
-			Shipping_ISO_State__c = stt.Id,
-			Shipping_ISO_Country__c = ctry.Id,
-			Shipping_Street__c = 'street',
-			Shipping_City__c = 'city'
-		);
+        AMS_Pax_Accreditation_Form__c stagingArea = new AMS_Pax_Accreditation_Form__c(
+            SAAM_Case__c = newCase.Id, 
+            Account_Name__c=aBr.Name,
+            Short_Name__c=aBr.Short_Name__c,
+            IATA_ISO_State__c=stt.Id,
+            Branch_Office_Country__c= ctry.Id,
+            Shipping_ISO_State__c = stt.Id,
+            Shipping_ISO_Country__c = ctry.Id,
+            Shipping_Street__c = 'street',
+            Shipping_City__c = 'city',
+            ISSP_AMS_GDS_with_signed_contract__c = 'Amadeus'
+        );
 
 		insert stagingArea;
 
@@ -1649,8 +1655,18 @@
 
 		insert stagingArea;
 
-		oscar.AMS_Online_Accreditation__c = stagingArea.Id;
-		update oscar;
+        Test.startTest();
+        oscar.AMS_Online_Accreditation__c = stagingArea.Id;
+        try{        
+            update oscar;
+        }catch(DmlException e){ 
+            System.assertEquals('The GDS should be populated. Please fill the GDS on the OSCAR central panel before passing the sanity check', e.getMessage());
+        }
+
+        stagingArea.ISSP_AMS_GDS_with_signed_contract__c = 'Amadeus';
+        update stagingArea;
+
+        update oscar;
 
 		AMS_Accreditation_Contact__c owner = new AMS_Accreditation_Contact__c();
 		owner.Name = 'test owner';
@@ -1663,11 +1679,10 @@
 		owner.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner');
 		insert owner;
 
-		Test.startTest();
-		AMS_Settlement_System__c issOperation = new AMS_Settlement_System__c();
-		issOperation.Name = 'TEST';
-		issOperation.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Settlement_System__c', 'BSP');
-		insert issOperation;
+        AMS_Settlement_System__c issOperation = new AMS_Settlement_System__c();
+        issOperation.Name = 'TEST';
+        issOperation.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Settlement_System__c', 'BSP');
+        insert issOperation;
 
 		AMS_Operation__c operation = new AMS_Operation__c();
 		operation.Country__c = country.Id;
