@@ -1,0 +1,241 @@
+<apex:page showHeader="false" sidebar="false" standardController="AMS_OSCAR__c" extensions="ANG_MulticountryConversionAccountSelCtrl" tabStyle="AMS_OSCAR__c">
+
+	<apex:includeScript value="/support/console/46.0/integration.js"/>
+	
+	<script type="text/javascript">
+	
+		function logClose(closetab){
+			console.info(closetab);
+		}
+
+		function testSetTabTitle(){
+			//Set the current tab's title
+			sforce.console.setTabTitle('Accounts Selection');
+		}
+
+		var pageLoad = window.onload;
+
+		window.onload = function(){
+			if(pageLoad){
+				pageLoad();
+			}
+			testSetTabTitle();
+			
+			// disable "enter"
+			document.getElementById("{!$Component.accountForm}").onkeypress = function(e)
+			{
+				var key = e.charCode || e.keyCode || 0;     
+				if (key == 13)
+					e.preventDefault();
+			}
+		}
+
+		function closeTab(){
+			sforce.console.getEnclosingTabId(closeSubtab);
+		}
+		
+		var closeSubtab = function closeSubtab(result){
+			var tabId = result.id;
+			sforce.console.closeTab(tabId);
+		};
+
+		function refreshTab(){
+
+			if (sforce.console.isInConsole()){
+
+				sforce.console.getEnclosingTabId(function(enclosingResult){
+
+					sforce.console.getEnclosingPrimaryTabId(function(primaryResult){
+						sforce.console.refreshPrimaryTabById(primaryResult.id,true,null);
+						closeTab();
+					});
+
+				});
+
+			} 
+			else {
+				window.top.location.href = '/'+redirectUrl
+			}
+			
+		}
+
+		function checkAccountSelection()
+		{
+			document.getElementById('{!$Component.accountForm.accountSel.lookupField.selectHeField}').value = '';
+			rerenderAccountSel();
+
+			var messages = document.getElementById('j_id0:accountForm:accountSel:pageMesssagesPanel').querySelectorAll('li');
+			for (var i = 0; i != messages.length; i++)
+			{
+				if (messages[i].innerText.startsWith('New parent'))
+					messages[i].parentNode.removeChild(messages[i]);
+			}
+		}
+
+	</script>
+
+	<style>
+		.pos-relative{ position: relative; }
+		.loading-backdrop{ 
+			position: absolute; 
+			top: 0; 
+			bottom: 0; 
+			right: 0; 
+			left: 0; 
+			background: #FFF; 
+			opacity: 0.5; 
+		}
+		.loading-img{
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			margin-top: -16px;
+			margin-left: -16px;
+			}
+	</style>
+
+	<apex:sectionHeader title="Newgen ISS Accounts Selection" subtitle="{!AMS_OSCAR__c.Account__r.Name}"/>
+
+	<apex:outputPanel id="editPanel" rendered="{!!readOnly}">
+
+		<apex:form styleClass="pos-relative" id="accountForm">
+
+			<apex:actionFunction name="rerenderAccountSel" rerender="lookupField" />
+
+			<apex:pageBlock id="accountSel">
+			
+				<apex:panelGrid id="fieldPanel" columns="4">
+
+					<apex:pageBlockSection id="conversionLabel" columns="2" >
+						<apex:outputText value="Conversion to GoGlobal"/>
+					</apex:pageBlockSection>
+
+					<apex:pageBlockSection id="lookupField" columns="2" rendered="{!!readOnly}">
+						<apex:inputField label="Select HE Accounts" value="{!oscar.New_parent__c}" id="selectHeField"/>
+						<apex:commandButton title="Add" value="Add" action="{!addHierarchyFromHE}" status="blockEditing" rerender="selectedAccountsPanel, selectedHeSection, allSelectedAccountsTable, selectHeField, pageMesssagesPanel, lookupField"
+							oncomplete="checkAccountSelection();"/>
+					</apex:pageBlockSection>
+
+				</apex:panelGrid>
+
+				<apex:pageMessages id="pageMesssagesPanel"/>
+
+				<apex:pageBlockSection id="notes" columns="1" title="Notes" collapsible="true">
+					<apex:dataList value="{!noteList}" var="note" rendered="{!noteList.size > 0}">
+						<apex:outputText value="{!note}"/>
+					</apex:dataList>  
+				</apex:pageBlockSection>
+
+			</apex:pageBlock>
+
+			<apex:pageBlock id="selectedAccountsPanel">
+
+				<apex:pageBlockSection id="selectedHeSection" columns="1" title="Selected HE" collapsible="true">
+
+					<apex:variable value="{!0}" var="removeIndex"/>
+
+					<apex:pageBlockTable id="headEntitiesTable" value="{!heAccountSelectionLst}" var="wrap" rendered="{!heAccountSelectionLst.size > 0}">
+
+						<apex:column headerValue="" rendered="{!!readOnly}">
+						
+							<apex:commandButton action="{!removeHeAccount}" value="❌" status="blockEditing" rerender="selectedAccountsPanel, selectedHeSection, allSelectedAccountsTable, pageMesssagesPanel">
+								<apex:param name="removeIndex" value="{!removeIndex}" assignTo="{!heAccountIndex}" />
+							</apex:commandButton>
+							
+							<apex:variable var="removeIndex" value="{!removeIndex + 1}"/>
+
+						</apex:column>
+
+						<apex:column headerValue="Account Name">
+							<apex:outputText value="{!wrap.acct.Name}"/>
+						</apex:column>
+
+						<apex:column headerValue="IATA Code">
+							<apex:outputText value="{!wrap.acct.IATACode__c}"/>
+						</apex:column>
+
+						<apex:column headerValue="Location Type">
+							<apex:outputText value="{!wrap.acct.Location_Type__c}"/>
+						</apex:column>
+
+						<apex:column headerValue="Status">
+							<apex:outputText value="{!wrap.acct.Status__c}"/>
+						</apex:column>
+
+						<apex:column headerValue="Country">
+							<apex:outputText value="{!wrap.acct.IATA_ISO_Country__r.Name}"/>
+						</apex:column>
+
+						<apex:column headerValue="BSP">
+							<apex:outputText value="{!wrap.acct.IATA_ISO_Country__r.AMS_Settlement_System__r.Name}"/>
+						</apex:column>
+
+					</apex:pageBlockTable>
+
+				</apex:pageBlockSection>
+
+				<apex:pageBlockSection id="selectedAccountsSection" columns="1" title="Selected Accounts" collapsible="true">
+
+					<apex:outputPanel id="buttonPanel" rendered="{!accountSelectionLst.size > 0}">
+						<apex:commandButton title="Beginning" action="{!beginning}" value="<<" status="blockEditing" disabled="{!disablePrevious}" rerender="allSelectedAccountsTable, buttonPanel"/>
+						<apex:commandButton title="Previous"  action="{!previous}"  value="<"  status="blockEditing" disabled="{!disablePrevious}" rerender="allSelectedAccountsTable, buttonPanel" />        
+						<apex:outputText >Page {!(currentPage + 1)} of {!totalPages}</apex:outputText>
+						<apex:commandButton title="Next"  action="{!next}" value=">"  status="blockEditing" disabled="{!disableNext}" rerender="allSelectedAccountsTable, buttonPanel" />
+						<apex:commandButton title="End"   action="{!end}"  value=">>" status="blockEditing" disabled="{!disableNext}" rerender="allSelectedAccountsTable, buttonPanel"/>
+					</apex:outputPanel>
+					
+					<apex:pageBlockTable id="allSelectedAccountsTable" value="{!accountSelectionLst}" var="wrap" rendered="{!accountSelectionLst.size > 0}">
+
+						<apex:column headerValue="Account Name">
+							<apex:outputText value="{!wrap.acct.Name}"/>
+						</apex:column>
+
+						<apex:column headerValue="IATA Code">
+							<apex:outputText value="{!wrap.acct.IATACode__c}"/>
+						</apex:column>
+
+						<apex:column headerValue="Location Type">
+							<apex:outputText value="{!wrap.acct.Location_Type__c}"/>
+						</apex:column>
+
+						<apex:column headerValue="Status">
+							<apex:outputText value="{!wrap.acct.Status__c}"/>
+						</apex:column>
+
+						<apex:column headerValue="Country">
+							<apex:outputText value="{!wrap.acct.IATA_ISO_Country__r.Name}"/>
+						</apex:column>
+
+						<apex:column headerValue="BSP">
+							<apex:outputText value="{!wrap.acct.IATA_ISO_Country__r.AMS_Settlement_System__r.Name}"/>
+						</apex:column>
+
+					</apex:pageBlockTable>
+
+				</apex:pageBlockSection>
+
+				<apex:actionStatus id="blockEditing">
+					<apex:facet name="start">
+						<apex:outputPanel layout="none">
+							<apex:outputPanel layout="block" styleClass="loading-backdrop"/>
+							<apex:image value="/../img/loading32.gif" styleClass="loading-img"/>
+						</apex:outputPanel>
+					</apex:facet>
+				</apex:actionStatus>
+
+				<apex:pageBlockButtons location="bottom" rendered="{!!readOnly}">
+					<apex:commandButton action="{!save}" value="{!$Label.site.save}" status="blockEditing" oncomplete="{!IF(closeTab, 'refreshTab();', '')}" reRender="pageMesssagesPanel" />
+					<apex:commandButton onclick="closeTab(); return false;" status="blockEditing" value="{!$Label.site.cancel}"/>
+				</apex:pageBlockButtons>
+
+			</apex:pageBlock>
+			
+		</apex:form>
+
+	</apex:outputPanel>
+
+	<apex:pageBlock rendered="{!readOnly}">
+		<apex:pageMessage severity="Error" summary="New accounts cannot be added anymore" strength="1"/>
+	</apex:pageBlock>
+
+</apex:page>

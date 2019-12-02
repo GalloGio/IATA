@@ -89,7 +89,9 @@
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Account Role Services</pluralLabel>
-    <searchLayouts/>
+    <searchLayouts>
+        <lookupDialogsAdditionalFields>Account_Role_Services__c</lookupDialogsAdditionalFields>
+    </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>

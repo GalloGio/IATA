@@ -28,11 +28,11 @@
     </values>
     <values>
         <field>DataCategoryLabel_en_US__c</field>
-        <value xsi:type="xsd:string">Product content</value>
+        <value xsi:type="xsd:string">BSP NDC API</value>
     </values>
     <values>
         <field>DataCategoryLabel_es__c</field>
-        <value xsi:type="xsd:string">Contenido del producto</value>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>DataCategoryLabel_fr__c</field>
@@ -80,7 +80,7 @@
     </values>
     <values>
         <field>DataSubtopicName__c</field>
-        <value xsi:type="xsd:string">Product_content_NDClink</value>
+        <value xsi:type="xsd:string">BSP_NDC_API</value>
     </values>
     <values>
         <field>DataTopicName__c</field>
@@ -104,11 +104,15 @@
     </values>
     <values>
         <field>Order__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:double">4.0</value>
     </values>
     <values>
         <field>Permission_Set_Name__c</field>
         <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Requires_Level2_Registration__c</field>
+        <value xsi:type="xsd:boolean">false</value>
     </values>
     <values>
         <field>SectorExceptions__c</field>

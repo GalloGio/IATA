@@ -107,6 +107,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>ANG_Fees_GoStandard_GoGlobal__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>ANG_Fees_GoLite_GoStandard__c</field>
             </layoutItems>
         </layoutColumns>

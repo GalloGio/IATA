@@ -21,12 +21,19 @@ public class ChooseCommunityCtrl {
     }
     
     public PageReference SendEmail(){
-        system.debug('BCC: ' + bccCS);
         string cID = String.valueOf(contact.id);
-        //throw new transformationException(' '+ cID );
-        if(community =='--None--') {ApexPages.addMessage(new ApexPages.Message(ApexPages.severity.Error,'Please select a community')); return null;}
-        else Comm_User_Helper.resetPasswordComm(cID ,community, bccCS);
-        //else if(community == Comm_User_Helper.IEC)Comm_User_Helper.resetPasswordComm(cID  ,Comm_User_Helper.IEC, bccCS);
+        if(community =='--None--') {
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.severity.Error,'Please select a community'));
+            return null;
+        }
+        else{
+            if(community != Comm_User_Helper.ISSP){
+                Comm_User_Helper.resetPasswordComm(cID ,community, bccCS);
+            }
+            else{
+                PortalForgotPasswordController.handleResetPassword(contact.email);
+            }
+        }
        
         return controller.view();
     }
@@ -39,7 +46,13 @@ public class ChooseCommunityCtrl {
     @future
     private static void sendAssinc(String contactId,String community){  
          try{
-            comm_User_Helper.resetPasswordComm(Id.valueOf(contactId) ,community, false);
+             if(community != Comm_User_Helper.ISSP) {
+                 comm_User_Helper.resetPasswordComm(Id.valueOf(contactId), community, false);
+             }
+             else{
+                 List<contact> contactList = [Select email from contact where id =: contactId Limit 1];
+                 if(!contactList.isEmpty()) PortalForgotPasswordController.handleResetPassword(contactList.get(0).email);
+             }
         }catch(Exception e){
             throw e;
         }    
