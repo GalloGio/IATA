@@ -118,90 +118,18 @@
     </alerts>
     <alerts>
         <fullName>Marketingalertofnewdeals</fullName>
-        <ccEmails>brazeaug@iata.org, walkers@iata.org, OdeleJ@iata.org</ccEmails>
         <description>MACS alert of new deals over 10K</description>
         <protected>false</protected>
         <recipients>
-            <type>owner</type>
-        </recipients>
-        <recipients>
-            <recipient>SalesAssistantDirectorAmericas</recipient>
-            <type>role</type>
-        </recipients>
-        <recipients>
-            <recipient>SalesAssistantDirectorAsiaPac</recipient>
-            <type>role</type>
-        </recipients>
-        <recipients>
-            <recipient>SalesAssistantDirectorEurope</recipient>
-            <type>role</type>
-        </recipients>
-        <recipients>
-            <recipient>SalesDirector</recipient>
-            <type>role</type>
-        </recipients>
-        <recipients>
-            <recipient>SalesDirectorBIITCO</recipient>
-            <type>role</type>
-        </recipients>
-        <recipients>
-            <recipient>astridgec@iata.org</recipient>
+            <recipient>hartonga@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>auragh@iata.org</recipient>
+            <recipient>meuniera@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>bertolusj@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>debonol2@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>deghelderc@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>greenwayt@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>heinickem@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>itania@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>kikanor@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>krishnanh@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>legerf@iata.org.prod</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>mccorleys@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>mckayt@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>siponenp@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>wangw@iata.org</recipient>
+            <recipient>orlikr@iata.org</recipient>
             <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>

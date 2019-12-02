@@ -7,6 +7,7 @@ public class OneIdForgotPasswordControllerTest {
         Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal (Partner)'];
         try {
             insert new ISSP_CS__c(Name = 'IdentityPortal', Value__c = 'iata--sit.cs85.my.salesforce.com');
+            insert new ISSP_CS__c(Name = 'Host',Value__c = 'host');
         }catch(exception rr){}
 
         Account a = new Account (name= 'New TAP Account');
@@ -31,14 +32,22 @@ public class OneIdForgotPasswordControllerTest {
         OneIdForgotPasswordController ad = new OneIdForgotPasswordController();
 
         Test.startTest();
-        //Test.setCurrentPage(new PageReference('/home/home.jsp'));
+        Test.setCurrentPage(new PageReference('/home/home.jsp'));
         //Testsuccess change password case
-        //System.assertEquals(OneIdForgotPasswordController.forgotPassword(con.email,'/home/home.jsp'),null);
+        System.assertEquals(OneIdForgotPasswordController.forgotPassword(con.email,'/home/home.jsp'),null);
         //Test invalid email case
-        //System.assertEquals(OneIdForgotPasswordController.forgotPassword('testsalesforce.com','/home/home.jsp'),Label.Site.invalid_email);
+        System.assertEquals(OneIdForgotPasswordController.forgotPassword('testsalesforce.com','/home/home.jsp'),Label.Site.invalid_email);
         //Test not sucess change password with inexistent user
-	   	//System.assertNotEquals(OneIdForgotPasswordController.forgotPassword('test443523@salesforce.com','/home/home.jsp'),null);
+	   	System.assertNotEquals(OneIdForgotPasswordController.forgotPassword('test443523@salesforce.com','/home/home.jsp'),null);
 
         Test.stopTest();
+    }
+
+    @isTest
+    public static void testGetCustomerPortalUrl(){
+        Test.startTest();
+        string url = OneIdForgotPasswordController.getCustomerPortalUrl();
+        Test.stopTest();
+        System.assertNotEquals(url, null);
     }
 }

@@ -164,6 +164,12 @@ export default class PortalSearchServicesList extends NavigationMixin(LightningE
                 this.loadingMoreResults = false;
             }
 
+            if(filteringObjectAux.servicesComponent.nrResults === 0 && !filteringObjectAux.servicesComponent.highlight && filteringObjectAux.highlightTopResults){
+                filteringObjectAux.servicesComponent.show = false;
+            }else if(filteringObjectAux.servicesComponent.nrResults > 0 && !filteringObjectAux.servicesComponent.highlight && filteringObjectAux.highlightTopResults){
+                filteringObjectAux.servicesComponent.show = true;
+            }
+            
             const selectedEvent = new CustomEvent('filterchanged', { detail : { object: filteringObjectAux, componentName: "servicesComponent" }});
             this.dispatchEvent(selectedEvent);
 
@@ -217,6 +223,8 @@ export default class PortalSearchServicesList extends NavigationMixin(LightningE
             filteringObjectAux.faqsComponent.show = false;
             filteringObjectAux.documentsComponent.highlight = false;
             filteringObjectAux.documentsComponent.show = false;
+            filteringObjectAux.profileComponent.highlight = false;
+            filteringObjectAux.profileComponent.show = false;
             const selectedEvent = new CustomEvent('highlightfilterchanged', { detail: filteringObjectAux });
             this.dispatchEvent(selectedEvent);
         }

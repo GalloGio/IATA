@@ -302,7 +302,7 @@ public with sharing class IDCARD_VFEmailTemplateController {
         //get fee for Renewal
         String acccountType = IDCardUtil.GetAgentTypeFromAccountType(cc.Account.type);
         IATA_ISO_Country__c contactCountry = IDCardUtil.GetIATAISOCountryOfContact(cc.Account.IATACode__c);
-        Price_Table__c[] listPriceTables = [Select p.ID_Card_Fee__c, p.Type_Class_of_Agent__c, p.CurrencyIsoCode, p.Expedite__c, p.Name From Price_Table__c p where p.Type_Class_of_Agent__c = :acccountType and p.ISO_Country__r.Id = :contactCountry.Id];
+        Price_Table__c[] listPriceTables = [Select p.ID_Card_Fee__c, p.Type_Class_of_Agent__c, p.CurrencyIsoCode, p.Expedite__c, p.Name, p.Cost_of_Printer__c From Price_Table__c p where p.Type_Class_of_Agent__c = :acccountType and p.ISO_Country__r.Id = :contactCountry.Id];
         fee = IDCardUtil.GetApplicableFee(listPriceTables[0], false, false, false, null) + '   ' + listPriceTables[0].CurrencyIsoCode;
         EmailTemplate__c e = null;
         if (Test.isRunningTest())

@@ -53,6 +53,15 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Categories__c</fullName>
+        <externalId>false</externalId>
+        <label>Categories</label>
+        <length>100</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Chat_Answer__c</fullName>
         <description>Field used to set up chat answers from Knowledge Articles</description>
         <externalId>false</externalId>
@@ -61,7 +70,194 @@
         <type>LongTextArea</type>
         <visibleLines>3</visibleLines>
     </fields>
+    <fields>
+        <fullName>New_Articles__c</fullName>
+        <defaultValue>true</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Complete this checkbox if it’s linked to a new articles expected</inlineHelpText>
+        <label>New Articles</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Queues__c</fullName>
+        <externalId>false</externalId>
+        <label>Queues</label>
+        <length>100</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
     <label>Knowledge</label>
+    <listViews>
+        <fullName>AGM_Queue</fullName>
+        <columns>ARTICLE_NUMBER</columns>
+        <columns>TITLE</columns>
+        <columns>VALIDATION_STATUS_ENUM</columns>
+        <columns>PUBLISH_STATUS</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>LANGUAGE</columns>
+        <columns>LAST_PUBLISHED_DATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Queues__c</field>
+            <operation>contains</operation>
+            <value>AGM</value>
+        </filters>
+        <label>AGM Queue</label>
+    </listViews>
+    <listViews>
+        <fullName>AMS_Publications_Queue</fullName>
+        <columns>ARTICLE_NUMBER</columns>
+        <columns>TITLE</columns>
+        <columns>VALIDATION_STATUS_ENUM</columns>
+        <columns>PUBLISH_STATUS</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>LANGUAGE</columns>
+        <columns>LAST_PUBLISHED_DATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Queues__c</field>
+            <operation>contains</operation>
+            <value>AMS Publications</value>
+        </filters>
+        <label>AMS Publications Queue</label>
+    </listViews>
+    <listViews>
+        <fullName>BIS_Queue</fullName>
+        <columns>ARTICLE_NUMBER</columns>
+        <columns>TITLE</columns>
+        <columns>VALIDATION_STATUS_ENUM</columns>
+        <columns>PUBLISH_STATUS</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>LANGUAGE</columns>
+        <columns>LAST_PUBLISHED_DATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Queues__c</field>
+            <operation>contains</operation>
+            <value>BIS</value>
+        </filters>
+        <label>BIS Queue</label>
+    </listViews>
+    <listViews>
+        <fullName>CDS_Queue</fullName>
+        <columns>ARTICLE_NUMBER</columns>
+        <columns>TITLE</columns>
+        <columns>VALIDATION_STATUS_ENUM</columns>
+        <columns>PUBLISH_STATUS</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>LANGUAGE</columns>
+        <columns>LAST_PUBLISHED_DATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Queues__c</field>
+            <operation>contains</operation>
+            <value>CDS</value>
+        </filters>
+        <label>CDS Queue</label>
+    </listViews>
+    <listViews>
+        <fullName>CNS_Queue</fullName>
+        <columns>ARTICLE_NUMBER</columns>
+        <columns>TITLE</columns>
+        <columns>VALIDATION_STATUS_ENUM</columns>
+        <columns>PUBLISH_STATUS</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>LANGUAGE</columns>
+        <columns>LAST_PUBLISHED_DATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Queues__c</field>
+            <operation>contains</operation>
+            <value>CNS</value>
+        </filters>
+        <label>CNS Queue</label>
+    </listViews>
+    <listViews>
+        <fullName>Coding_Queue</fullName>
+        <columns>ARTICLE_NUMBER</columns>
+        <columns>TITLE</columns>
+        <columns>VALIDATION_STATUS_ENUM</columns>
+        <columns>PUBLISH_STATUS</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>LANGUAGE</columns>
+        <columns>LAST_PUBLISHED_DATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Queues__c</field>
+            <operation>contains</operation>
+            <value>Coding</value>
+        </filters>
+        <label>Coding Queue</label>
+    </listViews>
+    <listViews>
+        <fullName>EF_Queue</fullName>
+        <columns>ARTICLE_NUMBER</columns>
+        <columns>TITLE</columns>
+        <columns>VALIDATION_STATUS_ENUM</columns>
+        <columns>PUBLISH_STATUS</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>LANGUAGE</columns>
+        <columns>LAST_PUBLISHED_DATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Queues__c</field>
+            <operation>contains</operation>
+            <value>E&amp;F</value>
+        </filters>
+        <label>E&amp;F Queue</label>
+    </listViews>
+    <listViews>
+        <fullName>IATAN_Queue</fullName>
+        <columns>ARTICLE_NUMBER</columns>
+        <columns>TITLE</columns>
+        <columns>VALIDATION_STATUS_ENUM</columns>
+        <columns>PUBLISH_STATUS</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>LANGUAGE</columns>
+        <columns>LAST_PUBLISHED_DATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Queues__c</field>
+            <operation>contains</operation>
+            <value>IATAN</value>
+        </filters>
+        <label>IATAN Queue</label>
+    </listViews>
+    <listViews>
+        <fullName>ICCS_Queue</fullName>
+        <columns>ARTICLE_NUMBER</columns>
+        <columns>TITLE</columns>
+        <columns>VALIDATION_STATUS_ENUM</columns>
+        <columns>PUBLISH_STATUS</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>LANGUAGE</columns>
+        <columns>LAST_PUBLISHED_DATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Queues__c</field>
+            <operation>contains</operation>
+            <value>ICCS</value>
+        </filters>
+        <label>ICCS Queue</label>
+    </listViews>
+    <listViews>
+        <fullName>ICH_Queue</fullName>
+        <columns>ARTICLE_NUMBER</columns>
+        <columns>TITLE</columns>
+        <columns>VALIDATION_STATUS_ENUM</columns>
+        <columns>PUBLISH_STATUS</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>LANGUAGE</columns>
+        <columns>LAST_PUBLISHED_DATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Queues__c</field>
+            <operation>contains</operation>
+            <value>ICH</value>
+        </filters>
+        <label>ICH Queue</label>
+    </listViews>
     <listViews>
         <fullName>Internal_FAQs</fullName>
         <columns>ARTICLE_NUMBER</columns>
@@ -77,6 +273,142 @@
             <value>FAQ__kav.Internal_FAQ</value>
         </filters>
         <label>Internal FAQs</label>
+    </listViews>
+    <listViews>
+        <fullName>NewGen_Queue</fullName>
+        <columns>ARTICLE_NUMBER</columns>
+        <columns>TITLE</columns>
+        <columns>VALIDATION_STATUS_ENUM</columns>
+        <columns>PUBLISH_STATUS</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>LANGUAGE</columns>
+        <columns>LAST_PUBLISHED_DATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Queues__c</field>
+            <operation>equals</operation>
+            <value>NewGen</value>
+        </filters>
+        <label>NewGen Queue</label>
+    </listViews>
+    <listViews>
+        <fullName>New_Article_Queue</fullName>
+        <columns>ARTICLE_NUMBER</columns>
+        <columns>TITLE</columns>
+        <columns>VALIDATION_STATUS_ENUM</columns>
+        <columns>PUBLISH_STATUS</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>LANGUAGE</columns>
+        <columns>LAST_PUBLISHED_DATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Queues__c</field>
+            <operation>contains</operation>
+            <value>New Articles</value>
+        </filters>
+        <label>New Articles Queue</label>
+    </listViews>
+    <listViews>
+        <fullName>Participation_Queue</fullName>
+        <columns>ARTICLE_NUMBER</columns>
+        <columns>TITLE</columns>
+        <columns>VALIDATION_STATUS_ENUM</columns>
+        <columns>PUBLISH_STATUS</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>LANGUAGE</columns>
+        <columns>LAST_PUBLISHED_DATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Queues__c</field>
+            <operation>equals</operation>
+            <value>Participation</value>
+        </filters>
+        <label>Participation Queue</label>
+    </listViews>
+    <listViews>
+        <fullName>Payment_Facilitation_Queue</fullName>
+        <columns>ARTICLE_NUMBER</columns>
+        <columns>TITLE</columns>
+        <columns>VALIDATION_STATUS_ENUM</columns>
+        <columns>PUBLISH_STATUS</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>LANGUAGE</columns>
+        <columns>LAST_PUBLISHED_DATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Queues__c</field>
+            <operation>contains</operation>
+            <value>Payment Facilitation</value>
+        </filters>
+        <label>Payment Facilitation Queue</label>
+    </listViews>
+    <listViews>
+        <fullName>SIS_Queue</fullName>
+        <columns>ARTICLE_NUMBER</columns>
+        <columns>TITLE</columns>
+        <columns>VALIDATION_STATUS_ENUM</columns>
+        <columns>PUBLISH_STATUS</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>LANGUAGE</columns>
+        <columns>LAST_PUBLISHED_DATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Queues__c</field>
+            <operation>contains</operation>
+            <value>SIS</value>
+        </filters>
+        <label>SIS Queue</label>
+    </listViews>
+    <listViews>
+        <fullName>TT_Queue</fullName>
+        <columns>ARTICLE_NUMBER</columns>
+        <columns>TITLE</columns>
+        <columns>VALIDATION_STATUS_ENUM</columns>
+        <columns>PUBLISH_STATUS</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>LANGUAGE</columns>
+        <columns>LAST_PUBLISHED_DATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Queues__c</field>
+            <operation>contains</operation>
+            <value>T&amp;T</value>
+        </filters>
+        <label>T&amp;T Queue</label>
+    </listViews>
+    <listViews>
+        <fullName>Training_Queue</fullName>
+        <columns>ARTICLE_NUMBER</columns>
+        <columns>TITLE</columns>
+        <columns>VALIDATION_STATUS_ENUM</columns>
+        <columns>PUBLISH_STATUS</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>LANGUAGE</columns>
+        <columns>LAST_PUBLISHED_DATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Queues__c</field>
+            <operation>contains</operation>
+            <value>Training</value>
+        </filters>
+        <label>Training Queue</label>
+    </listViews>
+    <listViews>
+        <fullName>Treasury_Queue</fullName>
+        <columns>ARTICLE_NUMBER</columns>
+        <columns>TITLE</columns>
+        <columns>VALIDATION_STATUS_ENUM</columns>
+        <columns>PUBLISH_STATUS</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>LANGUAGE</columns>
+        <columns>LAST_PUBLISHED_DATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Queues__c</field>
+            <operation>contains</operation>
+            <value>Treasury</value>
+        </filters>
+        <label>Treasury Queue</label>
     </listViews>
     <listViews>
         <fullName>archived_articles</fullName>
