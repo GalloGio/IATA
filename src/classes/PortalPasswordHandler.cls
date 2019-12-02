@@ -50,7 +50,7 @@ public without sharing class PortalPasswordHandler {
     public static User getUserFromEmail(String email){
         User user;
         List<User> userList = [Select id, contactId, uid__c, userName, contact.Preferred_Language__c from user where email = :email and contactId != '' and
-                                     (isActive = true or portal_user_frozen_checkbox__c = true)];
+                                (isActive = true or portal_user_frozen_checkbox__c = true)];
 
         if(!userList.isEmpty()){
             user = userList.get(0);
@@ -67,6 +67,8 @@ public without sharing class PortalPasswordHandler {
         user.uid__c   = Comm_User_Helper.NewGuid();
         user.isActive = true;
         user.portal_user_frozen_checkbox__c = false;
+
+        update user;
 
         result.password = Comm_User_Helper.generateRandomString(6)+'1a';
 

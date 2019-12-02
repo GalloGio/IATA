@@ -3475,10 +3475,21 @@
     <fields>
         <fullName>ANG_CashCondition__c</fullName>
         <externalId>false</externalId>
-        <formula>IF(ANG_FA_Opt_out__c,true,
-   IF(ISPICKVAL(ANG_Accreditation_Model__c, &apos;Cashless&apos;) ||ISPICKVAL(Top_Parent__r.ANG_Accreditation_Model__c, &apos;Cashless&apos;),false,
-      IF(ISPICKVAL(Location_Type__c ,&apos;HE&apos;), ANG_HE_CashCondition__c,Top_Parent__r.ANG_HE_CashCondition__c)
-   ))</formula>
+        <formula>IF(ANG_FA_Opt_out__c, true,
+
+	IF(ISPICKVAL(ANG_Accreditation_Model__c, &apos;Cashless&apos;) || ISPICKVAL(Top_Parent__r.ANG_Accreditation_Model__c, &apos;Cashless&apos;),false,
+   
+   		IF(AND(OR(ISPICKVAL(ANG_Accreditation_Model__c, &apos;Multicountry&apos;), ISPICKVAL(Top_Parent__r.ANG_Accreditation_Model__c, &apos;Multicountry&apos;)), ISPICKVAL(Location_Type__c ,&apos;GE&apos;)), ANG_HE_CashCondition__c, 
+   
+   			IF(OR(ISPICKVAL(ANG_Accreditation_Model__c, &apos;Multicountry&apos;), ISPICKVAL(Top_Parent__r.ANG_Accreditation_Model__c, &apos;Multicountry&apos;)), Top_Parent__r.ANG_HE_CashCondition__c,
+
+      			IF(ISPICKVAL(Location_Type__c ,&apos;HE&apos;), ANG_HE_CashCondition__c,Top_Parent__r.ANG_HE_CashCondition__c
+
+      			)
+      		)
+      	)
+    )
+)</formula>
         <inlineHelpText>Indicates that the RHC Amount is equal to the Guaranteed Amount. Will be enforced only if the agency has a FS</inlineHelpText>
         <label>Cash Condition equal to FS</label>
         <trackHistory>false</trackHistory>
@@ -3667,7 +3678,13 @@
         <externalId>false</externalId>
         <formula>IF(ISPICKVAL(ANG_Accreditation_Model__c, &apos;Cashless&apos;) || ISPICKVAL(Top_Parent__r.ANG_Accreditation_Model__c, &apos;Cashless&apos;),
     &apos;Not Applicable&apos;,
-    IF(ISPICKVAL(Location_Type__c, &apos;HE&apos;),
+    IF(
+    	OR(
+
+            AND(ISPICKVAL(Location_Type__c ,&apos;HE&apos;),NOT(ISPICKVAL(ANG_Accreditation_Model__c ,&apos;Multicountry&apos;))),
+            ISPICKVAL(Location_Type__c ,&apos;GE&apos;)
+        ),
+
         TEXT(ANG_HE_RiskHistoryAssessment__c),
 		IF(ISPICKVAL(ANG_Accreditation_Model__c, &apos;&apos;),
 			&apos;&apos;,		
@@ -3686,7 +3703,12 @@
         <externalId>false</externalId>
         <formula>IF(ISPICKVAL(ANG_Accreditation_Model__c, &apos;Cashless&apos;) || ISPICKVAL(Top_Parent__r.ANG_Accreditation_Model__c, &apos;Cashless&apos;) || ANG_FA_Opt_out__c,
     &apos;Not Applicable&apos;,
-	IF(ISPICKVAL(Location_Type__c ,&apos;HE&apos;),
+	IF(
+		OR(
+
+            AND(ISPICKVAL(Location_Type__c ,&apos;HE&apos;),NOT(ISPICKVAL(ANG_Accreditation_Model__c ,&apos;Multicountry&apos;))),
+            ISPICKVAL(Location_Type__c ,&apos;GE&apos;)
+        ),
 		TEXT(ANG_HE_RiskStatus__c),
 		IF(ISPICKVAL(ANG_Accreditation_Model__c, &apos;&apos;),
 			&apos;&apos;,			
@@ -6123,6 +6145,18 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                 </value>
             </valueSetDefinition>
         </valueSet>
+    </fields>
+    <fields>
+        <fullName>Bulletin_Headquarter__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Account name to publish in bulletin for multicountry hierarchies that have headquarter in a non-NewGen country</inlineHelpText>
+        <label>eBulletin Multicountry Headquarter</label>
+        <length>50</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Business_City_Name__c</fullName>
@@ -13480,6 +13514,16 @@ Approval: Key Contact can see pending request approve it one by one</inlineHelpT
         <type>DateTime</type>
     </fields>
     <fields>
+        <fullName>Identify_as_Multicountry_Key_Hierarchy__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>This field can only be amended from the Global Entity (GE)</inlineHelpText>
+        <label>Identify as Multicountry Key Hierarchy</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>In_a_Airport__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
@@ -14290,6 +14334,9 @@ J-Joint Vent</inlineHelpText>
         <fullName>Location_Type_Ordered__c</fullName>
         <externalId>false</externalId>
         <formula>case (TEXT(Location_Type__c) 
+						
+, &apos;GE&apos;, 0
+						
 , &apos;AO&apos;, 1 
 , &apos;EP&apos;, 1 
 , &apos;HO&apos;, 1 
@@ -14364,6 +14411,11 @@ J-Joint Vent</inlineHelpText>
                     <fullName>ES</fullName>
                     <default>false</default>
                     <label>ES</label>
+                </value>
+                <value>
+                    <fullName>GE</fullName>
+                    <default>false</default>
+                    <label>GE</label>
                 </value>
                 <value>
                     <fullName>HE</fullName>
@@ -14684,6 +14736,17 @@ J-Joint Vent</inlineHelpText>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Phone</type>
+    </fields>
+    <fields>
+        <fullName>Multicountry_Key_Hierarchy__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( ISPICKVAL( Location_Type__c , &apos;GE&apos;) ,
+  Identify_as_Multicountry_Key_Hierarchy__c ,
+  Top_Parent__r.Identify_as_Multicountry_Key_Hierarchy__c )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Multicountry Key Hierarchy</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>N_Code__c</fullName>
@@ -33303,6 +33366,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>ES</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GE</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -88910,6 +88977,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
+                <fullName>GE</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>HE</fullName>
                 <default>false</default>
             </values>
@@ -101805,6 +101876,18 @@ Source_System__c &lt;&gt;&apos;AIMS&apos;
         <errorMessage>Head office account can be edited only by administrator, please contact your administrator</errorMessage>
     </validationRules>
     <validationRules>
+        <fullName>Edit_Identify_Multicountry_for_GE_only</fullName>
+        <active>true</active>
+        <description>The &quot;Identify as Multicountry Key Hierarchy&quot; field can only be edited in Accounts with location type GE.</description>
+        <errorConditionFormula>AND(
+  ISCHANGED( Identify_as_Multicountry_Key_Hierarchy__c ),
+  Identify_as_Multicountry_Key_Hierarchy__c = true,
+  NOT(ISPICKVAL( Location_Type__c , &apos;GE&apos;))
+)</errorConditionFormula>
+        <errorDisplayField>Identify_as_Multicountry_Key_Hierarchy__c</errorDisplayField>
+        <errorMessage>This field can only be amended from the Global Entity (GE)</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>Enforce_HE_Parent_on_AE_Account</fullName>
         <active>true</active>
         <description>AE cannot be a standalone agency (or has an AE as a parent) except for some Status :
@@ -101816,7 +101899,7 @@ OR(
 RecordType.DeveloperName = &apos;Standard_Account&apos;, RecordType.DeveloperName = &apos;IATA_Agency&apos; 
 ), 
 TEXT(Location_Type__c) = &apos;AE&apos;, 
-TEXT(Parent.Location_Type__c) &lt;&gt; &apos;HE&apos;, 
+AND(TEXT(Parent.Location_Type__c) &lt;&gt; &apos;HE&apos;, TEXT(Parent.Location_Type__c) &lt;&gt; &apos;GE&apos;),
 NOT(OR(ISPICKVAL(Status__c, &quot;Terminated&quot;), 
 ISPICKVAL(Status__c, &quot;Not in operation&quot;), 
 ISPICKVAL(Status__c, &quot;New application pending&quot;), 
@@ -101827,7 +101910,7 @@ ISPICKVAL(Status__c, &quot;&quot;)
 TEXT(Location_Type__c) = &apos;AE&apos;, 
 TEXT(Parent.Location_Type__c) = &apos;AE&apos;)
 )</errorConditionFormula>
-        <errorMessage>An Associate Entity (with proper status) must have a parent account with location type HE (or has an AE as a parent)</errorMessage>
+        <errorMessage>An Associate Entity (with proper status) must have a parent account with location type HE OR GE (or has an AE as a parent)</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Field_Head_Office_Required</fullName>
@@ -101975,9 +102058,9 @@ IF(INCLUDES(Remittance_frequency__c , &quot;D&quot;),1,0) &gt; 2 )
     <validationRules>
         <fullName>Location_Type_cannot_choose_HE_or_AE</fullName>
         <active>true</active>
-        <description>User cannot set location type HE/AE if the location class is not P/D and country is not NewGen.</description>
-        <errorConditionFormula>AND(ISNEW(),OR(ISPICKVAL(Location_Type__c,&apos;HE&apos;),ISPICKVAL(Location_Type__c,&apos;AE&apos;)),OR(NOT(ANG_IsNewGenAgency__c),NOT(OR(ISPICKVAL(Location_Class__c,&apos;P&apos;),ISPICKVAL(Location_Class__c,&apos;D&apos;)))))</errorConditionFormula>
-        <errorMessage>You cannot set location type HE/AE if the location class is not P/D and country is not NewGen.</errorMessage>
+        <description>User cannot set location type HE/GE/AE if the location class is not P/D and country is not NewGen.</description>
+        <errorConditionFormula>AND(ISNEW(),OR(ISPICKVAL(Location_Type__c,&apos;HE&apos;),ISPICKVAL(Location_Type__c,&apos;GE&apos;),ISPICKVAL(Location_Type__c,&apos;AE&apos;)),OR(NOT(ANG_IsNewGenAgency__c),NOT(OR(ISPICKVAL(Location_Class__c,&apos;P&apos;),ISPICKVAL(Location_Class__c,&apos;D&apos;)))))</errorConditionFormula>
+        <errorMessage>You cannot set location type HE/GE/AE if the location class is not P/D and country is not NewGen.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>MITA_Mandatory_Fields_For_Members</fullName>
