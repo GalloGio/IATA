@@ -2049,7 +2049,7 @@
         <name>CSP_Dear</name>
     </customLabels>
     <customLabels>
-        <label>Benutzerzugriff verweigern</label>
+        <label>Zugriff verweigern</label>
         <name>CSP_Deny_User_Access_Title</name>
     </customLabels>
     <customLabels>
@@ -2277,7 +2277,7 @@
         <name>CSP_Frozen_User_Message</name>
     </customLabels>
     <customLabels>
-        <label>Benutzerzugriff gewähren</label>
+        <label>Zugriff gewähren</label>
         <name>CSP_Grant_User_Access_Title</name>
     </customLabels>
     <customLabels>

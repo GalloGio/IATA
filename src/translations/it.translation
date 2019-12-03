@@ -2049,7 +2049,7 @@ la seguente procedura per completarlo :
         <name>CSP_Dear</name>
     </customLabels>
     <customLabels>
-        <label>Nega l&apos;accesso all&apos;utente</label>
+        <label>Negare l&#39;accesso</label>
         <name>CSP_Deny_User_Access_Title</name>
     </customLabels>
     <customLabels>
@@ -2277,7 +2277,7 @@ la seguente procedura per completarlo :
         <name>CSP_Frozen_User_Message</name>
     </customLabels>
     <customLabels>
-        <label>Concedi l&apos;accesso all&apos;utente</label>
+        <label>Concedere l&#39;accesso</label>
         <name>CSP_Grant_User_Access_Title</name>
     </customLabels>
     <customLabels>

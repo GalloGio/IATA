@@ -2048,7 +2048,7 @@
         <name>CSP_Dear</name>
     </customLabels>
     <customLabels>
-        <label>사용자 액세스 거부</label>
+        <label>액세스 거부</label>
         <name>CSP_Deny_User_Access_Title</name>
     </customLabels>
     <customLabels>
@@ -2276,7 +2276,7 @@
         <name>CSP_Frozen_User_Message</name>
     </customLabels>
     <customLabels>
-        <label>사용자 액세스 권한 부여</label>
+        <label>액세스 권한 부여</label>
         <name>CSP_Grant_User_Access_Title</name>
     </customLabels>
     <customLabels>

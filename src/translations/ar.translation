@@ -2045,7 +2045,7 @@
         <name>CSP_Dear</name>
     </customLabels>
     <customLabels>
-        <label>رفض وصول المستخدم</label>
+        <label>منع الدخول</label>
         <name>CSP_Deny_User_Access_Title</name>
     </customLabels>
     <customLabels>
@@ -2273,7 +2273,7 @@
         <name>CSP_Frozen_User_Message</name>
     </customLabels>
     <customLabels>
-        <label>منح وصول للمستخدم</label>
+        <label>السماح بالدخول</label>
         <name>CSP_Grant_User_Access_Title</name>
     </customLabels>
     <customLabels>

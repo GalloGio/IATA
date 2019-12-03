@@ -2045,7 +2045,7 @@
         <name>CSP_Dear</name>
     </customLabels>
     <customLabels>
-        <label>ปฏิเสธการเข้าถึงของผู้ใช้</label>
+        <label>ปฏิเสธการเข้าถึง</label>
         <name>CSP_Deny_User_Access_Title</name>
     </customLabels>
     <customLabels>
@@ -2273,7 +2273,7 @@
         <name>CSP_Frozen_User_Message</name>
     </customLabels>
     <customLabels>
-        <label>ให้สิทธิ์การเข้าถึงของผู้ใช้</label>
+        <label>อนุญาตให้มีการเข้าถึง</label>
         <name>CSP_Grant_User_Access_Title</name>
     </customLabels>
     <customLabels>

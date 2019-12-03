@@ -2048,7 +2048,7 @@
         <name>CSP_Dear</name>
     </customLabels>
     <customLabels>
-        <label>Refuser l&apos;accès utilisateur</label>
+        <label>Refuser l&#39;accès</label>
         <name>CSP_Deny_User_Access_Title</name>
     </customLabels>
     <customLabels>
@@ -2276,7 +2276,7 @@
         <name>CSP_Frozen_User_Message</name>
     </customLabels>
     <customLabels>
-        <label>Accorder un accès utilisateur</label>
+        <label>Accorder l&#39;accès</label>
         <name>CSP_Grant_User_Access_Title</name>
     </customLabels>
     <customLabels>

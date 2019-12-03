@@ -2047,8 +2047,8 @@
         <name>CSP_Dear</name>
     </customLabels>
     <customLabels>
-        <label>Từ chối quyền truy cập của người dùng</label>
         <name>CSP_Deny_User_Access_Title</name>
+        <label>Từ chối Truy cập</label>
     </customLabels>
     <customLabels>
         <label>Các tài liệu</label>
@@ -2275,7 +2275,7 @@
         <name>CSP_Frozen_User_Message</name>
     </customLabels>
     <customLabels>
-        <label>Cấp quyền truy cập người dùng</label>
+        <label>Cho phép Truy cập</label>
         <name>CSP_Grant_User_Access_Title</name>
     </customLabels>
     <customLabels>
