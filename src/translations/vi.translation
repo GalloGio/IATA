@@ -2047,8 +2047,8 @@
         <name>CSP_Dear</name>
     </customLabels>
     <customLabels>
-        <name>CSP_Deny_User_Access_Title</name>
         <label>Từ chối Truy cập</label>
+        <name>CSP_Deny_User_Access_Title</name>
     </customLabels>
     <customLabels>
         <label>Các tài liệu</label>
