@@ -79,7 +79,7 @@ global class MassCloseCaseBatch implements Database.Batchable<sObject>, Database
 			 email.setSubject('Mass closing cases status ' + datetime.now());
 			 email.setTargetObjectId(userInfo.getUserId());
 			 email.setPlainTextBody( body );
-			 mail.setSaveAsActivity(false);
+			 email.setSaveAsActivity(false);
 
 			 if(numberOfErrors>0){
 					 Messaging.EmailFileAttachment efa = new Messaging.EmailFileAttachment();
