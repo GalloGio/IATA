@@ -2,7 +2,6 @@ global class ANG_MulticountryOscarCreatorBatch implements Database.Batchable<sOb
 	
 	//Assuming that to move one file it is required 5 callouts (at most)
 	private static final Integer FILE_UNIT_CALLOUT_THRESHOLD = 5;
-	private static final Integer AMAZON_FILES_ACTIONS_BATCH_SIZE = 15;
 
 	String query;
 	
@@ -145,6 +144,7 @@ global class ANG_MulticountryOscarCreatorBatch implements Database.Batchable<sOb
 	global void finish(Database.BatchableContext BC) {
 
 		if(createdCasesLst.isEmpty() || accountAccreditationFormsMap.isEmpty()){
+			System.debug(LoggingLevel.FINE, '____ [cls ANG_MulticountryOscarCreatorBatch - finish] No need to move files');
 			return;
 		}
 
@@ -159,39 +159,51 @@ global class ANG_MulticountryOscarCreatorBatch implements Database.Batchable<sOb
 			}
 		}
 
+		System.debug(LoggingLevel.FINE, '____ [cls ANG_MulticountryOscarCreatorBatch - finish] newCaseFilesMapping: ' + newCaseFilesMapping);
+
 		List<WrapperAttach> wrapAttachmentsLst = WrapperAttach.getListAttachments(mainCaseId);
 
-		List<AmazonFile__c> originalFilesToDeleteLst = new List<AmazonFile__c>();
-		List<AmazonFile__c> transferedFilesLst = new List<AmazonFile__c>();
-
+		Map<String, Id> scopeMapping = new Map<String, Id>();
 		Map<WrapperAttach, Id> amazonFilesToMoveMap = new Map<WrapperAttach, Id>();
-
+		List<MoveAmazonFilesActionBatch.MoveAmazonFilesActionWrapper> afWrapLst = new List<MoveAmazonFilesActionBatch.MoveAmazonFilesActionWrapper>();
+		
 		for(WrapperAttach wa : wrapAttachmentsLst){
 			if(newCaseFilesMapping.containsKey(wa.fileAmazon.amazonFile.Full_Name_Unique__c)){
 				Id newCaseId = newCaseFilesMapping.get(wa.fileAmazon.amazonFile.Full_Name_Unique__c);
+				System.debug(LoggingLevel.FINE, '____ [cls ANG_MulticountryOscarCreatorBatch - finish] Processing file ' + wa.fileAmazon.amazonFile.Full_Name_Unique__c + ' to case ' + newCaseId);
 				//If there are not enough callouts to move the file:
-				//We map it with the new case Id so it can be moved later by the batch
+				//We map it with the new case Id so it can be moved later by batch
 				if((Limits.getCallouts() + FILE_UNIT_CALLOUT_THRESHOLD) >= Limits.getLimitCallouts()){
 					amazonFilesToMoveMap.put(wa, newCaseId);
 				}
 				else {
-					AmazonFilesActionsBatch.AmazonFilesActionsWrapper afWrap = AmazonFilesActionsBatch.moveAmazonFile(wa, newCaseId);
-					transferedFilesLst.add(afWrap.fileToInsert);
-					originalFilesToDeleteLst.add(afWrap.fileToDelete);
+					afWrapLst.add(MoveAmazonFilesActionBatch.moveAmazonFile(wa, newCaseId));
+					scopeMapping.put(wa.fileAmazon.amazonFile.Full_Name_Unique__c, newCaseId);
 				}
 			}
 		}
+		
+		Savepoint sp = Database.setSavepoint();
 
-		if(!transferedFilesLst.isEmpty()){
-			insert transferedFilesLst;
+		try {
+			MoveAmazonFilesActionBatch.commitActions(afWrapLst);
 		}
-
-		if(!originalFilesToDeleteLst.isEmpty()){
-			delete originalFilesToDeleteLst;
+		catch(Exception e){
+			System.debug(LoggingLevel.ERROR, '____ [cls ANG_MulticountryOscarCreatorBatch - finish] Exception: ' + e.getMessage());
+			System.debug(LoggingLevel.ERROR, '____ [cls ANG_MulticountryOscarCreatorBatch - finish] Exception Stacktrace: ' + e.getStackTraceString());
+			Database.rollback(sp);
+			MoveAmazonFilesActionBatch.commitTechnicalLogs(
+				new Technical_Logs__c(
+					Operation__c = 'ANG_MulticountryOscarCreatorBatch - Moving amazon files',
+					Status__c = (e.getMessage() + '\n' + e.getStackTraceString()).left(254),
+					Log__c = JSON.serialize(scopeMapping)
+				)
+			);
 		}
 
 		if(!amazonFilesToMoveMap.isEmpty()){
-			Database.executeBatch(new AmazonFilesActionsBatch(amazonFilesToMoveMap), AMAZON_FILES_ACTIONS_BATCH_SIZE);
+			System.debug(LoggingLevel.FINE, '____ [cls ANG_MulticountryOscarCreatorBatch - finish] amazonFilesToMoveMap: ' + amazonFilesToMoveMap);
+			Database.executeBatch(new MoveAmazonFilesActionBatch(amazonFilesToMoveMap), MoveAmazonFilesActionBatch.MOVE_AMAZON_FILES_ACTION_BATCH_SIZE);
 		}
 
 	}
