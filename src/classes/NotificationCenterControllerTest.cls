@@ -144,7 +144,7 @@ private class NotificationCenterControllerTest {
 	@isTest
 	static void shouldReturnTwoCountries(){
 		Test.startTest();
-		List<AggregateResult> countries = NotificationCenterController.getAccountCoutries();
+		List<IATA_ISO_Country__c> countries = NotificationCenterController.getAccountCoutries();
 		Test.stopTest();
 		System.assertEquals(2, countries.size());
 		System.assertEquals('Canada',(countries.get(0)).get('Name'));
