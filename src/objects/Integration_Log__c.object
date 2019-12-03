@@ -81,7 +81,7 @@
         <externalId>false</externalId>
         <label>Object Type</label>
         <length>80</length>
-        <required>false</required>
+        <required>true</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -113,7 +113,7 @@
         <description>Indicates the status of an interface transaction. Possible values are: - Success (Indicates that an interface transaction completed successfully). - Failure (Indicates that an interface transaction completed unsuccessfully). - In Progress (Indicates that an asynchronous process is in progress. Upon completion the Status and Status Detail will be updated accordingly)</description>
         <externalId>false</externalId>
         <label>Status</label>
-        <required>false</required>
+        <required>true</required>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
