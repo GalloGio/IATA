@@ -3614,7 +3614,7 @@ Payment required on receipt of this Payment Advice
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_Deny_User_Access_Title</shortDescription>
-        <value>Deny User Access</value>
+        <value>Deny Access</value>
     </labels>
     <labels>
         <fullName>CSP_Documents</fullName>
@@ -4066,7 +4066,7 @@ Payment required on receipt of this Payment Advice
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_Grant_User_Access_Title</shortDescription>
-        <value>Grant User Access</value>
+        <value>Grant Access</value>
     </labels>
     <labels>
         <fullName>CSP_Home_WelcomeTitle</fullName>
