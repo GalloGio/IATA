@@ -1935,7 +1935,7 @@
         <name>CSP_DateTo</name>
     </customLabels>
     <customLabels>
-        <label>Từ chối quyền truy cập của người dùng</label>
+        <label>Từ chối Truy cập</label>
         <name>CSP_Deny_User_Access_Title</name>
     </customLabels>
     <customLabels>
@@ -2031,7 +2031,7 @@
         <name>CSP_ForYou</name>
     </customLabels>
     <customLabels>
-        <label>Cấp quyền truy cập người dùng</label>
+        <label>Cho phép Truy cập</label>
         <name>CSP_Grant_User_Access_Title</name>
     </customLabels>
     <customLabels>

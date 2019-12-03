@@ -1933,7 +1933,7 @@
         <name>CSP_DateTo</name>
     </customLabels>
     <customLabels>
-        <label>Запретить доступ пользователя</label>
+        <label>Отказать в доступе</label>
         <name>CSP_Deny_User_Access_Title</name>
     </customLabels>
     <customLabels>
@@ -2029,7 +2029,7 @@
         <name>CSP_ForYou</name>
     </customLabels>
     <customLabels>
-        <label>Предоставить доступ пользователю</label>
+        <label>Предоставить доступ</label>
         <name>CSP_Grant_User_Access_Title</name>
     </customLabels>
     <customLabels>

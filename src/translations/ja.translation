@@ -1936,7 +1936,7 @@
         <name>CSP_DateTo</name>
     </customLabels>
     <customLabels>
-        <label>ユーザーアクセスを拒否する</label>
+        <label>アクセスを拒否する</label>
         <name>CSP_Deny_User_Access_Title</name>
     </customLabels>
     <customLabels>
@@ -2032,7 +2032,7 @@
         <name>CSP_ForYou</name>
     </customLabels>
     <customLabels>
-        <label>ユーザーアクセス権を付与する</label>
+        <label>アクセスを許可する</label>
         <name>CSP_Grant_User_Access_Title</name>
     </customLabels>
     <customLabels>

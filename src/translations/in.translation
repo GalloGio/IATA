@@ -1936,7 +1936,7 @@
         <name>CSP_DateTo</name>
     </customLabels>
     <customLabels>
-        <label>Tolak Akses Pengguna</label>
+        <label>Akses ditolak</label>
         <name>CSP_Deny_User_Access_Title</name>
     </customLabels>
     <customLabels>
@@ -2032,7 +2032,7 @@
         <name>CSP_ForYou</name>
     </customLabels>
     <customLabels>
-        <label>Berikan Akses Pengguna</label>
+        <label>Akses Diberikan</label>
         <name>CSP_Grant_User_Access_Title</name>
     </customLabels>
     <customLabels>
