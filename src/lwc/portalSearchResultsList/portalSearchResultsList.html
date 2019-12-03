@@ -33,7 +33,7 @@
                                     </div>
                                     <div class="slds-col slds-size_1-of-6 slds-align_absolute-center" data-item={article.Id} data-url={article.url} data-category={article.category} onclick={renderArticle}>
                                         <lightning-button icon-name="utility:forward" size="x-small"
-                                            class="baseButton newLinkButton buttonMinHeightMedium text-xsmall fullWidth cursorPointer" data-item={article.Id} data-url={article.url} onclick={renderArticle}>
+                                            class="baseButton newLinkButton buttonMinHeightMedium text-xsmall fullWidth cursorPointer" data-item={article.Id} data-url={article.url} data-category={article.category} onclick={renderArticle}>
                                         </lightning-button>
                                     </div>
                                 </div>
@@ -62,7 +62,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="slds-col slds-size_2-of-12 slds-align_absolute-center slds-text-align_right" data-item={article.Id} data-url={article.url} onclick={renderArticle}>
+                                    <div class="slds-col slds-size_2-of-12 slds-align_absolute-center slds-text-align_right" data-item={article.Id} data-url={article.url} data-category={article.category} onclick={renderArticle}>
                                         <lightning-button icon-name="utility:forward" size="x-small"
                                             class="baseButton newLinkButton buttonMinHeightMedium text-xsmall fullWidth cursorPointer" data-item={article.Id} data-url={article.url} data-category={article.category} onclick={renderArticle}>
                                         </lightning-button>
