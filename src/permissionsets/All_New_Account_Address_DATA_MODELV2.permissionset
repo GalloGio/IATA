@@ -1,5 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <classAccesses>
+        <apexClass>FlowGetBusinessContextsInvocable</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>FlowGetBusinessContextsInvocableTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>FlowGetBusinessContextsInvocable_Test</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>FlowGetSalesAreasInvocable</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>FlowGetSalesAreasInvocableTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>FlowGetSalesAreasInvocable_Test</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>FlowUpdateARBCWithoutSharing</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>FlowUpdateARBCWithoutSharingTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>FlowUpdateAccountRoleWithoutSharing</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>FlowUpdateAccountRoleWithoutSharingTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
     <fieldPermissions>
         <editable>true</editable>
         <field>Account.Business_City_Name__c</field>
@@ -112,21 +152,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Account_Role__c.Account_Role_Name_Formula__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Account_Role__c.Account_name__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Account_Role__c.Business_Context__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Account_Role__c.DisplayAccount_FunctionalRole__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -197,11 +222,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Address__c.Country__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Address__c.Geo_Coordinates__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -212,7 +232,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Address__c.Po_Box__c</field>
+        <field>Address__c.PO_Box_Address__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

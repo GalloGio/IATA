@@ -64,11 +64,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Account_Role__c.Account_name__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Account_Role__c.DisplayAccount_FunctionalRole__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -197,11 +192,6 @@
         <field>E_and_F_Contact_Role_Detail__c.Display_Contact_Detailed_contact_role__c</field>
         <readable>true</readable>
     </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>IATA_ISO_City__c.Verification_Status__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
     <label>E&amp;F Account Flow Creation</label>
     <objectPermissions>
@@ -327,10 +317,6 @@
     </recordTypeVisibilities>
     <tabSettings>
         <tab>Business_Context__c</tab>
-        <visibility>Visible</visibility>
-    </tabSettings>
-    <tabSettings>
-        <tab>IATA_ISO_City__c</tab>
         <visibility>Visible</visibility>
     </tabSettings>
     <userPermissions>
