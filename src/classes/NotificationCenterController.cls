@@ -11,8 +11,8 @@ public with sharing class NotificationCenterController {
 	}
 
 	@AuraEnabled(cacheable=true)
-	public static List<AggregateResult> getAccountCoutries(){
-		return [SELECT 	IATA_ISO_Country__r.Name FROM Account Group by 	IATA_ISO_Country__r.Name];
+	public static List<IATA_ISO_Country__c> getAccountCoutries(){
+		return [SELECT Name FROM IATA_ISO_Country__c ORDER BY Name];
 	}
 
 	@AuraEnabled
