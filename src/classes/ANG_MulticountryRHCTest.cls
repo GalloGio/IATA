@@ -1,7 +1,7 @@
 @isTest
 private class ANG_MulticountryRHCTest {
 
-	@testSetup
+	@testSetup 
 	static void setup(){
 
 		Test.startTest();
@@ -56,30 +56,30 @@ private class ANG_MulticountryRHCTest {
 		);
 
 		insert new List<AMS_Settlement_System__c>{bspPT, bspFR};
-
+		
 		List<Operational_Calendar__c> opCalendarList = new List<Operational_Calendar__c>();
 
 		Operational_Calendar__c ptCalendarWeekly = new Operational_Calendar__c(
-			First_Day__c = Date.today().addDays(5),
-			Frequency_code__c = 'D',
-			ISS_operation__c = bspPT.Id,
+			First_Day__c = Date.today().addDays(5), 
+			Frequency_code__c = 'D', 
+			ISS_operation__c = bspPT.Id, 
 			Last_day__c = Date.today().addDays(10)
 		);
-
+	
 		Operational_Calendar__c frCalendarWeekly = new Operational_Calendar__c(
-			First_Day__c = Date.today().addDays(10),
-			Frequency_code__c = 'D',
-			ISS_operation__c = bspFR.Id,
+			First_Day__c = Date.today().addDays(10), 
+			Frequency_code__c = 'D', 
+			ISS_operation__c = bspFR.Id, 
 			Last_day__c = Date.today().addDays(20)
 		);
 
 		opCalendarList.add(ptCalendarWeekly);
 		opCalendarList.add(frCalendarWeekly);
-
+		
 		insert opCalendarList;
 
 		IATA_ISO_Country__c countryPT = new IATA_ISO_Country__c();
-
+		
 		countryPT.Name = 'Portugal';
 		countryPT.ISO_Code__c = 'PT';
 		countryPT.ANG_Enable_NewGen__c = true;
@@ -87,7 +87,7 @@ private class ANG_MulticountryRHCTest {
 		countryPT.Multicountry_Enabled__c = true;
 
 		IATA_ISO_Country__c countryFR = new IATA_ISO_Country__c();
-
+		
 		countryFR.Name = 'France';
 		countryFR.ISO_Code__c = 'FR';
 		countryFR.ANG_Enable_NewGen__c = true;
@@ -95,17 +95,17 @@ private class ANG_MulticountryRHCTest {
 		countryFR.Multicountry_Enabled__c = true;
 
 		IATA_ISO_Country__c countryWW = new IATA_ISO_Country__c();
-
+		
 		countryWW.Name = 'All Countries';
 		countryWW.ISO_Code__c = 'WW';
 
 		insert new List<IATA_ISO_Country__c>{countryPT, countryFR, countryWW};
 
 		AMS_Country_Specific_Attribute__c amsCountrySpecificAttr = new AMS_Country_Specific_Attribute__c(
-			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Country_Specific_Attribute__c', 'Minimum_RHC_Amount'),
+			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Country_Specific_Attribute__c', 'Minimum_RHC_Amount'), 
 			IATA_ISO_Country__c = countryWW.Id,
 			ANG_Minimum_RHC_Amount__c = 1000,
-			CurrencyIsoCode = 'EUR'
+			CurrencyIsoCode = 'EUR'  
 		);
 
 		insert amsCountrySpecificAttr;
@@ -198,9 +198,9 @@ private class ANG_MulticountryRHCTest {
 		ANG_RHCHelper.createRHCInfo(new Set<Id>{accountGE.Id}, false);
 
 		Financial_Institution__c fi = new Financial_Institution__c(
-			Name = 'Bank',
-			Region__c = 'Europe',
-			Country__c = 'Portugal',
+			Name = 'Bank', 
+			Region__c = 'Europe', 
+			Country__c = 'Portugal', 
 			Institution_Type__c = 'Bank',
 			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Financial_Institution__c', 'Generic_FI')
 		);
@@ -212,16 +212,16 @@ private class ANG_MulticountryRHCTest {
 	}
 
 	@isTest static void rhcCashConditionCalculationTest(){
-
-		Financial_Institution__c fi =
+		
+		Financial_Institution__c fi = 
 			[SELECT Id
-			 FROM Financial_Institution__c
+			 FROM Financial_Institution__c 
 			 LIMIT 1
 			];
 
-		Account accountGE =
+		Account accountGE = 
 			[SELECT Id
-			 FROM Account
+			 FROM Account 
 			 WHERE Location_Type__c = :AMS_Utils.GE
 			 LIMIT 1
 			];
@@ -234,31 +234,31 @@ private class ANG_MulticountryRHCTest {
 		insert cc;
 
 		Financial_Security__c fs = new Financial_Security__c(
-			CurrencyIsoCode = 'EUR',
-			Account__c = accountGE.Id,
-			Amount__c = 100000,
-			Expiry_date__c = System.Today().AddDays(100),
-			Financial_Institution__c = fi.Id,
-			Security_Status__c = 'Active',
-			Security_Type__c = 'Bank Guarantee',
-			Region__c = 'Europe',
-			Reception_Date__c = System.today(),
+			CurrencyIsoCode = 'EUR', 
+			Account__c = accountGE.Id, 
+			Amount__c = 100000, 
+			Expiry_date__c = System.Today().AddDays(100), 
+			Financial_Institution__c = fi.Id, 
+			Security_Status__c = 'Active', 
+			Security_Type__c = 'Bank Guarantee', 
+			Region__c = 'Europe', 
+			Reception_Date__c = System.today(), 
 			Reasonforrequest__c = 'New Application',
 			Reception_Case__c = cc.Id,
 			Financial_Security_Validation_Case__c = cc.Id
 		);
 
-		insert fs;
+		insert fs; 
 
 		cc.Financial_Security_Amount__c = 1000;
 		cc.Financial_Security_Currency__c = 'EUR';
 		update cc;
 
-		ANG_RHC_Information__c rhcInfo =
-			[SELECT
-				Id,
-				ANG_RHC_Amount_Forecasted__c
-			 FROM ANG_RHC_Information__c
+		ANG_RHC_Information__c rhcInfo = 
+			[SELECT 
+				Id, 
+				ANG_RHC_Amount_Forecasted__c 
+			 FROM ANG_RHC_Information__c 
 			 WHERE ANG_AccountId__c = :accountGE.Id
 			];
 
@@ -267,16 +267,16 @@ private class ANG_MulticountryRHCTest {
 	}
 
 	@isTest static void rhcFormulaCalculationTest(){
-
-		Financial_Institution__c fi =
+		
+		Financial_Institution__c fi = 
 			[SELECT Id
-			 FROM Financial_Institution__c
+			 FROM Financial_Institution__c 
 			 LIMIT 1
 			];
 
-		Account accountGE =
+		Account accountGE = 
 			[SELECT Id
-			 FROM Account
+			 FROM Account 
 			 WHERE Location_Type__c = :AMS_Utils.GE
 			 LIMIT 1
 			];
@@ -285,21 +285,21 @@ private class ANG_MulticountryRHCTest {
 		insert cc;
 
 		Financial_Security__c fs = new Financial_Security__c(
-			CurrencyIsoCode = 'EUR',
-			Account__c = accountGE.Id,
-			Amount__c = 100000,
-			Expiry_date__c = System.Today().AddDays(100),
-			Financial_Institution__c = fi.Id,
-			Security_Status__c = 'Active',
-			Security_Type__c = 'Bank Guarantee',
-			Region__c = 'Europe',
-			Reception_Date__c = System.today(),
+			CurrencyIsoCode = 'EUR', 
+			Account__c = accountGE.Id, 
+			Amount__c = 100000, 
+			Expiry_date__c = System.Today().AddDays(100), 
+			Financial_Institution__c = fi.Id, 
+			Security_Status__c = 'Active', 
+			Security_Type__c = 'Bank Guarantee', 
+			Region__c = 'Europe', 
+			Reception_Date__c = System.today(), 
 			Reasonforrequest__c = 'New Application',
 			Reception_Case__c = cc.Id,
 			Financial_Security_Validation_Case__c = cc.Id
 		);
 
-		insert fs;
+		insert fs; 
 
 		cc.Financial_Security_Amount__c = 50000;
 		cc.Financial_Security_Currency__c = 'EUR';
@@ -307,11 +307,11 @@ private class ANG_MulticountryRHCTest {
 
 		Test.startTest();
 
-		ANG_RHC_Information__c rhcInfo =
-			[SELECT
-				Id,
-				ANG_RHC_Amount_Forecasted__c
-			 FROM ANG_RHC_Information__c
+		ANG_RHC_Information__c rhcInfo = 
+			[SELECT 
+				Id, 
+				ANG_RHC_Amount_Forecasted__c 
+			 FROM ANG_RHC_Information__c 
 			 WHERE ANG_AccountId__c = :accountGE.Id
 			];
 
@@ -320,49 +320,49 @@ private class ANG_MulticountryRHCTest {
 		rhcInfo.ANG_RHC_Amount_Provisional__c = 4000;
 		update rhcInfo;
 
-		rhcInfo =
-			[SELECT
-				Id,
-				ANG_RHC_Amount_Forecasted__c,
-				ANG_RHC_Amount_Provisional__c,
-				ANG_Exceeding_Financial_Security__c
-			 FROM ANG_RHC_Information__c
+		rhcInfo = 
+			[SELECT 
+				Id, 
+				ANG_RHC_Amount_Forecasted__c, 
+				ANG_RHC_Amount_Provisional__c, 
+				ANG_Exceeding_Financial_Security__c 
+			 FROM ANG_RHC_Information__c 
 			 WHERE ANG_AccountId__c = :accountGE.Id
 			];
 
-		System.assertEquals((rhcInfo.ANG_RHC_Amount_Provisional__c + rhcInfo.ANG_Exceeding_Financial_Security__c), rhcInfo.ANG_RHC_Amount_Forecasted__c);
-
+		System.assertEquals(100000, rhcInfo.ANG_RHC_Amount_Forecasted__c);
+		
 		//After the stop test the future method that updates the Min FS on the RHC record is executed
 		//and therefore the RHC Amount Forecasted will change again
 		Test.stopTest();
-
-		rhcInfo =
-			[SELECT
-				Id,
-				ANG_RHC_Amount_Forecasted__c,
-				ANG_RHC_Amount_Provisional__c,
-				ANG_Exceeding_Financial_Security__c
-			 FROM ANG_RHC_Information__c
+		
+		rhcInfo = 
+			[SELECT 
+				Id, 
+				ANG_RHC_Amount_Forecasted__c, 
+				ANG_RHC_Amount_Provisional__c, 
+				ANG_Exceeding_Financial_Security__c 
+			 FROM ANG_RHC_Information__c 
 			 WHERE ANG_AccountId__c = :accountGE.Id
 			];
 
 		System.assertEquals(fs.Amount__c, rhcInfo.ANG_RHC_Amount_Forecasted__c);
 
-
+		
 
 	}
 
 	@isTest static void rhcEffectiveNewGeRiskEventGenerationTest(){
 
-		Financial_Institution__c fi =
+		Financial_Institution__c fi = 
 			[SELECT Id
 			 FROM Financial_Institution__c
 			 LIMIT 1
 			];
 
-		Account accountGE =
+		Account accountGE = 
 			[SELECT Id
-			 FROM Account
+			 FROM Account 
 			 WHERE Location_Type__c = :AMS_Utils.GE
 			 LIMIT 1
 			];
@@ -371,26 +371,26 @@ private class ANG_MulticountryRHCTest {
 		insert cc;
 
 		Financial_Security__c fs = new Financial_Security__c(
-			CurrencyIsoCode = 'EUR',
-			Account__c = accountGE.Id,
-			Amount__c = 100000,
-			Expiry_date__c = System.Today().AddDays(100),
-			Financial_Institution__c = fi.Id,
-			Security_Status__c = 'Active',
-			Security_Type__c = 'Bank Guarantee',
-			Region__c = 'Europe',
-			Reception_Date__c = System.today(),
+			CurrencyIsoCode = 'EUR', 
+			Account__c = accountGE.Id, 
+			Amount__c = 100000, 
+			Expiry_date__c = System.Today().AddDays(100), 
+			Financial_Institution__c = fi.Id, 
+			Security_Status__c = 'Active', 
+			Security_Type__c = 'Bank Guarantee', 
+			Region__c = 'Europe', 
+			Reception_Date__c = System.today(), 
 			Reasonforrequest__c = 'New Application',
 			Reception_Case__c = cc.Id,
 			Financial_Security_Validation_Case__c = cc.Id
 		);
 
-		insert fs;
+		insert fs; 
 
 		cc.Financial_Security_Amount__c = 50000;
 		cc.Financial_Security_Currency__c = 'EUR';
 		update cc;
-
+		
 		AMS_OSCAR__c oscar = new AMS_OSCAR__c(
 			Account__c = accountGE.Id,
 			Process__c = AMS_Utils.NEWGESTANDARD,
@@ -398,23 +398,23 @@ private class ANG_MulticountryRHCTest {
 			RPM_Approval__c = AMS_Utils.AUTH_APPROVAL
 		);
 
-		insert oscar;
+		insert oscar; 
 
 		Case caseOscar = new Case(
 			Oscar__c = oscar.Id,
 			AccountId = accountGE.Id,
 			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication')
 		);
-
+	
 		insert caseOscar;
 
-		ANG_RHC_Information__c rhcInfo =
-			[SELECT
-				Id,
-				ANG_RHC_Amount__c,
-				ANG_RHC_Amount_Forecasted__c
-			 FROM ANG_RHC_Information__c
-			 WHERE
+		ANG_RHC_Information__c rhcInfo = 
+			[SELECT 
+				Id, 
+				ANG_RHC_Amount__c, 
+				ANG_RHC_Amount_Forecasted__c 
+			 FROM ANG_RHC_Information__c 
+			 WHERE 
 			 	ANG_AccountId__c = :accountGE.Id
 			];
 
@@ -426,18 +426,344 @@ private class ANG_MulticountryRHCTest {
 
 		Test.stopTest();
 
-		rhcInfo =
-			[SELECT
-				Id,
-				ANG_RHC_Amount__c,
-				ANG_RHC_Amount_Forecasted__c
-			 FROM ANG_RHC_Information__c
-			 WHERE
+		rhcInfo = 
+			[SELECT 
+				Id, 
+				ANG_RHC_Amount__c, 
+				ANG_RHC_Amount_Forecasted__c 
+			 FROM ANG_RHC_Information__c 
+			 WHERE 
 			 	ANG_AccountId__c = :accountGE.Id
 			];
 
 		System.assertEquals(rhcInfo.ANG_RHC_Amount__c, rhcInfo.ANG_RHC_Amount_Forecasted__c, 'RHC Amount must be effective');
 
 	}
+
+	@isTest
+	public static void testRhcFormulaCalculationScenario1()
+	{
+		Id recId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Country_Specific_Attribute__c', 'Minimum_RHC_Amount');
+		AMS_Country_Specific_Attribute__c amsCountrySpecificAttr = [SELECT Id
+																	FROM AMS_Country_Specific_Attribute__c
+																	WHERE RecordTypeId = :recId];
+		amsCountrySpecificAttr.ANG_Minimum_RHC_Amount__c = 10000;
+		update amsCountrySpecificAttr;
+
+		Financial_Institution__c fi = [SELECT Id FROM Financial_Institution__c LIMIT 1];
+		Account accountGE = [SELECT Id FROM Account WHERE Location_Type__c = :AMS_Utils.GE LIMIT 1];
+
+		Case cc = new Case(AccountId = accountGE.Id);
+		insert cc;
+
+		ANG_RHC_Information__c rhcInfo = [SELECT Id FROM ANG_RHC_Information__c WHERE ANG_AccountId__c = :accountGE.Id];
+		rhcInfo.ANG_RME_Amount__c = 1000000;
+		rhcInfo.ANG_RHC_Amount_Provisional__c = 1000000;
+		rhcInfo.ANG_Minimum_Financial_Security__c = 700000;
+		rhcInfo.ANG_Financial_Security__c = 700000;
+		update rhcInfo;
+
+		Financial_Security__c fs = new Financial_Security__c(
+			CurrencyIsoCode = 'EUR', 
+			Account__c = accountGE.Id, 
+			Amount__c = 700000, 
+			Expiry_date__c = System.Today().AddDays(100), 
+			Financial_Institution__c = fi.Id, 
+			Security_Status__c = 'Active', 
+			Security_Type__c = 'Bank Guarantee', 
+			Region__c = 'Europe', 
+			Reception_Date__c = System.today(), 
+			Reasonforrequest__c = 'New Application',
+			Reception_Case__c = cc.Id,
+			Financial_Security_Validation_Case__c = cc.Id
+		);
+		insert fs; 
+		
+		AMS_OSCAR__c oscar = new AMS_OSCAR__c(
+			Account__c = accountGE.Id,
+			Process__c = AMS_Utils.NEWGESTANDARD,
+			RecordTypeId = AMS_Utils.RECTYPE_NEWGE,
+			RPM_Approval__c = AMS_Utils.AUTH_APPROVAL
+		);
+		insert oscar; 
+
+		Case caseOscar = new Case(
+			Oscar__c = oscar.Id,
+			AccountId = accountGE.Id,
+			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication')
+		);
+		insert caseOscar;
+
+		rhcInfo = [SELECT Id, 
+					ANG_RHC_Amount__c, 
+					ANG_RHC_Amount_Forecasted__c,
+					ANG_Forecasted_RHC_Effective_date__c
+			 	   FROM ANG_RHC_Information__c 
+			 	   WHERE ANG_AccountId__c = :accountGE.Id];
+
+		System.assertEquals(1000000, rhcInfo.ANG_RHC_Amount_Forecasted__c);
+		System.assertEquals(Date.today().addDays(5), rhcInfo.ANG_Forecasted_RHC_Effective_date__c);
+	}
+
+	@isTest
+	public static void testRhcFormulaCalculationScenario2()
+	{
+		Id recId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Country_Specific_Attribute__c', 'Minimum_RHC_Amount');
+		AMS_Country_Specific_Attribute__c amsCountrySpecificAttr = [SELECT Id
+																	FROM AMS_Country_Specific_Attribute__c
+																	WHERE RecordTypeId = :recId];
+		amsCountrySpecificAttr.ANG_Minimum_RHC_Amount__c = 10000;
+		update amsCountrySpecificAttr;
+
+		Financial_Institution__c fi = [SELECT Id FROM Financial_Institution__c LIMIT 1];
+		Account accountGE = [SELECT Id FROM Account WHERE Location_Type__c = :AMS_Utils.GE LIMIT 1];
+
+		Case cc = new Case(AccountId = accountGE.Id);
+		insert cc;
+
+		ANG_RHC_Information__c rhcInfo = [SELECT Id FROM ANG_RHC_Information__c WHERE ANG_AccountId__c = :accountGE.Id];
+		rhcInfo.ANG_RME_Amount__c = 1000000;
+		rhcInfo.ANG_RHC_Amount_Provisional__c = 1000000;
+		rhcInfo.ANG_Minimum_Financial_Security__c = 700000;
+		rhcInfo.ANG_Financial_Security__c = 400000;
+		update rhcInfo;
+
+		Financial_Security__c fs = new Financial_Security__c(
+			CurrencyIsoCode = 'EUR', 
+			Account__c = accountGE.Id, 
+			Amount__c = 400000, 
+			Expiry_date__c = System.Today().AddDays(100), 
+			Financial_Institution__c = fi.Id, 
+			Security_Status__c = 'Active', 
+			Security_Type__c = 'Bank Guarantee', 
+			Region__c = 'Europe', 
+			Reception_Date__c = System.today(), 
+			Reasonforrequest__c = 'New Application',
+			Reception_Case__c = cc.Id,
+			Financial_Security_Validation_Case__c = cc.Id
+		);
+		insert fs; 
+		
+		AMS_OSCAR__c oscar = new AMS_OSCAR__c(
+			Account__c = accountGE.Id,
+			Process__c = AMS_Utils.NEWGESTANDARD,
+			RecordTypeId = AMS_Utils.RECTYPE_NEWGE,
+			RPM_Approval__c = AMS_Utils.AUTH_APPROVAL
+		);
+		insert oscar; 
+
+		Case caseOscar = new Case(
+			Oscar__c = oscar.Id,
+			AccountId = accountGE.Id,
+			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication')
+		);
+		insert caseOscar;
+
+		rhcInfo = [SELECT Id, 
+					ANG_RHC_Amount__c, 
+					ANG_RHC_Amount_Forecasted__c,
+					ANG_Forecasted_RHC_Effective_date__c
+			 	   FROM ANG_RHC_Information__c 
+			 	   WHERE ANG_AccountId__c = :accountGE.Id];
+
+		System.assertEquals(571429, rhcInfo.ANG_RHC_Amount_Forecasted__c);
+		System.assertEquals(Date.today().addDays(5), rhcInfo.ANG_Forecasted_RHC_Effective_date__c);
+	}
+
+	@isTest
+	public static void testRhcFormulaCalculationScenario3()
+	{
+		Id recId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Country_Specific_Attribute__c', 'Minimum_RHC_Amount');
+		AMS_Country_Specific_Attribute__c amsCountrySpecificAttr = [SELECT Id
+																	FROM AMS_Country_Specific_Attribute__c
+																	WHERE RecordTypeId = :recId];
+		amsCountrySpecificAttr.ANG_Minimum_RHC_Amount__c = 10000;
+		update amsCountrySpecificAttr;
+
+		Financial_Institution__c fi = [SELECT Id FROM Financial_Institution__c LIMIT 1];
+		Account accountGE = [SELECT Id FROM Account WHERE Location_Type__c = :AMS_Utils.GE LIMIT 1];
+
+		Case cc = new Case(AccountId = accountGE.Id);
+		insert cc;
+
+		ANG_RHC_Information__c rhcInfo = [SELECT Id FROM ANG_RHC_Information__c WHERE ANG_AccountId__c = :accountGE.Id];
+		rhcInfo.ANG_RME_Amount__c = 1000000;
+		rhcInfo.ANG_RHC_Amount_Provisional__c = 1000000;
+		rhcInfo.ANG_Minimum_Financial_Security__c = 700000;
+		rhcInfo.ANG_Financial_Security__c = 900000;
+		update rhcInfo;
+
+		Financial_Security__c fs = new Financial_Security__c(
+			CurrencyIsoCode = 'EUR', 
+			Account__c = accountGE.Id, 
+			Amount__c = 900000, 
+			Expiry_date__c = System.Today().AddDays(100), 
+			Financial_Institution__c = fi.Id, 
+			Security_Status__c = 'Active', 
+			Security_Type__c = 'Bank Guarantee', 
+			Region__c = 'Europe', 
+			Reception_Date__c = System.today(), 
+			Reasonforrequest__c = 'New Application',
+			Reception_Case__c = cc.Id,
+			Financial_Security_Validation_Case__c = cc.Id
+		);
+		insert fs; 
+		
+		AMS_OSCAR__c oscar = new AMS_OSCAR__c(
+			Account__c = accountGE.Id,
+			Process__c = AMS_Utils.NEWGESTANDARD,
+			RecordTypeId = AMS_Utils.RECTYPE_NEWGE,
+			RPM_Approval__c = AMS_Utils.AUTH_APPROVAL
+		);
+		insert oscar; 
+
+		Case caseOscar = new Case(
+			Oscar__c = oscar.Id,
+			AccountId = accountGE.Id,
+			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication')
+		);
+		insert caseOscar;
+
+		rhcInfo = [SELECT Id, 
+					ANG_RHC_Amount__c, 
+					ANG_RHC_Amount_Forecasted__c,
+					ANG_Forecasted_RHC_Effective_date__c
+			 	   FROM ANG_RHC_Information__c 
+			 	   WHERE ANG_AccountId__c = :accountGE.Id];
+
+		System.assertEquals(1285714, rhcInfo.ANG_RHC_Amount_Forecasted__c);
+		System.assertEquals(Date.today().addDays(5), rhcInfo.ANG_Forecasted_RHC_Effective_date__c);
+	}
+
+	@isTest
+	public static void testRhcFormulaCalculationScenario_minRHCAmount()
+	{
+		Id recId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Country_Specific_Attribute__c', 'Minimum_RHC_Amount');
+		AMS_Country_Specific_Attribute__c amsCountrySpecificAttr = [SELECT Id
+																	FROM AMS_Country_Specific_Attribute__c
+																	WHERE RecordTypeId = :recId];
+		amsCountrySpecificAttr.ANG_Minimum_RHC_Amount__c = 10000;
+		update amsCountrySpecificAttr;
+
+		Financial_Institution__c fi = [SELECT Id FROM Financial_Institution__c LIMIT 1];
+		Account accountGE = [SELECT Id FROM Account WHERE Location_Type__c = :AMS_Utils.GE LIMIT 1];
+
+		Case cc = new Case(AccountId = accountGE.Id);
+		insert cc;
+
+		ANG_RHC_Information__c rhcInfo = [SELECT Id FROM ANG_RHC_Information__c WHERE ANG_AccountId__c = :accountGE.Id];
+		rhcInfo.ANG_RME_Amount__c = 100;
+		rhcInfo.ANG_RHC_Amount_Provisional__c = 100;
+		rhcInfo.ANG_Minimum_Financial_Security__c = 70;
+		rhcInfo.ANG_Financial_Security__c = 90;
+		update rhcInfo;
+
+		Financial_Security__c fs = new Financial_Security__c(
+			CurrencyIsoCode = 'EUR', 
+			Account__c = accountGE.Id, 
+			Amount__c = 90, 
+			Expiry_date__c = System.Today().AddDays(100), 
+			Financial_Institution__c = fi.Id, 
+			Security_Status__c = 'Active', 
+			Security_Type__c = 'Bank Guarantee', 
+			Region__c = 'Europe', 
+			Reception_Date__c = System.today(), 
+			Reasonforrequest__c = 'New Application',
+			Reception_Case__c = cc.Id,
+			Financial_Security_Validation_Case__c = cc.Id
+		);
+		insert fs; 
+		
+		AMS_OSCAR__c oscar = new AMS_OSCAR__c(
+			Account__c = accountGE.Id,
+			Process__c = AMS_Utils.NEWGESTANDARD,
+			RecordTypeId = AMS_Utils.RECTYPE_NEWGE,
+			RPM_Approval__c = AMS_Utils.AUTH_APPROVAL
+		);
+		insert oscar; 
+
+		Case caseOscar = new Case(
+			Oscar__c = oscar.Id,
+			AccountId = accountGE.Id,
+			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication')
+		);
+		insert caseOscar;
+
+		rhcInfo = [SELECT Id, 
+					ANG_RHC_Amount__c, 
+					ANG_RHC_Amount_Forecasted__c,
+					ANG_Forecasted_RHC_Effective_date__c
+			 	   FROM ANG_RHC_Information__c 
+			 	   WHERE ANG_AccountId__c = :accountGE.Id];
+
+		System.assertEquals(10000, rhcInfo.ANG_RHC_Amount_Forecasted__c);
+		System.assertEquals(Date.today().addDays(5), rhcInfo.ANG_Forecasted_RHC_Effective_date__c);
+	}
+
+	@isTest
+	public static void testRhcFormulaCalculationScenario_maxFS()
+	{
+		Id recId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Country_Specific_Attribute__c', 'Minimum_RHC_Amount');
+		AMS_Country_Specific_Attribute__c amsCountrySpecificAttr = [SELECT Id
+																	FROM AMS_Country_Specific_Attribute__c
+																	WHERE RecordTypeId = :recId];
+		amsCountrySpecificAttr.ANG_Minimum_RHC_Amount__c = 10000;
+		update amsCountrySpecificAttr;
+
+		Financial_Institution__c fi = [SELECT Id FROM Financial_Institution__c LIMIT 1];
+		Account accountGE = [SELECT Id FROM Account WHERE Location_Type__c = :AMS_Utils.GE LIMIT 1];
+
+		Case cc = new Case(AccountId = accountGE.Id);
+		insert cc;
+
+		ANG_RHC_Information__c rhcInfo = [SELECT Id FROM ANG_RHC_Information__c WHERE ANG_AccountId__c = :accountGE.Id];
+		rhcInfo.ANG_RME_Amount__c = 100;
+		rhcInfo.ANG_RHC_Amount_Provisional__c = 100;
+		rhcInfo.ANG_Minimum_Financial_Security__c = 90000;
+		rhcInfo.ANG_Financial_Security__c = 90000;
+		update rhcInfo;
+
+		Financial_Security__c fs = new Financial_Security__c(
+			CurrencyIsoCode = 'EUR', 
+			Account__c = accountGE.Id, 
+			Amount__c = 90000, 
+			Expiry_date__c = System.Today().AddDays(100), 
+			Financial_Institution__c = fi.Id, 
+			Security_Status__c = 'Active', 
+			Security_Type__c = 'Bank Guarantee', 
+			Region__c = 'Europe', 
+			Reception_Date__c = System.today(), 
+			Reasonforrequest__c = 'New Application',
+			Reception_Case__c = cc.Id,
+			Financial_Security_Validation_Case__c = cc.Id
+		);
+		insert fs; 
+		
+		AMS_OSCAR__c oscar = new AMS_OSCAR__c(
+			Account__c = accountGE.Id,
+			Process__c = AMS_Utils.NEWGESTANDARD,
+			RecordTypeId = AMS_Utils.RECTYPE_NEWGE,
+			RPM_Approval__c = AMS_Utils.AUTH_APPROVAL
+		);
+		insert oscar; 
+
+		Case caseOscar = new Case(
+			Oscar__c = oscar.Id,
+			AccountId = accountGE.Id,
+			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication')
+		);
+		insert caseOscar;
+
+		rhcInfo = [SELECT Id, 
+					ANG_RHC_Amount__c, 
+					ANG_RHC_Amount_Forecasted__c,
+					ANG_Forecasted_RHC_Effective_date__c
+			 	   FROM ANG_RHC_Information__c 
+			 	   WHERE ANG_AccountId__c = :accountGE.Id];
+
+		System.assertEquals(90000, rhcInfo.ANG_RHC_Amount_Forecasted__c);
+		System.assertEquals(Date.today().addDays(5), rhcInfo.ANG_Forecasted_RHC_Effective_date__c);
+	}
+ 
 
 }
