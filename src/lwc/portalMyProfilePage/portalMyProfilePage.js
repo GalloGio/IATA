@@ -5,7 +5,6 @@ import getLoggedUser from '@salesforce/apex/CSP_Utils.getLoggedUser';
 import getServices from '@salesforce/apex/PortalServicesCtrl.getUserAccessGrantedServices';
 
 import getContactDetails from '@salesforce/apex/PortalMyProfileCtrl.getContactInfo';
-import getContactTrainingDetails from '@salesforce/apex/PortalMyProfileCtrl.getContactTrainingInfo';
 
 
 export default class PortalMyProfilePage extends LightningElement {
@@ -18,20 +17,16 @@ export default class PortalMyProfilePage extends LightningElement {
 
     @track services = [];
     @track contactInfo;
-    @track contactTrainingInfo;
-    @track contactTrainingIds;
 
     @track handleScrolling = true;
     @track currentSection;
     @track sectionMapContact = [];
     @track sectionMapAccount = [];
-    @track sectionMapTraining = [];
 
     @track loggedUser;
 
     @track mapOfValuesContact = [];
     @track mapOfValuesAccount = [];
-    @track mapOfValuesTraining = [];
 
     connectedCallback() {
 
@@ -56,14 +51,6 @@ export default class PortalMyProfilePage extends LightningElement {
             this.contactInfo = contact;
         });
 
-        getContactTrainingDetails().then(result => {
-            let trainings = result;
-
-            this.contactTrainingInfo = trainings;
-
-            this.contactTrainingIds = trainings.map(a => a.Id);
-        });
-
     }
 
     renderedCallback() {
@@ -77,10 +64,6 @@ export default class PortalMyProfilePage extends LightningElement {
             }
 
             for (let key in this.sectionMapAccount) {
-                navItems.push({ label: key, value: key, open: true });
-            }
-
-            for (let key in this.sectionMapTraining) {
                 navItems.push({ label: key, value: key, open: true });
             }
 
@@ -106,25 +89,6 @@ export default class PortalMyProfilePage extends LightningElement {
                 }
             }
             this.mapOfValuesContact = localMap;
-
-        });
-
-        getFieldsMap({ type: 'MyTrainings' }).then(result => {
-
-            this.sectionMapTraining = JSON.parse(JSON.stringify(result));
-
-            let sectionMap = this.sectionMapTraining;
-
-            let localMap = [];
-            for (let key in this.sectionMapTraining) {
-
-                if (sectionMap.hasOwnProperty(key)) {
-                    let value = sectionMap[key];
-                    localMap.push({'value': value, 'key': key});
-
-                }
-            }
-            this.mapOfValuesTraining = localMap;
 
         });
 
