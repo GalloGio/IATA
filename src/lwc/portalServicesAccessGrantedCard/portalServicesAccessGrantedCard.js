@@ -4,12 +4,11 @@ import goToOldPortalService from '@salesforce/apex/PortalServicesCtrl.goToOldPor
 import updateLastModifiedService from '@salesforce/apex/PortalServicesCtrl.updateLastModifiedService';
 import verifyCompleteL3Data from '@salesforce/apex/PortalServicesCtrl.verifyCompleteL3Data';
 import getPortalServiceId from '@salesforce/apex/PortalServicesCtrl.getPortalServiceId';
+import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 
 //navigation
 import { NavigationMixin } from 'lightning/navigation';
 import { navigateToPage } from 'c/navigationUtils';
-import { CurrentPageReference } from 'lightning/navigation';
-import { fireEvent } from 'c/pubsub';
 
 //import labels
 import CSP_Services_ManageService from '@salesforce/label/c.CSP_Services_ManageService';
@@ -93,7 +92,8 @@ export default class PortalServicesAccessGrantedCard extends NavigationMixin(Lig
 											window.open(myUrl);
 										}
 										else{
-											fireEvent(this.pageRef, 'fireL3Registration', serviceId);
+											//fireEvent(this.pageRef, 'fireL3Registration', serviceId);
+											navigateToPage(CSP_PortalPath+'?firstLogin=true&lms=yas');
 
 										}
 										this.toggleSpinner();
@@ -139,7 +139,5 @@ export default class PortalServicesAccessGrantedCard extends NavigationMixin(Lig
 
 
 	}
-
-	@wire(CurrentPageReference) pageRef;
 
 }

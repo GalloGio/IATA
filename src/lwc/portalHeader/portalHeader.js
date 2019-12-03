@@ -55,8 +55,6 @@ import Portal_Registration_Required from '@salesforce/schema/User.Portal_Registr
 
 import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 
-import { registerListener,unregisterAllListeners,fireEvent } from 'c/pubsub';
-
 
 export default class PortalHeader extends NavigationMixin(LightningElement) {
 	@track displayAcceptTerms = true;
@@ -219,8 +217,6 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
 
 	connectedCallback() {
 
-		registerListener('fireL3Registration', this.handleMissingData, this);
-
 		isAdmin().then(result => {
 			this.userAdmin = result;
 		});
@@ -314,16 +310,6 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
 		getContactInfo().then(result => {
 			this.displayCompanyTab = !result.Account.Is_General_Public_Account__c;
 		});
-	}
-
-	disconnectedCallback() {
-		// unsubscribe from inputChangeEvent event
-		unregisterAllListeners(this);
-	}
-
-	handleMissingData(payload) {
-		this.displayThirdLevelRegistrationLMS = true;
-		this.serviceid = payload;
 	}
 
 	redirectChangePassword() {

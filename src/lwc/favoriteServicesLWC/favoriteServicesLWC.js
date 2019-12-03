@@ -6,11 +6,10 @@ import paymentLinkRedirect from '@salesforce/apex/PortalServicesCtrl.paymentLink
 import verifyCompleteL3Data from '@salesforce/apex/PortalServicesCtrl.verifyCompleteL3Data';
 import getPortalServiceId from '@salesforce/apex/PortalServicesCtrl.getPortalServiceId';
 import { updateRecord } from 'lightning/uiRecordApi';
+import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 
 //Navigation
 import { navigateToPage } from 'c/navigationUtils';
-import { CurrentPageReference } from 'lightning/navigation';
-import { fireEvent } from 'c/pubsub';
 
 //import labels
 import CSP_SeeAll from '@salesforce/label/c.CSP_SeeAll';
@@ -300,14 +299,14 @@ export default class FavoriteServicesLWC extends LightningElement {
 						else if(recordName.value === 'Training Platform (LMS)'){
 							getPortalServiceId({ serviceName: recordName.value })
 								.then(serviceId => {
-									console.log('service Id: ' + serviceId);
 									verifyCompleteL3Data({serviceId: serviceId})
 									.then(result => {
 										if(result){
 											window.open(myUrl);
 										}
 										else{
-											fireEvent(this.pageRef, 'fireL3Registration', serviceId);
+											//fireEvent(this.pageRef, 'fireL3Registration', serviceId);
+											navigateToPage(CSP_PortalPath+'?firstLogin=true&lms=yas');
 
 										}
 										this.toggleSpinner();
@@ -374,7 +373,5 @@ export default class FavoriteServicesLWC extends LightningElement {
 	goToAvailableServices() {
 		navigateToPage("services?tab=availableServices");
 	}
-
-	@wire(CurrentPageReference) pageRef;
 
 }
