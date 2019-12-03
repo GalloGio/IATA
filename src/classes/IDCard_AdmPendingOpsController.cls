@@ -565,6 +565,7 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
             Map<String, decimal> detailledFees = new Map<String, decimal>();
             detailledFees = IDCardUtil.GetDetailledFees(priceTable, isReissue, false, isITDIPackage, null, null, isToPrint);
             app.Physical_Card_Fee__c = detailledFees.get('PhysCardFee');
+            app.ID_Card_Fee__c = detailledFees.get('IDCardFee');
             if(validatedApplication.keyset().contains(app.Id)){
                 
                 if (app.ID_Card_Fee__c != null)

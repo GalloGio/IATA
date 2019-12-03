@@ -349,7 +349,7 @@ public class IDCard_RenewalWebServiceTest
 
         // validate application
         ID_Card_Application__c app = getCardApplication(idCardApplicationId);
-        validateApplication(app, uit, typeOfCard, pCode, true, 2, false, false, false, false, false);
+        validateApplication(app, uit, typeOfCard, pCode, true, 2, false, false, false, false, true);
         validatePayment(app, pCode, true, false, true, true, false);
         validateSpecializationFields(app, true);
 
@@ -406,7 +406,7 @@ public class IDCard_RenewalWebServiceTest
 
         // validate application
         ID_Card_Application__c app = getCardApplication(idCardApplicationId);
-        validateApplication(app, uit, typeOfCard, pCode, true, 2, false, false, false, false, false);
+        validateApplication(app, uit, typeOfCard, pCode, true, 2, false, false, false, false, true);
         validatePayment(app, pCode, true, false, true, true, false);
         validateSpecializationFields(app, true);
 
@@ -463,7 +463,7 @@ public class IDCard_RenewalWebServiceTest
 
         // validate application
         ID_Card_Application__c app = getCardApplication(idCardApplicationId);
-        validateApplication(app, uit, typeOfCard, pCode, false, 2, false, false, false, false, false);
+        validateApplication(app, uit, typeOfCard, pCode, false, 2, false, false, false, false, true);
         validatePayment(app, pCode, true, false, true, false, false);
         validateSpecializationFields(app, true);
 
@@ -520,7 +520,7 @@ public class IDCard_RenewalWebServiceTest
 
         // validate application
         ID_Card_Application__c app = getCardApplication(idCardApplicationId);
-        validateApplication(app, uit, typeOfCard, pCode, false, 0, false, false, false, false, false);
+        validateApplication(app, uit, typeOfCard, pCode, false, 0, false, false, false, false, true);
         validatePayment(app, pCode, false, false, false, false, false);
         validateSpecializationFields(app, true);
 
@@ -800,7 +800,7 @@ public class IDCard_RenewalWebServiceTest
 
         // validate application
         ID_Card_Application__c app = getCardApplication(idCardApplicationId);
-        validateApplication(app, uit, typeOfCard, pCode, true, 2, true, false, false, true, false); // forced digital
+        validateApplication(app, uit, IDCard_MobileAppRenewalService.CARD_TYPE_DIGITAL, pCode, true, 2, true, false, false, true, false); // forced digital
         validatePayment(app, pCode, true, true, true, true, true);
         validateSpecializationFields(app, true);
 
@@ -863,7 +863,7 @@ public class IDCard_RenewalWebServiceTest
 
         // validate application
         ID_Card_Application__c app = getCardApplication(idCardApplicationId);
-        validateApplication(app, uit, typeOfCard, pCode, true, 2, true, false, false, true, false); // forced digital
+        validateApplication(app, uit, IDCard_MobileAppRenewalService.CARD_TYPE_DIGITAL, pCode, true, 2, true, false, false, true, false); // forced digital
         validatePayment(app, pCode, true, true, true, true, true);
         validateSpecializationFields(app, true);
 
@@ -924,7 +924,7 @@ public class IDCard_RenewalWebServiceTest
 
         // validate application
         ID_Card_Application__c app = getCardApplication(idCardApplicationId);
-        validateApplication(app, uit, typeOfCard, pCode, true, 2, true, false, false, true, false); // forced digital
+        validateApplication(app, uit, IDCard_MobileAppRenewalService.CARD_TYPE_DIGITAL, pCode, true, 2, true, false, false, true, false); // forced digital
         validatePayment(app, pCode, true, true, true, true, true);
         validateSpecializationFields(app, true);
 
@@ -999,7 +999,7 @@ public class IDCard_RenewalWebServiceTest
         // validate application
         ID_Card_Application__c app = getCardApplication(idCardApplicationId);
         // ! openApplication because Test.stopTest already called and there is a pending callout
-        validateApplication(app, uit, typeOfCard, pCode, true, 2, true, false, true, true, true); // forced digital
+        validateApplication(app, uit, IDCard_MobileAppRenewalService.CARD_TYPE_DIGITAL, pCode, true, 2, true, false, true, true, true); // forced digital
         validatePayment(app, pCode, true, true, true, true, true);
         validateSpecializationFields(app, true);
 
