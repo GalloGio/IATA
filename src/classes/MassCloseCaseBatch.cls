@@ -55,14 +55,6 @@ global class MassCloseCaseBatch implements Database.Batchable<sObject>, Database
 
 	 }
 	 global void finish(Database.BatchableContext info){
-			 Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-			 mail.setBccAddresses(new list<String>{UserInfo.getUserEmail()});
-
-			 /*
-			 string message='"Case ID";"Error message"\r\n';
-			 for(string id : logs.keyset())
-					 message += '"'+id+'";"'  + logs.get(id)+'"\r\n';
-			 */
 			 Blob b =blob.valueOf(logfile);
 
 
