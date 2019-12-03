@@ -55,7 +55,7 @@ global class ISSP_BO_Email_Interface implements Messaging.InboundEmailHandler {
 					if (!lstNotificationTemplate.isEmpty())
 					{
 						Notification_template__c notificationTemplate = lstNotificationTemplate[0];
-						ISSP_NotificationUtilities.sendNotification(contactList, notificationTemplate, null, null);
+						ISSP_NotificationUtilities.sendNotification(contactList, notificationTemplate, null, null, null);
 					}
 				}
 			}

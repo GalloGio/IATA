@@ -10,9 +10,9 @@ public class ANG_AgencyHierarchyUniqueVerifier extends TriggerAction {
 		if(Trigger.isInsert){
 			return s.get('Main_Account__c') <> null;
 		}
-		
+
 		if(Trigger.isUpdate){
-		
+
 			Map<Id, AMS_Agencies_Hierarchy__c> oldMap = (Map<Id, AMS_Agencies_Hierarchy__c>) Trigger.oldMap;
 
 			return oldMap.get(s.Id).Main_Account__c <> s.get('Main_Account__c') && s.get('Main_Account__c') <> null;
@@ -22,13 +22,13 @@ public class ANG_AgencyHierarchyUniqueVerifier extends TriggerAction {
 	}
 
 		/**
-	 * Method to process mass applications 
+	 * Method to process mass applications
 	 * @param records relevant records
 	 * @param uw 	  unit of work to include all DML operations
 	 * @return
 	 */
 	protected override void execute(List<SObject> records, UnitOfWork uw) {
-		  
+
 		// first understand if there are any duplicates in the list to update.
 
 		Set<Id> mainAccountsInTrigger = new Set<Id>();
@@ -50,7 +50,7 @@ public class ANG_AgencyHierarchyUniqueVerifier extends TriggerAction {
 		}
 
 		if(mainAccountsInTrigger.isEmpty()) return; // should not happen if we are running execute but ... :)
-			
+
 		// now let's look at the database (excluding the trigger context records)
 
 		Map<Id,AMS_Agencies_Hierarchy__c> toAnalyseMap = new Map<Id,AMS_Agencies_Hierarchy__c>();

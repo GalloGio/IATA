@@ -85,6 +85,20 @@ public class soapSforceComSchemasClassIecWebser2 {
         private String[] apex_schema_type_info = new String[]{'http://soap.sforce.com/schemas/class/IEC_WebService','true','false'};
         private String[] field_order_type_info = new String[]{'quoteId'};
     }
+	public class updateUserProfile_element {
+		public String userId;
+		public String profileId;
+		private String[] userId_type_info = new String[]{'userId','http://soap.sforce.com/schemas/class/IEC_WebService',null,'1','1','true'};
+		private String[] profileId_type_info = new String[]{'profileId','http://soap.sforce.com/schemas/class/IEC_WebService',null,'1','1','true'};
+		private String[] apex_schema_type_info = new String[]{'http://soap.sforce.com/schemas/class/IEC_WebService','true','false'};
+		private String[] field_order_type_info = new String[]{'userId','profileId'};
+	}
+	public class updateUserProfileResponse_element {
+		public Boolean result;
+		private String[] result_type_info = new String[]{'result','http://soap.sforce.com/schemas/class/IEC_WebService',null,'1','1','true'};
+		private String[] apex_schema_type_info = new String[]{'http://soap.sforce.com/schemas/class/IEC_WebService','true','false'};
+		private String[] field_order_type_info = new String[]{'result'};
+	}
     public class IEC_WebService {
         public String endpoint_x = IEC_Settings__c.getOrgDefaults().IEC_Web_Service_Endpoint__c;  //'https://iata--Preprod.cs86.my.salesforce.com/services/Soap/class/IEC_WebService';
         public Map<String,String> inputHttpHeaders_x;
@@ -104,6 +118,28 @@ public class soapSforceComSchemasClassIecWebser2 {
         private String AllowFieldTruncationHeader_hns = 'AllowFieldTruncationHeader=http://soap.sforce.com/schemas/class/IEC_WebService';
         private String DebuggingInfo_hns = 'DebuggingInfo=http://soap.sforce.com/schemas/class/IEC_WebService';
         private String[] ns_map_type_info = new String[]{'http://soap.sforce.com/schemas/class/IEC_WebService', 'soapSforceComSchemasClassIecWebser2'};
+		public Boolean updateUserProfile(String userId,String profileId) {
+			soapSforceComSchemasClassIecWebser2.updateUserProfile_element request_x = new soapSforceComSchemasClassIecWebser2.updateUserProfile_element();
+			request_x.userId = userId;
+			request_x.profileId = profileId;
+			soapSforceComSchemasClassIecWebser2.updateUserProfileResponse_element response_x;
+			Map<String, soapSforceComSchemasClassIecWebser2.updateUserProfileResponse_element> response_map_x = new Map<String, soapSforceComSchemasClassIecWebser2.updateUserProfileResponse_element>();
+			response_map_x.put('response_x', response_x);
+			WebServiceCallout.invoke(
+			  this,
+			  request_x,
+			  response_map_x,
+			  new String[]{endpoint_x,
+			  '',
+			  'http://soap.sforce.com/schemas/class/IEC_WebService',
+			  'updateUserProfile',
+			  'http://soap.sforce.com/schemas/class/IEC_WebService',
+			  'updateUserProfileResponse',
+			  'soapSforceComSchemasClassIecWebser2.updateUserProfileResponse_element'}
+			);
+			response_x = response_map_x.get('response_x');
+			return response_x.result;
+		}
         public Boolean updateContact(String contactId,String sFirstName,String sLastName,String sEmail,String sSalutation,String sTitle,String sPhone,String sTax1,String sTax2,String sVATCountryCode, String sIECPortalStatus) {
             soapSforceComSchemasClassIecWebser2.updateContact_element request_x = new soapSforceComSchemasClassIecWebser2.updateContact_element();
             request_x.contactId = contactId;

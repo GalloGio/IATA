@@ -2,7 +2,7 @@
 private class ANG_HierarchyTriggerTest {
 
 	@isTest static void ANG_HierarchyTriggerTestValidateRT() {
-		
+
 		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US',ANG_Enable_NewGen__c=true)  ;
 		insert ctry ;
 
@@ -35,8 +35,8 @@ private class ANG_HierarchyTriggerTest {
 
 	}
 
-  @isTest static void ANG_HierarchyTriggerTestValidateUniqueness() {
-		
+	@isTest static void ANG_HierarchyTriggerTestValidateUniqueness() {
+
 		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US',ANG_Enable_NewGen__c=true)  ;
 		insert ctry ;
 
@@ -52,12 +52,12 @@ private class ANG_HierarchyTriggerTest {
 		insert new list<AMS_Agencies_Hierarchy__c>{hierarchy};
 
 		Test.startTest();
-  
+
 		//Create the hierarchy
 		AMS_Agencies_Hierarchy__c hierarchy2 = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy 2', Main_account__c = a1.Id);
 
 		try{
-			
+
 			insert new list<AMS_Agencies_Hierarchy__c>{hierarchy2};
 
 		}catch(Exception e){
@@ -72,8 +72,8 @@ private class ANG_HierarchyTriggerTest {
 
 	}
 
-  @isTest static void ANG_HierarchyTriggerTestValidateUniqueness2() {
-		
+	@isTest static void ANG_HierarchyTriggerTestValidateUniqueness2() {
+
 		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US',ANG_Enable_NewGen__c=true)  ;
 		insert ctry ;
 
@@ -91,7 +91,7 @@ private class ANG_HierarchyTriggerTest {
 		insert new list<AMS_Agencies_Hierarchy__c>{hierarchy1,hierarchy2};
 
 		Test.startTest();
-  
+
 		try{
 
 			hierarchy2.Main_account__c = a1.Id;
@@ -109,8 +109,8 @@ private class ANG_HierarchyTriggerTest {
 
 	}
 
-  @isTest static void ANG_HierarchyTriggerTestValidateUniqueness3() {
-		
+	@isTest static void ANG_HierarchyTriggerTestValidateUniqueness3() {
+
 		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US',ANG_Enable_NewGen__c=true)  ;
 		insert ctry ;
 
@@ -138,8 +138,8 @@ private class ANG_HierarchyTriggerTest {
 
 	}
 
-  @isTest static void ANG_HierarchyTriggerTestValidateUniqueness4() {
-		
+	@isTest static void ANG_HierarchyTriggerTestValidateUniqueness4() {
+
 		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US',ANG_Enable_NewGen__c=true)  ;
 		insert ctry ;
 
@@ -196,8 +196,8 @@ private class ANG_HierarchyTriggerTest {
 
 	}
 
-  @isTest static void ANG_HierarchyTriggerTestValidateUniqueness5() {
-		
+	@isTest static void ANG_HierarchyTriggerTestValidateUniqueness5() {
+
 		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US',ANG_Enable_NewGen__c=true)  ;
 		insert ctry ;
 
@@ -222,7 +222,7 @@ private class ANG_HierarchyTriggerTest {
 
 			hierarchy1.Main_account__c = a3.Id;
 			hierarchy2.Main_account__c = a3.Id;
-	
+
 			update new list<AMS_Agencies_Hierarchy__c>{hierarchy1,hierarchy2};
 
 		}catch(Exception e){
@@ -239,7 +239,7 @@ private class ANG_HierarchyTriggerTest {
 
 
 	@isTest static void ANG_HierarchyBatchUpdater() {
-	
+
 		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US', ANG_Enable_NewGen__c=true)  ;
 		insert ctry ;
 
@@ -248,7 +248,7 @@ private class ANG_HierarchyTriggerTest {
 		Account a1 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234561',Location_Type__c='HE',Name='Agency HE 1',Short_Name__c='Agency HE 1', Sector__c = 'Travel Agent', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S9_APPROVED);
 		Account a2 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234562',Location_Type__c='HE',Name='Agency HE 1',Short_Name__c='Agency HE 1', Sector__c = 'Travel Agent', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S9_APPROVED);
 		Account a3 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234563',Location_Type__c='HE',Name='Agency HE 2',Short_Name__c='Agency HE 2', Sector__c = 'Travel Agent', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S0_TERMINATED, Purge_Flag__c = true);
-		  
+
 		insert new List<Account>{a1,a2,a3};
 
 		//Create the hierarchy
@@ -266,7 +266,7 @@ private class ANG_HierarchyTriggerTest {
 		List<AMS_Agencies_Hierarchy__c> newHierarchyLst = [Select ID , Main_account__C from AMS_Agencies_Hierarchy__c where id != :hierarchy.Id];
 
 		System.assertEquals(1,newHierarchyLst.size());
-		
+
 		System.assertEquals(a2.Id,newHierarchyLst.get(0).Main_Account__c);
 
 		newHierarchyLst = [Select ID , Main_account__C from AMS_Agencies_Hierarchy__c where id = :hierarchy.Id];
@@ -276,18 +276,18 @@ private class ANG_HierarchyTriggerTest {
 	}
 
 	@isTest static void ANG_HierarchyBatchUpdater2() {
-	
+
 		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US', ANG_Enable_NewGen__c=true)  ;
 		insert ctry ;
 
 		Id accountAgencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
 		Account a1 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234561',Location_Type__c='HE',Name='Agency HE 1',Short_Name__c='Agency HE 1', Sector__c = 'Travel Agent', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S9_APPROVED);
- 
+
  		insert new List<Account>{a1};
 
 		Account a2 = new Account(IATA_ISO_Country__c = ctry.id, ParentId = a1.Id,  RecordTypeId = accountAgencyRT, IATACode__c='1234562',Location_Type__c='AE',Name='Agency HE 2',Short_Name__c='Agency HE 2', Sector__c = 'Travel Agent', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S9_APPROVED);
-		  
+
 		insert new List<Account>{a2};
 
 		//Create the hierarchy
@@ -296,7 +296,7 @@ private class ANG_HierarchyTriggerTest {
 		insert new list<AMS_Agencies_Hierarchy__c>{hierarchy};
 
 		AMS_Agencies_relationhip__c rel1 = new AMS_Agencies_relationhip__c(Hierarchy__c = hierarchy.Id, Parent_Account__c = a1.Id, Child_Account__c = a2.Id, Is_Newgen_Relation__c = true);
-	
+
 		insert new List<AMS_Agencies_relationhip__c>{rel1};
 
 		Test.startTest();
@@ -309,24 +309,24 @@ private class ANG_HierarchyTriggerTest {
 		List<AMS_Agencies_Hierarchy__c> newHierarchyLst = [Select ID , Main_account__C from AMS_Agencies_Hierarchy__c];
 
 		System.assertEquals(1,newHierarchyLst.size());
-		
+
 		System.assertEquals(a1.Id,newHierarchyLst.get(0).Main_Account__c);
-		
+
 	}
 
 	@isTest static void ANG_HierarchyBatchUpdaterError() {
-	
+
 		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US', ANG_Enable_NewGen__c=true)  ;
 		insert ctry ;
 
 		Id accountAgencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
 		Account a1 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234561',Location_Type__c='HE',Name='Agency HE 1',Short_Name__c='Agency HE 1', Sector__c = 'Travel Agent', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S9_APPROVED);
- 
+
  		insert new List<Account>{a1};
 
 		Account a2 = new Account(IATA_ISO_Country__c = ctry.id, ParentId = a1.Id,  RecordTypeId = accountAgencyRT, IATACode__c='1234562',Location_Type__c='AE',Name='Agency HE 2',Short_Name__c='Agency HE 2', Sector__c = 'Travel Agent', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S9_APPROVED);
-		  
+
 		insert new List<Account>{a2};
 
 		//Create the hierarchy
@@ -335,7 +335,7 @@ private class ANG_HierarchyTriggerTest {
 		insert new list<AMS_Agencies_Hierarchy__c>{hierarchy};
 
 		AMS_Agencies_relationhip__c rel1 = new AMS_Agencies_relationhip__c(Hierarchy__c = hierarchy.Id, Parent_Account__c = a1.Id, Child_Account__c = a2.Id, Is_Newgen_Relation__c = true);
-	
+
 		insert new List<AMS_Agencies_relationhip__c>{rel1};
 
 		//Create the hierarchy
@@ -344,34 +344,34 @@ private class ANG_HierarchyTriggerTest {
 		insert new list<AMS_Agencies_Hierarchy__c>{hierarchy2};
 
 		Test.startTest();
-		
+
 		ANG_HierarchyUpdaterBatch batch = new ANG_HierarchyUpdaterBatch(null,false);
-		
+
 		ANG_HierarchyUpdaterBatch.injectError = true;
-		
+
 		Database.executeBatch(batch, 200);
 
 		Test.stopTest();
-		
+
 		List<AMS_Agencies_Hierarchy__c> newHierarchyLst = [Select ID , Main_account__C from AMS_Agencies_Hierarchy__c where id = :hierarchy.Id];
-		
+
 		System.assertEquals(null,newHierarchyLst.get(0).Main_Account__c);
 
 	}
 
 	@isTest static void ANG_HierarchyBatchUpdaterReport() {
-	
+
 		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US', ANG_Enable_NewGen__c=true)  ;
 		insert ctry ;
 
 		Id accountAgencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
 		Account a1 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234561',Location_Type__c='HE',Name='Agency HE 1',Short_Name__c='Agency HE 1', Sector__c = 'Travel Agent', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S9_APPROVED);
- 
+
  		insert new List<Account>{a1};
 
 		Account a2 = new Account(IATA_ISO_Country__c = ctry.id, ParentId = a1.Id,  RecordTypeId = accountAgencyRT, IATACode__c='1234562',Location_Type__c='AE',Name='Agency HE 2',Short_Name__c='Agency HE 2', Sector__c = 'Travel Agent', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S9_APPROVED);
-		  
+
 		insert new List<Account>{a2};
 
 		//Create the hierarchy
@@ -380,7 +380,7 @@ private class ANG_HierarchyTriggerTest {
 		insert new list<AMS_Agencies_Hierarchy__c>{hierarchy};
 
 		AMS_Agencies_relationhip__c rel1 = new AMS_Agencies_relationhip__c(Hierarchy__c = hierarchy.Id, Parent_Account__c = a1.Id, Child_Account__c = a2.Id, Is_Newgen_Relation__c = true);
-	
+
 		insert new List<AMS_Agencies_relationhip__c>{rel1};
 
 		Test.startTest();
@@ -393,8 +393,8 @@ private class ANG_HierarchyTriggerTest {
 		List<AMS_Agencies_Hierarchy__c> newHierarchyLst = [Select ID , Main_account__C from AMS_Agencies_Hierarchy__c];
 
 		System.assertEquals(1,newHierarchyLst.size());
-		
+
 		System.assertEquals(null,newHierarchyLst.get(0).Main_Account__c);
-		
+
 	}
 }

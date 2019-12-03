@@ -3,8 +3,8 @@
  */
 public class RecordTypeSingleton {
 	// private static variable referencing the class
-    private static RecordTypeSingleton instance = null;
-    // variable that contains the repord types by name per object type
+	private static RecordTypeSingleton instance = null;
+	// variable that contains the repord types by name per object type
 	private Map<String, Map<String, RecordType>> recordTypesByName;
 
 	// variable that contains the repord types by id per object type
@@ -38,7 +38,7 @@ public class RecordTypeSingleton {
 		}
 
 	}
-	   
+
 	/**
 	 * Method that returns the instance of RecordTypeSingleton
 	 * @return instance of the singleton
@@ -46,9 +46,9 @@ public class RecordTypeSingleton {
 	public static RecordTypeSingleton getInstance(){
 		if(instance == null){
 			instance = new RecordTypeSingleton();
-		} 
-	    
-	    return instance;
+		}
+
+		return instance;
 	}
 
 	/**
@@ -139,7 +139,7 @@ public class RecordTypeSingleton {
 	 * Method that returns a map of record types Ids for a specified object and a list of developer names
 	 * @param  objectName  the name of the object
 	 * @param  devNameList List of the name of the record type (DeveloperName)
-	 * @return             Map of record type Ids for the passed object per developer name of record type 
+	 * @return             Map of record type Ids for the passed object per developer name of record type
 	 */
 	public Map<String, Id> getRecordTypeObjIdMapForSpecfifiedNames(String objectName, List<String> devNameList) {
 		Map<String, Id> returnRecTypeObjIdMap = new Map<String, Id>();
@@ -185,7 +185,7 @@ public class RecordTypeSingleton {
 	public RecordType getRecordTypeById(String objectName, Id rtId){
 
 		if(!recordTypesByName.containsKey(objectName)) return null;
-		
+
 		return recordTypesById.get(objectName).get(rtId);
 
 	}

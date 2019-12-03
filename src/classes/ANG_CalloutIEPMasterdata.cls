@@ -10,8 +10,8 @@ global class ANG_CalloutIEPMasterdata implements ANG_CalloutHelperInt {
 
 	private static void sendCallout(String body, String action, String namedCredential, String changeCodeId, String agencyUpdateId, String iataCode,Boolean isRunningBatch){
 		if((System.isBatch() || System.isFuture()) && trigger.isExecuting){
-			System.enqueueJob(new executeCalloutQueueable(body, action, namedCredential, changeCodeId, agencyUpdateId, iataCode));		
-		}		
+			System.enqueueJob(new executeCalloutQueueable(body, action, namedCredential, changeCodeId, agencyUpdateId, iataCode));
+		}
 		else if(isRunningBatch || ANG_ConversionHelper.isMigrationTool || System.isBatch() || System.isFuture()){
 			executeCallout(body, action, namedCredential, changeCodeId, agencyUpdateId, iataCode);
 		}
@@ -36,7 +36,7 @@ global class ANG_CalloutIEPMasterdata implements ANG_CalloutHelperInt {
 
 		System.debug('ANG_CalloutIEPMasterdata:Endpoint:' + req.getEndpoint());
 		System.debug('ANG_CalloutIEPMasterdata:Callout request is:'+req.getBody());
-   
+
 		Http http = new Http();
 		HTTPResponse res;
 
@@ -57,9 +57,9 @@ global class ANG_CalloutIEPMasterdata implements ANG_CalloutHelperInt {
 			log.Success__c = false;
 
 			//ServiceNow_Helper.sendRequestToSNOW('Mulesoft', 'INT_008', 'Agency MasterData', 'Mulesoft', 'Mulesoft', iataCode + ' ' + log.Error_Code__c, e.getMessage(), 'Connectivity', 'Salesforce.com', 'Salesforce.com', 'Infrastructure Services', 'Mulesoft Support', '2', '2', '2', 'Failure');
-			ServiceNow_Helper.sendRequestToSNOWMulesoft('SNOW1', iatacode, log);	
-			ANG_IEP_CalloutHelper.updateAgencyEvent(agencyUpdateId,false);			
-			
+			ServiceNow_Helper.sendRequestToSNOWMulesoft('SNOW1', iatacode, log);
+			ANG_IEP_CalloutHelper.updateAgencyEvent(agencyUpdateId,false);
+
 			insert log;
 			return;
 		}
@@ -75,8 +75,8 @@ global class ANG_CalloutIEPMasterdata implements ANG_CalloutHelperInt {
 		log.Method__c = action;
 		log.Web_Service__c = String.valueOf(req);
 
-		try{ 
-		  log.Response__c = res.getBody(); 
+		try{
+			log.Response__c = res.getBody();
 		}catch(exception e){}
 
 		if(!(res.getStatusCode() > ANG_IEP_CalloutHelper.STATUSOKLOWER   && res.getStatusCode() < ANG_IEP_CalloutHelper.STATUSOKHIGHER )){
@@ -85,7 +85,7 @@ global class ANG_CalloutIEPMasterdata implements ANG_CalloutHelperInt {
 			log.Error_Code__c = String.valueOf(res.getStatusCode());
 			log.Error_Message__c = res.getStatus();
 			log.Success__c = false;
-			//ServiceNow_Helper.sendRequestToSNOW('Mulesoft', 'INT_008', 'Agency MasterData', 'Mulesoft', 'Mulesoft', iataCode + ' ' +  String.valueOf(res.getStatusCode()),  String.valueOf(res.getStatusCode()), 'Connectivity', 'Salesforce.com', 'Salesforce.com', 'Infrastructure Services', 'Mulesoft Support', '2', '2', '2', 'Failure');			
+			//ServiceNow_Helper.sendRequestToSNOW('Mulesoft', 'INT_008', 'Agency MasterData', 'Mulesoft', 'Mulesoft', iataCode + ' ' +  String.valueOf(res.getStatusCode()),  String.valueOf(res.getStatusCode()), 'Connectivity', 'Salesforce.com', 'Salesforce.com', 'Infrastructure Services', 'Mulesoft Support', '2', '2', '2', 'Failure');
 			ServiceNow_Helper.sendRequestToSNOWMulesoft('SNOW2', iatacode, log);
 		}
 		else{
@@ -105,19 +105,19 @@ global class ANG_CalloutIEPMasterdata implements ANG_CalloutHelperInt {
 		private String changeCodeId;
 		private String agencyUpdateId;
 		private String iataCode;
-	
+
 		public executeCalloutQueueable(String body, String action, String namedCredential, String changeCodeId, String agencyUpdateId, String iataCode){
 			this.body =	body;
 			this.action = action;
 			this.namedCredential = namedCredential;
 			this.changeCodeId =	changeCodeId;
 			this.agencyUpdateId = agencyUpdateId;
-			this.iataCode =	iataCode;		
+			this.iataCode =	iataCode;
 		}
 
 		public void execute(QueueableContext context){
-			executeCallout(body, action, namedCredential, changeCodeId, agencyUpdateId, iataCode);		
+			executeCallout(body, action, namedCredential, changeCodeId, agencyUpdateId, iataCode);
 		}
-	
+
 	}
 }

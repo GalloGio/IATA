@@ -46,10 +46,10 @@ private class ANG_FinancialReviewAutomaticOptOutTest {
 		IATA_ISO_Country__c countryWW = new IATA_ISO_Country__c(
 			Name = 'All Countries',
 			ISO_Code__c = 'WW'
-		);		
+		);
 
 		IATA_ISO_Country__c countryCN = new IATA_ISO_Country__c(
-			Name = 'China (People\'s Republic of)', 
+			Name = 'China (People\'s Republic of)',
 			ISO_Code__c = 'CN',
 			AMS_Settlement_System__c = bspCN.Id,
 			ANG_Enable_NewGen__c = true
@@ -152,32 +152,32 @@ private class ANG_FinancialReviewAutomaticOptOutTest {
 		AMS_Agencies_Hierarchy__c h = new AMS_Agencies_Hierarchy__c(
 			Hierarchy_Name__c = 'Newgen Hierarchy Cashless'
 		);
-		
+
 		insert h;
 
 		AMS_Agencies_relationhip__c r1 = new AMS_Agencies_relationhip__c(
-			Is_Newgen_Relation__c = true, 
-			Child_Account__c = cashlessAgentAE.Id, 
-			Parent_Account__c = cashlessAgent.Id, 
+			Is_Newgen_Relation__c = true,
+			Child_Account__c = cashlessAgentAE.Id,
+			Parent_Account__c = cashlessAgent.Id,
 			Hierarchy__c = h.Id
 		);
-		
+
 		AMS_Agencies_relationhip__c r2 = new AMS_Agencies_relationhip__c(
-			Is_Newgen_Relation__c = true, 
-			Child_Account__c = cashlessAgent2AE.Id, 
-			Parent_Account__c = cashlessAgent.Id, 
+			Is_Newgen_Relation__c = true,
+			Child_Account__c = cashlessAgent2AE.Id,
+			Parent_Account__c = cashlessAgent.Id,
 			Hierarchy__c = h.Id
 		);
 
 		insert new List<AMS_Agencies_relationhip__c>{r1, r2};
 
 		Contact co1 = new Contact(
-			AccountId = agentCN.id, 
-			Firstname = 'John', 
-			Lastname = 'Test', 
-			Phone = '666123456', 
-			MobilePhone = '911111111', 
-			Email = 'test.john@test.com', 
+			AccountId = agentCN.id,
+			Firstname = 'John',
+			Lastname = 'Test',
+			Phone = '666123456',
+			MobilePhone = '911111111',
+			Email = 'test.john@test.com',
 			Financial_Assessment_Contact__c = false
 		);
 
@@ -191,31 +191,31 @@ private class ANG_FinancialReviewAutomaticOptOutTest {
 		);
 
 		Contact co3 = new Contact(
-			AccountId = cashlessAgent.id, 
-			Firstname = 'Cashless', 
-			Lastname = 'Agent', 
-			Phone = '666122222', 
-			MobilePhone = '911111112', 
-			Email = 'cashless.agent@test.com', 
+			AccountId = cashlessAgent.id,
+			Firstname = 'Cashless',
+			Lastname = 'Agent',
+			Phone = '666122222',
+			MobilePhone = '911111112',
+			Email = 'cashless.agent@test.com',
 			Financial_Assessment_Contact__c = false
 		);
-		
+
 		insert new List<Contact>{co1, co2, co3};
 
 		Id caseRT = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
 		AMS_OSCAR__c oscar = new AMS_OSCAR__c(
-			Process__c = AMS_Utils.NEWHESTANDARD, 
+			Process__c = AMS_Utils.NEWHESTANDARD,
 			Account__c = agentCN.Id,
 			RecordTypeId = AMS_Utils.RECTYPE_NEWHE
 		);
 
 		insert oscar;
 
-		//Since the trigger is not bulkified 
+		//Since the trigger is not bulkified
 		//we have to insert oscars's separately
 		AMS_OSCAR__c changesOscar = new AMS_OSCAR__c(
-			Process__c = AMS_Utils.NGCHANGES, 
+			Process__c = AMS_Utils.NGCHANGES,
 			Account__c = cashlessAgent.Id,
 			RecordTypeId = AMS_Utils.RECTYPE_NGCHANGES
 		);
@@ -223,18 +223,18 @@ private class ANG_FinancialReviewAutomaticOptOutTest {
 		insert changesOscar;
 
 		Case oscarCase = new Case(
-			Oscar__c = oscar.Id, 
+			Oscar__c = oscar.Id,
 			RecordTypeId = caseRT,
 			AccountId = agentCN.Id,
 			ContactId = co1.Id
 		);
 
 		insert oscarCase;
-		
+
 		Test.stopTest();
 
 		Case changesOscarCase = new Case(
-			Oscar__c = changesOscar.Id, 
+			Oscar__c = changesOscar.Id,
 			RecordTypeId = caseRT,
 			AccountId = cashlessAgent.Id,
 			ContactId = co3.Id
@@ -275,7 +275,7 @@ private class ANG_FinancialReviewAutomaticOptOutTest {
 		changesOscar.AMS_Online_Accreditation__c = chgsStagingArea.Id;
 
 		update new List<AMS_OSCAR__c>{oscar, changesOscar};
-		
+
 		Attachment attc = new Attachment(
 			OwnerId = UserInfo.getUserId(),
 			IsPrivate = true,
@@ -319,65 +319,65 @@ private class ANG_FinancialReviewAutomaticOptOutTest {
 		);
 
 		insert new List<AMS_Accreditation_Contact__c>{owner, ownerChg};
-		
+
 		Case cseIfap = new Case(
 			RecordTypeId = AMS_Utils.RECTYPE_CASEIFAP,
 			Status = 'Open',
-			Region__c = 'Asia & Pacific', 
-			Origin= 'Agent Financial Review Notification', 
-			Subject =  'Financial Review Case', 
-			AccountId = oscar.Account__c, 
-			BSPCountry__c = 'CN', 
-			IFAP_Area__c = 'Area 3', 
+			Region__c = 'Asia & Pacific',
+			Origin= 'Agent Financial Review Notification',
+			Subject =  'Financial Review Case',
+			AccountId = oscar.Account__c,
+			BSPCountry__c = 'CN',
+			IFAP_Area__c = 'Area 3',
 			IFAP_Financial_Year__c =  String.valueOf(Date.today().year()),
-			Deadline_Date__c = Date.today().addDays(360), 
-			Contactid = co2.id, 
+			Deadline_Date__c = Date.today().addDays(360),
+			Contactid = co2.id,
 			Assessment_Performed_Date__c = Date.today()
 		);
 
 		Case cseChgIfap = new Case(
 			RecordTypeId = AMS_Utils.RECTYPE_CASEIFAP,
 			Status = 'Open',
-			Region__c = 'Asia & Pacific', 
-			Origin= 'Agent Financial Review Notification', 
-			Subject =  'Financial Review Case', 
-			AccountId = changesOscar.Account__c, 
-			BSPCountry__c = 'CN', 
-			IFAP_Area__c = 'Area 3', 
+			Region__c = 'Asia & Pacific',
+			Origin= 'Agent Financial Review Notification',
+			Subject =  'Financial Review Case',
+			AccountId = changesOscar.Account__c,
+			BSPCountry__c = 'CN',
+			IFAP_Area__c = 'Area 3',
 			IFAP_Financial_Year__c =  String.valueOf(Date.today().year()),
-			Deadline_Date__c = Date.today().addDays(360), 
-			Contactid = co2.id, 
+			Deadline_Date__c = Date.today().addDays(360),
+			Contactid = co2.id,
 			Assessment_Performed_Date__c = Date.today()
 		);
 
 		CaseChildHelper.noValidationsOnTrgCAseIFAP = true;
-		  
+
 		insert new List<Case>{cseIfap, cseChgIfap};
 
 	}
 
 	@isTest static void newHEStandardAgentOptOutFieldOscarLeftPanelTest(){
 
-		AMS_OSCAR__c oscar = 
-			[SELECT 
+		AMS_OSCAR__c oscar =
+			[SELECT
 				Id,
 				ANG_FA_Opt_Out__c
-			 FROM 
+			 FROM
 				AMS_OSCAR__c
 			 WHERE
 				Process__c = :AMS_Utils.NEWHESTANDARD
 			 LIMIT 1
 			];
-		
+
 		PageReference pageRef = Page.AMS_OSCAR_ProcessViewer;
 		Test.setCurrentPage(pageRef);
 		ApexPages.currentPage().getParameters().put('id', oscar.Id);
-		
+
 		AMS_OSCAR_ProcessViewerController ctrl = new AMS_OSCAR_ProcessViewerController();
 
 		system.assert(ctrl.blockFAoptOut, 'Financial assessment opt-in / opt-out field should be blocked for edition');
 		system.assert(!ctrl.hideFAoptOut, 'Financial assessment opt-in / opt-out field should NOT be hidden');
-		
+
 		AMS_OSCAR_JSON.Process process = ctrl.process.get(AMS_Utils.NEWHESTANDARD);
 
 		Boolean faOptOutFldFound = false;
@@ -413,11 +413,11 @@ private class ANG_FinancialReviewAutomaticOptOutTest {
 		//force delete the configuration so the Opt Out field is set as 'N/A'
 		delete csaLst;
 
-		AMS_OSCAR__c oscar = 
-			[SELECT 
+		AMS_OSCAR__c oscar =
+			[SELECT
 				Id,
 				ANG_FA_Opt_Out__c
-			 FROM 
+			 FROM
 				AMS_OSCAR__c
 			 WHERE
 				Process__c = :AMS_Utils.NEWHESTANDARD
@@ -430,11 +430,11 @@ private class ANG_FinancialReviewAutomaticOptOutTest {
 
 		update oscar;
 
-		oscar = 
-			[SELECT 
+		oscar =
+			[SELECT
 				Id,
 				ANG_FA_Opt_Out__c
-			 FROM 
+			 FROM
 				AMS_OSCAR__c
 			 WHERE
 				Id = :oscar.Id
@@ -446,21 +446,21 @@ private class ANG_FinancialReviewAutomaticOptOutTest {
 	}
 
 	@isTest static void newHEStandardAgentAutomaticallyOptOutFATest(){
-		
-        AMS_OSCARTriggerHandler.allOnlineAccr = null;
-        
-		AMS_OSCAR__c oscar = 
+
+		AMS_OSCARTriggerHandler.allOnlineAccr = null;
+
+		AMS_OSCAR__c oscar =
 			[SELECT
 				Id,
 				ANG_FA_Opt_Out__c,
-             	AMS_Online_Accreditation__c
-			 FROM 
+			 	AMS_Online_Accreditation__c
+			 FROM
 				AMS_OSCAR__c
 			 WHERE
 				Process__c = :AMS_Utils.NEWHESTANDARD
 			 LIMIT 1
 			];
-		        
+
 		system.assert(oscar.ANG_FA_Opt_Out__c == AMS_Utils.NOT_APPLICABLE, 'The OSCAR should have the default value \'' + AMS_Utils.NOT_APPLICABLE + '\' for \'Financial Assessment opt-in/opt-out\' before passing the sanity check');
 
 		oscar.Is_PCI_compliant__c = 'Yes';
@@ -469,12 +469,12 @@ private class ANG_FinancialReviewAutomaticOptOutTest {
 
 		update oscar;
 
-		oscar = 
+		oscar =
 			[SELECT
 				Id,
 				Account__c,
 				ANG_FA_Opt_Out__c
-			 FROM 
+			 FROM
 				AMS_OSCAR__c
 			 WHERE
 				Id = :oscar.Id
@@ -487,7 +487,7 @@ private class ANG_FinancialReviewAutomaticOptOutTest {
 		//hiting the governor limits generates the change code before
 		//just for the purpose of this test
 		AMS_OSCAR_Webservice.createChangeCodeNEW(oscar.Id);
-		
+
 		Test.startTest();
 
 		oscar.STEP11__c = AMS_Utils.PASSED;
@@ -506,7 +506,7 @@ private class ANG_FinancialReviewAutomaticOptOutTest {
 	}
 
 	@isTest static void changeOfAccreditationTypeNotApplicableFATest(){
-		
+
 		ANG_AgencyChangesHelper.testRunnningForNonBackup = true;
 
 		List<AMS_Country_Specific_Attribute__c> csaLst = new List<AMS_Country_Specific_Attribute__c>(
@@ -517,21 +517,21 @@ private class ANG_FinancialReviewAutomaticOptOutTest {
 		delete csaLst;
 
 		ANG_AgencyChangesConfig__c chgCfg = new ANG_AgencyChangesConfig__c(
-			Name = 'ChangeAccreditationType', 
+			Name = 'ChangeAccreditationType',
 			TC_Accreditation_Type__c = true,
-			TCA_Sanity_check__c = 'CHI', 
+			TCA_Sanity_check__c = 'CHI',
 			TCA_Application_withdrawal__c = 'CWD',
 			Valid_Accreditation_Models__c = 'Cash;Cashless;Legacy'
 		);
 
 		insert chgCfg;
 
-		AMS_OSCAR__c oscar = 
-			[SELECT 
+		AMS_OSCAR__c oscar =
+			[SELECT
 				Id,
 				ANG_FA_Opt_Out__c
-			 FROM 
-				AMS_OSCAR__c 
+			 FROM
+				AMS_OSCAR__c
 			 WHERE
 				Process__c = :AMS_Utils.NGCHANGES
 			 LIMIT 1
@@ -550,13 +550,13 @@ private class ANG_FinancialReviewAutomaticOptOutTest {
 		update oscar;
 
 		Test.stopTest();
-		
-		oscar = 
-			[SELECT 
-				Id, 
+
+		oscar =
+			[SELECT
+				Id,
 				ANG_FA_Opt_Out__c
-			 FROM 
-				AMS_OSCAR__c 
+			 FROM
+				AMS_OSCAR__c
 			 WHERE
 				Id = :oscar.Id
 			 LIMIT 1
@@ -567,25 +567,25 @@ private class ANG_FinancialReviewAutomaticOptOutTest {
 	}
 
 	@isTest static void changeOfAccreditationTypeAutomaticallyOptOutFATest(){
-		
+
 		ANG_AgencyChangesHelper.testRunnningForNonBackup = true;
 
 		ANG_AgencyChangesConfig__c chgCfg = new ANG_AgencyChangesConfig__c(
-			Name = 'ChangeAccreditationType', 
+			Name = 'ChangeAccreditationType',
 			TC_Accreditation_Type__c = true,
-			TCA_Sanity_check__c = 'CHI', 
+			TCA_Sanity_check__c = 'CHI',
 			TCA_Application_withdrawal__c = 'CWD',
 			Valid_Accreditation_Models__c = 'Cash;Cashless;Legacy'
 		);
 
 		insert chgCfg;
 
-		AMS_OSCAR__c oscar = 
-			[SELECT 
+		AMS_OSCAR__c oscar =
+			[SELECT
 				Id,
 				ANG_FA_Opt_Out__c
-			 FROM 
-				AMS_OSCAR__c 
+			 FROM
+				AMS_OSCAR__c
 			 WHERE
 				Process__c = :AMS_Utils.NGCHANGES
 			 LIMIT 1
@@ -604,20 +604,20 @@ private class ANG_FinancialReviewAutomaticOptOutTest {
 
 		Test.stopTest();
 
-		oscar = 
-			[SELECT 
-				Id, 
+		oscar =
+			[SELECT
+				Id,
 				Account__c,
 				ANG_FA_Opt_Out__c
-			 FROM 
-				AMS_OSCAR__c 
+			 FROM
+				AMS_OSCAR__c
 			 WHERE
 				Id = :oscar.Id
 			 LIMIT 1
 			];
 
 		system.assert(oscar.ANG_FA_Opt_Out__c == AMS_Utils.FA_OPT_OUT, 'The OSCAR should have the value \'' + AMS_Utils.FA_OPT_OUT + '\' for \'Financial Assessment opt-in/opt-out\'');
-			
+
 		oscar.STEP11__c = AMS_Utils.PASSED;
 		oscar.STEP2__c = AMS_Utils.PASSED;
 		oscar.STEP34__c = AMS_Utils.PASSED;
@@ -627,17 +627,17 @@ private class ANG_FinancialReviewAutomaticOptOutTest {
 		//WMO-564
 		oscar.Bank_Guarantee_requested__c = Date.today();
 		update oscar;
-		
+
 		assessfinancialReviewOptOut(oscar.Id);
 
 	}
 
 	private static void assessfinancialReviewOptOut(Id oscarId){
 
-		AMS_OSCAR__c oscar = 
-			[SELECT 
+		AMS_OSCAR__c oscar =
+			[SELECT
 				Id,
-				Account__c, 
+				Account__c,
 				AMS_Online_Accreditation__c,
 				Oscar_Communication_Case_Id__c,
 				RecordType.DeveloperName,
@@ -646,10 +646,10 @@ private class ANG_FinancialReviewAutomaticOptOutTest {
 				Account__r.ANG_CashCondition__c,
 				Account__r.ANG_RiskStatus__c,
 				ANG_FA_Opt_Out__c
-			 FROM 
+			 FROM
 				AMS_OSCAR__c
 			 WHERE
-				Id = :oscarId 
+				Id = :oscarId
 			 LIMIT 1
 			];
 
@@ -682,7 +682,7 @@ private class ANG_FinancialReviewAutomaticOptOutTest {
 			 AND
 				RecordTypeId = :AMS_Utils.RECTYPE_CASEIFAP
 			]
-		); 
+		);
 
 		for(Case cse : ifapLst){
 			system.assert(cse.Status == IFAP_BusinessRules.CLOSEDOPTOUT, 'All IFAP cases should be in status \'' + IFAP_BusinessRules.CLOSEDOPTOUT + '\'');

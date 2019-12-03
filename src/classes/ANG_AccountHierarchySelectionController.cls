@@ -324,9 +324,12 @@ public with sharing class ANG_AccountHierarchySelectionController {
 	public Boolean showTargetAgency{
 		get{
 			if(oscar.ANG_Type_Of_Change__c != null){
+
 				if(tocList.contains(AMS_Utils.ANG_HIERARCHY))
 					return true;
+
 			}
+
 			oscar.New_parent__c = null;
 			return false;
 		}
@@ -466,7 +469,6 @@ public with sharing class ANG_AccountHierarchySelectionController {
 				}
 
 			}
-
 			return hierarchy;
 		}
 		set;
@@ -550,14 +552,14 @@ public with sharing class ANG_AccountHierarchySelectionController {
 				}
 			}
 
-			
+
 			System.debug(loggingLevel.Info, '[cls ANG_AccountHierarchySelectionController] hierarchy items lists - ' + hierarchyValuesForDisplay);
 			return hierarchyValuesForDisplay;
 		}
 		set;
 	}
 
-	public Boolean showBSPPanel {
+	public Boolean showBSPPanel{
 		get{
 			if(newParent != null && tocList.contains(AMS_Utils.ANG_HIERARCHY) && isMulticountry){
 				for(HEPerBSP hePerBsp : hesPerBSPs.values()){
@@ -627,6 +629,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 		}
 	}
 
+
 	// ***********************************
 	// ********** constructor ************
 	// ***********************************
@@ -642,7 +645,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 
 		this.isMulticountry = oscar.Account__r.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
 		this.isCashOrCashless = (oscar.Account__r.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_CASH || oscar.Account__r.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_CASHLESS);
-		
+
 		if(isMulticountry && String.isNotBlank(oscar.HE_per_BSP_Mapping__c)){
 			Map<Id, Id> savedHEPerBSP = (Map<Id, Id>) JSON.deserialize(oscar.HE_per_BSP_Mapping__c, Map<Id, Id>.class);
 			for(Id bspId : savedHEPerBsp.keySet()){
@@ -807,10 +810,10 @@ public with sharing class ANG_AccountHierarchySelectionController {
 	}
 
 	public void handleSelection(){
-		
+
 		if(newParent != null && tocList.contains(AMS_Utils.ANG_HIERARCHY) && isMulticountry){
 
-			Map<Id, HEPerBSP> tempHesPerBSPs = new Map<Id, HEPerBSP>();
+			Map<Id,HEPerBSP> tempHesPerBSPs = new Map<Id,HEPerBSP>();
 
 			List<HierarchyItem> hierarchyItemsSorted = hierarchy.values().clone();
 			hierarchyItemsSorted.sort();
@@ -848,7 +851,6 @@ public with sharing class ANG_AccountHierarchySelectionController {
 			hesPerBSPs = tempHesPerBSPs;
 		
 		}
-
 	}
 
 	public PageReference FetchNewParent(){
@@ -1190,7 +1192,6 @@ public with sharing class ANG_AccountHierarchySelectionController {
 			HierarchyItem hi = (HierarchyItem) compareTo;
 			return this.compareKey.compareTo(hi.compareKey);
 		}
-
 	}
 
 	public class HEPerBSP {
@@ -1200,7 +1201,6 @@ public with sharing class ANG_AccountHierarchySelectionController {
 		public String country { get; set; }
 		public Account p { get; set; }
 		public Map<ID, Account> possibleAccounts { get; set; }
-
 		public boolean needsUserToChoose() {
 				return (possibleAccounts.size() > 1 && (p.Parentid == null || (possibleAccounts.containsKey(p.ParentId) && possibleAccounts.get(p.Parentid).Location_Type__c == AMS_Utils.AE)));
 		}
@@ -1218,6 +1218,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 			this.country = country;
 			possibleAccounts = new Map<ID, Account>();
 			p = new Account();
+
 		}
 
 	}

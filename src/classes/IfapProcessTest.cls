@@ -4,7 +4,7 @@ public class IfapProcessTest {
 	public static String CRON_EXP = '0 0 0 12 1 ? 2030';
 
 	static testMethod void testSchedule(){
-		
+
 		Test.startTest();
 		String jobId = System.schedule('IfapProcessScheduler_Test', CRON_EXP, new IfapProcessScheduler());
 		Test.stopTest();
@@ -12,7 +12,7 @@ public class IfapProcessTest {
 	}
 
 	static testMethod void testExtraSchedule(){
-		
+
 		Test.startTest();
 		IfapProcessScheduler.launchExtraSchedule();
 		Test.stopTest();
@@ -20,7 +20,7 @@ public class IfapProcessTest {
 	}
 
 	static testMethod void testScheduleWithExtraExecution(){
-		
+
 		IfapProcessScheduler scheduleProcess = new IfapProcessScheduler();
 		scheduleProcess.isExtraExecution = true;
 
@@ -31,7 +31,7 @@ public class IfapProcessTest {
 	}
 
 	static testMethod void testSendErrorMail() {
-		
+
 		List<String> listErrors = new list<String>();
 		listErrors.add('error1');
 
@@ -44,7 +44,7 @@ public class IfapProcessTest {
 	public class TestException extends Exception {}
 
 	static testMethod void testQueueableFailure(){
-		
+
 		TestException e = new TestException();
 		IfapToolManager.PWCResponses response = new IfapToolManager.PWCResponses(e);
 
@@ -61,7 +61,7 @@ public class IfapProcessTest {
 	}
 
 	static testMethod void testQueueableSuccess(){
-		
+
 		TestException e = new TestException();
 		IfapToolManager.PWCResponses response = new IfapToolManager.PWCResponses(e);
 		response.success = true;
@@ -110,9 +110,9 @@ public class IfapProcessTest {
 		list<Case> listCases = new list<Case>();
 		for ( Integer i = 0; i < NUM_TEST_CASES; i++) {
 			listCases.add(new Case(
-				Subject = 'Test case ' + i, 
-				Status = status, 
-				RecordTypeId = IFAPcaseRecordTypeID, 
+				Subject = 'Test case ' + i,
+				Status = status,
+				RecordTypeId = IFAPcaseRecordTypeID,
 				IFAP_Financial_Year__c = String.ValueOf(Date.today().year()),
 				ArchivedDate__c = Date.today(),
 				AccountId = account.Id,
@@ -143,7 +143,7 @@ public class IfapProcessTest {
 	}
 
 	static testMethod void testResultsBatch_Success() {
-		
+
 		loadTestCases();
 
 		// prepare json String
@@ -175,7 +175,7 @@ public class IfapProcessTest {
 	}
 
 	static testMethod void testResultsBatchSubmitted_Success() {
-		
+
 		loadTestCases('Submitted',false);
 		//prepare json String
 		list<String> listJson = new list<String>();
@@ -202,7 +202,7 @@ public class IfapProcessTest {
 	}
 
 	static testMethod void testResultsBatch_Failure() {
-		
+
 		loadTestCases();
 
 		// prepare json String
@@ -231,7 +231,7 @@ public class IfapProcessTest {
 	}
 
 	static testMethod void testRejectionsBatch_Success() {
-		
+
 		loadTestCases();
 
 		// prepare json String
@@ -262,7 +262,7 @@ public class IfapProcessTest {
 	}
 
 	static testMethod void testRejectionsBatch_Failure() {
-		
+
 		loadTestCases();
 
 		// prepare json String
@@ -290,7 +290,7 @@ public class IfapProcessTest {
 		//system.assertEquals(NUM_TEST_CASES,fars.size());
 	}
 	static testMethod void testResultsBatchFinancialAssessmentResult() {
-		
+
 		loadTestCases();
 
 		AMS_Settlement_System__c sett_sys = new AMS_Settlement_System__c(name = 'BSP-HK', DPC_System__c = 'test_dpc');
@@ -338,9 +338,9 @@ public class IfapProcessTest {
 	}
 
 	static testMethod void testResultsBatchFinancialAssessmentResult_Failure() {
-		
+
 		loadTestCases();
-		
+
 		AMS_Settlement_System__c sett_sys = new AMS_Settlement_System__c(name = 'BSP-HK', DPC_System__c = 'test_dpc');
 		insert sett_sys;
 
@@ -385,16 +385,16 @@ public class IfapProcessTest {
 	}
 
 	/**
-	* Test method to force particular cases/exceptions 
+	* Test method to force particular cases/exceptions
 	* in order to increase overall code coverage
-	* 
+	*
 	*/
 	@isTest static void testIfapProcessResultsBatchExceptions() {
-		
+
 		loadTestCases();
 
 		AMS_Settlement_System__c bsp = new AMS_Settlement_System__c(
-			Name = 'BSP-HK', 
+			Name = 'BSP-HK',
 			DPC_System__c = 'DPC'
 		);
 
@@ -402,8 +402,8 @@ public class IfapProcessTest {
 
 		IATA_ISO_Country__c country = new IATA_ISO_Country__c(
 			ISO_Code__c = 'HK',
-			AIMS_Area_Name__c = 'HK', 
-			BSP_Country_free_text__c = 'HK', 
+			AIMS_Area_Name__c = 'HK',
+			BSP_Country_free_text__c = 'HK',
 			ANG_Enable_NewGen__c = true,
 			AMS_Settlement_System__c = bsp.Id
 		);
@@ -426,7 +426,7 @@ public class IfapProcessTest {
 		Account acct = new Account(Id = c.AccountId);
 		acct.IATA_ISO_Country__c = country.Id;
 		update acct;
-		
+
 		IfapToolManager.testJsonResults = '{ "responses": [' + String.join(listJson,',')+ ']}';
 
 		//Test the batch
@@ -442,7 +442,7 @@ public class IfapProcessTest {
 		Database.executeBatch(emptyXMLBatch);
 
 		Test.stopTest();
-		
+
 		//Method call just to increase coverage
 		IfapProcessResultsBatch.deleteResults(new List<String>{'file#1', 'file#2'});
 
@@ -483,12 +483,12 @@ public class IfapProcessTest {
 		insert accountGE;
 
 		Contact cont = new Contact(
-			AccountId = accountGE.Id, 
-			Firstname = 'Richard', 
-			Lastname = 'Vaughan', 
-			Phone = '666123456', 
-			MobilePhone = '911111111', 
-			Email = 'richard.vaughan@test.com', 
+			AccountId = accountGE.Id,
+			Firstname = 'Richard',
+			Lastname = 'Vaughan',
+			Phone = '666123456',
+			MobilePhone = '911111111',
+			Email = 'richard.vaughan@test.com',
 			Financial_Assessment_Contact__c = true
 		);
 		insert cont;
@@ -516,7 +516,7 @@ public class IfapProcessTest {
 				'"xml": "<?xml version=\\\"1.0\\\" ?><WorkflowIntegrationDictionary xmlns:xsi=\\\"http://www.w3.org/2001/XMLSchema-instance\\\"><SalesforceCaseNumber>'+ifap.CaseNumber+'</SalesforceCaseNumber><File><FileName>MX-P-8653021.pdf</FileName><FileType>FinancialAssessmentResult</FileType></File><GFAStatus>Unsatisfactory - New Financial Security</GFAStatus> <FinancialCriteriaTotalScore>' + expectedPoints + '</FinancialCriteriaTotalScore> <Error><ErrorCode>0</ErrorCode></Error></WorkflowIntegrationDictionary>",' +
 				'"success":true'+
 				'}';
-		
+
 		jsonLst.add(jsonCase);
 
 		IfapToolManager.testJsonResults = '{ "responses": [' + String.join(jsonLst,',')+ ']}';
@@ -535,7 +535,7 @@ public class IfapProcessTest {
 		system.assertEquals(caseReturned.Assessment_Performed_Date__c, System.today());
 		system.assertEquals(true, batch.errors.isEmpty());
 	}
-	
+
 	@isTest static void multicountryFinancialAssessmentResults70PointsTest(){
 		multicountryFinancialAssessmentResults(70, AMS_Utils.FA_RESULT_SATISFACTORY_NO_ACTION);
 	}

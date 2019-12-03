@@ -7,6 +7,7 @@ private class  OneIdLightningLoginFormControllerTest {
     @testSetup static void customSettingSetup() {
         insert new ISSP_CS__c(Name = 'ipinfo_token',Value__c = '^(http:\\/\\/|https:\\/\\/)?(www.)([a-zA-Z0-9\\-]+)([.])(([a-zA-Z]{3})|([a-zA-Z]{2}))');
         insert new ISSP_CS__c(Name = 'IdentityPortal',Value__c = 'identity');
+        insert new ISSP_CS__c(Name = 'Host',Value__c = 'host');
         IATA_ISO_Country__c country_i = new IATA_ISO_Country__c(Name = 'Ireland', ISO_Code__c = 'FR');
         insert country_i;
 
@@ -244,5 +245,13 @@ private class  OneIdLightningLoginFormControllerTest {
         Test.startTest();
         OneIdLightningLoginFormController.login('Test@test11111.com', 'supersecretstring', 'someStartUrl', 'GADM');
         Test.stopTest();
+    }
+    
+    @isTest
+    public static void testGetCustomerPortalUrl(){
+        Test.startTest();
+        string url = OneIdLightningLoginFormController.getCustomerPortalUrl();
+        Test.stopTest();
+        System.assertNotEquals(url, null);
     }
 }

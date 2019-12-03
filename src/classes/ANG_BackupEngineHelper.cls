@@ -111,7 +111,7 @@ global without sharing class ANG_BackupEngineHelper implements Queueable{
 			deleteAllBackups();
 		}
 	}
-	
+
 	public void deleteAllBackups(){
 		delete [Select Id from Technical_Logs__c where Record__c = :oscarId];
 	}
@@ -151,7 +151,7 @@ global without sharing class ANG_BackupEngineHelper implements Queueable{
 				}
 			}
 		}
-		
+
 		if(newParentHierarchyId == null)
 			newParentHierarchyId = oscar.New_parent__c;
 
@@ -171,9 +171,9 @@ global without sharing class ANG_BackupEngineHelper implements Queueable{
 		accountFields.add('Financial_Assessment_Points__c');
 		accountFields.add('Identify_as_Multicountry_Key_Hierarchy__c');
 		accountFields.add('Remittance_Frequency__c'); //NEWGEN-6033-BugFix
-		
+
 		Set<String> contactFields = new Set<String>();
-		
+
 		contactFields.add('FirstName');
 		contactFields.add('LastName');
 		contactFields.add('Title');
@@ -204,7 +204,7 @@ global without sharing class ANG_BackupEngineHelper implements Queueable{
 			entitiesToRollback.addAll(entitiesToBackupConfig.get(typeOfChange));
 
 		if(newParentHierarchyId != null){
-			accountIds.add(newParentHierarchyId);	
+			accountIds.add(newParentHierarchyId);
 		}
 
 		system.debug('[ANG_BackupEngineHelper] (2) Heap size: ' + Limits.getHeapSize() + ' of ' + Limits.getLimitHeapSize());
@@ -226,9 +226,9 @@ global without sharing class ANG_BackupEngineHelper implements Queueable{
 			system.debug('[ANG_BackupEngineHelper] Cleanup done : (3.1) Before Entity '+entity +' Heap size: ' + Limits.getHeapSize() + ' of ' + Limits.getLimitHeapSize());
 
 			if(newParentHierarchyId != null && (entity == 'AMS_Agencies_Hierarchy__c'|| entity == 'AMS_Agencies_relationhip__c')){
-				accountIds.add(newParentHierarchyId);	
+				accountIds.add(newParentHierarchyId);
 			}
-			
+
 			Set<String> fieldSet = entity == 'Contact' ? contactFields : null;
 
 			entitiesToBackup.put(entity,getObject(entity,accountIds,fieldSet,whereClausesMap.get(entity.toUpperCase())));
@@ -244,7 +244,7 @@ global without sharing class ANG_BackupEngineHelper implements Queueable{
 	}
 
 	private void backupData(){
-		
+
 		List<Technical_Logs__c> backupToInsert = new List<Technical_Logs__c>();
 
 		Set<String> entitiesToBackupLst = entitiesToBackup.keySet();
@@ -256,8 +256,8 @@ global without sharing class ANG_BackupEngineHelper implements Queueable{
 			for(sObject sobjectToInsert: entitiesToBackup.get(entity)){
 
 				Technical_Logs__c backupData = new Technical_Logs__c(
-					Log__c= JSON.serialize(serializeObject(entity,sobjectToInsert)), 
-					Status__c= entity, 
+					Log__c= JSON.serialize(serializeObject(entity,sobjectToInsert)),
+					Status__c= entity,
 					Record__c= oscarId,
 					Operation__c= 'Rollback');
 
@@ -293,7 +293,7 @@ global without sharing class ANG_BackupEngineHelper implements Queueable{
 	private Set<Id> fetchHierarchySelection(Id accountOscar){
 
 		Set<Id> accountIds = new Set<Id>();
-		
+
 		Account acct = [Select Id, Location_Type__c, ParentId, Top_Parent__c, ANG_Accreditation_Model__c from Account where Id =:accountOscar];
 		Id accountId = acct.Id;
 
@@ -314,10 +314,10 @@ global without sharing class ANG_BackupEngineHelper implements Queueable{
 			accountsQuery += 'ParentId = :accountId';
 		}
 
-        for(Account acctToSearch: Database.query(accountsQuery)){
+		for(Account acctToSearch: Database.query(accountsQuery)){
 			accountIds.add(acctToSearch.Id);
-        }
-	
+		}
+
 		accountIds.add(accountId);
 
 		return accountIds;
@@ -333,7 +333,7 @@ global without sharing class ANG_BackupEngineHelper implements Queueable{
 		Set<String> fieldSet = new Set<String>();
 
 		for(String field : schemaFieldMap.keySet()){
-			
+
 			String str = field.toUpperCase();
 
 			if(objectFields == null || objectFields.contains(str))
@@ -352,14 +352,14 @@ global without sharing class ANG_BackupEngineHelper implements Queueable{
 
 		if(adhocConditions != null)
 			query += ' WHERE ' + adhocConditions;
-		
+
 		if(selectedObject == 'AMS_AGENCIES_HIERARCHY__C'){
 
 			List<sObject> hierarchiesList =  Database.query(query);
 
 			query = 'SELECT '+ String.join(fieldList, ', ') + ' FROM '+selectedObject;
 			query += ' WHERE main_account__c in:objectIds';
-		
+
 			hierarchiesList.addAll(Database.query(query));
 
 			Set<sObject> setList = new Set<sObject>();
@@ -369,9 +369,9 @@ global without sharing class ANG_BackupEngineHelper implements Queueable{
 			}
 
 			return new List<sObject>(setList);
-		
+
 		}else{
-			return Database.query(query);	
+			return Database.query(query);
 		}
 
 
@@ -395,7 +395,7 @@ global without sharing class ANG_BackupEngineHelper implements Queueable{
 			return null;
 
 		Set<String> outSet = new Set<String>();
-		
+
 		for(String str: inSet){
 			outSet.add(str.toUpperCase());
 		}

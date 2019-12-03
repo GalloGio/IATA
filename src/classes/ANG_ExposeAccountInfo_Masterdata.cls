@@ -1,14 +1,14 @@
 /***********************************************************
 	2019-07-03. Author: Daniele Tullo
 	Class to expose to external source account's data
-	
+
 	Interface catalogue [INT_008] Jira issue: https://iatasfdc.atlassian.net/browse/NEWGEN-4597
 	confluence specification: https://iatasfdc.atlassian.net/wiki/spaces/MUL/pages/688095239/Accreditation+GO-Global+Requirements
 
 ***********************************************************/
 
 public without sharing class ANG_ExposeAccountInfo_Masterdata {
-	
+
 	public static final Set<String> dueDiligenceIEPChangeCodes = new Set<String>{'MBDIL','MAPDF','MaddY', AMS_Utils.MBPDD_CHANGE_CODE};
 	public static final string CurrencyBSP = 'BspCurrency';
 	public static final string CurrencyMulticountry = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
@@ -20,7 +20,7 @@ public without sharing class ANG_ExposeAccountInfo_Masterdata {
 	public static void ANG_ExposeAccountInfo_Masterdata(map<id, Account> mapAccnt, string sMode, string sChangeCode) {
 		try{
 			list<INT008_SuccessPayload> lsToReturn = new list<INT008_SuccessPayload>();
-			
+
 			switch on sMode {
 				when 'F' {
 					map<id, list<AMS_Account_Role__c>> mapOwner = fetchHierarchyOwners(mapAccnt.values());
@@ -102,7 +102,7 @@ public without sharing class ANG_ExposeAccountInfo_Masterdata {
 
 	public static list<Account> QueryAgencyToProcess (string MDMode, string IATACode){
 		Set<String> iEPRecordTypes = new Set<String>{AMS_Utils.RECTYPE_BANK_ACCOUNT_SETUP,AMS_Utils.RECTYPE_IEPMODELA,AMS_Utils.RECTYPE_IEPMODELB, AMS_Utils.RECTYPE_IEPMODELBPLUS};
-					
+
 		string sQueryMD = 'select Guaranteed_amount__c, CurrencyIsoCode, Due_Diligence_Status__c, ANG_IsNewGenAgency__c, Is_Branch_Abroad__c, Purge_Flag__c, Accreditation_date__c, Date_Organisation_Status_attained__c, Default_date__c, ANG_Accreditation_Model__c, billingCity, billingCountry, billingPostalCode,'
 							+' billingState, billingStreet, IATA_ISO_Country__r.BSP_Country_free_text__c, IATA_ISO_Country__r.ISO_Code_Numeric__c, IATA_ISO_Country__r.ISO_Code__c, '
 							+' Email__c, fax, IATACode__c, Id, ANG_IEP_Status_FF__c, Location_Class__c, Location_Type__c, Name, Parent.IATACode__c, phone, '
@@ -176,7 +176,7 @@ public without sharing class ANG_ExposeAccountInfo_Masterdata {
 			this.currencyCode = currencyCode;
 		}
 	}
-	
+
 	/* Form Of Payment */
 	private class FOP{
 		public string Type;     //CA, CE, EP
@@ -200,7 +200,7 @@ public without sharing class ANG_ExposeAccountInfo_Masterdata {
 				this.name = role.Owner_Name__c;
 			}
 
-			this.percentage = percentage == null ? 0 : percentage; 
+			this.percentage = percentage == null ? 0 : percentage;
 		}
 	}
 
@@ -208,7 +208,7 @@ public without sharing class ANG_ExposeAccountInfo_Masterdata {
 	private class DueDiligence{
 		public string type;
 		public string status;
-		
+
 		public DueDiligence(string type, string status){
 			this.type = type;
 			this.status = status;
@@ -256,11 +256,11 @@ public without sharing class ANG_ExposeAccountInfo_Masterdata {
 		public string Region;
 		public string RelinquishmentCode; //ReasonCode
 		public string RemittanceFrequency;
-		public string Segmentation; 
+		public string Segmentation;
 		public string status;
 		public string TaxID;
 		public string TradeName;
-		public string vatNumber;        
+		public string vatNumber;
 		public string topParentIATACode;
 		public list<FOP> FormOfPayment;
 		public RHCInfoClass RHCInfo;    //Risk Information
@@ -327,12 +327,12 @@ public without sharing class ANG_ExposeAccountInfo_Masterdata {
 					if(changeCode == 'MaddY')
 						this.dueDiligence.add(new DueDiligence(changeCode, ((acc.oscars__r[0] != null && acc.oscars__r[0].step41__c == 'Passed' && acc.oscars__r[0].step17__c == 'Passed') ?  'Passed' : 'Failed'  )));
 					else
-						this.dueDiligence.add(new DueDiligence(changeCode, (acc.oscars__r[0] != null ?  acc.oscars__r[0].step17__c : 'Failed'  )));                    
+						this.dueDiligence.add(new DueDiligence(changeCode, (acc.oscars__r[0] != null ?  acc.oscars__r[0].step17__c : 'Failed'  )));
 				}
 
 				list<theCurrency> lsCurrencies = new list<theCurrency>();
 				string sBSPCurrency = acc.IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode;
-				
+
 				lsCurrencies.add(new theCurrency(CurrencyBSP, sBSPCurrency));
 
 				//Risk Info
@@ -349,7 +349,7 @@ public without sharing class ANG_ExposeAccountInfo_Masterdata {
 					String.IsBlank(sBSPCurrency)?acc.CurrencyIsoCode:sBSPCurrency,
 					String.IsBlank(sBSPCurrency)?acc.Guaranteed_amount__c:ANG_Risk_Helper.currencyConverter(acc.CurrencyIsoCode, acc.Guaranteed_amount__c,acc.IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode)
 				);
-								
+
 				this.currencies = lsCurrencies;
 
 				this.FormOfPayment = new list<FOP>();
@@ -381,9 +381,9 @@ public without sharing class ANG_ExposeAccountInfo_Masterdata {
 
 				//GDI - note: we do publish HE/HO only
 				if(string.isNotBlank(acc.GDI_Status__c) && setGDIStatusToPublish.contains(acc.GDI_Status__c))
-				   this.externalSystems.add(ISSP_Financial_Institutions.GDI_PORTAL_SERVICE); //check if we do have it somewhere in any static variable
-				
-				//Fill isPciDss attribute for every Account IEP Status except "No IEP Account" or blank 
+					 this.externalSystems.add(ISSP_Financial_Institutions.GDI_PORTAL_SERVICE); //check if we do have it somewhere in any static variable
+
+				//Fill isPciDss attribute for every Account IEP Status except "No IEP Account" or blank
 				if(String.isNotBlank(acc.ANG_IEP_Status_FF__c) && acc.ANG_IEP_Status_FF__c != AMS_Utils.NO_IEP_ACCOUNT){
 					this.isPciDss = String.isNotBlank(acc.Is_PCI_compliant__c) ? pciCompliantFldMapping.get(acc.Is_PCI_compliant__c) : FALSE;
 				}

@@ -1,8 +1,8 @@
 public with sharing class ANG_IFAPNotificationsController {
 
-	@TestVisible 
-	private static final String IFAP_RELATED_KEY_MULTICOUNTRY_MSG = 'This case is related to a Multicountry Key account';  
-	
+	@TestVisible
+	private static final String IFAP_RELATED_KEY_MULTICOUNTRY_MSG = 'This case is related to a Multicountry Key account';
+
 	public Boolean isKeyMulticountryIFAP {get; set;}
 	private Case currentCase;
 
@@ -25,7 +25,7 @@ public with sharing class ANG_IFAPNotificationsController {
 
 		if(!caseLst.isEmpty()){
 			currentCase = caseLst.get(0);
-			isKeyMulticountryIFAP = (currentCase.RecordType.DeveloperName == 'IATA_Financial_Review' && 
+			isKeyMulticountryIFAP = (currentCase.RecordType.DeveloperName == 'IATA_Financial_Review' &&
 									currentCase.Account.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY &&
 									currentCase.Account.Identify_as_Multicountry_Key_Hierarchy__c);
 		}

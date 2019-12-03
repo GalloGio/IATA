@@ -11,21 +11,21 @@ public class ANG_EligibilityForNewMulticountryAgent {
 		@InvocableVariable
 		public Boolean isAgentEligible;
 		@InvocableVariable
-		public Boolean isParentInSameBSP; 
+		public Boolean isParentInSameBSP;
 	}
 
 	@InvocableMethod(label='VerifyAgentEligibility' description='Checks if the current agent is eligible for multicountry')
 	public static List<EligibilityOutputWrapper> verifyAgentEligibility(List<EligibilityInputWrapper> eligibilityWrapperLst) {
 
-		//This method is intended to be invoked from the OSCAR Wizard flow containing a single record 
+		//This method is intended to be invoked from the OSCAR Wizard flow containing a single record
 		EligibilityInputWrapper ew = eligibilityWrapperLst.get(0);
 
 		// Fetch the BSP associated with the parent agent
-		Account parentAgent = 
-			[SELECT 
-				IATA_ISO_Country__r.AMS_Settlement_System__c 
+		Account parentAgent =
+			[SELECT
+				IATA_ISO_Country__r.AMS_Settlement_System__c
 			 FROM Account
-			 WHERE 
+			 WHERE
 			 	Id = :ew.currentAgent.ParentId
 			 LIMIT 1
 			];
@@ -52,8 +52,8 @@ public class ANG_EligibilityForNewMulticountryAgent {
 				 	IATA_ISO_Country__r.AMS_Settlement_System__c = :ew.currentAgentBSP
 				]
 			);
- 			
- 			//If there is not any other HE in the same BSP the agent is eligible for multicountry 
+
+ 			//If there is not any other HE in the same BSP the agent is eligible for multicountry
  			eligibilityOutput.isAgentEligible = childHEList.isEmpty();
 
 		}

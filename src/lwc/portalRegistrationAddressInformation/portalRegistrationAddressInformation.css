@@ -1,0 +1,240 @@
+.modal{
+    font-family: DaMaWebFont;
+}
+
+.customPopupInteriorHalfScreenCentered{
+    overflow-y: scroll;
+    max-height: 83vh;
+}
+
+.customPopupInteriorHalfScreenCentered::-webkit-scrollbar {
+    width: 68px;
+}
+
+.customPopupInteriorHalfScreenCentered::-webkit-scrollbar-thumb{
+     width: 68px;
+      background-image: url("/csportal/s/cat.gif"),
+        linear-gradient(
+          90deg,
+          transparent,
+          magenta,
+          red,
+          yellow,
+          limegreen,
+          turquoise,
+          blue,
+          magenta,
+          transparent
+        );
+      background-position: center bottom, center -20px;
+      background-repeat: no-repeat, no-repeat;
+      background-size: contain, contain;
+}
+
+.maxWidth{
+    width: 100%;
+}
+
+
+.inputLineHeight{
+    line-height: 45px;
+}
+
+
+.fontBold{
+    font-weight: bold;
+}
+
+.loginTitle{
+    margin-top: -10px;
+}
+
+.loginLabel{
+    font-size: 12px;
+    border-radius: 0.1rem;
+}
+
+.loginUrlHighlight{
+    width: 100%;
+    font-weight: 500;
+    color: #3333ff;
+}
+
+.loginSeparator {
+    border-bottom-style: solid;
+    color: #d3d3d352;
+    margin-bottom: 15px;
+}
+
+.textAlignCenter {
+    text-align: center;
+}
+
+.textAlignEnd {
+    text-align: end;
+}
+
+.marginBottomGeneral {
+    margin-bottom: 20px;
+}
+
+.showPasswordButton{
+    margin-top: -10px;
+    width: 30px;
+    height: 20px;
+    box-shadow: none;
+}
+
+.showPasswordIcon{
+    width: 20px;
+    height: 20px;
+}
+
+.showPasswordIconDisabled{
+    opacity:0.5;
+}
+
+.inputBackgroundGrey{
+    background-color: #f7f8fa !important;
+}
+
+.slds-has-error input{
+    border-radius: 1px !important;
+    border: solid 2px rgba(240, 70, 50, 0.8) !important;
+    box-shadow: none !important;
+}
+
+.slds-has-error .slds-form-element__help{
+    color: #f04632 !important;
+    font-size: 14px !important;
+}
+
+.slds-has-error .slds-form-element__help div{
+    color: #f04632 !important;
+}
+
+.font-small{
+    font-size: 18px !important;
+}
+
+.formElementSpacer{
+    padding-bottom:40px;
+}
+
+.inputBackgroundGrey{
+    background-color: #f7f8fa !important;
+}
+
+.hidden{
+    visibility : hidden;
+}
+
+.leftItem{
+    padding-right: 7px;
+}
+
+.rightItem{
+    padding-left: 7px;
+}
+
+.link_normal {
+    width: 336px;
+    height: 56px;
+}
+
+.-Title {
+    width: 304px;
+    height: 24px;
+    font-size: 14px;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.71;
+    letter-spacing: normal;
+    color: #3333ff;
+  }
+  
+  .dataLabel {
+    font-size: 14px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.43;
+    letter-spacing: normal;
+    color: #999999;
+  }
+
+  .dataValue {
+    font-size: 16px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.63;
+    letter-spacing: normal;
+    color: #525252;
+  }
+
+  .sectionTitle {
+    font-size: 22px;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.45;
+    letter-spacing: normal;
+    color: #333333;
+    padding-bottom: 4px;
+  }
+
+  .sectionSubTitle {
+    font-size: 18px;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.78;
+    letter-spacing: normal;
+    color: #333333;
+    padding: 15px 0;
+  }
+
+  .sectionDescription {
+    font-size: 16px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.63;
+    letter-spacing: normal;
+    color: #4a4d61;
+  }
+
+.backButtonWrapper{
+    display: flex;
+    align-items: center;
+}
+
+.containedButton{
+    box-shadow: none !important;
+}
+
+.customBtn .slds-button:disabled{
+    box-shadow: none;
+}
+
+.companyInfoContainer{
+    background-color: #f7f8fc;
+    padding: 16px 24px;
+    margin-bottom: 40px;
+}
+
+.companyInfoContainer .dataLabel{
+    color: #9a9eb0;
+}
+
+.formLabelContainer{
+    padding-bottom: 11px;
+}
+
+.buttonsContainer{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
