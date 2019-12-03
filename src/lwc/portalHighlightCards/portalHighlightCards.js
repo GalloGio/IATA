@@ -37,6 +37,11 @@ export default class PortalHighlightCards extends LightningElement {
     @track swipe = "slds-grid slds-wrap slds-align--absolute-center slds-gutters_direct-medium slds-is-relative swipeClass swipeMove";
     @track cardMove = "margin-left: 0; opacity: 1";
 
+    get
+    showComponent() {
+        return !this.loading && this.highlightList.length > 0;
+    } 
+
     connectedCallback() {
         
         getRecommendations({'type' : this.type}).then(result => {
