@@ -145,7 +145,7 @@ private class ANG_RHCHelperTest {
 		List<ANG_RHC_Information__c> rhcinformationList = 
 				[SELECT id, ANG_CashCondition__c, ANG_AccountId__c,ANG_RHC_Amount_Equals_FS__c, ANG_Financial_Security__c,
 					ANG_RME_Amount__c, ANG_RHC_Amount_Provisional__c, ANG_Exceeding_Financial_Security__c,ANG_RHC_Amount_Forecasted__c,
-					CurrencyIsoCode, RHC_Amount_Equals_FS_Percent__c, ANG_Forecasted_RHC_Effective_date__c
+					CurrencyIsoCode, RHC_Amount_Equals_FS_Percent__c, ANG_Forecasted_RHC_Effective_date__c, ANG_Minimum_Financial_Security__c
 				FROM ANG_RHC_Information__c];
 
 		ANG_RHCHelper.calculateRHCAmount(rhcinformationList);
