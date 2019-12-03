@@ -1,5 +1,5 @@
 <template>
-    <c-portal-custom-card-container special-card={specialCase} special-body>
+    <c-portal-custom-card-container if:true={showComponent} special-card={specialCase} special-body>
 
         <span if:false={specialCase} slot="cardTitle">
             <span if:false={hideTitle} class="text-small">
