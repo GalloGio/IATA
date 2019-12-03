@@ -21,6 +21,7 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import ISSP_Pending_Approval from '@salesforce/label/c.ISSP_Pending_Approval';
 import CSP_ALPHAFILTER_All from '@salesforce/label/c.CSP_ALPHAFILTER_All';
 import CSP_ALPHAFILTER_Other from '@salesforce/label/c.CSP_ALPHAFILTER_Other';
+import isAdminAndIATAAgencyAcct from '@salesforce/apex/PortalProfileCtrl.isAdminAndIATAAgencyAcct';
 
 export default class PortalCompanyProfileContactsList extends LightningElement {
 
@@ -70,6 +71,7 @@ export default class PortalCompanyProfileContactsList extends LightningElement {
     @track accountId;
     @track objectid;
     @track action = '';
+	@track showIFAPBtn = false;
 
     @track alphaFiltersNormal = [
         { value:'A', label: 'A', selected: false },
@@ -154,7 +156,10 @@ export default class PortalCompanyProfileContactsList extends LightningElement {
             this.objectid = this.loggedUser.Contact.AccountId;
             this.userLoaded = true;
         });
-
+		
+		isAdminAndIATAAgencyAcct().then(result => {
+            this.showIFAPBtn = result;
+            });
 
         //init the contacts list
         this.resetContactsList();
