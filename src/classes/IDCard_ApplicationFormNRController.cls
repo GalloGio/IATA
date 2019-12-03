@@ -521,9 +521,9 @@ public with sharing class IDCard_ApplicationFormNRController  extends IDCardAbst
       Boolean isReissue = (IDCardApplicationNR.Type_of_application__c == IDCardUtil.APPLICATIONTYPE_REISSUE);
       Boolean isExpedite = IDCardApplicationNR.IDCard_Expedite_Delivery__c;
 
+      if(isCardTypeChoiceAvailable == false) IDCardApplicationNR.Card_Type__c = 'digital';
       if(IDCardApplicationNR.Card_Type__c == 'digital') IDCardApplicationNR.IDCard_Expedite_Delivery__c = false;
       Boolean isToPrint = (IDCardApplicationNR.Card_Type__c == 'plastic');
-      if(isCardTypeChoiceAvailable == false) isToPrint = false;
 
       //Get the ITDI Courses Selection
       IDCardApplicationNR.Package_of_Travel_Professionals_Course_1__c = null;

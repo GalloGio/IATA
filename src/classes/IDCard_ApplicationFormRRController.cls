@@ -523,9 +523,9 @@ public with sharing class IDCard_ApplicationFormRRController extends  IDCardAbst
 
       ////////////////////////////////
       // calculate the applicable fee
+      if(isCardTypeChoiceAvailable == false) IDCardApplicationRR.Card_Type__c = 'digital';
       if(IDCardApplicationRR.Card_Type__c == 'digital') IDCardApplicationRR.IDCard_Expedite_Delivery__c = false;
       Boolean isToPrint = (IDCardApplicationRR.Card_Type__c == 'plastic');
-      if(isCardTypeChoiceAvailable == false) isToPrint = false;
       Boolean isReissue = (IDCardApplicationRR.Type_of_application__c == IDCardUtil.APPLICATIONTYPE_REISSUE);
       Boolean isExpedite = IDCardApplicationRR.IDCard_Expedite_Delivery__c;
       Boolean isITDIPackage = selectedITDICourses.size() > 0; //IDCardApplicationRR.Package_of_Travel_Professionals_Course_1__c != null || IDCardApplicationRR.Package_of_Travel_Professionals_Course_2__c != null;
