@@ -480,12 +480,15 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
             fields.accountId = this.accountId;
 
             let contact = JSON.parse(JSON.stringify(this.staticFields));
-            if(contact.ID_Card_Holder__c && fields.FirstName && fields.LastName && fields.Birthdate &&
-               (fields.FirstName != contact.FirstName || fields.LastName != contact.LastName || fields.Birthdate != contact.Birthdate)){
+            if(contact.ID_Card_Holder__c && (fields.FirstName != contact.FirstName || fields.LastName != contact.LastName || (fields.Birthdate != contact.Birthdate && contact.Birthdate))){
                 this.isSaving = false;
                 this.closeModal();
                 this.idCardErrorPopup = true;
                 return;
+            }
+            else if(contact.ID_Card_Holder__c && !contact.Birthdate && fields.Birthdate){
+                contact.Birthdate = fields.Birthdate;
+                this.staticFields = contact;
             }
 
             if (selected.length > 0) {
