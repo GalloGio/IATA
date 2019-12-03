@@ -8,7 +8,8 @@ global class ANG_OscarProcessHelper {
 
 	/* EasyPay Service Providers */
 	public static final Set<String> MODEL_A_PROVIDERS = new Set<String>{'IATA EasyPay (EDENRED)'};
-	public static final Set<String> MODEL_B_PROVIDERS = new Set<String>{'IATA EasyPay (EDENRED)','IATA EasyPay (MSTS)'};
+	public static final Set<String> MODEL_B_PROVIDERS = new Set<String>{'IATA EasyPay (EDENRED)','IATA EasyPay (MSTS)','IATA EasyPay (2C2P)'};
+	public static final Set<String> IEP_MODEL_PROVIDERS = new Set<String>{'Model A', 'Model B', 'Model B+'};
 
 	public static boolean isIATACodeGenerationRunning = false;
 
@@ -2165,7 +2166,8 @@ global class ANG_OscarProcessHelper {
 			FROM Contact WHERE AccountId IN :accsMap.keySet()
 			AND Id IN (SELECT Contact__c FROM Portal_Application_Right__c WHERE Right__c = 'Access Granted'
 				AND ANG_Portal_Service_Role__c = 'IEP Admin'
-				AND Portal_Application__r.Name IN : (model == 'A' || model == 'setup' ? MODEL_A_PROVIDERS : MODEL_B_PROVIDERS))]){
+				AND Contact__r.Account.IATA_ISO_Country__r.ANG_IEP_Model__c IN :IEP_MODEL_PROVIDERS
+				AND Contact__r.AccountId IN :accsMap.keySet())]){
 
 			contactAcc.put(con.AccountId,con);
 		}
@@ -2193,7 +2195,7 @@ global class ANG_OscarProcessHelper {
 			fieldsOfObject.put('Type_of_customer__c','IATA Travel Agent');
 			fieldsOfObject.put('Visible_on_ISS_Portal__c',true);
 
-		   	Case cse = ANG_EntityCreator.createCase(AMS_Utils.RECTYPE_OSCARCOMM, acc.Id, fieldsOfObject);
+			Case cse = ANG_EntityCreator.createCase(AMS_Utils.RECTYPE_OSCARCOMM, acc.Id, fieldsOfObject);
 
 			//assign to queue
 			if(!Test.isRunningTest()){
