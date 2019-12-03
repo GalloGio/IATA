@@ -135,20 +135,18 @@ public with sharing class IDCard_MobileAppRenewalService
 
         // 4. auto approve Case
         // 5. create the IDC
-        //   5.1. define the card dates based on the previous IDC
+
+        //   5.1. set the printing information based on agent location (US agents = digital)
+        requestInformation.newIDCA.Card_Type__c = setIdCardType(requestInformation);
+
+        //   5.2. define the card dates based on the previous IDC
         approveCaseAndCreateIDC(requestInformation);
         requestInformation.newIDC = getIdCardFromApplication(requestInformation.newIDCA.Id);
         
-        //   5.2. set the printing information based on agent location (US agents = digital)
-        setIdCardType(requestInformation);
-
-        //   5.3. set the printing information based on the card type (plastic, digital)
-        setIdCardPrintingOptions(requestInformation);
-
-        //   5.4. set the training courses information based on the related IDCA and previous IDC
+        //   5.3. set the training courses information based on the related IDCA and previous IDC
         setIDCAgentSpecialization(requestInformation);
 
-        //   5.5. set the WebStar_P00_Key__c field on the new card
+        //   5.4. set the WebStar_P00_Key__c field on the new card
         setWebStarField(requestInformation);
 
         // 6. update the Case to "Closed" on digital cards
@@ -215,20 +213,18 @@ public with sharing class IDCard_MobileAppRenewalService
 
         // 4. auto approve Case
         // 5. create the IDC
-        //   5.1. define the card dates based on the previous IDC
+
+        //   5.1. set the printing information based on agent location (US agents = digital)
+        requestInformation.newIDCA.Card_Type__c = setIdCardType(requestInformation);
+
+        //   5.2. define the card dates based on the previous IDC
         approveCaseAndCreateIDC(requestInformation);
         requestInformation.newIDC = getIdCardFromApplication(requestInformation.newIDCA.Id);
         
-        //   5.2. set the printing information based on agent location (US agents = digital)
-        setIdCardType(requestInformation);
-
-        //   5.3. set the printing information based on the card type (plastic, digital)
-        setIdCardPrintingOptions(requestInformation);
-
-        //   5.4. set the training courses information based on the related IDCA and previous IDC
+        //   5.3. set the training courses information based on the related IDCA and previous IDC
         setIDCAgentSpecialization(requestInformation);
 
-        //   5.5. set the WebStar_P00_Key__c field on the new card
+        //   5.4. set the WebStar_P00_Key__c field on the new card
         setWebStarField(requestInformation);
 
         // 6. update the Case to "Closed" on digital cards
@@ -259,31 +255,15 @@ public with sharing class IDCard_MobileAppRenewalService
         return IDCard_ServiceResponse.makeGenericServiceResponse(values);
     }
 
-    private static void setIdCardPrintingOptions(RequestInformation requestInformation)
-    {
-        if (CARD_TYPE_PLASTIC.equals(requestInformation.newIDC.Card_Type__c))
-        {
-            // already defined on IDCardUtil
-        }
-        else if (CARD_TYPE_DIGITAL.equals(requestInformation.newIDC.Card_Type__c))
-        {
-            requestInformation.newIDC.Is_Expedite__c = false;
-            requestInformation.newIDC.MustSyncWithAIMS__c = false;
-            requestInformation.newIDC.Card_Status__c = IDCardUtil.CARDSTATUS_VALID;
-            requestInformation.newIDC.Sent_to_AIMS_on__c = System.now();
-            requestInformation.newIDC.Received_From_AIMS__c = System.now();
-        }
-    }
-
-    private static void setIdCardType(RequestInformation requestInformation)
+    private static String setIdCardType(RequestInformation requestInformation)
     {
         String type = requestInformation.newIDCA.Card_Type__c;
         if (requestInformation.isUSAgent)
             type = CARD_TYPE_DIGITAL;
-        requestInformation.newIDC.Card_Type__c = type;
 
         System.debug('Checking US agent ' + requestInformation.newIDCA.Card_Type__c + ' ' +
             type + ' ' + requestInformation.contactCountry.ISO_Code__c);
+        return type;
     }
 
     private static Id_Card__c getIdCardFromApplication(Id appId)
@@ -860,7 +840,7 @@ public with sharing class IDCard_MobileAppRenewalService
                                             i.Approving_Manager_s_Name__c, i.Approving_Manager_s_Email__c, i.Applicable_Fee__c,
                                             i.Regional_Office__c, i.AgencyShare_Confirmation__c, i.Revenue_Confirmation_Validation_Failed__c,
                                             i.ID_Card_Fee__c, i.ITDI_Courses_Fee__c, i.Tax_1_Name__c, i.Tax_1_Value__c, i.Tax_2_Name__c,
-                                            i.Tax_2_Value__c, i.Profit_Center__c, i.ASF_Current_Function__c,
+                                            i.Tax_2_Value__c, i.Profit_Center__c, i.ASF_Current_Function__c, i.Card_Type__c,
                                             i.ASF_Percentage_of_Annual_Booking__c, i.ASF_Market_Specialization__c,
                                             i.ASF_Market_Specialization_Comment__c, i.ASF_Market_Focus__c, i.ASF_Specializing_on_Destination__c,
                                             i.ASF_Completed_Travel_Courses__c, i.ASF_Last_Completed_Travel_Course__c, i.ASF_FAM_Trips__c

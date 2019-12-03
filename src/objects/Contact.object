@@ -20198,7 +20198,8 @@ $UserRole.Name &lt;&gt; &quot;IDO Industry Solutions&quot;
 or( 
 $User.Profile_Name__c &lt;&gt; &quot;GDP - Administrator&quot;, 
 $UserRole.Name &lt;&gt; &quot;GDP&quot; 
-) 
+)	,	
+$User.Profile_Name__c &lt;&gt; &quot;System Administrator&quot;
 
 )</errorConditionFormula>
         <errorMessage>This contact is an ID Card holder. please raise an internal case to ID Card team to move the contact to another account</errorMessage>
@@ -20217,7 +20218,8 @@ $UserRole.Name &lt;&gt; &quot;GDP&quot;
 				or(
 $User.Profile_Name__c &lt;&gt; &quot;IDFS Passenger - Distribution Solutions&quot;,
 $UserRole.Name &lt;&gt; &quot;IDO Industry Solutions&quot; 
-) ,
+) ,	
+$User.Profile_Name__c &lt;&gt; &quot;System Administrator&quot;,
 				
 	Or(			
 					and(
@@ -20238,6 +20240,7 @@ UPPER(PRIORVALUE(FirstName)) &lt;&gt; UPPER(FirstName)
         <errorConditionFormula>AND( 
  ISPICKVAL($User.UserType,&quot;PowerPartner&quot;), 
 ID_Card_Holder__c=true,
+$User.Profile_Name__c &lt;&gt; &quot;System Administrator&quot;,
 ISCHANGED(ISSP_Contact_Name__c )
 )</errorConditionFormula>
         <errorMessage>This contact is an ID Card holder. To change the contact name, please contact to IATA Customer Service team.</errorMessage>
