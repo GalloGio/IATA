@@ -28,6 +28,7 @@ import CSP_L_WorkPhone_LMS from '@salesforce/label/c.CSP_L_WorkPhone_LMS';
 import CSP_Next_LMS from '@salesforce/label/c.CSP_Next_LMS';
 import CSP_L2_RegistrationFailed_LMS from '@salesforce/label/c.CSP_L2_RegistrationFailed_LMS';
 import CSP_L2_IdAlready_LMS from '@salesforce/label/c.CSP_L2_IdAlready_LMS';
+import CSP_Age_Verification from '@salesforce/label/c.CSP_Age_Verification';
 
 
 /** The delay used when debouncing input filters. */
@@ -71,8 +72,8 @@ export default class PortalRegistrationProfileDetailsLMS extends LightningElemen
 		CSP_L_WorkPhone_LMS,
 		CSP_Next_LMS,
 		CSP_L2_RegistrationFailed_LMS,
-		CSP_L2_IdAlready_LMS
-
+		CSP_L2_IdAlready_LMS,
+		CSP_Age_Verification
 	}
 	get labels() {
 		return this._labels;
@@ -254,7 +255,7 @@ export default class PortalRegistrationProfileDetailsLMS extends LightningElemen
 		var birthdateDiv = this.template.querySelector('[data-id="birthdateDiv"]');
 		if(!this.isBirthdateValid){
 			birthdateDiv.classList.add('slds-has-error');
-			this.errorMessageBirthdate = 'The Date must be over 18.';
+			this.errorMessageBirthdate = this.labels.CSP_Age_Verification;
 			this.displayErrorBirthdate = true;
 		}else{
 			birthdateDiv.classList.remove('slds-has-error');
