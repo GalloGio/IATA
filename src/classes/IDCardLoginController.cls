@@ -593,7 +593,7 @@ public with sharing class IDCardLoginController extends IdCardAbstractController
         Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
 
 
-        mail.setToAddresses(new String[] {'jfonteray@gmail.com'});
+        mail.setToAddresses(new String[] {'salima@iata.org'});
         mail.setSubject('A blacklisted agent has tried to sign in on ID Card Online Platform. VER: ' + vernum + ' IATA Code: ' + iataCode);
         mail.setPlainTextBody('A blacklisted agent has tried to sign in on ID Card Online Platform. VER: ' + vernum + ' IATA Code: ' + iataCode);
         List<Messaging.SingleEmailMessage> lstMsgs = new List<Messaging.SingleEmailMessage>();

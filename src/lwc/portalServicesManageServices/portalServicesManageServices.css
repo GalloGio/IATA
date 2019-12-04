@@ -43,16 +43,12 @@
     border: 0;
     background: #3333ff;
     border-radius: 1px;
+    display: flex;
 }
 
 .requestedButtonCls span{
     border: radius 0;
 }
-
-.requestedButtonCls svg[data-key="threedots_vertical"]{
-    fill:white;
-}
-
 
 .customCreateCaseModal {
     width: 544px;
@@ -66,13 +62,11 @@
     box-shadow: 0 8px 18px 0 rgba(0, 0, 0, 0.08), 0 1px 4px 0 rgba(0, 0, 0, 0.04);
 }
 
-
 .overlap-top-center {
     position: relative;
     top: 110px;
     z-index: 1;
 }
-
 
 .dot-lightgreen {
     height: 96px;
@@ -130,12 +124,68 @@
     position: absolute;
 }
 
-.customPopupInteriorHalfScreenCentered{
-    width: 500px;
-}
-
-
 .searchContainer{
     display: flex;
     align-items: end;
 }
+
+.userlookupLabel{
+    height: 20px;
+    font-size: 14px;
+    line-height: 1.43;
+    color: #525252;
+}
+
+.fullWidth{
+    width:100%;
+}
+
+.recipients-box{
+    min-height:150px;
+}
+
+
+.contactsToAdd svg{
+    fill:#d2d6fe;
+}
+
+.filterIcon svg{
+    fill:#d2d6fe;
+}
+
+/* MODAL */
+
+.modalTitle{
+    font-size: 20px;
+    font-weight: 600;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.6;
+    letter-spacing: normal;
+    color: #333;
+}
+
+/* datatable changes*/
+@media only screen and (max-device-width: 760px) {
+    .usersTable table * {
+        font-size: 12px;
+      }
+    .usersTable table tr th:nth-child(1),
+    .usersTable table tr td:nth-child(1) {
+        width:24px !important;
+    }
+    .usersTable table tr th:nth-child(6),
+    .usersTable table tr td:nth-child(6) {
+        width:22px;
+    }
+
+    .usersTable table tr td:nth-child(3),
+    .usersTable table tr th:nth-child(3),
+    .usersTable table tr td:nth-child(5),
+    .usersTable table tr th:nth-child(5) {
+      display: none;
+    }
+    .slds-th__action span {
+        min-width: 100px;
+    }
+  }

@@ -63,9 +63,16 @@ public with sharing class DAL_WithoutSharingTest {
         Test.startTest();
         System.runAs(newUser) {
             String result = DAL_WithoutSharing.performCheckonPoll('IEP_EdenRed', 0);
-            List<Contact> myContactsByAccountId = DAL_WithoutSharing.getContactsByAccountId(child.id, 0, 0);
-            List<Contact> searchMyContactsByAccountId = DAL_WithoutSharing.searchContactsByAccountId(child.id, 0, 0, '');
+            PortalProfileCtrl.CompanyInformationContactsFiltersWrapper searchwrapper = new PortalProfileCtrl.CompanyInformationContactsFiltersWrapper();
+            searchwrapper.sortField='name';
+            searchwrapper.sortDirection='ASC';
+            searchwrapper.searchInput='test';
+            searchwrapper.firstLetter='A';
+            
+            string searchkey=JSON.serialize(searchwrapper);
+            CSP_Utils.PagedResult searchResult= DAL_WithoutSharing.searchForCompanyContacts(searchkey,0,5,child.id);
             newMap = DAL_WithoutSharing.getUserOptions(newUser.id);
+			system.AssertEquals(DAL_WithoutSharing.hasAccessToService('asd',con.id),false);
         }
         
         Test.stopTest();

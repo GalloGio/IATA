@@ -1,6 +1,7 @@
 import { LightningElement, track, api } from 'lwc';
 
 import getBreadcrumbs from '@salesforce/apex/PortalBreadcrumbCtrl.getBreadcrumbs';
+import isGuestUser from '@salesforce/apex/CSP_Utils.isGuestUser';
 
 //import navigation methods
 import { NavigationMixin } from 'lightning/navigation';
@@ -17,7 +18,9 @@ import CSP_Breadcrumb_Services_Title from '@salesforce/label/c.CSP_Breadcrumb_Se
 import CSP_Manage_Services from '@salesforce/label/c.CSP_Manage_Services';
 import CSP_Breadcrumb_Company_Profile_Title from '@salesforce/label/c.CSP_Breadcrumb_CompanyProfile_Title';
 import CSP_Breadcrump_MyProfile_Title from '@salesforce/label/c.CSP_Breadcrump_MyProfile_Title';
+import CSP_Breadcrump_You_IATA from '@salesforce/label/c.CSP_Breadcrump_You_IATA';
 import CSP_Cases from '@salesforce/label/c.CSP_Cases';
+import CSP_Breadcrumb_CaseDetails_Title from '@salesforce/label/c.CSP_Breadcrumb_CaseDetails_Title';
 
 export default class PortalBreadcrumbs extends NavigationMixin(LightningElement) {
 
@@ -29,10 +32,12 @@ export default class PortalBreadcrumbs extends NavigationMixin(LightningElement)
         CSP_Breadcrumb_Support_ReachUs,
         CSP_Breadcrumb_Support_CreateNewCase,
         CSP_Breadcrumb_FAQ_Title,
+		CSP_Breadcrumb_CaseDetails_Title,	
         CSP_Breadcrumb_Services_Title,
         CSP_Manage_Services,
         CSP_Breadcrumb_Company_Profile_Title,
         CSP_Breadcrump_MyProfile_Title,
+        CSP_Breadcrump_You_IATA,
         CSP_Cases
     };
 
@@ -56,8 +61,13 @@ export default class PortalBreadcrumbs extends NavigationMixin(LightningElement)
     pagename = '';
 
     @track loadingBreadcrumbs = true;
+    @track guestUser = false;
 
     connectedCallback() {
+        isGuestUser().then(results => {            
+            if(results) this.guestUser = true;
+        });
+
         this.pagename = getPageName();
 
         this.classNameAllBreadCrumbs = 'text-linkBlue';
@@ -73,7 +83,7 @@ export default class PortalBreadcrumbs extends NavigationMixin(LightningElement)
                 this.results = results;
                 this.processLstBreadcrumbs();
             })
-            .catch(error => {
+            .catch(error => {                
                 this.loadingBreadcrumbs = false;
             });
         }
@@ -114,15 +124,36 @@ export default class PortalBreadcrumbs extends NavigationMixin(LightningElement)
     }
 
     navigateToBreadcrumb(event){
-        let clickedBreadcrumbName = event.target.dataset.item;
-        clickedBreadcrumbName = clickedBreadcrumbName.split('_').join('-');
+        let clickedBreadcrumbName = event.target.dataset.item;        
+        
+        // if guest user, redirect to public page
+        if(this.guestUser) {
+            if(clickedBreadcrumbName === 'home') {
+                window.location = 'https://www.iata.org';
+            }
 
-        this[NavigationMixin.GenerateUrl]({
-            type: "standard__namedPage",
-            attributes: {
-                pageName: clickedBreadcrumbName
-            }})
-        .then(url => navigateToPage(url, {}));
+            if(clickedBreadcrumbName === 'support') {
+                clickedBreadcrumbName = 'faq';
+
+                clickedBreadcrumbName = clickedBreadcrumbName.split('_').join('-');
+
+                this[NavigationMixin.GenerateUrl]({
+                    type: "standard__namedPage",
+                    attributes: {
+                        pageName: clickedBreadcrumbName
+                    }})
+                .then(url => navigateToPage(url, {}));
+            }
+        } else {
+            clickedBreadcrumbName = clickedBreadcrumbName.split('_').join('-');
+
+            this[NavigationMixin.GenerateUrl]({
+                type: "standard__namedPage",
+                attributes: {
+                    pageName: clickedBreadcrumbName
+                }})
+            .then(url => navigateToPage(url, {}));
+        }
     }
 
 }

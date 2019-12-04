@@ -48,7 +48,7 @@ var __sfdcSessionId = '{!GETSESSIONID()}';
         }
 
         function invokeWS(currentElement) {
-          
+
             var idToUpdate= '{!oscar.Id}';
             
             //get the parent DIV having an id
@@ -63,6 +63,9 @@ var __sfdcSessionId = '{!GETSESSIONID()}';
             
             var fieldsApiName = [];
             var fieldValues = [];
+
+            var rfcontrol = false;
+            var showConfirmationRFChange = false;
             
             var addedApiName;
             var addedApiValue;
@@ -79,6 +82,12 @@ var __sfdcSessionId = '{!GETSESSIONID()}';
                     if (inputElem != null && inputElem.length > 0) {
                         
                         fieldsApiName.push(elem.id);
+
+
+                        //Step6__c || RPM_Approval__c
+                        if(elem.id =='STEP6__c' || elem.id == 'RPM_Approval__c'){
+                            rfcontrol = true;
+                        }
                         
                         addedApiName = true;
                         addedApiValue = false;
@@ -126,7 +135,14 @@ var __sfdcSessionId = '{!GETSESSIONID()}';
                             } else {
                                 
                                 if (inputElem[0].value != null) {
-                                    
+
+                                    if(rfcontrol == true){
+                                        rfcontrol = false;
+                                        if(inputElem[0].value == 'Passed' || inputElem[0].value == 'Authorize Approval'){
+                                            showConfirmationRFChange = true;
+                                        }
+                                    }
+
                                     fieldValues.push(inputElem[0].value);
                                     addedApiValue = true;
                                 } else {
@@ -162,6 +178,28 @@ var __sfdcSessionId = '{!GETSESSIONID()}';
                         fieldValueToServer.push(fieldValues[i]);
                     }
                 }
+  
+                //NEWGEN-5544 - Confirmation message for BSP with Remittance Frequency per State
+                //Steps Sanity Check - STEP6__c = Passed || RPM_Approval__c Step = Authorize Approval & oscar.ANG_Type_Of_Change__c = Location & Account.RF != Pax_Accreditation.RF
+                var rfAccount = '{!oscar.Account__r.Remittance_frequency__c}';
+                var rfStagingArea = '{!oscar.AMS_Online_Accreditation__r.Remittance_Frequency__c}';
+                var rfPerState = '{!oscar.Account__r.IATA_ISO_Country__r.AMS_Settlement_System__r.Remittance_Frequency_per_State__c}';
+                var typeChange = '{!oscar.ANG_Type_Of_Change__c}';
+
+                if(typeChange == 'Location' && rfAccount != rfStagingArea && rfPerState && showConfirmationRFChange){
+
+                    var r = confirm("Remittance Frequency has changed. Do you want to proceed?");
+                    if (r != true){
+                        return 'false';
+                    }
+                }
+
+                if ({!oscar.Process__c == 'ANG.CONVERT.ST.TO.MC'} && arrayContains(fieldValueToServer, "Passed")
+                    && arrayContains(fieldsApiName, "STEP45__c"))
+                {
+                    if (! confirm("Please make sure that you review the step to Confirm the hierarchy structure to ensure validations are enforced. Do you want to proceed?"))
+                        return 'false';
+                }
 
                 sforce.connection.header = null;
                 var result = "" + sforce.apex.execute("AMS_OSCAR_Webservice","updateFormFields", 
@@ -173,6 +211,16 @@ var __sfdcSessionId = '{!GETSESSIONID()}';
                     alert(result);
                 }
             }
+        }
+
+        function arrayContains(array, element)
+        {
+            for (var i = 0; i != array.length; i++)
+            {
+                if (array[i] === element)
+                    return true;
+            }
+            return false;
         }
 
         function openSubtab(subtabUrl, subTabTitle)
@@ -487,7 +535,7 @@ function buildFunctionCall(func, argList){
 </apex:pageBlock>
 
 
-<apex:pageBlock rendered="{!showRequiredOverlay}">
+<apex:pageBlock rendered="{!showRequiredOverlay && !isGEwithNoHierarchy}">
     <div class="overlay">
     <div class="overlay-content">
         <p style="font-size: 36px;">LOCKED</p>
@@ -527,6 +575,16 @@ function buildFunctionCall(func, argList){
     </div>
 </apex:pageBlock>
 
+<apex:pageBlock rendered="{!isGEwithNoHierarchy}">
+    <div class="overlay">
+    <div class="overlay-content">
+        <p style="font-size: 36px;">LOCKED</p>
+        <p>In order to proceed please use the Button - Account Creator - (in the Oscar Section) to create the accounts for this Hierarchy. 
+        </p>
+      </div>
+    </div>
+</apex:pageBlock>
+
 <apex:pageBlock rendered="{!IF(oscar != null &&  isAgencyChange &&oscar.Change_effective_as_of__c!=null && oscar.Change_effective_as_of__c > TODAY(),true,false)}">
     <div class="overlay">
     <div class="overlay-content">
@@ -556,8 +614,11 @@ function buildFunctionCall(func, argList){
                     <apex:outputPanel styleClass="{!flowColors[p.name + flow.name]}">
                     <apex:pageBlockSection id="theSection" title="{!$Label[flow.name]}" collapsible="{!collapsibleMap[p.name + flow.name]}" columns="1">
                         <apex:outputPanel layout="block" styleClass="sectionWrapper">
-                            <apex:outputPanel layout="block" styleClass="sectionBlocker" rendered="{!ddBlock[flow.name]}">
+                            <apex:outputPanel layout="block" styleClass="sectionBlocker" rendered="{!ddBlock[flow.name] && !isNewGE && !isNewGEConversion }">
                                 <p>{!$Label.AMS_Due_Diligence_Lock}</p>
+                            </apex:outputPanel>
+                             <apex:outputPanel layout="block" styleClass="sectionBlocker" rendered="{!ddBlock[flow.name] && OR(isNewGE, isNewGEConversion )}">
+                                <p>{!IF(oscar.step45__c == 'Passed',$Label.AMS_Due_Diligence_Lock, $Label.ANG_NEW_GE_lock)}</p>
                             </apex:outputPanel>
                             <apex:pageBlockSection columns="3">
                                 <apex:repeat value="{!flow.steps}" var="step">
@@ -568,10 +629,21 @@ function buildFunctionCall(func, argList){
                                             </a>
                                         </apex:outputPanel>
                                     </apex:pageBlockSectionItem>
-                                    <apex:pageBlockSectionItem dataStyle="width:100%; padding-bottom: 8px;">
+                                    <apex:pageBlockSectionItem dataStyle="width:100%; padding-bottom: 8px;" rendered="{!OR(step.name  != 'STEP45', oscar.Process__c != 'ANG.NEW.GE.STANDARD.1.0')}">
                                         <apex:outputPanel >
                                             <div style="padding-top: {!IF((step.isDependent), '0px', '20px')}">
                                                 <a id="{!step.name}" class="lightbox" href="#inline{!step.name}" onclick="clicked(this)">
+                                                    <apex:outputText value="{!$Label[step.label]}"/>
+                                                </a>
+                                            </div>
+                                        </apex:outputPanel>
+                                    </apex:pageBlockSectionItem>
+
+                                    <!-- FOR GE PROCESS: CALLING DIRECTLY THE PAGE FROM URL-->
+                                    <apex:pageBlockSectionItem dataStyle="width:100%; padding-bottom: 8px;" rendered="{!AND(step.name  == 'STEP45', oscar.Process__c == 'ANG.NEW.GE.STANDARD.1.0')}">
+                                        <apex:outputPanel >
+                                            <div style="padding-top: {!IF((step.isDependent), '0px', '20px')}">
+                                                <a href="javascript:dyn_functions.hierarchySelectionForGE('{!oscar.id}');">
                                                     <apex:outputText value="{!$Label[step.label]}"/>
                                                 </a>
                                             </div>

@@ -43,7 +43,7 @@ public without sharing class ISSP_UserTriggerHandler {
         }
 
         if(contactIdSet.size() > 0){
-            HigherLogicIntegrationHelper.pushPersonCompanyMembers(HigherLogicIntegrationHelper.PUSH_EXISTING_MEMBERS, contactIdSet, null);
+            HigherLogicIntegrationHelper.pushPersonCompanyMembers(HigherLogicIntegrationHelper.PUSH_EXISTING_MEMBERS, contactIdSet);
         }
         
         setPortalUserName(newUserList);

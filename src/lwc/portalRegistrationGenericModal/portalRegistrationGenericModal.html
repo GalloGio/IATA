@@ -1,0 +1,52 @@
+<template>
+    <div class="outer">
+        <div class="middle">
+            <div class="modal2">
+                <div class="customPopupInteriorQuarterScreenCentered">
+                    <template if:true={isIconDefined}>
+                        <div class="icon">
+                            <img src={icon} height="96" width="96" class="slds-p-left_small">
+                        </div>
+                    </template>
+                    <div class="slds-m-horizontal_x-large">
+                        <div class="cardBodyContent">
+                            <div class="slds-card__body">
+                                <div class="slds-p-bottom_x-small textAlignCenter">
+                                    <span class="text-medium text-darkGray text-bold modalTitle">
+                                        <span>{title}</span>
+                                    </span>
+                                </div>
+                                <div class="slds-p-bottom_x-small textAlignCenter">
+                                    <div class="slds-p-bottom_medium">
+                                        <span class="fixed-text text-gray">{message}</span>
+                                    </div>
+
+                                    <div class="buttonsWrapper">
+
+                                        <template if:true={displayButton1}>
+                                            <div class="buttonContainer">
+                                                <lightning-button class="containedButton customBtn btnModal outlinedBtn" label={button1Label} variant="neutral"  onclick={button1Action} >
+                                                </lightning-button>
+                                            </div>
+                                            <div class="buttonContainer">
+                                                <lightning-button class="containedButton customBtn btnModal secondBtn" label={button2Label} variant="brand"  onclick={button2Action} >
+                                                </lightning-button>
+                                            </div>
+                                        </template>
+
+                                        <template if:false={displayButton1}>
+                                            <div class="buttonContainer marginAuto">
+                                                <lightning-button class="containedButton customBtn btnModal secondBtn" label={button2Label} variant="brand"  onclick={button2Action} >
+                                                </lightning-button>
+                                            </div>
+                                        </template>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

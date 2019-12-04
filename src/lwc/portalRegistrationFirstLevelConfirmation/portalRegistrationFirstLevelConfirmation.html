@@ -1,0 +1,302 @@
+<!--
+ - Created by ukaya01 on 28/08/2019.
+ -->
+
+<!-- Portal Registration First Level Confirmation -->
+<template>
+
+    <section aria-modal="true" class="slds-modal slds-fade-in-open" style="z-index: 10000;">
+
+        <div if:true={isLoading}>
+            <div class="modalSpinnerContainer">
+                <lightning-spinner class="" alternative-text="Loading" size="medium">
+                </lightning-spinner>
+            </div>
+        </div>
+
+        <div class="modal">
+            <div  class="registrationPopup" onkeypress={handleFormKeyPress} data-id="snackbar">
+                <!-- Popup Header -->
+                <div class="slds-p-horizontal_large slds-p-vertical_medium headerTitle">
+                    <span>{labels.ISSP_Registration_MyInformation}</span>
+                    <span class="slds-float_right slds-m-horizontal_x-small close-mark" onclick={closeModal}>
+                        <lightning-icon icon-name="utility:close" size="x-small" class="cursorPointer"
+                                        onclick={handleCloseModal}></lightning-icon>
+                    </span>
+                </div>
+
+                <div class="slds-is-relative">
+
+                    <div class="slds-p-around_large slds-p-horizontal_small slds-p-horizontal_large customWhiteBackground">
+
+                        <div if:true={displaySubmitError} >
+                            <div class="snackbar text-xxsmall" style="display: flex;">
+                                <div style="flex: 1;">
+                                    <span><img src={exclamationIcon}></span>
+                                </div>
+                                <div style="flex: 15;">
+                                    {labels.CSP_Unexcepted_Error} {labels.CSP_Troubleshooting_Info} <a style="color: #fff; text-decoration: underline;" href={config.troubleShootingUrl}>{labels.CSP_Troubleshooting}</a>
+                                </div>
+                                <div style="flex: 1;">
+                                    <span class="cancelIconContainer"><img src={cancelIcon} class="cancelIcon" onclick={handleSnackbarCancel}></span>
+                                </div>
+                            </div>
+                            <div class="formElementSpacer">
+                            </div>
+                        </div>
+
+                        <lightning-layout multiple-rows vertical-align="end" class="IEFixDisplayContainer">
+                            <div class="IEFixDisplayContainer">
+                            <lightning-layout-item size="12">
+                                <!------------------------------------------      E-Mail      --------------------------------------------->
+                                <lightning-layout-item size="12">
+                                    <div class="formElementContainer">
+                                        <div class="formLabelContainer">
+                                            <div style="width:100%;" class="text-xxsmall">
+                                                <abbr class="slds-required" title="required">*</abbr>
+                                                {config.contactLabelMap.Email}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="12">
+                                    <div data-id="emailDiv" class="slds-form-element">
+                                        <div class="slds-form-element__control custTextInput custTextInputSmall">
+                                            <input type="text" data-id="email" name="email" value={registrationForm.email} placeholder=" " disabled readonly required class="slds-input inputBackgroundGrey" />
+                                        </div>
+                                    </div>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="12">
+                                    <div class="formElementSpacer">
+                                    </div>
+                                </lightning-layout-item>
+
+                                    <!------------------------------------------      First Name      ------------------------------------------ -->
+                                <lightning-layout-item size="12">
+                                    <div class="formElementContainer">
+                                        <div class="formLabelContainer">
+                                            <div style="width:100%;" class="text-xxsmall">
+                                                <abbr class="slds-required" title="required">*</abbr>
+                                                {config.contactLabelMap.FirstName}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="12">
+                                    <div data-id="firstNameDiv" class="slds-form-element">
+                                        <div class="slds-form-element__control custTextInput custTextInputSmall">
+                                            <input type="text" data-id="firstName" name="firstName" value={registrationForm.firstName} placeholder=" " required class="slds-input"
+                                                   onkeyup={handleInputValueChange} />
+                                        </div>
+                                    </div>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="12">
+                                    <div class="formElementSpacer">
+                                    </div>
+                                </lightning-layout-item>
+
+                            </lightning-layout-item>
+
+                            <!------------------------------------------      Last Name      --------------------------------------------->
+                            <lightning-layout-item size="12">
+                                <div class="formElementContainer">
+                                    <div class="formLabelContainer">
+                                        <div style="width:100%;" class="text-xxsmall">
+                                            <abbr class="slds-required" title="required">*</abbr>
+                                            {config.contactLabelMap.LastName}
+                                        </div>
+                                    </div>
+                                </div>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="12">
+                                <div data-id="lastNameDiv" class="slds-form-element">
+                                    <div class="slds-form-element__control custTextInput custTextInputSmall">
+                                        <input type="text" data-id="lastName" name="lastName" value={registrationForm.lastName} placeholder=" " required class="slds-input"
+                                               onkeyup={handleInputValueChange} />
+                                    </div>
+                                </div>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="12">
+                                <div class="formElementSpacer">
+                                </div>
+                            </lightning-layout-item>
+                            <!------------------------------------------      Country      --------------------------------------------->
+                            <lightning-layout-item size="12">
+                                <div class="formElementContainer">
+                                    <div class="formLabelContainer">
+                                        <div style="width:100%;" class="text-xxsmall">
+                                            {config.contactLabelMap.Country__c}
+                                        </div>
+                                    </div>
+                                </div>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="12">
+                                <div class="slds-form-element__control registrationComboBox custTextInputSmall">
+                                    <lightning-combobox class="" placeholder=" "
+                                                        name="" label=""
+                                                        variant="label-hidden"
+                                                        value={registrationForm.country} options={countryOptions}
+                                                        onchange={handleCountryChange}>
+                                    </lightning-combobox>
+                                </div>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="12">
+                                <div class="formElementSpacer">
+                                </div>
+                            </lightning-layout-item>
+                            <!------------------------------------------      Phone      --------------------------------------------->
+                            <lightning-layout-item size="12">
+                                <div class="formElementContainer">
+                                    <div class="formLabelContainer">
+                                        <div style="width:100%;" class="text-xxsmall">
+                                            {config.contactLabelMap.Phone}
+                                        </div>
+                                    </div>
+                                </div>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="12">
+                                    <div data-id={rerender} class="slds-form-element__control registrationComboBox custTextInput custTextInputSmall">
+                                    <input data-id="phone" name="phone" class="phoneFormat slds-input" type="tel" placeholder=" "
+                                            onkeyup={handlePhoneInputChange} value={registrationForm.phone} />
+                                </div>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="12">
+                                <div class="formElementSpacer">
+                                </div>
+                            </lightning-layout-item>
+                            <!------------------------------------------      Customer Type      --------------------------------------------->
+                            <!-- Sector -->
+                            <template if:true={sector.display}>
+                                <lightning-layout-item size="12">
+                                    <div class="formElementContainer">
+                                        <div class="formLabelContainer">
+                                            <div style="width:100%;" class="text-xxsmall">
+                                                <abbr class="slds-required" title="required">*</abbr>
+                                                {sector.label}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="12">
+                                    <div class="slds-form-element__control registrationComboBox custTextInputSmall">
+                                        <lightning-combobox class="" placeholder=" "
+                                                            name="sectorCbx" label="" required
+                                                            variant="label-hidden"
+                                                            value={registrationForm.sector}
+                                                            options={sector.options}
+                                                            onchange={handleSectorChange}
+                                                            message-when-value-missing=" "
+                                                            disabled={customerTypeSelectionEnabled}>
+                                        </lightning-combobox>
+                                    </div>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="12">
+                                    <div class="formElementSpacer">
+                                    </div>
+                                </lightning-layout-item>
+                            </template>
+
+                            <!-- Extra Question -->
+                            <template if:true={extraQuestion.display}>
+                                <lightning-layout-item size="12">
+                                    <div class="formElementContainer">
+                                        <div class="formLabelContainer">
+                                            <div style="width:100%;" class="text-xxsmall">
+                                                <abbr class="slds-required" title="required">*</abbr>
+                                                {extraQuestion.label}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="12">
+                                    <div class="slds-form-element__control registrationComboBox custTextInputSmall">
+                                        <lightning-combobox class="" placeholder=" "
+                                                            name="extraCbx" label="" required
+                                                            variant="label-hidden"
+                                                            value={registrationForm.extraChoice}
+                                                            options={extraQuestion.options}
+                                                            onchange={handleExtraChoiceChange}
+                                                            message-when-value-missing=" "
+                                                            disabled={customerTypeSelectionEnabled}>
+                                        </lightning-combobox>
+                                    </div>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="12">
+                                    <div class="formElementSpacer">
+                                    </div>
+                                </lightning-layout-item>
+                            </template>
+
+                            <!-- Category -->
+                            <template if:true={category.display}>
+                                <lightning-layout-item size="12">
+                                    <div class="formElementContainer">
+                                        <div class="formLabelContainer">
+                                            <div style="width:100%;" class="text-xxsmall">
+                                                <abbr class="slds-required" title="required">*</abbr>
+                                                {category.label}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="12">
+                                    <div class="slds-form-element__control registrationComboBox custTextInputSmall">
+                                        <lightning-combobox class="" placeholder=" "
+                                                            name="categoryCbx" label="" required
+                                                            variant="label-hidden"
+                                                            value={registrationForm.category}
+                                                            options={category.options}
+                                                            onchange={handleCategoryChange}
+                                                            message-when-value-missing=" "
+                                                            disabled={customerTypeSelectionEnabled}>
+                                        </lightning-combobox>
+                                    </div>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="12">
+                                    <div class="formElementSpacer">
+                                    </div>
+                                </lightning-layout-item>
+                            </template>
+                            <!------------------------------------------      Preferred Portal Language      --------------------------------------------->
+                            <lightning-layout-item size="12">
+                                <div class="formElementContainer">
+                                    <div class="formLabelContainer">
+                                        <div style="width:100%;" class="text-xxsmall">
+                                            <abbr class="slds-required" title="required">*</abbr>
+                                            {config.contactLabelMap.Preferred_Language__c}
+                                        </div>
+                                    </div>
+                                </div>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="12">
+                                <div class="slds-form-element__control registrationComboBox custTextInputSmall">
+                                    <lightning-combobox class="" placeholder=" "
+                                                        name="" label="" required
+                                                        variant="label-hidden"
+                                                        value={registrationForm.language}
+                                                        options={languageOptions}
+                                                        onchange={handlePreferredLanguageChange}>
+                                    </lightning-combobox>
+                                </div>
+                            </lightning-layout-item>
+
+                            <lightning-layout-item size="12">
+                                <div class="formElementSpacer">
+                                </div>
+                            </lightning-layout-item>
+
+                            <lightning-layout-item size="12">
+                                <div>
+                                    <lightning-button data-id="submitButton" disabled class="containedButtonDisabled" onclick={handleSubmit} label={labels.CSP_Submit}></lightning-button>
+                                </div>
+
+                            </lightning-layout-item>
+                            </div>
+                        </lightning-layout>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</template>

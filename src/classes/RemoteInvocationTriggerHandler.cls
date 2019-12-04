@@ -71,11 +71,21 @@ public without sharing class RemoteInvocationTriggerHandler {
     }
 
     public void handlePlatformEvent(){
+        Map<Id,Remote_Invocation__c> remoteInvocations = new Map<Id,Remote_Invocation__c>();
+
         for(Remote_Invocation__c re : triggerNew){
 
             //if oldmap doesn't contain id, trigger is insert. Note: this method only runs on after, id is allways populated 
             if((oldMap == null || ( oldMap != null && oldMap.get(re.id).Status__c != re.Status__c)) && (re.Status__c == 'Completed' || re.Status__c == 'Failed'))
-                PlatformEvents_Helper.publishEvents((trigger.isDelete?trigger.OldMap:Trigger.newMap), 'RemoteInvocation__e', 'Remote_Invocation__c', trigger.isInsert, trigger.isUpdate, trigger.isDelete, trigger.isUndelete);
+                remoteInvocations.put(re.Id, re);
+        }
+
+        if(!remoteInvocations.isEmpty()){
+            if((Limits.getLimitQueueableJobs() - Limits.getQueueableJobs()) > 0 && !System.isFuture() && !System.isBatch()) {
+                System.enqueueJob(new PlatformEvents_Helper(remoteInvocations, 'RemoteInvocation__e', 'Remote_Invocation__c', trigger.isInsert, trigger.isUpdate, trigger.isDelete, trigger.isUndelete));
+            } else {
+                PlatformEvents_Helper.publishEvents(remoteInvocations, 'RemoteInvocation__e', 'Remote_Invocation__c', trigger.isInsert, trigger.isUpdate, trigger.isDelete, trigger.isUndelete);
+            }
         }
     }
 

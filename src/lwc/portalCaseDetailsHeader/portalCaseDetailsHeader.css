@@ -36,10 +36,11 @@
 .recipients-data {
     padding: 0 20px;
     white-space: nowrap;
-    max-width:50%;
+    max-width: 70%;
     overflow: hidden;
     text-overflow: ellipsis;
-    display:inline-block;
+    vertical-align: top;
+    display: inline-block;
 }
 
 .recipients {
@@ -49,4 +50,58 @@
 
 .recipients lightning-button{
     padding: 0 10px;
+}
+
+.border_gradient {
+    position: relative;
+    z-index: 1;
+}
+
+.border_gradient:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 25%;
+    height: 60%;
+    width: 100%;
+    border-right: 1px solid #E6E6E6;
+}
+
+.border_gradient:after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 25%;
+    height: 60%;
+    width: 0%;
+    border-left: 1px solid #E6E6E6;
+}
+
+.CustomCardTitleBox_SmallText {
+    font-size: 13px;
+    font-weight: 400;
+}
+.text-recipients {
+    text-align: right;
+}
+@media print {
+    .text-recipients div,
+    .slds-text-align_right div {
+        text-align: left;
+    }
+    .recipients-label.text-blue {
+        display: none;
+    }
+    .border_gradient:before {
+        border-right: 0 solid transparent;
+    }
+    .border_gradient:after {
+        border-left: 0 solid transparent;
+    }
+    .customCardTitleBox .size_1-of-1.slds-medium-size_2-of-12 {
+        width: 16.6666666667%;
+    }
+    .customCardTitleBox .size_1-of-1.slds-medium-size_8-of-12 {
+        width: 66.6666666667%;
+    }
 }

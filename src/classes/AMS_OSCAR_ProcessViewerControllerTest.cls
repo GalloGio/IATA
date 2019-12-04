@@ -37,6 +37,7 @@ private class AMS_OSCAR_ProcessViewerControllerTest {
         oscar.STEP11__c = 'Not Started';
         oscar.STEP15__c = 'Something else';
         oscar.STEP12__c = 'Something else';
+        oscar.Payment_requested__c = Date.today();
         
         update oscar;
         

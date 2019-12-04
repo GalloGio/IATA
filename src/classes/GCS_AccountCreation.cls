@@ -15,19 +15,14 @@ public without sharing class GCS_AccountCreation{
     	return GCS_RegistrationController.getAccountLabels();
     }
 
-    @AuraEnabled
-    public static GCS_Customer_Type_For_Registration__mdt getMetadataCustomerType(String customerTypeKey) {
-    	return customerTypesMap.get(customerTypeKey).metadataCustomerType;
-    }
+	@AuraEnabled
+	public static GCS_Customer_Type_For_Registration__mdt getMetadataCustomerType(String customerTypeKey) {
+		return customerTypesMap.get(customerTypeKey).metadataCustomerType;
+	}
 
     @AuraEnabled
     public static OneId_RegistrationProcessController.StatesAndAlternateNames getStates(String country){
 		return OneId_RegistrationProcessController.getStates(country);
-    }
-    
-    @AuraEnabled
-    public static String getAllCities(String country){
-		return OneId_RegistrationProcessController.getAllCities(country);
     }
 
     @AuraEnabled
@@ -36,20 +31,20 @@ public without sharing class GCS_AccountCreation{
         return OneId_AddressDoctor.validate((OneId_AddressDoctor.AddressInfo)JSON.deserialize(info, OneId_AddressDoctor.AddressInfo.class));
     }
 
-    @AuraEnabled
+	@AuraEnabled
 	public static List<CustomerTypePicklist> getCustomerTypePicklists(String root, String leaf){
 		List<CustomerTypePicklist> picklists = new List<CustomerTypePicklist>();
-		
+
 		String selectedItem;
-		
+
 		Boolean keepLooping = true;
-		
+
 		String currentCustomerType = leaf;
 		String previousCustomerType = null;
-		
+
 		while(keepLooping){
 			GCS_CustomerType customerType = customerTypesMap.get(currentCustomerType);
-			
+
 			if(!customerType.children.isEmpty()){
 				CustomerTypePicklist picklist = new CustomerTypePicklist(customerType.subCategorizationLabel);
 
@@ -58,10 +53,10 @@ public without sharing class GCS_AccountCreation{
 				for(GCS_CustomerType child : customerType.children){
 					picklist.picklistOptions.add(new CustomerTypePicklistOption(child.metadataCustomerType.DeveloperName, child.label, child.metadataCustomerType.DeveloperName == previousCustomerType));
 				}
-				
+
 				picklists.add(picklist);
 			}
-			
+
 			if(customerType.parent != null && currentCustomerType != root){
 				previousCustomerType = currentCustomerType;
 				currentCustomerType = customerType.parent.metadataCustomerType.DeveloperName;
@@ -76,16 +71,16 @@ public without sharing class GCS_AccountCreation{
 		for(Integer i = picklists.size()- 1 ; i >= 0; i--){
 			orderedPicklists.add(picklists[i]);
 		}
-		
+
 		return orderedPicklists;
 	}
-	
+
 	public class CustomerTypePicklist{
 		@AuraEnabled
-		String picklistLabel { get; private set; }
+		public String picklistLabel { get; private set; }
 		
 		@AuraEnabled
-		List<CustomerTypePicklistOption> picklistOptions { get; private set; }
+		public List<CustomerTypePicklistOption> picklistOptions { get; private set; }
 		
 		public CustomerTypePicklist(String picklistLabel){
 			this.picklistLabel = picklistLabel;
@@ -95,13 +90,13 @@ public without sharing class GCS_AccountCreation{
 
 	public class CustomerTypePicklistOption{
 		@AuraEnabled
-		String key { get; private set; }
+		public String key { get; private set; }
 		
 		@AuraEnabled
-		String label { get; private set; }
+		public String label { get; private set; }
 		
 		@AuraEnabled
-		Boolean isSelected { get; private set; }
+		public Boolean isSelected { get; private set; }
 		
 		public CustomerTypePicklistOption(String key, String label, Boolean isSelected){
 			this.key = key;

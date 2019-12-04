@@ -491,7 +491,7 @@ private class ISSP_PortalUserStatusChangeTest {
         insert acc;
         Contact con = ISSP_ObjectFactory.createNewContact();
         con.AccountId= acc.Id;
-        con.email='asd@asd.com';
+        con.email='asd@asdjhjhasdfz.com';
         insert con;    
 
         list<SelectOptionWrapper> communityList= ISSP_PortalUserStatusChange.getAvalaibleCommunities();

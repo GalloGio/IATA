@@ -18,11 +18,11 @@ public class AMS_Irregularities_Utils{
 		for(Account accnt:lsAccnt)
 			setAccntIDs.add(accnt.id);
 			
-		CalculateAccumulatedIrregularities(setAccntIDs, new Map<Id,Id>());
+		CalculateAccumulatedIrregularities(setAccntIDs, new Map<Id,Id>(), new Map<Id, Account>(), new Map<Id,Agency_Applied_Change_code__c>(), true);
 	}
 	
 	
-	public static void CalculateAccumulatedIrregularitiesFromChangeCode(list<Agency_Applied_Change_code__c> lsCCs){
+	public static void CalculateAccumulatedIrregularitiesFromChangeCode(list<Agency_Applied_Change_code__c> lsCCs, Map<Id, Account> mapAccntToUpdate, Map<Id,Agency_Applied_Change_code__c> mapUpdatedIRR){
 		set<id> setAccntIDs = new set<id>();
 		Map<Id,Id> mapAccountCase = new Map<Id,Id>();
 		
@@ -31,19 +31,18 @@ public class AMS_Irregularities_Utils{
 			if(cc.SIDRA_Case__c <> null) {
 				mapAccountCase.put(cc.account__c, cc.SIDRA_Case__c);
 			}
-		}	
-
-		System.debug('setAccntIDs: ' + setAccntIDs);
-		System.debug('mapAccountCase: ' + mapAccountCase);		
+		}
 			
-		CalculateAccumulatedIrregularities(setAccntIDs, mapAccountCase);
+		CalculateAccumulatedIrregularities(setAccntIDs, mapAccountCase, mapAccntToUpdate, mapUpdatedIRR, false);
 	}
 	
-	private static void CalculateAccumulatedIrregularities(set<id> setAccntIds, Map<Id,Id> mapAccountCase){
+	private static void CalculateAccumulatedIrregularities(set<id> setAccntIds, Map<Id,Id> mapAccountCase, Map<Id, Account> mapAccntToUpdate, Map<Id,Agency_Applied_Change_code__c> mapUpdatedIRR, Boolean toUpdateAccts){
 		if(!setAccntIds.isEmpty()){
 			list<Account> lsAccntToUpdate = new list<Account>();
 			map<id, decimal> mapAccIRRperAgency = new map<id, decimal>();
 			Map<Id,Decimal> mapCurrentIrr = new Map<Id,Decimal>();
+
+			if(!mapAccountCase.isEmpty() && mapAccntToUpdate.isEmpty()) toUpdateAccts = true;
 			
 			for(ID a: setAccntIDs)
 				mapAccIRRperAgency.put(a, 0);
@@ -56,6 +55,10 @@ public class AMS_Irregularities_Utils{
 				
 				for(Agency_Applied_Change_code__c IRRS : [select ID, Account__c, Irregularities_Expired__c, Irregularities_Points__c, Operation__c, Created_Date_To_Show__c from Agency_Applied_Change_code__c 
 														  where RecordType.Developername = 'Irregularities' and Account__c in :setAccntIds AND Created_Date_To_Show__c >= LAST_YEAR]){
+
+					if(mapUpdatedIRR.containsKey(IRRS.Id))
+						IRRS = mapUpdatedIRR.get(IRRS.Id);
+
 					if(IRRS.Operation__c == 'A' && (IRRS.Irregularities_Expired__c==null || IRRS.Irregularities_Expired__c==false)){
 						mapAccIRRperAgency.put(IRRS.Account__c, integer.ValueOf(mapAccIRRperAgency.get(IRRS.Account__c)) + Integer.ValueOf((IRRS.Irregularities_Points__c==null?0:IRRS.Irregularities_Points__c)));
 					}
@@ -77,18 +80,25 @@ public class AMS_Irregularities_Utils{
 					mapCurrentIrr.put(a, CurrAccIrr);
 					
 					if(AccIrr != CurrAccIrr) {
-						lsAccntToUpdate.add(new Account(Id = a, Accumulated_Irregularities__c = (AccIrr<0?0:AccIrr), Location_Class__c= accCurr.Location_Class__c, IATA_ISO_Country__c= accCurr.IATA_ISO_Country__c));
+						if(toUpdateAccts){
+							lsAccntToUpdate.add(new Account(Id = a, Accumulated_Irregularities__c = (AccIrr<0?0:AccIrr), Location_Class__c= accCurr.Location_Class__c, IATA_ISO_Country__c= accCurr.IATA_ISO_Country__c));
+						} else {
+							if(!mapAccntToUpdate.containsKey(a))
+								mapAccntToUpdate.put(a, mapAccCurrAccIRR.get(a));
+							mapAccntToUpdate.get(a).Accumulated_Irregularities__c = AccIrr < 0 ? 0 : AccIrr;
+						}
+
 						countriesIds.add(accCurr.IATA_ISO_Country__c);
 					}
 				}
 				
-				if(!lsAccntToUpdate.isEmpty()) {
+				if(!lsAccntToUpdate.isEmpty() && toUpdateAccts) {
 					update lsAccntToUpdate;
 					if(!mapAccountCase.isEmpty()) {
 						checkIRRTreshold(lsAccntToUpdate, countriesIds, mapAccountCase, mapCurrentIrr);
-			}
-		}
-	} 
+					}
+				}
+			} 
 		}
 	} 
 
@@ -124,8 +134,7 @@ public class AMS_Irregularities_Utils{
 			}
 
 			Decimal prevIRR = mapCurrentIrr.get(acc.Id);//Avoid to create a case when the irregularities decrease
-			System.debug('prevIRR: ' + prevIRR);
-			System.debug('currIRR: ' + acc.Accumulated_Irregularities__c);
+
 			if(classTreshold.Threshold__c <= acc.Accumulated_Irregularities__c && prevIRR < classTreshold.Threshold__c) {
 				String irrReason;
 				if(classTreshold.Reason__c == 'Financial Security Request') {

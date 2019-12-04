@@ -2,19 +2,19 @@ public without sharing class OneIdUtils {
 	
     public Enum Mode {CURRENT, ISSP, IDENTITY, GDPR, CSP}
     
-	@AuraEnabled
-	public static String ORG_URL {get; set;}
     @AuraEnabled
-	public static String COMMUNITY_URL_NAME {get; set;}
+    public static String ORG_URL {get; set;}
     @AuraEnabled
-	public static String COMMUNITY_COMPLETE_URL {get; set;}
+    public static String COMMUNITY_URL_NAME {get; set;}
+    @AuraEnabled
+    public static String COMMUNITY_COMPLETE_URL {get; set;}
 
 
 
    
     @AuraEnabled
     public Static String getOrgUrl (){
-    	ORG_URL = URL.getSalesforceBaseUrl().getHost();
+        ORG_URL = URL.getSalesforceBaseUrl().getHost();
         System.debug('getOrgUrl() RESULT='+ORG_URL);
         return ORG_URL;
     }

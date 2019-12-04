@@ -1,5 +1,4 @@
 <template>
-    
     <div if:true={showBackdrop} class="slds-backdrop slds-backdrop_open" onclick={closeSearch}></div>
 
     <div class="mainContentDiv">
@@ -10,7 +9,7 @@
                 <img src={searchIconUrl} class="slds-p-left_small" height="42" width="42"/>
             </div>
             <div class="searchBarBarContainer">
-                <div class="fullWidth">
+                <div class="searchBarBar fullWidth">
                     <lightning-input
                         name="enter-search"
                         type="text"
@@ -23,13 +22,18 @@
                     </lightning-input>
                 </div>
             </div>
+
+            <div if:true={showCross} class="searchBarIcon slds-m-right--large">
+                <lightning-icon class="cursorPointer rotateIcon" icon-name="utility:add" size="small" alternative-text="" onclick={removeTextSearch}></lightning-icon>
+            </div>
+            
             <div>
                 <span if:true={loadingTypehead} class="barSpinner">
                     <lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
                 </span>
             </div>
             <div>
-                <lightning-button class="outlinedButton slds-p-right_small" variant="neutral" 
+                <lightning-button if:true={filteringObject.advancedSearch} class="outlinedButton slds-p-right_small" variant="neutral" 
                     label={label.CSP_Search_AdvancedSearch} title={label.CSP_Search_AdvancedSearch} 
                     icon-name="utility:settings" icon-position="right" onclick={goToAdvancedSearch}>
                 </lightning-button>
@@ -85,6 +89,4 @@
         </div>
 
     </div>
-
-
 </template>

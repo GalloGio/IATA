@@ -100,14 +100,32 @@ public class BusinessDays {
                 
                 Case updatedCase = TriggerNewMap.get(caseID);
                 Case oldCase = TriggerOldMap.get(caseID);
-                
+                /*
                 dateTime originalCreated = updatedCase.CreatedDate;
                 dateTime createDatePlusOne = updatedCase.CreatedDate.addHours(1);
                 dateTime result  =   businessHours.nextStartDate( updatedCase.businessHoursId, createDatePlusOne);
                 updatedCase.First_Business_Day__c   = createDatePlusOne.day() == result.day() ?  originalCreated : result;                
-                
+                */
                 //OK, the status has changed or the businessHoursChanged
                 
+                dateTime originalCreated = updatedCase.CreatedDate;
+                dateTime createdDatePlusOne = updatedCase.CreatedDate.addHours(1);
+
+                boolean isCreatedDateWithinBH = businessHours.isWithin(updatedCase.businessHoursId, originalCreated);
+                boolean isCreatedDatePlusOneWithinBH = businessHours.isWithin(updatedCase.businessHoursId, createdDatePlusOne);
+
+                //------- Covers the 4 scenarios: --------- 
+                //CD - True  && CD+1 - True  - Created date time
+                //CD - False && CD+1 - False - Next start date time
+                //CD - True  && CD+1 - False - Next start date time
+                //CD - False && CD+1 - True  - Next start date time 
+                if(isCreatedDateWithinBH && isCreatedDatePlusOneWithinBH){
+                    updatedCase.First_Business_Day__c = originalCreated;
+                }
+                else {
+                    updatedCase.First_Business_Day__c =  businessHours.nextStartDate( updatedCase.businessHoursId, createdDatePlusOne);
+                }
+
                 if (
                     !oldCase.IsClosed
                     ||

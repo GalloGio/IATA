@@ -51,11 +51,35 @@
                 <behavior>Edit</behavior>
                 <field>Non_Members_Sub_Category__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Business_Street__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Business_City__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Business_Postal_Code__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Key_Customer__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Identify_as_Key_Customer__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Multicountry_Key_Hierarchy__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Identify_as_Multicountry_Key_Hierarchy__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -76,10 +100,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>TradeName__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Identify_as_Key_Customer__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -423,6 +443,13 @@
                 <showScrollbars>true</showScrollbars>
                 <width>100%</width>
             </layoutItems>
+            <layoutItems>
+                <height>300</height>
+                <page>ANG_AccountTrackingHistory</page>
+                <showLabel>false</showLabel>
+                <showScrollbars>true</showScrollbars>
+                <width>100%</width>
+            </layoutItems>
         </layoutColumns>
         <style>OneColumn</style>
     </layoutSections>
@@ -698,6 +725,8 @@
         <relatedList>AMS_Accreditation_Contact__c.Company__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <fields>MEMBER_NAME</fields>
+        <fields>TEAM_MEMBER_ROLE</fields>
         <relatedList>RelatedAccountSalesTeam</relatedList>
     </relatedLists>
     <relatedLists>
@@ -705,6 +734,14 @@
     </relatedLists>
     <relatedLists>
         <relatedList>RelatedEntityHistoryList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>CREATEDBY_USER</fields>
+        <fields>What__c</fields>
+        <fields>Old_Value__c</fields>
+        <fields>New_Value__c</fields>
+        <relatedList>ANG_Account_Tracking_History__c.Account__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>

@@ -92,6 +92,7 @@ public class ams2gdp_BusinessLogic {
                        , Email_Address__c =  account.Email__c
                        , GDP_Opt_In__c =  account.GDP_Opt_In__c
                        , IATA_Code__c =  (String.isNotBlank(account.IATACode__c)) ? (account.IATACode__c.left(1).equalsIgnoreCase('x') ? account.IATACode__c.left(8) : account.IATACode__c.left(7)) : null
+                       , IDCard_Key_Account__c = account.IDCard_Key_Account__c
                        , Incorporation_Type__c =  (tbl_company_types.containsKey(account.Company_Type__c)) ? tbl_company_types.get(account.Company_Type__c).Id : account.Incorporation_Type__c
                        , Agency_Short_Name__c  = account.Short_Name__c
                        , Legal_Name_1__c =   (legalNameParts.size() > 0) ? legalNameParts.get(0) : null
@@ -1067,11 +1068,11 @@ public class ams2gdp_BusinessLogic {
 		// because the AMS_GDP_Key__c == accountId we can query based on them
 		List<Authorized_Forms_Of_Payment__c> result = new List<Authorized_Forms_Of_Payment__c>();
 		for (Agency_Authorization__c aa : authorizations) {
-			result.add(new Authorized_Forms_Of_Payment__c(AMS_GDP_Key__c = aa.Account__c + aa.ANG_FormOfPayment_ID__c
-			           , Form_of_Payment_Code__c = aa.ANG_FormOfPayment_ID__c
-			                                       , Status__c = aa.Status__c
-			                                               , Related_GDP_Products_Account_View__c = gdpProductIdByAccountId.get(aa.Account__c)
-			                                             ));
+			String aaFopId = aa.ANG_FormOfPayment_ID__c == AMS_Utils.BOP ? AMS_Utils.EP : aa.ANG_FormOfPayment_ID__c;
+			result.add(new Authorized_Forms_Of_Payment__c(AMS_GDP_Key__c = aa.Account__c + aaFopId
+								, Form_of_Payment_Code__c = aaFopId
+								, Status__c = aa.Status__c
+								, Related_GDP_Products_Account_View__c = gdpProductIdByAccountId.get(aa.Account__c)));
 		}
 
 		return result;
