@@ -2147,7 +2147,20 @@ public without sharing class ISSP_AMS_Accreditation {
 					}
 				}
 
-				newForm.MultiCountry_Countries_Concerned__c = countriesMC;
+				if (newForm.Scope_of_Change__c == 'HO - All Branches') {
+					first = true;
+
+					for (HierarchyItem hi: hierarchyValues) {
+						if (first) {
+							countriesMC = hi.acc.Country_ISO_Code__c;
+							first = false;
+						} else if (!countriesMC.contains(hi.acc.Country_ISO_Code__c)) {
+							countriesMC += ',' + hi.acc.Country_ISO_Code__c;
+						}
+					}
+
+					newForm.MultiCountry_Countries_Concerned__c = countriesMC;
+				}
 			}
 
 			if (newForm.Scope_of_Change__c=='HO Only' || newForm.Scope_of_Change__c=='HO - All Branches') {
@@ -5855,7 +5868,7 @@ public without sharing class ISSP_AMS_Accreditation {
 
 			String queryAuxReqsList = 'SELECT Id, Name, Requirement_text__c, File_to_Upload__c, File_Identifier2__c, Language__c, AMS_Accreditation_Country_CheckList__r.IATA_ISO_Country__r.Name FROM AMS_Accreditation_Requirement__c ';
 			
-			if (hqAccount.ANG_Accreditation_Model__c != AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY) {
+			if (hqAccount.ANG_Accreditation_Model__c != AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY || (newForm.Scope_of_Change__c == 'HO Only' && hqAccount.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY)) {
 				queryAuxReqsList += 'WHERE AMS_Accreditation_Country_CheckList__r.IATA_ISO_Country__r.ISO_Code__c = \'' + newCase.IFAP_Country_ISO__c + '\' ';
 			} else {
 				String mcCountriesIsosAux = '(\'';
