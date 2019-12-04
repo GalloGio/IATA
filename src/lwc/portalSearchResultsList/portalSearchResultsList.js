@@ -14,6 +14,11 @@ import CSP_FAQs_Title from '@salesforce/label/c.CSP_FAQs_Title';
 import CSP_Title from '@salesforce/label/c.CSP_Title';
 import ISSP_See_more from '@salesforce/label/c.ISSP_See_more';
 import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
+import CSP_Cases from '@salesforce/label/c.CSP_Cases';
+import ISSP_AvailableServices_Service from '@salesforce/label/c.ISSP_AvailableServices_Service';
+import CSP_Breadcrumb_FAQ_Title from '@salesforce/label/c.CSP_Breadcrumb_FAQ_Title';
+import CSP_Documents from '@salesforce/label/c.CSP_Documents';
+import ICCS_Profile from '@salesforce/label/c.ICCS_Profile';
 
 export default class PortalSearchResultList extends NavigationMixin(LightningElement) {
 
@@ -74,13 +79,18 @@ export default class PortalSearchResultList extends NavigationMixin(LightningEle
         this.filteringObject.searchText = '';
     }
 
-    label = {
+    @track label = {
         CSP_NoSearchResults,
         CSP_SeeAll,
         CSP_FAQs_Title,
         CSP_Title,
         ISSP_See_more,
-        CSP_PortalPath
+        CSP_PortalPath,
+        CSP_Cases,
+        ISSP_AvailableServices_Service,
+        CSP_Breadcrumb_FAQ_Title,
+        CSP_Documents,
+        ICCS_Profile
     };
 
     //clone of the filtering object passed from the parent
@@ -339,7 +349,7 @@ export default class PortalSearchResultList extends NavigationMixin(LightningEle
             if (this.caseResults && this.caseResults.length > i && aggregateResults.length < this.filteringObject.numberOfResults) {
                 let caseRes = {
                     "id": this.caseResults[i].Id,
-                    "category": "Cases",
+                    "category": this.label.CSP_Cases,
                     "title": this.caseResults[i].CaseNumber,
                     "description": this.caseResults[i].Subject,
                     "class": "categId-1",
@@ -350,7 +360,7 @@ export default class PortalSearchResultList extends NavigationMixin(LightningEle
             if (this.faqsResults && this.faqsResults.length > i && aggregateResults.length < this.filteringObject.numberOfResults) {
                 let faq = {
                     "id": this.faqsResults[i].Id,
-                    "category": "FAQ",
+                    "category": this.label.CSP_Breadcrumb_FAQ_Title,
                     "title": this.faqsResults[i].Title,
                     "description": "",
                     "class": "categId-2",
@@ -361,7 +371,7 @@ export default class PortalSearchResultList extends NavigationMixin(LightningEle
             if (this.servicesResults && this.servicesResults.length > i && aggregateResults.length < this.filteringObject.numberOfResults) {
                 let serviceRes = {
                     "id": this.servicesResults[i].Id,
-                    "category": "Services",
+                    "category": this.label.ISSP_AvailableServices_Service,
                     "title": this.servicesResults[i].Name,
                     "description": this.servicesResults[i].Description__c,
                     "class": "categId-3",
@@ -372,7 +382,7 @@ export default class PortalSearchResultList extends NavigationMixin(LightningEle
             if (this.documentsResults && this.documentsResults.length > i && aggregateResults.length < this.filteringObject.numberOfResults) {
                 let doc = {
                     "id": this.documentsResults[i].Id,
-                    "category": "Documents",
+                    "category": this.label.CSP_Documents,
                     "title": this.documentsResults[i].Title,
                     "description": this.documentsResults[i].Description,
                     "class": "categId-5",
@@ -383,7 +393,7 @@ export default class PortalSearchResultList extends NavigationMixin(LightningEle
             if (retrievedAccounts && retrievedAccounts.length > i && aggregateResults.length < this.filteringObject.numberOfResults) {
                 let acc = {
                     "id": retrievedAccounts[i].profileId,
-                    "category": "Profile",
+                    "category": this.label.ICCS_Profile,
                     "title": retrievedAccounts[i].profileName,
                     "description": retrievedAccounts[i].profileType,
                     "class": "categId-4",
@@ -394,7 +404,7 @@ export default class PortalSearchResultList extends NavigationMixin(LightningEle
             if (retrievedContacts && retrievedContacts.length > i && aggregateResults.length < this.filteringObject.numberOfResults) {
                 let cont = {
                     "id": retrievedContacts[i].profileId,
-                    "category": "Profile",
+                    "category": this.label.ICCS_Profile,
                     "title": retrievedContacts[i].profileName,
                     "description": retrievedContacts[i].profileType,
                     "class": "categId-4",
