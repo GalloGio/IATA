@@ -29,10 +29,10 @@
 
 .resultsContentDiv {
     position:absolute;
-    width:calc(100% + 20px);
+    width:100%;
     z-index:4001;
     top:33px;
-    margin: 0px -10px 0px -10px;
+    margin: 0;
     padding: 40px 10px 0px 10px;
 }
 
