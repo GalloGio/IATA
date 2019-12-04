@@ -1,23 +1,23 @@
 global with sharing class ANG_ConversionHelper {
-	
+
 	//Record Types for the Account
-    public static final String ACCOUNT_AGENCY_RT     = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
-    public static final String ACCOUNT_STANDARD_RT   = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
+	public static final String ACCOUNT_AGENCY_RT     = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+	public static final String ACCOUNT_STANDARD_RT   = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
 
-    public static final Set<String> ALLOWEDRECORDTYPES = new Set<String>{ACCOUNT_AGENCY_RT,ACCOUNT_STANDARD_RT};
+	public static final Set<String> ALLOWEDRECORDTYPES = new Set<String>{ACCOUNT_AGENCY_RT,ACCOUNT_STANDARD_RT};
 
-    public static final Set<String> INVALIDAGENCYSTATUS = new Set<String>{AMS_utils.ACC_S2_NEWAPPLICATIONPENDING,AMS_utils.ACC_S1_NOTACCREDITED,'',null,AMS_utils.ACC_S3_NOTINOPERATION, 'Not Accredited'};
+	public static final Set<String> INVALIDAGENCYSTATUS = new Set<String>{AMS_utils.ACC_S2_NEWAPPLICATIONPENDING,AMS_utils.ACC_S1_NOTACCREDITED,'',null,AMS_utils.ACC_S3_NOTINOPERATION, 'Not Accredited'};
 
-    public static final Set<String> ACTIVEAGENCYSTATUS = new Set<String>{AMS_Utils.ACC_S9_APPROVED,AMS_Utils.ACC_S5_CASHNOCOMMISSION,AMS_Utils.ACC_S6_CASHWITHCOMMISSION,AMS_Utils.ACC_S8_CHANGESPROCESSED,AMS_Utils.ACC_S4_LISTED,AMS_Utils.ACC_S7_UNDERREVIEW,'Endorsed','On hold','Review'};
-    public static final Set<String> INACTIVEAGENCYSTATUS = new Set<String>{AMS_Utils.ACC_S1_NOTACCREDITED,'Not Accredited',AMS_Utils.ACC_S3_NOTINOPERATION,AMS_Utils.ACC_S0_TERMINATED};
-    public static final Set<String> BLANKAGENCYSTATUS = new Set<String>{'',null,AMS_Utils.ACC_S2_NEWAPPLICATIONPENDING};
+	public static final Set<String> ACTIVEAGENCYSTATUS = new Set<String>{AMS_Utils.ACC_S9_APPROVED,AMS_Utils.ACC_S5_CASHNOCOMMISSION,AMS_Utils.ACC_S6_CASHWITHCOMMISSION,AMS_Utils.ACC_S8_CHANGESPROCESSED,AMS_Utils.ACC_S4_LISTED,AMS_Utils.ACC_S7_UNDERREVIEW,'Endorsed','On hold','Review'};
+	public static final Set<String> INACTIVEAGENCYSTATUS = new Set<String>{AMS_Utils.ACC_S1_NOTACCREDITED,'Not Accredited',AMS_Utils.ACC_S3_NOTINOPERATION,AMS_Utils.ACC_S0_TERMINATED};
+	public static final Set<String> BLANKAGENCYSTATUS = new Set<String>{'',null,AMS_Utils.ACC_S2_NEWAPPLICATIONPENDING};
 
-    public static final Integer WRONGRECORDTYPE= -2;
-    public static final Integer BRANCHABROAD= -3;
-    public static final Integer WRONGLOCATIONCLASS= -4;
-    public static final Integer AGENCYINMUTIPLEHIERARCHIES= -5;
-    public static final Integer WRONGSECTOR= -6;
-    public static final Integer MISSINGTOPPARENT = -7;
+	public static final Integer WRONGRECORDTYPE= -2;
+	public static final Integer BRANCHABROAD= -3;
+	public static final Integer WRONGLOCATIONCLASS= -4;
+	public static final Integer AGENCYINMUTIPLEHIERARCHIES= -5;
+	public static final Integer WRONGSECTOR= -6;
+	public static final Integer MISSINGTOPPARENT = -7;
 	public static final Integer ORFANBRANCH = -8;
 	public static final Integer DIFFERENTTOPPARENT = -9;
 	public static final Integer BRDIFFCOUNTRY = -10;
@@ -25,20 +25,20 @@ global with sharing class ANG_ConversionHelper {
 
 	public static final String TIDSLOCALTIONCLASS = 'T';
 
-    public static final Set<String> ALLOWEDLOCATIONCLASSES = new Set<String>{'P','D'};
-    public static final Set<String> ALLOWEDSECTORS = new Set<String>{'Travel Agent'};
+	public static final Set<String> ALLOWEDLOCATIONCLASSES = new Set<String>{'P','D'};
+	public static final Set<String> ALLOWEDSECTORS = new Set<String>{'Travel Agent'};
 
-    public static final Set<String> OLDLOCATIONTYPES = new Set<String>{'BR','HO','SA','AO'};
-    public static final Set<String> TOPLEVELLOCATIONTYPES = new Set<String>{'HO','AO'};
+	public static final Set<String> OLDLOCATIONTYPES = new Set<String>{'BR','HO','SA','AO'};
+	public static final Set<String> TOPLEVELLOCATIONTYPES = new Set<String>{'HO','AO'};
 
 	public static final Set<String> LOCATIONTYPESNEWGEN = new Set<String>{'AE','HE'};
 
-    public static Set<String> LOCATIONTYPESBRS {
+	public static Set<String> LOCATIONTYPESBRS {
 
-    	get{
-    		if(LOCATIONTYPESBRS == null){
+		get{
+			if(LOCATIONTYPESBRS == null){
 
-		    	Set<String> pickListValuesList= new Set<String>();
+				Set<String> pickListValuesList= new Set<String>();
 
 				Schema.DescribeFieldResult fieldResult = Account.Location_Type__c.getDescribe();
 
@@ -51,43 +51,43 @@ global with sharing class ANG_ConversionHelper {
 					if((!(LOCATIONTYPESNEWGEN.contains(valuePickList) || TOPLEVELLOCATIONTYPES.contains(valuePickList))) && pickListVal.isActive())
 						pickListValuesList.add(valuePickList);
 
-				}    
+				}
 
 				LOCATIONTYPESBRS = pickListValuesList;
 
-    		}
+			}
 
 			return LOCATIONTYPESBRS;
-    	}
+		}
 
-    	Set;
-    }
-    
-    public static Map<Integer, String> errorMessages = new Map<Integer, String> {
-        -2 => 'Hierarchies with wrong Record Type',
-        -3 => 'Hierarchies with branches abroad',
-        -4 => 'Hierarchies with invalid location classes',
-        -5 => 'Agencies in multiple hierarchies',
-        -6 => 'Hierarchies with invalid agencies sectors',
-        -7 => 'Hierarchies with agencies missing top parent',
-        -8 => 'Orphan Branches (BR,SA,ST,etc.)',
+		Set;
+	}
+
+	public static Map<Integer, String> errorMessages = new Map<Integer, String> {
+		-2 => 'Hierarchies with wrong Record Type',
+		-3 => 'Hierarchies with branches abroad',
+		-4 => 'Hierarchies with invalid location classes',
+		-5 => 'Agencies in multiple hierarchies',
+		-6 => 'Hierarchies with invalid agencies sectors',
+		-7 => 'Hierarchies with agencies missing top parent',
+		-8 => 'Orphan Branches (BR,SA,ST,etc.)',
 		-9 => 'Different Top Parent in the Hierarchies',
 		-10 => 'Branches Abroad in a different country Hierarchies'
-    };
+	};
 
-    public static Map<Integer, String> errorMessagesLongDescription = new Map<Integer, String> {
-        -2 => Label.ANG_Conversion_Tool_Error_2,
-        -3 => Label.ANG_Conversion_Tool_Error_3,
-        -4 => Label.ANG_Conversion_Tool_Error_4,
-        -5 => Label.ANG_Conversion_Tool_Error_5,
-        -6 => Label.ANG_Conversion_Tool_Error_6,
-        -7 => Label.ANG_Conversion_Tool_Error_7,
-        -8 => Label.ANG_Conversion_Tool_Error_8,
+	public static Map<Integer, String> errorMessagesLongDescription = new Map<Integer, String> {
+		-2 => Label.ANG_Conversion_Tool_Error_2,
+		-3 => Label.ANG_Conversion_Tool_Error_3,
+		-4 => Label.ANG_Conversion_Tool_Error_4,
+		-5 => Label.ANG_Conversion_Tool_Error_5,
+		-6 => Label.ANG_Conversion_Tool_Error_6,
+		-7 => Label.ANG_Conversion_Tool_Error_7,
+		-8 => Label.ANG_Conversion_Tool_Error_8,
 		-9 => Label.ANG_Conversion_Tool_Error_9,
 		-10 => Label.ANG_Conversion_Tool_Error_10
-    };
+	};
 
-    public static boolean isMigrationTool{
+	public static boolean isMigrationTool{
 		get{
 			if(isMigrationTool ==null) isMigrationTool=false;
 			return isMigrationTool;
@@ -96,7 +96,7 @@ global with sharing class ANG_ConversionHelper {
 		Set;
 	}
 
-    public static boolean isMigrationToolAnalyses{
+	public static boolean isMigrationToolAnalyses{
 		get{
 			if(isMigrationToolAnalyses ==null) isMigrationToolAnalyses=false;
 			return isMigrationToolAnalyses;
@@ -107,10 +107,10 @@ global with sharing class ANG_ConversionHelper {
 
 
    public static ANG_ConversionHelper.ControllerLightStructure runFullAnalyses(String countryName){
-         
+
 		Set<Id> allAgenciesGlobal = new Set<Id>();
 
-        Map<Id,ANG_ConversionHelper.HierarchyStructure> structure = ANG_ConversionHelper.buildHierarchyStructure(countryName);
+		Map<Id,ANG_ConversionHelper.HierarchyStructure> structure = ANG_ConversionHelper.buildHierarchyStructure(countryName);
 
 		structure = ANG_ConversionHelper.performValidationOnHierarchyStructure(structure);
 
@@ -130,9 +130,9 @@ global with sharing class ANG_ConversionHelper {
 		system.debug('[ANG_ConversionHelper] Total of valid agencies is:'+allAgenciesGlobal.size());
 
 		return new ControllerLightStructure(ANG_ConversionHelper.fetchStatistics(structure,countryName));
-            
+
    }
-    
+
 	public static Map<Id,ANG_ConversionHelper.HierarchyStructure> buildHierarchyStructure(String country){
 
 		Set<Id> allAgencies = new Set<Id>();
@@ -206,16 +206,16 @@ global with sharing class ANG_ConversionHelper {
 		System.debug('[ANG_ConversionHelper] brAbroadInDiffCountries are:'+brAbroadInDiffCountries);
 
 		for(AMS_Agencies_relationhip__c relationShip: brAbroadInDiffCountries){
-			
+
 			/*if(relationShip.Child_Account__r.Status__c == AMS_Utils.ACC_S0_TERMINATED)
 				if(relationShip.Child_Account__r.Expiry_Date__c < frontierDate)
 					continue;
 			*/
-			
+
 			if(validateBranchesAbroad(new List<AMS_Agencies_relationhip__c>{relationShip})){// it's a false positive
 				continue;
 			}
-			
+
 			if(toReturn.get(relationShip.Hierarchy__c) == null){
 				system.debug('[ANG_ConversionHelper] Child_Account__r.Top_Parent__r.IATA_ISO_Country__r.Name is ' + relationShip.Child_Account__r.IATA_ISO_Country__r.Name);
 				toReturn.put(relationShip.Hierarchy__c,createNewBrAbroadByCountryHierarchyStructure(relationShip,relationShip.Child_Account__r.IATA_ISO_Country__r.Name));
@@ -236,7 +236,7 @@ global with sharing class ANG_ConversionHelper {
 
 
 		System.debug('[ANG_ConversionHelper] All hierarchies:'+allHierarchies.size());
-		
+
 		System.debug('[ANG_ConversionHelper] All HO Single Accounts:'+allAccountsSingleHierarchyHOorTerminatedAgencies.size());
 
 		return toReturn;
@@ -272,7 +272,7 @@ global with sharing class ANG_ConversionHelper {
 
 			if(!struct.migrated)
 				struct = performValidationsOnHierarchy(struct);
-			
+
 		}
 
 		return structure;
@@ -470,7 +470,7 @@ global with sharing class ANG_ConversionHelper {
 				System.debug('[ANG_ConversionHelper] '+'IATA Code:' + hStructure.iataCodeTopParent + ' || Hierarchy Id:' + hStructure.hierarchyId);
 
 			}
-			
+
 
 		}
 
@@ -482,47 +482,47 @@ global with sharing class ANG_ConversionHelper {
 	public static Id runMigration(String countryName){
 
 		Map<Id,ANG_ConversionHelper.HierarchyStructure> structure = ANG_ConversionHelper.buildHierarchyStructure(countryName);
-		       
+
 		structure = ANG_ConversionHelper.performValidationOnHierarchyStructure(structure);
-		        
+
 		ANG_ConversionHelper.StatisticGeneratorStructure finalStruct = ANG_ConversionHelper.fetchStatistics(structure,countryName);
 
 		ANG_ConversionHelper.isMigrationTool=true;
-		
+
 		ANG_ConversionBatch conversionBatch = new ANG_ConversionBatch(finalStruct.validHierarchies.values());
 
 		Id conversionBatchId = null;
 
 		if(!Test.isRunningTest())
-    		conversionBatchId = Database.executeBatch(conversionBatch,1);	
-    	else
-    		conversionBatchId = Database.executeBatch(conversionBatch);	
+			conversionBatchId = Database.executeBatch(conversionBatch,1);
+		else
+			conversionBatchId = Database.executeBatch(conversionBatch);
 
-    	return conversionBatchId;
+		return conversionBatchId;
 
 	}
 
 	public static Id runFullAnalysesWithReport(String countryName){
 
 		Map<Id,ANG_ConversionHelper.HierarchyStructure> structure = ANG_ConversionHelper.buildHierarchyStructure(countryName);
-		       
+
 		structure = ANG_ConversionHelper.performValidationOnHierarchyStructure(structure);
-		        
+
 		ANG_ConversionHelper.StatisticGeneratorStructure finalStruct = ANG_ConversionHelper.fetchStatistics(structure,countryName);
 
 		ANG_ConversionHelper.isMigrationTool=true;
 		ANG_ConversionHelper.isMigrationToolAnalyses=true;
-		
+
 		ANG_ConversionFullAnalysesBatch conversionBatch = new ANG_ConversionFullAnalysesBatch(finalStruct.validHierarchies.values(), countryName);
 
 		Id conversionBatchId = null;
 
 		if(!Test.isRunningTest())
-    		conversionBatchId = Database.executeBatch(conversionBatch,1);	
-    	else
-    		conversionBatchId = Database.executeBatch(conversionBatch);	
+			conversionBatchId = Database.executeBatch(conversionBatch,1);
+		else
+			conversionBatchId = Database.executeBatch(conversionBatch);
 
-    	return conversionBatchId;
+		return conversionBatchId;
 
 	}
 
@@ -533,11 +533,11 @@ global with sharing class ANG_ConversionHelper {
 		Id conversionBatchId = null;
 
 		if(!Test.isRunningTest())
-	    	conversionBatchId= Database.executeBatch(conversionBatch,1);	
-	    else
-	    	conversionBatchId= Database.executeBatch(conversionBatch);
+			conversionBatchId= Database.executeBatch(conversionBatch,1);
+		else
+			conversionBatchId= Database.executeBatch(conversionBatch);
 
-    	return conversionBatchId;
+		return conversionBatchId;
 
 	}
 
@@ -547,13 +547,13 @@ global with sharing class ANG_ConversionHelper {
 		ANG_ConversionHelper.StatisticGeneratorStructure toReturn = new ANG_ConversionHelper.StatisticGeneratorStructure();
 
 		for(ANG_ConversionHelper.HierarchyStructure struct: structure.values()){
-			            
+
 			if(struct.migrated){
-				
+
 				//System.debug('Account Migrated:'+struct.hierarchyId);
 
 				toReturn.totalMigratedHierarchies ++;
-			
+
 			}
 			else if(struct.isValid){
 
@@ -703,27 +703,27 @@ global with sharing class ANG_ConversionHelper {
 			MT Enhancement 2019/03/11- Not Accredited Agencies with RHC Object
 			*/
 			if(!String.isBlank(container.struct.iataCodeTopParent)){
-				topParents.add(container.struct.topParentId);	
+				topParents.add(container.struct.topParentId);
 			}
-			
+
 
 		}
 
 		AMS_AgencyRelationshipTriggerHandler.isToRunTrigger = false;
 		TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
-		
+
 		ANG_RiskEventMigrationHelper reHelper = null;
 
 		if(container != null)
 			reHelper = new ANG_RiskEventMigrationHelper(container.accountsToUpdate);
 
 		update new List<Account>(accountsToUpdate);
-	
+
 		if(reHelper != null)
 			insert reHelper.convertChangeCodesToRiskEvents();
 
 		System.debug('[ANG_ConversionHelper] RelationsToUpdate are :' + relationsToUpdate);
-		
+
 		update new List<AMS_Agencies_relationhip__c>(relationsToUpdate);
 
 		System.debug('[ANG_ConversionHelper] hierarchiesToUpdate are :' + hierarchiesToUpdate);
@@ -781,7 +781,7 @@ global with sharing class ANG_ConversionHelper {
 		Set<Id> accountsAlreadyAdjusted = new Set<Id>();
 
 		for(AMS_Agencies_relationhip__c rel: [Select Id, Hierarchy__c, Hierarchy__r.Main_Account__c,Parent_Account__c from AMS_Agencies_relationhip__c where Parent_Account__c in:accountsToProcess]){
-			
+
 			if(accountsHierarchies.get(rel.Parent_Account__c) <> null)
 				continue;
 
@@ -797,7 +797,7 @@ global with sharing class ANG_ConversionHelper {
 		Set<AMS_Agencies_Hierarchy__c> hierarchiesToUpsert = new Set<AMS_Agencies_Hierarchy__c>();
 
 		for(Id acctId: accountsToProcess){
-			
+
 			hierarchy = null;
 
 			if(accountsHierarchies.get(acctId) <> null){ // need update the hierachy
@@ -891,7 +891,7 @@ global with sharing class ANG_ConversionHelper {
 				hierarchyIdsToSearch.add(struct.hierarchyId);
 		}
 
-		
+
 		System.debug('[ANG_ConversionHelper] Found these hierarchyIdsToSearch Id:' + hierarchyIdsToSearch);
 
 		List<AMS_Agencies_Hierarchy__c> hierarchiesSearched = [SELECT Id, Migrated__c from AMS_Agencies_Hierarchy__c where Id in :hierarchyIdsToSearch];
@@ -907,7 +907,7 @@ global with sharing class ANG_ConversionHelper {
 		for(ANG_ConversionHelper.HierarchyStructure struct:structs){
 
 			toReturn.put(struct.hierarchyId, hierarchiesSearchedMap.get(struct.hierarchyId));
-			
+
 		}
 
 		return toReturn;
@@ -920,7 +920,7 @@ global with sharing class ANG_ConversionHelper {
 
 					//TODO : Pick up all accounts to be updated and proccess them again in relation to Risk Status
 			/*
-			
+
 				1) Query ALL ANG_Agency_Risk_Calculation__c do record type Risk Status Assessment (with the fields Finantial Review Result and Risk History Assessement) (going to be a config table)
 				2) Loop all Agencies
 				 3) For each account
@@ -984,7 +984,7 @@ global with sharing class ANG_ConversionHelper {
 					allAgencies.get(soloId).ANG_Accreditation_Model__c = 'Cash';
 					allAgencies.get(soloId).ANG_HE_RiskHistoryAssessment__c = 'Passed';
 					allAgencies.get(soloId).ANG_HE_CashCondition__c = false;
-					
+
 					if(allAgencies.get(soloId).ANG_IEP_Status__c ==null)
 						allAgencies.get(soloId).ANG_IEP_Status__c  = 'No IEP Account';
 				}
@@ -997,17 +997,17 @@ global with sharing class ANG_ConversionHelper {
 			else{// Now, let's create a new hierarchy if needed and a new Set of Relations...
 
 				AMS_Agencies_Hierarchy__c newHierarchy;
-				
+
 				if(!isMigrationToolAnalyses){
 					newHierarchy = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy');
 					insert newHierarchy;
 				}
 
 				for(Account acct: accountsToCreateNewHierarchy){
-					
+
 					if(acct.Id == struct.topParentId){
 						allAgencies.get(acct.Id).Location_Type__c = 'HE';
-						
+
 						allAgencies.get(acct.Id).Top_Parent__c = null;
 						allAgencies.get(acct.Id).ParentId = null;
 
@@ -1015,17 +1015,17 @@ global with sharing class ANG_ConversionHelper {
 						relationsToAdd.add(new AMS_Agencies_relationhip__c(Parent_Account__c = struct.topParentId, Child_Account__c = acct.Id, Hierarchy__c = newHierarchy.id));
 
 						allAgencies.get(acct.Id).Location_Type__c = 'AE';
-						
+
 						allAgencies.get(acct.Id).Top_Parent__c = struct.topParentId;
 						allAgencies.get(acct.Id).ParentId = struct.topParentId;
 
 					}
-					
+
 					if(allAgencies.get(acct.Id).RecordTypeId != ANG_ConversionHelper.ACCOUNT_STANDARD_RT){
 						allAgencies.get(acct.Id).ANG_Accreditation_Model__c = 'Cash';
 						allAgencies.get(acct.Id).ANG_HE_RiskHistoryAssessment__c = 'Passed';
 						allAgencies.get(acct.Id).ANG_HE_CashCondition__c = false;
-						
+
 						if(allAgencies.get(acct.Id).ANG_IEP_Status__c ==null)
 							allAgencies.get(acct.Id).ANG_IEP_Status__c  = 'No IEP Account';
 					}
@@ -1047,7 +1047,7 @@ global with sharing class ANG_ConversionHelper {
 				accountNotSearch.add(rels.Parent_Account__c);
 				accountNotSearch.add(rels.Child_Account__c);
 			}
-			
+
 			// we are not getting all the relations and we need them to adjust the actual hierarchy.
 			Map<Id,Account> accountsSearched = new Map<Id,Account>([SELECT Id, Name, Top_Parent__c, Top_Parent__r.Location_Type__c, Location_Type__c, Location_Class__c, ParentId, Status__c, IATA_ISO_Country__r.BSP_Country_free_text__c, IATA_ISO_Country__r.BSP__c, IATA_ISO_Country__r.ISO_Code__c, Remittance_frequency__c, Financial_Review_Result__c, IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode, ANG_RiskStatus__c, ANG_Accreditation_Model__c, Email__c,ANG_CashCondition__c, IATACode__c, (select Id, ANG_Financial_Security__c, ANG_RHC_Amount__c from RHC_Informations__r), Guaranteed_amount__c from Account where Id in :accountNotSearch]);
 
@@ -1084,23 +1084,23 @@ global with sharing class ANG_ConversionHelper {
 
 		}else if(struct.isSingleAgencyHierarchy){
 			if(allAgencies.get(struct.topParentId).Location_Type__c == AMS_Utils.AO && allAgencies.get(struct.topParentId).Status__c == AMS_Utils.ACC_S4_LISTED)
-				allAgencies.get(struct.topParentId).Status__c = AMS_Utils.ACC_S9_APPROVED;		
-			
+				allAgencies.get(struct.topParentId).Status__c = AMS_Utils.ACC_S9_APPROVED;
+
 			if(allAgencies.get(struct.topParentId).Status__c == AMS_Utils.ACC_S0_TERMINATED && !TOPLEVELLOCATIONTYPES.contains(allAgencies.get(struct.topParentId).Location_Type__c)){
-				allAgencies.get(struct.topParentId).Location_Type__c = 'AE';					
+				allAgencies.get(struct.topParentId).Location_Type__c = 'AE';
 			} else {
 
 				if(TOPLEVELLOCATIONTYPES.contains(allAgencies.get(struct.topParentId).Location_Type__c))
 					allAgencies.get(struct.topParentId).Location_Type__c = 'HE';
 				else
-					allAgencies.get(struct.topParentId).Location_Type__c = 'AE';		
+					allAgencies.get(struct.topParentId).Location_Type__c = 'AE';
 
 
 				if(allAgencies.get(struct.topParentId).RecordTypeId != ANG_ConversionHelper.ACCOUNT_STANDARD_RT){
 					allAgencies.get(struct.topParentId).ANG_Accreditation_Model__c = 'Cash';
 					allAgencies.get(struct.topParentId).ANG_HE_RiskHistoryAssessment__c = 'Passed';
 					allAgencies.get(struct.topParentId).ANG_HE_CashCondition__c = false;
-					
+
 					if(allAgencies.get(struct.topParentId).ANG_IEP_Status__c == null)
 						allAgencies.get(struct.topParentId).ANG_IEP_Status__c  = 'No IEP Account';
 				}
@@ -1113,12 +1113,12 @@ global with sharing class ANG_ConversionHelper {
 		} else{
 
 				System.debug('[ANG_ConversionHelper] Migration is not either BR Abroad or Single Hierarchy');
-				
+
 				for(AMS_Agencies_relationhip__c rel: struct.relations){
 
 					if(allAgencies.get(rel.Child_Account__c).Location_Class__c == TIDSLOCALTIONCLASS || !validateBSPAttributes(allAgencies.get(rel.Child_Account__c).IATA_ISO_Country__r.BSP_Country_free_text__c, allAgencies.get(rel.Child_Account__c).IATA_ISO_Country__r.ISO_Code__c, allAgencies.get(rel.Child_Account__r.Top_Parent__c).IATA_ISO_Country__r.BSP_Country_free_text__c,allAgencies.get(rel.Child_Account__r.Top_Parent__c).IATA_ISO_Country__r.ISO_Code__c)){
-                        relationsTidsToSplit.add(rel);
-						
+						relationsTidsToSplit.add(rel);
+
 						if(struct.relations.size() == 1)
 							hierarchyToDelete = true; // this need to be changed. Not only with 1 hierarchy we need to delete it.
 					}
@@ -1127,30 +1127,30 @@ global with sharing class ANG_ConversionHelper {
 
 						rel.Is_Newgen_Relation__c = true;
 						rel.Parent_Account__c = struct.topParentId;
-						
+
 						if(allAgencies.get(rel.Parent_Account__c).Location_Type__c == AMS_Utils.AO && allAgencies.get(rel.Parent_Account__c).Status__c == AMS_Utils.ACC_S4_LISTED)
-							allAgencies.get(rel.Parent_Account__c).Status__c = AMS_Utils.ACC_S9_APPROVED;	
+							allAgencies.get(rel.Parent_Account__c).Status__c = AMS_Utils.ACC_S9_APPROVED;
 
 						allAgencies.get(rel.Parent_Account__c).Location_Type__c = 'HE';
 						if(allAgencies.get(rel.Parent_Account__c).RecordTypeId != ANG_ConversionHelper.ACCOUNT_STANDARD_RT){
 							allAgencies.get(rel.Parent_Account__c).ANG_Accreditation_Model__c = 'Cash';
 							allAgencies.get(rel.Parent_Account__c).ANG_HE_RiskHistoryAssessment__c = 'Passed';
 							allAgencies.get(rel.Parent_Account__c).ANG_HE_CashCondition__c = false;
-							
+
 							if(allAgencies.get(rel.Parent_Account__c).ANG_IEP_Status__c ==null)
 								allAgencies.get(rel.Parent_Account__c).ANG_IEP_Status__c  = 'No IEP Account';
-						}						
+						}
 						allAgencies.get(rel.Parent_Account__c).Organization_Last_Change_Date__c = System.today();
 
 
 						//if(!(rel.child_Account__r.Status__c == AMS_Utils.ACC_S0_TERMINATED && rel.Child_Account__r.Expiry_Date__c < frontierDate)) { // let's ignore it
-							
+
 						allAgencies.get(rel.Child_Account__c).Location_Type__c = 'AE';
 						if(allAgencies.get(rel.Child_Account__c).RecordTypeId != ANG_ConversionHelper.ACCOUNT_STANDARD_RT){
 							allAgencies.get(rel.Child_Account__c).ANG_Accreditation_Model__c = 'Cash';
 							allAgencies.get(rel.Child_Account__c).ANG_HE_RiskHistoryAssessment__c = 'Passed';
 							allAgencies.get(rel.Child_Account__c).ANG_HE_CashCondition__c = false;
-							
+
 							if(allAgencies.get(rel.Child_Account__c).ANG_IEP_Status__c ==null)
 								allAgencies.get(rel.Child_Account__c).ANG_IEP_Status__c  = 'No IEP Account';
 						}
@@ -1170,7 +1170,7 @@ global with sharing class ANG_ConversionHelper {
 
 						rel.Hierarchy__r.Migrated__c= true;
 
-						accountsToUpdate.add(allAgencies.get(rel.Parent_Account__c));					
+						accountsToUpdate.add(allAgencies.get(rel.Parent_Account__c));
 
 						if(!relationsTidsToSplit.contains(rel))
 							relationsToUpdate.add(rel);
@@ -1227,7 +1227,7 @@ global with sharing class ANG_ConversionHelper {
 				}else{
 
 					if(allAgencies.get(rel.Child_Account__c).ParentId == allAgencies.get(rel.Child_Account__c).Top_Parent__c){
-						
+
 						System.debug('[ANG_ConversionHelper] parentRel.Child_Account__c is ' + parentRel.Child_Account__c);
 						System.debug('[ANG_ConversionHelper] allAgencies.get(parentRel.Child_Account__c).Id is:'+allAgencies.get(parentRel.Child_Account__c).Id);
 
@@ -1254,23 +1254,23 @@ global with sharing class ANG_ConversionHelper {
 
 					if(allAgencies.get(rel.Child_Account__r.Top_Parent__c).Location_Type__c == AMS_Utils.AO)
 						if(allAgencies.get(rel.Child_Account__r.Top_Parent__c).Status__c == AMS_Utils.ACC_S4_LISTED)
-							allAgencies.get(rel.Child_Account__r.Top_Parent__c).Status__c = AMS_Utils.ACC_S9_APPROVED;	
+							allAgencies.get(rel.Child_Account__r.Top_Parent__c).Status__c = AMS_Utils.ACC_S9_APPROVED;
 
 					allAgencies.get(rel.Child_Account__r.Top_Parent__c).Location_Type__c = 'HE';
 					if(allAgencies.get(rel.Child_Account__r.Top_Parent__c).RecordTypeId != ANG_ConversionHelper.ACCOUNT_STANDARD_RT){
 						allAgencies.get(rel.Child_Account__r.Top_Parent__c).ANG_Accreditation_Model__c = 'Cash';
 						allAgencies.get(rel.Child_Account__r.Top_Parent__c).ANG_HE_RiskHistoryAssessment__c = 'Passed';
 						allAgencies.get(rel.Child_Account__r.Top_Parent__c).ANG_HE_CashCondition__c = false;
-						
+
 						if(allAgencies.get(rel.Child_Account__r.Top_Parent__c).ANG_IEP_Status__c ==null)
 							allAgencies.get(rel.Child_Account__r.Top_Parent__c).ANG_IEP_Status__c  = 'No IEP Account';
-					}	
+					}
 
 					allAgencies.get(rel.Child_Account__r.Top_Parent__c).Organization_Last_Change_Date__c = System.today();
 
 					System.debug('[ANG_ConversionHelper] Adding accounts to update :' + allAgencies.get(rel.Child_Account__r.Top_Parent__c));
 
-					accountsToUpdate.add(allAgencies.get(rel.Child_Account__r.Top_Parent__c));	
+					accountsToUpdate.add(allAgencies.get(rel.Child_Account__r.Top_Parent__c));
 				}
 			}
 
@@ -1362,83 +1362,83 @@ global with sharing class ANG_ConversionHelper {
 
 	private static void createAgencyAuthorizations(Set<Account> accts){
 
-        List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
-        
-        ID FormOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
-        
-        List<Account> acctToInsert = [SELECT Id, IATACode__c, Status__c, Purge_Flag__c, Is_PCI_compliant__c, ANG_PCI_compliance_expiry_date__c from Account where Id in:accts];
-        
-        String statusAA, statusCC = null;
+		List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
 
-        for(Account acct:acctToInsert){
+		ID FormOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
 
-        	if(isAcctElegibleToCreateAuthorization(acct)){
+		List<Account> acctToInsert = [SELECT Id, IATACode__c, Status__c, Purge_Flag__c, Is_PCI_compliant__c, ANG_PCI_compliance_expiry_date__c from Account where Id in:accts];
 
-        		statusAA = acct.Status__c == AMS_utils.ACC_S0_TERMINATED ? 'Non-Active' :  'Active';
+		String statusAA, statusCC = null;
 
-        		statusCC = acct.Is_PCI_compliant__c == '' || acct.Is_PCI_compliant__c == null ? 'Non-Active' 
-        					: (acct.Is_PCI_compliant__c == 'Yes' && acct.ANG_PCI_compliance_expiry_date__c < System.today() ? 'Non-Active' 
-        					: (acct.Is_PCI_compliant__c == 'Yes' ? 'Active' : (acct.Is_PCI_compliant__c =='No' ? 'Non-Active' : 'Not Authorized')));
+		for(Account acct:acctToInsert){
 
-        		authorizations.add(new Agency_Authorization__c(Account__c = acct.Id, ANG_FormOfPayment_ID__c = 'CC', Status__c = statusCC, RecordTypeId = FormOfPaymentRT));
-        		authorizations.add(new Agency_Authorization__c(Account__c = acct.Id, ANG_FormOfPayment_ID__c = 'CA', Status__c = statusAA, RecordTypeId = FormOfPaymentRT));
-        		authorizations.add(new Agency_Authorization__c(Account__c = acct.Id, ANG_FormOfPayment_ID__c = 'EP', Status__c = statusAA, RecordTypeId = FormOfPaymentRT));
+			if(isAcctElegibleToCreateAuthorization(acct)){
+
+				statusAA = acct.Status__c == AMS_utils.ACC_S0_TERMINATED ? 'Non-Active' :  'Active';
+
+				statusCC = acct.Is_PCI_compliant__c == '' || acct.Is_PCI_compliant__c == null ? 'Non-Active'
+							: (acct.Is_PCI_compliant__c == 'Yes' && acct.ANG_PCI_compliance_expiry_date__c < System.today() ? 'Non-Active'
+							: (acct.Is_PCI_compliant__c == 'Yes' ? 'Active' : (acct.Is_PCI_compliant__c =='No' ? 'Non-Active' : 'Not Authorized')));
+
+				authorizations.add(new Agency_Authorization__c(Account__c = acct.Id, ANG_FormOfPayment_ID__c = 'CC', Status__c = statusCC, RecordTypeId = FormOfPaymentRT));
+				authorizations.add(new Agency_Authorization__c(Account__c = acct.Id, ANG_FormOfPayment_ID__c = 'CA', Status__c = statusAA, RecordTypeId = FormOfPaymentRT));
+				authorizations.add(new Agency_Authorization__c(Account__c = acct.Id, ANG_FormOfPayment_ID__c = 'EP', Status__c = statusAA, RecordTypeId = FormOfPaymentRT));
 			}
 		}
 
-        insert authorizations;
-    }
+		insert authorizations;
+	}
 
-    public static boolean isAcctElegibleToCreateAuthorization(Account acct){
+	public static boolean isAcctElegibleToCreateAuthorization(Account acct){
 
-    	return !(acct.IATACode__c == null ||  INVALIDAGENCYSTATUS.contains(acct.Status__c) || acct.Purge_Flag__c == true);
+		return !(acct.IATACode__c == null ||  INVALIDAGENCYSTATUS.contains(acct.Status__c) || acct.Purge_Flag__c == true);
 
-    }
+	}
 
-    public static void createCorrectionChangeCodes(Set<Account> accountsToApply){
+	public static void createCorrectionChangeCodes(Set<Account> accountsToApply){
 
-        Map<Id,Agency_Applied_Change_code__c> mapAACCAccounts = new Map<Id,Agency_Applied_Change_code__c>();
+		Map<Id,Agency_Applied_Change_code__c> mapAACCAccounts = new Map<Id,Agency_Applied_Change_code__c>();
 
-        //Accounts are reQueried to avoid conflicts with Risk Assessment (performed on an earlier step)
+		//Accounts are reQueried to avoid conflicts with Risk Assessment (performed on an earlier step)
 		List<Account> accounts = [SELECT Id, Status__c, CNS_Agency__c, (SELECT Reason_Code__c, Reason_Description__c,Account__r.Status__c FROM Agencies_Applied_Change_codes__r WHERE Active__c = TRUE ORDER BY CreatedDate DESC) FROM Account WHERE Id in :accountsToApply];
 
 		for(Account a : accounts){
 			if(!a.Agencies_Applied_Change_codes__r.isEmpty()) mapAACCAccounts.put(a.Id,a.Agencies_Applied_Change_codes__r[0]);
 		}
 
-        //prepare data structures to feed into change code generator
-        List<Account> accts = new List<Account>();
-        //No oscars are involved in this process but we still need it to pass onto the method
-        List<AMS_OSCAR__c> oscars = new List<AMS_OSCAR__c>();
-        List<AMS_OSCAR_JSON.ChangeCode> corChangeCodes = new List<AMS_OSCAR_JSON.ChangeCode>();
+		//prepare data structures to feed into change code generator
+		List<Account> accts = new List<Account>();
+		//No oscars are involved in this process but we still need it to pass onto the method
+		List<AMS_OSCAR__c> oscars = new List<AMS_OSCAR__c>();
+		List<AMS_OSCAR_JSON.ChangeCode> corChangeCodes = new List<AMS_OSCAR_JSON.ChangeCode>();
 
 		AMS_OSCAR_JSON.ChangeCode changeCode;
 
-        for(Account acc: accounts){
+		for(Account acc: accounts){
 
 			//create correction change code definition
-	    	changeCode = new AMS_OSCAR_JSON.ChangeCode();
+			changeCode = new AMS_OSCAR_JSON.ChangeCode();
 
-	        changeCode.name = 'COR';
-	        changeCode.memoText = 'Correction';
-	        changeCode.publishedOnEBulletin = false;
-	        changeCode.status  = null;
+			changeCode.name = 'COR';
+			changeCode.memoText = 'Correction';
+			changeCode.publishedOnEBulletin = false;
+			changeCode.status  = null;
 
 			if(mapAACCAccounts.get(acc.Id) != null){
-			    changeCode.reasonCode = mapAACCAccounts.get(acc.Id).Reason_Code__c;
-			    changeCode.reasonDesc = mapAACCAccounts.get(acc.Id).Reason_Description__c;
-			    changeCode.status = AMS_Utils.getIATANumericStatus(mapAACCAccounts.get(acc.Id).Account__r.Status__c);
+				changeCode.reasonCode = mapAACCAccounts.get(acc.Id).Reason_Code__c;
+				changeCode.reasonDesc = mapAACCAccounts.get(acc.Id).Reason_Description__c;
+				changeCode.status = AMS_Utils.getIATANumericStatus(mapAACCAccounts.get(acc.Id).Account__r.Status__c);
 			}
 
-        	accts.add(acc);
-        	corChangeCodes.add(changeCode);
-        	oscars.add(null);
-        }
+			accts.add(acc);
+			corChangeCodes.add(changeCode);
+			oscars.add(null);
+		}
 
 		AMS_ChangeCodesHelper.createAAChangeCodes(corChangeCodes, oscars, accts, true);
-    }
+	}
 
-    
+
 	public class MigrationContainer{
 
 		ANG_ConversionHelper.HierarchyStructure struct;
@@ -1458,7 +1458,7 @@ global with sharing class ANG_ConversionHelper {
 		Boolean hierarchyToDelete;
 
 		public migrationContainer(ANG_ConversionHelper.HierarchyStructure structIn,Set<Account> accountsToUpdateIn, Set<Account> accountsSplitedToUpdateIn, Set<AMS_Agencies_relationhip__c> relationsToUpdateIn,AMS_Agencies_Hierarchy__c hierarchyIn,Set<AMS_Agencies_relationhip__c> relationsToDeleteIn,Set<AMS_Agencies_relationhip__c> relationsToAddIn, boolean hierarchyToDeleteIn){
-			
+
 			struct = structIn;
 			accountsToUpdate = accountsToUpdateIn;
 			accountsSplitedToUpdate = accountsSplitedToUpdateIn;
@@ -1487,11 +1487,11 @@ global with sharing class ANG_ConversionHelper {
 		public Integer totalValidHierarchies{get;set;}
 
 		public Integer totalMigratedHierarchies{get;set;}
-		
+
 		public Integer totalInvalidHierarchies{get;set;}
 
 		public Map<String,ANG_ConversionHelper.HierarchyStructure> validHierarchies;
-		
+
 		public Map<Integer,List<ANG_ConversionHelper.HierarchyStructure>> inValidHierarchies;
 
 		public StatisticGeneratorStructure(){
@@ -1524,7 +1524,7 @@ global with sharing class ANG_ConversionHelper {
 		public Integer errorCategory;
 		public String iataCodeTopParent{get;set;}
 		public boolean migrated;
-        public String nameTopParent{get;set;}
+		public String nameTopParent{get;set;}
 		public Set<Id> allAgencies;
 		public String countryABR{get;set;}
 
@@ -1533,7 +1533,7 @@ global with sharing class ANG_ConversionHelper {
 			isSingleAgencyHierarchy = false;
 			hierarchyId = hierarchy.Id;
 			topParentId = null;
-			relations = new List<AMS_Agencies_relationhip__c>(); 
+			relations = new List<AMS_Agencies_relationhip__c>();
 			iataCodeTopParent = null;
 			nameTopParent = null;
 
@@ -1552,7 +1552,7 @@ global with sharing class ANG_ConversionHelper {
 			isSingleAgencyHierarchy = true;
 			hierarchyId = acct.Id;
 			topParentId = acct.Id;
-			relations = new List<AMS_Agencies_relationhip__c>(); 
+			relations = new List<AMS_Agencies_relationhip__c>();
 			iataCodeTopParent = acct.IATACode__c;
 			nameTopParent = acct.Name;
 
@@ -1614,7 +1614,7 @@ global with sharing class ANG_ConversionHelper {
 
 		}
 
-		
+
 
 
 		public HierarchyStructure addRelation(AMS_Agencies_relationhip__c relationShip){
@@ -1639,8 +1639,8 @@ global with sharing class ANG_ConversionHelper {
 			return this;
 
 		}
-		
-	} 
+
+	}
 
 
 	global class ControllerLightStructure{
@@ -1652,9 +1652,9 @@ global with sharing class ANG_ConversionHelper {
 		public Integer totalValidHierarchies{get;set;}
 
 		public Integer totalMigratedHierarchies{get;set;}
-		
+
 		public Integer totalInvalidHierarchies{get;set;}
-		
+
 		public Map<Integer,List<ANG_ConversionHelper.HierarchyStructure>> inValidHierarchies;
 
 		public ControllerLightStructure(StatisticGeneratorStructure struct){
@@ -1663,9 +1663,9 @@ global with sharing class ANG_ConversionHelper {
 			this.totalHierarchies = struct.totalHierarchies;
 
 			this.totalValidHierarchies = struct.totalValidHierarchies;
-			
+
 			this.totalMigratedHierarchies = struct.totalMigratedHierarchies;
-			
+
 			this.totalInvalidHierarchies = struct.totalInvalidHierarchies;
 
 			this.inValidHierarchies = struct.inValidHierarchies;
@@ -1738,20 +1738,20 @@ global with sharing class ANG_ConversionHelper {
 		*	Returns -1 if the relationship cannot be parent of the compareTo
 		**/
 		public Integer compareTo(Object compareTo) {
-       
-            OrderRelations compareToOR = (OrderRelations)compareTo;
 
-            if(statusWeight == compareToOR.statusWeight) {
+			OrderRelations compareToOR = (OrderRelations)compareTo;
 
-            	if (locationTypeWeight == compareToOR.locationTypeWeight)
-            		return 0;
-        		else
-        			return locationTypeWeight < compareToOR.locationTypeWeight ? 1 : -1;
+			if(statusWeight == compareToOR.statusWeight) {
 
-            } else {
+				if (locationTypeWeight == compareToOR.locationTypeWeight)
+					return 0;
+				else
+					return locationTypeWeight < compareToOR.locationTypeWeight ? 1 : -1;
 
-            	return statusWeight < compareToOR.statusWeight ? 1 : -1;
-            }
+			} else {
+
+				return statusWeight < compareToOR.statusWeight ? 1 : -1;
+			}
 		}
 
 		/**

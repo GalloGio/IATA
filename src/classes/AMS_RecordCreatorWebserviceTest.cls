@@ -1,10 +1,10 @@
 @isTest
 private class AMS_RecordCreatorWebserviceTest {
-	
-    @testSetup static void setup(){
-		
-        IATA_ISO_Country__c ctry = new IATA_ISO_Country__c(Name='Italy', ISO_Code__c='IT', Region__c='Europe', ISS_Office_Location__c='Italy');
-        insert ctry;
+
+	@testSetup static void setup(){
+
+		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c(Name='Italy', ISO_Code__c='IT', Region__c='Europe', ISS_Office_Location__c='Italy');
+		insert ctry;
 
 		Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
 
@@ -60,9 +60,9 @@ private class AMS_RecordCreatorWebserviceTest {
 		System.debug('Accounts created');
 
 		Contact co1 = new Contact(AccountId = acct.Id, Firstname = 'teste11', Lastname='test11', Phone = '9111111111', MobilePhone = '9111111111', Email = 'test11@test.com', Financial_Assessment_Contact__c = false);
-		
+
 		Contact co2 = new Contact(AccountId = acct2.Id, Firstname = 'teste22', Lastname='test22', Phone = '9111111122', MobilePhone = '9111111122', Email = 'test22@test.com', Financial_Assessment_Contact__c = false);
-		
+
 		List<Contact> contacts = new List<Contact>{co1,co2};
 		insert contacts;
 
@@ -80,22 +80,22 @@ private class AMS_RecordCreatorWebserviceTest {
 		System.debug('Cases created');
 
 		AMS_Pax_Accreditation_Form__c accre = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = oscarCase.id);
-        
+
 		AMS_Pax_Accreditation_Form__c accre2 = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = oscarCase2.id);
-        
-        List<AMS_Pax_Accreditation_Form__c> acredts = new List<AMS_Pax_Accreditation_Form__c>{accre,accre2};
+
+		List<AMS_Pax_Accreditation_Form__c> acredts = new List<AMS_Pax_Accreditation_Form__c>{accre,accre2};
 
 		insert acredts;
 
 		System.debug('Accreditations created');
 
 
-    }
-	
+	}
+
 	@isTest static void createMinorChangesTradeNameChangeCode() {
 
 		Test.startTest();
-		
+
 		Account acct = [SELECT Id from Account LIMIT 1];
 
 		insert new AMS_ChangeCodes__c(Integration_RecId__c = 'C', Name = 'CADM', Change_Code__c = 'CAD');
@@ -120,11 +120,11 @@ private class AMS_RecordCreatorWebserviceTest {
 		Test.stopTest();
 	}
 
-	
+
 	@isTest static void createMinorChangesChangeCode() {
 
 		Test.startTest();
-		
+
 		Account acct = [SELECT Id from Account LIMIT 1];
 
 		insert new AMS_ChangeCodes__c(Integration_RecId__c = 'C', Name = 'CADM', Change_Code__c = 'CAD');
@@ -153,7 +153,7 @@ private class AMS_RecordCreatorWebserviceTest {
 	@isTest static void createAccreditation() {
 
 		Test.startTest();
-		
+
 		List<Account> acctLst = [SELECT Id, Name, ParentId from Account];
 
 		Account acct = acctLst.get(0);
@@ -197,7 +197,7 @@ private class AMS_RecordCreatorWebserviceTest {
 		System.assertEquals(hierarchies.size(),1);
 
 
-		
+
 
 
 		Test.stopTest();
@@ -205,9 +205,9 @@ private class AMS_RecordCreatorWebserviceTest {
 	}
 
 	@isTest static void createAccreditationChangeOfName() {
-		
+
 		Test.startTest();
-		
+
 		List<Account> acctLst = [SELECT Id, Name, ParentId from Account];
 
 		Account acct = acctLst.get(0);
@@ -250,7 +250,7 @@ private class AMS_RecordCreatorWebserviceTest {
 
 
 		Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
-		
+
 		IATA_ISO_Country__c ctry = [SELECT ID FROM IATA_ISO_Country__c LIMIT 1];
 
 		Account acct3 = new Account();
@@ -351,7 +351,7 @@ private class AMS_RecordCreatorWebserviceTest {
 		insert h;
 
 		Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
-		
+
 		IATA_ISO_Country__c ctry = [SELECT ID FROM IATA_ISO_Country__c LIMIT 1];
 
 		Account acct3 = new Account();
@@ -441,7 +441,7 @@ private class AMS_RecordCreatorWebserviceTest {
 		System.assertEquals(details.size(),2);
 
 		acct4.Location_Type__c = AMS_Utils.AE;
-		
+
 		AMS_RecordCreatorWebservice.createProcessDetailsForConversion(oscarId, new List<Account> { acct4 });
 		details = [SELECT Id from AMS_Process_Detail__c where OSCAR__c = :oscarId and RecordType.Developername = 'Agency_Involved'];
 		System.assertEquals(3, details.size());
@@ -467,8 +467,8 @@ private class AMS_RecordCreatorWebserviceTest {
 
 		//insert rel;
 
-		
-		
+
+
 		IATA_ISO_Country__c ctry = [SELECT ID FROM IATA_ISO_Country__c LIMIT 1];
 
 		AMS_Agencies_relationhip__c rel = new AMS_Agencies_relationhip__c(Child_Account__c = acct2.Id, Parent_Account__c = acct.Id, Hierarchy__c = h.Id);
@@ -512,8 +512,8 @@ private class AMS_RecordCreatorWebserviceTest {
 	@isTest static void createAccreditationForSA() {
 
 		IATA_ISO_Country__c ctry = [SELECT id from IATA_ISO_Country__c limit 1];
-            
-        Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
+
+		Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
 
 		Account acct = new Account();
 
@@ -536,13 +536,13 @@ private class AMS_RecordCreatorWebserviceTest {
 		acct.IN_A_AIRPORT__C = false;
 		acct.REASON_FOR_CREATION__C = 'Created by customer';
 
-		
+
 		insert acct;
 
 		Contact co1 = new Contact(AccountId = acct.Id, Firstname = 'teste1', Lastname='test1', Phone = '911111111', MobilePhone = '911111111', Email = 'testd1@test.com', Financial_Assessment_Contact__c = false);
-		
+
 		Contact co2 = new Contact(AccountId = acct.Id, Firstname = 'teste2', Lastname='test2', Phone = '911111111', MobilePhone = '911111111', Email = 'test2d1@test.com', Financial_Assessment_Contact__c = false);
-		
+
 		List<Contact> contacts = new List<Contact>{co1,co2};
 
 		insert contacts;
@@ -613,7 +613,7 @@ private class AMS_RecordCreatorWebserviceTest {
 		AMS_Pax_Accreditation_Form__c accr = [SELECT Id from AMS_Pax_Accreditation_Form__c where SAAM_Case__c = :caseCom.Id];
 
 		String oscarId = AMS_RecordCreatorWebservice.createAccreditation(acct.Id,accr.Id,'ANG.FS.OPTINOUT',caseCom.Id);
-		
+
 		Test.stopTest();
 	}
 
@@ -646,7 +646,7 @@ private class AMS_RecordCreatorWebserviceTest {
 		AMS_RecordCreatorWebservice.fetchOscarRecordType(AMS_Utils.NGANNUALREVAL);
 		AMS_RecordCreatorWebservice.fetchOscarRecordType(AMS_Utils.NGGE);
 		AMS_RecordCreatorWebservice.fetchOscarRecordType(AMS_Utils.NGGDI);
-		
+
 		Test.stopTest();
 	}
 }

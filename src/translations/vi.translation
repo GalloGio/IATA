@@ -353,6 +353,10 @@
         <name>AMS_OSCAR_Action18</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMS_OSCAR_Action19 --></label>
+        <name>AMS_OSCAR_Action19</name>
+    </customLabels>
+    <customLabels>
         <label><!-- AMS OSCAR Action2 --></label>
         <name>AMS_OSCAR_Action2</name>
     </customLabels>
@@ -447,6 +451,10 @@
     <customLabels>
         <label><!-- AMS_OSCAR_GDI_fees --></label>
         <name>AMS_OSCAR_GDI_fees</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS_OSCAR_GOGLOBAL --></label>
+        <name>AMS_OSCAR_GOGLOBAL</name>
     </customLabels>
     <customLabels>
         <label><!-- AMS OSCAR MASTERDATA --></label>
@@ -661,6 +669,10 @@
         <name>AMS_OSCAR_STEP44</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMS_OSCAR_STEP45 --></label>
+        <name>AMS_OSCAR_STEP45</name>
+    </customLabels>
+    <customLabels>
         <label><!-- AMS OSCAR STEP46 --></label>
         <name>AMS_OSCAR_STEP46</name>
     </customLabels>
@@ -735,6 +747,10 @@
     <customLabels>
         <label>* Pháp nhân phụ này có phải là một Pháp nhân độc lập với Pháp nhân chính không?</label>
         <name>ANG_AE_separate_Legal_Entity</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_AE_separate_Legal_Entity_MultiCountry --></label>
+        <name>ANG_AE_separate_Legal_Entity_MultiCountry</name>
     </customLabels>
     <customLabels>
         <label><!-- ANG_Conversion_Tool_Error_10 --></label>
@@ -905,6 +921,10 @@
         <name>ANG_ISSP_CountryConcerned</name>
     </customLabels>
     <customLabels>
+        <label><!-- ANG_ISSP_CountryConcerned_AEs --></label>
+        <name>ANG_ISSP_CountryConcerned_AEs</name>
+    </customLabels>
+    <customLabels>
         <label>Trở lại phần so sánh các Loại Chứng nhận</label>
         <name>ANG_ISSP_CountryRequirementsGoBack</name>
     </customLabels>
@@ -971,6 +991,14 @@
     <customLabels>
         <label>Danh sách Các tổ chức Tài chính cung cấp Bảo hiểm Bảo đảm Tài chính tại quốc gia của bạn</label>
         <name>ANG_ISSP_GDI_Breadcrumb</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_ISSP_GDI_Learn_More --></label>
+        <name>ANG_ISSP_GDI_Learn_More</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_ISSP_GDI_Learn_More_Text --></label>
+        <name>ANG_ISSP_GDI_Learn_More_Text</name>
     </customLabels>
     <customLabels>
         <label>Đi đến Cổng thông tin GDI</label>
@@ -1075,6 +1103,22 @@
     <customLabels>
         <label><!-- ANG_ISSP_Min_Users_With_Role_Error_Msg --></label>
         <name>ANG_ISSP_Min_Users_With_Role_Error_Msg2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_ISSP_Multicountry_Question --></label>
+        <name>ANG_ISSP_Multicountry_Question</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_ISSP_Multicountry_Submit_Message1 --></label>
+        <name>ANG_ISSP_Multicountry_Submit_Message1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_ISSP_Multicountry_Submit_Message2 --></label>
+        <name>ANG_ISSP_Multicountry_Submit_Message2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_ISSP_Multicountry_Submit_Message_New_AE --></label>
+        <name>ANG_ISSP_Multicountry_Submit_Message_New_AE</name>
     </customLabels>
     <customLabels>
         <label>Để quản lý yêu cầu, vui lòng nhấp vào</label>
@@ -1269,6 +1313,10 @@
         <name>ANG_ISSP_ProductStandardAccreditationWithCash</name>
     </customLabels>
     <customLabels>
+        <label><!-- ANG_ISSP_ProductStandardAccreditationWithMultiCountry --></label>
+        <name>ANG_ISSP_ProductStandardAccreditationWithMultiCountry</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ANG_ISSP_ProductStandardAccreditationWithNoCash --></label>
         <name>ANG_ISSP_ProductStandardAccreditationWithNoCash</name>
     </customLabels>
@@ -1363,6 +1411,26 @@
     <customLabels>
         <label>Địa chỉ e-mail</label>
         <name>ANG_ISSP_e_mail_address</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG Multicountry Already Has Locations Only Allow AE Error --></label>
+        <name>ANG_Multicountry_Already_Has_Locations_Only_Allow_AE_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG Multicountry Already Has Locations Only Allow AE With Correct HE Error --></label>
+        <name>ANG_Multicountry_Already_Has_Locations_Only_Allow_AE_With_Correct_HE_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG Multicountry Already Has Locations Only Allow HE Error --></label>
+        <name>ANG_Multicountry_Already_Has_Locations_Only_Allow_HE_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG Multicountry Process Parent Account Error --></label>
+        <name>ANG_Multicountry_Process_Parent_Account_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_NEW_GE_lock --></label>
+        <name>ANG_NEW_GE_lock</name>
     </customLabels>
     <customLabels>
         <label><!-- ANG_NON_COMPLIANCE --></label>
@@ -1759,6 +1827,14 @@
         <name>CC</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_ALPHAFILTER_All --></label>
+        <name>CSP_ALPHAFILTER_All</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_ALPHAFILTER_Other --></label>
+        <name>CSP_ALPHAFILTER_Other</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_AMS_StepFinal_In_Addition2 --></label>
         <name>CSP_AMS_StepFinal_In_Addition2</name>
     </customLabels>
@@ -1863,6 +1939,10 @@
         <name>CSP_Breadcrump_You_IATA</name>
     </customLabels>
     <customLabels>
+        <label>Mua trực tuyến</label>
+        <name>CSP_Buy_Online</name>
+    </customLabels>
+    <customLabels>
         <label>Hủy</label>
         <name>CSP_Cancel</name>
     </customLabels>
@@ -1911,8 +1991,44 @@
         <name>CSP_Case_Currency</name>
     </customLabels>
     <customLabels>
+        <label>Chi tiết trường hợp</label>
+        <name>CSP_Case_Details</name>
+    </customLabels>
+    <customLabels>
         <label>Các trường hợp</label>
         <name>CSP_Cases</name>
+    </customLabels>
+    <customLabels>
+        <label>Thay đổi e-mail</label>
+        <name>CSP_Change_Email</name>
+    </customLabels>
+    <customLabels>
+        <label>Đổi mật khẩu</label>
+        <name>CSP_Change_Password</name>
+    </customLabels>
+    <customLabels>
+        <label>Mật khẩu mới của quý khách không được thiết lập thành công.</label>
+        <name>CSP_Change_Password_Error</name>
+    </customLabels>
+    <customLabels>
+        <label>Vui lòng nhập mật khẩu hiện tại của quý khách, sau đó thiết lập mật khẩu mới và xác nhận lại mật khẩu.</label>
+        <name>CSP_Change_Password_Info_1</name>
+    </customLabels>
+    <customLabels>
+        <label>Mật khẩu phải chứa 10 ký tự trở lên, bao gồm ít nhất một chữ cái viết hoa, một chữ số và một ký tự đặc biệt (! @ # $% * () _ + ^ &amp;)</label>
+        <name>CSP_Change_Password_Info_2</name>
+    </customLabels>
+    <customLabels>
+        <label>Quý khách vui lòng kiểm tra Email của mình để nhận chi tiết lịch sử truy cập của quý khách</label>
+        <name>CSP_Check_Email</name>
+    </customLabels>
+    <customLabels>
+        <label>Thay đổi mật khẩu thành công.</label>
+        <name>CSP_Chg_Pass_Success_Msg_1</name>
+    </customLabels>
+    <customLabels>
+        <label>Bây giờ quý khách có thể sử dụng mật khẩu mới để đăng nhập vào hệ thống.</label>
+        <name>CSP_Chg_Pass_Success_Msg_2</name>
     </customLabels>
     <customLabels>
         <label>Cộng đồng</label>
@@ -1931,6 +2047,10 @@
         <name>CSP_CompanyProfile</name>
     </customLabels>
     <customLabels>
+        <label>Hoàn thành Hồ sơ cá nhân</label>
+        <name>CSP_Complete_Profile</name>
+    </customLabels>
+    <customLabels>
         <label>Bạn có chắc chắn muốn từ chối quyền truy cập vào &lt; b &gt; {0} &lt; / b &gt; cho &lt; b &gt; {1} &lt; / b &gt; không?</label>
         <name>CSP_Confirm_Deny_User_Access</name>
     </customLabels>
@@ -1939,8 +2059,20 @@
         <name>CSP_Confirm_Grant_User_Access</name>
     </customLabels>
     <customLabels>
+        <label>Thư xác nhận Địa chỉ Email Cổng thông tin Chăm sóc Khách hàng của IATA</label>
+        <name>CSP_Confirmation_Email_Subject</name>
+    </customLabels>
+    <customLabels>
         <label>&quot;Yêu cầu truy cập {0} của bạn đã được gửi tới quản trị viên cổng thông tin. Nếu bạn có bất kỳ câu hỏi hoặc yêu cầu nào về quy trình, bạn có thể liên hệ với quản trị viên bên dưới:&quot;</label>
         <name>CSP_Confirmed_Requested_Service_Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Contacts_NoResults_text1 --></label>
+        <name>CSP_Contacts_NoResults_text1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Contacts_NoResults_text2 --></label>
+        <name>CSP_Contacts_NoResults_text2</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_Continue --></label>
@@ -1949,6 +2081,22 @@
     <customLabels>
         <label><!-- Create_Contact_Complete_Field --></label>
         <name>CSP_Create_Contact_Complete_Field</name>
+    </customLabels>
+    <customLabels>
+        <label>Bạn mới biết đến Cổng thông tin Khách hàng của IATA?</label>
+        <name>CSP_Create_New_Account_Info</name>
+    </customLabels>
+    <customLabels>
+        <label>Tạo tài khoản mới</label>
+        <name>CSP_Create_New_Account_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>Tạo mật khẩu</label>
+        <name>CSP_Create_Password</name>
+    </customLabels>
+    <customLabels>
+        <label>Mật khẩu mới của quý khách không được tạo thành công. Xin quý khách vui lòng thử lại!</label>
+        <name>CSP_Create_Password_Error</name>
     </customLabels>
     <customLabels>
         <label>Ngày tạo</label>
@@ -1961,6 +2109,10 @@
     <customLabels>
         <label><!-- CSP_DateTo --></label>
         <name>CSP_DateTo</name>
+    </customLabels>
+    <customLabels>
+        <label>Kính chào quý khách</label>
+        <name>CSP_Dear</name>
     </customLabels>
     <customLabels>
         <label>Từ chối quyền truy cập của người dùng</label>
@@ -1987,8 +2139,80 @@
         <name>CSP_Documents_PubliCountry</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Email --></label>
+        <name>CSP_Email</name>
+    </customLabels>
+    <customLabels>
+        <label>Chân thành cảm ơn quý khách vì đã đăng ký tài khoản trên Cổng thông tin Khách hàng IATA. Chỉ còn một bước nữa thôi là quý khách có thể truy cập vào hệ thống của chúng tôi!</label>
+        <name>CSP_Email_Confirmation_Body_Part_1</name>
+    </customLabels>
+    <customLabels>
+        <label>Xin quý khách vui lòng xác nhận địa chỉ Email của mình bằng cách nhấn vào</label>
+        <name>CSP_Email_Confirmation_Body_Part_2</name>
+    </customLabels>
+    <customLabels>
+        <label>Vì lý do bảo mật, liên kết này chỉ có hiệu lực trong vòng 8 giờ tới. Sau khoảng thời gian trên, quý khách sẽ phải gửi lại yêu cầu xác minh tài khoản đến địa chỉ Email của mình.</label>
+        <name>CSP_Email_Confirmation_Body_Part_3</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP Email Domain Error Message --></label>
         <name>CSP_Email_Domain_Error_Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Footer Image --></label>
+        <name>CSP_Email_Footer_Image</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Header Image --></label>
+        <name>CSP_Email_Header_Image</name>
+    </customLabels>
+    <customLabels>
+        <label>đây</label>
+        <name>CSP_Email_Here</name>
+    </customLabels>
+    <customLabels>
+        <label>Chúng tôi đã nhận được truy vấn yêu cầu đặt lại mật khẩu cho tài khoản của quý khách trên Cổng thông tin Khách hàng IATA.</label>
+        <name>CSP_Email_Password_Reset_Body_Part_1</name>
+    </customLabels>
+    <customLabels>
+        <label>Xin quý khách vui lòng nhấn vào</label>
+        <name>CSP_Email_Password_Reset_Body_Part_2</name>
+    </customLabels>
+    <customLabels>
+        <label>để thực hiện cài đặt mật khẩu mới cho tài khoản của mình.</label>
+        <name>CSP_Email_Password_Reset_Body_Part_3</name>
+    </customLabels>
+    <customLabels>
+        <label>Vì lý do bảo mật, liên kết này sẽ chỉ có hiệu lực trong vòng 8 giờ tới. Sau khoảng thời gian trên, quý khách sẽ phải gửi lại yêu cầu đặt lại mật khẩu đến địa chỉ Email của mình.</label>
+        <name>CSP_Email_Password_Reset_Body_Part_4</name>
+    </customLabels>
+    <customLabels>
+        <label>Chân thành cảm ơn quý khách vì đã trở thành một phần của IATA.</label>
+        <name>CSP_Email_Signature_Part_1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Signature Part 2 --></label>
+        <name>CSP_Email_Signature_Part_2</name>
+    </customLabels>
+    <customLabels>
+        <label>Chúng tôi rất hân hạnh khi có quý khách tham gia vào Cổng thông tin Khách hàng IATA của chúng tôi!</label>
+        <name>CSP_Email_Welcome_Part_1</name>
+    </customLabels>
+    <customLabels>
+        <label>Cổng thông tin Khách hàng IATA cung cấp các gói dịch vụ hữu ích, các thông tin liên quan đến sản phẩm, một số mẹo và thủ thuật hữu ích được thiết kế dành riêng cho quý khách. Quý khách có thể sử dụng tài khoản này để dễ dàng liên hệ với Bộ phận Chăm sóc Khách hàng của chúng tôi. Tài khoản trên cũng cung cấp các tính năng trò chuyện trực tiếp hoặc mua hàng trực tiếp từ cửa hàng trực tuyến của chúng tôi. Đây chính là cánh cổng đưa quý khách đến IATA!</label>
+        <name>CSP_Email_Welcome_Part_2</name>
+    </customLabels>
+    <customLabels>
+        <label>&lt;a href=&quot;{!Portal_Url}&quot;&gt;Đưa tôi đến Cổng thông tin!&lt;/a&gt;</label>
+        <name>CSP_Email_Welcome_Part_3</name>
+    </customLabels>
+    <customLabels>
+        <label>Để nâng cao các trải nghiệm của mình trên Cổng thông tin Khách hàng IATA, quý khách có thể hoàn thành các thông tin còn thiếu trên hồ sơ tài khoản của mình bất cứ khi nào quý khách muốn. Quý khách có thể dễ dàng thực hiện thao tác trên bằng cách nhấn vào</label>
+        <name>CSP_Email_Welcome_Part_4</name>
+    </customLabels>
+    <customLabels>
+        <label>Chúng tôi hy vọng quý khách có những trải nghiệm tuyệt vời khi sử dụng Cổng thông tin Khách hàng IATA của chúng tôi!</label>
+        <name>CSP_Email_Welcome_Part_5</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP Error Creating Record --></label>
@@ -2001,6 +2225,26 @@
     <customLabels>
         <label><!-- CSP Error while delete record --></label>
         <name>CSP_Error_while_delete_record</name>
+    </customLabels>
+    <customLabels>
+        <label>Có vẻ như bạn đã là một người dùng cổng thông tin. Vui lòng đăng nhập bằng mật khẩu của bạn.</label>
+        <name>CSP_Existing_User_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Xin quý khách vui lòng kiểm tra E-mail của mình và nhấn vào liên kết tạo mật khẩu.</label>
+        <name>CSP_Expired_Email_Success_Msg</name>
+    </customLabels>
+    <customLabels>
+        <label>Đường dẫn xác minh đã hết hạn.</label>
+        <name>CSP_Expired_Link_Msg_1</name>
+    </customLabels>
+    <customLabels>
+        <label>Vì lý do bảo mật, đường dẫn xác minh sẽ hết hạn sau 8 giờ.</label>
+        <name>CSP_Expired_Link_Msg_2</name>
+    </customLabels>
+    <customLabels>
+        <label>Xin quý khách vui lòng kiểm tra E-mail của mình và nhấn vào liên kết tạo mật khẩu.</label>
+        <name>CSP_Expired_Reset_Password_Msg</name>
     </customLabels>
     <customLabels>
         <label>Liên lạc với chúng tôi</label>
@@ -2017,6 +2261,10 @@
     <customLabels>
         <label>Các câu hỏi thường gặp</label>
         <name>CSP_FAQ_HeaderTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>Chuyển đến Câu hỏi thường gặp của chúng tôi</label>
+        <name>CSP_FAQ_Label</name>
     </customLabels>
     <customLabels>
         <label>Chọn một trong các loại chính</label>
@@ -2055,8 +2303,44 @@
         <name>CSP_Filtered</name>
     </customLabels>
     <customLabels>
+        <label>Tài khoản đăng nhập của quý khách đã được tạo mới thành công! Quý khách hiện có thể khám phá các tính năng trên trang Cổng thông tin của chúng tôi ngay từ bây giờ. Đối với các nội dung mang tính chất cá nhân hóa, xin quý khách vui lòng hoàn thành hồ sơ của mình.</label>
+        <name>CSP_First_Login_Desc</name>
+    </customLabels>
+    <customLabels>
+        <label>Chào mừng quý khách,</label>
+        <name>CSP_First_Login_Title</name>
+    </customLabels>
+    <customLabels>
         <label>Cho bạn</label>
         <name>CSP_ForYou</name>
+    </customLabels>
+    <customLabels>
+        <label>Quên mật khẩu?</label>
+        <name>CSP_Forgot_Password</name>
+    </customLabels>
+    <customLabels>
+        <label>Có vẻ như chúng tôi không có người dùng đăng ký bằng email của bạn. Bạn có thể dễ dàng tạo một tài khoản mới.</label>
+        <name>CSP_Forgot_Password_Error_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Vui lòng nhập địa chỉ email đã đăng ký của bạn để đặt lại mật khẩu của bạn. Chúng tôi sẽ gửi cho bạn một liên kết thiết lập lại email của bạn.</label>
+        <name>CSP_Forgot_Password_Info</name>
+    </customLabels>
+    <customLabels>
+        <label>Vui lòng kiểm tra thư mục rác của bạn trước. Trong trường hợp quý khách không thể tìm thấy bất cứ điều gì trong thư mục thư rác, xin quý khách vui lòng thử đặt lại mật khẩu của tài khoản của mình một lần nữa bằng cách nhấn chọn mục Thử lại.</label>
+        <name>CSP_Forgot_Password_Retry_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Không nhận được email?</label>
+        <name>CSP_Forgot_Password_Retry_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Vui lòng kiểm tra email của bạn và nhấp vào liên kết đặt lại mật khẩu</label>
+        <name>CSP_Forgot_Password_Success_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Vì bạn đã không đăng nhập trong 90 ngày qua, chúng tôi đã gửi cho bạn một email với mật khẩu mới.</label>
+        <name>CSP_Frozen_User_Message</name>
     </customLabels>
     <customLabels>
         <label>Cấp quyền truy cập người dùng</label>
@@ -2075,12 +2359,432 @@
         <name>CSP_IMPORTANT</name>
     </customLabels>
     <customLabels>
+        <label>Email không hợp lệ</label>
+        <name>CSP_Invalid_Email</name>
+    </customLabels>
+    <customLabels>
+        <label>Thông tin tài khoản doanh nghiệp</label>
+        <name>CSP_L2_Account_Information</name>
+    </customLabels>
+    <customLabels>
+        <label>Xin quý khách vui lòng bổ sung các thông tin còn thiếu dưới đây để tìm kiếm tài khoản doanh nghiệp của quý khách.</label>
+        <name>CSP_L2_Account_Information_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Lựa chọn tài khoản</label>
+        <name>CSP_L2_Account_Selection</name>
+    </customLabels>
+    <customLabels>
+        <label>Để kết nối hồ sơ cá nhân với tài khoản doanh nghiệp của quý khách, chúng tôi cần quý khách cung cấp thêm một số thông tin chi tiết. Điều này sẽ giúp chúng tôi kiểm tra xem doanh nghiệp của quý khách đã đăng ký tài khoản trên IATA hay chưa.</label>
+        <name>CSP_L2_Account_Selection_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Chúng tôi không thể tìm thấy địa chỉ của doanh nghiệp này. Xin quý khách vui lòng nhấn vào nút Bước tiếp theo để xác nhận địa chỉ mà quý khách cung cấp trên đây là một địa chỉ hợp lệ.</label>
+        <name>CSP_L2_Address_Not_Found_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Dường như quý khách đã hoàn thành các thông tin trên hồ sơ cá nhân của mình trước đó, do vậy chúng tôi đã có tất cả các thông tin về quý khách mà chúng tôi cần.</label>
+        <name>CSP_L2_Already_L2_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Mọi việc đã hoàn tất!</label>
+        <name>CSP_L2_Already_L2_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Quay lại Thông tin tài khoản doanh nghiệp</label>
+        <name>CSP_L2_Back_to_Account_Selection</name>
+    </customLabels>
+    <customLabels>
+        <label>Quay lại Thông tin Địa chỉ Doanh nghiệp</label>
+        <name>CSP_L2_Back_to_Business_Address_Information</name>
+    </customLabels>
+    <customLabels>
+        <label>Quay lại Thông tin Công ty.</label>
+        <name>CSP_L2_Back_to_Company_Information</name>
+    </customLabels>
+    <customLabels>
+        <label>Quay lại để chỉnh sửa</label>
+        <name>CSP_L2_Back_to_Edit</name>
+    </customLabels>
+    <customLabels>
+        <label>Quay lại Chi tiết Hồ sơ doanh nghiệp</label>
+        <name>CSP_L2_Back_to_Profile_Details</name>
+    </customLabels>
+    <customLabels>
+        <label>Hoàn thành Hồ sơ cá nhân &amp; Lựa chọn tài khoản</label>
+        <name>CSP_L2_Banner_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Thông tin địa chỉ doanh nghiệp</label>
+        <name>CSP_L2_Business_Address_Information</name>
+    </customLabels>
+    <customLabels>
+        <label>Xin quý khách vui lòng nhập thông tin liên quan đến địa chỉ doanh nghiệp của quý khách.</label>
+        <name>CSP_L2_Business_Address_Information_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Lĩnh vực, ngành nghề kinh doanh</label>
+        <name>CSP_L2_Category</name>
+    </customLabels>
+    <customLabels>
+        <label>Dịch vụ mà quý khách đang yêu cầu truy cập vào hiện có thể không khả dụng đối với hạng mục mà quý khách đã lựa chọn. Quý khách vẫn có thể hoàn tất quá trình đăng ký của mình với chúng tôi, tuy nhiên dịch vụ trên có thể không còn khả dụng sau khi quý khách hoàn thành thao tác đăng ký.</label>
+        <name>CSP_L2_Change_Categorization_Warning</name>
+    </customLabels>
+    <customLabels>
+        <label>Thành phố</label>
+        <name>CSP_L2_City</name>
+    </customLabels>
+    <customLabels>
+        <label>Tài khoản doanh nghiệp</label>
+        <name>CSP_L2_Company_Account</name>
+    </customLabels>
+    <customLabels>
+        <label>Xin quý khách vui lòng kiểm tra lại chi tiết các thông tin trên Hồ sơ doanh nghiệp</label>
+        <name>CSP_L2_Company_Account_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Thông tin Doanh nghiệp</label>
+        <name>CSP_L2_Company_Information</name>
+    </customLabels>
+    <customLabels>
+        <label>Việc đăng ký tài khoản doanh nghiệp trên IATA sẽ cung cấp cho doanh nghiệp của quý khách một số quyền truy cập vào các dịch vụ của IATA được thiết kế riêng cho doanh nghiệp của quý khách. Quý khách có thể dễ dàng tạo một tài khoản doanh nghiệp mới chỉ bằng hai bước.</label>
+        <name>CSP_L2_Company_Information_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Địa chỉ Trụ sở doanh nghiệp</label>
+        <name>CSP_L2_Company_Location</name>
+    </customLabels>
+    <customLabels>
+        <label>Tên doanh nghiệp</label>
+        <name>CSP_L2_Company_Name</name>
+    </customLabels>
+    <customLabels>
+        <label>Xác nhận</label>
+        <name>CSP_L2_Confirmation</name>
+    </customLabels>
+    <customLabels>
+        <label>Chỉ còn một bước nữa thôi là quý khách có thể hoàn thành hồ sơ doanh nghiệp của mình. Xin quý khách vui lòng kiểm tra lại các thông tin mà quý khách đã cung cấp phía trên và nhấn chọn nút Gửi nếu mọi thông tin trên đây đều đã chính xác.</label>
+        <name>CSP_L2_Confirmation_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Liên hệ Hỗ trợ</label>
+        <name>CSP_L2_Contact_Support</name>
+    </customLabels>
+    <customLabels>
+        <label>Quốc gia</label>
+        <name>CSP_L2_Country</name>
+    </customLabels>
+    <customLabels>
+        <label>Trong trường hợp quý khách vẫn không thể tìm thấy tài khoản doanh nghiệp của mình, quý khách vẫn có thể dễ dàng tạo một tài khoản doanh nghiệp mới chỉ bằng hai bước đơn giản.</label>
+        <name>CSP_L2_Create_Account_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Tạo tài khoản mới</label>
+        <name>CSP_L2_Create_New_Account</name>
+    </customLabels>
+    <customLabels>
+        <label>Ngày sinh</label>
+        <name>CSP_L2_Date_of_Birth</name>
+    </customLabels>
+    <customLabels>
+        <label>Các chi tiết về thông tin của quý khách đã được lưu thành công.</label>
+        <name>CSP_L2_Details_Saved</name>
+    </customLabels>
+    <customLabels>
+        <label>Bây giờ chúng tôi có thể mang lại nhiều trải nghiệm dành riêng hơn nữa cho quý khách trên Cổng thông tin chăm sóc khách hàng! Hãy xem qua trang Cổng thông tin của chúng tôi và khám phá các sản phẩm và dịch vụ được thiết kế dành riêng cho quý khách!</label>
+        <name>CSP_L2_Details_Saved_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Bây giờ quý khách có thể tiếp tục gửi cho chúng tôi yêu cầu về các dịch vụ mà chúng tôi hiện đang cung cấp.</label>
+        <name>CSP_L2_Details_Saved_Service_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Bây giờ quý khách có thể tiếp tục gửi cho chúng tôi yêu cầu của mình.</label>
+        <name>CSP_L2_Details_Saved_Topic_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Không tìm được những gì quý khách đang muốn tìm kiếm?</label>
+        <name>CSP_L2_Did_Not_Find</name>
+    </customLabels>
+    <customLabels>
+        <label>Quý khách có thể dễ dàng tạo một tài khoản doanh nghiệp mới chỉ bằng hai bước để hoàn thành hồ sơ của mình</label>
+        <name>CSP_L2_Did_Not_Find_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Xin quý khách vui lòng nhấn vào đây để hoàn tất hồ sơ cá nhân của quý khách</label>
+        <name>CSP_L2_Edit_Company_Information</name>
+    </customLabels>
+    <customLabels>
+        <label>Chúng tôi đã xây dựng Cổng thông tin Khách hàng IATA để đề xuất một số sản phẩm và dịch vụ của IATA dành riêng cho nhu cầu mua sắm và thị hiếu của quý khách. Để chúng tôi có thể tiến hành việc này, chúng tôi muốn biết thêm một vài thông tin chi tiết về bản thân quý khách và tổ chức của quý khách.</label>
+        <name>CSP_L2_Edit_Company_Information_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Địa chỉ Email</label>
+        <name>CSP_L2_Email_Address</name>
+    </customLabels>
+    <customLabels>
+        <label>Tìm địa chỉ doanh nghiệp</label>
+        <name>CSP_L2_Find_Address</name>
+    </customLabels>
+    <customLabels>
+        <label>Quay lại</label>
+        <name>CSP_L2_Go_Back</name>
+    </customLabels>
+    <customLabels>
+        <label>Chuyển hướng đến Trang chủ</label>
+        <name>CSP_L2_Go_To_Homepage</name>
+    </customLabels>
+    <customLabels>
+        <label>Quay trở lại Hồ sơ</label>
+        <name>CSP_L2_Go_To_Profile</name>
+    </customLabels>
+    <customLabels>
+        <label>Quay trở lại Dịch vụ</label>
+        <name>CSP_L2_Go_To_Service</name>
+    </customLabels>
+    <customLabels>
+        <label>Quay trở lại Chủ đề</label>
+        <name>CSP_L2_Go_To_Topic</name>
+    </customLabels>
+    <customLabels>
+        <label>Mã IATA</label>
+        <name>CSP_L2_IATA_Codes</name>
+    </customLabels>
+    <customLabels>
+        <label>Đây có phải là địa chỉ đến Hòm thư bưu điện của quý khách không?</label>
+        <name>CSP_L2_Is_PO_Box_Address</name>
+    </customLabels>
+    <customLabels>
+        <label>Chức năng công việc</label>
+        <name>CSP_L2_Job_Function</name>
+    </customLabels>
+    <customLabels>
+        <label>Chức danh công việc</label>
+        <name>CSP_L2_Job_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Tên Pháp lý của doanh nghiệp</label>
+        <name>CSP_L2_Legal_Name</name>
+    </customLabels>
+    <customLabels>
+        <label>Bước tiếp theo / Lựa chọn tài khoản</label>
+        <name>CSP_L2_Next_Account_Selection</name>
+    </customLabels>
+    <customLabels>
+        <label>Bước tiếp theo / Thông tin địa chỉ doanh nghiệp</label>
+        <name>CSP_L2_Next_Address_Information</name>
+    </customLabels>
+    <customLabels>
+        <label>Bước tiếp theo / Xác nhận</label>
+        <name>CSP_L2_Next_Confirmation</name>
+    </customLabels>
+    <customLabels>
+        <label>Không</label>
+        <name>CSP_L2_No</name>
+    </customLabels>
+    <customLabels>
+        <label>Không tìm thấy bất cứ kết quả nào phù hợp</label>
+        <name>CSP_L2_No_Matching_Results</name>
+    </customLabels>
+    <customLabels>
+        <label>Khác</label>
+        <name>CSP_L2_Other_Sector</name>
+    </customLabels>
+    <customLabels>
+        <label>Xin quý khách vui lòng lựa chọn một lĩnh vực, ngành nghề kinh doanh có liên quan từ danh sách mà chúng tôi cung cấp.</label>
+        <name>CSP_L2_Other_Sector_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Mã số Hòm thư bưu điện</label>
+        <name>CSP_L2_PO_Box_Number</name>
+    </customLabels>
+    <customLabels>
+        <label>Thông tin cá nhân</label>
+        <name>CSP_L2_Personal_Details</name>
+    </customLabels>
+    <customLabels>
+        <label>Xin quý khách vui lòng kiểm tra lại chi tiết các thông tin trên Hồ sơ cá nhân</label>
+        <name>CSP_L2_Personal_Details_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Số điện thoại doanh nghiệp</label>
+        <name>CSP_L2_Phone_Number</name>
+    </customLabels>
+    <customLabels>
+        <label>Mã bưu điện</label>
+        <name>CSP_L2_Postal_Code</name>
+    </customLabels>
+    <customLabels>
+        <label>Chi tiết Hồ sơ cá nhân</label>
+        <name>CSP_L2_Profile_Details</name>
+    </customLabels>
+    <customLabels>
+        <label>Bổ sung những thông tin còn thiếu trên Hồ sơ cá nhân của quý khách để IATA có thể đề xuất các nội dung và dịch vụ được cá nhân hóa dành riêng cho quý khách.</label>
+        <name>CSP_L2_Profile_Details_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Hồ sơ cá nhân của quý khách chưa được cập nhật đầy đủ.</label>
+        <name>CSP_L2_Profile_Incomplete</name>
+    </customLabels>
+    <customLabels>
+        <label>Nhưng chúng tôi đã lưu phần nội dung trên đây dưới dạng bản nháp trong hệ thống để quý khách có thể tiếp tục chỉnh sửa sau này. Quý khách có chắc chắn rằng mình muốn thoát khỏi trang này hay không?</label>
+        <name>CSP_L2_Profile_Incomplete_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Thật không may, đã xảy ra lỗi khi tạo tài khoản của bạn. Để giúp bạn thêm, xin vui lòng liên hệ với nhóm hỗ trợ của chúng tôi.</label>
+        <name>CSP_L2_Registration_Error_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Đã xảy ra lỗi</label>
+        <name>CSP_L2_Registration_Error_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Chúng tôi đã xây dựng Cổng thông tin Khách hàng IATA để đề xuất một số sản phẩm và dịch vụ của IATA dành riêng cho nhu cầu mua sắm và thị hiếu của quý khách. Để chúng tôi có thể tiến hành việc này, chúng tôi muốn biết thêm một vài thông tin chi tiết về bản thân quý khách và tổ chức của quý khách.</label>
+        <name>CSP_L2_Requested_Modal_Cancel</name>
+    </customLabels>
+    <customLabels>
+        <label>Hoàn thành hồ sơ cá nhân của tôi</label>
+        <name>CSP_L2_Requested_Modal_Complete</name>
+    </customLabels>
+    <customLabels>
+        <label>Để tiếp tục, chúng tôi cần thêm một số thông tin chi tiết của quý khách và cơ quan nơi quý khách hiện đang làm việc. Xin quý khách đừng vội lo lắng, quý khách sẽ không tốn quá nhiều thời gian để hoàn thành hồ sơ cá nhân của mình đâu!</label>
+        <name>CSP_L2_Requested_Modal_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Xin chào quý khách</label>
+        <name>CSP_L2_Requested_Modal_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_L2_Required --></label>
+        <name>CSP_L2_Required</name>
+    </customLabels>
+    <customLabels>
+        <label>Tìm kiếm</label>
+        <name>CSP_L2_Search</name>
+    </customLabels>
+    <customLabels>
+        <label>Xin quý khách vui lòng hoàn thành ít nhất một trong hai phần thông tin dưới đây.</label>
+        <name>CSP_L2_Search_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Kết quả tìm kiếm</label>
+        <name>CSP_L2_Search_Results</name>
+    </customLabels>
+    <customLabels>
+        <label>Chúng tôi đã tìm thấy hơn 50 tài khoản phù hợp với tiêu chí tìm kiếm của bạn.</label>
+        <name>CSP_L2_Search_Results_Above_Limit</name>
+    </customLabels>
+    <customLabels>
+        <label>Hoàn thiện tiêu chí tìm kiếm</label>
+        <name>CSP_L2_Search_Results_Above_Limit_Link</name>
+    </customLabels>
+    <customLabels>
+        <label>--empty--</label>
+        <name>CSP_L2_Search_Results_Above_Limit_Link_1</name>
+    </customLabels>
+    <customLabels>
+        <label>để xem ít tùy chọn hơn.</label>
+        <name>CSP_L2_Search_Results_Above_Limit_Link_2</name>
+    </customLabels>
+    <customLabels>
+        <label>Lĩnh vực kinh doanh</label>
+        <name>CSP_L2_Sector</name>
+    </customLabels>
+    <customLabels>
+        <label>Lựa chọn</label>
+        <name>CSP_L2_Select</name>
+    </customLabels>
+    <customLabels>
+        <label>Xin quý khách vui lòng chọn địa chỉ chính xác. Trong trường hợp quý khách không thể tìm thấy địa chỉ chính xác từ danh sách gợi ý của chúng tôi, hệ thống của chúng tôi sẽ tiến hành lưu lại địa chỉ quý khách đã nhập. Nhấn chọn Bước tiếp theo để tiếp tục.</label>
+        <name>CSP_L2_Select_Address_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Chọn tài khoản kết nối của quý khách từ danh sách.</label>
+        <name>CSP_L2_Select_Company_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Tiểu bang</label>
+        <name>CSP_L2_State</name>
+    </customLabels>
+    <customLabels>
+        <label>Đường</label>
+        <name>CSP_L2_Street</name>
+    </customLabels>
+    <customLabels>
+        <label>Gửi</label>
+        <name>CSP_L2_Submit</name>
+    </customLabels>
+    <customLabels>
+        <label>Tiêu đề</label>
+        <name>CSP_L2_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Tên Thương mại của doanh nghiệp</label>
+        <name>CSP_L2_Trade_Name</name>
+    </customLabels>
+    <customLabels>
+        <label>Địa chỉ Trang web doanh nghiệp</label>
+        <name>CSP_L2_Website</name>
+    </customLabels>
+    <customLabels>
+        <label>Có</label>
+        <name>CSP_L2_Yes</name>
+    </customLabels>
+    <customLabels>
         <label>Cập nhật cuối cùng</label>
         <name>CSP_LastUpdate</name>
     </customLabels>
     <customLabels>
+        <label>Tìm hiểu thêm</label>
+        <name>CSP_Learn_More</name>
+    </customLabels>
+    <customLabels>
         <label>Đăng xuất</label>
         <name>CSP_LogOut</name>
+    </customLabels>
+    <customLabels>
+        <label>Đăng nhập ngay bây giờ</label>
+        <name>CSP_Login_Now</name>
+    </customLabels>
+    <customLabels>
+        <label>Vài ngày trước, chúng tôi nhận thấy quý khách đã đăng ký mở tài khoản để trở thành một thành viên của Cổng thông tin Khách hàng IATA - Xin chân thành cảm ơn quý khách và chào mừng quý khách đã đến với chúng tôi!</label>
+        <name>CSP_Lvl2_Reminder_1</name>
+    </customLabels>
+    <customLabels>
+        <label>Chúng tôi đã xây dựng Cổng thông tin Khách hàng IATA để đề xuất một số sản phẩm và dịch vụ của IATA dành riêng cho nhu cầu mua sắm và thị hiếu của quý khách. Để chúng tôi có thể tiến hành việc này, chúng tôi muốn biết thêm một vài thông tin chi tiết về bản thân quý khách và tổ chức của quý khách.</label>
+        <name>CSP_Lvl2_Reminder_2</name>
+    </customLabels>
+    <customLabels>
+        <label>Chúng tôi đã cố gắng làm cho thao tác trên trở nên dễ dàng và nhanh chóng - tất cả những gì quý khách cần làm là hãy bấm  &lt;strong&gt;&lt;a href=[URL]&gt; lần vào đường dẫn dưới đây để hoàn thành hồ sơ của quý khách &lt;/a&gt;&lt;/strong&gt;.</label>
+        <name>CSP_Lvl2_Reminder_3</name>
+    </customLabels>
+    <customLabels>
+        <label>Quý khách sẽ nhận được:</label>
+        <name>CSP_Lvl2_Reminder_4</name>
+    </customLabels>
+    <customLabels>
+        <label>· Trực tiếp tiếp cận các dịch vụ được thiết kế dành riêng cho quý khách.</label>
+        <name>CSP_Lvl2_Reminder_5</name>
+    </customLabels>
+    <customLabels>
+        <label>· Toàn quyền truy cập vào những Thông tin &amp; Tiêu chuẩn được quản lý bởi IATA</label>
+        <name>CSP_Lvl2_Reminder_6</name>
+    </customLabels>
+    <customLabels>
+        <label>· Hỗ trợ Chuyên môn từ Các chuyên gia Dịch vụ của IATA</label>
+        <name>CSP_Lvl2_Reminder_7</name>
+    </customLabels>
+    <customLabels>
+        <label>· Và nhiều hơn thế nữa!</label>
+        <name>CSP_Lvl2_Reminder_8</name>
+    </customLabels>
+    <customLabels>
+        <label>&lt;strong&gt;&lt;a href=[URL]&gt; Xin quý khách vui lòng nhấn vào đây để hoàn tất hồ sơ cá nhân của quý khách &lt; /a&gt;&lt;/strong&gt;</label>
+        <name>CSP_Lvl2_Reminder_9</name>
+    </customLabels>
+    <customLabels>
+        <label>Tận dụng tối đa các chức năng trên Cổng thông tin Khách hàng IATA - Hoàn thành hồ sơ cá nhân của quý khách!</label>
+        <name>CSP_Lvl2_Reminder_Subject</name>
     </customLabels>
     <customLabels>
         <label>Bạn có thể quản lý người dùng từ danh sách dưới đây.</label>
@@ -2119,8 +2823,16 @@
         <name>CSP_NewServiceUserMessage</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP New Account To Address --></label>
+        <name>CSP_New_Account_To_Address</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP New Email Domain --></label>
         <name>CSP_New_Email_Domain</name>
+    </customLabels>
+    <customLabels>
+        <label>Kế tiếp</label>
+        <name>CSP_Next</name>
     </customLabels>
     <customLabels>
         <label>Không có tài khoản liên quan để hiển thị.</label>
@@ -2151,8 +2863,32 @@
         <name>CSP_OperationalCalendar_SeeMonthlyLink</name>
     </customLabels>
     <customLabels>
+        <label>Mật khẩu</label>
+        <name>CSP_Password</name>
+    </customLabels>
+    <customLabels>
+        <label>Tối thiểu 10 ký tự</label>
+        <name>CSP_Password_Rule_1</name>
+    </customLabels>
+    <customLabels>
+        <label>Bao gồm ít nhất một chữ cái viết hoa</label>
+        <name>CSP_Password_Rule_2</name>
+    </customLabels>
+    <customLabels>
+        <label>Bao gồm ít nhất một chữ số</label>
+        <name>CSP_Password_Rule_3</name>
+    </customLabels>
+    <customLabels>
+        <label>Bao gồm ít nhất một ký tự đặc biệt (! @ # $% * () _ + ^ &amp;)</label>
+        <name>CSP_Password_Rule_4</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_Payment --></label>
         <name>CSP_Payment</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_PendingApproval --></label>
+        <name>CSP_PendingApproval</name>
     </customLabels>
     <customLabels>
         <label>Chúng tôi cần ý kiến đóng góp của bạn để tiến hành với trường hợp của bạn.</label>
@@ -2163,6 +2899,10 @@
         <name>CSP_Period</name>
     </customLabels>
     <customLabels>
+        <label>Thông tin cá nhân</label>
+        <name>CSP_Personal_Information</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_PortalPath --></label>
         <name>CSP_PortalPath</name>
     </customLabels>
@@ -2171,8 +2911,24 @@
         <name>CSP_Portal_Administrators</name>
     </customLabels>
     <customLabels>
+        <label>Cổng thông tin đăng nhập hiện đang bị vô hiệu hóa. Cảm ơn bạn đã thông cảm.</label>
+        <name>CSP_Portal_Login_Disabled_Message</name>
+    </customLabels>
+    <customLabels>
         <label>Trạng thái cổng thông tin</label>
         <name>CSP_Portal_Status</name>
+    </customLabels>
+    <customLabels>
+        <label>In</label>
+        <name>CSP_Print</name>
+    </customLabels>
+    <customLabels>
+        <label>Ngày in</label>
+        <name>CSP_Printed_date</name>
+    </customLabels>
+    <customLabels>
+        <label>Tôi đồng ý với &lt;a target=&quot;_blank&quot; href=&quot;https://www.iata.org/Pages/privacy.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Chính sách bảo mật&lt;/a&gt; và &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-portal/Pages/terms.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Điều khoản sử dụng. &lt;/a&gt; của IATA</label>
+        <name>CSP_Privacy_Policy</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_Profile_PrivacyManagement_Link --></label>
@@ -2231,6 +2987,26 @@
         <name>CSP_Record_Deleted</name>
     </customLabels>
     <customLabels>
+        <label>Đăng ký thành công.</label>
+        <name>CSP_Registration_Complete</name>
+    </customLabels>
+    <customLabels>
+        <label>Hoàn tất quy trình đăng ký cơ bản để tham gia Cổng thông tin Khách hàng của IATA.</label>
+        <name>CSP_Registration_Description</name>
+    </customLabels>
+    <customLabels>
+        <label>Tính năng Đăng ký cổng thông tin hiện đang bị vô hiệu hóa. Xin cảm ơn sự thông cảm của quý khách.</label>
+        <name>CSP_Registration_Disabled_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Quý khách đang cố gắng đăng ký một tài khoản mới trùng với một tài khoản đăng nhập khác sẵn có, xin vui lòng thay đổi địa chỉ Email đăng ký hoặc nhấn vào nút đăng nhập để đi đến trang đăng nhập</label>
+        <name>CSP_Registration_Existing_User_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Trước tiên, quý khách cần kiểm tra thư mục thư rác của mình. Trong trường hợp quý khách vẫn không thể tìm thấy bất kỳ thư nào trong thư mục thư rác, xin quý khách vui lòng thử đăng ký lại với chúng tôi bằng cách nhấn vào nút Thử lại.</label>
+        <name>CSP_Registration_Retry_Message</name>
+    </customLabels>
+    <customLabels>
         <label>Những bài viết liên quan</label>
         <name>CSP_RelatedArticles</name>
     </customLabels>
@@ -2251,8 +3027,48 @@
         <name>CSP_Request_Service</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Resend Verification Email --></label>
+        <name>CSP_Resend_Verification_Email</name>
+    </customLabels>
+    <customLabels>
+        <label>Đặt lại mật khẩu</label>
+        <name>CSP_Reset_Password</name>
+    </customLabels>
+    <customLabels>
+        <label>Đặt lại mật khẩu của quý khách cho Cổng thông tin Chăm sóc Khách hàng IATA</label>
+        <name>CSP_Reset_Password_Email_Subject</name>
+    </customLabels>
+    <customLabels>
+        <label>Xin quý khách vui lòng nhập mật khẩu mới của mình.</label>
+        <name>CSP_Reset_Password_Info_1</name>
+    </customLabels>
+    <customLabels>
+        <label>Mật khẩu phải bao gồm:</label>
+        <name>CSP_Reset_Password_Info_2</name>
+    </customLabels>
+    <customLabels>
+        <label>Mật khẩu của quý khách đã được thay đổi thành công.</label>
+        <name>CSP_Reset_Password_Success_Msg_1</name>
+    </customLabels>
+    <customLabels>
+        <label>Quý khách có thể đăng nhập bằng mật khẩu mới.</label>
+        <name>CSP_Reset_Password_Success_Msg_2</name>
+    </customLabels>
+    <customLabels>
+        <label>IP máy tính của bạn đã được xác định là bắt nguồn từ một trong những quốc gia nằm trong sanh sách bị cấm vận bởi chính quyền Hoa Kỳ.&lt;br/&gt; Nền tảng hỗ trợ Cổng thông tin Khách hàng của chúng tôi tuân thủ các quy định này của Hoa Kỳ và do đó, chúng tôi hiện không thể cung cấp quyền truy cập vào Cổng thông tin Khách hàng từ địa chỉ IP hiện tại của bạn.&lt;br/&gt; &lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Nhấn vào đây để liên hệ với chúng tôi.&lt;/a&gt;</label>
+        <name>CSP_Restricted_Login_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Hạn chế đăng nhập</label>
+        <name>CSP_Restricted_Login_Title</name>
+    </customLabels>
+    <customLabels>
         <label>Tiết kiệm</label>
         <name>CSP_Save</name>
+    </customLabels>
+    <customLabels>
+        <label>Lưu &amp; đăng nhập</label>
+        <name>CSP_Save_Login</name>
     </customLabels>
     <customLabels>
         <label>Tìm kiếm theo chi tiết tài liệu</label>
@@ -2427,6 +3243,10 @@
         <name>CSP_Settings</name>
     </customLabels>
     <customLabels>
+        <label>Tạm thời bỏ qua</label>
+        <name>CSP_Skip</name>
+    </customLabels>
+    <customLabels>
         <label>Trạng thái</label>
         <name>CSP_Status</name>
     </customLabels>
@@ -2435,7 +3255,15 @@
         <name>CSP_Submit</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Success --></label>
+        <label><!-- CSP_SubmitApproval --></label>
+        <name>CSP_SubmitApproval</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_SubmittedApproval --></label>
+        <name>CSP_SubmittedApproval</name>
+    </customLabels>
+    <customLabels>
+        <label>Thành công</label>
         <name>CSP_Success</name>
     </customLabels>
     <customLabels>
@@ -2471,44 +3299,72 @@
         <name>CSP_Travel_Agent_Accreditation_Changes_Request</name>
     </customLabels>
     <customLabels>
+        <label>xử lý sự cố</label>
+        <name>CSP_Troubleshooting</name>
+    </customLabels>
+    <customLabels>
+        <label>Để được trợ giúp kiểm tra thêm</label>
+        <name>CSP_Troubleshooting_Info</name>
+    </customLabels>
+    <customLabels>
+        <label>Xin quý khách thử làm lại thao tác trên</label>
+        <name>CSP_Try_Again</name>
+    </customLabels>
+    <customLabels>
         <label>Loại trường hợp</label>
         <name>CSP_TypeOfCase</name>
+    </customLabels>
+    <customLabels>
+        <label>Một lỗi kỹ thuật không ngờ đã xảy ra!</label>
+        <name>CSP_Unexcepted_Error</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_User --></label>
         <name>CSP_User</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Welcome_Panel_Bullet_1_Desc --></label>
+        <label>Chào mừng quý khách đến với Cổng thông tin Chăm sóc Khách hàng của IATA</label>
+        <name>CSP_Welcome_Email_Subject</name>
+    </customLabels>
+    <customLabels>
+        <label>Truy cập trực tiếp hơn 60 dịch vụ IATA, được lựa chọn đặc biệt cho bạn.</label>
         <name>CSP_Welcome_Panel_Bullet_1_Desc</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Welcome_Panel_Bullet_1_Title --></label>
+        <label>Truy cập dịch vụ IATA</label>
         <name>CSP_Welcome_Panel_Bullet_1_Title</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Welcome_Panel_Bullet_2_Desc --></label>
+        <label>Dễ dàng quản lý và cập nhật hồ sơ IATA của bạn.</label>
         <name>CSP_Welcome_Panel_Bullet_2_Desc</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Welcome_Panel_Bullet_2_Title --></label>
+        <label>Hãy luôn cập nhật</label>
         <name>CSP_Welcome_Panel_Bullet_2_Title</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Welcome_Panel_Bullet_3_Desc --></label>
+        <label>Khám phá việc lựa chọn các ấn phẩm, khóa đào tạo và các sản phẩm và dịch vụ khác của IATA.</label>
         <name>CSP_Welcome_Panel_Bullet_3_Desc</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Welcome_Panel_Bullet_3_Title --></label>
+        <label>Tìm ưu đãi đặc biệt</label>
         <name>CSP_Welcome_Panel_Bullet_3_Title</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Welcome_Panel_Bullet_4_Desc --></label>
+        <label>Truy cập bộ sưu tập lớn các câu hỏi &amp; câu trả lời của chúng tôi; và nhận hỗ trợ trực tiếp từ IATA.</label>
         <name>CSP_Welcome_Panel_Bullet_4_Desc</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Welcome_Panel_Bullet_4_Title --></label>
+        <label>Nhận câu trả lời</label>
         <name>CSP_Welcome_Panel_Bullet_4_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Truy cập và quản lý tất cả các dịch vụ IATA của bạn. Tham khảo thông tin về các sản phẩm khác nhau và nhận hỗ trợ về bất kỳ chủ đề nào. Của bạn đây.</label>
+        <name>CSP_Welcome_Panel_Info</name>
+    </customLabels>
+    <customLabels>
+        <label>Chào mừng bạn đến với Cổng thông tin Khách hàng của IATA</label>
+        <name>CSP_Welcome_Title</name>
     </customLabels>
     <customLabels>
         <label>Bạn &amp; IATA</label>
@@ -2703,7 +3559,7 @@
         <name>ConfirmSendRecycleBin</name>
     </customLabels>
     <customLabels>
-        <label><!-- Confirm password --></label>
+        <label>Xác nhận mật khẩu</label>
         <name>Confirm_password</name>
     </customLabels>
     <customLabels>
@@ -3227,7 +4083,7 @@
         <name>CurrencyCenter_def_TTBS</name>
     </customLabels>
     <customLabels>
-        <label><!-- Current password --></label>
+        <label>Mật khẩu hiện tại</label>
         <name>Current_password</name>
     </customLabels>
     <customLabels>
@@ -8407,6 +9263,10 @@ and
         <name>ISSP_AMS_Add_Company</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS Add Contact --></label>
+        <name>ISSP_AMS_Add_Contact</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS Add Director --></label>
         <name>ISSP_AMS_Add_Director</name>
     </customLabels>
@@ -8481,6 +9341,10 @@ and
     <customLabels>
         <label>Pháp nhân phụ mới - GoLite</label>
         <name>ISSP_AMS_Associate_Entity_Cashless</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Associate Entity Cashless --></label>
+        <name>ISSP_AMS_Associate_Entity_Multicountry</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS Authorised Sig --></label>
@@ -8843,6 +9707,10 @@ and
         <name>ISSP_AMS_CONFIRM_DISCARD</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS CONFIRM DISCARD APPLICATION --></label>
+        <name>ISSP_AMS_CONFIRM_DISCARD_APPLICATION</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_Title_Capacity --></label>
         <name>ISSP_AMS_Capacity</name>
     </customLabels>
@@ -9105,6 +9973,10 @@ and
     <customLabels>
         <label>Chú ý! Bằng cách sao chép thông tin quyền sở hữu vào một Đại lý, bạn sẽ xóa bất kỳ thông tin quyền sở hữu nào hiện có về Đại lý mục tiêu.</label>
         <name>ISSP_AMS_Copy_Ownership_Warning</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Country Not Selected --></label>
+        <name>ISSP_AMS_Country_Not_Selected</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS Country Select --></label>
@@ -9451,6 +10323,10 @@ and
         <name>ISSP_AMS_Head_Entity_Cash</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS Head Entity Multicountry --></label>
+        <name>ISSP_AMS_Head_Entity_Multicountry</name>
+    </customLabels>
+    <customLabels>
         <label>Pháp nhân chính mới - GoLite</label>
         <name>ISSP_AMS_Head_Entity_No_Cash</name>
     </customLabels>
@@ -9491,12 +10367,24 @@ and
         <name>ISSP_AMS_IS_GSA</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS IS Legal Name Blank --></label>
+        <name>ISSP_AMS_IS_Legal_Name_Selected_Blank</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS IS Legal Name Null --></label>
+        <name>ISSP_AMS_IS_Legal_Name_Selected_Null</name>
+    </customLabels>
+    <customLabels>
         <label>Vui lòng chọn nếu Pháp nhân phụ là một Pháp nhân độc lập.</label>
         <name>ISSP_AMS_IS_Separate_Entity_Null</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS If Approved Gross Amnt --></label>
         <name>ISSP_AMS_If_Approved_Gross_Amnt</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Info Accreditation Types --></label>
+        <name>ISSP_AMS_Info_Accreditation_Types</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS International --></label>
@@ -10075,6 +10963,14 @@ and
         <name>ISSP_AMS_Month_September</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_Multicountry_Submit_Button --></label>
+        <name>ISSP_AMS_Multicountry_Submit_Button</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NOC_All_Countries --></label>
+        <name>ISSP_AMS_NOC_All_Countries</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS NOC Current Legal details --></label>
         <name>ISSP_AMS_NOC_Current_Legal_details</name>
     </customLabels>
@@ -10477,6 +11373,10 @@ and
     <customLabels>
         <label><!-- ISSP_AMS_NoC_Roles_and_Responsabilities --></label>
         <name>ISSP_AMS_NoC_Roles_and_Responsabilities</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_Search_Entity_Conversion --></label>
+        <name>ISSP_AMS_NoC_Search_Entity_Conversion</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_NoC_Signature --></label>
@@ -10897,6 +11797,10 @@ and
     <customLabels>
         <label><!-- ISSP AMS Section 2 SubSection 2 --></label>
         <name>ISSP_AMS_Section_2_SubSection_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Select AEs --></label>
+        <name>ISSP_AMS_Select_AEs</name>
     </customLabels>
     <customLabels>
         <label>Chọn Tài khoản Mục tiêu</label>
@@ -11555,6 +12459,10 @@ and
         <name>ISSP_AMS_Step3_Indicate_GDSs</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_Step3_Cashless_Location --></label>
+        <name>ISSP_AMS_Step3_Multicountry_Location</name>
+    </customLabels>
+    <customLabels>
         <label>Địa chỉ đầy đủ của Văn phòng nơi thực hiện Đơn xin Phê duyệt</label>
         <name>ISSP_AMS_Step3_Office_FullAddress</name>
     </customLabels>
@@ -11613,6 +12521,10 @@ and
     <customLabels>
         <label><!-- ISSP AMS Step5 ProgressBar CNS --></label>
         <name>ISSP_AMS_Step5_ProgressBar_CNS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step5_ProgressBar_Validate_Data --></label>
+        <name>ISSP_AMS_Step5_ProgressBar_Validate_Data</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS Step5 ReviewBeforeSubmit --></label>
@@ -11805,6 +12717,10 @@ and
     <customLabels>
         <label><!-- ISSP AMS Validation Financial Contact --></label>
         <name>ISSP_AMS_Validation_Financial_Contact</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Validation MC Conversion Countries --></label>
+        <name>ISSP_AMS_Validation_MC_Conversion_Countries</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS Validation Percent Ownership --></label>
@@ -12303,6 +13219,10 @@ and
         <name>ISSP_ANG_Branch_Office_address_details</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP ANG Branch Office contact details --></label>
+        <name>ISSP_ANG_Branch_Office_contact_details</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Link to the IATAs CheckACode page --></label>
         <name>ISSP_ANG_CODE_SEARCH_CHECK_A_CODE_LINK</name>
     </customLabels>
@@ -12369,6 +13289,10 @@ and
     <customLabels>
         <label>Dự thảo Đơn xin GoLite của Pháp nhân chính về Chứng nhận Đại lý</label>
         <name>ISSP_ANG_Email_HE_Cashless_Subject</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP ANG Email HE Multicountry Subject --></label>
+        <name>ISSP_ANG_Email_HE_Multicountry</name>
     </customLabels>
     <customLabels>
         <label>Kích hoạt Phương thức Thanh toán bằng Thẻ tín dụng cho (các) Mã</label>
@@ -12443,12 +13367,20 @@ and
         <name>ISSP_ANG_Iata_Codes_Relinquish</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_ANG_Import_Directors --></label>
+        <name>ISSP_ANG_Import_Directors</name>
+    </customLabels>
+    <customLabels>
         <label>Vui lòng chọn tối thiểu một Văn phòng Chi nhánh</label>
         <name>ISSP_ANG_Least_One_Branch</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_ANG_LeftNav_Section1_AE_Details --></label>
         <name>ISSP_ANG_LeftNav_Section1_AE_Details</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ANG_Legal_Name_already_in_used --></label>
+        <name>ISSP_ANG_Legal_Name_already_in_used</name>
     </customLabels>
     <customLabels>
         <label><!-- Branch to Shipping --></label>
@@ -12469,6 +13401,14 @@ and
     <customLabels>
         <label><!-- Must Add Users To Service --></label>
         <name>ISSP_ANG_MustAddUsersToService</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- NOC_GOGLOBAL_Info --></label>
+        <name>ISSP_ANG_NOC_GOGLOBAL_Info</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Third NoC Question --></label>
+        <name>ISSP_ANG_NOC_Type_Of_Change</name>
     </customLabels>
     <customLabels>
         <label>Một hay nhiều Pháp nhân phụ</label>
@@ -12689,6 +13629,30 @@ and
     <customLabels>
         <label>&lt;p&gt;Theo đây, tôi xin tự nguyện từ bỏ Chứng nhận IATA liên quan đến các Địa điểm đã Phê duyệt được liệt kê ở trên&lt;/p&gt;</label>
         <name>ISSP_ANG_VR_Disclaimer</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Validate Agency Details --></label>
+        <name>ISSP_ANG_Validate_Agency_Details</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ANG_View_And_Modify_Owners --></label>
+        <name>ISSP_ANG_View_And_Modify_Owners</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ANG_View_Owners --></label>
+        <name>ISSP_ANG_View_Owners</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ANG_Import --></label>
+        <name>ISSP_ANG_View_Owners_Info</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ANG_Import --></label>
+        <name>ISSP_ANG_View_Owners_Modify</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ANG_View_Owners_Tooltip --></label>
+        <name>ISSP_ANG_View_Owners_Tooltip</name>
     </customLabels>
     <customLabels>
         <label>Xóa Tự nguyện</label>
@@ -13417,7 +14381,7 @@ Xin vui lòng xác nhận bạn đã nhận được sự trợ giúp liên quan
         <name>ISSP_ContactName</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Contact About IATA Courses --></label>
+        <label>Có phải quý khách liên hệ với chúng tôi để biết thêm thông tin chi tiết về các khóa học của IATA?</label>
         <name>ISSP_Contact_About_IATA_Courses</name>
     </customLabels>
     <customLabels>
@@ -15209,6 +16173,10 @@ Xin vui lòng xác nhận bạn đã nhận được sự trợ giúp liên quan
         <name>ISSP_NoC_HE_with_AEs_Warning</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP NoC HE with AEs Warning --></label>
+        <name>ISSP_NoC_HE_with_AEs_Warning_MC</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP NoC Head Entity Becoming a AE --></label>
         <name>ISSP_NoC_Head_Entity_Becoming_a_AE</name>
     </customLabels>
@@ -15405,6 +16373,10 @@ Nếu bạn tiếp tục gặp vấn đề đăng ký trên cổng thông tin kh
         <name>ISSP_OperationalCalendar_CurrencyFilter</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_OperationalCalendar_CycleFilter --></label>
+        <name>ISSP_OperationalCalendar_CycleFilter</name>
+    </customLabels>
+    <customLabels>
         <label>Ngày tải về</label>
         <name>ISSP_OperationalCalendar_DownloadDate</name>
     </customLabels>
@@ -15449,6 +16421,10 @@ Nếu bạn tiếp tục gặp vấn đề đăng ký trên cổng thông tin kh
         <name>ISSP_OperationalCalendar_No_Events</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP OperationalCalendar PDFFooterText --></label>
+        <name>ISSP_OperationalCalendar_PDFFooterText</name>
+    </customLabels>
+    <customLabels>
         <label>Thiết lập lại</label>
         <name>ISSP_OperationalCalendar_Reset</name>
     </customLabels>
@@ -15457,8 +16433,24 @@ Nếu bạn tiếp tục gặp vấn đề đăng ký trên cổng thông tin kh
         <name>ISSP_OperationalCalendar_Show_Calendar</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_OperationalCalendar_SubtypeFilter --></label>
+        <name>ISSP_OperationalCalendar_SubtypeFilter</name>
+    </customLabels>
+    <customLabels>
         <label>Sync Calendar</label>
         <name>ISSP_OperationalCalendar_Sync_Calendar</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_OperationalCalendar_Timezone_Disclaimer --></label>
+        <name>ISSP_OperationalCalendar_Timezone_Disclaimer</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_OperationalCalendar_TypeFilter --></label>
+        <name>ISSP_OperationalCalendar_TypeFilter</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_OperationalCalendar_Type_Filter_Required --></label>
+        <name>ISSP_OperationalCalendar_Type_Filter_Required</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_Opt_In --></label>
@@ -16826,7 +17818,7 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
         <name>ISSP_See_more</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Select --></label>
+        <label>- Lựa chọn -</label>
         <name>ISSP_Select</name>
     </customLabels>
     <customLabels>
@@ -17369,6 +18361,10 @@ IATA Treasury Dashboard là một công cụ thông tin Web năng động mà c�
     <customLabels>
         <label>Cảm ơn bạn đã gửi yêu cầu Xóa Tự nguyện</label>
         <name>ISSP_VR_Case_Submited</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Validated --></label>
+        <name>ISSP_Validated</name>
     </customLabels>
     <customLabels>
         <label>Phiên bản</label>
@@ -18304,7 +19300,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>Location</name>
     </customLabels>
     <customLabels>
-        <label><!-- Login --></label>
+        <label>Đăng nhập</label>
         <name>Login</name>
     </customLabels>
     <customLabels>
@@ -18424,7 +19420,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>NewGenApp_ServiceRequested</name>
     </customLabels>
     <customLabels>
-        <label><!-- New password --></label>
+        <label>Mật khẩu mới</label>
         <name>New_password</name>
     </customLabels>
     <customLabels>
@@ -18516,7 +19512,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>OneId_Account_Association</name>
     </customLabels>
     <customLabels>
-        <label><!-- OneId_Account Creation --></label>
+        <label>Tạo mới tài khoản</label>
         <name>OneId_Account_Creation</name>
     </customLabels>
     <customLabels>
@@ -18580,7 +19576,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>OneId_CreateNew</name>
     </customLabels>
     <customLabels>
-        <label><!-- OneId_CreateNewAccount --></label>
+        <label>Tạo tài khoản mới</label>
         <name>OneId_CreateNewAccount</name>
     </customLabels>
     <customLabels>
@@ -18988,7 +19984,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>OneId_Login</name>
     </customLabels>
     <customLabels>
-        <label><!-- OneId_LoginFail --></label>
+        <label>Nỗ lực đăng nhập của bạn đã thất bại. Hãy chắc chắn rằng email và mật khẩu là chính xác.</label>
         <name>OneId_LoginFail</name>
     </customLabels>
     <customLabels>
@@ -19060,7 +20056,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>OneId_Online_Help_Link</name>
     </customLabels>
     <customLabels>
-        <label><!-- OneId_Password --></label>
+        <label>Mật khẩu</label>
         <name>OneId_Password</name>
     </customLabels>
     <customLabels>
@@ -19887,7 +20883,7 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
         <name>PKB2_search_to_long</name>
     </customLabels>
     <customLabels>
-        <label><!-- PKB2: Contact Us Send Email --></label>
+        <label>Gửi lại mail xác minh mật khẩu</label>
         <name>PKB2_send_mail</name>
     </customLabels>
     <customLabels>
@@ -20273,6 +21269,10 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
     <customLabels>
         <label><!-- SIDRA Automated Case Message --></label>
         <name>SIDRA_Automated_Case_Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- SIDRA_GE_Info --></label>
+        <name>SIDRA_GE_Info</name>
     </customLabels>
     <customLabels>
         <label><!-- SIS --></label>
@@ -20973,6 +21973,10 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
     <customLabels>
         <label>Chức danh công việc</label>
         <name>csp_My_Profile_Job_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- csp_Next_Step_Account_Selection --></label>
+        <name>csp_Next_Step_Account_Selection</name>
     </customLabels>
     <customLabels>
         <label><!-- Request New Service --></label>
@@ -21677,6 +22681,10 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
     <customTabs>
         <label><!-- Projects Calendar --></label>
         <name>UAT_Calendar</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- Unregistered users --></label>
+        <name>Unregistered_users</name>
     </customTabs>
     <customTabs>
         <label><!-- Voucher Management --></label>

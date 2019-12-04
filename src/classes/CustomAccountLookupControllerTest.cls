@@ -29,7 +29,7 @@ public class CustomAccountLookupControllerTest
 		System.assertEquals(1, controller.results.size());
 		System.assertEquals(null, controller.getFormTag());
 		System.assertEquals(null, controller.getTextBox());
-		
+
 		Account a = new Account(Name = 'SC Account 5 HE PT');
 		controller.account = a;
 		controller.saveAccount();

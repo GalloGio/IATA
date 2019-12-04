@@ -243,7 +243,7 @@
 		if ($j('[id$=tradenameafterchange]').val() !='' && $j('[id$=tradenameafterchange]').val()!=undefined)
 			$j('[id$=tradenameoutput]').text($j('[id$=tradenameafterchange]').val());
 		else
-			$j('[id$=tradenameoutput]').text("{!accountConcerned.TradeName__c}");
+			$j('[id$=tradenameoutput]').text('{!accountConcerned.TradeName__c}'); 
 		$j('[id$=modaltradename]').val($j('[id$=tradenameoutput]').text());
 	}
 
@@ -251,7 +251,7 @@
 		if ($j('[id$=legalnameafterchange]').val() !='' && $j('[id$=legalnameafterchange]').val()!=undefined)
 			$j('[id$=legalnameoutput]').text($j('[id$=legalnameafterchange]').val());
 		else
-			$j('[id$=legalnameoutput]').text("{!accountConcerned.Name}");
+			$j('[id$=legalnameoutput]').text('{!accountConcerned.Name}');
 		$j('[id$=modallegalname]').val($j('[id$=legalnameoutput]').text());
 	}
 
@@ -292,7 +292,7 @@
 		if ($j('[id$=locationphone]').val() !='' && $j('[id$=locationphone]').val()!=undefined)
 			$j('[id$=phoneoutput]').text($j('[id$=locationphone]').val());
 		else
-			$j('[id$=phoneoutput]').text("{!accountConcerned.Phone}");
+			$j('[id$=phoneoutput]').text('{!accountConcerned.Phone}');
 
 		$j('[id$=companyphone]').val($j('[id$=phoneoutput]').text());
 		$j('[id$=companyphoneinput]').intlTelInput("setNumber",$j('[id$=companyphone]').val());
@@ -302,7 +302,7 @@
 		if ($j('[id$=locationfax]').val() !='' && $j('[id$=locationfax]').val()!=undefined)
 			$j('[id$=faxoutput]').text($j('[id$=locationfax]').val());
 		else
-			$j('[id$=faxoutput]').text("{!accountConcerned.Fax}");
+			$j('[id$=faxoutput]').text('{!accountConcerned.Fax}');
 		$j('[id$=companyfax]').val($j('[id$=faxoutput]').text());
 		$j('[id$=companyfaxinput]').intlTelInput("setNumber",$j('[id$=companyfax]').val());
 	}
@@ -2270,6 +2270,7 @@
 			var whereToAppend = where.parent().parent().next().children().last();
 			// where.parent() because disabled elements does not have mouse events
 			where.parent().hover(function() {
+				removeMessage();
 				whereToAppend.append(getWarningBox(warningMessage));
 			}, function() {
 				removeMessage();
@@ -2287,6 +2288,7 @@
 
 			where.parent().hover(function() {
 				if (!where[0].checked) {
+					removeMessage();
 					whereToAppend.append(getWarningBox(warningMessage));
 				}
 			}, function() {

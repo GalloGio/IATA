@@ -35,12 +35,12 @@ private class ANG_IFAPNotificationsControllerTest {
 		insert accountGE;
 
 		Contact cont = new Contact(
-			AccountId = accountGE.Id, 
-			Firstname = 'Richard', 
-			Lastname = 'Vaughan', 
-			Phone = '666123456', 
-			MobilePhone = '911111111', 
-			Email = 'richard.vaughan@test.com', 
+			AccountId = accountGE.Id,
+			Firstname = 'Richard',
+			Lastname = 'Vaughan',
+			Phone = '666123456',
+			MobilePhone = '911111111',
+			Email = 'richard.vaughan@test.com',
 			Financial_Assessment_Contact__c = true
 		);
 		insert cont;
@@ -70,7 +70,7 @@ private class ANG_IFAPNotificationsControllerTest {
 		ctrl.setNotificationMessage();
 
 		ApexPages.Message[] pageMessages = ApexPages.getMessages();
-		
+
 		System.assertEquals(0, pageMessages.size());
 
 		accountGE.Identify_as_Multicountry_Key_Hierarchy__c = true;
@@ -85,12 +85,12 @@ private class ANG_IFAPNotificationsControllerTest {
 		findApexPagesMessage(ANG_IFAPNotificationsController.IFAP_RELATED_KEY_MULTICOUNTRY_MSG);
 
 		Test.stopTest();
-  	}
+		}
 
-  	private static Boolean findApexPagesMessage(String expectedMessage){
-		
+		private static Boolean findApexPagesMessage(String expectedMessage){
+
 		ApexPages.Message[] pageMessages = ApexPages.getMessages();
-		
+
 		System.assertNotEquals(0, pageMessages.size());
 
 		Boolean messageFound = false;
@@ -102,7 +102,7 @@ private class ANG_IFAPNotificationsControllerTest {
 		}
 
 		return false;
-				
+
 	}
 
 }

@@ -38,5 +38,14 @@ This CS defines a disclaimer to be shown on the calendar page, based on Country 
         <unique>false</unique>
     </fields>
     <label>ISSP Operational Calendar Disclaimer</label>
+    <listViews>
+        <fullName>All_with_details</fullName>
+        <columns>NAME</columns>
+        <columns>Country__c</columns>
+        <columns>Operation_Type__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All with details</label>
+        <language>en_US</language>
+    </listViews>
     <visibility>Public</visibility>
 </CustomObject>

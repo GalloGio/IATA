@@ -4,9 +4,9 @@ private class ANG_FinancialAssessmentTest {
 	@testSetup static void setup(){
 
 		Test.startTest();
-		
-        ANG_RME_Alert_Service_Test.createRMEMappings();
-        
+
+		ANG_RME_Alert_Service_Test.createRMEMappings();
+
 		AMS_Settlement_System__c bspSG = new AMS_Settlement_System__c(
 			Name = 'BSP-SG',
 			RecordTypeId = AMS_Utils.RECTYPE_BSP,
@@ -26,7 +26,7 @@ private class ANG_FinancialAssessmentTest {
 		);
 
 		IATA_ISO_Country__c countrySG = new IATA_ISO_Country__c (
-			Name = 'Singapore', 
+			Name = 'Singapore',
 			ISO_Code__c = 'SG',
 			AMS_Settlement_System__c = bspSG.Id,
 			ANG_Enable_NewGen__c = true,
@@ -34,7 +34,7 @@ private class ANG_FinancialAssessmentTest {
 		);
 
 		IATA_ISO_Country__c countryPT = new IATA_ISO_Country__c (
-			Name = 'Portugal', 
+			Name = 'Portugal',
 			ISO_Code__c = 'PT',
 			AMS_Settlement_System__c = bspPT.Id,
 			ANG_Enable_NewGen__c = false
@@ -80,13 +80,13 @@ private class ANG_FinancialAssessmentTest {
 			Remittance_frequency__c = 'M',
 			Type = 'IATA Passenger Sales Agent',
 			BillingCountry = 'Portugal'
-    	);
+		);
 
 		insert new List<Account>{agentSG, agentPT};
-			
+
 		ANG_RHCHelper.createRHCInfo(new Set<Id>{agentSG.Id}, false);
-		
-    	Contact contSG = new Contact(
+
+		Contact contSG = new Contact(
 			FirstName = 'Agent',
 			LastName = 'Singapore',
 			Type_of_Contact__c = 'IFAP Contact',
@@ -103,9 +103,9 @@ private class ANG_FinancialAssessmentTest {
 			Email = 'agent.portugal@test.com',
 			Financial_Assessment_Contact__c = true
 		);
-		
+
 		insert new List<Contact>{contSG, contPT};
-		
+
 		Case caseSG = new Case(
 			ContactId = contSG.Id,
 			AccountId = agentSG.Id,
@@ -133,9 +133,9 @@ private class ANG_FinancialAssessmentTest {
 		insert new List<Case>{caseSG, casePT};
 
 		Financial_Institution__c fi = new Financial_Institution__c(
-			Name = 'Financial Institution', 
-			Region__c = 'Asia & Pacific', 
-			Country__c = 'Singapore', 
+			Name = 'Financial Institution',
+			Region__c = 'Asia & Pacific',
+			Country__c = 'Singapore',
 			Institution_Type__c = 'Bank'
 		);
 
@@ -145,24 +145,24 @@ private class ANG_FinancialAssessmentTest {
 		insert cc;
 
 		Financial_Security__c fs = new Financial_Security__c(
-			CurrencyIsoCode = 'EUR', 
-			Account__c = agentSG.Id, 
-			Amount__c = 10000, 
-			Expiry_date__c = System.Today().addDays(100), 
-			Financial_Institution__c = fi.Id, 
-			Security_Status__c = 'Not Active yet', 
-			Security_Type__c = 'Bank Guarantee', 
-			Region__c = 'Asia & Pacific', 
-			Reception_Date__c = System.today(), 
+			CurrencyIsoCode = 'EUR',
+			Account__c = agentSG.Id,
+			Amount__c = 10000,
+			Expiry_date__c = System.Today().addDays(100),
+			Financial_Institution__c = fi.Id,
+			Security_Status__c = 'Not Active yet',
+			Security_Type__c = 'Bank Guarantee',
+			Region__c = 'Asia & Pacific',
+			Reception_Date__c = System.today(),
 			Reasonforrequest__c = 'New Application',
 			Reception_Case__c = cc.Id
 		);
 
-		insert fs; 
+		insert fs;
 
 		ANG_Risk_Event_Type__c riskEventType = new ANG_Risk_Event_Type__c(
-			Name = 'Fail Financial Statements', 
-			ANG_Risk_ID__c = '5', 
+			Name = 'Fail Financial Statements',
+			ANG_Risk_ID__c = '5',
 			ANG_Expiration__c = 12,
 			Limit_Cash_conditions__c=false
 		);
@@ -170,34 +170,34 @@ private class ANG_FinancialAssessmentTest {
 		insert riskEventType;
 
 		ANG_Agency_Risk_Event__c are = new ANG_Agency_Risk_Event__c(
-    		ANG_AccountId__c = agentSG.Id,
+			ANG_AccountId__c = agentSG.Id,
 			ANG_Event_Status__c = 'Active',
-    		ANG_HE_AccountId__c = agentSG.Id,
-    		ANG_Risk_Type__c = riskEventType.Id,
-    		ANG_Issued_Date__c = System.today()
+			ANG_HE_AccountId__c = agentSG.Id,
+			ANG_Risk_Type__c = riskEventType.Id,
+			ANG_Issued_Date__c = System.today()
 		);
 
 		insert are;
 
 		Test.stopTest();
-		
+
 	}
 
 	@isTest static void applyCashConditionFromIFAPNonNewgenTest(){
 
-		Case cse = 
-			[SELECT 
-				Id, 
-				AccountId 
-			 FROM 
-				Case 
-			 WHERE 
-				Account.ANG_IsNewGenAgency__c = FALSE 
+		Case cse =
+			[SELECT
+				Id,
+				AccountId
+			 FROM
+				Case
+			 WHERE
+				Account.ANG_IsNewGenAgency__c = FALSE
 			 LIMIT 1
 			];
 
 		String message = IFAP_WebService.applyCashCondition(cse.Id, cse.AccountId);
-		system.assertEquals(IFAP_WebService.INVALID_ACTION_CONDITIONS_NOT_SATISFIED_APPLY, message); 
+		system.assertEquals(IFAP_WebService.INVALID_ACTION_CONDITIONS_NOT_SATISFIED_APPLY, message);
 
 		CaseChildHelper.noValidationsOnTrgCAseIFAP = true;
 
@@ -206,13 +206,13 @@ private class ANG_FinancialAssessmentTest {
 		update cse;
 
 		message = IFAP_WebService.applyCashCondition(cse.Id, cse.AccountId);
-		system.assertEquals(IFAP_WebService.INVALID_ACTION_CONDITIONS_NOT_SATISFIED_APPLY, message); 
+		system.assertEquals(IFAP_WebService.INVALID_ACTION_CONDITIONS_NOT_SATISFIED_APPLY, message);
 
 		cse.FA_Second_Deadline_Date__c = System.today();
 		update cse;
 
 		message = IFAP_WebService.applyCashCondition(cse.Id, cse.AccountId);
-		system.assertEquals(IFAP_WebService.INVALID_ACTION_CONDITIONS_NOT_SATISFIED_APPLY, message); 
+		system.assertEquals(IFAP_WebService.INVALID_ACTION_CONDITIONS_NOT_SATISFIED_APPLY, message);
 
 		cse.Financial_Review_Result__c = ANG_Risk_Helper.FR_UNSATISFACTORY;
 		cse.Assessment_Performed_Date__c = System.today().addDays(1);
@@ -220,7 +220,7 @@ private class ANG_FinancialAssessmentTest {
 		update cse;
 
 		message = IFAP_WebService.applyCashCondition(cse.Id, cse.AccountId);
-		system.assertEquals(IFAP_WebService.INVALID_ACTION_CONDITIONS_NOT_SATISFIED_APPLY, message); 
+		system.assertEquals(IFAP_WebService.INVALID_ACTION_CONDITIONS_NOT_SATISFIED_APPLY, message);
 
 		cse.FA_Second_Deadline_Date__c = System.today().addDays(-1);
 		cse.Assessment_Performed_Date__c = cse.FA_Second_Deadline_Date__c.addDays(-1);
@@ -228,20 +228,20 @@ private class ANG_FinancialAssessmentTest {
 		update cse;
 
 		message = IFAP_WebService.applyCashCondition(cse.Id, cse.AccountId);
-		system.assertEquals(IFAP_WebService.INVALID_ACTION_CONDITIONS_NOT_SATISFIED_APPLY, message); 
+		system.assertEquals(IFAP_WebService.INVALID_ACTION_CONDITIONS_NOT_SATISFIED_APPLY, message);
 
-	}   
+	}
 
 	@isTest static void applyCashConditionFromIFAPTest(){
-		
-		Case cse = 
-			[SELECT 
-				Id, 
-				AccountId 
-			 FROM 
-				Case 
-			 WHERE 
-				Account.ANG_IsNewGenAgency__c = TRUE 
+
+		Case cse =
+			[SELECT
+				Id,
+				AccountId
+			 FROM
+				Case
+			 WHERE
+				Account.ANG_IsNewGenAgency__c = TRUE
 			 LIMIT 1
 			];
 
@@ -251,7 +251,7 @@ private class ANG_FinancialAssessmentTest {
 		update acct;
 
 		String message = IFAP_WebService.applyCashCondition(cse.Id, cse.AccountId);
-		system.assertEquals(IFAP_WebService.INVALID_ACTION_CONDITIONS_NOT_SATISFIED_APPLY, message); 
+		system.assertEquals(IFAP_WebService.INVALID_ACTION_CONDITIONS_NOT_SATISFIED_APPLY, message);
 
 		CaseChildHelper.noValidationsOnTrgCAseIFAP = true;
 
@@ -260,13 +260,13 @@ private class ANG_FinancialAssessmentTest {
 		update cse;
 
 		message = IFAP_WebService.applyCashCondition(cse.Id, cse.AccountId);
-		system.assertEquals(IFAP_WebService.INVALID_ACTION_TRIGGER_SIDRA_LITE, message); 
+		system.assertEquals(IFAP_WebService.INVALID_ACTION_TRIGGER_SIDRA_LITE, message);
 
 		cse.FA_Second_Deadline_Date__c = System.today();
 		update cse;
 
 		message = IFAP_WebService.applyCashCondition(cse.Id, cse.AccountId);
-		system.assertEquals(IFAP_WebService.INVALID_ACTION_CONDITIONS_NOT_SATISFIED_APPLY, message); 
+		system.assertEquals(IFAP_WebService.INVALID_ACTION_CONDITIONS_NOT_SATISFIED_APPLY, message);
 
 		cse.Financial_Review_Result__c = ANG_Risk_Helper.FR_UNSATISFACTORY;
 		cse.Assessment_Performed_Date__c = System.today().addDays(1);
@@ -274,15 +274,15 @@ private class ANG_FinancialAssessmentTest {
 		update cse;
 
 		message = IFAP_WebService.applyCashCondition(cse.Id, cse.AccountId);
-		system.assertEquals(IFAP_WebService.INVALID_ACTION_REINSTATE_AGENT, message); 
+		system.assertEquals(IFAP_WebService.INVALID_ACTION_REINSTATE_AGENT, message);
 
-		Financial_Security__c fs = 
-			[SELECT 
-				Id 
-			 FROM 
-				Financial_Security__c 
-			 WHERE 
-				Account__c = :cse.AccountId 
+		Financial_Security__c fs =
+			[SELECT
+				Id
+			 FROM
+				Financial_Security__c
+			 WHERE
+				Account__c = :cse.AccountId
 			 LIMIT 1
 			];
 
@@ -291,7 +291,7 @@ private class ANG_FinancialAssessmentTest {
 		update fs;
 
 		message = IFAP_WebService.applyCashCondition(cse.Id, cse.AccountId);
-		system.assertEquals(IFAP_WebService.INVALID_ACTION_REMOVE_CASH_CONDITIONS, message); 
+		system.assertEquals(IFAP_WebService.INVALID_ACTION_REMOVE_CASH_CONDITIONS, message);
 
 		cse.FA_Second_Deadline_Date__c = System.today().addDays(-1);
 		cse.Assessment_Performed_Date__c = cse.FA_Second_Deadline_Date__c.addDays(-1);
@@ -301,28 +301,28 @@ private class ANG_FinancialAssessmentTest {
 		message = IFAP_WebService.applyCashCondition(cse.Id, cse.AccountId);
 		System.assertEquals(IFAP_WebService.CASH_CONDITION_SUCCESSFULLY_APPLIED, message);
 
-		ANG_Agency_Risk_Event__c riskEvent = 
+		ANG_Agency_Risk_Event__c riskEvent =
 			[SELECT
 				Id,
 				ANG_Limit_Cash_Conditions__c
 			 FROM ANG_Agency_Risk_Event__c
 			 WHERE
 			 	ANG_Risk_Type__r.Name = 'Fail Financial Statements'
-			 AND 
+			 AND
 			 	ANG_Event_Status__c = 'Active'
 			];
 
 		system.assert(riskEvent.ANG_Limit_Cash_Conditions__c, 'Risk Event must have limit cash conditions TRUE');
 
-		Case updCse = 
+		Case updCse =
 			[SELECT
 				Id,
 				Deadline_Date__c,
 				FA_Third_Deadline_Date__c,
 				secondFAnonComplianceDate__c
-			 FROM 
-				Case 
-			 WHERE 
+			 FROM
+				Case
+			 WHERE
 				Id = :cse.Id
 			 LIMIT 1
 			];
@@ -334,19 +334,19 @@ private class ANG_FinancialAssessmentTest {
 
 	@isTest static void removeCashConditionFromIFAPNonNewgenTest(){
 
-		Case cse = 
-			[SELECT 
-				Id, 
-				AccountId 
-			 FROM 
-				Case 
-			 WHERE 
-				Account.ANG_IsNewGenAgency__c = FALSE 
+		Case cse =
+			[SELECT
+				Id,
+				AccountId
+			 FROM
+				Case
+			 WHERE
+				Account.ANG_IsNewGenAgency__c = FALSE
 			 LIMIT 1
 			];
 
 		String message = IFAP_WebService.removeCashCondition(cse.Id, cse.AccountId);
-		system.assertEquals(IFAP_WebService.INVALID_ACTION_CONDITIONS_NOT_SATISFIED_REMOVE, message); 
+		system.assertEquals(IFAP_WebService.INVALID_ACTION_CONDITIONS_NOT_SATISFIED_REMOVE, message);
 
 		CaseChildHelper.noValidationsOnTrgCAseIFAP = true;
 
@@ -355,13 +355,13 @@ private class ANG_FinancialAssessmentTest {
 		update cse;
 
 		message = IFAP_WebService.removeCashCondition(cse.Id, cse.AccountId);
-		system.assertEquals(IFAP_WebService.INVALID_ACTION_CONDITIONS_NOT_SATISFIED_REMOVE, message); 
+		system.assertEquals(IFAP_WebService.INVALID_ACTION_CONDITIONS_NOT_SATISFIED_REMOVE, message);
 
 		cse.FA_Second_Deadline_Date__c = System.today();
 		update cse;
 
 		message = IFAP_WebService.removeCashCondition(cse.Id, cse.AccountId);
-		system.assertEquals(IFAP_WebService.INVALID_ACTION_CONDITIONS_NOT_SATISFIED_REMOVE, message); 
+		system.assertEquals(IFAP_WebService.INVALID_ACTION_CONDITIONS_NOT_SATISFIED_REMOVE, message);
 
 		cse.Financial_Review_Result__c = ANG_Risk_Helper.FR_UNSATISFACTORY;
 		cse.Assessment_Performed_Date__c = System.today().addDays(1);
@@ -369,7 +369,7 @@ private class ANG_FinancialAssessmentTest {
 		update cse;
 
 		message = IFAP_WebService.removeCashCondition(cse.Id, cse.AccountId);
-		system.assertEquals(IFAP_WebService.INVALID_ACTION_CONDITIONS_NOT_SATISFIED_REMOVE, message); 
+		system.assertEquals(IFAP_WebService.INVALID_ACTION_CONDITIONS_NOT_SATISFIED_REMOVE, message);
 
 		cse.FA_Second_Deadline_Date__c = System.today().addDays(-1);
 		cse.Assessment_Performed_Date__c = cse.FA_Second_Deadline_Date__c.addDays(-1);
@@ -379,27 +379,27 @@ private class ANG_FinancialAssessmentTest {
 		message = IFAP_WebService.removeCashCondition(cse.Id, cse.AccountId);
 		system.assertEquals(IFAP_WebService.INVALID_ACTION_CONDITIONS_NOT_SATISFIED_REMOVE, message);
 
-	}   
+	}
 
 	@isTest static void removeCashConditionFromIFAPTest(){
-		
-		Case cse = 
-			[SELECT 
-				Id, 
-				AccountId 
-			 FROM 
-				Case 
-			 WHERE 
-				Account.ANG_IsNewGenAgency__c = TRUE 
+
+		Case cse =
+			[SELECT
+				Id,
+				AccountId
+			 FROM
+				Case
+			 WHERE
+				Account.ANG_IsNewGenAgency__c = TRUE
 			 LIMIT 1
 			];
-        
-        Account acct = new Account(Id = cse.AccountId);
+
+		Account acct = new Account(Id = cse.AccountId);
 		acct.ANG_HE_CashCondition__c = FALSE;
 		update acct;
-        
+
 		String message = IFAP_WebService.removeCashCondition(cse.Id, cse.AccountId);
-		system.assertEquals(IFAP_WebService.INVALID_ACTION_CONDITIONS_NOT_SATISFIED_REMOVE, message); 
+		system.assertEquals(IFAP_WebService.INVALID_ACTION_CONDITIONS_NOT_SATISFIED_REMOVE, message);
 
 		CaseChildHelper.noValidationsOnTrgCAseIFAP = true;
 
@@ -408,29 +408,29 @@ private class ANG_FinancialAssessmentTest {
 		update cse;
 
 		message = IFAP_WebService.removeCashCondition(cse.Id, cse.AccountId);
-		system.assertEquals(IFAP_WebService.INVALID_ACTION_CONDITIONS_NOT_SATISFIED_REMOVE, message); 
+		system.assertEquals(IFAP_WebService.INVALID_ACTION_CONDITIONS_NOT_SATISFIED_REMOVE, message);
 
 		cse.FA_Second_Deadline_Date__c = System.today();
 		update cse;
 
 		message = IFAP_WebService.removeCashCondition(cse.Id, cse.AccountId);
-		system.assertEquals(IFAP_WebService.INVALID_ACTION_CONDITIONS_NOT_SATISFIED_REMOVE, message); 
-	
+		system.assertEquals(IFAP_WebService.INVALID_ACTION_CONDITIONS_NOT_SATISFIED_REMOVE, message);
+
 		cse.Financial_Review_Result__c = ANG_Risk_Helper.FR_UNSATISFACTORY;
 		cse.Assessment_Performed_Date__c = System.today().addDays(1);
 		cse.Status = 'Sanity Check Failure';
 		update cse;
 
 		message = IFAP_WebService.removeCashCondition(cse.Id, cse.AccountId);
-		system.assertEquals(IFAP_WebService.INVALID_ACTION_REINSTATE_AGENT, message); 
+		system.assertEquals(IFAP_WebService.INVALID_ACTION_REINSTATE_AGENT, message);
 
-		Financial_Security__c fs = 
-			[SELECT 
-				Id 
-			 FROM 
-				Financial_Security__c 
-			 WHERE 
-				Account__c = :cse.AccountId 
+		Financial_Security__c fs =
+			[SELECT
+				Id
+			 FROM
+				Financial_Security__c
+			 WHERE
+				Account__c = :cse.AccountId
 			 LIMIT 1
 			];
 
@@ -438,24 +438,24 @@ private class ANG_FinancialAssessmentTest {
 		fs.Financial_Security_Validation_Case__c = cse.Id;
 		update fs;
 
-        message = IFAP_WebService.removeCashCondition(cse.Id, cse.AccountId);
-		system.assertEquals(IFAP_WebService.AGENT_DOES_NOT_HAVE_CASH_CONDITION, message); 
-        
-        acct = new Account(Id = cse.AccountId);
+		message = IFAP_WebService.removeCashCondition(cse.Id, cse.AccountId);
+		system.assertEquals(IFAP_WebService.AGENT_DOES_NOT_HAVE_CASH_CONDITION, message);
+
+		acct = new Account(Id = cse.AccountId);
 		acct.ANG_HE_CashCondition__c = TRUE;
 		update acct;
-        
-		message = IFAP_WebService.removeCashCondition(cse.Id, cse.AccountId);
-		system.assertEquals(IFAP_WebService.CASH_CONDITION_SUCCESSFULLY_REMOVED, message); 
 
-		ANG_Agency_Risk_Event__c riskEvent = 
+		message = IFAP_WebService.removeCashCondition(cse.Id, cse.AccountId);
+		system.assertEquals(IFAP_WebService.CASH_CONDITION_SUCCESSFULLY_REMOVED, message);
+
+		ANG_Agency_Risk_Event__c riskEvent =
 			[SELECT
 				Id,
 				ANG_Limit_Cash_Conditions__c
 			 FROM ANG_Agency_Risk_Event__c
 			 WHERE
 			 	ANG_Risk_Type__r.Name = 'Fail Financial Statements'
-			 AND 
+			 AND
 			 	ANG_Event_Status__c = 'Active'
 			];
 
@@ -463,57 +463,57 @@ private class ANG_FinancialAssessmentTest {
 
 	}
 
-    @isTest
-    static void updateThirdDeadlineDateForNewgenAgentsTest(){
-    	Case ifapCase = [SELECT id, AccountId, Status
-    					 FROM Case 
-    					 WHERE Account.ANG_IsNewGenAgency__c = TRUE 
-    					 LIMIT 1];
-   
-    	CaseChildHelper.noValidationsOnTrgCAseIFAP = true;
+	@isTest
+	static void updateThirdDeadlineDateForNewgenAgentsTest(){
+		Case ifapCase = [SELECT id, AccountId, Status
+						 FROM Case
+						 WHERE Account.ANG_IsNewGenAgency__c = TRUE
+						 LIMIT 1];
 
-    	ifapCase.Status = 'Agent Notified (Mail)';
-    	ifapCase.Financial_Review_Type__c = 'Annual';
-    	ifapCase.FA_Letter_Sent__c = true;    	
-    	update ifapCase; 
+		CaseChildHelper.noValidationsOnTrgCAseIFAP = true;
 
-    	Case sidraCase = createSIDRALite(ifapCase);
-    	sidraCase.BSP_CASS__c = 'BSP';
-    	insert sidraCase;
+		ifapCase.Status = 'Agent Notified (Mail)';
+		ifapCase.Financial_Review_Type__c = 'Annual';
+		ifapCase.FA_Letter_Sent__c = true;
+		update ifapCase;
 
-    	ifapCase.FA_Second_Deadline_Date__c = Date.today().addDays(-1);
-    	ifapCase.secondFAnonComplianceDate__c = null;
-    	update ifapCase;
+		Case sidraCase = createSIDRALite(ifapCase);
+		sidraCase.BSP_CASS__c = 'BSP';
+		insert sidraCase;
 
-    	Test.startTest();
+		ifapCase.FA_Second_Deadline_Date__c = Date.today().addDays(-1);
+		ifapCase.secondFAnonComplianceDate__c = null;
+		update ifapCase;
+
+		Test.startTest();
   		WSSidraLite.updateSecondAndThirdDeadline(ifapCase.id);
-    	Test.stopTest();
+		Test.stopTest();
 
-    	//For Newgen Agents -> Check the parentCase.FA_Third_Deadline_Date__c
-    	Case parentCase = [SELECT id, AccountId, Status, Deadline_Date__c, FA_Third_Deadline_Date__c
-    					 FROM Case WHERE Account.ANG_IsNewGenAgency__c = TRUE LIMIT 1];
+		//For Newgen Agents -> Check the parentCase.FA_Third_Deadline_Date__c
+		Case parentCase = [SELECT id, AccountId, Status, Deadline_Date__c, FA_Third_Deadline_Date__c
+						 FROM Case WHERE Account.ANG_IsNewGenAgency__c = TRUE LIMIT 1];
 
-    	System.assertEquals(parentCase.Deadline_Date__c.addDays(365), parentCase.FA_Third_Deadline_Date__c);
+		System.assertEquals(parentCase.Deadline_Date__c.addDays(365), parentCase.FA_Third_Deadline_Date__c);
 
-    }
+	}
 
-    private static Case createSIDRALite(Case parent) {
-        Case cse = new Case(
-            RecordtypeId = SidraLiteManager.RECORDTYPE_SIDRA_LITE,
-            ParentId = parent.Id,
-            accountId = parent.accountId,
-            BSPCountry__c = 'BSP-SG',
-            SIDRA_Lite_Reason__c = SidraLiteHelperForIFAP.isFS(parent)? 'Financial Security Non-compliance': 'Financial Review Non-compliance'
-        );
-        return cse;
-    }
+	private static Case createSIDRALite(Case parent) {
+		Case cse = new Case(
+			RecordtypeId = SidraLiteManager.RECORDTYPE_SIDRA_LITE,
+			ParentId = parent.Id,
+			accountId = parent.accountId,
+			BSPCountry__c = 'BSP-SG',
+			SIDRA_Lite_Reason__c = SidraLiteHelperForIFAP.isFS(parent)? 'Financial Security Non-compliance': 'Financial Review Non-compliance'
+		);
+		return cse;
+	}
 
 	/**
 	 * Verify when a IFAP Case is being set the Financial_Review_Result__c field
 	 * and its Status = Financial Security Requested
-	 * Financial_Review_Result__c and Financial_Assessment_Points__c(just for HK and MK) must be copied into the Account 
+	 * Financial_Review_Result__c and Financial_Assessment_Points__c(just for HK and MK) must be copied into the Account
 	 *
-	 * ANG_CaseTriggerHandler.updateFinancialReviewResultOnAccount 
+	 * ANG_CaseTriggerHandler.updateFinancialReviewResultOnAccount
 	 */
 	@isTest
 	static void copyFinancialReviewResultWhenFSRequestedCaseStatusTest(){
@@ -530,7 +530,7 @@ private class ANG_FinancialAssessmentTest {
 		cse.Assessment_Performed_Date__c = Date.today();
 		update cse;
 
-		Test.stopTest();	
+		Test.stopTest();
 
 		Account accountUpdated = [SELECT id, Financial_Assessment_Points__c, Financial_Review_Result__c, Assessment_Performed_Date__c
 								  FROM Account WHERE ANG_IsNewGenAgency__c = TRUE LIMIT 1];
@@ -545,7 +545,7 @@ private class ANG_FinancialAssessmentTest {
 	static void generateNOTChangeCodeOnlyForLastIFAPClosed_NonComplianceStatusTest(){
 
 		//Create AMS Change Code Custom Setting
-		AMS_ChangeCodes__c amsChangeCode = new AMS_ChangeCodes__c(Name = 'ANG82', Accreditation_Model__c = 'NEWGEN', 
+		AMS_ChangeCodes__c amsChangeCode = new AMS_ChangeCodes__c(Name = 'ANG82', Accreditation_Model__c = 'NEWGEN',
 			Apply_to_hierarchy__c = true, Billable__c = false,  Class_Type__c = 'P', Change_Code__c = 'NOT', CurrencyIsoCode = 'EUR',
 			Field1__c = 'SIDRA_Lite_Reason__c',  Field1Values__c = 'VALUES:Financial Review Non-compliance',
 			Field2__c = 'DEF_Approval_Rejection__c',  Field2Values__c = 'VALUES:Approved',
@@ -566,12 +566,12 @@ private class ANG_FinancialAssessmentTest {
 
 		CaseChildHelper.noValidationsOnTrgCAseIFAP = true;
 
-    	ifapCaseLastYear.Financial_Review_Type__c = 'Annual';
-    	ifapCaseLastYear.FA_Letter_Sent__c = true;
+		ifapCaseLastYear.Financial_Review_Type__c = 'Annual';
+		ifapCaseLastYear.FA_Letter_Sent__c = true;
 
-    	//Set the Last IFAP Case as Closed this will create a Technical Log , in order to present an error message on the Sidra Page layout
+		//Set the Last IFAP Case as Closed this will create a Technical Log , in order to present an error message on the Sidra Page layout
 		ifapCaseLastYear.Status = 'Closed';
-    	update ifapCaseLastYear;
+		update ifapCaseLastYear;
 
 		//Create new IFAP Case
 		Case currentIfapCase = new Case(
@@ -593,12 +593,12 @@ private class ANG_FinancialAssessmentTest {
 		currentIFAPCase.Status = 'Sanity Check Failure';
 		update currentIfapCase;
 
-    	Case sidraCase = createSIDRALite(currentIfapCase);
-    	sidraCase.BSP_CASS__c = 'BSP';
-    	insert sidraCase;
+		Case sidraCase = createSIDRALite(currentIfapCase);
+		sidraCase.BSP_CASS__c = 'BSP';
+		insert sidraCase;
 
-    	//Set this flag in order to Run again the AMS_OscarCase_RiskMgmt
-    	AMS_OscarCase_RiskMgmt.EndRun();
+		//Set this flag in order to Run again the AMS_OscarCase_RiskMgmt
+		AMS_OscarCase_RiskMgmt.EndRun();
 		//Update SidraCase with the values from Excel
 		sidraCase.SIDRA_Lite_Default_Date__c = Date.today();
 		sidraCase.DEF_Approval_Rejection__c = 'Approved';
@@ -621,7 +621,7 @@ private class ANG_FinancialAssessmentTest {
 		update ifapCaseLastYear;
 
 		//Set this flag in order to Run again the AMS_OscarCase_RiskMgmt
-    	AMS_OscarCase_RiskMgmt.EndRun();
+		AMS_OscarCase_RiskMgmt.EndRun();
 		//Update SidraCase with the values from Excel
 		sidraCase.SIDRA_Lite_Default_Date__c = Date.today();
 		sidraCase.DEF_Approval_Rejection__c = 'Approved';
@@ -633,7 +633,7 @@ private class ANG_FinancialAssessmentTest {
 		//With the previous data the NOT Change Code will be generated
 		Agency_Applied_Change_code__c notChangeCode = [SELECT id, Change_Code__c FROM Agency_Applied_Change_code__c Where Account__c = :currentIfapCase.AccountId limit 1];
 		System.assertEquals('NOT', notChangeCode.Change_Code__c);
-		
+
 	}
 
 }

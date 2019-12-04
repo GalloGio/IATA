@@ -680,7 +680,7 @@
         <fields>AMS_Financial_Review_Second_Quarter__c</fields>
         <fields>AMS_Financial_Review_Third_Quarter__c</fields>
         <relatedList>AMS_Process_Detail__c.Case__c</relatedList>
-    </relatedLists> 
+    </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
         <fields>Reassessment_Rejection_Reason__c</fields>

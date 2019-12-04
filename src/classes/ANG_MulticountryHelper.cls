@@ -1,5 +1,5 @@
 public class ANG_MulticountryHelper {
-	
+
 	private class ValidationWrapper {
 		public Boolean valid;
 		public String message;
@@ -31,15 +31,15 @@ public class ANG_MulticountryHelper {
 
 			Id relationHeInBsp = hePerBspMapping.get(relation.Child_Account__r.IATA_ISO_Country__r.AMS_Settlement_System__c);
 			Id compareRelationHeInBsp = hePerBspMapping.get(compareToRelation.Child_Account__r.IATA_ISO_Country__r.AMS_Settlement_System__c);
-			
-			//If agencies location type are GE: they have priority over any other 
+
+			//If agencies location type are GE: they have priority over any other
 			if(relation.Parent_Account__r.Location_Type__c == AMS_Utils.GE){
 				return -1;
 			}
 			else if(compareToRelation.Parent_Account__r.Location_Type__c == AMS_Utils.GE){
 				return 1;
 			}
-			//If any of the agencies with location type AE was selected by the user to become a new HE: they have priority over HE's 
+			//If any of the agencies with location type AE was selected by the user to become a new HE: they have priority over HE's
 			else if(relation.Child_Account__r.Location_Type__c == AMS_Utils.AE && relation.Child_Account__c == relationHeInBsp){
 				return -1;
 			}
@@ -69,57 +69,57 @@ public class ANG_MulticountryHelper {
 	public static Set<String> allowedLocationsSet = new Set<String>{'D', 'P'};
 
 	public static Set<String> locationTypesSet = new Set<String>{
-		AMS_Utils.HE, 
+		AMS_Utils.HE,
 		AMS_Utils.AE,
 		AMS_Utils.GE
 	};
 
 	/**
-	* Verifies if the immediate parent 
-	* associated with the acctId 
+	* Verifies if the immediate parent
+	* associated with the acctId
 	* has the given change code
-	* 
-	* @param acctId: Id 
+	*
+	* @param acctId: Id
 	* @param changeCode: String
-	* @return Boolean 
+	* @return Boolean
 	*
 	*/
 	private static Boolean parentHasChangeCode(Id acctId, String changeCode){
-		
+
 		integer nbrOfChangeCodes =
 			[SELECT
 				count()
 			 FROM Agency_Applied_Change_Code__c
-			 WHERE								
-			 	 Change_Code__c = :changeCode 	
-			 AND Account__c IN 					
-			 	(SELECT ParentId				
-			 	 FROM Account 					
+			 WHERE
+			 	 Change_Code__c = :changeCode
+			 AND Account__c IN
+			 	(SELECT ParentId
+			 	 FROM Account
 			 	 WHERE Id = :acctId)
 			];
 
 		return nbrOfChangeCodes > 0;
-	
+
 	}
 
 	/**
 	* Verifies if the IATA Code generation should be allowed
-	* 
+	*
 	* @param oscar: AMS_OSCAR__c
 	* @return Boolean
 	*
 	*/
 	public static Boolean allowIATACodeGeneration(AMS_OSCAR__c oscar){
-		return 
-			(parentHasChangeCode(oscar.Account__c, 'NEW') && 
-			 (AMS_Utils.ACTIVEAGENCYSTATUS.contains(oscar.Account__r.Parent.Status__c) || 
-			  oscar.Account__r.Parent.Status__c == AMS_Utils.ACC_S2_NEWAPPLICATIONPENDING)
+		return
+			(parentHasChangeCode(oscar.Account__c, 'NEW') &&
+			 (AMS_Utils.ACTIVEAGENCYSTATUS.contains(oscar.Account__r.Parent.Status__c) ||
+				oscar.Account__r.Parent.Status__c == AMS_Utils.ACC_S2_NEWAPPLICATIONPENDING)
 			);
 	}
 
 	/**
 	* Verifies if the OSCAR approval step should be allowed
-	* 
+	*
 	* @param oscar: AMS_OSCAR__c
 	* @return Boolean
 	*
@@ -141,7 +141,7 @@ public class ANG_MulticountryHelper {
 	}
 
 	/**
-	* Executes the validations on accounts 
+	* Executes the validations on accounts
 	* in a multicountry hierarchy
 	*
 	* @param accountsHePerBspMap: Map<String, Set<Id>>
@@ -156,7 +156,7 @@ public class ANG_MulticountryHelper {
 
 		if(account.Location_Type__c == AMS_Utils.AE){
 
-		   	if(account.IATA_ISO_Country__r.AMS_Settlement_System__c != account.Parent.IATA_ISO_Country__r.AMS_Settlement_System__c){
+			 	if(account.IATA_ISO_Country__r.AMS_Settlement_System__c != account.Parent.IATA_ISO_Country__r.AMS_Settlement_System__c){
 				vw.valid = false;
 				vw.message = Label.ANG_Multicountry_Already_Has_Locations_Only_Allow_HE_Error;
 				return vw;
@@ -191,11 +191,11 @@ public class ANG_MulticountryHelper {
 	/**
 	* Fetches the accounts related
 	* with the given parent Ids
-	* 
+	*
 	* @param parentIdSet: Set<Id>
 	* @return accountMap: Map<Id, Account>
 	*
-	*/ 	
+	*/
 	private static Map<Id, Account> fetchMulticountryAccounts(Set<Id> parentIdSet){
 
 		Map<Id, Account> accountMap = new Map<Id, Account>(
@@ -210,17 +210,17 @@ public class ANG_MulticountryHelper {
 				IATA_ISO_Country__r.Name,
 				Parent.IATA_ISO_Country__r.AMS_Settlement_System__c
 			 FROM Account
-			 WHERE 
+			 WHERE
 				(Id IN :parentIdSet OR ParentId IN :parentIdSet)
 			/* AND
 				Location_Type__c IN :locationTypesSet */
 			 AND
 			 	(
-			 	Top_Parent__r.Location_Type__c = :AMS_Utils.GE OR Location_Type__c = :AMS_Utils.GE) 
+			 	Top_Parent__r.Location_Type__c = :AMS_Utils.GE OR Location_Type__c = :AMS_Utils.GE)
 			]
 		);
 
-	   	System.debug(LoggingLevel.FINE, '____ [cls ANG_MulticountryHelper - fetchMulticountryAccounts] Account Map: ' + accountMap);
+		 	System.debug(LoggingLevel.FINE, '____ [cls ANG_MulticountryHelper - fetchMulticountryAccounts] Account Map: ' + accountMap);
 
 		return accountMap;
 
@@ -228,7 +228,7 @@ public class ANG_MulticountryHelper {
 
 	/**
 	* Aggregate HE accounts for each BSP/GE
-	* 
+	*
 	* @param accountLst: List<Account>
 	* @return accountsHePerBspMap: Map<String, Set<Id>>
 	*
@@ -250,7 +250,7 @@ public class ANG_MulticountryHelper {
 					continue;
 				}
 
-				accountsHePerBspMap.put(aggrKey, new Set<Id>{acct.Id});   
+				accountsHePerBspMap.put(aggrKey, new Set<Id>{acct.Id});
 			}
 
 		}
@@ -260,10 +260,10 @@ public class ANG_MulticountryHelper {
 	}
 
 	/**
-	* Process the given accounts to make sure 
-	* that for each multicountry account 
+	* Process the given accounts to make sure
+	* that for each multicountry account
 	* the validations are executed.
-	* 
+	*
 	* @param accountLst: List<Account>
 	* @param parentIdSet: Set<Id>
 	*
@@ -275,11 +275,11 @@ public class ANG_MulticountryHelper {
 		if(acctWithRelshipsMap.isEmpty()) return;
 
 		Map<String, Set<Id>> accountsHePerBspMap = aggregateHeadEntitiesForEachBSP(acctWithRelshipsMap.values());
-		
+
 		for(Account acct : accountLst){
-		
+
 			Account acctWithRelships = acctWithRelshipsMap.get(acct.Id);
-		   
+
 			System.debug(LoggingLevel.FINE, '____ [cls ANG_MulticountryHelper - processMulticountryValidations] Processing account: ' + acct);
 			System.debug(LoggingLevel.FINE, '____ [cls ANG_MulticountryHelper - processMulticountryValidations] Processing account with relations: ' + acctWithRelships);
 
@@ -294,7 +294,7 @@ public class ANG_MulticountryHelper {
 
 	}
 
-   /**
+	 /**
 	* Gets the Remittance frequency from the current AMS Online Accreditation
 	*
 	* @param accreditationID: ID
@@ -302,8 +302,8 @@ public class ANG_MulticountryHelper {
 	*
 	*/
 	private static String getPaxRemittanceFrequencyByID(Id accreditationID){
-		
-		List<AMS_Pax_Accreditation_Form__c> onlineAccred = [SELECT Remittance_frequency__c 
+
+		List<AMS_Pax_Accreditation_Form__c> onlineAccred = [SELECT Remittance_frequency__c
 															FROM AMS_Pax_Accreditation_Form__c
 															WHERE id = :accreditationID];
 
@@ -316,16 +316,16 @@ public class ANG_MulticountryHelper {
 
 
 	/**
-	 * Checks if an Multicountry account (GE or HE) 
+	 * Checks if an Multicountry account (GE or HE)
 	 * has an empty Remittance_frequency__c
 	 * NEWGEN-4850
-	 * 
+	 *
 	 * @param oscar: AMS_OSCAR__c
 	 * @return Boolean
 	 */
 	public static Boolean multicountryAccountHasRemittenceFrequencyEmpty(AMS_OSCAR__c oscar){
 		return ( String.isEmpty(getPaxRemittanceFrequencyByID(oscar.AMS_Online_Accreditation__c))
-			&& ((oscar.Location_Type__c == AMS_Utils.HE && oscar.Process__c == AMS_Utils.MCAE) 
+			&& ((oscar.Location_Type__c == AMS_Utils.HE && oscar.Process__c == AMS_Utils.MCAE)
 				|| oscar.Location_Type__c == AMS_Utils.GE));
 	}
 
@@ -354,12 +354,12 @@ public class ANG_MulticountryHelper {
 			String lastName =  contactRole.Owner_Account__c <> null ? contactRole.Owner_Account__r.Name : contactRole.Contact__c <> null ? contactRole.contact__r.LastName : contactRole.Person__c <> null ? contactRole.Person__r.Name : contactRole.Owner_Name__c;
 
 			AMS_Accreditation_Contact__c aContact = new AMS_Accreditation_Contact__c();
-				
+
 			aContact.AMS_Pax_Accreditation_Form__c =accreditationFormId;
 			aContact.Agency_owner__c = true;
 			aContact.Company__c = contactRole.Owner_Account__c;
 			aContact.Contact__c = contactRole.Contact__c;
-			aContact.Email__c = contactRole.Contact_Email__c; 
+			aContact.Email__c = contactRole.Contact_Email__c;
 			aContact.Financial_Assessment_Contact__c = contactRole.Financial_Assessment_Contact__c;
 			aContact.Financial_interest__c = contactRole.Percentage__c;
 			aContact.First_name__c = firstName;
@@ -375,13 +375,13 @@ public class ANG_MulticountryHelper {
 		}
 
 		insert aContactLst;
-	
+
 		return null;
-	
+
 	}
 
 	/**
-	* Swap location types between two accounts 
+	* Swap location types between two accounts
 	* in the scope of change of location type
 	* for multicountry agencies
 	*
@@ -390,19 +390,19 @@ public class ANG_MulticountryHelper {
 	*
 	*/
 	public static SwapAccountsWrapper swapAccountsLocationType(Map<Id, Account> accountsMap, ANG_AgencyChangesHelper.AChangeStructure toReturn){
-		
+
 		SwapAccountsWrapper swapWrapper = new SwapAccountsWrapper();
 
 		swapWrapper.swapAE = false;
-		
+
 		//Swap mapping stores the mapping between the swapping accounts
 		Map<Id, Account> swapMapping = new Map<Id, Account>();
-		
+
 		List<Account> accountLst = accountsMap.values();
 
 		Account firstAccount  = accountLst.get(0);
 		Account secondAccount = accountLst.get(1);
-		
+
 		String locationTypeAux = firstAccount.Location_Type__c;
 
 		//Swap location types from the involved accounts
@@ -410,13 +410,13 @@ public class ANG_MulticountryHelper {
 		secondAccount.Location_Type__c = locationTypeAux;
 
 		//Identifies if involved accounts are in a different BSP
-		Boolean diffBSP = 
-			(firstAccount.IATA_ISO_Country__r.AMS_Settlement_System__c != 
+		Boolean diffBSP =
+			(firstAccount.IATA_ISO_Country__r.AMS_Settlement_System__c !=
 				secondAccount.IATA_ISO_Country__r.AMS_Settlement_System__c);
 
-		//If the swapped accounts are in different BSPs 
+		//If the swapped accounts are in different BSPs
 		//and one of them has the location type AE it must be updated to HE
-		//to make sure that the multicountry hierarchy remains valid  
+		//to make sure that the multicountry hierarchy remains valid
 		if(diffBSP && firstAccount.Location_Type__c == AMS_Utils.AE){
 			firstAccount.Location_Type__c = AMS_Utils.HE;
 			swapWrapper.swapAE = true;
@@ -450,15 +450,15 @@ public class ANG_MulticountryHelper {
 
 		swapMapping.put(firstAccount.Id, secondAccount);
 		swapMapping.put(secondAccount.Id, firstAccount);
-		
+
 		swapWrapper.diffBSP = diffBSP;
 		swapWrapper.swapMapping = swapMapping;
 
 		toReturn.addAccount(firstAccount);
 		toReturn.addAccount(secondAccount);
-		
+
 		return swapWrapper;
-		
+
 	}
 
 	/**
@@ -471,7 +471,7 @@ public class ANG_MulticountryHelper {
 	*
 	*/
 	public static void moveRiskRelatedFieldsFromAccount(Account assignFieldsAcct, Account srcAcct){
-		
+
 		assignFieldsAcct.ANG_IEP_Status__c = srcAcct.ANG_IEP_Status__c;
 		assignFieldsAcct.ANG_HE_RiskStatus__c = srcAcct.ANG_HE_RiskStatus__c;
 		assignFieldsAcct.ANG_IEP_HE_AccntNum__c = srcAcct.ANG_IEP_HE_AccntNum__c;
@@ -479,7 +479,7 @@ public class ANG_MulticountryHelper {
 		assignFieldsAcct.Financial_Review_Result__c = srcAcct.Financial_Review_Result__c;
 		assignFieldsAcct.ANG_HE_RiskHistoryAssessment__c = srcAcct.ANG_HE_RiskHistoryAssessment__c;
 		assignFieldsAcct.Financial_Assessment_Points__c = srcAcct.Financial_Assessment_Points__c;
-		assignFieldsAcct.Identify_as_Multicountry_Key_Hierarchy__c = srcAcct.Identify_as_Multicountry_Key_Hierarchy__c; 
+		assignFieldsAcct.Identify_as_Multicountry_Key_Hierarchy__c = srcAcct.Identify_as_Multicountry_Key_Hierarchy__c;
 
 		srcAcct.ANG_IEP_Status__c = null;
 		srcAcct.ANG_HE_RiskStatus__c = null;
@@ -490,12 +490,12 @@ public class ANG_MulticountryHelper {
 		srcAcct.Identify_as_Multicountry_Key_Hierarchy__c = false;
 
 		ANG_RHCHelper.moveRHCInfos(srcAcct.RHC_Informations__r, new Map<Id,Id>{srcAcct.Id => assignFieldsAcct.Id});
-	
+
 	}
 
 
 	/**
-	* Swap field values between two accounts 
+	* Swap field values between two accounts
 	* in the scope of change of location type
 	* for multicountry agencies
 	*
@@ -521,13 +521,13 @@ public class ANG_MulticountryHelper {
 
 	/**
 	 * Processes and sorts the acquired hierarchy relationship records.
-	 * - The sort is custom to make sure that we later process the relationship records from top location types to bottom 
+	 * - The sort is custom to make sure that we later process the relationship records from top location types to bottom
 	 * (see compareTo method from wrapper class AgenciesRelationshipWrapper)
 	 *
-	 * @param  acquiredHierarchyLst 		contains all relationship records from the acquired hierarchy 
-	 * @param  hePerBspMapping      		contains the previously user selected HE for each new BSP in the target hierarchy 
-	 * @return acquiredHierarchyWrapperLst	sorted list of relationship wrappers containing all the acquired hierarchy relationships  
-	 */ 
+	 * @param  acquiredHierarchyLst 		contains all relationship records from the acquired hierarchy
+	 * @param  hePerBspMapping      		contains the previously user selected HE for each new BSP in the target hierarchy
+	 * @return acquiredHierarchyWrapperLst	sorted list of relationship wrappers containing all the acquired hierarchy relationships
+	 */
 	public static List<AgenciesRelationshipWrapper> prepareAcquiredHierarchyData(List<AMS_Agencies_relationhip__c> acquiredHierarchyLst, Map<Id, Id> hePerBspMapping){
 
 		List<AgenciesRelationshipWrapper> acquiredHierarchyWrapperLst = new List<AgenciesRelationshipWrapper>();
@@ -544,19 +544,19 @@ public class ANG_MulticountryHelper {
 		acquiredHierarchyWrapperLst.sort();
 
 		return acquiredHierarchyWrapperLst;
-		
+
 	}
 
 	/**
 	 * Processes all the target relationships from the target hierarchy
 	 * and splits the hierarchy head locations (GE/HE) for each different BSP
-	 * <GE, BSP>; <HE 1; BSP 1>; <HE 2; BSP 2>; etc    
-	 * 
-	 * @param  targetHierarchyLst contains all relationship records from the target hierarchy 
+	 * <GE, BSP>; <HE 1; BSP 1>; <HE 2; BSP 2>; etc
+	 *
+	 * @param  targetHierarchyLst contains all relationship records from the target hierarchy
 	 * @return thw                wrapper containing the target hierarchy head locations splited by BSP, GE record and target hierarchy id
 	 */
 	public static TargetHierarchyWrapper prepareTargetHierarchyData(List<AMS_Agencies_relationhip__c> targetHierarchyLst){
-		
+
 		TargetHierarchyWrapper thw = new TargetHierarchyWrapper();
 
 		thw.hierarchyBspMap = new Map<Id, Account>();
@@ -566,7 +566,7 @@ public class ANG_MulticountryHelper {
 
 		while(i < listSize){
 			AMS_Agencies_relationhip__c relation = targetHierarchyLst.get(i);
-			
+
 			if(thw.hierarchyId == NULL){
 				thw.hierarchyId = relation.Hierarchy__c;
 			}
@@ -589,7 +589,7 @@ public class ANG_MulticountryHelper {
 	/**
 	 * Processes a given acquired agency by another multicountry hierarchy
 	 * or an agency splitted into a new multicountry hierarchy
-	 * 
+	 *
 	 * @param  agency           current account that is being processed
 	 * @param  oscarAccountId   account id associated with the change oscar
 	 * @param  newParentId      account id of the hierarchy parent (GE)
@@ -600,7 +600,7 @@ public class ANG_MulticountryHelper {
 	 * @param  isHierarchySplit identifies if this change of hierarchy is a hierarchy split
 	 */
 	public static void processAgency(Account agency, Id oscarAccountId, Id newParentId, Id currentBspId, AMS_Agencies_relationhip__c currentRelation, TargetHierarchyWrapper thw, ANG_AgencyChangesHelper.AChangeStructure toReturn, Boolean isHierarchySplit){
-		
+
 		if(isHierarchySplit){
 			processSplitAgency(agency, oscarAccountId, newParentId, currentBspId, currentRelation, thw, toReturn);
 		}
@@ -618,8 +618,8 @@ public class ANG_MulticountryHelper {
 	 * Processes a given split agency into a new multicountry hierarchy:
 	 *  - Updates current account relationships/location types
 	 *  - Creates RHC information record for the new GE
-	 *  - Deletes previous relationships where the new GE was a child 
-	 * 
+	 *  - Deletes previous relationships where the new GE was a child
+	 *
 	 * @param  splitAgency     current account that is being processed
 	 * @param  oscarAccountId   account id associated with the change oscar
 	 * @param  newParentId      account id of the hierarchy parent (GE)
@@ -644,11 +644,11 @@ public class ANG_MulticountryHelper {
 				toReturn.addRelationToDelete(currentRelation);
 			}
 
-			return; 
+			return;
 		}
-		
+
 		updateAgencyRelationships(splitAgency, oscarAccountId, currentBspId, headEntityIdInBSP, thw.hierarchyBspMap);
-		
+
 		if(currentRelation != NULL){
 			currentRelation.Hierarchy__c = thw.hierarchyId;
 			currentRelation.Parent_Account__c = splitAgency.ParentId;
@@ -663,7 +663,7 @@ public class ANG_MulticountryHelper {
 	 *  and we need to clean and delete a couple of fields/related records (RHC e.g.)
 	 *  - Inactivate risk events associated with the current account
 	 * 	- Updates current account relationships/location types
-	 * 
+	 *
 	 * @param  acquiredAgency  current account that is being processed
 	 * @param  newParentId     account id of the target hierarchy parent (GE)
 	 * @param  currentBspId    bsp associated with the current account
@@ -690,7 +690,7 @@ public class ANG_MulticountryHelper {
 			acquiredAgency.ANG_HE_CashCondition__c = false;
 			acquiredAgency.Financial_Assessment_Points__c = null;
 			acquiredAgency.Identify_as_Multicountry_Key_Hierarchy__c = false;
-			
+
 			if(acquiredAgency.RHC_Informations__r != NULL){
 				toReturn.addRhcInformationToDeactivate(acquiredAgency.RHC_Informations__r[0]);
 			}
@@ -714,20 +714,20 @@ public class ANG_MulticountryHelper {
 			currentRelation.Hierarchy__c = thw.hierarchyId;
 			toReturn.addRelation(currentRelation);
 		}
-		
+
 	}
 
 	/**
-	 * Updates the current account relationships (Parent and Top Parent) 
+	 * Updates the current account relationships (Parent and Top Parent)
 	 * and assigns the proper location type accordingly to the following:
 	 * 	- If the target hierarchy does not contain (yet) the associated BSP: HE
 	 *	- Otherwise: AE
-	 * 
+	 *
 	 * @param  acct                  current account that is being processed
 	 * @param  newParentId           account id of the target hierarchy parent (GE)
 	 * @param  currentBspId          bsp associated with the current account
-	 * @param  headEntityIdInBSP     account id of the head entity for the current BSP (if present) 
-	 * @param  targetHierarchyBspMap contains the target hierarchy head locations (GE or HE) splited by BSP 
+	 * @param  headEntityIdInBSP     account id of the head entity for the current BSP (if present)
+	 * @param  targetHierarchyBspMap contains the target hierarchy head locations (GE or HE) splited by BSP
 	 */
 	private static void updateAgencyRelationships(Account acct, Id newParentId, Id currentBspId, Account headEntityIdInBSP, Map<Id, Account> targetHierarchyBspMap){
 
@@ -741,14 +741,14 @@ public class ANG_MulticountryHelper {
 			acct.Top_Parent__c = newParentId;
 			targetHierarchyBspMap.put(currentBspId, acct);
 		}
-		
+
 	}
 
 	/**
-	 * Process agencies forms of payments so that: 
+	 * Process agencies forms of payments so that:
 	 *  - Cash & IEP forms of payments are set to Active
 	 *  - Credit Card form of payment are set accordingly to PCI Compliance
-	 *  
+	 *
 	 * @param  accountLst agencies to process
 	 * @param  toReturn   agency changes wrapper
 	 */
@@ -765,12 +765,12 @@ public class ANG_MulticountryHelper {
 				}
 			}
 		}
-		
+
 	}
 
 	/**
 	 * Method that perform the staging area mapping with the Account values
-	 *  
+	 *
 	 * @param  acc 				Account values to map into staging area fields
 	 * @param  fieldsOfObject   Map of Field Object - AMS_Pax_Accreditation_Form__c
 	 */
@@ -778,7 +778,6 @@ public class ANG_MulticountryHelper {
 
 		Map<String,Object> fieldsOfObject = new Map<String,Object>();
 
-		fieldsOfObject.put('ANG_Accreditation_type__c',acct.ANG_Accreditation_Model__c);
 		fieldsOfObject.put('Abbreviated_Address__c',acct.Abbreviated_address__c);
 		fieldsOfObject.put('Abbreviated_name__c',acct.Abbreviated_name__c);
 		fieldsOfObject.put('Accept_terms_and_conditions__c',true);
@@ -813,7 +812,8 @@ public class ANG_MulticountryHelper {
 		fieldsOfObject.put('Trade_Name__c',acct.TradeName__c);
 		fieldsOfObject.put('VAT_Number_2__c',acct.VAT_Number_2__c);
 		fieldsOfObject.put('Website__c',acct.Website);
-		fieldsOfObject.put('ISSP_Branch_AccountId__c',acct.Id);
+		fieldsOfObject.put('ISSP_Branch_AccountId__c', acct.Location_Type__c != AMS_Utils.GE ? String.valueOf(acct.Id) : '');
+		fieldsOfObject.put('HO_Account__c', acct.Location_Type__c == AMS_Utils.GE ? acct.Id : null);
 
 		return fieldsOfObject;
 	}
@@ -822,7 +822,7 @@ public class ANG_MulticountryHelper {
 	{
 		return acct.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
 	}
-	
+
 	public static List<IATA_ISO_Country__c> getAccountCountry(List<Account> accts)
 	{
 		Set<Id> countries = new Set<Id>();
@@ -831,7 +831,7 @@ public class ANG_MulticountryHelper {
 
 		return IATAIsoCountryDAO.getIsoCountriesByIds(countries);
 	}
-	
+
 	public static Boolean isMulticountryCountry(IATA_ISO_Country__c cntry)
 	{
 		return cntry == null ? false : cntry.Multicountry_Enabled__c;
@@ -839,7 +839,7 @@ public class ANG_MulticountryHelper {
 
 	/**
 	 * Returns a list of HE account child to the given list of accounts.
-	 * 
+	 *
 	 * @param	accountIds			List of parent accounts
 	 * @return	Map<Id, Account>	List of child HE accounts
 	 */
@@ -849,7 +849,7 @@ public class ANG_MulticountryHelper {
 			return new Map<Id, Account>();
 
 		return new Map<Id, Account>(
-			   [SELECT Id, BillingCountry, Region_formula__c, Abbreviated_address__c, Abbreviated_name__c,
+				 [SELECT Id, BillingCountry, Region_formula__c, Abbreviated_address__c, Abbreviated_name__c,
 					Name, BillingState, BillingCity, IATA_ISO_Country__c, Email__c, Fax, Phone, BillingPostalCode,
 					BillingStreet, CASS_Number__c, IATACode__c, Iso_State__c, License_Number__c, VAT_Number__c,
 					Is_your_firm_handling_Dangerous_Goods__c, Location_Class__c, Location_Type__c, Mobile__c,
@@ -862,11 +862,11 @@ public class ANG_MulticountryHelper {
 					AND Status__c NOT IN (
 						'', NULL,
 						:AMS_Utils.ACC_S4_LISTED,
-						:AMS_Utils.ACC_S0_TERMINATED, 
-						:AMS_Utils.ACC_S1_NOTACCREDITED, 
+						:AMS_Utils.ACC_S0_TERMINATED,
+						:AMS_Utils.ACC_S1_NOTACCREDITED,
 						:AMS_Utils.ACC_S3_NOTINOPERATION
 					)
-			   ]);
+				 ]);
 	}
 
 }

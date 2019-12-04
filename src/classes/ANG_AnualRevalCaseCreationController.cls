@@ -2,13 +2,13 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 
 		public List<SelectOption> paginationSizeOptions{get;set;}
 		public Integer size{get;set;}
-        public string region{get; private set;}
-        public string mode{get; private set;}
-        public String country{get;private set;}
+		public string region{get; private set;}
+		public string mode{get; private set;}
+		public String country{get;private set;}
 		public String year{get; private set;}
 
-        public List<String> countriesLst{get; set;}
-        public Account account{get; set;}
+		public List<String> countriesLst{get; set;}
+		public Account account{get; set;}
 		public boolean shouldDisableButton;
 
 		public List<Account> accountsToCreate{
@@ -35,8 +35,8 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 
 		private final List<String> invalidOscarStatus = new List<String>{'Closed (Closed)','Closed (Closed)','Closed','Closed_ Not Accepted','Closed_Rejected','Closed_Withdrawn'};
 
-        public ANG_AnualRevalCaseCreationController() {
-		
+		public ANG_AnualRevalCaseCreationController() {
+
 			countriesLst = new List<String>();
 			account = new Account();
 			accountsToCreate = new List<Account>();
@@ -50,20 +50,20 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 		}
 
 		public void setPaginationOptions(){
-		    size=10;
-		    paginationSizeOptions = new List<SelectOption>();
-		    paginationSizeOptions.add(new SelectOption('5','5'));
-		    paginationSizeOptions.add(new SelectOption('10','10'));
-		    paginationSizeOptions.add(new SelectOption('20','20'));
-		    paginationSizeOptions.add(new SelectOption('50','50'));
-		    paginationSizeOptions.add(new SelectOption('100','100'));
+			size=10;
+			paginationSizeOptions = new List<SelectOption>();
+			paginationSizeOptions.add(new SelectOption('5','5'));
+			paginationSizeOptions.add(new SelectOption('10','10'));
+			paginationSizeOptions.add(new SelectOption('20','20'));
+			paginationSizeOptions.add(new SelectOption('50','50'));
+			paginationSizeOptions.add(new SelectOption('100','100'));
 		}
 
-	    //Changes the size of pagination
-	    public PageReference refreshPageSize() {
-	         con.setPageSize(size);
-	         return null;
-	    }
+		//Changes the size of pagination
+		public PageReference refreshPageSize() {
+			 con.setPageSize(size);
+			 return null;
+		}
 
 		public void setcountry(String value){
 			if(country != value){
@@ -97,39 +97,39 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 			year = value;
 		}
 
-	    public list<selectoption> getregionobj(){
+		public list<selectoption> getregionobj(){
 
-                list<selectoption> options= new list<selectoption>();
+				list<selectoption> options= new list<selectoption>();
 
-                options.add(new selectoption('Select Region', 'Select Region'));
+				options.add(new selectoption('Select Region', 'Select Region'));
 
-                options.add(new selectoption('Africa & Middle East','Africa & Middle East'));
-                options.add(new selectoption('Americas','Americas'));
-                options.add(new selectoption('Asia & Pacific','Asia & Pacific'));
-                options.add(new selectoption('China & North Asia','China & North Asia'));
-                options.add(new selectoption('Europe','Europe'));
+				options.add(new selectoption('Africa & Middle East','Africa & Middle East'));
+				options.add(new selectoption('Americas','Americas'));
+				options.add(new selectoption('Asia & Pacific','Asia & Pacific'));
+				options.add(new selectoption('China & North Asia','China & North Asia'));
+				options.add(new selectoption('Europe','Europe'));
 
-                return options;
+				return options;
 
-        }
+		}
 
-	    public list<selectoption> getmodeObj(){
+		public list<selectoption> getmodeObj(){
 
-                list<selectoption> options= new list<selectoption>();
+				list<selectoption> options= new list<selectoption>();
 
-                options.add(new selectoption('Select Mode', 'Select Mode'));
+				options.add(new selectoption('Select Mode', 'Select Mode'));
 
-                options.add(new selectoption('Financial year end','Financial year end'));
-                options.add(new selectoption('Country','Country'));
-                options.add(new selectoption('IATA Code','IATA Code'));
+				options.add(new selectoption('Financial year end','Financial year end'));
+				options.add(new selectoption('Country','Country'));
+				options.add(new selectoption('IATA Code','IATA Code'));
 
-                return options;
+				return options;
 
-        }
+		}
 
-            public list<selectoption> getyearobj(){
+			public list<selectoption> getyearobj(){
 
-                list<selectoption> options= new list<selectoption>();
+				list<selectoption> options= new list<selectoption>();
 
 				options.add(new selectoption('Please Select a Month','Please Select a Month'));
 				options.add(new selectoption('January','January'));
@@ -145,61 +145,61 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 				options.add(new selectoption('November','November'));
 				options.add(new selectoption('December','December'));
 
-                return options;
+				return options;
 
-        }
+		}
 
-    	public list<selectoption> getcountryobj(){
+		public list<selectoption> getcountryobj(){
 
-                list<selectoption> options= new list<selectoption>();
+				list<selectoption> options= new list<selectoption>();
 
-                list<IATA_ISO_Country__c> contr= IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountriesByRegion(new Set<String>{region}), 'Name');
+				list<IATA_ISO_Country__c> contr= IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountriesByRegion(new Set<String>{region}), 'Name');
 
-                if(contr.isEmpty()){
-                    options.add(new selectoption('Select Country', 'Select Country'));
-                    countriesLst.clear();
-                    
-                }
-                for( IATA_ISO_Country__c c:contr){
+				if(contr.isEmpty()){
+					options.add(new selectoption('Select Country', 'Select Country'));
+					countriesLst.clear();
 
-                        options.add(new selectoption(c.Id,c.name));
-                }
+				}
+				for( IATA_ISO_Country__c c:contr){
 
-                return options;
+						options.add(new selectoption(c.Id,c.name));
+				}
 
-        }
+				return options;
+
+		}
 
 		public boolean getshouldDisableButton(){
-        	
-        	boolean value = false;
 
-            if(region == 'Select Region' || mode == 'Select Mode' || region == null || mode == null)
-            	value = true;
+			boolean value = false;
 
-            if(mode == 'Financial year end' && (year == null || year == '' || year == 'Please Select a Month'))
-            	value =  true;
-            
-            return value;
-        }
+			if(region == 'Select Region' || mode == 'Select Mode' || region == null || mode == null)
+				value = true;
 
-        public void searchAgencies(){
+			if(mode == 'Financial year end' && (year == null || year == '' || year == 'Please Select a Month'))
+				value =  true;
 
-        	System.debug('Running for Financial year end with value:'+ year);
-        	System.debug('Running for Country with value:'+ country);
-        	System.debug('Running for IATA Code with value:'+ account.IATACode__c);
+			return value;
+		}
 
-        	String queryAccount = null;
+		public void searchAgencies(){
+
+			System.debug('Running for Financial year end with value:'+ year);
+			System.debug('Running for Country with value:'+ country);
+			System.debug('Running for IATA Code with value:'+ account.IATACode__c);
+
+			String queryAccount = null;
 			con = null;
 
-        	if(mode == 'Financial year end')
+			if(mode == 'Financial year end')
 				queryAccount = 'Select Id , (select id,name from OSCARs__r where Process__c = \'ANG.ANNUAL.REVALIDATION\' AND STATUS__c NOT IN (\'' + String.join(invalidOscarStatus, '\',\'') + '\') LIMIT 1), IATACode__c, Name, RecordType.Name, Status__c, Location_Class__c, Location_Type__c, IATA_ISO_Country__r.Region__c, IATA_ISO_Country__r.Name, Financial_Year_End__c from Account where Location_Type__c = \'HE\' and ANG_Accreditation_Model__c != \''+AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY+'\' and Status__c NOT IN (null, \'Terminated\', \'Listed\', \'Not in operation\', \'Not accreditated\',\'New Application Pending\') and RecordType.DeveloperName = \'IATA_Agency\' and IATA_ISO_Country__r.Region__c = \'' + region + '\' and Financial_Year_End__c = \'' + year + '\'';
 			else if(mode == 'Country')
 				queryAccount = 'Select Id , (select id,name from OSCARs__r where Process__c = \'ANG.ANNUAL.REVALIDATION\' AND STATUS__c NOT IN (\'' + String.join(invalidOscarStatus, '\',\'') + '\') LIMIT 1), IATACode__c, Name, RecordType.Name, Status__c, Location_Class__c, Location_Type__c, IATA_ISO_Country__r.Region__c, IATA_ISO_Country__r.Name, Financial_Year_End__c  from Account where Location_Type__c = \'HE\' and ANG_Accreditation_Model__c != \''+AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY+'\' and Status__c NOT IN (null, \'Terminated\', \'Listed\', \'Not in operation\', \'Not accreditated\',\'New Application Pending\') and RecordType.DeveloperName = \'IATA_Agency\' and IATA_ISO_Country__r.Region__c = \'' + region + '\' and IATA_ISO_Country__c = \'' + country + '\'';
 			else if(mode == 'IATA Code')
 				queryAccount = 'Select Id , (select id,name from OSCARs__r where Process__c = \'ANG.ANNUAL.REVALIDATION\' AND STATUS__c NOT IN (\'' + String.join(invalidOscarStatus, '\',\'') + '\')LIMIT 1), IATACode__c, Name, RecordType.Name, Status__c, Location_Class__c, Location_Type__c, IATA_ISO_Country__r.Region__c, IATA_ISO_Country__r.Name, Financial_Year_End__c  from Account where Location_Type__c = \'HE\' and ANG_Accreditation_Model__c != \''+AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY+'\' and Status__c NOT IN (null, \'Terminated\', \'Listed\', \'Not in operation\', \'Not accreditated\',\'New Application Pending\') and RecordType.DeveloperName = \'IATA_Agency\' and IATA_ISO_Country__r.Region__c = \'' + region + '\' and IATACode__c = \'' + account.IATACode__c + '\'';
-			
+
 			if(queryAccount <> null){
-				
+
 				System.debug('queryAccount is ' + queryAccount);
 
 				accountsToCreate = Database.query(queryAccount);
@@ -217,61 +217,61 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 				for(Case c: [Select Id, OSCAR__c from Case where OSCAR__c in: oscarsId]){
 					caseOscars.put(c.OSCAR__c,c.Id);
 				}
-                
+
 				con = new ApexPages.StandardSetController(accountsToCreate);
 				con.setPageSize(size);
-			
-            }else{
+
+			}else{
 				System.debug('queryAccount is null.');
 			}
-            
 
-        }
 
-	    public Boolean hasNext  
-	    {  
-	        get  
-	        {  
-	            return con.getHasNext();  
-	        }  
-	        set;  
-	    }  
-	    public Boolean hasPrevious  
-	    {  
-	        get  
-	        {  
-	            return con.getHasPrevious();  
-	        }  
-	        set;  
-	    }  
-	    public Integer pageNumber  
-	    {  
-	        get  
-	        {  
-	            return con.getPageNumber();  
-	        }  
-	        set;  
-	    }  
-	    public void previous()  
-	    {  
-	        con.previous();  
-	    }  
-	    public void next()  
-	    {  
-	        con.next();  
-	    }  
+		}
 
-	    public void last()  
-	    {  
-	        con.last();  
-	    }
+		public Boolean hasNext
+		{
+			get
+			{
+				return con.getHasNext();
+			}
+			set;
+		}
+		public Boolean hasPrevious
+		{
+			get
+			{
+				return con.getHasPrevious();
+			}
+			set;
+		}
+		public Integer pageNumber
+		{
+			get
+			{
+				return con.getPageNumber();
+			}
+			set;
+		}
+		public void previous()
+		{
+			con.previous();
+		}
+		public void next()
+		{
+			con.next();
+		}
 
-	    public void first()  
-	    {  
-	        con.first();  
-	    }
+		public void last()
+		{
+			con.last();
+		}
 
-        public void launchCampaign(){
+		public void first()
+		{
+			con.first();
+		}
+
+		public void launchCampaign(){
 
 			Set<Id> accountsToCreateIds = new Set<Id>();
 
@@ -295,19 +295,19 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 				batchStatusBool = true;
 				pollerBool = true;
 
-				ANG_AnualRevalCaseCreationBatch aRCCbatch = new ANG_AnualRevalCaseCreationBatch(accountsToCreateIds); 
+				ANG_AnualRevalCaseCreationBatch aRCCbatch = new ANG_AnualRevalCaseCreationBatch(accountsToCreateIds);
 				batchId = Database.executeBatch(aRCCbatch,1);
 			}
 
-        }
+		}
 
 	public void getBatchStatus(){
-		
-        if(batchId == null){
-            pollerBool = true;
-            return;
-        }
-        
+
+		if(batchId == null){
+			pollerBool = true;
+			return;
+		}
+
 		batchJob = [SELECT Id, Status, NumberOfErrors, JobItemsProcessed, TotalJobItems, CreatedBy.Email FROM AsyncApexJob WHERE Id = :batchId];
 
 		if(batchJob.status == 'Ended' || batchJob.status == 'Completed')

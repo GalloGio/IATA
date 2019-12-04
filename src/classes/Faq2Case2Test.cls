@@ -25,15 +25,16 @@ public with sharing class Faq2Case2Test {
 		con.CNS_Contact__c = true;
         insert con;
         
-        System.debug('con Id: ' + con.Id);
-        
-        User newUser = ISSP_ObjectFactory.createPortalUser(con);
-        System.debug('newUser Id: ' + newUser.Id);
+       
+        Test.startTest();
+        User newUser = ISSP_ObjectFactory.createPortalUser(con);	
+		Faq2CaseTest.assignPermissionSet(newUser.id,Faq2CaseTest.fullFAQVisibilityPermissionsetId);
+		Test.stopTest();
+       
         con.OwnerId = newUser.Id;
         update con;
         
        
-        Test.startTest();
         System.runAs(newUser)
         {
 		  vfISSP_FAQ2Case controller = new vfISSP_FAQ2Case();
@@ -79,7 +80,6 @@ public with sharing class Faq2Case2Test {
 
           controller.save();
 		}
-		Test.stopTest();
     }
     
     static testMethod void testFaq2CaseBypassButtons() {
@@ -101,14 +101,16 @@ public with sharing class Faq2Case2Test {
 		con.CNS_Contact__c = true;
         insert con;
 
-        User newUser = ISSP_ObjectFactory.createPortalUser(con);
-        System.debug('newUser Id: ' + newUser.Id);
+    	Test.startTest();
+        User newUser = ISSP_ObjectFactory.createPortalUser(con);	
+		Faq2CaseTest.assignPermissionSet(newUser.id,Faq2CaseTest.fullFAQVisibilityPermissionsetId);
+		Test.stopTest();
         con.OwnerId = newUser.Id;
         update con;
 
         insert new LiveAgentButtonSettings__c (Name = 'ABC', ButtonId__c = '123', Button_Per_Topic__c = true, DeploymentId__c = '1234', Language__c = 'EN', Topic__c = 'ICH_Helpdesk__c');
 
-        Test.startTest();
+     
         System.runAs(newUser)
         {
 		  vfISSP_FAQ2Case controller = new vfISSP_FAQ2Case();
@@ -120,7 +122,7 @@ public with sharing class Faq2Case2Test {
                 //System.assertEquals('ABC', controller.csButtonsList.get(str).Name);
             }
 		}
-		Test.stopTest();
+		
     }
 
 	static testMethod void testCountryPicklistVisibility1() {
@@ -142,14 +144,16 @@ public with sharing class Faq2Case2Test {
 		con.CNS_Contact__c = true;
 		insert con;
 
-		User newUser = ISSP_ObjectFactory.createPortalUser(con);
-		System.debug('newUser Id: ' + newUser.Id);
+		Test.startTest();
+        User newUser = ISSP_ObjectFactory.createPortalUser(con);	
+		Faq2CaseTest.assignPermissionSet(newUser.id,Faq2CaseTest.fullFAQVisibilityPermissionsetId);
+		Test.stopTest();
 		con.OwnerId = newUser.Id;
 		update con;
 
 		insert new LiveAgentButtonSettings__c (Name = 'ABC', ButtonId__c = '123', Button_Per_Topic__c = true, DeploymentId__c = '1234', Language__c = 'EN', Topic__c = 'ICH_Helpdesk__c');
 
-		Test.startTest();
+	
 		System.runAs(newUser)
 		{
 			vfISSP_FAQ2Case controller = new vfISSP_FAQ2Case();
@@ -170,7 +174,7 @@ public with sharing class Faq2Case2Test {
 			System.assertEquals(1, controller.csButtonsList.size());
 
 		}
-		Test.stopTest();
+		
 	}
 
 	static testMethod void testCountryPicklistVisibility2() {
@@ -192,14 +196,16 @@ public with sharing class Faq2Case2Test {
 		con.CNS_Contact__c = true;
 		insert con;
 
-		User newUser = ISSP_ObjectFactory.createPortalUser(con);
-		System.debug('newUser Id: ' + newUser.Id);
+		Test.startTest();
+        User newUser = ISSP_ObjectFactory.createPortalUser(con);	
+		Faq2CaseTest.assignPermissionSet(newUser.id,Faq2CaseTest.fullFAQVisibilityPermissionsetId);
+		Test.stopTest();
 		con.OwnerId = newUser.Id;
 		update con;
 
 		insert new LiveAgentButtonSettings__c (Name = 'ABC', ButtonId__c = '123', Button_Per_Topic__c = true, DeploymentId__c = '1234', Language__c = 'EN', Topic__c = 'ICH_Helpdesk__c');
 
-		Test.startTest();
+		
 		System.runAs(newUser)
 		{
 			vfISSP_FAQ2Case controller = new vfISSP_FAQ2Case();
@@ -235,7 +241,7 @@ public with sharing class Faq2Case2Test {
 
 
 		}
-		Test.stopTest();
+		
 	}
 
 	static testMethod void testCountryPicklistVisibility3() {
@@ -257,14 +263,16 @@ public with sharing class Faq2Case2Test {
 		con.CNS_Contact__c = true;
 		insert con;
 
-		User newUser = ISSP_ObjectFactory.createPortalUser(con);
-		System.debug('newUser Id: ' + newUser.Id);
+		Test.startTest();
+        User newUser = ISSP_ObjectFactory.createPortalUser(con);	
+		Faq2CaseTest.assignPermissionSet(newUser.id,Faq2CaseTest.fullFAQVisibilityPermissionsetId);
+		Test.stopTest();
 		con.OwnerId = newUser.Id;
 		update con;
 
 		insert new LiveAgentButtonSettings__c (Name = 'ABC', ButtonId__c = '123', Button_Per_Topic__c = true, DeploymentId__c = '1234', Language__c = 'EN', Topic__c = 'ICH_Helpdesk__c');
 
-		Test.startTest();
+	
 		System.runAs(newUser)
 		{
 			vfISSP_FAQ2Case controller = new vfISSP_FAQ2Case();
@@ -312,7 +320,6 @@ public with sharing class Faq2Case2Test {
 			//System.assertEquals(1, controller.csButtonsList.size());
 
 		}
-		Test.stopTest();
-	}
-
+		
+	}	
 }

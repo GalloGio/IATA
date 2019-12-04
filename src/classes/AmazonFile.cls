@@ -142,6 +142,10 @@ public class AmazonFile {
         return null;
     }
     
+	public Boolean deleteFileOnlyFromS3(){
+		return this.s3File.deleteFile(); 
+	}
+	
     public Boolean delFile() {
         Boolean result = this.s3File.deleteFile();
         if ( result ) {

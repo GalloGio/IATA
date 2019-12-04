@@ -630,7 +630,7 @@
         <fields>Remarks__c</fields>
         <relatedList>Financial_Security__c.Reception_Case__c</relatedList>
     </relatedLists>
-	<relatedLists>
+    <relatedLists>
         <excludeButtons>MassChangeOwner</excludeButtons>
         <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>

@@ -1,5 +1,5 @@
 public class AMS_AgencyHierarchyTriggerHandler extends TriggerHandler {
-	
+
 	protected override List<Schema.SObjectType> getSObjectTypes(){
 		return new List<Schema.SObjectType>{};
 	}

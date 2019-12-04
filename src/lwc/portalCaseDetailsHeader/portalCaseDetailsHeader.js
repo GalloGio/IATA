@@ -1,8 +1,10 @@
 import { LightningElement, track } from 'lwc';
+import idOfUser from '@salesforce/user/Id';
 import getCaseById from '@salesforce/apex/PortalCasesCtrl.getCaseById';
 import removeRecipient from '@salesforce/apex/PortalCasesCtrl.removeRecipient';
 import addNewRecipient from '@salesforce/apex/PortalCasesCtrl.addNewRecipient';
 import getOscarProgress from '@salesforce/apex/portal_OscarProgressBar.getOscarProgress';
+import isUserLevelOne from '@salesforce/apex/PortalSupportReachUsCreateNewCaseCtrl.isUserLevelOne';
 import getSurveyLink from '@salesforce/apex/PortalCasesCtrl.getSurveyLink';
 
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
@@ -16,11 +18,12 @@ import Open from '@salesforce/label/c.Open';
 import CSP_RecipientsQuestion from '@salesforce/label/c.CSP_RecipientsQuestion';
 import CSP_Recipients from '@salesforce/label/c.CSP_Recipients';
 import ISSP_CaseNumber from '@salesforce/label/c.ISSP_CaseNumber';
-import ISSP_Subject from '@salesforce/label/c.ISSP_Subject';
+import ISSP_Subject from '@salesforce/label/c.ISSP_CaseNumber';
 import CSP_Status from '@salesforce/label/c.CSP_Status';
 import CSP_CreatedOn from '@salesforce/label/c.CSP_CreatedOn';
 import CSP_LastUpdate from '@salesforce/label/c.CSP_LastUpdate';
 import CSP_Manage_Recipients from '@salesforce/label/c.CSP_Manage_Recipients';
+import CSP_CaseDetails from '@salesforce/label/c.CSP_Case_Details';
 export default class PortalHomeCalendar extends LightningElement {
 
     @track loading = true;
@@ -37,6 +40,13 @@ export default class PortalHomeCalendar extends LightningElement {
     @track pendingCustomerCase = false;
     pendingCustomerCaseWarningLabel = CSP_PendingCustomerCase_Warning;
 
+	//is the user a Level1 user? If he has not completed level 2 registration he is not
+	@track Level1User = false;
+
+
+	//the logged user's id
+    userId = idOfUser;
+    
     @track displayOscarProgressBar = false;
     @track progressStatusList = [];
     
@@ -50,7 +60,8 @@ export default class PortalHomeCalendar extends LightningElement {
 		CSP_Status,
 		CSP_CreatedOn,
 		CSP_LastUpdate,
-		CSP_Manage_Recipients
+        CSP_Manage_Recipients,
+        CSP_CaseDetails
     }
 
     connectedCallback() {
@@ -66,6 +77,26 @@ export default class PortalHomeCalendar extends LightningElement {
         }
 
 	this.getSurveyLink();
+
+	    this.isLevelOneUser();
+    }   
+
+	 isLevelOneUser(){
+        isUserLevelOne({userId: this.userId}).then(result => {
+            this.Level1User = result;
+        }).catch(error => {
+            //throws error
+            this.error = error;
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: this.label.PKB2_js_error,
+                    message: this.label.ISSP_ANG_GenericError,
+                    variant: 'error'
+                })
+            );
+            // eslint-disable-next-line no-console
+            console.log('Error: ', error);
+        });
     }
 
     getCaseByIdJS(){
@@ -100,6 +131,7 @@ export default class PortalHomeCalendar extends LightningElement {
 
             this.loading = false;
             this.pendingCustomerCase = results.Status === 'Pending customer';
+            document.title = CSP_CaseDetails+"_"+this.caseDetails.CaseNumber;
 
             this.CaseStatusClass = results.Status.replace(/\s/g, '').replace(/_|-|\./g, '');
 
@@ -218,6 +250,9 @@ export default class PortalHomeCalendar extends LightningElement {
     }
 
 
+    get manageRecipients(){
+        return this.haveRecipients && !this.Level1User;
+    }
     getSurveyLink() {
         getSurveyLink({ caseId: this.pageParams.caseId })
             .then(result => {

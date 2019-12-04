@@ -1,0 +1,5 @@
+<messaging:emailTemplate subject="Welcome to IATA Customer Portal" recipientType="User" language="{!recipient.languagelocalekey}">
+<messaging:plainTextEmailBody >
+    <c:CSP_Welcome_Email />
+</messaging:plainTextEmailBody>
+</messaging:emailTemplate>

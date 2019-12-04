@@ -7,6 +7,7 @@ public class OneIdForgotPasswordControllerTest {
         Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal (Partner)'];
         try {
             insert new ISSP_CS__c(Name = 'IdentityPortal', Value__c = 'iata--sit.cs85.my.salesforce.com');
+            insert new ISSP_CS__c(Name = 'Host',Value__c = 'host');
         }catch(exception rr){}
 
         Account a = new Account (name= 'New TAP Account');
@@ -40,5 +41,13 @@ public class OneIdForgotPasswordControllerTest {
 	   	System.assertNotEquals(OneIdForgotPasswordController.forgotPassword('test443523@salesforce.com','/home/home.jsp'),null);
 
         Test.stopTest();
+    }
+
+    @isTest
+    public static void testGetCustomerPortalUrl(){
+        Test.startTest();
+        string url = OneIdForgotPasswordController.getCustomerPortalUrl();
+        Test.stopTest();
+        System.assertNotEquals(url, null);
     }
 }

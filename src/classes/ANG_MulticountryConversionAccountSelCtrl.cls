@@ -1,22 +1,22 @@
 public class ANG_MulticountryConversionAccountSelCtrl {
 
 	@TestVisible
-	private static final String CANNOT_REMOVE_HE_ERROR = 'You cannot remove the HE associated with the OSCAR'; 
+	private static final String CANNOT_REMOVE_HE_ERROR = 'You cannot remove the HE associated with the OSCAR';
 
 	@TestVisible
 	private static final String COUNTRY_NOT_MULTICOUNTRY = '{0} is not enabled for Multicountry. Please remove the accounts in this country';
 
 	private static final String INVALID_SELECTION = 'Select HE Accounts: Value does not exist or does not match filter criteria.';
-	
+
 	public class SelectedAccountWrapper implements Comparable {
-		
+
 		public Account acct {get; set;}
-		public String compareKey; 
+		public String compareKey;
 
 		public SelectedAccountWrapper(Account acct){
 			this.acct = acct;
-			this.compareKey = 
-				acct.IATA_ISO_Country__r.AMS_Settlement_System__r.Name + 
+			this.compareKey =
+				acct.IATA_ISO_Country__r.AMS_Settlement_System__r.Name +
 				(acct.Top_Parent__c == null ? acct.Id + 'A' : acct.Top_Parent__c + 'B');
 		}
 
@@ -38,7 +38,7 @@ public class ANG_MulticountryConversionAccountSelCtrl {
 		}
 		set;
 	}
-	
+
 	public Boolean closeTab {
 		get{
 			if(closeTab == null){
@@ -70,7 +70,7 @@ public class ANG_MulticountryConversionAccountSelCtrl {
 		}
 		set;
 	}
-	
+
 	public List<SelectedAccountWrapper> accountSelectionLst {
 		get {
 			if(accountSelectionBucketLst.size() > 0){
@@ -87,7 +87,7 @@ public class ANG_MulticountryConversionAccountSelCtrl {
 			}
 			return heAccountSelectionLst;
 		}
-		set;    
+		set;
 	}
 
 	public Boolean readOnly {
@@ -116,15 +116,15 @@ public class ANG_MulticountryConversionAccountSelCtrl {
 		}
 		set;
 	}
-	
+
 	private Map<Id, AMS_Process_Detail__c> processDetailsMap {
 		get {
-			
+
 			if(processDetailsMap == null){
 
 				processDetailsMap = new Map<Id, AMS_Process_Detail__c>();
 
-				for(AMS_Process_Detail__c pd : 
+				for(AMS_Process_Detail__c pd :
 					[SELECT
 						Id,
 						Account__c,
@@ -150,7 +150,7 @@ public class ANG_MulticountryConversionAccountSelCtrl {
 			return processDetailsMap;
 
 		}
-		
+
 		set;
 
 	}
@@ -165,7 +165,7 @@ public class ANG_MulticountryConversionAccountSelCtrl {
 	private List<SelectedAccountWrapper> allAccountsSelectionLst = new List<SelectedAccountWrapper>();
 
 	public ANG_MulticountryConversionAccountSelCtrl(ApexPages.StandardController controller){
-		
+
 		if(Test.isRunningTest()){
 			Id oscarId = controller.getId();
 			this.oscar = [SELECT Id, Account__c, New_parent__c, STEP45__c FROM AMS_OSCAR__c WHERE Id = :oscarId];
@@ -179,7 +179,7 @@ public class ANG_MulticountryConversionAccountSelCtrl {
 			readOnly = true;
 			return;
 		}
-		
+
 		for(Id acctId : processDetailsMap.keySet()){
 			AMS_Process_Detail__c pd = processDetailsMap.get(acctId);
 
@@ -202,7 +202,7 @@ public class ANG_MulticountryConversionAccountSelCtrl {
 
 	}
 
-	public Boolean getDisablePrevious(){ 
+	public Boolean getDisablePrevious(){
 		return (currentPage <= 0);
 	}
 
@@ -215,12 +215,12 @@ public class ANG_MulticountryConversionAccountSelCtrl {
 		return null;
 	}
 
-	public PageReference previous(){ 
+	public PageReference previous(){
 		currentPage--;
 		return null;
 	}
 
-	public PageReference next(){ 
+	public PageReference next(){
 		currentPage++;
 		return null;
 	}
@@ -237,7 +237,7 @@ public class ANG_MulticountryConversionAccountSelCtrl {
 
 	/**
 	 * Adds the selected HE and the related hierarchy
-	 * @param  selectedHE: receives Id of the selected HE 
+	 * @param  selectedHE: receives Id of the selected HE
 	 */
 	private void addHierarchyFromHE(List<Account> accountLst){
 
@@ -245,15 +245,15 @@ public class ANG_MulticountryConversionAccountSelCtrl {
 
 			if(!alreadyAddedAccounts.contains(acct.Id)){
 				SelectedAccountWrapper saw = new SelectedAccountWrapper(acct);
-				
+
 				this.allAccountsSelectionLst.add(saw);
 				this.alreadyAddedAccounts.add(acct.Id);
-				
+
 				if(acct.Location_Type__c == AMS_Utils.HE){
 					this.heAccountSelectionLst.add(saw);
 				}
 			}
-			
+
 		}
 
 	}
@@ -270,19 +270,19 @@ public class ANG_MulticountryConversionAccountSelCtrl {
 				Location_Type__c,
 				IATA_ISO_Country__r.Name,
 				IATA_ISO_Country__r.AMS_Settlement_System__r.Name,
-				(SELECT 
-					Id, Name, Status__c, IATACode__c, Top_Parent__c, Location_Type__c, 
+				(SELECT
+					Id, Name, Status__c, IATACode__c, Top_Parent__c, Location_Type__c,
 					IATA_ISO_Country__r.Name, IATA_ISO_Country__r.AMS_Settlement_System__r.Name
 				 FROM ChildAccounts
-				 WHERE 
+				 WHERE
 				 	Location_Type__c = :AMS_Utils.AE
-				 AND 
+				 AND
 				 	Status__c NOT IN (
 						'',
 						NULL,
 						:AMS_Utils.ACC_S4_LISTED,
-						:AMS_Utils.ACC_S0_TERMINATED, 
-						:AMS_Utils.ACC_S1_NOTACCREDITED, 
+						:AMS_Utils.ACC_S0_TERMINATED,
+						:AMS_Utils.ACC_S1_NOTACCREDITED,
 						:AMS_Utils.ACC_S3_NOTINOPERATION
 					)
 				)
@@ -296,8 +296,8 @@ public class ANG_MulticountryConversionAccountSelCtrl {
 					'',
 					NULL,
 					:AMS_Utils.ACC_S4_LISTED,
-					:AMS_Utils.ACC_S0_TERMINATED, 
-					:AMS_Utils.ACC_S1_NOTACCREDITED, 
+					:AMS_Utils.ACC_S0_TERMINATED,
+					:AMS_Utils.ACC_S1_NOTACCREDITED,
 					:AMS_Utils.ACC_S3_NOTINOPERATION
 				)
 			]
@@ -316,15 +316,15 @@ public class ANG_MulticountryConversionAccountSelCtrl {
 	}
 
 	/**
-	 * Adds the selected HE and 
-	 * the related hierarchy to the accounts table 
+	 * Adds the selected HE and
+	 * the related hierarchy to the accounts table
 	 * @return null
-	 */ 
+	 */
 	public PageReference addHierarchyFromHE(){
 		//Using the oscar field as auxiliary to fetch the accounts
 		//We won't save any value on the field
 		Id selectedHE = this.oscar.New_Parent__c;
-		
+
 		if (selectedHE != null)
 		{
 			List<Account> accountLst = getAccounts(selectedHE);
@@ -338,9 +338,9 @@ public class ANG_MulticountryConversionAccountSelCtrl {
 			// validate if it is a multicountry enabled country
 			if (! isValidCountry(accountLst))
 				return null;
-			
+
 			addHierarchyFromHE(accountLst);
-		
+
 			this.oscar.New_Parent__c = null;
 
 			//Reset account buckets for pagination
@@ -373,13 +373,13 @@ public class ANG_MulticountryConversionAccountSelCtrl {
 
 	/**
 	 * Removes the intended HE and the related hierarchy
-	 * @return null 
+	 * @return null
 	 */
 	public PageReference removeHeAccount(){
-		
+
 		SelectedAccountWrapper heToRemove = this.heAccountSelectionLst.get(heAccountIndex);
 
-		//Block the HE account associated with the oscar to be removed 
+		//Block the HE account associated with the oscar to be removed
 		if(heToRemove.acct.Id == this.oscar.Account__c){
 			ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, CANNOT_REMOVE_HE_ERROR));
 			return null;
@@ -412,9 +412,9 @@ public class ANG_MulticountryConversionAccountSelCtrl {
 	}
 
 	/**
-	 * Save method that creates and 
-	 * inserts the AMS Process Detail records 
-	 * @return null 
+	 * Save method that creates and
+	 * inserts the AMS Process Detail records
+	 * @return null
 	 */
 	public PageReference save(){
 

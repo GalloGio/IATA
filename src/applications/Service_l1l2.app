@@ -960,6 +960,7 @@
     <tabs>standard-Dashboard</tabs>
     <tabs>My_Status</tabs>
     <tabs>standard-File</tabs>
+    <tabs>IATA_ISO_City__c</tabs>
     <uiType>Lightning</uiType>
     <utilityBar>Service_UtilityBar</utilityBar>
 </CustomApplication>

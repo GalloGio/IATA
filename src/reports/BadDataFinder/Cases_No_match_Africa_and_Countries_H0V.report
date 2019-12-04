@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>CASE_ID</field>
+    </columns>
+    <columns>
+        <field>Case.Region__c</field>
+    </columns>
+    <columns>
+        <field>Case.BSPCountry__c</field>
+    </columns>
+    <currency>USD</currency>
+    <description>This report will support us to find Countries and Region of Africa &amp; Middle East not compatibles.</description>
+    <filter>
+        <criteriaItems>
+            <column>Case.Region__c</column>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Africa &amp; Middle East</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Case.BSPCountry__c</column>
+            <isUnlocked>true</isUnlocked>
+            <operator>notContain</operator>
+            <value>,Afghanistan,Algeria,All region,Angola,Bahrain,Benin,Botswana,Burkina Faso,Burundi,Cameroon,Cape Verde,Central African Republic,Comoros,Congo,the Democratic Republic of the,Congo (Brazzaville),Côte d&apos;Ivoire,Djibouti,Egypt,Equatorial Guinea,Eritrea,Ethiopia,Gabon,Gambia,Ghana,Guinea,Guinea-Bissau,Iran,Islamic Republic of,Iraq,Jordan,Kenya,Kuwait,Lebanon,Lesotho,Liberia,Libya,Madagascar,Malawi,Mali,Mauritania,Mauritius,Morocco,Mozambique,Namibia,Niger,Nigeria,Oman,Palestinian Territories,Occupied,Qatar,Regional Office - Africa &amp;amp; Middle East,Rwanda,Sao Tome,Saudi Arabia,Senegal,Seychelles,Sierra Leone,Somalia,South Africa,South Sudan,Sudan,Swaziland,Syria,Tanzania,United Republic of,Tchad,Togo,Tunisia,Uganda,United Arab Emirates,Yemen,Zambia,Zimbabwe</value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
+    <format>Tabular</format>
+    <name>Cases - No match Africa and Countries</name>
+    <params>
+        <name>units</name>
+        <value>h</value>
+    </params>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>CaseList</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>CREATED_DATEONLY</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>
