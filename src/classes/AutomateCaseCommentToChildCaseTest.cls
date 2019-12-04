@@ -17,32 +17,39 @@ private class AutomateCaseCommentToChildCaseTest {
 	}
 
 	@isTest
-	public static void shoouldFail(){
+	public static void shouldFail(){
 		Test.startTest();
 		List<Boolean> result = AutomateCaseCommentToChildCase.copyCommentToChilds(new List<Id>());
+		List<CaseComment> comments = [SELECT Id, CommentBody FROM CaseComment WHERE ParentId IN (SELECT Id FROM Case WHERE Subject = 'Case Test 1')];
 		Test.stopTest();
 		System.assertEquals(1, result.size());
 		System.assertEquals(false, result.get(0));
+		System.assertEquals(0, comments.size());
 	}
 
 	@isTest
-	public static void shoouldFail2(){
+	public static void shouldFail2(){
 		Test.startTest();
 		Case testCase = [SELECT Id FROM Case WHERE Subject='Case Test2'][0];
 		List<Boolean> result = AutomateCaseCommentToChildCase.copyCommentToChilds(new List<Id>{testCase.Id});
+		List<CaseComment> comments = [SELECT Id, CommentBody FROM CaseComment WHERE ParentId IN (SELECT Id FROM Case WHERE Subject = 'Case Test 1')];
 		Test.stopTest();
 		System.assertEquals(1, result.size());
 		System.assertEquals(false, result.get(0));
+		System.assertEquals(0, comments.size());
 	}
 
 	@isTest
-	public static void shoouldSucced(){
+	public static void shouldSucceed(){
 		Test.startTest();
 		Case testCase = [SELECT Id FROM Case WHERE Subject='Case Test'][0];
 		List<Boolean> result = AutomateCaseCommentToChildCase.copyCommentToChilds(new List<Id>{testCase.Id});
+		List<CaseComment> comments = [SELECT Id, CommentBody FROM CaseComment WHERE ParentId IN (SELECT Id FROM Case WHERE Subject = 'Case Test 1')];
 		Test.stopTest();
 
 		System.assertEquals(1, result.size());
 		System.assertEquals(true, result.get(0));
+		System.assertEquals(1, comments.size());
+		System.assertEquals('test comment body', comments.get(0).CommentBody);
 	}
 }
