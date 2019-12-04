@@ -19,7 +19,7 @@
 
 		    String queryRHCs = 'SELECT Id, ANG_RHC_Amount__c, ANG_Financial_Security__c,ANG_CashCondition__c, ANG_RHC_Amount_Equals_FS__c, ANG_AccountId__r.Id, ANG_AccountId__r.Name, ANG_RHC_Amount_Forecasted__c, '+
 		    			'ANG_AccountId__r.IATACode__c, ANG_AccountId__c, CurrencyIsoCode, ANG_AccountId__r.Status__c, ANG_RME_Amount__c, ANG_AccountId__r.IATA_ISO_Country__c, ANG_AccountId__r.Location_Type__c, '+
-		    			'ANG_AccountId__r.Location_Class__c, ANG_RHC_Amount_Provisional__c, ANG_Exceeding_Financial_Security__c, ANG_AccountId__r.IATA_ISO_Country__r.AMS_Settlement_System__c, RHC_Amount_Equals_FS_Percent__c '+
+		    			'ANG_AccountId__r.Location_Class__c, ANG_RHC_Amount_Provisional__c, ANG_Exceeding_Financial_Security__c, ANG_AccountId__r.IATA_ISO_Country__r.AMS_Settlement_System__c, RHC_Amount_Equals_FS_Percent__c, ANG_Minimum_Financial_Security__c '+
 		    			'FROM ANG_RHC_Information__c '+
 		    			'WHERE ANG_AccountId__r.Status__c IN :ACTIVEAGENCYSTATUS '+
 		    				'AND ANG_AccountId__r.Location_Type__c = \'HE\' '+
