@@ -66,7 +66,7 @@
                                                     <lightning:formattedUrl label="{!localGroup.groupName}" value="{!localGroup.groupLink}" target="_blank"/>
                                                 </div>
                                             </td>
-                                            <td ><lightning:formattedText value="{!member.accountName}"/></td>
+                                            <td style="white-space: normal;"><lightning:formattedText value="{!member.accountName}"/></td>
                                             <td ><lightning:formattedText value="{!localGroup.ownerName}"/></td>
                                             <td ><c:AMP_LongText text="{!localGroup.mission}"/></td>
                                             <td ><lightning:formattedText value="{!member.role}"/></td>
