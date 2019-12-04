@@ -426,7 +426,7 @@ public class PortalServicesCtrlTest {
                 contactToUser.put(u.ContactId, u.Id);
             }
             
-            contactToServices = PortalServicesCtrl.getContactsAccessGrantedServices(contactToUser);
+            contactToServices = PortalServicesCtrl.getContactsAccessGrantedServices(contactToUser, true);
             System.assert(!contactToServices.keySet().isEmpty());
             
         }
