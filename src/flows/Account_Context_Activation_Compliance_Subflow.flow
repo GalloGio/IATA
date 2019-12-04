@@ -4,20 +4,20 @@
         <description>Notify the flow launcher that the compliance is a failure</description>
         <name>Notify_Flow_Launcher</name>
         <label>Notify Flow Launcher</label>
-        <locationX>560</locationX>
-        <locationY>654</locationY>
+        <locationX>549</locationX>
+        <locationY>490</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
+        <inputParameters>
+            <name>emailAddresses</name>
+            <value>
+                <elementReference>UserFlowLauncher.Email</elementReference>
+            </value>
+        </inputParameters>
         <inputParameters>
             <name>emailBody</name>
             <value>
                 <elementReference>EmailBody</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>emailAddresses</name>
-            <value>
-                <elementReference>CurrentUserEmail</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -31,8 +31,8 @@
         <description>Account is compliant</description>
         <name>Output_Success</name>
         <label>Output Success</label>
-        <locationX>212</locationX>
-        <locationY>456</locationY>
+        <locationX>188</locationX>
+        <locationY>507</locationY>
         <assignmentItems>
             <assignToReference>FlowSuccessfullyEnded</assignToReference>
             <operator>Assign</operator>
@@ -44,8 +44,8 @@
     <assignments>
         <name>Prepare_Compliant_Case</name>
         <label>Prepare Compliant Case</label>
-        <locationX>1089</locationX>
-        <locationY>180</locationY>
+        <locationX>1080</locationX>
+        <locationY>484</locationY>
         <assignmentItems>
             <assignToReference>ComplianceCase.RecordTypeId</assignToReference>
             <operator>Assign</operator>
@@ -106,9 +106,22 @@
             <targetReference>Insert_Compliant_Case</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>Wait_for_compliance_case_to_be_closed</name>
+        <label>Wait for compliance case to be closed</label>
+        <locationX>740</locationX>
+        <locationY>485</locationY>
+        <assignmentItems>
+            <assignToReference>WaitForNextAction</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+    </assignments>
     <constants>
         <description>DeveloperName of the queue Due Diligence</description>
-        <name>DueDiligenceQueueName</name>
+        <name>QUEUE_DEVELOPERNAME_DUE_DILIGENCE</name>
         <dataType>String</dataType>
         <value>
             <stringValue>Due_Diligence</stringValue>
@@ -116,24 +129,49 @@
     </constants>
     <constants>
         <description>Case RecordType DeveloperName for Internal Case</description>
-        <name>RtCaseInternalCase</name>
+        <name>RECORDTYPE_CASE_INTERNAL</name>
         <dataType>String</dataType>
         <value>
             <stringValue>InternalCasesEuropeSCE</stringValue>
         </value>
     </constants>
     <decisions>
+        <name>has_been_relaunched</name>
+        <label>has been relaunched ?</label>
+        <locationX>544</locationX>
+        <locationY>264</locationY>
+        <defaultConnector>
+            <targetReference>Is_Case_Created</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>first execution</defaultConnectorLabel>
+        <rules>
+            <name>second_execution</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>FlowHasBeenRelaunched</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Notify_Flow_Launcher</targetReference>
+            </connector>
+            <label>second execution</label>
+        </rules>
+    </decisions>
+    <decisions>
         <description>Account is currently compliant are:
 Due Diligence Status (Due_Diligence_Status__c) = “Cleared”, AND
 Date of last clearance (Date_of_last_clearance__c) within the last 12 months</description>
         <name>Is_Account_compliant</name>
         <label>Is Account compliant ?</label>
-        <locationX>206</locationX>
+        <locationX>180</locationX>
         <locationY>264</locationY>
         <defaultConnector>
             <targetReference>Get_Compliance_Case</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <defaultConnectorLabel>not compliant</defaultConnectorLabel>
         <rules>
             <name>is_compliant</name>
             <conditionLogic>and</conditionLogic>
@@ -158,48 +196,16 @@ Date of last clearance (Date_of_last_clearance__c) within the last 12 months</de
         </rules>
     </decisions>
     <decisions>
-        <name>Is_Account_Compliant_After_Case_Closed</name>
-        <label>Is Account Compliant After Case Closed ?</label>
-        <locationX>552</locationX>
-        <locationY>459</locationY>
-        <defaultConnector>
-            <targetReference>Notify_Flow_Launcher</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>is_compliant_after_case_closed</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>CompliantAccount.Due_Diligence_Status__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Cleared</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Flow.CurrentDate</leftValueReference>
-                <operator>LessThan</operator>
-                <rightValue>
-                    <elementReference>MaxLastClearanceDateAfterCaseClosed</elementReference>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Output_Success</targetReference>
-            </connector>
-            <label>is compliant after case closed</label>
-        </rules>
-    </decisions>
-    <decisions>
         <name>Is_Case_Created</name>
         <label>Is Case Created ?</label>
-        <locationX>557</locationX>
-        <locationY>259</locationY>
+        <locationX>732</locationX>
+        <locationY>262</locationY>
         <defaultConnector>
             <targetReference>Get_Case_RT_Internal_Case</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <defaultConnectorLabel>not created</defaultConnectorLabel>
         <rules>
-            <name>Case_already_created</name>
+            <name>case_already_created</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>ComplianceCase</leftValueReference>
@@ -209,9 +215,9 @@ Date of last clearance (Date_of_last_clearance__c) within the last 12 months</de
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Wait_for_compliance_process</targetReference>
+                <targetReference>Wait_for_compliance_case_to_be_closed</targetReference>
             </connector>
-            <label>Case already created</label>
+            <label>case already created</label>
         </rules>
     </decisions>
     <description>Search for a completed compliant case, else create one if it doesn&apos;t exist and notify account creator.</description>
@@ -221,21 +227,11 @@ Date of last clearance (Date_of_last_clearance__c) within the last 12 months</de
         <expression>{!$Label.EFComplianceReview} &amp; &apos; - &apos; &amp; {!Account.Name}</expression>
     </formulas>
     <formulas>
-        <name>CurrentUserEmail</name>
-        <dataType>String</dataType>
-        <expression>{!$User.Email}</expression>
-    </formulas>
-    <formulas>
-        <name>CurrentUserName</name>
-        <dataType>String</dataType>
-        <expression>{!$User.FirstName} &amp; &apos; &apos; &amp; {!$User.LastName}</expression>
-    </formulas>
-    <formulas>
         <name>EmailBody</name>
         <dataType>String</dataType>
         <expression>SUBSTITUTE(SUBSTITUTE(SUBSTITUTE({!$Label.ComplianceProcessEmailBody}, 
-&quot;{0}&quot;, {!CurrentUserName}),
-&quot;{1}&quot;, {!SublowComplianceEvent.Case_Number__c}),
+&quot;{0}&quot;, {!UserFlowLauncher.Name}),
+&quot;{1}&quot;, {!ComplianceCase.CaseNumber}),
 &quot;{2}&quot;, {!Account.Name})</expression>
     </formulas>
     <formulas>
@@ -247,11 +243,6 @@ Date of last clearance (Date_of_last_clearance__c) within the last 12 months</de
         <name>MaxLastClearanceDate</name>
         <dataType>Date</dataType>
         <expression>ADDMONTHS({!Account.Date_of_last_clearance__c}, 12)</expression>
-    </formulas>
-    <formulas>
-        <name>MaxLastClearanceDateAfterCaseClosed</name>
-        <dataType>Date</dataType>
-        <expression>ADDMONTHS({!CompliantAccount.Date_of_last_clearance__c}, 12)</expression>
     </formulas>
     <interviewLabel>Account Context Activation Compliance Subflow {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Account Context Activation Compliance Subflow</label>
@@ -271,18 +262,18 @@ Date of last clearance (Date_of_last_clearance__c) within the last 12 months</de
     <recordCreates>
         <name>Insert_Compliant_Case</name>
         <label>Insert Compliant Case</label>
-        <locationX>1239</locationX>
-        <locationY>259</locationY>
+        <locationX>925</locationX>
+        <locationY>485</locationY>
         <connector>
-            <targetReference>Wait_for_compliance_process</targetReference>
+            <targetReference>Wait_for_compliance_case_to_be_closed</targetReference>
         </connector>
         <inputReference>ComplianceCase</inputReference>
     </recordCreates>
     <recordLookups>
         <name>Get_Case_RT_Internal_Case</name>
         <label>Get Case RT Internal Case</label>
-        <locationX>774</locationX>
-        <locationY>180</locationY>
+        <locationX>922</locationX>
+        <locationY>256</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Due_Diligence_Queue</targetReference>
@@ -291,7 +282,7 @@ Date of last clearance (Date_of_last_clearance__c) within the last 12 months</de
             <field>DeveloperName</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>RtCaseInternalCase</elementReference>
+                <elementReference>RECORDTYPE_CASE_INTERNAL</elementReference>
             </value>
         </filters>
         <filters>
@@ -308,11 +299,11 @@ Date of last clearance (Date_of_last_clearance__c) within the last 12 months</de
     <recordLookups>
         <name>Get_Compliance_Case</name>
         <label>Get Compliance Case</label>
-        <locationX>424</locationX>
-        <locationY>257</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <locationX>397</locationX>
+        <locationY>262</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Is_Case_Created</targetReference>
+            <targetReference>has_been_relaunched</targetReference>
         </connector>
         <filters>
             <field>AccountId</field>
@@ -353,7 +344,7 @@ Date of last clearance (Date_of_last_clearance__c) within the last 12 months</de
             <field>RecordTypeDeveloperName__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>RtCaseInternalCase</elementReference>
+                <elementReference>RECORDTYPE_CASE_INTERNAL</elementReference>
             </value>
         </filters>
         <filters>
@@ -366,36 +357,13 @@ Date of last clearance (Date_of_last_clearance__c) within the last 12 months</de
         <object>Case</object>
         <outputReference>ComplianceCase</outputReference>
         <queriedFields>Id</queriedFields>
-    </recordLookups>
-    <recordLookups>
-        <name>Get_Compliant_Account</name>
-        <label>Get Compliant Account</label>
-        <locationX>895</locationX>
-        <locationY>457</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Is_Account_Compliant_After_Case_Closed</targetReference>
-        </connector>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Account.Id</elementReference>
-            </value>
-        </filters>
-        <object>Account</object>
-        <outputReference>CompliantAccount</outputReference>
-        <queriedFields>Id</queriedFields>
-        <queriedFields>RecordTypeDeveloperName__c</queriedFields>
-        <queriedFields>ParentId</queriedFields>
-        <queriedFields>Due_Diligence_Status__c</queriedFields>
-        <queriedFields>Date_of_last_clearance__c</queriedFields>
+        <queriedFields>CaseNumber</queriedFields>
     </recordLookups>
     <recordLookups>
         <name>Get_Due_Diligence_Queue</name>
         <label>Get Due Diligence Queue</label>
-        <locationX>938</locationX>
-        <locationY>180</locationY>
+        <locationX>1080</locationX>
+        <locationY>256</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Prepare_Compliant_Case</targetReference>
@@ -404,7 +372,7 @@ Date of last clearance (Date_of_last_clearance__c) within the last 12 months</de
             <field>DeveloperName</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>DueDiligenceQueueName</elementReference>
+                <elementReference>QUEUE_DEVELOPERNAME_DUE_DILIGENCE</elementReference>
             </value>
         </filters>
         <object>Group</object>
@@ -436,20 +404,23 @@ Date of last clearance (Date_of_last_clearance__c) within the last 12 months</de
         <objectType>Case</objectType>
     </variables>
     <variables>
-        <name>CompliantAccount</name>
-        <dataType>SObject</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>Account</objectType>
-    </variables>
-    <variables>
         <name>DueDiligenceQueue</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>Group</objectType>
+    </variables>
+    <variables>
+        <description>Determines if the flow has been relaunched by a process builder</description>
+        <name>FlowHasBeenRelaunched</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
     </variables>
     <variables>
         <name>FlowSuccessfullyEnded</name>
@@ -470,38 +441,22 @@ Date of last clearance (Date_of_last_clearance__c) within the last 12 months</de
         <objectType>RecordType</objectType>
     </variables>
     <variables>
-        <name>SublowComplianceEvent</name>
+        <name>UserFlowLauncher</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
-        <isInput>false</isInput>
+        <isInput>true</isInput>
         <isOutput>false</isOutput>
-        <objectType>Subflow_Compliance__e</objectType>
+        <objectType>User</objectType>
     </variables>
-    <waits>
-        <description>Wait for case to be closed</description>
-        <name>Wait_for_compliance_process</name>
-        <label>Wait for compliance process</label>
-        <locationX>1239</locationX>
-        <locationY>407</locationY>
-        <defaultConnectorLabel>Default Path</defaultConnectorLabel>
-        <waitEvents>
-            <name>Case_has_been_closed</name>
-            <conditionLogic>and</conditionLogic>
-            <connector>
-                <targetReference>Get_Compliant_Account</targetReference>
-            </connector>
-            <eventType>Subflow_Compliance__e</eventType>
-            <inputParameters>
-                <name>Account_Id__c</name>
-                <value>
-                    <elementReference>Account.Id</elementReference>
-                </value>
-            </inputParameters>
-            <label>Case has been closed</label>
-            <outputParameters>
-                <assignToReference>SublowComplianceEvent</assignToReference>
-                <name>Subflow_Compliance__e</name>
-            </outputParameters>
-        </waitEvents>
-    </waits>
+    <variables>
+        <description>Wait for case to be closed, then the process builder CaseComplianceClosed will relaunch the flow a second time</description>
+        <name>WaitForNextAction</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
 </Flow>

@@ -3,8 +3,8 @@
     <actionCalls>
         <name>FlowGetBusinessContextsInvocable</name>
         <label>Get Available Business Context</label>
-        <locationX>493</locationX>
-        <locationY>56</locationY>
+        <locationX>533</locationX>
+        <locationY>51</locationY>
         <actionName>FlowGetBusinessContextsInvocable</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -21,43 +21,24 @@
             <name>businessContextAvailable</name>
         </outputParameters>
     </actionCalls>
-    <actionCalls>
-        <name>Notify_success_to_flow_launcher</name>
-        <label>Notify success to flow launcher</label>
-        <locationX>971</locationX>
-        <locationY>619</locationY>
-        <actionName>emailSimple</actionName>
-        <actionType>emailSimple</actionType>
-        <inputParameters>
-            <name>emailAddresses</name>
-            <value>
-                <elementReference>CurrentUserEmail</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>emailBody</name>
-            <value>
-                <elementReference>SuccessEmailBody</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>emailSubject</name>
-            <value>
-                <elementReference>SuccessEmailSubject</elementReference>
-            </value>
-        </inputParameters>
-    </actionCalls>
+    <constants>
+        <name>BUSINESS_CONTEXT_EAF</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>E&amp;F</stringValue>
+        </value>
+    </constants>
     <decisions>
         <name>Business_context_available</name>
         <label>Business context available ?</label>
-        <locationX>484</locationX>
-        <locationY>370</locationY>
+        <locationX>525</locationX>
+        <locationY>392</locationY>
         <defaultConnector>
             <targetReference>Business_context_selection</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <defaultConnectorLabel>can choose a context</defaultConnectorLabel>
         <rules>
-            <name>No_business_context</name>
+            <name>no_business_context</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>BusinessContextAvailable</leftValueReference>
@@ -69,62 +50,40 @@
             <connector>
                 <targetReference>No_business_context_available_screen</targetReference>
             </connector>
-            <label>No business context</label>
+            <label>no business context</label>
         </rules>
     </decisions>
     <decisions>
         <name>E_F_Business_Context</name>
         <label>E&amp;F Business Context ?</label>
-        <locationX>272</locationX>
-        <locationY>502</locationY>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <locationX>274</locationX>
+        <locationY>547</locationY>
+        <defaultConnectorLabel>Unrecognized Context</defaultConnectorLabel>
         <rules>
-            <name>E_F_selected</name>
+            <name>E_F_Context</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>SelectedBusinessContext</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <elementReference>EAFBusinessContext</elementReference>
+                    <elementReference>BUSINESS_CONTEXT_EAF</elementReference>
                 </rightValue>
             </conditions>
             <connector>
                 <targetReference>E_F_Subflow</targetReference>
             </connector>
-            <label>E&amp;F selected</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Flow_successfully_ended</name>
-        <label>Flow successfully ended ?</label>
-        <locationX>740</locationX>
-        <locationY>622</locationY>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>success</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>FlowSuccessfullyEnded</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Notify_success_to_flow_launcher</targetReference>
-            </connector>
-            <label>success</label>
+            <label>E&amp;F Context</label>
         </rules>
     </decisions>
     <decisions>
         <name>Is_Authority</name>
         <label>Is Authority ?</label>
         <locationX>313</locationX>
-        <locationY>53</locationY>
+        <locationY>52</locationY>
         <defaultConnector>
             <targetReference>FlowGetBusinessContextsInvocable</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <defaultConnectorLabel>authority account</defaultConnectorLabel>
         <rules>
             <name>branch</name>
             <conditionLogic>and</conditionLogic>
@@ -157,29 +116,6 @@
         </rules>
     </decisions>
     <description>Allows user to send the account to SAP then EMS. First, it look at user custom permission, with a custom metadata &quot;Business Context Activation&quot;,  it will then validate some required fields before hitting touchpoint.</description>
-    <formulas>
-        <name>CurrentUserEmail</name>
-        <dataType>String</dataType>
-        <expression>{!$User.Email}</expression>
-    </formulas>
-    <formulas>
-        <name>CurrentUserName</name>
-        <dataType>String</dataType>
-        <expression>{!$User.FirstName} &amp; &apos; &apos; &amp; {!$User.LastName}</expression>
-    </formulas>
-    <formulas>
-        <name>SuccessEmailBody</name>
-        <dataType>String</dataType>
-        <expression>SUBSTITUTE(SUBSTITUTE({!$Label.AccountContextActivationEmailBody},
-&apos;{0}&apos;, {!CurrentUserName}),
-&apos;{1}&apos;, {!Account.Name})</expression>
-    </formulas>
-    <formulas>
-        <name>SuccessEmailSubject</name>
-        <dataType>String</dataType>
-        <expression>SUBSTITUTE({!$Label.AccountContextActivationEmailSubject},
-&apos;{0}&apos;, {!Account.Name})</expression>
-    </formulas>
     <interviewLabel>Account {!$Flow.CurrentDateTime}</interviewLabel>
     <isTemplate>true</isTemplate>
     <label>Account Context Activation</label>
@@ -223,7 +159,7 @@
         <name>Account_Context_Activation_Error</name>
         <label>Account Context Activation Error</label>
         <locationX>321</locationX>
-        <locationY>234</locationY>
+        <locationY>233</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -238,8 +174,8 @@
     <screens>
         <name>Business_context_selection</name>
         <label>Business context selection</label>
-        <locationX>282</locationX>
-        <locationY>359</locationY>
+        <locationX>283</locationX>
+        <locationY>385</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -274,8 +210,8 @@
     <screens>
         <name>No_business_context_available_screen</name>
         <label>No business context available screen</label>
-        <locationX>722</locationX>
-        <locationY>369</locationY>
+        <locationX>763</locationX>
+        <locationY>391</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -287,16 +223,19 @@
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>
-    <startElementReference>Get_Account</startElementReference>
+    <start>
+        <locationX>50</locationX>
+        <locationY>50</locationY>
+        <connector>
+            <targetReference>Get_Account</targetReference>
+        </connector>
+    </start>
     <status>Active</status>
     <subflows>
         <name>E_F_Subflow</name>
         <label>E&amp;F Subflow</label>
-        <locationX>524</locationX>
-        <locationY>619</locationY>
-        <connector>
-            <targetReference>Flow_successfully_ended</targetReference>
-        </connector>
+        <locationX>537</locationX>
+        <locationY>544</locationY>
         <flowName>Account_Context_Activation_E_F_Subflow</flowName>
         <inputAssignments>
             <name>AccountId</name>
@@ -304,16 +243,6 @@
                 <elementReference>AccountId</elementReference>
             </value>
         </inputAssignments>
-        <inputAssignments>
-            <name>SelectedBusinessContext</name>
-            <value>
-                <elementReference>SelectedBusinessContext</elementReference>
-            </value>
-        </inputAssignments>
-        <outputAssignments>
-            <assignToReference>FlowSuccessfullyEnded</assignToReference>
-            <name>FlowSuccessfullyEnded</name>
-        </outputAssignments>
     </subflows>
     <variables>
         <name>Account</name>
@@ -331,53 +260,11 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <name>AccountRole</name>
-        <dataType>SObject</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>Account_Role__c</objectType>
-    </variables>
-    <variables>
         <name>BusinessContextAvailable</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>BusinessContextContenation</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>BusinessContextInProgress</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>EAFBusinessContext</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <value>
-            <stringValue>E&amp;F</stringValue>
-        </value>
-    </variables>
-    <variables>
-        <name>FlowSuccessfullyEnded</name>
-        <dataType>Boolean</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <value>
-            <booleanValue>false</booleanValue>
-        </value>
     </variables>
     <variables>
         <name>SelectedBusinessContext</name>

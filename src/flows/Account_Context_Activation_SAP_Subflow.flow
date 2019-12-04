@@ -3,20 +3,14 @@
     <actionCalls>
         <name>Notify_Flow_Launcher</name>
         <label>Notify Flow Launcher</label>
-        <locationX>220</locationX>
-        <locationY>473</locationY>
+        <locationX>828</locationX>
+        <locationY>183</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <inputParameters>
             <name>emailAddresses</name>
             <value>
-                <elementReference>CurrentUserEmail</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>emailSubject</name>
-            <value>
-                <elementReference>EmailSubject</elementReference>
+                <elementReference>UserFlowLauncher.Email</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -25,12 +19,18 @@
                 <elementReference>EmailBody</elementReference>
             </value>
         </inputParameters>
+        <inputParameters>
+            <name>emailSubject</name>
+            <value>
+                <elementReference>EmailSubject</elementReference>
+            </value>
+        </inputParameters>
     </actionCalls>
     <assignments>
         <name>Ouput_Success</name>
         <label>Ouput Success</label>
-        <locationX>50</locationX>
-        <locationY>267</locationY>
+        <locationX>831</locationX>
+        <locationY>360</locationY>
         <assignmentItems>
             <assignToReference>FlowSuccessfullyEnded</assignToReference>
             <operator>Assign</operator>
@@ -39,22 +39,60 @@
             </value>
         </assignmentItems>
     </assignments>
+    <assignments>
+        <name>Wait_for_Integration_Log_to_be_updated_by_Mulesoft</name>
+        <label>Wait for Integration Log to be updated by Mulesoft</label>
+        <locationX>684</locationX>
+        <locationY>52</locationY>
+        <assignmentItems>
+            <assignToReference>WaitForNextAction</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+    </assignments>
     <constants>
-        <name>TYPE_INSERT</name>
+        <name>PLATFORM_EVENT_TYPE_CREATE</name>
         <dataType>String</dataType>
         <value>
             <stringValue>Create</stringValue>
         </value>
     </constants>
     <decisions>
+        <name>has_been_relaunched</name>
+        <label>has been relaunched ?</label>
+        <locationX>305</locationX>
+        <locationY>52</locationY>
+        <defaultConnector>
+            <targetReference>Publish_Address_Role_Business_Context_Event</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>first execution</defaultConnectorLabel>
+        <rules>
+            <name>second_execution</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>FlowHasBeenRelaunched</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Integration_Log</targetReference>
+            </connector>
+            <label>second execution</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>SAP_customer_creation_succeeded</name>
         <label>SAP customer creation succeeded ?</label>
-        <locationX>211</locationX>
-        <locationY>269</locationY>
+        <locationX>590</locationX>
+        <locationY>271</locationY>
         <defaultConnector>
             <targetReference>Notify_Flow_Launcher</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <defaultConnectorLabel>SAP KO</defaultConnectorLabel>
         <rules>
             <name>SAP_OK</name>
             <conditionLogic>and</conditionLogic>
@@ -71,21 +109,12 @@
             <label>SAP OK</label>
         </rules>
     </decisions>
-    <formulas>
-        <name>CurrentUserEmail</name>
-        <dataType>String</dataType>
-        <expression>{!$User.Email}</expression>
-    </formulas>
-    <formulas>
-        <name>CurrentUserName</name>
-        <dataType>String</dataType>
-        <expression>{!$User.FirstName} &amp; &apos; &apos; &amp; {!$User.LastName}</expression>
-    </formulas>
+    <description>Send an Address Role Business Context platform event so that mulesoft can spread the account creation in SAP and DMS, then wait for Mulesoft to respond back (by updating Integration Log related to the address role business context platform event)</description>
     <formulas>
         <name>EmailBody</name>
         <dataType>String</dataType>
         <expression>SUBSTITUTE(SUBSTITUTE({!$Label.SapProcessEmailBody}, 
-&quot;{0}&quot;, {!CurrentUserName}),
+&quot;{0}&quot;, {!UserFlowLauncher.Name}),
 &quot;{1}&quot;, {!Account.Name})</expression>
     </formulas>
     <formulas>
@@ -111,15 +140,15 @@
     <recordCreates>
         <name>Publish_Address_Role_Business_Context_Event</name>
         <label>Publish Address Role Business Context Event</label>
-        <locationX>216</locationX>
-        <locationY>50</locationY>
+        <locationX>523</locationX>
+        <locationY>52</locationY>
         <connector>
-            <targetReference>Wait_for_Mulesoft_to_respond</targetReference>
+            <targetReference>Wait_for_Integration_Log_to_be_updated_by_Mulesoft</targetReference>
         </connector>
         <inputAssignments>
             <field>EventType__c</field>
             <value>
-                <elementReference>TYPE_INSERT</elementReference>
+                <elementReference>PLATFORM_EVENT_TYPE_CREATE</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -133,8 +162,8 @@
     <recordLookups>
         <name>Get_Integration_Log</name>
         <label>Get Integration Log</label>
-        <locationX>393</locationX>
-        <locationY>267</locationY>
+        <locationX>312</locationX>
+        <locationY>269</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>SAP_customer_creation_succeeded</targetReference>
@@ -143,7 +172,7 @@
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>SubflowSAPEvent.Integration_Log_Id__c</elementReference>
+                <elementReference>IntegrationLogId</elementReference>
             </value>
         </filters>
         <object>Integration_Log__c</object>
@@ -156,7 +185,7 @@
         <locationX>50</locationX>
         <locationY>50</locationY>
         <connector>
-            <targetReference>Publish_Address_Role_Business_Context_Event</targetReference>
+            <targetReference>has_been_relaunched</targetReference>
         </connector>
     </start>
     <status>Active</status>
@@ -177,6 +206,17 @@
         <objectType>Address_Role_Business_Context__c</objectType>
     </variables>
     <variables>
+        <description>Determines if the flow has been relaunched by the trigger on Integration Log obj if status has changed</description>
+        <name>FlowHasBeenRelaunched</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
         <name>FlowSuccessfullyEnded</name>
         <dataType>Boolean</dataType>
         <isCollection>false</isCollection>
@@ -195,44 +235,31 @@
         <objectType>Integration_Log__c</objectType>
     </variables>
     <variables>
-        <name>NewAccountContextActivationStatus</name>
+        <description>Id of the Integration Log related to the platform event that has been created in the first execution of this flow</description>
+        <name>IntegrationLogId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
-        <isInput>false</isInput>
+        <isInput>true</isInput>
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <name>SubflowSAPEvent</name>
+        <description>Required with fields : Id, Name, Email</description>
+        <name>UserFlowLauncher</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
-        <isInput>false</isInput>
+        <isInput>true</isInput>
         <isOutput>false</isOutput>
-        <objectType>Subflow_SAP__e</objectType>
+        <objectType>User</objectType>
     </variables>
-    <waits>
-        <name>Wait_for_Mulesoft_to_respond</name>
-        <label>Wait for Mulesoft to respond</label>
-        <locationX>393</locationX>
-        <locationY>50</locationY>
-        <defaultConnectorLabel>Default Path</defaultConnectorLabel>
-        <waitEvents>
-            <name>Jobs_from_mulesoft_are_done</name>
-            <conditionLogic>and</conditionLogic>
-            <connector>
-                <targetReference>Get_Integration_Log</targetReference>
-            </connector>
-            <eventType>Subflow_SAP__e</eventType>
-            <inputParameters>
-                <name>Address_Role_Business_Context_Id__c</name>
-                <value>
-                    <elementReference>AddressRoleBusinessContext.Id</elementReference>
-                </value>
-            </inputParameters>
-            <label>Jobs from mulesoft are done</label>
-            <outputParameters>
-                <assignToReference>SubflowSAPEvent</assignToReference>
-                <name>Subflow_SAP__e</name>
-            </outputParameters>
-        </waitEvents>
-    </waits>
+    <variables>
+        <description>Wait for Intregration log created by the platform event to be changed by Mulesoft on status field, then the trigger IntegrationLogTrigger will relaunch the flow a second time</description>
+        <name>WaitForNextAction</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
 </Flow>

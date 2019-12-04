@@ -3,20 +3,20 @@
     <actionCalls>
         <name>Notify_Flow_Launcher</name>
         <label>Notify Flow Launcher</label>
-        <locationX>590</locationX>
-        <locationY>587</locationY>
+        <locationX>520</locationX>
+        <locationY>472</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
+        <inputParameters>
+            <name>emailAddresses</name>
+            <value>
+                <elementReference>UserFlowLauncher.Email</elementReference>
+            </value>
+        </inputParameters>
         <inputParameters>
             <name>emailBody</name>
             <value>
                 <elementReference>EmailBody</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>emailAddresses</name>
-            <value>
-                <elementReference>CurrentUserEmail</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -29,8 +29,8 @@
     <assignments>
         <name>Output_Success</name>
         <label>Output Success</label>
-        <locationX>215</locationX>
-        <locationY>411</locationY>
+        <locationX>210</locationX>
+        <locationY>483</locationY>
         <assignmentItems>
             <assignToReference>FlowSuccessfullyEnded</assignToReference>
             <operator>Assign</operator>
@@ -42,59 +42,59 @@
     <assignments>
         <name>Prepare_SIS_Case</name>
         <label>Prepare SIS Case</label>
-        <locationX>970</locationX>
-        <locationY>180</locationY>
+        <locationX>1080</locationX>
+        <locationY>478</locationY>
         <assignmentItems>
-            <assignToReference>SISCase.Subject</assignToReference>
+            <assignToReference>SisCase.Subject</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>SisCaseSubject</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>SISCase.AccountId</assignToReference>
+            <assignToReference>SisCase.AccountId</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Account.Id</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>SISCase.RecordTypeId</assignToReference>
+            <assignToReference>SisCase.RecordTypeId</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>RTInternalCase.Id</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>SISCase.CaseArea__c</assignToReference>
+            <assignToReference>SisCase.CaseArea__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>E&amp;F Operations</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>SISCase.Reason1__c</assignToReference>
+            <assignToReference>SisCase.Reason1__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>New Airline/Operator</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>SISCase.BSPCountry__c</assignToReference>
+            <assignToReference>SisCase.BSPCountry__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Account.IATA_Iso_Country_Name__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>SISCase.Region__c</assignToReference>
+            <assignToReference>SisCase.Region__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Account.Region_formula__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>SISCase.OwnerId</assignToReference>
+            <assignToReference>SisCase.OwnerId</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>AirlineParticipationHeadOfficeQueue.Id</elementReference>
@@ -104,15 +104,28 @@
             <targetReference>Insert_SIS_Case</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>Wait_for_SIS_case_to_be_closed</name>
+        <label>Wait for SIS case to be closed</label>
+        <locationX>695</locationX>
+        <locationY>477</locationY>
+        <assignmentItems>
+            <assignToReference>WaitForNextAction</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+    </assignments>
     <constants>
-        <name>AirlineParticipationHeadOffice</name>
+        <name>QUEUE_AIRLINE_PARTICIPATION_HEADOFFICE</name>
         <dataType>String</dataType>
         <value>
             <stringValue>AirlineParticipationHeadOffice</stringValue>
         </value>
     </constants>
     <constants>
-        <name>RecordTypeInternalCase</name>
+        <name>RECORDTYPE_CASE_INTERNAL</name>
         <dataType>String</dataType>
         <value>
             <stringValue>InternalCasesEuropeSCE</stringValue>
@@ -126,9 +139,9 @@
         <defaultConnector>
             <targetReference>Get_SIS_Case</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <defaultConnectorLabel>SIS KO</defaultConnectorLabel>
         <rules>
-            <name>SIS_OK</name>
+            <name>SIS_fields_filled</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>Account.SIS_ID__c</leftValueReference>
@@ -154,89 +167,66 @@
             <connector>
                 <targetReference>Output_Success</targetReference>
             </connector>
-            <label>SIS OK</label>
+            <label>SIS fields filled</label>
         </rules>
     </decisions>
     <decisions>
-        <name>Account_has_SIS_Id_2</name>
-        <label>Account has SIS Id ?</label>
-        <locationX>583</locationX>
-        <locationY>413</locationY>
+        <name>has_been_relaunched</name>
+        <label>has been relaunched ?</label>
+        <locationX>512</locationX>
+        <locationY>250</locationY>
         <defaultConnector>
-            <targetReference>Notify_Flow_Launcher</targetReference>
+            <targetReference>Is_Case_Created</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <defaultConnectorLabel>first execution</defaultConnectorLabel>
         <rules>
-            <name>SIS_ID_OK</name>
+            <name>second_execution</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>SisAccount.SIS_ID__c</leftValueReference>
-                <operator>IsNull</operator>
+                <leftValueReference>FlowHasBeenRelaunched</leftValueReference>
+                <operator>EqualTo</operator>
                 <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>SisAccount.EF_SIS_Designator__c</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>SisAccount.EF_SIS_Code__c</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Output_Success</targetReference>
+                <targetReference>Notify_Flow_Launcher</targetReference>
             </connector>
-            <label>SIS ID OK</label>
+            <label>second execution</label>
         </rules>
     </decisions>
     <decisions>
         <name>Is_Case_Created</name>
         <label>Is Case Created ?</label>
-        <locationX>529</locationX>
+        <locationX>685</locationX>
         <locationY>248</locationY>
         <defaultConnector>
             <targetReference>Get_Case_RT_Internal_Case</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <defaultConnectorLabel>not created</defaultConnectorLabel>
         <rules>
-            <name>Case_already_created</name>
+            <name>case_already_created</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>SISCase</leftValueReference>
+                <leftValueReference>SisCase</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Wait_for_SIS_Process</targetReference>
+                <targetReference>Wait_for_SIS_case_to_be_closed</targetReference>
             </connector>
-            <label>Case already created</label>
+            <label>case already created</label>
         </rules>
     </decisions>
-    <formulas>
-        <name>CurrentUserEmail</name>
-        <dataType>String</dataType>
-        <expression>{!$User.Email}</expression>
-    </formulas>
-    <formulas>
-        <name>CurrentUserName</name>
-        <dataType>String</dataType>
-        <expression>{!$User.FirstName} &amp; &apos; &apos; &amp; {!$User.LastName}</expression>
-    </formulas>
+    <description>Search for a completed sis case, else create one if it doesn&apos;t exist and notify account creator.</description>
     <formulas>
         <name>EmailBody</name>
         <dataType>String</dataType>
         <expression>SUBSTITUTE(SUBSTITUTE(SUBSTITUTE({!$Label.SisProcessEmailBody}, 
-&quot;{0}&quot;, {!CurrentUserName}),
-&quot;{1}&quot;, {!SubflowSisEvent.Case_Number__c}),
+&quot;{0}&quot;, {!UserFlowLauncher.Name}),
+&quot;{1}&quot;, {!SisCase.CaseNumber}),
 &quot;{2}&quot;, {!Account.Name})</expression>
     </formulas>
     <formulas>
@@ -267,18 +257,18 @@
     <recordCreates>
         <name>Insert_SIS_Case</name>
         <label>Insert SIS Case</label>
-        <locationX>1108</locationX>
-        <locationY>180</locationY>
+        <locationX>906</locationX>
+        <locationY>478</locationY>
         <connector>
-            <targetReference>Wait_for_SIS_Process</targetReference>
+            <targetReference>Wait_for_SIS_case_to_be_closed</targetReference>
         </connector>
-        <inputReference>SISCase</inputReference>
+        <inputReference>SisCase</inputReference>
     </recordCreates>
     <recordLookups>
         <name>Get_Airline_Headoffice_Queue</name>
         <label>Get Airline Headoffice Queue</label>
-        <locationX>827</locationX>
-        <locationY>180</locationY>
+        <locationX>1080</locationX>
+        <locationY>245</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Prepare_SIS_Case</targetReference>
@@ -287,7 +277,7 @@
             <field>DeveloperName</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>AirlineParticipationHeadOffice</elementReference>
+                <elementReference>QUEUE_AIRLINE_PARTICIPATION_HEADOFFICE</elementReference>
             </value>
         </filters>
         <object>Group</object>
@@ -297,8 +287,8 @@
     <recordLookups>
         <name>Get_Case_RT_Internal_Case</name>
         <label>Get Case RT Internal Case</label>
-        <locationX>690</locationX>
-        <locationY>180</locationY>
+        <locationX>899</locationX>
+        <locationY>245</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Airline_Headoffice_Queue</targetReference>
@@ -307,7 +297,7 @@
             <field>DeveloperName</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>RecordTypeInternalCase</elementReference>
+                <elementReference>RECORDTYPE_CASE_INTERNAL</elementReference>
             </value>
         </filters>
         <filters>
@@ -322,36 +312,13 @@
         <queriedFields>Id</queriedFields>
     </recordLookups>
     <recordLookups>
-        <name>Get_SIS_Account</name>
-        <label>Get SIS Account</label>
-        <locationX>828</locationX>
-        <locationY>411</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Account_has_SIS_Id_2</targetReference>
-        </connector>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Account.Id</elementReference>
-            </value>
-        </filters>
-        <object>Account</object>
-        <outputReference>SisAccount</outputReference>
-        <queriedFields>Id</queriedFields>
-        <queriedFields>SIS_ID__c</queriedFields>
-        <queriedFields>EF_SIS_Designator__c</queriedFields>
-        <queriedFields>EF_SIS_Code__c</queriedFields>
-    </recordLookups>
-    <recordLookups>
         <name>Get_SIS_Case</name>
         <label>Get SIS Case</label>
-        <locationX>378</locationX>
-        <locationY>246</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <locationX>366</locationX>
+        <locationY>248</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Is_Case_Created</targetReference>
+            <targetReference>has_been_relaunched</targetReference>
         </connector>
         <filters>
             <field>AccountId</field>
@@ -392,7 +359,7 @@
             <field>RecordTypeDeveloperName__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>RecordTypeInternalCase</elementReference>
+                <elementReference>RECORDTYPE_CASE_INTERNAL</elementReference>
             </value>
         </filters>
         <filters>
@@ -410,10 +377,17 @@
             </value>
         </filters>
         <object>Case</object>
-        <outputReference>SISCase</outputReference>
+        <outputReference>SisCase</outputReference>
         <queriedFields>Id</queriedFields>
+        <queriedFields>CaseNumber</queriedFields>
     </recordLookups>
-    <startElementReference>Account_has_SIS_ID</startElementReference>
+    <start>
+        <locationX>50</locationX>
+        <locationY>50</locationY>
+        <connector>
+            <targetReference>Account_has_SIS_ID</targetReference>
+        </connector>
+    </start>
     <status>Active</status>
     <variables>
         <name>Account</name>
@@ -430,6 +404,17 @@
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>Group</objectType>
+    </variables>
+    <variables>
+        <description>Determines if the flow has been relaunched by a process builder</description>
+        <name>FlowHasBeenRelaunched</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
     </variables>
     <variables>
         <name>FlowSuccessfullyEnded</name>
@@ -450,15 +435,7 @@
         <objectType>RecordType</objectType>
     </variables>
     <variables>
-        <name>SisAccount</name>
-        <dataType>SObject</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>Account</objectType>
-    </variables>
-    <variables>
-        <name>SISCase</name>
+        <name>SisCase</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
@@ -466,37 +443,22 @@
         <objectType>Case</objectType>
     </variables>
     <variables>
-        <name>SubflowSisEvent</name>
+        <name>UserFlowLauncher</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
-        <isInput>false</isInput>
+        <isInput>true</isInput>
         <isOutput>false</isOutput>
-        <objectType>Subflow_SIS__e</objectType>
+        <objectType>User</objectType>
     </variables>
-    <waits>
-        <name>Wait_for_SIS_Process</name>
-        <label>Wait for SIS Process</label>
-        <locationX>1108</locationX>
-        <locationY>341</locationY>
-        <defaultConnectorLabel>Default Path</defaultConnectorLabel>
-        <waitEvents>
-            <name>Case_has_been_closed</name>
-            <conditionLogic>and</conditionLogic>
-            <connector>
-                <targetReference>Get_SIS_Account</targetReference>
-            </connector>
-            <eventType>Subflow_SIS__e</eventType>
-            <inputParameters>
-                <name>Account_Id__c</name>
-                <value>
-                    <elementReference>Account.Id</elementReference>
-                </value>
-            </inputParameters>
-            <label>Case has been closed</label>
-            <outputParameters>
-                <assignToReference>SubflowSisEvent</assignToReference>
-                <name>Subflow_SIS__e</name>
-            </outputParameters>
-        </waitEvents>
-    </waits>
+    <variables>
+        <description>Wait for case to be closed, then the process builder CaseSisClosed will relaunch the flow a second time</description>
+        <name>WaitForNextAction</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
 </Flow>

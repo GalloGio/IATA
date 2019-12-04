@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Retrieve_available_Sales_Areas</name>
         <label>Retrieve available Sales Areas</label>
-        <locationX>265</locationX>
-        <locationY>786</locationY>
+        <locationX>292</locationX>
+        <locationY>1092</locationY>
         <actionName>FlowGetSalesAreasInvocable</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -19,7 +19,7 @@
         <inputParameters>
             <name>selectedBusinessContext</name>
             <value>
-                <elementReference>SelectedBusinessContext</elementReference>
+                <elementReference>BUSINESS_CONTEXT_EAF</elementReference>
             </value>
         </inputParameters>
         <outputParameters>
@@ -30,8 +30,8 @@
     <actionCalls>
         <name>Update_account_role_to_Pending</name>
         <label>Update account role to &apos;Pending&apos;</label>
-        <locationX>548</locationX>
-        <locationY>1191</locationY>
+        <locationX>612</locationX>
+        <locationY>1597</locationY>
         <actionName>FlowUpdateAccountRoleWithoutSharing</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -46,15 +46,15 @@
         <inputParameters>
             <name>flowStatus</name>
             <value>
-                <elementReference>PendingStatus</elementReference>
+                <elementReference>FLOW_STATUS_PENDING</elementReference>
             </value>
         </inputParameters>
     </actionCalls>
     <assignments>
         <name>AddErrorMsgAccountNoAddress</name>
         <label>AddErrorMsgAccountNoAddress</label>
-        <locationX>706</locationX>
-        <locationY>294</locationY>
+        <locationX>833</locationX>
+        <locationY>328</locationY>
         <assignmentItems>
             <assignToReference>VerificationErrorMessage</assignToReference>
             <operator>Add</operator>
@@ -63,14 +63,14 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Get_Account_Role</targetReference>
+            <targetReference>Get_E_F_Account_Role</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>AddErrorMsgAccountNotVerified</name>
         <label>AddErrorMsgAccountNotVerified</label>
-        <locationX>709</locationX>
-        <locationY>175</locationY>
+        <locationX>833</locationX>
+        <locationY>144</locationY>
         <assignmentItems>
             <assignToReference>VerificationErrorMessage</assignToReference>
             <operator>Add</operator>
@@ -85,8 +85,8 @@
     <assignments>
         <name>AddErrorMsgAccountRole</name>
         <label>AddErrorMsgAccountRole</label>
-        <locationX>703</locationX>
-        <locationY>445</locationY>
+        <locationX>833</locationX>
+        <locationY>532</locationY>
         <assignmentItems>
             <assignToReference>VerificationErrorMessage</assignToReference>
             <operator>Add</operator>
@@ -101,8 +101,8 @@
     <assignments>
         <name>AddErrorMsgContactRole</name>
         <label>AddErrorMsgContactRole</label>
-        <locationX>697</locationX>
-        <locationY>724</locationY>
+        <locationX>844</locationX>
+        <locationY>936</locationY>
         <assignmentItems>
             <assignToReference>VerificationErrorMessage</assignToReference>
             <operator>Add</operator>
@@ -111,14 +111,14 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Check_If_Screen_Has_Error_Msg_To_Display</targetReference>
+            <targetReference>Has_Error_Msg_To_Display</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>AddErrorMsgNoContact</name>
         <label>AddErrorMsgNoContact</label>
-        <locationX>709</locationX>
-        <locationY>569</locationY>
+        <locationX>839</locationX>
+        <locationY>693</locationY>
         <assignmentItems>
             <assignToReference>VerificationErrorMessage</assignToReference>
             <operator>Add</operator>
@@ -127,14 +127,14 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Account_Role_exists</targetReference>
+            <targetReference>Account_Role_created_bis</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Fill_Address_Role_Business_Context</name>
         <label>Fill Address Role Business Context</label>
-        <locationX>694</locationX>
-        <locationY>1845</locationY>
+        <locationX>762</locationX>
+        <locationY>2252</locationY>
         <assignmentItems>
             <assignToReference>AddressRoleBusinessContext.Address_Role__c</assignToReference>
             <operator>Assign</operator>
@@ -163,8 +163,8 @@
     <assignments>
         <name>Fill_Address_Role_fields</name>
         <label>Fill Address Role fields</label>
-        <locationX>687</locationX>
-        <locationY>1555</locationY>
+        <locationX>754</locationX>
+        <locationY>1833</locationY>
         <assignmentItems>
             <assignToReference>BusinessAddressRole.Address__c</assignToReference>
             <operator>Assign</operator>
@@ -186,8 +186,8 @@
     <assignments>
         <name>Set_Status_Pending_to_ARBC</name>
         <label>Set Status Pending to ARBC</label>
-        <locationX>690</locationX>
-        <locationY>2015</locationY>
+        <locationX>758</locationX>
+        <locationY>2421</locationY>
         <assignmentItems>
             <assignToReference>AddressRoleBusinessContext.Account_Activation_Context_Status__c</assignToReference>
             <operator>Assign</operator>
@@ -200,21 +200,14 @@
         </connector>
     </assignments>
     <constants>
-        <name>EAF_Account_Role</name>
+        <name>BUSINESS_CONTEXT_EAF</name>
         <dataType>String</dataType>
         <value>
-            <stringValue>EAF</stringValue>
+            <stringValue>E&amp;F</stringValue>
         </value>
     </constants>
     <constants>
-        <name>EAF_Contact_Role</name>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>EAF</stringValue>
-        </value>
-    </constants>
-    <constants>
-        <name>PendingStatus</name>
+        <name>FLOW_STATUS_PENDING</name>
         <dataType>String</dataType>
         <value>
             <stringValue>Pending</stringValue>
@@ -223,14 +216,14 @@
     <decisions>
         <name>Account_is_verified</name>
         <label>Account is verified ?</label>
-        <locationX>458</locationX>
-        <locationY>51</locationY>
+        <locationX>537</locationX>
+        <locationY>52</locationY>
         <defaultConnector>
             <targetReference>Address_is_filled</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <defaultConnectorLabel>is verified</defaultConnectorLabel>
         <rules>
-            <name>Unverified_Account</name>
+            <name>unverified_Account</name>
             <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>Account.Verification_Status__c</leftValueReference>
@@ -249,18 +242,18 @@
             <connector>
                 <targetReference>AddErrorMsgAccountNotVerified</targetReference>
             </connector>
-            <label>Unverified account</label>
+            <label>unverified account</label>
         </rules>
     </decisions>
     <decisions>
-        <name>Account_Role_exist</name>
-        <label>Account Role exist ?</label>
-        <locationX>462</locationX>
-        <locationY>365</locationY>
+        <name>Account_Role_created</name>
+        <label>E&amp;F Account Role created ?</label>
+        <locationX>543</locationX>
+        <locationY>432</locationY>
         <defaultConnector>
             <targetReference>Get_Contacts</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <defaultConnectorLabel>has account role</defaultConnectorLabel>
         <rules>
             <name>Account_role_uncreated</name>
             <conditionLogic>and</conditionLogic>
@@ -274,18 +267,18 @@
             <connector>
                 <targetReference>AddErrorMsgAccountRole</targetReference>
             </connector>
-            <label>Account role uncreated</label>
+            <label>account role uncreated</label>
         </rules>
     </decisions>
     <decisions>
-        <name>Account_Role_exists</name>
-        <label>Account Role exists ?</label>
-        <locationX>317</locationX>
-        <locationY>571</locationY>
+        <name>Account_Role_created_bis</name>
+        <label>E&amp;F Account Role created ?</label>
+        <locationX>553</locationX>
+        <locationY>792</locationY>
         <defaultConnector>
             <targetReference>Get_E_F_Contact_Role</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <defaultConnectorLabel>has account role</defaultConnectorLabel>
         <rules>
             <name>no_account_role</name>
             <conditionLogic>and</conditionLogic>
@@ -305,14 +298,14 @@
     <decisions>
         <name>Account_role_has_no_flow_status</name>
         <label>Account role has no flow status ?</label>
-        <locationX>431</locationX>
-        <locationY>1069</locationY>
+        <locationX>605</locationX>
+        <locationY>1372</locationY>
         <defaultConnector>
             <targetReference>FlowContinueBackgroundScreen</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <defaultConnectorLabel>already in pending</defaultConnectorLabel>
         <rules>
-            <name>No_flow_status</name>
+            <name>no_flow_status</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>AccountRole.Flow_Status__c</leftValueReference>
@@ -324,20 +317,20 @@
             <connector>
                 <targetReference>Update_account_role_to_Pending</targetReference>
             </connector>
-            <label>No flow status</label>
+            <label>no flow status</label>
         </rules>
     </decisions>
     <decisions>
         <name>Address_is_filled</name>
         <label>Address is filled ?</label>
-        <locationX>454</locationX>
-        <locationY>193</locationY>
+        <locationX>539</locationX>
+        <locationY>232</locationY>
         <defaultConnector>
-            <targetReference>Get_Account_Role</targetReference>
+            <targetReference>Get_E_F_Account_Role</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <defaultConnectorLabel>has addess filled</defaultConnectorLabel>
         <rules>
-            <name>Address_not_filled</name>
+            <name>address_not_filled</name>
             <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>Account.IATA_ISO_Country__c</leftValueReference>
@@ -377,18 +370,18 @@
             <connector>
                 <targetReference>AddErrorMsgAccountNoAddress</targetReference>
             </connector>
-            <label>Address not filled</label>
+            <label>address not filled</label>
         </rules>
     </decisions>
     <decisions>
         <name>Address_Role_Business_Context_Exists</name>
         <label>Address Role Business Context exists ?</label>
-        <locationX>253</locationX>
-        <locationY>1932</locationY>
+        <locationX>321</locationX>
+        <locationY>2339</locationY>
         <defaultConnector>
             <targetReference>Set_Status_Pending_to_ARBC</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <defaultConnectorLabel>ARBC is already created</defaultConnectorLabel>
         <rules>
             <name>ARBC_has_to_be_created</name>
             <conditionLogic>and</conditionLogic>
@@ -408,12 +401,12 @@
     <decisions>
         <name>Business_Address_Role_exists</name>
         <label>Business Address Role exists ?</label>
-        <locationX>449</locationX>
-        <locationY>1560</locationY>
+        <locationX>513</locationX>
+        <locationY>1843</locationY>
         <defaultConnector>
             <targetReference>Get_Business_Context</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <defaultConnectorLabel>address has address role</defaultConnectorLabel>
         <rules>
             <name>AR_has_to_be_created</name>
             <conditionLogic>and</conditionLogic>
@@ -433,12 +426,12 @@
     <decisions>
         <name>Business_context_exists</name>
         <label>Business context exists ?</label>
-        <locationX>258</locationX>
-        <locationY>1656</locationY>
+        <locationX>326</locationX>
+        <locationY>2063</locationY>
         <defaultConnector>
             <targetReference>Get_Address_Role_Business_Context</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <defaultConnectorLabel>business context exists</defaultConnectorLabel>
         <rules>
             <name>no_business_context</name>
             <conditionLogic>and</conditionLogic>
@@ -456,41 +449,16 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Check_If_Screen_Has_Error_Msg_To_Display</name>
-        <label>Check If Screen Has Error Msg To Display</label>
-        <locationX>453</locationX>
-        <locationY>783</locationY>
-        <defaultConnector>
-            <targetReference>Retrieve_available_Sales_Areas</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Has_Error</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>VerificationErrorMessage</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>DisplayErrorMsg</targetReference>
-            </connector>
-            <label>Has Error</label>
-        </rules>
-    </decisions>
-    <decisions>
         <name>Contact_created</name>
         <label>Contact created ?</label>
-        <locationX>464</locationX>
-        <locationY>514</locationY>
+        <locationX>553</locationX>
+        <locationY>612</locationY>
         <defaultConnector>
-            <targetReference>Account_Role_exists</targetReference>
+            <targetReference>Account_Role_created_bis</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <defaultConnectorLabel>has contacts</defaultConnectorLabel>
         <rules>
-            <name>No_contacts</name>
+            <name>no_contacts</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>Contacts</leftValueReference>
@@ -502,20 +470,20 @@
             <connector>
                 <targetReference>AddErrorMsgNoContact</targetReference>
             </connector>
-            <label>No contacts</label>
+            <label>no contacts</label>
         </rules>
     </decisions>
     <decisions>
-        <name>Contact_role_created</name>
-        <label>Contact role created ?</label>
-        <locationX>455</locationX>
-        <locationY>650</locationY>
+        <name>E_F_Contact_role_created</name>
+        <label>E&amp;F Contact role created ?</label>
+        <locationX>284</locationX>
+        <locationY>948</locationY>
         <defaultConnector>
-            <targetReference>Check_If_Screen_Has_Error_Msg_To_Display</targetReference>
+            <targetReference>Has_Error_Msg_To_Display</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <defaultConnectorLabel>has contact role</defaultConnectorLabel>
         <rules>
-            <name>No_contact_role</name>
+            <name>no_contact_role</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>ContactRoles</leftValueReference>
@@ -527,20 +495,45 @@
             <connector>
                 <targetReference>AddErrorMsgContactRole</targetReference>
             </connector>
-            <label>No contact role</label>
+            <label>no contact role</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Has_Error_Msg_To_Display</name>
+        <label>Has Error Msg To Display ?</label>
+        <locationX>520</locationX>
+        <locationY>1047</locationY>
+        <defaultConnector>
+            <targetReference>Retrieve_available_Sales_Areas</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>no errors</defaultConnectorLabel>
+        <rules>
+            <name>display_errors_msg</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>VerificationErrorMessage</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>DisplayErrorMsg</targetReference>
+            </connector>
+            <label>display errors msg</label>
         </rules>
     </decisions>
     <decisions>
         <name>Sales_area_available</name>
         <label>Sales area available ?</label>
-        <locationX>254</locationX>
-        <locationY>915</locationY>
+        <locationX>285</locationX>
+        <locationY>1228</locationY>
         <defaultConnector>
             <targetReference>Sales_Area_Selection_Screen</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <defaultConnectorLabel>sales areas available</defaultConnectorLabel>
         <rules>
-            <name>No_sales_area</name>
+            <name>no_sales_area</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>SalesAreaAvailable</leftValueReference>
@@ -552,10 +545,15 @@
             <connector>
                 <targetReference>No_Sales_Area_Msg_Screen</targetReference>
             </connector>
-            <label>No sales area</label>
+            <label>no sales area</label>
         </rules>
     </decisions>
     <description>Verifies account before sending to touchpoint, then it asks user to select a sales area, then the E&amp;F background subflow is launched and user can leave the form.</description>
+    <formulas>
+        <name>CurrentUserId</name>
+        <dataType>String</dataType>
+        <expression>{!$User.Id}</expression>
+    </formulas>
     <interviewLabel>Account Context Activation E&amp;F Subflow {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Account Context Activation E&amp;F Subflow</label>
     <processMetadataValues>
@@ -574,18 +572,18 @@
     <recordCreates>
         <name>Create_Address_Role_Business_Context</name>
         <label>Create Address Role Business Context</label>
-        <locationX>872</locationX>
-        <locationY>1845</locationY>
+        <locationX>936</locationX>
+        <locationY>2252</locationY>
         <connector>
-            <targetReference>Start_background_E_F_Subflow</targetReference>
+            <targetReference>Get_user_that_launched_the_flow</targetReference>
         </connector>
         <inputReference>AddressRoleBusinessContext</inputReference>
     </recordCreates>
     <recordCreates>
         <name>Create_Business_Address_Role</name>
         <label>Create Business Address Role</label>
-        <locationX>687</locationX>
-        <locationY>1684</locationY>
+        <locationX>755</locationX>
+        <locationY>2060</locationY>
         <connector>
             <targetReference>Get_Business_Context</targetReference>
         </connector>
@@ -594,8 +592,8 @@
     <recordLookups>
         <name>Get_Account_Record</name>
         <label>Get Account</label>
-        <locationX>290</locationX>
-        <locationY>49</locationY>
+        <locationX>311</locationX>
+        <locationY>50</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Account_is_verified</targetReference>
@@ -628,38 +626,10 @@
         <queriedFields>EF_SIS_Code__c</queriedFields>
     </recordLookups>
     <recordLookups>
-        <name>Get_Account_Role</name>
-        <label>Get Account Role</label>
-        <locationX>236</locationX>
-        <locationY>302</locationY>
-        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Account_Role_exist</targetReference>
-        </connector>
-        <filters>
-            <field>Account__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>AccountId</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>Functional_Role__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>SelectedBusinessContext</elementReference>
-            </value>
-        </filters>
-        <object>Account_Role__c</object>
-        <outputReference>AccountRole</outputReference>
-        <queriedFields>Id</queriedFields>
-        <queriedFields>Flow_Status__c</queriedFields>
-    </recordLookups>
-    <recordLookups>
         <name>Get_Address_Role_Business_Context</name>
         <label>Get Address Role Business Context</label>
-        <locationX>264</locationX>
-        <locationY>1788</locationY>
+        <locationX>53</locationX>
+        <locationY>2201</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Address_Role_Business_Context_Exists</targetReference>
@@ -686,8 +656,8 @@
     <recordLookups>
         <name>Get_Business_Address</name>
         <label>Get Business Address</label>
-        <locationX>261</locationX>
-        <locationY>1340</locationY>
+        <locationX>326</locationX>
+        <locationY>1711</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Business_Address_Role</targetReference>
@@ -713,8 +683,8 @@
     <recordLookups>
         <name>Get_Business_Address_Role</name>
         <label>Get Business Address Role</label>
-        <locationX>263</locationX>
-        <locationY>1470</locationY>
+        <locationX>327</locationX>
+        <locationY>1850</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Business_Address_Role_exists</targetReference>
@@ -740,8 +710,8 @@
     <recordLookups>
         <name>Get_Business_Context</name>
         <label>Get Business Context</label>
-        <locationX>460</locationX>
-        <locationY>1685</locationY>
+        <locationX>524</locationX>
+        <locationY>2060</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Business_context_exists</targetReference>
@@ -750,7 +720,7 @@
             <field>Business_Context__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>SelectedBusinessContext</elementReference>
+                <elementReference>BUSINESS_CONTEXT_EAF</elementReference>
             </value>
         </filters>
         <filters>
@@ -767,8 +737,8 @@
     <recordLookups>
         <name>Get_Contacts</name>
         <label>Get Contacts</label>
-        <locationX>236</locationX>
-        <locationY>453</locationY>
+        <locationX>296</locationX>
+        <locationY>541</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Contact_created</targetReference>
@@ -785,13 +755,41 @@
         <queriedFields>Id</queriedFields>
     </recordLookups>
     <recordLookups>
-        <name>Get_E_F_Contact_Role</name>
-        <label>Get E&amp;F Contact Role</label>
-        <locationX>237</locationX>
-        <locationY>648</locationY>
+        <name>Get_E_F_Account_Role</name>
+        <label>Get E&amp;F Account Role</label>
+        <locationX>300</locationX>
+        <locationY>336</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Contact_role_created</targetReference>
+            <targetReference>Account_Role_created</targetReference>
+        </connector>
+        <filters>
+            <field>Account__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>AccountId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Functional_Role__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>BUSINESS_CONTEXT_EAF</elementReference>
+            </value>
+        </filters>
+        <object>Account_Role__c</object>
+        <outputReference>AccountRole</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Flow_Status__c</queriedFields>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_E_F_Contact_Role</name>
+        <label>Get E&amp;F Contact Role</label>
+        <locationX>292</locationX>
+        <locationY>785</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>E_F_Contact_role_created</targetReference>
         </connector>
         <filters>
             <field>Account_Role__c</field>
@@ -804,7 +802,7 @@
             <field>Functional_Role__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>SelectedBusinessContext</elementReference>
+                <elementReference>BUSINESS_CONTEXT_EAF</elementReference>
             </value>
         </filters>
         <object>Account_Contact_Role__c</object>
@@ -812,13 +810,35 @@
         <queriedFields>Id</queriedFields>
         <queriedFields>Contact__c</queriedFields>
     </recordLookups>
+    <recordLookups>
+        <name>Get_user_that_launched_the_flow</name>
+        <label>Get user that launched the flow</label>
+        <locationX>1119</locationX>
+        <locationY>2342</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Start_background_E_F_Subflow</targetReference>
+        </connector>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>CurrentUserId</elementReference>
+            </value>
+        </filters>
+        <object>User</object>
+        <outputReference>UserFlowLauncher</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Name</queriedFields>
+        <queriedFields>Email</queriedFields>
+    </recordLookups>
     <recordUpdates>
         <name>Update_Address_Role_Business_Context</name>
         <label>Update Address Role Business Context</label>
-        <locationX>869</locationX>
-        <locationY>2015</locationY>
+        <locationX>937</locationX>
+        <locationY>2421</locationY>
         <connector>
-            <targetReference>Start_background_E_F_Subflow</targetReference>
+            <targetReference>Get_user_that_launched_the_flow</targetReference>
         </connector>
         <inputReference>AddressRoleBusinessContext</inputReference>
     </recordUpdates>
@@ -826,8 +846,8 @@
         <description>Dispay error that occured during the verification steps</description>
         <name>DisplayErrorMsg</name>
         <label>DisplayErrorMsg</label>
-        <locationX>690</locationX>
-        <locationY>854</locationY>
+        <locationX>758</locationX>
+        <locationY>1149</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -842,8 +862,8 @@
     <screens>
         <name>FlowContinueBackgroundScreen</name>
         <label>Flow Continue Background Screen</label>
-        <locationX>260</locationX>
-        <locationY>1183</locationY>
+        <locationX>328</locationX>
+        <locationY>1589</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -861,8 +881,8 @@
     <screens>
         <name>No_Sales_Area_Msg_Screen</name>
         <label>No Sales Area Msg Screen</label>
-        <locationX>459</locationX>
-        <locationY>918</locationY>
+        <locationX>529</locationX>
+        <locationY>1224</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -878,7 +898,7 @@
         <name>NoBusinessContextErrorMsg</name>
         <label>NoBusinessContextErrorMsg</label>
         <locationX>50</locationX>
-        <locationY>1651</locationY>
+        <locationY>1980</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -893,8 +913,8 @@
     <screens>
         <name>Sales_Area_Selection_Screen</name>
         <label>Sales Area Selection Screen</label>
-        <locationX>263</locationX>
-        <locationY>1049</locationY>
+        <locationX>295</locationX>
+        <locationY>1362</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -926,13 +946,19 @@
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>
-    <startElementReference>Get_Account_Record</startElementReference>
+    <start>
+        <locationX>129</locationX>
+        <locationY>50</locationY>
+        <connector>
+            <targetReference>Get_Account_Record</targetReference>
+        </connector>
+    </start>
     <status>Active</status>
     <subflows>
         <name>Start_background_E_F_Subflow</name>
         <label>Start background E&amp;F Subflow</label>
-        <locationX>1085</locationX>
-        <locationY>1931</locationY>
+        <locationX>1294</locationX>
+        <locationY>2342</locationY>
         <flowName>Account_Context_Activation_E_F_Background_Subflow</flowName>
         <inputAssignments>
             <name>Account</name>
@@ -958,10 +984,12 @@
                 <elementReference>ContactRoles</elementReference>
             </value>
         </inputAssignments>
-        <outputAssignments>
-            <assignToReference>FlowSuccessfullyEnded</assignToReference>
-            <name>FlowSuccessfullyEnded</name>
-        </outputAssignments>
+        <inputAssignments>
+            <name>UserFlowLauncher</name>
+            <value>
+                <elementReference>UserFlowLauncher</elementReference>
+            </value>
+        </inputAssignments>
     </subflows>
     <variables>
         <name>Account</name>
@@ -983,7 +1011,7 @@
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
-        <isOutput>true</isOutput>
+        <isOutput>false</isOutput>
         <objectType>Account_Role__c</objectType>
     </variables>
     <variables>
@@ -1035,27 +1063,10 @@
         <objectType>Contact</objectType>
     </variables>
     <variables>
-        <name>FlowSuccessfullyEnded</name>
-        <dataType>Boolean</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>true</isOutput>
-        <value>
-            <booleanValue>false</booleanValue>
-        </value>
-    </variables>
-    <variables>
         <name>SalesAreaAvailable</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>SelectedBusinessContext</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>true</isInput>
         <isOutput>false</isOutput>
     </variables>
     <variables>
@@ -1064,6 +1075,14 @@
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>UserFlowLauncher</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>User</objectType>
     </variables>
     <variables>
         <name>VerificationErrorMessage</name>
