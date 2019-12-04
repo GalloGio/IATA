@@ -1,0 +1,304 @@
+<aura:component controller="GADM_ExternalUserContactDetail_CTRL" description="GADM_ExternalUserContactListDetail">
+
+    <!--USER INFORMATION-->
+    <aura:attribute name="selectedUserInfo" type="Object"/>
+    <aura:attribute name="currentUserInfo" type="Object"/>
+    <aura:attribute name="isPowerUser" type="Boolean"/>
+    <aura:attribute name="isSuperUser" type="Boolean"/>
+    <aura:attribute name="isGadmUser" type="Boolean"/>
+    <aura:attribute name="businessUnits" type="List"/>
+    <aura:attribute name="currentUserIsSelectedUser" type="Boolean" default="false"/>
+
+    <!--TABLE DATA-->
+    <aura:attribute name="copyData" type="String" default=""/>
+    <aura:attribute name="dataRoles" type="List" default="[]"/>
+    <aura:attribute name="dataBusinessUnits" type="List" default="[]"/>
+    <aura:attribute name="dataActors" type="List" default="[]"/>
+
+    <!--RELOAD LIST IF DATA WAS MODIFIED-->
+    <aura:attribute name="dataModified" type="Boolean" default="false"/>
+
+    <!--SHOW PROPERTIES-->
+    <aura:attribute name="showTable" type="Boolean" default="false"/>
+    <aura:attribute name="showSpinner" type="Boolean" default="false"/>
+
+    <!--ACTOR CAN HAVE ONLY CERTAIN NUMBER OF USERS-->
+    <aura:attribute name="userCountReached" type="Boolean" default="false"/>
+    <aura:attribute name="maxUserCount" type="Integer"/>
+    <aura:attribute name="activeUserCount" type="Integer"/>
+    <aura:attribute name="hasGadmUserRole" type="Boolean"/>
+    <aura:attribute name="gadmUserRoleAdded" type="Boolean" default="false"/>
+    <aura:attribute name="gadmUserReachedText" type="String" default=""/>
+
+    <!--BACK EVENT-->
+    <aura:registerEvent name="Back_EVT" type="c:GADM_ExternalUserContactList_EVT"/>
+
+    <!--HANDLER-->
+    <aura:handler name="init" value="{!this}" action="{! c.doInit}"/>
+
+
+    <div class="page_container">
+
+        <aura:if isTrue="{! v.showTable}">
+
+            <!--TABLE START-->
+            <div class="slds-grid slds-wrap">
+
+                <!--PROFILE INFORMATION HEADER-->
+                <div class="slds-col--padded slds-size--12-of-12">
+                    <h2>Profile Information</h2>
+                </div>
+
+                <!--PROFILE INFORMATION-->
+                <div class="slds-p-bottom_large slds-grid slds-col--padded slds-size--12-of-12">
+
+                    <!--PROFILE INFORMATION - LEFT COLUMN-->
+                    <div class="slds-col--padded slds-size--6-of-12">
+
+                        <div class="slds-p-bottom_xx_small">
+                            <label class="slds-form-element__label">NAME</label>
+                            <div class="slds-p-vertical_x-small" title="{! v.selectedUserInfo.con.Salutation + ' ' + v.selectedUserInfo.con.LastName + ', ' + v.selectedUserInfo.con.FirstName}">{! v.selectedUserInfo.con.Salutation}&nbsp; {! v.selectedUserInfo.con.LastName}, {! v.selectedUserInfo.con.FirstName}</div>
+                        </div>
+
+                        <div class="slds-p-bottom_xx_small">
+                            <label class="slds-form-element__label" >EMAIL</label>
+                            <div class="slds-p-vertical_x-small" title="{!v.selectedUserInfo.con.Email}">{!v.selectedUserInfo.con.Email}</div>
+                        </div>
+
+                        <div class="slds-p-bottom_xx_small">
+                            <label class="slds-form-element__label" >BUSINESS PHONE</label>
+                            <div class="slds-p-vertical_x-small" title="{!v.selectedUserInfo.con.Phone}">{!v.selectedUserInfo.con.Phone}</div>
+                        </div>
+
+                        <div class="slds-p-bottom_xx_small">
+                            <label class="slds-form-element__label" >MOBILE PHONE</label>
+                            <div class="slds-p-vertical_x-small" title="{!v.selectedUserInfo.con.MobilePhone}">{!v.selectedUserInfo.con.MobilePhone}</div>
+                        </div>
+
+                        <div class="slds-p-bottom_xx_small">
+                            <label class="slds-form-element__label" >BUSINESS FAX</label>
+                            <div class="slds-p-vertical_x-small" title="{!v.selectedUserInfo.con.Fax}">{!v.selectedUserInfo.con.Fax}</div>
+                        </div>
+
+                    </div>
+
+
+                    <!--PROFILE INFORMATION - RIGHT COLUMN-->
+                    <div class="slds-col--padded slds-size--6-of-12">
+
+                        <div class="slds-p-bottom_xx_small">
+                            <label class="slds-form-element__label" >JOB TITLE</label>
+                            <div class="slds-p-vertical_x-small" title="{!v.selectedUserInfo.con.Title}">{!v.selectedUserInfo.con.Title}</div>
+                        </div>
+
+                        <div class="slds-p-bottom_xx_small">
+                            <label class="slds-form-element__label" >STATUS</label>
+                            <div class="slds-p-vertical_x-small" title="{!v.selectedUserInfo.con.User_Portal_Status__c}">{!v.selectedUserInfo.con.User_Portal_Status__c}</div>
+                        </div>
+
+                        <div class="slds-p-bottom_xx_small">
+                            <label class="slds-form-element__label" >PREFERRED LANGUAGE</label>
+                            <div class="slds-p-vertical_x-small" title="{!v.selectedUserInfo.con.Preferred_Language__c}">{!v.selectedUserInfo.con.Preferred_Language__c}</div>
+                        </div>
+
+                        <div class="slds-p-bottom_xx_small">
+                            <label class="slds-form-element__label" >FUNCTION</label>
+                            <div class="slds-p-vertical_x-small" title="{!v.selectedUserInfo.con.Membership_Function__c}">{!v.selectedUserInfo.con.Membership_Function__c}</div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!--BUSINESS INFORMATION HEADER-->
+                <div class="slds-col--padded slds-size--12-of-12">
+                    <h2>Business Information</h2>
+                </div>
+
+                <!--BUSINESS INFORMATION-->
+                <div class="slds-grid slds-col--padded slds-size--12-of-12">
+
+                    <!--BUSINESS INFORMATION - FIRST COLUMN-->
+                    <div class="slds-p-bottom_small slds-col--padded slds-size--4-of-12">
+                        <label class="slds-form-element__label" >ACCOUNT</label>
+                        <div class="slds-p-vertical_x-small" title="{!v.selectedUserInfo.con.Account.Name}">{!v.selectedUserInfo.con.Account.Name}</div>
+                    </div>
+
+                    <!--BUSINESS INFORMATION - SECOND COLUMN-->
+                    <div class="slds-p-bottom_small slds-col--padded slds-size--4-of-12">
+                        <label class="slds-form-element__label" >IATA CODE</label>
+                        <div class="slds-p-vertical_x-small" title="{!v.selectedUserInfo.con.Account.IATACode__c}">{!v.selectedUserInfo.con.Account.IATACode__c}</div>
+                    </div>
+
+                    <!--BUSINESS INFORMATION - THIRD COLUMN-->
+                    <div class="slds-p-bottom_small slds-col--padded slds-size--4-of-12">
+                        <label class="slds-form-element__label" >REGION</label>
+                        <div class="slds-p-vertical_x-small" title="{!v.selectedUserInfo.con.Account.Region__c}">{!v.selectedUserInfo.con.Account.Region__c}</div>
+                    </div>
+
+                </div>
+
+
+                <!--BUSINESS INFORMATION HEADER-->
+                <div class="slds-col--padded slds-size--12-of-12">
+                    <h2>Management Information</h2>
+                </div>
+
+
+                <!--BUSINESS INFORMATION - FIRST ROW-->
+                <div class="slds-grid slds-col--padded slds-size--12-of-12">
+
+                    <!--ROLES-->
+                    <div class="slds-col--padded slds-size--6-of-12">
+
+                        <div class="slds-grid slds-wrap" >
+                            <p class="slds-p-bottom_small">Roles:</p>
+                            <aura:if isTrue="{! v.dataRoles.length > 0}">
+                                <aura:iteration items="{!v.dataRoles}" var="dataRole">
+                                    <div class="slds-size--1-of-1 slds-grid slds-col line">
+                                        <!--GADM User role-->
+                                        <aura:if isTrue="{! dataRole.value.role.Name == 'GADM User'}">
+
+                                            <div class="slds-col slds-size--1-of-12"><lightning:input aura:id="gadmUserCheckbox" type="checkbox" checked="{!dataRole.value.isChecked}" disabled="{! !dataRole.value.isEditable || dataRole.value.isDomainBlocked}" onchange="{! c.checkUserCount}"/></div>
+                                            <div class="slds-truncate slds-col slds-size--10-of-12" title="{!dataRole.value.role.Name}">{!dataRole.value.role.Name}</div>
+                                            <aura:if isTrue="{! and(and(!v.hasGadmUserRole, v.gadmUserRoleAdded), v.userCountReached)}">
+                                                <div class="slds-col slds-size--1-of-12 red small"><lightning:helptext content="{!v.gadmUserReachedText}"/></div>
+
+                                                <aura:set attribute="else">
+                                                    <aura:if isTrue="{! !dataRole.value.isEditable || dataRole.value.isDomainBlocked}">
+                                                        <div class="label slds-col slds-size-1-of-12 red small"><lightning:helptext content="{! dataRole.errorText}"/></div>
+                                                    </aura:if>
+                                                </aura:set>
+                                            </aura:if>
+
+                                            <!--OTHER ROLES-->
+                                            <aura:set attribute="else">
+
+                                                <div class="slds-col slds-size--1-of-12"><lightning:input type="checkbox" checked="{!dataRole.value.isChecked}" disabled="{! !dataRole.value.isEditable}"/></div>
+                                                <div class="slds-truncate slds-col slds-size--10-of-12" title="{!dataRole.value.role.Name}">{!dataRole.value.role.Name}</div>
+                                                <aura:if isTrue="{! !dataRole.value.isEditable || dataRole.value.isDomainBlocked}">
+                                                    <div class="label slds-col slds-size-1-of-12 red small"><lightning:helptext content="{! dataRole.errorText}"/></div>
+                                                </aura:if>
+
+                                            </aura:set>
+
+                                        </aura:if>
+
+                                    </div>
+                                </aura:iteration>
+                                <aura:set attribute="else">
+                                    <div class="slds-size--1-of-1 slds-grid line">
+                                        <div class="slds-col slds-size--6-of-12">
+                                            <div>{! $Label.c.GADM_User_Management_no_data}</div>
+                                        </div>
+                                    </div>
+                                </aura:set>
+                            </aura:if>
+
+                        </div>
+
+                    </div>
+
+
+                    <!--BUSINESS UNITS-->
+                    <div class="slds-col--padded slds-size--6-of-12">
+
+                        <div class="slds-grid slds-wrap " >
+                            <p class="slds-p-bottom_small">Business Units:</p>
+                            <aura:if isTrue="{! v.dataBusinessUnits.length > 0}">
+                                <aura:iteration items="{!v.dataBusinessUnits}" var="dataBusinessUnit">
+                                    <div class="slds-size--1-of-1 slds-grid line">
+                                        <div class="slds-col slds-size--1-of-12"><lightning:input type="checkbox" checked="{!dataBusinessUnit.value.isChecked}" disabled="{! !dataBusinessUnit.value.isEditable}" /></div>
+                                        <div class="slds-truncate slds-col slds-size--10-of-12" title="{!dataBusinessUnit.value.businessUnit.Name}">{!dataBusinessUnit.value.businessUnit.Name}</div>
+                                        <aura:if isTrue="{! !dataBusinessUnit.value.isEditable}">
+                                            <div class="label slds-col slds-size-1-of-12 red small"><lightning:helptext content="{! dataBusinessUnit.errorText}"/></div>
+                                        </aura:if>
+                                    </div>
+                                </aura:iteration>
+                                <aura:set attribute="else">
+                                    <div class="slds-size--1-of-1 slds-grid line">
+                                        <div class="slds-col slds-size--6-of-12">
+                                            <div>{! $Label.c.GADM_User_Management_no_data}</div>
+                                        </div>
+                                    </div>
+                                </aura:set>
+                            </aura:if>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!--BUSINESS INFORMATION - SECOND ROW-->
+                <div class="slds-grid slds-col--padded slds-size--12-of-12">
+
+                    <!--ACCOUNTS-->
+                    <div class="slds-col--padded slds-size--6-of-12">
+
+                        <div class="slds-grid slds-wrap slds-p-bottom--large" >
+                            <p class="slds-p-bottom_small">Actors:</p>
+                            <aura:if isTrue="{! v.dataActors.length > 0}">
+                                <aura:iteration items="{!v.dataActors}" var="dataActor">
+                                    <div class="slds-size--1-of-1 slds-grid line">
+                                        <div class="slds-col slds-size--1-of-12"><lightning:input type="checkbox" checked="{!dataActor.value.isChecked}" disabled="{! !dataActor.value.isEditable || dataActor.value.isDomainBlocked}" /></div>
+                                        <!--<div class="slds-col slds-size-1-of-12"><lightning:input type="checkbox" checked="{!dataActor.value.isChecked}"/></div>-->
+                                        <div class="label slds-truncate slds-col slds-size--10-of-12" title="{!dataActor.value.actor.Name}">{!dataActor.value.actor.Name} </div>
+                                        <aura:if isTrue="{! (!dataActor.value.isEditable || dataActor.value.isDomainBlocked)}">
+                                            <div class="label slds-col slds-size-1-of-12 red small"><lightning:helptext content="{! dataActor.errorText}"/></div>
+                                        </aura:if>
+                                    </div>
+                                </aura:iteration>
+                                <aura:set attribute="else">
+                                    <div class="slds-size--1-of-1 slds-grid line">
+                                        <div class="slds-col slds-size--6-of-12">
+                                            <div>{! $Label.c.GADM_User_Management_no_data}</div>
+                                        </div>
+                                    </div>
+                                </aura:set>
+                            </aura:if>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+            <!--END TABLE-->
+
+            <!--SAVE & BACK BUTTONS-->
+            <div  class="slds-grid slds-wrap">
+
+                <!--SAVE BUTTON - IS SHOWN ONLY TO SUPER USER OR POWER USER-->
+                <aura:if isTrue="{! !v.currentUserIsSelectedUser}">
+
+                    <div class="slds-size--1-of-2 slds-p-right_small">
+                        <button class="btn btn-primary btn-grey slds-float--right" onclick="{! c.save }" disabled="{! and(and(!v.hasGadmUserRole, v.gadmUserRoleAdded), v.userCountReached)}">Save</button>
+                    </div>
+
+                </aura:if>
+
+                <!--BACK BUTTON-->
+                <div class="{! !v.currentUserIsSelectedUser ? 'slds-size--1-of-2 slds-p-left_small':'slds-size--1-of-1 center'}">
+                    <button class="btn btn-primary btn-grey " onclick="{! c.back }">Back</button>
+                </div>
+
+            </div>
+
+        </aura:if>
+        <!--SHOW TABLE END-->
+
+        <!--SPINNER-->
+        <aura:if isTrue="{! v.showSpinner}">
+            <lightning:spinner alternativeText="Loading"/>
+        </aura:if>
+
+
+    </div>
+    <!--PAGE CONTAINER END-->
+
+</aura:component>

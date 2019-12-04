@@ -58,8 +58,7 @@ global class ANG_BatchAggregatePwcData implements Database.Batchable<Account>, D
                 'AND Location_Type__c IN :locationTypesLimit ' + 
                 'AND status__c in: AccountStatusLimit ' + 
                 'AND WebStar_ID__c = null ' + 
-                'AND (Purge_Flag__c=false OR Purge_Flag__c=null)' +
-                'AND ANG_FA_Opt_out__c = false';
+                'AND (Purge_Flag__c=false OR Purge_Flag__c=null)';
 
         return (Iterable<Account>) Database.getQueryLocator(sQuery);
     }
