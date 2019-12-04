@@ -6509,10 +6509,9 @@ public without sharing class ISSP_AMS_Accreditation {
 				//NG this will be used for the New Associated Entity
 				if(newForm.Agent_Type__c == AMS_UTILS.NEWFORM_AGENTTYPE_NO_CASH || newform.Agent_Type__c == AMS_UTILS.NEWFORM_AGENTTYPE_CASH || newform.Agent_Type__c == AMS_UTILS.NEWFORM_AGENTTYPE_MULTICOUNTRY){
 					if(validateNewAccModelBranch(true)) errorFound = true;
-				}
 
-				if (!(isMultiCountryNewAE || isMultiCountryAccredittedAddingAEs())) {
-					if (!validateBROfficeDetails()) {
+					if (newForm.Branch_Office_Phone__c == null) {
+						newForm.Branch_Office_Phone_National__c.addError(Label.ISSP_YouMustEnter);
 						errorFound = true;
 					}
 				}
