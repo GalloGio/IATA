@@ -13,6 +13,7 @@
           fixMultipicklistArrowStyle();
           try {refreshSubtypePicklist();} catch(e){}
           changeSubsectionStyle();
+          hideiiNetReason();
         });
         window.onload = function toggleButtons() {
             window.document.getElementsByName('newComment')[0].style.display = 'none';
@@ -34,6 +35,12 @@
                 subsections[i].classList.add("blueback");
             }
         }
+        /* VALINHO */
+        function hideiiNetReason(){
+            $(".caseAreaField  option[value='iiNet']").prop('disabled', true);
+            $(".caseAreaField  option[value='iiNet']").hide();
+        }
+        /* END VALINHO */
         </script>
         <style>
             ul li, ol li {
@@ -370,18 +377,20 @@
 
 									//NEW VALINHO
 									function manageCaseAreaAvaiableOptions(element) {
-										let selectedLabel = $(element).find(":selected").text();
-										if(selectedLabel == "Accounting Centre of China Aviation (ACCA)"){
-											//disable option iiNet and if it was selected, unselect it and the reason (dependent picklist)
-											$(".caseAreaField  option[value='iiNet']").prop('disabled', true);
+                                        let selectedLabel = $(element).find(":selected").text();
+                                        console.log("selected label => ",selectedLabel);
+										if(selectedLabel == "IATA"){
+                                            //enable option iiNet only for IATA
+                                            $(".caseAreaField  option[value='iiNet']").prop('disabled', false);
+											$(".caseAreaField  option[value='iiNet']").show();
+										} else {
+                                            //disable option iiNet and if it was selected, unselect it and the reason (dependent picklist)
+                                            $(".caseAreaField  option[value='iiNet']").prop('disabled', true);
 											$(".caseAreaField  option[value='iiNet']").hide();
 											if ($(".caseAreaField option:selected").val() === 'iiNet') {
 												$(".caseAreaField option:selected").removeAttr("selected");
 												$(".reason1Field option:selected").removeAttr("selected");
 											}
-										} else {
-											$(".caseAreaField  option[value='iiNet']").prop('disabled', false);
-											$(".caseAreaField  option[value='iiNet']").show();
 										}
 									}
 									//END NEW VALINHO
