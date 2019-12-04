@@ -5816,13 +5816,30 @@ public without sharing class ISSP_AMS_Accreditation {
 		}
 	}
 
+	public class CountryRequirement {
+		public AMS_Accreditation_Requirement__c requirement {get; set;}
+		public String countryName {get; set;}
+
+		public CountryRequirement(AMS_Accreditation_Requirement__c requirement, String countryName) {
+			this.requirement = requirement;
+			this.countryName = countryName;
+		}
+	}
+
+	public Map<String, List<AMS_Accreditation_Requirement__c>> mcNoCRequirementsMap {get; set;}
+	public Set<String> mcNoCRequirementsMapKeys {
+		get {
+			return mcNoCRequirementsMap == null ? null : mcNoCRequirementsMap.keySet();
+		} 
+		set;
+	}
+
 	private void retNoCTravelCountryReqments(boolean isFromValidation) {
+		List<AMS_Accreditation_Requirement__c> auxReqsList;
 		String selectedLang = translateApplyLanguage();
 		Id ChangeReqRecTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Requirement__c', 'Change');
 
 		AggregateResult[] distinctReqmentLangs;
-
-		List<AMS_Accreditation_Requirement__c> auxReqsList;
 
 		//Get distinct set of Languages for this country / operation requirements
 		if (stepNumber != '5') {
@@ -5836,22 +5853,52 @@ public without sharing class ISSP_AMS_Accreditation {
 									GROUP BY Language__c
 									ORDER BY Language__c ASC];
 
-			auxReqsList = [SELECT Id, Name, Requirement_text__c, File_to_Upload__c, File_Identifier2__c, Language__c
-						FROM AMS_Accreditation_Requirement__c
-						WHERE AMS_Accreditation_Country_CheckList__r.IATA_ISO_Country__r.ISO_Code__c = :newCase.IFAP_Country_ISO__c AND AMS_Accreditation_Country_CheckList__r.Operation__c = :sector AND Type_Of_Change__c != null
-							AND RecordTypeId = :ChangeReqRecTypeId AND (Type_Of_Change__c INCLUDES (:noticeOfChangeList.get(0)) OR Type_Of_Change__c INCLUDES (:noticeOfChangeList.get(1))
-								OR Type_Of_Change__c INCLUDES (:noticeOfChangeList.get(2)) OR Type_Of_Change__c INCLUDES (:noticeOfChangeList.get(3)))
-							AND ((File_Identifier2__c NOT IN (:AMS_Utils.NOC_SIGNED_CONTRACT, :BNK_ACCNT_DTLS))
-								OR (File_Identifier2__c = : BNK_ACCNT_DTLS))
-						ORDER BY Sort_Order__c ASC];
+			String queryAuxReqsList = 'SELECT Id, Name, Requirement_text__c, File_to_Upload__c, File_Identifier2__c, Language__c, AMS_Accreditation_Country_CheckList__r.IATA_ISO_Country__r.Name FROM AMS_Accreditation_Requirement__c ';
+			
+			if (hqAccount.ANG_Accreditation_Model__c != AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY) {
+				queryAuxReqsList += 'WHERE AMS_Accreditation_Country_CheckList__r.IATA_ISO_Country__r.ISO_Code__c = \'' + newCase.IFAP_Country_ISO__c + '\' ';
+			} else {
+				String mcCountriesIsosAux = '(\'';
 
-			this.List_CountryReqments = filterRequirementList(selectedLang, auxReqsList);
+				for (String isoCountry: newForm.MultiCountry_Countries_Concerned__c.split(',')) {
+					mcCountriesIsosAux += isoCountry + '\',\'';
+				}
+
+				mcCountriesIsosAux += '\')';
+
+				queryAuxReqsList += 'WHERE AMS_Accreditation_Country_CheckList__r.IATA_ISO_Country__r.ISO_Code__c IN ' + mcCountriesIsosAux + ' '; //trocar para IN
+			}
+
+			String nocSignedContract = AMS_Utils.NOC_SIGNED_CONTRACT;
+			String noticeOfChangeListAux = '(\'' + String.join(noticeOfChangeList, '\',\'') + '\')';
+
+			queryAuxReqsList += 'AND AMS_Accreditation_Country_CheckList__r.Operation__c = \'' + sector + '\' AND Type_Of_Change__c != null AND RecordTypeId = \'' + ChangeReqRecTypeId + '\' ';
+			queryAuxReqsList += 'AND Type_Of_Change__c INCLUDES ' + noticeOfChangeListAux + ' ';
+			queryAuxReqsList +=	'AND ((File_Identifier2__c NOT IN (:nocSignedContract, :BNK_ACCNT_DTLS)) OR (File_Identifier2__c = : BNK_ACCNT_DTLS)) ';
+			queryAuxReqsList +=	'ORDER BY Sort_Order__c ASC';
+
+			List<AMS_Accreditation_Requirement__c> reqsListTemp = Database.query(queryAuxReqsList);
+
+			this.List_CountryReqments = filterRequirementList(selectedLang, reqsListTemp);
 			if (this.List_CountryReqments.isEmpty()) {
-				this.List_CountryReqments = filterRequirementList('English', auxReqsList);
+				this.List_CountryReqments = filterRequirementList('English', reqsListTemp);
 				if (!distinctReqmentLangs.isEmpty() && this.List_CountryReqments.isEmpty()) {
-					this.List_CountryReqments = filterRequirementList((String)distinctReqmentLangs[0].get('Language__c'), auxReqsList);
+					this.List_CountryReqments = filterRequirementList((String)distinctReqmentLangs[0].get('Language__c'), reqsListTemp);
 				}
 			}
+
+			if (hqAccount.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY) {
+				mcNoCRequirementsMap = new Map<String, List<AMS_Accreditation_Requirement__c>>();
+				
+				for (AMS_Accreditation_Requirement__c req: this.List_CountryReqments) {
+					if (mcNoCRequirementsMap.get(req.AMS_Accreditation_Country_CheckList__r.IATA_ISO_Country__r.Name) == null) {
+						mcNoCRequirementsMap.put(req.AMS_Accreditation_Country_CheckList__r.IATA_ISO_Country__r.Name, new List<AMS_Accreditation_Requirement__c>());
+					}
+
+					mcNoCRequirementsMap.get(req.AMS_Accreditation_Country_CheckList__r.IATA_ISO_Country__r.Name).add(req);
+				}
+			}
+
 		} else if (stepNumber == '5' && !isFromValidation) {
 			distinctReqmentLangs = [SELECT Language__c
 									FROM AMS_Accreditation_Requirement__c

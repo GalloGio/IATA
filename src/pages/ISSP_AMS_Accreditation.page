@@ -930,7 +930,7 @@
 
                                 <div class="col-lg-9" id="brabroadcountries" style="padding-top:7px;">
                                     <apex:outputPanel rendered="{!AND(isMCAccredited, isNoticeOfChange)}">
-                                        <apex:outputPanel>
+                                        <apex:outputPanel >
                                             <c:MultiselectPicklist id="countryMultiSelection"
                                                                 leftLabel="{!$Label.ISSP_AMS_eBulletin_AvailableCountries}" 
                                                                 leftOptions="{!nonSelectedCountryIsos}"
@@ -1115,18 +1115,35 @@
                                     Check_CountryReqments();
                                 </script>
                             </apex:outputPanel>
-                            <apex:pageblock mode="detail" id="countryreqs" rendered="{!(List_CountryReqments.size > 0)}" title="{!$Label.ISSP_AMS_Step2_Instructions}" >
+                            <apex:pageblock mode="detail" id="countryreqs" rendered="{!AND(List_CountryReqments.size > 0, hqAccount.ANG_Accreditation_Model__c != 'Multicountry')}" title="{!$Label.ISSP_AMS_Step2_Instructions}">
                                 <apex:dataTable value="{!List_CountryReqments}" var="reqs"  style="background-color:white" styleClass="table table-condensed" >
                                     <apex:column headerClass="info">
                                         <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
                                     </apex:column>
-                                    <apex:column headerClass="info" headerValue="{!$Label.ISSP_AMS_Step2_Check_List} {!amsCountryLabel} - {!IF(NOT(isNoticeOfChange), IF(BEGINS(sectorValue,'Travel_Agent'), $Label.ISSP_Travel_Agent, IF(BEGINS(sectorValue,'Cargo_Agent'), IF(newlabels,'IFACP Forwarder','IATA Cargo Agent'),newForm.Agent_Type__c)), $Label.ISSP_AMS_NoC_Request_for_Change)}">
+                                    <apex:column headerClass="info" headerValue="{!IF(isPassAccreditation==true,$Label.ISSP_AMS_Step2_Check_List_PASS,$Label.ISSP_AMS_Step2_Check_List+' '+amsCountryLabel+' - '+ IF(NOT(isNoticeOfChange), IF(BEGINS(sectorValue,'Travel_Agent'), $Label.ISSP_Travel_Agent, IF(BEGINS(sectorValue,'Cargo_Agent'), IF(newlabels,'IFACP Forwarder','IATA Cargo Agent'),newForm.Agent_Type__c)),$Label.ISSP_AMS_NoC_Request_for_Change))}">					     
                                         <apex:outputText >
                                             <strong>{!reqs.Name}</strong><br/>
                                             <apex:outputField value="{!reqs.Requirement_text__c}"/>
                                         </apex:outputText>
                                     </apex:column>
                                 </apex:dataTable>
+							</apex:pageblock>
+							
+							<apex:pageblock mode="detail" id="countryreqsMC" rendered="{!AND(List_CountryReqments.size > 0, hqAccount.ANG_Accreditation_Model__c == 'Multicountry')}" title="{!$Label.ISSP_AMS_Step2_Instructions}">
+								<apex:repeat value="{!mcNoCRequirementsMapKeys}" var="country">
+									<apex:dataTable value="{!mcNoCRequirementsMap[country]}" var="req" style="background-color:white" styleClass="table table-condensed" >
+										{!req.countryName}
+										<apex:column headerClass="info">
+											<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+										</apex:column>
+										<apex:column headerClass="info" headerValue="{!country}">
+											<apex:outputText>
+												<strong>{!req.Name}</strong><br/>
+												<apex:outputField value="{!req.Requirement_text__c}"/>
+											</apex:outputText>
+										</apex:column>
+									</apex:dataTable>
+								</apex:repeat>
                             </apex:pageblock>
 
                             <center>
