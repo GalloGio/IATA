@@ -115,11 +115,6 @@
         <active>true</active>
         <label>Hierarchy</label>
     </recordTypes>
-    <recordTypes>
-        <fullName>MASTER</fullName>
-        <active>true</active>
-        <label>MASTER (erreur)</label>
-    </recordTypes>
     <searchLayouts>
         <searchResultsAdditionalFields>Parent_Account__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Child_Account__c</searchResultsAdditionalFields>
