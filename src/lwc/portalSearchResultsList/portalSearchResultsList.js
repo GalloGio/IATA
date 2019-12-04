@@ -79,7 +79,7 @@ export default class PortalSearchResultList extends NavigationMixin(LightningEle
         this.filteringObject.searchText = '';
     }
 
-    label = {
+    @track label = {
         CSP_NoSearchResults,
         CSP_SeeAll,
         CSP_FAQs_Title,
