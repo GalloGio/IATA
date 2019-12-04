@@ -54,6 +54,7 @@ global class SignaturitEventsBatch implements Database.Batchable<sObject>, Datab
 		Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
 		mail.setTargetObjectId(UserInfo.getUserId());
 		mail.setSubject('Signaturit Event Refresh');
+		mail.setSaveAsActivity(false);
 		mail.setPlainTextBody('Missing event(s) retrieved from Signaturit : ' + newEvents);
 		Messaging.sendEmail(new Messaging.SingleEmailMessage[] { mail });
 	}
