@@ -470,21 +470,21 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 
 
 					}else{
-					Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-					mail.saveAsActivity = true;
-					if(templateToIATA){
-						mail.setTemplateId(tempIata.get(0).Id);
-					} else {
-						mail.setTemplateId(getSpecificLangTemplate(recipient.Preferred_Language__c, countryTemplates));
+						Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+						mail.saveAsActivity = true;
+						if(templateToIATA){
+							mail.setTemplateId(tempIata.get(0).Id);
+						} else {
+							mail.setTemplateId(getSpecificLangTemplate(recipient.Preferred_Language__c, countryTemplates));
+						}
+						mail.setTargetObjectId(recipient.Id);
+
+						mail.setWhatId(oscarId);
+
+						mail.setOrgWideEmailAddressId(owea.Id);
+
+						mailsToSend.add(mail);
 					}
-					mail.setTargetObjectId(recipient.Id);
-
-					mail.setWhatId(oscarId);
-
-					mail.setOrgWideEmailAddressId(owea.Id);
-
-					mailsToSend.add(mail);
-				}
 				}
 
 			}
