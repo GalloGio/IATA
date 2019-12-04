@@ -64,7 +64,7 @@
             <assignToReference>ComplianceCase.Reason1__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>New E&amp;F participant</stringValue>
+                <stringValue>SIS Client</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -100,6 +100,13 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>DueDiligenceQueue.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>ComplianceCase.CreatedById</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>UserFlowLauncher.Id</elementReference>
             </value>
         </assignmentItems>
         <connector>
