@@ -7,15 +7,15 @@ public without sharing class AutomateCaseCommentToChildCase {
 			return new List<Boolean>{false};
 		}
 
-		String comment = [SELECT E2CP__Most_Recent_Public_Comment__c FROM Case WHERE Id = :caseIds.get(0)].E2CP__Most_Recent_Public_Comment__c;
-		List<Case> cases  = [SELECT Id FROM Case WHERE ParentId = :caseIds.get(0)];
+		Case parentCase = [SELECT E2CP__Most_Recent_Public_Comment__c, (SELECT Id FROM Cases) FROM Case WHERE Id = :caseIds.get(0)];
+		//List<Case> cases  = [SELECT Id FROM Case WHERE ParentId = :caseIds.get(0)];
 
-		if(comment != null && comment != '' && cases.size() > 0){
+		if(parentCase.E2CP__Most_Recent_Public_Comment__c != null && parentCase.E2CP__Most_Recent_Public_Comment__c != '' && parentCase.cases.size() > 0){
 			List<CaseComment> newComents = new List<CaseComment>();
-			for(Case c: cases){
+			for(Case c: parentCase.cases){
 				newComents.add(
 					new CaseComment(
-						CommentBody = comment,
+						CommentBody = parentCase.E2CP__Most_Recent_Public_Comment__c,
 						ParentId =  c.Id
 					)
 				);
