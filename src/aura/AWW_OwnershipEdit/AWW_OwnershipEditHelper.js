@@ -251,7 +251,6 @@
             component.set('v.selectedAction', newAction);
             component.set('v.data', null);
             component.set('v.removeData', null);
-            component.find('accountNameSearch').set('v.value',null);
             component.set('v.selectedRowsCount',0);
         }
     }
