@@ -1,5 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <assignments>
+        <name>Set_Account_Id</name>
+        <label>Set Account Id</label>
+        <locationX>395</locationX>
+        <locationY>918</locationY>
+        <assignmentItems>
+            <assignToReference>AccountId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>BusinessAddress.Account__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_Account</targetReference>
+        </connector>
+    </assignments>
     <constants>
         <name>BUSINESS_CONTEXT_EAF</name>
         <dataType>String</dataType>
@@ -7,6 +23,78 @@
             <stringValue>E&amp;F</stringValue>
         </value>
     </constants>
+    <decisions>
+        <name>init_from_account_id</name>
+        <label>init from account id ?</label>
+        <locationX>198</locationX>
+        <locationY>52</locationY>
+        <defaultConnector>
+            <targetReference>Integration_Log_id_is_filled</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>else</defaultConnectorLabel>
+        <rules>
+            <name>account_id_filled</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>AccountId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Account</targetReference>
+            </connector>
+            <label>account id filled</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Integration_Log_id_is_filled</name>
+        <label>Integration Log id is filled ?</label>
+        <locationX>382</locationX>
+        <locationY>50</locationY>
+        <defaultConnectorLabel>else</defaultConnectorLabel>
+        <rules>
+            <name>integration_log_id_filled</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>IntegrationLogId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Integration_Log</targetReference>
+            </connector>
+            <label>integration log id filled</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Integration_Log_was_filled</name>
+        <label>Integration Log was filled ?</label>
+        <locationX>201</locationX>
+        <locationY>1574</locationY>
+        <defaultConnector>
+            <targetReference>Get_Business_Address</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>not filled</defaultConnectorLabel>
+        <rules>
+            <name>was_filled</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>IntegrationLogId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Restart_Account_Context_Activation_E_F_Background_Subflow</targetReference>
+            </connector>
+            <label>was filled</label>
+        </rules>
+    </decisions>
     <description>It skips the Account Context Activation screenflow and Account Context Activation E&amp;F screenflow, it is used by a process builder (CaseSisClosed or CaseComplianceClosed) and by a trigger (IntegrationLogTrigger) to relaunch Account Context Activation E&amp;F Background Subflow with the Business Context E&amp;F et the Sales area selected by the user (stored in Address Role Business Context).</description>
     <interviewLabel>Account Context Activation E&amp;F Relauncher {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Account Context Activation E&amp;F Relauncher</label>
@@ -26,8 +114,8 @@
     <recordLookups>
         <name>Get_Account</name>
         <label>Get Account</label>
-        <locationX>210</locationX>
-        <locationY>50</locationY>
+        <locationX>207</locationX>
+        <locationY>919</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_E_F_Account_Role</targetReference>
@@ -61,8 +149,8 @@
     <recordLookups>
         <name>Get_Address_Role_Business_Context</name>
         <label>Get Address Role Business Context</label>
-        <locationX>213</locationX>
-        <locationY>1015</locationY>
+        <locationX>40</locationX>
+        <locationY>1926</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_User_that_launched_Account_Context_Activation</targetReference>
@@ -81,10 +169,33 @@
         <queriedFields>CreatedById</queriedFields>
     </recordLookups>
     <recordLookups>
+        <name>Get_Address_Role_Business_Context_From_Integration_Log</name>
+        <label>Get Address Role Business Context</label>
+        <locationX>393</locationX>
+        <locationY>429</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_Business_Address_Role_From_Integration_Log</targetReference>
+        </connector>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>IntegrationLog.Record_Id__c</elementReference>
+            </value>
+        </filters>
+        <object>Address_Role_Business_Context__c</object>
+        <outputReference>AddressRoleBusinessContext</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Address_Role__c</queriedFields>
+        <queriedFields>Account_Activation_Context_Status__c</queriedFields>
+        <queriedFields>CreatedById</queriedFields>
+    </recordLookups>
+    <recordLookups>
         <name>Get_Business_Address</name>
         <label>Get Business Address</label>
-        <locationX>211</locationX>
-        <locationY>689</locationY>
+        <locationX>39</locationX>
+        <locationY>1572</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Business_Address_Role</targetReference>
@@ -108,10 +219,30 @@
         <queriedFields>Id</queriedFields>
     </recordLookups>
     <recordLookups>
+        <name>Get_Business_Address_From_Integration_Log</name>
+        <label>Get Business Address</label>
+        <locationX>396</locationX>
+        <locationY>769</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Set_Account_Id</targetReference>
+        </connector>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>BusinessAddressRole.Address__c</elementReference>
+            </value>
+        </filters>
+        <object>Address__c</object>
+        <outputReference>BusinessAddress</outputReference>
+        <queriedFields>Id</queriedFields>
+    </recordLookups>
+    <recordLookups>
         <name>Get_Business_Address_Role</name>
         <label>Get Business Address Role</label>
-        <locationX>212</locationX>
-        <locationY>843</locationY>
+        <locationX>39</locationX>
+        <locationY>1760</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Address_Role_Business_Context</targetReference>
@@ -135,10 +266,31 @@
         <queriedFields>Id</queriedFields>
     </recordLookups>
     <recordLookups>
+        <name>Get_Business_Address_Role_From_Integration_Log</name>
+        <label>Get Business Address Role</label>
+        <locationX>396</locationX>
+        <locationY>596</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_Business_Address_From_Integration_Log</targetReference>
+        </connector>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>AddressRoleBusinessContext.Address_Role__c</elementReference>
+            </value>
+        </filters>
+        <object>Address_Role__c</object>
+        <outputReference>BusinessAddressRole</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Address__c</queriedFields>
+    </recordLookups>
+    <recordLookups>
         <name>Get_Contacts</name>
         <label>Get Contacts</label>
-        <locationX>211</locationX>
-        <locationY>377</locationY>
+        <locationX>206</locationX>
+        <locationY>1246</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_E_F_Contact_Roles</targetReference>
@@ -157,8 +309,8 @@
     <recordLookups>
         <name>Get_E_F_Account_Role</name>
         <label>Get E&amp;F Account Role</label>
-        <locationX>211</locationX>
-        <locationY>206</locationY>
+        <locationX>206</locationX>
+        <locationY>1075</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Contacts</targetReference>
@@ -185,11 +337,11 @@
     <recordLookups>
         <name>Get_E_F_Contact_Roles</name>
         <label>Get E&amp;F Contact Roles</label>
-        <locationX>211</locationX>
-        <locationY>528</locationY>
+        <locationX>206</locationX>
+        <locationY>1398</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Get_Business_Address</targetReference>
+            <targetReference>Integration_Log_was_filled</targetReference>
         </connector>
         <filters>
             <field>Account_Role__c</field>
@@ -211,10 +363,31 @@
         <queriedFields>Contact__c</queriedFields>
     </recordLookups>
     <recordLookups>
+        <name>Get_Integration_Log</name>
+        <label>Get Integration Log</label>
+        <locationX>393</locationX>
+        <locationY>272</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_Address_Role_Business_Context_From_Integration_Log</targetReference>
+        </connector>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>IntegrationLogId</elementReference>
+            </value>
+        </filters>
+        <object>Integration_Log__c</object>
+        <outputReference>IntegrationLog</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Record_Id__c</queriedFields>
+    </recordLookups>
+    <recordLookups>
         <name>Get_User_that_launched_Account_Context_Activation</name>
         <label>Get User that launched Account Context Activation</label>
-        <locationX>212</locationX>
-        <locationY>1173</locationY>
+        <locationX>40</locationX>
+        <locationY>2093</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Restart_Account_Context_Activation_E_F_Background_Subflow</targetReference>
@@ -236,15 +409,15 @@
         <locationX>50</locationX>
         <locationY>50</locationY>
         <connector>
-            <targetReference>Get_Account</targetReference>
+            <targetReference>init_from_account_id</targetReference>
         </connector>
     </start>
     <status>Active</status>
     <subflows>
         <name>Restart_Account_Context_Activation_E_F_Background_Subflow</name>
         <label>Restart Account Context Activation E&amp;F Background Subflow</label>
-        <locationX>409</locationX>
-        <locationY>1171</locationY>
+        <locationX>207</locationX>
+        <locationY>2089</locationY>
         <flowName>Account_Context_Activation_E_F_Background_Subflow</flowName>
         <inputAssignments>
             <name>Account</name>
@@ -364,6 +537,14 @@
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>Contact</objectType>
+    </variables>
+    <variables>
+        <name>IntegrationLog</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Integration_Log__c</objectType>
     </variables>
     <variables>
         <description>Id of the Integration Log related to platform event sent in Account Context Activation SAP Subflow</description>
