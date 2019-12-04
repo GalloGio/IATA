@@ -161,7 +161,8 @@ public class AMS_AgencyChangesTest {
 															Branch_Office_Country__c = theAccount.IATA_ISO_Country__c, 
 														   SAAM_Case__c = theCommunicationCase.Id, 
 														   Location_Class__c = theAccount.Location_Class__c, 
-														   Location_Type__c = theAccount.Location_Type__c);
+														   Location_Type__c = theAccount.Location_Type__c,
+														   ISSP_AMS_GDS_with_signed_contract__c = 'Amadeus');
 															
 		insert theStagingAcc;
 		
