@@ -2364,7 +2364,7 @@
 			}
 		}
 
-		if (typeOfChange !== 'Yes' && {!CanChangeAccreditationType}) {
+		if (typeOfChange === 'No' && {!CanChangeAccreditationType}) {
 			iataChangeAccType.prop('disabled', true);
 			iataChangeAccType.prop('checked', false);
 
