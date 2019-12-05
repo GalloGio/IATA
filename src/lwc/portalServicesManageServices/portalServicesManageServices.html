@@ -178,7 +178,8 @@
                                         <div class="slds-p-vertical_medium slds-text-align_center">
                                             <img src={searchIconNoResultsUrl} />
                                             <div class="text-small text-bold text-linkBlue">{label.CSP_Search_NoResults_text1}</div>
-                                            <div class="text-xxsmall text-gray">{label.CSP_Search_NoResults_text2} <span class="text-bold text-darkGray">"{searchKey}"</span></div>
+                                            <div class="text-xxsmall text-gray" if:false={filtered}>{label.CSP_Search_NoResults_text2} <span class="text-bold text-darkGray">"{searchKey}"</span></div>
+                                            <div class="text-xxsmall text-gray" if:true={filtered}>{label.CSP_NoRecordsFilter}</div>
                                         </div>
                                     </div>
                                 </div>

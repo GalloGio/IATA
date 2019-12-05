@@ -32,6 +32,8 @@ import cancelAccessMsg from '@salesforce/label/c.CSP_Cancel_Access_Message';
 import cancelAccessTitle from '@salesforce/label/c.CSP_Cancel_Access_Title';
 import searchContactPlaceholder from '@salesforce/label/c.CSP_Search_In_Contacts_In_Service';
 import ISSP_IATA_Location_Code from '@salesforce/label/c.ISSP_IATA_Location_Code';
+import CSP_NoRecordsFilter from '@salesforce/label/c.CSP_NoRecordsFiltered'; 
+
 import Email from '@salesforce/label/c.Email';
 import Status from '@salesforce/label/c.Status';
 import Country from '@salesforce/label/c.Country';
@@ -146,6 +148,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         ISSP_ANG_GenericError,
         CSP_Filter,
         CSP_Filtered,
+		CSP_NoRecordsFilter,
         CSP_Search_Case_Country,
         CSP_RemoveAllFilters,
         CSP_Apply,
