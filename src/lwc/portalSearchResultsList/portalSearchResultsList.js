@@ -19,6 +19,8 @@ import ISSP_AvailableServices_Service from '@salesforce/label/c.ISSP_AvailableSe
 import CSP_Breadcrumb_FAQ_Title from '@salesforce/label/c.CSP_Breadcrumb_FAQ_Title';
 import CSP_Documents from '@salesforce/label/c.CSP_Documents';
 import ICCS_Profile from '@salesforce/label/c.ICCS_Profile';
+import csp_My_Profile_Company from '@salesforce/label/c.csp_My_Profile_Company';
+import ISSP_Contact from '@salesforce/label/c.ISSP_Contact';
 
 export default class PortalSearchResultList extends NavigationMixin(LightningElement) {
 
@@ -90,7 +92,9 @@ export default class PortalSearchResultList extends NavigationMixin(LightningEle
         ISSP_AvailableServices_Service,
         CSP_Breadcrumb_FAQ_Title,
         CSP_Documents,
-        ICCS_Profile
+        ICCS_Profile,
+        csp_My_Profile_Company,
+        ISSP_Contact
     };
 
     //clone of the filtering object passed from the parent
@@ -395,7 +399,7 @@ export default class PortalSearchResultList extends NavigationMixin(LightningEle
                     "id": retrievedAccounts[i].profileId,
                     "category": this.label.ICCS_Profile,
                     "title": retrievedAccounts[i].profileName,
-                    "description": retrievedAccounts[i].profileType,
+                    "description": this.label.csp_My_Profile_Company,
                     "class": "categId-4",
                     "url": retrievedAccounts[i].profileUrl
                 }
@@ -406,7 +410,7 @@ export default class PortalSearchResultList extends NavigationMixin(LightningEle
                     "id": retrievedContacts[i].profileId,
                     "category": this.label.ICCS_Profile,
                     "title": retrievedContacts[i].profileName,
-                    "description": retrievedContacts[i].profileType,
+                    "description": this.label.ISSP_Contact,
                     "class": "categId-4",
                     "url": retrievedContacts[i].profileUrl
                 }
@@ -461,25 +465,25 @@ export default class PortalSearchResultList extends NavigationMixin(LightningEle
         let category = event.target.attributes.getNamedItem('data-category').value;
         let thePage;
         let params = {};
-        if (category === 'Cases') {
+        if (category === this.label.CSP_Cases) {
             thePage = 'case-details'
             params.caseId = url.replace('case-details?caseId=', '');
         }
-        if (category === 'FAQ') {
+        if (category === this.label.CSP_Breadcrumb_FAQ_Title) {
             thePage = filteringObjectAux.advancedSearch ? 'support-view-article' : 'faq-article';
             params.q = filteringObjectAux.searchText;
             params.id1 = url.replace('q=' + filteringObjectAux.searchText + '&id1=', '');
         }
-        if (category === 'Documents') {
+        if (category === this.label.CSP_Documents) {
             thePage = 'documents-search'
             params.searchText = filteringObjectAux.searchText;
             params.docId = url.replace("documents-search?searchText=" + filteringObjectAux.searchText + "&docId=", '');
         }
-        if (category === 'Services') {
+        if (category === this.label.ISSP_AvailableServices_Service) {
             thePage = 'manage-service';
             params.serviceId = url.replace('manage-service?serviceId=', '');
         }
-        if (category === 'Profile') {
+        if (category === this.label.ICCS_Profile) {
             if (url.includes('company-profile?account=')) {
                 thePage = 'company-profile';
                 params.account = url.replace(this.label.CSP_PortalPath + 'company-profile?account=', '');
