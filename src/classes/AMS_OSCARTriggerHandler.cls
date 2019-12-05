@@ -257,21 +257,21 @@ public class AMS_OSCARTriggerHandler {
 			}
 		}
 
-        if(!accountIdSet.isEmpty()){
-            
-            //Fetch all the accounts from the hierarchies
-            List<Account> acctLst = new List<Account>(
-                [SELECT
-                    Id,
-                    ANG_FA_Opt_out__c
-                FROM  
-                    Account
-                WHERE
-                    Id IN :accountIdSet
-                OR
-                    ParentId IN :accountIdSet
-                ]
-            );
+		if(!accountIdSet.isEmpty()){
+			
+			//Fetch all the accounts from the hierarchies
+			List<Account> acctLst = new List<Account>(
+				[SELECT
+					Id,
+					ANG_FA_Opt_out__c
+				FROM  
+					Account
+				WHERE
+					Id IN :accountIdSet
+				OR
+					ParentId IN :accountIdSet
+				]
+			);
 
 			//Updates the FA Opt Out field on each account
 			for(Account acct : acctLst){

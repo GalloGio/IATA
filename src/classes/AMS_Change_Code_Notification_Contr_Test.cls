@@ -230,8 +230,6 @@ private class AMS_Change_Code_Notification_Contr_Test {
 		techLog.Log__c = 'Error for test';
 		insert techLog;
 		
-		System.assertEquals(ccase2.Remittance_Period__c, '20180604W');
-
 		Test.startTest();
 			
 			ApexPages.StandardController stdController = new ApexPages.StandardController(ccase2);

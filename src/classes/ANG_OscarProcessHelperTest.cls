@@ -612,48 +612,6 @@ private class ANG_OscarProcessHelperTest {
 		a.Reason__c = '91-ACCREDITED-MEET-STANDARDS';
 
 		update a;
-
-	/*	a = [SELECT Abbreviated_address__c, Abbreviated_name__c,
-						BillingState,
-						BillingCity,
-						Email__c,
-						Fax,
-						Phone,
-						BillingPostalCode,
-						BillingStreet,
-						CASS_Number__c,
-						BillingCountry,
-						Name,
-						Region_formula__c,
-						ANG_Accreditation_Model__c,
-						Id,
-						Iata_iso_country__c,
-						IATACode__c,
-						Iso_State__c,
-						GDS__c,
-						Company_Type__c,
-						License_Number__c,
-						VAT_Number__c,
-						Is_your_firm_handling_Dangerous_Goods__c,
-						Location_Class__c,
-						Location_Type__c,
-						Mobile__c,
-						Operation__c,
-						Remittance_frequency__c,
-						ShippingCity,
-						ShippingCountry,
-						IATA_ISO_Shipping_Country__c,
-						IATA_ISO_Shipping_State__c,
-						ShippingPostalCode,
-						ShippingState,
-						ShippingStreet,
-						Short_Name__c,
-						Solicitation_Flag__c,
-						TradeName__c,
-						VAT_Number_2__c,
-						Reason__c,
-						Website FROM account limit 1]; 
-	*/
 		
 		List<Contact> conts = [SELECT Id, Name, Email, Preferred_Language__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c, User_Portal_Status__c, AccountId FROM contact WHERE accountid =:a.id];
 		
