@@ -6501,6 +6501,10 @@
         <name>IDCard_NoModificationAllowed</name>
     </customLabels>
     <customLabels>
+        <label><!-- IDCard_NoUSServiceDescription --></label>
+        <name>IDCard_NoUSServiceDescription</name>
+    </customLabels>
+    <customLabels>
         <label><!-- IDCard No Price Table Found --></label>
         <name>IDCard_No_Price_Table_Found</name>
     </customLabels>
@@ -6787,6 +6791,10 @@
     <customLabels>
         <label><!-- IDCard_TrxNum --></label>
         <name>IDCard_TrxNum</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IDCard_USServiceDescription --></label>
+        <name>IDCard_USServiceDescription</name>
     </customLabels>
     <customLabels>
         <label><!-- IDCard Update Application --></label>
@@ -15791,6 +15799,14 @@
     <customLabels>
         <label><!-- ISSP_IdCard_Name_Warning --></label>
         <name>ISSP_IdCard_Name_Warning</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_IdCard_NonUS --></label>
+        <name>ISSP_IdCard_NonUS</name>
+    </customLabels>
+    <customLabels>
+        <label>国际航空公司旅行社网络 (IATAN) 在线服务</label>
+        <name>ISSP_IdCard_US</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_In Progress --></label>

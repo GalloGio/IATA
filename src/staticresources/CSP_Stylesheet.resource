@@ -2486,3 +2486,84 @@ input::-ms-reveal {  display: none; width : 0; height: 0; }
 }
 
 /* ############################################## */
+.showOnlyFavorites, .showOnlyFavorites button, .showOnlyFavorites button:active, .showOnlyFavorites button:visited, .showOnlyFavorites button:focus, .showOnlyFavorites button:hover{
+    width: 165px;
+    height: 48px;
+    border-radius: 0;
+    border: 0;
+    background-color: #d0d7fb;
+    font-family: AktivGrotesk;
+    font-size: 14px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.71;
+    letter-spacing: normal;
+    color: #3333ff;
+  }
+
+.idCardPopup {
+	background-color: #F7F8FA;
+    width: 100%;
+    max-width: 544px;
+    margin: auto;
+    box-shadow: 5px 5px 20px #808080;
+    border-radius: 1px;
+}
+.outlinedButtonCancel button, .outlinedButtonCancel button:hover, .outlinedButtonCancel button:focus, .outlinedButtonCancel button:active{
+    -webkit-transition-duration: 0.4s; /* Safari */
+  	transition-duration: 0.4s;
+    min-height: 56px;
+    word-break: break-all;
+    border-radius: 1px;
+  	border: solid 1px #1e32fa;
+  	background-color: #ffffff;
+    font-size: 16px;
+  	font-weight: 500;
+  	font-style: normal;
+  	font-stretch: normal;
+  	line-height: 1.5;
+  	letter-spacing: normal;
+  	text-align: center;
+  	color: #3333ff;
+    width: 100%;
+    box-shadow: none; 
+}
+.popupApproveButton, .popupApproveButton button, .popupApproveButton button:active, .popupApproveButton button:visited, .popupApproveButton button:focus {
+    -webkit-transition-duration: 0.4s; /* Safari */
+  	transition-duration: 0.4s;
+    border-radius: 1px;
+  	box-shadow: 0 6px 16px 0 rgba(56, 86, 235, 0.24), 0 1px 2px 0 rgba(56, 86, 235, 0.16);
+  	background-color: #3333ff;
+    font-size: 16px;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.5;
+    letter-spacing: normal;
+    text-align: center;
+    color: #ffffff;
+    min-height: 40px;
+    word-break: break-all;
+    border: none;
+    height: 56px;
+    width: 100%;
+}
+.popupApproveButton button:hover {
+	border-radius: 1px;
+    box-shadow: 0 6px 16px 0 rgba(56, 86, 235, 0.24), 0 1px 2px 0 rgba(56, 86, 235, 0.16);
+    background-color: #1e32fa;
+    font-size: 16px;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.5;
+    letter-spacing: normal;
+    text-align: center;
+    color: #ffffff;
+    min-height: 40px;
+    word-break: break-all;
+    border: none;
+	height: 56px;
+    width: 100%;
+}

@@ -16,6 +16,7 @@ import getAccountDomains from '@salesforce/apex/PortalProfileCtrl.getAccountDoma
 import checkIfIsAirlineUser from '@salesforce/apex/CSP_Utils.isAirlineUser';
 import checkHasAccessToAccred from '@salesforce/apex/DAL_WithoutSharing.hasAccessToService'; // check if user has access to IATA Accreditation and changes
 import getMapHierarchyAccounts from '@salesforce/apex/PortalProfileCtrl.getMapHierarchyAccounts';
+import getPhotoFromAPI from '@salesforce/apex/PortalProfileCtrl.getPhotoFromAPI';
 
 import SaveLabel from '@salesforce/label/c.CSP_Save';
 import CancelLabel from '@salesforce/label/c.CSP_Cancel';
@@ -26,8 +27,13 @@ import InvalidValue from '@salesforce/label/c.csp_InvalidPhoneValue';
 import CompleteField from '@salesforce/label/c.csp_CompleteField';
 import RelocateAccount from '@salesforce/label/c.ISSP_Relocate_Contact';
 
-import IdCardNumber from '@salesforce/label/c.ISSP_IDCard_VER_Number';
-import IdCardValidTo from '@salesforce/label/c.ISSP_IDCard_Valid_To';
+import IdCard from '@salesforce/label/c.CSP_Id_Card';
+import IdCardNumber from '@salesforce/label/c.CSP_IDCard_Ver_Number';
+import IdCardValidTo from '@salesforce/label/c.CSP_IDCard_Valid_To';
+import IdCardPhoto from '@salesforce/label/c.CSP_IDCard_Photo';
+import IdCardPhotoTitle from '@salesforce/label/c.CSP_IDCard_Photo_Title';
+import IdCardName from '@salesforce/label/c.CSP_IDCard_Name';
+import IdCardStatus from '@salesforce/label/c.CSP_IDCard_Status';
 import CSP_Error_Message_Mandatory_Fields_Contact from '@salesforce/label/c.CSP_Error_Message_Mandatory_Fields_Contact';
 import LastLoginDate from '@salesforce/label/c.csp_LastLoginDate';
 import CompanyInformation_EMADOMVAL_Title from '@salesforce/label/c.ISSP_CompanyInformation_EMADOMVAL_Title';
@@ -49,6 +55,8 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     @api sectionTitle;
     @api showEdit;
     @api editBasics;
+    @api editIdcard;
+    @api idCardRedirectionUrl;
     @api allowContactDelete=false;
 
     @api editFields;
@@ -77,6 +85,10 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     @track fieldsLocal;
     @track jobFunctions;
     @track removeContact = false;
+    @track idCardErrorPopup = false;
+    @track photoURL;
+    @track photoPopUp = false;
+
 
     timeout = null;
 
@@ -114,7 +126,12 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
 		CSP_Travel_Agent_Accreditation_Changes_Access,
 		CSP_Travel_Agent_Accreditation_Changes_Request,
 		CSP_Airline_Changes_Access,
-        CSP_CompanyAdministration_Link
+        CSP_CompanyAdministration_Link,
+        IdCardName,
+        IdCardPhoto,
+        IdCardStatus,
+        IdCard,
+        IdCardPhotoTitle
     };
 
     @api tabName = '';
@@ -248,6 +265,10 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     loaded(event) {
         this.isLoading = false;
         let fields = JSON.parse(JSON.stringify(event.detail.objectInfos.Contact.fields));
+
+        if(this.sectionTitle === this._labels.IdCard){
+            this.template.querySelector('[data-id="sectionId"]').classList.add('grayBackgroundSection');
+        }
     }
 
     loadedEdit() {
@@ -457,6 +478,18 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
 
             let fields = event.detail.fields;
             fields.accountId = this.accountId;
+
+            let contact = JSON.parse(JSON.stringify(this.staticFields));
+            if(contact.ID_Card_Holder__c && (fields.FirstName != contact.FirstName || fields.LastName != contact.LastName || (fields.Birthdate != contact.Birthdate && contact.Birthdate))){
+                this.isSaving = false;
+                this.closeModal();
+                this.idCardErrorPopup = true;
+                return;
+            }
+            else if(contact.ID_Card_Holder__c && !contact.Birthdate && fields.Birthdate){
+                contact.Birthdate = fields.Birthdate;
+                this.staticFields = contact;
+            }
 
             if (selected.length > 0) {
                 fields.Area__c = selected;
@@ -672,6 +705,30 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
             this.openRelocateAccount = true;
             this.relatedAccounts = JSON.parse(JSON.stringify(result));
         });
+    }
+
+    hideIdCardErrorPopup() {
+        this.idCardErrorPopup = false;
+    }
+
+    redirectToIdCardPortal() {
+        if(this.idCardRedirectionUrl  != ''){
+           window.location.href = this.idCardRedirectionUrl;
+        }
+    }
+
+    openPhotoPopUp() {
+        if(this.staticFields.cardPhoto != ''){
+           getPhotoFromAPI({ photoName : this.staticFields.cardPhoto})
+           .then(result => {
+              this.photoURL = result;
+              this.photoPopUp = true;
+           });
+        }
+    }
+
+    hideIdCardPhotoPopup() {
+        this.photoPopUp = false;
     }
 
 }

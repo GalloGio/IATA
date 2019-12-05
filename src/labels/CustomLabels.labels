@@ -3308,6 +3308,13 @@ Payment required on receipt of this Payment Advice
         <value>Was this article helpful?</value>
     </labels>
     <labels>
+        <fullName>CSP_Assign_New_Service</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Assign New Service</shortDescription>
+        <value>Assign New Service</value>
+    </labels>
+    <labels>
         <fullName>CSP_Branch_Offices</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -3578,6 +3585,14 @@ Payment required on receipt of this Payment Advice
         <value>You can use your new password to log in.</value>
     </labels>
     <labels>
+        <fullName>CSP_Close</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Close</shortDescription>
+        <value>Close</value>
+    </labels>
+    <labels>
         <fullName>CSP_Community</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -3650,6 +3665,14 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP_Contacts_NoResults_text1</shortDescription>
         <value>No Results</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Contact_Id_Card_Error_Msg</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Contact Id Card Error Msg</shortDescription>
+        <value>Changing your profile name will impact the validity of your ID Card. Please contact our Customer Service Team to change your profile name.</value>
     </labels>
     <labels>
         <fullName>CSP_Contacts_NoResults_text2</fullName>
@@ -4190,6 +4213,14 @@ Payment required on receipt of this Payment Advice
         <value>Since you have not logged in the last 90 days, we’ve sent you an email with a new password.</value>
     </labels>
     <labels>
+        <fullName>CSP_Go_to_Webstar</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Go to Webstar</shortDescription>
+        <value>IATAN Online Service</value>
+    </labels>
+    <labels>
         <fullName>CSP_Grant_User_Access_Title</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -4205,6 +4236,61 @@ Payment required on receipt of this Payment Advice
         <value>Welcome [username]</value>
     </labels>
     <labels>
+        <fullName>CSP_IDCard_Name</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP IDCard Name</shortDescription>
+        <value>Name on the ID Card</value>
+    </labels>
+    <labels>
+        <fullName>CSP_IDCard_Photo</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP IDCard Photo</shortDescription>
+        <value>Click here to see your ID Card photo</value>
+    </labels>
+    <labels>
+        <fullName>CSP_IDCard_Photo_Title</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP IDCard Photo Title</shortDescription>
+        <value>Photo</value>
+    </labels>
+    <labels>
+        <fullName>CSP_IDCard_Status</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP IDCard Status</shortDescription>
+        <value>ID Card Status</value>
+    </labels>
+    <labels>
+        <fullName>CSP_IDCard_Valid_To</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP IdCard Valid To</shortDescription>
+        <value>ID Card Expiry Date</value>
+    </labels>
+    <labels>
+        <fullName>CSP_IDCard_Ver_Number</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP IDCard Ver Number</shortDescription>
+        <value>ID Card VER Number</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Id_Card</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Id Card</shortDescription>
+        <value>ID Card</value>
+    </labels>
+    <labels>
         <fullName>CSP_IATA_Country</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -4217,6 +4303,15 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP_IMPORTANT</shortDescription>
         <value>IMPORTANT</value>
+    </labels>
+    <labels>
+		<fullName>CSP_IATAN_Register_Info</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+		<shortDescription>CSP IATAN Register Info</shortDescription>
+	<value>&lt;p&gt;To create an “IATAN Passenger Sales Agent (US only)” or “Travel Service Intermediaries TSI (US only)” account,you can request the creation of your company account through &lt;a href=&quot;https://webstar.iatan.org/WebStarExtranetWEB/login.jsp?token=void&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;IATAN online service&lt;/a&gt;.&lt;/p&gt;&lt;/br&gt;
+	&lt;p&gt;Once the registration is finalized in Webstar, you will be able to identify your organization in the IATA Customer Portal.&lt;/p&gt;</value>
     </labels>
     <labels>
         <fullName>CSP_Invalid_Email</fullName>
@@ -5861,6 +5956,14 @@ Click &lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.as
         <value>Access Requested</value>
     </labels>
     <labels>
+        <fullName>CSP_Services_AddFavorite</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Services_AddFavorite</shortDescription>
+        <value>Add Favorite</value>
+    </labels>
+    <labels>
         <fullName>CSP_Services_AvailableServicesHelpText</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -5949,12 +6052,36 @@ Click &lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.as
         <value>Service Request</value>
     </labels>
     <labels>
+        <fullName>CSP_Services_RemoveFavorite</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Services_RemoveFavorite</shortDescription>
+        <value>Remove Favorite</value>
+    </labels>
+    <labels>
         <fullName>CSP_Services_ServiceInformation</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_Services_ServiceInformation</shortDescription>
         <value>Service Information</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Services_ShowAll</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Services_ShowAll</shortDescription>
+        <value>Show All</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Services_ShowOnlyFavorites</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Services_ShowOnlyFavorites</shortDescription>
+        <value>Show Only Favorites</value>
     </labels>
     <labels>
         <fullName>CSP_Services_Title</fullName>
@@ -12236,6 +12363,14 @@ For new applicants and returning agents who do not have their existing ID Card c
         <value>The application form can not be modified after the payment has been made</value>
     </labels>
     <labels>
+        <fullName>IDCard_NoUSServiceDescription</fullName>
+        <categories>IATA Passenger Sales Agent,TIDS Agent,Domestic Agent</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IDCard_NoUSServiceDescription</shortDescription>
+        <value>Apply &amp; pay for your ID Card (new, renew, change of agency) and get IATA travel agent benefits.</value>
+    </labels>
+    <labels>
         <fullName>IDCard_No_Price_Table_Found</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -12740,6 +12875,14 @@ Kindly note that home-based agents are required to coordinate with their colleag
         <protected>false</protected>
         <shortDescription>IDCard_TrxNum</shortDescription>
         <value>Transaction #:</value>
+    </labels>
+    <labels>
+        <fullName>IDCard_USServiceDescription</fullName>
+        <categories>IATAN Passenger Sales Agent (USA Only),Travel Service Intermediaries-TSI (USA Only),IATA Passenger Sales Agent</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IDCard_USServiceDescription</shortDescription>
+        <value>(For US agents only) Request for ID Cards, register Agents, pay Annual Service Fee, process Agency Recertification, etc</value>
     </labels>
     <labels>
         <fullName>IDCard_Update_Application</fullName>
@@ -29864,6 +30007,22 @@ this is the tiess topic help</value>
         <protected>false</protected>
         <shortDescription>ISSP_IdCard_Name_Warning</shortDescription>
         <value>Please, note that a change to your name will not be reflected on your ID Card. For changing it on ID Card, please, login to ID Card platform.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_IdCard_NonUS</fullName>
+        <categories>IATA Passenger Sales Agent,TIDS Agent,Domestic Agent</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_IdCard_NonUS</shortDescription>
+        <value>ID Card Online Platform</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_IdCard_US</fullName>
+        <categories>IATAN Passenger Sales Agent (USA Only),Travel Service Intermediaries-TSI (USA Only),IATA Passenger Sales Agent</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_IdCard_US</shortDescription>
+        <value>IATAN Online Services</value>
     </labels>
     <labels>
         <fullName>ISSP_In_Progress</fullName>

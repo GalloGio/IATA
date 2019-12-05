@@ -23,8 +23,8 @@ public static List<Portal_Applications__c> getNonRequestableServicesList(String 
 	List<Portal_Applications__c> portalApplicationList = new List<Portal_Applications__c>();
 
 	string queryFields = 'Name, Description__c, Service_Description__c, Service_Description_Label__c, Visible__c, ' +
-						 'Requestable__c, Application_icon__c, Application_URL__c, New_Window__c, VisibleCNS__c, ' +
-						 'ANG_Flag_Restrict_Accredited_Agent__c, ANG_Flag_Restrict_Sector__c, ServiceName__c ';
+							'Requestable__c, Application_icon__c, Application_URL__c, New_Window__c, VisibleCNS__c, ' +
+							'ANG_Flag_Restrict_Accredited_Agent__c, ANG_Flag_Restrict_Sector__c, ServiceName__c, Application_icon_URL__c ';
 
 	string query = 'SELECT '  + queryFields +
 					' FROM Portal_Applications__c' +
@@ -83,13 +83,12 @@ public static List<Portal_Application_Right__c> getUsersFavoriteServicesList(Str
 						'Portal_Application__r.New_Window__c, Right__c, Portal_Application__r.Application_icon_URL__c, ' +
 						'Portal_Application__r.Name, Portal_Application__c, My_Apps__c, Contact__c, ' +
 						'Application_Start_URL__c,Technical_Provisioning_Status__c, Case_creation_record_Type__c, ' +
-						'Portal_Application__r.Service_Description__c, Portal_Application__r.Service_Description_Label__c  ' +
+						'Portal_Application__r.Service_Description__c, Portal_Application__r.Service_Description_Label__c, Is_Favorite__c, Portal_Application__r.Id  ' +
 						'FROM Portal_Application_Right__c ' +
 						'WHERE (Contact__c = \'' + contactId + '\' AND '+
-						'	Right__c = \'' +  PORTAL_ACCESS_GRANTED + '\' AND ' +
-						'	Portal_Application__r.Hide_on_Homepage__c = false)' +
-				' AND (IsSCIMIFG__c = false OR (IsSCIMIFG__c = true AND Technical_Provisioning_Status__c = \'' + PORTAL_EXTERNAL_ACCESS_GRANTED + '\' ))';
-
+						'   (Right__c = \'' +  PORTAL_ACCESS_GRANTED + '\' OR Portal_Application__r.Requestable__c = false) AND ' +
+						'   Portal_Application__r.Hide_on_Homepage__c = false)' +
+						' AND (IsSCIMIFG__c = false OR (IsSCIMIFG__c = true AND Technical_Provisioning_Status__c = \'' + PORTAL_EXTERNAL_ACCESS_GRANTED + '\' ))';
 
 	finalQuery += ' ORDER BY Last_Visit_Date__c DESC NULLS LAST, Portal_Application__r.New_Window__c ASC, Portal_Application__r.Name ASC LIMIT 15';
 
@@ -108,20 +107,33 @@ public static List<Portal_Application_Right__c> getFavoriteServicesList(){
 
 	List<Portal_Applications__c> lstPortalApplications =  getNonRequestableServicesList(contactId);
 
+	List<Portal_Application_Right__c> listToReturn = new List<Portal_Application_Right__c>();
+	List<Portal_Application_Right__c> nonFavorites = new List<Portal_Application_Right__c>();
+	Set<Id> portalApplicationIdSet = new Set<Id>();
+	for(Portal_Application_Right__c par : lstPortalApplicationsRights){
+		if(par.Is_Favorite__c){
+			listToReturn.add(par);
+		}
+		else{
+			nonFavorites.add(par);
+		}
+		portalApplicationIdSet.add(par.Portal_Application__r.Id);
+	}
+
+	listToReturn.addAll(nonFavorites);
+
 	if(!lstPortalApplications.isEmpty()) {
 		for(Portal_Applications__c pa : lstPortalApplications) {
-			// for(Portal_Application_Right__c par : lstPortalApplicationsRights) {
-			//	 if(par.Portal_Application__c == pa.Id) {
-			Portal_Application_Right__c lstPar = new Portal_Application_Right__c();
-			lstPar.Portal_Application__r = pa;
-			lstPortalApplicationsRights.add(lstPar);
-			//		 break;
-			//	 }
-			// }
+			if(! portalApplicationIdSet.contains(pa.Id)){
+				Portal_Application_Right__c lstPar = new Portal_Application_Right__c();
+				lstPar.Portal_Application__r = pa;
+				lstPar.Is_Favorite__c = false;
+				listToReturn.add(lstPar);
+			}
 		}
 	}
 
-	return lstPortalApplicationsRights;
+	return listToReturn;
 }
 
 @AuraEnabled(cacheable=true)
@@ -299,6 +311,8 @@ public static List<ServiceWrapper> getAllServices(){
 			}
 
 			alignStatus(mapServiceWrapper.get(accessAux.Portal_Application__c),statusAux);
+			mapServiceWrapper.get(accessAux.Portal_Application__c).portalApplicationRightId = accessAux.Id;
+			mapServiceWrapper.get(accessAux.Portal_Application__c).isFavorite = accessAux.Is_Favorite__c;
 		}else{
 			appsAlreadyWithAccessIds.add(accessAux.Portal_Application__c);
 		}
@@ -315,7 +329,9 @@ public static List<ServiceWrapper> getAllServices(){
 		//if the map of services does not contains this service yet, then add it
 		if(!mapServiceWrapper.containsKey(accessAux.Portal_Application__c)) {
 			mapServiceWrapper.put(accessAux.Portal_Application__c,
-								  new ServiceWrapper(mapAppsAlreadyWithAccess.get(accessAux.Portal_Application__c), isAdmin, iepStatus, isAuthorisedSignatory, accessAux.Right__c, userAux));
+				new ServiceWrapper(mapAppsAlreadyWithAccess.get(accessAux.Portal_Application__c), isAdmin, iepStatus, isAuthorisedSignatory, accessAux.Right__c, userAux));
+			mapServiceWrapper.get(accessAux.Portal_Application__c).portalApplicationRightId = accessAux.Id;
+			mapServiceWrapper.get(accessAux.Portal_Application__c).isFavorite = accessAux.Is_Favorite__c;
 		}
 	}
 
@@ -405,10 +421,13 @@ public static List<ServiceWrapper> getUserAccessGrantedServices(){
 
 	List<ServiceWrapper> lstAllServices = PortalServicesCtrl.getAllServices();
 
+	Set<Id> serviceIds = new Set<Id>();
+
 	List<ServiceWrapper> lstToReturn = new List<ServiceWrapper>();
 	for(ServiceWrapper serviceWrapperAux : lstAllServices) {
 		if(serviceWrapperAux.status == PortalServicesCtrl.PORTAL_ACCESS_GRANTED) {
 			lstToReturn.add(serviceWrapperAux);
+			serviceIds.add(serviceWrapperAux.recordService.Id);
 		}
 	}
 
@@ -420,8 +439,26 @@ public static List<ServiceWrapper> getUserAccessGrantedServices(){
 
 	if(!lstPA.isEmpty()) {
 		Map<String,ServiceWrapper> mapServiceWrapper = new Map<String,ServiceWrapper>();
+		// Non-requestable services for the contact might have Portal Service Access records, defining if the service belongs to the favorites
+		List<Portal_Application_Right__c> portalServiceAccessesList = [SELECT Id, Portal_Application__r.Id, Is_Favorite__c FROM Portal_Application_Right__c WHERE Contact__r.Id =:contactId]; 
+		Map<Id, Portal_Application_Right__c> portalServiceAccessesMap = new Map<Id, Portal_Application_Right__c>();
+		for(Portal_Application_Right__c par : portalServiceAccessesList){
+			portalServiceAccessesMap.put(par.Portal_Application__r.Id, par);
+		}
+		Set<Id> keySet = portalServiceAccessesMap.keySet();
+
 		for(Portal_Applications__c portalAppAux : lstPA) {
-			lstServiceWrapper.add(new ServiceWrapper(portalAppAux, false, '', false, '', userAux));
+			if(! serviceIds.contains(portalAppAux.Id)){
+				ServiceWrapper wrappedService = new ServiceWrapper(portalAppAux, false, '', false, '', userAux);
+				if(keySet.contains(portalAppAux.Id)){
+					wrappedService.isFavorite = portalServiceAccessesMap.get(portalAppAux.Id).Is_Favorite__c;
+					wrappedService.portalApplicationRightId = portalServiceAccessesMap.get(portalAppAux.Id).Id;
+				}
+				else{
+					wrappedService.isFavorite = false;
+				}
+				lstServiceWrapper.add(wrappedService);
+			}
 		}
 		lstToReturn.addAll(lstServiceWrapper);
 	}
@@ -728,6 +765,8 @@ public string status {get; set;}
 @AuraEnabled
 public Portal_Applications__c recordService {get; set;}
 @AuraEnabled
+public String portalApplicationRightId {get; set;}
+@AuraEnabled
 public String btnLabel {get; set;}
 @AuraEnabled
 public Boolean isEasyPayService {get; set;}
@@ -745,6 +784,8 @@ public boolean accountNotOpenError {get; set;}
 public boolean accessGranted {get; set;}
 @AuraEnabled
 public boolean accessRequested {get; set;}
+@AuraEnabled
+public boolean isFavorite {get; set;}
 @AuraEnabled
 public List<ContactWrapper> contactList {get; set;}
 @AuraEnabled
@@ -1472,6 +1513,68 @@ public static Boolean grantAccess(string contactId,string serviceId,string reaso
 		}else{
 			return 'Failure';
 		}
+	}
+
+	@AuraEnabled
+	public static Boolean changeIsFavoriteStatus(String portalApplicationId, String portalApplicationRightId, Boolean isFavorite){
+		System.debug('portalApplicationId ' + portalApplicationId);
+		System.debug('portalApplicationRightId ' + portalApplicationRightId);
+		System.debug('isFavorite ' + isFavorite);
+		try{
+			if(portalApplicationRightId != null){
+				Portal_Application_Right__c par = new Portal_Application_Right__c(
+					Id = portalApplicationRightId,
+					Is_Favorite__c = isFavorite
+				);
+				update par;
+				return true;
+			}
+			else if(portalApplicationId != null){
+				Portal_Application_Right__c par = new Portal_Application_Right__c(
+					Portal_Application__c = portalApplicationId,
+					Contact__c = DAL_ISSP.getUser(Userinfo.getUserId()).ContactId,
+					Is_Favorite__c = isFavorite
+				);
+				insert par;
+				return true;
+			}
+			return false;
+
+		}
+		catch(Exception ex){
+			System.debug('ERROR ' + ex.getMessage());
+			return false;
+		}
+	}
+
+	@AuraEnabled
+	public static Boolean createPortalApplicationRight(String portalApplicationId){
+		try{
+			Portal_Application_Right__c par = new Portal_Application_Right__c(
+				Portal_Application__c = portalApplicationId,
+				Contact__c = DAL_ISSP.getUser(Userinfo.getUserId()).ContactId,
+				Last_Visit_Date__c = Datetime.now()
+			);
+			insert par;
+			return true;
+		}
+		catch(Exception ex){
+			System.debug('ERROR ' + ex.getMessage());
+			return false;
+		}
+	}
+
+	//This method is used when a portal admin is creating a new contact in the portal
+	//It should retun all the services that he can assign to the contact he is creating
+	@AuraEnabled(cacheable=true)
+	public static List<Portal_Applications__c> getAvailableServicesForNewContact(){
+		List<Portal_Applications__c> services = getPortalApplications();
+		for(Portal_Applications__c service : services){
+			if(service.Cannot_be_managed_by_portal_admin__c){
+				services.remove(services.indexOf(service));
+			}
+		}
+		return services;
 	}
 
 }

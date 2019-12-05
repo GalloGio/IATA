@@ -2073,6 +2073,10 @@
         <name>CSP_Contacts_NoResults_text1</name>
     </customLabels>
     <customLabels>
+        <label>Das Ändern Ihres Profilnamens wirkt sich auf die Gültigkeit Ihres Personalausweises aus. Bitte nehmen Sie Kontakt mit unserem Kundenserviceteam auf, um Ihren Profilnamen zu ändern</label>
+        <name>CSP_Contact_Id_Card_Error_Msg</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_Contacts_NoResults_text2 --></label>
         <name>CSP_Contacts_NoResults_text2</name>
     </customLabels>
@@ -2355,6 +2359,30 @@
     <customLabels>
         <label><!-- CSP_IATA_Country --></label>
         <name>CSP_IATA_Country</name>
+    </customLabels>
+    <customLabels>
+        <label>Name auf dem Ausweis</label>
+        <name>CSP_IDCard_Name</name>
+    </customLabels>
+    <customLabels>
+        <label>Klicken Sie hier, um das Foto Ihres Ausweises zu sehen</label>
+        <name>CSP_IDCard_Photo</name>
+    </customLabels>
+    <customLabels>
+        <label>Foto</label>
+        <name>CSP_IDCard_Photo_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP IDCard Status --></label>
+        <name>CSP_IDCard_Status</name>
+    </customLabels>
+    <customLabels>
+        <label>Ablaufdatum (gültig bis)</label>
+        <name>CSP_IDCard_Valid_To</name>
+    </customLabels>
+    <customLabels>
+        <label>VER-Nummer des Ausweises</label>
+        <name>CSP_IDCard_Ver_Number</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_IMPORTANT --></label>
@@ -6511,6 +6539,10 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <name>IDCard_NoModificationAllowed</name>
     </customLabels>
     <customLabels>
+        <label>Beantragen &amp; bezahlen Sie Ihren Personalausweis (Neuantrag, Verlängerung, Agenturwechsel) und erhalten Sie IATA Reisevermittler-Leistungen.</label>
+        <name>IDCard_NoUSServiceDescription</name>
+    </customLabels>
+    <customLabels>
         <label><!-- IDCard No Price Table Found --></label>
         <name>IDCard_No_Price_Table_Found</name>
     </customLabels>
@@ -6799,6 +6831,10 @@ Kindly note that home-based agents are required to coordinate with their colleag
     <customLabels>
         <label><!-- IDCard_TrxNum --></label>
         <name>IDCard_TrxNum</name>
+    </customLabels>
+    <customLabels>
+        <label>(Für US-Agenten) Beantragung von Personalausweisen, Registrierung von Agenten, Bezahlung der jährlichen Servicegebühr, Bearbeitung von Agentur-Rezertifizierungen usw.</label>
+        <name>IDCard_USServiceDescription</name>
     </customLabels>
     <customLabels>
         <label><!-- IDCard Update Application --></label>
@@ -15812,6 +15848,14 @@ Bitte geben Sie an, für welches Land Sie zuletzt unsere Unterstützung erhalten
     <customLabels>
         <label>Bitte beachten Sie, dass eine Änderung Ihres Namens nicht auf Ihrem IATA Ausweis widerspiegelt wird. Zur Änderun Ihrer ID -Karte , melden Sie sich bitte, bei der ID -Carten-Plattform an.</label>
         <name>ISSP_IdCard_Name_Warning</name>
+    </customLabels>
+    <customLabels>
+        <label>ID-Karten-Online-Plattform</label>
+        <name>ISSP_IdCard_NonUS</name>
+    </customLabels>
+    <customLabels>
+        <label>IATAN Online-Dienste</label>
+        <name>ISSP_IdCard_US</name>
     </customLabels>
     <customLabels>
         <label>In Bearbeitung</label>
