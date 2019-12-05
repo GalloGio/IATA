@@ -3916,6 +3916,14 @@ Payment required on receipt of this Payment Advice
         <value>Please add your Shipping address information.</value>
     </labels>
     <labels>
+        <fullName>CSP_L3_Confirmation_Message_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L3_Confirmation_Message_LMS</shortDescription>
+        <value>You're just one step from completing your profile! If the information is correct please click Submit. If you need to edit any information please click on Go back to edit</value>
+    </labels>
+    <labels>
         <fullName>CSP_L2_Details_Saved_Message_LMS</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>

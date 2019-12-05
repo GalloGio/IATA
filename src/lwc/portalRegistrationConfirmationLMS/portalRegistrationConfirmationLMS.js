@@ -14,7 +14,7 @@ import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 
 import ISSP_CompanyName      from '@salesforce/label/c.ISSP_CompanyName';
 
-import CSP_L2_Confirmation_Message from '@salesforce/label/c.CSP_L2_Confirmation_Message';
+import CSP_L3_Confirmation_Message_LMS from '@salesforce/label/c.CSP_L3_Confirmation_Message_LMS';
 import CSP_L2_Profile_Details from '@salesforce/label/c.CSP_L2_Profile_Details';
 import CSP_L2_Personal_Details_Message from '@salesforce/label/c.CSP_L2_Personal_Details_Message';
 import CSP_L2_Back_to_Edit from '@salesforce/label/c.CSP_L2_Back_to_Edit';
@@ -114,7 +114,7 @@ export default class PortalRegistrationConfirmationLMS extends LightningElement 
 		CSP_L2_Company_Account,
 		CSP_L2_Company_Account_Message,
 		CSP_L2_Company_Information,
-		CSP_L2_Confirmation_Message,
+		CSP_L3_Confirmation_Message_LMS,
 		CSP_L2_Country,
 		CSP_L2_Date_of_Birth,
 		CSP_L2_Details_Saved,
