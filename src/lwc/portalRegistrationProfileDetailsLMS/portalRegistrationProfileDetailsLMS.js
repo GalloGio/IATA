@@ -14,7 +14,7 @@ import ISSP_Registration_MS                          from '@salesforce/label/c.I
 
 import CSP_L2_Profile_Details_Message                   from '@salesforce/label/c.CSP_L2_Profile_Details_Message_LMS';
 import CSP_L2_Profile_Details from '@salesforce/label/c.CSP_L2_Profile_Details';
-import CSP_L2_Title from '@salesforce/label/c.CSP_L2_Title';
+import CSP_L3_Title_LMS from '@salesforce/label/c.CSP_L3_Title_LMS';
 import CSP_L2_Date_of_Birth from '@salesforce/label/c.CSP_L2_Date_of_Birth';
 import CSP_L2_Job_Function from '@salesforce/label/c.CSP_L2_Job_Function';
 import CSP_L2_Job_Title from '@salesforce/label/c.CSP_L2_Job_Title'; 
@@ -59,7 +59,7 @@ export default class PortalRegistrationProfileDetailsLMS extends LightningElemen
 		ISSP_Registration_MS,
 		CSP_L2_Profile_Details,
 		CSP_L2_Profile_Details_Message,
-		CSP_L2_Title,
+		CSP_L3_Title_LMS,
 		CSP_L2_Date_of_Birth,
 		CSP_L2_Job_Function,
 		CSP_L2_Job_Title,
