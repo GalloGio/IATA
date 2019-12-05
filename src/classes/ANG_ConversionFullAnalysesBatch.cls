@@ -210,7 +210,7 @@ global class ANG_ConversionFullAnalysesBatch implements Database.Batchable<sObje
 
 		String subject = 'Conversion Report for ' + country;
 		email.setSaveAsActivity(false);
-		email.setTargetObjectId(UserInfo.getUserEmail());
+		email.setTargetObjectId(UserInfo.getUserId());
 		email.setSubject(subject);
 		email.setToAddresses(toAddress);
 		email.setPlainTextBody('Conversion Report for '  + country + ' in attachment. \n\n\n ' + errorsFound);
