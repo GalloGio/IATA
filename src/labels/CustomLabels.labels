@@ -3042,6 +3042,13 @@ Payment required on receipt of this Payment Advice
         <value>Add New Documents</value>
     </labels>
     <labels>
+        <fullName>CSP_Age_Verification</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Age Verification</shortDescription>
+        <value>You must be over 18.</value>
+    </labels>
+    <labels>
         <fullName>CSP_Announcement</fullName>
         <language>en_US</language>
         <protected>false</protected>
