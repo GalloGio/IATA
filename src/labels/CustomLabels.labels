@@ -3900,6 +3900,22 @@ Payment required on receipt of this Payment Advice
         <value>Work Phone</value>
     </labels>
     <labels>
+        <fullName>CSP_L2_Business_Address_Information_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Business_Address_Information_LMS</shortDescription>
+        <value>Shipping Address</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L2_Business_Address_Information_Message_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Business_Address_Information_Message_LMS</shortDescription>
+        <value>Please add your Shipping address information.</value>
+    </labels>
+    <labels>
         <fullName>CSP_L2_EmailValidationDescri_LMS</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
