@@ -1175,6 +1175,22 @@ NOT(BEGINS($Profile.Name, &apos;identity&apos;))
         <errorMessage>Access to the TIP Portal Service can only be granted to contacts of a Payment Provider account.</errorMessage>
     </validationRules>
     <validationRules>
+        <fullName>Restrict_IAC_request</fullName>
+        <active>true</active>
+        <description>Internal users must not be able to assign an IATA Accreditation &amp; Changes portal service with Access Status = Access Requested to a contact under accounts registered as Freight Forwarders in a CNS country.</description>
+        <errorConditionFormula>AND(
+    OR(
+    Text(Right__c) = &apos;Access Requested&apos;,
+    Text(Right__c) = &apos;Access Granted&apos;),
+    CONTAINS(Application_Name__c, &apos;IATA Accreditation &amp; Changes&apos;),
+    OR(Contact__r.Account.CNS_Account__c ,Contact__r.Account.CNS_Agency__c),
+    OR(Contact__r.Account.RecordType.DeveloperName =&apos;IATA_Agency&apos;,Contact__r.Account.RecordType.DeveloperName =&apos;Standard_Account&apos;),
+    ISPICKVAL(Contact__r.Account.Sector__c,&apos;Cargo Agent&apos;),
+    NOT(BEGINS($Profile.Name, &apos;System Administrator&apos;))
+    )</errorConditionFormula>
+        <errorMessage>Access to an IATA IATA Accreditation &amp; Changes portal service cannot be requested internally to a contact under accounts registered as Freight Forwarders in a CNS country.</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>Restrict_IEP_request</fullName>
         <active>true</active>
         <description>Internal users must not be able to assign an IATA EasyPay portal service with Access Status = Access Requested to a contact.</description>

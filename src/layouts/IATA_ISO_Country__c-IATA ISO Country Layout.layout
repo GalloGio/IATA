@@ -265,6 +265,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Multicountry_Enabled__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>ANG_GDI_Enabled__c</field>
             </layoutItems>
             <layoutItems>
@@ -509,7 +513,9 @@
     <relatedLists>
         <fields>NAME</fields>
         <fields>ISO_Code__c</fields>
-        <fields>IEC_Valid_SAP__c</fields>
+        <fields>GeonameAsciiName__c</fields>
+        <fields>GeonameName__c</fields>
+        <fields>Valid_for_Address__c</fields>
         <relatedList>IATA_ISO_State__c.IATA_ISO_Country__c</relatedList>
     </relatedLists>
     <relatedLists>

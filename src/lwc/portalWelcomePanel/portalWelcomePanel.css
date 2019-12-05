@@ -1,0 +1,135 @@
+/**
+ * Created by ukaya01 on 09/08/2019.
+ */
+
+ .imgBg{
+  margin-bottom: 40px;
+}
+
+.headerTitle {
+  /*width: 368px;*/
+  /*height: 80px;*/
+  font-size: 30px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.33;
+  letter-spacing: normal;
+  color: #1e32fa;
+  margin-bottom: 38px;
+}
+
+.infoText {
+  /*width: 368px;*/
+  /*height: 78px;*/
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.63;
+  letter-spacing: normal;
+  color: #333333;
+  margin-bottom: 35px;
+}
+
+.rectangle {
+  /*width: 368px;*/
+  /*height: 454px;*/
+  border-radius: 1px;
+  background-color: rgba(255, 255, 255, 0.96);
+  -webkit-clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 100% 91%, 91% 100%, 0% 100%, 0% 0%, 0% 0%);
+  clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 100% 91%, 91% 100%, 0% 100%, 0% 0%, 0% 0%);
+}
+
+.bounds {
+  /*width: 336px;
+  height: 88px;*/
+  object-fit: contain;
+  border-radius: 1px;
+  padding: 16px;
+}
+
+.faqContainer{
+    /*width: 336px;
+    height: 88px;*/
+    object-fit: contain;
+    border-radius: 1px;
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-bottom: 16px;
+}
+
+.service {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+}
+
+.cardItemTitle {
+  /*width: 272px;*/
+  /*height: 24px;*/
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
+  color: #333333;
+}
+
+.description {
+  /*width: 272px;*/
+  /*height: 40px;*/
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.43;
+  letter-spacing: normal;
+  color: #525252;
+}
+
+.link {
+  width: 66px;
+  height: 24px;
+  font-size: 14px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.71;
+  letter-spacing: normal;
+  color: #3333ff;
+  cursor: pointer;
+}
+
+.contentContainer {
+    /*width: 528px;*/
+    padding: 11%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.faqPointer {
+    cursor: pointer;
+    -webkit-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
+    -o-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+}
+
+@media only screen and (min-width: 1441px) {
+  .contentContainer {
+    padding: 15%; 
+  }
+}
+
+.welcomePanelItem{
+  display: inline-block;
+}
+
+.IEFixWidth{
+  width: 100%;
+}

@@ -1,0 +1,75 @@
+@font-face {
+    font-family: 'aktiv-grotesk';
+    src: "{!$Resource.GADM_Portal/fonts/OTF/AktivGrotesk-Regular.otf}";
+}
+
+@font-face {
+    font-family: 'aktiv-grotesk-bold';
+    src: "{!$Resource.GADM_Portal/fonts/OTF/AktivGrotesk-Bold.otf}";
+}
+
+.THIS.cCenterPanel {
+    margin: 0 auto;
+    max-width: 1040px !important;
+    min-height: 500px;
+    padding-left: 15px;
+    padding-right: 15px;
+    font-family: aktiv-grotesk;
+}
+
+.THIS .slds-col--padded {
+    padding-top: .75rem;
+    padding-bottom: .75rem;
+}
+
+
+.THIS .IATA_section {
+    background-color: #F2F2F2;
+    font-size: 18px;
+    font-weight: bold;
+    height: 48px;
+    padding: 15px;
+}
+
+.THIS .IATA_sectionEndSeparator {
+    background-color: #FAC832;
+    height: 4px;
+    width:100%;
+}
+
+.THIS .cFooterPanel {
+    display:none;
+}
+
+.THIS p {
+  font-family: aktiv-grotesk, sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 22px;
+}
+
+.THIS h2 {
+    font-family: aktiv-grotesk, sans-serif !important;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 22px;
+    text-align:left;
+}
+
+.THIS .cardBorder {
+    box-shadow: none !important;
+    background: padding-box rgb(255, 255, 255) !important;
+    border-width: 1px !important;
+    border-style: solid !important;
+    border-color: rgb(212, 212, 212) !important;
+    border-image: initial !important;
+    border-radius: 0.25rem !important;
+}
+
+.THIS.salesforceIdentityIdentityBody a {
+    color: black !important;
+}
+
+.THIS .noAccess {
+    text-align: center;
+}

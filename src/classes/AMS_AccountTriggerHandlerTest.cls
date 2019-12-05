@@ -1,92 +1,92 @@
 @isTest
 private class AMS_AccountTriggerHandlerTest {
-	
+
 	@testSetup static void setup(){
 
 		List<Account> acctsToInsert = new List<Account>();
 
 		Account acc1 = new Account(
-            Name = 'HO Account 1',
-            Type = AMS_Utils.CATEGORY_IATA_CARGO_AGENT,
-            Category__c = AMS_Utils.CATEGORY_IATA_CARGO_AGENT,
-            Sector__c = AMS_Utils.SECTOR_CARGO,
-            RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account'),
-            REASON_FOR_CREATION__C = 'Created by customer'
-        );
+			Name = 'HO Account 1',
+			Type = AMS_Utils.CATEGORY_IATA_CARGO_AGENT,
+			Category__c = AMS_Utils.CATEGORY_IATA_CARGO_AGENT,
+			Sector__c = AMS_Utils.SECTOR_CARGO,
+			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account'),
+			REASON_FOR_CREATION__C = 'Created by customer'
+		);
 
 		insert acc1;
 
 		Account acc2 = new Account(
-            Name = 'BR Account 2',
-            Type = AMS_Utils.CATEGORY_IATA_CARGO_AGENT,
-            Category__c = AMS_Utils.CATEGORY_IATA_CARGO_AGENT,
-            RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account'),
-            ParentId = acc1.Id,
-            Sector__c = AMS_Utils.SECTOR_CARGO,
-            REASON_FOR_CREATION__C = 'Created by customer'
-		);		
-        
+			Name = 'BR Account 2',
+			Type = AMS_Utils.CATEGORY_IATA_CARGO_AGENT,
+			Category__c = AMS_Utils.CATEGORY_IATA_CARGO_AGENT,
+			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account'),
+			ParentId = acc1.Id,
+			Sector__c = AMS_Utils.SECTOR_CARGO,
+			REASON_FOR_CREATION__C = 'Created by customer'
+		);
+
 		Account acc3 = new Account(
-            Name = 'BR Account 3',
-            Type = AMS_Utils.CATEGORY_IATA_CARGO_AGENT,
-            Category__c = AMS_Utils.CATEGORY_IATA_CARGO_AGENT,
-            RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account'),
-            ParentId = acc1.Id,
-            Sector__c = AMS_Utils.SECTOR_CARGO,
-            REASON_FOR_CREATION__C = 'Created by customer'
+			Name = 'BR Account 3',
+			Type = AMS_Utils.CATEGORY_IATA_CARGO_AGENT,
+			Category__c = AMS_Utils.CATEGORY_IATA_CARGO_AGENT,
+			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account'),
+			ParentId = acc1.Id,
+			Sector__c = AMS_Utils.SECTOR_CARGO,
+			REASON_FOR_CREATION__C = 'Created by customer'
 	   	);
-        
+
 		Account acc4 = new Account(
-            Name = 'BR Account 4',
-            Type = AMS_Utils.CATEGORY_IATA_CARGO_AGENT,
-            Category__c = AMS_Utils.CATEGORY_IATA_CARGO_AGENT,
-            RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account'),
-            ParentId = acc1.Id,
-            Sector__c = AMS_Utils.SECTOR_CARGO,
-            REASON_FOR_CREATION__C = 'Created by customer'
-        );
-        
+			Name = 'BR Account 4',
+			Type = AMS_Utils.CATEGORY_IATA_CARGO_AGENT,
+			Category__c = AMS_Utils.CATEGORY_IATA_CARGO_AGENT,
+			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account'),
+			ParentId = acc1.Id,
+			Sector__c = AMS_Utils.SECTOR_CARGO,
+			REASON_FOR_CREATION__C = 'Created by customer'
+		);
+
 		// different set
 		Account acc1d = new Account(
-            Name = 'HO Account Diff 1',
-            Type = AMS_Utils.CATEGORY_IATA_CARGO_AGENT,
-            Category__c = AMS_Utils.CATEGORY_IATA_CARGO_AGENT,
-            Sector__c = AMS_Utils.SECTOR_CARGO,
-            RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account'),
-            REASON_FOR_CREATION__C = 'Created by customer'
+			Name = 'HO Account Diff 1',
+			Type = AMS_Utils.CATEGORY_IATA_CARGO_AGENT,
+			Category__c = AMS_Utils.CATEGORY_IATA_CARGO_AGENT,
+			Sector__c = AMS_Utils.SECTOR_CARGO,
+			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account'),
+			REASON_FOR_CREATION__C = 'Created by customer'
 		);
 		insert acc1d;
-		
+
 		Account acc2d = new Account(
-            Name = 'BR Account Diff 2',
-            Type = AMS_Utils.CATEGORY_IATA_CARGO_AGENT,
-            Category__c = AMS_Utils.CATEGORY_IATA_CARGO_AGENT,
-            RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account'),
-            ParentId = acc1d.Id,
-            Sector__c = AMS_Utils.SECTOR_CARGO,
-            REASON_FOR_CREATION__C = 'Created by customer'
+			Name = 'BR Account Diff 2',
+			Type = AMS_Utils.CATEGORY_IATA_CARGO_AGENT,
+			Category__c = AMS_Utils.CATEGORY_IATA_CARGO_AGENT,
+			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account'),
+			ParentId = acc1d.Id,
+			Sector__c = AMS_Utils.SECTOR_CARGO,
+			REASON_FOR_CREATION__C = 'Created by customer'
 		);
-        
+
 		Account acc3d = new Account(
-            Name = 'BR Account Diff 3',
-            Type = AMS_Utils.CATEGORY_IATA_CARGO_AGENT,
-            Category__c = AMS_Utils.CATEGORY_IATA_CARGO_AGENT,
-            RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account'),
-            ParentId = acc1d.Id,
-            Sector__c = AMS_Utils.SECTOR_CARGO,
-            REASON_FOR_CREATION__C = 'Created by customer'
+			Name = 'BR Account Diff 3',
+			Type = AMS_Utils.CATEGORY_IATA_CARGO_AGENT,
+			Category__c = AMS_Utils.CATEGORY_IATA_CARGO_AGENT,
+			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account'),
+			ParentId = acc1d.Id,
+			Sector__c = AMS_Utils.SECTOR_CARGO,
+			REASON_FOR_CREATION__C = 'Created by customer'
 		);
-        
+
 		Account acc4d = new Account(
-            Name = 'BR Account Diff 4',
-            Type = AMS_Utils.CATEGORY_IATA_CARGO_AGENT,
-            Category__c = AMS_Utils.CATEGORY_IATA_CARGO_AGENT,
-            RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account'),
-            ParentId = acc1d.Id,
-            Sector__c = AMS_Utils.SECTOR_CARGO,
-            REASON_FOR_CREATION__C = 'Created by customer'
+			Name = 'BR Account Diff 4',
+			Type = AMS_Utils.CATEGORY_IATA_CARGO_AGENT,
+			Category__c = AMS_Utils.CATEGORY_IATA_CARGO_AGENT,
+			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account'),
+			ParentId = acc1d.Id,
+			Sector__c = AMS_Utils.SECTOR_CARGO,
+			REASON_FOR_CREATION__C = 'Created by customer'
 		);
-        
+
 		acctsToInsert.add(acc2);
 		acctsToInsert.add(acc3);
 		acctsToInsert.add(acc4);
@@ -102,7 +102,7 @@ private class AMS_AccountTriggerHandlerTest {
 		List<AMS_Agencies_Hierarchy__c> hierarchiesToInsert = new List<AMS_Agencies_Hierarchy__c>();
 
 		AMS_Agencies_Hierarchy__c ah1 = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy 1');
-		
+
 		AMS_Agencies_Hierarchy__c ah2 = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy 2');
 
 		hierarchiesToInsert.add(ah1);
@@ -110,11 +110,9 @@ private class AMS_AccountTriggerHandlerTest {
 
 		insert hierarchiesToInsert;
 
-
 		AMS_Agencies_relationhip__c ar1 = new AMS_Agencies_relationhip__c(Relationship_details__c='Test',Hierarchy__c=ah1.id,Child_Account__c=acc2.id,Parent_Account__c=acc1.id);
 		AMS_Agencies_relationhip__c ar2 = new AMS_Agencies_relationhip__c(Relationship_details__c='Test',Hierarchy__c=ah1.id,Child_Account__c=acc3.id,Parent_Account__c=acc1.id);
 		AMS_Agencies_relationhip__c ar3 = new AMS_Agencies_relationhip__c(Relationship_details__c='Test',Hierarchy__c=ah1.id,Child_Account__c=acc4.id,Parent_Account__c=acc1.id);
-
 
 		AMS_Agencies_relationhip__c ar1d = new AMS_Agencies_relationhip__c(Relationship_details__c='Test',Hierarchy__c=ah2.id,Child_Account__c=acc2d.id,Parent_Account__c=acc1d.id);
 		AMS_Agencies_relationhip__c ar2d = new AMS_Agencies_relationhip__c(Relationship_details__c='Test',Hierarchy__c=ah2.id,Child_Account__c=acc3d.id,Parent_Account__c=acc1d.id);
@@ -128,14 +126,13 @@ private class AMS_AccountTriggerHandlerTest {
 
 		rels.add(ar1d);
 		rels.add(ar2d);
-		rels.add(ar3d);     
+		rels.add(ar3d);
 
 		insert rels;
 	}
 
-
 	@isTest static void verifychangeCassNumberError() {
-		
+
 		Test.StartTest();
 
 		Boolean exceptionVar = false;
@@ -152,9 +149,9 @@ private class AMS_AccountTriggerHandlerTest {
 			System.debug('Analyzing Account name '+ acc.Name + ' that has cass number ' + acc.CASS_Number__c);
 
 			if(acc.ParentId != null){
-			
+
 				System.assert(acc.Cass_Number__c != null);
-			
+
 				if(acc.CASS_Number__c == '001'){
 					acc.CASS_Number__c = '002';
 					System.debug('Account name '+ acc.Name + ' now has cass number ' + acc.CASS_Number__c);
@@ -166,8 +163,6 @@ private class AMS_AccountTriggerHandlerTest {
 				System.debug('The Account name '+ acc.Name + ' does not have parent id ');
 			}
 		}
-
-	   
 
 		if(!accountListToUpdate.isEmpty()){
 			try{
@@ -183,10 +178,10 @@ private class AMS_AccountTriggerHandlerTest {
 		}
 
 		System.assert(exceptionVar,true);
-		
+
 		Test.StopTest();
 	}
-	
+
 	@isTest static void verifychangeCassNumberSuccess() {
 
 		Test.StartTest();
@@ -201,9 +196,9 @@ private class AMS_AccountTriggerHandlerTest {
 		for(Account acc: accountList){
 
 			if(acc.ParentId != null){
-			
+
 				System.assert(acc.Cass_Number__c != null);
-			
+
 				if(acc.CASS_Number__c == '001'){
 					acc.CASS_Number__c = '002';
 					accountListToUpdate.add(acc);
@@ -216,39 +211,36 @@ private class AMS_AccountTriggerHandlerTest {
 			}
 		}
 
-		
-
 		if(!accountListToUpdate.isEmpty()){
 			update accountListToUpdate;
 		}
 		else{
 			System.assertEquals(true,false);
 		}
-		
+
 		Test.StopTest();
 	}
-
 
 	//Test the trigger trgAccount
 	static testMethod void test_trgAccount() {
 		IECTestUtil.bIgnoreCurrentUserProfile = true;
 		Account acc1 = new Account(
-            Name = 'HO Account 1',
-            Type = AMS_Utils.CATEGORY_IATA_CARGO_AGENT,
-            Category__c = AMS_Utils.CATEGORY_IATA_CARGO_AGENT,
-            Sector__c = AMS_Utils.SECTOR_CARGO,
-            WebStar_ID__c = 'Some Test',
-            Is_your_firm_handling_Dangerous_Goods__c = 'No',
-            RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account'),
-            REASON_FOR_CREATION__C = 'Account is missing'
+			Name = 'HO Account 1',
+			Type = AMS_Utils.CATEGORY_IATA_CARGO_AGENT,
+			Category__c = AMS_Utils.CATEGORY_IATA_CARGO_AGENT,
+			Sector__c = AMS_Utils.SECTOR_CARGO,
+			WebStar_ID__c = 'Some Test',
+			Is_your_firm_handling_Dangerous_Goods__c = 'No',
+			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account'),
+			REASON_FOR_CREATION__C = 'Account is missing'
 		);
 		try{
 			insert acc1;
 		}catch(Exception e){
-			System.assert(e.getMessage().contains(Label.Cannot_Update_AIMS_values));	
+			System.assert(e.getMessage().contains(Label.Cannot_Update_AIMS_values));
 
-			IECTestUtil.bIgnoreCurrentUserProfile = false;	
-			insert acc1;	
+			IECTestUtil.bIgnoreCurrentUserProfile = false;
+			insert acc1;
 		}
 
 		IECTestUtil.bIgnoreCurrentUserProfile = true;
@@ -260,35 +252,35 @@ private class AMS_AccountTriggerHandlerTest {
 	}
 
 	static testMethod void test_irregularityCheck() {
-        IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US')  ;
-        insert ctry;
+		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US')  ;
+		insert ctry;
 
-        AMS_Country_Specific_Attribute__c irrThsd = new AMS_Country_Specific_Attribute__c(IATA_ISO_Country__c = ctry.Id, Location_Class__c = 'Test', Threshold__c = 1, 
-        												RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Country_Specific_Attribute__c', 'Irregularity_Threshold'));
-        insert irrThsd;
+		AMS_Country_Specific_Attribute__c irrThsd = new AMS_Country_Specific_Attribute__c(IATA_ISO_Country__c = ctry.Id, Location_Class__c = 'Test', Threshold__c = 1,
+														RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Country_Specific_Attribute__c', 'Irregularity_Threshold'));
+		insert irrThsd;
 
-        Account a = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account'), Name='Test Agency', IATAcode__c = '1234567', Location_Class__c = 'Test');
-        insert a;
+		Account a = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account'), Name='Test Agency', IATAcode__c = '1234567', Location_Class__c = 'Test');
+		insert a;
 
-        Test.startTest();
+		Test.startTest();
 
-        	Agency_Applied_Change_code__c irr = new Agency_Applied_Change_code__c(Account__c = a.Id, 
-        											RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Applied_Change_code__c', 'Irregularities'), 
-        											Change_Code__c = 'IRR', Operation__c = 'A', Irregularities_Points__c = 1, Irregularities_Expired__c = false);
-        	insert irr;
+			Agency_Applied_Change_code__c irr = new Agency_Applied_Change_code__c(Account__c = a.Id,
+													RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Applied_Change_code__c', 'Irregularities'),
+													Change_Code__c = 'IRR', Operation__c = 'A', Irregularities_Points__c = 1, Irregularities_Expired__c = false);
+			insert irr;
 
-        	Account aAssert = [SELECT Id, Count_Accumulated_Irregularities__c, SUM_A_Irregularities__c, SUM_W_Irregularities__c FROM Account WHERE Id = :a.Id];
-        	//System.assertEquals(1, aAssert.Count_Accumulated_Irregularities__c);
+			Account aAssert = [SELECT Id, Count_Accumulated_Irregularities__c, SUM_A_Irregularities__c, SUM_W_Irregularities__c FROM Account WHERE Id = :a.Id];
+			//System.assertEquals(1, aAssert.Count_Accumulated_Irregularities__c);
 
-        Test.stopTest();
+		Test.stopTest();
 	}
 
 	static testMethod void test_DDcheck() {
-		
+
 		/*IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US')  ;
 		insert ctry;*/
 
-		Account a = new Account(RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account'), 
+		Account a = new Account(RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account'),
 								Name='Test Agency', IATAcode__c = '1234567', Location_Class__c = 'Test');
 		insert a;
 
@@ -326,7 +318,7 @@ private class AMS_AccountTriggerHandlerTest {
 		Account account = new Account(
 			Name = 'Test Account',
 			Type = AMS_Utils.CATEGORY_IATA_CARGO_AGENT,
-            Category__c = AMS_Utils.CATEGORY_IATA_CARGO_AGENT,
+			Category__c = AMS_Utils.CATEGORY_IATA_CARGO_AGENT,
 			Cass_Number__c = '000',
 			Sector__c = AMS_Utils.SECTOR_CARGO,
 			IATA_ISO_Country__c = country.Id,
@@ -339,7 +331,7 @@ private class AMS_AccountTriggerHandlerTest {
 		Account account2 = new Account(
 			Name = 'Test Account',
 			Type = AMS_Utils.CATEGORY_IATA_CARGO_AGENT,
-            Category__c = AMS_Utils.CATEGORY_IATA_CARGO_AGENT,
+			Category__c = AMS_Utils.CATEGORY_IATA_CARGO_AGENT,
 			Cass_Number__c = null,
 			Sector__c = AMS_Utils.SECTOR_CARGO,
 			Location_Type__c = 'HO',
@@ -373,5 +365,5 @@ private class AMS_AccountTriggerHandlerTest {
 
 		Boolean bool = AMS_AccountTriggerHandler.verifyFieldChanges(account, account2);
 	}
-	
+
 }

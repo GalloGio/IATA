@@ -671,6 +671,16 @@ NOT(CONTAINS($User.Customer_type__c,&quot;Agency&quot;))
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Requires_Level2_Registration__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Indicates if L2 registration is necessary to request access to this service</description>
+        <externalId>false</externalId>
+        <label>Requires Level2 Registration</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Restricted_App__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
@@ -964,7 +974,8 @@ Name
     OR( 
         AND(Agency__c = true, 
             $User.Customer_type__c=&quot;Agency&quot;,
-            NOT(Name = &quot;Access BOP&quot;)), 
+            NOT(Name = &quot;Access BOP&quot;),
+            NOT(Name = &quot;Payment Link&quot;)), 
         AND(VisibleCNS__c= true, 
             $User.Customer_type__c=&quot;CNS Agency&quot;), 
         AND(Not_ICH_Airline__c = true,
@@ -981,8 +992,13 @@ Name
             CONTAINS($UserRole.Name ,&quot;General Public&quot;)), 
         AND(Others__c = true, 
             CONTAINS($User.Contact_Account_Record_Type__c  ,&quot;Others&quot;)), 
-        AND(Name = &quot;Payment Link&quot;, 
-            NOT($User.Customer_type__c=&quot;CNS Agency&quot;)), 
+        AND(Name = &quot;Payment Link&quot;,
+            NOT($User.Customer_type__c=&quot;CNS Agency&quot;),
+            NOT($User.ANG_Category__c=&quot;IATAN Passenger Sales Agent (USA Only)&quot;),
+            NOT($User.ANG_Category__c=&quot;Travel Service Intermediaries-TSI (USA Only)&quot;)), 
+        AND(Name = &quot;Webstar&quot;,
+            OR($User.ANG_Category__c=&quot;IATAN Passenger Sales Agent (USA Only)&quot;,
+                $User.ANG_Category__c=&quot;Travel Service Intermediaries-TSI (USA Only)&quot;)), 
         AND(Name = &quot;Paypal&quot;,
             $User.CNS_Account_or_Agency__c),
         AND(Name = &quot;Resource Center&quot;, 
@@ -991,7 +1007,10 @@ Name
         AND(Name = &quot;Transparency in Payments (TIP)&quot;,
             ($User.Is_TIP_User__c)),
         AND(Name = &quot;Access BOP&quot;,
-            $User.ANG_Customer_Country_ISO__c = &quot;CN&quot;)
+            $User.ANG_Customer_Country_ISO__c = &quot;CN&quot;),
+        AND(Name = &quot;IATA Accreditation &amp; Changes&quot;,
+            NOT($User.CNS_Account_or_Agency__c),
+            NOT($User.ANG_Sector__c=&apos;Cargo Agent&apos;))
     )
 )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>

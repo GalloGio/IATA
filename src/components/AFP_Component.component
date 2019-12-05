@@ -52,10 +52,10 @@
 			<a style="display:{!IF(wrapper.isSearch,'none','')};" id="iepLink" href="{!IF(isNewPortal, portalRedirectToIEP , wrapper.iepLink)}" onclick="errorMessageModal('{! wrapper.modalErrorMessageFlag}')">{! wrapper.iepLinkLabel}</a>
 		</div>
 
-		<div class="{!IF(wrapper.authQuantity == 2, 'col-md-6', IF(wrapper.authQuantity == 1, 'col-md-12', 'col-md-4'))} col-sm-12 text-center" style="display: {!IF(AND(wrapper.isChinaAgent, wrapper.isBOPFlag), 'block', 'none')}"> 
-			<img id="theImage" src="{!URLFOR($Resource.ISSP_RHC_Page_Icons,'img/wallet.jpg')}" width="100" height="100"/>
-			<strong class="show">{!$Label.ANG_ISSP_BOP}</strong>
-			<a style="display:{!IF(wrapper.isSearch,'none','')};" id="bopLink" href="{! wrapper.iepLink}" target="_blank" onclick="errorMessageModal('{! wrapper.modalErrorMessageFlag}')">{!$Label.ANG_ISSP_BOP_Access}</a>
+    	<div class="{!IF(wrapper.authQuantity == 2, 'col-md-6', IF(wrapper.authQuantity == 1, 'col-md-12', 'col-md-4'))} col-sm-12 text-center" style="display: {!IF(AND(wrapper.isChinaAgent, wrapper.isBOPFlag), 'block', 'none')}"> 
+      		<img id="theImage" src="{!URLFOR($Resource.ISSP_RHC_Page_Icons,'img/wallet.jpg')}" width="100" height="100"/>
+      		<strong class="show">{!$Label.ANG_ISSP_BOP}</strong>
+		<a style="display:{!IF(wrapper.isSearch,'none','')};" id="bopLink" href="{! wrapper.iepLink}" target="_blank" onclick="errorMessageModal('{! wrapper.modalErrorMessageFlag}')">{!$Label.ANG_ISSP_BOP_Access}</a>
 		</div>
 
 

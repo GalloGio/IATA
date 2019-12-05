@@ -36,10 +36,20 @@
                         <span class="{!(v.serviceName == 'CSP') ? 'subLogoISSP' : 'subLogo' + v.serviceName}"></span>
                     </a>
                     <aura:set attribute="else">
-                        <a class="homeIcon loginIcon" href="{!'/' + $Label.c.OneId_Community_Name + '/login/?language=' + v.selectedLanguage + '&amp;' + (empty(v.serviceName) ? '' : 'serviceName='+v.serviceName)}">
-                            <span class="icon icon-logo"></span>
-                            <span class="{!(v.serviceName == 'CSP') ? 'subLogoISSP' : 'subLogo' + v.serviceName}"></span>
-                        </a>
+                        <!--GADM-->
+                        <aura:if isTrue="{!equals(v.serviceName,'GADM')}">
+                            <a class="homeIcon loginIcon" href="{!'/' + $Label.c.OneId_Community_Name+'/gadm?serviceName=GADM'}">
+                                <span class="icon icon-logo"></span>
+                                <span class="{!'subLogo' + v.serviceName}"></span>
+                            </a>
+                            <!--OTHERS-->
+                            <aura:set attribute="else">
+                                <a class="homeIcon loginIcon" href="{!'/' + $Label.c.OneId_Community_Name + '/login/?language=' + v.selectedLanguage + '&amp;' + (empty(v.serviceName) ? '' : 'serviceName='+v.serviceName)}">
+                                    <span class="icon icon-logo"></span>
+                                    <span class="{!(v.serviceName == 'CSP') ? 'subLogoISSP' : 'subLogo' + v.serviceName}"></span>
+                                </a>
+                            </aura:set>
+                        </aura:if>
                     </aura:set>
                 </aura:if>
 
