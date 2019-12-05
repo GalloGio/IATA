@@ -3,8 +3,8 @@
     <assignments>
         <name>Set_Account_Id</name>
         <label>Set Account Id</label>
-        <locationX>395</locationX>
-        <locationY>918</locationY>
+        <locationX>396</locationX>
+        <locationY>919</locationY>
         <assignmentItems>
             <assignToReference>AccountId</assignToReference>
             <operator>Assign</operator>
@@ -73,8 +73,8 @@
     <decisions>
         <name>Integration_Log_was_filled</name>
         <label>Integration Log was filled ?</label>
-        <locationX>201</locationX>
-        <locationY>1574</locationY>
+        <locationX>198</locationX>
+        <locationY>1578</locationY>
         <defaultConnector>
             <targetReference>Get_Business_Address</targetReference>
         </defaultConnector>
@@ -90,7 +90,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Restart_Account_Context_Activation_E_F_Background_Subflow</targetReference>
+                <targetReference>Get_User_that_launched_Account_Context_Activation</targetReference>
             </connector>
             <label>was filled</label>
         </rules>
@@ -237,6 +237,7 @@
         <object>Address__c</object>
         <outputReference>BusinessAddress</outputReference>
         <queriedFields>Id</queriedFields>
+        <queriedFields>Account__c</queriedFields>
     </recordLookups>
     <recordLookups>
         <name>Get_Business_Address_Role</name>
@@ -386,8 +387,8 @@
     <recordLookups>
         <name>Get_User_that_launched_Account_Context_Activation</name>
         <label>Get User that launched Account Context Activation</label>
-        <locationX>40</locationX>
-        <locationY>2093</locationY>
+        <locationX>204</locationX>
+        <locationY>1926</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Restart_Account_Context_Activation_E_F_Background_Subflow</targetReference>
@@ -405,19 +406,13 @@
         <queriedFields>Name</queriedFields>
         <queriedFields>Email</queriedFields>
     </recordLookups>
-    <start>
-        <locationX>50</locationX>
-        <locationY>50</locationY>
-        <connector>
-            <targetReference>init_from_account_id</targetReference>
-        </connector>
-    </start>
+    <startElementReference>init_from_account_id</startElementReference>
     <status>Active</status>
     <subflows>
         <name>Restart_Account_Context_Activation_E_F_Background_Subflow</name>
         <label>Restart Account Context Activation E&amp;F Background Subflow</label>
-        <locationX>207</locationX>
-        <locationY>2089</locationY>
+        <locationX>204</locationX>
+        <locationY>2086</locationY>
         <flowName>Account_Context_Activation_E_F_Background_Subflow</flowName>
         <inputAssignments>
             <name>Account</name>
