@@ -2,15 +2,11 @@
     <apex:attribute name="ctrl" description="controller" type="ISSP_APProcess" required="true"/>
     <apex:attribute name="readOnly" description="show read only version to create a pdf" type="Boolean" required="false" default="false"/>
 
-    <apex:variable var="sectionCounter" value="{!0}" />
-
     <div class="no-page-break">
     <apex:pageBlockSection columns="2" id="section1" collapsible="true">
         <apex:facet name="header">
             <apex:outputpanel >
-                <apex:outputText value="{!'Section {0} - Company Information'}">
-                    <apex:param value="sectionCounter" />
-                </apex:outputText>
+                Section 1 - Company Information
             </apex:outputpanel>
         </apex:facet>
 

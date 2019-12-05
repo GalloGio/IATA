@@ -2,15 +2,10 @@
     <apex:attribute name="ctrl" description="controller" type="ISSP_APProcess" required="true"/>
     <apex:attribute name="readOnly" description="show read only version to create a pdf" type="Boolean" required="false" default="false"/>
 
-    <apex:variable var="sectionCounter" value="{!0}" />
-
-    <apex:variable var="sectionCounter" value="{!sectionCounter + 1}" />
     <div class="no-page-break">
     <apex:pageBlockSection columns="2" id="section1" collapsible="true">
         <apex:facet name="header">
-            <apex:outputText value="Section {0} - Company Information">
-                <apex:param value="{!sectionCounter}" />
-            </apex:outputText>
+            Section 1 - Company Information
         </apex:facet>
 
         <tr>
@@ -114,13 +109,10 @@
     </apex:pageBlockSection>
     </div>
 
-    <apex:variable var="sectionCounter" value="{!sectionCounter + 1}" />
     <div class="no-page-break">
     <apex:pageBlockSection columns="1" id="section2" collapsible="true">
         <apex:facet name="header">
-            <apex:outputText value="Section {0} - Sponsor Company">
-                <apex:param value="{!sectionCounter}" />
-            </apex:outputText>
+            Section 2 - Sponsor Company
         </apex:facet>
 
         <apex:inputField styleclass="required" value="{!ctrl.newform.Legal_Name_of_company__c}" rendered="{!!readOnly}" />
@@ -156,13 +148,10 @@
     </apex:pageBlockSection>
     </div>
 
-    <apex:variable var="sectionCounter" value="{!sectionCounter + 1}" />
     <div class="no-page-break">
     <apex:pageBlockSection columns="1" id="section3" collapsible="true">
         <apex:facet name="header">
-            <apex:outputText value="Section {0} - Corporate Compliance">
-                <apex:param value="{!sectionCounter}" />
-            </apex:outputText>
+            Section 3 - Corporate Compliance
         </apex:facet>
 
         <apex:pageBlockSectionItem>
@@ -251,13 +240,10 @@
     </apex:pageBlockSection>
     </div>
 
-    <apex:variable var="sectionCounter" value="{!sectionCounter + 1}" />
     <div class="no-page-break">
     <apex:pageBlockSection columns="1" id="section4" collapsible="true">
         <apex:facet name="header">
-            <apex:outputText value="Section {0} - Contact Details">
-                <apex:param value="{!sectionCounter}" />
-            </apex:outputText>
+            Section 4 - Contact Details
         </apex:facet>
 
         <tr>
@@ -447,13 +433,10 @@
     </apex:pageBlockSection>
     </div>
 
-    <apex:variable var="sectionCounter" value="{!sectionCounter + 1}" rendered="{!!ctrl.isSISMember}"/>
     <div class="no-page-break">
     <apex:pageBlockSection columns="2" id="section5" collapsible="true" rendered="{!!ctrl.isSISMember}">
         <apex:facet name="header">
-            <apex:outputText value="Section {0} - Optional Services">
-                <apex:param value="{!sectionCounter}" />
-            </apex:outputText>
+            Section 5 - Optional Services
         </apex:facet>
 
         <tr>
@@ -572,13 +555,10 @@
     </apex:pageBlockSection>
     </div>
 
-    <apex:variable var="sectionCounter" value="{!sectionCounter + 1}" />
     <div class="no-page-break">
     <apex:pageBlockSection columns="1" id="section6" collapsible="true">
         <apex:facet name="header">
-            <apex:outputText value="Section {0} - iiNET">
-                <apex:param value="{!sectionCounter}" />
-            </apex:outputText>
+            Section 6 - iiNET
         </apex:facet>
 
         <apex:outputText styleclass="strong-label" value="{!$Label.ISSP_SIS_Membership_ISPA_Section5_Subtitle1}" escape="false" />
@@ -608,13 +588,10 @@
     </apex:pageBlockSection>
     </div>
 
-    <apex:variable var="sectionCounter" value="{!sectionCounter + 1}" />
     <div class="no-page-break">
     <apex:pageBlockSection columns="1" id="section7" collapsible="true">
         <apex:facet name="header">
-            <apex:outputText value="Section {0} - IATA Member Sponsorship letter">
-                <apex:param value="{!sectionCounter}" />
-            </apex:outputText>
+            Section 7 - IATA Member Sponsorship letter
         </apex:facet>
 
         <apex:outputText value="[DOWNLOAD DOCUMENT TO SIGN]" styleclass="strong-label"/>
@@ -628,13 +605,10 @@
     </apex:pageBlockSection>
     </div>
 
-    <apex:variable var="sectionCounter" value="{!sectionCounter + 1}" />
     <div class="no-page-break">
     <apex:pageBlockSection columns="1" id="section8" collapsible="true" rendered="{!!ctrl.isSISMember}">
         <apex:facet name="header">
-            <apex:outputText value="Section {0} - Additional questions">
-                <apex:param value="{!sectionCounter}" />
-            </apex:outputText>
+            Section 8 - Additional questions
         </apex:facet>
 
         <apex:outputText value="The Standard Agreement for SIS Participation includes a section on EU Standard Contractual Clauses for processing between an EU controller and non-EU processor (and sub-processor) which is only applicable to SIS participants who are subject to European data protection laws."
