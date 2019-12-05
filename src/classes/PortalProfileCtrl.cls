@@ -59,6 +59,9 @@ public static final Id RECORDTYPE_AIRLINE_BR = RecordTypeSingleton.getInstance()
 public static final Id RECORDTYPE_AIRLINE_HQ = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
 public static final list<Id> VALID_ACCOUNT_RT = new list<String> {RECORDTYPE_AGENCY, RECORDTYPE_AIRLINE_BR, RECORDTYPE_AIRLINE_HQ};
 
+
+    public static Integer RESULTS_PER_PAGE = 10;
+
 	public class PortalProfileException extends Exception {}
 
 public static Contact contactInfo = new Contact();
@@ -223,30 +226,7 @@ public static Contact contactInfo = new Contact();
 		return new ApexMessageHandling();
     }        
 
-    /**
-    * Todo: Implement contact search.
-    * With infinite scrolling, search currently only filters records that are already on the client.
-    * In the future - filtering, sorting to call backend methods and return data from the DB.
-    */
-    @AuraEnabled
-    public static List<ContactWrapper> searchAccountContacts(String queryString, Integer offset){
-        List<Contact> searchResults = DAL_WithoutSharing.searchContactsByAccountId(myContact.AccountId,offset,CONTACT_BATCH,queryString);
-        List<ContactWrapper> wrappers = getContactWrappers(searchResults);
-        return wrappers;
-    }
 
-    @AuraEnabled
-    public static List<ContactWrapper> getAccountContacts(){
-        return getAccountContacts(0);
-    }
-
-
-    @AuraEnabled
-    public static List<ContactWrapper> getAccountContacts(Integer offset){
-        List<Contact> contacts = DAL_WithoutSharing.getContactsByAccountId(myContact.AccountId,offset,CONTACT_BATCH);
-        List<ContactWrapper> wrappers = getContactWrappers(contacts);
-        return wrappers;
-    }
 
 	private static List<ContactWrapper> getContactWrappers(List<Contact> contacts){
 		List<ContactWrapper> wrappers = new List<ContactWrapper>();
@@ -310,39 +290,91 @@ public static Contact contactInfo = new Contact();
 		return wrappers;
 	}
 
+    /* 
+    * Portal company profile -> account branches 
+    * Currently pagination is beeing done at the component side.
+    */
+    @AuraEnabled(cacheable=false)
+    public static CSP_Utils.PagedResult searchForCompanyBranches(String companybranchFilterWrapper, String requestedPage){
+        CompanyInformationBranchesFiltersWrapper filtersWrapper = (CompanyInformationBranchesFiltersWrapper) JSON.deserialize(companybranchFilterWrapper, CompanyInformationBranchesFiltersWrapper.class);
+        Integer requestedPageAux = integer.valueof(requestedPage);
 
-    @AuraEnabled
-    public static List<Account> searchCompanyBranches(String queryString, Integer offset){
-        List<Account> branches = new List<Account>();
-        queryString =queryString+'%';
+        String baseQuery = 'SELECT Id,TradeName__c,Name,BillingCity,Status__c,BillingCountry,'+
+                           'IATA_ISO_Country__r.Name,IATACode__c,BillingAddress,Phone,Fax ' + 
+                           'FROM Account ';
+        /*String baseQueryCount = 'SELECT COUNT() ' + 
+                                'FROM Account ';*/
+        String conditionsQuery = 'WHERE (Id = \'' + myContact.AccountId +'\' OR ParentId = \'' + myContact.AccountId + '\' OR Top_Parent__c = \'' + myContact.AccountId +'\' ) ' +
+                                 'AND (Status__c NOT IN (\'Terminated\',\'Not accredited\', \'No longer a customer\', \'New application pending\')) ';
 
-        branches = [select id,TradeName__c,Name,BillingCity,Status__c,BillingCountry,IATA_ISO_Country__r.Name,IATACode__c,BillingAddress,Phone,Fax
-        from account
-        where (id =:myContact.AccountId or parentId=:myContact.AccountId or top_parent__c =:myContact.AccountId)
-        and (TradeName__c LIKE :queryString OR Name LIKE :queryString OR BillingCity LIKE :queryString OR IATACode__c LIKE :queryString)
-        and (Status__c NOT IN ('Terminated','Not accredited', 'No longer a customer', 'New application pending'))
-        ORDER BY Name ASC LIMIT:BRANCH_BATCH OFFSET :offset
-        ];
+        
 
-        return branches;
+        if(filtersWrapper != null) {
+            // evaluate filter if they exist 
+            if(!String.isBlank(filtersWrapper.searchInput)){
+                String searchText = '%' + String.escapeSingleQuotes(filtersWrapper.searchInput) + '%';
+                conditionsQuery += ' AND (TradeName__c LIKE \'' + searchText + '\' OR Name LIKE \'' + searchText + '\'' +
+                             ' OR BillingCity LIKE \''+ searchText + '\' OR IATACode__c LIKE \'' + searchText + '\' ) ';
+            }
+        }
+
+        String orderQuery = ''; 
+        if(requestedPageAux == 0){ //just for the first time
+            orderQuery = ' ORDER BY ' + filtersWrapper.sortField + ' ' + filtersWrapper.sortDirection + ' ';
+        }
+
+        //pagination 
+        /*Integer offset = requestedPageAux * PortalProfileCtrl.RESULTS_PER_PAGE;
+        String offsetQuery = ' LIMIT ' + PortalProfileCtrl.RESULTS_PER_PAGE + ' OFFSET ' + offset + ' ';*/
+
+        CSP_Utils.PagedResult pageResult = new CSP_Utils.PagedResult();
+	    pageResult.records = Database.query(baseQuery + conditionsQuery + orderQuery /*+ offsetQuery*/);
+        /*if(requestedPageAux == 0){
+            //first page -> get total count
+            pageResult.totalItemCount = Database.countQuery(baseQueryCount + conditionsQuery);
+        }*/
+
+        return pageResult;
     }
 
-    @AuraEnabled
-    public static List<Account> getCompanyBranches(){
-        return getCompanyBranches(0);
+    // used to store filtering for company profile account branches 
+    public class CompanyInformationBranchesFiltersWrapper {
+        @AuraEnabled
+		public String searchInput {get; set;}
+        @AuraEnabled
+        public String firstLetter {get; set;}
+        @AuraEnabled
+		public String sortField {get; set;}
+        @AuraEnabled
+		public String sortDirection {get; set;}
     }
 
-    @AuraEnabled
-    public static List<Account> getCompanyBranches(Integer offset){
-        List<Account> branches = new List<Account>();
+    /* 
+    * Portal company profile -> account contacts 
+    */
+    @AuraEnabled(cacheable=false)
+    public static CSP_Utils.PagedResult searchForCompanyContacts(String companybranchFilterWrapper, String requestedPage){
+        Integer requestedPageAux = Integer.valueof(requestedPage);
 
-        branches = [select id,TradeName__c,Name,BillingCity,Status__c,BillingCountry,IATA_ISO_Country__r.Name,IATACode__c,BillingAddress,Phone,Fax
-        from account where (id =:myContact.AccountId or parentId=:myContact.AccountId or top_parent__c =:myContact.AccountId)
-        and (Status__c NOT IN ('Terminated','Not accredited', 'No longer a customer', 'New application pending'))
-        ORDER BY Name ASC LIMIT:BRANCH_BATCH OFFSET :offset
-        ];
+        CSP_Utils.PagedResult pagedResultAux = DAL_WithoutSharing.searchForCompanyContacts(companybranchFilterWrapper, requestedPageAux, PortalProfileCtrl.RESULTS_PER_PAGE , myContact.AccountId);
+        
+        CSP_Utils.PagedResult pagedResultToReturn = new CSP_Utils.PagedResult();
+        pagedResultToReturn.recordsString = JSON.serialize(getContactWrappers(pagedResultAux.records));
+        pagedResultToReturn.totalItemCount = pagedResultAux.totalItemCount;
 
-        return branches;
+        return pagedResultToReturn;
+    }
+
+    // used to store filtering for company profile account contacts 
+    public class CompanyInformationContactsFiltersWrapper {
+        @AuraEnabled
+		public String searchInput {get; set;}
+        @AuraEnabled
+        public String firstLetter {get; set;}
+        @AuraEnabled
+		public String sortField {get; set;}
+        @AuraEnabled
+		public String sortDirection {get; set;}
     }
 
 	public class ContactWrapper {
@@ -1072,4 +1104,68 @@ public static Contact contactInfo = new Contact();
         }
     }
 
+    @AuraEnabled (cacheable=false)
+    public static CSP_Utils.PagedResult getFilteredProfileResultsPage(String profileFilterWrapper){
+        
+        CSP_Utils.PagedResult filteredProfiles = DAL_WithoutSharing.getSearchProfiles(profileFilterWrapper, myContact);
+        
+        return filteredProfiles;
+    }
+
+    public class ProfileWrapper{
+
+        @AuraEnabled public String profileId;
+        
+        @AuraEnabled public String profileName;
+
+        @AuraEnabled public String profilePortalStatus;
+
+        @AuraEnabled public String profileCountry;
+
+        @AuraEnabled public String profileType;
+        
+        @AuraEnabled public String profileUrl;
+
+        public ProfileWrapper(String profileIdAux, String profileNameAux, String profilePortalStatusAux, String profileCountryAux, String profileTypeAux){
+            this.profileId = profileIdAux;
+            this.profileName = profileNameAux;
+
+            if(profilePortalStatusAux == 'Approved Admin')
+                this.profilePortalStatus = System.Label.ISSP_Administrator;
+            else if (profilePortalStatusAux == 'Approved User')
+                this.profilePortalStatus = System.Label.ISSP_Active;
+            else
+                this.profilePortalStatus = profilePortalStatusAux;
+
+            this.profileCountry = profileCountryAux;
+
+            if(profileTypeAux == 'Account'){
+                this.profileType = System.Label.Company; //instead of Account set it "Company"
+                this.profileUrl = profileIdAux == myContact.AccountId ? System.Label.CSP_PortalPath + 'company-profile' : System.Label.CSP_PortalPath + 'company-profile?account='+profileIdAux;
+            }
+            else{
+                this.profileType = profileTypeAux; //set it to "Contact"
+                this.profileUrl = profileIdAux == myContact.Id ? System.Label.CSP_PortalPath + 'my-profile' : System.Label.CSP_PortalPath + 'company-profile?contact='+profileIdAux;
+            }
+        }
+    }
+
+    @AuraEnabled(cacheable=true)
+    public static List<CSP_Utils.PickListWrapper> typeOfProfilePortalCustomPicklist(){
+        List<CSP_Utils.PickListWrapper> lstPickValues = new List<CSP_Utils.PickListWrapper>();
+        lstPickValues.add(new CSP_Utils.PickListWrapper('Account',System.Label.Company ));
+        lstPickValues.add(new CSP_Utils.PickListWrapper('Contact',System.Label.Button_Contact ));
+
+        return lstPickValues;
+    }
+
+    @AuraEnabled(cacheable=true)
+    public static List<CSP_Utils.PickListWrapper> userPortalStatusCustomPicklist(){
+        List<CSP_Utils.PickListWrapper> lstPickValues = new List<CSP_Utils.PickListWrapper>();
+        lstPickValues.add(new CSP_Utils.PickListWrapper('Approved Admin', System.Label.ISSP_Contacts_PortalAdmins));
+        lstPickValues.add(new CSP_Utils.PickListWrapper('Approved User', System.Label.ISSP_Contacts_PortalUsers));
+        lstPickValues.add(new CSP_Utils.PickListWrapper('Pending Approval', System.Label.ISSP_Contacts_PendingApproval));
+
+        return lstPickValues;
+    }
 }

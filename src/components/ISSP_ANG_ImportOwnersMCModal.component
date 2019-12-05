@@ -1,0 +1,46 @@
+<apex:component controller="ISSP_AMS_Accreditation" allowDML="true">
+    <apex:form id="viewOwnersMc">
+      	<div class="modal fade" id="viewOwnersMcModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        	<div class="modal-dialog" role="document" style="width: 850px !important;">
+          		<div class="modal-content">
+            		<div class="modal-header">
+              			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              			<h4 class="modal-title" id="myModalLabel">{!IF(isHOAccredited, $Label.ISSP_ANG_View_Owners, $Label.ISSP_ANG_View_And_Modify_Owners)}</h4>
+            		</div>
+            		<div class="modal-body" style="text-align: center;">
+            			<div class="col-md-12 alert alert-warning" id="AccreditationAlert" role="alert" style="display: {!IF(isHOAccredited, 'none', '')}">
+				            {!$Label.ISSP_ANG_View_Owners_Tooltip}
+				        </div>
+              			<apex:pageBlock>
+		                    <apex:dataTable value="{!ownersFromMainLegalEntity}" var="owner" id="importOwnersList" styleClass="table-hover table table-condensed table-responsive" rendered="{!ownersFromMainLegalEntity.size != 0}" style="width: 100%;">
+								<apex:column headervalue="{!$ObjectType.Contact.fields.Name.Label}" value="{!owner.name}" style="text-align: left;"/>
+								<apex:column headervalue="{!$ObjectType.Contact.fields.Phone.Label}" value="{!owner.phone}" style="text-align: left;"/>
+								<apex:column headervalue="{!$ObjectType.Contact.fields.Email.Label}" value="{!owner.email}" style="text-align: left;"/>
+								<apex:column headervalue="{!$ObjectType.AMS_Accreditation_Contact__c.fields.Financial_interest__c.Label}" value="{!owner.financialInterest}" style="text-align: left;"/>
+							</apex:dataTable>
+              			</apex:pageBlock>
+            		</div>
+
+            		<div class="modal-footer">            			
+              			<apex:commandButton id="modifyButton" action="{!saveAndNavigateToOwnersForm}" status="WaitingStatus" styleClass="btn btn-default" value="{!$Label.ISSP_ANG_View_Owners_Modify}" oncomplete="closeOwnersMulticountry(); this.removeAttribute('disabled'); return false;" onclick="this.disabled='disabled'" rendered="{!NOT(isHOAccredited)}"/>
+              			<button type="button" class="btn btn-default" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">{!$Label.ISSP_Cancel}</span></button>
+            		</div>
+          		</div>
+        	</div>
+    	</div>
+    </apex:form>
+    <script>
+		function showOwnersMulticountry() {
+      		$j(function () {
+          		$j('#viewOwnersMcModal').modal('show');
+        	});
+      	}
+
+      	function closeOwnersMulticountry() {
+        	$j(function () {
+          		$j('#viewOwnersMcModal').modal('hide');
+        	});
+      	}
+	</script>
+    <!-- End Modal Copy Owners MultiCountry -->
+</apex:component>

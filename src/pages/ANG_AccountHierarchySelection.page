@@ -18,6 +18,17 @@
 			testSetTabTitle();
 		}
 
+		//NEWGEN-5859 - For Multicountry agencies remove the option Accreditation Type from the type of changes Multipicklist
+		$( document ).ready(function() {
+			removeAccreditationType();
+		});
+
+ 		function removeAccreditationType(){
+			if({!isMulticountry}){
+				$('[id$=typeOfChangeMultipicklist_unselected]').find('option:contains("Accreditation type")').remove();
+			}
+        }
+		
 		function closeTab(){
 			sforce.console.getEnclosingTabId(closeSubtab);
 		}
@@ -46,9 +57,14 @@
 
 
 		function bindCheckboxes() {
+			$('[data-group="select"]').on("change", function () {
+				rerenderNotes();
+				handleCheckBoxClick();
+			});
+
 			$('[data-group="main"]').on("change", function () {
 				var $clicked = $(this);
-
+				rerenderNotes();
 				if($clicked.prop("checked")){
 					$('[data-group="main"]').not($clicked).each(function () {
 						if($(this).prop("checked")){
@@ -69,10 +85,12 @@
 						$clicked.prop("checked", true);
 						alert('Main account must always be selected');
 					}
+					
 				}
 			});
 		}
-	</script>
+    
+</script>
 
 
 
@@ -97,20 +115,20 @@
 	</style>
 	
 	<apex:sectionHeader title="Newgen ISS Account Hierarchy Selection" subtitle="{!AMS_OSCAR__c.Account__r.Name}"/>
-	
 	<apex:form styleClass="pos-relative">
 		<apex:pageBlock mode="edit" rendered="{!editable}">
+		<apex:actionFunction name="rerenderNotes" rerender="notes,BSPTable" />
 
 			<apex:panelGrid id="fields" columns="2" rendered="{!showTopPanel}">
 				<apex:pageBlockSection id="controlField" columns="1">
-					<apex:inputField value="{!oscar.ANG_Type_Of_Change__c}" rendered="{!NOT(isChinaConversion)}">
-						<apex:actionSupport event="onchange" status="blockEditing" reRender="dependentFields, notes"/>
+					<apex:inputField id="typeOfChangeMultipicklist" value="{!oscar.ANG_Type_Of_Change__c}" rendered="{!NOT(isChinaConversion)}">
+						<apex:actionSupport event="onchange" status="blockEditing" reRender="dependentFields, notes, BSPTable" oncomplete="removeAccreditationType();"/>
 					</apex:inputField>
 					<apex:outputField value="{!oscar.ANG_Type_Of_Change__c}" rendered="{!isChinaConversion}" />
 				</apex:pageBlockSection>
 				<apex:pageBlockSection id="dependentFields">
 					<apex:inputField value="{!oscar.New_parent__c}" rendered="{!showTargetAgency}">
-						<apex:actionSupport event="onchange" status="blockEditing" reRender="notes" action="{!FetchNewParent}"/>
+						<apex:actionSupport event="onchange" status="blockEditing" reRender="notes,BSPTable" action="{!FetchNewParent}" oncomplete="forceRerenderBSPTable()"/>
 					</apex:inputField>
 				</apex:pageBlockSection>
 
@@ -138,17 +156,18 @@
                 <apex:pageBlockTable id="hierarchyList" value="{!hierarchyValuesForDisplay[currentPage]}" var="hi"> 
 					
 					<apex:column headerValue="Main">
-						<apex:inputCheckbox html-data-group="main" html-data-controls="{!hi.acc.Id}" value="{!hi.main}" disabled="{!isChinaConversion}"/>
+						<apex:inputCheckbox html-data-group="main" html-data-controls="{!hi.acc.Id}" value="{!hi.main}"  disabled="{!isChinaConversion}"/>
 					</apex:column>
 
 					<apex:column >
 						<apex:facet name="header">
 							<apex:inputCheckbox value="{!selectAll}" disabled="{!isChinaConversion}">
-								<apex:actionSupport event="onchange" action="{!doSelectAll}" status="blockEditing" reRender="table"/>
+								<apex:actionSupport event="onchange" action="{!doSelectAll}" status="blockEditing" reRender="table,BSPTable,notes"/>
 							</apex:inputCheckbox>
 						</apex:facet>
+						
 
-						<apex:inputCheckbox html-data-group="select" html-data-controlledBy="{!hi.acc.Id}" value="{!hi.selected}" disabled="{!isChinaConversion}"/>
+						<apex:inputCheckbox html-data-group="select" html-data-controlledBy="{!hi.acc.Id}" value="{!hi.selected}"  disabled="{!isChinaConversion}"/>
 					</apex:column>
 
 					<apex:column value="{!hi.acc['Name']}"/>
@@ -156,15 +175,19 @@
 					<apex:column value="{!hi.acc['Location_Class__c']}" rendered="{!isChinaConversion}"/>
 					<apex:column value="{!hi.acc['IATACode__c']}"/>
 					<apex:column value="{!hi.acc['Status__c']}"/>
+					<apex:column value="{!hi.acc.IATA_ISO_Country__r.AMS_Settlement_System__r['name']}" headerValue="BSP Name" rendered="{!isMulticountry}"/>
 					<apex:column value="{!hi.acc['BillingCity']}"/>
 					<apex:column value="{!hi.acc['Category__c']}"/>
 				</apex:pageBlockTable>
+
+				<apex:actionFunction name="handleCheckBoxClick" action="{!handleSelection}" status="blockEditing" oncomplete="forceRerenderBSPTable()" />
+				<apex:actionFunction name="forceRerenderBSPTable" reRender="BSPTable"/>
 
 				<script>
 					bindCheckboxes();
 				</script>
 
-				<apex:actionFunction name="selectMain" action="{!selectMain}" status="blockEditing" reRender="table, dependentFields"/>
+				<apex:actionFunction name="selectMain" action="{!selectMain}" status="blockEditing" reRender="table, dependentFields, BSPTable" />
 
 				<apex:actionStatus id="blockEditing">
 					<apex:facet name="start">
@@ -176,9 +199,107 @@
 				</apex:actionStatus>
 			</apex:pageBlockSection>
 
+
+			<apex:outputPanel layout="block" id="BSPTable">
+				<apex:pageBlockSection columns="1" title="Select Country HE per BSP" rendered="{!showBSPPanel}"> 
+
+					<script>
+
+						var jsonObject = JSON.parse('{!JSONHEsPerBSPs}');
+						var currentBSP = '#'; 
+
+						function setBSP( bsp){
+							currentBSP = bsp;
+						}
+
+						function openLookup(baseURL, width, modified, searchParam){
+
+							var originalbaseURL = baseURL;
+							var originalwidth = width;
+							var originalmodified = modified;
+							var originalsearchParam = searchParam;
+
+							var lookupType = baseURL.substr(baseURL.length-3, 3);
+							if (modified == '1') baseURL = baseURL + searchParam;
+
+							var isCustomLookup = false;
+
+							// Following "001" is the lookup type for Account object so change this as per your standard or custom object
+							if(lookupType == "001"){
+
+							  var urlArr = baseURL.split("&");
+							  var txtId = '';
+							  if(urlArr.length > 2) {
+							    urlArr = urlArr[1].split('=');
+							    txtId = urlArr[1];
+							  }
+							  
+							  // Following is the url of Custom Lookup page. You need to change that accordingly
+							  baseURL = "/apex/CustomAccountLookup?txt=" + txtId;
+							  
+							  // Following is the id of apex:form control "myForm". You need to change that accordingly
+							  baseURL = baseURL + "&frm=" + escapeUTF("{!$Component.myForm}");
+							  if (modified == '1') {
+
+							  	var iataCodeToFilter = Object.keys(jsonObject[currentBSP].possibleAccounts);
+								console.log("test: " ,  iataCodeToFilter );
+							    baseURL = baseURL + "&staticFilter="+ iataCodeToFilter + "&lksearch=" + searchParam;
+							  }
+							  
+							  // Following is the ID of inputField that is the lookup to be customized as custom lookup
+							  if(txtId.indexOf('Account') > -1 ){
+							    isCustomLookup = true;
+							  }
+							}
+
+
+
+							if(isCustomLookup == true){
+								console.log("final baseURL: " +baseURL);
+							  	openPopup(baseURL, "lookup", 350, 480, "width="+width+",height=480,toolbar=no,status=no,directories=no,menubar=no,resizable=yes,scrollable=no", true);
+							}
+							else {
+							  if (modified == '1') originalbaseURL = originalbaseURL + origin + alsearchParam;
+							  	console.log("final originalbaseURL: " +originalbaseURL);
+							  	openPopup(originalbaseURL, "lookup", 350, 480, "width="+originalwidth+",height=480,toolbar=no,status=no,directories=no,menubar=no,resizable=yes,scrollable=no", true);
+							} 
+						}
+
+					</script>
+
+	                <apex:outputPanel id="BSPbuttonPanel">
+	                    <apex:commandButton action="{!Beginning}" title="Beginning" value="<<" disabled="{!disablePrevious}" reRender="hierarchyList,buttonPanel"/>
+	                    <apex:commandButton action="{!Previous}" title="Previous" value="<" disabled="{!disablePrevious}" reRender="hierarchyList,buttonPanel"/>        
+	                    <apex:outputText >Page {!(currentPage + 1)} of {!totalPagesForHEPerBSP}</apex:outputText>
+	                    <apex:commandButton action="{!Next}" title="Next" value=">" disabled="{!disableNext}" reRender="hierarchyList,buttonPanel"/>
+	                    <apex:commandButton action="{!End}" title="End" value=">>" disabled="{!disableNext}" reRender="hierarchyList,buttonPanel"/>
+	                </apex:outputPanel>
+						
+	                <apex:pageBlockTable id="BSPList" value="{!hEsPerBSPsForDisplay[currentPage]}" var="hi"> 
+						
+						
+
+						<apex:column value="{!hi.name}" headerValue="BSP Name"/>
+						<apex:column value="{!hi.country}" headerValue="Country"/>
+
+
+						<apex:column headerValue="Account Name">
+							<apex:inputField id="Account" html-data-id="{!hi.bspId}" value="{!hi.p.parentid}" onclick="setBSP('{!hi.bspId}')" />
+						</apex:column>
+
+						<!--<apex:column value="{!hi.acc['Location_Type__c']}"/>
+					-->
+					</apex:pageBlockTable>
+
+
+				</apex:pageBlockSection>
+			</apex:outputPanel>
+
+
+
 			<apex:pageBlockButtons location="bottom">
 				<apex:commandButton action="{!save}" oncomplete="{!IF(closeTab, 'refreshTab();', '')}" status="blockEditing" value="{!$Label.site.save}" reRender="pageMessages"/>
-				<apex:commandButton onclick="closeTab(); return false;" status="blockEditing" value="{!$Label.site.cancel}" immediate="true"/>
+				<apex:commandButton onclick="closeTab();  return false;" status="blockEditing" value="{!$Label.site.cancel}" immediate="true"/>
 			</apex:pageBlockButtons>
 		</apex:pageBlock>
 

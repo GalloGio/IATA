@@ -65,7 +65,9 @@ global class ISSP_AccountStatementsSchedule implements Schedulable {
         bc.NotificationTemplate = NOTIFICATION_TEMPLATE;
         bc.MessagesByGroupMap = null;
         bc.ContactGroupField = null;
-        bc.listVariables = new list<String>{remittanceDateStr};
+        bc.fieldBindingByGroupMap = new Map<String, list<String>>();
+        // add variables with null key to use the same values for all records
+        bc.fieldBindingByGroupMap.put(null,new list<String>{remittanceDateStr});
         Database.executeBatch(bc, elemsPerBatch);
     }
 }

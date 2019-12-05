@@ -37,7 +37,8 @@ private class IEC_ProductDetailsControllerTest {
 		IEC_ProductDetailsController ctrl;
 
 		//*** cover case of Publication product 
-		system.runAs(usr)
+		Test.startTest();
+        system.runAs(usr)
 		{
 			ctrl = new IEC_ProductDetailsController();
 			ctrl.onLoadAction();
@@ -55,6 +56,7 @@ private class IEC_ProductDetailsControllerTest {
 			//ctrl = new IEC_ProductDetailsController();
 			//ctrl.onLoadAction();
 		}
+        Test.stopTest();
 	}
 	
 }
