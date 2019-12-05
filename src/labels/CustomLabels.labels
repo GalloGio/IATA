@@ -30986,6 +30986,14 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <value>Currency</value>
     </labels>
     <labels>
+        <fullName>ISSP_OperationalCalendar_CycleFilter</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_OperationalCalendar_CycleFilter</shortDescription>
+        <value>Cycle</value>
+    </labels>
+    <labels>
         <fullName>ISSP_OperationalCalendar_DownloadDate</fullName>
         <categories>ISSP, OperationalCalendar</categories>
         <language>en_US</language>
@@ -31074,6 +31082,14 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <value>No events to show</value>
     </labels>
     <labels>
+        <fullName>ISSP_OperationalCalendar_PDFFooterText</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP OperationalCalendar PDFFooterText</shortDescription>
+        <value>This is the footer, please change the value of this custom label: ISSP_OperationalCalendar_PDFFooterText</value>
+    </labels>
+    <labels>
         <fullName>ISSP_OperationalCalendar_Reset</fullName>
         <categories>ISSP</categories>
         <language>en_US</language>
@@ -31090,12 +31106,44 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <value>Show Calendar</value>
     </labels>
     <labels>
+        <fullName>ISSP_OperationalCalendar_SubtypeFilter</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_OperationalCalendar_SubtypeFilter</shortDescription>
+        <value>Calendar Subtype</value>
+    </labels>
+    <labels>
         <fullName>ISSP_OperationalCalendar_Sync_Calendar</fullName>
         <categories>ISSP, OperationalCalendar</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_OperationalCalendar_Sync_Calendar</shortDescription>
         <value>Sync Calendar</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_OperationalCalendar_Timezone_Disclaimer</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_OperationalCalendar_Timezone_Disclaimer</shortDescription>
+        <value>Times based in Montreal’s timezone</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_OperationalCalendar_TypeFilter</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_OperationalCalendar_TypeFilter</shortDescription>
+        <value>Calendar Type</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_OperationalCalendar_Type_Filter_Required</fullName>
+        <categories>ISSP, OperationalCalendar</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_OperationalCalendar_Type_Filter_Required</shortDescription>
+        <value>Operation Type or Subtype required</value>
     </labels>
     <labels>
         <fullName>ISSP_Opt_In</fullName>
