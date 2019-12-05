@@ -23,7 +23,7 @@ public class PortalRegistrationThirdLevelLMSCtrlTest{
 		insert accRole;
 
 		Id accContactRole_RT = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'Master');
-		Account_Contact_Role__c acr = new Account_Contact_Role__c(Account_Role__c = accRole.Id, Contact__c = c2.Id, Service_Rendered__c = 'Other', RecordTypeId = accContactRole_RT, Contact_Role_Name__c = 'Yardstick');
+		Account_Contact_Role__c acr = new Account_Contact_Role__c(Account_Role__c = accRole.Id, Contact__c = c2.Id, Service_Rendered__c = 'Other', RecordTypeId = accContactRole_RT, Contact_Role_Name__c = 'Trainee');
 		insert acr;
 
 		Training_Contact_Role_Details__c tcrd = new Training_Contact_Role_Details__c(Account_Contact_Role__c = acr.Id);
