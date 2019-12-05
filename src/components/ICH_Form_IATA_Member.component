@@ -20,7 +20,7 @@
 
         <tr>
             <td colspan="2"></td>
-            <td colspan="2"><a target="_blank" onclick="section1CopyInfo()" class="copy-info">{!$Label.ISSP_SIS_Membership_ISPA_Section1_CopyButton}</a></td>
+            <td colspan="2"><a target="_blank" onclick="section1CopyInfo()" class="copy-info {!IF(AND(!isSISMember,!readOnly),'','hidden')}">{!$Label.ISSP_SIS_Membership_ISPA_Section1_CopyButton}</a></td>
         </tr>
         <apex:outputpanel ></apex:outputpanel>
 
