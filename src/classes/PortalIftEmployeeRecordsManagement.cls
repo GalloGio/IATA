@@ -16,7 +16,8 @@ public without sharing class PortalIftEmployeeRecordsManagement {
 													Position__c,RecordTypeId,Service_Rendered__c,Status__c,Title__c,
 													TransferFlag__c,UniqueKey__c, Details__c, Global_ID__c
 												FROM Account_Contact_Role__c
-												WHERE  Contact__r.accountid = :accountId];
+												WHERE  Contact__r.accountid = :accountId
+												AND  Service_Rendered__c = 'IFTP'];
 		return emps;
 	}
 

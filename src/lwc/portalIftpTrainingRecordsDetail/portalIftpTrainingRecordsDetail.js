@@ -351,10 +351,9 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
         }
     
         if(!this.itpValue || this.itpValue === 'All'){
+            auxItp = '';
             for(i=0; i < this.itpOptions.length; i++){
-                if(this.itpOptions[i].value === 'All'){
-                    auxItp = '';
-                }else{
+                if(this.itpOptions[i].value !== 'All'){
                 auxItp = (auxItp === '' ) ? this.itpOptions[i].value : auxItp + ',' + this.itpOptions[i].value;
                 }
             }
@@ -475,7 +474,7 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
         auxSearchValues = [
             auxStations,
             'null',                 // auxItp,
-            'null',                 // place holder for auxExperiationstatus,
+            'Active, Expired',                 // place holder for auxExperiationstatus,
             auxAircraftType,
             'Yes',                  // place holder for auxProficiency,
             'null',                 // place holder for auxFromDate,
@@ -488,6 +487,8 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
         // 1st - get all data from database
         let columns = JSON.parse(JSON.stringify(this.columns));
         this.loading = true;
+        console.log("###RS auxSearchValues", auxSearchValues);
+        alert("###RS auxSearchValues" + auxSearchValues);
         getAllTrainingRecordsForDetailView({searchValues: auxSearchValues, searchType: 'RecordsDetail'})
         .then(results => {
             if(results && results.length > 0) {
