@@ -33,6 +33,8 @@ private class AcliSyncBatchTest {
         + '\n' + 'Inconsistency 4                                                                 004 EINEI Dublin Airport                                                                  DUBLIN                                       Ireland                                                                                                                                                       YYY YS 004 0010000145X000000001234567890 Coding status                 20151014   Inconsistency 4                                                                 DIE'
         ;
 
+  
+  
     static void loadData() {
         // create the custom setting values
         list<UtilityCS__c> utilities = new list<UtilityCS__c>{
@@ -60,15 +62,9 @@ private class AcliSyncBatchTest {
 
     static testMethod void testAcliNewScheduler_Ok() {
         loadData();
-
         AcliNewScheduler.acliResponse = new AcliJavaTool.Response('{"success":true,"content":"content","code":"","message":""}');
-
-
-        // CRON expression: Because this is a test, job executes immediately after Test.stopTest().
         String CRON_EXP = '0 0 0 15 3 ? 2022';
-
         test.startTest();
-            // Schedule the test job
             String jobId = System.schedule('AcliNewScheduler', CRON_EXP, new AcliNewScheduler());
         test.stopTest();
     }
@@ -84,21 +80,30 @@ private class AcliSyncBatchTest {
         test.stopTest();
     }
     static testMethod void testAcliLaunchBatchScheduler_Ok() {
+        
         loadData();
-        Document doc = new Document();
-        doc.Name = AcliNewScheduler.ACLI_DOC_NAME;
-        doc.Body = Blob.ValueOf(CSV);
-        doc.FolderId = AcliNewScheduler.ACLI_FOLDER.Id;
-        insert doc;
 
-        // CRON expression: Because this is a test, job executes immediately after Test.stopTest().
+        Document acliDoc;
+        acliDoc = new Document();
+        acliDoc.Name = AcliNewScheduler.ACLI_DOC_NAME;
+        acliDoc.FolderId =  AcliNewScheduler.ACLI_FOLDER.Id;
+
+        acliDoc.Body = Blob.valueof(CSV);
+
+        insert acliDoc;
+
         String CRON_EXP = '0 0 0 15 3 ? 2022';
 
-        test.startTest();
+        Test.startTest();
             // Schedule the test job
-		AcliLaunchBatchScheduler scheduler = new AcliLaunchBatchScheduler();
-        //scheduler.launchBatch();          
-		test.stopTest();
+        String jobId = System.schedule('AcliLaunchBatchScheduler', CRON_EXP, new AcliLaunchBatchScheduler());
+        Test.stopTest();  
+
+        List<Document> doc = new List<Document>();
+        doc = [SELECT Id, Name FROM Document WHERE Name =: AcliNewScheduler.ACLI_DOC_NAME];
+
+        System.assert(doc.isEmpty());
+
     }
 
     static testMethod void testBatch() {
@@ -240,4 +245,5 @@ private class AcliSyncBatchTest {
         system.assertEquals(true, sapAR.Airline_Coding__c);
         system.assertEquals('0010000088', sapAR.SAP_ID__c);
     }
+
 }

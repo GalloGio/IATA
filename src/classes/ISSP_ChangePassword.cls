@@ -191,20 +191,6 @@ public without sharing class ISSP_ChangePassword {
     }
 
     public void provisioning(){ 
-    /*               
-        provUser = [Select Id, Username, LastLoginDate,UID__c, ByPassValidationRule__c from user where id =:UserInfo.getUserId()];
-        PermissionSetAssignment[] lstcurrentUserPerSet = [SELECT Id, PermissionSet.Name,AssigneeId 
-                                                                FROM PermissionSetAssignment 
-                                                                WHERE AssigneeId = :Userinfo.getUserId() AND PermissionSet.Name = 'FRED_Provisioning'];
-        
-        List <PermissionSet> fredprovisioning = [SELECT Id FROM PermissionSet WHERE Name = 'FRED_Provisioning'];        
-        if(!fredprovisioning.isEmpty() && lstcurrentUserPerSet.size() == 0){
-            PermissionSetAssignment assignPset = new PermissionSetAssignment();
-                assignPset.AssigneeId = provUser.Id;
-                assignPset.PermissionSetId = fredprovisioning[0].Id;
-            insert assignPset;
-        }      
-        */
 
         LightningConnectedAppHelper.submit('FRED', 'FRED Primary User');
     }
@@ -265,98 +251,5 @@ public without sharing class ISSP_ChangePassword {
         get{
             return LightningConnectedAppHelper.getAppTerms ('FRED');
         }
-    }    
-    
-    public static void increaseCodeCoverage(){
-    	Integer i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-		i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-		i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-		i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    	i = 0;
-    }
+    } 
 }

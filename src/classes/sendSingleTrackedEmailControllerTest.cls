@@ -460,9 +460,6 @@ public with sharing class sendSingleTrackedEmailControllerTest {
         controller.selectedFrom = 'agencymanagement@iata.org';
     
         controller.sendTrackedEmail();
-		
-		//EM: To be removed
-		clsFinancialSecurityRequestController.fakecoverage();
         
         Test.stopTest();
     }

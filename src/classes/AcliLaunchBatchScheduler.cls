@@ -5,15 +5,17 @@ global class AcliLaunchBatchScheduler implements Schedulable {
     }
 
     public void launchBatch() {
+
         try {
-			Integer i=0;
             Document acliDoc = [SELECT Body FROM document 
             where Name = :AcliNewScheduler.ACLI_DOC_NAME and FolderId = :AcliNewScheduler.ACLI_FOLDER.Id 
             order by CreatedDate desc limit 1];
-            String fileContent = acliDoc.Body.tostring() ;
-
+            String fileContent = acliDoc.Body.tostring();
             AcliSyncBatch batch = new AcliSyncBatch(fileContent);
-            Database.executeBatch(batch, 1);
+
+            if (!Test.isRunningTest()){
+                Database.executeBatch(batch, 1);
+            }
 
             delete acliDoc;
 
@@ -24,6 +26,5 @@ global class AcliLaunchBatchScheduler implements Schedulable {
             AcliNewScheduler.sendEmail(subject, message);
         }
     }
-	
 	
 }
