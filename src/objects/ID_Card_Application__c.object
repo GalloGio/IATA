@@ -625,7 +625,7 @@
     <fields>
         <fullName>Applicable_Fee__c</fullName>
         <externalId>false</externalId>
-        <label>Applicable Fee</label>
+        <label>Total Cost</label>
         <precision>18</precision>
         <required>false</required>
         <scale>2</scale>
@@ -1029,7 +1029,7 @@ Completed: Process is complete</inlineHelpText>
     <fields>
         <fullName>IDCard_Expedite_Delivery_Fee__c</fullName>
         <externalId>false</externalId>
-        <label>IDCard Expedite Delivery Fee</label>
+        <label>Expedite Delivery Fee</label>
         <precision>18</precision>
         <required>false</required>
         <scale>2</scale>
@@ -1074,13 +1074,38 @@ Completed: Process is complete</inlineHelpText>
                 </value>
             </valueSetDefinition>
         </valueSet>
+	</fields>
+    <fields>
+        <fullName>ID_Card__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>ID Card</label>
+        <referenceTo>ID_Card__c</referenceTo>
+        <relationshipLabel>ID Card Applications</relationshipLabel>
+        <relationshipName>ID_Card_Applications</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
     </fields>
     <fields>
         <fullName>ID_Card_Fee__c</fullName>
         <description>Fee for the card.</description>
         <externalId>false</externalId>
-        <label>IDCard Fee</label>
+        <label>ID Card Fee</label>
         <precision>8</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>ID_Card_Fee_Discount__c</fullName>
+        <description>Discount for the fee for the card.</description>
+        <externalId>false</externalId>
+        <label>ID Card Fee Discount</label>
+        <precision>18</precision>
         <required>false</required>
         <scale>2</scale>
         <trackHistory>true</trackHistory>
@@ -1091,7 +1116,7 @@ Completed: Process is complete</inlineHelpText>
         <fullName>ITDI_Courses_Fee__c</fullName>
         <description>ITTDI Courses Fee</description>
         <externalId>false</externalId>
-        <label>ITDI Courses Fee</label>
+        <label>IATA Training Courses Fee</label>
         <precision>12</precision>
         <required>false</required>
         <scale>2</scale>
@@ -1102,7 +1127,7 @@ Completed: Process is complete</inlineHelpText>
     <fields>
         <fullName>ITDI_Courses_Status__c</fullName>
         <externalId>false</externalId>
-        <label>ITDI Courses Status</label>
+        <label>IATA Training Courses Status</label>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
@@ -1196,7 +1221,7 @@ Completed: Process is complete</inlineHelpText>
         <description>IATA Package of Travel Professionals Course 1</description>
         <externalId>false</externalId>
         <inlineHelpText>IATA Package of Travel Professionals Course 1</inlineHelpText>
-        <label>Package of Travel Professionals Course 1</label>
+        <label>IATA Training Course 1</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -1307,7 +1332,7 @@ Completed: Process is complete</inlineHelpText>
         <description>IATA Package of Travel Professionals Course 2</description>
         <externalId>false</externalId>
         <inlineHelpText>IATA Package of Travel Professionals Course 2</inlineHelpText>
-        <label>Package of Travel Professionals Course 2</label>
+        <label>IATA Training Course 2</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -1505,6 +1530,18 @@ Completed: Process is complete</inlineHelpText>
                 </value>
             </valueSetDefinition>
         </valueSet>
+    </fields>
+    <fields>
+        <fullName>Physical_Card_Fee__c</fullName>
+        <description>Fee for printing the physical card.</description>
+        <externalId>false</externalId>
+        <label>Printing Fee</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
     </fields>
     <fields>
         <fullName>Photo__c</fullName>

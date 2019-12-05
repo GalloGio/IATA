@@ -5896,6 +5896,18 @@
         <name>IDCard_CaseDetails</name>
     </customLabels>
     <customLabels>
+        <label>No</label>
+        <name>IDCard_CardType_DigCardNo</name>
+    </customLabels>
+    <customLabels>
+        <label>Sí</label>
+        <name>IDCard_CardType_PhysCardYes</name>
+    </customLabels>
+    <customLabels>
+        <label>¿Le gustaría recibir una tarjeta de identificación IATA impresa? Pueden aplicarse cargos adicionales.</label>
+        <name>IDCard_CardType_WishToRecieve</name>
+    </customLabels>
+    <customLabels>
         <label>Numero de caso:</label>
         <name>IDCard_CaseNum</name>
     </customLabels>
@@ -6204,11 +6216,11 @@ Por favor, si es la primera vez que usted solicita una tarjeta de identificació
         <name>IDCard_ExpediteDeliveryAddedtoCardPrice</name>
     </customLabels>
     <customLabels>
-        <label>Gastos de envío rapido :</label>
+        <label>Cargo por entrega rápida</label>
         <name>IDCard_ExpediteFee</name>
     </customLabels>
     <customLabels>
-        <label>Certificado/Rápido</label>
+        <label>Entrega rápida</label>
         <name>IDCard_Expedite_Delivery</name>
     </customLabels>
     <customLabels>
@@ -6216,8 +6228,16 @@ Por favor, si es la primera vez que usted solicita una tarjeta de identificació
         <name>IDCard_Expedite_Note</name>
     </customLabels>
     <customLabels>
+        <label>Su tarjeta de identificación IATA impresa se enviará a la dirección de su agencia en el transcurso de 2 a 6 semanas a menos que elija la entrega rápida (de 4 a 8 días hábiles). La entrega rápida incluye un seguimiento del envío si lo solicita.</label>
+        <name>IDCard_Expedite_Text</name>
+    </customLabels>
+    <customLabels>
         <label><!-- IDCard ExportCSV --></label>
         <name>IDCard_ExportCSV</name>
+    </customLabels>
+    <customLabels>
+        <label>Cargo por tarjeta de identificación IATA</label>
+        <name>IDCard_fee</name>
     </customLabels>
     <customLabels>
         <label>Tarifa aplicable</label>
@@ -6226,6 +6246,10 @@ Por favor, si es la primera vez que usted solicita una tarjeta de identificació
     <customLabels>
         <label>Tarifas</label>
         <name>IDCard_Fees</name>
+    </customLabels>
+    <customLabels>
+        <label>Cargo por manejo y envoi</label>
+        <name>IDCard_FeesPhysical</name>
     </customLabels>
     <customLabels>
         <label>Archivo (s) subido correctamente</label>
@@ -6696,6 +6720,10 @@ Para los nuevos solicitantes y los agentes que regresan y que no tengan sus cód
     <customLabels>
         <label>confirmación de la compra</label>
         <name>IDCard_PurchaseConfirmation</name>
+    </customLabels>
+    <customLabels>
+        <label>Código promocional</label>
+        <name>IDCard_PromotionCode</name>
     </customLabels>
     <customLabels>
         <label><!-- IDCard_Question_New_Or_Change --></label>
@@ -7187,7 +7215,7 @@ Por favor tenga en cuenta que todo agente trabajando desde su hogar deberá coor
         <name>ID_Card_Not_found_for_VER</name>
     </customLabels>
     <customLabels>
-        <label>Aproveche  de un precio reducido para 2 cursos de capacitación con IATA Training. &lt;u&gt;El precio será agregado a la Tarifa&lt;/u&gt;. Una vez que su solicitud de la tarjeta IATA/IATAN haya sido aprobada , IATA Training se contactará con usted para el acceso a sus cursos.</label>
+        <label>En agradecimiento por haber ordenado su tarjeta de identificación, tendrá la oportunidad de comprar dos de los siguientes cursos de capacitación a distancia de IATA por solo USD 150 (con ahorros de hasta el 80 %). Recibirá instrucciones para acceder a los cursos luego de aprobada su solicitud de tarjeta de identificación.</label>
         <name>ID_Card_Package_Travel_Professionals_1</name>
     </customLabels>
     <customLabels>
@@ -7231,6 +7259,10 @@ Por favor tenga en cuenta que todo agente trabajando desde su hogar deberá coor
         <name>ID_Card_Specifics</name>
     </customLabels>
     <customLabels>
+        <label>Impuestos aplicables</label>
+        <name>ID_Card_Taxes</name>
+    </customLabels>
+    <customLabels>
         <label>&quot;I have read and accept the 
 &lt;a href=&quot;&quot;JavaScript:newPopup(&apos;http://www.iata.org/Pages/privacy.aspx&apos;); &quot;&quot;&gt;Privacy Policy, Conditions of Use &lt;/a&gt; 
 and 
@@ -7252,6 +7284,10 @@ and
     <customLabels>
         <label>Para la agencia:</label>
         <name>ID_Card_To_Agency</name>
+    </customLabels>
+    <customLabels>
+        <label>Cargo por cursos de capacitación IATA (2 cursos)</label>
+        <name>ID_Card_Training_Fee</name>
     </customLabels>
     <customLabels>
         <label>Por favor, sube la prueba de su cambio de nombre</label>
@@ -21566,6 +21602,10 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
     <customLabels>
         <label><!-- Title_Home_Page --></label>
         <name>Title_Home_Page</name>
+    </customLabels>
+    <customLabels>
+        <label>Costo total</label>
+        <name>Total_Cost</name>
     </customLabels>
     <customLabels>
         <label><!-- Total Price --></label>

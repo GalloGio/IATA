@@ -464,6 +464,8 @@ public with sharing class IDCard_AdmUserManagmentPictureCtrl extends IDCardAbstr
                 IDCardApplicationNR.ID_Card_Fee__c = detailledFees.get('IDCardFee');
                 IDCardApplicationNR.IDCard_Expedite_Delivery_Fee__c = detailledFees.get('ExpediteFee');         
                 IDCardApplicationNR.ITDI_Courses_Fee__c = detailledFees.get('ITDIFee');                
+                IDCardApplicationNR.Physical_Card_Fee__c = detailledFees.get('PhysCardFee');
+                IDCardApplicationNR.ID_Card_Fee_Discount__c = detailledFees.get('Discount');
                 IDCardApplicationNR.Applicable_Fee__c = IDCardUtil.GetApplicableFee(listPriceTables[0], isReissue, isExpedite, isITDIPackage, validPromotion);                               
                 IDCardApplicationNR.CurrencyIsoCode = listPriceTables[0].CurrencyIsoCode;
                 // Always display the expedite fees
