@@ -11,7 +11,7 @@
             </span>
 
         </span>
-        <span slot="cardButton" if:true={showButton}>
+        <span slot="cardButton" if:true={showButton} class="slds-show_medium">
             <lightning-button
                 variant="neutral"
                 label={label.CSP_FAQReachUsBanner_ButtonText}
@@ -47,6 +47,15 @@
                             hide-checkbox-column
                             resize-column-disabled>
                         </lightning-datatable>
+                        <div slot="cardButton" if:true={showButton} class="slds-hide_medium slds-m-top_small slds-text-align_center">
+                            <lightning-button
+                                variant="neutral"
+                                label={label.CSP_FAQReachUsBanner_ButtonText}
+                                title={label.CSP_FAQReachUsBanner_ButtonText}
+                                class="reachusbutton outlinedButton slds-m-right_medium button-half-height"
+                                onclick={redirectToSupport}>
+                            </lightning-button>
+                        </div>
                     </div>
                     <div if:false={dataRecords}>
                         <c-portal-no-cases-banner></c-portal-no-cases-banner>
