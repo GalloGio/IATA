@@ -65,7 +65,7 @@ public class IATAIsoCountryDAO {
 												 Region_Province_and_Cities_Enabled__c,
 						AMS_Settlement_System__r.Name,
                                                  
-                                                 (SELECT Id, Name, ISO_Code__c, IEC_Valid_SAP__c
+                                                 (SELECT Id, Name, ISO_Code__c, IEC_Valid_SAP__c, Valid_for_Address__c
                                                   FROM IATA_ISO_States__r
                                                   ORDER BY Name),
                                                  

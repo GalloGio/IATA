@@ -175,6 +175,7 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
             
         billingStatesList = new List<SelectOption>();
         for (IATA_ISO_State__c s : iso.IATA_ISO_States__r) {
+            if(s.Valid_For_Address__c)
                 billingStatesList.add(new SelectOption(s.Id, s.Name));
             }
 

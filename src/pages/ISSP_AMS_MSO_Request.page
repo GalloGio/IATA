@@ -547,6 +547,13 @@
                                 <div class="col-lg-10" >{!accreditationForm.IATA_ISO_State__r.Name}</div>
                             </apex:outputPanel>
 
+                            <apex:outputPanel styleClass="billingStreetPanel">
+                                <label for="countryconcerned" class="col-lg-2" style="text-align: right; font-size: 91%; padding-right: 0px;">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Branch_Office_City__c.Label}</label>
+                                    <div class="col-lg-10" >
+                                        <apex:outputField id="billingCity" value="{!accreditationForm.Branch_Office_City__c}"/>                                
+                                    </div>
+                            </apex:outputPanel>
+
                             <apex:outputPanel id="billingStreetPanel" styleClass="billingStreetPanel">
                                     <label for="billingstate" class="col-lg-2" style="text-align: right; font-size: 91%; padding-right: 0px;">
                                     {!$Label.ISSP_AMS_MSO_GSA_Address}</label>
@@ -563,15 +570,7 @@
                                 <apex:outputField id="billingPostalCode"  value="{!accreditationForm.Branch_Office_Postal_code__c}"/>
                                             
                             </div>
-                                    </apex:outputPanel>
-
-                                <apex:outputPanel styleClass="billingStreetPanel">
-                                    <label for="countryconcerned" class="col-lg-2" style="text-align: right; font-size: 91%; padding-right: 0px;">{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Branch_Office_City__c.Label}</label>
-
-                                    <div class="col-lg-10" >
-                                <apex:outputField id="billingCity" value="{!accreditationForm.Branch_Office_City__c}"/>                                
-                            </div>
-                                </apex:outputPanel>
+                                    </apex:outputPanel>                                
 
                                 <apex:outputPanel styleClass="billingStreetPanel">
                                     <label for="countryconcerned" class="col-lg-2" style="text-align: right; font-size: 91%; padding-right: 0px;">{!$Label.ISSP_Office_Phone}</label>

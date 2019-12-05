@@ -164,7 +164,8 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
         if (countryISOCodeList.size() == 0 || countrySelected == null || mapBillingStatesPerCountry.get(countrySelected) == null) return;
 
         for (IATA_ISO_State__c s : mapBillingStatesPerCountry.get(countrySelected)) {
-            billingStatesList.add(new SelectOption(s.Id, s.Name));
+            if(s.Valid_For_Address__c)
+                billingStatesList.add(new SelectOption(s.Id, s.Name));
         }
 
     }
@@ -191,6 +192,7 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
         Boolean isValid = true;
         Pattern p = Pattern.compile(ISO_8859_1_regEx);
 
+        billingCity = String.isBlank(billingCity)?null:billingCity;
         System.debug('accreditationForm: ' + accreditationForm);
         System.debug('countrySelected: ' + countrySelected);
 
