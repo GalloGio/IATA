@@ -4017,7 +4017,7 @@ Payment required on receipt of this Payment Advice
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_L2_VerificationToP1_LMS</shortDescription>
-        <value>We have sent a verification email to:</value>
+        <value>We have sent a verification email to </value>
     </labels>
     <labels>
         <fullName>CSP_L2_VerificationToP2_LMS</fullName>
@@ -4025,7 +4025,7 @@ Payment required on receipt of this Payment Advice
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_L2_VerificationToP2_LMS</shortDescription>
-        <value>. Please check your email and follow the instructions to completo your registration.</value>
+        <value>. Please check your email and follow the instructions to complete your registration.</value>
     </labels>
     <labels>
         <fullName>CSP_L3_CompleteInformation_LMS</fullName>
