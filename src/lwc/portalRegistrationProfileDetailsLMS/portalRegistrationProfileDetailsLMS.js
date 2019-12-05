@@ -12,7 +12,7 @@ import ISSP_Registration_MR                          from '@salesforce/label/c.I
 import ISSP_Registration_MRS                         from '@salesforce/label/c.ISSP_Registration_MRS';
 import ISSP_Registration_MS                          from '@salesforce/label/c.ISSP_Registration_MS';
 
-import CSP_L2_Profile_Details_Message                   from '@salesforce/label/c.CSP_L2_Profile_Details_Message';
+import CSP_L2_Profile_Details_Message                   from '@salesforce/label/c.CSP_L2_Profile_Details_Message_LMS';
 import CSP_L2_Profile_Details from '@salesforce/label/c.CSP_L2_Profile_Details';
 import CSP_L2_Title from '@salesforce/label/c.CSP_L2_Title';
 import CSP_L2_Date_of_Birth from '@salesforce/label/c.CSP_L2_Date_of_Birth';
@@ -25,7 +25,7 @@ import CSP_L_TrainingEmail_LMS from '@salesforce/label/c.CSP_L_TrainingEmail_LMS
 import CSP_L_TrainingUser_LMS from '@salesforce/label/c.CSP_L_TrainingUser_LMS';
 import CSP_L_Phone_LMS from '@salesforce/label/c.CSP_L_Phone_LMS';
 import CSP_L_WorkPhone_LMS from '@salesforce/label/c.CSP_L_WorkPhone_LMS';
-import CSP_Next_LMS from '@salesforce/label/c.CSP_Next_LMS';
+import CSP_Next_LMS from '@salesforce/label/c.CSP_Next_EmailValidation_LMS';
 import CSP_L2_RegistrationFailed_LMS from '@salesforce/label/c.CSP_L2_RegistrationFailed_LMS';
 import CSP_L2_IdAlready_LMS from '@salesforce/label/c.CSP_L2_IdAlready_LMS';
 import CSP_Age_Verification from '@salesforce/label/c.CSP_Age_Verification';

@@ -3932,6 +3932,14 @@ Payment required on receipt of this Payment Advice
         <value>The input user Id is already being used.</value>
     </labels>
     <labels>
+        <fullName>CSP_L2_Profile_Details_Message_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L2_Profile_Details_Message</shortDescription>
+        <value>IATA needs your Personal Email to maintain your lifelong Training record with us. We also need your Work Email to access some specific Services on the Portal and to be able to bill your company, instead of you as an individual.</value>
+    </labels>
+    <labels>
         <fullName>CSP_L2_RegistrationFailed_LMS</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -4172,6 +4180,14 @@ Payment required on receipt of this Payment Advice
         <value>Login Email</value>
     </labels>
     <labels>
+        <fullName>CSP_L_LoginEmail_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Login Email</shortDescription>
+        <value>Email</value>
+    </labels>
+    <labels>
         <fullName>CSP_L_PersonalEmail_LMS</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -4191,14 +4207,14 @@ Payment required on receipt of this Payment Advice
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_L_TrainingEmail_LMS</shortDescription>
-        <value>Existing IATA Training username (if any)</value>
+        <value>Username</value>
     </labels>
     <labels>
         <fullName>CSP_L_TrainingUser_LMS</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_L_TrainingUser_LMS</shortDescription>
-        <value>Existing IATA Training User ID (if any)</value>
+        <value>User Id</value>
     </labels>
     <labels>
         <fullName>CSP_L_WorkPhone_LMS</fullName>
@@ -4364,6 +4380,14 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP_Next_LMS</shortDescription>
         <value>Next</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Next_EmailValidation_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Next_EmailValidation_LMS</shortDescription>
+        <value>Next / Email Validation</value>
     </labels>
     <labels>
         <fullName>CSP_NoAccount</fullName>
