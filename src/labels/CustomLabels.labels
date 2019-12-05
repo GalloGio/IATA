@@ -3964,6 +3964,14 @@ Payment required on receipt of this Payment Advice
         <value>The input user Id is already being used.</value>
     </labels>
     <labels>
+        <fullName>CSP_L3_Next_Confirmation_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L3_Next_Confirmation_LMS</shortDescription>
+        <value>Next / Confirmation</value>
+    </labels>
+    <labels>
         <fullName>CSP_L2_Profile_Details_Message_LMS</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
