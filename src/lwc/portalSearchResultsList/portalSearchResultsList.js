@@ -19,7 +19,7 @@ import ISSP_AvailableServices_Service from '@salesforce/label/c.ISSP_AvailableSe
 import CSP_Breadcrumb_FAQ_Title from '@salesforce/label/c.CSP_Breadcrumb_FAQ_Title';
 import CSP_Documents from '@salesforce/label/c.CSP_Documents';
 import ICCS_Profile from '@salesforce/label/c.ICCS_Profile';
-import Company from '@salesforce/label/c.Company';
+import csp_My_Profile_Company from '@salesforce/label/c.csp_My_Profile_Company';
 import ISSP_Contact from '@salesforce/label/c.ISSP_Contact';
 
 export default class PortalSearchResultList extends NavigationMixin(LightningElement) {
@@ -93,7 +93,7 @@ export default class PortalSearchResultList extends NavigationMixin(LightningEle
         CSP_Breadcrumb_FAQ_Title,
         CSP_Documents,
         ICCS_Profile,
-        Company,
+        csp_My_Profile_Company,
         ISSP_Contact
     };
 
@@ -399,7 +399,7 @@ export default class PortalSearchResultList extends NavigationMixin(LightningEle
                     "id": retrievedAccounts[i].profileId,
                     "category": this.label.ICCS_Profile,
                     "title": retrievedAccounts[i].profileName,
-                    "description": this.label.Company,
+                    "description": this.label.csp_My_Profile_Company,
                     "class": "categId-4",
                     "url": retrievedAccounts[i].profileUrl
                 }
