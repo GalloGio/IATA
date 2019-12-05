@@ -5763,7 +5763,7 @@ public without sharing class ISSP_AMS_Accreditation {
 									ORDER BY Language__c ASC];
 			//First look for country requirements in the User's selected language
 
-			auxReqsList = [SELECT Id, Name, Requirement_text__c, File_to_Upload__c, File_Identifier2__c
+			auxReqsList = [SELECT Id, Name, Requirement_text__c, File_to_Upload__c, File_Identifier2__c, Language__c
 						FROM AMS_Accreditation_Requirement__c
 						WHERE (AMS_Accreditation_Country_CheckList__r.IATA_ISO_Country__r.ISO_Code__c = :newCase.IFAP_Country_ISO__c AND AMS_Accreditation_Country_CheckList__r.Operation__c = :sector AND Type_Of_Change__c != null
 							AND RecordTypeId = :ChangeReqRecTypeId AND (Type_Of_Change__c INCLUDES (:noticeOfChangeList.get(0)) OR Type_Of_Change__c INCLUDES (:noticeOfChangeList.get(1))
