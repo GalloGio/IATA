@@ -40894,6 +40894,14 @@ title,Title,Name</value>
         <value>Stay Informed!</value>
     </labels>
     <labels>
+        <fullName>Stop_creating_accounts_from_Owners_and_Subsidiaries</fullName>
+        <categories>Owners, Subsidiaries</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Stop creating accounts from Owners and Subsidiaries</shortDescription>
+        <value>No account was found with this name, please create a Standard account first in order to add it here!</value>
+    </labels>
+    <labels>
         <fullName>Street_cannot_be_empty</fullName>
         <language>en_US</language>
         <protected>false</protected>
