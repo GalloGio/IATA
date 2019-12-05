@@ -532,7 +532,6 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
         this.buttonServiceStyle = this.buttonServiceStyle.replace(/selectedButton/g, '');
         this.buttonSupportStyle = this.buttonSupportStyle.replace(/selectedButton/g, '');
         this.buttonSideMenuServiceStyle = this.buttonSideMenuServiceStyle.replace(/selectedButton/g, '');
-        this.buttonSideMenuYouIATAStyle = this.buttonSideMenuYouIATAStyle.replace(/selectedButton/g,'');
         this.buttonSideMenuSupportStyle = this.buttonSideMenuSupportStyle.replace(/selectedButton/g, '');
         this.buttonSideMenuSearchStyle = this.buttonSideMenuSearchStyle.replace(/selectedButton/g, '');
         this.buttonSideMenuProfileStyle = this.buttonSideMenuProfileStyle.replace(/selectedButton/g, '');
