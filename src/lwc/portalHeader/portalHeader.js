@@ -241,7 +241,7 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
     @track checkDisplayBodyStyle
 
     // MODAL
-    @track openmodal = false;
+    @track openModal = false;
 
     @track mainBackground = 'z-index: 9999;';
 
@@ -496,12 +496,12 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
         this.notificationsView(event);
 
         this.mainBackground = "z-index: 10004;";
-        this.openmodal = true;
+        this.openModal = true;
     }
 
     closeModal() {
         this.mainBackground = "z-index: 10000;";
-        this.openmodal = false;
+        this.openModal = false;
     }
 
     notificationsView(event) {
