@@ -209,7 +209,7 @@
                 <leftValueReference>myVariable_current.Reason1__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>New E&amp;F participant</stringValue>
+                    <stringValue>SIS Client</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
@@ -366,7 +366,7 @@
                 <leftValueReference>myVariable_old.Reason1__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>New E&amp;F participant</stringValue>
+                    <stringValue>SIS Client</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
@@ -404,7 +404,7 @@
         </rules>
     </decisions>
     <description>Relaunch the account context activation flow when a case of type &quot;Compliance&quot; is closed</description>
-    <interviewLabel>CaseComplianceClosed-2_InterviewLabel</interviewLabel>
+    <interviewLabel>CaseComplianceClosed-3_InterviewLabel</interviewLabel>
     <label>CaseComplianceClosed</label>
     <processMetadataValues>
         <name>ObjectType</name>
