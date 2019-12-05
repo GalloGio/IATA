@@ -386,13 +386,7 @@ Date of last clearance (Date_of_last_clearance__c) within the last 12 months</de
         <outputReference>DueDiligenceQueue</outputReference>
         <queriedFields>Id</queriedFields>
     </recordLookups>
-    <start>
-        <locationX>50</locationX>
-        <locationY>50</locationY>
-        <connector>
-            <targetReference>Is_Account_compliant</targetReference>
-        </connector>
-    </start>
+    <startElementReference>Is_Account_compliant</startElementReference>
     <status>Active</status>
     <variables>
         <name>Account</name>
