@@ -86,7 +86,7 @@ export default class NotificationCenter extends LightningElement {
 			//notifications template setup
 			aux = [];
 			notTemplates.forEach( row =>{
-				aux.push({label: row.Identifier__c, value: row.Name });
+				aux.push({label: row.Subject__c, value: row.Name });
 			});
 			this.notificationTempaltes = aux;
 
@@ -133,6 +133,7 @@ export default class NotificationCenter extends LightningElement {
 			this.currentPageRecords = currentPageIds;
 			if (data.length < 1) {
 				this.showToast(ERROR,'Note!','There are no users to be displayed');
+				this.totalRecords = 0;
 			}else if(this.aplyingFilters){
 				this.showToast(SUCCESS,'Success','filters applied successfully!');
 			}
