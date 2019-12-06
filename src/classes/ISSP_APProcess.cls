@@ -1109,6 +1109,13 @@ global without sharing class ISSP_APProcess {
         }
     }
     public Pagereference goToStep4(){
+        if(isPassAirline){
+            passParam='&airline=PASS';
+            if(managePASS){
+                passParam=passParam+'&managePASS=true';
+            }
+            return new Pagereference('/ISSP_APProcess?caseId='+newCase.Id+'&step=4'+passParam);
+        }
         return new Pagereference('/ISSP_APProcess?caseId='+newCase.Id+'&step=4');
     }
 
@@ -1209,8 +1216,7 @@ global without sharing class ISSP_APProcess {
 
                 copyAttachmentsToChildCases(vCaseId,childCaseIdIsoCodeMap);
                 
-            }
-            //*******************************
+            }          
 
             newCase.Status = 'For Review and Acceptance';
             newCase.Dossier_Reception_Date__c = Date.today();
