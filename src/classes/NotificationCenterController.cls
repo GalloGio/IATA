@@ -2,7 +2,7 @@ public with sharing class NotificationCenterController {
 
 	@AuraEnabled(cacheable=true)
 	public static List<Notification_template__c> getInformationNotificationTemplates(){
-		return [SELECT Identifier__c, Name FROM Notification_template__c WHERE Type__c = 'Information'];
+		return [SELECT Subject__c, Name FROM Notification_template__c WHERE Type__c = 'Information'];
 	}
 
 	@AuraEnabled(cacheable=true)
