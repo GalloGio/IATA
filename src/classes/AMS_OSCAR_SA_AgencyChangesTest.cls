@@ -110,12 +110,12 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
         oscar.AMS_Online_Accreditation__c = stagingArea.Id;
         oscar.AMS_Target_Agency__c = targetAgencyId;
         update oscar;
-
+		
         /*** AMSU-180 ***/
         Id cId;
-        if(typeOfChange == 'Ownership to IATA Agent' && targetAgency <> null) {            
-            C1.AccountId = targetAgency.Id;
-            update C1;
+        if(typeOfChange == 'Ownership to IATA Agent' && targetAgency <> null) {
+			C1.AccountId = targetAgency.Id;
+			update C1;
 
             cId = C1.Id;
             AMS_Account_Role__c targetOwner = new AMS_Account_Role__c(
@@ -124,7 +124,7 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
                 Contact__c = cId,
                 Account__c = targetAgency.Id
             );
-            insert targetOwner;            
+            insert targetOwner;
         }
 
         AMS_Accreditation_Contact__c owner = new AMS_Accreditation_Contact__c(
@@ -146,6 +146,8 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
     }
 
     @testSetup static void setup() {
+
+		Test.startTest();
 
         ID rtAgency = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
@@ -281,6 +283,7 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
 
         //system.assertEquals(HO1.Id, null);
 
+		Test.stopTest();
 
     }
 
@@ -885,7 +888,7 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
         AMS_Account_Role__c r6 = r.clone(false,true,false,false);
         r6.Account__c = SA4.Id;
         insert new List<AMS_Account_Role__c> {r1,r2,r3,r4,r5,r6};
-
+		
         //oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
         oscar.STEP6__c = AMS_Utils.PASSED;
         update oscar;
