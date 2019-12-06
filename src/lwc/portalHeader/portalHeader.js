@@ -13,6 +13,7 @@ import getBreadcrumbs from '@salesforce/apex/PortalBreadcrumbCtrl.getBreadcrumbs
 //notification apex method
 import getNotifications from '@salesforce/apex/PortalHeaderCtrl.getNotifications';
 import isAdmin from '@salesforce/apex/CSP_Utils.isAdmin';
+import showIATAInvoices from '@salesforce/apex/PortalHeaderCtrl.showIATAInvoices'; //WMO-696 - ACAMBAS
 import increaseNotificationView from '@salesforce/apex/PortalHeaderCtrl.increaseNotificationView';
 import goToManageService from '@salesforce/apex/PortalHeaderCtrl.goToManageService';
 import goToOldChangePassword from '@salesforce/apex/PortalHeaderCtrl.goToOldChangePassword';
@@ -41,6 +42,7 @@ import NotificationCenter from '@salesforce/label/c.NotificationCenter_Title';
 import ViewDetails from '@salesforce/label/c.ViewDetails_Notification';
 import NotificationDetail from '@salesforce/label/c.NotificationDetail_Detail';
 import ISSP_Reset_Password from '@salesforce/label/c.ISSP_Reset_Password';
+import CSP_IATA_Invoices from '@salesforce/label/c.CSP_IATA_Invoices'; //WMO-627 - ACAMBAS
 
 import Announcement from '@salesforce/label/c.Announcements_Notification';
 import Tasks from '@salesforce/label/c.Tasks_Notification';
@@ -181,8 +183,8 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
         ISSP_Reset_Password,
         CSP_You_Dont_Have_Notifications,
         CSP_You_Dont_Have_Announcements,
-        CSP_You_Dont_Have_Tasks
-
+        CSP_You_Dont_Have_Tasks,
+        CSP_IATA_Invoices //WMO-627 - ACAMBAS
     };
 
     get labels() {
@@ -229,6 +231,9 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
 
     //User Type
     @track userAdmin;
+
+    //Flag that defines if the IATA Invoices entry is displayed in the menu
+    @track displayInvoicesMenu; //WMO-696 - ACAMBAS
 
     //style variables for notifications
     @track sideMenuBarStyle;
@@ -290,6 +295,12 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
                 this.firstLogin = true;
             }
         }
+
+        //WMO-696 - ACAMBAS: Begin
+        showIATAInvoices().then(result => {
+            this.displayInvoicesMenu = result;
+        });
+        //WMO-696 - ACAMBAS: End
 
         this.redirectChangePassword();
 
@@ -374,6 +385,33 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
         }
     }
 
+    //WMO-627 - ACAMBAS: Begin
+    // Navigate to other page tab
+	navigationCheckToPageTab(pageNameToNavigate, currentService, tab) {
+		if (this.trackedIsInOldPortal) {
+            redirectfromPortalHeader({ pageName: currentService }).then(result => {
+                if (tab != null && tab != '')
+                    window.location.href = result + '?tab=' + tab;
+                else
+                    window.location.href = result;
+                });
+        } else {
+            let params = {};
+            if (tab !== undefined && tab !== null) {
+                params.tab = tab;
+            }
+
+            this[NavigationMixin.GenerateUrl]({
+                type: "standard__namedPage",
+                attributes: {
+                    pageName: pageNameToNavigate
+                }
+            })
+            .then(url => navigateToPage(url, params));
+        }
+    }
+    //WMO-627 - ACAMBAS: End
+
     navigateToHomePage() {
         this.navigationCheck("home", "");
         //this.navigateToOtherPage("home");
@@ -398,12 +436,21 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
     }
 
     navigateToCompanyProfile() {
-        this.navigationCheck("company-profile", "company-profile");
+        //WMO-627 - ACAMBAS: Begin
+        //this.navigationCheck("company-profile", "company-profile");
+        this.navigationCheckToPageTab("company-profile", "company-profile", null);
+        //WMO-627 - ACAMBAS: End
     }
 
     navigateToCases() {
         this.navigationCheck("cases-list", "cases-list");
     }
+
+    //WMO-627 - ACAMBAS: Begin
+    navigateToInvoices() {
+        this.navigationCheckToPageTab("company-profile", "company-profile", "invoices");
+    }
+    //WMO-627 - ACAMBAS: End
 
     navigateToSettings() {
         //this.navigateToOtherPage("");
@@ -565,7 +612,8 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
                 });
             }
         } else {
-            navigateToPage("company-profile?tab=contact&contactName=" + notification.contactName);
+            //CUSTOMER INVOICES
+            navigateToPage("company-profile?tab=invoices");
         }
     }
 

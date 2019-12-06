@@ -1369,4 +1369,12 @@ public static Boolean grantAccess(string contactId,string serviceId,string reaso
 		}
 	}
 
+	//WMO-736 - ACAMBAS: Begin
+    @AuraEnabled
+    public static ServiceWrapper getPortalServiceDetails(string serviceName) {       
+		Portal_Applications__c portalService = [SELECT Id FROM Portal_Applications__c WHERE Name = :serviceName LIMIT 1];
+		return getServiceDetails(portalService.Id);
+    }
+	//WMO-736 - ACAMBAS: End
+
 }

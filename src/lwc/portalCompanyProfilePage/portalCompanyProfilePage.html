@@ -57,17 +57,82 @@
                     <div if:true={tab2Active} >
                         <c-portal-company-profile-contacts-list></c-portal-company-profile-contacts-list>
                     </div>
+					
+					<!-- Profile: Outstanding Invoices -->
+					<template if:true={tab3Active}>
+						<!-- Sub-Sections nav bar -->
+						<div class="slds-col slds-size_1-of-1 slds-m-vertical_medium">
+							<template for:each={lstSubTabs} for:item="tab">
+								<span key={tab.id} class="slds-p-around_small text-small">
+									<!-- Active subtab -->
+									<span if:true={tab.active} data-item={tab.id}
+										class="slds-p-around_small text-bold selectedTab">
+										{tab.label}
+									</span>
+									<!-- Inactive subtab -->
+									<span if:false={tab.active} data-item={tab.id} class={tab.class} onmouseenter={onmouseenterSubTab} onmouseleave={onmouseleaveSubTab} onclick={onclickSubTab}>
+										{tab.label}
+									</span>
+								</span>
+							</template>
+						</div>
 
-                    <!-- Profile: Company Calendar -->
-                    <div if:true={tab3Active} >
-                        Company Calendar
-                    </div>
+						<!-- Sub-Tab: IATA Invoices -->
+						<template if:true={subTab0Active}>
+							<template if:true={iataInvoicesLoaded}>                                       
+								<div class="slds-grid slds-wrap slds-m-top_x-small">
+									<c-portal-invoice-list object-name="Customer_Invoice__c" class="fullWidth"
+										default-sort="Name" fields-list={iataInvoiceFields}
+										records={invoices}
+										recordid={recordid} accountid={accountid}
+										objectid={objectid} ongetrecords={getInvoices} fetching={isFetching}
+										onrefreshview={refreshview} onsearchrecords={searchRecords}>
+									</c-portal-invoice-list>
+								</div>
+							</template>
+							<template if:false={iataInvoicesLoaded}>
+								<div class="slds-m-around_xx-large slds-is-relative">
+									<lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+								</div>
+							</template>
+						</template>
 
-                    <!-- Profile: Activity Log -->
-                    <div if:true={tab4Active} >
-                        Activity Log
-                    </div>
-        
+						<!-- Sub-Tab: E&F Invoices -->
+						<template if:true={subTab1Active}>
+							<template if:true={efInvoicesLoaded}>                                       
+								<div class="slds-grid slds-wrap slds-m-top_x-small">
+									<c-portal-invoice-list is-account="false" object-name="Customer_Invoice__c" class="fullWidth"
+										default-sort="Name" fields-list={efInvoiceFields}
+										records={invoices}
+										recordid={recordid} accountid={accountid}
+										objectid={objectid} ongetrecords={getInvoices} fetching={isFetching}
+										onrefreshview={refreshview} onsearchrecords={searchRecords}>
+									</c-portal-invoice-list>
+								</div>
+							</template>
+							<template if:false={efInvoicesLoaded}>
+								<div class="slds-m-around_xx-large slds-is-relative">
+									<lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+								</div>
+							</template>
+						</template>
+
+						<!-- No invoices to be displayed -->
+						<template if:true={hasNoInvoices}>
+							<br><br><p align="center">{labels.No_Invoices_To_Display}</p> 
+						</template>
+
+					</template>
+
+					<!-- Profile: Company Calendar -->
+					<template if:true={tab4Active}>
+						Company Calendar
+					</template>
+
+					<!-- Profile: Activity Log -->
+					<template if:true={tab5Active}>
+						Activity Log
+					</template>
                 </span>
             </c-portal-page-container>
 
