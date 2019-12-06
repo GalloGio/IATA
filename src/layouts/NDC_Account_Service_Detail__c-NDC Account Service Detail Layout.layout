@@ -53,6 +53,10 @@
                 <behavior>Edit</behavior>
                 <field>Submitted_for_Approval__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Operating_Countries__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -151,6 +155,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Reach_Number_of_Sellers_Connected__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Aggregator_Identifier__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
