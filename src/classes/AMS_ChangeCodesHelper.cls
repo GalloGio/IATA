@@ -148,8 +148,9 @@ public class AMS_ChangeCodesHelper {
         Set<Account> accountsToUpdate = new Set<Account>();
 
         Set<Id> accountIds = new Set<Id>();
-        for(Account acc: oscarAgencies)
+        for(Account acc: oscarAgencies) {
             accountIds.add(acc.Id);
+        }
 
         List<Agency_Applied_Change_code__c> aaccToInsert = new List<Agency_Applied_Change_code__c>();
 
@@ -157,8 +158,9 @@ public class AMS_ChangeCodesHelper {
         Map<Id,List<Agency_Authorization__c>> fOPs = null;
 
         //if(AMS_Utils.isNewGenProcess)
-        if(oscars!= null && !oscars.isEmpty() && oscars[0] != null && oscars[0].Is_NewGen__c)
+        if(oscars!= null && !oscars.isEmpty() && oscars[0] != null && oscars[0].Is_NewGen__c) {
             fOPs = fetchFormsOfPayment(accountIds);
+        }
 
         ObjectChangesStruct objectChangesByChangeCode = null;
         
@@ -174,13 +176,15 @@ public class AMS_ChangeCodesHelper {
                 isActive = true;
             }
             
-            if(objectChanges != null && !objectChanges.isEmpty())
+            if(objectChanges != null && !objectChanges.isEmpty()) {
                 objectChangesByChangeCode = objectChanges.get(index);
+            }
 
             List<Agency_Authorization__c> accFOPs = null;
 
-            if(oscars!= null && !oscars.isEmpty() && oscars[0] != null && oscars[0].Is_NewGen__c)
+            if(oscars!= null && !oscars.isEmpty() && oscars[0] != null && oscars[0].Is_NewGen__c) {
                 accFOPs = fOPs.get(oscarAgencies.get(index).Id);
+            }
 
             ChangeCodeStruct changeCodeResult = createAAChangeCode(objectChangesByChangeCode,cc, oscars.get(index), oscarAgencies.get(index), isActive, accFOPs);
 
@@ -192,8 +196,10 @@ public class AMS_ChangeCodesHelper {
             
             System.debug('## changeCodeResult: ('+index+')'+changeCodeResult);
             
-            if (!accountsToUpdate.contains(changeCodeResult.acct))
+            if (!accountsToUpdate.contains(changeCodeResult.acct)) {
                 accountsToUpdate.add(changeCodeResult.acct);
+            }
+            
 
             index++;
         }
@@ -364,7 +370,9 @@ public class AMS_ChangeCodesHelper {
                 if(!Trigger.isExecuting || Trigger.isAfter) update oscar; //used on the creation of the NEW via webservice
             }
             
-            if( aacNEW.Change_Code__c == 'FIN' && !oscar.Flag_IATACode_Formula__c) oscar.addError('Please, make sure the IATA Code has been generated');
+            if( aacNEW.Change_Code__c == 'FIN' && !oscar.Flag_IATACode_Formula__c) {
+                oscar.addError('Please, make sure the IATA Code has been generated');    
+            } 
 
             if( (oscar.RecordTypeId == AMS_Utils.RECTYPE_NEW || oscar.RecordTypeId == AMS_Utils.RECTYPE_NEWHE || oscar.RecordTypeId == AMS_Utils.RECTYPE_NEWAE ) && (aacNEW.Change_Code__c == 'FIN' || aacNEW.Change_Code__c == 'DIS') && !oscar.First_Step_Completed__c) oscar.addError('Approval/Disapproval can only be made after the NEW change code was created ');  
                     if( oscar.RecordTypeId == AMS_Utils.RECTYPE_CHANGE && !oscar.First_Step_Completed__c && String.isNotEmpty(aacNEW.Bulletin_Information__c)){
@@ -384,7 +392,10 @@ public class AMS_ChangeCodesHelper {
             oscarAgency.Certificate_Generated_Current_Year__c = true;
         }        
 
-        if( aacNEW.Change_Code__c == 'FIN'){
+if(aacNew.Change_Code__c == 'FIN' && oscar.Location_Class__c == 'L' && oscarAgency.Sector__c == 'Cargo Agent' && oscarAgency.Category__c == 'Postal Service') {
+            System.enqueueJob(new AMS_OSCAR_Automation.PortalRightsForPortalAdmins(oscar));
+        }
+if( aacNEW.Change_Code__c == 'FIN'){
                 
             oscarAgency.Is_AIMS_Account__c = true;
 
