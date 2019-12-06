@@ -135,7 +135,8 @@ private class ANG_ChangeEntityLocationRiskEventTest {
 			Remittance_frequency__c = 'M',
 			Location_Class__c = 'D',
 			Location_Type__c = AMS_Utils.HE,
-			IATA_ISO_State__c = stt.Id
+			IATA_ISO_State__c = stt.Id,
+			ISSP_AMS_GDS_with_signed_contract__c = 'Amadeus'
 		);
 
 		insert stagingArea;

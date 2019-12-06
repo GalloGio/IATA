@@ -65,7 +65,7 @@ public class IDCard_AdmUserForm extends IDCardAbstractController{
             }else{
                 isNew = false;
                 List<ID_Card_Application__c> pendingapps = [SELECT Name, Displayed_Name__c, Type_of_application__c, IATA_Code__c, Title__c, Date_of_birth__c, First_Name__c, Last_Name__c, Gender__c, 
-                                                                    Email_admin__c, Telephone__c, Hours_worked__c, Position_in_Current_Agency__c, Duties_in_current_Agency__c, 
+                                                                    Email_admin__c, Telephone__c, Hours_worked__c, Position_in_Current_Agency__c, Duties_in_current_Agency__c, Card_Type__c, 
                                                                     Start_date_agency_month__c, Start_date_agency_year__c, Start_date_industry__c, VER_Number__c, UIR__c, Photo__c,
                                                                     Package_of_Travel_Professionals_Course_1__c, Package_of_Travel_Professionals_Course_2__c, IATA_Code_for_previous_agency__c
                                                             FROM ID_Card_Application__c 
