@@ -365,7 +365,7 @@ public static List<ServiceWrapper> getUserAccessRequestedServices(){
 	return lstToReturn;
 }
 
-public static Map<Id,List<ServiceWrapper> > getContactsAccessGrantedServices(Map<Id,Id> contactToUserIds){
+public static Map<Id,List<ServiceWrapper> > getContactsAccessGrantedServices(Map<Id,Id> contactToUserIds, Boolean getServiceDescription){
 
 	Map<Id,List<ServiceWrapper> > contactToServices = new Map<Id,List<ServiceWrapper> >();
 
