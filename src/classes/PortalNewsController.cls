@@ -41,7 +41,8 @@ public with sharing class PortalNewsController {
         Date TodayInstance = Date.today();
         Contact PortalContact = [
             SELECT User_Portal_Status__c, Account.Sector__c, Account.Category__c,
-                Account.IATA_ISO_Country__r.Name, Account.IATA_ISO_Country__r.Region__c 
+                Account.IATA_ISO_Country__r.Name, Account.IATA_ISO_Country__r.Region__c,
+                (SELECT Id, Valid_To_Date__c FROM ID_Cards__r WHERE NOT card_status__c like 'Cancelled%') 
             FROM Contact 
             WHERE Id = :[SELECT ContactId FROM User WHERE Id = :UserInfo.getUserId()].ContactId
             LIMIT 1
@@ -57,6 +58,15 @@ public with sharing class PortalNewsController {
         System.debug('____ [cls PortalNewsController - populateVariables] UserPortalCountry / UserPortalRegion - ' + UserPortalCountry + ' / ' + UserPortalRegion);
 
         unFilteredBanner_List = new List<ISSP_Banner__c>();
+        //check if user has valid id_card
+        Set<String> showBannerSet = new Set<String>();
+        showBannerSet.add('all');
+        if (!PortalContact.ID_Cards__r.isEmpty()){
+            showBannerSet.add('id_card');
+        } else {
+            showBannerSet.add('no_id_card');
+        }
+
         //get visible banner records
         for(ISSP_Banner_Visibility__c bannerVis : [SELECT ISSP_Banner__r.Id ,ISSP_Banner__r.Country__c ,ISSP_Banner__r.Publication_end_date__c
                 ,ISSP_Banner__r.Publication_start_date__c ,ISSP_Banner__r.Status__c, ISSP_Banner__r.Background_image_url_link__c, ISSP_Banner__r.Background_image_url_link_target__c
@@ -68,9 +78,9 @@ public with sharing class PortalNewsController {
         AND ISSP_Banner__r.Publication_end_date__c > :TodayInstance
         AND ISSP_Banner__r.User_portal_Status__c INCLUDES (:String.escapeSingleQuotes(UserPortalStatus))
         AND ISSP_Banner__r.Name != 'Ban-001'
+        AND ISSP_Banner__r.banner_availability__c IN :showBannerSet
         ORDER BY ISSP_Banner__r.Publication_start_date__c DESC
         LIMIT 8]){
-
             unFilteredBanner_List.add(bannerVis.ISSP_Banner__r);
         }
 
