@@ -121,6 +121,8 @@ global without sharing class ISSP_APProcess {
     public String passParam {get;set;}
     public List<SelectOption> selectedPassCountries {get;set;}
     public List<SelectOption> possiblePassCountries {get;set;}
+    public List<SelectOption> activePassCountries {get;set;}
+    public List<SelectOption> withdrawPassCountries {get;set;}
     public List<String> existingPassCountries {get;set;}
     public List<passCountriesWrapper> wrapperPassCountries{get;set;}
     public String countryCode {get;set;}
@@ -1316,11 +1318,17 @@ global without sharing class ISSP_APProcess {
     }
 
     public Pagereference cancel(){
-        string retURL = ApexPages.currentPage().getParameters().get('retURL');
+        String retURL = ApexPages.currentPage().getParameters().get('retURL');
+        String APprocess = ApexPages.currentPage().getParameters().get('proc');
+        
         if (retURL == null) {
             return new Pagereference('/ISSP_APCases');
         } else {
-            return new Pagereference(retURL);
+            String strRetUrl = retURL;
+            if(ApProcess != null && APprocess == 'chg') {
+                strRetUrl = strRetUrl + '?proc=chg';
+            }
+            return new Pagereference(strRetUrl);
         }
     }
 
@@ -2507,22 +2515,65 @@ public pagereference UploadFile(){
 //PASS
     public Pagereference changeIsPassAirlineMethod(){
         strOperationType = Apexpages.currentPage().getParameters().get('strOT');
-        
+        changePass = false;
         if(strOperationType=='PASS'){
             isPassAirline=true;
+            if(Approcess == 'chg'){
+                changePass = true;
+            }
+            
         }else{
             isPassAirline=false;
         }
         return null;
     }
 
+    //DB :: PASS JCFF
+    public void withdrawCountries(){
+        
+        List<String> isoCountriesList = new List<String>();
+        List<String> isoCountriesInactiveList = new List<String>();
+        if(withdrawPassCountries == null || withdrawPassCountries.size() == 0) {
+            ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.ERROR,'Please choose at least one contry to invalidate');
+            ApexPages.addMessage(myMsg);
+            return;     
+        }
+
+        for(SelectOption option : withdrawPassCountries){
+            isoCountriesList.add(option.getValue());
+            isoCountriesInactiveList.add(option.getLabel());
+        }
+        List<Services_Rendered__c> serviceRenderedList=[SELECT Id,Services_Rendered_Type__c, Services_Rendered_Status__c   
+                                                        FROM Services_Rendered__c 
+                                                        WHERE Services_Rendered_Type__c LIKE 'PASS%'
+                                                        AND (Services_Rendered_By__r.Id=:con.accountId OR Services_Rendered_By__r.Top_Parent__r.Id=:con.accountId)
+                                                        AND BSP_Country__c IN:isoCountriesList];
+
+        for(Services_Rendered__c service : serviceRenderedList){
+            service.Services_Rendered_Status__c = 'Inactive';
+        }
+        System.debug('DB:: serviceRenderedList updated '+serviceRenderedList);
+        try {
+            update serviceRenderedList;
+            fetchPassCountries(newCase);
+            ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.INFO,'The following countries were successfully inactivated: ' + isoCountriesInactiveList);
+            ApexPages.addMessage(myMsg);
+        } catch(DmlException ex) {
+            ApexPages.addMessages(ex);
+        }
+    }
+
     public void fetchPassCountries(Case passCase){
         List<String> selectedCountriesAux = new List<String>();
         List<String> existingPassCountriesIso = new List<String>();
+        List<String> activePassCountriesIso = new List<String>();
         existingPassCountries=new List<String>();
 
         possiblePassCountries = new List<SelectOption>();
         selectedPASSCountries = new List<SelectOption>();
+        activePassCountries = new List<SelectOption>();
+        withdrawPassCountries = new List<SelectOption>();
+
         
 
         List <AP_Country_Requierment__c> isoListJoining = [SELECT Id, Name, Country__r.Name, Country__r.ISO_Code__c  
@@ -2532,11 +2583,16 @@ public pagereference UploadFile(){
         if(con.Account!=null){
             //List<Case> passCaseList=[SELECT Id,IFAP_Country_ISO__c,BSPCountry__c, Country_Concerned__c FROM Case WHERE AccountId=:con.Account.Id AND (Reason1__c=:AMS_Utils.passAirlineCaseReason OR Reason1__c=:AMS_Utils.passAggregatorCaseReason) AND Status!='Draft'];
 
-            List<Services_Rendered__c> SRList = [SELECT BSP_Country__c FROM Services_Rendered__c WHERE Services_Rendered_By__c = :con.Account.Id AND 
+            List<Services_Rendered__c> SRList = [SELECT BSP_Country__c, Services_Rendered_Status__c FROM Services_Rendered__c WHERE Services_Rendered_By__c = :con.Account.Id AND 
                                                 Services_Rendered_Type__c LIKE 'PASS %' AND Source_Case__r.BSPCountry__c != 'Multiple' AND BSP_Country__c != null];
             for(Services_Rendered__c SRRecord : SRList){
-                existingPassCountriesIso.add(SRRecord.BSP_Country__c);
-            }
+                if(SRRecord.Services_Rendered_Status__c == 'Active'){
+                    activePassCountriesIso.add(SRRecord.BSP_Country__c);
+                }
+                else{
+                    existingPassCountriesIso.add(SRRecord.BSP_Country__c); //status = inactive
+                }
+            }   
         }
 
         //In order to present to the user the selected and possible countries, the selectedPassCountries need to be built using the country that is in the IFAP_Country_ISO__c case field and the
@@ -2548,12 +2604,17 @@ public pagereference UploadFile(){
             }
         }
 
-        for(AP_Country_Requierment__c isoJoiningCountry:isoListJoining){
-            if(existingPassCountriesIso.contains(isoJoiningCountry.Country__r.ISO_Code__c)){
+        for(AP_Country_Requierment__c isoJoiningCountry : isoListJoining){
+            /*if(existingPassCountriesIso.contains(isoJoiningCountry.Country__r.ISO_Code__c)){
                 existingPassCountries.add(isoJoiningCountry.Country__r.Name);
-            }else if(selectedCountriesAux.contains(isoJoiningCountry.Country__r.ISO_Code__c)){
+            }*/
+            if(selectedCountriesAux.contains(isoJoiningCountry.Country__r.ISO_Code__c)){
                 selectedPassCountries.add(new SelectOption(isoJoiningCountry.Country__r.ISO_Code__c, isoJoiningCountry.Country__r.Name));
-            }else{
+            }
+            else if(activePassCountriesIso.contains(isoJoiningCountry.Country__r.ISO_Code__c)){
+                activePassCountries.add(new SelectOption(isoJoiningCountry.Country__r.ISO_Code__c, isoJoiningCountry.Country__r.Name));
+            }
+            else{
                 possiblePassCountries.add(new SelectOption(isoJoiningCountry.Country__r.ISO_Code__c, isoJoiningCountry.Country__r.Name));
             }
         }
