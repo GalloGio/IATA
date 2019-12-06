@@ -4081,7 +4081,7 @@ Payment required on receipt of this Payment Advice
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP Is Personal Email</shortDescription>
-        <value>Is your user email your Login Email?</value>
+        <value>Is your Login Email your Personal Email?</value>
     </labels>
     <labels>
         <fullName>CSP_L3_IsReversedEmail_LMS</fullName>
