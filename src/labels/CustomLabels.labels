@@ -4233,7 +4233,7 @@ Payment required on receipt of this Payment Advice
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP Login Email</shortDescription>
-        <value>Email</value>
+        <value>Login Email</value>
     </labels>
     <labels>
         <fullName>CSP_L_PersonalEmail_LMS</fullName>
@@ -4255,14 +4255,14 @@ Payment required on receipt of this Payment Advice
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_L_TrainingEmail_LMS</shortDescription>
-        <value>Username</value>
+        <value>Existing IATA Training username (if any)</value>
     </labels>
     <labels>
         <fullName>CSP_L_TrainingUser_LMS</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_L_TrainingUser_LMS</shortDescription>
-        <value>User Id</value>
+        <value>Existing IATA Training User ID (if any)</value>
     </labels>
     <labels>
         <fullName>CSP_L_WorkPhone_LMS</fullName>
