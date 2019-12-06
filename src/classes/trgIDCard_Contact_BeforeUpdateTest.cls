@@ -58,7 +58,7 @@ public class trgIDCard_Contact_BeforeUpdateTest{
         idCardToInsert[1].Valid_To_Date__c = Date.today().addDays(365);
         idCardToInsert[1].Card_Status__c = 'Valid ID Card';
         
-        insert idCardToInsert; 
+        upsert idCardToInsert; 
         
         relatedContact[0].Allow_Contact_LastName_Change__c = true;
         relatedContact[0].ID_Card_Holder__c = false;
