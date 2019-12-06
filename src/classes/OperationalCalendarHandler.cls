@@ -3,11 +3,14 @@
 **/
 public with sharing class OperationalCalendarHandler {
     
+    public static final Id ISS_RECORDTYPE_ID = Schema.SObjectType.Operational_Calendar__c.getRecordTypeInfosByDeveloperName().get('ISS_Calendar').getRecordTypeId();
     public static final list<String> AIRLINE_PROFILES = ISSP_CS__c.getValues('ISS OperationalCalendar Airline Profil').Value__c.split(',');
     public static final list<String> AGENT_PROFILES = ISSP_CS__c.getValues('ISS OperationalCalendar Agency Profile').Value__c.split(',');
     
     public static list<User> TEST_LIST_AIRLINE_USER = new list<User>();
     public static list<User> TEST_LIST_AGENCY_USER = new list<User>();
+
+    private static final Map<String, Schema.SObjectField> CALENDAR_FIELD_INFO = Schema.SObjectType.Operational_Calendar__c.fields.getMap(); 
     
     public static void beforeInsert(list<Operational_Calendar__c> listNew) {
         populateMissingFields(listNew);
@@ -17,6 +20,25 @@ public with sharing class OperationalCalendarHandler {
         createNotifications(mapNew,mapOld);
     }
     
+    private static Notification_template__c OPERATIONAL_CALENDAR_TEMPLATE;
+    public static Notification_template__c getOperationaCalendarTemplate() {
+        if (OPERATIONAL_CALENDAR_TEMPLATE == null) {
+            try {
+                OPERATIONAL_CALENDAR_TEMPLATE = [
+                    SELECT Type__c, Subject__c, Notification_color__c, Name, Message__c, Master_Notification_template__c, Language__c, Id, Expire_in_days__c, Due_date__c, DDS_Update_Request__c, Alert_Contact_By_Email__c, Admins_Users__c, CriticalNotification__c,
+                        (Select Type__c, Subject__c, Notification_color__c, Name, Message__c, Master_Notification_template__c, Language__c, Id, Expire_in_days__c, Due_date__c, DDS_Update_Request__c, Alert_Contact_By_Email__c, Admins_Users__c, CriticalNotification__c
+                        FROM Notification_templates__r)
+                    FROM Notification_template__c
+                    WHERE Id = :ISSP_Notifications_Trigger__c.getValues('Operational Calendar').Notification_Template_Id__c
+                    LIMIT 1
+                ];
+            } catch (Exception e) {
+                System.debug('Notification template for operational calendars not found. No notification will be created.');
+            }
+        }
+        return OPERATIONAL_CALENDAR_TEMPLATE;
+    }
+
     /**
         Check updated Operational Calendar reords and select only those changing 
         the Settlement_Day__c or the Remittance_Day__c
@@ -27,7 +49,7 @@ public with sharing class OperationalCalendarHandler {
             map<Id,Operational_Calendar__c> mapRemittanceChanges = new map<Id,Operational_Calendar__c>();
             
             for (Operational_Calendar__c operationNew: mapNew.values()) {
-                if (operationNew.Visible_on_the_portal__c==true) {
+                if (operationNew.Visible_on_the_portal__c==true && operationNew.RecordTypeId==ISS_RECORDTYPE_ID ) {
                     Operational_Calendar__c operationOld = mapOld.get(operationNew.Id);
                     if (operationNew.Settlement_Day__c!=operationOld.Settlement_Day__c) {
                         mapSettlementChanges.put(operationNew.Id,operationNew);
@@ -90,22 +112,24 @@ public with sharing class OperationalCalendarHandler {
         ];
         if (Test.isRunningTest()) listUser = TEST_LIST_AIRLINE_USER;
         // use the queries records to check those users with a calendar operation having an update
-        list<Id> listContactIdForRemittance = new list<Id>();
-        list<Id> listContactIdForSettlement = new list<Id>();
+        map<Id,Operational_Calendar__c> mapContactIdForRemittance = new map<Id,Operational_Calendar__c>();
+        map<Id,Operational_Calendar__c> mapContactIdForSettlement = new map<Id,Operational_Calendar__c>();
+        map<Id,Contact> mapContact = new map<Id,Contact>();
         for (User user: listUser) {
             Id BSPOperationId = user.Contact.Account.IATA_ISO_Country__r.AMS_Settlement_System__c;
             Id CASSOperationId = user.Contact.Account.IATA_ISO_Country__r.AMS_Settlement_System_CASS__c;
             list<Operational_Calendar__c> listBSPOperations = mapISSOperationListCalendar.get(BSPOperationId);
             list<Operational_Calendar__c> listCASSOperations = mapISSOperationListCalendar.get(CASSOperationId);
+            mapContact.put(user.ContactId, user.Contact);
 
             if (listBSPOperations!=null && !listBSPOperations.isEmpty()) {
                 System.debug('Contact ' + user.Contact + ' has BSP  changes: ' + listBSPOperations);
                 for (Operational_Calendar__c operation: listBSPOperations) {
                     if (mapRemittanceChanges.keyset().contains(operation.Id)) {
-                        listContactIdForRemittance.add(user.ContactId);
+                        mapContactIdForRemittance.put(user.ContactId,operation);
                     }
                     if (mapSettlementChanges.keyset().contains(operation.Id)) {
-                        listContactIdForSettlement.add(user.ContactId);
+                        mapContactIdForSettlement.put(user.ContactId,operation);
                     }
                 }
             }
@@ -113,17 +137,17 @@ public with sharing class OperationalCalendarHandler {
                 System.debug('Contact ' + user.Contact + ' has CASS changes: ' + listCASSOperations);
                 for (Operational_Calendar__c operation: listCASSOperations) {
                     if (mapRemittanceChanges.keyset().contains(operation.Id)) {
-                        listContactIdForRemittance.add(user.ContactId);
+                        mapContactIdForRemittance.put(user.ContactId,operation);
                     }
                     if (mapSettlementChanges.keyset().contains(operation.Id)) {
-                        listContactIdForSettlement.add(user.ContactId);
+                        mapContactIdForSettlement.put(user.ContactId,operation);
                     }
                 }
             }
         }
         // send notifications
-        createAndSendNotificationBatch('Remittance change in Operational Calendar',listContactIdForRemittance);
-        createAndSendNotificationBatch('Settlement change in Operational Calendar',listContactIdForSettlement);
+        createAndSendNotificationBatch(getOperationaCalendarTemplate(), 'Remittance_Day__c',mapContactIdForRemittance, mapContact);
+        createAndSendNotificationBatch(getOperationaCalendarTemplate(), 'Settlement_Day__c',mapContactIdForSettlement, mapContact);
     }
     
     /**
@@ -169,57 +193,98 @@ public with sharing class OperationalCalendarHandler {
         ];
         if (Test.isRunningTest()) listUser = TEST_LIST_AGENCY_USER;
         // use the queries records to check those users with a calendar operation having an update
-        list<Id> listContactIdForRemittance = new list<Id>();
-        list<Id> listContactIdForSettlement = new list<Id>();
+        map<Id,Operational_Calendar__c> mapContactIdForRemittance = new map<Id,Operational_Calendar__c>();
+        map<Id, Contact> mapContact = new map<Id, Contact>();
         for (User user: listUser) {
             String country = user.Contact.Account.IATA_ISO_Country__c;
             String frequency = user.Contact.Account.Remittance_frequency__c;
             String operationType = ISSP_OperationalCalendarController.MAP_OPERATION_TYPES.get(user.Contact.Account.Location_Class__c);
-            Id ISSOperationId;
+            mapContact.put(user.ContactId, user.Contact);
+            //Find operations in BSP
             if (operationType!=null && operationType.contains('BSP')) {
-                 ISSOperationId = user.Contact.Account.IATA_ISO_Country__r.AMS_Settlement_System__c;
-            }
-            if (operationType!=null && operationType.contains('CASS')) {
-                 ISSOperationId = user.Contact.Account.IATA_ISO_Country__r.AMS_Settlement_System_CASS__c;
-            }
-            // Select the operation calendar list (BSP or CASS) depending on the account operation type value
-            list<Operational_Calendar__c> listOperationsForThisUser = mapISSOperationListCalendar.get(ISSOperationId);
-            if (listOperationsForThisUser!=null && !listOperationsForThisUser.isEmpty() && ISSOperationId!=null) {
-                System.debug('Contact ' + user.Contact + ' has BSP/CASS  changes: ' + listOperationsForThisUser);
-                for (Operational_Calendar__c operation: listOperationsForThisUser) {
-                    if (mapRemittanceChanges.keyset().contains(operation.Id)
-                        && operation.frequency_code__c == frequency
-                        && operation.Operation_Type__c == operationType) {
-                            listContactIdForRemittance.add(user.ContactId);
+                // Find the Operational Calendar Ids in ISS BSP
+                Id bspOperationId = user.Contact.Account.IATA_ISO_Country__r.AMS_Settlement_System__c;
+                list<Operational_Calendar__c> listOperationsForThisUser = mapISSOperationListCalendar.get(bspOperationId);
+                if (listOperationsForThisUser!=null && !listOperationsForThisUser.isEmpty() && bspOperationId!=null) {
+                    System.debug('Contact ' + user.Contact + ' has BSP changes: ' + listOperationsForThisUser);
+                    for (Operational_Calendar__c operation: listOperationsForThisUser) {
+                        if (mapRemittanceChanges.keyset().contains(operation.Id)
+                            && operation.frequency_code__c == frequency
+                            && operation.Operation_Type__c == operationType) {
+                                mapContactIdForRemittance.put(user.ContactId,operation);
+                        }
                     }
                 }
             }
+            //Find operations in CASS
+            if (operationType!=null && operationType.contains('CASS')) {
+                // Find the Operational Calendar Ids in ISS CASS
+                Id cassOperationId = user.Contact.Account.IATA_ISO_Country__r.AMS_Settlement_System_CASS__c;
+                list<Operational_Calendar__c> listOperationsForThisUser = mapISSOperationListCalendar.get(cassOperationId);
+                if (listOperationsForThisUser!=null && !listOperationsForThisUser.isEmpty() && cassOperationId!=null) {
+                    System.debug('Contact ' + user.Contact + ' has CASS changes: ' + listOperationsForThisUser);
+                    for (Operational_Calendar__c operation: listOperationsForThisUser) {
+                        if (mapRemittanceChanges.keyset().contains(operation.Id)
+                            && operation.Operation_Type__c == operationType) {
+                                mapContactIdForRemittance.put(user.ContactId,operation);
+                        }
+                    }
+                }
+            }
+
         }
         // send notifications
-        createAndSendNotificationBatch('Remittance change in Operational Calendar',listContactIdForRemittance);
+        createAndSendNotificationBatch(getOperationaCalendarTemplate(), 'Remittance_Day__c', mapContactIdForRemittance, mapContact);
     }
     
     /**
         Call the ISSP Notification batch to send emails using the incoming template
     **/
-    private static void createAndSendNotificationBatch(String templateName, list<Id> listContactId) {
-        if (listContactId.isEmpty()) return;
-        Notification_template__c template = [
-            SELECT Type__c, Subject__c, Notification_color__c, Name, Message__c, Master_Notification_template__c, Language__c, Id, Expire_in_days__c, Due_date__c, DDS_Update_Request__c, Alert_Contact_By_Email__c, Admins_Users__c, CriticalNotification__c,
-                (Select Type__c, Subject__c, Notification_color__c, Name, Message__c, Master_Notification_template__c, Language__c, Id, Expire_in_days__c, Due_date__c, DDS_Update_Request__c, Alert_Contact_By_Email__c, Admins_Users__c, CriticalNotification__c
-                FROM Notification_templates__r)
-            FROM Notification_template__c
-            WHERE Subject__c = :templateName
-            LIMIT 1
-        ];
+    public static void createAndSendNotificationBatch(Notification_template__c template, String fieldName, map<Id,Operational_Calendar__c> mapContactId, map<Id, Contact> mapContact) {
+        if (template==null || mapContactId.isEmpty()) return;
+        //Retrieve Countries
+        list<String> listISOCodes = new list<String>();
+        for (Operational_Calendar__c operation: mapContactId.values() ) {
+            String isocode= operation.Operation_Code__c.mid(0,2);
+            listISOCodes.add(isocode);
+        }
+        map<String,IATA_ISO_Country__c> mapCountries = new map<String,IATA_ISO_Country__c>();
+        for (IATA_ISO_Country__c country: [SELECT Id, Name, ISO_Code__c FROM IATA_ISO_Country__c WHERE ISO_Code__c IN :listISOCodes]) {
+            mapCountries.put(country.ISO_Code__c, country);
+        }
+
+        //Create notifications batch
+        list<Id> listContactId = new list<Id>();
+        listContactId.addAll(mapContactId.keyset());
         ISSP_NotificationBatch bc = new ISSP_NotificationBatch();
         bc.Query = 'SELECT ' + String.join(ISSP_NotificationUtilities.getAllContactFields(), ',')
             + ' FROM Contact '
             + ' WHERE Id IN (\'' + String.join(listContactId, '\',\'') + '\')';
-
         bc.NotificationTemplate = template;
         bc.MessagesByGroupMap = null;
         bc.ContactGroupField = null;
+        bc.FieldBindingByGroupMap = new map<String,list<String>>();
+        for (Id contactId: mapContactId.keyset() ) {
+            try {
+                Operational_Calendar__c operation = mapContactId.get(contactId);
+                Contact contact = mapContact.get(contactId);
+                list<String> listValues = new list<String>();
+                listValues.add(contact.Name);
+                listValues.add(operation.Operation_Type__c);
+                String countryKey = operation.Operation_Code__c.mid(0,2);
+                String countryName = mapCountries.containsKey(countryKey)? mapCountries.get(countryKey).Name: countryKey;
+                listValues.add(countryName);
+                listValues.add(CALENDAR_FIELD_INFO.get(fieldName).getDescribe().getLabel());
+                listValues.add(operation.Period_Code__c);
+                listValues.add(String.ValueOf(operation.First_Day__c));
+                listValues.add(String.ValueOf(operation.Last_Day__c));
+                listValues.add(String.ValueOf(operation.get(fieldName)));
+                bc.FieldBindingByGroupMap.put(contactId, listValues);
+            } catch (Exception e) {
+                System.debug('___OperationalCalendarHandler.createAndSendNotificationBatch() contactId ' + contactId + ', error:' + e.getMessage());
+            }
+        }
+        bc.ContactGroupField = 'Id';
         Database.executeBatch(bc, 1);
     }
     

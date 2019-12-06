@@ -208,11 +208,11 @@
 
 		// checks initial state
 		showForms();
+		checkGoGlobal();
 	});
 
 	var ownerRecType;
 	var companyOwnerRecType;
-
 
 	function showForms() {
 
@@ -220,28 +220,18 @@
 			var controlledId = $j(this).data('controls');
 			var $form = $j('.'+controlledId);
 
-			if($j(this).prop('checked')) $form.show();//removeClass('invisible');
-			else $form.hide();//addClass('invisible');
+			if($j(this).prop('checked')) $form.show();
+			else $form.hide();
 		});
 	} 
 
 	function closeModal() {
-
 		$j(function() {
 			$j( '#addNewContactModal' ).modal('hide');
-            //clearForm('{!$Component.newContact}', '{!$Component.newContact.contactBlock.contactcountry}');
 		});
 	}
 
 	function initFieldsSettings(){
-        /**
-		if("{!newForm.Branch_Office_Street_name_number__c}"=='' && "{!isValError}"=='true')
-			$j('.branch_office_street_name_number__c').addClass('requiredIndicator');
-		if("{!newForm.Branch_Office_City__c}"=='' && "{!isValError}"=='true')
-			$j('.branch_office_city__c').addClass('requiredIndicator');
-        if("{!newForm.Branch_office_email__c}"=='' && "{!isValError}"=='true')
-			$j('.branch_office_email__c').addClass('requiredIndicator');
-            **/
 		$j('.requiredIndicator').wrap('<div class="requiredInput">').before('<div class="requiredBlock"></div>'); 
 		$j(".country__c").attr('readonly', true);
 		$j(".country__c").attr('disabled','disabled');
@@ -290,15 +280,12 @@
 
 		updateModalAddressInfo();
 
-
 		billingaddress = $j('.branch_office_street_name_number__c:eq(1)').val()+'<br/>'+$j('.branch_office_city__c:eq(1)').val()+', '+$j('.branch_office_postal_code__c:eq(1)').val()+'<br/>';
 		if ($j('.state_province__c:eq(1)').val()!='')
 			billingaddress += $j('.state_province__c:eq(1)').val() + ', ' ;
 		billingaddress += "{!isocountry.Name}";
 
 		$j('[id$=billingaddress]').html(billingaddress);
-
-
 	}
 
 	function updatePhoneInfo(){
@@ -328,10 +315,8 @@
 			}
 	}
 
-
 	var ownerModalFields = [];
 	ownerModalFields[0] = "{!$Component.newContact.contactBlock.Financial_interest__c}";
-	//ownerModalFields[1] = "{!$Component.newContact.contactBlock.Number_Of_Shares__c}";
                    
 	function toggleModalContactFields(ownerId) {
 		if(document.getElementById(ownerId).checked){
@@ -350,15 +335,12 @@
 		}
 	}
 
-	
-
     function toggleInternationalSales(myValue, salesId){
-        //  alert( $j('input[name="' + myValue + '"]:checked').val() + ' was selected.' );
-            if( $j('input[name="' + myValue + '"][value=Yes]').prop("checked")) {
-                document.getElementById('InternationalSales').style.display='block';
-             } else {
-                document.getElementById('InternationalSales').style.display='none';
-             }
+		if( $j('input[name="' + myValue + '"][value=Yes]').prop("checked")) {
+			document.getElementById('InternationalSales').style.display='block';
+		} else {
+			document.getElementById('InternationalSales').style.display='none';
+		}
     }
 
     function showNewSalesDialog() {
@@ -391,9 +373,8 @@
         
 		if (ownerRecType=='Current Owner'){
 			$j('[id$=personEmail]').show();
-            $j('[id$=personPhone]').show();
-            //$j('[id$=ownerContactTitleAfterChange]').show(); 
-            //$j('[id$=c]').hide();				
+			$j('[id$=personPhone]').show();
+					
 			if($j('[id$=UpdatedLegalStatus]').val()=='Corporation')
 				$j('[id$=corporatefield2]').show();
 			else
@@ -481,15 +462,12 @@
 	function toggleUpdatedLegalStatus(myValue){
 		var theValue = document.getElementById(myValue).value;
 		if (theValue != ''){
-            //$j('[id$=personTableAfterChange]').show();
-            
 			if(theValue!='Sole Proprietorship') {
 				$j('[id$=addcompany]').show();
                 $j('[id$=updated-company-owners]').show();
                 $j('[id$=updated-owner-summary]').show();
 			} else {
                 $j('[id$=addcompany]').hide();
-                //$j('[id$=updated-company-owners]').hide();
                 $j('[id$=updated-owner-summary]').hide();
             }
             
@@ -499,12 +477,6 @@
 				$j('[id$=currcorporatedetails]').hide();
 		} else {
             $j('[id$=addCompany]').hide();
-            /**
-            //$j('[id$=personTableAfterChange]').hide();	
-			$j('[id$=updated-company-owners]').hide();
-            $j('[id$=updated-owner-summary]').hide();
-			$j('[id$=currcorporatedetails]').hide();
-            **/
 		}	
 		
         setHeaderLabelsAfterChange(theValue.toLowerCase());
@@ -641,6 +613,20 @@
 			$j(".PostalArea").val($j(".PhysicalArea").val());
 		}
 	}
+
+	function checkGoGlobal() {
+		if ({!newForm.ANG_IsNewGenAgency__c}) {
+			if ($j('[id$=allowedAccreditationModelSelect]')[0].selectedOptions[0].value == "{!ACCREDITATION_MODEL_MC}") {
+				$j('[id$=selectHEForConversion]').css('display', 'block');
+				$j('[id$=accountsToBeConvertedPanel]').css('display', 'block');
+				$j('[id$=HEAgencyMC]').css('display', 'block');
+			} else {
+				$j('[id$=selectHEForConversion]').css('display', 'none');
+				$j('[id$=accountsToBeConvertedPanel]').css('display', 'none');
+				$j('[id$=HEAgencyMC]').css('display', 'none');
+			}
+		}
+	}
 	
 	</script>
 	
@@ -746,10 +732,13 @@
                 <apex:param name="travelAgentCode" assignTo="{!iatacode}" value=""/>
                 <apex:param name="AgentSector" assignTo="{!agentsector}" value="Both"/>
                 <apex:param name="isAddCompanyModal" assignTo="{!isAddCompanyModal}" value="true"/>
-            </apex:actionFunction>
+			</apex:actionFunction>
+			<apex:actionFunction name="fetchHeadEntity" action="{!fetchHeadEntityMC}" status="loadingHEAgencyMC" reRender="HEAgencyMC">
+				<apex:param name="travelAgentCode" assignTo="{!iatacode}" value=""/>
+			</apex:actionFunction>
 					
 			<apex:pageBlock id="AMSBlock">
-			<div class="alert alert-info" role="alert">
+			<div class="alert alert-info" role="alert" style="margin-bottom: {!IF(AND(isMCAccredited, isNoticeOfChange), '5px !important', '20px;')}">
 				{!$Label.ISSP_AMS_NoC_StepB_message}
 			</div>
 			<apex:pageBlockButtons >
@@ -807,13 +796,13 @@
 								
 								<apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Notify_Change_Accreditation_Type__c.Label}" style="color:black;font-size:110%"/>
 							</apex:outputPanel>
-							<apex:inputCheckbox id="iataChangeAccType" value="{!newForm.Notify_Change_Accreditation_Type__c}" onchange="accreditationModelChanged(this)" disabled="{!!CanChangeAccreditationType}"/>
+							<apex:inputCheckbox id="iataChangeAccType" value="{!newForm.Notify_Change_Accreditation_Type__c}" onchange="accreditationModelChanged(this); checkGoGlobal();" disabled="{!!CanChangeAccreditationType}"/>
 						</apex:pageBlockSectionItem>						
 
 						<apex:pageBlockSection columns="1">	
 							<apex:pageBlockSectionItem labelStyle="width:26%">
 								<apex:outputLabel value="{!$Label.ANG_ISSP_AccreditationType}"/>
-								<apex:outputText value="{!IF(con.Account.ANG_Accreditation_Model__c == 'Cash', $Label.ANG_ISSP_ProductStandardAccreditationWithCash, $Label.ANG_ISSP_ProductStandardAccreditationWithNoCash)}" />
+								<apex:outputText value="{!IF(con.Account.ANG_Accreditation_Model__c == 'Cash', $Label.ANG_ISSP_ProductStandardAccreditationWithCash, IF(con.Account.ANG_Accreditation_Model__c == ACCREDITATION_MODEL_MC, $Label.ANG_ISSP_ProductStandardAccreditationWithMultiCountry, $Label.ANG_ISSP_ProductStandardAccreditationWithNoCash))}" />
 							</apex:pageBlockSectionItem>
 						</apex:pageBlockSection>
 						<apex:pageBlockSection columns="1">
@@ -821,35 +810,72 @@
 							<apex:outputPanel id="allowedAccreditationModelSelectPanel" style="display : {!IF(newForm.Notify_Change_Accreditation_Type__c == true, '', 'none')}">
 								<apex:pageBlockSectionItem labelStyle="width:26%;display: {!IF(newForm.Notify_Change_Accreditation_Type__c, '', 'none')}" dataStyle="display: {!IF(newForm.Notify_Change_Accreditation_Type__c, '', 'none')}">
 									<apex:outputLabel style="font-size: 12px; padding-right: 20px;" value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ANG_Accreditation_Model_to_Change__c.Label}" styleClass="agencyAccreditationTypeComponent"/>
-									<apex:inputField id="allowedAccreditationModelSelect" value="{!newForm.ANG_Accreditation_Model_to_Change__c}" styleClass="agencyAccreditationTypeComponent" onchange="accreditationModelChanged(this)"></apex:inputField>
+									<apex:inputField id="allowedAccreditationModelSelect" value="{!newForm.ANG_Accreditation_Model_to_Change__c}" styleClass="agencyAccreditationTypeComponent" onchange="accreditationModelChanged(this); checkGoGlobal();"></apex:inputField>
 								</apex:pageBlockSectionItem>
+
+								<apex:outputPanel id="selectHEForConversion" style="display: none;">
+									<apex:outputLabel value="{!$Label.ISSP_AMS_NoC_Search_Entity_Conversion}" style="font-size: 12px;" styleClass="agencyAccreditationTypeComponent"/>
+									<apex:inputText value="{!accountToBeFetchedOrRemoved}" onblur="fetchHeadEntity(this.value.trim())"/>
+								</apex:outputPanel>
+
+								<apex:outputPanel id="HEAgencyMC">
+									<apex:actionStatus id="loadingHEAgencyMC" startStyleClass="bg-info">
+										<apex:facet name="start" >
+											{!$Label.ISSP_Loading_Travel_Agency_Details}
+										</apex:facet>
+									</apex:actionStatus>
+									<apex:outputText value="{!$Label.ISSP_AMS_Invalid_IATA_Code}" styleClass="bg-danger" escape="false" rendered="{!AND(fetchedHEMCName == '', accountToBeFetchedOrRemoved != '')}"/>	
+									<apex:outputPanel style="display: flex;">
+										<apex:outputPanel rendered="{!AND(fetchedHEMCName != '', iatacode != '')}">
+											<span style="font-weight: bold; color: #4a4a56;">{!$Label.ISSP_Agency_name} </span>{!fetchedHEMCName}
+											&nbsp;<apex:commandLink action="{!addToAccountsToConvert}" styleClass="glyphicon glyphicon-plus" rerender="accountsToBeConvertedPanel" rendered="{!AND(fetchedHEMCName != '', accountToBeFetchedOrRemoved != '')}"/>
+											<br/>
+											<span style="font-weight: bold; color: #4a4a56;">{!$Label.ISSP_AMS_Address} </span> {!fetchedHEMCAddress}
+										</apex:outputPanel>
+									</apex:outputPanel>
+								</apex:outputPanel>
+
+								<apex:outputPanel id="accountsToBeConvertedPanel">
+									<apex:pageBlockTable value="{!accountsToBeConverted}" var="acc" rendered="{!accountsToBeConverted.size > 0}" style="margin-top: 20px;">
+										<apex:column value="{!acc.Name}"/>
+										<apex:column value="{!acc.IATACode__c}"/>
+										<apex:column value="{!acc.BillingCountry}"/>
+										<apex:column >
+											<apex:commandLink action="{!removeFromAccountsToConvert}" styleClass="glyphicon glyphicon-trash" rerender="accountsToBeConvertedPanel">
+												<apex:param value="{!acc.Id}" name="recordId" assignTo="{!accountToBeFetchedOrRemoved}" />
+											</apex:commandLink>
+										</apex:column>
+									</apex:pageBlockTable>
+								</apex:outputPanel>
+
+								
+
 								<!-- Remove the current accreditation model from the picklist -->
 								<!-- It does not make sense the user change the accretitation model to the current one -->
 								<script type="text/javascript">
         							(function() {
-        								var aux = "{!con.Account.ANG_Accreditation_Model__c}";        								
+										var aux = "{!con.Account.ANG_Accreditation_Model__c}";
+										var mcEnabled = {!con.Account.IATA_ISO_Country__r.Multicountry_Enabled__c};
         								var l = document.querySelectorAll('[id$="allowedAccreditationModelSelect"]')[0];
-        								for(i = 0; i < l.length; i++) {
-        									if(aux == 'Cashless' && l[i].value === "Cashless") {
+        								for(i = l.length -1; i >=0 ; i--) {
+        									if((aux == 'Cashless' || aux === "{!ACCREDITATION_MODEL_MC}") && (l[i].value === "Cashless" || l[i].value === "{!ACCREDITATION_MODEL_MC}")) {
         										l.remove(i);
-        									}
-        									if(aux == 'Cash' && l[i].value === "Cash") {
+											} else if (l[i].value === "{!ACCREDITATION_MODEL_MC}" && !mcEnabled) {
+												l.remove(i);
+											} else if(aux == 'Cash' && l[i].value === "Cash") {
 	     										l.remove(i);
-        									}
+											}
         								}
         							})();
 					            </script>																	
 							</apex:outputPanel>
 
-							<!--apex:pageBlockSectionItem labelStyle="width:26%;display: {!IF(newForm.Notify_Change_Accreditation_Type__c, '', 'none')}" dataStyle="display: {!IF(newForm.Notify_Change_Accreditation_Type__c, '', 'none')}">
-								<apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ANG_Accreditation_Model_to_Change__c.Label}" styleClass="agencyAccreditationTypeComponent"/>
-								<apex:inputField id="allowedAccreditationModelSelect" value="{!newForm.ANG_Accreditation_Model_to_Change__c}" styleClass="agencyAccreditationTypeComponent" onchange="accreditationModelChanged(this)"></apex:inputField>
-							</apex:pageBlockSectionItem-->
+
 
 							<script>
 								cntIFAPContacts = {!cntIFAPContacts};
 							</script>
-							<!--apex:outputPanel id="addFinancialAssessmentContactItem" rendered="{!con.Account.ANG_Accreditation_Model__c == 'Cashless'}" style="display: {!IF(newForm.ANG_Accreditation_Model_to_Change__c == 'Cash', '', 'none')};"-->
+
 							<apex:outputPanel id="addFinancialAssessmentContactItem" 
 									style="display : {!IF(AND(newForm.Notify_Change_Accreditation_Type__c == true, 
 															  newForm.ANG_Accreditation_Model_to_Change__c == 'Cash'),
@@ -931,7 +957,7 @@
 							
 						<apex:pageBlockSectionItem labelStyle="width:40%;" dataStyle="width:10%;{!IF(AND(isValError, newForm.Confirm_Legal_Details_are_correct__c==false,newForm.Notify_Change_Legal_Details__c==false), 'border:2px red solid !important;margin-right:5px', 'margin-right:5px')}">
 							<apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Notify_Change_Legal_Details__c.Label}" style="color:black;font-size:110%"/>
-							<apex:inputCheckbox html-data-group="agencyLegalDetails" html-data-controls="agencyLegalDetailsComponent" value="{!newForm.Notify_Change_Legal_Details__c}"/>
+							<apex:inputCheckbox id="notifyLegalDetailsChange" html-data-group="agencyLegalDetails" html-data-controls="agencyLegalDetailsComponent" value="{!newForm.Notify_Change_Legal_Details__c}" onchange="removeMessage();"/>
 						</apex:pageBlockSectionItem>
 					
 						<apex:pageBlockSection columns="1">		
@@ -1010,7 +1036,7 @@
 								<apex:inputCheckbox html-data-group="agencyLocation" value="{!newForm.Confirm_Location_Details_are_correct__c}"/>
 							</apex:pageBlockSectionItem>
 						
-						<apex:pageBlockSectionItem labelStyle="width:40%;font-weight:" dataStyle="width:10%;{!IF(AND(isValError, newForm.Confirm_Location_Details_are_correct__c==false,newForm.Notify_Change_Location__c==false, newForm.Scope_of_Change__c != 'HO - All Branches' , agencyCodesConcernedSize < 1), 'border:2px red solid !important;margin-right:5px', 'margin-right:5px')}">
+						<apex:pageBlockSectionItem labelStyle="width:40%;font-weight:" dataStyle="width:10%;{!IF(AND(isValError, newForm.Confirm_Location_Details_are_correct__c==false,newForm.Notify_Change_Location__c==false, newForm.Scope_of_Change__c != 'HO - All Branches'), 'border:2px red solid !important;margin-right:5px', 'margin-right:5px')}">
 							<apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Notify_Change_Location__c.Label}" style="color:black;font-size:110%"/>
 							<apex:inputCheckbox id="notifyChangeLocationCheckbox" html-data-group="agencyLocation" html-data-controls="agencyLocationComponent" value="{!newForm.Notify_Change_Location__c}"/>
 						</apex:pageBlockSectionItem>
@@ -1170,7 +1196,7 @@
 						<apex:pageBlockSection columns="1">
 		                    <apex:pageBlockSectionItem labelStyle="width:80%" dataStyle="width:10%;{!IF(AND(isValError, newForm.Confirm_Ownership_details_are_correct__c==false,newForm.Notify_Change_Ownership__c==false), 'border:2px red solid !important;margin-right:5px', 'margin-right:5px')}">
 								<apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Notify_Change_Ownership__c.Label}" style="color:black;font-size:110%"/>
-								<apex:inputCheckbox html-data-group="agencyOwnership" html-data-controls="agencyOwnershipComponent" value="{!newForm.Notify_Change_Ownership__c}"/>
+								<apex:inputCheckbox id="notifyOwnershipChange" html-data-group="agencyOwnership" html-data-controls="agencyOwnershipComponent" value="{!newForm.Notify_Change_Ownership__c}" onchange="removeMessage();"/>
 							</apex:pageBlockSectionItem>    
 						</apex:pageBlockSection>
 					</apex:outputPanel>
@@ -1659,7 +1685,7 @@
 								<apex:outputlabel id="section5-gds" value="{!$Label.ISSP_NoC_Advise_GDS}" />
 								<apex:inputfield value="{!newForm.ISSP_AMS_GDS_with_signed_contract__c}"/>
 							</apex:pageblocksectionitem>
-						</apex:pageblocksection>   
+						</apex:pageblocksection>
 						<!--END NEWGEN-668-->
 						<apex:pageBlockSectionItem >
 							<apex:outputLabel value="{!$Label.ISSP_AMS_NoC_Provide_Registeration_Or_License}"/>
@@ -2123,7 +2149,6 @@
 				</div>
 
 				<script>
-
 					function closeIFAPModalByCommandButton() {
 						$j( '#addNewIFAPContactModal' ).modal('hide');
             			clearForm('{!$Component.newIFAPContact}');
@@ -2202,160 +2227,219 @@
 	</div>
 	</div>
 		</div>
-		<c:ISSP_CustomFooter communityName="{!communityName}"/>
-		<script>
-			//NEWGEN-1885
-			$j ( document ).ready(function() {
-				$j('[id$=UpdatedLegalStatus]').val() !== 'Corporation' && $j('[id$=currcorporatedetails]').hide();
+
+	<c:ISSP_CustomFooter communityName="{!communityName}"/>
+	
+	<script>
+		//NEWGEN-1885
+		$j ( document ).ready(function() {
+			$j('[id$=UpdatedLegalStatus]').val() !== 'Corporation' && $j('[id$=currcorporatedetails]').hide();
+		});
+		//END - NEWGEN-1885
+		
+		//NoC Changes
+		var accreditationModel = '{!con.Account.ANG_Accreditation_Model__c}',
+				lScopeOfChange = '{!newForm.Scope_of_Change__c}',
+				checkb = $j('[id$=notifyChangeLocationCheckbox]'),
+				iataChangeAccType = $j('[id$=iataChangeAccType]'),
+				allowedAccreditationModelSelect = $j('[id$=allowedAccreditationModelSelect]'),
+				addFinancialAssessmentContactItem = $j('[id$=addFinancialAssessmentContactItem]'),
+				allowedAccreditationModelSelectPanel = $j('[id$=allowedAccreditationModelSelectPanel]'),
+				allowedAccreditationModelSelectDisplay = allowedAccreditationModelSelect.parent().parent().children(),
+				confirmAccType = $j('[id$=confirmAccType]'),
+				typeOfChange = '{!newForm.Type_of_Change__c}';
+
+		function removeMessage() {
+			var warningBox = $j('[id$=warningHoverBox]');
+
+			if (warningBox) {
+				warningBox.remove();
+			}
+		}			  
+
+		function getWarningBox(message) {
+			var alertDiv = document.createElement('div');
+			alertDiv.className = 'alert alert-warning text-justify';
+			alertDiv.role = 'alert';
+			alertDiv.appendChild(document.createTextNode(message));
+			alertDiv.id = 'warningHoverBox';
+			return alertDiv;
+		} 
+
+		function setWarningBoxOnHover(where, warningMessage) {
+			var whereToAppend = where.parent().parent().next().children().last();
+			// where.parent() because disabled elements does not have mouse events
+			where.parent().hover(function() {
+				whereToAppend.append(getWarningBox(warningMessage));
+			}, function() {
+				removeMessage();
 			});
-			//END - NEWGEN-1885
-			
-			//NoC Changes
-			var accreditationModel = '{!con.Account.ANG_Accreditation_Model__c}',
-				  lScopeOfChange = '{!newForm.Scope_of_Change__c}',
-				  checkb = $j('[id$=notifyChangeLocationCheckbox]'),
-				  iataChangeAccType = $j('[id$=iataChangeAccType]'),
-				  allowedAccreditationModelSelect = $j('[id$=allowedAccreditationModelSelect]'),
-				  addFinancialAssessmentContactItem = $j('[id$=addFinancialAssessmentContactItem]'),
-				  allowedAccreditationModelSelectPanel = $j('[id$=allowedAccreditationModelSelectPanel]'),
-				  allowedAccreditationModelSelectDisplay = allowedAccreditationModelSelect.parent().parent().children(),
-				  confirmAccType = $j('[id$=confirmAccType]');
+		}
 
-//alert(allowedAccreditationModelSelectDisplay.value);				  
+		function setWarningBoxOnHoverMC(where, warningMessage) {
+			var whereToAppend;
 
-			function getWarningBox(message) {
-				var alertDiv = document.createElement('div');
-				alertDiv.className = 'alert alert-warning text-justify';
-				alertDiv.role = 'alert';
-				alertDiv.appendChild(document.createTextNode(message));
-				return alertDiv;
-			} 
+			if (~where[0].name.indexOf("notifyOwnershipChange")) {
+				whereToAppend = where.parent().parent().parent().parent().parent().parent().parent().parent().parent().next().children().last();
+			} else {
+				whereToAppend = where.parent().parent().next().children().last();
+			}
 
-			function setWarningBoxOnHover(where, warningMessage) {
-				var whereToAppend = where.parent().parent().next().children().last();
-				// where.parent() because disabled elements does not have mouse events
-				where.parent().hover(function() {
+			where.parent().hover(function() {
+				if (!where[0].checked) {
 					whereToAppend.append(getWarningBox(warningMessage));
-				}, function() {
-					whereToAppend.html('');
-				});
-			}
+				}
+			}, function() {
+				removeMessage();
+			});
+		}
 
-			//NEWGEN-523
-			function hideAccreditationTypeSelectSection() {
-				allowedAccreditationModelSelect.val('');
-				addFinancialAssessmentContactItem.css('display', 'none');
-				allowedAccreditationModelSelectDisplay.css('display', 'none');
-			}
+		//NEWGEN-523
+		function hideAccreditationTypeSelectSection() {
+			allowedAccreditationModelSelect.val('');
+			addFinancialAssessmentContactItem.css('display', 'none');
+			allowedAccreditationModelSelectDisplay.css('display', 'none');
+		}
 
-			function accreditationModelChanged(element) {
-				if (element === 'isCorrect') {
-					if (cntIFAPContacts > 0) {
-						bootbox.confirm('{!$Label.ISSP_NoC_Switch_Selection_Warning}', function(result) {
-							if(result) {
-								deleteIFAPContact($j('[id$=agencyConIFAPContact]')[0].innerText);
-								hideAccreditationTypeSelectSection();
-								iataChangeAccType[0].checked = false;
-							} else {
-								confirmAccType[0].checked = false;
-								iataChangeAccType[0].checked = true;
-								allowedAccreditationModelSelectPanel.css('display', '');
-							}
-						});
-					} else {
-						iataChangeAccType[0].checked = false;
-						hideAccreditationTypeSelectSection();
-					}
-				} else {
-					if(element.checked === false) {
-						allowedAccreditationModelSelect.val('');
-						allowedAccreditationModelSelectPanel.css('display', 'none');
-					} else if (element.checked === true) {
-						confirmAccType[0].checked = false; 
-						allowedAccreditationModelSelectPanel.css('display', '');
-					}
-
-					if (element.checked === false) {
-						addFinancialAssessmentContactItem.css('display', 'none');
-					} else {
-						if (element.value === 'Cash') {
-							addFinancialAssessmentContactItem.css('display', '');
+		function accreditationModelChanged(element) {
+			if (element === 'isCorrect') {
+				if (cntIFAPContacts > 0) {
+					bootbox.confirm('{!$Label.ISSP_NoC_Switch_Selection_Warning}', function(result) {
+						if(result) {
+							deleteIFAPContact($j('[id$=agencyConIFAPContact]')[0].innerText);
+							hideAccreditationTypeSelectSection();
+							iataChangeAccType[0].checked = false;
+						} else {
+							confirmAccType[0].checked = false;
+							iataChangeAccType[0].checked = true;
+							allowedAccreditationModelSelectPanel.css('display', '');
 						}
-					}
+					});
+				} else {
+					iataChangeAccType[0].checked = false;
+					hideAccreditationTypeSelectSection();
 				}
-			}
-			//END NEWGEN-523
+			} else {
+				if(element.checked === false) {
+					allowedAccreditationModelSelect.val('');
+					allowedAccreditationModelSelectPanel.css('display', 'none');
+				} else if (element.checked === true) {
+					confirmAccType[0].checked = false; 
+					allowedAccreditationModelSelectPanel.css('display', '');
+				}
 
-			//NEWGEN-1227
-			if (lScopeOfChange === 'HO - All Branches' || lScopeOfChange === 'HO - Selected Branches' || {!agencyCodesConcernedSize} > 1) {
-				checkb.prop('checked', false);
-				checkb.prop('disabled', true);
-				setWarningBoxOnHover(checkb, '{!$Label.ISSP_NoC_Location_Warning}');
-			}
-			//END - NEWGEN 1227
-					
-			if ({!isAccreditationModelNotNullOrLegacy}) {
-				$("option[value='" + accreditationModel + "']").remove();
-				var contactAccountNumberOfAEs = {!ContactAccountAEsChilds},
-					scopeOfChange = '{!newForm.Scope_of_Change__c}';
-				if ({!!CanChangeAccreditationType}) {
-					setWarningBoxOnHover(iataChangeAccType, "{!$Label.ISSP_NoC_HE_with_AEs_Warning}");
-					if (cntIFAPContacts > 0) {
-						deleteIFAPContact($j('[id$=agencyConIFAPContact]')[0].innerText);
-					}
+				if (element.checked === false) {
+					addFinancialAssessmentContactItem.css('display', 'none');
+				} else if (element.value === 'Cash') {
+					addFinancialAssessmentContactItem.css('display', '');
 				}
 			}
-			//END - NoC Changes
+		}
+		//END NEWGEN-523
+
+		//NEWGEN-1227
+		if ('{!newForm.Agency_Codes_Concerned__c}'.includes(",")) {
+			checkb.prop('checked', false);
+			checkb.prop('disabled', true);
+			setWarningBoxOnHoverMC(checkb, "{!$Label.ISSP_NoC_HE_with_AEs_Warning_MC}");
+		}
+		else if ((lScopeOfChange === 'HO - All Branches' || lScopeOfChange === 'HO - Selected Branches') && ('{!BranchAccounts}'.match(/label=/g) || []).length > 0) {
+			checkb.prop('checked', false);
+			checkb.prop('disabled', true);
+			setWarningBoxOnHover(checkb, '{!$Label.ISSP_NoC_Location_Warning}');
+		}
+		//END - NEWGEN 1227
+				
+		if ({!isAccreditationModelNotNullOrLegacy}) {
+			$("option[value='" + accreditationModel + "']").remove();
+			var contactAccountNumberOfAEs = {!ContactAccountAEsChilds},
+				scopeOfChange = '{!newForm.Scope_of_Change__c}';
+			if ({!!CanChangeAccreditationType}) {
+				setWarningBoxOnHover(iataChangeAccType, "{!$Label.ISSP_NoC_HE_with_AEs_Warning}");
+				if (cntIFAPContacts > 0) {
+					deleteIFAPContact($j('[id$=agencyConIFAPContact]')[0].innerText);
+				}
+			}
+		}
+
+		if (typeOfChange !== 'Yes' && {!CanChangeAccreditationType}) {
+			iataChangeAccType.prop('disabled', true);
+			iataChangeAccType.prop('checked', false);
+
+			$j('[id$=allowedAccreditationModelSelectPanel]').css('display', 'none');
+		}
+
+		if ({!isMCAccredited} && lScopeOfChange !== 'HO Only') {
+			if ('{!newForm.Agency_Codes_Concerned__c}'.includes(",")) {
+				setWarningBoxOnHoverMC($j('[id$=notifyOwnershipChange]'), "{!$Label.ISSP_NoC_HE_with_AEs_Warning_MC}");
+			}
+			setWarningBoxOnHoverMC($j('[id$=notifyLegalDetailsChange]'), "{!$Label.ISSP_NoC_HE_with_AEs_Warning_MC}");
+		}
+		
+		if ({!multipleCountriesSelected} && ('{!BranchAccounts}'.match(/label=/g) || []).length > 0) {
+			$j('[id$=notifyLegalDetailsChange]').prop('disabled', true);
+
+			if (!({!isMCAccredited} && lScopeOfChange !== 'HO Only')) {
+				setWarningBoxOnHoverMC($j('[id$=notifyLegalDetailsChange]'), "{!$Label.ISSP_NoC_HE_with_AEs_Warning_MC}");
+			}
 			
-						
+			$j('[id$=notifyOwnershipChange]').prop('disabled', true);
+
+			if (!({!isMCAccredited} && lScopeOfChange !== 'HO Only' && '{!newForm.Agency_Codes_Concerned__c}'.includes(","))) {
+				setWarningBoxOnHoverMC($j('[id$=notifyOwnershipChange]'), "{!$Label.ISSP_NoC_HE_with_AEs_Warning_MC}");
+			}
+		}
+		
+		//END - NoC Changes
+							
 		var natmobileacct1 = $j("input[name='{!$Component.AMSForm.AMSBlock.locationSection.addressSection.locationItemMobile.locationmobileinput}']");                
-							var mobileacct1 = $j("input[name='{!$Component.AMSForm.AMSBlock.locationSection.addressSection.locationmobile}']");
-							
-							natmobileacct1.intlTelInput({
-								nationalMode: true,
-								defaultCountry: defaultHQCountry,
-								numberType: "MOBILE",
-								utilsScript: "{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/lib/libphonenumber/build/utils.js')}"
-							});
-							
-							
-							var natfaxacct1 = $j("input[name='{!$Component.AMSForm.AMSBlock.locationSection.addressSection.locationItemFax.locationfaxinput}']");
-							var faxacct1 = $j("input[name='{!$Component.AMSForm.AMSBlock.locationSection.addressSection.locationfax}']");
-						
-							natfaxacct1.intlTelInput({
-								nationalMode: true,
-								defaultCountry: defaultHQCountry,
-								numberType: "FIXED_LINE",
-								utilsScript: "{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/lib/libphonenumber/build/utils.js')}"
-							});
+		var mobileacct1 = $j("input[name='{!$Component.AMSForm.AMSBlock.locationSection.addressSection.locationmobile}']");
+		
+		natmobileacct1.intlTelInput({
+			nationalMode: true,
+			defaultCountry: defaultHQCountry,
+			numberType: "MOBILE",
+			utilsScript: "{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/lib/libphonenumber/build/utils.js')}"
+		});
+		
+		
+		var natfaxacct1 = $j("input[name='{!$Component.AMSForm.AMSBlock.locationSection.addressSection.locationItemFax.locationfaxinput}']");
+		var faxacct1 = $j("input[name='{!$Component.AMSForm.AMSBlock.locationSection.addressSection.locationfax}']");
+	
+		natfaxacct1.intlTelInput({
+			nationalMode: true,
+			defaultCountry: defaultHQCountry,
+			numberType: "FIXED_LINE",
+			utilsScript: "{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/lib/libphonenumber/build/utils.js')}"
+		});
 
-							var natphoneacct1 = $j("input[name='{!$Component.AMSForm.AMSBlock.locationSection.addressSection.locationItemPhone.locationphoneinput}']");
-							var phoneacct1 = $j('.branch_office_phone__c');
-							var phoneacct2 = $j("input[name='{!$Component.AMSForm.AMSBlock.locationSection.addressSection.locationphone}']");
-					 
-							natphoneacct1.intlTelInput({
-								nationalMode: true,
-								defaultCountry: defaultHQCountry,
-								numberType: "FIXED_LINE",
-								utilsScript: "{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/lib/libphonenumber/build/utils.js')}"
-							});
+		var natphoneacct1 = $j("input[name='{!$Component.AMSForm.AMSBlock.locationSection.addressSection.locationItemPhone.locationphoneinput}']");
+		var phoneacct1 = $j('.branch_office_phone__c');
+		var phoneacct2 = $j("input[name='{!$Component.AMSForm.AMSBlock.locationSection.addressSection.locationphone}']");
+	
+		natphoneacct1.intlTelInput({
+			nationalMode: true,
+			defaultCountry: defaultHQCountry,
+			numberType: "FIXED_LINE",
+			utilsScript: "{!URLFOR($Resource.InternationalPhoneNumberFormat, '/intl-tel-input-master/lib/libphonenumber/build/utils.js')}"
+		});
 
-							natmobileacct1.intlTelInput("setNumber", mobileacct1.val());
-							
-							natfaxacct1.intlTelInput("setNumber", faxacct1.val());
+		natmobileacct1.intlTelInput("setNumber", mobileacct1.val());
+		
+		natfaxacct1.intlTelInput("setNumber", faxacct1.val());
 
-							natphoneacct1.intlTelInput("setNumber", phoneacct1.val());
+		natphoneacct1.intlTelInput("setNumber", phoneacct1.val());
 
-							function setInternationalAccountPhoneInfo(p) {
-								if(p=='phone') {
-									phoneacct1.val(natphoneacct1.intlTelInput("getNumber"));
-									phoneacct2.val(natphoneacct1.intlTelInput("getNumber"));
-								} else if(p=='mobile') {
-									mobileacct1.val(natmobileacct1.intlTelInput("getNumber"));
-								} else {
-									faxacct1.val(natfaxacct1.intlTelInput("getNumber"));
-								}
-										}
+		function setInternationalAccountPhoneInfo(p) {
+			if(p=='phone') {
+				phoneacct1.val(natphoneacct1.intlTelInput("getNumber"));
+				phoneacct2.val(natphoneacct1.intlTelInput("getNumber"));
+			} else if(p=='mobile') {
+				mobileacct1.val(natmobileacct1.intlTelInput("getNumber"));
+			} else {
+				faxacct1.val(natfaxacct1.intlTelInput("getNumber"));
+			}
+		}
 	</script>
 	</body>	
 </html>
