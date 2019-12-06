@@ -329,6 +329,9 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 										}else{
 											//Don't validate the personal email for this flow
 											if(this.flow === 'flow3'){
+												//reverse email
+												this.localContactInfo.Additional_Email__c = this.localContactInfo.Email;
+												this.localContactInfo.Email = this.workEmailInput;
 												this.stopLoading();
 												this.dispatchEvent(new CustomEvent('next'));
 											}else if(userInfo.hasExistingContactPersonalEmail == true){
