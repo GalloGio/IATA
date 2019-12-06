@@ -1,231 +1,88 @@
-<!--
- - Created by pvavruska on 5/23/2019.
- -->
-
-<!-- Portal Company Profile Page -->
 <template>
 
+    <div if:true={userLoaded}>
 
-    <template if:true={userLoaded}>
-        <div class="profilePageWrapper">
-            <template if:false={noAccount}>
-                <c-portal-page-container style-class="dark">
-                    <span slot="componentContent">
-                        <div class="slds-grid slds-wrap slds-gutters_direct-medium">
+        <div if:false={noAccount}>
 
-                            <!-- Sections nav bar -->
-                            <div class="slds-col slds-size_1-of-1 slds-m-vertical_medium">
+            <!-- TAB SELECTOR -->
+            <c-portal-page-container style-class="dark">
+                <span slot="componentContent">
+                    <div class="slds-grid slds-wrap slds-gutters_direct-medium">
 
-                                <!--<div class="emptyGrayAreaSize"></div>-->
+                        <!-- Sections nav bar -->
+                        <div class="slds-col slds-size_1-of-1 slds-m-vertical_medium">
 
-                                <template for:each={lstTabs} for:item="tab">
-                                    <span key={tab.id} class="slds-p-around_small text-small">
+                            <!--<div class="emptyGrayAreaSize"></div>-->
 
-                                        <!-- Active tab -->
-                                        <span if:true={tab.active} data-item={tab.id}
-                                            class="slds-p-around_small text-bold selectedTab">
-                                            {tab.label}
-                                        </span>
+                            <template for:each={lstTabs} for:item="tab">
+                                <span key={tab.id} class="slds-p-around_small text-small">
 
-                                        <!-- Inactive tab -->
-                                        <span if:false={tab.active} data-item={tab.id} class={tab.class}
-                                            onmouseenter={onmouseenterTab} onmouseleave={onmouseleaveTab}
-                                            onclick={onclickTab}>
-                                            {tab.label}
-                                        </span>
-
+                                    <!-- Active tab -->
+                                    <span if:true={tab.active} data-item={tab.id}
+                                        class="slds-p-around_small text-bold selectedTab">
+                                        {tab.label}
                                     </span>
-                                </template>
 
-                            </div>
+                                    <!-- Inactive tab -->
+                                    <span if:false={tab.active} data-item={tab.id} class={tab.class}
+                                        onmouseenter={onmouseenterTab} onmouseleave={onmouseleaveTab}
+                                        onclick={onclickTab}>
+                                        {tab.label}
+                                    </span>
+
+                                </span>
+                            </template>
 
                         </div>
-                    </span>
-                </c-portal-page-container>
 
-                <c-portal-page-container style-class="light">
-                    <span slot="componentContent">
-                        <!-- Profile: Navigation & Sections -->
-                        <template if:true={tab0Active}>
-                            <div class="slds-grid slds-wrap slds-gutters_medium slds-p-vertical_x-large">
+                    </div>
+                </span>
+            </c-portal-page-container>
 
-                                <!-- Sticky navigation -->
-                                <div class="stickyNav slds-col slds-size_1-of-3">
-                                    <c-portal-company-profile-info-nav class="slds-large-show"
-                                        onnavigate={handleNavigation}></c-portal-company-profile-info-nav>
-                                </div>
+            <!-- SELECTED TAB CONTENT -->
+            <c-portal-page-container style-class="light">
+                <span slot="componentContent">
+                            
+                    <!-- Profile: Navigation & Sections -->
+                    <div if:true={tab0Active}>
+                        <c-portal-company-profile-information></c-portal-company-profile-information>
+                    </div>
 
-                                <!-- Profile sections -->
-                                <div class="slds-col slds-size_1-of-1 slds-large-size_2-of-3">
+                    <!-- Profile: Branch Offices-->
+                    <div if:true={tab1Active} >
+                        <c-portal-company-profile-branches-list></c-portal-company-profile-branches-list>
+                    </div>
 
-                                    <template if:true={mapOfValues}>
-                                        <template for:each={mapOfValues} for:item="keyValue">
-                                            <c-portal-record-form-wrapper key={keyValue.key} object-name="Account"
-                                                record-id={loggedUser.Contact.AccountId} fields={keyValue.value}
-                                                show-edit={canEditAccount} class="section" section-title={keyValue.key}
-                                                data-name={keyValue.key} edit-basics={editBasics} tab-name={tabName}
-                                                section-class="slds-p-vertical_xx-large slds-p-horizontal_x-large customBorderlessCardWhite slds-m-bottom_medium section">
-                                            </c-portal-record-form-wrapper>
-                                        </template>
+                    <!-- Profile: Contacts-->
+                    <div if:true={tab2Active} >
+                        <c-portal-company-profile-contacts-list></c-portal-company-profile-contacts-list>
+                    </div>
 
-                                        <div class="endOfPage"></div>
+                    <!-- Profile: Company Calendar -->
+                    <div if:true={tab3Active} >
+                        Company Calendar
+                    </div>
 
-                                    </template>
+                    <!-- Profile: Activity Log -->
+                    <div if:true={tab4Active} >
+                        Activity Log
+                    </div>
+        
+                </span>
+            </c-portal-page-container>
 
-                                    <!-- Portal Administrators -->
-                                    <c-portal-profile-section data-name="adminContacts" class-name="slds-p-vertical_xx-large slds-p-horizontal_x-large customBorderlessCardWhite slds-m-bottom_medium section" class="section">
-                                        <span slot="sectionTitle">{labels.CSP_Portal_Administrators}</span>
-                                        
-                                        <span slot="sectionActions">
-                                        </span>
 
-                                        <span slot="componentContent">
-                                            <div if:true={hasPortalAdmins} class="adminContactsTable">
-                                                <lightning-datatable
-                                                    key-field="Id"
-                                                    data={portalAdminList}
-                                                    columns={portalAdminColumns}
-                                                    hide-checkbox-column="true">
-                                                </lightning-datatable>
-                                            </div>
-                                            <div if:false={hasPortalAdmins}>
-                                                {labels.NoResults}
-                                            </div>
-                                        </span>
-                                    </c-portal-profile-section>
-
-                                </div>
-                            </div>
-                        </template>
-
-                        <!-- Profile: Branch Offices-->
-                        <template if:true={tab1Active}>
-                            <template if:true={branchesLoaded}>
-                                <div class="slds-col slds-grid slds-wrap slds-p-top_medium slds-m-bottom_medium slds-size_1-of-1">
-                                    <div class=" slds-col slds-p-top_xx-large bottomLightGrayBorder searchContainer">
-                                        <img src={searchColored} height="24" width="24" />
-                                        <lightning-input name="branch-search"
-                                            type="text"
-                                            placeholder={labels.FindBranch}
-                                            class="hideInputLabel borderlessInput grayInputBackground text-xsmall"
-                                            onchange={onchangeSearchInputBranches}>
-                                        </lightning-input>
-                                    </div>
-                                </div>  
-                                <div class="slds-grid slds-wrap slds-m-top_x-small">
-                                    <c-portal-contact-list is-account="true" object-name="Account" class="fullWidth"
-                                        fields-list={branchFields} fields-list-to-create={fieldsListToCreate}
-                                        default-sort="TradeName__c" records={branches} openmodel={openmodel} recordid={recordid}
-                                        objectid={accountid} fetching={isFetching} onsearchrecords={searchRecords} show-edit={canEditAccount} search-key={searchTextBranches}>
-                                    </c-portal-contact-list>
-                                </div>
-                            </template>
-
-                            <template if:false={branchesLoaded}>
-                                <div class="slds-m-around_xx-large slds-is-relative">
-                                    <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
-                                </div>
-                            </template>
-                        </template>
-
-                        <!-- Profile: Contacts-->
-                        <template if:true={tab2Active}>
-
-                            <template if:true={contactsLoaded}>
-                                <lightning-layout multiple-rows class="slds-text-align_right slds-m-top_x-large slds-gutters_xx-small slds-p-around_xx-small" pull-to-boundary="small" horizontal-align="spread">
-
-                                    <!-- SEARCH -->
-                                    <lightning-layout-item class="slds-p-around_xx-small" size="12" flexibility="grow" medium-device-size="6" large-device-size="3">
-                                        <div class="bottomLightGrayBorder slds-m-around_small inputFilter">
-                                            <img src={searchColored}>
-                                            <lightning-input name="contact-search" type="text" value={searchValue}
-                                                placeholder={labels.FindContact}
-                                                onchange={onchangeSearchInputContacts}
-                                                class="borderlessInput hideInputLabel grayInputBackground grayInputPlaceholder searchStyle">
-                                            </lightning-input>
-                                        </div>
-                                    </lightning-layout-item>
-
-                                    <lightning-layout-item class="slds-p-around_xx-small" size="12" flexibility="auto" medium-device-size="6" large-device-size="9">
-                                        
-                                        <!-- APPROVE -->
-                                        <lightning-layout-item class="slds-text-align_right" size="4" flexibility="auto" medium-device-size="4" large-device-size="2">
-                                            <lightning-button if:true={showManageButtons} variant="brand" label={labels.ISSP_Activate}
-                                                class="containedButtonSmaller" onclick={grantAccess} data-item="approve">
-                                            </lightning-button>
-                                        </lightning-layout-item>
-
-                                        <!-- DECLINE -->
-                                        <lightning-layout-item class="slds-text-align_right" size="4" flexibility="auto" medium-device-size="4" large-device-size="2">
-                                            <lightning-button if:true={showManageButtons} variant="brand" label={labels.ISSP_Inactivate}
-                                                class="containedButtonSmaller" onclick={denyAccess} data-item="inactive">
-                                            </lightning-button>
-                                        </lightning-layout-item>
-
-                                        <!-- ASSESSMENT CONTRACT -->
-                                        <lightning-layout-item class="slds-text-align_right" size="4" flexibility="auto" medium-device-size="4" large-device-size="2">
-                                            <lightning-button variant="brand" label={labels.ISSP_Assign_IFAP}
-                                                title={labels.ISSP_Assign_IFAP} onclick={navigateToIFAP}
-                                                class="containedButtonSmaller">
-                                            </lightning-button>
-                                        </lightning-layout-item>
-
-                                        <!-- LIST VIEW -->
-                                        <lightning-layout-item class="slds-text-align_right" size="4" flexibility="auto" medium-device-size="4" large-device-size="2">    
-                                            <lightning-button variant="brand" label={labels.NewContact} 
-                                                title="Create New Contact" disabled={contactsNotLoaded}
-                                                onclick={createContact} class="containedButtonSmaller">
-                                            </lightning-button>
-                                        </lightning-layout-item>
-
-                                    </lightning-layout-item>
-
-                                </lightning-layout>
-
-                                <div class="slds-grid slds-wrap slds-m-top_x-small">
-                                    <c-portal-contact-list is-account="false" object-name="Contact" class="fullWidth"
-                                        default-sort="Name" fields-list={contactFields}
-                                        fields-list-to-create={fieldsListToCreate} records={contacts} wrapper={contactsWrapper}
-                                        openmodel={openmodel} recordid={recordid} accountid={accountid}
-                                        objectid={objectid} ongetcontacts={getContacts} fetching={isFetching}
-                                        onrefreshview={refreshview} onsearchrecords={searchRecords} search-key={searchTextContacts} onmanageusers={manageUsers}
-                                        action-name={action}>
-                                    </c-portal-contact-list>
-
-                                </div>
-                            </template>
-
-                            <template if:false={contactsLoaded}>
-                                <div class="slds-m-around_xx-large slds-is-relative">
-                                    <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
-                                </div>
-                            </template>
-
-                        </template>
-
-                        <!-- Profile: Company Calendar -->
-                        <template if:true={tab3Active}>
-                            Company Calendar
-                        </template>
-
-                        <!-- Profile: Activity Log -->
-                        <template if:true={tab4Active}>
-                            Activity Log
-                        </template>
-                    </span>
-                </c-portal-page-container>
-            </template>
-
-            <template if:true={noAccount}>
-                <c-portal-page-container style-class="light">
-                    <span slot="componentContent">
-                        {labels.NoAccount}
-                    </span>
-                </c-portal-page-container>
-
-            </template>
         </div>
-    </template>
 
+
+        <div if:true={noAccount}>
+            <c-portal-page-container style-class="light">
+                <span slot="componentContent">
+                    {labels.NoAccount}
+                </span>
+            </c-portal-page-container>
+        </div>
+
+    </div>
 
 </template>

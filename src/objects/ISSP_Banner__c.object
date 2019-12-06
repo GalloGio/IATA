@@ -2834,6 +2834,36 @@ _blank = new window</description>
             </valueSetDefinition>
         </valueSet>
     </fields>
+    <fields>
+        <fullName>banner_availability__c</fullName>
+        <description>This field allows to specify if the banner is visible to all users, or only to users with id card, or only to users without id card.</description>
+        <externalId>false</externalId>
+        <label>Banner Availability</label>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>all</fullName>
+                    <default>true</default>
+                    <label>All</label>
+                </value>
+                <value>
+                    <fullName>no_id_card</fullName>
+                    <default>false</default>
+                    <label>Without Id Card</label>
+                </value>
+                <value>
+                    <fullName>id_card</fullName>
+                    <default>false</default>
+                    <label>With Id Card</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
     <label>ISSP Banner</label>
     <listViews>
         <fullName>All</fullName>
