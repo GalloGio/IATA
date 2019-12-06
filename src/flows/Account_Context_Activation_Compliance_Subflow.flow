@@ -4,8 +4,8 @@
         <description>Notify the flow launcher that the compliance is a failure</description>
         <name>Notify_Flow_Launcher</name>
         <label>Notify Flow Launcher</label>
-        <locationX>549</locationX>
-        <locationY>490</locationY>
+        <locationX>384</locationX>
+        <locationY>508</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <inputParameters>
@@ -145,10 +145,10 @@
     <decisions>
         <name>has_been_relaunched</name>
         <label>has been relaunched ?</label>
-        <locationX>544</locationX>
-        <locationY>264</locationY>
+        <locationX>378</locationX>
+        <locationY>262</locationY>
         <defaultConnector>
-            <targetReference>Is_Case_Created</targetReference>
+            <targetReference>Get_Compliance_Case</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>first execution</defaultConnectorLabel>
         <rules>
@@ -176,7 +176,7 @@ Date of last clearance (Date_of_last_clearance__c) within the last 12 months</de
         <locationX>180</locationX>
         <locationY>264</locationY>
         <defaultConnector>
-            <targetReference>Get_Compliance_Case</targetReference>
+            <targetReference>has_been_relaunched</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>not compliant</defaultConnectorLabel>
         <rules>
@@ -238,7 +238,7 @@ Date of last clearance (Date_of_last_clearance__c) within the last 12 months</de
         <dataType>String</dataType>
         <expression>SUBSTITUTE(SUBSTITUTE(SUBSTITUTE({!$Label.ComplianceProcessEmailBody}, 
 &quot;{0}&quot;, {!UserFlowLauncher.Name}),
-&quot;{1}&quot;, {!ComplianceCase.CaseNumber}),
+&quot;{1}&quot;, {!ClosedCaseNumber}),
 &quot;{2}&quot;, {!Account.Name})</expression>
     </formulas>
     <formulas>
@@ -306,11 +306,11 @@ Date of last clearance (Date_of_last_clearance__c) within the last 12 months</de
     <recordLookups>
         <name>Get_Compliance_Case</name>
         <label>Get Compliance Case</label>
-        <locationX>397</locationX>
-        <locationY>262</locationY>
+        <locationX>574</locationX>
+        <locationY>260</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>has_been_relaunched</targetReference>
+            <targetReference>Is_Case_Created</targetReference>
         </connector>
         <filters>
             <field>AccountId</field>
@@ -344,7 +344,7 @@ Date of last clearance (Date_of_last_clearance__c) within the last 12 months</de
             <field>Reason1__c</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>New E&amp;F participant</stringValue>
+                <stringValue>SIS Client</stringValue>
             </value>
         </filters>
         <filters>
@@ -386,7 +386,13 @@ Date of last clearance (Date_of_last_clearance__c) within the last 12 months</de
         <outputReference>DueDiligenceQueue</outputReference>
         <queriedFields>Id</queriedFields>
     </recordLookups>
-    <startElementReference>Is_Account_compliant</startElementReference>
+    <start>
+        <locationX>50</locationX>
+        <locationY>50</locationY>
+        <connector>
+            <targetReference>Is_Account_compliant</targetReference>
+        </connector>
+    </start>
     <status>Active</status>
     <variables>
         <name>Account</name>
@@ -395,6 +401,14 @@ Date of last clearance (Date_of_last_clearance__c) within the last 12 months</de
         <isInput>true</isInput>
         <isOutput>false</isOutput>
         <objectType>Account</objectType>
+    </variables>
+    <variables>
+        <description>Compliance or SIS Case number. Only when flow is launched by Process Builder &quot;CaseComplianceClosed&quot; or &quot;CaseSISClosed&quot;</description>
+        <name>ClosedCaseNumber</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>ComplianceCase</name>

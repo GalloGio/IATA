@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Notify_Flow_Launcher</name>
         <label>Notify Flow Launcher</label>
-        <locationX>520</locationX>
-        <locationY>472</locationY>
+        <locationX>366</locationX>
+        <locationY>487</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <inputParameters>
@@ -29,7 +29,7 @@
     <assignments>
         <name>Output_Success</name>
         <label>Output Success</label>
-        <locationX>210</locationX>
+        <locationX>179</locationX>
         <locationY>483</locationY>
         <assignmentItems>
             <assignToReference>FlowSuccessfullyEnded</assignToReference>
@@ -141,10 +141,10 @@
     <decisions>
         <name>Account_has_SIS_ID</name>
         <label>Account has SIS ID ?</label>
-        <locationX>204</locationX>
-        <locationY>248</locationY>
+        <locationX>172</locationX>
+        <locationY>251</locationY>
         <defaultConnector>
-            <targetReference>Get_SIS_Case</targetReference>
+            <targetReference>has_been_relaunched</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>SIS KO</defaultConnectorLabel>
         <rules>
@@ -180,10 +180,10 @@
     <decisions>
         <name>has_been_relaunched</name>
         <label>has been relaunched ?</label>
-        <locationX>512</locationX>
+        <locationX>359</locationX>
         <locationY>250</locationY>
         <defaultConnector>
-            <targetReference>Is_Case_Created</targetReference>
+            <targetReference>Get_SIS_Case</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>first execution</defaultConnectorLabel>
         <rules>
@@ -233,7 +233,7 @@
         <dataType>String</dataType>
         <expression>SUBSTITUTE(SUBSTITUTE(SUBSTITUTE({!$Label.SisProcessEmailBody}, 
 &quot;{0}&quot;, {!UserFlowLauncher.Name}),
-&quot;{1}&quot;, {!SisCase.CaseNumber}),
+&quot;{1}&quot;, {!ClosedCaseNumber}),
 &quot;{2}&quot;, {!Account.Name})</expression>
     </formulas>
     <formulas>
@@ -321,11 +321,11 @@
     <recordLookups>
         <name>Get_SIS_Case</name>
         <label>Get SIS Case</label>
-        <locationX>366</locationX>
-        <locationY>248</locationY>
+        <locationX>548</locationX>
+        <locationY>246</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>has_been_relaunched</targetReference>
+            <targetReference>Is_Case_Created</targetReference>
         </connector>
         <filters>
             <field>AccountId</field>
@@ -411,6 +411,14 @@
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>Group</objectType>
+    </variables>
+    <variables>
+        <description>Compliance or SIS Case number. Only when flow is launched by Process Builder &quot;CaseComplianceClosed&quot; or &quot;CaseSISClosed&quot;</description>
+        <name>ClosedCaseNumber</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <description>Determines if the flow has been relaunched by a process builder</description>

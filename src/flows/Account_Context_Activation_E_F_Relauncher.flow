@@ -24,8 +24,8 @@
         </value>
     </constants>
     <decisions>
-        <name>init_from_account_id</name>
-        <label>init from account id ?</label>
+        <name>Account_Id_is_filled</name>
+        <label>Account Id is filled ?</label>
         <locationX>198</locationX>
         <locationY>52</locationY>
         <defaultConnector>
@@ -406,7 +406,13 @@
         <queriedFields>Name</queriedFields>
         <queriedFields>Email</queriedFields>
     </recordLookups>
-    <startElementReference>init_from_account_id</startElementReference>
+    <start>
+        <locationX>50</locationX>
+        <locationY>50</locationY>
+        <connector>
+            <targetReference>Account_Id_is_filled</targetReference>
+        </connector>
+    </start>
     <status>Active</status>
     <subflows>
         <name>Restart_Account_Context_Activation_E_F_Background_Subflow</name>
@@ -430,6 +436,12 @@
             <name>AddressRoleBusinessContext</name>
             <value>
                 <elementReference>AddressRoleBusinessContext</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ClosedCaseNumber</name>
+            <value>
+                <elementReference>ClosedCaseNumber</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -516,6 +528,14 @@
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>Address_Role__c</objectType>
+    </variables>
+    <variables>
+        <description>Compliance or SIS Case number. Only when flow is launched by Process Builder &quot;CaseComplianceClosed&quot; or &quot;CaseSISClosed&quot;</description>
+        <name>ClosedCaseNumber</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>ContactRoles</name>

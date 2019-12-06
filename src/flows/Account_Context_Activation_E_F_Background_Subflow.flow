@@ -545,6 +545,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <name>ClosedCaseNumber</name>
+            <value>
+                <elementReference>ClosedCaseNumber</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <name>FlowHasBeenRelaunched</name>
             <value>
                 <elementReference>RestartComplianceSubflow</elementReference>
@@ -640,6 +646,12 @@
                 <elementReference>UserFlowLauncher</elementReference>
             </value>
         </inputAssignments>
+        <inputAssignments>
+            <name>ClosedCaseNumber</name>
+            <value>
+                <elementReference>ClosedCaseNumber</elementReference>
+            </value>
+        </inputAssignments>
         <outputAssignments>
             <assignToReference>SisSubflowSuccessfullyFinished</assignToReference>
             <name>FlowSuccessfullyEnded</name>
@@ -696,6 +708,14 @@
         <isInput>true</isInput>
         <isOutput>false</isOutput>
         <objectType>Address_Role_Business_Context__c</objectType>
+    </variables>
+    <variables>
+        <description>Compliance or SIS Case number. Only when flow is launched by Process Builder &quot;CaseComplianceClosed&quot; or &quot;CaseSISClosed&quot;</description>
+        <name>ClosedCaseNumber</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <description>determine if the compliance subflow successfully ended</description>
