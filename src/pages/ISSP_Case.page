@@ -378,7 +378,6 @@
 									//NEW VALINHO
 									function manageCaseAreaAvaiableOptions(element) {
                                         let selectedLabel = $(element).find(":selected").text();
-                                        console.log("selected label => ",selectedLabel);
 										if(selectedLabel == "IATA"){
                                             //enable option iiNet only for IATA
                                             $(".caseAreaField  option[value='iiNet']").prop('disabled', false);
