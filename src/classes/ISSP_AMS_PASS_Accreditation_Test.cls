@@ -16,7 +16,12 @@ private class ISSP_AMS_PASS_Accreditation_Test
         insert new ISSP_AMS_Contextual_Help__c(Name='TRAINED_STAFF_ORGANIZATION',ISSP_AMS_HelpText_ar__c   ='test',ISSP_AMS_HelpText_de__c ='test',ISSP_AMS_HelpText_en_US__c  ='test',ISSP_AMS_HelpText_es__c ='test',ISSP_AMS_HelpText_fr__c ='test',ISSP_AMS_HelpText_in__c ='test',ISSP_AMS_HelpText_it__c ='test',ISSP_AMS_HelpText_ja__c ='test',ISSP_AMS_HelpText_ko__c ='test',ISSP_AMS_HelpText_pt_BR__c  ='test',ISSP_AMS_HelpText_th__c ='test',ISSP_AMS_HelpText_vi__c ='test',ISSP_AMS_HelpText_zh_CN__c  ='test');
         insert new ISSP_AMS_Contextual_Help__c(Name='TRAINED_STAFF_REFERENCE',ISSP_AMS_HelpText_ar__c   ='test',ISSP_AMS_HelpText_de__c ='test',ISSP_AMS_HelpText_en_US__c  ='test',ISSP_AMS_HelpText_es__c ='test',ISSP_AMS_HelpText_fr__c ='test',ISSP_AMS_HelpText_in__c ='test',ISSP_AMS_HelpText_it__c ='test',ISSP_AMS_HelpText_ja__c ='test',ISSP_AMS_HelpText_ko__c ='test',ISSP_AMS_HelpText_pt_BR__c  ='test',ISSP_AMS_HelpText_th__c ='test',ISSP_AMS_HelpText_vi__c ='test',ISSP_AMS_HelpText_zh_CN__c  ='test');
         insert new ISSP_AMS_Contextual_Help__c(Name='GROSS_SALES',ISSP_AMS_HelpText_ar__c   ='test',ISSP_AMS_HelpText_de__c ='test',ISSP_AMS_HelpText_en_US__c  ='test',ISSP_AMS_HelpText_es__c ='test',ISSP_AMS_HelpText_fr__c ='test',ISSP_AMS_HelpText_in__c ='test',ISSP_AMS_HelpText_it__c ='test',ISSP_AMS_HelpText_ja__c ='test',ISSP_AMS_HelpText_ko__c ='test',ISSP_AMS_HelpText_pt_BR__c  ='test',ISSP_AMS_HelpText_th__c ='test',ISSP_AMS_HelpText_vi__c ='test',ISSP_AMS_HelpText_zh_CN__c  ='test');
-    
+        //MIGUEL ALB
+        insert new ISSP_AMS_Contextual_Help__c(Name='PASS_ADMIN',ISSP_AMS_HelpText_ar__c   ='test',ISSP_AMS_HelpText_de__c ='test',ISSP_AMS_HelpText_en_US__c  ='test',ISSP_AMS_HelpText_es__c ='test',ISSP_AMS_HelpText_fr__c ='test',ISSP_AMS_HelpText_in__c ='test',ISSP_AMS_HelpText_it__c ='test',ISSP_AMS_HelpText_ja__c ='test',ISSP_AMS_HelpText_ko__c ='test',ISSP_AMS_HelpText_pt_BR__c  ='test',ISSP_AMS_HelpText_th__c ='test',ISSP_AMS_HelpText_vi__c ='test',ISSP_AMS_HelpText_zh_CN__c  ='test');
+        insert new ISSP_AMS_Contextual_Help__c(Name='PASS_USER',ISSP_AMS_HelpText_ar__c   ='test',ISSP_AMS_HelpText_de__c ='test',ISSP_AMS_HelpText_en_US__c  ='test',ISSP_AMS_HelpText_es__c ='test',ISSP_AMS_HelpText_fr__c ='test',ISSP_AMS_HelpText_in__c ='test',ISSP_AMS_HelpText_it__c ='test',ISSP_AMS_HelpText_ja__c ='test',ISSP_AMS_HelpText_ko__c ='test',ISSP_AMS_HelpText_pt_BR__c  ='test',ISSP_AMS_HelpText_th__c ='test',ISSP_AMS_HelpText_vi__c ='test',ISSP_AMS_HelpText_zh_CN__c  ='test');
+        // /MIGUEL ALB
+
+
     }
 
     @isTest static void ISSP_AMS_PASS_Accreditation_Test_1()
@@ -140,13 +145,19 @@ private class ISSP_AMS_PASS_Accreditation_Test
 
             AMS_Accreditation_Contact__c testAccContact=new AMS_Accreditation_Contact__c();
             testAccContact.AMS_Pax_Accreditation_Form__c=newForm.id;
-            testAccContact.PASS_contact__c  =true;
+            //testAccContact.PASS_contact__c  =true;
+            //MIGUEL ALBUQUERQUE
+            testAccContact.PASS_admin__c = true;
+            testAccContact.PASS_user__c = true;
+            // /MIGUEL ALBUQUERQUE
             testAccContact.Authorised_signatory__c=true;
             testAccContact.Financial_interest__c=50;
             testAccContact.Legacy_External_Id__c = 'test';
             testAccContact.Last_name__c = 'Last_name';
             testAccContact.Agencies_prev_worked_for__c ='2';
             insert testAccContact;
+            System.debug('#####MSAPASS_admin__c'+testAccContact.PASS_admin__c);
+            System.debug('#####MSAPASS_user__c'+testAccContact.PASS_user__c);
 
             newForm.ISSP_AMS_Portal_admin__c =testAccContact.id;
             update newForm ;
@@ -723,6 +734,10 @@ private class ISSP_AMS_PASS_Accreditation_Test
             AMS_Accreditation_Contact__c testAccContact=new AMS_Accreditation_Contact__c();
             testAccContact.AMS_Pax_Accreditation_Form__c=newForm.id;
             testAccContact.PASS_contact__c  =true;
+            //MIGUEL ALB
+            testAccContact.PASS_admin__c = false;
+            testAccContact.PASS_user__c = true;
+            // /MIGUEL ALB
             testAccContact.Authorised_signatory__c=true;
             testAccContact.Financial_interest__c=50;
             testAccContact.Legacy_External_Id__c = 'test';
@@ -929,6 +944,21 @@ private class ISSP_AMS_PASS_Accreditation_Test
             newForm.Solicitation_Flag__c=false;
             insert newForm ;
 
+            //MIGUEL ALB
+            AMS_Accreditation_Contact__c testAgencyContact=new AMS_Accreditation_Contact__c();
+            testAgencyContact.AMS_Pax_Accreditation_Form__c=newForm.id;
+            // MIGUEL ALB
+            testAgencyContact.PASS_admin__c = false;
+            testAgencyContact.PASS_user__c = true;
+            // /MIGUEL ALB
+            testAgencyContact.Authorised_signatory__c=true;
+            testAgencyContact.Financial_interest__c=50;
+            testAgencyContact.Legacy_External_Id__c = 'test';
+            testAgencyContact.Last_name__c = 'Last_name';
+            testAgencyContact.Agency_owner__c =true;
+            insert testAgencyContact;
+            // /MIGUEL ALB
+
             ApexPages.currentPage().getParameters().put('caseId' ,testOscarCase.Id );
             ISSP_AMS_PASS_Accreditation test = new ISSP_AMS_PASS_Accreditation();
             test.newCase = testOscarCase ;
@@ -938,6 +968,108 @@ private class ISSP_AMS_PASS_Accreditation_Test
         }
         Test.stopTest();
     }
+
+    // MIGUEL ALB
+    @isTest static void ISSP_AMS_PASS_Accreditation_Test_7_1()
+    {
+
+        IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', IATA_Contry_KR__c = 'test', CASS_Import__c = 'Yes',
+                                    IATA_COUNTRY_EN__c = 'testEN' , IATA_Country_FR__c = 'testFR' , IATA_Country_ZH__c = 'testZH' ,
+                                    IATA_Country_IT__c = 'testIT' , IATA_Country_JP__c = 'testJP' , ISO_Code__c = 'tq',
+                                    IATA_Country_PT__c = 'testPT' , IATA_Country_SP__c = 'testSP' , Case_BSP_Country__c = 'test',Local_language_Agency_details_required__c=true);
+        insert country;
+        IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2', CASS_Import__c = 'Yes',Local_language_Agency_details_required__c=true);
+        insert country2;
+
+        Id rtIdBr = [ SELECT Id FROM RecordType
+        WHERE SobjectType = 'Account'
+        AND DeveloperName = 'Standard_Account'][0].Id;
+
+
+        Account parent = ISSP_ObjectFactory.createNewAccount();
+        parent.BillingCity = 'test';
+        parent.Name = 'test';
+        parent.sector__c = 'Travel Agent';
+        parent.Location_Type__c = 'HO';
+        parent.RecordTypeId = rtIdBr ;
+        parent.IATACode__c = '100';
+        parent.Email__c='';
+        parent.IATA_ISO_Country__c = country.Id;
+        parent.Reason_for_creation__c='test';
+        insert parent;
+        System.debug('parent Id: ' + parent.Id);
+
+        Contact con = ISSP_ObjectFactory.createNewContact();
+        con.AccountId= parent.Id;
+        con.Email = 'Test@test11.com';
+        insert con;
+
+        System.debug('con Id: ' + con.Id);
+        User newUser = ISSP_ObjectFactory.createPortalUser(con);
+        System.debug('newUser Id: ' + newUser.Id);
+        con.OwnerId = newUser.Id;
+        update con;
+
+        AMS_OSCAR__c oscarTest= new AMS_OSCAR__c();
+        oscarTest.Account__c=parent.id;
+        insert oscarTest;
+
+        Test.startTest();
+        System.runAs(newUser)
+        {
+
+            Case testOscarCase = ISSP_ObjectFactory.createNewCase();
+            testOscarCase.BSPCountry__c = 'Hong Kong (SAR), China';
+            testOscarCase.Status = 'Open - EDMC';
+            testOscarCase.Customer_recovery__c = false;
+            testOscarCase.BounceEmailCounter__c = 0.0;
+            testOscarCase.Case_Language__c = 'English';
+            testOscarCase.Subject = 'Test 006';
+            testOscarCase.Reopened_case__c = 0.0;
+            testOscarCase.Account_Concerned__c = parent.Id;
+            testOscarCase.IFAP_Country_ISO__c = 'tq';
+            testOscarCase.Region__c='Europe';
+            testOscarCase.Reason1__c=AMS_Utils.CASE_REASON_NEW_HO;
+            testOscarCase.RecordTypeId= Schema.SObjectType.Case.RecordTypeInfosByName.get('OSCAR Communication').RecordTypeId;
+            testOscarCase.OSCAR__c=oscarTest.id;
+            insert testOscarCase;
+
+            AMS_Pax_Accreditation_Form__c newForm = new AMS_Pax_Accreditation_Form__c();
+            newForm.IsGSA__c = 'No';
+            newForm.CurrencyIsoCode = country.CurrencyIsoCode;
+            newForm.SAAM_Case__c = testOscarCase.Id;
+            newForm.ISSP_AMS_Legal_Status__c ='State Owned Enterprise';
+            newForm.Account_Name__c ='';
+            newForm.Operation_Type__c=AMS_Utils.sectorValuePass;
+            newForm.Accept_terms_and_conditions__c=true;
+            newForm.Solicitation_Flag__c=false;
+            insert newForm ;
+
+            //MIGUEL ALB
+            AMS_Accreditation_Contact__c testAgencyContact=new AMS_Accreditation_Contact__c();
+            testAgencyContact.AMS_Pax_Accreditation_Form__c=newForm.id;
+            // MIGUEL ALB
+            testAgencyContact.PASS_admin__c = true;
+            testAgencyContact.PASS_user__c = true;
+            // /MIGUEL ALB
+            testAgencyContact.Authorised_signatory__c=true;
+            testAgencyContact.Financial_interest__c=50;
+            testAgencyContact.Legacy_External_Id__c = 'test';
+            testAgencyContact.Last_name__c = 'Last_name';
+            testAgencyContact.Agency_owner__c =true;
+            insert testAgencyContact;
+            // /MIGUEL ALB
+
+            ApexPages.currentPage().getParameters().put('caseId' ,testOscarCase.Id );
+            ISSP_AMS_PASS_Accreditation test = new ISSP_AMS_PASS_Accreditation();
+            test.newCase = testOscarCase ;
+
+            test.amsOfficeType='Branch';
+            test.goToFinalStep();
+        }
+        Test.stopTest();
+    }
+    // /MIGUEL ALB
 
     @isTest static void ISSP_AMS_PASS_Accreditation_Test_8()
     {
@@ -1011,6 +1143,10 @@ private class ISSP_AMS_PASS_Accreditation_Test
             AMS_Accreditation_Contact__c testAgencyContact=new AMS_Accreditation_Contact__c();
             testAgencyContact.AMS_Pax_Accreditation_Form__c=newForm.id;
             testAgencyContact.PASS_contact__c  =true;
+            //MIGUEL ALB
+            testAgencyContact.PASS_admin__c = true;
+            testAgencyContact.PASS_user__c = true;
+            // /MIGUEL ALB
             testAgencyContact.Authorised_signatory__c=true;
             testAgencyContact.Financial_interest__c=50;
             testAgencyContact.Legacy_External_Id__c = 'test';
@@ -1020,6 +1156,10 @@ private class ISSP_AMS_PASS_Accreditation_Test
             AMS_Accreditation_Contact__c testTrainedStaffContact=new AMS_Accreditation_Contact__c();
             testTrainedStaffContact.AMS_Pax_Accreditation_Form__c=newForm.id;
             testTrainedStaffContact.PASS_contact__c  =true;
+            // MIGUEL ALB
+            testTrainedStaffContact.PASS_admin__c = true;
+            testTrainedStaffContact.PASS_user__c = true;
+            // /MIGUEL ALB
             testTrainedStaffContact.Authorised_signatory__c=true;
             testTrainedStaffContact.Financial_interest__c=50;
             testTrainedStaffContact.Legacy_External_Id__c = 'test';
@@ -1114,7 +1254,11 @@ private class ISSP_AMS_PASS_Accreditation_Test
 
             AMS_Accreditation_Contact__c testAgencyContact=new AMS_Accreditation_Contact__c();
             testAgencyContact.AMS_Pax_Accreditation_Form__c=newForm.id;
-            testAgencyContact.PASS_contact__c  =true;
+            //testAgencyContact.PASS_contact__c  =true;
+            // MIGUEL ALB
+            testAgencyContact.PASS_admin__c = false;
+            testAgencyContact.PASS_user__c = true;
+            // /MIGUEL ALB
             testAgencyContact.Authorised_signatory__c=true;
             testAgencyContact.Financial_interest__c=50;
             testAgencyContact.Legacy_External_Id__c = 'test';
@@ -1124,7 +1268,11 @@ private class ISSP_AMS_PASS_Accreditation_Test
 
             AMS_Accreditation_Contact__c testTrainedStaffContact=new AMS_Accreditation_Contact__c();
             testTrainedStaffContact.AMS_Pax_Accreditation_Form__c=newForm.id;
-            testTrainedStaffContact.PASS_contact__c  =true;
+            //testTrainedStaffContact.PASS_contact__c  =true;
+            //MIGUEL ALB
+            testTrainedStaffContact.PASS_admin__c = false;
+            testTrainedStaffContact.PASS_user__c = true;
+            // /MIGUEL ALB
             testTrainedStaffContact.Authorised_signatory__c=true;
             testTrainedStaffContact.Financial_interest__c=50;
             testTrainedStaffContact.Legacy_External_Id__c = 'test';

@@ -3,7 +3,11 @@ private class ISSP_AMS_Accreditation_Test {
     @testSetup static void customSettingSetup() {
         insert new ISSP_CS__c(Name = 'ISSP AMS ALLOWED AGENCY URL', Value__c = '^(http:\\/\\/|https:\\/\\/)?(www.)([a-zA-Z0-9\\-]+)([.])(([a-zA-Z]{3})|([a-zA-Z]{2}))');
         insert new ISSP_CS__c(Name = 'No Notification Email Contact Id', Value__c = null);
-    }
+	//PASS
+        insert new ISSP_AMS_Contextual_Help__c(Name='PASS_ADMIN',ISSP_AMS_HelpText_ar__c   ='test',ISSP_AMS_HelpText_de__c ='test',ISSP_AMS_HelpText_en_US__c  ='test',ISSP_AMS_HelpText_es__c ='test',ISSP_AMS_HelpText_fr__c ='test',ISSP_AMS_HelpText_in__c ='test',ISSP_AMS_HelpText_it__c ='test',ISSP_AMS_HelpText_ja__c ='test',ISSP_AMS_HelpText_ko__c ='test',ISSP_AMS_HelpText_pt_BR__c  ='test',ISSP_AMS_HelpText_th__c ='test',ISSP_AMS_HelpText_vi__c ='test',ISSP_AMS_HelpText_zh_CN__c  ='test');
+        insert new ISSP_AMS_Contextual_Help__c(Name='PASS_USER',ISSP_AMS_HelpText_ar__c   ='test',ISSP_AMS_HelpText_de__c ='test',ISSP_AMS_HelpText_en_US__c  ='test',ISSP_AMS_HelpText_es__c ='test',ISSP_AMS_HelpText_fr__c ='test',ISSP_AMS_HelpText_in__c ='test',ISSP_AMS_HelpText_it__c ='test',ISSP_AMS_HelpText_ja__c ='test',ISSP_AMS_HelpText_ko__c ='test',ISSP_AMS_HelpText_pt_BR__c  ='test',ISSP_AMS_HelpText_th__c ='test',ISSP_AMS_HelpText_vi__c ='test',ISSP_AMS_HelpText_zh_CN__c  ='test');
+
+	}
 
     @isTest static void ISSP_AMS_Accreditation_Test_1() {
         IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', IATA_Contry_KR__c = 'test', CASS_Import__c = 'Yes',
@@ -2129,6 +2133,7 @@ private class ISSP_AMS_Accreditation_Test {
             newContact.Phone__c = '1123123';
             newContact.Email__c = 'test@test.com';
             newContact.AMS_Pax_Accreditation_Form__c = newForm.Id;
+		newContact.PASS_admin__c = true; //PASS
             insert newContact;
 
             Portal_Applications__c app = new Portal_Applications__c(Name = 'IFAP');
@@ -2161,6 +2166,8 @@ private class ISSP_AMS_Accreditation_Test {
             ctrl.txtHelpFinContact = '';
             ctrl.txtHelpPortalAdmin = '';
             ctrl.txtHelpGrossSales = '';
+            ctrl.txtHelpPassAdmin = '';
+            ctrl.txtHelpPassUser = '';
             ctrl.isEUcountry = true;
             ctrl.vatNumber = '123';
             ctrl.amsLocationType = 'New HO - IATA Passenger Sales Agent';

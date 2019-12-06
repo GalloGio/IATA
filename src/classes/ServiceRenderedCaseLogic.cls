@@ -118,21 +118,38 @@ public class ServiceRenderedCaseLogic {
               for(AP_Process_Form__c formRecord: [SELECT Id,RecordTypeId FROM AP_Process_Form__c WHERE Case__c IN: passCaseIdList]){
                   objectMapAPProcessForm.put(formRecord.Id, formRecord);
               }
-              if(objectMapAPProcessForm.size()>0){
-                PlatformEvents_Helper.publishEvents(objectMapAPProcessForm, 'PASS__e', 'AP_Process_Form__c', true, false, false, false);
+              
+              //PASS
+              /*if(objectMapAPProcessForm.size()>0){
+                //PlatformEvents_Helper.publishEvents(objectMapAPProcessForm, 'PASS__e', 'AP_Process_Form__c', true, false, false, false);
+                PlatformEvents_Helper.publishEvents(objectMapAPProcessForm, 'Airline_Account__e', 'AP_Process_Form__c', true, false, false, false);
+              }*/ //-- This Platform Events is not related to Service Render
+              
+              /*List<Case> toGetCaseStatus = new List<Case>(); //[SELECT Id, Status FROM Case WHERE Id IN :newSRList.Source_Case__c];
+              for(Case c : newSRList) {
+                toGetCaseStatus.add(c.Source_Case__c);
+              }*/
+
+              //PASS
+              //Id serviceRenderId;
+              for(Services_Rendered__c serviceRendered : newSRList){
+                /*for(Case c : toGetCaseStatus) {
+                  
+                }*/
+                if(passCaseIdList.contains(serviceRendered.Source_Case__c)){
+                objectMapServiceRendered.put(serviceRendered.Id, serviceRendered);
+                //serviceRenderId = serviceRendered.Id;
+                } 
               }
 
-              for(Services_Rendered__c serviceRecord:newSRList){
-                if(passCaseIdList.contains(serviceRecord.Source_Case__c)){
-                  objectMapServiceRendered.put(serviceRecord.Id, serviceRecord);
-                }
-              }
               if(objectMapServiceRendered.size()>0){
-                PlatformEvents_Helper.publishEvents(objectMapServiceRendered, 'PASS__e', 'Services_Rendered__c', false, true, false, false);
+                
+                
+                PlatformEvents_Helper.publishEvents(objectMapServiceRendered, 'Service_Rendered__e', 'Services_Rendered__c', false, true, false, false);
               }
             }
         }
-   }
+    } }
   /*
   This method is in commented to solve a conflict. The method above should be enough as it has logic of the PASS project. DB
 

@@ -3807,8 +3807,7 @@ public class AMS_OSCARTriggerHandler {
                 changeCode.status  = n.Account_status_change__c;
                 changeCode.publishedOnEBulletin = n.Published_in_bulletin__c;
 
-                AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {updatedOscar}, (List<Account>)JSON.deserialize('[{"Id" : "'+ updatedOscar.Account__c +'", "CNS_Agency__c" : ' + accounts.get(updatedOscar.Account__c).CNS_Agency__c + ' }]', List<Account>.class), true);
-            }
+                AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode},new List<AMS_OSCAR__c> {updatedOscar},(List<Account>)JSON.deserialize('[{"Id" : "'+ updatedOscar.Account__c +'", "CNS_Agency__c" : "' + accounts.get(updatedOscar.Account__c).CNS_Agency__c + '", "Sector__c" : "' + accounts.get(updatedOscar.Account__c).Sector__c +'", "Category__c" : "' + accounts.get(updatedOscar.Account__c).Category__c +'" }]', List<Account>.class), true);            }
         // Management of CORRECTION OSCARs
         }else if (updatedOscar.recordTypeID == AMS_Utils.RECTYPE_CORRECTION){
             if (oldOSCAR.STEP6__c != 'Passed' && updatedOscar.STEP6__c == 'Passed'){

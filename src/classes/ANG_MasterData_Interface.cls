@@ -25,7 +25,7 @@ global class ANG_MasterData_Interface{
                                             Email__c, fax, IATACode__c, Id, ANG_IEP_Status_FF__c, Location_Class__c, Location_Type__c, Name, Parent.IATACode__c, phone, 
                                             IATA_ISO_Country__r.ANG_Portal_Service__r.Name, IATA_ISO_Country__r.Region__c, Reason__c, Remittance_frequency__c, Status__c, Tax_ID_1__c, TradeName__c, 
                                             VAT_Number__c, ANG_RiskStatus__c, Segmentation__c, Top_Parent__r.IATACode__c,IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode, Top_Parent__c,
-                                            GDI_Status__c, Is_PCI_compliant__c,
+                                            GDI_Status__c, Is_PCI_compliant__c, IMPC_Code__c,
                                             (Select Id, recordtype.developername, Email_Used_for_BSP_Creation__c, ANG_FormOfPayment_ID__c, Status__c From Agency_Authorizations__r where recordtype.developername in ('BSPLink','FormOfPayment')),  //Accelya Email + FOP
                                             (Select Id, IATACode__c, Status__c, Is_PCI_compliant__c From ChildAccounts where Purge_Flag__c = false and IATACode__c != null and recordtype.developername= 'IATA_Agency'), //List of children
                                             (Select Id, ANG_RHC_Amount__c, CurrencyIsoCode, ANG_Financial_Security__c From RHC_Informations__r), //RHC Information
@@ -191,6 +191,7 @@ global class ANG_MasterData_Interface{
         public list<DueDiligence> dueDiligence;
         public list<string> externalSystems; //NEWGEN-4276
         public Boolean isPciDss;
+        public String IMPCCode; //PASS
 
         /*Constructor*/
         public MasterDataPayload(Account acc, boolean getChildren, String changeCode){
@@ -308,6 +309,12 @@ global class ANG_MasterData_Interface{
                 //Fill isPciDss attribute for every Account IEP Status except "No IEP Account" or blank 
                 if(String.isNotBlank(acc.ANG_IEP_Status_FF__c) && acc.ANG_IEP_Status_FF__c != AMS_Utils.NO_IEP_ACCOUNT){
                     this.isPciDss = String.isNotBlank(acc.Is_PCI_compliant__c) ? pciCompliantFldMapping.get(acc.Is_PCI_compliant__c) : FALSE;
+                }
+
+                //PASS Agency Integration
+                if(acc.location_class__c == 'L') {
+                    this.externalSystems.add('PASSlink');
+                    this.IMPCCode = acc.IMPC_Code__c;
                 }
 
             }

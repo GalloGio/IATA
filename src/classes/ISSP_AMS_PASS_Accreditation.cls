@@ -3420,16 +3420,16 @@ public without sharing class ISSP_AMS_PASS_Accreditation {
         /*cntContact = [SELECT COUNT() FROM AMS_Accreditation_Contact__c
                           WHERE AMS_Pax_Accreditation_Form__c = :newForm.Id AND PASS_contact__c = true];*/
 
-
+        //PASS
         cntAdmin = [SELECT COUNT() FROM AMS_Accreditation_Contact__c
                         WHERE AMS_Pax_Accreditation_Form__c = :newForm.Id AND PASS_admin__c = true];
 
         cntMultiplePASS = [SELECT COUNT() FROM AMS_Accreditation_Contact__c
                             WHERE AMS_Pax_Accreditation_Form__c = :newForm.Id AND PASS_admin__c = true AND PASS_user__c = true];
-
+        //PASS 
 
         system.debug('validateForm - cntAuthorisedSig: ' + cntAuthorisedSig);
-        system.debug('validateForm - cntContact: ' + cntContact);
+        //system.debug('validateForm - cntContact: ' + cntContact);
         system.debug('amsOfficeType: ' + amsOfficeType);
         system.debug('AMS_Utils.HO: ' + AMS_Utils.HO);
 
@@ -3460,7 +3460,7 @@ public without sharing class ISSP_AMS_PASS_Accreditation {
                 errorFound = true;
             }
 
-
+		//PASS
            if(cntAdmin == 0) {
                 ApexPages.Message myMsg;
                 myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Validation_PASS_Admin);
@@ -3474,7 +3474,7 @@ public without sharing class ISSP_AMS_PASS_Accreditation {
                 ApexPages.addMessage(myMsg);
                 errorFound = true;
             }
-
+		//PASS
 
             /*if (cntContact == 0) {
                 ApexPages.Message myMsg;
@@ -3608,7 +3608,7 @@ public without sharing class ISSP_AMS_PASS_Accreditation {
                 errorFound = true;
             }
 
-
+		//PASS
             if(cntAdmin == 0) {
                 ApexPages.Message myMsg;
                 myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Validation_PASS_Admin);
@@ -3622,7 +3622,7 @@ public without sharing class ISSP_AMS_PASS_Accreditation {
                 ApexPages.addMessage(myMsg);
                 errorFound = true;
             }
-
+		//PASS
 
             /*if (cntContact == 0) {
                 ApexPages.Message myMsg;
@@ -3840,7 +3840,7 @@ public without sharing class ISSP_AMS_PASS_Accreditation {
                 txtHelpTrainedStaffReference = (String)hlp.get(fldName);
             }
         }
-
+	//PASS
         hlp = ISSP_AMS_Contextual_Help__c.getValues('PASS_ADMIN');
         if (hlp != null) {
             if ((String)hlp.get(fldName) != null) {
@@ -3858,7 +3858,7 @@ public without sharing class ISSP_AMS_PASS_Accreditation {
                 txtHelpPassUser = (String)hlp.get(fldName);
             }
         }
-
+	//PASS
 
         txtLocalAgencyDetailsTitle = Label.ISSP_AMS_Local_Details_Title_PASS_BRANCH;
         txtLocalAgencyDetailsPleaseEnter = Label.ISSP_AMS_Local_Details_Please_Enter_PASS;

@@ -128,6 +128,7 @@ public without sharing class AMS_Utils {
     public static final String passAggregatorCaseReason = 'PASS Country Aggregator';
     public static final String passIATAMultipleCountries = 'Multiple';
     public static final String accountReasonForCreationPASS = 'New Airline joining PASS';
+    public static final String passSSOPortalService = 'PASSlink Single Sign-On';
 
     //AMSU-125
     public static final Set<String> oscarNewProcesses = new Set<String> {new_HO, new_BR, new_BR_ABROAD, new_TIDS, new_MSO, new_GSA, new_GSA_BSP, new_GSSA, new_AHA, new_AHA_BSP, new_SA};

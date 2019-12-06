@@ -7071,6 +7071,10 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                 <valueName>Non-IATA Cargo Agent</valueName>
             </valueSettings>
             <valueSettings>
+                <controllingFieldValue>Cargo Agent</controllingFieldValue>
+                <valueName>Postal Service</valueName>
+            </valueSettings>
+            <valueSettings>
                 <controllingFieldValue>Training</controllingFieldValue>
                 <valueName>Academic/Research Body</valueName>
             </valueSettings>

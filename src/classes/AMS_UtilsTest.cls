@@ -803,4 +803,20 @@ private class AMS_UtilsTest {
         result = AMS_Utils.decodeAMFromOscarProcess('something', 'value');
         System.assertEquals(result, 'value');
     }
+
+    //MIGUEL ALBUQUERQUE
+    @isTest
+    static void encriptionKeyAndAlgorythmTest() {
+        String strKey;
+        String strAlgo;
+        //AMS_Utils util = new AMS_Utils();
+
+        Test.startTest();
+        strKey = AMS_Utils.ENCRYPTION_KEY;
+        strAlgo = AMS_Utils.ENCRYPTION_ALGORYTHM;
+
+        System.assertEquals(strKey, 'hasd==aSDFclDDGasjdhfclx');
+        System.assertEquals(strAlgo, 'AES128');
+        Test.stopTest();
+    }
 }
