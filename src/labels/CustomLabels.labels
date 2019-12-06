@@ -17448,6 +17448,14 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <value>Apply for a New Associate Entity</value>
     </labels>
     <labels>
+        <fullName>ISSP_Add_New_Associate_Entity</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Add_New_Associate_Entity</shortDescription>
+        <value>Add New Associate Entity</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Apply_New_Branch_Office</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -18175,6 +18183,14 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <protected>false</protected>
         <shortDescription>ISSP AMS CONFIRM DISCARD APPLICATION</shortDescription>
         <value>Are you sure you want to discard your application?</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_DISCARD_APPLICATION</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_DISCARD_APPLICATION</shortDescription>
+        <value>Discard Application</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Capacity</fullName>

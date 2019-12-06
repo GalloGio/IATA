@@ -522,7 +522,14 @@
                 $('[id$=isSameLegal]').first().insertAfter($('[id$=countrySelection').first());
                 populateLegalAndSeparateFields();
                 enableDisableLegalName();
+
+                if ('{!sectorValue}' === 'Cargo_Agent'){
+                    $('#brcountry').show();
+                    $('#brabroadcountries').hide();
+                } else {
                 $('[id$=officetypelist]').prop('disabled', true);
+            }
+                
             }
         }
 
@@ -1041,6 +1048,12 @@
                                     if (sectorValue === 'Cargo_Agent') {
                                         $('[name$=separateLegalEntitySelect]').prop('checked', false);
                                         $('[name$=isGSASelect]').prop('checked', false);
+
+                                        $('#brcountry').show();
+                                        $('#brabroadcountries').hide();
+                                    } else if ({!isMultiCountryNewAE}) {
+                                        $('#brcountry').hide();
+                                        $('#brabroadcountries').show();
                                     }
 
                                     setVarsProductComparisonLink(namEnabled, sectorValue, isHOAccredited, sector);
