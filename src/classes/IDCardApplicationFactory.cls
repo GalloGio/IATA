@@ -291,10 +291,12 @@ public class IDCardApplicationFactory {
         application.ID_Card_Fee__c = detailledFees.get('IDCardFee');
         application.IDCard_Expedite_Delivery_Fee__c = detailledFees.get('ExpediteFee');
         application.ITDI_Courses_Fee__c = detailledFees.get('ITDIFee');
+        application.Physical_Card_Fee__c = detailledFees.get('PhysCardFee');
+        application.ID_Card_Fee_Discount__c = detailledFees.get('Discount');
 
         ///////////////
-        application.ID_Card_Fee__c = application.ID_Card_Fee__c * ((100 - (acc.ID_Card_Key_Account_Discount__c == null ? 0 : acc.ID_Card_Key_Account_Discount__c)) / 100);
-        application.Applicable_Fee__c = application.ID_Card_Fee__c + application.IDCard_Expedite_Delivery_Fee__c + application.ITDI_Courses_Fee__c;
+        application.ID_Card_Fee__c = (application.ID_Card_Fee__c + application.Physical_Card_Fee__c) * ((100 - (acc.ID_Card_Key_Account_Discount__c == null ? 0 : acc.ID_Card_Key_Account_Discount__c)) / 100);
+        application.Applicable_Fee__c = application.ID_Card_Fee__c + application.Physical_Card_Fee__c + application.IDCard_Expedite_Delivery_Fee__c + application.ITDI_Courses_Fee__c;
         ///////////////
 
         application.CurrencyIsoCode = listPriceTables[0].CurrencyIsoCode;

@@ -782,4 +782,137 @@ private class WorkflowHelperTest {
 
 
     }
+
+    @isTest static void updateRecordSharingCriteriaTest() {
+
+        String uniqueUserName = 'iataiwuser' + DateTime.now().getTime() + '@testorg.com';
+
+        IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='PT');
+        insert ctry ;
+
+        Id standardAccountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
+
+        Account account = new Account();
+        account.Name = 'Update Record Sharing Criteria Test';
+        account.IATA_ISO_Country__c = ctry.Id;
+        account.RecordTypeId = standardAccountRT;
+        insert account;
+
+        List<Contact> conListToInsert = new List<Contact>();
+
+        Contact c1 = new Contact();
+        c1.LastName = 'Contact 1';
+        c1.Email = uniqueUserName + '1';
+        c1.AccountId = account.Id;
+        c1.Record_Sharing_Criteria__c = 'IFG Active Users';
+        conListToInsert.add(c1);
+
+        Contact c2 = new Contact();
+        c2.LastName = 'Contact 2';
+        c2.Email = uniqueUserName + '2';
+        c2.AccountId = account.Id;
+        c2.Record_Sharing_Criteria__c = 'None';
+        conListToInsert.add(c2);
+
+        Test.startTest();
+        insert conListToInsert;
+        Test.stopTest();
+
+        List<Contact> conList = [SELECT Id, Record_Sharing_Criteria_AUX__c FROM Contact WHERE AccountId =: account.Id];
+
+        System.assertEquals('IFG Active Users;', conList.get(0).Record_Sharing_Criteria_AUX__c);
+        System.assertEquals(null, conList.get(1).Record_Sharing_Criteria_AUX__c);
+    }
+
+    @isTest static void keyContactOptOutTest() {
+
+        String uniqueUserName = 'iataiwuser' + DateTime.now().getTime() + '@testorg.com';
+
+        IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='PT');
+        insert ctry ;
+
+        Id standardAccountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
+
+        Account account = new Account();
+        account.Name = 'Key Contact Opt Out Test';
+        account.IATA_ISO_Country__c = ctry.Id;
+        account.RecordTypeId = standardAccountRT;
+        insert account;
+
+        List<Contact> conListToInsert = new List<Contact>();
+
+        Contact c1 = new Contact();
+        c1.FirstName = 'My';
+        c1.LastName = 'Contact 1';
+        c1.Email = uniqueUserName + '1';
+        c1.AccountId = account.Id;
+        c1.CEO_CFO__c = 'CEO';
+        c1.HasOptedOutOfEmail = false;
+        c1.Marketing_Communications_Opt_in__c = true;
+        c1.Title = 'Manager';
+        c1.Membership_Function__c = 'Finance';
+        conListToInsert.add(c1);
+
+        Contact c2 = new Contact();
+        c2.FirstName = 'My';
+        c2.LastName = 'Contact 2';
+        c2.Email = uniqueUserName + '2';
+        c2.AccountId = account.Id;
+        c2.HasOptedOutOfEmail = false;
+        c2.Marketing_Communications_Opt_in__c = true;
+        conListToInsert.add(c2);
+
+        Test.startTest();
+        insert conListToInsert;
+        Test.stopTest();
+
+        List<Contact> conList = [SELECT Id, HasOptedOutOfEmail, Marketing_Communications_Opt_in__c FROM Contact WHERE AccountId =: account.Id];
+
+        System.assert(conList.get(0).HasOptedOutOfEmail);
+        System.assert(!conList.get(0).Marketing_Communications_Opt_in__c);
+        System.assert(!conList.get(1).HasOptedOutOfEmail);
+        System.assert(conList.get(1).Marketing_Communications_Opt_in__c);
+    }
+
+    @isTest static void updateIDCardContactCheckboxTest() {
+
+        String uniqueUserName = 'iataiwuser' + DateTime.now().getTime() + '@testorg.com';
+
+        IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='PT');
+        insert ctry ;
+
+        Id standardAccountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
+
+        Account account = new Account();
+        account.Name = 'Update ID Card Contact Checkbox Test';
+        account.IATA_ISO_Country__c = ctry.Id;
+        account.RecordTypeId = standardAccountRT;
+        insert account;
+
+        List<Contact> conListToInsert = new List<Contact>();
+
+        Contact c1 = new Contact();
+        c1.LastName = 'Contact 1';
+        c1.Email = uniqueUserName + '1';
+        c1.AccountId = account.Id;
+        c1.ID_Card_Holder__c = false;
+        conListToInsert.add(c1);
+
+        Contact c2 = new Contact();
+        c2.LastName = 'Contact 2';
+        c2.Email = uniqueUserName + '2';
+        c2.AccountId = account.Id;
+        c2.VER_Number__c = 1234567890;
+        c2.ID_Card_Holder__c = false;
+        conListToInsert.add(c2);
+
+        Test.startTest();
+        insert conListToInsert;
+        Test.stopTest();
+
+        List<Contact> conList = [SELECT Id, ID_Card_Holder__c FROM Contact WHERE AccountId =: account.Id];
+
+        System.assert(!conList.get(0).ID_Card_Holder__c);
+        System.assert(conList.get(1).ID_Card_Holder__c);
+    }
 }

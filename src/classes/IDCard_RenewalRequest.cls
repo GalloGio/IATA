@@ -5,7 +5,8 @@
 public class IDCard_RenewalRequest {
 
 	public class Payment {
-		public Double amount {get;set;} 
+		public Double amount {get;set;}
+		public Double discount {get;set;} 
 		public String orderDate {get;set;} 
 		public String cur {get;set;} 
 		public String cardNumber {get;set;} 
@@ -19,6 +20,8 @@ public class IDCard_RenewalRequest {
 					if (parser.nextToken() != System.JSONToken.VALUE_NULL) {
 						if (text == 'amount') {
 							amount = parser.getDoubleValue();
+						} else if (text == 'discount') {
+							discount = parser.getDoubleValue();
 						} else if (text == 'date') {
 							orderDate = parser.getText();
 						} else if (text == 'currency') {

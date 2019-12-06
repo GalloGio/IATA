@@ -73,7 +73,7 @@ private class trgIDCard_Case_BeforeUpdateTest
             
             List<ID_Card__c> idCardToInsert = new List<ID_Card__c>();          
             idCardToInsert.add(IDCardUtil.CreateIDCardObjectFromApplication(idCardAppToInsert[0], relatedContact[0]));            
-            insert idCardToInsert;
+            upsert idCardToInsert;
             
             idCardAppToInsert[0].Type_of_application__c = IDCardUtil.APPLICATIONTYPE_REISSUE;
             update idCardAppToInsert;
