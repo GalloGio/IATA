@@ -197,7 +197,7 @@
                                     <apex:pageBlock mode="edit">
                                        <apex:pageBlockButtons location="bottom" style="padding-left:100px">
                                            <apex:outputPanel id="cmdButtonsBlock">
-                                            <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-right" action="{!withdrawCountries}" value="Continue" rendered="{!changePass}" reRender="strmessages,countryListPassToWithdraw"/>&nbsp; <!--msa - rendered -->
+                                            <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-right" action="{!withdrawCountries}" value="Continue" rendered="{!changePass}" reRender="strmessages,countryListPassToWithdraw"/>&nbsp;
                                             <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-right" action="{!save}" rendered="{!!changePass}" value="Continue" />&nbsp;    
                                             <apex:commandButton styleclass="iatabtn iatabtn-danger iatabtn-right" action="{!cancel}" value="{!$Label.ISSP_Cancel}"
                                             immediate="true" />
