@@ -5892,12 +5892,16 @@
         <name>IDCard_CardDuration</name>
     </customLabels>
     <customLabels>
-        <label>Detalles del caso</label>
-        <name>IDCard_CaseDetails</name>
+        <label><!-- IDCard_CardType_DigCard --></label>
+        <name>IDCard_CardType_DigCard</name>
     </customLabels>
     <customLabels>
         <label>No</label>
         <name>IDCard_CardType_DigCardNo</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IDCard_CardType_PhysCard --></label>
+        <name>IDCard_CardType_PhysCard</name>
     </customLabels>
     <customLabels>
         <label>Sí</label>
@@ -5906,6 +5910,10 @@
     <customLabels>
         <label>¿Le gustaría recibir una tarjeta de identificación IATA impresa? Pueden aplicarse cargos adicionales.</label>
         <name>IDCard_CardType_WishToRecieve</name>
+    </customLabels>
+    <customLabels>
+        <label>Detalles del caso</label>
+        <name>IDCard_CaseDetails</name>
     </customLabels>
     <customLabels>
         <label>Numero de caso:</label>
@@ -6176,6 +6184,10 @@ Por favor, si es la primera vez que usted solicita una tarjeta de identificació
         <name>IDCard_Details</name>
     </customLabels>
     <customLabels>
+        <label><!-- IDCard Discount --></label>
+        <name>IDCard_Discount</name>
+    </customLabels>
+    <customLabels>
         <label>El nombre enseñado se reduce para ajustarse a 22 caracteres</label>
         <name>IDCard_DisplayedName_RemainingCharacter</name>
     </customLabels>
@@ -6234,10 +6246,6 @@ Por favor, si es la primera vez que usted solicita una tarjeta de identificació
     <customLabels>
         <label><!-- IDCard ExportCSV --></label>
         <name>IDCard_ExportCSV</name>
-    </customLabels>
-    <customLabels>
-        <label>Cargo por tarjeta de identificación IATA</label>
-        <name>IDCard_fee</name>
     </customLabels>
     <customLabels>
         <label>Tarifa aplicable</label>
@@ -6714,16 +6722,16 @@ Para los nuevos solicitantes y los agentes que regresan y que no tengan sus cód
         <name>IDCard_PortalPage_SubMenu_ReplaceRenew</name>
     </customLabels>
     <customLabels>
+        <label>Código promocional</label>
+        <name>IDCard_PromotionCode</name>
+    </customLabels>
+    <customLabels>
         <label><!-- IDCard Purchase --></label>
         <name>IDCard_Purchase</name>
     </customLabels>
     <customLabels>
         <label>confirmación de la compra</label>
         <name>IDCard_PurchaseConfirmation</name>
-    </customLabels>
-    <customLabels>
-        <label>Código promocional</label>
-        <name>IDCard_PromotionCode</name>
     </customLabels>
     <customLabels>
         <label><!-- IDCard_Question_New_Or_Change --></label>
@@ -6889,6 +6897,10 @@ Por favor tenga en cuenta que todo agente trabajando desde su hogar deberá coor
     <customLabels>
         <label><!-- IDCard error 20 hours required --></label>
         <name>IDCard_error_20_hours_required</name>
+    </customLabels>
+    <customLabels>
+        <label>Cargo por tarjeta de identificación IATA</label>
+        <name>IDCard_fee</name>
     </customLabels>
     <customLabels>
         <label><!-- IDCard hasPhoto --></label>

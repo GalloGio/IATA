@@ -11745,13 +11745,6 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <value>Export as CSV</value>
     </labels>
     <labels>
-        <fullName>IDCard_fee</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ID Card fee</shortDescription>
-        <value>ID Card fee</value>
-    </labels>
-    <labels>
         <fullName>IDCard_FeeApplicable_Label</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -12581,6 +12574,13 @@ Should you have any question about payment by bank transfer, please visit &lt;a 
         <value>REPLACE RENEW</value>
     </labels>
     <labels>
+        <fullName>IDCard_PromotionCode</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IDCard_PromotionCode</shortDescription>
+        <value>Promo code</value>
+    </labels>
+    <labels>
         <fullName>IDCard_Purchase</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -12593,13 +12593,6 @@ Should you have any question about payment by bank transfer, please visit &lt;a 
         <protected>false</protected>
         <shortDescription>IDCard_PurchaseConfirmation</shortDescription>
         <value>Purchase confirmation</value>
-    </labels>
-    <labels>
-        <fullName>IDCard_PromotionCode</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>IDCard_PromotionCode</shortDescription>
-        <value>Promo code</value>
     </labels>
     <labels>
         <fullName>IDCard_Question_New_Or_Change</fullName>
@@ -12888,6 +12881,13 @@ Kindly note that home-based agents are required to coordinate with their colleag
         <protected>false</protected>
         <shortDescription>IDCard error 20 hours required</shortDescription>
         <value>employee must work more than 20 hours per week to obtain an ID Card.</value>
+    </labels>
+    <labels>
+        <fullName>IDCard_fee</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ID Card fee</shortDescription>
+        <value>ID Card fee</value>
     </labels>
     <labels>
         <fullName>IDCard_hasPhoto</fullName>
