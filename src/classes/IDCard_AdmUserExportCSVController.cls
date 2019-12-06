@@ -124,7 +124,7 @@ public with sharing class IDCard_AdmUserExportCSVController extends IDCardAbstra
 
     for (ID_Card_Application__c  idca : [Select i.VER_Number__c, i.Photo__c, i.Type_of_application__c, i.Single_Application_Processing_Step__c, i.RecordTypeId, i.Mass_order_Application__c, i.Id, i.IATA_Code__c, i.Displayed_Name__c, i.Application_Status__c,
                                          Title__c, First_Name__c, Last_Name__c, Date_of_Birth__c, Position_in_Current_Agency__c, Duties_in_Current_Agency__c,
-                                         Start_Date_Agency_Month__c, Start_Date_Agency_Year__c, Start_Date_Industry__c,
+                                         Start_Date_Agency_Month__c, Start_Date_Agency_Year__c, Start_Date_Industry__c, Card_Type__c,
                                          Package_of_Travel_Professionals_Course_1__c,  Package_of_Travel_Professionals_Course_2__c
 
 
