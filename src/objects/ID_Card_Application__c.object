@@ -1074,19 +1074,18 @@ Completed: Process is complete</inlineHelpText>
                 </value>
             </valueSetDefinition>
         </valueSet>
-	</fields>
+    </fields>
     <fields>
-        <fullName>ID_Card__c</fullName>
-        <deleteConstraint>SetNull</deleteConstraint>
+        <fullName>ID_Card_Fee_Discount__c</fullName>
+        <description>Discount for the fee for the card.</description>
         <externalId>false</externalId>
-        <label>ID Card</label>
-        <referenceTo>ID_Card__c</referenceTo>
-        <relationshipLabel>ID Card Applications</relationshipLabel>
-        <relationshipName>ID_Card_Applications</relationshipName>
+        <label>ID Card Fee Discount</label>
+        <precision>18</precision>
         <required>false</required>
+        <scale>2</scale>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
-        <type>Lookup</type>
+        <type>Currency</type>
     </fields>
     <fields>
         <fullName>ID_Card_Fee__c</fullName>
@@ -1101,16 +1100,17 @@ Completed: Process is complete</inlineHelpText>
         <type>Currency</type>
     </fields>
     <fields>
-        <fullName>ID_Card_Fee_Discount__c</fullName>
-        <description>Discount for the fee for the card.</description>
+        <fullName>ID_Card__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
-        <label>ID Card Fee Discount</label>
-        <precision>18</precision>
+        <label>ID Card</label>
+        <referenceTo>ID_Card__c</referenceTo>
+        <relationshipLabel>ID Card Applications</relationshipLabel>
+        <relationshipName>ID_Card_Applications</relationshipName>
         <required>false</required>
-        <scale>2</scale>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
-        <type>Currency</type>
+        <type>Lookup</type>
     </fields>
     <fields>
         <fullName>ITDI_Courses_Fee__c</fullName>
@@ -1532,18 +1532,6 @@ Completed: Process is complete</inlineHelpText>
         </valueSet>
     </fields>
     <fields>
-        <fullName>Physical_Card_Fee__c</fullName>
-        <description>Fee for printing the physical card.</description>
-        <externalId>false</externalId>
-        <label>Printing Fee</label>
-        <precision>18</precision>
-        <required>false</required>
-        <scale>2</scale>
-        <trackHistory>true</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Currency</type>
-    </fields>
-    <fields>
         <fullName>Photo__c</fullName>
         <description>Filename of the agent&apos;s photo</description>
         <externalId>false</externalId>
@@ -1554,6 +1542,18 @@ Completed: Process is complete</inlineHelpText>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Physical_Card_Fee__c</fullName>
+        <description>Fee for printing the physical card.</description>
+        <externalId>false</externalId>
+        <label>Printing Fee</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
     </fields>
     <fields>
         <fullName>Position_Code__c</fullName>

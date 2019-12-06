@@ -5893,12 +5893,16 @@
         <name>IDCard_CardDuration</name>
     </customLabels>
     <customLabels>
-        <label>Détails du cas</label>
-        <name>IDCard_CaseDetails</name>
+        <label><!-- IDCard_CardType_DigCard --></label>
+        <name>IDCard_CardType_DigCard</name>
     </customLabels>
     <customLabels>
         <label>Non</label>
         <name>IDCard_CardType_DigCardNo</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IDCard_CardType_PhysCard --></label>
+        <name>IDCard_CardType_PhysCard</name>
     </customLabels>
     <customLabels>
         <label>Oui</label>
@@ -5907,6 +5911,10 @@
     <customLabels>
         <label>Aimeriez-vous recevoir une carte d’identité imprimée? Des frais supplémentaires peuvent s’appliquer.</label>
         <name>IDCard_CardType_WishToRecieve</name>
+    </customLabels>
+    <customLabels>
+        <label>Détails du cas</label>
+        <name>IDCard_CaseDetails</name>
     </customLabels>
     <customLabels>
         <label>Numéro de dossier:</label>
@@ -6177,6 +6185,10 @@ Veuillez, si c&apos;est la première fois que vous faites une demande de carte d
         <name>IDCard_Details</name>
     </customLabels>
     <customLabels>
+        <label><!-- IDCard Discount --></label>
+        <name>IDCard_Discount</name>
+    </customLabels>
+    <customLabels>
         <label>The display Name is truncated to fit 22 characters</label>
         <name>IDCard_DisplayedName_RemainingCharacter</name>
     </customLabels>
@@ -6235,10 +6247,6 @@ Veuillez, si c&apos;est la première fois que vous faites une demande de carte d
     <customLabels>
         <label><!-- IDCard ExportCSV --></label>
         <name>IDCard_ExportCSV</name>
-    </customLabels>
-    <customLabels>
-        <label>Frais pour la carte d’identité</label>
-        <name>IDCard_fee</name>
     </customLabels>
     <customLabels>
         <label>Frais applicables</label>
@@ -6714,16 +6722,16 @@ Pour les agents qui souhaitent renouveler, réémettre la carte en raison de per
         <name>IDCard_PortalPage_SubMenu_ReplaceRenew</name>
     </customLabels>
     <customLabels>
+        <label>Code de promotion</label>
+        <name>IDCard_PromotionCode</name>
+    </customLabels>
+    <customLabels>
         <label>Executer</label>
         <name>IDCard_Purchase</name>
     </customLabels>
     <customLabels>
         <label>Confirmation d&apos;achat</label>
         <name>IDCard_PurchaseConfirmation</name>
-    </customLabels>
-    <customLabels>
-        <label>Code de promotion</label>
-        <name>IDCard_PromotionCode</name>
     </customLabels>
     <customLabels>
         <label><!-- IDCard_Question_New_Or_Change --></label>
@@ -6889,6 +6897,10 @@ Veuillez noter que les agents à domicile sont tenus de coordonner avec leurs co
     <customLabels>
         <label><!-- IDCard error 20 hours required --></label>
         <name>IDCard_error_20_hours_required</name>
+    </customLabels>
+    <customLabels>
+        <label>Frais pour la carte d’identité</label>
+        <name>IDCard_fee</name>
     </customLabels>
     <customLabels>
         <label><!-- IDCard hasPhoto --></label>
