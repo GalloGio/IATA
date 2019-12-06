@@ -136,6 +136,9 @@ global without sharing class ISSP_APProcess {
     public Boolean showHotFilesEmail{get;set;}
     public Boolean showPDFReportsPreference {get;set;}
     public Boolean showPDFReportsEmail{get;set;}
+    public Boolean changePass{get;set;}
+    
+
    
     public ISSP_APProcess(){
         //Set the Variables default values
@@ -164,6 +167,8 @@ global without sharing class ISSP_APProcess {
         showHotFilesEmail=false;
         showPDFReportsPreference=true;
         showPDFReportsEmail=false;
+        //JCFF
+        changePass=false;
 
         newForm = new AP_Process_Form__c();
         newCase = new Case();
@@ -794,13 +799,15 @@ global without sharing class ISSP_APProcess {
         //If we have retrieved same case going from STEP 1 back to STEP 2 then need to reset these 2 submitted fields
         newCase.IFAP_Country_ISO__c = apcountryisocode;
         newCase.Description = description;
-
-        isocountry = fetchISOCountry(newCase.IFAP_Country_ISO__c);
-        newCase.BSPCountry__c =  isocountry.Case_BSP_Country__c ;
-        newCase.Country_concerned_by_the_query__c = isocountry.Case_BSP_Country__c;
-        newCase.Visible_on_ISS_Portal__c = true;
-
-        newForm.ANG_Enable_NewGen__c = (isocountry.ANG_Portal_Service__c != null);
+        
+        if(!isPassAirline){
+            isocountry = fetchISOCountry(newCase.IFAP_Country_ISO__c);      
+            newCase.BSPCountry__c =  isocountry.Case_BSP_Country__c ;
+            newCase.Country_concerned_by_the_query__c = isocountry.Case_BSP_Country__c;
+            newCase.Visible_on_ISS_Portal__c = true;
+            newForm.ANG_Enable_NewGen__c = (isocountry.ANG_Portal_Service__c != null);
+        }
+        
 
         //AS - R03 SP03; for when GSSA create joining processs on behalf of Airline
     if(isPassAirline && !isGSSAUser){// One of the countries that is chosen for the Pass Joining will be in the IFAP_Country_ISO__c case field. If there are more than one country, the rest of them are going to be in the Country_Concerned__c case field
