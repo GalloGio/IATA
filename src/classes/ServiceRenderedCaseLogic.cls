@@ -87,7 +87,9 @@ public class ServiceRenderedCaseLogic {
         changingCases.add(c);
       }
 
-      if(!joiningCases.isEmpty()) 
+
+
+      if(!joiningCases.isEmpty()) {
         newSRList.addAll(ServiceRenderedCaseLogic.joiningCase(joiningCases,ServicesPerReason));  
 
             if(!leavingCases.isEmpty()) 

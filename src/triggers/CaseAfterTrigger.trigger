@@ -1060,7 +1060,11 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 	}
 	/****************************************************************************************************************************************************/    
     /*Trigger.isDelete*/
-    
+    else if (Trigger.isDelete) { 
+        System.debug('____ [cls CaseAfterTrigger - Trigger.isDelete]');
+        new ANG_CaseTriggerHandler().onAfterDelete();
+    }
+    /*Trigger.isDelete*/
 
     //MMSA
     // PASS Country - When Parent Child (Airline) is closed, only when being the first time accessing the 'Join Settlement Service', a Platform event is triggered: AP_Process_Form__c => Airline_Account__e 
