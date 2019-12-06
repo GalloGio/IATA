@@ -395,23 +395,6 @@
 									}
 									//END NEW VALINHO
 
-                                            function manageCaseAreaAvaiableOptions(element) {
-                                                let selectedLabel = $(element).find(":selected").text();
-                                                if(selectedLabel == "Accounting Centre of China Aviation (ACCA)"){
-                                                    //disable option iiNet and if it was selected, unselect it and the reason (dependent picklist)                                   
-                                                    $(".caseAreaField  option[value='iiNet']").prop('disabled', true);
-                                                    $(".caseAreaField  option[value='iiNet']").hide();
-                                                    if ($(".caseAreaField option:selected").val() === 'iiNet') {
-                                                        $(".caseAreaField option:selected").removeAttr("selected");
-                                                        $(".reason1Field option:selected").removeAttr("selected");
-                                                    }
-                                                } else {
-                                                    $(".caseAreaField  option[value='iiNet']").prop('disabled', false);
-                                                    $(".caseAreaField  option[value='iiNet']").show();
-                                                }
-                                            }
-
-
                                     </script>
                                     <!-- oncomplete="GenerateSubTopicHelpText();" immediate="true" status="actStatusId"-->
 
