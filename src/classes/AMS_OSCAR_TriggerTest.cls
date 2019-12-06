@@ -256,6 +256,7 @@
 		theAccreditation.Location_Type__c='HE';
 		theAccreditation.SAAM_Case__c=oscarCase.Id;
 		theAccreditation.Account_Name__c = a1.Id;
+		theAccreditation.ISSP_AMS_GDS_with_signed_contract__c = 'Amadeus';
 
 		insert theAccreditation;
 
@@ -628,6 +629,7 @@
 		theAccreditation.Location_Type__c='HE';
 		theAccreditation.SAAM_Case__c=oscarCase.Id;
 		theAccreditation.Account_Name__c = a1.Id;
+		theAccreditation.ISSP_AMS_GDS_with_signed_contract__c = 'Amadeus';
 
 		insert theAccreditation;
 
@@ -1121,7 +1123,8 @@
 			Shipping_ISO_State__c = stt.Id,
 			Shipping_ISO_Country__c = ctry.Id,
 			Shipping_Street__c = 'street',
-			Shipping_City__c = 'city'
+			Shipping_City__c = 'city',
+			ISSP_AMS_GDS_with_signed_contract__c = 'Amadeus'
 			);
 
 		insert stagingArea;
@@ -1229,7 +1232,8 @@
 			Shipping_ISO_State__c = stt.Id,
 			Shipping_ISO_Country__c = ctry.Id,
 			Shipping_Street__c = 'street',
-			Shipping_City__c = 'city' );
+			Shipping_City__c = 'city',
+			ISSP_AMS_GDS_with_signed_contract__c = 'Amadeus' );
 
 		insert stagingArea;
 
@@ -1312,7 +1316,8 @@
 			Shipping_ISO_State__c = stt.Id,
 			Shipping_ISO_Country__c = ctry.Id,
 			Shipping_Street__c = 'street',
-			Shipping_City__c = 'city');
+			Shipping_City__c = 'city',
+			ISSP_AMS_GDS_with_signed_contract__c = 'Amadeus');
 
 		insert stagingArea;
 
@@ -1412,7 +1417,8 @@
 			Shipping_ISO_State__c = stt.Id,
 			Shipping_ISO_Country__c = ctry.Id,
 			Shipping_Street__c = 'street',
-			Shipping_City__c = 'city'
+			Shipping_City__c = 'city',
+			ISSP_AMS_GDS_with_signed_contract__c = 'Amadeus'
 		);
 
 		insert stagingArea;
@@ -1649,7 +1655,17 @@
 
 		insert stagingArea;
 
+		Test.startTest();
 		oscar.AMS_Online_Accreditation__c = stagingArea.Id;
+		try{
+			update oscar;
+		}catch(DmlException e){
+			System.assertEquals('The GDS should be populated. Please fill the GDS on the OSCAR central panel before passing the sanity check', e.getMessage());
+		}
+
+		stagingArea.ISSP_AMS_GDS_with_signed_contract__c = 'Amadeus';
+		update stagingArea;
+
 		update oscar;
 
 		AMS_Accreditation_Contact__c owner = new AMS_Accreditation_Contact__c();
@@ -1663,7 +1679,6 @@
 		owner.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Current_Owner');
 		insert owner;
 
-		Test.startTest();
 		AMS_Settlement_System__c issOperation = new AMS_Settlement_System__c();
 		issOperation.Name = 'TEST';
 		issOperation.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Settlement_System__c', 'BSP');
