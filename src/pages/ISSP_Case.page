@@ -13,6 +13,7 @@
           fixMultipicklistArrowStyle();
           try {refreshSubtypePicklist();} catch(e){}
           changeSubsectionStyle();
+          hideiiNetReason();
         });
         window.onload = function toggleButtons() {
             window.document.getElementsByName('newComment')[0].style.display = 'none';
@@ -34,6 +35,12 @@
                 subsections[i].classList.add("blueback");
             }
         }
+        /* VALINHO */
+        function hideiiNetReason(){
+            $(".caseAreaField  option[value='iiNet']").prop('disabled', true);
+            $(".caseAreaField  option[value='iiNet']").hide();
+        }
+        /* END VALINHO */
         </script>
         <style>
             ul li, ol li {
@@ -368,6 +375,25 @@
 
                                     }
 
+									//NEW VALINHO
+									function manageCaseAreaAvaiableOptions(element) {
+                                        let selectedLabel = $(element).find(":selected").text();
+                                        console.log("selected label => ",selectedLabel);
+										if(selectedLabel == "IATA"){
+                                            //enable option iiNet only for IATA
+                                            $(".caseAreaField  option[value='iiNet']").prop('disabled', false);
+											$(".caseAreaField  option[value='iiNet']").show();
+										} else {
+                                            //disable option iiNet and if it was selected, unselect it and the reason (dependent picklist)
+                                            $(".caseAreaField  option[value='iiNet']").prop('disabled', true);
+											$(".caseAreaField  option[value='iiNet']").hide();
+											if ($(".caseAreaField option:selected").val() === 'iiNet') {
+												$(".caseAreaField option:selected").removeAttr("selected");
+												$(".reason1Field option:selected").removeAttr("selected");
+											}
+										}
+									}
+									//END NEW VALINHO
 
                                             function manageCaseAreaAvaiableOptions(element) {
                                                 let selectedLabel = $(element).find(":selected").text();
@@ -395,20 +421,26 @@
                                             <apex:outputpanel layout="block" styleclass="requiredBlock" />
                                             <apex:selectlist styleclass="form-control"
                                                 value="{!whoToContact}" required="true" multiselect="false" size="1"
-                                                onchange="autofillCCOthers(this); manageCaseAreaAvaiableOptions(this)">
+                                                onchange="autofillCCOthers(this); manageCaseAreaAvaiableOptions(this);">
                                                 <apex:selectoptions value="{!lst_whoToContact}" />
                                             </apex:selectlist>
                                         </apex:outputpanel>
                                     </apex:pageblocksectionitem>
 
+                                    <!-- NEW VALINHO -->
+									<apex:inputField value="{!newCase.CaseArea__c}" rendered="{!isDPCUser}" styleclass="form-control caseAreaField" required="true">
+										<apex:actionSupport event="onchange" reRender="reason1Picklist" />
+									</apex:inputField>
+									<apex:inputField id="reason1Picklist" value="{!newCase.Reason1__c}" rendered="{!isDPCUser}" styleclass="form-control reason1Field" required="true" />
+									<!-- END NEW VALINHO -->
 
-                                        <apex:inputField value="{!newCase.CaseArea__c}" rendered="{!isDPCUser}" styleclass="form-control caseAreaField" required="true">
-                                            <apex:actionSupport event="onchange" reRender="reason1Picklist" />
-                                        </apex:inputField>
-                                        <apex:inputField id="reason1Picklist" value="{!newCase.Reason1__c}" rendered="{!isDPCUser}" styleclass="form-control reason1Field"
-                                            required="true" />
-
-
+									<!-- OLD VALINHO
+									<apex:inputField value="{!newCase.CaseArea__c}" rendered="{!isDPCUser}" styleclass="form-control" required="true">
+                                        <apex:actionSupport event="onchange" reRender="reason1Picklist"/>
+                                    </apex:inputField>
+                                    <apex:inputField id="reason1Picklist" value="{!newCase.Reason1__c}" rendered="{!isDPCUser}" styleclass="form-control" required="true"/>
+									END OLD VALINHO -->
+									
                                     <!-- <label class=" lbl col-lg-5 control-label" for="exampleInputEmail1"><span class="required"></span></label> -->
                                     
                                     <!-- ACAMBAS - WMO-399 - Start -->
