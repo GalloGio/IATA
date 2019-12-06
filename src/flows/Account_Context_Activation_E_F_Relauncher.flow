@@ -3,8 +3,8 @@
     <assignments>
         <name>Set_Account_Id</name>
         <label>Set Account Id</label>
-        <locationX>396</locationX>
-        <locationY>919</locationY>
+        <locationX>466</locationX>
+        <locationY>1128</locationY>
         <assignmentItems>
             <assignToReference>AccountId</assignToReference>
             <operator>Assign</operator>
@@ -26,7 +26,7 @@
     <decisions>
         <name>Account_Id_is_filled</name>
         <label>Account Id is filled ?</label>
-        <locationX>198</locationX>
+        <locationX>271</locationX>
         <locationY>52</locationY>
         <defaultConnector>
             <targetReference>Integration_Log_id_is_filled</targetReference>
@@ -49,9 +49,31 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Has_ARBC_a_pending_status</name>
+        <label>Has ARBC a pending status ?</label>
+        <locationX>458</locationX>
+        <locationY>591</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>has_pending_status</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>AddressRoleBusinessContext</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Business_Address_Role_From_Integration_Log</targetReference>
+            </connector>
+            <label>has pending status</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Integration_Log_id_is_filled</name>
         <label>Integration Log id is filled ?</label>
-        <locationX>382</locationX>
+        <locationX>455</locationX>
         <locationY>50</locationY>
         <defaultConnectorLabel>else</defaultConnectorLabel>
         <rules>
@@ -73,8 +95,8 @@
     <decisions>
         <name>Integration_Log_was_filled</name>
         <label>Integration Log was filled ?</label>
-        <locationX>198</locationX>
-        <locationY>1578</locationY>
+        <locationX>268</locationX>
+        <locationY>1787</locationY>
         <defaultConnector>
             <targetReference>Get_Business_Address</targetReference>
         </defaultConnector>
@@ -93,6 +115,28 @@
                 <targetReference>Get_User_that_launched_Account_Context_Activation</targetReference>
             </connector>
             <label>was filled</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Is_ARBC_with_pending_status_found</name>
+        <label>Is ARBC with pending status found ?</label>
+        <locationX>50</locationX>
+        <locationY>2316</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>ARBC_found</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>AddressRoleBusinessContext</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_User_that_launched_Account_Context_Activation</targetReference>
+            </connector>
+            <label>ARBC found</label>
         </rules>
     </decisions>
     <description>It skips the Account Context Activation screenflow and Account Context Activation E&amp;F screenflow, it is used by a process builder (CaseSisClosed or CaseComplianceClosed) and by a trigger (IntegrationLogTrigger) to relaunch Account Context Activation E&amp;F Background Subflow with the Business Context E&amp;F et the Sales area selected by the user (stored in Address Role Business Context).</description>
@@ -114,8 +158,8 @@
     <recordLookups>
         <name>Get_Account</name>
         <label>Get Account</label>
-        <locationX>207</locationX>
-        <locationY>919</locationY>
+        <locationX>277</locationX>
+        <locationY>1128</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_E_F_Account_Role</targetReference>
@@ -149,12 +193,19 @@
     <recordLookups>
         <name>Get_Address_Role_Business_Context</name>
         <label>Get Address Role Business Context</label>
-        <locationX>40</locationX>
-        <locationY>1926</locationY>
+        <locationX>55</locationX>
+        <locationY>2138</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Get_User_that_launched_Account_Context_Activation</targetReference>
+            <targetReference>Is_ARBC_with_pending_status_found</targetReference>
         </connector>
+        <filters>
+            <field>Account_Activation_Context_Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Pending</stringValue>
+            </value>
+        </filters>
         <filters>
             <field>Address_Role__c</field>
             <operator>EqualTo</operator>
@@ -171,12 +222,19 @@
     <recordLookups>
         <name>Get_Address_Role_Business_Context_From_Integration_Log</name>
         <label>Get Address Role Business Context</label>
-        <locationX>393</locationX>
+        <locationX>466</locationX>
         <locationY>429</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Get_Business_Address_Role_From_Integration_Log</targetReference>
+            <targetReference>Has_ARBC_a_pending_status</targetReference>
         </connector>
+        <filters>
+            <field>Account_Activation_Context_Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Pending</stringValue>
+            </value>
+        </filters>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -194,8 +252,8 @@
     <recordLookups>
         <name>Get_Business_Address</name>
         <label>Get Business Address</label>
-        <locationX>39</locationX>
-        <locationY>1572</locationY>
+        <locationX>54</locationX>
+        <locationY>1784</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Business_Address_Role</targetReference>
@@ -221,8 +279,8 @@
     <recordLookups>
         <name>Get_Business_Address_From_Integration_Log</name>
         <label>Get Business Address</label>
-        <locationX>396</locationX>
-        <locationY>769</locationY>
+        <locationX>466</locationX>
+        <locationY>978</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Set_Account_Id</targetReference>
@@ -242,8 +300,8 @@
     <recordLookups>
         <name>Get_Business_Address_Role</name>
         <label>Get Business Address Role</label>
-        <locationX>39</locationX>
-        <locationY>1760</locationY>
+        <locationX>54</locationX>
+        <locationY>1972</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Address_Role_Business_Context</targetReference>
@@ -269,8 +327,8 @@
     <recordLookups>
         <name>Get_Business_Address_Role_From_Integration_Log</name>
         <label>Get Business Address Role</label>
-        <locationX>396</locationX>
-        <locationY>596</locationY>
+        <locationX>466</locationX>
+        <locationY>805</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Business_Address_From_Integration_Log</targetReference>
@@ -290,8 +348,8 @@
     <recordLookups>
         <name>Get_Contacts</name>
         <label>Get Contacts</label>
-        <locationX>206</locationX>
-        <locationY>1246</locationY>
+        <locationX>276</locationX>
+        <locationY>1455</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_E_F_Contact_Roles</targetReference>
@@ -310,8 +368,8 @@
     <recordLookups>
         <name>Get_E_F_Account_Role</name>
         <label>Get E&amp;F Account Role</label>
-        <locationX>206</locationX>
-        <locationY>1075</locationY>
+        <locationX>276</locationX>
+        <locationY>1284</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Contacts</targetReference>
@@ -338,8 +396,8 @@
     <recordLookups>
         <name>Get_E_F_Contact_Roles</name>
         <label>Get E&amp;F Contact Roles</label>
-        <locationX>206</locationX>
-        <locationY>1398</locationY>
+        <locationX>276</locationX>
+        <locationY>1607</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Integration_Log_was_filled</targetReference>
@@ -366,7 +424,7 @@
     <recordLookups>
         <name>Get_Integration_Log</name>
         <label>Get Integration Log</label>
-        <locationX>393</locationX>
+        <locationX>466</locationX>
         <locationY>272</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -387,8 +445,8 @@
     <recordLookups>
         <name>Get_User_that_launched_Account_Context_Activation</name>
         <label>Get User that launched Account Context Activation</label>
-        <locationX>204</locationX>
-        <locationY>1926</locationY>
+        <locationX>277</locationX>
+        <locationY>2313</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Restart_Account_Context_Activation_E_F_Background_Subflow</targetReference>
@@ -407,7 +465,7 @@
         <queriedFields>Email</queriedFields>
     </recordLookups>
     <start>
-        <locationX>50</locationX>
+        <locationX>123</locationX>
         <locationY>50</locationY>
         <connector>
             <targetReference>Account_Id_is_filled</targetReference>
@@ -417,8 +475,8 @@
     <subflows>
         <name>Restart_Account_Context_Activation_E_F_Background_Subflow</name>
         <label>Restart Account Context Activation E&amp;F Background Subflow</label>
-        <locationX>204</locationX>
-        <locationY>2086</locationY>
+        <locationX>274</locationX>
+        <locationY>2474</locationY>
         <flowName>Account_Context_Activation_E_F_Background_Subflow</flowName>
         <inputAssignments>
             <name>Account</name>
