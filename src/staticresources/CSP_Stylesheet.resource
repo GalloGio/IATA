@@ -804,6 +804,7 @@ lightning-datatable .slds-th__action {
     border: none;
   font-weight: 500;
   font-size: 14px;
+  line-height: normal;
 }
 .blueCustomButtonLink button:hover {
 	color: #3333ff;
