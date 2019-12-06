@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EntitlementProcess xmlns="http://soap.sforce.com/2006/04/metadata">
+    <SObjectType>Case</SObjectType>
+    <active>true</active>
+    <description>For: 
+Sector: Airline
+Category: Passenger and Cargo</description>
+    <entryStartDateField>Case.CreatedDate</entryStartDateField>
+    <exitCriteriaFilterItems>
+        <field>Case.IsClosed</field>
+        <operation>equals</operation>
+        <value>true</value>
+    </exitCriteriaFilterItems>
+    <exitCriteriaFilterItems>
+        <field>Account.Sector__c</field>
+        <operation>notEqual</operation>
+        <value>Airline</value>
+    </exitCriteriaFilterItems>
+    <exitCriteriaFilterItems>
+        <field>Account.Category__c</field>
+        <operation>notEqual</operation>
+        <value>Passenger and Cargo</value>
+    </exitCriteriaFilterItems>
+    <milestones>
+        <milestoneName>Case Received</milestoneName>
+        <minutesToComplete>1</minutesToComplete>
+        <useCriteriaStartTime>false</useCriteriaStartTime>
+    </milestones>
+    <milestones>
+        <milestoneName>Case Assigned to CSR</milestoneName>
+        <minutesToComplete>1</minutesToComplete>
+        <useCriteriaStartTime>false</useCriteriaStartTime>
+    </milestones>
+    <milestones>
+        <milestoneName>First Contact with Client</milestoneName>
+        <minutesToComplete>120</minutesToComplete>
+        <timeTriggers>
+            <actions>
+                <name>Warning</name>
+                <type>Alert</type>
+            </actions>
+            <timeLength>-30</timeLength>
+            <workflowTimeTriggerUnit>Minutes</workflowTimeTriggerUnit>
+        </timeTriggers>
+        <useCriteriaStartTime>true</useCriteriaStartTime>
+    </milestones>
+    <milestones>
+        <milestoneName>Max. case age with IATA</milestoneName>
+        <minutesToComplete>540</minutesToComplete>
+        <timeTriggers>
+            <actions>
+                <name>Warning_Maximum_Age_with_IATA</name>
+                <type>Alert</type>
+            </actions>
+            <timeLength>-30</timeLength>
+            <workflowTimeTriggerUnit>Minutes</workflowTimeTriggerUnit>
+        </timeTriggers>
+        <useCriteriaStartTime>true</useCriteriaStartTime>
+    </milestones>
+</EntitlementProcess>

@@ -19,9 +19,11 @@
 <script src="{!URLFOR($Resource.ISSP_OperationalCalendar, '/js/buttons.print.min.js')}"></script>
 <script src="{!URLFOR($Resource.ISSP_OperationalCalendar, '/js/buttons.colVis.min.js')}"></script>
 <script src="{!URLFOR($Resource.ISSP_OperationalCalendar, '/js/iata_logo.js')}"></script>
+<script src="{!URLFOR($Resource.ISSP_OperationalCalendar, '/js/cns_logo.js')}"></script>
 <apex:includeScript value="{!URLFOR($Resource.jszip, '/FileSaver.min.js')}"/>
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.26/moment-timezone-with-data.min.js"></script>
 
 <link href="{!URLFOR($Resource.ISSP_OperationalCalendar, '/css/dataTables.bootstrap.min.css')}" rel="stylesheet"/>
 <link href="{!URLFOR($Resource.ISSP_OperationalCalendar, '/css/buttons.bootstrap.min.css')}" rel="stylesheet"/>
@@ -47,43 +49,85 @@
     #loading-modal-content {
         margin-top: 25%;
     }
+
+    .form-control {
+        width: 105%;
+        padding: 6px;
+    }
 </style>
 
 <script>
     moment.locale("{!UserLanguage}");
     var LIST_FILTERS = {!listFiltersJson};
     var MAP_FREQUENCIES = {!mapFrequenciesJson};
+    var MAP_COUNTRIES = {!mapCountriesJson};
+    var BILLING_OPTIONS = {
+        "{!YEAR(TODAY())}": "{!YEAR(TODAY())} {!$Label.ISSP_OperationalCalendar_Billing_Period}",
+        "1": "{!$Label.ISSP_AMS_Month_January} {!YEAR(TODAY())} {!$Label.ISSP_OperationalCalendar_Billing_Period}",
+        "2": "{!$Label.ISSP_AMS_Month_February} {!YEAR(TODAY())} {!$Label.ISSP_OperationalCalendar_Billing_Period}",
+        "3": "{!$Label.ISSP_AMS_Month_March} {!YEAR(TODAY())} {!$Label.ISSP_OperationalCalendar_Billing_Period}",
+        "4": "{!$Label.ISSP_AMS_Month_April} {!YEAR(TODAY())} {!$Label.ISSP_OperationalCalendar_Billing_Period}",
+        "5": "{!$Label.ISSP_AMS_Month_May} {!YEAR(TODAY())} {!$Label.ISSP_OperationalCalendar_Billing_Period}",
+        "6": "{!$Label.ISSP_AMS_Month_June} {!YEAR(TODAY())} {!$Label.ISSP_OperationalCalendar_Billing_Period}",
+        "7": "{!$Label.ISSP_AMS_Month_July} {!YEAR(TODAY())} {!$Label.ISSP_OperationalCalendar_Billing_Period}",
+        "8": "{!$Label.ISSP_AMS_Month_August} {!YEAR(TODAY())} {!$Label.ISSP_OperationalCalendar_Billing_Period}",
+        "9": "{!$Label.ISSP_AMS_Month_September} {!YEAR(TODAY())} {!$Label.ISSP_OperationalCalendar_Billing_Period}",
+        "10": "{!$Label.ISSP_AMS_Month_October} {!YEAR(TODAY())} {!$Label.ISSP_OperationalCalendar_Billing_Period}",
+        "11": "{!$Label.ISSP_AMS_Month_November} {!YEAR(TODAY())} {!$Label.ISSP_OperationalCalendar_Billing_Period}",
+        "12": "{!$Label.ISSP_AMS_Month_December} {!YEAR(TODAY())} {!$Label.ISSP_OperationalCalendar_Billing_Period}",
+        "{!YEAR(TODAY())-1}": "{!YEAR(TODAY()) - 1} {!$Label.ISSP_OperationalCalendar_Billing_Period}",
+        "{!YEAR(TODAY())+1}": "{!YEAR(TODAY()) + 1} {!$Label.ISSP_OperationalCalendar_Billing_Period}"
+    };
+    var BILLING_ICCS_OPTIONS = {
+        "{!YEAR(TODAY())}": "{!YEAR(TODAY())} {!$Label.ISSP_OperationalCalendar_Billing_Period}",
+        "{!YEAR(TODAY())-1}": "{!YEAR(TODAY()) - 1} {!$Label.ISSP_OperationalCalendar_Billing_Period}",
+        "{!YEAR(TODAY())+1}": "{!YEAR(TODAY()) + 1} {!$Label.ISSP_OperationalCalendar_Billing_Period}"
+    };
+    var SIS_OPTIONS = {!sisOptionsJson};
     var isAirline = {!isAirline};
-    var defaultCountry = "{!defaultCountry}";
     var defaultOperationType = "{!defaultOperationType}";
+    var defaultSubtype = "{!defaultOperationSubtype}";
+    var defaultCountry = "{!defaultCountry}";
     var defaultFrequency = "{!defaultFrequency}";
+    var defaultCycle = "";
     if (isAirline) {
+        defaultCountry = "";
+        defaultOperationType = "";
         defaultFrequency = "";
     }
+    var isMultiButtonVisible = {!IsMultiButtonVisible};
     var title = "{!$Label.ISSP_OperationalCalendar_Header}";
-    //console.log(MAP_FREQUENCIES);
-    //console.log(LIST_FILTERS);
-    //console.log(defaultCountry);
-    //console.log(defaultOperationType);
-    //console.log(defaultFrequency);
+    console.log(MAP_FREQUENCIES);
+    console.log(MAP_COUNTRIES);
+    console.log(LIST_FILTERS);
+    console.log(defaultOperationType);
+    console.log(defaultSubtype);
+    console.log(defaultCountry);
+    console.log(defaultFrequency);
     $(document).ready(function() {
         initFilters();
-        refreshDetails();
+        refreshDetails(false);
         
-        $(".countryFilter").change(function() {
-            updatePicklistsFromCountry();
-            refreshDetails();
-        });
         $("#typeFilter").change(function() {
-            var isCASS = $(this).val().includes("CASS");
-            if (isCASS) $("#frequencyFilter").val("");
-            $("#frequencyFilter").prop('disabled', isCASS);
             updatePicklistsFromType();
             refreshDetails();
             addExportButtons();
         });
+        $("#subtypeFilter").change(function() {
+            updatePicklistsFromSubtype();
+            refreshDetails();
+            addExportButtons();
+        });
+        $("#cycleFilter").change(function() {
+            //updatePicklistsFromCycle();
+            refreshDetails();
+        });
+        $("#countryFilter").change(function() {
+            //updatePicklistsFromCountry();
+            refreshDetails();
+        });
         $("#frequencyFilter").change(function() {
-            updatePicklistsFromFrequency();
+            //updatePicklistsFromFrequency();
             refreshDetails();
         });
         $("#currencyFilter").change(function() {
@@ -97,42 +141,45 @@
             enableFilters(enabled);
         });
         $("#resetButton").click(function() {
-            $(".countryFilter").val(defaultCountry);
-            updatePicklistsFromCountry();
-            $("#typeFilter").val(defaultOperationType);
+            setFilterValue($("#typeFilter"), "", defaultOperationType);
             updatePicklistsFromType();
-            $("#frequencyFilter").val(defaultFrequency);
-            updatePicklistsFromFrequency();
+            setFilterValue($("#subtypeFilter"), "", defaultSubtype);
+            updatePicklistsFromSubtype();
+            setFilterValue($("#cycleFilter"), "", defaultCycle);
+            setFilterValue($("#countryFilter"), "", defaultCountry);
+            setFilterValue($("#frequencyFilter"), "", defaultFrequency);
+            setFilterValue($("#currencyFilter"), "", "");
             $('#billingPeriodFilter').val(new Date().getFullYear());
             $("#enableFiltersCheck").prop('checked',false);
             enableFilters(false);
-            refreshDetails();
+            refreshDetails(true);
         });
         $(".btn-default").toggleClass('btn-default btn-primary');
+        //populate picklists in multi-download button section
+        if (isAirline) {
+            $('#typeOfDownload').empty()
+                .append('<option value="all">{!$Label.ISSP_FDS_AllCountries}</option>')
+                .append('<option value="allservices">{!$Label.ISSP_FDS_AllCountriesWithServices}</option>')
+                .append('<option value="custom" selected="selected">{!$Label.ISSP_FDS_ChooseCountries}</option>');
+        } else {
+            $('#typeOfDownload').empty()
+                .append('<option value="custom" selected="selected">{!$Label.ISSP_FDS_ChooseCountries}</option>');
+        }
     });
     
     function initFilters(){
-        if ("{!$CurrentPage.parameters.fcountry}">"") {
-            $(".countryFilter").val("{!$CurrentPage.parameters.fcountry}");
-        } else {
-            $(".countryFilter").val(defaultCountry);
-        }
-        updatePicklistsFromCountry(true);
-        if ("{!$CurrentPage.parameters.ftype}">"") {
-            $("#typeFilter").val("{!$CurrentPage.parameters.ftype}");
-        } else {
-            $("#typeFilter").val(defaultOperationType);
-        }
+        //populate first filter
+        var listValues = containsInArray(LIST_FILTERS, '');
+        updatePicklist($("#typeFilter"), listValues, 0, '');
+        setFilterValue($("#typeFilter"), "{!$CurrentPage.parameters.ftype}", defaultOperationType);
         updatePicklistsFromType();
-        if ("{!$CurrentPage.parameters.ffrequency}">"") {
-            $("#frequencyFilter").val("{!$CurrentPage.parameters.ffrequency}");
-        } else {
-            $("#frequencyFilter").val(defaultFrequency);
-        }
-        updatePicklistsFromFrequency();
-        if ("{!$CurrentPage.parameters.fcurrency}">"") {
-            $("#currencyFilter").val("{!$CurrentPage.parameters.fcurrency}");
-        }
+        setFilterValue($("#subtypeFilter"), "{!$CurrentPage.parameters.fsubtype}", defaultSubtype);
+        updatePicklistsFromSubtype();
+        setFilterValue($("#cycleFilter"), "{!$CurrentPage.parameters.fcycle}", defaultCycle);
+        setFilterValue($("#countryFilter"), "{!$CurrentPage.parameters.fcountry}", defaultCountry);
+        setFilterValue($("#frequencyFilter"), "{!$CurrentPage.parameters.ffrequency}", defaultFrequency);
+        setFilterValue($("#currencyFilter"), "{!$CurrentPage.parameters.fcurrency}", "");
+
         var fenablefilters = "{!$CurrentPage.parameters.fenablefilters}";
         if (fenablefilters>"") {
             var isEnabled = fenablefilters=='true';
@@ -145,29 +192,65 @@
             }
         }
     }
-    
+
+    function setFilterValue(input, value, defaultvalue) {
+        if (value=="all") {
+            input.val("");
+        } else if (value>"") {
+            input.val(value);
+        } else {
+            input.val(defaultvalue);
+        }
+        if (input.val()==null) input.val(input.find("option:first").val());
+    }
+
     function enableFilters(enabled) {
         if (isAirline) return;
         var disabled = !enabled;
-        $(".countryFilter").prop("disabled",disabled);
         $("#typeFilter").prop("disabled",disabled);
+        $("#subtypeFilter").prop("disabled",disabled);
+        $("#cycleFilter").prop("disabled",disabled);
+        $("#countryFilter").prop("disabled",disabled);
         $("#frequencyFilter").prop("disabled",disabled);
         $("#currencyFilter").prop("disabled",disabled);
     }
     
     function setCalendarTitle() {
-        var countryName = $('.countryFilter :selected').text();
-        var divTitle = $("#title");
-        if ($('.countryFilter :selected').val()=="") {
-            divTitle.hide();
-            divTitle.text(title.replace("{0}",""));
-        } else {
-            if ($("#typeFilter").val()=="") {
-                divTitle.text(title.replace("{0}",countryName));
-            } else {
-                var typeText = $('#typeFilter :selected').text();
-                divTitle.text(title.replace("{0}",countryName + " " + typeText));
+        var typeFilter = $("#typeFilter :selected");
+        var subtypeFilter = $("#subtypeFilter :selected");
+        var cycleFilter = $("#cycleFilter :selected");
+        var countryFilter = $("#countryFilter :selected");
+        var frequencyFilter = $("#frequencyFilter :selected");
+        var titleText = "";
+        if (typeFilter.val()=="BSP/CASS" || typeFilter.val() == "CNS") {
+            if (subtypeFilter.val()>"") {
+                if (countryFilter.val() > "") {
+                    titleText = subtypeFilter.text() + " " + countryFilter.text();
+                } else {
+                    titleText = subtypeFilter.text();
+                }
             }
+        }
+        if (typeFilter.val() == "SIS") {
+            if (subtypeFilter.val() > "") {
+                titleText = subtypeFilter.text();
+            }
+        }
+        if (typeFilter.val() == "ICCS") {
+            titleText = typeFilter.text();
+            if (countryFilter.val() > "") {
+                titleText += " " + countryFilter.text();
+            }
+            if (cycleFilter.val() > "") {
+                titleText += " #" + cycleFilter.text();
+            }
+        }
+        // set the title
+        var divTitle = $("#title");
+        if (titleText=="") {
+            divTitle.hide();
+        } else {
+            divTitle.text(title.replace("{0}", titleText));
             divTitle.show();
         }
     }
@@ -181,6 +264,8 @@
                     var datatype= $(node).attr("data-type");
                     if (datatype=="date") {
                         return formatDate(data);
+                    } else if (datatype == "datetime") {
+                        return formatDateTime(data,"America/Montreal", "YYYY-MM-DD HH:mm");
                     } else {
                         return data;
                     }
@@ -193,12 +278,15 @@
         extend: 'pdfHtml5',
         exportOptions: {
             columns: ':visible',
+            header: true,
             footer: true,
             format: {
                 body: function ( data, row, column, node ) {
                     var datatype= $(node).attr("data-type");
-                    if (datatype=="date") {
+                    if (datatype == "date") {
                         return formatDate(data);
+                    } else if (datatype == "datetime") {
+                        return formatDateTime(data, "America/Montreal", "D MMM YYYY HH:mm");
                     } else {
                         return data;
                     }
@@ -206,18 +294,48 @@
             }
         },
         title: function () { return getExportFileNamePDF();},
+        messageBottom: function ( doc ) {
+            return {
+                alignment: 'left',
+                text: "\n{!$Label.ISSP_OperationalCalendar_PDFFooterText}",
+                margin: [40, 100]
+            }
+        },
         orientation: "portrait",
         customize: function ( doc ) {
             doc.content.splice( 0, 0, {
                 margin: [ 0, 0, 0, 0 ],
                 alignment: 'center',
-                image: iata_logo
+                image: getLogo(nvl($("#typeFilter").val()))
+            });
+            doc['header']=(function(page, pages) {
+                if (page>1) return {
+                    columns: [
+                        {
+                            margin: [ 80, 5],
+                            alignment: 'left',
+                            image: getLogo(nvl($("#typeFilter").val())),
+                            width: 40
+                        },
+                        {
+                            margin: [ 0, 10],
+                            alignment: 'center',
+                            fontSize: 16,
+                            text: getExportFileNamePDF()
+                        }
+                    ]
+                }
             });
             doc['footer']=(function(page, pages) {
                 return {
                     columns: [
-                        '\n{!$Label.ISSP_OperationalCalendar_DownloadDate}: ' + moment().format('D MMM YYYY'),
-                        '\n{!$Label.ISSP_OperationalCalendar_LastModifiedDate}: ' + formatDate(getLastModifiedDate()),
+                        '\n{!$Label.ISSP_OperationalCalendar_DownloadDate}: \n' + moment().format('D MMM YYYY'),
+                        '\n{!$Label.ISSP_OperationalCalendar_LastModifiedDate}: \n' + formatDate(getLastModifiedDate()),
+                        '\n'+ getDiscalimer(),
+                        {
+                            alignment: 'right',
+                            text: ['\n','www.iata.org/CS']
+                        },
                         {
                             alignment: 'right',
                             text: ['\n',{ text: page.toString() },  ' / ', { text: pages.toString() }]
@@ -228,7 +346,21 @@
             });
         }
     };
-    
+
+    function getDiscalimer() {
+        if (nvl($("#typeFilter").val()) == "SIS") {
+            return '{!$Label.ISSP_OperationalCalendar_Timezone_Disclaimer}';
+        }
+        return '';
+    }
+
+    function getLogo(typeFilter) {
+        if (typeFilter=="CNS") {
+            return cns_logo;
+        }
+        return iata_logo;
+    }
+
     function getLastModifiedDate() {
         var table = $('.table-pagination').DataTable();
         var lastModifiedDate = null;
@@ -249,7 +381,7 @@
             if(table.column(i).visible()) colCount++;
         }
         //PDF Button
-        pdfButton.orientation = colCount>6? "landscape": "portrait";
+        pdfButton.orientation = colCount>7? "landscape": "portrait";
         var isDisabled = $(".buttons-pdf").prop("disabled");
         $(".buttons-pdf").remove();
         $("#advanced-filters").empty();
@@ -273,7 +405,9 @@
             .prop("disabled", isDisabled);
         $(".buttons-csv").attr('onclick','alert("{!$Label.ISSP_OperationalCalendar_Export_Disclaimer}")');
         /*** WMO-388 ***/
-        if("{!isAirline}" == "true") {
+        //Multi-Download Button
+        var operationType = nvl($("#typeFilter").val());
+        if(isMultiButtonVisible && operationType != "SIS" && operationType != "ICCS") {
             $("#advanced-filters")
                 .append("<div class='dt-buttons btn-group'><button class='btn buttons-html5 btn-primary'><span class='glyphicon glyphicon-th' style='padding-right:2px;'></span><span>{!$Label.ISSP_FDS_CustomFilterBtn}</span></button></div>");
             $("#advanced-filters").attr('onclick','openCustomFilters()');
@@ -293,48 +427,88 @@
     function nvl(value) {
         return value==null? "": value;
     }
-    
-    function updatePicklistsFromCountry(isCalledFromInit) {
-        var country = nvl($(".countryFilter").val());
-        var opertionType = nvl($("#typeFilter").val());
-        var filter = country + ",";
-        var listValues = containsInArray(LIST_FILTERS,filter);
-        updatePicklist($("#typeFilter"), listValues,1,opertionType);
-        updatePicklist($("#frequencyFilter"), listValues,2,'');
-        updatePicklist($("#currencyFilter"), listValues,3,'');
-        if (!isCalledFromInit) {
-            console.log('showDisclaimer1 ' + country+opertionType);
-            showDisclaimer(country,opertionType);
-        }
-    }
-    
+
     function updatePicklistsFromType() {
-        var country = nvl($(".countryFilter").val());
-        var opertionType = nvl($("#typeFilter").val());
-        var filter = country + ",";
-        if (opertionType!=undefined) {
-            filter+= opertionType + ",";
+        var operationType = nvl($("#typeFilter").val());
+        if (operationType.includes('BSP/CASS') || operationType.includes('CNS')) {
+            $("#timezone-disclaimer").addClass("hidden");
+            $("#subtypeFilter").parent().parent().removeClass("hidden");
+            $("#cycleFilter").parent().parent().addClass("hidden");
+            $("#countryFilter").parent().parent().addClass("hidden");
+            $("#frequencyFilter").parent().parent().addClass("hidden");
+            $("#currencyFilter").parent().parent().addClass("hidden");
+            $("#billingPeriodFilter").parent().parent().addClass("hidden");
+             $("#empty-filter-block").attr("class","col-sm-7");
+            //populate BSP CASS subcategory picklist
+            var listValues = containsInArray(LIST_FILTERS, operationType + ',');
+            updatePicklist($("#subtypeFilter"), listValues, 1, '');
+            updatePicklistWithMap($("#billingPeriodFilter"), BILLING_OPTIONS, "{!YEAR(TODAY())}");
+        } else if (operationType.includes('SIS')) {
+            $("#timezone-disclaimer").removeClass("hidden");
+            $("#subtypeFilter").parent().parent().removeClass("hidden");
+            $("#cycleFilter").parent().parent().addClass("hidden");
+            $("#countryFilter").parent().parent().addClass("hidden");
+            $("#frequencyFilter").parent().parent().removeClass("hidden");
+            $("#currencyFilter").parent().parent().addClass("hidden");
+            $("#billingPeriodFilter").parent().parent().removeClass("hidden");
+            $("#empty-filter-block").attr("class","col-sm-2");
+            //populate SIS subcategory picklist
+            updatePicklist($("#subtypeFilter"), SIS_OPTIONS,0,'');
+            updatePicklistWithMap($("#billingPeriodFilter"), BILLING_OPTIONS, "{!YEAR(TODAY())}");
+        
+        } else if (operationType.includes('ICCS')) {
+            $("#timezone-disclaimer").addClass("hidden");
+            $("#subtypeFilter").parent().parent().addClass("hidden");
+            $("#cycleFilter").parent().parent().removeClass("hidden");
+            $("#countryFilter").parent().parent().removeClass("hidden");
+            $("#frequencyFilter").parent().parent().addClass("hidden");
+            $("#currencyFilter").parent().parent().addClass("hidden");
+            $("#billingPeriodFilter").parent().parent().removeClass("hidden");
+            $("#empty-filter-block").removeClass("hidden").attr("class", "col-sm-2");
+            //populate visible picklists for SIS
+            var listValues = containsInArray(LIST_FILTERS, 'ICCS,');
+            updatePicklist($("#cycleFilter"), listValues, 1, '');
+            updatePicklist($("#countryFilter"), listValues, 2, '');
+            updatePicklistWithMap($("#billingPeriodFilter"), BILLING_ICCS_OPTIONS, "{!YEAR(TODAY())}");
+        } else {
+            $("#timezone-disclaimer").addClass("hidden");
+            $("#subtypeFilter").parent().parent().addClass("hidden");
+            $("#cycleFilter").parent().parent().addClass("hidden");
+            $("#countryFilter").parent().parent().addClass("hidden");
+            $("#frequencyFilter").parent().parent().addClass("hidden");
+            $("#currencyFilter").parent().parent().addClass("hidden");
+            $("#billingPeriodFilter").parent().parent().addClass("hidden");
+            $("#empty-filter-block").attr("class","col-sm-9");
         }
-        var listValues = containsInArray(LIST_FILTERS,filter);
-        if (opertionType==undefined) {
-            updatePicklist($("#typeFilter"), listValues,1,'');
-        }
-        updatePicklist($("#frequencyFilter"), listValues,2,'');
-        updatePicklist($("#currencyFilter"), listValues,3,'');
-        console.log('showDisclaimer2 ' + country+opertionType);
-        showDisclaimer(country,opertionType);
+        updatePicklistsFromSubtype();
     }
-    
-    function updatePicklistsFromFrequency() {
-        var country = nvl($(".countryFilter").val());
-        var opertionType = nvl($("#typeFilter").val());
-        var frequency = nvl($("#frequencyFilter").val());
-        var filter = country + "," + opertionType + ",";
-        if (frequency>"") {
-             filter+= frequency + ",";
+
+    function updatePicklistsFromSubtype() {
+        var operationType = nvl($("#typeFilter").val());
+        var operationSubtype = nvl($("#subtypeFilter").val());
+        if (operationType=='BSP/CASS' || operationType.includes('CNS')) {
+            $("#cycleFilter").parent().parent().addClass("hidden");
+            $("#countryFilter").parent().parent().removeClass("hidden");
+            $("#frequencyFilter").parent().parent().removeClass("hidden");
+            $("#currencyFilter").parent().parent().removeClass("hidden").attr("class","col-sm-1");
+            $("#billingPeriodFilter").parent().parent().attr("class","col-sm-2");
+            $("#empty-filter-block").addClass("hidden");
+            //populate visible picklists for BSP/CASS
+            var listValues = containsInArray(LIST_FILTERS, operationType + ',' + operationSubtype + ',');
+            updatePicklist($("#countryFilter"), listValues, 2, '');
+            updatePicklist($("#frequencyFilter"), listValues, 3, '');
+            updatePicklist($("#currencyFilter"), listValues, 4, '');
         }
-        var listValues = containsInArray(LIST_FILTERS,filter);
-        updatePicklist($("#currencyFilter"), listValues,3,'');
+        if (operationType=='SIS') {
+            $("#cycleFilter").parent().parent().addClass("hidden");
+            $("#subtypeFilter").parent().parent().removeClass("hidden");
+            $("#countryFilter").parent().parent().addClass("hidden");
+            $("#frequencyFilter").parent().parent().removeClass("hidden");
+            $("#currencyFilter").parent().parent().addClass("hidden");
+            //populate visible picklists for SIS
+            var listValues = containsInArray(LIST_FILTERS, 'SIS,');
+            updatePicklist($("#frequencyFilter"), listValues, 1, '');
+        }
     }
 
     function updatePicklist(inputSelect, listValues, position, defValue) {
@@ -349,49 +523,67 @@
             return self.indexOf(item) == pos;
         });
         // add None option if required
-        if (listUniqueValues.length!=1) {
-            var emptyText = "--{!$Label.ISSP_All}--";
-            if (inputSelect.attr('id')=="typeFilter") {
-                emptyText = "{!$Label.ANG_ISSP_Picklist_None}";
+        if (listUniqueValues.length != 1) {
+            var option;
+            if (inputSelect.attr("id") == "typeFilter" || inputSelect.attr("id") == "subtypeFilter") {
+                option = $("<option>", { value: "", text: "--{!$Label.ANG_ISSP_Picklist_None}--" });
+            } else {
+                option = $("<option>", { value: "", text: "--{!$Label.ISSP_All}--" });
             }
-            inputSelect.append($("<option>", {value: "",text : emptyText}));
+            if (defValue == "") option.attr("selected", true);
+            inputSelect.append(option);
         }
         // Add options
         $.each(listUniqueValues, function (i, item) {
             var label = item;
-            if (position==2) {
+            if (inputSelect.attr("id")=="frequencyFilter") {
                 label = MAP_FREQUENCIES[item];
-                if (label==null) label = item;
+            }
+            if (inputSelect.attr("id")=="countryFilter") {
+                label = MAP_COUNTRIES[item];
             }
             var option = $('<option>', {value: item,text: label});
             if (defValue==item) option.attr("selected",true);
             inputSelect.append(option);
         });
     }
-    
-    function refreshDetails() {
+
+    function updatePicklistWithMap(inputSelect, mapValues, defValue) {
+        inputSelect.find('option').remove();
+        $.each(mapValues, function (key, label) {
+            var option = $('<option>', { value: key, text: label });
+            if (defValue == key) option.attr("selected", true);
+            inputSelect.append(option);
+        });
+    }
+
+    function refreshDetails(ignoreError) {
         hideError();
         setCalendarTitle();
-        var country = $(".countryFilter").val();
-        var frequency = $("#frequencyFilter").val();
-        var operationType = $("#typeFilter").val();
-        var currency = $("#currencyFilter").val();
-        var billingPeriod = $("#billingPeriodFilter").val();
-        // validate country and operationtype
-        if (country=='') {
-            showError("{!$Label.ISSP_OperationalCalendar_Country_Filter_Required}");
-            return;
-        }
+        var operationType = nvl($("#typeFilter").val());
+        if (operationType == "BSP/CASS") operationType=nvl($("#subtypeFilter").val());
+        if (operationType == "CNS") operationType = nvl($("#subtypeFilter").val());
+        if (operationType == "SIS") operationType=nvl($("#subtypeFilter").val());
+        var cycle = nvl($("#cycleFilter").val());
+        var country = nvl($("#countryFilter").val());
+        var frequency = nvl($("#frequencyFilter").val());
+        var currency = nvl($("#currencyFilter").val());
+        var billingPeriod = nvl($("#billingPeriodFilter").val());
+        if (billingPeriod=="") billingPeriod=0;
+        console.log("operationType: " + operationType + " cycle: " + cycle + " country: " + country + " frequency: " + frequency + " currency: " + currency + " billingPeriod: " + billingPeriod);
         Visualforce.remoting.Manager.invokeAction(
             '{!$RemoteAction.ISSP_OperationalCalendarController.loadDetailsRemote}',
-            country, frequency, operationType, currency, billingPeriod,
+            operationType, cycle, country, frequency, currency, billingPeriod,
             function(result, event){
                 if (event.status) {
+                    $("div#table-container").show();
                     createDataTable($.parseJSON(result));
                 } else if (event.type === 'exception') {
-                    showError(event.message);
+                    if (!ignoreError) showError(event.message);
+                    $("div#table-container").hide();
                 } else {
                     console.log('Unknown error in refreshDetails result: ' + unescape(result));
+                    $("div#table-container").hide();
                 }
             }, 
             {escape: false}
@@ -419,6 +611,7 @@
     }
     
     function createDataTable(tableDef){
+        console.log(tableDef);
         // recreate the table inside div table-container
         var container = $("div#table-container");
         container.empty();
@@ -432,7 +625,7 @@
                 if (firstVisibleCol==null) firstVisibleCol=i;
             }
         });
-        console.log(firstVisibleCol);
+        //console.log(firstVisibleCol);
         
         $.each(tableDef.data, function (i, line) {
             var node = table.row.add(line).node();
@@ -442,6 +635,12 @@
                     jcell.attr("data-type","date");
                     jcell.attr("data-order",jcell.text());
                     jcell.text(formatDate(jcell.text()));
+                }
+                if (colTypes[j] == "datetime") {
+                    var jcell = $(cell);
+                    jcell.attr("data-type", "datetime");
+                    jcell.attr("data-order", jcell.text());
+                    jcell.text(formatDateTime(jcell.text(),"America/Montreal","D MMM YYYY HH:mm"));
                 }
             });
             $(node).addClass(line[0]); //first column contains the class name to use in this row
@@ -465,41 +664,58 @@
     }
     function showCalendar() {
         var href="/ISSP_OperationalCalendar?MainNav=resources&subNav=OperationalCalendar&mid=M2S4";
-        if ($(".countryFilter").val()>"") {
-          href+="&fcountry=" + $(".countryFilter").val();
+        let typeFilter = getFilterValue($("#typeFilter"));
+        if (typeFilter!=null) {
+            href+="&ftype=" + typeFilter;
         }
-        if ($("#typeFilter").val()>"") {
-          href+="&ftype=" + $("#typeFilter").val();
+        let subtypeFilter = getFilterValue($("#subtypeFilter"));
+        if (subtypeFilter!=null) {
+            href+="&fsubtype=" + subtypeFilter;
         }
-        if ($("#frequencyFilter").val()>"") {
-          href+="&ffrequency=" + $("#frequencyFilter").val();
+        let cycleFilter = getFilterValue($("#cycleFilter"));
+        if (cycleFilter!=null) {
+            href+="&fcycle=" + cycleFilter;
         }
-        if ($("#currencyFilter").val()>"") {
-          href+="&fcurrency=" + $("#currencyFilter").val();
+        let countryFilter = getFilterValue($("#countryFilter"));
+        if (countryFilter!=null) {
+            href+="&fcountry=" + countryFilter;
+        }
+        let frequencyFilter = getFilterValue($("#frequencyFilter"));
+        if (frequencyFilter!=null) {
+            href+="&ffrequency=" + frequencyFilter;
+        }
+        let currencyFilter = getFilterValue($("#currencyFilter"));
+        if (currencyFilter!=null) {
+            href+="&fcurrency=" + currencyFilter;
         }
         if ($("#enableFiltersCheck").prop("checked")) {
             href+="&fenablefilters=true";
         }
         window.location.href = href;
     }
-    
+
+    function getFilterValue(input) {
+        if (input==null) return null;
+        let value = encodeURIComponent(input.val());
+        if (value=="") value = "all";
+        return value
+    }
+
     function getExportFileNameCSV() {
         return getExportFileNamePDF() + '_' + new Date().toDateString().replace(/ /g , "-");
     }
     function getExportFileNamePDF() {
         var filename = "{!$Label.ISSP_OperationalCalendar}";
-        filename += " " + $(".countryFilter option:selected").text();
+        filename += " ";
+        if ($("#countryFilter option:selected").val()=="") {
+            filename += "All Countries";
+        } else {
+            filename += $("#countryFilter option:selected").text();
+        } 
         filename += "-" + $("#typeFilter option:selected").text();
-        if ($("#frequencyFilter").val()!="") {
-            filename += " " + $("#frequencyFilter option:selected").text();
-        }
-        if ($("#currencyFilter").val()!="") {
-            filename += " " + $("#currencyFilter option:selected").text();
-        }
-        filename += " " + $("#billingPeriodFilter option:selected").text();
+        filename += " " + $("#billingPeriodFilter option:selected").text().replace("Billing Period", "");
         return filename;
     }
-    
     function formatDate(str){
         try {
             if (str==null) return '';
@@ -511,24 +727,41 @@
         }
     }
 
+    function formatDateTime(str, timezone, format) {
+        try {
+            if (str == null) return '';
+            if (typeof str == 'string' && str.trim() == '') return '';
+            var utcDate = moment.utc(str);
+            var result = utcDate.tz(timezone).format(format);
+            return result == 'Invalid datetime' ? str : result;
+        } catch (e) {
+            return str;
+        }
+    }
     /*** WMO-388 ***/
     function openCustomFilters() {
         $('#custom-filters').modal('show'); 
         moveAll("#right-opt-operation-filter", "#left-opt-operation-filter", "value");
         moveAll("#right-opt-remittance-filter", "#left-opt-remittance-filter", "value");
         moveAll("#right-opt-country-filter", "#left-opt-country-filter", "title");
-        prepopulate("#typeFilter", "operation-filter");
+        prepopulate("#subtypeFilter", "operation-filter");
         prepopulate("#frequencyFilter", "remittance-filter");
-        prepopulate(".countryFilter", "country-filter");
+        prepopulate("#countryFilter", "country-filter");
     }
 
     function prepopulate(fromId, toId) {
         var fromVal = $(fromId).val();
-        if(fromVal) {
+        if (fromVal=="") {
+            var elems = $("#left-opt-" + toId + " option");
+            for (var i=0; i<elems.length; i++) {
+                var selectedVal = $(elems[i]).detach();
+                $(selectedVal).appendTo("#right-opt-"+toId);
+            }
+        } else if(fromVal) {
             var elem = $("#left-opt-"+toId+" option[value='"+fromVal+"']");
             if(elem) {
                 var selectedVal = $(elem).detach();
-                $(selectedVal).appendTo("#right-opt-"+toId);    
+                $(selectedVal).appendTo("#right-opt-"+toId);
             }
         }
     }
@@ -577,10 +810,12 @@
         zipFile = null;
         $('#downloadBtn').attr("disabled", true);
         $("#loading-modal").modal("show");
+        console.log("createZipFile opt: " + opt + " operations: " + operations + " countries: " + countries + " accountId: " + accountId);
         Visualforce.remoting.Manager.invokeAction(
             '{!$RemoteAction.ISSP_OperationalCalendarController.createZipFile}',
             opt, operations, remittance, countries, accountId,
             function(result, event) {
+                console.log(result);
                 if (event.status) {
                     zipFile = new JSZip();
                     
@@ -597,6 +832,8 @@
 
                     if(generationCounter == 0) {
                         alert("{!$Label.ISSP_FDS_NoResults}");
+                        $('#downloadBtn').attr("disabled", false);
+                        $("#loading-modal").modal("hide");
                         return;
                     }
                     $.each(result.folders, function(i,v) {
@@ -613,10 +850,12 @@
                     showError(event.message);
                     $('#downloadBtn').attr("disabled", false);
                     $("#loading-modal").modal("hide");
+                    $('#custom-filters').modal('hide');
                 } else {
                     console.log('Unknown error during download result: ' + unescape(result));
                     $('#downloadBtn').attr("disabled", false);
                     $("#loading-modal").modal("hide");
+                    $('#custom-filters').modal('hide');
                 }
             },
             {escape: false}
@@ -737,7 +976,7 @@
             content: [
                 {
                     alignment: "center",
-                    image: iata_logo,
+                    image: getLogo(data.operationType),
                     margin: [0,0,0,0]
                 },
                 {
@@ -745,22 +984,54 @@
                     text: data.fileName,
                     margin: [0,0,0,12]
                 },
-                {                    
+                {
                     layout: "noBorders",
                     table: {
                         headerRows: 1,
                         body: applyTableStyle(data.table.body, data.fileName)
                     }
+                },
+                {
+                    style: "title",
+                    text: "\n{!$Label.ISSP_OperationalCalendar_PDFFooterText}",
                 }
             ],
+            header: function(page, pages) {
+                if (page>1) return {
+                    columns: [
+                        {
+                            margin: [ 80, 5],
+                            alignment: 'left',
+                            image: getLogo(data.operationType),
+                            width: 40
+                        },
+                        {
+                            margin: [ 0, 10],
+                            alignment: 'center',
+                            fontSize: 16,
+                            text: data.fileName
+                        }
+                    ]
+                }
+            },
             footer: function(page, pages) {
                 return {
                     columns: [
-                        '\n{!$Label.ISSP_OperationalCalendar_DownloadDate}: ' + moment().format('D MMM YYYY'),
-                        '\n{!$Label.ISSP_OperationalCalendar_LastModifiedDate}: ' + data.lastModifiedDateStr,
+                        {
+                            alignment: 'left',
+                            text: ['{!$Label.ISSP_OperationalCalendar_DownloadDate}:','\n',moment().format('D MMM YYYY')]
+                        },
+                        {
+                            alignment: 'left',
+                            text: ['{!$Label.ISSP_OperationalCalendar_LastModifiedDate}:','\n',data.lastModifiedDateStr]
+                        },
                         {
                             alignment: 'right',
-                            text: ['\n',{ text: page.toString() },  ' / ', { text: pages.toString() }]
+                            text: ['www.iata.org/CS']
+                        },
+                        {
+                            alignment: 'right',
+                            text: [{ text: page.toString() },  ' / ', { text: pages.toString() }]
                         }
                     ],
                     margin: [10, 0]
@@ -802,13 +1073,13 @@
                     <label class="form-check-label" for="enableFiltersCheck">{!$Label.ISSP_OperationalCalendar_EnableFilters}</label>
                 </apex:outputPanel>
             </div>
-            <div class="{!IF(isAirline, 'col-sm-6', 'col-sm-8')}">
+            <div class="{!IF(isMultiButtonVisible, 'col-sm-6', 'col-sm-8')}">
                 <button type="button" class="btn btn-default btn-calendar center-block" onclick="showCalendar()">{!$Label.ISSP_OperationalCalendar_Show_Calendar}</button>
             </div>
-            <div id="exportCSV" class="{!IF(isAirline, 'col-sm-4', 'col-sm-2')}" style="float: right; text-align: right;">
+            <div id="exportCSV" class="{!IF(isMultiButtonVisible, 'col-sm-4', 'col-sm-2')}" style="float: right; text-align: right;">
                 <span id="exportCSV"></span>
                 <span id="exportPDF"></span>
-                <apex:outputPanel layout="none" rendered="{!isAirline}">
+                <apex:outputPanel layout="none" rendered="{!isMultiButtonVisible}">
                     <span id="advanced-filters" class="pull-right" style="margin-left: 1%"></span>
                 </apex:outputPanel>
             </div>
@@ -816,53 +1087,49 @@
         <div class="row">
             <apex:form >
                 <div class="col-sm-2">
-                    <apex:outputPanel layout="block" styleclass="form-group">
-                        <label for="countryFilterInput">{!$Label.ISSP_OperationalCalendar_CountryFilter}</label>
-                        <apex:selectList styleclass="countryFilter form-control required" multiselect="false" size="1">
-                            <apex:selectOptions value="{!countryOptions}" />
-                        </apex:selectList>
-                    </apex:outputPanel>
-                </div>
-                <div class="col-sm-2">
-                    <apex:outputPanel layout="block" styleclass="form-group">
-                        <label for="typeFilter">{!$Label.ISSP_OperationalCalendar_BSPCASSFilter}</label>
-                        <select id="typeFilter" class="form-control required"></select>
-                    </apex:outputPanel>
-                </div>
-                <div class="col-sm-2">
-                    <apex:outputPanel layout="block" styleclass="form-group" >
-                        <label for="frequencyFilter">{!$Label.ISSP_OperationalCalendar_FrequencyFilter}</label>
-                        <select id="frequencyFilter" class="form-control"></select>
-                    </apex:outputPanel>
-                </div>
-                <div class="col-sm-2">
-                    <apex:outputPanel layout="block" styleclass="form-group">
-                        <label for="currencyFilter">{!$Label.ISSP_OperationalCalendar_CurrencyFilter}</label>
-                        <select id="currencyFilter" class="form-control"></select>
-                    </apex:outputPanel>
-                </div>
-                <div class="col-sm-3">
                     <div class="form-group">
-                        <label for="billingPeriodFilter">{!$Label.ISSP_OperationalCalendar_Billing_Period}</label>
-                        <select id="billingPeriodFilter" class="form-control">
-                            <option value="{!YEAR(TODAY())}">{!YEAR(TODAY())} {!$Label.ISSP_OperationalCalendar_Billing_Period}</option>
-                            <option value="1">{!$Label.ISSP_AMS_Month_January} {!YEAR(TODAY())} {!$Label.ISSP_OperationalCalendar_Billing_Period}</option>
-                            <option value="2">{!$Label.ISSP_AMS_Month_February} {!YEAR(TODAY())} {!$Label.ISSP_OperationalCalendar_Billing_Period}</option>
-                            <option value="3">{!$Label.ISSP_AMS_Month_March} {!YEAR(TODAY())} {!$Label.ISSP_OperationalCalendar_Billing_Period}</option>
-                            <option value="4">{!$Label.ISSP_AMS_Month_April} {!YEAR(TODAY())} {!$Label.ISSP_OperationalCalendar_Billing_Period}</option>
-                            <option value="5">{!$Label.ISSP_AMS_Month_May} {!YEAR(TODAY())} {!$Label.ISSP_OperationalCalendar_Billing_Period}</option>
-                            <option value="6">{!$Label.ISSP_AMS_Month_June} {!YEAR(TODAY())} {!$Label.ISSP_OperationalCalendar_Billing_Period}</option>
-                            <option value="7">{!$Label.ISSP_AMS_Month_July} {!YEAR(TODAY())} {!$Label.ISSP_OperationalCalendar_Billing_Period}</option>
-                            <option value="8">{!$Label.ISSP_AMS_Month_August} {!YEAR(TODAY())} {!$Label.ISSP_OperationalCalendar_Billing_Period}</option>
-                            <option value="9">{!$Label.ISSP_AMS_Month_September} {!YEAR(TODAY())} {!$Label.ISSP_OperationalCalendar_Billing_Period}</option>
-                            <option value="10">{!$Label.ISSP_AMS_Month_October} {!YEAR(TODAY())} {!$Label.ISSP_OperationalCalendar_Billing_Period}</option>
-                            <option value="11">{!$Label.ISSP_AMS_Month_November} {!YEAR(TODAY())} {!$Label.ISSP_OperationalCalendar_Billing_Period}</option>
-                            <option value="12">{!$Label.ISSP_AMS_Month_December} {!YEAR(TODAY())} {!$Label.ISSP_OperationalCalendar_Billing_Period}</option>
-                            <option value="{!YEAR(TODAY())-1}">{!YEAR(TODAY())-1} {!$Label.ISSP_OperationalCalendar_Billing_Period}</option>
-                            <option value="{!YEAR(TODAY())+1}">{!YEAR(TODAY())+1} {!$Label.ISSP_OperationalCalendar_Billing_Period}</option>
-                        </select>
+                        <label for="typeFilter">{!$Label.ISSP_OperationalCalendar_TypeFilter}</label>
+                        <select id="typeFilter" class="form-control required"></select>
                     </div>
                 </div>
+                <div class="col-sm-2 hidden">
+                    <div class="form-group">
+                        <label for="subtypeFilter">{!$Label.ISSP_OperationalCalendar_SubtypeFilter}</label>
+                        <select id="subtypeFilter" class="form-control required"></select>
+                    </div>
+                </div>
+                <div class="col-sm-2 hidden">
+                    <div class="form-group">
+                        <label for="cycleFilterInput">{!$Label.ISSP_OperationalCalendar_CycleFilter}</label>
+                        <select id="cycleFilter" class="form-control"></select>
+                    </div>
+                </div>
+                <div class="col-sm-2 hidden">
+                    <div class="form-group">
+                        <label for="countryFilterInput">{!$Label.ISSP_OperationalCalendar_CountryFilter}</label>
+                        <select id="countryFilter" class="form-control"></select>
+                    </div>
+                </div>
+                <div class="col-sm-2 hidden">
+                    <div class="form-group">
+                        <label for="frequencyFilter">{!$Label.ISSP_OperationalCalendar_FrequencyFilter}</label>
+                        <select id="frequencyFilter" class="form-control"></select>
+                    </div>
+                </div>
+                <div class="col-sm-2 hidden">
+                    <div class="form-group">
+                        <label for="currencyFilter">{!$Label.ISSP_OperationalCalendar_CurrencyFilter}</label>
+                        <select id="currencyFilter" class="form-control"></select>
+                    </div>
+                </div>
+                <div class="col-sm-3 hidden">
+                    <div class="form-group">
+                        <label for="billingPeriodFilter">{!$Label.ISSP_OperationalCalendar_Billing_Period}</label>
+                        <select id="billingPeriodFilter" class="form-control"></select>
+                    </div>
+                </div>
+
+                <div id="empty-filter-block" class="col-sm-9"><div class="form-group"></div></div>
                 <div id="resetFilters" class="col-sm-1">
                     <label class="invisible">{!$Label.ISSP_OperationalCalendar_Reset}</label>
                     <button id="resetButton" class="btn btn-primary" type="button">{!$Label.ISSP_OperationalCalendar_Reset}</button>
@@ -890,12 +1157,19 @@
                 </div>
                 <div class="col-sm-1"></div>
             </apex:outputPanel>
+            <div id="timezone-disclaimer">
+                <div class="col-sm-1"></div>
+                <div class="col-sm-10">
+                    <div class="alert alert-info">{!$Label.ISSP_OperationalCalendar_Timezone_Disclaimer}</div>
+                </div>
+                <div class="col-sm-1"></div>
+            </div>
         </apex:form >
         <!-- DATA TABLE -->
         <div id="table-container"></div>
 
         <!-- WMO-388 -->
-        <apex:outputPanel layout="none" rendered="{!isAirline}">
+        <apex:outputPanel layout="none" rendered="{!isMultiButtonVisible}">
             <div id="custom-filters" class="modal fade" role="dialog" tabindex="-1" aria-labelledby="myModalLabel">
                 <div class="modal-dialog modal-lg" role="document">
                     <div class="modal-content">
@@ -913,9 +1187,6 @@
                                     <div class="col-sm-10">
                                         <label for="typeOfDownload">{!$Label.ISSP_FDS_DownloadOpts}</label>
                                         <select id="typeOfDownload" class="form-control required" onchange="changeTypeOfDownload(this);">
-                                            <option value="all">{!$Label.ISSP_FDS_AllCountries}</option>
-                                            <option value="allservices">{!$Label.ISSP_FDS_AllCountriesWithServices}</option>
-                                            <option value="custom" selected="selected">{!$Label.ISSP_FDS_ChooseCountries}</option>
                                         </select>
                                     </div>
                                     <div class="col-sm-1"></div>

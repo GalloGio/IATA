@@ -8,8 +8,11 @@ import getCaseTypeAndCountry from '@salesforce/apex/PortalSupportReachUsCtrl.get
 import insertCase from '@salesforce/apex/PortalSupportReachUsCreateNewCaseCtrl.insertCase';
 import createCase from '@salesforce/apex/PortalSupportReachUsCreateNewCaseCtrl.createCase';
 import getCallUsPhoneNumber from '@salesforce/apex/PortalSupportReachUsCtrl.getCallUsPhoneNumber';
+import isAirlineUser from '@salesforce/apex/CSP_Utils.isAirlineUser';
 
 import getAllPickListValues from '@salesforce/apex/PortalFAQsCtrl.getFAQsInfo';
+import getL2Topics from '@salesforce/apex/PortalRegistrationSecondLevelCtrl.getL2Topics';
+import getContactLevelInfo from '@salesforce/apex/PortalRegistrationSecondLevelCtrl.getContactInfo';
 
 //import navigation methods
 import { NavigationMixin } from 'lightning/navigation';
@@ -51,6 +54,10 @@ import csp_SupportReachUs_GoToSupport from '@salesforce/label/c.csp_GoToSupport'
 import csp_SupportReachUs_ComplimentInfo from '@salesforce/label/c.csp_ComplimentInfo';
 import csp_SupportReachUs_Compliment from '@salesforce/label/c.csp_Compliment';
 import IDCard_FillAllFields from '@salesforce/label/c.IDCard_FillAllFields';
+import CSP_L2_Requested_Modal_Title from '@salesforce/label/c.CSP_L2_Requested_Modal_Title';
+import CSP_L2_Requested_Modal_Message from '@salesforce/label/c.CSP_L2_Requested_Modal_Message';
+import CSP_L2_Requested_Modal_Complete from '@salesforce/label/c.CSP_L2_Requested_Modal_Complete';
+import CSP_L2_Requested_Modal_Cancel from '@salesforce/label/c.CSP_L2_Requested_Modal_Cancel';
 
 // Import standard salesforce labels
 import csp_caseNumber from '@salesforce/schema/Case.CaseNumber';
@@ -60,6 +67,8 @@ import csp_caseDescription from '@salesforce/schema/Case.Description';
 import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 
 export default class PortalSupportReachUs extends NavigationMixin(LightningElement) {
+    alertIcon = CSP_PortalPath + 'CSPortal/alertIcon.png';
+
     //track variables
     @track isLoaded = true;
     @track caseDetails;
@@ -89,6 +98,8 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
     @track showModal = false;
     @track callUsPhoneNumberConfigs;
     @track phoneNumber = [];
+
+    @track showRecentCasesList = true;
     //@track suggestion;
 
     //global variables
@@ -102,6 +113,14 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
     recordTypeAndCountry;
     myliveAgentButtonInfo;
     caseInitiated;
+    l2topics;
+
+    // Level 2 registration variables
+    @track isFirstLevelUser;
+    @track displaySecondLevelRegistrationPopup = false;
+    @track displaySecondLevelRegistration = false;
+    level2RegistrationTrigger = 'topic';
+    isTriggeredByRequest = true;
 
     //label construct
     label = {
@@ -141,14 +160,25 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
         csp_caseNumber,
         csp_caseSubject,
         csp_caseDescription,
-        IDCard_FillAllFields
+        IDCard_FillAllFields,
+        CSP_L2_Requested_Modal_Title,
+        CSP_L2_Requested_Modal_Message,
+        CSP_L2_Requested_Modal_Complete,
+        CSP_L2_Requested_Modal_Cancel
     }
 
     //links for images
     iconsBaseLink = CSP_PortalPath + 'CSPortal/Images/Support/';
     iconsExtension = '.svg';
 
+    @track rendered = false;
 
+    renderedCallback(){
+        if(!this.rendered){
+            this.handleTileParam();
+            this.rendered = true;
+        }
+    }
 
     //old doInit() in aura. Fires once the component is loaded.
     connectedCallback() {
@@ -156,6 +186,10 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
         //Data Pickup methods
 
         this.getCountryList();
+
+        this.getL2Topics();
+
+        this.getContactLevelInfo();
 
         this.getAllPickListValues();
 
@@ -165,6 +199,9 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
 
         this.getCallUsPhoneNumber();
 
+        isAirlineUser().then(result => {
+            this.showRecentCasesList = !result; //if airline user, hide case list
+        });
         //visual aspect for tiles
         this.question_selected = this.iconsBaseLink + 'question_selected' + this.iconsExtension;
         this.question_unselected = this.iconsBaseLink + 'question_unselected' + this.iconsExtension;
@@ -173,6 +210,26 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
         this.compliment_selected = this.iconsBaseLink + 'compliment_selected' + this.iconsExtension;
         this.compliment_unselected = this.iconsBaseLink + 'compliment_unselected' + this.iconsExtension;
         //this.suggestion = this.iconsBaseLink + 'suggestion_unselected' + this.iconsExtension;
+    }
+
+    getContactLevelInfo(){
+        getContactLevelInfo()
+            .then(result => {
+                this.isFirstLevelUser = result.Account.Is_General_Public_Account__c;
+            })
+    }
+
+    getL2Topics(){
+        getL2Topics()
+            .then(result => {
+                var list = JSON.parse(JSON.stringify(result));
+
+                this.l2topics = new Set();
+
+                for(let i = 0; i < list.length; i++){
+                    this.l2topics.add(list[i].DataTopicName__c);
+                }
+            })
     }
 
     //get the Topic Values for picklist
@@ -372,6 +429,12 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
             if (this.topicOptions.some(checkTopic)) {
 
                 this.topic = this.pageParams.topic;
+
+                if(this.isFirstLevelUser && this.l2topics.has(this.topic)){
+                    this.displaySecondLevelRegistrationPopup = true;
+                    return;
+                }
+
                 this.subTopicCB = true;
                 this.subTopicValuesGetter();
             } else {
@@ -387,6 +450,12 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
     topicHandler(event) {
         //set topic globally
         this.topic = event.target.value;
+
+        if(this.isFirstLevelUser && this.l2topics.has(this.topic)){
+            this.displaySecondLevelRegistrationPopup = true;
+            return;
+        }
+
         if (this.topic !== "") {
             //Show subTopic Picklist/Combobox
             this.subTopicCB = true;
@@ -430,7 +499,7 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
 
         //first element on the picklist
         for (const item of this.myResult) {
-            if (!map.has(item.childs) && item.topicName === this.topic) {
+            if (!map.has(item.childs) && item.topicName === this.topic && item.categoryName === this.category) {
                 Object.keys(item.childs).forEach(function (el) {
                     mySubTopicOptionsAux.push({
                         label: el, value: item.childs[el]
@@ -440,7 +509,7 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
         }
 
         //set the options
-        this.subTopicOptions = mySubTopicOptions.concat(mySubTopicOptionsAux.reverse());
+        this.subTopicOptions = mySubTopicOptions.concat(mySubTopicOptionsAux);
 
         //set value of Subtopic if in URL
         if ('subtopic' in this.pageParams && this.pageParams.subtopic !== '') {
@@ -457,7 +526,9 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
                     this.optionsButton = true;
                     if (this.emergencyCategories.some(obj => obj.value === this.topic + ('__c'))
                         && this.emergencyCategories.some(obj => obj.value.includes(this.subTopic + '__c'))) {
-                        this.emergencyButton = true;
+                            if(this.isQuestion){
+                                this.emergencyButton = true;
+                            }
                     }
                 }
             } else {
@@ -487,7 +558,9 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
 
                 if (this.emergencyCategories.find(obj => obj.Name === this.topic + ('__c'))
                     && this.emergencyCategories.find(obj => obj.Subtopic__c.includes(this.subTopic + '__c'))) {
-                    this.emergencyButton = true;
+                        if(this.isQuestion){
+                            this.emergencyButton = true;
+                        }
                 }
             }
         } else {
@@ -507,7 +580,9 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
             window.scrollTo({ top: divToTop, left: 0, behavior: 'smooth' });
             if (this.emergencyCategories.find(obj => obj.Name === this.topic + ('__c'))
                 && this.emergencyCategories.find(obj => obj.Subtopic__c.includes(this.subTopic + '__c'))) {
-                this.emergencyButton = true;
+                    if(this.isQuestion){
+                        this.emergencyButton = true;
+                    }
             }
         } else {
             this.optionsButton = false;
@@ -572,7 +647,13 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
 
         //Shows Options Panel
         let showOptionsPanel = new Promise((resolve, reject) => {
-            const showoptions = new CustomEvent('showoptions');
+            const showoptions = new CustomEvent('showoptions', { 
+                detail: {
+                    topic: this.topic,
+                    subtopic: this.subTopic,
+                    category: this.category
+                }
+            });
             // Fire the custom event
             this.dispatchEvent(showoptions);
 
@@ -666,6 +747,51 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
         const closeOptions = new CustomEvent('closeoptions');
         // Fire the custom event
         this.dispatchEvent(closeOptions);
+    }
+
+    handleTileParam(){
+        this.pageParams = getParamsFromPage();
+        if ('tile' in this.pageParams){
+            if(this.pageParams.tile === 'question'){
+                this.isQuestion = true;
+                this.isConcern = false;
+                this.isCompliment = false;
+
+                let mod = this.template.querySelector('[data-id="001" ]');
+                mod.classList.remove('default_panel');
+                mod.classList.add('active_panel');
+                return;
+            }
+            else if(this.pageParams.tile === 'concern'){
+                this.isQuestion = false;
+                this.isConcern = true;
+                this.isCompliment = false;
+
+                let mod = this.template.querySelector('[data-id="002" ]');
+                mod.classList.remove('default_panel');
+                mod.classList.add('active_panel');
+                return;
+            }
+            if(this.pageParams.tile === 'compliment'){
+                this.isQuestion = false;
+                this.isConcern = false;
+                this.isCompliment = true;
+
+                let mod = this.template.querySelector('[data-id="003" ]');
+                mod.classList.remove('default_panel');
+                mod.classList.add('active_panel');
+                return;
+            }
+        }
+
+        // default behavior is no param or incorrect value
+        this.isQuestion = true;
+        this.isConcern = false;
+        this.isCompliment = false;
+
+        let mod = this.template.querySelector('[data-id="001" ]');
+        mod.classList.remove('default_panel');
+        mod.classList.add('active_panel');
     }
 
     //clickhandler for the panels
@@ -864,5 +990,46 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
                         && item.DeveloperName === 'LVA_CallUs_GEN'); // ---- Seventh Condition ------//
             });
         }
+    }
+
+    hideRecentCasesList() {
+        this.showRecentCasesList = false;
+    }
+        
+    // Level 2 registration methods
+
+    secondLevelRegistrationCompletedAction1(){
+        navigateToPage(CSP_PortalPath,{});
+    }
+    
+    secondLevelRegistrationCompletedAction2(){
+        var page = "support-reach-us?category=" + this.category + "&topic=" + this.topic;
+
+        if(this.isQuestion){
+            page = page + "&tile=question";
+        }
+        else if(this.isConcern){
+            page = page + "&tile=concern";
+        }
+
+        navigateToPage(page);
+    }
+    
+    cancelSecondLevelRegistration(){
+        var page = "support-reach-us?category=" + this.category;
+
+        if(this.isQuestion){
+            page = page + "&tile=question";
+        }
+        else if(this.isConcern){
+            page = page + "&tile=concern";
+        }
+
+        navigateToPage(page);
+    }
+
+    showSecondLevelRegistration(){
+        this.displaySecondLevelRegistrationPopup = false;
+        this.displaySecondLevelRegistration = true;
     }
 }

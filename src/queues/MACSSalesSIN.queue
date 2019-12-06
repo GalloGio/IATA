@@ -4,8 +4,8 @@
     <name>MACS Sales - SIN</name>
     <queueMembers>
         <roles>
-            <role>SalesAssistantDirectorAsiaPacA</role>
-            <role>SalesManagersAsiaPacA</role>
+            <role>SalesAssistantDirectorAsiaPac</role>
+            <role>SalesManagersAsiaPac</role>
         </roles>
     </queueMembers>
     <queueSobject>

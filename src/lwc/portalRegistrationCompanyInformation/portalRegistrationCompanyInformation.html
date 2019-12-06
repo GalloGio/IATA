@@ -1,0 +1,327 @@
+<template>
+<div>
+    <lightning-layout multiple-rows vertical-align="stretch">
+        <div class="IEFixDisplayContainer">
+            <lightning-layout-item size="12" class="topLabel IEFixDisplay">
+                <div class="sectionTitle">{labels.CSP_L2_Create_New_Account}</div>
+                <div class="sectionDescription">{labels.CSP_L2_Company_Information_Message}</div>
+                <!--div class="sectionDescription">Your can easily create a company account in two steps.</div-->
+            </lightning-layout-item>
+
+            <lightning-layout-item class="slds-p-around_small topLightGrayBorder customWhiteBackground slds-clearfix IEFixDisplay" size="12">
+            </lightning-layout-item>
+        
+            <lightning-layout-item size="12" class="IEFixDisplay">
+                <div class="sectionSubTitle">{labels.CSP_L2_Company_Information}</div>
+            </lightning-layout-item>
+
+            <lightning-layout-item padding="around-small" size="12" class="IEFixDisplay">
+            </lightning-layout-item>
+            
+                <!------------------------------------------      Customer Type      -------------------------------------------->
+                <template if:true={customerTypesList}>
+
+                    <!------------------------------------------      First Categorization picklist      -------------------------------------------->
+                    <lightning-layout-item size="6" class="companyItem IEFixDisplay">
+                        <div class="formLabelContainer">
+                            <div class="text-xxsmall">
+                                {firstCategorizationPicklist.label}<abbr class="slds-required" title="required">*</abbr>
+                            </div>
+                        </div>
+            
+                        <div class="slds-form-element">
+                            <div class="slds-form-element__control custTextInputSmall">
+                                <lightning-combobox
+                                    options={firstCategorizationPicklist.options}
+                                    value={firstCategorizationPicklist.selectedItem}
+                                    variant="label-hidden"
+                                    class="cursorPointerComboBox text-xxsmall"
+                                    dropdown-alignment="auto"
+                                    onchange={changeCustomerType}>
+                                </lightning-combobox>
+                            </div>
+                        </div>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="6" class="IEFixDisplay"></lightning-layout-item>
+
+                    <!------------------------------------------      Second Categorization picklist      -------------------------------------------->
+                    <template if:false={atLeastTwoPicklists}>
+                        <lightning-layout-item size="6" class="companyItem IEFixDisplay">
+                            <div class="formLabelContainer">
+                                <div class="text-xxsmall">
+                                    Category<abbr class="slds-required" title="required">*</abbr>
+                                </div>
+                            </div>
+                
+                            <div class="slds-form-element">
+                                <div class="slds-form-element__control custTextInputSmall">
+                                    <lightning-combobox
+                                        options={fakeCategoryPicklist}
+                                        variant="label-hidden"
+                                        class="cursorPointerComboBox text-xxsmall"
+                                        dropdown-alignment="auto">
+                                    </lightning-combobox>
+                                </div>
+                            </div>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="6" class="IEFixDisplay"></lightning-layout-item>
+                    </template>
+
+                    <template if:true={atLeastTwoPicklists}>
+                        <!------------------------------------------      if Other is selected      -------------------------------------------->
+                        <template if:true={isOtherPicklistDisplayed}>
+                        <!--<lightning-layout-item size="12">-->
+                            <div class="otherSectionContainer companyItem">
+                                <!--<lightning-layout-item size="6" class="leftItem">-->
+                                <div class="otherSection">  
+                                    <div class="formLabelContainer">
+                                        <div class="text-xxsmall">
+                                            {secondCategorizationPicklist.label}<abbr class="slds-required" title="required">*</abbr>
+                                        </div>
+                                    </div>
+                        
+                                    <div class="slds-form-element">
+                                        <div class="slds-form-element__control custTextInputSmall">
+                                            <lightning-combobox
+                                                options={secondCategorizationPicklist.options}
+                                                value={secondCategorizationPicklist.selectedItem}
+                                                variant="label-hidden"
+                                                class="cursorPointerComboBox text-xxsmall"
+                                                dropdown-alignment="auto"
+                                                onchange={changeCustomerType}>
+                                            </lightning-combobox>
+                                        </div>
+                                    </div>
+                                <!--</lightning-layout-item>-->
+                                <!--</lightning-layout-item>-->
+                                </div>  
+                            </div>
+
+                            <template if:false={threePicklists}>
+                                <lightning-layout-item size="6" class="companyItem IEFixDisplay">
+                                    <div class="formLabelContainer">
+                                        <div class="text-xxsmall">
+                                            Category<abbr class="slds-required" title="required">*</abbr>
+                                        </div>
+                                    </div>
+                        
+                                    <div class="slds-form-element">
+                                        <div class="slds-form-element__control custTextInputSmall">
+                                            <lightning-combobox
+                                                options={fakeCategoryPicklist}
+                                                variant="label-hidden"
+                                                class="cursorPointerComboBox text-xxsmall"
+                                                dropdown-alignment="auto">
+                                            </lightning-combobox>
+                                        </div>
+                                    </div>
+                                </lightning-layout-item>
+                            </template>
+
+                            <!------------------------------------------      Third Categorization picklist      -------------------------------------------->
+                            <template if:true={threePicklists}>
+                                <lightning-layout-item size="6" class="companyItem IEFixDisplay">
+                                    <div class="formLabelContainer">
+                                        <div class="text-xxsmall">
+                                            {thirdCategorizationPicklist.label}<abbr class="slds-required" title="required">*</abbr>
+                                        </div>
+                                    </div>
+                        
+                                    <div class="slds-form-element">
+                                        <div class="slds-form-element__control custTextInputSmall">
+                                            <lightning-combobox
+                                                options={thirdCategorizationPicklist.options}
+                                                value={thirdCategorizationPicklist.selectedItem}
+                                                variant="label-hidden"
+                                                class="cursorPointerComboBox text-xxsmall"
+                                                dropdown-alignment="auto"
+                                                onchange={changeCustomerType}>
+                                            </lightning-combobox>
+                                        </div>
+                                    </div>
+                                </lightning-layout-item>
+                            </template>
+
+                        </template>
+
+                        <!------------------------------------------      if Other is NOT selected      -------------------------------------------->
+                        <template if:false={isOtherPicklistDisplayed}>
+                            <lightning-layout-item size="6" class="companyItem IEFixDisplay">
+                                <div class="formLabelContainer">
+                                    <div class="text-xxsmall">
+                                        {secondCategorizationPicklist.label}<abbr class="slds-required" title="required">*</abbr>
+                                    </div>
+                                </div>
+                    
+                                <div class="slds-form-element">
+                                    <div class="slds-form-element__control custTextInputSmall">
+                                        <lightning-combobox
+                                            options={secondCategorizationPicklist.options}
+                                            value={secondCategorizationPicklist.selectedItem}
+                                            variant="label-hidden"
+                                            class="cursorPointerComboBox text-xxsmall"
+                                            dropdown-alignment="auto"
+                                            onchange={changeCustomerType}>
+                                        </lightning-combobox>
+                                    </div>
+                                </div>
+                            </lightning-layout-item>
+                        </template>
+                    </template>
+
+                    <!-- WARNING MESSAGE -->
+                    <template if:true={isCategorizationModified}>
+                            <lightning-layout-item size="12" class="text-xxsmall warningMessage">
+                                <img src={alertIcon} height="36" width="36" class="warningIcon"/>
+                                <p class="warningContent">{labels.CSP_L2_Change_Categorization_Warning}</p>
+                            </lightning-layout-item>
+            
+                            <lightning-layout-item size="12">
+                            </lightning-layout-item>
+                    </template>
+                </template>
+                
+
+                <!------------------------------------------      Trade Name      -------------------------------------------->
+                <lightning-layout-item size="12" class="companyItem IEFixDisplay">
+                    <div class="formLabelContainer">
+                        <div class="text-xxsmall">
+                            {labels.CSP_L2_Trade_Name}
+                        </div>
+                    </div>
+
+                    <div class="slds-form-element">
+                        <div class="slds-form-element__control custTextInput custTextInputSmall">
+                            <input 
+                                data-id="tradeName"
+                                name="tradeName"    
+                                type="text"
+                                class="slds-input" 
+                                placeholder=" "
+                                value={localAccount.tradeName} 
+                                onkeyup={handleInputValueChange}/>
+                        </div>
+                    </div>
+                </lightning-layout-item>
+
+                <!------------------------------------------      Legal Name      -------------------------------------------->
+                <lightning-layout-item size="12" class="companyItem IEFixDisplay">
+                    <div class="formLabelContainer">
+                        <div class="text-xxsmall">
+                            {labels.CSP_L2_Legal_Name}<abbr class="slds-required" title="required">*</abbr>
+                        </div>
+                    </div>
+
+                    <div class="slds-form-element">
+                        <div class="slds-form-element__control custTextInput custTextInputSmall">
+                            <input 
+                                data-id="legalName"
+                                name="legalName"    
+                                type="text"
+                                class="slds-input" 
+                                placeholder=" "
+                                value={localAccount.legalName} 
+                                onkeyup={handleInputValueChange}/>
+                        </div>
+                    </div>
+                </lightning-layout-item>
+                <!------------------------------------------      Phone      -------------------------------------------->
+                <lightning-layout-item size="12" class="companyItem IEFixDisplay">
+                    <div class="formLabelContainer">
+                        <div class="text-xxsmall">
+                            {labels.CSP_L2_Phone_Number}<abbr class="slds-required" title="required">*</abbr>
+                        </div>
+                    </div>
+
+                    <div class="slds-form-element">
+                        <div class="slds-form-element__control custTextInput custTextInputSmall">
+                            <input 
+                                data-id="phone"
+                                name="phone" 
+                                type="tel"
+                                class="phoneFormat slds-input phoneInput" 
+                                placeholder=" "
+                                value={localAccount.phone}
+                                onkeyup={handleInputValueChange}/>
+                        </div>
+                    </div>
+                </lightning-layout-item>
+
+                <!------------------------------------------      Email      -------------------------------------------->
+                <lightning-layout-item size="12" class="companyItem IEFixDisplay">
+                    <div class="formLabelContainer">
+                        <div class="text-xxsmall">
+                            {labels.CSP_L2_Email_Address}
+                        </div>
+                    </div>
+
+                    <div data-id="emailDiv" class="slds-form-element">
+                        <div class="slds-form-element__control custTextInput custTextInputSmall">
+                            <input 
+                                data-id="email"
+                                name="email"
+                                type="text"
+                                class="slds-input"
+                                placeholder=" "
+                                value={localAccount.email}
+                                onkeyup={handleInputValueChange}/>
+                        </div>
+                        <div if:true={displayInvalidEmailMessage}>
+                            <div style="height:16px;">
+                                <div class="slds-form-element__help">{labels.CSP_Invalid_Email}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                </lightning-layout-item>
+
+                <!------------------------------------------      Website      -------------------------------------------->
+                <lightning-layout-item size="12" class="companyItem IEFixDisplay">
+                    <div class="formLabelContainer">
+                        <div class="text-xxsmall">
+                            {labels.CSP_L2_Website}
+                        </div>
+                    </div>
+
+                    <div class="slds-form-element">
+                        <div class="slds-form-element__control custTextInput custTextInputSmall">
+                            <input 
+                                data-id="website"
+                                name="website"    
+                                type="text"
+                                class="slds-input"
+                                placeholder=" "
+                                value={localAccount.website}
+                                onkeyup={handleInputValueChange}/>
+                        </div>
+                    </div>
+                </lightning-layout-item>
+
+                <!--<lightning-layout-item size="4">
+                    <span class="link_normal -Title slds-float_left" onclick={toAccountSelection} >{labels.CSP_L2_Back_to_Account_Selection}</span>
+                </lightning-layout-item>-->
+                <div class="buttonsContainer">
+                    <lightning-layout-item size="6" class="backButtonWrapper">
+                        <div class="text-xxsmall">
+                            <lightning-button variant="base"
+                                label={labels.CSP_L2_Back_to_Account_Selection}
+                                title={labels.CSP_L2_Back_to_Account_Selection}
+                                onclick={toAccountSelection}
+                                class="blueCustomButtonLinkSmall"
+                                icon-name="utility:back" 
+                                icon-position="left">
+                            </lightning-button>
+                        </div>
+                    </lightning-layout-item>
+            
+                    <lightning-layout-item size="6" class="IEFixDisplay">
+                        <lightning-button class="slds-float_right containedButton customBtn" data-id="nextButton" label={labels.CSP_L2_Next_Address_Information} disabled={isAddressInformationButtonDisabled} variant="brand" onclick={toAddressInformation}>
+                        </lightning-button>
+                    </lightning-layout-item>
+                </div>
+                <lightning-layout-item size="12" padding="around-small" class="IEFixDisplay">
+                </lightning-layout-item>
+            </div>
+        </lightning-layout>
+    </div>
+</template>

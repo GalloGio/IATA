@@ -1,6 +1,6 @@
 public with sharing class PortalSupportReachUsCreateNewCaseCtrl {
 
-private final static Integer MAX_RESULTS = 7;
+private final static Integer MAX_RESULTS = 20;
 
 private static User USER = DAL_ISSP.getUser(Userinfo.getUserId());
 private static Contact CONTACT = DAL_ISSP.getContact(DAL_ISSP.getUser(Userinfo.getUserId()).ContactId);
@@ -26,20 +26,72 @@ public static List<PortalLookupSearchResult> searchAccounts(String searchTerm) {
 
 //Dynamic Query to perform searches on the Account.
 private static List<Account> searchRelatedAccounts(String searchTerm) {
-	//prepare query
+//prepare query
+
+	Account currentAccount = [
+		Select id, Name, IATAcode__c,
+		ParentId,
+		Parent.ParentId,
+		Parent.Parent.ParentId,
+		Parent.Parent.Parent.ParentId,
+		Parent.Parent.Parent.Parent.ParentId
+		From Account
+		Where id = :USER.Contact.AccountId
+	];
+
+// find the top parent
+	Id parentId = null;
+	if (currentAccount.ParentId == null || currentAccount.ParentId =='' ) {
+		parentId = currentAccount.Id;
+	} else if (currentAccount.Parent.ParentId == null || currentAccount.Parent.ParentId =='') {
+		parentId = currentAccount.ParentId;
+	} else if (currentAccount.Parent.Parent.ParentId == null || currentAccount.Parent.Parent.ParentId =='') {
+		parentId = currentAccount.Parent.ParentId;
+	} else if (currentAccount.Parent.Parent.Parent.ParentId == null || currentAccount.Parent.Parent.Parent.ParentId =='') {
+		parentId = currentAccount.Parent.Parent.ParentId;
+	} else if (currentAccount.Parent.Parent.Parent.Parent.ParentId == null || currentAccount.Parent.Parent.Parent.Parent.ParentId =='') {
+		parentId = currentAccount.Parent.Parent.Parent.ParentId;
+	} else {
+		parentId = currentAccount.Parent.Parent.Parent.Parent.ParentId;
+	}
+
+
 	String finalQuery = 'SELECT ID, IATAcode__c, Name, BillingCity FROM Account '
 	                    + 'WHERE IATAcode__c != null ';
 
-	if(String.isNotEmpty(searchTerm)) {
-		finalQuery += ' AND ( IATAcode__c LIKE  \'%' + String.escapeSingleQuotes(searchTerm)
-		              + '%\' OR BillingCity LIKE \'%' + String.escapeSingleQuotes(searchTerm)
-		              + '%\' OR Name LIKE \'%' + String.escapeSingleQuotes(searchTerm)
-		              + '%\') ';
+	finalQuery +=
+		' AND (Id = \'' + parentId
+		+ '\' OR ParentId = \'' + parentId
+		+ '\' OR Parent.ParentId = \'' + parentId
+		+ '\' OR Parent.Parent.ParentId = \'' + parentId
+		+ '\' OR Parent.Parent.Parent.ParentId = \'' + parentId
+		+ '\' OR Parent.Parent.Parent.Parent.ParentId = \'' + parentId + '\')';
+
+	if(searchTerm != null) {
+		finalQuery +=
+			' AND ( IATAcode__c LIKE  \'%' + searchTerm
+			+ '%\' OR BillingCity LIKE \'%' + searchTerm
+			+ '%\' OR Name LIKE \'%' + searchTerm
+			+ '%\') ';
 	}
 
 	finalQuery += ' LIMIT ' + MAX_RESULTS;
 
-	return Database.query(finalQuery);
+	List<Account> reorderedCodes = new List<Account>();
+	List<Account> allCodes = DAL_WithoutSharing.getRelatedAccounts(finalQuery);
+
+	//place user's Iata code as first element in the list
+	if(!allCodes.isEmpty()) {
+		for(Account act : allCodes) {
+			if(act.id == currentAccount.id && !reorderedCodes.isEmpty()) {
+				reorderedCodes.add(0,act);
+			}else{
+				reorderedCodes.add(act);
+			}
+		}
+	}
+
+	return reorderedCodes;
 
 }
 
@@ -228,4 +280,10 @@ private static void createCaseTeamMemberList(Case cse, list<Contact> listContact
 	}
 	insert listCaseTeam;
 }
+
+	//Checks if user is a level 1 user (haven't completed level 2 registration)
+	@AuraEnabled
+	public static Boolean isUserLevelOne(Id userId){
+		return  [SELECT Contact.Account.Is_General_Public_Account__c  FROM User WHERE Id = :userId].Contact.Account.Is_General_Public_Account__c;
+	}
 }

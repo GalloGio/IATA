@@ -283,6 +283,17 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>ANG_Fees_GoStandard_GoGlobal__c</fullName>
+        <description>Fees to convert from GoStandard to GoGlobal.</description>
+        <externalId>false</externalId>
+        <label>GoStandard to GoGlobal</label>
+        <length>25</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>ANG_Fees_GoStandard_GoLite__c</fullName>
         <description>Fees to convert from GoStandard to GoLite.</description>
         <externalId>false</externalId>
@@ -20455,6 +20466,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>TACT-Public</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>TIESS</fullName>
                 <default>false</default>
             </values>
@@ -22323,12 +22338,13 @@ The product will only appear on the Online Store when the date entered in this f
         <customTabListAdditionalFields>PRODUCT2.FAMILY</customTabListAdditionalFields>
         <customTabListAdditionalFields>Product_Manager__c</customTabListAdditionalFields>
         <lookupDialogsAdditionalFields>PRODUCT2.NAME</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Short_Title__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>SAP_Material_Number__c</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>Product_Manager__c</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>Product_Section__c</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>Line_of_Business__c</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>Activity_Code__c</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>Product_Segment__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Edition__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Language__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Media__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Effective_From__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Delivery_Fulfillment_Support__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>PRODUCT2.DESCRIPTION</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>EF_IATA_Ticket_Tax_Code__c</lookupDialogsAdditionalFields>
         <lookupPhoneDialogsAdditionalFields>PRODUCT2.NAME</lookupPhoneDialogsAdditionalFields>
@@ -22336,12 +22352,15 @@ The product will only appear on the Online Store when the date entered in this f
         <lookupPhoneDialogsAdditionalFields>PRODUCT2.DESCRIPTION</lookupPhoneDialogsAdditionalFields>
         <lookupPhoneDialogsAdditionalFields>PRODUCT2.FAMILY</lookupPhoneDialogsAdditionalFields>
         <searchResultsAdditionalFields>PRODUCT2.NAME</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Product_Segment__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Product_Manager__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>PRODUCT2.FAMILY</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>PRODUCT2.ACTIVE</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Line_of_Business__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Short_Title__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>SAP_Material_Number__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Edition__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Language__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Media__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Effective_From__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Delivery_Fulfillment_Support__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>IATA_ORG_Group__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>IEC_Use_on_IATA_org__c</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <validationRules>

@@ -25,29 +25,29 @@ public class vfIECEBC_TestSuite1 {
     public static List<GDP_Products_Account_View__c> createGDPProductsAccountViews() {
         return vfIECEBC_TestSuite.createGDPProductsAccountViews();
     }
-    /////////////////  
+
     public static void testRecipientList() { 
         PageReference pageRef = Page.IECEBC_RecipientList;
         Test.setCurrentPage(pageRef);
         
         IECEBC_TestUtility.createTestUser(false);
-//        User usr = initPreRunAs(true);
-        
+            
+        Test.startTest();
+
         List<EBC_Application_Filter__c> afs = new List<EBC_Application_Filter__c>{
             new EBC_Application_Filter__c(Search_Level__c  = 'Geo-Selection', Audience__c = 'Agency', Filter_Description__c = 'Country', Data_Type__c = 'Text', Filter_Field__c = 'Country__c'),
             new EBC_Application_Filter__c(Search_Level__c  = 'Refinement', Audience__c = 'Agency', Filter_Description__c = 'Preferred Language', Data_Type__c = 'Text', Filter_Field__c = 'Preferred_Language__c')
         };
         insert afs;
+        
         EBC_Master_Filter__c masterFilter = new EBC_Master_Filter__c(Audience__c = 'Agency', OwnerId = IECEBC_TestUtility.oUser.Id, Is_Global_Filter__c = false, Billing_Account__c = IECEBC_TestUtility.oBillingAccount.Id);
         insert masterFilter;
         
         System.runAs(IECEBC_TestUtility.oUser) {
-//        System.runAs(usr) {
-//            initPostRunAs();
+
 			vfIECEBC_TestPaymentSuite.initPostRunAs(5);
-            Test.startTest();
-            
             vfIECEBC_Layout layoutController = new vfIECEBC_Layout();
+            
             System.assertEquals(null, layoutController.pageLoad());
             
             vfIECEBC_RecipientList recList = new vfIECEBC_RecipientList();
@@ -75,19 +75,17 @@ public class vfIECEBC_TestSuite1 {
             
             recList = new vfIECEBC_RecipientList();
             System.assertEquals(1, recList.getFilters().size());
-            
+            Test.stopTest();
         }
     }
     
     public static void testReadMosaicoUploads() { 
         IECEBC_TestUtility.createTestUser(false);
-//        User usr = initPreRunAs(true);
-        
+        Test.startTest();
+
         System.runAs(IECEBC_TestUtility.oUser) {
-//        System.runAs(usr) {
-//            initPostRunAs();
+
 			vfIECEBC_TestPaymentSuite.initPostRunAs(5);
-            Test.startTest();
             
             RestRequest req = new RestRequest();
             req.requestURI = 'https://hostname/services/apexrest/MosaicoUploads';
@@ -101,13 +99,10 @@ public class vfIECEBC_TestSuite1 {
     }
     public static void testWriteMosaicoUploads() { 
         IECEBC_TestUtility.createTestUser(false);
-//        User usr = initPreRunAs(true);
+        Test.startTest();
         
         System.runAs(IECEBC_TestUtility.oUser) {
-//        System.runAs(usr) {
-//            initPostRunAs();
 			vfIECEBC_TestPaymentSuite.initPostRunAs(5);
-            Test.startTest();
             
             RestRequest req = new RestRequest();
             req.requestURI = 'https://hostname/services/apexrest/MosaicoUploads';
@@ -120,7 +115,6 @@ public class vfIECEBC_TestSuite1 {
             RestContext.response = res;
             
             vfIECEBC_MosaicoUploads.doPost();
-            
             
             req = new RestRequest();
             req.requestURI = 'https://hostname/services/apexrest/MosaicoUploads';
@@ -138,20 +132,17 @@ public class vfIECEBC_TestSuite1 {
     public static void testAccountRatePlan() { 
         PageReference pageRef = Page.IECEBC_AccountRatePlan;
         Test.setCurrentPage(pageRef);
-        
+
         IECEBC_TestUtility.createTestUser(false);
-//        User usr = initPreRunAs(true);
-        
+        Test.startTest();  
         System.runAs(IECEBC_TestUtility.oUser) {
-//        System.runAs(usr) {
-//            initPostRunAs();
 			vfIECEBC_TestPaymentSuite.initPostRunAs(5);
-            Test.startTest();
             
             vfIECEBC_Layout layoutController = new vfIECEBC_Layout();
             System.assertEquals(null, layoutController.pageLoad());
             
             vfIECEBC_AccountRatePlan accRP = new vfIECEBC_AccountRatePlan();
+          	Test.stopTest();  
             
             System.assertNotEquals(null, accRP.isEbcPrepaid);
             System.assertNotEquals(null, accRP.productRatePlan.Name);
@@ -180,13 +171,10 @@ public class vfIECEBC_TestSuite1 {
         Test.setCurrentPage(pageRef);
         
         IECEBC_TestUtility.createTestUser(false);
-//        User usr = initPreRunAs(true);
-        
+        Test.startTest();
+
         System.runAs(IECEBC_TestUtility.oUser) {
-//        System.runAs(usr) {
-//            initPostRunAs();
 			vfIECEBC_TestPaymentSuite.initPostRunAs(5);
-            Test.startTest();
             
             vfIECEBC_Layout layoutController = new vfIECEBC_Layout();
             System.assertEquals(null, layoutController.pageLoad());
@@ -207,20 +195,16 @@ public class vfIECEBC_TestSuite1 {
             System.assertNotEquals(null, accExtras.goToPaymentPage());
             System.assertNotEquals(null, accExtras.selectedProductRatePlan);
         }
-        
     }
     public static void testAccountEmailBlocks() {
         PageReference pageRef = Page.IECEBC_AccountEmailBlocks;
         Test.setCurrentPage(pageRef);
         
         IECEBC_TestUtility.createTestUser(false);
-//        User usr = initPreRunAs(true);
-        
+        Test.startTest();
+
         System.runAs(IECEBC_TestUtility.oUser) {
-//        System.runAs(usr) {
-//            initPostRunAs();
 			vfIECEBC_TestPaymentSuite.initPostRunAs(5);
-            Test.startTest();
             
             vfIECEBC_Layout layoutController = new vfIECEBC_Layout();
             System.assertEquals(null, layoutController.pageLoad());
@@ -231,7 +215,6 @@ public class vfIECEBC_TestSuite1 {
             System.assertNotEquals(null, accEmailBlocks.productRatePlanWrapperOptionList);
             System.assertNotEquals(null, accEmailBlocks.showPurchasedSelectionMessage);
             
-            
             accEmailBlocks.selectedRatePlanIndex = accEmailBlocks.productRatePlanWrapperOptionList[0].index;
             accEmailBlocks.productRatePlanWrapperOptionList[0].selected = true;
             accEmailBlocks.selectRatePlanEmaiLBlock();
@@ -241,9 +224,6 @@ public class vfIECEBC_TestSuite1 {
             System.assertNotEquals(null, accEmailBlocks.totalNewPurchaseAmount);
             System.assertNotEquals(null, accEmailBlocks.selectedProductRatePlan);
             System.assertNotEquals(null, accEmailBlocks.goToPaymentPage());
-            
-            
-            
         }
     }
     public static void testAccountManage() {
@@ -251,13 +231,10 @@ public class vfIECEBC_TestSuite1 {
         Test.setCurrentPage(pageRef);
         
         IECEBC_TestUtility.createTestUser(false);
-//        User usr = initPreRunAs(true);
-        
+        Test.startTest();
+
         System.runAs(IECEBC_TestUtility.oUser) {
-//        System.runAs(usr) {
-//            initPostRunAs();
 			vfIECEBC_TestPaymentSuite.initPostRunAs(10);
-            Test.startTest();
             
             vfIECEBC_Layout layoutController = new vfIECEBC_Layout();
             System.assertEquals(null, layoutController.pageLoad());
@@ -300,12 +277,13 @@ public class vfIECEBC_TestSuite1 {
     public static void testResourceListError() {
         PageReference pageRef = Page.IECEBC_ResourceList;
         Test.setCurrentPage(pageRef);
-        
+       
         User usr = initPreRunAs(true);
         
         System.runAs(usr) {
-            initPostRunAs();
             Test.startTest();
+            	initPostRunAs();
+	      	Test.stopTest();
             
             vfIECEBC_Layout layoutController = new vfIECEBC_Layout();
             System.assertEquals(null, layoutController.pageLoad());
@@ -316,8 +294,6 @@ public class vfIECEBC_TestSuite1 {
             System.assertEquals(true, listCon.MessageFlag);
             System.assertNotEquals('', listCon.MessageContent);
             listCon.ClearMessage();
-            
-	        //Test.setMock(HttpCalloutMock.class, new AttachmentUpload_Mock());
         }
     }
     public static void testResourceList() {
@@ -334,9 +310,10 @@ public class vfIECEBC_TestSuite1 {
         };
         insert ress;
         
+        Test.startTest();
+
         System.runAs(usr) {
             initPostRunAs();
-            Test.startTest();
             
             vfIECEBC_Layout layoutController = new vfIECEBC_Layout();
             System.assertEquals(null, layoutController.pageLoad());
@@ -353,21 +330,21 @@ public class vfIECEBC_TestSuite1 {
             
             Boolean isLoadMoreImage = listCon.loadmoreimage;
             Test.stopTest();
-            
         }
     }
     public static void testResourceListUpload() {
         PageReference pageRef = Page.IECEBC_ResourceList;
-        Test.setCurrentPage(pageRef);
-        
+        Test.setCurrentPage(pageRef);            
+
         User usr = initPreRunAs(true);
         
         Test.setMock(HttpCalloutMock.class, new AttachmentUpload_Mock());
         
         System.runAs(usr) {
-            initPostRunAs();
             Test.startTest();
-            
+            	initPostRunAs();
+            Test.stopTest();
+
             vfIECEBC_Layout layoutController = new vfIECEBC_Layout();
             System.assertEquals(null, layoutController.pageLoad());
             
@@ -382,25 +359,28 @@ public class vfIECEBC_TestSuite1 {
             System.assertEquals(false, listCon.MessageFlag);
         }
     }
+    
     public static void testResourceListUpload1() {
         PageReference pageRef = Page.IECEBC_ResourceList;
         Test.setCurrentPage(pageRef);
-        
+
         User usr = initPreRunAs(true);
         
-        EBC_Resource__c er = new EBC_Resource__c();
-        er.Billing_Account__c = oBillingAccount.Id;
-        er.Name = 'test.png';
-        er.Image_Type__c = 'png';
-        er.Image_Size__c = 12;
+        EBC_Resource__c er = new EBC_Resource__c(
+            Billing_Account__c = oBillingAccount.Id,
+        	Name = 'test.png',
+        	Image_Type__c = 'png',
+        	Image_Size__c = 12
+        );
         insert er;
         
-        Attachment a = new Attachment();
-        a.Name = er.Name;
-        a.Body = Blob.valueOf('helloworld');
-        a.ParentId = er.Id;
+        Attachment a = new Attachment(
+            Name = er.Name,
+            Body = Blob.valueOf('helloworld'),
+            ParentId = er.Id
+        );
         insert a;
-        
+           
         String url = 'https://hostname/iec/services/apexrest/Resources/' + er.Id + '/' + er.Name + '?client=exacttarget';
         
         Test.setMock(HttpCalloutMock.class, new AttachmentUpload_Mock());
@@ -416,17 +396,9 @@ public class vfIECEBC_TestSuite1 {
         restIEC_Attachment.doGet();
         
         System.runAs(usr) {
-            initPostRunAs();
-            
-            
             Test.startTest();
-            
-            IECEBC_ETPortfolioCreate.CreatePortfolioObject(new Map<String, String>{
-                er.Id + '.png' => url
-            });
-            
+                initPostRunAs();
             Test.stopTest();
-            
         }
     }
     
@@ -443,28 +415,27 @@ public class vfIECEBC_TestSuite1 {
         Zuora__CustomerAccount__c ba1 = IECTestUtil.createSampleBillingAccount(a1, c1);
         insert ba1;
         
-        
-        EBC_Template__c tpl = new EBC_Template__c();
-        tpl.Name = 'unittesttemplate';
-        tpl.Audience__c = 'Agency';
-        tpl.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('EBC_Template__c', 'Global');
+        EBC_Template__c tpl = new EBC_Template__c(
+            Name = 'unittesttemplate',
+            Audience__c = 'Agency',
+            RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('EBC_Template__c', 'Global')
+        );
         insert tpl;
         
         Id userRecTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('EBC_Template__c', 'User_Templates');
         List<EBC_Template__c> tpls = new List<EBC_Template__c>{
             new EBC_Template__c(Name = 'a1', RecordTypeId = userRecTypeId, Audience__c = 'Agency', Billing_Account__c = oBillingAccount.Id, Is_Reusable__c = true, Parent_Template__c = tpl.Id),
-                new EBC_Template__c(Name = 'a2', RecordTypeId = userRecTypeId, Audience__c = 'Agency', Billing_Account__c = oBillingAccount.Id, Is_Reusable__c = true, Parent_Template__c = tpl.Id),
-                new EBC_Template__c(Name = 'a3', RecordTypeId = userRecTypeId, Audience__c = 'Agency', Billing_Account__c = oBillingAccount.Id, Is_Reusable__c = true, Parent_Template__c = tpl.Id),
-                new EBC_Template__c(Name = 'a4', RecordTypeId = userRecTypeId, Audience__c = 'Agency', Billing_Account__c = ba1.Id, Is_Reusable__c = true, Parent_Template__c = tpl.Id),
-                new EBC_Template__c(Name = 'a5', RecordTypeId = userRecTypeId, Audience__c = 'Agency', Billing_Account__c = oBillingAccount.Id, Is_Reusable__c = false, Parent_Template__c = tpl.Id)
-                };
-                    insert tpls;
-        
+            new EBC_Template__c(Name = 'a2', RecordTypeId = userRecTypeId, Audience__c = 'Agency', Billing_Account__c = oBillingAccount.Id, Is_Reusable__c = true, Parent_Template__c = tpl.Id),
+            new EBC_Template__c(Name = 'a3', RecordTypeId = userRecTypeId, Audience__c = 'Agency', Billing_Account__c = oBillingAccount.Id, Is_Reusable__c = true, Parent_Template__c = tpl.Id),
+            new EBC_Template__c(Name = 'a4', RecordTypeId = userRecTypeId, Audience__c = 'Agency', Billing_Account__c = ba1.Id, Is_Reusable__c = true, Parent_Template__c = tpl.Id),
+            new EBC_Template__c(Name = 'a5', RecordTypeId = userRecTypeId, Audience__c = 'Agency', Billing_Account__c = oBillingAccount.Id, Is_Reusable__c = false, Parent_Template__c = tpl.Id)
+		};
+        insert tpls;
         
         System.runAs(usr) {
-            initPostRunAs();
             Test.startTest();
-            
+            initPostRunAs();
+
             // Layout PageLoad
             vfIECEBC_Layout layoutController = new vfIECEBC_Layout();
             System.assertEquals(null, layoutController.pageLoad());
@@ -482,7 +453,6 @@ public class vfIECEBC_TestSuite1 {
             insert new Attachment(ParentId = conTpls[0].Id, Name = 'test.html', ContentType = 'plain/text', Body = Blob.valueOf('test'));
             insert new EBC_Template_Resource__c(EBC_Template__c = conTpls[0].Id, EBC_Resource__c = res.Id);
             
-            
             listCon.selectedItemId = conTpls[0].Id;
             listCon.getSelectedFilter().Name = 'New Name';
             listCon.duplicate();
@@ -499,6 +469,8 @@ public class vfIECEBC_TestSuite1 {
             
             listCon = new vfIECEBC_TemplateList();
             conTpls = listCon.getFilters();
+            Test.stopTest();
+
             System.assertEquals(3, conTpls.size());
         }
         
@@ -508,36 +480,35 @@ public class vfIECEBC_TestSuite1 {
         PageReference pageRef = Page.IECEBC_Dashboard;
         Test.setCurrentPage(pageRef); 
         
-        Account newAccount = new Account();
-        newAccount.Name = 'Hello World';
+        Account newAccount = new Account(Name = 'Hello World');
         insert newAccount;
-        Contact newContact = new Contact();
-		newContact.FirstName = 'Name';
-        newContact.Phone='5142640908';
-        newContact.Email='dashboard@iata.com';
-        newContact.LastName = 'w00t';
+        Contact newContact = new Contact(
+            FirstName = 'Name',
+            Phone='5142640908',
+            Email='dashboard@iata.com',
+            LastName = 'w00t'
+        );
         insert newContact;
-        
+
         Zuora__CustomerAccount__c otherBillingAccount = IECTestUtil.createSampleBillingAccount(newAccount, newContact);
         insert otherBillingAccount;  
-        
+
         User usr = initPreRunAs(true);
         
         List<EBC_Campaign__c> campaigns = new List<EBC_Campaign__c>{
             new EBC_Campaign__c(Name = 'Foo Bar 1', Subject__c = 'Foo Bar 1', From_Name__c = 'FooBar1', Billing_Account__c = oBillingAccount.Id),
-                new EBC_Campaign__c(Name = 'Foo Bar 2', Subject__c = 'Foo Bar 2', From_Name__c = 'FooBar2', Billing_Account__c = oBillingAccount.Id),
-                new EBC_Campaign__c(Name = 'Foo Bar 3', Subject__c = 'Foo Bar 3', From_Name__c = 'FooBar3', Billing_Account__c = oBillingAccount.Id),
-                new EBC_Campaign__c(Name = 'Foo Bar 4', Subject__c = 'Foo Bar 4', From_Name__c = 'FooBar4', Billing_Account__c = oBillingAccount.Id),
-                new EBC_Campaign__c(Name = 'Hello World 1', Subject__c = 'Hello World 1', From_Name__c = 'HelloWorld1', Billing_Account__c = otherBillingAccount.Id)
-                };
-                    
-                    insert campaigns;
-        
-        
+			new EBC_Campaign__c(Name = 'Foo Bar 2', Subject__c = 'Foo Bar 2', From_Name__c = 'FooBar2', Billing_Account__c = oBillingAccount.Id),
+            new EBC_Campaign__c(Name = 'Foo Bar 3', Subject__c = 'Foo Bar 3', From_Name__c = 'FooBar3', Billing_Account__c = oBillingAccount.Id),
+            new EBC_Campaign__c(Name = 'Foo Bar 4', Subject__c = 'Foo Bar 4', From_Name__c = 'FooBar4', Billing_Account__c = oBillingAccount.Id),
+            new EBC_Campaign__c(Name = 'Hello World 1', Subject__c = 'Hello World 1', From_Name__c = 'HelloWorld1', Billing_Account__c = otherBillingAccount.Id)
+        };
+        insert campaigns;
+
         System.runAs(usr) {
-            initPostRunAs();
             Test.startTest();
-            
+            	initPostRunAs();
+            Test.stopTest();
+
             vfIECEBC_Layout layoutController = new vfIECEBC_Layout();
             System.assertEquals(null, layoutController.pageLoad());
             layoutController.getSProdCACPro();
@@ -550,7 +521,7 @@ public class vfIECEBC_TestSuite1 {
             Boolean newNow=layoutController.showRenewNow;
             String pageUrl=layoutController.renewalPageUrl;
             layoutController.getIsUserLoggedIn();
-            
+                        
             vfIECEBC_Dashboard dashboardCon = new vfIECEBC_Dashboard();
             System.assertEquals(4, dashboardCon.campaignsCount);
             System.assertNotEquals(null, dashboardCon.showRenewNow);
@@ -562,13 +533,11 @@ public class vfIECEBC_TestSuite1 {
             System.assertEquals('LastModifiedDate DESC', campaignListComponent.sortBy);
             System.assertEquals(dashboardCon.campaignsCount, campaignListComponent.CampaignsCount);
             System.assertEquals(2, campaignListComponent.campaigns.size());
-            
         }
     }
     
     public static void testRecipientListEdit() {
         User usr = initPreRunAs(true);
-        
         
         List<EBC_Application_Filter__c> afs = new List<EBC_Application_Filter__c>{
             new EBC_Application_Filter__c(Search_Level__c  = 'Geo-Selection', Audience__c = 'Agency', Filter_Description__c = 'Country', Data_Type__c = 'Text', Filter_Field__c = 'Country__c'),
@@ -577,14 +546,8 @@ public class vfIECEBC_TestSuite1 {
         insert afs;
         EBC_Master_Filter__c masterFilter = new EBC_Master_Filter__c(Audience__c = 'Agency', OwnerId = usr.Id);
         insert masterFilter;
-        /*
-        List<EBC_Customer_Filter__c> cfs = new List<EBC_Customer_Filter__c>{
-            new EBC_Customer_Filter__c(EBC_Master_Filter__c = masterFilter.Id, EBC_Application_Filter__c = afs[0].Id, Field_Operator__c = '=', Field_Value__c = 'X0'),
-            new EBC_Customer_Filter__c(EBC_Master_Filter__c = masterFilter.Id, EBC_Application_Filter__c = afs[1].Id, Field_Operator__c = '=', Field_Value__c = 'X0')
-        };
-        insert cfs;
-*/
-        
+
+        Test.startTest();
 
         PageReference pageRef = Page.IECEBC_Recipient;
         pageRef.getParameters().put('id', masterFilter.Id);
@@ -592,7 +555,6 @@ public class vfIECEBC_TestSuite1 {
         
         System.runAs(usr) {
             initPostRunAs();
-            Test.startTest();
             
             // Layout PageLoad
             vfIECEBC_Layout layoutController = new vfIECEBC_Layout();
@@ -630,7 +592,6 @@ public class vfIECEBC_TestSuite1 {
             
                         
             // Geo Filters
-            // 
             recipientEditCon.getAvailableGeoApplicationFilterOptions();
             recipientEditCon.addGeoFilter();
             recipientEditCon.resetGeoFilter();
@@ -645,13 +606,6 @@ public class vfIECEBC_TestSuite1 {
             recipientEditCon.geoFilterIndex = '0';
             recipientEditCon.removeGeoFilter();
             
-                
-//            new EBC_Customer_Filter__c(EBC_Master_Filter__c = masterFilter.Id, EBC_Application_Filter__c = afs[0].Id, Field_Operator__c = '=', Field_Value__c = 'X0'),
-            
-            
-            
-            
-            
             Test.stopTest();
         }
     }
@@ -662,50 +616,32 @@ public class vfIECEBC_TestSuite1 {
         Test.setCurrentPage(pageRef);
         
         User usr = initPreRunAs(true);
-        /*
-GDP_Reference_Table__c grt = new GDP_Reference_Table__c(Code__c = '4');
-insert grt;
-Accreditation__c accr = new Accreditation__c(Status__c = grt.Id);
-insert accr;
+              
+        Test.startTest();
 
-List<GDP_Products_Account_View__c> gpavs = new List<GDP_Products_Account_View__c>{
-new GDP_Products_Account_View__c(Name = 'a',				Related_Accreditation_Class__c = accr.Id,	GDP_Opt_In__c = true,	Email_Address__c = 'a@b.com',			Preferred_Language__c = 'X0'),
-new GDP_Products_Account_View__c(Name = 'b',			Related_Accreditation_Class__c = accr.Id,	GDP_Opt_In__c = true,	Email_Address__c = 'b@b.com',			Preferred_Language__c = 'X0'),
-new GDP_Products_Account_View__c(Name = 'c',			Related_Accreditation_Class__c = accr.Id,	GDP_Opt_In__c = true,	Email_Address__c = 'c@b.com',			Preferred_Language__c = 'X0'),
-new GDP_Products_Account_View__c(Name = 'd',			Related_Accreditation_Class__c = accr.Id,	GDP_Opt_In__c = true,	Email_Address__c = 'd@b.com',			Preferred_Language__c = 'X0'),
-new GDP_Products_Account_View__c(Name = 'e',			Related_Accreditation_Class__c = accr.Id,	GDP_Opt_In__c = true,	Email_Address__c = 'e@b.com',			Preferred_Language__c = 'X0'),
-new GDP_Products_Account_View__c(Name = 'f',			Related_Accreditation_Class__c = accr.Id,	GDP_Opt_In__c = true,	Email_Address__c = 'f@b.com',			Preferred_Language__c = 'X0'),
-new GDP_Products_Account_View__c(Name = 'notincluded',	Related_Accreditation_Class__c = accr.Id,	GDP_Opt_In__c = true,	Email_Address__c = 'notincluded@b.com',	Preferred_Language__c = 'X1'),
-new GDP_Products_Account_View__c(Name = 'optout',		Related_Accreditation_Class__c = accr.Id,	GDP_Opt_In__c = false,	Email_Address__c = 'optout@b.com',		Preferred_Language__c = 'X0'),
-new GDP_Products_Account_View__c(Name = 'duplicate',	Related_Accreditation_Class__c = accr.Id,	GDP_Opt_In__c = true,	Email_Address__c = 'duplicate@b.com',	Preferred_Language__c = 'X0'),
-new GDP_Products_Account_View__c(Name = 'duplicate1',	Related_Accreditation_Class__c = accr.Id,	GDP_Opt_In__c = true,	Email_Address__c = 'duplicate@b.com',	Preferred_Language__c = 'X0')
-};
-insert gpavs;*/
         List<GDP_Products_Account_View__c> gpavs = createGDPProductsAccountViews();
         
-        EBC_Master_Filter__c masterFilter = new EBC_Master_Filter__c();
-        masterFilter.Audience__c = 'Agency';
-        masterFilter.Billing_Account__c = oBillingAccount.Id;
+        EBC_Master_Filter__c masterFilter = new EBC_Master_Filter__c(
+            Audience__c = 'Agency',
+            Billing_Account__c = oBillingAccount.Id
+        );
         insert masterFilter;
         
         EBC_Template__c tpl = new EBC_Template__c();
         insert tpl;
         
-        EBC_Campaign__c camp = new EBC_Campaign__c();
-        // Step 1
-        camp.Name = 'Foo Bar';
-        camp.Subject__c = 'Foo Subject';
-        camp.From_Name__c = 'Foo From Name';
-        camp.Is_Google_Analytics_Tracker_Active__c = true;
-        camp.Google_Analytics_Tracking_Code__c = 'UA-XXXXXX';
-        camp.Billing_Account__c = oBillingAccount.Id;
-        // Step 2
-        //        camp.EBC_Master_Filter__c = masterFilter.Id;
+        EBC_Campaign__c camp = new EBC_Campaign__c(
+            Name = 'Foo Bar',
+            Subject__c = 'Foo Subject',
+            From_Name__c = 'Foo From Name',
+            Is_Google_Analytics_Tracker_Active__c = true,
+            Google_Analytics_Tracking_Code__c = 'UA-XXXXXX',
+            Billing_Account__c = oBillingAccount.Id
+        );
         insert camp;
         
         System.runAs(usr) {
             initPostRunAs();
-            Test.startTest();
             
             // Layout PageLoad
             vfIECEBC_Layout layoutController = new vfIECEBC_Layout();
@@ -751,7 +687,6 @@ insert gpavs;*/
             recipientEditCon.validateNewFilter();
             System.assertEquals(4, recipientEditCon.newListStepNumber);
             
-            
             recipientEditCon.newFilter.Name = 'New filter name';
             recipientEditCon.save();
             
@@ -770,55 +705,48 @@ insert gpavs;*/
         
         List<EBC_Template__c> globTpl = new List<EBC_Template__c>{
             new EBC_Template__c(Name = 'Global Agent 1', Audience__c = 'Agent', RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('EBC_Template__c', 'Global')),
-                new EBC_Template__c(Name = 'Global Neutral 1', Audience__c = 'Neutral', RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('EBC_Template__c', 'Global')),
-                new EBC_Template__c(Name = 'Global Agency 1', Audience__c = 'Agency', RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('EBC_Template__c', 'Global')),
-                new EBC_Template__c(Name = 'Global Agency 2', Audience__c = 'Agency', RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('EBC_Template__c', 'Global')),
-                new EBC_Template__c(Name = 'Custom Agency 2', External_Id__c = 'customhtml-agencytest', Audience__c = 'Agency', RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('EBC_Template__c', 'Global'))
-                };
-                    upsert globTpl; 
+			new EBC_Template__c(Name = 'Global Neutral 1', Audience__c = 'Neutral', RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('EBC_Template__c', 'Global')),
+			new EBC_Template__c(Name = 'Global Agency 1', Audience__c = 'Agency', RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('EBC_Template__c', 'Global')),
+			new EBC_Template__c(Name = 'Global Agency 2', Audience__c = 'Agency', RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('EBC_Template__c', 'Global')),
+			new EBC_Template__c(Name = 'Custom Agency 2', External_Id__c = 'customhtml-agencytest', Audience__c = 'Agency', RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('EBC_Template__c', 'Global'))
+		};
+        upsert globTpl; 
         
+        Test.startTest();
+
         insert new List<EBC_Template__c>{
             new EBC_Template__c(Is_Reusable__c = true, Billing_Account__c = oBillingAccount.Id, Name = 'UD Agent 1', Audience__c = 'Agent', RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('EBC_Template__c', 'User_Templates'), Parent_Template__c = globTpl[0].Id),
-                new EBC_Template__c(Is_Reusable__c = true, Billing_Account__c = oBillingAccount.Id, Name = 'UD Neutral 1', Audience__c = 'Neutral', RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('EBC_Template__c', 'User_Templates'), Parent_Template__c = globTpl[1].Id),
-                new EBC_Template__c(Is_Reusable__c = true, Billing_Account__c = oBillingAccount.Id, Name = 'UD Agency 1', Audience__c = 'Agency', RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('EBC_Template__c', 'User_Templates'), Parent_Template__c = globTpl[2].Id)
-                };
+			new EBC_Template__c(Is_Reusable__c = true, Billing_Account__c = oBillingAccount.Id, Name = 'UD Neutral 1', Audience__c = 'Neutral', RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('EBC_Template__c', 'User_Templates'), Parent_Template__c = globTpl[1].Id),
+			new EBC_Template__c(Is_Reusable__c = true, Billing_Account__c = oBillingAccount.Id, Name = 'UD Agency 1', Audience__c = 'Agency', RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('EBC_Template__c', 'User_Templates'), Parent_Template__c = globTpl[2].Id)
+		};
                     
-                    List<GDP_Products_Account_View__c> gpavs = createGDPProductsAccountViews();
+		List<GDP_Products_Account_View__c> gpavs = createGDPProductsAccountViews();
         
-        EBC_Master_Filter__c masterFilter = new EBC_Master_Filter__c();
-        masterFilter.Audience__c = 'Agency';
-        masterFilter.Billing_Account__c = oBillingAccount.Id;
+        EBC_Master_Filter__c masterFilter = new EBC_Master_Filter__c(
+            Audience__c = 'Agency',
+            Billing_Account__c = oBillingAccount.Id
+        );
         insert masterFilter;
         
-        EBC_Campaign__c camp = new EBC_Campaign__c();
-        // Step 1
-        camp.Name = 'Foo Bar';
-        camp.Subject__c = 'Foo Subject';
-        camp.From_Name__c = 'Foo From Name';
-        camp.Is_Google_Analytics_Tracker_Active__c = true;
-        camp.Google_Analytics_Tracking_Code__c = 'UA-XXXXXX';
-        camp.Billing_Account__c = oBillingAccount.Id;
-        camp.EBC_Master_Filter__c = masterFilter.Id;
+        EBC_Campaign__c camp = new EBC_Campaign__c(
+            Name = 'Foo Bar',
+            Subject__c = 'Foo Subject',
+            From_Name__c = 'Foo From Name',
+            Is_Google_Analytics_Tracker_Active__c = true,
+            Google_Analytics_Tracking_Code__c = 'UA-XXXXXX',
+            Billing_Account__c = oBillingAccount.Id,
+            EBC_Master_Filter__c = masterFilter.Id
+		);
         insert camp;
         
-        camp = [
-            Select
-            Id,
-            Name,
-            Subject__c,
-            From_Name__c,
-            Is_Google_Analytics_Tracker_Active__c,
-            Google_Analytics_Tracking_Code__c,
-            Billing_Account__c,
-            EBC_Master_Filter__c,
-            Audience__c
-            From EBC_Campaign__c
-            Where Id = :camp.Id
+        camp = [Select Id, Name, Subject__c, From_Name__c, Is_Google_Analytics_Tracker_Active__c, Google_Analytics_Tracking_Code__c,
+                	Billing_Account__c, EBC_Master_Filter__c, Audience__c
+                From EBC_Campaign__c
+                Where Id = :camp.Id
         ];
         
         System.runAs(usr) {
             initPostRunAs();
-            Test.startTest();
             
             // Layout PageLoad
             vfIECEBC_Layout layoutController = new vfIECEBC_Layout();
@@ -845,9 +773,7 @@ insert gpavs;*/
     }
     
     public static void testCampaignTracking() {
-//        vfIECEBC_CampaignTracking
-//        
-        
+
         User usr = initPreRunAs(true);
         List<GDP_Products_Account_View__c> gpavs = createGDPProductsAccountViews();
         
@@ -855,7 +781,6 @@ insert gpavs;*/
         insert act;
         EBC_Application_Filter__c af = new EBC_Application_Filter__c(Audience__c = 'Agency', Filter_Description__c = 'Preferred Language', Data_Type__c = 'Text', Filter_Field__c = 'Preferred_Language__c');
         insert af;
-        // 
         
         EBC_Master_Filter__c masterFilter = new EBC_Master_Filter__c(Audience__c = 'Agency', OwnerId = usr.Id);
         insert masterFilter;
@@ -868,63 +793,29 @@ insert gpavs;*/
         
         IECEBC_ETCampaignTrackingAsync.initCampaignTrackingRecords(camp);
         
-        
+        Test.startTest();
+
         SchdlIECEBCRetrieveCumulativeStats.Schedule();
         Test.setMock(HttpCalloutMock.class, new CampaignTracking_Mock());
-/*        SchdlIECEBCRetrieveCumulativeStats n = new SchdlIECEBCRetrieveCumulativeStats();
-        Database.executeBatch(n,200);*/
-        
+    
         EBC_Click_Event__c ce = new EBC_Click_Event__c(Subscriber_Key__c = '1234', External_Id__c = 'abcd', EBC_Campaign__c = camp.Id, URL__c = 'http://foo.bar/');
         insert ce;
-        
-        
-        
-        
+
         System.runAs(usr) {
             initPostRunAs();
-            Test.startTest();
             
             System.debug(Limits.getQueries());
-            List<EBC_Campaign__c> camps = [SELECT Id, Name, Send_Datetime__c, External_Id__c, Status__c,
-                                           is7dFollowUpCompleted__c 
+            List<EBC_Campaign__c> camps = [SELECT Id, Name, Send_Datetime__c, External_Id__c, Status__c, is7dFollowUpCompleted__c 
                                            FROM EBC_Campaign__c
                                            WHERE id = :camp.Id
                                           ];
             
             System.debug(Limits.getQueries());
-            IECEBC_ETCampaignTrackingAsync.createCumulativeCampaignTracking(camps);
+            //IECEBC_ETCampaignTrackingAsync.createCumulativeCampaignTracking(camps);
             System.debug(Limits.getQueries());
-            //Test.stopTest();          
-            System.debug(Limits.getQueries());  
             
         	SchdlIECEBCRetrieveCumulativeStats.cancel();
             System.debug(Limits.getQueries());
-            
-            camp = [
-                SELECT
-                Id,
-                Name,
-                EBC_Master_Filter__c,
-                Audience__c,
-                EBC_Design__c,
-                Send_Datetime__c,
-                External_Id__c,
-                From_Name__c,
-                Google_Analytics_Tracking_Code__c,
-                Is_Google_Analytics_Tracker_Active__c,
-                Is_Step1_Valid__c, Is_Step2_Valid__c, Is_Step3_Valid__c, Is_Step4_Valid__c , Is_Step5_Valid__c , Is_Step6_Valid__c,
-                Maximum_Allowed_Step__c,
-                Billing_Account__c,
-                Number_of_Recipients__c,
-                Scheduled_Date__c,
-                Scheduled_Date_Valid_Until__c,
-                Status__c,
-                Subject__c
-                FROM
-                EBC_Campaign__c
-                WHERE
-                Id = :camp.Id
-            ];
             
             System.debug(Limits.getQueries());
             PageReference pageRef = Page.IECEBC_ManageReportsDetails;
@@ -967,14 +858,10 @@ insert gpavs;*/
         }
     }
     
- 
     class CampaignTracking_Mock implements HttpCalloutMock {
         public HTTPResponse respond(HTTPRequest req) {
             HTTPResponse r = new HTTPResponse();
-            //if (req.getBody().contains('RetrieveRequest') && req.getBody().contains('<ObjectType>SentEvent</ObjectType>')) {
-	            r.setBody('<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"><soap:Header><wsa:Action>CreateResponse</wsa:Action><wsa:MessageID>urn:uuid:901b7768-1626-4da9-b77c-b1a16d6158bf</wsa:MessageID><wsa:RelatesTo>urn:uuid:0caa9e7d-bd29-4dab-b268-668343be00bd</wsa:RelatesTo><wsa:To>http://schemas.xmlsoap.org/ws/2004/08/addressing/role/anonymous</wsa:To><wsse:Security><wsu:Timestamp wsu:Id="Timestamp-f9ebc7d2-b029-4c4d-aa20-f17e5048298f"><wsu:Created>2016-11-07T22:33:42Z</wsu:Created><wsu:Expires>2016-11-07T22:38:42Z</wsu:Expires></wsu:Timestamp></wsse:Security></soap:Header><soap:Body><RetrieveResponseMsg xmlns="http://exacttarget.com/wsdl/partnerAPI"><OverallStatus>OK</OverallStatus><RequestID>cdca8b87-b14e-4dfb-a20f-962f6c3bf988</RequestID><Results xsi:type="TriggeredSendSummary"><PartnerKey xsi:nil="true" /><ObjectID xsi:nil="true" /><Sent>8</Sent><NotSentDueToOptOut>0</NotSentDueToOptOut><NotSentDueToUndeliverable>0</NotSentDueToUndeliverable><Bounces>1</Bounces><Opens>6</Opens><Clicks>0</Clicks><UniqueOpens>6</UniqueOpens><UniqueClicks>0</UniqueClicks><OptOuts>0</OptOuts><SurveyResponses>0</SurveyResponses><FTAFRequests>0</FTAFRequests><FTAFEmailsSent>0</FTAFEmailsSent><FTAFOptIns>0</FTAFOptIns><Conversions>0</Conversions><UniqueConversions>0</UniqueConversions><InProcess>0</InProcess><NotSentDueToError>0</NotSentDueToError><Queued>0</Queued></Results></RetrieveResponseMsg></soap:Body></soap:Envelope>');
-            //}
-            
+	        r.setBody('<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"><soap:Header><wsa:Action>CreateResponse</wsa:Action><wsa:MessageID>urn:uuid:901b7768-1626-4da9-b77c-b1a16d6158bf</wsa:MessageID><wsa:RelatesTo>urn:uuid:0caa9e7d-bd29-4dab-b268-668343be00bd</wsa:RelatesTo><wsa:To>http://schemas.xmlsoap.org/ws/2004/08/addressing/role/anonymous</wsa:To><wsse:Security><wsu:Timestamp wsu:Id="Timestamp-f9ebc7d2-b029-4c4d-aa20-f17e5048298f"><wsu:Created>2016-11-07T22:33:42Z</wsu:Created><wsu:Expires>2016-11-07T22:38:42Z</wsu:Expires></wsu:Timestamp></wsse:Security></soap:Header><soap:Body><RetrieveResponseMsg xmlns="http://exacttarget.com/wsdl/partnerAPI"><OverallStatus>OK</OverallStatus><RequestID>cdca8b87-b14e-4dfb-a20f-962f6c3bf988</RequestID><Results xsi:type="TriggeredSendSummary"><PartnerKey xsi:nil="true" /><ObjectID xsi:nil="true" /><Sent>8</Sent><NotSentDueToOptOut>0</NotSentDueToOptOut><NotSentDueToUndeliverable>0</NotSentDueToUndeliverable><Bounces>1</Bounces><Opens>6</Opens><Clicks>0</Clicks><UniqueOpens>6</UniqueOpens><UniqueClicks>0</UniqueClicks><OptOuts>0</OptOuts><SurveyResponses>0</SurveyResponses><FTAFRequests>0</FTAFRequests><FTAFEmailsSent>0</FTAFEmailsSent><FTAFOptIns>0</FTAFOptIns><Conversions>0</Conversions><UniqueConversions>0</UniqueConversions><InProcess>0</InProcess><NotSentDueToError>0</NotSentDueToError><Queued>0</Queued></Results></RetrieveResponseMsg></soap:Body></soap:Envelope>');
             r.setStatusCode(200);
             return r;
         }
@@ -983,10 +870,8 @@ insert gpavs;*/
         public HTTPResponse respond(HTTPRequest req) {
             HTTPResponse r = new HTTPResponse();
             r.setBody('<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"><env:Header xmlns:env="http://www.w3.org/2003/05/soap-envelope"><wsa:Action>CreateResponse</wsa:Action><wsa:MessageID>urn:uuid:d84a3cc0-d528-4869-96f3-6e387d7ba01e</wsa:MessageID><wsa:RelatesTo>urn:uuid:db7625ad-b909-48f7-a9e6-9819f5bd3ddb</wsa:RelatesTo><wsa:To>http://schemas.xmlsoap.org/ws/2004/08/addressing/role/anonymous</wsa:To><wsse:Security><wsu:Timestamp wsu:Id="Timestamp-ebb07db4-2c98-451a-8b29-8c7cb70f35a9"><wsu:Created>2016-11-08T17:53:30Z</wsu:Created><wsu:Expires>2016-11-08T17:58:30Z</wsu:Expires></wsu:Timestamp></wsse:Security></env:Header><soap:Body><CreateResponse xmlns="http://exacttarget.com/wsdl/partnerAPI"><Results><StatusCode>OK</StatusCode><StatusMessage>Media item queued for upload</StatusMessage><OrdinalID>0</OrdinalID><NewID>0</NewID><NewObjectID>5982dc8d-710d-4390-a619-b1de98cd9487</NewObjectID><Object xsi:type="Portfolio"><PartnerKey xsi:nil="true" /><ModifiedDate xsi:nil="true" /><ObjectID>5982dc8d-710d-4390-a619-b1de98cd9487</ObjectID><CustomerKey /><Source><PartnerKey xsi:nil="true" /><ModifiedDate xsi:nil="true" /><ObjectID xsi:nil="true" /><URN>http://www.google.com</URN></Source><FileName>image.png</FileName></Object></Results><RequestID>1af37a88-9a51-4eb3-8031-385180fe0549</RequestID><OverallStatus>OK</OverallStatus></CreateResponse></soap:Body></soap:Envelope>');
-            
             r.setStatusCode(200);
             return r;
         }
     }
-    
 }

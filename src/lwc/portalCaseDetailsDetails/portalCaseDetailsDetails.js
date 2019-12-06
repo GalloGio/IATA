@@ -1,10 +1,11 @@
-import { LightningElement, track, api } from 'lwc';
+import { LightningElement, track } from 'lwc';
 
 import { navigateToPage } from 'c/navigationUtils';
 
 import getCaseById from '@salesforce/apex/PortalCasesCtrl.getCaseById';
 import getFieldLabels from '@salesforce/apex/CSP_Utils.getSelectedColumns';
 import optionBuilder from '@salesforce/apex/PortalCasesCtrl.optionBuilder';
+
 
 import { getParamsFromPage } from 'c/navigationUtils';
 
@@ -13,6 +14,17 @@ import AddDocumentsMsg from '@salesforce/label/c.CSP_No_Documents_Message';
 import DocumentsLabel from '@salesforce/label/c.ISSP_Documents';
 import CaseDetails from '@salesforce/label/c.IDCard_CaseDetails';
 import RelatedAccount from '@salesforce/label/c.csp_CreateNewCaseMainPicklistLabel';
+import Open from '@salesforce/label/c.Open';
+
+import Email from '@salesforce/label/c.Email';
+import CSP_Remittantce_Date from '@salesforce/label/c.CSP_Remittantce_Date';
+import CSP_Case_Currency from '@salesforce/label/c.CSP_Case_Currency';
+import ISSP_SIDRA_Irregularity_Date from '@salesforce/label/c.ISSP_SIDRA_Irregularity_Date';
+import CSP_IATA_Country from '@salesforce/label/c.CSP_IATA_Country';
+import CSP_AdditionalDetails from '@salesforce/label/c.csp_AdditionalDetails';
+import ISSP_Description from '@salesforce/label/c.ISSP_Description';
+import CSP_ContactName from '@salesforce/label/c.Contact_Name';
+import CSP_AccountName from '@salesforce/label/c.ICCS_Account_Name_Label';
 
 /* PDF Labels */
 import ISSP_AMS_Download_PDF_Copy from '@salesforce/label/c.ISSP_AMS_Download_PDF_Copy';
@@ -26,6 +38,7 @@ export default class PortalCaseDetailsDetails extends LightningElement {
     @track loading = true;
     @track caseDetails;
     @track caseId;
+    @track surveyLink;
     @track optionBuilder;
 
     @track pdfImage = PDFICON;
@@ -35,13 +48,27 @@ export default class PortalCaseDetailsDetails extends LightningElement {
 
     @track nrDocs = 0;
 
+    @track showNewDescriptionSection = false;
+	@track isCollapsedWhenNewDescriptionInPlace = "slds-p-around_medium ";
+	
+
     @track labels = {
         AddDocumentsMsg,
         CaseDetails,
         DocumentsLabel,
         RelatedAccount,
+        Open,
         ISSP_AMS_Download_PDF_Copy,
-        ISSP_AMS_Download_PDF_NOC
+        ISSP_AMS_Download_PDF_NOC,
+        Email,
+        CSP_Remittantce_Date,
+        CSP_Case_Currency,
+        ISSP_SIDRA_Irregularity_Date,
+        CSP_IATA_Country,
+        CSP_AdditionalDetails,
+		ISSP_Description,
+		CSP_ContactName,
+		CSP_AccountName
     };
 
     acceptedFormats = ['.pdf', '.jpeg', '.jpg', '.png', '.ppt', '.pptx', '.xls', '.xlsx', '.tif', '.tiff', '.zip'];
@@ -58,12 +85,24 @@ export default class PortalCaseDetailsDetails extends LightningElement {
                 .then(results => {
                     this.caseDetails = results;
 
+                    this.showNewDescriptionSection = this.caseDetails.RecordType__c === 'Cases - Africa & Middle East'
+                        || this.caseDetails.RecordType__c === 'Cases - Americas'
+                        || this.caseDetails.RecordType__c === 'Cases - Asia & Pacific'
+                        || this.caseDetails.RecordType__c === 'Cases - China & North Asia'
+                        || this.caseDetails.RecordType__c === 'Cases - Europe'
+                        || this.caseDetails.RecordType__c === 'Cases - Global'
+                        || this.caseDetails.RecordType__c === 'Complaint (IDFS ISS)'
+                        || this.caseDetails.RecordType__c === 'Process';
+
+                    this.isCollapsedWhenNewDescriptionInPlace = this.showNewDescriptionSection ? "slds-p-around_medium collapsed " : "slds-p-around_medium ";
+
                     optionBuilder({ caseObj: results })
                         .then(result => {
                             this.optionBuilder = result;
                         });
 
                     this.loading = false;
+                    
                 })
                 .catch(error => {
                     console.log('error: ', error);
@@ -94,7 +133,6 @@ export default class PortalCaseDetailsDetails extends LightningElement {
             this.toggleCollapsed('[data-docicon]', 'arrowExpanded');
             this.showAddDocsModal = true;
             this.pageParams.Att = "";
-            console.log('open sayz me!');
         }
         
     }
@@ -130,6 +168,7 @@ export default class PortalCaseDetailsDetails extends LightningElement {
     get showNrDocs() {
         return this.nrDocs > 0;
     }
+    
 
     get hasAccount() {
         return this.caseDetails !== undefined && this.caseDetails.AccountId !== undefined;
@@ -184,9 +223,8 @@ export default class PortalCaseDetailsDetails extends LightningElement {
     }
 
     get getPDF2_3() {
-        if (this.caseDetails) {
-            return this.caseDetails.Reason1__c === 'Bank Detail Update' || this.caseDetails.Reason1__c.startsWith('CH') ||
-                this.caseDetails.Reason1__c.startsWith('CL') || this.caseDetails.Reason1__c === 'Major Change';
+        if (this.caseDetails && this.optionBuilder) {
+            return this.caseDetails.Reason1__c === 'Bank Detail Update' || this.caseDetails.Reason1__c.startsWith('CH') || this.caseDetails.Reason1__c.startsWith('CL') || this.caseDetails.Reason1__c === 'Major Change' || this.optionBuilder.isNoticeOfChange;
         }
         return null;
     }
@@ -246,6 +284,11 @@ export default class PortalCaseDetailsDetails extends LightningElement {
         this.showAddDocsModal = false;
     }
 
+    toggleDescriptionSection() {
+        this.toggleCollapsed('[data-detdiv]', 'collapsed');
+        this.toggleCollapsed('[data-deticon]', 'arrowExpanded');
+    }
+
     toggleCollapsed(elem, cssclass) {
         this.template.querySelector(elem).classList.toggle(cssclass);
     }
@@ -254,5 +297,4 @@ export default class PortalCaseDetailsDetails extends LightningElement {
         //display modal on attachment component
         this.showAddDocsModal = true;
     }
-
 }

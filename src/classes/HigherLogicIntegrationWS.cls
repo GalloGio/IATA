@@ -157,7 +157,7 @@ public class HigherLogicIntegrationWS {
 				accountName = user.Contact.Account.Parent.Name;
 			}
 		    else if(String.isBlank(user.ContactId)){
-				Account a = ProvisionKaviAccess.getFakeAccount();
+				Account a = ProvisionKaviAccess.IATASSWAccount;
 			    accountId = a.Id;
 			    accountName = a.Name;
 		    }

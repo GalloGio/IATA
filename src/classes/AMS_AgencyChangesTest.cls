@@ -161,7 +161,8 @@ public class AMS_AgencyChangesTest {
 															Branch_Office_Country__c = theAccount.IATA_ISO_Country__c, 
 														   SAAM_Case__c = theCommunicationCase.Id, 
 														   Location_Class__c = theAccount.Location_Class__c, 
-														   Location_Type__c = theAccount.Location_Type__c);
+														   Location_Type__c = theAccount.Location_Type__c,
+														   ISSP_AMS_GDS_with_signed_contract__c = 'Amadeus');
 															
 		insert theStagingAcc;
 		
@@ -215,6 +216,7 @@ public class AMS_AgencyChangesTest {
 		theOSCAR.Validation_Status__c = AMS_Utils.PASSED;
 		theOSCAR.STEP15__c = AMS_Utils.PASSED;
         theOSCAR.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
+		theOscar.Bank_Guarantee_Requested__c = Date.today();
 		update theOSCAR;
 		
 		changecodes = [SELECT Account__r.IATAcode__c, Change_Code__c FROM Agency_Applied_Change_code__c WHERE OSCAR__c = :theOscar.Id ORDER BY Account__r.IATAcode__c];
@@ -294,6 +296,7 @@ public class AMS_AgencyChangesTest {
 		theOSCAR.Validation_Status__c = AMS_Utils.PASSED;
 		theOSCAR.STEP15__c = 'Passed';
         theOSCAR.RPM_Approval__c = 'Authorize Approval';
+		theOSCAR.Bank_Guarantee_requested__c = Date.today();
 		update theOSCAR;
 		
 		changecodes = [SELECT Account__r.IATAcode__c, Change_Code__c FROM Agency_Applied_Change_code__c 

@@ -3,7 +3,6 @@
     <customButtons>Detailed_Hierarchy_View</customButtons>
     <customButtons>Zuora__Sync_Data_from_ZBilling</customButtons>
     <customButtons>Start_Oscar_Wizard</customButtons>
-    <customButtons>China_Pilot_Conversion_Wizard</customButtons>
     <customConsoleComponents>
         <primaryTabComponents>
             <containers>
@@ -168,6 +167,22 @@
                 <behavior>Edit</behavior>
                 <field>Purge_Flag__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Business_Street__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Business_City__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Business_Postal_Code__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Bulletin_Headquarter__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -188,6 +203,14 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Identify_as_Key_Customer__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Multicountry_Key_Hierarchy__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Identify_as_Multicountry_Key_Hierarchy__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -660,7 +683,7 @@
                 <height>200</height>
                 <page>ImportantContacts</page>
                 <showLabel>false</showLabel>
-                <showScrollbars>false</showScrollbars>
+                <showScrollbars>true</showScrollbars>
                 <width>100%</width>
             </layoutItems>
         </layoutColumns>
@@ -739,6 +762,8 @@
         <fields>Location_Class__c</fields>
     </miniLayout>
     <relatedLists>
+        <fields>MEMBER_NAME</fields>
+        <fields>TEAM_MEMBER_ROLE</fields>
         <relatedList>RelatedAccountSalesTeam</relatedList>
     </relatedLists>
     <relatedLists>
@@ -951,11 +976,13 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Is_Newgen_Relation__c</fields>
         <fields>Hierarchy__c</fields>
         <relatedList>AMS_Agencies_relationhip__c.Child_Account__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Is_Newgen_Relation__c</fields>
         <fields>Hierarchy__c</fields>
         <relatedList>AMS_Agencies_relationhip__c.Parent_Account__c</relatedList>
     </relatedLists>

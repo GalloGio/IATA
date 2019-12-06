@@ -61,6 +61,10 @@
                 <behavior>Edit</behavior>
                 <field>AMS_Default_State__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Informatica_Value__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -261,6 +265,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Multicountry_Enabled__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>ANG_GDI_Enabled__c</field>
             </layoutItems>
             <layoutItems>
@@ -280,6 +288,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>ANG_IEP_Model__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ANG_RHC_LocationType__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -465,6 +477,13 @@
         <layoutColumns/>
         <style>CustomLinks</style>
     </layoutSections>
+    <miniLayout>
+        <fields>Name</fields>
+        <fields>ISO_Code__c</fields>
+        <fields>ISO_Code_Numeric__c</fields>
+        <fields>ANG_IEP_Model__c</fields>
+        <fields>ANG_Portal_Service__c</fields>
+    </miniLayout>
     <relatedLists>
         <fields>NAME</fields>
         <fields>RECORDTYPE</fields>
@@ -494,7 +513,9 @@
     <relatedLists>
         <fields>NAME</fields>
         <fields>ISO_Code__c</fields>
-        <fields>IEC_Valid_SAP__c</fields>
+        <fields>GeonameAsciiName__c</fields>
+        <fields>GeonameName__c</fields>
+        <fields>Valid_for_Address__c</fields>
         <relatedList>IATA_ISO_State__c.IATA_ISO_Country__c</relatedList>
     </relatedLists>
     <relatedLists>

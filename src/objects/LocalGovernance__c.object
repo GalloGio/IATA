@@ -997,6 +997,15 @@ Record Type + Group Type + ISO_Country_Name</description>
     </fields>
     <label>Industry Group</label>
     <listViews>
+        <fullName>AME_Local_Groups_Notification_LocalGovernance</fullName>
+        <filterScope>Queue</filterScope>
+        <label>AME – Local Groups Notification</label>
+        <queue>AME_Local_Groups_Notification</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
         <fullName>Inactive_Local_Groups</fullName>
         <columns>NAME</columns>
         <columns>Cargo_Passenger__c</columns>
@@ -1066,6 +1075,15 @@ Record Type + Group Type + ISO_Country_Name</description>
         </filters>
         <label>All Active Local Groups</label>
         <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Local_groups_no_notification_LocalGovernance</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Local groups no notification</label>
+        <queue>Local_groups_no_notification</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
     </listViews>
     <listViews>
         <fullName>Reg_Div_Groups</fullName>
@@ -1204,10 +1222,6 @@ Record Type + Group Type + ISO_Country_Name</description>
             </values>
             <values>
                 <fullName>ICAP</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>JALWG</fullName>
                 <default>false</default>
             </values>
             <values>

@@ -1,6 +1,13 @@
-public class PlatformEvents_Helper {
+public class PlatformEvents_Helper implements Queueable {
 
     private static Map<String, Schema.SObjectType> schemaInfoMap = new Map<String, Schema.SObjectType>();
+    private Map<Id,sObject> ObjectMap;
+    private String PE_Name;
+    private String ObjSource;
+    private Boolean bIsInsert;
+    private Boolean bIsUpdate;
+    private Boolean bIsDelete;
+    private Boolean bIsUndelete;
 
     private static Schema.SObjectType getSchemaInfo(String objectName) {
 
@@ -9,6 +16,23 @@ public class PlatformEvents_Helper {
         }
 
         return schemaInfoMap.get(objectName);
+    }
+
+    public PlatformEvents_Helper(Map<Id,sObject> ObjectMap, String PE_Name, String ObjSource, Boolean bIsInsert, Boolean bIsUpdate, Boolean bIsDelete, Boolean bIsUndelete) {
+        this.ObjectMap = ObjectMap;
+        this.PE_Name = PE_Name;
+        this.ObjSource = ObjSource;
+        this.bIsInsert = bIsInsert;
+        this.bIsUpdate = bIsUpdate;
+        this.bIsDelete = bIsDelete;
+        this.bIsUndelete = bIsUndelete;
+    }
+
+    public void execute(QueueableContext context) {
+        
+        publishEvents(ObjectMap, PE_Name, ObjSource, bIsInsert, bIsUpdate, bIsDelete, bIsUndelete);
+
+        System.debug('____ [PlatformEvents_Helper - execute] Events published');
     }
     
     public static void publishEvents(Map<Id,sObject> ObjectMap, string PE_Name, string ObjSource, boolean bIsInsert, boolean bIsUpdate, boolean bIsDelete, boolean bIsUndelete){
@@ -21,7 +45,8 @@ public class PlatformEvents_Helper {
                 'Partner_products__c' => 'PartnerProduct__e',
                 'TIP_Pay_Prov_Prod_Country_Config__c' => 'Product_Country_Config__e',
                 'TIP_BIN_Range__c' => 'Product_Bin_Range__e',
-                'Remote_Invocation__c' => 'RemoteInvocation__e'
+                'Remote_Invocation__c' => 'RemoteInvocation__e',
+                'GADM_Account_Service_Detail__c' => 'GadmAccountServiceDetail__e'
 		};
           
     	
@@ -109,7 +134,7 @@ public class PlatformEvents_Helper {
             };
         }
         
-        if(sObj=='Contact__e' || sObj=='Product_Bin_Range__e' || sObj=='PartnerProduct__e' 
+        if(sObj=='Contact__e' || sObj=='Product_Bin_Range__e' || sObj=='PartnerProduct__e' || sObj == 'GadmAccountServiceDetail__e'
         	|| sObj=='Product_Country_Config__e' || sObj=='AccountContactRole__e' || sObj=='AccountRole__e' || sObj=='RemoteInvocation__e'){
             return new map<String,String>{
                 'Id' => 'RecordId__c',

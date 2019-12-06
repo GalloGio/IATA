@@ -94,6 +94,7 @@ private class ANG_AgentsNotificationRhcTest {
 			acct.Financial_Review_Result__c = ANG_Risk_Helper.FR_UNSATISFACTORY;
 			acct.RecordTypeId = AMS_Utils.RECTYPE_IATAAGENCY;
 			acct.Remittance_frequency__c = 'W';
+			acct.ANG_HE_RiskStatus__c = 'C';
 
 			insert acct;
 
@@ -151,7 +152,7 @@ private class ANG_AgentsNotificationRhcTest {
 
 		Account acct = 
 			[SELECT 
-				Id 
+				Id, IATA_ISO_Country__c
 			 FROM 
 				Account 
 			 WHERE 
@@ -171,6 +172,15 @@ private class ANG_AgentsNotificationRhcTest {
 		Case cc = new Case(AccountId = acct.Id);
 		insert cc;
 
+		ANG_RHC_Information__c rhcInfo = new ANG_RHC_Information__c(
+			ANG_AccountId__c = acct.Id,
+			CurrencyIsoCode = 'EUR',
+			RecordTypeId = ANG_RHCHelper.RECTYPE_STDRHCINFO,
+            ANG_Forecasted_RHC_Effective_date__c = System.today()
+		);
+
+		insert rhcInfo;
+
 		Financial_Security__c fs = new Financial_Security__c(
 			CurrencyIsoCode = 'EUR', 
 			Account__c = acct.Id, 
@@ -182,20 +192,15 @@ private class ANG_AgentsNotificationRhcTest {
 			Region__c = 'Europe', 
 			Reception_Date__c = System.today(), 
 			Reasonforrequest__c = 'New Application',
-			Reception_Case__c = cc.Id
+			Reception_Case__c = cc.Id,
+			Financial_Security_Validation_Case__c = cc.Id
 		);
 
 		insert fs; 
 
-		ANG_RHC_Information__c rhcInfo = new ANG_RHC_Information__c(
-			ANG_AccountId__c = acct.Id,
-			CurrencyIsoCode = 'EUR',
-			RecordTypeId = ANG_RHCHelper.RECTYPE_STDRHCINFO
-		);
-
-		insert rhcInfo;
+		ANG_RHCHelper.updateNotificationAlreadySent.clear();
+		
 		acct.ANG_HE_RiskStatus__c = 'A';
-
 		update acct;
 
 		Notification__c no = 
@@ -205,8 +210,9 @@ private class ANG_AgentsNotificationRhcTest {
 			 FROM 
 				Notification__c 
 			 WHERE 
-				Contact__r.AccountId = :acct.Id 
-			 LIMIT 1
+				Contact__r.AccountId = :acct.Id
+			ORDER BY CreatedDate  DESC
+			LIMIT 1
 			];
 
 		System.assert(no.Message__c.contains('Risk Status: ' + acct.ANG_HE_RiskStatus__c));
@@ -218,19 +224,35 @@ private class ANG_AgentsNotificationRhcTest {
 		rhcInfo.ANG_RHC_Amount_Forecasted__c = 10000.00;
 		update rhcInfo;
 		
-		no = 
+		Notification__c no2 = 
 			[SELECT 
 				Id, 
 				Message__c 
 			 FROM 
 				Notification__c 
 			 WHERE 
-				 Contact__r.AccountId = :acct.Id 
-			 AND Id != :no.Id 
+				 Contact__r.AccountId = :acct.Id AND id != :no.ID
+			 ORDER BY CreatedDate DESC
 			 LIMIT 1
 			];
+		
+		System.assert(no2.Message__c.contains('RHC Amount: ' + String.valueOf(rhcInfo.ANG_RHC_Amount_Forecasted__c.format()) + ' ' + rhcInfo.CurrencyIsoCode));
 
-		System.assert(no.Message__c.contains('RHC Amount: ' + String.valueOf(rhcInfo.ANG_RHC_Amount_Forecasted__c.format()) + ' ' + rhcInfo.CurrencyIsoCode));
+		//Now checking that the blocking is working 
+		Integer size = [SELECT Id FROM Notification__c ].size();
+        
+        //Force to send another notification
+		//for the same account in the same transaction
+		ANG_RHCHelper.updateNotificationAlreadySent.clear();
+		
+        //Blocking notifications
+        insert new AMS_Country_Specific_Attribute__c (recordtypeid =AMS_Utils.RECTYPE_CSA_RISK_NOTIFICATION, Block_notification_on_Risk_Status_update__c = true, Block_notification_on_RHC_amount_update__c = true, IATA_ISO_Country__c = acct.IATA_ISO_Country__c);
+        IATAIsoCountryDAO.resetMapIataIsoCountry();
+        rhcInfo.ANG_RHC_Amount_Forecasted__c = 100001.00;
+		update rhcInfo;
+        
+        Integer currentSize = [SELECT Id FROM Notification__c ].size();
+		system.assert(size == currentSize, 'Too manny notifications. Should only have the previous ones');
 
 		Test.stopTest();
 

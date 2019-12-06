@@ -51,7 +51,8 @@ import Button_Cancel from '@salesforce/label/c.Button_Cancel';
 import IDCard_Confirm_Replacement from '@salesforce/label/c.IDCard_Confirm_Replacement';
 import csp_TimeoutIEP from '@salesforce/label/c.csp_TimeoutIEP';
 import ISSP_Access_Requested from '@salesforce/label/c.ISSP_Access_Requested';
-
+import CSP_Breadcrumb_CompanyProfile_Title from '@salesforce/label/c.CSP_Breadcrumb_CompanyProfile_Title';
+import ISSP_Page from '@salesforce/label/c.ISSP_Page';
 
 
 //import navigation methods
@@ -64,7 +65,6 @@ import IATA_LOADING_IMAGE from '@salesforce/resourceUrl/IataLoadingImage';
 
 // import getServiceDetails from '@salesforce/apex/PortalServicesCtrl.getServiceDetails';
 import requestServiceAccess from '@salesforce/apex/PortalServicesCtrl.requestAccess';
-import getPortalAdmins from '@salesforce/apex/PortalServicesCtrl.getPortalAdmins';
 import getUserOptions from '@salesforce/apex/PortalServicesCtrl.getUserOptions';
 import availableIEPPortalServiceRoles from '@salesforce/apex/PortalServicesCtrl.availableIEPPortalServiceRoles';
 import availableICCSPortalServiceRoles from '@salesforce/apex/PortalServicesCtrl.availableICCSPortalServiceRoles';
@@ -128,8 +128,9 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         IDCard_Confirm_Replacement,
         csp_TimeoutIEP,
         ISSP_ANG_Portal_Role_SubWalletManager,
-        ISSP_Access_Requested
-
+        ISSP_Access_Requested,
+        CSP_Breadcrumb_CompanyProfile_Title,
+        ISSP_Page
     };
 
     //exposed static resources
@@ -160,6 +161,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
             this.addUsersEnable = this.trackedServiceRecord.addUsersEnable;
             this.serviceFullName = this.trackedServiceRecord.recordService.Name;
             this.serviceName = this.trackedServiceRecord.recordService.ServiceName__c;
+            this.submitMessage = this.label.confirmedRequestMsglb.replace('{0}', this.serviceName);
             this.popUpHandler();
         }
 
@@ -249,22 +251,20 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     IATA_IEP_RadioButtons;
     timeoutLimit = 18;
     timeoutCounter = 0;
+    companyInformationLabel;
+    companyInformationPageLabel;
 
     @track isAdmin = false;
     @track serviceName = '';
     @track serviceFullName = '';
     @track addUsersEnable = false;
-    @track portalAdminList = [];
     @track submitMessage = '';
-
-
-    @wire(getPortalAdmins) portalAdminList;
-
 
     connectedCallback() {
         this.popUpHandler();
 
-        //this.submitMessage= this.label.confirmedRequestMsglb.replace('{0}', this.serviceName);
+        this.companyInformationLabel = this.label.CSP_Breadcrumb_CompanyProfile_Title.toLowerCase();
+        this.companyInformationPageLabel = this.label.ISSP_Page.toLowerCase();
     }
 
     popUpHandler() {
@@ -460,7 +460,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
             this.showButtons = false;
             this.IEPRoleSuccessModal = true;
             this.showRoleSelection = false;
-            this.newAppRequest(this.trackedServiceId, this.serviceFullName, this.userContactId, this.radioOption, false, '');
+            this.newAppRequest(this.trackedServiceId, this.serviceFullName, this.userContactId, this.radioOption, false);
         }
     }
 
@@ -469,19 +469,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         this.ShowIEPIntroMessage = false;
         this.showButtons = false;
         this.loadingMessage = this.label.ANG_ISSP_UserProvisioningWait;
-        availableIEPPortalServiceRoles({ serviceId: this.trackedServiceId })
-            .then(result => {
-                let myResults = JSON.parse(JSON.stringify(result));
-
-                let mydefaultPortalUserRole = myResults.filter(obj => obj.Default_User_Role__c === true && obj.Connected_App__c === this.serviceFullName);
-
-                if (mydefaultPortalUserRole) {
-                    this.defaultPortalUserRole = mydefaultPortalUserRole[0].Role__c;
-                    this.newAppRequest(this.trackedServiceId, this.serviceFullName, this.userContactId, '', true, this.defaultPortalUserRole);
-                } else {
-                    console.log('Custom Setting configuration missing');
-                }
-            });
+        this.newAppRequest(this.trackedServiceId, this.serviceFullName, this.userContactId, '', true);
 
     }
 
@@ -509,7 +497,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         this.ICCSSuccessMessage = this.label.ISSP_Thanks_for_request;
         this.showSpinner = true;
 
-        this.newAppRequest(this.trackedServiceId, this.serviceFullName, this.userContactId, this.ICCSRole, false, '');
+        this.newAppRequest(this.trackedServiceId, this.serviceFullName, this.userContactId, this.ICCSRole, false);
     }
 
     OpenSSWSAccount() {
@@ -523,14 +511,13 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     }
 
 
-    newAppRequest(AppId, AppName, ContactId, AppPortalRole, FlagUseDefaultRole, adefaultPortalUserRole) {
+    newAppRequest(AppId, AppName, ContactId, AppPortalRole, FlagUseDefaultRole) {
         ISSP_AvailableService_newAppsRequest2({
             applicationId: AppId,
             applicationName: AppName,
             contactId: ContactId,
             portalServiceRole: AppPortalRole,
-            flagUseDefaultRole: FlagUseDefaultRole,
-            defaultPortalUserRole: adefaultPortalUserRole
+            flagUseDefaultRole: FlagUseDefaultRole
         })
             .then(result => {
                 let results = JSON.parse(JSON.stringify(result));
@@ -581,6 +568,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 
                 if (results === 'okauto' || results === 'ok') {
                     this.SSWSSuccessModal = true;
+                    this.clearURL();
                 }
             });
     }
@@ -781,10 +769,27 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     navigateToServicesPage() {
         navigateToPage("services");
     }
+    
+    navigateToCompanyProfile() {
+        let params = {};
+        params.section = 'adminContacts';
+        navigateToPage("company-profile", params);
+    }
+
     abortRequest() {
         this.showConfirm = false;
         this.dispatchEvent(new CustomEvent('requestcompleted', { detail: { success: false } }));// sends to parent the nr of records
 
     }
 
+    clearURL() {
+        let windowURL = window.location.href;
+        windowURL = windowURL.split('?');
+        
+        if (windowURL[1].split('&').length > 1) {
+            let param = windowURL[1].split('&');
+            windowURL = windowURL[0] + '?' + param[0];
+            window.history.pushState(null, null, windowURL);
+        }
+    }
 }

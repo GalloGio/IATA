@@ -4,13 +4,14 @@ public class GCS_CustomerType implements Comparable{
         get{
             if(customLabels == null){
                 customLabels = new Map<String,String>{
-                        'Category' => Label.ISSP_MyProfile_CATEGORY,
-                        'Sector' => Label.ISSP_MyProfile_SECTOR,
+						'Category' => Label.CSP_L2_Category,
+						'Sector' => Label.CSP_L2_Sector,
                         'Select' => Label.ISSP_Select,
                         'Other' => Label.ISSP_Other,
                         'Student' => Label.ISSP_Contact_About_IATA_Courses,
                         'Yes' => Label.ISSP_Yes,
-                        'No' => Label.ISSP_No
+                        'No' => Label.ISSP_No,
+                        'TSI_USA_Only' => Label.TSI_USA_Only
                 };
             }
             return customLabels;
@@ -152,7 +153,7 @@ public class GCS_CustomerType implements Comparable{
 
         return customerTypeList;
     }
-    
+
     private static void sortCustomerTypesList(List<GCS_CustomerType> customerTypeList){
     	customerTypeList.sort();
     	for(GCS_CustomerType customerType : customerTypeList){

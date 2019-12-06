@@ -6,8 +6,18 @@
 <template>
 
     <template if:true={changeUserPortalStatus}>
-        <c-portal-change-user-status record-id={recordId} onclosemodal={closePortalChangeUserStatus}
-            onrefreshview={closePortalChangeUserStatusWithRefresh}></c-portal-change-user-status>
+        <c-portal-change-user-status record-id={recordId} onrefreshview={closePortalChangeUserStatusWithRefresh}
+                                     onclosemodal={closePortalChangeUserStatus}
+                                     remove-contact={removeContact}></c-portal-change-user-status>
+    </template>
+
+    <template if:true={openRelocateAccount}>
+        <c-portal-relocate-account record-id={recordId} onclosemodal={closePortalChangeUserStatus}
+            onrefreshview={closePortalChangeUserStatusWithRefresh} related-accounts={relatedAccounts}></c-portal-relocate-account>
+    </template>
+
+    <template if:true={emailDomain}>
+        <c-portal-email-domain record-id={recordId} oncloseemaildomain={closeEmailDomain}></c-portal-email-domain>
     </template>
 
     <c-portal-profile-section class-name={sectionClass} header-class={headerClass}>
@@ -22,7 +32,26 @@
             <lightning-record-view-form record-id={recordId} object-api-name={objectName} onload={loaded}>
                 <template if:false={isLoading}>
                     <div class="slds-grid slds-wrap slds-gutters_medium slds-p-vertical_small">
+
                         <template for:each={fields} for:item="field">
+                            <template if:true={field.isAccountDomainPermission}>
+                                <span key={field.fieldName}
+                                    class="text-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2">
+                                    <span class="specialLabel slds-m-left_xx-small">
+                                        {labels.CompanyInformation_EMADOMVAL_Title}
+                                    </span>
+                                    <span class="slds-m-left_x-small">
+                                        <lightning-icon icon-name="utility:edit" size="x-small"
+                                            class="darkBlueIcon cursorPointer" onclick={openEmailDomain}></lightning-icon>
+                                    </span>
+                                    <div class="textValue slds-m-left_xx-small">
+                                        <template for:each={accountDomains} for:item="domain">
+                                            <div key={domain.Name}> {domain.Name} </div>
+                                        </template>
+                                    </div>
+                                </span>
+                            </template>
+
                             <template if:true={field.isAccessibility}>
                                 <span key={field.fieldName}
                                     class="text-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2">
@@ -89,36 +118,67 @@
                                 <template if:false={field.isContactServices}>
                                     <template if:false={field.isJobFunction}>
                                         <template if:false={field.isIdCardInfo}>
-                                            <span key={field.fieldName}
-                                                class="text-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2">
-                                                <div if:true={field.visible}>
-                                                    <template if:false={field.changeUserStatus}>
-                                                        <lightning-output-field class="labelValue textValue"
-                                                            field-name={field.fieldName}>
-                                                        </lightning-output-field>
-                                                    </template>
-
-                                                    <template if:true={field.changeUserStatus}>
-                                                        <div class="changeUserStatus">
-                                                            <lightning-output-field class="labelValue textValue"
-                                                                field-name={field.fieldName}>
-                                                            </lightning-output-field>
-                                                            <template if:false={isForEdit}>
-                                                                <span class="changeUserStatusButton">
-                                                                    <lightning-icon icon-name="utility:custom_apps"
-                                                                        size="x-small"
-                                                                        class="darkBlueIcon cursorPointer"
-                                                                        onclick={openChangeUserPortalStatus}>
-                                                                    </lightning-icon>
-                                                                </span>
+                                            <template if:false={field.isLastLogin}>
+                                                <span key={field.fieldName}
+                                                    class="text-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2">
+                                                    <div if:true={field.visible}>
+                                                        <template if:false={field.changeUserStatus}>
+                                                            
+                                                            <template if:true={field.canChangeAccount}>
+                                                                <lightning-icon if:true={canRelocate} icon-name="utility:rotate"
+                                                                    size="x-small"
+                                                                    class="darkBlueIcon cursorPointer leftIconPosition slds-m-vertical_large"
+                                                                    title={labels.RelocateAccount}
+                                                                    onclick={opensRelocateAccount}>
+                                                                </lightning-icon>
+                                                                
+                                                                <lightning-output-field class="labelValue textValue removeLinks"
+                                                                    field-name={field.fieldName}>
+                                                                </lightning-output-field>
                                                             </template>
-                                                        </div>
 
-                                                    </template>
-                                                </div>
-                                            </span>
+                                                            <template if:false={field.canChangeAccount}>
+                                                                <lightning-output-field class="labelValue textValue"
+                                                                    field-name={field.fieldName}>
+                                                                </lightning-output-field>
+                                                            </template>
+                                                        </template>
+
+                                                        <template if:true={field.changeUserStatus}>
+                                                            <div class="changeUserStatus">
+
+                                                                <lightning-output-field class="labelValue textValue"
+                                                                    field-name={field.fieldName}>
+                                                                </lightning-output-field>
+                                                                <template if:false={isForEdit}>
+                                                                    <span class="changeUserStatusButton">
+                                                                        <lightning-icon icon-name="utility:custom_apps"
+                                                                            size="x-small"
+                                                                            class="darkBlueIcon cursorPointer"
+                                                                            onclick={openChangeUserPortalStatus}>
+                                                                        </lightning-icon>
+                                                                    </span>
+                                                                </template>
+                                                            </div>
+
+                                                        </template>
+                                                    </div>
+                                                </span>
+                                            </template>
                                         </template>
                                     </template>
+                                </template>
+
+                                <template if:true={field.isLastLogin}>
+                                    <div key={field.fieldName} class=" slds-col slds-size_1-of-1 slds-medium-size_1-of-2 labelValue">
+                                        <div class="slds-form-element__label">
+                                            {labels.LastLoginDate}
+                                        </div>
+
+                                        <div class="textValue">
+                                            <div class="slds-form-element__static">{staticFields.LastLogin}</div>
+                                        </div>
+                                    </div>
                                 </template>
 
                                 <template if:true={field.isJobFunction}>
@@ -177,9 +237,23 @@
                                 </template>
                             </template>
 
-
-
-
+                            <template if:true={field.isPrivacyManagement}>
+                                <div key={labels.IdCardNumber}
+                                    class=" slds-col slds-size_1-of-1 slds-medium-size_1-of-1 labelValue slds-form-element_stacked">
+                                    <div class="slds-form-element__label">
+                                        {field.label}
+                                    </div>
+                                    <div class="textValue">
+                                        <div class="slds-form-element__static">
+                                            <div class="text-xsmall slds-size_1-of-1">
+                                                <a class="text-blue" onclick={navigateToPrivacyPortal}>
+                                                    {field.link}
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </template>
 
                         </template>
                     </div>
@@ -240,6 +314,22 @@
                                         <template if:false={isLoadingEdit}>
                                             <div
                                                 class="slds-grid slds-wrap slds-gutters_medium slds-p-vertical_x-large slds-p-around_small">
+
+                                                <lightning-messages>
+                                                </lightning-messages>
+
+                                                <template if:true={showHelpText}>
+													<div if:false={isAirline}>
+														<div class="slds-p-horizontal_medium slds-p-vertical_small text-xxsmall blueLink">
+															<lightning-formatted-rich-text value={labels.CSP_CompanyAdministration_Link} ></lightning-formatted-rich-text><br/>
+															<lightning-formatted-rich-text value={linkToDoChanges} ></lightning-formatted-rich-text><br/>
+															
+														</div>
+													</div>
+                                                    <div if:true={isAirline} class="slds-p-horizontal_medium slds-p-vertical_small text-xxsmall blueLink">
+                                                        <lightning-formatted-rich-text value={labels.CSP_Airline_Changes_Access} ></lightning-formatted-rich-text>
+                                                    </div>
+                                                </template>
 
                                                 <!-- Display same fields for edit -->
                                                 <template if:false={haveEditFields}>
@@ -481,17 +571,31 @@
                                     </div>
 
                                     <!-- Popup Footer -->
-                                    <div
-                                        class="slds-p-around_medium topLightGrayBorder customWhiteBackground slds-clearfix">
-                                        <lightning-button class="slds-float_right containedButton"
-                                            label={labels.SaveLabel} type="submit" disabled={canSave} variant="brand">
-                                        </lightning-button>
-
-                                        <lightning-button
-                                            class="slds-float_right  containedButtonWhite slds-m-right_medium"
-                                            disabled={isSaving} label={labels.CancelLabel} variant=""
-                                            onclick={closeModal}></lightning-button>
+                                <div class="slds-p-around_large topLightGrayBorder customWhiteBackground">
+                                    <div if:false={allowContactDelete}>
+                                        <div class="slds-grid slds-wrap slds-gutters_medium slds-grid--vertical-stretch">
+                                            <div class="slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2">    
+                                                <lightning-button class="baseButton newLinkButton buttonMinHeightMedium text-xsmall fullWidth" label={labels.CancelLabel} variant="neutral" onclick={closeModal}></lightning-button>
+                                            </div>
+                                            <div class="slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2">
+                                                <lightning-button class="baseButton newContainedButton buttonMinHeightMedium text-xsmall fullWidth" label={labels.SaveLabel} variant="neutral" onclick={applyFiltersModal} type="submit" disabled={canSave}></lightning-button>
+                                            </div>
+                                        </div>
                                     </div>
+                                    <div if:true={allowContactDelete}>
+                                        <div class="slds-grid slds-wrap slds-gutters_medium slds-grid--vertical-stretch">
+                                            <div class="slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_1-of-3 slds-large-size_1-of-3">    
+                                                <lightning-button class="baseButton newLinkButton buttonMinHeightMedium text-xsmall fullWidth" label={removeContactLabel} variant="neutral" onclick={removeUser}></lightning-button>
+                                            </div>
+                                            <div class="slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_1-of-3 slds-large-size_1-of-3">    
+                                                <lightning-button class="baseButton newLinkButton buttonMinHeightMedium text-xsmall fullWidth" label={labels.CancelLabel} variant="neutral" onclick={closeModal}></lightning-button>
+                                            </div>
+                                            <div class="slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_1-of-3 slds-large-size_1-of-3">
+                                                <lightning-button class="baseButton newContainedButton buttonMinHeightMedium text-xsmall fullWidth" label={labels.SaveLabel} variant="neutral" onclick={applyFiltersModal} type="submit" disabled={canSave}></lightning-button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 </lightning-record-edit-form>
                             </div>
                         </template>

@@ -15,6 +15,8 @@ import CSP_Title from '@salesforce/label/c.CSP_Title';
 
 export default class PortalSearchFAQList extends NavigationMixin(LightningElement) {
     
+    @api userInfo = {};
+
     @api
     get filteringObjectParent() {
         return this.filteringObject;
@@ -60,12 +62,10 @@ export default class PortalSearchFAQList extends NavigationMixin(LightningElemen
 
     @track loadingMoreResults = false;
 
-    connectedCallback() {
-
+    connectedCallback() {        
         document.addEventListener('scroll', () => {
             this.faqsScrollListener();
         }, this);
-
     }
 
     faqsScrollListener(){
@@ -145,6 +145,9 @@ export default class PortalSearchFAQList extends NavigationMixin(LightningElemen
         this.pageNumber = requestedPageNumber;
 
         let filteringObjectAux = JSON.parse(JSON.stringify(this.filteringObject));
+        if(!filteringObjectAux.advancedSearch) {
+            filteringObjectAux.guestUser = !filteringObjectAux.advancedSearch;
+        }
         getFilteredFAQsResultsPage({ searchKey : JSON.stringify(filteringObjectAux) , requestedPage : requestedPageNumber+'' })
         .then(results => {
 
@@ -167,6 +170,12 @@ export default class PortalSearchFAQList extends NavigationMixin(LightningElemen
                 this.loadingMoreResults = false;
             }
 
+            if(filteringObjectAux.faqsComponent.nrResults === 0 && !filteringObjectAux.faqsComponent.highlight && filteringObjectAux.highlightTopResults){
+                filteringObjectAux.faqsComponent.show = false;
+            }else if(filteringObjectAux.faqsComponent.nrResults > 0 && !filteringObjectAux.faqsComponent.highlight && filteringObjectAux.highlightTopResults){
+                filteringObjectAux.faqsComponent.show = true;
+            }
+            
             const selectedEvent = new CustomEvent('filterchanged', { detail : { object: filteringObjectAux, componentName: "faqsComponent" }});
             this.dispatchEvent(selectedEvent);
 
@@ -220,6 +229,8 @@ export default class PortalSearchFAQList extends NavigationMixin(LightningElemen
             filteringObjectAux.faqsComponent.show = true;
             filteringObjectAux.documentsComponent.highlight = false;
             filteringObjectAux.documentsComponent.show = false;
+            filteringObjectAux.profileComponent.highlight = false;
+            filteringObjectAux.profileComponent.show = false;
             const selectedEvent = new CustomEvent('highlightfilterchanged', { detail: filteringObjectAux });
             this.dispatchEvent(selectedEvent);
         }
@@ -233,28 +244,47 @@ export default class PortalSearchFAQList extends NavigationMixin(LightningElemen
         let filteringObjectAux = JSON.parse(JSON.stringify(this.filteringObject));
 
         let params = {};
-        params.highlight = 'faqsComponent';
-        params.searchText = filteringObjectAux.searchText;
+
+        let pageName;
+        if(filteringObjectAux.advancedSearch) {
+            pageName = 'advanced-search';
+            params.highlight = 'faqsComponent';
+            params.searchText = filteringObjectAux.searchText;
+        } else {
+            pageName = 'faq-article';
+            params.language = filteringObjectAux.language;
+            params.q = filteringObjectAux.searchText;
+        }
 
         event.preventDefault();
         event.stopPropagation();
         this[NavigationMixin.GenerateUrl]({
             type: "standard__namedPage",
             attributes: {
-                pageName: "advanced-search"
+                pageName: pageName
             }})
         .then(url => navigateToPage(url, params));
     }
 
     renderArticle(event) {
         let params = {};
-        params.q = this.filteringObject.searchText; // SEARCH TERM
-        params.id1 = event.target.attributes.getNamedItem('data-item').value; // SPECIFIC SELECTED ARTICLE
+
+        let pageName;
+        if(this.filteringObject.advancedSearch) {
+            pageName = 'support-view-article';
+            params.q = this.filteringObject.searchText; // SEARCH TERM
+            params.id1 = event.target.attributes.getNamedItem('data-item').value; // SPECIFIC SELECTED ARTICLE
+        } else {
+            pageName = 'faq-article';
+            params.language = this.filteringObject.language;
+            params.q = this.filteringObject.searchText; // SEARCH TERM
+            params.id1 = event.target.attributes.getNamedItem('data-item').value; // SPECIFIC SELECTED ARTICLE
+        }
 
         this[NavigationMixin.GenerateUrl]({
             type: "standard__namedPage",
             attributes: {
-                pageName: "support-view-article"
+                pageName: pageName
             }})
         .then(url => navigateToPage(url, params));
     }

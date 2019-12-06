@@ -15,6 +15,15 @@
         <content>IATA_Training_cases</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.CS_Process_IDFS_ISS</recordType>
+        <type>Flexipage</type>
+        <profile>IATA Training - Support Team</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>IATA_Training_cases</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.IATA_Training</recordType>
         <type>Flexipage</type>
         <profile>Admin</profile>
@@ -43,6 +52,7 @@
     <tabs>standard-Case</tabs>
     <tabs>standard-report</tabs>
     <tabs>standard-Dashboard</tabs>
+    <tabs>IATA_ISO_City__c</tabs>
     <uiType>Lightning</uiType>
     <utilityBar>Service_UtilityBar</utilityBar>
 </CustomApplication>

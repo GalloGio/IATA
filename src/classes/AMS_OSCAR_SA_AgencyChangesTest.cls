@@ -1990,6 +1990,7 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
         oscar.Validation_Status__c = AMS_Utils.PASSED;
 	oscar.STEP15__c = AMS_Utils.PASSED;
         oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
+        oscar.Bank_Guarantee_Requested__c = Date.today();
         update oscar;
 
         Test.stopTest();
@@ -2008,6 +2009,7 @@ public class AMS_OSCAR_SA_AgencyChangesTest {
         oscar.Validation_Status__c = AMS_Utils.PASSED;
 	oscar.STEP15__c = AMS_Utils.PASSED;
         oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
+        oscar.Bank_Guarantee_Requested__c = Date.today();
         update oscar;
 
         Test.stopTest();

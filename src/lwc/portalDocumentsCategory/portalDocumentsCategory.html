@@ -8,7 +8,7 @@
                         <c-portal-custom-card-container class="slds-p-bottom_medium" key={keyValue.key}>
 
                             <span slot="cardTitle" class="cursorPointer" onclick={categorySelected} data-item={keyValue.key}>
-                                {keyValue.key} ({keyValue.noResults})
+                                {keyValue.label} ({keyValue.noResults})
                             </span>
 
                             <template for:each={keyValue.value} for:item="record">
@@ -23,7 +23,7 @@
                                                     </div>
                                                 </td>
                                                 <td key={record.id} class="underLinded secColInfo"><button class="cursorPointer buttonInfo" data-name={record.title} data-item={record.id} onclick={viewDocument}>{label.CurrencyCenter_Open}</button></td>
-                                                <td key={record.id} class="slds-text-title_bold text-black underLinded thirdColInfo">{record.title}</td>
+                                                <td key={record.id} class="slds-text-title_bold text-black underLinded thirdColInfo titleTruncation" title={record.title}>{record.title}</td>
                                                 <td key={record.id} class="underLinded fourthColInfo">{record.language}</td>
                                                 <td key={record.id} class="underLinded fourthColInfo">{record.filetype}</td>
                                                 <td key={record.id} class="underLinded"><lightning-icon class="cursorPointer" icon-name="utility:download" size="xx-small" data-name={record.title} data-item={record.id} onclick={downloadDocument}></lightning-icon></td>
