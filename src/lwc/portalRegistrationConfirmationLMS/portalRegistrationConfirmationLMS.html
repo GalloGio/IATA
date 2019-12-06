@@ -6,7 +6,7 @@
 
 			<lightning-layout-item size="12">
 				<div class="stepText">
-					{labels.CSP_L2_Confirmation_Message}
+					{labels.CSP_L3_Confirmation_Message_LMS}
 				</div>
 			</lightning-layout-item>
 
@@ -18,7 +18,7 @@
 
 			<!------------------------------------------      Personal Details      -------------------------------------------->
 			<lightning-layout-item size="6">
-				<div class="sectionTitle">{labels.CSP_L2_Personal_Details}</div>
+				<div class="sectionTitle">{labels.CSP_L2_Profile_Details}</div>
 				<div class="sectionDescription">{labels.CSP_L2_Personal_Details_Message}</div>
 			</lightning-layout-item>
 
@@ -56,16 +56,16 @@
 			</lightning-layout-item>
 
 			<lightning-layout-item size="6">
-				<!-- <div class="dataLabel">{labels.CSP_L2_Job_Title}</div> -->
-                <div class="dataLabel">{labels.CSP_L3_PersonalEmail_LMS}</div>
-				<div class="dataValue">{contactInfo.Additional_Email__c}</div>
-			</lightning-layout-item>
-
-			<lightning-layout-item size="6">
 				<!-- <div class="dataLabel">{labels.CSP_L2_Job_Function}</div> -->
 	            <div class="dataLabel">{labels.CSP_L3_LoginEmail_LMS}</div>
 
 				<div class="dataValue">{contactInfo.Email}</div>
+			</lightning-layout-item>
+
+			<lightning-layout-item size="6">
+				<!-- <div class="dataLabel">{labels.CSP_L2_Job_Title}</div> -->
+                <div class="dataLabel">{labels.CSP_L3_PersonalEmail_LMS}</div>
+				<div class="dataValue">{contactInfo.Additional_Email__c}</div>
 			</lightning-layout-item>
 
 			<lightning-layout-item padding="around-small" size="12">
@@ -141,9 +141,9 @@
 			<c-portal-registration-generic-modal
 				icon={successIcon}
 				title={labels.CSP_L2_Details_Saved}
-				message={labels.CSP_L2_Details_Saved_Message}
-				button1-label={labels.CSP_L2_Go_To_Homepage}
-				button2-label={labels.CSP_L2_Go_To_Service}
+				message={labels.CSP_L2_Details_Saved_Message_LMS}
+				button1-label={labels.CSP_L2_Go_To_Homepage_LMS}
+				button2-label={labels.CSP_L2_Go_To_Service_LMS}
 				onbuttononeaction={button1Action}
 				onbuttontwoaction={closeSuccessModal}>
 			</c-portal-registration-generic-modal>
@@ -154,8 +154,8 @@
 					icon={successIcon}
 					title={successModalTitle}
 					message={successModalMessage}
-					button1-label={labels.CSP_L2_Go_To_Homepage}
-					button2-label={labels.CSP_L2_Go_To_Service}
+					button1-label={labels.CSP_L2_Go_To_Homepage_LMS}
+					button2-label={labels.CSP_L2_Go_To_Service_LMS}
 					onbuttononeaction={button1Action}
 					onbuttontwoaction={closeVerificationMailSuccessModal}>
 				</c-portal-registration-generic-modal>
@@ -166,8 +166,8 @@
 				icon={errorIcon}
 				title={errorModalTitle}
 				message={errorModalMessage}
-				button1-label={labels.CSP_L2_Go_To_Homepage}
-				button2-label={labels.CSP_L2_Go_To_Service}
+				button1-label={labels.CSP_L2_Go_To_Homepage_LMS}
+				button2-label={labels.CSP_L2_Go_To_Service_LMS}
 				onbuttononeaction={button1Action}
 				onbuttontwoaction={closeErrorModal}>
 			</c-portal-registration-generic-modal>

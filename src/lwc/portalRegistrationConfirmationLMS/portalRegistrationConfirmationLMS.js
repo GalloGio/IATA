@@ -14,8 +14,8 @@ import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 
 import ISSP_CompanyName      from '@salesforce/label/c.ISSP_CompanyName';
 
-import CSP_L2_Confirmation_Message from '@salesforce/label/c.CSP_L2_Confirmation_Message';
-import CSP_L2_Personal_Details from '@salesforce/label/c.CSP_L2_Personal_Details';
+import CSP_L3_Confirmation_Message_LMS from '@salesforce/label/c.CSP_L3_Confirmation_Message_LMS';
+import CSP_L2_Profile_Details from '@salesforce/label/c.CSP_L2_Profile_Details';
 import CSP_L2_Personal_Details_Message from '@salesforce/label/c.CSP_L2_Personal_Details_Message';
 import CSP_L2_Back_to_Edit from '@salesforce/label/c.CSP_L2_Back_to_Edit';
 import CSP_L2_Company_Account from '@salesforce/label/c.CSP_L2_Company_Account';
@@ -23,9 +23,9 @@ import CSP_L2_Company_Account_Message from '@salesforce/label/c.CSP_L2_Company_A
 import CSP_L2_Back_to_Business_Address_Information from '@salesforce/label/c.CSP_L2_Back_to_Business_Address_Information';
 import CSP_L2_Submit from '@salesforce/label/c.CSP_L2_Submit';
 import CSP_L2_Details_Saved from '@salesforce/label/c.CSP_L2_Details_Saved';
-import CSP_L2_Details_Saved_Message from '@salesforce/label/c.CSP_L2_Details_Saved_Message';
-import CSP_L2_Go_To_Homepage from '@salesforce/label/c.CSP_L2_Go_To_Homepage';
-import CSP_L2_Go_To_Service from '@salesforce/label/c.CSP_L2_Go_To_Service';
+import CSP_L2_Details_Saved_Message_LMS from '@salesforce/label/c.CSP_L2_Details_Saved_Message_LMS';
+import CSP_L2_Go_To_Homepage_LMS from '@salesforce/label/c.CSP_L2_Go_To_Homepage_LMS';
+import CSP_L2_Go_To_Service_LMS from '@salesforce/label/c.CSP_L2_Go_To_Service_LMS';
 import CSP_L2_Company_Information from '@salesforce/label/c.CSP_L2_Company_Information';
 import CSP_L2_Business_Address_Information from '@salesforce/label/c.CSP_L2_Business_Address_Information';
 import CSP_L2_Is_PO_Box_Address from '@salesforce/label/c.CSP_L2_Is_PO_Box_Address';
@@ -114,18 +114,18 @@ export default class PortalRegistrationConfirmationLMS extends LightningElement 
 		CSP_L2_Company_Account,
 		CSP_L2_Company_Account_Message,
 		CSP_L2_Company_Information,
-		CSP_L2_Confirmation_Message,
+		CSP_L3_Confirmation_Message_LMS,
 		CSP_L2_Country,
 		CSP_L2_Date_of_Birth,
 		CSP_L2_Details_Saved,
-		CSP_L2_Details_Saved_Message,
+		CSP_L2_Details_Saved_Message_LMS,
 		CSP_L2_Email_Address,
-		CSP_L2_Go_To_Homepage,
-		CSP_L2_Go_To_Service,
+		CSP_L2_Go_To_Homepage_LMS,
+		CSP_L2_Go_To_Service_LMS,
 		CSP_L2_Job_Function,
 		CSP_L2_Job_Title,
 		CSP_L2_Legal_Name,
-		CSP_L2_Personal_Details,
+		CSP_L2_Profile_Details,
 		CSP_L2_Personal_Details_Message,
 		CSP_L2_Phone_Number,
 		CSP_L2_Postal_Code,

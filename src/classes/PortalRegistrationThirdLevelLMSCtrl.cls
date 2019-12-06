@@ -243,8 +243,8 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 			if(contactInfo.flow == 'flow3'){
 
 				Contact con = [SELECT Id,AccountId,Email,Additional_Email__c,Phone,OtherPhone,Salutation,Birthdate,Shipping_Address__c FROM Contact WHERE Id = :contactInfo.Id];
-				con.Email = contactInfo.Additional_Email;
-				con.Additional_Email__c = contactInfo.Email;
+				// con.Email = contactInfo.Additional_Email;
+				// con.Additional_Email__c = contactInfo.Email;
 				con.Shipping_Address__c = contactInfo.Shipping_Address != ''? contactInfo.Shipping_Address : null;
 				con.Phone = contactInfo.Phone;
 				con.OtherPhone = contactInfo.OtherPhone;

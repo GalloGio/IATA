@@ -1,7 +1,7 @@
 import { LightningElement,track,api } from 'lwc';
 
 //custom labels
-import CSP_L2_Business_Address_Information from '@salesforce/label/c.CSP_L2_Business_Address_Information';
+import CSP_L2_Business_Address_Information from '@salesforce/label/c.CSP_L2_Business_Address_Information_LMS';
 import CSP_L2_Create_New_Account from '@salesforce/label/c.CSP_L2_Create_New_Account';
 import CSP_L2_Company_Information_Message from '@salesforce/label/c.CSP_L2_Company_Information_Message';
 import CSP_L2_Company_Information from '@salesforce/label/c.CSP_L2_Company_Information';
@@ -12,7 +12,7 @@ import CSP_L2_Trade_Name from '@salesforce/label/c.CSP_L2_Trade_Name';
 import CSP_L2_Phone_Number from '@salesforce/label/c.CSP_L2_Phone_Number';
 import CSP_L2_Email_Address from '@salesforce/label/c.CSP_L2_Email_Address';
 import CSP_L2_Website from '@salesforce/label/c.CSP_L2_Website';
-import CSP_L2_Business_Address_Information_Message from '@salesforce/label/c.CSP_L2_Business_Address_Information_Message';
+import CSP_L2_Business_Address_Information_Message from '@salesforce/label/c.CSP_L2_Business_Address_Information_Message_LMS';
 import CSP_L2_Back_to_Company_Information from '@salesforce/label/c.CSP_L2_Back_to_Company_Information';
 import CSP_L2_Next_Confirmation from '@salesforce/label/c.CSP_L2_Next_Confirmation';
 import CSP_Next_LMS from '@salesforce/label/c.CSP_Next_LMS';

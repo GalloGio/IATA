@@ -28,7 +28,7 @@ import CSP_L2_Did_Not_Find from '@salesforce/label/c.CSP_L2_Did_Not_Find';
 import CSP_L2_Did_Not_Find_Message from '@salesforce/label/c.CSP_L2_Did_Not_Find_Message';
 import CSP_L2_Create_Account_Message from '@salesforce/label/c.CSP_L2_Create_Account_Message';
 import CSP_L2_Create_New_Account from '@salesforce/label/c.CSP_L2_Create_New_Account';
-import CSP_L2_Next_Confirmation from '@salesforce/label/c.CSP_L2_Next_Confirmation';
+import CSP_L3_Next_Confirmation_LMS from '@salesforce/label/c.CSP_L3_Next_Confirmation_LMS';
 import CSP_L2_Company_Name from '@salesforce/label/c.CSP_L2_Company_Name';
 import CSP_L2_No_Matching_Results from '@salesforce/label/c.CSP_L2_No_Matching_Results';
 import CSP_L2_EmailValidationDescri_LMS from '@salesforce/label/c.CSP_L2_EmailValidationDescri_LMS';
@@ -136,7 +136,7 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 		CSP_L2_Select,
 		CSP_L2_Create_Account_Message,
 		CSP_L2_Create_New_Account,
-		CSP_L2_Next_Confirmation,
+		CSP_L3_Next_Confirmation_LMS,
 		CSP_L2_Did_Not_Find,
 		CSP_L2_Did_Not_Find_Message,
 		CSP_L2_No_Matching_Results,
@@ -329,6 +329,9 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 										}else{
 											//Don't validate the personal email for this flow
 											if(this.flow === 'flow3'){
+												//reverse email
+												this.localContactInfo.Additional_Email__c = this.localContactInfo.Email;
+												this.localContactInfo.Email = this.workEmailInput;
 												this.stopLoading();
 												this.dispatchEvent(new CustomEvent('next'));
 											}else if(userInfo.hasExistingContactPersonalEmail == true){
