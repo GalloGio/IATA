@@ -504,7 +504,7 @@ public with sharing class AMS_XML_Generator {
                     RecordTypeId,RecordType.Name,
                     STD_Code__c,VAT_Number__c,
                     TradeName__c,Unique_ID__c,Verification_Date__c,IATA_ISO_Country__c, IATA_ISO_Country__r.Name,
-                    Short_Name__c,Abbreviated_name__c,Sector__c,AIMS_ID__c,BSP_CASS_Code__c
+                    Short_Name__c,Abbreviated_name__c,Sector__c,AIMS_ID__c,BSP_CASS_Code__c,IMPC_Code__c 
                     FROM Account WHERE Id in :setOwnershipKeys];
 
         for (Account o : lOwner) {
@@ -588,7 +588,7 @@ public with sharing class AMS_XML_Generator {
         lAgRelationshipHierarchy = [SELECT Id,AIMS_ID__c,
                     CASS_Number__c,Check_Digit__c,IATACode__c,
                     C_Code__c,ParentId,Parent.AIMS_ID__c,
-                    IATA_Area__c,Sector__c
+                    IATA_Area__c,Sector__c, Location_Class__c, IMPC_Code__c
                     FROM Account where id in :setAgRelationshipKeys];
         
         //REFERENCE                    
@@ -692,7 +692,7 @@ public with sharing class AMS_XML_Generator {
                     RecordTypeId,RecordType.Name,
                     STD_Code__c,VAT_Number__c,
                     TradeName__c,Unique_ID__c,Verification_Date__c,IATA_ISO_Country__c, IATA_ISO_Country__r.Name,
-                    Short_Name__c,Abbreviated_name__c,Sector__c,AIMS_ID__c,BSP_CASS_Code__c, Reason__c FROM Account WHERE Id in :setAccountKeys]; 
+                    Short_Name__c,Abbreviated_name__c,Sector__c,AIMS_ID__c,BSP_CASS_Code__c, Reason__c,IMPC_Code__c  FROM Account WHERE Id in :setAccountKeys]; 
 
         for (Account o : lAccount) {
             //20-06-2017 - Change AMSU-93 - special chars replacement
