@@ -157,6 +157,9 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 			CaseProcessTypeHelper.processKPI(Trigger.new, Trigger.oldMap);
 		}
 
+		/** WMO-424 **/
+		CaseVisibilityEngine.execute(Trigger.new);
+
 		// assigns default email address to be used on send email quick action
 		//follows same logic as current classic functionality
 		for(Case c: trigger.new){
@@ -2031,7 +2034,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 					  IDCard_Expedite_Delivery__c, IDCard_Expedite_Delivery_Fee__c, IATA_numeric_code_previous_employer_4__c, IATA_numeric_code_previous_employer_3__c, IATA_numeric_code_previous_employer_2__c,
 					  IATA_numeric_code_previous_employer_1__c, IATA_Code_for_previous_agency__c, IATA_Code__c, Hours_worked__c, Hours_Worked_Validation_Failed__c, Hours_Worked_Code__c, Gender__c,
 					  First_Name__c, Email_admin__c, Duties_in_Current_Agency__c, Duties_Code__c, Displayed_Name__c, Date_of_Birth__c, CurrencyIsoCode, CreatedDate, CreatedById, ConnectionSentId,
-					  ConnectionReceivedId, Case_Number__c, Approving_Manager_s_Name__c, Approving_Manager_s_Email__c, Applicable_Fee__c, AgencyShare_Confirmation__c,
+					  ConnectionReceivedId, Case_Number__c, Approving_Manager_s_Name__c, Approving_Manager_s_Email__c, Applicable_Fee__c, AgencyShare_Confirmation__c, Card_Type__c,
 					  (SELECT Id FROM ID_Cards__r LIMIT 1)
 					FROM ID_Card_Application__c
 					WHERE ID IN :relatedIDCardAppList]){
@@ -2126,7 +2129,11 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 							//Create idCard From Application
 							idCard = IDCardUtil.CreateIDCardObjectFromApplication(application, theContact, theAccount);
 
-							if (idCard != null) insert idCard;
+                            if (idCard != null){
+                                upsert idCard;
+                                application.ID_Card__c = idCard.Id;
+                                update application;
+                            } 
 
 						}else{
 							theContact = contactMap.get(aCase.ContactId);
