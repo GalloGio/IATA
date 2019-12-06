@@ -35,10 +35,17 @@ public class IDCard_RenewalRequestTest {
 		'	  \"description\": \"expedited delivery charge\",'+
 		'	  \"quantity\": 1,'+
 		'	  \"price\": 25.00'+
+		'	},'+
+		'	{'+
+		'	  \"id\": \"PRINTING\",'+
+		'	  \"description\": \"Physical Card\",'+
+		'	  \"quantity\": 1,'+
+		'	  \"price\": 5.00'+
 		'	}'+
 		'  ],'+
 		'  \"payment\": {'+
 		'	\"amount\": 460.00,'+
+		'	\"discount\": 20.00,'+
 		'    \"date\": \"xxxx\",'+
 		'	\"currency\": \"USD\",'+
 		'	\"cardNumber\": \"1234XXXXXXXX1234\",'+
