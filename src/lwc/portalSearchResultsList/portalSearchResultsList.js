@@ -180,6 +180,10 @@ export default class PortalSearchResultList extends NavigationMixin(LightningEle
         this.resultsList2 = [];
 
         filteringObjectAux.faqsComponent.loading = true;
+        if(!filteringObjectAux.casesComponent.show && filteringObjectAux.servicesComponent.show && filteringObjectAux.faqsComponent.show){
+            filteringObjectAux.faqsComponent.show = false;
+        }
+        
         this.loadingMoreResults = true;
 
         const selectedEvent = new CustomEvent('filterchanged', { detail: { object: filteringObjectAux, componentName: "faqsComponent" } });
