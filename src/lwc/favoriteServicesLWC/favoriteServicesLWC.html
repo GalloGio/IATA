@@ -25,7 +25,7 @@
                 </div>
 
                 <div if:false={isLoading}>
-                    <div class="slds-grid slds-gutters_direct-xx-small">
+                    <div class="slds-grid slds-gutters_direct-xx-small slds-show_medium">
                         <div class="slds-col slds-size_5-of-6">
                             <div class="slds-grid slds-gutters_direct-xx-small">
                                 <template for:each={favoriteServices} for:item='favoriteServicesRow'>
@@ -72,7 +72,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="slds-p-vertical_medium">
+                    <div class="slds-p-vertical_medium slds-show_medium">
                         <lightning-layout vertical-align="center" horizontal-align="center" if:true={showPagination}>
                             <lightning-layout-item padding="horizontal-small">
                                 <a onclick={handlePrevious}><lightning-icon class="superlightBlueIcon" icon-name="utility:chevronleft" size="xx-small"> </lightning-icon></a>
@@ -86,6 +86,63 @@
                                 <a onclick={handleNext}><lightning-icon class="superlightBlueIcon" icon-name="utility:chevronright" size="xx-small"> </lightning-icon></a>
                             </lightning-layout-item>
                         </lightning-layout>
+                    </div>
+                    <div class="slds-grid slds-gutters_direct-xx-small slds-hide_medium slds-scrollable_x">
+                        <div class="slds-col slds-size_1-of-1" style={sliderWidth}>
+                            <div class="slds-grid slds-gutters_direct-xx-small">
+                                <template for:each={auxResult} for:item='favoriteServicesTile'>
+                                    <div class="slds-col slds-size_1-of-2" key={favoriteServicesTile.id}>
+                                        <article class={myClassMobile}
+                                            onclick={redirect} data-appurl={favoriteServicesTile.Application_Start_URL__c}
+                                            data-requestable={favoriteServicesTile.Portal_Application__r.Requestable__c}
+                                            data-appfullurl={favoriteServicesTile.Portal_Application__r.Application_URL__c}
+                                            data-openwindow={favoriteServicesTile.Portal_Application__r.New_Window__c}
+                                            data-recordid={favoriteServicesTile.Id}
+                                            data-recordname={favoriteServicesTile.serviceName}>
+                                            <div class="noPointerEvents">
+                                                <div class="extDivHeight">
+                                                    <lightning-icon icon-name="utility:forward_up" size="xx-small"
+                                                        slot="actions" class={favoriteServicesTile.extIconClass}>
+                                                    </lightning-icon>
+                                                </div>
+                                                <div class="imageContainer slds-m-horizontal_small imageDivHeight">
+                                                    <img class="serviceImageStyles" src={favoriteServicesTile.Portal_Application__r.Application_icon_URL__c}/>
+                                                </div>
+                                                <div class="tileText slds-truncate text-gray text-xxxsmall textDivHeight" >
+                                                    {favoriteServicesTile.serviceName}
+                                                </div>
+                                            </div>
+                                        </article>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-p-vertical_medium slds-hide_medium">
+                            <lightning-layout vertical-align="center" horizontal-align="center" if:true={showPagination}>
+                                <lightning-layout-item padding="horizontal-small">
+                                    <lightning-icon class="superlightBlueIcon" icon-name="utility:chevronleft" size="xx-small"> </lightning-icon>
+                                </lightning-layout-item>
+                                <lightning-layout-item padding="horizontal-small">
+                                    <lightning-icon class="superlightBlueIcon" icon-name="utility:chevronright" size="xx-small"> </lightning-icon>
+                                </lightning-layout-item>
+                            </lightning-layout>
+                        </div>
+                    <div class="slds-col slds-size_6-of-6 slds-p-around_x-small slds-hide_medium">
+                        <div class="slds-card__body_inner aroundLinkBlueBorder">
+                            <div class="cursorPointer slds-illustration slds-illustration_small " onclick={goToAvailableServices}>
+                                <div class="slds-grid slds-gutters slds-grid_align-center slds-grid_vertical-align-center">
+                                    <div class="slds-col slds-size_2-of-12 slds-m-vertical_small slds-p-horizontal_none slds-text-align_right">
+                                        <span class="tileNewServiceIconMobile slds-text-align_center">+</span>
+                                    </div>
+                                    <div class="slds-col slds-size_7-of-12">
+                                        <span class="slds-text-heading_small tileNewServiceText slds-m-top_none text-blue text-bold">
+                                            {label.csp_Request_New_Service}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

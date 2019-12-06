@@ -49,7 +49,7 @@ export default class PortalCompanyProfilePage extends LightningElement {
                         active: !viewContacts,
                         label: tabNames[i],
                         id: i,
-                        class: "slds-p-around_small cursorPointer text-darkGray"
+                        class: "slds-p-around_small cursorPointer text-darkGray itemTab"
                     };
                     if (i === 1) {
                         tabAux.active = false;
