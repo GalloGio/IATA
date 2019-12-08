@@ -2838,7 +2838,7 @@ IATA Easy Pay 계좌 개설을 희망하시는 여행사는 아래 우리은행 
         <shortDescription>Attachment Name</shortDescription>
         <value>Attachment Name</value>
     </labels>
-	<labels>
+    <labels>
         <fullName>Attach_Proof_Of_Payment</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -2930,7 +2930,7 @@ Payment required on receipt of this Payment Advice
         <shortDescription>Bank transfer validation for auto renew</shortDescription>
         <value>Cannot pay with Bank Transfer when a product is on Auto Renew</value>
     </labels>
-	<labels>
+    <labels>
         <fullName>Billing_Member_Accounting_Code</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -5253,7 +5253,7 @@ You can easily create a company account in two steps</value>
         <shortDescription>CSP_OperationalCalendar_SeeMonthlyLink</shortDescription>
         <value>See Monthly</value>
     </labels>
-	<labels>
+    <labels>
         <fullName>CSP_Outstanding_Invoices</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -6695,7 +6695,7 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <shortDescription>Creation date</shortDescription>
         <value>Creation date</value>
     </labels>
-	<labels>
+    <labels>
         <fullName>Credit_Card_Payment_Link</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -8022,7 +8022,7 @@ Message: {2}</value>
         <shortDescription>FW</shortDescription>
         <value>FW</value>
     </labels>
-	<labels>
+    <labels>
         <fullName>Fee_Codes</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -35597,7 +35597,7 @@ If you continue to experience issues registering for the CNS Customer Portal ple
 Please use hashtags (#) to define the topic(s) of your post.
 You can choose one or more of the following topics:</value>
     </labels>
-	<labels>
+    <labels>
         <fullName>Invoice_Amount</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -36756,7 +36756,7 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <shortDescription>Line of Business (LoB)</shortDescription>
         <value>Line of Business (LoB)</value>
     </labels>
-	<labels>
+    <labels>
         <fullName>Link_To_SIS</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -37181,7 +37181,7 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <shortDescription>NoSameName</shortDescription>
         <value>There is already an attachment with the same name. Please rename it.</value>
     </labels>
-	<labels>
+    <labels>
         <fullName>No_Invoices_To_Display</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -40789,7 +40789,7 @@ title,Title,Name</value>
         <shortDescription>Section Title Top Sellers</shortDescription>
         <value>Top Sellers</value>
     </labels>
-	<labels>
+    <labels>
         <fullName>See_Bank_Account_Details</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -41197,7 +41197,7 @@ title,Title,Name</value>
         <shortDescription>Total_Cost</shortDescription>
         <value>Total cost</value>
     </labels>
-	<labels>
+    <labels>
         <fullName>Total_Amount</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -41526,7 +41526,7 @@ title,Title,Name</value>
         <shortDescription>Account Relocation</shortDescription>
         <value>Contact relocated successfully.</value>
     </labels>
-	<labels>
+    <labels>
         <fullName>CSP_EF_Invoices</fullName>
         <categories>CSP</categories>
         <language>en_US</language>

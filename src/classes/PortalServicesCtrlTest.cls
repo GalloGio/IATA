@@ -741,17 +741,17 @@ public static void PortalServicesCtrlTest_CreateNewPortalAccess(){
 	String test = PortalServicesCtrl.CreateNewPortalAccess(contactIds, portalServicelist[0].id, PortalServiceRole);
 }
 
-    //WMO-736 - ACAMBAS: Begin
-    @isTest
-    public static void getPortalServiceDetailsTest() {
-        Contact c = [select id,email,firstname,lastname,name from contact where lastName = 'ContactTest2'];
+	//WMO-736 - ACAMBAS: Begin
+	@isTest
+	public static void getPortalServiceDetailsTest() {
+		Contact c = [select id,email,firstname,lastname,name from contact where lastName = 'ContactTest2'];
 
-        User portalUser = ISSP_ObjectFactory.createPortalUser(c);
+		User portalUser = ISSP_ObjectFactory.createPortalUser(c);
         
-        System.runAs(portalUser) {
-            PortalServicesCtrl.getPortalServiceDetails('serviceTest');
-        }
-    }
+		System.runAs(portalUser) {
+			PortalServicesCtrl.getPortalServiceDetails('serviceTest');
+		}
+	}
 	//WMO-736 - ACAMBAS: End
 
 }
