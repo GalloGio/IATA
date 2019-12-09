@@ -42,8 +42,8 @@
     <assignments>
         <name>Wait_for_Integration_Log_to_be_updated_by_Mulesoft</name>
         <label>Wait for Integration Log to be updated by Mulesoft</label>
-        <locationX>684</locationX>
-        <locationY>52</locationY>
+        <locationX>937</locationX>
+        <locationY>49</locationY>
         <assignmentItems>
             <assignToReference>WaitForNextAction</assignToReference>
             <operator>Assign</operator>
@@ -65,7 +65,7 @@
         <locationX>305</locationX>
         <locationY>52</locationY>
         <defaultConnector>
-            <targetReference>Publish_Address_Role_Business_Context_Event</targetReference>
+            <targetReference>Get_Record_Type_ARBC</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>first execution</defaultConnectorLabel>
         <rules>
@@ -140,8 +140,8 @@
     <recordCreates>
         <name>Publish_Address_Role_Business_Context_Event</name>
         <label>Publish Address Role Business Context Event</label>
-        <locationX>523</locationX>
-        <locationY>52</locationY>
+        <locationX>776</locationX>
+        <locationY>49</locationY>
         <connector>
             <targetReference>Wait_for_Integration_Log_to_be_updated_by_Mulesoft</targetReference>
         </connector>
@@ -155,6 +155,12 @@
             <field>RecordId__c</field>
             <value>
                 <elementReference>AddressRoleBusinessContext.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>RecordType__c</field>
+            <value>
+                <elementReference>RecordTypeARBC.Name</elementReference>
             </value>
         </inputAssignments>
         <object>AddressRoleBusinessContext__e</object>
@@ -180,6 +186,28 @@
         <queriedFields>Id</queriedFields>
         <queriedFields>Status__c</queriedFields>
         <queriedFields>Status_Detail__c</queriedFields>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Record_Type_ARBC</name>
+        <label>Get Record Type ARBC</label>
+        <locationX>610</locationX>
+        <locationY>49</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Publish_Address_Role_Business_Context_Event</targetReference>
+        </connector>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>AddressRoleBusinessContext.RecordTypeId</elementReference>
+            </value>
+        </filters>
+        <object>RecordType</object>
+        <outputReference>RecordTypeARBC</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Name</queriedFields>
+        <queriedFields>DeveloperName</queriedFields>
     </recordLookups>
     <start>
         <locationX>50</locationX>
@@ -241,6 +269,14 @@
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>RecordTypeARBC</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>RecordType</objectType>
     </variables>
     <variables>
         <description>Required with fields : Id, Name, Email</description>

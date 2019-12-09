@@ -126,7 +126,7 @@ public with sharing class CustomerSyncUtils extends SObjectSyncUtils {
 
 		Set<Id> ids = new Set<Id>();
 
-		String query = 'SELECT Id, RecordType.DeveloperName, Address_Role__c, Address_Role__r.Address__r.Account__c FROM Address_Role_Business_Context__c WHERE ';
+		String query = 'SELECT Id, RecordTypeId, RecordType.DeveloperName, Address_Role__c, Address_Role__r.Address__r.Account__c FROM Address_Role_Business_Context__c WHERE ';
 
 		// Context is observed by the current where clause
 		switch on sObjects.get(0) {
@@ -263,7 +263,7 @@ public with sharing class CustomerSyncUtils extends SObjectSyncUtils {
 
 		// Get whole context for each selected Customer (Account, Address, AddressRole, AddressRoleBusinessContext)
 		for (Address_Role_Business_Context__c addressRoleBusinessContext : [
-				SELECT Id, Account_Activation_Context_Status__c,
+				SELECT Id, Account_Activation_Context_Status__c, RecordTypeId,
 						Address_Role__r.AccountHierarchyLevel__c, Address_Role__r.Role_Type__c,
 						Address_Role__r.Address__c,
 						Address_Role__r.Address__r.Account__c, Address_Role__r.Address__r.Account__r.RecordTypeId, Address_Role__r.Address__r.Account__r.ParentId, Address_Role__r.Address__r.Account__r.Hierarchy_Level__c

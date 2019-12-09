@@ -218,6 +218,7 @@
         <queriedFields>Id</queriedFields>
         <queriedFields>Account_Activation_Context_Status__c</queriedFields>
         <queriedFields>CreatedById</queriedFields>
+        <queriedFields>RecordTypeId</queriedFields>
     </recordLookups>
     <recordLookups>
         <name>Get_Address_Role_Business_Context_From_Integration_Log</name>
@@ -248,6 +249,7 @@
         <queriedFields>Address_Role__c</queriedFields>
         <queriedFields>Account_Activation_Context_Status__c</queriedFields>
         <queriedFields>CreatedById</queriedFields>
+        <queriedFields>RecordTypeId</queriedFields>
     </recordLookups>
     <recordLookups>
         <name>Get_Business_Address</name>

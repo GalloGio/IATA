@@ -55,7 +55,7 @@ public with sharing class ContactSyncUtils extends SObjectSyncUtils {
 	private List<Account_Contact_Role__c> getACRFromSObjects(List<SObject> sObjects){
 		Set<Id> ids = new Set<Id>();
 
-		String query = 'SELECT Id, RecordType.DeveloperName, Contact__c, Account_Role__r.Account__c FROM Account_Contact_Role__c WHERE ';
+		String query = 'SELECT Id, RecordTypeId, RecordType.DeveloperName, Contact__c, Account_Role__r.Account__c FROM Account_Contact_Role__c WHERE ';
 
 		// Context is observed by the current where clause
 		switch on sObjects.get(0){
