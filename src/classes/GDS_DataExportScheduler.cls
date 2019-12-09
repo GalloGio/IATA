@@ -110,6 +110,7 @@ global with sharing class GDS_DataExportScheduler implements Schedulable{
             doc.Country_of_publication__c = 'All - Globally';
             doc.Language__c = 'English';
             doc.User_status_access__c = 'Approved User;Approved Admin';
+            doc.Document_Category__c = 'Accreditation';
             insert doc;
             
             doc = [select ContentDocumentId from ContentVersion where id = :doc.id];
