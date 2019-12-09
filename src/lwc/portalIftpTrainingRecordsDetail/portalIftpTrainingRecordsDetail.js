@@ -440,7 +440,7 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
     handleExportToExcel(){
         let columns = JSON.parse(JSON.stringify(this.columns));
         let data = JSON.parse(JSON.stringify(this.data));
-        this.template.querySelector('c-portal-iftp-export-data').exportDataToExcel(columns, data, "EmployeesSearchResults.xls");
+        this.template.querySelector('c-portal-iftp-export-data').exportDataToExcel(columns, data, "TrainingRecordsDetailSearchResults.xls");
     }
 
     handleExportAllDataToCSV(){
