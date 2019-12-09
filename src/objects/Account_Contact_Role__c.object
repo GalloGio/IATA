@@ -42,6 +42,16 @@
     </actionOverrides>
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <compactLayouts>
+        <fullName>IFTP_Compact_Layout</fullName>
+        <fields>Account__c</fields>
+        <fields>Name</fields>
+        <fields>Account_Role__c</fields>
+        <fields>Contact__c</fields>
+        <fields>First_Name__c</fields>
+        <fields>Last_Name__c</fields>
+        <label>IFTP Compact Layout</label>
+    </compactLayouts>
     <deploymentStatus>Deployed</deploymentStatus>
     <description>Related to the Account Role, used to designate an existing contact, under the account, that acts as a primary contact for the associated type of account role.</description>
     <enableActivities>false</enableActivities>
