@@ -33,6 +33,20 @@ global class AmazonFinancialCtrl {
 		}
 		set;
 	}
+   ////////////  	GxA Project	/////////////////////
+    public boolean isGxAEnable{
+        get{
+            // get the case Id from the URL
+            Id caseId = apexpages.currentpage().getparameters().get('id');
+            // get the GxA flag from the case Id
+            Case IFAP = [Select Account.IATA_ISO_Country__r.GxA_Enable__c FROM Case where Id =:caseId];
+            
+            return IFAP.Account.IATA_ISO_Country__r.GxA_Enable__c; 
+
+        }
+        set;
+    }   
+    ////////////////////////////////////////////////////
 
 	public boolean hasMessage {get{return (ApexPages.hasmessages());} private set;}
 	@TestVisible

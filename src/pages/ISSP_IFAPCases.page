@@ -567,8 +567,10 @@
           <apex:pageMessages />
         </div>  
       </apex:outputPanel>
-                        
-    <apex:outputPanel rendered="{!canUploadAndDelete}" id="btnsSubmitPanel" >  
+            
+            <!-- If the account doesn't have access to GxA -->
+	<apex:outputPanel rendered="{!NOT(isGxAEnable)}">
+            <apex:outputPanel rendered="{!canUploadAndDelete}" id="btnsSubmitPanel" >  
      <label><b>{!$Label.IFAP_Overall_Max_size_20mb}</b></label> 
 
                      <!--  <apex:outputText value="{0,number,0.##}\20" id="sizeLabel"  >
@@ -713,6 +715,18 @@
             </script>
         </apex:pageblock>
 </apex:outputPanel>
+        
+    </apex:outputPanel>
+
+            
+<!-- If the account does have access to GxA -->
+<apex:outputPanel rendered="{!isGxAEnable}">
+    	<b><apex:outputLabel value="{!$Label.Upload_GxA}"  styleClass="phase1"/></b> <br/>
+    <apex:outputLink value="{!$Label.GxA_Link}" onclick="" id="GxALink" target="_blank">{!$Label.GxA_Link_Label}</apex:outputLink>
+            </apex:outputPanel>
+       
+
+    
 
     </apex:form>  
   </apex:outputPanel>

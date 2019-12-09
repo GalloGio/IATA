@@ -8589,6 +8589,20 @@ You will receive an email with a copy of your quote or you can retrieve the quot
         <value>Go to IATA corporate site</value>
     </labels>
     <labels>
+        <fullName>GxA_Link</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GxA Link</shortDescription>
+        <value>https://myassessor2-stage.pwc.ch/Iata/InitiateSingleSignOn</value>
+    </labels>
+    <labels>
+        <fullName>GxA_Link_Label</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GxA Link Label</shortDescription>
+        <value>GxA Website</value>
+    </labels>
+    <labels>
         <fullName>Handling</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -41071,6 +41085,13 @@ title,Title,Name</value>
         <protected>false</protected>
         <shortDescription>Upload_Financial_Documents</shortDescription>
         <value>Upload Financial Documents</value>
+    </labels>
+    <labels>
+        <fullName>Upload_GxA</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Upload GxA</shortDescription>
+        <value>To upload the financial documents please use the link below.</value>
     </labels>
     <labels>
         <fullName>UserRequestPortalAccess</fullName>
