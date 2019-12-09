@@ -286,7 +286,7 @@ private class OneId_RegistrationProcessControllerTest {
     }
 
     @isTest
-    public static void testRegistration_VI() {
+    public static void testRegistration_IV() {
         
         // Prepare test data
 
@@ -328,6 +328,94 @@ private class OneId_RegistrationProcessControllerTest {
         Test.stopTest();
 
     }
+
+    @isTest
+    public static void testRegistration_V() {
+        
+        // Prepare test data
+
+        ISSP_CS__c setting = new ISSP_CS__c();
+        setting.Name = 'DefaultNewAccountOwnerId';
+        setting.Value__c = UserInfo.getUserId();
+        insert setting; 
+
+        ISSP_CS__c setting2 = new ISSP_CS__c();
+        setting2.Name = 'IdentityPortal';
+        setting2.Value__c = 'customer-portal-iata.force.com';
+        insert setting2; 
+
+        Id profileId = [ SELECT Id FROM Profile WHERE Name = 'ISS Portal Agency User (Partner)' ][0].Id;
+
+        ISSP_CS__c setting3 = new ISSP_CS__c();
+        setting3.Name = 'ISS_Portal_Agency_User';
+        setting3.Value__c = profileId;
+        insert setting3; 
+
+        IATA_ISO_Country__c country = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='Pt')  ;
+        insert country ;
+
+        Account a = new Account(name = 'TEST ACCOUNT',Sector__c='Airline Supplier', Category__c='Fuel Supplier',IATA_ISO_Country__c = country.Id);
+        insert a;
+        
+        String serviceName = 'ISSP';        
+ 
+        Test.startTest();
+         
+            PortalType portalType = PortalType.PowerPartner;
+            User userWithRole = null;
+            Boolean doInsert = true;
+            
+            Contact c = new Contact(firstname='firstname', lastname = 'lastname',Salutation = 'sig', email='xpto@lls.com');
+
+            OneId_RegistrationProcessController.registration(a,c,serviceName);
+
+        Test.stopTest();
+
+    }
+
+    @isTest
+    public static void testRegistration_VI() {
+        
+        // Prepare test data
+
+        ISSP_CS__c setting = new ISSP_CS__c();
+        setting.Name = 'DefaultNewAccountOwnerId';
+        setting.Value__c = UserInfo.getUserId();
+        insert setting; 
+
+        ISSP_CS__c setting2 = new ISSP_CS__c();
+        setting2.Name = 'IdentityPortal';
+        setting2.Value__c = 'customer-portal-iata.force.com';
+        insert setting2; 
+
+        Id profileId = [ SELECT Id FROM Profile WHERE Name = 'ISS Portal Agency User (Partner)' ][0].Id;
+
+        ISSP_CS__c setting3 = new ISSP_CS__c();
+        setting3.Name = 'ISS_Portal_Agency_User';
+        setting3.Value__c = profileId;
+        insert setting3; 
+
+        IATA_ISO_Country__c country = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='Pt')  ;
+        insert country ;
+        
+        String serviceName = 'ISSP';        
+ 
+        Test.startTest();
+         
+            PortalType portalType = PortalType.PowerPartner;
+            User userWithRole = null;
+            Boolean doInsert = true;
+            Account a = new Account(name = 'TEST ACCOUNT',Sector__c='Airline Supplier', Category__c='Fuel Supplier',IATA_ISO_Country__c = country.Id);
+            Contact c = new Contact(firstname='firstname', lastname = 'lastname',Salutation = 'sig', email='xpto@lls.com');
+
+            OneId_RegistrationProcessController.registration(a,c,serviceName);
+            OneId_RegistrationProcessController.checkIsUsernameIsAvailableInGlobalSalesforce('xpto@registest.com');
+            OneId_RegistrationProcessController.getAccountLabels();
+            OneId_RegistrationProcessController.getSectors();
+
+        Test.stopTest();
+    }
+
 
     @isTest
     public static void testPermSet() {
