@@ -201,7 +201,7 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
 			isValid = false;
 		}
 
-		if (billingState == null) {
+		if (billingState == null && billingStatesList.size()>1 ) {
 			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_MSO_Billing_State_ErrMsg));
 			isValid = false;
 		}
