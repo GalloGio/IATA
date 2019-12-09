@@ -96,6 +96,18 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Company_Code__c</fullName>
+        <description>Company Internal Code for the employee</description>
+        <externalId>false</externalId>
+        <label>Employee Code</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Contact_Role_Name__c</fullName>
         <description>A functional role that a Contact belonging to an Account may assume when interacting with an IATA Salesforce functional capability. This designation technically supports the provisioning and delivery of IATA Salesforce functional capabilities.</description>
         <externalId>false</externalId>
