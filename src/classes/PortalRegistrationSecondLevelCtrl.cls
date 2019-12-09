@@ -86,7 +86,7 @@ public without sharing class PortalRegistrationSecondLevelCtrl {
 
 			sendEmailNotification(updatedContact);
 			//IFTP
-            setIFTPUser(acc,con,false);
+			setIFTPUser(acc,con,false);
 		}
 		catch(Exception e){
 			return false;
@@ -98,7 +98,7 @@ public without sharing class PortalRegistrationSecondLevelCtrl {
 	public static Boolean registrationWithExistingAccount(Account acc, Contact con){
 		try{
 			Account acc2 = [SELECT Id, RecordType.DeveloperName, Sector__c, Category__c, IsPartner FROM Account WHERE Id =: acc.Id];
-			
+
 			// Ensure that the existing account is a partner account
 			if(!acc2.IsPartner){
 				acc2.IsPartner = true;
@@ -114,11 +114,11 @@ public without sharing class PortalRegistrationSecondLevelCtrl {
 			OneId_RegistrationProcessController.updateUserProfile(con, acc2, false);
 
 			OneId_RegistrationProcessController.addDefaultAppRights(con.Id, null);
-			
+
 			ISSP_CreateNotification.SendEmailToPortalAdminNewContact(new List<Contact>{con});
 
 			//IFTP
-            setIFTPUser(acc,con,true);
+			setIFTPUser(acc,con,true);
 			return true;
 		}
 		catch(Exception e){
@@ -253,7 +253,7 @@ public without sharing class PortalRegistrationSecondLevelCtrl {
 	public static List<OneId_AddressDoctor.AddressInfo> checkAddress(String info) {
 		return OneId_AddressDoctor.validate((OneId_AddressDoctor.AddressInfo)JSON.deserialize(info, OneId_AddressDoctor.AddressInfo.class));
 	}
-	
+
 	public static void setIFTPUser(Account acc, Contact con, Boolean bAccExist){
 		/**
 		IFTP Accounts - IFTP Service
@@ -368,5 +368,5 @@ public without sharing class PortalRegistrationSecondLevelCtrl {
 
 		insert psa;
 	}
-	
+
 }
