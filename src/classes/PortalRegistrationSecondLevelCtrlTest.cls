@@ -217,7 +217,6 @@ public class PortalRegistrationSecondLevelCtrlTest {
             BillingPostalCode = '1234',
             ShippingPostalCode = '1234',
 
-            Business_Country__c = country.Id,
             BillingCountry = country.Name,
             ShippingCountry = country.Name,
 
@@ -225,7 +224,6 @@ public class PortalRegistrationSecondLevelCtrlTest {
             IATA_ISO_Shipping_Country__c = country.Id,
 
             Business_City__c = cityId,
-            Business_City_Text__c = cityName,
 
             Geoname_Billing_City__c = cityId,
             BillingCity = cityName,
@@ -234,9 +232,6 @@ public class PortalRegistrationSecondLevelCtrlTest {
             ShippingCity = cityName,
 
             Iso_State__c = state.Id,
-            
-            Business_State__c = state.Id,
-            Business_State_Text__c = state.Name,
 
             IATA_ISO_Billing_State__c = state.Id,
             BillingState = state.Name,
