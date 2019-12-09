@@ -8,7 +8,7 @@ global class ANG_OscarProcessHelper {
 
 	/* EasyPay Service Providers */
 	public static final Set<String> MODEL_A_PROVIDERS = new Set<String>{'IATA EasyPay (EDENRED)'};
-	public static final Set<String> MODEL_B_PROVIDERS = new Set<String>{'IATA EasyPay (EDENRED)','IATA EasyPay (MSTS)','IATA EasyPay (2C2P)'};
+	public static final Set<String> MODEL_B_PROVIDERS = new Set<String>{ ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_EDENRED, ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_MSTS, ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_2C2P };
 	public static final Set<String> IEP_MODEL_PROVIDERS = new Set<String>{'Model A', 'Model B', 'Model B+'};
 
 	public static boolean isIATACodeGenerationRunning = false;

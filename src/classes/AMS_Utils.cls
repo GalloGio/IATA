@@ -123,8 +123,7 @@ public without sharing class AMS_Utils {
 		AMS_Utils.ACC_S1_NOTACCREDITED
 	};
 
-	public static final Set<String> IEP_VENDORS = new Set<String>{'IATA EasyPay (EDENRED)', 'IATA EasyPay (MSTS)', 'IATA EasyPay (2C2P)'};
-
+	public static final Set<String> IEP_VENDORS = new Set<String>{ ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_EDENRED, ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_MSTS, ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_2C2P };
 	//AMSU-125
 	public static final Set<String> oscarNewProcesses = new Set<String> {new_HO, new_BR, new_BR_ABROAD, new_TIDS, new_MSO, new_GSA, new_GSA_BSP, new_GSSA, new_AHA, new_AHA_BSP, new_SA};
 
