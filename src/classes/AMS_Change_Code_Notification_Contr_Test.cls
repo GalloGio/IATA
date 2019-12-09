@@ -164,8 +164,6 @@ private class AMS_Change_Code_Notification_Contr_Test {
 		ccase.Remittance_Period__c = '20180604W';
 		update ccase;
 
-		System.assertEquals(ccase.Remittance_Period__c, '20180604W');
-
 		Technical_Logs__c notif1 = new Technical_Logs__c();
 		notif1.Record__c = ccase.Id;
 		notif1.Log__c = 'some notification';
@@ -239,6 +237,17 @@ private class AMS_Change_Code_Notification_Contr_Test {
 			ctrl.setNotificationMessage();
 
 		Test.stopTest();
+		
+		List<Apexpages.Message> messages = ApexPages.getMessages();
+
+		boolean b = false;
+
+		for(Apexpages.Message msg:messages){
+			if (msg.getDetail().contains('not generated, please issue Notice of Termination')) b = true;
+		}
+
+		System.assert(b);
+
 
 	}
 
