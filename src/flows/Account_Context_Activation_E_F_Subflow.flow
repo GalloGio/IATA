@@ -133,7 +133,7 @@
     <assignments>
         <name>Fill_Address_Role_Business_Context</name>
         <label>Fill Address Role Business Context</label>
-        <locationX>762</locationX>
+        <locationX>814</locationX>
         <locationY>2252</locationY>
         <assignmentItems>
             <assignToReference>AddressRoleBusinessContext.Address_Role__c</assignToReference>
@@ -154,6 +154,13 @@
             <operator>Assign</operator>
             <value>
                 <stringValue>Pending</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>AddressRoleBusinessContext.RecordTypeId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>RecordTypeARBC.Id</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -393,7 +400,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Fill_Address_Role_Business_Context</targetReference>
+                <targetReference>Get_Record_Type_ARBC</targetReference>
             </connector>
             <label>ARBC has to be created</label>
         </rules>
@@ -652,6 +659,7 @@
         <outputReference>AddressRoleBusinessContext</outputReference>
         <queriedFields>Id</queriedFields>
         <queriedFields>Account_Activation_Context_Status__c</queriedFields>
+        <queriedFields>RecordTypeId</queriedFields>
     </recordLookups>
     <recordLookups>
         <name>Get_Business_Address</name>
@@ -809,6 +817,35 @@
         <outputReference>ContactRoles</outputReference>
         <queriedFields>Id</queriedFields>
         <queriedFields>Contact__c</queriedFields>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Record_Type_ARBC</name>
+        <label>Get Record Type ARBC</label>
+        <locationX>684</locationX>
+        <locationY>2252</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Fill_Address_Role_Business_Context</targetReference>
+        </connector>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>MASTER</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>SobjectType</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Address_Role_Business_Context__c</stringValue>
+            </value>
+        </filters>
+        <object>RecordType</object>
+        <outputReference>RecordTypeARBC</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Name</queriedFields>
+        <queriedFields>DeveloperName</queriedFields>
     </recordLookups>
     <recordLookups>
         <name>Get_user_that_launched_the_flow</name>
@@ -1061,6 +1098,14 @@
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>Contact</objectType>
+    </variables>
+    <variables>
+        <name>RecordTypeARBC</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>RecordType</objectType>
     </variables>
     <variables>
         <name>SalesAreaAvailable</name>
