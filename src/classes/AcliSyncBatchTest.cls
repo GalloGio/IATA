@@ -82,15 +82,13 @@ private class AcliSyncBatchTest {
     static testMethod void testAcliLaunchBatchScheduler_Ok() {
         
         loadData();
-
-        Document acliDoc;
-        acliDoc = new Document();
-        acliDoc.Name = AcliNewScheduler.ACLI_DOC_NAME;
-        acliDoc.FolderId =  AcliNewScheduler.ACLI_FOLDER.Id;
-
-        acliDoc.Body = Blob.valueof(CSV);
-
-        insert acliDoc;
+        String c = 'NAME1,NAME2,NUM_CODE_NULL,ICAO_DES,DES_NULL,DES_SEC_FLAG,ADDRESS1,ADDRESS2,CITY,PROV_ST_NAME,COUNTRY,POSTAL,RES_TTYPE,RES_HEAD_NAME,RES_TITLE,CO_TTYPE,EMERG_TTYPE,EMERG_HEAD_NAME,EMERG_TITLE,SITA_FLAG,ARINC_FLAG,IATA_FLAG,ATA_FLAG,MITA_FLAG,CAT_PKEY,NUM_SEC_FLAG,AIRLINE_PRF_NULL,AIRLINE_SEC_FLAG,KUNNR,ACTIVE,AOC_date,MITA_MEMBER,REQUEST_ID,REQ_STATUS,REQ_STATUS_DESCR,RECEIVED,FORMTYPE'
+        + '\n' + 'Aer Lingus Limited                                                              053 EINEI Dublin Airport                                                                  DUBLIN                                       Ireland                                                                                                                                                       YYY YI 053 0010000141X00000000                                         00000000   Aer Lingus Limited                                                              DIE';
+		Document doc = new Document();
+		doc.Name = AcliNewScheduler.ACLI_DOC_NAME;
+		doc.Body = Blob.ValueOf(c);
+        doc.FolderId =  AcliNewScheduler.ACLI_FOLDER.Id;
+        insert doc;
 
         String CRON_EXP = '0 0 0 15 3 ? 2022';
 
@@ -99,10 +97,10 @@ private class AcliSyncBatchTest {
         String jobId = System.schedule('AcliLaunchBatchScheduler', CRON_EXP, new AcliLaunchBatchScheduler());
         Test.stopTest();  
 
-        List<Document> doc = new List<Document>();
-        doc = [SELECT Id, Name FROM Document WHERE Name =: AcliNewScheduler.ACLI_DOC_NAME];
+        List<Document> docResult = new List<Document>();
+        docResult = [SELECT Id, Name FROM Document WHERE Name =: AcliNewScheduler.ACLI_DOC_NAME];
 
-        System.assert(doc.isEmpty());
+        System.assert(docResult.isEmpty());
 
     }
 
