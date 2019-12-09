@@ -98,7 +98,7 @@ private class IDCard_ApplicationFormRRControllerTest {
         idCardToInsert.add(IDCardUtil.CreateIDCardObjectFromApplication(testData.IDCards_IDCardApplications[6], relatedContact[1]));
         idCardToInsert.add(IDCardUtil.CreateIDCardObjectFromApplication(testData.IDCards_IDCardApplications[5], relatedContact[0]));
         
-        insert idCardToInsert;       
+        upsert idCardToInsert;       
 		       
         //Test LangItems, HasError and getErrMsg
         iDCard_ApplicationFormRRController = new iDCard_ApplicationFormRRController();

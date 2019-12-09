@@ -53,6 +53,7 @@ public class  ID_Card_Mass_Application_Test {
                         IDCard_Key_Account__c = true,
                         RecordTypeId = rtacc,
                         BillingCountry = 'Australia',
+                        IATA_ISO_Country__c = isoc.Id,
                         Status__c = 'Approved',
                         ID_Card_Key_Account_Discount__c = 0
         );
