@@ -540,6 +540,7 @@
     </layoutSections>
     <miniLayout>
         <fields>Name</fields>
+        <fields>RecordTypeId</fields>
         <fields>IATACode__c</fields>
         <fields>ParentId</fields>
         <fields>BillingAddress</fields>
@@ -553,6 +554,7 @@
             <relatedList>RelatedContactList</relatedList>
         </relatedLists>
         <relatedLists>
+            <fields>CASES.CASE_NUMBER</fields>
             <relatedList>RelatedCaseList</relatedList>
         </relatedLists>
         <relatedLists>
