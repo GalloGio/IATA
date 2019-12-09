@@ -646,7 +646,7 @@ private class WorkflowHelperTest {
 
         Profile p = [SELECT Id FROM Profile WHERE Name='Account management team'];
         
-        User u = [Select id from User where ProfileId = :p.Id LIMIT 1];
+        User u = [Select id from User where ProfileId = :p.Id AND isActive = true LIMIT 1];
 
         System.runAs(u) {
             

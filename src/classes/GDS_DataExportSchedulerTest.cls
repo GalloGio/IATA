@@ -15,7 +15,9 @@ private class GDS_DataExportSchedulerTest {
             Name = 'Test Account',
             IATA_ISO_Country__c = country.Id,
             Location_Class__c = 'P',
-            Zuora__Active__c = 'True');
+            Zuora__Active__c = 'True',
+            Status__c = 'Terminated',
+            recordtypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency'));
         insert account;
         
         list<Agency_Applied_Change_code__c> listChangeCodes = new list<Agency_Applied_Change_code__c>();
@@ -23,10 +25,13 @@ private class GDS_DataExportSchedulerTest {
             listChangeCodes.add(
                 new Agency_Applied_Change_code__c(
                     Account__c = account.Id,
-                    Change_Code__c = 'TER')
+                    Change_Code__c = 'TER',
+                    Active__c = true)
             );
         }
         insert listChangeCodes;
+        Datetime LAST_MONTH = Datetime.now().addMonths(-1);
+        Test.setCreatedDate(listChangeCodes[0].Id, LAST_MONTH);
     }
 
     static testMethod void test_Batch() {
