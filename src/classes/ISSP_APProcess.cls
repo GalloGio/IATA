@@ -7,6 +7,7 @@ global without sharing class ISSP_APProcess {
     private static Id RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IDFS_Airline_Participation_Process');
     private Map<String, String> apProcessFormRecordTypesMap = RecordTypeSingleton.getInstance().getMapRecordTypesBySObject('AP_Process_Form__c');
     
+    
     @TestVisible private string vCaseId;
     private Id vHQAccountId;
     private Id vGSSAAccountId;
