@@ -30,6 +30,7 @@ public with sharing class IDCard_ApplicationFormNRController  extends IDCardAbst
   public Boolean isEmployee {get; set;}
   public list<SelectOption> itdiCourses;
   public String[] selectedITDICourses;
+  public Double vatPrice  {get; set;}
 
   private String IATA_Code;
   private Account theAccount;
@@ -78,7 +79,30 @@ public with sharing class IDCard_ApplicationFormNRController  extends IDCardAbst
 
   public String attachmentID {get; set;}
 
+  public List<SelectOption> cardTypeList {
+    get {
+        if (cardTypeList == null) {
+            cardTypeList = new List<SelectOption>{};
+            cardTypeList.add(new SelectOption('digital', Label.IDCard_CardType_DigCardNo));
+            cardTypeList.add(new SelectOption('plastic', Label.IDCard_CardType_PhysCardYes));
+        }
+        return cardTypeList;
+    }
+    private set;
+  }
 
+  public Boolean isCardTypeChoiceAvailable {
+    get {
+      IATA_ISO_Country__c contactCountry = GetIATAISOCountryOfContact(IDCardApplicationNR.IATA_Code__c);
+      Price_Table__c[] listPriceTables = [Select p.Cost_of_Printer__c From Price_Table__c p where p.Type_Class_of_Agent__c = :accountType and p.ISO_Country__r.Id = :contactCountry.Id];
+      if (listPriceTables == null || listPriceTables.size() == 0) {
+        throw new IDCardApplicationException(String.Format(Label.IDCard_No_Price_Table_Found, new String[] {'<i>' + contactCountry.ISO_Code__c + '</i>', '<i>' + accountType + '</i>'}));
+      } else {
+        Boolean printFee = listPriceTables[0].Cost_of_Printer__c == 0 ? false : true;
+        return !IDCard_MobileAppRenewalService.US_COUNTRY_ISO_CODES.contains(contactCountry.ISO_Code__c) && printFee;
+      }   
+    }
+  }
   /** 
    * Constructor
    */
@@ -94,7 +118,8 @@ public with sharing class IDCard_ApplicationFormNRController  extends IDCardAbst
     isContractor = false;
     isEmployee = false;
     detailledFees = new Map<String, decimal>();
-    selectedITDICourses = new String[] {}; 
+    selectedITDICourses = new String[] {};
+    vatPrice = 0;
 
     geographyinTravelPlanning_Description = Label.IDCard_GeographyinTravelPlanning_Description;
     destinationGeography_Description = Label.IDCard_DestinationGeography_Description;
@@ -140,15 +165,15 @@ public with sharing class IDCard_ApplicationFormNRController  extends IDCardAbst
       String applicationId = IDCardUtil.DecodeDecryptParameter(System.currentPageReference().getParameters().get(IDCardUtil.PARAM_APPID));
 
       //get application info from DB
-      IDCardApplicationNR = [Select i.Payment_Amount__c, i.RecordTypeId, i.VER_Number__c, i.UIR__c, i.Revenue_Confirmation__c, i.Type_of_application__c, i.Title__c, i.Telephone__c, i.SystemModstamp,
-                             i.Start_Date_Industry__c, i.Start_Date_Agency_Year__c, i.Start_Date_Agency_Month__c, i.Solicitation_Flag__c, i.Promotion_Code__c, i.Position_in_Current_Agency__c, i.Position_Code__c, i.Photo__c,
-                             i.Package_of_Travel_Professionals_Course_2__c, i.Package_of_Travel_Professionals_Course_1__c, i.OwnerId, i.Name, i.Middle_Initial__c, i.Last_Name__c, i.LastModifiedDate,
-                             i.LastModifiedById, i.IsDeleted, i.Id, i.IDCard_Prefered_Language__c, i.IDCard_Expedite_Delivery__c, i.IDCard_Expedite_Delivery_Fee__c, i.IATA_numeric_code_previous_employer_4__c,
-                             i.IATA_numeric_code_previous_employer_3__c, i.IATA_numeric_code_previous_employer_2__c, i.IATA_numeric_code_previous_employer_1__c, i.IATA_Code_for_previous_agency__c,
-                             i.IATA_Code__c, i.Hours_worked__c, i.Hours_Worked_Code__c, i.Gender__c, i.First_Name__c, i.Email_admin__c, i.Duties_in_Current_Agency__c, i.Duties_Code__c, i.Displayed_Name__c,
-                             i.Date_of_Birth__c, i.CurrencyIsoCode, i.CreatedDate, i.CreatedById, i.Approving_Manager_s_Name__c, i.Approving_Manager_s_Email__c,
-                             i.Applicable_Fee__c, i.Regional_Office__c, i.AgencyShare_Confirmation__c  From ID_Card_Application__c i
-                             where i.Id = :applicationId limit 1];
+      IDCardApplicationNR = [SELECT i.Payment_Amount__c, i.VER_Number__c, i.RecordTypeId, i.Revenue_Confirmation__c, i.UIR__c, i.Type_of_application__c, i.Title__c, 
+                            i.Telephone__c, i.SystemModstamp, i.Start_Date_Industry__c, i.Start_Date_Agency_Year__c, i.Start_Date_Agency_Month__c, i.Solicitation_Flag__c, i.Promotion_Code__c, 
+                            i.Position_in_Current_Agency__c, i.Position_Code__c, i.Photo__c, i.Package_of_Travel_Professionals_Course_2__c, i.Package_of_Travel_Professionals_Course_1__c, i.OwnerId, i.Name, i.Middle_Initial__c, 
+                            i.Last_Name__c, i.LastModifiedDate, i.LastModifiedById, i.IsDeleted, i.Id, i.IDCard_Prefered_Language__c, i.IDCard_Expedite_Delivery__c, i.IDCard_Expedite_Delivery_Fee__c, i.IATA_numeric_code_previous_employer_4__c, 
+                            i.IATA_numeric_code_previous_employer_3__c, i.IATA_numeric_code_previous_employer_2__c, i.IATA_numeric_code_previous_employer_1__c, i.IATA_Code_for_previous_agency__c, i.IATA_Code__c, i.Hours_worked__c, i.Hours_Worked_Code__c, 
+                            i.Gender__c, i.First_Name__c, i.Email_admin__c, i.Duties_in_Current_Agency__c, i.Duties_Code__c, i.Displayed_Name__c, i.Date_of_Birth__c, i.CurrencyIsoCode, i.CreatedDate, i.CreatedById, i.Approving_Manager_s_Name__c, i.Approving_Manager_s_Email__c, 
+                            i.Applicable_Fee__c, i.Regional_Office__c, i.AgencyShare_Confirmation__c, i.Card_Type__c, i.Tax_1_Value__c, i.Tax_2_Value__c, i.Physical_Card_Fee__c, i.ID_Card_Fee_Discount__c
+                            FROM ID_Card_Application__c i 
+                            WHERE i.Id = :applicationId LIMIT 1];
       //Block Page if payment is done and case is created
       Case[] tempCase = [ Select id from Case where Related_ID_Card_Application__c = : IDCardApplicationNR.Id ] ;
       if (tempCase.size() > 0 ) {
@@ -466,12 +491,19 @@ public with sharing class IDCard_ApplicationFormNRController  extends IDCardAbst
 
 
       Promotion__c validPromotion = null;
-      Account theAccount = [Select a.ID_Card_Key_Account_Discount__c, a.IATACode__c, a.type, a.BillingCountry From Account a where a.RecordType.Name = 'Agency' AND a.IATACode__c = : IDCardApplicationNR.IATA_Code__c limit 1];
+      Account theAccount = [SELECT a.ID_Card_Key_Account_Discount__c, a.IATACode__c, a.type, a.BillingCountry, a.BillingState 
+                            FROM Account a where a.RecordTypeId =: AMS_Utils.RECTYPE_IATAAGENCY 
+                            AND a.IATACode__c = : IDCardApplicationNR.IATA_Code__c limit 1];
       if (theAccount == null)
         throw new IDCardApplicationException(string.format(Label.ID_Card_Account_Not_Found, new String[] {IDCardApplicationNR.IATA_Code__c}));
 
       // Map the account agent type to the Price Table agent type
       accountType = IDCardUtil.GetAgentTypeFromAccountType(theAccount.type);
+
+      Map<String, String> taxes = IDCardTaxUtil.GetTaxes(theAccount.BillingState, theAccount.BillingCountry);
+
+      List<String> taxNames = new List<String>();
+      taxNames.addAll(taxes.keySet());
 
       // get the Price Table based on the country and on the type of agent
       IATA_ISO_Country__c contactCountry = GetIATAISOCountryOfContact(IDCardApplicationNR.IATA_Code__c);
@@ -489,6 +521,10 @@ public with sharing class IDCard_ApplicationFormNRController  extends IDCardAbst
       Boolean isReissue = (IDCardApplicationNR.Type_of_application__c == IDCardUtil.APPLICATIONTYPE_REISSUE);
       Boolean isExpedite = IDCardApplicationNR.IDCard_Expedite_Delivery__c;
 
+      if(isCardTypeChoiceAvailable == false) IDCardApplicationNR.Card_Type__c = 'digital';
+      if(IDCardApplicationNR.Card_Type__c == 'digital') IDCardApplicationNR.IDCard_Expedite_Delivery__c = false;
+      Boolean isToPrint = (IDCardApplicationNR.Card_Type__c == 'plastic');
+
       //Get the ITDI Courses Selection
       IDCardApplicationNR.Package_of_Travel_Professionals_Course_1__c = null;
       IDCardApplicationNR.Package_of_Travel_Professionals_Course_2__c = null;
@@ -504,17 +540,50 @@ public with sharing class IDCard_ApplicationFormNRController  extends IDCardAbst
 
 
       Boolean isITDIPackage = selectedITDICourses.size() > 0 ; //IDCardApplicationNR.Package_of_Travel_Professionals_Course_1__c != null || IDCardApplicationNR.Package_of_Travel_Professionals_Course_2__c != null;
-      detailledFees = IDCardUtil.GetDetailledFees(listPriceTables[0], isReissue, isExpedite, isITDIPackage, validPromotion);
+      detailledFees = IDCardUtil.GetDetailledFees(listPriceTables[0], isReissue, isExpedite, isITDIPackage, validPromotion, null, isToPrint);
       IDCardApplicationNR.ID_Card_Fee__c = detailledFees.get('IDCardFee');
       IDCardApplicationNR.IDCard_Expedite_Delivery_Fee__c = detailledFees.get('ExpediteFee');
       IDCardApplicationNR.ITDI_Courses_Fee__c = detailledFees.get('ITDIFee');
-      IDCardApplicationNR.Applicable_Fee__c = IDCardUtil.GetApplicableFee(listPriceTables[0], isReissue, isExpedite, isITDIPackage, validPromotion);
+      IDCardApplicationNR.Applicable_Fee__c = IDCardUtil.GetApplicableFee(listPriceTables[0], isReissue, isExpedite, isITDIPackage, validPromotion, isToPrint);
       IDCardApplicationNR.CurrencyIsoCode = listPriceTables[0].CurrencyIsoCode;
+      IDCardApplicationNR.Physical_Card_Fee__c = detailledFees.get('PhysCardFee');
+      IDCardApplicationNR.ID_Card_Fee_Discount__c = detailledFees.get('Discount');
 
       ///////////////
+      IDCardApplicationNR.ID_Card_Fee_Discount__c += ((IDCardApplicationNR.ID_Card_Fee__c + IDCardApplicationNR.Physical_Card_Fee__c) - (IDCardApplicationNR.ID_Card_Fee__c + IDCardApplicationNR.Physical_Card_Fee__c) * ((100 - (theAccount.ID_Card_Key_Account_Discount__c == null ? 0 : theAccount.ID_Card_Key_Account_Discount__c)) / 100));
       IDCardApplicationNR.ID_Card_Fee__c = IDCardApplicationNR.ID_Card_Fee__c * ((100 - (theAccount.ID_Card_Key_Account_Discount__c == null ? 0 : theAccount.ID_Card_Key_Account_Discount__c)) / 100);
-      IDCardApplicationNR.Applicable_Fee__c = IDCardApplicationNR.ID_Card_Fee__c + IDCardApplicationNR.IDCard_Expedite_Delivery_Fee__c + IDCardApplicationNR.ITDI_Courses_Fee__c;
+      IDCardApplicationNR.Physical_Card_Fee__c = IDCardApplicationNR.Physical_Card_Fee__c * ((100 - (theAccount.ID_Card_Key_Account_Discount__c == null ? 0 : theAccount.ID_Card_Key_Account_Discount__c)) / 100);
+      IDCardApplicationNR.Applicable_Fee__c = IDCardApplicationNR.ID_Card_Fee__c + IDCardApplicationNR.Physical_Card_Fee__c + IDCardApplicationNR.IDCard_Expedite_Delivery_Fee__c + IDCardApplicationNR.ITDI_Courses_Fee__c;      ///////////////
       ///////////////
+      if (taxNames.size() == 1)
+      {
+        String name1 = taxNames.get(0);
+        String percentage1 = taxes.get(name1);
+        IDCardApplicationNR.Tax_1_Name__c = name1 + '(' + percentage1 + '%)' ;
+        IDCardApplicationNR.Tax_1_Value__c = IDCardTaxUtil.CalculateTaxes(percentage1, String.ValueOf(IDCardApplicationNR.Applicable_Fee__c)) + ' '+ IDCardApplicationNR.CurrencyIsoCode;
+        vatPrice = Double.valueOf(Decimal.valueOf(Double.valueOf(IDCardApplicationNR.Tax_1_Value__c.split(' ', 0)[0])).setScale(2));
+      }
+      else if (taxNames.size() == 2)
+      {
+        String name1 = taxNames.get(0);
+        String percentage1 = taxes.get(name1);
+        String name2 = taxNames.get(1);
+        String percentage2 = taxes.get(name2);
+
+        IDCardApplicationNR.Tax_1_Name__c = name1 + '(' + percentage1 + '%)' ;
+        IDCardApplicationNR.Tax_2_Name__c = name2 + '(' + percentage2 + '%)' ;
+
+        Decimal totalTaxPercentage = Decimal.valueOf(percentage1) + Decimal.valueOf(percentage2);
+        Decimal totalTaxAmount = Decimal.valueOf(IDCardTaxUtil.CalculateTaxes(String.valueOf(totalTaxPercentage), String.ValueOf(IDCardApplicationNR.Applicable_Fee__c)));
+
+        Decimal taxAmount1 = totalTaxAmount / totalTaxPercentage * Decimal.valueOf(percentage1);
+        Decimal taxAmount2 = totalTaxAmount / totalTaxPercentage * Decimal.valueOf(percentage2);
+
+        IDCardApplicationNR.Tax_1_Value__c = taxAmount1.setScale(2) + ' ' + IDCardApplicationNR.CurrencyIsoCode;
+        IDCardApplicationNR.Tax_2_Value__c = taxAmount2.setScale(2) + ' ' + IDCardApplicationNR.CurrencyIsoCode;
+        vatPrice = Double.valueOf(Decimal.valueOf(Double.valueOf(IDCardApplicationNR.Tax_1_Value__c.split(' ', 0)[0])).setScale(2) + 
+                                  Decimal.valueOf(Double.valueOf(IDCardApplicationNR.Tax_2_Value__c.split(' ', 0)[0])).setScale(2));
+      }
       // Always display the expedite fees
       expediteFees = listPriceTables[0].Expedite__c;
       DisplayFees = true;

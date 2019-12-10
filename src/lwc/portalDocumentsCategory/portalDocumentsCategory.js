@@ -119,6 +119,8 @@ export default class PortalDocumentsCategory extends LightningElement {
                                 category: docs[el].Document_Category__c, 
                                 language: docs[el].Language__c, 
                                 filetype: docs[el].FileType, 
+								url: docs[el].ContentUrl,
+                                isLink: docs[el].FileType === 'LINK' ? true : false,
                                 open: docs[el].Id === __documentObject.docId ? true : false});
                         }
                     });
@@ -190,18 +192,35 @@ export default class PortalDocumentsCategory extends LightningElement {
 
     viewDocument(event) {
         this.loading = true;
+        let url = event.target.dataset.url;
+        if(url !== undefined && url.length>0){
+             url = url.trim();
+            if(url.substring(0,4) !== 'http')
+                url = 'https://' + url;   
+       
+            window.open(url, '_blank'); 
+
+        } else{
         getContentDistribution({ documentName: event.target.dataset.name, documentId: event.target.dataset.item })
             .then(results => {
                 window.open(results.DistributionPublicUrl, '_blank');
-                this.loading = false;});
+                });
+        }
+        this.loading = false;
     }
 
     downloadDocument(event) {
-        this.loading = true;
-        getContentDistribution({ documentName: event.target.dataset.name, documentId: event.target.dataset.item })
-            .then(results => {
-                window.open(results.ContentDownloadUrl, '_self');
-                this.loading = false;});
+		let url = event.target.dataset.url;
+
+        if(url !== undefined && url.length>0){
+            this.viewDocument(event);
+        } else{
+			this.loading = true;
+			getContentDistribution({ documentName: event.target.dataset.name, documentId: event.target.dataset.item })
+				.then(results => {
+					window.open(results.ContentDownloadUrl, '_self');
+					this.loading = false;});
+		  }
     }
 
     categorySelected(event) {
