@@ -444,7 +444,7 @@
                                     <span class="slds-p-around_small text-xsmall text-black profileOption"
                                         onclick={navigateToCases}>{labels.CSP_Cases}</span>
                                     <!--WMO-627 - ACAMBAS: Begin-->
-                                    <span class="slds-p-around_small text-xsmall text-black profileOption" onclick={navigateToInvoices}>{labels.CSP_IATA_Invoices}</span>
+                                    <span if:true={displayInvoicesMenu} class="slds-p-around_small text-xsmall text-black profileOption" onclick={navigateToInvoices}>{labels.CSP_IATA_Invoices}</span>
                                     <!--WMO-627 - ACAMBAS: End-->
                                     <span class="slds-p-around_small text-xsmall text-black profileOption"
                                     onclick={navigateToCspChangePassword}> {labels.ISSP_Reset_Password} </span>

@@ -611,6 +611,8 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
                     navigateToPage(results, params);
                 });
             }
+        } else if (notification.type === "Portal Access") {
+            navigateToPage("company-profile?tab=contact&contactName=" + notification.contactName);
         } else {
             //CUSTOMER INVOICES
             navigateToPage("company-profile?tab=invoices");
@@ -716,7 +718,7 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
             let notList = JSON.parse(JSON.stringify(this.notificationsList));
             if (notList !== undefined && notList.length > 0) {
                 notList.forEach(function (element) {
-                    if (element.type === 'Notification' || element.type === 'Portal Service' || element.type === 'Portal Access')
+                    if (element.type === 'Notification' || element.type === 'Portal Service' || element.type === 'Portal Access' || element.type === 'Customer Invoice')
                         toReturn = false;
                 });
             }
@@ -744,7 +746,7 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
             let notList = JSON.parse(JSON.stringify(this.notificationsList));
             if (notList !== undefined && notList.length > 0) {
                 notList.forEach(function (element) {
-                    if (element.type === 'Portal Service' || element.type === 'Portal Access')
+                    if (element.type === 'Portal Service' || element.type === 'Portal Access' || element.type === 'Customer Invoice')
                         toReturn = false;
                 });
             }

@@ -958,7 +958,7 @@ public static String serviceWrapperRedirect(String serviceId){
 
 	Boolean isAdmin = (currentPortalUser.contact.User_Portal_Status__c == PORTAL_ADMIN_APPROVED);
 
-	List<Portal_Applications__c> Servicetmp_List = new List<Portal_Applications__c>([SELECT id,Application_icon__c, Application_URL__c,
+	List<Portal_Applications__c> Servicetmp_List = new List<Portal_Applications__c>([SELECT id,Application_icon__c, Application_URL__c,Application_icon_URL__c,
 																					 Confirm_Box__c, Confirm_Text__c, Description__c,Name,
 																					 ServiceName__c,Cannot_be_managed_by_portal_admin__c
 																					 FROM Portal_Applications__c WHERE Id =: serviceId ]);
