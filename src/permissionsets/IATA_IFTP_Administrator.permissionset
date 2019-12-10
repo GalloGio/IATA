@@ -411,11 +411,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Account.BSP_non_air__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Account.BSPlink_code__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -8224,10 +8219,6 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <recordType>Account_Role__c.Default</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <recordType>Account_Role__c.ITP</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
