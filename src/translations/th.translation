@@ -1805,6 +1805,10 @@
         <name>CSP_ArticleHelpful</name>
     </customLabels>
     <customLabels>
+        <label>กำหนดบริการใหม่</label>
+        <name>CSP_Assign_New_Service</name>
+    </customLabels>
+    <customLabels>
         <label>สำนักงานสาขา</label>
         <name>CSP_Branch_Offices</name>
     </customLabels>

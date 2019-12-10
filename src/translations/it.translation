@@ -1809,6 +1809,10 @@ la seguente procedura per completarlo :
         <name>CSP_ArticleHelpful</name>
     </customLabels>
     <customLabels>
+        <label>Assegna nuovo servizio</label>
+        <name>CSP_Assign_New_Service</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Branch Offices --></label>
         <name>CSP_Branch_Offices</name>
     </customLabels>
