@@ -27956,6 +27956,7 @@ ANG_IsNewGenAgency__c,
 
 NOT( Branch_Office_Country__r.ISO_Code__c  = &apos;BR&apos;),
 
+IF(INCLUDES(Remittance_frequency__c , &quot;L&quot;),1,0) +
 IF(INCLUDES(Remittance_frequency__c , &quot;M&quot;),1,0) +
 IF(INCLUDES(Remittance_frequency__c , &quot;F&quot;),1,0) +
 IF(INCLUDES(Remittance_frequency__c , &quot;R&quot;),1,0) +
@@ -27971,7 +27972,8 @@ AND(
 ANG_IsNewGenAgency__c,
 
 Branch_Office_Country__r.ISO_Code__c  = &apos;BR&apos;,
-
+				
+IF(INCLUDES(Remittance_frequency__c , &quot;L&quot;),1,0) +
 IF(INCLUDES(Remittance_frequency__c , &quot;M&quot;),1,0) +
 IF(INCLUDES(Remittance_frequency__c , &quot;F&quot;),1,0) +
 IF(INCLUDES(Remittance_frequency__c , &quot;R&quot;),1,0) +
