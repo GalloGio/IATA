@@ -3986,7 +3986,7 @@ Payment required on receipt of this Payment Advice
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP Existing User Message</shortDescription>
-        <value>It seems you are already a portal user. Please login with your password.</value>
+        <value>It seems you already are a portal user. Please login with your password.</value>
     </labels>
     <labels>
         <fullName>CSP_Expired_Email_Success_Msg</fullName>
@@ -4138,7 +4138,7 @@ Payment required on receipt of this Payment Advice
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP First Login Desc</shortDescription>
-        <value>Your account is created successfully. You can discover the portal features now. Please complete your profile to get more personalized content</value>
+        <value>Your account has been created successfully. You can now discover the standard features within the Portal. Some other features require further details, please complete your Profile for full access.</value>
     </labels>
     <labels>
         <fullName>CSP_First_Login_Title</fullName>
@@ -4546,7 +4546,7 @@ You can easily create a company account in two steps</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_L2_Country</shortDescription>
-        <value>Country</value>
+        <value>Country/Territory</value>
     </labels>
     <labels>
         <fullName>CSP_L2_Create_Account_Message</fullName>
@@ -4770,7 +4770,7 @@ You can easily create a company account in two steps</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_L2_No_Matching_Results</shortDescription>
-        <value>There is no matching results found</value>
+        <value>No matching results found</value>
     </labels>
     <labels>
         <fullName>CSP_L2_Other_Sector</fullName>
@@ -4906,7 +4906,7 @@ You can easily create a company account in two steps</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_L2_Requested_Modal_Title</shortDescription>
-        <value>Hi</value>
+        <value>Tell us more</value>
     </labels>
     <labels>
         <fullName>CSP_L2_Required</fullName>
@@ -5034,7 +5034,7 @@ You can easily create a company account in two steps</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_L2_Title</shortDescription>
-        <value>Title</value>
+        <value>Salutation</value>
     </labels>
     <labels>
         <fullName>CSP_L2_Trade_Name</fullName>
