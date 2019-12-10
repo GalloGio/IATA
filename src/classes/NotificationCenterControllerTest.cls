@@ -129,7 +129,7 @@ private class NotificationCenterControllerTest {
 		List<Notification_template__c> templates =  NotificationCenterController.getInformationNotificationTemplates();
 		Test.stopTest();
 		System.assertEquals(1, templates.size());
-		System.assertEquals('test notification template', templates.get(0).Identifier__c);
+		System.assertEquals('Test Subject', templates.get(0).Subject__c);
 	}
 
 	@isTest
