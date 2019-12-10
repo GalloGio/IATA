@@ -548,20 +548,6 @@
                 <default>false</default>
             </values>
         </picklistValues>
-        <picklistValues>
-            <picklist>Last_Integration_Operation__c</picklist>
-            <values>
-                <fullName>delete</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>insert</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>update</fullName>
-            </values>
-        </picklistValues>
     </recordTypes>
     <recordTypes>
         <fullName>Master</fullName>
