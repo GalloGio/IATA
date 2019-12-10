@@ -2877,6 +2877,10 @@ la seguente procedura per completarlo :
         <name>CSP_NoCases2</name>
     </customLabels>
     <customLabels>
+        <label>Spiacenti, nessun risultato trovato per i filtri applicati.</label>
+        <name>CSP_NoRecordsFiltered</name>
+    </customLabels>
+    <customLabels>
         <label>Nessun risultato</label>
         <name>CSP_NoSearchResults</name>
     </customLabels>

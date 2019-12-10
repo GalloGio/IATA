@@ -803,6 +803,32 @@ public static void PortalServicesCtrlTest_getAvailableServicesForNewContact(){
     System.assert(true);
 }
 
+	@isTest
+	public static void PortalServicesCtrlTest_MassActions() {
+		Contact c = [select id from contact where lastName = 'ContactTest4'];
+		list<Portal_Applications__c> portalServicelist=[select id from Portal_Applications__c where Name ='serviceTest3'];
+		
+		
+		Portal_Application_Right__c appRight = new Portal_Application_Right__c(
+			Portal_Application__c = portalServicelist.get(0).id,
+			Right__c = 'Access Requested',
+			Contact__c = c.Id
+			);
+
+		insert appRight;
+
+		Test.StartTest();
+			// Grant access to service
+			Boolean isSuccessGrant =PortalServicesCtrl.massGrantAccess(new list<string>{c.id}, portalServicelist[0].id, 'Test');
+			system.assertEquals(isSuccessGrant,true);
+			system.assertEquals('Access Granted',[select Right__c from Portal_Application_Right__c where id=:appRight.id ].Right__c);
+
+			boolean isSuccessDeny =PortalServicesCtrl.massDenyAccess(new list<string>{c.id}, portalServicelist[0].id, 'Test');
+			system.assertEquals(isSuccessDeny,true);
+			system.assertEquals('Access Denied',[select Right__c from Portal_Application_Right__c where id=:appRight.id ].Right__c);
+		Test.StopTest();
+	}
+
 }
 
            

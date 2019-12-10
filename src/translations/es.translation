@@ -2875,6 +2875,10 @@
         <name>CSP_NoCases2</name>
     </customLabels>
     <customLabels>
+        <label>Lo sentimos, no se encontraron resultados para los filtros aplicados</label>
+        <name>CSP_NoRecordsFiltered</name>
+    </customLabels>
+    <customLabels>
         <label>No hay resultados</label>
         <name>CSP_NoSearchResults</name>
     </customLabels>

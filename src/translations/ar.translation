@@ -2876,6 +2876,10 @@
         <label>لا نتائج</label>
         <name>CSP_NoSearchResults</name>
     </customLabels>
+	<customLabels>
+        <label>عفوًا، لم يتم العثور على نتائج حسب عوامل التصفية المطبقة</label>
+        <name>CSP_NoRecordsFiltered</name>
+    </customLabels>
     <customLabels>
         <label>إذا اقتضى الأمر، يمكنك إضافة وثائق إلى القضية.</label>
         <name>CSP_No_Documents_Message</name>
