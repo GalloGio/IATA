@@ -181,8 +181,8 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
             let isToDateValueOk = true;
             if(this.experiationstatusValue === 'Manual'){
                 let today = new Date();
-                today = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-                if(!this.toDateValue || this.toDateValue <= today){
+                let toDateValue = new Date(this.toDateValue);
+                if(!this.toDateValue || toDateValue.getTime() <= today.getTime()){
                     isToDateValueOk = false;
                     const event = new ShowToastEvent({
                         title: 'Search Training Records Result',
@@ -487,8 +487,6 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
         // 1st - get all data from database
         let columns = JSON.parse(JSON.stringify(this.columns));
         this.loading = true;
-        console.log("###RS auxSearchValues", auxSearchValues);
-        alert("###RS auxSearchValues" + auxSearchValues);
         getAllTrainingRecordsForDetailView({searchValues: auxSearchValues, searchType: 'RecordsDetail'})
         .then(results => {
             if(results && results.length > 0) {
