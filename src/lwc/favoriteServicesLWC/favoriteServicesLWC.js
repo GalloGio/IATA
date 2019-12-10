@@ -15,6 +15,8 @@ import { navigateToPage } from 'c/navigationUtils';
 import CSP_SeeAll from '@salesforce/label/c.CSP_SeeAll';
 import csp_Request_New_Service from '@salesforce/label/c.csp_Request_New_Service';
 import CSP_FavoriteServices_Title from '@salesforce/label/c.CSP_FavoriteServices_Title';
+import CSP_Services_AddFavorite from '@salesforce/label/c.CSP_Services_AddFavorite';
+import CSP_Services_RemoveFavorite from '@salesforce/label/c.CSP_Services_RemoveFavorite';
 
 import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 
@@ -41,7 +43,9 @@ export default class FavoriteServicesLWC extends LightningElement {
     label = {
         csp_Request_New_Service,
         CSP_SeeAll,
-        CSP_FavoriteServices_Title
+        CSP_FavoriteServices_Title,
+        CSP_Services_AddFavorite,
+        CSP_Services_RemoveFavorite
     };
 
     //Same as doInit() function on old aura components
