@@ -3265,6 +3265,14 @@
         <name>CSP_Services_ServiceInformation</name>
     </customLabels>
     <customLabels>
+        <label>全てを表示する<label>
+        <name>CSP_Services_ShowAll</name>
+    </customLabels>
+    <customLabels>
+        <label>お気に入りのみを表示する<label>
+        <name>CSP_Services_ShowOnlyFavorites</name>
+    </customLabels>
+    <customLabels>
         <label>サービス内容</label>
         <name>CSP_Services_Title</name>
     </customLabels>

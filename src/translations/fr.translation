@@ -3261,6 +3261,14 @@
         <name>CSP_Services_ServiceInformation</name>
     </customLabels>
     <customLabels>
+        <label>Afficher tout<label>
+        <name>CSP_Services_ShowAll</name>
+    </customLabels>
+    <customLabels>
+        <label>Afficher uniquement les favoris<label>
+        <name>CSP_Services_ShowOnlyFavorites</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_Services_Title --></label>
         <name>CSP_Services_Title</name>
     </customLabels>

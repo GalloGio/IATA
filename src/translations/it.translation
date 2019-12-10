@@ -3266,6 +3266,14 @@ la seguente procedura per completarlo :
         <name>CSP_Services_ServiceInformation</name>
     </customLabels>
     <customLabels>
+        <label>Mostra tutto<label>
+        <name>CSP_Services_ShowAll</name>
+    </customLabels>
+    <customLabels>
+        <label>Mostra solo preferiti<label>
+        <name>CSP_Services_ShowOnlyFavorites</name>
+    </customLabels>
+    <customLabels>
         <label>Servizi</label>
         <name>CSP_Services_Title</name>
     </customLabels>

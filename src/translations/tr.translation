@@ -3261,6 +3261,14 @@
         <name>CSP_Services_ServiceInformation</name>
     </customLabels>
     <customLabels>
+        <label>Hepsini Göster<label>
+        <name>CSP_Services_ShowAll</name>
+    </customLabels>
+    <customLabels>
+        <label>Yalnızca Favorileri Göster<label>
+        <name>CSP_Services_ShowOnlyFavorites</name>
+    </customLabels>
+    <customLabels>
         <label>Hizmetler</label>
         <name>CSP_Services_Title</name>
     </customLabels>

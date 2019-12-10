@@ -3263,6 +3263,14 @@
         <name>CSP_Services_ServiceInformation</name>
     </customLabels>
     <customLabels>
+        <label>Показать всё<label>
+        <name>CSP_Services_ShowAll</name>
+    </customLabels>
+    <customLabels>
+        <label>Показать только избранное<label>
+        <name>CSP_Services_ShowOnlyFavorites</name>
+    </customLabels>
+    <customLabels>
         <label>Сервисы</label>
         <name>CSP_Services_Title</name>
     </customLabels>

@@ -3265,6 +3265,14 @@ dan &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-port
         <name>CSP_Services_ServiceInformation</name>
     </customLabels>
     <customLabels>
+        <label>Tampilkan semua<label>
+        <name>CSP_Services_ShowAll</name>
+    </customLabels>
+    <customLabels>
+        <label>Hanya Tampilkan Favorit<label>
+        <name>CSP_Services_ShowOnlyFavorites</name>
+    </customLabels>
+    <customLabels>
         <label>Layanan</label>
         <name>CSP_Services_Title</name>
     </customLabels>

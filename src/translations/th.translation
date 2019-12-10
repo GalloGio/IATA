@@ -3261,6 +3261,14 @@
         <name>CSP_Services_ServiceInformation</name>
     </customLabels>
     <customLabels>
+        <label>แสดงทั้งหมด<label>
+        <name>CSP_Services_ShowAll</name>
+    </customLabels>
+    <customLabels>
+        <label>แสดงเฉพาะรายการโปรดเท่านั้น<label>
+        <name>CSP_Services_ShowOnlyFavorites</name>
+    </customLabels>
+    <customLabels>
         <label>บริการ</label>
         <name>CSP_Services_Title</name>
     </customLabels>

@@ -3267,6 +3267,14 @@ und &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-port
         <name>CSP_Services_ServiceInformation</name>
     </customLabels>
     <customLabels>
+        <label>Alle anzeigen<label>
+        <name>CSP_Services_ShowAll</name>
+    </customLabels>
+    <customLabels>
+        <label>Nur Favoriten anzeigen<label>
+        <name>CSP_Services_ShowOnlyFavorites</name>
+    </customLabels>
+    <customLabels>
         <label>Dienste</label>
         <name>CSP_Services_Title</name>
     </customLabels>

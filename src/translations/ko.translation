@@ -3264,6 +3264,14 @@
         <name>CSP_Services_ServiceInformation</name>
     </customLabels>
     <customLabels>
+        <label>모두 표시하기<label>
+        <name>CSP_Services_ShowAll</name>
+    </customLabels>
+    <customLabels>
+        <label>즐겨찾기만 표시하기<label>
+        <name>CSP_Services_ShowOnlyFavorites</name>
+    </customLabels>
+    <customLabels>
         <label>서비스</label>
         <name>CSP_Services_Title</name>
     </customLabels>
