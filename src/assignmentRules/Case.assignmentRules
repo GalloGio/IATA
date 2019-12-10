@@ -290,6 +290,46 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
+            <assignedTo>Differentiated_Service_Model_Agency</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <booleanFilter>1 AND (2 OR 3 OR 4 OR 5 OR 6 OR 7)</booleanFilter>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Cases - Europe,Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia,Complaint (IDFS ISS)</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Account.Parent_account_IATAcode__c</field>
+                <operation>equals</operation>
+                <value>57527470,67797612,02361133,02359851,08327410,13309450,14308582,14341412,16314642,17328500,20313742,24344036,24345683,28305034,32307623,32308043,35308431,34309015,08208222,08202364,81207534,23270973,17208483,17260320,78224193,78200076,19200510,20263051</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Account.Parent_account_IATAcode__c</field>
+                <operation>equals</operation>
+                <value>91266313,91245836,57205864,60299024,06020562,80212064,80201590,57275050,57205820,20300641,35304183,19210601,17210992,23274904,36203053,60210883,77209893,91212391,86210515,80212521,61516335,86725063,14336641,02333623,24334855,42301943,32334750,08315193</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Account.Parent_account_IATAcode__c</field>
+                <operation>equals</operation>
+                <value>13310172,27313613</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Account.IATACode__c</field>
+                <operation>equals</operation>
+                <value>57527470,67797612,02361133,02359851,08327410,13309450,14308582,14341412,16314642,17328500,20313742,24344036,24345683,28305034,32307623,32308043,35308431,34309015,08208222,08202364,81207534,23270973,17208483,17260320,78224193,78200076,19200510,20263051</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Account.IATACode__c</field>
+                <operation>equals</operation>
+                <value>91266313,91245836,57205864,60299024,06020562,80212064,80201590,57275050,57205820,20300641,35304183,19210601,17210992,23274904,36203053,60210883,77209893,91212391,86210515,80212521,61516335,86725063,14336641,02333623,24334855,42301943,32334750,08315193</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Account.IATACode__c</field>
+                <operation>equals</operation>
+                <value>13310172,27313613</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
             <assignedTo>GCS_IATAN</assignedTo>
             <assignedToType>Queue</assignedToType>
             <formula>AND(
