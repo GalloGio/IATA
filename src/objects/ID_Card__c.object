@@ -1645,11 +1645,10 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
         <columns>Card_Status__c</columns>
         <columns>Is_Expedite__c</columns>
         <columns>Missing_Information__c</columns>
+        <columns>UPDATEDBY_USER</columns>
         <columns>CREATEDBY_USER</columns>
         <columns>CIN__c</columns>
-        <columns>Sent_to_AIMS_on__c</columns>
         <columns>Valid_To_Date__c</columns>
-        <columns>CREATED_DATE</columns>
         <columns>LAST_UPDATE</columns>
         <columns>Agency_Name__c</columns>
         <columns>Agency_IATA_Code__c</columns>
