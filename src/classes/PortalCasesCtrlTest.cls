@@ -118,7 +118,7 @@ private class PortalCasesCtrlTest {
                 
                 PortalCasesCtrl.ReturnWrapper addNewRecipientTest = PortalCasesCtrl.addNewRecipient(newCase1.Id, '');
                 
-                PortalCasesCtrl.ReturnWrapper submitNewMessageTest = PortalCasesCtrl.submitNewMessage(newCase.Id, 'Test Message');
+                DAL_WithoutSharing.ReturnWrapper submitNewMessageTest = DAL_WithoutSharing.submitNewMessage(newCase.Id, 'Test Message');
             }
             PortalCasesCtrl.ReturnWrapper addNewRecipientTest1 = PortalCasesCtrl.addNewRecipient(newCase.Id, 'testeW@csp.testclass');
             PortalCasesCtrl.ReturnWrapper addNewRecipientTest2 = PortalCasesCtrl.addNewRecipient(newCase.Id, 'testemailNEW@csp.testclass');
@@ -155,7 +155,7 @@ private class PortalCasesCtrlTest {
                 
                 PortalCasesCtrl.ReturnWrapper addNewRecipientTest = PortalCasesCtrl.addNewRecipient(newCase1.Id, '');
                 
-                PortalCasesCtrl.ReturnWrapper submitNewMessageTest = PortalCasesCtrl.submitNewMessage(newCase.Id, 'Test Message');
+                DAL_WithoutSharing.ReturnWrapper submitNewMessageTest = DAL_WithoutSharing.submitNewMessage(newCase.Id, 'Test Message');
             }
             PortalCasesCtrl.ReturnWrapper addNewRecipientTest1 = PortalCasesCtrl.addNewRecipient(newCase.Id, 'testeW@csp.testclass');
             PortalCasesCtrl.ReturnWrapper addNewRecipientTest2 = PortalCasesCtrl.addNewRecipient(newCase.Id, 'testemailNEW@csp.testclass');
@@ -183,7 +183,7 @@ private class PortalCasesCtrlTest {
                 
                 PortalCasesCtrl.ReturnWrapper addNewRecipientTest = PortalCasesCtrl.addNewRecipient(newCase1.Id, '');
                 
-                PortalCasesCtrl.ReturnWrapper submitNewMessageTest = PortalCasesCtrl.submitNewMessage(newCase.Id, 'Test Message');
+                DAL_WithoutSharing.ReturnWrapper submitNewMessageTest = DAL_WithoutSharing.submitNewMessage(newCase.Id, 'Test Message');
 
 
                 PortalCasesCtrl.MessageWrapper mw = new PortalCasesCtrl.MessageWrapper();
