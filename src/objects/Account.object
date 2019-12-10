@@ -101595,6 +101595,21 @@ $Setup.Is_Allowed_to_Change_Agency_Name__c.Can_change_name__c
         <errorMessage>You are not allowed to change the field &quot;Account Name&quot;.</errorMessage>
     </validationRules>
     <validationRules>
+        <fullName>Agent_Country_Not_Enabled_Multicountry</fullName>
+        <active>true</active>
+        <description>Validate for the selected country if it is a multicountry enabled</description>
+        <errorConditionFormula>OR(
+ AND(ISPICKVAL(Location_Type__c,&apos;GE&apos;), NOT(IATA_ISO_Country__r.Multicountry_Enabled__c)),
+
+AND(
+ OR(ISPICKVAL(Parent.Location_Type__c,&apos;GE&apos;),ISPICKVAL(Parent.Parent.Location_Type__c,&apos;GE&apos;)),
+
+ NOT(IATA_ISO_Country__r.Multicountry_Enabled__c)
+ )
+)</errorConditionFormula>
+        <errorMessage>The selected country is not enabled for multicountry.</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>Airline_HO_Name</fullName>
         <active>true</active>
         <description>You are not allowed to change the field &quot;Account Name&quot;. The only Exception is if you are also changing one of the following:Legal_name__c,TradeName__c,Name_on_AOC__c. This assignment logic is done via Account Trigger.</description>
@@ -101799,19 +101814,39 @@ $User.ProfileId = &apos;00ew0000001R7Ci&apos;)))</errorConditionFormula>
     <validationRules>
         <fullName>Cannot_change_HO_location_type</fullName>
         <active>true</active>
-        <description>Cannot change the Location Type from HO or HE to anything else than HE or HO if the account has a financial assessment contact linked to it.</description>
+        <description>Cannot change the Location Type/Accreditation Model from HO, HE or GE to anything else than GE, HE or HO if the account has a financial assessment contact linked to it.</description>
         <errorConditionFormula>AND(
   RecordType.DeveloperName = &apos;IATA_Agency&apos;,
-  ISCHANGED(Location_Type__c),
-  OR (
-    ISPICKVAL(PRIORVALUE(Location_Type__c),&apos;HO&apos;),
-    ISPICKVAL(PRIORVALUE(Location_Type__c),&apos;HE&apos;)
-  ),
-  NOT(ISPICKVAL(Location_Type__c, &apos;HO&apos;)),
-  NOT(ISPICKVAL(Location_Type__c, &apos;HE&apos;)),
-  Has_a_Financial_Assessment_Contact__c
+		OR(
+						
+		 AND(		
+		    ISCHANGED(Location_Type__c),
+      OR (
+        ISPICKVAL(PRIORVALUE(Location_Type__c),&apos;HO&apos;),
+        ISPICKVAL(PRIORVALUE(Location_Type__c),&apos;HE&apos;),
+				    ISPICKVAL(PRIORVALUE(Location_Type__c),&apos;GE&apos;)
+      ),
+      NOT(ISPICKVAL(Location_Type__c, &apos;HO&apos;)),
+		    OR(
+					    AND(
+					        NOT(ISPICKVAL(Location_Type__c, &apos;HE&apos;)),
+					        NOT(ISPICKVAL(ANG_Accreditation_Model__c, &apos;Multicountry&apos;))
+					    ),
+					    AND(
+					        NOT(ISPICKVAL(Location_Type__c, &apos;GE&apos;)),
+					        ISPICKVAL(ANG_Accreditation_Model__c, &apos;Multicountry&apos;)
+					    )			
+		    )
+		 ),
+	  AND(		
+		    ISCHANGED(ANG_Accreditation_Model__c),
+						NOT(ISPICKVAL(Location_Type__c, &apos;GE&apos;)),
+						ISPICKVAL(ANG_Accreditation_Model__c, &apos;Multicountry&apos;)	
+		 )
+  ),	
+		Has_a_Financial_Assessment_Contact__c
 )</errorConditionFormula>
-        <errorMessage>The Location Type of this account cannot be changed from &apos;HO&apos; or &apos;HE&apos; because it has a Financial Assessment Contact linked to it.</errorMessage>
+        <errorMessage>The Location Type/Accreditation Model of this account cannot be changed from &apos;HO&apos;, &apos;HE&apos;, or &apos;GE&apos; because it has a Financial Assessment Contact linked to it.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>CategoryOtherRequired</fullName>
