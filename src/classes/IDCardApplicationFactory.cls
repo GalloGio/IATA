@@ -232,7 +232,7 @@ public class IDCardApplicationFactory {
     public static List<Price_Table__c> getPriceTables(String agentClass, String countryId) {
         if (pricesTableMaps == null) {
             pricesTableMaps = new Map<String, Map<String, List<Price_Table__c>>>();
-            Price_Table__c[] listPriceTables = [Select p.Type_Class_of_Agent__c, p.Expedite__c, p.Name, p.Profit_Center__c, p.ISO_Country__r.Id, p.currencyIsoCode, p.ID_Card_Fee__c, p.IATA_Package__c From Price_Table__c p];
+            Price_Table__c[] listPriceTables = [Select p.Type_Class_of_Agent__c, p.Expedite__c, p.Name, p.Profit_Center__c, p.ISO_Country__r.Id, p.currencyIsoCode, p.ID_Card_Fee__c, p.IATA_Package__c, p.Cost_of_Printer__c From Price_Table__c p];
             for (Price_Table__c pt : listPriceTables) {
                 if (pricesTableMaps.get(pt.Type_Class_of_Agent__c) == null) {
                     pricesTableMaps.put(pt.Type_Class_of_Agent__c, new Map<String, List<Price_Table__c>>());
@@ -291,10 +291,12 @@ public class IDCardApplicationFactory {
         application.ID_Card_Fee__c = detailledFees.get('IDCardFee');
         application.IDCard_Expedite_Delivery_Fee__c = detailledFees.get('ExpediteFee');
         application.ITDI_Courses_Fee__c = detailledFees.get('ITDIFee');
+        application.Physical_Card_Fee__c = detailledFees.get('PhysCardFee');
+        application.ID_Card_Fee_Discount__c = detailledFees.get('Discount');
 
         ///////////////
-        application.ID_Card_Fee__c = application.ID_Card_Fee__c * ((100 - (acc.ID_Card_Key_Account_Discount__c == null ? 0 : acc.ID_Card_Key_Account_Discount__c)) / 100);
-        application.Applicable_Fee__c = application.ID_Card_Fee__c + application.IDCard_Expedite_Delivery_Fee__c + application.ITDI_Courses_Fee__c;
+        application.ID_Card_Fee__c = (application.ID_Card_Fee__c + application.Physical_Card_Fee__c) * ((100 - (acc.ID_Card_Key_Account_Discount__c == null ? 0 : acc.ID_Card_Key_Account_Discount__c)) / 100);
+        application.Applicable_Fee__c = application.ID_Card_Fee__c + application.Physical_Card_Fee__c + application.IDCard_Expedite_Delivery_Fee__c + application.ITDI_Courses_Fee__c;
         ///////////////
 
         application.CurrencyIsoCode = listPriceTables[0].CurrencyIsoCode;

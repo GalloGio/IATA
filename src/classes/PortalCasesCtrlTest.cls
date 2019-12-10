@@ -118,7 +118,7 @@ private class PortalCasesCtrlTest {
                 
                 PortalCasesCtrl.ReturnWrapper addNewRecipientTest = PortalCasesCtrl.addNewRecipient(newCase1.Id, '');
                 
-                PortalCasesCtrl.ReturnWrapper submitNewMessageTest = PortalCasesCtrl.submitNewMessage(newCase.Id, 'Test Message');
+                DAL_WithoutSharing.ReturnWrapper submitNewMessageTest = DAL_WithoutSharing.submitNewMessage(newCase.Id, 'Test Message');
             }
             PortalCasesCtrl.ReturnWrapper addNewRecipientTest1 = PortalCasesCtrl.addNewRecipient(newCase.Id, 'testeW@csp.testclass');
             PortalCasesCtrl.ReturnWrapper addNewRecipientTest2 = PortalCasesCtrl.addNewRecipient(newCase.Id, 'testemailNEW@csp.testclass');
@@ -155,7 +155,7 @@ private class PortalCasesCtrlTest {
                 
                 PortalCasesCtrl.ReturnWrapper addNewRecipientTest = PortalCasesCtrl.addNewRecipient(newCase1.Id, '');
                 
-                PortalCasesCtrl.ReturnWrapper submitNewMessageTest = PortalCasesCtrl.submitNewMessage(newCase.Id, 'Test Message');
+                DAL_WithoutSharing.ReturnWrapper submitNewMessageTest = DAL_WithoutSharing.submitNewMessage(newCase.Id, 'Test Message');
             }
             PortalCasesCtrl.ReturnWrapper addNewRecipientTest1 = PortalCasesCtrl.addNewRecipient(newCase.Id, 'testeW@csp.testclass');
             PortalCasesCtrl.ReturnWrapper addNewRecipientTest2 = PortalCasesCtrl.addNewRecipient(newCase.Id, 'testemailNEW@csp.testclass');
@@ -183,7 +183,7 @@ private class PortalCasesCtrlTest {
                 
                 PortalCasesCtrl.ReturnWrapper addNewRecipientTest = PortalCasesCtrl.addNewRecipient(newCase1.Id, '');
                 
-                PortalCasesCtrl.ReturnWrapper submitNewMessageTest = PortalCasesCtrl.submitNewMessage(newCase.Id, 'Test Message');
+                DAL_WithoutSharing.ReturnWrapper submitNewMessageTest = DAL_WithoutSharing.submitNewMessage(newCase.Id, 'Test Message');
 
 
                 PortalCasesCtrl.MessageWrapper mw = new PortalCasesCtrl.MessageWrapper();
@@ -383,6 +383,8 @@ private class PortalCasesCtrlTest {
         
         AMS_Pax_Accreditation_Form__c ams = new AMS_Pax_Accreditation_Form__c();
         ams.SAAM_Case__c = newCase4.id;
+        ams.Operation_Type__c = 'Travel_Agent';
+        ams.Notify_Change_Location__c = true;
         insert ams;
 
         AP_Process_Form__c apForm = new AP_Process_Form__c(

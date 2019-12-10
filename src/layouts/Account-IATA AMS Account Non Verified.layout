@@ -533,6 +533,7 @@
     </layoutSections>
     <miniLayout>
         <fields>Name</fields>
+        <fields>RecordTypeId</fields>
         <fields>ParentId</fields>
         <fields>Site</fields>
         <fields>BillingAddress</fields>
@@ -540,6 +541,9 @@
         <fields>Phone</fields>
         <fields>Location_Type__c</fields>
         <fields>Status__c</fields>
+        <fields>Sector__c</fields>
+        <fields>Category__c</fields>
+        <fields>Location_Class__c</fields>
     </miniLayout>
     <relatedLists>
         <fields>MEMBER_NAME</fields>
@@ -741,11 +745,13 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Is_Newgen_Relation__c</fields>
         <fields>Hierarchy__c</fields>
         <relatedList>AMS_Agencies_relationhip__c.Child_Account__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Is_Newgen_Relation__c</fields>
         <fields>Hierarchy__c</fields>
         <relatedList>AMS_Agencies_relationhip__c.Parent_Account__c</relatedList>
     </relatedLists>

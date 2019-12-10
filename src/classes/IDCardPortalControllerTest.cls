@@ -126,7 +126,7 @@ public class IDCardPortalControllerTest {
         idCardToInsert.add(IDCardUtil.CreateIDCardObjectFromApplication(idCardApplicationClone, relatedContact[1]));
         idCardToInsert.add(IDCardUtil.CreateIDCardObjectFromApplication(testData.IDCards_IDCardApplications[3], relatedContact[2]));
         idCardToInsert[2].Card_Status__c = IDCardUtil.CARDSTATUS_VALID;
-        insert idCardToInsert;
+        upsert idCardToInsert;
 
         // Test page without cookies
         system.debug('***TESTE***');
