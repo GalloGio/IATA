@@ -2150,6 +2150,7 @@ public without sharing class ISSP_AMS_Accreditation {
 				if (newForm.Scope_of_Change__c == 'HO - All Branches') {
 					first = true;
 
+					populateHierarchy();
 					for (HierarchyItem hi: hierarchyValues) {
 						if (first) {
 							countriesMC = hi.acc.Country_ISO_Code__c;
