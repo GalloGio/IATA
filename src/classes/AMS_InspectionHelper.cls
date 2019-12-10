@@ -48,8 +48,8 @@ public class AMS_InspectionHelper {
                 Accreditation_Endorsement_organisation__r.Air_Code__c = 'IATAN')
             ORDER By Account__c, Accreditation_Endorsement_Status_code__c ASC];
 
-        Map<Id,Account> mapAgencies = new Map<Id,Account>([select Id, Status__c, Location_Class__c from Account where id IN :agencyIds]);
-        List<Account> lsAgencies = [select Id, Status__c, Location_Class__c from Account where id IN :agencyIds];
+        Map<Id,Account> mapAgencies = new Map<Id,Account>([select Id, Status__c, Location_Class__c, Sector__c, Category__c from Account where id IN :agencyIds]);
+        List<Account> lsAgencies = [select Id, Status__c, Location_Class__c, Sector__c, Category__c from Account where id IN :agencyIds];
         Set<Account> accountsToUpdate = new Set<Account>();
 
         // Account accountToProcess;
@@ -156,7 +156,7 @@ public class AMS_InspectionHelper {
         if(statusCodeChanged.keySet().isEmpty())
             return;
 
-        List<Account> accountsToProcess = [select id, Expiry_Date__c, Location_Class__c, Status__c, Reason__c, RecordTypeId from Account where id in :statusCodeChanged.keySet()];
+        List<Account> accountsToProcess = [select id, Expiry_Date__c, Location_Class__c, Status__c, Reason__c, RecordTypeId, Sector__c, Category__c from Account where id in :statusCodeChanged.keySet()];
 
         if(accountsToProcess.isEmpty())
             return;
@@ -252,7 +252,7 @@ public class AMS_InspectionHelper {
         try {
             map<Id, Boolean> mapActiveAppointmentPerAccountId = new map<Id, Boolean>();
             //AMSU-161 adding new fields to the query
-            map<Id, Account> mapAccountsPerId = new map<Id, Account>([SELECT Id, Name, IATACode__c, Location_Class__c,CNS_Agency__c, Date_Organisation_Status_attained__c, Status__c, Reason__c FROM Account WHERE Id IN :lstAccountIdsToCheck]);
+            map<Id, Account> mapAccountsPerId = new map<Id, Account>([SELECT Id, Name, IATACode__c, Location_Class__c,CNS_Agency__c, Date_Organisation_Status_attained__c, Status__c, Reason__c, Sector__c, Category__c FROM Account WHERE Id IN :lstAccountIdsToCheck]);
             Map<Id, List<AMS_Agencies_relationhip__c>> accountHierarchyRelationships = new Map<Id, List<AMS_Agencies_relationhip__c>>(); //AMSU-161
             list<AMS_Inspection__c> lstActiveInspections = [SELECT Id, Account__c FROM AMS_Inspection__c WHERE Accreditation_Endorsement_Status_code__c <> '0' AND Account__c IN :lstAccountIdsToCheck];
      
@@ -437,7 +437,7 @@ public class AMS_InspectionHelper {
             }
 
             Map<Id, AMS_OSCAR__c> mOscars = new Map<Id, AMS_OSCAR__c>([SELECT Id, Process__c FROM AMS_OSCAR__c WHERE id in :oscarIds]);
-            Map<Id, Account> mAccounts = new Map<Id, Account>([SELECT Id, Status__c FROM Account WHERE id in :accIds]);
+            Map<Id, Account> mAccounts = new Map<Id, Account>([SELECT Id, Status__c, Sector__c, Category__c  FROM Account WHERE id in :accIds]);
 
             for(AMS_Inspection__c appt : appointments){
                 //If OSCAR__c is not null means that the appointment is being created in an OSCAR
@@ -478,7 +478,7 @@ public class AMS_InspectionHelper {
         Set<String> LocationClassForTerritory = new Set<String>{'X','G'};
 
         List<AMS_Territory__c> territoryToInsert = new List<AMS_Territory__c>();
-        List<AMS_Inspection__c> appointmentsWithAccData = [SELECT Id, Account__c, Account__r.IATA_ISO_Country__c, Account__r.Location_Class__c, OSCAR__c, OSCAR__r.Account__r.IATA_ISO_Country__c, OSCAR__r.Account__r.Location_Class__c FROM AMS_Inspection__c WHERE Id in :appointments];
+        List<AMS_Inspection__c> appointmentsWithAccData = [SELECT Id, Account__c, Account__r.IATA_ISO_Country__c, Account__r.Location_Class__c, OSCAR__c, OSCAR__r.Account__r.IATA_ISO_Country__c, OSCAR__r.Account__r.Location_Class__c, OSCAR__r.Account__r.Sector__c, OSCAR__r.Account__r.Category__c  FROM AMS_Inspection__c WHERE Id in :appointments];
 
         System.debug('createTerritoryForAppointments - Init - appointmentsWithAccData: ' + appointmentsWithAccData);
 

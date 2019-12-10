@@ -48,6 +48,12 @@
 			c.set('v.account.Sector__c', 'General Public');
 		}
 
+		if(customerType == 'FreightForwarder'){
+			fieldLabels = [$A.get("$Label.c.ISSP_CompanyName"), $A.get("$Label.c.ISSP_Address"), labels["IATACode__c"]];
+			fieldNames = ['Name', 'BillingStreet', 'IATACode__c'];
+			c.set('v.account.Sector__c', 'Cargo Agent');
+		}
+
 		// add fields that will be needed on creation
 	    // TODO create a new attribute for this
 	    fieldNames.push('IATA_ISO_Billing_State__c');

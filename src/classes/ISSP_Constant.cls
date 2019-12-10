@@ -125,7 +125,8 @@ Constant Class
         'NonIATAAgent' => new set<string>{'Others', 'Standard_Account'},
         'OtherCompany' => new set<string>{'Others', 'Standard_Account','TIP_Payment_Provider'},
         'TIESS' => new set<string>{'Others', 'IATA_Agency', 'IATA', 'Standard_Account'},
-        'GeneralPublic' => new set<string>{'Standard_Account'}
+        'GeneralPublic' => new set<string>{'Standard_Account'},
+        'FreightForwarder' => new set<string>{'Standard_Account'}
     };
                                             
     public static Map<String, String> accountDefaultRecordTypeByCustomerType = new Map<String, String>
@@ -139,7 +140,8 @@ Constant Class
             //'OtherCompany' => 'Others',
             'OtherCompany' => 'Standard_Account',
             //'TIESS' => 'Others',
-            'GeneralPublic' => 'Standard_Account'
+            'GeneralPublic' => 'Standard_Account',
+            'FreightForwarder' => 'Standard_Account'
             };
                                                     
     //New Test Portal User Profile Id

@@ -336,7 +336,7 @@ private class AMS_AccountTriggerHandlerTest {
 			Sector__c = AMS_Utils.SECTOR_CARGO,
 			Location_Type__c = 'HO',
 			IATA_ISO_Country__c = country.Id,
-			IATACode__c = '001',
+			IATACode__c = '002',
 			Accreditation_date__c = System.today(),
 			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency'),
 			phone = '00351218145439'
@@ -365,5 +365,5 @@ private class AMS_AccountTriggerHandlerTest {
 
 		Boolean bool = AMS_AccountTriggerHandler.verifyFieldChanges(account, account2);
 	}
-
+	
 }

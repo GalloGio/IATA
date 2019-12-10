@@ -560,44 +560,57 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 			list<Case> casesToTrigger = new list<Case>();
 			List<Case> airlineChangeCasesToTrigger = new List<Case>();
 
-			for(case c:trigger.new){
-				if(!TransformationHelper.triggerOnCaseNSerRen && c.recordtypeId == APCaseRTID && (c.CaseArea__c == airlineJoining || c.CaseArea__c  == airlineLeaving || c.CaseArea__c  == airlineSuspension))
-			    	casesToTrigger.add(c);
-			    else if (!TransformationHelper.triggerOnCaseNSerRen && c.recordtypeId == APCaseRTID && c.CaseArea__c == airlineChange && c.reason1__c == 'IATA Easy Pay' && c.Status == 'Closed' && c.CaseArea__c == airlineChange && (trigger.isInsert || trigger.oldmap.get(c.id).Status != 'Closed'))
-			    	airlineChangeCasesToTrigger.add(c);
-			}
+            for(case c:trigger.new){
+                if(!TransformationHelper.triggerOnCaseNSerRen && c.recordtypeId == APCaseRTID && (c.CaseArea__c == airlineJoining || c.CaseArea__c  == airlineLeaving || c.CaseArea__c  == airlineSuspension))
+                    casesToTrigger.add(c);
+                else if (!TransformationHelper.triggerOnCaseNSerRen && c.recordtypeId == APCaseRTID && c.CaseArea__c == airlineChange && c.reason1__c == 'IATA Easy Pay' && c.Status == 'Closed' && c.CaseArea__c == airlineChange && (trigger.isInsert || trigger.oldmap.get(c.id).Status != 'Closed'))
+                    airlineChangeCasesToTrigger.add(c);
+            }
+            
+            if (!airlineChangeCasesToTrigger.isEmpty()) {
+                
+                ServiceRenderedCaseLogic.saveTheServices(airlineChangeCasesToTrigger, null);
+            }
+            
+            if(!casesToTrigger.isEmpty()){
+                set<String> ServicesToCheck = new set<String>();
+                map<String,Case_Reason_Service__c> ServicesPerReason = new map<String,Case_Reason_Service__c>();
+                list<Case> USRRcases = new list<Case>();
+                list<Case> casesValidation = new list<Case>();
+                // this custom setting contains the infos regargind the need to reparent the provider to the hq to which the consumer belongs to.
+                for(Case_Reason_Service__c ReasonServiceMapping:Case_Reason_Service__c.getall().values()) {
+                    ServicesPerReason.put(ReasonServiceMapping.name,ReasonServiceMapping);
+                    ServicesToCheck.add(ReasonServiceMapping.name);
+                }
+                
+                string STC = '';
+                for (string s:ServicesToCheck) {
+                    STC += s + ', ';
+                }
+                system.debug('STC: ' + STC);
+                map<Id,Id> caseIdPerAccID = new map<Id,Id>();                      
+                map<Id,Case> caseMap = new map<Id,Case>();
+                set<Id> checkChildCasesId=new set<Id>();  
+                //Initial Validation 
+                for (Case c : casesToTrigger){
+                    if (ServicesToCheck.contains(c.reason1__c) && c.Status == 'Closed' && (c.BSPCountry__c != AMS_Utils.passIATAMultipleCountries || !c.Reason1__c.startsWith('PASS')) && (trigger.isInsert || trigger.oldmap.get(c.id).Status != 'Closed')){
+                        caseMap.put(c.id,c); //child cases that are coming from Opened to Closed
 
-			if (!airlineChangeCasesToTrigger.isEmpty()) {
-				ServiceRenderedCaseLogic.saveTheServices(airlineChangeCasesToTrigger, null);
-			}
+                        caseIdPerAccID.put(c.accountID,c.id);
+                    } else if( !ServicesToCheck.contains(c.reason1__c)){
+                        c.addError(' The reason you entered is not mapped to a service. \n Please contact the administrators.\n Administration Error:Custom Setting ' );                  
+                    }
+                    /*if(c.Status == 'Closed' && c.BSPCountry__c == AMS_Utils.passIATAMultipleCountries && c.Reason1__c.startsWith('PASS') && trigger.oldmap.get(c.id).Status != 'Closed'){
+                        checkChildCasesId.add(c.Id); //all (--closed--) cases Ids
+                    }
+                    if(c.Reason1__c.startsWith('PASS')){
+                        checkChildCasesId.add(c.Id); //all (--closed--) cases Ids
+                    }*/
+                    
+                }
+				
+                //Previous validations are now done in a validation rule in Case object
 
-			if(!casesToTrigger.isEmpty()){
-			    set<String> ServicesToCheck = new set<String>();
-			    map<String,Case_Reason_Service__c> ServicesPerReason = new map<String,Case_Reason_Service__c>();
-			    list<Case> USRRcases = new list<Case>();
-			    list<Case> casesValidation = new list<Case>();
-			    // this custom setting contains the infos regargind the need to reparent the provider to the hq to which the consumer belongs to.
-			    for(Case_Reason_Service__c ReasonServiceMapping:Case_Reason_Service__c.getall().values()) {
-					ServicesPerReason.put(ReasonServiceMapping.name,ReasonServiceMapping);
-					ServicesToCheck.add(ReasonServiceMapping.name);
-			    }
-			    string STC = '';
-			    for (string s:ServicesToCheck) {
-					STC += s + ', ';
-			    }
-			    system.debug('STC: ' + STC);
-				map<Id,Id> caseIdPerAccID = new map<Id,Id>();                      
-		        map<Id,Case> caseMap = new map<Id,Case>();  
-		        //Initial Validation 
-		        for (Case c : casesToTrigger){
-		        	system.debug('REASON: '+c.reason1__c);
-		        	if (ServicesToCheck.contains(c.reason1__c) && c.Status == 'Closed' && (trigger.isInsert || trigger.oldmap.get(c.id).Status != 'Closed')){
-			            caseMap.put(c.id,c);
-			            caseIdPerAccID.put(c.accountID,c.id);
-			        } else if( !ServicesToCheck.contains(c.reason1__c)){
-						c.addError(' The reason you entered is not mapped to a service. \n Please contact the administrators.\n Administration Error:Custom Setting ' );                  
-		            }
-		        }
 		       	if(caseMap.size()>0){ //validation and at the same time change of recordtype of the accts if they were standard 
 		        	map<Id,Case> casesWithErrorOnAcct = ServiceRenderedCaseLogic.changeRTtoBranchAccts(caseIdPerAccID, caseMap);
 					for (Id idc : caseMap.keySet()) {
@@ -1015,9 +1028,40 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 	}
 	/****************************************************************************************************************************************************/    
     /*Trigger.isDelete*/
-	else if (Trigger.isDelete) { 
-       	System.debug('____ [cls CaseAfterTrigger - Trigger.isDelete]');
-		new ANG_CaseTriggerHandler().onAfterDelete();
-	}
-	/*Trigger.isDelete*/
+    else if (Trigger.isDelete) { 
+        System.debug('____ [cls CaseAfterTrigger - Trigger.isDelete]');
+        new ANG_CaseTriggerHandler().onAfterDelete();
+    }
+    /*Trigger.isDelete*/
+
+
+    /* Trigger.isAfter && Trigger.isUpdate */
+    
+    //PASS
+    if(trigger.isAfter && Trigger.isUpdate) {
+        Map<Id, AP_Process_Form__c> casePassCountryMap = new Map<Id, AP_Process_Form__c>();
+
+        List<Case> closedParentCaseList = [SELECT Id,CaseNumber,ParentId, Status
+                                                                FROM Case 
+                                                                WHERE Status = 'Closed' AND ParentId = null AND  Reason1__c LIKE 'PASS Participation%' AND Id IN:Trigger.new]; 
+
+        List<AP_Process_Form__c> apFormList = [SELECT Id, RecordTypeId FROM AP_Process_Form__c WHERE Case__c IN:closedParentCaseList];
+            for(Case c : Trigger.new) {
+                Case oldCase = Trigger.oldMap.get(c.Id);
+                if(c.Status == 'Closed' && oldCase.Status != 'Closed'){
+                    for(AP_Process_Form__c form : apFormList) {
+                        casePassCountryMap.put(form.Id,form);
+                    }
+                }
+            }     
+   
+        if(casePassCountryMap != null && casePassCountryMap.size() > 0) {
+            if((Limits.getLimitQueueableJobs() - Limits.getQueueableJobs()) > 0 && !System.isFuture() && !System.isBatch()) {
+                System.enqueueJob(new PlatformEvents_Helper(casePassCountryMap, 'Airline_Account__e', 'AP_Process_Form__c', trigger.isInsert, true, trigger.isDelete, trigger.isUndelete));
+            } else {
+                PlatformEvents_Helper.publishEvents(casePassCountryMap, 'Airline_Account__e', 'AP_Process_Form__c', trigger.isInsert, true, trigger.isDelete, trigger.isUndelete);
+            }
+        }  
+    }
+    /* trigger.isAfter && Trigger.isUpdate */
 }

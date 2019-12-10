@@ -33,6 +33,9 @@ trigger ISSP_Portal_Application_Right on Portal_Application_Right__c (after inse
 	Set <Id> contactIdIATAAccreditationSet = new Set <Id>();
 	Set <Id> contactIdRemoveIATAAccreditationSet = new Set <Id>();
 
+	Set <Id> contactIdPASSAccreditationSet = new Set <Id>();
+	Set <Id> contactIdRemovePASSAccreditationSet = new Set <Id>();
+
 	List<Portal_Application_Right__c> ebulletinServices = new List<Portal_Application_Right__c>();
 
 	//Mconde start
@@ -236,6 +239,27 @@ trigger ISSP_Portal_Application_Right on Portal_Application_Right__c (after inse
 				}
 			}
 		}
+		//PASS
+		else if (access.Application_Name__c.startsWith('PASSlink Single Sign-On')){
+
+			if (trigger.isInsert && access.Right__c == 'Access Granted') {
+				system.debug('IS INSERT AND GRANTED');
+				contactIdPASSAccreditationSet.add(access.Contact__c);
+			}
+			else if (trigger.isUpdate){
+				Portal_Application_Right__c oldAccess = trigger.oldMap.get(access.Id);
+				if (access.Right__c != oldAccess.Right__c) {
+					if (access.Right__c == 'Access Granted') {
+						system.debug('IS UPDATE AND GRANTED');
+						contactIdPASSAccreditationSet.add(access.Contact__c);
+					}
+					else if (access.Right__c == 'Access Denied'){
+						system.debug('IS UPDATE AND DENIED');
+						contactIdRemovePASSAccreditationSet.add(access.Contact__c);
+					}
+				}
+			}
+		}
 		/*
 		else if (access.Application_Name__c == 'ASD'){
 			system.debug('IS ASD');
@@ -383,6 +407,18 @@ trigger ISSP_Portal_Application_Right on Portal_Application_Right__c (after inse
 
 		if (!ISSP_UserTriggerHandler.preventTrigger)
 			ISSP_UserTriggerHandler.updateUserPermissionSet('ISSP_New_Agency_permission_set', contactIdIATAAccreditationSet, contactIdRemoveIATAAccreditationSet);
+		ISSP_UserTriggerHandler.preventTrigger = true;
+	}
+
+	if (!contactIdPASSAccreditationSet.isEmpty() || !contactIdRemovePASSAccreditationSet.isEmpty()) {
+		system.debug('WILL START FUTURE METHOD');
+
+		// Validate: Give permission set only to Accounts with record type == 'Standard Account'
+		//List<Contact> lsContact = [SELECT Id FROM Contact where Account.recordtype.name = 'Standard Account' and id in :contactIdPASSAccreditationSet];
+		//contactIdPASSAccreditationSet = (new Map<Id, SObject>(lsContact)).keySet(); //Replace current set with the filtered results from the query
+
+		if (!ISSP_UserTriggerHandler.preventTrigger)
+			ISSP_UserTriggerHandler.updateUserPermissionSet('PASS_User_Prov', contactIdPASSAccreditationSet, contactIdRemovePASSAccreditationSet);
 		ISSP_UserTriggerHandler.preventTrigger = true;
 	}
 

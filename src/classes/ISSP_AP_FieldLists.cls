@@ -225,5 +225,30 @@ public class ISSP_AP_FieldLists {
             'Contact_Resp_Job_Title__c'                 => '',
             'Contact_Resp_Phone__c'						=> ''
     };
+
+    public static final Map<String,String> passMandatoryFields = new Map<String,String>{
+    'Desired_commencment_date__c' 					=> '',
+    'Contact_Resp_Salutation__c' 					=> '',
+    'Contact_Resp_F_Name__c' 						=> '',
+    'Contact_Resp_L_Name__c' 						=> '',
+    'Contact_Resp_Email__c' 						=> '',
+    'Contact_Resp_Job_Title__c'		 				=> '',
+    'Contact_Resp_Phone__c' 						=> ''
+    ,
+    'CASSLink_Contact_Salutation__c' 				=> '',
+    'CASSLink_Contact_F_Name__c' 					=> '',
+    'CASSLink_Contact_L_Name__c' 					=> '',
+    'CASSLink_Contact_Job_Title__c' 				=> '',
+    'CASSLink_Contact_Email__c'						=> '',
+    'CASSLink_Contact_Phone__c' 					=> '',
+    'Billing_File_Emrgcy_Contact_Salutation__c' 	=> '',
+    'Billing_File_Emrgcy_Contact_F_Name__c' 		=> '',
+    'Billing_File_Emrgcy_Contact_L_Name__c' 		=> '',
+    'Billing_File_Emrgcy_Contact_Job_Title__c' 		=> '',
+    'Billing_File_Emrgcy_Contact_Email__c' 			=> '',
+    'Receive_HOT_files__c' 							=> '',
+    'PDF_Report_Delivery_Format__c' 				=> '',
+    'Receive_XLS_Reports__c' 						=> ''
+    };
         
 }

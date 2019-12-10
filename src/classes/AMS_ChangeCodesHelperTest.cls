@@ -93,7 +93,7 @@ private class AMS_ChangeCodesHelperTest {
     static testMethod void TestChangesCodesCreation() {
 
 
-        List<Account> accountLst = [SELECT ID, Status__c, CNS_Agency__c from Account ];
+        List<Account> accountLst = [SELECT ID, Status__c, CNS_Agency__c, Sector__c, Category__c from Account ];
 
         if(accountLst.isEmpty())
             System.assert(true,false);

@@ -504,7 +504,7 @@ public with sharing class AMS_XML_Generator {
                     RecordTypeId,RecordType.Name,
                     STD_Code__c,VAT_Number__c,
                     TradeName__c,Unique_ID__c,Verification_Date__c,IATA_ISO_Country__c, IATA_ISO_Country__r.Name,
-                    Short_Name__c,Abbreviated_name__c,Sector__c,AIMS_ID__c,BSP_CASS_Code__c
+                    Short_Name__c,Abbreviated_name__c,Sector__c,AIMS_ID__c,BSP_CASS_Code__c,IMPC_Code__c 
                     FROM Account WHERE Id in :setOwnershipKeys];
 
         for (Account o : lOwner) {
@@ -588,7 +588,7 @@ public with sharing class AMS_XML_Generator {
         lAgRelationshipHierarchy = [SELECT Id,AIMS_ID__c,
                     CASS_Number__c,Check_Digit__c,IATACode__c,
                     C_Code__c,ParentId,Parent.AIMS_ID__c,
-                    IATA_Area__c,Sector__c
+                    IATA_Area__c,Sector__c, Location_Class__c, IMPC_Code__c
                     FROM Account where id in :setAgRelationshipKeys];
         
         //REFERENCE                    
@@ -692,7 +692,7 @@ public with sharing class AMS_XML_Generator {
                     RecordTypeId,RecordType.Name,
                     STD_Code__c,VAT_Number__c,
                     TradeName__c,Unique_ID__c,Verification_Date__c,IATA_ISO_Country__c, IATA_ISO_Country__r.Name,
-                    Short_Name__c,Abbreviated_name__c,Sector__c,AIMS_ID__c,BSP_CASS_Code__c, Reason__c FROM Account WHERE Id in :setAccountKeys]; 
+                    Short_Name__c,Abbreviated_name__c,Sector__c,AIMS_ID__c,BSP_CASS_Code__c, Reason__c,IMPC_Code__c  FROM Account WHERE Id in :setAccountKeys]; 
 
         for (Account o : lAccount) {
             //20-06-2017 - Change AMSU-93 - special chars replacement
@@ -848,17 +848,21 @@ public with sharing class AMS_XML_Generator {
         
         SET<Id> setAgencyPaxKeys = new SET<Id>();
         SET<Id> setAgencyCargoKeys = new SET<Id>();
+        SET<Id> setAgencyCargoPassKeys = new SET<Id>();
         for (Account ag : agency) {
             if( ag.Sector__c.equalsIgnoreCase('Travel Agent') ){
                 setAgencyPaxKeys.add(ag.Id);
-            }else if(ag.Sector__c.equalsIgnoreCase('Cargo Agent') ){
+            }else if(ag.Sector__c.equalsIgnoreCase('Cargo Agent') && ag.Location_Class__c!='L'){
                 setAgencyCargoKeys.add(ag.Id);
+            }else if(ag.Sector__c.equalsIgnoreCase('Cargo Agent') && ag.Location_Class__c=='L'){
+                setAgencyCargoPassKeys.add(ag.Id);
             }
         }
 
         List<AggregateResult> agBspDpc = new List<AggregateResult>();
         List<AggregateResult> agBspDpcPax = new List<AggregateResult>();
         List<AggregateResult> agBspDpcCargo = new List<AggregateResult>();
+        List<AggregateResult> agBspDpcCargoPass = new List<AggregateResult>();
         
         agBspDpcPax = [SELECT id Account__c,IATA_ISO_Country__r.name,
                                             IATA_ISO_Country__r.AMS_Settlement_System__r.name bsp,
@@ -876,9 +880,17 @@ public with sharing class AMS_XML_Generator {
                                             IATA_ISO_Country__r.AMS_Settlement_System_CASS__r.name,
                                             IATA_ISO_Country__r.AMS_Settlement_System_CASS__r.DPC_System__c];
 
+        agBspDpcCargoPass = [SELECT id Account__c, IATA_ISO_Country__r.name,
+                                            IATA_ISO_Country__r.AMS_Settlement_System_PASS__r.name bsp,
+                                            IATA_ISO_Country__r.AMS_Settlement_System_PASS__r.DPC_System__c dpc
+                                            FROM Account where id in :setAgencyCargoPassKeys 
+                                            group by id, IATA_ISO_Country__r.name,
+                                            IATA_ISO_Country__r.AMS_Settlement_System_PASS__r.name,
+                                            IATA_ISO_Country__r.AMS_Settlement_System_PASS__r.DPC_System__c];
 
         agBspDpc.addAll(agBspDpcPax);
         agBspDpc.addAll(agBspDpcCargo);
+        agBspDpc.addAll(agBspDpcCargoPass);
 
        
         String auxBSP = '';
@@ -1609,6 +1621,10 @@ public with sharing class AMS_XML_Generator {
         getElementNode(agencyNode, 'area', mAg_VS_AgArea.get(agency.Id));
         getElementNode(agencyNode, 'ams_id', agency.Id);
 
+        if(agency.Location_Class__c == 'L'){
+            getElementNode(agencyNode, 'impc_code', agency.IMPC_Code__c);
+        }
+
         if(!redux){
             //Sprint 10: removed condition for Inserting "agref" and "agxref", Now they are always inserted
             //Sprint 7: Inserting "agref" and "agxref" for Agencies with Legacy "AIMS", for now we use the legacy ID
@@ -1690,8 +1706,12 @@ public with sharing class AMS_XML_Generator {
                     getElementNode(nodeCat, 'cat_code', s);
                 }            
             }
-            
-            getElementNode(agencyNode, 'pas_cgo', sPasCargo);
+
+            if(agency.Sector__c != Null && agency.Sector__c.equalsIgnoreCase('Cargo Agent') && agency.Location_Class__c=='L'){
+                getElementNode(agencyNode, 'pas_cgo', 'L');
+            }else{
+                getElementNode(agencyNode, 'pas_cgo', sPasCargo);
+            }
             
             getElementTranslatedNode(agencyNode, agency.Id, 'ams_agency__c.Company_Type__c', 'co_type', agency.Company_Type__c);
             

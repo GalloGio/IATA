@@ -164,7 +164,7 @@ public class AMS_OSCAR_JSONHelper {
                                 AMS_OSCAR_JSON.ChangeCode changeCode = a.changeCode;
                                 if(changeCode != null){
                                     //AMS_ChangeCodesHelper.createAAChangeCode(changeCode, oscar, oscar.Account__c);    
-                                    Account acct = new Account(Id = oscar.Account__c);
+                                    Account acct = new Account(Id = oscar.Account__c, Sector__c = oscar.Account__r.Sector__c, Category__c = oscar.Account__r.Category__c);
                                     System.debug('Creating Agency Applied changeCode for Account ' + acct.Id);
                                     AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode>{changeCode}, new List<AMS_OSCAR__c>{oscar}, new List<Account>{acct}, true);
                                     System.debug('Done creating Agency Applied changeCode for Account ' + acct.Id);
