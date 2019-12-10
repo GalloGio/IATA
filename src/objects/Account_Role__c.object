@@ -41,6 +41,14 @@
         <type>Default</type>
     </actionOverrides>
     <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayouts>
+        <fullName>IFTP_Compact_Layout</fullName>
+        <fields>Account__c</fields>
+        <fields>Account_Roles__c</fields>
+        <fields>Name</fields>
+        <fields>Status__c</fields>
+        <label>IFTP Compact Layout</label>
+    </compactLayouts>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
     <description>Used to extend the role of any existing account type e.g. an airline that also acts as a payment provider. A record type should be created for each type of account role required.</description>
