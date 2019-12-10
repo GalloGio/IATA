@@ -91,7 +91,7 @@ export default class PortalMyProfilePage extends LightningElement {
                     'value': sectionMapContactLocal[i].lstFieldWrapper,
                     'key': sectionMapContactLocal[i].cardTitle,
                     'showfunction': (sectionMapContactLocal[i].cardTitle === 'Professional'),
-                    'isEditable': sectionMapContactLocal[i].isEditable
+                    'isEditable': sectionMapContactLocal[i].isEditable,
                     'isEditIdCard': (sectionMapContactLocal[i].cardTitle === IdCard),
 		    'sectionKeyName': sectionMapContactLocal[i].cardKey,
                     'idCardRedirectionUrl':sectionMapContactLocal[i].idCardUrl
