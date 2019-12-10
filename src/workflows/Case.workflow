@@ -835,6 +835,50 @@
         <template>AP_notification/IAPP_Notification_of_new_docs_received</template>
     </alerts>
     <alerts>
+        <fullName>IATA_ICCS1_Service_Now</fullName>
+        <ccEmails>iata@service-now.com</ccEmails>
+        <ccEmails>iinetcare@iata.org</ccEmails>
+        <ccEmails>jakub.hlahulek@isobar.com</ccEmails>
+        <description>IATA ICCS1 Service Now</description>
+        <protected>false</protected>
+        <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>All/SNOW_ICCS1</template>
+    </alerts>
+    <alerts>
+        <fullName>IATA_ICCS2_Service_Now</fullName>
+        <ccEmails>iata@service-now.com</ccEmails>
+        <ccEmails>iinetcare@iata.org</ccEmails>
+        <ccEmails>jakub.hlahulek@isobar.com</ccEmails>
+        <description>IATA ICCS2 Service Now</description>
+        <protected>false</protected>
+        <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>All/SNOW_ICCS2</template>
+    </alerts>
+    <alerts>
+        <fullName>IATA_ICCS_Service_Now</fullName>
+        <ccEmails>iata@service-now.com</ccEmails>
+        <ccEmails>iinetcare@iata.org</ccEmails>
+        <ccEmails>jakub.hlahulek@isobar.com</ccEmails>
+        <description>IATA_ICCS_Service_Now</description>
+        <protected>false</protected>
+        <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>All/SNOW_ICCS</template>
+    </alerts>
+    <alerts>
+        <fullName>IATA_MITA_Service_Now</fullName>
+        <ccEmails>iata@service-now.com</ccEmails>
+        <ccEmails>iinetcare@iata.org</ccEmails>
+        <ccEmails>jakub.hlahulek@isobar.com</ccEmails>
+        <description>IATA MITA Service Now</description>
+        <protected>false</protected>
+        <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>All/SNOW_MITA_BIETA</template>
+    </alerts>
+    <alerts>
         <fullName>IATA_iiNet_Service_Now</fullName>
         <ccEmails>iata@service-now.com</ccEmails>
         <ccEmails>iinetcare@iata.org</ccEmails>
