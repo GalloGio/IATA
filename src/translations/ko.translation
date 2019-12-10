@@ -2780,6 +2780,10 @@
         <name>CSP_NoCases2</name>
     </customLabels>
     <customLabels>
+        <label>죄송합니다. 적용된 필터에 대한 결과가 없습니다.</label>
+        <name>CSP_NoRecordsFiltered</name>
+    </customLabels>
+    <customLabels>
         <label>결과 없음</label>
         <name>CSP_NoSearchResults</name>
     </customLabels>

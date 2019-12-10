@@ -2780,6 +2780,10 @@
         <name>CSP_NoCases2</name>
     </customLabels>
     <customLabels>
+        <label>申し訳ございませんが、適用されたフィルターの結果は見つかりませんでした</label>
+        <name>CSP_NoRecordsFiltered</name>
+    </customLabels>
+    <customLabels>
         <label>結果なし</label>
         <name>CSP_NoSearchResults</name>
     </customLabels>

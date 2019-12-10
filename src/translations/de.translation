@@ -2780,6 +2780,10 @@
         <label>Sobald Sie dies getan haben, sehen Sie hier die neuesten.</label>
         <name>CSP_NoCases2</name>
     </customLabels>
+	<customLabels>
+        <label>Es wurden leider keine Ergebnisse für die angewandten Filter gefunden.</label>
+        <name>CSP_NoRecordsFiltered</name>
+    </customLabels>
     <customLabels>
         <label>Keine Ergebnisse</label>
         <name>CSP_NoSearchResults</name>

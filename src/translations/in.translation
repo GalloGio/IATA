@@ -2780,6 +2780,10 @@
         <name>CSP_NoCases2</name>
     </customLabels>
     <customLabels>
+        <label>Maaf, tidak ditemukan hasil untuk filter yang diterapkan</label>
+        <name>CSP_NoRecordsFiltered</name>
+    </customLabels>
+    <customLabels>
         <label>Tidak Ada Hasil</label>
         <name>CSP_NoSearchResults</name>
     </customLabels>

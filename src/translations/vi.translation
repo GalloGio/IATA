@@ -2778,6 +2778,10 @@
         <label>&quot;Nhưng một khi bạn có, bạn sẽ thấy những cái gần đây nhất ở đây.&quot;</label>
         <name>CSP_NoCases2</name>
     </customLabels>
+	<customLabels>
+        <label>Rất tiếc, không tìm thấy kết quả nào theo các bộ lọc được sử dụng</label>
+        <name>CSP_NoRecordsFiltered</name>
+    </customLabels>
     <customLabels>
         <label>Không có kết quả</label>
         <name>CSP_NoSearchResults</name>

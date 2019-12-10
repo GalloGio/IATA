@@ -2777,6 +2777,10 @@
         <name>CSP_NoCases2</name>
     </customLabels>
     <customLabels>
+        <label>ขออภัย ไม่พบผลลัพธ์จากตัวกรองที่คุณเลือก</label>
+        <name>CSP_NoRecordsFiltered</name>
+    </customLabels>
+    <customLabels>
         <label>ไม่มีผลลัพธ์</label>
         <name>CSP_NoSearchResults</name>
     </customLabels>

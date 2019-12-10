@@ -2777,6 +2777,10 @@
         <name>CSP_NoCases2</name>
     </customLabels>
     <customLabels>
+        <label>Извините, но для примененных вами фильтров результаты отсутствуют</label>
+        <name>CSP_NoRecordsFiltered</name>
+    </customLabels>
+    <customLabels>
         <label>Нет результатов</label>
         <name>CSP_NoSearchResults</name>
     </customLabels>
