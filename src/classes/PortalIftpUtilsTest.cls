@@ -180,10 +180,8 @@ public class PortalIftpUtilsTest {
 
 	static testMethod void integrationLogUtils_Test() {
 
-		String RECTYPE_ITP_AccRole = RecordTypeSingleton.getInstance().getRecordTypeId('AccountRole__e', 'ITP');
-		String RECTYPE_ITP_AccountContactRole = RecordTypeSingleton.getInstance().getRecordTypeId('AccountContactRole__e', 'ITP');
-		AccountRole__e are = New AccountRole__e(EventType__c = 'test', RecordId__c = 'test1', RecordType__c = RECTYPE_ITP_AccRole);
-		AccountContactRole__e acre = New AccountContactRole__e(EventType__c = 'test', RecordId__c = 'test1', RecordType__c = RECTYPE_ITP_AccountContactRole);
+		AccountRole__e are = New AccountRole__e(EventType__c = 'test', RecordId__c = 'test1', RecordType__c = 'ITP');
+		AccountContactRole__e acre = New AccountContactRole__e(EventType__c = 'test', RecordId__c = 'test1', RecordType__c = 'ITP');
 
 		Test.startTest();
 
