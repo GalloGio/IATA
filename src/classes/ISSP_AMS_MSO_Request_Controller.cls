@@ -8,6 +8,11 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
     public String reason {get; set;}
     public List<SelectOption> billingStatesList {get; set; }
 
+	public List<IATA_ISO_City__c> billingCityList;
+
+	public String billingCity{get;set;}
+
+	public String billingCityListStr {get {return JSON.serialize(billingCityList);} set;}
     private map<String,list<IATA_ISO_State__c>> mapBillingStatesPerCountry;
     private User currentUser;
     
@@ -157,10 +162,17 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
         if (countryISOCodeList.size() == 0 || countrySelected == null || mapBillingStatesPerCountry.get(countrySelected) == null) return;
 
         for (IATA_ISO_State__c s : mapBillingStatesPerCountry.get(countrySelected)) {
+			if(s.Valid_For_Address__c)
             billingStatesList.add(new SelectOption(s.Id, s.Name));
         }
     }
 
+	public void refreshCities(){
+
+		billingCityList = new List<IATA_ISO_City__c>([SELECT Id, Name, GeonameName__c, GeonameAlternateNames__c
+													  FROM Iata_Iso_City__c
+													  WHERE IATA_ISO_State__c = :billingState AND IATA_ISO_State__r.IATA_ISO_Country__c = :countrySelected]);
+	}
     public Pagereference cancel() {
         string retURL = ApexPages.currentPage().getParameters().get('retURL');
         if (retURL == null) {
@@ -176,6 +188,7 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
         Boolean isValid = true;
         Pattern p = Pattern.compile(ISO_8859_1_regEx);
 
+		billingCity = String.isBlank(billingCity)?null:billingCity;
         System.debug('accreditationForm: ' + accreditationForm);
         System.debug('countrySelected: ' + countrySelected);
 
@@ -184,7 +197,7 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
             isValid = false;
         }
 
-        if (billingState == null) {
+		if (billingState == null && billingStatesList.size()>1 ) {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_MSO_Billing_State_ErrMsg));
             isValid = false;
         }
@@ -278,6 +291,7 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
                 accreditationForm.Location_Type__c = 'HO';
                 accreditationForm.IATA_ISO_State__c = billingState;
                 accreditationForm.Branch_Office_Country__c = countrySelected;
+				accreditationForm.Geoname_Billing_City__c = billingCity;
                 insert accreditationForm;
 
                 oscar.AMS_Online_Accreditation__c = accreditationForm.Id;
