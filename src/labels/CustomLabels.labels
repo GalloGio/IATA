@@ -3610,6 +3610,22 @@ Payment required on receipt of this Payment Advice
         <value>Dear</value>
     </labels>
     <labels>
+        <fullName>CSP_Deduction_Notice</fullName>
+        <categories>CSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Deduction_Notice</shortDescription>
+        <value>Deduction Notice</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Deduction_Notice_Israel_Description</fullName>
+        <categories>CSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Deduction Notice Israel Description</shortDescription>
+        <value>This deduction form allows travel agents participating in BSP Israel to advise airlines and IATA BSP management of offset of any specific amount from due payment, as per Israel Anti-Trust Commissioner&#39;s instructions.</value>
+    </labels>
+    <labels>
         <fullName>CSP_Deny_User_Access_Title</fullName>
         <language>en_US</language>
         <protected>false</protected>

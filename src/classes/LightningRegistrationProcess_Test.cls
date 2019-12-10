@@ -67,6 +67,10 @@ private class LightningRegistrationProcess_Test {
         
         LightningRegistrationProcess.checkConAvailable(new Contact(FirstName = 'firstName2', LastName = 'L3', Email = 'test3@test.com', phone='(515) 146 2178',AccountId=oAccount.Id, RecordTypeId= rtId));
         
+        Portal_Applications__c app = new Portal_Applications__c(Name = 'TIP Reports'); 
+        insert app;
+        
+        LightningRegistrationProcess.insertDeductionNoticeApp(string.valueOf(c1.Id), string.valueOf(app.Id));
     }
     
 }

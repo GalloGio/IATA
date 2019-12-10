@@ -707,6 +707,15 @@ public without sharing class LightningRegistrationProcess{
         u.FederationIdentifier = u.id;
         database.update(u);
     }
+
+    @future
+	public static void insertDeductionNoticeApp(String contId, String appId){
+        Portal_Application_Right__c par = new Portal_Application_Right__c();
+        par.Contact__c = contId;
+        par.Portal_Application__c = appId;
+        par.Right__c = 'Access Granted';
+	    database.insert(par);
+    }
 /*    
     @AuraEnabled
     public Static String setHostURL (){

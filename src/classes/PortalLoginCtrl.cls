@@ -115,6 +115,25 @@ public with sharing class PortalLoginCtrl {
                 startUrl = OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, '/ISSP_Homepage?communityName=CNS');
             }
 
+            if(oneUser.ANG_Sector__c == 'Travel Agent' 
+            && oneUser.ANG_Category__c == 'IATA Passenger Sales Agent'
+            && oneUser.Customer_type__c == 'Agency'
+            && oneUser.ANG_Is_Accredited_Agent__c == true
+            && oneUser.ANG_Customer_Country_ISO__c == 'IL'
+            && (oneUser.Contact.User_Portal_Status__c == 'Approved User' 
+            || oneUser.Contact.User_Portal_Status__c == 'Approved Admin')){
+                list<Portal_Applications__c> lstApp = [SELECT Id 
+                                                        FROM Portal_Applications__c 
+                                                        WHERE Application_URL__c = '/csportal/s/israel-disputes-create-new-case' 
+                                                        LIMIT 1];
+
+                try {
+                    LightningRegistrationProcess.insertDeductionNoticeApp(string.valueOf(oneUser.ContactId), string.valueOf(lstApp[0].Id));
+                } catch (Exception e) {
+                    System.debug(e);
+                }
+            }
+
             username=null != oneUser ? oneUser.Username : username;
 
             if(string.isNotBlank(relayState)){
@@ -149,7 +168,9 @@ public with sharing class PortalLoginCtrl {
         return
         [SELECT Id, Username, ContactId, Email, Portal_User_Frozen__c,
                 IsActive, Portal_User_Frozen_Checkbox__c, Contact.Community__c,
-                Profile.Name, CNS_Account_or_Agency__c
+                Profile.Name, CNS_Account_or_Agency__c,
+                ANG_Sector__c, ANG_Category__c, Customer_Type__c, ANG_Is_Accredited_Agent__c,
+                ANG_Customer_Country_ISO__c, Contact.User_Portal_Status__c
         FROM User
         WHERE (Username=: nameOrEmail
         OR email =: nameOrEmail)
