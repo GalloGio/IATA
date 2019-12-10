@@ -11,7 +11,7 @@ private class PortalIftEmployeeRecordsManagementTest {
 
 		Id contactToDelete = [SELECT id FROM contact WHERE LastName like 'Student'].id;
 		Account_Contact_Role__c employeeToInactivate = [SELECT id, Contact__c, name, Company_Code__c, First_Name__c, Last_Name__c  FROM Account_Contact_Role__c WHERE contact__c = :contactToDelete];
-
+		
 		PortalIftEmployeeRecordsManagement.EmployeeRecordWrapper employeeToAdd = new PortalIftEmployeeRecordsManagement.EmployeeRecordWrapper();
 		employeeToAdd.code = 'Abc';
 		employeeToAdd.first_name = 'Rita1';
@@ -23,28 +23,6 @@ private class PortalIftEmployeeRecordsManagementTest {
 		employeeToAdd.phone = '199999999';
 		employeeToAdd.details = 'New employee';
 
-		PortalIftEmployeeRecordsManagement.EmployeeRecordWrapper employeeToAdd_2 = new PortalIftEmployeeRecordsManagement.EmployeeRecordWrapper();
-		employeeToAdd_2.code = '';
-		employeeToAdd_2.first_name = '';
-		employeeToAdd_2.last_name = '';
-		employeeToAdd_2.role = '';
-		employeeToAdd_2.busEmail = '';
-		employeeToAdd_2.personalEmail = '';
-		employeeToAdd_2.title = 'Trainee';
-		employeeToAdd_2.phone = '';
-		employeeToAdd_2.details = 'New employee';
-
-		PortalIftEmployeeRecordsManagement.EmployeeRecordWrapper employeeToAdd_3 = new PortalIftEmployeeRecordsManagement.EmployeeRecordWrapper();
-		employeeToAdd_3.code = 'Abc';
-		employeeToAdd_3.first_name = '';
-		employeeToAdd_3.last_name = '';
-		employeeToAdd_3.role = '';
-		employeeToAdd_3.busEmail = '';
-		employeeToAdd_3.personalEmail = '';
-		employeeToAdd_3.title = 'Trainee';
-		employeeToAdd_3.phone = null;
-		employeeToAdd_3.details = 'New employee';
-
 		Test.startTest();
 		System.runAs(u1) {
 			PortalIftEmployeeRecordsManagement.ResultWrapper res0 = PortalIftEmployeeRecordsManagement.inactivateEmployee(employeeToInactivate);
@@ -52,13 +30,6 @@ private class PortalIftEmployeeRecordsManagementTest {
 
 			PortalIftEmployeeRecordsManagement.ResultWrapper res1 = PortalIftEmployeeRecordsManagement.addNewEmployee(employeeToAdd);
 			System.assert(res1.succeeded);
-
-			PortalIftEmployeeRecordsManagement.ResultWrapper res2 = PortalIftEmployeeRecordsManagement.addNewEmployee(employeeToAdd_2);
-			System.assert(!res2.succeeded);
-
-			PortalIftEmployeeRecordsManagement.ResultWrapper res3 = PortalIftEmployeeRecordsManagement.addNewEmployee(employeeToAdd_3);
-			System.assert(!res3.succeeded);
-
 		}
 		Test.stopTest();
 	}
@@ -95,6 +66,60 @@ private class PortalIftEmployeeRecordsManagementTest {
 		}
 		Test.stopTest();
 	}
+
+	@IsTest
+	static void addEmployeeTest_3(){
+
+		User u1 = [select id from user where Email = 'test.cont3@test.com' limit 1];
+
+		PortalIftEmployeeRecordsManagement.EmployeeRecordWrapper employeeToAdd_3 = new PortalIftEmployeeRecordsManagement.EmployeeRecordWrapper();
+		employeeToAdd_3.code = 'Abc';
+		employeeToAdd_3.first_name = '';
+		employeeToAdd_3.last_name = '';
+		employeeToAdd_3.role = '';
+		employeeToAdd_3.busEmail = '';
+		employeeToAdd_3.personalEmail = '';
+		employeeToAdd_3.title = 'Trainee';
+		employeeToAdd_3.phone = null;
+		employeeToAdd_3.details = 'New employee';
+
+		Test.startTest();
+		System.runAs(u1) {
+
+			PortalIftEmployeeRecordsManagement.ResultWrapper res3 = PortalIftEmployeeRecordsManagement.addNewEmployee(employeeToAdd_3);
+			System.assert(!res3.succeeded);
+
+		}
+		Test.stopTest();
+	}
+
+		@IsTest
+	static void addEmployeeTest_4(){
+
+		User u1 = [select id from user where Email = 'test.cont3@test.com' limit 1];
+
+		PortalIftEmployeeRecordsManagement.EmployeeRecordWrapper employeeToAdd_2 = new PortalIftEmployeeRecordsManagement.EmployeeRecordWrapper();
+		employeeToAdd_2.code = '';
+		employeeToAdd_2.first_name = '';
+		employeeToAdd_2.last_name = '';
+		employeeToAdd_2.role = '';
+		employeeToAdd_2.busEmail = '';
+		employeeToAdd_2.personalEmail = '';
+		employeeToAdd_2.title = 'Trainee';
+		employeeToAdd_2.phone = '';
+		employeeToAdd_2.details = 'New employee';
+
+
+		Test.startTest();
+		System.runAs(u1) {
+
+			PortalIftEmployeeRecordsManagement.ResultWrapper res2 = PortalIftEmployeeRecordsManagement.addNewEmployee(employeeToAdd_2);
+			System.assert(!res2.succeeded);
+
+		}
+		Test.stopTest();
+	}
+
 
 	@IsTest
 	static void inactivateEmployeeTest(){
