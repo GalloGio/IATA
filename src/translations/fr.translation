@@ -5893,6 +5893,26 @@
         <name>IDCard_CardDuration</name>
     </customLabels>
     <customLabels>
+        <label><!-- IDCard_CardType_DigCard --></label>
+        <name>IDCard_CardType_DigCard</name>
+    </customLabels>
+    <customLabels>
+        <label>Non</label>
+        <name>IDCard_CardType_DigCardNo</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IDCard_CardType_PhysCard --></label>
+        <name>IDCard_CardType_PhysCard</name>
+    </customLabels>
+    <customLabels>
+        <label>Oui</label>
+        <name>IDCard_CardType_PhysCardYes</name>
+    </customLabels>
+    <customLabels>
+        <label>Aimeriez-vous recevoir une carte d’identité imprimée? Des frais supplémentaires peuvent s’appliquer.</label>
+        <name>IDCard_CardType_WishToRecieve</name>
+    </customLabels>
+    <customLabels>
         <label>Détails du cas</label>
         <name>IDCard_CaseDetails</name>
     </customLabels>
@@ -6165,6 +6185,10 @@ Veuillez, si c&apos;est la première fois que vous faites une demande de carte d
         <name>IDCard_Details</name>
     </customLabels>
     <customLabels>
+        <label><!-- IDCard Discount --></label>
+        <name>IDCard_Discount</name>
+    </customLabels>
+    <customLabels>
         <label>The display Name is truncated to fit 22 characters</label>
         <name>IDCard_DisplayedName_RemainingCharacter</name>
     </customLabels>
@@ -6205,16 +6229,20 @@ Veuillez, si c&apos;est la première fois que vous faites une demande de carte d
         <name>IDCard_ExpediteDeliveryAddedtoCardPrice</name>
     </customLabels>
     <customLabels>
-        <label>Frais d&apos;envoi:</label>
+        <label>Frais de livraison accélérée</label>
         <name>IDCard_ExpediteFee</name>
     </customLabels>
     <customLabels>
-        <label>Livraison Express</label>
+        <label>Livraison accélérée</label>
         <name>IDCard_Expedite_Delivery</name>
     </customLabels>
     <customLabels>
         <label>Note : Option recommandée où le service de courrier local n&apos;est pas fiable. Livraison de 8 à 10 jours ouvrables. Numéro de suivi disponible sur demande.</label>
         <name>IDCard_Expedite_Note</name>
+    </customLabels>
+    <customLabels>
+        <label>Votre carte d’identité imprimée sera livrée à l’adresse de votre agence d’ici deux à six semaines, à moins que vous ne choisissiez la livraison accélérée (quatre à huit jours ouvrables). La livraison accélérée comprend le suivi de l’expédition sur demande.</label>
+        <name>IDCard_Expedite_Text</name>
     </customLabels>
     <customLabels>
         <label><!-- IDCard ExportCSV --></label>
@@ -6227,6 +6255,10 @@ Veuillez, si c&apos;est la première fois que vous faites une demande de carte d
     <customLabels>
         <label>Frais</label>
         <name>IDCard_Fees</name>
+    </customLabels>
+    <customLabels>
+        <label>Frais d’expédition et de manutention</label>
+        <name>IDCard_FeesPhysical</name>
     </customLabels>
     <customLabels>
         <label>Fichier(s) téléchargé(s) avec succès</label>
@@ -6690,6 +6722,10 @@ Pour les agents qui souhaitent renouveler, réémettre la carte en raison de per
         <name>IDCard_PortalPage_SubMenu_ReplaceRenew</name>
     </customLabels>
     <customLabels>
+        <label>Code de promotion</label>
+        <name>IDCard_PromotionCode</name>
+    </customLabels>
+    <customLabels>
         <label>Executer</label>
         <name>IDCard_Purchase</name>
     </customLabels>
@@ -6861,6 +6897,10 @@ Veuillez noter que les agents à domicile sont tenus de coordonner avec leurs co
     <customLabels>
         <label><!-- IDCard error 20 hours required --></label>
         <name>IDCard_error_20_hours_required</name>
+    </customLabels>
+    <customLabels>
+        <label>Frais pour la carte d’identité</label>
+        <name>IDCard_fee</name>
     </customLabels>
     <customLabels>
         <label><!-- IDCard hasPhoto --></label>
@@ -7193,7 +7233,7 @@ Veuillez noter que les agents à domicile sont tenus de coordonner avec leurs co
         <name>ID_Card_Not_found_for_VER</name>
     </customLabels>
     <customLabels>
-        <label>Profitez du rabais sur deux cours au choix offerts par IATA Training. &lt;u&gt; Le prix devra être ajouté aux Frais suivants &lt;/u&gt;. Une fois votre demande de carte d&apos;identité IATA/IATAN approuvée, vous serez contacté par le département IATA Training qui vous donnera l&apos;accès au cours que vous aurez sélectionné</label>
+        <label>Pour vous remercier d’avoir commandé votre carte d’identité, on vous offre la possibilité d’acheter deux des cours de formation à distance d’IATA suivants pour seulement 150 $ US (une économie allant jusqu’à 80 %). Vous recevrez des instructions pour accéder à vos cours lorsque votre demande de carte d’identité aura été approuvée.</label>
         <name>ID_Card_Package_Travel_Professionals_1</name>
     </customLabels>
     <customLabels>
@@ -7237,6 +7277,10 @@ Veuillez noter que les agents à domicile sont tenus de coordonner avec leurs co
         <name>ID_Card_Specifics</name>
     </customLabels>
     <customLabels>
+        <label>Taxes applicables</label>
+        <name>ID_Card_Taxes</name>
+    </customLabels>
+    <customLabels>
         <label>&quot;I have read and accept the 
 &lt;a href=&quot;&quot;JavaScript:newPopup(&apos;http://www.iata.org/Pages/privacy.aspx&apos;); &quot;&quot;&gt;Privacy Policy, Conditions of Use &lt;/a&gt; 
 and 
@@ -7257,6 +7301,10 @@ and
     <customLabels>
         <label>A l&apos;agence:</label>
         <name>ID_Card_To_Agency</name>
+    </customLabels>
+    <customLabels>
+        <label>Frais pour les cours de formation d’IATA (deux cours)</label>
+        <name>ID_Card_Training_Fee</name>
     </customLabels>
     <customLabels>
         <label>Veuillez télécharger une preuve de votre changement de nom</label>
@@ -16415,6 +16463,10 @@ Si vous continuez à avoir des difficultées d&apos;enregistrement au Portail Cl
         <name>ISSP_OperationalCalendar_CurrencyFilter</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_OperationalCalendar_CycleFilter --></label>
+        <name>ISSP_OperationalCalendar_CycleFilter</name>
+    </customLabels>
+    <customLabels>
         <label>Date de téléchargement</label>
         <name>ISSP_OperationalCalendar_DownloadDate</name>
     </customLabels>
@@ -16459,6 +16511,10 @@ Si vous continuez à avoir des difficultées d&apos;enregistrement au Portail Cl
         <name>ISSP_OperationalCalendar_No_Events</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP OperationalCalendar PDFFooterText --></label>
+        <name>ISSP_OperationalCalendar_PDFFooterText</name>
+    </customLabels>
+    <customLabels>
         <label>Réinitialiser</label>
         <name>ISSP_OperationalCalendar_Reset</name>
     </customLabels>
@@ -16467,8 +16523,24 @@ Si vous continuez à avoir des difficultées d&apos;enregistrement au Portail Cl
         <name>ISSP_OperationalCalendar_Show_Calendar</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_OperationalCalendar_SubtypeFilter --></label>
+        <name>ISSP_OperationalCalendar_SubtypeFilter</name>
+    </customLabels>
+    <customLabels>
         <label>Mise à jour du calendrier</label>
         <name>ISSP_OperationalCalendar_Sync_Calendar</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_OperationalCalendar_Timezone_Disclaimer --></label>
+        <name>ISSP_OperationalCalendar_Timezone_Disclaimer</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_OperationalCalendar_TypeFilter --></label>
+        <name>ISSP_OperationalCalendar_TypeFilter</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_OperationalCalendar_Type_Filter_Required --></label>
+        <name>ISSP_OperationalCalendar_Type_Filter_Required</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_Opt_In --></label>
@@ -21554,6 +21626,10 @@ Pour réinitialiser votre mot de passe, retournez à l&apos;écran de connexion 
     <customLabels>
         <label><!-- Title_Home_Page --></label>
         <name>Title_Home_Page</name>
+    </customLabels>
+    <customLabels>
+        <label>Coût total</label>
+        <name>Total_Cost</name>
     </customLabels>
     <customLabels>
         <label><!-- Total Price --></label>

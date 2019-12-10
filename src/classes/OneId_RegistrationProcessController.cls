@@ -903,7 +903,7 @@ public without sharing class OneId_RegistrationProcessController {
 			}
 		}
 
-		if (acc.Sector__c == 'Travel Agent'){
+		if (acc.Sector__c == 'Travel Agent' || acc.Sector__c == 'Cargo Agent'){
 			profileName = ISSP_Constant.profilNameByUserTypeMap.get(userType).get('Agency');
 		}
 		else if (acc.Sector__c == 'Airline'){

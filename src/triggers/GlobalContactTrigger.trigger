@@ -120,6 +120,9 @@ trigger GlobalContactTrigger on Contact (after delete, after insert, after undel
                     }
                 }
             }
+
+            //HK TR18-158 - Move all fields updates on Contact to the trigger
+            WorkflowHelper.performActions(WorkflowHelper.CONTACT_TYPE);
         }
         /*Share trigger code*/
             

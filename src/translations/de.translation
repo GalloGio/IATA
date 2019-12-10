@@ -5895,6 +5895,26 @@ und &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-port
         <name>IDCard_CardDuration</name>
     </customLabels>
     <customLabels>
+        <label><!-- IDCard_CardType_DigCard --></label>
+        <name>IDCard_CardType_DigCard</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IDCard_CardType_DigCardNo --></label>
+        <name>IDCard_CardType_DigCardNo</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IDCard_CardType_PhysCard --></label>
+        <name>IDCard_CardType_PhysCard</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IDCard_CardType_PhysCardYes --></label>
+        <name>IDCard_CardType_PhysCardYes</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IDCard_CardType_WishToRecieve --></label>
+        <name>IDCard_CardType_WishToRecieve</name>
+    </customLabels>
+    <customLabels>
         <label>Details der Anfrage</label>
         <name>IDCard_CaseDetails</name>
     </customLabels>
@@ -6151,6 +6171,10 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <name>IDCard_Details</name>
     </customLabels>
     <customLabels>
+        <label><!-- IDCard Discount --></label>
+        <name>IDCard_Discount</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ID Card Displayed Name Remaining Character --></label>
         <name>IDCard_DisplayedName_RemainingCharacter</name>
     </customLabels>
@@ -6203,6 +6227,10 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <name>IDCard_Expedite_Note</name>
     </customLabels>
     <customLabels>
+        <label><!-- IDCard_Expedite_Text --></label>
+        <name>IDCard_Expedite_Text</name>
+    </customLabels>
+    <customLabels>
         <label><!-- IDCard ExportCSV --></label>
         <name>IDCard_ExportCSV</name>
     </customLabels>
@@ -6213,6 +6241,10 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
     <customLabels>
         <label>Gebühren</label>
         <name>IDCard_Fees</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IDCard_FeesPhysical --></label>
+        <name>IDCard_FeesPhysical</name>
     </customLabels>
     <customLabels>
         <label><!-- IDCard_FileUploadSuccess --></label>
@@ -6672,6 +6704,10 @@ Should you have any question about payment by bank transfer, please visit &lt;a 
         <name>IDCard_PortalPage_SubMenu_ReplaceRenew</name>
     </customLabels>
     <customLabels>
+        <label><!-- IDCard_PromotionCode --></label>
+        <name>IDCard_PromotionCode</name>
+    </customLabels>
+    <customLabels>
         <label><!-- IDCard Purchase --></label>
         <name>IDCard_Purchase</name>
     </customLabels>
@@ -6843,6 +6879,10 @@ Kindly note that home-based agents are required to coordinate with their colleag
     <customLabels>
         <label><!-- IDCard error 20 hours required --></label>
         <name>IDCard_error_20_hours_required</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ID Card fee --></label>
+        <name>IDCard_fee</name>
     </customLabels>
     <customLabels>
         <label><!-- IDCard hasPhoto --></label>
@@ -7213,6 +7253,10 @@ Kindly note that home-based agents are required to coordinate with their colleag
         <name>ID_Card_Specifics</name>
     </customLabels>
     <customLabels>
+        <label><!-- ID_Card_Taxes --></label>
+        <name>ID_Card_Taxes</name>
+    </customLabels>
+    <customLabels>
         <label>&quot;I have read and accept the 
 &lt;a href=&quot;&quot;JavaScript:newPopup(&apos;http://www.iata.org/Pages/privacy.aspx&apos;); &quot;&quot;&gt;Privacy Policy, Conditions of Use &lt;/a&gt; 
 and 
@@ -7233,6 +7277,10 @@ and
     <customLabels>
         <label><!-- ID Card To Agency --></label>
         <name>ID_Card_To_Agency</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ID_Card_Training_Fee --></label>
+        <name>ID_Card_Training_Fee</name>
     </customLabels>
     <customLabels>
         <label><!-- ID Card Upload Proof --></label>
@@ -16379,6 +16427,10 @@ Wenn weiterhin Probleme bei der Registrierung zum IATA Kundenportal bestehen, be
         <name>ISSP_OperationalCalendar_CurrencyFilter</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_OperationalCalendar_CycleFilter --></label>
+        <name>ISSP_OperationalCalendar_CycleFilter</name>
+    </customLabels>
+    <customLabels>
         <label>Download-Datum</label>
         <name>ISSP_OperationalCalendar_DownloadDate</name>
     </customLabels>
@@ -16423,6 +16475,10 @@ Wenn weiterhin Probleme bei der Registrierung zum IATA Kundenportal bestehen, be
         <name>ISSP_OperationalCalendar_No_Events</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP OperationalCalendar PDFFooterText --></label>
+        <name>ISSP_OperationalCalendar_PDFFooterText</name>
+    </customLabels>
+    <customLabels>
         <label>Zurücksetzen</label>
         <name>ISSP_OperationalCalendar_Reset</name>
     </customLabels>
@@ -16431,8 +16487,24 @@ Wenn weiterhin Probleme bei der Registrierung zum IATA Kundenportal bestehen, be
         <name>ISSP_OperationalCalendar_Show_Calendar</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_OperationalCalendar_SubtypeFilter --></label>
+        <name>ISSP_OperationalCalendar_SubtypeFilter</name>
+    </customLabels>
+    <customLabels>
         <label>Kalender synchronisieren</label>
         <name>ISSP_OperationalCalendar_Sync_Calendar</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_OperationalCalendar_Timezone_Disclaimer --></label>
+        <name>ISSP_OperationalCalendar_Timezone_Disclaimer</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_OperationalCalendar_TypeFilter --></label>
+        <name>ISSP_OperationalCalendar_TypeFilter</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_OperationalCalendar_Type_Filter_Required --></label>
+        <name>ISSP_OperationalCalendar_Type_Filter_Required</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_Opt_In --></label>
@@ -21520,6 +21592,10 @@ Wenn Sie Ihr Passwort zurücksetzen möchten, gehen Sie bitte zum Log-in-Bildsch
     <customLabels>
         <label><!-- Title_Home_Page --></label>
         <name>Title_Home_Page</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Total_Cost --></label>
+        <name>Total_Cost</name>
     </customLabels>
     <customLabels>
         <label><!-- Total Price --></label>

@@ -1362,6 +1362,11 @@
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
+        <displayedFields>
+            <field>ISSP_AMS_GDS_with_signed_contract__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
         <label>NG vmfr</label>
     </fieldSets>
     <fieldSets>
@@ -5525,6 +5530,11 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
                     <default>false</default>
                     <label>Daily</label>
                 </value>
+                <value>
+                    <fullName>L</fullName>
+                    <default>false</default>
+                    <label>Long Daily</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
         <visibleLines>10</visibleLines>
@@ -7177,6 +7187,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
                 <default>false</default>
             </values>
             <values>
+                <fullName>L</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>M</fullName>
                 <default>false</default>
             </values>
@@ -8073,6 +8087,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
                 <default>false</default>
             </values>
             <values>
+                <fullName>L</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>M</fullName>
                 <default>false</default>
             </values>
@@ -8860,6 +8878,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
             <values>
                 <fullName>F</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>L</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -9653,6 +9675,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
                 <default>false</default>
             </values>
             <values>
+                <fullName>L</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>M</fullName>
                 <default>false</default>
             </values>
@@ -10440,6 +10466,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
             <values>
                 <fullName>F</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>L</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -11245,6 +11275,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
                 <default>false</default>
             </values>
             <values>
+                <fullName>L</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>M</fullName>
                 <default>false</default>
             </values>
@@ -12044,6 +12078,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
             <values>
                 <fullName>F</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>L</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -12849,6 +12887,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
                 <default>false</default>
             </values>
             <values>
+                <fullName>L</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>M</fullName>
                 <default>false</default>
             </values>
@@ -13648,6 +13690,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
             <values>
                 <fullName>F</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>L</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -14488,6 +14534,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
             <values>
                 <fullName>F</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>L</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -15379,6 +15429,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
                 <default>false</default>
             </values>
             <values>
+                <fullName>L</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>M</fullName>
                 <default>false</default>
             </values>
@@ -16177,6 +16231,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
             <values>
                 <fullName>F</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>L</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -17038,6 +17096,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
             <values>
                 <fullName>F</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>L</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -17995,6 +18057,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
                 <default>false</default>
             </values>
             <values>
+                <fullName>L</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>M</fullName>
                 <default>false</default>
             </values>
@@ -18913,6 +18979,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
             <values>
                 <fullName>F</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>L</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -19867,6 +19937,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
             <values>
                 <fullName>F</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>L</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -20840,6 +20914,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
                 <default>false</default>
             </values>
             <values>
+                <fullName>L</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>M</fullName>
                 <default>false</default>
             </values>
@@ -21440,6 +21518,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
             <values>
                 <fullName>F</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>L</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -22260,6 +22342,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
             <values>
                 <fullName>F</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>L</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -23163,6 +23249,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
                 <default>false</default>
             </values>
             <values>
+                <fullName>L</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>M</fullName>
                 <default>false</default>
             </values>
@@ -23978,6 +24068,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
             <values>
                 <fullName>F</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>L</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -24858,6 +24952,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
                 <default>false</default>
             </values>
             <values>
+                <fullName>L</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>M</fullName>
                 <default>false</default>
             </values>
@@ -25708,6 +25806,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
             <values>
                 <fullName>F</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>L</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -26671,6 +26773,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </values>
             <values>
                 <fullName>F</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>L</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -27648,6 +27754,10 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
                 <default>false</default>
             </values>
             <values>
+                <fullName>L</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>M</fullName>
                 <default>false</default>
             </values>
@@ -27951,6 +28061,7 @@ ANG_IsNewGenAgency__c,
 
 NOT( Branch_Office_Country__r.ISO_Code__c  = &apos;BR&apos;),
 
+IF(INCLUDES(Remittance_frequency__c , &quot;L&quot;),1,0) +
 IF(INCLUDES(Remittance_frequency__c , &quot;M&quot;),1,0) +
 IF(INCLUDES(Remittance_frequency__c , &quot;F&quot;),1,0) +
 IF(INCLUDES(Remittance_frequency__c , &quot;R&quot;),1,0) +
@@ -27966,7 +28077,8 @@ AND(
 ANG_IsNewGenAgency__c,
 
 Branch_Office_Country__r.ISO_Code__c  = &apos;BR&apos;,
-
+				
+IF(INCLUDES(Remittance_frequency__c , &quot;L&quot;),1,0) +
 IF(INCLUDES(Remittance_frequency__c , &quot;M&quot;),1,0) +
 IF(INCLUDES(Remittance_frequency__c , &quot;F&quot;),1,0) +
 IF(INCLUDES(Remittance_frequency__c , &quot;R&quot;),1,0) +
