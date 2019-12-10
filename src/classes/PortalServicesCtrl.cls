@@ -1570,13 +1570,13 @@ public static Boolean grantAccess(string contactId,string serviceId,string reaso
 	//It should retun all the services that he can assign to the contact he is creating
 	@AuraEnabled(cacheable=true)
 	public static List<Portal_Applications__c> getAvailableServicesForNewContact(){
-		List<Portal_Applications__c> services = getPortalApplications();
-		for(Portal_Applications__c service : services){
-			if(service.Cannot_be_managed_by_portal_admin__c){
-				services.remove(services.indexOf(service));
+		List<Portal_Applications__c> toReturn = new List<Portal_Applications__c>();
+		for(Portal_Applications__c service : getPortalApplications()){
+			if(!service.Cannot_be_managed_by_portal_admin__c){
+				toReturn.add(service);
 			}
 		}
-		return services;
+		return toReturn;
 	}
 
 }
