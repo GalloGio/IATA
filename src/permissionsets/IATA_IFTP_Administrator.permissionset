@@ -8203,10 +8203,6 @@
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <recordTypeVisibilities>
-        <recordType>Account_Contact_Role__c.ITP</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
         <recordType>Account_Contact_Role__c.Master</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
