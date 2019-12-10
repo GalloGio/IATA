@@ -538,6 +538,14 @@
                 <valueName>TIDS Agent</valueName>
             </valueSettings>
             <valueSettings>
+                <controllingFieldValue>Travel Agent</controllingFieldValue>
+                <valueName>IATAN Passenger Sales Agent (USA Only)</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Travel Agent</controllingFieldValue>
+                <valueName>Travel Service Intermediaries-TSI (USA Only)</valueName>
+            </valueSettings>
+            <valueSettings>
                 <controllingFieldValue>Accommodation</controllingFieldValue>
                 <valueName>Apartment and Villa Rental</valueName>
             </valueSettings>
