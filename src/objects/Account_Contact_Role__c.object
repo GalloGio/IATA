@@ -510,6 +510,60 @@
         </picklistValues>
     </recordTypes>
     <recordTypes>
+        <fullName>ITP</fullName>
+        <active>true</active>
+        <compactLayoutAssignment>IFTP_Compact_Layout</compactLayoutAssignment>
+        <label>ITP</label>
+        <picklistValues>
+            <picklist>Contact_Role__c</picklist>
+            <values>
+                <fullName>ITP Administrator</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ITP Master</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ITP Trainee</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ITP Training Coordinator</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Integration_Status__c</picklist>
+            <values>
+                <fullName>Error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Queued</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Success</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Last_Integration_Operation__c</picklist>
+            <values>
+                <fullName>delete</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>insert</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>update</fullName>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
         <fullName>Master</fullName>
         <active>true</active>
         <description>Master RecordType</description>
