@@ -1153,15 +1153,17 @@ public static Boolean massGrantAccess(List<String> contactIds, String serviceId,
 		psa.Access_Status_Reason__c = reason;
 		appRightsToUpdate.add(psa);
 	}
-	
-	try {
-		update contactsToUpdateMap.values();
-		
-		ISSP_EditPortalServiceAccessExt.updateUserProfiles(new List<String>(contactsToUpdateMap.keySet()));
-	} catch(exception e) {
-		throw new portalServiceException(Label.ISSP_ANG_GenericError);
-	}
-
+    
+    if(!contactsToUpdateMap.keySet().isEmpty()){
+        try {
+            update contactsToUpdateMap.values();
+            
+            ISSP_EditPortalServiceAccessExt.updateUserProfiles(new List<String>(contactsToUpdateMap.keySet()));
+        } catch(exception e) {
+            throw e;
+            //throw new portalServiceException(Label.ISSP_ANG_GenericError);
+        }
+    }
 	if(contactsToStatusChangeList != null && !contactsToStatusChangeList.isEmpty()) {
 		ISSP_ContactList ctrl = new ISSP_ContactList();
 
