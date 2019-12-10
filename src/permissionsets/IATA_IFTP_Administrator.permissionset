@@ -411,11 +411,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Account.BSP_non_air__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Account.BSPlink_code__c</field>
         <readable>true</readable>
     </fieldPermissions>
