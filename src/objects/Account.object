@@ -9776,6 +9776,29 @@ V - Co-operative</inlineHelpText>
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>D_B_Company__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>D&amp;B Company</label>
+        <lookupFilter>
+            <active>true</active>
+            <errorMessage>Value does not exist or the D&amp;B Company entered is out of business.</errorMessage>
+            <filterItems>
+                <field>D_B_Company__c.Out_of_Business__c</field>
+                <operation>equals</operation>
+                <value>False</value>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>D_B_Company__c</referenceTo>
+        <relationshipLabel>Accounts</relationshipLabel>
+        <relationshipName>Accounts</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>Data_Quality_Description__c</fullName>
         <externalId>false</externalId>
         <formula>IF( Data_Quality_Score__c =100,&quot;All Account Details Captured&quot;, &quot;Missing: &quot;&amp;IF( ISPICKVAL( Status__c,&quot;&quot;),&quot;Status, &quot;,&quot;&quot;)&amp;&quot;&quot; &amp;IF( ISPICKVAL( Location_Type__c,&quot;&quot;),&quot;Location Type, &quot;,&quot;&quot;)&amp;&quot;&quot; &amp;IF( LEN(Name) = 0, &quot;Name, &quot;,&quot;&quot;)&amp;&quot;&quot; &amp;IF( LEN(IATACode__c) != 8, &quot;IATA Code short, &quot;,&quot;&quot;)&amp;&quot;&quot; &amp;IF( ISPICKVAL( Sector__c,&quot;&quot;),&quot;Sector, &quot;,&quot;&quot;)&amp;&quot;&quot; &amp;IF( ISPICKVAL( Category__c,&quot;&quot;),&quot;Category, &quot;,&quot;&quot;)&amp;&quot;&quot; &amp;IF( LEN(Reason__c) = 0, &quot;Reason, &quot;,&quot;&quot;)&amp;&quot;&quot; &amp;IF( LEN(Short_Name__c) = 0, &quot;Short Name, &quot;,&quot;&quot;)&amp;&quot;&quot; &amp;IF( ISPICKVAL(Company_Type__c,&quot;&quot;),&quot;Company Type, &quot;,&quot;&quot;)&amp;&quot;&quot; &amp;IF(AND(OR(ISPICKVAL(Location_Type__c,&quot;HO&quot;),ISPICKVAL(Location_Type__c,&quot;AO&quot;)),Has_a_Financial_Assessment_Contact__c = FALSE), &quot;Financial Assessment Contact, &quot;,&quot;&quot;)&amp;&quot;&quot; &amp;IF(AND(OR(ISPICKVAL(Location_Type__c,&quot;HO&quot;),ISPICKVAL(Location_Type__c,&quot;AO&quot;)),Has_an_Administrator_User_Portal__c = FALSE), &quot;Portal Admin User, &quot;,&quot;&quot;)&amp;&quot;&quot; &amp;IF(AND(OR(ISPICKVAL(Location_Type__c,&quot;HO&quot;),ISPICKVAL(Location_Type__c,&quot;AO&quot;)),ISPICKVAL(Fin_statements_submission_deadline__c,&quot;&quot;)), &quot;FA Submis. Deadline, &quot;,&quot;&quot;)&amp;&quot;&quot;
@@ -9980,6 +10003,18 @@ OR(ISPICKVAL(Location_Class__c,&quot;P&quot;),ISPICKVAL(Location_Class__c,&quot;
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Domestic_Ultimate_Account_Global_ID__c</fullName>
+        <description>The Account Global ID of the highest ranking company within a country for a hierarchy. There can only be one Domestic Ultimate per Country.</description>
+        <externalId>false</externalId>
+        <label>Domestic Ultimate Account Global ID</label>
+        <length>13</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Due_Diligence_Remarks__c</fullName>
@@ -10907,6 +10942,18 @@ WSPN-Worldspan</inlineHelpText>
         <type>AutoNumber</type>
     </fields>
     <fields>
+        <fullName>Global_Ultimate_Account_Global_ID__c</fullName>
+        <description>The Account Global ID of the highest ranking company globally for a hierarchy. There can only be one Global Ultimate per hierarchy.</description>
+        <externalId>false</externalId>
+        <label>Global Ultimate Account Global ID</label>
+        <length>13</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Guaranteed_amount__c</fullName>
         <description>SARA</description>
         <externalId>false</externalId>
@@ -11100,6 +11147,18 @@ WSPN-Worldspan</inlineHelpText>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Headquarter_Account_Global_ID__c</fullName>
+        <description>The Account Global ID of the headquarter to which this branch reports. This data will only be populated branch Accounts.</description>
+        <externalId>false</externalId>
+        <label>Headquarter Account Global ID</label>
+        <length>13</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
         <unique>false</unique>
     </fields>
     <fields>
@@ -13680,6 +13739,16 @@ Approval: Key Contact can see pending request approve it one by one</inlineHelpT
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Is_D_B_Branch__c</fullName>
+        <description>If the D&amp;B Company record has an associated Headquarter, then this Account is a Branch according to D&amp;B.</description>
+        <externalId>false</externalId>
+        <formula>NOT(ISBLANK(D_B_Company__r.Headquarter_DUNS_Number__c))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Is D&amp;B Branch?</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Is_General_Public_Account__c</fullName>
         <defaultValue>false</defaultValue>
         <description>Indicates if the Account is a General Public account</description>
@@ -14584,6 +14653,18 @@ J-Joint Vent</inlineHelpText>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Main Accreditation Organization</label>
         <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Majority_Owner_Account_Global_ID__c</fullName>
+        <description>The Account Global ID number of the Parent company that is the majority shareholder (&gt;50%). If this data is present then this Account is a Subsidiary.</description>
+        <externalId>false</externalId>
+        <label>Majority Owner Account Global ID</label>
+        <length>13</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>

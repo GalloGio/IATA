@@ -487,6 +487,8 @@ private class IDCard_ApplicationFormNRControllerTest {
         //matches with idcard application promo code
         system.debug('##IDCardApplicationNR : ' + ctrl.IDCardApplicationNR.Promotion_Code__c);
         ctrl.IDCardApplicationNR.Promotion_Code__c = 'PROMOP';
+        //the following line covers the cardTypeList variable on the controller
+        List<SelectOption> cList = ctrl.cardTypeList;
         ctrl.CalculateApplicationFee();
         
         Promotion__c[] listPromotion1 = [Select p.Promotion_Value__c, p.Promotion_Duration_Valid_Up_to__c, p.Promotion_Duration_Valid_From__c, p.Promotion_Code__c, p.Type_of_Application__c From Promotion__c p where p.Promotion_Code__c = :ctrl.IDCardApplicationNR.Promotion_Code__c];
