@@ -1815,6 +1815,11 @@ visibility: hidden;
     max-height: calc(10rem);
 }
 
+
+.firstLevelRegistrationCombobox .slds-dropdown_length-with-icon-10{
+    max-height: calc(18rem);
+}
+
 /* USER INACTIVE POPUP */
 .siteforcePanelsContainer>div{
     z-index: 5000 !important;
