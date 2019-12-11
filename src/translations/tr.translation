@@ -3213,6 +3213,10 @@
         <name>CSP_Services_AccessRequestedTitle</name>
     </customLabels>
     <customLabels>
+        <label>Favorilere ekle</label>
+        <name>CSP_Services_AddFavorite</name>
+    </customLabels>
+    <customLabels>
         <label>Şirketiniz için mevcut tüm hizmetler aşağıda listelenmiştir.</label>
         <name>CSP_Services_AvailableServicesHelpText</name>
     </customLabels>
@@ -3245,6 +3249,10 @@
         <name>CSP_Services_MyServicesTabTile</name>
     </customLabels>
     <customLabels>
+        <label>Favoriyi kaldır</label>
+        <name>CSP_Services_RemoveFavorite</name>
+    </customLabels>
+    <customLabels>
         <label>Mevcut Hizmetlere Bakın</label>
         <name>CSP_Services_RequestServiceBannerButton</name>
     </customLabels>
@@ -3261,11 +3269,11 @@
         <name>CSP_Services_ServiceInformation</name>
     </customLabels>
     <customLabels>
-        <label>Hepsini Göster<label>
+        <label>Hepsini Göster</label>
         <name>CSP_Services_ShowAll</name>
     </customLabels>
     <customLabels>
-        <label>Yalnızca Favorileri Göster<label>
+        <label>Yalnızca Favorileri Göster</label>
         <name>CSP_Services_ShowOnlyFavorites</name>
     </customLabels>
     <customLabels>

@@ -3218,6 +3218,10 @@ la seguente procedura per completarlo :
         <name>CSP_Services_AccessRequestedTitle</name>
     </customLabels>
     <customLabels>
+        <label>Aggiungere preferito</label>
+        <name>CSP_Services_AddFavorite</name>
+    </customLabels>
+    <customLabels>
         <label>Tutti i servizi disponibili per la sua azienda sono elencati di seguito.</label>
         <name>CSP_Services_AvailableServicesHelpText</name>
     </customLabels>
@@ -3250,6 +3254,10 @@ la seguente procedura per completarlo :
         <name>CSP_Services_MyServicesTabTile</name>
     </customLabels>
     <customLabels>
+        <label>Rimuovere preferito</label>
+        <name>CSP_Services_RemoveFavorite</name>
+    </customLabels>
+    <customLabels>
         <label>Vedi i servizi disponibili</label>
         <name>CSP_Services_RequestServiceBannerButton</name>
     </customLabels>
@@ -3266,11 +3274,11 @@ la seguente procedura per completarlo :
         <name>CSP_Services_ServiceInformation</name>
     </customLabels>
     <customLabels>
-        <label>Mostra tutto<label>
+        <label>Mostra tutto</label>
         <name>CSP_Services_ShowAll</name>
     </customLabels>
     <customLabels>
-        <label>Mostra solo preferiti<label>
+        <label>Mostra solo preferiti</label>
         <name>CSP_Services_ShowOnlyFavorites</name>
     </customLabels>
     <customLabels>

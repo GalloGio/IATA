@@ -3213,6 +3213,10 @@
         <name>CSP_Services_AccessRequestedTitle</name>
     </customLabels>
     <customLabels>
+        <label>إضافة مفضَّلة</label>
+        <name>CSP_Services_AddFavorite</name>
+    </customLabels>
+    <customLabels>
         <label>جميع الخدمات المتاحة لشركتك مدرجة أدناه.</label>
         <name>CSP_Services_AvailableServicesHelpText</name>
     </customLabels>
@@ -3245,6 +3249,10 @@
         <name>CSP_Services_MyServicesTabTile</name>
     </customLabels>
     <customLabels>
+        <label>إزالة مفضَّلة</label>
+        <name>CSP_Services_RemoveFavorite</name>
+    </customLabels>
+    <customLabels>
         <label>عرض الخدمات المتاحة</label>
         <name>CSP_Services_RequestServiceBannerButton</name>
     </customLabels>
@@ -3261,11 +3269,11 @@
         <name>CSP_Services_ServiceInformation</name>
     </customLabels>
     <customLabels>
-        <label>عرض الكل<label>
+        <label>عرض الكل</label>
         <name>CSP_Services_ShowAll</name>
     </customLabels>
     <customLabels>
-        <label>عرض المفضلة فقط<label>
+        <label>عرض المفضلة فقط</label>
         <name>CSP_Services_ShowOnlyFavorites</name>
     </customLabels>
     <customLabels>
@@ -16500,7 +16508,7 @@ and
     </customLabels>
     <customLabels>
         <label><!-- ISSP_Opt_In --></label>
-        <name>ISSP_Opt_In</name>
+        <name>ISSP_Opt_In</nsame>
     </customLabels>
     <customLabels>
         <label><!-- ISSP Optional --></label>

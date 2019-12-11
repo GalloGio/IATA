@@ -3215,6 +3215,10 @@
         <name>CSP_Services_AccessRequestedTitle</name>
     </customLabels>
     <customLabels>
+        <label>Thêm mục yêu thích</label>
+        <name>CSP_Services_AddFavorite</name>
+    </customLabels>
+    <customLabels>
         <label>Tất cả các dịch vụ có sẵn cho công ty của bạn được liệt kê dưới đây.</label>
         <name>CSP_Services_AvailableServicesHelpText</name>
     </customLabels>
@@ -3247,6 +3251,10 @@
         <name>CSP_Services_MyServicesTabTile</name>
     </customLabels>
     <customLabels>
+        <label>Xóa mục yêu thích</label>
+        <name>CSP_Services_RemoveFavorite</name>
+    </customLabels>
+    <customLabels>
         <label>Xem các dịch vụ có sẵn</label>
         <name>CSP_Services_RequestServiceBannerButton</name>
     </customLabels>
@@ -3263,11 +3271,11 @@
         <name>CSP_Services_ServiceInformation</name>
     </customLabels>
     <customLabels>
-        <label>Hiển thị tất cả<label>
+        <label>Hiển thị tất cả</label>
         <name>CSP_Services_ShowAll</name>
     </customLabels>
     <customLabels>
-        <label>Chỉ hiển thị yêu thích<label>
+        <label>Chỉ hiển thị yêu thích</label>
         <name>CSP_Services_ShowOnlyFavorites</name>
     </customLabels>
     <customLabels>

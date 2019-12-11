@@ -3215,6 +3215,10 @@
         <name>CSP_Services_AccessRequestedTitle</name>
     </customLabels>
     <customLabels>
+        <label>Добавить в избранное</label>
+        <name>CSP_Services_AddFavorite</name>
+    </customLabels>
+    <customLabels>
         <label>Все доступные услуги для вашей компании перечислены ниже.</label>
         <name>CSP_Services_AvailableServicesHelpText</name>
     </customLabels>
@@ -3247,6 +3251,10 @@
         <name>CSP_Services_MyServicesTabTile</name>
     </customLabels>
     <customLabels>
+        <label>Удалить избранное</label>
+        <name>CSP_Services_RemoveFavorite</name>
+    </customLabels>
+    <customLabels>
         <label>Смотреть доступные услуги</label>
         <name>CSP_Services_RequestServiceBannerButton</name>
     </customLabels>
@@ -3263,11 +3271,11 @@
         <name>CSP_Services_ServiceInformation</name>
     </customLabels>
     <customLabels>
-        <label>Показать всё<label>
+        <label>Показать всё</label>
         <name>CSP_Services_ShowAll</name>
     </customLabels>
     <customLabels>
-        <label>Показать только избранное<label>
+        <label>Показать только избранное</label>
         <name>CSP_Services_ShowOnlyFavorites</name>
     </customLabels>
     <customLabels>

@@ -3216,6 +3216,10 @@
         <name>CSP_Services_AccessRequestedTitle</name>
     </customLabels>
     <customLabels>
+        <label>Añadir favorito</label>
+        <name>CSP_Services_AddFavorite</name>
+    </customLabels>
+    <customLabels>
         <label>Todos los servicios disponibles para su empresa se enumeran a continuación.</label>
         <name>CSP_Services_AvailableServicesHelpText</name>
     </customLabels>
@@ -3248,6 +3252,10 @@
         <name>CSP_Services_MyServicesTabTile</name>
     </customLabels>
     <customLabels>
+        <label>Eliminar favorito</label>
+        <name>CSP_Services_RemoveFavorite</name>
+    </customLabels>
+    <customLabels>
         <label>Ver servicios disponibles</label>
         <name>CSP_Services_RequestServiceBannerButton</name>
     </customLabels>
@@ -3264,11 +3272,11 @@
         <name>CSP_Services_ServiceInformation</name>
     </customLabels>
     <customLabels>
-        <label>Mostrar todo<label>
+        <label>Mostrar todo</label>
         <name>CSP_Services_ShowAll</name>
     </customLabels>
     <customLabels>
-        <label>Mostrar solo favoritos<label>
+        <label>Mostrar solo favoritos</label>
         <name>CSP_Services_ShowOnlyFavorites</name>
     </customLabels>
     <customLabels>

@@ -3219,6 +3219,10 @@ und &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-port
         <name>CSP_Services_AccessRequestedTitle</name>
     </customLabels>
     <customLabels>
+        <label>Favorit hinzufügen</label>
+        <name>CSP_Services_AddFavorite</name>
+    </customLabels>
+    <customLabels>
         <label>Alle verfügbaren Dienstleistungen für Ihr Unternehmen sind unten aufgeführt.</label>
         <name>CSP_Services_AvailableServicesHelpText</name>
     </customLabels>
@@ -3251,6 +3255,10 @@ und &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-port
         <name>CSP_Services_MyServicesTabTile</name>
     </customLabels>
     <customLabels>
+        <label>Favorit entfernen</label>
+        <name>CSP_Services_RemoveFavorite</name>
+    </customLabels>
+    <customLabels>
         <label>Verfügbare Dienste anzeigen</label>
         <name>CSP_Services_RequestServiceBannerButton</name>
     </customLabels>
@@ -3267,11 +3275,11 @@ und &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-port
         <name>CSP_Services_ServiceInformation</name>
     </customLabels>
     <customLabels>
-        <label>Alle anzeigen<label>
+        <label>Alle anzeigen</label>
         <name>CSP_Services_ShowAll</name>
     </customLabels>
     <customLabels>
-        <label>Nur Favoriten anzeigen<label>
+        <label>Nur Favoriten anzeigen</label>
         <name>CSP_Services_ShowOnlyFavorites</name>
     </customLabels>
     <customLabels>

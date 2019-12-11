@@ -3213,6 +3213,10 @@
         <name>CSP_Services_AccessRequestedTitle</name>
     </customLabels>
     <customLabels>
+        <label>添加收藏</label>
+        <name>CSP_Services_AddFavorite</name>
+    </customLabels>
+    <customLabels>
         <label>下面列出了贵公司的所有可用服务。</label>
         <name>CSP_Services_AvailableServicesHelpText</name>
     </customLabels>
@@ -3243,6 +3247,10 @@
     <customLabels>
         <label>我的服务</label>
         <name>CSP_Services_MyServicesTabTile</name>
+    </customLabels>
+    <customLabels>
+        <label>删除收藏</label>
+        <name>CSP_Services_RemoveFavorite</name>
     </customLabels>
     <customLabels>
         <label>查看可用服务</label>

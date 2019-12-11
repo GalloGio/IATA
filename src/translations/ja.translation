@@ -3217,6 +3217,10 @@
         <name>CSP_Services_AccessRequestedTitle</name>
     </customLabels>
     <customLabels>
+        <label>お気に入りを追加する</label>
+        <name>CSP_Services_AddFavorite</name>
+    </customLabels>
+    <customLabels>
         <label>貴社のご利用可能な全サービスは以下の通りです。</label>
         <name>CSP_Services_AvailableServicesHelpText</name>
     </customLabels>
@@ -3249,6 +3253,10 @@
         <name>CSP_Services_MyServicesTabTile</name>
     </customLabels>
     <customLabels>
+        <label>お気に入りを削除する</label>
+        <name>CSP_Services_RemoveFavorite</name>
+    </customLabels>
+    <customLabels>
         <label>利用可能なサービスを表示</label>
         <name>CSP_Services_RequestServiceBannerButton</name>
     </customLabels>
@@ -3265,11 +3273,11 @@
         <name>CSP_Services_ServiceInformation</name>
     </customLabels>
     <customLabels>
-        <label>全てを表示する<label>
+        <label>全てを表示する</label>
         <name>CSP_Services_ShowAll</name>
     </customLabels>
     <customLabels>
-        <label>お気に入りのみを表示する<label>
+        <label>お気に入りのみを表示する</label>
         <name>CSP_Services_ShowOnlyFavorites</name>
     </customLabels>
     <customLabels>
