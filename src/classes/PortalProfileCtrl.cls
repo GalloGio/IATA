@@ -398,6 +398,8 @@ public static Contact contactInfo = new Contact();
 		public Boolean hasProducts;
 		@AuraEnabled
 		public Boolean selected;
+		@AuraEnabled
+		public String cardKey;
 	}
 
     public class CardWrapper{
