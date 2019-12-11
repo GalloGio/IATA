@@ -13,7 +13,6 @@ import insertCase from '@salesforce/apex/PortalSupportReachUsCreateNewCaseCtrl.i
 import csp_CreateNewCaseMainInputEmailsTopLabel from '@salesforce/label/c.csp_CreateNewCaseMainInputEmailsTopLabel';
 import csp_errorCreatingCase from '@salesforce/label/c.csp_errorCreatingCase';
 import IDCard_FillAllFields from '@salesforce/label/c.IDCard_FillAllFields';
-import CSP_Deduction_Notice_Israel_Description from '@salesforce/label/c.CSP_Deduction_Notice_Israel_Description';
 
 import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 
@@ -23,7 +22,6 @@ export default class IsraelDisputesCreateNewCase extends LightningElement {
         csp_CreateNewCaseMainInputEmailsTopLabel,
         csp_errorCreatingCase,
         IDCard_FillAllFields,
-        CSP_Deduction_Notice_Israel_Description,
     }
 
     calendarIcon = CSP_PortalPath + 'CSPortal/Images/Icons/calendar.svg'; 

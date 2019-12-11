@@ -124,14 +124,16 @@ public with sharing class PortalLoginCtrl {
 			|| oneUser.Contact.User_Portal_Status__c == 'Approved Admin')){
 				list<Portal_Applications__c> lstApp = [SELECT Id 
 														FROM Portal_Applications__c 
-														WHERE Application_URL__c = '/csportal/s/israel-disputes-create-new-case' 
+														WHERE Application_URL__c LIKE '%israel-disputes-create-new-case%' 
 														LIMIT 1];
-
-				try {
+				List<Portal_Application_Right__c> appRight = [SELECT Id 
+																FROM Portal_Application_Right__c 
+																WHERE Contact__c =: oneUser.ContactId 
+																AND Portal_Application__c =: lstApp[0].Id
+																AND Right__c = 'Access Granted'];
+				System.debug(appRight);
+				if(appRight.isEmpty())
 					LightningRegistrationProcess.insertDeductionNoticeApp(string.valueOf(oneUser.ContactId), string.valueOf(lstApp[0].Id));
-				} catch (Exception e) {
-					System.debug(e);
-				}
 			}
 
 			username=null != oneUser ? oneUser.Username : username;
