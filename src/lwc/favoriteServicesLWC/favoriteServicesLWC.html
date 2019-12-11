@@ -38,10 +38,10 @@
                                                     key={favoriteServicesTile.id} 
                                                     onclick={changeIsFavoriteStatus}>
                                                 <template if:true={favoriteServicesTile.Is_Favorite__c}>
-                                                    <img src={favoriteIcon} alt={label.CSP_Services_RemoveFavorite} class="favoriteIcon"/>
+                                                    <img src={favoriteIcon} alt={label.CSP_Services_RemoveFavorite} title={label.CSP_Services_RemoveFavorite} class="favoriteIcon"/>
                                                 </template>
                                                 <template if:false={favoriteServicesTile.Is_Favorite__c}>
-                                                    <img src={notFavoriteIcon} alt={label.CSP_Services_AddFavorite} class="favoriteIcon"/>
+                                                    <img src={notFavoriteIcon} alt={label.CSP_Services_AddFavorite} title={label.CSP_Services_AddFavorite} class="favoriteIcon"/>
                                                 </template>
                                             </div>
 
