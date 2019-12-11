@@ -31052,7 +31052,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             <default>false</default>
         </values>
         <values>
-            <fullName>Park</fullName>
+            <fullName>Park (Theme Park)</fullName>
             <default>false</default>
         </values>
         <values>
@@ -31100,7 +31100,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             <default>false</default>
         </values>
         <values>
-            <fullName>Training Centre</fullName>
+            <fullName>Training Center</fullName>
             <default>false</default>
         </values>
         <values>
@@ -31109,10 +31109,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         </values>
         <values>
             <fullName>Vendor</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Worldwide HQ</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -36218,10 +36214,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             <default>false</default>
         </values>
         <values>
-            <fullName>Education</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Equipment Manufacturer</fullName>
             <default>false</default>
         </values>
@@ -37950,7 +37942,7 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
     <picklistValues>
         <picklist>Special_remarks__c</picklist>
         <values>
-            <fullName>1</fullName>
+            <fullName>NDC</fullName>
             <default>false</default>
         </values>
     </picklistValues>
