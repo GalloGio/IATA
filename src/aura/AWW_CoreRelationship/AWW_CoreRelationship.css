@@ -1,0 +1,11 @@
+.THIS .bckColor{
+    background: inherit !important;
+}
+
+.THIS .slds-card__body {
+    margin-bottom: 0%
+}
+
+.THIS .margin_top {
+    margin-top: 20px;
+}
