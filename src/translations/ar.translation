@@ -16508,7 +16508,7 @@ and
     </customLabels>
     <customLabels>
         <label><!-- ISSP_Opt_In --></label>
-        <name>ISSP_Opt_In</nsame>
+        <name>ISSP_Opt_In</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP Optional --></label>
