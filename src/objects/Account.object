@@ -30679,17 +30679,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>BSP_non_air__c</picklist>
-        <values>
-            <fullName>No</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Yes</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>Branch_Type__c</picklist>
         <values>
             <fullName>Normal</fullName>
