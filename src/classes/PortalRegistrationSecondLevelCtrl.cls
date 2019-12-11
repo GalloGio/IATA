@@ -322,13 +322,24 @@ public without sharing class PortalRegistrationSecondLevelCtrl {
 
 			}
 
-			Portal_Application_Right__c portalApplicationRight = new Portal_Application_Right__c(
+			List<Portal_Application_Right__c> par = [SELECT id FROM Portal_Application_Right__c WHERE Contact__c = :con.Id AND Portal_Application__c = :pa.id LIMIT 1];
+
+			if(par != null && !par.isEmpty()){
+				Portal_Application_Right__c portalApplicationRight = par[0];
+				if(portalApplicationRight.Right__c != 'Access Requested'){
+					portalApplicationRight.Right__c = 'Access Requested';
+
+					update portalApplicationRight;
+				}
+			}else{
+				Portal_Application_Right__c portalApplicationRight = new Portal_Application_Right__c(
 					Portal_Application__c = pa.id,
 					Right__c = 'Access Requested',
 					Contact__c = con.Id,
 					Favourite_Service__c = true
 				);
 				insert portalApplicationRight;
+			}
 
 			accContRoleToInserted = [SELECT Id,Name, Company_Code__c FROM Account_Contact_Role__c WHERE id = :accContRoleToInserted.Id LIMIT 1];
 

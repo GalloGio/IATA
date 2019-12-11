@@ -1,24 +1,24 @@
 public without sharing class OneId_RegistrationProcessController {
 
-    public static Boolean isNewAcc = false;
-    public static Boolean createBranch = false;
-    public static String languageString = 'English';
-    public static Boolean isAlreadyContact = false;
+	public static Boolean isNewAcc = false;
+	public static Boolean createBranch = false;
+	public static String languageString = 'English';
+	public static Boolean isAlreadyContact = false;
 
-    @AuraEnabled
-    public static String getHostURL(){
-        return OneIdUtils.getOrgUrl();
-    }
+	@AuraEnabled
+	public static String getHostURL(){
+		return OneIdUtils.getOrgUrl();
+	}
 
-    @AuraEnabled
-    public static String getCommunityName(){
-        return OneIdUtils.getCommunityUrlName();
-    }
+	@AuraEnabled
+	public static String getCommunityName(){
+		return OneIdUtils.getCommunityUrlName();
+	}
 
-    @AuraEnabled
-    public static List<Account> getAccountsBySectorAndCategory(String sector, String cat, String country, String userInput) {
-        String recordTypesSet = '';
-        String categoryFilter = '';
+	@AuraEnabled
+	public static List<Account> getAccountsBySectorAndCategory(String sector, String cat, String country, String userInput) {
+		String recordTypesSet = '';
+		String categoryFilter = '';
 
 		if(sector == 'Airline'){
 			recordTypesSet = '(\'IATA_Airline\',\'Operator\')';
@@ -37,802 +37,698 @@ public without sharing class OneId_RegistrationProcessController {
 			recordTypesSet = '(\'Others\',\'Standard_Account\')';
 			categoryFilter = ' AND Category__c in (\'Global Distribution System\',\'Content Aggregator\', \'System Solutions Provider\')';
 		}
-		
+
 		if(recordTypesSet == ''){
 			System.debug('NDCMM - invalid sector-category combination : "' + sector + '" - "' + cat + '"');
 			return new List<Account>();
 		}
 
-        String queryStr = 'SELECT Id, IATACode__c, Airline_designator__c, Field_Head_Office__c, Name, BillingStreet, BillingCity, BillingCountry FROM Account WHERE ';
-        queryStr += ' RecordType.DeveloperName in ' + recordTypesSet;
-        queryStr += ' AND Sector__c = \'' + sector + '\'';
-        queryStr += categoryFilter;
-        queryStr += ' AND IATA_ISO_Country__c = \'' + country + '\'';
-        queryStr += ' AND Name like \'%' + userInput + '%\'';
+		String queryStr = 'SELECT Id, IATACode__c, Airline_designator__c, Field_Head_Office__c, Name, BillingStreet, BillingCity, BillingCountry FROM Account WHERE ';
+		queryStr += ' RecordType.DeveloperName in ' + recordTypesSet;
+		queryStr += ' AND Sector__c = \'' + sector + '\'';
+		queryStr += categoryFilter;
+		queryStr += ' AND IATA_ISO_Country__c = \'' + country + '\'';
+		queryStr += ' AND Name like \'%' + userInput + '%\'';
 
-        system.debug(queryStr);
+		system.debug(queryStr);
 
-        list<Account> accs = Database.query(queryStr);
-        system.debug(accs);
-        return accs;
-    }
+		list<Account> accs = Database.query(queryStr);
+		system.debug(accs);
+		return accs;
+	}
 
-    @AuraEnabled
-    public static String findLocation(String ipAddress){
+	@AuraEnabled
+	public static String findLocation(String ipAddress){
 
-        HttpRequest req = new HttpRequest();
-        req.setEndpoint('https://ipinfo.io/' + ipAddress + '/json?token=' + ISSP_CS__c.getInstance('ipinfo_token').Value__c);
-        req.setMethod('GET');
-        req.setTimeout(2000);
-        HttpResponse res;
+		HttpRequest req = new HttpRequest();
+		req.setEndpoint('https://ipinfo.io/' + ipAddress + '/json?token=' + ISSP_CS__c.getInstance('ipinfo_token').Value__c);
+		req.setMethod('GET');
+		req.setTimeout(2000);
+		HttpResponse res;
 
-        try{
-            res = new Http().send(req);
-            Map<String, String> response = (Map<String, String>)JSON.deserialize(res.getBody(), Map<String, String>.class);
-            return response.get('country');
+		try{
+			res = new Http().send(req);
+			Map<String, String> response = (Map<String, String>)JSON.deserialize(res.getBody(), Map<String, String>.class);
+			return response.get('country');
 
-        }catch(Exception e){
-            System.debug('Exception findLocation LightningRegistrationProcess...' + e);
-            return e.getMessage();
-        }
-    }
+		}catch(Exception e){
+			System.debug('Exception findLocation LightningRegistrationProcess...' + e);
+			return e.getMessage();
+		}
+	}
 
-    @AuraEnabled
-    public static UserInformation getUserInformation(String serviceName){
-        UserInformation userInformation = new UserInformation();
-        Integer guestUser = [SELECT count() FROM User WHERE Name = 'identity Site Guest User' AND Id =: UserInfo.getUserId()];
+	@AuraEnabled
+	public static UserInformation getUserInformation(String serviceName){
+		UserInformation userInformation = new UserInformation();
+		Integer guestUser = [SELECT count() FROM User WHERE Name = 'identity Site Guest User' AND Id =: UserInfo.getUserId()];
 
-        userInformation.isGuest = guestUser > 0;
+		userInformation.isGuest = guestUser > 0;
 
-        // This part has to be made generic, using the serviceName parameter
-        if(!userInformation.isGuest && serviceName == 'FRED'){
-            Integer fredAccess = [SELECT count() FROM PermissionSetAssignment WHERE AssigneeId =: UserInfo.getUserId() AND PermissionSet.Name = 'FRED_SSO'];
+		// This part has to be made generic, using the serviceName parameter
+		if(!userInformation.isGuest && serviceName == 'FRED'){
+			Integer fredAccess = [SELECT count() FROM PermissionSetAssignment WHERE AssigneeId =: UserInfo.getUserId() AND PermissionSet.Name = 'FRED_SSO'];
 
-            userInformation.isServiceUser = fredAccess > 0;
+			userInformation.isServiceUser = fredAccess > 0;
 
-            if(!userInformation.isServiceUser){
-                User usr = [SELECT AccountId FROM User where Id =: UserInfo.getUserId()];
+			if(!userInformation.isServiceUser){
+				User usr = [SELECT AccountId FROM User where Id =: UserInfo.getUserId()];
 
-                Account acc = [SELECT RecordTypeId, fredp_aircraftoperator_eligibility__c, RecordType.DeveloperName FROM Account WHERE Id =: usr.AccountId];
-
-
-                if((acc.RecordType.DeveloperName == 'IATA_Airline' ||  acc.RecordType.DeveloperName == 'Operator') && acc.fredp_aircraftoperator_eligibility__c){
-                    userInformation.isServiceEligible = true;
-                }
-                else if(acc.RecordType.DeveloperName == 'ICAO_Member_State' || acc.RecordType.DeveloperName == 'Verifiers'){
-                    userInformation.isServiceEligible = true;
-                }
-                else{
-                    userInformation.isServiceEligible = false;
-                }
-            }
-        }
-        // This part has to be made generic, using the serviceName parameter
-        if(!userInformation.isGuest && serviceName == 'NDCMM'){
-            User usr = [SELECT ContactId, AccountId
-            FROM User
-            WHERE Id =: UserInfo.getUserId()];
-
-            getNDCMMUserInformation(userInformation, usr.ContactId, usr.AccountId);
-        }
-        return userInformation;
-    }
-
-    private static void getNDCMMUserInformation(UserInformation userInformation, Id contactId, Id accountId){
-        // Step 1 : check if user requested access to NDC Matchmaker Service
-        // Step 1.1 : Retrieve the NDC Matchmaker Portal Service Id
-        One_Id_Service_Provider_Config__c oneIdService = [SELECT Portal_Service__c
-        FROM One_Id_Service_Provider_Config__c
-        WHERE Service_Provider_Name__c = 'NDCMM'
-        AND RecordType.DeveloperName = 'Service_Provider' LIMIT 1];
-
-        // Step 1.2 : Retrieve the Portal Service Access record
-        List<Portal_Application_Right__c> portalApplicationRights = [SELECT Right__c, Access_Pending_Detail__c
-        FROM Portal_Application_Right__c
-        WHERE Portal_Application__c =: oneIdService.Portal_Service__c
-        AND Contact__c =: contactId];
-
-        userInformation.isServiceUser = !portalApplicationRights.isEmpty();
-
-        // if access has already been requested yet, we can stop here
-        if(userInformation.isServiceUser){
-            //Don't return now because we need contact info to pass to email component
-            //return userInformation;
-        }
-
-        Account acc = [SELECT Name, Sector__c, Category__c, RecordType.DeveloperName FROM Account WHERE Id =: accountId];
-
-        // Step 2 : check if user's Account is eligible
-        userInformation.isServiceEligible = isNDCMMEligible(acc);
-
-        // if account is not eligible, we can stop here
-        if(!userInformation.isServiceEligible){
-            return;
-        }
-
-        // Step 3 : set Contact and Account
-        userInformation.con = [SELECT Id, Email, Salutation, FirstName, LastName, Title, Membership_Function__c, Phone, MobilePhone, Fax
-        FROM Contact
-        WHERE Id =: contactId];
-
-        userInformation.acc = acc;
-    }
-
-    public class UserInformation {
-        @AuraEnabled
-        Boolean isGuest {get; set;}
-        @AuraEnabled
-        Boolean isEmailAddressAvailable {get; set;}
-        @AuraEnabled
-        Boolean isContactInserted {get; set;}
-        @AuraEnabled
-        Boolean isServiceUser {get; set;}
-        @AuraEnabled
-        Boolean isServiceEligible {get; set;}
-        @AuraEnabled
-        Contact con {get;set;}
-        @AuraEnabled
-        Account acc {get;set;}
-        @AuraEnabled
-        Boolean accessRequested {get; set;}
-    }
-
-    @AuraEnabled
-    public static UserInformation getUserInformationFromEmail(String email, String serviceName) {
-        UserInformation userInformation = new UserInformation();
-        List<Contact> conList = returnExistingContact(email); // Since the email is unique we didn't expect to receive more than one email
-        userInformation = getUserInformation(serviceName);
-        userInformation.isEmailAddressAvailable = checkIsUsernameIsAvailableInGlobalSalesforce(email, conList);
-
-        System.Debug('Information ::: Contact List : ' + conList + ' isEmailAddressAvailable ? ' + userInformation.isEmailAddressAvailable + ' Service Name : ' + serviceName);
-
-        userInformation.isContactInserted = conList.size() > 0;
-        //setting default value. If contact and email don't exist, user will be eligible
-        userInformation.isServiceEligible = !(userInformation.isContactInserted && userInformation.isEmailAddressAvailable);
-
-        if((!conList.isEmpty()) && userInformation.isEmailAddressAvailable){
-            //String UID = Comm_User_Helper.NewGuid();
-            //Id userCreated = Comm_User_Helper.createNewUser(conList.get(0), '' , serviceName , (conList.get(0).Preferred_Language__c != null ?  conList.get(0).Preferred_Language__c : languageString) , false, false);
-            //Boolean userCreated = Comm_User_Helper.createNewUser(conList.get(0), '' , serviceName , (conList.get(0).Preferred_Language__c != null ?  conList.get(0).Preferred_Language__c : languageString) , false, false) != null ? TRUE : FALSE;
-
-            if(serviceName != 'FRED' && serviceName != 'NDCMM'){
-                isAlreadyContact = true;
-                Boolean userCreated = registration(returnRelatedAcc(conList.get(0).AccountId), conList.get(0), serviceName, new Map<String,String>(), false);
-
-                if(userCreated == true){
-                    userInformation.isContactInserted = true;
-                    userInformation.isServiceEligible = true;
-                    userInformation.con = conList.get(0);
-                    System.Debug('User CREATED with success!');
-                }
-                else {
-                    userInformation.isContactInserted = false;
-                    System.Debug('User NOT created!');
-                }
-            }
-            else if(serviceName == 'FRED'){
-                userInformation.isContactInserted = true;
-                userInformation.con = conList.get(0);
-                Account acc = [SELECT Name, RecordTypeId, RecordType.Name, fredp_aircraftoperator_eligibility__c, RecordType.DeveloperName FROM Account WHERE Id =: conList.get(0).Account.Id];
-
-                if((acc.RecordType.DeveloperName == 'IATA_Airline' ||  acc.RecordType.DeveloperName == 'Operator') && acc.fredp_aircraftoperator_eligibility__c){
-                    userInformation.isServiceEligible = true;
-                }
-                else if(acc.RecordType.DeveloperName == 'ICAO_Member_State' || acc.RecordType.DeveloperName == 'Verifiers'){
-                    userInformation.isServiceEligible = true;
-                }
-                else{
-                    userInformation.isServiceEligible = false;
-                }
-                userInformation.acc = acc;
-            }
-            else{
-                userInformation.isContactInserted = true;
-                userInformation.con = conList.get(0);
-                userInformation.acc = [SELECT Name, Sector__c, Category__c, RecordType.DeveloperName FROM Account WHERE Id =: conList.get(0).Account.Id];
-
-                getNDCMMUserInformation(userInformation, userInformation.con.Id, userInformation.acc.Id);
-            }
-        }
-
-        if(!userInformation.isEmailAddressAvailable){
-            // Retrieve existing user information
-            List<User> usrs = [SELECT Id, ContactId, AccountId FROM User where Email =: email];
-            if(!usrs.isEmpty()){
-                User usr = usrs[0];
-                Account acc = [SELECT RecordTypeId, fredp_aircraftoperator_eligibility__c, RecordType.DeveloperName FROM Account WHERE Id =: usr.AccountId];
-
-                // This part has to be made generic, using the serviceName parameter
-                if(serviceName == 'FRED'){
-                    Integer fredAccess = [SELECT count() FROM PermissionSetAssignment WHERE AssigneeId =: usr.Id AND PermissionSet.Name = 'FRED_SSO'];
-
-                    userInformation.isServiceUser = fredAccess > 0;
-
-                    if(!userInformation.isServiceUser){
-                        if((acc.RecordType.DeveloperName == 'IATA_Airline' ||  acc.RecordType.DeveloperName == 'Operator') && acc.fredp_aircraftoperator_eligibility__c){
-                            userInformation.isServiceEligible = true;
-                        }
-                        else if(acc.RecordType.DeveloperName == 'ICAO_Member_State' || acc.RecordType.DeveloperName == 'Verifiers'){
-                            userInformation.isServiceEligible = true;
-                        }
-                        else{
-                            userInformation.isServiceEligible = false;
-                        }
-                    }
-                }
-                if(serviceName == 'NDCMM'){
-                    getNDCMMUserInformation(userInformation, usrs[0].ContactId, usrs[0].AccountId);
-                }
-            }
-            userInformation.isContactInserted = false;
-        }
-
-        System.Debug('Retrieving user information .... userInformation : ' + userInformation);
-        return userInformation;
-    }
-
-    private static Boolean isNDCMMEligible(Account acc){
-        Boolean isEligible =  (acc.Sector__c == 'Airline'
-                && (acc.RecordType.DeveloperName == 'IATA_Airline' || acc.RecordType.DeveloperName == 'Operator'))
-                || (acc.Sector__c == 'Travel Agent'
-                && ((acc.Category__c == 'IATA Passenger Sales Agent'&& (acc.RecordType.DeveloperName == 'IATA_Agency' || acc.RecordType.DeveloperName == 'Standard_Account')) || (acc.Category__c == 'Non-IATA Travel Agent' && (acc.RecordType.DeveloperName == 'Non_IATA_Agency' || acc.RecordType.DeveloperName == 'Standard_Account'))))
-                || (acc.Sector__c == 'Airline Supplier' 
-                && (acc.Category__c == 'Global Distribution System' || acc.Category__c == 'Content Aggregator' || acc.Category__c== 'System Solutions Provider')
-                && (acc.RecordType.DeveloperName == 'Others' || acc.RecordType.DeveloperName == 'Standard_Account'));
-        return isEligible;
-    }
+				Account acc = [SELECT RecordTypeId, fredp_aircraftoperator_eligibility__c, RecordType.DeveloperName FROM Account WHERE Id =: usr.AccountId];
 
 
-    @AuraEnabled
-    public static boolean checkIsUsernameIsAvailableInGlobalSalesforce(String email) {
-        // Method to test if another user existin in all SF instances to avoid having an error at the end of the process
-        Savepoint sp = Database.setSavepoint();
+				if((acc.RecordType.DeveloperName == 'IATA_Airline' ||  acc.RecordType.DeveloperName == 'Operator') && acc.fredp_aircraftoperator_eligibility__c){
+					userInformation.isServiceEligible = true;
+				}
+				else if(acc.RecordType.DeveloperName == 'ICAO_Member_State' || acc.RecordType.DeveloperName == 'Verifiers'){
+					userInformation.isServiceEligible = true;
+				}
+				else{
+					userInformation.isServiceEligible = false;
+				}
+			}
+		}
+		// This part has to be made generic, using the serviceName parameter
+		if(!userInformation.isGuest && serviceName == 'NDCMM'){
+			User usr = [SELECT ContactId, AccountId
+			FROM User
+			WHERE Id =: UserInfo.getUserId()];
 
-        try {
-            User testingUser = new User(LastName = 'DUMMY',
-                    FirstName='DUMMY',
-                    Alias = 'DUMMY',
-                    CommunityNickname = 'DUMMY',
-                    Email = email,
-                    Username = ISSP_Utilities.buildPortalUserName(email), //myEmail@company.com because myEmail.company.com@partner.iata.org
-                    ProfileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal (Partner)' LIMIT 1].Id,
-                    ContactId = [SELECT Id FROM Contact WHERE Id NOT IN (SELECT ContactId FROM User) LIMIT 1].Id,
-                    TimeZoneSidKey = 'GMT',
-                    LanguageLocaleKey = 'en_US',
-                    EmailEncodingKey = 'UTF-8',
-                    LocaleSidKey = 'en_US',
-                    License_Cost_center__c = 'ISF005CH01'
-            );
-            system.debug(testingUser);
-            insert testingUser;
+			getNDCMMUserInformation(userInformation, usr.ContactId, usr.AccountId);
+		}
+		return userInformation;
+	}
 
-            // Rollback to avoid creation of the user
-            Database.rollback(sp);
-            return true;
+	private static void getNDCMMUserInformation(UserInformation userInformation, Id contactId, Id accountId){
+		// Step 1 : check if user requested access to NDC Matchmaker Service
+		// Step 1.1 : Retrieve the NDC Matchmaker Portal Service Id
+		One_Id_Service_Provider_Config__c oneIdService = [SELECT Portal_Service__c
+		FROM One_Id_Service_Provider_Config__c
+		WHERE Service_Provider_Name__c = 'NDCMM'
+		AND RecordType.DeveloperName = 'Service_Provider' LIMIT 1];
 
-        } catch(Exception e) {
-            System.debug(loggingLevel.ERROR, '____ [cls OneId_RegistrationProcessControllere - checkIsUsernameIsAvailableInGlobalSalesforce] e.getMessage() - ' + e.getMessage());
-            Database.rollback(sp);
-            return false;
-        }
-    }
+		// Step 1.2 : Retrieve the Portal Service Access record
+		List<Portal_Application_Right__c> portalApplicationRights = [SELECT Right__c, Access_Pending_Detail__c
+		FROM Portal_Application_Right__c
+		WHERE Portal_Application__c =: oneIdService.Portal_Service__c
+		AND Contact__c =: contactId];
 
-    @AuraEnabled
-    public static boolean checkIsUsernameIsAvailableInGlobalSalesforce(String email, List<Contact> conList) {
-        // Method to test if another user existin in all SF instances to avoid having an error at the end of the process
-        Savepoint sp = Database.setSavepoint();
+		userInformation.isServiceUser = !portalApplicationRights.isEmpty();
 
-        try {
-            User testingUser = new User(LastName = 'DUMMY',
-                    FirstName='DUMMY',
-                    Alias = 'DUMMY',
-                    CommunityNickname = 'DUMMY',
-                    Email = email,
-                    Username = ISSP_Utilities.buildPortalUserName(email), //myEmail@company.com because myEmail.company.com@partner.iata.org
-                    ProfileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal (Partner)' LIMIT 1].Id,
-                    ContactId =  !conlist.isEmpty() ? conList.get(0).Id : [SELECT Id FROM Contact WHERE Id NOT IN (SELECT ContactId FROM User) LIMIT 1].Id,
-                    TimeZoneSidKey = 'GMT',
-                    LanguageLocaleKey = 'en_US',
-                    EmailEncodingKey = 'UTF-8',
-                    LocaleSidKey = 'en_US',
-                    License_Cost_center__c = 'ISF005CH01'
-            );
-            system.debug(testingUser);
-            insert testingUser;
+		// if access has already been requested yet, we can stop here
+		if(userInformation.isServiceUser){
+			//Don't return now because we need contact info to pass to email component
+			//return userInformation;
+		}
 
-            // Rollback to avoid creation of the user
-            Database.rollback(sp);
-            return true;
+		Account acc = [SELECT Name, Sector__c, Category__c, RecordType.DeveloperName FROM Account WHERE Id =: accountId];
 
-        } catch(Exception e) {
-            System.debug(loggingLevel.ERROR, '____ [cls OneId_RegistrationProcessControllere - checkIsUsernameIsAvailableInGlobalSalesforce] e.getMessage() - ' + e.getMessage());
-            Database.rollback(sp);
-            return false;
-        }
-    }
+		// Step 2 : check if user's Account is eligible
+		userInformation.isServiceEligible = isNDCMMEligible(acc);
+
+		// if account is not eligible, we can stop here
+		if(!userInformation.isServiceEligible){
+			return;
+		}
+
+		// Step 3 : set Contact and Account
+		userInformation.con = [SELECT Id, Email, Salutation, FirstName, LastName, Title, Membership_Function__c, Phone, MobilePhone, Fax
+		FROM Contact
+		WHERE Id =: contactId];
+
+		userInformation.acc = acc;
+	}
+
+	public class UserInformation {
+		@AuraEnabled
+		Boolean isGuest {get; set;}
+		@AuraEnabled
+		Boolean isEmailAddressAvailable {get; set;}
+		@AuraEnabled
+		Boolean isContactInserted {get; set;}
+		@AuraEnabled
+		Boolean isServiceUser {get; set;}
+		@AuraEnabled
+		Boolean isServiceEligible {get; set;}
+		@AuraEnabled
+		Contact con {get;set;}
+		@AuraEnabled
+		Account acc {get;set;}
+		@AuraEnabled
+		Boolean accessRequested {get; set;}
+	}
+
+	@AuraEnabled
+	public static UserInformation getUserInformationFromEmail(String email, String serviceName) {
+		UserInformation userInformation = new UserInformation();
+		List<Contact> conList = returnExistingContact(email); // Since the email is unique we didn't expect to receive more than one email
+		userInformation = getUserInformation(serviceName);
+		userInformation.isEmailAddressAvailable = checkIsUsernameIsAvailableInGlobalSalesforce(email, conList);
+
+		System.Debug('Information ::: Contact List : ' + conList + ' isEmailAddressAvailable ? ' + userInformation.isEmailAddressAvailable + ' Service Name : ' + serviceName);
+
+		userInformation.isContactInserted = conList.size() > 0;
+		//setting default value. If contact and email don't exist, user will be eligible
+		userInformation.isServiceEligible = !(userInformation.isContactInserted && userInformation.isEmailAddressAvailable);
+
+		if((!conList.isEmpty()) && userInformation.isEmailAddressAvailable){
+			//String UID = Comm_User_Helper.NewGuid();
+			//Id userCreated = Comm_User_Helper.createNewUser(conList.get(0), '' , serviceName , (conList.get(0).Preferred_Language__c != null ?  conList.get(0).Preferred_Language__c : languageString) , false, false);
+			//Boolean userCreated = Comm_User_Helper.createNewUser(conList.get(0), '' , serviceName , (conList.get(0).Preferred_Language__c != null ?  conList.get(0).Preferred_Language__c : languageString) , false, false) != null ? TRUE : FALSE;
+
+			if(serviceName != 'FRED' && serviceName != 'NDCMM'){
+				isAlreadyContact = true;
+				Boolean userCreated = registration(returnRelatedAcc(conList.get(0).AccountId), conList.get(0), serviceName, new Map<String,String>(), false);
+
+				if(userCreated == true){
+					userInformation.isContactInserted = true;
+					userInformation.isServiceEligible = true;
+					userInformation.con = conList.get(0);
+					System.Debug('User CREATED with success!');
+				}
+				else {
+					userInformation.isContactInserted = false;
+					System.Debug('User NOT created!');
+				}
+			}
+			else if(serviceName == 'FRED'){
+				userInformation.isContactInserted = true;
+				userInformation.con = conList.get(0);
+				Account acc = [SELECT Name, RecordTypeId, RecordType.Name, fredp_aircraftoperator_eligibility__c, RecordType.DeveloperName FROM Account WHERE Id =: conList.get(0).Account.Id];
+
+				if((acc.RecordType.DeveloperName == 'IATA_Airline' ||  acc.RecordType.DeveloperName == 'Operator') && acc.fredp_aircraftoperator_eligibility__c){
+					userInformation.isServiceEligible = true;
+				}
+				else if(acc.RecordType.DeveloperName == 'ICAO_Member_State' || acc.RecordType.DeveloperName == 'Verifiers'){
+					userInformation.isServiceEligible = true;
+				}
+				else{
+					userInformation.isServiceEligible = false;
+				}
+				userInformation.acc = acc;
+			}
+			else{
+				userInformation.isContactInserted = true;
+				userInformation.con = conList.get(0);
+				userInformation.acc = [SELECT Name, Sector__c, Category__c, RecordType.DeveloperName FROM Account WHERE Id =: conList.get(0).Account.Id];
+
+				getNDCMMUserInformation(userInformation, userInformation.con.Id, userInformation.acc.Id);
+			}
+		}
+
+		if(!userInformation.isEmailAddressAvailable){
+			// Retrieve existing user information
+			List<User> usrs = [SELECT Id, ContactId, AccountId FROM User where Email =: email];
+			if(!usrs.isEmpty()){
+				User usr = usrs[0];
+				Account acc = [SELECT RecordTypeId, fredp_aircraftoperator_eligibility__c, RecordType.DeveloperName FROM Account WHERE Id =: usr.AccountId];
+
+				// This part has to be made generic, using the serviceName parameter
+				if(serviceName == 'FRED'){
+					Integer fredAccess = [SELECT count() FROM PermissionSetAssignment WHERE AssigneeId =: usr.Id AND PermissionSet.Name = 'FRED_SSO'];
+
+					userInformation.isServiceUser = fredAccess > 0;
+
+					if(!userInformation.isServiceUser){
+						if((acc.RecordType.DeveloperName == 'IATA_Airline' ||  acc.RecordType.DeveloperName == 'Operator') && acc.fredp_aircraftoperator_eligibility__c){
+							userInformation.isServiceEligible = true;
+						}
+						else if(acc.RecordType.DeveloperName == 'ICAO_Member_State' || acc.RecordType.DeveloperName == 'Verifiers'){
+							userInformation.isServiceEligible = true;
+						}
+						else{
+							userInformation.isServiceEligible = false;
+						}
+					}
+				}
+				if(serviceName == 'NDCMM'){
+					getNDCMMUserInformation(userInformation, usrs[0].ContactId, usrs[0].AccountId);
+				}
+			}
+			userInformation.isContactInserted = false;
+		}
+
+		System.Debug('Retrieving user information .... userInformation : ' + userInformation);
+		return userInformation;
+	}
+
+	private static Boolean isNDCMMEligible(Account acc){
+		Boolean isEligible =  (acc.Sector__c == 'Airline'
+				&& (acc.RecordType.DeveloperName == 'IATA_Airline' || acc.RecordType.DeveloperName == 'Operator'))
+				|| (acc.Sector__c == 'Travel Agent'
+				&& ((acc.Category__c == 'IATA Passenger Sales Agent'&& (acc.RecordType.DeveloperName == 'IATA_Agency' || acc.RecordType.DeveloperName == 'Standard_Account')) || (acc.Category__c == 'Non-IATA Travel Agent' && (acc.RecordType.DeveloperName == 'Non_IATA_Agency' || acc.RecordType.DeveloperName == 'Standard_Account'))))
+				|| (acc.Sector__c == 'Airline Supplier'
+				&& (acc.Category__c == 'Global Distribution System' || acc.Category__c == 'Content Aggregator' || acc.Category__c== 'System Solutions Provider')
+				&& (acc.RecordType.DeveloperName == 'Others' || acc.RecordType.DeveloperName == 'Standard_Account'));
+		return isEligible;
+	}
 
 
-    @AuraEnabled
-    public static List<Contact> returnExistingContact(String email) {
+	@AuraEnabled
+	public static boolean checkIsUsernameIsAvailableInGlobalSalesforce(String email) {
+		// Method to test if another user existin in all SF instances to avoid having an error at the end of the process
+		Savepoint sp = Database.setSavepoint();
 
-        // Method to search contact that already exists in SALESFORCE
-        List<Contact> conList = [SELECT id, Preferred_Language__c, Salutation, FirstName, LastName, Email, Account.Id, Account.Sector__c, RecordTypeId, ISO_Country__c, IATA_ISO_Shipping_Country__c, Primary_Contact__c, User_Portal_Status__c, Status__c, BSP_CASS_Payment_contact__c, Invoicing_Contact__c, Title, Phone, MobilePhone, Fax, Membership_Function__c FROM Contact WHERE Email =: email];
+		try {
+			User testingUser = new User(LastName = 'DUMMY',
+					FirstName='DUMMY',
+					Alias = 'DUMMY',
+					CommunityNickname = 'DUMMY',
+					Email = email,
+					Username = ISSP_Utilities.buildPortalUserName(email), //myEmail@company.com because myEmail.company.com@partner.iata.org
+					ProfileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal (Partner)' LIMIT 1].Id,
+					ContactId = [SELECT Id FROM Contact WHERE Id NOT IN (SELECT ContactId FROM User) LIMIT 1].Id,
+					TimeZoneSidKey = 'GMT',
+					LanguageLocaleKey = 'en_US',
+					EmailEncodingKey = 'UTF-8',
+					LocaleSidKey = 'en_US',
+					License_Cost_center__c = 'ISF005CH01'
+			);
+			system.debug(testingUser);
+			insert testingUser;
 
-        return conList;
+			// Rollback to avoid creation of the user
+			Database.rollback(sp);
+			return true;
 
-    }
+		} catch(Exception e) {
+			System.debug(loggingLevel.ERROR, '____ [cls OneId_RegistrationProcessControllere - checkIsUsernameIsAvailableInGlobalSalesforce] e.getMessage() - ' + e.getMessage());
+			Database.rollback(sp);
+			return false;
+		}
+	}
 
-    public static Account returnRelatedAcc(Id accID){
-        return [SELECT id, Name, ParentId, Ownerid, Recordtypeid, Category__c, Category_Other_Value__c, BillingCountry, IATA_ISO_Country__c, IATA_ISO_Shipping_Country__c, IATA_ISO_Billing_State__c, IATA_ISO_Shipping_State__c, Sector__c, Reason_for_creation__c FROM Account WHERE ID =: accID];
-    }
+	@AuraEnabled
+	public static boolean checkIsUsernameIsAvailableInGlobalSalesforce(String email, List<Contact> conList) {
+		// Method to test if another user existin in all SF instances to avoid having an error at the end of the process
+		Savepoint sp = Database.setSavepoint();
+
+		try {
+			User testingUser = new User(LastName = 'DUMMY',
+					FirstName='DUMMY',
+					Alias = 'DUMMY',
+					CommunityNickname = 'DUMMY',
+					Email = email,
+					Username = ISSP_Utilities.buildPortalUserName(email), //myEmail@company.com because myEmail.company.com@partner.iata.org
+					ProfileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal (Partner)' LIMIT 1].Id,
+					ContactId =  !conlist.isEmpty() ? conList.get(0).Id : [SELECT Id FROM Contact WHERE Id NOT IN (SELECT ContactId FROM User) LIMIT 1].Id,
+					TimeZoneSidKey = 'GMT',
+					LanguageLocaleKey = 'en_US',
+					EmailEncodingKey = 'UTF-8',
+					LocaleSidKey = 'en_US',
+					License_Cost_center__c = 'ISF005CH01'
+			);
+			system.debug(testingUser);
+			insert testingUser;
+
+			// Rollback to avoid creation of the user
+			Database.rollback(sp);
+			return true;
+
+		} catch(Exception e) {
+			System.debug(loggingLevel.ERROR, '____ [cls OneId_RegistrationProcessControllere - checkIsUsernameIsAvailableInGlobalSalesforce] e.getMessage() - ' + e.getMessage());
+			Database.rollback(sp);
+			return false;
+		}
+	}
 
 
-    @future
-    public static void updateContactInFuture(String conId, String firstCommunity, String usPortalStatus, String email, String accId){
-        Contact conToUpdate = new Contact(
-                Id = conId,
-                Community__c = firstCommunity,
-                User_Portal_Status__c = usPortalStatus,
-                Email = email,
-                AccountId = accId
-        );
-        System.debug('::: Update Contact in future ... INFO : ' + conToUpdate);
-        checkConAvailable(conToUpdate);
-    }
+	@AuraEnabled
+	public static List<Contact> returnExistingContact(String email) {
 
-    @AuraEnabled
-    public static Map<String,String> getContactLabels() {
-        List<SObjectField> contactFields = new List<Schema.SObjectField> {
-                // 'Id',
-                Contact.FirstName,
-                Contact.LastName,
-                Contact.Email,
-                Contact.Salutation,
-                Contact.Title,
-                Contact.Phone,
-                Contact.MobilePhone,
-                Contact.Fax,
+		// Method to search contact that already exists in SALESFORCE
+		List<Contact> conList = [SELECT id, Preferred_Language__c, Salutation, FirstName, LastName, Email, Account.Id, Account.Sector__c, RecordTypeId, ISO_Country__c, IATA_ISO_Shipping_Country__c, Primary_Contact__c, User_Portal_Status__c, Status__c, BSP_CASS_Payment_contact__c, Invoicing_Contact__c, Title, Phone, MobilePhone, Fax, Membership_Function__c FROM Contact WHERE Email =: email];
+
+		return conList;
+
+	}
+
+	public static Account returnRelatedAcc(Id accID){
+		return [SELECT id, Name, ParentId, Ownerid, Recordtypeid, Category__c, Category_Other_Value__c, BillingCountry, IATA_ISO_Country__c, IATA_ISO_Shipping_Country__c, IATA_ISO_Billing_State__c, IATA_ISO_Shipping_State__c, Sector__c, Reason_for_creation__c FROM Account WHERE ID =: accID];
+	}
+
+
+	@future
+	public static void updateContactInFuture(String conId, String firstCommunity, String usPortalStatus, String email, String accId){
+		Contact conToUpdate = new Contact(
+				Id = conId,
+				Community__c = firstCommunity,
+				User_Portal_Status__c = usPortalStatus,
+				Email = email,
+				AccountId = accId
+		);
+		System.debug('::: Update Contact in future ... INFO : ' + conToUpdate);
+		checkConAvailable(conToUpdate);
+	}
+
+	@AuraEnabled
+	public static Map<String,String> getContactLabels() {
+		List<SObjectField> contactFields = new List<Schema.SObjectField> {
+				// 'Id',
+				Contact.FirstName,
+				Contact.LastName,
+				Contact.Email,
+				Contact.Salutation,
+				Contact.Title,
+				Contact.Phone,
+				Contact.MobilePhone,
+				Contact.Fax,
 			Contact.Membership_Function__c,
 			Contact.Date_of_Birth__c,
 			Contact.Birthdate
-        };
+		};
 
-        Map<String,String> labels = new Map<String,String>();
-        for (SObjectField f : contactFields) {
-            labels.put(f.getDescribe().getName(), f.getDescribe().getLabel());
-        }
-        return labels;
-    }
+		Map<String,String> labels = new Map<String,String>();
+		for (SObjectField f : contactFields) {
+			labels.put(f.getDescribe().getName(), f.getDescribe().getLabel());
+		}
+		return labels;
+	}
 
-    @AuraEnabled
-    public static Map<String,String> getAccountLabels() {
-        List<String> contactFields = new List<String> {
-           // 'Id',
-            'BillingAddress',
-            'BillingCity',
-            'BillingCountry',
-            'BillingPostalCode',
-            'BillingState',
-            'BillingStreet',
-            'Category__c',
-            'Category_Other_Value__c',
-            'Email__c',
-            'IATACode__c',
-            'Legal_name__c',
-            'Name',
-            'Sector__c',
-            'ShippingAddress',
-            'ShippingCity',
-            'ShippingCountry',
-            'ShippingPostalCode',
-            'ShippingState',
-            'ShippingStreet',
-            'TradeName__c',
-            'Website'
-        };
-        Map<String, SObjectField> accountFields = Schema.SObjectType.Account.fields.getMap();
-        Map<String,String> labels = new Map<String,String>();
-        for (String name : contactFields) {
-            SObjectField f = accountFields.get(name);
-            if (f!=null){
-                labels.put(f.getDescribe().getName(), f.getDescribe().getLabel());
-            }
-        }
-        return labels;
-    }
+	@AuraEnabled
+	public static Map<String,String> getAccountLabels() {
+		List<String> contactFields = new List<String> {
+		   // 'Id',
+			'BillingAddress',
+			'BillingCity',
+			'BillingCountry',
+			'BillingPostalCode',
+			'BillingState',
+			'BillingStreet',
+			'Category__c',
+			'Category_Other_Value__c',
+			'Email__c',
+			'IATACode__c',
+			'Legal_name__c',
+			'Name',
+			'Sector__c',
+			'ShippingAddress',
+			'ShippingCity',
+			'ShippingCountry',
+			'ShippingPostalCode',
+			'ShippingState',
+			'ShippingStreet',
+			'TradeName__c',
+			'Website'
+		};
+		Map<String, SObjectField> accountFields = Schema.SObjectType.Account.fields.getMap();
+		Map<String,String> labels = new Map<String,String>();
+		for (String name : contactFields) {
+			SObjectField f = accountFields.get(name);
+			if (f!=null){
+				labels.put(f.getDescribe().getName(), f.getDescribe().getLabel());
+			}
+		}
+		return labels;
+	}
 
 	@AuraEnabled(cacheable=true)
-    public static List<PicklistEntry> getContactJobFunctionValues(){
-        List<PicklistEntry> values =  new  List<PicklistEntry>();
+	public static List<PicklistEntry> getContactJobFunctionValues(){
+		List<PicklistEntry> values =  new  List<PicklistEntry>();
 
-        List<Schema.PicklistEntry> controllingFieldValues = Schema.Contact.Function__c.getDescribe().getPickListValues();
-        for (Schema.PicklistEntry p : controllingFieldValues){
-           values.add(new PicklistEntry(p.getLabel(), p.getValue()));
-        }
-        return values;
-    }
+		List<Schema.PicklistEntry> controllingFieldValues = Schema.Contact.Function__c.getDescribe().getPickListValues();
+		for (Schema.PicklistEntry p : controllingFieldValues){
+		   values.add(new PicklistEntry(p.getLabel(), p.getValue()));
+		}
+		return values;
+	}
 
-    @AuraEnabled
-    public static Map<String, PicklistEntry> getSectors(){
-        Map<String, PicklistEntry> values =  new  Map<String, PicklistEntry>();
-        values.put('', new PicklistEntry(System.Label.ISSP_Registration_None, ''));
+	@AuraEnabled
+	public static Map<String, PicklistEntry> getSectors(){
+		Map<String, PicklistEntry> values =  new  Map<String, PicklistEntry>();
+		values.put('', new PicklistEntry(System.Label.ISSP_Registration_None, ''));
 
-        for (Schema.PicklistEntry p : Schema.Account.Sector__c.getDescribe().getPickListValues()){
-            PicklistEntry e = new PicklistEntry(p.getLabel(), p.getValue());
+		for (Schema.PicklistEntry p : Schema.Account.Sector__c.getDescribe().getPickListValues()){
+			PicklistEntry e = new PicklistEntry(p.getLabel(), p.getValue());
 
-            for(Schema.PicklistEntry dp : OneId_PicklistHelper.getDependentValues(p.getValue())){
-                e.dependentValues.add(new PicklistEntry(dp.getLabel(), dp.getValue()));
-            }
+			for(Schema.PicklistEntry dp : OneId_PicklistHelper.getDependentValues(p.getValue())){
+				e.dependentValues.add(new PicklistEntry(dp.getLabel(), dp.getValue()));
+			}
 
-            values.put(e.value, e);
-        }
-        return values;
-    }
+			values.put(e.value, e);
+		}
+		return values;
+	}
 
-    public class PicklistEntry {
-        @AuraEnabled public String label;
-        @AuraEnabled public String value;
-        @AuraEnabled public List<PicklistEntry> dependentValues;
+	public class PicklistEntry {
+		@AuraEnabled public String label;
+		@AuraEnabled public String value;
+		@AuraEnabled public List<PicklistEntry> dependentValues;
 
-        public PicklistEntry(String label, String value){
-            this.label = label;
-            this.value = value;
-            this.dependentValues = new List<PicklistEntry>();
-        }
-    }
+		public PicklistEntry(String label, String value){
+			this.label = label;
+			this.value = value;
+			this.dependentValues = new List<PicklistEntry>();
+		}
+	}
 
-    @AuraEnabled
-    public static CountryInformation getISOCountries() {
-        List<IATA_ISO_Country__c> countries = new List<IATA_ISO_Country__c>();
-        for(IATA_ISO_Country__c iso : IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountries(), 'Name')){
-            if (iso.Name != 'All Countries' &&  iso.Name != 'NO COUNTRY'){
-                countries.add(iso);
-            }
-        }
-        return new CountryInformation(countries);
-    }
+	@AuraEnabled
+	public static CountryInformation getISOCountries() {
+		List<IATA_ISO_Country__c> countries = new List<IATA_ISO_Country__c>();
+		for(IATA_ISO_Country__c iso : IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountries(), 'Name')){
+			if (iso.Name != 'All Countries' &&  iso.Name != 'NO COUNTRY'){
+				countries.add(iso);
+			}
+		}
+		return new CountryInformation(countries);
+	}
 
-    public class CountryInformation {
-        @AuraEnabled public Map<Id, IATA_ISO_Country__c> countryMap { get; private set; }
-        @AuraEnabled public List<IATA_ISO_Country__c> countryList { get; private set; }
+	public class CountryInformation {
+		@AuraEnabled public Map<Id, IATA_ISO_Country__c> countryMap { get; private set; }
+		@AuraEnabled public List<IATA_ISO_Country__c> countryList { get; private set; }
 
-        public CountryInformation(List<IATA_ISO_Country__c> countryList){
-            this.countryList = countryList;
-            this.countryMap = new Map<Id, IATA_ISO_Country__c>(countryList);
-        }
-    }
+		public CountryInformation(List<IATA_ISO_Country__c> countryList){
+			this.countryList = countryList;
+			this.countryMap = new Map<Id, IATA_ISO_Country__c>(countryList);
+		}
+	}
 
-    @AuraEnabled
-    public static List<OneId_AddressDoctor.AddressInfo> checkAddress(String info) {
-        System.debug(loggingLevel.FINE, '____ [cls OneId_RegistrationProcessController - checkAddress] info - ' + info);
-        return OneId_AddressDoctor.validate((OneId_AddressDoctor.AddressInfo)JSON.deserialize(info, OneId_AddressDoctor.AddressInfo.class));
-    }
+	@AuraEnabled
+	public static List<OneId_AddressDoctor.AddressInfo> checkAddress(String info) {
+		System.debug(loggingLevel.FINE, '____ [cls OneId_RegistrationProcessController - checkAddress] info - ' + info);
+		return OneId_AddressDoctor.validate((OneId_AddressDoctor.AddressInfo)JSON.deserialize(info, OneId_AddressDoctor.AddressInfo.class));
+	}
 
-    //Method created as a workaround due to not be able to populate lookups in the Lightning Component. This was a quick fix in order to not change registration method signature. 
-    //Probably the way to set this IDs should be reviewed. 
-    @AuraEnabled
-    public static boolean registrationAux(Account acc, Contact con, String serviceName, Map<String, String> cityAndStateIds){
-        
-        if(cityAndStateIds != null){
-            String billingCityId = (String) cityAndStateIds.get('billingCityId');
-            String billingStateId = (String) cityAndStateIds.get('billingStateId');
-            String shippingCityId = (String) cityAndStateIds.get('shippingCityId');
-            String shippingStateId = (String) cityAndStateIds.get('shippingStateId');
-            
-            if(!String.isBlank(billingCityId)){
-                acc.Geoname_Billing_City__c = billingCityId;                
-            }
+	//Method created as a workaround due to not be able to populate lookups in the Lightning Component. This was a quick fix in order to not change registration method signature.
+	//Probably the way to set this IDs should be reviewed.
+	@AuraEnabled
+	public static boolean registrationAux(Account acc, Contact con, String serviceName, Map<String, String> cityAndStateIds){
 
-            if(!String.isBlank(billingStateId)){
-                acc.ISO_State__c = billingStateId;
-                acc.IATA_ISO_Billing_State__c = billingStateId;                            
-            }
+		if(cityAndStateIds != null){
+			String billingCityId = (String) cityAndStateIds.get('billingCityId');
+			String billingStateId = (String) cityAndStateIds.get('billingStateId');
+			String shippingCityId = (String) cityAndStateIds.get('shippingCityId');
+			String shippingStateId = (String) cityAndStateIds.get('shippingStateId');
 
-            if(!String.isBlank(shippingCityId)){
-                acc.Geoname_Shipping_City__c = shippingCityId;                
-            }
+			if(!String.isBlank(billingCityId)){
+				acc.Geoname_Billing_City__c = billingCityId;
+			}
 
-            if(!String.isBlank(shippingStateId)){
-                acc.IATA_ISO_Shipping_State__c = shippingStateId;                            
-            }
-        }
+			if(!String.isBlank(billingStateId)){
+				acc.ISO_State__c = billingStateId;
+				acc.IATA_ISO_Billing_State__c = billingStateId;
+			}
 
-        return OneId_RegistrationProcessController.registration(acc, con, serviceName, false);
-    }
-    
-    @AuraEnabled
+			if(!String.isBlank(shippingCityId)){
+				acc.Geoname_Shipping_City__c = shippingCityId;
+			}
+
+			if(!String.isBlank(shippingStateId)){
+				acc.IATA_ISO_Shipping_State__c = shippingStateId;
+			}
+		}
+
+		return OneId_RegistrationProcessController.registration(acc, con, serviceName, false);
+	}
+
+	@AuraEnabled
 	public static boolean registration(Account acc, Contact con, String serviceName){
 		return registration(acc, con, serviceName, new Map<String, String>(), false);
 	}
-    
-    @AuraEnabled
-    public static boolean registration(Account acc, Contact con, String serviceName, Boolean l1UserExists){
-        return registration(acc, con, serviceName, new Map<String, String>(), l1UserExists);
-    }
 
-    @AuraEnabled
-    public static boolean registration(Account acc, Contact con, String serviceName, Map<String, String> serviceSpecificParams, Boolean l1UserExists){
+	@AuraEnabled
+	public static boolean registration(Account acc, Contact con, String serviceName, Boolean l1UserExists){
+		return registration(acc, con, serviceName, new Map<String, String>(), l1UserExists);
+	}
 
-        system.debug('OneId registration process starting...');
-        system.debug('account  --> ' + acc);
-        system.debug('contact  --> ' + con);
-        system.debug('serviceName  --> ' + serviceName);
+	@AuraEnabled
+	public static boolean registration(Account acc, Contact con, String serviceName, Map<String, String> serviceSpecificParams, Boolean l1UserExists){
+
+		system.debug('OneId registration process starting...');
+		system.debug('account  --> ' + acc);
+		system.debug('contact  --> ' + con);
+		system.debug('serviceName  --> ' + serviceName);
 		system.debug('l1UserExists  --> ' + l1UserExists);
 		if(l1UserExists == null){
 			l1UserExists = false;
 		}
 
-       if(serviceName == null)
-            serviceName = 'IDENTITY';
+	   if(serviceName == null)
+			serviceName = 'IDENTITY';
 
-        //it's general public account? create contact / user
-        if(acc.Id == null && acc.Sector__c == 'General Public'){
-            List<Account> gpAccount = [SELECT id, IATA_ISO_Country__c FROM Account WHERE Sector__c = 'General Public' and  IATA_ISO_Country__c =:acc.IATA_ISO_Country__c];
-            if(!gpAccount.isEmpty()) acc.Id  = gpAccount[0].Id;
-        }
+		//it's general public account? create contact / user
+		if(acc.Id == null && acc.Sector__c == 'General Public'){
+			List<Account> gpAccount = [SELECT id, IATA_ISO_Country__c FROM Account WHERE Sector__c = 'General Public' and  IATA_ISO_Country__c =:acc.IATA_ISO_Country__c];
+			if(!gpAccount.isEmpty()) acc.Id  = gpAccount[0].Id;
+		}
 
-        //it's a branch
-        if(acc.ParentId != null){
-            Account pAccount = [SELECT id, IATACode__c, Airline_designator__c, Name FROM Account WHERE id = :acc.ParentId];
-            system.debug('aqui pAccount ' + pAccount);
-            acc.Reason_for_creation__c = 'Branch is missing';
-            acc.IATACode__c = pAccount.IATACode__c;
-            acc.Airline_designator__c = pAccount.Airline_designator__c;
-            acc.Name = pAccount.Name;
-            createBranch = true;
-        }
+		//it's a branch
+		if(acc.ParentId != null){
+			Account pAccount = [SELECT id, IATACode__c, Airline_designator__c, Name FROM Account WHERE id = :acc.ParentId];
+			system.debug('aqui pAccount ' + pAccount);
+			acc.Reason_for_creation__c = 'Branch is missing';
+			acc.IATACode__c = pAccount.IATACode__c;
+			acc.Airline_designator__c = pAccount.Airline_designator__c;
+			acc.Name = pAccount.Name;
+			createBranch = true;
+		}
 
-        if(acc.Id != null) {
-            // Define account fields
-            if(acc.Sector__c != 'General Public')
-                acc.Legal_name__c = acc.Name;
+		if(acc.Id != null) {
+			// Define account fields
+			if(acc.Sector__c != 'General Public')
+				acc.Legal_name__c = acc.Name;
 
-            // Define field specific to services
-            if(serviceName == 'ISSP'){
-                con.Community__c = 'ISS Customer Portal';
-                con.User_Portal_Status__c = 'Pending Approval';
-            }
+			// Define field specific to services
+			if(serviceName == 'ISSP'){
+				con.Community__c = 'ISS Customer Portal';
+				con.User_Portal_Status__c = 'Pending Approval';
+			}
 
-            //check if the general public account have contacts
-            if(acc.Sector__c == 'General Public'){
-                List<Contact> gpContact = [SELECT id, AccountId FROM Contact WHERE AccountId =:acc.Id];
-                if(gpContact.isEmpty()) //in this case the Portal Status will be Pending Approval
-                    con.User_Portal_Status__c = 'Active';
-            }
+			//check if the general public account have contacts
+			if(acc.Sector__c == 'General Public'){
+				List<Contact> gpContact = [SELECT id, AccountId FROM Contact WHERE AccountId =:acc.Id];
+				if(gpContact.isEmpty()) //in this case the Portal Status will be Pending Approval
+					con.User_Portal_Status__c = 'Active';
+			}
 
-            if(serviceName == 'FRED'){
-                //con.User_Portal_Status__c = 'Pending Approval';
-                con.Community__c = 'FRED Customer Portal';
-            }
+			if(serviceName == 'FRED'){
+				//con.User_Portal_Status__c = 'Pending Approval';
+				con.Community__c = 'FRED Customer Portal';
+			}
 
-        }else{ // account not found
-            system.debug('account not found starting...');
-            system.debug('account not found --> acc.IATA_ISO_Country__c ' + acc.IATA_ISO_Country__c);
-            system.debug('account not found --> acc.IATA_ISO_Shipping_Country__c ' + acc.IATA_ISO_Shipping_Country__c);
-            system.debug('account not found --> acc.BillingCountry ' + acc.BillingCountry);
-            system.debug('account not found --> acc.ShippingCountry ' + acc.ShippingCountry);
-            system.debug('account not found --> sector ' + acc.Sector__c);
-            system.debug('account not found --> category ' + acc.Category__c);
-            isNewAcc = true;
-            acc.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
+		}else{ // account not found
+			system.debug('account not found starting...');
+			system.debug('account not found --> acc.IATA_ISO_Country__c ' + acc.IATA_ISO_Country__c);
+			system.debug('account not found --> acc.IATA_ISO_Shipping_Country__c ' + acc.IATA_ISO_Shipping_Country__c);
+			system.debug('account not found --> acc.BillingCountry ' + acc.BillingCountry);
+			system.debug('account not found --> acc.ShippingCountry ' + acc.ShippingCountry);
+			system.debug('account not found --> sector ' + acc.Sector__c);
+			system.debug('account not found --> category ' + acc.Category__c);
+			isNewAcc = true;
+			acc.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
 
-            if(serviceName == 'ISSP'){
-                con.User_Portal_Status__c ='Active';
-                con.Community__c = 'ISS Customer Portal';
-            }
+			if(serviceName == 'ISSP'){
+				con.User_Portal_Status__c ='Active';
+				con.Community__c = 'ISS Customer Portal';
+			}
 
 			if(acc <> null && con.AccountId <> null && !l1UserExists) acc.id = con.AccountId;
-        }
+		}
 
-        //create contact
-        con.ISO_Country__c = acc.IATA_ISO_Country__c;
-        con.IATA_ISO_Shipping_Country__c = acc.IATA_ISO_Shipping_Country__c;
-        con.Country__c = acc.IATA_ISO_Country__c;
-        con.Preferred_Language__c = languageString;
-        con.IATA_ISO_Billing_State__c = acc.IATA_ISO_Billing_State__c;
-        con.IATA_ISO_Shipping_State__c = acc.IATA_ISO_Shipping_State__c;
+		//create contact
+		con.ISO_Country__c = acc.IATA_ISO_Country__c;
+		con.IATA_ISO_Shipping_Country__c = acc.IATA_ISO_Shipping_Country__c;
+		con.Country__c = acc.IATA_ISO_Country__c;
+		con.Preferred_Language__c = languageString;
+		con.IATA_ISO_Billing_State__c = acc.IATA_ISO_Billing_State__c;
+		con.IATA_ISO_Shipping_State__c = acc.IATA_ISO_Shipping_State__c;
 
 
-        Savepoint sp = Database.setSavepoint();
-        try {
+		Savepoint sp = Database.setSavepoint();
+		try {
 
 			String returnedString = createContactAndAccount(con,acc,serviceName, serviceSpecificParams,l1UserExists);
-            System.debug('@SMH'+returnedString);
-            if (returnedString.contains('line:')){
-                // Error during creation of contact and user
-                Database.rollback(sp);
-                return false;
-            } else {
-                system.debug('aqui service name after ' + serviceName);
-                if(serviceName == 'ISSP'){
-                    permissionCSPortal(returnedString); // assign Permission Set CS Portal, give access to CS Portal Connected App
-                }
-                if(serviceName == 'ISSP' && isNewAcc == true && (acc.Sector__c == 'Travel Agent' || acc.Sector__c == 'Cargo Agent')){
-                    permissionNewAgency(returnedString);
-                    updatePortalUseProfile(returnedString);
+			System.debug('@SMH'+returnedString);
+			if (returnedString.contains('line:')){
+				// Error during creation of contact and user
+				Database.rollback(sp);
+				return false;
+			} else {
+				system.debug('aqui service name after ' + serviceName);
+				if(serviceName == 'ISSP'){
+					permissionCSPortal(returnedString); // assign Permission Set CS Portal, give access to CS Portal Connected App
+				}
+				if(serviceName == 'ISSP' && isNewAcc == true && (acc.Sector__c == 'Travel Agent' || acc.Sector__c == 'Cargo Agent')){
+					permissionNewAgency(returnedString);
+					updatePortalUseProfile(returnedString);
 
-                    if(acc.Sector__c == 'Travel Agent' || acc.Sector__c == 'Cargo Agent')
-                        portalServiceNewAgency(con.Id);
-                }
+					if(acc.Sector__c == 'Travel Agent' || acc.Sector__c == 'Cargo Agent')
+						portalServiceNewAgency(con.Id);
+				}
 				/**
 				IFTP Accounts - IFTP Service
 				only for NEW Accounts
 				*/
+
 				if(acc.Sector__c == 'Airline Supplier' && acc.Category__c == 'Fuel Supplier' ){
 
-					String RECTYPE_ITP_AccContRole = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'ITP');
-					String RECTYPE_ITP_AccRole = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Role__c', 'IFTP');
-					String RECTYPE_Others = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Others');
+					handleIFTPProcess(acc, con, isNewAcc);
 
-					Account_Roles__c accRoles = [SELECT id FROM Account_Roles__c
-											WHERE Name = 'Airline Supplier - ITP' limit 1];
-
-					Account_Role_Services__c accRoleSrvs = [SELECT id FROM Account_Role_Services__c
-											WHERE Name = 'IFTP - ITP' limit 1];
-
-					PermissionSet psAbsorb = [SELECT Id FROM PermissionSet WHERE Name = 'Absorb'];
-
-					List<Contact_Roles__c> contRoles = [SELECT id, Name FROM Contact_Roles__c WHERE Name in ('ITP Administrator','ITP Training Coordinator') ];
-					Id idContRoleAdmin = null;
-					Id idContRoleTranCoord = null;
-
-					for(Contact_Roles__c cr : contRoles){
-						if(cr.name == 'ITP Administrator'){
-							idContRoleAdmin = cr.id;
-						}else if(cr.name == 'ITP Training Coordinator'){
-							idContRoleTranCoord = cr.id;
-						}
-					}
-
-					Portal_Applications__c pa = [SELECT id FROM Portal_Applications__c WHERE name = 'IFTP' limit 1];
-
-					Account_Contact_Role__c accContRoleToInserted = new Account_Contact_Role__c();
-
-					if(isNewAcc == true){
-
-						Account_Role__c accRole = new Account_Role__c();
-						accRole.Account__c = acc.Id;
-						accRole.Account_Roles__c = accRoles.id;
-						accRole.RecordTypeId = RECTYPE_ITP_AccRole;
-						insert accRole;
-
-						Account_Role_Service__c accRoleSrv = new Account_Role_Service__c();
-						accRoleSrv.Account_Role__c = accRole.id;
-						accRoleSrv.Account_Role_Services__c = accRoleSrvs.id;
-						insert accRoleSrv;
-
-						Account_Contact_Role__c accContRoleToInsert = new Account_Contact_Role__c();
-						// accContRoleToInsert.Company_Code__c = employeeToAdd.code.trim();
-						accContRoleToInsert.Service_Rendered__c = 'IFTP';
-						accContRoleToInsert.Status__c = 'Active';
-						accContRoleToInsert.RecordTypeId = RECTYPE_ITP_AccContRole;
-						accContRoleToInsert.Account_Role__c = accRole.Id;
-						accContRoleToInsert.Contact_Role__c = 'ITP Administrator';
-						accContRoleToInsert.Contact_Roles__c = idContRoleAdmin;
-						accContRoleToInsert.Details__c = '';
-						accContRoleToInsert.Contact__c = con.Id;
-						insert accContRoleToInsert;
-
-						accContRoleToInserted.Id = accContRoleToInsert.Id;
-
-					}else{
-						System.debug('Not NEW Account!');
-						Account_Role__c accRole = [SELECT id FROM Account_Role__c WHERE account__c = :acc.id AND recordtypeid = :RECTYPE_ITP_AccRole limit 1];
-
-						Account_Contact_Role__c accContRoleToInsert = new Account_Contact_Role__c();
-						// accContRoleToInsert.Company_Code__c = employeeToAdd.code.trim();
-						accContRoleToInsert.Service_Rendered__c = 'IFTP';
-						accContRoleToInsert.Status__c = 'Active';
-						accContRoleToInsert.RecordTypeId = RECTYPE_ITP_AccContRole;
-						accContRoleToInsert.Account_Role__c = accRole.Id;
-						accContRoleToInsert.Contact_Role__c = 'ITP Training Coordinator';
-						accContRoleToInsert.Contact_Roles__c = idContRoleTranCoord;
-						accContRoleToInsert.Details__c = '';
-						accContRoleToInsert.Contact__c = con.Id;
-						insert accContRoleToInsert;
-
-						accContRoleToInserted.Id = accContRoleToInsert.Id;
-
-						System.debug('accContRoleToInsert- ' + accContRoleToInsert);
-					}
-
-					Portal_Application_Right__c portalApplicationRight = new Portal_Application_Right__c(
-							Portal_Application__c = pa.id,
-							Right__c = 'Access Requested',
-							Contact__c = con.Id,
-							Favourite_Service__c = true
-						);
-						insert portalApplicationRight;
-
-					accContRoleToInserted = [SELECT Id,Name, Company_Code__c FROM Account_Contact_Role__c WHERE id = :accContRoleToInserted.Id LIMIT 1];
-
-					String newEmployeeCode = 'TC-' + accContRoleToInserted.Name.split('-').get(1).replaceFirst('^0+','');
-					accContRoleToInserted.Company_Code__c = newEmployeeCode;
-
-					update accContRoleToInserted;
-
-					User cont = [SELECT id, contact.FirstName, contact.LastName, contact.account.name FROM User WHERE ContactId = :con.Id LIMIT 1];
-
-					List<IFTP_History__c> IftpHistoryRecordsToBeInserted = new List<IFTP_History__c>();
-					IFTP_History__c ihrec = portalIftpHistoryManagement.createIftpHistoryRecord(portalIftpHistoryManagement.Employee_Start_Working_for_ITP,
-																		accContRoleToInserted.Company_Code__c,
-																		cont.contact.account.name,
-																		cont.contact.FirstName,
-																		cont.contact.LastName);
-					IftpHistoryRecordsToBeInserted.add(ihrec);
-
-					if(IftpHistoryRecordsToBeInserted.size() > 0){
-						portalIftpHistoryManagement.insertIntoIftpHistory(IftpHistoryRecordsToBeInserted);
-					}
-
-					updatePortalUseProfile(cont.id,'ISS Portal (Partner)');
-					assignPermissionSet(psAbsorb.Id, cont.id);
 				}
 			}
 
-            // We need to create a Case
-            if(serviceName == 'GADM') {
-                permissionGADMPortal(returnedString);
-            }
+			// We need to create a Case
+			if(serviceName == 'GADM') {
+				permissionGADMPortal(returnedString);
+			}
 
-            if(serviceName == 'NDCMM'){
+			if(serviceName == 'NDCMM'){
 
-                //Fetching the assignment rules on case
-                List<AssignmentRule> arList = [SELECT Id FROM AssignmentRule WHERE SobjectType = 'Case' AND Active = true limit 1];
+				//Fetching the assignment rules on case
+				List<AssignmentRule> arList = [SELECT Id FROM AssignmentRule WHERE SobjectType = 'Case' AND Active = true limit 1];
 
-                //Creating the DMLOptions for "Assign using active assignment rules" checkbox
-                Database.DMLOptions dmlOpts = new Database.DMLOptions();
-                if(arList.size() > 0) {
-                    dmlOpts.assignmentRuleHeader.assignmentRuleId = arList[0].id;
-                }
+				//Creating the DMLOptions for "Assign using active assignment rules" checkbox
+				Database.DMLOptions dmlOpts = new Database.DMLOptions();
+				if(arList.size() > 0) {
+					dmlOpts.assignmentRuleHeader.assignmentRuleId = arList[0].id;
+				}
 
-                Case cse = new Case(
-                        Subject = 'NDC Matchmaker - Validate Account and Contact',
-                        Status = 'New',
-                        AccountId = acc.Id,
-                        ContactId = con.Id,
-                        Origin = 'Portal',
-                        RecordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByName().get('NDC Management').getRecordTypeId()
-                );
+				Case cse = new Case(
+						Subject = 'NDC Matchmaker - Validate Account and Contact',
+						Status = 'New',
+						AccountId = acc.Id,
+						ContactId = con.Id,
+						Origin = 'Portal',
+						RecordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByName().get('NDC Management').getRecordTypeId()
+				);
 
-                cse.setOptions(dmlOpts);
-                insert cse;
+				cse.setOptions(dmlOpts);
+				insert cse;
 
-                // We also need to create a Portal Application Right
-                // This part has to be made generic for all services in the future
-                One_Id_Service_Provider_Config__c oneIdService = [select Portal_Service__c from One_Id_Service_Provider_Config__c where Service_Provider_Name__c = 'NDCMM' and RecordType.DeveloperName = 'Service_Provider' limit 1];
+				// We also need to create a Portal Application Right
+				// This part has to be made generic for all services in the future
+				One_Id_Service_Provider_Config__c oneIdService = [select Portal_Service__c from One_Id_Service_Provider_Config__c where Service_Provider_Name__c = 'NDCMM' and RecordType.DeveloperName = 'Service_Provider' limit 1];
 
-                Portal_Application_Right__c portalApplicationRight = new Portal_Application_Right__c(
-                        Portal_Application__c = oneIdService.Portal_Service__c,
-                        Right__c = 'Access Requested',
-                        Contact__c = con.Id
-                );
-                insert portalApplicationRight;
-            }
-        } catch(exception ex){
-            Database.rollback(sp);
-            System.debug(ex);
-            return false;
-        }
-        return true;
-    }
+				Portal_Application_Right__c portalApplicationRight = new Portal_Application_Right__c(
+						Portal_Application__c = oneIdService.Portal_Service__c,
+						Right__c = 'Access Requested',
+						Contact__c = con.Id
+				);
+				insert portalApplicationRight;
+			}
+		} catch(exception ex){
+			Database.rollback(sp);
+			System.debug(ex);
+			return false;
+		}
+		return true;
+	}
 
-    private static String createContactAndAccount (Contact con, Account acc, String servName, Map<String, String> serviceSpecificParams, Boolean l1UserExists) {
-        system.debug('createContactAndAccount starting contact -->  ' + con);
-        system.debug('createContactAndAccount starting account -- ' + acc);
+	private static String createContactAndAccount (Contact con, Account acc, String servName, Map<String, String> serviceSpecificParams, Boolean l1UserExists) {
+		system.debug('createContactAndAccount starting contact -->  ' + con);
+		system.debug('createContactAndAccount starting account -- ' + acc);
 
-        Id rtId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
+		Id rtId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
 
-        if(con.RecordType == null){
-            con.RecordTypeId = rtId;
-        }
+		if(con.RecordType == null){
+			con.RecordTypeId = rtId;
+		}
 
-        try {
-            if(acc.Id == null) {
-                acc.Reason_for_creation__c = 'Created by customer';
-                //Since we need to create a portal user, we need to assign the account to a user with a specified role, otherwise an error is thrown
-                acc.ownerid = ISSP_Constant.newAccountOwnerId;
-				
+		try {
+			if(acc.Id == null) {
+				acc.Reason_for_creation__c = 'Created by customer';
+				//Since we need to create a portal user, we need to assign the account to a user with a specified role, otherwise an error is thrown
+				acc.ownerid = ISSP_Constant.newAccountOwnerId;
+
 				//IFTP - included if for Others recordtype
 				if (acc.Sector__c != null && !String.isBlank(acc.Sector__c) && acc.Sector__c == 'Airline Supplier' &&
 					acc.Category__c != null && !String.isBlank(acc.Category__c) && acc.Category__c == 'Fuel Supplier'){
@@ -841,61 +737,61 @@ public without sharing class OneId_RegistrationProcessController {
 					acc.recordtypeid = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
 				}
 
-                if (!String.isBlank(acc.Category__c) && acc.Category__c != 'Other')
-                    acc.Category_Other_Value__c = null;
+				if (!String.isBlank(acc.Category__c) && acc.Category__c != 'Other')
+					acc.Category_Other_Value__c = null;
 
-                //Assign countries and states
-                if (!String.isBlank(acc.BillingCountry)) {
-                    List<Iata_Iso_Country__c> cn = IATAIsoCountryDAO.getIsoCountryByCountriesName(new Set<String>{acc.BillingCountry});
-                    if (cn.size()!=0) {
-                        acc.IATA_ISO_Country__c = cn[0].id;
-                    }
-                }
-                if (!String.isBlank(acc.ShippingCountry)) {
-                    List<Iata_Iso_Country__c> cn = IATAIsoCountryDAO.getIsoCountryByCountriesName(new Set<String>{acc.ShippingCountry});
-                    if (cn.size()!=0) {
-                        acc.IATA_ISO_Shipping_Country__c = cn[0].id;
-                    }
-                }
-                database.insert(acc);
+				//Assign countries and states
+				if (!String.isBlank(acc.BillingCountry)) {
+					List<Iata_Iso_Country__c> cn = IATAIsoCountryDAO.getIsoCountryByCountriesName(new Set<String>{acc.BillingCountry});
+					if (cn.size()!=0) {
+						acc.IATA_ISO_Country__c = cn[0].id;
+					}
+				}
+				if (!String.isBlank(acc.ShippingCountry)) {
+					List<Iata_Iso_Country__c> cn = IATAIsoCountryDAO.getIsoCountryByCountriesName(new Set<String>{acc.ShippingCountry});
+					if (cn.size()!=0) {
+						acc.IATA_ISO_Shipping_Country__c = cn[0].id;
+					}
+				}
+				database.insert(acc);
 
 				if(l1UserExists){
 					con.User_Portal_Status__c = 'Approved Admin';
 					acc.IsPartner = true;
 					update acc;
 				}
-            }
+			}
 
-            Account_Role__c accountRole = new Account_Role__c();
-            if(servName == 'GADM') {
-                accountRole = OneId_RegistrationHelper_GADM.createAccountRole(acc);
-            }
+			Account_Role__c accountRole = new Account_Role__c();
+			if(servName == 'GADM') {
+				accountRole = OneId_RegistrationHelper_GADM.createAccountRole(acc);
+			}
 
-            con.AccountId = acc.Id;
-            if(! String.isBlank(acc.Iata_Iso_Country__c)) {
-                con.ISO_Country__c = acc.Iata_Iso_Country__c;
-                if(! String.isBlank(acc.IATA_ISO_Shipping_Country__c))
-                    con.IATA_ISO_Shipping_Country__c = acc.IATA_ISO_Shipping_Country__c;
-            }
+			con.AccountId = acc.Id;
+			if(! String.isBlank(acc.Iata_Iso_Country__c)) {
+				con.ISO_Country__c = acc.Iata_Iso_Country__c;
+				if(! String.isBlank(acc.IATA_ISO_Shipping_Country__c))
+					con.IATA_ISO_Shipping_Country__c = acc.IATA_ISO_Shipping_Country__c;
+			}
 
-            // TIP PORTAL ACCESS ASSIGNMENT
-            if(acc.Sector__c == TIP_Utils.ACCOUNT_SECTOR_FINANCIAL_INSTITUTION && acc.Category__c == TIP_Utils.ACCOUNT_CATEGORY_PAYMENT_PROVIDER){
-                con.Primary_Contact__c = true;
-                con.User_Portal_Status__c = 'Approved Admin';
+			// TIP PORTAL ACCESS ASSIGNMENT
+			if(acc.Sector__c == TIP_Utils.ACCOUNT_SECTOR_FINANCIAL_INSTITUTION && acc.Category__c == TIP_Utils.ACCOUNT_CATEGORY_PAYMENT_PROVIDER){
+				con.Primary_Contact__c = true;
+				con.User_Portal_Status__c = 'Approved Admin';
 
-                checkConAvailable(con);
+				checkConAvailable(con);
 
-                con.account=acc;
-                //TIP-16 - Assign TIP Portal Service
-                Id appListId;
-                ISSP_Portal_Service_Ids__c serviceIdInstance = ISSP_Portal_Service_Ids__c.getInstance();
-                if (serviceIdInstance != null && !String.isBlank(serviceIdInstance.TIP_Portal_Service_Id__c)){
-                    appListId = serviceIdInstance.TIP_Portal_Service_Id__c;
+				con.account=acc;
+				//TIP-16 - Assign TIP Portal Service
+				Id appListId;
+				ISSP_Portal_Service_Ids__c serviceIdInstance = ISSP_Portal_Service_Ids__c.getInstance();
+				if (serviceIdInstance != null && !String.isBlank(serviceIdInstance.TIP_Portal_Service_Id__c)){
+					appListId = serviceIdInstance.TIP_Portal_Service_Id__c;
 
-                    Portal_Application_Right__c newRight = new Portal_Application_Right__c();
-                    newRight.Contact__c = con.Id;
-                    newRight.Right__c = 'Access Granted';
-                    newRight.Portal_Application__c = appListId;
+					Portal_Application_Right__c newRight = new Portal_Application_Right__c();
+					newRight.Contact__c = con.Id;
+					newRight.Right__c = 'Access Granted';
+					newRight.Portal_Application__c = appListId;
 					try{
 						insert newRight;
 					}
@@ -904,29 +800,29 @@ public without sharing class OneId_RegistrationProcessController {
 					}
 				}
 
-                //Start ACLI
-                // ACLI Requirement: The first user registering under a new airline account will get it automatically.
-            }else if(acc.Sector__c == 'Airline' && isNewAcc &&
-                    acc.RecordTypeId == Schema.Account.sObjectType.getDescribe().getRecordTypeInfosByName().get('Standard Account').getRecordTypeId() ){
+				//Start ACLI
+				// ACLI Requirement: The first user registering under a new airline account will get it automatically.
+			}else if(acc.Sector__c == 'Airline' && isNewAcc &&
+					acc.RecordTypeId == Schema.Account.sObjectType.getDescribe().getRecordTypeInfosByName().get('Standard Account').getRecordTypeId() ){
 
-                System.debug('Adding ACLI service');
-                con.Primary_Contact__c = true;
-                con.User_Portal_Status__c = 'Approved Admin';
+				System.debug('Adding ACLI service');
+				con.Primary_Contact__c = true;
+				con.User_Portal_Status__c = 'Approved Admin';
 
-                checkConAvailable(con);
+				checkConAvailable(con);
 
-                con.account=acc;
+				con.account=acc;
 
-                //ACLI Requirement: if first user on an Airline account then the user gets automatically the Coding Service
-                Id appListId;
-                ISSP_Portal_Service_Ids__c serviceIdInstance = ISSP_Portal_Service_Ids__c.getInstance();
-                if (serviceIdInstance != null && !String.isBlank(serviceIdInstance.ACLI_IATA_Airlines_and_Location_Codes__c)){
-                    appListId = serviceIdInstance.ACLI_IATA_Airlines_and_Location_Codes__c;
+				//ACLI Requirement: if first user on an Airline account then the user gets automatically the Coding Service
+				Id appListId;
+				ISSP_Portal_Service_Ids__c serviceIdInstance = ISSP_Portal_Service_Ids__c.getInstance();
+				if (serviceIdInstance != null && !String.isBlank(serviceIdInstance.ACLI_IATA_Airlines_and_Location_Codes__c)){
+					appListId = serviceIdInstance.ACLI_IATA_Airlines_and_Location_Codes__c;
 
-                    Portal_Application_Right__c newRight = new Portal_Application_Right__c();
-                    newRight.Contact__c = con.Id;
-                    newRight.Right__c = 'Access Granted';
-                    newRight.Portal_Application__c = appListId;
+					Portal_Application_Right__c newRight = new Portal_Application_Right__c();
+					newRight.Contact__c = con.Id;
+					newRight.Right__c = 'Access Granted';
+					newRight.Portal_Application__c = appListId;
 					try{
 						insert newRight;
 					}
@@ -936,26 +832,26 @@ public without sharing class OneId_RegistrationProcessController {
 				}
 
 
-            }
-            //End ACLI
-            else if(!isAlreadyContact){
-                checkConAvailable(con);
-                system.debug('::: Is not a contact already: ' + con);
-            }
-            else{
-                checkConAvailable(con);
-                updateContactInFuture(String.valueOf(con.Id), con.Community__c, String.valueOf(con.User_Portal_Status__C), con.Email, con.AccountId);
-                system.debug('::: Is contact already UPDATING: ' + con);
-                //update con;
+			}
+			//End ACLI
+			else if(!isAlreadyContact){
+				checkConAvailable(con);
+				system.debug('::: Is not a contact already: ' + con);
+			}
+			else{
+				checkConAvailable(con);
+				updateContactInFuture(String.valueOf(con.Id), con.Community__c, String.valueOf(con.User_Portal_Status__C), con.Email, con.AccountId);
+				system.debug('::: Is contact already UPDATING: ' + con);
+				//update con;
 
-            }
+			}
 
-            //create contact role after contact is created
-            if(servName == 'GADM') {
-                if(serviceSpecificParams.get('isPowerUser') != null) {
-                    OneId_RegistrationHelper_GADM.createContactRole(con, accountRole, Boolean.valueOf(serviceSpecificParams.get('isPowerUser')));
-                }
-            }
+			//create contact role after contact is created
+			if(servName == 'GADM') {
+				if(serviceSpecificParams.get('isPowerUser') != null) {
+					OneId_RegistrationHelper_GADM.createContactRole(con, accountRole, Boolean.valueOf(serviceSpecificParams.get('isPowerUser')));
+				}
+			}
 
 			if(l1UserExists){
 
@@ -1017,7 +913,7 @@ public without sharing class OneId_RegistrationProcessController {
 			Account acc = [SELECT Id, Sector__c, Category__c FROM Account WHERE Id =: accId];
 			Comm_User_Helper.addDefaultAppRights(con, acc);
 		}
-	} 
+	}
 
 	public static void updateUserProfile(Contact con, Account acc, Boolean isNewAcc){
 		User u = [SELECT Id, ProfileId FROM User WHERE Id =: UserInfo.getUserId()];
@@ -1081,87 +977,86 @@ public without sharing class OneId_RegistrationProcessController {
 		}
 	}
 
-    @Future
-    public static void permissionGADMPortal(String userId){
-        if (userId != null && userId != '') {
-            List <PermissionSet> permListPortal = [SELECT Id FROM PermissionSet WHERE Name = 'GADM'];
-            if(!permListPortal.isEmpty()){
-                PermissionSetAssignment newAssignCS = new PermissionSetAssignment();
-                newAssignCS.AssigneeId = userId;
-                newAssignCS.PermissionSetId = permListPortal[0].Id;
-                insert newAssignCS;
-            }
-        }
-    }
+	@Future
+	public static void permissionGADMPortal(String userId){
+		if (userId != null && userId != '') {
+			List <PermissionSet> permListPortal = [SELECT Id FROM PermissionSet WHERE Name = 'GADM'];
+			if(!permListPortal.isEmpty()){
+				PermissionSetAssignment newAssignCS = new PermissionSetAssignment();
+				newAssignCS.AssigneeId = userId;
+				newAssignCS.PermissionSetId = permListPortal[0].Id;
+				insert newAssignCS;
+			}
+		}
+	}
 
-    @future
-    public static void updatePortalUseProfile(String userId){
-        system.debug('updateUserProfile starting... ' + userId);
-        Profile isspAgentUser = [SELECT Id FROM Profile WHERE Name = 'ISS Portal Agency User (Partner)'];
-        update new User(Id = userId, ProfileId = isspAgentUser.Id);
-    }
-    
-    @future
+	@future
+	public static void updatePortalUseProfile(String userId){
+		system.debug('updateUserProfile starting... ' + userId);
+		Profile isspAgentUser = [SELECT Id FROM Profile WHERE Name = 'ISS Portal Agency User (Partner)'];
+		update new User(Id = userId, ProfileId = isspAgentUser.Id);
+	}
+
 	public static void updatePortalUseProfile(String userId, String sProfile){
 		updatePortalUseProfile(userId, 'ISS Portal Agency User (Partner)');
 	}
 
-    @Future
-    public static void permissionNewAgency(String userId){
-        if (userId != null && userId != '') {
-            List <PermissionSet> permList = [SELECT Id FROM PermissionSet WHERE Name = 'ISSP_New_Agency_permission_set'];
-            if (!permList.isEmpty()){
-                PermissionSetAssignment newAssign = new PermissionSetAssignment();
-                newAssign.AssigneeId = userId;
-                newAssign.PermissionSetId = permList[0].Id;
+	@Future
+	public static void permissionNewAgency(String userId){
+		if (userId != null && userId != '') {
+			List <PermissionSet> permList = [SELECT Id FROM PermissionSet WHERE Name = 'ISSP_New_Agency_permission_set'];
+			if (!permList.isEmpty()){
+				PermissionSetAssignment newAssign = new PermissionSetAssignment();
+				newAssign.AssigneeId = userId;
+				newAssign.PermissionSetId = permList[0].Id;
 				try{
 					insert newAssign;
-                }
+				}
 				catch(Exception e){
 					System.debug(e);
 				}
-            }
-        }
-    }
+			}
+		}
+	}
 
-    @Future
-    public static void permissionCSPortal(String userId){
-        if (userId != null && userId != '') {
-            List <PermissionSet> permListPortal = [SELECT Id FROM PermissionSet WHERE Name = 'ISSP_SSO'];
-            if(!permListPortal.isEmpty()){
-                PermissionSetAssignment newAssignCS = new PermissionSetAssignment();
-                newAssignCS.AssigneeId = userId;
-                newAssignCS.PermissionSetId = permListPortal[0].Id;
+	@Future
+	public static void permissionCSPortal(String userId){
+		if (userId != null && userId != '') {
+			List <PermissionSet> permListPortal = [SELECT Id FROM PermissionSet WHERE Name = 'ISSP_SSO'];
+			if(!permListPortal.isEmpty()){
+				PermissionSetAssignment newAssignCS = new PermissionSetAssignment();
+				newAssignCS.AssigneeId = userId;
+				newAssignCS.PermissionSetId = permListPortal[0].Id;
 				try{
 					insert newAssignCS;
 				}
 				catch(Exception e){
 					System.debug(e);
 				}
-            }
-        }
-    }
+			}
+		}
+	}
 
-    public static void portalServiceNewAgency(String conId){
-        system.debug('aqui portalServiceNewAgency....' + conId);
-        if (conId != null && conId != '') {
-            List<Portal_Applications__c> pApplication = [SELECT id FROM Portal_Applications__c WHERE Name = :AMS_UTILS.IATA_ACCREDITATION_AND_CHANGES];
+	public static void portalServiceNewAgency(String conId){
+		system.debug('aqui portalServiceNewAgency....' + conId);
+		if (conId != null && conId != '') {
+			List<Portal_Applications__c> pApplication = [SELECT id FROM Portal_Applications__c WHERE Name = :AMS_UTILS.IATA_ACCREDITATION_AND_CHANGES];
 
-            if(!pApplication.isEmpty()){
-                Portal_Application_Right__c appRight = new Portal_Application_Right__c();
-                appRight.Contact__c = conId;
-                appRight.Portal_Application__c = pApplication[0].Id;
-                appRight.Right__c = 'Access Granted';
-                insert appRight;
-            }
+			if(!pApplication.isEmpty()){
+				Portal_Application_Right__c appRight = new Portal_Application_Right__c();
+				appRight.Contact__c = conId;
+				appRight.Portal_Application__c = pApplication[0].Id;
+				appRight.Right__c = 'Access Granted';
+				insert appRight;
+			}
 
-        }
-    }
+		}
+	}
 
-    @AuraEnabled
-    public static void checkConAvailable (Contact con){
+	@AuraEnabled
+	public static void checkConAvailable (Contact con){
 
-        Id rtId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
+		Id rtId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
 		if(con.Id == null){
 			Contact [] ec = [Select id, email, AccountId, RecordType.Id, User_Portal_Status__c, Community__c, Invoicing_Contact__c, BSP_CASS_Payment_contact__c FROM Contact WHERE email =:con.email AND AccountId =:con.AccountId LIMIT 1];
 			System.debug('Contact Information : ' + con + ' Contact query: ' + ec);
@@ -1177,7 +1072,7 @@ public without sharing class OneId_RegistrationProcessController {
 				}
 
 			} else {
-				System.debug('Insert new contact'); 
+				System.debug('Insert new contact');
 				System.debug(con);
 				try {
 					database.insert(con);
@@ -1196,87 +1091,87 @@ public without sharing class OneId_RegistrationProcessController {
 		}
 	}
 
-    @AuraEnabled
-    public static Contact loadInvitationInfo (String invitationId){
+	@AuraEnabled
+	public static Contact loadInvitationInfo (String invitationId){
 
-        List<Invitation__c> invitation = [select id,AccountId__c, Business_Fax__c, Business_Phone__c,
-                Email__c, First_Name__c, Job_Function__c, Job_Title__c,
-                Last_Name__c, Mobile_Phone__c, Name, Salutation__c from Invitation__c WHERE Id =: invitationId];
-        if(! invitation.isEmpty()) {
-            Invitation__c inv = invitation[0];
-            Contact c = new Contact (
-                    AccountId = inv.AccountId__c,
-                    Fax = inv.Business_Fax__c,
-                    Phone = inv.Business_Phone__c,
-                    Email = inv.Email__c,
-                    FirstName = inv.First_Name__c,
-                    Function__c = inv.Job_Function__c,
-                    Membership_Function__c = inv.Job_Function__c,
-                    Title = inv.Job_Title__c,
-                    LastName = inv.Last_Name__c,
-                    MobilePhone = inv.Mobile_Phone__c,
-                    Salutation = inv.Salutation__c
-            );
-            return c;
-        }
-        return null;
-    }
+		List<Invitation__c> invitation = [select id,AccountId__c, Business_Fax__c, Business_Phone__c,
+				Email__c, First_Name__c, Job_Function__c, Job_Title__c,
+				Last_Name__c, Mobile_Phone__c, Name, Salutation__c from Invitation__c WHERE Id =: invitationId];
+		if(! invitation.isEmpty()) {
+			Invitation__c inv = invitation[0];
+			Contact c = new Contact (
+					AccountId = inv.AccountId__c,
+					Fax = inv.Business_Fax__c,
+					Phone = inv.Business_Phone__c,
+					Email = inv.Email__c,
+					FirstName = inv.First_Name__c,
+					Function__c = inv.Job_Function__c,
+					Membership_Function__c = inv.Job_Function__c,
+					Title = inv.Job_Title__c,
+					LastName = inv.Last_Name__c,
+					MobilePhone = inv.Mobile_Phone__c,
+					Salutation = inv.Salutation__c
+			);
+			return c;
+		}
+		return null;
+	}
 
-    @AuraEnabled
-    public static Invitation__c getInvitation(String invitationId) {
-        if(String.isNotBlank(invitationId)) {
-            List<Invitation__c> invitations = [SELECT Id, GADM_Power_User__c FROM Invitation__c WHERE Id = :invitationId LIMIT 1];
-            if(! invitations.isEmpty()) {
-                return invitations[0];
-            }else{
-                return new Invitation__c();
-            }
-        }
-        return new Invitation__c();
-    }
+	@AuraEnabled
+	public static Invitation__c getInvitation(String invitationId) {
+		if(String.isNotBlank(invitationId)) {
+			List<Invitation__c> invitations = [SELECT Id, GADM_Power_User__c FROM Invitation__c WHERE Id = :invitationId LIMIT 1];
+			if(! invitations.isEmpty()) {
+				return invitations[0];
+			}else{
+				return new Invitation__c();
+			}
+		}
+		return new Invitation__c();
+	}
 
 
-    @AuraEnabled
-    public static Account loadGadmAccount(String gadmAccountId) {
-        if(String.isNotBlank(gadmAccountId)) {
-            List<Account> accounts = [SELECT Id, Name, BillingStreet, IATA_ISO_Country__r.Name, Airline_designator__c, IATACode__c, Category__c, IATA_ISO_Billing_State__c, IATA_ISO_Shipping_State__c, Sector__c FROM Account WHERE Id = :gadmAccountId LIMIT 1];
-            if (! accounts.isEmpty()) {
-                return accounts[0];
-            }else{
-                return new Account();
-            }
-        }
+	@AuraEnabled
+	public static Account loadGadmAccount(String gadmAccountId) {
+		if(String.isNotBlank(gadmAccountId)) {
+			List<Account> accounts = [SELECT Id, Name, BillingStreet, IATA_ISO_Country__r.Name, Airline_designator__c, IATACode__c, Category__c, IATA_ISO_Billing_State__c, IATA_ISO_Shipping_State__c, Sector__c FROM Account WHERE Id = :gadmAccountId LIMIT 1];
+			if (! accounts.isEmpty()) {
+				return accounts[0];
+			}else{
+				return new Account();
+			}
+		}
 
-        return new Account();
-    }
+		return new Account();
+	}
 
    @AuraEnabled
-    public static StatesAndAlternateNames getStates(String country){
+	public static StatesAndAlternateNames getStates(String country){
 		List<IATA_ISO_State__c> liis =  [SELECT ID, Name, GeonameAsciiName__c, IATA_ISO_Country__r.State_Province_Mandatory__c, IATA_ISO_Country__r.IEC_Zip_Postal_Code_required__c, (SELECT IATA_ISO_State__r.Name, GeonameName__c, GeonameAlternateNames__c, GeonameHierarchy_label__c, Name, Is_PO_Box_City__c FROM IATA_ISO_Cities__r WHERE Status__c <> 'Pending') FROM IATA_ISO_State__c WHERE IATA_ISO_Country__r.Name = :country AND Valid_for_Address__c = true ORDER BY IATA_ISO_Country__r.Name];
 		Map<ID, IATA_ISO_City__c> ma = new Map<ID,IATA_ISO_City__c>([SELECT Name, GeonameAlternateNames__c, IATA_ISO_State__r.Id, Is_PO_Box_City__c FROM IATA_ISO_City__c WHERE Status__c <> 'Pending' AND IATA_ISO_State__r.IATA_ISO_Country__r.Name = :country]);
 		StatesAndAlternateNames states = new StatesAndAlternateNames(liis, ma);
 
 		return states;
-    }
-    
-    @TestVisible
-    public class StatesAndAlternateNames{
-        @AuraEnabled 
-        public List<IATA_ISO_State__c> states;
-        
-        @AuraEnabled
-        public Map<ID, IATA_ISO_City__c> idAndAlternateNames;
+	}
 
-         public StatesAndAlternateNames(List<IATA_ISO_State__c> states, Map<ID, IATA_ISO_City__c> idAndAlternateNames){
-           this.states = states;
-           this.idAndAlternateNames = idAndAlternateNames;  
-        }
-        
-    }
+	@TestVisible
+	public class StatesAndAlternateNames{
+		@AuraEnabled
+		public List<IATA_ISO_State__c> states;
+
+		@AuraEnabled
+		public Map<ID, IATA_ISO_City__c> idAndAlternateNames;
+
+		 public StatesAndAlternateNames(List<IATA_ISO_State__c> states, Map<ID, IATA_ISO_City__c> idAndAlternateNames){
+		   this.states = states;
+		   this.idAndAlternateNames = idAndAlternateNames;
+		}
+
+	}
 
 
-    @AuraEnabled
-    public static string getCustomerPortalUrl(){
+	@AuraEnabled
+	public static string getCustomerPortalUrl(){
 		string url = '';
 		List<Network> networkList = [Select id from Network where name =: 'CS Portal' Limit 1];
 		if(!test.isRunningTest()){
@@ -1285,108 +1180,216 @@ public without sharing class OneId_RegistrationProcessController {
 				url = url + '/login/SelfRegister';
 			}
 		}
-        return url;
-    }
-    
-    @future
+		return url;
+	}
+
+	@future
 	private static void assignPermissionSet(Id absorbId, Id userId){
 		PermissionSetAssignment psa = new PermissionSetAssignment(PermissionSetId = absorbId, AssigneeId = userId);
 
 		insert psa;
 	}
 
-    /* Manuel Conde commented this...
+	public static void handleIFTPProcess(Account acc, Contact con, Boolean isNewAccount){
+		String RECTYPE_ITP_AccContRole = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'ITP');
+		String RECTYPE_ITP_AccRole = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Role__c', 'IFTP');
+		String RECTYPE_Others = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Others');
 
-    public static void increaseCodeCoverage(){
-        Integer i = 0;
-        i = 0;
-        i = 0;
-        i = 0;
-        i = 0;
-        i = 0;
-        i = 0;
-        i = 0;
-        i = 0;
-        i = 0;
-        i = 0;
-        i = 0;
-        i = 0;
-        i = 0;
-        i = 0;
-        i = 0;
-        i = 0;
-        i = 0;
-        i = 0;
-        i = 0;
-        i = 0;
-        i = 0;
-        i = 0;
-        i = 0;
-        i = 0;
-        i = 0;
-        i = 0;
-        i = 0;
-        i = 0;
-        i = 0;
-        i = 0;
-        i = 0;
-        i = 0;
-        i = 0;
-        i = 0;
-        i = 0;
-        i = 0;
-        i = 0;
-        i = 0;
-        i = 0;
-        i = 0;
-        i = 0;
-        i = 0;
-        i = 0;
-        i = 0;
-        i = 0;
-        i = 0;
-        i = 0;
-        i = 0;
-        i = 0;
-        i = 0;
-        i = 0;
-        i = 0;
-        i = 0;
-        i = 0;
-        i = 0;
-        i = 0;
-        i = 0;
-        i = 0;
-        i = 0;
-        i = 0;
-        i = 0;
-        i = 0;
-        i = 0;
-        i = 0;
-        i = 0;
-        i = 0;
-        i = 0;
-        i = 0;
-        i = 0;
-        i = 0;
-        i = 0;
-        i = 0;
-        i = 0;
-        i = 0;
-        i = 0;
-        i = 0;
-        i = 0;
-        i = 0;
-        i = 0;
-        i = 0;
-        i = 0;
-        i = 0;
-        i = 0;
-        i = 0;
-        i = 0;
-        i = 0;
-    }
+		Account_Roles__c accRoles = [SELECT id FROM Account_Roles__c
+								WHERE Name = 'Airline Supplier - ITP' limit 1];
 
-     */
+		Account_Role_Services__c accRoleSrvs = [SELECT id FROM Account_Role_Services__c
+								WHERE Name = 'IFTP - ITP' limit 1];
+
+		PermissionSet psAbsorb = [SELECT Id FROM PermissionSet WHERE Name = 'Absorb'];
+
+		List<Contact_Roles__c> contRoles = [SELECT id, Name FROM Contact_Roles__c WHERE Name in ('ITP Administrator','ITP Training Coordinator') ];
+		Id idContRoleAdmin = null;
+		Id idContRoleTranCoord = null;
+
+		for(Contact_Roles__c cr : contRoles){
+			if(cr.name == 'ITP Administrator'){
+				idContRoleAdmin = cr.id;
+			}else if(cr.name == 'ITP Training Coordinator'){
+				idContRoleTranCoord = cr.id;
+			}
+		}
+
+		Portal_Applications__c pa = [SELECT id FROM Portal_Applications__c WHERE name = 'IFTP' limit 1];
+
+		Account_Contact_Role__c accContRoleToInserted = new Account_Contact_Role__c();
+
+		if(isNewAccount == true){
+			Account_Role__c accRole = new Account_Role__c();
+			accRole.Account__c = acc.Id;
+			accRole.Account_Roles__c = accRoles.id;
+			accRole.RecordTypeId = RECTYPE_ITP_AccRole;
+			insert accRole;
+
+			Account_Role_Service__c accRoleSrv = new Account_Role_Service__c();
+			accRoleSrv.Account_Role__c = accRole.id;
+			accRoleSrv.Account_Role_Services__c = accRoleSrvs.id;
+			insert accRoleSrv;
+
+			Account_Contact_Role__c accContRoleToInsert = new Account_Contact_Role__c();
+			// accContRoleToInsert.Company_Code__c = employeeToAdd.code.trim();
+			accContRoleToInsert.Service_Rendered__c = 'IFTP';
+			accContRoleToInsert.Status__c = 'Active';
+			accContRoleToInsert.RecordTypeId = RECTYPE_ITP_AccContRole;
+			accContRoleToInsert.Account_Role__c = accRole.Id;
+			accContRoleToInsert.Contact_Role__c = 'ITP Administrator';
+			accContRoleToInsert.Contact_Roles__c = idContRoleAdmin;
+			accContRoleToInsert.Details__c = '';
+			accContRoleToInsert.Contact__c = con.Id;
+			insert accContRoleToInsert;
+
+			accContRoleToInserted.Id = accContRoleToInsert.Id;
+
+		}else{
+			Account_Role__c accRole = [SELECT id FROM Account_Role__c WHERE account__c = :acc.id AND recordtypeid = :RECTYPE_ITP_AccRole limit 1];
+
+			Account_Contact_Role__c accContRoleToInsert = new Account_Contact_Role__c();
+			accContRoleToInsert.Service_Rendered__c = 'IFTP';
+			accContRoleToInsert.Status__c = 'Active';
+			accContRoleToInsert.RecordTypeId = RECTYPE_ITP_AccContRole;
+			accContRoleToInsert.Account_Role__c = accRole.Id;
+			accContRoleToInsert.Contact_Role__c = 'ITP Training Coordinator';
+			accContRoleToInsert.Contact_Roles__c = idContRoleTranCoord;
+			accContRoleToInsert.Details__c = '';
+			accContRoleToInsert.Contact__c = con.Id;
+			insert accContRoleToInsert;
+
+			accContRoleToInserted.Id = accContRoleToInsert.Id;
+
+		}
+
+		Portal_Application_Right__c portalApplicationRight = new Portal_Application_Right__c(
+				Portal_Application__c = pa.id,
+				Right__c = 'Access Requested',
+				Contact__c = con.Id,
+				Favourite_Service__c = true
+			);
+			insert portalApplicationRight;
+
+		accContRoleToInserted = [SELECT Id,Name, Company_Code__c FROM Account_Contact_Role__c WHERE id = :accContRoleToInserted.Id LIMIT 1];
+
+		String newEmployeeCode = 'TC-' + accContRoleToInserted.Name.split('-').get(1).replaceFirst('^0+','');
+		accContRoleToInserted.Company_Code__c = newEmployeeCode;
+
+		update accContRoleToInserted;
+
+		Contact cont = [SELECT id, FirstName, LastName, Account.Name FROM Contact WHERE Id = :con.Id LIMIT 1];
+
+		List<IFTP_History__c> IftpHistoryRecordsToBeInserted = new List<IFTP_History__c>();
+		IFTP_History__c ihrec = portalIftpHistoryManagement.createIftpHistoryRecord(portalIftpHistoryManagement.Employee_Start_Working_for_ITP,
+															accContRoleToInserted.Company_Code__c,
+															cont.account.name,
+															cont.FirstName,
+															cont.LastName);
+		IftpHistoryRecordsToBeInserted.add(ihrec);
+
+		if(IftpHistoryRecordsToBeInserted.size() > 0){
+			portalIftpHistoryManagement.insertIntoIftpHistory(IftpHistoryRecordsToBeInserted);
+		}
+
+		if(!Test.isRunningTest()){
+			updatePortalUseProfile(cont.id,'ISS Portal (Partner)');
+			assignPermissionSet(psAbsorb.Id, cont.id);
+		}
+	}
+
+	/* Manuel Conde commented this...
+
+	public static void increaseCodeCoverage(){
+		Integer i = 0;
+		i = 0;
+		i = 0;
+		i = 0;
+		i = 0;
+		i = 0;
+		i = 0;
+		i = 0;
+		i = 0;
+		i = 0;
+		i = 0;
+		i = 0;
+		i = 0;
+		i = 0;
+		i = 0;
+		i = 0;
+		i = 0;
+		i = 0;
+		i = 0;
+		i = 0;
+		i = 0;
+		i = 0;
+		i = 0;
+		i = 0;
+		i = 0;
+		i = 0;
+		i = 0;
+		i = 0;
+		i = 0;
+		i = 0;
+		i = 0;
+		i = 0;
+		i = 0;
+		i = 0;
+		i = 0;
+		i = 0;
+		i = 0;
+		i = 0;
+		i = 0;
+		i = 0;
+		i = 0;
+		i = 0;
+		i = 0;
+		i = 0;
+		i = 0;
+		i = 0;
+		i = 0;
+		i = 0;
+		i = 0;
+		i = 0;
+		i = 0;
+		i = 0;
+		i = 0;
+		i = 0;
+		i = 0;
+		i = 0;
+		i = 0;
+		i = 0;
+		i = 0;
+		i = 0;
+		i = 0;
+		i = 0;
+		i = 0;
+		i = 0;
+		i = 0;
+		i = 0;
+		i = 0;
+		i = 0;
+		i = 0;
+		i = 0;
+		i = 0;
+		i = 0;
+		i = 0;
+		i = 0;
+		i = 0;
+		i = 0;
+		i = 0;
+		i = 0;
+		i = 0;
+		i = 0;
+		i = 0;
+		i = 0;
+		i = 0;
+		i = 0;
+		i = 0;
+		i = 0;
+		i = 0;
+	}
+
+	 */
 
 }
