@@ -99,7 +99,7 @@ private class ISSP_Ctrl_Country_Requirements_Test {
 		Test.stopTest();
 
 		// 2 elements + null value
-		System.assertEquals(listResult.size(),3);
+		System.assertEquals(4,listResult.size());
 	}
 
 	// with type filter, 1 results
