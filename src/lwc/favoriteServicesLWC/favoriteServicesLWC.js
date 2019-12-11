@@ -137,13 +137,6 @@ export default class FavoriteServicesLWC extends LightningElement {
                 this.auxResult[i].extIconClass = 'slds-current-color noExtIconClass';
             }
 
-            if(counter === 2 || counter === 4){
-                this.auxResult[i].favoriteDivClass = 'halfOneRemClass';
-            }
-            else{
-                this.auxResult[i].favoriteDivClass = 'oneRemClass';
-            }
-
             pageListAux.push(this.auxResult[i]);
             counter++;
 
@@ -153,6 +146,12 @@ export default class FavoriteServicesLWC extends LightningElement {
                 let lstAux1 = [];
                 let lstAux2 = [];
                 let lstAux3 = [];
+
+                pageListAux[0].favoriteDivClass = 'oneRemClass';
+                pageListAux[1].favoriteDivClass = 'oneRemClass';
+                pageListAux[2].favoriteDivClass = 'halfOneRemClass';
+                pageListAux[3].favoriteDivClass = 'oneRemClass';
+                pageListAux[4].favoriteDivClass = 'halfOneRemClass';
 
                 lstAux1.push(pageListAux[0]);
                 lstAux2.push(pageListAux[1]);
@@ -176,24 +175,36 @@ export default class FavoriteServicesLWC extends LightningElement {
             let lstAux2 = [];
             let lstAux3 = [];
 
+            pageListAux[0].favoriteDivClass = 'oneRemClass';
+
             lstAux1.push(pageListAux[0]);
 
             if (pageListAux.length === 2) {
+                pageListAux[1].favoriteDivClass = 'oneRemClass';    
                 lstAux2.push(pageListAux[1]);
             }
 
             if (pageListAux.length === 3) {
+                pageListAux[1].favoriteDivClass = 'oneRemClass';
+                pageListAux[2].favoriteDivClass = 'oneRemClass';
                 lstAux2.push(pageListAux[1]);
                 lstAux3.push(pageListAux[2]);
             }
 
             if (pageListAux.length === 4) {
+                pageListAux[1].favoriteDivClass = 'oneRemClass';
+                pageListAux[2].favoriteDivClass = 'oneRemClass';
+                pageListAux[3].favoriteDivClass = 'halfOneRemClass';
                 lstAux2.push(pageListAux[1]);
                 lstAux3.push(pageListAux[2]);
                 lstAux3.push(pageListAux[3]);
             }
 
             if (pageListAux.length === 5) {
+                pageListAux[1].favoriteDivClass = 'oneRemClass';
+                pageListAux[2].favoriteDivClass = 'halfOneRemClass';
+                pageListAux[3].favoriteDivClass = 'oneRemClass';
+                pageListAux[4].favoriteDivClass = 'halfOneRemClass';
                 lstAux2.push(pageListAux[1]);
                 lstAux2.push(pageListAux[2]);
                 lstAux3.push(pageListAux[3]);
