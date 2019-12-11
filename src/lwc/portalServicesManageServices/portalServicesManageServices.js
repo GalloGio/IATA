@@ -65,6 +65,10 @@ import ISSP_All from '@salesforce/label/c.ISSP_All';
 import ISSP_Access_Granted from '@salesforce/label/c.ISSP_Access_Granted';
 import ISSP_Access_Requested from '@salesforce/label/c.ISSP_Access_Requested';
 import ISSP_Access_Denied from '@salesforce/label/c.ISSP_Access_Denied';
+import CSP_L2_Requested_Modal_Title from '@salesforce/label/c.CSP_L2_Requested_Modal_Title';
+import CSP_L2_Requested_Modal_Message from '@salesforce/label/c.CSP_L2_Requested_Modal_Message';
+import CSP_L2_Requested_Modal_Cancel from '@salesforce/label/c.CSP_L2_Requested_Modal_Cancel';
+import CSP_L2_Requested_Modal_Complete from '@salesforce/label/c.CSP_L2_Requested_Modal_Complete';
 
 
 
@@ -93,6 +97,7 @@ import ActivateIEPUsers from '@salesforce/apex/PortalServicesCtrl.ActivateIEPUse
 import CreateNewPortalAccess from '@salesforce/apex/PortalServicesCtrl.CreateNewPortalAccess';
 import isAirlineUser from '@salesforce/apex/CSP_Utils.isAirlineUser';
 import getCountryList from '@salesforce/apex/PortalSupportReachUsCtrl.getCountryList';
+import getContactInfo from '@salesforce/apex/PortalRegistrationSecondLevelCtrl.getContactInfo';
 
 
 
@@ -102,6 +107,7 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 
 export default class PortalServicesManageServices extends NavigationMixin(LightningElement) {
+    alertIcon = CSP_PortalPath + 'CSPortal/alertIcon.png';
 
     label = {
         aboutlb,
@@ -157,7 +163,11 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         ISSP_All,
         ISSP_Access_Granted,
         ISSP_Access_Requested,
-        ISSP_Access_Denied
+        ISSP_Access_Denied,
+        CSP_L2_Requested_Modal_Title,
+        CSP_L2_Requested_Modal_Message,
+        CSP_L2_Requested_Modal_Cancel,
+        CSP_L2_Requested_Modal_Complete
     };
 
     //links for images
@@ -280,6 +290,14 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         }
     }
 
+    //Level 2 registration variables
+    @track isFirstLevelUser = false;
+    level2RegistrationTrigger = 'service';
+    isTriggeredByRequest = true;
+    
+    @track displaySecondLevelRegistrationPopup = false;
+    @track displaySecondLevelRegistration = false;
+
     connectedCallback() {
         
         //get the parameters for this page
@@ -363,6 +381,11 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 
         //get the service details
         this.getServiceDetailsJS();
+
+        getContactInfo()
+            .then(result => {
+                this.isFirstLevelUser = result.Account.Is_General_Public_Account__c;
+            })
 
     }
 
@@ -730,8 +753,14 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
             let appInfo = serviceRec.recordService
             this.goToService(appInfo);
         } else {
-            //displays popup to confirm request
-            this.showConfirm = true;
+            // check if user is Level 1 and if service requests L2
+            if(serviceRec.recordService.Requires_Level2_Registration__c && this.isFirstLevelUser){
+                this.displaySecondLevelRegistrationPopup = true;
+            }
+            else{
+            	//displays popup to confirm request
+            	this.showConfirm = true;
+            }
         }
     }
 
@@ -1364,4 +1393,21 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 
     }
 
+    cancelSecondLevelRegistration(){
+        this.displaySecondLevelRegistrationPopup = false;
+        this.displaySecondLevelRegistration = false;
+    }
+
+    showSecondLevelRegistration(){
+        this.displaySecondLevelRegistrationPopup = false;
+        this.displaySecondLevelRegistration = true;
+    }
+
+    secondLevelRegistrationCompletedAction1(){
+        navigateToPage(CSP_PortalPath,{});
+    }
+
+    secondLevelRegistrationCompletedAction2(){
+        navigateToPage("manage-service?serviceId=" + this.serviceId);
+    }
 }
