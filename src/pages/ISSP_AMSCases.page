@@ -207,7 +207,12 @@
                 if ('{!isoCountry.ANG_Enable_NewGen__c}' == 'true' && '{!isHOAccredited}' == 'false') {
                     $('#modalChooseAccreditationType').modal('toggle');
                 } else {
-                    navigateToUrl('/ISSP_AMS_Accreditation?{!if(communityName=='CNS', 'CommunityName=CNS&', '')}{!IF(con.Account.ANG_Accreditation_Model__c == ACCREDITATION_MODEL_MC, 'isMultiCountryNewAE=true&isMCAccredited=true&', '')}retUrl=/ISSP_HomePage','LIST_VIEW','newCase');
+					if('{!isPassAccreditation}'== 'true'){
+                        navigateToUrl('/ISSP_AMS_PASS_Accreditation?{!if(communityName=='CNS', 'CommunityName=CNS&', '')}retUrl=/ISSP_HomePage','LIST_VIEW','newCase');
+                    }
+                    else{
+                    	navigateToUrl('/ISSP_AMS_Accreditation?{!if(communityName=='CNS', 'CommunityName=CNS&', '')}{!IF(con.Account.ANG_Accreditation_Model__c == ACCREDITATION_MODEL_MC, 'isMultiCountryNewAE=true&isMCAccredited=true&', '')}retUrl=/ISSP_HomePage','LIST_VIEW','newCase');
+					}
                 }
                 return false;
             }
@@ -343,10 +348,14 @@
             
             <c:ISSP_CustomNavigation communityName="{!communityName}"/>
             <div class="container">
+			 <div>
+                <apex:image value="{!URLFOR($Resource.IATA_Logo_Large)}" width="138" height="102" style="float:left" rendered="{!AND(communityName!='CNS',NOT(isPassAccreditation))}"/>
+                <apex:image value="{!URLFOR($Resource.PASS_Logo_Large)}" height="112" style="float:left" rendered="{!AND(communityName!='CNS',isPassAccreditation)}" />
+            </div>
         
             <div style="padding-top:16px;">
-                <h3>{!if(communityName=='CNS', $Label.ISSP_AMS_Step0_SAA_CNS, IF(newlabels, $Label.ISSP_AMS_Step0_SAA_New, $Label.ISSP_AMS_Step0_SAA))}</h3>
-                <apex:outputText value="{!if(communityName=='CNS', $Label.ISSP_AMS_Step0_Intro_CNS, IF(newlabels, $Label.ISSP_AMS_Step0_Intro_New, $Label.ISSP_AMS_Step0_Intro))}" escape="false"/>
+                <h3>{!IF(isPassAccreditation,$Label.ISSP_AMS_Step0_SAA_PASS,if(communityName=='CNS', $Label.ISSP_AMS_Step0_SAA_CNS, IF(newlabels, $Label.ISSP_AMS_Step0_SAA_New, $Label.ISSP_AMS_Step0_SAA)))}</h3>
+                <apex:outputText value="{!IF(isPassAccreditation,$Label.ISSP_AMS_Step0_Intro_PASS,if(communityName=='CNS', $Label.ISSP_AMS_Step0_Intro_CNS, IF(newlabels, $Label.ISSP_AMS_Step0_Intro_New, $Label.ISSP_AMS_Step0_Intro)))}" escape="false"/>
             </div>
             <div id="load_scrl" class="loadingBox loader" style="display:none;"/> 
             <div class="loadingBox overlay"/> 
@@ -365,7 +374,7 @@
                             <header>
                                 <div class="section-header">
                                     <apex:image value="{!URLFOR($Resource.ISSP_RHC_Page_Icons,'img/RHC.png')}"/>
-                                    <strong>{!$Label.ISSP_AMS_Agency_Accreditation}</strong>
+                                    <strong>{!IF(isPassAccreditation,$Label.ISSP_AMS_PASS_Application,$Label.ISSP_AMS_Agency_Accreditation)}</strong>
                                 </div>
                             </header>
                                 
@@ -379,7 +388,7 @@
 
                                 <br/>
                                         
-                                <apex:outputText value="{!if(communityName=='CNS', $Label.ISSP_AMS_Step0_Intro_Accred_CNS, IF(newlabels, $Label.ISSP_AMS_Step0_Intro_Accred_New, $Label.ISSP_AMS_Step0_Intro_Accred))}" escape="false"/>
+                                <apex:outputText value="{!IF(isPassAccreditation,$Label.ISSP_AMS_Step0_Intro_Accred_PASS,if(communityName=='CNS', $Label.ISSP_AMS_Step0_Intro_Accred_CNS, IF(newlabels, $Label.ISSP_AMS_Step0_Intro_Accred_New, $Label.ISSP_AMS_Step0_Intro_Accred)))}" escape="false"/>
                                         
                                 <apex:image value="/img/msg_icons/info16.png" title="{!$Label.ISSP_AMS_Step0_Intro_Accred_Msg}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" /><br/>
                                         
@@ -431,6 +440,7 @@
                              </div>   
                 </div>
                     </section>
+					<apex:outputPanel rendered="{!NOT(isPassAccreditation)}" layout="none">
 
                         <section name="left-side-agency-accred-multicountry" id="left-side-mc" class="col-md-7" style="min-height: 350px; display: {!IF(AND(isMultiCountryStarted, NOT(isMCAccredited)), '', 'none')};">
                             <header>
@@ -483,8 +493,9 @@
                                 </div>
                             </div>
                         </section>
-                    </div>
-                    
+                    </apex:outputPanel>
+                </div>
+                
                 <div class="row mainRows">
                     <section name="left-side-ongoing-apps" id="ongoing-apps" class="col-md-7" style="min-height: 350px; padding-top: 20px; display: {!IF(AND(isMultiCountryStarted, NOT(isMCAccredited)), 'none', '')}">
                             <header>
@@ -498,14 +509,23 @@
                                 <apex:pageBlock id="DraftCasespageblock">
                                     <apex:pageBlockTable id="DraftCases" value="{!AMSDraftCases}" var="MyAMSCases" styleClass="table" rendered="{!NOT(AMSDraftCasesIsEmpty)}">
                                         <apex:column headerValue="{!$ObjectType.Case.fields.CaseNumber.label}" rendered="{!NOT(AND(isoCountry.Enable_Notice_of_Change__c==false,NOT(BEGINS(MyAMSCases.Reason1__c, 'New'))))}">
-                                            <apex:outputLink value="/ISSP_AMS_Accreditation?caseId={!MyAMSCases.Id}&step=2{!if(communityName=='CNS', '&CommunityName=CNS', '')}{!IF(con.Account.ANG_Accreditation_Model__c == ACCREDITATION_MODEL_MC, '&isMultiCountryNewAE=true&isMCAccredited=true', '')}" rendered="{!BEGINS(MyAMSCases.Reason1__c, 'New')}">{!MyAMSCases.CaseNumber}</apex:outputLink>
+                                            <!--<apex:outputLink value="/ISSP_AMS_Accreditation?caseId={!MyAMSCases.Id}&step=2{!if(communityName=='CNS', '&CommunityName=CNS', '')}{!IF(con.Account.ANG_Accreditation_Model__c == ACCREDITATION_MODEL_MC, '&isMultiCountryNewAE=true&isMCAccredited=true', '')}" rendered="{!BEGINS(MyAMSCases.Reason1__c, 'New')}">{!MyAMSCases.CaseNumber}</apex:outputLink>
                                             
                                             <apex:outputLink value="/ISSP_AMS_Accreditation?caseId={!MyAMSCases.Id}&isNoticeOfChange=true&isBankAccountChange=true&step=2{!if(communityName=='CNS', '&CommunityName=CNS', '')}" rendered="{!MyAMSCases.Reason1__c=='Bank Detail Update'}">{!MyAMSCases.CaseNumber}</apex:outputLink>
 
                                             <apex:outputLink value="/ISSP_ANG_PCI?caseId={!MyAMSCases.Id}&step=1{!if(communityName=='CNS', '&CommunityName=CNS', '')}" rendered="{!MyAMSCases.Reason1__c=='FoP Management'}">{!MyAMSCases.CaseNumber}</apex:outputLink>
 
                                             <apex:outputLink value="/ISSP_AMS_Accreditation?caseId={!MyAMSCases.Id}&isNoticeOfChange=true&isBankAccountChange=false&step=2{!if(communityName=='CNS', '&CommunityName=CNS', '')}" rendered="{!NOT(OR(BEGINS(MyAMSCases.Reason1__c, 'New'),MyAMSCases.Reason1__c=='Bank Detail Update',MyAMSCases.Reason1__c=='FoP Management'))}">{!MyAMSCases.CaseNumber}</apex:outputLink>
-                                        </apex:column>
+                                        </apex:column> !-->
+										<apex:outputLink value="{!IF(isPassAccreditation==true, '/ISSP_AMS_PASS_Accreditation?caseId=' + MyAMSCases.Id +'&step=2'+IF(communityName=='CNS', '&CommunityName=CNS', ''), '/ISSP_AMS_Accreditation?caseId='+ MyAMSCases.Id +'&step=2'+IF(communityName=='CNS', '&CommunityName=CNS', ''))}" rendered="{!BEGINS(MyAMSCases.Reason1__c, 'New')}">{!MyAMSCases.CaseNumber}</apex:outputLink>
+
+                                        <apex:outputLink value="{!IF(isPassAccreditation==true, '/ISSP_AMS_PASS_Accreditation?caseId=' + MyAMSCases.Id +'&isNoticeOfChange=true&isBankAccountChange=true&step=2'+IF(communityName=='CNS', '&CommunityName=CNS', ''), '/ISSP_AMS_Accreditation?caseId='+ MyAMSCases.Id +'&isNoticeOfChange=true&isBankAccountChange=true&step=2'+IF(communityName=='CNS', '&CommunityName=CNS', ''))}" rendered="{!MyAMSCases.Reason1__c=='Bank Detail Update'}">{!MyAMSCases.CaseNumber}</apex:outputLink>
+
+                                        <apex:outputLink value="/ISSP_ANG_PCI?caseId={!MyAMSCases.Id}&step=1{!if(communityName=='CNS', '&CommunityName=CNS', '')}{!if(isPassAccreditation==true, '&accType=PASS', '')}" rendered="{!MyAMSCases.Reason1__c=='FoP Management'}">{!MyAMSCases.CaseNumber}</apex:outputLink>
+
+                                        <apex:outputLink value="/ISSP_AMS_Accreditation?caseId={!MyAMSCases.Id}&isNoticeOfChange=true&isBankAccountChange=false&step=2{!if(communityName=='CNS', '&CommunityName=CNS', '')}{!if(isPassAccreditation==true, '&accType=PASS', '')}" rendered="{!NOT(OR(BEGINS(MyAMSCases.Reason1__c, 'New'),MyAMSCases.Reason1__c=='Bank Detail Update',MyAMSCases.Reason1__c=='FoP Management'))}">{!MyAMSCases.CaseNumber}</apex:outputLink>
+
+                   					</apex:column>
 
                                         <apex:column headerValue="{!$ObjectType.Case.fields.Subject.label}" rendered="{!NOT(AND(isoCountry.Enable_Notice_of_Change__c==false,NOT(BEGINS(MyAMSCases.Reason1__c, 'New'))))}">
                                             <apex:outputField value="{!MyAMSCases.Subject}"/> <br/>
@@ -521,11 +541,11 @@
                             </div>
 
                             <apex:outputPanel id="amsCasesMessage">
-                                <apex:outputText styleClass="bg-info" value="{!if(communityName=='CNS', $Label.ISSP_AMS_No_Pending_CNS, $Label.ISSP_AMS_No_Pending)}" rendered="{!AMSDraftCasesIsEmpty}"/>
+                                <apex:outputText styleClass="bg-info" value="{!IF(isPassAccreditation==true,$Label.ISSP_AMS_No_Pending_PASS,if(communityName=='CNS', $Label.ISSP_AMS_No_Pending_CNS, $Label.ISSP_AMS_No_Pending))}" rendered="{!AMSDraftCasesIsEmpty}"/>
                             </apex:outputPanel>
                                 
                         </section>
-                            
+    		 <apex:outputPanel rendered="{!NOT(isPassAccreditation)}" layout="none">
                         <section name="right-side-other-forms" id="other-forms" class="col-md-5" style="display:{!IF(OR(AND(isMultiCountryStarted, NOT(isMCAccredited)),AND(con.Account.Category__c == 'Domestic Agent', NOT(isocountry.ANG_Enable_NewGen__c))), 'none', IF(isUserAccAccredited, '', 'none'))}; margin-right: 0px; margin-left: 0px; min-height: 350px; padding-top: 20px;">
 				<div class="content-box">
                             <header>
@@ -545,7 +565,8 @@
 				</div>
 							</div>
                         </section>
-                    </div>
+                    </apex:outputPanel>
+                </div>
             </div>
 
                 <div class="modal" id="modalChooseAccreditationType" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

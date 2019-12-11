@@ -609,7 +609,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
                     
                 }
 				
-                //Previous validations are now done in a validation rule in Case object
+                //Previous validations for PASS are now done in a validation rule in Case object
 
 		       	if(caseMap.size()>0){ //validation and at the same time change of recordtype of the accts if they were standard 
 		        	map<Id,Case> casesWithErrorOnAcct = ServiceRenderedCaseLogic.changeRTtoBranchAccts(caseIdPerAccID, caseMap);

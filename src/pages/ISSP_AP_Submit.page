@@ -130,6 +130,29 @@
                                 <li>Chief Financial Officer (CFO) or</li>
                                 <li>Head of Treasury or Cash Management Department</li>
                             </ul>
+        				<div class="progress" style="display:{!IF(isPassAirline == true && managePASS=true, 'block','none')}">
+                            <apex:outputPanel rendered="{!(strChangeType!='Bank Account Instructions')}">
+                                <div style="padding-bottom:5px">1) A scanned version of the local bank mandate shall be attached to this process to proceed with its validation prior the original being sent to IATA. The result of the validation will be communicated to you. Additional banking information may be requested according to the existing banking requirements in the country concerned.</div>
+                                <div style="padding-bottom:5px">2) The original local bank mandate should be sent to IATA Geneva at the following address (the reception of the original document is mandatory to finalize the process):</div>
+                            </apex:outputPanel>
+                            <apex:outputPanel rendered="{!(strChangeType=='Bank Account Instructions')}">
+                                <div style="padding-bottom:5px">1) A scanned version of the local bank mandate shall be attached to this process to proceed with its validation prior the original being sent to IATA. The result of the validation will be communicated to you. Additional banking information may be requested according to the existing banking requirements in the country concerned.</div>
+                                <div style="padding-bottom:5px">2) Kindly note any change in the bank account instructions must be requested by the participant at least 15 days in advance. The implementation of such instructions can only be considered as valid by the participant when acknowledged by IATA, including the settlement date in which the new instructions will be effective. Until such confirmation, please ensure that you current account remains active.</div>
+                                <div style="padding-bottom:5px">3) The original local bank mandate should be sent to IATA Geneva at the following address (the reception of the original document is mandatory to finalize the process). Please follow the instructions to fill in the bank information. If the document does not comply with IATA requirements it can delay the process.</div>
+                            </apex:outputPanel>
+                            <br/>
+                                <div style="font-weight:bold;margin-left:100px;display:block">
+                                    <apex:outputText value="{!$Label.IATA_Global_Delivery_Center_Address}" escape="false" /> 
+                                </div>
+                            <br/>
+                            <div style="padding-bottom:5px"><b>NOTE:</b>&nbsp;For countries / operations with dual currencies, please submit separate bank mandates for each currency.</div>
+                                <apex:outputPanel rendered="{!(strChangeType=='Bank Account Instructions')}">
+                                    <div style="padding-bottom:5px"><b>NOTE II:</b>&nbsp;In case you are applying for a change from ICCS to a Local Bank Account in the concerned operation, you are requested to coordinate with ICCS team (ICCSO@iata.org) in order to take the necessary adjustments in regards to your ICCS participation.</div>
+                                </apex:outputPanel>
+                                <apex:outputText rendered="{!apCountryISOCode='BO'}">
+                                    <br/><br/><b>NOTE:</b>&nbsp;If you choose only one currency that travel agents may use to issue tickets, please inform your travel agents accordingly.  However, please note that GDSs do not have the capability to restrict ticketing to only one currency.
+                                </apex:outputText>
+						</div>
                         </apex:outputPanel>
                         <apex:outputPanel layout="block" styleclass="red-box" rendered="{!AuthorizedSignatories.size>0 && !isPassAirline}">
                             <p>

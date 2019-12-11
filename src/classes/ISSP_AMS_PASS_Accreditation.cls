@@ -4273,4 +4273,105 @@ public without sharing class ISSP_AMS_PASS_Accreditation {
 
         return null;
     }
+
+    //PASS - createUser; method called by createNewUser() to create a User for each additional Contact on the IATA Postal Accounts Settlement System
+    public static User createUser(Contact con, Id userProfile){
+        string nick = con.email!=null?con.email.substring(0, con.email.indexOf('@')):'';
+        nick += Datetime.now().getTime();
+        if (nick.length() > 40){
+            nick = nick.left(40);
+        }
+        else{
+            nick = nick;
+        }
+        User user;
+        list<User> userList = [select Id,ProfileId,IsActive,IsPortalEnabled,languagelocalekey from User where contactId =: con.Id];
+        if(!userList.isEmpty()){ //user already exists
+            user = userList.get(0);
+            user.IsActive = true;
+            user.IsPortalEnabled = true;
+            user.ProfileId = userProfile;
+            user.Username = ISSP_Utilities.buildPortalUserName(user.email);//AEF:
+            
+        }else{ //user does not exist
+             user = new User(
+                        alias = ISSP_PortalUserStatusChange.createAlias(con.firstName, con.lastName), 
+                        email = con.email, 
+                        emailencodingkey = 'UTF-8', 
+                        firstname = con.firstName, 
+                        lastname = con.lastname, 
+                        languagelocalekey = 'en_US', 
+                        localesidkey = 'en_US', 
+                        contactId = con.Id,
+                        timezonesidkey = 'Asia/Dubai', 
+                        username = ISSP_Utilities.buildPortalUserName(con.email),//AEF
+                        CommunityNickname = nick,
+                        ProfileId = userProfile,
+                        IsActive = true);
+        }
+         if(con.Preferred_Language__c!=null && ISSP_PortalUserStatusChange.languageMap.containsKey(con.Preferred_Language__c))
+                user.languagelocalekey = ISSP_PortalUserStatusChange.languageMap.get(con.Preferred_Language__c);
+        return user;
+    }
+
+    //PASS - createNewUser; method to create a User for each additional Contact on the IATA Postal Accounts Settlement System
+    public static void createNewUser(Id userProfile,List<String> contactIds){
+        system.debug('\n\n\n contactIds'+contactIds+'\n\n\n');
+        List <Contact> contacts = [SELECT Id, email, firstname, lastname, accountId, Preferred_Language__c, Salutation, Community__c FROM Contact WHERE ID IN :contactIds];
+
+        Database.DMLOptions dmo = new Database.DMLOptions();
+        dmo.EmailHeader.triggerUserEmail = false; 
+        dmo.EmailHeader.triggerOtherEmail = false; 
+        dmo.EmailHeader.triggerAutoResponseEmail = false; 
+        dmo.optAllOrNone = false; 
+
+        //PASS - create portal user
+        List<User> newUsers = new List<User>();
+        List<User> usersToUpdate = new List<User>();
+        String UID = Comm_User_Helper.NewGuid();
+        for(Contact userContact : contacts) {
+            User pivotUser = createUser(userContact, userProfile);
+            if(pivotUser.Id == null) {
+                pivotUser.setOptions(dmo);
+
+                //new email process
+                pivotUser.UID__c = UID;
+                pivotUser.Community__c = 'ISSP';
+                newUsers.add(pivotUser);
+            } else {
+                usersToUpdate.add(pivotUser);
+            }
+        }
+      
+        if(!newUsers.isEmpty()) {
+           insert newUsers; 
+
+           String password = Comm_User_Helper.generateRandomString(6)+'1a';
+            for(User user : newUsers) {
+                System.setPassword(user.Id, password);
+            }
+            String cleanUsername;
+            String encodedPart;
+            String link;
+            String template = 'ISSP_New_Member_Welcome_Email_2';
+            Map<String,String> emailWrap = new Map<String, String>();
+            for(Contact con : contacts) {
+                cleanUsername = ISSP_Utilities.buildPortalUserName(con.email).replace('+', Comm_User_Helper.plusReplacer);
+                encodedPart = EncodingUtil.urlEncode(Comm_User_Helper.EncryptString(cleanUsername + Comm_User_Helper.SEPARATOR + password + Comm_User_Helper.SEPARATOR + UID), 'UTF-8');
+
+                link = 'https://' + String.ValueOF(ISSP_CS__c.getValues('Host').value__c)+ '/ISSP_First_Login?c='+encodedPart;
+                if(con.Community__c != null && con.Community__c.contains('CNS')){
+                    link = 'https://' + String.ValueOF(ISSP_CS__c.getValues('Host').value__c)+ '/ISSP_First_Login?CommunityName=CNS&c='+encodedPart ;
+                    template = 'ISSP_New_Member_Welcome_Email_2_CNS';
+                }
+
+                emailWrap = Comm_User_Helper.ISSP_PassWordBuilMessageWrapper( con ,  password ,  link, con.Community__c);
+                Comm_User_Helper.sendEmail( template ,emailWrap, con, con.Community__c);
+            }
+        }
+
+        if(!usersToUpdate.isEmpty()) {
+           update usersToUpdate; 
+        }
+    }
 }

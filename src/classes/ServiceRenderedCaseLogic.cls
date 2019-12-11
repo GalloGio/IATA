@@ -115,8 +115,12 @@ public class ServiceRenderedCaseLogic {
             
             //logic to publish the platform events
             if(passCaseIdList.size()>0){
+              Map<Id,sObject> objectMapAPProcessForm=new Map<Id,sObject>();
               Map<Id,sObject> objectMapServiceRendered=new Map<Id,sObject>();
 
+              for(AP_Process_Form__c formRecord: [SELECT Id,RecordTypeId FROM AP_Process_Form__c WHERE Case__c IN: passCaseIdList]){
+                  objectMapAPProcessForm.put(formRecord.Id, formRecord);
+              }
               for(Services_Rendered__c serviceRendered : newSRList){
                 if(passCaseIdList.contains(serviceRendered.Source_Case__c)){
                   objectMapServiceRendered.put(serviceRendered.Id, serviceRendered);

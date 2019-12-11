@@ -1484,17 +1484,44 @@ public with sharing class AMS_OSCAR_Automation {
 		}
 
 		public void execute (QueueableContext context){
-		   List<AMS_Accreditation_Contact__c> accredList = [select Id, Contact__c FROM AMS_Accreditation_Contact__c WHERE AMS_Pax_Accreditation_Form__c =: oscar.AMS_Online_Accreditation__c AND Portal_administrator__c = true LIMIT 1];
-		   Portal_Applications__c pa = [SELECT Id FROM Portal_Applications__c WHERE Name =:ANG_RHCHelper.RISK_PROFILE_AND_RHC_PORTAL_SERVICE LIMIT 1];
+            List<AMS_Accreditation_Contact__c> accredList = new List<AMS_Accreditation_Contact__c>();
+            Portal_Applications__c pa;
+            List<Portal_Application_Right__c> parList = new List<Portal_Application_Right__c>();
+            List<String> conList = new List<String>();
 
-			if(!accredList.isEmpty() && accredList.get(0).Contact__c != null){
-				Portal_Application_Right__c par = new Portal_Application_Right__c (
-										Right__c = AMS_Utils.PORTAL_APP_ACCESS_GRANTED,
-										Contact__c = accredList.get(0).Contact__c,
-										Portal_Application__c = pa.Id
-							);
-				insert par;
-			}
+            if(oscar.Location_Class__c == 'L') {
+                //only contacts without Application Rights
+                accredList = [select Id, Contact__c, Contact__r.Name FROM AMS_Accreditation_Contact__c WHERE (AMS_Pax_Accreditation_Form__c =:oscar.AMS_Online_Accreditation__c) AND  (Contact__r.Available_Services__c EXCLUDES ('PASSlink Single Sign-On'))];
+                pa = [SELECT Id FROM Portal_Applications__c WHERE Name =:AMS_Utils.passSSOPortalService LIMIT 1];
+                Id profileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal (Partner)' LIMIT 1].Id;
+                for(AMS_Accreditation_Contact__c accrCon : accredList) {
+                    if(!accredList.isEmpty() && accrCon.Contact__c != null){
+                        conList.add(accrCon.contact__c);
+                            Portal_Application_Right__c par = new Portal_Application_Right__c (
+                                                        Right__c = AMS_Utils.PORTAL_APP_ACCESS_GRANTED,
+                                                        Contact__c = accrCon.Contact__c,
+                                                        Portal_Application__c = pa.Id
+                                            );
+                            parList.add(par);
+                    }
+                }
+                ISSP_AMS_PASS_Accreditation.createNewUser(profileId, conList);
+                insert parList;
+            } else {
+               accredList = [select Id, Contact__c FROM AMS_Accreditation_Contact__c WHERE AMS_Pax_Accreditation_Form__c =: oscar.AMS_Online_Accreditation__c AND Portal_administrator__c = true LIMIT 1];
+               pa = [SELECT Id FROM Portal_Applications__c WHERE Name =:ANG_RHCHelper.RISK_PROFILE_AND_RHC_PORTAL_SERVICE LIMIT 1];  
+
+               if(!accredList.isEmpty() && accredList.get(0).Contact__c != null){
+                    Portal_Application_Right__c par = new Portal_Application_Right__c (
+                                                Right__c = AMS_Utils.PORTAL_APP_ACCESS_GRANTED,
+                                                Contact__c = accredList.get(0).Contact__c,
+                                                Portal_Application__c = pa.Id
+                                    );
+                    insert par;
+                }
+            }
+
+            
 		}
 	}
 }

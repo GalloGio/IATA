@@ -1620,7 +1620,8 @@ public with sharing class AMS_XML_Generator {
         //3 - Asia, Australia, Oceania
         getElementNode(agencyNode, 'area', mAg_VS_AgArea.get(agency.Id));
         getElementNode(agencyNode, 'ams_id', agency.Id);
-
+		
+		//PASS
         if(agency.Location_Class__c == 'L'){
             getElementNode(agencyNode, 'impc_code', agency.IMPC_Code__c);
         }

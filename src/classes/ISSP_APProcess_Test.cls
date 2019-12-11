@@ -1735,6 +1735,10 @@ private class ISSP_APProcess_Test
             ctrl.wrapperPassCountries=ctrl.fetchWrapperCaseCountries(testCase);
             ctrl.goToFinalStep();
             ctrl.changeIsPassAirlineMethod();
+            
+            //mmsa
+            System.assert(ctrl.isPassAirline);
+            System.assertEquals(ctrl.passParam, '&airline=PASS');
         }
         
         Test.stopTest();
@@ -1847,4 +1851,77 @@ private class ISSP_APProcess_Test
         
         Test.stopTest();
     }
+
+
+    @isTest
+    static void goToStep2_test_m() {
+        IATA_ISO_Country__c ic = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='Pt');
+        Account a = new Account(name = 'test', Sector__c = 'NOT General Public', Category__c = 'Non-IATA Travel Agent', IATA_ISO_Country__c = ic.Id);
+        insert a;
+        Contact c = new Contact(firstname = 'teste', lastname = 'lastname', Salutation = 'sig', email = 't@t.com', AccountId = a.Id, Community__c = 'somethingrandom');
+        insert c;
+
+        Case fakeCase = new Case();
+        insert fakeCase;
+
+        User newUser = ISSP_ObjectFactory.createPortalUser(c);
+        System.debug('newUser Id: ' + newUser.Id);
+        c.OwnerId = newUser.Id;
+
+        
+
+        //Pagereference pref = new Pagereference();
+
+        Test.startTest();
+        System.runAs(newUser) {
+            ISSP_APProcess ap = new ISSP_APProcess();
+            ap.newCase = fakeCase;
+            ap.isPassAirline = false;
+            ap.isStep3 = false;
+            ap.managePASS = true;
+
+            ap.goToStep2();
+            
+            System.assertEquals(ap.passParam, ap.passParam + '&managePASS=true');
+        } 
+        Test.stopTest();
+        //System.assertEquals(pref, '/ISSP_APProcess?caseId='+ap.newCase.Id+'&step=4'+ap.passParam);
+    }
+
+    @isTest
+    static void goToStep3_test_m() {
+        Case fakeCase = new Case();
+        insert fakeCase;
+
+        ISSP_APProcess ap = new ISSP_APProcess();
+        ap.newCase = fakeCase;
+        ap.managePASS = true;
+
+        //Pagereference pref = new Pagereference();
+
+        Test.startTest();
+            /*pref = */ ap.goToStep3();
+        Test.stopTest();
+        System.assertEquals(ap.passParam, ap.passParam + '&managePASS=true');
+        //System.assertEquals(pref, '/ISSP_APProcess?caseId='+ap.newCase.Id+'&step=1'+ap.passParam);
+    }
+
+    @isTest
+    static void goToStep4_test_m() {
+        Case fakeCase = new Case();
+        insert fakeCase;
+
+        ISSP_APProcess ap = new ISSP_APProcess();
+        ap.newCase = fakeCase;
+        ap.isPassAirline = true;
+
+        //Pagereference pref = new Pagereference();
+
+        Test.startTest();
+            /*pref = */ ap.goToStep3();
+        Test.stopTest();
+        System.assertEquals(ap.passParam, ap.passParam + '&managePASS=true');
+        //System.assertEquals(pref, '/ISSP_APProcess?caseId='+ap.newCase.Id+'&step=4'+ap.passParam);
+    }
+
 }

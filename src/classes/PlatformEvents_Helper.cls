@@ -46,7 +46,10 @@ public class PlatformEvents_Helper implements Queueable {
                 'TIP_Pay_Prov_Prod_Country_Config__c' => 'Product_Country_Config__e',
                 'TIP_BIN_Range__c' => 'Product_Bin_Range__e',
                 'Remote_Invocation__c' => 'RemoteInvocation__e',
-                'GADM_Account_Service_Detail__c' => 'GadmAccountServiceDetail__e'
+                'GADM_Account_Service_Detail__c' => 'GadmAccountServiceDetail__e',
+				//PASS
+                'AP_Process_Form__c' => 'Airline_Account__e',
+                'Services_Rendered__c' => 'Service_Rendered__e'
 		};
           
     	
@@ -135,7 +138,8 @@ public class PlatformEvents_Helper implements Queueable {
         }
         
         if(sObj=='Contact__e' || sObj=='Product_Bin_Range__e' || sObj=='PartnerProduct__e' || sObj == 'GadmAccountServiceDetail__e'
-        	|| sObj=='Product_Country_Config__e' || sObj=='AccountContactRole__e' || sObj=='AccountRole__e' || sObj=='RemoteInvocation__e'){
+        	|| sObj=='Product_Country_Config__e' || sObj=='AccountContactRole__e' || sObj=='AccountRole__e' || sObj=='RemoteInvocation__e'|| sObj=='Service_Rendered__e'
+            || sObj=='Airline_Account__e'){
             return new map<String,String>{
                 'Id' => 'RecordId__c',
                 'Recordtype' => 'RecordType__c',

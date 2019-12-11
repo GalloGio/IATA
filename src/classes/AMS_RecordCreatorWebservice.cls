@@ -32,7 +32,7 @@ global without sharing class AMS_RecordCreatorWebservice {
 	private static String NEWNGLOBAL = 'ANG.NEW.GE.STANDARD.1.0';
 	public static String CONVERT_TO_MC = 'ANG.CONVERT.ST.TO.MC';
 
-	public static Set<String> accountConcernedProcesses = new Set <String>{NEWBR_PV, NEWBRABRD_PV, MAJOR_CHANGES_PV, NEWSA_PV, NEWNAE, MCAE, MAJOR_CHANGESNEWGEN_PV,IEP_BANK_ACCOUNT_SETUP,IEP_MODEL_A_ACCOUNT_SETUP, IEP_MODEL_B_ACCOUNT_SETUP,  IEP_MODEL_B_PLUS_ACCOUNT_SETUP,NEWVR_PV};
+	public static Set<String> accountConcernedProcesses = new Set <String>{NEWBR_PV, NEWBRABRD_PV, MAJOR_CHANGES_PV, NEWSA_PV, NEWNAE, MCAE, MAJOR_CHANGESNEWGEN_PV,IEP_BANK_ACCOUNT_SETUP,IEP_MODEL_A_ACCOUNT_SETUP, IEP_MODEL_B_ACCOUNT_SETUP,  IEP_MODEL_B_PLUS_ACCOUNT_SETUP,NEWVR_PV, AMS_Utils.new_PASS_BR};
 
 	public static Set<String> newgenChildProcess = new Set<String>{NEWNAE,MCAE};
 	public static String EMPTYACCREDITATIONID = 'EMPTY';
@@ -63,7 +63,7 @@ global without sharing class AMS_RecordCreatorWebservice {
 				throw new CalloutException('Could not find any record type matching the type of process ' + typeOfProcess + '.Please check the logs or contact the System Administrator.');
 				//return 'Could not find any record type matching the type of process ' + typeOfProcess + '.Please check the logs or contact the System Administrator.';
 
-			List<Case> cases = [SELECT Id, Account_Concerned__c, AccountId, Account.Location_Type__c, Account.Region_Formula__c, Account.Category__c, OSCAR__c, OwnerId, Origin from CASE where Id = :caseId LIMIT 1];
+			List<Case> cases = [SELECT Id, Account_Concerned__c, AccountId, Account.Location_Type__c, Account.Region_Formula__c, Account.Sector__c, Account.Category__c, OSCAR__c, OwnerId, Origin from CASE where Id = :caseId LIMIT 1];
 
 			String realAccountId = fetchRealAccountId(typeOfProcess, accountId, cases);
 
@@ -660,8 +660,8 @@ global without sharing class AMS_RecordCreatorWebservice {
 		if(accountId == null)
 			throw new CalloutException('Account Id must be filled.');
 
-		Account account = new Account(Id = accountId);
-		Account a = [SELECT Id, CNS_Agency__c, Location_Class__c, Status__c, (SELECT Reason_Code__c, Reason_Description__c FROM Agencies_Applied_Change_codes__r WHERE Active__c = TRUE) FROM Account WHERE Id = :accountId];
+        Account account = new Account(Id = accountId);
+        Account a = [SELECT Id, CNS_Agency__c, Location_Class__c, Status__c, Sector__c , Category__c,  (SELECT Reason_Code__c, Reason_Description__c FROM Agencies_Applied_Change_codes__r WHERE Active__c = TRUE) FROM Account WHERE Id = :accountId];
 
 		if(a == null)
 			throw new CalloutException('Account could not be found.');
@@ -840,7 +840,7 @@ global without sharing class AMS_RecordCreatorWebservice {
 
 			Id oscarRecordType = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NEW');
 
-			Case caseObj = [SELECT Id, Account_Concerned__c, AccountId, Account.Location_Type__c, Account.Category__c, OSCAR__c, OwnerId from CASE where Id = :caseId LIMIT 1];
+            Case caseObj = [SELECT Id, Account_Concerned__c, AccountId, Account.Location_Type__c, Account.Sector__c, Account.Category__c, OSCAR__c, OwnerId from CASE where Id = :caseId LIMIT 1];
 
 			Id ownerId = null;
 

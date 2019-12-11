@@ -122,6 +122,21 @@ public without sharing class AMS_Utils {
 		AMS_Utils.ACC_S3_NOTINOPERATION,
 		AMS_Utils.ACC_S1_NOTACCREDITED
 	};
+	
+	//Process of type PASS
+    public static final String new_PASS_HO        = 'NEW.PASS.HO.1.0' ;
+    public static final String new_PASS_BR        = 'NEW.PASS.BR.1.0' ;
+    public static final String SECTOR_PASS        = 'Cargo Agent';
+    public static final String sectorValuePass    = 'Cargo_Agent' ;
+    public static final String categoryPass       = 'Postal Service' ;
+    public static final String customerTypePass   = 'PostalService' ;
+    public static final String passParticipation  = 'PASS' ;
+    public static final String passAirlineCaseReason = 'PASS Participation';
+    public static final String passCountryCaseReason = 'PASS Country';
+    public static final String passAggregatorCaseReason = 'PASS Country Aggregator';
+    public static final String passIATAMultipleCountries = 'Multiple';
+    public static final String accountReasonForCreationPASS = 'New Airline joining PASS';
+    public static final String passSSOPortalService = 'PASSlink Single Sign-On';
 
 	public static final Set<String> IEP_VENDORS = new Set<String>{ ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_EDENRED, ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_MSTS, ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_2C2P };
 	//AMSU-125
@@ -190,13 +205,13 @@ public without sharing class AMS_Utils {
 
 	public static final String RECTYPE_IEP_MODEL_A  = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Requirement__c','IEP_Model_A');
 
-	public static final String RECTYPE_BSP = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Settlement_System__c', 'BSP');
-
-	public static final String RECTYPE_GDI_FS       = RecordTypeSingleton.getInstance().getRecordTypeId('Opportunity','GDI_FinancialSecurity');
-	public static final String RECTYPE_NEWGEN_CHANGES_PAX = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'New_Gen_Changes');
-
-	public static final String RECTYPE_AIRLINE      = RecordTypeSingleton.getInstance().getRecordTypeId('Account','IATA_Airline');
-	public static final String RECTYPE_AIRLINE_BR   = RecordTypeSingleton.getInstance().getRecordTypeId('Account','IATA_Airline_BR');
+    public static final String RECTYPE_BSP          = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Settlement_System__c', 'BSP');
+    public static final Id OSCAR_COMUNICATION       = Schema.SObjectType.Case.getRecordTypeInfosByName().get('OSCAR Communication').getRecordTypeId();
+    public static final String RECTYPE_GDI_FS       = RecordTypeSingleton.getInstance().getRecordTypeId('Opportunity','GDI_FinancialSecurity');
+    public static final String RECTYPE_NEWGEN_CHANGES_PAX = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'New_Gen_Changes');
+    
+    public static final String RECTYPE_AIRLINE      = RecordTypeSingleton.getInstance().getRecordTypeId('Account','IATA_Airline');
+    public static final String RECTYPE_AIRLINE_BR   = RecordTypeSingleton.getInstance().getRecordTypeId('Account','IATA_Airline_BR');
 
 	//AMS Country Specific Attribute
 	public static final String RECTYPE_CSA_RISK_NOTIFICATION   = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Country_Specific_Attribute__c','Risk_Notification');
@@ -245,6 +260,7 @@ public without sharing class AMS_Utils {
 	public static final String CASE_REASON_HE_MULTICOUNTRY = 'New HE Multicountry';
 	public static final String CASE_REASON_ASSOCIATE_ENTITY_STANDARD = 'New AE';
 	public static final String CASE_REASON_NEW_HO = 'New HO';
+	public static final String CASE_REASON_NEW_BR = 'New BR';
 	public static final String CASE_REASON_AE_STANDARD = 'New AE standard';
 	public static final String CASE_REASON_AE_LITE = 'New AE lite';
 	public static final String CASE_REASON_AE_MULTICOUNTRY = 'New AE Multicountry';
@@ -315,11 +331,12 @@ public without sharing class AMS_Utils {
 	public static final String AGENTTYPE_NOCASH = 'Standard no Cash';
 	public static final String AGENTTYPE_MULTICOUNTRY = 'Multicountry';
 
-	//Account - ANG_Accreditation_Model__c
-	public static final String ACCREDITATIONMODEL_CASH = 'Cash';
-	public static final String ACCREDITATIONMODEL_CASHLESS = 'Cashless';
-	public static final String ACCREDITATIONMODEL_LEGACY = 'Legacy';
-	public static final String ACCREDITATIONMODEL_MULTICOUNTRY = 'Multicountry';
+    //Account - ANG_Accreditation_Model__c
+    public static final String ACCREDITATIONMODEL_CASH = 'Cash';
+    public static final String ACCREDITATIONMODEL_CASHLESS = 'Cashless';
+    public static final String ACCREDITATIONMODEL_LEGACY = 'Legacy';
+    public static final String ACCREDITATIONMODEL_MULTICOUNTRY = 'Multicountry';
+    public static final String ACCREDITATIONMODEL_PASS = 'PASS';
 
 	public static final String IATAN_PASSENGER_AGENT = 'IATAN Passenger Agent';
 
@@ -348,6 +365,8 @@ public without sharing class AMS_Utils {
 	public static final String TYPE_PAX_AE_CASH = buildOfficeType(CASE_REASON_ASSOCIATE_ENTITY_STANDARD, NEWFORM_AGENTTYPE_CASH);
 	public static final String TYPE_PAX_AE_NO_CASH = buildOfficeType(CASE_REASON_ASSOCIATE_ENTITY_STANDARD, NEWFORM_AGENTTYPE_NO_CASH);
 	public static final String TYPE_PAX_HO = buildOfficeType(CASE_REASON_NEW_HO, ACCREDITATIONMODEL_LEGACY);
+	public static final String TYPE_PAX_PASS_HO = buildOfficeType(CASE_REASON_NEW_HO, ACCREDITATIONMODEL_PASS);
+    public static final String TYPE_PAX_PASS_BRANCH = buildOfficeType(CASE_REASON_NEW_BR, ACCREDITATIONMODEL_PASS);
 	public static final String TYPE_HE_ST_CASH = buildOfficeType(CASE_REASON_HE_STANDARD, AGENTTYPE_WITHCASH);
 	public static final String TYPE_HE_LITE_NO_CASH = buildOfficeType(CASE_REASON_HE_LITE, AGENTTYPE_NOCASH);
 	public static final String TYPE_HE_MULTICOUNTRY = buildOfficeType(CASE_REASON_HE_MULTICOUNTRY, AGENTTYPE_MULTICOUNTRY);
@@ -359,14 +378,15 @@ public without sharing class AMS_Utils {
 	public static final String OPEN = 'Open';
 	public static final String NO_IEP_ACCOUNT = 'No IEP Account';
 
-	public static final String CC = 'CC';
-	public static final String CA = 'CA';
-	public static final string EP = 'EP';
-	public static final string BOP = 'BOP';
-	public static final String IATA_ACCREDITATION_AND_CHANGES = 'IATA Accreditation & Changes';
-	public static final String CGO_SIGNED_CONTRACT = 'CGO_SIGNED_CONTRACT';
-	public static final String NOC_SIGNED_CONTRACT = 'NOC_SIGNED_CONTRACT';
-	public static final String PCI_COMPLIANCE = 'PCI_COMPLIANCE';
+    public static final String CC = 'CC';
+    public static final String CA = 'CA';
+    public static final string EP = 'EP';
+    public static final string BOP = 'BOP';
+    public static final String IATA_ACCREDITATION_AND_CHANGES = 'IATA Accreditation & Changes';
+    public static final String IATA_PASS_SERVICE_NAME = 'IATA Postal Accounts Settlement System';
+    public static final String CGO_SIGNED_CONTRACT = 'CGO_SIGNED_CONTRACT';
+    public static final String NOC_SIGNED_CONTRACT = 'NOC_SIGNED_CONTRACT';
+    public static final String PCI_COMPLIANCE = 'PCI_COMPLIANCE';
 
 	public static final String RECTYPE_CASEIFAP   = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
 
