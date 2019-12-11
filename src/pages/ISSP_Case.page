@@ -409,20 +409,14 @@
                                         </apex:outputpanel>
                                     </apex:pageblocksectionitem>
 
-                                    <!-- NEW VALINHO -->
-									<apex:inputField value="{!newCase.CaseArea__c}" rendered="{!isDPCUser}" styleclass="form-control caseAreaField" required="true">
-										<apex:actionSupport event="onchange" reRender="reason1Picklist" />
-									</apex:inputField>
-									<apex:inputField id="reason1Picklist" value="{!newCase.Reason1__c}" rendered="{!isDPCUser}" styleclass="form-control reason1Field" required="true" />
-									<!-- END NEW VALINHO -->
 
-									<!-- OLD VALINHO
-									<apex:inputField value="{!newCase.CaseArea__c}" rendered="{!isDPCUser}" styleclass="form-control" required="true">
-                                        <apex:actionSupport event="onchange" reRender="reason1Picklist"/>
-                                    </apex:inputField>
-                                    <apex:inputField id="reason1Picklist" value="{!newCase.Reason1__c}" rendered="{!isDPCUser}" styleclass="form-control" required="true"/>
-									END OLD VALINHO -->
-									
+                                        <apex:inputField value="{!newCase.CaseArea__c}" rendered="{!isDPCUser}" styleclass="form-control caseAreaField" required="true">
+                                            <apex:actionSupport event="onchange" reRender="reason1Picklist" />
+                                        </apex:inputField>
+                                        <apex:inputField id="reason1Picklist" value="{!newCase.Reason1__c}" rendered="{!isDPCUser}" styleclass="form-control reason1Field"
+                                            required="true" />
+
+
                                     <!-- <label class=" lbl col-lg-5 control-label" for="exampleInputEmail1"><span class="required"></span></label> -->
                                     
                                     <!-- ACAMBAS - WMO-399 - Start -->
