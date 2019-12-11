@@ -1815,6 +1815,11 @@ visibility: hidden;
     max-height: calc(10rem);
 }
 
+
+.firstLevelRegistrationCombobox .slds-dropdown_length-with-icon-10{
+    max-height: calc(18rem);
+}
+
 /* USER INACTIVE POPUP */
 .siteforcePanelsContainer>div{
     z-index: 5000 !important;
@@ -2488,7 +2493,7 @@ input::-ms-reveal {  display: none; width : 0; height: 0; }
 /* ############################################## */
 .showOnlyFavorites, .showOnlyFavorites button, .showOnlyFavorites button:active, .showOnlyFavorites button:visited, .showOnlyFavorites button:focus, .showOnlyFavorites button:hover{
     width: 165px;
-    height: 48px;
+    min-height: 48px;
     border-radius: 0;
     border: 0;
     background-color: #d0d7fb;

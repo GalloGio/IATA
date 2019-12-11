@@ -2684,7 +2684,7 @@
         <name>CSP_L2_Requested_Modal_Message</name>
     </customLabels>
     <customLabels>
-        <label>안녕하세요</label>
+        <label>더 말해 주세요.</label>
         <name>CSP_L2_Requested_Modal_Title</name>
     </customLabels>
     <customLabels>
@@ -3224,6 +3224,10 @@
         <name>CSP_Services_AccessRequestedTitle</name>
     </customLabels>
     <customLabels>
+        <label>즐겨 찾기 추가</label>
+        <name>CSP_Services_AddFavorite</name>
+    </customLabels>
+    <customLabels>
         <label>귀하의 회사에서 사용 가능한 모든 서비스가 아래에 나열되어 있습니다.</label>
         <name>CSP_Services_AvailableServicesHelpText</name>
     </customLabels>
@@ -3256,6 +3260,10 @@
         <name>CSP_Services_MyServicesTabTile</name>
     </customLabels>
     <customLabels>
+        <label>즐겨 찾기 제거</label>
+        <name>CSP_Services_RemoveFavorite</name>
+    </customLabels>
+    <customLabels>
         <label>사용 가능한 서비스 보기</label>
         <name>CSP_Services_RequestServiceBannerButton</name>
     </customLabels>
@@ -3270,6 +3278,14 @@
     <customLabels>
         <label>서비스 정보</label>
         <name>CSP_Services_ServiceInformation</name>
+    </customLabels>
+    <customLabels>
+        <label>모두 표시하기</label>
+        <name>CSP_Services_ShowAll</name>
+    </customLabels>
+    <customLabels>
+        <label>즐겨찾기만 표시하기</label>
+        <name>CSP_Services_ShowOnlyFavorites</name>
     </customLabels>
     <customLabels>
         <label>서비스</label>

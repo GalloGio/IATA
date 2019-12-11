@@ -2681,7 +2681,7 @@
         <name>CSP_L2_Requested_Modal_Message</name>
     </customLabels>
     <customLabels>
-        <label>สวัสดี</label>
+        <label>บอกเราเพิ่มเติม</label>
         <name>CSP_L2_Requested_Modal_Title</name>
     </customLabels>
     <customLabels>
@@ -3221,6 +3221,10 @@
         <name>CSP_Services_AccessRequestedTitle</name>
     </customLabels>
     <customLabels>
+        <label>เพิ่มรายการโปรด</label>
+        <name>CSP_Services_AddFavorite</name>
+    </customLabels>
+    <customLabels>
         <label>บริการทั้งหมดที่มีให้สำหรับบริษัทของคุณ ได้ระบุไว้ตามด้านล่างนี้</label>
         <name>CSP_Services_AvailableServicesHelpText</name>
     </customLabels>
@@ -3253,6 +3257,10 @@
         <name>CSP_Services_MyServicesTabTile</name>
     </customLabels>
     <customLabels>
+        <label>ลบรายการโปรด</label>
+        <name>CSP_Services_RemoveFavorite</name>
+    </customLabels>
+    <customLabels>
         <label>ดูบริการที่มี</label>
         <name>CSP_Services_RequestServiceBannerButton</name>
     </customLabels>
@@ -3267,6 +3275,14 @@
     <customLabels>
         <label>ข้อมูลการบริการ</label>
         <name>CSP_Services_ServiceInformation</name>
+    </customLabels>
+    <customLabels>
+        <label>แสดงทั้งหมด</label>
+        <name>CSP_Services_ShowAll</name>
+    </customLabels>
+    <customLabels>
+        <label>แสดงเฉพาะรายการโปรดเท่านั้น</label>
+        <name>CSP_Services_ShowOnlyFavorites</name>
     </customLabels>
     <customLabels>
         <label>บริการ</label>

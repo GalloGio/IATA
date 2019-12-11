@@ -210,6 +210,28 @@
         </c-portal-page-container>
     </div>
 
+    <template if:true={displaySecondLevelRegistrationPopup}>
+        <c-portal-registration-generic-modal
+            icon={alertIcon}
+            title={label.CSP_L2_Requested_Modal_Title}
+            message={label.CSP_L2_Requested_Modal_Message}
+            button1-label={label.CSP_L2_Requested_Modal_Cancel}
+            button2-label={label.CSP_L2_Requested_Modal_Complete}
+            onbuttononeaction={cancelSecondLevelRegistration}
+            onbuttontwoaction={showSecondLevelRegistration}>
+        </c-portal-registration-generic-modal>
+    </template>
+
+    <template if:true={displaySecondLevelRegistration}>
+        <c-portal-registration-second-level
+            trigger={level2RegistrationTrigger}
+            is-triggered-by-request={isTriggeredByRequest}
+            onclosesecondlevelregistration={cancelSecondLevelRegistration}
+            onsecondlevelregistrationcompletedactionone={secondLevelRegistrationCompletedAction1}
+            onsecondlevelregistrationcompletedactiontwo={secondLevelRegistrationCompletedAction2}>
+        </c-portal-registration-second-level>
+    </template>
+
     <!-- CONFIRM POPUP -->
     <div if:true={showConfirmPopup} >
         <c-portal-popup-container size="half">

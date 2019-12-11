@@ -2684,7 +2684,7 @@
         <name>CSP_L2_Requested_Modal_Message</name>
     </customLabels>
     <customLabels>
-        <label>Olá</label>
+        <label>Nos diga mais</label>
         <name>CSP_L2_Requested_Modal_Title</name>
     </customLabels>
     <customLabels>
@@ -3224,6 +3224,10 @@
         <name>CSP_Services_AccessRequestedTitle</name>
     </customLabels>
     <customLabels>
+        <label>Adicionar favorito</label>
+        <name>CSP_Services_AddFavorite</name>
+    </customLabels>
+    <customLabels>
         <label>Todos os serviços disponíveis para sua empresa estão listados abaixo.</label>
         <name>CSP_Services_AvailableServicesHelpText</name>
     </customLabels>
@@ -3256,6 +3260,10 @@
         <name>CSP_Services_MyServicesTabTile</name>
     </customLabels>
     <customLabels>
+        <label>Remover favorito</label>
+        <name>CSP_Services_RemoveFavorite</name>
+    </customLabels>
+    <customLabels>
         <label>Veja os serviços disponíveis</label>
         <name>CSP_Services_RequestServiceBannerButton</name>
     </customLabels>
@@ -3270,6 +3278,14 @@
     <customLabels>
         <label>Serviço de informação</label>
         <name>CSP_Services_ServiceInformation</name>
+    </customLabels>
+    <customLabels>
+        <label>Mostrar Tudo</label>
+        <name>CSP_Services_ShowAll</name>
+    </customLabels>
+    <customLabels>
+        <label>Mostrar Apenas Favoritos</label>
+        <name>CSP_Services_ShowOnlyFavorites</name>
     </customLabels>
     <customLabels>
         <label>Serviços</label>

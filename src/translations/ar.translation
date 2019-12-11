@@ -2681,7 +2681,7 @@
         <name>CSP_L2_Requested_Modal_Message</name>
     </customLabels>
     <customLabels>
-        <label>مرحبًا</label>
+        <label>أخبرنا المزيد</label>
         <name>CSP_L2_Requested_Modal_Title</name>
     </customLabels>
     <customLabels>
@@ -3221,6 +3221,10 @@
         <name>CSP_Services_AccessRequestedTitle</name>
     </customLabels>
     <customLabels>
+        <label>إضافة مفضَّلة</label>
+        <name>CSP_Services_AddFavorite</name>
+    </customLabels>
+    <customLabels>
         <label>جميع الخدمات المتاحة لشركتك مدرجة أدناه.</label>
         <name>CSP_Services_AvailableServicesHelpText</name>
     </customLabels>
@@ -3253,6 +3257,10 @@
         <name>CSP_Services_MyServicesTabTile</name>
     </customLabels>
     <customLabels>
+        <label>إزالة مفضَّلة</label>
+        <name>CSP_Services_RemoveFavorite</name>
+    </customLabels>
+    <customLabels>
         <label>عرض الخدمات المتاحة</label>
         <name>CSP_Services_RequestServiceBannerButton</name>
     </customLabels>
@@ -3267,6 +3275,14 @@
     <customLabels>
         <label>معلومات الخدمة</label>
         <name>CSP_Services_ServiceInformation</name>
+    </customLabels>
+    <customLabels>
+        <label>عرض الكل</label>
+        <name>CSP_Services_ShowAll</name>
+    </customLabels>
+    <customLabels>
+        <label>عرض المفضلة فقط</label>
+        <name>CSP_Services_ShowOnlyFavorites</name>
     </customLabels>
     <customLabels>
         <label>الخدمات</label>
