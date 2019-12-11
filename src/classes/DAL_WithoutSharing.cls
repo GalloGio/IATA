@@ -162,6 +162,26 @@ public static Map<String, String> getUserOptions(String portalUser){
         return [select id from Portal_Application_Right__c where Contact__c =:conId and Right__c ='Access Granted' and Application_Name__c like :str limit 1].size()>0;
     }
 	
+	/*
+	*   Wrapper class for returning database operations success / unsuccess
+	*/
+	public class ReturnWrapper {
+		@AuraEnabled
+		public Boolean success {get; set;}
+		@AuraEnabled
+		public String returnMessage {get; set;}
+		@AuraEnabled
+		public String extraDetails {get; set;}
+
+		public ReturnWrapper(){}
+
+		public ReturnWrapper(Boolean successAux, String returnMessageAux, String extraDetailsAux){
+			this.success = successAux;
+			this.returnMessage = returnMessageAux;
+			this.extraDetails = extraDetailsAux;
+		}
+	}
+	
 	@AuraEnabled
     public static ReturnWrapper submitNewMessage(String caseId, String messageTextAux){
         ReturnWrapper returnWrapper = new ReturnWrapper();
