@@ -3251,8 +3251,8 @@
     <customLabels>
         <label>ลบรายการโปรด</label>
         <name>CSP_Services_RemoveFavorite</name>
-    <customLabels>
     </customLabels>
+    <customLabels>
         <label>ดูบริการที่มี</label>
         <name>CSP_Services_RequestServiceBannerButton</name>
     </customLabels>
