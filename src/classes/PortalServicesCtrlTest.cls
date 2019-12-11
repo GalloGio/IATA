@@ -831,4 +831,17 @@ public static void PortalServicesCtrlTest_getAvailableServicesForNewContact(){
 
 }
 
+	//WMO-736 - ACAMBAS: Begin
+	@isTest
+	public static void getPortalServiceDetailsTest() {
+		Contact c = [select id,email,firstname,lastname,name from contact where lastName = 'ContactTest2'];
+
+		User portalUser = ISSP_ObjectFactory.createPortalUser(c);
+        
+		System.runAs(portalUser) {
+			PortalServicesCtrl.getPortalServiceDetails('serviceTest');
+		}
+	}
+	//WMO-736 - ACAMBAS: End
+
            

@@ -17,6 +17,11 @@ import checkIfIsAirlineUser from '@salesforce/apex/CSP_Utils.isAirlineUser';
 import checkHasAccessToAccred from '@salesforce/apex/DAL_WithoutSharing.hasAccessToService'; // check if user has access to IATA Accreditation and changes
 import getMapHierarchyAccounts from '@salesforce/apex/PortalProfileCtrl.getMapHierarchyAccounts';
 import getPhotoFromAPI from '@salesforce/apex/PortalProfileCtrl.getPhotoFromAPI';
+import isCountryEligibleForPaymentLink from '@salesforce/apex/PortalProfileCtrl.isCountryEligibleForPaymentLink'; //WMO-699 - ACAMBAS
+import paymentLinkRedirect from '@salesforce/apex/PortalServicesCtrl.paymentLinkRedirect'; //WMO-699 - ACAMBAS
+import hasAccessToSIS from '@salesforce/apex/DAL_WithoutSharing.hasAccessToService'; //WMO-736 - ACAMBAS
+import getPortalServiceDetails from '@salesforce/apex/PortalServicesCtrl.getPortalServiceDetails'; //WMO-736 - ACAMBAS
+import goToOldPortalService from '@salesforce/apex/PortalServicesCtrl.goToOldPortalService'; //WMO-736 - ACAMBAS
 
 import SaveLabel from '@salesforce/label/c.CSP_Save';
 import CancelLabel from '@salesforce/label/c.CSP_Cancel';
@@ -46,6 +51,9 @@ import CSP_CompanyAdministration_Link from '@salesforce/label/c.CSP_CompanyAdmin
 import CSP_Travel_Agent_Accreditation_Changes_Access from '@salesforce/label/c.CSP_Travel_Agent_Accreditation_Changes_Access';
 import CSP_Travel_Agent_Accreditation_Changes_Request from '@salesforce/label/c.CSP_Travel_Agent_Accreditation_Changes_Request';
 import CSP_Airline_Changes_Access from '@salesforce/label/c.CSP_Airline_Changes_Access';
+import See_Bank_Account_Details from '@salesforce/label/c.See_Bank_Account_Details'; //WMO-699 - ACAMBAS
+import Credit_Card_Payment_Link from '@salesforce/label/c.Credit_Card_Payment_Link'; //WMO-699 - ACAMBAS
+import Link_To_SIS from '@salesforce/label/c.Link_To_SIS'; //WMO-736 - ACAMBAS
 
 
 export default class PortalRecordFormWrapper extends NavigationMixin(LightningElement) {
@@ -88,6 +96,13 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     @track idCardErrorPopup = false;
     @track photoURL;
     @track photoPopUp = false;
+    @track isEligibleForPaymentLink; //WMO-699 - ACAMBAS
+    @track paymentLinkURL; //WMO-699 - ACAMBAS
+    @track hasAccessToSISPortal; //WMO-736 - ACAMBAS
+    @track SISPortalLink; //WMO-736 - ACAMBAS
+
+    @track iconUrl;
+    @track sisPage;
 
 
     timeout = null;
@@ -131,7 +146,9 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
         IdCardPhoto,
         IdCardStatus,
         IdCard,
-        IdCardPhotoTitle
+        IdCardPhotoTitle,
+        See_Bank_Account_Details,
+        Credit_Card_Payment_Link
     };
 
     @api tabName = '';
@@ -222,6 +239,52 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
 
 		});
 
+        //WMO-699 - ACAMBAS: Begin
+        isCountryEligibleForPaymentLink().then(result => {
+            this.isEligibleForPaymentLink = result;
+        });
+
+
+        paymentLinkRedirect().then(result => {
+            let myUrl;
+            if (result !== undefined && result !== '') {
+                myUrl = result;
+                if (!myUrl.startsWith('http')) {
+                    myUrl = window.location.protocol + '//' + myUrl;
+                }
+            }
+            this.paymentLinkURL = myUrl;
+
+            let creditCardPaymentLink = Credit_Card_Payment_Link.replace('{1}', this.paymentLinkURL);
+            this._labels.Credit_Card_Payment_Link = creditCardPaymentLink;
+        });
+        //WMO-699 - ACAMBAS: End
+
+        //WMO-736 - ACAMBAS: Begin
+        let SISPortalService = 'SIS';
+
+        hasAccessToSIS({ str: SISPortalService }).then(result => {
+            this.hasAccessToSISPortal = result;
+
+            if(this.hasAccessToSISPortal) {
+                getPortalServiceDetails({ serviceName: SISPortalService }).then(result => {
+                    let portalService = JSON.parse(JSON.stringify(result));
+
+                    if (portalService !== undefined && portalService !== '') {
+                        //let SISIconHTML = portalService.recordService.Application_icon__c;
+                        let SISPortalURL = portalService.recordService.Application_URL__c;
+                        this.iconUrl = portalService.recordService.Application_icon_URL__c;
+                        goToOldPortalService({ myurl: SISPortalURL }).then(result => {
+                            //this.SISPortalLink = Link_To_SIS.replace('{1}', SISIconHTML);
+                            //this.SISPortalLink = this.SISPortalLink.replace('{2}', result);
+                            this.sisPage = result;
+                        })
+                    }
+                });
+            }
+        });
+        //WMO-736 - ACAMBAS: End
+
         this.getAccountEmailDomains();
     }
 	get showHelpText(){
@@ -299,6 +362,21 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     get isContact() {
         return this.objectName != null && this.objectName.toLowerCase() == 'contact';
     }
+
+    //WMO-699 - ACAMBAS: Begin
+    get isCustomerInvoice() {
+        return this.objectName != null && this.objectName.toLowerCase() == 'customer_invoice__c';
+    }
+
+    get displayPaymentLinkLabel() {
+        let isCustomerInvoiceObject = this.objectName != null && this.objectName.toLowerCase() == 'customer_invoice__c';
+        return this.isEligibleForPaymentLink && isCustomerInvoiceObject;
+    }
+
+    get getPaymentLinkURL() {
+        return this.paymentLinkURL;
+    }
+    //WMO-699 - ACAMBAS: End
 
     get showAreas() {
         return this.showarea;
