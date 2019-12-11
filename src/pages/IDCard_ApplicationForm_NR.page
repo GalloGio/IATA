@@ -193,7 +193,10 @@
     //You need to wrap everything in document.ready because the select tag we are taregting needs to
     //be loaded in the DOM befire we can access it.
     $(document).ready(function() {
-        rerenderRenewPageValues();
+        var isPart3 = '{!isPart3}';
+        if(isPart3 == 'true'){
+            rerenderRenewPageValues();
+        }
         //-----EDIT THE NEXT TWO LINES-----
         var startYear=1930; //replace 1930 with whatever year you want to start with;
         var endYear=2034; //replace 2034 with whatever year you want to end with;
