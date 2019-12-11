@@ -163,7 +163,7 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
 
         for (IATA_ISO_State__c s : mapBillingStatesPerCountry.get(countrySelected)) {
 			if(s.Valid_For_Address__c)
-            billingStatesList.add(new SelectOption(s.Id, s.Name));
+            	billingStatesList.add(new SelectOption(s.Id, s.Name));
         }
     }
 
