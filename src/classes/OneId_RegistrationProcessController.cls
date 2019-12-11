@@ -661,7 +661,7 @@ public without sharing class OneId_RegistrationProcessController {
 
 				if(acc.Sector__c == 'Airline Supplier' && acc.Category__c == 'Fuel Supplier' ){
 
-					handleIFTPProcess(acc, con);
+					handleIFTPProcess(acc, con, isNewAcc);
 
 				}
 			}
@@ -997,7 +997,6 @@ public without sharing class OneId_RegistrationProcessController {
 		update new User(Id = userId, ProfileId = isspAgentUser.Id);
 	}
 
-	@future
 	public static void updatePortalUseProfile(String userId, String sProfile){
 		updatePortalUseProfile(userId, 'ISS Portal Agency User (Partner)');
 	}
@@ -1191,7 +1190,7 @@ public without sharing class OneId_RegistrationProcessController {
 		insert psa;
 	}
 
-	public static void handleIFTPProcess(Account acc, Contact con){
+	public static void handleIFTPProcess(Account acc, Contact con, Boolean isNewAccount){
 		String RECTYPE_ITP_AccContRole = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'ITP');
 		String RECTYPE_ITP_AccRole = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Role__c', 'IFTP');
 		String RECTYPE_Others = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Others');
@@ -1220,8 +1219,7 @@ public without sharing class OneId_RegistrationProcessController {
 
 		Account_Contact_Role__c accContRoleToInserted = new Account_Contact_Role__c();
 
-		if(isNewAcc == true){
-
+		if(isNewAccount == true){
 			Account_Role__c accRole = new Account_Role__c();
 			accRole.Account__c = acc.Id;
 			accRole.Account_Roles__c = accRoles.id;
@@ -1248,11 +1246,9 @@ public without sharing class OneId_RegistrationProcessController {
 			accContRoleToInserted.Id = accContRoleToInsert.Id;
 
 		}else{
-			System.debug('Not NEW Account!');
 			Account_Role__c accRole = [SELECT id FROM Account_Role__c WHERE account__c = :acc.id AND recordtypeid = :RECTYPE_ITP_AccRole limit 1];
 
 			Account_Contact_Role__c accContRoleToInsert = new Account_Contact_Role__c();
-			// accContRoleToInsert.Company_Code__c = employeeToAdd.code.trim();
 			accContRoleToInsert.Service_Rendered__c = 'IFTP';
 			accContRoleToInsert.Status__c = 'Active';
 			accContRoleToInsert.RecordTypeId = RECTYPE_ITP_AccContRole;
@@ -1265,7 +1261,6 @@ public without sharing class OneId_RegistrationProcessController {
 
 			accContRoleToInserted.Id = accContRoleToInsert.Id;
 
-			System.debug('accContRoleToInsert- ' + accContRoleToInsert);
 		}
 
 		Portal_Application_Right__c portalApplicationRight = new Portal_Application_Right__c(
@@ -1283,22 +1278,24 @@ public without sharing class OneId_RegistrationProcessController {
 
 		update accContRoleToInserted;
 
-		User cont = [SELECT id, contact.FirstName, contact.LastName, contact.account.name FROM User WHERE ContactId = :con.Id LIMIT 1];
+		Contact cont = [SELECT id, FirstName, LastName, Account.Name FROM Contact WHERE Id = :con.Id LIMIT 1];
 
 		List<IFTP_History__c> IftpHistoryRecordsToBeInserted = new List<IFTP_History__c>();
 		IFTP_History__c ihrec = portalIftpHistoryManagement.createIftpHistoryRecord(portalIftpHistoryManagement.Employee_Start_Working_for_ITP,
 															accContRoleToInserted.Company_Code__c,
-															cont.contact.account.name,
-															cont.contact.FirstName,
-															cont.contact.LastName);
+															cont.account.name,
+															cont.FirstName,
+															cont.LastName);
 		IftpHistoryRecordsToBeInserted.add(ihrec);
 
 		if(IftpHistoryRecordsToBeInserted.size() > 0){
 			portalIftpHistoryManagement.insertIntoIftpHistory(IftpHistoryRecordsToBeInserted);
 		}
 
-		updatePortalUseProfile(cont.id,'ISS Portal (Partner)');
-		assignPermissionSet(psAbsorb.Id, cont.id);
+		if(!Test.isRunningTest()){
+			updatePortalUseProfile(cont.id,'ISS Portal (Partner)');
+			assignPermissionSet(psAbsorb.Id, cont.id);
+		}
 	}
 
 	/* Manuel Conde commented this...
