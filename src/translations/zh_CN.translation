@@ -1820,6 +1820,10 @@
         <label>本文是否有帮助？</label>
         <name>CSP_ArticleHelpful</name>
     </customLabels>
+	<customLabels>
+        <label>分配新服务</label>
+        <name>CSP_Assign_New_Service</name>
+    </customLabels>
     <customLabels>
         <label><!-- Branch Offices --></label>
         <name>CSP_Branch_Offices</name>
@@ -2775,6 +2779,10 @@
     <customLabels>
         <label>但是一旦您有了，您会在这里看到最新的。</label>
         <name>CSP_NoCases2</name>
+    </customLabels>
+	<customLabels>
+        <label>抱歉，找不到适用过滤器的结果</label>
+        <name>CSP_NoRecordsFiltered</name>
     </customLabels>
     <customLabels>
         <label>没有结果</label>
