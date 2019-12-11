@@ -224,13 +224,16 @@
     </layoutSections>
     <miniLayout>
         <fields>Name</fields>
+        <fields>RecordTypeId</fields>
         <fields>ParentId</fields>
         <fields>BillingAddress</fields>
         <fields>Phone</fields>
         <relatedLists>
+            <fields>FULL_NAME</fields>
             <relatedList>RelatedContactList</relatedList>
         </relatedLists>
         <relatedLists>
+            <fields>CASES.CASE_NUMBER</fields>
             <relatedList>RelatedCaseList</relatedList>
         </relatedLists>
         <relatedLists>

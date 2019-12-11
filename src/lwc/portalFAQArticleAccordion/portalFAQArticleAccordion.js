@@ -410,9 +410,9 @@ export default class PortalFAQArticleAccordion extends NavigationMixin(Lightning
           if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
         }
         return null;
-    }
+    } 
     
-    closeModal(){
-       this.renderConfirmation = !this.renderConfirmation;
+    closeModal() {
+        this.renderConfirmation = !this.renderConfirmation;
     }
 }

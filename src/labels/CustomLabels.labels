@@ -11251,6 +11251,41 @@ The sum of percentage cannot exceed 100%</value>
         <value>12</value>
     </labels>
     <labels>
+        <fullName>IDCard_CardType_DigCard</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IDCard_CardType_DigCard</shortDescription>
+        <value>Digital card</value>
+    </labels>
+    <labels>
+        <fullName>IDCard_CardType_DigCardNo</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IDCard_CardType_DigCardNo</shortDescription>
+        <value>No</value>
+    </labels>
+    <labels>
+        <fullName>IDCard_CardType_PhysCard</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IDCard_CardType_PhysCard</shortDescription>
+        <value>Physical card</value>
+    </labels>
+    <labels>
+        <fullName>IDCard_CardType_PhysCardYes</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IDCard_CardType_PhysCardYes</shortDescription>
+        <value>Yes</value>
+    </labels>
+    <labels>
+        <fullName>IDCard_CardType_WishToRecieve</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IDCard_CardType_WishToRecieve</shortDescription>
+        <value>Would you like to receive a printed ID Card? Additional fees may apply.</value>
+    </labels>
+    <labels>
         <fullName>IDCard_CaseDetails</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -11446,7 +11481,7 @@ Accepted documents for independent travel consultant/contractor/broker are:&lt;b
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCard CheckoutConfirm CC</shortDescription>
-        <value>Payment information</value>
+        <value>Payment method</value>
     </labels>
     <labels>
         <fullName>IDCard_CheckoutConfirm_Cheque</fullName>
@@ -11730,6 +11765,13 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <value>Details</value>
     </labels>
     <labels>
+        <fullName>IDCard_Discount</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IDCard Discount</shortDescription>
+        <value>Discount</value>
+    </labels>
+    <labels>
         <fullName>IDCard_DisplayedName_RemainingCharacter</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -11804,14 +11846,14 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCard_ExpediteFee</shortDescription>
-        <value>Expedite Fee</value>
+        <value>Expedited delivery fee</value>
     </labels>
     <labels>
         <fullName>IDCard_Expedite_Delivery</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCard_Expedite_Delivery</shortDescription>
-        <value>Certified/Expedite</value>
+        <value>Expedited delivery</value>
     </labels>
     <labels>
         <fullName>IDCard_Expedite_Note</fullName>
@@ -11819,7 +11861,15 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCard_Expedite_Note</shortDescription>
-        <value>Note: Recommended option to track shipment where mail service may be unreliable. Delivery within 8-10 business days. Tracking number available upon request.</value>
+        <value>Note: Recommended option to track shipment where mail service may be unreliable. Delivery within 4-8 business days. Tracking number available upon request.</value>
+    </labels>
+    <labels>
+        <fullName>IDCard_Expedite_Text</fullName>
+        <categories>IDCard</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IDCard_Expedite_Text</shortDescription>
+        <value>Your printed ID Card will be delivered to your agency’s address within 2 – 6 weeks unless you opt for expedited delivery (4 – 8 business days). Expedited delivery includes shipment tracking upon request.</value>
     </labels>
     <labels>
         <fullName>IDCard_ExportCSV</fullName>
@@ -11841,6 +11891,13 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <protected>false</protected>
         <shortDescription>IDCard_Fees</shortDescription>
         <value>Fees</value>
+    </labels>
+    <labels>
+        <fullName>IDCard_FeesPhysical</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IDCard_FeesPhysical</shortDescription>
+        <value>Shipping and handling fee</value>
     </labels>
     <labels>
         <fullName>IDCard_FileUploadSuccess</fullName>
@@ -12659,6 +12716,13 @@ Should you have any question about payment by bank transfer, please visit &lt;a 
         <value>REPLACE RENEW</value>
     </labels>
     <labels>
+        <fullName>IDCard_PromotionCode</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IDCard_PromotionCode</shortDescription>
+        <value>Promo code</value>
+    </labels>
+    <labels>
         <fullName>IDCard_Purchase</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -12969,6 +13033,13 @@ Kindly note that home-based agents are required to coordinate with their colleag
         <value>employee must work more than 20 hours per week to obtain an ID Card.</value>
     </labels>
     <labels>
+        <fullName>IDCard_fee</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ID Card fee</shortDescription>
+        <value>ID Card fee</value>
+    </labels>
+    <labels>
         <fullName>IDCard_hasPhoto</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -13225,7 +13296,7 @@ Your ID Card application manager has been informed of your request.</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCard rejected</shortDescription>
-        <value>Rejected Applications</value>
+        <value>Rejected applications</value>
     </labels>
     <labels>
         <fullName>ID_Card_Account_Not_Found</fullName>
@@ -13547,7 +13618,7 @@ Your ID Card application manager has been informed of your request.</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ID Card Package Travel Professionals 1</shortDescription>
-        <value>Take advantage of the reduced price for any two of the following IATA Training courses. &lt;u&gt; The price will be added to the Fees below &lt;/u&gt;. Upon approval of your ID Card application, you will be contacted by IATA Training for access to the selected courses.</value>
+        <value>As a “thank you” for ordering your ID Card, you may purchase two of the following IATA Training distance learning courses for only USD 150 (savings of up to 80%). You will receive instructions to access your courses once your ID Card application has been approved.</value>
     </labels>
     <labels>
         <fullName>ID_Card_Package_Travel_Professionals_2</fullName>
@@ -13620,6 +13691,13 @@ Your ID Card application manager has been informed of your request.</value>
         <value>IDCard Specifics</value>
     </labels>
     <labels>
+        <fullName>ID_Card_Taxes</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ID_Card_Taxes</shortDescription>
+        <value>Applicable taxes</value>
+    </labels>
+    <labels>
         <fullName>ID_Card_Terms_Condition</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -13652,6 +13730,13 @@ and
         <protected>false</protected>
         <shortDescription>ID Card To Agency</shortDescription>
         <value>To agency:</value>
+    </labels>
+    <labels>
+        <fullName>ID_Card_Training_Fee</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ID_Card_Training_Fee</shortDescription>
+        <value>IATA Training fee (2 courses)</value>
     </labels>
     <labels>
         <fullName>ID_Card_Upload_Proof</fullName>
@@ -25843,7 +25928,7 @@ Separate legal entities cannot share the same Legal Name.</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AP_Bank_Details_Change</shortDescription>
-        <value>BSP / CASS Change of Bank details</value>
+        <value>Joining Change of Bank details</value>
     </labels>
     <labels>
         <fullName>ISSP_AP_Bank_Details_Change_Description</fullName>
@@ -26972,7 +27057,7 @@ Can you please confirm which country you&apos;ve previously received support for
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Change_Request</shortDescription>
-        <value>BSP / CASS Change Request</value>
+        <value>Joining Change Request</value>
     </labels>
     <labels>
         <fullName>ISSP_Change_Request_Description</fullName>
@@ -30133,7 +30218,7 @@ this is the tiess topic help</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Join_BSP_CASS</shortDescription>
-        <value>Join BSP / CASS</value>
+        <value>Joining Settlement Services</value>
     </labels>
     <labels>
         <fullName>ISSP_Join_BSP_CASS_Description</fullName>
@@ -41178,6 +41263,13 @@ title,Title,Name</value>
         <protected>false</protected>
         <shortDescription>Title_Home_Page</shortDescription>
         <value>IATA: International Air Transport Association</value>
+    </labels>
+    <labels>
+        <fullName>Total_Cost</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Total_Cost</shortDescription>
+        <value>Total cost</value>
     </labels>
     <labels>
         <fullName>Total_Price</fullName>

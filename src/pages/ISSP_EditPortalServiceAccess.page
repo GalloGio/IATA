@@ -325,7 +325,7 @@
                                     "TestApp", $Label.ISSP_TestApp,
                                     "IATA EasyPay (EDENRED)", $Label.ANG_ISSP_IATA_EasyPay,
                                     "IATA EasyPay (MSTS)", $Label.ANG_ISSP_IATA_EasyPay,
-                                    "IATA EasyPay (WEX)", $Label.ANG_ISSP_IATA_EasyPay,
+                                    "IATA EasyPay (2C2P)", $Label.ANG_ISSP_IATA_EasyPay,
                                     "IATA Accreditation ", $Label.ISSP_Become_Accredited_Agent,
                                     "BSP / CASS Change of Bank details", $Label.ISSP_Change_Bank,
                                     "RHC Information", $Label.ANG_ISSP_RHC_Information,

@@ -137,9 +137,9 @@ export default class PortalCasesList extends NavigationMixin(LightningElement) {
         getSelectedColumns({ sObjectType : 'Case', sObjectFields : this.fieldLabels })
         .then(results => {
             this.columns = [
-                {label: results.CaseNumber, fieldName: 'CaseURL', type: 'url', initialWidth: 135, typeAttributes: {label: {fieldName: 'CaseNumber'}, target:'_self'}},
+                {label: results.CaseNumber, fieldName: 'CaseURL', type: 'url', initialWidth: 135, typeAttributes: {label: {fieldName: 'CaseNumber'}, target:'_self', tooltip: {fieldName: 'CaseNumber'}}},
                 {label: results.Type_of_case_Portal__c, fieldName: 'Type_of_case_Portal__c', type: 'text', initialWidth: 135, cellAttributes: {class: 'cellHidden'}},
-                {label: results.Subject, fieldName: 'CaseURL', type: 'url', initialWidth: 350, typeAttributes: {label: {fieldName: 'Subject'}, target:'_self'}, cellAttributes: {class: 'slds-text-title_bold text-black'}},
+                {label: results.Subject, fieldName: 'CaseURL', type: 'url', initialWidth: 350, typeAttributes: {label: {fieldName: 'Subject'}, target:'_self', tooltip: {fieldName: 'Subject'}}, cellAttributes: {class: 'slds-text-title_bold text-black'}},
                 {label: ISSP_Contact, fieldName: 'ContactName', type: 'text'},
                 {label: results.LastModifiedDate, fieldName: 'LastModifiedDate', type: 'date', typeAttributes: {year: "numeric", month: "short", day: "2-digit", hour: "2-digit", minute: "2-digit"}, cellAttributes: {class: 'cellHidden'}},
                 {label: results.Country_concerned__c, fieldName: 'Country', type: 'text', cellAttributes: {class: 'cellHidden'}},
