@@ -2493,7 +2493,7 @@ input::-ms-reveal {  display: none; width : 0; height: 0; }
 /* ############################################## */
 .showOnlyFavorites, .showOnlyFavorites button, .showOnlyFavorites button:active, .showOnlyFavorites button:visited, .showOnlyFavorites button:focus, .showOnlyFavorites button:hover{
     width: 165px;
-    height: 48px;
+    min-height: 48px;
     border-radius: 0;
     border: 0;
     background-color: #d0d7fb;
