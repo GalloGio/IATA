@@ -415,6 +415,126 @@ private class OneId_RegistrationProcessControllerTest {
 
 		Test.stopTest();
 	}
+	
+	@isTest
+	public static void testRegistration_VII() {
+
+		// Prepare test data
+
+		ISSP_CS__c setting = new ISSP_CS__c();
+		setting.Name = 'DefaultNewAccountOwnerId';
+		setting.Value__c = UserInfo.getUserId();
+		insert setting;
+
+		ISSP_CS__c setting2 = new ISSP_CS__c();
+		setting2.Name = 'IdentityPortal';
+		setting2.Value__c = 'customer-portal-iata.force.com';
+		insert setting2;
+
+		Id profileId = [ SELECT Id FROM Profile WHERE Name = 'ISS Portal Agency User (Partner)' ][0].Id;
+
+		ISSP_CS__c setting3 = new ISSP_CS__c();
+		setting3.Name = 'ISS_Portal_Agency_User';
+		setting3.Value__c = profileId;
+		insert setting3;
+
+		IATA_ISO_Country__c country = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='Pt')  ;
+		insert country ;
+
+		String serviceName = 'ISSP';
+
+		PortalType portalType = PortalType.PowerPartner;
+			User userWithRole = null;
+			Boolean doInsert = true;
+			Account a = new Account(name = 'TEST ACCOUNT',Sector__c='Airline Supplier', Category__c='Fuel Supplier',IATA_ISO_Country__c = country.Id);
+			insert a;
+			Contact c = new Contact(firstname='firstname', lastname = 'lastname',Salutation = 'sig', email='xpto@lls.com', accountId = a.Id);
+			insert c;
+
+			Account_Roles__c accRole = new Account_Roles__c(Name = 'Airline Supplier - ITP');
+			insert accRole;
+
+			Account_Role_Services__c accRoleSrvs = new Account_Role_Services__c(Name = 'IFTP - ITP');
+			insert accRoleSrvs;
+
+			Portal_Applications__c pa = new Portal_Applications__c(Name = 'IFTP');
+			insert pa;
+
+			Contact_Roles__c contRole1 = new Contact_Roles__c(Name = 'ITP Administrator');
+			Contact_Roles__c contRole2 = new Contact_Roles__c(Name = 'ITP Training Coordinator');
+			List<Contact_Roles__c> conrolesLst = new List<Contact_Roles__c>{contRole1, contRole2};
+			insert conrolesLst;
+
+			String RECTYPE_ITP_AccRole = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Role__c', 'IFTP');
+			Account_Role__c accountRole = new Account_Role__c(account__c = a.Id, recordtypeid = RECTYPE_ITP_AccRole);
+			insert accountRole;
+
+		Test.startTest();
+
+			OneId_RegistrationProcessController.handleIFTPProcess(a, c, true);
+
+		Test.stopTest();
+	}
+
+	@isTest
+	public static void testRegistration_VIII() {
+
+		// Prepare test data
+
+		ISSP_CS__c setting = new ISSP_CS__c();
+		setting.Name = 'DefaultNewAccountOwnerId';
+		setting.Value__c = UserInfo.getUserId();
+		insert setting;
+
+		ISSP_CS__c setting2 = new ISSP_CS__c();
+		setting2.Name = 'IdentityPortal';
+		setting2.Value__c = 'customer-portal-iata.force.com';
+		insert setting2;
+
+		Id profileId = [ SELECT Id FROM Profile WHERE Name = 'ISS Portal Agency User (Partner)' ][0].Id;
+
+		ISSP_CS__c setting3 = new ISSP_CS__c();
+		setting3.Name = 'ISS_Portal_Agency_User';
+		setting3.Value__c = profileId;
+		insert setting3;
+
+		IATA_ISO_Country__c country = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='Pt')  ;
+		insert country ;
+
+		String serviceName = 'ISSP';
+
+		PortalType portalType = PortalType.PowerPartner;
+			User userWithRole = null;
+			Boolean doInsert = true;
+			Account a = new Account(name = 'TEST ACCOUNT',Sector__c='Airline Supplier', Category__c='Fuel Supplier',IATA_ISO_Country__c = country.Id);
+			insert a;
+			Contact c = new Contact(firstname='firstname', lastname = 'lastname',Salutation = 'sig', email='xpto@lls.com', accountId = a.Id);
+			insert c;
+
+			Account_Roles__c accRole = new Account_Roles__c(Name = 'Airline Supplier - ITP');
+			insert accRole;
+
+			Account_Role_Services__c accRoleSrvs = new Account_Role_Services__c(Name = 'IFTP - ITP');
+			insert accRoleSrvs;
+
+			Portal_Applications__c pa = new Portal_Applications__c(Name = 'IFTP');
+			insert pa;
+
+			Contact_Roles__c contRole1 = new Contact_Roles__c(Name = 'ITP Administrator');
+			Contact_Roles__c contRole2 = new Contact_Roles__c(Name = 'ITP Training Coordinator');
+			List<Contact_Roles__c> conrolesLst = new List<Contact_Roles__c>{contRole1, contRole2};
+			insert conrolesLst;
+
+			String RECTYPE_ITP_AccRole = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Role__c', 'IFTP');
+			Account_Role__c accountRole = new Account_Role__c(account__c = a.Id, recordtypeid = RECTYPE_ITP_AccRole);
+			insert accountRole;
+
+		Test.startTest();
+
+			OneId_RegistrationProcessController.handleIFTPProcess(a, c, false);
+
+		Test.stopTest();
+	}
 
 
 	@isTest
