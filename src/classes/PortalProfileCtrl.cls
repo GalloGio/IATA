@@ -397,9 +397,7 @@ public static Contact contactInfo = new Contact();
 		@AuraEnabled
 		public Boolean hasProducts;
 		@AuraEnabled
-		public Boolean selected;
-		@AuraEnabled
-		public String cardKey;
+		public Boolean selected;		
 	}
 
     public class CardWrapper{
@@ -415,6 +413,9 @@ public static Contact contactInfo = new Contact();
 
 		@AuraEnabled
 		public String idCardUrl;
+		
+		@AuraEnabled
+		public String cardKey;
 
         public CardWrapper(String cardTitleAux, List<FieldWrapper> lstFieldWrapperAux, Boolean isEditableAux){
             this.cardTitle = cardTitleAux;
