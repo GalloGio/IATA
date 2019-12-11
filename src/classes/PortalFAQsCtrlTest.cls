@@ -35,32 +35,33 @@ public class PortalFAQsCtrlTest {
             kavObj.UrlName = 'Sample-Article-Portal-Test';
             kavObj.Summary = 'Summary';
             insert kavObj;
+			
+			System.runAs(usr) { 
+				PortalKnowledge__c faqCategory = new PortalKnowledge__c();
+				faqCategory.Name = 'Travel';
+				faqCategory.FAQsStructure__c = true;
+				faqCategory.DataCategoryName__c = 'Travel';
+				faqCategory.DataCategoryLabel_en_US__c = 'Travel';
+				faqCategory.Order__c = 1;
 
-            PortalKnowledge__c faqCategory = new PortalKnowledge__c();
-            faqCategory.Name = 'Travel';
-            faqCategory.FAQsStructure__c = true;
-            faqCategory.DataCategoryName__c = 'Travel';
-            faqCategory.DataCategoryLabel_en_US__c = 'Travel';
-            faqCategory.Order__c = 1;
+				PortalKnowledge__c faqTopic = new PortalKnowledge__c();
+				faqTopic.Name = 'IATA EasyPay';
+				faqTopic.FAQsStructure__c = true;
+				faqTopic.DataCategoryName__c = 'Travel';
+				faqTopic.DataTopicName__c = 'IATA_EasyPay';
+				faqTopic.DataCategoryLabel_en_US__c = 'TravelCategory';
+				faqTopic.Order__c = 1;
 
-            PortalKnowledge__c faqTopic = new PortalKnowledge__c();
-            faqTopic.Name = 'IATA EasyPay';
-            faqTopic.FAQsStructure__c = true;
-            faqTopic.DataCategoryName__c = 'Travel';
-            faqTopic.DataTopicName__c = 'IATA_EasyPay';
-            faqTopic.DataCategoryLabel_en_US__c = 'TravelCategory';
-            faqTopic.Order__c = 1;
-
-            PortalKnowledge__c faqSubtopic = new PortalKnowledge__c();
-            faqSubtopic.Name = 'Changes to my Agency';
-            faqSubtopic.FAQsStructure__c = true;
-            faqSubtopic.DataCategoryName__c = 'Travel';
-            faqSubtopic.DataTopicName__c = 'IATA_EasyPay';
-            faqSubtopic.DataSubtopicName__c = 'PAX_Changes_to_my_Agency';
-            faqSubtopic.DataCategoryLabel_en_US__c = 'Changes to my Agency';
-            faqSubtopic.Order__c = 1;
-            insert new List<PortalKnowledge__c>{ faqCategory, faqTopic, faqSubtopic };
-            
+				PortalKnowledge__c faqSubtopic = new PortalKnowledge__c();
+				faqSubtopic.Name = 'Changes to my Agency';
+				faqSubtopic.FAQsStructure__c = true;
+				faqSubtopic.DataCategoryName__c = 'Travel';
+				faqSubtopic.DataTopicName__c = 'IATA_EasyPay';
+				faqSubtopic.DataSubtopicName__c = 'PAX_Changes_to_my_Agency';
+				faqSubtopic.DataCategoryLabel_en_US__c = 'Changes to my Agency';
+				faqSubtopic.Order__c = 1;
+				insert new List<PortalKnowledge__c>{ faqCategory, faqTopic, faqSubtopic };
+            }
             //retrieve master article Id created on FAQ__kav record insertion
             //in order to get the KnowledgeArticleId
             kavObj = [SELECT KnowledgeArticleId FROM FAQ__kav WHERE Id = :kavObj.Id];
