@@ -17,7 +17,7 @@
         <defaultConnectorLabel>default</defaultConnectorLabel>
         <rules>
             <name>myRule_1</name>
-            <conditionLogic>(1 OR 2) AND ((3 AND 4) OR (5 AND 6) OR 7)  AND 8</conditionLogic>
+            <conditionLogic>(1 OR 2) AND ((3 AND 4) OR (5 AND 6) OR (7 AND 8))  AND 9</conditionLogic>
             <conditions>
                 <processMetadataValues>
                     <name>inputDataType</name>
@@ -233,6 +233,37 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>iiNet</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <processMetadataValues>
+                    <name>inputDataType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>leftHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>operatorDataType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>rightHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <leftValueReference>myVariable_current.Parent.Reason1__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>iiNet Integrated connectivity issues</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
@@ -286,7 +317,7 @@
         <defaultConnectorLabel>default</defaultConnectorLabel>
         <rules>
             <name>myRule_3</name>
-            <conditionLogic>(1 OR 2) AND ((3 AND 4) OR (5 AND 6) OR 7)  AND 8</conditionLogic>
+            <conditionLogic>(1 OR 2) AND ((3 AND 4) OR (5 AND 6) OR (7 AND 8))  AND 9</conditionLogic>
             <conditions>
                 <processMetadataValues>
                     <name>inputDataType</name>
@@ -529,6 +560,37 @@
                         <stringValue>Picklist</stringValue>
                     </value>
                 </processMetadataValues>
+                <leftValueReference>myVariable_current.Parent.Reason1__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>iiNet Integrated connectivity issues</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <processMetadataValues>
+                    <name>inputDataType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>leftHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>operatorDataType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>rightHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
                 <leftValueReference>myVariable_current.Parent.Status</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
@@ -541,7 +603,7 @@
             <label>Closed status</label>
         </rules>
     </decisions>
-    <interviewLabel>iiNet_ICCS_MITA_change_status-3_InterviewLabel</interviewLabel>
+    <interviewLabel>iiNet_ICCS_MITA_change_status-4_InterviewLabel</interviewLabel>
     <label>iiNet ICCS MITA change status</label>
     <processMetadataValues>
         <name>ObjectType</name>
