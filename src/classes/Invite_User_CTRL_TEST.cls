@@ -80,7 +80,7 @@ public class Invite_User_CTRL_TEST {
 		accountRole.Account_Roles__c = accountRoles.Id;
 		accountRole.Status__c = 'Active';
 		accountRole.Effective_From_Date__c = today.addDays(-2);
-		accountRole.Effective_To_Date__c = today;
+		accountRole.Effective_To_Date__c = today.addDays(2);
 		accountRolesToInsert.add(accountRole);
 
 		Account_Role__c accountRole2 = new Account_Role__c();
@@ -89,7 +89,7 @@ public class Invite_User_CTRL_TEST {
 		accountRole2.Account_Roles__c = accountRoles.Id;
 		accountRole2.Status__c = 'Active';
 		accountRole2.Effective_From_Date__c = today.addDays(-2);
-		accountRole2.Effective_To_Date__c = today;
+		accountRole2.Effective_To_Date__c = today.addDays(2);
 		accountRolesToInsert.add(accountRole2);
 
 		insert accountRolesToInsert;
