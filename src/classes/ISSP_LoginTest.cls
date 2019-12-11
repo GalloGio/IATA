@@ -14,7 +14,6 @@ private class ISSP_LoginTest {
 		String communityName = controller.communityName;
         ApexPages.currentPage().getHeaders().put('USER-AGENT','MSIE');
         isIE = controller.isIe;
-		ISSP_Login.fakemethod();
 	}
 
 	public static testMethod void testLanguage() {
@@ -103,39 +102,8 @@ private class ISSP_LoginTest {
             ctrl.login();
     	}
 
-		/*
-    	Contact contact2 = ISSP_ObjectFactory.createNewContact();
-        contact2.AccountId = acc.Id;
-        contact2.User_Portal_Status__c = 'Pending Approval';
-        contact2.Portal_User_Frozen__c = true;
-        contact2.email = 'ISSP_test2@test.test';
-		contact2.Community__c = 'CNS Portal User';
-        insert contact2;
-        User newUser2 = new User(alias = 'dsfsdfds',
-	                            email = '1issp_login_test_class@testclass.testclass',
-	                            emailencodingkey = 'UTF-8',
-	                            firstname = contact2.firstName,
-	                            lastname = contact2.lastname,
-	                            languagelocalekey = 'en_US',
-	                            localesidkey = 'en_US',
-	                            contactId = contact2.Id,
-	                            timezonesidkey = 'Asia/Dubai',
-	                            username = '1issp_login_test_class.testclass.testclass@partner.iata.org',
-	                            PortalRole = 'Manager',
-	                            CommunityNickname = contact2.email.substring(0, contact2.email.indexOf('@'))+Datetime.now().formatLong().substring(10,15),
-	                            ProfileId = profileId,
-	                            IsActive = true);
-    	insert newUser2;
-
-    	system.runAs(newUser2){
-	    	Apexpages.currentPage().getParameters().put('retURL', '/test');
-	    	ISSP_Login ctrl = new ISSP_Login();
-	    	ctrl.username = 'test';
-    	}
-		*/
-
 	}
-	/*
+	
 	public static testMethod void testISSP_Login_5() {
 
 		ApexPages.currentPage().getHeaders().put('X-Salesforce-SIP','10.10.10.10');
@@ -156,18 +124,22 @@ private class ISSP_LoginTest {
 		cs.Value__c = 'test';
 		insert cs;
 
+		ISSP_CS__c cs1 = new ISSP_CS__c();
+		cs1.Name = '1ID redirect';
+		cs1.Value__c = 'ON';
+		insert cs1;
+
+		System.currentPageReference().getParameters().put('startURL', 'test');
+
 		IATA_ISO_Country__c ISO_Country = new IATA_ISO_Country__c(ISO_Code__c='TT',Name='test');
         insert ISO_Country;
 
         ISSP_Login ctrl = new ISSP_Login();
-        //ctrl.ipAddress = '10.10.10.10';
         ctrl.findLocationCaller();
 
         ISO_Country.Sanctioned_Country__c = true;
         update ISO_Country;
 
-        ctrl.findLocationCaller();
 	}
-	*/
 
 }
