@@ -90,6 +90,9 @@ private class ISSP_APProcess_Test
             ctrl.getIsNewCountryProcess();
             insert new ISSP_CS__c(Name='ISSP_APProcess_New_Countries', Value__c='CH');
             ctrl.getIsNewCountryProcess();
+            ctrl.getListSISTypes();
+            ctrl.getShowISPAForm();
+            ctrl.getShowISUAForm();
         }
         Test.stopTest();
 
@@ -190,7 +193,7 @@ private class ISSP_APProcess_Test
             prSteps = ctrl.saveBSPFormAndGoBack();
             System.assert(prSteps.getUrl().endsWith('step=2'));
             prSteps = ctrl.saveBSPFormAndLeave();
-            System.assert(prSteps.getUrl().endsWith('ISSP_APCases'));
+            System.assert(prSteps.getUrl().containsIgnoreCase('ISSP_APCases'));
             prSteps = ctrl.goToStep1();
             System.assert(prSteps.getUrl().endsWith('step=1'));
             //ctrl.goToStep2();
@@ -203,7 +206,7 @@ private class ISSP_APProcess_Test
             //ctrl.redirectToCasesListForDupe(); //called from save
             prSteps = ctrl.cancel();
             System.assert(prSteps.getUrl().endsWith('ISSP_TEST'));
-            List<SelectOption> options = ctrl.getItems();
+            List<SelectOption> options = ctrl.getListOptionCountries();
             System.assertEquals(options.size(), 1);
             options = ctrl.getAPTypes();
             System.assertEquals(options.size(), 4);
@@ -219,7 +222,8 @@ private class ISSP_APProcess_Test
             System.assertEquals(bool, false);
             System.assert(prSteps == null);
             options = ctrl.countryNameList;
-            System.assertEquals('test', options[1].getValue());
+            System.assertEquals(country.id, options[1].getValue());
+            ISSP_APProcess.updateGuideCounter(ctrl.newCase.Id); 
         }
         Test.stopTest();
 
@@ -323,7 +327,7 @@ private class ISSP_APProcess_Test
             prSteps = ctrl.saveBSPFormAndGoBack();
             System.assert(prSteps.getUrl().endsWith('step=2'));
             prSteps = ctrl.saveBSPFormAndLeave();
-            System.assert(prSteps.getUrl().endsWith('ISSP_APCases'));
+            System.assert(prSteps.getUrl().containsIgnoreCase('ISSP_APCases'));
             prSteps = ctrl.goToStep1();
             System.assert(prSteps.getUrl().endsWith('step=1'));
             //ctrl.goToStep2();
@@ -336,7 +340,7 @@ private class ISSP_APProcess_Test
             //ctrl.redirectToCasesListForDupe(); //called from save
             prSteps = ctrl.cancel();
             System.assert(prSteps.getUrl().endsWith('ISSP_TEST'));
-            List<SelectOption> options = ctrl.getItems();
+            List<SelectOption> options = ctrl.getListOptionCountries();
             System.assertEquals(options.size(), 1);
             options = ctrl.getAPTypes();
             System.assertEquals(options.size(), 3);
@@ -352,7 +356,7 @@ private class ISSP_APProcess_Test
             System.assertEquals(bool, false);
             System.assert(prSteps == null);
             options = ctrl.countryNameList;
-            System.assertEquals('test', options[1].getValue());
+            System.assertEquals(country.Id, options[1].getValue());
         }
         Test.stopTest();
 
@@ -1138,6 +1142,7 @@ private class ISSP_APProcess_Test
             pr.getParameters().put('caseId', newCase.Id);
             ISSP_APProcess ctrl = new ISSP_APProcess();
 
+            ctrl.isBSP = true;
             newCase.BSPCountry__c = 'Spain';
             ctrl.sendConfirmationEmail(newCase);
             newCase.BSPCountry__c = 'France';
@@ -1195,6 +1200,10 @@ private class ISSP_APProcess_Test
             ctrl.sendConfirmationEmail(newCase);
             newCase.Region__c = '';
             newCase.BSPCountry__c = '';
+            ctrl.sendConfirmationEmail(newCase);
+
+            ctrl.isBSP = false;
+            ctrl.isICH = true;
             ctrl.sendConfirmationEmail(newCase);
         }
         Test.stopTest();
@@ -1442,6 +1451,57 @@ private class ISSP_APProcess_Test
         Test.stopTest();
     }
 
+    @isTest static void test_ICH()
+    {
+        IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'WW', ISO_Code__c = 'WW', Case_BSP_Country__c = 'WW');
+        insert country;
+        Account parent = ISSP_ObjectFactory.createNewAccount();
+        parent.BillingCity = 'test';
+        parent.Name = 'test';
+        insert parent;
+        Account child = ISSP_ObjectFactory.createNewAccount();
+        child.ParentId = parent.Id;
+        child.BillingCity = 'test2';
+        child.Name = 'test2';
+        child.Site = 'headSite';
+        insert child;
+        child.Top_Parent__c = null;
+        update child;
+        Contact con = ISSP_ObjectFactory.createNewContact();
+        con.AccountId= child.Id;
+        con.Email = 'test2098398439@email.com';
+        insert con;
+        User newUser = ISSP_ObjectFactory.createPortalUser(con);
+        con.OwnerId = newUser.Id;
+        update con;
+
+        AP_Country_Requierment__c cReq = new AP_Country_Requierment__c(
+                                        Country__c = country.Id,
+                                        Line_of_business__c = 'ICH');
+        insert cReq;
+
+        insert new Case_Reason_Service__c(Name='New ICH participant', Service__C = 'ICH', Provider_Required__c = false);
+
+        Test.startTest();
+        System.runAs(newUser)
+        {
+            ISSP_APProcess ctrl = new ISSP_APProcess();
+            ctrl.strOperationType = 'ICH';
+            ctrl.strParentMembershipstatus = ISSP_APProcess.ICH_TYPE_IATA_MEMBER;
+            ctrl.newCase.Classification_SIS__c = ISSP_APProcess.ICH_TYPE_IATA_MEMBER;
+            ctrl.isICH = true;
+            ctrl.save();
+            System.assert(ctrl.newCase.Id!=null);
+
+            ctrl.gotoStep3();
+            ctrl.goToFinalStep();
+            ctrl.goToFinalStep();
+            ctrl.newForm.Accept_terms_and_conditions__c = true;
+            ctrl.goToFinalStep();
+        }
+        Test.stopTest();
+    }
+
     @isTest static void testOptInOut() {
         Portal_Applications__c portalApp = new Portal_Applications__c(Name = 'Stuff');
         insert portalApp;
@@ -1585,6 +1645,12 @@ private class ISSP_APProcess_Test
             ctrl.getCASSCounterIndemnityAgreementName();
             ctrl.getCASSFormOfApplicacionConcurrenceUrl();
             ctrl.getCASSFormOfApplicacionConcurrenceName();
+            ctrl.getICHBankMandateFormUrl();
+            ctrl.getICHBankMandateFormName();
+            ctrl.getSISBankMandateFormUrl();
+            ctrl.getSISBankMandateFormName();
+            ctrl.getAdditionalSignatoryFormUrl();
+            ctrl.getAdditionalSignatoryFormName();
             ctrl.securityCheck();
             ctrl.getShowJoinICCSQuestion();
             ctrl.getShowJoinICCS();
@@ -1605,8 +1671,156 @@ private class ISSP_APProcess_Test
             ctrl.getShowCounterIndemnity();
             ctrl.getDocumentGuide();
             ISSP_APProcess.updateGuideCounter(ctrl.newCase.Id);
+
+            System.assert(ctrl.thisController!=null);
+
+            ctrl.selectedContact = new Contact_Endorsement__c();
+            ctrl.selectedContactPosition_SISSuperUser = true;
+            System.assertEquals(true,ctrl.selectedContactPosition_SISSuperUser);
+            ctrl.selectedContactPosition_ICHPrimaryContact = true;
+            System.assertEquals(true,ctrl.selectedContactPosition_ICHPrimaryContact);
+            ctrl.selectedContactPosition_ICHFinancialContact = true;
+            System.assertEquals(true,ctrl.selectedContactPosition_ICHFinancialContact);
+            ctrl.selectedContactPosition_ICHNotificationContact = true;
+            System.assertEquals(true,ctrl.selectedContactPosition_ICHNotificationContact);
+            ctrl.selectedContactPosition_ICHAdvice = true;
+            System.assertEquals(true,ctrl.selectedContactPosition_ICHAdvice);
+            ctrl.selectedContactPosition_ICHCleanConfirmation = true;
+            System.assertEquals(true,ctrl.selectedContactPosition_ICHCleanConfirmation);
+            ctrl.selectedContactPosition_ICHCleanInitialization = true;
+            System.assertEquals(true,ctrl.selectedContactPosition_ICHCleanInitialization);
+            ctrl.selectedContact = null;
+            ctrl.selectedContactPosition_SISSuperUser = true;
+            System.assertEquals(false,ctrl.selectedContactPosition_SISSuperUser);
+            ctrl.ICHCurrencyClearance = '';
+            System.assertEquals('',ctrl.ICHCurrencyClearance);
+            ctrl.hideTermsConditionsPopup();
+            System.assert(!ctrl.financialCountryNameList.isEmpty());
+            System.assert(!ctrl.countryNameList.isEmpty());
+            ctrl.getListOptionICHParticipation();
+
+            ctrl.getICHCurrencyClearanceLabel();
+
+            ctrl.hqaccount.ICH_Member__c = true;
+            System.assert(ctrl.getICHSubtypes().isEmpty());
+            ctrl.hqaccount.ICH_Member__c = false;
+            ctrl.hqaccount.Sector__c = 'Airline2';
+            ctrl.hqaccount.Category__c = 'Cargo Only';
+            System.assert(ctrl.getICHSubtypes().isEmpty());
+            ctrl.hqaccount.Sector__c = 'Airline';
+            ctrl.hqaccount.Membership_status__c = 'Active';
+            System.assert(!ctrl.getICHSubtypes().isEmpty());
+            ctrl.strOperationType = 'ICH';
+            ctrl.getListOptionICHParticipation();
+
+            ctrl.getIsICHType_IATAMember();
+            ctrl.getIsICHType_NonIATAMember();
+            ctrl.getIsICHType_SponsoredAirline();
+            ctrl.getIsICHType_SponsoredAssociates();
+            ctrl.getIsICHType_AssociateSP();
+            ctrl.getIsICHType_AssociateSubsidiary();
+            ctrl.getIsICHType_AssociateAggregator();
+
+            ctrl.UploadFile();
+            ctrl.getAttachList();
+
+            ctrl.newCase.Classification_SIS__c = ISSP_APProcess.ICH_TYPE_IATA_MEMBER;
+            list<AP_Country_specs__c> listCountrySpecs = new list<AP_Country_specs__c>();
+            listCountrySpecs.add(new AP_Country_specs__c(
+                Name = ctrl.newCase.Classification_SIS__c,
+                Download_URL__c = 'testurl',
+                Link_label__c='label')
+            );
+            listCountrySpecs.add(new AP_Country_specs__c(
+                Name = 'Associate_Aggregator_Member_App',
+                Library_Doc_Name__c = 'testdoc',
+                Link_label__c='label')
+            );
+            insert listCountrySpecs;
+            ctrl.getICHTermsAndConditionsUrl();
+            ctrl.getICHTermsAndConditionsName();
+            ctrl.getICHGenericTermsAndConditionsUrl();
+            ctrl.getICHGenericTermsAndConditionsName();
+            ctrl.getAssociateAggregatorMemberApplicationUrl();
+            ctrl.getAssociateAggregatorMemberApplicationName();
+            ctrl.getICHCurrencyClearanceOptions();
+            ctrl.getIsSISMember();
+            ctrl.getIsValidDueDiligence();
+            ctrl.newCase.CaseArea__c='Airline Joining';
+            ctrl.isBSP = true;
+            ctrl.isCASS = false;
+            ctrl.getApp();
+            ctrl.getPageTitle();
+            ctrl.isBSP = false;
+            ctrl.isCASS = true;
+            ctrl.getApp();
+            ctrl.getPageTitle();
+            ctrl.isCASS = false;
+            ctrl.isICH = true;
+            ctrl.getApp();
+            ctrl.getPageTitle();
+            ctrl.newCase.CaseArea__c='Airline Change';
+            ctrl.newCase.Reason1__c='Minor database changes';
+            ctrl.getApp();
+            ctrl.getPageTitle();
+            ctrl.newCase.Reason1__c='Bank Account Instructions';
+            ctrl.getApp();
+            ctrl.getPageTitle();
+            ctrl.getPageTitle();
+            ctrl.strAreaType='';
+            ctrl.getPageTitle();
+            ctrl.newForm = null;
         }
         
         Test.stopTest();
     }
+
+    @isTest static void testContactEndorsement() {
+        Portal_Applications__c portalApp = new Portal_Applications__c(Name = 'App');
+        insert portalApp;
+
+        List<IATA_ISO_Country__c> countries = new List<IATA_ISO_Country__c>();
+
+        IATA_ISO_Country__c countryUS = new IATA_ISO_Country__c (Name = 'US', ISO_Code__c = 'US', ANG_Portal_Service__c = portalApp.Id, Airline_EasyPay_Opt_Out_Date__c = Date.today()-1);
+        insert countryUS;
+
+        Account headquarter = new Account(
+            Name = 'Emirates hq',
+            Field_Head_Office__c = 'Headquarter',
+            Airline_Designator__c = 'LH',
+            IATACode__c = '220',
+            Airline_Prefix__c = '220',
+            Sector__c = 'Airline',
+            Category__c = 'Passenger and Cargo',
+            Key_Customer_Reason__c = 'Volume',
+            TradeName__c = 'Emirates',
+            Legal_name__c = 'Stuff',
+            Name_on_AOC__c = 'Stuff',
+            IATA_ISO_Country__c = countryUS.Id,
+            RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline'));
+        insert headquarter;
+
+        Contact con = ISSP_ObjectFactory.createNewContact();
+        con.AccountId = headquarter.Id;
+        insert con;
+
+        User newUser = ISSP_ObjectFactory.createPortalUser(con);
+        con.OwnerId = newUser.Id;
+        update con;
+
+        System.runAs(newUser) {
+            Test.startTest();
+            ISSP_APProcess ctrl = new ISSP_APProcess();
+            ctrl.newContact();
+            Contact_Endorsement__c contact = ctrl.selectedContact;
+            contact.Position__c = 'SIS Super User';
+            ctrl.saveContact();
+            ctrl.selectedContactId = contact.Id;
+            ctrl.editContact();
+            ctrl.selectedContact = contact;
+            ctrl.deleteContact();
+            Test.StopTest();
+        }
+    }
+
 }
