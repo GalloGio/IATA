@@ -181,8 +181,8 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
             let isToDateValueOk = true;
             if(this.experiationstatusValue === 'Manual'){
                 let today = new Date();
-                today = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-                if(!this.toDateValue || this.toDateValue <= today){
+                let toDateValue = new Date(this.toDateValue);
+                if(!this.toDateValue || toDateValue.getTime() <= today.getTime()){
                     isToDateValueOk = false;
                     const event = new ShowToastEvent({
                         title: 'Search Training Records Result',
@@ -351,10 +351,9 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
         }
     
         if(!this.itpValue || this.itpValue === 'All'){
+            auxItp = '';
             for(i=0; i < this.itpOptions.length; i++){
-                if(this.itpOptions[i].value === 'All'){
-                    auxItp = '';
-                }else{
+                if(this.itpOptions[i].value !== 'All'){
                 auxItp = (auxItp === '' ) ? this.itpOptions[i].value : auxItp + ',' + this.itpOptions[i].value;
                 }
             }
@@ -441,7 +440,7 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
     handleExportToExcel(){
         let columns = JSON.parse(JSON.stringify(this.columns));
         let data = JSON.parse(JSON.stringify(this.data));
-        this.template.querySelector('c-portal-iftp-export-data').exportDataToExcel(columns, data, "EmployeesSearchResults.xls");
+        this.template.querySelector('c-portal-iftp-export-data').exportDataToExcel(columns, data, "TrainingRecordsDetailSearchResults.xls");
     }
 
     handleExportAllDataToCSV(){
@@ -475,7 +474,7 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
         auxSearchValues = [
             auxStations,
             'null',                 // auxItp,
-            'null',                 // place holder for auxExperiationstatus,
+            'Active, Expired',                 // place holder for auxExperiationstatus,
             auxAircraftType,
             'Yes',                  // place holder for auxProficiency,
             'null',                 // place holder for auxFromDate,

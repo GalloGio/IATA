@@ -107,7 +107,6 @@ export default class PortalIftpMonitorTrainings extends LightningElement {
         registerListener('stationsChanged', this.handleStationsChanged, this);
         let toDateValue = new Date();
         this.toDateValue = toDateValue.getFullYear()+'-'+(toDateValue.getMonth()+1)+'-'+toDateValue.getDate();
-
         this.initData();
     }
 
@@ -187,12 +186,13 @@ export default class PortalIftpMonitorTrainings extends LightningElement {
                 }
             }
         }
-        this.toDateValue = toDateValue.getFullYear()+'-'+(toDateValue.getMonth()+1)+'-'+toDateValue.getDate();
         if(this.expirationStatusValue === 'Manual'){
             this.isNotEditable = false;
         } else {
             this.isNotEditable = true;
         }
+        this.toDateValue = toDateValue.getFullYear()+'-'+(toDateValue.getMonth()+1)+'-'+toDateValue.getDate();
+
     }
     handleChangeAircraftType(event) {
         this.aircraftTypeValue = event.detail.value;
@@ -209,13 +209,11 @@ export default class PortalIftpMonitorTrainings extends LightningElement {
     handleSearchButtonClick(){
         this.selectedRows = null;
 
-        this.error = [];
-        this.mainErrorMessage = '';
         let isToDateValueOk = true;
         if(this.expirationStatusValue === 'Manual'){
             let today = new Date();
-            today = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-            if(!this.toDateValue || this.toDateValue <= today){
+            let toDateValue = new Date(this.toDateValue);
+            if(!this.toDateValue || toDateValue.getTime() <= today.getTime()){
                 isToDateValueOk = false;
                 const event = new ShowToastEvent({
                     title: 'Monitor Trainings Result',
@@ -227,13 +225,8 @@ export default class PortalIftpMonitorTrainings extends LightningElement {
             }
         }
         if(isToDateValueOk){
-            if(this.error.length === 0){
-                this.showSearch = true;
-                this.cleanErrors();
-                this.handleSearch();
-            }else{
-                this.mainErrorMessage = 'Need to fill the required fields';
-            }
+            this.showSearch = true;
+            this.handleSearch();   
         }
     }
 
