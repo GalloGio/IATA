@@ -2572,3 +2572,67 @@ input::-ms-reveal {  display: none; width : 0; height: 0; }
 	height: 56px;
     width: 100%;
 }
+
+/*#################################*/
+
+/*RS - START - Needed for IFTP app */
+.Expired{
+	color: red;
+ }
+.Success{
+	color: green;
+ }
+.Failed{
+	color: red;
+ }
+.changeUploadFileTextToSelectFile .slds-file-selector__button{
+	font-size: 0;
+}
+
+.changeUploadFileTextToSelectFile .slds-file-selector__button:after{
+	content: 'Select File';
+	font-size: .8125rem;
+	color: #0070d2;
+}
+
+.changeUploadFileTextToSelectFile .slds-file-selector__text{
+	font-size: 0;
+}
+
+.changeUploadFileTextToSelectFile .slds-file-selector__text:after{
+	content: 'Or drag and drop file';
+	font-size: .8125rem;
+}
+.to-upper-case {
+	text-transform: uppercase;
+}
+.modal + .modal {
+  display: none;
+}
+.modal-backdrop + .modal-backdrop{
+  display: none;
+}
+.combobox_max_height .slds-listbox{
+	max-height: 15rem;
+}
+.slds-hide-action{
+	visibility:hidden;
+}
+
+.slds-hide-proficiency-action .slds-button{
+	visibility:hidden;
+}
+
+.remove_focus .slds-table [role="gridcell"]:focus, .remove_focus .slds-table [role="gridcell"].slds-has-focus{
+	box-shadow: unset;
+}
+.displayWrapText .slds-button_icon-bare {
+  display: block;
+}
+
+/* FM - added for error toast to work correctly on IFTP app*/
+.toastContainer .slds-button_icon-bare {
+  display: flex !important;
+}
+
+/*RS - END - Needed for IFTP app */

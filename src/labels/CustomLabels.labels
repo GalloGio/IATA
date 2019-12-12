@@ -8599,6 +8599,20 @@ You can choose one or more of the following topics:</value>
         <shortDescription>GADM Power User</shortDescription>
         <value>GADM Power User</value>
     </labels>
+     <labels>
+        <fullName>GADM_Status_Change_Template_Link</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Status Change Template Link</shortDescription>
+        <value>Please click on link to access {0}.</value>
+    </labels>
+    <labels>
+        <fullName>GADM_User_Already_Invited</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM User Already Invited</shortDescription>
+        <value>User is already invited to GADM program.</value>
+    </labels>
     <labels>
         <fullName>GADM_User_Invitation_Mr</fullName>
         <language>en_US</language>
@@ -41242,6 +41256,14 @@ title,Title,Name</value>
         <protected>false</protected>
         <shortDescription>Stay Informed!</shortDescription>
         <value>Stay Informed!</value>
+    </labels>
+    <labels>
+        <fullName>Stop_creating_accounts_from_Owners_and_Subsidiaries</fullName>
+        <categories>Owners, Subsidiaries</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Stop creating accounts from Owners and Subsidiaries</shortDescription>
+        <value>No account was found with this name, please create a Standard account first in order to add it here!</value>
     </labels>
     <labels>
         <fullName>Street_cannot_be_empty</fullName>
