@@ -172,7 +172,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 		/*trgCaseIFAP Trigger*/
 		if(trgCaseIFAP){
 			System.debug('____ [cls CaseBeforeTrigger - trgCaseIFAP]');
-			//get a Set of Ids Parent of all IFAP New Cases 
+			//get a Set of Ids Parent of all IFAP New Cases
 			Set<ID> IFAPParentID = new Set<ID>();
 
 			if (!CaseChildHelper.noValidationsOnTrgCAseIFAP){
@@ -308,14 +308,14 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 		/*
 		* @author: Constantin BUZDUGA, blue-infinity
 		* @description: This trigger is used for validation on ICCS Cases:
-		*	For FDS_ICCS_Product_Management cases:
-		*	- product choice validation (existing & active product);
-		*	- for assignment cases, it checks that the selected product-country-currency is not already active for the airline;
-		*	- for removal cases, it checks that the product-country-currency is assigned & active on the airline.
-		*	For FDS_ICCS_Bank_Account_Management cases:
-		*	- for "delete bank account" cases, it checks that the bank account is not currently assigned to an active PA.
+		*       For FDS_ICCS_Product_Management cases:
+		*       - product choice validation (existing & active product);
+		*       - for assignment cases, it checks that the selected product-country-currency is not already active for the airline;
+		*       - for removal cases, it checks that the product-country-currency is assigned & active on the airline.
+		*       For FDS_ICCS_Bank_Account_Management cases:
+		*       - for "delete bank account" cases, it checks that the bank account is not currently assigned to an active PA.
 		*
-		*	If any of these conditions is not respected, an error is raised and the upsert of the case is blocked.*/
+		*       If any of these conditions is not respected, an error is raised and the upsert of the case is blocked.*/
 		if (trgICCSCaseValidation) {
 			System.debug('____ [cls CaseBeforeTrigger - trgICCSCaseValidation]');
 
@@ -420,7 +420,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 			if (!ICCSProductManagementCases.isEmpty()) {
 				// Create a map of all active services, with the key [Product-Country-Currency]
 				Map<String, ICCS_Product_Currency__c> mapProductCurrencyPerKey = new Map<String, ICCS_Product_Currency__c>();
-				
+
 				List<ICCS_Product_Currency__c> lstProdCurr = [SELECT Id, Currency__c, Country__c, Product__c
 															FROM ICCS_Product_Currency__c
 															WHERE Status__c = 'Active' AND Product__c IN :lstProducts];
@@ -509,10 +509,10 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 		/*trgICCS_ASP_Case_Validation Trigger*/
 		/** @author: Constantin BUZDUGA, blue-infinity
 		* @description: This trigger only handles ICCS Cases with the "FDS ASP Management" record type and is used to ensure that:
-		*	- there is only one open ASP case with the "FDS - Create ... " case area for any given account at any given time;
-		*	- no ASP case can be closed unless all related tasks are closed (completed)
+		*       - there is only one open ASP case with the "FDS - Create ... " case area for any given account at any given time;
+		*       - no ASP case can be closed unless all related tasks are closed (completed)
 		* Since Oct 2015:
-		*	- this trigger ensures that there is no more than one open "Airline Coding Application" case per account at the same time*/
+		*       - this trigger ensures that there is no more than one open "Airline Coding Application" case per account at the same time*/
 		if (trgICCS_ASP_Case_Validation) {
 			System.debug('____ [cls CaseBeforeTrigger - trgICCS_ASP_Case_Validation]');
 			Set<Id> setRelatedAcctIds = new Set<ID>();
@@ -526,7 +526,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 				if ( c.RecordTypeId == RT_ICCS_ASP_Id  && c.Status == 'Closed' && !Trigger.oldMap.get(c.Id).isClosed && c.AccountId != null )
 					setClosingCasesIds.add(c.Id);
 			}
-			
+
 			System.debug(loggingLevel.ERROR, '____ [CaseBeforeTrigger - trgICCS_ASP_Case_Validation] setRelatedAcctIds - ' + setRelatedAcctIds);
 			if (!setRelatedAcctIds.isEmpty()) {
 				// get a map of relevant cases per Account Id
@@ -534,7 +534,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 				Map<Id, list<Case>> mapACCasesPerAccountId = new Map<Id, list<Case>>(); // for Airline coding, new from Oct 2015
 				// WMO-517
 				List<Case> cases = new List<Case>([SELECT Id, Subject, RecordTypeId, AccountId, IsClosed, CaseArea__c, Reason1__c, Owner.Name
-											   FROM Case 
+											   FROM Case
 											   WHERE ((RecordTypeId = :RT_ICCS_ASP_Id AND CaseArea__c = :FDS)
 											   OR RecordTypeId = :AirlineCodingRTId)
 												AND IsClosed = false AND AccountId IN :setRelatedAcctIds]);
@@ -641,7 +641,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 						// get the potentially concerned cases, by choosing those with an IATA Country not null
 						if (aCase.BSPCountry__c != null &&
 							(
-								(Trigger.isInsert && aCase.Account_Concerned__c == null) || 
+								(Trigger.isInsert && aCase.Account_Concerned__c == null) ||
 								(Trigger.isUpdate && aCase.BSPCountry__c != Trigger.oldMap.get(aCase.Id).BSPCountry__c)
 							)
 						) {
@@ -780,7 +780,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 		if (trgAccelyaRequestSetCountry) {
 			System.debug('____ [cls CaseBeforeTrigger - trgAccelyaRequestSetCountry]');
 			for (Case aCase : trigger.New) {
-				/* Trigger.isInsert: Every time a case is created (internal user or Accelya) and has a value on the Accelya: 
+				/* Trigger.isInsert: Every time a case is created (internal user or Accelya) and has a value on the Accelya:
 						 Request Type field, we set the correct record type */
 
 				if(Trigger.isInsert && aCase.Accelya_Request_Type__c != null && aCase.RecordTypeId != CSRcaseRecordTypeID) {
@@ -796,7 +796,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 		}
 		/*trgAccelyaRequestSetCountry Trigger*/
 
-		/*trgBeforeInsertUpdate Trigger*/ 
+		/*trgBeforeInsertUpdate Trigger*/
 		/*This trigger assigns the correct group to case based on the Owner Profile, taking it from the Email2CasePremium custom setting*/
 		if (trgBeforeInsertUpdate) {
 			System.debug('____ [cls CaseBeforeTrigger - trgBeforeInsertUpdate]');
