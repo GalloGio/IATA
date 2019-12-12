@@ -518,6 +518,141 @@
         </valueSet>
     </fields>
     <fields>
+        <fullName>DescriptionLabel_ar__c</fullName>
+        <description>Arabic translation</description>
+        <externalId>false</externalId>
+        <label>DescriptionLabel_ar</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>DescriptionLabel_de__c</fullName>
+        <description>German translation</description>
+        <externalId>false</externalId>
+        <label>DescriptionLabel_de</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>DescriptionLabel_en_US__c</fullName>
+        <description>English translation</description>
+        <externalId>false</externalId>
+        <label>DescriptionLabel_en_US</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>DescriptionLabel_es__c</fullName>
+        <description>Spanish translation</description>
+        <externalId>false</externalId>
+        <label>DescriptionLabel_es</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>DescriptionLabel_fr__c</fullName>
+        <description>French translation</description>
+        <externalId>false</externalId>
+        <label>DescriptionLabel_fr</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>DescriptionLabel_in__c</fullName>
+        <description>Indian translation</description>
+        <externalId>false</externalId>
+        <label>DescriptionLabel_in</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>DescriptionLabel_it__c</fullName>
+        <description>Italian translation</description>
+        <externalId>false</externalId>
+        <label>DescriptionLabel_it</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>DescriptionLabel_ja__c</fullName>
+        <description>Japanese translation</description>
+        <externalId>false</externalId>
+        <label>DescriptionLabel_ja</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>DescriptionLabel_ko__c</fullName>
+        <description>Korean translation</description>
+        <externalId>false</externalId>
+        <label>DescriptionLabel_ko</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>DescriptionLabel_pt_BR__c</fullName>
+        <description>Portuguese translation</description>
+        <externalId>false</externalId>
+        <label>DescriptionLabel_pt_BR</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>DescriptionLabel_ru__c</fullName>
+        <description>Russian translation</description>
+        <externalId>false</externalId>
+        <label>DescriptionLabel_ru</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>DescriptionLabel_th__c</fullName>
+        <description>Thai translation</description>
+        <externalId>false</externalId>
+        <label>DescriptionLabel_th</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>DescriptionLabel_TR__c</fullName>
+        <description>Turkish translation</description>
+        <externalId>false</externalId>
+        <label>DescriptionLabel_TR</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>DescriptionLabel_vi__c</fullName>
+        <description>Vietnamese translation</description>
+        <externalId>false</externalId>
+        <label>DescriptionLabel_vi</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>DescriptionLabel_zh_CN__c</fullName>
+        <description>Chinese translation</description>
+        <externalId>false</externalId>
+        <label>DescriptionLabel_zh_CN</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
         <fullName>EndDate__c</fullName>
         <description>Start date of the recommendation</description>
         <externalId>false</externalId>
@@ -626,6 +761,16 @@
         <description>Define the product related to the recommendation</description>
         <externalId>false</externalId>
         <label>Product</label>
+        <lookupFilter>
+            <active>true</active>
+            <errorMessage>Product selected is not &quot;Active&quot;</errorMessage>
+            <filterItems>
+                <field>Product2.IsActive</field>
+                <operation>equals</operation>
+                <value>True</value>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
         <referenceTo>Product2</referenceTo>
         <relationshipLabel>Recommendations Visibility</relationshipLabel>
         <relationshipName>Recommendations_Visibility</relationshipName>
@@ -778,7 +923,7 @@
     <fields>
         <fullName>Visible__c</fullName>
         <externalId>false</externalId>
-        <formula>IsActive__c &amp;&amp; (StartDate__c &lt;= TODAY() &amp;&amp; EndDate__c &gt;= TODAY())</formula>
+        <formula>(NOT(ISBLANK(PortalService__c)) || NOT(ISBLANK(Product__c)) &amp;&amp; Product__r.IsActive) &amp;&amp; IsActive__c &amp;&amp; (StartDate__c &lt;= TODAY() &amp;&amp; EndDate__c &gt;= TODAY())</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Visible</label>
         <trackTrending>false</trackTrending>

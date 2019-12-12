@@ -353,6 +353,10 @@
         <name>AMS_OSCAR_Action18</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMS_OSCAR_Action19 --></label>
+        <name>AMS_OSCAR_Action19</name>
+    </customLabels>
+    <customLabels>
         <label><!-- AMS OSCAR Action2 --></label>
         <name>AMS_OSCAR_Action2</name>
     </customLabels>
@@ -447,6 +451,10 @@
     <customLabels>
         <label><!-- AMS_OSCAR_GDI_fees --></label>
         <name>AMS_OSCAR_GDI_fees</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS_OSCAR_GOGLOBAL --></label>
+        <name>AMS_OSCAR_GOGLOBAL</name>
     </customLabels>
     <customLabels>
         <label><!-- AMS OSCAR MASTERDATA --></label>
@@ -661,6 +669,10 @@
         <name>AMS_OSCAR_STEP44</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMS_OSCAR_STEP45 --></label>
+        <name>AMS_OSCAR_STEP45</name>
+    </customLabels>
+    <customLabels>
         <label><!-- AMS OSCAR STEP46 --></label>
         <name>AMS_OSCAR_STEP46</name>
     </customLabels>
@@ -735,6 +747,10 @@
     <customLabels>
         <label>*¿Esta entidad asociada es una entidad legal diferente de la entidad central?</label>
         <name>ANG_AE_separate_Legal_Entity</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_AE_separate_Legal_Entity_MultiCountry --></label>
+        <name>ANG_AE_separate_Legal_Entity_MultiCountry</name>
     </customLabels>
     <customLabels>
         <label><!-- ANG_Conversion_Tool_Error_10 --></label>
@@ -905,6 +921,10 @@
         <name>ANG_ISSP_CountryConcerned</name>
     </customLabels>
     <customLabels>
+        <label><!-- ANG_ISSP_CountryConcerned_AEs --></label>
+        <name>ANG_ISSP_CountryConcerned_AEs</name>
+    </customLabels>
+    <customLabels>
         <label>Regresar a la comparativa de tipos de acreditación</label>
         <name>ANG_ISSP_CountryRequirementsGoBack</name>
     </customLabels>
@@ -971,6 +991,14 @@
     <customLabels>
         <label>La lista de instituciones financieras que ofrecen seguro de Garantía Financiera en su país</label>
         <name>ANG_ISSP_GDI_Breadcrumb</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_ISSP_GDI_Learn_More --></label>
+        <name>ANG_ISSP_GDI_Learn_More</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_ISSP_GDI_Learn_More_Text --></label>
+        <name>ANG_ISSP_GDI_Learn_More_Text</name>
     </customLabels>
     <customLabels>
         <label>Ir al Portal del GDI</label>
@@ -1075,6 +1103,22 @@
     <customLabels>
         <label><!-- ANG_ISSP_Min_Users_With_Role_Error_Msg --></label>
         <name>ANG_ISSP_Min_Users_With_Role_Error_Msg2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_ISSP_Multicountry_Question --></label>
+        <name>ANG_ISSP_Multicountry_Question</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_ISSP_Multicountry_Submit_Message1 --></label>
+        <name>ANG_ISSP_Multicountry_Submit_Message1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_ISSP_Multicountry_Submit_Message2 --></label>
+        <name>ANG_ISSP_Multicountry_Submit_Message2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_ISSP_Multicountry_Submit_Message_New_AE --></label>
+        <name>ANG_ISSP_Multicountry_Submit_Message_New_AE</name>
     </customLabels>
     <customLabels>
         <label>&quot;Para gestionar la solicitud, haga clic&quot;</label>
@@ -1269,6 +1313,10 @@
         <name>ANG_ISSP_ProductStandardAccreditationWithCash</name>
     </customLabels>
     <customLabels>
+        <label><!-- ANG_ISSP_ProductStandardAccreditationWithMultiCountry --></label>
+        <name>ANG_ISSP_ProductStandardAccreditationWithMultiCountry</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ANG_ISSP_ProductStandardAccreditationWithNoCash --></label>
         <name>ANG_ISSP_ProductStandardAccreditationWithNoCash</name>
     </customLabels>
@@ -1363,6 +1411,26 @@
     <customLabels>
         <label>Dirección de correo electrónico</label>
         <name>ANG_ISSP_e_mail_address</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG Multicountry Already Has Locations Only Allow AE Error --></label>
+        <name>ANG_Multicountry_Already_Has_Locations_Only_Allow_AE_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG Multicountry Already Has Locations Only Allow AE With Correct HE Error --></label>
+        <name>ANG_Multicountry_Already_Has_Locations_Only_Allow_AE_With_Correct_HE_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG Multicountry Already Has Locations Only Allow HE Error --></label>
+        <name>ANG_Multicountry_Already_Has_Locations_Only_Allow_HE_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG Multicountry Process Parent Account Error --></label>
+        <name>ANG_Multicountry_Process_Parent_Account_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_NEW_GE_lock --></label>
+        <name>ANG_NEW_GE_lock</name>
     </customLabels>
     <customLabels>
         <label><!-- ANG_NON_COMPLIANCE --></label>
@@ -1823,6 +1891,10 @@
         <name>CSP_ArticleHelpful</name>
     </customLabels>
     <customLabels>
+        <label>Asignar un nuevo servicio</label>
+        <name>CSP_Assign_New_Service</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Branch Offices --></label>
         <name>CSP_Branch_Offices</name>
     </customLabels>
@@ -1999,6 +2071,10 @@
         <name>CSP_Confirmed_Requested_Service_Message</name>
     </customLabels>
     <customLabels>
+        <label>Cambir su nombre de perfil afectará la validez de su documento de identidad. Comuníquese con nuestro equipo de atención al cliente para cambiar su nombre de perfil.</label>
+        <name>CSP_Contact_Id_Card_Error_Msg</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_Contacts_NoResults_text1 --></label>
         <name>CSP_Contacts_NoResults_text1</name>
     </customLabels>
@@ -2047,7 +2123,7 @@
         <name>CSP_Dear</name>
     </customLabels>
     <customLabels>
-        <label>Denegar acceso de usuario</label>
+        <label>Denegar acceso</label>
         <name>CSP_Deny_User_Access_Title</name>
     </customLabels>
     <customLabels>
@@ -2275,7 +2351,7 @@
         <name>CSP_Frozen_User_Message</name>
     </customLabels>
     <customLabels>
-        <label>Otorgar acceso de usuario</label>
+        <label>Autorizar acceso</label>
         <name>CSP_Grant_User_Access_Title</name>
     </customLabels>
     <customLabels>
@@ -2285,6 +2361,30 @@
     <customLabels>
         <label><!-- CSP_IATA_Country --></label>
         <name>CSP_IATA_Country</name>
+    </customLabels>
+    <customLabels>
+        <label>Nombre en la tarjeta de identificación</label>
+        <name>CSP_IDCard_Name</name>
+    </customLabels>
+    <customLabels>
+        <label>Haga clic aquí para ver la foto de su tarjeta de identificación</label>
+        <name>CSP_IDCard_Photo</name>
+    </customLabels>
+    <customLabels>
+        <label>Foto</label>
+        <name>CSP_IDCard_Photo_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Estado</label>
+        <name>CSP_IDCard_Status</name>
+    </customLabels>
+    <customLabels>
+        <label>Fecha de caducidad</label>
+        <name>CSP_IDCard_Valid_To</name>
+    </customLabels>
+    <customLabels>
+        <label>Número VER de la tarjeta de identificación</label>
+        <name>CSP_IDCard_Ver_Number</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_IMPORTANT --></label>
@@ -2583,7 +2683,7 @@
         <name>CSP_L2_Requested_Modal_Message</name>
     </customLabels>
     <customLabels>
-        <label>Hola</label>
+        <label>Cuéntenos más</label>
         <name>CSP_L2_Requested_Modal_Title</name>
     </customLabels>
     <customLabels>
@@ -2777,6 +2877,10 @@
     <customLabels>
         <label>&quot;Pero una vez que lo haya hecho, verá los más recientes aquí.&quot;</label>
         <name>CSP_NoCases2</name>
+    </customLabels>
+    <customLabels>
+        <label>Lo sentimos, no se encontraron resultados para los filtros aplicados</label>
+        <name>CSP_NoRecordsFiltered</name>
     </customLabels>
     <customLabels>
         <label>No hay resultados</label>
@@ -3120,6 +3224,10 @@
         <name>CSP_Services_AccessRequestedTitle</name>
     </customLabels>
     <customLabels>
+        <label>Añadir favorito</label>
+        <name>CSP_Services_AddFavorite</name>
+    </customLabels>
+    <customLabels>
         <label>Todos los servicios disponibles para su empresa se enumeran a continuación.</label>
         <name>CSP_Services_AvailableServicesHelpText</name>
     </customLabels>
@@ -3152,6 +3260,10 @@
         <name>CSP_Services_MyServicesTabTile</name>
     </customLabels>
     <customLabels>
+        <label>Eliminar favorito</label>
+        <name>CSP_Services_RemoveFavorite</name>
+    </customLabels>
+    <customLabels>
         <label>Ver servicios disponibles</label>
         <name>CSP_Services_RequestServiceBannerButton</name>
     </customLabels>
@@ -3166,6 +3278,14 @@
     <customLabels>
         <label>Servicio de Información</label>
         <name>CSP_Services_ServiceInformation</name>
+    </customLabels>
+    <customLabels>
+        <label>Mostrar todo</label>
+        <name>CSP_Services_ShowAll</name>
+    </customLabels>
+    <customLabels>
+        <label>Mostrar solo favoritos</label>
+        <name>CSP_Services_ShowOnlyFavorites</name>
     </customLabels>
     <customLabels>
         <label>Servicios</label>
@@ -5824,6 +5944,26 @@
         <name>IDCard_CardDuration</name>
     </customLabels>
     <customLabels>
+        <label><!-- IDCard_CardType_DigCard --></label>
+        <name>IDCard_CardType_DigCard</name>
+    </customLabels>
+    <customLabels>
+        <label>No</label>
+        <name>IDCard_CardType_DigCardNo</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IDCard_CardType_PhysCard --></label>
+        <name>IDCard_CardType_PhysCard</name>
+    </customLabels>
+    <customLabels>
+        <label>Sí</label>
+        <name>IDCard_CardType_PhysCardYes</name>
+    </customLabels>
+    <customLabels>
+        <label>¿Le gustaría recibir una tarjeta de identificación IATA impresa? Pueden aplicarse cargos adicionales.</label>
+        <name>IDCard_CardType_WishToRecieve</name>
+    </customLabels>
+    <customLabels>
         <label>Detalles del caso</label>
         <name>IDCard_CaseDetails</name>
     </customLabels>
@@ -6096,6 +6236,10 @@ Por favor, si es la primera vez que usted solicita una tarjeta de identificació
         <name>IDCard_Details</name>
     </customLabels>
     <customLabels>
+        <label><!-- IDCard Discount --></label>
+        <name>IDCard_Discount</name>
+    </customLabels>
+    <customLabels>
         <label>El nombre enseñado se reduce para ajustarse a 22 caracteres</label>
         <name>IDCard_DisplayedName_RemainingCharacter</name>
     </customLabels>
@@ -6136,16 +6280,20 @@ Por favor, si es la primera vez que usted solicita una tarjeta de identificació
         <name>IDCard_ExpediteDeliveryAddedtoCardPrice</name>
     </customLabels>
     <customLabels>
-        <label>Gastos de envío rapido :</label>
+        <label>Cargo por entrega rápida</label>
         <name>IDCard_ExpediteFee</name>
     </customLabels>
     <customLabels>
-        <label>Certificado/Rápido</label>
+        <label>Entrega rápida</label>
         <name>IDCard_Expedite_Delivery</name>
     </customLabels>
     <customLabels>
         <label>Nota: Opción recomendada para rastrear envío donde el servicio de correo local no es fiable. Entrega es de 8-10 días laborales. Número de guía disponible bajo petición.</label>
         <name>IDCard_Expedite_Note</name>
+    </customLabels>
+    <customLabels>
+        <label>Su tarjeta de identificación IATA impresa se enviará a la dirección de su agencia en el transcurso de 2 a 6 semanas a menos que elija la entrega rápida (de 4 a 8 días hábiles). La entrega rápida incluye un seguimiento del envío si lo solicita.</label>
+        <name>IDCard_Expedite_Text</name>
     </customLabels>
     <customLabels>
         <label><!-- IDCard ExportCSV --></label>
@@ -6158,6 +6306,10 @@ Por favor, si es la primera vez que usted solicita una tarjeta de identificació
     <customLabels>
         <label>Tarifas</label>
         <name>IDCard_Fees</name>
+    </customLabels>
+    <customLabels>
+        <label>Cargo por manejo y envoi</label>
+        <name>IDCard_FeesPhysical</name>
     </customLabels>
     <customLabels>
         <label>Archivo (s) subido correctamente</label>
@@ -6462,6 +6614,10 @@ Para los nuevos solicitantes y los agentes que regresan y que no tengan sus cód
         <name>IDCard_NoModificationAllowed</name>
     </customLabels>
     <customLabels>
+        <label>Solicite y pague su tarjeta de identificación (nueva, renovada, cambio de agencia) y obtenga los beneficios de agente de viajes IATA.</label>
+        <name>IDCard_NoUSServiceDescription</name>
+    </customLabels>
+    <customLabels>
         <label>No se encontró la tabla de precios para el País Código ISO {0} y el tipo de agente de {1}</label>
         <name>IDCard_No_Price_Table_Found</name>
     </customLabels>
@@ -6622,6 +6778,10 @@ Para los nuevos solicitantes y los agentes que regresan y que no tengan sus cód
         <name>IDCard_PortalPage_SubMenu_ReplaceRenew</name>
     </customLabels>
     <customLabels>
+        <label>Código promocional</label>
+        <name>IDCard_PromotionCode</name>
+    </customLabels>
+    <customLabels>
         <label><!-- IDCard Purchase --></label>
         <name>IDCard_Purchase</name>
     </customLabels>
@@ -6751,6 +6911,10 @@ Por favor tenga en cuenta que todo agente trabajando desde su hogar deberá coor
         <name>IDCard_TrxNum</name>
     </customLabels>
     <customLabels>
+        <label>(Para agentes de EE.UU.) Solicitar tarjetas de identificación, registrar agentes, pagar la tarifa de servicio anual, procesar la re-certificación de la agencia, etc.</label>
+        <name>IDCard_USServiceDescription</name>
+    </customLabels>
+    <customLabels>
         <label><!-- IDCard Update Application --></label>
         <name>IDCard_Update_Application</name>
     </customLabels>
@@ -6793,6 +6957,10 @@ Por favor tenga en cuenta que todo agente trabajando desde su hogar deberá coor
     <customLabels>
         <label><!-- IDCard error 20 hours required --></label>
         <name>IDCard_error_20_hours_required</name>
+    </customLabels>
+    <customLabels>
+        <label>Cargo por tarjeta de identificación IATA</label>
+        <name>IDCard_fee</name>
     </customLabels>
     <customLabels>
         <label><!-- IDCard hasPhoto --></label>
@@ -7119,7 +7287,7 @@ Por favor tenga en cuenta que todo agente trabajando desde su hogar deberá coor
         <name>ID_Card_Not_found_for_VER</name>
     </customLabels>
     <customLabels>
-        <label>Aproveche  de un precio reducido para 2 cursos de capacitación con IATA Training. &lt;u&gt;El precio será agregado a la Tarifa&lt;/u&gt;. Una vez que su solicitud de la tarjeta IATA/IATAN haya sido aprobada , IATA Training se contactará con usted para el acceso a sus cursos.</label>
+        <label>En agradecimiento por haber ordenado su tarjeta de identificación, tendrá la oportunidad de comprar dos de los siguientes cursos de capacitación a distancia de IATA por solo USD 150 (con ahorros de hasta el 80 %). Recibirá instrucciones para acceder a los cursos luego de aprobada su solicitud de tarjeta de identificación.</label>
         <name>ID_Card_Package_Travel_Professionals_1</name>
     </customLabels>
     <customLabels>
@@ -7163,6 +7331,10 @@ Por favor tenga en cuenta que todo agente trabajando desde su hogar deberá coor
         <name>ID_Card_Specifics</name>
     </customLabels>
     <customLabels>
+        <label>Impuestos aplicables</label>
+        <name>ID_Card_Taxes</name>
+    </customLabels>
+    <customLabels>
         <label>&quot;I have read and accept the 
 &lt;a href=&quot;&quot;JavaScript:newPopup(&apos;http://www.iata.org/Pages/privacy.aspx&apos;); &quot;&quot;&gt;Privacy Policy, Conditions of Use &lt;/a&gt; 
 and 
@@ -7184,6 +7356,10 @@ and
     <customLabels>
         <label>Para la agencia:</label>
         <name>ID_Card_To_Agency</name>
+    </customLabels>
+    <customLabels>
+        <label>Cargo por cursos de capacitación IATA (2 cursos)</label>
+        <name>ID_Card_Training_Fee</name>
     </customLabels>
     <customLabels>
         <label>Por favor, sube la prueba de su cambio de nombre</label>
@@ -9221,6 +9397,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AMS_Add_Company</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS Add Contact --></label>
+        <name>ISSP_AMS_Add_Contact</name>
+    </customLabels>
+    <customLabels>
         <label>Añadir Director/Directivo</label>
         <name>ISSP_AMS_Add_Director</name>
     </customLabels>
@@ -9295,6 +9475,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
     <customLabels>
         <label>Nueva entidad asociada: GoLite</label>
         <name>ISSP_AMS_Associate_Entity_Cashless</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Associate Entity Cashless --></label>
+        <name>ISSP_AMS_Associate_Entity_Multicountry</name>
     </customLabels>
     <customLabels>
         <label>Signatario&lt;br/&gt;autorizado</label>
@@ -9657,6 +9841,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AMS_CONFIRM_DISCARD</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS CONFIRM DISCARD APPLICATION --></label>
+        <name>ISSP_AMS_CONFIRM_DISCARD_APPLICATION</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_Title_Capacity --></label>
         <name>ISSP_AMS_Capacity</name>
     </customLabels>
@@ -9919,6 +10107,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
     <customLabels>
         <label>Recuerde: Al copiar la información de propiedad en una agencia, se borrará toda la información de propiedad previa de la agencia destino.</label>
         <name>ISSP_AMS_Copy_Ownership_Warning</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Country Not Selected --></label>
+        <name>ISSP_AMS_Country_Not_Selected</name>
     </customLabels>
     <customLabels>
         <label>-- Seleccionar país -</label>
@@ -10265,6 +10457,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AMS_Head_Entity_Cash</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS Head Entity Multicountry --></label>
+        <name>ISSP_AMS_Head_Entity_Multicountry</name>
+    </customLabels>
+    <customLabels>
         <label>Nueva entidad central: GoLite</label>
         <name>ISSP_AMS_Head_Entity_No_Cash</name>
     </customLabels>
@@ -10305,12 +10501,24 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AMS_IS_GSA</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS IS Legal Name Blank --></label>
+        <name>ISSP_AMS_IS_Legal_Name_Selected_Blank</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS IS Legal Name Null --></label>
+        <name>ISSP_AMS_IS_Legal_Name_Selected_Null</name>
+    </customLabels>
+    <customLabels>
         <label>Seleccione si la entidad asociada constituye una entidad legal diferente.</label>
         <name>ISSP_AMS_IS_Separate_Entity_Null</name>
     </customLabels>
     <customLabels>
         <label>Si su solicitud es acreditada como Agente IATA ¿a cuánto estima Ud. el volumen de sus ventas brutas de transporte aéreo internacional sobre Compañías Aéreas Miembros de IATA con respecto al Local que solicita dicha aprobación?</label>
         <name>ISSP_AMS_If_Approved_Gross_Amnt</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Info Accreditation Types --></label>
+        <name>ISSP_AMS_Info_Accreditation_Types</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS International --></label>
@@ -10889,6 +11097,14 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AMS_Month_September</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_Multicountry_Submit_Button --></label>
+        <name>ISSP_AMS_Multicountry_Submit_Button</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NOC_All_Countries --></label>
+        <name>ISSP_AMS_NOC_All_Countries</name>
+    </customLabels>
+    <customLabels>
         <label>Datos legales actuales</label>
         <name>ISSP_AMS_NOC_Current_Legal_details</name>
     </customLabels>
@@ -11291,6 +11507,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
     <customLabels>
         <label>Funciones y responsabilidades</label>
         <name>ISSP_AMS_NoC_Roles_and_Responsabilities</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_Search_Entity_Conversion --></label>
+        <name>ISSP_AMS_NoC_Search_Entity_Conversion</name>
     </customLabels>
     <customLabels>
         <label>Firma</label>
@@ -11711,6 +11931,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
     <customLabels>
         <label>Sección 2.2</label>
         <name>ISSP_AMS_Section_2_SubSection_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Select AEs --></label>
+        <name>ISSP_AMS_Select_AEs</name>
     </customLabels>
     <customLabels>
         <label>Seleccionar las cuentas destino</label>
@@ -12371,6 +12595,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AMS_Step3_Indicate_GDSs</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_Step3_Cashless_Location --></label>
+        <name>ISSP_AMS_Step3_Multicountry_Location</name>
+    </customLabels>
+    <customLabels>
         <label>Dirección completa de la oficina para la que se presenta la solicitud de aprobación</label>
         <name>ISSP_AMS_Step3_Office_FullAddress</name>
     </customLabels>
@@ -12429,6 +12657,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
     <customLabels>
         <label><!-- ISSP AMS Step5 ProgressBar CNS --></label>
         <name>ISSP_AMS_Step5_ProgressBar_CNS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step5_ProgressBar_Validate_Data --></label>
+        <name>ISSP_AMS_Step5_ProgressBar_Validate_Data</name>
     </customLabels>
     <customLabels>
         <label>Por favor revise todos los detalles de su solicitud antes de aceptar los terminos&amp;condiciones detallados mas abajo y antes de enviar dicha solicitud a IATA. Una vez el formulario enviado, podra Usted descargar una copia en formato PDF.</label>
@@ -12621,6 +12853,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
     <customLabels>
         <label>Seleccione al Asesor Financiero en su Agencia</label>
         <name>ISSP_AMS_Validation_Financial_Contact</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Validation MC Conversion Countries --></label>
+        <name>ISSP_AMS_Validation_MC_Conversion_Countries</name>
     </customLabels>
     <customLabels>
         <label>Sección 4.1 Personas - Asegúrese de que el % de Propiedad Total equivale al 100%</label>
@@ -13119,6 +13355,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_ANG_Branch_Office_address_details</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP ANG Branch Office contact details --></label>
+        <name>ISSP_ANG_Branch_Office_contact_details</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Link to the IATAs CheckACode page --></label>
         <name>ISSP_ANG_CODE_SEARCH_CHECK_A_CODE_LINK</name>
     </customLabels>
@@ -13185,6 +13425,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
     <customLabels>
         <label>Borrador de solicitud de acreditación para entidad central con GoLite de Agencia</label>
         <name>ISSP_ANG_Email_HE_Cashless_Subject</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP ANG Email HE Multicountry Subject --></label>
+        <name>ISSP_ANG_Email_HE_Multicountry</name>
     </customLabels>
     <customLabels>
         <label>Habilitar la forma de pago con tarjeta de crédito para el/los código(s)</label>
@@ -13259,12 +13503,20 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_ANG_Iata_Codes_Relinquish</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_ANG_Import_Directors --></label>
+        <name>ISSP_ANG_Import_Directors</name>
+    </customLabels>
+    <customLabels>
         <label>Seleccione al menos una sucursal</label>
         <name>ISSP_ANG_Least_One_Branch</name>
     </customLabels>
     <customLabels>
         <label>1. Datos de la entidad central acreditada de la IATA</label>
         <name>ISSP_ANG_LeftNav_Section1_AE_Details</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ANG_Legal_Name_already_in_used --></label>
+        <name>ISSP_ANG_Legal_Name_already_in_used</name>
     </customLabels>
     <customLabels>
         <label><!-- Branch to Shipping --></label>
@@ -13285,6 +13537,14 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
     <customLabels>
         <label><!-- Must Add Users To Service --></label>
         <name>ISSP_ANG_MustAddUsersToService</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- NOC_GOGLOBAL_Info --></label>
+        <name>ISSP_ANG_NOC_GOGLOBAL_Info</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Third NoC Question --></label>
+        <name>ISSP_ANG_NOC_Type_Of_Change</name>
     </customLabels>
     <customLabels>
         <label>Una o más entidades asociadas</label>
@@ -13505,6 +13765,30 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
     <customLabels>
         <label>&quot;&amp;lt;p&gt; Por la presente, renuncio voluntariamente a la Acreditación de la IATA con respecto a las ubicaciones aprobadas tal como se enumeraron anteriormente. &amp;lt;p/&gt;&quot;</label>
         <name>ISSP_ANG_VR_Disclaimer</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Validate Agency Details --></label>
+        <name>ISSP_ANG_Validate_Agency_Details</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ANG_View_And_Modify_Owners --></label>
+        <name>ISSP_ANG_View_And_Modify_Owners</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ANG_View_Owners --></label>
+        <name>ISSP_ANG_View_Owners</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ANG_Import --></label>
+        <name>ISSP_ANG_View_Owners_Info</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ANG_Import --></label>
+        <name>ISSP_ANG_View_Owners_Modify</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ANG_View_Owners_Tooltip --></label>
+        <name>ISSP_ANG_View_Owners_Tooltip</name>
     </customLabels>
     <customLabels>
         <label>Renuncia voluntaria</label>
@@ -15663,6 +15947,14 @@ Por favor, índiquenos el país sobre el cual ha solicitado ayuda</label>
         <name>ISSP_IdCard_Name_Warning</name>
     </customLabels>
     <customLabels>
+        <label>Plataforma en línea de tarjeta de identificación</label>
+        <name>ISSP_IdCard_NonUS</name>
+    </customLabels>
+    <customLabels>
+        <label>Servicios en línea de IATAN</label>
+        <name>ISSP_IdCard_US</name>
+    </customLabels>
+    <customLabels>
         <label>En curso</label>
         <name>ISSP_In_Progress</name>
     </customLabels>
@@ -16027,6 +16319,10 @@ Por favor, índiquenos el país sobre el cual ha solicitado ayuda</label>
         <name>ISSP_NoC_HE_with_AEs_Warning</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP NoC HE with AEs Warning --></label>
+        <name>ISSP_NoC_HE_with_AEs_Warning_MC</name>
+    </customLabels>
+    <customLabels>
         <label>*¿Se va a convertir esta entidad central en una entidad asociada?</label>
         <name>ISSP_NoC_Head_Entity_Becoming_a_AE</name>
     </customLabels>
@@ -16223,6 +16519,10 @@ Si continúa teniendo dificultades en el proceso de registro para el Portal IATA
         <name>ISSP_OperationalCalendar_CurrencyFilter</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_OperationalCalendar_CycleFilter --></label>
+        <name>ISSP_OperationalCalendar_CycleFilter</name>
+    </customLabels>
+    <customLabels>
         <label>Fecha de descarga</label>
         <name>ISSP_OperationalCalendar_DownloadDate</name>
     </customLabels>
@@ -16267,6 +16567,10 @@ Si continúa teniendo dificultades en el proceso de registro para el Portal IATA
         <name>ISSP_OperationalCalendar_No_Events</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP OperationalCalendar PDFFooterText --></label>
+        <name>ISSP_OperationalCalendar_PDFFooterText</name>
+    </customLabels>
+    <customLabels>
         <label>Restablecer</label>
         <name>ISSP_OperationalCalendar_Reset</name>
     </customLabels>
@@ -16275,8 +16579,24 @@ Si continúa teniendo dificultades en el proceso de registro para el Portal IATA
         <name>ISSP_OperationalCalendar_Show_Calendar</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_OperationalCalendar_SubtypeFilter --></label>
+        <name>ISSP_OperationalCalendar_SubtypeFilter</name>
+    </customLabels>
+    <customLabels>
         <label>Sincronizar calendario</label>
         <name>ISSP_OperationalCalendar_Sync_Calendar</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_OperationalCalendar_Timezone_Disclaimer --></label>
+        <name>ISSP_OperationalCalendar_Timezone_Disclaimer</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_OperationalCalendar_TypeFilter --></label>
+        <name>ISSP_OperationalCalendar_TypeFilter</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_OperationalCalendar_Type_Filter_Required --></label>
+        <name>ISSP_OperationalCalendar_Type_Filter_Required</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_Opt_In --></label>
@@ -18187,6 +18507,10 @@ El Panel de contabilidad de IATA es una herramienta que contiene información di
     <customLabels>
         <label>Gracias por enviar la solicitud de renuncia voluntaria</label>
         <name>ISSP_VR_Case_Submited</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Validated --></label>
+        <name>ISSP_Validated</name>
     </customLabels>
     <customLabels>
         <label>Versión</label>
@@ -21092,6 +21416,10 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
         <name>SIDRA_Automated_Case_Message</name>
     </customLabels>
     <customLabels>
+        <label><!-- SIDRA_GE_Info --></label>
+        <name>SIDRA_GE_Info</name>
+    </customLabels>
+    <customLabels>
         <label><!-- SIS --></label>
         <name>SIS</name>
     </customLabels>
@@ -21354,6 +21682,10 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
     <customLabels>
         <label><!-- Title_Home_Page --></label>
         <name>Title_Home_Page</name>
+    </customLabels>
+    <customLabels>
+        <label>Costo total</label>
+        <name>Total_Cost</name>
     </customLabels>
     <customLabels>
         <label><!-- Total Price --></label>

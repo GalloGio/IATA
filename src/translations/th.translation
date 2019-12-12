@@ -353,6 +353,10 @@
         <name>AMS_OSCAR_Action18</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMS_OSCAR_Action19 --></label>
+        <name>AMS_OSCAR_Action19</name>
+    </customLabels>
+    <customLabels>
         <label><!-- AMS OSCAR Action2 --></label>
         <name>AMS_OSCAR_Action2</name>
     </customLabels>
@@ -447,6 +451,10 @@
     <customLabels>
         <label><!-- AMS_OSCAR_GDI_fees --></label>
         <name>AMS_OSCAR_GDI_fees</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS_OSCAR_GOGLOBAL --></label>
+        <name>AMS_OSCAR_GOGLOBAL</name>
     </customLabels>
     <customLabels>
         <label><!-- AMS OSCAR MASTERDATA --></label>
@@ -661,6 +669,10 @@
         <name>AMS_OSCAR_STEP44</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMS_OSCAR_STEP45 --></label>
+        <name>AMS_OSCAR_STEP45</name>
+    </customLabels>
+    <customLabels>
         <label><!-- AMS OSCAR STEP46 --></label>
         <name>AMS_OSCAR_STEP46</name>
     </customLabels>
@@ -735,6 +747,10 @@
     <customLabels>
         <label>* บริษัทในเครือแห่งนี้มีสถานะทางกฎหมายแยกออกจากนิติบุคคลหลักหรือไม่?</label>
         <name>ANG_AE_separate_Legal_Entity</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_AE_separate_Legal_Entity_MultiCountry --></label>
+        <name>ANG_AE_separate_Legal_Entity_MultiCountry</name>
     </customLabels>
     <customLabels>
         <label><!-- ANG_Conversion_Tool_Error_10 --></label>
@@ -905,6 +921,10 @@
         <name>ANG_ISSP_CountryConcerned</name>
     </customLabels>
     <customLabels>
+        <label><!-- ANG_ISSP_CountryConcerned_AEs --></label>
+        <name>ANG_ISSP_CountryConcerned_AEs</name>
+    </customLabels>
+    <customLabels>
         <label>กลับสู่การเปรียบเทียบการรับรองประเภทต่าง ๆ</label>
         <name>ANG_ISSP_CountryRequirementsGoBack</name>
     </customLabels>
@@ -971,6 +991,14 @@
     <customLabels>
         <label>รายชื่อสถาบันการเงินที่มีประกันภัยความมั่นคงทางการเงินในประเทศของคุณ</label>
         <name>ANG_ISSP_GDI_Breadcrumb</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_ISSP_GDI_Learn_More --></label>
+        <name>ANG_ISSP_GDI_Learn_More</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_ISSP_GDI_Learn_More_Text --></label>
+        <name>ANG_ISSP_GDI_Learn_More_Text</name>
     </customLabels>
     <customLabels>
         <label>ไปยังพอร์ทัล GDI</label>
@@ -1075,6 +1103,22 @@
     <customLabels>
         <label><!-- ANG_ISSP_Min_Users_With_Role_Error_Msg --></label>
         <name>ANG_ISSP_Min_Users_With_Role_Error_Msg2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_ISSP_Multicountry_Question --></label>
+        <name>ANG_ISSP_Multicountry_Question</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_ISSP_Multicountry_Submit_Message1 --></label>
+        <name>ANG_ISSP_Multicountry_Submit_Message1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_ISSP_Multicountry_Submit_Message2 --></label>
+        <name>ANG_ISSP_Multicountry_Submit_Message2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_ISSP_Multicountry_Submit_Message_New_AE --></label>
+        <name>ANG_ISSP_Multicountry_Submit_Message_New_AE</name>
     </customLabels>
     <customLabels>
         <label>จัดการคำร้องขอ กรุณาคลิก</label>
@@ -1269,6 +1313,10 @@
         <name>ANG_ISSP_ProductStandardAccreditationWithCash</name>
     </customLabels>
     <customLabels>
+        <label><!-- ANG_ISSP_ProductStandardAccreditationWithMultiCountry --></label>
+        <name>ANG_ISSP_ProductStandardAccreditationWithMultiCountry</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ANG_ISSP_ProductStandardAccreditationWithNoCash --></label>
         <name>ANG_ISSP_ProductStandardAccreditationWithNoCash</name>
     </customLabels>
@@ -1363,6 +1411,26 @@
     <customLabels>
         <label>ที่อยู่อีเมล</label>
         <name>ANG_ISSP_e_mail_address</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG Multicountry Already Has Locations Only Allow AE Error --></label>
+        <name>ANG_Multicountry_Already_Has_Locations_Only_Allow_AE_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG Multicountry Already Has Locations Only Allow AE With Correct HE Error --></label>
+        <name>ANG_Multicountry_Already_Has_Locations_Only_Allow_AE_With_Correct_HE_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG Multicountry Already Has Locations Only Allow HE Error --></label>
+        <name>ANG_Multicountry_Already_Has_Locations_Only_Allow_HE_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG Multicountry Process Parent Account Error --></label>
+        <name>ANG_Multicountry_Process_Parent_Account_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_NEW_GE_lock --></label>
+        <name>ANG_NEW_GE_lock</name>
     </customLabels>
     <customLabels>
         <label><!-- ANG_NON_COMPLIANCE --></label>
@@ -1821,6 +1889,10 @@
         <name>CSP_ArticleHelpful</name>
     </customLabels>
     <customLabels>
+        <label>กำหนดบริการใหม่</label>
+        <name>CSP_Assign_New_Service</name>
+    </customLabels>
+    <customLabels>
         <label>สำนักงานสาขา</label>
         <name>CSP_Branch_Offices</name>
     </customLabels>
@@ -1997,6 +2069,10 @@
         <name>CSP_Confirmed_Requested_Service_Message</name>
     </customLabels>
     <customLabels>
+        <label>การเปลี่ยนชื่อโปรไฟล์จะส่งผลต่อสถานะการใช้งานบัตรประจำตัวของคุณ โปรดติดต่อทีมบริการลูกค้าของเราเพื่อขอเปลี่ยนชื่อโปรไฟล์ของคุณ</label>
+        <name>CSP_Contact_Id_Card_Error_Msg</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_Contacts_NoResults_text1 --></label>
         <name>CSP_Contacts_NoResults_text1</name>
     </customLabels>
@@ -2045,7 +2121,7 @@
         <name>CSP_Dear</name>
     </customLabels>
     <customLabels>
-        <label>ปฏิเสธการเข้าถึงของผู้ใช้</label>
+        <label>ปฏิเสธการเข้าถึง</label>
         <name>CSP_Deny_User_Access_Title</name>
     </customLabels>
     <customLabels>
@@ -2273,7 +2349,7 @@
         <name>CSP_Frozen_User_Message</name>
     </customLabels>
     <customLabels>
-        <label>ให้สิทธิ์การเข้าถึงของผู้ใช้</label>
+        <label>อนุญาตให้มีการเข้าถึง</label>
         <name>CSP_Grant_User_Access_Title</name>
     </customLabels>
     <customLabels>
@@ -2283,6 +2359,30 @@
     <customLabels>
         <label><!-- CSP_IATA_Country --></label>
         <name>CSP_IATA_Country</name>
+    </customLabels>
+    <customLabels>
+        <label>ชื่อในบัตรประจำตัว</label>
+        <name>CSP_IDCard_Name</name>
+    </customLabels>
+    <customLabels>
+        <label>คลิกที่นี่เพื่อดูรูปถ่ายในบัตรประจำตัวของคุณ</label>
+        <name>CSP_IDCard_Photo</name>
+    </customLabels>
+    <customLabels>
+        <label>รูปถ่าย</label>
+        <name>CSP_IDCard_Photo_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>สถานะ</label>
+        <name>CSP_IDCard_Status</name>
+    </customLabels>
+    <customLabels>
+        <label>วันหมดอายุ</label>
+        <name>CSP_IDCard_Valid_To</name>
+    </customLabels>
+    <customLabels>
+        <label>หมายเลขบัตร VER</label>
+        <name>CSP_IDCard_Ver_Number</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_IMPORTANT --></label>
@@ -2581,7 +2681,7 @@
         <name>CSP_L2_Requested_Modal_Message</name>
     </customLabels>
     <customLabels>
-        <label>สวัสดี</label>
+        <label>บอกเราเพิ่มเติม</label>
         <name>CSP_L2_Requested_Modal_Title</name>
     </customLabels>
     <customLabels>
@@ -2775,6 +2875,10 @@
     <customLabels>
         <label>แต่เมื่อคุณมี คุณจะเห็นรายการล่าสุดที่นี่</label>
         <name>CSP_NoCases2</name>
+    </customLabels>
+    <customLabels>
+        <label>ขออภัย ไม่พบผลลัพธ์จากตัวกรองที่คุณเลือก</label>
+        <name>CSP_NoRecordsFiltered</name>
     </customLabels>
     <customLabels>
         <label>ไม่มีผลลัพธ์</label>
@@ -3117,6 +3221,10 @@
         <name>CSP_Services_AccessRequestedTitle</name>
     </customLabels>
     <customLabels>
+        <label>เพิ่มรายการโปรด</label>
+        <name>CSP_Services_AddFavorite</name>
+    </customLabels>
+    <customLabels>
         <label>บริการทั้งหมดที่มีให้สำหรับบริษัทของคุณ ได้ระบุไว้ตามด้านล่างนี้</label>
         <name>CSP_Services_AvailableServicesHelpText</name>
     </customLabels>
@@ -3149,6 +3257,10 @@
         <name>CSP_Services_MyServicesTabTile</name>
     </customLabels>
     <customLabels>
+        <label>ลบรายการโปรด</label>
+        <name>CSP_Services_RemoveFavorite</name>
+    </customLabels>
+    <customLabels>
         <label>ดูบริการที่มี</label>
         <name>CSP_Services_RequestServiceBannerButton</name>
     </customLabels>
@@ -3163,6 +3275,14 @@
     <customLabels>
         <label>ข้อมูลการบริการ</label>
         <name>CSP_Services_ServiceInformation</name>
+    </customLabels>
+    <customLabels>
+        <label>แสดงทั้งหมด</label>
+        <name>CSP_Services_ShowAll</name>
+    </customLabels>
+    <customLabels>
+        <label>แสดงเฉพาะรายการโปรดเท่านั้น</label>
+        <name>CSP_Services_ShowOnlyFavorites</name>
     </customLabels>
     <customLabels>
         <label>บริการ</label>
@@ -5821,6 +5941,26 @@
         <name>IDCard_CardDuration</name>
     </customLabels>
     <customLabels>
+        <label><!-- IDCard_CardType_DigCard --></label>
+        <name>IDCard_CardType_DigCard</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IDCard_CardType_DigCardNo --></label>
+        <name>IDCard_CardType_DigCardNo</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IDCard_CardType_PhysCard --></label>
+        <name>IDCard_CardType_PhysCard</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IDCard_CardType_PhysCardYes --></label>
+        <name>IDCard_CardType_PhysCardYes</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IDCard_CardType_WishToRecieve --></label>
+        <name>IDCard_CardType_WishToRecieve</name>
+    </customLabels>
+    <customLabels>
         <label>รายละเอียดของเรื่อง</label>
         <name>IDCard_CaseDetails</name>
     </customLabels>
@@ -6077,6 +6217,10 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <name>IDCard_Details</name>
     </customLabels>
     <customLabels>
+        <label><!-- IDCard Discount --></label>
+        <name>IDCard_Discount</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ID Card Displayed Name Remaining Character --></label>
         <name>IDCard_DisplayedName_RemainingCharacter</name>
     </customLabels>
@@ -6129,6 +6273,10 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <name>IDCard_Expedite_Note</name>
     </customLabels>
     <customLabels>
+        <label><!-- IDCard_Expedite_Text --></label>
+        <name>IDCard_Expedite_Text</name>
+    </customLabels>
+    <customLabels>
         <label><!-- IDCard ExportCSV --></label>
         <name>IDCard_ExportCSV</name>
     </customLabels>
@@ -6139,6 +6287,10 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
     <customLabels>
         <label>ค่าธรรมเนียม</label>
         <name>IDCard_Fees</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IDCard_FeesPhysical --></label>
+        <name>IDCard_FeesPhysical</name>
     </customLabels>
     <customLabels>
         <label><!-- IDCard_FileUploadSuccess --></label>
@@ -6437,6 +6589,10 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <name>IDCard_NoModificationAllowed</name>
     </customLabels>
     <customLabels>
+        <label>สมัครและชำระค่าบัตรประจำตัวของท่าน (ทำบัตรใหม่, ต่ออายุบัตร, การเปลี่ยนแปลงของตัวแทน) และรับผลประโยชน์สำหรับตัวแทนการท่องเที่ยวของ IATA</label>
+        <name>IDCard_NoUSServiceDescription</name>
+    </customLabels>
+    <customLabels>
         <label><!-- IDCard No Price Table Found --></label>
         <name>IDCard_No_Price_Table_Found</name>
     </customLabels>
@@ -6598,6 +6754,10 @@ Should you have any question about payment by bank transfer, please visit &lt;a 
         <name>IDCard_PortalPage_SubMenu_ReplaceRenew</name>
     </customLabels>
     <customLabels>
+        <label><!-- IDCard_PromotionCode --></label>
+        <name>IDCard_PromotionCode</name>
+    </customLabels>
+    <customLabels>
         <label><!-- IDCard Purchase --></label>
         <name>IDCard_Purchase</name>
     </customLabels>
@@ -6727,6 +6887,10 @@ Kindly note that home-based agents are required to coordinate with their colleag
         <name>IDCard_TrxNum</name>
     </customLabels>
     <customLabels>
+        <label>(สำหรับตัวแทนในสหรัฐอเมริกา) ขอบัตรประจำตัว, ลงทะเบียนตัวแทน, ชำระค่าธรรมเนียมรายปี, ดำเนินการต่ออายุใบรับรองของตัวแทน ฯลฯ</label>
+        <name>IDCard_USServiceDescription</name>
+    </customLabels>
+    <customLabels>
         <label><!-- IDCard Update Application --></label>
         <name>IDCard_Update_Application</name>
     </customLabels>
@@ -6769,6 +6933,10 @@ Kindly note that home-based agents are required to coordinate with their colleag
     <customLabels>
         <label><!-- IDCard error 20 hours required --></label>
         <name>IDCard_error_20_hours_required</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ID Card fee --></label>
+        <name>IDCard_fee</name>
     </customLabels>
     <customLabels>
         <label><!-- IDCard hasPhoto --></label>
@@ -7139,6 +7307,10 @@ Kindly note that home-based agents are required to coordinate with their colleag
         <name>ID_Card_Specifics</name>
     </customLabels>
     <customLabels>
+        <label><!-- ID_Card_Taxes --></label>
+        <name>ID_Card_Taxes</name>
+    </customLabels>
+    <customLabels>
         <label>&quot;I have read and accept the 
 &lt;a href=&quot;&quot;JavaScript:newPopup(&apos;http://www.iata.org/Pages/privacy.aspx&apos;); &quot;&quot;&gt;Privacy Policy, Conditions of Use &lt;/a&gt; 
 and 
@@ -7159,6 +7331,10 @@ and
     <customLabels>
         <label><!-- ID Card To Agency --></label>
         <name>ID_Card_To_Agency</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ID_Card_Training_Fee --></label>
+        <name>ID_Card_Training_Fee</name>
     </customLabels>
     <customLabels>
         <label><!-- ID Card Upload Proof --></label>
@@ -9193,6 +9369,10 @@ and
         <name>ISSP_AMS_Add_Company</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS Add Contact --></label>
+        <name>ISSP_AMS_Add_Contact</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS Add Director --></label>
         <name>ISSP_AMS_Add_Director</name>
     </customLabels>
@@ -9267,6 +9447,10 @@ and
     <customLabels>
         <label>บริษัทในเครือรายใหม่ - GoLite</label>
         <name>ISSP_AMS_Associate_Entity_Cashless</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Associate Entity Cashless --></label>
+        <name>ISSP_AMS_Associate_Entity_Multicountry</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS Authorised Sig --></label>
@@ -9629,6 +9813,10 @@ and
         <name>ISSP_AMS_CONFIRM_DISCARD</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS CONFIRM DISCARD APPLICATION --></label>
+        <name>ISSP_AMS_CONFIRM_DISCARD_APPLICATION</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_Title_Capacity --></label>
         <name>ISSP_AMS_Capacity</name>
     </customLabels>
@@ -9891,6 +10079,10 @@ and
     <customLabels>
         <label>โปรดทราบ! เมื่อคัดลอกข้อมูลความเป็นเจ้าของไปยังบริษัทตัวแทนแห่งใดแห่งหนึ่ง คุณจะลบข้อมูลความเป็นเจ้าของที่มีอยู่ของบริษัทตัวแทนเป้าหมาย</label>
         <name>ISSP_AMS_Copy_Ownership_Warning</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Country Not Selected --></label>
+        <name>ISSP_AMS_Country_Not_Selected</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS Country Select --></label>
@@ -10237,6 +10429,10 @@ and
         <name>ISSP_AMS_Head_Entity_Cash</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS Head Entity Multicountry --></label>
+        <name>ISSP_AMS_Head_Entity_Multicountry</name>
+    </customLabels>
+    <customLabels>
         <label>นิติบุคคลหลักรายใหม่ - GoLite</label>
         <name>ISSP_AMS_Head_Entity_No_Cash</name>
     </customLabels>
@@ -10277,12 +10473,24 @@ and
         <name>ISSP_AMS_IS_GSA</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS IS Legal Name Blank --></label>
+        <name>ISSP_AMS_IS_Legal_Name_Selected_Blank</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS IS Legal Name Null --></label>
+        <name>ISSP_AMS_IS_Legal_Name_Selected_Null</name>
+    </customLabels>
+    <customLabels>
         <label>กรุณาเลือก หากบริษัทในเครือมีสถานะทางกฎหมายที่แยกต่างหาก</label>
         <name>ISSP_AMS_IS_Separate_Entity_Null</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS If Approved Gross Amnt --></label>
         <name>ISSP_AMS_If_Approved_Gross_Amnt</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Info Accreditation Types --></label>
+        <name>ISSP_AMS_Info_Accreditation_Types</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS International --></label>
@@ -10861,6 +11069,14 @@ and
         <name>ISSP_AMS_Month_September</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_Multicountry_Submit_Button --></label>
+        <name>ISSP_AMS_Multicountry_Submit_Button</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NOC_All_Countries --></label>
+        <name>ISSP_AMS_NOC_All_Countries</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS NOC Current Legal details --></label>
         <name>ISSP_AMS_NOC_Current_Legal_details</name>
     </customLabels>
@@ -11263,6 +11479,10 @@ and
     <customLabels>
         <label><!-- ISSP_AMS_NoC_Roles_and_Responsabilities --></label>
         <name>ISSP_AMS_NoC_Roles_and_Responsabilities</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_Search_Entity_Conversion --></label>
+        <name>ISSP_AMS_NoC_Search_Entity_Conversion</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_NoC_Signature --></label>
@@ -11683,6 +11903,10 @@ and
     <customLabels>
         <label><!-- ISSP AMS Section 2 SubSection 2 --></label>
         <name>ISSP_AMS_Section_2_SubSection_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Select AEs --></label>
+        <name>ISSP_AMS_Select_AEs</name>
     </customLabels>
     <customLabels>
         <label>เลือกบัญชีเป้าหมาย</label>
@@ -12341,6 +12565,10 @@ and
         <name>ISSP_AMS_Step3_Indicate_GDSs</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_Step3_Cashless_Location --></label>
+        <name>ISSP_AMS_Step3_Multicountry_Location</name>
+    </customLabels>
+    <customLabels>
         <label>ที่อยู่เต็มของสำนักงานที่ยื่นขออนุมัติ</label>
         <name>ISSP_AMS_Step3_Office_FullAddress</name>
     </customLabels>
@@ -12399,6 +12627,10 @@ and
     <customLabels>
         <label><!-- ISSP AMS Step5 ProgressBar CNS --></label>
         <name>ISSP_AMS_Step5_ProgressBar_CNS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step5_ProgressBar_Validate_Data --></label>
+        <name>ISSP_AMS_Step5_ProgressBar_Validate_Data</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS Step5 ReviewBeforeSubmit --></label>
@@ -12591,6 +12823,10 @@ and
     <customLabels>
         <label><!-- ISSP AMS Validation Financial Contact --></label>
         <name>ISSP_AMS_Validation_Financial_Contact</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Validation MC Conversion Countries --></label>
+        <name>ISSP_AMS_Validation_MC_Conversion_Countries</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS Validation Percent Ownership --></label>
@@ -13089,6 +13325,10 @@ and
         <name>ISSP_ANG_Branch_Office_address_details</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP ANG Branch Office contact details --></label>
+        <name>ISSP_ANG_Branch_Office_contact_details</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Link to the IATAs CheckACode page --></label>
         <name>ISSP_ANG_CODE_SEARCH_CHECK_A_CODE_LINK</name>
     </customLabels>
@@ -13155,6 +13395,10 @@ and
     <customLabels>
         <label>ใบสมัครฉบับร่างสำหรับการรับรองนิติบุคคลหลักแบบ GoLite</label>
         <name>ISSP_ANG_Email_HE_Cashless_Subject</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP ANG Email HE Multicountry Subject --></label>
+        <name>ISSP_ANG_Email_HE_Multicountry</name>
     </customLabels>
     <customLabels>
         <label>อนุญาตให้ใช้ระบบรับชำระด้วยบัตรเครดิตสำหรับรหัส</label>
@@ -13229,12 +13473,20 @@ and
         <name>ISSP_ANG_Iata_Codes_Relinquish</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_ANG_Import_Directors --></label>
+        <name>ISSP_ANG_Import_Directors</name>
+    </customLabels>
+    <customLabels>
         <label>กรุณาเลือกอย่างน้อยหนึ่งสาขา</label>
         <name>ISSP_ANG_Least_One_Branch</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_ANG_LeftNav_Section1_AE_Details --></label>
         <name>ISSP_ANG_LeftNav_Section1_AE_Details</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ANG_Legal_Name_already_in_used --></label>
+        <name>ISSP_ANG_Legal_Name_already_in_used</name>
     </customLabels>
     <customLabels>
         <label><!-- Branch to Shipping --></label>
@@ -13255,6 +13507,14 @@ and
     <customLabels>
         <label><!-- Must Add Users To Service --></label>
         <name>ISSP_ANG_MustAddUsersToService</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- NOC_GOGLOBAL_Info --></label>
+        <name>ISSP_ANG_NOC_GOGLOBAL_Info</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Third NoC Question --></label>
+        <name>ISSP_ANG_NOC_Type_Of_Change</name>
     </customLabels>
     <customLabels>
         <label>บริษัทในเครือหนึ่งแห่งหรือมากกว่า</label>
@@ -13475,6 +13735,30 @@ and
     <customLabels>
         <label>&lt;p&gt;ข้าพเจ้ามีความประสงค์ขอยกเลิกการรับรองของ IATA โดยสมัครใจ ตามสถานที่อนุมัติข้างต้น&lt;/p&gt;</label>
         <name>ISSP_ANG_VR_Disclaimer</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Validate Agency Details --></label>
+        <name>ISSP_ANG_Validate_Agency_Details</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ANG_View_And_Modify_Owners --></label>
+        <name>ISSP_ANG_View_And_Modify_Owners</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ANG_View_Owners --></label>
+        <name>ISSP_ANG_View_Owners</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ANG_Import --></label>
+        <name>ISSP_ANG_View_Owners_Info</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ANG_Import --></label>
+        <name>ISSP_ANG_View_Owners_Modify</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ANG_View_Owners_Tooltip --></label>
+        <name>ISSP_ANG_View_Owners_Tooltip</name>
     </customLabels>
     <customLabels>
         <label>การยกเลิกโดยสมัครใจ</label>
@@ -15633,6 +15917,14 @@ and
         <name>ISSP_IdCard_Name_Warning</name>
     </customLabels>
     <customLabels>
+        <label>แพลตฟอร์มออนไลน์สำหรับบัตรประจำตัว</label>
+        <name>ISSP_IdCard_NonUS</name>
+    </customLabels>
+    <customLabels>
+        <label>บริการออนไลน์ของ IATAN</label>
+        <name>ISSP_IdCard_US</name>
+    </customLabels>
+    <customLabels>
         <label>กำลังดำเนินการ</label>
         <name>ISSP_In_Progress</name>
     </customLabels>
@@ -15997,6 +16289,10 @@ and
         <name>ISSP_NoC_HE_with_AEs_Warning</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP NoC HE with AEs Warning --></label>
+        <name>ISSP_NoC_HE_with_AEs_Warning_MC</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP NoC Head Entity Becoming a AE --></label>
         <name>ISSP_NoC_Head_Entity_Becoming_a_AE</name>
     </customLabels>
@@ -16193,6 +16489,10 @@ Nếu bạn tiếp tục gặp vấn đề khi đăng ký trên Cổng thông ti
         <name>ISSP_OperationalCalendar_CurrencyFilter</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_OperationalCalendar_CycleFilter --></label>
+        <name>ISSP_OperationalCalendar_CycleFilter</name>
+    </customLabels>
+    <customLabels>
         <label>วันที่ดาวน์โหลด</label>
         <name>ISSP_OperationalCalendar_DownloadDate</name>
     </customLabels>
@@ -16237,6 +16537,10 @@ Nếu bạn tiếp tục gặp vấn đề khi đăng ký trên Cổng thông ti
         <name>ISSP_OperationalCalendar_No_Events</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP OperationalCalendar PDFFooterText --></label>
+        <name>ISSP_OperationalCalendar_PDFFooterText</name>
+    </customLabels>
+    <customLabels>
         <label>ตั้งค่าใหม่</label>
         <name>ISSP_OperationalCalendar_Reset</name>
     </customLabels>
@@ -16245,8 +16549,24 @@ Nếu bạn tiếp tục gặp vấn đề khi đăng ký trên Cổng thông ti
         <name>ISSP_OperationalCalendar_Show_Calendar</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_OperationalCalendar_SubtypeFilter --></label>
+        <name>ISSP_OperationalCalendar_SubtypeFilter</name>
+    </customLabels>
+    <customLabels>
         <label>การเชื่อมปฏิทิน</label>
         <name>ISSP_OperationalCalendar_Sync_Calendar</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_OperationalCalendar_Timezone_Disclaimer --></label>
+        <name>ISSP_OperationalCalendar_Timezone_Disclaimer</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_OperationalCalendar_TypeFilter --></label>
+        <name>ISSP_OperationalCalendar_TypeFilter</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_OperationalCalendar_Type_Filter_Required --></label>
+        <name>ISSP_OperationalCalendar_Type_Filter_Required</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_Opt_In --></label>
@@ -18158,6 +18478,10 @@ IATA Treasury Dashboard คือเครื่องมือทางเว�
     <customLabels>
         <label>ขอบคุณที่ยื่นคำขอการยกเลิกโดยสมัครใจ</label>
         <name>ISSP_VR_Case_Submited</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Validated --></label>
+        <name>ISSP_Validated</name>
     </customLabels>
     <customLabels>
         <label>เวอร์ชั่น</label>
@@ -21064,6 +21388,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>SIDRA_Automated_Case_Message</name>
     </customLabels>
     <customLabels>
+        <label><!-- SIDRA_GE_Info --></label>
+        <name>SIDRA_GE_Info</name>
+    </customLabels>
+    <customLabels>
         <label><!-- SIS --></label>
         <name>SIS</name>
     </customLabels>
@@ -21326,6 +21654,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
     <customLabels>
         <label><!-- Title_Home_Page --></label>
         <name>Title_Home_Page</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Total_Cost --></label>
+        <name>Total_Cost</name>
     </customLabels>
     <customLabels>
         <label><!-- Total Price --></label>

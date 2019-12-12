@@ -251,7 +251,7 @@ global with sharing class IDCardUtil {
         
         decimal applicableFee = thePriceTable.ID_Card_Fee__c;
 
-        if (isToPrint)
+        if (isToPrint && !isWithExpedite)
             applicableFee += priceTable.Cost_of_Printer__c == null ? 0 : priceTable.Cost_of_Printer__c;
 
         if (isReissue)
@@ -295,19 +295,26 @@ global with sharing class IDCardUtil {
         Price_Table__c thePriceTable = priceTable;
 
         decimal applicableFee = thePriceTable.ID_Card_Fee__c;
+        decimal physFee = 0;
 
-        if (isToPrint)
-            applicableFee += priceTable.Cost_of_Printer__c == null ? 0 : priceTable.Cost_of_Printer__c;
+        if (isToPrint && !isWithExpedite)
+            physFee += priceTable.Cost_of_Printer__c == null ? 0 : priceTable.Cost_of_Printer__c;
 
-        if (isReissue)
+        if (isReissue) {
             applicableFee = applicableFee / 2;
+            physFee = physFee / 2;
+        }
 
         if (validPromo != null) {
             // apply reduction percentage
             detailledFee.put('IDCardFee', (applicableFee - (applicableFee * (validPromo.Promotion_Value__c / 100.0))));
+            detailledFee.put('PhysCardFee', (physFee - (physFee * (validPromo.Promotion_Value__c / 100.0))));
+            detailledFee.put('Discount', ((physFee + applicableFee) * (validPromo.Promotion_Value__c / 100.0)));
             detailledFee.put('PromoFee', (validPromo.Promotion_Value__c / 100.0));
         } else {
             detailledFee.put('IDCardFee', (applicableFee));
+            detailledFee.put('PhysCardFee', (physFee));
+            detailledFee.put('Discount', 0);
             detailledFee.put('PromoFee', 0);
         }
 
@@ -851,7 +858,7 @@ global with sharing class IDCardUtil {
             idCard.Gender__c = objApp.Gender__c;
             idCard.Hours_per_week__c = objApp.Hours_worked__c;
             idCard.ID_Card_Application__c = objApp.Id;
-            idcard.Is_Expedite__c = objApp.IDCard_Expedite_Delivery__c;
+            idCard.Is_Expedite__c = objApp.IDCard_Expedite_Delivery__c;
             idCard.LastName__c = objApp.Last_Name__c;
             idCard.Middle_Initial__c = objApp.Middle_Initial__c;
             idCard.Name_on_ID_Card__c = objApp.Displayed_Name__c;
@@ -869,9 +876,12 @@ global with sharing class IDCardUtil {
             idCard.Start_Date_Agency_Year__c = objApp.Start_Date_Agency_Year__c;
             idCard.Type_of_ID_Card__c = String.isNotBlank(accountType) ? accountType : GetAgentTypeFromAccountType(theAccount.Type);
             idCard.Title__c = (objApp.Title__c != null && objApp.Title__c.length() <= 5) ? objApp.Title__c : '';
-            idcard.VER_Number__c = objApp.VER_Number__c;
+            idCard.VER_Number__c = objApp.VER_Number__c;
+            idCard.Card_Type__c = objApp.Card_Type__c;
             //set sync to true
             idCard.MustSyncWithAIMS__c = true;
+            idCard.Sent_to_AIMS_on__c = null;
+            idCard.Received_From_AIMS__c = null;
 
             if (IdCardAIMSrt == null)
                 IdCardAIMSrt = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card__c', 'AIMS');
@@ -888,9 +898,26 @@ global with sharing class IDCardUtil {
                 idCard.Card_Code__c = 'TACB';
             } else { idCard.Card_Code__c = 'TACT'; }
 
+            if (IDCard_MobileAppRenewalService.CARD_TYPE_DIGITAL.equals(idCard.Card_Type__c))
+            {
+                idCard.Is_Expedite__c = false;
+                idCard.MustSyncWithAIMS__c = false;
+                idCard.Sent_to_AIMS_on__c = System.now();
+                idCard.Received_From_AIMS__c = System.now();
+                idCard.Card_Status__c = CARDSTATUS_VALID;
+            }
+            ID_Card__c lastIdCard;
             if (theContact != null) {
                 idCard.Related_Contact__c = theContact.Id;
+                lastIdCard = LastIdCardForGivenContact(theContact);
             }
+
+            if(lastIdCard != null) {
+                idCard.Id = lastIdCard.Id;
+                if(lastIdCard.Valid_To_Date__c < Date.today())
+                    idCard.Valid_From_Date__c = lastIdCard.Valid_From_Date__c;
+            }
+
             system.debug(LoggingLevel.ERROR, '[CreateIDCardObjectFromApplication] return ' + idcard);
             return idCard;
         } catch (Exception ex) {
@@ -923,15 +950,15 @@ global with sharing class IDCardUtil {
             return null;
         else {
             //Search for Active card
-            list<ID_Card__c> lsIdCard = [select Id, Valid_To_Date__c, Valid_From_Date__c
-                                         from ID_Card__c where Related_Contact__c = :con.id and Is_Active_Card__c = :true
-                                                 order by Valid_From_Date__c nulls last limit 1];
+            list<ID_Card__c> lsIdCard = [SELECT Id, Valid_To_Date__c, Valid_From_Date__c
+                                         FROM ID_Card__c where Related_Contact__c = :con.id and Is_Active_Card__c = :true
+                                         ORDER BY Valid_From_Date__c DESC NULLS LAST LIMIT 1];
 
             //If not active card is found, than search for card NOT canceled and NOT blacklisted
             if (lsIdCard.isEmpty()) {
-                lsIdCard = [select Id, Valid_To_Date__c, Valid_From_Date__c
-                            from ID_Card__c where Related_Contact__c = :con.id and Blacklisted__c = :false and Card_Status__c<>:'Cancelled ID Card'
-                                    order by Valid_From_Date__c nulls last limit 1];
+                lsIdCard = [SELECT Id, Valid_To_Date__c, Valid_From_Date__c
+                            FROM ID_Card__c where Related_Contact__c = :con.id and Blacklisted__c = :false and Card_Status__c<>:'Cancelled ID Card'
+                            ORDER BY Valid_From_Date__c DESC NULLS LAST LIMIT 1];
             }
 
             if (lsIdCard.isEmpty())
@@ -1014,7 +1041,7 @@ global with sharing class IDCardUtil {
 
         Account[] theAccounts = [SELECT IATACode__c, BillingCountry, type, Id 
                                  FROM Account
-                                 WHERE RecordType.Name = : 'Agency' AND IATACode__c = : iataCode
+                                 WHERE RecordTypeId =: AMS_Utils.RECTYPE_IATAAGENCY AND IATACode__c = : iataCode
                                     AND (Status__c in : IDCARDUtil.ALLOWED_ACCOUNT_STATUS or Status__c = 'Terminated') limit 1];
 
         System.debug(' *** Getting Account ' + theAccounts);
@@ -1029,8 +1056,9 @@ global with sharing class IDCardUtil {
     * Returns the account object from an IATA code
     */
     public static List<Account> GetAccountListFromIATACodes(Set<String> iataCodes) {
-        return  [Select IATACode__c, BillingCountry, type, Id From Account
-                 where RecordType.Name = : 'Agency'
+        return  [SELECT IATACode__c, BillingCountry, IATA_ISO_Country__c, type, Id 
+                 FROM Account
+                 WHERE RecordTypeId =: AMS_Utils.RECTYPE_IATAAGENCY
                                          AND IATACode__c in :iataCodes
                                          AND  (Status__c in : IDCARDUtil.ALLOWED_ACCOUNT_STATUS)
                 ];
@@ -1550,9 +1578,9 @@ global with sharing class IDCardUtil {
 
                     //get IDCard and Application
 
-                    ID_Card_Application__c application = [Select VER_Number__c, UIR__c, Type_of_application__c, Title__c, Terms_and_Conditions_Time_Stamp__c, Telephone__c, SystemModstamp, Start_Date_Industry__c, Start_Date_Agency_Year__c, Start_Date_Agency_Month__c, Solicitation_Flag__c, Selected_Preferred_Language__c, Revenue_Confirmation__c, Revenue_Confirmation_Validation_Failed__c, Renewal_From_Replace__c, Regional_Office__c, Promotion_Code__c, Profit_Center__c, Position_in_Current_Agency__c, Position_Code__c, Photo__c, Payment_Type__c, Payment_Transaction_Number__c, Payment_Date__c, Payment_Currency__c, Payment_Credit_Card_Number__c, Payment_Amount__c, Package_of_Travel_Professionals_Course_2__c, Package_of_Travel_Professionals_Course_1__c, OwnerId, Name, Middle_Initial__c, Last_Name__c, LastModifiedDate, LastModifiedById, LastActivityDate, IsDeleted, Id, ITDI_Courses_Fee__c, ID_Card_Fee__c, IDCard_Prefered_Language__c, IDCard_Expedite_Delivery__c, IDCard_Expedite_Delivery_Fee__c, IATA_numeric_code_previous_employer_4__c, IATA_numeric_code_previous_employer_3__c, IATA_numeric_code_previous_employer_2__c, IATA_numeric_code_previous_employer_1__c, IATA_Code_for_previous_agency__c, IATA_Code__c, Hours_worked__c, Hours_Worked_Validation_Failed__c, Hours_Worked_Code__c, Gender__c, First_Name__c, Email_admin__c, Duties_in_Current_Agency__c, Duties_Code__c, Displayed_Name__c, Date_of_Birth__c, CurrencyIsoCode, CreatedDate, CreatedById, Case_Number__c, Approving_Manager_s_Name__c, Approving_Manager_s_Email__c, Applicable_Fee__c, AgencyShare_Confirmation__c From ID_Card_Application__c WHERE ID = : c[0].Related_ID_Card_Application__c limit 1];
+                    ID_Card_Application__c application = [SELECT VER_Number__c, UIR__c, Type_of_application__c, Title__c, Terms_and_Conditions_Time_Stamp__c, Telephone__c, SystemModstamp, Start_Date_Industry__c, Start_Date_Agency_Year__c, Start_Date_Agency_Month__c, Solicitation_Flag__c, Selected_Preferred_Language__c, Revenue_Confirmation__c, Revenue_Confirmation_Validation_Failed__c, Renewal_From_Replace__c, Regional_Office__c, Promotion_Code__c, Profit_Center__c, Position_in_Current_Agency__c, Position_Code__c, Photo__c, Payment_Type__c, Payment_Transaction_Number__c, Payment_Date__c, Payment_Currency__c, Payment_Credit_Card_Number__c, Payment_Amount__c, Package_of_Travel_Professionals_Course_2__c, Package_of_Travel_Professionals_Course_1__c, OwnerId, Name, Middle_Initial__c, Last_Name__c, LastModifiedDate, LastModifiedById, LastActivityDate, IsDeleted, Id, ITDI_Courses_Fee__c, ID_Card_Fee__c, IDCard_Prefered_Language__c, IDCard_Expedite_Delivery__c, IDCard_Expedite_Delivery_Fee__c, IATA_numeric_code_previous_employer_4__c, IATA_numeric_code_previous_employer_3__c, IATA_numeric_code_previous_employer_2__c, IATA_numeric_code_previous_employer_1__c, IATA_Code_for_previous_agency__c, IATA_Code__c, Hours_worked__c, Hours_Worked_Validation_Failed__c, Hours_Worked_Code__c, Gender__c, First_Name__c, Email_admin__c, Duties_in_Current_Agency__c, Duties_Code__c, Displayed_Name__c, Date_of_Birth__c, CurrencyIsoCode, CreatedDate, CreatedById, Case_Number__c, Approving_Manager_s_Name__c, Approving_Manager_s_Email__c, Applicable_Fee__c, AgencyShare_Confirmation__c, Card_Type__c FROM ID_Card_Application__c WHERE ID = : c[0].Related_ID_Card_Application__c LIMIT 1];
 
-                    ID_Card__c[] existingIdCard = [Select Valid_To_Date__c, Valid_From_Date__c, Type_of_ID_Card__c, Related_Contact__c, Name_on_ID_Card__c, IsDeleted, Id, ID_Card_Application__c, Card_Status__c, Card_Code__c, Agency_IATA_Code__c From ID_Card__c WHERE ID_Card_Application__c = : application.ID limit 1];
+                    ID_Card__c[] existingIdCard = [SELECT Valid_To_Date__c, Valid_From_Date__c, Type_of_ID_Card__c, Related_Contact__c, Name_on_ID_Card__c, IsDeleted, Id, ID_Card_Application__c, Card_Status__c, Card_Code__c, Agency_IATA_Code__c FROM ID_Card__c WHERE ID_Card_Application__c = : application.ID LIMIT 1];
 
                     System.debug(LoggingLevel.ERROR, '[UpdateCaseToApproved_Rejected]  Case Approved. Found ' + existingIdCard.size() + ' idcards');
 
@@ -1572,7 +1600,9 @@ global with sharing class IDCardUtil {
                         System.debug(LoggingLevel.ERROR, '[UpdateCaseToApproved_Rejected]  calling the method for id card creation');
 
                         idCardNew = IDCardUtil.CreateIDCardObjectFromApplication(application, contacts[0], accountType);
-                        insert idCardNew;
+                        upsert idCardNew;
+                        application.ID_Card__c = idCardNew.Id;
+                        update application;
                     }
 
                     //@@ and c.RecordTypeID =: IDCardContactRecordTypeID
@@ -1597,18 +1627,6 @@ global with sharing class IDCardUtil {
                     if (application.Type_of_application__c == IDCardUtil.APPLICATIONTYPE_REPLACEMENT) {
                         Account theAccount = GetAccountObjectFromIATACode(application.IATA_Code__c);
                         theContact.AccountId = theAccount.Id;
-                    }
-
-                    // Change the status of the old card to "Cancelled" (only on reissue => Lost/stolen) and change of agency
-                    if (application.Type_of_application__c == IDCardUtil.APPLICATIONTYPE_REISSUE || application.Type_of_application__c == IDCardUtil.APPLICATIONTYPE_REPLACEMENT) {
-                        //find old card to cancel it
-                        ID_Card__c[] idCards = [Select Card_Status__c, MustSyncWithAIMS__c, Valid_To_Date__c From ID_Card__c where Related_Contact__c = :theContact.Id AND Card_Status__c = : CARDSTATUS_VALID order by CreatedDate desc];
-                        if (idCards != null && idCards.size() > 0) {
-                            idCards[0].Card_Status__c = IDCardUtil.CARDSTATUS_CANCELED;
-                            idCards[0].Cancellation_Date__c = Date.Today();
-                            //fidCards[0].MustSyncWithAIMS__c = true;
-                            update idcards[0];
-                        }
                     }
 
                     //update contact after cancelling existing card to avoid validation rule on active cards in case of name change.
