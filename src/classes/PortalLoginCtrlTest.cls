@@ -54,12 +54,12 @@ public with sharing class PortalLoginCtrlTest {
 		insert con3;
 		User portalUser3 = ISSP_ObjectFactory.createPortalUser(con3);
 
-		PortalLoginCtrl.LoginConfig loginConfig = PortalLoginCtrl.getInitialConfig();
-		PortalLoginCtrl.LoginResult loginResult = PortalLoginCtrl.login('contact1@bucketairline.com', 'password', '','');
-		loginResult = PortalLoginCtrl.login('contact2@bucketairline.com', 'password', Label.CSP_PortalPath + 'test','');
-		loginResult = PortalLoginCtrl.login('contact3@bucketairline.com', 'password', 'test','');
-		loginResult = PortalLoginCtrl.login('contact3@bucketairline.com', '', '','');
 		system.runAs(portalUser) {
+			PortalLoginCtrl.LoginConfig loginConfig = PortalLoginCtrl.getInitialConfig();
+			PortalLoginCtrl.LoginResult loginResult = PortalLoginCtrl.login('contact1@bucketairline.com', 'password', '','');
+			loginResult = PortalLoginCtrl.login('contact2@bucketairline.com', 'password', Label.CSP_PortalPath + 'test','');
+			loginResult = PortalLoginCtrl.login('contact3@bucketairline.com', 'password', 'test','');
+			loginResult = PortalLoginCtrl.login('contact3@bucketairline.com', '', '','');
 			PortalLoginCtrl.reactivateUser(portalUser);
 		}
 	}

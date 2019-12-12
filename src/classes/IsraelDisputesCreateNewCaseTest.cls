@@ -71,14 +71,14 @@ public with sharing class IsraelDisputesCreateNewCaseTest {
 		child3.Top_Parent__c = parent.Id;
 		child3.IATAcode__c = '1234566';
 		child3.IATA_ISO_Country__c = country.Id;
-		child2.Site = 'hi';
-		child2.Sector__c = 'Airline';
-		child2.Category__c = 'Passenger Only';
-		child2.Membership_status__c = 'IATA Member';
-		child2.ACLI_Status__c = 'Active Company';
-		child2.Airline_Prefix__c = '112';
-		child2.Airline_Designator__c = 'GB';
-		child2.RecordTypeId = recordTypeId;
+		child3.Site = 'hi';
+		child3.Sector__c = 'Airline';
+		child3.Category__c = 'Passenger Only';
+		child3.Membership_status__c = 'IATA Member';
+		child3.ACLI_Status__c = 'Active Company';
+		child3.Airline_Prefix__c = '111';
+		child3.Airline_Designator__c = 'GB';
+		child3.RecordTypeId = recordTypeId;
 		insert child3;
 
 		Contact con = ISSP_ObjectFactory.createNewContact();
@@ -109,6 +109,6 @@ public with sharing class IsraelDisputesCreateNewCaseTest {
 		test.stopTest();
 
 		System.assertEquals(2, lstSearchAccounts.size());
-		System.assertEquals(3, lstSearchAccountsNoEntry.size());
+		System.assertEquals(4, lstSearchAccountsNoEntry.size());
 	}
 }

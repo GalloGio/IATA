@@ -709,20 +709,41 @@ public without sharing class LightningRegistrationProcess{
 	}
 
 	@future
-	public static void insertDeductionNoticeApp(String contId, String appId){
-		Portal_Application_Right__c par = new Portal_Application_Right__c();
-		par.Contact__c = contId;
-		par.Portal_Application__c = appId;
-		par.Right__c = 'Access Granted';
-		database.insert(par);
+	public static void insertDeductionNoticeApp(String userId){
+		User oneUser = [SELECT Id, Username, ContactId, Email, Portal_User_Frozen__c,
+						IsActive, Portal_User_Frozen_Checkbox__c, Contact.Community__c,
+						Profile.Name, CNS_Account_or_Agency__c,
+						ANG_Sector__c, ANG_Category__c, Customer_Type__c, ANG_Is_Accredited_Agent__c,
+						ANG_Customer_Country_ISO__c, Contact.User_Portal_Status__c
+						FROM User WHERE Id =: userId];
+		
+		if(oneUser.ANG_Sector__c == 'Travel Agent' 
+			&& oneUser.ANG_Category__c == 'IATA Passenger Sales Agent'
+			&& oneUser.Customer_type__c == 'Agency'
+			&& oneUser.ANG_Is_Accredited_Agent__c == true
+			&& oneUser.ANG_Customer_Country_ISO__c == 'IL'
+			&& (oneUser.Contact.User_Portal_Status__c == 'Approved User' 
+			|| oneUser.Contact.User_Portal_Status__c == 'Approved Admin')){
+				list<Portal_Applications__c> lstApp = [SELECT Id 
+													   FROM Portal_Applications__c 
+													   WHERE Application_URL__c LIKE '%israel-disputes-create-new-case%' 
+													   LIMIT 1];
+				List<Portal_Application_Right__c> appRight = [SELECT Id 
+															  FROM Portal_Application_Right__c 
+															  WHERE Contact__c =: oneUser.ContactId 
+															  AND Portal_Application__c =: lstApp[0].Id
+															  AND Right__c = 'Access Granted'];
+				if(appRight.isEmpty()){
+					Portal_Application_Right__c par = new Portal_Application_Right__c();
+					par.Contact__c = oneUser.ContactId;
+					par.Portal_Application__c = lstApp[0].Id;
+					par.Right__c = 'Access Granted';
+					database.insert(par);
+				}
+			}
 	}
-/*	
-	@AuraEnabled
-	public Static String setHostURL (){
-	   return OneIdUtils.getOrgUrl();
-	}
-	
-*/	
+
+
 	// to be used in visualforce page OneIdVfCAPTCHA
 	@AuraEnabled
 	public Static String getHostURL(){
