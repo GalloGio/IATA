@@ -189,22 +189,25 @@ public without sharing class WorkflowHelper {
 
 		Set<Id> accountRecordTypes = new Set<Id>{AMS_Utils.RECTYPE_AIRLINE_BR,airLineRT,gsaRT};
 
-        if(accountRecordTypes.contains(newAccount.RecordTypeId) || 
-        (newAccount.recordTypeId == standardRT && newAccount.Sector__c == 'Airline')
-        ){            
-            if(newAccount.Industry == 'Travel Agent'){
-                return;
-            }
-            
-            String accountSite = '';
-			
- 			accountSite = newAccount.Airline_designator__c == null ? '' : newAccount.Airline_designator__c;
- 			accountSite += newAccount.IATACode__c == null ? (newAccount.Airline_Prefix__c == null ? '' : (accountSite == '' ? newAccount.Airline_Prefix__c : ' ' + newAccount.Airline_Prefix__c)) : (accountSite == '' ? newAccount.IATACode__c : ' ' + newAccount.IATACode__c);
- 			accountSite += newAccount.Country_ISO_Code__c == null ? '' : (accountSite == '' ? newAccount.Country_ISO_Code__c : ' ' + newAccount.Country_ISO_Code__c);
+		if(accountRecordTypes.contains(newAccount.RecordTypeId) ||
+		(newAccount.recordTypeId == standardRT && newAccount.Sector__c == 'Airline')
+		){
+			if(newAccount.Industry == 'Travel Agent'){
+				return;
+			}
 
-			newAccount.Site = accountSite;
-        }
-    }
+			if(newAccount.IATACode__c == null){
+				if(newAccount.Airline_Prefix__c == null){
+					newAccount.site = newAccount.Airline_designator__c + ' ' + newAccount.Country_ISO_Code__c;
+				}
+				else {
+					newAccount.site = newAccount.Airline_designator__c + ' ' + newAccount.Airline_Prefix__c + ' ' + newAccount.Country_ISO_Code__c;
+				}
+			}else{
+				newAccount.site = newAccount.Airline_designator__c + ' ' + newAccount.IATACode__c + ' ' + newAccount.Country_ISO_Code__c;
+			}
+		}
+	}
 
 	//Update account Historize the data quality feedback comment
 	//Workflow Name:Data quality comment history

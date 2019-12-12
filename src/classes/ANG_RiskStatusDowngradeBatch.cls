@@ -9,7 +9,7 @@ public class ANG_RiskStatusDowngradeBatch implements Database.Batchable<SObject>
 
 	public List<Account> start(Database.BatchableContext BC)
 	{
-		return ANG_MulticountryHelper.getAccountsInfo(accounts).values();
+		return ANG_MulticountryHelper.getChildHEAccounts(accounts).values();
 	}
 
 	public void execute(Database.BatchableContext BC, List<SObject> scope)
