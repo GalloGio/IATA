@@ -18,7 +18,7 @@
                                 <span key={tab.id} class="slds-p-around_small text-small">
 
                                     <!-- Active tab -->
-                                    <span if:true={tab.active} data-item={tab.id}
+                                    <span if:true={tab.active} data-item={tab.id} onclick={reloadData}
                                         class="slds-p-around_small text-bold selectedTab">
                                         {tab.label}
                                     </span>

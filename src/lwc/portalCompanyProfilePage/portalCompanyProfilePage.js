@@ -394,4 +394,10 @@ export default class PortalCompanyProfilePage extends LightningElement {
     get subTab1Active() { return (this.lstSubTabs[0] != null && this.lstSubTabs[0].active && this.IATAInvoicesNum == 0 && this.EFInvoicesNum > 0) || (this.lstSubTabs[1] != null && this.lstSubTabs[1].active); }
     get hasNoInvoices() { return (this.IATAInvoicesNum + this.EFInvoicesNum) === 0; } //WMO-699 - ACAMBAS
 
+    reloadData(){
+        if(this.tab2Active){
+            //performs the reload in case the Contacts tab is clicked--- Api function exposed on the c-portal-company-profile-contacts-list component
+            this.template.querySelector('c-portal-company-profile-contacts-list').reloadData();
+        }
+    }
 }

@@ -1889,6 +1889,10 @@
         <name>CSP_ArticleHelpful</name>
     </customLabels>
     <customLabels>
+        <label>Yeni Servis Ata</label>
+        <name>CSP_Assign_New_Service</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Branch Offices --></label>
         <name>CSP_Branch_Offices</name>
     </customLabels>
@@ -2065,6 +2069,10 @@
         <name>CSP_Confirmed_Requested_Service_Message</name>
     </customLabels>
     <customLabels>
+        <label>Profil adınızı değiştirmek, Kimlik Kartınızın geçerliliğini etkileyecektir. Profil adınızı değiştirmek için lütfen Müşteri Hizmetleri Ekibimize başvurun.</label>
+        <name>CSP_Contact_Id_Card_Error_Msg</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_Contacts_NoResults_text1 --></label>
         <name>CSP_Contacts_NoResults_text1</name>
     </customLabels>
@@ -2113,7 +2121,7 @@
         <name>CSP_Dear</name>
     </customLabels>
     <customLabels>
-        <label>Kullanıcı Erişimini Reddedin</label>
+        <label>Erişimi Reddedin</label>
         <name>CSP_Deny_User_Access_Title</name>
     </customLabels>
     <customLabels>
@@ -2341,7 +2349,7 @@
         <name>CSP_Frozen_User_Message</name>
     </customLabels>
     <customLabels>
-        <label>Kullanıcıya Erişim İzni Verin</label>
+        <label>Erişime İzin Verin</label>
         <name>CSP_Grant_User_Access_Title</name>
     </customLabels>
     <customLabels>
@@ -2359,6 +2367,30 @@
     <customLabels>
         <label>Geçersiz e-posta</label>
         <name>CSP_Invalid_Email</name>
+    </customLabels>
+    <customLabels>
+        <label>Kimlik Kartındaki İsim</label>
+        <name>CSP_IDCard_Name</name>
+    </customLabels>
+    <customLabels>
+        <label>Kimlik Kartı fotoğrafınızı görmek için buraya tıklayın</label>
+        <name>CSP_IDCard_Photo</name>
+    </customLabels>
+    <customLabels>
+        <label>Fotoğraf</label>
+        <name>CSP_IDCard_Photo_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Durum</label>
+        <name>CSP_IDCard_Status</name>
+    </customLabels>
+    <customLabels>
+        <label>Son kullanma tarihi</label>
+        <name>CSP_IDCard_Valid_To</name>
+    </customLabels>
+    <customLabels>
+        <label>Kimlik Kartı VER Numarası</label>
+        <name>CSP_IDCard_Ver_Number</name>
     </customLabels>
     <customLabels>
         <label>Şirket Hesap Bilgisi</label>
@@ -2649,7 +2681,7 @@
         <name>CSP_L2_Requested_Modal_Message</name>
     </customLabels>
     <customLabels>
-        <label>Merhaba</label>
+        <label>Bize daha fazla bilgi ver</label>
         <name>CSP_L2_Requested_Modal_Title</name>
     </customLabels>
     <customLabels>
@@ -2843,6 +2875,10 @@
     <customLabels>
         <label>Sahip olunca, burada en yenilerini göreceksiniz.</label>
         <name>CSP_NoCases2</name>
+    </customLabels>
+    <customLabels>
+        <label>Maalesef uygulanan filtreler için sonuç bulunamadı</label>
+        <name>CSP_NoRecordsFiltered</name>
     </customLabels>
     <customLabels>
         <label>Sonuç Yok</label>
@@ -3185,6 +3221,10 @@
         <name>CSP_Services_AccessRequestedTitle</name>
     </customLabels>
     <customLabels>
+        <label>Favorilere ekle</label>
+        <name>CSP_Services_AddFavorite</name>
+    </customLabels>
+    <customLabels>
         <label>Şirketiniz için mevcut tüm hizmetler aşağıda listelenmiştir.</label>
         <name>CSP_Services_AvailableServicesHelpText</name>
     </customLabels>
@@ -3217,6 +3257,10 @@
         <name>CSP_Services_MyServicesTabTile</name>
     </customLabels>
     <customLabels>
+        <label>Favoriyi kaldır</label>
+        <name>CSP_Services_RemoveFavorite</name>
+    </customLabels>
+    <customLabels>
         <label>Mevcut Hizmetlere Bakın</label>
         <name>CSP_Services_RequestServiceBannerButton</name>
     </customLabels>
@@ -3231,6 +3275,14 @@
     <customLabels>
         <label>Servis Bilgisi</label>
         <name>CSP_Services_ServiceInformation</name>
+    </customLabels>
+    <customLabels>
+        <label>Hepsini Göster</label>
+        <name>CSP_Services_ShowAll</name>
+    </customLabels>
+    <customLabels>
+        <label>Yalnızca Favorileri Göster</label>
+        <name>CSP_Services_ShowOnlyFavorites</name>
     </customLabels>
     <customLabels>
         <label>Hizmetler</label>
@@ -6533,6 +6585,10 @@
         <name>IDCard_NoModificationAllowed</name>
     </customLabels>
     <customLabels>
+        <label>Kimlik Kartınız için başvuruda bulunup ödeme yapın (yeni, yenileme, acente değişikliği) ve IATA seyahat acentesi avantajlarından yararlanın.</label>
+        <name>IDCard_NoUSServiceDescription</name>
+    </customLabels>
+    <customLabels>
         <label><!-- IDCard No Price Table Found --></label>
         <name>IDCard_No_Price_Table_Found</name>
     </customLabels>
@@ -6823,6 +6879,10 @@
     <customLabels>
         <label><!-- IDCard_TrxNum --></label>
         <name>IDCard_TrxNum</name>
+    </customLabels>
+    <customLabels>
+        <label>(ABD Acenteleri için) Kimlik Kartı, Acenteleri kaydetme, Yıllık Hizmet Ücreti ödemesi, Acente Belgelendirme süreci, vb. talepler</label>
+        <name>IDCard_USServiceDescription</name>
     </customLabels>
     <customLabels>
         <label><!-- IDCard Update Application --></label>
@@ -15851,6 +15911,14 @@ Lütfen daha önce hangi ülke için destek aldığınızı doğrulayın:</label
     <customLabels>
         <label>Adınızda yapılacak bir değişiklik ID Card’ınıza yansıtılmayacaktır. ID Card’ınız üzerinde değişiklik yapmak için, lütfen Kimlik Kartı platformuna giriş yapın.</label>
         <name>ISSP_IdCard_Name_Warning</name>
+    </customLabels>
+    <customLabels>
+        <label>Kimlik Kartı Çevrimiçi Platformu</label>
+        <name>ISSP_IdCard_NonUS</name>
+    </customLabels>
+    <customLabels>
+        <label>IATAN Çevrimiçi Hizmetler</label>
+        <name>ISSP_IdCard_US</name>
     </customLabels>
     <customLabels>
         <label>İşlem halinde</label>

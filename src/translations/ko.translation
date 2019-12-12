@@ -1892,6 +1892,10 @@
         <name>CSP_ArticleHelpful</name>
     </customLabels>
     <customLabels>
+        <label>새로운 서비스 할당하기</label>
+        <name>CSP_Assign_New_Service</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Branch Offices --></label>
         <name>CSP_Branch_Offices</name>
     </customLabels>
@@ -2068,6 +2072,10 @@
         <name>CSP_Confirmed_Requested_Service_Message</name>
     </customLabels>
     <customLabels>
+        <label>귀하의 프로필 이름을 변경하면 ID 카드의 유효성에 영향을 미칩니다. 귀하의 프로필 이름을 변경하려면 저희 고객 지원팀에 문의하세요.</label>
+        <name>CSP_Contact_Id_Card_Error_Msg</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_Contacts_NoResults_text1 --></label>
         <name>CSP_Contacts_NoResults_text1</name>
     </customLabels>
@@ -2116,7 +2124,7 @@
         <name>CSP_Dear</name>
     </customLabels>
     <customLabels>
-        <label>사용자 액세스 거부</label>
+        <label>액세스 거부</label>
         <name>CSP_Deny_User_Access_Title</name>
     </customLabels>
     <customLabels>
@@ -2344,7 +2352,7 @@
         <name>CSP_Frozen_User_Message</name>
     </customLabels>
     <customLabels>
-        <label>사용자 액세스 권한 부여</label>
+        <label>액세스 권한 부여</label>
         <name>CSP_Grant_User_Access_Title</name>
     </customLabels>
     <customLabels>
@@ -2354,6 +2362,30 @@
     <customLabels>
         <label><!-- CSP_IATA_Country --></label>
         <name>CSP_IATA_Country</name>
+    </customLabels>
+    <customLabels>
+        <label>ID 카드의 이름</label>
+        <name>CSP_IDCard_Name</name>
+    </customLabels>
+    <customLabels>
+        <label>귀하의 ID 카드 사진을 보시려면 여기를 클릭하세요.</label>
+        <name>CSP_IDCard_Photo</name>
+    </customLabels>
+    <customLabels>
+        <label>사진</label>
+        <name>CSP_IDCard_Photo_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>상태</label>
+        <name>CSP_IDCard_Status</name>
+    </customLabels>
+    <customLabels>
+        <label>만료 날짜</label>
+        <name>CSP_IDCard_Valid_To</name>
+    </customLabels>
+    <customLabels>
+        <label>ID 카드 VER 번호</label>
+        <name>CSP_IDCard_Ver_Number</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_IMPORTANT --></label>
@@ -2652,7 +2684,7 @@
         <name>CSP_L2_Requested_Modal_Message</name>
     </customLabels>
     <customLabels>
-        <label>안녕하세요</label>
+        <label>더 말해 주세요.</label>
         <name>CSP_L2_Requested_Modal_Title</name>
     </customLabels>
     <customLabels>
@@ -2846,6 +2878,10 @@
     <customLabels>
         <label>그러나 일단 가지고 계시면, 제일 최근 항목을 여기서 보실 수 있습니다.</label>
         <name>CSP_NoCases2</name>
+    </customLabels>
+    <customLabels>
+        <label>죄송합니다. 적용된 필터에 대한 결과가 없습니다.</label>
+        <name>CSP_NoRecordsFiltered</name>
     </customLabels>
     <customLabels>
         <label>결과 없음</label>
@@ -3188,6 +3224,10 @@
         <name>CSP_Services_AccessRequestedTitle</name>
     </customLabels>
     <customLabels>
+        <label>즐겨 찾기 추가</label>
+        <name>CSP_Services_AddFavorite</name>
+    </customLabels>
+    <customLabels>
         <label>귀하의 회사에서 사용 가능한 모든 서비스가 아래에 나열되어 있습니다.</label>
         <name>CSP_Services_AvailableServicesHelpText</name>
     </customLabels>
@@ -3220,6 +3260,10 @@
         <name>CSP_Services_MyServicesTabTile</name>
     </customLabels>
     <customLabels>
+        <label>즐겨 찾기 제거</label>
+        <name>CSP_Services_RemoveFavorite</name>
+    </customLabels>
+    <customLabels>
         <label>사용 가능한 서비스 보기</label>
         <name>CSP_Services_RequestServiceBannerButton</name>
     </customLabels>
@@ -3234,6 +3278,14 @@
     <customLabels>
         <label>서비스 정보</label>
         <name>CSP_Services_ServiceInformation</name>
+    </customLabels>
+    <customLabels>
+        <label>모두 표시하기</label>
+        <name>CSP_Services_ShowAll</name>
+    </customLabels>
+    <customLabels>
+        <label>즐겨찾기만 표시하기</label>
+        <name>CSP_Services_ShowOnlyFavorites</name>
     </customLabels>
     <customLabels>
         <label>서비스</label>
@@ -6540,6 +6592,10 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <name>IDCard_NoModificationAllowed</name>
     </customLabels>
     <customLabels>
+        <label>ID 카드 (신규, 갱신, 대행사 변경)를 신청 &amp; 지불하고 국제항공운송협회 (IATA) 여행사 혜택을 받으십시오.</label>
+        <name>IDCard_NoUSServiceDescription</name>
+    </customLabels>
+    <customLabels>
         <label><!-- IDCard No Price Table Found --></label>
         <name>IDCard_No_Price_Table_Found</name>
     </customLabels>
@@ -6832,6 +6888,10 @@ Kindly note that home-based agents are required to coordinate with their colleag
     <customLabels>
         <label><!-- IDCard_TrxNum --></label>
         <name>IDCard_TrxNum</name>
+    </customLabels>
+    <customLabels>
+        <label>(미국 담당자용)ID 카드 요청, 에이전트 등록, 연간 서비스 요금 지불, 대행사 재인증 처리 등</label>
+        <name>IDCard_USServiceDescription</name>
     </customLabels>
     <customLabels>
         <label><!-- IDCard Update Application --></label>
@@ -15859,6 +15919,14 @@ IATA로부터 다음 국가에 대한 도움을 받으신 적이 있습니까?</
     <customLabels>
         <label>본 귀하의 성함 변경은 귀하 ID 카드에는 반영되지 않습니다. ID 카드의 성함을 변경하시고자 하는 경우, ID 카드 포털에 접속하여 변경해주시기 바랍니다.</label>
         <name>ISSP_IdCard_Name_Warning</name>
+    </customLabels>
+    <customLabels>
+        <label>ID 카드 온라인 플랫폼</label>
+        <name>ISSP_IdCard_NonUS</name>
+    </customLabels>
+    <customLabels>
+        <label>국제여행사협회 (IATAN) 온라인 서비스</label>
+        <name>ISSP_IdCard_US</name>
     </customLabels>
     <customLabels>
         <label>진행 중</label>
