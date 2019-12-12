@@ -569,7 +569,7 @@
       </apex:outputPanel>
             
             <!-- If the account doesn't have access to GxA -->
-	<apex:outputPanel rendered="{!NOT(isGxAEnable)}">
+	<apex:outputPanel rendered="{!NOT(ifapCaseRec.Account.IATA_ISO_Country__r.GxA_Enable__c)}">
             <apex:outputPanel rendered="{!canUploadAndDelete}" id="btnsSubmitPanel" >  
      <label><b>{!$Label.IFAP_Overall_Max_size_20mb}</b></label> 
 
@@ -720,9 +720,9 @@
 
             
 <!-- If the account does have access to GxA -->
-<apex:outputPanel rendered="{!isGxAEnable}">
+<apex:outputPanel rendered="{!ifapCaseRec.Account.IATA_ISO_Country__r.GxA_Enable__c}">
     	<b><apex:outputLabel value="{!$Label.Upload_GxA}"  styleClass="phase1"/></b> <br/>
-    <apex:outputLink value="{!$Label.GxA_Link}" onclick="" id="GxALink" target="_blank">{!$Label.GxA_Link_Label}</apex:outputLink>
+    <apex:outputLink value="{!$Label.GxA_Link}" onclick="" id="GxALink" target="_blank" disabled="{!IF(ifapCaseRec.status == 'Sanity Check Failure' || ifapCaseRec.status == 'Closed_Non compliance' || ifapCaseRec.status == 'Agent Notified (Email)' || ifapCaseRec.status == 'Agent Notified (Mail)', false, true)}">{!$Label.GxA_Link_Label}</apex:outputLink>
             </apex:outputPanel>
        
 
