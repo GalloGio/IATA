@@ -161,7 +161,7 @@ public without sharing class ContactRoleServiceAccessTriggerHandler {
 
     private static Messaging.SingleEmailMessage createNotification(Id access, User usr, string status) {
         return createNotification(access, usr.Email, usr.Id, status, 'Contact_Role_Status_Changed');
-}
+	}
 
     private static Messaging.SingleEmailMessage createNotification(Id access, string emailAddress, Id person, string status, string emailTemplateName) {
         Id iataNoReplyId = null;
@@ -169,18 +169,23 @@ public without sharing class ContactRoleServiceAccessTriggerHandler {
         if(iataNoReply != null && iataNoReply.size() > 0){
             iataNoReplyId = iataNoReply.get(0).Id;
         }
-
+		
+        String approvedLink = '';
+        if (status.toUpperCase() == 'APPROVED'){        
+            string link = '<a href="' + OneIdUtils.getSiteCompleteUrl(OneIdUtils.Mode.IDENTITY) + '/gadm?language=en_US&serviceName=GADM">GADM Service</a>';
+            approvedLink = String.format(Label.GADM_Status_Change_Template_Link, new List<String>{link});
+        }
+		
         string tense = status.toUpperCase() == 'PENDING' ? 'is' : 'has been';
         emailTemplateName = 'Contact_Role_Status_Changed';
         EmailTemplate et = [SELECT Id, Name, Subject, Body FROM EmailTemplate WHERE DeveloperName = :emailTemplateName];
         Messaging.SingleEmailMessage mail = Messaging.renderStoredEmailTemplate(et.Id, person, access);
         String bodyText = mail.getPlainTextBody();
-        String replacedTextbody = bodyText.replace('*tense*', tense);
+        String replacedTextbody = bodyText.replace('*approvedLink*', approvedLink).replace('*tense*', tense);
         mail.setPlainTextBody(replacedTextBody);
         String bodyHtml = mail.getHtmlBody();
-        String replacedHtmlBody = bodyHtml.replace('*tense*', tense);
-        mail.setHtmlBody(replacedHtmlBody);
-
+        String replacedHtmlBody = bodyHtml.replace('*approvedLink*', approvedLink).replace('*tense*', tense);
+        mail.setHtmlBody(replacedHtmlBody);		
         mail.setToAddresses(new List<string>{
                 emailAddress
         });
@@ -189,8 +194,8 @@ public without sharing class ContactRoleServiceAccessTriggerHandler {
         }
         mail.setSaveAsActivity(false);
         mail.setUseSignature(false);
-        mail.setTreatTargetObjectAsRecipient(false);
-        return mail;
+        mail.setTreatTargetObjectAsRecipient(false);        
+        return mail;        
     }
 
 
