@@ -41,6 +41,8 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
     public Double deliveryPrice  {get; set;}
     public Integer rejectedSize  {get; set;}
     public Double expediteFees  {get; set;}
+    public Double idCardFee {get; set;}
+    public Double coursesFee {get; set;}
 
     private double massAppDeliveryFee = 0;
 
@@ -51,6 +53,20 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
 
     /* information for each pending information*/
     public Map<String, boolean> isApplicationreadyMap {get; set;}
+
+    public Map<String, Boolean> isNotDigitalOnly {get; set;}
+
+    public List<SelectOption> cardTypeList {
+        get {
+            if (cardTypeList == null) {
+                cardTypeList = new List<SelectOption>{};
+                cardTypeList.add(new SelectOption('digital', Label.IDCard_CardType_DigCard));
+                cardTypeList.add(new SelectOption('plastic', Label.IDCard_CardType_PhysCard));
+            }
+            return cardTypeList;
+        }
+        private set;
+    }
 
     /*selected payment mode*/
     public String paymentMode  {get; set;}
@@ -67,17 +83,13 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
 
     /** vars used for mexpedite fees.**/
     public boolean fastExpedition {get; set{
-            fastExpedition = value;
-            if (validatedApplication != null) {
-                for (ID_Card_Application__c app : validatedApplication.values())
-                    if (isApplicationExpediteAvailable(app))
-                        app.IDCard_Expedite_Delivery__c = fastExpedition;
-                calculateAllPrices();
-            }
+            fastExpedition = false;
         }
     }
 
     public Map<String, IATA_ISO_Country__c> countriesPerIATACode = new Map<String, IATA_ISO_Country__c>();
+
+    public Map<String, String> countriesPerIATACode2 = new Map<String, String>();
 
     public boolean IsExpediteAvailable {get; set;}
 
@@ -97,6 +109,8 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
         rejectedSize = 0;
         deliveryPrice = 0;
         expediteFees = 0;
+        idCardFee = 0;
+        coursesFee = 0;
         cyberSrcData = null;
         fastExpedition =  false;
         cyberSrcData = new Map<String, String>()     ;
@@ -105,6 +119,7 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
         validatedApplication = new Map<String, ID_Card_Application__c> ();
         contactsPerApplication = new Map<String, ContactProxy>();
         isApplicationreadyMap = new Map<String, boolean> ();
+        isNotDigitalOnly = new Map<String, Boolean>();
         singeAppRT = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Single_ID_Card_Operation');
 
         system.debug('[IDCard_AdmPendingOpsController] LOAD LIST');
@@ -192,16 +207,25 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
 
             system.debug('[PENDING FEE] find account for IATACode ' + acc.IATACode__C + '  ID :  ' + acc.Id + ' coutnry ' + acc.BillingCountry + ' TYPE: ' + acc.type);
             accountTypesPerIATACode.put(acc.IATACode__C, IDCardUtil.GetAgentTypeFromAccountType(acc.type));
+            countriesPerIATACode2.put(acc.IATACode__C, acc.IATA_ISO_Country__c);
         }
         countriesPerIATACode = IDCarDUtil.GetIATAISOCountryFromAccounts(accs) ;
+        
         pricePerCountry = new Map<String , Price_Table__c>();
-        List<Price_Table__c> pts = [Select p.ID_Card_Fee__c, p.Expedite__c, p.Mass_Purchase_exp__c,  p.IATA_Package__c,  p.Type_Class_of_Agent__c , p.ISO_Country__c From Price_Table__c p where (Mass_Purchase_exp__c != null and Mass_Purchase_exp__c != 0)];
+        List<Price_Table__c> pts = [Select p.ID_Card_Fee__c, p.Expedite__c, p.Mass_Purchase_exp__c,  p.IATA_Package__c,  p.Type_Class_of_Agent__c , p.ISO_Country__c, p.ISO_Country__r.ISO_Code__c,p.Name, p.Cost_of_Printer__c From Price_Table__c p];
         for (Price_Table__c pt : pts) {
             system.debug('[MASS APP FEE] find record ofr mass feees: class: ' + pt.Type_Class_of_Agent__c + ' country id :' + pt.ISO_Country__c + ' fee: ' + pt.Mass_Purchase_exp__c);
             pricePerCountry.put(pt.ISO_Country__c+'-'+pt.Type_Class_of_Agent__c, pt);
-            ApexPAges.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,pt.ISO_Country__c+'-'+pt.Type_Class_of_Agent__c+' ---> '+pt.Mass_Purchase_exp__c));
-            system.debug(LoggingLevel.ERROR,'#############  INSERISCO NELLA MAPPA: '+pt.ISO_Country__c+'-'+pt.Type_Class_of_Agent__c+' ---> '+pt.Mass_Purchase_exp__c);
         }
+        for (ID_Card_Application__c app : pendingApplications) {
+            Price_Table__c priceTable = pricePerCountry.get(countriesPerIATACode2.get(app.IATA_Code__c)+'-'+accountTypesPerIATACode.get(app.IATA_Code__c));
+            if(IDCard_MobileAppRenewalService.US_COUNTRY_ISO_CODES.contains(priceTable.ISO_Country__r.ISO_Code__c)){
+                isNotDigitalOnly.put(app.Id, false);
+            } else {
+                isNotDigitalOnly.put(app.Id, true);
+            }
+        }
+
         calculateAllPrices();
     }
 
@@ -511,7 +535,7 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
     }
 
     /*Calculate price from selected pending application*/
-    private void calculateAllPrices() {
+    public void calculateAllPrices() {
         system.debug(LoggingLevel.ERROR,'[calculateAllPrices]: calcuated rpice with ' + validatedApplication.size());
         appsCurrency = '-';
         vatPrice = 0;
@@ -519,39 +543,42 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
         deliveryPrice = 0;
         expediteFees = 0 ;
         massAppDeliveryFee = 0;
+        idCardFee = 0;
+        coursesFee = 0;
         
-        for (ID_Card_Application__c app : validatedApplication.values()) {
-            /*system.debug('Find element  with ' + app.Tax_2_Value__c + ' -  ' + app.ID_Card_Fee__c + ' -  ' + app.IDCard_Expedite_Delivery_Fee__c + ' -  ' + app.Tax_1_Value__c);
-            if (app.Tax_2_Value__c != null) {
-                try {
-                    vatPrice += Decimal.valueOf(Double.valueOf(app.Tax_2_Value__c.split(' ', 0)[0])).setScale(2);
-                } catch (TypeException te) {
-                    ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR, 'Failed to calculate VAT amout. Please contact IATA.' ));
-                }
-            }
-            if (app.Tax_1_Value__c != null) {
-                try {
-                    vatPrice += Decimal.valueOf(Double.valueOf(app.Tax_1_Value__c.split(' ', 0)[0])).setScale(2);
-                } catch (TypeException te) {
-                    ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR, 'Failed to calculate VAT amout. Please contact IATA.' ));
-                }
-            }*/
-            if (app.ID_Card_Fee__c != null)
-                tPrice += app.Applicable_Fee__c;
-            if (fastExpedition && isApplicationExpediteAvailable(app) ) {
-                system.debug('[CALCULATED FEES] should add fee to app: ' + app.Id);
-                string key = countriesPerIATACode.get(app.IATA_Code__c).ID + '-'+ accountTypesPerIATACode.get(app.IATA_Code__c);
-                ApexPAges.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'KEY: '+key));
-                system.debug(LoggingLevel.ERROR,'#############  KEY: '+key);
-                if (pricePerCountry.get(key).Mass_Purchase_exp__c != null) {
-                    system.debug('[CALCULATED FEES] managed to find fees_: ' + pricePerCountry.get(key));
-                    deliveryPrice =  pricePerCountry.get(key).Mass_Purchase_exp__c;
-                    massAppDeliveryFee =  pricePerCountry.get(key).Mass_Purchase_exp__c;
+        for (ID_Card_Application__c app : pendingApplications) {
 
+            Price_Table__c priceTable = pricePerCountry.get(countriesPerIATACode2.get(app.IATA_Code__c)+'-'+accountTypesPerIATACode.get(app.IATA_Code__c));
+            Boolean isITDIPackage = false;
+                if(app.Package_of_Travel_Professionals_Course_1__c != null){
+                    isITDIPackage = true;
+                } else if(app.Package_of_Travel_Professionals_Course_2__c != null){
+                    isITDIPackage = true;
                 }
+            Boolean isReissue = (app.Type_of_application__c == IDCardUtil.APPLICATIONTYPE_REISSUE);
+            Boolean isToPrint = (app.Card_Type__c == 'plastic');
+            if(IDCard_MobileAppRenewalService.US_COUNTRY_ISO_CODES.contains(priceTable.ISO_Country__r.ISO_Code__c)){
+                app.Card_Type__c = 'digital';
+                isToPrint = false;
             }
-            if (app.CurrencyIsoCode != null)
-                appsCurrency = app.CurrencyIsoCode;
+            app.Applicable_Fee__c = IDCardUtil.GetApplicableFee(priceTable, isReissue, false, isITDIPackage, null, isToPrint);
+            Map<String, decimal> detailledFees = new Map<String, decimal>();
+            detailledFees = IDCardUtil.GetDetailledFees(priceTable, isReissue, false, isITDIPackage, null, null, isToPrint);
+            app.Physical_Card_Fee__c = detailledFees.get('PhysCardFee');
+            app.ID_Card_Fee__c = detailledFees.get('IDCardFee');
+            if(validatedApplication.keyset().contains(app.Id)){
+                
+                if (app.ID_Card_Fee__c != null)
+                    tPrice += app.Applicable_Fee__c;
+                
+                if(app.Card_Type__c == 'plastic') deliveryPrice += app.Physical_Card_Fee__c;
+                idCardFee += app.ID_Card_Fee__c;
+                coursesFee += app.ITDI_Courses_Fee__c;
+                
+                if (app.CurrencyIsoCode != null)
+                    appsCurrency = app.CurrencyIsoCode;
+
+            }
         }
         tPrice += massAppDeliveryFee;
         
@@ -567,6 +594,13 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
                                   Decimal.valueOf(Double.valueOf(app.Tax_2_Value__c.split(' ', 0)[0])).setScale(2));
 
         
+    }
+    
+    public void processAllDigital(){
+        for (ID_Card_Application__c app : pendingApplications) {
+            app.Card_Type__c = 'digital';
+        }
+        calculateAllPrices();
     }
 
     private boolean isApplicationValid(ID_Card_Application__c app) {

@@ -32,10 +32,6 @@ ul li, ol li {
             content: "*&nbsp;";
         }
         
-        .apcontainer div {
-        border-top: 0px;
-        }
-        
         .col1 {
         width: 55%;
         }  
@@ -227,6 +223,5 @@ p.LOB {
     .apcontainer div .intl-tel-input {
         border: 0;
     }
-        
     </style>
 </apex:component>

@@ -7,11 +7,9 @@
         <field>Account$Airline_designator__c</field>
     </columns>
     <columns>
-        <aggregateTypes>Sum</aggregateTypes>
         <field>Account.Account_Roles__r.Account_Role_Services__r.GADM_Account_Service_Details__r$IOSA__c</field>
     </columns>
     <columns>
-        <aggregateTypes>Sum</aggregateTypes>
         <field>Account.Account_Roles__r.Account_Role_Services__r.GADM_Account_Service_Details__r$ISAGO__c</field>
     </columns>
     <columns>

@@ -185,6 +185,20 @@ public static Case createCase(String countryiso, Boolean isConcernCase, String t
 
 }
 
+@AuraEnabled(cacheable=true)
+public static Case createCaseTreasuryDashboard(String recordTypeId) {
+
+	Case newCase = new Case();
+
+	newCase.RecordTypeId = recordTypeId;
+	newCase.Status = 'Open';
+	newCase.CaseArea__c = 'Customer Portal';
+	newCase.Origin = 'Portal';
+
+	return newCase;
+
+}
+
 //Inserts the Case. But sets a savepoint in case the Emails do not exist.
 @AuraEnabled
 public static Case insertCase(Case caseToInsert, List<String> recipientsToAdd) {
@@ -280,4 +294,10 @@ private static void createCaseTeamMemberList(Case cse, list<Contact> listContact
 	}
 	insert listCaseTeam;
 }
+
+	//Checks if user is a level 1 user (haven't completed level 2 registration)
+	@AuraEnabled
+	public static Boolean isUserLevelOne(Id userId){
+		return  [SELECT Contact.Account.Is_General_Public_Account__c  FROM User WHERE Id = :userId].Contact.Account.Is_General_Public_Account__c;
+	}
 }

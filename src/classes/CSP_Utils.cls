@@ -66,7 +66,7 @@ public with sharing class CSP_Utils {
         User loggedUser = [SELECT Id, Profile.Name, contactId, Contact.Account.Top_Parent__c, Contact.Account.Category__c, 
                                     Contact.Account.Sector__c, Contact.Account.Parent.Category__c, Contact.Account.Top_Parent__r.Category__c, 
                                     Contact.Account.ParentId, Contact.Account.RecordType.DeveloperName, Contact.Account.Status__c, 
-                                    Contact.AccountId, Contact.User_Portal_Status__c  
+                                    Contact.AccountId, Contact.User_Portal_Status__c, Contact.Account.IATA_ISO_Country__r.ISO_Code__c
                            FROM User
                            WHERE Id =: UserInfo.getUserId()];
         
@@ -379,6 +379,23 @@ public with sharing class CSP_Utils {
     public static Boolean isAirlineUser() {
         User loggedUser = getLoggedUser();
         return loggedUser.Profile.Name.contains('Airline');
+    }
+
+    /*
+    * Public class used thoughout the portal to return nr of records, a list of records and other properties
+    */
+    public class PagedResult {
+        @AuraEnabled
+        public Integer totalItemCount { get; set; }
+        @AuraEnabled
+        public SObject[] records { get; set; }
+        @AuraEnabled
+        public Boolean userAdmin { get; set; }
+        @AuraEnabled
+        public String url { get; set; }
+        @AuraEnabled
+        public String recordsString { get; set; }
+        
     }
 
 

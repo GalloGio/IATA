@@ -6,7 +6,29 @@
             <c-portal-accept-terms oncloseacceptterms={logOut} onacceptterms={acceptTerms}></c-portal-accept-terms>
         </template>
     
-        <div class="headerContainer borderTransition">
+    <template if:true={displayRegistrationConfirmation}>
+        <c-portal-registration-first-level-confirmation oncloseregistrationpopup={logOut} onhideregistrationpopup={hideRegistration}
+                                                        onconfirmregistration={confirmRegistration}>
+        </c-portal-registration-first-level-confirmation>
+    </template>
+
+    <template if:true={displayFirstLogin}>
+        <c-portal-first-login registrationlevel={registrationlevel}
+                            onclosefirstloginpopup={hideFirstLogin} 
+                            ontriggersecondlevelregistration={triggerSecondLevelRegistration}>
+        </c-portal-first-login>
+    </template>
+
+    <template if:true={displaySecondLevelRegistration}>
+        <c-portal-registration-second-level 
+            trigger={level2RegistrationTrigger}
+            is-triggered-by-request={isTriggeredByRequest}
+            onclosesecondlevelregistration={closeSecondLevelRegistration} 
+            onsecondlevelregistrationcompletedactiontwo={secondLevelRegistrationCompleted}>
+        </c-portal-registration-second-level>
+    </template>
+
+<div class="headerContainer borderTransition">
             <div class="slds-grid slds-wrap maxWidthHeader">
     
                 <!-- MODAL -->
@@ -421,8 +443,11 @@
                                         onclick={navigateToCompanyProfile}>{labels.CSP_CompanyProfile}</span>
                                     <span class="slds-p-around_small text-xsmall text-black profileOption"
                                         onclick={navigateToCases}>{labels.CSP_Cases}</span>
+                                    <!--WMO-627 - ACAMBAS: Begin-->
+                                    <span if:true={displayInvoicesMenu} class="slds-p-around_small text-xsmall text-black profileOption" onclick={navigateToInvoices}>{labels.CSP_IATA_Invoices}</span>
+                                    <!--WMO-627 - ACAMBAS: End-->
                                     <span class="slds-p-around_small text-xsmall text-black profileOption"
-                                        onclick={navigateToChangePassword}> {labels.ISSP_Reset_Password} </span>
+                                    onclick={navigateToCspChangePassword}> {labels.ISSP_Reset_Password} </span>
                                     <span class="slds-p-around_small text-xsmall text-black profileOption"
                                         onclick={logOut}>{labels.CSP_LogOut}</span>
                                 </div>

@@ -270,4 +270,27 @@ private  class AttachmentListCtrlTest {
            system.AssertEquals(res.severity=='SUCCESS',true);
         Test.stopTest();
      }
+
+     //ACAMBAS - WMO-611: Begin
+     static testMethod void testUpdateParentRecord() {
+        //Account
+        Id accountAgencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+        Account newAcc = new Account(Name='Account Test Headquarter', Site = 'Site Test', Sector__c = 'Airline', 
+                                    IATACode__c = '123', Field_Head_Office__c = 'Headquarter', SIS_ID__c = '12345', Accounting_Code__c = 'xx', 
+                                    RecordTypeId = accountAgencyRT);
+        insert newAcc;
+
+        //Invoice
+        Customer_Invoice__c newInv = new Customer_Invoice__c(Invoice_ID__c = 'id-123', Billed_Member_Id__c = '12345', 
+                                                             Billing_Member_IS_Sub_Status__c = 'IATA OFFICE', Invoice_Status__c = 'Unpaid Invoice');
+        insert newInv;
+
+
+        AttachmentListCtrl.updateParentRecord(newInv.id);
+
+        newInv = [SELECT Has_Attachments__c FROM Customer_Invoice__c LIMIT 1];
+
+        system.AssertEquals(newInv.Has_Attachments__c, true);
+     }
+     //ACAMBAS - WMO-611: End
 }

@@ -5,6 +5,7 @@ public with sharing class PortalApplications_Sel extends Selector {
 			Portal_Applications__c.Id,
 			Portal_Applications__c.Name,
 			Portal_Applications__c.Application_icon_URL__c,
+			Portal_Applications__c.Application_icon__c, //WMO-736 - ACAMBAS
 			Portal_Applications__c.Application_URL__c,
 			Portal_Applications__c.Confirm_Box__c,
 			Portal_Applications__c.Confirm_Text__c,

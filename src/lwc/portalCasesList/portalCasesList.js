@@ -26,11 +26,10 @@ import CSP_DateFrom from '@salesforce/label/c.CSP_DateFrom';
 import CSP_DateTo from '@salesforce/label/c.CSP_DateTo';
 import CSP_RemoveAllFilters from '@salesforce/label/c.CSP_RemoveAllFilters';
 import CSP_Apply from '@salesforce/label/c.CSP_Apply';
-import CSP_FAQReachUsBanner_ButtonText from '@salesforce/label/c.CSP_FAQReachUsBanner_ButtonText';
 
 export default class PortalCasesList extends NavigationMixin(LightningElement) {
 
-    @track label = {
+    label = {
         CSP_RecentCases,
         CSP_SeeAll,
         Created_By,
@@ -43,8 +42,7 @@ export default class PortalCasesList extends NavigationMixin(LightningElement) {
         ISSP_Contact,
         CSP_DateFrom,
         CSP_DateTo,
-		CSP_RemoveAllFilters,
-		CSP_FAQReachUsBanner_ButtonText,
+        CSP_RemoveAllFilters,
         CSP_Apply
     };
 
@@ -134,9 +132,9 @@ export default class PortalCasesList extends NavigationMixin(LightningElement) {
         getSelectedColumns({ sObjectType : 'Case', sObjectFields : this.fieldLabels })
         .then(results => {
             this.columns = [
-                {label: results.CaseNumber, fieldName: 'CaseURL', type: 'url', initialWidth: 135, typeAttributes: {label: {fieldName: 'CaseNumber'}, target:'_self'}},
+                {label: results.CaseNumber, fieldName: 'CaseURL', type: 'url', initialWidth: 135, typeAttributes: {label: {fieldName: 'CaseNumber'}, target:'_self', tooltip: {fieldName: 'CaseNumber'}}},
                 {label: results.Type_of_case_Portal__c, fieldName: 'Type_of_case_Portal__c', type: 'text', initialWidth: 135, cellAttributes: {class: 'cellHidden'}},
-                {label: results.Subject, fieldName: 'CaseURL', type: 'url', initialWidth: 350, typeAttributes: {label: {fieldName: 'Subject'}, target:'_self'}, cellAttributes: {class: 'slds-text-title_bold text-black'}},
+                {label: results.Subject, fieldName: 'CaseURL', type: 'url', initialWidth: 350, typeAttributes: {label: {fieldName: 'Subject'}, target:'_self', tooltip: {fieldName: 'Subject'}}, cellAttributes: {class: 'slds-text-title_bold text-black'}},
                 {label: ISSP_Contact, fieldName: 'ContactName', type: 'text'},
                 {label: results.LastModifiedDate, fieldName: 'LastModifiedDate', type: 'date', typeAttributes: {year: "numeric", month: "short", day: "2-digit", hour: "2-digit", minute: "2-digit"}, cellAttributes: {class: 'cellHidden'}},
                 {label: results.Country_concerned__c, fieldName: 'Country', type: 'text', cellAttributes: {class: 'cellHidden'}},

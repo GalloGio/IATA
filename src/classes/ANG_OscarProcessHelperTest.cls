@@ -87,6 +87,7 @@ private class ANG_OscarProcessHelperTest {
 		theAccreditation.Location_Type__c='HE';
 		theAccreditation.SAAM_Case__c=oscarCase.Id;
 		theAccreditation.Account_Name__c = a1.Id;
+		theAccreditation.ISSP_AMS_GDS_with_signed_contract__c = 'Amadeus';
 
 		insert theAccreditation;
 
@@ -427,7 +428,7 @@ private class ANG_OscarProcessHelperTest {
 		
 				
 		
-		AMS_Pax_Accreditation_Form__c theAccreditation = new AMS_Pax_Accreditation_Form__c(id = oscar.AMS_Online_Accreditation__c);
+		AMS_Pax_Accreditation_Form__c theAccreditation = new AMS_Pax_Accreditation_Form__c(id = oscar.AMS_Online_Accreditation__c, ISSP_AMS_GDS_with_signed_contract__c = 'Amadeus');
 		theAccreditation.Branch_Office_Email__c='sdf+dfgdg@~df3434.comsdsd';
 		update theAccreditation;
 

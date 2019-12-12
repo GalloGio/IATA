@@ -7,16 +7,18 @@ import getCommunityAvailableLanguages from '@salesforce/apex/CSP_Utils.getCommun
 
 //navigation
 import { NavigationMixin, CurrentPageReference } from 'lightning/navigation';
-import { navigateToPage, getPageName } from 'c/navigationUtils';
+import { navigateToPage, getPageName, getParamsFromPage } from 'c/navigationUtils';
 import getBreadcrumbs from '@salesforce/apex/PortalBreadcrumbCtrl.getBreadcrumbs';
 
 //notification apex method
 import getNotifications from '@salesforce/apex/PortalHeaderCtrl.getNotifications';
 import isAdmin from '@salesforce/apex/CSP_Utils.isAdmin';
+import showIATAInvoices from '@salesforce/apex/PortalHeaderCtrl.showIATAInvoices'; //WMO-696 - ACAMBAS
 import increaseNotificationView from '@salesforce/apex/PortalHeaderCtrl.increaseNotificationView';
 import goToManageService from '@salesforce/apex/PortalHeaderCtrl.goToManageService';
 import goToOldChangePassword from '@salesforce/apex/PortalHeaderCtrl.goToOldChangePassword';
 import redirectChangePassword from '@salesforce/apex/PortalHeaderCtrl.redirectChangePassword';
+import getContactInfo from '@salesforce/apex/PortalRegistrationSecondLevelCtrl.getContactInfo';
 
 import redirectfromPortalHeader from '@salesforce/apex/CSP_Utils.redirectfromPortalHeader';
 
@@ -40,6 +42,7 @@ import NotificationCenter from '@salesforce/label/c.NotificationCenter_Title';
 import ViewDetails from '@salesforce/label/c.ViewDetails_Notification';
 import NotificationDetail from '@salesforce/label/c.NotificationDetail_Detail';
 import ISSP_Reset_Password from '@salesforce/label/c.ISSP_Reset_Password';
+import CSP_IATA_Invoices from '@salesforce/label/c.CSP_IATA_Invoices'; //WMO-627 - ACAMBAS
 
 import Announcement from '@salesforce/label/c.Announcements_Notification';
 import Tasks from '@salesforce/label/c.Tasks_Notification';
@@ -55,6 +58,7 @@ import { getRecord } from 'lightning/uiRecordApi';
 import Id from '@salesforce/user/Id';
 import User_ToU_accept from '@salesforce/schema/User.ToU_accepted__c';
 import AccountSector from '@salesforce/schema/User.Contact.Account.Sector__c';
+import Portal_Registration_Required from '@salesforce/schema/User.Portal_Registration_Required__c';
 
 import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 
@@ -103,15 +107,37 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
 
     // terms
     @track displayAcceptTerms = true;
+    @track displayRegistrationConfirmation = false;
+    @track displayFirstLogin = false;
+    @track firstLogin = false;
 
-    @wire(getRecord, { recordId: Id, fields: [User_ToU_accept] })
+    // l2 registration
+    level2RegistrationTrigger = 'homepage';
+    isTriggeredByRequest = false;
+    
+    @wire(getRecord, { recordId: Id, fields: [User_ToU_accept, Portal_Registration_Required] })
     WiregetUserRecord(result) {
         if (result.data) {
             let user = JSON.parse(JSON.stringify(result.data));
             let acceptTerms = user.fields.ToU_accepted__c.value;
+            let registrationRequired = user.fields.Portal_Registration_Required__c.value;
             let currentURL = window.location.href;
             if (currentURL.includes(this.labels.PortalName)) {
                 this.displayAcceptTerms = acceptTerms;
+            }
+
+            console.log('displayAcceptTerms: ', this.displayAcceptTerms);
+            console.log('firstLogin: ', this.firstLogin);
+            console.log('registrationRequired: ', registrationRequired);
+
+            if(acceptTerms == true){
+                if(registrationRequired == true){
+                    this.displayRegistrationConfirmation = true;
+                }else{
+                    if(this.firstLogin == true){
+                        this.displayFirstLogin = true;
+                    }
+                }
             }
 
         }
@@ -157,8 +183,8 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
         ISSP_Reset_Password,
         CSP_You_Dont_Have_Notifications,
         CSP_You_Dont_Have_Announcements,
-        CSP_You_Dont_Have_Tasks
-
+        CSP_You_Dont_Have_Tasks,
+        CSP_IATA_Invoices //WMO-627 - ACAMBAS
     };
 
     get labels() {
@@ -205,6 +231,9 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
 
     //User Type
     @track userAdmin;
+
+    //Flag that defines if the IATA Invoices entry is displayed in the menu
+    @track displayInvoicesMenu; //WMO-696 - ACAMBAS
 
     //style variables for notifications
     @track sideMenuBarStyle;
@@ -260,6 +289,19 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
             this.userAdmin = result;
         });
 
+        let pageParams = getParamsFromPage();
+        if(pageParams !== undefined && pageParams.firstLogin !== undefined){
+            if(pageParams.firstLogin == "true"){
+                this.firstLogin = true;
+            }
+        }
+
+        //WMO-696 - ACAMBAS: Begin
+        showIATAInvoices().then(result => {
+            this.displayInvoicesMenu = result;
+        });
+        //WMO-696 - ACAMBAS: End
+
         this.redirectChangePassword();
 
         getNotifications().then(result => {
@@ -301,6 +343,9 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
 
         });
 
+        getContactInfo().then(result => {
+            this.displayCompanyTab = !result.Account.Is_General_Public_Account__c;
+        });
     }
 
     redirectChangePassword() {
@@ -340,6 +385,33 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
         }
     }
 
+    //WMO-627 - ACAMBAS: Begin
+    // Navigate to other page tab
+	navigationCheckToPageTab(pageNameToNavigate, currentService, tab) {
+		if (this.trackedIsInOldPortal) {
+            redirectfromPortalHeader({ pageName: currentService }).then(result => {
+                if (tab != null && tab != '')
+                    window.location.href = result + '?tab=' + tab;
+                else
+                    window.location.href = result;
+                });
+        } else {
+            let params = {};
+            if (tab !== undefined && tab !== null) {
+                params.tab = tab;
+            }
+
+            this[NavigationMixin.GenerateUrl]({
+                type: "standard__namedPage",
+                attributes: {
+                    pageName: pageNameToNavigate
+                }
+            })
+            .then(url => navigateToPage(url, params));
+        }
+    }
+    //WMO-627 - ACAMBAS: End
+
     navigateToHomePage() {
         this.navigationCheck("home", "");
         //this.navigateToOtherPage("home");
@@ -364,12 +436,21 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
     }
 
     navigateToCompanyProfile() {
-        this.navigationCheck("company-profile", "company-profile");
+        //WMO-627 - ACAMBAS: Begin
+        //this.navigationCheck("company-profile", "company-profile");
+        this.navigationCheckToPageTab("company-profile", "company-profile", null);
+        //WMO-627 - ACAMBAS: End
     }
 
     navigateToCases() {
         this.navigationCheck("cases-list", "cases-list");
     }
+
+    //WMO-627 - ACAMBAS: Begin
+    navigateToInvoices() {
+        this.navigationCheckToPageTab("company-profile", "company-profile", "invoices");
+    }
+    //WMO-627 - ACAMBAS: End
 
     navigateToSettings() {
         //this.navigateToOtherPage("");
@@ -382,9 +463,13 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
 
     }
 
+    navigateToCspChangePassword() {
+        this.navigationCheck("changePassword", "changePassword");
+    }
+
     //user logout
     logOut() {
-        navigateToPage("/secur/logout.jsp");
+        navigateToPage("/secur/logout.jsp?retUrl=" + CSP_PortalPath + "login");
     }
 
 
@@ -526,8 +611,11 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
                     navigateToPage(results, params);
                 });
             }
-        } else {
+        } else if (notification.type === "Portal Access") {
             navigateToPage("company-profile?tab=contact&contactName=" + notification.contactName);
+        } else {
+            //CUSTOMER INVOICES
+            navigateToPage("company-profile?tab=invoices");
         }
     }
 
@@ -594,6 +682,19 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
 
     }
 
+    confirmRegistration() {
+        const fields = {};
+        fields.Id = Id;
+        fields.Portal_Registration_Required__c = false;
+        const recordInput = { fields };
+
+        updateRecord(recordInput)
+            .then(() => {
+                window.location.reload();
+                //this.displayRegistrationConfirmation = false;
+        });
+    }
+
     close() {
         if (this.openNotifications) {
             this.openNotifications = true;
@@ -602,13 +703,22 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
 
     }
 
+    hideRegistration() {
+        this.displayRegistrationConfirmation = false;
+    }
+
+    hideFirstLogin() {
+        this.displayFirstLogin = false;
+        this.firstLogin = false;
+    }
+
     get totalNotification() {
         let toReturn = true;
         if (this.notificationsList !== undefined) {
             let notList = JSON.parse(JSON.stringify(this.notificationsList));
             if (notList !== undefined && notList.length > 0) {
                 notList.forEach(function (element) {
-                    if (element.type === 'Notification' || element.type === 'Portal Service' || element.type === 'Portal Access')
+                    if (element.type === 'Notification' || element.type === 'Portal Service' || element.type === 'Portal Access' || element.type === 'Customer Invoice')
                         toReturn = false;
                 });
             }
@@ -636,7 +746,7 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
             let notList = JSON.parse(JSON.stringify(this.notificationsList));
             if (notList !== undefined && notList.length > 0) {
                 notList.forEach(function (element) {
-                    if (element.type === 'Portal Service' || element.type === 'Portal Access')
+                    if (element.type === 'Portal Service' || element.type === 'Portal Access' || element.type === 'Customer Invoice')
                         toReturn = false;
                 });
             }
@@ -644,4 +754,19 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
         return toReturn;
     }
 
+    @track displaySecondLevelRegistration = false;
+
+    triggerSecondLevelRegistration(){
+        this.displayFirstLogin = false;
+        this.firstLogin = false;
+        this.displaySecondLevelRegistration= true;
+    }
+
+    closeSecondLevelRegistration(){
+        this.displaySecondLevelRegistration = false;
+    }
+
+    secondLevelRegistrationCompleted(){
+        navigateToPage(CSP_PortalPath,{});
+    }
 }
