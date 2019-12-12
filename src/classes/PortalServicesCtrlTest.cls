@@ -829,7 +829,7 @@ public static void PortalServicesCtrlTest_getAvailableServicesForNewContact(){
 		Test.StopTest();
 	}
 
-}
+
 
 	//WMO-736 - ACAMBAS: Begin
 	@isTest
@@ -843,5 +843,5 @@ public static void PortalServicesCtrlTest_getAvailableServicesForNewContact(){
 		}
 	}
 	//WMO-736 - ACAMBAS: End
-
+}
            
