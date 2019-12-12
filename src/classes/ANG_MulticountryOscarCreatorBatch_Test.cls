@@ -7,11 +7,13 @@ public class ANG_MulticountryOscarCreatorBatch_Test
 		list<Amazon_Cred__c> listAmazonCred =  new list<Amazon_Cred__c>{
 			new Amazon_Cred__c(
 				name = 'GenericAttach',
-				Dev_Configuration__c = 'GenericAttach-dev'
+				Dev_Configuration__c = 'GenericAttach-dev',
+				Prod_Configuration__c = 'GenericAttach-prod'
 			),
 			new Amazon_Cred__c(
 				name = 'RecycleBin',
-				Dev_Configuration__c = 'RecycleBin-dev'
+				Dev_Configuration__c = 'RecycleBin-dev',
+				Prod_Configuration__c = 'RecycleBin-prod'
 			)
 		};
 		insert listAmazonCred;
@@ -28,6 +30,24 @@ public class ANG_MulticountryOscarCreatorBatch_Test
 			),
 			new AWSKey__c(
 				name = 'RecycleBin-dev' ,
+				Key__c = 'asd',
+				Secret__c = 'asd',
+				IAS_configuration_name__c = 'asdas',
+				IAS_Access_Point__c = 'asd',
+				Bucket__c = 'asd',
+				AWS_ENDPOINT_URL__c = 'asd'
+			),
+			new AWSKey__c(
+				name = 'GenericAttach-prod' ,
+				Key__c = 'asd',
+				Secret__c = 'asd',
+				IAS_configuration_name__c = 'asdas',
+				IAS_Access_Point__c = 'asd',
+				Bucket__c = 'asd',
+				AWS_ENDPOINT_URL__c = 'asd'
+			),
+			new AWSKey__c(
+				name = 'RecycleBin-prod' ,
 				Key__c = 'asd',
 				Secret__c = 'asd',
 				IAS_configuration_name__c = 'asdas',
