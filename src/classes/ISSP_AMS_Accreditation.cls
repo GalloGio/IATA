@@ -2138,20 +2138,12 @@ public without sharing class ISSP_AMS_Accreditation {
 				Boolean first = true;
 				String countriesMC = '';
 
-				for (SelectOption country: selectedCountryIsos) {
-					if (first) {
-						countriesMC = country.getValue();
-						first = false;
-					} else {
-						countriesMC += ',' + country.getValue();
-					}
+				if (newForm.Scope_of_Change__c == 'HO - All Branches') {
+					populateHierarchy();
 				}
 
-				if (newForm.Scope_of_Change__c == 'HO - All Branches') {
-					first = true;
-
-					populateHierarchy();
-					for (HierarchyItem hi: hierarchyValues) {
+				for (HierarchyItem hi: hierarchyValues) {
+					if (hi.selected || newForm.Scope_of_Change__c == 'HO - All Branches') {
 						if (first) {
 							countriesMC = hi.acc.Country_ISO_Code__c;
 							first = false;
@@ -2159,9 +2151,13 @@ public without sharing class ISSP_AMS_Accreditation {
 							countriesMC += ',' + hi.acc.Country_ISO_Code__c;
 						}
 					}
-
-					newForm.MultiCountry_Countries_Concerned__c = countriesMC;
 				}
+
+				if (newForm.Scope_of_Change__c.contains('HO') && !countriesMC.contains(hqAccount.Country_ISO_Code__c)) {
+					countriesMC += ',' + hqAccount.Country_ISO_Code__c;
+				}
+
+				newForm.MultiCountry_Countries_Concerned__c = countriesMC;
 			}
 
 			if (newForm.Scope_of_Change__c=='HO Only' || newForm.Scope_of_Change__c=='HO - All Branches') {
