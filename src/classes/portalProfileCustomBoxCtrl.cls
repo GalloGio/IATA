@@ -37,7 +37,7 @@ public without sharing class portalProfileCustomBoxCtrl {
 					theLabel = thisAccount.Name + ' (' + thisAccount.IATACode__c + ')';
 				}else{
 					theLabel = thisAccount.Name;
-				}
+				}			
 			}
 			options.add(new optionWrapper(thisAccount.Id, theLabel));
 		}
@@ -51,4 +51,17 @@ public without sharing class portalProfileCustomBoxCtrl {
 		Database.update(c);
 	}
 
+	@AuraEnabled
+	public static Boolean createPortalApplicationRigth(Id contactId, List<Id> servicesIds){
+		List<Portal_Application_Right__c> rigths = new List<Portal_Application_Right__c>();
+		for(Id service : servicesIds){
+			rigths.add(New Portal_Application_Right__c(Contact__c = contactId, Portal_Application__c = service,	Right__c = 'Access Granted'));
+		}
+		try{
+			insert rigths;
+		}catch(Exception e){
+			return false;
+		}
+		return true;
+	}
 }

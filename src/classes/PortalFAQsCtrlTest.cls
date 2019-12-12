@@ -21,14 +21,47 @@ public class PortalFAQsCtrlTest {
             insert con;
 
             User usr = ISSP_ObjectFactory.createPortalUser(con);
-            PortalFAQsSharingCtrl.validateUserFAQsPermissions(usr.id);
+
+            List<PermissionSet> permSet = [SELECT Id FROM PermissionSet WHERE Name = 'All_DataCategories_Visible' LIMIT 1];
+            String permissionId = permSet[0].Id;
+
+            PermissionSetAssignment ps = new PermissionSetAssignment();
+            ps.AssigneeId = usr.Id;
+		    ps.PermissionSetId = permissionId;
+		    insert ps;
 
             FAQ__kav kavObj = new FAQ__kav();
             kavObj.Title = 'Sample Article Portal Test';
             kavObj.UrlName = 'Sample-Article-Portal-Test';
             kavObj.Summary = 'Summary';
             insert kavObj;
-            
+			
+			System.runAs(usr) { 
+				PortalKnowledge__c faqCategory = new PortalKnowledge__c();
+				faqCategory.Name = 'Travel';
+				faqCategory.FAQsStructure__c = true;
+				faqCategory.DataCategoryName__c = 'Travel';
+				faqCategory.DataCategoryLabel_en_US__c = 'Travel';
+				faqCategory.Order__c = 1;
+
+				PortalKnowledge__c faqTopic = new PortalKnowledge__c();
+				faqTopic.Name = 'IATA EasyPay';
+				faqTopic.FAQsStructure__c = true;
+				faqTopic.DataCategoryName__c = 'Travel';
+				faqTopic.DataTopicName__c = 'IATA_EasyPay';
+				faqTopic.DataCategoryLabel_en_US__c = 'TravelCategory';
+				faqTopic.Order__c = 1;
+
+				PortalKnowledge__c faqSubtopic = new PortalKnowledge__c();
+				faqSubtopic.Name = 'Changes to my Agency';
+				faqSubtopic.FAQsStructure__c = true;
+				faqSubtopic.DataCategoryName__c = 'Travel';
+				faqSubtopic.DataTopicName__c = 'IATA_EasyPay';
+				faqSubtopic.DataSubtopicName__c = 'PAX_Changes_to_my_Agency';
+				faqSubtopic.DataCategoryLabel_en_US__c = 'Changes to my Agency';
+				faqSubtopic.Order__c = 1;
+				insert new List<PortalKnowledge__c>{ faqCategory, faqTopic, faqSubtopic };
+            }
             //retrieve master article Id created on FAQ__kav record insertion
             //in order to get the KnowledgeArticleId
             kavObj = [SELECT KnowledgeArticleId FROM FAQ__kav WHERE Id = :kavObj.Id];
@@ -41,7 +74,7 @@ public class PortalFAQsCtrlTest {
 
             FAQ__DataCategorySelection tempCat = new FAQ__DataCategorySelection ();
             tempCat.DataCategoryGroupName = results[0].getName();
-            tempCat.DataCategoryName = 'IEP_Support';
+            tempCat.DataCategoryName = 'Travel';
             tempCat.ParentId = kavObj.Id;
 
             insert tempCat;
@@ -58,16 +91,16 @@ public class PortalFAQsCtrlTest {
             filtersWrapper.searchText = 'Test Publish Online';
             filtersWrapper.faqsComponent = null;
             filtersWrapper.language = 'en_US';
-            PortalFAQsCtrl.PagedResult resultsWithoutSubtopic = PortalFAQsCtrl.getFilteredFAQsResultsPage(JSON.serialize(filtersWrapper), '0');
+            CSP_Utils.PagedResult resultsWithoutSubtopic = PortalFAQsCtrl.getFilteredFAQsResultsPage(JSON.serialize(filtersWrapper), '0');
 
             filtersWrapper.language = '';
             resultsWithoutSubtopic = PortalFAQsCtrl.getFilteredFAQsResultsPage(JSON.serialize(filtersWrapper), '0');
 
             PortalSearchFilterWrapper.faqsComponent faqsComponent = new PortalSearchFilterWrapper.faqsComponent();
-            faqsComponent.faqSubtopicsList = new List<String>{'IEP_Support'};
+            faqsComponent.faqSubtopicsList = new List<String>{'Travel'};
             filtersWrapper.faqsComponent = faqsComponent;
             filtersWrapper.language = 'en_US';
-            PortalFAQsCtrl.PagedResult resultsWithSubtopic = PortalFAQsCtrl.getFilteredFAQsResultsPage(JSON.serialize(filtersWrapper), '1');
+            CSP_Utils.PagedResult resultsWithSubtopic = PortalFAQsCtrl.getFilteredFAQsResultsPage(JSON.serialize(filtersWrapper), '1');
         }
         Test.stopTest();
     }
@@ -77,9 +110,10 @@ public class PortalFAQsCtrlTest {
 
         Test.startTest();
         System.runAs(testUser) {
-            List<FAQ__kav> article = PortalFAQsCtrl.getArticles('IEP_Support__c');
-            List<FAQ__kav> articleByLanguage = PortalFAQsCtrl.getArticlesByLanguage('IEP_Support__c', 'en_US');
+            List<FAQ__kav> article = PortalFAQsCtrl.getArticles('Travel__c');
+            List<FAQ__kav> articleByLanguage = PortalFAQsCtrl.getArticlesByLanguage('Travel__c', 'en_US');
         }
+        Test.stopTest();
     }
 
     @isTest static void testArticleFeedback() {
@@ -140,5 +174,27 @@ public class PortalFAQsCtrlTest {
                 PortalFAQsCtrl.submitArticleForApproval('KnowledgeFAQArticles', articleToSubmit.Id, UserInfo.getUserId(), 'This is a comment.');
             }
         Test.stopTest();
+    }
+
+    @isTest static void portalGlobalSearch() {
+        
+	    User testUser = [SELECT Id FROM User WHERE Email LIKE '%testemail1@csp.testclass' LIMIT 1];
+    
+	    Test.startTest();
+	    System.runAs(testUser) {
+	    	CSP_Utils.PagedResult test = new CSP_Utils.PagedResult();
+    
+	    	PortalSearchFilterWrapper.faqsComponent faqsComponent = new PortalSearchFilterWrapper.faqsComponent();
+	    	faqsComponent.faqSubtopicsList = new List<String> {'Travel'};
+	    	faqsComponent.show = true;
+    
+	    	PortalSearchFilterWrapper filtersWrapper = new PortalSearchFilterWrapper();
+	    	filtersWrapper.searchText = 'Travel';
+	    	filtersWrapper.faqsComponent = faqsComponent;
+	    	filtersWrapper.language = 'en_US';
+    
+	    	test = PortalGlobalSearchCtrl.portalGlobalSearch(JSON.serialize(filtersWrapper), 'FAQS');
+	    }
+	    Test.stopTest();
     }
 }

@@ -177,6 +177,10 @@ input[type="checkbox"] {
   }
 }
 
+.grayBackgroundSection {
+    background-color: #f7f8fc;
+}
+
 .underLinded {
   border-bottom: 1px solid #e1e1e1;
   padding-bottom: 1%;

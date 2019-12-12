@@ -26,7 +26,9 @@ public with sharing class PortalProfileCtrl {
     PRIVATE STATIC FINAL STRING LABEL_BUSINESS_CONTACT = System.label.csp_Profile_BusinessContact;
     PRIVATE STATIC FINAL STRING LABEL_ACCESSIBILITY = System.label.csp_Profile_PortalAccessibility;
     PRIVATE STATIC FINAL STRING LABEL_PROFESSIONAL = System.label.csp_Profile_Professional;
+	PRIVATE STATIC FINAL STRING LABEL_IDCARD = System.label.CSP_Id_Card;
     
+	PRIVATE STATIC FINAL STRING LABEL_EN_IDCARD = 'ID Card';
     PRIVATE STATIC FINAL STRING LABEL_PRIVACYMANAGEMENTTITLE = System.Label.CSP_Profile_PrivacyManagement_Title;
     PRIVATE STATIC FINAL STRING LABEL_PRIVACYMANAGEMENTTEXT = System.label.CSP_Profile_PrivacyManagement_Text;
     PRIVATE STATIC FINAL STRING LABEL_PRIVACYMANAGEMENTLINK = System.label.CSP_Profile_PrivacyManagement_Link;
@@ -68,6 +70,12 @@ public with sharing class PortalProfileCtrl {
     PRIVATE STATIC FINAL INTEGER INVOICE_BATCH = 15; //WMO-627 - ACAMBAS
 
     PUBLIC STATIC FINAL STRING IATA_INVOICE_TYPE = 'IATA OFFICE'; //WMO-627 - ACAMBAS
+
+	PRIVATE STATIC FINAL String CREDENTIAL_NAME = 'IdCard';
+	PRIVATE STATIC FINAL String FOLDER = 'a0W';
+
+	PUBLIC STATIC FINAL String CATEGORY_TIDS_AGENT = 'TIDS Agent';
+	PRIVATE STATIC FINAL Set<String> countrySet = new Set<String>{'AS', 'GU', 'MP', 'PW', 'UP', 'US'};
 
 public static final Id RECORDTYPE_AGENCY = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 public static final Id RECORDTYPE_AIRLINE_BR = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline_BR');
@@ -404,7 +412,7 @@ public static Contact contactInfo = new Contact();
 		@AuraEnabled
 		public Boolean hasProducts;
 		@AuraEnabled
-		public Boolean selected;
+		public Boolean selected;		
 	}
 
     public class CardWrapper{
@@ -418,12 +426,26 @@ public static Contact contactInfo = new Contact();
         @AuraEnabled
         public Boolean isEditable;
 
+		@AuraEnabled
+		public String idCardUrl;
+		
+		@AuraEnabled
+		public String cardKey;
+
         public CardWrapper(String cardTitleAux, List<FieldWrapper> lstFieldWrapperAux, Boolean isEditableAux){
             this.cardTitle = cardTitleAux;
             this.lstFieldWrapper = lstFieldWrapperAux;
             this.isEditable = isEditableAux;
+			this.idCardUrl = '';
         }
 
+		public CardWrapper(String cardTitleAux, List<FieldWrapper> lstFieldWrapperAux, Boolean isEditableAux, String cardKeyAux, String idCardUrl){
+			this.cardTitle = cardTitleAux;
+			this.lstFieldWrapper = lstFieldWrapperAux;
+			this.isEditable = isEditableAux;
+			this.cardKey = cardKeyAux;
+			this.idCardUrl = idCardUrl;
+		}
 
     }
 
@@ -463,13 +485,39 @@ public static Contact contactInfo = new Contact();
 
         //PROFESSIONAL CARD
         List<FieldWrapper> lstfw4 = new List<FieldWrapper>();
-        fw = new FieldWrapper('ID_CARD',false,true,true);
-        fw.isIdCardInfo = true;
-        lstfw4.add(fw);
         fw = new FieldWrapper('Membership_Function__c',false,true,true);
         fw.isJobFunction = true;
         lstfw4.add(fw);
         lstCardWrapper.add(new CardWrapper(LABEL_PROFESSIONAL, lstfw4, true));
+
+		//ID CARD
+		if(contactInfo.ID_Card_Holder__c == true){
+			List<FieldWrapper> lstfw6 = new List<FieldWrapper>();
+			fw = new FieldWrapper('ID_CARD',false,true,true);
+			fw.isIdCardInfo = true;
+			lstfw6.add(fw);
+
+			//get redirection url for id card contact
+			String redirectionUrl = '';
+			ISSP_CS__c cs;
+
+			if(contactInfo.Account.Sector__c == 'Travel Agent'){
+				if(countrySet.contains(contactInfo.Account.IATA_ISO_Country__r.ISO_Code__c) &&
+						(contactInfo.Account.Category__c == AMS_Utils.IATAN_PASSENGER_SALES_AGENT_USA_ONLY || contactInfo.Account.Category__c == AMS_Utils.TRAVEL_SERVICE_INTERMEDIATES_TSI_USA_ONLY ||
+								contactInfo.Account.Category__c == AMS_Utils.CATEGORY_PASSENGER_SALES_AGENT)){
+					cs = ISSP_CS__c.getInstance('US Cardholders URL');
+				}
+				else{
+					if(contactInfo.Account.Category__c == AMS_Utils.CATEGORY_PASSENGER_SALES_AGENT || contactInfo.Account.Category__c ==  CATEGORY_TIDS_AGENT||
+							contactInfo.Account.Category__c == AMS_Utils.CATEGORY_DOMESTIC_AGENT){
+						cs = ISSP_CS__c.getInstance('Non US Cardholders URL');
+					}
+				}
+			}
+
+			if(cs != null) redirectionUrl = cs.value__c;
+			lstCardWrapper.add(new CardWrapper(LABEL_IDCARD, lstfw6, false, LABEL_EN_IDCARD, redirectionUrl));
+		}
 
         //PRIVACY CARD
         List<FieldWrapper> lstfw5 = new List<FieldWrapper>();
@@ -1119,10 +1167,34 @@ public static Contact contactInfo = new Contact();
         }
     }
 
+	@AuraEnabled
+	public static String getPhotoFromAPI (String photoName) {
+		AmazonCredentials credential = AmazonCredentials.getCredentials(CREDENTIAL_NAME);
+
+		Long timestamp  = System.now().getTime()/1000 + 300;
+		String filename = '/' + credential.Bucket + '/' + FOLDER + '/' + photoName;
+
+		String canonical = 'GET\n\n\n' + timestamp + '\n' + filename;
+		Blob bsig = Crypto.generateMac('HmacSHA1', Blob.valueOf(canonical), Blob.valueOf(credential.Secret));
+		String signature = EncodingUtil.base64Encode(bsig);
+
+		return credential.EndpointBaseURL + filename.removeStart('/') + '?AWSAccessKeyId=' + credential.AWSAccessKeyId + '&Expires=' + timestamp + '&Signature=' + EncodingUtil.urlEncode(signature,'UTF-8');
+	}
+
+    //returns a JSON String with the ProfileWrapper list.
     @AuraEnabled (cacheable=false)
     public static CSP_Utils.PagedResult getFilteredProfileResultsPage(String profileFilterWrapper){
         
-        CSP_Utils.PagedResult filteredProfiles = DAL_WithoutSharing.getSearchProfiles(profileFilterWrapper, myContact);
+        CSP_Utils.PagedResult filteredProfiles = DAL_WithoutSharing.getSearchProfiles(profileFilterWrapper, myContact, '');
+        
+        return filteredProfiles;
+    }
+
+    //returns a JSON String with the ProfileWrapper list.
+    @AuraEnabled (cacheable=false)
+    public static CSP_Utils.PagedResult getFilteredProfileResultsPageWithLimit(String profileFilterWrapper, String limitQuery){
+        
+        CSP_Utils.PagedResult filteredProfiles = DAL_WithoutSharing.getSearchProfiles(profileFilterWrapper, myContact, limitQuery);
         
         return filteredProfiles;
     }
@@ -1160,7 +1232,7 @@ public static Contact contactInfo = new Contact();
             }
             else{
                 this.profileType = profileTypeAux; //set it to "Contact"
-                this.profileUrl = profileIdAux == myContact.Id ? System.Label.CSP_PortalPath + 'my-profile' : System.Label.CSP_PortalPath + 'company-profile?contact='+profileIdAux;
+                this.profileUrl = profileIdAux == myContact.Id ? System.Label.CSP_PortalPath + 'my-profile' : System.Label.CSP_PortalPath + 'company-profile?tab=contact&contact='+profileIdAux;
             }
         }
     }
