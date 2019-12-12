@@ -93,7 +93,7 @@ export default class PortalCompanyProfilePage extends LightningElement {
             if (i + "" === clickedTab) {
                 tabsAux[i].class = "slds-p-around_small cursorPointer text-darkGray activeTab";
             } else {
-                tabsAux[i].class = "slds-p-around_small cursorPointer text-darkGray";
+                tabsAux[i].class = "slds-p-around_small cursorPointer text-darkGray itemTab";
             }
         }
 
@@ -108,9 +108,9 @@ export default class PortalCompanyProfilePage extends LightningElement {
 
         for (let i = 0; i < tabsAux.length; i++) {
             if (i + "" === clickedTab) {
-                tabsAux[i].class = "slds-p-around_small cursorPointer text-darkGray";
+                tabsAux[i].class = "slds-p-around_small cursorPointer text-darkGray itemTab";
             } else {
-                tabsAux[i].class = "slds-p-around_small cursorPointer text-darkGray";
+                tabsAux[i].class = "slds-p-around_small cursorPointer text-darkGray itemTab";
             }
         }
 
