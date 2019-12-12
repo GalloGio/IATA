@@ -25,6 +25,9 @@ public  class IDCard_CheckoutController extends IDCardAbstractController {
     public String orderPage_version {get; set;}
     public String orderPage_serialNumber {get; set;}
     public string idCardFee {get; set;}
+
+    public Double vatPrice {get; set;}
+
     public string itdiCourseFee {get; set;}
     public string expediteDeliveryFee {get; set;}
     public string itdiSelCourseNames {get; set;}
@@ -114,7 +117,7 @@ public  class IDCard_CheckoutController extends IDCardAbstractController {
                                      i.Hours_worked__c, i.Hours_Worked_Code__c, i.Gender__c, i.First_Name__c, i.Email_admin__c, 
                                      i.Duties_in_Current_Agency__c, i.Duties_Code__c, i.Displayed_Name__c, i.Date_of_Birth__c, i.CurrencyIsoCode, i.CreatedDate, i.CreatedById, 
                                      i.Approving_Manager_s_Name__c, i.Approving_Manager_s_Email__c, i.Applicable_Fee__c,
-                                     i.Tax_2_Name__c,  i.Tax_1_Name__c,  i.Tax_1_Value__c,  i.Tax_2_Value__c    
+                                     i.Tax_2_Name__c,  i.Tax_1_Name__c,  i.Tax_1_Value__c,  i.Tax_2_Value__c, i.Physical_Card_Fee__c, i.ID_Card_Fee_Discount__c
                                      From ID_Card_Application__c i 
                                      where i.Id = :applicationId 
                                      limit 1];
@@ -124,29 +127,12 @@ public  class IDCard_CheckoutController extends IDCardAbstractController {
                 
                Map<String,String> taxes =  IDCardTaxUtil.GetTaxes(a.BillingState,a.BillingCountry);
                if(taxes.keySet().Size()==1){   
-                     List<String> taxPercentage =  taxes.values();
-                     List<String> taxName = new List<String>();
-                     taxName.addAll(taxes.keySet());
-                     idCardApplication.Tax_1_Name__c = String.ValueOf(taxName[0]) + '(' + String.ValueOf(taxPercentage[0]) + '%)' ;
-                     idCardApplication.Tax_1_Value__c = IDCardTaxUtil.CalculateTaxes(String.ValueOf(taxPercentage[0]), String.ValueOf(idCardApplication.Applicable_Fee__c)) + ' '+ idCardApplication.CurrencyIsoCode;
-                  
-               }else if(taxes.keySet().Size()==2){
-                     List<String> taxPercentage =  taxes.values();
-                     List<String> taxName = new List<String>();
-                     taxName.addAll(taxes.keySet());
-                     idCardApplication.Tax_1_Name__c = String.ValueOf(taxName[0]) + '(' + String.ValueOf(taxPercentage[0]) + '%)' ;
-                     idCardApplication.Tax_2_Name__c = taxName[1] + '(' + String.ValueOf(taxPercentage[1]) + '%)' ;
-                     
-                     // If I have 2 taxes, I must consider both in the calculation
-                     // As first I retrieve the total amount of the taxes
-                     decimal totaltaxpercentage = decimal.valueOf(taxPercentage[0])+decimal.valueOf(taxPercentage[1]);
-                     decimal totaltaxamount = decimal.valueOf(IDCardTaxUtil.CalculateTaxes(String.valueOf(totaltaxpercentage), String.ValueOf(idCardApplication.Applicable_Fee__c)));
+                     vatPrice = Double.valueOf(Decimal.valueOf(Double.valueOf(idCardApplication.Tax_1_Value__c.split(' ', 0)[0])).setScale(2));
 
-                     // Now I split the total tax amount in the two separate ones
-                     decimal taxamount1 = totaltaxamount / totaltaxpercentage * decimal.valueOf(taxPercentage[0]);
-                     decimal taxamount2 = totaltaxamount / totaltaxpercentage * decimal.valueOf(taxPercentage[1]);            
-                     idCardApplication.Tax_1_Value__c = taxamount1.setScale(2) + ' '+ idCardApplication.CurrencyIsoCode;
-                     idCardApplication.Tax_2_Value__c = taxamount2.setScale(2)+ ' '+ idCardApplication.CurrencyIsoCode;
+               }else if(taxes.keySet().Size()==2){
+                     vatPrice = Double.valueOf(Decimal.valueOf(Double.valueOf(idCardApplication.Tax_1_Value__c.split(' ', 0)[0])).setScale(2) + 
+                                Decimal.valueOf(Double.valueOf(idCardApplication.Tax_2_Value__c.split(' ', 0)[0])).setScale(2));
+
                  }
             }
             catch (Exception ex) {

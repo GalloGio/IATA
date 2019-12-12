@@ -740,11 +740,6 @@ public without sharing class OneId_RegistrationProcessController {
 				}
             }
 
-            Account_Role__c accountRole = new Account_Role__c();
-            if(servName == 'GADM') {
-                accountRole = OneId_RegistrationHelper_GADM.createAccountRole(acc);
-            }
-
             con.AccountId = acc.Id;
             if(! String.isBlank(acc.Iata_Iso_Country__c)) {
                 con.ISO_Country__c = acc.Iata_Iso_Country__c;
@@ -826,7 +821,9 @@ public without sharing class OneId_RegistrationProcessController {
 
             //create contact role after contact is created
             if(servName == 'GADM') {
-                if(serviceSpecificParams.get('isPowerUser') != null) {
+                Account_Role__c accountRole = OneId_RegistrationHelper_GADM.getAccountRole(acc.Id);
+
+                if(serviceSpecificParams.get('isPowerUser') != null && accountRole != null) {
                     OneId_RegistrationHelper_GADM.createContactRole(con, accountRole, Boolean.valueOf(serviceSpecificParams.get('isPowerUser')));
                 }
             }
@@ -906,7 +903,7 @@ public without sharing class OneId_RegistrationProcessController {
 			}
 		}
 
-		if (acc.Sector__c == 'Travel Agent'){
+		if (acc.Sector__c == 'Travel Agent' || acc.Sector__c == 'Cargo Agent'){
 			profileName = ISSP_Constant.profilNameByUserTypeMap.get(userType).get('Agency');
 		}
 		else if (acc.Sector__c == 'Airline'){

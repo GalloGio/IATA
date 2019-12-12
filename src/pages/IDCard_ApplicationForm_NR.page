@@ -193,6 +193,7 @@
     //You need to wrap everything in document.ready because the select tag we are taregting needs to
     //be loaded in the DOM befire we can access it.
     $(document).ready(function() {
+        rerenderRenewPageValues();
         //-----EDIT THE NEXT TWO LINES-----
         var startYear=1930; //replace 1930 with whatever year you want to start with;
         var endYear=2034; //replace 2034 with whatever year you want to end with;
@@ -940,6 +941,9 @@ rendered="{!isEmployee}" accept="application/pdf" />
                     <br/>
                     
                     <apex:pageMessages id="ErrorMsgs" escape="false" />
+                    <apex:actionRegion>
+                        <apex:actionFunction name="rerenderRenewPageValues" reRender="panelIDCardFees"/>
+                    </apex:actionRegion>
                     <center>
                         <apex:actionStatus id="saveStatus">
                             
@@ -965,31 +969,48 @@ rendered="{!isEmployee}" accept="application/pdf" />
                 
                 <apex:outputPanel id="panelIDCardFees" rendered="{!DisplayFees}">
                     
-                    <apex:pageBlockSection columns="2" collapsible="false" rendered="{!IsExpediteAvailable}" >
+                    <apex:pageBlockSection columns="2" collapsible="false" rendered="{!isCardTypeChoiceAvailable}" >
                         
-                        <apex:outputText styleclass="LabelsBlue" value="{!$Label.IDCard_DeliveryOption}"  rendered="{!IsExpediteAvailable}" />   
+                        <apex:outputText styleclass="LabelsBlue" value="{!$Label.IDCard_DeliveryOption}"  rendered="{!isCardTypeChoiceAvailable}" />   
                         <br/>
                         <apex:actionRegion >
                             
+                            <table id="printTable">
+                                <tr>
+                                    <td style="width: 170px"><span class="labelCol">{!$Label.IDCard_CardType_WishToRecieve}</span></td>
+                                    <td> 
+                                        <apex:selectList id="cardTypeSelect" size="1" value="{!IDCardApplicationNR.Card_Type__c}" style="width:100%">
+                                            <apex:selectOptions value="{!cardTypeList}"/>
+                                                <apex:actionSupport event="onchange"  action="{!CalculateApplicationFee}"  reRender="panelApplicableFee, ErrorMsgs, panelIDCardFees"  status="saveStatus"/>
+                                        </apex:selectList>
+                                        &nbsp;&nbsp; 
+                                    </td>
+                                </tr>
+                            </table>
+                            &nbsp;<br/>
+                            <apex:outputText id="textExpedite" value="{!$Label.IDCard_Expedite_Text}" label="" rendered="{!AND(IsExpediteAvailable, IDCardApplicationNR.Card_Type__c == 'plastic')}"/>  
+                            &nbsp;
                             <table id="expediteTable">
                                 <tr>
                                     <td style="width: 170px">
                                         <span class="labelCol">{!$Label.IDCard_Expedite_Delivery}</span>                                          
                                     </td>
                                     <td>
-                                        <apex:inputField id="chckExpedite" value="{!IDCardApplicationNR.IDCard_Expedite_Delivery__c}">
+                                        <apex:inputCheckbox id="chckExpedite"   value="{!IDCardApplicationNR.IDCard_Expedite_Delivery__c}" >
                                             <apex:actionSupport event="onclick" action="{!CalculateApplicationFee}" reRender="panelApplicableFee, ErrorMsgs" status="saveStatus"/>
-                                        </apex:inputField>
+                                        </apex:inputCheckbox>
                                         &nbsp;&nbsp; 
                                         <apex:outputText id="lblExpedite" value="{!expediteFees} {!IDCardApplicationNR.CurrencyIsoCode}" label="" rendered="{!IsExpediteAvailable}" />
                                     </td>                                     
                                 </tr>
                             </table>
-                                  <span>{!$Label.IDCard_Expedite_Note}</span>                             
+
                         </apex:actionRegion>
                         <script> 
-                        var tableStyle = document.getElementById('expediteTable').style;                                
-                        {!IsExpediteAvailable} ? tableStyle.visibility = 'visible' :tableStyle.display = 'none';                                               
+                        var tableStyle = document.getElementById('expediteTable').style; 
+                        {!IsExpediteAvailable && IDCardApplicationNR.Card_Type__c == 'plastic'} ? tableStyle.visibility = 'visible' :tableStyle.display = 'none';
+                        var tableStylePrint = document.getElementById('printTable').style;                                
+                        {!isCardTypeChoiceAvailable} ? tableStylePrint.visibility = 'visible' :tableStyle.display = 'none';                                               
                         </script>
                     </apex:pageBlockSection> 
                     
@@ -1003,7 +1024,7 @@ rendered="{!isEmployee}" accept="application/pdf" />
                     </strong>
                     <br />
                     <apex:outputLabel styleClass="labelCol" escape="false"
-                                      value="{!$Label.ID_Card_Package_Travel_Professionals_1}<br/>{!$Label.ID_Card_Package_Travel_Professionals_2}" />
+                                      value="{!$Label.ID_Card_Package_Travel_Professionals_1}" />
                     <apex:actionRegion >
                         <table>
                             <tr>
@@ -1065,12 +1086,18 @@ rendered="{!isEmployee}" accept="application/pdf" />
                     <apex:actionRegion >
                         <apex:pageBlockSection id="panelApplicableFee" columns="2">
                             
-                            <apex:inputField id="txtPromotionCode" value="{!IDCardApplicationNR.Promotion_Code__c}" style="width:6em" onfocus="setMaxLength('{!$Component.txtPromotionCode}', 6);">
+                            <apex:inputField id="txtPromotionCode" label="{!$Label.IDCard_PromotionCode}" value="{!IDCardApplicationNR.Promotion_Code__c}" style="width:6em" onfocus="setMaxLength('{!$Component.txtPromotionCode}', 6);">
                                 <apex:actionSupport event="onblur"  action="{!CalculateApplicationFee}"   reRender="panelApplicableFee, ErrorMsgs"  status="saveStatus"/>
                             </apex:inputField>
                             <apex:outputText />
                             
-                            <apex:outputText value="{!IDCardApplicationNR.Applicable_Fee__c} {!IDCardApplicationNR.CurrencyIsoCode}"  label="{!$Label.IDCard_FeeApplicable_Label}" />
+                            <apex:outputText value="{!IDCardApplicationNR.ID_Card_Fee__c} {!IDCardApplicationNR.CurrencyIsoCode}"  label="{!$Label.IDCard_fee}" /><br/>
+                            <apex:outputText value="{!IDCardApplicationNR.Physical_Card_Fee__c} {!IDCardApplicationNR.CurrencyIsoCode}"  label="{!$Label.IDCard_FeesPhysical}" /><br/>
+                            <apex:outputText value="{!IDCardApplicationNR.IDCard_Expedite_Delivery_Fee__c} {!IDCardApplicationNR.CurrencyIsoCode}"  label="{!$Label.IDCard_ExpediteFee}" /><br/>
+                            <apex:outputText value="{!IDCardApplicationNR.ITDI_Courses_Fee__c} {!IDCardApplicationNR.CurrencyIsoCode}"  label="{!$Label.ID_Card_Training_Fee}" /><br/>
+                            <apex:outputText value="{!vatPrice} {!IDCardApplicationNR.CurrencyIsoCode}"  label="{!$Label.ID_Card_Taxes}" /><br/>
+                            <apex:outputText value="{!IDCardApplicationNR.ID_Card_Fee_Discount__c} {!IDCardApplicationNR.CurrencyIsoCode}"  label="{!$Label.IDCard_Discount}" /><br/>
+                            <apex:outputText value="{!IDCardApplicationNR.Applicable_Fee__c} {!IDCardApplicationNR.CurrencyIsoCode}"  label="{!$Label.Total_Cost}" />                            
                             <apex:outputText value="{!$Label.IDCard_ExpediteDeliveryAddedtoCardPrice}" rendered="{!IsExpediteDeliveryAddedtoIDCardPrice}"/>
                             
                         </apex:pageBlockSection>

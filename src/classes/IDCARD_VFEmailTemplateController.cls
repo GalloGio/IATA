@@ -184,7 +184,7 @@ public with sharing class IDCARD_VFEmailTemplateController {
              c.Related_ID_Card_Application__r.Tax_2_Name__c, c.Related_ID_Card_Application__r.Payment_Date__c, c.Related_ID_Card_Application__r.Payment_Transaction_Number__c ,
              c.Related_ID_Card_Application__r.Payment_Credit_Card_Number__c, c.Related_ID_Card_Application__r.ID_Card_Fee__c, c.Related_ID_Card_Application__r.IDCard_Expedite_Delivery_Fee__c,
              c.Related_ID_Card_Application__r.ITDI_Courses_Fee__c, c.Related_ID_Card_Application__r.Package_of_Travel_Professionals_Course_1__c, c.Related_ID_Card_Application__r.Package_of_Travel_Professionals_Course_2__c,
-             c.Related_ID_Card_Application__r.IDCard_Prefered_Language__c, c.Related_ID_Card_Application__r.Last_Name__c,
+             c.Related_ID_Card_Application__r.IDCard_Prefered_Language__c, c.Related_ID_Card_Application__r.Last_Name__c, c.Related_ID_Card_Application__r.Physical_Card_Fee__c, c.Related_ID_Card_Application__r.ID_Card_Fee_Discount__c,
              c.Account.BillingStreet, c.Account.BillingCity, c.Account.BillingState, c.Account.BillingPostalCode, c.Account.BillingCountry,
              c.Account.ShippingStreet, c.Account.ShippingCity, c.Account.ShippingState, c.Account.ShippingPostalCode, c.Account.ShippingCountry, c.Account.Name,
              c.Account.Short_Name__c, c.Account.TradeName__c, c.Related_ID_Card_Application__r.Type_of_application__c, c.Related_ID_Card_Application__r.First_Name__c, c.Related_ID_Card_Application__r.Middle_Initial__c,

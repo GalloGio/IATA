@@ -19,6 +19,7 @@ public class PowerBI_Embedded_Dashboard_CTRL_TEST {
         configDev.Username__c = 'some.username@iata.org';
         configDev.Resource__c = 'https://analysis.windows.net/powerbi/api';
         configDev.Password__c = 'some-password';
+        configDev.Application_Identifier__c = 'GADMdev';
         configsToInsert.add(configDev);
 
         PowerBI_Config__c configProd = new PowerBI_Config__c();
@@ -28,6 +29,7 @@ public class PowerBI_Embedded_Dashboard_CTRL_TEST {
         configProd.Username__c = 'some.username.prod@iata.org';
         configProd.Resource__c = 'https://analysis.windows.net/powerbi/api';
         configProd.Password__c = 'some-password-prod';
+        configProd.Application_Identifier__c = 'GADMprod';
         configsToInsert.add(configProd);
 
         insert configsToInsert;

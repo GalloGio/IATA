@@ -22,6 +22,12 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
     public List<SelectOption> countryISOCodeList {get;set;}
     public List<SelectOption> billingStatesList {get; set; }
 
+	public List<IATA_ISO_City__c> billingCityList;
+
+	public String billingCity{get;set;}
+
+	public String billingCityListStr {get { return JSON.serialize(billingCityList); } set;}
+
     private static final string ISO_8859_1_regEx = '^[\\x00-\\x7F\\xA0-\\xFF]+$';  //Reg exp to limit inputted chars to ISO-8859-1
 
     //CNS
@@ -45,7 +51,7 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
         if (applyLanguage != 'en_US' && applyLanguage != 'es' && applyLanguage != 'fr')
             applyLanguage = 'en_US';
 
-        list<Account> lstAcc = new list<Account>([SELECT Id, Name, TradeName__c, Short_Name__c, BillingStreet, BillingPostalCode, BillingCity, IATACode__c, IATA_ISO_Country__c, IATA_ISO_Country__r.Name, Iso_State__c, Iso_State__r.Name, Email__c, Phone, Fax, Company_Type__c, License_Number__c, Solicitation_Flag__c, VAT_Number__c, Website, ShippingStreet, ShippingPostalCode, ShippingCity, Operation__c, Abbreviated_name__c, Abbreviated_address__c, Remittance_frequency__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c, IATA_ISO_Billing_State__c, IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_State__c, Link_agent_name__c, Accreditation_date__c, Expiry_Date__c, Status__c FROM Account WHERE Id = :msoId]);
+        list<Account> lstAcc = new list<Account>([SELECT Id, Name, TradeName__c, Short_Name__c, BillingStreet, BillingPostalCode, BillingCity, IATACode__c, IATA_ISO_Country__c, IATA_ISO_Country__r.Name, Iso_State__c, Iso_State__r.Name, Email__c, Phone, Fax, Company_Type__c, License_Number__c, Solicitation_Flag__c, VAT_Number__c, Website, ShippingStreet, ShippingPostalCode, ShippingCity, Operation__c, Abbreviated_name__c, Abbreviated_address__c, Remittance_frequency__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c, IATA_ISO_Billing_State__c, IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_State__c, Link_agent_name__c, Accreditation_date__c, Expiry_Date__c, Status__c, Geoname_Billing_City__c,Geoname_Billing_City__r.Name,Geoname_Shipping_City__c FROM Account WHERE Id = :msoId]);
 
         System.debug('lstAcc: ' + lstAcc);
 
@@ -98,14 +104,18 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
                     accreditationForm.Shipping_ISO_Country__c = msoAccount.IATA_ISO_Shipping_Country__c;
                     accreditationForm.Shipping_ISO_State__c = msoAccount.IATA_ISO_Shipping_State__c;
                     accreditationForm.Link_agent_name__c = msoAccount.Link_agent_name__c;
+					accreditationForm.Geoname_Billing_City__c = msoAccount.Geoname_Billing_City__c;
+					accreditationForm.Geoname_Shipping_City__c = msoAccount.Geoname_Shipping_City__c;
 
                 } else {
-                    accreditationForm = [SELECT Id, Account_Name__c, Branch_Office_Street_name_number__c, Branch_Office_Postal_code__c, Branch_Office_City__c, Branch_Office_Phone__c, Branch_Office_Email__c, IATACode__c, IATA_ISO_State__c, IATA_ISO_State__r.Name, Branch_Office_Country__c, Branch_Office_Country__r.Name, Short_Name__c, Trade_Name__c, ISSP_AMS_License_No__c, ISSP_AMS_VAT_number__c, Website__c, Shipping_Street__c, Shipping_Postal_Code__c, Branch_Office_FAX__c, Shipping_City__c, Operation__c, Abbreviated_name__c, Abbreviated_Address__c, Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c, Shipping_ISO_Country__c, Shipping_ISO_State__c, Link_agent_name__c FROM AMS_Pax_Accreditation_Form__c WHERE SAAM_Case__c = :oscarCase.Id];
+                    accreditationForm = [SELECT Id, Account_Name__c, Branch_Office_Street_name_number__c, Branch_Office_Postal_code__c, Branch_Office_City__c, Branch_Office_Phone__c, Branch_Office_Email__c, IATACode__c, IATA_ISO_State__c, IATA_ISO_State__r.Name, Branch_Office_Country__c, Branch_Office_Country__r.Name, Short_Name__c, Trade_Name__c, ISSP_AMS_License_No__c, ISSP_AMS_VAT_number__c, Website__c, Shipping_Street__c, Shipping_Postal_Code__c, Branch_Office_FAX__c, Shipping_City__c, Operation__c, Abbreviated_name__c, Abbreviated_Address__c, Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c, Shipping_ISO_Country__c, Shipping_ISO_State__c, Link_agent_name__c, Geoname_Billing_City__c,Geoname_Billing_City__r.Name,Geoname_Shipping_City__c FROM AMS_Pax_Accreditation_Form__c WHERE SAAM_Case__c = :oscarCase.Id];
                 }
                 
                 refreshStates();
                 countrySelected = accreditationForm.Branch_Office_Country__c;
                 billingState = accreditationForm.IATA_ISO_State__c;
+                refreshCities();
+                billingCity = accreditationForm.Geoname_Billing_City__c;
 
                 if (step == 'view') {
                     String auxCtry = '';
@@ -125,8 +135,17 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
                             auxState = billingStatesList.get(i).getLabel();
                         }
                     }
+
+					String auxCity = '';
+					for(Integer i=0 ; i < billingCityList.size() ; i++ ){
+						if(billingCityList.get(i).Id == billingCity){
+							auxCity = billingCityList.get(i).Name;
+						}
+					}
+
                     countrySelected = auxCtry;
                     billingState = auxState;
+                    billingCity = auxCity;
 
                 }
 
@@ -134,12 +153,15 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
                 System.debug('action FM: ' + action);
                 System.debug('step: ' + step);
                 
-                Account acc = [Select Id, IATA_ISO_Country__c, Iso_State__c from Account where Id = :msoId];
+                Account acc = [Select Id, IATA_ISO_Country__c, Iso_State__c, Geoname_Billing_City__c from Account where Id = :msoId];
                 
                 countrySelected = acc.IATA_ISO_Country__c;
                 billingState = acc.Iso_State__c;
+                billingCity = acc.Geoname_Billing_City__c;
+
                 System.debug('countrySelected: ' + countrySelected);
                 System.debug('billingState: ' + billingState);
+                System.debug('billingCity: ' + billingCity);
             }
 
         }
@@ -153,6 +175,7 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
             
         billingStatesList = new List<SelectOption>();
         for (IATA_ISO_State__c s : iso.IATA_ISO_States__r) {
+            if(s.Valid_For_Address__c)
                 billingStatesList.add(new SelectOption(s.Id, s.Name));
             }
 
@@ -173,6 +196,13 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
         }
         
     }
+
+	public void refreshCities(){
+
+		billingCityList = new List<IATA_ISO_City__c>([SELECT Id, Name, GeonameName__c, GeonameAlternateNames__c
+													  FROM Iata_Iso_City__c
+													  WHERE IATA_ISO_State__c = :billingState AND IATA_ISO_State__r.IATA_ISO_Country__c = :countrySelected]);
+	}
 
     public Pagereference securityCheck() {
         // checkIfUserHasAccessToService
@@ -210,6 +240,7 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
 
     // create / update the MSO Account, Oscar, Communication Case, Accreditation Form and Appointment
     public PageReference save() {
+        billingCity = String.isBlank(billingCity)?null:billingCity;
         // validate selection
         Boolean isValid = true;
         Pattern p = Pattern.compile(ISO_8859_1_regEx);
@@ -219,7 +250,7 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
             isValid = false;
         }
 
-        if (billingState == null) {
+		if (billingState == null && billingStatesList.size()>1) {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.ISSP_AMS_MSO_Billing_State_ErrMsg));
             isValid = false;
         }
@@ -246,7 +277,6 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
             accreditationForm.Branch_Office_City__c.addError(Label.ISSP_EnterValidString);
             isValid = false;
         }
-
 
         if (!isValid) {
             return null;
@@ -291,6 +321,7 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
                 accreditationForm.SAAM_Case__c = oscarCase.Id;
                 accreditationForm.IATA_ISO_State__c = billingState;
                 accreditationForm.Branch_Office_Country__c = countrySelected;
+                accreditationForm.Geoname_Billing_City__c = billingCity;
                 insert accreditationForm;
 
                 oscar.AMS_Online_Accreditation__c = accreditationForm.Id;
@@ -301,6 +332,7 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
             } else {
                 accreditationForm.IATA_ISO_State__c = billingState;
                 accreditationForm.Branch_Office_Country__c = countrySelected;
+                accreditationForm.Geoname_Billing_City__c = billingCity;
                 upsert accreditationForm;
             }
         } catch (Exception ex) {
