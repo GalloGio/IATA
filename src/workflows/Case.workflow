@@ -835,6 +835,50 @@
         <template>AP_notification/IAPP_Notification_of_new_docs_received</template>
     </alerts>
     <alerts>
+        <fullName>IATA_ICCS1_Service_Now</fullName>
+        <ccEmails>iata@service-now.com</ccEmails>
+        <ccEmails>iinetcare@iata.org</ccEmails>
+        <ccEmails>jakub.hlahulek@isobar.com</ccEmails>
+        <description>IATA ICCS1 Service Now</description>
+        <protected>false</protected>
+        <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>All/SNOW_ICCS1</template>
+    </alerts>
+    <alerts>
+        <fullName>IATA_ICCS2_Service_Now</fullName>
+        <ccEmails>iata@service-now.com</ccEmails>
+        <ccEmails>iinetcare@iata.org</ccEmails>
+        <ccEmails>jakub.hlahulek@isobar.com</ccEmails>
+        <description>IATA ICCS2 Service Now</description>
+        <protected>false</protected>
+        <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>All/SNOW_ICCS2</template>
+    </alerts>
+    <alerts>
+        <fullName>IATA_ICCS_Service_Now</fullName>
+        <ccEmails>iata@service-now.com</ccEmails>
+        <ccEmails>iinetcare@iata.org</ccEmails>
+        <ccEmails>jakub.hlahulek@isobar.com</ccEmails>
+        <description>IATA_ICCS_Service_Now</description>
+        <protected>false</protected>
+        <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>All/SNOW_ICCS</template>
+    </alerts>
+    <alerts>
+        <fullName>IATA_MITA_Service_Now</fullName>
+        <ccEmails>iata@service-now.com</ccEmails>
+        <ccEmails>iinetcare@iata.org</ccEmails>
+        <ccEmails>jakub.hlahulek@isobar.com</ccEmails>
+        <description>IATA MITA Service Now</description>
+        <protected>false</protected>
+        <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>All/SNOW_MITA_BIETA</template>
+    </alerts>
+    <alerts>
         <fullName>IATA_iiNet_Service_Now</fullName>
         <ccEmails>iata@service-now.com</ccEmails>
         <ccEmails>iinetcare@iata.org</ccEmails>
@@ -2155,6 +2199,17 @@
         </recipients>
         <senderType>CurrentUser</senderType>
         <template>All/IFG_Internal_Case_Close_confirmation_e_mail_HTML_English</template>
+    </alerts>
+    <alerts>
+        <fullName>IFTP_Request_Record_Transfer_Closed</fullName>
+        <description>IFTP - Request Record Transfer Closed</description>
+        <protected>false</protected>
+        <recipients>
+            <field>ContactId</field>
+            <type>contactLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>IFTP/IFTP_Request_Record_Transfer_Closed</template>
     </alerts>
     <alerts>
         <fullName>ISSP_Send_DPC_HP_ACR_email_notification</fullName>
@@ -15498,6 +15553,31 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <value>True</value>
         </criteriaItems>
         <description>IFG - Send email notification for Customer when case is closed</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>IFTP Request Transfer Case Close</fullName>
+        <actions>
+            <name>IFTP_Request_Record_Transfer_Closed</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Case.CaseArea__c</field>
+            <operation>equals</operation>
+            <value>IATA Fuelling Training Portal (IFTP)</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Reason1__c</field>
+            <operation>equals</operation>
+            <value>IFTP Request Record Transfer</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Status</field>
+            <operation>equals</operation>
+            <value>Closed</value>
+        </criteriaItems>
+        <description>Send notification email upon employee transfer case closed.</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>

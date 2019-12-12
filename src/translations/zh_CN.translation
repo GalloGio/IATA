@@ -1888,6 +1888,10 @@
         <label>本文是否有帮助？</label>
         <name>CSP_ArticleHelpful</name>
     </customLabels>
+	<customLabels>
+        <label>分配新服务</label>
+        <name>CSP_Assign_New_Service</name>
+    </customLabels>
     <customLabels>
         <label><!-- Branch Offices --></label>
         <name>CSP_Branch_Offices</name>
@@ -2065,6 +2069,10 @@
         <name>CSP_Confirmed_Requested_Service_Message</name>
     </customLabels>
     <customLabels>
+        <label>更改个人资料名称将影响身份证的有效性。请联系我们的客户服务团队以更改您的个人资料名称</label>
+        <name>CSP_Contact_Id_Card_Error_Msg</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_Contacts_NoResults_text1 --></label>
         <name>CSP_Contacts_NoResults_text1</name>
     </customLabels>
@@ -2113,7 +2121,7 @@
         <name>CSP_Dear</name>
     </customLabels>
     <customLabels>
-        <label>拒绝用户访问</label>
+        <label>拒绝访问权限</label>
         <name>CSP_Deny_User_Access_Title</name>
     </customLabels>
     <customLabels>
@@ -2341,7 +2349,7 @@
         <name>CSP_Frozen_User_Message</name>
     </customLabels>
     <customLabels>
-        <label>授予用户访问权限</label>
+        <label>授予访问权限</label>
         <name>CSP_Grant_User_Access_Title</name>
     </customLabels>
     <customLabels>
@@ -2351,6 +2359,30 @@
     <customLabels>
         <label><!-- CSP_IATA_Country --></label>
         <name>CSP_IATA_Country</name>
+    </customLabels>
+    <customLabels>
+        <label>ID 卡上的姓名</label>
+        <name>CSP_IDCard_Name</name>
+    </customLabels>
+    <customLabels>
+        <label>点击此处查看您的 ID 卡照片</label>
+        <name>CSP_IDCard_Photo</name>
+    </customLabels>
+    <customLabels>
+        <label>照片</label>
+        <name>CSP_IDCard_Photo_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>状态</label>
+        <name>CSP_IDCard_Status</name>
+    </customLabels>
+    <customLabels>
+        <label>到期日</label>
+        <name>CSP_IDCard_Valid_To</name>
+    </customLabels>
+    <customLabels>
+        <label>ID 卡版本号</label>
+        <name>CSP_IDCard_Ver_Number</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_IMPORTANT --></label>
@@ -2649,7 +2681,7 @@
         <name>CSP_L2_Requested_Modal_Message</name>
     </customLabels>
     <customLabels>
-        <label>您好</label>
+        <label>请告诉我们更多内容</label>
         <name>CSP_L2_Requested_Modal_Title</name>
     </customLabels>
     <customLabels>
@@ -2843,6 +2875,10 @@
     <customLabels>
         <label>但是一旦您有了，您会在这里看到最新的。</label>
         <name>CSP_NoCases2</name>
+    </customLabels>
+	<customLabels>
+        <label>抱歉，找不到适用过滤器的结果</label>
+        <name>CSP_NoRecordsFiltered</name>
     </customLabels>
     <customLabels>
         <label>没有结果</label>
@@ -3185,6 +3221,10 @@
         <name>CSP_Services_AccessRequestedTitle</name>
     </customLabels>
     <customLabels>
+        <label>添加收藏</label>
+        <name>CSP_Services_AddFavorite</name>
+    </customLabels>
+    <customLabels>
         <label>下面列出了贵公司的所有可用服务。</label>
         <name>CSP_Services_AvailableServicesHelpText</name>
     </customLabels>
@@ -3217,6 +3257,10 @@
         <name>CSP_Services_MyServicesTabTile</name>
     </customLabels>
     <customLabels>
+        <label>删除收藏</label>
+        <name>CSP_Services_RemoveFavorite</name>
+    </customLabels>
+    <customLabels>
         <label>查看可用服务</label>
         <name>CSP_Services_RequestServiceBannerButton</name>
     </customLabels>
@@ -3231,6 +3275,14 @@
     <customLabels>
         <label>服务信息</label>
         <name>CSP_Services_ServiceInformation</name>
+    </customLabels>
+    <customLabels>
+        <label>显示所有</label>
+        <name>CSP_Services_ShowAll</name>
+    </customLabels>
+    <customLabels>
+        <label>仅显示收藏内容</label>
+        <name>CSP_Services_ShowOnlyFavorites</name>
     </customLabels>
     <customLabels>
         <label>服务</label>
@@ -6537,6 +6589,10 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <name>IDCard_NoModificationAllowed</name>
     </customLabels>
     <customLabels>
+        <label>申请和支付您的（IATA）身份证（新的，续签的，代理变更的），并获得 国际航空运输协会 (IATA) 旅行社福利。</label>
+        <name>IDCard_NoUSServiceDescription</name>
+    </customLabels>
+    <customLabels>
         <label><!-- IDCard No Price Table Found --></label>
         <name>IDCard_No_Price_Table_Found</name>
     </customLabels>
@@ -6829,6 +6885,10 @@ Kindly note that home-based agents are required to coordinate with their colleag
     <customLabels>
         <label><!-- IDCard_TrxNum --></label>
         <name>IDCard_TrxNum</name>
+    </customLabels>
+    <customLabels>
+        <label>（适用于美国代理商）申请（IATA）身份证，注册代理商，支付年度服务费，办理代理商重新认证等</label>
+        <name>IDCard_USServiceDescription</name>
     </customLabels>
     <customLabels>
         <label><!-- IDCard Update Application --></label>
@@ -15853,6 +15913,14 @@ and
     <customLabels>
         <label>请知悉，关于您名字的修改不会影响到ID 卡的信息。若要更改ID中的信息，请登录ID卡平台进行申请。</label>
         <name>ISSP_IdCard_Name_Warning</name>
+    </customLabels>
+    <customLabels>
+        <label>身份证在线平台</label>
+        <name>ISSP_IdCard_NonUS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_IdCard_US --></label>
+        <name>ISSP_IdCard_US</name>
     </customLabels>
     <customLabels>
         <label>进行中</label>
