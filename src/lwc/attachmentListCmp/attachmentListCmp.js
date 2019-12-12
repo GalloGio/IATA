@@ -6,6 +6,7 @@ import redirectToOldPortal from '@salesforce/apex/CSP_Utils.redirectToOldPortal'
 
 import getContentDetails from '@salesforce/apex/AttachmentListCtrl.getContentDetails';
 import deleteAttachment from '@salesforce/apex/AttachmentListCtrl.deleteAttachment';
+import updateParentRecord from '@salesforce/apex/AttachmentListCtrl.updateParentRecord'; //ACAMBAS - WMO-611
 
 import { refreshApex } from '@salesforce/apex';
 
@@ -189,6 +190,16 @@ export default class AttachmentListCmp extends LightningElement {
             this.loading = false;
         });
 
+        //ACAMBAS - WMO-611: Begin
+        //updates parent record
+        updateParentRecord({ recordId: this.parentid }).then(
+            result => {
+                //do nothing
+            }
+        ).error(error => {
+            console.error('Error', error);
+        });
+        //ACAMBAS - WMO-611: End
     }
 
     get renderModalDataTable() {

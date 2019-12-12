@@ -283,6 +283,17 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>ANG_Fees_GoStandard_GoGlobal__c</fullName>
+        <description>Fees to convert from GoStandard to GoGlobal.</description>
+        <externalId>false</externalId>
+        <label>GoStandard to GoGlobal</label>
+        <length>25</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>ANG_Fees_GoStandard_GoLite__c</fullName>
         <description>Fees to convert from GoStandard to GoLite.</description>
         <externalId>false</externalId>
@@ -20452,6 +20463,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>TACT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TACT-Public</fullName>
                 <default>false</default>
             </values>
             <values>

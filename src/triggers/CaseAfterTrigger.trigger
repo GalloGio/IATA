@@ -537,7 +537,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 								if (!lstNotificationTemplate.isEmpty()){
 									system.debug('sending notification to: ' + contactNotificationList);
 									Notification_template__c notificationTemplate = lstNotificationTemplate[0];
-									ISSP_NotificationUtilities.sendNotification(contactNotificationList, notificationTemplate, null, null);
+									ISSP_NotificationUtilities.sendNotification(contactNotificationList, notificationTemplate, null, null, null);
 								}
 							}
 						}

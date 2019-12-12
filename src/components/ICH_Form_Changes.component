@@ -1,0 +1,217 @@
+<apex:component >
+    <apex:attribute name="ctrl" description="controller" type="ISSP_APProcess" required="true"/>
+    <apex:attribute name="readOnly" description="show read only version to create a pdf" type="Boolean" required="false" default="false"/>
+
+    <apex:pageBlockSection columns="1" id="section1" collapsible="true">
+        <apex:facet name="header">
+            <apex:outputpanel>
+                Section 1 - IATA Clearing House – Currency of Clearance &amp; Settlement Selection
+            </apex:outputpanel>
+        </apex:facet>
+    
+        <apex:actionFunction name="forceUpdatesection2" action="{!null}" rerender="section1,section2" status="WaitingStatus" />
+    
+        <apex:outputText styleclass="blue-label-title" value="ICH Manual Regulation 13" escape="false" />
+        <apex:outputText styleclass="" value="The Clearance House standard currencies of Clearance (and, for the avoidance of doubt, for invoicing between Members), shall be the USD, the GBP and the EUR. Each Member shall  choose any one of standard these standard currencies or such other currency as may be accepted  by the Clearing House Manager for Clearance from time to time, and shall notify the Clearing House Manager of that choice; such notice shall remain in effect for at least twelve months. A Member may from time to time change its chosen currency by giving three months prior written notice to the Clearing House Manager, provided that such notice of change of currency shall remain in effect for at least twelve months.  The Clearing House Manager shall promptly notify all Members of the selected currency of Clearance and changes thereto."
+            escape="false" />
+        <!-- Select Currency Clearance  -->
+        <apex:outputText styleclass="strong-label" value="Please indicate your selected Currency of Clearance" escape="false" />
+        <apex:pageBlockSectionItem rendered="{!!readOnly}">
+            <apex:outputLabel value="" />
+            <apex:actionRegion>
+                <apex:selectRadio styleClass="radio-currency-clearance required" layout="pageDirection" value="{!ctrl.ICHCurrencyClearance}"
+                    rendered="{!!readOnly}">
+                    <apex:selectOptions value="{!ctrl.ICHCurrencyClearanceOptions}" />
+                    <apex:actionSupport event="onchange" rerender="section1,section2" status="WaitingStatus" />
+                </apex:selectRadio>
+                <apex:outPutText value="{!ctrl.ICHCurrencyClearance}" rendered="{!readOnly}" />
+            </apex:actionRegion>
+        </apex:pageBlockSectionItem>
+        <apex:outputText value="{!ctrl.ICHCurrencyClearanceLabel}" styleclass="bold" rendered="{!readOnly}" />
+    
+        <apex:outputText styleclass="blue-label-title" value="ICH Manual Regulation 14" escape="false" />
+        <apex:outputText styleclass="" value="Clearances shall be effected in USD, except that Clearance between Members who have both chosen GBP or EUR under Regulation 13 shall be in GBP or EUR respectively as applicable.  All claims will be submitted by Members in the applicable currency of Clearance.  Members may choose a currency of Clearance other than USD, GBP or the EUR as may be agreed and made available by the Clearing House from time to time, the Clearing House to charge such Members a  service fee in that regard."
+            escape="false" />
+        <apex:outputText styleclass="strong-label" value="Table of Clearance Currency" escape="false" />
+    
+        <div class="regular-table regular-table-center no-page-break">
+            <table style="width: 50%; margin-left: 10%;">
+                <tr>
+                    <th class="back-color-1"></th>
+                    <th colspan="3" class="back-color-1">Zone of Billed Member</th>
+                </tr>
+                <tr>
+                    <th class="back-color-2">Zone of Billing Member</th>
+                    <th class="back-color-1">A</th>
+                    <th class="back-color-1">B</th>
+                    <th class="back-color-1">D</th>
+                </tr>
+                <tr>
+                    <td class="back-color-2">A</td>
+                    <td>GBP</td>
+                    <td>USD</td>
+                    <td>USD</td>
+                </tr>
+                <tr>
+                    <td class="back-color-2">B</td>
+                    <td>USD</td>
+                    <td>USD</td>
+                    <td>USD</td>
+                </tr>
+                <tr>
+                    <td class="back-color-2">D</td>
+                    <td>USD</td>
+                    <td>USD</td>
+                    <td>EUR</td>
+                </tr>
+            </table>
+        </div>
+    
+        <apex:outputText styleclass="strong-label" value="Note:" escape="false" />
+        <apex:outputText styleclass="" value="Miscellaneous charges not billed in the applicable Currency of Clearance (in local currency) shall be converted to the applicable Currency of Clearance using the applicable Five Day Rates. See ICH Manual Regulation 16 for more details."
+            escape="false" />
+    
+        <apex:outputText styleclass="blue-label-title" value="ICH Manual Regulation 18" escape="false" />
+        <apex:outputText styleclass="" value="Currencies of settlement are the currencies in which Members are required to settle balances due by them to the Clearing House, or in which they receive settlements from the Clearing House of balances due to them. The currencies of settlement (subject to Regulation 19) are USD, GBP, EUR, and any other currency as may be accepted and made available by the Clearing House Manager from time to time under Regulation 14, applicable as follows: Settlements by or to such Members will normally be made in the applicable currency of Clearance.  Any Member may, however by giving three months prior written to the Clearing House, choose USD, GBP EUR, or any other currency as may be accepted and made available by the Clearing House Manager from time to time under Regulation 14 as the currency of settlement for its transactions.  Such notice shall remain in effect for at least twelve months."
+            escape="false" />
+        <apex:outputPanel rendered="{!!readOnly}">
+            <!-- Selected Clearance A -->
+            <apex:outputPanel rendered="{!ctrl.newform.ICH_Currency_of_Clearance__c='A'}">
+                <apex:outputText styleclass="strong-label" value="As your selection in Currency of Clearance was Zone A, please select one of the following three options available for the Currency of Settlement:"
+                    escape="false" />
+                <apex:actionRegion>
+                    <apex:selectRadio styleClass="radio-currency-clearance required" layout="pageDirection" value="{!ctrl.newform.ICH_Currency_of_Settlement__c}"
+                        onchange="forceUpdatesection2();">
+                        <apex:selectOption itemValue="GBP" itemLabel="Entirely in GBP; therefore on Advice Day the charges submitted into clearance (in the currency of clearance) for Zone B, C and D in USD would be converted into GBP using the exchange rate on Advice Day and Zone A GBP would remain the GBP amount submitted into clearance, therefore arriving at one GBP payable or receivable amount."
+                        />
+                        <apex:selectOption itemValue="USD" itemLabel="Entirely in USD; therefore on Advice Day the charges submitted into clearance (in the currency of clearance) for Zone B, C and D in USD remain the USD amount submitted into clearance and Zone A GBP would be converted into USD on Advice Day, using the exchange rate on Advice Day, therefore arriving at one USD payable or receivable amount."
+                        />
+                        <apex:selectOption itemValue="GBP-USD" itemLabel="In GBP with respect to balance with other Zone A members and in USD with respect to all other zones; therefore amounts submitted into clearance (in the currency of clearance) would be settled exactly as reported, thus is arriving at one USD payable or receivable amount and one GBP payable or receivable amount."
+                        />
+                    </apex:selectRadio>
+                </apex:actionRegion>
+            </apex:outputPanel>
+            <!-- Selected Clearance B -->
+            <apex:outputPanel rendered="{!ctrl.newform.ICH_Currency_of_Clearance__c='B'}">
+                <apex:outputText styleclass="strong-label" value="As your selection in Currency of Clearance was Zone B, please select one of the following three options available for the Currency of Settlement"
+                    escape="false" />
+                <apex:actionRegion>
+                    <apex:selectRadio styleClass="radio-currency-clearance required" layout="pageDirection" value="{!ctrl.newform.ICH_Currency_of_Settlement__c}"
+                        onchange="forceUpdatesection2();">
+                        <apex:selectOption itemValue="USD" itemLabel="Entirely in USD; therefore on Advice Day the charges submitted into clearance (in the currency of clearance) for Zone A, B, C and D in USD be remain as reported in USD therefore arriving at one USD payable or receivable amount."
+                        />
+                        <apex:selectOption itemValue="EUR" itemLabel="Entirely in EUR; therefore on Advice Day the charges submitted into clearance (in the currency of clearance) for Zone A, B, C and D in USD would be converted into EUR using the exchange rate on Advice Day, therefore arriving at one EUR payable or receivable amount."
+                        />
+                        <apex:selectOption itemValue="EUR-USD" itemLabel="In EUR and USD; amount submitted into clearance in USD for a specific Group (A, B or D) for which your company wishes to receive EUR, the USD amount would be converted to EUR on Advice Day, using the banking rate of the day, thus is arriving at one USD payable or receivable amount and one EUR payable or receivable amount."
+                        />
+                    </apex:selectRadio>
+                </apex:actionRegion>
+            </apex:outputPanel>
+            <!-- Selected Clearance D -->
+            <apex:outputPanel rendered="{!ctrl.newform.ICH_Currency_of_Clearance__c='D'}">
+                <apex:outputText styleclass="strong-label" value="As your selection in Currency of Clearance was Zone D, please select one of the following three options available for the Currency of Settlement"
+                    escape="false" />
+                <apex:actionRegion>
+                    <apex:selectRadio styleClass="radio-currency-clearance required" layout="pageDirection" value="{!ctrl.newform.ICH_Currency_of_Settlement__c}"
+                        onchange="forceUpdatesection2();">
+                        <apex:selectOption itemValue="EUR" itemLabel="Entirely in EUR; therefore on Advice Day the charges submitted into clearance (in the currency of clearance) for Zone A, B and C in USD would be converted into EUR using the exchange rate on Advice Day and Zone D EUR would remain the EUR amount submitted into clearance, therefore arriving at one EUR payable or receivable amount."
+                        />
+                        <apex:selectOption itemValue="USD" itemLabel="Entirely in USD; therefore on Advice Day the charges submitted into clearance (in the currency of clearance) for Zone A and B in USD remain the USD amount submitted into clearance and Zone D EUR would be converted into USD on Advice Day, using the exchange rate on Advice Day, therefore arriving at one USD payable or receivable amount."
+                        />
+                        <apex:selectOption itemValue="EUR-USD" itemLabel="In EUR with respect to balance with other Zone D members and in USD with respect to all other zones; therefore amounts submitted into clearance (in the currency of clearance) would be settled exactly as reported, thus is arriving at one USD payable or receivable amount and one EUR payable or receivable amount."
+                        />
+                    </apex:selectRadio>
+                </apex:actionRegion>
+            </apex:outputPanel>
+        </apex:outputPanel>
+        <apex:outputPanel rendered="{!readOnly}">
+            <apex:outputText styleclass="bold" value="Entirely in GBP; therefore on Advice Day the charges submitted into clearance (in the currency of clearance) for Zone B, C and D in USD would be converted into GBP using the exchange rate on Advice Day and Zone A GBP would remain the GBP amount submitted into clearance, therefore arriving at one GBP payable or receivable amount."
+                rendered="{!ctrl.newform.ICH_Currency_of_Settlement__c=='GBP'}" />
+            <apex:outputText styleclass="bold" value="Entirely in USD; therefore on Advice Day the charges submitted into clearance (in the currency of clearance) for Zone B, C and D in USD remain the USD amount submitted into clearance and Zone A GBP would be converted into USD on Advice Day, using the exchange rate on Advice Day, therefore arriving at one USD payable or receivable amount."
+                rendered="{!ctrl.newform.ICH_Currency_of_Settlement__c=='USD'}" />
+            <apex:outputText styleclass="bold" value="In GBP with respect to balance with other Zone A members and in USD with respect to all other zones; therefore amounts submitted into clearance (in the currency of clearance) would be settled exactly as reported, thus is arriving at one USD payable or receivable amount and one GBP payable or receivable amount."
+                rendered="{!ctrl.newform.ICH_Currency_of_Settlement__c=='GBP-USD'}" />
+            <apex:outputText styleclass="bold" value="Entirely in EUR; therefore on Advice Day the charges submitted into clearance (in the currency of clearance) for Zone A, B, C and D in USD would be converted into EUR using the exchange rate on Advice Day, therefore arriving at one EUR payable or receivable amount."
+                rendered="{!ctrl.newform.ICH_Currency_of_Settlement__c=='EUR'}" />
+            <apex:outputText styleclass="bold" value="In EUR and USD; amount submitted into clearance in USD for a specific Group (A, B or D) for which your company wishes to receive EUR, the USD amount would be converted to EUR on Advice Day, using the banking rate of the day, thus is arriving at one USD payable or receivable amount and one EUR payable or receivable amount."
+                rendered="{!ctrl.newform.ICH_Currency_of_Settlement__c=='EUR-USD'}" />
+        </apex:outputPanel>
+        <script>setRequired();</script>
+    
+    </apex:pageBlockSection>
+
+    <apex:pageBlockSection columns="1" id="section2" collapsible="true">
+        <apex:facet name="header">
+            <apex:outputpanel>
+                Section 2 - Bank Accounts
+            </apex:outputpanel>
+        </apex:facet>
+    
+        <apex:outputText styleclass="strong-label" value="ICH Account" escape="false" />
+        <apex:outputText styleclass="" value="The member banking details are mandatory and to be used by the IATA Clearing House for the purpose of making payment to a member that is in a receiving position &ldquo;Balance Due from ICH&rdquo; once a clearance period has been finalized."
+            escape="false" />
+        <apex:outputText styleclass="" value="One Banking Mandate Form will be required to be completed for each currency of clearance that the applicant has chosen previously
+                    in this application form. Note: Only one &ldquo;Additional signatory&rdquo; form is needed." escape="false"
+        />
+    
+        <apex:variable var="show2bankMandate" value="{!OR(ctrl.newform.ICH_Currency_of_Settlement__c=='GBP-USD',ctrl.newform.ICH_Currency_of_Settlement__c=='EUR-USD')}"
+        /> Please download and complete the ICH Bank Mandate form in the link below, and upload using the box:
+        <apex:outputPanel layout="block" rendered="{!ctrl.ICHBankMandateFormUrl!=null}">
+            <apex:outputLink value="{!ctrl.ICHBankMandateFormUrl}" style="color:#31708f; text-decoration: underline;" target="_blank">{!ctrl.ICHBankMandateFormName}</apex:outputLink>
+            <apex:outputText value="  (Please use the same download file link for both bank mandate file uploads)" rendered="{!show2bankMandate}" />
+        </apex:outputPanel>
+    
+        <!-- Bank Mandate upload for GBP, EUR and USD -->
+        <apex:outputPanel rendered="{!NOT(show2bankMandate)}">
+            <apex:iframe scrolling="true" height="190px" rendered="{!!readOnly}" src="/ISSP_FormUpload?caseId={!ctrl.newCase.Id}&reqCnt=5&reqRequired=Mandatory&reqName={!URLENCODE('Bank Mandate Form')}&reqDescription={!URLENCODE('(Please download, complete, sign and print on Company letterhead each banking mandate form listed below)')}&reqIdentifier=BankMandate1&onlyOne=true"
+            />
+            <apex:outputText styleclass="bold" value="{!IF(FIND('BankMandate1',ctrl.listUploadedFileIds)=0,'File not uploaded','File uploaded')}: Bank Mandate"
+                rendered="{!readOnly}" />
+        </apex:outputPanel>
+        <!-- Bank Mandate upload for GBP-USD and EUR-USD -->
+        <apex:outputPanel rendered="{!show2bankMandate}">
+            <apex:iframe scrolling="false" height="190px" rendered="{!!readOnly}" src="/ISSP_FormUpload?caseId={!ctrl.newCase.Id}&reqCnt=6&reqRequired=Mandatory&reqName={!URLENCODE('Bank Mandate Form')} 1&reqDescription={!URLENCODE('(Please download, complete, sign and print on Company letterhead each banking mandate form listed below)')}&reqIdentifier=BankMandate1&onlyOne=true"
+            />
+            <apex:outputText styleclass="bold" value="{!IF(FIND('BankMandate1',ctrl.listUploadedFileIds)=0,'File not uploaded','File uploaded')}: Bank Mandate 1"
+                rendered="{!readOnly}" />
+            <br/>
+            <apex:iframe scrolling="false" height="190px" rendered="{!!readOnly}" src="/ISSP_FormUpload?caseId={!ctrl.newCase.Id}&reqCnt=7&reqRequired=Mandatory&reqName={!URLENCODE('Bank Mandate Form')} 2&reqDescription={!URLENCODE('(Please download, complete, sign and print on Company letterhead each banking mandate form listed below)')}&reqIdentifier=BankMandate2&onlyOne=true"
+            />
+            <apex:outputText styleclass="bold" value="{!IF(FIND('BankMandate2',ctrl.listUploadedFileIds)=0,'File not uploaded','File uploaded')}: Bank Mandate 2"
+                rendered="{!readOnly}" />
+        </apex:outputPanel>
+    
+        <apex:outputText styleclass="strong-label" value="SIS Account" escape="false" />
+        <div class="alert alert-danger" role="alert">
+            An applicant can also provide bank account settlement details to their SIS account registration, if provided the details
+            will be stored in the member profile and will be populated on invoices issued for bilateral settlement
+        </div>
+        <apex:actionRegion>
+            <apex:selectRadio value="{!ctrl.newform.Do_you_want_to_add_Bank_Details__c}" styleClass="radio-currency-clearance required"
+                layout="pageDirection" rendered="{!!readOnly}">
+                <apex:selectOption itemValue="No" itemLabel="No, nothing is needed" />
+                <apex:selectOption itemValue="No, use form 1" itemLabel="No, Use ICH Bank Mandate Form" rendered="{!NOT(show2bankMandate)}" />
+                <apex:selectOption itemValue="No, use form 1" itemLabel="No, Use ICH Bank Mandate Form 1" rendered="{!show2bankMandate}" />
+                <apex:selectOption itemValue="No, use form 2" itemLabel="No, Use ICH Bank Mandate Form 2" rendered="{!show2bankMandate}" />
+                <apex:selectOption itemValue="Yes" itemLabel="Yes, Use this SIS specific Bank Mandate" />
+                <apex:actionSupport event="onchange" rerender="section2" status="WaitingStatus" />
+            </apex:selectRadio>
+        </apex:actionRegion>
+        <apex:outputText value="{!ctrl.newform.Do_you_want_to_add_Bank_Details__c}" styleClass="bold" rendered="{!readOnly}" />
+    
+        <apex:outputPanel layout="block" rendered="{!ctrl.newform.Do_you_want_to_add_Bank_Details__c=='Yes'}">
+            Please download and complete the SIS Bank Mandate form in the link below, and upload using the box:
+            <apex:outputPanel layout="block" rendered="{!ctrl.SISBankMandateFormUrl!=null}">
+                <apex:outputLink value="{!ctrl.SISBankMandateFormUrl}" style="color:#31708f; text-decoration: underline;" target="_blank">{!ctrl.SISBankMandateFormName}</apex:outputLink>
+            </apex:outputPanel>
+            <apex:iframe scrolling="false" height="190px" rendered="{!!readOnly}" src="/ISSP_FormUpload?caseId={!ctrl.newCase.Id}&reqCnt=8&reqRequired=Mandatory&reqName={!URLENCODE('SIS Bank Mandate Form')}&reqDescription={!URLENCODE('(Please download, complete, sign and print on Company letterhead each banking mandate form listed below)')}&reqIdentifier=SISBankMandate&onlyOne=true"
+            />
+            <apex:outputText styleclass="bold" value="{!IF(FIND('SISBankMandate',ctrl.listUploadedFileIds)=0,'File not uploaded','File uploaded')}: SIS Bank Mandate"
+                rendered="{!readOnly}" />
+        </apex:outputPanel>
+    
+        <script>setRequired();</script>
+    
+    </apex:pageBlockSection>
+
+</apex:component>
