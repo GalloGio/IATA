@@ -690,7 +690,7 @@ private class ANG_MulticountryHelperTest {
 			 													WHERE Name IN ('MC Account GE PT', 'S Account HE UK')]);
 
 		Test.startTest();
-		Map<Id, Account> accounts = ANG_MulticountryHelper.getAccountsInfo(accountIds.keySet());
+		Map<Id, Account> accounts = ANG_MulticountryHelper.getChildHEAccounts(accountIds.keySet());
 		Test.stopTest();
 
 		System.assertEquals(1, accounts.size()); // the 1 HE child for PT GE
