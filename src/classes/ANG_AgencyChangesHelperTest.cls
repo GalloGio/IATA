@@ -1066,7 +1066,8 @@ public class ANG_AgencyChangesHelperTest {
 				Branch_Office_FAX__c = '123456780',
 				Branch_Office_Fax_National__c = '123456780',
 				Abbreviated_name__c = 'Lisbon Travel Gods',
-				VAT_Number_2__c = '111222333'
+				VAT_Number_2__c = '111222333',
+				ISSP_AMS_GDS_with_signed_contract__c = 'Amadeus'
 								);
 
 				insert stagingArea;
@@ -1196,7 +1197,8 @@ public class ANG_AgencyChangesHelperTest {
 				Branch_Office_FAX__c = '123456780',
 				Branch_Office_Fax_National__c = '123456780',
 				Abbreviated_name__c = 'Lisbon Travel Gods',
-				VAT_Number_2__c = '111222333'
+				VAT_Number_2__c = '111222333',
+				ISSP_AMS_GDS_with_signed_contract__c = 'Amadeus'
 								);
 
 				insert stagingArea;
@@ -1317,7 +1319,8 @@ public class ANG_AgencyChangesHelperTest {
 				Branch_Office_FAX__c = '123456780',
 				Branch_Office_Fax_National__c = '123456780',
 				Abbreviated_name__c = 'Lisbon Travel Gods',
-				VAT_Number_2__c = '111222333'
+				VAT_Number_2__c = '111222333',
+				ISSP_AMS_GDS_with_signed_contract__c = 'Amadeus'
 								);
 
 				insert stagingArea;
@@ -1441,7 +1444,8 @@ public class ANG_AgencyChangesHelperTest {
 				Branch_Office_FAX__c = '123456780',
 				Branch_Office_Fax_National__c = '123456780',
 				Abbreviated_name__c = 'Lisbon Travel Gods',
-				VAT_Number_2__c = '111222333'
+				VAT_Number_2__c = '111222333',
+				ISSP_AMS_GDS_with_signed_contract__c = 'Amadeus'
 								);
 
 				insert stagingArea;
@@ -1568,7 +1572,8 @@ public class ANG_AgencyChangesHelperTest {
 				Branch_Office_Fax_National__c = '123456780',
 				Abbreviated_name__c = 'Lisbon Travel Gods',
 				VAT_Number_2__c = '111222333',
-				ANG_Accreditation_type__c = 'Cash'
+				ANG_Accreditation_type__c = 'Cash',
+				ISSP_AMS_GDS_with_signed_contract__c = 'Amadeus'
 								);
 
 				insert stagingArea;
@@ -1685,7 +1690,8 @@ public class ANG_AgencyChangesHelperTest {
 				Branch_Office_Fax_National__c = '123456780',
 				Abbreviated_name__c = 'Lisbon Travel Gods',
 				VAT_Number_2__c = '111222333',
-				ANG_Accreditation_type__c = 'Cashless'
+				ANG_Accreditation_type__c = 'Cashless',
+				ISSP_AMS_GDS_with_signed_contract__c = 'Amadeus'
 								);
 
 				insert stagingArea;
@@ -1836,7 +1842,8 @@ public class ANG_AgencyChangesHelperTest {
 				Branch_Office_Fax_National__c = '123456780',
 				Abbreviated_name__c = 'Lisbon Travel Gods',
 				VAT_Number_2__c = '111222333',
-				ANG_Accreditation_type__c = 'Cashless'
+				ANG_Accreditation_type__c = 'Cashless',
+				ISSP_AMS_GDS_with_signed_contract__c = 'Amadeus'
 								);
 
 				insert stagingArea;
@@ -2048,7 +2055,8 @@ public class ANG_AgencyChangesHelperTest {
 				Branch_Office_Fax_National__c = '123456780',
 				Abbreviated_name__c = 'Lisbon Travel Gods',
 				VAT_Number_2__c = '111222333',
-				ANG_Accreditation_type__c = 'Cashless'
+				ANG_Accreditation_type__c = 'Cashless',
+				ISSP_AMS_GDS_with_signed_contract__c = 'Amadeus'
 								);
 
 				insert stagingArea;
@@ -2237,7 +2245,8 @@ public class ANG_AgencyChangesHelperTest {
 				Branch_Office_Fax_National__c = '123456780',
 				Abbreviated_name__c = 'Lisbon Travel Gods',
 				VAT_Number_2__c = '111222333',
-				ANG_Accreditation_type__c = 'Cashless'
+				ANG_Accreditation_type__c = 'Cashless',
+				ISSP_AMS_GDS_with_signed_contract__c = 'Amadeus'
 								);
 
 				insert stagingArea;
@@ -2322,11 +2331,13 @@ public class ANG_AgencyChangesHelperTest {
 				Branch_Office_Fax_National__c = '123456780',
 				Abbreviated_name__c = 'Lisbon Travel Gods',
 				VAT_Number_2__c = '111222333',
-				ANG_Accreditation_type__c = 'Cashless'
+				ANG_Accreditation_type__c = 'Cashless',
+				ISSP_AMS_GDS_with_signed_contract__c = 'Amadeus'
 								);
 
 				insert stagingArea2;
 
+		AMS_OscarTriggerHandler.allOnlineAccr = null;
 
 				oscar2.AMS_Online_Accreditation__c = stagingArea2.Id;
 				oscar2.ANG_Type_Of_Change__c = AMS_Utils.ANG_LOCATION;
@@ -2477,7 +2488,8 @@ public class ANG_AgencyChangesHelperTest {
 				Branch_Office_Fax_National__c = '123456780',
 				Abbreviated_name__c = 'Lisbon Travel Gods',
 				VAT_Number_2__c = '111222333',
-				ANG_Accreditation_type__c = 'Cashless'
+				ANG_Accreditation_type__c = 'Cashless',
+				ISSP_AMS_GDS_with_signed_contract__c = 'Amadeus'
 								);
 
 				insert stagingArea;
@@ -2627,7 +2639,8 @@ public class ANG_AgencyChangesHelperTest {
 				Branch_Office_Fax_National__c = '123456780',
 				Abbreviated_name__c = 'Lisbon Travel Gods',
 				VAT_Number_2__c = '111222333',
-				ANG_Accreditation_type__c = 'Cashless'
+				ANG_Accreditation_type__c = 'Cashless',
+				ISSP_AMS_GDS_with_signed_contract__c = 'Amadeus'
 								);
 
 				insert stagingArea;
@@ -2766,7 +2779,8 @@ public class ANG_AgencyChangesHelperTest {
 				Branch_Office_Fax_National__c = '123456780',
 				Abbreviated_name__c = 'Lisbon Travel Gods',
 				VAT_Number_2__c = '111222333',
-				ANG_Accreditation_type__c = 'Cashless'
+				ANG_Accreditation_type__c = 'Cashless',
+				ISSP_AMS_GDS_with_signed_contract__c = 'Amadeus'
 								);
 
 				insert stagingArea;
@@ -2948,6 +2962,7 @@ public class ANG_AgencyChangesHelperTest {
 		staging.Location_Type__c = acct.Location_Type__c;
 		staging.SAAM_Case__c = oscarCase.Id;
 		staging.ANG_Accreditation_type__c = AMS_Utils.ACCREDITATIONMODEL_CASHLESS;
+		staging.ISSP_AMS_GDS_with_signed_contract__c = 'Amadeus';
 
 		insert staging;
 

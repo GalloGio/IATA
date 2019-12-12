@@ -110,6 +110,7 @@ private class GeneralSOQLQueriesAnalyserTest {
         fieldsOfObject.put('Location_Type__c','HE');
 
         AMS_Pax_Accreditation_Form__c theAccreditation = ANG_EntityCreator.createStagingArea(rtNew, a.Id, c.Id, fieldsOfObject);
+        theAccreditation.ISSP_AMS_GDS_with_signed_contract__c = 'Amadeus';
         insert theAccreditation;
 
         System.debug('Checkpoint 8');
