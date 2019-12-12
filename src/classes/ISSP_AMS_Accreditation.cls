@@ -7426,23 +7426,14 @@ public without sharing class ISSP_AMS_Accreditation {
 		if (hlpMap.containsKey('TRAINED_STAFF_REFERENCE')) {
 			txtHelpTrainedStaffReference = (String) hlpMap.get('TRAINED_STAFF_REFERENCE').get(fldName);
 		}
-		hlpMap = ISSP_AMS_Contextual_Help__c.getValues('PASS_ADMIN');
-        if (hlpMap != null) {
-            if ((String)hlpMap.get(fldName) != null) {
-                txtHelpPassAdmin = (String)hlpMap.get(fldName);
-            } else {
-                txtHelpPassAdmin = (String)hlpMap.get(fldName);
-            }
-        }
-
-        hlpMap = ISSP_AMS_Contextual_Help__c.getValues('PASS_USER');
-        if (hlpMap != null) {
-            if ((String)hlphlpMapget(fldName) != null) {
-                txtHelpPassUser = (String)hlpMap.get(fldName);
-            } else {
-                txtHelpPassUser = (String)hlpMap.get(fldName);
-            }
-        }
+		
+		if (hlpMap.containsKey('PASS_ADMIN')) {
+			txtHelpPassAdmin = (String) hlpMap.get('PASS_ADMIN').get(fldName);
+		}
+		
+		if (hlpMap.containsKey('PASS_USER')) {
+			txtHelpPassUser = (String) hlpMap.get('PASS_USER').get(fldName);
+		}
 
 		txtLocalAgencyDetailsTitle = Label.ISSP_AMS_Local_Details_Title;
 		txtLocalAgencyDetailsPleaseEnter = Label.ISSP_AMS_Local_Details_Please_Enter;
