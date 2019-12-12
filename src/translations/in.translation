@@ -1892,6 +1892,10 @@
         <name>CSP_ArticleHelpful</name>
     </customLabels>
     <customLabels>
+        <label>Tetapkan Layanan Baru</label>
+        <name>CSP_Assign_New_Service</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Branch Offices --></label>
         <name>CSP_Branch_Offices</name>
     </customLabels>
@@ -2068,6 +2072,10 @@
         <name>CSP_Confirmed_Requested_Service_Message</name>
     </customLabels>
     <customLabels>
+        <label>Mengubah nama profil Anda akan memengaruhi validitas KTP Anda. Silakan hubungi Tim Layanan Pelanggan kami untuk mengubah nama profil Anda</label>
+        <name>CSP_Contact_Id_Card_Error_Msg</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_Contacts_NoResults_text1 --></label>
         <name>CSP_Contacts_NoResults_text1</name>
     </customLabels>
@@ -2116,7 +2124,7 @@
         <name>CSP_Dear</name>
     </customLabels>
     <customLabels>
-        <label>Tolak Akses Pengguna</label>
+        <label>Akses ditolak</label>
         <name>CSP_Deny_User_Access_Title</name>
     </customLabels>
     <customLabels>
@@ -2344,7 +2352,7 @@
         <name>CSP_Frozen_User_Message</name>
     </customLabels>
     <customLabels>
-        <label>Berikan Akses Pengguna</label>
+        <label>Akses Diberikan</label>
         <name>CSP_Grant_User_Access_Title</name>
     </customLabels>
     <customLabels>
@@ -2362,6 +2370,30 @@
     <customLabels>
         <label>Email tidak valid</label>
         <name>CSP_Invalid_Email</name>
+    </customLabels>
+    <customLabels>
+        <label>Nama pada Kartu ID</label>
+        <name>CSP_IDCard_Name</name>
+    </customLabels>
+    <customLabels>
+        <label>Klik di sini untuk melihat foto Kartu ID Anda</label>
+        <name>CSP_IDCard_Photo</name>
+    </customLabels>
+    <customLabels>
+        <label>Foto</label>
+        <name>CSP_IDCard_Photo_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP IDCard Status --></label>
+        <name>CSP_IDCard_Status</name>
+    </customLabels>
+    <customLabels>
+        <label>Tanggal Kedaluwarsa</label>
+        <name>CSP_IDCard_Valid_To</name>
+    </customLabels>
+    <customLabels>
+        <label>Nomor VER Kartu ID</label>
+        <name>CSP_IDCard_Ver_Number</name>
     </customLabels>
     <customLabels>
         <label>Info Akun Perusahaan</label>
@@ -2652,7 +2684,7 @@
         <name>CSP_L2_Requested_Modal_Message</name>
     </customLabels>
     <customLabels>
-        <label>Hai</label>
+        <label>Silakan cerita lebih banyak lagi</label>
         <name>CSP_L2_Requested_Modal_Title</name>
     </customLabels>
     <customLabels>
@@ -2846,6 +2878,10 @@
     <customLabels>
         <label>&quot;Tapi begitu Anda sudah memilikinya, Anda akan melihat yang terbaru di sini.&quot;</label>
         <name>CSP_NoCases2</name>
+    </customLabels>
+    <customLabels>
+        <label>Maaf, tidak ditemukan hasil untuk filter yang diterapkan</label>
+        <name>CSP_NoRecordsFiltered</name>
     </customLabels>
     <customLabels>
         <label>Tidak Ada Hasil</label>
@@ -3189,6 +3225,10 @@ dan &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-port
         <name>CSP_Services_AccessRequestedTitle</name>
     </customLabels>
     <customLabels>
+        <label>Tambah favorit</label>
+        <name>CSP_Services_AddFavorite</name>
+    </customLabels>
+    <customLabels>
         <label>Semua layanan yang tersedia untuk perusahaan Anda tercantum di bawah ini.</label>
         <name>CSP_Services_AvailableServicesHelpText</name>
     </customLabels>
@@ -3221,6 +3261,10 @@ dan &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-port
         <name>CSP_Services_MyServicesTabTile</name>
     </customLabels>
     <customLabels>
+        <label>Hapus favorit</label>
+        <name>CSP_Services_RemoveFavorite</name>
+    </customLabels>
+    <customLabels>
         <label>Lihat Layanan yang Tersedia</label>
         <name>CSP_Services_RequestServiceBannerButton</name>
     </customLabels>
@@ -3235,6 +3279,14 @@ dan &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-port
     <customLabels>
         <label>Informasi Layanan</label>
         <name>CSP_Services_ServiceInformation</name>
+    </customLabels>
+    <customLabels>
+        <label>Tampilkan semua</label>
+        <name>CSP_Services_ShowAll</name>
+    </customLabels>
+    <customLabels>
+        <label>Hanya Tampilkan Favorit</label>
+        <name>CSP_Services_ShowOnlyFavorites</name>
     </customLabels>
     <customLabels>
         <label>Layanan</label>

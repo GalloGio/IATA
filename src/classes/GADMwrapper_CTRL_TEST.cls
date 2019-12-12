@@ -55,7 +55,7 @@ public class GADMwrapper_CTRL_TEST {
         accountRole.Account_Roles__c = accountRoles.Id;
         accountRole.Status__c = 'Active';
         accountRole.Effective_From_Date__c = today.addDays(-2);
-        accountRole.Effective_To_Date__c = today;
+        accountRole.Effective_To_Date__c = today.addDays(2);
         insert accountRole;
 
         Contact_Roles__c contactRoles = new Contact_Roles__c();

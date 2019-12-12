@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>46.0</apiVersion>
+    <description>Portal Treasury Dashboard Footer</description>
+    <isExposed>true</isExposed>
+    <masterLabel>Portal Treasury Dashboard Footer</masterLabel>
+</LightningComponentBundle>

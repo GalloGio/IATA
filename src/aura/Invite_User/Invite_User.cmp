@@ -13,6 +13,9 @@
     <aura:attribute name="showBack" type="Boolean" default="false"/>
     <aura:attribute name="userCountry" type="String" />
     <aura:attribute name="showPage" type="Boolean" default="False"/>
+    <aura:attribute name="existingRolePowerUser" type="Boolean" default="False"/>
+    <aura:attribute name="registeredUserAccount" type="Id" default=""/>
+    <aura:attribute name="contactIsAlreadyInvited" type="Boolean" default="false"/>
 
     <!--ARE WE IN LIGHTNING OR CLASSIC?-->
     <aura:attribute name="theme" type="String" default="Theme4d"/>
@@ -72,7 +75,7 @@
                             <aura:if isTrue="{! v.showBack}">
                                 <lightning:button variant="base" label="Back" title="Back" onclick="{! c.backToEmailField }" class="btn btn-primary btn-grey button_width right" />
                             </aura:if>
-                            <lightning:button variant="base" label="Validate" title="Validate" onclick="{! c.checkUsername }" class="btn btn-primary btn-grey button_width left" />
+                            <lightning:button variant="base" label="Validate" title="Validate" onclick="{! c.checkUsername }" class="btn btn-primary btn-grey button_width left"/>
                         </div>
                     </aura:set>
 
@@ -81,12 +84,23 @@
             </div>
 
             <!--EMAIL EXISTS - NOTIFY USER-->
-            <div aura:id="emailExists" class="center slds-size--8-of-12 slds-hide">
-                <div class="slds-col--padded slds-size--8-of-12 center">
+            <div aura:id="contactIsAlreadyInvited" class="slds-grid slds-wrap slds-col slds-size--8-of-12 center slds-hide">
+                <div class="slds-col--padded  text_center">                    
+                    <div class="text_center">{!$Label.c.GADM_User_Already_Invited}</div>
+                </div>
+            </div>
+            <div aura:id="emailExists" class="slds-grid slds-wrap slds-col slds-size--8-of-12 center slds-hide">
+                <div class="slds-col--padded  text_center">                    
                     <div class="text_center">{!$Label.c.GADM_User_Invitation_user_exists}</div>
-                    <div class="slds-col--padded text_center">
-                        <lightning:button aura:id="notifyUserButton" variant="base" label="Notify user" title="Notify user" onclick="{! c.inviteUser}" class="btn btn-primary btn-grey center" />
-                    </div>
+                    <p style="height=2rem;"/>
+                    <span class="slds-col--padded text_center"> 
+                        <aura:if isTrue="{! v.userType == 'Standard'}">
+                                <ui:inputCheckbox label="GADM Power User" class="puCheckExisting" value="{! v.existingRolePowerUser}" />  
+                        </aura:if>
+                        <lightning:combobox aura:id="actorExistingUser" name="accounts" label="Actor" value="{!v.registeredUserAccount}" placeholder="Select Actor" options="{! v.actors }" messageWhenValueMissing="Please select Actor" required="true" onchange="{! c.checkActorDomains}"/>
+                        <lightning:button aura:id="notifyUserButton" variant="base" label="Notify user" title="Notify user" onclick="{! c.inviteUser}" class="btn btn-primary btn-grey" disabled="{!or(v.emailInputError.length > 0, empty(v.registeredUserAccount))}" />
+                    	
+                    </span>
                 </div>
             </div>
 

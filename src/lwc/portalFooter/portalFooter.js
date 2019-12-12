@@ -7,6 +7,7 @@ import { getRecord } from 'lightning/uiRecordApi';
 
 import getCommunityAvailableLanguages from '@salesforce/apex/CSP_Utils.getCommunityAvailableLanguages';
 import changeUserLanguage from '@salesforce/apex/CSP_Utils.changeUserLanguage';
+import isGuestUser from '@salesforce/apex/CSP_Utils.isGuestUser';
 
 import FooterLeadMessage from '@salesforce/label/c.FooterLeadMessage';
 import CSP_Breadcrumb_Support_Title from '@salesforce/label/c.CSP_Breadcrumb_Support_Title';
@@ -31,6 +32,7 @@ export default class PortalFooter extends LightningElement {
     @track chagingLang = false;
     @track loadingLangs = true;
     @track userId = userId;
+    @track internalUser = false;
 
     iataLogo = CSP_PortalPath + 'CSPortal/Images/Logo/logo-group-white.svg';
     facebookIcon = CSP_PortalPath + 'CSPortal/Images/Icons/facebook-icon.svg';
@@ -84,6 +86,10 @@ export default class PortalFooter extends LightningElement {
     }
 
     connectedCallback() {
+        isGuestUser().then(results => {            
+            this.internalUser = !results;
+        });
+
         this.getLanguagesOptions();
     }
 

@@ -128,6 +128,35 @@
                                     </div>
                                 </template>
                             </div>
+                            
+                            <!--SERVICE ACCESS-->
+                            <div
+                                class="text-small fontWeight slds-col slds-size_1-of-1 slds-m-bottom_medium slds-m-top_medium">
+                                {labels.Service_Access}
+                            </div>
+                            <div>
+                                <p class="text-xxsmall text-gray slds-p-bottom_small">{labels.Assign_Service_Access}</p>
+                            </div>
+                            <div class="">
+                                <c-portal-search-lookup-component onsearch={handleServiceSearch}
+                                    item-name="servicesearch" data-id="servicesearch" hide-icon=true is-multi-entry 
+                                    onservicesearch={showServiceResults}
+                                    placeholder={placeholder} onselectionchange={addNewServiceButtonClick}>
+                                </c-portal-search-lookup-component>
+                                <div class="slds-m-top_large slds-scrollable_y recipients-box">
+                                    <template for:each={lstServices} for:item="service">
+                                        <span key={service.id}
+                                            class="slds-p-around_x-small slds-m-around_xx-small custom-recipients">
+                                            {service.title}
+                                            <lightning-icon class="cursorPointer" key={service.id}
+                                                icon-name="utility:close" size="x-small" onclick={removeService}
+                                                data-item={service.id}>
+                                            </lightning-icon>
+                                        </span>
+                                    </template>
+                                </div>
+                            </div>
+                            <!--SERVICE ACCESS-->
 
                             <div class="slds-grid slds-wrap slds-gutters_medium slds-grid--vertical-stretch slds-m-vertical_medium">
                                 <div class="slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2">    

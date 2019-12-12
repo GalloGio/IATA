@@ -1,0 +1,18 @@
+<aura:component>
+    <aura:attribute name="accountId" type="Id"/>
+    <aura:attribute name="canEdit" type="Boolean"/>
+
+    <aura:handler name="controlSpinner" event="c:AWW_Spinner" action="{!c.controlSpinner}"/>
+
+    <div class="slds-grid slds-grid_vertical">
+        <div class="slds-size_2-of-10">
+            <c:AWW_AccountHeader accountId="{!v.accountId}"/>
+        </div>
+        <div class="slds-size_8-of-10">
+            <c:AWW_AccountTabs accountId="{!v.accountId}" canEdit="{!v.canEdit}"/>
+        </div>    
+    </div>     
+    <div aura:id="app-spinner" class="slds-hide">
+        <lightning:spinner class="slds-is-fixed" alternativeText="Loading" size="large"/>
+    </div>   
+</aura:component>
