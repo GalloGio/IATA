@@ -1889,6 +1889,10 @@
         <name>CSP_ArticleHelpful</name>
     </customLabels>
     <customLabels>
+        <label>تعيين خدمة جديدة</label>
+        <name>CSP_Assign_New_Service</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Branch Offices --></label>
         <name>CSP_Branch_Offices</name>
     </customLabels>
@@ -2065,6 +2069,10 @@
         <name>CSP_Confirmed_Requested_Service_Message</name>
     </customLabels>
     <customLabels>
+        <label>سيؤثر تغيير اسم ملفك الشخصي على صلاحية بطاقة هويتك. يُرجى التواصل مع فريق خدمة العملاء لدينا لتغيير اسم ملفك الشخصي</label>
+        <name>CSP_Contact_Id_Card_Error_Msg</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_Contacts_NoResults_text1 --></label>
         <name>CSP_Contacts_NoResults_text1</name>
     </customLabels>
@@ -2113,7 +2121,7 @@
         <name>CSP_Dear</name>
     </customLabels>
     <customLabels>
-        <label>رفض وصول المستخدم</label>
+        <label>منع الدخول</label>
         <name>CSP_Deny_User_Access_Title</name>
     </customLabels>
     <customLabels>
@@ -2341,7 +2349,7 @@
         <name>CSP_Frozen_User_Message</name>
     </customLabels>
     <customLabels>
-        <label>منح وصول للمستخدم</label>
+        <label>السماح بالدخول</label>
         <name>CSP_Grant_User_Access_Title</name>
     </customLabels>
     <customLabels>
@@ -2359,6 +2367,30 @@
     <customLabels>
         <label>عنوان البريد الإلكتروني خاطئ</label>
         <name>CSP_Invalid_Email</name>
+    </customLabels>
+    <customLabels>
+        <label>الاسم على بطاقة الهوية</label>
+        <name>CSP_IDCard_Name</name>
+    </customLabels>
+    <customLabels>
+        <label>انقر هنا لرؤية صورة بطاقة الهوية الخاصة بك</label>
+        <name>CSP_IDCard_Photo</name>
+    </customLabels>
+    <customLabels>
+        <label>صورة فوتوغرافية</label>
+        <name>CSP_IDCard_Photo_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>الحالة</label>
+        <name>CSP_IDCard_Status</name>
+    </customLabels>
+    <customLabels>
+        <label>تاريخ الانتهاء</label>
+        <name>CSP_IDCard_Valid_To</name>
+    </customLabels>
+    <customLabels>
+        <label>رقم بطاقة الهوية</label>
+        <name>CSP_IDCard_Ver_Number</name>
     </customLabels>
     <customLabels>
         <label>معلومات حساب الشركة</label>
@@ -2649,7 +2681,7 @@
         <name>CSP_L2_Requested_Modal_Message</name>
     </customLabels>
     <customLabels>
-        <label>مرحبًا</label>
+        <label>أخبرنا المزيد</label>
         <name>CSP_L2_Requested_Modal_Title</name>
     </customLabels>
     <customLabels>
@@ -2847,6 +2879,10 @@
     <customLabels>
         <label>لا نتائج</label>
         <name>CSP_NoSearchResults</name>
+    </customLabels>
+	<customLabels>
+        <label>عفوًا، لم يتم العثور على نتائج حسب عوامل التصفية المطبقة</label>
+        <name>CSP_NoRecordsFiltered</name>
     </customLabels>
     <customLabels>
         <label>إذا اقتضى الأمر، يمكنك إضافة وثائق إلى القضية.</label>
@@ -3185,6 +3221,10 @@
         <name>CSP_Services_AccessRequestedTitle</name>
     </customLabels>
     <customLabels>
+        <label>إضافة مفضَّلة</label>
+        <name>CSP_Services_AddFavorite</name>
+    </customLabels>
+    <customLabels>
         <label>جميع الخدمات المتاحة لشركتك مدرجة أدناه.</label>
         <name>CSP_Services_AvailableServicesHelpText</name>
     </customLabels>
@@ -3217,6 +3257,10 @@
         <name>CSP_Services_MyServicesTabTile</name>
     </customLabels>
     <customLabels>
+        <label>إزالة مفضَّلة</label>
+        <name>CSP_Services_RemoveFavorite</name>
+    </customLabels>
+    <customLabels>
         <label>عرض الخدمات المتاحة</label>
         <name>CSP_Services_RequestServiceBannerButton</name>
     </customLabels>
@@ -3231,6 +3275,14 @@
     <customLabels>
         <label>معلومات الخدمة</label>
         <name>CSP_Services_ServiceInformation</name>
+    </customLabels>
+    <customLabels>
+        <label>عرض الكل</label>
+        <name>CSP_Services_ShowAll</name>
+    </customLabels>
+    <customLabels>
+        <label>عرض المفضلة فقط</label>
+        <name>CSP_Services_ShowOnlyFavorites</name>
     </customLabels>
     <customLabels>
         <label>الخدمات</label>
@@ -6537,6 +6589,10 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <name>IDCard_NoModificationAllowed</name>
     </customLabels>
     <customLabels>
+        <label>.قدِّم وادفع للحصول على بطاقة الهوية الخاصة بك (جديد، تجديد، تغير الوكالة) واحصل على فوائد وكيل السفر إياتا</label>
+        <name>IDCard_NoUSServiceDescription</name>
+    </customLabels>
+    <customLabels>
         <label><!-- IDCard No Price Table Found --></label>
         <name>IDCard_No_Price_Table_Found</name>
     </customLabels>
@@ -6829,6 +6885,10 @@ Kindly note that home-based agents are required to coordinate with their colleag
     <customLabels>
         <label><!-- IDCard_TrxNum --></label>
         <name>IDCard_TrxNum</name>
+    </customLabels>
+    <customLabels>
+        <label>(للوكلاء الأمريكيين) طلب بطاقات هوية، تسجيل الوكلاء، دفع رسوم الخدمة السنوية، عملية إعادة تأكيد الشهادة للوكالة، إلخ</label>
+        <name>IDCard_USServiceDescription</name>
     </customLabels>
     <customLabels>
         <label><!-- IDCard Update Application --></label>
@@ -15853,6 +15913,14 @@ and
     <customLabels>
         <label>يرجى الانتباه إلى أن أي تغيير لاسم المستخدم لن ينعكس على بطاقة الأياتا. إن كنت ترغب بتغيير الاسم على البطاقة، يرجى التوجه للبوابة الخاصة ببطاقات الأياتا.</label>
         <name>ISSP_IdCard_Name_Warning</name>
+    </customLabels>
+    <customLabels>
+        <label>منصة الإنترنت لبطاقة الهوية</label>
+        <name>ISSP_IdCard_NonUS</name>
+    </customLabels>
+    <customLabels>
+        <label>خدمات إياتا عبر الإنترنت</label>
+        <name>ISSP_IdCard_US</name>
     </customLabels>
     <customLabels>
         <label>قيد التقدم</label>

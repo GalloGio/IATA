@@ -79,8 +79,6 @@ export default class PortalCasesList extends NavigationMixin(LightningElement) {
 
     @track isAdminUser = false; //stores the boolean if the current user is admin or not
 
-    @track loadingMoreResults = false; //loading more results to the datatable
-
     @track viewCasesFiltersModal = false; //toggle for the popup
 
     @track countryPickOptions = []; 
@@ -90,7 +88,14 @@ export default class PortalCasesList extends NavigationMixin(LightningElement) {
     @track adminView = false; //stores if the user is viewing company cases
     @track filtered = false;
 
-    get viewNormalUserCasesTableViewButton(){
+    @track paginationObject = {
+        totalItems: 10,
+        currentPage: 1,
+        pageSize: 10,
+        maxPages: 3
+    }
+
+    get viewNormalUserCasesTableViewButton() {
         return this.adminView === true && this.isAdminUser === true;
     }
 
@@ -148,36 +153,10 @@ export default class PortalCasesList extends NavigationMixin(LightningElement) {
         this.resetPagination();
         this.searchWithNewFilters();
 
-        document.addEventListener('scroll', () => {
-            this.casesScrollListener();
-        }, this);
-
     }
 
-    casesScrollListener(){
-        let filteringObjectAux = JSON.parse(JSON.stringify(this.filteringObject));
+    get viewResults() {
         let casesListAux = JSON.parse(JSON.stringify(this.casesList));
-
-        //if the component is highlighted, and it's not loading and still have more results to fetch, verifies if the scroll is in the 
-        // right position to call the next batch of results
-        if(this.loading === false && this.loadingMoreResults === false
-            && (casesListAux.length < filteringObjectAux.casesComponent.nrResults) && filteringObjectAux.casesComponent.nrResults > 0 ){
-            
-            let divToTop = this.template.querySelectorAll('.endOfTableCases')[0].getBoundingClientRect().top;
-            let windowSize = window.innerHeight;
-            let offset = (windowSize/10)*2; // 20% of the screen size to get more sesults
-
-            if(divToTop < windowSize-offset){
-                // update table
-                this.searchWithNewFilters();
-                this.loadingMoreResults = true;
-            }
-        }
-
-    }
-
-    get viewResults(){
-        let casesListAux = JSON.parse(JSON.stringify(this.casesList)); 
         return casesListAux !== undefined && casesListAux.length > 0;
     }
 
@@ -189,64 +168,63 @@ export default class PortalCasesList extends NavigationMixin(LightningElement) {
 
             filteringObjectAux.casesComponent.nrResults = 0;
 
-            if(this.pageNumber < 0 ){
                 this.loading = true;
-            }else{
-                this.loadingMoreResults = true;
-            }
-            
+
             this.filteringObject = filteringObjectAux;
 
             this.retrieveResultsFromServer();
-            
+
         }
     }
 
-    resetPagination(){
+    resetPagination() {
+        this.paginationObject = {
+            totalItems: this.casesList.length,
+            currentPage: 1,
+            pageSize: 10,
+            maxPages: 3
+        }
         this.pageNumber = -1;
         this.totalResults = 0;
         this.casesList = [];
     }
 
-    retrieveResultsFromServer(){
-
-        let requestedPageNumber = this.pageNumber + 1;
-        this.pageNumber = requestedPageNumber;
-
+    retrieveResultsFromServer() {
+        if (this.pageNumber < 0) {
+            //first call
+            let requestedPageNumber = this.pageNumber + 1;
+            this.pageNumber = requestedPageNumber;
+        }
         let filteringObjectAux = JSON.parse(JSON.stringify(this.filteringObject));
-        let params = { searchKey : JSON.stringify(filteringObjectAux) , requestedPage : requestedPageNumber+'' , isAdminUser : this.adminView };
-		
+        let params = { searchKey: JSON.stringify(filteringObjectAux), requestedPage: this.pageNumber + '', isAdminUser: this.adminView };
         getFilteredCasesResultsPage(params)
-        .then(results => {
+            .then(results => {
+                if (results.records && results.records.length > 0) {
+                    let allDataAux = JSON.parse(JSON.stringify(results));
 
-            if(results.records && results.records.length > 0) {
-                let allDataAux = JSON.parse(JSON.stringify(results));
-				
-                let urlMap = JSON.parse(allDataAux.url);
+                    let urlMap = JSON.parse(allDataAux.url);
 
-                for(let i = 0; i < allDataAux.records.length; i++) {
-                    let row = allDataAux.records[i];
-                    row.CaseURL = urlMap[row.Id];
-                    row.Country = row.Country_concerned_by_the_query__c;
-                    row.ContactName = row.Contact.Name;
-                    row.statusClass= row.Status.replace(/\s/g, '').replace(/_|-|\./g, '') + ' cellHidden';
+                    for (let i = 0; i < allDataAux.records.length; i++) {
+                        let row = allDataAux.records[i];
+                        row.CaseURL = urlMap[row.Id];
+                        row.Country = row.Country_concerned_by_the_query__c;
+                        row.ContactName = row.Contact.Name;
+                        row.statusClass = row.Status.replace(/\s/g, '').replace(/_|-|\./g, '') + ' cellHidden';
+                    }
+
+                    let casesListAux = allDataAux.records;
+                    this.casesList = casesListAux;
+                    let paginationObjectAux = JSON.parse(JSON.stringify(this.paginationObject));
+                    paginationObjectAux.totalItems = allDataAux.totalItemCount;
+                    this.paginationObject = paginationObjectAux;
+
+                } else {
+                    this.casesList = [];
                 }
 
-                let casesListAux = this.casesList.concat(allDataAux.records);
-                this.casesList = casesListAux;
-
-            }else{
-                this.casesList = [];
-            }
 
             filteringObjectAux.casesComponent.nrResults = results.totalItemCount;
-            
-            if(this.pageNumber < 1 ){
                 this.loading = false;
-            }else{
-                this.loadingMoreResults = false;
-            }
-
             this.filteringObject = filteringObjectAux;
         })
         .catch(error => {
@@ -256,9 +234,8 @@ export default class PortalCasesList extends NavigationMixin(LightningElement) {
 
             this.filteringObject = filteringObjectAux;
 
-            this.casesList = [];
-            this.loadingMoreResults = false;
-        });
+                this.casesList = [];
+            });
 
     }
 
@@ -393,14 +370,16 @@ export default class PortalCasesList extends NavigationMixin(LightningElement) {
         let picklistAux = [{checked: false, label: 'All', value: ''}];
         return picklistAux.concat(picklist);
     }
-	
-	openReachUs() {
-        this[NavigationMixin.Navigate]({
-            type: "standard__namedPage",
-            attributes: {
-                pageName: "support-reach-us"
-            },
-        });
+
+    handleSelectedPage(event) {
+        //the event contains the selected page
+        this.loading = true;
+        let requestedPage = event.detail;
+        this.pageNumber = requestedPage - 1;
+        let paginationObjectAux = JSON.parse(JSON.stringify(this.paginationObject));
+        paginationObjectAux.currentPage = requestedPage;
+        this.paginationObject = paginationObjectAux;
+        this.retrieveResultsFromServer();
     }
-    
+
 }

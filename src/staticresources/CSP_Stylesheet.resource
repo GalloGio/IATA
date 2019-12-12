@@ -788,6 +788,16 @@ lightning-datatable .slds-th__action {
   	color: #3333ff;
 }
 
+.outlinedButton.button-half-height,
+.outlinedButton.button-half-height button,
+.outlinedButton.button-half-height button:active,
+.outlinedButton.button-half-height button:visited,
+.outlinedButton.button-half-height button:focus,
+.outlinedButton.button-half-height button:hover  {
+  min-height: 24px;
+  font-size: 14px;
+}
+
 .blueCustomButtonLink, .blueCustomButtonLink button, .blueCustomButtonLink button:active, .blueCustomButtonLink button:visited, .blueCustomButtonLink button:focus {
 	color: #3333ff;
     fill: #3333ff;
@@ -795,7 +805,6 @@ lightning-datatable .slds-th__action {
   font-weight: 500;
   font-size: 14px;
 }
-
 .blueCustomButtonLink button:hover {
 	color: #3333ff;
     fill: #3333ff;
@@ -1056,6 +1065,62 @@ lightning-datatable .slds-th__action {
     left: 0px;
 }
 
+.icon-combobox .slds-combobox_container
+  .slds-input__icon_right
+  lightning-primitive-icon:before {
+  content: "";
+  position: absolute;
+  border-top: 6px solid #fff;
+  border-bottom: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  top: 7px;
+}
+
+.icon-combobox .slds-combobox_container
+  .slds-is-open
+  .slds-input__icon_right
+  lightning-primitive-icon:before {
+  content: "";
+  position: absolute;
+  border-top: 0;
+  border-bottom: 6px solid #fff;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  top: 7px;
+}
+
+.icon-combobox .slds-combobox_container
+  .slds-input__icon_right
+  lightning-primitive-icon:after {
+  content: "";
+  position: absolute;
+  border-top: 6px solid rgb(93, 107, 248);
+  border-bottom: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  top: 4px;
+}
+
+
+.icon-combobox .slds-combobox_container
+  .slds-is-open
+  .slds-input__icon_right
+  lightning-primitive-icon:after {
+  content: "";
+  position: absolute;
+  border-top: 0;
+  border-bottom: 6px solid rgb(93, 107, 248);
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  top: 10px;
+}
+
+.icon-combobox .slds-input__icon-group_right {
+  left: 0.475rem;
+  width: 0.875rem;
+}
+
 .languageSelection .slds-combobox_container
   .slds-input__icon_right
   lightning-primitive-icon:after {
@@ -1137,6 +1202,18 @@ lightning-datatable .slds-th__action {
 
 .customCombobox input {
     height: 3.2rem;
+}
+
+.combobox-categories .slds-combobox_container input {
+  background-color: transparent !important;
+  color: #FFFFFF;
+  margin-top: -2%;
+  margin-bottom: 0%;
+  margin-left: 2%;
+}
+
+.combobox-list-options .slds-listbox {
+  width: auto;
 }
 
 .innerHeaderCss .slds-button .slds-button__icon_right,
@@ -1557,6 +1634,19 @@ lightning-datatable .slds-th__action {
     color: #9a9eb0;
 }
 
+.textSize .slds-form-element__control {
+  font-size: 32px;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.25;
+  letter-spacing: normal;
+}
+
+@media only screen and (max-width: 767px) {
+  .textSize.text-xxxsmall .slds-form-element__control {
+      font-size: 1.2rem;
+  }
+}
 /* End of Profile section overrides*/
 
 .containedButtonWhite {
@@ -1723,6 +1813,11 @@ visibility: hidden;
 /*Used to limit the height of the dropdownlist*/
 .customDropDownMaxHeight .slds-dropdown_length-with-icon-10 {
     max-height: calc(10rem);
+}
+
+
+.firstLevelRegistrationCombobox .slds-dropdown_length-with-icon-10{
+    max-height: calc(18rem);
 }
 
 /* USER INACTIVE POPUP */
@@ -2361,6 +2456,123 @@ input::-ms-reveal {  display: none; width : 0; height: 0; }
     animation-name: fadeOutKeyFrame;
     animation-duration: 0.3s;
 }
+/* portalServicesManagedServices table configuration for mobile */
+@media only screen and (max-device-width: 760px) {
+  .usersTable table tr td:nth-child(3),
+  .usersTable table tr th:nth-child(3),
+  .usersTable table tr td:nth-child(5),
+  .usersTable table tr th:nth-child(5) {
+    display: none;
+  }
+  .usersTable table * {
+    font-size: 12px;
+  }
+  .usersTable table tr th:first-child,
+  .usersTable table tr td:first-child {
+    width:12px !important;
+  }
+  .usersTable table tr th:last-child,
+  .usersTable table tr td:last-child {
+    width:10px !important;
+  }
+
+  th:nth-child(2) .slds-th__action span,
+  th:nth-child(4) .slds-th__action span {
+    min-width: 100px;
+  }
+}
+/*#################################*/
+
+/* ############################################## */
+/* Transformation & Animation Classes */
+
+.rotateIcon45Deg{
+  transform: rotate(45deg);
+}
+
+/* ############################################## */
+.showOnlyFavorites, .showOnlyFavorites button, .showOnlyFavorites button:active, .showOnlyFavorites button:visited, .showOnlyFavorites button:focus, .showOnlyFavorites button:hover{
+    width: 165px;
+    min-height: 48px;
+    border-radius: 0;
+    border: 0;
+    background-color: #d0d7fb;
+    font-family: AktivGrotesk;
+    font-size: 14px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.71;
+    letter-spacing: normal;
+    color: #3333ff;
+  }
+
+.idCardPopup {
+	background-color: #F7F8FA;
+    width: 100%;
+    max-width: 544px;
+    margin: auto;
+    box-shadow: 5px 5px 20px #808080;
+    border-radius: 1px;
+}
+.outlinedButtonCancel button, .outlinedButtonCancel button:hover, .outlinedButtonCancel button:focus, .outlinedButtonCancel button:active{
+    -webkit-transition-duration: 0.4s; /* Safari */
+  	transition-duration: 0.4s;
+    min-height: 56px;
+    word-break: break-all;
+    border-radius: 1px;
+  	border: solid 1px #1e32fa;
+  	background-color: #ffffff;
+    font-size: 16px;
+  	font-weight: 500;
+  	font-style: normal;
+  	font-stretch: normal;
+  	line-height: 1.5;
+  	letter-spacing: normal;
+  	text-align: center;
+  	color: #3333ff;
+    width: 100%;
+    box-shadow: none; 
+}
+.popupApproveButton, .popupApproveButton button, .popupApproveButton button:active, .popupApproveButton button:visited, .popupApproveButton button:focus {
+    -webkit-transition-duration: 0.4s; /* Safari */
+  	transition-duration: 0.4s;
+    border-radius: 1px;
+  	box-shadow: 0 6px 16px 0 rgba(56, 86, 235, 0.24), 0 1px 2px 0 rgba(56, 86, 235, 0.16);
+  	background-color: #3333ff;
+    font-size: 16px;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.5;
+    letter-spacing: normal;
+    text-align: center;
+    color: #ffffff;
+    min-height: 40px;
+    word-break: break-all;
+    border: none;
+    height: 56px;
+    width: 100%;
+}
+.popupApproveButton button:hover {
+	border-radius: 1px;
+    box-shadow: 0 6px 16px 0 rgba(56, 86, 235, 0.24), 0 1px 2px 0 rgba(56, 86, 235, 0.16);
+    background-color: #1e32fa;
+    font-size: 16px;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.5;
+    letter-spacing: normal;
+    text-align: center;
+    color: #ffffff;
+    min-height: 40px;
+    word-break: break-all;
+    border: none;
+	height: 56px;
+    width: 100%;
+}
+
 /*#################################*/
 
 /*RS - START - Needed for IFTP app */
@@ -2424,4 +2636,3 @@ input::-ms-reveal {  display: none; width : 0; height: 0; }
 }
 
 /*RS - END - Needed for IFTP app */
-

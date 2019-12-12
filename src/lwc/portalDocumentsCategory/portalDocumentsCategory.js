@@ -44,7 +44,7 @@ export default class PortalDocumentsCategory extends LightningElement {
                 _value.searchText !== __documentObject.searchText ||
                 _value.productCategory !== __documentObject.productCategory ||
                 _value.countryOfPublication !== __documentObject.countryOfPublication) ||
-                _value.show !== __documentObject.show) {
+                _value.show === true) {
 
                 this.resetPagination();
                 this.searchDocuments();
@@ -127,7 +127,7 @@ export default class PortalDocumentsCategory extends LightningElement {
                     
                     let tempDocs = {};
                     tempDocs = JSON.parse(JSON.stringify(docsMap));
-
+                            
                     let docsList = [];
                     for(let key in tempDocs) {
                         if (tempDocs.hasOwnProperty(key)) {
@@ -137,7 +137,11 @@ export default class PortalDocumentsCategory extends LightningElement {
                             if(this._documentObject.topResults === false) { // INFINITE SCROLL
                                 this.concatValues = this.concatValues.concat(tempDocs[this._documentObject.apiName]);
                                 docsList.push({ key: key, label : labelForKey, value: this.concatValues, noResults: this.totalResults });
-                                __documentObject.noResults = this.totalResults;
+                                if(this._documentObject.show === true) {
+                                    __documentObject.noResults = this.totalResults;
+                                } else {
+                                    __documentObject.noResults = this.totalResults > 10 ? '10+' : this.totalResults;
+                                }
                             } else {
                                 let noResults = results.totalItemCount > 10 ? '10+' : results.totalItemCount;
                                 docsList.push({ key: key, label : labelForKey, value: tempDocs[key], noResults: noResults });
@@ -147,7 +151,7 @@ export default class PortalDocumentsCategory extends LightningElement {
                             }
                         }
                     }
-
+                    
 
                     
                     const selectedEvent = new CustomEvent('categoryfilter', { bubbles: true, detail: __documentObject });
@@ -226,7 +230,7 @@ export default class PortalDocumentsCategory extends LightningElement {
     categorySelected(event) {
         let categoryName = event.target.dataset.item;
         let __documentObject = JSON.parse(JSON.stringify(this._documentObject));
-
+        
         if(__documentObject.categorySelected !== categoryName) {
             
             __documentObject.categorySelected = categoryName;

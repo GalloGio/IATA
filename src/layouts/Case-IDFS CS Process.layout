@@ -412,6 +412,11 @@
         <fields>Input_Requested_Date__c</fields>
         <relatedList>Airline_Input__c.Parent_Case__c</relatedList>
     </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>RECORDTYPE</fields>
+        <relatedList>Additional_Case_Information__c.Case__c</relatedList>
+    </relatedLists>
     <relatedObjects>ContactId</relatedObjects>
     <relatedObjects>AccountId</relatedObjects>
     <runAssignmentRulesDefault>false</runAssignmentRulesDefault>
