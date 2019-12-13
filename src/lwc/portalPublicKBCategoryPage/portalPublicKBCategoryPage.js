@@ -4,25 +4,22 @@ import { NavigationMixin } from 'lightning/navigation';
 import { getParamsFromPage } from'c/navigationUtils';
 
 export default class PortalPublicKBCategoryPage extends NavigationMixin(LightningElement) {
-    @track category;
-    @track language;
-    @track topic;
-    @track subTopic;
+    @track faqObject = {};
 
     connectedCallback() {
+        let _faqObject = { category: '', topic: '', subtopic: '', language: '' };
+
         let pageParams = getParamsFromPage();
 
         if(pageParams !== undefined) {              
-            if(pageParams.category !== undefined) this.category = pageParams.category;
-            if(pageParams.language !== undefined) this.language = pageParams.language;
-        }         
+            if(pageParams.category !== undefined) _faqObject.category = pageParams.category;
+            if(pageParams.language !== undefined) _faqObject.language = pageParams.language;
+        }
+        
+        this.faqObject = _faqObject;
     }
 
-    topicSelected(event) {
-        this.topic = event.detail.options;
-    }
-
-    subTopicSelected(event) {
-        this.subTopic = event.detail.options;
+    categoriesChange(event) {
+        this.faqObject = event.detail;
     }
 }

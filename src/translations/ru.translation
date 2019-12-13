@@ -1889,6 +1889,10 @@
         <name>CSP_ArticleHelpful</name>
     </customLabels>
     <customLabels>
+        <label>Назначить новую услугу</label>
+        <name>CSP_Assign_New_Service</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Branch Offices --></label>
         <name>CSP_Branch_Offices</name>
     </customLabels>
@@ -2065,6 +2069,10 @@
         <name>CSP_Confirmed_Requested_Service_Message</name>
     </customLabels>
     <customLabels>
+        <label>Изменение имени Вашего профиля повлияет на действительность Вашей идентификационной карты. Пожалуйста, свяжитесь с нашей командой по работе с клиентами чтобы изменить имя Вашего профиля</label>
+        <name>CSP_Contact_Id_Card_Error_Msg</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_Contacts_NoResults_text1 --></label>
         <name>CSP_Contacts_NoResults_text1</name>
     </customLabels>
@@ -2113,7 +2121,7 @@
         <name>CSP_Dear</name>
     </customLabels>
     <customLabels>
-        <label>Запретить доступ пользователя</label>
+        <label>Отказать в доступе</label>
         <name>CSP_Deny_User_Access_Title</name>
     </customLabels>
     <customLabels>
@@ -2341,7 +2349,7 @@
         <name>CSP_Frozen_User_Message</name>
     </customLabels>
     <customLabels>
-        <label>Предоставить доступ пользователю</label>
+        <label>Предоставить доступ</label>
         <name>CSP_Grant_User_Access_Title</name>
     </customLabels>
     <customLabels>
@@ -2359,6 +2367,30 @@
     <customLabels>
         <label>Неверный адрес электронной почты</label>
         <name>CSP_Invalid_Email</name>
+    </customLabels>
+    <customLabels>
+        <label>Имя на удостоверении личности</label>
+        <name>CSP_IDCard_Name</name>
+    </customLabels>
+    <customLabels>
+        <label>Нажмите здесь, чтобы просмотреть фотографию вашего удостоверения личности</label>
+        <name>CSP_IDCard_Photo</name>
+    </customLabels>
+    <customLabels>
+        <label>Фото</label>
+        <name>CSP_IDCard_Photo_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Статус</label>
+        <name>CSP_IDCard_Status</name>
+    </customLabels>
+    <customLabels>
+        <label>Срок действия</label>
+        <name>CSP_IDCard_Valid_To</name>
+    </customLabels>
+    <customLabels>
+        <label>VER номер удостоверения личности</label>
+        <name>CSP_IDCard_Ver_Number</name>
     </customLabels>
     <customLabels>
         <label>Информация о компании</label>
@@ -2649,7 +2681,7 @@
         <name>CSP_L2_Requested_Modal_Message</name>
     </customLabels>
     <customLabels>
-        <label>Здравствуйте</label>
+        <label>Расскажите нам больше</label>
         <name>CSP_L2_Requested_Modal_Title</name>
     </customLabels>
     <customLabels>
@@ -2843,6 +2875,10 @@
     <customLabels>
         <label>Но как только вы это сделаете, вы увидите самые последние из них здесь.</label>
         <name>CSP_NoCases2</name>
+    </customLabels>
+    <customLabels>
+        <label>Извините, но для примененных вами фильтров результаты отсутствуют</label>
+        <name>CSP_NoRecordsFiltered</name>
     </customLabels>
     <customLabels>
         <label>Нет результатов</label>
@@ -3187,6 +3223,10 @@
         <name>CSP_Services_AccessRequestedTitle</name>
     </customLabels>
     <customLabels>
+        <label>Добавить в избранное</label>
+        <name>CSP_Services_AddFavorite</name>
+    </customLabels>
+    <customLabels>
         <label>Все доступные услуги для вашей компании перечислены ниже.</label>
         <name>CSP_Services_AvailableServicesHelpText</name>
     </customLabels>
@@ -3219,6 +3259,10 @@
         <name>CSP_Services_MyServicesTabTile</name>
     </customLabels>
     <customLabels>
+        <label>Удалить избранное</label>
+        <name>CSP_Services_RemoveFavorite</name>
+    </customLabels>
+    <customLabels>
         <label>Смотреть доступные услуги</label>
         <name>CSP_Services_RequestServiceBannerButton</name>
     </customLabels>
@@ -3233,6 +3277,14 @@
     <customLabels>
         <label>Служебная информация</label>
         <name>CSP_Services_ServiceInformation</name>
+    </customLabels>
+    <customLabels>
+        <label>Показать всё</label>
+        <name>CSP_Services_ShowAll</name>
+    </customLabels>
+    <customLabels>
+        <label>Показать только избранное</label>
+        <name>CSP_Services_ShowOnlyFavorites</name>
     </customLabels>
     <customLabels>
         <label>Сервисы</label>
@@ -6535,6 +6587,10 @@
         <name>IDCard_NoModificationAllowed</name>
     </customLabels>
     <customLabels>
+        <label>Подайте заявку и оплатите свою идентификационную карту (получение новой, продление старой карты, смена агентства) и воспользуйтесь преимуществами предоставляемыми туристическим агентам Международной ассоциацией воздушного транспорта (IATA).</label>
+        <name>IDCard_NoUSServiceDescription</name>
+    </customLabels>
+    <customLabels>
         <label><!-- IDCard No Price Table Found --></label>
         <name>IDCard_No_Price_Table_Found</name>
     </customLabels>
@@ -6825,6 +6881,10 @@
     <customLabels>
         <label><!-- IDCard_TrxNum --></label>
         <name>IDCard_TrxNum</name>
+    </customLabels>
+    <customLabels>
+        <label>(для агентов базирующихся в США) Запрос на получение идентификационной карты, регистрация агентов, оплата годовых взносов за обслуживание, переаттестация агентств, и т. д.</label>
+        <name>IDCard_USServiceDescription</name>
     </customLabels>
     <customLabels>
         <label><!-- IDCard Update Application --></label>
@@ -15854,6 +15914,14 @@ IATA стремится обеспечить высочайшее качеств
     <customLabels>
         <label>Обратите внимание, что изменение вашего имени не будет отражено на вашей идентификационной карте. Чтобы изменить его на идентификационной карте, войдите на платформу идентификационных карт.</label>
         <name>ISSP_IdCard_Name_Warning</name>
+    </customLabels>
+    <customLabels>
+        <label>Интернет-платформа идентификационной карты</label>
+        <name>ISSP_IdCard_NonUS</name>
+    </customLabels>
+    <customLabels>
+        <label>Онлайн услуги IATAN</label>
+        <name>ISSP_IdCard_US</name>
     </customLabels>
     <customLabels>
         <label>Выполняется</label>
