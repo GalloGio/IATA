@@ -24,6 +24,12 @@ public without sharing class ISSP_AMS_Accreditation {
 		set;
 	}
 
+	public static final String reachUsLink {
+		get {
+			return CSP_Utils.redirectfromPortalHeader('support-reach-us');
+		}
+	}
+
 	public enum AccredContactEnum {
 		PARAMCODE_OWNERSHIP_SUMMARY,
 		PARAMCODE_OWNERSHIP_SUMMARY_PREV,
