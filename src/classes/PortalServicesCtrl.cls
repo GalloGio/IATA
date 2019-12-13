@@ -293,6 +293,8 @@ public static List<ServiceWrapper> getAllServices(){
 			}
 
 			alignStatus(mapServiceWrapper.get(accessAux.Portal_Application__c),statusAux);
+			mapServiceWrapper.get(accessAux.Portal_Application__c).portalApplicationRightId = accessAux.Id;
+			mapServiceWrapper.get(accessAux.Portal_Application__c).isFavorite = accessAux.Is_Favorite__c;
 		}else{
 			appsAlreadyWithAccessIds.add(accessAux.Portal_Application__c);
 		}
@@ -1043,15 +1045,17 @@ public static Boolean grantAccess(string contactId,string serviceId,string reaso
 	}
 
 	@AuraEnabled (cacheable=false)
-	public static Boolean verifyCompleteL3Data(String serviceId){
+	public static String verifyCompleteL3Data(String serviceId){
 
 		Boolean requiredDataPopulated = true;
 		Boolean latestToSAccepted = false;
 
+		String resURL = '';
+
 		User userAux = [SELECT Id, ContactId FROM User WHERE Id = :UserInfo.getUserId()];
 
 		Set<String> l3MandatoryFields = new Set<String>{
-			'Birthdate', 'Shipping_Address__c'
+			'Birthdate'//, 'Shipping_Address__c'
 		};
 
 		Contact c = [SELECT Id, Name, Birthdate , Shipping_Address__c FROM Contact WHERE Id =: userAux.ContactId];
@@ -1069,12 +1073,36 @@ public static Boolean grantAccess(string contactId,string serviceId,string reaso
 		if(!tosAccept.isEmpty())
 			latestToSAccepted = true;
 
-		return requiredDataPopulated && latestToSAccepted;
+		String baseUrl = Site.getBaseSecureUrl();
+		String pathPrefix = Site.getPathPrefix().replace('/s', '');
+
+		if(requiredDataPopulated && latestToSAccepted){
+			String RECTYPE_Trainee_YASContDet = RecordTypeSingleton.getInstance().getRecordTypeId('Training_Contact_Role_Details__c', 'Yardstick_Trainee');
+
+
+			List<AppMenuItem> ami = [SELECT StartUrl FROM AppMenuItem WHERE Name = 'Yardstick' LIMIT 1];
+			// system.assert(!ami.isEmpty(), 'Connected app Yardstick does not exist.');
+
+			Training_Contact_Role_Details__c tcrd = [SELECT Id,RecordTypeId,Account_Contact_Role__c,Username__c,UserId__c,Preferred_Course__c
+															FROM Training_Contact_Role_Details__c
+															WHERE Account_Contact_Role__r.Contact__c = :userAux.ContactId
+															AND RecordTypeId = :RECTYPE_Trainee_YASContDet
+															LIMIT 1];
+			//https://preprod-customer-portal-iata.cs109.force.com/csportal/idp/login?app=0sp0Q0000008OTD&RelayState=
+			resURL = baseUrl + pathPrefix + ami[0].StartUrl + '&RelayState=' + EncodingUtil.urlEncode(tcrd.Preferred_Course__c, 'UTF-8');
+		}else{
+			resURL = 'not_complete';
+		}
+
+		System.debug('resURL: ' + resURL);
+
+		return resURL;
 	}
 
 	@AuraEnabled(cacheable=false)
 	public static String getPortalServiceId(string serviceName){
 
+		system.debug('serviceName: ' + serviceName);
 		List<Portal_Applications__c> pas = [SELECT Id FROM Portal_Applications__c WHERE Name =: serviceName];
 		system.assert(pas.size() == 1, 'Service data integrity excpetion. None or more than one service was found.');
 

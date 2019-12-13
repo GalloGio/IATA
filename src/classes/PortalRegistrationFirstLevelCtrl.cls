@@ -25,8 +25,8 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 		public CountryInformation countryInfo{get;set;}
 		@AuraEnabled
 		public List<CSP_Utils.PickListWrapper> languageList{get;set;}
-		@AuraEnabled
-		public string troubleShootingUrl{get;set;}
+        @AuraEnabled
+        public string troubleShootingUrl{get;set;}
 	}
 
 	public class RegistrationConfirmationConfig{
@@ -50,8 +50,8 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 		public string extraChoice{get;set;}
 		@AuraEnabled
 		public boolean isGeneralPublic{get;set;}
-		@AuraEnabled
-		public string troubleShootingUrl{get;set;}
+        @AuraEnabled
+        public string troubleShootingUrl{get;set;}
 	}
 
 	public class RegistrationResult{
@@ -97,7 +97,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 		public String existingContactName{get;set;}
 		public String existingContactEmail{get;set;}
 		public String existingContactAccount{get;set;}
-		public String existingContactUsername{get;set;}
+        public String existingContactUsername{get;set;}
 	}
 
 	public class UserInformation {
@@ -114,10 +114,10 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 
 		/*YAS info for matching contact based on additional email temporary*/
 		@AuraEnabled
-		public Boolean hasExistingContactPersonalEmail{get;set;}
-		@AuraEnabled
-		public Boolean hasExistingUserPersonalEmail{get;set;}
-		@AuraEnabled
+        public Boolean hasExistingContactPersonalEmail{get;set;}
+        @AuraEnabled
+        public Boolean hasExistingUserPersonalEmail{get;set;}
+        @AuraEnabled
 		public String existingContactId{get;set;}
 		@AuraEnabled
 		public String existingContactName{get;set;}
@@ -142,11 +142,11 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 			wrapper.value = wrapper.value.toLowerCase();
 			config.languageList.add(wrapper);
 		}
-		config.troubleShootingUrl = Label.CSP_PortalPath + 'faq-article?language=en_US&q=troubleshooting';
-		ISSP_CS__c cs = ISSP_CS__c.getInstance('TroubleShootingArticleId');
-		if(cs != null){
-			config.troubleShootingUrl = config.troubleShootingUrl + '&id1=' + cs.value__c;
-		}
+        config.troubleShootingUrl = Label.CSP_PortalPath + 'faq-article?language=en_US&q=troubleshooting';
+        ISSP_CS__c cs = ISSP_CS__c.getInstance('TroubleShootingArticleId');
+        if(cs != null){
+            config.troubleShootingUrl = config.troubleShootingUrl + '&id1=' + cs.value__c;
+        }
 		return config;
 	}
 
@@ -252,11 +252,11 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 			CSP_Utils.PickListWrapper wrapper = new CSP_Utils.PickListWrapper(portalLang.Language__c, portalLang.Language__c);
 			config.languageList.add(wrapper);
 		}
-		config.troubleShootingUrl = Label.CSP_PortalPath + 'faq-article?language=en_US&q=troubleshooting';
-		ISSP_CS__c cs = ISSP_CS__c.getInstance('TroubleShootingArticleId');
-		if(cs != null){
-			config.troubleShootingUrl = config.troubleShootingUrl + '&id1=' + cs.value__c;
-		}
+        config.troubleShootingUrl = Label.CSP_PortalPath + 'faq-article?language=en_US&q=troubleshooting';
+        ISSP_CS__c cs = ISSP_CS__c.getInstance('TroubleShootingArticleId');
+        if(cs != null){
+            config.troubleShootingUrl = config.troubleShootingUrl + '&id1=' + cs.value__c;
+        }
 		return config;
 
 	}
@@ -281,6 +281,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 	public static UserInformation getUserInformationFromEmail(String email, String LMSRedirectFrom){
 		UserInformation userInfo = new UserInformation();
 		List<Contact> conList = returnExistingContact(email); // Since the email is unique we didn't expect to receive more than one email
+		System.debug('conList: ' + conList);
 		userInfo.hasExistingContact = true ? conList.size() > 0 : false;
 		if( userInfo.hasExistingContact){
 			userInfo.contactId = conList.get(0).Id;
@@ -288,12 +289,18 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 		}
 		Set<Id> contactIds = (new Map<Id,SObject>(conList)).keySet();
 		List<User> userList = returnExistingUser(contactIds, email);
+		System.debug('userList: ' + conList);
 		userInfo.hasExistingUser = true ? userList.size() > 0 :false;
 		userInfo.isEmailAddressAvailable = checkIsUsernameIsAvailableInGlobalSalesforce(email, conList);
+		System.debug('userInfo.isEmailAddressAvailable: ' + userInfo.isEmailAddressAvailable);
+
+		System.debug('userInfo.hasExistingContact: ' + userInfo.hasExistingContact);
+		System.debug('LMSRedirectFrom: ' + LMSRedirectFrom);
 
 		/*LMS YAS check for existing contact/user based on additional email field*/
 		if(!userInfo.hasExistingContact && LMSRedirectFrom == 'yas'){
 			List<Contact> contactPersonalEmailList = returnExistingContactAdditionalEmail(email);//TODOMAC: get the contact having training records
+			System.debug('contactPersonalEmailList: ' + contactPersonalEmailList);
 			userInfo.hasExistingContactPersonalEmail = contactPersonalEmailList.size() > 0 ? true : false;
 			if(!contactPersonalEmailList.isEmpty()){
 				userInfo.existingContactId = contactPersonalEmailList.get(0).Id;
@@ -417,8 +424,8 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 	public static boolean sendRegistrationEmailVF(RegistrationParameters params, string userId){
 		Boolean result = false;
 		String portalUrl = '';
-		if(Network.getNetworkId() != null) portalUrl = Network.getLoginURL(Network.getNetworkId()).substring(0,Network.getLoginURL(Network.getNetworkId()).indexOf('/login'));
-		string profileUrl = portalUrl + '/my-profile?triggerL2=true';
+		if(Network.getNetworkId() != null) portalUrl = Network.getLoginURL(Network.getNetworkId()).substring(0,Network.getLoginURL(Network.getNetworkId()).lastIndexOf('/'));
+        string profileUrl = portalUrl + '/my-profile?triggerL2=true';
 
 		if (userId == null || userId == ''){
 			userId = UserInfo.getUserId();
@@ -472,9 +479,10 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 			params.existingContactEmail = (userInfoMap.get('existingContactEmail') != null) ? string.valueOf(userInfoMap.get('existingContactEmail')) : '';
 			params.existingContactAccount = (userInfoMap.get('existingContactAccount') != null) ? string.valueOf(userInfoMap.get('existingContactAccount')) : '';
 			params.existingContactUsername = (userInfoMap.get('existingContactUsername') != null) ? string.valueOf(userInfoMap.get('existingContactUsername')) : '';
-			params.lms  = (inputMap.get('lmsRedirectFrom') != null) ? string.valueOf(inputMap.get('lmsRedirectFrom')) : '';
-			params.lmsCourse  = (inputMap.get('lmsCourse') != null) ? string.valueOf(inputMap.get('lmsCourse')) : '';
-
+			// params.lms  = (inputMap.get('lms') != null) ? string.valueOf(inputMap.get('lms')) : '';
+            params.lms  = (inputMap.get('lmsRedirectFrom') != null) ? string.valueOf(inputMap.get('lmsRedirectFrom')) : '';
+            params.lmsCourse  = (inputMap.get('lmsCourse') != null) ? string.valueOf(inputMap.get('lmsCourse')) : '';
+			
 			if(params.contactId.length() < 1){
 				if(params.email.length() < 1 || params.firstName.length() < 1 || params.lastName.length() < 1){
 					result.isSuccess = false;
@@ -676,11 +684,11 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 				con.Phone = string.valueOf(inputMap.get('phone'));
 			}
 
-			if(String.isBlank(con.Community__c)){
-				con.Community__c = 'ISS Customer Portal';
-			}
+            if(String.isBlank(con.Community__c)){
+                con.Community__c = 'ISS Customer Portal';
+            }
 
-			con.User_Portal_Status__c = 'Pending Approval';
+            con.User_Portal_Status__c = 'Pending Approval';
 
 			if((inputMap.get('language') != null)){
 				con.Preferred_Language__c = string.valueOf(inputMap.get('language'));
@@ -858,6 +866,8 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 			con.User_Portal_Status__c = 'Pending Approval';
 			//todo: perform field check before insert
 
+			system.debug('contact to be created: ' + con.Email);
+			system.debug('contact: ' + con);
 			DataBase.SaveResult sr = DataBase.Insert(con);
 			if(sr.isSuccess() == false){
 				for(Database.Error objErr : sr.getErrors()) {
@@ -867,6 +877,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 			}else{
 				//Specific LMS Yardstick flow
 				if(params.existingContactId != null){
+					system.debug('handle migration of existing certicates.');
 					createOrMigrateContactStructure(con, params.existingContactId);
 				}
 
@@ -976,7 +987,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 		String encodedPart = 'c=' + EncodingUtil.urlEncode(encryptedStr, 'UTF-8');
 
 		String prefix = '';
-		if(Network.getNetworkId() != null) prefix = Network.getLoginURL(Network.getNetworkId()).substring(0,Network.getLoginURL(Network.getNetworkId()).indexOf('/login'));
+		if(Network.getNetworkId() != null) prefix = Network.getLoginURL(Network.getNetworkId()).substring(0,Network.getLoginURL(Network.getNetworkId()).lastIndexOf('/'));
 		String oneTimeUrl = prefix + '/' + 'createPassword' + '?' + encodedPart;
 		return oneTimeUrl;
 
@@ -1241,7 +1252,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 		String RECTYPE_Master_AccContRole = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'Master');
 
 		//Create Account Role if not existing
-		List<Account_Role__c> ars = [SELECT Id,Account__c,RecordTypeId FROM Account_Role__c WHERE Account__c = :con.AccountId AND Account_Role_Name__c = 'Trainee' LIMIT 1];
+		List<Account_Role__c> ars = [SELECT Id,Account__c,RecordTypeId FROM Account_Role__c WHERE Account__c = :con.AccountId AND Account_Role_Name__c = 'Training' AND Functional_Role__c = 'Training' LIMIT 1];
 
 		Account_Role__c ar = new Account_Role__c();
 
@@ -1250,12 +1261,13 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 		}else{
 			ar.Account__c = con.AccountId;
 			ar.RecordTypeId = RECTYPE_Master_AccRole;
-			ar.Account_Role_Name__c =  'Trainee';
+			ar.Account_Role_Name__c = 'Training';
+			ar.Functional_Role__c = 'Training';
 			insert ar;
 		}
 
 		//Check if existing contact has account contact role
-		List<Account_Contact_Role__c> acrs = [SELECT Id,Account_Role__c,Contact__c,Contact_Role_Name__c,RecordTypeId FROM Account_Contact_Role__c WHERE Contact__c = :existingConId AND Contact_Role_Name__c = 'Trainee' LIMIT 1];
+		List<Account_Contact_Role__c> acrs = [SELECT Id,Account_Role__c,Contact__c,Contact_Role_Name__c,RecordTypeId FROM Account_Contact_Role__c WHERE Contact__c = :existingConId AND Contact_Role_Name__c = 'Trainee' AND Functional_Role__c = 'Training' LIMIT 1];
 
 		if(acrs != null && !acrs.isEmpty())
 		{
@@ -1270,6 +1282,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 			acr.Account_Role__c = ar.Id;
 			acr.Contact__c = con.Id;
 			acr.Contact_Role_Name__c = 'Trainee';
+			acr.Functional_Role__c = 'Training';
 			acr.RecordTypeId = RECTYPE_Master_AccContRole;
 			acr.Service_Rendered__c = 'Other';
 
@@ -1278,7 +1291,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 
 		//deactivate user
 		if(existingConId != null && existingConId != '')
-		futureDeactivateUsers(new Set<String>{existingConId});
+			futureDeactivateUsers(new Set<String>{existingConId});
 	}
 
 	@future
