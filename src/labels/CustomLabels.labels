@@ -3789,6 +3789,22 @@ Payment required on receipt of this Payment Advice
         <value>Dear</value>
     </labels>
     <labels>
+        <fullName>CSP_Deduction_Notice</fullName>
+        <categories>CSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Deduction_Notice</shortDescription>
+        <value>Deduction Notice</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Deduction_Notice_Israel_Description</fullName>
+        <categories>CSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Deduction Notice Israel Description</shortDescription>
+        <value>This deduction form allows travel agents participating in BSP Israel to advise airlines and IATA BSP management of offset of any specific amount from due payment, as per Israel Anti-Trust Commissioner&#39;s instructions.</value>
+    </labels>
+    <labels>
         <fullName>CSP_Deny_User_Access_Title</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -17669,6 +17685,14 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <value>Apply for a New Associate Entity</value>
     </labels>
     <labels>
+        <fullName>ISSP_Add_New_Associate_Entity</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Add_New_Associate_Entity</shortDescription>
+        <value>Add New Associate Entity</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Apply_New_Branch_Office</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -18396,6 +18420,14 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <protected>false</protected>
         <shortDescription>ISSP AMS CONFIRM DISCARD APPLICATION</shortDescription>
         <value>Are you sure you want to discard your application?</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_DISCARD_APPLICATION</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_DISCARD_APPLICATION</shortDescription>
+        <value>Discard Application</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Capacity</fullName>
