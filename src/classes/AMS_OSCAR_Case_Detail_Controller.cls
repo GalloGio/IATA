@@ -136,6 +136,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
 				, AMS_Pax_Accreditation_Form__c.ANG_IsNewGenAgency__c
 				, AMS_Pax_Accreditation_Form__c.ANG_Accreditation_type__c
 				, AMS_Pax_Accreditation_Form__c.Preferred_RHC_currency__c
+                , AMS_Pax_Accreditation_Form__c.NDC_Transactions__c
 			};
 		}
 	}
