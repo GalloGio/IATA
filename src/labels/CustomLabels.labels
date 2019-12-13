@@ -4228,14 +4228,6 @@ Payment required on receipt of this Payment Advice
         <value>Login Email</value>
     </labels>
     <labels>
-        <fullName>CSP_L_LoginEmail_LMS</fullName>
-        <categories>CS Portal</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP Login Email</shortDescription>
-        <value>Login Email</value>
-    </labels>
-    <labels>
         <fullName>CSP_L_PersonalEmail_LMS</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
