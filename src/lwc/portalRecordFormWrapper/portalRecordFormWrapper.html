@@ -20,11 +20,21 @@
         <c-portal-email-domain record-id={recordId} oncloseemaildomain={closeEmailDomain}></c-portal-email-domain>
     </template>
 
+    <template if:true={idCardErrorPopup}>
+        <c-portal-contact-id-card-error-modal oncloseidcarderrorpopup={hideIdCardErrorPopup}></c-portal-contact-id-card-error-modal>
+    </template>
+
+    <template if:true={photoPopUp}>
+        <c-portal-id-card-photo-modal photo-url={photoURL} oncloseidcardphotopopup={hideIdCardPhotoPopup}></c-portal-id-card-photo-modal>
+    </template>
+
     <c-portal-profile-section class-name={sectionClass} header-class={headerClass}>
         <span slot="sectionTitle">{sectionTitle}</span>
         <span slot="sectionActions">
             <lightning-icon if:true={canEditBasics} icon-name="utility:edit" size="x-small"
                 class="darkBlueIcon cursorPointer" onclick={openModal}></lightning-icon>
+            <lightning-icon if:true={editIdcard} icon-name="utility:edit" size="x-small"
+                            class="darkBlueIcon cursorPointer" onclick={redirectToIdCardPortal}></lightning-icon>
         </span>
         <span slot="componentContent">
 
@@ -35,7 +45,7 @@
                     <template if:true={hasAccessToSISPortal}>
                         <!--<lightning-formatted-rich-text value={SISPortalLink}></lightning-formatted-rich-text><br><br>-->
 
-                        <div class="slds-grid slds-wrap slds-p-vertical_small">
+                        <div class="slds-grid slds-wrap slds-gutters_medium slds-p-vertical_small" data-id="sectionId">
                             <div>
                                 <img src={iconUrl} alt="SIS" style="height:64px; width:64px;" border="0"/>
                             </div>
@@ -244,6 +254,32 @@
 
                             <template if:true={field.isIdCardInfo}>
                                 <template if:true={hasIdCard}>
+                                    <div key={labels.IdCardName}
+                                         class=" slds-col slds-size_1-of-1 slds-medium-size_1-of-2 labelValue slds-form-element_stacked">
+                                        <div class="slds-form-element__label">
+                                            {labels.IdCardName}
+                                        </div>
+
+                                        <div class="textValue">
+                                            <div class="slds-form-element__static">
+                                                {staticFields.cardName}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div key={labels.IdCardPhoto}
+                                         class=" slds-col slds-size_1-of-1 slds-medium-size_1-of-2 labelValue slds-form-element_stacked">
+                                        <div class="slds-form-element__label">
+                                            {labels.IdCardPhotoTitle}
+                                        </div>
+
+                                        <div class="textValue">
+                                            <div class="slds-form-element__static">
+                                                <a class="text-blue" onclick={openPhotoPopUp}>{labels.IdCardPhoto}</a>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                     <div key={labels.IdCardNumber}
                                         class=" slds-col slds-size_1-of-1 slds-medium-size_1-of-2 labelValue slds-form-element_stacked">
                                         <div class="slds-form-element__label">
@@ -266,6 +302,19 @@
                                         <div class="textValue">
                                             <div class="slds-form-element__static">
                                                 {staticFields.cardDate}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                   <div key={labels.IdCardStatus}
+                                        class=" slds-col slds-size_1-of-1 slds-medium-size_1-of-2 labelValue slds-form-element_stacked">
+                                        <div class="slds-form-element__label">
+                                            {labels.IdCardStatus}
+                                        </div>
+
+                                        <div class="textValue">
+                                            <div class="slds-form-element__static">
+                                                {staticFields.cardStatus}
                                             </div>
                                         </div>
                                     </div>

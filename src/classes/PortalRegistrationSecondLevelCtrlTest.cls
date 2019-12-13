@@ -125,7 +125,7 @@ public class PortalRegistrationSecondLevelCtrlTest {
 
 	@IsTest
 	static void testGetL2Topics(){
-		List<PortalFAQs__mdt> topics = PortalRegistrationSecondLevelCtrl.getL2Topics();
+		List<PortalKnowledge__c> topics = PortalRegistrationSecondLevelCtrl.getL2Topics();
 	}
 
 	@IsTest
