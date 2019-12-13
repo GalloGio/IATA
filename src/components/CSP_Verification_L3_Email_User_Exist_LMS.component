@@ -28,15 +28,8 @@
                         <td>
                             <p>{!$Label.CSP_Dear} {!FirstName},</p>
                             <p>{!ExistingContactUsername}</p>
-                            <i>Contact Name: {!ExistingContactName}</i><br/>
-                            <i>Contact Email: {!ExistingContactEmail}</i><br/>
-                            <i>Account Name: {!ExistingContactAccount}</i><br/>
-                            <p>If you are still working for {!ExistingContactAccount}, please login to the portal using the username above.</p>
-                            <p>Please click on this <b><a href="{!CommunityUrl}">link</a></b> to confirm that you still have access to this work email.</p>
-                            <p>The user associated with your personal email will then be merged with the existing user associated with this work email address. Your training record will be maintained under this merged user. <b>From now on you will only be able to login with your work email address.</b></p>
-                            <p>Thank you for your interest in IATA.</p> 
                             <p>{!$Label.CSP_Email_Confirmation_Body_Part_3}</p>
-                            <p>{!$Label.CSP_Email_Signature_Part_1}</p>
+                            <p>{!$Label.CSP_Verification_L3_Email_3_LMS}</p>
                             <p>{!$Label.CSP_Email_Signature_Part_2}</p>
                         </td>
                     </tr>
