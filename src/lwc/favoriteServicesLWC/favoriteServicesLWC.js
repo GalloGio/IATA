@@ -301,8 +301,9 @@ export default class FavoriteServicesLWC extends LightningElement {
 								.then(serviceId => {
 									verifyCompleteL3Data({serviceId: serviceId})
 									.then(result => {
-										if(result){
-											window.open(myUrl);
+console.log('result: ', result);										
+										if(result !== 'not_complete'){
+											window.open(result);
 										}
 										else{
 											//fireEvent(this.pageRef, 'fireL3Registration', serviceId);

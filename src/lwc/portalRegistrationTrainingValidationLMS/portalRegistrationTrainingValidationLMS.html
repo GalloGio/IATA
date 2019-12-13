@@ -1,0 +1,196 @@
+<template>
+	<lightning-layout multiple-rows vertical-align="stretch">
+		<div class="IEFixDisplayContainer">
+			<lightning-layout-item size="12">
+				<span class="text-medium">{labels.CSP_L3_Training_Validation_LMS}</span>
+			</lightning-layout-item>
+
+
+			<lightning-layout-item size="12">
+				<!-- <div class="sectionDescription">{labels.CSP_L2_Account_Selection_Message}</div> -->
+				<div class="sectionDescription">{labels.CSP_L3_TrainValidationDescri_LMS}
+				</div>
+
+				<!--div class="sectionDescription">Your company may have an account in IATA, so please check it first before creating a new one.</div-->
+			</lightning-layout-item>
+
+			<lightning-layout-item padding="around-small" size="12">
+			</lightning-layout-item>
+
+			<lightning-layout-item class="slds-p-around_small topLightGrayBorder customWhiteBackground slds-clearfix"
+				size="12">
+			</lightning-layout-item>
+
+			<lightning-layout-item size="12">
+				<!-- <div class="sectionTitle">{labels.CSP_L2_Account_Information}</div> -->
+				<div class="sectionTitle">{labels.CSP_L3_Training_Information_LMS}</div>
+				<!-- <div class="sectionDescription">{labels.CSP_L2_Account_Information_Message}</div> -->
+				<div class="sectionDescription">{labels.CSP_L3_CompleteInformation_LMS}</div>
+			</lightning-layout-item>
+
+			<lightning-layout-item padding="around-small" size="12">
+			</lightning-layout-item>
+			<!------------------------------------------      Training Information      -------------------------------------------->
+			<div class="companyInfoContainer">
+				<!------------------------------------------      Do you already have a IATA Training username?     -------------------------------------------->
+
+				<div class="infoItem">
+					<lightning-layout-item size="6">
+						<div class="formLabelContainer">
+							<div class="text-xxsmall">
+								{labels.CSP_L3_haveTrainingUser_LMS}
+							</div>
+						</div>
+					</lightning-layout-item>
+					<lightning-layout-item size="6">
+						<div class="slds-form-element">
+							<div class="slds-form-element__control custTextInputSmall">
+								<lightning-combobox options={TrainingUserOptions} value={haveTrainingUser}
+									variant="label-hidden" class="cursorPointerComboBox text-xxsmall"
+									dropdown-alignment="auto" onchange={changeHaveTrainingUser}>
+								</lightning-combobox>
+							</div>
+						</div>
+					</lightning-layout-item>
+				</div>
+
+				<template if:true={trainingInfoVisibility}>
+					<!------------------------------------------      LMS Username       -------------------------------------------->
+					<div class="infoItemLine">
+						<lightning-layout-item size="6">
+							<div class="formLabelContainer">
+								<div class="text-xxsmall">
+									{labels.CSP_L_TrainingEmail_LMS}
+								</div>
+							</div>
+						</lightning-layout-item>
+						<lightning-layout-item size="12">
+							<div class="slds-form-element">
+								<div class="slds-form-element__control custTextInput custTextInputSmall">
+									<input type="text" class="slds-input" placeholder=" "
+										value={localContactInfo.Username} onkeyup={changeUsername} />
+								</div>
+							</div>
+						</lightning-layout-item>
+					</div>
+					<!------------------------------------------      LMS User Id     -------------------------------------------->
+					<div class="infoItemLine">
+						<lightning-layout-item size="6">
+							<div class="formLabelContainer">
+								<div class="text-xxsmall">
+									{labels.CSP_L_TrainingUser_LMS}
+								</div>
+							</div>
+						</lightning-layout-item>
+						<lightning-layout-item size="12">
+							<div data-id="userDiv" class="slds-form-element">
+								<div class="slds-form-element__control custTextInput custTextInputSmall">
+									<input type="text" class="slds-input userIdInputClass" placeholder=" "
+										value={localContactInfo.UserId} onkeyup={changeUserId} />
+								</div>
+								<div class="formElementSpacer">
+									<div if:true={displayErrorUserId}>
+										<div class="slds-form-element__help">{errorMessageUserId}</div>
+									</div>
+								</div>
+							</div>
+						</lightning-layout-item>
+					</div>
+				</template>
+
+
+				<!-- ----------------------------------------      Existing user/personal email      ------------------------------------------ -->
+				<template if:true={existingUsernameVisibility}>
+
+					<div class="infoItemLine">
+
+						<lightning-layout-item size="12">
+							<div class="formLabelContainer">
+								<div class="sectionDescription">
+									{labels.CSP_L3_ExistTrainUser_LMS}
+								</div>
+							</div>
+						</lightning-layout-item>
+					</div>
+					<lightning-layout-item size="6">
+						<lightning-button class="slds-float_right containedButton customBtn"
+							data-id="navigateToSupport1" label={labels.CSP_L3_ContactSupport_LMS} variant="brand"
+							onclick={navigateToSupport}>
+						</lightning-button>
+					</lightning-layout-item>
+					<lightning-layout-item padding="around-small" size="12">
+					</lightning-layout-item>
+				</template>
+				<template if:true={notMatchingVisibility}>
+
+					<div class="infoItemLine">
+
+						<lightning-layout-item size="12">
+							<div class="formLabelContainer">
+								<div class="sectionDescription">
+									{labels.CSP_L3_ExistTrainNameMatch_LMS}
+								</div>
+							</div>
+						</lightning-layout-item>
+					</div>
+					<lightning-layout-item size="6">
+						<lightning-button class="slds-float_right containedButton customBtn"
+							data-id="navigateToSupport2" label={labels.CSP_L3_ContactSupport_LMS} variant="brand"
+							onclick={navigateToSupport}>
+						</lightning-button>
+					</lightning-layout-item>
+					<lightning-layout-item padding="around-small" size="12">
+					</lightning-layout-item>
+				</template>
+				<template if:true={matchingVisibility}>
+
+					<div class="infoItemLine">
+
+						<lightning-layout-item size="12">
+							<div class="formLabelContainer">
+								<div class="sectionDescription">
+									{labels.CSP_L3_ExistTrainUserMatch_LMS}
+								</div>
+							</div>
+						</lightning-layout-item>
+					</div>
+					<lightning-layout-item padding="around-small" size="12">
+					</lightning-layout-item>
+				</template>
+
+
+				<div data-id="emailDiv" class="slds-form-element">
+					<div class="formElementSpacer">
+						<div if:true={displayError}>
+							<div class="slds-form-element__help">{errorMessage}</div>
+						</div>
+					</div>
+					<div if:true={displayError} style="height:16px;">
+					</div>
+				</div>
+			</div>
+
+
+			<lightning-layout-item size="6" class="backButtonWrapper">
+				<template if:false={searchPerformed}>
+					<div class="text-xxsmall">
+						<lightning-button variant="base" label={labels.CSP_L3_Back_to_Email_Validation_LMS}
+							title={labels.CSP_L3_Back_to_Email_Validation_LMS} onclick={previous}
+							class="blueCustomButtonLinkSmall" icon-name="utility:back" icon-position="left">
+						</lightning-button>
+					</div>
+				</template>
+			</lightning-layout-item>
+
+			<lightning-layout-item size="6">
+				<lightning-button class="slds-float_right containedButton customBtn" data-id="nextButton"
+					label={labels.CSP_L3_Next_Confirmation_LMS} disabled={blockConfirmation} variant="brand"
+					onclick={next}>
+				</lightning-button>
+			</lightning-layout-item>
+
+			<lightning-layout-item padding="around-small" size="12">
+			</lightning-layout-item>
+		</div>
+	</lightning-layout>
+</template>

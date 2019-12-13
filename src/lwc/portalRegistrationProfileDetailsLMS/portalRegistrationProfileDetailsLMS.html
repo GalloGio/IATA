@@ -1,134 +1,122 @@
 <!-- Portal Registration Profile Details -->
 <template>
-	<lightning-layout multiple-rows vertical-align="start">
+	<lightning-layout multiple-rows vertical-align="stretch">
 
-		<lightning-layout-item size="12">
-			<span class="text-medium">{labels.CSP_L2_Profile_Details}</span>
-		</lightning-layout-item>
-
-		<lightning-layout-item padding="around-small" size="12">
-		</lightning-layout-item>
-
-		<lightning-layout-item size="12">
-			<span class="fixed-text">{labels.CSP_L2_Profile_Details_Message}</span>
-		</lightning-layout-item>
-
-		<lightning-layout-item padding="around-small" size="12">
-		</lightning-layout-item>
-
-		<lightning-layout-item class="slds-p-around_medium topLightGrayBorder customWhiteBackground slds-clearfix" size="12">
-		</lightning-layout-item>
-
-		<!------------------------------------------      Profile details      -------------------------------------------->
-		<div class="profileContainer">
-		<!------------------------------------------      Salutation      -------------------------------------------->
-			<div class="profileItem">
-				<lightning-layout-item size="6" class="leftItem">
-					<div class="formLabelContainer">
-						<div class="text-xxsmall">
-							<abbr class="slds-required" title="required">* </abbr>{labels.CSP_L3_Title_LMS}
-						</div>
-					</div>
+		<!-- <div class="IEFixDisplayContainer"> -->
+			<lightning-layout-item padding="around-small" class="IEFixDisplay" size="12">
 				</lightning-layout-item>
-				<lightning-layout-item size="12">
-					<div class="slds-form-element">
-						<div class="slds-form-element__control custTextInputSmall">
-							<lightning-combobox
-								options={salutationPicklistOptions}
-								value={localContactInfo.Salutation}
-								variant="label-hidden"
-								class="cursorPointerComboBox text-xxsmall"
-								dropdown-alignment="auto"
-								onchange={changeSalutation}>
-							</lightning-combobox>
-						</div>
-					</div>
-				</lightning-layout-item>
-			</div>
-			<!------------------------------------------      Date of Birth      -------------------------------------------->
-			<div class="profileItem">
-				<lightning-layout-item size="6" class="rightItem">
-					<div class="formLabelContainer">
-						<div class="text-xxsmall">
-							<abbr class="slds-required" title="required">* </abbr>{labels.CSP_L2_Date_of_Birth}
-						</div>
-					</div>
-				</lightning-layout-item>
-				<lightning-layout-item size="12">
-					<div data-id="birthdateDiv" class="slds-form-element">
-						<div class="slds-form-element__control custTextInput custTextInputSmall">
-							<lightning-input
-								date-style="short"
-								type="date"
-								value={localContactInfo.Birthdate}
-								class="birthdateInputClass"
-								placeholder=" "
-								variant="label-hidden"
-								onkeyup={changeDateOfBirth}
-								onchange={changeDateOfBirth}>
-							</lightning-input>
-						</div>
-						<div class="formElementSpacer">
-							<div if:true={displayErrorBirthdate}>
-								<div class="slds-form-element__help">{errorMessageBirthdate}</div>
+				
+			<lightning-layout-item size="12" class="IEFixDisplay">
+				<span class="text-medium">{labels.CSP_L2_Profile_Details}</span>
+			</lightning-layout-item>
+
+			<lightning-layout-item padding="around-small" class="IEFixDisplay" size="12">
+			</lightning-layout-item>
+
+			<lightning-layout-item size="12" class="IEFixDisplay">
+				<span class="fixed-text">{labels.CSP_L2_Profile_Details_Message}</span>
+			</lightning-layout-item>
+
+			<lightning-layout-item padding="around-small" class="IEFixDisplay" size="12">
+			</lightning-layout-item>
+
+			<lightning-layout-item class="slds-p-around_medium topLightGrayBorder customWhiteBackground slds-clearfix"
+				size="12">
+			</lightning-layout-item>
+
+			<!------------------------------------------      Profile details      -------------------------------------------->
+			<div class="profileContainer">
+				<!------------------------------------------      Salutation      -------------------------------------------->
+				<div class="profileItem">
+					<lightning-layout-item size="6" class="leftItem">
+						<div class="formLabelContainer">
+							<div class="text-xxsmall">
+								<abbr class="slds-required" title="required">* </abbr>{labels.CSP_L3_Title_LMS}
 							</div>
 						</div>
-					</div>
-				</lightning-layout-item>
-
-				<lightning-layout-item padding="around-small" size="12">
-				</lightning-layout-item>
-			</div>
-
-			<!------------------------------------------      Work Email (email)      -------------------------------------------->
-			<div class="profileItemLine">
-				<lightning-layout-item size="6" >
-					<div class="formLabelContainer">
-						<div class="text-xxsmall">
-				           {labels.CSP_L_LoginEmail_LMS}
+					</lightning-layout-item>
+					<lightning-layout-item size="12">
+						<div class="slds-form-element">
+							<div class="slds-form-element__control custTextInputSmall">
+								<lightning-combobox options={salutationPicklistOptions}
+									value={localContactInfo.Salutation} variant="label-hidden"
+									class="cursorPointerComboBox text-xxsmall" dropdown-alignment="auto"
+									onchange={changeSalutation}>
+								</lightning-combobox>
+							</div>
 						</div>
-					</div>
-				</lightning-layout-item>
-				<lightning-layout-item size="12">
-					<div class="slds-form-element">
-						<div class="slds-form-element__control custTextInput custTextInputSmall">
-							<input
-								type="text"
-								class="slds-input"
-								placeholder=" "
-								value={localContactInfo.Email}
-								readonly/>
+					</lightning-layout-item>
+				</div>
+				<!------------------------------------------      Date of Birth      -------------------------------------------->
+				<div class="profileItem">
+					<lightning-layout-item size="6" class="rightItem">
+						<div class="formLabelContainer">
+							<div class="text-xxsmall">
+								<abbr class="slds-required" title="required">* </abbr>{labels.CSP_L2_Date_of_Birth}
+							</div>
 						</div>
-					</div>
-				</lightning-layout-item>
-			</div>
+					</lightning-layout-item>
+					<lightning-layout-item size="12">
+						<div data-id="birthdateDiv" class="slds-form-element">
+							<div class="slds-form-element__control custTextInput custTextInputSmall">
+								<lightning-input date-style="short" type="date" value={localContactInfo.Birthdate}
+									class="birthdateInputClass" placeholder=" " variant="label-hidden"
+									onkeyup={changeDateOfBirth} onchange={changeDateOfBirth}>
+								</lightning-input>
+							</div>
+							<div class="formElementSpacer">
+								<div if:true={displayErrorBirthdate}>
+									<div class="slds-form-element__help">{errorMessageBirthdate}</div>
+								</div>
+							</div>
+						</div>
+					</lightning-layout-item>
 
-			<!------------------------------------------      Personal Email (additional email)      -------------------------------------------->
-			<div class="profileItemLine">
-				<lightning-layout-item size="6" >
-					<div class="formLabelContainer">
-						<div class="text-xxsmall">
-							{labels.CSP_L_PersonalEmail_LMS}
-						</div>
-					</div>
-				</lightning-layout-item>
-				<lightning-layout-item size="12">
-					<div class="slds-form-element">
-						<div class="slds-form-element__control custTextInput custTextInputSmall">
-							<input
-								type="text"
-								class="slds-input"
-								placeholder=" "
-								value={localContactInfo.Additional_Email__c}
-								onkeyup={changeAdditional_Email}
-								readonly/>
-						</div>
-					</div>
-				</lightning-layout-item>
-			</div>
+					<lightning-layout-item padding="around-small" size="12">
+					</lightning-layout-item>
+				</div>
 
-			<!------------------------------------------      LMS Username       -------------------------------------------->
-			<div class="profileItem">
+				<!------------------------------------------      Work Email (email)      -------------------------------------------->
+				<div class="profileItemLine">
+					<lightning-layout-item size="6">
+						<div class="formLabelContainer">
+							<div class="text-xxsmall">
+								{labels.CSP_L_LoginEmail_LMS}
+							</div>
+						</div>
+					</lightning-layout-item>
+					<lightning-layout-item size="12">
+						<div class="slds-form-element">
+							<div class="slds-form-element__control custTextInput custTextInputSmall">
+								<input type="text" class="slds-input" placeholder=" " value={localContactInfo.Email}
+									readonly />
+							</div>
+						</div>
+					</lightning-layout-item>
+				</div>
+
+				<!------------------------------------------      Personal Email (additional email)      -------------------------------------------->
+				<div class="profileItemLine">
+					<lightning-layout-item size="6">
+						<div class="formLabelContainer">
+							<div class="text-xxsmall">
+								{labels.CSP_L_PersonalEmail_LMS}
+							</div>
+						</div>
+					</lightning-layout-item>
+					<lightning-layout-item size="12">
+						<div class="slds-form-element">
+							<div class="slds-form-element__control custTextInput custTextInputSmall">
+								<input type="text" class="slds-input" placeholder=" "
+									value={localContactInfo.Additional_Email__c} onkeyup={changeAdditional_Email}
+									readonly />
+							</div>
+						</div>
+					</lightning-layout-item>
+				</div>
+
+				<!------------------------------------------      LMS Username       -------------------------------------------->
+				<!-- <div class="profileItem">
 				<lightning-layout-item size="6" class="leftItem">
 					<div class="formLabelContainer">
 						<div class="text-xxsmall">
@@ -148,9 +136,9 @@
 						</div>
 					</div>
 				</lightning-layout-item>
-			</div>
-			<!------------------------------------------      LMS User Id     -------------------------------------------->
-			<div class="profileItem">
+			</div> -->
+				<!------------------------------------------      LMS User Id     -------------------------------------------->
+				<!-- <div class="profileItem">
 				<lightning-layout-item size="6" class="rightItem">
 					<div class="formLabelContainer">
 						<div class="text-xxsmall">
@@ -175,76 +163,61 @@
 						</div>
 					</div>
 				</lightning-layout-item>
+			</div> -->
+				<!------------------------------------------      Phone       -------------------------------------------->
+				<div class="profileItem">
+					<lightning-layout-item size="6" class="leftItem">
+						<div class="formLabelContainer">
+							<div class="text-xxsmall">
+								<abbr class="slds-required" title="required">* </abbr>{labels.CSP_L_Phone_LMS}
+							</div>
+						</div>
+					</lightning-layout-item>
+					<lightning-layout-item size="12">
+						<div class="slds-form-element">
+							<div class="slds-form-element__control custTextInput custTextInputSmall">
+								<input type="text" class="slds-input" placeholder=" " value={localContactInfo.Phone}
+									onkeyup={changePhone} />
+							</div>
+						</div>
+					</lightning-layout-item>
+				</div>
+				<!------------------------------------------      Other Phone (work)     -------------------------------------------->
+				<div class="profileItem">
+					<lightning-layout-item size="6" class="rightItem">
+						<div class="formLabelContainer">
+							<div class="text-xxsmall">
+								{labels.CSP_L_WorkPhone_LMS}
+							</div>
+						</div>
+					</lightning-layout-item>
+					<lightning-layout-item size="12">
+						<div class="slds-form-element">
+							<div class="slds-form-element__control custTextInput custTextInputSmall">
+								<input type="text" class="slds-input" placeholder=" "
+									value={localContactInfo.OtherPhone} onkeyup={changeOtherPhone} />
+							</div>
+						</div>
+					</lightning-layout-item>
+				</div>
 			</div>
-			<!------------------------------------------      Phone       -------------------------------------------->
-			<div class="profileItem">
-				<lightning-layout-item size="6" class="leftItem">
-					<div class="formLabelContainer">
-						<div class="text-xxsmall">
-							<abbr class="slds-required" title="required">* </abbr>{labels.CSP_L_Phone_LMS}
-						</div>
-					</div>
-				</lightning-layout-item>
-				<lightning-layout-item size="12">
-					<div class="slds-form-element">
-						<div class="slds-form-element__control custTextInput custTextInputSmall">
-							<input
-								type="text"
-								class="slds-input"
-								placeholder=" "
-								value={localContactInfo.Phone}
-								onkeyup={changePhone}/>
-						</div>
-					</div>
-				</lightning-layout-item>
-			</div>
-			<!------------------------------------------      Other Phone (work)     -------------------------------------------->
-			<div class="profileItem">
-				<lightning-layout-item size="6" class="rightItem">
-					<div class="formLabelContainer">
-						<div class="text-xxsmall">
-				           	{labels.CSP_L_WorkPhone_LMS}
-						</div>
-					</div>
-				</lightning-layout-item>
-				<lightning-layout-item size="12">
-					<div class="slds-form-element">
-						<div class="slds-form-element__control custTextInput custTextInputSmall">
-							<input
-								type="text"
-								class="slds-input"
-								placeholder=" "
-								value={localContactInfo.OtherPhone}
-								onkeyup={changeOtherPhone}/>
-						</div>
-					</div>
-				</lightning-layout-item>
-			</div>
-		</div>
-		<lightning-layout-item padding="around-small" size="12">
-		</lightning-layout-item>
+			<lightning-layout-item padding="around-small" size="12" class="IEFixDisplay">
+			</lightning-layout-item>
 
-		<lightning-layout-item size="6">
-		</lightning-layout-item>
+			<lightning-layout-item size="6" class="IEFixDisplay">
+			</lightning-layout-item>
 
-		<lightning-layout-item size="6" class="nextBtn">
-			<lightning-button class="slds-float_right containedButton customBtn" data-id="nextButton" label={labels.CSP_Next_LMS} disabled={isNextDisabled} variant="brand"  onclick={next}>
-			</lightning-button>
-		</lightning-layout-item>
+			<lightning-layout-item size="6" class="nextBtn">
+				<lightning-button class="slds-float_right containedButton customBtn" data-id="nextButton"
+					label={labels.CSP_Next_LMS} disabled={isNextDisabled} variant="brand" onclick={next}>
+				</lightning-button>
+				<br/>
+			</lightning-layout-item>
 
-		<template if:true={isAddressInformationStep}>
-				<c-portal-registration-address-information
-					account={account}
-					address={address}
-					country-id={selectedCountryId}
-					original-customer-type={originalCustomerType}
-					ongotostep={goToStep}
-					onscrolltotop={scrollToTop}
-					onstartloading={startLoading}
-					onstoploading={stopLoading}
-					oncompletionstatus={step4CompletionStatus}>
-				</c-portal-registration-address-information>
-			</template>
-
+			<lightning-layout-item padding="around-small" size="12">
+			</lightning-layout-item>
+			<br/><br/>
+		<!-- </div> -->
 	</lightning-layout>
+	
 </template>

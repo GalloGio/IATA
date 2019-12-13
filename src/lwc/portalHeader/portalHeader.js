@@ -229,27 +229,45 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
 			}
 		}
 
+		console.log('portalHeader - connectedCallback - Start L3' );
+		console.log('portalHeader - connectedCallback - pageParams:' + pageParams);
+		console.log('portalHeader - connectedCallback - pageParams.firstLogin:' + pageParams.firstLogin);
+		console.log('portalHeader - connectedCallback - pageParams.lms:' + pageParams.lms);
 		// FOR LMS L3
 		if(pageParams !== undefined &&
 			(pageParams.lms !== undefined || pageParams.lmsflow !== undefined ) ){
+		
 			if(pageParams.lms === 'yas'){
+		
 				if(pageParams.firstLogin == "true"){
 					this.thirdLoginLMS = true;
 					this.registrationlevel = '3';
 					this.displayFirstLogin = true;
 				}else{
+		
 					getPortalServiceId({ serviceName: 'Training Platform (LMS)' })
 						.then(serviceId => {
+		
 							verifyCompleteL3Data({serviceId: serviceId})
 							.then(result => {
-								if(result){
-									window.open('https://getyardstick.com');
+								
+								if(result !== 'not_complete'){
+console.log('pageParams.RelayState: ', pageParams.RelayState );
+									if(pageParams.RelayState !== ''){
+										let sURL = result.split('RelayState');
+console.log('sURL: ', sURL );
+										result = sURL[0] + 'RelayState=' + pageParams.RelayState;
+console.log('result: ', result );
+									}
+
+									window.open(result);
 								}
 								else{
 									this.thirdLoginLMS = true;
 									this.registrationlevel = '3';
-									this.displayFirstLogin = true;
+									this.displayThirdLevelRegistrationLMS= true; 
 								}
+								this.toggleSpinner();
 							})
 							.catch(error => {
 								this.error = error;
@@ -258,10 +276,11 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
 						.catch(error => {
 							this.error = error;
 						});
-
+					
 				}
 
 			}else if(pageParams.lmsflow.indexOf('flow') > -1){
+				console.log('portalHeader - connectedCallback - IF LMS FLOW' );
 				this.thirdLoginLMS = true;
 				this.registrationlevel = '3';
 				this.displayFirstLogin = false;
@@ -269,6 +288,12 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
 			}
 
 		}
+		console.log('portalHeader - connectedCallback - pageParams.firstLogin:' + pageParams.firstLogin);
+		console.log('portalHeader - connectedCallback - pageParams.lms:' + pageParams.lms);
+		console.log('portalHeader - connectedCallback - pageParams.lmsflow:' + pageParams.lmsflow);
+		console.log('portalHeader - connectedCallback - this.firstLogin:' + this.firstLogin);
+		console.log('portalHeader - connectedCallback - this.thirdLoginLMS:' + this.thirdLoginLMS);
+		console.log('portalHeader - connectedCallback - this.registrationlevel:' + this.registrationlevel);
 		this.redirectChangePassword();
 
 		getNotifications().then(result => {

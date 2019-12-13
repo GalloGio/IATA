@@ -4,7 +4,7 @@ import { LightningElement, track, api} from 'lwc';
 /* eslint-disable no-alert */
 /* eslint-disable vars-on-top */
 import validateYasUserId                 from '@salesforce/apex/PortalRegistrationThirdLevelLMSCtrl.validateYasUserId';
-import getLMSContactInfo               from '@salesforce/apex/PortalRegistrationThirdLevelLMSCtrl.getLMSContactInfo';
+// import getLMSContactInfo               from '@salesforce/apex/PortalRegistrationThirdLevelLMSCtrl.getLMSContactInfo';
 
 //custom labels
 import ISSP_Registration_None                        from '@salesforce/label/c.ISSP_Registration_None';
@@ -25,7 +25,7 @@ import CSP_L_TrainingEmail_LMS from '@salesforce/label/c.CSP_L_TrainingEmail_LMS
 import CSP_L_TrainingUser_LMS from '@salesforce/label/c.CSP_L_TrainingUser_LMS';
 import CSP_L_Phone_LMS from '@salesforce/label/c.CSP_L_Phone_LMS';
 import CSP_L_WorkPhone_LMS from '@salesforce/label/c.CSP_L_WorkPhone_LMS';
-import CSP_Next_LMS from '@salesforce/label/c.CSP_Next_EmailValidation_LMS';
+import CSP_Next_LMS from '@salesforce/label/c.CSP_Next_LMS';
 import CSP_L2_RegistrationFailed_LMS from '@salesforce/label/c.CSP_L2_RegistrationFailed_LMS';
 import CSP_L2_IdAlready_LMS from '@salesforce/label/c.CSP_L2_IdAlready_LMS';
 import CSP_Age_Verification from '@salesforce/label/c.CSP_Age_Verification';
@@ -36,7 +36,8 @@ const DELAY = 350;
 
 export default class PortalRegistrationProfileDetailsLMS extends LightningElement {
 	@api contactInfo;
-	
+	@api isIE;
+
 	@track isUserIdValid;
 	@track isBirthdateValid;
 	
@@ -51,6 +52,10 @@ export default class PortalRegistrationProfileDetailsLMS extends LightningElemen
 	@track salutationPicklistOptions;
 	@track jobFunctionsPicklistOptions;
 
+	@track classIE = 'IEFixDisplayContainer';
+	@track startIE;
+	@track endIE;
+	
 	/* label variables */
 	_labels = {
 		ISSP_Registration_None,
@@ -87,40 +92,20 @@ export default class PortalRegistrationProfileDetailsLMS extends LightningElemen
 		return (this.localContactInfo.Salutation === '' || this.localContactInfo.Salutation === null || this.localContactInfo.Salutation === undefined)
 				|| (this.localContactInfo.Birthdate === '' || this.localContactInfo.Birthdate === null || this.localContactInfo.Birthdate === undefined)
 				|| (this.localContactInfo.Phone === '' || this.localContactInfo.Phone === null || this.localContactInfo.Phone === undefined)
-				|| (this.isUserIdValid === false) || (this.isBirthdateValid === false);
+				|| (this.isBirthdateValid === false);
 	}
 
 	connectedCallback() {
 		this.localContactInfo = JSON.parse(JSON.stringify(this.contactInfo));
-
+console.log('this.localContactInfo: ', this.localContactInfo);
 		//Initialize missing fields
 		this.localContactInfo.Additional_Email__c = this.localContactInfo.Additional_Email__c === undefined ? '' : this.localContactInfo.Additional_Email__c;
 
-		getLMSContactInfo({lms:'yas'})
-		.then(result2 => {
-			if(result2 !== undefined){
-				this.contactInfoLMS = result2;
-
-				this.localContactInfo.Username = this.contactInfoLMS.Username__c !== undefined ? this.contactInfoLMS.Username__c : '';
-				this.localContactInfo.UserId = this.contactInfoLMS.UserId__c !== undefined ? this.contactInfoLMS.UserId__c : '';
-				this.localContactInfo.lmsCourse = this.contactInfoLMS.Preferred_Course__c !== undefined ? this.contactInfoLMS.Preferred_Course__c : '';
-			}else{
-				this.localContactInfo.Username = '';
-				this.localContactInfo.UserId = '';
-				this.localContactInfo.lmsCourse = '';
-			}
-								
-		})
-		.catch((error) => {
-			this.localContactInfo.Username = '';
-			this.localContactInfo.UserId = '';
-			this.localContactInfo.lmsCourse = '';
-
-			this.openMessageModalFlowRegister = true;
-			this.message = CSP_L2_RegistrationFailed_LMS + error;
-			console.log('Error: ', JSON.parse(JSON.stringify(error)));
-			console.log('Error2: ', error);
-		});
+		if(!this.isIE){ 
+			this.classIE = '';
+			this.startIE = '<div class="IEFixDisplayContainer">';
+			this.endIE = '</div>';
+		}
 
 		var salutationList = [];
 

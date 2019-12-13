@@ -21,9 +21,9 @@
                                 {pageMessage}
                                 <div style="padding: 1.5rem;"></div>
                             </div>
-                            <div if:true={config.isUsernamePasswordEnabled} class="IEFixDisplay">
-                                    <lightning-layout multiple-rows vertical-align="end" class="IEFixDisplay">
-                                        <div class="IEFixDisplay">
+                            <div if:true={config.isUsernamePasswordEnabled} class="IEFixDisplayContainer">
+                                    <lightning-layout multiple-rows vertical-align="end" class="IEFixDisplayContainer">
+                                        <div class="IEFixDisplayContainer">
                                             <lightning-layout-item size="12">
                                                 <div class="formElementContainer">
                                                     <div class="formLabelContainer">
@@ -144,23 +144,18 @@
                                             <template if:true={config.isSelfRegistrationEnabled}>
 
                                                 <lightning-layout-item size="12">
-                                                    <div class="containerBorderTop" style="height:24px;">
-
-                                                    </div>
-                                                    <div class="textAlignCenter text-xsmall text-gray">
+                                                    <div class="containerBorderTop textAlignCenter text-xsmall text-gray labelSpacer">
                                                         {labels.CSP_Create_New_Account_Info}
                                                     </div>
                                                 </lightning-layout-item>
                                                 <lightning-layout-item size="12">
-                                                    <div class="textAlignCenter text-xxsmall">
+                                                    <div class="textAlignCenter text-xxsmall formElementSpacer">
                                                         <lightning-button variant="base"
                                                                         label={labels.CSP_Create_New_Account_Label}
                                                                         title={labels.CSP_Create_New_Account_Label}
                                                                         onclick={handleNavigateToSelfRegister}
                                                                         class="blueCustomButtonLinkSmall">
                                                         </lightning-button>
-                                                    </div>
-                                                    <div style="height:41px;">
                                                     </div>
                                                 </lightning-layout-item>
                                             </template>
@@ -173,7 +168,7 @@
                 </c-portal-custom-card-container>
             </div>
             <div if:true={isFrozen}>
-                <div style="padding-top:100px;">
+                <div class="messageElementSpacer">
                     <c-portal-informative-message-box>
                         <span slot="message">
                             <lightning-formatted-rich-text value={labels.CSP_Frozen_User_Message} class="text-small text-gray fixed-text"></lightning-formatted-rich-text>
@@ -182,7 +177,7 @@
                 </div>
             </div>
             <div if:true={isLoginDisabled}>
-                <div style="padding-top:100px;">
+                <div class="messageElementSpacer">
                     <c-portal-informative-message-box>
                         <span slot="message">
                             <lightning-formatted-rich-text value={labels.CSP_Portal_Login_Disabled_Message} class="text-small text-gray fixed-text"></lightning-formatted-rich-text>

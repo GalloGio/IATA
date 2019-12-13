@@ -1,9 +1,6 @@
 <template>
     <template if:true={registerData}>
         <div class="registration-modal">
-            <!--img 
-                src="img/bspcass.svg"
-                class="BSPCASS"-->
             <div data-name="top" class="banner">
                 <div class="header">
                     <div class="headerHome">
@@ -65,56 +62,59 @@
                                 <template if:true={contactFound}>
                                     <template if:true={isProfileInformationStep}>
                                         <c-portal-registration-profile-details-l-m-s
+                                            is-i-e={isIE}
                                             contact-info={contactInfo}
-                                            onnext={fromProfileDetailsToAccountSelection}
+                                            onnext={fromProfileDetailsToAddressInformation}
                                             onstartloading={startLoading}
                                             onstoploading={stopLoading}
                                             onscrolltotop={scrollToTop}>
                                         </c-portal-registration-profile-details-l-m-s>
                                     </template>
                                     <template if:true={isAddressInformationStep}>
-                                            <c-portal-registration-address-information-l-m-s
-                                                account={account}
-                                                address={address}
-                                                country-id={selectedCountryId}
-                                                original-customer-type={originalCustomerType}
-                                                ongotostep={goToStep}
-                                                onscrolltotop={scrollToTop}
-                                                onstartloading={startLoading}
-                                                onstoploading={stopLoading}
-                                                oncompletionstatus={step4CompletionStatus}>
-                                            </c-portal-registration-address-information-l-m-s>
-                                        </template>
+                                        <c-portal-registration-address-information-l-m-s
+                                            is-i-e={isIE}    
+                                            address={address}
+                                            country-id={selectedCountryId}
+                                            ongotostep={goToStep}
+                                            onnext={fromAddressInformationToEmailInformation}
+                                            onscrolltotop={scrollToTop}
+                                            onstartloading={startLoading}
+                                            onstoploading={stopLoading}
+                                            oncompletionstatus={step4CompletionStatus}>
+                                        </c-portal-registration-address-information-l-m-s>
+                                    </template>
                                     <template if:true={isEmailValidationStep}>
                                         <c-portal-registration-email-validation-l-m-s
+                                            is-i-e={isIE}
                                             contact-info={contactInfo}
                                             flow={flow}
-                                            customer-type={selectedCustomerType}
-                                            country-id={selectedCountryId}
-                                            account-id={selectedAccountId}
-                                            search-results={searchResults}
-                                            is-triggered-by-request={isTriggeredByRequest}
-                                            onprevious={fromAccountSelectionToProfileDetails}
-                                            onnext={fromAccountSelectionToConfirmation}
-                                            oncreateaccount={fromAccountSelectionToCompanyInformation}
+                                            onprevious={fromEmailInformationToAddressInformation}
+                                            onnext={fromEmailInformationToTrainingInformation}
                                             onstartloading={startLoading}
                                             onstoploading={stopLoading}
                                             onscrolltotop={scrollToTop}>
                                         </c-portal-registration-email-validation-l-m-s>
                                     </template>
+                                    <template if:true={isTrainingValidationStep}>
+                                        <c-portal-registration-training-validation-l-m-s
+                                            is-i-e={isIE}
+                                            contact-info={contactInfo}
+                                            flow={flow}
+                                            onprevious={fromTrainingInformationToEmailInformation}
+                                            onnext={fromTrainingInformationToConfirmation}
+                                            onstartloading={startLoading}
+                                            onstoploading={stopLoading}
+                                            onscrolltotop={scrollToTop}>
+                                        </c-portal-registration-training-validation-l-m-s>
+                                    </template>
                                     <template if:true={isConfirmationStep}>
                                         <c-portal-registration-confirmation-l-m-s
+                                            is-i-e={isIE}
                                             contact-info={contactInfo}
                                             flow={flow}
                                             trigger={trigger}
                                             address={address}
-                                            account={account}
-                                            search-results={searchResults}
-                                            selected-account-id={selectedAccountId}
-                                            country-id={selectedCountryId}
                                             ontoprofiledetails={fromConfirmationToProfileDetails}
-                                            ontoaccountselection={fromConfirmationToAccountSelection}
-                                            ontocompanyinformation={fromConfirmationToCompanyInformation}
                                             ontoaddressinformation={fromConfirmationToAddressInformation}
                                             onprevious={fromConfirmationToAddressInformation}
                                             onstartloading={startLoading}

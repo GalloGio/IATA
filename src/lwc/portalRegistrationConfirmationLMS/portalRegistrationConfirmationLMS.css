@@ -178,3 +178,16 @@
 .customBtn .slds-button:disabled{
     box-shadow: none;
 }
+
+.profileContainer{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.profileItem{
+  width: 50%;
+  padding: 7px;
+  margin-bottom: 20px;
+}

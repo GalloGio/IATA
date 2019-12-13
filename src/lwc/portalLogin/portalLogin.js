@@ -15,7 +15,7 @@ import login from '@salesforce/apex/PortalLoginCtrl.login';
 /* ==============================================================================================================*/
 /* Custom Labels
 /* ==============================================================================================================*/
-import Login                                from '@salesforce/label/c.login';
+import Login                                from '@salesforce/label/c.Login';
 import CSP_Email                            from '@salesforce/label/c.CSP_Email';
 import CSP_Password                         from '@salesforce/label/c.CSP_Password';
 import CSP_Change_Email                     from '@salesforce/label/c.CSP_Change_Email';
@@ -70,6 +70,7 @@ export default class PortalLogin extends LightningElement {
     @track isEmailInvalid = false;
     exclamationIcon = CSP_PortalPath + 'CSPortal/Images/Icons/exclamation_point.svg';
     startURL = "";
+    relayState = "";
 
     _labels = {
         Login,
@@ -113,10 +114,16 @@ export default class PortalLogin extends LightningElement {
     connectedCallback() {
 
         let pageParams = getParamsFromPage();
-        console.log('pageParams: ', pageParams);
+        console.info('pageParams: ', pageParams);
 
-        if(pageParams !== undefined && pageParams.startURL !== undefined){
-            this.startURL = pageParams.startURL;
+        if(pageParams !== undefined){
+            if(pageParams.startURL !== undefined){
+                this.startURL = pageParams.startURL;
+            }
+            if(pageParams.RelayState !== undefined){
+                this.relayState = pageParams.RelayState;
+            }
+
         }
 
         const RegistrationUtilsJs = new RegistrationUtils();
@@ -145,11 +152,14 @@ export default class PortalLogin extends LightningElement {
             }else{
                 getInitialConfig().then(result => {
                     var config = JSON.parse(JSON.stringify(result));
-                    console.log('config: ', config);
+                    console.log('result.selfRegistrationUrl: ', result.selfRegistrationUrl);
                     config.selfRegistrationUrl = result.selfRegistrationUrl.substring(result.selfRegistrationUrl.indexOf(CSP_PortalPath));
                     config.forgotPasswordUrl = result.forgotPasswordUrl.substring(result.forgotPasswordUrl.indexOf(CSP_PortalPath));
                     this.config = config;
-
+                    console.log('config.selfRegistrationUrl: ', config.selfRegistrationUrl);
+                    config.selfRegistrationUrl += '?startURL='+ this.startURL;
+                    console.log('config.selfRegistrationUrl: ', config.selfRegistrationUrl);
+                    
                     //todo remove this part - for testing only.
                     //config.isUsernamePasswordEnabled = false;
                     //------------------------------------------
@@ -286,9 +296,8 @@ export default class PortalLogin extends LightningElement {
                 this.isLoading = false;
                 return;
             }else{
-                login({username: this.email, password: this.password, landingPage: this.startURL }).then(result => {
+                login({username: this.email, password: this.password, landingPage: this.startURL, relayState: this.relayState }).then(result => {
                     var response = JSON.parse(JSON.stringify(result));
-                    console.log('response: ', response);
                     if(response.isSuccess == true){
                         navigateToPage(response.sessionUrl, {});
                     }else{
