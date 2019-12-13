@@ -1727,6 +1727,13 @@ Contact Details: 	Mr. Ravi Chaudhary&lt;br/&gt;
 Contact Details:	Mr. Allen Lasrado&lt;br/&gt;
 &amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;Tel: 8286661684&lt;br/&gt;
 &amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;allen.lasrado@yesbank.in</value>
+	</labels>
+	<labels>
+        <fullName>ANG_ISSP_IEP_Indonesia_msg</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_IEP_Indonesia_msg</shortDescription>
+        <value>Thank you for your enquiry. Please log a query in the Customer Portal with subject Easy Pay Account Opening Indonesia.</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_IEP_ModelBanking_SouthKorea_msg</fullName>
