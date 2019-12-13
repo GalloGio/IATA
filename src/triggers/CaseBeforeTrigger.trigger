@@ -1460,6 +1460,9 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 			}
 		}
 		/*AMS_OSCARCaseTrigger Trigger.isInsert*/
+
+		//HK TR18-174 - Move all fields updates on Case to the trigger
+		WorkflowHelper.performActions(WorkflowHelper.CASE_TYPE);
 	}
 
 /**************************************************** Trigger.isUpdate ************************************************************************************************/
@@ -2217,24 +2220,24 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 					}
 				}
 
-				if(oscarIdcases.keySet().isEmpty()) return;
+				if(!oscarIdcases.isEmpty()){
 
-				for (AMS_OSCAR__C oscar : [select Id, Financial_Assessment_requested__c, Financial_Assessment_deadline__c, Assessment_Performed_Date__c,
-										   Financial_Review_Result__c, Bank_Guarantee_amount__c, Reason_for_change_of_Financial_result__c,
-										   Requested_Bank_Guarantee_amount__c, Bank_Guarantee_Currency__c, Bank_Guarantee_deadline__c, Requested_Bank_Guarantee_currency__c
-										   from AMS_OSCAR__c where Id in :oscarIdcases.keySet()]) {
+					for (AMS_OSCAR__C oscar : [select Id, Financial_Assessment_requested__c, Financial_Assessment_deadline__c, Assessment_Performed_Date__c,
+											Financial_Review_Result__c, Bank_Guarantee_amount__c, Reason_for_change_of_Financial_result__c,
+											Requested_Bank_Guarantee_amount__c, Bank_Guarantee_Currency__c, Bank_Guarantee_deadline__c, Requested_Bank_Guarantee_currency__c
+											from AMS_OSCAR__c where Id in :oscarIdcases.keySet()]) {
 
-					oscar = AMS_Utils.syncOSCARwithIFAP(trigger.oldMap.get(oscarIdcases.get(oscar.Id).Id), oscarIdcases.get(oscar.Id), oscar, false);
+						oscar = AMS_Utils.syncOSCARwithIFAP(trigger.oldMap.get(oscarIdcases.get(oscar.Id).Id), oscarIdcases.get(oscar.Id), oscar, false);
 
-					if (oscar != null) {
-						oscarsToUpdate.add(oscar);
+						if (oscar != null) {
+							oscarsToUpdate.add(oscar);
+						}
+					}
+
+					if (!oscarsToUpdate.isEmpty()) {
+						update oscarsToUpdate;
 					}
 				}
-
-				if (!oscarsToUpdate.isEmpty()) {
-					update oscarsToUpdate;
-				}
-
 			}
 		}
 		/*AMS_OSCARCaseTrigger Trigger.isUpdate*/
@@ -2256,6 +2259,9 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 			ISSP_CreateNotification.CreateNotificationForSobjectList(trigger.new);
 		}
 		/*ISSP_CreateNotificationForCase Trigger.isUpdate*/
+
+		//HK TR18-174 - Move all fields updates on Case to the trigger
+		WorkflowHelper.performActions(WorkflowHelper.CASE_TYPE);
 
 	}
 /************************************************************ Trigger.isDelete ****************************************************************************************/
@@ -2298,8 +2304,4 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 	}
 
 	/*Internal methods Case_FSM_Handle_NonCompliance_BI_BU*/
-
-	//HK TR18-174 - Move all fields updates on Case to the trigger
-	if (Trigger.isInsert || Trigger.isUpdate)
-		WorkflowHelper.performActions(WorkflowHelper.CASE_TYPE);
 }
