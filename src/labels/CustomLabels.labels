@@ -2831,19 +2831,19 @@ IATA Easy Pay 계좌 개설을 희망하시는 여행사는 아래 우리은행 
         <value>Special needs travelers represent a promising market for the travel industry. To unlock this business opportunity, travel suppliers and agents must first be able to identify customers who may have special travel needs. Then they must deliver the services that make their journey safe and pleasant... (&lt;a href=\&quot;http://www.iata.org/training/courses/Pages/travelers-special-needs-tttg98.aspx\&quot; target=\&quot;_blank\&quot;&gt;read more&lt;/a&gt;)</value>
     </labels>
     <labels>
+        <fullName>Attach_Proof_Of_Payment</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Attach_Proof_Of_Payment</shortDescription>
+        <value>Please attach your proof of payment in case you have paid this invoice.</value>
+    </labels>
+    <labels>
         <fullName>Attachment_Name</fullName>
         <categories>TransferAttachmentToCase</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Attachment Name</shortDescription>
         <value>Attachment Name</value>
-    </labels>
-    <labels>
-        <fullName>Attach_Proof_Of_Payment</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Attach_Proof_Of_Payment</shortDescription>
-        <value>Please attach your proof of payment in case you have paid this invoice.</value>
     </labels>
     <labels>
         <fullName>Attachments</fullName>
@@ -3687,20 +3687,20 @@ Payment required on receipt of this Payment Advice
         <value>Your {0} access request has been sent to your company’s portal administrators. &lt;br/&gt;Your portal administrator can be fund under your</value>
     </labels>
     <labels>
-        <fullName>CSP_Contacts_NoResults_text1</fullName>
-        <categories>CS Portal</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP_Contacts_NoResults_text1</shortDescription>
-        <value>No Results</value>
-    </labels>
-    <labels>
         <fullName>CSP_Contact_Id_Card_Error_Msg</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP Contact Id Card Error Msg</shortDescription>
         <value>Changing your profile name will impact the validity of your ID Card. Please contact our Customer Service Team to change your profile name.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Contacts_NoResults_text1</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Contacts_NoResults_text1</shortDescription>
+        <value>No Results</value>
     </labels>
     <labels>
         <fullName>CSP_Contacts_NoResults_text2</fullName>
@@ -3789,6 +3789,22 @@ Payment required on receipt of this Payment Advice
         <value>Dear</value>
     </labels>
     <labels>
+        <fullName>CSP_Deduction_Notice</fullName>
+        <categories>CSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Deduction_Notice</shortDescription>
+        <value>Deduction Notice</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Deduction_Notice_Israel_Description</fullName>
+        <categories>CSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Deduction Notice Israel Description</shortDescription>
+        <value>This deduction form allows travel agents participating in BSP Israel to advise airlines and IATA BSP management of offset of any specific amount from due payment, as per Israel Anti-Trust Commissioner&apos;s instructions.</value>
+    </labels>
+    <labels>
         <fullName>CSP_Deny_User_Access_Title</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -3834,6 +3850,14 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP_Documents_PubliCountry</shortDescription>
         <value>Publication Countries</value>
+    </labels>
+    <labels>
+        <fullName>CSP_EF_Invoices</fullName>
+        <categories>CSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>EF Invoices</shortDescription>
+        <value>E&amp;F Invoices</value>
     </labels>
     <labels>
         <fullName>CSP_Email</fullName>
@@ -4264,6 +4288,30 @@ Payment required on receipt of this Payment Advice
         <value>Welcome [username]</value>
     </labels>
     <labels>
+        <fullName>CSP_IATAN_Register_Info</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP IATAN Register Info</shortDescription>
+        <value>&lt;p&gt;To create an “IATAN Passenger Sales Agent (US only)” or “Travel Service Intermediaries TSI (US only)” account,you can request the creation of your company account through &lt;a href=&quot;https://webstar.iatan.org/WebStarExtranetWEB/login.jsp?token=void&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;IATAN online service&lt;/a&gt;.&lt;/p&gt;&lt;/br&gt;
+	&lt;p&gt;Once the registration is finalized in Webstar, you will be able to identify your organization in the IATA Customer Portal.&lt;/p&gt;</value>
+    </labels>
+    <labels>
+        <fullName>CSP_IATA_Country</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_IATA_Country</shortDescription>
+        <value>IATA Country</value>
+    </labels>
+    <labels>
+        <fullName>CSP_IATA_Invoices</fullName>
+        <categories>CSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IATA Invoices</shortDescription>
+        <value>IATA Invoices</value>
+    </labels>
+    <labels>
         <fullName>CSP_IDCard_Name</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -4311,21 +4359,6 @@ Payment required on receipt of this Payment Advice
         <value>ID Card VER Number</value>
     </labels>
     <labels>
-        <fullName>CSP_Id_Card</fullName>
-        <categories>CS Portal</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP Id Card</shortDescription>
-        <value>ID Card</value>
-    </labels>
-    <labels>
-        <fullName>CSP_IATA_Country</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP_IATA_Country</shortDescription>
-        <value>IATA Country</value>
-    </labels>
-    <labels>
         <fullName>CSP_IMPORTANT</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -4333,13 +4366,12 @@ Payment required on receipt of this Payment Advice
         <value>IMPORTANT</value>
     </labels>
     <labels>
-		<fullName>CSP_IATAN_Register_Info</fullName>
+        <fullName>CSP_Id_Card</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
         <protected>false</protected>
-		<shortDescription>CSP IATAN Register Info</shortDescription>
-	<value>&lt;p&gt;To create an “IATAN Passenger Sales Agent (US only)” or “Travel Service Intermediaries TSI (US only)” account,you can request the creation of your company account through &lt;a href=&quot;https://webstar.iatan.org/WebStarExtranetWEB/login.jsp?token=void&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;IATAN online service&lt;/a&gt;.&lt;/p&gt;&lt;/br&gt;
-	&lt;p&gt;Once the registration is finalized in Webstar, you will be able to identify your organization in the IATA Customer Portal.&lt;/p&gt;</value>
+        <shortDescription>CSP Id Card</shortDescription>
+        <value>ID Card</value>
     </labels>
     <labels>
         <fullName>CSP_Invalid_Email</fullName>
@@ -5316,7 +5348,7 @@ You can easily create a company account in two steps</value>
         <shortDescription>CSP_NoCases2</shortDescription>
         <value>But once you have, you&apos;ll see the most recent ones here.</value>
     </labels>
-	<labels>
+    <labels>
         <fullName>CSP_NoRecordsFiltered</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -6071,6 +6103,14 @@ Click &lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.as
         <value>My Services</value>
     </labels>
     <labels>
+        <fullName>CSP_Services_RemoveFavorite</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Services_RemoveFavorite</shortDescription>
+        <value>Remove Favorite</value>
+    </labels>
+    <labels>
         <fullName>CSP_Services_RequestServiceBannerButton</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -6093,14 +6133,6 @@ Click &lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.as
         <protected>false</protected>
         <shortDescription>CSP_Services_RequestServiceBannerTitle</shortDescription>
         <value>Service Request</value>
-    </labels>
-    <labels>
-        <fullName>CSP_Services_RemoveFavorite</fullName>
-        <categories>CS Portal</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP_Services_RemoveFavorite</shortDescription>
-        <value>Remove Favorite</value>
     </labels>
     <labels>
         <fullName>CSP_Services_ServiceInformation</fullName>
@@ -6239,13 +6271,6 @@ Click &lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.as
         <value>Title</value>
     </labels>
     <labels>
-        <fullName>CSP_Treasury_Dashboard</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP Treasury Dashboard</shortDescription>
-        <value>Treasury Dashboard</value>
-    </labels>
-    <labels>
         <fullName>CSP_Travel_Agent_Accreditation_Changes_Access</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -6258,6 +6283,13 @@ Click &lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.as
         <protected>false</protected>
         <shortDescription>CSP_Travel_Agent_Accreditation_Changes_Request</shortDescription>
         <value>&lt;a href=&quot;/s/manage-service?serviceId=a2ww0000001D7GOAA0&quot; target=&quot;_self&quot;&gt;Click here to request the IATA Accreditation and Changes&lt;/a&gt;</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Treasury_Dashboard</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Treasury Dashboard</shortDescription>
+        <value>Treasury Dashboard</value>
     </labels>
     <labels>
         <fullName>CSP_Troubleshooting</fullName>
@@ -8599,7 +8631,7 @@ You can choose one or more of the following topics:</value>
         <shortDescription>GADM Power User</shortDescription>
         <value>GADM Power User</value>
     </labels>
-     <labels>
+    <labels>
         <fullName>GADM_Status_Change_Template_Link</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -25208,6 +25240,14 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <value>Type of Agency:</value>
     </labels>
     <labels>
+        <fullName>ISSP_ANG_DISCARD_APPLICATION</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_DISCARD_APPLICATION</shortDescription>
+        <value>Discard Application</value>
+    </labels>
+    <labels>
         <fullName>ISSP_ANG_ENTIRE_HIERARCHY</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -26231,6 +26271,14 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <protected>false</protected>
         <shortDescription>ISSP Add FAP Contact</shortDescription>
         <value>Add Financial Assessment Contact</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Add_New_Associate_Entity</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Add_New_Associate_Entity</shortDescription>
+        <value>Add New Associate Entity</value>
     </labels>
     <labels>
         <fullName>ISSP_Add_User_to_this_service</fullName>
@@ -41386,18 +41434,18 @@ title,Title,Name</value>
         <value>IATA: International Air Transport Association</value>
     </labels>
     <labels>
-        <fullName>Total_Cost</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Total_Cost</shortDescription>
-        <value>Total cost</value>
-    </labels>
-    <labels>
         <fullName>Total_Amount</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Total Amount</shortDescription>
         <value>Total Amount</value>
+    </labels>
+    <labels>
+        <fullName>Total_Cost</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Total_Cost</shortDescription>
+        <value>Total cost</value>
     </labels>
     <labels>
         <fullName>Total_Price</fullName>
@@ -41923,22 +41971,6 @@ title,Title,Name</value>
         <protected>false</protected>
         <shortDescription>Account Relocation</shortDescription>
         <value>Contact relocated successfully.</value>
-    </labels>
-    <labels>
-        <fullName>CSP_EF_Invoices</fullName>
-        <categories>CSP</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>EF Invoices</shortDescription>
-        <value>E&amp;F Invoices</value>
-    </labels>
-    <labels>
-        <fullName>CSP_IATA_Invoices</fullName>
-        <categories>CSP</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>IATA Invoices</shortDescription>
-        <value>IATA Invoices</value>
     </labels>
     <labels>
         <fullName>csp_Accreditation_Process</fullName>

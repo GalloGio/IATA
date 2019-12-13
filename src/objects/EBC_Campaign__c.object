@@ -1150,7 +1150,7 @@ The value is determined by ExactTarget, and this is is only populated once a cam
         <filters>
             <field>Billing_Account__c</field>
             <operation>contains</operation>
-            <value>IATA - TestingEBC</value>
+            <value>hermes</value>
         </filters>
         <filters>
             <field>Status__c</field>

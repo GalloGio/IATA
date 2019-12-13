@@ -4,7 +4,7 @@
     <protected>false</protected>
     <values>
         <field>Always_Visible__c</field>
-        <value xsi:type="xsd:boolean">true</value>
+        <value xsi:type="xsd:boolean">false</value>
     </values>
     <values>
         <field>CaseArea__c</field>
@@ -20,11 +20,11 @@
     </values>
     <values>
         <field>Field_Filter__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">Origin NOT_IN</value>
     </values>
     <values>
         <field>Origin__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">IATA Internal User</value>
     </values>
     <values>
         <field>Reason1__c</field>

@@ -518,6 +518,15 @@
         </valueSet>
     </fields>
     <fields>
+        <fullName>DescriptionLabel_TR__c</fullName>
+        <description>Turkish translation</description>
+        <externalId>false</externalId>
+        <label>DescriptionLabel_TR</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
         <fullName>DescriptionLabel_ar__c</fullName>
         <description>Arabic translation</description>
         <externalId>false</externalId>
@@ -621,15 +630,6 @@
         <description>Thai translation</description>
         <externalId>false</externalId>
         <label>DescriptionLabel_th</label>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>TextArea</type>
-    </fields>
-    <fields>
-        <fullName>DescriptionLabel_TR__c</fullName>
-        <description>Turkish translation</description>
-        <externalId>false</externalId>
-        <label>DescriptionLabel_TR</label>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>TextArea</type>
