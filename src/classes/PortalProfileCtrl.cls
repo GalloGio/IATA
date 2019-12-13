@@ -26,7 +26,9 @@ public with sharing class PortalProfileCtrl {
     PRIVATE STATIC FINAL STRING LABEL_BUSINESS_CONTACT = System.label.csp_Profile_BusinessContact;
     PRIVATE STATIC FINAL STRING LABEL_ACCESSIBILITY = System.label.csp_Profile_PortalAccessibility;
     PRIVATE STATIC FINAL STRING LABEL_PROFESSIONAL = System.label.csp_Profile_Professional;
+	PRIVATE STATIC FINAL STRING LABEL_IDCARD = System.label.CSP_Id_Card;
     
+	PRIVATE STATIC FINAL STRING LABEL_EN_IDCARD = 'ID Card';
     PRIVATE STATIC FINAL STRING LABEL_PRIVACYMANAGEMENTTITLE = System.Label.CSP_Profile_PrivacyManagement_Title;
     PRIVATE STATIC FINAL STRING LABEL_PRIVACYMANAGEMENTTEXT = System.label.CSP_Profile_PrivacyManagement_Text;
     PRIVATE STATIC FINAL STRING LABEL_PRIVACYMANAGEMENTLINK = System.label.CSP_Profile_PrivacyManagement_Link;
@@ -51,8 +53,29 @@ public with sharing class PortalProfileCtrl {
     PRIVATE STATIC FINAL STRING LABEL_PAYMENT_CONTACT = System.label.CSP_cpcc_BSP_CASS_Payment_Contact;
     PRIVATE STATIC FINAL STRING LABEL_AGENT_CREDIT_RISK = System.label.CSP_cpcc_Agent_Credit_Risk;
 
+    //WMO-627 - ACAMBAS: Begin
+    PRIVATE STATIC FINAL STRING LABEL_INVOICE_NUMBER = System.label.Invoice_number;
+    PRIVATE STATIC FINAL STRING LABEL_CURRENCY = System.label.ISSP_Currency;
+    PRIVATE STATIC FINAL STRING LABEL_INVOICE_STATUS = System.label.Invoice_Status;
+    PRIVATE STATIC FINAL STRING LABEL_INVOICE_AMOUNT = System.label.Invoice_Amount; //WMO-699 - ACAMBAS
+    PRIVATE STATIC FINAL STRING LABEL_FEE_CODES = System.label.Fee_Codes; //WMO-699 - ACAMBAS
+    PRIVATE STATIC FINAL STRING LABEL_BILLING_MEMBER_ACCOUNTING_CODE = System.label.Billing_Member_Accounting_Code;
+    PRIVATE STATIC FINAL STRING LABEL_BILLING_MEMBER_DESIGNATOR_CODE = System.label.Billing_Member_Designator_Code;
+    PRIVATE STATIC FINAL STRING LABEL_BILLING_MEMBER_NAME = System.label.Billing_Member_Name;
+    PRIVATE STATIC FINAL STRING LABEL_INVOICE_DATE = System.label.Invoice_Date;
+    //WMO-627 - ACAMBAS: End
+
     PRIVATE STATIC FINAL INTEGER CONTACT_BATCH= 15;
     PRIVATE STATIC FINAL INTEGER BRANCH_BATCH = 15;
+    PRIVATE STATIC FINAL INTEGER INVOICE_BATCH = 15; //WMO-627 - ACAMBAS
+
+    PUBLIC STATIC FINAL STRING IATA_INVOICE_TYPE = 'IATA OFFICE'; //WMO-627 - ACAMBAS
+
+	PRIVATE STATIC FINAL String CREDENTIAL_NAME = 'IdCard';
+	PRIVATE STATIC FINAL String FOLDER = 'a0W';
+
+	PUBLIC STATIC FINAL String CATEGORY_TIDS_AGENT = 'TIDS Agent';
+	PRIVATE STATIC FINAL Set<String> countrySet = new Set<String>{'AS', 'GU', 'MP', 'PW', 'UP', 'US'};
 
 public static final Id RECORDTYPE_AGENCY = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 public static final Id RECORDTYPE_AIRLINE_BR = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline_BR');
@@ -389,7 +412,7 @@ public static Contact contactInfo = new Contact();
 		@AuraEnabled
 		public Boolean hasProducts;
 		@AuraEnabled
-		public Boolean selected;
+		public Boolean selected;		
 	}
 
     public class CardWrapper{
@@ -403,12 +426,26 @@ public static Contact contactInfo = new Contact();
         @AuraEnabled
         public Boolean isEditable;
 
+		@AuraEnabled
+		public String idCardUrl;
+		
+		@AuraEnabled
+		public String cardKey;
+
         public CardWrapper(String cardTitleAux, List<FieldWrapper> lstFieldWrapperAux, Boolean isEditableAux){
             this.cardTitle = cardTitleAux;
             this.lstFieldWrapper = lstFieldWrapperAux;
             this.isEditable = isEditableAux;
+			this.idCardUrl = '';
         }
 
+		public CardWrapper(String cardTitleAux, List<FieldWrapper> lstFieldWrapperAux, Boolean isEditableAux, String cardKeyAux, String idCardUrl){
+			this.cardTitle = cardTitleAux;
+			this.lstFieldWrapper = lstFieldWrapperAux;
+			this.isEditable = isEditableAux;
+			this.cardKey = cardKeyAux;
+			this.idCardUrl = idCardUrl;
+		}
 
     }
 
@@ -448,13 +485,39 @@ public static Contact contactInfo = new Contact();
 
         //PROFESSIONAL CARD
         List<FieldWrapper> lstfw4 = new List<FieldWrapper>();
-        fw = new FieldWrapper('ID_CARD',false,true,true);
-        fw.isIdCardInfo = true;
-        lstfw4.add(fw);
         fw = new FieldWrapper('Membership_Function__c',false,true,true);
         fw.isJobFunction = true;
         lstfw4.add(fw);
         lstCardWrapper.add(new CardWrapper(LABEL_PROFESSIONAL, lstfw4, true));
+
+		//ID CARD
+		if(contactInfo.ID_Card_Holder__c == true){
+			List<FieldWrapper> lstfw6 = new List<FieldWrapper>();
+			fw = new FieldWrapper('ID_CARD',false,true,true);
+			fw.isIdCardInfo = true;
+			lstfw6.add(fw);
+
+			//get redirection url for id card contact
+			String redirectionUrl = '';
+			ISSP_CS__c cs;
+
+			if(contactInfo.Account.Sector__c == 'Travel Agent'){
+				if(countrySet.contains(contactInfo.Account.IATA_ISO_Country__r.ISO_Code__c) &&
+						(contactInfo.Account.Category__c == AMS_Utils.IATAN_PASSENGER_SALES_AGENT_USA_ONLY || contactInfo.Account.Category__c == AMS_Utils.TRAVEL_SERVICE_INTERMEDIATES_TSI_USA_ONLY ||
+								contactInfo.Account.Category__c == AMS_Utils.CATEGORY_PASSENGER_SALES_AGENT)){
+					cs = ISSP_CS__c.getInstance('US Cardholders URL');
+				}
+				else{
+					if(contactInfo.Account.Category__c == AMS_Utils.CATEGORY_PASSENGER_SALES_AGENT || contactInfo.Account.Category__c ==  CATEGORY_TIDS_AGENT||
+							contactInfo.Account.Category__c == AMS_Utils.CATEGORY_DOMESTIC_AGENT){
+						cs = ISSP_CS__c.getInstance('Non US Cardholders URL');
+					}
+				}
+			}
+
+			if(cs != null) redirectionUrl = cs.value__c;
+			lstCardWrapper.add(new CardWrapper(LABEL_IDCARD, lstfw6, false, LABEL_EN_IDCARD, redirectionUrl));
+		}
 
         //PRIVACY CARD
         List<FieldWrapper> lstfw5 = new List<FieldWrapper>();
@@ -1104,10 +1167,34 @@ public static Contact contactInfo = new Contact();
         }
     }
 
+	@AuraEnabled
+	public static String getPhotoFromAPI (String photoName) {
+		AmazonCredentials credential = AmazonCredentials.getCredentials(CREDENTIAL_NAME);
+
+		Long timestamp  = System.now().getTime()/1000 + 300;
+		String filename = '/' + credential.Bucket + '/' + FOLDER + '/' + photoName;
+
+		String canonical = 'GET\n\n\n' + timestamp + '\n' + filename;
+		Blob bsig = Crypto.generateMac('HmacSHA1', Blob.valueOf(canonical), Blob.valueOf(credential.Secret));
+		String signature = EncodingUtil.base64Encode(bsig);
+
+		return credential.EndpointBaseURL + filename.removeStart('/') + '?AWSAccessKeyId=' + credential.AWSAccessKeyId + '&Expires=' + timestamp + '&Signature=' + EncodingUtil.urlEncode(signature,'UTF-8');
+	}
+
+    //returns a JSON String with the ProfileWrapper list.
     @AuraEnabled (cacheable=false)
     public static CSP_Utils.PagedResult getFilteredProfileResultsPage(String profileFilterWrapper){
         
-        CSP_Utils.PagedResult filteredProfiles = DAL_WithoutSharing.getSearchProfiles(profileFilterWrapper, myContact);
+        CSP_Utils.PagedResult filteredProfiles = DAL_WithoutSharing.getSearchProfiles(profileFilterWrapper, myContact, '');
+        
+        return filteredProfiles;
+    }
+
+    //returns a JSON String with the ProfileWrapper list.
+    @AuraEnabled (cacheable=false)
+    public static CSP_Utils.PagedResult getFilteredProfileResultsPageWithLimit(String profileFilterWrapper, String limitQuery){
+        
+        CSP_Utils.PagedResult filteredProfiles = DAL_WithoutSharing.getSearchProfiles(profileFilterWrapper, myContact, limitQuery);
         
         return filteredProfiles;
     }
@@ -1145,7 +1232,7 @@ public static Contact contactInfo = new Contact();
             }
             else{
                 this.profileType = profileTypeAux; //set it to "Contact"
-                this.profileUrl = profileIdAux == myContact.Id ? System.Label.CSP_PortalPath + 'my-profile' : System.Label.CSP_PortalPath + 'company-profile?contact='+profileIdAux;
+                this.profileUrl = profileIdAux == myContact.Id ? System.Label.CSP_PortalPath + 'my-profile' : System.Label.CSP_PortalPath + 'company-profile?tab=contact&contact='+profileIdAux;
             }
         }
     }
@@ -1168,4 +1255,103 @@ public static Contact contactInfo = new Contact();
 
         return lstPickValues;
     }
+
+    //WMO-627 - ACAMBAS: Begin
+
+    /** Outstanding Invoices section */
+
+    @AuraEnabled
+    public static Map<String,List<FieldWrapper>> getInvoicesListFields(String invoiceType) {
+
+        String rowsFields = 'ROWS'; //Fields to display in columns of a closed accordion/record list
+        String viewFields = 'VIEW'; //Fields to display in open accordion section/record detail
+        String editFields = 'EDITS'; //Fields to display/edit in record edit modal dialog
+
+        List<String> toRow;
+
+        if(invoiceType == IATA_INVOICE_TYPE && myContact.Account.RecordType.DeveloperName == 'IATA_Agency') {
+            toRow = new List<String>{'Invoice_Number__c', 'Invoice_Date__c', 'Billing_Currency__c', 'Total_Amount__c', 'Fee_Codes_Display__c', 'Invoice_Status__c'};
+        }
+        else {
+            toRow = new List<String>{'Invoice_Number__c', 'Invoice_Date__c', 'Billing_Currency__c', 'Total_Amount__c', 'Fee_Codes_Display__c', 'Billing_Member_Name__c', 'Invoice_Status__c'};   
+        }
+
+        Map<String,String> fieldLabels = new Map<String,String>();
+
+        fieldLabels.put('Invoice_Number__c', LABEL_INVOICE_NUMBER);
+        fieldLabels.put('Invoice_Status__c', LABEL_INVOICE_STATUS);
+        fieldLabels.put('Total_Amount__c', LABEL_INVOICE_AMOUNT);
+        fieldLabels.put('Billing_Currency__c', LABEL_CURRENCY);
+        fieldLabels.put('Billing_Member_Accounting_Code__c', LABEL_BILLING_MEMBER_ACCOUNTING_CODE);
+        //fieldLabels.put('Billing_Member_Designator_Code__c', LABEL_BILLING_MEMBER_DESIGNATOR_CODE);
+        fieldLabels.put('Billing_Member_Name__c', LABEL_BILLING_MEMBER_NAME);
+        fieldLabels.put('Invoice_Date__c', LABEL_INVOICE_DATE);
+        fieldLabels.put('Fee_Codes_Display__c', LABEL_FEE_CODES);
+
+        Map<String,List<FieldWrapper>> wrapperMap = new Map<String,List<FieldWrapper>>();
+
+        wrapperMap.put(rowsFields,new List<FieldWrapper>());
+        for(String fieldName : toRow){
+            wrapperMap.get(rowsFields).add(new FieldWrapper(fieldName,true,true,'underLinded inactive cursorPointer',fieldLabels.get(fieldName)));
+        }
+
+        wrapperMap.put(viewFields,new List<FieldWrapper>());
+        wrapperMap.put(editFields,new List<FieldWrapper>());
+
+        //VIEW
+        wrapperMap.get(viewFields).add(new FieldWrapper('Bank_Name__c',true,true,true));
+        wrapperMap.get(viewFields).add(new FieldWrapper('IBAN__c',true,true));
+        wrapperMap.get(viewFields).add(new FieldWrapper('SWIFT__c',true,true));
+        wrapperMap.get(viewFields).add(new FieldWrapper('Bank_Code__c',false,true,true));
+        wrapperMap.get(viewFields).add(new FieldWrapper('Branch_Code__c',false,true,true));
+        wrapperMap.get(viewFields).add(new FieldWrapper('Bank_Account_No__c',false,true,true));
+        wrapperMap.get(viewFields).add(new FieldWrapper('Bank_Account_Name__c',false,true,true));
+
+        return wrapperMap;
+    }
+
+    @AuraEnabled
+    public static List<Customer_Invoice__c> getCustomerInvoices() {
+        return getCustomerInvoices(0, IATA_INVOICE_TYPE);
+    }
+
+    @AuraEnabled
+    public static List<Customer_Invoice__c> getCustomerInvoices(Integer offset, String type) {
+        List<String> statusList = new List<String>();
+        for(Customer_Invoices_Visible_Status__mdt visibleStatus : [SELECT MasterLabel FROM Customer_Invoices_Visible_Status__mdt]) {
+            statusList.add(visibleStatus.MasterLabel);
+        }
+
+        List<Customer_Invoice__c> invoices = 
+                [SELECT Id, Invoice_Number__c, Invoice_Status__c, Total_Amount__c, Billing_Currency__c, Fee_Codes_Display__c,
+                        Billing_Member_Designator_Code__c, Billing_Member_Name__c, Invoice_Date__c,
+                        Bank_Name__c, IBAN__c, SWIFT__c, Bank_Code__c, Branch_Code__c, Bank_Account_No__c, Bank_Account_Name__c
+                 FROM Customer_Invoice__c 
+                 WHERE AccountId__c = :myContact.AccountId AND Billing_Member_IS_Sub_Status__c = :type AND Invoice_Status__c IN :statusList
+                 ORDER BY Invoice_Date__c ASC LIMIT:INVOICE_BATCH OFFSET :offset
+                ];
+
+        return invoices;
+    }
+
+    //WMO-627 - ACAMBAS: End
+
+    //WMO-699 - ACAMBAS: Begin
+    @AuraEnabled
+    public static Boolean isCountryEligibleForPaymentLink() {
+        String isoCountry = myContact.Account.IATA_ISO_Country__r.ISO_Code__c;
+
+        List<String> eligibleCountryList = new List<String>();
+        for(Customer_Invoice_Payment_Link__mdt eligibleCountry : [SELECT DeveloperName FROM Customer_Invoice_Payment_Link__mdt]) {
+            eligibleCountryList.add(eligibleCountry.DeveloperName);
+        }
+
+        if(eligibleCountryList.contains(isoCountry)) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    //WMO-699 - ACAMBAS: End
 }

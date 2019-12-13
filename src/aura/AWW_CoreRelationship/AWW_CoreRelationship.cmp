@@ -1,0 +1,79 @@
+<aura:component controller="AWW_CoreRelationshipCtrl">
+    <aura:attribute name="accountId" type="Id"/>
+    <aura:attribute name="columns1" type="List"/>
+    <aura:attribute name="data1" type="List"/>
+    <aura:attribute name="columns2" type="List"/>
+    <aura:attribute name="data2" type="List"/>
+    <aura:attribute name="columns3" type="List"/>
+    <aura:attribute name="data3" type="List"/>
+    <aura:attribute name="columns4" type="List"/>
+    <aura:attribute name="data4" type="List"/>
+    <aura:attribute name="columns5" type="List"/>
+    <aura:attribute name="data5" type="List"/>
+    <aura:attribute name="data6" type="List"/>
+    <aura:attribute name="record" type="Account"/>
+    <aura:attribute name="canEdit" type="Boolean"/>
+    <aura:attribute name="haveAMPAgencyManagement" type="Boolean" default="false" />
+
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+    <aura:handler name="refreshTab" event="c:AWW_RefreshTabEvent" action="{!c.refreshTab}"/>  
+    
+    <div class="slds-p-around_medium">
+        <div class="slds-box slds-p-around_none slds-theme_shade">
+            <lightning:card class="bckColor" title="Core Relationship" iconName="standard:data_integration_hub">
+                <aura:set attribute="actions">
+                    <div class="slds-grid slds-gutters slds-grid_vertical-align-end">
+                        <div class="slds-col">
+                            <lightning:button label="Export Details" onclick="{!c.exportDetails}"/>
+                        </div>
+                        <div class="{!'slds-col ' + if(v.canEdit,'','slds-hide')}">
+                            <lightning:button label="Edit" onclick="{!c.edit}"/>
+                        </div>                    
+                    </div>
+                </aura:set>
+                <div class="slds-grid slds-wrap slds-m-around_medium">
+                    <div class="slds-col slds-size_1-of-2">
+                        <div class="slds-box slds-p-around_none slds-m-right_xxx-small slds-m-bottom_xxx-small">
+                            <lightning:card title="Core Relationship with IATA" iconName="standard:strategy">
+                                <c:AWW_CoreRelationshipTable columns="{!v.columns1}" data="{!v.data1}"/>
+                            </lightning:card>
+                        </div>
+                        <div class="slds-box slds-p-around_none slds-m-right_xxx-small slds-m-bottom_xxx-small">
+                            <c:AWW_CoreRelationshipTable columns="{!v.columns1}" data="{!v.data6}" isCoreRelationshipWithIATA="true"/>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <div class="slds-box slds-p-around_none slds-m-left_xxx-small slds-m-bottom_xxx-small">
+                            <lightning:card title="Relationship with External Entities" iconName="standard:strategy">
+                                <aura:if isTrue="{!v.record.Agency_Business_Model__c != 'Freight Forwarder' &amp;&amp; v.record.Agency_Business_Model__c != 'Other'}">
+                                    <c:AWW_CoreRelationshipTable columns="{!v.columns4}" data="{!v.data4}"/>
+                                    <lightning:textarea class="slds-p-top_x-small slds-p-left_x-small slds-p-right_x-small" value="{!v.record.External_Entities_PAX_OTHER__c}" label="OTHER" disabled="true"/>
+                                </aura:if>
+                                <aura:if isTrue="{!v.record.Agency_Business_Model__c == 'Freight Forwarder' || v.record.Agency_Business_Model__c == 'Other' || v.record.Agency_Business_Model__c == null}">
+                                    <c:AWW_CoreRelationshipTable columns="{!v.columns5}" data="{!v.data5}"/> 
+                                    <lightning:textarea class="slds-p-around_x-small" value="{!v.record.External_Entities_CARGO_OTHER__c}" label="OTHER" disabled="true"/>
+                                </aura:if>
+                            </lightning:card>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2 margin_top">
+                        <div class="slds-box slds-p-around_none slds-m-right_xxx-small slds-m-top_xxx-small">
+                            <lightning:card title="Accredited Locations per Country" iconName="standard:strategy">
+                                <c:AWW_CoreRelationshipTable columns="{!v.columns2}" data="{!v.data2}"/>
+                            </lightning:card>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2 margin_top">
+                        <div class="slds-box slds-p-around_none slds-m-left_xxx-small slds-m-top_xxx-small">
+                            <lightning:card title="Accredited Locations per Region" iconName="standard:strategy">
+                                <c:AWW_CoreRelationshipTable columns="{!v.columns3}" data="{!v.data3}"/>
+                            </lightning:card>
+                        </div>
+                    </div>                    
+                </div>
+            </lightning:card>
+        </div>
+    </div>
+
+    <c:AWW_CoreRelationshipEdit aura:id="edit-modal" paxEntities="{!v.data4}" cargoEntities="{!v.data5}" haveAMPAgencyManagement="{!v.haveAMPAgencyManagement}"/> 
+</aura:component>

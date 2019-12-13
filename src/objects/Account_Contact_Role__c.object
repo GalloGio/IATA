@@ -142,6 +142,16 @@
     </actionOverrides>
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <compactLayouts>
+        <fullName>IFTP_Compact_Layout</fullName>
+        <fields>Account__c</fields>
+        <fields>Name</fields>
+        <fields>Account_Role__c</fields>
+        <fields>Contact__c</fields>
+        <fields>First_Name__c</fields>
+        <fields>Last_Name__c</fields>
+        <label>IFTP Compact Layout</label>
+    </compactLayouts>
     <deploymentStatus>Deployed</deploymentStatus>
     <description>Related to the Account Role, used to designate an existing contact, under the account, that acts as a primary contact for the associated type of account role.</description>
     <enableActivities>false</enableActivities>
@@ -149,7 +159,7 @@
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableLicensing>false</enableLicensing>
-    <enableReports>false</enableReports>
+    <enableReports>true</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
@@ -202,6 +212,18 @@
         <externalId>false</externalId>
         <formula>Contact__r.Phone</formula>
         <label>Phone</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Company_Code__c</fullName>
+        <description>Company Internal Code for the employee</description>
+        <externalId>false</externalId>
+        <label>Employee Code</label>
+        <length>50</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -272,6 +294,26 @@
             <valueSetDefinition>
                 <sorted>true</sorted>
                 <value>
+                    <fullName>ITP Administrator</fullName>
+                    <default>false</default>
+                    <label>ITP Administrator</label>
+                </value>
+                <value>
+                    <fullName>ITP Master</fullName>
+                    <default>false</default>
+                    <label>ITP Master</label>
+                </value>
+                <value>
+                    <fullName>ITP Trainee</fullName>
+                    <default>false</default>
+                    <label>ITP Trainee</label>
+                </value>
+                <value>
+                    <fullName>ITP Training Coordinator</fullName>
+                    <default>false</default>
+                    <label>ITP Training Coordinator</label>
+                </value>
+                <value>
                     <fullName>Primary Contact</fullName>
                     <default>false</default>
                     <label>Primary Contact</label>
@@ -284,7 +326,7 @@
         <fullName>Contact_Roles__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
-        <label>Contact Roles</label>
+        <label>Portal Contact Roles</label>
         <referenceTo>Contact_Roles__c</referenceTo>
         <relationshipLabel>Account Contacts Role</relationshipLabel>
         <relationshipName>Account_Contacts_Role</relationshipName>
@@ -307,6 +349,15 @@
         <trackTrending>false</trackTrending>
         <type>MasterDetail</type>
         <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Details__c</fullName>
+        <externalId>false</externalId>
+        <label>Details</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
     </fields>
     <fields>
         <fullName>Email__c</fullName>
@@ -346,11 +397,63 @@
         </valueSet>
     </fields>
     <fields>
+        <fullName>Global_ID__c</fullName>
+        <displayFormat>aB4{0000000000}</displayFormat>
+        <externalId>false</externalId>
+        <label>Global ID</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>AutoNumber</type>
+    </fields>
+    <fields>
+        <fullName>Integration_Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Integration Status</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Functional_Roles</valueSetName>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Success</fullName>
+                    <default>false</default>
+                    <label>Success</label>
+                </value>
+                <value>
+                    <fullName>Error</fullName>
+                    <default>false</default>
+                    <label>Error</label>
+                </value>
+                <value>
+                    <fullName>Queued</fullName>
+                    <default>false</default>
+                    <label>Queued</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
         <fullName>Last_Name__c</fullName>
         <description>Last name of the related contact</description>
         <externalId>false</externalId>
         <formula>Contact__r.LastName</formula>
         <label>Last Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Personal_Email__c</fullName>
+        <externalId>false</externalId>
+        <formula>Contact__r.Additional_Email__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Personal Email</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -388,6 +491,11 @@
                     <label>GADM</label>
                 </value>
                 <value>
+                    <fullName>IFTP</fullName>
+                    <default>false</default>
+                    <label>IFTP</label>
+                </value>
+                <value>
                     <fullName>Other</fullName>
                     <default>false</default>
                     <label>Other</label>
@@ -401,15 +509,49 @@
         </valueSet>
     </fields>
     <fields>
+        <fullName>Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Status</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Active</fullName>
+                    <default>false</default>
+                    <label>Active</label>
+                </value>
+                <value>
+                    <fullName>Inactive</fullName>
+                    <default>false</default>
+                    <label>Inactive</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
         <fullName>Title__c</fullName>
         <externalId>false</externalId>
-        <formula>TEXT(Contact__r.Salutation)</formula>
+        <formula>Contact__r.Title</formula>
         <label>Title</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TransferFlag__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>TransferFlag</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>UniqueKey__c</fullName>
@@ -522,6 +664,46 @@
         </picklistValues>
     </recordTypes>
     <recordTypes>
+        <fullName>ITP</fullName>
+        <active>true</active>
+        <compactLayoutAssignment>IFTP_Compact_Layout</compactLayoutAssignment>
+        <label>ITP</label>
+        <picklistValues>
+            <picklist>Contact_Role__c</picklist>
+            <values>
+                <fullName>ITP Administrator</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ITP Master</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ITP Trainee</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ITP Training Coordinator</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Integration_Status__c</picklist>
+            <values>
+                <fullName>Error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Queued</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Success</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
         <fullName>Master</fullName>
         <active>true</active>
         <description>Master RecordType</description>
@@ -591,10 +773,16 @@
         <lookupDialogsAdditionalFields>Contact_Roles__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>Service_Rendered__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>Account_Name__c</lookupDialogsAdditionalFields>
+        <searchFilterFields>First_Name__c</searchFilterFields>
+        <searchFilterFields>Last_Name__c</searchFilterFields>
+        <searchFilterFields>Email__c</searchFilterFields>
+        <searchFilterFields>Company_Code__c</searchFilterFields>
+        <searchFilterFields>Contact__c</searchFilterFields>
         <searchResultsAdditionalFields>Account__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Account_Role__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>First_Name__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Last_Name__c</searchResultsAdditionalFields>
+		<searchResultsAdditionalFields>Email__c</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>ControlledByParent</sharingModel>
     <validationRules>

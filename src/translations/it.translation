@@ -1893,6 +1893,10 @@ la seguente procedura per completarlo :
         <name>CSP_ArticleHelpful</name>
     </customLabels>
     <customLabels>
+        <label>Assegna nuovo servizio</label>
+        <name>CSP_Assign_New_Service</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Branch Offices --></label>
         <name>CSP_Branch_Offices</name>
     </customLabels>
@@ -2069,6 +2073,10 @@ la seguente procedura per completarlo :
         <name>CSP_Confirmed_Requested_Service_Message</name>
     </customLabels>
     <customLabels>
+        <label>Cambiare il nome del suo profilo influirà sulla validità della sua carta d&apos;identità. Contatti il team del servizio clienti per modificare il nome del suo profilo</label>
+        <name>CSP_Contact_Id_Card_Error_Msg</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_Contacts_NoResults_text1 --></label>
         <name>CSP_Contacts_NoResults_text1</name>
     </customLabels>
@@ -2117,7 +2125,7 @@ la seguente procedura per completarlo :
         <name>CSP_Dear</name>
     </customLabels>
     <customLabels>
-        <label>Nega l&apos;accesso all&apos;utente</label>
+        <label>Negare l&#39;accesso</label>
         <name>CSP_Deny_User_Access_Title</name>
     </customLabels>
     <customLabels>
@@ -2345,7 +2353,7 @@ la seguente procedura per completarlo :
         <name>CSP_Frozen_User_Message</name>
     </customLabels>
     <customLabels>
-        <label>Concedi l&apos;accesso all&apos;utente</label>
+        <label>Concedere l&#39;accesso</label>
         <name>CSP_Grant_User_Access_Title</name>
     </customLabels>
     <customLabels>
@@ -2355,6 +2363,30 @@ la seguente procedura per completarlo :
     <customLabels>
         <label><!-- CSP_IATA_Country --></label>
         <name>CSP_IATA_Country</name>
+    </customLabels>
+    <customLabels>
+        <label>Nome sulla carta d&apos;identità</label>
+        <name>CSP_IDCard_Name</name>
+    </customLabels>
+    <customLabels>
+        <label>Vada qui per vedere la sua foto della carta d&apos;identità</label>
+        <name>CSP_IDCard_Photo</name>
+    </customLabels>
+    <customLabels>
+        <label>Foto</label>
+        <name>CSP_IDCard_Photo_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Stato</label>
+        <name>CSP_IDCard_Status</name>
+    </customLabels>
+    <customLabels>
+        <label>Data di scadenza</label>
+        <name>CSP_IDCard_Valid_To</name>
+    </customLabels>
+    <customLabels>
+        <label>Numero VER del documento di identità</label>
+        <name>CSP_IDCard_Ver_Number</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_IMPORTANT --></label>
@@ -2653,7 +2685,7 @@ la seguente procedura per completarlo :
         <name>CSP_L2_Requested_Modal_Message</name>
     </customLabels>
     <customLabels>
-        <label>Salve</label>
+        <label>Ci dica di più</label>
         <name>CSP_L2_Requested_Modal_Title</name>
     </customLabels>
     <customLabels>
@@ -2847,6 +2879,10 @@ la seguente procedura per completarlo :
     <customLabels>
         <label>&quot;Ma una volta che li avrà, qui vedrà i più recenti.&quot;</label>
         <name>CSP_NoCases2</name>
+    </customLabels>
+    <customLabels>
+        <label>Spiacenti, nessun risultato trovato per i filtri applicati.</label>
+        <name>CSP_NoRecordsFiltered</name>
     </customLabels>
     <customLabels>
         <label>Nessun risultato</label>
@@ -3190,6 +3226,10 @@ la seguente procedura per completarlo :
         <name>CSP_Services_AccessRequestedTitle</name>
     </customLabels>
     <customLabels>
+        <label>Aggiungere preferito</label>
+        <name>CSP_Services_AddFavorite</name>
+    </customLabels>
+    <customLabels>
         <label>Tutti i servizi disponibili per la sua azienda sono elencati di seguito.</label>
         <name>CSP_Services_AvailableServicesHelpText</name>
     </customLabels>
@@ -3222,6 +3262,10 @@ la seguente procedura per completarlo :
         <name>CSP_Services_MyServicesTabTile</name>
     </customLabels>
     <customLabels>
+        <label>Rimuovere preferito</label>
+        <name>CSP_Services_RemoveFavorite</name>
+    </customLabels>
+    <customLabels>
         <label>Vedi i servizi disponibili</label>
         <name>CSP_Services_RequestServiceBannerButton</name>
     </customLabels>
@@ -3236,6 +3280,14 @@ la seguente procedura per completarlo :
     <customLabels>
         <label>Informazioni sui servizi</label>
         <name>CSP_Services_ServiceInformation</name>
+    </customLabels>
+    <customLabels>
+        <label>Mostra tutto</label>
+        <name>CSP_Services_ShowAll</name>
+    </customLabels>
+    <customLabels>
+        <label>Mostra solo preferiti</label>
+        <name>CSP_Services_ShowOnlyFavorites</name>
     </customLabels>
     <customLabels>
         <label>Servizi</label>
@@ -6542,6 +6594,10 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <name>IDCard_NoModificationAllowed</name>
     </customLabels>
     <customLabels>
+        <label>Effettui l&apos;iscrizione e il pagamento per ottenere il suo documento d&apos;identità (nuovo, rinnovo, cambio di agenzia) e sfrutti i vantaggi di essere un agente di viaggio IATA.</label>
+        <name>IDCard_NoUSServiceDescription</name>
+    </customLabels>
+    <customLabels>
         <label><!-- IDCard No Price Table Found --></label>
         <name>IDCard_No_Price_Table_Found</name>
     </customLabels>
@@ -6834,6 +6890,10 @@ Kindly note that home-based agents are required to coordinate with their colleag
     <customLabels>
         <label><!-- IDCard_TrxNum --></label>
         <name>IDCard_TrxNum</name>
+    </customLabels>
+    <customLabels>
+        <label>(Per agenti statunitensi) Richiesta di documenti d&apos;identità, agenti di registro, pagamento della quota annuale per il servizio, processo di ricertificazione dell&apos;agenzia, ecc.</label>
+        <name>IDCard_USServiceDescription</name>
     </customLabels>
     <customLabels>
         <label><!-- IDCard Update Application --></label>
@@ -15861,6 +15921,14 @@ La preghiamo di indicarci il paese per il quale richiede assistenza</label>
     <customLabels>
         <label>La informiamo che un eventuale cambio di nome non risulterá in automatico nella sua ID Card pertanto per modificare il nome dovrá entrare all&apos;interno della notra ID card Platform</label>
         <name>ISSP_IdCard_Name_Warning</name>
+    </customLabels>
+    <customLabels>
+        <label>Piattaforma online per documenti d&apos;identità</label>
+        <name>ISSP_IdCard_NonUS</name>
+    </customLabels>
+    <customLabels>
+        <label>Servizi online IATAN</label>
+        <name>ISSP_IdCard_US</name>
     </customLabels>
     <customLabels>
         <label>In fase di elaborazione</label>

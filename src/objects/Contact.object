@@ -20179,7 +20179,9 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
         <fullName>CFOCEO_contact_under_AL_HQ_only</fullName>
         <active>true</active>
         <description>prevents flagging a contact as CEO CFO unless it is under an airline HQ account</description>
-        <errorConditionFormula>Account_HQ_BO__c &lt;&gt; &quot;Headquarter&quot; &amp;&amp; not(ispickval(CEO_CFO__c,&quot;&quot;))</errorConditionFormula>
+            <errorConditionFormula>(Account.RecordType.DeveloperName &lt;&gt; &#39;Agency_WW_HQ&#39; &amp;&amp; Account_HQ_BO__c &lt;&gt; &#39;Headquarter&#39;)
+&amp;&amp; 
+NOT(ISPICKVAL(CEO_CFO__c,&#39;&#39;))</errorConditionFormula>
         <errorDisplayField>CEO_CFO__c</errorDisplayField>
         <errorMessage>Airline CEO/CFO/COO can only be flagged under the airline headquarter account. If this is the correct contact, please relocate it under the HQ by editing the &quot;Account&quot; field to the correct value.</errorMessage>
     </validationRules>
