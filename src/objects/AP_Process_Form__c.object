@@ -9971,6 +9971,21 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>CASS_PH_Preferred_Billing_Currency__c</picklist>
+            <values>
+                <fullName>PHP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>USD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>USD and PHP %282 separate billing files to be prepared by Airline%29</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Canada_Has_Principal_Office__c</picklist>
             <values>
                 <fullName>No</fullName>
@@ -10250,6 +10265,21 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
             </values>
             <values>
                 <fullName>International</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>GSSA_Contact_Salutation__c</picklist>
+            <values>
+                <fullName>Mr</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mrs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ms</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -10542,6 +10572,21 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
             </values>
             <values>
                 <fullName>CASS</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_of_Change_Requested__c</picklist>
+            <values>
+                <fullName>BSPLink Master Table</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Change of Address</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Tax Number</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -11028,6 +11073,21 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>CASS_PH_Preferred_Billing_Currency__c</picklist>
+            <values>
+                <fullName>PHP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>USD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>USD and PHP %282 separate billing files to be prepared by Airline%29</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Canada_Has_Principal_Office__c</picklist>
             <values>
                 <fullName>No</fullName>
@@ -11307,6 +11367,21 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
             </values>
             <values>
                 <fullName>International</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>GSSA_Contact_Salutation__c</picklist>
+            <values>
+                <fullName>Mr</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mrs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ms</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -11599,6 +11674,21 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
             </values>
             <values>
                 <fullName>CASS</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_of_Change_Requested__c</picklist>
+            <values>
+                <fullName>BSPLink Master Table</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Change of Address</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Tax Number</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
