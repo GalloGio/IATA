@@ -19,13 +19,6 @@
                 <elementReference>ExistingAddress.Id</elementReference>
             </value>
         </assignmentItems>
-        <assignmentItems>
-            <assignToReference>AddressRole.SIS_Location_ID__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Main</stringValue>
-            </value>
-        </assignmentItems>
         <connector>
             <targetReference>UpdateAddressrole</targetReference>
         </connector>
@@ -63,13 +56,6 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>NewAddress.Id</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>AddressRole.SIS_Location_ID__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Main</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -139,13 +125,6 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>ExistingAddress.Id</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>AddressRole.SIS_Location_ID__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Main</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -345,22 +324,6 @@
         </assignmentItems>
         <connector>
             <targetReference>NewMainAddressCreation_0_0</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Unchecked_TechUpdate</name>
-        <label>Unchecked TechUpdate</label>
-        <locationX>1366</locationX>
-        <locationY>455</locationY>
-        <assignmentItems>
-            <assignToReference>ExistingAddress.TechUpdate_AddressFlow__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <booleanValue>false</booleanValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Update_TechUpdate</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -1316,7 +1279,7 @@
         <locationX>1153</locationX>
         <locationY>455</locationY>
         <connector>
-            <targetReference>Unchecked_TechUpdate</targetReference>
+            <targetReference>GetExistingAddressRole</targetReference>
         </connector>
         <inputReference>ExistingAddress</inputReference>
     </recordUpdates>
@@ -1352,23 +1315,19 @@
         <inputReference>ExistingAddress</inputReference>
     </recordUpdates>
     <recordUpdates>
-        <name>Update_TechUpdate</name>
-        <label>Update TechUpdate</label>
-        <locationX>1558</locationX>
-        <locationY>455</locationY>
-        <connector>
-            <targetReference>GetExistingAddressRole</targetReference>
-        </connector>
-        <inputReference>ExistingAddress</inputReference>
-    </recordUpdates>
-    <recordUpdates>
         <name>UpdateAddressrole</name>
         <label>UpdateAddressrole</label>
         <locationX>2488</locationX>
         <locationY>556</locationY>
         <inputReference>AddressRole</inputReference>
     </recordUpdates>
-    <startElementReference>Does_Main_Address_exist</startElementReference>
+    <start>
+        <locationX>50</locationX>
+        <locationY>50</locationY>
+        <connector>
+            <targetReference>Does_Main_Address_exist</targetReference>
+        </connector>
+    </start>
     <status>Active</status>
     <variables>
         <name>AccountAuthorityRecordGET</name>

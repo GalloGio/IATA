@@ -20193,15 +20193,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>TechUpdate_AddressFlow__c</fullName>
-        <defaultValue>false</defaultValue>
-        <externalId>false</externalId>
-        <label>Tech Update Address Flow</label>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-        <type>Checkbox</type>
-    </fields>
-    <fields>
         <fullName>Verification_Status__c</fullName>
         <defaultValue>&quot;Unverified&quot;</defaultValue>
         <externalId>false</externalId>
