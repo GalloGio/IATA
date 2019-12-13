@@ -313,7 +313,7 @@
     </listViews>
     <nameField>
         <displayFormat>TCRD-{00000}</displayFormat>
-        <label>Training_Contact_Role_Details__c Name</label>
+        <label>Name</label>
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Training Contact Role Details</pluralLabel>
