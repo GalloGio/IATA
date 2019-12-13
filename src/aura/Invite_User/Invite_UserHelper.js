@@ -121,7 +121,6 @@
             var state = response.getState();
             if (state === "SUCCESS") {
                 let contactCountry = response.getReturnValue();
-                console.log('contact country: ' + contactCountry);
                 component.set("v.userCountry",contactCountry);
             }
             else if (state === "ERROR") {
@@ -146,7 +145,9 @@
 
             action.setParams({
                 "contactStr": JSON.stringify(component.get("v.contact")),
-                "invitationStr": JSON.stringify(component.get("v.invitation"))
+                "invitationStr": JSON.stringify(component.get("v.invitation")),
+                "existingRolePowerUser": component.get("v.existingRolePowerUser"),
+                "existingUserSelectedAccount" : component.get("v.registeredUserAccount") == "" ? null : component.get("v.registeredUserAccount")
             });
             action.setCallback(this, function(response) {
                 const state = response.getState();
@@ -185,7 +186,6 @@
         }
 
         let actor =  component.find('actor');
-        console.log(actor);
         if(! $A.util.isEmpty(actor)) {
             let value = actor.get('v.value');
             if(!$A.util.isEmpty(value)) {

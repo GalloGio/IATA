@@ -195,8 +195,12 @@
     <label>IATA Geonames City</label>
     <listViews>
         <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>GeonameName__c</columns>
+        <columns>GeonameAlternateNames__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
+        <language>en_US</language>
     </listViews>
     <nameField>
         <label>GeonameAsciiName</label>

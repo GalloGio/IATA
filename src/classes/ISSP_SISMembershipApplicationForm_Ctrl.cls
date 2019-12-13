@@ -14,9 +14,9 @@ public without sharing class ISSP_SISMembershipApplicationForm_Ctrl{
         AP_RT_ISUA => new list<String>{'A. ' + Label.ISSP_SIS_Membership_Review_Country_Req,'B. ' + Label.ISSP_SIS_Membership_Fill_The_Form,'C. ' + Label.ISSP_SIS_Membership_Submit_To_IATA},
         AP_RT_TOU  => new list<String>{'A. ' + Label.ISSP_SIS_Membership_Fill_The_Form,'B. ' + Label.ISSP_SIS_Membership_Submit_To_IATA}
     };
-    public Boolean getisISPA() {return this.newForm.RecordTypeId==AP_RT_ISPA;}
-    public Boolean getisISUA() {return this.newForm.RecordTypeId==AP_RT_ISUA;}
-    public Boolean getisTOU()  {return this.newForm.RecordTypeId==AP_RT_TOU;}
+    public Boolean getisISPA() {return this.newForm.RecordTypeId==AP_RT_ISPA || Apexpages.CurrentPage().getParameters().get('sistype')=='ISPA';}
+    public Boolean getisISUA() {return this.newForm.RecordTypeId==AP_RT_ISUA || Apexpages.CurrentPage().getParameters().get('sistype')=='ISUA';}
+    public Boolean getisTOU()  {return this.newForm.RecordTypeId==AP_RT_TOU || Apexpages.CurrentPage().getParameters().get('sistype')=='TOU';}
     public list<String> getSteps()  {
         return MAP_STEPS.get(this.newForm.RecordTypeId);
     }
@@ -36,7 +36,8 @@ public without sharing class ISSP_SISMembershipApplicationForm_Ctrl{
         String inputStep = Apexpages.CurrentPage().getParameters().get('step');
         this.newForm = retrieveAPProcessForm(inputId);
         this.newCase = this.newForm.Case__r;
-        this.account = retrieveAccount(this.newForm.Airline__c);
+        Id accountId = this.newForm.Airline__c==null? this.newCase.AccountId: this.newForm.Airline__c;
+        this.account = retrieveAccount(accountId);
         this.sisType = retrieveSisType();
         // step 1 is for requirements, if there are no requirements then begin in step 2
         this.currentStep = this.sisType.Requirements_Text__c==null? 2: 1;
@@ -385,5 +386,26 @@ public without sharing class ISSP_SISMembershipApplicationForm_Ctrl{
     **/
     public Boolean getIsValidDueDiligence() {
         return CaseDueDiligence.isValid(this.newCase, this.account);
+    }
+
+    /**
+        Find the user to receive the notification in the PDF form
+        if there is a contact endorsement use it, otherwise use the contact fields in the form
+     */
+    public Contact_Endorsement__c getAttentionUser() {
+        list<Contact_Endorsement__c> listContact = [
+            SELECT Id,Email__c,Fax__c,First_Name__c,Last_Name__c,Mobile_Phone__c,Phone__c,Position__c,Salutation__c
+            FROM Contact_Endorsement__c
+            WHERE AP_Process_Form__c = :this.newForm.Id
+            AND RecordType.DeveloperName = 'Person'
+            AND Position__c INCLUDES ('SIS Super User')];
+        if (listContact.isEmpty()) {
+            return new Contact_Endorsement__c(
+                First_Name__c = newForm.Contact_First_name__c,
+                Last_Name__c = newForm.Contact_Last_name__c,
+                Email__c = newForm.Contact_email__c
+            );
+        }
+        return listContact[0];
     }
 }

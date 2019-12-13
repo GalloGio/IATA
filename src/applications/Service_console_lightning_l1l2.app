@@ -29,6 +29,38 @@
     <navType>Console</navType>
     <profileActionOverrides>
         <actionName>View</actionName>
+        <content>Chat_Transcript_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>LiveChatTranscript</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>GCS - Management</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Chat_Transcript_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>LiveChatTranscript</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>GCS - Management - AI</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Chat_Transcript_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>LiveChatTranscript</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>GCS - Staff</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Chat_Transcript_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>LiveChatTranscript</pageOrSobjectType>
+        <type>Flexipage</type>
+        <profile>GCS - Staff - AI</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
         <content>Service_console_sidra_level1_level2</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>

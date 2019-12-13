@@ -115,7 +115,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 
 	/*Maps, Sets, Lists*/
 	Set<id> setFSMCaseId = new Set<id>();
-   
+
 	/*CONTROLLARE IL POPOLAMENTO DELLE SEGUENTI MAPPE QUANDO VIENE CHIAMATA CheckBusinessHoursHelperClass*/
 	Map <string, Contact> CBHContactMap = new Map <string, Contact> ();
 	Map <string, Account> CBHAccountMap = new Map <string, Account> ();
@@ -138,20 +138,30 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 
 	//Case_FSM_Handle_NonCompliance_BI_BU
 	List<Case> SAAMCaseList;
-	
+
 	/*Maps, Sets, Lists*/
-	
+
 /***********************************************************************************************************************************************************/
 	/*Share trigger code*/
 	if (Trigger.isInsert || Trigger.isUpdate) {
+
+		if(Trigger.isInsert){
+			new ANG_CaseTriggerHandler().onBeforeInsert();
+		}
+		else if(Trigger.isUpdate){
+			new ANG_CaseTriggerHandler().onBeforeUpdate();
+		}
 
 		/** WMO-564 **/
 		if(Trigger.isUpdate) {
 			CaseProcessTypeHelper.processKPI(Trigger.new, Trigger.oldMap);
 		}
 
-	// assigns default email address to be used on send email quick action
-		//follows same logic as current classic functionality      
+		/** WMO-424 **/
+		CaseVisibilityEngine.execute(Trigger.new);
+
+		// assigns default email address to be used on send email quick action
+		//follows same logic as current classic functionality
 		for(Case c: trigger.new){
 			RecordType caseRTDevName=RecordTypeSingleton.getInstance().getRecordTypeById('Case',c.recordtypeId);
 			string email=IDFS_Util.getRecordTypeEmail(caseRTDevName.developerName, c.BSPCountry__c, c.Case_Group__c);
@@ -159,13 +169,13 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 		}
 
 		/*trgCaseIFAP Trigger*/
-		if(trgCaseIFAP){ 
+		if(trgCaseIFAP){
 			System.debug('____ [cls CaseBeforeTrigger - trgCaseIFAP]');
-			//get a Set of Ids Parent of all IFAP New Cases 
+			//get a Set of Ids Parent of all IFAP New Cases
 			Set<ID> IFAPParentID = new Set<ID>();
 
 			if (!CaseChildHelper.noValidationsOnTrgCAseIFAP){
-				
+
 				IFAPCaseList = new List<Case>();
 				for (Case aCase : trigger.New) {
 					if (aCase.RecordTypeId == IFAPcaseRecordTypeID) {
@@ -198,7 +208,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 				}
 
 				if (!IFAPaccountIds.isEmpty()) {
-					Map<Id, Account> accounts = new Map<Id, Account>([SELECT a.Id, a.IATACode__c, a.BillingCountry, a.Type, a.RecordType.DeveloperName, a.CNS_Account__c 
+					Map<Id, Account> accounts = new Map<Id, Account>([SELECT a.Id, a.IATACode__c, a.BillingCountry, a.Type, a.RecordType.DeveloperName, a.CNS_Account__c
 													FROM Account a WHERE Id IN :IFAPaccountIds]);
 					// Create Account (in order to decrease the number of SOQL queries executed)
 					for (Case aCase : IFAPCaseList) {
@@ -208,7 +218,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 							accountMap.put(aCase.id, aAccount);
 							if(aAccount.RecordType.DeveloperName == 'IATA_Agency' && aAccount.CNS_Account__c){ aCase.CNSCase__c = true; }
 						}
-				  
+
 					}
 				}
 			}
@@ -240,8 +250,8 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 			System.debug('____ [cls CaseBeforeTrigger - trgCheckBusinessHoursBeforeInsert]');
 			List <Contact> ctcIdList = new List < Contact >();
 			for (Case newCaseObj : Trigger.new) {
-				if ((newCaseObj.RecordTypeId != null && newCaseObj.RecordTypeId == sisHelpDeskCaseRecordTypeID) || 
-					(newCaseObj.description != null && (newCaseObj.description.contains(Label.Case_Area_ICH) || newCaseObj.description.contains(Label.Case_Area_SIS))) || 
+				if ((newCaseObj.RecordTypeId != null && newCaseObj.RecordTypeId == sisHelpDeskCaseRecordTypeID) ||
+					(newCaseObj.description != null && (newCaseObj.description.contains(Label.Case_Area_ICH) || newCaseObj.description.contains(Label.Case_Area_SIS))) ||
 					(newCaseObj.CaseArea__c != null && (newCaseObj.CaseArea__c == Label.SIS || newCaseObj.CaseArea__c == Label.ICH))
 				) {
 					hasOneSISCase = true;
@@ -283,8 +293,8 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 				'Problem / Issue'
 			};
 			for (Case newCase : Trigger.New) {
-				if(newCase.Type != null && newCase.RecordTypeId == sisHelpDeskCaseRecordTypeID && newCase.Origin != 'Internal Case' 
-				&& ((newCase.CaseArea__c == 'ICH' && caseTypeICHAndSIS.contains(newCase.Type)) 
+				if(newCase.Type != null && newCase.RecordTypeId == sisHelpDeskCaseRecordTypeID && newCase.Origin != 'Internal Case'
+				&& ((newCase.CaseArea__c == 'ICH' && caseTypeICHAndSIS.contains(newCase.Type))
 				|| (newCase.CaseArea__c == 'SIS' && !caseTypeICHAndSIS.contains(newCase.Type)))) {
 
 					newCase.addError(Label.HelpDesk_SIS_ICH_Type_Area_Mismatch);
@@ -383,16 +393,16 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 			}
 
 			if (!ICCSBankAccountManagementCases.isEmpty() || !ICCSProductManagementCases.isEmpty()){
-				productAssignmentActiveList = [SELECT Id, Account__c, ICCS_Bank_Account__c, ICCS_Product_Currency__c 
-											   FROM Product_Assignment__c 
-											   WHERE Status__c = 'Active' 
-											   AND (ICCS_Bank_Account__c IN :lstBankAccountIds OR Account__c IN :lstAccountIds)]; 
+				productAssignmentActiveList = [SELECT Id, Account__c, ICCS_Bank_Account__c, ICCS_Product_Currency__c
+											   FROM Product_Assignment__c
+											   WHERE Status__c = 'Active'
+											   AND (ICCS_Bank_Account__c IN :lstBankAccountIds OR Account__c IN :lstAccountIds)];
 			}
 
 			if (!ICCSBankAccountManagementCases.isEmpty()) {
 				// Create a map of all active Product Assignments linked to trigger-related Bank Accounts; Key = Bank Account SF Id, Value = PA
 				Map<Id, Product_Assignment__c> mapBaPaPerId = new Map<Id, Product_Assignment__c>();
-				for (Id bankAccountID : lstBankAccountIds){ 
+				for (Id bankAccountID : lstBankAccountIds){
 					for (Product_Assignment__c pa : productAssignmentActiveList) {
 						if (pa.ICCS_Bank_Account__c == bankAccountID){
 							mapBaPaPerId.put(pa.ICCS_Bank_Account__c, pa);
@@ -409,9 +419,9 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 			if (!ICCSProductManagementCases.isEmpty()) {
 				// Create a map of all active services, with the key [Product-Country-Currency]
 				Map<String, ICCS_Product_Currency__c> mapProductCurrencyPerKey = new Map<String, ICCS_Product_Currency__c>();
-				
-				List<ICCS_Product_Currency__c> lstProdCurr = [SELECT Id, Currency__c, Country__c, Product__c 
-															FROM ICCS_Product_Currency__c 
+
+				List<ICCS_Product_Currency__c> lstProdCurr = [SELECT Id, Currency__c, Country__c, Product__c
+															FROM ICCS_Product_Currency__c
 															WHERE Status__c = 'Active' AND Product__c IN :lstProducts];
 				for (ICCS_Product_Currency__c pc : lstProdCurr) {
 					mapProductCurrencyPerKey.put(pc.Product__c + '-' + pc.Country__c + '-' + pc.Currency__c, pc);
@@ -429,9 +439,9 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 				}
 				Set<Id> CaseWithBalanceOrTotal = new Set<Id>();
 				if (ThereAreICCSCaseClosing) {
-					for (ICCS_BankAccount_To_Case__c batc : [SELECT Case__c, Split_Type__c 
-															FROM ICCS_BankAccount_To_Case__c 
-															WHERE ICCS_Bank_Account__r.Account__c IN :lstAccountIds 
+					for (ICCS_BankAccount_To_Case__c batc : [SELECT Case__c, Split_Type__c
+															FROM ICCS_BankAccount_To_Case__c
+															WHERE ICCS_Bank_Account__r.Account__c IN :lstAccountIds
 																AND (Split_Type__c = 'Balance' OR Split_Type__c = 'Total')]) {
 						CaseWithBalanceOrTotal.add(batc.Case__c);
 					}
@@ -453,7 +463,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 					// Assignment / removal / payment instruction cases checks
 					ICCS_Product_Currency__c tmpProdCurr = mapProductCurrencyPerKey.get(c.ICCS_Product__c + '-' + c.ICCS_Country__c + '-' + c.ICCS_Currencies__c);
 					if (tmpProdCurr != null && c.Status != 'Closed') {
-						Product_Assignment__c tmpPA = mapProductAssignmentsPerKey.get(String.valueOf(tmpProdCurr.Id) + '-' + String.valueOf(c.AccountId)); 
+						Product_Assignment__c tmpPA = mapProductAssignmentsPerKey.get(String.valueOf(tmpProdCurr.Id) + '-' + String.valueOf(c.AccountId));
 
 						// If this is an assignment Case and the product-country-currency is already assigned to the Account, raise an error
 						if (c.CaseArea__c == INS && tmpPA != null) {
@@ -469,7 +479,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 							c.ICCS_Currencies__c.addError(' This Product - Country - Currency combination is NOT currently active on the selected Account.');
 						}
 					}
-				} 
+				}
 			}
 		}
 		/*trgICCSCaseValidation Trigger*/
@@ -489,7 +499,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 				mapFSMCases = new Map<ID, Case>([SELECT Id, Status, RecordTypeId, Account.Industry, FS_Letter_Sent__c, isClosed
 												 , FS_Deadline_Date__c, FS_Second_Deadline_Date__c, FS_Third_Deadline_Date__c
 												 , firstFSnonComplianceDate__c, secondFSnonComplianceDate__c, FS_third_non_compliance_date__c
-												 FROM Case c 
+												 FROM Case c
 												 WHERE Id IN :setFSMCaseId and RecordTypeId = :FSMcaseRecordTypeID]);
 			}
 		}
@@ -515,17 +525,17 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 				if ( c.RecordTypeId == RT_ICCS_ASP_Id  && c.Status == 'Closed' && !Trigger.oldMap.get(c.Id).isClosed && c.AccountId != null )
 					setClosingCasesIds.add(c.Id);
 			}
-			
-			System.debug(loggingLevel.ERROR, '____ [CaseBeforeTrigger - trgICCS_ASP_Case_Validation] setRelatedAcctIds - ' + setRelatedAcctIds);            
+
+			System.debug(loggingLevel.ERROR, '____ [CaseBeforeTrigger - trgICCS_ASP_Case_Validation] setRelatedAcctIds - ' + setRelatedAcctIds);
 			if (!setRelatedAcctIds.isEmpty()) {
 				// get a map of relevant cases per Account Id
 				Map<Id, Case> mapCasesPerAccountId = new Map<Id, Case>(); // for ICCS ASP
 				Map<Id, list<Case>> mapACCasesPerAccountId = new Map<Id, list<Case>>(); // for Airline coding, new from Oct 2015
 				// WMO-517
-				List<Case> cases = new List<Case>([SELECT Id, Subject, RecordTypeId, AccountId, IsClosed, CaseArea__c, Reason1__c, Owner.Name 
-											   FROM Case 
-											   WHERE ((RecordTypeId = :RT_ICCS_ASP_Id AND CaseArea__c = :FDS) 
-											   OR RecordTypeId = :AirlineCodingRTId) 
+				List<Case> cases = new List<Case>([SELECT Id, Subject, RecordTypeId, AccountId, IsClosed, CaseArea__c, Reason1__c, Owner.Name
+											   FROM Case
+											   WHERE ((RecordTypeId = :RT_ICCS_ASP_Id AND CaseArea__c = :FDS)
+											   OR RecordTypeId = :AirlineCodingRTId)
 												AND IsClosed = false AND AccountId IN :setRelatedAcctIds]);
 
 				for (Case c : cases) {
@@ -533,12 +543,12 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 						mapCasesPerAccountId.put(c.AccountId, c);
 					}
 					if (c.RecordTypeId == AirlineCodingRTId ) {
-						if(!mapACCasesPerAccountId.containsKey(c.AccountId)) 
+						if(!mapACCasesPerAccountId.containsKey(c.AccountId))
 							mapACCasesPerAccountId.put(c.AccountId, new list<Case>());
 						mapACCasesPerAccountId.get(c.AccountId).add(c);
 					}
 				}
-			
+
 				// Validate one single ASP creation case OR one single
 				// only continue if there are new ASP creation cases
 				for (Case c : Trigger.new) {
@@ -592,7 +602,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 
 			List<Case> casesToTrigger = new List<Case>();
 			for (case c: trigger.new) {
-				if (!TransformationHelper.triggerOnCaseNSerRen && c.recordtypeId == APCaseRTID && 
+				if (!TransformationHelper.triggerOnCaseNSerRen && c.recordtypeId == APCaseRTID &&
 					(c.CaseArea__c == airlineJoining || c.CaseArea__c  == airlineLeaving || c.CaseArea__c  == airlineSuspension)){
 					casesToTrigger.add(c);
 				}
@@ -628,11 +638,11 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 
 						// Preliminary step for completing the Account Concerned when the account is an airline and the IATA Country is specified
 						// get the potentially concerned cases, by choosing those with an IATA Country not null
-						if (aCase.BSPCountry__c != null && 
+						if (aCase.BSPCountry__c != null &&
 							(
-								(Trigger.isInsert && aCase.Account_Concerned__c == null) || 
+								(Trigger.isInsert && aCase.Account_Concerned__c == null) ||
 								(Trigger.isUpdate && aCase.BSPCountry__c != Trigger.oldMap.get(aCase.Id).BSPCountry__c)
-							) 
+							)
 						) {
 
 							System.debug('____ [cls CaseBeforeTrigger - updateAccountFieldBasedOnIATAwebCode] Inside if 1');
@@ -640,7 +650,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 							lstAccountIds.add(aCase.AccountId);
 						}
 						// Complete the Account Concerned automatically when a Web IATA Code is specified
-						if ( (Trigger.isInsert && aCase.IATAcode__c != null && aCase.Account_Concerned__c == null) || 
+						if ( (Trigger.isInsert && aCase.IATAcode__c != null && aCase.Account_Concerned__c == null) ||
 							(Trigger.isUpdate && aCase.IATAcode__c != null && aCase.IATAcode__c != Trigger.oldMap.get(aCase.Id).IATAcode__c)
 						) {
 							System.debug('____ [cls CaseBeforeTrigger - updateAccountFieldBasedOnIATAwebCode] Inside if 2');
@@ -711,7 +721,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 
 					// Get a map of related accounts - only airlines
 					set<String> setAirlineAccountRTs = new set<String> {'IATA_Airline', 'IATA_Airline_BR'};
-					Map<Id, Account> mapRelatedAirlineAccountsPerId = 
+					Map<Id, Account> mapRelatedAirlineAccountsPerId =
 							new Map<Id, Account>([SELECT Id, Airline_designator__c, IATACode__c, IATA_ISO_Country__r.ISO_Code__c
 												 FROM Account WHERE Id IN :lstAccountIds AND RecordType.DeveloperName IN :setAirlineAccountRTs]);
 					// continue only if there are airline accounts
@@ -768,24 +778,24 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 		/*trgAccelyaRequestSetCountry Trigger*/
 		if (trgAccelyaRequestSetCountry) {
 			System.debug('____ [cls CaseBeforeTrigger - trgAccelyaRequestSetCountry]');
-			for (Case aCase : trigger.New) { 
-				/* Trigger.isInsert: Every time a case is created (internal user or Accelya) and has a value on the Accelya: 
+			for (Case aCase : trigger.New) {
+				/* Trigger.isInsert: Every time a case is created (internal user or Accelya) and has a value on the Accelya:
 						 Request Type field, we set the correct record type */
-		
+
 				if(Trigger.isInsert && aCase.Accelya_Request_Type__c != null && aCase.RecordTypeId != CSRcaseRecordTypeID) {
 					aCase.RecordTypeId = CSRcaseRecordTypeID;
 				}
 
-				/*Every time we have a BSPlink Customer Service Requests (CSR) case 
+				/*Every time we have a BSPlink Customer Service Requests (CSR) case
 					and the IATA Country is blank we set it as the first of the Country Concerned */
 				if (aCase.RecordTypeId == CSRcaseRecordTypeID && aCase.Country_concerned__c != null && aCase.BSPCountry__c == null) {
 					aCase.BSPCountry__c = aCase.Country_concerned__c.split(';')[0];
 				}
-			}              
+			}
 		}
 		/*trgAccelyaRequestSetCountry Trigger*/
 
-		/*trgBeforeInsertUpdate Trigger*/ 
+		/*trgBeforeInsertUpdate Trigger*/
 		/*This trigger assigns the correct group to case based on the Owner Profile, taking it from the Email2CasePremium custom setting*/
 		if (trgBeforeInsertUpdate) {
 			System.debug('____ [cls CaseBeforeTrigger - trgBeforeInsertUpdate]');
@@ -811,7 +821,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 		//Created Date - 14-June-2010 - This trigger is used to call the CaseSharing Class to share the case records to Customer portal users and update the Case Owner field displayed in the Customer Portal
 		if (trgCustomerPortalCaseSharing) {
 			System.debug('____ [cls CaseBeforeTrigger - trgCustomerPortalCaseSharing]');
-			
+
 			Set<Id> userIds = new Set<Id>();
 			Set<Id> queueIds = new Set<Id>();
 
@@ -819,7 +829,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 			List<Case> portalCases = new List<Case>();
 
 			for (Case ObjCaseNew : Trigger.New) {
-				if(ObjCaseNew.RecordTypeId == PortalRecordTypeID && 
+				if(ObjCaseNew.RecordTypeId == PortalRecordTypeID &&
 					(Trigger.isInsert && ObjCaseNew.Case_Owner_CP__c == '') || (Trigger.isUpdate && ObjCaseNew.OwnerID != Trigger.oldMap.get(ObjCaseNew.id).OwnerID) ){
 
 					if(ObjCaseNew.OwnerID.getSobjectType() == User.SObjectType){
@@ -854,7 +864,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 		} //if trgCustomerPortalCaseSharing
 		/*trgCustomerPortalCaseSharing Trigger*/
 
-		/*trgProcessISSCase */ 
+		/*trgProcessISSCase */
 		if(trgProcessISSCase){
 			System.debug('____ [cls CaseBeforeTrigger - trgProcessISSCase]');
 			Set<ID> parentId = new Set<ID>();
@@ -866,7 +876,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 				}
 			}
 			if(!parentId.isEmpty()){
-				parentISSPCases = new Map<ID,Case>([SELECT c.Id, c.ParentId, c.FA_Letter_Sent__c, c.FS_Letter_Sent__c, c.Status, c.RecordTypeId, c.firstFSnonComplianceDate__c, 
+				parentISSPCases = new Map<ID,Case>([SELECT c.Id, c.ParentId, c.FA_Letter_Sent__c, c.FS_Letter_Sent__c, c.Status, c.RecordTypeId, c.firstFSnonComplianceDate__c,
 									c.secondFSnonComplianceDate__c, c.firstFAnonComplianceDate__c, c.secondFAnonComplianceDate__c, c.Account.Type,  c.Account.ANG_IsNewGenAgency__c,
 									c.Deadline_Date__c, c.FA_Second_Deadline_Date__c, c.Third_FA_non_Compliance_Date__c, c.FS_Deadline_Date__c, c.FA_Third_Deadline_Date__c, FS_Second_Deadline_Date__c
 								FROM Case c WHERE c.Id IN :parentId]);
@@ -901,7 +911,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 				}
 			}
 		}
-		/*trgProcessISSCase */ 
+		/*trgProcessISSCase */
 	}
 /*Share trigger code*/
 
@@ -909,7 +919,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 	if (Trigger.isInsert) {
 
 		/*trgCase Trigger.isInsert*/
-		if (trgCase) { 
+		if (trgCase) {
 			System.debug('____ [cls CaseBeforeTrigger - trgCase Trigger.isInsert]');
 			SidraLiteManager.insertSidraLiteCases(Trigger.new);
 			DPCCasesUtil.addAdditionalContactsBefore(Trigger.new);
@@ -918,7 +928,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 		/*trgCase Trigger.isInsert*/
 
 		/*trgProcessISSCase Trigger.isInsert*/
-		if (trgProcessISSCase) { 
+		if (trgProcessISSCase) {
 			System.debug('____ [cls CaseBeforeTrigger - trgProcessISSCase Trigger.isInsert]');
 			// only process case of type SAAM
 			List<Case> casesToUpdate = new List<Case>();
@@ -948,7 +958,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 									}
 									parentISSPCase.firstFSnonComplianceDate__c = Date.today();
 									// set 2nd FS deadline date for PAX and Domestic agents
-									
+
 									if (isPassengerDomestic) {
 										//NEWGEN-3394 - deadline for NewGen to 60 days
 										if(parentISSPCase.Account.ANG_IsNewGenAgency__c)
@@ -956,7 +966,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 											parentISSPCase.FS_Second_Deadline_Date__c = parentISSPCase.firstFSnonComplianceDate__c.addDays(60);
 										else
 											parentISSPCase.FS_Second_Deadline_Date__c = parentISSPCase.firstFSnonComplianceDate__c.addDays(31);
-									   
+
 									}
 									else if (isCargoCASS) {
 										if (newCase.New_IFAP_Deadline_date__c == null) {
@@ -1073,7 +1083,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 				Map<Case, Case> insertedCases = new Map<Case, Case>();
 
 				//accountHasClosedCases
-				for(Case currentCase : [SELECT c.Status, c.IFAP_Financial_Year__c, c.IFAP_Financial_Month__c, c.AccountId, c.RecordTypeId FROM Case c 
+				for(Case currentCase : [SELECT c.Status, c.IFAP_Financial_Year__c, c.IFAP_Financial_Month__c, c.AccountId, c.RecordTypeId FROM Case c
 										WHERE c.AccountId IN :IFAPaccountIds AND c.Status = 'Closed' AND c.RecordTypeId = : IFAPcaseRecordTypeID]){
 
 					if(!mapAccountCases.containsKey(currentCase.AccountId)){
@@ -1146,7 +1156,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 					if (String.valueOf(newCase.ParentId) != '' && (caseSAAMList != null && caseSAAMList.size() > 0) && (caseIFAPList != null && caseIFAPList.size() > 0)) {
 						newCase.addError('The parent SAAM case already has an IFAP case.');
 					}
-					
+
 				}
 
 				Map<ID, Boolean> mapCase = IFAP_BusinessRules.IsStatusCanBeSelected(true, insertedCases, CaseHelper.currentUserProfile, CaseHelper.isIfapAuthorizedUser);
@@ -1160,7 +1170,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 		/*trgCaseIFAP Trigger.isInsert*/
 
 		/*UserInfoUpdate Trigger.isInsert*/
-		if (UserInfoUpdate) { 
+		if (UserInfoUpdate) {
 			System.debug('____ [cls CaseBeforeTrigger - UserInfoUpdate Trigger.isInsert]');
 			for (Case aCase : Trigger.New) {
 				if ((aCase.RecordTypeId == SIDRAcaseRecordTypeID) || (aCase.RecordTypeId == SIDRABRcaseRecordTypeID )) {
@@ -1206,7 +1216,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 
 		//ACAMBAS - WMO-384 - Start
 				if((c.RecordTypeId == SIDRAcaseRecordTypeID || c.RecordTypeId == SIDRALiteCaseRecordTypeID) && !String.isEmpty(c.DEF_Approval_Rejection__c)) {
-					c.DEF_Approval_Rejection_Date__c = DateTime.now();    
+					c.DEF_Approval_Rejection_Date__c = DateTime.now();
 				}
 				//ACAMBAS - WMO-384 - End
 			}
@@ -1358,15 +1368,15 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 					setParentID.add(newcase.parentID);
 				}
 			}
-			
+
 			if(!setContactID.isEmpty()){ // Get Contacts by setContactID
 				accountFromRelatedContact = new Map<ID, Contact>([SELECT Id, AccountId FROM Contact WHERE Id IN :setContactID]);
 			}
 			if(!setParentID.isEmpty()){ // Get Cases by setParentID
 				parentAccounts = new Map<ID, Case>([SELECT Id, AccountId from Case where Id IN :setParentID]);
 			}
-			if(!mapCaseIDWithAccount.isEmpty()){ // Get Accounts where Cases is IATA_Financial_Security_Monitoring 
-				mapAccount = new Map<Id, Account>([SELECT Id, Sector__c, Category__c, IATA_ISO_Country__c 
+			if(!mapCaseIDWithAccount.isEmpty()){ // Get Accounts where Cases is IATA_Financial_Security_Monitoring
+				mapAccount = new Map<Id, Account>([SELECT Id, Sector__c, Category__c, IATA_ISO_Country__c
 													FROM Account WHERE Id IN :mapCaseIDWithAccount.values()]);
 			}
 
@@ -1376,11 +1386,11 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 			if(!mapAccount.isEmpty()){
 				String whereClauses ='';
 				// Iterate only accounts with IATA_Financial_Security_Monitoring Cases
-				for(Account acc : mapAccount.values()){ 
+				for(Account acc : mapAccount.values()){
 					cs = Financial_Monitoring_Template__c.getInstance(acc.Sector__c);
 					if (cs != null) { //it means that the sector is in the Custom Setting
 						for (String cat : cs.Category__c.split(',')) {
-							if (cat == acc.Category__c){                               
+							if (cat == acc.Category__c){
 								agentTypes.add(cs.Email_Template_Agency_Type__c);
 								isoCountries.add(acc.IATA_ISO_Country__c);
 							}
@@ -1388,7 +1398,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 					}
 				}
 
-				for(EmailTemplate__c tEmail : [SELECT id, Name, Agent_Type__c, IATA_ISO_Country__c FROM EmailTemplate__c 
+				for(EmailTemplate__c tEmail : [SELECT id, Name, Agent_Type__c, IATA_ISO_Country__c FROM EmailTemplate__c
 								WHERE Agent_Type__c IN :agentTypes AND IATA_ISO_Country__c IN :isoCountries]){
 					templateToUse.put(tEmail.Agent_Type__c+tEmail.IATA_ISO_Country__c, tEmail.Id);
 				}
@@ -1425,7 +1435,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 					String contactId = csrContacts.get(newCase.RecordTypeId+newCase.DPC_Software__c).Contact_Id__c;
 					Contact contactReleated = accountFromRelatedContact.get(contactId);
 					Case parentAcc = parentAccounts.get(newCase.ParentID);
-					if (contactId != null)                              
+					if (contactId != null)
 						newCase.ContactId = contactId;
 					if (accountFromRelatedContact != null)
 						newCase.AccountId = contactReleated.AccountId;
@@ -1434,7 +1444,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 						if (contactReleated != null){
 							newCase.Visible_on_ISS_Portal__c = csrContacts.get(newCase.RecordTypeId+newCase.DPC_Software__c).Access_to_portal__c;
 						}
-					}        
+					}
 				}
 			}
 		}
@@ -1604,8 +1614,8 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 								IFAPupdatedCase.addError('The following case status cannot be selected: ' + IFAPupdatedCase.status);
 							}
 					}
-					Set<ID> caseWithIFAPChild = new Set<ID>(); 
-					for(Case c : [SELECT Id, ParentId FROM Case 
+					Set<ID> caseWithIFAPChild = new Set<ID>();
+					for(Case c : [SELECT Id, ParentId FROM Case
 									WHERE ParentId IN :parentCaseID AND ID NOT IN :caseList AND RecordTypeId = : IFAPcaseRecordTypeID])
 						caseWithIFAPChild.add(c.ParentID);
 
@@ -1620,7 +1630,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 		/*trgCaseIFAP Trigger.isUpdate*/
 
 		/*UserInfoUpdate Trigger.isUpdate*/
-		if (UserInfoUpdate) { 
+		if (UserInfoUpdate) {
 			System.debug('____ [cls CaseBeforeTrigger - UserInfoUpdate Trigger.isUpdate]');
 			for (Case updateCase : Trigger.New) {
 				if ((updateCase.RecordTypeId == SIDRAcaseRecordTypeID) || (updateCase.RecordTypeId == SIDRABRcaseRecordTypeID )) {
@@ -1654,7 +1664,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 		/*trgCheckBusinessHoursBeforeInsert Trigger.isUpdate*/
 
 		/*trgSidraCaseBeforeInsertUpdate Trigger.isUpdate*/
-		if (trgSidraCaseBeforeInsertUpdate) { 
+		if (trgSidraCaseBeforeInsertUpdate) {
 			System.debug('____ [cls CaseBeforeTrigger - trgSidraCaseBeforeInsertUpdate Trigger.isUpdate]');
 			Datetime Last24Hours = Datetime.now().addDays(-1);
 			List<Case> caseLast24Hours = new List<Case>();
@@ -1666,14 +1676,14 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 				Case aCaseOld = Trigger.oldMap.get(aCase.Id);
 				// Only for Sidra small amount cases, only cases created within the last 24 hours
 				System.debug('____ [cls CaseBeforeTrigger - trgSidraCaseBeforeInsertUpdate UPDATE analyze ' + aCase.Subject + 'which has IRR_Withdrawal_Reason__c =  ' + aCase.IRR_Withdrawal_Reason__c + ']');
-				if (aCase.RecordTypeId == SIDRAcaseRecordTypeID && 
-					(aCase.IRR_Withdrawal_Reason__c == SMALLAMOUNT || aCase.IRR_Withdrawal_Reason__c == MINORPOLICY) && 
+				if (aCase.RecordTypeId == SIDRAcaseRecordTypeID &&
+					(aCase.IRR_Withdrawal_Reason__c == SMALLAMOUNT || aCase.IRR_Withdrawal_Reason__c == MINORPOLICY) &&
 					aCase.CreatedDate >= Last24Hours && aCase.AccountId != null
 				) {
 					// We add the Account id to the set only if the current case is a Sidra Small amount case. Avoid unwanted Case record types
 					accountIds.add(aCase.AccountId);
 					caseLast24Hours.add(aCase);
-				}  
+				}
 				if (aCase.RecordTypeId == SEDAcaseRecordTypeID) {
 					if (aCase.Demand_by_Email_Fax__c!=aCaseOld.Demand_by_Email_Fax__c) {
 						aCase.CS_Rep_Contact_Customer__c = UserInfo.getUserId();
@@ -1681,9 +1691,9 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 				}
 				//ACAMBAS - WMO-384 - Start
 				if((aCase.RecordTypeId == SIDRAcaseRecordTypeID || aCase.RecordTypeId == SIDRALiteCaseRecordTypeID) && acase.DEF_Approval_Rejection__c != aCaseOld.DEF_Approval_Rejection__c) {
-					aCase.DEF_Approval_Rejection_Date__c = DateTime.now();    
+					aCase.DEF_Approval_Rejection_Date__c = DateTime.now();
 				}
-				//ACAMBAS - WMO-384 - End 
+				//ACAMBAS - WMO-384 - End
 				if (aCase.RecordTypeId == SIDRAcaseRecordTypeID &&
 					aCaseOld.Update_AIMS_Repayment_agreed__c == null &&
 					aCase.Update_AIMS_Repayment_agreed__c != null) {
@@ -1692,23 +1702,23 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 
 				//If Group_Single_Agent__c is being modified for Sidra Lite case
 				//We need to check if any change code was previously generated:
-				//If any change code was generated we need to prevent saving 
-				//This field must only be edited for China: we do not need to check the country here since 
+				//If any change code was generated we need to prevent saving
+				//This field must only be edited for China: we do not need to check the country here since
 				//we have a validation rule preventing the field to be edited for Non China)
 				if(SidraLiteManager.runGroupSingleAgentSidraValidation && aCase.RecordTypeId == SIDRALiteCaseRecordTypeID && aCase.Group_Single_Agent__c != aCaseOld.Group_Single_Agent__c){
 					casesGroupSingleAgentModifiedSet.add(aCase.Id);
 					SidraLiteManager.runGroupSingleAgentSidraValidation = false;
 				}
-				
+
 			}
 
 			//Fetch change codes associated with the given SIDRA lite cases
 			if(!casesGroupSingleAgentModifiedSet.isEmpty()){
 				List<AggregateResult> changeCodesGeneratedAggLst = new List<AggregateResult>(
-					[SELECT 
+					[SELECT
 						SIDRA_Case__c CaseId,
-						COUNT(Id) 
-					FROM 
+						COUNT(Id)
+					FROM
 						Agency_Applied_Change_code__c
 					WHERE
 						SIDRA_Case__c IN :casesGroupSingleAgentModifiedSet
@@ -1719,8 +1729,8 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 
 				Integer i = 0;
 				Integer chgCodeSize = changeCodesGeneratedAggLst.size();
-				
-				while(i < chgCodeSize){       
+
+				while(i < chgCodeSize){
 					AggregateResult ar = changeCodesGeneratedAggLst.get(i);
 
 					Id caseId = (Id) ar.get('CaseId');
@@ -1751,7 +1761,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 				Date OneYearAgo = Date.today().addYears(-1);
 
 				List<Case> casesUpd = [SELECT AccountId, Action_needed_Small_Amount__c, Subject, CreatedDate, Propose_Irregularity__c, IRR_Approval_Rejection__c, IRR_Approval_Rejection_Date__c
-									   FROM Case 
+									   FROM Case
 									   WHERE RecordTypeId = : SIDRAcaseRecordTypeID
 										AND (IRR_Withdrawal_Reason__c = :SMALLAMOUNT OR IRR_Withdrawal_Reason__c = :MINORPOLICY OR Action_needed_Small_Amount__c = true)
 										AND CreatedDate >= : OneYearAgo AND AccountId <> null AND AccountId IN: accountIds];
@@ -1759,7 +1769,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 				// If there are minor error policy cases, make a list of the latest reinstatement date per Account Id
 				map<Id, Datetime> mapReiDatesPerAccountiId = new map<Id, Datetime>();
 				if (!casesUpd.isEmpty()) {
-					AggregateResult[] REIDates = [SELECT MAX(Update_AIMS_REI_DEFWITH__c)reinstatement_date, AccountId 
+					AggregateResult[] REIDates = [SELECT MAX(Update_AIMS_REI_DEFWITH__c)reinstatement_date, AccountId
 												  FROM Case
 												  WHERE REI_ApprovalRejectin__c = 'Approved'
 														  AND DEF_Withdrawal_Approval_Rejection__c <> 'Approved'
@@ -1784,7 +1794,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 							nbCasesSA ++;
 						}
 					}
-					//WMO-717 
+					//WMO-717
 					//Change the accumulation of 4 to 3 occurrences within 12 months period of both (Small Amount) and/or (Minor Error Policy) BSP only
 					//The new rule will reset the counter of 3 occurrences starting the day we go live
 					Decimal selectedNumberForCassOrBSP = 3;
@@ -1809,8 +1819,8 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 						mCase.Propose_Irregularity__c = Datetime.now();
 						mCase.IRR_Approval_Rejection__c = 'Approved';
 						mCase.IRR_Approval_Rejection_Date__c = Date.today();
-					} else { 
-						mCase.Action_needed_Small_Amount__c = false; 
+					} else {
+						mCase.Action_needed_Small_Amount__c = false;
 					}
 				}
 			}
@@ -1818,7 +1828,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 		/*trgSidraCaseBeforeInsertUpdate Trigger.isUpdate*/
 
 		/*CalculateBusinessHoursAges Trigger.isUpdate*/
-		if (CalculateBusinessHoursAges) { 
+		if (CalculateBusinessHoursAges) {
 			System.debug('____ [cls CaseBeforeTrigger - CalculateBusinessHoursAges Trigger.isUpdate]');
 			// Handling of DPC cases - automatic status change
 			DPCCasesUtil.HandleStatusUpdate(Trigger.newMap, Trigger.oldMap, Trigger.isInsert);
@@ -1829,8 +1839,8 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 				}
 				//Here we calculate the first contact with client in business hours
 				Case oldCase = Trigger.oldMap.get(updatedCase.Id);
-				if (updatedCase.BusinessHoursId <> null && updatedCase.First_Contact_with_Client__c <> null 
-					&& (   updatedCase.First_Contact_w_Client_in_Business_Hours__c != oldCase.First_Contact_w_Client_in_Business_Hours__c 
+				if (updatedCase.BusinessHoursId <> null && updatedCase.First_Contact_with_Client__c <> null
+					&& (   updatedCase.First_Contact_w_Client_in_Business_Hours__c != oldCase.First_Contact_w_Client_in_Business_Hours__c
 						|| updatedCase.First_Contact_w_Client_in_Business_Hours__c == null
 						|| updatedCase.First_Contact_w_Client_in_Business_Hours__c < 0
 					)
@@ -1852,7 +1862,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 						// if record type changed and new record type is process case record type
 						(oldCase.recordTypeId != updatedCase.recordTypeId && updatedCase.recordTypeId == processRTId) ||
 						// if status changed...
-						(oldCase.Status != updatedCase.Status) || 
+						(oldCase.Status != updatedCase.Status) ||
 						// if new case has business hours and they have changed
 						(updatedCase.BusinessHoursId <> null && updatedCase.BusinessHoursId <> oldCase.BusinessHoursId) ||
 						// if first business day not present...
@@ -1885,12 +1895,12 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 		/*CalculateBusinessHoursAges Trigger.isUpdate*/
 
 		/*trgCase_SIS_ICH_AreaVsType Trigger.isUpdate*/
-		if (trgCase_SIS_ICH_AreaVsType) { 
+		if (trgCase_SIS_ICH_AreaVsType) {
 			System.debug('____ [cls CaseBeforeTrigger - trgCase_SIS_ICH_AreaVsType Trigger.isUpdate]');
 
 			for (case newCase: Trigger.new) {
-				if (newCase.priority != null && newCase.Type != null && newCase.CaseArea__c != null && newCase.CaseArea__c == 'ICH' 
-						&& newCase.Assigned_To__c == 'ICH Application Support' && newCase.Status == 'Escalated' 
+				if (newCase.priority != null && newCase.Type != null && newCase.CaseArea__c != null && newCase.CaseArea__c == 'ICH'
+						&& newCase.Assigned_To__c == 'ICH Application Support' && newCase.Status == 'Escalated'
 						&& newCase.L2_Support_Priority__c == null && newCase.Priority != 'Priority 1 (Showstopper)'
 				) {
 					System.debug('____ [cls CaseBeforeTrigger - trgCase_SIS_ICH_AreaVsType: Assert error3 caught...]');
@@ -1900,13 +1910,13 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 				String oldStatus = trigger.oldMap.get(newCase.id).status;
 				String oldPriority = trigger.oldMap.get(newCase.id).priority;
 				String oldTeam = trigger.oldMap.get(newCase.id).assigned_to__c;
-				if (newCase.priority != null && newCase.Type != null && newCase.CaseArea__c != null && newCase.CaseArea__c == 'ICH' && 
+				if (newCase.priority != null && newCase.Type != null && newCase.CaseArea__c != null && newCase.CaseArea__c == 'ICH' &&
 					(
 						( ( newCase.status != oldStatus || newCase.assigned_to__c != oldTeam )
 							&& newCase.status == 'Escalated' && oldPriority != 'Priority 1 (Showstopper)' && newCase.assigned_to__c == 'ICH Application Support'
 						) ||
-						( oldPriority != newCase.priority && newCase.priority == 'Priority 1 (Showstopper)' && 
-							!(oldStatus == 'Escalated' && newCase.assigned_to__c == 'ICH Application Support') 
+						( oldPriority != newCase.priority && newCase.priority == 'Priority 1 (Showstopper)' &&
+							!(oldStatus == 'Escalated' && newCase.assigned_to__c == 'ICH Application Support')
 						)
 					)
 				) {
@@ -1929,17 +1939,17 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 
 			for (Case c : trigger.new) {
 				Case oldCase = Trigger.oldMap.get(c.id);
-				if(c.parentId != null && c.RecordTypeId == InternalcaseRecordTypeID && c.Reason1__c != 'FA/ FS Non-Compliance' 
+				if(c.parentId != null && c.RecordTypeId == InternalcaseRecordTypeID && c.Reason1__c != 'FA/ FS Non-Compliance'
 					&& c.Status == 'Closed' && oldCase.Status != 'Closed') {
 						CaseIdsNew.add(c.Id);
-				}    
+				}
 			}
 
 			if (!CaseIdsNew.isEmpty() && futureLimit < 10) {
 				if (!FutureProcessorControl.inFutureContext && !System.isBatch()){ // do not execute if in a Batch context - added 2014-12-10 Constantin Buzduga
 					clsInternalCaseDML.InternalCaseDMLMethod(CaseIdsNew, 'Update');
-				} 
-			} 
+				}
+			}
 		}
 		/*trgParentCaseUpdate Trigger.isUpdate*/
 
@@ -1964,28 +1974,28 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 		}
 		/*Case_FSM_Handle_NonCompliance_BI_BU Trigger.isUpdate*/
 
-		/*trgIDCard_Case_BeforeUpdate Trigger.isUpdate*/ 
+		/*trgIDCard_Case_BeforeUpdate Trigger.isUpdate*/
 		if (trgIDCard_Case_BeforeUpdate) {
 			System.debug('____ [cls CaseBeforeTrigger - trgIDCard_Case_BeforeUpdate Trigger.isUpdate]');
-			
+
 			// Get contactID from Trigger.new to use in the query
 			Set<Id> contactIDList = new Set<Id>();
 			Set<Id> accounttIDList = new Set<Id>();
 			Set<Id> relatedIDCardAppList = new Set<Id> ();
-			Set<Id> casesWithoutAccount = new Set<Id>(); 
-			
+			Set<Id> casesWithoutAccount = new Set<Id>();
+
 			List<Case> idCardCases = new List<Case>();
 			Map<String, Case> casePerParentId = new map<String, Case>();
 			Map<Id, Contact> contactMap;
 			Map<ID, ID_Card_Application__c> idCardAppMap = new Map<ID, ID_Card_Application__c>();
 
-			for (Case aCase : trigger.new) { 
+			for (Case aCase : trigger.new) {
 				Case oldCase = Trigger.oldMap.get(aCase.ID);
 
 				if(aCase.RecordTypeId == caseRecordType){
 					idCardCases.add(aCase);
 					if (aCase.ID_Card_Status__c == IDCardUtil.CASECARDSTATUS_APPROVED && oldCase.ID_Card_Status__c == IDCardUtil.CASECARDSTATUS_PENDING_MNG_APPROVAL) {
-						
+
 						if(aCase.ContactId != null)
 							contactIDList.add(aCase.ContactId);
 
@@ -2003,14 +2013,14 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 			if(!contactIDList.isEmpty()){
 
 				contactMap = new Map<ID, Contact>(
-					[SELECT c.Id, c.AgencyShare_Confirmation__c, c.ID_Card_Preferred_Language__c, c.VER_Number__c, c.Title, c.FirstName, 
+					[SELECT c.Id, c.AgencyShare_Confirmation__c, c.ID_Card_Preferred_Language__c, c.VER_Number__c, c.Title, c.FirstName,
 						c.Middle_Initial__c, c.LastName, c.UIR__c, c.Account.IATACode__c, c.Hours_per_week__c, c.Duties__c, c.Position__c,
 						c.Solicitation_Flag__c, c.Revenue_Confirmation__c,
-					  (SELECT Id, Card_Status__c, Valid_To_Date__c 
-						From ID_Cards__r 
+					  (SELECT Id, Card_Status__c, Valid_To_Date__c
+						From ID_Cards__r
 						where  Card_Status__c = : IDCardUtil.CARDSTATUS_VALID order by CreatedDate desc)
-					FROM Contact c 
-					WHERE c.RecordType.Name = : 'Standard' AND id IN :contactIDList]); 
+					FROM Contact c
+					WHERE c.RecordType.Name = : 'Standard' AND id IN :contactIDList]);
 			}
 			Set<String> iataCodes = new Set<String>();
 
@@ -2024,14 +2034,14 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 					  IDCard_Expedite_Delivery__c, IDCard_Expedite_Delivery_Fee__c, IATA_numeric_code_previous_employer_4__c, IATA_numeric_code_previous_employer_3__c, IATA_numeric_code_previous_employer_2__c,
 					  IATA_numeric_code_previous_employer_1__c, IATA_Code_for_previous_agency__c, IATA_Code__c, Hours_worked__c, Hours_Worked_Validation_Failed__c, Hours_Worked_Code__c, Gender__c,
 					  First_Name__c, Email_admin__c, Duties_in_Current_Agency__c, Duties_Code__c, Displayed_Name__c, Date_of_Birth__c, CurrencyIsoCode, CreatedDate, CreatedById, ConnectionSentId,
-					  ConnectionReceivedId, Case_Number__c, Approving_Manager_s_Name__c, Approving_Manager_s_Email__c, Applicable_Fee__c, AgencyShare_Confirmation__c, 
+					  ConnectionReceivedId, Case_Number__c, Approving_Manager_s_Name__c, Approving_Manager_s_Email__c, Applicable_Fee__c, AgencyShare_Confirmation__c, Card_Type__c,
 					  (SELECT Id FROM ID_Cards__r LIMIT 1)
 					FROM ID_Card_Application__c
 					WHERE ID IN :relatedIDCardAppList]){
 
 					idCardAppMap.put(app.Id, app);
 					if(casesWithoutAccount.contains(app.Id) || app.ID_Cards__r.isEmpty()) iataCodes.add(app.IATA_Code__c);
-					
+
 				 }
 			}
 
@@ -2039,12 +2049,12 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 			Map<String, Account> accountsById = new Map<String, Account>();
 
 			if(!iataCodes.isEmpty()){
-				for(Account a : [SELECT 
+				for(Account a : [SELECT
 								 Name, ID_Card_Corporate_Validation_Date__c, IATA_Area__c, IATACode__c, Type, Id, IDCard_Key_Account__c, Status__c, BillingCountry
-								 FROM Account 
+								 FROM Account
 								 WHERE Id IN :accounttIDList OR
-								  (RecordType.Name = : 'Agency' 
-									AND IATACode__c IN :iataCodes 
+								  (RecordType.Name = : 'Agency'
+									AND IATACode__c IN :iataCodes
 									AND (Status__c in : IDCARDUtil.ALLOWED_ACCOUNT_STATUS or Status__c = 'Terminated'))])
 				{
 					accountsByIATACode.put(a.IATACode__c, a);
@@ -2054,7 +2064,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 
 			Boolean isAdmin;
 			Boolean isSiteGuestUser;
-			//only iterate Case with ID Card RecordType                 
+			//only iterate Case with ID Card RecordType
 			for (Case aCase : idCardCases) {
 
 				//R.A 6/17/2013: allow Admins to change the status of ID Card otherwise blocks the change of Approval, Pending Payment and Pending
@@ -2108,18 +2118,22 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 							//**Create Contact only for new application
 							if (application.Type_of_application__c == IDCardUtil.APPLICATIONTYPE_NEW){
 								theContact = IDCardUtil.CreateContactWhenNewCardIsApproved(application, theAccount);
-								theContact.Email = application.Email_admin__c; 
+								theContact.Email = application.Email_admin__c;
 								aCase.ContactId = theContact.ID;
 							}
 							else theContact = contactMap.get(aCase.ContactId);
-							
-							if (theContact == null || theContact.VER_Number__c != Decimal.valueOf(application.VER_Number__c)) 
+
+							if (theContact == null || theContact.VER_Number__c != Decimal.valueOf(application.VER_Number__c))
 								throw new IDCardApplicationException(string.format(Label.ID_Card_Contact_Not_found_for_VER, new string[] {application.VER_Number__c}));
-							
-							//Create idCard From Application 
+
+							//Create idCard From Application
 							idCard = IDCardUtil.CreateIDCardObjectFromApplication(application, theContact, theAccount);
 
-							if (idCard != null) insert idCard;
+                            if (idCard != null){
+                                upsert idCard;
+                                application.ID_Card__c = idCard.Id;
+                                update application;
+                            } 
 
 						}else{
 							theContact = contactMap.get(aCase.ContactId);
@@ -2127,25 +2141,25 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 							if (theContact == null || theContact.VER_Number__c != Decimal.valueOf(application.VER_Number__c)){
 								throw new IDCardApplicationException(string.format(Label.ID_Card_Contact_Not_found_for_VER, new string[] {application.VER_Number__c}));
 							}
-							
+
 							idCard = application.id_cards__r[0];
 
 							//Update Contact Info
 							theContact.LastName = application.Last_Name__c;
 							theContact.ID_Card_Preferred_Language__c = application.IDCard_Prefered_Language__c;
 							theContact.Phone = application.Telephone__c;
-							theContact.Email = application.Email_admin__c;    
+							theContact.Email = application.Email_admin__c;
 							theContact.Position__c = application.Position_in_Current_Agency__c;
 							theContact.Duties__c = application.Duties_in_Current_Agency__c;
 							theContact.Hours_per_week__c = application.Hours_worked__c;
 							theContact.Solicitation_Flag__c = application.Solicitation_Flag__c;
 							theContact.Revenue_Confirmation__c = application.Revenue_Confirmation__c;
 							theContact.AgencyShare_Confirmation__c = application.AgencyShare_Confirmation__c;
-							
+
 							if (application.Type_of_application__c == IDCardUtil.APPLICATIONTYPE_REPLACEMENT){
-								if(aCase.AccountID == null) 
+								if(aCase.AccountID == null)
 									theContact.AccountId = IDCardUtil.GetAccountObjectFromIATACode(application.IATA_Code__c).ID;
-								else 
+								else
 									theContact.AccountId = aCase.AccountId;
 							}
 							//Future action: remove dml operation from FOR - implemented that way just to be possible to add error to the current case
@@ -2157,7 +2171,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 							//find old card to cancel it
 							if (idCard != null) {
 								idCard.Card_Status__c = IDCardUtil.CARDSTATUS_CANCELED;
-								//Future action: remove dml operation from FOR - implemented that way just to be possible to add error to the current case 
+								//Future action: remove dml operation from FOR - implemented that way just to be possible to add error to the current case
 								update idCard;
 							}
 						}
@@ -2169,13 +2183,13 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 					aCase.addError('** Error ' + e.getMessage() + '  ' + e.getStackTraceString());
 					break;
 				}
-				   
+
 			}// END for (Case aCase : idCardCases)
 
 			//2014-07-17 new interactiuon feature
 			if (casePerParentId.size() > 0) {
 				//look for parent case which are Id cards type
-				List<Case> idCardsParentCases = [SELECT id, CaseNumber, New_interaction__c 
+				List<Case> idCardsParentCases = [SELECT id, CaseNumber, New_interaction__c
 												FROM Case WHERE Id in :casePerParentId.keyset() AND RecordTypeId = :caseRecordType];
 				//for each of them we update New interaction on child case
 				for (Case parentCase : idCardsParentCases) {
@@ -2204,7 +2218,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 				}
 
 				if(oscarIdcases.keySet().isEmpty()) return;
-				
+
 				for (AMS_OSCAR__C oscar : [select Id, Financial_Assessment_requested__c, Financial_Assessment_deadline__c, Assessment_Performed_Date__c,
 										   Financial_Review_Result__c, Bank_Guarantee_amount__c, Reason_for_change_of_Financial_result__c,
 										   Requested_Bank_Guarantee_amount__c, Bank_Guarantee_Currency__c, Bank_Guarantee_deadline__c, Requested_Bank_Guarantee_currency__c
@@ -2227,7 +2241,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 
 		/*ISSP_CreateNotificationForCase Trigger.isUpdate*/
 		//This trigger updates a field based on a change in the IATA country; it creates also a Notification record
-		if (ISSP_CreateNotificationForCase) { 
+		if (ISSP_CreateNotificationForCase) {
 			System.debug('____ [cls CaseBeforeTrigger - ISSP_CreateNotificationForCase Trigger.isUpdate]');
 			system.debug('flag per entrare nel trigger ' + !ISSP_Case.preventTrigger);
 			if (!ISSP_Case.preventTrigger) {
@@ -2249,7 +2263,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 
 		/*trgCase_BeforeDelete Trigger.isDelete*/
 		//This trigger avoids the deletion of a case with record type "IATA Financial Review"
-		if (trgCase_BeforeDelete) { 
+		if (trgCase_BeforeDelete) {
 			System.debug('____ [cls CaseBeforeTrigger - trgCase_BeforeDelete Trigger.isDelete]');
 			for (Case aCase : trigger.old) {
 				if (aCase.RecordTypeId == IFAPcaseRecordTypeID)
@@ -2282,7 +2296,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 			}
 		}
 	}
-	
+
 	/*Internal methods Case_FSM_Handle_NonCompliance_BI_BU*/
 
 	//HK TR18-174 - Move all fields updates on Case to the trigger

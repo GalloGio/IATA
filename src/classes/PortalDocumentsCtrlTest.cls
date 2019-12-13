@@ -71,7 +71,7 @@ public class PortalDocumentsCtrlTest {
 
         Test.startTest();
             System.runAs(testUser) {
-                PortalDocumentsController.PagedResult docsWithoutFilter = PortalDocumentsController.getSearchDocuments(testContent[0].Title, testContent[0].Document_Category__c, '', testContent[0].Country_of_publication__c, 0, testContent[0].Id);
+                CSP_Utils.PagedResult docsWithoutFilter = PortalDocumentsController.getSearchDocuments(testContent[0].Title, testContent[0].Document_Category__c, '', testContent[0].Country_of_publication__c, 0, testContent[0].Id);
                 
                 List<ContentVersion> contents = PortalDocumentsController.sortContentVersions(testContent, isoCountry[0].Name, isoCountry[0].Region__c);
                 System.assertEquals(1, contents.size());
@@ -80,5 +80,24 @@ public class PortalDocumentsCtrlTest {
                 System.assertEquals(1, contents2.size());
             }
         Test.stopTest();
+    }
+
+    @IsTest static void testPortalGlobalSearch() {
+
+	    User testUser = [SELECT Id FROM User WHERE Email LIKE '%testemail1@csp.testclass' LIMIT 1];
+    
+	    Test.startTest();
+	    System.runAs(testUser) {
+	    	CSP_Utils.PagedResult test = new CSP_Utils.PagedResult();
+    
+	    	PortalSearchFilterWrapper.documentsComponent documentsCmp = new PortalSearchFilterWrapper.documentsComponent();
+	    	documentsCmp.show = true;
+	    	PortalSearchFilterWrapper filtersWrapper = new PortalSearchFilterWrapper();
+	    	filtersWrapper.searchText = 'Test';
+	    	filtersWrapper.documentsComponent = documentsCmp;
+    
+	    	test = PortalGlobalSearchCtrl.portalGlobalSearch(JSON.serialize(filtersWrapper), 'Documents');
+	    }
+	    Test.stopTest();
     }
 }

@@ -4,6 +4,7 @@ public without sharing class WorkflowHelper {
 	public static final String CONTACT_TYPE = 'Contact';
 	public static final String CASE_TYPE = 'Case';
 
+	//Account Record Types
 	private static final ID AIRLINERT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline') ;
 	private  static final ID GSART = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_GSA');
 	private  static final Id STANDARDRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
@@ -20,12 +21,17 @@ public without sharing class WorkflowHelper {
 	private static Map<Id,List<Account>> accountsToSearchParents = new Map<Id,List<Account>>();
 
 	public static void performActions(String objectType){
-		
-		switch on objectType { 
+
+		switch on objectType {
 			when 'Account' {
-				System.debug('[WorkflowHelper]: starting to process work for:'+objectType); 
+				System.debug('[WorkflowHelper]: starting to process work for:'+objectType);
 				performActionsAccount();
-				System.debug('[WorkflowHelper]: ended process work for:'+objectType); 
+				System.debug('[WorkflowHelper]: ended process work for:'+objectType);
+			}
+			when 'Contact' {
+				System.debug('[WorkflowHelper]: starting to process work for:'+objectType);
+				performActionsContact();
+				System.debug('[WorkflowHelper]: ended process work for:'+objectType);
 			}
 			when 'Case' {
 				System.debug('[WorkflowHelper]: starting to process work for:'+objectType); 
@@ -33,10 +39,10 @@ public without sharing class WorkflowHelper {
 				System.debug('[WorkflowHelper]: ended process work for:'+objectType); 
 			}
 			when else{
-				System.debug(LoggingLevel.ERROR,'[WorkflowHelper]: object was not identified so no job to perform here:'+objectType); 
+				System.debug(LoggingLevel.ERROR,'[WorkflowHelper]: object was not identified so no job to perform here:'+objectType);
 			}
 		}
-		
+
 	}
 
 	public static void performActionsAccount(){
@@ -50,7 +56,7 @@ public without sharing class WorkflowHelper {
 		Account newAcct;
 
 		for(sObject acct: newMap){
-			
+
 			newAcct = (Account)acct;
 			oldAcct = oldMap == null ? null : oldMap.get(acct.Id) == null ? null : (Account)oldMap.get(acct.Id);
 
@@ -74,6 +80,27 @@ public without sharing class WorkflowHelper {
 
 		if(!accountsToSearchParents.isEmpty()){
 			setAccountBranchNamePos((List<Account>) newMap, oldMap <> null);
+		}
+	}
+
+	public static void performActionsContact(){
+
+		// runs on both Update and Insert
+
+		Map<Id,sObject> oldMap = trigger.oldMap;
+		List<sObject> newMap = trigger.new;
+
+		Contact oldCon;
+		Contact newCon;
+
+		for(sObject con: newMap){
+
+			newCon = (Contact)con;
+			oldCon = oldMap == null ? null : oldMap.get(con.Id) == null ? null : (Contact)oldMap.get(con.Id);
+
+			updateRecordSharingCriteria(oldCon, newCon);
+			keyContactOptOut(oldCon, newCon);
+			updateIDCardContactCheckbox(oldCon, newCon);
 		}
 	}
 
@@ -108,9 +135,11 @@ public without sharing class WorkflowHelper {
 		}
 	}
 
+	/*ACCOUNT ACTIONS START*/
+
 	//Updates the field Industry in the travel agent accounts that are uploaded from AIMS
 	//Workflow Name: AIMS: Update Industry - travel agents
-	public static void updateIndustryFieldFromAIMS(Account newAccount){ 
+	public static void updateIndustryFieldFromAIMS(Account newAccount){
 
 		if(newAccount.Is_AIMS_Account__c && newAccount.Industry <> 'Travel Agent' && accountTypes.contains(newAccount.type)){
 			newAccount.Industry = 'Travel Agent';
@@ -135,10 +164,10 @@ public without sharing class WorkflowHelper {
 	}
 
 	//Updates the Account category when the Source System is webstar, the record type is Agency and has no Category
-	//Workflow Name:AMS Webstar set sector and category	
+	//Workflow Name:AMS Webstar set sector and category
 	public static void updateWebstarAccountCategory(Account newAccount){
 
-		if( newAccount.Source_System__c == 'Webstar' && 
+		if( newAccount.Source_System__c == 'Webstar' &&
 			newAccount.Category__c == null &&
 			newAccount.recordtypeId == AMS_Utils.RECTYPE_IATAAGENCY
 			){
@@ -152,7 +181,7 @@ public without sharing class WorkflowHelper {
 	//Workflow Name:AIMS Accounts RT Assignment Rule
 	public static void updateAIMSAccountRecordtype(Account newAccount){
 
-		If( newAccount.Is_AIMS_Account__c && 
+		If( newAccount.Is_AIMS_Account__c &&
 			newAccount.recordtypeId == standardRT){
 
 			newAccount.recordTypeId = AMS_Utils.RECTYPE_IATAAGENCY;
@@ -183,7 +212,7 @@ public without sharing class WorkflowHelper {
 	}
 
 	//Update Account Type field to 'Not Applicable' when the field should not be filled
-	//Workflow Name:Set Account Type when Not Applicable	
+	//Workflow Name:Set Account Type when Not Applicable
 	public static void restoreAccountType(Account newAccount){
 
 		if(newAccount.RecordTypeId == airLineRT &&
@@ -197,35 +226,32 @@ public without sharing class WorkflowHelper {
 	}
 
 	//Update account site if the account Record Type is Airline Branch or Airline Headquarters
-	//Workflow Name:Account site update	
+	//Workflow Name:Account site update
 	public static void setAccountSite(Account newAccount){
 
 		Set<Id> accountRecordTypes = new Set<Id>{AMS_Utils.RECTYPE_AIRLINE_BR,airLineRT,gsaRT};
 
-		if(accountRecordTypes.contains(newAccount.RecordTypeId) || 
+		if(accountRecordTypes.contains(newAccount.RecordTypeId) ||
 		(newAccount.recordTypeId == standardRT && newAccount.Sector__c == 'Airline')
-		){            
+		){
 			if(newAccount.Industry == 'Travel Agent'){
 				return;
 			}
+
+			String accountSite = '';
 			
-			if(newAccount.IATACode__c == null){
-				if(newAccount.Airline_Prefix__c == null){
-					newAccount.site = newAccount.Airline_designator__c + ' ' + newAccount.Country_ISO_Code__c;
-				}
-				else {
-					newAccount.site = newAccount.Airline_designator__c + ' ' + newAccount.Airline_Prefix__c + ' ' + newAccount.Country_ISO_Code__c;
-				}
-			}else{
-				newAccount.site = newAccount.Airline_designator__c + ' ' + newAccount.IATACode__c + ' ' + newAccount.Country_ISO_Code__c;
-			}
+ 			accountSite = newAccount.Airline_designator__c == null ? '' : newAccount.Airline_designator__c;
+ 			accountSite += newAccount.IATACode__c == null ? (newAccount.Airline_Prefix__c == null ? '' : (accountSite == '' ? newAccount.Airline_Prefix__c : ' ' + newAccount.Airline_Prefix__c)) : (accountSite == '' ? newAccount.IATACode__c : ' ' + newAccount.IATACode__c);
+ 			accountSite += newAccount.Country_ISO_Code__c == null ? '' : (accountSite == '' ? newAccount.Country_ISO_Code__c : ' ' + newAccount.Country_ISO_Code__c);
+
+			newAccount.Site = accountSite;
 		}
 	}
 
 	//Update account Historize the data quality feedback comment
 	//Workflow Name:Data quality comment history
 	public static void setDataQualityHistory(Account oldAccount , Account newAccount){
-		
+
 		if(oldAccount.Comment_data_quality_feedback__c <> newAccount.Comment_data_quality_feedback__c){
 			newAccount.Data_quality_history__c = (newAccount.Data_quality_history__c == null ? '' : newAccount.Data_quality_history__c + '\n') + System.now().format('YYYY-MM-dd') + ': ' + newAccount.Comment_data_quality_feedback__c;
 		}
@@ -235,7 +261,7 @@ public without sharing class WorkflowHelper {
 	//Update account name based on its parent
 	//Workflow Name:Rename Branch
 	public static void setAccountBranchNamePre(Account newAccount){
-		
+
 
 		if(newAccount.RecordTypeId == AMS_Utils.RECTYPE_AIRLINE_BR && newAccount.ParentId <> null) {
 				if(accountsToSearchParents.get(newAccount.ParentId) == null){
@@ -248,7 +274,7 @@ public without sharing class WorkflowHelper {
 	}
 
 	public static void setAccountBranchNamePos(List<AccounT> triggerNew, Boolean isUpdate){
-		
+
 		Map<Id,Account> newMap = new Map<Id,Account>();
 
 		for(Account acct: triggerNew){
@@ -266,7 +292,7 @@ public without sharing class WorkflowHelper {
 		List<Account> accountLst;
 
 		for(Account acctParent: [Select Id, TradeName__c, Name from Account where Id in:accountsToSearchParents.keySet()]){
-			
+
 			accountLst = accountsToSearchParents.get(acctParent.Id);
 
 			For(Account acct :accountLst){
@@ -277,10 +303,10 @@ public without sharing class WorkflowHelper {
 		}
 
 		// only for Updates
-		if(isUpdate && !newMap.isEmpty()){          
-			
+		if(isUpdate && !newMap.isEmpty()){
+
 			Account parentAccount = null;
-			
+
 			for(Account acctObject: newMap.values()){
 
 				if(acctObject.RecordTypeId == AMS_Utils.RECTYPE_AIRLINE_BR && acctObject.ParentId <> null){
@@ -297,7 +323,7 @@ public without sharing class WorkflowHelper {
 	//Update account EU Agent Consent Last Update Date with todays date uppon DDS Update Date field change
 	//Workflow Name:DDS Update Date
 	public static void setAccountDDSUpdateDate(Account oldAccount , Account newAccount){
-	
+
 		if(oldAccount.DDS_Status__c <> newAccount.DDS_Status__c){
 			newAccount.DDS_Last_Update_Date__c = System.today();
 		}
@@ -306,12 +332,12 @@ public without sharing class WorkflowHelper {
 	//Set the name of an ACLI account (RT = Airline Headquarters ) using its Trade Name or AOC Name
 	//Workflow Name:ACLIAccountSetName
 	public static void setACLIAccountName(Account oldAccount ,Account newAccount){
-		
+
 		if(newAccount.recordTypeId <> airLineRT){
 			return;
 		}
 
-		if( oldAccount == null || 
+		if( oldAccount == null ||
 			oldAccount.TradeName__c <> newAccount.TradeName__c ||
 			oldAccount.Legal_name__c <> newAccount.Legal_name__c ||
 			oldAccount.Name_on_AOC__c <> newAccount.Name_on_AOC__c
@@ -332,9 +358,49 @@ public without sharing class WorkflowHelper {
 				return;
 			}
 
-		}
-	
+			}
+
 	}
+	/*ACCOUNT ACTIONS END*/
+
+	/*CONTACT ACTIONS START*/
+
+	//Update Record Sharing Criteria AUX with values of Record Sharing Criteria
+	//Workflow Name: Field update with values of field Record Sharing Criteria
+	public static void updateRecordSharingCriteria(Contact oldContact , Contact newContact){
+
+		if((oldContact == null && newContact.Record_Sharing_Criteria__c != null)
+			|| (oldContact != null && oldContact.Record_Sharing_Criteria__c != newContact.Record_Sharing_Criteria__c)) {
+
+			newContact.Record_Sharing_Criteria_AUX__c = newContact.Record_Sharing_Criteria__c == null ? '' : (newContact.Record_Sharing_Criteria__c.contains('IFG Active Users') ? 'IFG Active Users;' : (newContact.Record_Sharing_Criteria__c.contains('TIP User') ? 'TIP User;' : ''));
+		}
+	}
+
+	//Automatically Opt out all Key contact
+	//Workflow Name: Key contact Opt out
+	public static void keyContactOptOut(Contact oldContact , Contact newContact){
+
+		Set<String> ceocfo = new Set<String>{'CEO', 'CFO', 'COO', 'CCO', 'CIO'};
+		//Formula field not calculated yet. Use an auxiliar variable
+		Boolean accountManagementKeyContact = ceocfo.contains(newContact.CEO_CFO__c) || newContact.Membership_Main_Contact__c || (newContact.Function__c != null && newContact.Function__c != '');
+
+		if((oldContact == null && accountManagementKeyContact)
+			|| (oldContact != null && oldContact.Account_Management_Key_Contact__c != accountManagementKeyContact)) {
+
+			newContact.HasOptedOutOfEmail = true;
+			newContact.Marketing_Communications_Opt_in__c = false;
+		}
+	}
+
+	//Set the contact as a ID Card Contact Holder if VER Number is not null
+	//Workflow Name: Update ID card contact checkbox
+	public static void updateIDCardContactCheckbox(Contact oldContact , Contact newContact){
+
+		if(newContact.VER_Number__c != null && !newContact.ID_Card_Holder__c)
+			newContact.ID_Card_Holder__c = true;
+	}
+
+	/*CONTACT ACTIONS END*/
 
 	/*CASE ACTIONS START*/
 
