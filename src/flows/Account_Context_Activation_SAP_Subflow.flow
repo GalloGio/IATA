@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Notify_Flow_Launcher</name>
         <label>Notify Flow Launcher</label>
-        <locationX>828</locationX>
-        <locationY>183</locationY>
+        <locationX>805</locationX>
+        <locationY>431</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <inputParameters>
@@ -29,8 +29,8 @@
     <assignments>
         <name>Ouput_Success</name>
         <label>Ouput Success</label>
-        <locationX>831</locationX>
-        <locationY>360</locationY>
+        <locationX>807</locationX>
+        <locationY>308</locationY>
         <assignmentItems>
             <assignToReference>FlowSuccessfullyEnded</assignToReference>
             <operator>Assign</operator>
@@ -42,8 +42,8 @@
     <assignments>
         <name>Wait_for_Integration_Log_to_be_updated_by_Mulesoft</name>
         <label>Wait for Integration Log to be updated by Mulesoft</label>
-        <locationX>937</locationX>
-        <locationY>49</locationY>
+        <locationX>1002</locationX>
+        <locationY>160</locationY>
         <assignmentItems>
             <assignToReference>WaitForNextAction</assignToReference>
             <operator>Assign</operator>
@@ -60,12 +60,37 @@
         </value>
     </constants>
     <decisions>
+        <name>Executed_for_first_sales_area</name>
+        <label>Executed for first sales area ?</label>
+        <locationX>497</locationX>
+        <locationY>162</locationY>
+        <defaultConnector>
+            <targetReference>Wait_for_Integration_Log_to_be_updated_by_Mulesoft</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>extended for other sales area</defaultConnectorLabel>
+        <rules>
+            <name>first_sales_area</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>AccountRole.Flow_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Pending</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Record_Type_ARBC</targetReference>
+            </connector>
+            <label>first sales area</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>has_been_relaunched</name>
         <label>has been relaunched ?</label>
-        <locationX>305</locationX>
-        <locationY>52</locationY>
+        <locationX>304</locationX>
+        <locationY>163</locationY>
         <defaultConnector>
-            <targetReference>Get_Record_Type_ARBC</targetReference>
+            <targetReference>Executed_for_first_sales_area</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>first execution</defaultConnectorLabel>
         <rules>
@@ -88,7 +113,7 @@
         <name>SAP_customer_creation_succeeded</name>
         <label>SAP customer creation succeeded ?</label>
         <locationX>590</locationX>
-        <locationY>271</locationY>
+        <locationY>382</locationY>
         <defaultConnector>
             <targetReference>Notify_Flow_Launcher</targetReference>
         </defaultConnector>
@@ -140,8 +165,8 @@
     <recordCreates>
         <name>Publish_Address_Role_Business_Context_Event</name>
         <label>Publish Address Role Business Context Event</label>
-        <locationX>776</locationX>
-        <locationY>49</locationY>
+        <locationX>856</locationX>
+        <locationY>50</locationY>
         <connector>
             <targetReference>Wait_for_Integration_Log_to_be_updated_by_Mulesoft</targetReference>
         </connector>
@@ -169,7 +194,7 @@
         <name>Get_Integration_Log</name>
         <label>Get Integration Log</label>
         <locationX>312</locationX>
-        <locationY>269</locationY>
+        <locationY>380</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>SAP_customer_creation_succeeded</targetReference>
@@ -190,8 +215,8 @@
     <recordLookups>
         <name>Get_Record_Type_ARBC</name>
         <label>Get Record Type ARBC</label>
-        <locationX>610</locationX>
-        <locationY>49</locationY>
+        <locationX>715</locationX>
+        <locationY>51</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Publish_Address_Role_Business_Context_Event</targetReference>
@@ -211,7 +236,7 @@
     </recordLookups>
     <start>
         <locationX>50</locationX>
-        <locationY>50</locationY>
+        <locationY>161</locationY>
         <connector>
             <targetReference>has_been_relaunched</targetReference>
         </connector>
@@ -224,6 +249,14 @@
         <isInput>true</isInput>
         <isOutput>false</isOutput>
         <objectType>Account</objectType>
+    </variables>
+    <variables>
+        <name>AccountRole</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Account_Role__c</objectType>
     </variables>
     <variables>
         <name>AddressRoleBusinessContext</name>

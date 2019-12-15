@@ -32,8 +32,8 @@
     <actionCalls>
         <name>Update_account_role_flow_status</name>
         <label>Update account role flow status</label>
-        <locationX>876</locationX>
-        <locationY>381</locationY>
+        <locationX>1056</locationX>
+        <locationY>378</locationY>
         <actionName>FlowUpdateAccountRoleWithoutSharing</actionName>
         <actionType>apex</actionType>
         <inputParameters>
@@ -57,7 +57,7 @@
         <actionName>FlowUpdateARBCWithoutSharing</actionName>
         <actionType>apex</actionType>
         <connector>
-            <targetReference>Update_account_role_flow_status</targetReference>
+            <targetReference>Is_account_role_in_Pending</targetReference>
         </connector>
         <inputParameters>
             <name>addressRoleBusinessContextId</name>
@@ -306,6 +306,28 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Is_account_role_in_Pending</name>
+        <label>Is account role in Pending ?</label>
+        <locationX>867</locationX>
+        <locationY>381</locationY>
+        <defaultConnectorLabel>Completed</defaultConnectorLabel>
+        <rules>
+            <name>Is_in_Pending</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>AccountRole.Flow_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Pending</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_account_role_flow_status</targetReference>
+            </connector>
+            <label>Is in Pending</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>SAP_OK</name>
         <label>SAP OK ?</label>
         <locationX>456</locationX>
@@ -477,7 +499,7 @@
         <locationX>742</locationX>
         <locationY>380</locationY>
         <connector>
-            <targetReference>Update_account_role_flow_status</targetReference>
+            <targetReference>Is_account_role_in_Pending</targetReference>
         </connector>
         <inputReference>AddressRoleBusinessContext</inputReference>
     </recordDeletes>
@@ -584,6 +606,12 @@
             <name>Account</name>
             <value>
                 <elementReference>Account</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>AccountRole</name>
+            <value>
+                <elementReference>AccountRole</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>

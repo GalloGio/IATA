@@ -316,9 +316,9 @@
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>AccountRole.Flow_Status__c</leftValueReference>
-                <operator>NotEqualTo</operator>
+                <operator>IsNull</operator>
                 <rightValue>
-                    <stringValue>Pending</stringValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
