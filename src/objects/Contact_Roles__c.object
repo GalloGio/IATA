@@ -79,7 +79,7 @@
     <listViews>
         <fullName>All</fullName>
         <columns>NAME</columns>
-		<columns>Service__c</columns>
+        <columns>Service__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
     </listViews>

@@ -100,6 +100,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 	ID ISSPcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ISS_Portal_New_Case_RT');//TF - SP9-C5
 	ID CSRcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'BSPlink_Customer_Service_Requests_CSR');
 	ID PortalRecordTypeID  = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'External_Cases_InvoiceWorks');
+	ID IsraelDispute  = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Disputes');
 	/*Record type*/
 
 	/*Variables*/
@@ -630,7 +631,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 
 				Set<ID> recordTypeSet = new Set<ID>{SIDRAcaseRecordTypeID,ProcessISSPcaseRecordTypeID,EuropecaseRecordTypeID,AmericacaseRecordTypeID,AfricaMEcaseRecordTypeID,
 													AsiaPacificcaseRecordTypeID,ChinaAsiacaseRecordTypeID,InternalcaseRecordTypeID,InvCollectioncaseRecordTypeID,
-													CSProcesscaseRecordTypeID, SEDAcaseRecordTypeID,ISSPcaseRecordTypeID,GlobalcaseRecordTypeID};
+													CSProcesscaseRecordTypeID, SEDAcaseRecordTypeID,ISSPcaseRecordTypeID,GlobalcaseRecordTypeID, IsraelDispute};
 				for (Case aCase : trigger.New) {
 					System.debug('____ [cls CaseBeforeTrigger - updateAccountFieldBasedOnIATAwebCode] RECORD TYPE: ' + aCase.RecordTypeId);
 					// check if correct record type
@@ -700,7 +701,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 					lstMatchedAccounts = [SELECT Id, Site FROM Account WHERE Site_Index__c IN :mapCasesPerWebIATACode.keyset()];
 				}
 				// Update the Cases with the Account or Account Concerned info retrieved from the DB - only if the found Account / Account Concerned is different from the Account in the Case
-				Set<ID> setIds = new Set<ID>{EuropecaseRecordTypeID,GlobalcaseRecordTypeID,AmericacaseRecordTypeID,AfricaMEcaseRecordTypeID,AsiaPacificcaseRecordTypeID,ChinaAsiacaseRecordTypeID,ISSPcaseRecordTypeID};
+				Set<ID> setIds = new Set<ID>{EuropecaseRecordTypeID,GlobalcaseRecordTypeID,AmericacaseRecordTypeID,AfricaMEcaseRecordTypeID,AsiaPacificcaseRecordTypeID,ChinaAsiacaseRecordTypeID,ISSPcaseRecordTypeID, IsraelDispute};
 				for (Account acc : lstMatchedAccounts) {
 					for (Case c : mapCasesPerWebIATACode.get(acc.Site)) {
 						if (c.AccountId != acc.Id) {
@@ -2129,11 +2130,11 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 							//Create idCard From Application
 							idCard = IDCardUtil.CreateIDCardObjectFromApplication(application, theContact, theAccount);
 
-                            if (idCard != null){
-                                upsert idCard;
-                                application.ID_Card__c = idCard.Id;
-                                update application;
-                            } 
+							if (idCard != null){
+								upsert idCard;
+								application.ID_Card__c = idCard.Id;
+								update application;
+							} 
 
 						}else{
 							theContact = contactMap.get(aCase.ContactId);

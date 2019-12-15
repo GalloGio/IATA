@@ -11,7 +11,10 @@
             <roleAndSubordinateInternal>DistributionAirlineManagementHO</roleAndSubordinateInternal>
         </roleAndSubordinatesInternal>
         <users>
+            <user>bricenoa@iata.org</user>
+            <user>gonzalezce@iata.org</user>
             <user>shalbakf@iata.org</user>
+            <user>amerz@iata.org</user>
         </users>
     </queueMembers>
     <queueSobject>
