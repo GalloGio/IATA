@@ -1,6 +1,3 @@
-/* eslint-disable no-alert */
-/* eslint-disable vars-on-top */
-
 import { LightningElement, track, api} from 'lwc';
 
 import getContactInfo               from '@salesforce/apex/PortalRegistrationSecondLevelCtrl.getContactInfo';
@@ -30,6 +27,9 @@ import CSP_L2_SucessUpdate_LMS                   from '@salesforce/label/c.CSP_L
 import CSP_L3_NewLoginEmail_LMS                   from '@salesforce/label/c.CSP_L3_NewLoginEmail_LMS';
 import OneId_Contact_Association_Validation                   from '@salesforce/label/c.OneId_Contact_Association_Validation';
 import CSP_L3_Header_Title                   from '@salesforce/label/c.CSP_L3_Header_Title';
+import CSP_L3_Note_F5_LMS                   from '@salesforce/label/c.CSP_L3_Note_F5_LMS';
+import CSP_L3_Note_F6_LMS                   from '@salesforce/label/c.CSP_L3_Note_F6_LMS';
+import CSP_L3_Note_F7_LMS                   from '@salesforce/label/c.CSP_L3_Note_F7_LMS';
 
 
 export default class PortalRegistrationThirdLevelLMS extends LightningElement {
@@ -118,13 +118,30 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 		CSP_L2_SucessUpdate_LMS,
 		CSP_L3_NewLoginEmail_LMS,
 		OneId_Contact_Association_Validation,
-		CSP_L3_Header_Title
+		CSP_L3_Header_Title,
+		CSP_L3_Note_F5_LMS,
+		CSP_L3_Note_F6_LMS,
+		CSP_L3_Note_F7_LMS
 	}
 	get labels() {
 		return this._labels;
 	}
 	set labels(value) {
 		this._labels = value;
+	}
+
+	@track isIE = this.checkIE;
+	get checkIE(){
+
+		let ua= navigator.userAgent;
+		let M= ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
+		let ret;
+		if(/trident/i.test(M[1])){
+			ret = true;
+		}else{
+			ret = false;
+		}
+		return ret;
 	}
 
 	scrollToTop(){
@@ -138,6 +155,7 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 		let pageParams = getParamsFromPage();
 
 		// Retrieve Contact information
+
 		getContactInfo()
 			.then(result => {
 				this.contactInfo = result;
@@ -148,7 +166,7 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 				}
 
 				// set up cached data
-				var countryName = this.contactInfo.Account.IATA_ISO_Country__r.Name;
+				let countryName = this.contactInfo.Account.IATA_ISO_Country__r.Name;
 				if(countryName.toLowerCase() === 'no country'){
 					this.selectedCountryId = '';
 				}
@@ -174,42 +192,57 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 				}
 
 				if(pageParams !== undefined && pageParams.lms !== undefined ){
-					this.contactInfo.lms =  pageParams.lms
-				}
-				if(pageParams !== undefined && pageParams.lmsCourse !== undefined ){
-					this.contactInfo.lmsCourse =  pageParams.lmsCourse
+					this.contactInfo.lms =  pageParams.lms;
 				}
 
+				if(pageParams !== undefined && pageParams.lmsCourse !== undefined ){
+					this.contactInfo.lmsCourse =  pageParams.lmsCourse.replace('%40_%40','%26');
+				}
+
+				if(pageParams !== undefined && pageParams.RelayState !== undefined ){
+					this.contactInfo.lmsCourse =  pageParams.RelayState;
+				}
+
+				if(pageParams !== undefined && pageParams.firstLogin !== undefined ){
+					this.contactInfo.firstLogin =  pageParams.firstLogin;
+				}else{
+					this.contactInfo.firstLogin =  false;
+				}
+				
 				this.contactInfo.serviceid = this.serviceid;
 
 				//Address Info
-				if(this.contactInfo.Shipping_Address__c != null &&
-					this.contactInfo.Shipping_Address__c != undefined &&
-					this.contactInfo.Shipping_Address__c !== ''){
+				// if(this.contactInfo.Shipping_Address__c != null &&
+				// 	this.contactInfo.Shipping_Address__c != undefined &&
+				// 	this.contactInfo.Shipping_Address__c !== ''){
 
-					this.address.isPoBox =  this.contactInfo.Shipping_Address__r.PO_Box__c !== undefined? this.contactInfo.Shipping_Address__r.PO_Box__c : false;
-					this.address.countryId = this.contactInfo.Shipping_Address__r.Country_Reference__c;
-					this.address.countryName = this.contactInfo.Shipping_Address__r.Country__c;
+					
+				// 	this.address.countryId = this.contactInfo.Shipping_Address__r.Country_Reference__c;
+				// 	this.address.countryName = this.contactInfo.Shipping_Address__r.Country__c;
 
-					// this.address.stateId = this.contactInfo.Shipping_Address__r.State_Reference__c;
-					if(this.contactInfo.Shipping_Address__r.State_Reference__c != null &&
-						this.contactInfo.Shipping_Address__r.State_Reference__c != undefined &&
-						this.contactInfo.Shipping_Address__r.State_Reference__c !== '' &&
-						this.contactInfo.Shipping_Address__r.State_Reference__r.iso_code__c != null &&
-						this.contactInfo.Shipping_Address__r.State_Reference__r.iso_code__c != undefined &&
-						this.contactInfo.Shipping_Address__r.State_Reference__r.iso_code__c !== ''){
+				// 	// this.address.stateId = this.contactInfo.Shipping_Address__r.State_Reference__c;
+				// 	if(this.contactInfo.Shipping_Address__r.State_Reference__c != null &&
+				// 		this.contactInfo.Shipping_Address__r.State_Reference__c != undefined &&
+				// 		this.contactInfo.Shipping_Address__r.State_Reference__c !== '' &&
+				// 		this.contactInfo.Shipping_Address__r.State_Reference__r.iso_code__c != null &&
+				// 		this.contactInfo.Shipping_Address__r.State_Reference__r.iso_code__c != undefined &&
+				// 		this.contactInfo.Shipping_Address__r.State_Reference__r.iso_code__c !== ''){
 
-						this.address.stateId = this.contactInfo.Shipping_Address__r.State_Reference__r.iso_code__c;
-					}else{
-						this.address.stateId = this.contactInfo.Shipping_Address__r.State__c !== undefined? this.contactInfo.Shipping_Address__r.State__c : '';
-					}
-					this.address.stateName =  this.contactInfo.Shipping_Address__r.State__c !== undefined? this.contactInfo.Shipping_Address__r.State__c : '';
-					this.address.cityId = this.contactInfo.Shipping_Address__r.City_Reference__c !== undefined? this.contactInfo.Shipping_Address__r.City_Reference__c : '';
-					this.address.cityName = this.contactInfo.Shipping_Address__r.City__c !== undefined? this.contactInfo.Shipping_Address__r.City__c : '';
-					this.address.street = this.contactInfo.Shipping_Address__r.Street__c;
-					this.address.street2 = this.contactInfo.Shipping_Address__r.Street2__c !== undefined? this.contactInfo.Shipping_Address__r.Street2__c : '';
-					this.address.zip = this.contactInfo.Shipping_Address__r.Postal_Code__c !== undefined? this.contactInfo.Shipping_Address__r.Postal_Code__c : '';
-				}
+				// 		this.address.stateId = this.contactInfo.Shipping_Address__r.State_Reference__r.iso_code__c;
+				// 	}else{
+				// 		this.address.stateId = this.contactInfo.Shipping_Address__r.State_Name__c !== undefined? this.contactInfo.Shipping_Address__r.State_Name__c : '';
+				// 	}
+				// 	this.address.stateName =  this.contactInfo.Shipping_Address__r.State_Name__c !== undefined? this.contactInfo.Shipping_Address__r.State_Name__c : '';
+				// 	this.address.cityId = this.contactInfo.Shipping_Address__r.City_Reference__c !== undefined? this.contactInfo.Shipping_Address__r.City_Reference__c : '';
+				// 	this.address.cityName = this.contactInfo.Shipping_Address__r.City_Name__c !== undefined? this.contactInfo.Shipping_Address__r.City_Name__c : '';
+					
+				// 	this.address.isPoBox =  this.contactInfo.Shipping_Address__r.PO_Box__c === undefined || this.contactInfo.Shipping_Address__r.PO_Box__c === ''? false : true;
+				// 	this.address.PoBoxAddress =  this.contactInfo.Shipping_Address__r.PO_Box_Address__c !== undefined? this.contactInfo.Shipping_Address__r.PO_Box_Address__c : false;
+					
+				// 	this.address.street = this.contactInfo.Shipping_Address__r.Street__c;
+				// 	this.address.street2 = this.contactInfo.Shipping_Address__r.Street2__c !== undefined? this.contactInfo.Shipping_Address__r.Street2__c : '';
+				// 	this.address.zip = this.contactInfo.Shipping_Address__r.Postal_Code__c !== undefined? this.contactInfo.Shipping_Address__r.Postal_Code__c : '';
+				// }
 
 				
 
@@ -218,84 +251,96 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 			this.openMessageModalFlowRegister = true;
 			this.message = CSP_L2_RegistrationFailed_LMS + error;
 			console.log('Error: ', JSON.parse(JSON.stringify(error)));
-		});
+		})
+		.finally(() => {
+			
+			// FOR LMS L3
+			if(pageParams !== undefined && pageParams.lmsflow !== undefined ){
+				if(pageParams.lmsflow.indexOf('flow') > -1){
+					let boldStr = '<b>' + CSP_L3_Note_LMS + '</b>';
+					this.registerData = false;
 
-		// FOR LMS L3
-		if(pageParams !== undefined && pageParams.lmsflow !== undefined ){
+					this.title=CSP_L3_ProfileUpdate_LMS;
+					// this.message=CSP_L3_UpdatingProfileInitialMessage_LMS; 
 
-			if(pageParams.lmsflow.indexOf('flow') > -1){
-				var boldStr = CSP_L3_Note_LMS;
-				this.registerData = false;
-				
-				this.title=CSP_L3_ProfileUpdate_LMS;
-				// this.message=CSP_L3_UpdatingProfileInitialMessage_LMS; 
-
-				if(pageParams.lmsflow === 'flow3'){
-					this.message=CSP_L3_UpdatingProfileP1_LMS + '<br>' + boldStr + '<br>' + CSP_L3_UpdatingProfileP2_LMS;
-				}
-				if(pageParams.lmsflow === 'flow4'){
-					this.message=CSP_L3_UpdatingProfileP1_LMS + '<br>' + boldStr + '<br>' + CSP_L3_UpdatingProfileP2_LMS;
-				}
-				if(pageParams.lmsflow === 'flow5'){
-					this.message=CSP_L3_UpdatingProfileP1_LMS + '<br>' + boldStr + '<br>' + CSP_L3_UpdatingProfileP2_LMS;
-				}
-				if(pageParams.lmsflow === 'flow6'){
-					this.message=CSP_L3_UpdatingProfileP1_LMS + '<br>' + boldStr + '<br>' + CSP_L3_UpdatingProfileP2_LMS;
-				}
-				if(pageParams.lmsflow === 'flow7'){
-					this.message=CSP_L3_UpdatingProfileP1_LMS + '<br>' + boldStr + '<br>' + CSP_L3_UpdatingProfileP2_LMS;
-				}
-
-				this.button1Label= CSP_L3_HomePage_LMS;
-
-				this.openMessageModalFlowRegister = true;
-				this.isResLoading = true;
-
-				var sPageURL = ''+ window.location;
-				
-				getParameters({ urlExtension : sPageURL }).then(result => {
-					this.contactInfo = JSON.parse(result.userInfo);
-					
 					if(pageParams.lmsflow === 'flow3'){
-						this.message=CSP_L3_UpdatingProfileP1_LMS + '<br>' + boldStr + '<br>' + CSP_L3_UpdatingProfileP2_LMS + '<br>' + CSP_L3_NewLoginEmail_LMS + ' <b>' + this.contactInfo.Email + '</b>';
+						this.message=CSP_L3_UpdatingProfileP1_LMS + '<br>' + boldStr + '<br>' + CSP_L3_UpdatingProfileP2_LMS;
 					}
+
 					if(pageParams.lmsflow === 'flow4'){
-						this.message=CSP_L3_UpdatingProfileP1_LMS + '<br>' + boldStr + '<br>' + CSP_L3_UpdatingProfileP2_LMS + '<br>' + CSP_L3_NewLoginEmail_LMS + ' <b>' + this.contactInfo.Email + '</b>';
+						this.message=CSP_L3_UpdatingProfileP1_LMS + '<br>' + boldStr + '<br>' + CSP_L3_UpdatingProfileP2_LMS;
 					}
+
 					if(pageParams.lmsflow === 'flow5'){
-						this.message=CSP_L3_UpdatingProfileP1_LMS + '<br>' + boldStr + '<br>' + CSP_L3_UpdatingProfileP2_LMS + '<br>' + CSP_L3_NewLoginEmail_LMS + ' <b>' + this.contactInfo.Email + '</b>';
+						boldStr = '<b>' + CSP_L3_Note_F5_LMS + '</b>';
+						this.message=CSP_L3_UpdatingProfileP1_LMS + '<br>' + boldStr + '<br>' + CSP_L3_UpdatingProfileP2_LMS;
 					}
+
 					if(pageParams.lmsflow === 'flow6'){
-						this.message=CSP_L3_UpdatingProfileP1_LMS + '<br>' + boldStr + '<br>' + CSP_L3_UpdatingProfileP2_LMS + '<br>' + CSP_L3_NewLoginEmail_LMS + ' <b>' + this.contactInfo.Email + '</b>';
+						boldStr = '<b>' + CSP_L3_Note_F6_LMS + '</b>';
+						this.message=CSP_L3_UpdatingProfileP1_LMS + '<br>' + boldStr + '<br>';
 					}
 					if(pageParams.lmsflow === 'flow7'){
-						this.message=CSP_L3_UpdatingProfileP1_LMS + '<br>' + boldStr + '<br>' + CSP_L3_UpdatingProfileP2_LMS + '<br>' + CSP_L3_NewLoginEmail_LMS + ' <b>' + this.contactInfo.Email + '</b>';
+						boldStr = CSP_L3_Note_F7_LMS;
+						boldStr = boldStr.replace('[work_email]',this.contactInfo.Email);
+						this.message=CSP_L3_UpdatingProfileP1_LMS + '<br>' + boldStr + '<br>';
 					}
+					this.button1Label= CSP_L3_HomePage_LMS;
 
-					completeRegistration({params: JSON.stringify(this.contactInfo) })
-					.then(result2 => {
+					this.openMessageModalFlowRegister = true;
+					this.isResLoading = true;
 
-						if(result2.isSuccess == true){
-							if(pageParams.lmsflow === 'flow7'){
-								this.message = this.message + '<br><br>' + CSP_L2_SucessUpdate_LMS + '<br>' + CSP_L3_NewLoginEmail_LMS + ' <b>' + this.contactInfo.Email + '</b>';
-							}else{
-								this.message = this.message + '<br><br>' + CSP_L2_SucessUpdate_LMS;
+					let sPageURL = ''+ window.location;
+					getParameters({ urlExtension : sPageURL }).then(result => {
+						this.contactInfo = JSON.parse(result.userInfo);
+						
+						if(pageParams.lmsflow === 'flow3'){
+							this.message=CSP_L3_UpdatingProfileP1_LMS + '<br>' + boldStr + '<br>' + CSP_L3_UpdatingProfileP2_LMS + '<br>' + CSP_L3_NewLoginEmail_LMS + ' <b>' + this.contactInfo.Email + '</b>';
+						}
+						if(pageParams.lmsflow === 'flow4'){
+							this.message=CSP_L3_UpdatingProfileP1_LMS + '<br>' + boldStr + '<br>' + CSP_L3_UpdatingProfileP2_LMS + '<br>' + CSP_L3_NewLoginEmail_LMS + ' <b>' + this.contactInfo.Email + '</b>';
+						}
+						if(pageParams.lmsflow === 'flow5'){
+							boldStr ='<b>' + CSP_L3_Note_F5_LMS + '</b>';
+							this.message=CSP_L3_UpdatingProfileP1_LMS + '<br>' + boldStr + '<br>' + CSP_L3_UpdatingProfileP2_LMS + '<br>' + CSP_L3_NewLoginEmail_LMS + ' <b>' + this.contactInfo.Email + '</b>';
+						}
+						if(pageParams.lmsflow === 'flow6'){
+							boldStr =  CSP_L3_Note_F6_LMS;
+							this.message=CSP_L3_UpdatingProfileP1_LMS + '<br>' + boldStr + '<br>';
+						}
+						if(pageParams.lmsflow === 'flow7'){
+							boldStr = CSP_L3_Note_F7_LMS;
+						
+							boldStr = boldStr.replace('[work_email]',this.contactInfo.Email);
+							this.message=CSP_L3_UpdatingProfileP1_LMS + '<br>' + boldStr + '<br>';
+						}
+
+						completeRegistration({params: JSON.stringify(this.contactInfo) })
+						.then(result2 => {
+
+							if(result2.isSuccess == true){
+								if(pageParams.lmsflow === 'flow7'){
+									let msgF7 = CSP_L2_SucessUpdate_LMS.replace('[Email]',this.contactInfo.Email);
+									this.message = this.message + '<br><br>' + msgF7;
+								}else{
+									this.message = this.message + '<br><br><b>' + CSP_L2_SucessUpdate_LMS + '</b>';
+								}
 							}
-							
-						}
-						else{
-							this.message = CSP_L2_Registration_Failed_LMS+'\n'+result2.message;
-						}
-						this.isResLoading = false;
+							else{
+								this.message = CSP_L2_Registration_Failed_LMS+'\n'+result2.message;
+							}
+							this.isResLoading = false;
+						})
+						.catch(error => {
+							console.log('Error: ', JSON.parse(JSON.stringify(error)));
+							this.errorModalMessage = JSON.parse(JSON.stringify(error));
+							this.isResLoading = false;
+						});
 					})
-					.catch(error => {
-						console.log('Error: ', JSON.parse(JSON.stringify(error)));
-						this.errorModalMessage = JSON.parse(JSON.stringify(error));
-						this.isResLoading = false;
-					});
-				})
+			
+				}
 			}
-		}
+		});
 	}
 
 	startLoading(){
@@ -319,25 +364,41 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 
 	/* NAVIGATION METHODS */
 	getCurrentStepData(){
+
+		let contactInfo = '';
+		let flow = '';
+		let addressInformation = '';
+
 		// Profile Details
 		if(this.currentStep === 1){
-			var contactInfo = this.template.querySelector('c-portal-registration-profile-details-l-m-s').getContactInfo();
+			contactInfo = this.template.querySelector('c-portal-registration-profile-details-l-m-s').getContactInfo();
 			this.contactInfo = JSON.parse(JSON.stringify(contactInfo));
 		}
-		// Account Selection
-		else if(this.currentStep === 2){
-			var contactInfo = this.template.querySelector('c-portal-registration-email-validation-l-m-s').getContactInfo();
-			this.contactInfo = JSON.parse(JSON.stringify(contactInfo));
-			var flow = this.template.querySelector('c-portal-registration-email-validation-l-m-s').getFlow();
-			this.flow = flow
-
-		}
-
+		
 		// Address Information
-		else if(this.currentStep === 4){
-			var addressInformation = this.template.querySelector('c-portal-registration-address-information-l-m-s').getAddressInformation();
+		else if(this.currentStep === 2){
+			addressInformation = this.template.querySelector('c-portal-registration-address-information-l-m-s').getAddressInformation();
 			this.address = JSON.parse(JSON.stringify(addressInformation));
 		}
+
+		// email validation
+		else if(this.currentStep === 3){
+			contactInfo = this.template.querySelector('c-portal-registration-email-validation-l-m-s').getContactInfo();
+			flow = this.template.querySelector('c-portal-registration-email-validation-l-m-s').getFlow();
+			this.contactInfo = JSON.parse(JSON.stringify(contactInfo));
+			this.flow = flow;
+console.log('getCurrentStepData 3 this.contactInfo: ', this.contactInfo);
+		}
+
+		// Training Information
+		else if(this.currentStep === 4){
+			contactInfo = this.template.querySelector('c-portal-registration-training-validation-l-m-s').getContactInfo();
+			flow = this.template.querySelector('c-portal-registration-training-validation-l-m-s').getFlow();
+			this.contactInfo = JSON.parse(JSON.stringify(contactInfo));
+			this.flow = flow;
+console.log('getCurrentStepData 4 this.contactInfo: ', this.contactInfo);			
+		}
+		
 	}
 
 	goToStep(event){
@@ -346,56 +407,77 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 		this.currentStep = futureStep;
 	}
 
-	fromProfileDetailsToAccountSelection(){
+
+	/*
+	ProfileDetails 		- 1
+	AddressInformation	- 2
+	EmailInformation	- 3
+	TrainingInformation	- 4
+	Confirmation		- 5
+	*/
+
+	fromProfileDetailsToAddressInformation(){
 		// retrieve profile details
 		var contactInfo = this.template.querySelector('c-portal-registration-profile-details-l-m-s').getContactInfo();
 		this.contactInfo = JSON.parse(JSON.stringify(contactInfo));
 
 		// go to next step
-		this.currentStep = 4;
-	}
-
-	fromAccountSelectionToProfileDetails(){
-
-		this.currentStep = 1;
-	}
-
-	fromAccountSelectionToConfirmation(){
-		var contactInfo = this.template.querySelector('c-portal-registration-email-validation-l-m-s').getContactInfo();
-		this.contactInfo = JSON.parse(JSON.stringify(contactInfo));
-		var flow = this.template.querySelector('c-portal-registration-email-validation-l-m-s').getFlow();
-		this.flow = flow
-
-		this.currentStep = 5;
-	}
-
-	fromAccountSelectionToCompanyInformation(){
-
 		this.currentStep = 3;
 	}
 
-	fromCompanyInformationToAccountSelection(){
-		var companyInformation= this.template.querySelector('c-portal-registration-company-information').getCompanyInformation();
+	fromAddressInformationToProfileDetails(){
+		this.currentStep = 1;
+	}
 
-		this.account = JSON.parse(JSON.stringify(companyInformation));
-		this.selectedCustomerType = companyInformation.customerType;
+	fromAddressInformationToEmailInformation(){
+		// retrieve profile details
+		let contactInfo = this.template.querySelector('c-portal-registration-profile-details-l-m-s').getContactInfo();
+		let addressInformation = this.template.querySelector('c-portal-registration-address-information-l-m-s').getAddressInformation();
+		this.contactInfo = JSON.parse(JSON.stringify(contactInfo));
+		this.address = JSON.parse(JSON.stringify(addressInformation));
 
-		this.currentStep = 2;
+		// go to next step
+		this.currentStep = 3;
+	}
+
+	fromEmailInformationToAddressInformation(){
+		this.currentStep = 1;
+	}
+
+	fromEmailInformationToTrainingInformation(){
+		var contactInfo = this.template.querySelector('c-portal-registration-email-validation-l-m-s').getContactInfo();
+		var flow = this.template.querySelector('c-portal-registration-email-validation-l-m-s').getFlow();
+		
+		this.contactInfo = JSON.parse(JSON.stringify(contactInfo));
+		this.flow = flow;
+console.log('fromEmailInformationToTrainingInformation this.contactInfo: ', this.contactInfo);
+		this.currentStep = 4;
+	}
+
+	fromTrainingInformationToEmailInformation(){
+		this.currentStep = 3;
+	}
+
+	fromTrainingInformationToConfirmation(){
+		var contactInfo = this.template.querySelector('c-portal-registration-training-validation-l-m-s').getContactInfo();
+		this.contactInfo = JSON.parse(JSON.stringify(contactInfo));
+console.log('fromTrainingInformationToConfirmation this.contactInfo: ', this.contactInfo);		
+		this.currentStep = 5;
 	}
 
 	fromConfirmationToProfileDetails(){
 		this.currentStep = 1;
 	}
-
-	fromConfirmationToAccountSelection(){
+	
+	fromConfirmationToAddressInformation(){
 		this.currentStep = 2;
 	}
 
-	fromConfirmationToCompanyInformation(){
+	fromConfirmationToEmailValidation(){
 		this.currentStep = 3;
 	}
 
-	fromConfirmationToAddressInformation(){
+	fromConfirmationToTrainingInformation(){
 		this.currentStep = 4;
 	}
 
@@ -403,25 +485,23 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 		return this.currentStep === 1;
 	}
 
-	get isEmailValidationStep(){
+	get isAddressInformationStep(){
 		return this.currentStep === 2;
 	}
 
-	get isCompanyInformationStep(){
+	get isEmailValidationStep(){
 		return this.currentStep === 3;
 	}
 
-	get isAddressInformationStep(){
+	get isTrainingValidationStep(){
+console.log('isTrainingValidationStep this.contactInfo: ', this.contactInfo);			
 		return this.currentStep === 4;
 	}
-
+	
 	get isConfirmationStep(){
 		return this.currentStep === 5;
 	}
 
-	get isAccountStep(){
-		return this.currentStep === 2 || this.currentStep === 3 || this.currentStep === 4;
-	}
 
 	landingPage;
 
@@ -456,4 +536,29 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 	secondLevelRegistrationCompletedAction2(){
 		this.dispatchEvent(new CustomEvent('secondlevelregistrationcompletedactiontwo'));
 	}
+
+		
+	browserType(){
+		let ua= navigator.userAgent;
+		let tem;
+		let M= ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
+
+		if(/trident/i.test(M[1])){
+			tem=  /\brv[ :]+(\d+)/g.exec(ua) || [];
+			// alert("IE"+'IE '+(tem[1] || ''));
+			return 'IE '+(tem[1] || '');
+		}
+		if(M[1]=== 'Chrome'){
+			tem= ua.match(/\b(OPR|Edge)\/(\d+)/);
+			if(tem!= null) return tem.slice(1).join(' ').replace('OPR', 'Opera');
+			// alert('chrome');
+		}
+		M= M[2]? [M[1], M[2]]: [navigator.appName, navigator.appVersion, '-?'];
+		if((tem= ua.match(/version\/(\d+)/i))!= null) M.splice(1, 1, tem[1]);
+		return M.join(' ');
+	}
+
+		
+
+	
 }

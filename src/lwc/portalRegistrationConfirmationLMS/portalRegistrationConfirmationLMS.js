@@ -7,6 +7,8 @@ import createIsoCity                        from '@salesforce/apex/PortalRegistr
 import registration                         from '@salesforce/apex/PortalRegistrationThirdLevelLMSCtrl.registration';
 import sendSingleEmail						from '@salesforce/apex/PortalRegistrationThirdLevelLMSCtrl.sendSingleEmail';
 import getLMSTermAndConditionAcceptance		from '@salesforce/apex/PortalRegistrationThirdLevelLMSCtrl.getLMSTermAndConditionAcceptance';
+import verifyCompleteL3Data 				from '@salesforce/apex/PortalServicesCtrl.verifyCompleteL3Data';
+import getPortalServiceId 					from '@salesforce/apex/PortalServicesCtrl.getPortalServiceId';
 
 import { navigateToPage } from'c/navigationUtils';
 
@@ -69,6 +71,7 @@ export default class PortalRegistrationConfirmationLMS extends LightningElement 
 	@api contactInfo;
 	@api flow;
 	@api address;
+	@api isIE;
 
 	@track street;
 	@track street2;
@@ -218,24 +221,24 @@ export default class PortalRegistrationConfirmationLMS extends LightningElement 
 		this.startLoading();
 
 		// Check first if we need to create a Geoname city
-		if(this.localAddress.stateId !== '' && this.localAddress.cityId === ''){
-			createIsoCity({name : this.localAddress.cityName, stateId: this.localAddress.stateId, isPoBox: this.localAddress.isPoBox})
-			.then(result => {
-				this.createdCityId = result;
-			})
-			.catch(error => {
-				console.log('Error: ', JSON.parse(JSON.stringify(error)));
-				this.openErrorModal = true;
-				this.errorModalMessage = JSON.parse(JSON.stringify(error));
-				this.stopLoading();
-			})
-			.finally(() => {
-				this.submitRegistration();
+		// if(this.localAddress.stateId !== '' && this.localAddress.cityId === ''){
+		// 	createIsoCity({name : this.localAddress.cityName, stateId: this.localAddress.stateId, isPoBox: this.localAddress.isPoBox})
+		// 	.then(result => {
+		// 		this.createdCityId = result;
+		// 	})
+		// 	.catch(error => {
+		// 		console.log('Error: ', JSON.parse(JSON.stringify(error)));
+		// 		this.openErrorModal = true;
+		// 		this.errorModalMessage = JSON.parse(JSON.stringify(error));
+		// 		this.stopLoading();
+		// 	})
+		// 	.finally(() => {
+		// 		this.submitRegistration();
 				
-			});
-		}else{
+		// 	});
+		// }else{
 			this.submitRegistration();
-		}
+		// }
 
 
 
@@ -259,9 +262,12 @@ export default class PortalRegistrationConfirmationLMS extends LightningElement 
 			this.city,
 			this.localAddress.isPoBox,
 			this.localContactInfo.serviceid,
-			this.localAddress.street2
+			this.localAddress.street2,
+			this.localContactInfo.existingTrainingId
 		];
 
+console.log('this.localContactInfo.lmsCourse: ',this.localContactInfo.lmsCourse);
+console.log('auxSearchValues: ',auxSearchValues);
 
 		//Move address info into ContactInfo
 		this.localContactInfo.isPoBox = this.localAddress.isPoBox;
@@ -319,7 +325,7 @@ export default class PortalRegistrationConfirmationLMS extends LightningElement 
 			.then(result => {
 				if(result.isSuccess == true){
 						this.openVerificationMailSuccessModal = true;
-						this.successModalMessage = CSP_L2_VerificationToP1_LMS+ this.localContactInfo.Additional_Email__c+CSP_L2_VerificationToP2_LMS;
+						this.successModalMessage = CSP_L2_VerificationToP1_LMS + ' ' + this.localContactInfo.Additional_Email__c+CSP_L2_VerificationToP2_LMS;
 					}
 					else{
 						this.openErrorModal = true;
@@ -374,6 +380,37 @@ export default class PortalRegistrationConfirmationLMS extends LightningElement 
 
 	get displayToS(){
 		return true;
+	}
+
+	goToService(){
+console.log('entrei');
+		this.startLoading();
+		getPortalServiceId({ serviceName: 'Training Platform (LMS)' })
+			.then(serviceId => {
+				verifyCompleteL3Data({serviceId: serviceId})
+				.then(result => {										
+					if(result !== 'not_complete'){
+						this.stopLoading();
+						window.open(result);
+						this.dispatchEvent(new CustomEvent('secondlevelregistrationcompletedactionone'));
+					}
+					else{
+						this.stopLoading();
+						//fireEvent(this.pageRef, 'fireL3Registration', serviceId);
+						navigateToPage(CSP_PortalPath+'?firstLogin=true&lms=yas');
+
+					}
+					this.toggleSpinner();
+				})
+				.catch(error => {
+					this.stopLoading();
+					this.error = error;
+				});
+			})
+			.catch(error => {
+				this.stopLoading();
+				this.error = error;
+		});
 	}
 
 	handleToSChange(event){

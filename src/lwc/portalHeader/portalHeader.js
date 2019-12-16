@@ -232,23 +232,33 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
 		// FOR LMS L3
 		if(pageParams !== undefined &&
 			(pageParams.lms !== undefined || pageParams.lmsflow !== undefined ) ){
+		
 			if(pageParams.lms === 'yas'){
+		
 				if(pageParams.firstLogin == "true"){
 					this.thirdLoginLMS = true;
 					this.registrationlevel = '3';
 					this.displayFirstLogin = true;
 				}else{
+		
 					getPortalServiceId({ serviceName: 'Training Platform (LMS)' })
 						.then(serviceId => {
+		
 							verifyCompleteL3Data({serviceId: serviceId})
 							.then(result => {
-								if(result){
-									window.open('https://getyardstick.com');
+								
+								if(result !== 'not_complete'){
+									if(pageParams.RelayState !== ''){
+										let sURL = result.split('RelayState');
+										result = sURL[0] + 'RelayState=' + pageParams.RelayState;
+									}
+
+									window.open(result);
 								}
 								else{
 									this.thirdLoginLMS = true;
 									this.registrationlevel = '3';
-									this.displayFirstLogin = true;
+									this.displayThirdLevelRegistrationLMS= true; 
 								}
 							})
 							.catch(error => {

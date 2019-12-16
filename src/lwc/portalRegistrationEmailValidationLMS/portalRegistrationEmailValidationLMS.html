@@ -1,243 +1,222 @@
 <template>
 	<lightning-layout multiple-rows vertical-align="stretch">
+		<div class="IEFixDisplayContainer">
+			<lightning-layout-item size="12">
+				<span class="text-medium">{labels.CSP_L3_Email_Validation_LMS}</span>
+			</lightning-layout-item>
 
-		<lightning-layout-item size="12">
-			<span class="text-medium">Email Validation</span>
-		</lightning-layout-item>
 
-
-		<lightning-layout-item size="12">
-			<!-- <div class="sectionDescription">{labels.CSP_L2_Account_Selection_Message}</div> -->
-        	   <div class="sectionDescription">{labels.CSP_L2_EmailValidationDescri_LMS}
-			</div>
-
-			<!--div class="sectionDescription">Your company may have an account in IATA, so please check it first before creating a new one.</div-->
-		</lightning-layout-item>
-
-		<lightning-layout-item padding="around-small" size="12">
-		</lightning-layout-item>
-
-		<lightning-layout-item class="slds-p-around_small topLightGrayBorder customWhiteBackground slds-clearfix" size="12">
-		</lightning-layout-item>
-
-		<lightning-layout-item size="12">
-			<!-- <div class="sectionTitle">{labels.CSP_L2_Account_Information}</div> -->
-             <div class="sectionTitle">{labels.CSP_L3_EmailInformation_LMS}</div>
-			<!-- <div class="sectionDescription">{labels.CSP_L2_Account_Information_Message}</div> -->
-             <div class="sectionDescription">{labels.CSP_L3_CompleteInformation_LMS}</div>
-		</lightning-layout-item>
-
-		<lightning-layout-item padding="around-small" size="12">
-		</lightning-layout-item>
-		<!------------------------------------------      Profile details      -------------------------------------------->
-		<div class="companyInfoContainer">
-		<!------------------------------------------      Is your user email your personal email ?      -------------------------------------------->
-
-			<template if:true={isPersonalEmailVisibility}>
-				<div class="infoItem" >
-					<lightning-layout-item size="12" >
-						<div class="formLabelContainer">
-							<div class="text-xxsmall">
-								<!-- <abbr class="slds-required" title="required">* </abbr>{item.label} -->
-								{labels.CSP_L3_IsPersonalEmail_LMS}
-							</div>
-						</div>
-					</lightning-layout-item>
-					<lightning-layout-item size="12" >
-						<div class="slds-form-element">
-							<div class="slds-form-element__control custTextInputSmall">
-								<lightning-combobox
-									options={PersonalEmailOptions}
-									value={isPersonalEmail}
-									variant="label-hidden"
-									class="cursorPointerComboBox text-xxsmall"
-									dropdown-alignment="auto"
-									onchange={changeIsPersonalEmail}>
-								</lightning-combobox>
-							</div>
-						</div>
-					</lightning-layout-item>
+			<lightning-layout-item size="12">
+				<!-- <div class="sectionDescription">{labels.CSP_L2_Account_Selection_Message}</div> -->
+				<div class="sectionDescription">{labels.CSP_L2_EmailValidationDescri_LMS}
 				</div>
-			</template>
 
-			<!-- ----------------------------------------      Personal and Work Email Reversed      ------------------------------------------ -->
-            <template if:true={reverseEmailVisibility}>
-                <div class="infoItem" >
-					<lightning-layout-item size="12" >
-						<div class="formLabelContainer">
-							<div class="text-xxsmall">
-								<!-- <abbr class="slds-required" title="required">* </abbr>{item.label} -->
-                                    {labels.CSP_L3_IsReversedEmail_LMS}
+				<!--div class="sectionDescription">Your company may have an account in IATA, so please check it first before creating a new one.</div-->
+			</lightning-layout-item>
+
+			<lightning-layout-item padding="around-small" size="12">
+			</lightning-layout-item>
+
+			<lightning-layout-item class="slds-p-around_small topLightGrayBorder customWhiteBackground slds-clearfix"
+				size="12">
+			</lightning-layout-item>
+
+			<lightning-layout-item size="12">
+				<!-- <div class="sectionTitle">{labels.CSP_L2_Account_Information}</div> -->
+				<div class="sectionTitle">{labels.CSP_L3_EmailInformation_LMS}</div>
+				<!-- <div class="sectionDescription">{labels.CSP_L2_Account_Information_Message}</div> -->
+				<div class="sectionDescription">{labels.CSP_L3_CompleteInformation_LMS}</div>
+			</lightning-layout-item>
+
+			<lightning-layout-item padding="around-small" size="12">
+			</lightning-layout-item>
+			<!------------------------------------------      Profile details      -------------------------------------------->
+			<div class="companyInfoContainer">
+				<!------------------------------------------      Is your user email your personal email ?      -------------------------------------------->
+
+				<template if:true={isPersonalEmailVisibility}>
+					<div class="infoItem">
+						<lightning-layout-item size="12">
+							<div class="formLabelContainer">
+								<div class="text-xxsmall">
+									<!-- <abbr class="slds-required" title="required">* </abbr>{item.label} -->
+									{labels.CSP_L3_IsPersonalEmail_LMS}
+								</div>
 							</div>
-						</div>
-					</lightning-layout-item>
-					<lightning-layout-item size="12" >
-						<div class="slds-form-element">
-							<div class="slds-form-element__control custTextInputSmall">
-								<lightning-combobox
-									options={PersonalEmailOptions}
-									value={isReverseEmail}
-									variant="label-hidden"
-									class="cursorPointerComboBox text-xxsmall"
-									dropdown-alignment="auto"
-									onchange={changeReverseEmail}>
-								</lightning-combobox>
+						</lightning-layout-item>
+						<lightning-layout-item size="12">
+							<div class="slds-form-element">
+								<div class="slds-form-element__control custTextInputSmall">
+									<lightning-combobox options={PersonalEmailOptions} value={isPersonalEmail}
+										variant="label-hidden" class="cursorPointerComboBox text-xxsmall"
+										dropdown-alignment="auto" onchange={changeIsPersonalEmail}>
+									</lightning-combobox>
+								</div>
 							</div>
-						</div>
-					</lightning-layout-item>
-				</div>
-			</template>
+						</lightning-layout-item>
+					</div>
+				</template>
 
-			<!-- ----------------------------------------      Work Email      ------------------------------------------ -->
-			<template if:true={workEmailVisibility}>
-				<div class="infoItemLine" >
-
-					<lightning-layout-item size="12">
-						<div class="formLabelContainer">
-							<div class="text-xxsmall">
-								<!-- {labels.CSP_L2_Company_Name} -->
-	                             {labels.CSP_L3_WorkEmail_LMS}
+				<!-- ----------------------------------------      Personal and Work Email Reversed      ------------------------------------------ -->
+				<template if:true={reverseEmailVisibility}>
+					<div class="infoItem">
+						<lightning-layout-item size="12">
+							<div class="formLabelContainer">
+								<div class="text-xxsmall">
+									<!-- <abbr class="slds-required" title="required">* </abbr>{item.label} -->
+									{labels.CSP_L3_IsReversedEmail_LMS}
+								</div>
 							</div>
-						</div>
-					</lightning-layout-item>
-					<lightning-layout-item size="12">
-						<div class="slds-form-element">
-							<div class="slds-form-element__control custTextInput custTextInputSmall">
-								<input
-									type="text"
-									class="slds-input"
-									placeholder=" "
-									value={workEmailInput}
-									onkeyup={changeWorkEmail}/>
+						</lightning-layout-item>
+						<lightning-layout-item size="12">
+							<div class="slds-form-element">
+								<div class="slds-form-element__control custTextInputSmall">
+									<lightning-combobox options={PersonalEmailOptions} value={isReverseEmail}
+										variant="label-hidden" class="cursorPointerComboBox text-xxsmall"
+										dropdown-alignment="auto" onchange={changeReverseEmail}>
+									</lightning-combobox>
+								</div>
 							</div>
-						</div>
-					</lightning-layout-item>
-				</div>
-			</template>
+						</lightning-layout-item>
+					</div>
+				</template>
 
+				<!-- ----------------------------------------      Work Email      ------------------------------------------ -->
+				<template if:true={workEmailVisibility}>
+					<div class="infoItemLine">
 
-			<!-- ----------------------------------------      Personal Email      ------------------------------------------ -->
-			<template if:true={personalEmailVisibility}>
-				<div class="infoItemLine" >
-
-					<lightning-layout-item size="12">
-						<div class="formLabelContainer">
-							<div class="text-xxsmall"> 
-								<!-- {labels.CSP_L2_Company_Name} -->
-								{labels.CSP_L_PersonalEmail_LMS}
+						<lightning-layout-item size="12">
+							<div class="formLabelContainer">
+								<div class="text-xxsmall" if:false={reverseEmailVisibility}>
+									{labels.CSP_L3_ProvideWorkEmail_LMS}
+								</div>
+								<div class="text-xxsmall" if:true={reverseEmailVisibility}>
+									{labels.CSP_L3_WorkEmail_LMS}
+								</div>
 							</div>
-						</div>
-					</lightning-layout-item>
-					<lightning-layout-item size="12">
-						<div class="slds-form-element">
-							<div class="slds-form-element__control custTextInput custTextInputSmall">
-								<input
-									type="text"
-									class="slds-input"
-									placeholder=" "
-									value={personalEmailInput}
-									onkeyup={changePersonalEmail}/>
+						</lightning-layout-item>
+						<lightning-layout-item size="12">
+							<div class="slds-form-element">
+								<div class="slds-form-element__control custTextInput custTextInputSmall">
+									<input type="text" class="slds-input" placeholder=" " value={workEmailInput}
+										onkeyup={changeWorkEmail} />
+								</div>
 							</div>
-						</div>
-					</lightning-layout-item>
-				</div>
-			</template>
+						</lightning-layout-item>
+					</div>
+				</template>
 
 
-			
-			<!-- ----------------------------------------      Existing user/personal email      ------------------------------------------ -->
-			<template if:true={existingUsernameVisibility}>
+				<!-- ----------------------------------------      Personal Email      ------------------------------------------ -->
+				<template if:true={personalEmailVisibility}>
+					<div class="infoItemLine">
 
-				<div class="infoItemLine" >
-
-					<lightning-layout-item size="12">
-						<div class="formLabelContainer">
-							<div class="sectionDescription">
-								<!-- {labels.CSP_L2_Company_Name} -->
-								{labels.CSP_L3_ExistingUser_LMS}
+						<lightning-layout-item size="12">
+							<div class="formLabelContainer">
+								<div class="text-xxsmall">
+									<!-- {labels.CSP_L2_Company_Name} -->
+									{labels.CSP_L_PersonalEmail_LMS}
+								</div>
 							</div>
-						</div>
-					</lightning-layout-item>
-					<lightning-button variant="base" label="Login" class="slds-p-right_small blueCustomButtonLinkSmall" onclick={handleNavigateToLogin}></lightning-button>
-				</div>
-			</template>
-			<template if:true={existingPersonalUsernameVisibility}>
-
-				<div class="infoItemLine" >
-
-					<lightning-layout-item size="12">
-						<div class="formLabelContainer">
-							<div class="sectionDescription">
-								<!-- {labels.CSP_L2_Company_Name} -->
-								{labels.CSP_L3_ExistingContact_LMS}
+						</lightning-layout-item>
+						<lightning-layout-item size="12">
+							<div class="slds-form-element">
+								<div class="slds-form-element__control custTextInput custTextInputSmall">
+									<input type="text" class="slds-input" placeholder=" " value={personalEmailInput}
+										onkeyup={changePersonalEmail} />
+								</div>
 							</div>
-						</div>
-					</lightning-layout-item>
-					<lightning-layout-item size="12">
-						<div class="slds-form-element">
-							<div class="sectionDescription">
-									<br> Personal Email: <b>{userInfo.existingContactEmail}</b>
-							</div>
-						</div>
-					</lightning-layout-item>
-					<lightning-layout-item size="12">
+						</lightning-layout-item>
+					</div>
+				</template>
+
+
+
+				<!-- ----------------------------------------      Existing user/personal email      ------------------------------------------ -->
+				<template if:true={existingUsernameVisibility}>
+
+					<div class="infoItemLine">
+
+						<lightning-layout-item size="12">
 							<div class="formLabelContainer">
 								<div class="sectionDescription">
-									<!-- {labels.CSP_L2_Company_Name} -->  
-		     <br>{labels.CSP_L3_StillWorkingP1_LMS} {userInfo.existingContactAccount}, {labels.CSP_L3_StillWorkingP2_LMS}
+									<!-- {labels.CSP_L2_Company_Name} -->
+									<lightning-formatted-rich-text  value={labels.CSP_Registration_Existing_Work_Message}></lightning-formatted-rich-text>
+								</div>
+							</div>
+						</lightning-layout-item>
+						
+					</div>
+				</template>
+
+
+				<template if:true={existingPersonalUsernameVisibility}>
+
+					<div class="infoItemLine">
+						<lightning-layout-item size="12">
+							<div class="formLabelContainer">
+								<div class="sectionDescription">
+									<!-- {labels.CSP_L2_Company_Name} -->
+									<lightning-formatted-rich-text  value={messageFlow7}></lightning-formatted-rich-text>
+								</div>
+							</div>
+						</lightning-layout-item>
+						<lightning-layout-item size="12">
+							<div class="slds-form-element">
+								<div class="sectionDescription">
+									<br> {labels.CSP_L_PersonalEmail_LMS} : <b>{localContactInfo.Additional_Email__c}</b>
+								</div>
+							</div>
+						</lightning-layout-item>
+						<lightning-layout-item size="12">
+							<div class="formLabelContainer">
+								<div class="sectionDescription">
+									<!-- {labels.CSP_L2_Company_Name} -->
+									<br>{labels.CSP_L3_StillWorkingP1_LMS} {userInfo.existingContactAccount},
+									{labels.CSP_L3_StillWorkingP2_LMS}
 								</div>
 							</div>
 						</lightning-layout-item>
 						<!-- <lightning-button variant="base" label="Login" class="slds-p-right_small blueCustomButtonLinkSmall" onclick={handleNavigateToLogin}></lightning-button> -->
 
 
-				</div>
-			</template>
+					</div>
+				</template>
 
 
 
-			<div data-id="emailDiv" class="slds-form-element">
-				<div class="formElementSpacer">
-					<div if:true={displayError}>
-						<div class="slds-form-element__help">{errorMessage}</div>
+				<div data-id="emailDiv" class="slds-form-element">
+					<div class="formElementSpacer">
+						<div if:true={displayError}>
+							<div class="slds-form-element__help">
+								<lightning-formatted-rich-text  value={errorMessage}></lightning-formatted-rich-text>
+							</div>
+						</div>
+					</div>
+					<div if:true={displayError} style="height:16px;">
 					</div>
 				</div>
-				<div if:true={displayError} style="height:16px;">
-				</div>
 			</div>
-		</div>
 
-
-		<template if:true={isCategorizationModified}>
-			<lightning-layout-item size="12">
-				<div>
-					Please note that the service you're requesting access might be uneligible for this categorization. You can anyway finalize your registration with this categorization, but in that case, the request access to the desired service will not be triggered.
-				</div>
+			<lightning-layout-item size="6" class="backButtonWrapper">
+				<template if:false={searchPerformed}>
+					<div class="text-xxsmall">
+						<lightning-button variant="base" label={labels.CSP_L2_Back_to_Profile_Details}
+							title={labels.CSP_L2_Back_to_Profile_Details} onclick={previous}
+							class="blueCustomButtonLinkSmall" icon-name="utility:back" icon-position="left">
+						</lightning-button>
+					</div>
+				</template>
 			</lightning-layout-item>
-		</template>
 
-		<lightning-layout-item size="6" class="backButtonWrapper">
-			<template if:false={searchPerformed}>
-				<div class="text-xxsmall">
-					<lightning-button variant="base"
-									label={labels.CSP_L2_Back_to_Profile_Details}
-									title={labels.CSP_L2_Back_to_Profile_Details}
-									onclick={previous}
-									class="blueCustomButtonLinkSmall"
-									icon-name="utility:back"
-									icon-position="left">
-					</lightning-button>
-				</div>
-			</template>
-		</lightning-layout-item>
+			<lightning-layout-item size="6">
+				<lightning-button class="slds-float_right containedButton customBtn" data-id="nextButton"
+					label={labels.CSP_Next_LMS} disabled={blockConfirmation} variant="brand" onclick={next}>
+				</lightning-button>
+			</lightning-layout-item>
 
-		<lightning-layout-item size="6">
-			<lightning-button class="slds-float_right containedButton customBtn" data-id="nextButton" label={labels.CSP_L3_Next_Confirmation_LMS} disabled={blockConfirmation} variant="brand" onclick={next}>
-			</lightning-button>
-		</lightning-layout-item>
-
-		<lightning-layout-item padding="around-small" size="12">
-		</lightning-layout-item>
-
+			<lightning-layout-item padding="around-small" size="12">
+			</lightning-layout-item>
+		</div>
 	</lightning-layout>
 </template>

@@ -17,6 +17,7 @@
 	</lightning-layout>
 
 	<c-portal-address-form-l-m-s
+		is-i-e={isIE}
 		country-id={countryId}
 		address={localAddress}
 		onsetvalidationstatus={setValidationStatus}
@@ -50,7 +51,7 @@
 				data-id="nextButton"
 				label={labels.CSP_Next_LMS}
 				disabled={isConfirmationButtonDisabled}
-				variant="brand" onclick={toConfirmation}>
+				variant="brand" onclick={next}>
 			</lightning-button>
 		</lightning-layout-item>
 

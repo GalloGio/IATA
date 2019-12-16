@@ -124,6 +124,20 @@ The Account Role record should be named after the functional capability for whic
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>Functional_Role__c</fullName>
+        <description>Functional Role</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Functional Role</inlineHelpText>
+        <label>Functional Role</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Functional_Roles</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
         <fullName>HQ_Location__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <description>Select the country where provider&apos;s headquarter is located</description>
@@ -245,6 +259,17 @@ The Account Role record should be named after the functional capability for whic
         <description>For records migrated and synchronized with Amsterdam Publications system.</description>
         <label>Amsterdam Publications</label>
         <picklistValues>
+            <picklist>Functional_Role__c</picklist>
+            <values>
+                <fullName>E%26F</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Training</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Provider_Type__c</picklist>
             <values>
                 <fullName>Closed Loop</fullName>
@@ -280,6 +305,17 @@ The Account Role record should be named after the functional capability for whic
         <active>true</active>
         <label>Default</label>
         <picklistValues>
+            <picklist>Functional_Role__c</picklist>
+            <values>
+                <fullName>E%26F</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Training</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Provider_Type__c</picklist>
             <values>
                 <fullName>Closed Loop</fullName>
@@ -311,6 +347,17 @@ The Account Role record should be named after the functional capability for whic
         <active>true</active>
         <description>Master recordType</description>
         <label>Master</label>
+        <picklistValues>
+            <picklist>Functional_Role__c</picklist>
+            <values>
+                <fullName>E%26F</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Training</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
         <picklistValues>
             <picklist>Provider_Type__c</picklist>
             <values>
@@ -346,6 +393,17 @@ The Account Role record should be named after the functional capability for whic
         <fullName>TIP_Payment_Provider</fullName>
         <active>true</active>
         <label>Payment Provider</label>
+        <picklistValues>
+            <picklist>Functional_Role__c</picklist>
+            <values>
+                <fullName>E%26F</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Training</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
         <picklistValues>
             <picklist>Provider_Type__c</picklist>
             <values>

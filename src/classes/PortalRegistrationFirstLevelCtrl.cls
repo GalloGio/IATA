@@ -1241,7 +1241,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 		String RECTYPE_Master_AccContRole = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'Master');
 
 		//Create Account Role if not existing
-		List<Account_Role__c> ars = [SELECT Id,Account__c,RecordTypeId FROM Account_Role__c WHERE Account__c = :con.AccountId AND Account_Role_Name__c = 'Trainee' LIMIT 1];
+		List<Account_Role__c> ars = [SELECT Id,Account__c,RecordTypeId FROM Account_Role__c WHERE Account__c = :con.AccountId AND Account_Role_Name__c = 'Training' AND Functional_Role__c = 'Training' LIMIT 1];
 
 		Account_Role__c ar = new Account_Role__c();
 
@@ -1250,12 +1250,13 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 		}else{
 			ar.Account__c = con.AccountId;
 			ar.RecordTypeId = RECTYPE_Master_AccRole;
-			ar.Account_Role_Name__c =  'Trainee';
+			ar.Account_Role_Name__c = 'Training';
+			ar.Functional_Role__c = 'Training';
 			insert ar;
 		}
 
 		//Check if existing contact has account contact role
-		List<Account_Contact_Role__c> acrs = [SELECT Id,Account_Role__c,Contact__c,Contact_Role_Name__c,RecordTypeId FROM Account_Contact_Role__c WHERE Contact__c = :existingConId AND Contact_Role_Name__c = 'Trainee' LIMIT 1];
+		List<Account_Contact_Role__c> acrs = [SELECT Id,Account_Role__c,Contact__c,Contact_Role_Name__c,RecordTypeId FROM Account_Contact_Role__c WHERE Contact__c = :existingConId AND Contact_Role_Name__c = 'Trainee' AND Functional_Role__c = 'Training' LIMIT 1];
 
 		if(acrs != null && !acrs.isEmpty())
 		{
@@ -1270,6 +1271,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 			acr.Account_Role__c = ar.Id;
 			acr.Contact__c = con.Id;
 			acr.Contact_Role_Name__c = 'Trainee';
+			acr.Functional_Role__c = 'Training';
 			acr.RecordTypeId = RECTYPE_Master_AccContRole;
 			acr.Service_Rendered__c = 'Other';
 
