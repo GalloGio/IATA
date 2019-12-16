@@ -778,7 +778,6 @@ public class ANG_MulticountryHelper {
 
 		Map<String,Object> fieldsOfObject = new Map<String,Object>();
 
-		fieldsOfObject.put('ANG_Accreditation_type__c',acct.ANG_Accreditation_Model__c);
 		fieldsOfObject.put('Abbreviated_Address__c',acct.Abbreviated_address__c);
 		fieldsOfObject.put('Abbreviated_name__c',acct.Abbreviated_name__c);
 		fieldsOfObject.put('Accept_terms_and_conditions__c',true);
@@ -813,7 +812,8 @@ public class ANG_MulticountryHelper {
 		fieldsOfObject.put('Trade_Name__c',acct.TradeName__c);
 		fieldsOfObject.put('VAT_Number_2__c',acct.VAT_Number_2__c);
 		fieldsOfObject.put('Website__c',acct.Website);
-		fieldsOfObject.put('ISSP_Branch_AccountId__c',acct.Id);
+		fieldsOfObject.put('ISSP_Branch_AccountId__c', acct.Location_Type__c != AMS_Utils.GE ? String.valueOf(acct.Id) : '');
+		fieldsOfObject.put('HO_Account__c', acct.Location_Type__c == AMS_Utils.GE ? acct.Id : null);
 
 		return fieldsOfObject;
 	}

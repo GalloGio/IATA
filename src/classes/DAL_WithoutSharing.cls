@@ -211,7 +211,7 @@ public static Map<String, String> getUserOptions(String portalUser){
 	 * @return List of List of SObjects (Accounts and Contacts)
 	 */
 	@AuraEnabled(cacheable=false)
-	public static CSP_Utils.PagedResult getSearchProfiles(String portalSearchFilterWrapper, Contact myContact) {
+	public static CSP_Utils.PagedResult getSearchProfiles(String portalSearchFilterWrapper, Contact myContact, String queryLimit) {
 		PortalSearchFilterWrapper profileFiltersWrapper = (PortalSearchFilterWrapper) JSON.deserialize(portalSearchFilterWrapper, PortalSearchFilterWrapper.class);
 		CSP_Utils.PagedResult result = new CSP_Utils.PagedResult();
 		List<PortalProfileCtrl.ProfileWrapper> lstProfileWrapper = new List<PortalProfileCtrl.ProfileWrapper>();
@@ -269,6 +269,10 @@ public static Map<String, String> getUserOptions(String portalUser){
 			baseQueryContacts += ' AND User_Portal_Status__c = \'' + profileFiltersWrapper.profileComponent.profileStatusFilter + '\' ';
 		}
 
+		if(!String.isBlank(queryLimit)) {
+			baseQueryContacts += ' LIMIT ' + queryLimit;
+			baseQueryAccounts += ' LIMIT ' + queryLimit;
+		}		
 		if (profileFiltersWrapper.profileComponent != null && profileFiltersWrapper.profileComponent.profileTypeFilter != null && profileFiltersWrapper.profileComponent.profileTypeFilter != 'Account') {
 			resultsContacts = Database.query(baseQueryContacts);
 		}
