@@ -19,46 +19,10 @@
 	background-color: #f7f8fa;
 }
 
-.BSPCASS {
-	width: 1440px;
-	height: 120px;
-	object-fit: contain;
-	box-shadow: 0 10px 16px 0 rgba(0, 0, 0, 0.03);
-	background-color: #ffffff;
-  }
-
-
-
-
 .scrollable-body{
 	height:70vh;
 	overflow:auto;
 }
-
-/* A lovely scroller - needs height recalculation
-.scrollable-body::-webkit-scrollbar {
-	width: 68px;
-}
-
-.scrollable-body::-webkit-scrollbar-thumb{
-	 width: 68px;
-	  background-image: url("/csportal/s/cat.gif"),
-		linear-gradient(
-		  90deg,
-		  transparent,
-		  magenta,
-		  red,
-		  yellow,
-		  limegreen,
-		  turquoise,
-		  blue,
-		  magenta,
-		  transparent
-		);
-	  background-position: center bottom, center -20px;
-	  background-repeat: no-repeat, no-repeat;
-	  background-size: contain, contain;
-}*/
 
 .slds-has-error input{
 	border-radius: 1px !important;
@@ -108,7 +72,7 @@
 }
 
 .header{
-	height: 50px;
+    height: 64px;
 	background-color: #1e32fa;
 	display: flex;
 	justify-content: space-around;
@@ -117,10 +81,11 @@
 .header .headerTitle{
 	display: flex;
 	align-items: center;
-	font-size: 20px;
+    font-size: 22px;
 	font-weight: 500;
 	text-align: center;
 	color: #fff;
+    font-family: DaMaWebFont;
 }
 
 .headerHome, .headerClose{
@@ -128,21 +93,19 @@
 	justify-content: center;
 	align-items: center;
 	cursor: pointer;
+    min-width: 64px;
 }
 
 .progressBarContainer{
 	background-color: #fff;
-	padding: 20px 0;
+    padding: 16px 0;
 }
-
-/* PROGRESS BAR */
 
 .progressBar{
 	display: flex;
 	align-items: stretch;
 	justify-content: space-evenly;
-	width: 100%;
-	width: 60%;
+    width: 50%;
 	margin: auto;
 }
 
@@ -153,9 +116,6 @@
 }
 
 .itemIcon{
-	/*width: 25px;
-	height: 25px;
-	border: 2px solid #289632;*/
 	border-radius: 50%;
 	margin-right: 10px;
 	display: flex;
@@ -271,14 +231,14 @@
   }
 
   .spinnerContainer{
-	position: fixed;
-	z-index: 1000;
-	padding-top: 100px;
-	left: 0;
-	top: 0;
-	width: 100%;
-	height: 100%;
-	overflow: auto;
+    position: fixed; 
+    z-index: 1000; 
+    padding-top: 100px; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; 
 }
 
 .mySpinnerProfileUpdate {
@@ -295,4 +255,29 @@
 
 .ProfileUpdateMessage{
 	word-wrap: normal;
+}
+
+.checkedIcon{
+    height: 24px;
+    width: 24px;
+}
+
+.uncheckedIcon{
+    height: 24px;
+    width: 24px;
+}
+
+@media only screen and (max-width: 800px) {
+    .header .headerTitle{
+        font-size: 18px;
+    }
+
+    .itemTitle {
+		text-align: center;
+    }
+
+    .progressItem{
+        flex-wrap: wrap;
+        min-width: 100px;
+    }
 }

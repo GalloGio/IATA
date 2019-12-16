@@ -88,13 +88,11 @@ export default class PortalServicesAccessGrantedCard extends NavigationMixin(Lig
 								.then(serviceId => {
 									verifyCompleteL3Data({serviceId: recordId})
 									.then(result => {
-										if(result){
+										if(result !== 'not_complete'){
 											window.open(myUrl);
 										}
 										else{
-											//fireEvent(this.pageRef, 'fireL3Registration', serviceId);
 											navigateToPage(CSP_PortalPath+'?firstLogin=true&lms=yas');
-
 										}
 										this.toggleSpinner();
 									})

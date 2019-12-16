@@ -170,6 +170,20 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Functional_Role__c</fullName>
+        <description>Functional Role</description>
+        <externalId>false</externalId>
+        <label>Functional Role</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Functional_Roles</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
         <fullName>Last_Name__c</fullName>
         <description>Last name of the related contact</description>
         <externalId>false</externalId>
@@ -275,6 +289,17 @@
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Functional_Role__c</picklist>
+            <values>
+                <fullName>E%26F</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Training</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Service_Rendered__c</picklist>
             <values>
                 <fullName>Other</fullName>
@@ -295,6 +320,17 @@
             <picklist>Contact_Role__c</picklist>
             <values>
                 <fullName>Primary Contact</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Functional_Role__c</picklist>
+            <values>
+                <fullName>E%26F</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Training</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

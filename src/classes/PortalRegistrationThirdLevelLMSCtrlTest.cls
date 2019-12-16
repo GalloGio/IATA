@@ -2,7 +2,7 @@
 public class PortalRegistrationThirdLevelLMSCtrlTest{
 
 	@testSetup
-	static void setup(){
+    static void setup(){
 
 		IATA_ISO_Country__c isoc = new IATA_ISO_Country__c(Name = 'United States', ISO_Code__c = 'US');
 		insert isoc;
@@ -49,7 +49,7 @@ public class PortalRegistrationThirdLevelLMSCtrlTest{
 			else if(con.Name == 'Don'){
 				c2 = con;
 			}
-
+			
 		}
 
 		List<IATA_ISO_State__c> isoState = [SELECT Id, Name FROM IATA_ISO_State__c];
@@ -85,7 +85,7 @@ public class PortalRegistrationThirdLevelLMSCtrlTest{
 			else if(con.Name == 'Don'){
 				c2 = con;
 			}
-
+			
 		}
 
 		List<IATA_ISO_State__c> isoState = [SELECT Id, Name FROM IATA_ISO_State__c];
@@ -113,7 +113,7 @@ public class PortalRegistrationThirdLevelLMSCtrlTest{
 			else if(con.Name == 'Don'){
 				c2 = con;
 			}
-
+			
 		}
 
 		List<IATA_ISO_State__c> isoState = [SELECT Id, Name FROM IATA_ISO_State__c];

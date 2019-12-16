@@ -36,7 +36,8 @@ export default class PortalAddressFormLMS extends LightningElement {
 	/* Passed address information */
 	@api countryId;
 	@api address;
-
+	@api isIE;
+	
 	/* Local address information
 
 		address.validationStatus values
@@ -195,7 +196,11 @@ export default class PortalAddressFormLMS extends LightningElement {
 				this.localAddress.stateName = value;
 				break;
 			case 'Street':
-				this.localAddress.street = value;
+				if(this.localAddress.isPoBox){
+					this.localAddress.PO_Box_Address__c = value;
+				}else{
+					this.localAddress.street = value;
+				}
 				break;
 			case 'Street2':
 				this.localAddress.street2 = value;
