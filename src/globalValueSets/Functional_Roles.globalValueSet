@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>E&amp;F</fullName>
+        <default>false</default>
+        <label>E&amp;F</label>
+    </customValue>
+    <customValue>
+        <fullName>Training</fullName>
+        <default>false</default>
+        <label>Training</label>
+    </customValue>
+    <description>Functional Roles</description>
+    <masterLabel>Functional Roles</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

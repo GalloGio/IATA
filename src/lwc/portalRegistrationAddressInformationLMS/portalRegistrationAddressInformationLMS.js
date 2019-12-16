@@ -24,7 +24,8 @@ export default class PortalRegistrationAddressInformationLMS extends LightningEl
 	@api address;
 	@api addressSuggestions;
 	@api countryId;
-
+	@api isIE;
+	
 	@track localAddress;
 
 	// flag to enable/disable the "Next Step / Confirmation" button
@@ -66,6 +67,10 @@ export default class PortalRegistrationAddressInformationLMS extends LightningEl
 
 	toConfirmation(){
 		this.dispatchEvent(new CustomEvent('gotostep', {detail:'2'}));
+	}
+
+	next(){
+		this.dispatchEvent(new CustomEvent('next'));
 	}
 
 	setValidationStatus(event){

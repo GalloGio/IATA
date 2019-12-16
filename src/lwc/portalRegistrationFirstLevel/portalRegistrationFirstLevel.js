@@ -250,11 +250,7 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 								let pageParams = getParamsFromPage();
 								if(pageParams !== undefined){
 									if(pageParams.language !== undefined){
-										this.registrationForm.language = pageParams.language.toLowerCase();;
-									}
-									if(pageParams.lms !== ''){
-										this.registrationForm.lmsRedirectFrom = pageParams.lms;
-										this.registrationForm.lmsCourse = pageParams.course;
+                                        this.registrationForm.language = pageParams.language.toLowerCase();
 									}
 									if(pageParams.email !== undefined){
 										this.registrationForm.email = decodeURIComponent(pageParams.email);
@@ -262,7 +258,32 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 										//this.displayContactForm = true;
 										//this._initializePhoneInput();
 										this.handleNext(null);
-										return;
+                                    }
+                                    if(pageParams.startURL !== ''){
+
+                                        let prmstr = decodeURIComponent(pageParams.startURL);
+
+                                        prmstr = prmstr.replace('/csportal/s/?','');
+
+                                        
+                                        let paramsReturn = {};
+
+                                        if(prmstr !== undefined && prmstr !== null && prmstr !== ''){
+                                            let prmarr = prmstr.split("&");
+                                            for ( let i = 0; i < prmarr.length; i++) {
+                                                let tmparr = prmarr[i].split("=");
+                                                paramsReturn[tmparr[0]] = tmparr[1];
+                                            }
+                                        }
+
+                                        if(paramsReturn.lms !== ''){
+                                            this.registrationForm.lmsRedirectFrom = paramsReturn.lms;
+                                            this.registrationForm.lmsCourse = paramsReturn.RelayState;
+                                            this.registrationForm.lmsCourse = this.registrationForm.lmsCourse.replace('&', '@_@').replace('%26', '@_@').replace('%2526', '@_@');
+
+
+                                        }
+                                        
 									}
 
 								}

@@ -198,7 +198,7 @@
         <externalId>false</externalId>
         <inlineHelpText>Training Preferred Course</inlineHelpText>
         <label>Preferred Course</label>
-        <length>20</length>
+        <length>255</length>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
@@ -258,7 +258,7 @@
     </listViews>
     <nameField>
         <displayFormat>TCRD-{00000}</displayFormat>
-        <label>Training_Contact_Role_Details__c Name</label>
+        <label>Name</label>
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Training Contact Role Details</pluralLabel>

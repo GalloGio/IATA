@@ -43,6 +43,13 @@ import CSP_L3_ExistingContact_LMS from '@salesforce/label/c.CSP_L3_ExistingConta
 import CSP_L3_StillWorkingP1_LMS from '@salesforce/label/c.CSP_L3_StillWorkingP1_LMS';
 import CSP_L3_StillWorkingP2_LMS from '@salesforce/label/c.CSP_L3_StillWorkingP2_LMS';
 import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
+import CSP_L3_Email_Validation_LMS from '@salesforce/label/c.CSP_L3_Email_Validation_LMS';
+import CSP_L3_ProvideWorkEmail_LMS from '@salesforce/label/c.CSP_L3_ProvideWorkEmail_LMS';
+import CSP_Next_LMS from '@salesforce/label/c.CSP_Next_LMS';
+import CSP_Registration_Existing_Work_Message from '@salesforce/label/c.CSP_Registration_Existing_Work_Message';
+
+
+
 
 export default class PortalRegistrationEmailValidationLMS extends LightningElement {
 	/* Images */
@@ -51,12 +58,14 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 	@api customerType;
 	@api contactInfo;
 	@api flow;
+	@api isIE;
 
 	@track errorMessage = ""; 
 	@track displayError = false;
 	@track displaySubmitError = false;
 	@track localContactInfo;
 	@track userInfo = {}
+	@track messageFlow7;
 
 	@track lms;
 	@track existingUsernameVisibility;
@@ -80,17 +89,26 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 	@track workEmailInput ='';
 
 	get blockConfirmation(){
-
+console.log('this.reverseEmailVisibility: ',this.reverseEmailVisibility);
+console.log('this.isReverseEmail: ',this.isReverseEmail);
 		let res = true;
-		if(
+		console.log('res: ',res);
 
-			(this.isPersonalEmail === 'no' && this.personalEmailInput !== '') ||
-			(this.isPersonalEmail === 'yes' && this.localContactInfo.Account.Is_General_Public_Account__c === true) ||
-			(this.isPersonalEmail === 'yes' && this.localContactInfo.Account.Is_General_Public_Account__c === false && this.workEmailInput !== '')
-			
-		){
-			res = false;
+		if(this.reverseEmailVisibility){
+			if(this.isReverseEmail !== undefined && this.isReverseEmail !== ''){
+				res = false;
+			}
+		}else{
+			if(
+				(this.isPersonalEmail === 'no' && this.personalEmailInput !== '') ||
+				(this.isPersonalEmail === 'yes' && this.localContactInfo.Account.Is_General_Public_Account__c === true) ||
+				(this.isPersonalEmail === 'yes' && this.localContactInfo.Account.Is_General_Public_Account__c === false && this.workEmailInput !== '')
+			){
+				res = false;
+			}
 		}
+		console.log('res: ',res);
+
 		return res;
 
 	}
@@ -150,7 +168,11 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 		CSP_L3_ExistingUser_LMS,
 		CSP_L3_ExistingContact_LMS,
 		CSP_L3_StillWorkingP1_LMS,
-		CSP_L3_StillWorkingP2_LMS
+		CSP_L3_StillWorkingP2_LMS,
+		CSP_L3_Email_Validation_LMS,
+		CSP_L3_ProvideWorkEmail_LMS,
+		CSP_Next_LMS,
+		CSP_Registration_Existing_Work_Message
 	}
 	get labels() {
 		return this._labels;
@@ -161,7 +183,7 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 
 	connectedCallback() {
 		this.localContactInfo = JSON.parse(JSON.stringify(this.contactInfo));
-
+console.log('this.localContactInfo: ', this.localContactInfo);
 
 		let pageParams = getParamsFromPage();// FOR LMS L3
 		if(pageParams !== undefined && pageParams.lms !== undefined){
@@ -175,7 +197,7 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 			this.setCustomerType(this.customerType);
 		}
 
-		//FLOW 1
+		//FLOW 0 && FLOW 1
 		if(this.localContactInfo.Additional_Email__c !== '' && (this.flow === undefined || this.flow === '' || this.flow === 'flow1' || this.flow === 'flow0') ){
 			this.flow = 'flow1';
 			this.isPersonalEmailVisibility = false;
@@ -184,6 +206,10 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 
 			this.workEmailInput = this.localContactInfo.Email;
 			this.personalEmailInput = this.localContactInfo.Additional_Email__c;
+
+			if(!this.localContactInfo.firstLogin){
+				this.isReverseEmail = 'no';
+			}
 		}
 
 	}
@@ -235,7 +261,7 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 	}
 
 	next(){
-
+console.log('next this.localContactInfo: ', this.localContactInfo);
 		if(this.flow === 'flow1'){
 			if(this.isReverseEmail === 'yes'){
 				this.flow = 'flow0';
@@ -351,6 +377,14 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 													this.localContactInfo.hasExistingContactPersonalEmail = userInfo.hasExistingContactPersonalEmail;
 													this.localContactInfo.hasExistingUserPersonalEmail = userInfo.hasExistingUserPersonalEmail;
 
+													this.messageFlow7 = CSP_L3_ExistingContact_LMS;
+console.log('this.messageFlow7: ', this.messageFlow7);		
+console.log('userInfo.existingContactEmail: ', userInfo.existingContactEmail);													
+console.log('userInfo.Email: ', this.localContactInfo.Email);													
+													this.messageFlow7 = this.messageFlow7.replace('[Existing_email]',userInfo.existingContactEmail);
+													this.messageFlow7 = this.messageFlow7.replace('[Existing_email]',userInfo.existingContactEmail);
+													this.messageFlow7 = this.messageFlow7.replace('[Email]',this.localContactInfo.Email);
+console.log('this.messageFlow7: ', this.messageFlow7);		
 
 													this._showEmailValidationError(true, this.labels.CSP_Registration_Existing_User_Message);
 													this.stopLoading();

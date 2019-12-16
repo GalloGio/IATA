@@ -22,9 +22,11 @@
     <body>
         <div class="main">
             <p>{!$Label.CSP_Dear} [CustomerName],</p>
-            <p>please click the link below to validate your email address</p>
-            <p>We´ve made it easy and fast – just click <a href="[URL]" target="_blank">here</a> to complete your profile</p>
-            <p>Thanks for being part of IATA.</p>
+            <p>{!$Label.CSP_Verification_L3_Email_1_LMS}</p>
+            <p>{!$Label.CSP_Verification_L3_Email_2_LMS}</p>
+            <p>{!$Label.CSP_Verification_L3_Email_3_LMS}</p>
+            <p>Please confirm your email address by clicking on this <a href="[URL]" target="_blank">link</a>.</p>
+            <p>Many thanks for your interest in IATA.</p>
             <p>IATA</p>
         </div>
     </body>

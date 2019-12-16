@@ -25,10 +25,9 @@ public without sharing class PortalRegistrationSecondLevelCtrl {
 									Email, Additional_Email__c, Phone, OtherPhone,
 									Account.Name, Account.IATA_ISO_Country__r.Id, Account.IATA_ISO_Country__r.Name,
 									Account.Sector__c, Account.Category__c, Account.Is_General_Public_Account__c,
-									Shipping_Address__c, Shipping_Address__r.city__c, Shipping_Address__r.City_Reference__c,
-									Shipping_Address__r.State__c, Shipping_Address__r.State_Reference__c,
-									Shipping_Address__r.State_Reference__r.iso_code__c,
-									Shipping_Address__r.PO_Box__c,
+                                    Shipping_Address__c, Shipping_Address__r.City_Name__c, Shipping_Address__r.City_Reference__c,
+                                    Shipping_Address__r.State_Name__c, Shipping_Address__r.State_Reference__c,
+                                    Shipping_Address__r.State_Reference__r.iso_code__c, Shipping_Address__r.PO_Box_Address__c,
 									Shipping_Address__r.Country__c, Shipping_Address__r.Country_Reference__c,
                                     Shipping_Address__r.Street__c, Shipping_Address__r.Postal_Code__c,
 									Shipping_Address__r.Street2__c
