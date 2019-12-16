@@ -27,10 +27,13 @@
 
         <!-- RENDER AS A LIST -->
         <div if:false={renderWithIcons}>
-            <div class="customBorderlessCardGray">
+            <div class="slds-grid slds-wrap slds-gutters_xx-small">
                 <template for:each={lstTiles} for:item="tile" for:index="index">
-                    <div key={tile.categoryName} class="slds-p-around_medium customCardTitleBox cursorPointer borderStyle cardStyle" onclick={handleTileButtonClick} data-item={tile.categoryName}>
-                        <span class="slds-p-left_small text-bold" data-item={tile.categoryName}>{tile.categoryLabel}</span>
+                    <div key={tile.categoryName} class="slds-col slds-size_1-of-1 slds-p-vertical_xx-small">
+                        <div class="slds-p-around_xx-small cursorPointer customBorderlessCardWhite" onclick={handleTileButtonClick} data-item={tile.categoryName}>
+                            <img src={tile.imageURL} class="slds-p-bottom_xx-small folder" data-item={tile.categoryName}/>
+                            <span class="slds-p-left_x-small text-xsmall text-black text-bold" data-item={tile.categoryName}>{tile.categoryLabel}</span>
+                        </div>
                     </div>
                 </template>
             </div>

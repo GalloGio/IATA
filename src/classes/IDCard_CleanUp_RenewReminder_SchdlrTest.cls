@@ -49,7 +49,7 @@ private class IDCard_CleanUp_RenewReminder_SchdlrTest {
         ID_Card__c idcard = IDCardUtil.CreateIDCardObjectFromApplication(testData.IDCards_IDCardApplications[3], contactsScope[0]);
         idcard.valid_To_Date__c = date.today();
         idcard.Card_Status__c = 'Valid ID Card';
-        insert idcard;
+        upsert idcard;
         IDCard_RenewalReminder_Batch bc = new IDCard_RenewalReminder_Batch();     
         
         bc.ContactScope = contactsScope;
