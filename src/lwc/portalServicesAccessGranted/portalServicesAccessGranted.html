@@ -5,15 +5,28 @@
     </div>
 
     <div if:false={componentLoading} class="slds-grid slds-wrap slds-gutters_direct-small">
-
-        <template for:each={lstServicesGranted} for:item="serviceGranted">
-            <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2 slds-m-vertical_small" key={serviceGranted.Id}>
-
-                <c-portal-services-access-granted-card service={serviceGranted}></c-portal-services-access-granted-card>
-
-            </div>
+        <template if:true={showOnlyFavorites}>
+            <template for:each={lstFavoriteServicesGranted} for:item="favoriteServiceGranted">
+                <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2 slds-m-vertical_small" key={favoriteServiceGranted.Id}>
+                    <c-portal-services-access-granted-card 
+                        service={favoriteServiceGranted} 
+                        onchangefavoritestatus={getGrantedServices}
+                        onstartloading={startLoading}>
+                    </c-portal-services-access-granted-card>
+                </div>
+            </template>
         </template>
 
+        <template if:false={showOnlyFavorites}>
+            <template for:each={lstAllServicesGranted} for:item="serviceGranted">
+                <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2 slds-m-vertical_small" key={serviceGranted.Id}>
+                    <c-portal-services-access-granted-card 
+                        service={serviceGranted} 
+                        onchangefavoritestatus={getGrantedServices}
+                        onstartloading={startLoading}>
+                    </c-portal-services-access-granted-card>
+                </div>
+            </template>
+        </template>
     </div>
-    
 </template>

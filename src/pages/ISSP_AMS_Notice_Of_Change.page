@@ -239,22 +239,6 @@
 		$j("[id$=branch_office_phone__c]").hide();
 	}
 
-	function updateTradeNameInfo(){
-		if ($j('[id$=tradenameafterchange]').val() !='' && $j('[id$=tradenameafterchange]').val()!=undefined)
-			$j('[id$=tradenameoutput]').text($j('[id$=tradenameafterchange]').val());
-		else
-			$j('[id$=tradenameoutput]').text('{!accountConcerned.TradeName__c}'); 
-		$j('[id$=modaltradename]').val($j('[id$=tradenameoutput]').text());
-	}
-
-	function updateLegalNameInfo(){
-		if ($j('[id$=legalnameafterchange]').val() !='' && $j('[id$=legalnameafterchange]').val()!=undefined)
-			$j('[id$=legalnameoutput]').text($j('[id$=legalnameafterchange]').val());
-		else
-			$j('[id$=legalnameoutput]').text('{!accountConcerned.Name}');
-		$j('[id$=modallegalname]').val($j('[id$=legalnameoutput]').text());
-	}
-
 	function updateModalAddressInfo(){
 		if ($j('.branch_office_street_name_number__c:eq(0)').val() !='' && $j('.branch_office_street_name_number__c:eq(0)').val()!=undefined)
 			$j('.branch_office_street_name_number__c:eq(1)').val($j('.branch_office_street_name_number__c:eq(0)').val());
@@ -273,19 +257,6 @@
 		else
 			$j('.state_province__c:eq(1)').val("{!accountConcerned.BillingState}");
 
-	}
-
-	function updateAddressInfo(){
-		var billingaddress;
-
-		updateModalAddressInfo();
-
-		billingaddress = $j('.branch_office_street_name_number__c:eq(1)').val()+'<br/>'+$j('.branch_office_city__c:eq(1)').val()+', '+$j('.branch_office_postal_code__c:eq(1)').val()+'<br/>';
-		if ($j('.state_province__c:eq(1)').val()!='')
-			billingaddress += $j('.state_province__c:eq(1)').val() + ', ' ;
-		billingaddress += "{!isocountry.Name}";
-
-		$j('[id$=billingaddress]').html(billingaddress);
 	}
 
 	function updatePhoneInfo(){
@@ -307,14 +278,7 @@
 		$j('[id$=companyfaxinput]').intlTelInput("setNumber",$j('[id$=companyfax]').val());
 	}
 
-	function toggleShareholdersMsg(myValue,prefix){
-			if( $j('input[name="' + myValue + '"][value=No]').prop("checked")) {
-				document.getElementById(prefix+'msgshareholdersdetails').style.display='block';
-			} else {
-				document.getElementById(prefix+'msgshareholdersdetails').style.display='none';
-			}
-	}
-
+	
 	var ownerModalFields = [];
 	ownerModalFields[0] = "{!$Component.newContact.contactBlock.Financial_interest__c}";
                    
@@ -1222,16 +1186,6 @@
                     <apex:outputPanel style="display:{!IF(newForm.ISSP_AMS_Legal_Status__c=='Corporation', '', 'none')}"></apex:outputPanel>
                     
                     <apex:outputPanel id="currcorporatedetails" layout="block" style="display:{!IF(newForm.ISSP_AMS_Legal_Status__c=='Corporation', '', 'none')}" styleClass="agencyOwnershipComponent">
-					
-						<!--<apex:pageBlockSection columns="1">
-							<apex:pageBlockSectionItem labelStyle="width:79%">
-								<apex:outputLabel value="{!$Label.ISSP_AMS_LABEL_Listed_Shares}"/>
-								<apex:selectRadio style="width:100px" id="currshareholdersmsg" value="{!newForm.ISSP_AMS_Curr_Entity_with_listed_shares__c}" styleClass="{!IF(AND(isValError, newForm.ISSP_AMS_Curr_Entity_with_listed_shares__c==null), 'requiredIndicator', '')}" onchange="toggleShareholdersMsg('{!$Component.currshareholdersmsg}','curr');">
-									<apex:selectOption itemValue="Yes" itemLabel="{!$Label.ISSP_Yes}" />
-									<apex:selectOption itemValue="No" itemLabel="{!$Label.ISSP_No}" />
-								</apex:selectRadio>
-							</apex:pageBlockSectionItem>
-						</apex:pageBlockSection>-->
 	                    
 						<apex:pageBlockSection columns="1">
 							<apex:pageblocksectionitem >
