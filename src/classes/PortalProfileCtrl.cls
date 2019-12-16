@@ -251,7 +251,7 @@ public static Contact contactInfo = new Contact();
 
 
 
-	private static List<ContactWrapper> getContactWrappers(List<Contact> contacts){
+	private static List<ContactWrapper> getContactWrappers(List<Contact> contacts, Boolean getServiceDescription){
 		List<ContactWrapper> wrappers = new List<ContactWrapper>();
 
 		if(!contacts.isEmpty()) {
@@ -271,7 +271,7 @@ public static Contact contactInfo = new Contact();
 			}
 
 			Map<Id,List<PortalServicesCtrl.ServiceWrapper> > contactToServices = new Map<Id,List<PortalServicesCtrl.ServiceWrapper> >();
-			contactToServices = PortalServicesCtrl.getContactsAccessGrantedServices(contactToUser);
+			contactToServices = PortalServicesCtrl.getContactsAccessGrantedServices(contactToUser, false);
 
 			Set<Id> contactsWithIdCard = new Set<Id>();
 			for(Id_Card__c idcard : [SELECT Related_Contact__c FROM Id_Card__c WHERE Related_Contact__c IN :contactIds]) {
@@ -382,7 +382,7 @@ public static Contact contactInfo = new Contact();
         CSP_Utils.PagedResult pagedResultAux = DAL_WithoutSharing.searchForCompanyContacts(companybranchFilterWrapper, requestedPageAux, PortalProfileCtrl.RESULTS_PER_PAGE , myContact.AccountId);
         
         CSP_Utils.PagedResult pagedResultToReturn = new CSP_Utils.PagedResult();
-        pagedResultToReturn.recordsString = JSON.serialize(getContactWrappers(pagedResultAux.records));
+        pagedResultToReturn.recordsString = JSON.serialize(getContactWrappers(pagedResultAux.records, false));
         pagedResultToReturn.totalItemCount = pagedResultAux.totalItemCount;
 
         return pagedResultToReturn;
