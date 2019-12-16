@@ -329,10 +329,6 @@
                 <fullName>E%26F</fullName>
                 <default>false</default>
             </values>
-            <values>
-                <fullName>Training</fullName>
-                <default>false</default>
-            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Service_Rendered__c</picklist>
