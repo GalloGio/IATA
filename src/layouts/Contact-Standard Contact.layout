@@ -73,6 +73,10 @@
                 <behavior>Edit</behavior>
                 <field>Allow_Contact_LastName_Change__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Shipping_Address__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -185,6 +189,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Email</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Additional_Email__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -777,6 +785,10 @@
             </layoutItem>
         </relatedContentItems>
     </relatedContent>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>Term_and_Condition_Acceptance__c.Contact__c</relatedList>
+    </relatedLists>
     <relatedLists>
         <fields>Account.NAME</fields>
         <fields>Account.ACC_SITE</fields>
