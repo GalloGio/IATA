@@ -41004,4 +41004,12 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <shortDescription>CSP_Verification_L3_Email_UE_3_LMS</shortDescription>
         <value>Your training record will be maintained under this merged user. &lt;b&gt;From now on you will only be able to login with your work email address.&lt;/b&gt;&lt;br/&gt;</value>
     </labels>
+    <labels>
+        <fullName>CSP_Registration_Existing_Work_Message</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Registration Existing work Message</shortDescription>
+        <value>The Personal email you have provided is already associated with an existing user. Please check that the personal email address you provided is correct. If so please click next. Once you confirm you have access to this personal email address, the user you are currently logged in with (associated with your work email) will be merged with the existing user associated with your personal email address. &lt;b&gt;From now on you will only be able to login with your work email address.&lt;/b&gt;</value>
+    </labels>
 </CustomLabels>
