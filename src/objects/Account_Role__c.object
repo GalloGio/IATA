@@ -264,10 +264,6 @@ The Account Role record should be named after the functional capability for whic
                 <fullName>E%26F</fullName>
                 <default>false</default>
             </values>
-            <values>
-                <fullName>Training</fullName>
-                <default>false</default>
-            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Provider_Type__c</picklist>
@@ -308,10 +304,6 @@ The Account Role record should be named after the functional capability for whic
             <picklist>Functional_Role__c</picklist>
             <values>
                 <fullName>E%26F</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Training</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -397,10 +389,6 @@ The Account Role record should be named after the functional capability for whic
             <picklist>Functional_Role__c</picklist>
             <values>
                 <fullName>E%26F</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Training</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
