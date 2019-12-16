@@ -3921,7 +3921,7 @@ Payment required on receipt of this Payment Advice
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_L3_Confirmation_Message_LMS</shortDescription>
-        <value>You're just one step from completing your profile! If the information is correct please click Submit. If you need to edit any information please click on Go back to edit</value>
+        <value>You&#39;re just one step from completing your profile! If the information is correct please click Submit. If you need to edit any information please click on Go back to edit</value>
     </labels>
     <labels>
         <fullName>CSP_L2_Details_Saved_Message_LMS</fullName>
@@ -3937,7 +3937,7 @@ Payment required on receipt of this Payment Advice
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP Personal Email</shortDescription>
-        <value>To Validate your personal email with an existing contact we need your personal email before creating a new one.</value>
+        <value>IATA needs your Personal Email to maintain your lifelong Training record with us. We also need your Work Email access some specific Services on the Portal and to be able to bill your company, instead of you as an individual.</value>
     </labels>
     <labels>
         <fullName>CSP_L2_Go_To_Homepage_LMS</fullName>
@@ -4001,7 +4001,7 @@ Payment required on receipt of this Payment Advice
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_L2_SucessUpdate_LMS</shortDescription>
-        <value>You have successfully updated your profile information. Your new Login Email is your Work Email.</value>
+        <value>Successfully updated your profile information.&lt;br/&gt;&lt;b&gt; From now, please only use your current Work Email [Email] to login to the IATA Customer Portal&lt;/b&gt;.</value>
     </labels>
     <labels>
         <fullName>CSP_L3_Title_LMS</fullName>
@@ -4049,7 +4049,7 @@ Payment required on receipt of this Payment Advice
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP Existing Contact</shortDescription>
-        <value>The Personal email you have provided is already associated with an existing user working for another company [quote login email of other user]. Please check that the personal email address you provided is correct. If you are working for several companies at the same time, please contact us so we can ensure the integrity of your training record. If you do not have access to [quote other user login email again] please click next. Once you confirm you have access to this personal email address, your training record from your previous user will be migrated to the user you are currently logged in with. From now on you will only be able to login with [quote the login email from the user he/she is currently logged in with] email address.</value>
+        <value>The Personal email you have provided is already associated with an existing user working for another company [Existing_email]. Please check that the personal email address you provided is correct. If you are working for several companies at the same time, please contact us so we can ensure the integrity of your training record. If you do not have access to [Existing_email] please click next. Once you confirm you have access to this personal email address, your training record from your previous user will be migrated to the user you are currently logged in with. &lt;b&gt;From now on you will only be able to login with [Email] email address.&lt;/b&gt;</value>
     </labels>
     <labels>
         <fullName>CSP_L3_ExistingUser_LMS</fullName>
@@ -4097,7 +4097,7 @@ Payment required on receipt of this Payment Advice
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP Login Email</shortDescription>
-        <value>Login Email</value>
+        <value>Email</value>
     </labels>
     <labels>
         <fullName>CSP_L3_NewLoginEmail_LMS</fullName>
@@ -4113,7 +4113,7 @@ Payment required on receipt of this Payment Advice
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP Note</shortDescription>
-        <value>&lt;b&gt;Please note that your Login Email. From now, please use your Work &lt;br&gt;Email to Login to the IATA Customer Portals&lt;/b&gt;</value>
+        <value>Please note that your Login Email. From now, please use your Work Email to Login to the IATA Customer Portal</value>
     </labels>
     <labels>
         <fullName>CSP_L3_PersonalEmail_LMS</fullName>
@@ -4201,7 +4201,7 @@ Payment required on receipt of this Payment Advice
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP Work Email</shortDescription>
-        <value>Please also provide your Work Email</value>
+        <value>Work Email</value>
     </labels>
     <labels>
         <fullName>CSP_L3_WorkPhone_LMS</fullName>
@@ -40810,5 +40810,198 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <protected>false</protected>
         <shortDescription>wire transfer payment msg</shortDescription>
         <value>Your wire transfer payment has been received.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L3_Back_to_Email_Validation_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L3_Back_to_Email_Validation_LMS</shortDescription>
+        <value>Back to Email Validation</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L3_ContactSupport_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L3_ContactSupport_LMS</shortDescription>
+        <value>Contact Support</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L3_Email_Validation_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Email Validation</shortDescription>
+        <value>Email Validation</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L3_ExistTrainNameMatch_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Existing Contact</shortDescription>
+        <value>Another active user is already using the userID and username you entered, but your First and Last name are not matching with the existing user. Please check that the First and Last name you provided are correct or please contact customer service to solve this duplication. Make sure to quote these username and userID in your message to them. We apologize for the inconvenience.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L3_ExistTrainUser_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L3_ExistTrainUser_LMS</shortDescription>
+        <value>Another active user is already using the userID and username you entered. Please contact customer service to solve this duplication. Make sure to quote these username and userID in your message to them. We apologize for the inconvenience. 
+        </value>
+    </labels>
+    <labels>
+        <fullName>CSP_L3_ExistTrainUserMatch_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Existing Contact</shortDescription>
+        <value>Another active user is already using the userID and username you entered.  Upon confirmation your training record from your previous user will be migrated to the user you are currently logged in with.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L3_haveTrainingUser_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Is Personal Email</shortDescription>
+        <value>Do you already have a IATA Training username?</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L3_Note_F5_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L3_Note_F5_LMS</shortDescription>
+        <value>Please note that your Login Email has been changed to your Work Email. From now, please use your Work Email to Login to the IATA Customer Portal.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L3_Note_F6_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L3_Note_F6_LMS</shortDescription>
+        <value>Please note that we have merged your accounts. &lt;b&gt;From now, please only use your Work Email to login to the IATA Customer Portal&lt;/b&gt;.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L3_Note_F7_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L3_Note_F7_LMS</shortDescription>
+        <value>Please note that we have transferred all past data to the current user.  &lt;b&gt;From now, please only use your current Work Email [work_email] to login to the IATA Customer Portal&lt;/b&gt;.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L3_NumericError_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L3_NumericError_LMS</shortDescription>
+        <value>Inserted value must contain only numbers</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L3_ProvideWorkEmail_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Work Email</shortDescription>
+        <value>Please also provide your Work Email</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L3_Salutation_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_L3_Salutation_LMS</shortDescription>
+        <value>Salutation</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L3_Training_Information_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Training Information</shortDescription>
+        <value>Training Information</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L3_Training_Validation_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Training Validation</shortDescription>
+        <value>Training Validation</value>
+    </labels>
+    <labels>
+        <fullName>CSP_L3_TrainValidationDescri_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Training Validation Description</shortDescription>
+        <value>IATA needs your Training Information to maintain your lifelong Training record with us. We also need your Training Information access directly to your Exams and Courses.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Verification_L3_Email_1_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Verification_L3_Email_1_LMS</shortDescription>
+        <value>Thank you for updating your profile on the IATA Customer Portal.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Verification_L3_Email_2_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Verification_L3_Email_2_LMS</shortDescription>
+        <value>Please confirm your email address by clicking on this &lt;a href="[URL]" target="_blank"&gt;link&lt;/a&gt;.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Verification_L3_Email_3_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Verification_L3_Email_3_LMS</shortDescription>
+        <value>Thank you for your interest in IATA</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Verification_L3_Email_PE_1_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Verification_L3_Email_PE_1_LMS</shortDescription>
+        <value>We found an existing user with this personal email. If you are working for several companies at the same time, please contact us so we can ensure the integrity of your training record.&lt;br/&gt;&lt;br/&gt;</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Verification_L3_Email_PE_2_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Verification_L3_Email_PE_2_LMS</shortDescription>
+        <value>If you do not have access to [ExistingEmail] please click this &lt;b&gt;&lt;a href="[URL]" target="_blank"&gt;link&lt;/a&gt;&lt;/b&gt; so your training record is migrated to your new user. &lt;b&gt;From then on you will only be able to login with [Email] email address.&lt;/b&gt;&lt;br/&gt;</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Verification_L3_Email_UE_1_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Verification_L3_Email_UE_1_LMS</shortDescription>
+        <value>Please click on this &lt;b&gt;&lt;a href="[URL]" target="_blank"&gt;link&lt;/a&gt;&lt;/b&gt; to confirm that you still have access to this personal email.&lt;br/&gt;&lt;br/&gt;</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Verification_L3_Email_UE_2_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Verification_L3_Email_UE_2_LMS</shortDescription>
+        <value>The user associated with your work email [Email] will then be merged with the existing user associated with this personal email address.&lt;br/&gt;</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Verification_L3_Email_UE_3_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Verification_L3_Email_UE_3_LMS</shortDescription>
+        <value>Your training record will be maintained under this merged user. &lt;b&gt;From now on you will only be able to login with your work email address.&lt;/b&gt;&lt;br/&gt;</value>
     </labels>
 </CustomLabels>
