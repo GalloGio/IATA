@@ -285,7 +285,7 @@ public static List<ServiceWrapper> getAllServices(){
 	//iterate over the returned portal apps and create a map of services
 	Map<String,ServiceWrapper> mapServiceWrapper = new Map<String,ServiceWrapper>();
 	for(Portal_Applications__c portalAppAux : lstPortalApplications) {
-		mapServiceWrapper.put(portalAppAux.Id, new ServiceWrapper(portalAppAux, isAdmin, iepStatus, isAuthorisedSignatory, '', userAux));
+		mapServiceWrapper.put(portalAppAux.Id, new ServiceWrapper(portalAppAux, isAdmin, iepStatus, isAuthorisedSignatory, '', userAux, true));
 	}
 
 	//get the portal application rights for this user
@@ -329,7 +329,7 @@ public static List<ServiceWrapper> getAllServices(){
 		//if the map of services does not contains this service yet, then add it
 		if(!mapServiceWrapper.containsKey(accessAux.Portal_Application__c)) {
 			mapServiceWrapper.put(accessAux.Portal_Application__c,
-				new ServiceWrapper(mapAppsAlreadyWithAccess.get(accessAux.Portal_Application__c), isAdmin, iepStatus, isAuthorisedSignatory, accessAux.Right__c, userAux));
+				new ServiceWrapper(mapAppsAlreadyWithAccess.get(accessAux.Portal_Application__c), isAdmin, iepStatus, isAuthorisedSignatory, accessAux.Right__c, userAux, true));
 			mapServiceWrapper.get(accessAux.Portal_Application__c).portalApplicationRightId = accessAux.Id;
 			mapServiceWrapper.get(accessAux.Portal_Application__c).isFavorite = accessAux.Is_Favorite__c;
 		}
@@ -381,7 +381,7 @@ public static List<ServiceWrapper> getUserAccessRequestedServices(){
 	return lstToReturn;
 }
 
-public static Map<Id,List<ServiceWrapper> > getContactsAccessGrantedServices(Map<Id,Id> contactToUserIds){
+public static Map<Id,List<ServiceWrapper> > getContactsAccessGrantedServices(Map<Id,Id> contactToUserIds, Boolean getServiceDescription){
 
 	Map<Id,List<ServiceWrapper> > contactToServices = new Map<Id,List<ServiceWrapper> >();
 
@@ -404,7 +404,7 @@ public static Map<Id,List<ServiceWrapper> > getContactsAccessGrantedServices(Map
 
 		Portal_Applications__c portalAppAux = new Portal_Applications__c(Id=accessRight.Portal_Application__r.Id,Application_URL__c=accessRight.Portal_Application__r.Application_URL__c,Name=accessRight.Application_Name__c);
 
-		ServiceWrapper wrap = new ServiceWrapper(portalAppAux, isAdmin, iepStatus,false, '', userInfos.get(contactToUserIds.get(accessRight.Contact__c)));
+		ServiceWrapper wrap = new ServiceWrapper(portalAppAux, isAdmin, iepStatus,false, '', userInfos.get(contactToUserIds.get(accessRight.Contact__c)), getServiceDescription);
 
 		if(!contactToServices.containsKey(accessRight.Contact__c)) {
 			contactToServices.put(accessRight.Contact__c,new List<ServiceWrapper> {wrap});
@@ -449,7 +449,7 @@ public static List<ServiceWrapper> getUserAccessGrantedServices(){
 
 		for(Portal_Applications__c portalAppAux : lstPA) {
 			if(! serviceIds.contains(portalAppAux.Id)){
-				ServiceWrapper wrappedService = new ServiceWrapper(portalAppAux, false, '', false, '', userAux);
+				ServiceWrapper wrappedService = new ServiceWrapper(portalAppAux, false, '', false, '', userAux, true);
 				if(keySet.contains(portalAppAux.Id)){
 					wrappedService.isFavorite = portalServiceAccessesMap.get(portalAppAux.Id).Is_Favorite__c;
 					wrappedService.portalApplicationRightId = portalServiceAccessesMap.get(portalAppAux.Id).Id;
@@ -564,7 +564,7 @@ public static ServiceWrapper getServiceDetails(string serviceId){
 		List<Portal_Applications__c> lstServicesAux = portalApplicationsSelector.getPortalApplicationsByApplicationsList(new Set<String>{serviceId});
 
 		if(lstServicesAux != null && !lstServicesAux.isEmpty()){
-			temp = new ServiceWrapper(lstServicesAux.get(0), isAdmin, iepStatus, isAuthorisedSignatory, '', user);
+			temp = new ServiceWrapper(lstServicesAux.get(0), isAdmin, iepStatus, isAuthorisedSignatory, '', user, true);
 			temp.totalNrContacts = PortalServicesCtrl.getTotalNrContatsRelatedToService(serviceId);
 		}
 	}
@@ -801,7 +801,7 @@ private boolean isAuthorisedSignatory {get; set;}
 
 
 
-public ServiceWrapper(Portal_Applications__c recordService, Boolean isAdmin, String iepStatus, Boolean isAuthorisedSignatory, String status, User user){
+public ServiceWrapper(Portal_Applications__c recordService, Boolean isAdmin, String iepStatus, Boolean isAuthorisedSignatory, String status, User user, Boolean getServiceDescription){
 	this.recordService = recordService;
 	this.isEasyPayService = ANG_ISSP_PortalServiceHelper.isIepPortalService(recordService.name);
 	this.status = status;
@@ -817,7 +817,11 @@ public ServiceWrapper(Portal_Applications__c recordService, Boolean isAdmin, Str
 		this.accountNotOpenError = false;
 	}
 
+	if(getServiceDescription){
 	this.serviceDescriptionLabel = getServiceDescription(recordService, user);
+	}else{
+		this.serviceDescriptionLabel = '';
+	}
 	
 	alignStatus(this,status);
 }
