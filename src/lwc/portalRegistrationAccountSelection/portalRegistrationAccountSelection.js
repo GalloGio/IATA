@@ -60,6 +60,7 @@ export default class PortalRegistrationAccountSelection extends LightningElement
     @track thirdCategorizationPicklist;
     @track atLeastTwoPicklists = false;
     @track threePicklists = false;
+    @track isIATANAccount = false;
 
     // search variables
     max = 50;
@@ -559,16 +560,23 @@ export default class PortalRegistrationAccountSelection extends LightningElement
     }
 
     createAccount(){
-        // discard selected account
-        if(this.localSearchResults !== undefined){
-            this.selectedAccountId = '';
-            this.checkCompletion();
-            for(let i = 0; i < this.localSearchResults.wrappedResults.length; i++){
-                this.localSearchResults.wrappedResults[i].isSelected = false;
-            }
+        this.isIATANAccount = false;
+        if(this.selectedCustomerType == 'IATAN_Passenger_Sales_Agent_USA_Only' ||
+           this.selectedCustomerType == 'TSI_USA_Only'){
+            this.isIATANAccount = true;
         }
+        else {
+            // discard selected account
+            if(this.localSearchResults !== undefined){
+                this.selectedAccountId = '';
+                this.checkCompletion();
+                for(let i = 0; i < this.localSearchResults.wrappedResults.length; i++){
+                    this.localSearchResults.wrappedResults[i].isSelected = false;
+                }
+            }
 
-        this.dispatchEvent(new CustomEvent('gotostep', {detail:'3'}));
+            this.dispatchEvent(new CustomEvent('gotostep', {detail:'3'}));
+        }
     }
 
     startLoading(){
@@ -593,5 +601,9 @@ export default class PortalRegistrationAccountSelection extends LightningElement
     @api
     getSearchResults(){
         return this.localSearchResults;
+    }
+
+    close() {
+        this.isIATANAccount = false;
     }
 }

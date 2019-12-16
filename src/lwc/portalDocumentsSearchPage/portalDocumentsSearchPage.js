@@ -47,7 +47,7 @@ export default class PortalDocumentsSearchPage extends LightningElement {
             categories: [],
             categorySelected: this.category,
             docId: this.docId,
-            topResults: this.topResults,
+            topResults: this.topResults
         };
 
         this.documentObject = _documentObject;
@@ -65,21 +65,10 @@ export default class PortalDocumentsSearchPage extends LightningElement {
 
     handleFilter(event) {
         this.loading = true; 
-        let detailObject = JSON.parse(JSON.stringify(event.detail));
+        let detailObject = JSON.parse(JSON.stringify(event.detail));        
 
         this.documentObject = detailObject;
-        let _documentObject = JSON.parse(JSON.stringify(this.documentObject));
-        let _categories = [];
-
-        for(let i = 0; i < _documentObject.categories.length; i++) {
-            if(_documentObject.categories[i].apiName === detailObject.categorySelected) {
-                _categories[0] = _documentObject.categories[i];
-                break;
-            }
-        }
-
-        this.categories = [];
-        this.categories = Object.keys(_categories).length > 0 ? _categories : this.documentObject.categories;
+        this.categories = this.documentObject.categories;
 
         this.resultsToRender();
     }
