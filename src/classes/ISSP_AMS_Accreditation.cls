@@ -937,7 +937,7 @@ public without sharing class ISSP_AMS_Accreditation {
 						mcformCountryISO = newForm.Branch_Office_Country__r.ISO_Code__c;
 					}
 
-					isocountry = (isMultiCountryNewAE ||  isMultiCountryAccredittedAddingAEs()) ? fetchISOCountry(mcformCountryISO) : fetchISOCountry(newCase.IFAP_Country_ISO__c);
+					isocountry = ((isMultiCountryNewAE || isMCAccredited) && sectorValue == 'Travel_Agent') ? fetchISOCountry(mcformCountryISO) : fetchISOCountry(newCase.IFAP_Country_ISO__c);
 
 					//Set default currency, as defined in IATA ISO Country record
 					if (isocountry != null) {
@@ -1916,13 +1916,13 @@ public without sharing class ISSP_AMS_Accreditation {
 				return null;
 			}
 
-			if (String.isBlank(mcformCountryISO) && isMultiCountryNewAE) {
-				ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_Country_Not_Selected)); //newerror, Giulio to define
-				return null;
-			}
+			if (sectorValue == 'Travel_Agent' && (String.isBlank(mcformCountryISO) && isMultiCountryNewAE)) {
+                ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_Country_Not_Selected)); //newerror, Giulio to define
+                return null;
+            }
 
             if (String.isBlank(newForm.Account_Name__c)) {
-		if (sectorValue == 'Travel_Agent' && (isMultiCountryNewAE && !isMCAccredited && String.isBlank(newForm.Same_Legal_Entity_Agency_Form__c)) || (isMCAccredited && String.isBlank(newForm.Same_Legal_Entity_Agency_Account__c))) {
+				if (sectorValue == 'Travel_Agent' && ((isMultiCountryNewAE && !isMCAccredited && String.isBlank(newForm.Same_Legal_Entity_Agency_Form__c)) || (isMCAccredited && String.isBlank(newForm.Same_Legal_Entity_Agency_Account__c)))) {
                     if (newForm.AE_separate_Legal_Entity__c == 'Yes') {
                         ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_IS_Legal_Name_Selected_Blank));
                     } else {
@@ -1932,11 +1932,10 @@ public without sharing class ISSP_AMS_Accreditation {
                 }
             }
 
-			if((newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_ABROAD && (newCase.IFAP_Country_ISO__c == hqCountryISOCode))
-				|| (isMultiCountryNewAE && mcformCountryISO == null)) {
-				ApexPages.addmessage(new ApexPages.message(ApexPages.severity.INFO, Label.ISSP_AMS_Branch_Abroad_Invalid_Country));
-				return null;
-			}
+			if (newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_ABROAD && newCase.IFAP_Country_ISO__c == hqCountryISOCode) {
+                ApexPages.addmessage(new ApexPages.message(ApexPages.severity.INFO, Label.ISSP_AMS_Branch_Abroad_Invalid_Country));
+                return null;
+            }
 
 			newCase.Origin = 'Portal';
 			newCase.Status = 'Draft';
