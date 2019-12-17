@@ -229,20 +229,18 @@ public class ANG_RHCHelper {
 			//If cash condition is TRUE on the agent
 			//fetch the cash condition record from BSP Attributes
 			//and apply RHC amount = % FS
-			if(rhc.ANG_CashCondition__c && fsAmount > 0){
+			if (rhc.ANG_CashCondition__c && fsAmount >= 0)
+			{
 				System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - calculateRHCAmount] Cash Condition');
+				Decimal fsPercentage = null;
 
-				Decimal fsPercentage = NULL;
-
-				if(isMulticountry){
+				if (isMulticountry) {
 					fsPercentage = 100;
 					System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - calculateRHCAmount] Apply 100% percentage for multicountry agent');
-				}
-				else{
+				} else {
 					ANG_BSP_Attributes__c bspAttrCash = bspAttributesMap.get(relatedBspId + '.' + RECTYPE_CASH_CONDITION_CONFIG);
 					fsPercentage = (bspAttrCash == null || bspAttrCash.FS_Percentage__c == null) ? 0 : bspAttrCash.FS_Percentage__c;
 					System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - calculateRHCAmount] Consider cash condition BSP Attribute');
-
 				}
 
 				applyRhcAmountFsPercentage(rhc, fsAmount, fsPercentage, mapBillingPeriodPerAccount);
