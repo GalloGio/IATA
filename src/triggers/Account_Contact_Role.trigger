@@ -23,15 +23,4 @@ trigger Account_Contact_Role on Account_Contact_Role__c (after delete, after ins
 			PlatformEvents_Helper.publishEvents((trigger.isDelete?trigger.OldMap:Trigger.newMap), 'AccountContactRole__e', 'Account_Contact_Role__c', trigger.isInsert, trigger.isUpdate, trigger.isDelete, trigger.isUndelete);
 		}
 	}
-
-	AccountContactRoleTriggerHandler handler = new AccountContactRoleTriggerHandler();
-	if (Trigger.isInsert && Trigger.isAfter) {
-		handler.OnAfterInsert(Trigger.new);
-	}
-	else if (Trigger.isUpdate && Trigger.isAfter) {
-		handler.OnAfterUpdate(Trigger.old, Trigger.new, Trigger.newMap);
-	}
-	else if (Trigger.isDelete && Trigger.isBefore) {
-		handler.OnBeforeDelete(Trigger.old, Trigger.oldMap);
-	}
 }
