@@ -976,9 +976,9 @@
                                             <apex:outputPanel rendered="{!OR(isBankAccountChange != true, con.Account.Location_Type__c != 'AE')}">
                                                 <apex:outputPanel rendered="{!AND(con.Account.ANG_Accreditation_Model__c != null, con.Account.ANG_Accreditation_Model__c != 'Legacy')}" id="nocOptionsFirstQ">
                                                     <apex:selectRadio id="typeOfChange" layout="pageDirection" label="{!$Label.ISSP_ANG_NOC_Type_Of_Change}" style="width:70%;" value="{!newForm.Type_of_Change__c}" >
-                                                        <apex:selectOption itemValue="{!$Label.ISSP_Yes}" itemLabel="{!$Label.ISSP_Yes}"/>
+                                                        <apex:selectOption itemValue="Yes" itemLabel="{!$Label.ISSP_Yes}"/>
 
-                                                        <apex:selectOption itemValue="{!$Label.ISSP_No}" itemLabel="{!$Label.ISSP_No}"/>
+                                                        <apex:selectOption itemValue="No" itemLabel="{!$Label.ISSP_No}"/>
                                                     </apex:selectRadio>
                                                 </apex:outputPanel>
                                             </apex:outputPanel>
