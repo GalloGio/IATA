@@ -6446,6 +6446,10 @@ public without sharing class ISSP_AMS_Accreditation {
 						if (!validateBROfficeDetails()) {
 							errorFound = true;
 						}
+
+						if (validateFormShipping()) {
+							errorFound = true;
+						}
 					}
 
 					if (newForm.ISSP_AMS_Portal_admin__c == null) {
@@ -7210,10 +7214,6 @@ public without sharing class ISSP_AMS_Accreditation {
 
 		if (newForm.Branch_Office_Phone__c == null) {
 			newForm.Branch_Office_Phone_National__c.addError(Label.ISSP_YouMustEnter);
-			errorFound = true;
-		}
-
-		if (validateFormShipping()) {
 			errorFound = true;
 		}
 
