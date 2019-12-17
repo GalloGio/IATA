@@ -275,6 +275,10 @@
                 <behavior>Edit</behavior>
                 <field>ISSP_AMS_GDS_with_signed_contract__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>NDC_Transactions__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns/>
         <style>TwoColumnsLeftToRight</style>
