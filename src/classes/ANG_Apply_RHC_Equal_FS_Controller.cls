@@ -128,7 +128,8 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
     	if (modeValue == 'BSP') {
     		agencies = [SELECT Id, ANG_RHC_Amount__c, ANG_Financial_Security__c, ANG_RHC_Amount_Equals_FS__c, ANG_AccountId__r.Id, ANG_AccountId__r.Name, 
 							ANG_AccountId__r.IATACode__c, ANG_AccountId__r.Status__c, ANG_AccountId__r.IATA_ISO_Country__c, ANG_AccountId__r.Location_Type__c, 
-							ANG_AccountId__r.Location_Class__c, ANG_AccountId__r.IATA_ISO_Country__r.AMS_Settlement_System__c, RHC_Amount_Equals_FS_Percent__c
+							ANG_AccountId__r.Location_Class__c, ANG_AccountId__r.IATA_ISO_Country__r.AMS_Settlement_System__c, RHC_Amount_Equals_FS_Percent__c,
+							ANG_Minimum_Financial_Security__c
 						FROM ANG_RHC_Information__c
 						WHERE ANG_AccountId__r.Status__c IN :AMS_Utils.ACTIVEAGENCYSTATUS
 							AND RHC_Amount_Equals_FS_Percent__c = :null
@@ -189,7 +190,8 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
     	} else if (modeValue == 'IATA_Code') {
     		agencies = [SELECT Id, ANG_RHC_Amount__c, ANG_Financial_Security__c, ANG_RHC_Amount_Equals_FS__c, ANG_AccountId__r.Id, ANG_AccountId__r.Name, 
 							ANG_AccountId__r.IATACode__c, ANG_AccountId__r.Status__c, ANG_AccountId__r.IATA_ISO_Country__c, ANG_AccountId__r.Location_Type__c, 
-							ANG_AccountId__r.Location_Class__c, ANG_AccountId__r.IATA_ISO_Country__r.AMS_Settlement_System__c, RHC_Amount_Equals_FS_Percent__c  
+							ANG_AccountId__r.Location_Class__c, ANG_AccountId__r.IATA_ISO_Country__r.AMS_Settlement_System__c, RHC_Amount_Equals_FS_Percent__c,
+							ANG_Minimum_Financial_Security__c  
     					FROM ANG_RHC_Information__c 
     					WHERE ANG_RHC_Amount_Equals_FS__c = :rhcFlag
     						AND ANG_AccountId__r.Status__c IN :AMS_Utils.ACTIVEAGENCYSTATUS

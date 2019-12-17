@@ -737,9 +737,9 @@ private class ANG_LocalFinancialCriteriaTest {
 			 	Id = :rhcInfo.Id
 			];
 
-		Decimal expectedAmount = rhcUpdated.ANG_Exceeding_Financial_Security__c + rhcInfo.ANG_RME_Amount__c;
+		Decimal expectedAmount = 8002000.00;
 
-		System.assert(expectedAmount == rhcUpdated.ANG_RHC_Amount_Forecasted__c);
+		System.assertEquals(expectedAmount, rhcUpdated.ANG_RHC_Amount_Forecasted__c);
 
 	}
 
@@ -863,9 +863,9 @@ private class ANG_LocalFinancialCriteriaTest {
                 Id = :rhcInfo.Id
             ];
 
-        Decimal expectedAmount = rhcUpdated.ANG_Exceeding_Financial_Security__c + rhcInfo.ANG_RME_Amount__c;
+        Decimal expectedAmount = 8002000.00;
 
-        System.assert(expectedAmount == rhcUpdated.ANG_RHC_Amount_Forecasted__c);
+        System.assertEquals(expectedAmount, rhcUpdated.ANG_RHC_Amount_Forecasted__c);
 
     }
 
