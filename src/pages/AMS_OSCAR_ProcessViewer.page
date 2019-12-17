@@ -493,7 +493,7 @@ function buildFunctionCall(func, argList){
         argList = argList.replace(']','');
     }
     if(argList.indexOf('accountNameFromOscar') > -1){
-        accountName = "{!oscar.Account__r.Name}";
+        accountName = '{!JSENCODE(oscar.Account__r.Name)}';
         argList = argList.replace('accountNameFromOscar', accountName);
         argList = argList.replace('[','');
         argList = argList.replace(']','');

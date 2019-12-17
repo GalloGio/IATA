@@ -917,6 +917,9 @@ public with sharing class ANG_AgencyChangesHelper {
 			//(with Status terminated, "Terminated", "Not accreditated","New application pending" and "Not in Operation") and disconnect them from their parent
 
 			if(isAllHierarchySelected){
+				if(isMulticountry && allRelations.containsKey(oscar.New_Parent__c)){
+					allRelations.remove(oscar.New_Parent__c);
+				}
 				changesContainer = detachTerminatedAccountsFromHierarchy(allRelations,changesContainer);
 			}
 
