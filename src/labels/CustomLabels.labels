@@ -4899,6 +4899,14 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <value>Contact Name</value>
     </labels>
     <labels>
+        <fullName>Control_Total_Percentage_Owners_And_Subsidiaries</fullName>
+        <categories>Percentage, AWWAgency</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Control Total Percentage Owners And Subsidiaries</shortDescription>
+        <value>The total Percentage Held must not exceed 100%. Please change the Percentage and save again.</value>
+    </labels>
+    <labels>
         <fullName>Copyright</fullName>
         <categories>IEC</categories>
         <language>en_US</language>

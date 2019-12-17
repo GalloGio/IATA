@@ -74,6 +74,6 @@
         </div>
     </div>
 
-    <c:AWW_OwnershipEdit aura:id="owners-edit" accountId="{!v.accountId}" whatType="owner"/>
+    <c:AWW_OwnershipEdit aura:id="owners-edit" allRecords="{!v.data}" accountId="{!v.accountId}" whatType="owner"/>
     <c:AWW_OwnershipDelete aura:id="delete-record"/>
 </aura:component>
