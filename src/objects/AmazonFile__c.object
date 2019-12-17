@@ -749,7 +749,7 @@
     <fields>
         <fullName>Full_Name_Unique__c</fullName>
         <caseSensitive>true</caseSensitive>
-        <externalId>false</externalId>
+        <externalId>true</externalId>
         <label>Full Name (Unique)</label>
         <length>255</length>
         <required>true</required>

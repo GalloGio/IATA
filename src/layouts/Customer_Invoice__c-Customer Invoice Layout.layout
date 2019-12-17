@@ -28,7 +28,7 @@
                 <field>Bank_Account_No__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Required</behavior>
                 <field>AccountId__c</field>
             </layoutItems>
             <layoutItems>
@@ -58,7 +58,7 @@
                 <field>Billing_Currency__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Required</behavior>
                 <field>Invoice_Status__c</field>
             </layoutItems>
             <layoutItems>
