@@ -2613,21 +2613,12 @@ public static String getChangeCodeMemoText(String process,String changeCodeId, A
 	}
 
 	public static ANG_ISSP_AfpWrapper getANG_ISSP_AfpWrapper(Contact con, Account acc, Boolean isSearch) {
-		List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
-		List<Portal_Application_Right__c> services = new List<Portal_Application_Right__c>();
-
-		authorizations = [SELECT Id, ANG_FormOfPayment_ID__c
+		List<Agency_Authorization__c> authorizations = [SELECT Id, ANG_FormOfPayment_ID__c
 						FROM Agency_Authorization__c
 						WHERE Account__c = :acc.Id
 							AND (Status__c = 'Active' OR Status__c = 'Authorized')];
 
-		if(con != null) {
-			services = [SELECT Id, Application_Name__c, Right__c, Application_Start_URL__c
-						  FROM Portal_Application_Right__c
-						 WHERE Contact__c = :con.Id];
-		}
-
-		return new ANG_ISSP_AfpWrapper(con, authorizations, services, acc, isSearch);
+		return new ANG_ISSP_AfpWrapper(con, authorizations, acc, isSearch);
 	}
 
 	public static List<Account> fetchAgentDetails(String iataCode) {
