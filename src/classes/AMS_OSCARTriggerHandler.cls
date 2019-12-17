@@ -3242,6 +3242,11 @@ public class AMS_OSCARTriggerHandler {
 				}
 				/*** AMSU-161 End ***/
 
+				//INC482850 - GDS Mandatory field - New Accreditation & Newgen Changes & Corrections
+				if((isNewgenAccreditation || oscar.Process__c == AMS_Utils.NGCHANGES || oscar.Process__c == AMS_Utils.NGCORRECTION) && String.isEmpty(allOnlineAccr.get(oscar.AMS_Online_Accreditation__c).ISSP_AMS_GDS_with_signed_contract__c)){
+					oscar.addError('The GDS should be populated. Please fill the GDS on the OSCAR central panel before passing the sanity check');
+				}
+
 				//ACAMBAS - NEWGEN-4784 - Start
 				if(oscar.Process__c == AMS_Utils.NGCHINACONVERSION) {
 					List<Account> accountsList = ANG_ChinaConversionsHelper.getAllAccountsFromRelationships(oscar.Account__c);
