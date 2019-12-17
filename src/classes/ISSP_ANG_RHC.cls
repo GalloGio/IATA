@@ -128,7 +128,7 @@ public with sharing class ISSP_ANG_RHC {
 				   ANG_ConsumedRHC_Last_Update__c, 
 				   ANG_Financial_Security__c
 			  FROM ANG_RHC_Information__c
-			 WHERE ANG_AccountId__c = :accountId
+			 WHERE ANG_AccountId__c = :accountIdTP
 		];
 		this.rhcInfo = rhcInfoList.isEmpty() ? null : rhcInfoList[0];
 	}
