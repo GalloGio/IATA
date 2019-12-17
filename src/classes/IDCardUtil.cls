@@ -270,7 +270,7 @@ global with sharing class IDCardUtil {
             applicableFee = applicableFee + thePriceTable.IATA_Package__c;
         }
 
-        return applicableFee.setScale(2, RoundingMode.HALF_UP);
+        return applicableFee;
     }
 
     public static Map<String, decimal> GetDetailledFees(Price_Table__c priceTable, boolean isReissue, boolean isWithExpedite, boolean isWithITDIPackage, Promotion__c validPromo) {
