@@ -495,6 +495,10 @@
                 <field>GDS__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>NDC_Agent__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>BSP_Name__c</field>
             </layoutItems>
