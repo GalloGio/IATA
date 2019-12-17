@@ -3544,7 +3544,15 @@
     <fields>
         <fullName>ANG_IEP_Account_Number__c</fullName>
         <externalId>false</externalId>
-        <formula>IF(OR(ISPICKVAL(Location_Type__c ,&apos;HE&apos;),ISPICKVAL(Location_Type__c ,&apos;HO&apos;),ISPICKVAL(Location_Type__c ,&apos;AO&apos;),Is_Branch_Abroad__c = &apos;Yes&apos;), ANG_IEP_HE_AccntNum__c,Top_Parent__r.ANG_IEP_HE_AccntNum__c)</formula>
+        <formula>IF(OR(ISPICKVAL(Location_Type__c ,&apos;GE&apos;),
+      ISPICKVAL(Location_Type__c ,&apos;HE&apos;),
+      ISPICKVAL(Location_Type__c ,&apos;HO&apos;),
+      ISPICKVAL(Location_Type__c ,&apos;AO&apos;),
+      Is_Branch_Abroad__c = &apos;Yes&apos;),
+   ANG_IEP_HE_AccntNum__c,
+   IF(ISPICKVAL(Location_Type__c ,&apos;AE&apos;),
+      Parent.ANG_IEP_HE_AccntNum__c,
+      Top_Parent__r.ANG_IEP_HE_AccntNum__c))</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>IEP Account Number</label>
         <required>false</required>
@@ -3569,7 +3577,15 @@
         <fullName>ANG_IEP_Status_FF__c</fullName>
         <description>To show analysts information about Easy Pay’s account status</description>
         <externalId>false</externalId>
-        <formula>IF(OR(ISPICKVAL(Location_Type__c ,&apos;HE&apos;),ISPICKVAL(Location_Type__c ,&apos;HO&apos;),ISPICKVAL(Location_Type__c ,&apos;AO&apos;),Is_Branch_Abroad__c = &apos;Yes&apos;), TEXT(ANG_IEP_Status__c), TEXT(Top_Parent__r.ANG_IEP_Status__c))</formula>
+        <formula>IF(OR(ISPICKVAL(Location_Type__c ,&apos;GE&apos;),
+      ISPICKVAL(Location_Type__c ,&apos;HE&apos;),
+      ISPICKVAL(Location_Type__c ,&apos;HO&apos;),
+      ISPICKVAL(Location_Type__c ,&apos;AO&apos;),
+      Is_Branch_Abroad__c = &apos;Yes&apos;), 
+   TEXT(ANG_IEP_Status__c), 
+   IF(ISPICKVAL(Location_Type__c ,&apos;AE&apos;),
+      TEXT(Parent.ANG_IEP_Status__c),
+      TEXT(Top_Parent__r.ANG_IEP_Status__c)))</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>IEP Status</label>
         <required>false</required>
