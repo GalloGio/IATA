@@ -100527,8 +100527,12 @@ $User.ProfileId = &apos;00ew0000001R7Ci&apos;)))</errorConditionFormula>
         <description>Blocks users editing ISO Country, VAT Number, Billing address standard field fields if they don’t have the permission set AMP_Agency_Management and record Type Agency WW HQ</description>
         <errorConditionFormula>AND(
 				$Permission.AMP_Agency_Management = False, 
-				 OR(
-				     ISCHANGED( BillingAddress ),
+OR(
+ISCHANGED(BillingStreet),
+ISCHANGED(BillingCity),
+ISCHANGED(BillingState),
+ISCHANGED(BillingPostalCode),
+ISCHANGED(BillingCountry),
 						 		ISCHANGED( IATA_ISO_Country__c ),
 				 				ISCHANGED( VAT_Number__c ),
 						 		ISCHANGED( Legal_name__c ),  
