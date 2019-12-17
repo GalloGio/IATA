@@ -21,8 +21,9 @@
               			</apex:pageBlock>
             		</div>
 
-            		<div class="modal-footer">            			
-              			<apex:commandButton id="modifyButton" action="{!saveAndNavigateToOwnersForm}" status="WaitingStatus" styleClass="btn btn-default" value="{!$Label.ISSP_ANG_View_Owners_Modify}" oncomplete="closeOwnersMulticountry(); this.removeAttribute('disabled'); return false;" onclick="this.disabled='disabled'" rendered="{!NOT(isHOAccredited)}"/>
+            		<div class="modal-footer">
+						
+              			<apex:commandButton id="modifyButton"  styleClass="btn btn-default" value="{!$Label.ISSP_ANG_View_Owners_Modify}" oncomplete="closeOwnersMulticountry(); this.removeAttribute('disabled'); return false;" onclick="navigateToOwners(); this.disabled='disabled';" rendered="{!NOT(isHOAccredited)}"/>
               			<button type="button" class="btn btn-default" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">{!$Label.ISSP_Cancel}</span></button>
             		</div>
           		</div>
