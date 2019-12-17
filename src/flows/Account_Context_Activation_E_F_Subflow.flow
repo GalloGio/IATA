@@ -30,8 +30,8 @@
     <actionCalls>
         <name>Update_account_role_to_Pending</name>
         <label>Update account role to &apos;Pending&apos;</label>
-        <locationX>612</locationX>
-        <locationY>1597</locationY>
+        <locationX>614</locationX>
+        <locationY>1663</locationY>
         <actionName>FlowUpdateAccountRoleWithoutSharing</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -191,6 +191,22 @@
         </connector>
     </assignments>
     <assignments>
+        <name>SET_Pending_status_on_account_role</name>
+        <label>SET Pending status on account role</label>
+        <locationX>616</locationX>
+        <locationY>1572</locationY>
+        <assignmentItems>
+            <assignToReference>AccountRole.Flow_Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Pending</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_account_role_to_Pending</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Set_Status_Pending_to_ARBC</name>
         <label>Set Status Pending to ARBC</label>
         <locationX>758</locationX>
@@ -322,7 +338,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Update_account_role_to_Pending</targetReference>
+                <targetReference>SET_Pending_status_on_account_role</targetReference>
             </connector>
             <label>no flow status</label>
         </rules>
