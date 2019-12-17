@@ -711,12 +711,12 @@ lightning-datatable .slds-th__action {
     min-height: 40px;
     height: 56px;
     width: 220px;
-    word-break: normal;
+    word-break: break-word; 
 }
 
 .containedButton-size {
     height: 56px;
-    width: 100%;
+    width: 200px;
 }
 
 .filterButton,
@@ -735,7 +735,7 @@ lightning-datatable .slds-th__action {
   color: #3333ff;
   min-height: 40px;
   width: 220px;
-  word-break: break-all;
+  word-break: break-word;
   border: none;
 }
 
@@ -756,7 +756,7 @@ lightning-datatable .slds-th__action {
     -webkit-transition-duration: 0.4s; /* Safari */
   	transition-duration: 0.4s;
     min-height: 48px;
-    word-break: break-all;
+    word-break: break-word;
     border-radius: 1px;
   	border: solid 1px #1e32fa;
   	background-color: #ffffff;
@@ -774,7 +774,7 @@ lightning-datatable .slds-th__action {
 	-webkit-transition-duration: 0.4s; /* Safari */
   	transition-duration: 0.4s;
     min-height: 48px;
-    word-break: break-all;
+    word-break: break-word;
     border-radius: 1px;
   	border: solid 1px rgba(0, 0, 0, 0.08);
   	background-color: #ffffff;
@@ -849,10 +849,6 @@ lightning-datatable .slds-th__action {
     color: #000000;
 }
 
-.slds-button__icon_right,
-.slds-button__icon--right {
-    margin-left: 0;
-}
 /* ############################################## */
 /* Text Sizing */
 
@@ -1664,7 +1660,7 @@ lightning-datatable .slds-th__action {
     color: #3333ff;
     min-height: 40px;
     width: 220px;
-    word-break: break-all;
+    word-break: break-word;
     border: none;
 }
 
@@ -1683,10 +1679,14 @@ lightning-datatable .slds-th__action {
     color: #3333ff;
     min-height: 40px;
     width: 220px;
-    word-break: break-all;
+    word-break: break-word;
     border: none;
     display: inline-block;
     min-height: 40px;
+}
+
+.fullWidth, .fullWidth button, .fullWidth button:active, .fullWidth button:visited, .fullWidth button:focus, .fullWidth button:hover {
+    width: 100%;
 }
 
 /* Custom picklist Support Reach Us*/

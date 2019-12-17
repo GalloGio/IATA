@@ -85,12 +85,13 @@ public without sharing class ISSP_PersonalInformationWithoutSharing {
 											User.Contact.Name, 
 											User.Contact.Email,
 											User.Contact.AccountId,
-											User.Contact.Account.Name, 
+											User.Contact.Account.Name,
 											User.Contact.Account.BillingCountry
 									   FROM AccountTeamMember 
-									  WHERE accountId IN: accountIds 
+									WHERE accountId IN: accountIds 
 									    AND (TeamMemberRole='Portal Administrator' 
-									  	     OR TeamMemberRole='Portal Regional Administrator')];
+									  	     OR TeamMemberRole='Portal Regional Administrator')
+										AND User.isActive=true];
 				
 		return teamMembers;
 		

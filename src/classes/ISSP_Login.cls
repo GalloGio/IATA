@@ -146,6 +146,7 @@ public without sharing class ISSP_Login {
 
     	thisUser.IsActive = true;
 		thisUser.Portal_User_Frozen_Checkbox__c = false;
+		thisUser.UserPermissionsSFContentUser = true;
 		update thisUser;
         Boolean success = false;
         if(thisUser.Contact.Community__c != null && thisUser.Contact.Community__c.contains('CNS') && thisUser.CNS_Account_or_Agency__c){

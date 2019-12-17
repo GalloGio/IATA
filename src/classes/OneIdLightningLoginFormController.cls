@@ -199,6 +199,7 @@ public without sharing class OneIdLightningLoginFormController {
     public static void reactivateUser(User thisUser, String serviceName){
         thisUser.IsActive = true;
         thisUser.Portal_User_Frozen_Checkbox__c = false;
+        thisUser.UserPermissionsSFContentUser = true;
         update thisUser;
 
         if(serviceName == 'CSP'){

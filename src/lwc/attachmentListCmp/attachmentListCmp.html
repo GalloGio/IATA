@@ -6,7 +6,7 @@
             resize-column-disabled=true min-column-width="175">
         </lightning-datatable>
 
-        <div class="slds-m-top_x-large slds-border_top slds-p-top_small no-print">
+        <div if:false={trackedIsExpired} class="slds-m-top_x-large slds-border_top slds-p-top_small no-print">
             <span class="AddAttButtonContainer">
                 <lightning-button class="whiteButtonBlueBorder slds-p-around_small text-xsmall text-bold" label={label.AddNewDocuments}
                     onclick={handleAddAttachs}></lightning-button>
@@ -15,10 +15,10 @@
     </div>
     <div if:false={renderDataTable}
         class="slds-grid slds-wrap slds-p-horizontal_large slds-align_absolute-center noDocContainer no-print">
-        <div class="slds-col slds-size_1-of-1 slds-p-around_medium slds-text-align_center">
+        <div class="slds-col slds-size_1-of-1 slds-p-around_medium slds-text-align_center" if:false={trackedIsExpired}>
             <span class="textMediumMessage">{noAttachmentMsg}</span>
         </div>
-        <div class="slds-col slds-size_1-of-1 slds-align_absolute-center">
+        <div class="slds-col slds-size_1-of-1 slds-align_absolute-center" if:false={trackedIsExpired}>
             <lightning-button class="whiteButtonBlueBorder slds-p-around_small text-xsmall text-bold" label={label.AddNewDocuments}
                 onclick={handleAddAttachs}></lightning-button>
         </div>

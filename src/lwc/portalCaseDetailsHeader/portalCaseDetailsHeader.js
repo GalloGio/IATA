@@ -1,11 +1,15 @@
-import { LightningElement, track } from 'lwc';
+import { LightningElement, track,api } from 'lwc';
 import idOfUser from '@salesforce/user/Id';
 import getCaseById from '@salesforce/apex/PortalCasesCtrl.getCaseById';
 import removeRecipient from '@salesforce/apex/PortalCasesCtrl.removeRecipient';
 import addNewRecipient from '@salesforce/apex/PortalCasesCtrl.addNewRecipient';
+import getHideForClosedCases from '@salesforce/apex/PortalCasesCtrl.getHideForClosedCases';
 import getOscarProgress from '@salesforce/apex/portal_OscarProgressBar.getOscarProgress';
 import isUserLevelOne from '@salesforce/apex/PortalSupportReachUsCreateNewCaseCtrl.isUserLevelOne';
 import getSurveyLink from '@salesforce/apex/PortalCasesCtrl.getSurveyLink';
+import searchContacts from '@salesforce/apex/PortalSupportReachUsCreateNewCaseCtrl.searchContacts';
+import searchAccounts from '@salesforce/apex/PortalSupportReachUsCreateNewCaseCtrl.searchAccounts';
+import getProfile from '@salesforce/apex/PortalSupportReachUsCreateNewCaseCtrl.getProfile';
 
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
@@ -17,13 +21,18 @@ import ISSP_Survey from '@salesforce/label/c.ISSP_Survey';
 import Open from '@salesforce/label/c.Open';
 import CSP_RecipientsQuestion from '@salesforce/label/c.CSP_RecipientsQuestion';
 import CSP_Recipients from '@salesforce/label/c.CSP_Recipients';
+import ISSP_Case_Closed_More_Than_2_Months from '@salesforce/label/c.ISSP_Case_Closed_More_Than_2_Months';
 import ISSP_CaseNumber from '@salesforce/label/c.ISSP_CaseNumber';
-import ISSP_Subject from '@salesforce/label/c.ISSP_CaseNumber';
+import ISSP_Subject from '@salesforce/label/c.ISSP_Subject';
 import CSP_Status from '@salesforce/label/c.CSP_Status';
 import CSP_CreatedOn from '@salesforce/label/c.CSP_CreatedOn';
 import CSP_LastUpdate from '@salesforce/label/c.CSP_LastUpdate';
 import CSP_Manage_Recipients from '@salesforce/label/c.CSP_Manage_Recipients';
 import CSP_CaseDetails from '@salesforce/label/c.CSP_Case_Details';
+import CSP_AddOrRemove_Recipients from '@salesforce/label/c.CSP_AddOrRemove_Recipients';
+import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
+import CSP_EmailAddress from '@salesforce/label/c.Email_address';
+
 export default class PortalHomeCalendar extends LightningElement {
 
     @track loading = true;
@@ -31,9 +40,11 @@ export default class PortalHomeCalendar extends LightningElement {
 
     @track showManageRecipientsPopup = false;
     @track manageRecipientsOkButtonDisabled = false;
-    @track lstRecipients;
+    @track lstRecipients = [];
     @track newRecipient = '';
     @track haveRecipients = false;
+    @track isExpired = false;
+    @track expiredCard;
     @track CaseStatusClass = '';
     @track surveyLink;
 
@@ -49,20 +60,32 @@ export default class PortalHomeCalendar extends LightningElement {
     
     @track displayOscarProgressBar = false;
     @track progressStatusList = [];
+
+    //variable to control error class sent to child component
+    @track requiredClass;
+
+    //stores emails to be sent to case creation
+    caseEmails = [];
     
     @track labels = {
         ISSP_Survey,
         Open,
         CSP_RecipientsQuestion,
-		CSP_Recipients,
-		ISSP_CaseNumber,
-		ISSP_Subject,
-		CSP_Status,
-		CSP_CreatedOn,
-		CSP_LastUpdate,
+	CSP_Recipients,
+	ISSP_CaseNumber,
+	ISSP_Subject,
+        CSP_AddOrRemove_Recipients,
+	ISSP_Case_Closed_More_Than_2_Months,
+	CSP_Status,
+	CSP_CreatedOn,
+	CSP_LastUpdate,
         CSP_Manage_Recipients,
-        CSP_CaseDetails
+        CSP_CaseDetails,
+	CSP_EmailAddress
     }
+
+    //Icons
+    infoIcon = CSP_PortalPath + 'CSPortal/Images/Icons/info.svg';   
 
     connectedCallback() {
         //get the parameters for this page
@@ -78,10 +101,12 @@ export default class PortalHomeCalendar extends LightningElement {
 
 	this.getSurveyLink();
 
-	    this.isLevelOneUser();
+	this.isLevelOneUser();
+	this.getRelatedAccounts();
+    	this.getRelatedContacts();
     }   
 
-	 isLevelOneUser(){
+	isLevelOneUser(){
         isUserLevelOne({userId: this.userId}).then(result => {
             this.Level1User = result;
         }).catch(error => {
@@ -127,21 +152,32 @@ export default class PortalHomeCalendar extends LightningElement {
                 this.haveRecipients = false;
             }
 
-            console.log('results.Status: ' , results.Status);
-
             this.loading = false;
             this.pendingCustomerCase = results.Status === 'Pending customer';
             document.title = CSP_CaseDetails+"_"+this.caseDetails.CaseNumber;
 
             this.CaseStatusClass = results.Status.replace(/\s/g, '').replace(/_|-|\./g, '');
 
-            console.log('pendingCustomerCase: ' , this.pendingCustomerCase);
         })
         .catch(error => {
             console.log('error: ' , error);
             this.loading = false;
         });
         
+        getHideForClosedCases({ caseId : this.pageParams.caseId })
+        .then(results => {
+            this.isExpired = results; //Disable
+
+            const selectedEvent = new CustomEvent("sendexpired", {
+                detail: this.isExpired
+              });
+
+            // Dispatches the event.
+            this.dispatchEvent(selectedEvent);
+        })
+        .catch(e => {
+            console.log(e);
+        });
     }
 
     getProgressBarStatus() {
@@ -153,6 +189,79 @@ export default class PortalHomeCalendar extends LightningElement {
             }
         });
 
+    }
+
+    //get the profile of the user
+    getProfile() {
+        getProfile()
+            .then(result => {
+                this.agentProfile = JSON.parse(JSON.stringify(result)).includes('ISS Portal Agency');
+                if (!JSON.parse(JSON.stringify(result)).includes('Admin')) {
+                    this.setPortalUserIATACode();
+                }
+            });
+    }
+
+    //gets related accounts and sets them in global var
+    getRelatedAccounts() {
+        //activate spinner
+        this.loading = true;
+        searchAccounts({ searchTerm: null })
+            .then(relatedAccountsResult => {
+
+                let allresults = JSON.parse(JSON.stringify(relatedAccountsResult));
+                this.relatedAccounts = allresults;
+
+                if (allresults.length === 1) {
+                    this.singleresult = allresults;
+                } else if (allresults.length === 0) {
+                    this.singleresult = [{ title: this.label.CSP_NoSearchResults }];
+                }
+                this.getProfile();
+
+                //activate spinner
+                this.loading = false;
+            });
+    }
+
+    //gets related contacts and sets them in global var
+    getRelatedContacts() {
+        //activate spinner
+        this.loading = true;
+        searchContacts({ searchTerm: null })
+            .then(relatedContactsResult => {
+                this.relatedContacts = JSON.parse(JSON.stringify(relatedContactsResult));
+				this.relatedContacts = this.relatedContacts.filter(obj => obj.id !== this.caseDetails.ContactId); //remove self if case owner
+                //deactivate spinner
+                this.loading = false;
+            });
+    }
+
+    //shows results upon clicking the search.
+    showEmailResults() {
+        this.template.querySelector('[data-id="emaillookup"]').setSearchResults(this.relatedContacts);
+    }
+
+    //performs search based on the input - minimum of 3 keystrokes - 300ms per search (check child component)
+    handleContactSearch(event) {
+        searchContacts(event.detail)
+            .then(results => {
+				results = results.filter(obj => obj.id !== this.caseDetails.ContactId); //remove self if case owner
+                this.template.querySelector('[data-id="emaillookup"]').setSearchResults(results);
+                this.requiredClass = '';
+            })
+            .catch((error) => {
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Search could not be performed',
+                        message: 'An error occured. Please refresh the page or contact administration',
+                        variant: 'error'
+                    })
+                );
+                //Errors usually are due to session timeout.
+                // eslint-disable-next-line no-console
+                console.log('Lookup Error: ' + error);
+            });
     }
 
     openManageRecipientsPopup(){
@@ -168,28 +277,25 @@ export default class PortalHomeCalendar extends LightningElement {
     }
 
     addNewRecipientButtonClick(){
+        let inputCmp = this.template.querySelector('[data-id="emaillookup"]').getSelection()[0].subtitle;
+        let comp = this.template.querySelector('[data-id="emaillookup"]');
+        comp.focus();
 
-        let inputCmp = this.template.querySelector(".newRecipientTextInput");
-        let emailIsValid = inputCmp.checkValidity();
-
-        if(emailIsValid){
-            let value = inputCmp.value;
-            this.loading = true;
-
-            addNewRecipient({ caseId : this.caseDetails.Id, newRecipientEmail : value })
+        this.loading = true;    
+        addNewRecipient({ caseId : this.caseDetails.Id, newRecipientEmail : inputCmp })
             .then(results => {
                 if(results.success === true){
+
                     //show success toast
                     const toastEvent = new ShowToastEvent({
                         title: "SUCCESS",
                         message: results.returnMessage,
                         variant: "success",
                     });
-                    this.dispatchEvent(toastEvent);
-                    this.newRecipient = '';
-                    inputCmp.value = '';
-
                     this.getCaseByIdJS();
+                    this.dispatchEvent(toastEvent);
+                    this.loading = false;
+
                 }else{
                     //show error toast
                     const toastEvent = new ShowToastEvent({
@@ -208,9 +314,8 @@ export default class PortalHomeCalendar extends LightningElement {
                 this.loading = false;
             });
 
-        }else{
-            inputCmp.reportValidity();
-        }
+            
+
     }
 
     removeRecipient(event){
@@ -227,9 +332,11 @@ export default class PortalHomeCalendar extends LightningElement {
                     message: results.returnMessage,
                     variant: "success",
                 });
-                this.dispatchEvent(toastEvent);
-
                 this.getCaseByIdJS();
+                this.dispatchEvent(toastEvent);
+                
+                this.loading = false;
+                
             }else{
                 //show error toast
                 const toastEvent = new ShowToastEvent({
