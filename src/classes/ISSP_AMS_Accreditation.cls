@@ -6026,19 +6026,21 @@ public without sharing class ISSP_AMS_Accreditation {
 	private Boolean validateFormShipping() {
 		Boolean errorFound = false;
 
-		if (newForm.Shipping_City__c == null) {
-			newForm.Shipping_City__c.addError(Label.ISSP_YouMustEnter);
-			errorFound = true;
-		}
+		if (getIsAccreditationModelNotNullOrLegacy() || newCase.Reason1__c == AMS_UTILS.CASE_REASON_HE_LITE || newCase.Reason1__c == AMS_UTILS.CASE_REASON_HE_STANDARD || newCase.Reason1__c == AMS_UTILS.CASE_REASON_HE_MULTICOUNTRY) {
+			if (newForm.Shipping_City__c == null) {
+				newForm.Shipping_City__c.addError(Label.ISSP_YouMustEnter);
+				errorFound = true;
+			}
 
-		if (newForm.Shipping_Street__c == null) {
-			newForm.Shipping_Street__c.addError(Label.ISSP_YouMustEnter);
-			errorFound = true;
-		}
+			if (newForm.Shipping_Street__c == null) {
+				newForm.Shipping_Street__c.addError(Label.ISSP_YouMustEnter);
+				errorFound = true;
+			}
 
-		if (newForm.Shipping_Country__c == null) {
-			newForm.Shipping_Country__c.addError(Label.ISSP_YouMustEnter);
-			errorFound = true;
+			if (newForm.Shipping_Country__c == null) {
+				newForm.Shipping_Country__c.addError(Label.ISSP_YouMustEnter);
+				errorFound = true;
+			}
 		}
 
 		return errorFound;
