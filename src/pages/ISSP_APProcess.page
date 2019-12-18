@@ -129,7 +129,6 @@
                                             </div>
                                         </div>
                                     </apex:outputPanel>
-
                                     <apex:outputPanel>
                                         <div  class="form-group" style="display:{!IF(isPassAirline == true && APprocess=='chg' && isGSSAUser!= true, 'block','none')}">
                                             <label for="countryconcernedPASSWithdraw" class="col-sm-2 control-label">* Countries to Withdraw</label> <!-- Withdraw -->
