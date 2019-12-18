@@ -34,7 +34,7 @@
                 <div class="slds-grid slds-wrap slds-m-around_medium">
                     <div class="slds-col slds-size_1-of-2">
                         <div class="slds-box slds-p-around_none slds-m-right_xxx-small slds-m-bottom_xxx-small">
-                            <lightning:card title="Core Relationship with IATA" iconName="standard:strategy">
+                            <lightning:card title="Core Relationship with IATA (active accounts only)" iconName="standard:strategy">
                                 <c:AWW_CoreRelationshipTable columns="{!v.columns1}" data="{!v.data1}"/>
                             </lightning:card>
                         </div>
@@ -58,14 +58,14 @@
                     </div>
                     <div class="slds-col slds-size_1-of-2 margin_top">
                         <div class="slds-box slds-p-around_none slds-m-right_xxx-small slds-m-top_xxx-small">
-                            <lightning:card title="Accredited Locations per Country" iconName="standard:strategy">
+                            <lightning:card title="Active Locations per Country" iconName="standard:strategy">
                                 <c:AWW_CoreRelationshipTable columns="{!v.columns2}" data="{!v.data2}"/>
                             </lightning:card>
                         </div>
                     </div>
                     <div class="slds-col slds-size_1-of-2 margin_top">
                         <div class="slds-box slds-p-around_none slds-m-left_xxx-small slds-m-top_xxx-small">
-                            <lightning:card title="Accredited Locations per Region" iconName="standard:strategy">
+                            <lightning:card title="Active Locations per Region" iconName="standard:strategy">
                                 <c:AWW_CoreRelationshipTable columns="{!v.columns3}" data="{!v.data3}"/>
                             </lightning:card>
                         </div>

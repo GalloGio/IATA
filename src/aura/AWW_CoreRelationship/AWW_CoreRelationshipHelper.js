@@ -68,7 +68,7 @@
         rows.push(['','']);
     },
     handleExport : function(component,rows) {        
-        var csvContent = 'data:text/csv;charset=utf-8,' + rows.map(e => e.join(',')).join('\n');
+        var csvContent = 'data:text/csv;charset=utf-8,' + rows.map(e => e.join(';')).join('\n');
         var encodedUri = encodeURI(csvContent);
         var encodedUri = encodeURI(csvContent);
         var link = document.createElement('a');

@@ -1,26 +1,22 @@
-<aura:component controller="AWW_PerformanceCtrl">
+<aura:component controller="AMP_KeyAccountPlanExtension">
     <aura:attribute name="header" type="String" default="New"/>
-    <aura:attribute name="accountId" type="Id"/>
     <aura:attribute name="errorMessage" type="String"/>
-    <aura:attribute name="record" type="Objective__c" default="{'sobjectType': 'Objective__c'}"/>
-    <aura:attribute name="typeList" type="List"/>
-    <aura:attribute name="statusList" type="List"/>
-    <aura:attribute name="unitList" type="List"/>
-    <aura:attribute name="divisionList" type="List"/>
-    <aura:attribute name="fieldValidity" type="Boolean" default="true" description="Because of a limitation to clear error messages i use this attribute to rerender the form"/>
-
-    <aura:registerEvent name="refreshTab" type="c:AWW_RefreshTabEvent"/>
-    <aura:registerEvent name="controlSpinner" type="c:AWW_Spinner"/>
+    <aura:attribute name="record" type="Task"/>
+    <aura:attribute name="statusList" type="List"/> 
+    <aura:attribute name="fieldValidity" type="Boolean" default="true"/>
 
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
     <aura:handler name="confirmation" event="c:AWW_ConfirmationEvent" action="{!c.confirmation}"/>
 
+    <aura:registerEvent name="refreshTab" type="c:AWW_RefreshTabEvent"/>
+    <aura:registerEvent name="controlSpinner" type="c:AWW_Spinner"/>    
+
     <aura:method name="showModal" action="{!c.handleModalVisibility}">
-        <aura:attribute name="record" type="Object"/>  
+        <aura:attribute name="record" type="Object"/>
     </aura:method>
 
-    <div aura:id="performance-form" class="slds-hide">
-        <section role="dialog" class="slds-modal slds-fade-in-open">
+    <div aura:id="milestone-form" class="slds-hide">
+        <section role="dialog" class="slds-modal slds-fade-in-open slds-modal_medium">
             <div class="slds-modal__container">
                 <header class="slds-modal__header">
                     <lightning:buttonIcon iconName="utility:close" onclick="{!c.handleModalVisibility}" alternativeText="close" variant="bare-inverse" size="large" class="slds-modal__close"/>
@@ -42,23 +38,31 @@
                     <div class="slds-grid slds-gutters slds-wrap">
                         <aura:if isTrue="{!v.fieldValidity}">
                             <div class="slds-col slds-size_1-of-3">
-                                <lightning:input aura:id="activityName" label="Activity" type="text" required="true" value="{!v.record.Name}" disabled="{!v.header != 'New'}"/>
+                                <lightning:textarea maxlength="255" aura:id="subject" label="Milestone" required="true" value="{!v.record.Subject__c}"/>
                             </div>
                             <div class="slds-col slds-size_1-of-3">
-                                <lightning:select aura:id="activityType" label="Type" value="{!v.record.Type__c}" required="true">
-                                    <aura:iteration items="{!v.typeList}" var="option">
-                                        <option text="{!option.label}" value="{!option.id}"/>
-                                    </aura:iteration>
-                                </lightning:select>
+                                <lightning:input maxlength="255" aura:id="responsible" label="Responsible" type="text" value="{!v.record.AM_Responsible__c}"/>
                             </div>
                             <div class="slds-col slds-size_1-of-3">
-                                <lightning:select aura:id="activityStatus" label="Account Status" value="{!v.record.Status__c}" required="true">
+                                <lightning:textarea maxlength="255" aura:id="involved" label="Involved" value="{!v.record.AM_Involved__c}"/>
+                            </div>
+                            <div class="slds-col slds-size_1-of-3">
+                                <lightning:textarea maxlength="255" aura:id="support" label="Support Required From Account" value="{!v.record.AM_Support_Required_from_Account__c}"/>
+                            </div>
+                            <div class="slds-col slds-size_1-of-3">
+                                <lightning:select aura:id="status" label="Milestone Status" value="{!v.record.Status}" required="true">
                                     <aura:iteration items="{!v.statusList}" var="option">
                                         <option text="{!option.label}" value="{!option.id}"/>
                                     </aura:iteration>
                                 </lightning:select>
+                            </div>   
+                            <div class="slds-col slds-size_1-of-3">
+                                <lightning:input aura:id="endDate" label="End Date" type="date" value="{!v.record.ActivityDate}" required="true"/>
                             </div>
-                        </aura:if>
+                            <div class="slds-col slds-size_3-of-3">
+                                <lightning:textarea maxlength="32000" aura:id="comments" label="Comments" value="{!v.record.Description}"/>
+                            </div>  
+                        </aura:if>                   
                     </div>
                 </div>
                 <footer class="slds-modal__footer">
@@ -66,7 +70,7 @@
                     <lightning:button variant="brand" label="Save" title="Save" onclick="{!c.save}"/>
                 </footer>
             </div>
-            <c:AWW_ConfirmationModal aura:id="confirmationModal"/>
+            <c:AWW_ConfirmationModal aura:id="confirmationModal"/>  
         </section>
         <div class="slds-backdrop slds-backdrop_open"></div>
     </div>

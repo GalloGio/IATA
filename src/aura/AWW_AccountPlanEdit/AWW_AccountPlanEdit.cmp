@@ -1,25 +1,26 @@
-<aura:component controller="AWW_PerformanceCtrl">
+<aura:component controller="AWW_AccountPlanCtrl">
     <aura:attribute name="header" type="String" default="New"/>
     <aura:attribute name="accountId" type="Id"/>
-    <aura:attribute name="errorMessage" type="String"/>
-    <aura:attribute name="record" type="Objective__c" default="{'sobjectType': 'Objective__c'}"/>
-    <aura:attribute name="typeList" type="List"/>
-    <aura:attribute name="statusList" type="List"/>
-    <aura:attribute name="unitList" type="List"/>
+    <aura:attribute name="record" type="Objective__c"/>
     <aura:attribute name="divisionList" type="List"/>
-    <aura:attribute name="fieldValidity" type="Boolean" default="true" description="Because of a limitation to clear error messages i use this attribute to rerender the form"/>
+    <aura:attribute name="statusList" type="List"/>
+    <aura:attribute name="renderLookup" type="Boolean" default="true"/>
+    <aura:attribute name="fieldValidity" type="Boolean" default="true"/>
+    <aura:attribute name="errorMessage" type="String" default=""/>
 
     <aura:registerEvent name="refreshTab" type="c:AWW_RefreshTabEvent"/>
     <aura:registerEvent name="controlSpinner" type="c:AWW_Spinner"/>
 
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
     <aura:handler name="confirmation" event="c:AWW_ConfirmationEvent" action="{!c.confirmation}"/>
+    <aura:handler name="updateLookupIdEvent" event="c:UpdateLookupId" action="{!c.handleAccountIssueIdUpdate}"/>
+    <aura:handler name="clearLookupIdEvent" event="c:ClearLookupId" action="{!c.handleAccountIssueIdClear}"/>
 
     <aura:method name="showModal" action="{!c.handleModalVisibility}">
         <aura:attribute name="record" type="Object"/>  
     </aura:method>
 
-    <div aura:id="performance-form" class="slds-hide">
+    <div aura:id="plan-form" class="slds-hide">
         <section role="dialog" class="slds-modal slds-fade-in-open">
             <div class="slds-modal__container">
                 <header class="slds-modal__header">
@@ -41,22 +42,45 @@
                     </aura:renderIf>
                     <div class="slds-grid slds-gutters slds-wrap">
                         <aura:if isTrue="{!v.fieldValidity}">
-                            <div class="slds-col slds-size_1-of-3">
-                                <lightning:input aura:id="activityName" label="Activity" type="text" required="true" value="{!v.record.Name}" disabled="{!v.header != 'New'}"/>
+                            <div class="slds-col slds-size_1-of-2">
+                                <lightning:input maxlength="80" aura:id="recordName" label="Activity" type="text" required="true" value="{!v.record.objectiveName}"/>
                             </div>
-                            <div class="slds-col slds-size_1-of-3">
-                                <lightning:select aura:id="activityType" label="Type" value="{!v.record.Type__c}" required="true">
-                                    <aura:iteration items="{!v.typeList}" var="option">
+                            <div class="slds-col slds-size_1-of-2">
+                                <lightning:select label="Division" value="{!v.record.division}">
+                                    <aura:iteration items="{!v.divisionList}" var="option">
                                         <option text="{!option.label}" value="{!option.id}"/>
                                     </aura:iteration>
                                 </lightning:select>
                             </div>
-                            <div class="slds-col slds-size_1-of-3">
-                                <lightning:select aura:id="activityStatus" label="Account Status" value="{!v.record.Status__c}" required="true">
+                            <div class="slds-col slds-size_1-of-2">
+                                <lightning:select aura:id="status" label="Overall Status" value="{!v.record.status}" required="true">
                                     <aura:iteration items="{!v.statusList}" var="option">
                                         <option text="{!option.label}" value="{!option.id}"/>
                                     </aura:iteration>
                                 </lightning:select>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2">
+                                <lightning:input type="date" aura:id="deadline" label="Deadline" value="{!v.record.endDate}" required="true"/>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2">
+                                <label class="slds-form-element__label" for="accountIssueLookup">Account Issue or Priority</label>
+                                <aura:if isTrue="{!v.renderLookup}">
+                                    <c:LookupSObject aura:id="accountIssueLookup"
+                                        preselectedSearchString="{!v.record.issueName}"
+                                        searchConditions="{!' WHERE Account__c = \'' + v.accountId + '\' AND RecordType.DeveloperName = \'Account_Issues_and_Priorities\''}"
+                                        label="Objective"
+                                        pluralLabel="Objectives"
+                                        sObjectAPIName="Objective__c"
+                                        listIconSVGPath="/resource/SLDS102/assets/icons/standard-sprite/svg/symbols.svg#connected_apps"
+                                        listIconClass="slds-icon-standard-connected-apps" />
+                                </aura:if>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2"></div>
+                            <div class="slds-col slds-size_1-of-2">
+                                <lightning:textarea maxlength="32768" label="Description" value="{!v.record.description}"/>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2">
+                                <lightning:textarea maxlength="1024" label="Comment" value="{!v.record.comments}"/>
                             </div>
                         </aura:if>
                     </div>
@@ -65,7 +89,7 @@
                     <lightning:button variant="neutral" label="Cancel" title="Cancel" onclick="{!c.handleModalVisibility}"/>
                     <lightning:button variant="brand" label="Save" title="Save" onclick="{!c.save}"/>
                 </footer>
-            </div>
+            </div>    
             <c:AWW_ConfirmationModal aura:id="confirmationModal"/>
         </section>
         <div class="slds-backdrop slds-backdrop_open"></div>

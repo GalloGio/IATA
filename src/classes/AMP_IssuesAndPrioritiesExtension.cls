@@ -127,7 +127,8 @@ public with sharing class AMP_IssuesAndPrioritiesExtension {
             'AM_Level_of_importance__c',
             'Status__c',
             'Details__c',
-            'AM_Source_Text__c'
+            'AM_Source_Text__c',
+            'AM_Public__c'
         };
         return issueAccessFields;
 

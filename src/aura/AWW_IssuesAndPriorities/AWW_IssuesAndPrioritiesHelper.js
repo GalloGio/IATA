@@ -14,7 +14,7 @@
             {label: 'Visible to all IATA', fieldName: 'AM_Public__c', fixedWidth: 90, type: 'boolean'}
         ];
 
-        if(component.get('v.canEdit') == true) {
+        if(component.get('v.canEdit') == true || component.get('v.haveAMPIssuesAndPriorities') == true) {
             var actions = [
                 {label: 'Edit', name: 'edit_issue', 'iconName': 'utility:edit'},
                 {label: 'Delete', name: 'delete_issue', 'iconName': 'utility:delete'}

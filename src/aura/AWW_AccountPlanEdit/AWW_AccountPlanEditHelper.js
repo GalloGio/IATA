@@ -1,23 +1,5 @@
 ({
     initPicklists : function(component) {
-        var typeList = [
-            {id: '', label: '--None--'},
-            {id: 'BMA', label: 'BMA'},
-            {id: 'RSA', label: 'RSA'},
-            {id: 'OSA', label: 'OSA'},
-        ];
-        component.set('v.typeList', typeList);
-        var statusList = [
-            {id: '', label: '--None--'},
-            {id: 'On Track', label: 'On Track'},
-            {id: 'On Hold', label: 'On Hold'},
-            {id: 'Delayed', label: 'Delayed'},
-            {id: 'Delivered', label: 'Delivered'},
-            {id: 'Cancelled', label: 'Cancelled'},
-            {id: 'Not Delivered', label: 'Not Delivered'},
-            {id: 'Not Started', label: 'Not Started'}
-        ];
-        component.set('v.statusList', statusList);
         var divisionList = [
             {id: '', label: '--None--'},
             {id: 'APCS', label: 'APCS'},
@@ -29,28 +11,31 @@
             {id: 'SFO', label: 'SFO'}
         ];
         component.set("v.divisionList", divisionList);
-        var unitList = [
+        var statusList = [
             {id: '', label: '--None--'},
-            {id: 'Number', label: 'Number'},
-            {id: 'Percentage', label: 'Percentage'},
+            {id: 'On Track', label: 'On Track'},
+            {id: 'On Hold', label: 'On Hold'},
+            {id: 'Delayed', label: 'Delayed'},
+            {id: 'Delivered', label: 'Delivered'},
+            {id: 'Cancelled', label: 'Cancelled'},
+            {id: 'Not Delivered', label: 'Not Delivered'},
+            {id: 'Not Started', label: 'Not Started'}
         ];
-        component.set("v.unitList", unitList);
+        component.set('v.statusList', statusList);
     },
-    showModal : function(component, record) {
+    showModal : function(component,record) {
         this.clearErros(component);
-        component.set('v.errorMessage', null);
         component.set('v.record', record);
-        var modal = component.find('performance-form');
+        var modal = component.find('plan-form');
         $A.util.removeClass(modal, 'slds-hide');
     },
     hideModal : function(component) {
-        component.set('v.errorMessage', null);
-        var modal = component.find('performance-form');
+        var modal = component.find('plan-form');
         $A.util.addClass(modal, 'slds-hide');
     },
     askConfirmation : function(component) {
         var confirmationModal = component.find('confirmationModal');
-        confirmationModal.show('Confirmation','Are you sure you want to apply the selected changes?','performance_edit');
+        confirmationModal.show('Confirmation','Are you sure you want to apply the selected changes?','account_plan_edit');
     },
     handleConfiramtion : function(event) {
         var decision = event.getParam('decision');
@@ -61,7 +46,7 @@
         component.set('v.fieldValidity',true);    
     },
     handleValidations : function(component) {
-        var cmpIds = ['activityName', 'activityType', 'activityStatus'];
+        var cmpIds = ['status', 'recordName', 'deadline'];
         var allValid = true;
         for(var cmpId of cmpIds) {
             var inputCmp = component.find(cmpId);
@@ -80,8 +65,7 @@
     handleSave : function(component) {
         var action = component.get('c.upsertRecord');
         action.setParams({
-            record : component.get('v.record'),
-            accountId : component.get('v.accountId')
+            wrapper : component.get('v.record')
         });
 
         action.setCallback(this, function(response) {
@@ -89,7 +73,7 @@
             if(component.isValid() && state === "SUCCESS") {
                 var refreshEvt = component.getEvent('refreshTab');
                 refreshEvt.setParams({
-                    tabName : 'performance_measures'
+                    tabName : 'account_plan'
                 });
                 refreshEvt.fire(); 
                 this.hideModal(component);
@@ -103,9 +87,18 @@
                             if (errors[0].fieldErrors.Name[0]) {
                                 message = errors[0].fieldErrors.Name[0].message;
                             }
+                        }else if(errors[0].fieldErrors.Benefits_to_Account__c){
+                            if (errors[0].fieldErrors.Benefits_to_Account__c[0]) {
+                                message = errors[0].fieldErrors.Benefits_to_Account__c[0].message;
+                            }
+                        }else if(errors[0].fieldErrors.Details__c){
+                            if (errors[0].fieldErrors.Details__c[0]) {
+                                message = errors[0].fieldErrors.Details__c[0].message;
+                            }
                         }
                     }
                 }
+                console.log('message::: ',message);
                 component.set('v.errorMessage', message);
             }
             this.handleSpinner(component, 'hide');
