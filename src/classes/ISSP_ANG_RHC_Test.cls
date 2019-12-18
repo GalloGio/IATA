@@ -263,6 +263,11 @@ public class ISSP_ANG_RHC_Test {
 			cont.riskStatusFilter = 'All';
 
 			cont.getRiskEventList();
+
+			System.assertEquals(true, cont.afpWrapper.displayIcons);
+			System.assertEquals(false, cont.afpWrapper.isBOPFlag);
+			System.assertEquals(false, cont.afpWrapper.isInternational);
+			System.assertEquals(false, cont.afpWrapper.isDomestic);
         }
 	}
 
@@ -284,18 +289,18 @@ public class ISSP_ANG_RHC_Test {
 
         insert new List<Portal_Applications__c>{s1,s2};
 
-        IATA_ISO_Country__c portugal = new IATA_ISO_Country__c (
-                Name = 'Portugal_test',
-                ISO_Code__c = 'PT',
+        IATA_ISO_Country__c indonesia = new IATA_ISO_Country__c (
+                Name = 'Indonesia',
+                ISO_Code__c = 'ID',
                 ANG_Portal_Service__c = s1.id,
                 ANG_Enable_NewGen__c = true
             );
 
-        insert new List<IATA_ISO_Country__c>{portugal};
+        insert new List<IATA_ISO_Country__c>{indonesia};
 
         Account a = new Account (
                 name = 'AccountTest',
-                IATA_ISO_Country__c = portugal.id,
+                IATA_ISO_Country__c = indonesia.id,
                 Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
                 ANG_IEP_Status__c = ANG_ISSP_PortalServiceHelper.STATUS_OPEN,
                 Location_type__c = 'HE',
@@ -304,7 +309,8 @@ public class ISSP_ANG_RHC_Test {
                 Status__c = 'Approved',
                 OwnerId = UserInfo.getUserId(),
                 Financial_Review_Result__c = 'Unsatisfactory',
-                Location_Class__c = 'P'
+                Location_Class__c = 'P',
+				Category__c = AMS_Utils.CATEGORY_PASSENGER_SALES_AGENT
             );
 
         insert new List<Account>{a};
@@ -423,17 +429,18 @@ public class ISSP_ANG_RHC_Test {
 
         insert new List<Portal_Applications__c>{s1,s2};
 
-        IATA_ISO_Country__c portugal = new IATA_ISO_Country__c (
-                Name = 'Portugal_test',
-                ISO_Code__c = 'PT',
-                ANG_Portal_Service__c = s1.id
+        IATA_ISO_Country__c korea = new IATA_ISO_Country__c (
+                Name = 'South_Korea_test',
+                ISO_Code__c = 'KR',
+                ANG_Portal_Service__c = s1.id,
+				ANG_IEP_Model__c = 'Banking Model'
             );
 
-        insert new List<IATA_ISO_Country__c>{portugal};
+        insert new List<IATA_ISO_Country__c>{korea};
 
         Account a = new Account (
                 name = 'AccountTest',
-                IATA_ISO_Country__c = portugal.id,
+                IATA_ISO_Country__c = korea.id,
                 Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
                 ANG_IEP_Status__c = ANG_ISSP_PortalServiceHelper.STATUS_NO_IEP_ACCOUNT,
                 Location_type__c = 'HO',
@@ -537,17 +544,17 @@ public class ISSP_ANG_RHC_Test {
 
         insert new List<Portal_Applications__c>{s1,s2};
 
-        IATA_ISO_Country__c portugal = new IATA_ISO_Country__c (
-                Name = 'Portugal_test',
-                ISO_Code__c = 'PT',
+        IATA_ISO_Country__c china = new IATA_ISO_Country__c (
+                Name = 'China_test',
+                ISO_Code__c = 'CN',
                 ANG_Portal_Service__c = s1.id
             );
 
-        insert new List<IATA_ISO_Country__c>{portugal};
+        insert new List<IATA_ISO_Country__c>{china};
 
         Account a = new Account (
                 name = 'AccountTest',
-                IATA_ISO_Country__c = portugal.id,
+                IATA_ISO_Country__c = china.id,
                 Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
                 ANG_IEP_Status__c = ANG_ISSP_PortalServiceHelper.STATUS_NO_IEP_ACCOUNT,
                 Location_type__c = 'AO',

@@ -92,7 +92,8 @@ public with sharing class ISSP_ANG_RHC {
 											Account.ANG_RiskHistoryAssessment__c,
 											Account.IATA_ISO_Country__r.ANG_IEP_Model__c,
 											Account.IATA_ISO_Country__r.Name,
-											Account.IATA_ISO_Country__r.ISO_Code__c
+											Account.IATA_ISO_Country__r.ISO_Code__c,
+											Account.Category__c
 									   FROM Contact
 									  WHERE Id = :contactId];
 
