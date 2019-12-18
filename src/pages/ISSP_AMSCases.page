@@ -219,12 +219,12 @@
 
             function newSectorApplicationNavigateTo() {
                 if ('{!sector}' == 'Travel Agent') {
-                    navigateToUrl('/ISSP_AMS_Accreditation?retUrl=/ISSP_HomePage&sectorValue=Cargo_Agent');
+                    navigateToUrl('/ISSP_AMS_Accreditation?retUrl=/ISSP_HomePage&sectorValue=Cargo_Agent{!IF(con.Account.ANG_Accreditation_Model__c == ACCREDITATION_MODEL_MC, '&isMultiCountryNewAE=true&isMCAccredited=true&', '')}');
                 } else if ('{!sector}' == 'Cargo Agent') {
                     if ('{!namEnabled}' == 'true') {
                         navigateToUrl('/ISSP_ANG_ProductComparison','LIST_VIEW','newCase');
                     } else {
-                        navigateToUrl('/ISSP_AMS_Accreditation?retUrl=/ISSP_HomePage&sectorValue=Travel_Agent'); 
+                        navigateToUrl('/ISSP_AMS_Accreditation?retUrl=/ISSP_HomePage&sectorValue=Travel_Agent{!IF(con.Account.ANG_Accreditation_Model__c == ACCREDITATION_MODEL_MC, '&isMultiCountryNewAE=true&isMCAccredited=true&', '')}'); 
                     }
                 } 
                 return false;
@@ -452,7 +452,7 @@
 
                             <div class="row" style="padding-top: 20px;">
                                 <div class="col-md-12">
-                                    <input type="button" class="btn btn_iata_primary" onClick="multiCountryNewAE();" value="Add New Associate Entity"/>
+                                    <input type="button" class="btn btn_iata_primary" onClick="multiCountryNewAE();" value="{!$Label.ISSP_Add_New_Associate_Entity}"/>
                                 </div>
                             </div>
 

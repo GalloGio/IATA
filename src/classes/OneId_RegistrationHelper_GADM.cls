@@ -1,6 +1,26 @@
 public without sharing class OneId_RegistrationHelper_GADM {
+    public static boolean contactIsAlreadyInvited(Id contactId){
+        List<Contact_Role_Service_Access__c> access = [SELECT Id FROM Contact_Role_Service_Access__c WHERE Contact__c =: contactId AND Service__r.Name = 'GADM'];
+        return access.size() > 0;
+    }	
+    public static Account_Role__c getAccountRole(Id accId){
+        List<Account_Role__c> accountRoles = [SELECT Id FROM Account_Role__c WHERE Account__c = :accId AND Account_Roles__r.Name = 'GADM Participant'];
+        if (accountRoles != null && accountRoles.size() == 1){
+            return accountRoles[0];
+        } else {
+            //as account must be Top Most Account(if exists)
+            List<Account> accDetail = [SELECT Id, Top_Parent__c FROM Account WHERE Id = :accId LIMIT 1];
 
-
+            if(String.isNotBlank(accDetail[0].Top_Parent__c)) {
+                List<Account_Role__c> accountRolesTop = [SELECT Id FROM Account_Role__c WHERE Account__c = :accDetail[0].Top_Parent__c AND Account_Roles__r.Name = 'GADM Participant'];
+                if (accountRolesTop != null && accountRolesTop.size() == 1){
+            		return accountRolesTop[0];	
+                }
+            }
+        }
+        
+        return null;
+    }
     public static Account_Role__c createAccountRole(Account acc) {
 
         Id defaultRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Role__c', 'Default');

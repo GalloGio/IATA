@@ -710,6 +710,39 @@
         <visibleLines>3</visibleLines>
     </fields>
     <fields>
+        <fullName>ICH_Requirements__c</fullName>
+        <description>Global requirements for ICH participation</description>
+        <externalId>false</externalId>
+        <label>ICH Requirements</label>
+        <length>32768</length>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Html</type>
+        <visibleLines>25</visibleLines>
+    </fields>
+    <fields>
+        <fullName>ISPA_Requirements__c</fullName>
+        <description>Global ISPA requirements for ICH participation</description>
+        <externalId>false</externalId>
+        <label>ISPA Requirements</label>
+        <length>32768</length>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Html</type>
+        <visibleLines>25</visibleLines>
+    </fields>
+    <fields>
+        <fullName>ISUA_Requirements__c</fullName>
+        <description>Global ISUA requirements for ICH participation</description>
+        <externalId>false</externalId>
+        <label>ISUA Requirements</label>
+        <length>32768</length>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Html</type>
+        <visibleLines>25</visibleLines>
+    </fields>
+    <fields>
         <fullName>Line_of_business__c</fullName>
         <externalId>false</externalId>
         <label>Line of business</label>
@@ -729,6 +762,11 @@
                     <fullName>CASS</fullName>
                     <default>false</default>
                     <label>CASS</label>
+                </value>
+				<value>
+                    <fullName>ICH</fullName>
+                    <default>false</default>
+                    <label>ICH</label>
                 </value>
                 <value>
                     <fullName>PASS</fullName>

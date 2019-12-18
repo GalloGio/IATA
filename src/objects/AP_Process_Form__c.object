@@ -152,6 +152,16 @@
             </valueSetDefinition>
         </valueSet>
     </fields>
+	<fields>
+        <fullName>Accept_Disclaimer__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Filled by the user to accept disclaimer for ICH form</description>
+        <externalId>false</externalId>
+        <label>Accept Disclaimer</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
     <fields>
         <fullName>Accept_Online_Corrections__c</fullName>
         <description>Field used in the PASS Airline Online Process form</description>
@@ -1884,6 +1894,17 @@ If NO, please submit a Local Bank Account in the BSP country and currency (refer
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>Company_Email__c</fullName>
+        <description>Email field for company information required in some joining forms</description>
+        <externalId>false</externalId>
+        <label>Company Email</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Company_Registration_ID__c</fullName>
         <description>Used for SIS Recordtypes</description>
         <externalId>false</externalId>
@@ -2239,6 +2260,26 @@ If NO, please submit a Local Bank Account in the BSP country and currency (refer
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>Desired_date_to_start_in_ICH__c</fullName>
+        <description>Desired date to start in ICH</description>
+        <externalId>false</externalId>
+        <label>Desired date to start in ICH</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Desired_date_to_start_in_SIS__c</fullName>
+        <description>Desired date to start in SIS</description>
+        <externalId>false</externalId>
+        <label>Desired date to start in SIS</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
         <fullName>Digital_Signature_application__c</fullName>
         <description>Used for SIS recordtypes</description>
         <externalId>false</externalId>
@@ -2358,6 +2399,16 @@ If NO, please submit a Local Bank Account in the BSP country and currency (refer
                     <fullName>No</fullName>
                     <default>false</default>
                     <label>No</label>
+                </value>
+                <value>
+                    <fullName>No, use form 1</fullName>
+                    <default>false</default>
+                    <label>No, use form 1</label>
+                </value>
+                <value>
+                    <fullName>No, use form 2</fullName>
+                    <default>false</default>
+                    <label>No, use form 2</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -3078,6 +3129,77 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
         </valueSet>
     </fields>
     <fields>
+        <fullName>ICH_Currency_of_Clearance__c</fullName>
+        <externalId>false</externalId>
+        <label>ICH Currency of Clearance</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>A</fullName>
+                    <default>false</default>
+                    <label>GBP Currency of Clearance (Zone A)</label>
+                </value>
+                <value>
+                    <fullName>B</fullName>
+                    <default>false</default>
+                    <label>USD Currency of Clearance (Zone B)</label>
+                </value>
+                <value>
+                    <fullName>D</fullName>
+                    <default>false</default>
+                    <label>EUR Currency of Clearance (Zone D)</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>ICH_Currency_of_Settlement__c</fullName>
+        <description>Currency of Settlement for ICH Joining Forms. It can be: GBP, USD, EUR, or a combination</description>
+        <externalId>false</externalId>
+        <label>ICH Currency of Settlement</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>GBP</fullName>
+                    <default>false</default>
+                    <label>Entirely in GBP</label>
+                </value>
+                <value>
+                    <fullName>USD</fullName>
+                    <default>false</default>
+                    <label>Entirely in USD</label>
+                </value>
+                <value>
+                    <fullName>GBP-USD</fullName>
+                    <default>false</default>
+                    <label>In GBP with respect to balance with other Zone A members and in USD with respect to all other zones</label>
+                </value>
+                <value>
+                    <fullName>EUR</fullName>
+                    <default>false</default>
+                    <label>Entirely in EUR</label>
+                </value>
+                <value>
+                    <fullName>EUR-USD</fullName>
+                    <default>false</default>
+                    <label>In EUR and USD</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
         <fullName>IINET_account_number__c</fullName>
         <description>What BSPlink access level does your Airline require?</description>
         <externalId>false</externalId>
@@ -3123,6 +3245,32 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
         <label>Is company subject to EU laws?</label>
         <required>false</required>
         <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Yes</fullName>
+                    <default>false</default>
+                    <label>Yes</label>
+                </value>
+                <value>
+                    <fullName>No</fullName>
+                    <default>false</default>
+                    <label>No</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Is_publicly_traded_company__c</fullName>
+        <description>Is your company a publicly traded company?</description>
+        <externalId>false</externalId>
+        <label>Is publicly traded company</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -3731,6 +3879,18 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
                 </value>
             </valueSetDefinition>
         </valueSet>
+    </fields>
+    <fields>
+        <fullName>Stock_Exchange_Name__c</fullName>
+        <description>Confirm on which stock exchange the company is listed</description>
+        <externalId>false</externalId>
+        <label>Stock Exchange Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Submitted_to_IATA__c</fullName>
@@ -4847,6 +5007,36 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ICH_Currency_of_Clearance__c</picklist>
+            <values>
+                <fullName>A</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>B</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>D</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ICH_Currency_of_Settlement__c</picklist>
+            <values>
+                <fullName>GBP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GBP-USD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>USD</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Is_AA_Member__c</picklist>
             <values>
                 <fullName>No</fullName>
@@ -4859,6 +5049,17 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
         </picklistValues>
         <picklistValues>
             <picklist>Is_company_subject_to_EU_laws__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_publicly_traded_company__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
@@ -5903,6 +6104,36 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ICH_Currency_of_Clearance__c</picklist>
+            <values>
+                <fullName>A</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>B</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>D</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ICH_Currency_of_Settlement__c</picklist>
+            <values>
+                <fullName>GBP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GBP-USD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>USD</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Is_AA_Member__c</picklist>
             <values>
                 <fullName>No</fullName>
@@ -5915,6 +6146,17 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
         </picklistValues>
         <picklistValues>
             <picklist>Is_company_subject_to_EU_laws__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_publicly_traded_company__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
@@ -6962,6 +7204,36 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ICH_Currency_of_Clearance__c</picklist>
+            <values>
+                <fullName>A</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>B</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>D</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ICH_Currency_of_Settlement__c</picklist>
+            <values>
+                <fullName>GBP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GBP-USD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>USD</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Is_AA_Member__c</picklist>
             <values>
                 <fullName>No</fullName>
@@ -6974,6 +7246,17 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
         </picklistValues>
         <picklistValues>
             <picklist>Is_company_subject_to_EU_laws__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_publicly_traded_company__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
@@ -8033,6 +8316,36 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ICH_Currency_of_Clearance__c</picklist>
+            <values>
+                <fullName>A</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>B</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>D</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ICH_Currency_of_Settlement__c</picklist>
+            <values>
+                <fullName>GBP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GBP-USD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>USD</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Is_AA_Member__c</picklist>
             <values>
                 <fullName>No</fullName>
@@ -8045,6 +8358,17 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
         </picklistValues>
         <picklistValues>
             <picklist>Is_company_subject_to_EU_laws__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_publicly_traded_company__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
@@ -9104,6 +9428,36 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ICH_Currency_of_Clearance__c</picklist>
+            <values>
+                <fullName>A</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>B</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>D</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ICH_Currency_of_Settlement__c</picklist>
+            <values>
+                <fullName>GBP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GBP-USD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>USD</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Is_AA_Member__c</picklist>
             <values>
                 <fullName>No</fullName>
@@ -9116,6 +9470,17 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
         </picklistValues>
         <picklistValues>
             <picklist>Is_company_subject_to_EU_laws__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_publicly_traded_company__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
@@ -9389,10 +9754,11 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
             </values>
         </picklistValues>
     </recordTypes>
-	<recordTypes>
-		    <fullName>PASS_Joining</fullName>
+    <recordTypes>
+        <fullName>ICH_Change</fullName>
         <active>true</active>
-        <label>PASS Joining</label>
+        <description>ICH Minor and Bank changes</description>
+        <label>ICH Change</label>
         <picklistValues>
             <picklist>ANG_Airline_accepts_EasyPay_tr_in_BSP__c</picklist>
             <values>
@@ -9417,17 +9783,6 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
         </picklistValues>
         <picklistValues>
             <picklist>AP_BR_BankBeneficiary_Account_Holder__c</picklist>
-            <values>
-                <fullName>No</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Yes</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Accept_Online_Corrections__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
@@ -10059,6 +10414,14 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
                 <default>false</default>
             </values>
             <values>
+                <fullName>No%2C use form 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No%2C use form 2</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Yes</fullName>
                 <default>false</default>
             </values>
@@ -10174,14 +10537,6 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
                 <default>false</default>
             </values>
             <values>
-                <fullName>Download only</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>E-mail and Download</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>iiNET</fullName>
                 <default>false</default>
             </values>
@@ -10198,6 +10553,44 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ICH_Currency_of_Clearance__c</picklist>
+            <values>
+                <fullName>A</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>B</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>D</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ICH_Currency_of_Settlement__c</picklist>
+            <values>
+                <fullName>EUR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EUR-USD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GBP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GBP-USD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>USD</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Is_AA_Member__c</picklist>
             <values>
                 <fullName>No</fullName>
@@ -10210,6 +10603,17 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
         </picklistValues>
         <picklistValues>
             <picklist>Is_company_subject_to_EU_laws__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_publicly_traded_company__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
@@ -10282,10 +10686,6 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
             </values>
             <values>
                 <fullName>E-mail and Download</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Not required</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -10362,30 +10762,11 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
                 <default>false</default>
             </values>
             <values>
-                <fullName>YES - Billing Period HOT</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>YES - Daily</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>YES - Per Period</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>YES - Remittance Period HOT</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Receive_PDF_Reports__c</picklist>
-            <values>
-                <fullName>NO</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>YES</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -10397,7 +10778,7 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
             </values>
             <values>
                 <fullName>Yes</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
         </picklistValues>
         <picklistValues>
@@ -10455,13 +10836,1107 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
         <picklistValues>
             <picklist>Type_of_participation_desired__c</picklist>
             <values>
-                <fullName>Airline joining CASS through a GSSA</fullName>
+                <fullName>Full %28direct participant%29</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Airline joining directly</fullName>
+                <fullName>Weblink</fullName>
                 <default>false</default>
             </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Use_a_new_Bank_Account__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>ICH_Joining</fullName>
+        <active>true</active>
+        <description>Joining Form for IATA Clearing House</description>
+        <label>ICH Joining</label>
+        <picklistValues>
+            <picklist>ANG_Airline_accepts_EasyPay_tr_in_BSP__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>AP_BR_Address_CNP__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>AP_BR_BankBeneficiary_Account_Holder__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Accept_payment_Cards_for_BSP_ticket__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Airline_Billing_Data_File_Type__c</picklist>
+            <values>
+                <fullName>Airline Head Office System</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline Local Office System</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA AWB Data Capture software is required</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Upload by your Airline%27s GSSA</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Airline_Intra_Europe_Flights__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Airline_s_Fiscal_Status__c</picklist>
+            <values>
+                <fullName>Special %28Contribuente Especial%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard %28Ordinario%29</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Airline_wish_to_join_ICCS__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Auto_billing__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>BSPLink_access_level_requested__c</picklist>
+            <values>
+                <fullName>Basic</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Enhanced</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>BSP_Russia_Double_Tax_avoiding_Treaty__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Billing_File_Emrgcy_Contact_Salutation__c</picklist>
+            <values>
+                <fullName>Mr</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mrs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ms</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Billing_Value_Confirmation__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Billing_Value_Determination__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>CASSLink_Contact_Salutation__c</picklist>
+            <values>
+                <fullName>Mr</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mrs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ms</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>CASSLink_New_User_1_Salutation__c</picklist>
+            <values>
+                <fullName>Mr</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mrs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ms</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>CASSLink_New_User_1_System_Functions__c</picklist>
+            <values>
+                <fullName>Add Corrections</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Add Input</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Approve Corrections</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Output Airlines</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Stock Management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>View Corrections</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>View Input</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>CASSLink_New_User_2_Salutation__c</picklist>
+            <values>
+                <fullName>Mr</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mrs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ms</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>CASSLink_New_User_2_System_Functions__c</picklist>
+            <values>
+                <fullName>Add Corrections</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Add Input</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Approve Corrections</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Output Airlines</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Stock Management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>View Corrections</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>View Input</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>CASSLink_New_User_3_Salutation__c</picklist>
+            <values>
+                <fullName>Mr</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mrs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ms</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>CASSLink_New_User_3_System_Functions__c</picklist>
+            <values>
+                <fullName>Add Corrections</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Add Input</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Approve Corrections</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Output Airlines</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Stock Management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>View Corrections</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>View Input</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>CASSLink_User_1_System_Functions__c</picklist>
+            <values>
+                <fullName>Add Corrections</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Add Input</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Approve Corrections</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Output Airlines</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Stock Management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>View Corrections</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>View Input</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>CASSLink_User_2_System_Functions__c</picklist>
+            <values>
+                <fullName>Add Corrections</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Add Input</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Approve Corrections</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Output Airlines</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Stock Management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>View Corrections</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>View Input</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>CASSLink_User_3_System_Functions__c</picklist>
+            <values>
+                <fullName>Add Corrections</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Add Input</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Approve Corrections</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Output Airlines</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Stock Management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>View Corrections</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>View Input</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>CASS_Operation__c</picklist>
+            <values>
+                <fullName>Export</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Import</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>CASS_PH_Bilateral_Agreement__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>CASS_PH_Preferred_Billing_Currency__c</picklist>
+            <values>
+                <fullName>PHP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>USD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>USD and PHP %282 separate billing files to be prepared by Airline%29</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Canada_Has_Principal_Office__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Canada_Provincial_Offices__c</picklist>
+            <values>
+                <fullName>ALBERTA %28AB%29%3A GST</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BRITISH COLUMBIA %28BC%29%3A GST</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MANITOBA %28MB%29%3A GST</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NEW BRUNSWICK %28NB%29%3A HST</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NEWFOUNDLAND %26 LABRADOR %28NL%29%3A HST</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NORTHWEST TERRITORIES %28NW%29%3A GST</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NOVA SCOTIA %28NS%29%3A HST</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NUNAVUT %28NT%29%3A GST</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ONTARIO %28ON%29%3A HST</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PRINCE EDWARD ISLAND %28PE%29%3A HST</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>QUEBEC %28QC%29%3A GST QST</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SASKATCHEWAN %28SK%29%3A GST</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Card_brand_accepted_for_BSP_ticket__c</picklist>
+            <values>
+                <fullName>American Express %28AX%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Diners %28DC%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MasterCard %28CA%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UATP %28TP%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Visa %28VI%29</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Colombia_Type_of_Contributor__c</picklist>
+            <values>
+                <fullName>Asignación de NIT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Gran contribuyente</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Gran contribuyente autorretenedor</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Regimen Especial</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Regimen comun</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Regimen comun autorretenedor</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Regimen simplificado</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Contact_Resp_Salutation__c</picklist>
+            <values>
+                <fullName>Mr</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mrs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ms</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Cyprus_Turkey_based_Airline__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Digital_Signature_application__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Digital_Signature_verification__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Do_you_have_an_iiNET_account__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Do_you_want_to_add_Bank_Details__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No%2C use form 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No%2C use form 2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ETSP_Contact_Salutation__c</picklist>
+            <values>
+                <fullName>Mr</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mrs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ms</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ETSP_Contractor_Name__c</picklist>
+            <values>
+                <fullName>APG</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TAL Aviation Ltd</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>EU_Data_Privacy_Laws__c</picklist>
+            <values>
+                <fullName>A</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>B</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Ecuador_Legal_Forms_requirements__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Fin_Adm_Contact_Country__c</picklist>
+            <values>
+                <fullName>France</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Fin_Adm_Contact__c</picklist>
+            <values>
+                <fullName>Mme</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mr</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Flights_operated_in_the_BSP_country__c</picklist>
+            <values>
+                <fullName>Both</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Domestic</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>International</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>GSSA_Contact_Salutation__c</picklist>
+            <values>
+                <fullName>Mr</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mrs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ms</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Hot_files_delivery_format__c</picklist>
+            <values>
+                <fullName>ASD %28applicable for China%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BSPLink</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>IATA_EasyPay_Opt_In_Opt_Out__c</picklist>
+            <values>
+                <fullName>IN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>OUT</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ICH_Currency_of_Clearance__c</picklist>
+            <values>
+                <fullName>A</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>B</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>D</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ICH_Currency_of_Settlement__c</picklist>
+            <values>
+                <fullName>EUR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EUR-USD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GBP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GBP-USD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>USD</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_AA_Member__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_company_subject_to_EU_laws__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_publicly_traded_company__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Is_your_company_joining_the_Clearing_Hou__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Join_BSP_ECCB__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Legal_Archiving__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Local_CC_Settlement_Scheme__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Online_carrier_in_the_BSP_country__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>PDF_Report_Delivery_Format__c</picklist>
+            <values>
+                <fullName>Download Only</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>E-mail and Download</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Participate_in_AWB_Stock_Management__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Participate_in_any_Commission_Control__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Participate_in_any_Remit_scheme__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Pay_Commission_to_agents__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Pay_Standard_Commission__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Receive_Cargo_BI_statistics__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Receive_HOT_files__c</picklist>
+            <values>
+                <fullName>NO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>YES - Daily</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>YES - Per Period</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Receive_XLS_Reports__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Select_Bank_Account__c</picklist>
+            <values>
+                <fullName>ICH Account</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>New Account</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Super_User_Salutation__c</picklist>
+            <values>
+                <fullName>Mr%2E</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mrs%2E</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ms%2E</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type__c</picklist>
+            <values>
+                <fullName>BSP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CASS</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_of_Change_Requested__c</picklist>
+            <values>
+                <fullName>BSPLink Master Table</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Change of Address</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Tax Number</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_of_participation_desired__c</picklist>
             <values>
                 <fullName>Full %28direct participant%29</fullName>
                 <default>false</default>
@@ -14920,8 +16395,16 @@ AND(RecordType.DeveloperName==&quot;CASS&quot;, OR(ISPICKVAL(Receive_HOT_files__
         <active>true</active>
         <description>Airlines must select whether or not thye will joing the ICCS before submitting</description>
         <errorConditionFormula>Submitted_to_IATA__c ==TRUE &amp;&amp; 
-OR(ISPICKVAL(Case__r.CaseArea__c, &apos;Airline Joining&apos;),ISPICKVAL(Case__r.Reason1__c, &apos;Bank Account Instructions&apos;)) &amp;&amp; 
-ISPICKVAL(Airline_wish_to_join_ICCS__c, &quot;&quot;)</errorConditionFormula>
+OR(
+                Case__r.Verification__c==&apos;BSP&apos;,
+                Case__r.Verification__c==&apos;CASS Export&apos;,
+                Case__r.Verification__c==&apos;CASS Import&apos;
+) &amp;&amp;
+OR(
+                ISPICKVAL(Case__r.CaseArea__c, &apos;Airline Joining&apos;),
+                ISPICKVAL(Case__r.Reason1__c, &apos;Bank Account Instructions&apos;)
+)
+&amp;&amp; ISPICKVAL(Airline_wish_to_join_ICCS__c, &quot;&quot;)</errorConditionFormula>
         <errorDisplayField>Airline_wish_to_join_ICCS__c</errorDisplayField>
         <errorMessage>Please select whether or not you wish to join ICCS before submitting this application to IATA.</errorMessage>
     </validationRules>
@@ -14939,6 +16422,18 @@ ISPICKVAL(Airline_wish_to_join_ICCS__c, &quot;&quot;)</errorConditionFormula>
         <errorConditionFormula>Submitted_to_IATA__c ==TRUE &amp;&amp;  Accept_terms_and_conditions__c == FALSE</errorConditionFormula>
         <errorDisplayField>Accept_terms_and_conditions__c</errorDisplayField>
         <errorMessage>Please accept the Terms and Conditions before submitting the Joining Application to IATA.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Derired_Date_to_start_ICH_Lower_than_SIS</fullName>
+        <active>true</active>
+        <description>The field Desired_date_to_start_in_ICH__c can&apos;t be earlier than field Desired_date_to_start_in_SIS__c</description>
+        <errorConditionFormula>AND(
+                NOT(ISBLANK(Desired_date_to_start_in_ICH__c)),
+                NOT(ISBLANK(Desired_date_to_start_in_SIS__c)),
+    Desired_date_to_start_in_ICH__c &lt; Desired_date_to_start_in_SIS__c
+)</errorConditionFormula>
+        <errorDisplayField>Desired_date_to_start_in_ICH__c</errorDisplayField>
+        <errorMessage>Desired Date to start in ICH can&apos;t be earlier than Desired Date to start in SIS</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Russia_Double_Tax_avoiding_Treaty</fullName>

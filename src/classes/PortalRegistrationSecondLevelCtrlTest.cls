@@ -125,7 +125,7 @@ public class PortalRegistrationSecondLevelCtrlTest {
 
 	@IsTest
 	static void testGetL2Topics(){
-		List<PortalFAQs__mdt> topics = PortalRegistrationSecondLevelCtrl.getL2Topics();
+		List<PortalKnowledge__c> topics = PortalRegistrationSecondLevelCtrl.getL2Topics();
 	}
 
 	@IsTest
@@ -241,4 +241,113 @@ public class PortalRegistrationSecondLevelCtrlTest {
 
         PortalRegistrationSecondLevelCtrl.registrationWithNewAccount(acc, con);
     }
+    
+	@IsTest
+	static void testIFTPRegistrationWithNewAccount(){
+		Contact con = [SELECT Id FROM Contact WHERE LastName = 'L1 Contact'];
+
+		IATA_ISO_Country__c country = [SELECT Id, Name from IATA_ISO_Country__c WHERE Name = 'Switzerland'];
+
+		IATA_ISO_State__c state = [SELECT Id, Name FROM IATA_ISO_State__c WHERE Name = 'Vaud'];
+
+		String cityName = 'Geneva';
+		String cityId = PortalRegistrationSecondLevelCtrl.createIsoCity(cityName, state.Id, false);
+
+		Account acc = new Account(
+			Name = 'New Account',
+			Sector__c = 'Airline Supplier',
+			Category__c = 'Fuel Supplier',
+
+			Business_Street__c = 'Street',
+			BillingStreet = 'Street',
+			ShippingStreet = 'Street',
+
+			Business_Postal_Code__c = '1234',
+			BillingPostalCode = '1234',
+			ShippingPostalCode = '1234',
+
+			BillingCountry = country.Name,
+			ShippingCountry = country.Name,
+
+			IATA_ISO_Country__c = country.Id,
+			IATA_ISO_Shipping_Country__c = country.Id,
+
+			Business_City__c = cityId,
+
+			Geoname_Billing_City__c = cityId,
+			BillingCity = cityName,
+
+			Geoname_Shipping_City__c = cityId,
+			ShippingCity = cityName,
+
+			Iso_State__c = state.Id,
+
+			IATA_ISO_Billing_State__c = state.Id,
+			BillingState = state.Name,
+
+			IATA_ISO_Shipping_State__c = state.Id,
+			ShippingState = state.Name
+		);
+
+		Portal_Applications__c portalApp = new Portal_Applications__c(Name = 'IFTP');
+		insert portalApp;
+
+		//Create Accounts Roles
+		List<Account_Roles__c> accRolesList = new List<Account_Roles__c>();
+		Account_Roles__c accRolesITP = new Account_Roles__c(Name = 'ITP');
+		Account_Roles__c accRolesAirline = new Account_Roles__c(Name = 'Airline');
+		Account_Roles__c accRolesAirlineSup = new Account_Roles__c(Name = 'Airline Supplier - ITP');
+		accRolesList.add(accRolesITP);
+		accRolesList.add(accRolesAirline);
+		accRolesList.add(accRolesAirlineSup);
+		insert accRolesList;
+
+		//Create Accounts Services'
+		List<Account_Role_Services__c> accRoleServicesList = new List<Account_Role_Services__c>();
+		Account_Role_Services__c accRoleServicesITP = new Account_Role_Services__c(Name = 'IFTP - ITP', Account_Roles__c = accRolesITP.Id, Portal_Service__c = portalApp.Id);
+		Account_Role_Services__c accRoleServicesAirline = new Account_Role_Services__c(Name = 'IFTP - Airline', Account_Roles__c = accRolesAirline.Id, Portal_Service__c = portalApp.Id);
+		accRoleServicesList.add(accRoleServicesITP);
+		accRoleServicesList.add(accRoleServicesAirline);
+		insert accRoleServicesList;
+
+
+		Test.startTest();
+		PortalRegistrationSecondLevelCtrl.registrationWithNewAccount(acc, con);
+		Test.stopTest();
+	}
+
+	@IsTest
+	static void testIFTPRegistrationWithExistingAccount(){
+		Contact con = [SELECT Id FROM Contact WHERE LastName = 'L1 Contact'];
+		Account acc = [SELECT Id FROM Account WHERE Name = 'TEST ITP'];
+
+		Portal_Applications__c portalApp = new Portal_Applications__c(Name = 'IFTP');
+		insert portalApp;
+
+		//Create Accounts Roles
+		List<Account_Roles__c> accRolesList = new List<Account_Roles__c>();
+		Account_Roles__c accRolesITP = new Account_Roles__c(Name = 'ITP');
+		Account_Roles__c accRolesAirline = new Account_Roles__c(Name = 'Airline');
+		Account_Roles__c accRolesAirlineSup = new Account_Roles__c(Name = 'Airline Supplier - ITP');
+		accRolesList.add(accRolesITP);
+		accRolesList.add(accRolesAirline);
+		accRolesList.add(accRolesAirlineSup);
+		insert accRolesList;
+
+		//Create Accounts Services'
+		List<Account_Role_Services__c> accRoleServicesList = new List<Account_Role_Services__c>();
+		Account_Role_Services__c accRoleServicesITP = new Account_Role_Services__c(Name = 'IFTP - ITP', Account_Roles__c = accRolesITP.Id, Portal_Service__c = portalApp.Id);
+		Account_Role_Services__c accRoleServicesAirline = new Account_Role_Services__c(Name = 'IFTP - Airline', Account_Roles__c = accRolesAirline.Id, Portal_Service__c = portalApp.Id);
+		accRoleServicesList.add(accRoleServicesITP);
+		accRoleServicesList.add(accRoleServicesAirline);
+		insert accRoleServicesList;
+
+		String RECTYPE_ITP_AccRole = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Role__c', 'IFTP');
+		Account_Role__c accRole = new Account_Role__c(account__c = acc.id, recordtypeid = RECTYPE_ITP_AccRole);
+		insert accRole;
+
+		Boolean success = PortalRegistrationSecondLevelCtrl.registrationWithExistingAccount(acc, con);
+
+	}
+    
 }
