@@ -4624,7 +4624,8 @@ public without sharing class ISSP_AMS_Accreditation {
 		if (whereClause == 'contextFacility') {
 			query += 'WHERE Id = \'' + facilitiesId + '\' LIMIT 1';
 		} else {
-			query += 'WHERE AMS_Online_Accreditation__c = \'' + newForm.Id + '\'';
+			String formId = newForm.Id != null ? ('\'' + newForm.Id + '\'') : null;
+			query += 'WHERE AMS_Online_Accreditation__c = ' + formId;
 		}
 
 		return Database.query(query);

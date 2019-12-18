@@ -4518,4 +4518,88 @@ private class ISSP_AMS_Accreditation_Test {
 												RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Person'),
 												AMS_Pax_Accreditation_Form__c = formId);
 	}
+
+	@isTest static void fetchFacilityListTest(){
+
+		IATA_ISO_Country__c country = fetchCountry('testOptOut');
+
+		Account acct = ISSP_ObjectFactory.createNewAccount();
+		acct.BillingStreet = 'Street Example';
+		acct.BillingCity = 'City Example';
+		acct.Name = 'Facility Test';
+		acct.sector__c = 'Cargo Agent';
+		acct.Location_Type__c = 'HO';
+		acct.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+		acct.IATACode__c = '100';
+		acct.IATA_ISO_Country__c = country.Id;
+		insert acct;
+
+		Contact con = ISSP_ObjectFactory.createNewContact();
+		con.AccountId = acct.Id;
+		con.Email = 'contact@test.com';
+		insert con;
+
+		User newUser = ISSP_ObjectFactory.createPortalUser(con);
+		con.OwnerId = newUser.Id;
+		update con;
+
+		System.runAs(newUser) {
+			Case testCase = ISSP_ObjectFactory.createNewCase();
+			testCase.BSPCountry__c = 'Hong Kong (SAR), China';
+			testCase.Reason1__c = 'Cargo Agent';
+			testCase.Case_Language__c = 'English';
+			testCase.Subject = 'Facilities Case Test';
+			testCase.Account_Concerned__c = acct.Id;
+			testCase.IFAP_Country_ISO__c = 'tp';
+			insert testCase;
+
+			AMS_Pax_Accreditation_Form__c newForm = new AMS_Pax_Accreditation_Form__c();
+			newForm.IsGSA__c = 'No';
+			newForm.CurrencyIsoCode = country.CurrencyIsoCode;
+			newForm.SAAM_Case__c = testCase.Id;
+			newForm.Validation_ERRORS__c = true;
+			insert newForm;
+
+			AMS_Facility__c facility1 = new AMS_Facility__c(
+				Is_the_warehouse_sub_contracted__c = 'Yes',
+				Is_the_office_warehouse_leased__c = 'Yes',
+				RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Facility__c', 'Office'),
+				AMS_Online_Accreditation__c = newForm.Id,
+				Are_Consignments_made_ready__c = 'Yes'
+			);
+
+			AMS_Facility__c facility2 = new AMS_Facility__c(
+				Is_the_warehouse_sub_contracted__c = 'Yes',
+				Is_the_office_warehouse_leased__c = 'Yes',
+				RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Facility__c', 'Warehouse'),
+				AMS_Online_Accreditation__c = newForm.Id,
+				Are_Consignments_made_ready__c = 'Yes'
+			);
+
+			insert new List<AMS_Facility__c>{facility1, facility2};
+
+			ApexPages.currentPage().getParameters().put('caseId', testCase.Id);
+			
+			ISSP_AMS_Accreditation ctrl = new ISSP_AMS_Accreditation();
+
+			System.assert(ctrl.facilityList.size() == 2, 'Facility list must have two records');
+
+			Case testCaseWithoutForm = ISSP_ObjectFactory.createNewCase();
+			testCaseWithoutForm.BSPCountry__c = 'Hong Kong (SAR), China';
+			testCaseWithoutForm.Reason1__c = 'Cargo Agent';
+			testCaseWithoutForm.Case_Language__c = 'English';
+			testCaseWithoutForm.Subject = 'Facilities Test';
+			testCaseWithoutForm.Account_Concerned__c = acct.Id;
+			testCaseWithoutForm.IFAP_Country_ISO__c = 'tp';
+			insert testCaseWithoutForm;
+
+			ApexPages.currentPage().getParameters().put('caseId', testCaseWithoutForm.Id);
+			
+			ctrl = new ISSP_AMS_Accreditation();
+
+			System.assert(ctrl.facilityList.isEmpty(), 'Facility list must NOT have records');
+		}
+
+	}
+
 }
