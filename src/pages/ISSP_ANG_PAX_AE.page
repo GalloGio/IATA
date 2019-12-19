@@ -1697,9 +1697,11 @@
                   							<apex:pageblocksection columns="1">
                     							<apex:pageblocksectionitem >
                       								<apex:outputlabel id="dgs-label" value="{!$Label.ISSP_AMS_Step3_Indicate_GDSs}" />
-                      								<apex:inputfield value="{!newForm.ISSP_AMS_GDS_with_signed_contract__c}" />
+                      								<apex:inputfield id="dgs-options" value="{!newForm.ISSP_AMS_GDS_with_signed_contract__c}" onchange="checkNDC();"/>
                     							</apex:pageblocksectionitem>
                   							</apex:pageblocksection>
+											  
+                  							<c:ISSP_ANG_NDC validationError="{!isValError}" ndcValue="{!newForm.NDC_Transactions__c}" rendered="{!namEnabled}"/>
                  						</apex:pageBlock>
                	 					</div>
                 <!-- EO APContainer -->
@@ -1708,17 +1710,12 @@
 				                	setPortalAdmin('{!$Component.PortalAdminId}');
 				                 
 				                 	$j( document ).ready(function() {
-				                    	var dgsLabel = $j('[id$=dgs-label]')[0],
-				                       		isAgencyIatan = $j('[id$=is-agency-iatan-label]')[0],
+				                    	var isAgencyIatan = $j('[id$=is-agency-iatan-label]')[0],
 				                       		iatanCode = $j('[id$=iatan-code-label]')[0],
 				                       		isCargo = $j('[id$=is-cargo-label]')[0],
 				                       		cargoCode = $j('[id$=cargo-code-label]')[0],
 				                       		firstYear = $j('[id$=section5-first-year-label]')[0],
 				                       		secondYear = $j('[id$=section5-second-year-label]')[0];
-				                    
-					                    if (dgsLabel) {
-					                      	dgsLabel.textContent = dgsLabel.textContent.replace('* ', '') + ' *';
-					                    }
 
 					                    if (isAgencyIatan) {
 					                      	isAgencyIatan.textContent = isAgencyIatan.textContent.replace('* ', '') + ' *';
