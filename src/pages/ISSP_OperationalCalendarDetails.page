@@ -787,7 +787,7 @@
         var countries = [];
         $("#right-opt-country-filter option").each(function() {countries.push($(this).val());});
 
-		var billingPeriod = $("#multiDownloadBillingPeriod").val();
+        var billingPeriod = $("#multiDownloadBillingPeriod").val();
 
         var hasBSP = false;
         $.each($("#right-opt-operation-filter option"), function(i,v) {
@@ -1249,14 +1249,14 @@
                                     </div>
                                     <div class="col-sm-1"></div>
                                 </div>
-								<div class="row">
+                                <div class="row">
                                     <div class="col-sm-1"></div>
                                     <div class="col-sm-10">
                                         <label >{!$Label.ISSP_OperationalCalendar_Billing_Period}</label>
                                         <select id="multiDownloadBillingPeriod" class="form-control required">
-											<option value="{!YEAR(TODAY())}">{!YEAR(TODAY())}</option>
-											<option value="{!YEAR(TODAY()) -1}">{!YEAR(TODAY()) -1}</option>
-											<option value="{!YEAR(TODAY()) +1}">{!YEAR(TODAY()) +1}</option>
+                                            <option value="{!YEAR(TODAY())}">{!YEAR(TODAY())}</option>
+                                            <option value="{!YEAR(TODAY()) -1}">{!YEAR(TODAY()) -1}</option>
+                                            <option value="{!YEAR(TODAY()) +1}">{!YEAR(TODAY()) +1}</option>
                                         </select>
                                     </div>
                                     <div class="col-sm-1"></div>
