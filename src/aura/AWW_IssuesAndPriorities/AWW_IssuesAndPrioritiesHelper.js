@@ -46,8 +46,9 @@
         action.setCallback(this, function(response) {
             var state = response.getState();
             if (component.isValid() && state === "SUCCESS") {
-                var result =  response.getReturnValue()
+                var result =  response.getReturnValue();
                 component.set('v.haveAMPIssuesAndPriorities', result);
+                this.initTable(component);
             }
         });
 
