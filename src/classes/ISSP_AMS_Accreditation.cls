@@ -6026,10 +6026,6 @@ public without sharing class ISSP_AMS_Accreditation {
 			ngErrorFound = true;
 		}
 
-		if (validateNDC()) {
-			ngErrorFound = true;
-		}
-
 		return ngErrorFound;
 	}
 
