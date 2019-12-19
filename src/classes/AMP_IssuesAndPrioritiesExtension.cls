@@ -123,7 +123,6 @@ public with sharing class AMP_IssuesAndPrioritiesExtension {
             'AM_Regional__c',
             'AM_Local__c',
             'AM_Issue_with_IATA__c',
-            'AM_Public__c',
             'AM_Level_of_importance__c',
             'Status__c',
             'Details__c',
