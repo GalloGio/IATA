@@ -1112,7 +1112,6 @@ global without sharing class ISSP_OperationalCalendarController {
 			+ ' FROM Operational_Calendar__c'
 			+ ' WHERE RecordTypeId = \'' + RT_ISS_CALENDAR.getRecordTypeId() + '\''
 			+ ' AND Visible_on_the_portal__c = true '
-			//+ ' AND First_Day__c = THIS_YEAR '
 			+ ' AND ISS_operation__c IN :operationsIds '
 			+ getBillingPeriodCondition(Integer.valueOf(billingPeriod),'First_Day__c');
 
