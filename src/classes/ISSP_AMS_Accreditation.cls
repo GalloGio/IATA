@@ -6026,20 +6026,30 @@ public without sharing class ISSP_AMS_Accreditation {
 			ngErrorFound = true;
 		}
 
-		if (hqAccount.IATA_ISO_Country__r.ANG_Enable_NewGen__c) {
-			if(newForm.NDC_Transactions__c == null) {
-				newForm.NDC_Transactions__c.addError(Label.ISSP_YouMustEnter);
-				ngErrorFound = true;
-			} else if (newForm.NDC_Transactions__c == 'No' && newForm.ISSP_AMS_GDS_with_signed_contract__c == null) {
-				newForm.ISSP_AMS_GDS_with_signed_contract__c.addError(Label.ISSP_AMS_Step3_Indicate_GDSs_Short);
-				ngErrorFound = true;
-			}
-		} else if (newForm.ISSP_AMS_GDS_with_signed_contract__c == null) {
-			newForm.ISSP_AMS_GDS_with_signed_contract__c.addError(Label.ISSP_YouMustEnter);
+		if (validateNDC()) {
 			ngErrorFound = true;
 		}
 
 		return ngErrorFound;
+	}
+
+	private Boolean validateNDC() {
+		Boolean errorFound = false;
+		
+		if (hqAccount.IATA_ISO_Country__r.ANG_Enable_NewGen__c) {
+			if(newForm.NDC_Transactions__c == null) {
+				newForm.NDC_Transactions__c.addError(Label.ISSP_YouMustEnter);
+				errorFound = true;
+			} else if (newForm.NDC_Transactions__c == 'No' && newForm.ISSP_AMS_GDS_with_signed_contract__c == null) {
+				newForm.ISSP_AMS_GDS_with_signed_contract__c.addError(Label.ISSP_AMS_Step3_Indicate_GDSs_Short);
+				errorFound = true;
+			}
+		} else if (newForm.ISSP_AMS_GDS_with_signed_contract__c == null) {
+			newForm.ISSP_AMS_GDS_with_signed_contract__c.addError(Label.ISSP_YouMustEnter);
+			errorFound = true;
+		}
+
+		return errorFound;
 	}
 
 	private Boolean validateFormShipping() {
@@ -6143,16 +6153,7 @@ public without sharing class ISSP_AMS_Accreditation {
 			ngErrorFoundBR = true;
 		}
 
-		if (hqAccount.IATA_ISO_Country__r.ANG_Enable_NewGen__c) {
-			if(newForm.NDC_Transactions__c == null) {
-				newForm.NDC_Transactions__c.addError(Label.ISSP_YouMustEnter);
-				ngErrorFoundBR = true;
-			} else if (newForm.NDC_Transactions__c == 'No' && newForm.ISSP_AMS_GDS_with_signed_contract__c == null) {
-				newForm.ISSP_AMS_GDS_with_signed_contract__c.addError(Label.ISSP_AMS_Step3_Indicate_GDSs_Short);
-				ngErrorFoundBR = true;
-			}
-		} else if (newForm.ISSP_AMS_GDS_with_signed_contract__c == null) {
-			newForm.ISSP_AMS_GDS_with_signed_contract__c.addError(Label.ISSP_YouMustEnter);
+		if (validateNDC()) {
 			ngErrorFoundBR = true;
 		}
 
@@ -6463,16 +6464,7 @@ public without sharing class ISSP_AMS_Accreditation {
 						errorFound = true;
 					}
 
-					if (hqAccount.IATA_ISO_Country__r.ANG_Enable_NewGen__c) {
-						if(newForm.NDC_Transactions__c == null) {
-							newForm.NDC_Transactions__c.addError(Label.ISSP_YouMustEnter);
-							errorFound = true;
-						} else if (newForm.NDC_Transactions__c == 'No' && newForm.ISSP_AMS_GDS_with_signed_contract__c == null) {
-							newForm.ISSP_AMS_GDS_with_signed_contract__c.addError(Label.ISSP_AMS_Step3_Indicate_GDSs_Short);
-							errorFound = true;
-						}
-					} else if (newForm.ISSP_AMS_GDS_with_signed_contract__c == null) {
-						newForm.ISSP_AMS_GDS_with_signed_contract__c.addError(Label.ISSP_AMS_Step3_Indicate_GDSs);
+					if (validateNDC()) {
 						errorFound = true;
 					}
 
@@ -6529,11 +6521,7 @@ public without sharing class ISSP_AMS_Accreditation {
 
 			if (amsOfficeType == 'Branch') {
 				if ((newCase.Reason1__c == AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD || isMultiCountryNewAE || newCase.Reason1__c == AMS_Utils.CASE_REASON_AE_MULTICOUNTRY)) {
-					if(newForm.NDC_Transactions__c == null) {
-						newForm.NDC_Transactions__c.addError(Label.ISSP_YouMustEnter);
-						errorFound = true;
-					} else if (newForm.NDC_Transactions__c == 'No' && newForm.ISSP_AMS_GDS_with_signed_contract__c == null) {
-						newForm.ISSP_AMS_GDS_with_signed_contract__c.addError(Label.ISSP_AMS_Step3_Indicate_GDSs_Short);
+					if (validateNDC()) {
 						errorFound = true;
 					}
 				}
