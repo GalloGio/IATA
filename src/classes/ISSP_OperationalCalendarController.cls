@@ -1053,7 +1053,7 @@ global without sharing class ISSP_OperationalCalendarController {
 	}
 
 	@RemoteAction
-	public static ZipFileWrapper createZipFile(String option, List<String> operations, List<String> remittance, List<Id> countries, Id accountId) {
+	public static ZipFileWrapper createZipFile(String option, List<String> operations, List<String> remittance, List<Id> countries, Id accountId, String billingPeriod) {
 		System.debug('countries: ' + countries);
 
 		ZipFileWrapper zfw = new ZipFileWrapper(Label.ISSP_OperationalCalendar + ' - ' + Datetime.now());
@@ -1067,7 +1067,7 @@ global without sharing class ISSP_OperationalCalendarController {
 			if (op.contains('SIS')) otherOperations.add(op);
 			if (op.contains('ICCS')) otherOperations.add(op);
 		}
-		mapFilesByFolder.putAll(findDataForBSPCASS(option,bspcassOperations,remittance,countries,accountId));
+		mapFilesByFolder.putAll(findDataForBSPCASS(option,bspcassOperations,remittance,countries,accountId, billingPeriod));
 		mapFilesByFolder.putAll(findDataForOthers(option,otherOperations,remittance,accountId));
 
 		// set folders
@@ -1090,7 +1090,7 @@ global without sharing class ISSP_OperationalCalendarController {
 		return zfw;
 	}
 
-	public static Map<String,Map<String,FileWrapper>> findDataForBSPCASS(String option, List<String> operations, List<String> remittance, List<Id> countries, Id accountId) {
+	public static Map<String,Map<String,FileWrapper>> findDataForBSPCASS(String option, List<String> operations, List<String> remittance, List<Id> countries, Id accountId, String billingPeriod) {
 		Map<String,Map<String,FileWrapper>> mapFilesByFolder = new Map<String,Map<String,FileWrapper>>();
 		if (operations.isEmpty()) return mapFilesByFolder;
 
@@ -1112,8 +1112,9 @@ global without sharing class ISSP_OperationalCalendarController {
 			+ ' FROM Operational_Calendar__c'
 			+ ' WHERE RecordTypeId = \'' + RT_ISS_CALENDAR.getRecordTypeId() + '\''
 			+ ' AND Visible_on_the_portal__c = true '
-			+ ' AND First_Day__c = THIS_YEAR '
-			+ ' AND ISS_operation__c IN :operationsIds ';
+			//+ ' AND First_Day__c = THIS_YEAR '
+			+ ' AND ISS_operation__c IN :operationsIds '
+			+ getBillingPeriodCondition(Integer.valueOf(billingPeriod),'First_Day__c');
 
 		List<String> conditions = new List<String>();
 		if(operations != null && !operations.isEmpty()) {

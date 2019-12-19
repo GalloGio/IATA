@@ -532,9 +532,9 @@ public class ISSP_OperationalCalendarControllerTest {
             List<String> operations = new List<String> {operationType};
             List<String> remittance = new List<String>{user.contact.account.Remittance_frequency__c};
             List<Id> countries = new list<Id>{country.Id};
-            ISSP_OperationalCalendarController.createZipFile('allservices', operations, remittance, countries, user.contact.accountId);
-            ISSP_OperationalCalendarController.createZipFile('custom', operations, remittance, countries, user.contact.accountId);
-            ISSP_OperationalCalendarController.createZipFile('all', operations, remittance, countries, user.contact.accountId);
+            ISSP_OperationalCalendarController.createZipFile('allservices', operations, remittance, countries, user.contact.accountId, String.valueOf(System.Today().year()));
+            ISSP_OperationalCalendarController.createZipFile('custom', operations, remittance, countries, user.contact.accountId, String.valueOf(System.Today().year() -1));
+            ISSP_OperationalCalendarController.createZipFile('all', operations, remittance, countries, user.contact.accountId, String.valueOf(System.Today().year() +1));
         }
         Test.StopTest();
     }
@@ -585,9 +585,9 @@ public class ISSP_OperationalCalendarControllerTest {
             List<String> operations = new List<String> {operationType};
             List<String> remittance = new List<String>{user.contact.account.Remittance_frequency__c};
             List<Id> countries = new list<Id>{country.Id};
-            ISSP_OperationalCalendarController.createZipFile('allservices', operations, remittance, countries, user.contact.accountId);
-            ISSP_OperationalCalendarController.createZipFile('custom', operations, remittance, countries, user.contact.accountId);
-            ISSP_OperationalCalendarController.createZipFile('all', operations, remittance, countries, user.contact.accountId);
+            ISSP_OperationalCalendarController.createZipFile('allservices', operations, remittance, countries, user.contact.accountId, String.valueOf(System.Today().year()));
+            ISSP_OperationalCalendarController.createZipFile('custom', operations, remittance, countries, user.contact.accountId, String.valueOf(System.Today().year()));
+            ISSP_OperationalCalendarController.createZipFile('all', operations, remittance, countries, user.contact.accountId, String.valueOf(System.Today().year()));
         }
         Test.StopTest();
     }
@@ -654,9 +654,9 @@ public class ISSP_OperationalCalendarControllerTest {
             List<String> operations = new List<String> {'SIS','CASS'};
             List<String> remittance = new List<String>{user.contact.account.Remittance_frequency__c};
             List<Id> countries = new list<Id>{country.Id};
-            ISSP_OperationalCalendarController.createZipFile('allservices', operations, remittance, countries, user.contact.accountId);
-            ISSP_OperationalCalendarController.createZipFile('custom', operations, remittance, countries, user.contact.accountId);
-            ISSP_OperationalCalendarController.createZipFile('all', operations, remittance, countries, user.contact.accountId);
+            ISSP_OperationalCalendarController.createZipFile('allservices', operations, remittance, countries, user.contact.accountId, String.valueOf(System.Today().year()));
+            ISSP_OperationalCalendarController.createZipFile('custom', operations, remittance, countries, user.contact.accountId, String.valueOf(System.Today().year()));
+            ISSP_OperationalCalendarController.createZipFile('all', operations, remittance, countries, user.contact.accountId, String.valueOf(System.Today().year()));
         }
         Test.StopTest();
     }

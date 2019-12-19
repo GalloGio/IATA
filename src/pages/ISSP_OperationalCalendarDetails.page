@@ -787,6 +787,8 @@
         var countries = [];
         $("#right-opt-country-filter option").each(function() {countries.push($(this).val());});
 
+		var billingPeriod = $("#multiDownloadBillingPeriod").val();
+
         var hasBSP = false;
         $.each($("#right-opt-operation-filter option"), function(i,v) {
             hasBSP |= !v.value.includes('CASS');
@@ -800,20 +802,20 @@
 
         alert("{!$Label.ISSP_OperationalCalendar_Export_Disclaimer}");
 
-        startDownload(opt, operations, remittance, countries, "{!account.Id}", fileFormat);
+        startDownload(opt, operations, remittance, countries, "{!account.Id}", billingPeriod, fileFormat);
     }
 
     var generationCounter;
     var zipFile;
-    function startDownload(opt, operations, remittance, countries, accountId, fileFormat) {
+    function startDownload(opt, operations, remittance, countries, accountId, billingPeriod, fileFormat) {
         generationCounter = null;
         zipFile = null;
         $('#downloadBtn').attr("disabled", true);
         $("#loading-modal").modal("show");
-        console.log("createZipFile opt: " + opt + " operations: " + operations + " countries: " + countries + " accountId: " + accountId);
+        console.log("createZipFile opt: " + opt + " operations: " + operations + " countries: " + countries + " accountId: " + accountId + " billingPeriod " + billingPeriod);
         Visualforce.remoting.Manager.invokeAction(
             '{!$RemoteAction.ISSP_OperationalCalendarController.createZipFile}',
-            opt, operations, remittance, countries, accountId,
+            opt, operations, remittance, countries, accountId, billingPeriod,
             function(result, event) {
                 console.log(result);
                 if (event.status) {
@@ -1244,6 +1246,18 @@
                                             size="8"
                                             required="true"
                                             identifier="country-filter"/>
+                                    </div>
+                                    <div class="col-sm-1"></div>
+                                </div>
+								<div class="row">
+                                    <div class="col-sm-1"></div>
+                                    <div class="col-sm-10">
+                                        <label >{!$Label.ISSP_OperationalCalendar_Billing_Period}</label>
+                                        <select id="multiDownloadBillingPeriod" class="form-control required">
+											<option value="{!YEAR(TODAY())}">{!YEAR(TODAY())}</option>
+											<option value="{!YEAR(TODAY()) -1}">{!YEAR(TODAY()) -1}</option>
+											<option value="{!YEAR(TODAY()) +1}">{!YEAR(TODAY()) +1}</option>
+                                        </select>
                                     </div>
                                     <div class="col-sm-1"></div>
                                 </div>
