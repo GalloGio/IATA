@@ -330,6 +330,8 @@
         <apex:outputField rendered="{!newForm.IATA_Registered_IATAN_Agent__c == 'Yes'}" label="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.IATAN_Code__c.Label}" value="{!newForm.IATAN_Code__c}"/> 
 
         <apex:outputField label="{!$Label.ISSP_AMS_Step3_Indicate_GDSs}" value="{!newForm.ISSP_AMS_GDS_with_signed_contract__c}"/>
+		
+		<apex:outputField label="{!$Label.ISSP_NDC_Transaction_Question}" value="{!newForm.NDC_Transactions__c}" rendered="{!namEnabled}"/>
       </apex:pageBlockSection>
 
     </apex:pageBlock>
