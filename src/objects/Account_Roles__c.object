@@ -105,6 +105,11 @@
                     <default>false</default>
                     <label>System Solutions Provider</label>
                 </value>
+                <value>
+                    <fullName>ITP</fullName>
+                    <default>false</default>
+                    <label>ITP</label>
+                </value>
             </valueSetDefinition>
             <valueSettings>
                 <controllingFieldValue>Airline</controllingFieldValue>
@@ -133,6 +138,10 @@
             <valueSettings>
                 <controllingFieldValue>Airline Supplier</controllingFieldValue>
                 <valueName>System Solutions Provider</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Airline Supplier</controllingFieldValue>
+                <valueName>ITP</valueName>
             </valueSettings>
         </valueSet>
     </fields>

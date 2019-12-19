@@ -446,6 +446,15 @@ The Account Role record should be named after the functional capability for whic
         <type>Text</type>
         <unique>true</unique>
     </fields>
+    <fields>
+        <fullName>useDepartmentContactsDetail__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Wrong field used in mulesoft (to be removed 2020)</description>
+        <externalId>false</externalId>
+        <label>useDepartmentContactsDetail</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
     <label>Account Role</label>
     <listViews>
         <fullName>All</fullName>
