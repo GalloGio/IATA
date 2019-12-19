@@ -1682,7 +1682,7 @@
 						<!--NEWGEN-668-->
 						<apex:pageblocksection columns="1" rendered="{!isAccreditationModelNotNullOrLegacy}">
 							<apex:pageblocksectionitem labelStyle="width:50%">
-								<apex:outputlabel id="section5-gds" value="{!$Label.ISSP_NoC_Advise_GDS}" />
+								<apex:outputlabel id="section5-gds" value="{!$Label.ISSP_NoC_Advise_GDS} *" />
 								<apex:inputfield value="{!newForm.ISSP_AMS_GDS_with_signed_contract__c}"/>
 							</apex:pageblocksectionitem>
 						</apex:pageblocksection>

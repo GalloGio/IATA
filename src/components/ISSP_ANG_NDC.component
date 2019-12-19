@@ -1,0 +1,49 @@
+<apex:component>
+    <apex:attribute name="validationError" description="Error on form." type="Boolean" required="true"/>
+    <apex:attribute name="ndcValue" type="String" description="NDC Value From Page" required="true"/>
+
+    <apex:pageBlockSection collapsible="false" columns="1">
+        <apex:pageblocksectionitem >
+            <apex:outputlabel value="{!$Label.ISSP_NDC_Transaction_Question} *" />
+            <apex:selectradio style="width: 100px;" value="{!ndcValue}" id="ndcQuestion">
+                <apex:selectoption itemvalue="Yes" itemlabel="{!$Label.ISSP_Yes}" />
+                <apex:selectoption itemvalue="No" itemlabel="{!$Label.ISSP_No}" />
+            </apex:selectradio>
+		</apex:pageblocksectionitem>		
+	</apex:pageBlockSection>
+	
+	<apex:pageBlockSection collapsible="false" columns="1">
+		<apex:pageblocksectionitem >
+			<apex:outputlabel value="{!$Label.ISSP_NDC_Transaction_Info}" />
+			<apex:inputHidden id="ndc-empty"></apex:inputHidden>
+		</apex:pageblocksectionitem>
+	</apex:pageBlockSection>
+	
+	<script>
+        var checkNDC = (function ndcLogic() {
+			$j('[id$=ndc-empty]').parent().attr('style', 'display: none;');
+
+            if ($j('[id$=dgs-options_selected]')[0].children.length > 1) {
+                $j('[name$=ndcQuestion]')[0].disabled = true;
+                $j('[name$=ndcQuestion]')[1].checked = true;
+                $j('[name$=ndcQuestion]')[1].disabled = true;
+            } else {
+                $j('[name$=ndcQuestion]')[0].disabled = false;
+                $j('[name$=ndcQuestion]')[1].disabled = false;
+                validateNDC();
+
+                if ('{!ndcValue}' === '') {
+                    $j('[name$=ndcQuestion]')[1].checked = false;
+                }
+            }
+
+            return ndcLogic;
+        })();
+
+        function validateNDC() {
+            if ({!validationError} && (!$j('[name$=ndcQuestion]')[0].checked && !$j('[name$=ndcQuestion]')[1].checked)) {
+                $j('[id$=ndcQuestion]').addClass('requiredIndicator');
+            }
+        }
+    </script>
+</apex:component>

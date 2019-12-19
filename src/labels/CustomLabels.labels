@@ -23365,7 +23365,15 @@ Select at least one authorised signatory, and choose the Financial Assessment co
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Step3 Indicate GDSs</shortDescription>
-        <value>* Please indicate the GDS(s) with which you have signed a contract</value>
+        <value>Please indicate the GDS(s) with which you have signed a contract</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Step3_Indicate_GDSs_Short</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Step3_Indicate_GDSs_Short</shortDescription>
+        <value>Please indicate the GDS(s)</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step3_Multicountry_Location</fullName>
@@ -30486,6 +30494,22 @@ this is the tiess topic help</value>
         <protected>false</protected>
         <shortDescription>ISSP My Contact Action</shortDescription>
         <value>Action</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_NDC_Transaction_Question</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_NDS_Transaction_Question</shortDescription>
+        <value>In absence of contract with GDS, kindly confirm you carry only NDC transactions with Airlines</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_NDC_Transaction_Info</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_NDC_Transaction_Info</shortDescription>
+        <value>On confirming, you will be asked to provide IATA with one letter of recommendation from an IATA Member Airline</value>
     </labels>
     <labels>
         <fullName>ISSP_NewCase</fullName>
