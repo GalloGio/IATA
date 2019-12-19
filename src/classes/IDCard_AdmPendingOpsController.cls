@@ -35,6 +35,9 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
     Global and calculated var priunted on page
 
     */
+
+	public Map<String, Decimal> discountPerKeyAccount {get; set;}
+
     public String appsCurrency  {get; set;}
     public Double tPrice  {get; set;}
     public Double vatPrice  {get; set;}
@@ -120,6 +123,7 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
         contactsPerApplication = new Map<String, ContactProxy>();
         isApplicationreadyMap = new Map<String, boolean> ();
         isNotDigitalOnly = new Map<String, Boolean>();
+		discountPerKeyAccount = new Map<String, Decimal>();
         singeAppRT = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Single_ID_Card_Operation');
 
         system.debug('[IDCard_AdmPendingOpsController] LOAD LIST');
@@ -152,6 +156,11 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
             iataCodeSubstring = iataCodeSubstring + (b ? ' or IATA_code__c = ' : ' IATA_code__c = ') + ' \'' + aCode + '\' ';
             b = true;
         }
+
+		for(Account acc : [SELECT Id, IATACode__c, ID_Card_Key_Account_Discount__c FROM Account WHERE IATACode__c in :keyContactAndDelegateForAccountList.keySet()]){
+			discountPerKeyAccount.put(acc.IATACode__c, acc.ID_Card_Key_Account_Discount__c);
+		}
+
         system.debug('[IDCard_AdmPendingOpsController]load list iataCodeSubstring=' + iataCodeSubstring);
         //pendingApplications   = new List<PendingApplicationProxy>();
         string IdCardApplicationQuery = 'SELECT ' + TransformationHelper.getAllFields(Schema.SObjectType.ID_Card_Application__c.fields.getMap()) +
@@ -561,9 +570,17 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
                 app.Card_Type__c = 'digital';
                 isToPrint = false;
             }
-            app.Applicable_Fee__c = IDCardUtil.GetApplicableFee(priceTable, isReissue, false, isITDIPackage, null, isToPrint);
-            Map<String, decimal> detailledFees = new Map<String, decimal>();
-            detailledFees = IDCardUtil.GetDetailledFees(priceTable, isReissue, false, isITDIPackage, null, null, isToPrint);
+			Decimal discountPercentage = discountPerKeyAccount.get(app.IATA_Code__c);
+			Map<String, decimal> detailledFees = new Map<String, decimal>();
+			if(discountPercentage != null && discountPercentage != 0){
+				Promotion__c discount = new Promotion__c(Promotion_Value__c = discountPercentage);
+				app.Applicable_Fee__c = IDCardUtil.GetApplicableFee(priceTable, isReissue, false, isITDIPackage, discount, isToPrint);
+				detailledFees = IDCardUtil.GetDetailledFees(priceTable, isReissue, false, isITDIPackage, discount, null, isToPrint);
+
+			} else {
+				app.Applicable_Fee__c = IDCardUtil.GetApplicableFee(priceTable, isReissue, false, isITDIPackage, null, isToPrint);
+				detailledFees = IDCardUtil.GetDetailledFees(priceTable, isReissue, false, isITDIPackage, null, null, isToPrint);
+			}
             app.Physical_Card_Fee__c = detailledFees.get('PhysCardFee');
             app.ID_Card_Fee__c = detailledFees.get('IDCardFee');
             if(validatedApplication.keyset().contains(app.Id)){
