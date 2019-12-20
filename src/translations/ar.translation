@@ -1073,6 +1073,10 @@
         <name>ANG_ISSP_IEP_AuthorisedSignatory_auth_msg_Administrator</name>
     </customLabels>
     <customLabels>
+        <label><!-- ANG_ISSP_IEP_Indonesia_msg --></label>
+        <name>ANG_ISSP_IEP_Indonesia_msg</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ModelBanking India --></label>
         <name>ANG_ISSP_IEP_ModelBanking_India_msg</name>
     </customLabels>
@@ -3145,7 +3149,7 @@
         <name>CSP_Reset_Password_Success_Msg_2</name>
     </customLabels>
     <customLabels>
-        <label>&lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;.الرجاء النقر هنا للاتصال بنا&lt;/a&gt; .تم تحديد مصدر عنوان (آيبي) لجهاز الكمبيوتر الخاص بكم على أنه في إحدى الدول المدرجة على قائمة الحظر من قبل السلطات الأمريكية. يتوافق النظام الأساسي الذي يدعم بوابة عملائنا مع لوائح الولايات المتحدة، وبالتالي، لا يمكننا حاليًا توفير الوصول إلى بوابة العملاء من عنوان (آيبي) الحالي الخاص بكم</label>
+        <label>&lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;.الرجاء النقر هنا للاتصال بنا&lt;/a&gt; .تم تحديد مصدر عنوان (آيبي) لجهاز الكمبيوتر الخاص بكم على أنه في إحدى الدول المدرجة على قائمة الحظر من قبل السلطات الأمريكية. يتوافق النظام الأساسي الذي يدعم بوابة عملائنا مع لوائح الولايات المتحدة، وبالتالي، لا يمكننا حاليًا توفير الوصول إلى بوابة العملاء من عنوان (آيبي) الحالي الخاص بكم</label>
         <name>CSP_Restricted_Login_Message</name>
     </customLabels>
     <customLabels>
@@ -17963,7 +17967,7 @@ and
         <name>ISSP_Salutation</name>
     </customLabels>
     <customLabels>
-        <label>لقد تم تحديد عنوان الIP الخاص بجهازك على أنه يقع في دولة خاضعة للحظر من قبل السلطات الأمريكية&lt;br/&gt;إن النظام الداعم لبوابة أياتا لخدمة العملاء مطابق للأنظمة الأمريكية. لذلك لن يكون بإمكانك الدخول إلى الموقع من العنوان الحالي لجهازك&lt;br/&gt;اضغط&lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.aspx&quot; &gt;هنا&lt;/a&gt;للاتصال بمكتب أياتا الإقليمي</label>
+        <label>لقد تم تحديد عنوان الIP الخاص بجهازك على أنه يقع في دولة خاضعة للحظر من قبل السلطات الأمريكية&lt;br/&gt;إن النظام الداعم لبوابة أياتا لخدمة العملاء مطابق للأنظمة الأمريكية. لذلك لن يكون بإمكانك الدخول إلى الموقع من العنوان الحالي لجهازك&lt;br/&gt;اضغط&lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quot; &gt;هنا&lt;/a&gt;للاتصال بمكتب أياتا الإقليمي</label>
         <name>ISSP_Sanctions_Message</name>
     </customLabels>
     <customLabels>

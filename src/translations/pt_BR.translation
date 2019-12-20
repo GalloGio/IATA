@@ -1073,6 +1073,10 @@
         <name>ANG_ISSP_IEP_AuthorisedSignatory_auth_msg_Administrator</name>
     </customLabels>
     <customLabels>
+        <label><!-- ANG_ISSP_IEP_Indonesia_msg --></label>
+        <name>ANG_ISSP_IEP_Indonesia_msg</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ModelBanking India --></label>
         <name>ANG_ISSP_IEP_ModelBanking_India_msg</name>
     </customLabels>
@@ -3148,7 +3152,7 @@
         <name>CSP_Reset_Password_Success_Msg_2</name>
     </customLabels>
     <customLabels>
-        <label>O IP do seu computador foi identificado como vindo de um dos países listados como embargados pelas autoridades dos EUA.&lt;br/&gt; A plataforma que suporta nosso Portal do cliente está em conformidade com os regulamentos dos EUA e, portanto, atualmente não podemos fornecer acesso ao portal do cliente a partir do seu endereço IP atual.&lt;br/&gt;&lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Clique aqui&lt;/a&gt; para entrar em contato conosco.</label>
+        <label>O IP do seu computador foi identificado como vindo de um dos países listados como embargados pelas autoridades dos EUA.&lt;br/&gt; A plataforma que suporta nosso Portal do cliente está em conformidade com os regulamentos dos EUA e, portanto, atualmente não podemos fornecer acesso ao portal do cliente a partir do seu endereço IP atual.&lt;br/&gt;&lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Clique aqui&lt;/a&gt; para entrar em contato conosco.</label>
         <name>CSP_Restricted_Login_Message</name>
     </customLabels>
     <customLabels>
@@ -17975,7 +17979,7 @@ Se desejar redefinir a sua senha, volte à tela de login e use a função Esquec
         <name>ISSP_Salutation</name>
     </customLabels>
     <customLabels>
-        <label>O código IP de seu computador foi identificado de uma fonte localizada em um país listado como em embargo com as autoridades Norte Americanas&lt;br/&gt;A plataforma que suporta o portal do cliente cumpre com as regulações dos Estados Unidos da America, portanto estamos momentaneamente incapazes de fornecer acesso ao Portal do cliente de seu código IP.&lt;br/&gt;Clique&lt;a href=&quot;http://www.iata.org/about/Pages/offices.aspx&quot; &gt;aqui&lt;/a&gt;para contatar um escritório local da IATA</label>
+        <label>O código IP de seu computador foi identificado de uma fonte localizada em um país listado como em embargo com as autoridades Norte Americanas&lt;br/&gt;A plataforma que suporta o portal do cliente cumpre com as regulações dos Estados Unidos da America, portanto estamos momentaneamente incapazes de fornecer acesso ao Portal do cliente de seu código IP.&lt;br/&gt;Clique &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quot; &gt;aqui&lt;/a&gt; para contatar um escritório local da IATA.</label>
         <name>ISSP_Sanctions_Message</name>
     </customLabels>
     <customLabels>
