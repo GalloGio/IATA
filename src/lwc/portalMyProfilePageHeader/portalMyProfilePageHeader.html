@@ -24,22 +24,23 @@
 
                         <div class="myProfileHeader">
                             <!-- Image spacers -->
-                            
+
                             <!--div class="slds-hide_medium imagespacer">< Image ></div>
                             <div class="slds-show_medium imagespacerSmall">< Image ></div-->
 
                             <!-- Header My Profile Info -->
                             <div class="slds-grid slds-wrap slds-gutters_medium slds-p-vertical_x-large headerMyProfile" >
-                                <div class="headerProfileImage">
+								<!-- Bellow code commented to solve SNOW issue INC518499, but mantained to possible future use -->
+                                <!-- <div class="headerProfileImage">
                                     <div class="profileImageContainer">
-                                        <!--<img src={alertIcon} width="160px">-->
+                                        <img src={alertIcon} width="160px">
                                     </div>
-                                    
-                                </div>
+
+                                </div> -->
                                 <div class="headerProfileContent">
                                     <div class="slds-col slds-size_3-of-3 slds-medium-size_3-of-3 slds-large-size_3-of-3 profileContactName">
-                                    <div class="text-medium text-bold text-darkGray"> {contact.Name} </div>
-                                </div>
+                                    	<div class="text-medium text-bold text-darkGray"> {contact.Name} </div>
+                                	</div>
 
                                     <!-- Labels -->
                                     <div class="slds-col slds-size_1-of-3 slds-medium-size_1-of-3 slds-large-size_1-of-3 contentItem">
@@ -100,7 +101,7 @@
             button1-label={emptyString}
             button2-label={labels.CSP_L2_Go_To_Homepage}
             onbuttontwoaction={closeAlreadyL2Popup}>
-        </c-portal-registration-generic-modal>        
+        </c-portal-registration-generic-modal>
     </template>
 
     <template if:true={displaySecondLevelRegistration}>
