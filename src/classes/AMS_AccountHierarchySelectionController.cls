@@ -40,6 +40,7 @@ public class AMS_AccountHierarchySelectionController {
 					, 'Change_of_location_type_behavior__c'
 					, 'STEP6__c'
 					, 'Process__c'
+					, 'Account__r.ANG_Accreditation_Model__c'
 				};
 			}
 			return oscarFields;
@@ -59,6 +60,7 @@ public class AMS_AccountHierarchySelectionController {
 					, 'Status__c'
 					, 'BillingCity'
 					, 'Category__c'
+					, 'IATA_ISO_Country__r.AMS_Settlement_System__c'
 				};
 			}
 			return accountFields;
@@ -73,10 +75,15 @@ public class AMS_AccountHierarchySelectionController {
 			//FM AMSU-1 27-09-2017 - On Correction Process we don't show notes!
 			if(!isCorrection){
 
-				if(isVoluntaryRelinquishment) notes.add('Voluntary relinquishment: select from the below list all the agencies listed in the pdf form received as attachment of the OSCAR. All the selected Agencies will be processed in the same way, there is no distinction between Main Agency and the other ones.');
-
-				else if(oscar.Type_of_Change__c != null){
-
+				if (isVoluntaryRelinquishment)
+				{
+					notes.add('Voluntary relinquishment: select from the below list all the agencies listed in the pdf form received as attachment of the OSCAR. All the selected Agencies will be processed in the same way, there is no distinction between Main Agency and the other ones.');
+					if (isMulticountry && isOnlyGeBspLeft()){
+						notes.add('A conversion case from GoGlobal to GoStandard has been created, please proceed to that case to complete the process of the remaining locations.');
+					}
+				}
+				else if (oscar.Type_of_Change__c != null)
+				{
 					if(tocList.contains(AMS_Utils.LEGAL_STATUS) || tocList.contains(AMS_Utils.NAME)) notes.add('Change of name/ legal status / vmfr will be applied to all the agencies selected');
 					if(tocList.contains(AMS_Utils.LOCATION) || tocList.contains(AMS_Utils.LOCATION_INSPECTION)) notes.add('The change of location will be applied only to the main agency. If the change is for an SA, the OSCAR opened for HO or BR, will also change the address for SAs associated to it, please make sure to select the SA Account also.');
 					//if(tocList.contains(AMS_Utils.LOCATION) || tocList.contains(AMS_Utils.LOCATION_INSPECTION)) notes.add('The change of location will be applied only to the main agency. If the change is for an SA, it is possible to select the HO or a BR as target agency. In this case the SA will be moved in the hierarchy to be placed under the selected agency');
@@ -93,7 +100,18 @@ public class AMS_AccountHierarchySelectionController {
 		set;
 	}
 
+	private boolean isOnlyGeBspLeft()
+	{
+		Set<Id> bsp = new Set<Id>();
 
+		for (HierarchyItem i : hierarchy.values())
+		{
+			if (!i.selected && !i.main)
+				bsp.add(i.acc.IATA_ISO_Country__r.AMS_Settlement_System__c);
+		}
+
+		return bsp.size() == 1;
+	}
 
 	private Map<String, String> errorMessages{
 		get{
@@ -163,8 +181,6 @@ public class AMS_AccountHierarchySelectionController {
 		get{
 			if(processDetails == null){
 				processDetails = new Map<Id, AMS_Process_Detail__c>();
-				//DTULLO: Added check on recordtype
-				//for(AMS_Process_Detail__c pd : [SELECT Id, Account__c FROM AMS_Process_Detail__c WHERE Oscar__c = :oscarId]){
 				for(AMS_Process_Detail__c pd : [SELECT Id, Account__c FROM AMS_Process_Detail__c WHERE Oscar__c = :oscarId and recordtype.developername='Agency_Involved']){
 					processDetails.put(pd.Account__c, pd);
 				}
@@ -201,6 +217,12 @@ public class AMS_AccountHierarchySelectionController {
 	public Boolean isCorrection{
 		get{
 			return (oscar.Process__c == AMS_Utils.COR);
+		}
+	}
+	
+	public Boolean isMulticountry {
+		get {
+			return oscar.Account__r.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
 		}
 	}
 
