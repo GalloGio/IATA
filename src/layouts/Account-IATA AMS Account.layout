@@ -810,6 +810,7 @@
     </layoutSections>
     <miniLayout>
         <fields>Name</fields>
+        <fields>RecordTypeId</fields>
         <fields>ParentId</fields>
         <fields>Site</fields>
         <fields>BillingAddress</fields>

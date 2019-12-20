@@ -8,7 +8,8 @@ global class ANG_OscarProcessHelper {
 
 	/* EasyPay Service Providers */
 	public static final Set<String> MODEL_A_PROVIDERS = new Set<String>{'IATA EasyPay (EDENRED)'};
-	public static final Set<String> MODEL_B_PROVIDERS = new Set<String>{'IATA EasyPay (EDENRED)','IATA EasyPay (MSTS)'};
+	public static final Set<String> MODEL_B_PROVIDERS = new Set<String>{ ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_EDENRED, ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_MSTS, ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_2C2P };
+	public static final Set<String> IEP_MODEL_PROVIDERS = new Set<String>{'Model A', 'Model B', 'Model B+'};
 
 	public static boolean isIATACodeGenerationRunning = false;
 
@@ -271,13 +272,6 @@ global class ANG_OscarProcessHelper {
 				returnMessage += 'The Oscar already has a Change Code inserted (skipped). \n\r';
 				System.debug('[ANG_OscarProcessHelper] The Oscar already has a Change Code inserted (skipped).');
 
-			}
-
-			//NEWGEN-4852 - Copy Parent Account (GE/HE) information to the staging area of AE in same BSP - Change Code NEW
-			if(iataCodeGeneration && changecodeGeneration && (oscar.Process__c == AMS_Utils.NEWGESTANDARD || (oscar.Process__c == AMS_Utils.MCAE && oscar.Account__r.Location_Type__c == AMS_Utils.HE))){
-				System.debug('[ANG_OscarProcessHelper] Call asynchronous process ANG_MulticountryCopyParentInfo for Change Code - NEW');
-				ID jobID = System.enqueueJob(new ANG_MulticountryCopyParentInfo(new List<ID>{theAccount.id}, 'NEW'));
-				System.debug('[ANG_OscarProcessHelper] JobID:' + jobID);
 			}
 
 			if(iataCodeGeneration && dataMigration && changecodeGeneration && !updater.oscarMap.get(oscar.Id).Flag_Data_to_SAPECC__c){
@@ -2166,7 +2160,8 @@ global class ANG_OscarProcessHelper {
 			FROM Contact WHERE AccountId IN :accsMap.keySet()
 			AND Id IN (SELECT Contact__c FROM Portal_Application_Right__c WHERE Right__c = 'Access Granted'
 				AND ANG_Portal_Service_Role__c = 'IEP Admin'
-				AND Portal_Application__r.Name IN : (model == 'A' || model == 'setup' ? MODEL_A_PROVIDERS : MODEL_B_PROVIDERS))]){
+				AND Contact__r.Account.IATA_ISO_Country__r.ANG_IEP_Model__c IN :IEP_MODEL_PROVIDERS
+				AND Contact__r.AccountId IN :accsMap.keySet())]){
 
 			contactAcc.put(con.AccountId,con);
 		}
@@ -2652,10 +2647,9 @@ global class ANG_OscarProcessHelper {
 			[SELECT
 				Id,
 				Status
-				FROM
-				Case
-				WHERE
-					AccountId IN :accountIdSet
+			FROM Case
+			WHERE
+				AccountId IN :accountIdSet
 				AND RecordTypeId = :recordTypeId
 				AND Status != :newCaseStatus
 			]

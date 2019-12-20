@@ -14035,6 +14035,17 @@
     </searchLayouts>
     <sharingModel>Private</sharingModel>
     <validationRules>
+        <fullName>Block_Opportinities_in_MSO_Accounts</fullName>
+        <active>true</active>
+        <description>Opportunities cannot be created under an MSO account. They can only be created under the airline headquarter or branch account.</description>
+        <errorConditionFormula>AND
+(
+Account.RecordType.Name = &apos;Agency&apos;,
+Text(Account.Category__c) = &apos;MSO Member Sales Office&apos;
+)</errorConditionFormula>
+        <errorMessage>Opportunities cannot be created under an MSO account. They can only be created under the airline headquarter or branch account.</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>CLOSEDOPP_ORDERNB</fullName>
         <active>true</active>
         <errorConditionFormula>AND (

@@ -776,8 +776,9 @@
                 <apex:param name="vatno" value="" assignto="{!vatNUmber}" />
               </apex:actionfunction>
 							
-							<apex:actionFunction name="updateStatus" action="{!updateStatusMCForm}" rerender=""/>
-							<apex:actionFunction name="reRenderImportOwnersMCModal" rerender="importOwnersMCModal, ownershipLinks"/>
+				<apex:actionFunction name="updateStatus" action="{!updateStatusMCForm}" rerender=""/>
+				<apex:actionFunction name="reRenderImportOwnersMCModal" rerender="importOwnersMCModal, ownershipLinks"/>
+				<apex:actionFunction name="navigateToOwners" action="{!saveAndNavigateToOwnersForm}" rerender="" status="WaitingStatus" />
               
 							<apex:pageBlock id="AMSBlock">
                 <div class="alert alert-info" role="alert">

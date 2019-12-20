@@ -23,7 +23,8 @@ public class PortalRecommendationCtrlTest {
             User usr = ISSP_ObjectFactory.createPortalUser(con);
             System.runAs(usr) {
             Product2 prd = new Product2(
-            name ='PRd1'
+            name ='PRd1',
+            IsActive = true
             );
 			
             insert prd;

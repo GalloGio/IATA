@@ -1,0 +1,21 @@
+public with sharing class TreasuryDashboardPowerBiPageCtrl {
+
+    public String embedUrl{get;set;}
+    public String accessToken{get;set;}
+    public String objectId{get;set;}
+    public String tokenType{get;set;}
+
+
+    public TreasuryDashboardPowerBiPageCtrl() {
+        this.embedUrl = Apexpages.currentPage().getParameters().get('embedUrl');
+        this.accessToken = Apexpages.currentPage().getParameters().get('accessToken');
+        this.objectId = Apexpages.currentPage().getParameters().get('objectId');
+        this.tokenType = Apexpages.currentPage().getParameters().get('tokenType');
+    }
+
+
+    public PageReference redirect() {
+        return null;
+    }
+
+}

@@ -886,7 +886,11 @@ public without sharing class ISSP_Case {
                 newCase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Inter_DPCs');
                 newCase.Account_Concerned__c = whoToContact;
             } else {
-                newCase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Service_Request');
+                if(newCase.CaseArea__c == 'iiNet'){
+                    newCase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Cases_Global');
+                } else{
+                    newCase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Service_Request');
+                }
             }
             Database.DMLOptions dmo = new Database.DMLOptions();
             dmo.assignmentRuleHeader.useDefaultRule = true;
@@ -974,7 +978,11 @@ public without sharing class ISSP_Case {
                 newCase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Inter_DPCs');
                 newCase.Account_Concerned__c = whoToContact;
             } else {
-                newCase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Service_Request');
+                if(newCase.CaseArea__c == 'iiNet'){
+                    newCase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Cases_Global');
+                } else{
+                    newCase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Service_Request');
+                }
             }
             Database.DMLOptions dmo = new Database.DMLOptions();
             dmo.assignmentRuleHeader.useDefaultRule = true;

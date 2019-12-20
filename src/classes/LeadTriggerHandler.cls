@@ -83,7 +83,7 @@ public class LeadTriggerHandler {
         //Map the emails with the leads looping on oldLeads because the change field could be Email itself
         for(Lead l : oldLeads){
             String email = String.isBlank(l.Email) ? null : l.Email.toLowerCase();
-            mapEmailLead.put(l.email, l);
+            mapEmailLead.put(email, l);
         }
    
         List<String> individualsToSearchByEmail = new List<String>(mapEmailLead.keySet());
