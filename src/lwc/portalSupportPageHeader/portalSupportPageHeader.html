@@ -2,22 +2,24 @@
         <div style={getBackgroundClass}>
             <c-portal-page-container>
                 <span slot="componentContent">
-                    <lightning-layout multiple-rows horizontal-align="spread">
-                        <lightning-layout-item flexibility="auto" >
-                            <c-portal-breadcrumbs show-in-white=true></c-portal-breadcrumbs>
-                        </lightning-layout-item>
-                        <lightning-layout-item flexibility="auto" >
+                    <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_10-of-12">
+                                <c-portal-breadcrumbs show-in-white=true></c-portal-breadcrumbs>
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_2-of-12">
                             <template if:true={guestUser}>
                                 <lightning-combobox 
                                     name="userLang" 
                                     value={language} 
                                     options={langOptions}
                                     onchange={handleChangeLang}
-                                    class="slds-p-bottom_x-small languageSelection borderlessCombobox">
+                                    class="slds-p-bottom_x-small languageSelection borderlessCombobox"
+                                    style="margin-top:-5px">
                                 </lightning-combobox>
                             </template>
-                        </lightning-layout-item>
-                    </lightning-layout>
+                            </div>  
+                    </div> 
                     
                     <div class="slds-p-vertical_x-large text-white text-xlarge text-bold">
                         <div>{label.CSP_Support_HeaderTitle}</div>
