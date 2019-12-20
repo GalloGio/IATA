@@ -4,12 +4,12 @@
 @IsTest
 private class LabelTranslatorControllerTest {
 
-    @isTest static void testTranslation(){
+	@isTest static void testTranslation(){
 
-        PageReference pageRef = Page.LabelTranslator;
-        Test.setCurrentPage(pageRef);
-        LabelTranslatorController controller = new LabelTranslatorController();
+		PageReference pageRef = Page.LabelTranslator;
+		Test.setCurrentPage(pageRef);
+		LabelTranslatorController controller = new LabelTranslatorController();
 
-    }
+	}
 
 }

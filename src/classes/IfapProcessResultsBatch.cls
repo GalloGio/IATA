@@ -43,7 +43,7 @@ global class IfapProcessResultsBatch implements Database.Batchable<sObject>, Dat
 
 			TransformationHelper.trgAccountISSP_AfterBeforInsertDeleteUpdateUndelete = true;
 			TransformationHelper.CalculateBusinessHoursAges = true;
-		  //  CaseChildHelper.noValidationsOnTrgCAseIFAP  = true;
+			//  CaseChildHelper.noValidationsOnTrgCAseIFAP  = true;
 
 			// Do the inserts
 			Database.SaveResult[] listInsertResult = Database.insert(listInserts,false);
@@ -133,7 +133,7 @@ global class IfapProcessResultsBatch implements Database.Batchable<sObject>, Dat
 
 			}
 		}
-		  }catch(Exception e){
+			}catch(Exception e){
 
 			TransformationHelper.sendEmailSupport('FATAL in saving the amazonfile record: IfapProcessBatch processSaveResults',' amazonFilesToInsert  '  +amazonFilesToInsert + '  listObject ' + listObject+ e.getMessage() + '   ' + e.getStackTraceString());
 		}
@@ -161,11 +161,11 @@ global class IfapProcessResultsBatch implements Database.Batchable<sObject>, Dat
 			//Sending email if something wrong happend
 			List<String> supEmails = new List<String>();
 			 for (SalesforceSupportEmails__c email : SalesforceSupportEmails__c.getAll().values())
-				  supEmails.add(email.Support_Email__c);
+					supEmails.add(email.Support_Email__c);
 
 			if(!errorMap.isEmpty()){
 				String body = 'The IfapProcessResultsBatch job has finished\n'
-							  + 'There were ' + errorMap.size() + ' erros. Please find error list attached.';
+								+ 'There were ' + errorMap.size() + ' erros. Please find error list attached.';
 
 				//Creating CSV file with errors
 				String finalstr = 'Id,Error,Errors-XML\n';
@@ -231,7 +231,7 @@ System.debug('############ processPWCResults ' + pwcress);
 		try{
 
 
-				   if(pwcress == null)throw new transformationException('the response from pwc was null check the MFT connection it will be running again in one hour');
+					 if(pwcress == null)throw new transformationException('the response from pwc was null check the MFT connection it will be running again in one hour');
 
 			//Getting all the cases
 			List<String> casenumbers = new List<String>();

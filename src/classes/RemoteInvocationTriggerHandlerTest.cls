@@ -3,14 +3,14 @@ public class RemoteInvocationTriggerHandlerTest {
 
 	@isTest
 	public static void testAssignRecordType() {
-		Remote_Invocation__c re = new Remote_Invocation__c(Internal_ID__c = '1234567', 
+		Remote_Invocation__c re = new Remote_Invocation__c(Internal_ID__c = '1234567',
 			Integration_Transaction_ID__c = 'idFromMulesoft', Request_Type__c = RemoteInvocationTriggerHandler.NEWGEN_EASY_PAY,
 			status__c = RemoteInvocationTriggerHandler.REMOTE_INVOCATION_STATUS_INITIALIZING);
-		
+
 		insert re;
 
 		List<Remote_Invocation__c> fetchedRe = [SELECT recordtypeid FROM Remote_Invocation__c WHERE ID = :re.id ];
-		System.assertEquals(fetchedRe[0].recordtypeid, RemoteInvocationTriggerHandler.RECTYPE_NEWGEN); 
+		System.assertEquals(fetchedRe[0].recordtypeid, RemoteInvocationTriggerHandler.RECTYPE_NEWGEN);
 
 	}
 
@@ -30,25 +30,25 @@ public class RemoteInvocationTriggerHandlerTest {
 		Portal_Applications__c pa = new Portal_Applications__c(name = 'IATA EasyPay (EDENRED)');
 		insert pa;
 
-		Portal_Application_Right__c par = new Portal_Application_Right__c(Right__c = 'Access Granted', 
+		Portal_Application_Right__c par = new Portal_Application_Right__c(Right__c = 'Access Granted',
 			ANG_Portal_Service_Role__c = 'IEP Admin',Contact__c = c.id, Portal_Application__c = pa.id);
 		insert par;
 
-		Remote_Invocation__c re = new Remote_Invocation__c(Internal_ID__c = '1234567', 
+		Remote_Invocation__c re = new Remote_Invocation__c(Internal_ID__c = '1234567',
 			Integration_Transaction_ID__c = 'idFromMulesoft', Request_Type__c = RemoteInvocationTriggerHandler.NEWGEN_EASY_PAY,
 			status__c = RemoteInvocationTriggerHandler.REMOTE_INVOCATION_STATUS_INITIALIZING);
-		
+
 		insert re;
 
 		Remote_Invocation_Artefact__c artifact = new Remote_Invocation_Artefact__c(Remote_Invocation__c = re.id, Internal_ID__c = '1234567');
 		insert artifact;
 
-		//Making the process starting to create the Bank Account Case OSCAR 
+		//Making the process starting to create the Bank Account Case OSCAR
 		re.Status__c = RemoteInvocationTriggerHandler.REMOTE_INVOCATION_STATUS_PROGRESS;
 		update re;
 
-		List<AMS_OSCAR__c> oscars = [SELECT id FROM AMS_OSCAR__c];		
-		System.assertEquals(oscars.size(), 1); 
+		List<AMS_OSCAR__c> oscars = [SELECT id FROM AMS_OSCAR__c];
+		System.assertEquals(oscars.size(), 1);
 
 	}
 
@@ -69,21 +69,21 @@ public class RemoteInvocationTriggerHandlerTest {
 		Portal_Applications__c pa = new Portal_Applications__c(name = 'IATA EasyPay (EDENRED)');
 		insert pa;
 
-		Portal_Application_Right__c par = new Portal_Application_Right__c(Right__c = 'Access Granted', 
+		Portal_Application_Right__c par = new Portal_Application_Right__c(Right__c = 'Access Granted',
 			ANG_Portal_Service_Role__c = 'IEP Admin',Contact__c = c.id, Portal_Application__c = pa.id);
 		insert par;
 
 		try{
-			Remote_Invocation__c re = new Remote_Invocation__c(Internal_ID__c = '1234567', 
+			Remote_Invocation__c re = new Remote_Invocation__c(Internal_ID__c = '1234567',
 				Integration_Transaction_ID__c = 'idFromMulesoft', Request_Type__c = RemoteInvocationTriggerHandler.NEWGEN_EASY_PAY,
 				status__c = RemoteInvocationTriggerHandler.REMOTE_INVOCATION_STATUS_INITIALIZING);
-			
+
 			insert re;
 
 			Remote_Invocation_Artefact__c artifact = new Remote_Invocation_Artefact__c(Remote_Invocation__c = re.id, Internal_ID__c = '1234567');
 			insert artifact;
 
-			//Making the process starting to create the Bank Account Case OSCAR 
+			//Making the process starting to create the Bank Account Case OSCAR
 			re.Status__c = RemoteInvocationTriggerHandler.REMOTE_INVOCATION_STATUS_PROGRESS;
 			update re;
 		}catch(Exception e){
@@ -91,7 +91,7 @@ public class RemoteInvocationTriggerHandlerTest {
 		}
 
 		List<AMS_OSCAR__c> oscars = [SELECT id FROM AMS_OSCAR__c];
-		System.assertEquals(oscars.size(), 0); 
+		System.assertEquals(oscars.size(), 0);
 
 	}
 
@@ -112,22 +112,22 @@ public class RemoteInvocationTriggerHandlerTest {
 		Portal_Applications__c pa = new Portal_Applications__c(name = 'IATA EasyPay (EDENRED)');
 		insert pa;
 
-		Portal_Application_Right__c par = new Portal_Application_Right__c(Right__c = 'Access Granted', 
+		Portal_Application_Right__c par = new Portal_Application_Right__c(Right__c = 'Access Granted',
 			ANG_Portal_Service_Role__c = 'IEP Admin',Contact__c = c.id, Portal_Application__c = pa.id);
 		insert par;
-		
+
 		try{
-				
+
 			//not assigning the correct iata code, trigger will fail
-			Remote_Invocation__c re = new Remote_Invocation__c(Internal_ID__c = '111111', 
+			Remote_Invocation__c re = new Remote_Invocation__c(Internal_ID__c = '111111',
 				Integration_Transaction_ID__c = 'idFromMulesoft', Request_Type__c = RemoteInvocationTriggerHandler.NEWGEN_EASY_PAY,
 				status__c = RemoteInvocationTriggerHandler.REMOTE_INVOCATION_STATUS_INITIALIZING);
 			insert re;
-            
+
 			Remote_Invocation_Artefact__c artifact = new Remote_Invocation_Artefact__c(Remote_Invocation__c = re.id, Internal_ID__c = '111111');
 			insert artifact;
 
-			//Making the process starting to create the Bank Account Case OSCAR 
+			//Making the process starting to create the Bank Account Case OSCAR
 			re.Status__c = RemoteInvocationTriggerHandler.REMOTE_INVOCATION_STATUS_PROGRESS;
 			update re;
 		}catch(Exception e){
@@ -135,8 +135,8 @@ public class RemoteInvocationTriggerHandlerTest {
 		}
 
 		List<AMS_OSCAR__c> oscars = [SELECT id FROM AMS_OSCAR__c];
-		System.assertEquals(oscars.size(), 0); 
-	}	
+		System.assertEquals(oscars.size(), 0);
+	}
 
 	@isTest
 	public static void testDiferentIATACode() {
@@ -155,22 +155,22 @@ public class RemoteInvocationTriggerHandlerTest {
 		Portal_Applications__c pa = new Portal_Applications__c(name = 'IATA EasyPay (EDENRED)');
 		insert pa;
 
-		Portal_Application_Right__c par = new Portal_Application_Right__c(Right__c = 'Access Granted', 
+		Portal_Application_Right__c par = new Portal_Application_Right__c(Right__c = 'Access Granted',
 			ANG_Portal_Service_Role__c = 'IEP Admin',Contact__c = c.id, Portal_Application__c = pa.id);
 		insert par;
-		
+
 		try{
-				
+
 			//not assigning the correct iata code, trigger will fail
-			Remote_Invocation__c re = new Remote_Invocation__c(Internal_ID__c = '1234567', 
+			Remote_Invocation__c re = new Remote_Invocation__c(Internal_ID__c = '1234567',
 				Integration_Transaction_ID__c = 'idFromMulesoft', Request_Type__c = RemoteInvocationTriggerHandler.NEWGEN_EASY_PAY,
 				status__c = RemoteInvocationTriggerHandler.REMOTE_INVOCATION_STATUS_INITIALIZING);
 			insert re;
-            
+
 			Remote_Invocation_Artefact__c artifact = new Remote_Invocation_Artefact__c(Remote_Invocation__c = re.id, Internal_ID__c = '111111');
 			insert artifact;
 
-			//Making the process starting to create the Bank Account Case OSCAR 
+			//Making the process starting to create the Bank Account Case OSCAR
 			re.Status__c = RemoteInvocationTriggerHandler.REMOTE_INVOCATION_STATUS_PROGRESS;
 			update re;
 		}catch(Exception e){
@@ -178,8 +178,8 @@ public class RemoteInvocationTriggerHandlerTest {
 		}
 
 		List<AMS_OSCAR__c> oscars = [SELECT id FROM AMS_OSCAR__c];
-		System.assertEquals(oscars.size(), 0); 
-	}	
+		System.assertEquals(oscars.size(), 0);
+	}
 
 	@isTest
 	public static void testNoArtifact() {
@@ -198,23 +198,23 @@ public class RemoteInvocationTriggerHandlerTest {
 		Portal_Applications__c pa = new Portal_Applications__c(name = 'IATA EasyPay (EDENRED)');
 		insert pa;
 
-		Portal_Application_Right__c par = new Portal_Application_Right__c(Right__c = 'Access Granted', 
+		Portal_Application_Right__c par = new Portal_Application_Right__c(Right__c = 'Access Granted',
 			ANG_Portal_Service_Role__c = 'IEP Admin',Contact__c = c.id, Portal_Application__c = pa.id);
 		insert par;
-		
+
 		try{
-				
+
 			//not assigning the correct iata code, trigger will fail
-			Remote_Invocation__c re = new Remote_Invocation__c(Internal_ID__c = '1234567', 
+			Remote_Invocation__c re = new Remote_Invocation__c(Internal_ID__c = '1234567',
 				Integration_Transaction_ID__c = 'idFromMulesoft', Request_Type__c = RemoteInvocationTriggerHandler.NEWGEN_EASY_PAY,
 				status__c = RemoteInvocationTriggerHandler.REMOTE_INVOCATION_STATUS_INITIALIZING);
 			insert re;
-            
-            //Not Inserting the artifact
+
+			//Not Inserting the artifact
 			//Remote_Invocation_Artefact__c artifact = new Remote_Invocation_Artefact__c(Remote_Invocation__c = re.id, Internal_ID__c = '111111');
 			//insert artifact;
 
-			//Making the process starting to create the Bank Account Case OSCAR 
+			//Making the process starting to create the Bank Account Case OSCAR
 			re.Status__c = RemoteInvocationTriggerHandler.REMOTE_INVOCATION_STATUS_PROGRESS;
 			update re;
 		}catch(Exception e){
@@ -222,7 +222,7 @@ public class RemoteInvocationTriggerHandlerTest {
 		}
 
 		List<AMS_OSCAR__c> oscars = [SELECT id FROM AMS_OSCAR__c];
-		System.assertEquals(oscars.size(), 0); 
+		System.assertEquals(oscars.size(), 0);
 	}
 
 	@isTest
@@ -243,25 +243,25 @@ public class RemoteInvocationTriggerHandlerTest {
 		insert pa;
 
 		//not assigning access granted to right
-		Portal_Application_Right__c par = new Portal_Application_Right__c(Right__c = 'Access Denied', 
+		Portal_Application_Right__c par = new Portal_Application_Right__c(Right__c = 'Access Denied',
 			ANG_Portal_Service_Role__c = 'IEP Admin',Contact__c = c.id, Portal_Application__c = pa.id);
 		insert par;
 
-		Remote_Invocation__c re = new Remote_Invocation__c(Internal_ID__c = '1234567', 
+		Remote_Invocation__c re = new Remote_Invocation__c(Internal_ID__c = '1234567',
 			Integration_Transaction_ID__c = 'idFromMulesoft', Request_Type__c = RemoteInvocationTriggerHandler.NEWGEN_EASY_PAY,
 			status__c = RemoteInvocationTriggerHandler.REMOTE_INVOCATION_STATUS_INITIALIZING);
-		
+
 		insert re;
 
 		Remote_Invocation_Artefact__c artifact = new Remote_Invocation_Artefact__c(Remote_Invocation__c = re.id, Internal_ID__c = '1234567');
 		insert artifact;
 
-		//Making the process starting to create the Bank Account Case OSCAR 
+		//Making the process starting to create the Bank Account Case OSCAR
 		re.Status__c = RemoteInvocationTriggerHandler.REMOTE_INVOCATION_STATUS_PROGRESS;
 		update re;
 
 		List<AMS_OSCAR__c> oscars = [SELECT id FROM AMS_OSCAR__c];
-		System.assertEquals(oscars.size(), 0); 
+		System.assertEquals(oscars.size(), 0);
 	}
 
 	@isTest
@@ -277,10 +277,10 @@ public class RemoteInvocationTriggerHandlerTest {
 
 		insert conf;
 
-		Account acc = new Account(name = 'some airline', Sector__c = 'Airline', 
+		Account acc = new Account(name = 'some airline', Sector__c = 'Airline',
 			IATACode__c = '123', recordtypeid = AMS_Utils.RECTYPE_AIRLINE);
 
-		Account acc2 = new Account(name = 'some airline2', Sector__c = 'Airline', 
+		Account acc2 = new Account(name = 'some airline2', Sector__c = 'Airline',
 			IATACode__c = '321', recordtypeid = AMS_Utils.RECTYPE_AIRLINE);
 
 		List<Account> la = new List<Account>();
@@ -349,7 +349,7 @@ public class RemoteInvocationTriggerHandlerTest {
 		//
 		//
 		//
-		lri = [Select Id, Integration_Transaction_ID__c, Internal_ID__c, Status__c From Remote_Invocation__c Where Integration_Transaction_ID__c Like 'ABC%'];		
+		lri = [Select Id, Integration_Transaction_ID__c, Internal_ID__c, Status__c From Remote_Invocation__c Where Integration_Transaction_ID__c Like 'ABC%'];
 
 		lria = [Select Id, Object_ID_Created__c, Remote_Invocation__c, Status__c From Remote_Invocation_Artefact__c Where Remote_Invocation__r.Integration_Transaction_ID__c Like 'ABC%'];
 
@@ -362,15 +362,15 @@ public class RemoteInvocationTriggerHandlerTest {
 		}
 
 		//
-		//  
+		//
 		//
 		for(Remote_Invocation_Artefact__c auxRia : lria) {
 			if(auxRia.Remote_Invocation__c == ri.Id) {
-				System.assertEquals(extRepAccountMap.get(auxRia.Object_ID_Created__c), acc.Id); 
+				System.assertEquals(extRepAccountMap.get(auxRia.Object_ID_Created__c), acc.Id);
 			}
 			if(auxRia.Remote_Invocation__c == ri2.Id) {
 				System.assertEquals(extRepAccountMap.get(auxRia.Object_ID_Created__c), acc2.Id);
-			}			
+			}
 		}
 
 		Remote_Invocation__c ri3 = new Remote_Invocation__c (
@@ -391,7 +391,7 @@ public class RemoteInvocationTriggerHandlerTest {
 		Remote_Invocation_Artefact__c ria6 = new Remote_Invocation_Artefact__c (
 			Name__c = 'some document 6',
 			Remote_Invocation__c = ri3.Id
-		);		
+		);
 
 		List<Remote_Invocation_Artefact__c> lria2 = new List<Remote_Invocation_Artefact__c>();
 		lria2.add(ria5);
@@ -423,18 +423,18 @@ public class RemoteInvocationTriggerHandlerTest {
 		//
 		for(Remote_Invocation_Artefact__c auxRia : lria) {
 			if(auxRia.Remote_Invocation__c == ri.Id) {
-				System.assertEquals(extRepAccountMap.get(auxRia.Object_ID_Created__c), acc.Id); 
+				System.assertEquals(extRepAccountMap.get(auxRia.Object_ID_Created__c), acc.Id);
 			}
 			if(auxRia.Remote_Invocation__c == ri2.Id) {
-				System.assertEquals(extRepAccountMap.get(auxRia.Object_ID_Created__c), acc2.Id); 
+				System.assertEquals(extRepAccountMap.get(auxRia.Object_ID_Created__c), acc2.Id);
 			}
 			if(auxRia.Remote_Invocation__c == ri3.Id) {
-				System.assertEquals(extRepAccountMap.get(auxRia.Object_ID_Created__c), acc2.Id); 
-			}			
+				System.assertEquals(extRepAccountMap.get(auxRia.Object_ID_Created__c), acc2.Id);
+			}
 		}
 
 		Test.stopTest();
-	}	
+	}
 
 	@isTest
 	public static void testAutomaticUploadReportsError() {
@@ -449,10 +449,10 @@ public class RemoteInvocationTriggerHandlerTest {
 
 		insert conf;
 
-		Account acc = new Account(name = 'some airline', Sector__c = 'Airline', 
+		Account acc = new Account(name = 'some airline', Sector__c = 'Airline',
 			IATACode__c = '123', recordtypeid = AMS_Utils.RECTYPE_AIRLINE);
 
-		Account acc2 = new Account(name = 'some airline2', Sector__c = 'Airline', 
+		Account acc2 = new Account(name = 'some airline2', Sector__c = 'Airline',
 			IATACode__c = '321', recordtypeid = AMS_Utils.RECTYPE_AIRLINE);
 
 		List<Account> la = new List<Account>();
@@ -521,17 +521,17 @@ public class RemoteInvocationTriggerHandlerTest {
 
 		update lri;
 
-		lri = [Select Id, Integration_Transaction_ID__c, Internal_ID__c, Status__c From Remote_Invocation__c Where Integration_Transaction_ID__c Like 'ABC%'];		
+		lri = [Select Id, Integration_Transaction_ID__c, Internal_ID__c, Status__c From Remote_Invocation__c Where Integration_Transaction_ID__c Like 'ABC%'];
 
 		lria = [Select Id, Object_ID_Created__c, Remote_Invocation__c, Request_Result__c From Remote_Invocation_Artefact__c Where Remote_Invocation__r.Integration_Transaction_ID__c Like 'ABC%'];
 
 		for(Remote_Invocation__c auxri : lri) {
-			System.assertEquals(auxri.Status__c, TIP_Utils.REMOTE_INVOCATION_STATUS_FAILED); 
+			System.assertEquals(auxri.Status__c, TIP_Utils.REMOTE_INVOCATION_STATUS_FAILED);
 		}
 
 		for(Remote_Invocation_Artefact__c auxria : lria) {
-			System.assertEquals(auxria.Request_Result__c, TIP_Utils.REMOTE_INVOCATION_ARTEFACT_STATUS_FAILED); 
+			System.assertEquals(auxria.Request_Result__c, TIP_Utils.REMOTE_INVOCATION_ARTEFACT_STATUS_FAILED);
 		}
 
-	}		
+	}
 }

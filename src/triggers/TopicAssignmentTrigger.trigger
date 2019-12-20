@@ -2,7 +2,7 @@ trigger TopicAssignmentTrigger on TopicAssignment (before insert, before update,
 
 	if (Trigger.isInsert) {
 		if (Trigger.isBefore) {
-	    	TopicAssignmentHelper.AccountTopicValidation(Trigger.New);
+			TopicAssignmentHelper.AccountTopicValidation(Trigger.New);
 		}
 	}
 }

@@ -349,7 +349,7 @@ public without sharing class portalIftpTrainingRecords {
 			lConditionsCertification.add('Account_Contact_Role__c IN :accCounRolIdsSet');
 		}
 
-	   // Generate complete Query
+		 // Generate complete Query
 		for(String sCond : lConditionsCertification){
 			if(conditionsCertification == ''){
 				conditionsCertification += ' WHERE ' + sCond;
@@ -867,7 +867,7 @@ public without sharing class portalIftpTrainingRecords {
 																									WHERE General_Training__c LIKE 'Yes'
 																									AND Prerequisite_Level__c LIKE:'Level 3')
 																		ORDER BY Expiration_Date__c ];
-		if(parentCertIdSet.size() > 0 && lstation != null && !lstation.equalsIgnoreCase('null')){			
+		if(parentCertIdSet.size() > 0 && lstation != null && !lstation.equalsIgnoreCase('null')){
 			parentAssessmentsList = [   SELECT Id, Name, Contact_Role_Certification__r.Account_Contact_Role__c,
 												Contact_Role_Certification__r.Certification__c, Contact_Role_Certification__r.Expiration_Date__c,
 												Contact_Role_Certification__r.Certification__r.Name, Contact_Role_Certification__r.Expiration_Status__c
@@ -878,7 +878,7 @@ public without sharing class portalIftpTrainingRecords {
 										AND Proficiency_Status__c = 'Active'
 										AND Address__r.Code__c = :lstation];
 		}
-		
+
 		// For Level 2 Prerequisite
 		List<Contact_Role_Certification__c> lGeneralTrainingLevel2 = new List<Contact_Role_Certification__c>();
 		lGeneralTrainingLevel2 = [SELECT  Id,Account_Contact_Role__c, Name, Certification__r.Name, Expiration_Status__c, Expiration_Date__c
@@ -900,7 +900,7 @@ public without sharing class portalIftpTrainingRecords {
 					certLevel = rec.Prerequisite_Level__c;
 					break;
 				}
-			}		
+			}
 			String auxIndicator = '';
 			String auxIndicatorPrereq = '';
 			Date auxIndicatorExpiration = null;
