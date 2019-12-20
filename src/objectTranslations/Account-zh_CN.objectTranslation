@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label>级别</label>
+        <name>Category__c</name>
+        <picklistValues>
+            <masterLabel>ANSP</masterLabel>
+            <translation>空中导航服务提供商</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Airline Alliance</masterLabel>
+            <translation>航空联盟</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Box Office</masterLabel>
+            <translation>票房</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Coordinator</masterLabel>
+            <translation>协调员</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Park (Theme Park)</masterLabel>
+            <translation>公园（主题公园）</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Payment Provider</masterLabel>
+            <translation>付款（服务）提供商</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Provider</masterLabel>
+            <translation>提供者</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sightseeing</masterLabel>
+            <translation>观光</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Transfer Service</masterLabel>
+            <translation>接送服务</translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label>部门</label>
+        <name>Sector__c</name>
+        <picklistValues>
+            <masterLabel>Accommodation</masterLabel>
+            <translation>住所</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Airline</masterLabel>
+            <translation>航空公司</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Airline Supplier</masterLabel>
+            <translation>航空公司供应商</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Association</masterLabel>
+            <translation>协会</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Equipment Manufacturer</masterLabel>
+            <translation>设备制造商</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Financial Institution</masterLabel>
+            <translation>金融机构</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Freight Forwarder</masterLabel>
+            <translation>货运代理</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>General Public</masterLabel>
+            <translation>普通公众</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>General Sales Agent</masterLabel>
+            <translation>销售总代</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Governmental Institution</masterLabel>
+            <translation>政府机构</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Holding Company</masterLabel>
+            <translation>控股公司</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Infrastructure Partner</masterLabel>
+            <translation>基础设施合作伙伴</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Media</masterLabel>
+            <translation>媒体</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Non-Airline Transportation</masterLabel>
+            <translation>非航空运输</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Recreational</masterLabel>
+            <translation>休闲娱乐</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Training</masterLabel>
+            <translation>培训</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Travel Agent</masterLabel>
+            <translation>旅行社</translation>
+        </picklistValues>
+    </fields>
+</CustomObjectTranslation>

@@ -330,6 +330,16 @@ NOT(CONTAINS($User.Customer_type__c,&quot;Agency&quot;))
                     <default>false</default>
                     <label>Import Agent</label>
                 </value>
+                <value>
+                    <fullName>IATAN Passenger Sales Agent (USA Only)</fullName>
+                    <default>false</default>
+                    <label>IATAN Passenger Sales Agent (USA Only)</label>
+                </value>
+                <value>
+                    <fullName>Travel Service Intermediaries-TSI (USA Only)</fullName>
+                    <default>false</default>
+                    <label>Travel Service Intermediaries-TSI (USA Only)</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
         <visibleLines>10</visibleLines>
@@ -671,6 +681,16 @@ NOT(CONTAINS($User.Customer_type__c,&quot;Agency&quot;))
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Requires_Level2_Registration__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Indicates if L2 registration is necessary to request access to this service</description>
+        <externalId>false</externalId>
+        <label>Requires Level2 Registration</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Restricted_App__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
@@ -732,7 +752,9 @@ NOT(CONTAINS($User.Customer_type__c,&quot;Agency&quot;))
 &quot;Currency Center&quot;, $Label.ISSP_CurrencyCenter,
 &quot;Risk Profile and RHC&quot;, IF($User.ANG_Customer_Country_ISO__c = &quot;CN&quot;, $Label.ANG_ISSP_RHC_Information_China, $Label.ANG_ISSP_RHC_Information),
 &quot;ICCS&quot;,&quot;ICCS&quot;,
-Name 
+&quot;IATAN Online Services&quot;, $Label.ISSP_IdCard_US,
+&quot;ID Card Online Platform&quot;, $Label.ISSP_IdCard_NonUS,
+Name
 )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Service</label>
@@ -801,6 +823,8 @@ Name
 &quot;MSO Management&quot;,$Label.ISSP_AMS_MSO_GSA_MSO_Service_Description,
 &quot;Join SIS e-Invoicing&quot;,$Label.ISSP_SIS_Membership_Description,
 &quot;ICCS&quot;,$Label.ICCS_Service_Description,
+&quot;ID Card Online Platform&quot;,$Label.IDCard_NoUSServiceDescription ,
+&quot;IATAN WebStar Online Services&quot;,$Label.IDCard_USServiceDescription,
 &quot;IATA Code Search&quot;,$Label.ISSP_ANG_IATA_CODE_SEARCH_DESCRIPTION,
 &quot;&quot;)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -961,11 +985,38 @@ Name
         <formula>IF(OR(
     Name = &quot;IFG Production&quot;, Name = &quot;IFG Sandbox&quot;),
     $User.IFG_Account_Member__c,
-    OR( 
-        AND(Agency__c = true, 
+				IF(
+								AND(Name = &quot;ID Card Online Platform&quot;,
+                    $User.ANG_Customer_Country_ISO__c &lt;&gt; &quot;AS&quot;,
+                    $User.ANG_Customer_Country_ISO__c &lt;&gt; &quot;GU&quot;,
+                    $User.ANG_Customer_Country_ISO__c &lt;&gt; &quot;MP&quot;,
+                    $User.ANG_Customer_Country_ISO__c &lt;&gt; &quot;PW&quot;,
+                    $User.ANG_Customer_Country_ISO__c &lt;&gt; &quot;UP&quot;,
+                    $User.ANG_Customer_Country_ISO__c &lt;&gt; &quot;US&quot;,
+                    $User.ANG_Customer_Country_ISO__c &lt;&gt; &quot;PR&quot;,
+                    $User.ANG_Customer_Country_ISO__c &lt;&gt; &quot;VI&quot;,
+                    $User.ANG_Customer_Country_ISO__c &lt;&gt; &quot;MH&quot;,
+                    $User.ANG_Customer_Country_ISO__c &lt;&gt; &quot;FM&quot;),
+                true,
+                IF( AND(Name = &quot;IATAN Online Services&quot;,
+                    OR($User.ANG_Customer_Country_ISO__c = &quot;AS&quot;,
+                    $User.ANG_Customer_Country_ISO__c = &quot;GU&quot;,
+                    $User.ANG_Customer_Country_ISO__c = &quot;MP&quot;,
+                    $User.ANG_Customer_Country_ISO__c = &quot;PW&quot;,
+                    $User.ANG_Customer_Country_ISO__c = &quot;UP&quot;,
+                    $User.ANG_Customer_Country_ISO__c = &quot;US&quot;,
+                    $User.ANG_Customer_Country_ISO__c = &quot;PR&quot;,
+                    $User.ANG_Customer_Country_ISO__c = &quot;VI&quot;,
+                    $User.ANG_Customer_Country_ISO__c = &quot;MH&quot;,
+                    $User.ANG_Customer_Country_ISO__c = &quot;FM&quot;)),
+                true,
+    OR(
+        AND(Agency__c = true,
             $User.Customer_type__c=&quot;Agency&quot;,
             NOT(Name = &quot;Access BOP&quot;),
-            NOT(Name = &quot;Payment Link&quot;)), 
+            NOT(Name = &quot;Payment Link&quot;),
+	    NOT(Name = &quot;ID Card Online Platform&quot;),
+            NOT(Name = &quot;IATAN Online Services&quot;)),
         AND(VisibleCNS__c= true, 
             $User.Customer_type__c=&quot;CNS Agency&quot;), 
         AND(Not_ICH_Airline__c = true,
@@ -985,10 +1036,10 @@ Name
         AND(Name = &quot;Payment Link&quot;,
             NOT($User.Customer_type__c=&quot;CNS Agency&quot;),
             NOT($User.ANG_Category__c=&quot;IATAN Passenger Sales Agent (USA Only)&quot;),
-            NOT($User.ANG_Category__c=&quot;Travel Service Intermediaries-TSI (USA Only)&quot;)), 
-        AND(Name = &quot;Webstar&quot;,
+            NOT($User.ANG_Category__c=&quot;Travel Service Intermediaries-TSI (USA Only)&quot;)),
+            AND(Name = &quot;Webstar&quot;,
             OR($User.ANG_Category__c=&quot;IATAN Passenger Sales Agent (USA Only)&quot;,
-                $User.ANG_Category__c=&quot;Travel Service Intermediaries-TSI (USA Only)&quot;)), 
+            $User.ANG_Category__c=&quot;Travel Service Intermediaries-TSI (USA Only)&quot;)),
         AND(Name = &quot;Paypal&quot;,
             $User.CNS_Account_or_Agency__c),
         AND(Name = &quot;Resource Center&quot;, 
@@ -998,12 +1049,11 @@ Name
             ($User.Is_TIP_User__c)),
         AND(Name = &quot;Access BOP&quot;,
             $User.ANG_Customer_Country_ISO__c = &quot;CN&quot;),
-        AND(Name = &quot;IATA Accreditation &amp; Changes&quot;,
+            AND(Name = &quot;IATA Accreditation &amp; Changes&quot;,
             NOT($User.CNS_Account_or_Agency__c),
-            NOT($User.ANG_Sector__c=&apos;Cargo Agent&apos;))
-    )
-)</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+            NOT($User.ANG_Sector__c=&quot;Cargo Agent&quot;))
+))
+))</formula>
         <label>Visible</label>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -1143,6 +1193,10 @@ Name
                 <default>false</default>
             </values>
             <values>
+                <fullName>IATAN Passenger Sales Agent %28USA Only%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Import Agent</fullName>
                 <default>false</default>
             </values>
@@ -1152,6 +1206,10 @@ Name
             </values>
             <values>
                 <fullName>TIDS Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Travel Service Intermediaries-TSI %28USA Only%29</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

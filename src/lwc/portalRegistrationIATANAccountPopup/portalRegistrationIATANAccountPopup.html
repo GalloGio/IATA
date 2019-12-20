@@ -1,0 +1,57 @@
+<!--
+ - Created by bkaya01 on 20/11/2019.
+ -->
+
+<!-- Portal Registration Iatan Account Popup -->
+<template>
+    <section aria-modal="true" class="slds-modal slds-fade-in-open" style="z-index: 10000;">
+
+        <div class="modal">
+            <div class="welcomePopup">
+
+                <div class="customWhiteBackground">
+
+                    <div class="slds-p-right_large slds-p-top_medium">
+                        <span>
+                             <div style="text-align:center">
+                                <img src={alertIcon} height="72" width="72" class="warningIcon"/>
+                             </div>
+                        </span>
+                    </div>
+
+                    <div class="slds-m-horizontal_large slds-p-bottom_large">
+                        <div class="cardBodyContent">
+                            <div class="slds-card__body">
+
+                                <div class="slds-p-bottom_x-small">
+                                    <span class="text-medium text-darkGray text-bold">
+                                        <span></span>
+                                    </span>
+                                </div>
+
+                                <div class="slds-p-bottom_xx-large">
+                                    <div class="slds-p-bottom_x-large" style="max-width: 480px;">
+                                        <lightning-formatted-rich-text value={labels.message} class="text-small text-gray fixed-text"></lightning-formatted-rich-text>
+                                     </div>
+
+                                    <div class="slds-p-bottom_large slds-float_left" style="width:48%;">
+                                        <lightning-button class="outlinedButtonLogin buttonHeight" label={labels.close} onclick={handleCloseModal}></lightning-button>
+                                    </div>
+
+                                    <div class="slds-p-bottom_large slds-float_right" style="width:49%;">
+                                        <lightning-button class="containedButtonLogin" label={labels.goToWebstar} onclick={handleGoToWebstar} ></lightning-button>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+</template>

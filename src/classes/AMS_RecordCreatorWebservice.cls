@@ -1,5 +1,6 @@
 global without sharing class AMS_RecordCreatorWebservice {
 
+	//Types of processes
 	private static String NEWBR_PV = 'NEW.BR';
 	private static String NEWHO_PV = 'NEW.HO.1.0';
 	private static String BANK_ACCOUNT_CHANGES_PV = 'BANK.ACCOUNT.CHANGES';
@@ -19,6 +20,7 @@ global without sharing class AMS_RecordCreatorWebservice {
 	public static String NEWNGLITE = 'ANG.NEW.HE.LITE.1.0';
 	public static String NEWNSTANDARD = 'ANG.NEW.HE.STANDARD.1.0';
 	public static String NEWNAE = 'ANG.NEW.AE.1.0';
+	public static String MCAE = 'ANG.MULTICOUNTRY.AE.1.0';
 	public static String MAJOR_CHANGESNEWGEN_PV = 'ANG.MAJOR.CHANGES.1.0';
 	public static String NGFOP_PV = 'ANG.FOPMANAGEMENT.1.0';
 	public static String IEP_BANK_ACCOUNT_SETUP = 'IEP.BANK.ACCOUNT.SETUP';
@@ -27,10 +29,12 @@ global without sharing class AMS_RecordCreatorWebservice {
 	public static String IEP_MODEL_B_PLUS_ACCOUNT_SETUP = 'IEP.MODEL.B.PLUS.ACCOUNT.SETUP';
 	public static string OPTINOPTOUT = 'ANG.FS.OPTINOUT';
 	public static String PCI_COMPLIANT = 'PCI.COMPLIANT.1.0';
+	private static String NEWNGLOBAL = 'ANG.NEW.GE.STANDARD.1.0';
+	public static String CONVERT_TO_MC = 'ANG.CONVERT.ST.TO.MC';
 
+	public static Set<String> accountConcernedProcesses = new Set <String>{NEWBR_PV, NEWBRABRD_PV, MAJOR_CHANGES_PV, NEWSA_PV, NEWNAE, MCAE, MAJOR_CHANGESNEWGEN_PV,IEP_BANK_ACCOUNT_SETUP,IEP_MODEL_A_ACCOUNT_SETUP, IEP_MODEL_B_ACCOUNT_SETUP,  IEP_MODEL_B_PLUS_ACCOUNT_SETUP,NEWVR_PV};
 
-	public static Set<String> accountConcernedProcesses = new Set <String>{NEWBR_PV, NEWBRABRD_PV, MAJOR_CHANGES_PV, NEWSA_PV, NEWNAE, MAJOR_CHANGESNEWGEN_PV,IEP_BANK_ACCOUNT_SETUP,IEP_MODEL_A_ACCOUNT_SETUP, IEP_MODEL_B_ACCOUNT_SETUP, IEP_MODEL_B_PLUS_ACCOUNT_SETUP, NEWVR_PV};
-
+	public static Set<String> newgenChildProcess = new Set<String>{NEWNAE,MCAE};
 	public static String EMPTYACCREDITATIONID = 'EMPTY';
 
 	/**
@@ -59,38 +63,42 @@ global without sharing class AMS_RecordCreatorWebservice {
 				throw new CalloutException('Could not find any record type matching the type of process ' + typeOfProcess + '.Please check the logs or contact the System Administrator.');
 				//return 'Could not find any record type matching the type of process ' + typeOfProcess + '.Please check the logs or contact the System Administrator.';
 
-			String realAccountId = fetchRealAccountId(typeOfProcess,accountId,caseId);
+			List<Case> cases = [SELECT Id, Account_Concerned__c, AccountId, Account.Location_Type__c, Account.Region_Formula__c, Account.Category__c, OSCAR__c, OwnerId, Origin from CASE where Id = :caseId LIMIT 1];
+
+			String realAccountId = fetchRealAccountId(typeOfProcess, accountId, cases);
 
 			if(realAccountId == null){
 				//throw new CalloutException('For new BR Accounts, the communication case must have a concern account filled.');
 				realAccountId = accountId;
 			}
 
-			List<Case> cases = [SELECT Id, Account_Concerned__c, AccountId, Account.Location_Type__c, Account.Category__c, OSCAR__c, OwnerId, Origin from CASE where Id = :caseId LIMIT 1];
-
 			Id ownerId = null;
 
-			if(!cases.isEmpty() && !Test.isRunningTest()){
-				ownerId = cases.get(0).OwnerId;
+			if(!cases.isEmpty()){
+				Case cse = cases.get(0);
+
+				if(!Test.isRunningTest()){
+					ownerId = cse.OwnerId;
+				}
+
+				if(cse.Origin == 'Portal' && (typeOfProcess == NEWNGLOBAL || typeOfProcess == MCAE || typeOfProcess == MAJOR_CHANGESNEWGEN_PV || typeOfProcess == CONVERT_TO_MC)){
+					ownerId = AMS_OscarCaseTriggerHelper.fetchOscarRegionQueueId(cse.Account.Region_Formula__c);
+				}
 			}
 
-
 			if(typeOfProcess.equalsIgnoreCase(NEWCER_PV) && cases.get(0).Origin == 'Portal'){
-
 				String selectedAccount = cases.get(0).Account_Concerned__c;
 				oscarId = createOscar(selectedAccount,  typeOfProcess, oscarRecordType ,  'Open',  accreditationId, ownerId, caseId,accountId );
 
 			} else {
-
 				oscarId = createOscar(realAccountId,  typeOfProcess, oscarRecordType ,  'Open',  accreditationId, ownerId, caseId, accountId);
-
 			}
 
 			if(String.isBlank(oscarId))
 				throw new CalloutException('There was an error on OSCAR object creation. Please check the logs or contact the System Administrator.');
 				//return 'There was an error on OSCAR object creation. Please check the logs or contact the System Administrator.';
 
-			if(typeOfProcess.equalsIgnoreCase(NEWBR_PV) || typeOfProcess.equalsIgnoreCase(NEWBRABRD_PV) || typeOfProcess.equalsIgnoreCase(NEWTIDS_PV) || typeOfProcess.equalsIgnoreCase(NEWSA_PV) || typeOfProcess.equalsIgnoreCase(NEWNAE)){
+			if(typeOfProcess.equalsIgnoreCase(NEWBR_PV) || typeOfProcess.equalsIgnoreCase(NEWBRABRD_PV) || typeOfProcess.equalsIgnoreCase(NEWTIDS_PV) || typeOfProcess.equalsIgnoreCase(NEWSA_PV) || typeOfProcess.equalsIgnoreCase(NEWNAE) || typeOfProcess.equalsIgnoreCase(MCAE)){
 				if(!createHierarchy(realAccountId, typeOfProcess)){
 					Database.rollback(sp);
 					throw new CalloutException('There was an error on hierarchy object creation (does the account have a parent ?) . Please check the logs or contact the System Administrator.');
@@ -106,7 +114,7 @@ global without sharing class AMS_RecordCreatorWebservice {
 
 				oscarCase.OSCAR__c = oscarId;
 
-				if(typeOfProcess.equalsIgnoreCase(NEWBR_PV) || typeOfProcess.equalsIgnoreCase(NEWBRABRD_PV) || typeOfProcess.equalsIgnoreCase(MAJOR_CHANGES_PV) || typeOfProcess.equalsIgnoreCase(NEWSA_PV) || typeOfProcess.equalsIgnoreCase(NEWNAE) || typeOfProcess.equalsIgnoreCase(MAJOR_CHANGESNEWGEN_PV) || typeOfProcess.equalsIgnoreCase(NEWVR_PV))
+				if(typeOfProcess.equalsIgnoreCase(NEWBR_PV) || typeOfProcess.equalsIgnoreCase(NEWBRABRD_PV) || typeOfProcess.equalsIgnoreCase(MAJOR_CHANGES_PV) || typeOfProcess.equalsIgnoreCase(NEWSA_PV) || typeOfProcess.equalsIgnoreCase(MCAE) || typeOfProcess.equalsIgnoreCase(NEWNAE) || typeOfProcess.equalsIgnoreCase(MAJOR_CHANGESNEWGEN_PV) || typeOfProcess.equalsIgnoreCase(NEWVR_PV))
 					if(oscarCase.AccountId != realAccountId)
 						oscarCase.AccountId = realAccountId;
 
@@ -133,17 +141,32 @@ global without sharing class AMS_RecordCreatorWebservice {
 
 	}
 
-	private static String fetchRealAccountId(String typeOfProcess,String accountId,String caseId){
+	public static void createProcessDetailsForConversion(String oscarId, List<Account> accounts) {
+		Id rtAgencyInvolved = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Process_Detail__c', 'Agency_Involved');
 
-		if(!(accountConcernedProcesses.contains(typeOfProcess.toUpperCase())))
+		List<AMS_Process_Detail__c> processDetailLst = new List<AMS_Process_Detail__c>();
+
+		for (Account acc: accounts) {
+			AMS_Process_Detail__c pd = new AMS_Process_Detail__c();
+			pd.Oscar__c = oscarId;
+			pd.Account__c = acc.Id;
+			pd.RecordTypeId = rtAgencyInvolved;
+			pd.ANG_Location_Type_Conversion__c = acc.Location_Type__c;
+			processDetailLst.add(pd);
+		}
+
+		insert processDetailLst;
+	}
+
+	private static String fetchRealAccountId(String typeOfProcess, String accountId, List<Case> cases){
+
+		if(!(accountConcernedProcesses.contains(typeOfProcess.toUpperCase()))){
 			return accountId;
-
-		List<Case> cases = [SELECT Id, Account_Concerned__c from CASE where Id = :caseId LIMIT 1];
+		}
 
 		if(!cases.isEmpty()){
 				System.debug('Changing the Account to the Account concerned. as the type of process is ' + typeOfProcess);
 				return cases.get(0).Account_Concerned__c;
-
 		}else{
 			System.debug('NOT Changing the Account as the type of process is ' + typeOfProcess);
 		}
@@ -151,13 +174,57 @@ global without sharing class AMS_RecordCreatorWebservice {
 		return null;
 	}
 
+	private static boolean createHierarchyNewgen(String AccountId, String typeOfProcess){
+
+		// in theory, we should, for NEWGEN, already have an Hierarchy coming from the HE or GE (for Multicountry).ApexPages
+
+		Account accountToProcess = [SELECT Id, ParentId, Top_Parent__c, Location_Type__c from Account where Id = :AccountId LIMIT 1].get(0);
+
+		if(accountToProcess.Top_Parent__c == null){
+			System.debug('There is no Parent Id to create an Hierarchy.');
+			return false;
+		}
+
+		List<AMS_Agencies_Hierarchy__c> hierarchyLst = [Select Id from AMS_Agencies_Hierarchy__c where Main_account__c = :accountToProcess.Top_Parent__c];
+
+		AMS_Agencies_Hierarchy__c hierarchy = null;
+
+		if(!hierarchyLst.isEmpty()){
+			hierarchy = hierarchyLst.get(0);
+		}else{
+			List<AMS_Agencies_relationhip__c> existingRelations = [SELECT Id, Hierarchy__c from AMS_Agencies_relationhip__c where Parent_Account__c =:accountToProcess.Top_Parent__c LIMIT 1];
+
+			if(!existingRelations.isEmpty()){
+				hierarchy = new AMS_Agencies_Hierarchy__c(id= existingRelations.get(0).Hierarchy__c);
+			}
+		}
+
+
+		if(hierarchy == null){
+			System.debug('Did not find any hierarchy, creating new one.');
+
+			hierarchy = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy', Main_account__c = accountToProcess.Top_parent__c);
+			insert hierarchy;
+		}
+
+		AMS_Agencies_relationhip__c relationship = new AMS_Agencies_relationhip__c(Child_Account__c = accountToProcess.Id, Parent_Account__c = accountToProcess.ParentId, Hierarchy__c = hierarchy.Id, Is_Newgen_Relation__c = true);
+
+		insert relationship;
+
+		return true;
+	}
+
 	private static boolean createHierarchy(String accountId, String typeOfProcess){
+
+		if(newgenChildProcess.contains(typeOfProcess)){
+			return createHierarchyNewgen(AccountId, typeOfProcess);
+		}
 
 		Account account = new Account(Id = accountId);
 
 		System.debug('Account to create hierarchy is ' + account.Id);
 
-		List<Account> parentIdLst = [SELECT Id, ParentId, Location_Type__c from Account where Id = :account.Id LIMIT 1];
+		List<Account> parentIdLst = [SELECT Id, ParentId, Top_Parent__c, Location_Type__c from Account where Id = :account.Id LIMIT 1];
 
 		if((!parentIdLst.isEmpty()) && typeOfProcess.equalsIgnoreCase(NEWTIDS_PV) && parentIdLst.get(0).Location_Type__c != 'BR'){
 			System.debug('There is no Parent Id to create an Hierarchy but its a TIDS so lets assume its an HO.');
@@ -222,7 +289,7 @@ global without sharing class AMS_RecordCreatorWebservice {
 
 		System.debug('Creating relationship with parent ' + parentAccount.Id + ' and child ' + account.Id);
 
-		Boolean isNewgenRelation = typeOfProcess.equalsIgnoreCase(NEWNAE);
+		Boolean isNewgenRelation = typeOfProcess.equalsIgnoreCase(NEWNAE) || typeOfProcess.equalsIgnoreCase(MCAE);
 
 		AMS_Agencies_relationhip__c relationship = new AMS_Agencies_relationhip__c(Child_Account__c = account.Id, Parent_Account__c = parentAccount.Id, Hierarchy__c = hierarchy.Id, Is_Newgen_Relation__c = isNewgenRelation);
 
@@ -232,6 +299,7 @@ global without sharing class AMS_RecordCreatorWebservice {
 
 	}
 
+	@TestVisible
 	private static String fetchOscarRecordType(String typeOfProcess){
 
 		if(typeOfProcess.equalsIgnoreCase(NEWBR_PV) || typeOfProcess.equalsIgnoreCase(NEWHO_PV) || typeOfProcess.equalsIgnoreCase(NEWBRABRD_PV) || typeOfProcess.equalsIgnoreCase(NEWTIDS_PV) || typeOfProcess.equalsIgnoreCase(NEWGSA_PV) || typeOfProcess.equalsIgnoreCase(NEWAHA_PV) || typeOfProcess.equalsIgnoreCase(NEWMSO_PV) || typeOfProcess.equalsIgnoreCase(NEWSA_PV))
@@ -261,6 +329,9 @@ global without sharing class AMS_RecordCreatorWebservice {
 		if(typeOfProcess.equalsIgnoreCase(NEWNAE))
 			return RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_New_AE');
 
+		if(typeOfProcess.equalsIgnoreCase(MCAE))
+			return RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_Multicountry_AE');
+
 		if(typeOfProcess.equalsIgnoreCase(AMS_Utils.NGCHANGES))
 			return RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_Agency_Changes');
 
@@ -273,11 +344,23 @@ global without sharing class AMS_RecordCreatorWebservice {
 		if(typeOfProcess.equalsIgnoreCase(AMS_Utils.NGCORRECTION))
 			return RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NGCORRECTION');
 
-		if(typeOfProcess.equalsIgnoreCase(AMS_Utils.NGGDI))
+		if(typeOfProcess.equalsIgnoreCase(NEWNGLOBAL)) {
+			return AMS_Utils.RECTYPE_NEWGE;
+		}
+
+		if(typeOfProcess.equalsIgnoreCase(AMS_Utils.NGGDI)) {
 			return AMS_Utils.RECTYPE_GDI;
+		}
+
+		if(typeOfProcess.equalsIgnoreCase(AMS_UTILS.MCAE)) {
+			return AMS_Utils.RECTYPE_MCAE;
+		}
+
+		if (typeOfProcess.equalsIgnoreCase(CONVERT_TO_MC)) {
+			return AMS_Utils.RECTYPE_NGCONVERSIONTOMULTICOUNTRY;
+		}
 
 		return null;
-
 	}
 
 	private static boolean isSomethingEmpyOrNull(List<String> fieldsToValidate){
@@ -310,7 +393,7 @@ global without sharing class AMS_RecordCreatorWebservice {
 			oscar.AMS_Online_Accreditation__c = accreditationId;
 		}
 
-		if(processType.equalsIgnoreCase(AMS_Utils.NEWAE)){
+		if(processType.equalsIgnoreCase(AMS_Utils.NEWAE) || processType.equalsIgnoreCase(AMS_Utils.MCAE)){
 			fillNewAEFieldsFromParent(parentAccount,accountId,accreditationId);
 		}
 
@@ -342,7 +425,7 @@ global without sharing class AMS_RecordCreatorWebservice {
 			}
 		}
 
-		Set<String> processesToUpdateCaseOnOscar = new Set<String>{AMS_Utils.NEWHESTANDARD,AMS_Utils.NEWHELITE, AMS_Utils.NEWAE, AMS_Utils.NGCORRECTION, AMS_Utils.NGCHANGES, AMS_Utils.NGOPTINOUT};
+		Set<String> processesToUpdateCaseOnOscar = new Set<String>{AMS_Utils.NEWHESTANDARD,AMS_Utils.NEWGESTANDARD,AMS_Utils.NEWHELITE, AMS_Utils.NEWAE, AMS_Utils.MCAE, AMS_Utils.NGCORRECTION, AMS_Utils.NGCHANGES, AMS_Utils.NGOPTINOUT, AMS_Utils.NGCONVERSIONTOMULTICOUNTRY};
 		if(processesToUpdateCaseOnOscar.contains(processType)){
 			oscar.Oscar_Communication_Case_Id__c = caseId;
 		}
@@ -379,7 +462,27 @@ global without sharing class AMS_RecordCreatorWebservice {
 			processOscarProcessDetail(oscar,accreditationObj,accountId);
 		}
 
+		if (processType.equalsIgnoreCase(CONVERT_TO_MC)) {
+			accreditationObj = fetchAccreditationObject(accreditationId);
+			createProcessDetailsForConversion(oscar.Id, getSelectedBranchList(accreditationObj.Agency_Codes_Concerned__c.split(',')));
+		}
+
 		return oscar.id;
+	}
+
+	private static List<Account> getSelectedBranchList(List<String> branchCodes) {
+		Set<String> iataCodes = new Set<String>();
+
+		for (String iataCode: branchCodes) {
+			if (!String.isBlank(iataCode)) {
+				iataCodes.add(iataCode);
+			}
+		}
+
+		return [SELECT Id, Name, IATA_ISO_Country__r.Name, Sector__c, IATACode__c,Location_Type__c, BillingCity, BillingState, BillingCountry
+				FROM Account
+				WHERE IATACode__c IN :iataCodes
+				ORDER BY Name, IATACode__c];
 	}
 
 	public static void fillNewAEFieldsFromParent(String parentId, String accountId, String accreditationId){
@@ -832,6 +935,47 @@ global without sharing class AMS_RecordCreatorWebservice {
 		accreditationObj.Branch_Office_Postal_code__c = accountSA.BillingPostalCode;
 		accreditationObj.Branch_Office_City__c = accountSA.BillingCity;
 		accreditationObj.Operation_Type__c = accountSA.Sector__c.replace(' ','_');
+
+
+		insert accreditationObj;
+
+		return accreditationObj;
+	}
+
+	public static AMS_Pax_Accreditation_Form__c createAccreditationObjectForMC(Account accountMC, Case caseObj){
+
+		AMS_Pax_Accreditation_Form__c accreditationObj = new AMS_Pax_Accreditation_Form__c();
+
+		accreditationObj.SAAM_Case__c = caseObj.Id;
+		accreditationObj.Account_Name__c = accountMC.Name;
+		accreditationObj.Short_Name__c = accountMC.Short_Name__c;
+		accreditationObj.Abbreviated_name__c = accountMC.Abbreviated_name__c;
+		accreditationObj.Trade_Name__c = accountMC.TradeName__c;
+		accreditationObj.ISSP_AMS_Legal_Status__c = AMS_MigrationToolHelper.decode(accountMC.Company_Type__c);
+
+		accreditationObj.Shipping_City__c = accountMC.ShippingCity;
+		accreditationObj.Shipping_Country__c = accountMC.ShippingCountry;
+		accreditationObj.Shipping_ISO_Country__c = accountMC.IATA_ISO_Shipping_Country__c;
+		accreditationObj.Shipping_ISO_State__c = accountMC.IATA_ISO_Shipping_State__c;
+		accreditationObj.Shipping_Postal_Code__c = accountMC.ShippingPostalCode;
+		accreditationObj.Shipping_State__c = accountMC.ShippingState;
+		accreditationObj.Shipping_Street__c = accountMC.ShippingStreet;
+
+		accreditationObj.Branch_Office_Country__c = accountMC.IATA_ISO_Country__c;
+		accreditationObj.ISO_Country__c = accountMC.IATA_ISO_Country__c;
+		accreditationObj.IATA_ISO_State__c = accountMC.Iso_State__c;
+		accreditationObj.Billing_State__c = accountMC.BillingState;
+		accreditationObj.Abbreviated_Address__c = accountMC.Abbreviated_Address__c;
+		accreditationObj.Website__c = accountMC.Website;
+		accreditationObj.Branch_Office_Phone__c = accountMC.Phone;
+		accreditationObj.Branch_Office_Email__c = accountMC.Email__c;
+		accreditationObj.Branch_Office_FAX__c = accountMC.Fax;
+		accreditationObj.Location_Type__c = accountMC.Location_Type__c;
+		accreditationObj.Location_Class__c = accountMC.Location_Class__c;
+		accreditationObj.Branch_Office_Street_name_number__c = accountMC.BillingStreet;
+		accreditationObj.Branch_Office_Postal_code__c = accountMC.BillingPostalCode;
+		accreditationObj.Branch_Office_City__c = accountMC.BillingCity;
+		accreditationObj.Operation_Type__c = accountMC.Sector__c.replace(' ','_');
 
 
 		insert accreditationObj;

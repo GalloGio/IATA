@@ -312,6 +312,31 @@
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
+    <fields>
+        <fullName>Settlement_Model__c</fullName>
+        <externalId>false</externalId>
+        <label>Settlement Model</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Funds Received</fullName>
+                    <default>false</default>
+                    <label>Funds Received</label>
+                </value>
+                <value>
+                    <fullName>Reported Sales</fullName>
+                    <default>false</default>
+                    <label>Reported Sales</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
     <label>ISS Operation</label>
     <listViews>
         <fullName>All</fullName>
@@ -444,6 +469,17 @@
                 <default>false</default>
             </values>
         </picklistValues>
+        <picklistValues>
+            <picklist>Settlement_Model__c</picklist>
+            <values>
+                <fullName>Funds Received</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Reported Sales</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
     </recordTypes>
     <recordTypes>
         <fullName>CASS</fullName>
@@ -541,6 +577,17 @@
             </values>
             <values>
                 <fullName>WEBSTAR</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Settlement_Model__c</picklist>
+            <values>
+                <fullName>Funds Received</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Reported Sales</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
