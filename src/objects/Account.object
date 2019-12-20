@@ -24652,7 +24652,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
     </listViews>
     <listViews>
         <fullName>Headofficesall</fullName>
-        <booleanFilter>(1 AND 2 AND 4) OR (2 AND 3 AND 4)</booleanFilter>
         <columns>ACCOUNT.NAME</columns>
         <columns>ACCOUNT.SITE</columns>
         <columns>IATACode__c</columns>
@@ -24663,27 +24662,16 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
         <columns>CORE.USERS.ALIAS</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>ACCOUNT.INDUSTRY</field>
+            <field>Category__c</field>
             <operation>equals</operation>
-            <value>Airline</value>
+            <value>IATA Passenger Sales Agent</value>
         </filters>
         <filters>
-            <field>Field_Head_Office__c</field>
+            <field>Sector__c</field>
             <operation>equals</operation>
-            <value>Headquarter</value>
-        </filters>
-        <filters>
-            <field>Type_of_Office__c</field>
-            <operation>equals</operation>
-            <value>Head Office</value>
-        </filters>
-        <filters>
-            <field>InvoiceWorks_Account__c</field>
-            <operation>equals</operation>
-            <value>0</value>
+            <value>Travel Agent</value>
         </filters>
         <label>Head Offices Airlines (all)</label>
-        <language>en_US</language>
         <sharedTo>
             <group>IDFSAllusersexcludingIWandACCA</group>
             <roleAndSubordinatesInternal>VPMACS</roleAndSubordinatesInternal>
