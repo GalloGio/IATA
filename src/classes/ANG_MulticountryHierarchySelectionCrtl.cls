@@ -428,9 +428,9 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 					WHERE SAAM_Case__c = :oscarCaseId
 					]
 				);
-					
-				//Assuming that we always have several staging records 
-				//when the oscar is created from the portal 
+
+				//Assuming that we always have several staging records
+				//when the oscar is created from the portal
 				//and a single record when created internally
 				if(accreditationFormsLst.size() == 1 && oscarMainAccount != null){
 
@@ -442,26 +442,26 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 
 				}
 				else if(accreditationFormsLst.size() > 1 && oscarMainAccount != null){
-					
+
 					Map<Id, AMS_Pax_Accreditation_Form__c> accreditationFormsMap = new Map<Id, AMS_Pax_Accreditation_Form__c>();
 
 					for(AMS_Pax_Accreditation_Form__c form : accreditationFormsLst){
 						Id acctId = form.HO_Account__c != null ? form.HO_Account__c : Id.valueOf(form.ISSP_Branch_AccountId__c);
 						accreditationFormsMap.put(acctId, form);
-					} 
+					}
 
 					for(Account acct : accountsToUpdate){
 						AMS_PAX_Accreditation_Form__c form = accreditationFormsMap.get(acct.Id);
 
 						form.ISSP_Branch_AccountId__c = acct.Location_Type__c != AMS_Utils.GE ? String.valueOf(acct.Id) : '';
-						form.HO_Account__c = acct.Location_Type__c == AMS_Utils.GE ? acct.Id : null; 
+						form.HO_Account__c = acct.Location_Type__c == AMS_Utils.GE ? acct.Id : null;
 						form.ANG_Accreditation_type__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
 						form.Location_Type__c = acct.Location_Type__c;
 						form.Same_Legal_Entity_Agency_Form__c = null;
 						form.Same_Legal_Entity_Agency_Id__c = null;
 						form.AE_separate_Legal_Entity__c = null;
 						form.ANG_AE_SameLegal__c = null;
-						
+
 						if(acct.Id == oscar.Account__c){
 							oscar.AMS_Online_Accreditation__c = form.Id;
 						}
@@ -497,7 +497,7 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 					acctId = new Set<Id>{accountIdToTest};
 				}
 
-				ANG_MulticountryOscarCreatorBatch myBatchObject = new ANG_MulticountryOscarCreatorBatch(oscarCaseId, AcctId); 
+				ANG_MulticountryOscarCreatorBatch myBatchObject = new ANG_MulticountryOscarCreatorBatch(oscarCaseId, AcctId);
 				Id batchId = Database.executeBatch(myBatchObject,1);
 
 				closeTab = true;

@@ -1,38 +1,38 @@
 public class vfIECEBC_Recipient extends vfIECEBC_Controller {
-    public String wizardStep {
-        get {
-            if (wizardStep == null) wizardStep = 'Audience';
-            return wizardStep;
-        }
-        set;
-    }
-    
-    public ApexPages.StandardController con {
-        public get;
-        private set;
-    }
-    
-    public vfIECEBC_Recipient(ApexPages.StandardController stdController) {        
-        this.con = stdController;
-        
-        this.filter = (EBC_Master_Filter__c)stdController.getRecord();
-    }
-    
-    public EBC_Master_Filter__c filter {
-        get;
-        set;
-    }
-    
-    
-    /////////////
+	public String wizardStep {
+		get {
+			if (wizardStep == null) wizardStep = 'Audience';
+			return wizardStep;
+		}
+		set;
+	}
 
-    public PageReference navigateToStepGeo() {
-        if (String.isBlank(filter.Audience__c)) {
-            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Please set an Audience.'));
-            return null;
-        }
-        
-        wizardStep = 'Geo';
-        return null;
-    }
+	public ApexPages.StandardController con {
+		public get;
+		private set;
+	}
+
+	public vfIECEBC_Recipient(ApexPages.StandardController stdController) {
+		this.con = stdController;
+
+		this.filter = (EBC_Master_Filter__c)stdController.getRecord();
+	}
+
+	public EBC_Master_Filter__c filter {
+		get;
+		set;
+	}
+
+
+	/////////////
+
+	public PageReference navigateToStepGeo() {
+		if (String.isBlank(filter.Audience__c)) {
+			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Please set an Audience.'));
+			return null;
+		}
+
+		wizardStep = 'Geo';
+		return null;
+	}
 }

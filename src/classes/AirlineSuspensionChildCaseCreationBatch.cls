@@ -248,6 +248,95 @@ global class AirlineSuspensionChildCaseCreationBatch implements Database.Batchab
 					}
 				}
 			}
+
+
+
+			// Create the attachments for the CS cases
+			// Not used anymore, we fill the template names in the case itself instead
+			/*
+			list<Attachment> lstCSCasesAttachments = new list<Attachment>();
+
+			// get all the ENGLISH document names
+			map<String, String> mapASDocumentNamePerCountryName = new map<String, String>();
+			for (Airline_Suspension_Documents__c asdoc : Airline_Suspension_Documents__c.getAll().values()) {
+				mapASDocumentNamePerCountryName.put(asdoc.Country_Name__c, asdoc.Document_Name__c);
+			}
+			// get the AS ENGLISH documents into a map
+			map<String, Document> mapASDocumentsPerDocName = new map<String, Document>();
+			for (Document doc : [SELECT Id, Name, DeveloperName, Body, ContentType, Type FROM Document WHERE DeveloperName IN :mapASDocumentNamePerCountryName.values()]) {
+				mapASDocumentsPerDocName.put(doc.DeveloperName, doc);
+			}
+
+
+			// get all the EXTRA document names (the 2nd languages)
+			map<String, String> mapExtraDocumentNamePerCountryName = new map<String, String>();
+			for (Airline_Suspension_Extra_Docs__c asdoc : Airline_Suspension_Extra_Docs__c.getAll().values()) {
+				mapExtraDocumentNamePerCountryName.put(asdoc.Country_Name__c, asdoc.Document_Name__c);
+			}
+			// get the EXTRA documents into a map
+			map<String, Document> mapExtraDocumentsPerDocName = new map<String, Document>();
+			for (Document doc : [SELECT Id, Name, DeveloperName, Body, ContentType, Type FROM Document WHERE DeveloperName IN :mapExtraDocumentNamePerCountryName.values()]) {
+				mapExtraDocumentsPerDocName.put(doc.DeveloperName, doc);
+			}
+
+
+			for (String country : mapCSChildCasesPerCountry.keyset()) {
+				/////// 1st doc, in ENGLISH
+				String strDocName;
+				// if country has a specific document to be used then select it, otherwise use the default
+				if (mapASDocumentNamePerCountryName.get(country) != null) {
+					strDocName = mapASDocumentNamePerCountryName.get(country);
+				} else if (mapCSChildCasesPerCountry.get(country).Subject.contains('CASS')) {
+				 	strDocName = mapASDocumentNamePerCountryName.get('CASS Default');
+				} else {
+					strDocName = mapASDocumentNamePerCountryName.get('BSP Default');
+				}
+
+				if (strDocName != null && mapASDocumentsPerDocName.get(strDocName) != null) {
+					Attachment att = new Attachment();
+
+					att.ParentId = mapCSChildCasesPerCountry.get(country).Id;
+					att.Name = mapASDocumentsPerDocName.get(strDocName).Name + '.' + mapASDocumentsPerDocName.get(strDocName).Type;
+					att.Body = mapASDocumentsPerDocName.get(strDocName).Body;
+					att.ContentType = mapASDocumentsPerDocName.get(strDocName).ContentType;
+
+					lstCSCasesAttachments.add(att);
+				}
+
+				/////// 2nd doc, in other languages
+				if (mapExtraDocumentNamePerCountryName.get(country) != null && mapExtraDocumentsPerDocName.get(mapExtraDocumentNamePerCountryName.get(country)) != null) {
+					Attachment att = new Attachment();
+
+					att.ParentId = mapCSChildCasesPerCountry.get(country).Id;
+					att.Name = mapExtraDocumentsPerDocName.get(mapExtraDocumentNamePerCountryName.get(country)).Name + '.' + mapExtraDocumentsPerDocName.get(mapExtraDocumentNamePerCountryName.get(country)).Type;
+					att.Body = mapExtraDocumentsPerDocName.get(mapExtraDocumentNamePerCountryName.get(country)).Body;
+					att.ContentType = mapExtraDocumentsPerDocName.get(mapExtraDocumentNamePerCountryName.get(country)).ContentType;
+
+					lstCSCasesAttachments.add(att);
+				}
+			}
+
+			if (! lstCSCasesAttachments.isEmpty()) {
+				srList.clear();
+				srList = Database.insert(lstCSCasesAttachments,false);
+
+				// Iterate through each returned result
+				for (Database.SaveResult sr : srList) {
+					if (!sr.isSuccess()) {
+						// Operation failed, so get all errors
+						for(Database.Error err : sr.getErrors()) {
+							System.debug('The following error has occurred on Attachment insertion.');
+							System.debug(err.getStatusCode() + ': ' + err.getMessage());
+							System.debug('Fields that affected this error: ' + err.getFields());
+
+							errorLog += 'Attachment creation error\n';
+							errorLog += 'Error #' + err.getStatusCode() + ': ' + err.getMessage() + '\n';
+							errorLog += 'Fields: ' + err.getFields() + '\n\n\n';
+						}
+					}
+				}
+
+			}*/
 		}
 	}
 

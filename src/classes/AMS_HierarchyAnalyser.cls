@@ -18,13 +18,13 @@ global class AMS_HierarchyAnalyser implements Schedulable {
 
 
 		Map<Id,Id> parentIDs = new Map <Id,Id> ();
-		
+
 		for(AMS_Agencies_relationhip__c rel : [SELECT  Parent_Account__c,Hierarchy__c from AMS_Agencies_relationhip__c where Parent_Account__c not in :allIDs])
 		{
 			parentIDs.put(rel.Parent_Account__c,rel.Hierarchy__c);
-		} 
+		}
 
 
-    	return parentIDs;
+		return parentIDs;
 	}
 }

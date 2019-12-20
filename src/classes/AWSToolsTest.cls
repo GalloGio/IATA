@@ -1,6 +1,6 @@
 /**
  * Mockup for AWS Amazon web serivces
- 
+
  * This class contains unit tests for validating the behavior of Apex classes
  * and triggers.
  *
@@ -14,7 +14,7 @@
  * coverage, and prevent regressions. All Apex classes are
  * required to have at least 75% code coverage in order to be deployed
  * to a production organization. In addition, all triggers must have some code coverage.
- * 
+ *
  * The @isTest class annotation indicates this class only contains test
  * methods. Classes defined with the @isTest annotation do not count against
  * the organization size limit for all Apex scripts.
@@ -24,22 +24,22 @@
 @isTest
 private class AWSToolsTest {
 
-	
-    @isTest 
-    static  void testGetInstance() {  
-    	system.debug('[AWSToolsTest] call of get instance');
-    	return ; 
-    }
-    
-    @isTest 
-    static void testCreateBucket(){
-    	system.debug('[AWSToolsTest] call of bucket creation');
-    	return ;
-    }
-    @isTest 
-    static void testRemoveFileFromS3(){
-    	system.debug('[AWSToolsTest] call to remove file');
-    	return ; 	
-    }
+
+	@isTest
+	static  void testGetInstance() {
+		system.debug('[AWSToolsTest] call of get instance');
+		return ;
+	}
+
+	@isTest
+	static void testCreateBucket(){
+		system.debug('[AWSToolsTest] call of bucket creation');
+		return ;
+	}
+	@isTest
+	static void testRemoveFileFromS3(){
+		system.debug('[AWSToolsTest] call to remove file');
+		return ;
+	}
 
 }

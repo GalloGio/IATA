@@ -57,11 +57,11 @@ global class SchdlGDPProductsAccountSnapshotCleanup implements Schedulable, Data
 	global void finish(Database.BatchableContext BC){
 		AsyncApexJob a = [SELECT Id, Status, NumberOfErrors, JobItemsProcessed, TotalJobItems, CreatedById FROM AsyncApexJob WHERE Id = :BC.getJobId()];
 
-		// Send an email to the Apex job's submitter
-		//   notifying of job completion.
+		// Send an email to the Apex job's submitter 
+		//   notifying of job completion. 
 		Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-		mail.setTargetObjectId(a.CreatedById);
-		mail.setSaveAsActivity(false);
+		String[] toAddresses = new String[] {a.CreatedBy.Email};
+		mail.setToAddresses(toAddresses);
 		mail.setCcAddresses(new List<String>{'debonol@iata.org'});
 		mail.setSubject('SchdlGDPProductsAccountSnapshotCleanup Status: ' + a.Status);
 		mail.setPlainTextBody('The batch Apex job processed ' + a.TotalJobItems + ' batches with '+ a.NumberOfErrors + ' failures.');

@@ -14,7 +14,7 @@ global class MoveAmazonFilesActionBatch implements Database.Batchable<WrapperAtt
 
 	/**
 	* Receives as argument amazonFilesToMoveMap that will contain
-	* the mapping between each amazon file wrapper (WrapperAttach) 
+	* the mapping between each amazon file wrapper (WrapperAttach)
 	* with the case Id for which the file should be moved to
 	*/
 	public MoveAmazonFilesActionBatch(Map<WrapperAttach, Id> amazonFilesToMoveMap){
@@ -32,7 +32,7 @@ global class MoveAmazonFilesActionBatch implements Database.Batchable<WrapperAtt
 	}
 
 	global void execute(Database.BatchableContext BC, List<WrapperAttach> scope) {
-		
+
 		List<AmazonFile__c> transferedFilesLst = new List<AmazonFile__c>();
 		List<AmazonFile__c> originalFilesToDeleteLst = new List<AmazonFile__c>();
 		List<Technical_Logs__c> errorLogsToInsertLst = new List<Technical_Logs__c>();
@@ -120,7 +120,7 @@ global class MoveAmazonFilesActionBatch implements Database.Batchable<WrapperAtt
 
 	public static MoveAmazonFilesActionWrapper moveAmazonFile(WrapperAttach wa, Id newCaseId){
 
-		MoveAmazonFilesActionWrapper afWrap = new MoveAmazonFilesActionWrapper(); 
+		MoveAmazonFilesActionWrapper afWrap = new MoveAmazonFilesActionWrapper();
 
 		try {
 			AmazonFile transferedFile = wa.transfer(newCaseId);

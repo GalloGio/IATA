@@ -1,6 +1,6 @@
 @isTest
 private class IEC_ProductDetailsControllerTest {
-	
+
 	@isTest(SeeAllData=true)
 	static void test_all() {
 		//-- Generate Ecom Products
@@ -36,9 +36,9 @@ private class IEC_ProductDetailsControllerTest {
 		ApexPages.currentPage().getParameters().put('id', selectedProduct.ProductNumber);
 		IEC_ProductDetailsController ctrl;
 
-		//*** cover case of Publication product 
+		//*** cover case of Publication product
 		Test.startTest();
-        system.runAs(usr)
+		system.runAs(usr)
 		{
 			ctrl = new IEC_ProductDetailsController();
 			ctrl.onLoadAction();
@@ -56,7 +56,7 @@ private class IEC_ProductDetailsControllerTest {
 			//ctrl = new IEC_ProductDetailsController();
 			//ctrl.onLoadAction();
 		}
-        Test.stopTest();
+		Test.stopTest();
 	}
-	
+
 }
