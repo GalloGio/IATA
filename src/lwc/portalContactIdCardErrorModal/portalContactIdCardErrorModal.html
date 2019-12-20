@@ -1,0 +1,29 @@
+<template>
+    <section aria-modal="true" class="slds-modal slds-fade-in-open" style="z-index: 10000;">
+        <div class="modal">
+            <div class="idCardPopup">
+                <div class="customWhiteBackground">
+                    <div class="slds-m-horizontal_large slds-p-bottom_large">
+                        <div class="cardBodyContent">
+                            <div class="slds-card__body">
+                                <div class="slds-p-bottom_xx-large slds-p-top_x-large">
+                                    <div class="slds-p-bottom_x-large" style="max-width: 480px;">
+                                        <lightning-formatted-rich-text value={labels.message} class="text-small text-gray fixed-text"></lightning-formatted-rich-text>
+                                    </div>
+
+                                    <div class="slds-p-bottom_large slds-float_left" style="width:48%;">
+                                        <lightning-button class="outlinedButtonCancel buttonHeight" label={labels.cancelLabel} onclick={handleCancel}></lightning-button>
+                                    </div>
+
+                                    <div class="slds-p-bottom_large slds-float_right" style="width:48%;">
+                                        <lightning-button class="popupApproveButton" label={labels.reachUsLAbel} onclick={redirectToSupport} ></lightning-button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</template>

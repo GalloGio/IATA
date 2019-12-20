@@ -40,7 +40,7 @@ public class IDCardLoginControllerTest {
 
         idCardToInsert.add(IDCardUtil.CreateIDCardObjectFromApplication(testData.IDCards_IDCardApplications[1], relatedContact[0]));
         idCardToInsert.add(IDCardUtil.CreateIDCardObjectFromApplication(testData.IDCards_IDCardApplications[3], relatedContact[1]));
-        insert idCardToInsert;
+        upsert idCardToInsert;
         System.debug('-------------------------- Contacts = ' + relatedContact[0].VER_Number__c + ' ' + relatedContact[0].Account.RecordType.Name + ' ' +  relatedContact[0].Account.Status__c +
                      '\n-------------------------- Contacts = ' + relatedContact[1].VER_Number__c + ' ' + relatedContact[1].Account.RecordType.Name + ' ' +  relatedContact[1].Account.Status__c);
         system.debug('Billing Country: ' + relatedContact[0].Account.BillingCountry + 'IATA_Code__c: ' + relatedContact[0].IATA_Code__c + 'FirstName: ' + relatedContact[0].FirstName);

@@ -522,7 +522,14 @@
                 $('[id$=isSameLegal]').first().insertAfter($('[id$=countrySelection').first());
                 populateLegalAndSeparateFields();
                 enableDisableLegalName();
+
+                if ('{!sectorValue}' === 'Cargo_Agent'){
+                    $('#brcountry').show();
+                    $('#brabroadcountries').hide();
+                } else {
                 $('[id$=officetypelist]').prop('disabled', true);
+            }
+                
             }
         }
 
@@ -969,9 +976,9 @@
                                             <apex:outputPanel rendered="{!OR(isBankAccountChange != true, con.Account.Location_Type__c != 'AE')}">
                                                 <apex:outputPanel rendered="{!AND(con.Account.ANG_Accreditation_Model__c != null, con.Account.ANG_Accreditation_Model__c != 'Legacy')}" id="nocOptionsFirstQ">
                                                     <apex:selectRadio id="typeOfChange" layout="pageDirection" label="{!$Label.ISSP_ANG_NOC_Type_Of_Change}" style="width:70%;" value="{!newForm.Type_of_Change__c}" >
-                                                        <apex:selectOption itemValue="{!$Label.ISSP_Yes}" itemLabel="{!$Label.ISSP_Yes}"/>
+                                                        <apex:selectOption itemValue="Yes" itemLabel="{!$Label.ISSP_Yes}"/>
 
-                                                        <apex:selectOption itemValue="{!$Label.ISSP_No}" itemLabel="{!$Label.ISSP_No}"/>
+                                                        <apex:selectOption itemValue="No" itemLabel="{!$Label.ISSP_No}"/>
                                                     </apex:selectRadio>
                                                 </apex:outputPanel>
                                             </apex:outputPanel>
@@ -1041,6 +1048,12 @@
                                     if (sectorValue === 'Cargo_Agent') {
                                         $('[name$=separateLegalEntitySelect]').prop('checked', false);
                                         $('[name$=isGSASelect]').prop('checked', false);
+
+                                        $('#brcountry').show();
+                                        $('#brabroadcountries').hide();
+                                    } else if ({!isMultiCountryNewAE}) {
+                                        $('#brcountry').hide();
+                                        $('#brabroadcountries').show();
                                     }
 
                                     setVarsProductComparisonLink(namEnabled, sectorValue, isHOAccredited, sector);

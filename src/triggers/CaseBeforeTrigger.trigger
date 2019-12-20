@@ -100,6 +100,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 	ID ISSPcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ISS_Portal_New_Case_RT');//TF - SP9-C5
 	ID CSRcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'BSPlink_Customer_Service_Requests_CSR');
 	ID PortalRecordTypeID  = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'External_Cases_InvoiceWorks');
+	ID IsraelDispute  = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Disputes');
 	/*Record type*/
 
 	/*Variables*/
@@ -156,6 +157,9 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 		if(Trigger.isUpdate) {
 			CaseProcessTypeHelper.processKPI(Trigger.new, Trigger.oldMap);
 		}
+
+		/** WMO-424 **/
+		CaseVisibilityEngine.execute(Trigger.new);
 
 		// assigns default email address to be used on send email quick action
 		//follows same logic as current classic functionality
@@ -627,7 +631,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 
 				Set<ID> recordTypeSet = new Set<ID>{SIDRAcaseRecordTypeID,ProcessISSPcaseRecordTypeID,EuropecaseRecordTypeID,AmericacaseRecordTypeID,AfricaMEcaseRecordTypeID,
 													AsiaPacificcaseRecordTypeID,ChinaAsiacaseRecordTypeID,InternalcaseRecordTypeID,InvCollectioncaseRecordTypeID,
-													CSProcesscaseRecordTypeID, SEDAcaseRecordTypeID,ISSPcaseRecordTypeID,GlobalcaseRecordTypeID};
+													CSProcesscaseRecordTypeID, SEDAcaseRecordTypeID,ISSPcaseRecordTypeID,GlobalcaseRecordTypeID, IsraelDispute};
 				for (Case aCase : trigger.New) {
 					System.debug('____ [cls CaseBeforeTrigger - updateAccountFieldBasedOnIATAwebCode] RECORD TYPE: ' + aCase.RecordTypeId);
 					// check if correct record type
@@ -697,7 +701,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 					lstMatchedAccounts = [SELECT Id, Site FROM Account WHERE Site_Index__c IN :mapCasesPerWebIATACode.keyset()];
 				}
 				// Update the Cases with the Account or Account Concerned info retrieved from the DB - only if the found Account / Account Concerned is different from the Account in the Case
-				Set<ID> setIds = new Set<ID>{EuropecaseRecordTypeID,GlobalcaseRecordTypeID,AmericacaseRecordTypeID,AfricaMEcaseRecordTypeID,AsiaPacificcaseRecordTypeID,ChinaAsiacaseRecordTypeID,ISSPcaseRecordTypeID};
+				Set<ID> setIds = new Set<ID>{EuropecaseRecordTypeID,GlobalcaseRecordTypeID,AmericacaseRecordTypeID,AfricaMEcaseRecordTypeID,AsiaPacificcaseRecordTypeID,ChinaAsiacaseRecordTypeID,ISSPcaseRecordTypeID, IsraelDispute};
 				for (Account acc : lstMatchedAccounts) {
 					for (Case c : mapCasesPerWebIATACode.get(acc.Site)) {
 						if (c.AccountId != acc.Id) {
@@ -2031,7 +2035,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 					  IDCard_Expedite_Delivery__c, IDCard_Expedite_Delivery_Fee__c, IATA_numeric_code_previous_employer_4__c, IATA_numeric_code_previous_employer_3__c, IATA_numeric_code_previous_employer_2__c,
 					  IATA_numeric_code_previous_employer_1__c, IATA_Code_for_previous_agency__c, IATA_Code__c, Hours_worked__c, Hours_Worked_Validation_Failed__c, Hours_Worked_Code__c, Gender__c,
 					  First_Name__c, Email_admin__c, Duties_in_Current_Agency__c, Duties_Code__c, Displayed_Name__c, Date_of_Birth__c, CurrencyIsoCode, CreatedDate, CreatedById, ConnectionSentId,
-					  ConnectionReceivedId, Case_Number__c, Approving_Manager_s_Name__c, Approving_Manager_s_Email__c, Applicable_Fee__c, AgencyShare_Confirmation__c,
+					  ConnectionReceivedId, Case_Number__c, Approving_Manager_s_Name__c, Approving_Manager_s_Email__c, Applicable_Fee__c, AgencyShare_Confirmation__c, Card_Type__c,
 					  (SELECT Id FROM ID_Cards__r LIMIT 1)
 					FROM ID_Card_Application__c
 					WHERE ID IN :relatedIDCardAppList]){
@@ -2126,7 +2130,11 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 							//Create idCard From Application
 							idCard = IDCardUtil.CreateIDCardObjectFromApplication(application, theContact, theAccount);
 
-							if (idCard != null) insert idCard;
+							if (idCard != null){
+								upsert idCard;
+								application.ID_Card__c = idCard.Id;
+								update application;
+							} 
 
 						}else{
 							theContact = contactMap.get(aCase.ContactId);
