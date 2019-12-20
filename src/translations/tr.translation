@@ -1073,6 +1073,10 @@
         <name>ANG_ISSP_IEP_AuthorisedSignatory_auth_msg_Administrator</name>
     </customLabels>
     <customLabels>
+        <label><!-- ANG_ISSP_IEP_Indonesia_msg --></label>
+        <name>ANG_ISSP_IEP_Indonesia_msg</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ModelBanking India --></label>
         <name>ANG_ISSP_IEP_ModelBanking_India_msg</name>
     </customLabels>
@@ -3145,7 +3149,7 @@
         <name>CSP_Reset_Password_Success_Msg_2</name>
     </customLabels>
     <customLabels>
-        <label>Bilgisayarınızın IP’sinin kaynağı, ABD yetkilileri tarafından ambargolu olarak listelenen ülkelerden birinde olarak tanımlandı.&lt;br/&gt;Müşteri Portalımızı destekleyen platform bu ABD düzenlemelerine uygundur ve dolayısıyla şu anki IP adresinizden Müşteri Portalına erişim sağlayamıyoruz. &lt;br/&gt;Bize ulaşmak için &lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;buraya tıklayın&lt;/a&gt;.</label>
+        <label>Bilgisayarınızın IP’sinin kaynağı, ABD yetkilileri tarafından ambargolu olarak listelenen ülkelerden birinde olarak tanımlandı.&lt;br/&gt;Müşteri Portalımızı destekleyen platform bu ABD düzenlemelerine uygundur ve dolayısıyla şu anki IP adresinizden Müşteri Portalına erişim sağlayamıyoruz. &lt;br/&gt;Bize ulaşmak için &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;buraya tıklayın&lt;/a&gt;.</label>
         <name>CSP_Restricted_Login_Message</name>
     </customLabels>
     <customLabels>
@@ -17978,7 +17982,7 @@ Parolanızı sıfırlamak isterseniz lütfen giriş ekranına geri dönün ve �
         <name>ISSP_Salutation</name>
     </customLabels>
     <customLabels>
-        <label>Bilgisayar IP adresinizin, ABD yetkili makamları tarafından ambargo uygulanan ülkeler listesinde yer alan ülkelerden birinden olduğu tespit edilmiştir.&lt;br/&gt;Müşteri Portalımızı destekleyen platform bu ABD yönetmeliklerine tabidir, dolayısıyla şu anda mevcut IP adresinizden Müşteri Portalına erişim sağlayamıyoruz.&lt;br/&gt;Bölgenizdeki IATA ofisiyle irtibata geçmek için &lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.aspx&quot; &gt;buraya&lt;/a&gt; tıklayın.</label>
+        <label>Bilgisayar IP adresinizin, ABD yetkili makamları tarafından ambargo uygulanan ülkeler listesinde yer alan ülkelerden birinden olduğu tespit edilmiştir.&lt;br/&gt;Müşteri Portalımızı destekleyen platform bu ABD yönetmeliklerine tabidir, dolayısıyla şu anda mevcut IP adresinizden Müşteri Portalına erişim sağlayamıyoruz.&lt;br/&gt;Bölgenizdeki IATA ofisiyle irtibata geçmek için &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quot; &gt;buraya&lt;/a&gt; tıklayın.</label>
         <name>ISSP_Sanctions_Message</name>
     </customLabels>
     <customLabels>
