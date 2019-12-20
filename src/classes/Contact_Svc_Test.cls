@@ -1,6 +1,6 @@
 /****************************************************************************************************
-    Created by CGI, Thai 2017-01-23
-        Cover code of trigger "Contacts", classes "Contact_Dom", "Contact_DTO", Contact_Sel" and "Contact_Svc"
+	Created by CGI, Thai 2017-01-23
+		Cover code of trigger "Contacts", classes "Contact_Dom", "Contact_DTO", Contact_Sel" and "Contact_Svc"
 ****************************************************************************************************/
 @isTest(seeAllData=false)
 private class Contact_Svc_Test {
@@ -15,7 +15,7 @@ static testMethod void test_AllMethod()
 
 	//Generate SAP Settings
 	TestDataGenerator.generateSAPSettings();
-	
+
 	List<Account> lstAccount = TestDataGenerator.generateAccounts(3, true);
 	List<Contact> lstContact = new List<Contact>();
 	lstContact.add(TestDataGenerator.generateContacts(lstAccount[0].Id, 1, false)[0]);
@@ -30,25 +30,25 @@ static testMethod void test_AllMethod()
 	lstLocation.add(new Location__c(Type__c='Sold To', Address__c=oAddress.Id, Account__c=lstAccount[2].Id, SAP_Id__c='sold3'));
 	lstLocation.add(new Location__c(Type__c='Bill To', Address__c=oAddress.Id, Account__c=lstAccount[2].Id, Contact__c=lstContact[2].Id));
 	insert lstLocation;
-	
+
 	//*** cover Contact_Svc.contactLocationToSynWithSap case having sold to but no SAP Id -> no assert since just for call out
 	lstContact[0].FirstName = lstContact[0].FirstName + 'zzz';
 	update lstContact[0];
-	
+
 	//*** cover Contact_Svc.contactLocationToSynWithSap case with no sold to -> no assert since just for call out
 	lstContact[1].FirstName = lstContact[1].FirstName + 'zzz';
 	update lstContact[1];
-	
+
 	//*** cover Contact_Svc.contactLocationToSynWithSap case with valid sold to -> no assert since just for call out
 	lstContact[2].FirstName = lstContact[2].FirstName + 'zzz';
 	update lstContact[2];
-	
+
 	//*** cover methods in Contact_Sel -> no assert since no logic
 	Contact_Sel cls = new Contact_Sel();
 	Contact oContact = cls.getContactById(lstContact[0].Id);
 	Map<Id, Id> mapContactId_AccountId = Contact_Sel.getAccountIdByContactId(new Set<Id>{oContact.Id});
 	Map<Id, Contact> mapId_Contact = Contact_Sel.getContactById(new Set<Id>{oContact.Id});
-	
+
 	//*** cover Contact_DTO -> no assert since it is a wrapper
 	Contact_DTO dto = new Contact_DTO();
 	dto.contactId = oContact.Id;

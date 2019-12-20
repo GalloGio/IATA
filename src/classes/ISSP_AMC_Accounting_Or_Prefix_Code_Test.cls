@@ -1,23 +1,23 @@
 /*
-    Class Name: ISSP_AMC_Accounting_Or_Prefix_Code_Test
-    Related Classes: ISSP_AMC_Accounting_Or_Prefix_Code
+	Class Name: ISSP_AMC_Accounting_Or_Prefix_Code_Test
+	Related Classes: ISSP_AMC_Accounting_Or_Prefix_Code
 
-    Copyright @Right IT Services
+	Copyright @Right IT Services
 
-    Purpose: Test class for ISSP_AMC_Accounting_Or_Prefix_Code
+	Purpose: Test class for ISSP_AMC_Accounting_Or_Prefix_Code
 
-    VERSION     AUTHOR                          DATE                DETAIL/CHANGE REFERENCE
-    1.0         DAVID BENTO & TIAGO MENDES    	06-02-2018              INITIAL DEVELOPMENT
+	VERSION     AUTHOR                          DATE                DETAIL/CHANGE REFERENCE
+	1.0         DAVID BENTO & TIAGO MENDES    	06-02-2018              INITIAL DEVELOPMENT
 	1.0			Inna Prokopieva					05-04-2019
 */
 @isTest
 public class ISSP_AMC_Accounting_Or_Prefix_Code_Test {
-	
+
 	/*
 		Purpose: Submit an empty Participation with no Operation selected
-		Parameters: 
+		Parameters:
 		Returns:
-		Throws [Exceptions]: 
+		Throws [Exceptions]:
 	*/
 	public static testMethod void testNoParticipationWithSubmit(){
 
@@ -28,7 +28,7 @@ public class ISSP_AMC_Accounting_Or_Prefix_Code_Test {
 		Test.StartTest();
 			System.runAs(myUser)
 			{
-				User user1 = ISSP_AMC_ParticipationFactory.portalSetup();		
+				User user1 = ISSP_AMC_ParticipationFactory.portalSetup();
 				System.runAs(user1){
 					Test.setCurrentPageReference(new PageReference('Page.ISSP_AMC_Accounting_Or_Prefix_Code'));
 					ISSP_AMC_Accounting_Or_Prefix_Code controller = new ISSP_AMC_Accounting_Or_Prefix_Code();
@@ -40,50 +40,50 @@ public class ISSP_AMC_Accounting_Or_Prefix_Code_Test {
 	}
 
 	/*
-        Purpose: Saves an Empty Participation with Account SIS_Status__c!= ACtive
-        Parameters: 
-        Returns:
-        Throws [Exceptions]: 
-    */
+		Purpose: Saves an Empty Participation with Account SIS_Status__c!= ACtive
+		Parameters:
+		Returns:
+		Throws [Exceptions]:
+	*/
 	@isTest static void testNoParticipationNoSIS() {
 
 	 	ISSP_AMC_ParticipationFactory.createcustomSetting(true);
 		ISSP_AMC_ParticipationFactory.createAccountingPrefixRequirements(true);
-		
+
 		User myUser = [select Id from User WHERE Profile.Name = 'System Administrator' AND IsActive = true LIMIT 1];
 
-		Test.StartTest(); 
+		Test.StartTest();
 			System.runAs(myUser){
 
 			User portalUser = ISSP_AMC_ParticipationFactory.portalSetupNoSIS();
 
 			Account acc = [SELECT id, Name,
-                                    Airline_Code__c, 
-                                    Baggage_Tag_Range_Code__c,
-                                    Airline_designator__c,
-                                    IATACode__c,
-                                    Airline_Prefix__c,
-                                    AOC_Expiry_Date__c,
-                                    Legal_name__c,
-                                    TradeName__c,
-                                    Sector__c,
-                                    Category__c,
-                                    IATA_ISO_Country__r.Name,
-                                    Region_formula__c,
-                                    Phone,
-                                    Email__c,
-                                    Website,
-                                    ShippingStreet,
-                                    ShippingAddress,
-                                    ShippingCity,
-                                    ShippingState,
-                                    ShippingPostalCode,
-                                    ShippingCountry,
-                                    IATA_ISO_Country__c,
-                                    SIS_Status__c
-                            FROM account
-                            
-                            LIMIT 1];
+									Airline_Code__c,
+									Baggage_Tag_Range_Code__c,
+									Airline_designator__c,
+									IATACode__c,
+									Airline_Prefix__c,
+									AOC_Expiry_Date__c,
+									Legal_name__c,
+									TradeName__c,
+									Sector__c,
+									Category__c,
+									IATA_ISO_Country__r.Name,
+									Region_formula__c,
+									Phone,
+									Email__c,
+									Website,
+									ShippingStreet,
+									ShippingAddress,
+									ShippingCity,
+									ShippingState,
+									ShippingPostalCode,
+									ShippingCountry,
+									IATA_ISO_Country__c,
+									SIS_Status__c
+							FROM account
+
+							LIMIT 1];
 				acc.SIS_Status__c = 'Terminated';
 				update acc;
 
@@ -113,9 +113,9 @@ public class ISSP_AMC_Accounting_Or_Prefix_Code_Test {
 
 	/*
 		Purpose: Submit an empty Participation with Type of Operation SCHEDULED_PASSENGER selected
-		Parameters: 
+		Parameters:
 		Returns:
-		Throws [Exceptions]: 
+		Throws [Exceptions]:
 	*/
 	public static testMethod void testScheduledPassenger(){
 
@@ -127,7 +127,7 @@ public class ISSP_AMC_Accounting_Or_Prefix_Code_Test {
 		Test.StartTest();
 			System.runAs(myUser)
 			{
-				User user1 = ISSP_AMC_ParticipationFactory.portalSetup();		
+				User user1 = ISSP_AMC_ParticipationFactory.portalSetup();
 				System.runAs(user1){
 					PageReference pageRef = Page.ISSP_AMC_Accounting_Or_Prefix_Code;
 					Test.setCurrentPageReference(pageRef);
@@ -151,12 +151,12 @@ public class ISSP_AMC_Accounting_Or_Prefix_Code_Test {
 		Test.StopTest();
 
 	}
-	
+
 	/*
 		Purpose: Save a Participation with Type of Operation SCHEDULED_PASSENGER selected
-		Parameters: 
+		Parameters:
 		Returns:
-		Throws [Exceptions]: 
+		Throws [Exceptions]:
 	*/
 	public static testMethod void testScheduledPassengerWithParticipationID(){
 
@@ -168,7 +168,7 @@ public class ISSP_AMC_Accounting_Or_Prefix_Code_Test {
 		Test.StartTest();
 			System.runAs(myUser)
 			{
-				User user1 = ISSP_AMC_ParticipationFactory.portalSetup();		
+				User user1 = ISSP_AMC_ParticipationFactory.portalSetup();
 				System.runAs(user1){
 					PageReference pageRef = Page.ISSP_AMC_Accounting_Or_Prefix_Code;
 					Test.setCurrentPageReference(pageRef);
@@ -177,7 +177,7 @@ public class ISSP_AMC_Accounting_Or_Prefix_Code_Test {
 					controller.step = '1';
 					controller.saveParticipation();
 					ISSP_AMC_ParticipationFactory.testAccountingPrefixUploadFiles(controller);
-					
+
 				}
 			}
 		Test.StopTest();
@@ -185,9 +185,9 @@ public class ISSP_AMC_Accounting_Or_Prefix_Code_Test {
 
 	/*
 		Purpose: Submit an empty Participation with Type of Operation SCHEDULED_CARGO selected
-		Parameters: 
+		Parameters:
 		Returns:
-		Throws [Exceptions]: 
+		Throws [Exceptions]:
 	*/
 	public static testMethod void testScheduledCargo(){
 
@@ -198,7 +198,7 @@ public class ISSP_AMC_Accounting_Or_Prefix_Code_Test {
 		Test.StartTest();
 			System.runAs(myUser)
 			{
-				User user1 = ISSP_AMC_ParticipationFactory.portalSetup();		
+				User user1 = ISSP_AMC_ParticipationFactory.portalSetup();
 				System.runAs(user1){
 					PageReference pageRef = Page.ISSP_AMC_Accounting_Or_Prefix_Code;
 					Test.setCurrentPageReference(pageRef);
@@ -206,7 +206,7 @@ public class ISSP_AMC_Accounting_Or_Prefix_Code_Test {
 					ISSP_AMC_Accounting_Or_Prefix_Code controller = new ISSP_AMC_Accounting_Or_Prefix_Code();
 					controller.step = 'Submit';
 					controller.saveParticipation();
-					
+
 				}
 			}
 		Test.StopTest();
@@ -214,9 +214,9 @@ public class ISSP_AMC_Accounting_Or_Prefix_Code_Test {
 
 	/*
 		Purpose: Save a Participation with Type of Operation SCHEDULED_CARGO selected
-		Parameters: 
+		Parameters:
 		Returns:
-		Throws [Exceptions]: 
+		Throws [Exceptions]:
 	*/
 	public static testMethod void testScheduledCargoWithParticipationID(){
 
@@ -228,7 +228,7 @@ public class ISSP_AMC_Accounting_Or_Prefix_Code_Test {
 		Test.StartTest();
 			System.runAs(myUser)
 			{
-				User user1 = ISSP_AMC_ParticipationFactory.portalSetup();		
+				User user1 = ISSP_AMC_ParticipationFactory.portalSetup();
 				System.runAs(user1){
 					PageReference pageRef = Page.ISSP_AMC_Accounting_Or_Prefix_Code;
 					Test.setCurrentPageReference(pageRef);
@@ -237,7 +237,7 @@ public class ISSP_AMC_Accounting_Or_Prefix_Code_Test {
 					controller.step = '1';
 					controller.saveParticipation();
 					ISSP_AMC_ParticipationFactory.testAccountingPrefixUploadFiles(controller);
-					
+
 				}
 			}
 		Test.StopTest();
@@ -245,9 +245,9 @@ public class ISSP_AMC_Accounting_Or_Prefix_Code_Test {
 
 	/*
 		Purpose: Submit an empty Participation with Type of Operation Nom SCHEDULED_PASSENGER selected
-		Parameters: 
+		Parameters:
 		Returns:
-		Throws [Exceptions]: 
+		Throws [Exceptions]:
 	*/
 	public static testMethod void testNonScheduledPassenger(){
 
@@ -259,7 +259,7 @@ public class ISSP_AMC_Accounting_Or_Prefix_Code_Test {
 		Test.StartTest();
 			System.runAs(myUser)
 			{
-				User user1 = ISSP_AMC_ParticipationFactory.portalSetup();		
+				User user1 = ISSP_AMC_ParticipationFactory.portalSetup();
 				System.runAs(user1){
 					PageReference pageRef = Page.ISSP_AMC_Accounting_Or_Prefix_Code;
 					Test.setCurrentPageReference(pageRef);
@@ -268,7 +268,7 @@ public class ISSP_AMC_Accounting_Or_Prefix_Code_Test {
 					controller.step = 'Submit';
 					controller.saveParticipation();
 
-					
+
 				}
 			}
 		Test.StopTest();
@@ -276,9 +276,9 @@ public class ISSP_AMC_Accounting_Or_Prefix_Code_Test {
 
 	/*
 		Purpose: Save a Participation with Type of Operation Non SCHEDULED_PASSENGER selected
-		Parameters: 
+		Parameters:
 		Returns:
-		Throws [Exceptions]: 
+		Throws [Exceptions]:
 	*/
 	public static testMethod void testNonScheduledPassengerWithParticipationID(){
 
@@ -290,16 +290,16 @@ public class ISSP_AMC_Accounting_Or_Prefix_Code_Test {
 		Test.StartTest();
 			System.runAs(myUser)
 			{
-				User user1 = ISSP_AMC_ParticipationFactory.portalSetup();		
+				User user1 = ISSP_AMC_ParticipationFactory.portalSetup();
 				System.runAs(user1){
 					PageReference pageRef = Page.ISSP_AMC_Accounting_Or_Prefix_Code;
 					Test.setCurrentPageReference(pageRef);
 					pageRef.getParameters().put('participationId',ISSP_AMC_ParticipationFactory.createAccountingPrefixParticipation('testName', true, ISSP_AMC_Constants.AMC_PAR_TYPEOFOPERATION_NON_SCHEDULED_PASSENGER).Id);
-					ISSP_AMC_Accounting_Or_Prefix_Code controller = new ISSP_AMC_Accounting_Or_Prefix_Code(); 
+					ISSP_AMC_Accounting_Or_Prefix_Code controller = new ISSP_AMC_Accounting_Or_Prefix_Code();
 					controller.step = '1';
 					controller.saveParticipation();
 					//ISSP_AMC_ParticipationFactory.testAccountingPrefixUploadFiles(controller); Too many SOQL Queries 101
-					
+
 				}
 			}
 		Test.StopTest();
@@ -307,9 +307,9 @@ public class ISSP_AMC_Accounting_Or_Prefix_Code_Test {
 
 	/*
 		Purpose: Submit an empty Participation with Type of Operation Non Scheduled Cargo selected
-		Parameters: 
+		Parameters:
 		Returns:
-		Throws [Exceptions]: 
+		Throws [Exceptions]:
 	*/
 	public static testMethod void testNonScheduledCargo(){
 
@@ -321,7 +321,7 @@ public class ISSP_AMC_Accounting_Or_Prefix_Code_Test {
 		Test.StartTest();
 			System.runAs(myUser)
 			{
-				User user1 = ISSP_AMC_ParticipationFactory.portalSetup();		
+				User user1 = ISSP_AMC_ParticipationFactory.portalSetup();
 				System.runAs(user1){
 					PageReference pageRef = Page.ISSP_AMC_Accounting_Or_Prefix_Code;
 					Test.setCurrentPageReference(pageRef);
@@ -329,7 +329,7 @@ public class ISSP_AMC_Accounting_Or_Prefix_Code_Test {
 					ISSP_AMC_Accounting_Or_Prefix_Code controller = new ISSP_AMC_Accounting_Or_Prefix_Code();
 					controller.step = 'Submit';
 					controller.saveParticipation();
-					
+
 				}
 			}
 		Test.StopTest();
@@ -337,9 +337,9 @@ public class ISSP_AMC_Accounting_Or_Prefix_Code_Test {
 
 	/*
 		Purpose: Save a Participation with Type of Operation Non Scheduled Cargo selected
-		Parameters: 
+		Parameters:
 		Returns:
-		Throws [Exceptions]: 
+		Throws [Exceptions]:
 	*/
 	public static testMethod void testNonScheduledCargoWithParticipationID(){
 
@@ -351,7 +351,7 @@ public class ISSP_AMC_Accounting_Or_Prefix_Code_Test {
 		Test.StartTest();
 			System.runAs(myUser)
 			{
-				User user1 = ISSP_AMC_ParticipationFactory.portalSetup();		
+				User user1 = ISSP_AMC_ParticipationFactory.portalSetup();
 				System.runAs(user1){
 					PageReference pageRef = Page.ISSP_AMC_Accounting_Or_Prefix_Code;
 					Test.setCurrentPageReference(pageRef);
@@ -360,7 +360,7 @@ public class ISSP_AMC_Accounting_Or_Prefix_Code_Test {
 					controller.step = '1';
 					controller.saveParticipation();
 					//ISSP_AMC_ParticipationFactory.testAccountingPrefixUploadFiles(controller); Too many SOQL Queries 101
-					
+
 				}
 			}
 		Test.StopTest();
@@ -368,9 +368,9 @@ public class ISSP_AMC_Accounting_Or_Prefix_Code_Test {
 
 	/*
 		Purpose: Submit an empty Participation with Type of Operation Ferry Company selected
-		Parameters: 
+		Parameters:
 		Returns:
-		Throws [Exceptions]: 
+		Throws [Exceptions]:
 	*/
 	public static testMethod void testFerry(){
 
@@ -382,7 +382,7 @@ public class ISSP_AMC_Accounting_Or_Prefix_Code_Test {
 		Test.StartTest();
 			System.runAs(myUser)
 			{
-				User user1 = ISSP_AMC_ParticipationFactory.portalSetup();		
+				User user1 = ISSP_AMC_ParticipationFactory.portalSetup();
 				System.runAs(user1){
 					PageReference pageRef = Page.ISSP_AMC_Accounting_Or_Prefix_Code;
 					Test.setCurrentPageReference(pageRef);
@@ -390,7 +390,7 @@ public class ISSP_AMC_Accounting_Or_Prefix_Code_Test {
 					ISSP_AMC_Accounting_Or_Prefix_Code controller = new ISSP_AMC_Accounting_Or_Prefix_Code();
 					controller.step = 'Submit';
 					controller.saveParticipation();
-					
+
 				}
 			}
 		Test.StopTest();
@@ -398,9 +398,9 @@ public class ISSP_AMC_Accounting_Or_Prefix_Code_Test {
 
 	/*
 		Purpose: Save a Participation with Type of Operation Ferry Company selected
-		Parameters: 
+		Parameters:
 		Returns:
-		Throws [Exceptions]: 
+		Throws [Exceptions]:
 	*/
 	public static testMethod void testFerryWithParticipationID(){
 
@@ -412,7 +412,7 @@ public class ISSP_AMC_Accounting_Or_Prefix_Code_Test {
 		Test.StartTest();
 			System.runAs(myUser)
 			{
-				User user1 = ISSP_AMC_ParticipationFactory.portalSetup();		
+				User user1 = ISSP_AMC_ParticipationFactory.portalSetup();
 				System.runAs(user1){
 					PageReference pageRef = Page.ISSP_AMC_Accounting_Or_Prefix_Code;
 					Test.setCurrentPageReference(pageRef);
@@ -421,7 +421,7 @@ public class ISSP_AMC_Accounting_Or_Prefix_Code_Test {
 					controller.step = '1';
 					controller.saveParticipation();
 					ISSP_AMC_ParticipationFactory.testAccountingPrefixUploadFiles(controller);
-					
+
 				}
 			}
 		Test.StopTest();
@@ -429,9 +429,9 @@ public class ISSP_AMC_Accounting_Or_Prefix_Code_Test {
 
 	/*
 		Purpose: Submit an empty Participation with Type of Operation CRS selected
-		Parameters: 
+		Parameters:
 		Returns:
-		Throws [Exceptions]: 
+		Throws [Exceptions]:
 	*/
 	public static testMethod void testCRS(){
 
@@ -443,7 +443,7 @@ public class ISSP_AMC_Accounting_Or_Prefix_Code_Test {
 		Test.StartTest();
 			System.runAs(myUser)
 			{
-				User user1 = ISSP_AMC_ParticipationFactory.portalSetup();		
+				User user1 = ISSP_AMC_ParticipationFactory.portalSetup();
 				System.runAs(user1){
 					PageReference pageRef = Page.ISSP_AMC_Accounting_Or_Prefix_Code;
 					Test.setCurrentPageReference(pageRef);
@@ -452,7 +452,7 @@ public class ISSP_AMC_Accounting_Or_Prefix_Code_Test {
 					controller.step = 'Submit';
 					controller.saveParticipation();
 
-					
+
 				}
 			}
 		Test.StopTest();
@@ -460,9 +460,9 @@ public class ISSP_AMC_Accounting_Or_Prefix_Code_Test {
 
 	/*
 		Purpose: Save a Participation with Type of Operation CRS selected
-		Parameters: 
+		Parameters:
 		Returns:
-		Throws [Exceptions]: 
+		Throws [Exceptions]:
 	*/
 	public static testMethod void testCRSWithParticipationID(){
 
@@ -474,7 +474,7 @@ public class ISSP_AMC_Accounting_Or_Prefix_Code_Test {
 		Test.StartTest();
 			System.runAs(myUser)
 			{
-				User user1 = ISSP_AMC_ParticipationFactory.portalSetup();		
+				User user1 = ISSP_AMC_ParticipationFactory.portalSetup();
 				System.runAs(user1){
 					PageReference pageRef = Page.ISSP_AMC_Accounting_Or_Prefix_Code;
 					Test.setCurrentPageReference(pageRef);
@@ -483,7 +483,7 @@ public class ISSP_AMC_Accounting_Or_Prefix_Code_Test {
 					controller.step = '1';
 					controller.saveParticipation();
 					ISSP_AMC_ParticipationFactory.testAccountingPrefixUploadFiles(controller);
-					
+
 				}
 			}
 		Test.StopTest();
@@ -491,9 +491,9 @@ public class ISSP_AMC_Accounting_Or_Prefix_Code_Test {
 
 	/*
 		Purpose: Submit an empty Participation with Type of Operation Bus Company selected
-		Parameters: 
+		Parameters:
 		Returns:
-		Throws [Exceptions]: 
+		Throws [Exceptions]:
 	*/
 	public static testMethod void testBus(){
 
@@ -505,7 +505,7 @@ public class ISSP_AMC_Accounting_Or_Prefix_Code_Test {
 		Test.StartTest();
 			System.runAs(myUser)
 			{
-				User user1 = ISSP_AMC_ParticipationFactory.portalSetup();		
+				User user1 = ISSP_AMC_ParticipationFactory.portalSetup();
 				System.runAs(user1){
 					PageReference pageRef = Page.ISSP_AMC_Accounting_Or_Prefix_Code;
 					Test.setCurrentPageReference(pageRef);
@@ -513,7 +513,7 @@ public class ISSP_AMC_Accounting_Or_Prefix_Code_Test {
 					ISSP_AMC_Accounting_Or_Prefix_Code controller = new ISSP_AMC_Accounting_Or_Prefix_Code();
 					controller.step = 'Submit';
 					controller.saveParticipation();
-					
+
 				}
 			}
 		Test.StopTest();
@@ -521,9 +521,9 @@ public class ISSP_AMC_Accounting_Or_Prefix_Code_Test {
 
 	/*
 		Purpose: Save a Participation with Type of Operation Bus Company selected
-		Parameters: 
+		Parameters:
 		Returns:
-		Throws [Exceptions]: 
+		Throws [Exceptions]:
 	*/
 	public static testMethod void testBusWithParticipationID(){
 
@@ -535,7 +535,7 @@ public class ISSP_AMC_Accounting_Or_Prefix_Code_Test {
 		Test.StartTest();
 			System.runAs(myUser)
 			{
-				User user1 = ISSP_AMC_ParticipationFactory.portalSetup();		
+				User user1 = ISSP_AMC_ParticipationFactory.portalSetup();
 				System.runAs(user1){
 					PageReference pageRef = Page.ISSP_AMC_Accounting_Or_Prefix_Code;
 					Test.setCurrentPageReference(pageRef);
@@ -544,7 +544,7 @@ public class ISSP_AMC_Accounting_Or_Prefix_Code_Test {
 					controller.step = '1';
 					controller.saveParticipation();
 					ISSP_AMC_ParticipationFactory.testAccountingPrefixUploadFiles(controller);
-					
+
 				}
 			}
 		Test.StopTest();
@@ -552,9 +552,9 @@ public class ISSP_AMC_Accounting_Or_Prefix_Code_Test {
 
 	/*
 		Purpose: Submit an empty Participation with Type of Operation Railway Company selected
-		Parameters: 
+		Parameters:
 		Returns:
-		Throws [Exceptions]: 
+		Throws [Exceptions]:
 	*/
 	public static testMethod void testRailway(){
 
@@ -566,7 +566,7 @@ public class ISSP_AMC_Accounting_Or_Prefix_Code_Test {
 		Test.StartTest();
 			System.runAs(myUser)
 			{
-				User user1 = ISSP_AMC_ParticipationFactory.portalSetup();		
+				User user1 = ISSP_AMC_ParticipationFactory.portalSetup();
 				System.runAs(user1){
 					PageReference pageRef = Page.ISSP_AMC_Accounting_Or_Prefix_Code;
 					Test.setCurrentPageReference(pageRef);
@@ -574,7 +574,7 @@ public class ISSP_AMC_Accounting_Or_Prefix_Code_Test {
 					ISSP_AMC_Accounting_Or_Prefix_Code controller = new ISSP_AMC_Accounting_Or_Prefix_Code();
 					controller.step = 'Submit';
 					controller.saveParticipation();
-					
+
 				}
 			}
 		Test.StopTest();
@@ -582,9 +582,9 @@ public class ISSP_AMC_Accounting_Or_Prefix_Code_Test {
 
 	/*
 		Purpose: Save a Participation with Type of Operation Railway Company selected
-		Parameters: 
+		Parameters:
 		Returns:
-		Throws [Exceptions]: 
+		Throws [Exceptions]:
 	*/
 	public static testMethod void testRailwayWithParticipationID(){
 
@@ -596,7 +596,7 @@ public class ISSP_AMC_Accounting_Or_Prefix_Code_Test {
 		Test.StartTest();
 			System.runAs(myUser)
 			{
-				User user1 = ISSP_AMC_ParticipationFactory.portalSetup();		
+				User user1 = ISSP_AMC_ParticipationFactory.portalSetup();
 				System.runAs(user1){
 					PageReference pageRef = Page.ISSP_AMC_Accounting_Or_Prefix_Code;
 					Test.setCurrentPageReference(pageRef);
@@ -605,7 +605,7 @@ public class ISSP_AMC_Accounting_Or_Prefix_Code_Test {
 					controller.step = '1';
 					controller.saveParticipation();
 					ISSP_AMC_ParticipationFactory.testAccountingPrefixUploadFiles(controller);
-					
+
 				}
 			}
 		Test.StopTest();

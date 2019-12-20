@@ -31,27 +31,27 @@ global class AMS_PCI_WizardNotification {
 		emailToSend.saveAsActivity = false;
 		emailToSend.setTargetObjectId(usr.Id);
 		emailToSend.setOrgWideEmailAddressId(owea[0].Id);
-     
 
-       	if(!attechments.isEmpty())  {  		
-       		emailToSend.setFileAttachments(getAttachmentsLst(attechments));
-       	}
 
-       	Messaging.SingleEmailMessage emailsToSend = mergeTemplate(template.Id, cse.contactId, usr.Id, cse.Id, owea[0].Id);
+			 	if(!attechments.isEmpty())  {
+			 		emailToSend.setFileAttachments(getAttachmentsLst(attechments));
+			 	}
 
-       	if(!Test.isRunningTest()) {
-       		Messaging.sendEmail(new List<Messaging.SingleEmailMessage> {emailsToSend});
-       	}
+			 	Messaging.SingleEmailMessage emailsToSend = mergeTemplate(template.Id, cse.contactId, usr.Id, cse.Id, owea[0].Id);
 
-       	EmailMessage emailMsg = new EmailMessage();
-        emailMsg.ToAddress = usr.Email;
-        emailMsg.Subject = emailsToSend.getSubject();
-        emailMsg.HtmlBody = emailsToSend.getHtmlBody();
-        emailMsg.ParentId = cse.Id; //Attach with the case
-        emailMsg.MessageDate = System.now();
-        emailMsg.Status = '0';       	
-     
-        insert emailMsg;           
+			 	if(!Test.isRunningTest()) {
+			 		Messaging.sendEmail(new List<Messaging.SingleEmailMessage> {emailsToSend});
+			 	}
+
+			 	EmailMessage emailMsg = new EmailMessage();
+				emailMsg.ToAddress = usr.Email;
+				emailMsg.Subject = emailsToSend.getSubject();
+				emailMsg.HtmlBody = emailsToSend.getHtmlBody();
+				emailMsg.ParentId = cse.Id; //Attach with the case
+				emailMsg.MessageDate = System.now();
+				emailMsg.Status = '0';
+
+				insert emailMsg;
 	}
 
 	//AMSU-177 -  added new BSP Parameter, and made necessary changes on  the method to use it
@@ -59,10 +59,10 @@ global class AMS_PCI_WizardNotification {
 		String filterBSP = BSP == 'No' ? 'NonBSP_' : '';
 		Set<String> devNames = new Set<String> {'AMS_PCI_Compliant_' + filterBSP + lang, 'AMS_PCI_Compliant_' + filterBSP + 'EN'};
 		List<EmailTemplate> templates = [SELECT Id, DeveloperName, HtmlValue, Body, Subject
-										 FROM EmailTemplate 
+										 FROM EmailTemplate
 										 WHERE DeveloperName IN :devNames];
 		Map<String, EmailTemplate> mapTemplates = new Map<String, EmailTemplate>();
-		
+
 		for(EmailTemplate template : templates) {
 			mapTemplates.put(template.DeveloperName, template);
 		}
@@ -80,24 +80,24 @@ global class AMS_PCI_WizardNotification {
 
 	public static List<Messaging.EmailFileAttachment> getAttachmentsLst(List<Attachment> attechments) {
 		List<Messaging.EmailFileAttachment> emailAttachs = new list<Messaging.EmailFileAttachment>();
-   		for(Attachment attach : attechments) {
-   			Messaging.EmailFileAttachment emailAttc = new Messaging.EmailFileAttachment();
-            emailAttc.setFileName(attach.Name);
-            emailAttc.setBody(attach.Body);
-            emailAttc.setContenttype(attach.ContentType);
-            emailAttachs.add(emailAttc); 
-   		}
+	 		for(Attachment attach : attechments) {
+	 			Messaging.EmailFileAttachment emailAttc = new Messaging.EmailFileAttachment();
+						emailAttc.setFileName(attach.Name);
+						emailAttc.setBody(attach.Body);
+						emailAttc.setContenttype(attach.ContentType);
+						emailAttachs.add(emailAttc);
+	 		}
 
-   		return emailAttachs;
+	 		return emailAttachs;
 	}
 
 	private static Messaging.SingleEmailMessage mergeTemplate(Id templateId, Id contactId, Id userId, Id caseId, Id oweaId) {
-        Messaging.SingleEmailMessage mail = Messaging.renderStoredEmailTemplate(templateId, contactId, caseId);   
-        mail.setOrgWideEmailAddressId(oweaId);
-        mail.setTargetObjectId(userId);
-        mail.saveAsActivity = false;
-        return mail;
-    }
+				Messaging.SingleEmailMessage mail = Messaging.renderStoredEmailTemplate(templateId, contactId, caseId);
+				mail.setOrgWideEmailAddressId(oweaId);
+				mail.setTargetObjectId(userId);
+				mail.saveAsActivity = false;
+				return mail;
+		}
 
 
 }

@@ -12,14 +12,14 @@
 
 
 public with sharing class SelectOptionWrapper {
-    @AuraEnabled
-    public String label {get;set;}
-    
-    @AuraEnabled
-    public String value {get;set;}
+	@AuraEnabled
+	public String label {get;set;}
 
-    public SelectOptionWrapper(String value, String label) {
-        this.value = value;
-        this.label = label;
-    }
+	@AuraEnabled
+	public String value {get;set;}
+
+	public SelectOptionWrapper(String value, String label) {
+		this.value = value;
+		this.label = label;
+	}
 }

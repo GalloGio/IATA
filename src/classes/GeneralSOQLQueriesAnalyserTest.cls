@@ -462,27 +462,27 @@ private class GeneralSOQLQueriesAnalyserTest {
 		}catch(Exception e){}
 
 		try{
-		   ANG_EntityCreator.createContact(null,null,null);
+			 ANG_EntityCreator.createContact(null,null,null);
 		}catch(Exception e){}
 
 		try{
-		   ANG_EntityCreator.createCase(null,null,null);
+			 ANG_EntityCreator.createCase(null,null,null);
 		}catch(Exception e){}
 
 		try{
-		   ANG_EntityCreator.createPerson(null,null,null);
+			 ANG_EntityCreator.createPerson(null,null,null);
 		}catch(Exception e){}
 
 		try{
-		   ANG_EntityCreator.createOscar(null,null,null);
+			 ANG_EntityCreator.createOscar(null,null,null);
 		}catch(Exception e){}
 
 		try{
-		   ANG_EntityCreator.createStagingArea(null,null,null,null);
+			 ANG_EntityCreator.createStagingArea(null,null,null,null);
 		}catch(Exception e){}
 
 		try{
-		   ANG_EntityCreator.createAccreditationContact(null,null,null);
+			 ANG_EntityCreator.createAccreditationContact(null,null,null);
 		}catch(Exception e){}
 
 		Test.stopTest();

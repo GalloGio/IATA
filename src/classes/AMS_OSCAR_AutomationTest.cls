@@ -393,7 +393,7 @@ private class AMS_OSCAR_AutomationTest {
 			System.assertEquals('Pending Approval', oscar.Status__c);
 			oscar.STEP12__c = AMS_Utils.NOT_APPLICABLE;
 			System.assertEquals(true, factory.processWork(event, oscar));
-	   		System.assertEquals('Passed', oscar.Validation_result__c);
+		 		System.assertEquals('Passed', oscar.Validation_result__c);
 			System.assertEquals('Pending Approval', oscar.Status__c);
 			try{
 				oscar.STEP12__c = AMS_Utils.FAILED;
@@ -465,7 +465,7 @@ private class AMS_OSCAR_AutomationTest {
 			System.assertEquals(true, factory.processWork(event, oscar));
 			System.assertEquals('Outstanding', oscar.Invoice_status__c);
 
-	   		factory = manager.newClassInstance('AMS_OSCAR_Automation.AMS_OSCAR_Step48_notApplicable');
+		 		factory = manager.newClassInstance('AMS_OSCAR_Automation.AMS_OSCAR_Step48_notApplicable');
 			System.assertEquals(true, factory.processWork(event, oscar));
 			System.assertEquals('N/A', oscar.Invoice_status__c);
 
