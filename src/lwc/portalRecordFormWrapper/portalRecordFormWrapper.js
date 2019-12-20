@@ -61,7 +61,6 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     @api sectionClass;
     @api headerClass;
     @api sectionTitle;
-    @api showEdit;
     @api sectionName;
     @api editBasics;
     @api editIdcard;

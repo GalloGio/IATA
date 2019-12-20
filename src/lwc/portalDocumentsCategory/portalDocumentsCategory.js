@@ -43,7 +43,7 @@ export default class PortalDocumentsCategory extends LightningElement {
             if(_value.topResults !== __documentObject.topResults ||
                 _value.searchText !== __documentObject.searchText ||
                 _value.productCategory !== __documentObject.productCategory ||
-                _value.countryOfPublication !== __documentObject.countryOfPublication) ||
+                _value.countryOfPublication !== __documentObject.countryOfPublication||
                 _value.show === true) {
 
                 this.resetPagination();

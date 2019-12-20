@@ -440,10 +440,11 @@ public static Contact contactInfo = new Contact();
 		@AuraEnabled
 		public String cardKey;
 
-        public CardWrapper(String cardTitleAux, List<FieldWrapper> lstFieldWrapperAux, Boolean isEditableAux){
+        public CardWrapper(String cardTitleAux, List<FieldWrapper> lstFieldWrapperAux, Boolean isEditableAux,String cardKeyAux){
             this.cardTitle = cardTitleAux;
             this.lstFieldWrapper = lstFieldWrapperAux;
             this.isEditable = isEditableAux;
+			this.cardKey = cardKeyAux;
 			this.idCardUrl = '';
         }
 
