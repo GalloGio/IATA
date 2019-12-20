@@ -1535,6 +1535,10 @@ button.twoLines {
     fill: #e2e2e2;
 }
 
+.hideDocsIcon svg {
+  fill:white;
+}
+
 /* Footer select language styles */
 .portalFooter .langSelect input[role="textbox"], .portalFooter .langSelect div[role="listbox"] {
     background-color: #333333;
