@@ -963,7 +963,7 @@
     <relatedLists>
         <fields>NAME</fields>
         <fields>Is_Business_Address__c</fields>
-        <fields>Country__c</fields>
+        <fields>IATA_ISO_Country__c</fields>
         <fields>State_Name__c</fields>
         <fields>City_Name__c</fields>
         <fields>Postal_Code__c</fields>
