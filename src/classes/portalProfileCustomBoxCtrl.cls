@@ -20,7 +20,7 @@ public without sharing class portalProfileCustomBoxCtrl {
 		List<optionWrapper> options = new List<optionWrapper>();
 
 		List <Account> accountList = [SELECT Id, Name, IATA_ISO_Country__r.Name, Site, Sector__c, IATACode__c, Field_Head_Office__c
-									  FROM Account
+										FROM Account
 									 WHERE (Id = :currentCon.AccountId OR Top_Parent__c = :currentCon.AccountId) AND RecordType.DeveloperName IN ('IATA_Agency','IATA_Airline','IATA_Airline_BR','Standard_Account','Others')
 									 ORDER BY RecordType.DeveloperName, Location_Type__c, Site
 									 ];
@@ -37,7 +37,7 @@ public without sharing class portalProfileCustomBoxCtrl {
 					theLabel = thisAccount.Name + ' (' + thisAccount.IATACode__c + ')';
 				}else{
 					theLabel = thisAccount.Name;
-				}			
+				}
 			}
 			options.add(new optionWrapper(thisAccount.Id, theLabel));
 		}

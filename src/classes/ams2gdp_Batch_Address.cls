@@ -27,9 +27,9 @@ global class ams2gdp_Batch_Address implements Database.Batchable<sObject> , Data
 
 		String idsCondition;
 		//-- Query conditions
-	    List<String> conditions = new List<String>{'RecordTypeId= \''+ RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency') +'\''};
+			List<String> conditions = new List<String>{'RecordTypeId= \''+ RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency') +'\''};
 		conditions.addAll(ams2gdp_BusinessLogic.queryClauseAccountAndRelated(batchName));
-	
+
 		if(extraIds!=null && extraIds.size() > 0) {
 			idsCondition = 'Id IN (\''+String.join(extraIds,'\', \'')+'\')';
 			if(extraIds[0]=='none'){
@@ -104,7 +104,7 @@ global class ams2gdp_Batch_Address implements Database.Batchable<sObject> , Data
 
 	global ams2gdp_Batch_Address(Boolean runNext, List<String> extra, Boolean manual)
 	{
-		init(runNext,extra,manual);	
+		init(runNext,extra,manual);
 	}
 
 	global Database.QueryLocator start(Database.BatchableContext BC)
@@ -118,14 +118,14 @@ global class ams2gdp_Batch_Address implements Database.Batchable<sObject> , Data
 		return Database.getQueryLocator(query);
 	}
 
-   	global void execute(Database.BatchableContext BC, List<Account> accounts)
-   	{
-   		//-- Total records to be processed
-   		totalRecords += accounts.size();
+	 	global void execute(Database.BatchableContext BC, List<Account> accounts)
+	 	{
+	 		//-- Total records to be processed
+	 		totalRecords += accounts.size();
 
-   		List<ams2gdp_Error> errors = new List<ams2gdp_Error>();
+	 		List<ams2gdp_Error> errors = new List<ams2gdp_Error>();
 
-   		// Format Account to GDP_Phone
+	 		// Format Account to GDP_Phone
 		List<GDP_Phone__c> phones_to_save = new List<GDP_Phone__c>();
 		try
 		{
@@ -199,7 +199,7 @@ global class ams2gdp_Batch_Address implements Database.Batchable<sObject> , Data
 	global void finish(Database.BatchableContext BC)
 	{
 		if(processNextBatch)Database.executeBatch(new ams2gdp_Batch_Agency_Affiliation(true, isManual));
-		ams2gdp_Utils.upsertAMS_GDP_Batch(batchName, syncStartedDate, errorsCount, totalRecords, failed_records, isManual);		
+		ams2gdp_Utils.upsertAMS_GDP_Batch(batchName, syncStartedDate, errorsCount, totalRecords, failed_records, isManual);
 		//--Send completion notification
 		ams2gdp_Utils.notifyBatchOutput(batchName, totalRecords, errorsCount, failed_records);
 	}

@@ -2,7 +2,7 @@
 public class IEC_PublicationsSubscriptionsCtrl_Test {
 	@isTest (SeeAllData = true)
 	static void IEC_PublicationsSubscriptionsCtrl_Test() {
-		
+
 		//Custom settings
 		TestDataGenerator.generateApexSetting();
 		TestDataGenerator.generateISOCountryState();
@@ -23,9 +23,9 @@ public class IEC_PublicationsSubscriptionsCtrl_Test {
 			//Orders & OrderItems
 			List<Account> accounts = TestDataGenerator.generateAccounts(1,true);
 			List<Contact> contacts = TestDataGenerator.generateContacts(accounts[0].Id,1,true);
-			List<Order> orders = TestDataGenerator.generateOrder(1, accounts[0].Id, usr.ContactId, usr.ContactId,true); 
+			List<Order> orders = TestDataGenerator.generateOrder(1, accounts[0].Id, usr.ContactId, usr.ContactId,true);
 			List<OrderItem> orderItems = TestDataGenerator.generateOrderItem(orders[0].Id, products, true);
-			
+
 			//create event subscription
 			IEC_Event_Subscription__c eveSubscription = new IEC_Event_Subscription__c(
 				Product__c = orderItems[0].Product__c,
@@ -50,6 +50,6 @@ public class IEC_PublicationsSubscriptionsCtrl_Test {
 			eveSubSel.getEventSubscriptionById(new set<Id>{eveSubscription.Id});
 		}
 		Test.stopTest();
-	
+
 	}
 }

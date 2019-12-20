@@ -407,7 +407,7 @@ public without sharing class OneId_RegistrationProcessController {
 	@AuraEnabled
 	public static Map<String,String> getAccountLabels() {
 		List<String> contactFields = new List<String> {
-		   // 'Id',
+			 // 'Id',
 			'BillingAddress',
 			'BillingCity',
 			'BillingCountry',
@@ -447,7 +447,7 @@ public without sharing class OneId_RegistrationProcessController {
 
 		List<Schema.PicklistEntry> controllingFieldValues = Schema.Contact.Function__c.getDescribe().getPickListValues();
 		for (Schema.PicklistEntry p : controllingFieldValues){
-		   values.add(new PicklistEntry(p.getLabel(), p.getValue()));
+			 values.add(new PicklistEntry(p.getLabel(), p.getValue()));
 		}
 		return values;
 	}
@@ -562,7 +562,7 @@ public without sharing class OneId_RegistrationProcessController {
 			l1UserExists = false;
 		}
 
-	   if(serviceName == null)
+		 if(serviceName == null)
 			serviceName = 'IDENTITY';
 
 		//it's general public account? create contact / user
@@ -1142,7 +1142,7 @@ public without sharing class OneId_RegistrationProcessController {
 		return new Account();
 	}
 
-   @AuraEnabled
+	 @AuraEnabled
 	public static StatesAndAlternateNames getStates(String country){
 		List<IATA_ISO_State__c> liis =  [SELECT ID, Name, GeonameAsciiName__c, IATA_ISO_Country__r.State_Province_Mandatory__c, IATA_ISO_Country__r.IEC_Zip_Postal_Code_required__c, (SELECT IATA_ISO_State__r.Name, GeonameName__c, GeonameAlternateNames__c, GeonameHierarchy_label__c, Name, Is_PO_Box_City__c FROM IATA_ISO_Cities__r WHERE Status__c <> 'Pending') FROM IATA_ISO_State__c WHERE IATA_ISO_Country__r.Name = :country AND Valid_for_Address__c = true ORDER BY IATA_ISO_Country__r.Name];
 		Map<ID, IATA_ISO_City__c> ma = new Map<ID,IATA_ISO_City__c>([SELECT Name, GeonameAlternateNames__c, IATA_ISO_State__r.Id, Is_PO_Box_City__c FROM IATA_ISO_City__c WHERE Status__c <> 'Pending' AND IATA_ISO_State__r.IATA_ISO_Country__r.Name = :country]);
@@ -1160,8 +1160,8 @@ public without sharing class OneId_RegistrationProcessController {
 		public Map<ID, IATA_ISO_City__c> idAndAlternateNames;
 
 		 public StatesAndAlternateNames(List<IATA_ISO_State__c> states, Map<ID, IATA_ISO_City__c> idAndAlternateNames){
-		   this.states = states;
-		   this.idAndAlternateNames = idAndAlternateNames;
+			 this.states = states;
+			 this.idAndAlternateNames = idAndAlternateNames;
 		}
 
 	}

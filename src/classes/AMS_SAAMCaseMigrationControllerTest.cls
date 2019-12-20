@@ -39,12 +39,12 @@ private class AMS_SAAMCaseMigrationControllerTest {
 
 
 	}
-	
+
 	static testMethod void testAAMS_SAAMCaseMigrationControllerTest() {
 
 		PageReference pageRef = Page.AMS_SAAMCaseMigration;
 		pageRef.getParameters().put('retURL', URL.getSalesforceBaseUrl()+'');
-        Test.setCurrentPageReference(pageRef);
+		Test.setCurrentPageReference(pageRef);
 
 		Id SAAMcaseRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');
 		AMS_SAAMCaseMigrationController con = new AMS_SAAMCaseMigrationController();
@@ -57,7 +57,7 @@ private class AMS_SAAMCaseMigrationControllerTest {
 		System.assert(con.showTextArea);
 
 		con.caseNumbers = [SELECT CaseNumber FROM Case WHERE RecordTypeId = :SAAMcaseRecordTypeId LIMIT 1].CaseNumber;
-		
+
 		System.assert(con.searchOptions.size() > 0);
 
 		con.search();
@@ -85,5 +85,5 @@ private class AMS_SAAMCaseMigrationControllerTest {
 		Test.stopTest();
 
 	}
-	
+
 }

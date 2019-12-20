@@ -9,9 +9,9 @@ public with sharing class PortalFAQsCtrl {
 	* @params
 	* @return List<DescribeDataCategoryGroupStructures.DataCategoryWrapper>
 	*/
-	@AuraEnabled(cacheable=true)	
+	@AuraEnabled(cacheable=true)
 	public static List<DescribeDataCategoryGroupStructures.DataCategoryWrapper> getFAQsInfo() {
-		return convertStructure(DescribeDataCategoryGroupStructures.getFaqsStructure());			   
+		return convertStructure(DescribeDataCategoryGroupStructures.getFaqsStructure());
 	}
 
 	/*
@@ -19,9 +19,9 @@ public with sharing class PortalFAQsCtrl {
 	* @params String lang
 	* @return List<FAQCategoryWrapper>
 	*/
-	@AuraEnabled(cacheable=true)	
+	@AuraEnabled(cacheable=true)
 	public static List<DescribeDataCategoryGroupStructures.DataCategoryWrapper> getFAQsInfoByLanguage(String lang) {
-		return convertStructure(DescribeDataCategoryGroupStructures.getPublicFaqsStructure(lang));			   
+		return convertStructure(DescribeDataCategoryGroupStructures.getPublicFaqsStructure(lang));
 	}
 
 	private static List<DescribeDataCategoryGroupStructures.DataCategoryWrapper> convertStructure(List<DescribeDataCategoryGroupStructures.FAQCategoryWrapper> lstToConvert){
@@ -48,7 +48,7 @@ public with sharing class PortalFAQsCtrl {
 	@AuraEnabled
 	public static List<FAQ__kav> getArticlesByLanguage(String selectedParams, String lang) {
 		LANGUAGE = lang;
-		
+
 		return getArticlesWithParam(selectedParams, 15);
 	}
 
@@ -62,7 +62,7 @@ public with sharing class PortalFAQsCtrl {
 		String queryOne = 'SELECT Id, ArticleNumber, Title, Answer__c FROM FAQ__kav WHERE PublishStatus=\'Online\'';
 		String queryTwo = String.isNotBlank(LANGUAGE) ? ' AND Language = \'' + LANGUAGE + '\'' : '';
 		String queryThree = ' WITH DATA CATEGORY FAQs__c BELOW ' + String.escapeSingleQuotes(selectedParams) + ' ORDER BY ArticleTotalViewCount DESC LIMIT ' + limitParam;
-		
+
 		String finalQuery = queryOne + queryTwo + queryThree;
 		System.debug(LoggingLevel.FINE, '____ [cls PortalFAQsCtrl - getArticles] finalQuery - ' + finalQuery);
 
@@ -72,7 +72,7 @@ public with sharing class PortalFAQsCtrl {
 	@AuraEnabled(cacheable=true)
 	public static List<PKB_Article_Feedback_Deflection__c> getArticlesFeedback(String articleIds, String sessionCookie) {
 		String query = 'SELECT Article_ID__c, Article_Title__c, Deflection__c FROM PKB_Article_Feedback_Deflection__c WHERE Session_ID__c = \'' + String.escapeSingleQuotes(sessionCookie) + '\' AND Article_ID__c IN ' + articleIds;
-		System.debug(LoggingLevel.FINE, '____ [cls PortalFAQsCtrl - getArticlesFeedback] query - ' + query); 
+		System.debug(LoggingLevel.FINE, '____ [cls PortalFAQsCtrl - getArticlesFeedback] query - ' + query);
 
 		return Database.query(query);
 	}
@@ -103,8 +103,8 @@ public with sharing class PortalFAQsCtrl {
 	}
 
 	/*
-		This method is used for CS Portal searchbar. 
-		@refinedSearchSerialized - is a serialized filter object sent from the LWC controller for further filtering 
+		This method is used for CS Portal searchbar.
+		@refinedSearchSerialized - is a serialized filter object sent from the LWC controller for further filtering
 	*/
 	@AuraEnabled (cacheable=true)
 	public static CSP_Utils.PagedResult getFilteredFAQsResultsPage(String searchKey, String requestedPage){
@@ -147,16 +147,16 @@ public with sharing class PortalFAQsCtrl {
 
 			String levels = '';
 			if(!subtopics.isEmpty()) levels = '(' + String.join(subtopics,' , ') + ' ) ';
-			
+
 			String queryPartOne = 'FIND \'' + String.escapeSingleQuotes(filtersWrapper.searchText) + '\' IN ALL FIELDS '+
-						   'RETURNING FAQ__kav(Id, ArticleNumber, Title, Answer__c WHERE PublishStatus = \'online\'';
+							 'RETURNING FAQ__kav(Id, ArticleNumber, Title, Answer__c WHERE PublishStatus = \'online\'';
 			String queryLanguage = filtersWrapper.guestUser != null && filtersWrapper.guestUser ? ' AND Language = \'' + filtersWrapper.language + '\'' : ' AND Language = \'' + UserInfo.getLanguage() + '\'';
 			String queryPartTwo = ' WITH DATA CATEGORY FAQs__c BELOW ' + levels ;
 
 
 			//Since SOSL don't have count, the first requested page is queried to all records
 			//and then the count is retrived from the returned results list. For the next pages
-			//limit and offset is used to improve loading times. 
+			//limit and offset is used to improve loading times.
 			if(requestedPageAux == 0){
 				String finalQuery;
 				if(String.isNotBlank(queryLanguage)) {
@@ -173,7 +173,7 @@ public with sharing class PortalFAQsCtrl {
 				for(Integer i = 0; i<tmpList.size() && i < PortalFAQsCtrl.RESULTS_PER_PAGE; i++){
 					lstToReturn.add(tmpList.get(i));
 				}
-				
+
 				result.records = lstToReturn;
 				result.totalItemCount = tmpList.size();
 			}else{
@@ -182,15 +182,15 @@ public with sharing class PortalFAQsCtrl {
 
 				String finalQuery = queryPartOne + ' AND Language = \'' + UserInfo.getLanguage() + '\'' + offsetQuery;
 				if(String.isNotBlank(queryPartTwo)) finalQuery += queryPartTwo;
-				
+
 				System.debug(LoggingLevel.FINE, '[cls PortalFAQsCtrl - getFilteredFAQsResultsPage] finalQuery - ' + finalQuery);
 				List<List<SObject>> searchList = Search.query(finalQuery);
 				List<FAQ__kav> tmpList = (List<FAQ__kav>)searchList[0];
 				result.records = tmpList;
 			}
-			
+
 		}
-		
+
 		return result;
 	}
 
@@ -205,7 +205,7 @@ public with sharing class PortalFAQsCtrl {
 			[SELECT Id, Categories__c, PublishStatus, ValidationStatus
 			FROM FAQ__kav
 			WHERE Id IN:articleTypeIds AND PublishStatus = 'Draft' AND ValidationStatus != 'Pending publication'];
-		
+
 		if(!lstArticleType.isEmpty()) {
 			List<FAQ__DataCategorySelection> lstDC =
 				[SELECT ParentId, DataCategoryName
@@ -235,7 +235,7 @@ public with sharing class PortalFAQsCtrl {
 				return new ApexMessageHandling();
 			} catch(DmlException e) {
 				return new ApexMessageHandling(false, e.getMessage());
-			}   
+			}
 		} else {
 			return new ApexMessageHandling(false, Label.CSP_PendingApproval);
 		}
