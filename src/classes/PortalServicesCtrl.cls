@@ -50,7 +50,7 @@ public static List<Portal_Applications__c> getNonRequestableServicesList(String 
 	for (Portal_Applications__c pApp: portalApplicationList) {
 		if(pApp.Name.contains('Paypal') && pApp.VisibleCNS__c) {
 			continue;
-		}		
+		}
 		if((pApp.Name == 'Trained Staff Certification' || pApp.Name == 'Local Industry Groups') && con.User_Portal_Status__c != PORTAL_ADMIN_APPROVED) {
 			continue;
 		}
@@ -285,7 +285,7 @@ public static List<ServiceWrapper> getAllServices(){
 	//iterate over the returned portal apps and create a map of services
 	Map<String,ServiceWrapper> mapServiceWrapper = new Map<String,ServiceWrapper>();
 	for(Portal_Applications__c portalAppAux : lstPortalApplications) {
-		mapServiceWrapper.put(portalAppAux.Id, new ServiceWrapper(portalAppAux, isAdmin, iepStatus, isAuthorisedSignatory, '', userAux));
+		mapServiceWrapper.put(portalAppAux.Id, new ServiceWrapper(portalAppAux, isAdmin, iepStatus, isAuthorisedSignatory, '', userAux, true));
 	}
 
 	//get the portal application rights for this user
@@ -329,7 +329,7 @@ public static List<ServiceWrapper> getAllServices(){
 		//if the map of services does not contains this service yet, then add it
 		if(!mapServiceWrapper.containsKey(accessAux.Portal_Application__c)) {
 			mapServiceWrapper.put(accessAux.Portal_Application__c,
-				new ServiceWrapper(mapAppsAlreadyWithAccess.get(accessAux.Portal_Application__c), isAdmin, iepStatus, isAuthorisedSignatory, accessAux.Right__c, userAux));
+				new ServiceWrapper(mapAppsAlreadyWithAccess.get(accessAux.Portal_Application__c), isAdmin, iepStatus, isAuthorisedSignatory, accessAux.Right__c, userAux, true));
 			mapServiceWrapper.get(accessAux.Portal_Application__c).portalApplicationRightId = accessAux.Id;
 			mapServiceWrapper.get(accessAux.Portal_Application__c).isFavorite = accessAux.Is_Favorite__c;
 		}
@@ -381,7 +381,7 @@ public static List<ServiceWrapper> getUserAccessRequestedServices(){
 	return lstToReturn;
 }
 
-public static Map<Id,List<ServiceWrapper> > getContactsAccessGrantedServices(Map<Id,Id> contactToUserIds){
+public static Map<Id,List<ServiceWrapper> > getContactsAccessGrantedServices(Map<Id,Id> contactToUserIds, Boolean getServiceDescription){
 
 	Map<Id,List<ServiceWrapper> > contactToServices = new Map<Id,List<ServiceWrapper> >();
 
@@ -404,7 +404,7 @@ public static Map<Id,List<ServiceWrapper> > getContactsAccessGrantedServices(Map
 
 		Portal_Applications__c portalAppAux = new Portal_Applications__c(Id=accessRight.Portal_Application__r.Id,Application_URL__c=accessRight.Portal_Application__r.Application_URL__c,Name=accessRight.Application_Name__c);
 
-		ServiceWrapper wrap = new ServiceWrapper(portalAppAux, isAdmin, iepStatus,false, '', userInfos.get(contactToUserIds.get(accessRight.Contact__c)));
+		ServiceWrapper wrap = new ServiceWrapper(portalAppAux, isAdmin, iepStatus,false, '', userInfos.get(contactToUserIds.get(accessRight.Contact__c)), getServiceDescription);
 
 		if(!contactToServices.containsKey(accessRight.Contact__c)) {
 			contactToServices.put(accessRight.Contact__c,new List<ServiceWrapper> {wrap});
@@ -440,7 +440,7 @@ public static List<ServiceWrapper> getUserAccessGrantedServices(){
 	if(!lstPA.isEmpty()) {
 		Map<String,ServiceWrapper> mapServiceWrapper = new Map<String,ServiceWrapper>();
 		// Non-requestable services for the contact might have Portal Service Access records, defining if the service belongs to the favorites
-		List<Portal_Application_Right__c> portalServiceAccessesList = [SELECT Id, Portal_Application__r.Id, Is_Favorite__c FROM Portal_Application_Right__c WHERE Contact__r.Id =:contactId]; 
+		List<Portal_Application_Right__c> portalServiceAccessesList = [SELECT Id, Portal_Application__r.Id, Is_Favorite__c FROM Portal_Application_Right__c WHERE Contact__r.Id =:contactId];
 		Map<Id, Portal_Application_Right__c> portalServiceAccessesMap = new Map<Id, Portal_Application_Right__c>();
 		for(Portal_Application_Right__c par : portalServiceAccessesList){
 			portalServiceAccessesMap.put(par.Portal_Application__r.Id, par);
@@ -449,7 +449,7 @@ public static List<ServiceWrapper> getUserAccessGrantedServices(){
 
 		for(Portal_Applications__c portalAppAux : lstPA) {
 			if(! serviceIds.contains(portalAppAux.Id)){
-				ServiceWrapper wrappedService = new ServiceWrapper(portalAppAux, false, '', false, '', userAux);
+				ServiceWrapper wrappedService = new ServiceWrapper(portalAppAux, false, '', false, '', userAux, true);
 				if(keySet.contains(portalAppAux.Id)){
 					wrappedService.isFavorite = portalServiceAccessesMap.get(portalAppAux.Id).Is_Favorite__c;
 					wrappedService.portalApplicationRightId = portalServiceAccessesMap.get(portalAppAux.Id).Id;
@@ -564,7 +564,7 @@ public static ServiceWrapper getServiceDetails(string serviceId){
 		List<Portal_Applications__c> lstServicesAux = portalApplicationsSelector.getPortalApplicationsByApplicationsList(new Set<String>{serviceId});
 
 		if(lstServicesAux != null && !lstServicesAux.isEmpty()){
-			temp = new ServiceWrapper(lstServicesAux.get(0), isAdmin, iepStatus, isAuthorisedSignatory, '', user);
+			temp = new ServiceWrapper(lstServicesAux.get(0), isAdmin, iepStatus, isAuthorisedSignatory, '', user, true);
 			temp.totalNrContacts = PortalServicesCtrl.getTotalNrContatsRelatedToService(serviceId);
 		}
 	}
@@ -588,7 +588,7 @@ public static List<ContactWrapper> getContactsAndStatusRelatedToServiceList(stri
 @AuraEnabled (cacheable=false)
 public static List<ContactWrapper> searchContactsInService(string serviceId,string searchkey,string filter1,string filter1_2,string filter2){
 	string filter=' AND (contact__r.name LIKE \'%'+searchkey +'%\' OR contact__r.email LIKE \'%{0}%\' OR contact__r.account.IATACode__c LIKE \'%{0}%\' OR contact__r.account.BillingCity LIKE \'%{0}%\' OR contact__r.account.IATA_ISO_Country__r.Name LIKE \'%{0}%\' )'.replace('{0}',searchkey);
-	
+
 	if(filter1 != '' && filter1 != 'All' && filter1_2 != ''){
 		filter += 'AND contact__r.account.IATACode__c =\'' + filter1 + '\' AND contact__r.account.BillingCity =\'' + filter1_2 + '\' ';
 	} else if(filter1 != '' && filter1 != 'All' && filter1_2 == '') {
@@ -801,7 +801,7 @@ private boolean isAuthorisedSignatory {get; set;}
 
 
 
-public ServiceWrapper(Portal_Applications__c recordService, Boolean isAdmin, String iepStatus, Boolean isAuthorisedSignatory, String status, User user){
+public ServiceWrapper(Portal_Applications__c recordService, Boolean isAdmin, String iepStatus, Boolean isAuthorisedSignatory, String status, User user, Boolean getServiceDescription){
 	this.recordService = recordService;
 	this.isEasyPayService = ANG_ISSP_PortalServiceHelper.isIepPortalService(recordService.name);
 	this.status = status;
@@ -817,8 +817,12 @@ public ServiceWrapper(Portal_Applications__c recordService, Boolean isAdmin, Str
 		this.accountNotOpenError = false;
 	}
 
+	if(getServiceDescription){
 	this.serviceDescriptionLabel = getServiceDescription(recordService, user);
-	
+	}else{
+		this.serviceDescriptionLabel = '';
+	}
+
 	alignStatus(this,status);
 }
 
@@ -994,8 +998,8 @@ public static Integer userProvisioningRequests(){
 public static String serviceWrapperRedirect(String serviceId){
 
 	User currentPortalUser = [SELECT id, contact.account.ANG_IEP_Status_FF__c, contact.Authorized_Signatory__c, contact.User_Portal_Status__c
-							  FROM User
-							  WHERE id =: UserInfo.getUserId()];
+								FROM User
+								WHERE id =: UserInfo.getUserId()];
 
 
 	Boolean isAdmin = (currentPortalUser.contact.User_Portal_Status__c == PORTAL_ADMIN_APPROVED);
@@ -1023,20 +1027,20 @@ public static String serviceWrapperRedirect(String serviceId){
 		List<AccountTeamMember> portalAdmins = new List<AccountTeamMember>();
 		Map<Id, AccountTeamMember> portalAdminMap = new Map<Id, AccountTeamMember>();
 
-		if (currentUserContact == null 
-			|| 
+		if (currentUserContact == null
+			||
 				(currentUserContact.User_Portal_Status__c != 'Active'
-				&& currentUserContact.User_Portal_Status__c != 'Approved Admin' //WMO-386  
+				&& currentUserContact.User_Portal_Status__c != 'Approved Admin' //WMO-386
 				&& currentUserContact.User_Portal_Status__c != 'Regional Administrator'
 				&& currentUserContact.User_Portal_Status__c != 'Approved User'
 				&& currentUserContact.User_Portal_Status__c != 'Pending Approval')
 			)
 			return new List<AccountTeamMember>();
-			
+
 		try {
 			String currentUserProfile = '';
 			List<AccountTeamMember> teamMembers = ISSP_PersonalInformationWithoutSharing.getPortalAdmins(new Id[] { currentUserContact.AccountId, currentUserContact.Account.ParentId });
-			
+
 			for (AccountTeamMember teamMember : teamMembers) {
 				if(currentUserContact.Id == teamMember.User.ContactId) {
 					if(currentUserProfile == '') {
@@ -1069,10 +1073,10 @@ public static String serviceWrapperRedirect(String serviceId){
 						portalAdminMap.put(teamMember.User.ContactId, teamMember);
 					}
 				}
-			} 
-			
-			portalAdmins = portalAdminMap.values(); 
-			
+			}
+
+			portalAdmins = portalAdminMap.values();
+
 		} catch (Exception e) {
 			ISSP_Utilities.log(e);
 		}
@@ -1092,7 +1096,7 @@ public static Boolean massDenyAccess(List<String> contactIds,string serviceId, S
 	if(psaList == null || psaList.isEmpty()) {
 		throw new portalServiceException(Label.ISSP_ANG_GenericError + ' EMPTY');
 	}
-	
+
 	for(Portal_Application_Right__c psa : psaList) {
 		psa.Right__c = PortalServicesCtrl.PORTAL_ACCESS_DENIED;
 		psa.Access_Status_Reason__c = reason;
@@ -1153,8 +1157,8 @@ public static Boolean denyAccess(String contactId,string serviceId, String reaso
 public static Boolean massGrantAccess(List<String> contactIds, String serviceId, String reason) {
 	// retrieves the record with the request
 	List<Portal_Application_Right__c> psal = [SELECT Id, Right__c, Access_Status_Reason__c, LastModifiedDate, Contact__c
-											  FROM Portal_Application_Right__c
-											  WHERE Portal_Application__c = :serviceId AND Contact__c IN :contactIds];
+												FROM Portal_Application_Right__c
+												WHERE Portal_Application__c = :serviceId AND Contact__c IN :contactIds];
 
 	if(psal.isEmpty()) {
 		System.debug(LoggingLevel.ERROR, 'PSA is null (2) [serviceId : ' + serviceId + ' - contactIds : ' + contactIds + '] ');
@@ -1181,12 +1185,12 @@ public static Boolean massGrantAccess(List<String> contactIds, String serviceId,
 			if (contact.User_Portal_Status__c == PortalServicesCtrl.PORTAL_USER_PENDING_APPR) {
 				// Pending Approval
 				contact.User_Portal_Status__c = PortalServicesCtrl.PORTAL_USER_APPROVED;
-				
+
 				contactsToUpdateMap.put(contact.Id, contact);
 			} else if (contact.users.isEmpty()) {
 				// No USer
 				contactsToStatusChangeList.add(contact.Id);
-				
+
 			}
 		}
 
@@ -1194,30 +1198,30 @@ public static Boolean massGrantAccess(List<String> contactIds, String serviceId,
 		psa.Access_Status_Reason__c = reason;
 		appRightsToUpdate.add(psa);
 	}
-    
-    if(!contactsToUpdateMap.keySet().isEmpty()){
-        try {
-            update contactsToUpdateMap.values();
-            
-            ISSP_EditPortalServiceAccessExt.updateUserProfiles(new List<String>(contactsToUpdateMap.keySet()));
-        } catch(exception e) {
-            throw e;
-            //throw new portalServiceException(Label.ISSP_ANG_GenericError);
-        }
-    }
+
+		if(!contactsToUpdateMap.keySet().isEmpty()){
+				try {
+						update contactsToUpdateMap.values();
+
+						ISSP_EditPortalServiceAccessExt.updateUserProfiles(new List<String>(contactsToUpdateMap.keySet()));
+				} catch(exception e) {
+						throw e;
+						//throw new portalServiceException(Label.ISSP_ANG_GenericError);
+				}
+		}
 	if(contactsToStatusChangeList != null && !contactsToStatusChangeList.isEmpty()) {
 		ISSP_ContactList ctrl = new ISSP_ContactList();
 
 		//generates user active with the portal
 		ctrl.processMultiplePortalUserStatusChange(contactsToStatusChangeList, PortalServicesCtrl.PORTAL_USER_APPROVED, 'Active');
 	}
-	
+
 	try {
 		update appRightsToUpdate;
 	} catch(Exception e) {
 		throw new portalServiceException(Label.ISSP_ANG_GenericError);
 	}
-	
+
 	return true;
 }
 
@@ -1228,9 +1232,9 @@ public static Boolean grantAccess(string contactId,string serviceId,string reaso
 
 	//retrieves the record with the request
 	List<Portal_Application_Right__c> psal = [SELECT Id, Right__c, Access_Status_Reason__c,
-											  LastModifiedDate
-											  FROM Portal_Application_Right__c
-											  WHERE Portal_Application__c = :serviceId AND Contact__c = :contactId];
+												LastModifiedDate
+												FROM Portal_Application_Right__c
+												WHERE Portal_Application__c = :serviceId AND Contact__c = :contactId];
 
 	if(psal.isEmpty()) {
 		System.debug(LoggingLevel.ERROR, 'PSA is null (2) [serviceId : ' + serviceId + ' - contactId : ' + contactId + '] ');
@@ -1305,7 +1309,7 @@ public static Boolean grantAccess(string contactId,string serviceId,string reaso
 		for(Portal_Application_Right__c right:existingRights) {
 			alreadyAssignedContactIds.add(right.Contact__c);
 		}
-		
+
 
 		String contactsQuery = 'SELECT Id, Name , AccountId, Email,Contact.Account_Country__c, User_Portal_Status__c, '+
 			'(select id, Right__c from Portal_Application_Rights__r where Portal_Application__c =\''+ ServiceId + '\'),'+
@@ -1315,7 +1319,7 @@ public static Boolean grantAccess(string contactId,string serviceId,string reaso
 			' AND Community__c != null' +
 			' AND Email != null' +
 			' AND Id NOT IN :alreadyAssignedContactIds ';
-			
+
 		if(!String.isBlank(queryString)){
 			contactsQuery += ' AND (Name LIKE \'%'+queryString+'%\' ) ';
 		}
@@ -1428,7 +1432,7 @@ public static Boolean grantAccess(string contactId,string serviceId,string reaso
 		}catch(Exception e) {
 			throw new portalServiceException(Label.ISSP_ANG_GenericError);
 		}
-	
+
 	}
 
 	@AuraEnabled
@@ -1519,7 +1523,7 @@ public static Boolean grantAccess(string contactId,string serviceId,string reaso
 
 	//WMO-736 - ACAMBAS: Begin
 	@AuraEnabled
-	public static ServiceWrapper getPortalServiceDetails(string serviceName) {       
+	public static ServiceWrapper getPortalServiceDetails(string serviceName) {
 		Portal_Applications__c portalService = [SELECT Id FROM Portal_Applications__c WHERE Name = :serviceName LIMIT 1];
 		return getServiceDetails(portalService.Id);
 	}

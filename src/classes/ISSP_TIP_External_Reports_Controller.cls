@@ -6,43 +6,43 @@ public with sharing class ISSP_TIP_External_Reports_Controller {
 	private List<AmazonFile__c> amazonFileListAux;
 	public static final AmazonCredentials CREDENTIALS = AmazonCredentials.getCredentials('GenericAttach');
 	public static final String SEPARATOR = '/';
-    
+
 
 	public PageReference init() {
 
 		//check if user has access to TIP Report
-        PageReference pr = new PageReference('/ISSP_Homepage');
+		PageReference pr = new PageReference('/ISSP_Homepage');
 
-        String userId = UserInfo.getUserId();
-        String contactId;
+		String userId = UserInfo.getUserId();
+		String contactId;
 
-        if(!String.isBlank(userId)) {
-            List <User> userList = [SELECT Id, ContactId FROM User WHERE Id = :userId];
+		if(!String.isBlank(userId)) {
+			List <User> userList = [SELECT Id, ContactId FROM User WHERE Id = :userId];
 
-            if(!userList.isEmpty()) {
+			if(!userList.isEmpty()) {
 
-                contactId = userList[0].ContactId;
+				contactId = userList[0].ContactId;
 
-                if (!String.isBlank(contactId)) {
-                    List <Portal_Application_Right__c> appList = [SELECT Id FROM Portal_Application_Right__c
-					                                              WHERE Portal_Application__r.Name LIKE 'TIP Reports%'
+				if (!String.isBlank(contactId)) {
+					List <Portal_Application_Right__c> appList = [SELECT Id FROM Portal_Application_Right__c
+																  WHERE Portal_Application__r.Name LIKE 'TIP Reports%'
 																		AND Right__c = 'Access Granted'
 																		AND Contact__c = :contactId];
-                    if (appList.isEmpty()) {
-                        return pr;
-                    }
-                }
-                else {
-                    return pr;
-                }
-            }
-            else {
-                return pr;
-            }
-        }
-        else {
-            return pr;
-        }
+					if (appList.isEmpty()) {
+						return pr;
+					}
+				}
+				else {
+					return pr;
+				}
+			}
+			else {
+				return pr;
+			}
+		}
+		else {
+			return pr;
+		}
 
 
 		externalReportsListAux = new List<ISSP_External_Report__c>();
@@ -69,12 +69,12 @@ public with sharing class ISSP_TIP_External_Reports_Controller {
 
 		Set<Id> externalReportIds = new Set<Id>();
 
-		for(ISSP_External_Report__c er : externalReportsListAux) { 
-			externalReportIds.add(er.Id);	
-		}	
+		for(ISSP_External_Report__c er : externalReportsListAux) {
+			externalReportIds.add(er.Id);
+		}
 
 
-		List<AmazonFile__c> amazonFileList = [SELECT Id, Name, CreatedDate, Full_Name_Unique__c, sObject_Id__c 
+		List<AmazonFile__c> amazonFileList = [SELECT Id, Name, CreatedDate, Full_Name_Unique__c, sObject_Id__c
 		 					   				  FROM AmazonFile__c
 		 					   				  WHERE isPublic__c = True AND sObject_Id__c in :externalReportIds];
 
@@ -88,7 +88,7 @@ public with sharing class ISSP_TIP_External_Reports_Controller {
 				amazonFileListAux = new List<AmazonFile__c>();
 			}
 			amazonFileListAux.add(af);
-			amazonFileMap.put(af.sObject_Id__c, amazonFileListAux);	
+			amazonFileMap.put(af.sObject_Id__c, amazonFileListAux);
 		}
 
 		externalReportsMap = new Map<Id, List<AmazonFile__c>>();
@@ -105,63 +105,63 @@ public with sharing class ISSP_TIP_External_Reports_Controller {
 
 
 	@remoteAction
-    public static string getExpiringLinkIfap(string fileName) {
-        return  genPublicExpiringAWSLinkIFAP(CREDENTIALS.Bucket + SEPARATOR, fileName);
-    }
+	public static string getExpiringLinkIfap(string fileName) {
+		return  genPublicExpiringAWSLinkIFAP(CREDENTIALS.Bucket + SEPARATOR, fileName);
+	}
 
 
-    private static string genPublicExpiringAWSLinkIFAP(string path, string filename) {
+	private static string genPublicExpiringAWSLinkIFAP(string path, string filename) {
 
-        string  stringToSplit = '/'+filename;
-        list<string> splittedName = stringToSplit.split('/');
-        splittedName.remove(0);
-        string encoded;
-        for(string dirNm:splittedName)
-            encoded+=  EncodingUtil.urlENcode(dirNm,'UTF-8') +'/';
-        encoded = encoded.substring(0,encoded.length()-1).replaceAll('null','');
+		string  stringToSplit = '/'+filename;
+		list<string> splittedName = stringToSplit.split('/');
+		splittedName.remove(0);
+		string encoded;
+		for(string dirNm:splittedName)
+			encoded+=  EncodingUtil.urlENcode(dirNm,'UTF-8') +'/';
+		encoded = encoded.substring(0,encoded.length()-1).replaceAll('null','');
 
-        Decimal timeInMili = Math.floor(System.now().getTime()/1000)+300;
-        string check = string.valueof(timeInMili);
-        if(check.indexOf('E') <> -1)    {
-            check =check.substring(0,check.indexOf('E')).replace('.', '');
-            check +='9';
-        }
-        long timeOut= Long.ValueOf(check);
+		Decimal timeInMili = Math.floor(System.now().getTime()/1000)+300;
+		string check = string.valueof(timeInMili);
+		if(check.indexOf('E') <> -1)    {
+			check =check.substring(0,check.indexOf('E')).replace('.', '');
+			check +='9';
+		}
+		long timeOut= Long.ValueOf(check);
 
-        string stringToSign = 'GET\n\n\n' + timeOut+ '\n/' + path+ encoded ;//+ filename;
-        string signature = make_sig(stringToSign);
-        string queryString = '?AWSAccessKeyId=' + CREDENTIALS.AWSAccessKeyId + '&Expires=' + timeOut+ '&Signature=' + signature;
-
-
-        PageReference page = new PageReference(CREDENTIALS.EndpointBaseURL + path+encoded );
-        map<String,String> params = page.getParameters();
-        params.put('AWSAccessKeyId', CREDENTIALS.AWSAccessKeyId);
-        params.put('Expires', String.ValueOf(timeOut));
-        params.put('Signature', signature);
-
-        String result = page.getUrl();
-       //  throw new transformationexception(''+result);
-        system.debug('stringToSign  '+  stringToSign + '  queryString  ' + queryString + '   result '  + result );
-
-        return   result ;
-     }
+		string stringToSign = 'GET\n\n\n' + timeOut+ '\n/' + path+ encoded ;//+ filename;
+		string signature = make_sig(stringToSign);
+		string queryString = '?AWSAccessKeyId=' + CREDENTIALS.AWSAccessKeyId + '&Expires=' + timeOut+ '&Signature=' + signature;
 
 
-     @remoteAction
-     public static void createDocumentTrackerRecord(string fileId, string reportId) {
-     	ISSP_Document_Tracker__c tracker = new ISSP_Document_Tracker__c(Amazon_File__c = fileId,
-     																	Report_Id__c = reportId,
-                                                            			User__c = UserInfo.getUserId(),
-                                                            			Type__c = 'TIP Report');
-        insert tracker;
-     }
+		PageReference page = new PageReference(CREDENTIALS.EndpointBaseURL + path+encoded );
+		map<String,String> params = page.getParameters();
+		params.put('AWSAccessKeyId', CREDENTIALS.AWSAccessKeyId);
+		params.put('Expires', String.ValueOf(timeOut));
+		params.put('Signature', signature);
+
+		String result = page.getUrl();
+	   //  throw new transformationexception(''+result);
+		system.debug('stringToSign  '+  stringToSign + '  queryString  ' + queryString + '   result '  + result );
+
+		return   result ;
+	 }
 
 
-     private static String make_sig(string canonicalBuffer) {
-        String macUrl ;
-        String signingKey = EncodingUtil.base64Encode(Blob.valueOf(CREDENTIALS.Secret));
-        Blob mac = Crypto.generateMac('HMacSHA1', blob.valueof(canonicalBuffer),blob.valueof(CREDENTIALS.Secret));
-        macUrl = EncodingUtil.base64Encode(mac);
-        return macUrl;
-    }
+	 @remoteAction
+	 public static void createDocumentTrackerRecord(string fileId, string reportId) {
+	 	ISSP_Document_Tracker__c tracker = new ISSP_Document_Tracker__c(Amazon_File__c = fileId,
+	 																	Report_Id__c = reportId,
+																		User__c = UserInfo.getUserId(),
+																		Type__c = 'TIP Report');
+		insert tracker;
+	 }
+
+
+	 private static String make_sig(string canonicalBuffer) {
+		String macUrl ;
+		String signingKey = EncodingUtil.base64Encode(Blob.valueOf(CREDENTIALS.Secret));
+		Blob mac = Crypto.generateMac('HMacSHA1', blob.valueof(canonicalBuffer),blob.valueof(CREDENTIALS.Secret));
+		macUrl = EncodingUtil.base64Encode(mac);
+		return macUrl;
+	}
 }

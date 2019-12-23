@@ -2,6 +2,26 @@
 <Queue xmlns="http://soap.sforce.com/2006/04/metadata">
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <name>GCS-ICCS</name>
+    <queueMembers>
+        <users>
+            <user>siddiqia@iata.org</user>
+            <user>takahashic@iata.org</user>
+            <user>vitharanai@iata.org</user>
+            <user>chenj@iata.org</user>
+            <user>dimariaj@iata.org</user>
+            <user>vidalk@iata.org</user>
+            <user>valkeajarl@iata.org</user>
+            <user>khabarovo@iata.org</user>
+            <user>mahavorams@iata.org</user>
+            <user>arorat@iata.org</user>
+            <user>bettiv@iata.org</user>
+            <user>larribay@iata.org</user>
+            <user>stupaky@iata.org</user>
+            <user>xiaoy@iata.org</user>
+            <user>huangyl@iata.org</user>
+            <user>weitz@iata.org</user>
+        </users>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

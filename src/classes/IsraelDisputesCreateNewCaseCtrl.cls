@@ -34,7 +34,7 @@ public with sharing class IsraelDisputesCreateNewCaseCtrl {
 
 		return results;
 	}
-	
+
 	private static List<Account> searchRelatedAccounts(String searchTerm) {
 		//prepare query
 		Account currentAccount = [
@@ -46,7 +46,7 @@ public with sharing class IsraelDisputesCreateNewCaseCtrl {
 		String recordTypeId = Schema.getGlobalDescribe().get('Account').getDescribe().getRecordTypeInfosByName().get('Airline Headquarters').getRecordTypeId();
 
 		String finalQuery = 'SELECT ID, Airline_Prefix__c, Name, Airline_Designator__c, Site FROM Account '
-							+ 'WHERE RecordTypeId = \'' + recordTypeId + '\' ' 
+							+ 'WHERE RecordTypeId = \'' + recordTypeId + '\' '
 							+ 'AND Sector__c = \'Airline\' '
 							+ 'AND (Category__c = \'Passenger and Cargo\' OR Category__c = \'Passenger only\') '
 							+ 'AND Membership_status__c = \'IATA Member\' '

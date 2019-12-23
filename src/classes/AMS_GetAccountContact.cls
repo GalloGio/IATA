@@ -1,5 +1,5 @@
 global class AMS_GetAccountContact {
-	
+
 	@InvocableMethod(label = 'Get Contacts')
 	public static List<Contact> getContactId(List<Id> accountIds) {
 		Id accountIdBR = accountIds[0];
@@ -21,7 +21,7 @@ global class AMS_GetAccountContact {
 				populateMapContacts(contactsHO, mapContacts);
 			}
 		}
-		
+
 		if(!appLst.isEmpty()) {
 			return new List<Contact> {new Contact(Id= appLst[0].Id)};
 		} else if(!finLst.isEmpty()) {
@@ -35,9 +35,9 @@ global class AMS_GetAccountContact {
 
 	private static List<Contact> getContacts(Id accountId) {
 		return [SELECT Id, Email, AccountId, Preferred_Language__c, User_Portal_Status__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c
-			  	FROM Contact
-			  	WHERE AccountId = :accountId AND IsEmailBounced = false AND 
-			  	(BSP_CASS_Payment_contact__c = true OR Financial_Assessment_Contact__c = true OR User_Portal_Status__c = 'Approved Admin')];
+					FROM Contact
+					WHERE AccountId = :accountId AND IsEmailBounced = false AND
+					(BSP_CASS_Payment_contact__c = true OR Financial_Assessment_Contact__c = true OR User_Portal_Status__c = 'Approved Admin')];
 	}
 
 	//Returns true if all the map lists are empty

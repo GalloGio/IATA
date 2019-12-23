@@ -8,7 +8,7 @@
     </values>
     <values>
         <field>Group_Id_Prod__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">tempfordeploy</value>
     </values>
     <values>
         <field>Report_Id_Dev__c</field>
@@ -16,6 +16,6 @@
     </values>
     <values>
         <field>Report_Id_Prod__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">tempfordeploy</value>
     </values>
 </CustomMetadata>

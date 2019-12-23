@@ -12,7 +12,7 @@ global class CreateNotificationsFromQueryBatch implements Database.Batchable<sOb
 			this.query += ' AND Contact.Account.Category__c = \'' + string.escapeSingleQuotes(category) + '\'' ;
 		}
 		if(sector != null && !string.isEmpty(sector)){
-		   this.query += ' AND Contact.Account.Sector__c = \'' + string.escapeSingleQuotes(sector) + '\'';
+			 this.query += ' AND Contact.Account.Sector__c = \'' + string.escapeSingleQuotes(sector) + '\'';
 		}
 		if(countries != null && countries.size() > 0 ){
 			this.query += ' AND Contact.Account.IATA_ISO_Country__r.Name IN (\'' + String.join(countries, '\',\'') + '\')' ;
@@ -21,15 +21,15 @@ global class CreateNotificationsFromQueryBatch implements Database.Batchable<sOb
 			this.query += ' AND ContactId IN (SELECT Contact__c From  Portal_Application_Right__c WHERE Portal_Application__r.Name = \'' + portalService + '\' AND Right__c = \'Access Granted\') ';
 		}
 		if(Test.isRunningTest()){
-		  this.query += ' LIMIT 2';
+			this.query += ' LIMIT 2';
 		}
 	}
 
-   global Database.QueryLocator start(Database.BatchableContext context){
-	   return Database.getQueryLocator(this.query);
-   }
+	 global Database.QueryLocator start(Database.BatchableContext context){
+		 return Database.getQueryLocator(this.query);
+	 }
 
-   global void execute(Database.BatchableContext context, List<sObject> users){
+	 global void execute(Database.BatchableContext context, List<sObject> users){
 		List<User> usersList =  (List<User>)users;
 		List<Notification__c> notifications = new List<Notification__c>();
 
@@ -48,8 +48,8 @@ global class CreateNotificationsFromQueryBatch implements Database.Batchable<sOb
 			));
 		}
 		insert notifications;
-   }
+	 }
 
-   global void finish(Database.BatchableContext context){
-   }
+	 global void finish(Database.BatchableContext context){
+	 }
 }
