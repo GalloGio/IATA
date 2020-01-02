@@ -1073,6 +1073,10 @@
         <name>ANG_ISSP_IEP_AuthorisedSignatory_auth_msg_Administrator</name>
     </customLabels>
     <customLabels>
+        <label><!-- ANG_ISSP_IEP_Indonesia_msg --></label>
+        <name>ANG_ISSP_IEP_Indonesia_msg</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ModelBanking India --></label>
         <name>ANG_ISSP_IEP_ModelBanking_India_msg</name>
     </customLabels>
@@ -17941,7 +17945,7 @@
         <name>ISSP_Salutation</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Sanctions_Message --></label>
+        <label>Your computer IP has been identified as sourcing from one of the countries listed as embargoed by U.S. authorities.&lt;br/&gt;The platform supporting our Customer Portal complies with this U.S. regulations and thus, we are currently unable to provide access to Customer Portal from your current IP address.&lt;br/&gt;Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quot; &gt;here&lt;/a&gt; to contact your regional IATA office.</label>
         <name>ISSP_Sanctions_Message</name>
     </customLabels>
     <customLabels>

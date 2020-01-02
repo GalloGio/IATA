@@ -1,9 +1,9 @@
-/**  
-  * Description: Trigger Handler for the Contact object of the IEC project
-  * Author: Alexandre McGraw
-  * Version: 1.0
-  * History: 
-  */
+/**
+	* Description: Trigger Handler for the Contact object of the IEC project
+	* Author: Alexandre McGraw
+	* Version: 1.0
+	* History:
+	*/
 public with sharing class trgHndlrIECContact {
 
 	/**
@@ -14,12 +14,12 @@ public with sharing class trgHndlrIECContact {
 		Set<Id> toAccountSync = new Set<Id>();
 		Set<Id> toContactSync = new Set<Id>();
 
-		
+
 		// Build list of IECAddress__c id to sync
 		for (Contact oContact : newRecords) {
 
 			Contact oldContact = oldRecordsMap.get(oContact.Id);
-			
+
 			// Make sure that only specific field have been changed to trigger the Billing Account Sync
 			if (oContact.Tax_1_ID__c != oldContact.Tax_1_ID__c
 				|| oContact.Tax_2_ID__c != oldContact.Tax_2_ID__c
@@ -39,12 +39,12 @@ public with sharing class trgHndlrIECContact {
 		Map<Id, Zuora__CustomerAccount__c> mapContactIdToBillingAccount = IECZuoraHelper.getBillingAccountByContactId(newRecordsMap.keySet());
 		if(mapContactIdToBillingAccount == null || mapContactIdToBillingAccount.isEmpty()) return;
 
-		
+
 		// Variables to Sync Billing Account
 		List<String> lstBillingAccountZId = new List<String>();
 		List<String> lstTax1ID = new List<String>();
 		List<String> lstTax2ID = new List<String>();
-		
+
 		// Variables to Sync Billing/Shipping Contact
 		List<String> lstContactZId = new List<String>();
 		List<String> lstFirstName = new List<String>();
@@ -78,16 +78,16 @@ public with sharing class trgHndlrIECContact {
 				lstPhone.add(oContact.Phone);
 				lstPhone.add(oContact.Phone);
 			}
-		
-		}		
-		
+
+		}
+
 		// sync (future method)
 		if (!lstBillingAccountZId.isEmpty())
 			IECZuoraHelper.SyncBillingAccountWithContactDetails(lstBillingAccountZId, lstTax1ID, lstTax2ID);
-		
+
 		// sync (future method)
 		if (!lstContactZId.isEmpty())
 			IECZuoraHelper.SyncZuoraContact(lstContactZId, lstFirstName, lstLastName, lstEmail, lstPhone);
-			
+
 	}
 }

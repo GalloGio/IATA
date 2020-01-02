@@ -77,22 +77,22 @@ public with sharing class ISSP_Ctrl_Country_Requirements {
 	private static User getUser() {
 		if(user == null) {
 			user = [Select id,
-						   contact.Account.Sector__c,
-						   contact.Account.Category__c,
-						   contact.Account.IATA_ISO_Country__r.Name,
-						   contact.Account.IATA_ISO_Country__r.ANG_Enable_NewGen__c,
-						   contact.Account.IATA_ISO_Country__r.Multicountry_Enabled__c,
-						   contact.Account.IATA_ISO_Country__r.ISO_Code__c,
-						   contact.Account.IATA_ISO_Country__r.Case_BSP_Country__c,
-						   contact.Account.IATA_ISO_Country__r.IATA_Country_FR__c,
-						   contact.Account.IATA_ISO_Country__r.IATA_Country_SP__c,
-						   contact.Account.IATA_ISO_Country__r.AMS_Accreditation_New_Labels__c,
-						   contact.Account.Top_Parent__c,
-						   contact.Account.IATACode__c,
-						   contact.Account.RecordType.DeveloperName,
-						   contact.Account.Status__c,
-						   contact.Account.ANG_Accreditation_Model__c
-					  from User
+							 contact.Account.Sector__c,
+							 contact.Account.Category__c,
+							 contact.Account.IATA_ISO_Country__r.Name,
+							 contact.Account.IATA_ISO_Country__r.ANG_Enable_NewGen__c,
+							 contact.Account.IATA_ISO_Country__r.Multicountry_Enabled__c,
+							 contact.Account.IATA_ISO_Country__r.ISO_Code__c,
+							 contact.Account.IATA_ISO_Country__r.Case_BSP_Country__c,
+							 contact.Account.IATA_ISO_Country__r.IATA_Country_FR__c,
+							 contact.Account.IATA_ISO_Country__r.IATA_Country_SP__c,
+							 contact.Account.IATA_ISO_Country__r.AMS_Accreditation_New_Labels__c,
+							 contact.Account.Top_Parent__c,
+							 contact.Account.IATACode__c,
+							 contact.Account.RecordType.DeveloperName,
+							 contact.Account.Status__c,
+							 contact.Account.ANG_Accreditation_Model__c
+						from User
 					 where Id = :UserInfo.getUserId()];
 		}
 		return user;
@@ -261,7 +261,7 @@ public with sharing class ISSP_Ctrl_Country_Requirements {
 		Map<String, Schema.SObjectField> objectFields = Schema.getGlobalDescribe().get('AP_Country_Requierment__c').getDescribe().fields.getMap();
 
 		for(String field : objectFields.keySet()) {
-		   query += field + ', ';
+			 query += field + ', ';
 		}
 
 		query += 'Country__r.Name FROM AP_Country_Requierment__c ';

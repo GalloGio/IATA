@@ -92,8 +92,8 @@ public static List<LiveAgentButtonSettings__c> getLiveAgentButton(String topicNa
 
 	if(isEmergency) {
 		return [SELECT ID, Name, ButtonId__c, Button_Per_Topic__c, DeploymentId__c, Language__c, Region__c, Sectors__c, Topic__c
-		        FROM LiveAgentButtonSettings__c
-		        WHERE Name =: 'Emergency'];
+						FROM LiveAgentButtonSettings__c
+						WHERE Name =: 'Emergency'];
 	}
 
 	//lower cases the country value;
@@ -124,18 +124,18 @@ public static List<LiveAgentButtonSettings__c> getLiveAgentButton(String topicNa
 
 	if(country != null && country != '') {
 		return [ SELECT ID, Name, ButtonId__c, Button_Per_Topic__c, DeploymentId__c,
-		         Language__c, Region__c, Sectors__c, Topic__c
-		         FROM LiveAgentButtonSettings__c
-		         WHERE Sectors__c Like : sector
-		         AND ((Language__c = 'en' AND Region__c =: selectedCountryRegion)
-		              OR (Language__c =: country AND Region__c =: selectedCountryRegion))];
+						 Language__c, Region__c, Sectors__c, Topic__c
+						 FROM LiveAgentButtonSettings__c
+						 WHERE Sectors__c Like : sector
+						 AND ((Language__c = 'en' AND Region__c =: selectedCountryRegion)
+									OR (Language__c =: country AND Region__c =: selectedCountryRegion))];
 
 	}
 	else{
 		return [ SELECT ID, Name, ButtonId__c, Button_Per_Topic__c, DeploymentId__c,
-		         Language__c, Region__c, Sectors__c, Topic__c
-		         FROM LiveAgentButtonSettings__c
-		         WHERE Topic__c Like : topicName];
+						 Language__c, Region__c, Sectors__c, Topic__c
+						 FROM LiveAgentButtonSettings__c
+						 WHERE Topic__c Like : topicName];
 	}
 }
 
@@ -202,8 +202,8 @@ public static Contact getContactInfo(){
 
 	//Grabs User's associated Contact
 	return [SELECT ID, FirstName, Name, Email, Phone, Account.Name, Account.Sector__c,
-	        Account.Category__c, Account.id, Account.Country_ISO_Code__c,
-	        Account.Region_formula__c FROM Contact WHERE ID = : user.ContactId];
+					Account.Category__c, Account.id, Account.Country_ISO_Code__c,
+					Account.Region_formula__c FROM Contact WHERE ID = : user.ContactId];
 
 }
 
@@ -219,12 +219,12 @@ public static List<ISSP_FAQ2Case_Emergencies__c> getEmergencyDependencies(){
 public static List<LVA_CallUsConfigClass> getCallUsPhoneNumber(){
 	List<LVA_CallUsConfigClass> listCallConfigs = new List<LVA_CallUsConfigClass>();
 	for(LVA_CallUsConfig__mdt callConfig : [SELECT DeveloperName,
-	                                        IsoCountry__c,
-	                                        Sector__c,
-	                                        Topic__c,
-	                                        PhoneNumber__c,
-	                                        AvailableHours__c
-	                                        FROM LVA_CallUsConfig__mdt]) {
+																					IsoCountry__c,
+																					Sector__c,
+																					Topic__c,
+																					PhoneNumber__c,
+																					AvailableHours__c
+																					FROM LVA_CallUsConfig__mdt]) {
 		LVA_CallUsConfigClass auxCallConfig =
 			new LVA_CallUsConfigClass(
 				callConfig.DeveloperName,

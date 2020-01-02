@@ -33,19 +33,19 @@ public with sharing class PortalApplications_Sel extends Selector {
 	}
 
 	/****************************************************************************************************
-    	
+
 	****************************************************************************************************/
 	public List<Portal_Applications__c> getPortalApplicationsByApplicationsList( Set<String> lstPortalApplicationsIds) {
 		String query = String.format(
-            'SELECT {0} ' +
-            'FROM {1} ' + 
-            'WHERE Id IN :lstPortalApplicationsIds ' , 
-            new List<String>{
-                String.join(getDefaultFields(), ', '),
-                getSObjectType().getDescribe().getName()
-            }
-        );
-		
+			'SELECT {0} ' +
+			'FROM {1} ' +
+			'WHERE Id IN :lstPortalApplicationsIds ' ,
+			new List<String>{
+				String.join(getDefaultFields(), ', '),
+				getSObjectType().getDescribe().getName()
+			}
+		);
+
 		return Database.query(query);
 	}
 

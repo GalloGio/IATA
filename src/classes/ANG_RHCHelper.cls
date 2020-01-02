@@ -282,7 +282,7 @@ public class ANG_RHCHelper {
 				if(currentBspAttrKey == bspAttrKey &&
 					(acct.Financial_Assessment_Points__c == NULL ||
 					 (bspAttr.Max_FA_Points__c >= acct.Financial_Assessment_Points__c &&
-					  bspAttr.Min_FA_Points__c <= acct.Financial_Assessment_Points__c)
+						bspAttr.Min_FA_Points__c <= acct.Financial_Assessment_Points__c)
 					)
 				){
 					bspAttrRhc = bspAttr;
@@ -589,8 +589,8 @@ public class ANG_RHCHelper {
 				Identifier__c
 			 FROM
 			 	Notification_Template__c
-			  WHERE
-			  	Identifier__c = :RISK_RHC_UPDATE_TEMPLATE
+				WHERE
+					Identifier__c = :RISK_RHC_UPDATE_TEMPLATE
 			]
 		);
 

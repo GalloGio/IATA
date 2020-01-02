@@ -1,8 +1,8 @@
 @isTest
 private class IDCard_CropperCtrlTest {
-	
+
 	@isTest static void test_method_one() {
-		
+
 		Amazon_Cred__c amc = new Amazon_Cred__c(Name = 'IdCard', Dev_Configuration__c = 'IdCardDev', Prod_Configuration__c = 'IdCardProd');
 		insert amc;
 
@@ -30,7 +30,7 @@ private class IDCard_CropperCtrlTest {
 
 		system.assertEquals('filename.jpg',ctrl_existing_file.controllerFileName);
 		system.assertNotEquals(null, ctrl_existing_file.awsImageViewLink);
-		
+
 	}
-		
+
 }
