@@ -194,13 +194,13 @@ public class GADM_RelatedFilesCategorizedLists_TEST {
 
 		Id gadmRT = RecordTypeSingleton.getInstance().getRecordTypeId('ContentVersion', 'GADM');
 		ContentVersion contentVersion = new ContentVersion(
-		  Title = 'testFile',
-		  PathOnClient = 'testFile.jpg',
-		  VersionData = Blob.valueOf('Test Content'),
-		  IsMajorVersion = true,
-		  RecordTypeId = gadmRT,
-		  Valid_From__c = Date.today().addDays(-2),
-		  Valid_To__c = Date.today().addDays(2)
+			Title = 'testFile',
+			PathOnClient = 'testFile.jpg',
+			VersionData = Blob.valueOf('Test Content'),
+			IsMajorVersion = true,
+			RecordTypeId = gadmRT,
+			Valid_From__c = Date.today().addDays(-2),
+			Valid_To__c = Date.today().addDays(2)
 		);
 		insert contentVersion;
 		List<ContentDocument> documents = [SELECT Id, Title, LatestPublishedVersionId FROM ContentDocument];

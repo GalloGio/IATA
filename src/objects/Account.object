@@ -16159,6 +16159,11 @@ IF ((RecordType.DeveloperName = &quot;Agency_WW_HQ&quot; || RecordType.Developer
                     <default>false</default>
                     <label>Long Daily</label>
                 </value>
+                <value>
+                    <fullName>E</fullName>
+                    <default>false</default>
+                    <label>EasyPay</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
         <visibleLines>10</visibleLines>
@@ -43247,6 +43252,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>D</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>E</fullName>
                 <default>false</default>
             </values>
             <values>

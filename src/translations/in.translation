@@ -1073,6 +1073,10 @@
         <name>ANG_ISSP_IEP_AuthorisedSignatory_auth_msg_Administrator</name>
     </customLabels>
     <customLabels>
+        <label><!-- ANG_ISSP_IEP_Indonesia_msg --></label>
+        <name>ANG_ISSP_IEP_Indonesia_msg</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ModelBanking India --></label>
         <name>ANG_ISSP_IEP_ModelBanking_India_msg</name>
     </customLabels>
@@ -3149,7 +3153,7 @@ dan &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-port
         <name>CSP_Reset_Password_Success_Msg_2</name>
     </customLabels>
     <customLabels>
-        <label>IP komputer Anda teridentifikasi sebagai sumber dari salah satu negara yang ada di daftar embargo oleh otoritas AS.&lt;br/&gt;Platform yang mendukung Portal Pelanggan kami sesuai dengan peraturan AS, oleh karena itu saat ini kami belum dapat memberikan akses ke Portal Pelanggan melalui alamat IP Anda.&lt;br/&gt;&lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Klik di &lt;/a&gt;sini untuk menghubungi kami.</label>
+        <label>IP komputer Anda teridentifikasi sebagai sumber dari salah satu negara yang ada di daftar embargo oleh otoritas AS.&lt;br/&gt;Platform yang mendukung Portal Pelanggan kami sesuai dengan peraturan AS, oleh karena itu saat ini kami belum dapat memberikan akses ke Portal Pelanggan melalui alamat IP Anda.&lt;br/&gt;&lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Klik di &lt;/a&gt;sini untuk menghubungi kami.</label>
         <name>CSP_Restricted_Login_Message</name>
     </customLabels>
     <customLabels>
@@ -17987,7 +17991,7 @@ Jika Anda ingin mengganti kata sandi, kembali ke layar masuk lalu gunakan fungsi
         <name>ISSP_Salutation</name>
     </customLabels>
     <customLabels>
-        <label>IP komputer Anda teridentifikasi berasal dari salah satu negara yang diembargo oleh otoritas AS&lt;br/&gt;Platform yang mendukung Customer Portal kami mematuhi peraturan AS. Dengan demikian, saat ini kami tidak dapat memberikan akses ke Customer Portal Anda dari alamat IP ini.&lt;br/&gt;Klik&lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.aspx&quot; &gt;Disini&lt;/a&gt;Untuk menghubungi kantor IATA regional Anda</label>
+        <label>IP komputer Anda teridentifikasi berasal dari salah satu negara yang diembargo oleh otoritas AS&lt;br/&gt;Platform yang mendukung Customer Portal kami mematuhi peraturan AS. Dengan demikian, saat ini kami tidak dapat memberikan akses ke Customer Portal Anda dari alamat IP ini.&lt;br/&gt;Klik&lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quot; &gt;Disini&lt;/a&gt;Untuk menghubungi kantor IATA regional Anda</label>
         <name>ISSP_Sanctions_Message</name>
     </customLabels>
     <customLabels>

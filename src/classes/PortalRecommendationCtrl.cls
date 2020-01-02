@@ -50,7 +50,7 @@ public with sharing class PortalRecommendationCtrl {
 	public static final String enableThisServiceLabel = System.Label.ISSP_Enable_Service;
 
 	public static final Boolean isPortalAdmin = CSP_Utils.isAdmin();
-	
+
 	@AuraEnabled
 	public static List<RecommendationWrapper> getRecommendations(String type) {
 		User usr = CSP_Utils.getLoggedUser();
@@ -74,8 +74,8 @@ public with sharing class PortalRecommendationCtrl {
 		if( type.equals('Services') ) {
 			whereClause += ' AND Recommendation_Visibility__r.RecordTypeId = \'' + serviceRecommendationRecTypeId + '\'';
 		}
-		
-		String recommendationQuery = String.format('SELECT {0} FROM Card_Visibility__c WHERE {1} ORDER BY CreatedDate DESC', 
+
+		String recommendationQuery = String.format('SELECT {0} FROM Card_Visibility__c WHERE {1} ORDER BY CreatedDate DESC',
 			new List<String>{String.join(getQueryFields(), ', '), whereClause}
 		);
 
@@ -112,7 +112,7 @@ public with sharing class PortalRecommendationCtrl {
 					(rec.Recommendation_Visibility__r.RecordTypeId != serviceRecommendationRecTypeId ? 'PRODUCT' : 'SERVICE')
 				));
 			}
-			
+
 		}
 
 		return recommendations;
@@ -171,6 +171,6 @@ public with sharing class PortalRecommendationCtrl {
 	@AuraEnabled
 	public static String getBaseURL() {
 		return URL.getSalesforceBaseUrl().toExternalForm();
-	} 
+	}
 
 }
