@@ -1073,6 +1073,10 @@
         <name>ANG_ISSP_IEP_AuthorisedSignatory_auth_msg_Administrator</name>
     </customLabels>
     <customLabels>
+        <label><!-- ANG_ISSP_IEP_Indonesia_msg --></label>
+        <name>ANG_ISSP_IEP_Indonesia_msg</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ModelBanking India --></label>
         <name>ANG_ISSP_IEP_ModelBanking_India_msg</name>
     </customLabels>
@@ -3150,7 +3154,7 @@ la seguente procedura per completarlo :
         <name>CSP_Reset_Password_Success_Msg_2</name>
     </customLabels>
     <customLabels>
-        <label>L&apos;IP del suo computer è stato identificato come proveniente da uno dei Paesi elencati come sotto embargo dalle autorità statunitensi. &lt;br/&gt;La piattaforma che supporta il nostro Portale Clienti è conforme alle normative statunitensi e pertanto non siamo attualmente in grado di fornire l&apos;accesso al Portale Clienti dal suo attuale indirizzo IP.&lt;br/&gt; &lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Clicchi qui&lt;/a&gt; per contattarci.</label>
+        <label>L&apos;IP del suo computer è stato identificato come proveniente da uno dei Paesi elencati come sotto embargo dalle autorità statunitensi. &lt;br/&gt;La piattaforma che supporta il nostro Portale Clienti è conforme alle normative statunitensi e pertanto non siamo attualmente in grado di fornire l&apos;accesso al Portale Clienti dal suo attuale indirizzo IP.&lt;br/&gt; &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Clicchi qui&lt;/a&gt; per contattarci.</label>
         <name>CSP_Restricted_Login_Message</name>
     </customLabels>
     <customLabels>
@@ -14281,7 +14285,11 @@ la funzione &quot;Password dimenticata?&quot;</label>
         <name>ISSP_CNS_quote2</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_CalendarDisclaimer --></label>
+        <label>&quot;Nota: il calendario per questo mercato contiene date specifiche locali che non sono riportate in questa applicazione.
+
+
+Si assicuri di scaricare la versione pdf completa del Calendario per il suo mercato, cliccando sulla scheda supporto e quindi selezionando i calendari sotto documenti sul lato destro della pagina.
+&quot;</label>
         <name>ISSP_CalendarDisclaimer</name>
     </customLabels>
     <customLabels>
@@ -17980,7 +17988,7 @@ Se desiderate ripristinare la password, tornate alla schermata di accesso e util
         <name>ISSP_Salutation</name>
     </customLabels>
     <customLabels>
-        <label>L&apos;indirizzio IP del suo computer é stato identificato come proveniente da uno dei paesi che constano con uun embargo degli Stati Uniti.&lt;br/&gt;La piattaforma del nostro portale risponde alla normativa statunitense e pertanto no possiamo farla accedere in questo momento dalla sua IP.&lt;br/&gt;Faccia Click&lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.aspx&quot; &gt;qui&lt;/a&gt;per contattare il suo ufficio regionale</label>
+        <label>L&apos;indirizzio IP del suo computer é stato identificato come proveniente da uno dei paesi che constano con uun embargo degli Stati Uniti.&lt;br/&gt;La piattaforma del nostro portale risponde alla normativa statunitense e pertanto no possiamo farla accedere in questo momento dalla sua IP.&lt;br/&gt;Faccia Click&lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quot; &gt;qui&lt;/a&gt;per contattare il suo ufficio regionale</label>
         <name>ISSP_Sanctions_Message</name>
     </customLabels>
     <customLabels>

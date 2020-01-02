@@ -5,7 +5,7 @@ public with sharing class TopicAssignmentHelper {
 	 * Applies to items posted to Airline HQ accounts that are IATA Members.
 	 */
 	public static void AccountTopicValidation(list<TopicAssignment> TriggerNew) {
-		
+
 		TopicHelper.TopicsWrapper topicWrapper = TopicHelper.getTopicsInfo();
 
 		String strAcceptedValues = topicWrapper.acceptedTopics;
@@ -51,11 +51,11 @@ public with sharing class TopicAssignmentHelper {
 				if (!setRelatedAccountIds.isEmpty()) {
 
 					Map<Id, Account> mapAccountsPerId = new Map<Id, Account>(
-						[SELECT 
-							Id 
-						 FROM 
+						[SELECT
+							Id
+						 FROM
 						 	Account
-						 WHERE 
+						 WHERE
 						 	 Id IN :setRelatedAccountIds
 						 AND RecordType.DeveloperName = 'IATA_Airline'
 						 AND Sector__c = 'Airline'

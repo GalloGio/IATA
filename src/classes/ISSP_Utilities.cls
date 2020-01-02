@@ -1,57 +1,57 @@
 public without sharing class ISSP_Utilities {
 
 	public virtual class  ApplicationException extends Exception {
-	} 
-	 
+	}
+
 	 @Future
 	 public static void SendErrorNotificationEMail(String EmailBody){
-        Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-        mail.setToAddresses(Label.ISSP_EmailsFailure.split(';'));
-        String Subject = 'ISSP Error!';
-        mail.setSubject(Subject);
+		Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+		mail.setToAddresses(Label.ISSP_EmailsFailure.split(';'));
+		String Subject = 'ISSP Error!';
+		mail.setSubject(Subject);
 		mail.setPlainTextBody(EmailBody);
-    }
-    
-    @Future
-    public static void sendEmailToAdmins(string ConId){
-    	Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-        mail.setToAddresses(Label.ISSP_EmailsFailure.split(';'));
-        String Subject = 'ISSP Error!';
-        mail.setSubject(Subject);
-		mail.setPlainTextBody('Test');
-    }
-    
-    @future 
-    public static void DMLOpt(Set<ID> casesIds){
-		List<Case> cases = [select id from Case where id IN :casesIds];
-	    if(cases!=null && cases.size()>0){
-	      Database.DMLOptions dmo = new Database.DMLOptions();
-	      dmo.assignmentRuleHeader.useDefaultRule = true;
-	      for(Case cs : cases){
-	        cs.setOptions(dmo);
-	      }
-	      update cases;
-	    }
 	}
-    
-    public static string getContactTypeById(string conId){
-    	Contact con = [select Id, Account.RecordType.DeveloperName, Account.Sector__c, Account.Category__c from Contact where Id =:conId];
-    	string userType = ISSP_Constant.userTypeByAccountRtDeveloperNameMap.get(con.Account.RecordType.DeveloperName);
-    	if(userType!=null){
-    		return userType;
-    	}
-    	else{
-    		userType = ISSP_Constant.accountSectorType.get(con.Account.Sector__c);
-    		if(userType!=null){
+
+	@Future
+	public static void sendEmailToAdmins(string ConId){
+		Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+		mail.setToAddresses(Label.ISSP_EmailsFailure.split(';'));
+		String Subject = 'ISSP Error!';
+		mail.setSubject(Subject);
+		mail.setPlainTextBody('Test');
+	}
+
+	@future
+	public static void DMLOpt(Set<ID> casesIds){
+		List<Case> cases = [select id from Case where id IN :casesIds];
+		if(cases!=null && cases.size()>0){
+		  Database.DMLOptions dmo = new Database.DMLOptions();
+		  dmo.assignmentRuleHeader.useDefaultRule = true;
+		  for(Case cs : cases){
+			cs.setOptions(dmo);
+		  }
+		  update cases;
+		}
+	}
+
+	public static string getContactTypeById(string conId){
+		Contact con = [select Id, Account.RecordType.DeveloperName, Account.Sector__c, Account.Category__c from Contact where Id =:conId];
+		string userType = ISSP_Constant.userTypeByAccountRtDeveloperNameMap.get(con.Account.RecordType.DeveloperName);
+		if(userType!=null){
+			return userType;
+		}
+		else{
+			userType = ISSP_Constant.accountSectorType.get(con.Account.Sector__c);
+			if(userType!=null){
 				return userType;
 			}
-    		userType = ISSP_Constant.accountCategoryType.get(con.Account.Category__c);
-    		if(userType!=null){
+			userType = ISSP_Constant.accountCategoryType.get(con.Account.Category__c);
+			if(userType!=null){
 				return userType;
 			}
-    	}
-    	return 'Other';
-    }
+		}
+		return 'Other';
+	}
 
 	public static void log(Object obj) {
 		system.debug('\n\n\n' + obj + '\n\n\n');
@@ -59,32 +59,32 @@ public without sharing class ISSP_Utilities {
 	//AEF:
 	public static String buildPortalUserName(String email) {
 		String sufix = '@partner.iata.org';
-		String portalUserName = String.isNotBlank(email) ? email : '';   
+		String portalUserName = String.isNotBlank(email) ? email : '';
 		if(String.isNotBlank(email) && !portalUserName.contains(sufix))
 			portalUserName = portalUserName.replace('@', '.') + sufix;
-		
-			
-		return portalUserName;  
+
+
+		return portalUserName;
 	}
-	
+
 	public static Boolean isEmpty(list<object> oneList) {
 		return null == oneList || oneList.isEmpty();
 	}
-	
+
 	public static Boolean isNotEmpty(list<object> oneList) {
 		return !isEmpty(oneList);
 	}
-	
+
 	public static String exceptionTrace(Exception exp) {
 		return exp.getStackTraceString() + '\n' + exp.getMessage() + '\n' + exp.getTypeName();
 	}
-	
+
 	public static String exceptionDump(Exception exp) {
 		String msg = '\n'+exceptionTrace(exp);
 		system.debug(system.LoggingLevel.ERROR, msg);
 		return msg;
 	}
-	
+
 	public static void addErrorMessage(Exception exp) {
 		exceptionDump(exp);
 		ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.FATAL, exp.getMessage()));
@@ -108,7 +108,7 @@ public without sharing class ISSP_Utilities {
 
 		return isCNS;
 
-      }
+	  }
 
 	public static boolean isIFGUser(){
 

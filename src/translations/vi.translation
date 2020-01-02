@@ -1073,6 +1073,10 @@
         <name>ANG_ISSP_IEP_AuthorisedSignatory_auth_msg_Administrator</name>
     </customLabels>
     <customLabels>
+        <label><!-- ANG_ISSP_IEP_Indonesia_msg --></label>
+        <name>ANG_ISSP_IEP_Indonesia_msg</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ModelBanking India --></label>
         <name>ANG_ISSP_IEP_ModelBanking_India_msg</name>
     </customLabels>
@@ -3147,7 +3151,7 @@
         <name>CSP_Reset_Password_Success_Msg_2</name>
     </customLabels>
     <customLabels>
-        <label>IP máy tính của bạn đã được xác định là bắt nguồn từ một trong những quốc gia nằm trong sanh sách bị cấm vận bởi chính quyền Hoa Kỳ.&lt;br/&gt; Nền tảng hỗ trợ Cổng thông tin Khách hàng của chúng tôi tuân thủ các quy định này của Hoa Kỳ và do đó, chúng tôi hiện không thể cung cấp quyền truy cập vào Cổng thông tin Khách hàng từ địa chỉ IP hiện tại của bạn.&lt;br/&gt; &lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Nhấn vào đây để liên hệ với chúng tôi.&lt;/a&gt;</label>
+        <label>IP máy tính của bạn đã được xác định là bắt nguồn từ một trong những quốc gia nằm trong sanh sách bị cấm vận bởi chính quyền Hoa Kỳ.&lt;br/&gt; Nền tảng hỗ trợ Cổng thông tin Khách hàng của chúng tôi tuân thủ các quy định này của Hoa Kỳ và do đó, chúng tôi hiện không thể cung cấp quyền truy cập vào Cổng thông tin Khách hàng từ địa chỉ IP hiện tại của bạn.&lt;br/&gt; &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Nhấn vào đây để liên hệ với chúng tôi.&lt;/a&gt;</label>
         <name>CSP_Restricted_Login_Message</name>
     </customLabels>
     <customLabels>
@@ -17974,7 +17978,7 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
         <name>ISSP_Salutation</name>
     </customLabels>
     <customLabels>
-        <label>IP máy tính của bạn được xác định nguồn từ một trong những quốc gia bị cấm vận bởi Hoa kỳ&lt;br/&gt;Hệ thống hỗ trợ khách hàng của chúng tôi tuân thủ với quy định này của Hoa Kỳ, do đó chúng hiện không thể cung cấp quyền truy cập vào Cổng thông tin khách hàng cho địa chỉ IP của bạn&lt;br/&gt;Click&lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.aspx&quot; &gt;tại đây&lt;/a&gt;để liên hệ tới văn phòng IATA tại khu vực của bạn</label>
+        <label>IP máy tính của bạn được xác định nguồn từ một trong những quốc gia bị cấm vận bởi Hoa kỳ&lt;br/&gt;Hệ thống hỗ trợ khách hàng của chúng tôi tuân thủ với quy định này của Hoa Kỳ, do đó chúng hiện không thể cung cấp quyền truy cập vào Cổng thông tin khách hàng cho địa chỉ IP của bạn&lt;br/&gt;Click&lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quot; &gt;tại đây&lt;/a&gt;để liên hệ tới văn phòng IATA tại khu vực của bạn</label>
         <name>ISSP_Sanctions_Message</name>
     </customLabels>
     <customLabels>

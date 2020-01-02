@@ -115,7 +115,7 @@ public with sharing class PortalLoginCtrl {
 				startUrl = OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, '/ISSP_Homepage?communityName=CNS');
 			}
 
-			
+
 			LightningRegistrationProcess.insertDeductionNoticeApp(string.valueOf(oneUser.Id));
 
 			username=null != oneUser ? oneUser.Username : username;

@@ -1,15 +1,15 @@
 @isTest
 private class AMS_PurgeIATACodeTest {
-	
+
 	@testSetup static void setup(){
 
 		Date myDate1 = Date.newInstance(2016, 2, 17);
 		Date myDate2 = Date.newInstance(2016, 2, 17);
 
-        ID rtAgency = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+		ID rtAgency = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
-        IATA_ISO_Country__c portugal = new IATA_ISO_Country__c(Name='Portugal', ISO_Code__c='IT', Region__c='Europe', ISS_Office_Location__c='Portugal');
-        insert portugal;
+		IATA_ISO_Country__c portugal = new IATA_ISO_Country__c(Name='Portugal', ISO_Code__c='IT', Region__c='Europe', ISS_Office_Location__c='Portugal');
+		insert portugal;
 
 
 		// create test account1
@@ -55,7 +55,7 @@ private class AMS_PurgeIATACodeTest {
 	}
 
 	@isTest static void runProcessForIatacodePurge() {
-		
+
 		Test.startTest();
 
 		List<Account> accts = [SELECT Id, Name, Accreditation_date__c, Status__c , Location_Class__c, IATACode__c from Account];
@@ -66,22 +66,22 @@ private class AMS_PurgeIATACodeTest {
 
 		AMS_PurgeAccountBatch pab = new AMS_PurgeAccountBatch(accountsToPurge);
 
-    	Id aMS_PurgeAccountBatchId = Database.executeBatch(pab,200);
+		Id aMS_PurgeAccountBatchId = Database.executeBatch(pab,200);
 
 		Test.stopTest();
 
 		accts = [SELECT Id, Accreditation_date__c, Status__c , Location_Class__c, IATACode__c, NAme from Account];
 
 		System.assertEquals(newIATACodePurged,accts.get(0).IATACode__c );
-		
+
 		List<GDP_Products_Account_View__c> gdps = [select Id, IATA_Code__c from GDP_Products_Account_View__c];
 
 		System.assertEquals(newIATACodePurged, gdps.get(0).IATA_Code__c);
 	}
 
-	
+
 	@isTest static void runProcessForIatacodePurgeErrorTesting2() {
-		
+
 		Test.startTest();
 
 		List<Account> accts = [SELECT Id, Name, Accreditation_date__c, Status__c , Location_Class__c, IATACode__c from Account];
@@ -108,14 +108,14 @@ private class AMS_PurgeIATACodeTest {
 
 		AMS_PurgeGDPIATACodeBatch pab = new AMS_PurgeGDPIATACodeBatch(accountsIATACODEToPurge);
 
-    	Id aMS_PurgeGDPBatchId = Database.executeBatch(pab,200);
+		Id aMS_PurgeGDPBatchId = Database.executeBatch(pab,200);
 
 		Test.stopTest();
 
 	}
 
 	@isTest static void runProcessForIatacodePurgeErrorTesting() {
-		
+
 		Test.startTest();
 
 		List<Account> accts = [SELECT Id, Name, Accreditation_date__c, Status__c , Location_Class__c, IATACode__c from Account];
@@ -132,7 +132,7 @@ private class AMS_PurgeIATACodeTest {
 
 		AMS_PurgeAccountBatch pab = new AMS_PurgeAccountBatch(accountsToPurge);
 
-    	Id aMS_PurgeAccountBatchId = Database.executeBatch(pab,200);
+		Id aMS_PurgeAccountBatchId = Database.executeBatch(pab,200);
 
 		Test.stopTest();
 
@@ -148,39 +148,39 @@ private class AMS_PurgeIATACodeTest {
 
 		PageReference pageRef = Page.AMS_PurgeIATACodePage;
 
-        Test.setCurrentPageReference(pageRef);
+		Test.setCurrentPageReference(pageRef);
 
-        AMS_PurgeIATACodeController controller = new AMS_PurgeIATACodeController();
+		AMS_PurgeIATACodeController controller = new AMS_PurgeIATACodeController();
 
-        Test.startTest();
-        
-        //AMS_VoucherManagerPage page = new AMS_VoucherManagerPage(sc);
+		Test.startTest();
+
+		//AMS_VoucherManagerPage page = new AMS_VoucherManagerPage(sc);
 
 		purgeId = controller.fullPurgeId;
 		purgeId = controller.litePurgeId;
-        
-        controller.checkBatchStatus();
 
-        controller.contentFile = Blob.valueOf('Id,IATACode__c,C_Code__c,A_Code__c,N_Code__c,Site,Name,Location_Type__c,Location_Class__c,Expiry_Date__c,Accreditation_date__c,Not to Purge SFDC,Not to Purge External\n0013E0000000000001,00000000012,,,,,Account A Portugal,HO,C,,Wed Jan 01 00:00:00 GMT 2014,,');
+		controller.checkBatchStatus();
 
-        controller.fetchSOQLObjects();
+		controller.contentFile = Blob.valueOf('Id,IATACode__c,C_Code__c,A_Code__c,N_Code__c,Site,Name,Location_Type__c,Location_Class__c,Expiry_Date__c,Accreditation_date__c,Not to Purge SFDC,Not to Purge External\n0013E0000000000001,00000000012,,,,,Account A Portugal,HO,C,,Wed Jan 01 00:00:00 GMT 2014,,');
 
-        controller.ReadFile();
+		controller.fetchSOQLObjects();
 
-        controller.runPurgeProcess();
+		controller.ReadFile();
 
-        controller.checkBatchStatus();
+		controller.runPurgeProcess();
 
-        controller.contentFile = Blob.valueOf('Id,IATACode__c,C_Code__c,A_Code__c,N_Code__c,Site,Name,Location_Type__c,Location_Class__c,Expiry_Date__c,Accreditation_date__c,Not to Purge SFDC,Not to Purge External\n0013E0000000000001,00000000012,,,,,Account A Portugal,HO,C,,Wed Jan 01 00:00:00 GMT 2014,Wed Jan 01,xxx,xxx,yyy');
+		controller.checkBatchStatus();
 
-        controller.fetchSOQLObjects();
+		controller.contentFile = Blob.valueOf('Id,IATACode__c,C_Code__c,A_Code__c,N_Code__c,Site,Name,Location_Type__c,Location_Class__c,Expiry_Date__c,Accreditation_date__c,Not to Purge SFDC,Not to Purge External\n0013E0000000000001,00000000012,,,,,Account A Portugal,HO,C,,Wed Jan 01 00:00:00 GMT 2014,Wed Jan 01,xxx,xxx,yyy');
 
-        controller.ReadFile();
+		controller.fetchSOQLObjects();
 
-        controller.runPurgeProcess();
+		controller.ReadFile();
+
+		controller.runPurgeProcess();
 
 
-        List<String> notesTest = controller.noteListFullPurge;
+		List<String> notesTest = controller.noteListFullPurge;
 		List<String> notesTest2 = controller.noteListLitePurge;
 		List<String> notesTest3 = controller.noteListUpload;
 
@@ -191,16 +191,16 @@ private class AMS_PurgeIATACodeTest {
 		exportRecord.Name = 'Lite Purge IATA Code';
 
 		update exportRecord;
-	
+
 		controller.fetchSOQLObjects();
 
-        Test.stopTest();
+		Test.stopTest();
 
 	}
 
 	@isTest static void AMSSOQ_ControllerTest() {
 
-		
+
 
 		PageReference pageRef = Page.AMS_SOQL_ExportPage;
 
@@ -226,20 +226,20 @@ private class AMS_PurgeIATACodeTest {
 
 		insert new List<AMS_SOQL_Query_Export__c>{export1,export2};
 
-        ApexPages.currentPage().getParameters().put('fullPurgeId', export1.Id);
+		ApexPages.currentPage().getParameters().put('fullPurgeId', export1.Id);
 		ApexPages.currentPage().getParameters().put('litePurgeId', export2.Id);
 
 		Test.setCurrentPageReference(pageRef);
 
 		Test.startTest();
-		
+
 		ApexPages.StandardController sc = new ApexPages.StandardController(export1);
 
 		AMS_SOQL_Export exportSOQL = new AMS_SOQL_Export(sc);
 
-        Test.stopTest();
+		Test.stopTest();
 
 	}
 
-	
+
 }

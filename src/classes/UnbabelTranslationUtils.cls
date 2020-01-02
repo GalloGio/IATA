@@ -2,15 +2,15 @@ public class UnbabelTranslationUtils {
 
 
 	// Inbound translation type
-    public final String TRANSLATIONTYPEINBOUND = 'Machine';
+	public final String TRANSLATIONTYPEINBOUND = 'Machine';
 
 	// Messages
 
-    public final String ERRORCUSTLANG   = 'Error detecting the customer language.';
-    public final String ERRORLANGPAIR   = 'Invalid language pair @lang1 : @lang2  detected.';
-    public final String SUCCESSREQUEST  = 'Translation requested to Unbabel. In the next minute a new comment will be created with the content translated to your language.';
+	public final String ERRORCUSTLANG   = 'Error detecting the customer language.';
+	public final String ERRORLANGPAIR   = 'Invalid language pair @lang1 : @lang2  detected.';
+	public final String SUCCESSREQUEST  = 'Translation requested to Unbabel. In the next minute a new comment will be created with the content translated to your language.';
 
-    public final String ERRORPUBLICC    = 'In order to Publish with Unbabel the Public checkbox must not be selected.';
+	public final String ERRORPUBLICC    = 'In order to Publish with Unbabel the Public checkbox must not be selected.';
 
 	@future(callout=true)
 	public static void sendRequest(Id ccId, String translationType, String sourceLang, String targetLang){
@@ -39,7 +39,7 @@ public class UnbabelTranslationUtils {
 		tr.unbabelapi__Unbabel_sObject__c = '';
 
 		//if request is successfull updates the Translation Request status to "Translation Requested" and inserts the TRs
-		
+
 		if(!cc.IsPublished){
 			if (ure.isSuccess) {
 				tr.unbabelapi__Unbabel_Status__c = 'Translation Requested';
@@ -59,78 +59,78 @@ public class UnbabelTranslationUtils {
 		}
 		insert tr;
 	}
-    
 
-    public String getCustomerLang(Case cas, CaseComment cc){
-        
-        String customerLang;
 
-	    if(cas.unbabelsc__Unbabel_Language__c != null) {
-		
-            customerLang = cas.unbabelsc__Unbabel_Language__c.split(':').get(0);
-	    
-        } else {
-            
-		    customerLang = checkLanguage(cc.CommentBody);
-	    
-        }
+	public String getCustomerLang(Case cas, CaseComment cc){
 
-        return customerLang;
+		String customerLang;
 
-    }
+		if(cas.unbabelsc__Unbabel_Language__c != null) {
+
+			customerLang = cas.unbabelsc__Unbabel_Language__c.split(':').get(0);
+
+		} else {
+
+			customerLang = checkLanguage(cc.CommentBody);
+
+		}
+
+		return customerLang;
+
+	}
 
 	public String checkLanguage(String content){
-		
+
 		if(Test.isRunningTest()) unbabelapi.UnbabelRestConnectorOutbound.desiredLanguage = getValidTargetLanguage();
 
 		unbabelapi.UnbabelRestEnvelopeCL ure = unbabelapi.UnbabelRestConnectorOutbound.checkLanguage(JSON.serialize(new EmailMessage(textBody=content)));
-        String languageFound;
-        //check language is sucessfull and is one of the permitted values on the org. will be used to set the unbabel language on the case
-        if(ure.isSuccess){
-            languageFound = ure.data.languageCode;
+		String languageFound;
+		//check language is sucessfull and is one of the permitted values on the org. will be used to set the unbabel language on the case
+		if(ure.isSuccess){
+			languageFound = ure.data.languageCode;
 		}
 
 		return languageFound;
 	}
 
 	public String getDefaultLanguage(){
-    
-	    String lang;
+
+		String lang;
 
 		Id userId = UserInfo.getUserId();
 
-        if(userId.getSObjectType() == User.SObjectType){
-            User u = [select Id, LanguageLocaleKey, unbabelapi__Unbabel_Language__c from User where Id =:userId];        
+		if(userId.getSObjectType() == User.SObjectType){
+			User u = [select Id, LanguageLocaleKey, unbabelapi__Unbabel_Language__c from User where Id =:userId];
 
-            lang = u.LanguageLocaleKey;    
-            if(u.unbabelapi__Unbabel_Language__c != null && u.unbabelapi__Unbabel_Language__c != '') {
-            
-                lang = u.unbabelapi__Unbabel_Language__c.split(':')[0];
-            }
-            else if(unbabelCodes.containsKey(lang)) lang = unbabelCodes.get(lang);
-        }else{
-            if(lang == null) lang = 'en';
-        }
-        
-        return lang;
-    }
+			lang = u.LanguageLocaleKey;
+			if(u.unbabelapi__Unbabel_Language__c != null && u.unbabelapi__Unbabel_Language__c != '') {
 
-    private  Map<String, String> unbabelCodes{
-        get{
-            if(unbabelCodes == null){
-                unbabelCodes = new Map<String, String>{
-                    'en_US' => 'en',
-                    'es_MX' => 'es',
-                    'nl_NL' => 'nl',
-                    'pt_BR' => 'pt-br',
-                    'zh_CN' => 'zh-CN',
-                    'zh_TW' => 'zh-TW'
-                };
-            }
-            return unbabelCodes;
-        }
-        set;
-    }
+				lang = u.unbabelapi__Unbabel_Language__c.split(':')[0];
+			}
+			else if(unbabelCodes.containsKey(lang)) lang = unbabelCodes.get(lang);
+		}else{
+			if(lang == null) lang = 'en';
+		}
+
+		return lang;
+	}
+
+	private  Map<String, String> unbabelCodes{
+		get{
+			if(unbabelCodes == null){
+				unbabelCodes = new Map<String, String>{
+					'en_US' => 'en',
+					'es_MX' => 'es',
+					'nl_NL' => 'nl',
+					'pt_BR' => 'pt-br',
+					'zh_CN' => 'zh-CN',
+					'zh_TW' => 'zh-TW'
+				};
+			}
+			return unbabelCodes;
+		}
+		set;
+	}
 
 	public String getOutboundTranslationType(){
 
@@ -141,13 +141,13 @@ public class UnbabelTranslationUtils {
 	}
 
 	private String getValidTargetLanguage(){
-		
+
 		String validLang;
 
 		for(Schema.PicklistEntry pe : unbabelapi__Unbabel_Translation_Request__c.unbabelapi__Unbabel_Languages__c.getDescribe().getPickListValues()){
-    		if(pe.isActive() && pe.getValue().split(':').get(0) != 'en'){
-		    	validLang = pe.getValue().split(':').get(0);
-    		}
+			if(pe.isActive() && pe.getValue().split(':').get(0) != 'en'){
+				validLang = pe.getValue().split(':').get(0);
+			}
 		}
 		return validLang;
 	}

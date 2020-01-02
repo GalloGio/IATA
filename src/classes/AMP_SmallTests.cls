@@ -34,10 +34,10 @@ private class AMP_SmallTests {
 		ac2.Service__c = testService2.Id;
 		ac2.Active__c = true;
 		insert ac2;
-        
+
 		AMP_ProductsController pcontroller = new AMP_ProductsController(stdController);
 		Boolean canView = AMP_ProductsController.canViewSalesfigures();
-        Boolean isIATAMember = AMP_ProductsController.isIATAMember(a.Id);
+				Boolean isIATAMember = AMP_ProductsController.isIATAMember(a.Id);
 
 		Account b = AMP_AccountManagementController.getAccount(a.Id);
 		System.assertEquals(a.Name, b.Name, 'Accounts should be the same');
@@ -95,27 +95,27 @@ private class AMP_SmallTests {
 		Account_Management_Settings__c ams = new Account_Management_Settings__c();
 		ams.Topic_Digest_Time_Range_Aggregator__c = 5;
 		insert ams;
-		
+
 		Profile p = [SELECT Id FROM Profile WHERE Name='Standard User'];
 		User u = new User(Alias = 'standt', Email='testusertempname@foo.bar',
-	               EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',
-	               LocaleSidKey='en_US', ProfileId = p.Id,
-	               TimeZoneSidKey='America/Los_Angeles', UserName='testusertempname@foo.bar',
-				   License_Cost_Center__c='ISF005CH01',
-				   AMP_Digest_Topics__c = 'test', AMP_Digest_Daily_or_Weekly__c = 'daily');
+								 EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',
+								 LocaleSidKey='en_US', ProfileId = p.Id,
+								 TimeZoneSidKey='America/Los_Angeles', UserName='testusertempname@foo.bar',
+					 License_Cost_Center__c='ISF005CH01',
+					 AMP_Digest_Topics__c = 'test', AMP_Digest_Daily_or_Weekly__c = 'daily');
 
-	   	//-- SChedule next job execution
-   		Datetime nextScheduleTime = system.now().addHours(0);
-   		string month = string.valueof(nextScheduleTime.month());
-   		string day = string.valueof(nextScheduleTime.day());
-   		string hour = string.valueof(nextScheduleTime.hour());
-   		string minute = string.valueof(nextScheduleTime.minute());
-   		string second = string.valueof(nextScheduleTime.second ());
-   		string cronvalue = second + ' ' + minute + ' ' + hour + ' ' + day + ' ' + month + ' ?';
-   		string jobName = 'AMP Chatter Email Digest ' + nextScheduleTime.format('yyyy-MM-dd HH:mm:ss');
+		 	//-- SChedule next job execution
+	 		Datetime nextScheduleTime = system.now().addHours(0);
+	 		string month = string.valueof(nextScheduleTime.month());
+	 		string day = string.valueof(nextScheduleTime.day());
+	 		string hour = string.valueof(nextScheduleTime.hour());
+	 		string minute = string.valueof(nextScheduleTime.minute());
+	 		string second = string.valueof(nextScheduleTime.second ());
+	 		string cronvalue = second + ' ' + minute + ' ' + hour + ' ' + day + ' ' + month + ' ?';
+	 		string jobName = 'AMP Chatter Email Digest ' + nextScheduleTime.format('yyyy-MM-dd HH:mm:ss');
 
-   		System.debug(jobName);
-   		System.schedule(jobName, cronvalue , new AMP_ChatterDigestScheduler());
+	 		System.debug(jobName);
+	 		System.schedule(jobName, cronvalue , new AMP_ChatterDigestScheduler());
 		System.runAs(u) {
 Test.startTest();
 			Id batchId = Database.executeBatch(new AMP_Batch_EmailChatterDigest('daily'));

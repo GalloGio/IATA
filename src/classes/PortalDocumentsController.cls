@@ -4,7 +4,7 @@ public with sharing class PortalDocumentsController {
 	public static Integer requestedPageNumber;
 	public static CSP_Utils.PagedResult result;
 
-	/* 
+	/*
 	* @description Main method that returns a list of ContentVersion records based on user level access
 	* @params String searchKey, String category, String prodCat, String publiCountry, Integer requestedPage
 	* @return CSP_Utils.PagedResult
@@ -25,10 +25,10 @@ public with sharing class PortalDocumentsController {
 		List<ContentWorkspaceDoc> ContentWorkspaceDoc_Lst;
 		List<ContentWorkspaceDoc> PublicDocs_list;
 		List<String> AccessLibraryName;
-		List<Access_to_Libraries_on_Portal__c> accessToLibrariesCS = Access_to_Libraries_on_Portal__c.getAll().values(); /* Custom Setting to control the visibility on Libraries */  
+		List<Access_to_Libraries_on_Portal__c> accessToLibrariesCS = Access_to_Libraries_on_Portal__c.getAll().values(); /* Custom Setting to control the visibility on Libraries */
 
 		Contact PortalContact = [
-			SELECT User_Portal_Status__c, Account.Sector__c, Account.Category__c, Account.RecordType.Name, 
+			SELECT User_Portal_Status__c, Account.Sector__c, Account.Category__c, Account.RecordType.Name,
 				Account.IATA_ISO_Country__r.Name, Account.IATA_ISO_Country__r.Region__c, Account.ICH_Member__c
 			FROM Contact
 			WHERE Id = :[SELECT ContactId FROM User WHERE Id = :UserInfo.getUserId()].ContactId
@@ -36,7 +36,7 @@ public with sharing class PortalDocumentsController {
 		];
 		System.debug('____ [cls PortalDocumentsController - getSearchDocuments] PortalContact - ' + PortalContact);
 
-		UserPortalStatus = String.isNotBlank(PortalContact.User_Portal_Status__c) ? PortalContact.User_Portal_Status__c : 'NoStatusValue';   
+		UserPortalStatus = String.isNotBlank(PortalContact.User_Portal_Status__c) ? PortalContact.User_Portal_Status__c : 'NoStatusValue';
 		UserPortalCountry = String.isNotBlank(PortalContact.Account.IATA_ISO_Country__r.Name) ? PortalContact.Account.IATA_ISO_Country__r.Name : 'NoCountryValue';
 		UserPortalRegion = String.isNotBlank(PortalContact.Account.IATA_ISO_Country__r.Region__c) ? PortalContact.Account.IATA_ISO_Country__r.Region__c : 'NoRegionValue';
 		UserPortalAccountSector = String.isNotBlank(PortalContact.Account.Sector__c) ? PortalContact.Account.Sector__c : 'NoSectorValue';
@@ -49,7 +49,7 @@ public with sharing class PortalDocumentsController {
 		/* Get library names which can be visible based on Account Sector and Record Type */
 		for(Access_to_Libraries_on_Portal__c a : accessToLibrariesCS) {
 			System.debug(LoggingLevel.FINE, '____ [cls PortalDocumentsController - getSearchDocuments] accessToLibrariesCS - ' + a);
-			if(((a.Category_of_Account__c == UserPortalCategory && a.Sector_of_Account__c == UserPortalAccountSector && a.Record_Type_of_Account__c == UserPortalRecodType) || 
+			if(((a.Category_of_Account__c == UserPortalCategory && a.Sector_of_Account__c == UserPortalAccountSector && a.Record_Type_of_Account__c == UserPortalRecodType) ||
 				a.Category_of_Account__c == 'All' && a.Sector_of_Account__c == UserPortalAccountSector && a.Record_Type_of_Account__c == UserPortalRecodType)) {
 
 				String libs = String.valueOf(a.Library_visibility__c);
@@ -65,8 +65,8 @@ public with sharing class PortalDocumentsController {
 		/* Get Library Ids */
 		if(!AccessLibraryName.isEmpty()) {
 			ContentWorkspaceDoc_Lst = new List<ContentWorkspaceDoc>([
-				SELECT Id, ContentDocumentId, ContentWorkspaceId 
-				FROM ContentWorkspaceDoc 
+				SELECT Id, ContentDocumentId, ContentWorkspaceId
+				FROM ContentWorkspaceDoc
 				WHERE ContentWorkspaceId = :[SELECT Id FROM ContentWorkspace WHERE Name IN :AccessLibraryName]
 			]);
 			System.debug(LoggingLevel.FINE, '____ [cls PortalDocumentsController - getSearchDocuments] ContentWorkspaceDoc_Lst - ' + ContentWorkspaceDoc_Lst);
@@ -82,14 +82,14 @@ public with sharing class PortalDocumentsController {
 
 		if (UserPortalAccountSector == 'General Public') {
 			PublicDocs_list = [
-				SELECT ContentDocumentId 
-				FROM ContentWorkspaceDoc 
+				SELECT ContentDocumentId
+				FROM ContentWorkspaceDoc
 				WHERE ContentWorkspace.Name = 'Public'
 			];
 		} else {
 			PublicDocs_list = [
-				SELECT ContentDocumentId 
-				FROM ContentWorkspaceDoc 
+				SELECT ContentDocumentId
+				FROM ContentWorkspaceDoc
 				WHERE ContentWorkspace.Name = 'Public' OR ContentWorkspace.Name = 'Third Party'
 			];
 		}
@@ -145,7 +145,7 @@ public with sharing class PortalDocumentsController {
 		return result;
 	}
 
-	/* 
+	/*
 	* @description Filter method to return the ContentVersion records that a user has access
 	* @params List<ContentVersion> docs, String UserPortalCountry, String UserPortalRegion
 	* @return List<ContentVersion>
