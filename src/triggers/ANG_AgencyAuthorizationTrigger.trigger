@@ -15,8 +15,8 @@ trigger ANG_AgencyAuthorizationTrigger on Agency_Authorization__c (before insert
 		}else if(Trigger.isUpdate){
 			ANG_AgencyAuthorizationTriggerHandler.handleAfterUpdate(trigger.New, trigger.OldMap);
 		}else if(Trigger.isDelete){
-            // delete the matching Remittance__c records - with Trigger.old
-            ANG_AgencyAuthorizationTriggerHandler.removeAuthorizedFormsOfPayment(trigger.Old);
-        }
+			// delete the matching Remittance__c records - with Trigger.old
+			ANG_AgencyAuthorizationTriggerHandler.removeAuthorizedFormsOfPayment(trigger.Old);
+		}
 	}
 }

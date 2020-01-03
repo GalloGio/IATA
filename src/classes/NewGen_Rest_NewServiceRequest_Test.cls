@@ -6,13 +6,13 @@ private class NewGen_Rest_NewServiceRequest_Test
 
 	private static void loadData(){
 		c = new Contact();
-        c.FirstName = 'test';
-        c.LastName = 'test';
-        c.Email = 'ISSP_test@test.test';
-        insert c;
+		c.FirstName = 'test';
+		c.LastName = 'test';
+		c.Email = 'ISSP_test@test.test';
+		insert c;
 
-        p = new Portal_Applications__c();
-        insert p;
+		p = new Portal_Applications__c();
+		insert p;
 	}
 
 	@isTest

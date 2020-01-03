@@ -11,16 +11,16 @@ public with sharing class EF_BaContractApprovalHelper
 		String query = 'select id, Contract__c from EF_Approval__c where '+objectName+' in :rejectedIds';
 
 		List<EF_Approval__c> storageList = Database.query(query);
-	    if(storageList.size() > 0)
-	    {
-	    	for(sObject recordToUpdate : rejectedList)
+		if(storageList.size() > 0)
+		{
+			for(sObject recordToUpdate : rejectedList)
 			{
-		        recordToUpdate.put('Manager_Approval__c', 'Not Started');
-		        recordToUpdate.put('Requested_Changes__c', '');
-		    }
+				recordToUpdate.put('Manager_Approval__c', 'Not Started');
+				recordToUpdate.put('Requested_Changes__c', '');
+			}
 
-		    delete storageList;
-	    }
+			delete storageList;
+		}
 	}
 
 	public static void copyValuesFromTempStorageOnRecordApproval(List<sObject> approvedList, List<String> fieldList, String objectName)
@@ -56,18 +56,18 @@ public with sharing class EF_BaContractApprovalHelper
 			Map<String, Schema.SobjectField> fields = approvedList.get(0).getSObjectType().getDescribe().fields.getMap();
 			for(sObject recordToUpdate : approvedList)
 			{
-		        for(String field : fieldList)
-		        {
-		            recordToUpdate.put(field, storageMap.get(recordToUpdate.Id).get(field));
-		        }
-		        recordToUpdate.put('Manager_Approval__c', 'Not Started');
-		        recordToUpdate.put('Requested_Changes__c', '');
-		    }
+				for(String field : fieldList)
+				{
+					recordToUpdate.put(field, storageMap.get(recordToUpdate.Id).get(field));
+				}
+				recordToUpdate.put('Manager_Approval__c', 'Not Started');
+				recordToUpdate.put('Requested_Changes__c', '');
+			}
 
-		    delete storageList;
+			delete storageList;
 		}
 	}
-	
+
 
 	// Utilizes helper field (EF_Manager_Approval__c) that gets updated through the approval final actions to identify records that got approved
 	public static List<sObject> identifyApprovedRecords(List<sObject> newValues, Map<Id, sObject> oldValues)
@@ -112,71 +112,71 @@ public with sharing class EF_BaContractApprovalHelper
 	}
 
 	public static boolean identifyRecordChanges(sObject newValues, sObject oldValues, List<String> fieldList, boolean isInsert)
-    {
-    	String htmlTable = '<table width="600px" border="1"><tr border="1"><th border="1">Field</th><th border="1">Existing value:</th><th border="1">Requested value:</th></tr>';
-    	boolean hasChanged = false;
-        Map<String, Schema.SobjectField> fields = newValues.getSObjectType().getDescribe().fields.getMap();
-        if(isInsert)
-        {
-	        for(String field : fieldList)
-	        {
-            	htmlTable = htmlTable + '<tr><td border="1">'+field+'</td><td border="1">--</td><td border="1">'+newValues.get(field)+'</td></tr>';
-                hasChanged = true;
-	        }
-	    }
-        else
-        {
-	        for(String field : fieldList)
-	        {
-	            if(newValues.get(field) != oldValues.get(field))
-	            {
-	            	htmlTable = htmlTable + '<tr><td border="1">'+field+'</td><td border="1">'+oldValues.get(field)+'</td><td border="1">'+newValues.get(field)+'</td></tr>';
-	                hasChanged = true;
-	            }
-	        }
-	    }
+	{
+		String htmlTable = '<table width="600px" border="1"><tr border="1"><th border="1">Field</th><th border="1">Existing value:</th><th border="1">Requested value:</th></tr>';
+		boolean hasChanged = false;
+		Map<String, Schema.SobjectField> fields = newValues.getSObjectType().getDescribe().fields.getMap();
+		if(isInsert)
+		{
+			for(String field : fieldList)
+			{
+				htmlTable = htmlTable + '<tr><td border="1">'+field+'</td><td border="1">--</td><td border="1">'+newValues.get(field)+'</td></tr>';
+				hasChanged = true;
+			}
+		}
+		else
+		{
+			for(String field : fieldList)
+			{
+				if(newValues.get(field) != oldValues.get(field))
+				{
+					htmlTable = htmlTable + '<tr><td border="1">'+field+'</td><td border="1">'+oldValues.get(field)+'</td><td border="1">'+newValues.get(field)+'</td></tr>';
+					hasChanged = true;
+				}
+			}
+		}
 
-        htmlTable = htmlTable + '</table>';
-        if(hasChanged)
-        {
-        	newValues.put('Requested_Changes__c', htmlTable);
-        }
-        return hasChanged;
-    }
+		htmlTable = htmlTable + '</table>';
+		if(hasChanged)
+		{
+			newValues.put('Requested_Changes__c', htmlTable);
+		}
+		return hasChanged;
+	}
 
 
-    public static void rollbackPreviousRecordValues(sObject newValues, sObject oldValues, List<String> fieldList)
-    {
-        Map<String, Schema.SobjectField> fields = newValues.getSObjectType().getDescribe().fields.getMap();
-        for(String field : fieldList)
-        {
-            newValues.put(field, oldValues.get(field));
-        }
-    }
+	public static void rollbackPreviousRecordValues(sObject newValues, sObject oldValues, List<String> fieldList)
+	{
+		Map<String, Schema.SobjectField> fields = newValues.getSObjectType().getDescribe().fields.getMap();
+		for(String field : fieldList)
+		{
+			newValues.put(field, oldValues.get(field));
+		}
+	}
 
-    // Loop over for any changes to key elements and put any changes into a temp storage record along with the parent Contract ID
-    public static EF_Approval__c fillTemporaryApprovalStorage(EF_Approval__c approvalStorageRecord, sObject newValues, List<String> fieldList, String fieldToUse)
-    {
-        Map<String, Schema.SobjectField> fields = newValues.getSObjectType().getDescribe().fields.getMap();
-        
-        for(String field : fieldList)
-        {
-            approvalStorageRecord.put(field, newValues.get(field));
-        }
-        approvalStorageRecord.put(fieldToUse, newValues.Id);
-        return approvalStorageRecord;
-    }
+	// Loop over for any changes to key elements and put any changes into a temp storage record along with the parent Contract ID
+	public static EF_Approval__c fillTemporaryApprovalStorage(EF_Approval__c approvalStorageRecord, sObject newValues, List<String> fieldList, String fieldToUse)
+	{
+		Map<String, Schema.SobjectField> fields = newValues.getSObjectType().getDescribe().fields.getMap();
 
-    public static void rollbackPreviousValues(sObject newValues, sObject oldValues, List<String> fieldList)
-    {
-        Map<String, Schema.SobjectField> fields = newValues.getSObjectType().getDescribe().fields.getMap();
-        for(String field : fieldList)
-        {
-            newValues.put(field, oldValues.get(field));
-        }
-    }
+		for(String field : fieldList)
+		{
+			approvalStorageRecord.put(field, newValues.get(field));
+		}
+		approvalStorageRecord.put(fieldToUse, newValues.Id);
+		return approvalStorageRecord;
+	}
 
-    // Submit a record to approval
+	public static void rollbackPreviousValues(sObject newValues, sObject oldValues, List<String> fieldList)
+	{
+		Map<String, Schema.SobjectField> fields = newValues.getSObjectType().getDescribe().fields.getMap();
+		for(String field : fieldList)
+		{
+			newValues.put(field, oldValues.get(field));
+		}
+	}
+
+	// Submit a record to approval
 	public static List<Id> submitForApproval(Id recordId, Id userId, String processNameOrId)
 	{
 		List<ProcessInstance> isInApproval = [Select Id From ProcessInstance WHERE TargetObjectId = :recordId AND Status = 'Pending'];
@@ -185,13 +185,13 @@ public with sharing class EF_BaContractApprovalHelper
 		{
 			Approval.ProcessSubmitRequest req = new Approval.ProcessSubmitRequest();
 			req.setObjectId(recordId);
-			req.setSubmitterId(userId); 
-			
+			req.setSubmitterId(userId);
+
 			// Utilize a certain approval process and ignore any others that might match the entry criteria
 			if(String.isNotBlank(processNameOrId))
 			{
 				req.setProcessDefinitionNameOrId(processNameOrId);
-				req.setSkipEntryCriteria(true); 	
+				req.setSkipEntryCriteria(true);
 			}
 			try
 			{
@@ -218,5 +218,5 @@ public with sharing class EF_BaContractApprovalHelper
 		}
 	}
 
-    public class ApprovalException extends Exception {}
+	public class ApprovalException extends Exception {}
 }

@@ -10,7 +10,7 @@ public without sharing class Pardot_API {
 			return headers;
 		}
 		set;
-	} 
+	}
 
 	public static String getAPIToken() {
 		String url = 'https://pi.pardot.com/api/login/version/'+pardotAPIVersion+'?email='+EncodingUtil.urlEncode(pardotSetting.Email__c, 'UTF-8')+'&password='+EncodingUtil.urlEncode(pardotSetting.Password__c, 'UTF-8')+'&user_key='+EncodingUtil.urlEncode(pardotSetting.User_Key__c, 'UTF-8');
@@ -27,7 +27,7 @@ public without sharing class Pardot_API {
 
 	public static Pardot_Prospect getProspect(String email) {
 		String url = 'https://pi.pardot.com/api/prospect/version/'+pardotAPIVersion+'/do/read/email/'+EncodingUtil.urlEncode(email, 'UTF-8');
-		
+
 		Pardot_Prospect prospect;
 		try {
 			String resp = callout('GET', url, headers);
@@ -69,7 +69,7 @@ public without sharing class Pardot_API {
 					Dom.XMLNode listNode = aListSubNode.getChildElement('list', null);
 					String listId = listNode.getChildElement('id', null).getText();
 					String listName = listNode.getChildElement('name', null).getText();
-					
+
 					prospect.list_subscription.add(new List_Subscription(listId, listName));
 				}
 			}
@@ -77,7 +77,7 @@ public without sharing class Pardot_API {
 			//Logging the error for debug, returning empty prospect
 			System.debug(loggingLevel.ERROR, '____ [cls Pardot_API - getProspect] e - ' + e);
 		}
-		
+
 		System.debug(loggingLevel.FINE, '____ [cls Pardot_API - getProspect] prospect - ' + prospect);
 		return prospect;
 	}
@@ -173,7 +173,7 @@ public without sharing class Pardot_API {
 		if( String.isBlank(prospect_id) || String.isBlank(list_id)) return false;
 		String url = 'https://pi.pardot.com/api/listMembership/version/'+pardotAPIVersion+'/do/delete/list_id/'+list_id+'/prospect_id/'+prospect_id;
 
-		
+
 		try {
 			String resp = callout('GET', url, headers);
 			// Get prospect information from XML
@@ -223,13 +223,13 @@ public without sharing class Pardot_API {
 	}
 
 	public class Pardot_Prospect {
-		@AuraEnabled public String Id {get;set;} 
-		@AuraEnabled public String salesforceId {get;set;} 
-		@AuraEnabled public String first_name {get;set;} 
-		@AuraEnabled public String last_name {get;set;} 
-		@AuraEnabled public String email {get;set;} 
-		@AuraEnabled public String salutation {get;set;} 
-		@AuraEnabled public String company {get;set;} 
+		@AuraEnabled public String Id {get;set;}
+		@AuraEnabled public String salesforceId {get;set;}
+		@AuraEnabled public String first_name {get;set;}
+		@AuraEnabled public String last_name {get;set;}
+		@AuraEnabled public String email {get;set;}
+		@AuraEnabled public String salutation {get;set;}
+		@AuraEnabled public String company {get;set;}
 		@AuraEnabled public String job_title {get;set;}
 		@AuraEnabled public String phone {get;set;}
 		@AuraEnabled public String country {get;set;}

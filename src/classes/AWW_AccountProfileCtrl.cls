@@ -4,7 +4,7 @@ public with sharing class AWW_AccountProfileCtrl {
 	public static String getUserAccessRights() {
 		List<PermissionSetAssignment> permissions = [
 			SELECT PermissionSet.Name
-			FROM PermissionSetAssignment 
+			FROM PermissionSetAssignment
 			WHERE AssigneeId = :UserInfo.getUserId() AND PermissionSet.Name IN ('AMP_admin','AMP_Profile_Visibility')
 		];
 

@@ -122,15 +122,15 @@ public without sharing class ISSP_Financial_Institutions {
 		List<Portal_Applications__c> portalAppList = [SELECT Id, Application_URL__c, (SELECT Id, Contact__c, Contact__r.Account.Country_ISO_Code__c, Right__c, Contact__r.Account.Region_formula__c,
 																						Contact__r.Account.IATA_ISO_Country__r.ANG_GDI_Enabled__c, Contact__r.Account.Category__c,
 																						Contact__r.Account.IATA_ISO_Country__r.Multicountry_Enabled__c, Contact__r.Account.ANG_Accreditation_Model__c
-																					  FROM Portal_Application_Rights__r
-																					  WHERE Contact__c IN (SELECT ContactId
-																										   FROM User
-																										   WHERE Id = :UserInfo.getUserId())
+																						FROM Portal_Application_Rights__r
+																						WHERE Contact__c IN (SELECT ContactId
+																											 FROM User
+																											 WHERE Id = :UserInfo.getUserId())
 																						AND Portal_Application__r.Name = :GDI_PORTAL_SERVICE
-																					  LIMIT 1)
-													  FROM Portal_Applications__c
-													  WHERE Name = :GDI_PORTAL_SERVICE
-													  LIMIT 1];
+																						LIMIT 1)
+														FROM Portal_Applications__c
+														WHERE Name = :GDI_PORTAL_SERVICE
+														LIMIT 1];
 
 		if (!portalAppList.isEmpty()) {
 			Portal_Applications__c gdiPortalApp = portalAppList[0];
@@ -161,9 +161,9 @@ public without sharing class ISSP_Financial_Institutions {
 											Contact.Financial_Assessment_Contact__c, Contact.User_Portal_Status__c,
 											Contact.Account.IATA_ISO_Country__r.Multicountry_Enabled__c,
 											Contact.Account.ANG_Accreditation_Model__c
-										  FROM User
-										  WHERE Id = :UserInfo.getUserId()
-										  LIMIT 1];
+											FROM User
+											WHERE Id = :UserInfo.getUserId()
+											LIMIT 1];
 
 				Account userAcc = currentPortalUser.Contact.Account;
 				conId = currentPortalUser.ContactId;
@@ -233,10 +233,10 @@ public without sharing class ISSP_Financial_Institutions {
 
 	public void createPortalAppRight() {
 		insert new Portal_Application_Right__c(Contact__c = conId,
-											   Portal_Application__c = gdiPortalAppId,
-											   Right__c = 'Access Requested',
-											   Terms_Acceptance__c = termsAndConditions,
-											   Terms_Acceptance_Date__c = Datetime.now());
+												 Portal_Application__c = gdiPortalAppId,
+												 Right__c = 'Access Requested',
+												 Terms_Acceptance__c = termsAndConditions,
+												 Terms_Acceptance_Date__c = Datetime.now());
 	}
 
 	private void getSSOPermissionSet() {

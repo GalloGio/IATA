@@ -373,7 +373,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
 					}
 				}
 
-			   // for new HE Accreditations get the values from the BSP configuration of all BSP operation codes related to this country
+				 // for new HE Accreditations get the values from the BSP configuration of all BSP operation codes related to this country
 				if(oscarObj.Process__c == AMS_Utils.MCAE || oscarObj.Process__c == AMS_Utils.NEWHELITE || oscarObj.Process__c == AMS_Utils.NEWHESTANDARD || oscarObj.Process__c == AMS_Utils.NEWGESTANDARD || oscarObj.Process__c == AMS_Utils.NGCONVERSIONTOMULTICOUNTRY) {
 
 					for(AMS_Settlement_System__c operation :operations) {
@@ -405,7 +405,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
 							}
 						}
 					}
-				   //for all the other processes get all the values from the picklist
+					 //for all the other processes get all the values from the picklist
 				}else{
 					Schema.DescribeFieldResult dfr = AMS_Pax_Accreditation_Form__c.Remittance_frequency__c.getDescribe();
 					for(Schema.PicklistEntry entry:  dfr.getPicklistValues()) {
@@ -807,7 +807,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
 			return false;
 		}
 
-	   return true;
+		 return true;
 	}
 
 	public void save(){

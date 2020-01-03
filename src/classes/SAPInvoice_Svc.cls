@@ -1,15 +1,15 @@
 /**
- * 
+ *
  * @author: Kevin Ky <kevin.ky@cgi.com>
  * @date: 2015-12-03
  *
- * 
+ *
  **/
 public without sharing class SAPInvoice_Svc {
-	
+
 	/****************************************************************************************************
-    	Created by Kevin Ky 2015-12-03
-    	Update order status to Payment Confirmed when a payment is confirm by SAP
+		Created by Kevin Ky 2015-12-03
+		Update order status to Payment Confirmed when a payment is confirm by SAP
 	****************************************************************************************************/
 	public static void updateOrderStatus(List<SAP_Invoice__c> sapInvoices){
 		Map<Id, String> mapOrderId_Invoice = new Map<Id, String>();
@@ -19,7 +19,7 @@ public without sharing class SAPInvoice_Svc {
 		//*** prepare to query data
 		for(SAP_Invoice__c sapInvoice : sapInvoices)
 			mapOrderId_Invoice.put(sapInvoice.Order__c, sapInvoice.Invoice_Number__c);
-		
+
 		if (mapOrderId_Invoice.size() > 0)
 		{
 			lstOrder = Order_Sel.getOrdersById(mapOrderId_Invoice.keySet());
@@ -42,17 +42,17 @@ public without sharing class SAPInvoice_Svc {
 
 				// Iterate through each returned result
 				for (Database.SaveResult sr : srList) {
-				    if (sr.isSuccess()) {
-				        // Operation was successful, so get the ID of the record that was processed
-				        orderIds.add(sr.getId());
-				    }
+					if (sr.isSuccess()) {
+						// Operation was successful, so get the ID of the record that was processed
+						orderIds.add(sr.getId());
+					}
 				}
-				
+
 				//*** update flag Is Paid of order items
 				lstOrderItem = [select Id, OrderId, Invoice_Number__c
-				                from OrderItem
-				                where IEC_Is_Paid__c != true
-				                  and OrderId in :mapOrderId_Invoice.keySet() and Invoice_Number__c in :mapOrderId_Invoice.values()];
+								from OrderItem
+								where IEC_Is_Paid__c != true
+								  and OrderId in :mapOrderId_Invoice.keySet() and Invoice_Number__c in :mapOrderId_Invoice.values()];
 				if (lstOrderItem.size() > 0)
 				{
 					for (OrderItem oi : lstOrderItem)

@@ -22,7 +22,7 @@ global class SCIMUserAttributeGenerator {
 		};
 
 	global SCIMUser getMappedAttributes(Process.PluginRequest request){
-		
+
 		SCIMUser user = new SCIMUser();
 		String messageType = (String)request.inputParameters.get(SCIMUserAttributeGenerator.PARAM_ENTITLEMENT);
 
@@ -58,7 +58,7 @@ global class SCIMUserAttributeGenerator {
 
 		return jsonTransformed;
 	}
- 
+
 	private String jsonReplaceAll(String json){
 		for(String key : ReplaceKeyMap.keySet()){
 			json = json.replaceAll('"'+key+'":', '"'+ReplaceKeyMap.get(key)+'":');
