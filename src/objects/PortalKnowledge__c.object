@@ -58,11 +58,10 @@
         <description>Use this field to exclude account categories from some data category</description>
         <externalId>false</externalId>
         <label>Category Exceptions</label>
-        <length>255</length>
-        <required>false</required>
+        <length>130000</length>
         <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
+        <type>LongTextArea</type>
+        <visibleLines>5</visibleLines>
     </fields>
     <fields>
         <fullName>DataCategoryLabel_TR__c</fullName>
@@ -297,11 +296,10 @@
         <description>Use this field to exclude account sectors from some data category</description>
         <externalId>false</externalId>
         <label>Sector Exceptions</label>
-        <length>255</length>
-        <required>false</required>
+        <length>130000</length>
         <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
+        <type>LongTextArea</type>
+        <visibleLines>5</visibleLines>
     </fields>
     <fields>
         <fullName>Setup__c</fullName>
