@@ -29,6 +29,10 @@ export default class FavoriteServicesLWC extends LightningElement {
     @track maxSize;
     @track showPagination;
     @track sliderIcons;
+    @track myClassMobile = 'withPointerTile smallTile slds-m-vertical_x-small aroundLightGrayBorder';
+    @track favoriteServicesMobile = [];
+    @track sliderWidth = '';
+    @track windowWidth = window.innerWidth;
 
     @track isLoading = true;
 
@@ -88,9 +92,11 @@ export default class FavoriteServicesLWC extends LightningElement {
 
                 //sets the first page
                 this.favoriteServices = this.globaList[0];
+                //this.favoriteServicesMobile = this.auxResult;
 
                 //the maxSize of the List
                 this.maxSize = this.globaList.length;
+                this.sliderWidth = "width:"+(this.windowWidth - 32) * (this.globaList.length) * 0.4 +"px;";
 
                 //show pagination if the number of pages is greater than 1
                 this.showPagination = this.maxSize > 1 ? true : false;
@@ -173,6 +179,7 @@ export default class FavoriteServicesLWC extends LightningElement {
             let lstAux1 = [];
             let lstAux2 = [];
             let lstAux3 = [];
+            let listMobile = [];
 
             pageListAux[0].favoriteDivClass = 'oneRemClass';
 
