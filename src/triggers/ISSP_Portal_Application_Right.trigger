@@ -58,24 +58,24 @@ trigger ISSP_Portal_Application_Right on Portal_Application_Right__c (after inse
 	//end of ANG
 
 	if(Trigger.isDelete) {
-	
+
 		Set<Id> disableContactIdSet = new Set<Id>();
 
 		for(Portal_Application_Right__c access : trigger.old){
-		
+
 			if(Trigger.isAfter && access.Application_Name__c == 'Standards Setting Workspace'){
 				disableContactIdSet.add(access.Contact__c);
 			}
 
 		}
-		
+
 		if(!disableContactIdSet.isEmpty()){
 			HigherLogicIntegrationHelper.pushPersonCompanyMembers(HigherLogicIntegrationHelper.DISABLE_EXISTING_MEMBERS, disableContactIdSet);
-            HigherLogicIntegrationHelper.assignHLPermissionSet(disableContactIdSet, HigherLogicIntegrationHelper.REMOVE_ACCESS);
+			HigherLogicIntegrationHelper.assignHLPermissionSet(disableContactIdSet, HigherLogicIntegrationHelper.REMOVE_ACCESS);
 		}
-		
+
 		return;
-		
+
 	}
 	//methods below this line should not run for delete cases
 
@@ -109,13 +109,13 @@ trigger ISSP_Portal_Application_Right on Portal_Application_Right__c (after inse
 				system.debug('mconde - Add permission SET SCIM to Grant list - APP Trigger insert');
 				//contactSCIMIdSet.add(access.Contact__c);
 				SCIMServProvManager.SCIMProvisioningRow aScimRow =
-				    new SCIMServProvManager.SCIMProvisioningRow(access.Contact__c,
-				            SCIMServProvManager.getSCIMAppNameFromId(access.Portal_Application__c),
-				            access.id,
-				            LightningConnectedAppHelper.OID_USER_APP_ACTION_ADD);
+					new SCIMServProvManager.SCIMProvisioningRow(access.Contact__c,
+							SCIMServProvManager.getSCIMAppNameFromId(access.Portal_Application__c),
+							access.id,
+							LightningConnectedAppHelper.OID_USER_APP_ACTION_ADD);
 				scimElements.add(aScimRow);
-            }
-            else if (trigger.isUpdate){
+			}
+			else if (trigger.isUpdate){
 				system.debug('basto1p - Add or remove permission SET IFG APP Trigger Update');
 				Portal_Application_Right__c oldAccess = trigger.oldMap.get(access.Id);
 				if (access.Right__c != oldAccess.Right__c) {
@@ -123,20 +123,20 @@ trigger ISSP_Portal_Application_Right on Portal_Application_Right__c (after inse
 						system.debug('basto1p - Add permission SET IFG to GRant list - APP Trigger Update');
 						//contactSCIMIdSet.add(access.Contact__c);
 						SCIMServProvManager.SCIMProvisioningRow aScimRow =
-						    new SCIMServProvManager.SCIMProvisioningRow(access.Contact__c,
-						            SCIMServProvManager.getSCIMAppNameFromId(access.Portal_Application__c),
-						            access.id,
-						            LightningConnectedAppHelper.OID_USER_APP_ACTION_ADD);
+							new SCIMServProvManager.SCIMProvisioningRow(access.Contact__c,
+									SCIMServProvManager.getSCIMAppNameFromId(access.Portal_Application__c),
+									access.id,
+									LightningConnectedAppHelper.OID_USER_APP_ACTION_ADD);
 						scimElements.add(aScimRow);
-                    }
-                    else if (access.Right__c == SCIMServProvManager.IATA_STS_ACCESS_DENIED){
+					}
+					else if (access.Right__c == SCIMServProvManager.IATA_STS_ACCESS_DENIED){
 						system.debug('basto1p - Remove permission SET IFG add to Deny list -   APP Trigger Update');
 						//contactSCIMRemoveIdSet.add(access.Contact__c);
 						SCIMServProvManager.SCIMProvisioningRow aScimRow =
-						    new SCIMServProvManager.SCIMProvisioningRow(access.Contact__c,
-						            SCIMServProvManager.getSCIMAppNameFromId(access.Portal_Application__c),
-						            access.id,
-						            LightningConnectedAppHelper.OID_USER_APP_ACTION_REMOVE);
+							new SCIMServProvManager.SCIMProvisioningRow(access.Contact__c,
+									SCIMServProvManager.getSCIMAppNameFromId(access.Portal_Application__c),
+									access.id,
+									LightningConnectedAppHelper.OID_USER_APP_ACTION_REMOVE);
 						scimElements.add(aScimRow);
 
 					}
@@ -193,7 +193,7 @@ trigger ISSP_Portal_Application_Right on Portal_Application_Right__c (after inse
 		else if (access.Application_Name__c == 'Standards Setting Workspace'){
 			if (trigger.isInsert && access.Right__c == 'Access Granted') {
 				contactKaviAdd.add(access.Contact__c);
-			} 
+			}
 			else if (trigger.isUpdate){
 				Portal_Application_Right__c oldAccess = trigger.oldMap.get(access.Id);
 				if (access.Right__c != oldAccess.Right__c) {
@@ -356,24 +356,24 @@ trigger ISSP_Portal_Application_Right on Portal_Application_Right__c (after inse
 	if (!contactRemove2FAIdSet.isEmpty()) {
 		ISSP_UserTriggerHandler.removeNonTdReportSharing(contactRemove2FAIdSet);
 	}
-	
+
 	if (!contactKaviAdd.isEmpty()){
-		
+
 		String action = HigherLogicIntegrationHelper.PUSH_MEMBERS;
-		
+
 		string kaviUser = [SELECT Kavi_User__c from Contact where Id in:contactKaviAdd limit 1].Kavi_User__c;
-		
+
 		if (kaviUser != null ){
 			action = HigherLogicIntegrationHelper.PUSH_INTERNAL_MEMBERS;
 		}
 
 		HigherLogicIntegrationHelper.pushPersonCompanyMembers(action, contactKaviAdd);
 
-		//RN-ENHC0012059 grant and remove the permission set to the user	
-		HigherLogicIntegrationHelper.assignHLPermissionSet(contactKaviAdd, HigherLogicIntegrationHelper.GRANT_ACCESS); 
-		
+		//RN-ENHC0012059 grant and remove the permission set to the user
+		HigherLogicIntegrationHelper.assignHLPermissionSet(contactKaviAdd, HigherLogicIntegrationHelper.GRANT_ACCESS);
+
 	}
-	
+
 	//RN-ENHC0012059 grant and remove the permission set to the user
 	if(!removeKaviPermissionSet.isEmpty()){
 		HigherLogicIntegrationHelper.pushPersonCompanyMembers(HigherLogicIntegrationHelper.PUSH_EXISTING_MEMBERS, removeKaviPermissionSet);
@@ -426,8 +426,8 @@ trigger ISSP_Portal_Application_Right on Portal_Application_Right__c (after inse
 	//basto1p -IFG ACCESS APPROVAL HANDLE - ADD/REmove Permission SET
 	if (!scimElements.isEmpty()) {
 		system.debug('SCIM ELEMENTS =' + scimElements);
-        if (!ISSP_UserTriggerHandler.preventTrigger)
-        {
+		if (!ISSP_UserTriggerHandler.preventTrigger)
+		{
 			SCIMServProvManager worker = new SCIMServProvManager(scimElements);
 
 			//Fill federation Ids if they are empty
@@ -451,24 +451,24 @@ trigger ISSP_Portal_Application_Right on Portal_Application_Right__c (after inse
 		if (par.Invoice_Type__c != null && par.Invoice_Type__c != '' && par.Right__c == 'Access Granted' && par.RecordTypeId == rtId) {
 			User user = [select Id, SAP_Account_Access_1__c, SAP_Account_Access_2__c, SAP_Account_Access_3__c, SAP_Account_Access_4__c from user where ContactId = :par.Contact__c];
 			par = [select Id, Invoice_Type__c, Contact__c,
-			       Contact__r.AccountId,   Contact__r.Account.Top_Parent__c
-			       from Portal_Application_Right__c
-			       where Id = : par.Id
-			                  limit 1];
+				   Contact__r.AccountId,   Contact__r.Account.Top_Parent__c
+				   from Portal_Application_Right__c
+				   where Id = : par.Id
+							  limit 1];
 
 
 			map<string, string> invoiceTypeSapAccoutId = new map<string, string>();
 			string topParentId = par.Contact__r.Account.Top_Parent__c != null ?
-			                     par.Contact__r.Account.Top_Parent__c :
-			                     par.Contact__r.AccountId;
+								 par.Contact__r.Account.Top_Parent__c :
+								 par.Contact__r.AccountId;
 
 			list<string> invoiceTypeSet = par.Invoice_Type__c.split(';');
 			map<string, string> invoiceTypeMap = new map<string, string>();
 
 			list<SAP_Account__c> SAPAccountList = [select Id, SAP_Account_type__c, SAP_ID__c from
-			                                       SAP_Account__c where
-			                                       SAP_Account_type__c in:invoiceTypeSet
-			                                       and Account__c = :topParentId];
+												   SAP_Account__c where
+												   SAP_Account_type__c in:invoiceTypeSet
+												   and Account__c = :topParentId];
 
 			for (SAP_Account__c sapAcc : SAPAccountList) {
 				if (invoiceTypeMap.get(sapAcc.SAP_Account_type__c) == null)

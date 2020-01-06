@@ -212,7 +212,7 @@ public class AMS_ChangeCodesHelper {
 			insert aaccToInsert;
 		}
 
-	   // Add the IDs of the Change Codes after they are inserted
+		 // Add the IDs of the Change Codes after they are inserted
 
 		createAAChangeCodesHistory( aaccToInsert, aaccHistoryToProcess.values());
 
@@ -259,7 +259,7 @@ public class AMS_ChangeCodesHelper {
 		}
 	}
 
-   /**
+	 /**
 
 	 Support for Old method from AMS_Utils
 
@@ -378,7 +378,7 @@ public class AMS_ChangeCodesHelper {
 
 		}
 
-	  if(aacNew.Change_Code__c == 'CER'){
+		if(aacNew.Change_Code__c == 'CER'){
 			oscarAgency.Annual_Renewal_Certificates__c = true;
 			oscarAgency.Certificate_Generated_Current_Year__c = true;
 		}
@@ -417,7 +417,7 @@ public class AMS_ChangeCodesHelper {
 	}
 
 
-	  /**
+		/**
 	 generateChangeCodes for Agency Changes from a Custom Setting Mapping
 	*/
 
@@ -686,7 +686,7 @@ public class AMS_ChangeCodesHelper {
 
 		if(accsIds.isEmpty()) return fOPs;
 		for(Agency_Authorization__c fop: [SELECT Authority__c, Status__c, Account__c, ISO_Country__c
-										  FROM Agency_Authorization__c WHERE Account__c IN :accsIds AND RecordTypeId = :aaRTId AND Status__c IN :activeStatus]){
+											FROM Agency_Authorization__c WHERE Account__c IN :accsIds AND RecordTypeId = :aaRTId AND Status__c IN :activeStatus]){
 			if(fOPs.keySet().contains(fop.Account__c))
 				fOPs.get(fop.Account__c).add(fop);
 			else

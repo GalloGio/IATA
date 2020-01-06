@@ -615,9 +615,9 @@ public with sharing class ANG_AccountHierarchySelectionController {
 			for(HEPerBSP item : hesPerBSPs.values()){
 				if(item.needsUserToChoose()) hesPerBSPsForDisplay.get(itemNumber++/rowsPerPage).add(item);
 			}
-			
+
 			System.debug(LoggingLevel.Info, '[cls ANG_AccountHierarchySelectionController] hesPerBSPsForDisplay: ' + hesPerBSPsForDisplay);
-			
+
 			return hesPerBSPsForDisplay;
 		}
 		set;
@@ -640,7 +640,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 		oscar = (AMS_OSCAR__c)stdController.getRecord();
 
 		if(Test.isRunningTest()){
-		   oscar = (AMS_OSCAR__c) Database.query('SELECT ' + String.join(new List<String>(oscarFields), ', ') + ' FROM AMS_OSCAR__c WHERE Id = :oscarId');
+			 oscar = (AMS_OSCAR__c) Database.query('SELECT ' + String.join(new List<String>(oscarFields), ', ') + ' FROM AMS_OSCAR__c WHERE Id = :oscarId');
 		}
 
 		this.isMulticountry = oscar.Account__r.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
@@ -822,7 +822,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 
 				Id currentBSP = i.acc.IATA_ISO_Country__r.AMS_Settlement_System__c;
 
-				if((i.selected || i.main) && !newParentHierarchyBSPs.contains(currentBSP)){ 
+				if((i.selected || i.main) && !newParentHierarchyBSPs.contains(currentBSP)){
 
 					if(!tempHesPerBSPs.containsKey(currentBSP)){
 						tempHesPerBSPs.put(currentBSP, new HEPerBSP(currentBSP, i.acc.IATA_ISO_Country__r.AMS_Settlement_System__r.Name, i.acc.IATA_ISO_Country__r.name));
@@ -849,7 +849,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 			}
 
 			hesPerBSPs = tempHesPerBSPs;
-		
+
 		}
 	}
 
@@ -874,7 +874,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 
 		if(newParent != null && tocList.contains(AMS_Utils.ANG_HIERARCHY) && isMulticountry){
 
-			newParentHierarchyBSPs = null;	
+			newParentHierarchyBSPs = null;
 			newParentHierarchyBSPs.add(newParent.IATA_ISO_Country__r.AMS_Settlement_System__c);
 
 			if(newParent.ChildAccounts != NULL){

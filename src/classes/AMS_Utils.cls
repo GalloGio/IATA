@@ -310,7 +310,7 @@ public without sharing class AMS_Utils {
 	public static final String CATEGORY_AIRPORT_CONCESSIONAIRE = 'Airport Concessionaire';
 	public static final String CATEGORY_AIRPORT_OPERATOR = 'Airport Operator';
 	public static final String CATEGORY_TOUR_OPERATOR = 'Tour Operator';
-  	public static final String CATEGORY_IATA_HEAD_OFFICE = 'IATA Head Office';
+		public static final String CATEGORY_IATA_HEAD_OFFICE = 'IATA Head Office';
 
 	public static final String TYPECHANGE_OWNERIATA2IATA = 'Ownership to IATA Agent';
 	public static final String TYPECHANGE_OWNERIATA2NONIATA = 'Ownership to non-IATA Agent';
@@ -1445,7 +1445,7 @@ public without sharing class AMS_Utils {
 
 						oldValue = String.valueOf(acc.get(accFieldApiName));
 						newValue = String.valueOf(accountFieldNewValue.get(accFieldApiName));
-				   }
+					 }
 
 					system.debug('DDD oldValue:' + oldValue);
 					system.debug('DDD newValue:' + newValue);
@@ -1623,7 +1623,7 @@ public without sharing class AMS_Utils {
 						else{
 							oldValue = String.valueOf(acc.get(accFieldApiName));
 							newValue = String.valueOf(accountFieldNewValue.get(accFieldApiName));
-					   }
+						 }
 
 						system.debug('DDD oldValue:' + oldValue);
 						system.debug('DDD newValue:' + newValue);
@@ -2074,8 +2074,8 @@ public static String getChangeCodeMemoText(String process,String changeCodeId, A
 	// Converts a base64 string into a list of integers representing the encoded bytes
 	public static List<Integer> B64ToBytes (String sIn) {
 		Map<Integer,Integer> base64 = new Map<Integer,Integer>{65=>0,66=>1,67=>2,68=>3,69=>4,70=>5,71=>6,72=>7,73=>8,74=>9,75=>10,76=>11,77=>12,78=>13,79=>14,80=>15,81=>16,82=>17,83=>18,84=>19,85=>20,86=>21,87=>22,88=>23,89=>24,90=>25
-															   ,97=>26,98=>27,99=>28,100=>29,101=>30,102=>31,103=>32,104=>33,105=>34,106=>35,107=>36,108=>37,109=>38,110=>39,111=>40,112=>41,113=>42,114=>43,115=>44,116=>45,117=>46,118=>47,119=>48,120=>49,121=>50,122=>51
-															   ,48=>52,49=>53,50=>54,51=>55,52=>56,53=>57,54=>58,55=>59,56=>60,57=>61,43=>62,47=>63};
+																 ,97=>26,98=>27,99=>28,100=>29,101=>30,102=>31,103=>32,104=>33,105=>34,106=>35,107=>36,108=>37,109=>38,110=>39,111=>40,112=>41,113=>42,114=>43,115=>44,116=>45,117=>46,118=>47,119=>48,120=>49,121=>50,122=>51
+																 ,48=>52,49=>53,50=>54,51=>55,52=>56,53=>57,54=>58,55=>59,56=>60,57=>61,43=>62,47=>63};
 
 		List<Integer> lstOut = new List<Integer>();
 		if ( sIn == null || sIn == '' ) return lstOut;
@@ -2300,7 +2300,7 @@ public static String getChangeCodeMemoText(String process,String changeCodeId, A
 		 Matcher m = p.matcher(part);
 
 		 if (m.matches()) {
-			  return '_' + m.group(1) + m.group(2).replace('0', '');
+				return '_' + m.group(1) + m.group(2).replace('0', '');
 		 }
 
 		 return '';
@@ -2313,7 +2313,7 @@ public static String getChangeCodeMemoText(String process,String changeCodeId, A
 		 Matcher m = p.matcher(part);
 
 		 if (m.matches()) {
-			  return '_' + m.group(1) + m.group(2).replace('0', '') + m.group(3);
+				return '_' + m.group(1) + m.group(2).replace('0', '') + m.group(3);
 		 }
 
 		 return '';
@@ -2321,18 +2321,18 @@ public static String getChangeCodeMemoText(String process,String changeCodeId, A
 
 	public static String caseRefId(String orgId, String caseId) {
 		 if (orgId == null || caseId == null) {
-			  return '';
+				return '';
 		 }
 
 		 String shortenedOrgId = shortenOrgId(orgId);
 		 String shortenedCaseId = shortenCaseId(caseId);
 
 		 return String.format(
-			  CASE_REF_FORMAT,
-			  new List<String>{
-				   shortenedOrgId,
-				   shortenedCaseId
-			  }
+				CASE_REF_FORMAT,
+				new List<String>{
+					 shortenedOrgId,
+					 shortenedCaseId
+				}
 		 );
 	}
 
@@ -2479,51 +2479,51 @@ public static String getChangeCodeMemoText(String process,String changeCodeId, A
 
 	public class Utility_RowIterator implements Iterator<String>, Iterable<String>
 	{
-	   private String m_Data;
-	   private Integer m_index = 0;
-	   private String m_rowDelimiter = '\n';
+		 private String m_Data;
+		 private Integer m_index = 0;
+		 private String m_rowDelimiter = '\n';
 
-	   public Utility_RowIterator(String fileData)
-	   {
-		  m_Data = fileData;
-	   }
-	   public Utility_RowIterator(String fileData, String rowDelimiter)
-	   {
-		  m_Data = fileData;
-		  m_rowDelimiter = rowDelimiter;
-	   }
+		 public Utility_RowIterator(String fileData)
+		 {
+			m_Data = fileData;
+		 }
+		 public Utility_RowIterator(String fileData, String rowDelimiter)
+		 {
+			m_Data = fileData;
+			m_rowDelimiter = rowDelimiter;
+		 }
 
-	   public Boolean hasNext()
-	   {
-		  return m_index < m_Data.length() ? true : false;
-	   }
-	   public String next()
-	   {
-		  Integer key = m_Data.indexOf(m_rowDelimiter, m_index);
+		 public Boolean hasNext()
+		 {
+			return m_index < m_Data.length() ? true : false;
+		 }
+		 public String next()
+		 {
+			Integer key = m_Data.indexOf(m_rowDelimiter, m_index);
 
-		  if (key == -1)
+			if (key == -1)
 			key = m_Data.length();
 
-		  String row = m_Data.subString(m_index, key);
-		  m_index = key + 1;
-		  return row;
-	   }
-	   public Iterator<String> Iterator()
-	   {
-		  return this;
-	   }
+			String row = m_Data.subString(m_index, key);
+			m_index = key + 1;
+			return row;
+		 }
+		 public Iterator<String> Iterator()
+		 {
+			return this;
+		 }
 	}
 
 
 	public static Contact getIEPContact(String conId) {
 		return [SELECT User_Portal_Status__c,
-					   Authorized_Signatory__c,
-					   Account.Location_Type__c,
-					   Account.Top_Parent__r.Location_Type__c,
-					   Account.ANG_IEP_Status_FF__c,
-					   Account.Is_Branch_Abroad__c,
-					   Account.Status__c
-				  FROM Contact WHERE Id = :conId limit 1];
+						 Authorized_Signatory__c,
+						 Account.Location_Type__c,
+						 Account.Top_Parent__r.Location_Type__c,
+						 Account.ANG_IEP_Status_FF__c,
+						 Account.Is_Branch_Abroad__c,
+						 Account.Status__c
+					FROM Contact WHERE Id = :conId limit 1];
 	}
 
 	/**
@@ -2637,30 +2637,21 @@ public static String getChangeCodeMemoText(String process,String changeCodeId, A
 	}
 
 	public static ANG_ISSP_AfpWrapper getANG_ISSP_AfpWrapper(Contact con, Account acc, Boolean isSearch) {
-		List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
-		List<Portal_Application_Right__c> services = new List<Portal_Application_Right__c>();
-
-		authorizations = [SELECT Id, ANG_FormOfPayment_ID__c
+		List<Agency_Authorization__c> authorizations = [SELECT Id, ANG_FormOfPayment_ID__c
 						FROM Agency_Authorization__c
 						WHERE Account__c = :acc.Id
 							AND (Status__c = 'Active' OR Status__c = 'Authorized')];
 
-		if(con != null) {
-			services = [SELECT Id, Application_Name__c, Right__c, Application_Start_URL__c
-						  FROM Portal_Application_Right__c
-						 WHERE Contact__c = :con.Id];
-		}
-
-		return new ANG_ISSP_AfpWrapper(con, authorizations, services, acc, isSearch);
+		return new ANG_ISSP_AfpWrapper(con, authorizations, acc, isSearch);
 	}
 
 	public static List<Account> fetchAgentDetails(String iataCode) {
 		return [Select Id, BillingStreet, BillingCity, BillingState, BillingPostalCode,
-					   BillingCountry, Name
-				  From Account
+						 BillingCountry, Name
+					From Account
 				 Where RecordType.DeveloperName = 'IATA_Agency'
-				   And Sector__c = :AMS_Utils.SECTOR_PASSENGER  // agentSector
-				   And IATACode__c Like :iataCode];
+					 And Sector__c = :AMS_Utils.SECTOR_PASSENGER  // agentSector
+					 And IATACode__c Like :iataCode];
 	}
 
 	/*** AMSU-166 Start ***/

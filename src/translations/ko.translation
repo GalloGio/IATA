@@ -1073,6 +1073,10 @@
         <name>ANG_ISSP_IEP_AuthorisedSignatory_auth_msg_Administrator</name>
     </customLabels>
     <customLabels>
+        <label><!-- ANG_ISSP_IEP_Indonesia_msg --></label>
+        <name>ANG_ISSP_IEP_Indonesia_msg</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ModelBanking India --></label>
         <name>ANG_ISSP_IEP_ModelBanking_India_msg</name>
     </customLabels>
@@ -3148,7 +3152,7 @@
         <name>CSP_Reset_Password_Success_Msg_2</name>
     </customLabels>
     <customLabels>
-        <label>고객님의 컴퓨터 IP가 미국 당국에 의해 금지된 국가 중 하나에서 접근된 것으로 확인되었습니다.&lt;br/&gt; 고객 포털을 지원하는 플랫폼은 이 미국 규정을 준수하므로 현재 IP 주소에서 고객 포털을 이용할 수 없습니다.&lt;br/&gt;&lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;연락하려면 여기를 클릭하세요.&lt;/a&gt;</label>
+        <label>고객님의 컴퓨터 IP가 미국 당국에 의해 금지된 국가 중 하나에서 접근된 것으로 확인되었습니다.&lt;br/&gt; 고객 포털을 지원하는 플랫폼은 이 미국 규정을 준수하므로 현재 IP 주소에서 고객 포털을 이용할 수 없습니다.&lt;br/&gt;&lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;연락하려면 여기를 클릭하세요.&lt;/a&gt;</label>
         <name>CSP_Restricted_Login_Message</name>
     </customLabels>
     <customLabels>
@@ -14279,7 +14283,7 @@ ICE의 업데이트 되는 정보들은 타사에서 24 시간의 간격을 두�
         <name>ISSP_CNS_quote2</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_CalendarDisclaimer --></label>
+        <label>참고: 이 시장의 캘린더에는 이 애플리케이션에 반영되지 않은 지역별 날짜가 포함되어 있습니다.</label>
         <name>ISSP_CalendarDisclaimer</name>
     </customLabels>
     <customLabels>
@@ -17978,7 +17982,7 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <name>ISSP_Salutation</name>
     </customLabels>
     <customLabels>
-        <label>귀하의 IP주소는 미(美) 정부 당국에 의해 통상/접속 금지된 국가에 속한 것으로 확인됩니다.&lt;br/&gt;IATA 커스터머포털은 본 미(美) 정부의 규정을 준수하는 플랫폼에 의해 지원되고 있습니다. 이에 귀하의 IP 주소로 IATA 커스터머포털에 접속이 불가함을 안내드립니다.&lt;br/&gt;확인 or 클릭 &lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.aspx&quot; &gt;이곳 &lt;/a&gt;IATA에 컨택하기</label>
+        <label>귀하의 IP주소는 미(美) 정부 당국에 의해 통상/접속 금지된 국가에 속한 것으로 확인됩니다.&lt;br/&gt;IATA 커스터머포털은 본 미(美) 정부의 규정을 준수하는 플랫폼에 의해 지원되고 있습니다. 이에 귀하의 IP 주소로 IATA 커스터머포털에 접속이 불가함을 안내드립니다.&lt;br/&gt;확인 or 클릭 &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quot; &gt;이곳 &lt;/a&gt;IATA에 컨택하기</label>
         <name>ISSP_Sanctions_Message</name>
     </customLabels>
     <customLabels>

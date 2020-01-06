@@ -7,18 +7,18 @@ private class NewGen_Rest_ToggleFavouriteService_Test
 
 	private static void loadData(){
 		c = new Contact();
-        c.FirstName = 'test';
-        c.LastName = 'test';
-        c.Email = 'ISSP_test@test.test';
-        insert c;
+		c.FirstName = 'test';
+		c.LastName = 'test';
+		c.Email = 'ISSP_test@test.test';
+		insert c;
 
-        p = new Portal_Applications__c();
-        insert p;
+		p = new Portal_Applications__c();
+		insert p;
 
-        String appRight = 'Access Granted';
+		String appRight = 'Access Granted';
 
-        pr = new Portal_Application_Right__c(Contact__c = c.Id,Portal_Application__c = p.Id, Right__c = appRight);
-        insert pr;
+		pr = new Portal_Application_Right__c(Contact__c = c.Id,Portal_Application__c = p.Id, Right__c = appRight);
+		insert pr;
 	}
 
 	@isTest

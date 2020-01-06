@@ -138,6 +138,18 @@
         <type>Checkbox</type>
     </fields>
     <label>D&amp;B Company</label>
+    <listViews>
+        <fullName>ALL</fullName>
+        <columns>D_B_Company_Name__c</columns>
+        <columns>DUNS_Number__c</columns>
+        <columns>Domestic_Ultimate_DUNS_Number__c</columns>
+        <columns>Global_Ultimate_DUNS_Number__c</columns>
+        <columns>Headquarter_DUNS_Number__c</columns>
+        <columns>Majority_Owner_DUNS__c</columns>
+        <columns>Out_of_Business__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>ALL</label>
+    </listViews>
     <nameField>
         <displayFormat>DBC{0000000000}</displayFormat>
         <label>Autoname</label>

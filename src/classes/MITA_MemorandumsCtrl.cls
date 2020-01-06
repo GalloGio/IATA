@@ -93,11 +93,11 @@ public with sharing class MITA_MemorandumsCtrl {
 	// Memorandum 1: CONCURRENCES
 	public list<WrapperAgreement> getConcurrencesAgreements(){
 		List<MITA_Agreement__c> res = [SELECT MITAorBIETA__c , Active__c , Airline_1__c, Airline_1__r.Name_on_AOC__c, Airline_2__r.Name_on_AOC__c, Effective_date__c, Agreement_Processed_Date__c, Agreement_type__c, Created_date__c, Withdrawal_Request_Reception_Date__c, Cancellation_processed_date__c, Cancellation_date__c
-									  FROM MITA_Agreement__c
-									  WHERE Agreement_Processed_Date__c >= :fromDate.Agreement_Processed_Date__c
-									  AND Agreement_Processed_Date__c <= :toDate.Agreement_Processed_Date__c
-									  AND MITAorBIETA__c = :selectedAgreement
-									  ORDER BY Airline_1__r.Name_on_AOC__c, Effective_Date__c];
+										FROM MITA_Agreement__c
+										WHERE Agreement_Processed_Date__c >= :fromDate.Agreement_Processed_Date__c
+										AND Agreement_Processed_Date__c <= :toDate.Agreement_Processed_Date__c
+										AND MITAorBIETA__c = :selectedAgreement
+										ORDER BY Airline_1__r.Name_on_AOC__c, Effective_Date__c];
 		list<WrapperAgreement> listWrapper = new list<WrapperAgreement>();
 		for(MITA_Agreement__c agr : res) {
 			addConcurrenceAgreement(listWrapper, agr);
@@ -120,12 +120,12 @@ public with sharing class MITA_MemorandumsCtrl {
 	// Memorandum 2: WITHDRAWALS
 	public list<WrapperAgreement> getWithdrawalsAgreements(){
 		List<MITA_Agreement__c> res = [SELECT MITAorBIETA__c, Active__c, Airline_1__c, Airline_1__r.Name_on_AOC__c, Airline_2__r.Name_on_AOC__c, Cancellation_Date__c, Cancellation_Processed_Date__c, Agreement_type__c, Created_date__c, Withdrawal_Request_Reception_Date__c
-									  FROM MITA_Agreement__c
-									  WHERE Cancellation_Processed_Date__c >= :fromDate.Cancellation_Processed_Date__c
-									  AND Cancellation_Processed_Date__c <= :toDate.Cancellation_Processed_Date__c
-									  AND MITAorBIETA__c = :selectedAgreement
-									  AND Cancellation_Reason__c in ('Requested by Airline 1','Requested by Airline 2')
-									  ORDER BY Airline_1__r.Name_on_AOC__c, Cancellation_Date__c];
+										FROM MITA_Agreement__c
+										WHERE Cancellation_Processed_Date__c >= :fromDate.Cancellation_Processed_Date__c
+										AND Cancellation_Processed_Date__c <= :toDate.Cancellation_Processed_Date__c
+										AND MITAorBIETA__c = :selectedAgreement
+										AND Cancellation_Reason__c in ('Requested by Airline 1','Requested by Airline 2')
+										ORDER BY Airline_1__r.Name_on_AOC__c, Cancellation_Date__c];
 		list<WrapperAgreement> listWrapper = new list<WrapperAgreement>();
 		for(MITA_Agreement__c agr : res) {
 			addWithdrawalAgreement(listWrapper, agr);

@@ -1,8 +1,8 @@
-/**  
- * Description: This class contains the controller for the Visualforce page (File Delivery) 
+/**
+ * Description: This class contains the controller for the Visualforce page (File Delivery)
  * Author: Samy Saied
  * Version: 1.0
- * History: 
+ * History:
  */
 
 public without sharing class vfIECGSS extends IECPageController {
@@ -20,11 +20,11 @@ public without sharing class vfIECGSS extends IECPageController {
 				return IECConstants.ProductCategory_Zuora_MDP;
 			else if (sProductCode == IECConstants.ProductCategory_SF_CACWEB)
 				return IECConstants.ProductCategory_Zuora_CACWEB;
-            else
+			else
 				return '';
 		}
 	}
-	
+
 	public String sApplicationTitleUpperCase {
 		get {
 			return sApplicationTitle.toUpperCase();
@@ -40,13 +40,13 @@ public without sharing class vfIECGSS extends IECPageController {
 			String sParamProductCode = ApexPages.currentPage().getParameters().get(IECConstants.PARAM_PRODUCT_CODE);
 			sProductCode = IECUtil.DecodeDecryptParameter(sParamProductCode);
 
-			//Initilize subscription component        
+			//Initilize subscription component
 			ctrSubsInfo = new vfIECSubscriptionInfo();
 			ctrSubsInfo.loggedCustomer = loggedCustomer;
-	        ctrSubsInfo.sSelectedSubscriptionName = null;
+			ctrSubsInfo.sSelectedSubscriptionName = null;
 			ctrSubsInfo.sApplicationName = sProductCode;
-	
-        }
+
+		}
 		catch (Exception ex) {
 			addErrorMessage(ex.getMessage());
 		}
@@ -72,12 +72,12 @@ public without sharing class vfIECGSS extends IECPageController {
 				if (!ctrSubsInfo.hasPageAccess) return Page.IECUnauthorized;
 				//Query for the active subscription list related to the current logged user
 				lstListActiveSubscriptions = getActiveSubscriptionsList();
-                
-                //If only one subscription is available, then pre-select it and navigate to the details page
-                if (lstListActiveSubscriptions != null && lstListActiveSubscriptions.size() == 1) {
-                    sSelectedSubscriptionName = lstListActiveSubscriptions.get(0).Name;
-                    return selectSubscription();
-                }
+
+				//If only one subscription is available, then pre-select it and navigate to the details page
+				if (lstListActiveSubscriptions != null && lstListActiveSubscriptions.size() == 1) {
+					sSelectedSubscriptionName = lstListActiveSubscriptions.get(0).Name;
+					return selectSubscription();
+				}
 			}
 		} catch (Exception ex) {
 			addErrorMessage(ex.getMessage() + '<br />' + ex.getStackTraceString());
@@ -103,22 +103,22 @@ public without sharing class vfIECGSS extends IECPageController {
 
 		return null;
 	}
-	
+
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//Handles the selection of one subscription (by subscriptionID) and query for its details
 	public Pagereference selectSubscription() {
 		try {
 			if (sSelectedSubscriptionName!=null && !String.isEmpty(sSelectedSubscriptionName)) {
 				Pagereference pgRef;
-                if (sProductCode == IECConstants.ProductCategory_SF_GSS)
+				if (sProductCode == IECConstants.ProductCategory_SF_GSS)
 					pgRef = Page.IECFDDetail;
 				else if (sProductCode == IECConstants.ProductCategory_SF_MDP)
 					pgRef = Page.IECFDDetail;
 				else if (sProductCode == IECConstants.ProductCategory_SF_CACWEB)
 					pgRef = Page.IEC_CACWDetail;
-                                
-                pgRef.getParameters().put(IECConstants.PARAM_SUBSCRIPTION_NAME, IECUtil.EncryptEncodeParameter(sSelectedSubscriptionName));
-                pgRef.getParameters().put(IECConstants.PARAM_PRODUCT_CODE, IECUtil.EncryptEncodeParameter(sProductCode));
+
+				pgRef.getParameters().put(IECConstants.PARAM_SUBSCRIPTION_NAME, IECUtil.EncryptEncodeParameter(sSelectedSubscriptionName));
+				pgRef.getParameters().put(IECConstants.PARAM_PRODUCT_CODE, IECUtil.EncryptEncodeParameter(sProductCode));
 				pgRef.setRedirect(true);
 				return pgRef;
 			}

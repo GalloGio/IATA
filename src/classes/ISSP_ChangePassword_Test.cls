@@ -170,7 +170,7 @@ private class ISSP_ChangePassword_Test {
 
 		List<Account_Role__c> accRoleList = new List<Account_Role__c>();
 		Account_Role__c accRoleITP = new Account_Role__c(Account__c = newAccount.Id, Account_Roles__c = accRolesITP.Id, RecordTypeId = accRoleITP_RT);
-	  	accRoleList.add(accRoleITP);
+			accRoleList.add(accRoleITP);
 		insert accRoleList;
 		System.debug('accRoleList - ' + accRoleList);
 
@@ -296,7 +296,7 @@ private class ISSP_ChangePassword_Test {
 		string parameters =myUsername+Comm_User_Helper.SEPARATOR+'testpassword'+Comm_User_Helper.SEPARATOR+ UID;
 		ApexPages.currentPage().getParameters().put('c',Comm_User_Helper.EncryptString(parameters));
 
-	  	ISSP_First_Login ctrl = new ISSP_First_Login();
+			ISSP_First_Login ctrl = new ISSP_First_Login();
 	 	Pagereference pr = Page.ISSP_Login;
 
 	}

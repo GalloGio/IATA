@@ -4,25 +4,25 @@
 
 public with sharing class CSP_Email_Controller {
 
-    public string HeaderUrl;
-    public string FirstName;
-    public string CommunityUrl;
-    public string FooterUrl;
+	public string HeaderUrl;
+	public string FirstName;
+	public string CommunityUrl;
+	public string FooterUrl;
 
-    public String getHeaderUrl(){
-       return '{!HeaderUrl}';
-    }
+	public String getHeaderUrl(){
+	   return '{!HeaderUrl}';
+	}
 
-    public String getFooterUrl(){
-        return '{!FooterUrl}';
-    }
+	public String getFooterUrl(){
+		return '{!FooterUrl}';
+	}
 
-    public String getFirstName(){
-        return '{!Receiving_User.FirstName}' ;
-    }
+	public String getFirstName(){
+		return '{!Receiving_User.FirstName}' ;
+	}
 
-    public String getCommunityUrl(){
-        return '{!Community_Url}';
-    }
+	public String getCommunityUrl(){
+		return '{!Community_Url}';
+	}
 
 }

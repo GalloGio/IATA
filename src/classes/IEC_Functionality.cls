@@ -1,10 +1,10 @@
 /**
 
 		Project: eCommerce Enhancements
-	       File: IEC_Functionality.cls
+				 File: IEC_Functionality.cls
 	Description: Functionality Management through Custom Setting.
-	     Author: blue-infinity sa
-	    History: aosantos, 2017-06-27, Initial Release.
+			 Author: blue-infinity sa
+			History: aosantos, 2017-06-27, Initial Release.
 
 
 */
@@ -21,7 +21,7 @@ public without sharing class IEC_Functionality {
 			System.debug('Functionality Wrapper New Start');
 
 			this.instance = functionality;
-	
+
 			System.debug('Functionality Wrapper New Returning');
 		}
 
@@ -77,10 +77,10 @@ public without sharing class IEC_Functionality {
 				String cookieValue;
 
 				Cookie cookie = cookiesMap.get(cookieName);
-				
+
 				cookieValue = cookie.getValue();
 
-				if (cookieValue != null && cookieValue.equals('1')) {		
+				if (cookieValue != null && cookieValue.equals('1')) {
 					cookieSet.add(cookieName);
 
 					System.debug('Adding the cookie ' + cookieName + ' to cookieSet');
@@ -105,7 +105,7 @@ public without sharing class IEC_Functionality {
 
 	/**
 		Get the instance of Functionalities.
-	
+
 	*/
 	public static IEC_Functionality getInstance() {
 		System.debug('Get Instance start');
@@ -257,7 +257,7 @@ public without sharing class IEC_Functionality {
 							', organizationId=' + organizationId +
 							', cookieSet=' + cookieSet + ']'
 						);
-						
+
 						if (isMatch == true) {
 							functionalityMap.put(
 								functionality.Functionality_Name__c.toUpperCase(),

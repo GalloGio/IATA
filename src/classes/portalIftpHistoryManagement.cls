@@ -329,7 +329,7 @@ public without sharing class portalIftpHistoryManagement {
 							GROUP BY Account_Contact_Role__r.Company_Code__c,
 								Certification__c, Certification__r.Code__c, Certification__r.Name ];
 
-	   List<AggregateResult> lContRoleCerts = [SELECT Account_Contact_Role__r.Company_Code__c,
+		 List<AggregateResult> lContRoleCerts = [SELECT Account_Contact_Role__r.Company_Code__c,
 								Certification__c, Certification__r.Code__c, Certification__r.Name
 							FROM Contact_Role_Certification__c
 							WHERE Account_Contact_Role__r.Company_Code__c IN :workingEmp
@@ -342,7 +342,7 @@ public without sharing class portalIftpHistoryManagement {
 		currentEmp = '';
 		Integer numberModules = 0;
 		Map<String,Integer> empModules = new Map<String,Integer>();
-		Set<String> hasCert = new Set<String>(); 
+		Set<String> hasCert = new Set<String>();
 
 		for(AggregateResult rec : lContRolePreReqCert){
 			hasCert.add((String)rec.get('Company_Code__c'));

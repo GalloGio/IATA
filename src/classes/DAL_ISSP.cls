@@ -15,8 +15,8 @@ public with sharing class DAL_ISSP {
 			[SELECT Id, Username, ContactId, Email, Portal_User_Frozen__c,
 				IsActive, Portal_User_Frozen_Checkbox__c, Contact.Community__c,
 				Profile.Name,CNS_Account_or_Agency__c
-			   FROM User
-			  WHERE (Username=: nameOrEmail
+				 FROM User
+				WHERE (Username=: nameOrEmail
 				 OR email =: nameOrEmail)
 				 AND (IsActive = true OR Portal_User_Frozen_Checkbox__c = true)
 				 AND ContactId != ''
@@ -26,8 +26,8 @@ public with sharing class DAL_ISSP {
 	public static list<LoginHistory> getLoginHistoryByUserId(ID userID) {
 		return
 			[SELECT l.UserId
-			   FROM LoginHistory l
-			  WHERE UserId =: userId];
+				 FROM LoginHistory l
+				WHERE UserId =: userId];
 	}
 
 
@@ -41,10 +41,10 @@ public with sharing class DAL_ISSP {
 					Account.BillingCountry, Account.IATACode__c, Account.Airline_Prefix__c, Account.BillingPostalCode,Account.BillingState,
 					Account.TradeName__c, Account.ParentId, Account.Top_Parent__c, Account.Airline_designator__c,
 					Account.Accumulated_Irregularities__c,Account.Sector__c,Account.Category__c,Account.VAT_Number__c,
-				   	Account.Fin_statements_submission_deadline__c, BSP_CASS_Payment_contact__c,Invoicing_contact__c,Airline_Credit_Risk_Manager__c,
-			   		Financial_Assessment_Contact__c, Account.Field_Head_Office__c, Account.Membership_status__c, Account.Phone, Account.Fax,Account.Email__c,Account.WebSite,
+					 	Account.Fin_statements_submission_deadline__c, BSP_CASS_Payment_contact__c,Invoicing_contact__c,Airline_Credit_Risk_Manager__c,
+				 		Financial_Assessment_Contact__c, Account.Field_Head_Office__c, Account.Membership_status__c, Account.Phone, Account.Fax,Account.Email__c,Account.WebSite,
 					Account.ICAO_designator__c, Account.IATA_ISO_Country__r.Name, Account.IATA_ISO_Country__r.Region__c, Account.IATA_ISO_Country__r.ISO_Code__c,Account.IATA_ISO_Country__r.OSCAR_enabled__c,
-			   		Account.Location_Type__c, Account.RecordType.DeveloperName, Account.Overdue_Invoices_Indicator__c ,Account.Top_Parent__r.IATACode__c,Account.IATA_ISO_Country__r.Prevent_Portal_Trade_Name_Change__c,
+				 		Account.Location_Type__c, Account.RecordType.DeveloperName, Account.Overdue_Invoices_Indicator__c ,Account.Top_Parent__r.IATACode__c,Account.IATA_ISO_Country__r.Prevent_Portal_Trade_Name_Change__c,
 					Account.Top_Parent__r.Location_Type__c , Account.Region_formula__c,PhoneNational__c,FAXNational__c,MobileNational__c,Account.IATA_ISO_Country__r.Enable_Minor_Changes_from_Portal__c,
 					ID_Card_Holder__c, Account.DDS_status__c, Account.DDS_Last_Update_Date__c,Account.PhoneNational__c,Account.FAXNational__c,
 					Account.Location_Class__c, Account.CNS_Account__c,Account.IATA_ISO_Country__r.ANG_Portal_Service__c, Account.ANG_IEP_Status_FF__c, Account.Quality__c,Account.ANG_Accreditation_Model__c,Account.Legal_name__c,

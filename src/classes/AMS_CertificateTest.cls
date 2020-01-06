@@ -7,7 +7,7 @@ private class AMS_CertificateTest {
 		Account acc2 = new Account(Name = 'Test Account', IataCode__c = '2', Certificate_Generated_Current_Year__c = false, recordtypeid = Art);
 		insert new List<Account>{acc1, acc2};
 	}
-	
+
 	static testMethod void manager() {
 		AMS_CertificateManagerController con = new AMS_CertificateManagerController();
 
@@ -52,7 +52,7 @@ private class AMS_CertificateTest {
 		System.debug(loggingLevel.Debug, '____ [cls AMS_CertificateTest - print] request.Id - ' + request.Id);
 		System.debug(loggingLevel.Debug, '____ [cls AMS_CertificateTest - print] request.AccountIds__c - ' + request.AccountIds__c);
 
-	    PageReference pdf = Page.AMSCertificateForPrint;
+		PageReference pdf = Page.AMSCertificateForPrint;
 		pdf.getParameters().put('Id', request.Id);
 
 		Test.setCurrentPage(pdf);
@@ -86,5 +86,5 @@ private class AMS_CertificateTest {
 
 		Test.stopTest();
 	}
-	
+
 }

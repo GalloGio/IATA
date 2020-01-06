@@ -1,7 +1,7 @@
 public without sharing class OneId_AccountSearch {
 	public class SearchWrapper {
-	    @AuraEnabled public List<Account> accList {get; set;}
-	    @AuraEnabled public Integer totalResults {get; set;}
+		@AuraEnabled public List<Account> accList {get; set;}
+		@AuraEnabled public Integer totalResults {get; set;}
 	}
 
 	@AuraEnabled
@@ -22,9 +22,9 @@ public without sharing class OneId_AccountSearch {
 			recordTypesSet.addAll(ISSP_Constant.accountRecordTypeByUserType.get('NonIATAAgent'));
 
 		String fieldString = 'SELECT Id, '+String.join(fieldsToQuery, ', ');
-        String limitString = ' LIMIT 20';
+		String limitString = ' LIMIT 20';
 
-        //WMO-385 exclude MSO accounts from the results
+		//WMO-385 exclude MSO accounts from the results
 		String objectString = ' FROM Account WHERE RecordType.DeveloperName in :recordTypesSet AND Location_Class__c <> \'M\'';
 
 		if(filters != null){
@@ -36,14 +36,14 @@ public without sharing class OneId_AccountSearch {
 		Set<String> nonGeneralTypes = new Set<String>{'Airline', 'Agency', 'OtherCompany',AMS_Utils.customerTypePass};
 		if(nonGeneralTypes.contains(customerType))
 			objectString += ' AND Sector__c != \'General Public\'';
-		
+
 		List<String> filterString = new List<String>();
 		for(String field : fieldsToSearch){
 			filterString.add(field+ ' LIKE  \'%' + search + '%\'');
 		}
 		if(!filterString.isEmpty())
 			objectString += ' AND ('+String.join(filterString, ' OR ')+')';
-		
+
 		System.debug(loggingLevel.FINE, '____ [cls OneId_AccountSearch - searchAccounts] recordTypesSet - ' + recordTypesSet);
 		System.debug(loggingLevel.FINE, '____ [cls OneId_AccountSearch - searchAccounts] query - ' + fieldString+objectString);
 		sw.accList = Database.query(fieldString+objectString+limitString);

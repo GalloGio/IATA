@@ -538,8 +538,8 @@ public class AMS_OSCARTriggerHandler {
 														AMS_Online_Accreditation__r.Location_Class__c, Country_ISO_Code__c
 												 FROM AMS_Oscar__c
 												 WHERE Id IN :oscarsToValidate AND
-													   AMS_Online_Accreditation__r.Remittance_frequency__c = NULL AND
-													   AMS_Online_Accreditation__r.Location_Class__c IN :locationsToCheck];
+														 AMS_Online_Accreditation__r.Remittance_frequency__c = NULL AND
+														 AMS_Online_Accreditation__r.Location_Class__c IN :locationsToCheck];
 
 			for(AMS_Oscar__c oscarsRF : oscarsWithAccr) {
 				Set<String> countryAttributes = mapClassAttributes.get(oscarsRF.Country_ISO_Code__c);
@@ -3425,7 +3425,7 @@ public class AMS_OSCARTriggerHandler {
 			'Release_previous_FS_if_applicable__c'      => 'Previous_FS_released__c',
 			'Suspend_Agency__c'                         => 'NOC_Requested__c'
 			};
-		   //Map to update Date related checkbox values
+			 //Map to update Date related checkbox values
 		for (String oscarDateFieldKey: oscarDateFieldsMap.keyset())
 		{
 			if (oldOSCAR.get(oscarDateFieldKey) == false && updatedOscar.get(oscarDateFieldKey) == true)
@@ -4868,7 +4868,7 @@ public class AMS_OSCARTriggerHandler {
 
 		for(AMS_OSCAR__c oscar :oscarsToProcessMap.values()) {
 			if(!oppOscarIdMap.containsKey(oscar.Id) || String.isBlank(oppOscarIdMap.get(oscar.Id).GDI_Offer_Id__c) ) {
-			   oscar.addError('GDI Offer Id is not specified, please specify the Offer Id in a related opportunity before proceeding');
+				 oscar.addError('GDI Offer Id is not specified, please specify the Offer Id in a related opportunity before proceeding');
 			} else {
 				iataCodes.put(oscar.IATACode__c,oppOscarIdMap.get(oscar.Id).GDI_Offer_Id__c);
 			}
@@ -4883,7 +4883,7 @@ public class AMS_OSCARTriggerHandler {
 	}
 
 	// to be removed
-  public void fakeMethod(){
+	public void fakeMethod(){
 	Integer i = 0;
 	i=0;
 	i=0;
@@ -5229,7 +5229,7 @@ public class AMS_OSCARTriggerHandler {
 	i=0;
 	i=0;
 	i=0;
-  }
+	}
 
 
 }
