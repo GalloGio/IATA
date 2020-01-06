@@ -26,14 +26,14 @@ public without sharing class ANG_GDIRemoteInvocation implements ANG_RemoteInvoca
 					mapRemoteInvocationToUpdates.put(ri.id, new Remote_Invocation__c(Id = ri.id, Status__c = 'Failed', Status_detail__c = 'Invalid Request Type'));
 				}
 			}
-			
+
 		}
 
 		//there is no consistent request. Update them with failure and exit
 		if(setValidRemoteInvocation.isEmpty()){
 			update mapRemoteInvocationToUpdates.values();
 			return;
-		} 
+		}
 
 		//Fetch the priceBook along with all entries
 		try{
@@ -166,7 +166,7 @@ public without sharing class ANG_GDIRemoteInvocation implements ANG_RemoteInvoca
 
 				//if(fsList != null) stagingFs.Financial_Security__c = fsList.Id;
 				stagingFs.Region__c = opp.Account.Region_formula__c;
-				stagingFs.Financial_Institution__c = dfltFI.Id; 
+				stagingFs.Financial_Institution__c = dfltFI.Id;
 				stagingFs.TotalPrice = artifact.Amount__c;
 				opp.CurrencyISOCode = artifact.Remote_Invocation__r.CurrencyISOCode;
 				stagingFS.FS_Currency__c = artifact.CurrencyISOCode;
@@ -205,7 +205,7 @@ public without sharing class ANG_GDIRemoteInvocation implements ANG_RemoteInvoca
 				mapRemoteInvocationToUpdates.put(ri.Id, new Remote_Invocation__c(id=ri.Id, Status__c = 'Failed', Status_detail__c='Verify related artefacts for details'));
 			}
 		}
-	
+
 		update listArtifactsToUpdate;
 		update mapRemoteInvocationToUpdates.values();
 	}

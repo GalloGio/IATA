@@ -3,8 +3,8 @@ global class CreateNotificationsBatch implements Database.Batchable<Notification
 	private List<Notification__c> notificationList;
 
 	global CreateNotificationsBatch(List<Notification__c> notifications) {
-	  if (notifications == null) notifications = new List<sObject>();
-	  this.notificationList = notifications;
+		if (notifications == null) notifications = new List<sObject>();
+		this.notificationList = notifications;
 	}
 	global Iterable<Notification__c> start(Database.BatchableContext context){
 		return notificationList;

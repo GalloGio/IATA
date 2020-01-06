@@ -4,63 +4,63 @@ private class AMP_OwnershipControllerTest {
 	@isTest static void test_method_one() {
 		// CREATE TEST DATA
 
-        // Create a new ISO Country
-        IATA_ISO_Country__c country_fr = new IATA_ISO_Country__c(Name = 'France', ISO_Code__c = 'FR', Region__c = 'Europe');
-        insert country_fr;
+				// Create a new ISO Country
+				IATA_ISO_Country__c country_fr = new IATA_ISO_Country__c(Name = 'France', ISO_Code__c = 'FR', Region__c = 'Europe');
+				insert country_fr;
 
-        IATA_ISO_Country__c country_qr = new IATA_ISO_Country__c(Name = 'Qatar', ISO_Code__c = 'QR', Region__c = 'Africa & Middle East');
-        insert country_qr;
+				IATA_ISO_Country__c country_qr = new IATA_ISO_Country__c(Name = 'Qatar', ISO_Code__c = 'QR', Region__c = 'Africa & Middle East');
+				insert country_qr;
 
-        // Create an Airline HQ account
-        Id AirlineHQ_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
-        Account acct_hq = new Account(Name = 'Qatar Airways', Airline_designator__c = 'QR', ICCS_Membership_Status__c = 'Member', Industry='Airline', Type='Passenger', Sector__c = AMS_Utils.SECTOR_AIRLINE,
-                                Category__c = AMS_Utils.CATEGORY_PASSENGER_ONLY, RecordTypeId = AirlineHQ_RT_Id, IATA_ISO_Country__c = country_qr.Id, Membership_status__c = 'Non-IATA member');
-        insert acct_hq;
+				// Create an Airline HQ account
+				Id AirlineHQ_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
+				Account acct_hq = new Account(Name = 'Qatar Airways', Airline_designator__c = 'QR', ICCS_Membership_Status__c = 'Member', Industry='Airline', Type='Passenger', Sector__c = AMS_Utils.SECTOR_AIRLINE,
+																Category__c = AMS_Utils.CATEGORY_PASSENGER_ONLY, RecordTypeId = AirlineHQ_RT_Id, IATA_ISO_Country__c = country_qr.Id, Membership_status__c = 'Non-IATA member');
+				insert acct_hq;
 
-        Account acct_hq2 = new Account(Name = 'Owner Airways', Airline_designator__c = 'OR', ICCS_Membership_Status__c = 'Member', Industry='Airline', Type='Passenger', Sector__c = AMS_Utils.SECTOR_AIRLINE,
-                                Category__c = AMS_Utils.CATEGORY_PASSENGER_ONLY, RecordTypeId = AirlineHQ_RT_Id, IATA_ISO_Country__c = country_qr.Id, Membership_status__c = 'Non-IATA member');
-        insert acct_hq2;
+				Account acct_hq2 = new Account(Name = 'Owner Airways', Airline_designator__c = 'OR', ICCS_Membership_Status__c = 'Member', Industry='Airline', Type='Passenger', Sector__c = AMS_Utils.SECTOR_AIRLINE,
+																Category__c = AMS_Utils.CATEGORY_PASSENGER_ONLY, RecordTypeId = AirlineHQ_RT_Id, IATA_ISO_Country__c = country_qr.Id, Membership_status__c = 'Non-IATA member');
+				insert acct_hq2;
 
 
-        test.startTest();
+				test.startTest();
 
-          // instantiate the OwnershipController page controller
-          ApexPages.StandardController std = new ApexPages.StandardController(acct_hq);
-          AMP_OwnershipController controller = new AMP_OwnershipController(std);
+					// instantiate the OwnershipController page controller
+					ApexPages.StandardController std = new ApexPages.StandardController(acct_hq);
+					AMP_OwnershipController controller = new AMP_OwnershipController(std);
 
-          // add new Owner account
-          controller.AddNewOwner();
+					// add new Owner account
+					controller.AddNewOwner();
 
-          controller.owners.amsAccountRoleList[0].Owner_Account__c = acct_hq2.Id;
-          controller.owners.amsAccountRoleList[0].Percentage__c = 50;
-          controller.SaveLine();
+					controller.owners.amsAccountRoleList[0].Owner_Account__c = acct_hq2.Id;
+					controller.owners.amsAccountRoleList[0].Percentage__c = 50;
+					controller.SaveLine();
 
-          // check it was correctly added
-          list<AMS_Account_Role__c> tmplstOwners = [SELECT Id FROM AMS_Account_Role__c WHERE Account__c = :acct_hq.Id];
-          system.assertEquals(1, tmplstOwners.size());
+					// check it was correctly added
+					list<AMS_Account_Role__c> tmplstOwners = [SELECT Id FROM AMS_Account_Role__c WHERE Account__c = :acct_hq.Id];
+					system.assertEquals(1, tmplstOwners.size());
 
-          // simulate edit mode, then cancel
-          controller.IdConcerned = tmplstOwners[0].Id;
-          controller.EditLine();
+					// simulate edit mode, then cancel
+					controller.IdConcerned = tmplstOwners[0].Id;
+					controller.EditLine();
 
-          system.assertEquals(true, controller.isEditMode);
+					system.assertEquals(true, controller.isEditMode);
 
-          controller.CancelEdit();
+					controller.CancelEdit();
 
-          system.assertEquals(false, controller.isEditMode);
+					system.assertEquals(false, controller.isEditMode);
 
-          // simulate the deletion of a line
-          controller.IdConcerned = tmplstOwners[0].Id;
-          controller.DeleteLine();
+					// simulate the deletion of a line
+					controller.IdConcerned = tmplstOwners[0].Id;
+					controller.DeleteLine();
 
-          system.assertEquals(true, controller.owners.amsAccountRoleList.isEmpty());
+					system.assertEquals(true, controller.owners.amsAccountRoleList.isEmpty());
 
-          // simulate the addition of a new Subsidiary
-          controller.AddNewSubsidiary();
+					// simulate the addition of a new Subsidiary
+					controller.AddNewSubsidiary();
 
-          system.assertEquals(false, controller.subsidiaries.amsAccountRoleList.isEmpty());
-          
-          AMP_OwnershipController.getSubsidiaries(acct_hq.Id);
+					system.assertEquals(false, controller.subsidiaries.amsAccountRoleList.isEmpty());
+
+					AMP_OwnershipController.getSubsidiaries(acct_hq.Id);
 
 					// add new Owner account
 					controller.AddNewOwner();
@@ -77,7 +77,7 @@ private class AMP_OwnershipControllerTest {
 
 		controller.addOtherStakeholderTypes();
 
-        test.stopTest();
-  }
+				test.stopTest();
+	}
 
 }

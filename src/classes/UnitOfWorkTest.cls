@@ -27,113 +27,113 @@
 @IsTest
 private with sharing class UnitOfWorkTest
 {
-    // SObjects (in order of dependency) used by UnitOfWork in tests bellow
-    private static List<Schema.SObjectType> MY_SOBJECTS =
-        new Schema.SObjectType[] {
-            Product2.SObjectType,
-            PricebookEntry.SObjectType,
-            Opportunity.SObjectType,
-            OpportunityLineItem.SObjectType };
+	// SObjects (in order of dependency) used by UnitOfWork in tests bellow
+	private static List<Schema.SObjectType> MY_SOBJECTS =
+		new Schema.SObjectType[] {
+			Product2.SObjectType,
+			PricebookEntry.SObjectType,
+			Opportunity.SObjectType,
+			OpportunityLineItem.SObjectType };
 
-    private static Id recType = RecordTypeSingleton.getInstance().getRecordTypeId('Opportunity', 'SalesOrder');
+	private static Id recType = RecordTypeSingleton.getInstance().getRecordTypeId('Opportunity', 'SalesOrder');
 
-    
-    @isTest
-    private static void testUnitOfWorkNewDirtyDelete()
-    {
-        // Insert Opportunities with UnitOfWork
-        {
-            UnitOfWork uow = new UnitOfWork(MY_SOBJECTS);
-            for(Integer o=0; o<10; o++)
-            {
-                Opportunity opp = new Opportunity();
-                opp.Name = 'UoW Test Name ' + o;
-                opp.StageName = 'Open';
-                opp.CloseDate = System.today();
-                opp.RecordTypeId = recType;
-                uow.registerNew(new List<SObject>{opp});
-                for(Integer i=0; i<o+1; i++)
-                {
-                    Product2 product = new Product2();
-                    product.Name = opp.Name + ' : Product : ' + i;
-                    uow.registerNew(new List<SObject>{product});
-                    PricebookEntry pbe = new PricebookEntry();
-                    pbe.UnitPrice = 10;
-                    pbe.IsActive = true;
-                    pbe.UseStandardPrice = false;
-                    pbe.Pricebook2Id = Test.getStandardPricebookId();
-                    uow.registerNew(pbe, PricebookEntry.Product2Id, product);
-                    OpportunityLineItem oppLineItem = new OpportunityLineItem();
-                    oppLineItem.Quantity = 1;
-                    oppLineItem.TotalPrice = 10;
-                    uow.registerRelationship(oppLineItem, OpportunityLineItem.PricebookEntryId, pbe);
-                    uow.registerNew(oppLineItem, OpportunityLineItem.OpportunityId, opp);
-                }
-            }
 
-            uow.commitWork();
-        }
+	@isTest
+	private static void testUnitOfWorkNewDirtyDelete()
+	{
+		// Insert Opportunities with UnitOfWork
+		{
+			UnitOfWork uow = new UnitOfWork(MY_SOBJECTS);
+			for(Integer o=0; o<10; o++)
+			{
+				Opportunity opp = new Opportunity();
+				opp.Name = 'UoW Test Name ' + o;
+				opp.StageName = 'Open';
+				opp.CloseDate = System.today();
+				opp.RecordTypeId = recType;
+				uow.registerNew(new List<SObject>{opp});
+				for(Integer i=0; i<o+1; i++)
+				{
+					Product2 product = new Product2();
+					product.Name = opp.Name + ' : Product : ' + i;
+					uow.registerNew(new List<SObject>{product});
+					PricebookEntry pbe = new PricebookEntry();
+					pbe.UnitPrice = 10;
+					pbe.IsActive = true;
+					pbe.UseStandardPrice = false;
+					pbe.Pricebook2Id = Test.getStandardPricebookId();
+					uow.registerNew(pbe, PricebookEntry.Product2Id, product);
+					OpportunityLineItem oppLineItem = new OpportunityLineItem();
+					oppLineItem.Quantity = 1;
+					oppLineItem.TotalPrice = 10;
+					uow.registerRelationship(oppLineItem, OpportunityLineItem.PricebookEntryId, pbe);
+					uow.registerNew(oppLineItem, OpportunityLineItem.OpportunityId, opp);
+				}
+			}
 
-  
+			uow.commitWork();
+		}
 
-        // Records to update
-        List<Opportunity> opps = [select Id, Name, (Select Id from OpportunityLineItems) from Opportunity where Name like 'UoW Test Name %' order by Name];
 
-        List<SObjectField> oppFields = new List<SObjectField>{
-        	Opportunity.Name
-        };
-        List<SObjectField> pdFields = new List<SObjectField>{
-        	OpportunityLineItem.Quantity,
-        	OpportunityLineItem.TotalPrice
-        };
 
-        // Update some records with UnitOfWork
-        {
-            UnitOfWork uow = new UnitOfWork(MY_SOBJECTS);
-            
-            Opportunity opp = opps[0];
-            opp.Name = opp.Name + ' Changed';
-            uow.registerDirty(new List<SObject>{opp}, oppFields);
-            
-            Product2 product = new Product2();
-            product.Name = opp.Name + ' : New Product';
-            uow.registerNew(new List<SObject>{product});
-            
-            PricebookEntry pbe = new PricebookEntry();
-            pbe.UnitPrice = 10;
-            pbe.IsActive = true;
-            pbe.UseStandardPrice = false;
-            pbe.Pricebook2Id = Test.getStandardPricebookId();
-            uow.registerNew(pbe, PricebookEntry.Product2Id, product);
+		// Records to update
+		List<Opportunity> opps = [select Id, Name, (Select Id from OpportunityLineItems) from Opportunity where Name like 'UoW Test Name %' order by Name];
 
-            OpportunityLineItem newOppLineItem = new OpportunityLineItem();
-            newOppLineItem.Quantity = 1;
-            newOppLineItem.TotalPrice = 10;
-            uow.registerRelationship(newOppLineItem, OpportunityLineItem.PricebookEntryId, pbe);
-            uow.registerNew(newOppLineItem, OpportunityLineItem.OpportunityId, opp);
-            
-            
-            OpportunityLineItem existingOppLine = opp.OpportunityLineItems[0];
-            existingOppLine.Quantity = 2;
-            existingOppLine.TotalPrice = 20;
-            uow.registerDirty(new List<SObject>{existingOppLine}, pdFields);
-            uow.commitWork();
-        }
+		List<SObjectField> oppFields = new List<SObjectField>{
+			Opportunity.Name
+		};
+		List<SObjectField> pdFields = new List<SObjectField>{
+			OpportunityLineItem.Quantity,
+			OpportunityLineItem.TotalPrice
+		};
 
-       opps = [select Id, Name, (Select Id, PricebookEntry.Product2.Name, Quantity, TotalPrice from OpportunityLineItems Order By PricebookEntry.Product2.Name) from Opportunity where Name like 'UoW Test Name %' order by Name];
+		// Update some records with UnitOfWork
+		{
+			UnitOfWork uow = new UnitOfWork(MY_SOBJECTS);
 
-        // Delete some records with the UnitOfWork
-        {
-            UnitOfWork uow = new UnitOfWork(MY_SOBJECTS);
-            uow.registerDeleted(new List<SObject>{opps[0].OpportunityLineItems[1].PricebookEntry.Product2}); // Delete PricebookEntry Product
-            uow.registerDeleted(new List<SObject>{opps[0].OpportunityLineItems[1].PricebookEntry}); // Delete PricebookEntry
-            uow.registerDeleted(new List<SObject>{opps[0].OpportunityLineItems[1]}); // Delete OpportunityLine Item
-            // Register the same deletions more than once.
-            // This verifies that using a Map to back the deleted records collection prevents duplicate registration.
-            uow.registerDeleted(new List<SObject>{opps[0].OpportunityLineItems[1].PricebookEntry.Product2}); // Delete PricebookEntry Product
-            uow.registerDeleted(new List<SObject>{opps[0].OpportunityLineItems[1].PricebookEntry}); // Delete PricebookEntry
-            uow.registerDeleted(new List<SObject>{opps[0].OpportunityLineItems[1]}); // Delete OpportunityLine Item
-            uow.commitWork();
-        }
-    }
+			Opportunity opp = opps[0];
+			opp.Name = opp.Name + ' Changed';
+			uow.registerDirty(new List<SObject>{opp}, oppFields);
+
+			Product2 product = new Product2();
+			product.Name = opp.Name + ' : New Product';
+			uow.registerNew(new List<SObject>{product});
+
+			PricebookEntry pbe = new PricebookEntry();
+			pbe.UnitPrice = 10;
+			pbe.IsActive = true;
+			pbe.UseStandardPrice = false;
+			pbe.Pricebook2Id = Test.getStandardPricebookId();
+			uow.registerNew(pbe, PricebookEntry.Product2Id, product);
+
+			OpportunityLineItem newOppLineItem = new OpportunityLineItem();
+			newOppLineItem.Quantity = 1;
+			newOppLineItem.TotalPrice = 10;
+			uow.registerRelationship(newOppLineItem, OpportunityLineItem.PricebookEntryId, pbe);
+			uow.registerNew(newOppLineItem, OpportunityLineItem.OpportunityId, opp);
+
+
+			OpportunityLineItem existingOppLine = opp.OpportunityLineItems[0];
+			existingOppLine.Quantity = 2;
+			existingOppLine.TotalPrice = 20;
+			uow.registerDirty(new List<SObject>{existingOppLine}, pdFields);
+			uow.commitWork();
+		}
+
+	   opps = [select Id, Name, (Select Id, PricebookEntry.Product2.Name, Quantity, TotalPrice from OpportunityLineItems Order By PricebookEntry.Product2.Name) from Opportunity where Name like 'UoW Test Name %' order by Name];
+
+		// Delete some records with the UnitOfWork
+		{
+			UnitOfWork uow = new UnitOfWork(MY_SOBJECTS);
+			uow.registerDeleted(new List<SObject>{opps[0].OpportunityLineItems[1].PricebookEntry.Product2}); // Delete PricebookEntry Product
+			uow.registerDeleted(new List<SObject>{opps[0].OpportunityLineItems[1].PricebookEntry}); // Delete PricebookEntry
+			uow.registerDeleted(new List<SObject>{opps[0].OpportunityLineItems[1]}); // Delete OpportunityLine Item
+			// Register the same deletions more than once.
+			// This verifies that using a Map to back the deleted records collection prevents duplicate registration.
+			uow.registerDeleted(new List<SObject>{opps[0].OpportunityLineItems[1].PricebookEntry.Product2}); // Delete PricebookEntry Product
+			uow.registerDeleted(new List<SObject>{opps[0].OpportunityLineItems[1].PricebookEntry}); // Delete PricebookEntry
+			uow.registerDeleted(new List<SObject>{opps[0].OpportunityLineItems[1]}); // Delete OpportunityLine Item
+			uow.commitWork();
+		}
+	}
 }

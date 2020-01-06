@@ -1265,17 +1265,17 @@ public with sharing class AMS_OSCAR_Automation {
 			String[] result = ANG_OscarProcessHelper.processRestrictFOP(oscar.id, oscar.ANG_Restrict_Credit_Card__c, oscar.ANG_Restrict_Cash__c);
 			if ('0' != result[0]) oscar.addError(result[1]);
 
-		   return '0' == result[0];
+			 return '0' == result[0];
 		}
 	}
 
 	public class AMS_OSCAR_Step39_succeeded implements IClassFactory {
 		public Boolean processWork(AMS_OSCAR_Event__c lce, AMS_OSCAR__c oscar) {
 			system.debug('Start AUTOMATION AMS_OSCAR_Step39_succeeded');
-		   String[] result = ANG_OscarProcessHelper.processRestoreFOP(oscar.id, oscar.ANG_Restore_Credit_Card__c, oscar.ANG_Restore_Cash__c);
-		   if ('0' != result[0]) oscar.addError(result[1]);
+			 String[] result = ANG_OscarProcessHelper.processRestoreFOP(oscar.id, oscar.ANG_Restore_Credit_Card__c, oscar.ANG_Restore_Cash__c);
+			 if ('0' != result[0]) oscar.addError(result[1]);
 
-		   return '0' == result[0];
+			 return '0' == result[0];
 		}
 	}
 
@@ -1489,8 +1489,8 @@ public with sharing class AMS_OSCAR_Automation {
 		}
 
 		public void execute (QueueableContext context){
-		   List<AMS_Accreditation_Contact__c> accredList = [select Id, Contact__c FROM AMS_Accreditation_Contact__c WHERE AMS_Pax_Accreditation_Form__c =: oscar.AMS_Online_Accreditation__c AND Portal_administrator__c = true LIMIT 1];
-		   Portal_Applications__c pa = [SELECT Id FROM Portal_Applications__c WHERE Name =:ANG_RHCHelper.RISK_PROFILE_AND_RHC_PORTAL_SERVICE LIMIT 1];
+			 List<AMS_Accreditation_Contact__c> accredList = [select Id, Contact__c FROM AMS_Accreditation_Contact__c WHERE AMS_Pax_Accreditation_Form__c =: oscar.AMS_Online_Accreditation__c AND Portal_administrator__c = true LIMIT 1];
+			 Portal_Applications__c pa = [SELECT Id FROM Portal_Applications__c WHERE Name =:ANG_RHCHelper.RISK_PROFILE_AND_RHC_PORTAL_SERVICE LIMIT 1];
 
 			if(!accredList.isEmpty() && accredList.get(0).Contact__c != null){
 				Portal_Application_Right__c par = new Portal_Application_Right__c (

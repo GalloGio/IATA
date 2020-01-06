@@ -100,17 +100,17 @@ public class AMS_AccountTriggerHandler {
 
 		}
 
-	   System.debug('Start CASS verification');
-	   verifyCassNumberUniqueness(accs,oldMap);
-	   System.debug('End CASS verification');
+		 System.debug('Start CASS verification');
+		 verifyCassNumberUniqueness(accs,oldMap);
+		 System.debug('End CASS verification');
 
-	   if(processMinorChangesValidationFlag){
+		 if(processMinorChangesValidationFlag){
 			handleManualMinorChanges(accs,oldMap);
-	   }else{
+		 }else{
 			System.debug('Not Handling minor changes');
-	   }
+		 }
 
-	   AMS_Utils.startIntegration(accs,oldMap);
+		 AMS_Utils.startIntegration(accs,oldMap);
 
 	}
 
