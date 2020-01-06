@@ -100,6 +100,8 @@ public with sharing class PortalDocumentsController {
             PublicDocIds_set.add(doc.ContentDocumentId);
         }
 
+        String processedSearchKey = searchKey.replaceAll(' ','%');
+
         System.debug('____ [cls PortalDocumentsController - getSearchDocuments] PublicDocIds_set - ' + PublicDocIds_set);
 
         soql = 'SELECT Id, Title, Description, Product_Category__c, FileType, OwnerId,Owner.Name, '+
@@ -107,7 +109,7 @@ public with sharing class PortalDocumentsController {
                     'ContentSize, Language__c, ContentDocumentId, Document_Category__c, Country_of_publication__c, ContentUrl, ICH_Member_Only__c'+
                 ' FROM ContentVersion';
 
-        queryConditions = ' WHERE IsLatest = true AND Title LIKE \'%'+ String.escapeSingleQuotes(searchKey) +'%\'';
+        queryConditions = ' WHERE IsLatest = true AND(Title LIKE \'%'+ String.escapeSingleQuotes(processedSearchKey) +'%\' OR Description LIKE \'%'+ String.escapeSingleQuotes(processedSearchKey) +'%\')';
 
         if(String.isNotBlank(category)) queryConditions += ' AND Document_Category__c = \''+ String.escapeSingleQuotes(category) +'\'';
         if(String.isNotBlank(prodCat)) queryConditions += ' AND Product_Category__c LIKE \'%'+ String.escapeSingleQuotes(prodCat) +'%\'';
