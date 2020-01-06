@@ -130,28 +130,34 @@
                             </div>
 
                             <!-- Contacts pick -->
-                            <div class="slds-p-around_xx-small">
-                                <div class="slds-p-horizontal_large slds-p-vertical_medium" if:true={viewContactsFilterPicklist}>
-                                    <lightning-combobox
-                                        class="cursorPointerComboBox text-xxsmall customPickList"
-                                        label={label.ISSP_Contact} value={filteringObject.casesComponent.caseContactFilter}
-                                        placeholder=" " options={contactPickOptions}
-                                        onchange={contactPickOnchangeHandler}>
-                                    </lightning-combobox>
+                            <div class="slds-p-horizontal_medium">
+                                <div class="slds-p-around_xx-small">
+                                    <div class="slds-p-horizontal_large slds-p-vertical_medium" if:true={viewContactsFilterPicklist}>
+                                        <lightning-combobox
+                                            class="cursorPointerComboBox text-xxsmall customPickList"
+                                            label={label.ISSP_Contact} value={filteringObject.casesComponent.caseContactFilter}
+                                            placeholder=" " options={contactPickOptions}
+                                            onchange={contactPickOnchangeHandler}>
+                                        </lightning-combobox>
+                                    </div>
                                 </div>
                             </div>
 
                         <!-- BUTTON -->
-                        <div class="slds-align_absolute-center slds-p-around_large slds-grid slds-wrap topLightGrayBorder" style="text-align: center;">
-                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
-                                <lightning-button variant="base" label={label.CSP_RemoveAllFilters}
-                                    onclick={resetFilters} class="slds-p-right_small blueCustomButtonLink">
-                                </lightning-button>
-                            </div>
-                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
-                                <lightning-button variant="brand" label={label.CSP_Apply}
-                                    onclick={applyFilters} class="slds-m-right_medium containedButton fullWidth">
-                                </lightning-button>
+                        <div class="slds-p-horizontal_medium">
+                            <div class="slds-p-around_xx-small">
+                                <div class="slds-p-around_large slds-grid slds-wrap topLightGrayBorder text-center">
+                                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-text-align_center">
+                                        <lightning-button variant="base" label={label.CSP_RemoveAllFilters}
+                                            onclick={resetFilters} class="baseButton newLinkButton buttonMinHeightMedium text-xsmall">
+                                        </lightning-button>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                        <lightning-button variant="brand" label={label.CSP_Apply}
+                                            onclick={applyFilters} class="baseButton newContainedButton buttonMinHeightMedium text-xsmall fullWidth">
+                                        </lightning-button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
