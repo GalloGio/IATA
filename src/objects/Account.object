@@ -7020,6 +7020,11 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Travel Agent</controllingFieldValue>
+                <controllingFieldValue>Cargo Agent</controllingFieldValue>
+                <valueName>Handling Agent</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Travel Agent</controllingFieldValue>
                 <valueName>IATA Passenger Sales Agent</valueName>
             </valueSettings>
             <valueSettings>
@@ -7141,10 +7146,6 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
             <valueSettings>
                 <controllingFieldValue>Cargo Agent</controllingFieldValue>
                 <valueName>Courier</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>Cargo Agent</controllingFieldValue>
-                <valueName>Handling Agent</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Cargo Agent</controllingFieldValue>
