@@ -27,6 +27,7 @@
         <value xsi:type="xsd:string">Internal Case 
 Voicemail 
 Phone 
+IATA Internal User
 Chat</value>
     </values>
     <values>

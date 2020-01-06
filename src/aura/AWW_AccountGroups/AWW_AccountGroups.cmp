@@ -1,0 +1,99 @@
+<aura:component controller="AWW_AccountGroupsCtrl">
+    <aura:attribute name="accountId" type="Id"/>
+    <aura:attribute name="gridColumns" type="List"/>
+    <aura:attribute name="gridData" type="List"/>
+    <aura:attribute name="originalData" type="List"/>
+    <aura:attribute name="gridExpandedRows" type="Object"/>
+    <aura:attribute name="originalExpRows" type="Object"/>
+    <aura:attribute name="hasRepresentatives" type="Boolean"/>
+    <aura:attribute name="countries" type="List" default="[{Id: '', Name: 'All'}]"/>
+    <aura:attribute name="selectedCountry" type="String" default="All"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+
+    <div class="slds-p-around_medium">
+        <div class="slds-box slds-p-around_none slds-theme_shade">
+            <lightning:card class="bckColor" title="Groups" iconName="standard:groups">
+                <aura:set attribute="actions">
+                    <div class="slds-grid slds-gutters slds-grid_vertical-align-end">
+                        <div class="slds-col">
+                            <lightning:select variant="label-inline" name="country" label="Country" value="{!v.selectedCountry}" onchange="{!c.filterByCountry}">
+                                <aura:iteration items="{!v.countries}" var="country">
+                                    <option value="{!country.Id}">{!country.Name}</option>
+                                </aura:iteration>
+                            </lightning:select>
+                        </div>
+                        <div class="slds-col">
+                            <lightning:button variant="Neutral" label="Print" title="Print" onclick="{!c.print}"/>
+                        </div>
+                        <div class="slds-col">
+                            <lightning:button variant="Neutral" label="Export Details" title="Export Details" onclick="{!c.openReport}"/>
+                        </div>
+                    </div>
+                </aura:set>
+                <div class="slds-p-around_none slds-m-around_medium">
+                    <table class="slds-table slds-table_bordered slds-table_cell-buffer slds-table_fixed-layout slds-no-row-hover slds-border_left slds-border_right">
+                        <thead>
+                            <tr>
+                                <aura:iteration items="{!v.gridColumns}" var="item">
+                                    <th class="{!item.cssClass}">
+                                        <lightning:formattedText class="slds-text-title_caps slds-text-title--caps" value="{!item.label}"/>
+                                    </th>
+                                </aura:iteration> 
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <aura:iteration items="{!v.gridData}" var="topGroup">
+                                <tr id="{!topGroup.rowId}" class="underGroup">
+                                    <td colspan="8">
+                                        <div style="display: flex">
+                                            <div id="{!topGroup.rowId_expand}" onclick="{!c.expandRow}">
+                                                <lightning:icon class="slds-p-right_x-small expandRows" iconName="utility:chevronright" size="xx-small"/>
+                                            </div>
+                                            <div id="{!topGroup.rowId_collapse}" class="slds-hide" onclick="{!c.collapseRow}">
+                                                <lightning:icon class="slds-p-right_x-small expandRows" iconName="utility:chevrondown" size="xx-small"/>
+                                            </div>                                            
+                                            <lightning:formattedText value="{!topGroup.groupName}"/>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <aura:iteration items="{!topGroup.childrens}" var="localGroup">
+                                    
+                                    <aura:iteration items="{!localGroup.childrens}" var="member">
+                                        <tr id="{!localGroup.rowId +'-'+ member.rowId}" class="slds-hide">
+                                            <td >
+                                                <div style="display: flex; white-space: normal;">
+                                                    <lightning:formattedUrl label="{!localGroup.groupName}" value="{!localGroup.groupLink}" target="_blank"/>
+                                                </div>
+                                            </td>
+                                            <td ><lightning:formattedText value="{!localGroup.ownerName}"/></td>
+                                            <td ><c:AMP_LongText text="{!localGroup.mission}"/></td>
+                                            <td ><lightning:formattedText value="{!member.role}"/></td>
+                                            <td ><lightning:formattedText value="{!member.salutation}"/></td>
+                                            <td ><lightning:formattedText value="{!member.firstName}"/></td>
+                                            <td ><lightning:formattedText value="{!member.lastName}"/></td>
+                                            <td >
+                                                <lightning:formattedText value="{!member.title}"/>
+                                                <aura:if isTrue="{!member.isRepresentative}">
+                                                    <lightning:icon class="slds-m-left_xx-small" size="x-small" iconName="utility:info" alternativeText="info" />
+                                                </aura:if>
+                                            </td>
+                                        </tr>
+                                    </aura:iteration>
+                                </aura:iteration>
+                            </aura:iteration>
+                        </tbody>
+                    </table>
+                    <aura:if isTrue="{!v.hasRepresentatives}">
+                        <div class="slds-grid slds-m-top_xx-small slds-wrap slds-grid_align-start">
+                            <div class="slds-col" style="display: flex">
+                                <lightning:icon size="x-small" iconName="utility:info" alternativeText="info"/>     
+                                <div class="slds-m-left_xx-small">This participant represents the account on that specific group.</div>                           
+                            </div>
+                        </div>                        
+                    </aura:if>                    
+                </div>
+            </lightning:card>
+        </div>
+    </div>
+</aura:component>
