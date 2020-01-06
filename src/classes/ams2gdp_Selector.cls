@@ -86,7 +86,7 @@ public class ams2gdp_Selector
 	{
 		List<String> result = new List<String>();
 		for(AMS_Agency_Affiliation__c item:[SELECT Id FROM AMS_Agency_Affiliation__c WHERE Account__c IN:accountIds])
-		    result.add(item.Id);
+			result.add(item.Id);
 
 		return result;
 	}
@@ -95,7 +95,7 @@ public class ams2gdp_Selector
 	{
 		List<String> result = new List<String>();
 		for(AMS_Account_Role__c item:[SELECT Id FROM AMS_Account_Role__c WHERE Account__c IN:accountIds])
-		    result.add(item.Id);
+			result.add(item.Id);
 
 
 		return result;

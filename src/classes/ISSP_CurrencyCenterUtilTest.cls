@@ -1,76 +1,76 @@
 @isTest
 private class ISSP_CurrencyCenterUtilTest {
 
-    private static void init(){
+	private static void init(){
 
-    }
-    
-    @isTest static void testCheckIfUserHasAccessToServiceWithoutUser() {
-        PageReference result = ISSP_CurrencyCenterUtil.checkIfUserHasAccessToService();
-        System.assertNotEquals(new PageReference('/ISSP_Homepage'),result);
-    }
-    
-    @isTest static void testStampVisitDateTimeWithoutUser() {
-        ISSP_CurrencyCenterUtil.stampVisitDateTime(8);
-    }
+	}
 
-    @isTest static void testMethodsWithUsers() {
-        Test.startTest();
+	@isTest static void testCheckIfUserHasAccessToServiceWithoutUser() {
+		PageReference result = ISSP_CurrencyCenterUtil.checkIfUserHasAccessToService();
+		System.assertNotEquals(new PageReference('/ISSP_Homepage'),result);
+	}
 
-        Id conRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
-        Id accRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
+	@isTest static void testStampVisitDateTimeWithoutUser() {
+		ISSP_CurrencyCenterUtil.stampVisitDateTime(8);
+	}
 
-        Set<String> customerUserTypes = new Set<String> {'CSPLiteUser','PowerPartner','PowerCustomerSuccess','CustomerSuccess'};
-        Account acc = new Account (
-        RecordTypeId = accRtId,
-        Name = 'testAcc'
-        );  
-        insert acc;
+	@isTest static void testMethodsWithUsers() {
+		Test.startTest();
 
-        Contact con = new Contact (
-        AccountId = acc.id,
-        RecordTypeId = conRtId, 
-        LastName = 'portalUser',
-        FirstName = 'Name',
-        User_Portal_Status__c = 'Approved User'
-        );
-        insert con;
+		Id conRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
+		Id accRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
 
-        Profile p = [select Id,name from Profile where UserType in :customerUserTypes limit 1];
-         
-        User newUser = new User(
-        profileId = p.id,
-        username = 'someuser@iata.org',
-        email = 'someuser@iata.org',
-        emailencodingkey = 'UTF-8',
-        localesidkey = 'en_US',
-        languagelocalekey = 'en_US',
-        timezonesidkey = 'America/Los_Angeles',
-        alias='nuser',
-        lastname='lastname',
-        contactId = con.id
-        );
-        insert newUser;
+		Set<String> customerUserTypes = new Set<String> {'CSPLiteUser','PowerPartner','PowerCustomerSuccess','CustomerSuccess'};
+		Account acc = new Account (
+		RecordTypeId = accRtId,
+		Name = 'testAcc'
+		);
+		insert acc;
 
-        Portal_Applications__c app = new Portal_Applications__c(Application_URL__c='/ISSP_CurrencyCenterHome');
-        insert app;
+		Contact con = new Contact (
+		AccountId = acc.id,
+		RecordTypeId = conRtId,
+		LastName = 'portalUser',
+		FirstName = 'Name',
+		User_Portal_Status__c = 'Approved User'
+		);
+		insert con;
 
-        Portal_Application_Right__c par = 
-            new Portal_Application_Right__c(Contact__c=newUser.ContactId,Right__c = 'Access Granted',Portal_Application__c=app.Id);
-        insert par;
+		Profile p = [select Id,name from Profile where UserType in :customerUserTypes limit 1];
 
-        System.runAs(newUser){
-            ISSP_CurrencyCenterUtil.stampVisitDateTime(8);
-            ISSP_CurrencyCenterUtil.checkIfUserHasAccessToService();
-            ISSP_CurrencyCenterUtil.getPreviousVisitDateTime();
-        }
+		User newUser = new User(
+		profileId = p.id,
+		username = 'someuser@iata.org',
+		email = 'someuser@iata.org',
+		emailencodingkey = 'UTF-8',
+		localesidkey = 'en_US',
+		languagelocalekey = 'en_US',
+		timezonesidkey = 'America/Los_Angeles',
+		alias='nuser',
+		lastname='lastname',
+		contactId = con.id
+		);
+		insert newUser;
 
-        Test.stopTest();
-        
-    }
+		Portal_Applications__c app = new Portal_Applications__c(Application_URL__c='/ISSP_CurrencyCenterHome');
+		insert app;
 
-    @isTest static void testGetPreviousVisitDateTime() {
-        ISSP_CurrencyCenterUtil.getPreviousVisitDateTime();
-    }
-    
+		Portal_Application_Right__c par =
+			new Portal_Application_Right__c(Contact__c=newUser.ContactId,Right__c = 'Access Granted',Portal_Application__c=app.Id);
+		insert par;
+
+		System.runAs(newUser){
+			ISSP_CurrencyCenterUtil.stampVisitDateTime(8);
+			ISSP_CurrencyCenterUtil.checkIfUserHasAccessToService();
+			ISSP_CurrencyCenterUtil.getPreviousVisitDateTime();
+		}
+
+		Test.stopTest();
+
+	}
+
+	@isTest static void testGetPreviousVisitDateTime() {
+		ISSP_CurrencyCenterUtil.getPreviousVisitDateTime();
+	}
+
 }

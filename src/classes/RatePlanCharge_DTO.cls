@@ -1,4 +1,4 @@
-public with sharing class RatePlanCharge_DTO 
+public with sharing class RatePlanCharge_DTO
 {
 	/*public String 	id;
 	public String 	name;
@@ -17,8 +17,8 @@ public with sharing class RatePlanCharge_DTO
 	/*public Decimal maxQty;*/
 	/*public String recurringPeriod;*/ // Annual | Month | Quarter | Semi-Annual
 	/*public Decimal prepaymentPeriods;*/
-	/*public String revRecCode;*/ 
-	/*public String taxCode;*/ 
+	/*public String revRecCode;*/
+	/*public String taxCode;*/
 	/*public String accountingCode; */
 	/*public String priceTable; */
 	/*public Decimal discountApplyType;*/
@@ -54,20 +54,20 @@ public with sharing class RatePlanCharge_DTO
 		//priceTable =  zRatePlanCharge.zqu__PriceTable__c;
 		//recurringPeriod =  zRatePlanCharge.zqu__RecurringPeriod__c;
 		//revRecCode =  zRatePlanCharge.zqu__RevRecCode__c;
-		//taxCode =  zRatePlanCharge.zqu__TaxCode__c;		
+		//taxCode =  zRatePlanCharge.zqu__TaxCode__c;
 		//uptoHowManyPeriods =  zRatePlanCharge.zqu__Upto_How_Many_Periods__c;
 	}
 */
 	/*public static List<RatePlanCharge_DTO> format(List<zqu__ProductRatePlanCharge__c> lst)
 	{
-		List<RatePlanCharge_DTO> ret = new List<RatePlanCharge_DTO>(); 
-		
+		List<RatePlanCharge_DTO> ret = new List<RatePlanCharge_DTO>();
+
 		if(lst != null && !lst.isEmpty())
 		{
 			for(zqu__ProductRatePlanCharge__c c : lst)
 				ret.add(new RatePlanCharge_DTO(c));
 		}
-			
+
 		return ret;
 	}*/
 }

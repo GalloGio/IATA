@@ -2,13 +2,13 @@
 private class Location_Svc_Test {
 
 	/****************************************************************************************************
-	    Created by Thai 2016-12-16
-	        Build test data
+			Created by Thai 2016-12-16
+					Build test data
 	****************************************************************************************************/
 	@testSetup static void setup()
 	{
 		TestDataGenerator.generateApexSetting();
-		
+
 		List<IATA_ISO_Country__c> lstCountryState = TestDataGenerator.generateISOCountryState();
 		IATA_ISO_Country__c countryCanada;
 		IATA_ISO_State__c stateOntario, stateQuebec;
@@ -23,30 +23,30 @@ private class Location_Svc_Test {
 						stateQuebec = state;
 				break;
 			}
-		
+
 		Account accountHQ1 = new Account(Name = 'Test HQ 1', Sector__c = 'Test', Category__c = 'Test', VAT_Number__c = '123'
-		                               , BillingStreet ='Billing Street 1', BillingCity= 'Billing City 1', BillingPostalCode ='H0H0H0'
-		                               , IATA_ISO_Country__c = countryCanada.Id , IATA_ISO_Billing_State__c = stateQuebec.Id
-		                               , IATA_ISO_Shipping_Country__c = countryCanada.Id);
+																	 , BillingStreet ='Billing Street 1', BillingCity= 'Billing City 1', BillingPostalCode ='H0H0H0'
+																	 , IATA_ISO_Country__c = countryCanada.Id , IATA_ISO_Billing_State__c = stateQuebec.Id
+																	 , IATA_ISO_Shipping_Country__c = countryCanada.Id);
 		Account accountHQ2 = new Account(Name = 'Test HQ 2', Sector__c = 'Test', Category__c = 'Test', VAT_Number__c = '123'
-		                               , BillingStreet ='Billing Street 1', BillingCity= 'Billing City 1', BillingPostalCode ='H0H0H0'
-		                               , IATA_ISO_Country__c = countryCanada.Id , IATA_ISO_Billing_State__c = stateQuebec.Id
-		                               , ShippingStreet ='Shipping Street 1', ShippingCity = 'Shipping City 1', ShippingPostalCode ='H0H0H0'
-		                               , IATA_ISO_Shipping_State__c = stateQuebec.Id, IATA_ISO_Shipping_Country__c = countryCanada.Id);
+																	 , BillingStreet ='Billing Street 1', BillingCity= 'Billing City 1', BillingPostalCode ='H0H0H0'
+																	 , IATA_ISO_Country__c = countryCanada.Id , IATA_ISO_Billing_State__c = stateQuebec.Id
+																	 , ShippingStreet ='Shipping Street 1', ShippingCity = 'Shipping City 1', ShippingPostalCode ='H0H0H0'
+																	 , IATA_ISO_Shipping_State__c = stateQuebec.Id, IATA_ISO_Shipping_Country__c = countryCanada.Id);
 		Account accountHQ3 = new Account(Name = 'Test HQ 3', Sector__c = 'Test', Category__c = 'Test', VAT_Number__c = '123'
-		                               , BillingStreet ='Billing Street 3', BillingCity= 'Billing City 3', BillingPostalCode ='H0H0H0'
-		                               , IATA_ISO_Country__c = countryCanada.Id , IATA_ISO_Billing_State__c = stateQuebec.Id);
+																	 , BillingStreet ='Billing Street 3', BillingCity= 'Billing City 3', BillingPostalCode ='H0H0H0'
+																	 , IATA_ISO_Country__c = countryCanada.Id , IATA_ISO_Billing_State__c = stateQuebec.Id);
 		Account accountHQ4 = new Account(Name = 'Test HQ 4', Sector__c = 'Test', Category__c = 'Test', VAT_Number__c = '123'
-		                               , BillingStreet ='Billing Street 3', BillingCity= 'Billing City 3', BillingPostalCode ='H0H0H0'
-		                               , IATA_ISO_Country__c = countryCanada.Id , IATA_ISO_Billing_State__c = stateQuebec.Id);
+																	 , BillingStreet ='Billing Street 3', BillingCity= 'Billing City 3', BillingPostalCode ='H0H0H0'
+																	 , IATA_ISO_Country__c = countryCanada.Id , IATA_ISO_Billing_State__c = stateQuebec.Id);
 		insert new List<Account>{accountHQ1, accountHQ2, accountHQ3, accountHQ4};
 		Account accountBranch1 = new Account(Name = 'Test Branch 1', Sector__c = 'Test', Category__c = 'Test', VAT_Number__c = '123', ParentId = accountHQ1.Id
-		                                   , BillingStreet ='Billing Street 2', BillingCity= 'Billing City 2', BillingPostalCode ='H0H0H0'
-		                                   , IATA_ISO_Country__c = countryCanada.Id , IATA_ISO_Billing_State__c = stateOntario.Id
-		                                   , ShippingStreet ='Shipping Street 2', ShippingCity = 'Shipping City 2', ShippingPostalCode ='H0H0H0'
-		                                   , IATA_ISO_Shipping_State__c = stateOntario.Id, IATA_ISO_Shipping_Country__c = countryCanada.Id);
+																			 , BillingStreet ='Billing Street 2', BillingCity= 'Billing City 2', BillingPostalCode ='H0H0H0'
+																			 , IATA_ISO_Country__c = countryCanada.Id , IATA_ISO_Billing_State__c = stateOntario.Id
+																			 , ShippingStreet ='Shipping Street 2', ShippingCity = 'Shipping City 2', ShippingPostalCode ='H0H0H0'
+																			 , IATA_ISO_Shipping_State__c = stateOntario.Id, IATA_ISO_Shipping_Country__c = countryCanada.Id);
 		insert accountBranch1;
-	
+
 		List<Contact> lstContact = new List<Contact>();
 		lstContact.add(new Contact(AccountId = accountHQ1.Id, FirstName = '1-FirstName', LastName = 'LastName', Email = 'test1@test.com', phone='111-111-1111'));
 		lstContact.add(new Contact(AccountId = accountHQ2.Id, FirstName = '1-FirstName', LastName = 'LastName', Email = 'test3@test.com', phone='333-333-3333'));
@@ -68,8 +68,8 @@ private class Location_Svc_Test {
 
 
 	/****************************************************************************************************
-	    Created by Thai 2016-12-16
-	        Return a map of accounts by name
+			Created by Thai 2016-12-16
+					Return a map of accounts by name
 	****************************************************************************************************/
 	static Map<String, Account> getAccount()
 	{
@@ -81,8 +81,8 @@ private class Location_Svc_Test {
 
 
 	/****************************************************************************************************
-	    Created by Thai 2016-12-16
-	        Return list of addresses in system
+			Created by Thai 2016-12-16
+					Return list of addresses in system
 	****************************************************************************************************/
 	static List<IECAddress__c> getAddress()
 	{
@@ -91,8 +91,8 @@ private class Location_Svc_Test {
 
 
 	/****************************************************************************************************
-	    Created by Thai 2016-12-16
-	        Cover method setLocationAccountId
+			Created by Thai 2016-12-16
+					Cover method setLocationAccountId
 	****************************************************************************************************/
 	static testMethod void test_setLocationAccountId()
 	{
@@ -129,8 +129,8 @@ private class Location_Svc_Test {
 
 
 	/****************************************************************************************************
-	    Created by Thai 2016-12-16
-	        Cover method SendLocationToSAP
+			Created by Thai 2016-12-16
+					Cover method SendLocationToSAP
 	****************************************************************************************************/
 	static testMethod void test_SendLocationToSAP()
 	{
@@ -149,8 +149,8 @@ private class Location_Svc_Test {
 
 
 	/****************************************************************************************************
-	    Created by Thai 2016-12-16
-	        Cover method locationToCreate
+			Created by Thai 2016-12-16
+					Cover method locationToCreate
 	****************************************************************************************************/
 	static testMethod void test_locationToCreate()
 	{
@@ -169,8 +169,8 @@ private class Location_Svc_Test {
 
 
 	/****************************************************************************************************
-	    Created by Thai 2016-12-16
-	        Cover method syncLocationsWithZuora
+			Created by Thai 2016-12-16
+					Cover method syncLocationsWithZuora
 	****************************************************************************************************/
 	static testMethod void test_syncLocationsWithZuora()
 	{
@@ -188,8 +188,8 @@ private class Location_Svc_Test {
 
 
 	/****************************************************************************************************
-	    Created by Thai 2016-12-16
-	        Cover method syncLocationsUpdateWithExternalSystems and syncLocationsUpdateWithNewOrders
+			Created by Thai 2016-12-16
+					Cover method syncLocationsUpdateWithExternalSystems and syncLocationsUpdateWithNewOrders
 	****************************************************************************************************/
 	static testMethod void test_syncLocationsUpdateWithExternalSyst()
 	{
@@ -205,14 +205,14 @@ private class Location_Svc_Test {
 		lstLocation.add(lstLocation[0].clone(true, true));
 		lstLocation[0].Address__c = lstAddress[1].Id;
 		Location_Svc.syncLocationsUpdateWithExternalSystems(lstLocation, new Map<Id, Location__c>{lstLocation[0].Id => lstLocation[1]});
-		
+
 		Location_Svc.syncLocationsUpdateWithNewOrders(new Map<Id, Location__c>{lstLocation[0].Id => lstLocation[0]}, new Map<Id, Location__c>{lstLocation[0].Id => lstLocation[0]});
 	} //*** end of "test_syncLocationsUpdateWithExternalSyst"
 
 
 	/****************************************************************************************************
-	    Created by Thai 2016-12-16
-	        Cover method IsLocationValid
+			Created by Thai 2016-12-16
+					Cover method IsLocationValid
 	****************************************************************************************************/
 	static testMethod void test_IsLocationValid()
 	{
@@ -240,8 +240,8 @@ private class Location_Svc_Test {
 
 
 	/****************************************************************************************************
-	    Created by Thai 2016-12-16
-	        Cover method forbidSAPLocationDeletion
+			Created by Thai 2016-12-16
+					Cover method forbidSAPLocationDeletion
 	****************************************************************************************************/
 	static testMethod void test_forbidSAPLocationDeletion()
 	{
@@ -255,13 +255,13 @@ private class Location_Svc_Test {
 		lstLocation.add(new Location__c(Active__c = true, SAP_Id__c = 'test', Type__c = 'Bill To', Address__c = lstAddress[0].Id, Account__c = accountHQ1.Id, Contact__c = lstContact[0].Id, Email__c = lstContact[0].Email, Phone__c = lstContact[0].Phone));
 		insert lstLocation;
 		Location_Svc.forbidSAPLocationDeletion(lstLocation);
-		
+
 	} //*** end of "test_forbidSAPLocationDeletion"
 
 
 	/****************************************************************************************************
-	    Created by Thai 2016-12-16
-	        Cover method validateOneActiveBillTo
+			Created by Thai 2016-12-16
+					Cover method validateOneActiveBillTo
 	****************************************************************************************************/
 	static testMethod void test_validateOneActiveBillTo()
 	{
@@ -280,8 +280,8 @@ private class Location_Svc_Test {
 
 
 	/****************************************************************************************************
-	    Created by Thai 2016-12-16
-	        Cover method createLocation
+			Created by Thai 2016-12-16
+					Cover method createLocation
 	****************************************************************************************************/
 	static testMethod void test_createLocation()
 	{
@@ -296,8 +296,8 @@ private class Location_Svc_Test {
 
 
 	/****************************************************************************************************
-	    Created by Thai 2016-12-16
-	        Cover method initializeDefaultLocations that indirectly covers method formatAddressToQuery
+			Created by Thai 2016-12-16
+					Cover method initializeDefaultLocations that indirectly covers method formatAddressToQuery
 	****************************************************************************************************/
 	static testMethod void test_initializeDefaultLocations()
 	{
@@ -307,7 +307,7 @@ private class Location_Svc_Test {
 		List<Contact> lstContact;
 		List<SObject> lstSObject = new List<SObject>();
 		List<String> lstResult;
-		
+
 		//*** cover scenarios where some partner already exists
 		selectAccount = mapAccountName_Account.get('Test HQ 3');
 		lstContact = selectAccount.Contacts;
@@ -341,10 +341,10 @@ private class Location_Svc_Test {
 			for (Location__c l : [select Id, Account_Name__c, Contact_First_Name__c, Type__c, SAP_Id__c from Location__c])
 				data += '\n' + l.Account_Name__c + '--' + l.Contact_First_Name__c + '--' + l.Type__c + '--' + l.SAP_Id__c;
 			system.assert(12 == [select count()
-			                     from Location__c
-			                     where (Account__c != null and Type__c = 'Sold To' and SAP_Id__c = 'Sold1')
-			                        or (Account__c != null and Type__c = 'Bill To' and SAP_Id__c = 'Bill1' and Contact__c != null)
-			                        or (Account__c != null and Type__c = 'Ship To' and SAP_Id__c = 'Ship1' and Contact__c != null)], 'Wrong count' + data);
+													 from Location__c
+													 where (Account__c != null and Type__c = 'Sold To' and SAP_Id__c = 'Sold1')
+															or (Account__c != null and Type__c = 'Bill To' and SAP_Id__c = 'Bill1' and Contact__c != null)
+															or (Account__c != null and Type__c = 'Ship To' and SAP_Id__c = 'Ship1' and Contact__c != null)], 'Wrong count' + data);
 
 			//*** cover no treatment needed because had all partners
 			lstResult = Location_Svc.initializeDefaultLocations(new List<Id>{lstContactId[0]});
@@ -367,8 +367,8 @@ private class Location_Svc_Test {
 
 
 	/****************************************************************************************************
-	    Created by Thai 2017-01-27
-	        Cover methods in class "Location_Sel"
+			Created by Thai 2017-01-27
+					Cover methods in class "Location_Sel"
 	****************************************************************************************************/
 	static testMethod void test_Location_Sel()
 	{

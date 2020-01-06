@@ -1073,6 +1073,10 @@
         <name>ANG_ISSP_IEP_AuthorisedSignatory_auth_msg_Administrator</name>
     </customLabels>
     <customLabels>
+        <label><!-- ANG_ISSP_IEP_Indonesia_msg --></label>
+        <name>ANG_ISSP_IEP_Indonesia_msg</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ModelBanking India --></label>
         <name>ANG_ISSP_IEP_ModelBanking_India_msg</name>
     </customLabels>
@@ -3149,7 +3153,7 @@
         <name>CSP_Reset_Password_Success_Msg_2</name>
     </customLabels>
     <customLabels>
-        <label>L&apos;IP de votre ordinateur a été identifié comme provenant de l&apos;un des pays listés comme étant sous embargo par les autorités américaines.&lt;br/&gt; La plateforme prenant en charge notre portail client est conforme à la réglementation américaine. Par conséquent, nous ne sommes actuellement pas en mesure de fournir un accès au portail client à partir de votre adresse IP actuelle.&lt;br/&gt; &lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Cliquez ici&lt;/a&gt; pour nous contacter.</label>
+        <label>L&apos;IP de votre ordinateur a été identifié comme provenant de l&apos;un des pays listés comme étant sous embargo par les autorités américaines.&lt;br/&gt; La plateforme prenant en charge notre portail client est conforme à la réglementation américaine. Par conséquent, nous ne sommes actuellement pas en mesure de fournir un accès au portail client à partir de votre adresse IP actuelle.&lt;br/&gt; &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Cliquez ici&lt;/a&gt; pour nous contacter.</label>
         <name>CSP_Restricted_Login_Message</name>
     </customLabels>
     <customLabels>
@@ -14315,7 +14319,10 @@ Veuillez également noter que les informations visibles sur ICE sont mises à di
         <name>ISSP_CNS_quote2</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_CalendarDisclaimer --></label>
+        <label>&quot;Remarque : le calendrier de ce marché contient des dates spécifiques locales qui ne sont pas reflétées dans cette application.
+
+
+Assurez-vous de télécharger la version pdf complète du calendrier de votre marché en cliquant sur l&apos;onglet assistance, puis en sélectionnant les calendriers sous les documents à droite de la page.&quot;</label>
         <name>ISSP_CalendarDisclaimer</name>
     </customLabels>
     <customLabels>
@@ -18016,7 +18023,7 @@ Si vous souhaitez réinitialiser votre mot de passe, retournez à l&apos;écran 
         <name>ISSP_Salutation</name>
     </customLabels>
     <customLabels>
-        <label>Votre adresse IP a été identifiée comme provenant de l&apos;un des pays énumérés sous embargo par les autorités américaines.&lt;br/&gt;La plate-forme soutenant notre Portail Clientèle se conforme à cette réglementation américaine et donc, nous sommes actuellement dans l&apos;impossibilité de fournir un accès au portail client de votre adresse IP actuelle.&lt;br/&gt;Cliquez&lt;a href=&quot;http://www.iata.org/about/Pages/offices.aspx&quot; &gt;Ici&lt;/a&gt;afin de contacter votre bureau regional IATA</label>
+        <label>Votre adresse IP a été identifiée comme provenant de l&apos;un des pays énumérés sous embargo par les autorités américaines.&lt;br/&gt;La plate-forme soutenant notre Portail Clientèle se conforme à cette réglementation américaine et donc, nous sommes actuellement dans l&apos;impossibilité de fournir un accès au portail client de votre adresse IP actuelle.&lt;br/&gt;Cliquez&lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quot; &gt;Ici&lt;/a&gt;afin de contacter votre bureau regional IATA</label>
         <name>ISSP_Sanctions_Message</name>
     </customLabels>
     <customLabels>

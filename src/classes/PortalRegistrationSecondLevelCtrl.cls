@@ -131,7 +131,7 @@ public without sharing class PortalRegistrationSecondLevelCtrl {
 		String errorMessage = '';
 
 		List<GCS_Customer_Type_For_Registration__mdt> customerTypeList = [Select Send_Email_Notification__c from GCS_Customer_Type_For_Registration__mdt
-																		   where Type__c =: 'Category' and Created_Account_Sector__c =: contact.account.sector__c
+																			 where Type__c =: 'Category' and Created_Account_Sector__c =: contact.account.sector__c
 																			 and Created_Account_Category__c =: contact.account.category__c and Send_Email_Notification__c =: true];
 		if(!customerTypeList.isEmpty()) {
 			try {

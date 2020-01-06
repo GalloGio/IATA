@@ -3,7 +3,7 @@ public class ANG_MulticountryOscarCreatorBatch_Test
 {
 
 	@testSetup static void setup(){
-		
+
 		list<Amazon_Cred__c> listAmazonCred =  new list<Amazon_Cred__c>{
 			new Amazon_Cred__c(
 				name = 'GenericAttach',
@@ -17,7 +17,7 @@ public class ANG_MulticountryOscarCreatorBatch_Test
 			)
 		};
 		insert listAmazonCred;
-	
+
 		list<AWSKey__c> AWS_KEYs = new list<AWSKey__c>{
 			new AWSKey__c(
 				name = 'GenericAttach-dev' ,

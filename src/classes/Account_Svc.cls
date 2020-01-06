@@ -1,5 +1,5 @@
 public with sharing class Account_Svc {
-	
+
 	/**
 	 * Function will sync any new updates on Account object to SAP
 	 *
@@ -12,45 +12,45 @@ public with sharing class Account_Svc {
 		String sAccRecTypeToSAP = Utility.getTextSetting('Account Record Type IDs to sync to SAP');
 		Set<Id> setAccRecTypeToSAP = new Set<Id>((List<Id>) sAccRecTypeToSAP.split(','));
 		*/
-		
+
 		// Retrieve list of fields that are allowed to be synced to SAP
 		List<String> lstAccFieldsToSAP = Utility.getSeqTextSetting('Account fields to sync to SAP', ',').split(',');
-		
+
 		Set<Id> setAccIdsToSync = new Set<Id>();
 
 		//Select only accounts that respond to certain criteria
 		list<Account> accsToPass = new list<Account>();
 
 		// Check that specific list of fields are modified to sync to SAP
-	    if (!lstAccFieldsToSAP.isEmpty()){
+		if (!lstAccFieldsToSAP.isEmpty()){
 
 			for (Account runAccs : lstAccount){
 				if(runAccs.ACLI_SAP_Id__c == null && runAccs.ACLI_Status__c != 'Active company') {
 
 					for(String field : lstAccFieldsToSAP){
 
-	                    if(!String.isBlank(field) && runAccs.get(field) != mapOldAccount.get(runAccs.Id).get(field)){
-				    		setAccIdsToSync.add(runAccs.Id);
-				    		break;
-	                    }
-	                }
-	    		}
-	    	}
-	    }
+						if(!String.isBlank(field) && runAccs.get(field) != mapOldAccount.get(runAccs.Id).get(field)){
+							setAccIdsToSync.add(runAccs.Id);
+							break;
+						}
+					}
+				}
+			}
+		}
 
-	    if(setAccIdsToSync.isEmpty())
+		if(setAccIdsToSync.isEmpty())
    			return; // nothing to do here .
-	    
-	    // The map of Location that will be synced with SAP
-	    Map<Id, Location__c> mapLocation = new Map<Id, Location__c>(
-	    	[SELECT Id
-	    	FROM Location__c
-	    	WHERE Account__c IN :setAccIdsToSync
-	    		AND Type__c = 'Sold To'
-	    		AND Active__c = true]);
-	    
-	    // Make the SAP call to update the account/contact
-	    if (!mapLocation.isEmpty())	    	    	
-	    	IECAddress_Svc.syncCustomerMasterWithSAP(mapLocation.keySet());
-    }
+
+		// The map of Location that will be synced with SAP
+		Map<Id, Location__c> mapLocation = new Map<Id, Location__c>(
+			[SELECT Id
+			FROM Location__c
+			WHERE Account__c IN :setAccIdsToSync
+				AND Type__c = 'Sold To'
+				AND Active__c = true]);
+
+		// Make the SAP call to update the account/contact
+		if (!mapLocation.isEmpty())
+			IECAddress_Svc.syncCustomerMasterWithSAP(mapLocation.keySet());
+	}
 }
