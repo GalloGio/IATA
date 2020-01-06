@@ -206,15 +206,15 @@ public  class vfIEC_CACWMonthlyConsumption {
 		List<CAC_Subscription_Detail__c> caclist = new List<CAC_Subscription_Detail__c>();
 
 		caclist=[SELECT id
-					  ,Service_Specification__c
-				   FROM CAC_Subscription_Detail__c
-				   WHERE Subscription__c = :s.Id
-				   Limit 1000];
+						,Service_Specification__c
+					 FROM CAC_Subscription_Detail__c
+					 WHERE Subscription__c = :s.Id
+					 Limit 1000];
 
 		Set<id> aset = new Set<Id>();
 		for(CAC_Subscription_Detail__c c:caclist)
 		{
-		  aset.add(c.Service_Specification__c);
+			aset.add(c.Service_Specification__c);
 		}
 		List<Attachment> attachment = new List<Attachment>();
 		attachment = [Select id
@@ -222,9 +222,9 @@ public  class vfIEC_CACWMonthlyConsumption {
 						,Body
 						From Attachment
 						Where ParentId=:aset
-					  Limit 1000];
+						Limit 1000];
 		return attachment;
-	  }
+		}
 		private set;
 
 	}
@@ -323,13 +323,13 @@ public  class vfIEC_CACWMonthlyConsumption {
 
 		public UsageAggregateResult(integer vyear, integer vmonth, integer vday, decimal vcounter ,decimal vmaxusage , Id vSubscriptionId,  Id vSubscriptionDetailId)
 		{
-		  cntTotal=vcounter;
-		  year=vyear;
-		  month=vmonth;
-		  day=vday;
-		  Subscription=vSubscriptionid;
-		  SubscriptionDetail=vSubscriptionDetailId;
-		  maxusage=vmaxusage;
+			cntTotal=vcounter;
+			year=vyear;
+			month=vmonth;
+			day=vday;
+			Subscription=vSubscriptionid;
+			SubscriptionDetail=vSubscriptionDetailId;
+			maxusage=vmaxusage;
 		}
 	}
 
@@ -353,7 +353,7 @@ public  class vfIEC_CACWMonthlyConsumption {
 					AND Date__c >= :startDate
 					AND Date__c <= :endDate
 				ORDER BY Date__c Asc
-			   LIMIT 100000];
+				 LIMIT 100000];
 
 
 		//compute statistics by period of time

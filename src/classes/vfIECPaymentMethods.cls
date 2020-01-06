@@ -1,9 +1,9 @@
 /**
-  * Description: This class contains the controller for the Visualforce page (Payment Methods)
-  * Author: Samy Saied
-  * Version: 1.0
-  * History:
-  */
+	* Description: This class contains the controller for the Visualforce page (Payment Methods)
+	* Author: Samy Saied
+	* Version: 1.0
+	* History:
+	*/
 public class vfIECPaymentMethods extends IECPageController {
 
 	///////////////////////////////////////////////////////
@@ -20,12 +20,12 @@ public class vfIECPaymentMethods extends IECPageController {
 	private String tenantId;
 
 	public String getExtraParamString() {
-	  String extraParam = '';
-	  Map<String, String> extraParameters = getExtraParameters();
-	  for ( String param : extraParameters.keySet() ) {
+		String extraParam = '';
+		Map<String, String> extraParameters = getExtraParameters();
+		for ( String param : extraParameters.keySet() ) {
 		extraParam += '&' + param + '=' + extraParameters.get( param );
-	  }
-	  return extraParam;
+		}
+		return extraParam;
 	}
 	//////////////////////////////////////////////////////////
 
@@ -432,23 +432,23 @@ public class vfIECPaymentMethods extends IECPageController {
 		}
 
 		try {
-			  String token = EncodingUtil.convertToHex(Crypto.generateAesKey(128));
-			  String timestamp = String.valueOf(System.currentTimeMillis());
+				String token = EncodingUtil.convertToHex(Crypto.generateAesKey(128));
+				String timestamp = String.valueOf(System.currentTimeMillis());
 
-			  String queryString = 'id=' + pageId + '&' +
-				  'tenantId=' + tenantId + '&' +
-				  'timestamp=' + timestamp + '&' +
-				  'token=' + token;
+				String queryString = 'id=' + pageId + '&' +
+					'tenantId=' + tenantId + '&' +
+					'timestamp=' + timestamp + '&' +
+					'token=' + token;
 
-			  String queryHashString = queryString + apiSecurityKey;
-			  String signature = EncodingUtil.base64Encode(Blob.valueOf(EncodingUtil.convertToHex(Crypto.generateDigest('MD5', Blob.valueOf(queryHashString)))));
+				String queryHashString = queryString + apiSecurityKey;
+				String signature = EncodingUtil.base64Encode(Blob.valueOf(EncodingUtil.convertToHex(Crypto.generateDigest('MD5', Blob.valueOf(queryHashString)))));
 
-			  iframeSrc = appUrl + '/PublicHostedPage.do?method=requestPage&id=' + pageId + '&tenantId=' + tenantId + '&timestamp=' +timestamp + '&token=' + token + '&signature=' + signature;
+				iframeSrc = appUrl + '/PublicHostedPage.do?method=requestPage&id=' + pageId + '&tenantId=' + tenantId + '&timestamp=' +timestamp + '&token=' + token + '&signature=' + signature;
 
-			  Map<String, String> extraParameters = getExtraParameters();
-			  for ( String param : extraParameters.keySet() ) {
+				Map<String, String> extraParameters = getExtraParameters();
+				for ( String param : extraParameters.keySet() ) {
 				iframeSrc += '&' + param + '=' + extraParameters.get( param );
-			  }
+				}
 		}
 		catch (Exception ex) {
 			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage()));
@@ -481,17 +481,17 @@ public class vfIECPaymentMethods extends IECPageController {
 					error = DefaultErrorPrefix;
 					unknownErrorCode = true;
 				}
-			  if ( errorMessage != null  && errorMessage != '' ) {
+				if ( errorMessage != null  && errorMessage != '' ) {
 				error += ( ': ' + errorMessage );
-			  }
-			  else if ( unknownErrorCode ) {
+				}
+				else if ( unknownErrorCode ) {
 				error += ( ': ' + errorCode );
-			  }
-			  ApexPages.addMessage( new ApexPages.Message( ApexPages.Severity.ERROR, error ) );
-			  iframeSrc += '&retainValues=true';
-			  if ( errorCode == 'InvalidCallbackSecurity' ) {
+				}
+				ApexPages.addMessage( new ApexPages.Message( ApexPages.Severity.ERROR, error ) );
+				iframeSrc += '&retainValues=true';
+				if ( errorCode == 'InvalidCallbackSecurity' ) {
 				return null;
-			  }
+				}
 			}
 
 			List<String> validationErrors = new List<String>();

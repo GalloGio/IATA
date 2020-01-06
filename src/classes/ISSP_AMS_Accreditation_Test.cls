@@ -1341,7 +1341,7 @@ private class ISSP_AMS_Accreditation_Test {
 		for (IATA_ISO_Country__c fetchedCountry: [SELECT Name, IATA_Contry_KR__c, CASS_Import__c, IATA_COUNTRY_EN__c, IATA_Country_FR__c, IATA_Country_ZH__c,
 														IATA_Country_IT__c, IATA_Country_JP__c, ISO_Code__c, IATA_Country_PT__c, IATA_Country_SP__c, Case_BSP_Country__c,
 														IATA_ISO_Country__c.CurrencyIsoCode, Local_language_Agency_details_required__c
-												  FROM IATA_ISO_Country__c]) {
+													FROM IATA_ISO_Country__c]) {
 			if (fetchedCountry.Name == 'testOptOut') country = fetchedCountry;
 			else if (fetchedCountry.Name == 'testOptOut2') country2 = fetchedCountry;
 		}
@@ -3989,8 +3989,8 @@ private class ISSP_AMS_Accreditation_Test {
 		return [SELECT Name, IATA_Contry_KR__c, CASS_Import__c, IATA_COUNTRY_EN__c, IATA_Country_FR__c, IATA_Country_ZH__c,
 					IATA_Country_IT__c, IATA_Country_JP__c, ISO_Code__c, IATA_Country_PT__c, IATA_Country_SP__c, Case_BSP_Country__c,
 					IATA_ISO_Country__c.CurrencyIsoCode, Local_language_Agency_details_required__c, Hide_Tax_Number_VAT__c, Multicountry_Enabled__c
-			  FROM IATA_ISO_Country__c
-			  WHERE Name = :name];
+				FROM IATA_ISO_Country__c
+				WHERE Name = :name];
 	}
 
 	private static Account fetchSingleAccount(String name) {

@@ -37,7 +37,7 @@ global class AMS_VoucherPDFCreationBatch implements Database.Batchable<sObject>,
 
 	}
 
-   	global void execute(Database.BatchableContext BC, List<AMS_Voucher__c> scope) {
+	 	global void execute(Database.BatchableContext BC, List<AMS_Voucher__c> scope) {
 
 		System.debug('List to execute vouchers printing:' + scope.size());
 

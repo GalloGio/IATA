@@ -258,7 +258,7 @@ if (ApexPages.currentPage().getParameters().get('type') == 'AirlineChargesUpdate
 			ApexPages.currentPage().setCookies(new Cookie[]{introVideoCookie});
 			if (
 				(CookieValCount>Integer.valueOf(getLivAgConfig(LVA_CFG_INTRO_VIDEO_DISPLAY_TIMES)))
-			  ||(CookieValCount == LVA_INTRO_VID_COOKIE_DEACTIVATED)
+				||(CookieValCount == LVA_INTRO_VID_COOKIE_DEACTIVATED)
 			){
 				retVal=true;
 			}
@@ -1217,7 +1217,7 @@ if(ApexPages.currentPage() != null){
 												 OR IsoCountry__c='all'
 												 OR IsoCountry__c='All'
 												 OR IsoCountry__c='ALL')
-										  ];
+											];
 
 			if(ListOfCallUsconfigsAux.size()>0 || Test.isRunningTest())
 			{
@@ -1339,7 +1339,7 @@ if(ApexPages.currentPage() != null){
 										FROM LVA_CallUsConfig__mdt
 										WHERE Sector__c=:sector
 										AND (Topic__c=''
-											  OR Topic__c = null)
+												OR Topic__c = null)
 										AND (IsoCountry__c=''
 											 OR IsoCountry__c=null
 											 OR IsoCountry__c='all'
@@ -1464,25 +1464,25 @@ if(ApexPages.currentPage() != null){
 					return country.Region__c;
 				}
 			}
-		   return null;
+			 return null;
 		}
 	}
 
 	/*******************************************************************************************************
-   * @description Gets list of subtopics for which a button from a given category is allowed to be shown,
-   *              If no button category is given it will return the list of all topics allowed for all buttons
-   *
-   * @param {string} buttonCategory - Category of button
-   *
-   *
-   * @example
-   * this.getTopicsToShowButtonFromACategory('BUT_CAT_EMERGENCY');
-   *
-   * @history
-   * -----------------------------------------------------------------------------------------------
-   * Date         Created by                        Description
-   * 2017-09-18   paulo.bastos@rightitservices.com  Creation
-   ********************************************************************************************************/
+	 * @description Gets list of subtopics for which a button from a given category is allowed to be shown,
+	 *              If no button category is given it will return the list of all topics allowed for all buttons
+	 *
+	 * @param {string} buttonCategory - Category of button
+	 *
+	 *
+	 * @example
+	 * this.getTopicsToShowButtonFromACategory('BUT_CAT_EMERGENCY');
+	 *
+	 * @history
+	 * -----------------------------------------------------------------------------------------------
+	 * Date         Created by                        Description
+	 * 2017-09-18   paulo.bastos@rightitservices.com  Creation
+	 ********************************************************************************************************/
 	public Set<String> getTopicsToShowButtonFromACategory(String buttonCategory) {
 		Set<String> topicsToShowButtonFromACategory;
 		List<ISSP_FAQ2CaseLiveAgentTopics__c> topicsAux= new List<ISSP_FAQ2CaseLiveAgentTopics__c>();
@@ -1704,15 +1704,15 @@ if(ApexPages.currentPage() != null){
 			 }
 
 			 addDecsription = Label.ISSP_F2CTopic + ' - '
-							  + selectDataCategory.CategoryLabel + '\n'
-							  + labelSubTopic + ' - '
-							  + selectDataCategory.getLabelByNameCategory(subtopic)
-							  + areaOfConcernStr;
+								+ selectDataCategory.CategoryLabel + '\n'
+								+ labelSubTopic + ' - '
+								+ selectDataCategory.getLabelByNameCategory(subtopic)
+								+ areaOfConcernStr;
 		}else {
 			 addDecsription = Label.ISSP_F2CTopic + ' - '
-							  + 'COMPLIMENT' + '\n'
-							  + labelSubTopic + ' - '
-							  + 'COMPLIMENT';
+								+ 'COMPLIMENT' + '\n'
+								+ labelSubTopic + ' - '
+								+ 'COMPLIMENT';
 		}
 
 		newCase.Description += '\n\n' + addDecsription;
@@ -1757,14 +1757,14 @@ if(ApexPages.currentPage() != null){
 
 		//This query controlls when a specific chat button is shown
 		/*
-		  Configuration is made related with allowing access of given chatt buttons
-		  For a given button name:
+			Configuration is made related with allowing access of given chatt buttons
+			For a given button name:
 			1) if is configured Iso_Code__c, button is allowed for that country code
 			2) if is configured only Region__c, button is allowed for all countries from that region
 			3) if is configured only Sector__c, button is allowed for all users from that sector
-			   (independently of Region__c or Iso_Code__c)
+				 (independently of Region__c or Iso_Code__c)
 			4) if is configured combination of Region__c and Sector__c, button is allowed for
-			   all countries from that region but only for users from that sector
+				 all countries from that region but only for users from that sector
 		*/
 		List<LiveAgent_Countries_Per_Button__c> aCountries =
 			[SELECT Iso_Code__c
@@ -1903,8 +1903,8 @@ if(ApexPages.currentPage() != null){
 				insert articleStatistic;
 				System.debug('kerensen Insert stat successful!: ' + articleStatistic.id);
 			} catch (Exception e) {
-			  ApexPages.addMessages(e);
-			  System.debug('kerensen An error occurred: ' + e.getMessage());
+				ApexPages.addMessages(e);
+				System.debug('kerensen An error occurred: ' + e.getMessage());
 			}
 		}
 	}
@@ -1985,13 +1985,13 @@ if(ApexPages.currentPage() != null){
 
 			string ErrFields = '';
 			if((subtopic == null ||subtopic == ''||subtopic == '-- Select --'|| subTopic == topic)&&isCompliment1!= true){
-			   ErrFields += System.Label.ISSP_I_wish_to_complain_about +'xx, '+isCompliment1;
+				 ErrFields += System.Label.ISSP_I_wish_to_complain_about +'xx, '+isCompliment1;
 			}
 			if((areaOfConcern == null || areaOfConcern == '') && isIFG==true && this.lst_selectareasOfConcern.size()>1){
-			   ErrFields += System.Label.ISSP_Area_of_Concern;
+				 ErrFields += System.Label.ISSP_Area_of_Concern;
 			}
 			if(((newCase.IFAP_Country_ISO__c == null ||newCase.IFAP_Country_ISO__c == '')) && excludeCountryPicklist == false){
-			   ErrFields += System.Label.Country_concerned_by_the_query +', ';
+				 ErrFields += System.Label.Country_concerned_by_the_query +', ';
 			}
 			if(newCase.Subject == null ||newCase.Subject == ''){
 				ErrFields += System.Label.ISSP_Subject + ', ';
@@ -2087,10 +2087,10 @@ if(ApexPages.currentPage() != null){
 
 			string ErrFields = '';
 			if((subtopic == null ||subtopic == ''||subtopic == '-- Select --'|| subTopic == topic )&&isCompliment1!= true){
-			   ErrFields += System.Label.ISSP_I_wish_to_complain_about +'yy, ';
+				 ErrFields += System.Label.ISSP_I_wish_to_complain_about +'yy, ';
 			}
 			if((newCase.IFAP_Country_ISO__c == null ||newCase.IFAP_Country_ISO__c == '')){
-			   ErrFields += System.Label.Country_concerned_by_the_query +', ';
+				 ErrFields += System.Label.Country_concerned_by_the_query +', ';
 			}
 			if(newCase.Subject == null ||newCase.Subject == ''){
 				ErrFields += System.Label.ISSP_Subject + ', ';
@@ -2397,10 +2397,10 @@ if(ApexPages.currentPage() != null){
 		system.debug('JK22 isComplain refreshTopicPickList END: ' + isComplain);
 	}
 
-   public void refreshSubTopicPickList(){
+	 public void refreshSubTopicPickList(){
 
 		resetCase();
-	   System.debug('basto1p - refreshSubTopicPickList myTopic='+myTopic);
+		 System.debug('basto1p - refreshSubTopicPickList myTopic='+myTopic);
 		system.debug('TOPIC: ' + topic);
 		Integer index = convertIndex(topic.trim());
 		system.debug('INTEGER: ' + index);
@@ -2446,32 +2446,32 @@ if(ApexPages.currentPage() != null){
 			}
 		}
 
-	   system.debug('basto1p before setIsIFG CategoryName='+selectDataCategory.CategoryName);
+		 system.debug('basto1p before setIsIFG CategoryName='+selectDataCategory.CategoryName);
 		//Set Areas of Concern Pick List
-	   setIsIFG(selectDataCategory.CategoryName);
+		 setIsIFG(selectDataCategory.CategoryName);
 
-	   //basto1p Live Agent v2 (set topic label name)
-	   this.topicLabel=selectDataCategory.CategoryName;
+		 //basto1p Live Agent v2 (set topic label name)
+		 this.topicLabel=selectDataCategory.CategoryName;
 
-	   if (isIFG){
-		   List<IFG_AreasOfConcernMapp__mdt> SubTopicAreasOfConcernMappList;
-		   SubTopicAreasOfConcernMappList=[SELECT SubTopic__c, MasterLabel FROM IFG_AreasOfConcernMapp__mdt ORDER BY SubTopic__c ASC, MasterLabel ASC];
+		 if (isIFG){
+			 List<IFG_AreasOfConcernMapp__mdt> SubTopicAreasOfConcernMappList;
+			 SubTopicAreasOfConcernMappList=[SELECT SubTopic__c, MasterLabel FROM IFG_AreasOfConcernMapp__mdt ORDER BY SubTopic__c ASC, MasterLabel ASC];
 
-		   this.lst_selectareasOfConcern = new list<SelectOption>();
-		   this.lst_selectareasOfConcern.add(new SelectOption(Env.SelectOptionEmptyValue, Env.SelectOptionEmptyValue));
+			 this.lst_selectareasOfConcern = new list<SelectOption>();
+			 this.lst_selectareasOfConcern.add(new SelectOption(Env.SelectOptionEmptyValue, Env.SelectOptionEmptyValue));
 
-		   for (IFG_AreasOfConcernMapp__mdt AreasOfConcernItem : SubTopicAreasOfConcernMappList){
-			   system.debug('subtopic='+subtopic+'; AreasOfConcernItem.SubTopic='+AreasOfConcernItem.SubTopic__c);
-			   if (subtopic.Contains(AreasOfConcernItem.SubTopic__c)){
-				   system.debug('ADDED subtopic='+subtopic+'; AreasOfConcernItem.SubTopic='+AreasOfConcernItem.MasterLabel);
-				   this.lst_selectareasOfConcern.add(new SelectOption(AreasOfConcernItem.MasterLabel, AreasOfConcernItem.MasterLabel));
-			   }
-		   }
-	   }
-	   else{
-		   this.lst_selectareasOfConcern = new list<SelectOption>();
-		   this.lst_selectareasOfConcern.add(new SelectOption(Env.SelectOptionEmptyValue, Env.SelectOptionEmptyValue));
-	   }
+			 for (IFG_AreasOfConcernMapp__mdt AreasOfConcernItem : SubTopicAreasOfConcernMappList){
+				 system.debug('subtopic='+subtopic+'; AreasOfConcernItem.SubTopic='+AreasOfConcernItem.SubTopic__c);
+				 if (subtopic.Contains(AreasOfConcernItem.SubTopic__c)){
+					 system.debug('ADDED subtopic='+subtopic+'; AreasOfConcernItem.SubTopic='+AreasOfConcernItem.MasterLabel);
+					 this.lst_selectareasOfConcern.add(new SelectOption(AreasOfConcernItem.MasterLabel, AreasOfConcernItem.MasterLabel));
+				 }
+			 }
+		 }
+		 else{
+			 this.lst_selectareasOfConcern = new list<SelectOption>();
+			 this.lst_selectareasOfConcern.add(new SelectOption(Env.SelectOptionEmptyValue, Env.SelectOptionEmptyValue));
+		 }
 	}
 	}
 
@@ -3022,8 +3022,8 @@ if(ApexPages.currentPage() != null){
 		List <ISSP_FAQ2Case_Record_Type__c> csList = [SELECT RecordType__c, OwnerId__c ,Topic__c ,SubTopic__c ,Complaint__c ,Country_concerned_by_the_query__c ,
 															 Country_concerned_by_the_query2__c , Country_concerned_by_the_query3__c,
 															 Flag_Assignment_Rules__c
-													  FROM ISSP_FAQ2Case_Record_Type__c
-													  WHERE
+														FROM ISSP_FAQ2Case_Record_Type__c
+														WHERE
 															Complaint__c = :isComplain1
 															AND (Topic__c = :topicName
 																OR SubTopic__c = :subtopic
@@ -3052,18 +3052,18 @@ if(ApexPages.currentPage() != null){
 
 				//Collect Topic Match Custom Settings
 				if(cs.Topic__c != null && cs.Topic__c.contains(topicName)){
-				   system.debug('basto1p: ADD TO TopicMatch_Lst'+cs.Topic__c);
-				   TopicMatch_Lst.add(cs);
+					 system.debug('basto1p: ADD TO TopicMatch_Lst'+cs.Topic__c);
+					 TopicMatch_Lst.add(cs);
 				}
 
 				//Collect Empty Topic no-Match Custom Settings
 				if(cs.Topic__c == null || cs.Topic__c == ''){
-				   EmptyTopicMatch_Lst.add(cs);
+					 EmptyTopicMatch_Lst.add(cs);
 				}
 
 				//Collect Empty Topic ans SubTopics no-Match Custom Settings
 				if((cs.Topic__c == null || cs.Topic__c == '') && (cs.SubTopic__c == null || cs.SubTopic__c == '') ){
-				   EmptySubTopicAndSubTopicMatch_Lst.add(cs);
+					 EmptySubTopicAndSubTopicMatch_Lst.add(cs);
 				}
 			}
 
@@ -3168,8 +3168,8 @@ if(ApexPages.currentPage() != null){
 	private boolean CheckCountryMatch(string inCountryCS , string inIFAPCountryISO){
 		system.debug('KER0 START CheckCountryMatch ' );
 		if(inCountryCS != null &&
-		   inIFAPCountryISO != null &&
-		   (inCountryCS.contains(inIFAPCountryISO) || inCountryCS == 'ALL'))
+			 inIFAPCountryISO != null &&
+			 (inCountryCS.contains(inIFAPCountryISO) || inCountryCS == 'ALL'))
 		{
 			system.debug('KER0 START CheckCountryMatch true' );
 			return true ;
@@ -3285,17 +3285,17 @@ if(ApexPages.currentPage() != null){
 		public list<SelectOption> listOptionsExtended {get; set;}
 
 		public fieldRecordWrapper(ISSP_Case_Fields__c CS){
-			  this.fieldName    = CS.Label__c ;
-			  this.fieldType    = CS.Type__c ;
-			  this.fieldValue   = CS.Field_Name__c ;
-			  this.rendered     = true;
-			  this.required     = CS.Required__c ;
-			  this.readonly     = CS.Read_Only__c ;
-			  this.orderNumber  = CS.Order__c ;
-			  this.NOT_FDS      = CS.NOT_FDS__c ;
-			  this.AP_CASE      = CS.AP_Case__c ;
-			  this.listOptions  = new list<list<SelectOption>>();
-			  this.listOptionsExtended  = new list<SelectOption>();
+				this.fieldName    = CS.Label__c ;
+				this.fieldType    = CS.Type__c ;
+				this.fieldValue   = CS.Field_Name__c ;
+				this.rendered     = true;
+				this.required     = CS.Required__c ;
+				this.readonly     = CS.Read_Only__c ;
+				this.orderNumber  = CS.Order__c ;
+				this.NOT_FDS      = CS.NOT_FDS__c ;
+				this.AP_CASE      = CS.AP_Case__c ;
+				this.listOptions  = new list<list<SelectOption>>();
+				this.listOptionsExtended  = new list<SelectOption>();
 		}
 	}
 
@@ -3355,9 +3355,9 @@ if(ApexPages.currentPage() != null){
 			clsDataCategory selectDataCategory = this.DataCategoryContainer.lst_DataCategories[index];
 
 			List<ISSP_HelpText__c> ISSP_TopicHelptext_Lst = new List<ISSP_HelpText__c> ([ select Id ,Topic__c , SubTopic__c , HelpText_Label_API__c
-																						  From ISSP_HelpText__c
-																						  WHERE Topic__c =: selectDataCategory.CategoryName
-																						  AND SubTopic__c =: null]);
+																							From ISSP_HelpText__c
+																							WHERE Topic__c =: selectDataCategory.CategoryName
+																							AND SubTopic__c =: null]);
 
 			System.debug('Kerensen1 ISSP_TopicHelptext_Lst ==>'+ISSP_TopicHelptext_Lst);
 			if(ISSP_TopicHelptext_Lst != null && ISSP_TopicHelptext_Lst.size() > 0){
@@ -3379,11 +3379,11 @@ if(ApexPages.currentPage() != null){
 			clsDataCategory selectDataCategory = this.DataCategoryContainer.lst_DataCategories[index];
 
 			List<ISSP_HelpText__c> ISSP_SubTopicHelptext_Lst = new List<ISSP_HelpText__c> ([ select Id ,Topic__c , SubTopic__c , HelpText_Label_API__c
-																						  From ISSP_HelpText__c
-																						  WHERE
-																							  Topic__c =: selectDataCategory.CategoryName
-																						  And SubTopic__c =:subtopic
-																						  And SubTopic__c != null]);
+																							From ISSP_HelpText__c
+																							WHERE
+																								Topic__c =: selectDataCategory.CategoryName
+																							And SubTopic__c =:subtopic
+																							And SubTopic__c != null]);
 
 			System.debug('Kerensen1 ISSP_SubTopicHelptext_Lst ==>'+ISSP_SubTopicHelptext_Lst);
 			if(ISSP_SubTopicHelptext_Lst != null && ISSP_SubTopicHelptext_Lst.size() > 0){
@@ -3480,8 +3480,8 @@ if(ApexPages.currentPage() != null){
 
 		//Select Custom Setting to set permissions
 		List <ISSP_FAQ2Case_Permissions__c> PermissionList = [SELECT Sector_Permission__c, Name ,Topic__c ,SubTopic__c, ISO_Country__c
-															  FROM ISSP_FAQ2Case_Permissions__c
-															  Where Subtopic__c != null];
+																FROM ISSP_FAQ2Case_Permissions__c
+																Where Subtopic__c != null];
 		system.debug('SFI2 PermissionList: ' + PermissionList);
 
 		if(PermissionList != null && PermissionList.size() > 0){
@@ -3542,10 +3542,10 @@ if(ApexPages.currentPage() != null){
 		clsDataCategory selectDataCategory = this.DataCategoryContainer.lst_DataCategories[index];
 
 		List<ISSP_FAQ2Case_CreateCaseURL__c> ISSP_CreateButtonURL_Lst = new List<ISSP_FAQ2Case_CreateCaseURL__c> ([ select Id ,Topic__c , SubTopic__c , URL__c
-																					  From ISSP_FAQ2Case_CreateCaseURL__c
-																					  WHERE
-																						  Topic__c =: selectDataCategory.CategoryName
-																					  And SubTopic__c =:subtopic
+																						From ISSP_FAQ2Case_CreateCaseURL__c
+																						WHERE
+																							Topic__c =: selectDataCategory.CategoryName
+																						And SubTopic__c =:subtopic
 		And SubTopic__c != null
 		AND Active__c = true]);
 

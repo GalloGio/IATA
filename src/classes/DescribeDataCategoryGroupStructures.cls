@@ -10,7 +10,7 @@ public with sharing class DescribeDataCategoryGroupStructures {
 	@AuraEnabled
 	public static List<FAQCategoryWrapper> getPublicFaqsStructure(String lang) {
 		LANGUAGE = lang;
-		
+
 		return getFaqsStructure();
 	}
 
@@ -56,10 +56,10 @@ public with sharing class DescribeDataCategoryGroupStructures {
 
 				//this if filters the metadata that does have all three fields filled: the category, topic and subtopic
 				if(!accountExceptions && String.isNotBlank(faqSubtopicAux.DataCategoryName__c) && String.isNotBlank(faqSubtopicAux.DataTopicName__c) && String.isNotBlank(faqSubtopicAux.DataSubtopicName__c)) {
-					
+
 					//concatenate the key to access the map
 					String categoryAndTopicNames = faqSubtopicAux.DataCategoryName__c + '_' + faqSubtopicAux.DataTopicName__c;
-					//if it's a subtopic that the user have access to, inserts it in the map to be returned 
+					//if it's a subtopic that the user have access to, inserts it in the map to be returned
 					if(guestUser || setSubtopicsForUser.contains(faqSubtopicAux.DataSubtopicName__c)){
 						//if the map does not contain this topic yet, then insert the topic and a new list of subtopics with just this subtopic
 						if(!mapCategoryNameTopicNameAndLstSubtopics.containsKey(categoryAndTopicNames)) {
@@ -128,7 +128,7 @@ public with sharing class DescribeDataCategoryGroupStructures {
 	private static Set<String> getUserAccessonFAQs() {
 		//Get the structure that the user have access to
 		List<DescribeDataCategoryGroupStructureResult> categoryGroups = getUserFaqsDescribeDataCategoryGroupStructureResult();
-		
+
 		if(!categoryGroups.isEmpty()) {
 			List<DataCategory> lstUserAccess = categoryGroups.get(0).getTopCategories();
 
@@ -183,14 +183,14 @@ public with sharing class DescribeDataCategoryGroupStructures {
 	*/
 	@AuraEnabled
 	public static List<PortalKnowledge__c> getAllFAQs() {
-		return [SELECT DataCategoryName__c, DataTopicName__c, DataSubtopicName__c, CategoryExceptions__c, 
-					SectorExceptions__c, DataCategoryLabel_en_US__c, DataCategoryLabel_ar__c, DataCategoryLabel_de__c, 
-					DataCategoryLabel_es__c, DataCategoryLabel_fr__c, DataCategoryLabel_in__c, DataCategoryLabel_it__c, 
-					DataCategoryLabel_ja__c, DataCategoryLabel_ko__c, DataCategoryLabel_pt_BR__c, DataCategoryLabel_ru__c, 
+		return [SELECT DataCategoryName__c, DataTopicName__c, DataSubtopicName__c, CategoryExceptions__c,
+					SectorExceptions__c, DataCategoryLabel_en_US__c, DataCategoryLabel_ar__c, DataCategoryLabel_de__c,
+					DataCategoryLabel_es__c, DataCategoryLabel_fr__c, DataCategoryLabel_in__c, DataCategoryLabel_it__c,
+					DataCategoryLabel_ja__c, DataCategoryLabel_ko__c, DataCategoryLabel_pt_BR__c, DataCategoryLabel_ru__c,
 					DataCategoryLabel_th__c, DataCategoryLabel_TR__c, DataCategoryLabel_vi__c, DataCategoryLabel_zh_CN__c,
-					Order__c, Name  
+					Order__c, Name
 				FROM PortalKnowledge__c WHERE FAQsStructure__c = true ORDER BY Order__c ASC NULLS LAST];
-	} 
+	}
 
 	/*
 	* @description Get user access to the FAQs Data Category Setup based on Data Category Visibility from Role, Profile and/or Permission Sets
@@ -207,7 +207,7 @@ public with sharing class DescribeDataCategoryGroupStructures {
 
 		//Creating a list of pair objects to use as a parameter for the describe call
 		List<DataCategoryGroupSobjectTypePair> pairs = new List<DataCategoryGroupSobjectTypePair>();
-		
+
 		//Looping throught the first describe result to create the list of pairs for the second describe call
 		for(DescribeDataCategoryGroupResult singleResult : describeCategoryResult) {
 			DataCategoryGroupSobjectTypePair p = new DataCategoryGroupSobjectTypePair();
@@ -240,9 +240,9 @@ public with sharing class DescribeDataCategoryGroupStructures {
 		@AuraEnabled
 		public String topicName {get;set;}
 		@AuraEnabled
-		public String topicLabel {get;set;} 
+		public String topicLabel {get;set;}
 		@AuraEnabled
-		public String topicLabelEn {get;set;} 
+		public String topicLabelEn {get;set;}
 		@AuraEnabled
 		public String categoryName {get;set;}
 		@AuraEnabled
@@ -263,7 +263,7 @@ public with sharing class DescribeDataCategoryGroupStructures {
 			this.categoryLabelEn = categoryLabelEn;
 			this.childs = childs;
 			this.childsEn = childsEn;
-		}				
+		}
 	}
 
 	public class FAQCategoryWrapper{

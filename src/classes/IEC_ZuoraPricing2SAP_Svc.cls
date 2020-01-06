@@ -10,11 +10,11 @@ public class IEC_ZuoraPricing2SAP_Svc
 	@TestVisible final Map<sapPT, String> sapPrice = new Map<sapPT, String>
 	{
 		sapPT.DISCOUNT_AMT => 'CUSTOMERTYPEDISCOUNT_DOLLARS'
-	  , sapPT.DISCOUNT_PCT => 'CUSTOMERTYPEDISCOUNT_PERCENTAGE'
-	  , sapPT.COUPON_AMT => 'COUPONDISCOUNT_DOLLARS'
-	  , sapPT.COUPON_PCT => 'COUPONDISCOUNT_PERCENTAGE'
-	  , sapPT.VOLUME => 'VOLUME_PRICE'
-	  , sapPT.UNIT => 'STANDARD_PRICE'
+		, sapPT.DISCOUNT_PCT => 'CUSTOMERTYPEDISCOUNT_PERCENTAGE'
+		, sapPT.COUPON_AMT => 'COUPONDISCOUNT_DOLLARS'
+		, sapPT.COUPON_PCT => 'COUPONDISCOUNT_PERCENTAGE'
+		, sapPT.VOLUME => 'VOLUME_PRICE'
+		, sapPT.UNIT => 'STANDARD_PRICE'
 	};
 	// some utility for SAP value
 	Boolean isSAPDiscountAmt(String strPriceType) { return strPriceType == sapPrice.get(sapPT.DISCOUNT_AMT); }
@@ -30,8 +30,8 @@ public class IEC_ZuoraPricing2SAP_Svc
 	@TestVisible final Map<sapOT, String> sapOperation = new Map<sapOT, String>
 	{
 		sapOT.DEL => 'D'
-	  , sapOT.INS => 'I'
-	  , sapOT.UPD => 'U'
+		, sapOT.INS => 'I'
+		, sapOT.UPD => 'U'
 	};
 
 
@@ -40,16 +40,16 @@ public class IEC_ZuoraPricing2SAP_Svc
 	final Map<zuoraPT, String> zuoraPrice = new Map<zuoraPT, String>
 	{
 		zuoraPT.DISCOUNT_AMT => 'Discount-Fixed Amount'
-	  , zuoraPT.DISCOUNT_PCT => 'Discount-Percentage'
-	  , zuoraPT.VOLUME => 'Volume'   // startsWith
-	  , zuoraPT.UNIT => 'Per Unit'   // startsWith
+		, zuoraPT.DISCOUNT_PCT => 'Discount-Percentage'
+		, zuoraPT.VOLUME => 'Volume'   // startsWith
+		, zuoraPT.UNIT => 'Per Unit'   // startsWith
 	};
 	// some utility for Zuora value
 	Boolean isZuoraTrue(String strPicklistValue) { return 'Yes'.equalsIgnoreCase(strPicklistValue); }
 	Boolean isZuoraDiscountAmt(String strModel) { return zuoraPrice.get(zuoraPT.DISCOUNT_AMT).equalsIgnoreCase(strModel); }
 	Boolean isZuoraDiscountPct(String strModel) { return zuoraPrice.get(zuoraPT.DISCOUNT_PCT).equalsIgnoreCase(strModel); }
 	Boolean isZuoraRecurring(String strModel, String strType) { return !strModel.startsWithIgnoreCase('Discount') &&
-																	   'Recurring'.equalsIgnoreCase(strType); }
+																		 'Recurring'.equalsIgnoreCase(strType); }
 	Boolean isZuoraVolume(String strModel) { return strModel.startsWithIgnoreCase(zuoraPrice.get(zuoraPT.VOLUME)); }
 	Boolean isZuoraUnit(String strModel) { return strModel.startsWithIgnoreCase(zuoraPrice.get(zuoraPT.UNIT)); }
 	String zuoraCurrency(zqu__ProductRatePlanChargeTier__c pricing)
@@ -70,12 +70,12 @@ public class IEC_ZuoraPricing2SAP_Svc
 		// build criteria specified by business
 		String strSOQL = '';
 		for (IEC_ZuoraPricing2SAP_Filter__c filter : [select SAP_Sales_Channel_Code__c, SAP_Division_Code__c, Exclude_SAP_Material_Number__c
-													  from IEC_ZuoraPricing2SAP_Filter__c])
+														from IEC_ZuoraPricing2SAP_Filter__c])
 			strSOQL += ' or (SAP_Sales_Channel_Code__c = \'' + filter.SAP_Sales_Channel_Code__c + '\''
-						   + ' and SAP_Division_Code__c = \'' + filter.SAP_Division_Code__c + '\''
-						   + (String.isBlank(filter.Exclude_SAP_Material_Number__c) ? ''
-							  : ' and SAP_Material_Number__c not in (' + filter.Exclude_SAP_Material_Number__c + ')')
-						   + ')';
+							 + ' and SAP_Division_Code__c = \'' + filter.SAP_Division_Code__c + '\''
+							 + (String.isBlank(filter.Exclude_SAP_Material_Number__c) ? ''
+								: ' and SAP_Material_Number__c not in (' + filter.Exclude_SAP_Material_Number__c + ')')
+							 + ')';
 
 		// search products
 		Map<Id, Product2> mapProductId_Product = new Map<Id, Product2>();
@@ -97,9 +97,9 @@ public class IEC_ZuoraPricing2SAP_Svc
 	Boolean isPricingDeleted(zqu__ProductRatePlanChargeTier__c pricing)
 	{
 		return pricing.zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.zqu__Product__r.zqu__Deleted__c ||
-			   pricing.zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.zqu__Deleted__c ||
-			   pricing.zqu__ProductRatePlanCharge__r.zqu__Deleted__c ||
-			   pricing.zqu__Deleted__c || pricing.IsDeleted;
+				 pricing.zqu__ProductRatePlanCharge__r.zqu__ProductRatePlan__r.zqu__Deleted__c ||
+				 pricing.zqu__ProductRatePlanCharge__r.zqu__Deleted__c ||
+				 pricing.zqu__Deleted__c || pricing.IsDeleted;
 	}
 
 
@@ -127,7 +127,7 @@ public class IEC_ZuoraPricing2SAP_Svc
 
 	// determine if tracking is new and not sent yet to SAP
 	Boolean isNewTracking(IEC_ZuoraPricing2SAP_Tracking__c tracking) { return tracking.Operation__c == sapOperation.get(sapOT.INS) &&
-																			  tracking.SendingTimestamp__c == null; }
+																				tracking.SendingTimestamp__c == null; }
 
 
 	// determine if updated price changes SAP pricing condition already sent
@@ -181,12 +181,12 @@ public class IEC_ZuoraPricing2SAP_Svc
 
 		// check modification on existing pricings
 		for (IEC_ZuoraPricing2SAP_Tracking__c tracking : [select Operation__c, Key__c, LatestSourceTimestamp__c, Material_Number__c
-															   , Pricing_Type__c, EffectiveFrom__c, EffectiveTo__c, Currency__c
-															   , StartingUnit__c, EndingUnit__c, AmountOrPercentage__c
-															   , CustomerType__c, Region__c, Country__c, Coupon__c
-															   , IsFreeShipping__c, IsPreSale__c, SendingTimestamp__c
-														  from IEC_ZuoraPricing2SAP_Tracking__c
-														  where Key__c in :mapKey_Pricing.keySet()])
+																 , Pricing_Type__c, EffectiveFrom__c, EffectiveTo__c, Currency__c
+																 , StartingUnit__c, EndingUnit__c, AmountOrPercentage__c
+																 , CustomerType__c, Region__c, Country__c, Coupon__c
+																 , IsFreeShipping__c, IsPreSale__c, SendingTimestamp__c
+															from IEC_ZuoraPricing2SAP_Tracking__c
+															where Key__c in :mapKey_Pricing.keySet()])
 		{
 			pricing = mapKey_Pricing.get(tracking.Key__c);
 
@@ -317,8 +317,8 @@ public class IEC_ZuoraPricing2SAP_Svc
 			{
 				Database.rollback(sp);
 				IECErrorLogger.logApexException('IEC_ZuoraPricing2SAP_Svc/trackPricing'
-											  , ('Update Error\n\nlstUpdateTracking\n' + String.join(lstUpdateTracking, '\n')).left(32768)
-											  , e.getMessage(), e.getStackTraceString());
+												, ('Update Error\n\nlstUpdateTracking\n' + String.join(lstUpdateTracking, '\n')).left(32768)
+												, e.getMessage(), e.getStackTraceString());
 			}
 		}
 		if (lstInsertTracking.size() > 0)
@@ -332,8 +332,8 @@ public class IEC_ZuoraPricing2SAP_Svc
 			{
 				Database.rollback(sp);
 				IECErrorLogger.logApexException('IEC_ZuoraPricing2SAP_Svc/trackPricing'
-											  , ('Insert Error\n\nlstInsertTracking\n' + String.join(lstInsertTracking, '\n')).left(32768)
-											  , e.getMessage(), e.getStackTraceString());
+												, ('Insert Error\n\nlstInsertTracking\n' + String.join(lstInsertTracking, '\n')).left(32768)
+												, e.getMessage(), e.getStackTraceString());
 			}
 		}
 	}
@@ -345,8 +345,8 @@ public class IEC_ZuoraPricing2SAP_Svc
 		// prepare lists of prices to send based on operation
 		Map<String, List<IEC_ZuoraPricing2SAP_Tracking__c>> mapPriority_Pricing = new Map<String, List<IEC_ZuoraPricing2SAP_Tracking__c>>{
 			sapOperation.get(sapOT.DEL) => new List<IEC_ZuoraPricing2SAP_Tracking__c>()
-		  , sapOperation.get(sapOT.INS) => new List<IEC_ZuoraPricing2SAP_Tracking__c>()
-		  , sapOperation.get(sapOT.UPD) => new List<IEC_ZuoraPricing2SAP_Tracking__c>()
+			, sapOperation.get(sapOT.INS) => new List<IEC_ZuoraPricing2SAP_Tracking__c>()
+			, sapOperation.get(sapOT.UPD) => new List<IEC_ZuoraPricing2SAP_Tracking__c>()
 		};
 		for (IEC_ZuoraPricing2SAP_Tracking__c tracking : lstTracking)
 			mapPriority_Pricing.get(tracking.Operation__c).add(tracking);
@@ -429,8 +429,8 @@ public class IEC_ZuoraPricing2SAP_Svc
 		httpReq.setMethod('POST');
 		// URL got from WSDL
 		httpReq.setEndpoint(Utility.fixEndpointDomain('http://ixidweb.sap.iata.org:8030/XISOAPAdapter/MessageServlet?senderParty=&' +
-													  'senderService=SFDC&receiverParty=&receiverService=&interface=SI_SFDC_Pricing_OB&' +
-													  'interfaceNamespace=http://iata.com/xi/SFDC/OTC/WID5614_Pricing/'));
+														'senderService=SFDC&receiverParty=&receiverService=&interface=SI_SFDC_Pricing_OB&' +
+														'interfaceNamespace=http://iata.com/xi/SFDC/OTC/WID5614_Pricing/'));
 		httpReq.setHeader('Authorization', Utility.getSAPauthorization());
 		httpReq.setHeader('Accept', 'text/xml');
 		httpReq.setHeader('Content-Type', 'text/xml');

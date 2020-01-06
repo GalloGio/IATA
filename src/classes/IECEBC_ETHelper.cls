@@ -171,7 +171,7 @@ public class IECEBC_ETHelper {
 
 		List<Map<String, String>> MyListMap = new List<Map<String, String>>();
 		DOM.Document doc = new DOM.Document();
-		  try {
+			try {
 			doc.load(res.getBody());
 			DOM.XMLNode root = doc.getRootElement();
 			return   walkThrough(root, elts, MyListMap);
@@ -215,9 +215,9 @@ public class IECEBC_ETHelper {
 			}
 
 		return MyListMap;
-	  }
+		}
 
-	  return null;  //should never reach here
+		return null;  //should never reach here
 	}
 	// parse xml response to get map<nodename, value> of TS Summary
 	public static void parseMapTriggeredSendSummary(HttpResponse res, Map<String, String> tssMap) {

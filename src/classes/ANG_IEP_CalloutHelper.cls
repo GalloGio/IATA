@@ -1,5 +1,5 @@
 public  with sharing class ANG_IEP_CalloutHelper {
-	
+
 
 	//**** =========================== Variable Assignment =================================== ****
 	public static final Integer STATUSOKLOWER  = 199;
@@ -16,11 +16,11 @@ public  with sharing class ANG_IEP_CalloutHelper {
 	 //**** ===========================SECONDARY CLASSES =================================== ****
 
 	public class ANG_calloutHelperWrapper {
-	    public ANG_CalloutMapping__c calloutMapping{get;set;}
+		public ANG_CalloutMapping__c calloutMapping{get;set;}
 		public ANG_IEP_CalloutHelper.AgencyEvent2Send rec2Send{get;set;}
 		public String changeCodeId{get;set;}
 		public string agencyUpdateId{get;set;}
-		
+
 
 		public ANG_calloutHelperWrapper(ANG_CalloutMapping__c cm,ANG_IEP_CalloutHelper.AgencyEvent2Send aer,String ccId,String auId){
 			calloutMapping=cm;
@@ -48,10 +48,10 @@ public  with sharing class ANG_IEP_CalloutHelper {
 	 //**** ===========================  ACTION METHODS  =================================== ****
 
 	  @InvocableMethod(label='Create a payload to be sent to mulesoft' description='Create a payload to be sent to mulesoft')
-    public static void invokeCustomImpl(List<Agency_Applied_Change_code__c> objList) {}
+	public static void invokeCustomImpl(List<Agency_Applied_Change_code__c> objList) {}
 
-    public static void invokeCustomImpl(List<AMS_Agency_Updates__c> agencyEventsList) {
-    	
+	public static void invokeCustomImpl(List<AMS_Agency_Updates__c> agencyEventsList) {
+
 		Map<String,Id> changeCodeIdMap = new Map<String,Id>();
 
 		Map<String,ANG_CalloutMapping__c> calloutMappingMap = new Map<String,ANG_CalloutMapping__c>();
@@ -66,13 +66,13 @@ public  with sharing class ANG_IEP_CalloutHelper {
 				records2SendList.add( new ANG_IEP_CalloutHelper.ANG_calloutHelperWrapper(calloutMappingMap.get(ae.ConfigurationID__c),tempchw,ae.Agency_Applied_Change_code__c,ae.id));
 			}
 		}
-	
 
-		//so since Salesforce governor limits don't allow us to have more than 50 future calls in a single apex transition, and some times change codes propagate to 
+
+		//so since Salesforce governor limits don't allow us to have more than 50 future calls in a single apex transition, and some times change codes propagate to
 		// an hierarchy that has > 50 agencies, we need to queue the calls in a batch.
 
 		system.debug('ANG_IEP_CalloutHelper records2SendList'+records2SendList);
-		
+
 		if((records2SendList.size() + System.Limits.getFutureCalls()) < THRESHOLD && !isRunningTestForThreshold){
 
 			System.debug('The change codes size is bellow THRESHOLD ('+THRESHOLD+'). Running future method process.');
@@ -95,7 +95,7 @@ public  with sharing class ANG_IEP_CalloutHelper {
 			System.debug('Running the ANG_IEPChangecodeInvocationBatch with Id:'+iEPChangecodeInvocationBatchId);
 
 		}
-	
+
 	}
 
 
@@ -119,7 +119,7 @@ public  with sharing class ANG_IEP_CalloutHelper {
 		}
 	}
 
-	
-	
+
+
 
 }

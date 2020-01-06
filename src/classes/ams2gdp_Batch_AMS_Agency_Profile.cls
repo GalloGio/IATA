@@ -30,7 +30,7 @@ global class ams2gdp_Batch_AMS_Agency_Profile implements Database.Batchable<sObj
 
 		List<String> conditions = new List<String> {'Account__r.RecordTypeId= \'' + RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency') + '\''
 			, 'GR_Item__c !=null'};
-		conditions.addAll(ams2gdp_BusinessLogic.queryClauseAccountAndRelated(batchName)); 
+		conditions.addAll(ams2gdp_BusinessLogic.queryClauseAccountAndRelated(batchName));
 
 
 		if (extraIds != null && extraIds.size() > 0) {
@@ -60,7 +60,7 @@ global class ams2gdp_Batch_AMS_Agency_Profile implements Database.Batchable<sObj
 			if (batchInfo != null) {
 				//Run only on the deltas
 				String deltaConditions = String.format('LastModifiedDate >= {0}'
-				                                       , new List<String> {batchInfo.Last_Sync_Start_Date__c.addDays(-2).format('yyyy-MM-dd\'T\'hh:mm:ss\'Z\'', 'GMT')});
+																							 , new List<String> {batchInfo.Last_Sync_Start_Date__c.addDays(-2).format('yyyy-MM-dd\'T\'hh:mm:ss\'Z\'', 'GMT')});
 				if (String.isNotBlank(batchInfo.Failed_Records__c)) {
 					// Reprocess failed records
 					List<String> failedRecordIds = new List<String>();
@@ -77,10 +77,10 @@ global class ams2gdp_Batch_AMS_Agency_Profile implements Database.Batchable<sObj
 		}
 
 		query = String.format('SELECT {0} '
-		                      +	'FROM AMS_Agency_Profile__c '
-		                      + 	'WHERE {1} ',
-		                      new List<String> {fields, String.join(conditions, ' AND ')}
-		                     );
+													+	'FROM AMS_Agency_Profile__c '
+													+ 	'WHERE {1} ',
+													new List<String> {fields, String.join(conditions, ' AND ')}
+												 );
 	}
 
 	global ams2gdp_Batch_AMS_Agency_Profile() {
@@ -153,7 +153,7 @@ global class ams2gdp_Batch_AMS_Agency_Profile implements Database.Batchable<sObj
 	}
 
 	global void finish(Database.BatchableContext BC) {
-		
+
 		if (processNextBatch)Database.executeBatch(new ams2gdp_Batch_AMS_Agency_Authorization(true, isManual));
 		ams2gdp_Utils.upsertAMS_GDP_Batch(batchName, syncStartedDate, errorsCount, totalRecords, failed_records, isManual);
 		//--Send completion notification

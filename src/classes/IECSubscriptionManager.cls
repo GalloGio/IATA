@@ -1,8 +1,8 @@
 /**
-  * Description: This class handles all subscription related
-  * Author: Samy Saied
-  * Version: 1.0
-  * History:
+	* Description: This class handles all subscription related
+	* Author: Samy Saied
+	* Version: 1.0
+	* History:
 		- Sayed Ramadan
 			Added method to check if a given product is triable
 			Added method to get all triable products in the system
@@ -14,7 +14,7 @@
 		- 20160928-Sonny Leman:
 			ebcSubscriptionInitialization uses EBC_Setup/IECEBC_Utility.ebcPayAsYouGoProductRatePlanIdSet to check if it is an Ebroadcast Pay-As-You-Go product rate plan, for code consistency.
 
-  */
+	*/
 public with sharing class IECSubscriptionManager {
 
 	public static final String TERM_TYPE = 'TERMED';
@@ -2083,7 +2083,7 @@ public with sharing class IECSubscriptionManager {
 				[SELECT Invoice__c
 				FROM Invoice_Item__c
 				WHERE Subscription_Number__c = :subscriptionNumber
-				  AND Invoice__r.CreatedDate < :dtInvoiceCutoffDate   //*** (Thai 2016-11-07) added criteria on creation date to filter applicable Zuora invoices
+					AND Invoice__r.CreatedDate < :dtInvoiceCutoffDate   //*** (Thai 2016-11-07) added criteria on creation date to filter applicable Zuora invoices
 				ORDER BY CreatedDate DESC LIMIT 1];
 
 			if (!lstInvoiceItem.isEmpty())
@@ -2108,7 +2108,7 @@ public with sharing class IECSubscriptionManager {
 				[SELECT Invoice__c, Subscription_Number__c
 				FROM Invoice_Item__c
 				WHERE Subscription_Number__c in :subscriptionNumbers
-				  AND Invoice__r.CreatedDate < :dtInvoiceCutoffDate   //*** (Thai 2016-11-07) added criteria on creation date to filter applicable Zuora invoices
+					AND Invoice__r.CreatedDate < :dtInvoiceCutoffDate   //*** (Thai 2016-11-07) added criteria on creation date to filter applicable Zuora invoices
 				ORDER BY CreatedDate DESC];
 
 			if (!lstInvoiceItem.isEmpty()){

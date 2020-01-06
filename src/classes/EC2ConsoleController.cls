@@ -14,10 +14,10 @@ public class EC2ConsoleController {
 
 
 	/*
-	   This method is called when the AWS_S3_Examples Visualforce page is loaded. It verifies that the AWS Keys can be found
-	   in the AWSKeys__c custom object by the specified name, as set in the string variable AWSCredentialsName.
+		 This method is called when the AWS_S3_Examples Visualforce page is loaded. It verifies that the AWS Keys can be found
+		 in the AWSKeys__c custom object by the specified name, as set in the string variable AWSCredentialsName.
 
-	   Any errors are added to the ApexPage and displayed in the Visualforce page.
+		 Any errors are added to the ApexPage and displayed in the Visualforce page.
 	*/
 	public PageReference constructor(){
 		try{
@@ -41,7 +41,7 @@ public class EC2ConsoleController {
 
 
 
-	   return null;
+		 return null;
 	}
 
 	//get public AMI images descriptions

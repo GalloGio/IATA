@@ -97,11 +97,11 @@ global with sharing class IDCard_SF_AIMS_WebService {
 	WebService static string SetMustSynchWithAIMSFlagToFalse(List<string> idCards) {
 		try {
 			List<ID_Card__c> cards = [SELECT Id, Valid_To_Date__c, Valid_From_Date__c, Photo__c, HourWorkedCode__c , MustSyncWithAIMS__c, VER_Number__c,
-									  Is_Expedite__c, FirstName__c, Middle_Initial__c, LastName__c, Date_of_Birth__c, Gender__c, Title__c,
-									  Position_Code__c, Duty_Code__c, Duties__c, Hours_per_week__c, Email__c, Start_Date_Industry__c, Start_Date_Agency_Year__c,
-									  Position__c, Start_Date_Agency_Month__c
-									  FROM ID_Card__c
-									  WHERE Id IN : idCards  ]; //and MustSyncWithAIMS__c = true
+										Is_Expedite__c, FirstName__c, Middle_Initial__c, LastName__c, Date_of_Birth__c, Gender__c, Title__c,
+										Position_Code__c, Duty_Code__c, Duties__c, Hours_per_week__c, Email__c, Start_Date_Industry__c, Start_Date_Agency_Year__c,
+										Position__c, Start_Date_Agency_Month__c
+										FROM ID_Card__c
+										WHERE Id IN : idCards  ]; //and MustSyncWithAIMS__c = true
 
 			if (cards != null && !cards.isEmpty()) {
 				for (ID_Card__c aCard : cards) {

@@ -1,12 +1,12 @@
 /**
-  * Description: This class contains some utility functions to be used for test classes
-  * Author: Samy Saied
-  * Version: 1.0
-  * History:
-  *  - 20160227: issue fixing related to ecommerce 3a project
-  *  - 20160804-sl: merge change from eBroadcast branch (GDP81/campaign scheduling).
-  *
-  */
+	* Description: This class contains some utility functions to be used for test classes
+	* Author: Samy Saied
+	* Version: 1.0
+	* History:
+	*  - 20160227: issue fixing related to ecommerce 3a project
+	*  - 20160804-sl: merge change from eBroadcast branch (GDP81/campaign scheduling).
+	*
+	*/
 //*** (Thai) change to "without" to fix issue of "INSUFFICIENT_ACCESS_ON_CROSS_REFERENCE_ENTITY" when create state in "CreateSampleIECAddress"
 public without sharing class IECTestUtil {
 	public static Id PortalUserAccountId;
@@ -1016,10 +1016,10 @@ public without sharing class IECTestUtil {
 
 	public static GDP_File_Description__c CreateSampleGDPFileDescription(String sClass, String sFrequency, String sProductType) {
 		return new GDP_File_Description__c (
-		  Name = 'Test File Description-' + (Math.random()*1000000000)
-		  , Class__c = sClass
-		  , Frequency__c = sFrequency
-		  , Product_Type__c = sProductType
+			Name = 'Test File Description-' + (Math.random()*1000000000)
+			, Class__c = sClass
+			, Frequency__c = sFrequency
+			, Product_Type__c = sProductType
 		);
 	}
 

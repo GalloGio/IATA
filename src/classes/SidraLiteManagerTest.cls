@@ -1176,7 +1176,7 @@ public class SidraLiteManagerTest {
 
 		List<PermissionSetAssignment> permissionSetList = new List<PermissionSetAssignment>();
 		PermissionSetAssignment psa = new PermissionSetAssignment(PermissionSetId = cnsPermissionSet.Id,
-																  AssigneeId = testUser.Id);
+																	AssigneeId = testUser.Id);
 		permissionSetList.add(psa);
 		upsert permissionSetList;
 	}

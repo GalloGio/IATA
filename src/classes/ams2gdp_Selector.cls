@@ -58,7 +58,7 @@ public class ams2gdp_Selector
 	{
 		List<String> result = new List<String>();
 		for(AMS_Territory__c item:[SELECT Id FROM AMS_Territory__c WHERE Appointment__r.Account__c IN:accountIds])
-		   result.add(item.Id);
+			 result.add(item.Id);
 
 
 		return result;

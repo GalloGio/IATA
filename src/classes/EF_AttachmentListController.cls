@@ -397,9 +397,9 @@ global with sharing class EF_AttachmentListController {
 			system.debug('@@@timestamp: ' + this.timestamp);
 			//this.timestamp = DateTime.now().format();
 			String policyString = 'PUT\n\n'
-								  + this.contentType + ';charset=UTF-8\n\n'
-								  + 'x-amz-date:' + this.timestamp + '\n'
-								  + '/' + this.bucketName + '/' + this.fullFileNameEncoded;
+									+ this.contentType + ';charset=UTF-8\n\n'
+									+ 'x-amz-date:' + this.timestamp + '\n'
+									+ '/' + this.bucketName + '/' + this.fullFileNameEncoded;
 			String signedPolicy = AmazonRest.make_sig(policyString, credential);
 
 			this.authorization = 'AWS ' + credential.AWSAccessKeyId + ':' + signedPolicy;

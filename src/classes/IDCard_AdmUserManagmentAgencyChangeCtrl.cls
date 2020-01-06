@@ -111,7 +111,7 @@ public class IDCard_AdmUserManagmentAgencyChangeCtrl extends IDCardAbstractContr
 			currentRecords.put(acg.verNum, acg);
 		}if(findcontact.size()==0) {
 			//currentRecord.previousContact =NULL;
-			  ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO,'Impossible to find a Contact using these information.'));
+				ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO,'Impossible to find a Contact using these information.'));
 		}
 
 
@@ -220,9 +220,9 @@ public class IDCard_AdmUserManagmentAgencyChangeCtrl extends IDCardAbstractContr
 
 		//changes.put(acw.verNum, acw);
 		List<ID_Card_Application__c> openApplications = [SELECT Id
-													   FROM ID_Card_Application__c
-													   WHERE VER_Number__c = :theChosenOne.verNum
-													   AND  (Application_Status__c = 'Pending' OR
+														 FROM ID_Card_Application__c
+														 WHERE VER_Number__c = :theChosenOne.verNum
+														 AND  (Application_Status__c = 'Pending' OR
 															 Application_Status__c = 'Unpaid'  OR
 															(Mass_order_Application__c <> NULL AND Application_Status__c = :IDCardUtil.single_application_status_waiting))];
 

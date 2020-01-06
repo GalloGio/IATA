@@ -287,7 +287,7 @@ public with sharing class ANG_ConversionToolController {
 		return(messageText);
 	}
 
-	public String getLongDetailMessage() {       
+	public String getLongDetailMessage() {
 		String messageText = ANG_ConversionHelper.errorMessagesLongDescription.get(errorDetailCode);
 		return(messageText);
 	}

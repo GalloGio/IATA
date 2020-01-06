@@ -387,9 +387,9 @@ global class WrapperAttach implements Comparable {
 		Get all attachments related to an object but only visible for Portal
 	**/
 	public static list<WrapperAttach> getListAttachmentsForPortal(Id sobjectId) {
-	   Boolean fullAttachmentAccess;
-	   list<AttachmentListLimitedAccess__c> perms = [select SetupOwnerId , Name, Id from AttachmentListLimitedAccess__c where SetupOwnerId = :userinfo.getProfileId() or SetupOwnerId = :userinfo.getUserId()];
-	   fullAttachmentAccess = perms.size()==0;
+		 Boolean fullAttachmentAccess;
+		 list<AttachmentListLimitedAccess__c> perms = [select SetupOwnerId , Name, Id from AttachmentListLimitedAccess__c where SetupOwnerId = :userinfo.getProfileId() or SetupOwnerId = :userinfo.getUserId()];
+		 fullAttachmentAccess = perms.size()==0;
 
 		list<WrapperAttach> listAttachments = new list<WrapperAttach>();
 		for (WrapperAttach attach: getListAttachments(sobjectId,false,true) ) {

@@ -107,11 +107,11 @@ public with sharing class IFAP_BusinessRules {
 	 */
 	//@future
 	public static void massCreateCase(List<String> listContactId,
-									  Id batchNumberId, string status, string subject,
-									  string description, string reviewType, date deadlineDate,
-									  String templateLang, String financialYear, String financialMonth,
-									  String emailTemplateName, String agentsWithOpenCasesReportURL,
-									  boolean IFAP_CanCreateWhileClosedCase) {
+										Id batchNumberId, string status, string subject,
+										string description, string reviewType, date deadlineDate,
+										String templateLang, String financialYear, String financialMonth,
+										String emailTemplateName, String agentsWithOpenCasesReportURL,
+										boolean IFAP_CanCreateWhileClosedCase) {
 
 
 		List<String> errors = new List<String>();
@@ -468,9 +468,9 @@ public with sharing class IFAP_BusinessRules {
 
 			// check for the corresponding assessment template
 			Assessment_Template__c[] templates = [Select a.Id, a.Template_Code__c, a.Passenger_Cargo__c, a.Name, a.Country_Name__c, a.Country_ISO_Code__c
-												  From Assessment_Template__c a
-												  where a.Passenger_Cargo__c = :paxCargoFlag
-														  and a.Country_Name__c = :country];
+													From Assessment_Template__c a
+													where a.Passenger_Cargo__c = :paxCargoFlag
+															and a.Country_Name__c = :country];
 
 			if (templates != null && templates.size() > 0) {
 				assessmentTemplateId = templates[0].Id;

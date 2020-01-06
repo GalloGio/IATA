@@ -787,7 +787,7 @@ public with sharing class TestDataGenerator
 		{
 			if(c.zqu__Model__c == ZuoraUtil.ZCHARGE_MODEL_VOLUME)
 			{
-			   zTiers.addAll(generateZTiers(c.Id, 3, false));
+				 zTiers.addAll(generateZTiers(c.Id, 3, false));
 			}
 		}
 		insert zTiers;
@@ -811,7 +811,7 @@ public with sharing class TestDataGenerator
 
 	public static List<Product2> generateProductsWithPrice(Integer nb)
 	{
-	   //-- Generate nb Products
+		 //-- Generate nb Products
 		List<Product2> products = TestDataGenerator.generateProducts(nb, true);
 
 
@@ -850,7 +850,7 @@ public with sharing class TestDataGenerator
 		{
 			if(c.zqu__Model__c == ZuoraUtil.ZCHARGE_MODEL_VOLUME)
 			{
-			   zTiers.addAll(generateZTiers(c.Id, 3, false));
+				 zTiers.addAll(generateZTiers(c.Id, 3, false));
 			}
 			else
 			{
@@ -1351,11 +1351,11 @@ public with sharing class TestDataGenerator
 
 		List<SFDC_SAP_Mapping__c> mapping = new List<SFDC_SAP_Mapping__c>();
 		mapping.add(new SFDC_SAP_Mapping__c(SFDC_Order_Type__c='Order', SFDC_Order_Source__c='Inbound call', SFDC_Order_Channel__c='Central Direct Sales'
-										  , SAP_Order_Type__c='Order', SAP_Sales_Org__c='YMQ1', SAP_Distribition_Channel__c='03', SAP_Division__c='01'));
+											, SAP_Order_Type__c='Order', SAP_Sales_Org__c='YMQ1', SAP_Distribition_Channel__c='03', SAP_Division__c='01'));
 		mapping.add(new SFDC_SAP_Mapping__c(SFDC_Order_Type__c='Order', SFDC_Order_Source__c='Inbound call', SFDC_Order_Channel__c='eCommerce'
-										  , SAP_Order_Type__c='Order', SAP_Sales_Org__c='YMQ1', SAP_Distribition_Channel__c='03', SAP_Division__c='02'));
+											, SAP_Order_Type__c='Order', SAP_Sales_Org__c='YMQ1', SAP_Distribition_Channel__c='03', SAP_Division__c='02'));
 		mapping.add(new SFDC_SAP_Mapping__c(SFDC_Order_Type__c='Order', SFDC_Order_Source__c='Inbound call', SFDC_Order_Channel__c='Telesales'
-										  , SAP_Order_Type__c='Order', SAP_Sales_Org__c='YMQ1', SAP_Distribition_Channel__c='04', SAP_Division__c='04'));
+											, SAP_Order_Type__c='Order', SAP_Sales_Org__c='YMQ1', SAP_Distribition_Channel__c='04', SAP_Division__c='04'));
 
 		if(doInsert)
 			insert mapping;

@@ -104,7 +104,7 @@ public class IECEBC_ETPortfolioCreate {
 			'<s:Body xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">'+
 			'<CreateRequest xmlns="http://exacttarget.com/wsdl/partnerAPI">'+
 			'<Options/>'+
-		   	'<ns1:Objects xsi:type="ns1:Portfolio" xmlns:ns1="http://exacttarget.com/wsdl/partnerAPI">'+
+			 	'<ns1:Objects xsi:type="ns1:Portfolio" xmlns:ns1="http://exacttarget.com/wsdl/partnerAPI">'+
 			'<ns1:PartnerKey xsi:nil="true"/>'+
 			'<ns1:ModifiedDate xsi:nil="true"/>'+
 			'<ns1:ObjectID xsi:nil="true"/>'+

@@ -266,7 +266,7 @@ public virtual class vfIECEBC_Controller {
 
 				Integer idx = baseRatePlanList.size()-1;
 				while ( idx >= 0
-					   && ( baseRatePlanList[idx] != productRatePlan.Id ))
+						 && ( baseRatePlanList[idx] != productRatePlan.Id ))
 				{
 					List<Id> updatedList = new List<ID> {baseRatePlanList[idx]};
 					updatedList.addAll(targetProductRatePlanIdList); // note that we need also to maintain the list ordering
@@ -482,7 +482,7 @@ public virtual class vfIECEBC_Controller {
 		List<EBC_Order__c> BillingAccountOrders =new List<EBC_Order__c>();
 
 		BillingAccountOrders = [Select Id
-							   	,eBroadcast_Payment_Token__c
+								 	,eBroadcast_Payment_Token__c
 								, eBroadcast_Payment_Target__c
 								, eBroadcast_Payment_Subscription__c
 								, eBroadcast_Payment_Product_Rate_Plan__c
@@ -490,10 +490,10 @@ public virtual class vfIECEBC_Controller {
 								, eBroadcast_Payment_Campaign_Option__c
 								, eBroadcast_Payment_Email_Credit_Amount__c
 								, Email_Credit__c
-							   From EBC_Order__c
-							   Where billing_Account__c=: billingAccount.Id
-							   and Status__c='Pending'
-							   Limit 1];
+								 From EBC_Order__c
+								 Where billing_Account__c=: billingAccount.Id
+								 and Status__c='Pending'
+								 Limit 1];
 		if (BillingAccountOrders.Size()>0) paymentBillingAccount =BillingAccountOrders[0];
 		if (BillingAccountOrders.Size()==0) paymentBillingAccount = new EBC_Order__c(billing_Account__c= billingAccount.Id);
 

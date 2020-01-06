@@ -49,7 +49,7 @@ private class TestSendEmailToPortalAdmin {
 
 		list<Portal_Applications__c> appList  = new list<Portal_Applications__c> {
 										TestObjectCreator.buildPortalApplications2(ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_EDENRED)
-									   ,TestObjectCreator.buildPortalApplications2(ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_EDENRED)
+										 ,TestObjectCreator.buildPortalApplications2(ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_EDENRED)
 		};
 		Database.insert(appList);
 		ID applicationId1 = appList[0].Id;
@@ -110,7 +110,7 @@ private class TestSendEmailToPortalAdmin {
 
 		list<Portal_Applications__c> appList  = new list<Portal_Applications__c> {
 										TestObjectCreator.buildPortalApplications('Test Method App 001')
-									   ,TestObjectCreator.buildPortalApplications('Test Method App 002')
+										 ,TestObjectCreator.buildPortalApplications('Test Method App 002')
 		};
 		Database.insert(appList);
 		ID applicationId1 = appList[0].Id;

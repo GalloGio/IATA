@@ -563,8 +563,8 @@ public without sharing class Order_Svc
 
 	@future(callout=true)
 	public static void createSAPContractsFuture(Set<Id> orderIds){
-	   if(test.isrunningTest() && trgHndlrIECInvoice_tst.stopCallout <> null && trgHndlrIECInvoice_tst.stopCallout)
-	   return;
+		 if(test.isrunningTest() && trgHndlrIECInvoice_tst.stopCallout <> null && trgHndlrIECInvoice_tst.stopCallout)
+		 return;
 		createSAPContracts(orderIds);
 	}
 
@@ -661,8 +661,8 @@ public without sharing class Order_Svc
 						ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, String.valueOf(lstResponse[i1].Return_x)));
 					else
 						IECErrorLogger.logApexError('Order_Svc.createSAPContracts'
-												  , 'Contract is not created for order ' + lstContract[i1].Header.ZuoraInv + '\n\n' + lstContract[i1]
-												  , String.valueOf(lstResponse[i1].Return_x), true);
+													, 'Contract is not created for order ' + lstContract[i1].Header.ZuoraInv + '\n\n' + lstContract[i1]
+													, String.valueOf(lstResponse[i1].Return_x), true);
 			}
 
 			//*** update order items having contracts created
@@ -674,7 +674,7 @@ public without sharing class Order_Svc
 
 	//Create the SAP Contract for interface
 	void prepareSAPContracts(List<iataComXiSalesforceOtcWid5600Sales3.Contract_element> lstContract, Map<Integer, List<Id>> mapContractIdx_OrderItemId
-						   , Order ord, Map<Id, Product2> mapProductId_Info, Map<Id, List<Order_Item_Charge__c>> mapOrderItemId_Discount, String strRegionalProfitCenter)
+							 , Order ord, Map<Id, Product2> mapProductId_Info, Map<Id, List<Order_Item_Charge__c>> mapOrderItemId_Discount, String strRegionalProfitCenter)
 	{
 		iataComXiSalesforceOtcWid5600Sales3.Contract_element contract = null;
 		iataComXiSalesforceOtcWid5600Sales3.Header_element contractHeader;
@@ -2026,7 +2026,7 @@ public without sharing class Order_Svc
 
 			//Get the Zuora invoices
 			if(zInvoicesIds.size() > 0){
-			   //Get the Zuora invoices
+				 //Get the Zuora invoices
 				List<Zuora.zObject> zInvoices = getZuoraInvoices(zInvoicesIds);
 				for(Zuora.zObject zInv : zInvoices){
 					invoiceMap.put((String)zInv.getValue('Id'),zInv);
@@ -3269,8 +3269,8 @@ public without sharing class Order_Svc
 		for (OrderItem oi : lstOrderItem)
 			mapId_PBE.put(oi.PricebookEntryId, null);
 		for (PricebookEntry pbe : [select Id, Product2Id, Product2.SAP_Material_Number__c, Product2.Charge_Shipping__c
-								   from PricebookEntry
-								   where Id in :mapId_PBE.keySet()])
+									 from PricebookEntry
+									 where Id in :mapId_PBE.keySet()])
 			mapId_PBE.put(pbe.Id, pbe);
 
 
@@ -3484,7 +3484,7 @@ public without sharing class Order_Svc
 			Input discount type must match with prefix of discount type for SAP interface
 	****************************************************************************************************/
 	void setDiscountFromPlan(OrderItem item, List<PriceDetail_DTO> lstPrice, String strDiscountType, List<Order_Item_Charge__c> lstZDiscountCharge
-						   , String strDiscountName, Boolean shouldCheckDiscountName)
+							 , String strDiscountName, Boolean shouldCheckDiscountName)
 	{
 		//*** safety check
 		if (lstPrice == null || lstPrice.size() == 0)
@@ -3506,14 +3506,14 @@ public without sharing class Order_Svc
 					Decimal discount = ((item.UnitPrice * item.Quantity) - item.Discount__c) * price.discountPercentage / 100;
 					item.Discount__c += discount;
 					lstZDiscountCharge.add(new Order_Item_Charge__c(Name=item.PricebookEntryId, Order_Item__c=item.Id, Discount_Type__c=strDiscountType
-																  , Discount_Amount__c=discount
-																  , Zuora_Rate_Plan_Id__c=price.discountPlanId, Zuora_Rate_Plan_Charge_Id__c=price.discountChargeId));
+																	, Discount_Amount__c=discount
+																	, Zuora_Rate_Plan_Id__c=price.discountPlanId, Zuora_Rate_Plan_Charge_Id__c=price.discountChargeId));
 				}
 				else if (price.discountAmount != null)
 				{
 					lstZDiscountCharge.add(new Order_Item_Charge__c(Name=item.PricebookEntryId, Order_Item__c=item.Id, Discount_Type__c=strDiscountType
-																  , Discount_Amount__c=price.discountAmount
-																  , Zuora_Rate_Plan_Id__c=price.discountPlanId, Zuora_Rate_Plan_Charge_Id__c=price.discountChargeId));
+																	, Discount_Amount__c=price.discountAmount
+																	, Zuora_Rate_Plan_Id__c=price.discountPlanId, Zuora_Rate_Plan_Charge_Id__c=price.discountChargeId));
 				}
 			}
 	} //*** end of "setDiscountFromPlan"
@@ -3565,8 +3565,8 @@ public without sharing class Order_Svc
 					return (maxUsage > [select count()
 										from Coupon_Used__c
 										where Account__c in (select AccountId from Contact where Id = :idContact)
-										  and Product__c = :idProduct
-										  and Coupon__c = :strCoupon]);
+											and Product__c = :idProduct
+											and Coupon__c = :strCoupon]);
 				}
 				catch (Exception e){ return false; }
 
@@ -4236,7 +4236,7 @@ public without sharing class Order_Svc
 		 IF No:
 			- nothing happens with the IEC SAP Invoice Status
 
-	  *******************************************************************/
+		*******************************************************************/
 	public static void sapInvoiceStatusUpdate(Map<Id, Order> newMap, Map<Id, Order> oldMap){
 		system.debug('sap invoice status update starting...');
 

@@ -26,7 +26,7 @@ private class EF_AttachmentListControllerTest {
 			insert efPrivateGroup;
 		} else
 		{
-		   efPrivateGroup = efPrivateGroups.get(0);
+			 efPrivateGroup = efPrivateGroups.get(0);
 		}
 
 		GroupMember efGM = new GroupMember();

@@ -135,9 +135,9 @@ public with sharing class SIDRAOIActionPlansController {
 
 	public void getOIActionPlans() {
 		String queryStr = 'SELECT OI__c, Name, Met_Due_Date__c, Id, Due_Date__c, Description__c, Comment__c, Closure_Date__c, Action_Owner__c ' +
-							  'FROM OI_Action_Plan__c ' +
-							  'WHERE OI__c = \'' + this.parent.Id + '\' ' +
-							  'ORDER BY ' + strSortField + ' ' + (isSortASC ? 'ASC' : 'DESC');
+								'FROM OI_Action_Plan__c ' +
+								'WHERE OI__c = \'' + this.parent.Id + '\' ' +
+								'ORDER BY ' + strSortField + ' ' + (isSortASC ? 'ASC' : 'DESC');
 
 		this.listOIActionPlans = (list<OI_Action_Plan__c>) Database.query(queryStr);
 	}

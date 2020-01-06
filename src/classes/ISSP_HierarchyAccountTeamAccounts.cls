@@ -35,7 +35,7 @@ public without sharing class ISSP_HierarchyAccountTeamAccounts {
 
 			portaluserstatus = con.User_Portal_Status__c;
 			 system.debug('\n\n\n\n User_Portal_Status__c: '+con.User_Portal_Status__c+'\n\n\n\n');
-			  system.debug('\n\n\n\n Regional_Administrator_Countries__c: '+con.Regional_Administrator_Countries__c+'\n\n\n\n');
+				system.debug('\n\n\n\n Regional_Administrator_Countries__c: '+con.Regional_Administrator_Countries__c+'\n\n\n\n');
 
 			if(con.Regional_Administrator_Countries__c == null)
 				con.Regional_Administrator_Countries__c ='';
@@ -127,9 +127,9 @@ public without sharing class ISSP_HierarchyAccountTeamAccounts {
 						 AccTeamMember.UserId = accUserMap.get(acc.Id);
 					 AccTeamMember.TeamMemberRole = 'Portal Administrator';
 					accountTeamMemberList.add(AccTeamMember);
-	   }
+		 }
 
-	   system.debug('\n\n creatAccountTeamMember => accountTeamMemberList:'+accountTeamMemberList+'\n\n');
-	   return accountTeamMemberList;
+		 system.debug('\n\n creatAccountTeamMember => accountTeamMemberList:'+accountTeamMemberList+'\n\n');
+		 return accountTeamMemberList;
 	}
 }

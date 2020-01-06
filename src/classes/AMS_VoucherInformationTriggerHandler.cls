@@ -1,6 +1,6 @@
 public with sharing class AMS_VoucherInformationTriggerHandler {
 
-  	private static boolean recalculateLastYearFlag = true;
+		private static boolean recalculateLastYearFlag = true;
 
 	public static void handleAfterInsert(List<AMS_Voucher_Information__c> newMap) {
 		validateVoucherInfoUniqueness(newMap);

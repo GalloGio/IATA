@@ -376,10 +376,10 @@ public class SCIMServProvManager {
 			}else if(System.Trigger.isInsert && System.Trigger.isBefore ) {
 				system.debug('basto1p - TRIGGER BEFORE INSERT');
 				if(right.Right__c != null && right.Right__c.equals(IATA_STS_ACCESS_GRANTED)
-				   //&& right.Portal_Application__r.Provisioning_Type__c.equals(PROV_TYP_SCIM)
+					 //&& right.Portal_Application__r.Provisioning_Type__c.equals(PROV_TYP_SCIM)
 						&& servMap.get(right.Portal_Application__c).Provisioning_Type__c!=null
 						&& servMap.get(right.Portal_Application__c).Provisioning_Type__c.equals(PROV_TYP_SCIM)
-				  ) {
+					) {
 					system.debug('basto1p - App Provisions Type SCIM on INSERT added Technical_Provisioning_Status__c=TECH_STS_IATA_ACCESS_GRANTED');
 					right.Technical_Provisioning_Status__c = TECH_STS_IATA_ACCESS_GRANTED;
 				}

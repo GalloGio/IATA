@@ -13,7 +13,7 @@ public with sharing class IECZuoraHelper {
 					SessionID = res.Session;
 				} catch (Zuora.zRemoteException ex) {
 					if (ex.code == 'INVALID_LOGIN') {
-					   throw new IECApplicationException('Invalid Zuora Login');
+						 throw new IECApplicationException('Invalid Zuora Login');
 					}
 				} catch (Zuora.zAPIException ex) {
 					throw new IECApplicationException('There was an api exception: ' + ex.getMessage() + '\r\n' + ex.getStackTraceString());

@@ -46,10 +46,10 @@ public with sharing class clsDataCategoryContainer {
 						}
 					}else{
 						lst_DataCategories.add(new clsDataCategory(oneResult.name
-																   ,oneResult.label
-																   ,oneChildCat.getName()
-																   ,oneChildCat.getLabel()
-																   ,oneChildCat.getChildCategories()));
+																	 ,oneResult.label
+																	 ,oneChildCat.getName()
+																	 ,oneChildCat.getLabel()
+																	 ,oneChildCat.getChildCategories()));
 
 					}
 				}
@@ -65,7 +65,7 @@ public with sharing class clsDataCategoryContainer {
 
 		//system.debug('** DataCategoryContainer Data **');
 		for(clsDataCategory cdc : lst_DataCategories){
-		   cdc.print();
+			 cdc.print();
 		}
 	}
 }

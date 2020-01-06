@@ -35,11 +35,11 @@ public without sharing class OneIdLightningLoginFormController {
 	* @example
 	* changeLanguage('paulo.bastos@rightisservices.com','asdsawqe','home');
 	*/
-   @AuraEnabled
+	 @AuraEnabled
 	public static String login(String username,
-							   String password,
-							   String startUrl,
-							   String serviceName) {
+								 String password,
+								 String startUrl,
+								 String serviceName) {
 		User oneUser;
 		String pageLink = startUrl == null || startUrl.equalsIgnoreCase('undefined') ? '' : startUrl;
 		//Clear spaces
@@ -129,10 +129,10 @@ public without sharing class OneIdLightningLoginFormController {
 
 			// if PWC or DPC user
 			if(oldPortalRedirectSet.contains(oneUser.profile.Name) || oneUser.CNS_Account_or_Agency__c){ //overrides to old portal
-			   serviceName='ISSP';
-			   startUrl ='/ISSP_Homepage';
+				 serviceName='ISSP';
+				 startUrl ='/ISSP_Homepage';
 
-			   if(oneUser.CNS_Account_or_Agency__c) startUrl+='?communityName=CNS';
+				 if(oneUser.CNS_Account_or_Agency__c) startUrl+='?communityName=CNS';
 
 			}
 
