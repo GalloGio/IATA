@@ -47,7 +47,7 @@ export default class PortalServicesAvailableServicesListCard extends NavigationM
     };
 
 	get hasIcon(){
-        return this.service.recordService.Application_icon_URL__c !== undefined;
+		return this.service.recordService.Application_icon_URL__c !== undefined;
 	}
 	
     cancelSecondLevelRegistration(){
