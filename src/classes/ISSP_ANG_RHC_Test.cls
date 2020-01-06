@@ -2,74 +2,74 @@
 public class ISSP_ANG_RHC_Test {
 
 	public static testMethod void test1() {
-		        Portal_Applications__c s1 = new Portal_Applications__c (
-                Name = ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_EDENRED,
-                ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
-                ANG_Accredited_Agents_Only__c = false,
-                Agency__c = true
-            );
+				Portal_Applications__c s1 = new Portal_Applications__c (
+				Name = ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_EDENRED,
+				ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
+				ANG_Accredited_Agents_Only__c = false,
+				Agency__c = true
+			);
 
-        Portal_Applications__c s2 = new Portal_Applications__c (
-                Name = ISSP_ANG_RHC.ICE_SERVICE,
-                ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
-                ANG_Accredited_Agents_Only__c = false,
-                Agency__c = true
-            );
+		Portal_Applications__c s2 = new Portal_Applications__c (
+				Name = ISSP_ANG_RHC.ICE_SERVICE,
+				ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
+				ANG_Accredited_Agents_Only__c = false,
+				Agency__c = true
+			);
 
 
-        insert new List<Portal_Applications__c>{s1,s2};
+		insert new List<Portal_Applications__c>{s1,s2};
 
-        IATA_ISO_Country__c portugal = new IATA_ISO_Country__c (
-                Name = 'Portugal_test',
-                ISO_Code__c = 'PT',
-                ANG_Portal_Service__c = s1.id,
-                ANG_Enable_NewGen__c = true
-            );
+		IATA_ISO_Country__c portugal = new IATA_ISO_Country__c (
+				Name = 'Portugal_test',
+				ISO_Code__c = 'PT',
+				ANG_Portal_Service__c = s1.id,
+				ANG_Enable_NewGen__c = true
+			);
 
-        insert new List<IATA_ISO_Country__c>{portugal};
+		insert new List<IATA_ISO_Country__c>{portugal};
 
-        Account a = new Account (
-                name = 'AccountTest',
-                IATA_ISO_Country__c = portugal.id,
-                Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
-                ANG_IEP_Status__c = ANG_ISSP_PortalServiceHelper.STATUS_OPEN,
-                Location_type__c = 'HE',
-                IATACode__c = '1234567890',
-                ANG_Accreditation_Model__c = 'Cash',
-                Status__c = 'Approved',
-                OwnerId = UserInfo.getUserId(),
-                Location_Class__c = 'P'
-            );
+		Account a = new Account (
+				name = 'AccountTest',
+				IATA_ISO_Country__c = portugal.id,
+				Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
+				ANG_IEP_Status__c = ANG_ISSP_PortalServiceHelper.STATUS_OPEN,
+				Location_type__c = 'HE',
+				IATACode__c = '1234567890',
+				ANG_Accreditation_Model__c = 'Cash',
+				Status__c = 'Approved',
+				OwnerId = UserInfo.getUserId(),
+				Location_Class__c = 'P'
+			);
 
-        insert new List<Account>{a};
+		insert new List<Account>{a};
 
-        Contact c = new Contact (
-        		firstName = 'firstname',
-                LastName = 'ContactTest',
-                accountID = a.id
-            );
+		Contact c = new Contact (
+				firstName = 'firstname',
+				LastName = 'ContactTest',
+				accountID = a.id
+			);
 
-        insert new List<Contact>{c};
+		insert new List<Contact>{c};
 
-        Portal_Application_Right__c appRight = new Portal_Application_Right__c(
-                Portal_Application__c = s1.id,
-                Right__c = 'Access Granted',
-                Contact__c = c.Id
-        	);
+		Portal_Application_Right__c appRight = new Portal_Application_Right__c(
+				Portal_Application__c = s1.id,
+				Right__c = 'Access Granted',
+				Contact__c = c.Id
+			);
 
-        Portal_Application_Right__c appRight2 = new Portal_Application_Right__c(
-                Portal_Application__c = s2.id,
-                Right__c = 'Access Granted',
-                Contact__c = c.Id
-        	);
+		Portal_Application_Right__c appRight2 = new Portal_Application_Right__c(
+				Portal_Application__c = s2.id,
+				Right__c = 'Access Granted',
+				Contact__c = c.Id
+			);
 
-        insert new List<Portal_Application_Right__c>{appRight,appRight2};
+		insert new List<Portal_Application_Right__c>{appRight,appRight2};
 
-        Agency_Authorization__c aa = new Agency_Authorization__c (
-        		ANG_FormOfPayment_ID__c = 'CC',
-        		Account__c = a.id,
-        		Status__c = 'Active'
-        	);
+		Agency_Authorization__c aa = new Agency_Authorization__c (
+				ANG_FormOfPayment_ID__c = 'CC',
+				Account__c = a.id,
+				Status__c = 'Active'
+			);
 
 		ANG_Risk_Event_Type__c t = new ANG_Risk_Event_Type__c(
 			ANG_Description__c = 'Active event 2',
@@ -93,117 +93,117 @@ public class ISSP_ANG_RHC_Test {
 
 		insert new List<Agency_Authorization__c>{aa};
 
-        Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal'];
+		Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal'];
 
-        User testeUser1 = new User (
-                Alias = 'newUser',
-                Email='newuser@testorg.com',
-                EmailEncodingKey='UTF-8',
-                LastName='Testing1',
-                LanguageLocaleKey='en_US',
-                ContactId = c.id,
-                LocaleSidKey='en_US',
-                ProfileId = p.Id,
-                TimeZoneSidKey='America/Los_Angeles',
-                UserName='newuser@testorg.com',
-                Mgmt_Report_Team__c = true
-            );
+		User testeUser1 = new User (
+				Alias = 'newUser',
+				Email='newuser@testorg.com',
+				EmailEncodingKey='UTF-8',
+				LastName='Testing1',
+				LanguageLocaleKey='en_US',
+				ContactId = c.id,
+				LocaleSidKey='en_US',
+				ProfileId = p.Id,
+				TimeZoneSidKey='America/Los_Angeles',
+				UserName='newuser@testorg.com',
+				Mgmt_Report_Team__c = true
+			);
 
-        System.runAs(testeUser1) {
-        	ISSP_ANG_RHC cont = new ISSP_ANG_RHC();
+		System.runAs(testeUser1) {
+			ISSP_ANG_RHC cont = new ISSP_ANG_RHC();
 
-        	cont.getRiskEventList();
+			cont.getRiskEventList();
 
-        	Boolean b = cont.hasRightAccessIceService;
+			Boolean b = cont.hasRightAccessIceService;
 
-        	cont.refreshRiskEventsTable();
+			cont.refreshRiskEventsTable();
 
-        	cont.riskStatusFilter = 'Expired';
+			cont.riskStatusFilter = 'Expired';
 
-        	cont.getRiskEventList();
+			cont.getRiskEventList();
 
-        	cont.riskStatusFilter = 'Inactive';
+			cont.riskStatusFilter = 'Inactive';
 
-        	cont.getRiskEventList();
+			cont.getRiskEventList();
 
 			cont.riskStatusFilter = 'All';
 
 			cont.getRiskEventList();
-        }
+		}
 	}
 
 	public static testMethod void test2() {
-	    Portal_Applications__c s1 = new Portal_Applications__c (
-                Name = ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_EDENRED,
-                ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
-                ANG_Accredited_Agents_Only__c = false,
-                Agency__c = true
-            );
+		Portal_Applications__c s1 = new Portal_Applications__c (
+				Name = ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_EDENRED,
+				ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
+				ANG_Accredited_Agents_Only__c = false,
+				Agency__c = true
+			);
 
-        Portal_Applications__c s2 = new Portal_Applications__c (
-                Name = ISSP_ANG_RHC.ICE_SERVICE,
-                ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
-                ANG_Accredited_Agents_Only__c = false,
-                Agency__c = true
-            );
+		Portal_Applications__c s2 = new Portal_Applications__c (
+				Name = ISSP_ANG_RHC.ICE_SERVICE,
+				ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
+				ANG_Accredited_Agents_Only__c = false,
+				Agency__c = true
+			);
 
 
-        insert new List<Portal_Applications__c>{s1,s2};
+		insert new List<Portal_Applications__c>{s1,s2};
 
-        IATA_ISO_Country__c portugal = new IATA_ISO_Country__c (
-                Name = 'Portugal_test',
-                ISO_Code__c = 'PT',
-                ANG_Portal_Service__c = s1.id,
-                ANG_Enable_NewGen__c = true
-            );
+		IATA_ISO_Country__c portugal = new IATA_ISO_Country__c (
+				Name = 'Portugal_test',
+				ISO_Code__c = 'PT',
+				ANG_Portal_Service__c = s1.id,
+				ANG_Enable_NewGen__c = true
+			);
 
-        insert new List<IATA_ISO_Country__c>{portugal};
+		insert new List<IATA_ISO_Country__c>{portugal};
 
-        Account a = new Account (
-                name = 'AccountTest',
-                IATA_ISO_Country__c = portugal.id,
-                Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
-                ANG_IEP_Status__c = ANG_ISSP_PortalServiceHelper.STATUS_NO_IEP_ACCOUNT,
-                Location_type__c = 'HE',
-                IATACode__c = '1234567890',
-                ANG_Accreditation_Model__c = 'Cash',
-                Status__c = 'Approved',
-                OwnerId = UserInfo.getUserId(),
-                Location_Class__c = 'P'
-            );
+		Account a = new Account (
+				name = 'AccountTest',
+				IATA_ISO_Country__c = portugal.id,
+				Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
+				ANG_IEP_Status__c = ANG_ISSP_PortalServiceHelper.STATUS_NO_IEP_ACCOUNT,
+				Location_type__c = 'HE',
+				IATACode__c = '1234567890',
+				ANG_Accreditation_Model__c = 'Cash',
+				Status__c = 'Approved',
+				OwnerId = UserInfo.getUserId(),
+				Location_Class__c = 'P'
+			);
 
-        insert new List<Account>{a};
+		insert new List<Account>{a};
 
 
 		System.debug('ANG_IEP_Status_FF__c--->' + a.ANG_IEP_Status_FF__c);
 
-        Contact c = new Contact (
-        		firstName = 'firstname',
-                LastName = 'ContactTest',
-                accountID = a.id
-            );
+		Contact c = new Contact (
+				firstName = 'firstname',
+				LastName = 'ContactTest',
+				accountID = a.id
+			);
 
-        insert new List<Contact>{c};
+		insert new List<Contact>{c};
 
-        Portal_Application_Right__c appRight = new Portal_Application_Right__c(
-                Portal_Application__c = s1.id,
-                Right__c = 'Access Granted',
-                Contact__c = c.Id
-        	);
+		Portal_Application_Right__c appRight = new Portal_Application_Right__c(
+				Portal_Application__c = s1.id,
+				Right__c = 'Access Granted',
+				Contact__c = c.Id
+			);
 
-        Portal_Application_Right__c appRight2 = new Portal_Application_Right__c(
-                Portal_Application__c = s2.id,
-                Right__c = 'Access Granted',
-                Contact__c = c.Id
-        	);
+		Portal_Application_Right__c appRight2 = new Portal_Application_Right__c(
+				Portal_Application__c = s2.id,
+				Right__c = 'Access Granted',
+				Contact__c = c.Id
+			);
 
-        insert new List<Portal_Application_Right__c>{appRight,appRight2};
+		insert new List<Portal_Application_Right__c>{appRight,appRight2};
 
-        Agency_Authorization__c aa = new Agency_Authorization__c (
-        		ANG_FormOfPayment_ID__c = 'CA',
-        		Account__c = a.id,
-        		Status__c = 'Active'
-        	);
+		Agency_Authorization__c aa = new Agency_Authorization__c (
+				ANG_FormOfPayment_ID__c = 'CA',
+				Account__c = a.id,
+				Status__c = 'Active'
+			);
 
 		ANG_Risk_Event_Type__c t = new ANG_Risk_Event_Type__c(
 			ANG_Description__c = 'Active event 2',
@@ -227,38 +227,38 @@ public class ISSP_ANG_RHC_Test {
 
 		insert new List<Agency_Authorization__c>{aa};
 
-        Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal'];
+		Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal'];
 
-        User testeUser1 = new User (
-                Alias = 'newUser',
-                Email='newuser@testorg.com',
-                EmailEncodingKey='UTF-8',
-                LastName='Testing1',
-                LanguageLocaleKey='en_US',
-                ContactId = c.id,
-                LocaleSidKey='en_US',
-                ProfileId = p.Id,
-                TimeZoneSidKey='America/Los_Angeles',
-                UserName='newuser@testorg.com',
-                Mgmt_Report_Team__c = true
-            );
+		User testeUser1 = new User (
+				Alias = 'newUser',
+				Email='newuser@testorg.com',
+				EmailEncodingKey='UTF-8',
+				LastName='Testing1',
+				LanguageLocaleKey='en_US',
+				ContactId = c.id,
+				LocaleSidKey='en_US',
+				ProfileId = p.Id,
+				TimeZoneSidKey='America/Los_Angeles',
+				UserName='newuser@testorg.com',
+				Mgmt_Report_Team__c = true
+			);
 
-        System.runAs(testeUser1) {
-        	ISSP_ANG_RHC cont = new ISSP_ANG_RHC();
+		System.runAs(testeUser1) {
+			ISSP_ANG_RHC cont = new ISSP_ANG_RHC();
 
-        	cont.getRiskEventList();
+			cont.getRiskEventList();
 
-        	Boolean b = cont.hasRightAccessIceService;
+			Boolean b = cont.hasRightAccessIceService;
 
-        	cont.refreshRiskEventsTable();
+			cont.refreshRiskEventsTable();
 
-        	cont.riskStatusFilter = 'Expired';
+			cont.riskStatusFilter = 'Expired';
 
-        	cont.getRiskEventList();
+			cont.getRiskEventList();
 
-        	cont.riskStatusFilter = 'Inactive';
+			cont.riskStatusFilter = 'Inactive';
 
-        	cont.getRiskEventList();
+			cont.getRiskEventList();
 
 			cont.riskStatusFilter = 'All';
 
@@ -268,83 +268,83 @@ public class ISSP_ANG_RHC_Test {
 			System.assertEquals(false, cont.afpWrapper.isBOPFlag);
 			System.assertEquals(false, cont.afpWrapper.isInternational);
 			System.assertEquals(false, cont.afpWrapper.isDomestic);
-        }
+		}
 	}
 
 	public static testMethod void test3() {
-	    Portal_Applications__c s1 = new Portal_Applications__c (
-                Name = ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_EDENRED,
-                ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
-                ANG_Accredited_Agents_Only__c = false,
-                Agency__c = true
-            );
+		Portal_Applications__c s1 = new Portal_Applications__c (
+				Name = ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_EDENRED,
+				ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
+				ANG_Accredited_Agents_Only__c = false,
+				Agency__c = true
+			);
 
-        Portal_Applications__c s2 = new Portal_Applications__c (
-                Name = ISSP_ANG_RHC.ICE_SERVICE,
-                ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
-                ANG_Accredited_Agents_Only__c = false,
-                Agency__c = true
-            );
+		Portal_Applications__c s2 = new Portal_Applications__c (
+				Name = ISSP_ANG_RHC.ICE_SERVICE,
+				ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
+				ANG_Accredited_Agents_Only__c = false,
+				Agency__c = true
+			);
 
 
-        insert new List<Portal_Applications__c>{s1,s2};
+		insert new List<Portal_Applications__c>{s1,s2};
 
-        IATA_ISO_Country__c indonesia = new IATA_ISO_Country__c (
-                Name = 'Indonesia',
-                ISO_Code__c = 'ID',
-                ANG_Portal_Service__c = s1.id,
-                ANG_Enable_NewGen__c = true
-            );
+		IATA_ISO_Country__c indonesia = new IATA_ISO_Country__c (
+				Name = 'Indonesia',
+				ISO_Code__c = 'ID',
+				ANG_Portal_Service__c = s1.id,
+				ANG_Enable_NewGen__c = true
+			);
 
-        insert new List<IATA_ISO_Country__c>{indonesia};
+		insert new List<IATA_ISO_Country__c>{indonesia};
 
-        Account a = new Account (
-                name = 'AccountTest',
-                IATA_ISO_Country__c = indonesia.id,
-                Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
-                ANG_IEP_Status__c = ANG_ISSP_PortalServiceHelper.STATUS_OPEN,
-                Location_type__c = 'HE',
-                IATACode__c = '1234567890',
-                ANG_Accreditation_Model__c = 'Cashless',
-                Status__c = 'Approved',
-                OwnerId = UserInfo.getUserId(),
-                Financial_Review_Result__c = 'Unsatisfactory',
-                Location_Class__c = 'P',
+		Account a = new Account (
+				name = 'AccountTest',
+				IATA_ISO_Country__c = indonesia.id,
+				Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
+				ANG_IEP_Status__c = ANG_ISSP_PortalServiceHelper.STATUS_OPEN,
+				Location_type__c = 'HE',
+				IATACode__c = '1234567890',
+				ANG_Accreditation_Model__c = 'Cashless',
+				Status__c = 'Approved',
+				OwnerId = UserInfo.getUserId(),
+				Financial_Review_Result__c = 'Unsatisfactory',
+				Location_Class__c = 'P',
 				Category__c = AMS_Utils.CATEGORY_PASSENGER_SALES_AGENT
-            );
+			);
 
-        insert new List<Account>{a};
+		insert new List<Account>{a};
 
-        Contact c = new Contact (
-        		firstName = 'firstname',
-                LastName = 'ContactTest',
-                accountID = a.id,
-                Authorized_Signatory__c = true
-            );
+		Contact c = new Contact (
+				firstName = 'firstname',
+				LastName = 'ContactTest',
+				accountID = a.id,
+				Authorized_Signatory__c = true
+			);
 
-        insert new List<Contact>{c};
+		insert new List<Contact>{c};
 
-        Portal_Application_Right__c appRight = new Portal_Application_Right__c(
-                Portal_Application__c = s1.id,
-                Right__c = 'Access Requested',
-                Contact__c = c.Id
-        	);
+		Portal_Application_Right__c appRight = new Portal_Application_Right__c(
+				Portal_Application__c = s1.id,
+				Right__c = 'Access Requested',
+				Contact__c = c.Id
+			);
 
-        Portal_Application_Right__c appRight2 = new Portal_Application_Right__c(
-                Portal_Application__c = s2.id,
-                Right__c = 'Access Requested',
-                Contact__c = c.Id
-        	);
+		Portal_Application_Right__c appRight2 = new Portal_Application_Right__c(
+				Portal_Application__c = s2.id,
+				Right__c = 'Access Requested',
+				Contact__c = c.Id
+			);
 
-        insert new List<Portal_Application_Right__c>{appRight,appRight2};
+		insert new List<Portal_Application_Right__c>{appRight,appRight2};
 
-        Agency_Authorization__c aa = new Agency_Authorization__c (
-        		ANG_FormOfPayment_ID__c = 'CC',
-        		Account__c = a.id,
-        		Status__c = 'Active'
-        	);
+		Agency_Authorization__c aa = new Agency_Authorization__c (
+				ANG_FormOfPayment_ID__c = 'CC',
+				Account__c = a.id,
+				Status__c = 'Active'
+			);
 
-        insert new List<Agency_Authorization__c>{aa};
+		insert new List<Agency_Authorization__c>{aa};
 
 		Case ca = new Case(
 
@@ -372,113 +372,113 @@ public class ISSP_ANG_RHC_Test {
 
 		insert e;
 
-        Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal'];
+		Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal'];
 
-        User testeUser1 = new User (
-                Alias = 'newUser',
-                Email='newuser@testorg.com',
-                EmailEncodingKey='UTF-8',
-                LastName='Testing1',
-                LanguageLocaleKey='en_US',
-                ContactId = c.id,
-                LocaleSidKey='en_US',
-                ProfileId = p.Id,
-                TimeZoneSidKey='America/Los_Angeles',
-                UserName='newuser@testorg.com',
-                Mgmt_Report_Team__c = true
-            );
+		User testeUser1 = new User (
+				Alias = 'newUser',
+				Email='newuser@testorg.com',
+				EmailEncodingKey='UTF-8',
+				LastName='Testing1',
+				LanguageLocaleKey='en_US',
+				ContactId = c.id,
+				LocaleSidKey='en_US',
+				ProfileId = p.Id,
+				TimeZoneSidKey='America/Los_Angeles',
+				UserName='newuser@testorg.com',
+				Mgmt_Report_Team__c = true
+			);
 
-        System.runAs(testeUser1) {
-        	ISSP_ANG_RHC cont = new ISSP_ANG_RHC();
+		System.runAs(testeUser1) {
+			ISSP_ANG_RHC cont = new ISSP_ANG_RHC();
 
-        	cont.getRiskEventList();
+			cont.getRiskEventList();
 
-        	Boolean b = cont.hasRightAccessIceService;
+			Boolean b = cont.hasRightAccessIceService;
 
-        	cont.refreshRiskEventsTable();
+			cont.refreshRiskEventsTable();
 
-        	cont.riskStatusFilter = 'Expired';
+			cont.riskStatusFilter = 'Expired';
 
-        	cont.getRiskEventList();
+			cont.getRiskEventList();
 
-        	cont.riskStatusFilter = 'Inactive';
+			cont.riskStatusFilter = 'Inactive';
 
-        	cont.getRiskEventList();
+			cont.getRiskEventList();
 
 			cont.riskStatusFilter = 'All';
 
 			cont.getRiskEventList();
-        }
+		}
 	}
 
 	public static testMethod void test4() {
-		        Portal_Applications__c s1 = new Portal_Applications__c (
-                Name = ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_EDENRED,
-                ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
-                ANG_Accredited_Agents_Only__c = false,
-                Agency__c = true
-            );
+				Portal_Applications__c s1 = new Portal_Applications__c (
+				Name = ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_EDENRED,
+				ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
+				ANG_Accredited_Agents_Only__c = false,
+				Agency__c = true
+			);
 
-        Portal_Applications__c s2 = new Portal_Applications__c (
-                Name = ISSP_ANG_RHC.ICE_SERVICE,
-                ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
-                ANG_Accredited_Agents_Only__c = false,
-                Agency__c = true
-            );
+		Portal_Applications__c s2 = new Portal_Applications__c (
+				Name = ISSP_ANG_RHC.ICE_SERVICE,
+				ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
+				ANG_Accredited_Agents_Only__c = false,
+				Agency__c = true
+			);
 
 
-        insert new List<Portal_Applications__c>{s1,s2};
+		insert new List<Portal_Applications__c>{s1,s2};
 
-        IATA_ISO_Country__c korea = new IATA_ISO_Country__c (
-                Name = 'South_Korea_test',
-                ISO_Code__c = 'KR',
-                ANG_Portal_Service__c = s1.id,
+		IATA_ISO_Country__c korea = new IATA_ISO_Country__c (
+				Name = 'South_Korea_test',
+				ISO_Code__c = 'KR',
+				ANG_Portal_Service__c = s1.id,
 				ANG_IEP_Model__c = 'Banking Model'
-            );
+			);
 
-        insert new List<IATA_ISO_Country__c>{korea};
+		insert new List<IATA_ISO_Country__c>{korea};
 
-        Account a = new Account (
-                name = 'AccountTest',
-                IATA_ISO_Country__c = korea.id,
-                Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
-                ANG_IEP_Status__c = ANG_ISSP_PortalServiceHelper.STATUS_NO_IEP_ACCOUNT,
-                Location_type__c = 'HO',
-                IATACode__c = '1234567890',
-                ANG_Accreditation_Model__c = 'Cash',
-                Status__c = 'Approved',
-                OwnerId = UserInfo.getUserId()
-            );
+		Account a = new Account (
+				name = 'AccountTest',
+				IATA_ISO_Country__c = korea.id,
+				Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
+				ANG_IEP_Status__c = ANG_ISSP_PortalServiceHelper.STATUS_NO_IEP_ACCOUNT,
+				Location_type__c = 'HO',
+				IATACode__c = '1234567890',
+				ANG_Accreditation_Model__c = 'Cash',
+				Status__c = 'Approved',
+				OwnerId = UserInfo.getUserId()
+			);
 
-        insert new List<Account>{a};
+		insert new List<Account>{a};
 
-        Contact c = new Contact (
-        		firstName = 'firstname',
-                LastName = 'ContactTest',
-                accountID = a.id
-            );
+		Contact c = new Contact (
+				firstName = 'firstname',
+				LastName = 'ContactTest',
+				accountID = a.id
+			);
 
-        insert new List<Contact>{c};
+		insert new List<Contact>{c};
 
-        Portal_Application_Right__c appRight = new Portal_Application_Right__c(
-                Portal_Application__c = s1.id,
-                Right__c = 'Access Granted',
-                Contact__c = c.Id
-        	);
+		Portal_Application_Right__c appRight = new Portal_Application_Right__c(
+				Portal_Application__c = s1.id,
+				Right__c = 'Access Granted',
+				Contact__c = c.Id
+			);
 
-        Portal_Application_Right__c appRight2 = new Portal_Application_Right__c(
-                Portal_Application__c = s2.id,
-                Right__c = 'Access Granted',
-                Contact__c = c.Id
-        	);
+		Portal_Application_Right__c appRight2 = new Portal_Application_Right__c(
+				Portal_Application__c = s2.id,
+				Right__c = 'Access Granted',
+				Contact__c = c.Id
+			);
 
-        insert new List<Portal_Application_Right__c>{appRight,appRight2};
+		insert new List<Portal_Application_Right__c>{appRight,appRight2};
 
-        Agency_Authorization__c aa = new Agency_Authorization__c (
-        		ANG_FormOfPayment_ID__c = 'CC',
-        		Account__c = a.id,
-        		Status__c = 'Active'
-        	);
+		Agency_Authorization__c aa = new Agency_Authorization__c (
+				ANG_FormOfPayment_ID__c = 'CC',
+				Account__c = a.id,
+				Status__c = 'Active'
+			);
 
 		ANG_Risk_Event_Type__c t = new ANG_Risk_Event_Type__c(
 			ANG_Description__c = 'Active event 2',
@@ -502,97 +502,97 @@ public class ISSP_ANG_RHC_Test {
 
 		insert new List<Agency_Authorization__c>{aa};
 
-        Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal'];
+		Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal'];
 
-        User testeUser1 = new User (
-                Alias = 'newUser',
-                Email='newuser@testorg.com',
-                EmailEncodingKey='UTF-8',
-                LastName='Testing1',
-                LanguageLocaleKey='en_US',
-                ContactId = c.id,
-                LocaleSidKey='en_US',
-                ProfileId = p.Id,
-                TimeZoneSidKey='America/Los_Angeles',
-                UserName='newuser@testorg.com',
-                Mgmt_Report_Team__c = true
-            );
+		User testeUser1 = new User (
+				Alias = 'newUser',
+				Email='newuser@testorg.com',
+				EmailEncodingKey='UTF-8',
+				LastName='Testing1',
+				LanguageLocaleKey='en_US',
+				ContactId = c.id,
+				LocaleSidKey='en_US',
+				ProfileId = p.Id,
+				TimeZoneSidKey='America/Los_Angeles',
+				UserName='newuser@testorg.com',
+				Mgmt_Report_Team__c = true
+			);
 
-        System.runAs(testeUser1) {
-        	ISSP_ANG_RHC cont = new ISSP_ANG_RHC();
+		System.runAs(testeUser1) {
+			ISSP_ANG_RHC cont = new ISSP_ANG_RHC();
 
-            //cont.initFormsOfPayment();
+			//cont.initFormsOfPayment();
 
-        }
+		}
 	}
 
 	public static testMethod void test5() {
-		        Portal_Applications__c s1 = new Portal_Applications__c (
-                Name = ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_EDENRED,
-                ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
-                ANG_Accredited_Agents_Only__c = false,
-                Agency__c = true
-            );
+				Portal_Applications__c s1 = new Portal_Applications__c (
+				Name = ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_EDENRED,
+				ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
+				ANG_Accredited_Agents_Only__c = false,
+				Agency__c = true
+			);
 
-        Portal_Applications__c s2 = new Portal_Applications__c (
-                Name = ISSP_ANG_RHC.ICE_SERVICE,
-                ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
-                ANG_Accredited_Agents_Only__c = false,
-                Agency__c = true
-            );
+		Portal_Applications__c s2 = new Portal_Applications__c (
+				Name = ISSP_ANG_RHC.ICE_SERVICE,
+				ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
+				ANG_Accredited_Agents_Only__c = false,
+				Agency__c = true
+			);
 
 
-        insert new List<Portal_Applications__c>{s1,s2};
+		insert new List<Portal_Applications__c>{s1,s2};
 
-        IATA_ISO_Country__c china = new IATA_ISO_Country__c (
-                Name = 'China_test',
-                ISO_Code__c = 'CN',
-                ANG_Portal_Service__c = s1.id
-            );
+		IATA_ISO_Country__c china = new IATA_ISO_Country__c (
+				Name = 'China_test',
+				ISO_Code__c = 'CN',
+				ANG_Portal_Service__c = s1.id
+			);
 
-        insert new List<IATA_ISO_Country__c>{china};
+		insert new List<IATA_ISO_Country__c>{china};
 
-        Account a = new Account (
-                name = 'AccountTest',
-                IATA_ISO_Country__c = china.id,
-                Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
-                ANG_IEP_Status__c = ANG_ISSP_PortalServiceHelper.STATUS_NO_IEP_ACCOUNT,
-                Location_type__c = 'AO',
-                IATACode__c = '1234567890',
-                ANG_Accreditation_Model__c = 'Cash',
-                Status__c = 'Approved',
-                OwnerId = UserInfo.getUserId()
-            );
+		Account a = new Account (
+				name = 'AccountTest',
+				IATA_ISO_Country__c = china.id,
+				Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
+				ANG_IEP_Status__c = ANG_ISSP_PortalServiceHelper.STATUS_NO_IEP_ACCOUNT,
+				Location_type__c = 'AO',
+				IATACode__c = '1234567890',
+				ANG_Accreditation_Model__c = 'Cash',
+				Status__c = 'Approved',
+				OwnerId = UserInfo.getUserId()
+			);
 
-        insert new List<Account>{a};
+		insert new List<Account>{a};
 
-        Contact c = new Contact (
-        		firstName = 'firstname',
-                LastName = 'ContactTest',
-                accountID = a.id
-            );
+		Contact c = new Contact (
+				firstName = 'firstname',
+				LastName = 'ContactTest',
+				accountID = a.id
+			);
 
-        insert new List<Contact>{c};
+		insert new List<Contact>{c};
 
-        Portal_Application_Right__c appRight = new Portal_Application_Right__c(
-                Portal_Application__c = s1.id,
-                Right__c = 'Access Granted',
-                Contact__c = c.Id
-        	);
+		Portal_Application_Right__c appRight = new Portal_Application_Right__c(
+				Portal_Application__c = s1.id,
+				Right__c = 'Access Granted',
+				Contact__c = c.Id
+			);
 
-        Portal_Application_Right__c appRight2 = new Portal_Application_Right__c(
-                Portal_Application__c = s2.id,
-                Right__c = 'Access Granted',
-                Contact__c = c.Id
-        	);
+		Portal_Application_Right__c appRight2 = new Portal_Application_Right__c(
+				Portal_Application__c = s2.id,
+				Right__c = 'Access Granted',
+				Contact__c = c.Id
+			);
 
-        insert new List<Portal_Application_Right__c>{appRight,appRight2};
+		insert new List<Portal_Application_Right__c>{appRight,appRight2};
 
-        Agency_Authorization__c aa = new Agency_Authorization__c (
-        		ANG_FormOfPayment_ID__c = 'CC',
-        		Account__c = a.id,
-        		Status__c = 'Active'
-        	);
+		Agency_Authorization__c aa = new Agency_Authorization__c (
+				ANG_FormOfPayment_ID__c = 'CC',
+				Account__c = a.id,
+				Status__c = 'Active'
+			);
 
 		ANG_Risk_Event_Type__c t = new ANG_Risk_Event_Type__c(
 			ANG_Description__c = 'Active event 2',
@@ -616,27 +616,27 @@ public class ISSP_ANG_RHC_Test {
 
 		insert new List<Agency_Authorization__c>{aa};
 
-        Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal'];
+		Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal'];
 
-        User testeUser1 = new User (
-                Alias = 'newUser',
-                Email='newuser@testorg.com',
-                EmailEncodingKey='UTF-8',
-                LastName='Testing1',
-                LanguageLocaleKey='en_US',
-                ContactId = c.id,
-                LocaleSidKey='en_US',
-                ProfileId = p.Id,
-                TimeZoneSidKey='America/Los_Angeles',
-                UserName='newuser@testorg.com',
-                Mgmt_Report_Team__c = true
-            );
+		User testeUser1 = new User (
+				Alias = 'newUser',
+				Email='newuser@testorg.com',
+				EmailEncodingKey='UTF-8',
+				LastName='Testing1',
+				LanguageLocaleKey='en_US',
+				ContactId = c.id,
+				LocaleSidKey='en_US',
+				ProfileId = p.Id,
+				TimeZoneSidKey='America/Los_Angeles',
+				UserName='newuser@testorg.com',
+				Mgmt_Report_Team__c = true
+			);
 
-        System.runAs(testeUser1) {
-        	ISSP_ANG_RHC cont = new ISSP_ANG_RHC();
+		System.runAs(testeUser1) {
+			ISSP_ANG_RHC cont = new ISSP_ANG_RHC();
 
-        	//cont.initFormsOfPayment();
+			//cont.initFormsOfPayment();
 
-        }
+		}
 	}
 }

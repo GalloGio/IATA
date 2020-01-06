@@ -1,8 +1,8 @@
 public class ANG_Apply_RHC_Equal_FS_Controller {
-	public static string RHCConfRT = RecordTypeSingleton.getInstance().getRecordTypeID('ANG_BSP_Attributes__c', 'RHC_Amount_Conf'); 
-	public static string CCConfRT = RecordTypeSingleton.getInstance().getRecordTypeID('ANG_BSP_Attributes__c', 'Cash_Condition_Conf'); 
+	public static string RHCConfRT = RecordTypeSingleton.getInstance().getRecordTypeID('ANG_BSP_Attributes__c', 'RHC_Amount_Conf');
+	public static string CCConfRT = RecordTypeSingleton.getInstance().getRecordTypeID('ANG_BSP_Attributes__c', 'Cash_Condition_Conf');
 	public static Set<String> countrySpecificsList = new Set<String>{'BSP-HK','BSP-MO'};
-	
+
 	public List<SelectOption> modes {get; private set;}
 	public List<SelectOption> actions {get; private set;}
 	public List<SelectOption> bsps {get; private set;}
@@ -27,21 +27,21 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
 	public Boolean agenciesFound {get; private set;}
 	public ApexPages.StandardSetController ssController {get; private set;}
 	public Boolean hasNext {get {return ssController.getHasNext();} set;}
-    public Boolean hasPrevious {get {return ssController.getHasPrevious();} set;}
-    public Boolean isValidPercentageFS {get {return percentageFS.isNumeric() && Decimal.valueof(percentageFS) > 0 ;} set;}
+		public Boolean hasPrevious {get {return ssController.getHasPrevious();} set;}
+		public Boolean isValidPercentageFS {get {return percentageFS.isNumeric() && Decimal.valueof(percentageFS) > 0 ;} set;}
 	public List<ANG_RHC_Information__c> agencies {
 		get {return (ssController != null) ? (List<ANG_RHC_Information__c>)ssController.getRecords() : agencies;}
 		private set;
 	}
 
 	public list <ANG_BSP_Attributes__c> bspAttributes{get; private set;}
-	
-	public list <ANG_BSP_Attributes__c> attributesToShow { get{ 
+
+	public list <ANG_BSP_Attributes__c> attributesToShow { get{
 		list <ANG_BSP_Attributes__c> temp = new list <ANG_BSP_Attributes__c>();
 		if(bspAttributes != null)
 			for (ANG_BSP_Attributes__c bsp :bspAttributes)
 				if (bsp.recordtypeid == RHCConfRT) temp.add(bsp);
-		
+
 		return temp;
 		 } private set;}
 
@@ -65,69 +65,69 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
 	}
 
 	private void populateModes() {
-        modes = new List<SelectOption>();
+				modes = new List<SelectOption>();
 
-        modes.add(new SelectOption('', 'Select Mode'));
-        modes.add(new SelectOption('IATA_Code','IATA Code'));
-        modes.add(new SelectOption('BSP','BSP'));
-    }
+				modes.add(new SelectOption('', 'Select Mode'));
+				modes.add(new SelectOption('IATA_Code','IATA Code'));
+				modes.add(new SelectOption('BSP','BSP'));
+		}
 
-    private void populateActions() {
+		private void populateActions() {
 
-        actions = new List<SelectOption>();
+				actions = new List<SelectOption>();
 
-        actions.add(new SelectOption('', 'Select Action'));
-        //actions.add(new SelectOption('Apply_RHC','Apply RHC equal FS'));
-        //actions.add(new SelectOption('Revert_RHC','Revert RHC equal FS'));
-        actions.add(new SelectOption('Apply_RHC_regardless','Apply RHC = FS% regardless of Risk Status'));
-        actions.add(new SelectOption('Revert_RHC_regardless','Revert RHC = FS% regardless of Risk Status'));
-        actions.add(new SelectOption('Apply_RHC_per_RS','Apply RHC = FS % per Risk Status'));
-        actions.add(new SelectOption('Revert_RHC_per_RS','Revert RHC = FS % per Risk Status'));
-    }
+				actions.add(new SelectOption('', 'Select Action'));
+				//actions.add(new SelectOption('Apply_RHC','Apply RHC equal FS'));
+				//actions.add(new SelectOption('Revert_RHC','Revert RHC equal FS'));
+				actions.add(new SelectOption('Apply_RHC_regardless','Apply RHC = FS% regardless of Risk Status'));
+				actions.add(new SelectOption('Revert_RHC_regardless','Revert RHC = FS% regardless of Risk Status'));
+				actions.add(new SelectOption('Apply_RHC_per_RS','Apply RHC = FS % per Risk Status'));
+				actions.add(new SelectOption('Revert_RHC_per_RS','Revert RHC = FS % per Risk Status'));
+		}
 
-    private void populateBSPs() {
-    	bsps = new List<SelectOption>();
-    	bsps.add(new SelectOption('', 'Select BSP'));
+		private void populateBSPs() {
+			bsps = new List<SelectOption>();
+			bsps.add(new SelectOption('', 'Select BSP'));
 
-    	for(AMS_Settlement_System__c fetchedBSP: [SELECT Id, Name 
-    												FROM AMS_Settlement_System__c
-    												WHERE RecordType.Name = 'BSP'
-    												ORDER BY Name]) {
-    		bsps.add(new SelectOption(fetchedBSP.Name, fetchedBSP.Name));
-    	}
-    }
+			for(AMS_Settlement_System__c fetchedBSP: [SELECT Id, Name
+														FROM AMS_Settlement_System__c
+														WHERE RecordType.Name = 'BSP'
+														ORDER BY Name]) {
+				bsps.add(new SelectOption(fetchedBSP.Name, fetchedBSP.Name));
+			}
+		}
 
-    private void populatePagination(){
-	    paginationSizeOptions = new List<SelectOption>();
-	    
-	    paginationSizeOptions.add(new SelectOption('5','5'));
-	    paginationSizeOptions.add(new SelectOption('10','10'));
-	    paginationSizeOptions.add(new SelectOption('20','20'));
-	    paginationSizeOptions.add(new SelectOption('50','50'));
-	    paginationSizeOptions.add(new SelectOption('100','100'));
+		private void populatePagination(){
+			paginationSizeOptions = new List<SelectOption>();
+
+			paginationSizeOptions.add(new SelectOption('5','5'));
+			paginationSizeOptions.add(new SelectOption('10','10'));
+			paginationSizeOptions.add(new SelectOption('20','20'));
+			paginationSizeOptions.add(new SelectOption('50','50'));
+			paginationSizeOptions.add(new SelectOption('100','100'));
 	}
 
 	public PageReference refreshPageSize() {
-	    ssController.setPageSize(size);
-	    return null;
+			ssController.setPageSize(size);
+			return null;
 	}
 
-    public PageReference fetchAgencies() {
-        mustPreventApply = false;
-    	ssController = null;
-    	agencies = null;
-    	renderConfirmButton = true;
-    	previousBspValue = bspValue;
-    	previousIataCode = iataCode;
-    	previousModeValue = modeValue;
-    	previousActionValue = actionValue;
-    	batchStatusBool = false;
-    	batchJob = null;
-    	Boolean rhcFlag = actionValue == 'Apply_RHC_regardless' || actionValue == 'Apply_RHC_per_RS' ? false : true; //Apply_RHC_per_RS
+		public PageReference fetchAgencies() {
+				mustPreventApply = false;
+			ssController = null;
+			agencies = null;
+			renderConfirmButton = true;
+			previousBspValue = bspValue;
+			previousIataCode = iataCode;
+			previousModeValue = modeValue;
+			previousActionValue = actionValue;
+			batchStatusBool = false;
+			batchJob = null;
+			Boolean rhcFlag = actionValue == 'Apply_RHC_regardless' || actionValue == 'Apply_RHC_per_RS' ? false : true; //Apply_RHC_per_RS
 
-    	if (modeValue == 'BSP') {
-    		agencies = [SELECT Id, ANG_RHC_Amount__c, ANG_Financial_Security__c, ANG_RHC_Amount_Equals_FS__c, ANG_AccountId__r.Id, ANG_AccountId__r.Name, 
-							ANG_AccountId__r.IATACode__c, ANG_AccountId__r.Status__c, ANG_AccountId__r.IATA_ISO_Country__c, ANG_AccountId__r.Location_Type__c, 
+			if (modeValue == 'BSP') {
+				agencies = [SELECT Id, ANG_RHC_Amount__c, ANG_Financial_Security__c, ANG_RHC_Amount_Equals_FS__c, ANG_AccountId__r.Id, ANG_AccountId__r.Name,
+							ANG_AccountId__r.IATACode__c, ANG_AccountId__r.Status__c, ANG_AccountId__r.IATA_ISO_Country__c, ANG_AccountId__r.Location_Type__c,
 							ANG_AccountId__r.Location_Class__c, ANG_AccountId__r.IATA_ISO_Country__r.AMS_Settlement_System__c, RHC_Amount_Equals_FS_Percent__c,
 							ANG_Minimum_Financial_Security__c
 						FROM ANG_RHC_Information__c
@@ -136,41 +136,41 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
 							AND ANG_AccountId__r.Location_Type__c = 'HE'
 							AND ANG_AccountId__r.ANG_IsNewGenAgency__c = true
 							AND ANG_AccountId__r.RecordTypeId = :AMS_Utils.RECTYPE_IATAAGENCY
-							AND ANG_AccountId__r.IATA_ISO_Country__r.AMS_Settlement_System__r.Name = :bspValue 
+							AND ANG_AccountId__r.IATA_ISO_Country__r.AMS_Settlement_System__r.Name = :bspValue
 							AND ANG_AccountId__r.ANG_Accreditation_Model__c = :AMS_Utils.ACCREDITATIONMODEL_CASH
 						ORDER BY ANG_AccountId__r.Name];
-    	
-        bspAttributes = [SELECT ID,FS_Percentage__c,BSP__c,Max_FA_Points__c,Min_FA_Points__c, RHC_Amnt_Calc_Type__c, Remittance_Frequency__c,Risk_Status__c, UniqueKey__c, RecordTypeid FROM ANG_BSP_Attributes__c WHERE BSP__r.name = :bspValue ORDER BY Risk_Status__c];
-    	
-    	if (actionValue == 'Apply_RHC_regardless' || actionValue == 'Apply_RHC_per_RS' ){
-    		Decimal value = -1; 
-    		Boolean isSameValue = true;
-    		Boolean mayBeBlock = false;
-    		for(ANG_BSP_Attributes__c bsp : bspAttributes){
 
-    			if(bsp.RHC_Amnt_Calc_Type__c == 'Fixed Percentage' && bsp.recordtypeid == RHCConfRT){
-    				mayBeBlock = true;
-    				if(value == -1) value = bsp.FS_Percentage__c;
-    				
-    				isSameValue = (value == bsp.FS_Percentage__c);
-    				if(!isSameValue) break; 
-    			}
-    		}
-    	
+				bspAttributes = [SELECT ID,FS_Percentage__c,BSP__c,Max_FA_Points__c,Min_FA_Points__c, RHC_Amnt_Calc_Type__c, Remittance_Frequency__c,Risk_Status__c, UniqueKey__c, RecordTypeid FROM ANG_BSP_Attributes__c WHERE BSP__r.name = :bspValue ORDER BY Risk_Status__c];
 
-            if(mayBeBlock && ((isSameValue && actionValue == 'Apply_RHC_per_RS') || (!isSameValue && actionValue == 'Apply_RHC_regardless'))){
-                    mustPreventApply = true;
-                    ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.ERROR,'Please proceed to revert existing conditions before applying new conditions.');
-                    ApexPages.addMessage(myMsg);
-            }
-        }
-        if(actionValue == 'Apply_RHC_per_RS' && showCountrySpecificColumns && bspAttributes.size() <= 4){
-    		AMS_Settlement_System__c operation = [SELECT  id, name FROM AMS_Settlement_System__c WHERE name = :bspValue limit 1];
-    		List<ANG_BSP_Attributes__c> listBspToInsert =  new List<ANG_BSP_Attributes__c>{new ANG_BSP_Attributes__c(Risk_Status__c = 'A', BSP__c = operation.id, recordtypeid = RHCConfRT), new ANG_BSP_Attributes__c(Risk_Status__c = 'B', BSP__c = operation.id, recordtypeid = RHCConfRT)};
-            bspAttributes.addAll(listBspToInsert);
-            
-            List<BSPAttributeWrapper> sortedBSPAttributeWrapper = new List<BSPAttributeWrapper>();
-            for(ANG_BSP_Attributes__c bsp : bspAttributes){
+			if (actionValue == 'Apply_RHC_regardless' || actionValue == 'Apply_RHC_per_RS' ){
+				Decimal value = -1;
+				Boolean isSameValue = true;
+				Boolean mayBeBlock = false;
+				for(ANG_BSP_Attributes__c bsp : bspAttributes){
+
+					if(bsp.RHC_Amnt_Calc_Type__c == 'Fixed Percentage' && bsp.recordtypeid == RHCConfRT){
+						mayBeBlock = true;
+						if(value == -1) value = bsp.FS_Percentage__c;
+
+						isSameValue = (value == bsp.FS_Percentage__c);
+						if(!isSameValue) break;
+					}
+				}
+
+
+						if(mayBeBlock && ((isSameValue && actionValue == 'Apply_RHC_per_RS') || (!isSameValue && actionValue == 'Apply_RHC_regardless'))){
+										mustPreventApply = true;
+										ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.ERROR,'Please proceed to revert existing conditions before applying new conditions.');
+										ApexPages.addMessage(myMsg);
+						}
+				}
+				if(actionValue == 'Apply_RHC_per_RS' && showCountrySpecificColumns && bspAttributes.size() <= 4){
+				AMS_Settlement_System__c operation = [SELECT  id, name FROM AMS_Settlement_System__c WHERE name = :bspValue limit 1];
+				List<ANG_BSP_Attributes__c> listBspToInsert =  new List<ANG_BSP_Attributes__c>{new ANG_BSP_Attributes__c(Risk_Status__c = 'A', BSP__c = operation.id, recordtypeid = RHCConfRT), new ANG_BSP_Attributes__c(Risk_Status__c = 'B', BSP__c = operation.id, recordtypeid = RHCConfRT)};
+						bspAttributes.addAll(listBspToInsert);
+
+						List<BSPAttributeWrapper> sortedBSPAttributeWrapper = new List<BSPAttributeWrapper>();
+						for(ANG_BSP_Attributes__c bsp : bspAttributes){
 				sortedBSPAttributeWrapper.add(new BSPAttributeWrapper(bsp));
 			}
 
@@ -179,66 +179,66 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
 			for(BSPAttributeWrapper bsp : sortedBSPAttributeWrapper){
 				bspAttributes.add(bsp.bspAttribute);
 			}
-    		//insert new List<ANG_BSP_Attributes__c>{new ANG_BSP_Attributes__c(Risk_Status__c = 'A', BSP__c = operation.id, recordtypeid = RHCConfRT), new ANG_BSP_Attributes__c(Risk_Status__c = 'B', BSP__c = operation.id, recordtypeid = RHCConfRT)};
-    	}
+				//insert new List<ANG_BSP_Attributes__c>{new ANG_BSP_Attributes__c(Risk_Status__c = 'A', BSP__c = operation.id, recordtypeid = RHCConfRT), new ANG_BSP_Attributes__c(Risk_Status__c = 'B', BSP__c = operation.id, recordtypeid = RHCConfRT)};
+			}
 
-    	
-    	if(actionValue != 'Apply_RHC_regardless')
-    		for(ANG_BSP_Attributes__c bsp : bspAttributes) 
-    			if (bsp.recordtypeid == CCConfRT) percentageFS = String.valueOf(bsp.FS_Percentage__c);
 
-    	} else if (modeValue == 'IATA_Code') {
-    		agencies = [SELECT Id, ANG_RHC_Amount__c, ANG_Financial_Security__c, ANG_RHC_Amount_Equals_FS__c, ANG_AccountId__r.Id, ANG_AccountId__r.Name, 
-							ANG_AccountId__r.IATACode__c, ANG_AccountId__r.Status__c, ANG_AccountId__r.IATA_ISO_Country__c, ANG_AccountId__r.Location_Type__c, 
+			if(actionValue != 'Apply_RHC_regardless')
+				for(ANG_BSP_Attributes__c bsp : bspAttributes)
+					if (bsp.recordtypeid == CCConfRT) percentageFS = String.valueOf(bsp.FS_Percentage__c);
+
+			} else if (modeValue == 'IATA_Code') {
+				agencies = [SELECT Id, ANG_RHC_Amount__c, ANG_Financial_Security__c, ANG_RHC_Amount_Equals_FS__c, ANG_AccountId__r.Id, ANG_AccountId__r.Name,
+							ANG_AccountId__r.IATACode__c, ANG_AccountId__r.Status__c, ANG_AccountId__r.IATA_ISO_Country__c, ANG_AccountId__r.Location_Type__c,
 							ANG_AccountId__r.Location_Class__c, ANG_AccountId__r.IATA_ISO_Country__r.AMS_Settlement_System__c, RHC_Amount_Equals_FS_Percent__c,
-							ANG_Minimum_Financial_Security__c  
-    					FROM ANG_RHC_Information__c 
-    					WHERE ANG_RHC_Amount_Equals_FS__c = :rhcFlag
-    						AND ANG_AccountId__r.Status__c IN :AMS_Utils.ACTIVEAGENCYSTATUS
+							ANG_Minimum_Financial_Security__c
+							FROM ANG_RHC_Information__c
+							WHERE ANG_RHC_Amount_Equals_FS__c = :rhcFlag
+								AND ANG_AccountId__r.Status__c IN :AMS_Utils.ACTIVEAGENCYSTATUS
 							AND ANG_AccountId__r.Location_Type__c = 'HE'
 							AND ANG_AccountId__r.ANG_IsNewGenAgency__c = true
 							AND ANG_AccountId__r.RecordTypeId = :AMS_Utils.RECTYPE_IATAAGENCY
-    						AND ANG_AccountId__r.IATACode__c = :iataCode
+								AND ANG_AccountId__r.IATACode__c = :iataCode
 							AND ANG_AccountId__r.ANG_Accreditation_Model__c = :AMS_Utils.ACCREDITATIONMODEL_CASH
-    					ORDER BY Name];
+							ORDER BY Name];
 
-    		if(actionValue == 'Revert_RHC_regardless' && !agencies.isEmpty()) percentageFS = '' + agencies[0].RHC_Amount_Equals_FS_Percent__c;
+				if(actionValue == 'Revert_RHC_regardless' && !agencies.isEmpty()) percentageFS = '' + agencies[0].RHC_Amount_Equals_FS_Percent__c;
 
-    	}
+			}
 
 
-    	agenciesFetched = agencies.size();
+			agenciesFetched = agencies.size();
 
-    	if (agencies.isEmpty()) {
-    		ApexPages.addMessage(new ApexPages.message(ApexPages.severity.INFO, 'Your research has not matched the criteria'));
-    		agenciesFound = false;
-    	} else {
-    		agenciesFound = true;
-    		if (modeValue == 'BSP') {
-    			ssController = new ApexPages.StandardSetController(agencies);
+			if (agencies.isEmpty()) {
+				ApexPages.addMessage(new ApexPages.message(ApexPages.severity.INFO, 'Your research has not matched the criteria'));
+				agenciesFound = false;
+			} else {
+				agenciesFound = true;
+				if (modeValue == 'BSP') {
+					ssController = new ApexPages.StandardSetController(agencies);
 				ssController.setPageSize(size);
-    		}
-    	}
+				}
+			}
 
-    	PageReference pageRef = ApexPages.currentPage();
-    	pageRef.setRedirect(false);
-    	return pageRef;
-    }
+			PageReference pageRef = ApexPages.currentPage();
+			pageRef.setRedirect(false);
+			return pageRef;
+		}
 
-    public void previous() {  
-	    ssController.previous();  
-	}  
-	    
-	public void next() {  
-	    ssController.next();  
-	}  
-
-	public void last(){  
-	    ssController.last();  
+		public void previous() {
+			ssController.previous();
 	}
 
-	public void first() {  
-	    ssController.first();  
+	public void next() {
+			ssController.next();
+	}
+
+	public void last(){
+			ssController.last();
+	}
+
+	public void first() {
+			ssController.first();
 	}
 
 	public void setModeValue (String modeValue) {
@@ -247,17 +247,17 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
 	}
 
 	public void setActionValue (String actionValue) {
-        
-        if(actionValue != this.actionValue){
-	        bspAttributes = null;
-	        agencies = null;
-	        agenciesFound = false;	
-        }
+
+				if(actionValue != this.actionValue){
+					bspAttributes = null;
+					agencies = null;
+					agenciesFound = false;
+				}
 
 		this.actionValue = actionValue;
 		this.renderConfirmButton = false;
 		this.percentageFS = '';
-		
+
 		if(actionValue == 'Apply_RHC_per_RS' || actionValue == 'Revert_RHC_per_RS') modeValue = 'BSP';
 	}
 
@@ -281,84 +281,84 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
 		Boolean isRegardlessRisk = (actionValue == 'Apply_RHC_regardless' || actionValue == 'Revert_RHC_regardless');
 		Boolean isApply =( actionValue == 'Apply_RHC_regardless' || actionValue == 'Apply_RHC_per_RS');
 
-		//redundant && isRegardlessRisk but better be safe than sorry 
-		if (modeValue == 'IATA_Code' && isRegardlessRisk) { 
-  			List<String> iataCodesAndNames = new List<String>();
-  
-	  		try {
-	  			for (ANG_RHC_Information__c rhcInfo: agencies) {
-	  				iataCodesAndNames.add(rhcInfo.ANG_AccountId__r.IataCode__c + ' - ' + rhcInfo.ANG_AccountId__r.Name);
-	  				rhcInfo.ANG_RHC_Amount_Equals_FS__c = isApply;
-	  				rhcInfo.RHC_Amount_Equals_FS_Percent__c	= (isApply ? (String.isEmpty(percentageFS) ? 0 : Integer.valueOf(percentageFS)) : null);
-	  			}
-	  
-	  			update agencies;
+		//redundant && isRegardlessRisk but better be safe than sorry
+		if (modeValue == 'IATA_Code' && isRegardlessRisk) {
+				List<String> iataCodesAndNames = new List<String>();
 
-	  			ApexPages.addMessage(new ApexPages.message(ApexPages.severity.CONFIRM, 'The changes were applied to this agency:'));
+				try {
+					for (ANG_RHC_Information__c rhcInfo: agencies) {
+						iataCodesAndNames.add(rhcInfo.ANG_AccountId__r.IataCode__c + ' - ' + rhcInfo.ANG_AccountId__r.Name);
+						rhcInfo.ANG_RHC_Amount_Equals_FS__c = isApply;
+						rhcInfo.RHC_Amount_Equals_FS_Percent__c	= (isApply ? (String.isEmpty(percentageFS) ? 0 : Integer.valueOf(percentageFS)) : null);
+					}
 
-	  		} catch(Exception e) { ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR, 'Error updating RHC Info for Agencies with Iata code(s): ' + String.join(iataCodesAndNames,',') + ' - ' + e.getMessage() + ' - ' + e.getStackTraceString())); }
-	  		
-  		} else {
-  			if(bspAttributes != null){
-	  			for (ANG_BSP_Attributes__c attribute : bspAttributes){
-	  				if(attribute.recordtypeid == RHCConfRT){
+					update agencies;
+
+					ApexPages.addMessage(new ApexPages.message(ApexPages.severity.CONFIRM, 'The changes were applied to this agency:'));
+
+				} catch(Exception e) { ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR, 'Error updating RHC Info for Agencies with Iata code(s): ' + String.join(iataCodesAndNames,',') + ' - ' + e.getMessage() + ' - ' + e.getStackTraceString())); }
+
+			} else {
+				if(bspAttributes != null){
+					for (ANG_BSP_Attributes__c attribute : bspAttributes){
+						if(attribute.recordtypeid == RHCConfRT){
 
 						attribute.FS_Percentage__c = (isRegardlessRisk ? (String.isEmpty(percentageFS) ? 0 : Decimal.valueOf(percentageFS)) : attribute.FS_Percentage__c);
 
-	  					if(!countrySpecificsList.contains(bspValue) || (isRegardlessRisk && isApply)) {
-		  					attribute.Min_FA_Points__c = 0;
-		  					attribute.Max_FA_Points__c = 999999;
-	  					}
+							if(!countrySpecificsList.contains(bspValue) || (isRegardlessRisk && isApply)) {
+								attribute.Min_FA_Points__c = 0;
+								attribute.Max_FA_Points__c = 999999;
+							}
 
-	  					if(attribute.FS_Percentage__c == null || attribute.FS_Percentage__c == 0 || !isApply ){
-		  					attribute.Min_FA_Points__c = null;
-		  					attribute.Max_FA_Points__c = null;
-		  					attribute.FS_Percentage__c = null;
-		  					attribute.RHC_Amnt_Calc_Type__c = 'Formula'; 
-		  				}
-		  				else attribute.RHC_Amnt_Calc_Type__c = 'Fixed Percentage';
+							if(attribute.FS_Percentage__c == null || attribute.FS_Percentage__c == 0 || !isApply ){
+								attribute.Min_FA_Points__c = null;
+								attribute.Max_FA_Points__c = null;
+								attribute.FS_Percentage__c = null;
+								attribute.RHC_Amnt_Calc_Type__c = 'Formula';
+							}
+							else attribute.RHC_Amnt_Calc_Type__c = 'Fixed Percentage';
 
-	  				}
-	  				else{
-	  					attribute.FS_Percentage__c = (isApply ? (String.isEmpty(percentageFS) ? 100 : Integer.valueOf(percentageFS)) : 100);
-	  				}
+						}
+						else{
+							attribute.FS_Percentage__c = (isApply ? (String.isEmpty(percentageFS) ? 100 : Integer.valueOf(percentageFS)) : 100);
+						}
 
-	  			}
-	  		}
+					}
+				}
 
-  			
-  			if((actionValue == 'Revert_RHC_per_RS' || actionValue == 'Revert_RHC_regardless' ) && showCountrySpecificColumns && bspAttributes.size() > 4 ){
 
-                Map<String, ANG_BSP_Attributes__c> mapBspByStatus = new Map<String, ANG_BSP_Attributes__c>();
-                list<ANG_BSP_Attributes__c> listBspToDelete = new list<ANG_BSP_Attributes__c>();
-                for (ANG_BSP_Attributes__c bsp : bspAttributes){
-                    if(mapBspByStatus.containsKey(bsp.Risk_Status__c)) listBspToDelete.add(bsp);
-                    else mapBspByStatus.put(bsp.Risk_Status__c, BSP);
-                }
-                
-                delete listBspToDelete;
-                upsert mapBspByStatus.values();
-                
+				if((actionValue == 'Revert_RHC_per_RS' || actionValue == 'Revert_RHC_regardless' ) && showCountrySpecificColumns && bspAttributes.size() > 4 ){
 
-  			}else upsert bspAttributes;
+								Map<String, ANG_BSP_Attributes__c> mapBspByStatus = new Map<String, ANG_BSP_Attributes__c>();
+								list<ANG_BSP_Attributes__c> listBspToDelete = new list<ANG_BSP_Attributes__c>();
+								for (ANG_BSP_Attributes__c bsp : bspAttributes){
+										if(mapBspByStatus.containsKey(bsp.Risk_Status__c)) listBspToDelete.add(bsp);
+										else mapBspByStatus.put(bsp.Risk_Status__c, BSP);
+								}
 
-  			//and to force the NEWGEN-5173 to run
-  			batchTimestamp = Datetime.now();
+								delete listBspToDelete;
+								upsert mapBspByStatus.values();
 
-  			Database.executeBatch(new ANG_CalculateRHCperBSP(bspValue), 200);
 
-	  		batchStatusBool = true;
+				}else upsert bspAttributes;
+
+				//and to force the NEWGEN-5173 to run
+				batchTimestamp = Datetime.now();
+
+				Database.executeBatch(new ANG_CalculateRHCperBSP(bspValue), 200);
+
+				batchStatusBool = true;
 			pollerBool = true;
 			batchPercentage = 0;
 
-  			ApexPages.addMessage(new ApexPages.message(ApexPages.severity.CONFIRM, 'The changes were applied to this BSP'));
-  		}
+				ApexPages.addMessage(new ApexPages.message(ApexPages.severity.CONFIRM, 'The changes were applied to this BSP'));
+			}
 	}
 
 	public void getBatchStatus() {
 		if (batchJob == null) {
 			batchJobs = [SELECT Id, Status, NumberOfErrors, JobItemsProcessed, TotalJobItems, CreatedBy.Email, ApexClass.Name
-						FROM AsyncApexJob 
+						FROM AsyncApexJob
 						WHERE ApexClass.Name = 'ANG_CalculateRHCperBSP'
 							AND CreatedById = :UserInfo.getUserId()
 							AND CreatedDate >= :batchTimestamp
@@ -367,9 +367,9 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
 			if (!batchJobs.isEmpty()) batchJob = batchJobs[0];
 		} else {
 			batchJob = [SELECT Id, Status, NumberOfErrors, JobItemsProcessed, TotalJobItems, CreatedBy.Email, ApexClass.Name
-						FROM AsyncApexJob 
+						FROM AsyncApexJob
 						WHERE Id = :batchJob.Id];
-			
+
 			if (batchJob.JobItemsProcessed > 0) batchPercentage = batchJob.JobItemsProcessed * 100 / batchJob.TotalJobItems;
 
 			if (batchJob.status == 'Processing' && batchPercentage == 100) batchPercentage = 99;
@@ -384,30 +384,30 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
 
 	public class BSPAttributeWrapper implements Comparable {
 
-	    private ANG_BSP_Attributes__c bspAttribute;
-	    
-	    // Constructor 
-	    public BSPAttributeWrapper(ANG_BSP_Attributes__c bspAttribute) {
-	        this.bspAttribute = bspAttribute;
-	    }
-	    
-	    // Compare opportunities based on the opportunity amount.
-	    public Integer compareTo(Object compareTo) {
-	        // Cast argument to OpportunityWrapper
-	        BSPAttributeWrapper compareToBSP = (BSPAttributeWrapper)compareTo;
-	        
-	        // The return value of 0 indicates that both elements are equal.
-	        Integer returnValue = 0;
-	        if ((String)bspAttribute.Risk_Status__c > (String)compareToBSP.bspAttribute.Risk_Status__c) {
-	            // Set return value to a positive value.
-	            returnValue = 1;
-	        } else if ((String)bspAttribute.Risk_Status__c < (String)compareToBSP.bspAttribute.Risk_Status__c) {
-	            // Set return value to a negative value.
-	            returnValue = -1;
-	        }
-	        
-	        return returnValue;       
-	    }
+			private ANG_BSP_Attributes__c bspAttribute;
+
+			// Constructor
+			public BSPAttributeWrapper(ANG_BSP_Attributes__c bspAttribute) {
+					this.bspAttribute = bspAttribute;
+			}
+
+			// Compare opportunities based on the opportunity amount.
+			public Integer compareTo(Object compareTo) {
+					// Cast argument to OpportunityWrapper
+					BSPAttributeWrapper compareToBSP = (BSPAttributeWrapper)compareTo;
+
+					// The return value of 0 indicates that both elements are equal.
+					Integer returnValue = 0;
+					if ((String)bspAttribute.Risk_Status__c > (String)compareToBSP.bspAttribute.Risk_Status__c) {
+							// Set return value to a positive value.
+							returnValue = 1;
+					} else if ((String)bspAttribute.Risk_Status__c < (String)compareToBSP.bspAttribute.Risk_Status__c) {
+							// Set return value to a negative value.
+							returnValue = -1;
+					}
+
+					return returnValue;
+			}
 	}
 
 }

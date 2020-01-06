@@ -1715,6 +1715,13 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <value>&lt;br/&gt;&lt;br/&gt;As a Portal Administrator you can either update your &lt;a href=&quot;/ISSP_PersonalInformation?mid=M5S1&quot;&gt;Personal Information&lt;/a&gt; to designate yourself as a Legal Authorized Signatory, or assign the correct person from the &lt;a href=&quot;/ISSP_ContactList?MainNav=Admin&amp;subNav=contacts&amp;mid=M4S1&quot;&gt;Company Administration -&gt; Contacts&lt;/a&gt; page and ask them to open your EasyPay account.</value>
     </labels>
     <labels>
+        <fullName>ANG_ISSP_IEP_Indonesia_msg</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_IEP_Indonesia_msg</shortDescription>
+        <value>Thank you for your enquiry. Please log a query in the Customer Portal with subject Easy Pay Account Opening Indonesia.</value>
+    </labels>
+    <labels>
         <fullName>ANG_ISSP_IEP_ModelBanking_India_msg</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -1727,13 +1734,6 @@ Contact Details: 	Mr. Ravi Chaudhary&lt;br/&gt;
 Contact Details:	Mr. Allen Lasrado&lt;br/&gt;
 &amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;Tel: 8286661684&lt;br/&gt;
 &amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;allen.lasrado@yesbank.in</value>
-	</labels>
-	<labels>
-        <fullName>ANG_ISSP_IEP_Indonesia_msg</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ANG_ISSP_IEP_Indonesia_msg</shortDescription>
-        <value>Thank you for your enquiry. Please log a query in the Customer Portal with subject Easy Pay Account Opening Indonesia.</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_IEP_ModelBanking_SouthKorea_msg</fullName>
@@ -5784,7 +5784,7 @@ You can easily create a company account in two steps</value>
         <shortDescription>CSP Restricted Login Message</shortDescription>
         <value>Your computer IP has been identified as sourcing from one of the countries listed as embargoed by U.S. authorities. &lt;br/&gt;
 The platform supporting our Customer Portal complies with this U.S. regulations and thus, we are currently unable to provide access to Customer Portal from your current IP address. &lt;br/&gt;
-Click &lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;here&lt;/a&gt; to contact us.</value>
+Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;here&lt;/a&gt; to contact us.</value>
     </labels>
     <labels>
         <fullName>CSP_Restricted_Login_Title</fullName>
@@ -8806,7 +8806,7 @@ You can choose one or more of the following topics:</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Generic_Sanctions_Message</shortDescription>
-        <value>Your computer IP has been identified as sourcing from one of the countries listed as embargoed by U.S. authorities.&lt;br/&gt;The platform supporting our  Portal complies with this U.S. regulations and thus, we are currently unable to provide access to Portal from your current IP address.&lt;br/&gt;Click &lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.aspx&quot; &gt;here&lt;/a&gt; to contact your regional IATA office.</value>
+        <value>Your computer IP has been identified as sourcing from one of the countries listed as embargoed by U.S. authorities.&lt;br/&gt;The platform supporting our  Portal complies with this U.S. regulations and thus, we are currently unable to provide access to Portal from your current IP address.&lt;br/&gt;Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quot; &gt;here&lt;/a&gt; to contact your regional IATA office.</value>
     </labels>
     <labels>
         <fullName>GetQuoteConfirmationMsg</fullName>
@@ -26858,7 +26858,8 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_CalendarDisclaimer</shortDescription>
-        <value>Note: There are Local Specific Dates in the Calendar for this operation. Please download the full version of the Calendar in the Resource Center, Document Tab.</value>
+        <value>&quot;Note: The calendar for this market contains local dpecific dates that are not reflected in this application. 
+Please make sure you download the full pdf version of the Calendar for your market by clicking on the support tab and then selecting calendars under documents on the right hand side of the page.&quot;</value>
     </labels>
     <labels>
         <fullName>ISSP_CampaignNotification_Confirm</fullName>
@@ -34152,7 +34153,7 @@ If you are not sure if your company based in {0} is subject to the EU laws on da
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Sanctions_Message</shortDescription>
-        <value>Your computer IP has been identified as sourcing from one of the countries listed as embargoed by U.S. authorities.&lt;br/&gt;The platform supporting our Customer Portal complies with this U.S. regulations and thus, we are currently unable to provide access to Customer Portal from your current IP address.&lt;br/&gt;Click &lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.aspx&quot; &gt;here&lt;/a&gt; to contact your regional IATA office.</value>
+        <value>Your computer IP has been identified as sourcing from one of the countries listed as embargoed by U.S. authorities.&lt;br/&gt;The platform supporting our Customer Portal complies with this U.S. regulations and thus, we are currently unable to provide access to Customer Portal from your current IP address.&lt;br/&gt;Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quot; &gt;here&lt;/a&gt; to contact your regional IATA office.</value>
     </labels>
     <labels>
         <fullName>ISSP_Satisfactory</fullName>
@@ -38671,7 +38672,7 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_Online Help Link</shortDescription>
-        <value>http://www.iata.org/customer-portal/Pages/contactus-v2.aspx</value>
+        <value>https://www.iata.org/en/contact-support/contactus-v2/</value>
     </labels>
     <labels>
         <fullName>OneId_Password</fullName>

@@ -315,13 +315,13 @@ public without sharing class ISSP_AMS_Accreditation {
 	public Boolean revCaseOpen {
 		get{
 			List<Case> revCases = [SELECT Id
-								   FROM Case
-								   WHERE (AccountId = :con.AccountId OR AccountId = :con.Account.Top_Parent__c)
-								   AND Reason1__c = 'Annual revalidation'
-								   AND Status != 'Closed'
-								   AND Status != 'Closed_Rejected'
-								   AND Status != 'Closed_Withdrawn'
-								   AND Status != 'Closed_ Not Accepted'];
+									 FROM Case
+									 WHERE (AccountId = :con.AccountId OR AccountId = :con.Account.Top_Parent__c)
+									 AND Reason1__c = 'Annual revalidation'
+									 AND Status != 'Closed'
+									 AND Status != 'Closed_Rejected'
+									 AND Status != 'Closed_Withdrawn'
+									 AND Status != 'Closed_ Not Accepted'];
 
 			return !revCases.isEmpty();
 		}
@@ -1457,8 +1457,8 @@ public without sharing class ISSP_AMS_Accreditation {
 		return [SELECT COUNT()
 				FROM Account
 				WHERE Top_Parent__c = :con.Account.Id
-				   AND Location_Type__c = :AMS_Utils.AE
-				   AND Status__c IN :l];
+					 AND Location_Type__c = :AMS_Utils.AE
+					 AND Status__c IN :l];
 	}
 
 	private List<Account> getBranchList(Boolean fullHierarchy) {
@@ -3081,8 +3081,8 @@ public without sharing class ISSP_AMS_Accreditation {
 
 	public void deleteFacility() {
 		AMS_Facility__c deleteFacility = [SELECT Id
-										  FROM AMS_Facility__c
-										  WHERE Id = :facilitiesId];
+											FROM AMS_Facility__c
+											WHERE Id = :facilitiesId];
 		if (deleteFacility != null) {
 			delete deleteFacility;
 		}
@@ -3103,12 +3103,12 @@ public without sharing class ISSP_AMS_Accreditation {
 
 	public void editAgencyContact() {
 		newContact = [SELECT Id, AMS_Pax_Accreditation_Form__c, Name, Authorised_signatory__c, Email__c, First_name__c, Last_name__c, Local_First_name__c, Local_Last_name__c, Salutation__c, Agency_owner__c, Agency_role__c,
-					  AddressStreet__c, AddressCity__c, AddressCountry__c, AddressPostcode__c, Financial_interest__c, Date_joined_agency__c, Registration_number__c, IATAcode__c, Company_Name_Local__c,Contact__c,
-					  Phone__c, PhoneNational__c, FAX__c, FAXNational__c, Financial_Assessment_Contact__c, Job_title__c, Mobile__c, MobileNational__c, Time_devoted_to_Agency_business__c, Agencies_prev_worked_for__c,
-					  Prev_Job1_Position__c, Prev_Job1_From__c, Prev_Job1_IATA_accredited__c, Prev_Job1_IATA_code__c, Prev_Job1_Employer__c, Prev_Job1_Address__c, CASS_contact__c, Number_Of_Shares__c,
-					  Prev_Job2_Position__c, Prev_Job2_From__c, Prev_Job2_IATA_accredited__c, Prev_Job2_IATA_code__c, Prev_Job2_Employer__c, Prev_Job2_Address__c, AMS_ContactId__c, AMS_OwnershipId__c, Authorised_to_make_customs_declarations__c
-					  FROM AMS_Accreditation_Contact__c
-					  WHERE Id = : editContactId];
+						AddressStreet__c, AddressCity__c, AddressCountry__c, AddressPostcode__c, Financial_interest__c, Date_joined_agency__c, Registration_number__c, IATAcode__c, Company_Name_Local__c,Contact__c,
+						Phone__c, PhoneNational__c, FAX__c, FAXNational__c, Financial_Assessment_Contact__c, Job_title__c, Mobile__c, MobileNational__c, Time_devoted_to_Agency_business__c, Agencies_prev_worked_for__c,
+						Prev_Job1_Position__c, Prev_Job1_From__c, Prev_Job1_IATA_accredited__c, Prev_Job1_IATA_code__c, Prev_Job1_Employer__c, Prev_Job1_Address__c, CASS_contact__c, Number_Of_Shares__c,
+						Prev_Job2_Position__c, Prev_Job2_From__c, Prev_Job2_IATA_accredited__c, Prev_Job2_IATA_code__c, Prev_Job2_Employer__c, Prev_Job2_Address__c, AMS_ContactId__c, AMS_OwnershipId__c, Authorised_to_make_customs_declarations__c
+						FROM AMS_Accreditation_Contact__c
+						WHERE Id = : editContactId];
 
 		amsContactCountry = newContact.AddressCountry__c;
 	}
@@ -3523,8 +3523,8 @@ public without sharing class ISSP_AMS_Accreditation {
 				//ONLY FOR PARTNERSHIP: Check if the signed PDF was uploaded to Amazon
 				if (getIsPartnership()) {
 					List<AmazonFile__c> listAmazonFile = [SELECT Id
-														  FROM AmazonFile__c
-														  WHERE Case__c = :newCase.Id
+															FROM AmazonFile__c
+															WHERE Case__c = :newCase.Id
 															AND File_Identifier__c = :FILE_ID_FOR_PARTNERSHIP];
 					if (listAmazonFile.isEmpty()) {
 						ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_Form_Missing_Signed_File));
@@ -4306,7 +4306,7 @@ public without sharing class ISSP_AMS_Accreditation {
 
 	public void fetchCase(String vCaseId) {
 		List<Case> newCases = [SELECT Id, CaseNumber, Reason1__c, CaseArea__c, Status, BSPCountry__c, Country_concerned_by_the_query__c, Contact.Name, Account.Id, Description, Subject, Account_Concerned__c, Account_Concerned__r.Top_Parent__c, Account.Name,
-								   Account.Billing_Address_formated__c, Verification__c, IFAP_Country_ISO__c, Case_Language__c, Region__c, Applicable_to_Which_Version_s__c
+									Account.Billing_Address_formated__c, Verification__c, IFAP_Country_ISO__c, Case_Language__c, Region__c, Applicable_to_Which_Version_s__c
 								FROM Case
 								WHERE Id = :vCaseId];
 		if (!newCases.isEmpty()) {
@@ -5221,8 +5221,8 @@ public without sharing class ISSP_AMS_Accreditation {
 				fetchedHEMCName = agency[0].Top_Parent__r.Name;
 
 				fetchedHEMCAddress = notNull(agency[0].Top_Parent__r.BillingStreet) + ' \r\n' +
-							   notNull(agency[0].Top_Parent__r.BillingCity) + '' + notNull(agency[0].Top_Parent__r.BillingState) +
-							   ' \r\n' + notNull(agency[0].Top_Parent__r.BillingCountry);
+								 notNull(agency[0].Top_Parent__r.BillingCity) + '' + notNull(agency[0].Top_Parent__r.BillingState) +
+								 ' \r\n' + notNull(agency[0].Top_Parent__r.BillingCountry);
 			} else {
 				temp = new Account(Id = agency[0].Id,
 								Name = agency[0].Name,
@@ -5232,8 +5232,8 @@ public without sharing class ISSP_AMS_Accreditation {
 				fetchedHEMCName = agency[0].Name;
 
 				fetchedHEMCAddress = notNull(agency[0].BillingStreet) + ' \r\n' +
-							   notNull(agency[0].BillingCity) + '' + notNull(agency[0].BillingState) +
-							   ' \r\n' + notNull(agency[0].BillingCountry);
+								 notNull(agency[0].BillingCity) + '' + notNull(agency[0].BillingState) +
+								 ' \r\n' + notNull(agency[0].BillingCountry);
 			}
 
 			accountToBeConverted = temp;
@@ -5299,8 +5299,8 @@ public without sharing class ISSP_AMS_Accreditation {
 				generalAccount = agentaccounts[0];
 				if (isAddCompanyModal != null && isAddCompanyModal) {
 					companyModalAddress = notNull(generalAccount.BillingStreet) + ' \r\n' +
-										  notNull(generalAccount.BillingCity) + '' + notNull(generalAccount.BillingState) +
-										  ' \r\n' + notNull(generalAccount.BillingCountry);
+											notNull(generalAccount.BillingCity) + '' + notNull(generalAccount.BillingState) +
+											' \r\n' + notNull(generalAccount.BillingCountry);
 					companyModalNameOfEmployer = notNull(generalAccount.Name);
 				}
 			} else if (agentsector == AMS_Utils.SECTOR_CARGO){
@@ -5313,8 +5313,8 @@ public without sharing class ISSP_AMS_Accreditation {
 				TravelAgentPrevAccount = agentaccounts[0];
 
 				agentAddress = notNull(TravelAgentPrevAccount.BillingStreet) + ' \r\n' +
-							   notNull(TravelAgentPrevAccount.BillingCity) + '' + notNull(TravelAgentPrevAccount.BillingState) +
-							   ' \r\n' + notNull(TravelAgentPrevAccount.BillingCountry);
+								 notNull(TravelAgentPrevAccount.BillingCity) + '' + notNull(TravelAgentPrevAccount.BillingState) +
+								 ' \r\n' + notNull(TravelAgentPrevAccount.BillingCountry);
 
 				if (prevAgentHistory == '1') {
 					newContact.Prev_Job1_Address__c = agentAddress;
@@ -5558,8 +5558,8 @@ public without sharing class ISSP_AMS_Accreditation {
 		}
 
 		List<AMS_Accreditation_Contact__c> amsContacts = [SELECT Id, Name, Portal_administrator__c
-													   FROM AMS_Accreditation_Contact__c
-													   WHERE recordTypeId = :personRecordTypeId
+														 FROM AMS_Accreditation_Contact__c
+														 WHERE recordTypeId = :personRecordTypeId
 															AND AMS_Pax_Accreditation_Form__c = :newForm.Id
 															AND Id = :newForm.ISSP_AMS_Portal_admin__c];
 		if (!amsContacts.isEmpty()) {
@@ -5731,7 +5731,7 @@ public without sharing class ISSP_AMS_Accreditation {
 									WHERE AMS_Accreditation_Country_CheckList__r.IATA_ISO_Country__r.ISO_Code__c = :newCase.IFAP_Country_ISO__c AND AMS_Accreditation_Country_CheckList__r.Operation__c = :sector AND Type_Of_Change__c != null
 											AND RecordTypeId = :ChangeReqRecTypeId AND (Type_Of_Change__c INCLUDES (:noticeOfChangeList.get(0)) OR Type_Of_Change__c INCLUDES (:noticeOfChangeList.get(1))
 												OR Type_Of_Change__c INCLUDES (:noticeOfChangeList.get(2)) OR Type_Of_Change__c INCLUDES (:noticeOfChangeList.get(3)))
-										AND ((File_Identifier2__c NOT IN (:AMS_Utils.NOC_SIGNED_CONTRACT, :BNK_ACCNT_DTLS))
+											AND ((File_Identifier2__c NOT IN (:AMS_Utils.NOC_SIGNED_CONTRACT, :BNK_ACCNT_DTLS))
 												OR (File_Identifier2__c = : BNK_ACCNT_DTLS)) AND AMS_Accreditation_Country_CheckList__r.Operation__c = :sector
 									GROUP BY Language__c
 									ORDER BY Language__c ASC];
@@ -5773,7 +5773,7 @@ public without sharing class ISSP_AMS_Accreditation {
 						WHERE (AMS_Accreditation_Country_CheckList__r.IATA_ISO_Country__r.ISO_Code__c = :newCase.IFAP_Country_ISO__c AND AMS_Accreditation_Country_CheckList__r.Operation__c = :sector AND Type_Of_Change__c != null
 							AND RecordTypeId = :ChangeReqRecTypeId AND (Type_Of_Change__c INCLUDES (:noticeOfChangeList.get(0)) OR Type_Of_Change__c INCLUDES (:noticeOfChangeList.get(1))
 								OR Type_Of_Change__c INCLUDES (:noticeOfChangeList.get(2)) OR Type_Of_Change__c INCLUDES (:noticeOfChangeList.get(3)))
-								AND File_Identifier2__c = :AMS_Utils.NOC_SIGNED_CONTRACT) AND Type_Of_Agent__c INCLUDES (:agentType)
+							AND File_Identifier2__c = :AMS_Utils.NOC_SIGNED_CONTRACT) AND Type_Of_Agent__c INCLUDES (:agentType)
 						ORDER BY Sort_Order__c ASC];
 
 			this.List_CountryReqments = filterRequirementList(selectedLang, auxReqsList);
@@ -7518,8 +7518,8 @@ public without sharing class ISSP_AMS_Accreditation {
 		trainedStaffContact = [SELECT Id, Name, First_name__c, Last_name__c, List_Dangerous_Goods_Awareness__c, Position_trained_staff__c,
 								IATA_FIATA_training_history__c, Air_cargo_transport_business_exp__c, Training_dangerous_goods_completed__c,
 								Valid_until__c, AMS_Pax_Accreditation_Form__c, Type_Of_Certificate__c, Registration_number__c, Certificate_Issuer__c
-							   FROM AMS_Accreditation_Contact__c
-							   WHERE Id = :trainedStaffId LIMIT 1];
+								 FROM AMS_Accreditation_Contact__c
+								 WHERE Id = :trainedStaffId LIMIT 1];
 	}
 
 	public void cancelTrainedStaff() {
@@ -7643,7 +7643,7 @@ system.debug('aqui sectorValue ' + sectorValue);
 		cntIFAPContacts = [SELECT COUNT()
 							 FROM AMS_Accreditation_Contact__c
 							WHERE AMS_Pax_Accreditation_Form__c = :newForm.Id AND Financial_Assessment_Contact__c = true
-							  AND Id != :newContact.Id];
+								AND Id != :newContact.Id];
 	}
 
 	public class specialTraffic {

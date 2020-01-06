@@ -12,12 +12,12 @@ public class Enquiry_NewContact_ControllerTest {
 		//EmailDeveloper
 		ID USERIDLOCAL =  [SELECT ID FROM USER WHERE ISACTIVE = TRUE LIMIT 1].ID;
 		LOGs = NEW list<LogAnEnquiryUtil__c> {	NEW LogAnEnquiryUtil__c(CONTENT__C = USERIDLOCAL , NAME = 'UserID'),
-		                                        NEW LogAnEnquiryUtil__c(CONTENT__C = 'Pages/thankspage.aspx' , NAME = 'thankspage'),
-		                                        NEW LogAnEnquiryUtil__c(CONTENT__C = 'pages/log-an-enquiry.aspx?' , NAME = 'LogAnEnquiry'),
-		                                        NEW LogAnEnquiryUtil__c(CONTENT__C = 'someURL', NAME = 'Enquiry_NewContact'),
-		                                        NEW LogAnEnquiryUtil__c(CONTENT__C = 'http://www.iata.org/customer-portal/' , NAME = 'customer-portal'),
-		                                        NEW LogAnEnquiryUtil__c(CONTENT__C = 'some email' , NAME = 'EmailDeveloper')
-		                                     };
+																						NEW LogAnEnquiryUtil__c(CONTENT__C = 'Pages/thankspage.aspx' , NAME = 'thankspage'),
+																						NEW LogAnEnquiryUtil__c(CONTENT__C = 'pages/log-an-enquiry.aspx?' , NAME = 'LogAnEnquiry'),
+																						NEW LogAnEnquiryUtil__c(CONTENT__C = 'someURL', NAME = 'Enquiry_NewContact'),
+																						NEW LogAnEnquiryUtil__c(CONTENT__C = 'http://www.iata.org/customer-portal/' , NAME = 'customer-portal'),
+																						NEW LogAnEnquiryUtil__c(CONTENT__C = 'some email' , NAME = 'EmailDeveloper')
+																				 };
 
 
 		insert LOGs;
@@ -42,13 +42,13 @@ public class Enquiry_NewContact_ControllerTest {
 	static void testSearchForNotFound() {
 
 		set<string> customerTypes  = new set<string> {'Airline',
-		        'Agency',
-		        'General Sales Agent',
-		        'TIESS',
-		        'Non IATA Agency',
-		        'Partner',
-		        'General Public'
-		                                             };
+						'Agency',
+						'General Sales Agent',
+						'TIESS',
+						'Non IATA Agency',
+						'Partner',
+						'General Public'
+																								 };
 		createData();
 		Enquiry_NewContact_Controller controller = new Enquiry_NewContact_Controller();
 		controller.con.phone = '123';
@@ -80,13 +80,13 @@ public class Enquiry_NewContact_ControllerTest {
 	static void testSearchForAccountVariousErros() {
 
 		set<string> customerTypes  = new set<string> {'Airline',
-		        'Agency',
-		        'General Sales Agent',
-		        'TIESS',
-		        'Non IATA Agency',
-		        'Partner',
-		        'General Public'
-		                                             };
+						'Agency',
+						'General Sales Agent',
+						'TIESS',
+						'Non IATA Agency',
+						'Partner',
+						'General Public'
+																								 };
 		createData();
 		Enquiry_NewContact_Controller controller = new Enquiry_NewContact_Controller();
 		controller.con.phone = '123';
@@ -119,12 +119,12 @@ public class Enquiry_NewContact_ControllerTest {
 
 		createData();
 		contact con = new contact(	email = 'some@email.org',
-		                            Lastname = 'myName' ,
-		                            firstname = 'Name' ,
-		                            recordtypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact'),
-		                            ISO_Country__c = isoCountries[0].id,
-		                            phone = '123'
-		                         );
+																Lastname = 'myName' ,
+																firstname = 'Name' ,
+																recordtypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact'),
+																ISO_Country__c = isoCountries[0].id,
+																phone = '123'
+														 );
 		insert con;
 
 		ApexPages.currentPage().getParameters().put('cid', con.id);
@@ -139,7 +139,7 @@ public class Enquiry_NewContact_ControllerTest {
 		controller.con.ISO_Country__c = isoCountries[0].id;
 
 		Account GeneralAccount = new account(type = 'General Public', name = 'genral',
-		                                     IATA_ISO_Country__c = isoCountries[0].id );
+																				 IATA_ISO_Country__c = isoCountries[0].id );
 		insert GeneralAccount;
 		controller.goToAccountSearch();
 
@@ -166,7 +166,7 @@ public class Enquiry_NewContact_ControllerTest {
 		controller.con.ISO_Country__c = isoCountries[0].id;
 
 		Account GeneralAccount = new account(type = 'General Public', name = 'genral',
-		                                     IATA_ISO_Country__c = isoCountries[0].id );
+																				 IATA_ISO_Country__c = isoCountries[0].id );
 		insert GeneralAccount;
 		controller.goToAccountSearch();
 
@@ -193,9 +193,9 @@ public class Enquiry_NewContact_ControllerTest {
 
 		controller.goToAccountSearch();
 		Account airline = new account(type = 'some airline',
-		                              name = 'myArilne', IATACode__c = '123',
-		                              RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline'),
-		                              IATA_ISO_Country__c = isoCountries[0].id );
+																	name = 'myArilne', IATACode__c = '123',
+																	RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline'),
+																	IATA_ISO_Country__c = isoCountries[0].id );
 		insert airline;
 		controller.acc.IATACode__c = '123';
 
@@ -229,9 +229,9 @@ public class Enquiry_NewContact_ControllerTest {
 
 		controller.goToAccountSearch();
 		Account airline = new account(type = 'some airline',
-		                              name = 'myArilne', IATACode__c = '123',
-		                              RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline'),
-		                              IATA_ISO_Country__c = isoCountries[0].id );
+																	name = 'myArilne', IATACode__c = '123',
+																	RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline'),
+																	IATA_ISO_Country__c = isoCountries[0].id );
 		insert airline;
 		controller.acc.IATACode__c = '123';
 

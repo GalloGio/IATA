@@ -5,13 +5,13 @@ public with sharing class IsraelDisputesCreateNewCaseTest {
 		String recordTypeId = Schema.getGlobalDescribe().get('Account').getDescribe().getRecordTypeInfosByName().get('Airline Headquarters').getRecordTypeId();
 
 		IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', IATA_Contry_KR__c = 'test', CASS_Import__c = 'Yes',
-															  IATA_COUNTRY_EN__c = 'testEN', IATA_Country_FR__c = 'testFR', IATA_Country_ZH__c = 'testZH',
-															  IATA_Country_IT__c = 'testIT', IATA_Country_JP__c = 'testJP', ISO_Code__c = 'tq',
-															  IATA_Country_PT__c = 'testPT', IATA_Country_SP__c = 'testSP', Case_BSP_Country__c = 'test' );
+																IATA_COUNTRY_EN__c = 'testEN', IATA_Country_FR__c = 'testFR', IATA_Country_ZH__c = 'testZH',
+																IATA_Country_IT__c = 'testIT', IATA_Country_JP__c = 'testJP', ISO_Code__c = 'tq',
+																IATA_Country_PT__c = 'testPT', IATA_Country_SP__c = 'testSP', Case_BSP_Country__c = 'test' );
 		insert country;
 		IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'GB', ISO_Code__c = 'GB', Case_BSP_Country__c = 'GB', CASS_Import__c = 'Yes');
 		insert country2;
-				
+
 		Account parent = ISSP_ObjectFactory.createNewAccount();
 		parent.BillingCity = 'test';
 		parent.Name = 'test';
@@ -27,7 +27,7 @@ public with sharing class IsraelDisputesCreateNewCaseTest {
 		parent.Airline_Designator__c = 'BB';
 		parent.RecordTypeId = recordTypeId;
 		insert parent;
-		
+
 		Account child = ISSP_ObjectFactory.createNewAccount();
 		child.BillingCity = 'GB';
 		child.Name = 'GB';
@@ -45,7 +45,7 @@ public with sharing class IsraelDisputesCreateNewCaseTest {
 		child.Airline_Designator__c = 'GB';
 		child.RecordTypeId = recordTypeId;
 		insert child;
-		
+
 		Account child2 = ISSP_ObjectFactory.createNewAccount();
 		child2.BillingCity = 'GB';
 		child2.Name = 'GB1';
@@ -63,7 +63,7 @@ public with sharing class IsraelDisputesCreateNewCaseTest {
 		child2.Airline_Designator__c = 'GB';
 		child2.RecordTypeId = recordTypeId;
 		insert child2;
-		
+
 		Account child3 = ISSP_ObjectFactory.createNewAccount();
 		child3.Name = 'GB2';
 		child3.Site = 'headSite';
@@ -85,12 +85,12 @@ public with sharing class IsraelDisputesCreateNewCaseTest {
 		con.AccountId = child.Id;
 		con.Email = 'Test@test11.com';
 		insert con;
-		
+
 		Contact con2 = ISSP_ObjectFactory.createNewContact();
 		con2.AccountId = child2.Id;
 		con2.Email = 'Test@test22.com';
 		insert con2;
-		
+
 		User newUser = ISSP_ObjectFactory.createPortalUser(con);
 		con.OwnerId = newUser.Id;
 		update con;
@@ -99,7 +99,7 @@ public with sharing class IsraelDisputesCreateNewCaseTest {
 		List<PortalLookupSearchResult> lstSearchAccountsNoEntry = new List<PortalLookupSearchResult>();
 
 		test.startTest();
-		
+
 		System.runAs(newUser) {
 			Boolean fifteenth = IsraelDisputesCreateNewCaseCtrl.isBeforeFifteenth();
 			lstSearchAccounts = IsraelDisputesCreateNewCaseCtrl.searchAccounts('112');

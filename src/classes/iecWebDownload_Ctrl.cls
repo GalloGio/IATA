@@ -1,6 +1,6 @@
 /****************************************************************************************************
-    Created by CGI, Kevin 2016-01-03
-    Generate an Amazon S3 unique link for web download
+	Created by CGI, Kevin 2016-01-03
+	Generate an Amazon S3 unique link for web download
 ****************************************************************************************************/
 public class iecWebDownload_Ctrl extends IEC_PageController {
 
@@ -42,7 +42,7 @@ public class iecWebDownload_Ctrl extends IEC_PageController {
 				accessKeyId = IECUtil.DecryptParameter(Utility.getTextSetting('AWS accessKeyId'));
 				secretAccessKey = IECUtil.DecryptParameter(Utility.getTextSetting('AWS secretAccessKey'));
 			}
-			
+
 			//Get Url parameters from customer email and make sur that the order exist
 			List<OrderItem> orderItems = new OrderItem_Sel().getDownloadableItem(itemNumber, loggedCustomer.sfUser.ContactId);
 
@@ -55,7 +55,7 @@ public class iecWebDownload_Ctrl extends IEC_PageController {
 				fileName = orderItem.File_Path__c;
 
 				//set the bucket name and the sub folders
-				bucketName = Utility.getTextSetting('AWS bucket name') + '/' + orderItem.Product_Number__c; // + '/' + filePath; 
+				bucketName = Utility.getTextSetting('AWS bucket name') + '/' + orderItem.Product_Number__c; // + '/' + filePath;
 
 				//set the expires link days
 				if(orderItem.Days_available_for_download_1__c == null || orderItem.Days_available_for_download_1__c == 0){
@@ -73,16 +73,16 @@ public class iecWebDownload_Ctrl extends IEC_PageController {
 					return pageRef;
 				}
 			}
-			
+
 		}
-		
+
 		return null;
 	}
 
 	//update the orderItem Number_of_download__c and AWS_download_link__c if the customer download the document
 	@remoteAction
 	public static String updateOrderItemDownloadNumber(String itemNumber, String awsLink){
-		
+
 		List<OrderItem> toUpdate = new List<OrderItem>();
 
 		Map<Id,OrderItem> orderItemMap = new OrderItem_Sel().getOrderItemByNumber(new set<String>{itemNumber});

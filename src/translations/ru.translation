@@ -1073,6 +1073,10 @@
         <name>ANG_ISSP_IEP_AuthorisedSignatory_auth_msg_Administrator</name>
     </customLabels>
     <customLabels>
+        <label><!-- ANG_ISSP_IEP_Indonesia_msg --></label>
+        <name>ANG_ISSP_IEP_Indonesia_msg</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ModelBanking India --></label>
         <name>ANG_ISSP_IEP_ModelBanking_India_msg</name>
     </customLabels>
@@ -3147,7 +3151,7 @@
         <name>CSP_Reset_Password_Success_Msg_2</name>
     </customLabels>
     <customLabels>
-        <label>IP вашего компьютера был определен как источник из одной из стран, указанных властями США в качестве эмбарго.&lt;br/&gt; Платформа, поддерживающая наш клиентский портал, соответствует правилам США, поэтому в настоящее время мы не можем предоставить доступ к клиентскому порталу с Вашего текущего IP-адреса.&lt;br/&gt; &lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Нажмите здесь, чтобы связаться с нами.&lt;/a&gt;</label>
+        <label>IP вашего компьютера был определен как источник из одной из стран, указанных властями США в качестве эмбарго.&lt;br/&gt; Платформа, поддерживающая наш клиентский портал, соответствует правилам США, поэтому в настоящее время мы не можем предоставить доступ к клиентскому порталу с Вашего текущего IP-адреса.&lt;br/&gt; &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Нажмите здесь, чтобы связаться с нами.&lt;/a&gt;</label>
         <name>CSP_Restricted_Login_Message</name>
     </customLabels>
     <customLabels>
@@ -14273,7 +14277,10 @@
         <name>ISSP_CNS_quote2</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_CalendarDisclaimer --></label>
+        <label>&quot;Примечание: Календарь для этого региона содержит конкретные даты, которые не отражены в этом приложении.
+
+
+Не забудьте скачать полную версию календаря для вашего региона, в формате pdf, сначала кликнув на вкладку «Поддержка», а затем выбрав нужный календарь в разделе «Документы» в правой части страницы.&quot;</label>
         <name>ISSP_CalendarDisclaimer</name>
     </customLabels>
     <customLabels>
@@ -17981,7 +17988,7 @@ GSA - 3 буквы.
         <name>ISSP_Salutation</name>
     </customLabels>
     <customLabels>
-        <label>IP-адрес вашего компьютера идентифицирован как находящийся в стране, на которую властями США наложено эмбарго.&lt;br/&gt;Платформа, поддерживающая наш клиентский портал, соблюдает законы США, и поэтому мы не можем предоставить доступ к клиентскому порталу для вашего текущего IP-адреса.&lt;br/&gt;Обратитесь в свой региональный офис IATA &lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.aspx&quot; &gt;по этой ссылке&lt;/a&gt;.</label>
+        <label>IP-адрес вашего компьютера идентифицирован как находящийся в стране, на которую властями США наложено эмбарго.&lt;br/&gt;Платформа, поддерживающая наш клиентский портал, соблюдает законы США, и поэтому мы не можем предоставить доступ к клиентскому порталу для вашего текущего IP-адреса.&lt;br/&gt;Обратитесь в свой региональный офис IATA &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quot; &gt;по этой ссылке&lt;/a&gt;.</label>
         <name>ISSP_Sanctions_Message</name>
     </customLabels>
     <customLabels>

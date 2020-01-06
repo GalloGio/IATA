@@ -1,13 +1,13 @@
 public with sharing class ANG_AgencyAuthorizationTriggerHandler {
 
-    public static final ID formOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
-    public static Map<Id,String> accountsName = new Map<Id,String>();
-    public static void handleBeforeInsert(List<Agency_Authorization__c> newMap){
+	public static final ID formOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
+	public static Map<Id,String> accountsName = new Map<Id,String>();
+	public static void handleBeforeInsert(List<Agency_Authorization__c> newMap){
 		verifyAAUniqueness(newMap);
 	}
 
-    public static void handleBeforeUpdate(List<Agency_Authorization__c> newMap, Map<Id,Agency_Authorization__c> oldMap){
-		
+	public static void handleBeforeUpdate(List<Agency_Authorization__c> newMap, Map<Id,Agency_Authorization__c> oldMap){
+
 		verifyAAUniqueness(newMap);
 		removeUniqueId(newMap);
 	}
@@ -16,27 +16,27 @@ public with sharing class ANG_AgencyAuthorizationTriggerHandler {
 
 	 	List<Agency_Authorization__c> listAuthP = new List<Agency_Authorization__c>();
 	 	map<Id,Agency_Authorization__c> mapOldAuthP = new map<Id,Agency_Authorization__c>();
-         
-         for(Agency_Authorization__c a : triggerNew){
-             if(a.recordtypeid == RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment')){
-                 listAuthp.add(a);
-                 mapOldAuthP.put(a.id, new Agency_Authorization__c(id = a.id));
-             }
-         }
 
- 		new ANG_AgencyEventsGenerator(listAuthP,mapOldAuthP,'AgencyAuthorization','Account__c').run(); 
+		 for(Agency_Authorization__c a : triggerNew){
+			 if(a.recordtypeid == RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment')){
+				 listAuthp.add(a);
+				 mapOldAuthP.put(a.id, new Agency_Authorization__c(id = a.id));
+			 }
+		 }
+
+ 		new ANG_AgencyEventsGenerator(listAuthP,mapOldAuthP,'AgencyAuthorization','Account__c').run();
 	}
 
 	public static void handleAfterUpdate(List<Agency_Authorization__c> triggerNew, Map<Id,Agency_Authorization__c> oldMap){
 
  		List<Agency_Authorization__c> listAuthP = new List<Agency_Authorization__c>();
- 		
+
  		for(Agency_Authorization__c a : triggerNew){
  			if(a.recordtypeid == RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment'))
  				listAuthp.add(a);
  		}
 
- 		new ANG_AgencyEventsGenerator(listAuthP,oldMap,'AgencyAuthorization','Account__c').run(); 
+ 		new ANG_AgencyEventsGenerator(listAuthP,oldMap,'AgencyAuthorization','Account__c').run();
 	}
 
 
@@ -112,45 +112,45 @@ public with sharing class ANG_AgencyAuthorizationTriggerHandler {
 
 	}
 
-    // this function is used to
-    // delete Authorized_Form_Of_Payment__c records
-    // when the Agency Authorizations are deleted
-    public static void removeAuthorizedFormsOfPayment(List<Agency_Authorization__c> aaValues){
-        List<Id> lsAccountIds = new List<Id>();
-        Id rtId = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c', 'FormOfPayment');
-        List<Agency_Authorization__c> lsFormsOfPayment = new List<Agency_Authorization__c>();
-        for(Agency_Authorization__c aa: aaValues){
-            if(aa.RecordTypeId == rtId) lsFormsOfPayment.add(aa);
-        }
-        for(Agency_Authorization__c aa: lsFormsOfPayment){
-            lsAccountIds.add(aa.Account__c);
-        }
+	// this function is used to
+	// delete Authorized_Form_Of_Payment__c records
+	// when the Agency Authorizations are deleted
+	public static void removeAuthorizedFormsOfPayment(List<Agency_Authorization__c> aaValues){
+		List<Id> lsAccountIds = new List<Id>();
+		Id rtId = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c', 'FormOfPayment');
+		List<Agency_Authorization__c> lsFormsOfPayment = new List<Agency_Authorization__c>();
+		for(Agency_Authorization__c aa: aaValues){
+			if(aa.RecordTypeId == rtId) lsFormsOfPayment.add(aa);
+		}
+		for(Agency_Authorization__c aa: lsFormsOfPayment){
+			lsAccountIds.add(aa.Account__c);
+		}
 
-        List<GDP_Products_Account_View__c> lsProducts =
-            [SELECT Id, AMS_GDP_Key__c
-            FROM GDP_Products_Account_View__c
-            WHERE AMS_GDP_Key__c IN :lsAccountIds];
-        List<Authorized_Forms_Of_Payment__c> lsAFP =
-            [SELECT Id, Form_of_Payment_Code__c, Related_GDP_Products_Account_View__r.Related_Accreditation_Class__r.Related_Account__c
-            FROM Authorized_Forms_Of_Payment__c
-            WHERE Related_GDP_Products_Account_View__c IN :lsProducts];
+		List<GDP_Products_Account_View__c> lsProducts =
+			[SELECT Id, AMS_GDP_Key__c
+			FROM GDP_Products_Account_View__c
+			WHERE AMS_GDP_Key__c IN :lsAccountIds];
+		List<Authorized_Forms_Of_Payment__c> lsAFP =
+			[SELECT Id, Form_of_Payment_Code__c, Related_GDP_Products_Account_View__r.Related_Accreditation_Class__r.Related_Account__c
+			FROM Authorized_Forms_Of_Payment__c
+			WHERE Related_GDP_Products_Account_View__c IN :lsProducts];
 
-        List<Authorized_Forms_Of_Payment__c> lsAFP2Delete = new List<Authorized_Forms_Of_Payment__c>();
+		List<Authorized_Forms_Of_Payment__c> lsAFP2Delete = new List<Authorized_Forms_Of_Payment__c>();
 
-        for(Agency_Authorization__c aa : lsFormsOfPayment ) {
-            for(Authorized_Forms_Of_Payment__c r : lsAFP) {
-                if(r.Related_GDP_Products_Account_View__r.Related_Accreditation_Class__r.Related_Account__c == aa.Account__c
-                    && r.Form_of_Payment_Code__c == aa.ANG_FormOfPayment_ID__c ) {
-                        lsAFP2Delete.add(r);
-                        break;
-                }
+		for(Agency_Authorization__c aa : lsFormsOfPayment ) {
+			for(Authorized_Forms_Of_Payment__c r : lsAFP) {
+				if(r.Related_GDP_Products_Account_View__r.Related_Accreditation_Class__r.Related_Account__c == aa.Account__c
+					&& r.Form_of_Payment_Code__c == aa.ANG_FormOfPayment_ID__c ) {
+						lsAFP2Delete.add(r);
+						break;
+				}
 
-            }
-        }
-        try {
-            delete lsAFP2Delete;
-        } catch(Exception e) {
-            System.debug(e);
-        }
-    }
+			}
+		}
+		try {
+			delete lsAFP2Delete;
+		} catch(Exception e) {
+			System.debug(e);
+		}
+	}
 }

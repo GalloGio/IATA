@@ -5,26 +5,26 @@ private class Selector_Test
 	static void test_data_selection()
 	{
 		TestDataGenerator.generateUtilitySetting();
-		
+
 		//-- Generate Test Data
 		Product2 prodA = new Product2(
 			Name = 'Product A',
 			SAP_Material_Number__c = TestDataGenerator.generateProductCode(),
 			Effective_From__c = Date.today().addMonths(-1),
 			Effective_To__c = Date.today().addMonths(+1)
-		); 
-		
+		);
+
 		Product2 prodB = new Product2(
 			Name = 'Product B',
 			SAP_Material_Number__c = TestDataGenerator.generateProductCode(),
 			Effective_From__c = null,
 			Effective_To__c = Date.today().addMonths(+1)
-		); 
-		
+		);
+
 		insert new List<Product2>{prodA, prodB};
 
-		// Call Method 
-		Product_Sel pSelector = new Product_Sel(); 
+		// Call Method
+		Product_Sel pSelector = new Product_Sel();
 
 		List<String> fields = new List<String>{'Id','Name'};
 

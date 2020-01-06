@@ -14,17 +14,17 @@ public with sharing class CSP_Utils {
 		config.selfRegistrationUrl = authConfig.getSelfRegistrationUrl();
 
 		return config;
-	}	
+	}
 
-	/* 
+	/*
 	* @description Indicates whether the current user isn’t logged in to the community.
 	* @params
 	* @return Boolean
-	*/	
+	*/
 	@AuraEnabled
 	public static Boolean isGuestUser(){
 		return Auth.CommunitiesUtil.isGuestUser();
-	} 
+	}
 
 	public static String toDatetime(Date dte) {
 		DateTime dtAndTime = DateTime.newInstanceGmt(dte.year(), dte.month(), dte.day(), 0, 0, 0);
@@ -32,7 +32,7 @@ public with sharing class CSP_Utils {
 		return dtAndTime.format('yyyy-MM-dd\'T\'hh:mm:ss\'Z\'');
 	}
 
-	/* 
+	/*
 	* @description Return field labels. It needs to pass the sObject and the necessary fields to retrieve
 	* @params String sObjectType, List<String> sObjectFields
 	* @return Map<String,String>
@@ -40,7 +40,7 @@ public with sharing class CSP_Utils {
 	@AuraEnabled(cacheable=true)
 	public static Map<String, String> getSelectedColumns(String sObjectType, List<String> sObjectFields) {
 		Map<String, String> allFieldsLabel = new Map<String, String>();
-		
+
 		Map<String, Schema.SObjectType> schemaMap = Schema.getGlobalDescribe();
 		Map<String, Schema.SObjectField> fieldMap = schemaMap.get(sObjectType).getDescribe().fields.getMap();
 
@@ -56,24 +56,24 @@ public with sharing class CSP_Utils {
 		return allFieldsLabel;
 	}
 
-	/* 
+	/*
 	* @description Get Logged User.
 	* @return User
 	*/
 	@AuraEnabled
 	public static User getLoggedUser() {
-		
-		User loggedUser = [SELECT Id, Profile.Name, contactId, Contact.Account.Top_Parent__c, Contact.Account.Category__c, 
-									Contact.Account.Sector__c, Contact.Account.Parent.Category__c, Contact.Account.Top_Parent__r.Category__c, 
-									Contact.Account.ParentId, Contact.Account.RecordType.DeveloperName, Contact.Account.Status__c, 
+
+		User loggedUser = [SELECT Id, Profile.Name, contactId, Contact.Account.Top_Parent__c, Contact.Account.Category__c,
+									Contact.Account.Sector__c, Contact.Account.Parent.Category__c, Contact.Account.Top_Parent__r.Category__c,
+									Contact.Account.ParentId, Contact.Account.RecordType.DeveloperName, Contact.Account.Status__c,
 									Contact.AccountId, Contact.User_Portal_Status__c, Contact.Account.IATA_ISO_Country__r.ISO_Code__c, Contact.Membership_Function__c
-						   FROM User
-						   WHERE Id =: UserInfo.getUserId()];
-		
+							 FROM User
+							 WHERE Id =: UserInfo.getUserId()];
+
 		return loggedUser;
 	}
 
-	/* 
+	/*
 	* @description Return the type of the User.
 	* @return String User Portal Status
 	*/
@@ -83,63 +83,63 @@ public with sharing class CSP_Utils {
 		return loggedUser.Contact.User_Portal_Status__c == 'Approved Admin';
 	}
 
-	/* 
+	/*
 	* @description Return list of notifications for a specific contact. It needs to pass contact Id to get the respective notifications
 	* @params String contactId
 	* @return List<Notification__c>
 	*/
 	public static List<Notification__c> getContactNotifications(String contactId) {
 
-		return [SELECT Id 
-				FROM Notification__c 
-				WHERE Contact__c =: contactId 
-					AND (Number_of_views__c = 0 OR Number_of_views__c = null) 
-					AND Archive__c = false 
+		return [SELECT Id
+				FROM Notification__c
+				WHERE Contact__c =: contactId
+					AND (Number_of_views__c = 0 OR Number_of_views__c = null)
+					AND Archive__c = false
 				ORDER BY Critical_notification__c DESC, CreatedDate DESC];
 	}
-	
-	/* 
+
+	/*
 	* @description Return list of portal users to approve. It needs to pass top parent Id to get the respective pending contacts to be approved
 	* @params String topParentId
 	* @return List<Contact>
 	*/
 	public static List<Contact> getContactsToApprove(String topParentId) {
 
-		return [SELECT Id 
-				FROM Contact 
-				WHERE (Account.Top_Parent__c =: topParentId OR AccountId =: topParentId) 
+		return [SELECT Id
+				FROM Contact
+				WHERE (Account.Top_Parent__c =: topParentId OR AccountId =: topParentId)
 					AND User_Portal_Status__c = 'Pending Approval'];
 	}
 
-	/* 
+	/*
 	* @description Return list of portal users to approve. It needs to pass top parent Id to get the respective pending contacts
 	* @params String topParentId
 	* @return List<Notification__c>
 	*/
 	public static List<Portal_Application_Right__c> getPortalAppRightsToApprove(String topParentId) {
 
-		return [SELECT Id 
-				FROM Portal_Application_Right__c 
-				WHERE Contact__r.AccountId =: topParentId 
-					AND Right__c = 'Access Requested' 
+		return [SELECT Id
+				FROM Portal_Application_Right__c
+				WHERE Contact__r.AccountId =: topParentId
+					AND Right__c = 'Access Requested'
 					AND Portal_Application__r.Cannot_be_managed_by_portal_admin__c = false];
 	}
 
-	/* 
+	/*
 	* @description Return number of notifications for the respective user. It needs to be a string to let the result be 99+ for more than 99
 	* @return String
 	*/
 	@AuraEnabled
 	public static String getNotificationsCount() {
-	
+
 		User loggedUser = [SELECT Id, ContactId , Contact.AccountId, Contact.Account.Top_Parent__c, Contact.User_Portal_Status__c
-						   FROM User
-						   WHERE Id =: UserInfo.getUserId()];
+							 FROM User
+							 WHERE Id =: UserInfo.getUserId()];
 
 		//check if the user is a portal user
 		if(loggedUser == null || loggedUser.ContactId == null) return null;
 
-		Integer numNotifications = 0;		
+		Integer numNotifications = 0;
 		List<Notification__c> notifications = getContactNotifications(loggedUser.ContactId);
 
 		if(!notifications.isEmpty())
@@ -149,7 +149,7 @@ public with sharing class CSP_Utils {
 		if(loggedUser.Contact.User_Portal_Status__c == 'Approved Admin') {
 
 			String topParentId = loggedUser.Contact.Account.Top_Parent__c == null ? loggedUser.Contact.AccountId : loggedUser.Contact.Account.Top_Parent__c;
-			
+
 			numNotifications += getContactsToApprove(topParentId).size() + getPortalAppRightsToApprove(topParentId).size();
 		}
 
@@ -161,7 +161,7 @@ public with sharing class CSP_Utils {
 		return OneIdUtils.getCommunityRedirection (OneIdUtils.Mode.ISSP, url);
 	}
 
-	 /* 
+	 /*
 	* @description Returns picklist values from a specific fields
 	* @return list<PickListWrapper> //wrapper used for picklist values- picklistEntry not available in lightning atm
 	*/
@@ -183,10 +183,10 @@ public with sharing class CSP_Utils {
 
 		// return empty list if the field type is not picklist
 		if (dfr.getType() != Schema.DisplayType.Picklist && dfr.getType() != Schema.DisplayType.MultiPicklist) return options;
-		
+
 		for (Schema.PicklistEntry ple : dfr.getPicklistValues()) {
 			if (ple.isActive()) {
-				PickListWrapper selection = new PickListWrapper();  
+				PickListWrapper selection = new PickListWrapper();
 				selection.label = ple.getLabel();
 				selection.value = ple.getValue();
 				selection.checked = false;
@@ -195,7 +195,7 @@ public with sharing class CSP_Utils {
 		}
 
 		return options;
-	}	
+	}
 
 	@AuraEnabled(cacheable=true)
 	public static String randomUUID() {
@@ -237,7 +237,7 @@ public with sharing class CSP_Utils {
 		return str.substring(index, index+1);
 	}
 
-	
+
 	//* Retrieves available lanaguages for the community*/
 	@AuraEnabled
 	public static List<PickListWrapper> getCommunityAvailableLanguages(string sobj,string field){
@@ -270,7 +270,7 @@ public with sharing class CSP_Utils {
 
 		List<Contact> contacts = [select Id,Preferred_Language__c  from Contact where Id=:user.ContactId];
 		if (!contacts.isEmpty()){
-			
+
 			Contact con = contacts[0];
 
 			if(pLangcs!= null || !pLangcs.isEmpty()){
@@ -283,23 +283,23 @@ public with sharing class CSP_Utils {
 			}
 		}
 
-	   
-	   /* Pagereference pr = new Pagereference(retURL);
-		pr.setCookies(new Cookie[]{new Cookie('lang',lang,null,100000000,false)});*/
-   }
 
-	   //Flag used to know if the new portal (CSPortal) is live or not.
+		 /* Pagereference pr = new Pagereference(retURL);
+		pr.setCookies(new Cookie[]{new Cookie('lang',lang,null,100000000,false)});*/
+	 }
+
+		 //Flag used to know if the new portal (CSPortal) is live or not.
 	@AuraEnabled
 	public static Boolean CSPortalRedirectExists(){
 		ISSP_CS__c issp_cs = ISSP_CS__c.getValues('CS Portal Redirect');
-		
+
 		if(issp_cs != null){
 			return true;
 		}
 		return false;
 	}
 
-	/* 
+	/*
 	* @description Return a public URL from a shared file
 	* @description The public URL (DistributionPublicUrl) is not ready in the moment it is inserted, so it's been retrieved using a SOQL instead
 	* @params String documentName, Id documentId
@@ -326,11 +326,11 @@ public with sharing class CSP_Utils {
 			contentToInsert.PreferencesPasswordRequired = false;
 			contentToInsert.PreferencesAllowOriginalDownload = true;
 
-			insert contentToInsert; 
+			insert contentToInsert;
 		}
 
 		return [SELECT ContentDownloadUrl, DistributionPublicUrl FROM ContentDistribution WHERE Id = :contentToInsert.Id LIMIT 1][0];
-	} 
+	}
 
 
 
@@ -344,7 +344,7 @@ public with sharing class CSP_Utils {
 		public String value;
 		@AuraEnabled
 		public Boolean checked;
-		
+
 		public PickListWrapper (){
 
 		}
@@ -353,7 +353,7 @@ public with sharing class CSP_Utils {
 			this.label=label;
 		}
 	}
-	
+
 	@AuraEnabled
 	public static Boolean isNewPortalActive() {
 		User usr = [SELECT Id, Profile.Name, CNS_Account_or_Agency__c FROM User WHERE Id =: UserInfo.getUserId()];
@@ -371,7 +371,7 @@ public with sharing class CSP_Utils {
 		return 'https://' + host + pageName;
 	}
 
-	 /* 
+	 /*
 	* @description Return if the user is an Airline User
 	* @return boolean is airline user
 	*/
@@ -395,7 +395,7 @@ public with sharing class CSP_Utils {
 		public String url { get; set; }
 		@AuraEnabled
 		public String recordsString { get; set; }
-		
+
 	}
 
 
