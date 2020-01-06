@@ -2,6 +2,9 @@ import { LightningElement, track } from 'lwc';
 
 import getFavoriteServicesList from '@salesforce/apex/PortalServicesCtrl.getFavoriteServicesList';
 import paymentLinkRedirect from '@salesforce/apex/PortalServicesCtrl.paymentLinkRedirect';
+import changeIsFavoriteStatus from '@salesforce/apex/PortalServicesCtrl.changeIsFavoriteStatus';
+import createPortalApplicationRight from '@salesforce/apex/PortalServicesCtrl.createPortalApplicationRight';
+
 import { updateRecord } from 'lightning/uiRecordApi';
 
 //Navigation
@@ -11,8 +14,16 @@ import { navigateToPage } from 'c/navigationUtils';
 import CSP_SeeAll from '@salesforce/label/c.CSP_SeeAll';
 import csp_Request_New_Service from '@salesforce/label/c.csp_Request_New_Service';
 import CSP_FavoriteServices_Title from '@salesforce/label/c.CSP_FavoriteServices_Title';
+import CSP_Services_AddFavorite from '@salesforce/label/c.CSP_Services_AddFavorite';
+import CSP_Services_RemoveFavorite from '@salesforce/label/c.CSP_Services_RemoveFavorite';
+
+import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 
 export default class FavoriteServicesLWC extends LightningElement {
+    /* Images */
+    favoriteIcon = CSP_PortalPath + 'CSPortal/Images/Icons/favorite.png';
+    notFavoriteIcon = CSP_PortalPath + 'CSPortal/Images/Icons/not_favorite.png';
+
     //track variables
 
     @track maxSize;
@@ -31,7 +42,9 @@ export default class FavoriteServicesLWC extends LightningElement {
     label = {
         csp_Request_New_Service,
         CSP_SeeAll,
-        CSP_FavoriteServices_Title
+        CSP_FavoriteServices_Title,
+        CSP_Services_AddFavorite,
+        CSP_Services_RemoveFavorite
     };
 
     //Same as doInit() function on old aura components
@@ -133,6 +146,12 @@ export default class FavoriteServicesLWC extends LightningElement {
                 let lstAux2 = [];
                 let lstAux3 = [];
 
+                pageListAux[0].favoriteDivClass = 'oneRemClass';
+                pageListAux[1].favoriteDivClass = 'oneRemClass';
+                pageListAux[2].favoriteDivClass = 'halfOneRemClass';
+                pageListAux[3].favoriteDivClass = 'oneRemClass';
+                pageListAux[4].favoriteDivClass = 'halfOneRemClass';
+
                 lstAux1.push(pageListAux[0]);
                 lstAux2.push(pageListAux[1]);
                 lstAux2.push(pageListAux[2]);
@@ -155,24 +174,36 @@ export default class FavoriteServicesLWC extends LightningElement {
             let lstAux2 = [];
             let lstAux3 = [];
 
+            pageListAux[0].favoriteDivClass = 'oneRemClass';
+
             lstAux1.push(pageListAux[0]);
 
             if (pageListAux.length === 2) {
+                pageListAux[1].favoriteDivClass = 'oneRemClass';    
                 lstAux2.push(pageListAux[1]);
             }
 
             if (pageListAux.length === 3) {
+                pageListAux[1].favoriteDivClass = 'oneRemClass';
+                pageListAux[2].favoriteDivClass = 'oneRemClass';
                 lstAux2.push(pageListAux[1]);
                 lstAux3.push(pageListAux[2]);
             }
 
             if (pageListAux.length === 4) {
+                pageListAux[1].favoriteDivClass = 'oneRemClass';
+                pageListAux[2].favoriteDivClass = 'oneRemClass';
+                pageListAux[3].favoriteDivClass = 'halfOneRemClass';
                 lstAux2.push(pageListAux[1]);
                 lstAux3.push(pageListAux[2]);
                 lstAux3.push(pageListAux[3]);
             }
 
             if (pageListAux.length === 5) {
+                pageListAux[1].favoriteDivClass = 'oneRemClass';
+                pageListAux[2].favoriteDivClass = 'halfOneRemClass';
+                pageListAux[3].favoriteDivClass = 'oneRemClass';
+                pageListAux[4].favoriteDivClass = 'halfOneRemClass';
                 lstAux2.push(pageListAux[1]);
                 lstAux2.push(pageListAux[2]);
                 lstAux3.push(pageListAux[3]);
@@ -231,8 +262,8 @@ export default class FavoriteServicesLWC extends LightningElement {
         const requestable = event.target.attributes.getNamedItem('data-requestable');
         const recordId = event.target.attributes.getNamedItem('data-recordid');
         const recordName = event.target.attributes.getNamedItem('data-recordname');
-        if (requestable.value === 'true') {
-            // update Last Visit Date on record only if the clicked service is requestable
+        if (recordId !== null) {
+            // update Last Visit Date on record only if portal application right exists
             // Create the recordInput object
             const fields = {};
             fields.Id = recordId.value;
@@ -240,6 +271,13 @@ export default class FavoriteServicesLWC extends LightningElement {
             const recordInput = { fields };
 
             updateRecord(recordInput)
+                .then(() => {
+                    console.info('Updated Last Visit Date successfully!');
+                });
+        }
+        else{
+            const pa = event.target.attributes.getNamedItem('data-application-id');
+            createPortalApplicationRight({portalApplicationId:pa.value})
                 .then(() => {
                     console.info('Updated Last Visit Date successfully!');
                 });
@@ -330,6 +368,24 @@ export default class FavoriteServicesLWC extends LightningElement {
 
     goToAvailableServices() {
         navigateToPage("services?tab=availableServices");
+    }
+
+    changeIsFavoriteStatus(event){
+        this.isLoading = true;
+        let par = event.currentTarget.getAttribute('data-id');
+        let pa = event.currentTarget.getAttribute('data-application-id');
+        let currentFavoriteStatus = event.currentTarget.getAttribute('data-is-favorite');
+
+        if(par === 'undefined'){
+            par = null;
+        }
+
+        changeIsFavoriteStatus({portalApplicationId:pa, portalApplicationRightId:par, isFavorite: (currentFavoriteStatus === 'false')})
+            .then(result => {
+                if(result){
+                    this.connectedCallback();
+                }
+            });
     }
 
 }

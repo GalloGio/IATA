@@ -32,8 +32,11 @@ import cancelAccessMsg from '@salesforce/label/c.CSP_Cancel_Access_Message';
 import cancelAccessTitle from '@salesforce/label/c.CSP_Cancel_Access_Title';
 import searchContactPlaceholder from '@salesforce/label/c.CSP_Search_In_Contacts_In_Service';
 import ISSP_IATA_Location_Code from '@salesforce/label/c.ISSP_IATA_Location_Code';
+import CSP_NoRecordsFilter from '@salesforce/label/c.CSP_NoRecordsFiltered'; 
+
 import Email from '@salesforce/label/c.Email';
 import Status from '@salesforce/label/c.Status';
+import Country from '@salesforce/label/c.Country';
 import CSP_User from '@salesforce/label/c.CSP_User';
 import confirm from '@salesforce/label/c.ISSP_Confirm';
 import cancel from '@salesforce/label/c.CSP_Cancel';
@@ -53,6 +56,21 @@ import ANG_ISSP_IEP_add_users_to_account_not_open_error_msg from '@salesforce/la
 import ISSP_AMC_CLOSE from '@salesforce/label/c.ISSP_AMC_CLOSE';
 import CSP_Manage_Services_NoIEPAccount from '@salesforce/label/c.CSP_Manage_Services_NoIEPAccount';
 import ISSP_ANG_GenericError from '@salesforce/label/c.ISSP_ANG_GenericError';
+import CSP_Filter from '@salesforce/label/c.CSP_Filter';
+import CSP_Filtered from '@salesforce/label/c.CSP_Filtered';
+import CSP_Search_Case_Country from '@salesforce/label/c.CSP_Search_Case_Country';
+import CSP_RemoveAllFilters from '@salesforce/label/c.CSP_RemoveAllFilters';
+import CSP_Apply from '@salesforce/label/c.CSP_Apply';
+import ISSP_All from '@salesforce/label/c.ISSP_All';
+import ISSP_Access_Granted from '@salesforce/label/c.ISSP_Access_Granted';
+import ISSP_Access_Requested from '@salesforce/label/c.ISSP_Access_Requested';
+import ISSP_Access_Denied from '@salesforce/label/c.ISSP_Access_Denied';
+import CSP_L2_Requested_Modal_Title from '@salesforce/label/c.CSP_L2_Requested_Modal_Title';
+import CSP_L2_Requested_Modal_Message from '@salesforce/label/c.CSP_L2_Requested_Modal_Message';
+import CSP_L2_Requested_Modal_Cancel from '@salesforce/label/c.CSP_L2_Requested_Modal_Cancel';
+import CSP_L2_Requested_Modal_Complete from '@salesforce/label/c.CSP_L2_Requested_Modal_Complete';
+
+
 
 //import user id
 import Id from '@salesforce/user/Id';
@@ -65,6 +83,8 @@ import getContacts from '@salesforce/apex/PortalServicesCtrl.getContactsAndStatu
 import searchContacts from '@salesforce/apex/PortalServicesCtrl.searchContactsInService';
 import updateLastModifiedService from '@salesforce/apex/PortalServicesCtrl.updateLastModifiedService';
 import grantUserAccess from '@salesforce/apex/PortalServicesCtrl.grantAccess';
+import massGrantUserAccess from '@salesforce/apex/PortalServicesCtrl.massGrantAccess';
+import massDenyUserAccess from '@salesforce/apex/PortalServicesCtrl.massDenyAccess';
 import denyUserAccess from '@salesforce/apex/PortalServicesCtrl.denyAccess';
 import getLoggedUser from '@salesforce/apex/CSP_Utils.getLoggedUser';
 import getContactsForAssignment from '@salesforce/apex/PortalServicesCtrl.getContactsForServiceAssignment';
@@ -74,6 +94,9 @@ import availableIEPPortalServiceRoles from '@salesforce/apex/PortalServicesCtrl.
 import newUserRequestableWithoutApproval from '@salesforce/apex/PortalServicesCtrl.newUserRequestableWithoutApproval';
 import ActivateIEPUsers from '@salesforce/apex/PortalServicesCtrl.ActivateIEPUsers';
 import CreateNewPortalAccess from '@salesforce/apex/PortalServicesCtrl.CreateNewPortalAccess';
+import isAirlineUser from '@salesforce/apex/CSP_Utils.isAirlineUser';
+import getCountryList from '@salesforce/apex/PortalSupportReachUsCtrl.getCountryList';
+import getContactInfo from '@salesforce/apex/PortalRegistrationSecondLevelCtrl.getContactInfo';
 
 
 
@@ -83,6 +106,7 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 
 export default class PortalServicesManageServices extends NavigationMixin(LightningElement) {
+    alertIcon = CSP_PortalPath + 'CSPortal/alertIcon.png';
 
     label = {
         aboutlb,
@@ -126,7 +150,23 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         ANG_ISSP_IEP_add_users_to_account_not_open_error_msg,
         ISSP_AMC_CLOSE,
         CSP_Manage_Services_NoIEPAccount,
-        ISSP_ANG_GenericError
+        ISSP_ANG_GenericError,
+        CSP_Filter,
+        CSP_Filtered,
+		CSP_NoRecordsFilter,
+        CSP_Search_Case_Country,
+        CSP_RemoveAllFilters,
+        CSP_Apply,
+        ISSP_IATA_Location_Code,
+        Status,
+        ISSP_All,
+        ISSP_Access_Granted,
+        ISSP_Access_Requested,
+        ISSP_Access_Denied,
+        CSP_L2_Requested_Modal_Title,
+        CSP_L2_Requested_Modal_Message,
+        CSP_L2_Requested_Modal_Cancel,
+        CSP_L2_Requested_Modal_Complete
     };
 
     //links for images
@@ -154,7 +194,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     @track currentPageNumber = 1;
 
     searchMode = false;
-
+    @track searchText='';
 
     searchIconNoResultsUrl = CSP_PortalPath + 'CSPortal/Images/Icons/searchNoResult.svg';
 
@@ -165,12 +205,12 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     @track showSpinner = false;
 
     @track componentLoading = true;
-
+    @track allLabel = "";
 
     @track isAdmin = false;
     @track serviceName = false;
     @track isAgency = false;
-    
+
     @track contactTableColums = [];
     @track contactsToAddColumns = [];
     @track showConfirmPopup = false;
@@ -206,50 +246,145 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 
     PAGE_SIZE = 10; //nr of contact record per page
 
-    connectedCallback() {
+    //Modal filter vars
+    @track airlineUser = false;
+    @track filtered = false;
+    @track viewServicesFiltersModal = false;
+    filterIconUrl = CSP_PortalPath + 'CSPortal/Images/Icons/filter.svg';
+    filteredIconUrl = CSP_PortalPath + 'CSPortal/Images/Icons/filtered.svg';
+    @track selectedCountry = "";
+    @track selectedCountryValue = '';
+    @track selectedStatus = "";
+    @track selectedIataCode = "";
+    @track searchKey = '';
+    @track globalResults = [];
+    @track optionsCountry = [];
+    @track optionsIATACodes = [{ checked: false, label: this.label.ISSP_All, value: ''}];
+    @track optionsStatus = [
+        { label: this.label.ISSP_Access_Granted, value: "Access Granted" },
+        { label: this.label.ISSP_Access_Denied, value: "Access Denied" },
+        { label: this.label.ISSP_Access_Requested, value: "Access Requested" }];
+    // Variables for mass update
+    @track selectedRecords = [];
+    @track showMassApprove = false;
+    @track showMassDeny = false;
 
+    checkMassActionButtons() {
+        if(this.selectedRecords && this.selectedRecords.length > 0) {
+            const uniqueGrant = [...new Set(this.selectedRecords.map((rec) => {
+                return rec.showGrant;
+                })
+            )];
+            this.showMassApprove = !uniqueGrant.includes(false);
+            
+            const uniqueDeny = [...new Set(this.selectedRecords.map((rec) => {
+                return rec.showDeny;
+                })
+            )];
+            this.showMassDeny = !uniqueDeny.includes(false);
+
+        } else {
+            this.showMassApprove = false;
+            this.showMassDeny = false;
+        }
+    }
+
+    //Level 2 registration variables
+    @track isFirstLevelUser = false;
+    level2RegistrationTrigger = 'service';
+    isTriggeredByRequest = true;
+    
+    @track displaySecondLevelRegistrationPopup = false;
+    @track displaySecondLevelRegistration = false;
+
+    connectedCallback() {
+        
         //get the parameters for this page
         this.pageParams = getParamsFromPage();
         if (this.pageParams) {
             this.serviceId = this.pageParams.serviceId;
+            
+            if (this.pageParams.openRequestService) {
+                this.showConfirm = true;
+            }
+            if (this.pageParams.status) {
+                if (this.pageParams.status == 'Access_Request') {
+                    this.selectedStatus = "Access Requested";
+                }
+            }
+
         }
 
         getLoggedUser().then(userResult => {
             let loggedUser = JSON.parse(JSON.stringify(userResult));
 
-            if(loggedUser.Contact != null && loggedUser.Contact.AccountId != null) {
+            if (loggedUser.Contact != null && loggedUser.Contact.AccountId != null) {
                 let account = loggedUser.Contact.Account;
-                if(account.RecordType.DeveloperName === 'IATA_Agency' && 
-                account.Status__c !== undefined && account.Status__c !== 'New application pending') {
-                        this.isAgency = true;
+                if (account.RecordType.DeveloperName === 'IATA_Agency' &&
+                    account.Status__c !== undefined && account.Status__c !== 'New application pending') {
+                    this.isAgency = true;
                 }
 
-                this.contactTableColums = [
-                    { label: CSP_User, fieldName: 'contactName', type: 'text' },
-                    { label: Email, fieldName: 'emailAddress', type: 'text' },
-                    { label: ISSP_IATA_Location_Code, fieldName: 'iataCodeLoc', type: 'text' },
-                    { label: Status, fieldName: 'serviceRight', type: 'text' },
-                    { type: 'action', typeAttributes: { iconName: 'utility:delete', disabled: true, rowActions: this.getRowActions } }
-                ];
-        
-                //Remove column IATA Code (Location) if User Account is not an Agency
-                if(!this.isAgency) {
-                    this.contactTableColums = this.contactTableColums.slice(0, 2).concat(this.contactTableColums.slice(3));
-                }
+                
+                isAirlineUser().then(result => {
+                    this.airlineUser = result;
 
-           this.contactsToAddColumns = [
-            { label: 'User', fieldName: 'title', type: 'text' },
-            { label: 'Email', fieldName: 'subtitle', type: 'text' },
-            { label: 'IATA Location Code', fieldName: 'iataCodeLocation', type: 'text' },
-            { label: 'Status', fieldName: 'status', type: 'text' },
-            { label: '', type: 'button', initialWidth: 35, typeAttributes: { label: '', variant: "base", title: 'Remove', name: 'removeContact', iconName: 'utility:delete' } }
-        ];
+                    getCountryList()
+                        .then(result2 => {
+                            let myResult = JSON.parse(JSON.stringify(result2));
+                            let myCountryOptions = [];
+                            let auxmyCountryOptions = [];
+                            Object.keys(myResult).forEach(function (el) {
+                                auxmyCountryOptions.push({ label: myResult[el], value: el });
+                            });
+                            //used to order alphabetically
+                            auxmyCountryOptions.sort((a, b) => { return (a.label).localeCompare(b.label) });
+                            myCountryOptions = myCountryOptions.concat(auxmyCountryOptions);
+
+                            this.optionsCountry = this.getPickWithAllValue(myCountryOptions);
+                            this.allLabel = this.label.ISSP_All;
+                        });
+                    this.optionsStatus = this.getPickWithAllValue(this.optionsStatus);
+                    //If Airline user - Country ELSE IATACODE
+                    if (this.airlineUser) {
+                        this.contactTableColums = [
+                            { label: CSP_User, fieldName: 'contactName', type: 'text' },
+                            { label: Email, fieldName: 'emailAddress', type: 'text' },
+                            { label: Status, fieldName: 'serviceRight', type: 'text' },
+                            { label: Country, fieldName: 'country', type: 'text' },
+                            { type: 'action', typeAttributes: { iconName: 'utility:delete', disabled: true, rowActions: this.getRowActions } }
+                        ];
+                    } else {
+                        this.contactTableColums = [
+                            { label: CSP_User, fieldName: 'contactName', type: 'text' },
+                            { label: Email, fieldName: 'emailAddress', type: 'text' },
+                            { label: Status, fieldName: 'serviceRight', type: 'text' },
+                            { label: ISSP_IATA_Location_Code, fieldName: 'iataCodeLoc', type: 'text' },
+                            { type: 'action', typeAttributes: { iconName: 'utility:delete', disabled: true, rowActions: this.getRowActions }}
+                        ];
+                    }
+
+                    this.contactsToAddColumns = [
+                        { label: 'User', fieldName: 'title', type: 'text' },
+                        { label: 'Email', fieldName: 'subtitle', type: 'text' },
+                        { label: 'Status', fieldName: 'status', type: 'text' },
+                        { label: 'IATA Location Code', fieldName: 'iataCodeLocation', type: 'text' },
+                        { label: '', type: 'button', initialWidth: 35, typeAttributes: { label: '', variant: "base", title: 'Remove', name: 'removeContact', iconName: 'utility:delete' } }
+                    ];
+
+            });
+
             }
         });
 
 
         //get the service details
         this.getServiceDetailsJS();
+
+        getContactInfo()
+            .then(result => {
+                this.isFirstLevelUser = result.Account.Is_General_Public_Account__c;
+            })
 
     }
 
@@ -265,6 +400,12 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         this.totalNrRecords = 0;
         this.nrLoadedRecs = 0;     //nr of loaded records
         this.currentPageNumber = 1;
+        this.selectedStatus = '';
+        this.selectedCountry = '';
+        this.selectedIataCode = '';
+	this.selectedRecords = [];
+
+        this.clearURL();
 
         this.getServiceDetailsJS();
     }
@@ -310,17 +451,61 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
             .then(result => {
                 this.canAddUsers = result;
             });
-    }
+	}
+	
+	populateIataCodeDropdown(contactList){		
+		if(contactList==undefined)return;
+
+		let optionslist=JSON.parse(JSON.stringify(this.optionsIATACodes));
+		for(let i=0;i<contactList.length;i++){
+
+			let iatacode=contactList[i].iataCodeLoc;
+
+			let exists=optionslist.find(el=>el.value==iatacode);
+			if(exists== undefined){
+				optionslist.push({ checked: false, label: iatacode, value: iatacode });
+			}
+		}
+		this.optionsIATACodes=optionslist.slice();
+
+
+	}
 
     getContactsForPage() {
         getContacts({ serviceId: this.serviceId, offset: this.nrLoadedRecs })
             .then(result => {
                 let resultData = JSON.parse(JSON.stringify(result));
+                resultData = this.sortResults(resultData);
+                this.globalResults = resultData;
                 this.initialPageLoad(resultData, this.serviceRecord.totalNrContacts);
-
+                if (this.pageParams && this.pageParams.status !== null && this.pageParams.status === 'Access_Requested') {
+                    resultData = resultData.filter(item => { return item.serviceRight === 'Access Requested' });
+                    this.searchKey = this.pageParams.status.replace('_', ' ');
+                }
+                if (this.selectedStatus == "Access Requested") {
+                    this.applyFiltersModal();
+                }
                 //this.showSpinner = false;
                 this.componentLoading = false;
+				this.checkMassActionButtons();
+				this.populateIataCodeDropdown(resultData);
+
             });
+    }
+
+    sortResults(results) {
+        let tempList = [];
+        let tempList1 = [];
+        let tempList2 = [];
+        results.forEach(function (el) {
+            if (el.serviceRight === 'Access Requested') {
+                tempList1.push(el);
+            } else {
+                tempList2.push(el);
+            }
+        });
+        tempList = tempList1.concat(tempList2);
+        return tempList;
     }
 
     get renderCancelRequest() {
@@ -347,7 +532,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         let tempPage = [];
 
         for (let i = 1; i <= contactList.length; i++) {
-            tempPage.push(contactList[i - 1]);
+			tempPage.push(contactList[i - 1]);
             if ((i % this.PAGE_SIZE) === 0) { // organizes the records by pages
                 tempList.push(tempPage);
                 tempPage = [];
@@ -367,8 +552,8 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         this.currentContactPage = tempList[startPage - 1];
         if (!this.searchMode)
             this.nrLoadedRecs += contactList.length;
-
     }
+
 
     //generates paginators menu
     generatePageList() {
@@ -428,12 +613,13 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         if (!newPage) {
             this.loadingContacts = true;
             getContacts({ serviceId: this.serviceId, offset: this.nrLoadedRecs }).then(result => {
-                let resultData = JSON.parse(JSON.stringify(result));
+				let resultData = JSON.parse(JSON.stringify(result));
+				this.populateIataCodeDropdown(resultData);
                 this.processContacList(resultData, currentPage);
                 this.generatePageList();
                 this.refreshContactPageView(currentPage);
             });
-        }else{
+        } else {
             this.generatePageList();
         }
         this.loadingContacts = false;
@@ -443,59 +629,48 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     //search Records
     searchRecord(event) {
         let searchKey = event.target.value.toLowerCase().trim();
-        this.searchKey = searchKey;
-        if (searchKey !== '' && searchKey.length >= 3) {
-            //enters search mode
-            //backups already retrieve values from server to _og variables
-            if (!this.searchMode) {
-                this.searchMode = true;
-                this.contactListOg = this.contactList.slice();
-                this.totalNrPagesOg = this.totalNrPages;
-            }
-            //if all records loadded searches localy only
-            if (this.totalNrRecords == this.nrLoadedRecs) {
-
-                let tempContactPagesList = JSON.parse(JSON.stringify(this.contactListOg.slice()));
-                let resultList = [];
-                tempContactPagesList.forEach((el, pos, arr) => {
-                    let filteredResults = el.filter((el) => {
-                        //to avoid uninitialized values
-                        if (!el.contactName) el.contactName = '';
-                        if (!el.iataCodeLoc) el.iataCodeLoc = '';
-                        if (!el.emailAddress) el.emailAddress = '';
-                        return el.contactName.toLowerCase().search(searchKey) != -1 || el.iataCodeLoc.toLowerCase().search(searchKey) != -1 || el.emailAddress.toLowerCase().search(searchKey) != -1;
-                    });
-                    resultList = resultList.concat(filteredResults);
-
-                });
-
-                this.contactList = [];
-                this.processContacList(resultList, 1);
-                this.totalNrPages = Math.ceil(resultList.length / this.PAGE_SIZE);
-                this.generatePageList();
-            } else {
-                //searchs from db - invokes server to retrieve search result
-                searchContacts({ serviceId: this.serviceId, searchkey: searchKey }).then(result => {
-                    let tempSearchResult = JSON.parse(JSON.stringify(result));
-
-                    this.contactList = [];
-                    this.totalNrPages = Math.ceil(tempSearchResult.length / this.PAGE_SIZE);
-                    this.processContacList(tempSearchResult, 1);
-                    this.generatePageList();
-                });
-            }
-        } else if (searchKey === '') {
-            if (this.searchMode) {
-                //Exit search mode
-                //restore all records already retrieved
-                this.searchMode = false;
-                this.contactList = this.contactListOg.slice();
-                this.totalNrPages = this.totalNrPagesOg;
-                this.generatePageList();
-                this.refreshContactPageView(1);
-            }
+        this.searchText = event.target.value;
+        this.searchKey = searchKey;      
+        if (this.searchKey.length == 0 ||this.searchKey.length >= 3) {
+            this.queryContacts();
+        } else{
+            this.searchKey = '';
         }
+    }  
 
+    queryContacts(){ 
+            this.showSpinner = true;
+            let filter1 = '';
+            let filter1_2 = '';
+            let filter2 = this.selectedStatus;
+            if(!this.airlineUser) {
+                if(this.selectedIataCode != '' && this.selectedIataCode != this.allLabel){
+                    let aux = this.selectedIataCode.split('(');
+                    filter1 = aux[0].trim();
+                    filter1_2 = aux[1].trim().substring(0,aux[1].length-1);
+                }
+            }
+            else{
+                filter1 = this.selectedCountry;
+            } 
+
+            if(filter1 == this.allLabel)
+                filter1 = 'All';
+
+            if(filter2 == this.allLabel)
+                filter2 = 'All';
+
+            //searchs from db - invokes server to retrieve search result
+            searchContacts({ serviceId: this.serviceId, searchkey: this.searchKey, filter1: filter1, filter1_2:filter1_2, filter2: filter2 }).then(result => {
+                let tempSearchResult = JSON.parse(JSON.stringify(result)); 
+                tempSearchResult = this.sortResults(tempSearchResult);
+                this.contactList = [];
+                this.totalNrPages = Math.ceil(tempSearchResult.length / this.PAGE_SIZE);
+                this.processContacList(tempSearchResult, 1);
+                this.generatePageList();
+            });
+
+            this.showSpinner = false;
     }
 
     //toggles dropdown when access requested
@@ -532,6 +707,42 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 
     }
 
+    onRowSelection(event) {
+        const selectedRows = event.detail.selectedRows;
+        this.selectedRecords = selectedRows;
+        
+        this.checkMassActionButtons();
+    }
+
+    handleMassApproveAccess(event) {
+        console.log('MASS Approve', event.detail, this.selectedRecords);
+        let contactNames = this.selectedRecords.map(function(elem){
+            return elem.contactName;
+        }).join("; ");
+
+        this.popupTitle = this.label.grantAccessTitle;
+        
+        this.popupMsg = this.label.confirmGrantAccessMsg.replace('{0}', this.serviceRecord.recordService.ServiceName__c).replace('{1}', contactNames);
+        this.mode = 'mass_grant';
+        this.showConfirmPopup = true;
+    }
+
+    handleMassDenyAccess(event) {
+        console.log('MASS DENY', event.detail, this.selectedRecords);
+        let contactNames = this.selectedRecords.map(function(elem){
+            return elem.contactName;
+        }).join("; ");
+
+        let title = this.label.denyAccessTitle;
+        let msg = this.label.confirmDenyAccessMsg.replace('{0}', this.serviceRecord.recordService.ServiceName__c).replace('{1}', contactNames);
+        
+        this.popupTitle = title;
+        this.popupMsg = msg;
+
+        this.mode = 'mass_deny';
+        this.showConfirmPopup = true;
+    }
+
     //Action on the top button ( request access or navigate to service)
     handleTopAction() {
         let serviceRec = JSON.parse(JSON.stringify(this.serviceRecord));
@@ -541,8 +752,14 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
             let appInfo = serviceRec.recordService
             this.goToService(appInfo);
         } else {
-            //displays popup to confirm request
-            this.showConfirm = true;
+            // check if user is Level 1 and if service requests L2
+            if(serviceRec.recordService.Requires_Level2_Registration__c && this.isFirstLevelUser){
+                this.displaySecondLevelRegistrationPopup = true;
+            }
+            else{
+            	//displays popup to confirm request
+            	this.showConfirm = true;
+            }
         }
     }
 
@@ -624,7 +841,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     }
 
     get noResultsFound() {
-        return this.searchMode && this.contactList.length == 0;
+        return this.contactList.length == 0;
     }
 
     get noContactsToAdd() {
@@ -666,12 +883,12 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                 this.denyUserAccessJS(row, msg, title, true);
                 break;
             case 'ifapContact':
-                const {contactId, contactName } = row;
-                
-                goToOldIFAP({hasContact : true, contactId : contactId, contactName : contactName}).then(results => {
+                const { contactId, contactName } = row;
+
+                goToOldIFAP({ hasContact: true, contactId: contactId, contactName: contactName }).then(results => {
                     window.open(results, "_self");
                 });
-                
+
                 break;
             default:
         }
@@ -691,7 +908,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         this.showConfirmPopup = true;
     }
 
-    denyUserAccessJS(contact, msg, title, isFromContactTable ){
+    denyUserAccessJS(contact, msg, title, isFromContactTable) {
         this.popupTitle = title;
         this.selectedlRow = contact;
         this.popupMsg = msg;
@@ -714,22 +931,24 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         this.showSpinner = true;
 
         let methodParams = {
-            contactId: this.selectedlRow.contactId,
             serviceId: this.serviceRecord.recordService.Id,
             reason: this.appRejReason
         };
         switch (this.mode) {
             case 'grant':
+                methodParams.contactId = this.selectedlRow.contactId;
                 grantUserAccess(methodParams).then(result => {
                     this.componentLoading = true;
                     this.showSpinner = false;
                     this.showConfirmPopup = false;
                     this.resetComponent();
-                }).catch(error=>{
+                }).catch(error => {
+					this.showSpinner = false;
                     this.showConfirmPopup = false;
                 });
                 break;
             case 'deny':
+                methodParams.contactId = this.selectedlRow.contactId;
                 methodParams.isFromContactTable = this.isFromContactTable;
 
                 denyUserAccess(methodParams).then(result => {
@@ -738,12 +957,85 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                     this.showConfirmPopup = false;
                     this.resetComponent();
                 }).catch(error => {
+                    this.showSpinner = false;
                     this.showConfirmPopup = false;
                 });
+                break;
+            case 'mass_grant':
+                this.confirmMassGrantAction(this.selectedRecords);
+                break;
+            case 'mass_deny':
+                this.confirmMassDenyAction(this.selectedRecords);
                 break;
             default:
                 this.showSpinner = false;
         }
+    }
+
+    confirmMassGrantAction(recordsList) {
+        let contactIds = recordsList.map((rec) => { return rec.contactId });
+
+        let methodParam = { 
+            contactIds: contactIds,
+            serviceId: this.serviceRecord.recordService.Id,
+            reason: this.appRejReason
+        };
+
+        massGrantUserAccess(methodParam)
+        .then(result => {
+            this.componentLoading = true;
+            this.showSpinner = false;
+            this.showConfirmPopup = false;
+
+            this.resetComponent();
+            this.checkMassActionButtons();
+        }).catch( error => {
+            this.showConfirmPopup = false;
+            this.showSpinner = false;
+            this.componentLoading = false;
+            this.checkMassActionButtons();
+            
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Error',
+                    message: error,
+                    variant: 'error'
+                })
+            );
+        });
+    }
+    
+    confirmMassDenyAction(recordsList) {
+        let contactIds = recordsList.map((rec) => { return rec.contactId });
+
+        let methodParam = { 
+            contactIds: contactIds,
+            serviceId: this.serviceRecord.recordService.Id,
+            reason: this.appRejReason
+        };
+
+        massDenyUserAccess(methodParam)
+        .then(result => {
+            this.componentLoading = true;
+            this.showSpinner = false;
+            this.showConfirmPopup = false;
+            
+            this.resetComponent();
+            this.checkMassActionButtons();
+        }).catch( error => {
+            this.showConfirmPopup = false;
+            this.showSpinner = false;
+            this.componentLoading = false;
+            this.checkMassActionButtons();
+
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Error',
+                    message: error,
+                    variant: 'error'
+                })
+            );
+        });
     }
 
     /* Add Users to service */
@@ -807,7 +1099,6 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 
         } else if (this.isIEPService && (this.radioOption !== undefined || this.radioOption !== null)) {
 
-            console.log(this.contactsToAdd);
             const contactsToAddIDs = this.contactsToAdd.map(function (el) { return el.id; });
             const serviceid = this.serviceId;
             const roleSelected = this.radioOption;
@@ -893,6 +1184,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                     });
             }
         }
+        this.clearURL();
 
     }
 
@@ -940,7 +1232,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 
         values.forEach((c, pos, arr) => {
             let contact = availableContacts.find(function (con) { return c.id === con.id; });
-            contact .deleteIcon = 'utility:delete';
+            contact.deleteIcon = 'utility:delete';
 
             contactsToAdd.push(contact);
         });
@@ -951,7 +1243,6 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     removeContact(event) {
         let itemVal = event.target.dataset.item;
         let contactsToAdd = JSON.parse(JSON.stringify(this.contactsToAdd));
-
         this.contactsToAdd = contactsToAdd.filter(item => item.id !== itemVal);
     }
 
@@ -969,6 +1260,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 
             this.availableContacts = available;
 
+
         });
     }
 
@@ -979,6 +1271,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
             getContactsForAssignment({ serviceId: this.serviceId, queryString: details.searchTerm })
                 .then(results => {
                     let availableContacts = JSON.parse(JSON.stringify(results));
+
                     let toAdd = JSON.parse(JSON.stringify(this.contactsToAdd));
 
                     let available = availableContacts.filter(function (c) {
@@ -1014,4 +1307,100 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
             .then(url => navigateToPage(url, { 'tab': 'contact' }));
     }
 
+    /*  -- FILTER MODAL -- */
+    applyFiltersModal() {
+        this.queryContacts();
+
+        if((this.selectedCountry != '' && this.selectedCountry != this.allLabel) || (this.selectedIataCode != '' && this.selectedIataCode != this.allLabel) || (this.selectedStatus != '' && this.selectedStatus != this.allLabel))
+            this.filtered = true;
+        else{
+            this.filtered = false;
+        }
+        //close modal
+        this.closeServicesFilterModal();
+    }
+
+    searchKeyField(elem) {
+        if (this.searchKey != '') {
+            return (elem.contactName.toLowerCase().search(this.searchKey) != -1 || elem.iataCodeLoc.toLowerCase().search(this.searchKey) != -1 || elem.emailAddress.toLowerCase().search(this.searchKey) != -1);
+        }
+            return true;
+    }
+
+    getPickWithAllValue(picklist) {
+        let picklistAux = [{ checked: false, label: this.label.ISSP_All, value: '' }];
+        return picklistAux.concat(picklist);
+    }
+
+    handleResetFilters() {
+        this.selectedStatus = '';
+        this.selectedCountry = '';
+        this.selectedCountryValue = '';
+        this.selectedIataCode = '';
+        this.filtered = false;
+        this.applyFiltersModal();
+        
+    }
+
+    handleChangeCountryFilter(event) {
+        this.selectedCountry = '';
+        this.selectedCountryValue = event.detail.value;
+        this.optionsCountry.forEach(el => {
+            if (el.value == this.selectedCountryValue) {
+                this.selectedCountry = el.label;
+            }
+        });
+        
+    }
+
+    handleChangeIataCodeFilter(event) {
+        this.selectedIataCodeValue = event.detail.value;
+        this.selectedIataCode = this.selectedIataCodeValue;
+
+    }
+
+    handleChangeStatusFilter(event) {
+        this.selectedStatus = event.detail.value;
+        if(this.selectedStatus == this.allLabel){
+            this.selectedStatus = '';
+        }
+    }
+
+    openServicesFilterModal() {
+        this.viewServicesFiltersModal = true;
+    }
+
+    closeServicesFilterModal() {
+        this.viewServicesFiltersModal = false;
+    }
+
+    clearURL() {
+        let windowURL = window.location.href;
+        windowURL = windowURL.split('?');
+
+        if (windowURL[1].split('&').length > 1) {
+            let param = windowURL[1].split('&');
+            windowURL = windowURL[0] + '?' + param[0];
+            window.history.pushState(null, null, windowURL);
+        }
+
+    }
+
+    cancelSecondLevelRegistration(){
+        this.displaySecondLevelRegistrationPopup = false;
+        this.displaySecondLevelRegistration = false;
+    }
+
+    showSecondLevelRegistration(){
+        this.displaySecondLevelRegistrationPopup = false;
+        this.displaySecondLevelRegistration = true;
+    }
+
+    secondLevelRegistrationCompletedAction1(){
+        navigateToPage(CSP_PortalPath,{});
+    }
+
+    secondLevelRegistrationCompletedAction2(){
+        navigateToPage("manage-service?serviceId=" + this.serviceId);
+    }
 }

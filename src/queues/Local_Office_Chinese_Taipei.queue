@@ -5,28 +5,28 @@
     <name>Local Office - Chinese Taipei</name>
     <queueMembers>
         <roleAndSubordinatesInternal>
-            <roleAndSubordinateInternal>ChinaNAsiaAgencyManagementMgrI</roleAndSubordinateInternal>
-            <roleAndSubordinateInternal>ChinaNAsiaAgencyManagementStaffI</roleAndSubordinateInternal>
-            <roleAndSubordinateInternal>ChinaNAsiaASDStaffI</roleAndSubordinateInternal>
-            <roleAndSubordinateInternal>ChinaNAsiaASDSupervisorI</roleAndSubordinateInternal>
-            <roleAndSubordinateInternal>ChinaNAsiaBankingManagerI</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>ChinaNAsiaAgencyManagementMgr</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>ChinaNAsiaAgencyManagementStaff</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>ChinaNAsiaASDStaff</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>ChinaNAsiaASDSupervisor</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>ChinaNAsiaBankingManager</roleAndSubordinateInternal>
             <roleAndSubordinateInternal>China_N_Asia_Business_Delivery_Manager</roleAndSubordinateInternal>
             <roleAndSubordinateInternal>China_N_Asia_Business_Delivery_Staff</roleAndSubordinateInternal>
-            <roleAndSubordinateInternal>ChinaNAsiaCustomerServiceManagerI</roleAndSubordinateInternal>
-            <roleAndSubordinateInternal>ChinaNAsiaCustomerServiceStaffI</roleAndSubordinateInternal>
-            <roleAndSubordinateInternal>ChinaNAsiaOperationalManagementI</roleAndSubordinateInternal>
-            <roleAndSubordinateInternal>ChinaNAsiaRSManagerI</roleAndSubordinateInternal>
-            <roleAndSubordinateInternal>ChinaNAsiaRSStaffI</roleAndSubordinateInternal>
-            <roleAndSubordinateInternal>ChinaNorthAsiaHubLeaderI</roleAndSubordinateInternal>
-            <roleAndSubordinateInternal>CountryManagerChinaI</roleAndSubordinateInternal>
-            <roleAndSubordinateInternal>CountryManagerHongKongI</roleAndSubordinateInternal>
-            <roleAndSubordinateInternal>CountryManagerMongoliaI</roleAndSubordinateInternal>
-            <roleAndSubordinateInternal>CountryManagerTaiwanI</roleAndSubordinateInternal>
-            <roleAndSubordinateInternal>IDFSChinaNorthAsiaRegionalOfficeI</roleAndSubordinateInternal>
-            <roleAndSubordinateInternal>StaffChinaI</roleAndSubordinateInternal>
-            <roleAndSubordinateInternal>StaffHongKongI</roleAndSubordinateInternal>
-            <roleAndSubordinateInternal>StaffMongoliaI</roleAndSubordinateInternal>
-            <roleAndSubordinateInternal>StaffTaiwanI</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>ChinaNAsiaCustomerServiceManager</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>ChinaNAsiaCustomerServiceStaff</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>ChinaNAsiaOperationalManagement</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>ChinaNAsiaRSManager</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>ChinaNAsiaRSStaff</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>ChinaNorthAsiaHubLeader</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>CountryManagerChina</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>CountryManagerHongKong</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>CountryManagerMongolia</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>CountryManagerTaiwan</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>IDFSChinaNorthAsiaRegionalOffice</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>StaffChina</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>StaffHongKong</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>StaffMongolia</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>StaffTaiwan</roleAndSubordinateInternal>
         </roleAndSubordinatesInternal>
     </queueMembers>
     <queueSobject>

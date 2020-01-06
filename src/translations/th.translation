@@ -53,6 +53,14 @@
         <name>FRED</name>
     </customApplications>
     <customApplications>
+        <label><!-- GADM --></label>
+        <name>GADM</name>
+    </customApplications>
+    <customApplications>
+        <label><!-- GADM --></label>
+        <name>GADM_Classic</name>
+    </customApplications>
+    <customApplications>
         <label><!-- GDP --></label>
         <name>GDP</name>
     </customApplications>
@@ -87,6 +95,10 @@
     <customApplications>
         <label><!-- IEC Admin Console --></label>
         <name>IEC_Admin_Console</name>
+    </customApplications>
+    <customApplications>
+        <label><!-- IFTP --></label>
+        <name>IFTP</name>
     </customApplications>
     <customApplications>
         <label><!-- MITA / BIETA --></label>
@@ -345,6 +357,10 @@
         <name>AMS_OSCAR_Action18</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMS_OSCAR_Action19 --></label>
+        <name>AMS_OSCAR_Action19</name>
+    </customLabels>
+    <customLabels>
         <label><!-- AMS OSCAR Action2 --></label>
         <name>AMS_OSCAR_Action2</name>
     </customLabels>
@@ -439,6 +455,10 @@
     <customLabels>
         <label><!-- AMS_OSCAR_GDI_fees --></label>
         <name>AMS_OSCAR_GDI_fees</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS_OSCAR_GOGLOBAL --></label>
+        <name>AMS_OSCAR_GOGLOBAL</name>
     </customLabels>
     <customLabels>
         <label><!-- AMS OSCAR MASTERDATA --></label>
@@ -653,6 +673,10 @@
         <name>AMS_OSCAR_STEP44</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMS_OSCAR_STEP45 --></label>
+        <name>AMS_OSCAR_STEP45</name>
+    </customLabels>
+    <customLabels>
         <label><!-- AMS OSCAR STEP46 --></label>
         <name>AMS_OSCAR_STEP46</name>
     </customLabels>
@@ -727,6 +751,10 @@
     <customLabels>
         <label>* บริษัทในเครือแห่งนี้มีสถานะทางกฎหมายแยกออกจากนิติบุคคลหลักหรือไม่?</label>
         <name>ANG_AE_separate_Legal_Entity</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_AE_separate_Legal_Entity_MultiCountry --></label>
+        <name>ANG_AE_separate_Legal_Entity_MultiCountry</name>
     </customLabels>
     <customLabels>
         <label><!-- ANG_Conversion_Tool_Error_10 --></label>
@@ -897,6 +925,10 @@
         <name>ANG_ISSP_CountryConcerned</name>
     </customLabels>
     <customLabels>
+        <label><!-- ANG_ISSP_CountryConcerned_AEs --></label>
+        <name>ANG_ISSP_CountryConcerned_AEs</name>
+    </customLabels>
+    <customLabels>
         <label>กลับสู่การเปรียบเทียบการรับรองประเภทต่าง ๆ</label>
         <name>ANG_ISSP_CountryRequirementsGoBack</name>
     </customLabels>
@@ -963,6 +995,14 @@
     <customLabels>
         <label>รายชื่อสถาบันการเงินที่มีประกันภัยความมั่นคงทางการเงินในประเทศของคุณ</label>
         <name>ANG_ISSP_GDI_Breadcrumb</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_ISSP_GDI_Learn_More --></label>
+        <name>ANG_ISSP_GDI_Learn_More</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_ISSP_GDI_Learn_More_Text --></label>
+        <name>ANG_ISSP_GDI_Learn_More_Text</name>
     </customLabels>
     <customLabels>
         <label>ไปยังพอร์ทัล GDI</label>
@@ -1067,6 +1107,22 @@
     <customLabels>
         <label><!-- ANG_ISSP_Min_Users_With_Role_Error_Msg --></label>
         <name>ANG_ISSP_Min_Users_With_Role_Error_Msg2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_ISSP_Multicountry_Question --></label>
+        <name>ANG_ISSP_Multicountry_Question</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_ISSP_Multicountry_Submit_Message1 --></label>
+        <name>ANG_ISSP_Multicountry_Submit_Message1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_ISSP_Multicountry_Submit_Message2 --></label>
+        <name>ANG_ISSP_Multicountry_Submit_Message2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_ISSP_Multicountry_Submit_Message_New_AE --></label>
+        <name>ANG_ISSP_Multicountry_Submit_Message_New_AE</name>
     </customLabels>
     <customLabels>
         <label>จัดการคำร้องขอ กรุณาคลิก</label>
@@ -1261,6 +1317,10 @@
         <name>ANG_ISSP_ProductStandardAccreditationWithCash</name>
     </customLabels>
     <customLabels>
+        <label><!-- ANG_ISSP_ProductStandardAccreditationWithMultiCountry --></label>
+        <name>ANG_ISSP_ProductStandardAccreditationWithMultiCountry</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ANG_ISSP_ProductStandardAccreditationWithNoCash --></label>
         <name>ANG_ISSP_ProductStandardAccreditationWithNoCash</name>
     </customLabels>
@@ -1355,6 +1415,26 @@
     <customLabels>
         <label>ที่อยู่อีเมล</label>
         <name>ANG_ISSP_e_mail_address</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG Multicountry Already Has Locations Only Allow AE Error --></label>
+        <name>ANG_Multicountry_Already_Has_Locations_Only_Allow_AE_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG Multicountry Already Has Locations Only Allow AE With Correct HE Error --></label>
+        <name>ANG_Multicountry_Already_Has_Locations_Only_Allow_AE_With_Correct_HE_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG Multicountry Already Has Locations Only Allow HE Error --></label>
+        <name>ANG_Multicountry_Already_Has_Locations_Only_Allow_HE_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG Multicountry Process Parent Account Error --></label>
+        <name>ANG_Multicountry_Process_Parent_Account_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ANG_NEW_GE_lock --></label>
+        <name>ANG_NEW_GE_lock</name>
     </customLabels>
     <customLabels>
         <label><!-- ANG_NON_COMPLIANCE --></label>
@@ -1569,6 +1649,10 @@
         <name>Assist_Travelers_Special_Needs_Description</name>
     </customLabels>
     <customLabels>
+        <label><!-- Attach_Proof_Of_Payment --></label>
+        <name>Attach_Proof_Of_Payment</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Attachment Name --></label>
         <name>Attachment_Name</name>
     </customLabels>
@@ -1611,6 +1695,18 @@
     <customLabels>
         <label><!-- Bank transfer validation for auto renew --></label>
         <name>Bank_transfer_validation_for_auto_renew</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Billing Member Accounting Code --></label>
+        <name>Billing_Member_Accounting_Code</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Billing Member Designator Code --></label>
+        <name>Billing_Member_Designator_Code</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Billing Member Name --></label>
+        <name>Billing_Member_Name</name>
     </customLabels>
     <customLabels>
         <label><!-- Billing address --></label>
@@ -1749,6 +1845,14 @@
         <name>CC</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_ALPHAFILTER_All --></label>
+        <name>CSP_ALPHAFILTER_All</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_ALPHAFILTER_Other --></label>
+        <name>CSP_ALPHAFILTER_Other</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_AMS_StepFinal_In_Addition2 --></label>
         <name>CSP_AMS_StepFinal_In_Addition2</name>
     </customLabels>
@@ -1789,6 +1893,10 @@
         <name>CSP_Add_User</name>
     </customLabels>
     <customLabels>
+        <label>คุณสามารถส่งข้อมูลเพื่อทำการเปลี่ยนแปลงรายละเอียดบัญชีของคุณได้ผ่าน &lt;a href= &apos;/s/support-reach-us&apos;&gt; หน้าติดต่อเรา &lt;/a&gt;</label>
+        <name>CSP_Airline_Changes_Access</name>
+    </customLabels>
+    <customLabels>
         <label>การประกาศ</label>
         <name>CSP_Announcement</name>
     </customLabels>
@@ -1801,12 +1909,20 @@
         <name>CSP_ArticleHelpful</name>
     </customLabels>
     <customLabels>
+        <label>กำหนดบริการใหม่</label>
+        <name>CSP_Assign_New_Service</name>
+    </customLabels>
+    <customLabels>
         <label>สำนักงานสาขา</label>
         <name>CSP_Branch_Offices</name>
     </customLabels>
     <customLabels>
         <label>การค้นหาขั้นสูง</label>
         <name>CSP_Breadcrumb_AdvancedSearch_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>รายละเอียดคำร้อง</label>
+        <name>CSP_Breadcrumb_CaseDetails_Title</name>
     </customLabels>
     <customLabels>
         <label>ข้อมูลบริษัท</label>
@@ -1839,6 +1955,14 @@
     <customLabels>
         <label><!-- CSP_Breadcrump_MyProfile_Title --></label>
         <name>CSP_Breadcrump_MyProfile_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>คุณและ IATA</label>
+        <name>CSP_Breadcrump_You_IATA</name>
+    </customLabels>
+    <customLabels>
+        <label>ซื้อทางออนไลน์</label>
+        <name>CSP_Buy_Online</name>
     </customLabels>
     <customLabels>
         <label>ยกเลิก</label>
@@ -1889,12 +2013,56 @@
         <name>CSP_Case_Currency</name>
     </customLabels>
     <customLabels>
+        <label>รายละเอียดคำร้อง</label>
+        <name>CSP_Case_Details</name>
+    </customLabels>
+    <customLabels>
         <label>คำร้อง</label>
         <name>CSP_Cases</name>
     </customLabels>
     <customLabels>
+        <label>เปลี่ยนอีเมล</label>
+        <name>CSP_Change_Email</name>
+    </customLabels>
+    <customLabels>
+        <label>เปลี่ยนรหัสผ่าน</label>
+        <name>CSP_Change_Password</name>
+    </customLabels>
+    <customLabels>
+        <label>ไม่สามารถตั้งรหัสผ่านชุดใหม่ได้</label>
+        <name>CSP_Change_Password_Error</name>
+    </customLabels>
+    <customLabels>
+        <label>กรุณาป้อนรหัสผ่านปัจจุบันของคุณ จากนั้นตั้งรหัสผ่านชุดใหม่และทำการยืนยัน</label>
+        <name>CSP_Change_Password_Info_1</name>
+    </customLabels>
+    <customLabels>
+        <label>รหัสผ่านควรมีอักขระอย่างน้อย 10 ตัว และมีอักษรตัวพิมพ์ใหญ่ ตัวเลข และสัญลักษณ์ (! @ # $% * () _ + ^ &amp;) อย่างน้อยหนึ่งตัว</label>
+        <name>CSP_Change_Password_Info_2</name>
+    </customLabels>
+    <customLabels>
+        <label>โปรดตรวจสอบอีเมลของคุณเพื่อรับทราบรายละเอียดสำหรับการเข้าถึงของคุณ</label>
+        <name>CSP_Check_Email</name>
+    </customLabels>
+    <customLabels>
+        <label>ตั้งรหัสผ่านสำเร็จแล้ว</label>
+        <name>CSP_Chg_Pass_Success_Msg_1</name>
+    </customLabels>
+    <customLabels>
+        <label>คุณสามารถใช้รหัสผ่านชุดใหม่เพื่อเข้าสู่ระบบ</label>
+        <name>CSP_Chg_Pass_Success_Msg_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Close --></label>
+        <name>CSP_Close</name>
+    </customLabels>
+    <customLabels>
         <label>ชุมชน</label>
         <name>CSP_Community</name>
+    </customLabels>
+    <customLabels>
+        <label>คุณสามารถทำการเปลี่ยนแปลงรายละเอียดบัญชีของคุณ ผ่านบริการ &quot;การรับรองของ IATA และการเปลี่ยนแปลง&quot; (IATA Accreditation and Changes)</label>
+        <name>CSP_CompanyAdministration_Link</name>
     </customLabels>
     <customLabels>
         <label>ดูคำร้องของบริษัทของฉัน</label>
@@ -1905,6 +2073,10 @@
         <name>CSP_CompanyProfile</name>
     </customLabels>
     <customLabels>
+        <label>กรอกข้อมูลส่วนบุคคลของคุณ</label>
+        <name>CSP_Complete_Profile</name>
+    </customLabels>
+    <customLabels>
         <label>คุณแน่ใจหรือไม่ว่าต้องการปฏิเสธการเข้าถึง &lt;b&gt;{0}&lt;/b&gt; สำหรับ &lt;b&gt;{1}&lt;/b&gt;?</label>
         <name>CSP_Confirm_Deny_User_Access</name>
     </customLabels>
@@ -1913,8 +2085,24 @@
         <name>CSP_Confirm_Grant_User_Access</name>
     </customLabels>
     <customLabels>
+        <label>การยืนยันอีเมลพอร์ทัลสำหรับลูกค้าIATA</label>
+        <name>CSP_Confirmation_Email_Subject</name>
+    </customLabels>
+    <customLabels>
         <label>คำขอเข้าถึง {0} ของคุณถูกส่งไปยังผู้ดูแลพอร์ทัลแล้ว หากคุณมีคำถามหรือคำขอเกี่ยวกับกระบวนการ คุณ สามารถติดต่อผู้ดูแลระบบ ตามด้านล่างนี้:</label>
         <name>CSP_Confirmed_Requested_Service_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>การเปลี่ยนชื่อโปรไฟล์จะส่งผลต่อสถานะการใช้งานบัตรประจำตัวของคุณ โปรดติดต่อทีมบริการลูกค้าของเราเพื่อขอเปลี่ยนชื่อโปรไฟล์ของคุณ</label>
+        <name>CSP_Contact_Id_Card_Error_Msg</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Contacts_NoResults_text1 --></label>
+        <name>CSP_Contacts_NoResults_text1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Contacts_NoResults_text2 --></label>
+        <name>CSP_Contacts_NoResults_text2</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_Continue --></label>
@@ -1925,6 +2113,26 @@
         <name>CSP_Create_Contact_Complete_Field</name>
     </customLabels>
     <customLabels>
+        <label>ยังใหม่กับพอร์ทัลสำหรับลูกค้าของ IATA ใช่ไหม?</label>
+        <name>CSP_Create_New_Account_Info</name>
+    </customLabels>
+    <customLabels>
+        <label>สร้างบัญชีใหม่</label>
+        <name>CSP_Create_New_Account_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>สร้างรหัสผ่าน</label>
+        <name>CSP_Create_Password</name>
+    </customLabels>
+    <customLabels>
+        <label>ไม่สามารถตั้งรหัสผ่านชุดใหม่ได้ กรุณาลองใหม่อีกครั้ง</label>
+        <name>CSP_Create_Password_Error</name>
+    </customLabels>
+    <customLabels>
+        <label>สร้างเมื่อ</label>
+        <name>CSP_CreatedOn</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_DateFrom --></label>
         <name>CSP_DateFrom</name>
     </customLabels>
@@ -1933,7 +2141,19 @@
         <name>CSP_DateTo</name>
     </customLabels>
     <customLabels>
-        <label>ปฏิเสธการเข้าถึงของผู้ใช้</label>
+        <label>เรียน</label>
+        <name>CSP_Dear</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Deduction_Notice --></label>
+        <name>CSP_Deduction_Notice</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Deduction Notice Israel Description --></label>
+        <name>CSP_Deduction_Notice_Israel_Description</name>
+    </customLabels>
+    <customLabels>
+        <label>ปฏิเสธการเข้าถึง</label>
         <name>CSP_Deny_User_Access_Title</name>
     </customLabels>
     <customLabels>
@@ -1957,8 +2177,84 @@
         <name>CSP_Documents_PubliCountry</name>
     </customLabels>
     <customLabels>
+        <label><!-- EF Invoices --></label>
+        <name>CSP_EF_Invoices</name>
+    </customLabels>
+    <customLabels>
+        <label>อีเมล</label>
+        <name>CSP_Email</name>
+    </customLabels>
+    <customLabels>
+        <label>ขอขอบคุณที่ลงทะเบียนกับพอร์ทัลสำหรับลูกค้า IATA คุณเหลืออีกเพียงขั้นตอนเดียวเพื่อที่จะเข้าสู่พอร์ทัล!</label>
+        <name>CSP_Email_Confirmation_Body_Part_1</name>
+    </customLabels>
+    <customLabels>
+        <label>กรุณายืนยันที่อยู่อีเมลของคุณ โดยคลิก</label>
+        <name>CSP_Email_Confirmation_Body_Part_2</name>
+    </customLabels>
+    <customLabels>
+        <label>เนื่องจากเหตุผลด้านความปลอดภัย ลิงก์นี้จะมีอายุการใช้งาน 8 ชั่วโมง หลังจากเกินเวลาที่กำหนดไว้ คุณจะต้องส่งคำขอเข้ามาอีกครั้ง</label>
+        <name>CSP_Email_Confirmation_Body_Part_3</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP Email Domain Error Message --></label>
         <name>CSP_Email_Domain_Error_Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Footer Image --></label>
+        <name>CSP_Email_Footer_Image</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Header Image --></label>
+        <name>CSP_Email_Header_Image</name>
+    </customLabels>
+    <customLabels>
+        <label>ที่นี่</label>
+        <name>CSP_Email_Here</name>
+    </customLabels>
+    <customLabels>
+        <label>เราได้รับคำขอของคุณเพื่อรีเซ็ตรหัสผ่านสำหรับพอร์ทัลสำหรับลูกค้าของ IATA</label>
+        <name>CSP_Email_Password_Reset_Body_Part_1</name>
+    </customLabels>
+    <customLabels>
+        <label>กรุณาคลิก</label>
+        <name>CSP_Email_Password_Reset_Body_Part_2</name>
+    </customLabels>
+    <customLabels>
+        <label>เพื่อตั้งรหัสผ่านใหม่</label>
+        <name>CSP_Email_Password_Reset_Body_Part_3</name>
+    </customLabels>
+    <customLabels>
+        <label>เนื่องจากเหตุผลด้านความปลอดภัย ลิงก์นี้จะมีอายุการใช้งาน 8 ชั่วโมง หลังจากเกินเวลาที่กำหนดไว้ คุณจะต้องส่งคำขอเข้ามาอีกครั้ง</label>
+        <name>CSP_Email_Password_Reset_Body_Part_4</name>
+    </customLabels>
+    <customLabels>
+        <label>ขอขอบคุณที่ร่วมเป็นส่วนหนึ่งของ IATA</label>
+        <name>CSP_Email_Signature_Part_1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Email Signature Part 2 --></label>
+        <name>CSP_Email_Signature_Part_2</name>
+    </customLabels>
+    <customLabels>
+        <label>เรายินดีที่ได้คุณมาร่วมกับเราในพอร์ทัลสำหรับลูกค้าของ IATA!</label>
+        <name>CSP_Email_Welcome_Part_1</name>
+    </customLabels>
+    <customLabels>
+        <label>พอร์ทัลสำหรับลูกค้า IATA นั้นเต็มไปด้วยบริการที่มีประโยชน์, ข้อมูลผลิตภัณฑ์, เคล็ดลับและคำแนะนำที่มีประโยชน์ ซึ่งออกแบบมาเป็นพิเศษสำหรับคุณ คุณสามารถใช้พอร์ทัลนี้สำหรับติดต่อทีมงานด้านบริการลูกค้าของเราได้โดยง่าย รวมถึงการแชทสด หรือทำรายการซื้อได้โดยตรงจากร้านค้าออนไลน์ของเรา นี่คือประตูสู่ IATA!</label>
+        <name>CSP_Email_Welcome_Part_2</name>
+    </customLabels>
+    <customLabels>
+        <label>&lt;a href=&quot;{!Portal_Url}&quot;&gt;นำฉันไปยังพอร์ทัล!&lt;/a&gt;</label>
+        <name>CSP_Email_Welcome_Part_3</name>
+    </customLabels>
+    <customLabels>
+        <label>คุณสามารถกรอกข้อมูลบัญชีของคุณได้ทุกเมื่อที่คุณต้องการ เพื่อยกระดับประสบการณ์ที่ได้รับจากการใช้งานพอร์ทัลสำหรับลูกค้าของ IATA ให้ดียิ่งขึ้น คุณสามารถทำได้อย่างง่ายดาย โดยคลิก</label>
+        <name>CSP_Email_Welcome_Part_4</name>
+    </customLabels>
+    <customLabels>
+        <label>เราหวังว่าคุณจะเพลิดเพลินกับพอร์ทัลสำหรับลูกค้า IATA ของเรา!</label>
+        <name>CSP_Email_Welcome_Part_5</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP Error Creating Record --></label>
@@ -1971,6 +2267,26 @@
     <customLabels>
         <label><!-- CSP Error while delete record --></label>
         <name>CSP_Error_while_delete_record</name>
+    </customLabels>
+    <customLabels>
+        <label>ดูเหมือนว่าคุณเป็นผู้ใช้พอร์ทัลอยู่แล้ว โปรดเข้าสู่ระบบด้วยรหัสผ่านของคุณ</label>
+        <name>CSP_Existing_User_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>โปรดตรวจสอบอีเมลของคุณและคลิกที่ลิงค์สำหรับสร้างรหัสผ่าน</label>
+        <name>CSP_Expired_Email_Success_Msg</name>
+    </customLabels>
+    <customLabels>
+        <label>ลิงค์สำหรับยืนยันหมดอายุแล้ว</label>
+        <name>CSP_Expired_Link_Msg_1</name>
+    </customLabels>
+    <customLabels>
+        <label>เพื่อเป็นการรักษาความปลอดภัย ลิงค์สำหรับยืนยันจะหมดอายุเมื่อเกิน 8 ชั่วโมง</label>
+        <name>CSP_Expired_Link_Msg_2</name>
+    </customLabels>
+    <customLabels>
+        <label>โปรดตรวจสอบอีเมลของคุณและคลิกที่ลิงค์สำหรับสร้างรหัสผ่าน</label>
+        <name>CSP_Expired_Reset_Password_Msg</name>
     </customLabels>
     <customLabels>
         <label>ติดต่อเรา</label>
@@ -1987,6 +2303,10 @@
     <customLabels>
         <label>คำถามที่พบบ่อย</label>
         <name>CSP_FAQ_HeaderTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>ไปที่คำถามที่พบบ่อยของเรา</label>
+        <name>CSP_FAQ_Label</name>
     </customLabels>
     <customLabels>
         <label>เลือกหนึ่งในหมวดหมู่หลัก</label>
@@ -2025,11 +2345,51 @@
         <name>CSP_Filtered</name>
     </customLabels>
     <customLabels>
+        <label>การสร้างบัญชีของคุณสำเร็จแล้ว! คุณสามารถสำรวจคุณสมบัติพอร์ทัลของเราได้แล้ว ณ ขณะนี้ สำหรับการตั้งค่าเนื้อหาส่วนบุคคลเพิ่มเติม กรุณากรอกข้อมูลส่วนบุคคลของคุณ</label>
+        <name>CSP_First_Login_Desc</name>
+    </customLabels>
+    <customLabels>
+        <label>ยินดีต้อนรับ</label>
+        <name>CSP_First_Login_Title</name>
+    </customLabels>
+    <customLabels>
         <label>สำหรับคุณ</label>
         <name>CSP_ForYou</name>
     </customLabels>
     <customLabels>
-        <label>ให้สิทธิ์การเข้าถึงของผู้ใช้</label>
+        <label>ลืมรหัสผ่าน?</label>
+        <name>CSP_Forgot_Password</name>
+    </customLabels>
+    <customLabels>
+        <label>ดูเหมือนว่าเราไม่มีผู้ใช้ที่ลงทะเบียนด้วยอีเมลของคุณ คุณสามารถสร้างบัญชีใหม่ได้อย่างง่ายดาย</label>
+        <name>CSP_Forgot_Password_Error_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>โปรดป้อนที่อยู่อีเมลที่ได้ลงทะเบียนไว้ เพื่อรีเซ็ตรหัสผ่านของคุณ เราจะส่งลิงก์รีเซ็ตให้คุณทางอีเมล</label>
+        <name>CSP_Forgot_Password_Info</name>
+    </customLabels>
+    <customLabels>
+        <label>โปรดตรวจสอบโฟลเดอร์สแปมของคุณก่อน หากคุณไม่พบสิ่งใดในโฟลเดอร์สแปม โปรดลองรีเซ็ตรหัสผ่านอีกครั้ง โดยการคลิกที่ลองอีกครั้ง (Try Again)</label>
+        <name>CSP_Forgot_Password_Retry_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>ไม่ได้รับอีเมลใช่ไหม?</label>
+        <name>CSP_Forgot_Password_Retry_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>โปรดตรวจสอบอีเมลของคุณ และคลิกที่ลิงก์รีเซ็ตรหัสผ่าน</label>
+        <name>CSP_Forgot_Password_Success_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>เนื่องจากคุณไม่ได้ลงชื่อเข้าใช้ใน 90 วันที่ผ่านมา เราจึงส่งอีเมลพร้อมรหัสผ่านใหม่ให้คุณ</label>
+        <name>CSP_Frozen_User_Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Go to Webstar --></label>
+        <name>CSP_Go_to_Webstar</name>
+    </customLabels>
+    <customLabels>
+        <label>อนุญาตให้มีการเข้าถึง</label>
         <name>CSP_Grant_User_Access_Title</name>
     </customLabels>
     <customLabels>
@@ -2037,20 +2397,484 @@
         <name>CSP_Home_WelcomeTitle</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP IATAN Register Info --></label>
+        <name>CSP_IATAN_Register_Info</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_IATA_Country --></label>
         <name>CSP_IATA_Country</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IATA Invoices --></label>
+        <name>CSP_IATA_Invoices</name>
+    </customLabels>
+    <customLabels>
+        <label>ชื่อในบัตรประจำตัว</label>
+        <name>CSP_IDCard_Name</name>
+    </customLabels>
+    <customLabels>
+        <label>คลิกที่นี่เพื่อดูรูปถ่ายในบัตรประจำตัวของคุณ</label>
+        <name>CSP_IDCard_Photo</name>
+    </customLabels>
+    <customLabels>
+        <label>รูปถ่าย</label>
+        <name>CSP_IDCard_Photo_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>สถานะ</label>
+        <name>CSP_IDCard_Status</name>
+    </customLabels>
+    <customLabels>
+        <label>วันหมดอายุ</label>
+        <name>CSP_IDCard_Valid_To</name>
+    </customLabels>
+    <customLabels>
+        <label>หมายเลขบัตร VER</label>
+        <name>CSP_IDCard_Ver_Number</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_IMPORTANT --></label>
         <name>CSP_IMPORTANT</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Id Card --></label>
+        <name>CSP_Id_Card</name>
+    </customLabels>
+    <customLabels>
+        <label>อีเมลไม่ถูกต้อง</label>
+        <name>CSP_Invalid_Email</name>
+    </customLabels>
+    <customLabels>
+        <label>ข้อมูลบัญชีบริษัท</label>
+        <name>CSP_L2_Account_Information</name>
+    </customLabels>
+    <customLabels>
+        <label>กรอกข้อมูลด้านล่างเพื่อค้นหาบัญชีการใช้งานของบริษัทของคุณ</label>
+        <name>CSP_L2_Account_Information_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>การเลือกบัญชี</label>
+        <name>CSP_L2_Account_Selection</name>
+    </customLabels>
+    <customLabels>
+        <label>เราต้องการรายละเอียดเพิ่มเติม เพื่อให้สามารถจับคู่โปรไฟล์ส่วนบุคคลของคุณกับบัญชีบริษัทของคุณได้. ขั้นตอนนี้จะช่วยให้เราตรวจสอบได้ว่าบริษัทของคุณได้ลงทะเบียนกับ IATA แล้วหรือไม่</label>
+        <name>CSP_L2_Account_Selection_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>เราไม่พบที่อยู่ของคุณ โปรดกดปุ่ม &quot;ขั้นตอนต่อไป&quot; เพื่อยืนยันว่าที่อยู่ของคุณถูกต้อง</label>
+        <name>CSP_L2_Address_Not_Found_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>ดูเหมือนว่าคุณเคยกรอกข้อมูลโปรไฟล์มาก่อน เราจึงมีรายละเอียดที่จำเป็นทั้งหมดแล้ว</label>
+        <name>CSP_L2_Already_L2_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>เรียบร้อยแล้ว!</label>
+        <name>CSP_L2_Already_L2_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>กลับไปที่ &quot;ข้อมูลบัญชีบริษัท&quot;</label>
+        <name>CSP_L2_Back_to_Account_Selection</name>
+    </customLabels>
+    <customLabels>
+        <label>กลับไปที่ข้อมูลที่อยู่ของธุรกิจ</label>
+        <name>CSP_L2_Back_to_Business_Address_Information</name>
+    </customLabels>
+    <customLabels>
+        <label>กลับไปที่ข้อมูลบริษัท</label>
+        <name>CSP_L2_Back_to_Company_Information</name>
+    </customLabels>
+    <customLabels>
+        <label>กลับไปที่หน้าสำหรับแก้ไข</label>
+        <name>CSP_L2_Back_to_Edit</name>
+    </customLabels>
+    <customLabels>
+        <label>กลับไปที่ &quot;รายละเอียดโปรไฟล์&quot;</label>
+        <name>CSP_L2_Back_to_Profile_Details</name>
+    </customLabels>
+    <customLabels>
+        <label>การสร้างและเพิ่มข้อมูลโปรไฟล์ &amp; การเลือกบัญชี</label>
+        <name>CSP_L2_Banner_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>ข้อมูลที่อยู่สำหรับติดต่อ</label>
+        <name>CSP_L2_Business_Address_Information</name>
+    </customLabels>
+    <customLabels>
+        <label>กรุณากรอกข้อมูลที่อยู่ธุรกิจของคุณ</label>
+        <name>CSP_L2_Business_Address_Information_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>ประเภท</label>
+        <name>CSP_L2_Category</name>
+    </customLabels>
+    <customLabels>
+        <label>บริการที่คุณขอเข้าถึงอาจไม่มีให้บริการสำหรับหมวดหมู่ที่คุณเลือก คุณยังคงสามารถลงทะเบียนให้เสร็จสิ้นได้ แต่บริการอาจไม่มีให้บริการอีกต่อไปหลังจากเสร็จสิ้น</label>
+        <name>CSP_L2_Change_Categorization_Warning</name>
+    </customLabels>
+    <customLabels>
+        <label>เมือง</label>
+        <name>CSP_L2_City</name>
+    </customLabels>
+    <customLabels>
+        <label>บัญชีบริษัท</label>
+        <name>CSP_L2_Company_Account</name>
+    </customLabels>
+    <customLabels>
+        <label>โปรดตรวจสอบรายละเอียดของบริษัทของคุณ</label>
+        <name>CSP_L2_Company_Account_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>ข้อมูลบริษัท</label>
+        <name>CSP_L2_Company_Information</name>
+    </customLabels>
+    <customLabels>
+        <label>การลงทะเบียนบัญชีบริษัทของคุณจะทำให้คุณสามารถเข้าถึงบริการของ IATA ตามที่เลือกกำหนดเองได้ คุณสามารถสร้างบัญชีบริษัทของคุณได้อย่างง่ายดายภายในสองขั้นตอน</label>
+        <name>CSP_L2_Company_Information_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>ที่ตั้งบริษัท</label>
+        <name>CSP_L2_Company_Location</name>
+    </customLabels>
+    <customLabels>
+        <label>ชื่อบริษัท</label>
+        <name>CSP_L2_Company_Name</name>
+    </customLabels>
+    <customLabels>
+        <label>การยืนยัน</label>
+        <name>CSP_L2_Confirmation</name>
+    </customLabels>
+    <customLabels>
+        <label>เหลืออีกเพียงขั้นตอนเดียวคุณก็จะสร้างโปรไฟล์ของคุณได้อย่างสมบูรณ์ โปรดตรวจสอบข้อมูลที่แจ้งไว้ หากข้อมูลทุกอย่างถูกต้อง กรุณากดปุ่ม &quot;ส่ง&quot;</label>
+        <name>CSP_L2_Confirmation_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>ติดต่อฝ่ายสนับสนุน</label>
+        <name>CSP_L2_Contact_Support</name>
+    </customLabels>
+    <customLabels>
+        <label>ประเทศ</label>
+        <name>CSP_L2_Country</name>
+    </customLabels>
+    <customLabels>
+        <label>หากคุณไม่พบบัญชีบริษัทของคุณ คุณสามารถสร้างบัญชีดังกล่าวได้อย่างง่ายดายภายในสองขั้นตอน</label>
+        <name>CSP_L2_Create_Account_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>สร้างบัญชีใหม่</label>
+        <name>CSP_L2_Create_New_Account</name>
+    </customLabels>
+    <customLabels>
+        <label>วันเกิด</label>
+        <name>CSP_L2_Date_of_Birth</name>
+    </customLabels>
+    <customLabels>
+        <label>ข้อมูลของคุณได้รับการบันทึกเรียบร้อยแล้ว</label>
+        <name>CSP_L2_Details_Saved</name>
+    </customLabels>
+    <customLabels>
+        <label>ขณะนี้เราสามารถนำเสนอการใช้งานพอร์ทัลที่เหมาะกับคุณเป็นการเฉพาะ! สำรวจดูพอร์ทัลของเราและค้นหาผลิตภัณฑ์และบริการที่ปรับแต่งเพิ่มเติมได้ตามความต้องการ</label>
+        <name>CSP_L2_Details_Saved_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>ขณะนี้คุณสามารถยื่นคำขอรับบริการของคุณต่อไปได้</label>
+        <name>CSP_L2_Details_Saved_Service_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>ขณะนี้คุณสามารถยื่นคำขอของคุณต่อไปได้</label>
+        <name>CSP_L2_Details_Saved_Topic_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>คุณไม่พบสิ่งที่ต้องการค้นหาใช่หรือไม่?</label>
+        <name>CSP_L2_Did_Not_Find</name>
+    </customLabels>
+    <customLabels>
+        <label>คุณสามารถสร้างบัญชีบริษัทได้อย่างง่ายดายภายในสองขั้นตอน เพื่อทำให้โปรไฟล์ของคุณสมบูรณ์</label>
+        <name>CSP_L2_Did_Not_Find_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>คลิกที่นี่ เพื่อกรอกรายละเอียดของคุณ</label>
+        <name>CSP_L2_Edit_Company_Information</name>
+    </customLabels>
+    <customLabels>
+        <label>เราได้สร้างพอร์ทัลสำหรับลูกค้าIATA เพื่อที่จะสามารถจัดผลิตภัณฑ์และบริการของ IATA ให้เหมาะสมสำหรับคุณโดยเฉพาะ เพื่อให้เราสามารถทำเช่นนั้นได้ เราอยากรู้จักคุณและองค์กรของคุณให้ดีขึ้นอีกสักเล็กน้อย</label>
+        <name>CSP_L2_Edit_Company_Information_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>อีเมล</label>
+        <name>CSP_L2_Email_Address</name>
+    </customLabels>
+    <customLabels>
+        <label>ค้นหาที่อยู่</label>
+        <name>CSP_L2_Find_Address</name>
+    </customLabels>
+    <customLabels>
+        <label>ย้อนกลับ</label>
+        <name>CSP_L2_Go_Back</name>
+    </customLabels>
+    <customLabels>
+        <label>ไปที่โฮมเพจ</label>
+        <name>CSP_L2_Go_To_Homepage</name>
+    </customLabels>
+    <customLabels>
+        <label>กลับไปที่โปรไฟล์</label>
+        <name>CSP_L2_Go_To_Profile</name>
+    </customLabels>
+    <customLabels>
+        <label>กลับไปที่ &quot;บริการ&quot;</label>
+        <name>CSP_L2_Go_To_Service</name>
+    </customLabels>
+    <customLabels>
+        <label>กลับไปที่หัวข้อ</label>
+        <name>CSP_L2_Go_To_Topic</name>
+    </customLabels>
+    <customLabels>
+        <label>รหัส IATA</label>
+        <name>CSP_L2_IATA_Codes</name>
+    </customLabels>
+    <customLabels>
+        <label>นี่คือที่อยู่ตู้ ปณ. ใช่หรือไม่?</label>
+        <name>CSP_L2_Is_PO_Box_Address</name>
+    </customLabels>
+    <customLabels>
+        <label>ฟังก์ชั่นการทำงาน</label>
+        <name>CSP_L2_Job_Function</name>
+    </customLabels>
+    <customLabels>
+        <label>ตำแหน่งงาน</label>
+        <name>CSP_L2_Job_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>ชื่อบริษัทที่จดทะเบียน</label>
+        <name>CSP_L2_Legal_Name</name>
+    </customLabels>
+    <customLabels>
+        <label>ขั้นตอนต่อไป / การเลือกบัญชี</label>
+        <name>CSP_L2_Next_Account_Selection</name>
+    </customLabels>
+    <customLabels>
+        <label>ขั้นตอนต่อไป / ข้อมูลที่อยู่</label>
+        <name>CSP_L2_Next_Address_Information</name>
+    </customLabels>
+    <customLabels>
+        <label>ขั้นตอนต่อไป / การยืนยัน</label>
+        <name>CSP_L2_Next_Confirmation</name>
+    </customLabels>
+    <customLabels>
+        <label>ไม่ใช่</label>
+        <name>CSP_L2_No</name>
+    </customLabels>
+    <customLabels>
+        <label>ไม่พบผลการค้นหาที่ตรงกัน</label>
+        <name>CSP_L2_No_Matching_Results</name>
+    </customLabels>
+    <customLabels>
+        <label>อื่นๆ</label>
+        <name>CSP_L2_Other_Sector</name>
+    </customLabels>
+    <customLabels>
+        <label>โปรดเลือกภาคที่เกี่ยวข้องจากรายการที่ปรากฏ</label>
+        <name>CSP_L2_Other_Sector_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>หมายเลขตู้ ปณ.</label>
+        <name>CSP_L2_PO_Box_Number</name>
+    </customLabels>
+    <customLabels>
+        <label>ข้อมูลส่วนบุคคล</label>
+        <name>CSP_L2_Personal_Details</name>
+    </customLabels>
+    <customLabels>
+        <label>กรุณาตรวจสอบรายละเอียดส่วนบุคคลของคุณ</label>
+        <name>CSP_L2_Personal_Details_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>หมายเลขโทรศัพท์</label>
+        <name>CSP_L2_Phone_Number</name>
+    </customLabels>
+    <customLabels>
+        <label>รหัสไปรษณีย์</label>
+        <name>CSP_L2_Postal_Code</name>
+    </customLabels>
+    <customLabels>
+        <label>รายละเอียดโปรไฟล์</label>
+        <name>CSP_L2_Profile_Details</name>
+    </customLabels>
+    <customLabels>
+        <label>เพิ่มรายละเอียดส่วนบุคคลของคุณ เพื่อให้ IATA สามารถแนะนำเนื้อหาและบริการที่เหมาะกับคุณ</label>
+        <name>CSP_L2_Profile_Details_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>โปรไฟล์ของคุณยังไม่ได้รับการอัพเดตอย่างสมบูรณ์</label>
+        <name>CSP_L2_Profile_Incomplete</name>
+    </customLabels>
+    <customLabels>
+        <label>แต่เราได้บันทึกไว้เป็นฉบับร่าง เพื่อให้คุณสามารถดำเนินการต่อได้ในภายหลัง คุณแน่ใจหรือไม่ว่าต้องการเลิกการทำงาน?</label>
+        <name>CSP_L2_Profile_Incomplete_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>ขออภัยในความไม่สะดวก เกิดข้อผิดพลาดในขณะที่เราพยายามสร้างบัญชีของคุณ เพื่อให้เราสามารถช่วยเหลือคุณเพิ่มเติมได้ โปรดติดต่อทีมสนับสนุนของเรา</label>
+        <name>CSP_L2_Registration_Error_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>มีบางอย่างผิดปกติ</label>
+        <name>CSP_L2_Registration_Error_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>ยกเลิก</label>
+        <name>CSP_L2_Requested_Modal_Cancel</name>
+    </customLabels>
+    <customLabels>
+        <label>กรอกข้อมูลโปรไฟล์ของฉันให้สมบูรณ์</label>
+        <name>CSP_L2_Requested_Modal_Complete</name>
+    </customLabels>
+    <customLabels>
+        <label>เพื่อดำเนินการต่อ เราต้องการรายละเอียดเพิ่มเติมบางอย่างเกี่ยวกับคุณและองค์กรของคุณ อย่าได้กังวล ขั้นตอนนี้ใช้เวลาไม่นาน!</label>
+        <name>CSP_L2_Requested_Modal_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>บอกเราเพิ่มเติม</label>
+        <name>CSP_L2_Requested_Modal_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_L2_Required --></label>
+        <name>CSP_L2_Required</name>
+    </customLabels>
+    <customLabels>
+        <label>ค้นหา</label>
+        <name>CSP_L2_Search</name>
+    </customLabels>
+    <customLabels>
+        <label>กรุณากรอกรายละเอียดลงในช่องว่างด้านล่างนี้อย่างน้อยหนึ่งช่อง</label>
+        <name>CSP_L2_Search_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>ผลการค้นหา</label>
+        <name>CSP_L2_Search_Results</name>
+    </customLabels>
+    <customLabels>
+        <label>เราพบบัญชีที่ตรงกับเกณฑ์การค้นหาของคุณเป็นจำนวน +50 บัญชี</label>
+        <name>CSP_L2_Search_Results_Above_Limit</name>
+    </customLabels>
+    <customLabels>
+        <label>ปรับเกณฑ์การค้นหา</label>
+        <name>CSP_L2_Search_Results_Above_Limit_Link</name>
+    </customLabels>
+    <customLabels>
+        <label>--empty--</label>
+        <name>CSP_L2_Search_Results_Above_Limit_Link_1</name>
+    </customLabels>
+    <customLabels>
+        <label>เพื่อให้เหลือตัวเลือกน้อยลง</label>
+        <name>CSP_L2_Search_Results_Above_Limit_Link_2</name>
+    </customLabels>
+    <customLabels>
+        <label>ภาค</label>
+        <name>CSP_L2_Sector</name>
+    </customLabels>
+    <customLabels>
+        <label>เลือก</label>
+        <name>CSP_L2_Select</name>
+    </customLabels>
+    <customLabels>
+        <label>กรุณาเลือกที่อยู่ที่ถูกต้อง หากคุณไม่พบที่อยู่ที่ถูกต้องจากรายการ เราจะบันทึกที่อยู่ที่คุณป้อน คลิกที่ขั้นตอนถัดไป เพื่อดำเนินการต่อ</label>
+        <name>CSP_L2_Select_Address_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>เลือกบัญชีที่ตรงกับบัญชีของคุณจากรายการที่ปรากฏ</label>
+        <name>CSP_L2_Select_Company_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>รัฐ</label>
+        <name>CSP_L2_State</name>
+    </customLabels>
+    <customLabels>
+        <label>ถนน</label>
+        <name>CSP_L2_Street</name>
+    </customLabels>
+    <customLabels>
+        <label>ส่ง</label>
+        <name>CSP_L2_Submit</name>
+    </customLabels>
+    <customLabels>
+        <label>หัวข้อ</label>
+        <name>CSP_L2_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>ชื่อบริษัทตามที่ปรากฏ</label>
+        <name>CSP_L2_Trade_Name</name>
+    </customLabels>
+    <customLabels>
+        <label>เว็บไซต์</label>
+        <name>CSP_L2_Website</name>
+    </customLabels>
+    <customLabels>
+        <label>ใช่</label>
+        <name>CSP_L2_Yes</name>
+    </customLabels>
+    <customLabels>
+        <label>อัปเดตล่าสุด</label>
+        <name>CSP_LastUpdate</name>
+    </customLabels>
+    <customLabels>
+        <label>เรียนรู้เพิ่มเติม</label>
+        <name>CSP_Learn_More</name>
+    </customLabels>
+    <customLabels>
         <label>ออกจากระบบ</label>
         <name>CSP_LogOut</name>
     </customLabels>
     <customLabels>
+        <label>ลงชื่อเข้าใช้ทันที</label>
+        <name>CSP_Login_Now</name>
+    </customLabels>
+    <customLabels>
+        <label>หลายวันก่อนหน้านี้ คุณได้ลงทะเบียนเพื่อเข้าร่วมเป็นส่วนหนึ่งของพอร์ทัลสำหรับลูกค้าIATA เราขอขอบคุณและยินดีต้อนรับ!</label>
+        <name>CSP_Lvl2_Reminder_1</name>
+    </customLabels>
+    <customLabels>
+        <label>เราได้สร้างพอร์ทัลสำหรับลูกค้าIATA เพื่อที่จะสามารถจัดผลิตภัณฑ์และบริการของ IATA ให้เหมาะสมสำหรับคุณโดยเฉพาะ เพื่อให้เราสามารถทำเช่นนั้นได้ เราอยากรู้จักคุณและองค์กรของคุณให้ดีขึ้นอีกสักเล็กน้อย</label>
+        <name>CSP_Lvl2_Reminder_2</name>
+    </customLabels>
+    <customLabels>
+        <label>เราได้ทำให้ง่ายและรวดเร็ว - เพียงแค่ &lt;strong&gt;&lt;a href=[URL]&gt;คลิกที่นี่ เพื่อกรอกรายละเอียดของคุณ&lt;/a&gt;&lt;/strong&gt;</label>
+        <name>CSP_Lvl2_Reminder_3</name>
+    </customLabels>
+    <customLabels>
+        <label>คุณจะได้รับ:</label>
+        <name>CSP_Lvl2_Reminder_4</name>
+    </customLabels>
+    <customLabels>
+        <label>· ทางเข้าสู่บริการที่จัดให้เหมาะกับคุณโดยตรง</label>
+        <name>CSP_Lvl2_Reminder_5</name>
+    </customLabels>
+    <customLabels>
+        <label>· การเข้าถึงความรู้และมาตรฐานของ IATA ทั้งหมดที่คัดสรรมาแล้ว</label>
+        <name>CSP_Lvl2_Reminder_6</name>
+    </customLabels>
+    <customLabels>
+        <label>· การให้บริการช่วยเหลือเฉพาะทางจากผู้เชี่ยวชาญด้านบริการของ IATA</label>
+        <name>CSP_Lvl2_Reminder_7</name>
+    </customLabels>
+    <customLabels>
+        <label>· และอีกมากมาย!</label>
+        <name>CSP_Lvl2_Reminder_8</name>
+    </customLabels>
+    <customLabels>
+        <label>&lt;strong&gt;&lt;a href=[URL]&gt;คลิกที่นี่ เพื่อกรอกรายละเอียดของคุณ&lt;/a&gt;&lt;/strong&gt;</label>
+        <name>CSP_Lvl2_Reminder_9</name>
+    </customLabels>
+    <customLabels>
+        <label>โปรดกรอกข้อมูลส่วนบุคคลของคุณ เพื่อให้สามารถใช้ประโยชน์สูงสุดได้จากพอร์ทัลสำหรับลูกค้าIATA!</label>
+        <name>CSP_Lvl2_Reminder_Subject</name>
+    </customLabels>
+    <customLabels>
         <label>คุณสามารถจัดการผู้ใช้ จากรายการด้านล่างนี้</label>
         <name>CSP_Manage_Portal_Users</name>
+    </customLabels>
+    <customLabels>
+        <label>จัดการผู้รับ</label>
+        <name>CSP_Manage_Recipients</name>
     </customLabels>
     <customLabels>
         <label>จัดการบริการ</label>
@@ -2081,8 +2905,16 @@
         <name>CSP_NewServiceUserMessage</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP New Account To Address --></label>
+        <name>CSP_New_Account_To_Address</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP New Email Domain --></label>
         <name>CSP_New_Email_Domain</name>
+    </customLabels>
+    <customLabels>
+        <label>ต่อไป</label>
+        <name>CSP_Next</name>
     </customLabels>
     <customLabels>
         <label>ไม่ปรากฏบัญชีที่เกี่ยวข้อง</label>
@@ -2095,6 +2927,10 @@
     <customLabels>
         <label>แต่เมื่อคุณมี คุณจะเห็นรายการล่าสุดที่นี่</label>
         <name>CSP_NoCases2</name>
+    </customLabels>
+    <customLabels>
+        <label>ขออภัย ไม่พบผลลัพธ์จากตัวกรองที่คุณเลือก</label>
+        <name>CSP_NoRecordsFiltered</name>
     </customLabels>
     <customLabels>
         <label>ไม่มีผลลัพธ์</label>
@@ -2113,8 +2949,36 @@
         <name>CSP_OperationalCalendar_SeeMonthlyLink</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_Outstanding_Invoices --></label>
+        <name>CSP_Outstanding_Invoices</name>
+    </customLabels>
+    <customLabels>
+        <label>รหัสผ่าน</label>
+        <name>CSP_Password</name>
+    </customLabels>
+    <customLabels>
+        <label>อักขระขั้นต่ำ 10 ตัว</label>
+        <name>CSP_Password_Rule_1</name>
+    </customLabels>
+    <customLabels>
+        <label>อักษรตัวพิมพ์ใหญ่ อย่างน้อย 1 ตัว</label>
+        <name>CSP_Password_Rule_2</name>
+    </customLabels>
+    <customLabels>
+        <label>ตัวเลข อย่างน้อย 1 ตัว</label>
+        <name>CSP_Password_Rule_3</name>
+    </customLabels>
+    <customLabels>
+        <label>สัญลักษณ์ อย่างน้อย 1 ตัว (! @ # $% * () _ + ^ &amp;)</label>
+        <name>CSP_Password_Rule_4</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_Payment --></label>
         <name>CSP_Payment</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_PendingApproval --></label>
+        <name>CSP_PendingApproval</name>
     </customLabels>
     <customLabels>
         <label>เราต้องการข้อมูลของคุณ เพื่อดำเนินการกับคำร้องของ คุณ</label>
@@ -2125,6 +2989,10 @@
         <name>CSP_Period</name>
     </customLabels>
     <customLabels>
+        <label>ข้อมูลส่วนบุคคล</label>
+        <name>CSP_Personal_Information</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_PortalPath --></label>
         <name>CSP_PortalPath</name>
     </customLabels>
@@ -2133,8 +3001,24 @@
         <name>CSP_Portal_Administrators</name>
     </customLabels>
     <customLabels>
+        <label>การเข้าสู่ระบบพอร์ทัลปิดใช้งานอยู่ในขณะนี้ ขอขอบคุณสำหรับความเข้าใจของคุณ</label>
+        <name>CSP_Portal_Login_Disabled_Message</name>
+    </customLabels>
+    <customLabels>
         <label>สถานะพอร์ทัล</label>
         <name>CSP_Portal_Status</name>
+    </customLabels>
+    <customLabels>
+        <label>พิมพ์</label>
+        <name>CSP_Print</name>
+    </customLabels>
+    <customLabels>
+        <label>วันที่พิมพ์</label>
+        <name>CSP_Printed_date</name>
+    </customLabels>
+    <customLabels>
+        <label>ข้าพเจ้าเห็นด้วยกับ &lt;a target=&quot;_blank&quot; href=&quot;https://www.iata.org/Pages/privacy.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;นโยบายความเป็นส่วนตัว&lt;/a&gt; และ &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-portal/Pages/terms.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;เงื่อนไขการใช้งาน&lt;/a&gt; ของ IATA</label>
+        <name>CSP_Privacy_Policy</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_Profile_PrivacyManagement_Link --></label>
@@ -2185,8 +3069,32 @@
         <name>CSP_RecentCases_Support</name>
     </customLabels>
     <customLabels>
+        <label>ผู้รับ</label>
+        <name>CSP_Recipients</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP Record Deleted --></label>
         <name>CSP_Record_Deleted</name>
+    </customLabels>
+    <customLabels>
+        <label>การลงทะเบียนเสร็จสมบูรณ์แล้ว</label>
+        <name>CSP_Registration_Complete</name>
+    </customLabels>
+    <customLabels>
+        <label>ทำการลงทะเบียนตามกระบวนการพื้นฐานให้เสร็จสมบูรณ์ เพื่อเข้าร่วมพอร์ทัลสำหรับลูกค้าของ IATA</label>
+        <name>CSP_Registration_Description</name>
+    </customLabels>
+    <customLabels>
+        <label>การลงทะเบียนพอร์ทัลถูกปิดใช้งานในขณะนี้ ขอขอบคุณสำหรับความเข้าใจของคุณ</label>
+        <name>CSP_Registration_Disabled_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>คุณกำลังพยายามลงทะเบียนด้วยชื่อผู้ใช้ที่มีอยู่แล้ว โปรดเปลี่ยนอีเมลหรือคลิกที่ปุ่มเข้าสู่ระบบ เพื่อไปยังหน้าลงทะเบียนสำหรับเข้าสู่ระบบ</label>
+        <name>CSP_Registration_Existing_User_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>อันดับแรก โปรดตรวจสอบโฟลเดอร์จดหมายขยะของคุณ หากคุณไม่พบสิ่งใดในโฟลเดอร์จดหมายขยะ โปรดลงทะเบียนใหม่อีกครั้ง โดยคลิกที่ปุ่ม &quot;ลองอีกครั้ง&quot;</label>
+        <name>CSP_Registration_Retry_Message</name>
     </customLabels>
     <customLabels>
         <label>บทความที่เกี่ยวข้อง</label>
@@ -2209,8 +3117,48 @@
         <name>CSP_Request_Service</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Resend Verification Email --></label>
+        <name>CSP_Resend_Verification_Email</name>
+    </customLabels>
+    <customLabels>
+        <label>ตั้งรหัสผ่านชุดใหม่</label>
+        <name>CSP_Reset_Password</name>
+    </customLabels>
+    <customLabels>
+        <label>รีเซ็ตรหัสผ่านที่คุณใช้สำหรับพอร์ทัลสำหรับลูกค้าIATA</label>
+        <name>CSP_Reset_Password_Email_Subject</name>
+    </customLabels>
+    <customLabels>
+        <label>กรุณาป้อนรหัสผ่านชุดใหม่ของคุณ</label>
+        <name>CSP_Reset_Password_Info_1</name>
+    </customLabels>
+    <customLabels>
+        <label>รหัสผ่านควรมี:</label>
+        <name>CSP_Reset_Password_Info_2</name>
+    </customLabels>
+    <customLabels>
+        <label>เปลี่ยนรหัสผ่านของคุณสำเร็จแล้ว</label>
+        <name>CSP_Reset_Password_Success_Msg_1</name>
+    </customLabels>
+    <customLabels>
+        <label>คุณสามารถเข้าสู่ระบบด้วยรหัสผ่านชุดใหม่ของคุณ</label>
+        <name>CSP_Reset_Password_Success_Msg_2</name>
+    </customLabels>
+    <customLabels>
+        <label>มีการระบุว่า IP ของคอมพิวเตอร์ของคุณมีแหล่งที่มาจากหนึ่งในประเทศที่อยู่ในรายการที่ถูกระงับโดยหน่วยงานในสหรัฐอเมริกา แพลตฟอร์มที่สนับสนุนพอร์ทัลสำหรับลูกค้าของเรานั้น ปฏิบัติตามกฎระเบียบของสหรัฐอเมริกา และด้วยเหตุนี้ เราจึงไม่สามารถให้การเข้าถึงพอร์ทัลสำหรับลูกค้าจากที่อยู่ IP ปัจจุบันของคุณได้ &lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;คลิกที่นี่เพื่อติดต่อเรา&lt;/a&gt;</label>
+        <name>CSP_Restricted_Login_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>การเข้าสู่ระบบที่จำกัด</label>
+        <name>CSP_Restricted_Login_Title</name>
+    </customLabels>
+    <customLabels>
         <label>บันทึก</label>
         <name>CSP_Save</name>
+    </customLabels>
+    <customLabels>
+        <label>บันทึก &amp; เข้าสู่ระบบ</label>
+        <name>CSP_Save_Login</name>
     </customLabels>
     <customLabels>
         <label>ค้นหาด้วยรายละเอียดเอกสาร</label>
@@ -2329,6 +3277,10 @@
         <name>CSP_Services_AccessRequestedTitle</name>
     </customLabels>
     <customLabels>
+        <label>เพิ่มรายการโปรด</label>
+        <name>CSP_Services_AddFavorite</name>
+    </customLabels>
+    <customLabels>
         <label>บริการทั้งหมดที่มีให้สำหรับบริษัทของคุณ ได้ระบุไว้ตามด้านล่างนี้</label>
         <name>CSP_Services_AvailableServicesHelpText</name>
     </customLabels>
@@ -2361,6 +3313,10 @@
         <name>CSP_Services_MyServicesTabTile</name>
     </customLabels>
     <customLabels>
+        <label>ลบรายการโปรด</label>
+        <name>CSP_Services_RemoveFavorite</name>
+    </customLabels>
+    <customLabels>
         <label>ดูบริการที่มี</label>
         <name>CSP_Services_RequestServiceBannerButton</name>
     </customLabels>
@@ -2377,12 +3333,24 @@
         <name>CSP_Services_ServiceInformation</name>
     </customLabels>
     <customLabels>
+        <label>แสดงทั้งหมด</label>
+        <name>CSP_Services_ShowAll</name>
+    </customLabels>
+    <customLabels>
+        <label>แสดงเฉพาะรายการโปรดเท่านั้น</label>
+        <name>CSP_Services_ShowOnlyFavorites</name>
+    </customLabels>
+    <customLabels>
         <label>บริการ</label>
         <name>CSP_Services_Title</name>
     </customLabels>
     <customLabels>
         <label>การตั้งค่า</label>
         <name>CSP_Settings</name>
+    </customLabels>
+    <customLabels>
+        <label>ข้ามการดำเนินการในตอนนี้</label>
+        <name>CSP_Skip</name>
     </customLabels>
     <customLabels>
         <label>สถานะ</label>
@@ -2393,7 +3361,15 @@
         <name>CSP_Submit</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Success --></label>
+        <label><!-- CSP_SubmitApproval --></label>
+        <name>CSP_SubmitApproval</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_SubmittedApproval --></label>
+        <name>CSP_SubmittedApproval</name>
+    </customLabels>
+    <customLabels>
+        <label>ความสำเร็จ</label>
         <name>CSP_Success</name>
     </customLabels>
     <customLabels>
@@ -2421,44 +3397,96 @@
         <name>CSP_Title</name>
     </customLabels>
     <customLabels>
+        <label>&lt;a href=&quot;/ISSP_AMSCases&quot; target=&quot;_self&quot;&gt; คลิกที่นี่เพื่อเข้าถึง &quot;การรับรองคุณภาพของ IATA และการเปลี่ยนแปลง&quot; โดยตรง &lt;/a&gt;</label>
+        <name>CSP_Travel_Agent_Accreditation_Changes_Access</name>
+    </customLabels>
+    <customLabels>
+        <label>&lt;a href=&quot;/s/manage-service?serviceId=a2ww0000001D7GOAA0&quot; target=&quot;_self&quot;&gt;คลิกที่นี่ เพื่อขอรับบริการ &quot;การรับรองของ IATA และการเปลี่ยนแปลง&quot;&lt;/a&gt;</label>
+        <name>CSP_Travel_Agent_Accreditation_Changes_Request</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Treasury Dashboard --></label>
+        <name>CSP_Treasury_Dashboard</name>
+    </customLabels>
+    <customLabels>
+        <label>การแก้ไขปัญหา</label>
+        <name>CSP_Troubleshooting</name>
+    </customLabels>
+    <customLabels>
+        <label>สำหรับความช่วยเหลือเพิ่มเติม กรุณาดูที่</label>
+        <name>CSP_Troubleshooting_Info</name>
+    </customLabels>
+    <customLabels>
+        <label>ลองอีกครั้ง</label>
+        <name>CSP_Try_Again</name>
+    </customLabels>
+    <customLabels>
         <label>ประเภทของคำร้อง</label>
         <name>CSP_TypeOfCase</name>
+    </customLabels>
+    <customLabels>
+        <label>เกิดข้อผิดพลาดที่ไม่คาดคิดขึ้น!</label>
+        <name>CSP_Unexcepted_Error</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_User --></label>
         <name>CSP_User</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Welcome_Panel_Bullet_1_Desc --></label>
+        <label>ยินดีต้อนรับสู่พอร์ทัลสำหรับลูกค้าIATA (สมาคมการขนส่งทางอากาศระหว่างประเทศ)</label>
+        <name>CSP_Welcome_Email_Subject</name>
+    </customLabels>
+    <customLabels>
+        <label>เข้าถึงบริการของ IATA มากกว่า 60 รายการโดยตรง คัดสรรมาเพื่อคุณโดยเฉพาะ</label>
         <name>CSP_Welcome_Panel_Bullet_1_Desc</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Welcome_Panel_Bullet_1_Title --></label>
+        <label>เข้าถึงบริการของ IATA</label>
         <name>CSP_Welcome_Panel_Bullet_1_Title</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Welcome_Panel_Bullet_2_Desc --></label>
+        <label>จัดการและปรับปรุงโปรไฟล์ IATA ของคุณได้อย่างง่ายดาย</label>
         <name>CSP_Welcome_Panel_Bullet_2_Desc</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Welcome_Panel_Bullet_2_Title --></label>
+        <label>ติดตามข่าวสารล่าสุดอยู่เสมอ</label>
         <name>CSP_Welcome_Panel_Bullet_2_Title</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Welcome_Panel_Bullet_3_Desc --></label>
+        <label>พบกับตัวเลือกสำหรับสิ่งพิมพ์, การฝึกอบรม, รวมทั้งผลิตภัณฑ์และบริการอื่น ๆ ของ IATA</label>
         <name>CSP_Welcome_Panel_Bullet_3_Desc</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Welcome_Panel_Bullet_3_Title --></label>
+        <label>ค้นหาข้อเสนอพิเศษ</label>
         <name>CSP_Welcome_Panel_Bullet_3_Title</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Welcome_Panel_Bullet_4_Desc --></label>
+        <label>เข้าถึงชุดคำถามและคำตอบที่กว้างขวางครอบคลุม และรับบริการช่วยเหลือจาก IATA โดยตรง</label>
         <name>CSP_Welcome_Panel_Bullet_4_Desc</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Welcome_Panel_Bullet_4_Title --></label>
+        <label>รับคำตอบ</label>
         <name>CSP_Welcome_Panel_Bullet_4_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>เข้าถึงและจัดการบริการของ IATA ทั้งหมดของคุณ ปรึกษาข้อมูลเกี่ยวกับผลิตภัณฑ์ต่าง ๆ และรับบริการช่วยเหลือในเรื่องใด ๆ ก็ตาม อยู่ตรงนี้ เพื่อคุณ</label>
+        <name>CSP_Welcome_Panel_Info</name>
+    </customLabels>
+    <customLabels>
+        <label>ยินดีต้อนรับเข้าสู่พอร์ทัลสำหรับลูกค้าของ IATA</label>
+        <name>CSP_Welcome_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>คุณและ IATA</label>
+        <name>CSP_YouAndIATA</name>
+    </customLabels>
+    <customLabels>
+        <label>หัวข้อเด่นที่เลือกสรรมาเพื่อคุณ</label>
+        <name>CSP_YouIATA_Highlights</name>
+    </customLabels>
+    <customLabels>
+        <label>ที่นี่ คุณสามารถค้นพบความหลากหลายของบริการ, สิ่งพิมพ์, ผลิตภัณฑ์ของ IATA, และแหล่งข้อมูลในอุตสาหกรรมการบิน คัดสรรมาให้เหมาะกับคุณเป็นพิเศษ ตามความสนใจและประวัติกิจกรรมของคุณ</label>
+        <name>CSP_YouIATA_Highlights_Text</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_You_Dont_Have_Announcements --></label>
@@ -2641,7 +3669,7 @@
         <name>ConfirmSendRecycleBin</name>
     </customLabels>
     <customLabels>
-        <label><!-- Confirm password --></label>
+        <label>ยืนยันรหัสผ่าน</label>
         <name>Confirm_password</name>
     </customLabels>
     <customLabels>
@@ -2691,6 +3719,10 @@
     <customLabels>
         <label><!-- Creation date --></label>
         <name>Creation_date</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Credit_Card_Payment_Link --></label>
+        <name>Credit_Card_Payment_Link</name>
     </customLabels>
     <customLabels>
         <label><!-- Credit card payment msg --></label>
@@ -3165,7 +4197,7 @@
         <name>CurrencyCenter_def_TTBS</name>
     </customLabels>
     <customLabels>
-        <label><!-- Current password --></label>
+        <label>รหัสผ่านปัจจุบัน</label>
         <name>Current_password</name>
     </customLabels>
     <customLabels>
@@ -3389,6 +4421,10 @@
         <name>FW</name>
     </customLabels>
     <customLabels>
+        <label><!-- Fee Codes --></label>
+        <name>Fee_Codes</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Feed Item Invalid Topics --></label>
         <name>Feed_Item_Invalid_Topics</name>
     </customLabels>
@@ -3439,6 +4475,278 @@
     <customLabels>
         <label><!-- FooterLeadMessage --></label>
         <name>FooterLeadMessage</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM Access Denied --></label>
+        <name>GADM_Access_Denied</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM Access Pending --></label>
+        <name>GADM_Access_Pending</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM Account not active --></label>
+        <name>GADM_Account_not_active</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM_ChooseAnotherFile --></label>
+        <name>GADM_ChooseAnotherFile</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM_ChooseFile --></label>
+        <name>GADM_ChooseFile</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM Data Submission bad file extension --></label>
+        <name>GADM_Data_Submission_bad_file_extension</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM Data Submission empty file --></label>
+        <name>GADM_Data_Submission_empty_file</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM Data Submission error uploading file --></label>
+        <name>GADM_Data_Submission_error_uploading_file</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM Data Submission file is big --></label>
+        <name>GADM_Data_Submission_file_is_big</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM Data Submission file is selected --></label>
+        <name>GADM_Data_Submission_file_is_selected</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM Data Submission file uploaded --></label>
+        <name>GADM_Data_Submission_file_uploaded</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM Data Submission help --></label>
+        <name>GADM_Data_Submission_help</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM Data Submission no access --></label>
+        <name>GADM_Data_Submission_no_access</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM Data Submission no actor --></label>
+        <name>GADM_Data_Submission_no_actor</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM Data Submission no gadm settings --></label>
+        <name>GADM_Data_Submission_no_gadm_settings</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM Data Submission no permission set --></label>
+        <name>GADM_Data_Submission_no_permission_set</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM Data Submission no records --></label>
+        <name>GADM_Data_Submission_no_records</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM Data Submission no user --></label>
+        <name>GADM_Data_Submission_no_user</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM Data Submission no valid actor --></label>
+        <name>GADM_Data_Submission_no_valid_actor</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM Data Submission select actor --></label>
+        <name>GADM_Data_Submission_select_actor</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM Data Submission select user --></label>
+        <name>GADM_Data_Submission_select_user</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM Data Submission too many files --></label>
+        <name>GADM_Data_Submission_too_many_files</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM Data Submission unexpected error --></label>
+        <name>GADM_Data_Submission_unexpected_error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM Data Submission upload error --></label>
+        <name>GADM_Data_Submission_upload_error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM Data Submission upload errors --></label>
+        <name>GADM_Data_Submission_upload_errors</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM Data Submission upload successful --></label>
+        <name>GADM_Data_Submission_upload_successful</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM Data Submission user search --></label>
+        <name>GADM_Data_Submission_user_search</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM Data Submssion no user information --></label>
+        <name>GADM_Data_Submssion_no_user_information</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM_FileAlreadyAttached --></label>
+        <name>GADM_FileAlreadyAttached</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM Ground Service Provider --></label>
+        <name>GADM_Ground_Service_Provider</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM_Invite_User_invitation_error --></label>
+        <name>GADM_Invite_User_invitation_error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM_Invite_User_invitation_no_data --></label>
+        <name>GADM_Invite_User_invitation_no_data</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM_Invite_User_invitation_sent --></label>
+        <name>GADM_Invite_User_invitation_sent</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM_Invite_User_not_allowed_email_domain --></label>
+        <name>GADM_Invite_User_not_allowed_email_domain</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM_Invite_User_notification_sent --></label>
+        <name>GADM_Invite_User_notification_sent</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM_NoFile --></label>
+        <name>GADM_NoFile</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM No Access --></label>
+        <name>GADM_No_Access</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM PowerBI categories error --></label>
+        <name>GADM_PowerBI_categories_error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM_PowerBI_no_access_token --></label>
+        <name>GADM_PowerBI_no_access_token</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM_PowerBI_no_categories --></label>
+        <name>GADM_PowerBI_no_categories</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM_PowerBI_no_dashboard --></label>
+        <name>GADM_PowerBI_no_dashboard</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM_PowerBI_no_dataset_detail --></label>
+        <name>GADM_PowerBI_no_dataset_detail</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM_PowerBI_no_embed_token --></label>
+        <name>GADM_PowerBI_no_embed_token</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM_PowerBI_no_federation_Id --></label>
+        <name>GADM_PowerBI_no_federation_Id</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM_PowerBI_no_report_detail --></label>
+        <name>GADM_PowerBI_no_report_detail</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM_PowerBI_no_user_detail --></label>
+        <name>GADM_PowerBI_no_user_detail</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM Power User --></label>
+        <name>GADM_Power_User</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM Status Change Template Link --></label>
+        <name>GADM_Status_Change_Template_Link</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM User Already Invited --></label>
+        <name>GADM_User_Already_Invited</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM_User_Invitation_Mr --></label>
+        <name>GADM_User_Invitation_Mr</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM_User_Invitation_Mrs --></label>
+        <name>GADM_User_Invitation_Mrs</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM_User_Invitation_Ms --></label>
+        <name>GADM_User_Invitation_Ms</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM_User_Invitation_job_function_help_text --></label>
+        <name>GADM_User_Invitation_job_function_help_text</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM_User_Invitation_job_title --></label>
+        <name>GADM_User_Invitation_job_title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM_User_Invitation_none --></label>
+        <name>GADM_User_Invitation_none</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM_User_Invitation_user_exist --></label>
+        <name>GADM_User_Invitation_user_exists</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM_User_Management_actor_not_available --></label>
+        <name>GADM_User_Management_actor_not_available</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM_User_Management_business_unit_not_available --></label>
+        <name>GADM_User_Management_business_unit_not_available</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM_User_Management_ cannot_edit_own_assignments --></label>
+        <name>GADM_User_Management_cannot_edit_own_assignments</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM_User_Management_domain_blocked --></label>
+        <name>GADM_User_Management_domain_blocked</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM_User_Management_gadm_user_domain_blocked --></label>
+        <name>GADM_User_Management_gadm_user_domain_blocked</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM User Management no data --></label>
+        <name>GADM_User_Management_no_data</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM User Management no records --></label>
+        <name>GADM_User_Management_no_records</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM_User_Management_role_not_editable --></label>
+        <name>GADM_User_Management_role_not_editable</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM User Management unable to save --></label>
+        <name>GADM_User_Management_unable_to_save</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM account contact role gadm user --></label>
+        <name>GADM_account_contact_role_gadm_user</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM account not effective --></label>
+        <name>GADM_account_not_effective</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GADM active users reached --></label>
+        <name>GADM_active_users_reached</name>
     </customLabels>
     <customLabels>
         <label>ประเทศ</label>
@@ -4709,6 +6017,26 @@
         <name>IDCard_CardDuration</name>
     </customLabels>
     <customLabels>
+        <label><!-- IDCard_CardType_DigCard --></label>
+        <name>IDCard_CardType_DigCard</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IDCard_CardType_DigCardNo --></label>
+        <name>IDCard_CardType_DigCardNo</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IDCard_CardType_PhysCard --></label>
+        <name>IDCard_CardType_PhysCard</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IDCard_CardType_PhysCardYes --></label>
+        <name>IDCard_CardType_PhysCardYes</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IDCard_CardType_WishToRecieve --></label>
+        <name>IDCard_CardType_WishToRecieve</name>
+    </customLabels>
+    <customLabels>
         <label>รายละเอียดของเรื่อง</label>
         <name>IDCard_CaseDetails</name>
     </customLabels>
@@ -4965,6 +6293,10 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <name>IDCard_Details</name>
     </customLabels>
     <customLabels>
+        <label><!-- IDCard Discount --></label>
+        <name>IDCard_Discount</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ID Card Displayed Name Remaining Character --></label>
         <name>IDCard_DisplayedName_RemainingCharacter</name>
     </customLabels>
@@ -5017,6 +6349,10 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <name>IDCard_Expedite_Note</name>
     </customLabels>
     <customLabels>
+        <label><!-- IDCard_Expedite_Text --></label>
+        <name>IDCard_Expedite_Text</name>
+    </customLabels>
+    <customLabels>
         <label><!-- IDCard ExportCSV --></label>
         <name>IDCard_ExportCSV</name>
     </customLabels>
@@ -5027,6 +6363,10 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
     <customLabels>
         <label>ค่าธรรมเนียม</label>
         <name>IDCard_Fees</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IDCard_FeesPhysical --></label>
+        <name>IDCard_FeesPhysical</name>
     </customLabels>
     <customLabels>
         <label><!-- IDCard_FileUploadSuccess --></label>
@@ -5325,6 +6665,10 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <name>IDCard_NoModificationAllowed</name>
     </customLabels>
     <customLabels>
+        <label>สมัครและชำระค่าบัตรประจำตัวของท่าน (ทำบัตรใหม่, ต่ออายุบัตร, การเปลี่ยนแปลงของตัวแทน) และรับผลประโยชน์สำหรับตัวแทนการท่องเที่ยวของ IATA</label>
+        <name>IDCard_NoUSServiceDescription</name>
+    </customLabels>
+    <customLabels>
         <label><!-- IDCard No Price Table Found --></label>
         <name>IDCard_No_Price_Table_Found</name>
     </customLabels>
@@ -5486,6 +6830,10 @@ Should you have any question about payment by bank transfer, please visit &lt;a 
         <name>IDCard_PortalPage_SubMenu_ReplaceRenew</name>
     </customLabels>
     <customLabels>
+        <label><!-- IDCard_PromotionCode --></label>
+        <name>IDCard_PromotionCode</name>
+    </customLabels>
+    <customLabels>
         <label><!-- IDCard Purchase --></label>
         <name>IDCard_Purchase</name>
     </customLabels>
@@ -5615,6 +6963,10 @@ Kindly note that home-based agents are required to coordinate with their colleag
         <name>IDCard_TrxNum</name>
     </customLabels>
     <customLabels>
+        <label>(สำหรับตัวแทนในสหรัฐอเมริกา) ขอบัตรประจำตัว, ลงทะเบียนตัวแทน, ชำระค่าธรรมเนียมรายปี, ดำเนินการต่ออายุใบรับรองของตัวแทน ฯลฯ</label>
+        <name>IDCard_USServiceDescription</name>
+    </customLabels>
+    <customLabels>
         <label><!-- IDCard Update Application --></label>
         <name>IDCard_Update_Application</name>
     </customLabels>
@@ -5657,6 +7009,10 @@ Kindly note that home-based agents are required to coordinate with their colleag
     <customLabels>
         <label><!-- IDCard error 20 hours required --></label>
         <name>IDCard_error_20_hours_required</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ID Card fee --></label>
+        <name>IDCard_fee</name>
     </customLabels>
     <customLabels>
         <label><!-- IDCard hasPhoto --></label>
@@ -6027,6 +7383,10 @@ Kindly note that home-based agents are required to coordinate with their colleag
         <name>ID_Card_Specifics</name>
     </customLabels>
     <customLabels>
+        <label><!-- ID_Card_Taxes --></label>
+        <name>ID_Card_Taxes</name>
+    </customLabels>
+    <customLabels>
         <label>&quot;I have read and accept the 
 &lt;a href=&quot;&quot;JavaScript:newPopup(&apos;http://www.iata.org/Pages/privacy.aspx&apos;); &quot;&quot;&gt;Privacy Policy, Conditions of Use &lt;/a&gt; 
 and 
@@ -6047,6 +7407,10 @@ and
     <customLabels>
         <label><!-- ID Card To Agency --></label>
         <name>ID_Card_To_Agency</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ID_Card_Training_Fee --></label>
+        <name>ID_Card_Training_Fee</name>
     </customLabels>
     <customLabels>
         <label><!-- ID Card Upload Proof --></label>
@@ -8081,6 +9445,10 @@ and
         <name>ISSP_AMS_Add_Company</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS Add Contact --></label>
+        <name>ISSP_AMS_Add_Contact</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS Add Director --></label>
         <name>ISSP_AMS_Add_Director</name>
     </customLabels>
@@ -8155,6 +9523,10 @@ and
     <customLabels>
         <label>บริษัทในเครือรายใหม่ - GoLite</label>
         <name>ISSP_AMS_Associate_Entity_Cashless</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Associate Entity Cashless --></label>
+        <name>ISSP_AMS_Associate_Entity_Multicountry</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS Authorised Sig --></label>
@@ -8517,6 +9889,10 @@ and
         <name>ISSP_AMS_CONFIRM_DISCARD</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS CONFIRM DISCARD APPLICATION --></label>
+        <name>ISSP_AMS_CONFIRM_DISCARD_APPLICATION</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_Title_Capacity --></label>
         <name>ISSP_AMS_Capacity</name>
     </customLabels>
@@ -8779,6 +10155,10 @@ and
     <customLabels>
         <label>โปรดทราบ! เมื่อคัดลอกข้อมูลความเป็นเจ้าของไปยังบริษัทตัวแทนแห่งใดแห่งหนึ่ง คุณจะลบข้อมูลความเป็นเจ้าของที่มีอยู่ของบริษัทตัวแทนเป้าหมาย</label>
         <name>ISSP_AMS_Copy_Ownership_Warning</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Country Not Selected --></label>
+        <name>ISSP_AMS_Country_Not_Selected</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS Country Select --></label>
@@ -9125,6 +10505,10 @@ and
         <name>ISSP_AMS_Head_Entity_Cash</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS Head Entity Multicountry --></label>
+        <name>ISSP_AMS_Head_Entity_Multicountry</name>
+    </customLabels>
+    <customLabels>
         <label>นิติบุคคลหลักรายใหม่ - GoLite</label>
         <name>ISSP_AMS_Head_Entity_No_Cash</name>
     </customLabels>
@@ -9165,12 +10549,24 @@ and
         <name>ISSP_AMS_IS_GSA</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS IS Legal Name Blank --></label>
+        <name>ISSP_AMS_IS_Legal_Name_Selected_Blank</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS IS Legal Name Null --></label>
+        <name>ISSP_AMS_IS_Legal_Name_Selected_Null</name>
+    </customLabels>
+    <customLabels>
         <label>กรุณาเลือก หากบริษัทในเครือมีสถานะทางกฎหมายที่แยกต่างหาก</label>
         <name>ISSP_AMS_IS_Separate_Entity_Null</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS If Approved Gross Amnt --></label>
         <name>ISSP_AMS_If_Approved_Gross_Amnt</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Info Accreditation Types --></label>
+        <name>ISSP_AMS_Info_Accreditation_Types</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS International --></label>
@@ -9749,6 +11145,14 @@ and
         <name>ISSP_AMS_Month_September</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_Multicountry_Submit_Button --></label>
+        <name>ISSP_AMS_Multicountry_Submit_Button</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NOC_All_Countries --></label>
+        <name>ISSP_AMS_NOC_All_Countries</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS NOC Current Legal details --></label>
         <name>ISSP_AMS_NOC_Current_Legal_details</name>
     </customLabels>
@@ -10151,6 +11555,10 @@ and
     <customLabels>
         <label><!-- ISSP_AMS_NoC_Roles_and_Responsabilities --></label>
         <name>ISSP_AMS_NoC_Roles_and_Responsabilities</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_Search_Entity_Conversion --></label>
+        <name>ISSP_AMS_NoC_Search_Entity_Conversion</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_NoC_Signature --></label>
@@ -10571,6 +11979,10 @@ and
     <customLabels>
         <label><!-- ISSP AMS Section 2 SubSection 2 --></label>
         <name>ISSP_AMS_Section_2_SubSection_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Select AEs --></label>
+        <name>ISSP_AMS_Select_AEs</name>
     </customLabels>
     <customLabels>
         <label>เลือกบัญชีเป้าหมาย</label>
@@ -11229,6 +12641,10 @@ and
         <name>ISSP_AMS_Step3_Indicate_GDSs</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_Step3_Cashless_Location --></label>
+        <name>ISSP_AMS_Step3_Multicountry_Location</name>
+    </customLabels>
+    <customLabels>
         <label>ที่อยู่เต็มของสำนักงานที่ยื่นขออนุมัติ</label>
         <name>ISSP_AMS_Step3_Office_FullAddress</name>
     </customLabels>
@@ -11287,6 +12703,10 @@ and
     <customLabels>
         <label><!-- ISSP AMS Step5 ProgressBar CNS --></label>
         <name>ISSP_AMS_Step5_ProgressBar_CNS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step5_ProgressBar_Validate_Data --></label>
+        <name>ISSP_AMS_Step5_ProgressBar_Validate_Data</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS Step5 ReviewBeforeSubmit --></label>
@@ -11479,6 +12899,10 @@ and
     <customLabels>
         <label><!-- ISSP AMS Validation Financial Contact --></label>
         <name>ISSP_AMS_Validation_Financial_Contact</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Validation MC Conversion Countries --></label>
+        <name>ISSP_AMS_Validation_MC_Conversion_Countries</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS Validation Percent Ownership --></label>
@@ -11977,6 +13401,10 @@ and
         <name>ISSP_ANG_Branch_Office_address_details</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP ANG Branch Office contact details --></label>
+        <name>ISSP_ANG_Branch_Office_contact_details</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Link to the IATAs CheckACode page --></label>
         <name>ISSP_ANG_CODE_SEARCH_CHECK_A_CODE_LINK</name>
     </customLabels>
@@ -12021,6 +13449,10 @@ and
         <name>ISSP_ANG_Country_Reqs_Type_Of_Agency</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_ANG_DISCARD_APPLICATION --></label>
+        <name>ISSP_ANG_DISCARD_APPLICATION</name>
+    </customLabels>
+    <customLabels>
         <label>ลำดับขั้นตอนทั้งหมด</label>
         <name>ISSP_ANG_ENTIRE_HIERARCHY</name>
     </customLabels>
@@ -12043,6 +13475,10 @@ and
     <customLabels>
         <label>ใบสมัครฉบับร่างสำหรับการรับรองนิติบุคคลหลักแบบ GoLite</label>
         <name>ISSP_ANG_Email_HE_Cashless_Subject</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP ANG Email HE Multicountry Subject --></label>
+        <name>ISSP_ANG_Email_HE_Multicountry</name>
     </customLabels>
     <customLabels>
         <label>อนุญาตให้ใช้ระบบรับชำระด้วยบัตรเครดิตสำหรับรหัส</label>
@@ -12117,12 +13553,20 @@ and
         <name>ISSP_ANG_Iata_Codes_Relinquish</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_ANG_Import_Directors --></label>
+        <name>ISSP_ANG_Import_Directors</name>
+    </customLabels>
+    <customLabels>
         <label>กรุณาเลือกอย่างน้อยหนึ่งสาขา</label>
         <name>ISSP_ANG_Least_One_Branch</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_ANG_LeftNav_Section1_AE_Details --></label>
         <name>ISSP_ANG_LeftNav_Section1_AE_Details</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ANG_Legal_Name_already_in_used --></label>
+        <name>ISSP_ANG_Legal_Name_already_in_used</name>
     </customLabels>
     <customLabels>
         <label><!-- Branch to Shipping --></label>
@@ -12143,6 +13587,14 @@ and
     <customLabels>
         <label><!-- Must Add Users To Service --></label>
         <name>ISSP_ANG_MustAddUsersToService</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- NOC_GOGLOBAL_Info --></label>
+        <name>ISSP_ANG_NOC_GOGLOBAL_Info</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Third NoC Question --></label>
+        <name>ISSP_ANG_NOC_Type_Of_Change</name>
     </customLabels>
     <customLabels>
         <label>บริษัทในเครือหนึ่งแห่งหรือมากกว่า</label>
@@ -12365,6 +13817,30 @@ and
         <name>ISSP_ANG_VR_Disclaimer</name>
     </customLabels>
     <customLabels>
+        <label><!-- Validate Agency Details --></label>
+        <name>ISSP_ANG_Validate_Agency_Details</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ANG_View_And_Modify_Owners --></label>
+        <name>ISSP_ANG_View_And_Modify_Owners</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ANG_View_Owners --></label>
+        <name>ISSP_ANG_View_Owners</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ANG_Import --></label>
+        <name>ISSP_ANG_View_Owners_Info</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ANG_Import --></label>
+        <name>ISSP_ANG_View_Owners_Modify</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_ANG_View_Owners_Tooltip --></label>
+        <name>ISSP_ANG_View_Owners_Tooltip</name>
+    </customLabels>
+    <customLabels>
         <label>การยกเลิกโดยสมัครใจ</label>
         <name>ISSP_ANG_Voluntary_Relinquishment</name>
     </customLabels>
@@ -12494,7 +13970,7 @@ and
         <name>ISSP_Account_not_approved</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ContactList --></label>
+        <label>อนุมัติ</label>
         <name>ISSP_Activate</name>
     </customLabels>
     <customLabels>
@@ -12508,6 +13984,10 @@ and
     <customLabels>
         <label><!-- ISSP Add FAP Contact --></label>
         <name>ISSP_Add_FAP_Contact</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Add_New_Associate_Entity --></label>
+        <name>ISSP_Add_New_Associate_Entity</name>
     </customLabels>
     <customLabels>
         <label>เพิ่มผู้ใช้งานในบริการนี้</label>
@@ -13093,7 +14573,7 @@ and
         <name>ISSP_ContactName</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Contact About IATA Courses --></label>
+        <label>คุณต้องการติดต่อเราเกี่ยวกับหลักสูตรของ IATA ใช่หรือไม่?</label>
         <name>ISSP_Contact_About_IATA_Courses</name>
     </customLabels>
     <customLabels>
@@ -13281,7 +14761,7 @@ and
         <name>ISSP_Deny_Access</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Description --></label>
+        <label>คำอธิบาย</label>
         <name>ISSP_Description</name>
     </customLabels>
     <customLabels>
@@ -13953,6 +15433,10 @@ and
         <name>ISSP_FDS_UnselectAll</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_FS_Link --></label>
+        <name>ISSP_FS_Link</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_Fax --></label>
         <name>ISSP_Fax</name>
     </customLabels>
@@ -14517,6 +16001,14 @@ and
         <name>ISSP_IdCard_Name_Warning</name>
     </customLabels>
     <customLabels>
+        <label>แพลตฟอร์มออนไลน์สำหรับบัตรประจำตัว</label>
+        <name>ISSP_IdCard_NonUS</name>
+    </customLabels>
+    <customLabels>
+        <label>บริการออนไลน์ของ IATAN</label>
+        <name>ISSP_IdCard_US</name>
+    </customLabels>
+    <customLabels>
         <label>กำลังดำเนินการ</label>
         <name>ISSP_In_Progress</name>
     </customLabels>
@@ -14701,7 +16193,7 @@ and
         <name>ISSP_MITA_Agreements_Service_Name</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_ContactList --></label>
+        <label>อนุมัติในฐานะผู้ดูแลระบบ</label>
         <name>ISSP_MakeAdmin</name>
     </customLabels>
     <customLabels>
@@ -14879,6 +16371,10 @@ and
     <customLabels>
         <label><!-- ISSP NoC HE with AEs Warning --></label>
         <name>ISSP_NoC_HE_with_AEs_Warning</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP NoC HE with AEs Warning --></label>
+        <name>ISSP_NoC_HE_with_AEs_Warning_MC</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP NoC Head Entity Becoming a AE --></label>
@@ -15077,6 +16573,10 @@ Nếu bạn tiếp tục gặp vấn đề khi đăng ký trên Cổng thông ti
         <name>ISSP_OperationalCalendar_CurrencyFilter</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_OperationalCalendar_CycleFilter --></label>
+        <name>ISSP_OperationalCalendar_CycleFilter</name>
+    </customLabels>
+    <customLabels>
         <label>วันที่ดาวน์โหลด</label>
         <name>ISSP_OperationalCalendar_DownloadDate</name>
     </customLabels>
@@ -15121,6 +16621,10 @@ Nếu bạn tiếp tục gặp vấn đề khi đăng ký trên Cổng thông ti
         <name>ISSP_OperationalCalendar_No_Events</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP OperationalCalendar PDFFooterText --></label>
+        <name>ISSP_OperationalCalendar_PDFFooterText</name>
+    </customLabels>
+    <customLabels>
         <label>ตั้งค่าใหม่</label>
         <name>ISSP_OperationalCalendar_Reset</name>
     </customLabels>
@@ -15129,8 +16633,24 @@ Nếu bạn tiếp tục gặp vấn đề khi đăng ký trên Cổng thông ti
         <name>ISSP_OperationalCalendar_Show_Calendar</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_OperationalCalendar_SubtypeFilter --></label>
+        <name>ISSP_OperationalCalendar_SubtypeFilter</name>
+    </customLabels>
+    <customLabels>
         <label>การเชื่อมปฏิทิน</label>
         <name>ISSP_OperationalCalendar_Sync_Calendar</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_OperationalCalendar_Timezone_Disclaimer --></label>
+        <name>ISSP_OperationalCalendar_Timezone_Disclaimer</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_OperationalCalendar_TypeFilter --></label>
+        <name>ISSP_OperationalCalendar_TypeFilter</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_OperationalCalendar_Type_Filter_Required --></label>
+        <name>ISSP_OperationalCalendar_Type_Filter_Required</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_Opt_In --></label>
@@ -16499,7 +18019,7 @@ GSA - ตัวอักษร 3 ตัว
         <name>ISSP_See_more</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Select --></label>
+        <label>- เลือก -</label>
         <name>ISSP_Select</name>
     </customLabels>
     <customLabels>
@@ -17044,6 +18564,10 @@ IATA Treasury Dashboard คือเครื่องมือทางเว�
         <name>ISSP_VR_Case_Submited</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Validated --></label>
+        <name>ISSP_Validated</name>
+    </customLabels>
+    <customLabels>
         <label>เวอร์ชั่น</label>
         <name>ISSP_Version</name>
     </customLabels>
@@ -17356,6 +18880,18 @@ IATA Treasury Dashboard คือเครื่องมือทางเว�
         <name>Invalid_Topic_Assignment</name>
     </customLabels>
     <customLabels>
+        <label><!-- Invoice Amount --></label>
+        <name>Invoice_Amount</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Invoice Date --></label>
+        <name>Invoice_Date</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Invoice Status --></label>
+        <name>Invoice_Status</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Invoice number --></label>
         <name>Invoice_number</name>
     </customLabels>
@@ -17390,6 +18926,18 @@ IATA Treasury Dashboard คือเครื่องมือทางเว�
     <customLabels>
         <label><!-- KALE_SUPPORT_EMAIL --></label>
         <name>KALE_SUPPORT_EMAIL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- KPI1RT --></label>
+        <name>KPI1RT</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- KPI1Reason --></label>
+        <name>KPI1Reason</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- KPI2 --></label>
+        <name>KPI2</name>
     </customLabels>
     <customLabels>
         <label><!-- Kavi email notification part 1 --></label>
@@ -17877,6 +19425,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>Line_of_Business_LoB</name>
     </customLabels>
     <customLabels>
+        <label><!-- Link To SIS --></label>
+        <name>Link_To_SIS</name>
+    </customLabels>
+    <customLabels>
         <label><!-- LiveAgentButtonLanguage --></label>
         <name>LiveAgentButtonLanguage</name>
     </customLabels>
@@ -17965,7 +19517,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>Location</name>
     </customLabels>
     <customLabels>
-        <label><!-- Login --></label>
+        <label>เข้าสู่ระบบ</label>
         <name>Login</name>
     </customLabels>
     <customLabels>
@@ -18085,7 +19637,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>NewGenApp_ServiceRequested</name>
     </customLabels>
     <customLabels>
-        <label><!-- New password --></label>
+        <label>รหัสผ่านชุดใหม่</label>
         <name>New_password</name>
     </customLabels>
     <customLabels>
@@ -18103,6 +19655,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
     <customLabels>
         <label><!-- NoSameName --></label>
         <name>NoSameName</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- No_Invoices_To_Display --></label>
+        <name>No_Invoices_To_Display</name>
     </customLabels>
     <customLabels>
         <label><!-- No-Reply --></label>
@@ -18177,7 +19733,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>OneId_Account_Association</name>
     </customLabels>
     <customLabels>
-        <label><!-- OneId_Account Creation --></label>
+        <label>การสร้างบัญชี</label>
         <name>OneId_Account_Creation</name>
     </customLabels>
     <customLabels>
@@ -18241,7 +19797,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>OneId_CreateNew</name>
     </customLabels>
     <customLabels>
-        <label><!-- OneId_CreateNewAccount --></label>
+        <label>สร้างบัญชีใหม่</label>
         <name>OneId_CreateNewAccount</name>
     </customLabels>
     <customLabels>
@@ -18565,6 +20121,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>OneId_Fred_Select_Type_of_Company</name>
     </customLabels>
     <customLabels>
+        <label><!-- OneId GADM Troubleshooting --></label>
+        <name>OneId_GADM_Troubleshooting</name>
+    </customLabels>
+    <customLabels>
         <label>หากไม่พบบริษัทหลังจากใส่รหัส GSA และประเทศของคุณแล้ว โปรดตรวจสอบความถูกต้องของข้อมูลอีกครั้ง หรือขอคำแนะนำจากเราที่ &lt;ahref=&quot;http://theiatahub.force.com/iatapkb/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US&quot; target=&quot;_blank&quot;&gt;troubleshooting guide&lt;/a&gt;</label>
         <name>OneId_GSAWarning</name>
     </customLabels>
@@ -18645,7 +20205,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>OneId_Login</name>
     </customLabels>
     <customLabels>
-        <label><!-- OneId_LoginFail --></label>
+        <label>ความพยายามในการเข้าสู่ระบบของคุณล้มเหลว ตรวจสอบให้แน่ใจว่าอีเมลและรหัสผ่านถูกต้อง</label>
         <name>OneId_LoginFail</name>
     </customLabels>
     <customLabels>
@@ -18717,7 +20277,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>OneId_Online_Help_Link</name>
     </customLabels>
     <customLabels>
-        <label><!-- OneId_Password --></label>
+        <label>รหัสผ่าน</label>
         <name>OneId_Password</name>
     </customLabels>
     <customLabels>
@@ -19544,7 +21104,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>PKB2_search_to_long</name>
     </customLabels>
     <customLabels>
-        <label><!-- PKB2: Contact Us Send Email --></label>
+        <label>ส่งอีเมลยืนยันอีกครั้ง</label>
         <name>PKB2_send_mail</name>
     </customLabels>
     <customLabels>
@@ -19772,6 +21332,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>Priority_4_Trivial_Defects</name>
     </customLabels>
     <customLabels>
+        <label><!-- ProcessEffAge --></label>
+        <name>ProcessEffAge</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Product --></label>
         <name>Product</name>
     </customLabels>
@@ -19928,6 +21492,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>SIDRA_Automated_Case_Message</name>
     </customLabels>
     <customLabels>
+        <label><!-- SIDRA_GE_Info --></label>
+        <name>SIDRA_GE_Info</name>
+    </customLabels>
+    <customLabels>
         <label><!-- SIS --></label>
         <name>SIS</name>
     </customLabels>
@@ -19982,6 +21550,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
     <customLabels>
         <label><!-- Section Title Top Sellers --></label>
         <name>Section_Title_Top_Sellers</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- See_Bank_Account_Details --></label>
+        <name>See_Bank_Account_Details</name>
     </customLabels>
     <customLabels>
         <label><!-- See details --></label>
@@ -20128,6 +21700,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>Stay_Informed</name>
     </customLabels>
     <customLabels>
+        <label><!-- Stop creating accounts from Owners and Subsidiaries --></label>
+        <name>Stop_creating_accounts_from_Owners_and_Subsidiaries</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Street cannot be empty --></label>
         <name>Street_cannot_be_empty</name>
     </customLabels>
@@ -20160,6 +21736,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>TECH_GDPR_Network_Name</name>
     </customLabels>
     <customLabels>
+        <label><!-- TSI USA Only --></label>
+        <name>TSI_USA_Only</name>
+    </customLabels>
+    <customLabels>
         <label>งาน</label>
         <name>Tasks_Notification</name>
     </customLabels>
@@ -20188,6 +21768,14 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>Title_Home_Page</name>
     </customLabels>
     <customLabels>
+        <label><!-- Total Amount --></label>
+        <name>Total_Amount</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Total_Cost --></label>
+        <name>Total_Cost</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Total Price --></label>
         <name>Total_Price</name>
     </customLabels>
@@ -20198,6 +21786,122 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
     <customLabels>
         <label><!-- Transfer Attachments --></label>
         <name>Transfer_Attachments</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard BSP --></label>
+        <name>Treasury_Dashboard_BSP</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard BSP Long --></label>
+        <name>Treasury_Dashboard_BSP_Long</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard Bank Holidays --></label>
+        <name>Treasury_Dashboard_Bank_Holidays</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard Bank Holidays URL --></label>
+        <name>Treasury_Dashboard_Bank_Holidays_URL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard CASS --></label>
+        <name>Treasury_Dashboard_CASS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard CASS Long --></label>
+        <name>Treasury_Dashboard_CASS_Long</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard Central Banks World Wide --></label>
+        <name>Treasury_Dashboard_Central_Banks_World_Wide</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard Central Banks World Wide URL --></label>
+        <name>Treasury_Dashboard_Central_Banks_World_Wide_URL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard Currency Center --></label>
+        <name>Treasury_Dashboard_Currency_Center</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard Currency Center URL --></label>
+        <name>Treasury_Dashboard_Currency_Center_URL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard Exchange Rates --></label>
+        <name>Treasury_Dashboard_Exchange_Rates</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard Exchange Rates Long --></label>
+        <name>Treasury_Dashboard_Exchange_Rates_Long</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard FX Rates --></label>
+        <name>Treasury_Dashboard_FX_Rates</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard FX Rates URL --></label>
+        <name>Treasury_Dashboard_FX_Rates_URL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard Header Text --></label>
+        <name>Treasury_Dashboard_Header_Text</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard ICCS --></label>
+        <name>Treasury_Dashboard_ICCS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard ICCS Long --></label>
+        <name>Treasury_Dashboard_ICCS_Long</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard ICH --></label>
+        <name>Treasury_Dashboard_ICH</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard ICH Long --></label>
+        <name>Treasury_Dashboard_ICH_Long</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard Links --></label>
+        <name>Treasury_Dashboard_Links</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard Market News --></label>
+        <name>Treasury_Dashboard_Market_News</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard Market News URL --></label>
+        <name>Treasury_Dashboard_Market_News_URL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard Premium Dashboard --></label>
+        <name>Treasury_Dashboard_Premium_Dashboard</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard Service Name --></label>
+        <name>Treasury_Dashboard_Service_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard Standard Dashboard --></label>
+        <name>Treasury_Dashboard_Standard_Dashboard</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard Terms Of Use --></label>
+        <name>Treasury_Dashboard_Terms_Of_Use</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard Terms of Use URL --></label>
+        <name>Treasury_Dashboard_Terms_of_Use_URL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard User Guide --></label>
+        <name>Treasury_Dashboard_User_Guide</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard User Guide URL --></label>
+        <name>Treasury_Dashboard_User_Guide_URL</name>
     </customLabels>
     <customLabels>
         <label><!-- Trust Weaver --></label>
@@ -20374,6 +22078,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
     <customLabels>
         <label>กรอกแบบฟอร์ม เพื่อดูตัวเลือกบริการช่วยเหลือที่แนะนำ</label>
         <name>csp_ActionIndicator</name>
+    </customLabels>
+    <customLabels>
+        <label>รายละเอียดเพิ่มเติม</label>
+        <name>csp_AdditionalDetails</name>
     </customLabels>
     <customLabels>
         <label>บริษัทตัวแทนอ่านอย่างเดียว</label>
@@ -20620,6 +22328,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>csp_My_Profile_Job_Title</name>
     </customLabels>
     <customLabels>
+        <label><!-- csp_Next_Step_Account_Selection --></label>
+        <name>csp_Next_Step_Account_Selection</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Request New Service --></label>
         <name>csp_NoPortalServiceNameFound</name>
     </customLabels>
@@ -20662,6 +22374,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
     <customLabels>
         <label>บริการช่วยเหลือ</label>
         <name>csp_Query</name>
+    </customLabels>
+    <customLabels>
+        <label>มีผู้อื่นที่ต้องการแจ้งอีกหรือไม่?</label>
+        <name>csp_RecipientsQuestion</name>
     </customLabels>
     <customLabels>
         <label>&quot;ริษัทตัวแทนของคุณยังไม่ได้เปิดบัญชี IATA EasyPay ในขณะนี้&lt;br/&gt;&lt;br/&gt;โปรดติดต่อผู้มีอำนาจลงนามผูกพันบริษัทสำนักงาน ใหญ่ของคุณ เพื่อขอให้ทางหน่วยงานเปิดบัญชี IATA EasyPay ในฐานะผู้ดูแลระบบพอร์ทัล คุณสามารถอัปเดต &lt;a href=&quot;&quot;/my-profile&quot;&quot;&gt;ข้อมูลส่วนตัว&lt;/a&gt;ของคุณ เพื่อกำหนดให้ตัวคุณเองเป็นผู้มีอำนาจลงนามผูกพัน ตามกฎหมาย หรือมอบหมายผู้ดูแลระบบพอร์ทัลที่ เหมาะสมจากหน้า &lt;a href=&quot;&quot;/company-profile&quot;&quot;&gt;การจัดการของ บริษัท -&gt; ผู้ติดต่อ&lt;/a&gt; และขอให้พวกเขาเปิดบัญชี EasyPay ของคุณ โปรด&lt;a href=&quot;&quot;/Support-Reach-Us&quot;&quot;&gt;ติดต่อฝ่ายบริการช่วยเหลือ&lt;/a&gt; หากคุณต้องการความช่วยเหลือ&quot;</label>
@@ -21176,6 +22892,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>Clicktools</name>
     </customTabs>
     <customTabs>
+        <label><!-- Data Submisssion --></label>
+        <name>Data_Submisssion</name>
+    </customTabs>
+    <customTabs>
         <label><!-- EC2 Console --></label>
         <name>EC2_Console</name>
     </customTabs>
@@ -21190,6 +22910,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
     <customTabs>
         <label><!-- ExactTarget --></label>
         <name>ExactTarget</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- Data Submission --></label>
+        <name>File_Upload</name>
     </customTabs>
     <customTabs>
         <label><!-- Financial Assessment Campaign --></label>
@@ -21214,6 +22938,14 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
     <customTabs>
         <label><!-- ISS Operations Loader --></label>
         <name>ISS_Operation</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- Invite User --></label>
+        <name>Invite_User</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- Invite User --></label>
+        <name>Invite_User1</name>
     </customTabs>
     <customTabs>
         <label><!-- Late Remittance Report --></label>
@@ -21260,6 +22992,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>My_Status</name>
     </customTabs>
     <customTabs>
+        <label><!-- Notification Center --></label>
+        <name>Notification_Center</name>
+    </customTabs>
+    <customTabs>
         <label><!-- OPS --></label>
         <name>OPS</name>
     </customTabs>
@@ -21302,6 +23038,14 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
     <customTabs>
         <label><!-- Projects Calendar --></label>
         <name>UAT_Calendar</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- Unregistered users --></label>
+        <name>Unregistered_users</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- Usage Report --></label>
+        <name>Usage_Report</name>
     </customTabs>
     <customTabs>
         <label><!-- Voucher Management --></label>

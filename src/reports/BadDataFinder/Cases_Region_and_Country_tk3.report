@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>CASE_ID</field>
+    </columns>
+    <columns>
+        <field>Case.Region__c</field>
+    </columns>
+    <columns>
+        <field>Case.BSPCountry__c</field>
+    </columns>
+    <currency>USD</currency>
+    <description>This report will support us to find Countries and Regions not compatibles.</description>
+    <filter>
+        <criteriaItems>
+            <column>Case.Region__c</column>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Americas</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Case.BSPCountry__c</column>
+            <isUnlocked>true</isUnlocked>
+            <operator>notContain</operator>
+            <value>,All region,Anguilla,Antigua and Barbuda,Argentina,Aruba,Bahamas,Barbados,Belize,Bermuda,Bolivia,Bonaire,Saba,St. Eustatius,Brazil,British Virgin Islands,Canada,Cayman Islands,Chile,Colombia,Costa Rica,Cuba,Curacao,Curaçao,Dominica,Dominican Republic,Ecuador,El Salvador,Falkland Islands,Grenada,Guatemala,Guyana,Haiti,Honduras,Jamaica,Mexico,Montserrat,Nicaragua,Panama,Paraguay,Peru,Regional Office - Americas,Saint Kitts and Nevis,Saint Lucia,Saint Maarten,Saint Pierre and Miquelon,Saint Vincent and the Grenadines,Suriname,Trinidad and Tobago,Turks and Caicos Islands,United States,Uruguay,Venezuela,Virgin Islands,British</value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
+    <format>Tabular</format>
+    <name>Cases - No match Americas and Countries</name>
+    <params>
+        <name>units</name>
+        <value>h</value>
+    </params>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>CaseList</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>CREATED_DATEONLY</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

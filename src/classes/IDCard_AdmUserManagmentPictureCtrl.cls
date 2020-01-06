@@ -432,7 +432,7 @@ public with sharing class IDCard_AdmUserManagmentPictureCtrl extends IDCardAbstr
                 
                 // get the Price Table based on the country and on the type of agent
                 IATA_ISO_Country__c contactCountry = GetIATAISOCountryOfContact(IDCardApplicationNR.IATA_Code__c);
-                Price_Table__c[] listPriceTables = [Select p.Type_Class_of_Agent__c, p.Expedite__c, p.CurrencyIsoCode, p.Name From Price_Table__c p where p.Type_Class_of_Agent__c = :accountType and p.ISO_Country__r.Id = :contactCountry.Id];
+                Price_Table__c[] listPriceTables = [Select p.Type_Class_of_Agent__c, p.Expedite__c, p.CurrencyIsoCode, p.Name, p.Cost_of_Printer__c From Price_Table__c p where p.Type_Class_of_Agent__c = :accountType and p.ISO_Country__r.Id = :contactCountry.Id];
                 if (listPriceTables == null || listPriceTables.size() == 0) {
                         throw new IDCardApplicationException(String.Format(Label.IDCard_No_Price_Table_Found, new String[] {'<i>' + contactCountry.ISO_Code__c + '</i>', '<i>' + accountType + '</i>'}));
                 }               
@@ -464,6 +464,8 @@ public with sharing class IDCard_AdmUserManagmentPictureCtrl extends IDCardAbstr
                 IDCardApplicationNR.ID_Card_Fee__c = detailledFees.get('IDCardFee');
                 IDCardApplicationNR.IDCard_Expedite_Delivery_Fee__c = detailledFees.get('ExpediteFee');         
                 IDCardApplicationNR.ITDI_Courses_Fee__c = detailledFees.get('ITDIFee');                
+                IDCardApplicationNR.Physical_Card_Fee__c = detailledFees.get('PhysCardFee');
+                IDCardApplicationNR.ID_Card_Fee_Discount__c = detailledFees.get('Discount');
                 IDCardApplicationNR.Applicable_Fee__c = IDCardUtil.GetApplicableFee(listPriceTables[0], isReissue, isExpedite, isITDIPackage, validPromotion);                               
                 IDCardApplicationNR.CurrencyIsoCode = listPriceTables[0].CurrencyIsoCode;
                 // Always display the expedite fees

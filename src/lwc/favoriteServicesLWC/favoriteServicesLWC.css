@@ -92,3 +92,21 @@
 .textDivHeight {
     height: 20%;
 }
+
+.oneRemClass{
+    position:absolute;
+    margin-left: 0.5rem;
+    margin-top: 1rem;
+}
+
+.halfOneRemClass{
+    position:absolute;
+    margin-left: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.favoriteIcon{
+    cursor: pointer;
+    height: 24px;
+    width: 24px;
+}

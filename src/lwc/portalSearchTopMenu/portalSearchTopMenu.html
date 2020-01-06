@@ -1,0 +1,75 @@
+<template>
+    <div if:true={showBackdrop} slot="background-white onTop">
+        <!-- SEARCH BAR -->
+        <div class="slds-p-horizontal_large">
+            <div class="slds-p-vertical_small customCardWhite background-white searchBarRow slds-m-around--medium">
+                <div class="searchBarIcon searchIconMagnifying">
+                    <img src={searchIconUrl} class="slds-p-left_small" height="42" width="42"/>
+                </div>
+                <div class="searchBarBarContainer">
+                    <div class="fullWidth">
+                        <lightning-input
+                            name="enter-search"
+                            type="text"
+                            placeholder={placeholder}
+                            onload={onchangeSearchInput}
+                            onchange={onchangeSearchInput}
+                            value={searchText}
+                            class="hideInputLabel borderlessInput searchInputPlaceHolder">
+                        </lightning-input>
+                    </div>
+                </div>
+
+                <div if:true={showCross} class="searchBarIcon slds-m-right--large">
+                    <lightning-icon class="cursorPointer rotateIcon45Deg" icon-name="utility:add" size="small" alternative-text="" onclick={removeTextSearch}></lightning-icon>
+                </div>
+
+                <div>
+                    <span if:true={loadingTypehead} class="smallSearchSpinner">
+                        <lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div if:true={showHoverResults} class="slds-grid slds-wrap topMenuSearchResultsList resultsContentDiv">
+        <!-- Results Section -->
+        <div class="slds-col slds-size_1-of-1" >
+
+            <div style={resultsClass}>
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-1">
+                        <div class="slds-m-vertical_medium">
+                            <c-portal-search-results-list 
+                                filtering-object-parent={filteringObject}
+                                onfilterchanged={handlefilterchanged}
+                                menu-search>
+                            </c-portal-search-results-list>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div style={noResultsClass}>
+                <div class="slds-p-around_medium">
+                    <div class="slds-text-align_center">
+                        <img class="slds-p-vertical_medium" src={searchIconNoResultsUrl}/>
+                        <div class="text-large text-bold text-linkBlue">{label.CSP_Search_NoResults_text1}</div>
+                        <div class="text-xsmall text-gray">{label.CSP_Search_NoResults_text2} <span class="text-bold text-darkGray"> "{filteringObject.searchText}"</span></div>
+                        <div class="text-xsmall text-gray">{label.CSP_Search_NoResults_text3}</div>
+                    </div>
+                </div>
+
+                <div class="slds-p-around_medium slds-grid slds-wrap slds-grid_align-center">
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-4 slds-large-size_3-of-4">
+                        <c-portal-f-a-q-reach-us-banner></c-portal-f-a-q-reach-us-banner>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+
+    </div>
+    
+</template>

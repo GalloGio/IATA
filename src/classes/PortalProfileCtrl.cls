@@ -26,7 +26,9 @@ public with sharing class PortalProfileCtrl {
     PRIVATE STATIC FINAL STRING LABEL_BUSINESS_CONTACT = System.label.csp_Profile_BusinessContact;
     PRIVATE STATIC FINAL STRING LABEL_ACCESSIBILITY = System.label.csp_Profile_PortalAccessibility;
     PRIVATE STATIC FINAL STRING LABEL_PROFESSIONAL = System.label.csp_Profile_Professional;
+	PRIVATE STATIC FINAL STRING LABEL_IDCARD = System.label.CSP_Id_Card;
     
+	PRIVATE STATIC FINAL STRING LABEL_EN_IDCARD = 'ID Card';
     PRIVATE STATIC FINAL STRING LABEL_PRIVACYMANAGEMENTTITLE = System.Label.CSP_Profile_PrivacyManagement_Title;
     PRIVATE STATIC FINAL STRING LABEL_PRIVACYMANAGEMENTTEXT = System.label.CSP_Profile_PrivacyManagement_Text;
     PRIVATE STATIC FINAL STRING LABEL_PRIVACYMANAGEMENTLINK = System.label.CSP_Profile_PrivacyManagement_Link;
@@ -51,13 +53,37 @@ public with sharing class PortalProfileCtrl {
     PRIVATE STATIC FINAL STRING LABEL_PAYMENT_CONTACT = System.label.CSP_cpcc_BSP_CASS_Payment_Contact;
     PRIVATE STATIC FINAL STRING LABEL_AGENT_CREDIT_RISK = System.label.CSP_cpcc_Agent_Credit_Risk;
 
+    //WMO-627 - ACAMBAS: Begin
+    PRIVATE STATIC FINAL STRING LABEL_INVOICE_NUMBER = System.label.Invoice_number;
+    PRIVATE STATIC FINAL STRING LABEL_CURRENCY = System.label.ISSP_Currency;
+    PRIVATE STATIC FINAL STRING LABEL_INVOICE_STATUS = System.label.Invoice_Status;
+    PRIVATE STATIC FINAL STRING LABEL_INVOICE_AMOUNT = System.label.Invoice_Amount; //WMO-699 - ACAMBAS
+    PRIVATE STATIC FINAL STRING LABEL_FEE_CODES = System.label.Fee_Codes; //WMO-699 - ACAMBAS
+    PRIVATE STATIC FINAL STRING LABEL_BILLING_MEMBER_ACCOUNTING_CODE = System.label.Billing_Member_Accounting_Code;
+    PRIVATE STATIC FINAL STRING LABEL_BILLING_MEMBER_DESIGNATOR_CODE = System.label.Billing_Member_Designator_Code;
+    PRIVATE STATIC FINAL STRING LABEL_BILLING_MEMBER_NAME = System.label.Billing_Member_Name;
+    PRIVATE STATIC FINAL STRING LABEL_INVOICE_DATE = System.label.Invoice_Date;
+    //WMO-627 - ACAMBAS: End
+
     PRIVATE STATIC FINAL INTEGER CONTACT_BATCH= 15;
     PRIVATE STATIC FINAL INTEGER BRANCH_BATCH = 15;
+    PRIVATE STATIC FINAL INTEGER INVOICE_BATCH = 15; //WMO-627 - ACAMBAS
+
+    PUBLIC STATIC FINAL STRING IATA_INVOICE_TYPE = 'IATA OFFICE'; //WMO-627 - ACAMBAS
+
+	PRIVATE STATIC FINAL String CREDENTIAL_NAME = 'IdCard';
+	PRIVATE STATIC FINAL String FOLDER = 'a0W';
+
+	PUBLIC STATIC FINAL String CATEGORY_TIDS_AGENT = 'TIDS Agent';
+	PRIVATE STATIC FINAL Set<String> countrySet = new Set<String>{'AS', 'GU', 'MP', 'PW', 'UP', 'US'};
 
 public static final Id RECORDTYPE_AGENCY = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 public static final Id RECORDTYPE_AIRLINE_BR = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline_BR');
 public static final Id RECORDTYPE_AIRLINE_HQ = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
 public static final list<Id> VALID_ACCOUNT_RT = new list<String> {RECORDTYPE_AGENCY, RECORDTYPE_AIRLINE_BR, RECORDTYPE_AIRLINE_HQ};
+
+
+    public static Integer RESULTS_PER_PAGE = 10;
 
 	public class PortalProfileException extends Exception {}
 
@@ -94,124 +120,300 @@ public static Contact contactInfo = new Contact();
 		set;
 	}
 
-    /**
-    * Todo: Implement contact search.
-    * With infinite scrolling, search currently only filters records that are already on the client.
-    * In the future - filtering, sorting to call backend methods and return data from the DB.
-    */
-    @AuraEnabled
-    public static List<ContactWrapper> searchAccountContacts(String queryString, Integer offset){
-        List<Contact> searchResults = DAL_WithoutSharing.searchContactsByAccountId(myContact.AccountId,offset,CONTACT_BATCH,queryString);
-        List<ContactWrapper> wrappers = getContactWrappers(searchResults);
-        return wrappers;
-    }
+	@AuraEnabled
+	public static ApexMessageHandling approve(String contactList, String approvalStatus) {
+		List<ContactWrapper> filtersWrapper = (List<ContactWrapper>) JSON.deserialize(contactList, List<ContactWrapper>.class);
 
-    @AuraEnabled
-    public static List<ContactWrapper> getAccountContacts(){
-        return getAccountContacts(0);
-    }
-
-
-    @AuraEnabled
-    public static List<ContactWrapper> getAccountContacts(Integer offset){
-        List<Contact> contacts = DAL_WithoutSharing.getContactsByAccountId(myContact.AccountId,offset,CONTACT_BATCH);
-        List<ContactWrapper> wrappers = getContactWrappers(contacts);
-        return wrappers;
-    }
-
-    private static List<ContactWrapper> getContactWrappers(List<Contact> contacts){
-        List<ContactWrapper> wrappers = new List<ContactWrapper>();
-        List<Id> contactIds = new List<Id>();
-        List<User> users = new List<User>();
-        Map<Id,Contact> contactIdtoContact = new Map<Id,Contact>();
-
-        Map<Id,List<PortalServicesCtrl.ServiceWrapper>> contactToServices = new Map<Id,List<PortalServicesCtrl.ServiceWrapper>>();
-
-        if(!contacts.isEmpty()){
-            for(Contact c :contacts){
-                contactIds.add(c.Id);
-                contactIdtoContact.put(c.Id,c);
-            }
-
-            users = DAL_ISSP.getUsersByContactId(contactIds);
-
-            Map<Id,Id> contactToUser = new Map<Id,Id>();
-            for(User u :users){
-                contactToUser.put(u.ContactId,u.Id);
-            }
-
-            contactToServices = PortalServicesCtrl.getContactsAccessGrantedServices(contactToUser);
-
-            ContactWrapper wrapper;
-            for(User u :users){
-                wrapper = new ContactWrapper();
-                wrapper.contact = contactIdtoContact.get(u.ContactId);
-                wrapper.contactUser = u;
-                wrapper.services = contactToServices.get(u.ContactId);
-
-                wrappers.add(wrapper);
-            }
-
-            for(Contact c: contacts){
-                if(!contactToUser.containsKey(c.Id)){
-                    wrapper = new ContactWrapper();
-                    wrapper.contact = c;
-                    wrapper.services = new List<PortalServicesCtrl.ServiceWrapper>();
-                    wrappers.add(wrapper);
-                }
+        Set <Id> contactIds = new Set <Id>();
+        for (ContactWrapper thisContactRecord : filtersWrapper){
+            if (thisContactRecord.selected){
+                contactIds.add(thisContactRecord.contact.Id);
             }
         }
 
+		if (!contactIds.isEmpty()) {
+            return processMultiplePortalUserStatusChange(contactIds, approvalStatus, 'Active');
+		}
 
+        return new ApexMessageHandling(false, Label.ISSP_SelectOneContact);
+	}
 
-        return wrappers;
+	@AuraEnabled
+	public static ApexMessageHandling inactivate(String contactList, String reasonToInactive) {
+		List<ContactWrapper> filtersWrapper = (List<ContactWrapper>) JSON.deserialize(contactList, List<ContactWrapper>.class);
+		Set<Id> contactIds = new Set<Id>();
+		String productMessage;
+
+		for (contactWrapper thisContactRecord : filtersWrapper) {
+            if (thisContactRecord.selected) {
+                if (thisContactRecord.hasProducts) {
+                    if (String.isNotBlank(productMessage)) {
+                        productMessage = Label.ISSP_InactiveUser_Subscription_Portal;
+                    }
+                    productMessage = productMessage + '</br>' + thisContactRecord.contact.Name;
+                }
+
+            	contactIds.add(thisContactRecord.contact.Id);
+            }
+		}
+
+		if (String.isNotBlank(productMessage)) {
+			return new ApexMessageHandling(false, productMessage);
+		} else {
+			List <Portal_Application_Right__c> appList =
+				[SELECT Id, Application_Name__c, Contact__r.Name, Contact__c
+				FROM Portal_Application_Right__c
+				WHERE Right__c = 'Access Granted' AND Contact__c IN :contactIds
+				AND Portal_Application__r.Critical_Service__c = true
+				ORDER BY Contact__c];
+
+			//ACAMBAS - TIP-282 Start
+			List <Account_Contact_Role__c> primaryConList =
+				[SELECT Id, Contact__c, Contact__r.Name
+					FROM Account_Contact_Role__c
+					WHERE Contact__c IN :contactIds AND is_primary__c = true];
+			//ACAMBAS - TIP-282 End
+
+			if(!appList.isEmpty()) {
+				String message = Label.ISSP_UserInactivation_ServiceMsg_4;
+				String currentConId;
+
+				for (Portal_Application_Right__c thisAppRight : appList) {
+					if (String.isNotBlank(currentConId)) {
+						currentConId = thisAppRight.Contact__c;
+						message += '<br/> - ' + thisAppRight.Contact__r.Name;
+						message += ': ' + thisAppRight.Application_Name__c;
+					} else if (currentConId != thisAppRight.Contact__c) {
+						currentConId = thisAppRight.Contact__c;
+						message += '<br/> - ' + thisAppRight.Contact__r.Name;
+						message += ': ' + thisAppRight.Application_Name__c;
+					} else {
+						message += ', ' + thisAppRight.Application_Name__c;
+					}
+				}
+
+				message += Label.ISSP_UserInactivation_ServiceMsg_2;
+				message += Label.ISSP_UserInactivation_ServiceMsg_3;
+
+				return new ApexMessageHandling(false, message);
+
+			} else if(!primaryConList.isEmpty()) {
+				String message = Label.ISSP_UserInactivation_ServiceMsg_4;
+				String currentConId;
+
+				for (Account_Contact_Role__c thisPrimaryContact : primaryConList) {
+					if (String.isNotBlank(currentConId)) {
+						currentConId = thisPrimaryContact.Contact__c;
+						message += '<br/> - ' + thisPrimaryContact.Contact__r.Name;
+					}
+					else if (currentConId != thisPrimaryContact.Contact__c){
+						currentConId = thisPrimaryContact.Contact__c;
+						message += '<br/> - ' + thisPrimaryContact.Contact__r.Name;
+					}
+				}
+
+				message += ': ' + Label.ISSP_UserInactivation_ServiceMsg_5;
+
+				return new ApexMessageHandling(false, message);				
+			} else {
+				return processMultiplePortalUserStatusChange(contactIds, 'Deactivated', reasonToInactive);
+			}
+		}
     }
 
+	private static ApexMessageHandling processMultiplePortalUserStatusChange(Set<Id> contactIds, String action, String inactivationReason){
+        List <Contact> processContactList = [SELECT Id, Name, User_Portal_Status__c, Email FROM Contact WHERE Id IN :contactIds];
 
-    @AuraEnabled
-    public static List<Account> searchCompanyBranches(String queryString, Integer offset){
-        List<Account> branches = new List<Account>();
-        queryString =queryString+'%';
+        if (!processContactList.isEmpty()) {
+            for (Contact thisContact : processContactList) {
+                String currentStatus = processContactList[0].User_Portal_Status__c;
 
-        branches = [select id,TradeName__c,Name,BillingCity,Status__c,BillingCountry,IATA_ISO_Country__r.Name,IATACode__c,BillingAddress,Phone,Fax
-        from account
-        where (id =:myContact.AccountId or parentId=:myContact.AccountId or top_parent__c =:myContact.AccountId)
-        and (TradeName__c LIKE :queryString OR Name LIKE :queryString OR BillingCity LIKE :queryString OR IATACode__c LIKE :queryString)
-        and (Status__c NOT IN ('Terminated','Not accredited', 'No longer a customer', 'New application pending'))
-        ORDER BY Name ASC LIMIT:BRANCH_BATCH OFFSET :offset
-        ];
+                if (currentStatus == '' || currentStatus == null) {
+                    currentStatus = 'New user';
+                }
 
-        return branches;
+                String theAction = ISSP_PortalUserStatusChange.actionsMap.get(currentStatus).get(action);
+                Savepoint sPointContact = Database.setSavepoint();
+
+                String theResult = ISSP_PortalUserStatusChange.runAction(thisContact.Id, thisContact.Email, theAction, action, inactivationReason, null);
+
+                if (String.isNotBlank(theResult)) {
+                    Database.rollback(sPointContact);
+					return new ApexMessageHandling(false, theResult);
+                }
+            }
+        } else {
+            return new ApexMessageHandling(false, 'No Contact found.');
+        }
+		
+		return new ApexMessageHandling();
+    }        
+
+
+
+	private static List<ContactWrapper> getContactWrappers(List<Contact> contacts, Boolean getServiceDescription){
+		List<ContactWrapper> wrappers = new List<ContactWrapper>();
+
+		if(!contacts.isEmpty()) {
+			List<Id> contactIds = new List<Id>();
+			Map<Id,Contact> contactIdtoContact = new Map<Id,Contact>();
+			for(Contact c :contacts) {
+				contactIds.add(c.Id);
+				contactIdtoContact.put(c.Id,c);
+			}
+
+			List<User> users = new List<User>();
+			users = DAL_ISSP.getUsersByContactId(contactIds);
+
+			Map<Id,Id> contactToUser = new Map<Id,Id>();
+			for(User u :users) {
+				contactToUser.put(u.ContactId,u.Id);
+			}
+
+			Map<Id,List<PortalServicesCtrl.ServiceWrapper> > contactToServices = new Map<Id,List<PortalServicesCtrl.ServiceWrapper> >();
+			contactToServices = PortalServicesCtrl.getContactsAccessGrantedServices(contactToUser, false);
+
+			Set<Id> contactsWithIdCard = new Set<Id>();
+			for(Id_Card__c idcard : [SELECT Related_Contact__c FROM Id_Card__c WHERE Related_Contact__c IN :contactIds]) {
+				contactsWithIdCard.add(idcard.Related_Contact__c);
+			}
+			
+			Set<Id> contactsWithSubscription = new Set<Id>();
+			for(IEC_Subscription_History__c subs : [SELECT Related_Contact__c FROM IEC_Subscription_History__c WHERE Related_Contact__c IN :contactIds]) {
+				contactsWithSubscription.add(subs.Related_Contact__c);
+			}
+
+			ContactWrapper wrapper;
+			for(User u :users) {
+				wrapper = new ContactWrapper();
+				wrapper.contact = contactIdtoContact.get(u.ContactId);
+				wrapper.contactUser = u;
+				wrapper.services = contactToServices.get(u.ContactId);
+				wrapper.selected = false;
+				wrapper.hasIdCard = contactsWithIdCard.contains(u.ContactId);
+                wrapper.hasProducts = contactsWithIdCard.contains(u.ContactId);
+
+				wrappers.add(wrapper);
+			}
+
+			for(Contact c: contacts) {
+				if(!contactToUser.containsKey(c.Id)) {
+					wrapper = new ContactWrapper();
+					wrapper.contact = c;
+					wrapper.services = new List<PortalServicesCtrl.ServiceWrapper>();
+					wrapper.selected = false;
+					wrapper.hasIdCard = contactsWithIdCard.contains(c.Id);
+                    wrapper.hasProducts = contactsWithIdCard.contains(c.Id);
+                    
+					wrappers.add(wrapper);
+				}
+			}
+		}
+
+		return wrappers;
+	}
+
+    /* 
+    * Portal company profile -> account branches 
+    * Currently pagination is beeing done at the component side.
+    */
+    @AuraEnabled(cacheable=false)
+    public static CSP_Utils.PagedResult searchForCompanyBranches(String companybranchFilterWrapper, String requestedPage){
+        CompanyInformationBranchesFiltersWrapper filtersWrapper = (CompanyInformationBranchesFiltersWrapper) JSON.deserialize(companybranchFilterWrapper, CompanyInformationBranchesFiltersWrapper.class);
+        Integer requestedPageAux = integer.valueof(requestedPage);
+
+        String baseQuery = 'SELECT Id,TradeName__c,Name,BillingCity,Status__c,BillingCountry,'+
+                           'IATA_ISO_Country__r.Name,IATACode__c,BillingAddress,Phone,Fax ' + 
+                           'FROM Account ';
+        /*String baseQueryCount = 'SELECT COUNT() ' + 
+                                'FROM Account ';*/
+        String conditionsQuery = 'WHERE (Id = \'' + myContact.AccountId +'\' OR ParentId = \'' + myContact.AccountId + '\' OR Top_Parent__c = \'' + myContact.AccountId +'\' ) ' +
+                                 'AND (Status__c NOT IN (\'Terminated\',\'Not accredited\', \'No longer a customer\', \'New application pending\')) ';
+
+        
+
+        if(filtersWrapper != null) {
+            // evaluate filter if they exist 
+            if(!String.isBlank(filtersWrapper.searchInput)){
+                String searchText = '%' + String.escapeSingleQuotes(filtersWrapper.searchInput) + '%';
+                conditionsQuery += ' AND (TradeName__c LIKE \'' + searchText + '\' OR Name LIKE \'' + searchText + '\'' +
+                             ' OR BillingCity LIKE \''+ searchText + '\' OR IATACode__c LIKE \'' + searchText + '\' ) ';
+            }
+        }
+
+        String orderQuery = ''; 
+        if(requestedPageAux == 0){ //just for the first time
+            orderQuery = ' ORDER BY ' + filtersWrapper.sortField + ' ' + filtersWrapper.sortDirection + ' ';
+        }
+
+        //pagination 
+        /*Integer offset = requestedPageAux * PortalProfileCtrl.RESULTS_PER_PAGE;
+        String offsetQuery = ' LIMIT ' + PortalProfileCtrl.RESULTS_PER_PAGE + ' OFFSET ' + offset + ' ';*/
+
+        CSP_Utils.PagedResult pageResult = new CSP_Utils.PagedResult();
+	    pageResult.records = Database.query(baseQuery + conditionsQuery + orderQuery /*+ offsetQuery*/);
+        /*if(requestedPageAux == 0){
+            //first page -> get total count
+            pageResult.totalItemCount = Database.countQuery(baseQueryCount + conditionsQuery);
+        }*/
+
+        return pageResult;
     }
 
-    @AuraEnabled
-    public static List<Account> getCompanyBranches(){
-        return getCompanyBranches(0);
-    }
-
-    @AuraEnabled
-    public static List<Account> getCompanyBranches(Integer offset){
-        List<Account> branches = new List<Account>();
-
-        branches = [select id,TradeName__c,Name,BillingCity,Status__c,BillingCountry,IATA_ISO_Country__r.Name,IATACode__c,BillingAddress,Phone,Fax
-        from account where (id =:myContact.AccountId or parentId=:myContact.AccountId or top_parent__c =:myContact.AccountId)
-        and (Status__c NOT IN ('Terminated','Not accredited', 'No longer a customer', 'New application pending'))
-        ORDER BY Name ASC LIMIT:BRANCH_BATCH OFFSET :offset
-        ];
-
-        return branches;
-    }
-
-    public class ContactWrapper{
+    // used to store filtering for company profile account branches 
+    public class CompanyInformationBranchesFiltersWrapper {
         @AuraEnabled
-        public Contact contact;
-
+		public String searchInput {get; set;}
         @AuraEnabled
-        public User contactUser;
-
+        public String firstLetter {get; set;}
         @AuraEnabled
-        public List<PortalServicesCtrl.ServiceWrapper> services;
+		public String sortField {get; set;}
+        @AuraEnabled
+		public String sortDirection {get; set;}
     }
+
+    /* 
+    * Portal company profile -> account contacts 
+    */
+    @AuraEnabled(cacheable=false)
+    public static CSP_Utils.PagedResult searchForCompanyContacts(String companybranchFilterWrapper, String requestedPage){
+        Integer requestedPageAux = Integer.valueof(requestedPage);
+
+        CSP_Utils.PagedResult pagedResultAux = DAL_WithoutSharing.searchForCompanyContacts(companybranchFilterWrapper, requestedPageAux, PortalProfileCtrl.RESULTS_PER_PAGE , myContact.AccountId);
+        
+        CSP_Utils.PagedResult pagedResultToReturn = new CSP_Utils.PagedResult();
+        pagedResultToReturn.recordsString = JSON.serialize(getContactWrappers(pagedResultAux.records, false));
+        pagedResultToReturn.totalItemCount = pagedResultAux.totalItemCount;
+
+        return pagedResultToReturn;
+    }
+
+    // used to store filtering for company profile account contacts 
+    public class CompanyInformationContactsFiltersWrapper {
+        @AuraEnabled
+		public String searchInput {get; set;}
+        @AuraEnabled
+        public String firstLetter {get; set;}
+        @AuraEnabled
+		public String sortField {get; set;}
+        @AuraEnabled
+		public String sortDirection {get; set;}
+    }
+
+	public class ContactWrapper {
+		@AuraEnabled
+		public Contact contact;
+		@AuraEnabled
+		public User contactUser;
+		@AuraEnabled
+		public List<PortalServicesCtrl.ServiceWrapper> services;
+		@AuraEnabled
+		public Boolean hasIdCard;
+		@AuraEnabled
+		public Boolean hasProducts;
+		@AuraEnabled
+		public Boolean selected;		
+	}
 
     public class CardWrapper{
 
@@ -224,12 +426,26 @@ public static Contact contactInfo = new Contact();
         @AuraEnabled
         public Boolean isEditable;
 
+		@AuraEnabled
+		public String idCardUrl;
+		
+		@AuraEnabled
+		public String cardKey;
+
         public CardWrapper(String cardTitleAux, List<FieldWrapper> lstFieldWrapperAux, Boolean isEditableAux){
             this.cardTitle = cardTitleAux;
             this.lstFieldWrapper = lstFieldWrapperAux;
             this.isEditable = isEditableAux;
+			this.idCardUrl = '';
         }
 
+		public CardWrapper(String cardTitleAux, List<FieldWrapper> lstFieldWrapperAux, Boolean isEditableAux, String cardKeyAux, String idCardUrl){
+			this.cardTitle = cardTitleAux;
+			this.lstFieldWrapper = lstFieldWrapperAux;
+			this.isEditable = isEditableAux;
+			this.cardKey = cardKeyAux;
+			this.idCardUrl = idCardUrl;
+		}
 
     }
 
@@ -259,11 +475,6 @@ public static Contact contactInfo = new Contact();
         fw.isRequired = true;
         lstfw2.add(fw);
         lstfw2.add(new FieldWrapper('MobilePhone',true,true));
-        lstfw2.add(new FieldWrapper('MailingCountry',true,true));
-        lstfw2.add(new FieldWrapper('MailingCity',true,true));
-        lstfw2.add(new FieldWrapper('MailingState',true,true));
-        lstfw2.add(new FieldWrapper('MailingStreet',true,true));
-        lstfw2.add(new FieldWrapper('MailingPostalCode',true,true));
         lstCardWrapper.add(new CardWrapper(LABEL_PERSONAL_CONTACT, lstfw2, true));
 
         //ACCESSIBILITY CARD
@@ -274,13 +485,39 @@ public static Contact contactInfo = new Contact();
 
         //PROFESSIONAL CARD
         List<FieldWrapper> lstfw4 = new List<FieldWrapper>();
-        fw = new FieldWrapper('ID_CARD',false,true,true);
-        fw.isIdCardInfo = true;
-        lstfw4.add(fw);
         fw = new FieldWrapper('Membership_Function__c',false,true,true);
         fw.isJobFunction = true;
         lstfw4.add(fw);
         lstCardWrapper.add(new CardWrapper(LABEL_PROFESSIONAL, lstfw4, true));
+
+		//ID CARD
+		if(contactInfo.ID_Card_Holder__c == true){
+			List<FieldWrapper> lstfw6 = new List<FieldWrapper>();
+			fw = new FieldWrapper('ID_CARD',false,true,true);
+			fw.isIdCardInfo = true;
+			lstfw6.add(fw);
+
+			//get redirection url for id card contact
+			String redirectionUrl = '';
+			ISSP_CS__c cs;
+
+			if(contactInfo.Account.Sector__c == 'Travel Agent'){
+				if(countrySet.contains(contactInfo.Account.IATA_ISO_Country__r.ISO_Code__c) &&
+						(contactInfo.Account.Category__c == AMS_Utils.IATAN_PASSENGER_SALES_AGENT_USA_ONLY || contactInfo.Account.Category__c == AMS_Utils.TRAVEL_SERVICE_INTERMEDIATES_TSI_USA_ONLY ||
+								contactInfo.Account.Category__c == AMS_Utils.CATEGORY_PASSENGER_SALES_AGENT)){
+					cs = ISSP_CS__c.getInstance('US Cardholders URL');
+				}
+				else{
+					if(contactInfo.Account.Category__c == AMS_Utils.CATEGORY_PASSENGER_SALES_AGENT || contactInfo.Account.Category__c ==  CATEGORY_TIDS_AGENT||
+							contactInfo.Account.Category__c == AMS_Utils.CATEGORY_DOMESTIC_AGENT){
+						cs = ISSP_CS__c.getInstance('Non US Cardholders URL');
+					}
+				}
+			}
+
+			if(cs != null) redirectionUrl = cs.value__c;
+			lstCardWrapper.add(new CardWrapper(LABEL_IDCARD, lstfw6, false, LABEL_EN_IDCARD, redirectionUrl));
+		}
 
         //PRIVACY CARD
         List<FieldWrapper> lstfw5 = new List<FieldWrapper>();
@@ -660,7 +897,7 @@ public static Contact contactInfo = new Contact();
 
         wrapperMap.put(rowsFields,new List<FieldWrapper>());
         for(String fieldName : toRow){
-            wrapperMap.get(rowsFields).add(new FieldWrapper(fieldName,true,true,'underLinded inactive cursorPointer',fieldLabels.get(fieldName)));
+            wrapperMap.get(rowsFields).add(new FieldWrapper(fieldName,true,true,'underLined inactive cursorPointer',fieldLabels.get(fieldName)));
         }
 
         wrapperMap.put(viewFields,new List<FieldWrapper>());
@@ -785,18 +1022,18 @@ public static Contact contactInfo = new Contact();
         wrapperMap.get(sectionBranchContact).add(new FieldWrapper('BillingCountry',false,true));
 
         for(String fieldName : toRow){
-            wrapperMap.get(rowsFields).add(new FieldWrapper(fieldName,true,true,'underLinded inactive cursorPointer',fieldLabels.get(fieldName)));
+            wrapperMap.get(rowsFields).add(new FieldWrapper(fieldName,true,true,'underLined inactive cursorPointer',fieldLabels.get(fieldName)));
         }
 
 
         wrapperMap.put(viewFields,new List<FieldWrapper>());
         for(String fieldName : toView){
-            wrapperMap.get(viewFields).add(new FieldWrapper(fieldName,true,true,'underLinded inactive cursorPointer',fieldLabels.get(fieldName)));
+            wrapperMap.get(viewFields).add(new FieldWrapper(fieldName,true,true,'underLined inactive cursorPointer',fieldLabels.get(fieldName)));
         }
 
         wrapperMap.put(editFields,new List<FieldWrapper>());
         for(String fieldName : toEdit){
-            wrapperMap.get(editFields).add(new FieldWrapper(fieldName,true,true,'underLinded inactive cursorPointer',fieldLabels.get(fieldName)));
+            wrapperMap.get(editFields).add(new FieldWrapper(fieldName,true,true,'underLined inactive cursorPointer',fieldLabels.get(fieldName)));
         }
 
         return wrapperMap;
@@ -930,4 +1167,191 @@ public static Contact contactInfo = new Contact();
         }
     }
 
+	@AuraEnabled
+	public static String getPhotoFromAPI (String photoName) {
+		AmazonCredentials credential = AmazonCredentials.getCredentials(CREDENTIAL_NAME);
+
+		Long timestamp  = System.now().getTime()/1000 + 300;
+		String filename = '/' + credential.Bucket + '/' + FOLDER + '/' + photoName;
+
+		String canonical = 'GET\n\n\n' + timestamp + '\n' + filename;
+		Blob bsig = Crypto.generateMac('HmacSHA1', Blob.valueOf(canonical), Blob.valueOf(credential.Secret));
+		String signature = EncodingUtil.base64Encode(bsig);
+
+		return credential.EndpointBaseURL + filename.removeStart('/') + '?AWSAccessKeyId=' + credential.AWSAccessKeyId + '&Expires=' + timestamp + '&Signature=' + EncodingUtil.urlEncode(signature,'UTF-8');
+	}
+
+    //returns a JSON String with the ProfileWrapper list.
+    @AuraEnabled (cacheable=false)
+    public static CSP_Utils.PagedResult getFilteredProfileResultsPage(String profileFilterWrapper){
+        
+        CSP_Utils.PagedResult filteredProfiles = DAL_WithoutSharing.getSearchProfiles(profileFilterWrapper, myContact, '');
+        
+        return filteredProfiles;
+    }
+
+    //returns a JSON String with the ProfileWrapper list.
+    @AuraEnabled (cacheable=false)
+    public static CSP_Utils.PagedResult getFilteredProfileResultsPageWithLimit(String profileFilterWrapper, String limitQuery){
+        
+        CSP_Utils.PagedResult filteredProfiles = DAL_WithoutSharing.getSearchProfiles(profileFilterWrapper, myContact, limitQuery);
+        
+        return filteredProfiles;
+    }
+
+    public class ProfileWrapper{
+
+        @AuraEnabled public String profileId;
+        
+        @AuraEnabled public String profileName;
+
+        @AuraEnabled public String profilePortalStatus;
+
+        @AuraEnabled public String profileCountry;
+
+        @AuraEnabled public String profileType;
+        
+        @AuraEnabled public String profileUrl;
+
+        public ProfileWrapper(String profileIdAux, String profileNameAux, String profilePortalStatusAux, String profileCountryAux, String profileTypeAux){
+            this.profileId = profileIdAux;
+            this.profileName = profileNameAux;
+
+            if(profilePortalStatusAux == 'Approved Admin')
+                this.profilePortalStatus = System.Label.ISSP_Administrator;
+            else if (profilePortalStatusAux == 'Approved User')
+                this.profilePortalStatus = System.Label.ISSP_Active;
+            else
+                this.profilePortalStatus = profilePortalStatusAux;
+
+            this.profileCountry = profileCountryAux;
+
+            if(profileTypeAux == 'Account'){
+                this.profileType = System.Label.Company; //instead of Account set it "Company"
+                this.profileUrl = profileIdAux == myContact.AccountId ? System.Label.CSP_PortalPath + 'company-profile' : System.Label.CSP_PortalPath + 'company-profile?account='+profileIdAux;
+            }
+            else{
+                this.profileType = profileTypeAux; //set it to "Contact"
+                this.profileUrl = profileIdAux == myContact.Id ? System.Label.CSP_PortalPath + 'my-profile' : System.Label.CSP_PortalPath + 'company-profile?tab=contact&contact='+profileIdAux;
+            }
+        }
+    }
+
+    @AuraEnabled(cacheable=true)
+    public static List<CSP_Utils.PickListWrapper> typeOfProfilePortalCustomPicklist(){
+        List<CSP_Utils.PickListWrapper> lstPickValues = new List<CSP_Utils.PickListWrapper>();
+        lstPickValues.add(new CSP_Utils.PickListWrapper('Account',System.Label.Company ));
+        lstPickValues.add(new CSP_Utils.PickListWrapper('Contact',System.Label.Button_Contact ));
+
+        return lstPickValues;
+    }
+
+    @AuraEnabled(cacheable=true)
+    public static List<CSP_Utils.PickListWrapper> userPortalStatusCustomPicklist(){
+        List<CSP_Utils.PickListWrapper> lstPickValues = new List<CSP_Utils.PickListWrapper>();
+        lstPickValues.add(new CSP_Utils.PickListWrapper('Approved Admin', System.Label.ISSP_Contacts_PortalAdmins));
+        lstPickValues.add(new CSP_Utils.PickListWrapper('Approved User', System.Label.ISSP_Contacts_PortalUsers));
+        lstPickValues.add(new CSP_Utils.PickListWrapper('Pending Approval', System.Label.ISSP_Contacts_PendingApproval));
+
+        return lstPickValues;
+    }
+
+    //WMO-627 - ACAMBAS: Begin
+
+    /** Outstanding Invoices section */
+
+    @AuraEnabled
+    public static Map<String,List<FieldWrapper>> getInvoicesListFields(String invoiceType) {
+
+        String rowsFields = 'ROWS'; //Fields to display in columns of a closed accordion/record list
+        String viewFields = 'VIEW'; //Fields to display in open accordion section/record detail
+        String editFields = 'EDITS'; //Fields to display/edit in record edit modal dialog
+
+        List<String> toRow;
+
+        if(invoiceType == IATA_INVOICE_TYPE && myContact.Account.RecordType.DeveloperName == 'IATA_Agency') {
+            toRow = new List<String>{'Invoice_Number__c', 'Invoice_Date__c', 'Billing_Currency__c', 'Total_Amount__c', 'Fee_Codes_Display__c', 'Invoice_Status__c'};
+        }
+        else {
+            toRow = new List<String>{'Invoice_Number__c', 'Invoice_Date__c', 'Billing_Currency__c', 'Total_Amount__c', 'Fee_Codes_Display__c', 'Billing_Member_Name__c', 'Invoice_Status__c'};   
+        }
+
+        Map<String,String> fieldLabels = new Map<String,String>();
+
+        fieldLabels.put('Invoice_Number__c', LABEL_INVOICE_NUMBER);
+        fieldLabels.put('Invoice_Status__c', LABEL_INVOICE_STATUS);
+        fieldLabels.put('Total_Amount__c', LABEL_INVOICE_AMOUNT);
+        fieldLabels.put('Billing_Currency__c', LABEL_CURRENCY);
+        fieldLabels.put('Billing_Member_Accounting_Code__c', LABEL_BILLING_MEMBER_ACCOUNTING_CODE);
+        //fieldLabels.put('Billing_Member_Designator_Code__c', LABEL_BILLING_MEMBER_DESIGNATOR_CODE);
+        fieldLabels.put('Billing_Member_Name__c', LABEL_BILLING_MEMBER_NAME);
+        fieldLabels.put('Invoice_Date__c', LABEL_INVOICE_DATE);
+        fieldLabels.put('Fee_Codes_Display__c', LABEL_FEE_CODES);
+
+        Map<String,List<FieldWrapper>> wrapperMap = new Map<String,List<FieldWrapper>>();
+
+        wrapperMap.put(rowsFields,new List<FieldWrapper>());
+        for(String fieldName : toRow){
+            wrapperMap.get(rowsFields).add(new FieldWrapper(fieldName,true,true,'underLinded inactive cursorPointer',fieldLabels.get(fieldName)));
+        }
+
+        wrapperMap.put(viewFields,new List<FieldWrapper>());
+        wrapperMap.put(editFields,new List<FieldWrapper>());
+
+        //VIEW
+        wrapperMap.get(viewFields).add(new FieldWrapper('Bank_Name__c',true,true,true));
+        wrapperMap.get(viewFields).add(new FieldWrapper('IBAN__c',true,true));
+        wrapperMap.get(viewFields).add(new FieldWrapper('SWIFT__c',true,true));
+        wrapperMap.get(viewFields).add(new FieldWrapper('Bank_Code__c',false,true,true));
+        wrapperMap.get(viewFields).add(new FieldWrapper('Branch_Code__c',false,true,true));
+        wrapperMap.get(viewFields).add(new FieldWrapper('Bank_Account_No__c',false,true,true));
+        wrapperMap.get(viewFields).add(new FieldWrapper('Bank_Account_Name__c',false,true,true));
+
+        return wrapperMap;
+    }
+
+    @AuraEnabled
+    public static List<Customer_Invoice__c> getCustomerInvoices() {
+        return getCustomerInvoices(0, IATA_INVOICE_TYPE);
+    }
+
+    @AuraEnabled
+    public static List<Customer_Invoice__c> getCustomerInvoices(Integer offset, String type) {
+        List<String> statusList = new List<String>();
+        for(Customer_Invoices_Visible_Status__mdt visibleStatus : [SELECT MasterLabel FROM Customer_Invoices_Visible_Status__mdt]) {
+            statusList.add(visibleStatus.MasterLabel);
+        }
+
+        List<Customer_Invoice__c> invoices = 
+                [SELECT Id, Invoice_Number__c, Invoice_Status__c, Total_Amount__c, Billing_Currency__c, Fee_Codes_Display__c,
+                        Billing_Member_Designator_Code__c, Billing_Member_Name__c, Invoice_Date__c,
+                        Bank_Name__c, IBAN__c, SWIFT__c, Bank_Code__c, Branch_Code__c, Bank_Account_No__c, Bank_Account_Name__c
+                 FROM Customer_Invoice__c 
+                 WHERE AccountId__c = :myContact.AccountId AND Billing_Member_IS_Sub_Status__c = :type AND Invoice_Status__c IN :statusList
+                 ORDER BY Invoice_Date__c ASC LIMIT:INVOICE_BATCH OFFSET :offset
+                ];
+
+        return invoices;
+    }
+
+    //WMO-627 - ACAMBAS: End
+
+    //WMO-699 - ACAMBAS: Begin
+    @AuraEnabled
+    public static Boolean isCountryEligibleForPaymentLink() {
+        String isoCountry = myContact.Account.IATA_ISO_Country__r.ISO_Code__c;
+
+        List<String> eligibleCountryList = new List<String>();
+        for(Customer_Invoice_Payment_Link__mdt eligibleCountry : [SELECT DeveloperName FROM Customer_Invoice_Payment_Link__mdt]) {
+            eligibleCountryList.add(eligibleCountry.DeveloperName);
+        }
+
+        if(eligibleCountryList.contains(isoCountry)) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    //WMO-699 - ACAMBAS: End
 }

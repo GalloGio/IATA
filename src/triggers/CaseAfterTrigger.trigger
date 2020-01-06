@@ -537,7 +537,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 								if (!lstNotificationTemplate.isEmpty()){
 									system.debug('sending notification to: ' + contactNotificationList);
 									Notification_template__c notificationTemplate = lstNotificationTemplate[0];
-									ISSP_NotificationUtilities.sendNotification(contactNotificationList, notificationTemplate, null, null);
+									ISSP_NotificationUtilities.sendNotification(contactNotificationList, notificationTemplate, null, null, null);
 								}
 							}
 						}
@@ -1010,6 +1010,25 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 		/*ANG Triggers*/
 
 		ANG_TrackingHistory.trackHistory(Trigger.newMap, Trigger.oldMap, 'Case', 'ANG_Case_Tracking_History__c'); //ACAMBAS - WMO-390
+
+		/*Copy last Casecoment in  child case */
+		List<Case> queueCases = new List<Case>();
+		for (Case c : Trigger.new) {
+			if(Trigger.oldMap.get(c.Id).E2CP__Most_Recent_Public_Comment__c != c.E2CP__Most_Recent_Public_Comment__c && c.OwnerId.getSObjectType().getDescribe().getName() == 'Group'){
+				queueCases.add(c);
+			}
+		}
+		if( queueCases.size() > 0){
+			List<Id> casesWithNewComments = new List<Id>();
+			Map<Id,Group> queues = new Map<Id,Group>([SELECT Id FROM Group WHERE DeveloperName  IN ('GCS_iiNet','iiNet_Business_Team') AND Type = 'Queue']);
+			for (Case c : queueCases) {
+				if(queues.containsKey(c.OwnerId)){
+					casesWithNewComments.add(c.Id);
+				}
+			}
+			AutomateCaseCommentToChildCase.copyCommentToChilds(casesWithNewComments);
+		}
+		/*End Copy last Casecoment in  child case*/
 
 	/*Trigger.isUpdate*/
 	}
