@@ -6477,18 +6477,6 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
             </valueSetDefinition>
         </valueSet>
     </fields>
-	<fields>
-        <fullName>Type_of_Operation__c</fullName>
-        <externalId>false</externalId>
-        <formula>TEXT(SAAM_Case__r.Account.Sector__c)</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Type of Operation</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
     <fields>
         <fullName>VAT_Exemption__c</fullName>
         <description>Part of Section 3 of the PASS Online Accreditation Form for the Head Office Accreditation</description>
@@ -6514,18 +6502,6 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
                 </value>
             </valueSetDefinition>
         </valueSet>
-    </fields>
-    <fields>
-        <fullName>VAT_Number_2__c</fullName>
-        <description>Used when importing account data from AIMS</description>
-        <externalId>false</externalId>
-        <label>VAT Number 2</label>
-        <length>30</length>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Type_of_Change__c</fullName>
