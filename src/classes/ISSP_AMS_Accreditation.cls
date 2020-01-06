@@ -4306,7 +4306,7 @@ public without sharing class ISSP_AMS_Accreditation {
 
 	public void fetchCase(String vCaseId) {
 		List<Case> newCases = [SELECT Id, CaseNumber, Reason1__c, CaseArea__c, Status, BSPCountry__c, Country_concerned_by_the_query__c, Contact.Name, Account.Id, Description, Subject, Account_Concerned__c, Account_Concerned__r.Top_Parent__c, Account.Name,
-									Account.Billing_Address_formated__c, Verification__c, IFAP_Country_ISO__c, Case_Language__c, Region__c, Applicable_to_Which_Version_s__c
+									 Account.Billing_Address_formated__c, Verification__c, IFAP_Country_ISO__c, Case_Language__c, Region__c, Applicable_to_Which_Version_s__c
 								FROM Case
 								WHERE Id = :vCaseId];
 		if (!newCases.isEmpty()) {
@@ -4621,7 +4621,7 @@ public without sharing class ISSP_AMS_Accreditation {
 		Map<String, Schema.SObjectField> objectFields = Schema.getGlobalDescribe().get('AMS_Facility__c').getDescribe().fields.getMap();
 
 		for(String field : objectFields.keySet()) {
-			query += field + ', ';
+			 query += field + ', ';
 		}
 
 		query += 'RecordType.Name, RecordType.DeveloperName ';
