@@ -16,7 +16,7 @@ public class TIP_BatchActivateRecordsByDate_test {
 
 		//contact for the account contact role. Required
 		contact = new Contact(FirstName = 'First Name', LastName = 'Last Name', Salutation = 'Mr.',
-							  Title = 'title', Email = 'abcde@test.org', Phone = '123456789');
+								Title = 'title', Email = 'abcde@test.org', Phone = '123456789');
 		insert contact;
 
 		//--------------CREATE ACCOUNTS--------------------
@@ -223,7 +223,7 @@ public class TIP_BatchActivateRecordsByDate_test {
 
 		Map<string, integer> accountRolesCount = new Map<string, integer>();
 		List<Account_Role__c> accountRoles = [SELECT Id, Status__c FROM Account_Role__c	WHERE Status__c = :TIP_UTils.PARTNER_STATUS_ACTIVE
-											  OR  Status__c = :TIP_UTils.PARTNER_STATUS_INACTIVE OR  Status__c = :TIP_UTils.PARTNER_STATUS_IN_PROGRESS];
+												OR  Status__c = :TIP_UTils.PARTNER_STATUS_INACTIVE OR  Status__c = :TIP_UTils.PARTNER_STATUS_IN_PROGRESS];
 
 		for(Account_Role__c ar: accountRoles){
 			integer roleCount = accountRolesCount.get(ar.Status__c);
@@ -259,7 +259,7 @@ public class TIP_BatchActivateRecordsByDate_test {
 
 		Map<string, integer> binRangeCount = new Map<string, integer>();
 		List<TIP_BIN_Range__c> binRange = [SELECT Id, TIP_Status__c FROM TIP_BIN_Range__c WHERE TIP_Status__c = :TIP_UTils.BIN_RANGE_STATUS_ACTIVE OR
-										   TIP_Status__c = :TIP_UTils.BIN_RANGE_STATUS_INACTIVE OR TIP_Status__c = :TIP_UTils.BIN_RANGE_STATUS_IN_PROGRESS];
+											 TIP_Status__c = :TIP_UTils.BIN_RANGE_STATUS_INACTIVE OR TIP_Status__c = :TIP_UTils.BIN_RANGE_STATUS_IN_PROGRESS];
 
 		for(TIP_BIN_Range__c br: binRange){
 			integer brCount = binRangeCount.get(br.TIP_Status__c);
@@ -276,9 +276,9 @@ public class TIP_BatchActivateRecordsByDate_test {
 
 		Map<string, integer> provProdCountryCount = new Map<string, integer>();
 		List<TIP_Pay_Prov_Prod_Country_Config__c> pppcList = [SELECT Id, TIP_Status__c FROM TIP_Pay_Prov_Prod_Country_Config__c
-															  WHERE TIP_Status__c = :TIP_UTils.PARTNER_PRODUCT_CONFIG_STATUS_ACTIVE
-															  OR TIP_Status__c = :TIP_UTils.PARTNER_PRODUCT_CONFIG_STATUS_INACTIVE
-															  OR TIP_Status__c = :TIP_UTils.PARTNER_PRODUCT_CONFIG_STATUS_IN_PROGRESS];
+																WHERE TIP_Status__c = :TIP_UTils.PARTNER_PRODUCT_CONFIG_STATUS_ACTIVE
+																OR TIP_Status__c = :TIP_UTils.PARTNER_PRODUCT_CONFIG_STATUS_INACTIVE
+																OR TIP_Status__c = :TIP_UTils.PARTNER_PRODUCT_CONFIG_STATUS_IN_PROGRESS];
 
 		for(TIP_Pay_Prov_Prod_Country_Config__c pppc: pppcList){
 			integer pppcCount = provProdCountryCount.get(pppc.TIP_Status__c);

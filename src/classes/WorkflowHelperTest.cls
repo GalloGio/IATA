@@ -2,7 +2,7 @@
 private class WorkflowHelperTest {
 
 	@testSetup static void setup(){
-		
+
 	}
 
 	@isTest static void  AccountUpdateIndustryTest(){
@@ -43,7 +43,7 @@ private class WorkflowHelperTest {
 		fieldsOfObject.put('Is_AIMS_Account__c',true);
 
 		Account acct2 = ANG_EntityCreator.createAccount(accountRT, ctry.Id, fieldsOfObject);
-		
+
 		insert new List<Account>{acct,acct2};
 
 		Test.stopTest();
@@ -103,7 +103,7 @@ private class WorkflowHelperTest {
 		insert acctAE;
 
 		Test.stopTest();
-	
+
 		acctAE = [Select Id, IATA_Member__c from Account where name = 'NewGenAgencyAE'];
 
 		System.assertEquals(true,acctAE.IATA_Member__c);
@@ -165,7 +165,7 @@ private class WorkflowHelperTest {
 		insert acctAE;
 
 		Test.stopTest();
-	
+
 		acctAE = [Select Id, IATA_Member__c from Account where name = 'NewGenAgencyAE'];
 
 		System.assertEquals(true,acctAE.IATA_Member__c);
@@ -220,7 +220,7 @@ private class WorkflowHelperTest {
 		fieldsOfObject.put('Is_AIMS_Account__c',true);
 
 		Account acct2 = ANG_EntityCreator.createAccount(accountRT, ctry.Id, fieldsOfObject);
-		
+
 
 		// Create a unique UserName
 		  String uniqueUserName = 'standarduser' + DateTime.now().getTime() + '@testorg.com';
@@ -247,7 +247,7 @@ private class WorkflowHelperTest {
 
 
 		Test.stopTest();
-	
+
 		acct =  [Select Id, Last_Modified_by_Source__c from Account where name = 'NewGenAgency'];
 		acct2 = [Select Id, Last_Modified_by_Source__c from Account where name = 'NewGenAgency2'];
 
@@ -263,7 +263,7 @@ private class WorkflowHelperTest {
 		}
 
 		acct =  [Select Id, Last_Modified_by_Source__c from Account where name = 'NewGenAgency'];
-		
+
 		date1 = date.newinstance(System.today().year(), System.today().month(), System.today().day());
 		date2 = date.newinstance(acct.Last_Modified_by_Source__c.year(), acct.Last_Modified_by_Source__c.month(), acct.Last_Modified_by_Source__c.day());
 
@@ -306,7 +306,7 @@ private class WorkflowHelperTest {
 
 		System.assertEquals('Travel Agent',acct.sector__c);
 		System.assertEquals('IATAN Passenger Agent',acct.Category__c);
-		
+
 	}
 
 	@isTest static void  updateAIMSAccountRecordtypeTest(){
@@ -345,8 +345,8 @@ private class WorkflowHelperTest {
 		Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
 		System.assertEquals(accountRT,acct.recordTypeId);
-		
-	}    
+
+	}
 
 	@isTest static void  resetAccountIdCardDiscountTest(){
 
@@ -385,9 +385,9 @@ private class WorkflowHelperTest {
 		acct =  [Select Id, ID_Card_Key_Account_Discount__c from Account where name = 'NewGenAgency'];
 
 		System.assertEquals(0,acct.ID_Card_Key_Account_Discount__c);
-		
-	}    
-	
+
+	}
+
 	@isTest static void resetAccountTypeTest(){
 
 		Test.startTest();
@@ -513,7 +513,7 @@ private class WorkflowHelperTest {
 		fieldsOfObject.put('Industry','Travel Agent');
 		fieldsOfObject.put('Site','Site');
 		fieldsOfObject.put('Sector__c','Travel Agent');
-		
+
 		Account acct = ANG_EntityCreator.createAccount(airLineRT, ctry.Id, fieldsOfObject);
 
 		fieldsOfObject = new Map<String,Object>();
@@ -530,7 +530,7 @@ private class WorkflowHelperTest {
 		fieldsOfObject.put('Sector__c','Airline');
 
 		Account acct2 = ANG_EntityCreator.createAccount(standardRT, ctry.Id, fieldsOfObject);
-			
+
 		insert new List<Account>{acct,acct2};
 
 		Test.stopTest();
@@ -634,22 +634,22 @@ private class WorkflowHelperTest {
 		insert acctAE;
 
 		Test.stopTest();
-	
+
 		acctAE = [Select Id, TradeName__c, name from Account where location_type__c = 'AE'];
 
 		System.assertEquals('tradenameParent',acctAE.TradeName__c);
 		System.assertEquals('tradenameParent',acctAE.name);
 
-		acct.TradeName__c = 'NewTradeNameParent';        
+		acct.TradeName__c = 'NewTradeNameParent';
 		acctAE.TradeName__c = 'XPTO';
 
 
-        Profile p = [SELECT Id FROM Profile WHERE Name='Account management team'];
-        
-        User u = [Select id from User where ProfileId = :p.Id AND isActive = true LIMIT 1];
+		Profile p = [SELECT Id FROM Profile WHERE Name='Account management team'];
+
+		User u = [Select id from User where ProfileId = :p.Id AND isActive = true LIMIT 1];
 
 		System.runAs(u) {
-			
+
 			update new List<Account>{acct,acctAE};
 		}
 
@@ -699,7 +699,7 @@ private class WorkflowHelperTest {
 		update acct;
 
 		acct =   [Select Id,DDS_Last_Update_Date__c from Account where name = 'NewGenAgency'];
-		
+
 		Date date1 = date.newinstance(System.today().year(), System.today().month(), System.today().day());
 		Date date2 = date.newinstance(acct.DDS_Last_Update_Date__c.year(), acct.DDS_Last_Update_Date__c.month(), acct.DDS_Last_Update_Date__c.day());
 
@@ -711,10 +711,10 @@ private class WorkflowHelperTest {
 
 		// Create a unique UserName
 		String uniqueUserName = 'standarduser' + DateTime.now().getTime() + '@testorg.com';
-		
+
 		// This code runs as the system user
 		Profile p = [SELECT Id FROM Profile WHERE Name='System Administrator'];
-		
+
 		User u = new User(
 			Alias = 'standt',
 			Email='standarduser@testorg.com',
@@ -728,16 +728,16 @@ private class WorkflowHelperTest {
 			UserName=uniqueUserName,
 			License_Cost_Center__c ='IDS005CH01'
 			);
-		
+
 		insert u;
 
 		PermissionSet ps = [SELECT Id FROM PermissionSet WHERE Name = 'Airline_HQ_ACLI'];
 		insert new PermissionSetAssignment(AssigneeId = u.id, PermissionSetId = ps.Id);
-		
+
 		Test.startTest();
 
 		System.runAs(u) {
-			
+
 		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='PT', ANG_Enable_NewGen__c = true)  ;
 		insert ctry ;
 
@@ -773,148 +773,148 @@ private class WorkflowHelperTest {
 
 
 		update acct;
-			
+
 		acct =   [Select Id,Name from Account];
 
 		System.assertEquals('OLDNAME', acct.Name);
-		
+
 		}
 
 
-    }
+	}
 
-    @isTest static void updateRecordSharingCriteriaTest() {
+	@isTest static void updateRecordSharingCriteriaTest() {
 
-        String uniqueUserName = 'iataiwuser' + DateTime.now().getTime() + '@testorg.com';
+		String uniqueUserName = 'iataiwuser' + DateTime.now().getTime() + '@testorg.com';
 
-        IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='PT');
-        insert ctry ;
+		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='PT');
+		insert ctry ;
 
-        Id standardAccountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
+		Id standardAccountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
 
-        Account account = new Account();
-        account.Name = 'Update Record Sharing Criteria Test';
-        account.IATA_ISO_Country__c = ctry.Id;
-        account.RecordTypeId = standardAccountRT;
-        insert account;
+		Account account = new Account();
+		account.Name = 'Update Record Sharing Criteria Test';
+		account.IATA_ISO_Country__c = ctry.Id;
+		account.RecordTypeId = standardAccountRT;
+		insert account;
 
-        List<Contact> conListToInsert = new List<Contact>();
+		List<Contact> conListToInsert = new List<Contact>();
 
-        Contact c1 = new Contact();
-        c1.LastName = 'Contact 1';
-        c1.Email = uniqueUserName + '1';
-        c1.AccountId = account.Id;
-        c1.Record_Sharing_Criteria__c = 'IFG Active Users';
-        conListToInsert.add(c1);
+		Contact c1 = new Contact();
+		c1.LastName = 'Contact 1';
+		c1.Email = uniqueUserName + '1';
+		c1.AccountId = account.Id;
+		c1.Record_Sharing_Criteria__c = 'IFG Active Users';
+		conListToInsert.add(c1);
 
-        Contact c2 = new Contact();
-        c2.LastName = 'Contact 2';
-        c2.Email = uniqueUserName + '2';
-        c2.AccountId = account.Id;
-        c2.Record_Sharing_Criteria__c = 'None';
-        conListToInsert.add(c2);
+		Contact c2 = new Contact();
+		c2.LastName = 'Contact 2';
+		c2.Email = uniqueUserName + '2';
+		c2.AccountId = account.Id;
+		c2.Record_Sharing_Criteria__c = 'None';
+		conListToInsert.add(c2);
 
-        Test.startTest();
-        insert conListToInsert;
-        Test.stopTest();
+		Test.startTest();
+		insert conListToInsert;
+		Test.stopTest();
 
-        List<Contact> conList = [SELECT Id, Record_Sharing_Criteria_AUX__c FROM Contact WHERE AccountId =: account.Id];
+		List<Contact> conList = [SELECT Id, Record_Sharing_Criteria_AUX__c FROM Contact WHERE AccountId =: account.Id];
 
-        System.assertEquals('IFG Active Users;', conList.get(0).Record_Sharing_Criteria_AUX__c);
-        System.assertEquals(null, conList.get(1).Record_Sharing_Criteria_AUX__c);
-    }
+		System.assertEquals('IFG Active Users;', conList.get(0).Record_Sharing_Criteria_AUX__c);
+		System.assertEquals(null, conList.get(1).Record_Sharing_Criteria_AUX__c);
+	}
 
-    @isTest static void keyContactOptOutTest() {
+	@isTest static void keyContactOptOutTest() {
 
-        String uniqueUserName = 'iataiwuser' + DateTime.now().getTime() + '@testorg.com';
+		String uniqueUserName = 'iataiwuser' + DateTime.now().getTime() + '@testorg.com';
 
-        IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='PT');
-        insert ctry ;
+		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='PT');
+		insert ctry ;
 
-        Id standardAccountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
+		Id standardAccountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
 
-        Account account = new Account();
-        account.Name = 'Key Contact Opt Out Test';
-        account.IATA_ISO_Country__c = ctry.Id;
-        account.RecordTypeId = standardAccountRT;
-        insert account;
+		Account account = new Account();
+		account.Name = 'Key Contact Opt Out Test';
+		account.IATA_ISO_Country__c = ctry.Id;
+		account.RecordTypeId = standardAccountRT;
+		insert account;
 
-        List<Contact> conListToInsert = new List<Contact>();
+		List<Contact> conListToInsert = new List<Contact>();
 
-        Contact c1 = new Contact();
-        c1.FirstName = 'My';
-        c1.LastName = 'Contact 1';
-        c1.Email = uniqueUserName + '1';
-        c1.AccountId = account.Id;
-        c1.CEO_CFO__c = 'CEO';
-        c1.HasOptedOutOfEmail = false;
-        c1.Marketing_Communications_Opt_in__c = true;
-        c1.Title = 'Manager';
-        c1.Membership_Function__c = 'Finance';
-        conListToInsert.add(c1);
+		Contact c1 = new Contact();
+		c1.FirstName = 'My';
+		c1.LastName = 'Contact 1';
+		c1.Email = uniqueUserName + '1';
+		c1.AccountId = account.Id;
+		c1.CEO_CFO__c = 'CEO';
+		c1.HasOptedOutOfEmail = false;
+		c1.Marketing_Communications_Opt_in__c = true;
+		c1.Title = 'Manager';
+		c1.Membership_Function__c = 'Finance';
+		conListToInsert.add(c1);
 
-        Contact c2 = new Contact();
-        c2.FirstName = 'My';
-        c2.LastName = 'Contact 2';
-        c2.Email = uniqueUserName + '2';
-        c2.AccountId = account.Id;
-        c2.HasOptedOutOfEmail = false;
-        c2.Marketing_Communications_Opt_in__c = true;
-        conListToInsert.add(c2);
+		Contact c2 = new Contact();
+		c2.FirstName = 'My';
+		c2.LastName = 'Contact 2';
+		c2.Email = uniqueUserName + '2';
+		c2.AccountId = account.Id;
+		c2.HasOptedOutOfEmail = false;
+		c2.Marketing_Communications_Opt_in__c = true;
+		conListToInsert.add(c2);
 
-        Test.startTest();
-        insert conListToInsert;
-        Test.stopTest();
+		Test.startTest();
+		insert conListToInsert;
+		Test.stopTest();
 
-        List<Contact> conList = [SELECT Id, HasOptedOutOfEmail, Marketing_Communications_Opt_in__c FROM Contact WHERE AccountId =: account.Id];
+		List<Contact> conList = [SELECT Id, HasOptedOutOfEmail, Marketing_Communications_Opt_in__c FROM Contact WHERE AccountId =: account.Id];
 
-        System.assert(conList.get(0).HasOptedOutOfEmail);
-        System.assert(!conList.get(0).Marketing_Communications_Opt_in__c);
-        System.assert(!conList.get(1).HasOptedOutOfEmail);
-        System.assert(conList.get(1).Marketing_Communications_Opt_in__c);
-    }
+		System.assert(conList.get(0).HasOptedOutOfEmail);
+		System.assert(!conList.get(0).Marketing_Communications_Opt_in__c);
+		System.assert(!conList.get(1).HasOptedOutOfEmail);
+		System.assert(conList.get(1).Marketing_Communications_Opt_in__c);
+	}
 
-    @isTest static void updateIDCardContactCheckboxTest() {
+	@isTest static void updateIDCardContactCheckboxTest() {
 
-        String uniqueUserName = 'iataiwuser' + DateTime.now().getTime() + '@testorg.com';
+		String uniqueUserName = 'iataiwuser' + DateTime.now().getTime() + '@testorg.com';
 
-        IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='PT');
-        insert ctry ;
+		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='PT');
+		insert ctry ;
 
-        Id standardAccountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
+		Id standardAccountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
 
-        Account account = new Account();
-        account.Name = 'Update ID Card Contact Checkbox Test';
-        account.IATA_ISO_Country__c = ctry.Id;
-        account.RecordTypeId = standardAccountRT;
-        insert account;
+		Account account = new Account();
+		account.Name = 'Update ID Card Contact Checkbox Test';
+		account.IATA_ISO_Country__c = ctry.Id;
+		account.RecordTypeId = standardAccountRT;
+		insert account;
 
-        List<Contact> conListToInsert = new List<Contact>();
+		List<Contact> conListToInsert = new List<Contact>();
 
-        Contact c1 = new Contact();
-        c1.LastName = 'Contact 1';
-        c1.Email = uniqueUserName + '1';
-        c1.AccountId = account.Id;
-        c1.ID_Card_Holder__c = false;
-        conListToInsert.add(c1);
+		Contact c1 = new Contact();
+		c1.LastName = 'Contact 1';
+		c1.Email = uniqueUserName + '1';
+		c1.AccountId = account.Id;
+		c1.ID_Card_Holder__c = false;
+		conListToInsert.add(c1);
 
-        Contact c2 = new Contact();
-        c2.LastName = 'Contact 2';
-        c2.Email = uniqueUserName + '2';
-        c2.AccountId = account.Id;
-        c2.VER_Number__c = 1234567890;
-        c2.ID_Card_Holder__c = false;
-        conListToInsert.add(c2);
+		Contact c2 = new Contact();
+		c2.LastName = 'Contact 2';
+		c2.Email = uniqueUserName + '2';
+		c2.AccountId = account.Id;
+		c2.VER_Number__c = 1234567890;
+		c2.ID_Card_Holder__c = false;
+		conListToInsert.add(c2);
 
-        Test.startTest();
-        insert conListToInsert;
-        Test.stopTest();
+		Test.startTest();
+		insert conListToInsert;
+		Test.stopTest();
 
-        List<Contact> conList = [SELECT Id, ID_Card_Holder__c FROM Contact WHERE AccountId =: account.Id];
+		List<Contact> conList = [SELECT Id, ID_Card_Holder__c FROM Contact WHERE AccountId =: account.Id];
 
-        System.assert(!conList.get(0).ID_Card_Holder__c);
-        System.assert(conList.get(1).ID_Card_Holder__c);
-    }
+		System.assert(!conList.get(0).ID_Card_Holder__c);
+		System.assert(conList.get(1).ID_Card_Holder__c);
+	}
 
 	@isTest static void changeCaseOriginToFaxTest() {
 

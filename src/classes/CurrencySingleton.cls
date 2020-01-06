@@ -9,14 +9,14 @@ public with sharing class CurrencySingleton {
 			this.mapCurrencies.put( currtype.IsoCode, currType);
 		}
 	}
-	
+
 	public static CurrencySingleton getInstance(){
 		if(instance == null) {
 			instance = new CurrencySingleton();
 		}
 		return instance;
 	}
-	
+
 	public Decimal getConversionRate(String oldCurrency, String newCurrency) {
 		try {
 			Decimal oldConversionRate = this.mapCurrencies.get(oldCurrency).ConversionRate;
@@ -24,14 +24,14 @@ public with sharing class CurrencySingleton {
 			return (newConversionRate / oldConversionRate);
 		} catch ( Exception e ) {
 			return null;
-		} 
+		}
 	}
-	
+
 	public Decimal convertCurrency( Decimal amount, String oldCurrency, String newCurrency ) {
 		if ( oldCurrency == newCurrency ) return amount;
 		Decimal rate = getConversionRate(oldCurrency, newCurrency);
-		if ( rate == null ) return null; 
+		if ( rate == null ) return null;
 		return amount * rate;
 	}
-	
+
 }

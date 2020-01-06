@@ -89,7 +89,7 @@ public class ObjectiveHandlerTest {
 		Objective__c objective = getAccountObjective();
 
 		Test.startTest();
-		insert objective; 
+		insert objective;
 		Test.stopTest();
 
 		Objective__c result = [Select Name from Objective__c where id = :objective.Id];
@@ -100,9 +100,9 @@ public class ObjectiveHandlerTest {
 	public static testMethod void testSetAccountObjectiveName80() {
 		Objective__c objective = getAccountObjective();
 		Account account = [Select Name from Account where id = :objective.Account__c];
-		Test.startTest();        
+		Test.startTest();
 		update account;
-		insert objective;		 
+		insert objective;
 		Test.stopTest();
 
 		Objective__c result = [Select Name, Account__r.name from Objective__c where id = :objective.Id];

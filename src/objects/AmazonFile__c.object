@@ -749,7 +749,7 @@
     <fields>
         <fullName>Full_Name_Unique__c</fullName>
         <caseSensitive>true</caseSensitive>
-        <externalId>false</externalId>
+        <externalId>true</externalId>
         <label>Full Name (Unique)</label>
         <length>255</length>
         <required>true</required>
@@ -1202,7 +1202,7 @@
         <filters>
             <field>Case__c</field>
             <operation>equals</operation>
-            <value>10771908</value>
+            <value>10688738</value>
         </filters>
         <label>files by case</label>
         <language>en_US</language>

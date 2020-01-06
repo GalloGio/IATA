@@ -41,6 +41,7 @@
         <type>Default</type>
     </actionOverrides>
     <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <compactLayouts>
         <fullName>IFTP_Compact_Layout</fullName>
         <fields>Account__c</fields>
@@ -49,7 +50,6 @@
         <fields>Status__c</fields>
         <label>IFTP Compact Layout</label>
     </compactLayouts>
-    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
     <description>Used to extend the role of any existing account type e.g. an airline that also acts as a payment provider. A record type should be created for each type of account role required.</description>
     <enableActivities>false</enableActivities>
@@ -296,6 +296,15 @@ The Account Role record should be named after the functional capability for whic
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>useDepartmentContactsDetail__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Wrong field used in mulesoft (to be removed 2020)</description>
+        <externalId>false</externalId>
+        <label>useDepartmentContactsDetail</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
     </fields>
     <label>Account Role</label>
     <listViews>

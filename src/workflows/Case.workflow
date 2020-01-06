@@ -709,7 +709,7 @@
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>All/EUR_Dispute_Notification_Airline_Agent_Israel_only</template>
+        <template>ISS_Portal/GCS_Dispute_Notification_Agent_Israel_VF</template>
     </alerts>
     <alerts>
         <fullName>FSM_Email_Reminder</fullName>
@@ -8569,7 +8569,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <criteriaItems>
             <field>Case.Origin</field>
             <operation>equals</operation>
-            <value>Web</value>
+            <value>Web,Portal</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.CaseArea__c</field>
@@ -8579,6 +8579,11 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <criteriaItems>
             <field>Case.Airline_E_mail__c</field>
             <operation>notEqual</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Disputes (Israel only)</value>
         </criteriaItems>
         <description>Sends an email notification to the Airline Email entered in the Web to Case form at http://www.iata.org/customer_portal_europe/deduction-israel.htm.</description>
         <triggerType>onCreateOnly</triggerType>

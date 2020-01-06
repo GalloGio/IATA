@@ -15,7 +15,7 @@ public class ANG_RiskEventHistoryPagination {
 	}
 
 	public ANG_RiskEventHistoryPagination(List<ANG_Agency_Risk_Event__c> records) {
-		this();		
+		this();
 
 		this.allRecords = records;
 		createPages();
@@ -58,7 +58,7 @@ public class ANG_RiskEventHistoryPagination {
 
 	//state variables
 
-	public Integer totalRecords { 
+	public Integer totalRecords {
 		get{
 			if(totalRecords == null) totalRecords = 0;
 			return totalRecords;
