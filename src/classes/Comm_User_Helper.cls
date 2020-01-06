@@ -6,11 +6,11 @@ global without sharing class Comm_User_Helper {
   public static final string CNS = 'CNS';
   public static final String ONEIDENTITY = 'IDENTITY';
   public static final string FRED = 'FRED';
+  public static final string GADM = 'GADM';
   public static final string NDCMM = 'NDCMM';
   public static final string SEPARATOR = '@#@#@#';
   public static final string KEYTODECODE = 'Kg0m2vAj4VmBBviGAUehrw==';
   public static final string plusReplacer = '@@##';
-  public static final string WILDCARD = 'ALL';
 
   public static String EncryptString( String str) {
         Blob dataToEncrypt = Blob.valueOf(str);
@@ -163,7 +163,7 @@ global without sharing class Comm_User_Helper {
         String link ;
         String cleanUsername = u.userName.replace('+', plusReplacer);
 
-        if(community == ISSP || community == CNS || community == ONEIDENTITY || community == FRED || community == NDCMM){
+        if(community == ISSP || community == CNS || community == ONEIDENTITY || community == FRED || community == NDCMM || community == GADM){
             
             if (lang != null && lang != ''){
                 system.debug('LANG IN CREATE USER: ' + lang);
@@ -183,7 +183,7 @@ global without sharing class Comm_User_Helper {
                 String template ='';
                 Map<String,String> emailWrap = new Map<String,String>();
 
-                if(community == ISSP || community == ONEIDENTITY || community == FRED  || community == NDCMM ){
+                if(community == ISSP || community == ONEIDENTITY || community == FRED  || community == NDCMM || community == GADM){
                     link = OneIdUtils.getSiteCompleteUrl(OneIdUtils.Mode.IDENTITY) + '/IdentityFirstLogin?' + encodedPart;
 
                     if(community == ISSP){
@@ -195,8 +195,10 @@ global without sharing class Comm_User_Helper {
                     }else if(community == NDCMM){
                         template = 'Identity_Portal_FRED_New_User';            
                         link += '&serviceName=NDCMM';
-                    }
-                    else {
+                    }else if(community == GADM) {
+                        link += '&serviceName=GADM';
+                        template = 'Identity_Portal_New_User';
+					} else {
                       template = 'Identity_Portal_New_User';
                     }
 
@@ -274,19 +276,7 @@ global without sharing class Comm_User_Helper {
             // so we try to add permission to the applications (if needed)
             if (listOtherContacts.isEmpty()) {
                 // Find app names with Auto Grant Service
-                list<String> listAppNames = new list<String>();
-                for (Portal_Application_Setting__mdt setting: [
-                        SELECT id, MasterLabel,
-                            (SELECT Sector__c, Category__c
-                            FROM Portal_Application_Visibilities__r
-                            WHERE Auto_grant_service__c = true
-                            AND Sector__c = :account.Sector__c
-                            AND Category__c IN (:account.Category__c,:WILDCARD))
-                        FROM Portal_Application_Setting__mdt]) {
-                    if (setting.Portal_Application_Visibilities__r.size()>0) {
-                        listAppNames.add(setting.MasterLabel);
-                    }
-                }
+                list<String> listAppNames = PortalApplicationSettingHelper.getAutoGrantApplicationNames(account);
 
                 // give right to all found apps
                 list<Portal_Application_Right__c> listAppRight = new list<Portal_Application_Right__c>();
@@ -608,7 +598,7 @@ global without sharing class Comm_User_Helper {
                   template = 'Communities_Forgot_Password_Email3';
                   emailWrap = Comm_User_Helper.ISSP_PassWordBuilMessageWrapper( con ,  password ,  link, 'ISSP');
               }else if(Community.contains('CNS')){
-                  string prefix = Site.getBaseUrl() == null || Site.getBaseUrl() == '' ? 'https://' + String.ValueOF(ISSP_CS__c.getValues('Host').value__c) : Site.getBaseUrl();
+                  string prefix ='https://' + String.ValueOF(ISSP_CS__c.getValues('Host').value__c);
                   link = prefix + '/ISSP_First_Login?CommunityName=CNS&'+encodedPart;
                   template = 'Communities_Forgot_Password_Email3_CNS';
                   emailWrap = Comm_User_Helper.ISSP_PassWordBuilMessageWrapper( con ,  password ,  link, 'CNS');

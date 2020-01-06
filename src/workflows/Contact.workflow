@@ -205,16 +205,6 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>EmailStatusUpdate</fullName>
-        <description>Captues current date whenever changes in &quot;Email Status&quot; field</description>
-        <field>Email_Status_Update__c</field>
-        <formula>Today()</formula>
-        <name>Email Status Update</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>IFAP_Enable_portal_self_registration</fullName>
         <field>CanAllowPortalSelfReg</field>
         <literalValue>1</literalValue>
@@ -363,27 +353,12 @@ IF(INCLUDES(Record_Sharing_Criteria__c, &quot;TIP User&quot;),&quot;TIP User;&qu
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
-        <fullName>Email Status Update</fullName>
-        <actions>
-            <name>EmailStatusUpdate</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Contact.Email_Status__c</field>
-            <operation>equals</operation>
-            <value>Missing,Do not Email,Invalid,Email,Unknown,Bad Email</value>
-        </criteriaItems>
-        <description>Updates &quot;Email Status Update &quot; field whenever changes in Email changes field.</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
         <fullName>Field update with values of field Record Sharing Criteria</fullName>
         <actions>
             <name>Update_Record</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <formula>ISCHANGED(Record_Sharing_Criteria__c)</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
@@ -499,7 +474,7 @@ IF(INCLUDES(Record_Sharing_Criteria__c, &quot;TIP User&quot;),&quot;TIP User;&qu
             <name>Switch_to_standard_contact_RT</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Contact.RecordTypeId</field>
             <operation>equals</operation>
@@ -554,7 +529,7 @@ IF(INCLUDES(Record_Sharing_Criteria__c, &quot;TIP User&quot;),&quot;TIP User;&qu
             <name>IWCheckInvoiceWorksCustomers</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>User.ProfileId</field>
             <operation>contains</operation>
@@ -573,7 +548,7 @@ IF(INCLUDES(Record_Sharing_Criteria__c, &quot;TIP User&quot;),&quot;TIP User;&qu
             <name>STD_Opt_out</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Contact.Account_Management_Key_Contact__c</field>
             <operation>equals</operation>
@@ -588,7 +563,7 @@ IF(INCLUDES(Record_Sharing_Criteria__c, &quot;TIP User&quot;),&quot;TIP User;&qu
             <name>Update_ID_card_contact_checkbox</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Contact.VER_Number__c</field>
             <operation>notEqual</operation>

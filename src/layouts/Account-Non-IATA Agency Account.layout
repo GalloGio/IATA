@@ -636,6 +636,11 @@
         </layoutColumns>
         <style>OneColumn</style>
     </layoutSections>
+    <miniLayout>
+        <fields>Name</fields>
+        <fields>RecordTypeId</fields>
+        <fields>ParentId</fields>
+    </miniLayout>
     <relatedLists>
         <fields>NAME</fields>
         <fields>Issues__c</fields>
@@ -645,6 +650,8 @@
         <relatedList>Data_Quality_Feedback__c.Account__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <fields>MEMBER_NAME</fields>
+        <fields>TEAM_MEMBER_ROLE</fields>
         <relatedList>RelatedAccountSalesTeam</relatedList>
     </relatedLists>
     <relatedLists>

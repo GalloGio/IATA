@@ -1,0 +1,29 @@
+<!--
+ - Created by ukaya01 on 23/08/2019.
+ -->
+
+<!-- Portal Informative Message Box -->
+<template>
+
+    <div class="alertDiv">
+        <lightning-layout multiple-rows vertical-align="center" horizontal-align="center">
+            <lightning-layout-item size="12" padding="" class="alignCenter">
+                <div class="dot-white overlap-top-center">
+                    <div class="dot-lightgreen">
+                        <div class="dot-green dot-allign">
+                            <div class="dot-white-small dot-allign">
+                                <img src={exclamationIcon} />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </lightning-layout-item>
+            <lightning-layout-item size="12" padding="around-medium" class="alignCenter">
+                <slot name="message"></slot>
+            </lightning-layout-item>
+            <lightning-layout-item padding="around-large" size="12">
+            </lightning-layout-item>
+        </lightning-layout>
+    </div>
+
+</template>

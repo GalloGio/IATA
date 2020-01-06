@@ -5,7 +5,7 @@
     <name>Cases - SASC</name>
     <queueMembers>
         <roleAndSubordinatesInternal>
-            <roleAndSubordinateInternal>APCustomerServiceStaffI</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>APCustomerServiceStaff</roleAndSubordinateInternal>
         </roleAndSubordinatesInternal>
     </queueMembers>
     <queueSobject>

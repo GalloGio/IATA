@@ -1068,11 +1068,11 @@ public class ams2gdp_BusinessLogic {
 		// because the AMS_GDP_Key__c == accountId we can query based on them
 		List<Authorized_Forms_Of_Payment__c> result = new List<Authorized_Forms_Of_Payment__c>();
 		for (Agency_Authorization__c aa : authorizations) {
-			result.add(new Authorized_Forms_Of_Payment__c(AMS_GDP_Key__c = aa.Account__c + aa.ANG_FormOfPayment_ID__c
-			           , Form_of_Payment_Code__c = aa.ANG_FormOfPayment_ID__c
-			                                       , Status__c = aa.Status__c
-			                                               , Related_GDP_Products_Account_View__c = gdpProductIdByAccountId.get(aa.Account__c)
-			                                             ));
+			String aaFopId = aa.ANG_FormOfPayment_ID__c == AMS_Utils.BOP ? AMS_Utils.EP : aa.ANG_FormOfPayment_ID__c;
+			result.add(new Authorized_Forms_Of_Payment__c(AMS_GDP_Key__c = aa.Account__c + aaFopId
+								, Form_of_Payment_Code__c = aaFopId
+								, Status__c = aa.Status__c
+								, Related_GDP_Products_Account_View__c = gdpProductIdByAccountId.get(aa.Account__c)));
 		}
 
 		return result;

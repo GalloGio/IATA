@@ -1138,12 +1138,37 @@ public class vfIECEBC_TestSuite {
         
         PageReference pageRef = Page.IECEBC_CampaignSchedule;
         Test.setCurrentPage(pageRef);
-        IEC_SEttings__c customsetting = [Select eBroadcast_Counter_AWS_API_KEY__c, eBroadcast_Counter_AWS_URL__c, eBroadcast_Counter_Switch__c
-                                         From IEC_SEttings__c limit 1];
-        if (customsetting == null) customsetting = new IEC_SEttings__c();
-        customsetting.eBroadcast_Counter_Switch__c = false;
         
-        upsert customsetting;
+        List<IEC_Settings__c> customsettingList = [SELECT Id FROM IEC_Settings__c LIMIT 1];
+        
+        //to make sure this test passes in all orgs.
+        //Orgs that have the Custom Setting configured get dupplicated if trying to insert.
+        if(customsettingList.size() == 0){
+            IEC_Settings__c customsetting = new IEC_Settings__c(
+                Customer_Permission_Set_Id__c = 'Test',
+                PaymentMethod_Bank_Transfer_Zuora_ID__c = 'Test',
+                PaymentMethod_Other_Zuora_ID__c = 'Test',
+                Quote_Template_Zuora_ID_New_Subscription__c = 'Test',
+                Cart_cookie_session_timeout__c = -1,
+                Encryption_Algorythm__c = 'Test',
+                Encryption_Key__c = 'Test',
+                IEC_Web_Service_Endpoint__c = 'Test',
+                IEC_Web_Service_Password__c = 'Test',
+                IEC_Web_Service_Username__c = 'Test',
+                SchdlIECCompileUsage_Class_ID__c = 'Test',
+                Server_API_URL__c = 'Test',
+                CAC_Web_Service_API_Gateway__c = 'Test',
+                CAC_Web_Service_Usage_Url__c = 'Test',
+                SchdlCACWSUsageUpdate_Class_ID__c = 'Test',
+                Error_Log_Keep_Duration__c = 6
+            );
+            insert customsetting;
+            
+            if (customsetting == null) customsetting = new IEC_SEttings__c();
+            customsetting.eBroadcast_Counter_Switch__c = false;
+            
+            upsert customsetting;
+        }
         
         Test.startTest();
 
@@ -1327,14 +1352,37 @@ public class vfIECEBC_TestSuite {
         PageReference pageRef = Page.IECEBC_CampaignRecipients;
         Test.setCurrentPage(pageRef);
         
-        IEC_SEttings__c customsetting = [Select eBroadcast_Counter_AWS_API_KEY__c, eBroadcast_Counter_AWS_URL__c, eBroadcast_Counter_Switch__c
-                                         From IEC_SEttings__c limit 1];
-        if (customsetting == null) customsetting = new IEC_SEttings__c();
-        customsetting.eBroadcast_Counter_AWS_API_KEY__c = 'Sr96oKUqaap4CXicrEMl5NXp6SerQNsAg701Gnf0';
-        customsetting.eBroadcast_Counter_AWS_URL__c = 'https://rb5luiyoea.execute-api.eu-west-1.amazonaws.com/prod/TestElasticSearchQuery';
-        customsetting.eBroadcast_Counter_Switch__c = true;
+        List<IEC_Settings__c> customsettingList = [SELECT Id FROM IEC_Settings__c LIMIT 1];
         
-        upsert customsetting;
+        //to make sure this test passes in all orgs.
+        //Orgs that have the Custom Setting configured get dupplicated if trying to insert.
+        if(customsettingList.size() == 0){
+            IEC_Settings__c customsetting = new IEC_Settings__c(
+                Customer_Permission_Set_Id__c = 'Test',
+                PaymentMethod_Bank_Transfer_Zuora_ID__c = 'Test',
+                PaymentMethod_Other_Zuora_ID__c = 'Test',
+                Quote_Template_Zuora_ID_New_Subscription__c = 'Test',
+                Cart_cookie_session_timeout__c = -1,
+                Encryption_Algorythm__c = 'Test',
+                Encryption_Key__c = 'Test',
+                IEC_Web_Service_Endpoint__c = 'Test',
+                IEC_Web_Service_Password__c = 'Test',
+                IEC_Web_Service_Username__c = 'Test',
+                SchdlIECCompileUsage_Class_ID__c = 'Test',
+                Server_API_URL__c = 'Test',
+                CAC_Web_Service_API_Gateway__c = 'Test',
+                CAC_Web_Service_Usage_Url__c = 'Test',
+                SchdlCACWSUsageUpdate_Class_ID__c = 'Test',
+                Error_Log_Keep_Duration__c = 6
+            );
+            insert customsetting;
+        
+            customsetting.eBroadcast_Counter_AWS_API_KEY__c = 'Sr96oKUqaap4CXicrEMl5NXp6SerQNsAg701Gnf0';
+            customsetting.eBroadcast_Counter_AWS_URL__c = 'https://rb5luiyoea.execute-api.eu-west-1.amazonaws.com/prod/TestElasticSearchQuery';
+            customsetting.eBroadcast_Counter_Switch__c = true;
+            
+            upsert customsetting;
+        }
         
         User usr = initPreRunAs(true);
         
@@ -1368,18 +1416,43 @@ public class vfIECEBC_TestSuite {
             campaignExtCon.getMasterFilters();
         }
     }
+    
     public static void testRecipientsCountExistingListMock() {
         PageReference pageRef = Page.IECEBC_CampaignRecipients;
         Test.setCurrentPage(pageRef);
-        IEC_SEttings__c customsetting = [Select eBroadcast_Counter_AWS_API_KEY__c, eBroadcast_Counter_AWS_URL__c, eBroadcast_Counter_Switch__c
-                                         From IEC_SEttings__c limit 1];
-        if (customsetting == null) customsetting = new IEC_SEttings__c();
-        customsetting.eBroadcast_Counter_AWS_API_KEY__c = 'Sr96oKUqaap4CXicrEMl5NXp6SerQNsAg701Gnf0';
-        customsetting.eBroadcast_Counter_AWS_URL__c = 'https://rb5luiyoea.execute-api.eu-west-1.amazonaws.com/prod/TestElasticSearchQuery';
-        customsetting.eBroadcast_Counter_Switch__c = true;
         
-        upsert customsetting;
+        List<IEC_Settings__c> customsettingList = [SELECT Id FROM IEC_Settings__c LIMIT 1];
         
+        //to make sure this test passes in all orgs.
+        //Orgs that have the Custom Setting configured get dupplicated if trying to insert.
+        if(customsettingList.size() == 0){
+            IEC_Settings__c customsetting = new IEC_Settings__c(
+                Customer_Permission_Set_Id__c = 'Test',
+                PaymentMethod_Bank_Transfer_Zuora_ID__c = 'Test',
+                PaymentMethod_Other_Zuora_ID__c = 'Test',
+                Quote_Template_Zuora_ID_New_Subscription__c = 'Test',
+                Cart_cookie_session_timeout__c = -1,
+                Encryption_Algorythm__c = 'Test',
+                Encryption_Key__c = 'Test',
+                IEC_Web_Service_Endpoint__c = 'Test',
+                IEC_Web_Service_Password__c = 'Test',
+                IEC_Web_Service_Username__c = 'Test',
+                SchdlIECCompileUsage_Class_ID__c = 'Test',
+                Server_API_URL__c = 'Test',
+                CAC_Web_Service_API_Gateway__c = 'Test',
+                CAC_Web_Service_Usage_Url__c = 'Test',
+                SchdlCACWSUsageUpdate_Class_ID__c = 'Test',
+                Error_Log_Keep_Duration__c = 6
+            );
+            insert customsetting;
+            
+            if (customsetting == null) customsetting = new IEC_SEttings__c();
+            customsetting.eBroadcast_Counter_AWS_API_KEY__c = 'Sr96oKUqaap4CXicrEMl5NXp6SerQNsAg701Gnf0';
+            customsetting.eBroadcast_Counter_AWS_URL__c = 'https://rb5luiyoea.execute-api.eu-west-1.amazonaws.com/prod/TestElasticSearchQuery';
+            customsetting.eBroadcast_Counter_Switch__c = true;
+            
+            upsert customsetting;
+        }
         Test.startTest();
         
         User usr = initPreRunAs(true);
@@ -1480,7 +1553,7 @@ public class vfIECEBC_TestSuite {
             PageReference pr = con.unsubscribe();
             
             // Schedule the test job
-            String jobId = System.schedule('SchdlIECEBCEmailExclusionRelation',
+            String jobId = System.schedule('SchdlIECEBCEmailExclusionRelation'+System.now(),
                                            CRON_EXP,
                                            new SchdlIECEBCEmailExclusionRelation());
             

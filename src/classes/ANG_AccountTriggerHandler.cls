@@ -21,15 +21,7 @@ public class ANG_AccountTriggerHandler {
 		set;
 	}
 
-	public Map<Id, List<Agency_Authorization__c>> formOfPaymentsMap {
-		get {
-			if(formOfPaymentsMap == NULL){
-				formOfPaymentsMap = getFormOfPaymentsPerAccount();
-			}
-			return formOfPaymentsMap;
-		}
-		set;
-	}
+	public Map<Id, Account> accountDataMap = new Map<Id, Account>();
 
 	// ************************************************************
 	// ****************** distribution methods ********************
@@ -40,9 +32,8 @@ public class ANG_AccountTriggerHandler {
 		updateRiskStatus();
 		populateIEPStatus();
 	}
-	public void onAfterInsert() {
 
-	}
+	public void onAfterInsert(){}
 
 	public void onBeforeUpdate(){
 		adjustShortName();
@@ -50,6 +41,7 @@ public class ANG_AccountTriggerHandler {
 		runRiskAssessment();
 		populateIEPStatus();
 	}
+
 	public void onAfterUpdate() {
 		updateRiskEventStatus();
 		updateRHCInformation();
@@ -62,7 +54,7 @@ public class ANG_AccountTriggerHandler {
 	}
 
 	public void onBeforeDelete(){}
-	public void onAfterDelete() {}
+	public void onAfterDelete(){}
 
 	// ************************************************************
 	// ********************* action methods ***********************
@@ -99,21 +91,21 @@ public class ANG_AccountTriggerHandler {
 	private void updateRiskStatus() {
 
 		List<Account> accs = new List<Account>();
-		Set<String> topLocationTypes = new Set<String>{AMS_Utils.HE, AMS_Utils.HO, AMS_Utils.AO};
+		Set<String> topLocationTypes = new Set<String>{AMS_Utils.HE, AMS_Utils.GE, AMS_Utils.HO, AMS_Utils.AO};
 
 		for(Account acc : triggerNew){
 			if(topLocationTypes.contains(acc.Location_Type__c) && (Trigger.isInsert || hasChangedValuesAccount(oldMap.get(acc.Id), acc))){
 				accs.add(acc);
 			}
 		}
-		
+
 		if(!accs.isEmpty()) ANG_Risk_Helper.updateRiskStatus(accs);
 	}
 
 	private void runRiskAssessment() {
-		
+
 		Map<Account,List<ANG_Agency_Risk_Event__c>> involvedAccounts = new Map<Account,List<ANG_Agency_Risk_Event__c>>();
-		for(account acc : triggerNew){  
+		for(account acc : triggerNew){
 			if(acc.ANG_Limit_Cash_Condition__c!= oldMap.get(acc.Id).ANG_Limit_Cash_Condition__c && !acc.ANG_Limit_Cash_Condition__c) involvedAccounts.put(acc, new List<ANG_Agency_Risk_Event__c>());
 		}
 
@@ -188,7 +180,7 @@ public class ANG_AccountTriggerHandler {
 			c.Region__c = acc.Region_formula__c;
 			c.BSPCountry__c = acc.BillingCountry;
 			c.Origin = ANG_Risk_Helper.CASE_ORIGIN_INTERNAL_CASE;
-			c.CaseArea__c = ANG_Risk_Helper.CASE_AREA_RISK_MANAGEMENT_PROCESS; 
+			c.CaseArea__c = ANG_Risk_Helper.CASE_AREA_RISK_MANAGEMENT_PROCESS;
 			c.Reason1__c = ANG_Risk_Helper.CASE_REASON_FINANCIAL_SECURITY_UPDATE;
 			c.Visible_on_ISS_Portal__c = false;
 
@@ -202,20 +194,24 @@ public class ANG_AccountTriggerHandler {
 		try{
 			if(!newCases.isEmpty()) insert newCases;
 		}catch(Exception e){
-            //ServiceNow_Helper.sendRequestToSNOW('Salesforce', 'ANG_AccountTriggerHandler', 'manageDowngrades', 'SFDC', 'SFDC',  e.getMessage(), 'false', 'System', 'Salesforce.com', 'Salesforce.com', 'Infrastructure Services', 'Salesforce Support', '2', '2', '2', 'Failure');
+			//ServiceNow_Helper.sendRequestToSNOW('Salesforce', 'ANG_AccountTriggerHandler', 'manageDowngrades', 'SFDC', 'SFDC',  e.getMessage(), 'false', 'System', 'Salesforce.com', 'Salesforce.com', 'Infrastructure Services', 'Salesforce Support', '2', '2', '2', 'Failure');
 			ServiceNow_Helper.sendRequestToSNOWSFDC('SNOW10',e);
 		}
 
-        //Get all account data that we need to make the validations requested.
-
-		Map<Id,Account> accountDataMap = new Map<Id,Account>();
-
+		//Get all account data that we need to make the validations requested.
 		if(!downGradeBtoC.isEmpty() || isLastFinancialReviewUpgrade){
-			accountDataMap = fetchAccountData(changeCodesForRiskChangesLst);
+			this.accountDataMap = fetchAccountData(changeCodesForRiskChangesLst);
 		}
-        
+
 		//downgrade from B to C
-		if(!downGradeBtoC.isEmpty()) createVMFROscars(downGradeBtoC, rhcContacts);
+		if (! downGradeBtoC.isEmpty())
+		{
+			// NEWGEN-4460 - also update the child multicountry HE accounts
+			Set<Id> multicountryGEAccounts = getGEAccountIds(downGradeBtoC);
+			launchPlatformEventForMulticoutryDowngrade(multicountryGEAccounts);
+
+			createVMFROscars(downGradeBtoC, rhcContacts);
+		}
 
 		//downgrade of cash conditions from "Fail Financial Statements" Risk Event
 		if(!createFOP.isEmpty()) createFOPOscar(createFOP, rhcContacts);
@@ -223,19 +219,21 @@ public class ANG_AccountTriggerHandler {
 		//NEWGEN-4880
 
 		if(isLastFinancialReviewUpgrade){
-			
+
 			AMS_ChangeCodes__c config = AMS_ChangeCodes__c.getInstance('UpgDownRisk');
 			List<Agency_Applied_Change_code__c> changeCodes = new List<Agency_Applied_Change_code__c>();
 			String source = UserInfo.getUserType() == 'PowerPartner' ? 'Portal' : 'Internal';
 
 			for(Id accId : changeCodesForRiskChangesLst){
 
-                if(accountDataMap.get(accId).ANG_RiskStatus__c == AMS_UTils.NOT_APPLICABLE){
+				Account fetchedAcct = this.accountDataMap.get(accId);
+
+				if(fetchedAcct.ANG_RiskStatus__c == AMS_UTils.NOT_APPLICABLE){
 					System.debug('Skipping account ' + accId + ' from Change code Creation because the risk status is not available.');
 					continue; // no need to generate Change code.
 				}
-                
-				List<Agency_Authorization__c> activeOrAuthorizedFoPLst = getActiveOrAuthorizedFoPs(accId);
+
+				List<Agency_Authorization__c> activeOrAuthorizedFoPLst = getActiveOrAuthorizedFoPs(fetchedAcct);
 
 				Account acc = newMap.get(accId);
 				changeCodes.add(new Agency_Applied_Change_code__c(
@@ -263,15 +261,18 @@ public class ANG_AccountTriggerHandler {
 		if(accountIds.isEmpty())
 			return new Map<Id,Account>();
 
+		Id aaRTId = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
+
 		return new Map<Id,Account>([Select Id, BillingCountry, Region_formula__c, Abbreviated_address__c, Abbreviated_name__c,
-                    Name, BillingState, BillingCity, IATA_ISO_Country__c, Email__c, Fax, Phone, BillingPostalCode,
-                    BillingStreet, CASS_Number__c, IATACode__c, Iso_State__c, License_Number__c, VAT_Number__c,
-                    Is_your_firm_handling_Dangerous_Goods__c, Location_Class__c, Location_Type__c, Mobile__c,
-                    Operation__c, ShippingCity, ShippingCountry, ShippingPostalCode, ShippingState, ShippingStreet,
-                    Short_Name__c, Solicitation_Flag__c, TradeName__c, VAT_Number_2__c, Website, Company_Type__c,
-					ANG_RiskStatus__c from Account where Id in :accountIds ]);
+					Name, BillingState, BillingCity, IATA_ISO_Country__c, Email__c, Fax, Phone, BillingPostalCode,
+					BillingStreet, CASS_Number__c, IATACode__c, Iso_State__c, License_Number__c, VAT_Number__c,
+					Is_your_firm_handling_Dangerous_Goods__c, Location_Class__c, Location_Type__c, Mobile__c,
+					Operation__c, ShippingCity, ShippingCountry, ShippingPostalCode, ShippingState, ShippingStreet,
+					Short_Name__c, Solicitation_Flag__c, TradeName__c, VAT_Number_2__c, Website, Company_Type__c, ANG_RiskStatus__c,
+					(SELECT Id, Account__c, ANG_FormOfPayment_ID__c, Authority__c, Status__c, ISO_Country__c FROM Agency_Authorizations__r WHERE RecordTypeId = :aaRTId)
+					from Account where Id in :accountIds]);
 	}
-    
+
 	//the testing for this method is made on the ANG_ActivateDeactivateREBatch_Test class
 	private void manageUpgrades() {
 		if(!isExpiration && !isLastFinancialReviewUpgrade) return;
@@ -309,18 +310,18 @@ public class ANG_AccountTriggerHandler {
 		List<Agency_Applied_Change_code__c> changeCodes = new List<Agency_Applied_Change_code__c>();
 		String source = UserInfo.getUserType() == 'PowerPartner' ? 'Portal' : 'Internal';
 
-		Map<Id,Account> accountDataMap = new Map<Id,Account>();
-
-		accountDataMap = fetchAccountData(toChangeCode);
+		this.accountDataMap = fetchAccountData(toChangeCode);
 
 		for(Id accId : toChangeCode){
-			
-			if(accountDataMap.get(accId).ANG_RiskStatus__c == AMS_UTils.NOT_APPLICABLE){
+
+			Account fetchedAcct = this.accountDataMap.get(accId);
+
+			if(fetchedAcct.ANG_RiskStatus__c == AMS_UTils.NOT_APPLICABLE){
 				System.debug('Skipping account ' + accId + ' from Change code Creation because the risk status is not available.');
 				continue; // no need to generate Change code.
 			}
 
-			List<Agency_Authorization__c> activeOrAuthorizedFoPLst = getActiveOrAuthorizedFoPs(accId);
+			List<Agency_Authorization__c> activeOrAuthorizedFoPLst = getActiveOrAuthorizedFoPs(fetchedAcct);
 
 			Account acc = newMap.get(accId);
 			changeCodes.add(new Agency_Applied_Change_code__c(
@@ -338,11 +339,11 @@ public class ANG_AccountTriggerHandler {
 		}
 
 		if(!changeCodes.isEmpty()) insert changeCodes;
-		
+
 		/* Replaced by the notification Risk_Information_Update (NEWGEN-5261)
 
 		List<EmailTemplate> emailTemplates = [SELECT DeveloperName,Id FROM EmailTemplate WHERE DeveloperName ='Risk_Status_Upgrade' AND isActive = true Order by DeveloperName desc];
-		
+
 		List<Notification_Template__c> notificationTemplates = [SELECT Id,Name, Identifier__c FROM Notification_Template__c WHERE Identifier__c ='Risk_Status_Upgrade'];
 
 		if(emailTemplates.isEmpty() && notificationTemplates.isEmpty()) return;
@@ -380,7 +381,7 @@ public class ANG_AccountTriggerHandler {
 		}
 
 		System.debug(loggingLevel.FINE, '____ [cls ANG_AccountTriggerHandler - manageUpgrades] Notifications - ' + notifications);
-		
+
 		if(!notifications.isEmpty()) insert notifications; */
 	}
 
@@ -393,35 +394,35 @@ public class ANG_AccountTriggerHandler {
 		List<ANG_Agency_Risk_Event__c> riskEventsToActiveList = new List<ANG_Agency_Risk_Event__c>();
 		List<ANG_Agency_Risk_Event__c> upsertRiskEventsList = new List<ANG_Agency_Risk_Event__c>();
 
-		//get just account ids where status changed to Terminated 
+		//get just account ids where status changed to Terminated
 		for(Account a : triggerNew){
 			if(a.status__c == AMS_Utils.ACC_S0_TERMINATED && oldMap.get(a.id).status__c != a.Status__c)
 				inactiveAccsIdSet.add(a.id);
 			else if( oldMap.get(a.id).status__c != a.Status__c && oldMap.get(a.id).status__c == AMS_Utils.ACC_S0_TERMINATED)
 				activeAccsIdSet.add(a.id);
-			
+
 			/*When changing accreditation type from Cash to Cashless, any active Risk Event should be updated to status "Inactive_Cashless"*/
 			if(oldMap.get(a.id).ANG_Accreditation_Model__c == 'Cash' && a.ANG_Accreditation_Model__c == 'Cashless')
 				inactivateAcctsSet.add(a.id);
 		}
 
-		
+
 		//create set with modified Accs
 		set<id> accIdSet = new set<id>(activeAccsIdSet);
 		accIdSet.addAll(inactiveAccsIdSet);
 		accIdSet.addAll(inactivateAcctsSet);
 
 		//get all related risk Events
-		if(accIdSet.isEmpty()) 
+		if(accIdSet.isEmpty())
 			return;
-			
+
 		List<ANG_Agency_Risk_Event__c> reToUpdateList=[select Id,ang_event_status__c,ANG_Issued_Date__c,ANG_AccountId__c from ANG_Agency_Risk_Event__c where ANG_AccountId__c in :accIdSet and  ang_event_status__c in (:ANG_Risk_Helper.STATUS_ACTIVE, :ANG_Risk_Helper.STATUS_INACTIVE, :ANG_Risk_Helper.STATUS_TERMINATED)];
-		
+
 		for(ANG_Agency_Risk_Event__c re : reToUpdateList){
-			if(inactiveAccsIdSet.contains(re.ANG_AccountId__c) 
+			if(inactiveAccsIdSet.contains(re.ANG_AccountId__c)
 				&& (re.ang_event_status__c == ANG_Risk_Helper.STATUS_ACTIVE || (re.ang_event_status__c == ANG_Risk_Helper.STATUS_INACTIVE && re.ANG_Issued_Date__c > system.Today()))){
 					re.ang_event_status__c = ANG_Risk_Helper.STATUS_TERMINATED;
-				
+
 			} else if (activeAccsIdSet.contains(re.ANG_AccountId__c) && re.ang_event_status__c == ANG_Risk_Helper.STATUS_TERMINATED){
 				re.ang_event_status__c = ANG_Risk_Helper.STATUS_ACTIVE;
 			}else if( inactivateAcctsSet.contains(re.ANG_AccountId__c) && re.ang_event_status__c <> ANG_Risk_Helper.STATUS_INACTIVE_CASHLESS){
@@ -444,13 +445,13 @@ public class ANG_AccountTriggerHandler {
 		//Find relevant accounts
 		for(Account a : triggerNew){
 			Account oldAcct = oldMap.get(a.Id);
-			//need to check both fields as some will change the be done 
-			//previously on the trigger (on on physical field), and some 
+			//need to check both fields as some will change the be done
+			//previously on the trigger (on on physical field), and some
 			//cases will change only the formula field (i.e.: Opt-in)
 			if(a.ANG_HE_CashCondition__c != oldAcct.ANG_HE_CashCondition__c) changedConditions.put(a.Id, a.ANG_HE_CashCondition__c);
 			else if(a.ANG_CashCondition__c != oldAcct.ANG_CashCondition__c) changedConditions.put(a.Id, a.ANG_CashCondition__c);
 			if(a.Status__c != oldAcct.Status__c && oldAcct.Status__c == AMS_Utils.ACC_S0_TERMINATED) changedStatus.add(a.Id);
-			
+
 			if((a.Financial_Assessment_Points__c != oldAcct.Financial_Assessment_Points__c) || (a.ANG_HE_RiskStatus__c != oldAcct.ANG_HE_RiskStatus__c)){
 				changedStatus.add(a.Id);
 			}
@@ -469,13 +470,13 @@ public class ANG_AccountTriggerHandler {
 
 		//first we set the Cash Conditions that changed
 		for(Id acc : changedConditions.keySet()) if(rhcToUpdate.containsKey(acc)) rhcToUpdate.get(acc).ANG_CashCondition__c = changedConditions.get(acc);
-		
+
 		//then set the recalculated values
 		List<ANG_RHC_Information__c> recalculateRHC = new List<ANG_RHC_Information__c>();
 		for(Id acc : changedStatus) if(rhcToUpdate.containsKey(acc)) recalculateRHC.add(rhcToUpdate.get(acc));
 
 		if(!recalculateRHC.isEmpty()) ANG_RHCHelper.calculateRHCAmount(recalculateRHC);
-		
+
 		//then, at last, we make the update
 		if(!rhcToUpdate.isEmpty()) update rhcToUpdate.values();
 	}
@@ -498,7 +499,8 @@ public class ANG_AccountTriggerHandler {
 		private AMS_Pax_Accreditation_Form__c stagingArea;
 	}
 
-	private void createVMFROscars(List<Account> accounts, Map<Id, Id> contacts){
+	public void createVMFROscars(List<Account> accounts, Map<Id, Id> contacts)
+	{
 		//used on manageDowngrades to create VFMR oscars with all the necessary objects
 		try{
 			//to prevent errors on test classes
@@ -508,7 +510,7 @@ public class ANG_AccountTriggerHandler {
 									TC_Legal_status__c = false, TC_Location__c = false, TC_Location_type__c = false,
 									TC_Minor_Shareholding__c = false, TC_Legal_Name__c = false,  TC_Hierarchy__c = false,
 									TC_Major_Shareholding__c = false, TC_Ownership__c = false,
-									TCA_Sanity_check__c = 'CHI', TCA_Application_withdrawal__c = 'CWD');
+									TCA_Sanity_check__c = 'CHI', TCA_Application_withdrawal__c = 'CWD',Valid_Accreditation_Models__c='ALL');
 				}
 			}
 
@@ -555,11 +557,17 @@ public class ANG_AccountTriggerHandler {
 			insert cases;
 
 			//populate field with operation with BSP attributes more frequent
-			String remitFreq = getHighestRemittanceFrequency(accounts);
+			Map<Id, String> remitFreqsMap = getHighestRemittanceFrequencies(accounts);
 
 			//create staging areas
 			List<AMS_Pax_Accreditation_Form__c> stgAreas = new List<AMS_Pax_Accreditation_Form__c>();
-			for(Account acc : accounts){
+			for(Account acc : accounts)
+			{
+				String currentRemitFreq = '';
+				if (remitFreqsMap.containsKey(acc.Id)){
+					currentRemitFreq = remitFreqsMap.get(acc.Id);
+				}
+
 				AMS_Pax_Accreditation_Form__c stgArea = new AMS_Pax_Accreditation_Form__c();
 
 				stgArea.SAAM_Case__c                             = objects.get(acc.Id).commCase.Id;
@@ -585,7 +593,7 @@ public class ANG_AccountTriggerHandler {
 				stgArea.Location_Type__c                         = acc.Location_Type__c;
 				stgArea.Mobile__c                                = acc.Mobile__c;
 				stgArea.Operation__c                             = acc.Operation__c;
-				stgArea.Remittance_frequency__c                  = remitFreq;
+				stgArea.Remittance_frequency__c                  = currentRemitFreq;
 				stgArea.Shipping_City__c                         = acc.ShippingCity;
 				stgArea.Shipping_Country__c                      = acc.ShippingCountry;
 				stgArea.Shipping_Postal_Code__c                  = acc.ShippingPostalCode;
@@ -615,12 +623,51 @@ public class ANG_AccountTriggerHandler {
 
 				AMS_HierarchyHelper.createProcessDetailForFullHierarchy(oscar.Id, oscar.Account__c);
 			}
-			
+
 			update oscars;
 		}catch(Exception e){
-            //ServiceNow_Helper.sendRequestToSNOW('Salesforce', 'ANG_AccountTriggerHandler', 'createVMFROscars', 'SFDC', 'SFDC',  e.getMessage(), 'false', 'System', 'Salesforce.com', 'Salesforce.com', 'Infrastructure Services', 'Salesforce Support', '2', '2', '2', 'Failure');
-        	ServiceNow_Helper.sendRequestToSNOWSFDC('SNOW11',e);
-        }
+			//ServiceNow_Helper.sendRequestToSNOW('Salesforce', 'ANG_AccountTriggerHandler', 'createVMFROscars', 'SFDC', 'SFDC',  e.getMessage(), 'false', 'System', 'Salesforce.com', 'Salesforce.com', 'Infrastructure Services', 'Salesforce Support', '2', '2', '2', 'Failure');
+			ServiceNow_Helper.sendRequestToSNOWSFDC('SNOW11',e);
+		}
+	}
+
+	private Set<Id> getGEAccountIds(List<Account> accounts)
+	{
+		Set<Id> geAccountIds = new Set<Id>();
+
+		// get the GE accounts
+		for (Account a : accounts)
+		{
+			if (AMS_Utils.GE.equals(a.Location_Type__c))
+				geAccountIds.add(a.Id);
+		}
+
+		// look for the child HE accounts
+		return geAccountIds;
+	}
+
+	private List<Account> getMulticountryAccounts(List<Account> accounts)
+	{
+		List<Account> ret = new List<Account>();
+
+		for (Account a : accounts)
+		{
+			if (ANG_MulticountryHelper.isMulticountryAccount(a))
+				ret.add(a);
+		}
+
+		return ret;
+	}
+
+	private void launchPlatformEventForMulticoutryDowngrade(Set<Id> geAccounts)
+	{
+		if (geAccounts.isEmpty())
+			return;
+
+		ANG_Risk_Status_Downgrade__e evt = new ANG_Risk_Status_Downgrade__e(
+			Accounts__c = JSON.serialize(geAccounts)
+		);
+		EventBus.publish(evt);
 	}
 
 	private void createFOPOscar(List<Account> accounts, Map<Id, Id> contacts) {
@@ -674,38 +721,47 @@ public class ANG_AccountTriggerHandler {
 			//insert cases
 			insert cases;
 		}catch(Exception e){
-        	//ServiceNow_Helper.sendRequestToSNOW('Salesforce', 'ANG_AccountTriggerHandler', 'createFOPOscar', 'SFDC', 'SFDC',  e.getMessage(), 'false', 'System', 'Salesforce.com', 'Salesforce.com', 'Infrastructure Services', 'Salesforce Support', '2', '2', '2', 'Failure');
+			//ServiceNow_Helper.sendRequestToSNOW('Salesforce', 'ANG_AccountTriggerHandler', 'createFOPOscar', 'SFDC', 'SFDC',  e.getMessage(), 'false', 'System', 'Salesforce.com', 'Salesforce.com', 'Infrastructure Services', 'Salesforce Support', '2', '2', '2', 'Failure');
 			ServiceNow_Helper.sendRequestToSNOWSFDC('SNOW12',e);
 		}
 	}
 
 	/**
-	returns the highest value for remittance Frequency existing on the BSP configurations related with the operation codes that are linked to the accounts
+	returns the highest value for remittance Frequency existing on the BSP configurations related linked to the accounts
 	*/
-	private String getHighestRemittanceFrequency(List<Account> accs){
-		
-		String remitFreq = '';
-		List<Id> accsIds = new List<Id>();
+	private Map<Id, String> getHighestRemittanceFrequencies(List<Account> accs)
+	{
+		if (accs.isEmpty())
+			return new Map<Id, String>();
 
+		List<Id> accsIds = new List<Id>();
 		for (Account a: accs)
 			accsIds.add(a.Id);
 
-		Map<Id,Account> agOpMap = ANG_AgencyChangesHelper.fetchAgOperationPerAccount(accsIds);
-		List<AMS_Settlement_System__c> ops = ANG_AgencyChangesHelper.fetchOperationConfiguration(RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Settlement_System__c','BSP'),
-		 agOpMap.keySet());
+		Map<Id, List<Account>> agOpMap = ANG_AgencyChangesHelper.fetchAgOperationPerAccount(accsIds);
+		List<AMS_Settlement_System__c> ops = ANG_AgencyChangesHelper.fetchOperationConfiguration(
+			RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Settlement_System__c', 'BSP'),
+		 	agOpMap.keySet());
 
-		Integer aux = 0;
-		for(AMS_Settlement_System__c op: ops){
-			for(ANG_BSP_Attributes__c attr : op.BSP_Attributes__r){
+		Map<Id, String> freqMap = new Map<Id, String>();
 
-				if((Integer)attr.Remittances_Per_Year__c > aux){
-					aux = (Integer)attr.Remittances_Per_Year__c;
-					remitFreq = attr.Remittance_Frequency__c;
+		Map<Id, ANG_BSP_Attributes__c> attrMap = new Map<Id, ANG_BSP_Attributes__c>();
+		for (AMS_Settlement_System__c op : ops)
+		{
+			List<Account> acctLst = agOpMap.get(op.Id);
+
+			for(Account acct : acctLst){
+				ANG_BSP_Attributes__c aux = null;
+				for (ANG_BSP_Attributes__c attr : op.BSP_Attributes__r)
+				{
+					if (aux == null || (Integer) attr.Remittances_Per_Year__c > aux.Remittances_Per_Year__c)
+						aux = attr;
 				}
+				freqMap.put(acct.Id, (aux == null ? '' : aux.Remittance_Frequency__c));
 			}
 		}
 
-		return remitFreq;
+		return freqMap;
 	}
 
 	private void createIEPModelAOscars(){
@@ -717,7 +773,7 @@ public class ANG_AccountTriggerHandler {
 
 		for(Account a :triggerNew){
 
-			if(a.ANG_IEP_Status__c == 'In Progress' && oldMap.get(a.Id).ANG_IEP_Status__c != 'In Progress') 
+			if(a.ANG_IEP_Status__c == 'In Progress' && oldMap.get(a.Id).ANG_IEP_Status__c != 'In Progress')
 				iepAccounts.add(a.Id);
 
 		}
@@ -725,7 +781,7 @@ public class ANG_AccountTriggerHandler {
 		if(iepAccounts.isEmpty()) return;
 
 		Map<Id,Account> iepCountriesAccs = new Map<Id,Account>([SELECT Id, IATA_ISO_Country__r.ANG_IEP_Model__c FROM Account WHERE Id IN :iepAccounts AND (IATA_ISO_Country__r.ANG_IEP_Model__c = 'Model A' OR IATA_ISO_Country__r.ANG_IEP_Model__c = 'Model B' OR IATA_ISO_Country__r.ANG_IEP_Model__c = 'Model B+')]);
-		
+
 		for(Id iepAcc: iepAccounts){
 
 			if(iepCountriesAccs.keySet().contains(iepAcc)){
@@ -750,12 +806,30 @@ public class ANG_AccountTriggerHandler {
 
 	public void updateFormsOfPayment(){
 
+		Set<Id> acctToFetchFoPSet = new Set<Id>();
 		List<Agency_Authorization__c> agencyAuthorizationsToProcessLst = new List<Agency_Authorization__c>();
 
 		for(Account a :triggerNew){
-			if((a.Status__c == AMS_Utils.ACC_S0_TERMINATED && oldMap.get(a.id).Status__c != AMS_Utils.ACC_S0_TERMINATED) || 
-				 (a.Status__c != AMS_Utils.ACC_S0_TERMINATED && oldMap.get(a.id).Status__c == AMS_Utils.ACC_S0_TERMINATED)){
-					 agencyAuthorizationsToProcessLst.addAll(getFormOfPaymentsByAccountId(a.Id));
+			if((a.Status__c == AMS_Utils.ACC_S0_TERMINATED && oldMap.get(a.id).Status__c != AMS_Utils.ACC_S0_TERMINATED) ||
+				(a.Status__c != AMS_Utils.ACC_S0_TERMINATED && oldMap.get(a.id).Status__c == AMS_Utils.ACC_S0_TERMINATED)){
+
+				Account acct = this.accountDataMap.get(a.Id);
+				if(acct == NULL){
+					//If the account was not retrieved yet
+					//we need to fetch it
+					acctToFetchFoPSet.add(a.Id);
+				}
+				else {
+					agencyAuthorizationsToProcessLst.addAll(getformOfPayments(acct));
+				}
+			}
+		}
+
+		//Fetch the remaining accounts
+		if(!acctToFetchFoPSet.isEmpty()){
+			Map<Id, Account> remainingAccountDataMap = fetchAccountData(acctToFetchFoPSet);
+			for(Id acctId : acctToFetchFoPSet){
+				agencyAuthorizationsToProcessLst.addAll(getformOfPayments(remainingAccountDataMap.get(acctId)));
 			}
 		}
 
@@ -765,11 +839,11 @@ public class ANG_AccountTriggerHandler {
 			Account currentAccount = newMap.get(aa.Account__c);
 
 			if(currentAccount.Status__c == AMS_Utils.ACC_S0_TERMINATED) aa.Status__c = 'Non-Active';
-			
+
 			else {
 
 				if(AMS_Utils.setChinaCountries.contains(currentAccount.Country_ISO_Code__c)) aa.Status__c = 'Authorized';
-				
+
 				else if (aa.ANG_FormOfPayment_ID__c == AMS_Utils.CC) {
 
 					if (currentAccount.Is_PCI_compliant__c == 'Yes' ) aa.Status__c = 'Active';
@@ -782,7 +856,7 @@ public class ANG_AccountTriggerHandler {
 			}
 			AgencyAuthorizationsToUpdate.add(aa);
 		}
-	
+
 		if(!AgencyAuthorizationsToUpdate.isEmpty()){
 			update AgencyAuthorizationsToUpdate;
 		}
@@ -793,10 +867,10 @@ public class ANG_AccountTriggerHandler {
 
 		for(Account acc : triggerNew) {
 
-			if((acc.Location_Class__c == 'P' || acc.Location_Class__c == 'D') 
-				&& acc.IATA_ISO_Country__c != null && acc.ANG_IEP_Status__c == null 
+			if((acc.Location_Class__c == 'P' || acc.Location_Class__c == 'D')
+				&& acc.IATA_ISO_Country__c != null && acc.ANG_IEP_Status__c == null
 				&& acc.Status__c != 'Terminated' && acc.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency')) {
-				
+
 				//Just go in the IsoCountryDao if the other conditions are true, to avoid a query
 				List<IATA_ISO_Country__c> listCountries = IATAIsoCountryDAO.getIsoCountriesByIds(new Set<Id>{acc.IATA_ISO_Country__c});
 				if(!listCountries.isEmpty() && (listCountries.get(0).ANG_Portal_Service__c != null || listCountries.get(0).ANG_IEP_Model__c == 'Banking Model'))
@@ -806,19 +880,22 @@ public class ANG_AccountTriggerHandler {
 	}
 
 	private void handleAccountUpdate(){
-		
+
 		Set<Id> toNotify = new Set<Id>();
 
 		for(account acc : triggerNew){
 			if(!ANG_RHCHelper.updateNotificationAlreadySent.contains(acc.Id) && acc.ANG_HE_RiskStatus__c != oldMap.get(acc.Id).ANG_HE_RiskStatus__c){
 				Boolean sendNotification = true;
-				
-				//no need to iterate the Iso Countries, just passing the ID of the current account. Getting the first Element
-				for(AMS_Country_Specific_Attribute__c att : IATAIsoCountryDAO.getIsoCountriesByIds(new Set<ID>{acc.IATA_ISO_Country__c}).get(0).AMS_Country_Specific_Attributes__r)
-					if (att.recordtypeid == AMS_Utils.RECTYPE_CSA_RISK_NOTIFICATION && att.Block_notification_on_Risk_Status_update__c) sendNotification = false;
-				
-				if(sendNotification) toNotify.add(acc.Id);
 
+				//no need to iterate the Iso Countries, just passing the ID of the current account. Getting the first Element
+				for(AMS_Country_Specific_Attribute__c att : IATAIsoCountryDAO.getIsoCountriesByIds(new Set<ID>{acc.IATA_ISO_Country__c}).get(0).AMS_Country_Specific_Attributes__r){
+					if (att.recordtypeid == AMS_Utils.RECTYPE_CSA_RISK_NOTIFICATION && att.Block_notification_on_Risk_Status_update__c){
+						sendNotification = false;
+						break;
+					}
+				}
+
+				if(sendNotification) toNotify.add(acc.Id);
 			}
 		}
 
@@ -827,48 +904,34 @@ public class ANG_AccountTriggerHandler {
 		}
 	}
 
-	private Map<Id, List<Agency_Authorization__c>> getFormOfPaymentsPerAccount(){
+	private List<Agency_Authorization__c> getFormOfPayments(Account acct){
 
-		Map<Id, List<Agency_Authorization__c>> fopMap = new Map<Id, List<Agency_Authorization__c>>();
+		List<Agency_Authorization__c> fopLst = acct.getSObjects('Agency_Authorizations__r');
 
-		Id aaRTId = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
-
-		for(Agency_Authorization__c aa : [SELECT Id, Account__c, ANG_FormOfPayment_ID__c, Authority__c, Status__c, ISO_Country__c FROM Agency_Authorization__c WHERE RecordTypeId = :aaRTId AND Account__c IN :newMap.keySet()]){
-		
-			if(fopMap.containsKey(aa.Account__c)){
-				fopMap.get(aa.Account__c).add(aa);
-			}
-			else{
-				fopMap.put(aa.Account__c, new List<Agency_Authorization__c>{aa});
-			}
-		
+		if(fopLst != NULL){
+			return fopLst;
 		}
 
-		return fopMap;
+		return new List<Agency_Authorization__c>();
 
 	}
 
-	private List<Agency_Authorization__c> getFormOfPaymentsByAccountId(Id acctId){
-			if(formOfPaymentsMap.containsKey(acctId)){
-				return formOfPaymentsMap.get(acctId);
-			}
-			return new List<Agency_Authorization__c>();
-	}
+	private List<Agency_Authorization__c> getActiveOrAuthorizedFoPs(Account acct){
 
-	private List<Agency_Authorization__c> getActiveOrAuthorizedFoPs(Id acctId){
-		
 		List<Agency_Authorization__c> fopToReturnLst = new List<Agency_Authorization__c>();
 
-		List<Agency_Authorization__c> fopLst = getFormOfPaymentsByAccountId(acctId);
+		if(acct == NULL){
+			return fopToReturnLst;
+		}
 
-		for(Agency_Authorization__c aa : fopLst){
+		for(Agency_Authorization__c aa : getFormOfPayments(acct)){
 			if(aa.Status__c == 'Active' || aa.Status__c == 'Authorized'){
 				fopToReturnLst.add(aa);
 			}
 		}
 
 		return fopToReturnLst;
-		
+
 	}
 
 }
