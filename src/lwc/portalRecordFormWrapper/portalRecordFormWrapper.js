@@ -21,7 +21,6 @@ import isCountryEligibleForPaymentLink from '@salesforce/apex/PortalProfileCtrl.
 import paymentLinkRedirect from '@salesforce/apex/PortalServicesCtrl.paymentLinkRedirect'; //WMO-699 - ACAMBAS
 import hasAccessToSIS from '@salesforce/apex/DAL_WithoutSharing.hasAccessToService'; //WMO-736 - ACAMBAS
 import getPortalServiceDetails from '@salesforce/apex/PortalServicesCtrl.getPortalServiceDetails'; //WMO-736 - ACAMBAS
-import goToOldPortalService from '@salesforce/apex/PortalServicesCtrl.goToOldPortalService'; //WMO-736 - ACAMBAS
 
 import SaveLabel from '@salesforce/label/c.CSP_Save';
 import CancelLabel from '@salesforce/label/c.CSP_Cancel';
@@ -269,16 +268,9 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
             if(this.hasAccessToSISPortal) {
                 getPortalServiceDetails({ serviceName: SISPortalService }).then(result => {
                     let portalService = JSON.parse(JSON.stringify(result));
-
-                    if (portalService !== undefined && portalService !== '') {
-                        //let SISIconHTML = portalService.recordService.Application_icon__c;
-                        let SISPortalURL = portalService.recordService.Application_URL__c;
-                        this.iconUrl = portalService.recordService.Application_icon_URL__c;
-                        goToOldPortalService({ myurl: SISPortalURL }).then(result => {
-                            //this.SISPortalLink = Link_To_SIS.replace('{1}', SISIconHTML);
-                            //this.SISPortalLink = this.SISPortalLink.replace('{2}', result);
-                            this.sisPage = result;
-                        })
+                    if (portalService !== undefined && portalService !== '' && portalService.recordService !== undefined && portalService.recordService !== '') {
+						this.iconUrl = portalService.recordService.Application_icon_URL__c;
+						this.sisPage = portalService.recordService.Application_URL__c;
                     }
                 });
             }
