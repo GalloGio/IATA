@@ -42,7 +42,7 @@ public class IEC_ProductDetailController  extends IEC_PageController
 	public string sSection3Description {get; set;}
 	public string sSection5Name {get; set;}
 	public string sSection5Description {get; set;}
-	
+
 	// Additional Resources section
 	public string sResourceMainText {get; set;}
 	public string sResource1File {get; set;}
@@ -51,8 +51,8 @@ public class IEC_ProductDetailController  extends IEC_PageController
 	public string sResource2Description {get; set;}
 	public string sResource3File {get; set;}
 	public string sResource3Description {get; set;}
-	
-	
+
+
 	// Boolean variables to dynamically show and hide the sections
 	public boolean bSection1Show {get; set;}
 	public boolean bSection2Show {get; set;}
@@ -61,7 +61,7 @@ public class IEC_ProductDetailController  extends IEC_PageController
 	public boolean bSection5Show {get; set;}
 	public boolean bSection6Show {get; set;}
 	public boolean bSection7Show {get; set;}
-	
+
 	// Boolean variables to dynamically show and hide the product features
 	public boolean bFeature1Show {get; set;}
 	public boolean bFeature2Show {get; set;}
@@ -69,34 +69,34 @@ public class IEC_ProductDetailController  extends IEC_PageController
 	public boolean bFeature4Show {get; set;}
 	public boolean bFeature5Show {get; set;}
 	public boolean bFeature6Show {get; set;}
-	
+
 	// Boolean variables to dynamically show and hide the additional resources
 	public boolean bResource1Show {get; set;}
 	public boolean bResource2Show {get; set;}
-	public boolean bResource3Show {get; set;}	
+	public boolean bResource3Show {get; set;}
 	public boolean bProductTriable {get; set;}
-	
+
 	// Boolean to determine whether to show the price on the rateplans or not
 	public boolean bShowPrice {get; set;}
-	
+
 	public String selectedTopic{get;set;}
 	public String selectedTopicLabel{get;set;}
 
 	public String productBreadcrumb {
-        get{
-        	String prdbread = Label.Home + ' > ' + selectedCategory.getLabel() + ' > ' + selectedTopicLabel + ' > ' + ecomProduct.ProductName;
-        	return JSON.serialize(prdbread);
-    	} 
-        set;
-    }
+		get{
+			String prdbread = Label.Home + ' > ' + selectedCategory.getLabel() + ' > ' + selectedTopicLabel + ' > ' + ecomProduct.ProductName;
+			return JSON.serialize(prdbread);
+		}
+		set;
+	}
 
-    public String productNameAndIdStr {
-        get{
-            String str = ecomProduct.ProductName + ' - ' + ecomProduct.ProductId;
-            return JSON.serialize(str);
-        }
-        set;
-    }
+	public String productNameAndIdStr {
+		get{
+			String str = ecomProduct.ProductName + ' - ' + ecomProduct.ProductId;
+			return JSON.serialize(str);
+		}
+		set;
+	}
 
 	public String productWrapper {
 		get {
@@ -112,22 +112,22 @@ public class IEC_ProductDetailController  extends IEC_PageController
 			prodObj.put('id', ecomProduct.ProductNumber);
 			prodObj.put('name', ecomProduct.ProductName);
 			prodObj.put('category', ecomProduct.Portfolio);
-			prodObj.put('price', ecomProduct.unitPrice == null ? 0.00 : ecomProduct.unitPrice);    
-            prodObj.put('brand', ecomProduct.ProductCategory);        
-            prodObj.put('dimension1', ecomProduct.Edition);
-            prodObj.put('dimension2', ecomProduct.Language);
-            prodObj.put('dimension3', ecomProduct.InventoryStatus);
-            prodObj.put('dimension4', ecomProduct.AvailabilityDate);
-            prodObj.put('dimension5', ecomProduct.Media);
-            prodObj.put('dimension6', ecomProduct.EffectiveTo);
+			prodObj.put('price', ecomProduct.unitPrice == null ? 0.00 : ecomProduct.unitPrice);
+			prodObj.put('brand', ecomProduct.ProductCategory);
+			prodObj.put('dimension1', ecomProduct.Edition);
+			prodObj.put('dimension2', ecomProduct.Language);
+			prodObj.put('dimension3', ecomProduct.InventoryStatus);
+			prodObj.put('dimension4', ecomProduct.AvailabilityDate);
+			prodObj.put('dimension5', ecomProduct.Media);
+			prodObj.put('dimension6', ecomProduct.EffectiveTo);
 
 			return JSON.serialize(ecommObj);
 		}
 		set;
 	}
-	
 
-	public IEC_ProductDetailController() 
+
+	public IEC_ProductDetailController()
 	{
 		bDisplayPrice= true;
 	}
@@ -136,7 +136,7 @@ public class IEC_ProductDetailController  extends IEC_PageController
 	{
 		Product_Sel pSelector = new Product_Sel();
 		String productNumber = System.currentPageReference().getParameters().get('id') ;
-	
+
 		try
 		{
 			iColWidth = 100;
@@ -147,30 +147,30 @@ public class IEC_ProductDetailController  extends IEC_PageController
 			system.debug('susana ecomProducts : '+ecomProducts);
 			if(ecomProducts.size() > 0)
 			{
-				//Parent found 
+				//Parent found
 				ecomProduct = ecomProducts[0];
 				system.debug('susana ecomProduct : '+ecomProduct);
-				//Query sub-products 
+				//Query sub-products
 				String subCond = 'IEC_Parent_Product__c=\''+ecomProduct.ProductId+'\'';
 				system.debug('susana subCond : '+subCond);
 				List<EComProduct_DTO> ecomSubProducts = Product_Sel.getEComProduct(null, false, subCond, null, false, null);
 				system.debug('susana ecomSubProducts : '+ecomSubProducts);
 				//Query sub-product's RatePlanInfo
-				Set<Id> productRatePlanInfoIds = new Set<Id>(); 
+				Set<Id> productRatePlanInfoIds = new Set<Id>();
 				for(EComProduct_DTO prod :ecomSubProducts)
 					productRatePlanInfoIds.add(prod.ProductRatePlanInfoId);
 
 				List<Product_Rate_Plan_Information__c> plans = IECProductManager.getProductRatePlansInformations(productRatePlanInfoIds);
 				Map<Id, Product_Rate_Plan_Information__c> planById = new Map<Id, Product_Rate_Plan_Information__c>(plans);
 
-				Set<Id> planIds = new Set<Id>();				
+				Set<Id> planIds = new Set<Id>();
 				subProducts = new List<SubProductWrapper>();
 				for(EComProduct_DTO prod : ecomSubProducts)
 				{
 					if(planById.containsKey(prod.ProductRatePlanInfoId))
 					{
 						SubProductWrapper subProd = new SubProductWrapper();
-							subProd.ecomProduct = prod; 
+							subProd.ecomProduct = prod;
 							subProd.ratePlanInformation = planById.get(prod.ProductRatePlanInfoId);
 						subProducts.add(subProd);
 
@@ -206,7 +206,7 @@ public class IEC_ProductDetailController  extends IEC_PageController
 			}
 			else
 			{
-				//-- Product Not found 
+				//-- Product Not found
 				ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, Label.Product_Not_Found));
 			}
 
@@ -221,7 +221,7 @@ public class IEC_ProductDetailController  extends IEC_PageController
 			Map<String,String> mapCategory_ImageName = Utility.buildMapFromString(Utility.getTextSetting('GDP Category-Image'), ',', '=');
 			if (mapCategory_ImageName.containsKey(pc.Name))
 				sProductIcon = mapCategory_ImageName.get(pc.Name);
-			
+
 			bShowPrice = (pc.Show_price_on_eCommerce__c == null || pc.Show_price_on_eCommerce__c == 'Yes');
 			system.debug('susana pc : '+pc);
 			sDisplayName = pc.Display_Name__c;
@@ -254,7 +254,7 @@ public class IEC_ProductDetailController  extends IEC_PageController
 			bSection5Show = pc.Section_5_Show__c;
 			bSection6Show = pc.Section_6_Show__c;
 			bSection7Show = pc.Section_7_Show__c;
-			
+
 			// Determines which feature to show
 			bFeature1Show = !(String.isEmpty(sFeature1Description) || String.isEmpty(sFeature1Image));
 			bFeature2Show = !(String.isEmpty(sFeature2Description) || String.isEmpty(sFeature2Image));
@@ -262,7 +262,7 @@ public class IEC_ProductDetailController  extends IEC_PageController
 			bFeature4Show = !(String.isEmpty(sFeature4Description) || String.isEmpty(sFeature4Image));
 			bFeature5Show = !(String.isEmpty(sFeature5Description) || String.isEmpty(sFeature5Image));
 			bFeature6Show = !(String.isEmpty(sFeature6Description) || String.isEmpty(sFeature6Image));
-			
+
 			// Additional Resources
 			sResourceMainText = pc.Resources_Main_Text__c;
 			sResource1File = pc.Resource_1_File__c;
@@ -289,15 +289,15 @@ public class IEC_ProductDetailController  extends IEC_PageController
 		return null;
 	}
 
-	public PageReference addToCart() 
+	public PageReference addToCart()
 	{
 		System.debug('addToCart CALLED');
-		try 
+		try
 		{
 			system.debug('try');
 			Product2 p = [
-				SELECT Id, IEC_Parent_Product__c, SAP_Material_Number__c , IEC_Product_Rate_Plan_Information__c, Name, IEC_Parent_Product__r.Name 
-				FROM Product2 
+				SELECT Id, IEC_Parent_Product__c, SAP_Material_Number__c , IEC_Product_Rate_Plan_Information__c, Name, IEC_Parent_Product__r.Name
+				FROM Product2
 				WHERE IEC_Product_Rate_Plan_Information__c = :selectedRatePlanInformationId
 				LIMIT 1
 			];
@@ -307,11 +307,11 @@ public class IEC_ProductDetailController  extends IEC_PageController
 			List<Product2> sibblingProducts = [
 				SELECT SAP_Material_Number__c FROM Product2 WHERE IEC_Parent_Product__c = :p.IEC_Parent_Product__c AND Id != :p.Id
 			];
-			Set<String> sibblingProductNumbers = new Set<String>(); 
+			Set<String> sibblingProductNumbers = new Set<String>();
 			for(Product2 prod : sibblingProducts)
 			{
 				sibblingProductNumbers.add(prod.SAP_Material_Number__c);
-			} 
+			}
 
 			String productNumber2Add = p.SAP_Material_Number__c;
 			//Map<String, Decimal> cookieContent = IECOrder_Svc.getItemsInCookie();
@@ -327,8 +327,8 @@ public class IEC_ProductDetailController  extends IEC_PageController
 				}
 			}
 
-			//-- Validate another sub-product does not exist in the cart 
-			Boolean sibblingInCart = false; 
+			//-- Validate another sub-product does not exist in the cart
+			Boolean sibblingInCart = false;
 			for(String item : cookieContent.keySet())
 			{
 				if(sibblingProductNumbers.contains(item))
@@ -339,10 +339,10 @@ public class IEC_ProductDetailController  extends IEC_PageController
 			}
 
 			//Verified if the cart already have a time-based subscription
-			List<Product2> existingProducts = [Select id, IEC_Product_Rate_Plan_Information__c, IEC_Parent_Product__c 
+			List<Product2> existingProducts = [Select id, IEC_Product_Rate_Plan_Information__c, IEC_Parent_Product__c
 												from Product2 where SAP_Material_Number__c in :cookieContent.keySet()];
 
-			Boolean existSubscriptionProd = false;								
+			Boolean existSubscriptionProd = false;
 			if(existingProducts != null && !existingProducts.isEmpty()){
 				for(Product2 prd : existingProducts){
 					if(prd.IEC_Product_Rate_Plan_Information__c != null && prd.IEC_Parent_Product__c != null){
@@ -351,12 +351,12 @@ public class IEC_ProductDetailController  extends IEC_PageController
 						break;
 					}
 				}
-			}						
+			}
 
 			if(!sibblingInCart && !existSubscriptionProd)
 			{
 				// Ecommerce Enhancements R2 - aosantos, do not redirect immediately when creating cookie, it might not be stored
-				
+
 				if (newShoppingCart == false) {
 					PageReference pageRef = IECOrder_Svc.addCartToCookie(p.SAP_Material_Number__c, 1);
 				} else {
@@ -367,43 +367,43 @@ public class IEC_ProductDetailController  extends IEC_PageController
 			}
 			else
 			{
-				
+
 				String urlParamMsg = (sibblingInCart) ? 'siblingInCart' : 'subscriptionAlreadyExist';
 
-				
+
 				PageReference pageRef = new Pagereference('/IEC_ShoppingCart?msg=' + urlParamMsg);
 				pageRef.setRedirect(true);
 				return pageRef;
 
-				//--- Sibbling already in Cart 
-				//ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.WARNING, 
+				//--- Sibbling already in Cart
+				//ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.WARNING,
 				//	String.format(Label.Item_already_in_your_cart, new List<String> {p.IEC_Parent_Product__r.Name})));
 
 				//return null;
 			}
-			
-		} 
-		catch (Exception e) 
+
+		}
+		catch (Exception e)
 		{
-	        ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, e.getMessage() + ' - ' +e.getStackTraceString()));
+			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, e.getMessage() + ' - ' +e.getStackTraceString()));
 			return null;
-		}		
+		}
 	}
 
 	public Pagereference register() {
-        try {
-            Pagereference pr = Page.ISSP_Registration;
-            pr.getParameters().put('sRefererCommunity', 'IEC_ProductDetail?id='+ecomProduct.ProductNumber);
-            pr.setRedirect(true);
-            return pr;
-        }
-        catch (Exception ex) {
-            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage()));
-            return null;
-        }
-    }
+		try {
+			Pagereference pr = Page.ISSP_Registration;
+			pr.getParameters().put('sRefererCommunity', 'IEC_ProductDetail?id='+ecomProduct.ProductNumber);
+			pr.setRedirect(true);
+			return pr;
+		}
+		catch (Exception ex) {
+			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage()));
+			return null;
+		}
+	}
 
-	
+
 	/**
 	 * Redirects the user to the quote page with the selected product rate plan info
 	 */
@@ -411,9 +411,9 @@ public class IEC_ProductDetailController  extends IEC_PageController
 		//return null;
 		try {
 			Pagereference prQuotePage = Page.IECQuote;
-		    prQuotePage.getParameters().put(IECConstants.PARAM_RATEPLANINFO_ID, IECUTil.EncryptEncodeParameter(selectedRatePlanInformationId));
-		    prQuotePage.setRedirect(true);
-		    return prQuotePage;
+			prQuotePage.getParameters().put(IECConstants.PARAM_RATEPLANINFO_ID, IECUTil.EncryptEncodeParameter(selectedRatePlanInformationId));
+			prQuotePage.setRedirect(true);
+			return prQuotePage;
 		}
 		catch (Exception ex) {
 			addErrorMessage(ex.getMessage());
@@ -421,7 +421,7 @@ public class IEC_ProductDetailController  extends IEC_PageController
 			return null;
 		}
 	}
-	
+
 	/**
 	 * Redirects the user to the Trial page with the selected product rate plan info
 	 */
@@ -430,8 +430,8 @@ public class IEC_ProductDetailController  extends IEC_PageController
 		try {
   			Pagereference prTrialRequest = Page.IECTrialRequest;
   			prTrialRequest.getParameters().put(IECConstants.PARAM_RATEPLAN_ID, IECUTil.EncryptEncodeParameter(selectedRatePlanInformationId));
-		    prTrialRequest.setRedirect(true); 
-		    return prTrialRequest;
+			prTrialRequest.setRedirect(true);
+			return prTrialRequest;
 		}
 		catch (Exception ex) {
 			addErrorMessage(ex.getMessage());

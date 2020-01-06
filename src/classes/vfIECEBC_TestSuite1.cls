@@ -143,7 +143,7 @@ public class vfIECEBC_TestSuite1 {
 			System.assertEquals(null, layoutController.pageLoad());
 
 			vfIECEBC_AccountRatePlan accRP = new vfIECEBC_AccountRatePlan();
-		  	Test.stopTest();
+				Test.stopTest();
 
 			System.assertNotEquals(null, accRP.isEbcPrepaid);
 			System.assertNotEquals(null, accRP.productRatePlan.Name);
@@ -284,7 +284,7 @@ public class vfIECEBC_TestSuite1 {
 		System.runAs(usr) {
 			Test.startTest();
 				initPostRunAs();
-		  	Test.stopTest();
+				Test.stopTest();
 
 			vfIECEBC_Layout layoutController = new vfIECEBC_Layout();
 			System.assertEquals(null, layoutController.pageLoad());
@@ -807,9 +807,9 @@ public class vfIECEBC_TestSuite1 {
 
 			System.debug(Limits.getQueries());
 			List<EBC_Campaign__c> camps = [SELECT Id, Name, Send_Datetime__c, External_Id__c, Status__c, is7dFollowUpCompleted__c
-										   FROM EBC_Campaign__c
-										   WHERE id = :camp.Id
-										  ];
+											 FROM EBC_Campaign__c
+											 WHERE id = :camp.Id
+											];
 
 			System.debug(Limits.getQueries());
 			//IECEBC_ETCampaignTrackingAsync.createCumulativeCampaignTracking(camps);

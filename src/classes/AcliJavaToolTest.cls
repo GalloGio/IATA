@@ -16,7 +16,7 @@ private class AcliJavaToolTest {
 			new AWSKey__c(name = 'adevconf' ,
 				Key__c = 'asd',
 				Secret__c = 'asd',
-				IAS_configuration_name__c = 'asdas', 
+				IAS_configuration_name__c = 'asdas',
 				IAS_Access_Point__c = 'asd',
 				Bucket__c = 'asd',
 				AWS_ENDPOINT_URL__c = 'asd')

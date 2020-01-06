@@ -25,7 +25,7 @@ public without sharing class PortalIftpUtils {
 	@AuraEnabled(cacheable=false)
 	public static UserInfoRecordsWrapper getUserInfo(){
 		UserInfoRecordsWrapper userInfo;
-		
+
 		Id userId = System.UserInfo.getUserId();
 		Id contactRoleId = null;
 		String contactRole = null;
@@ -44,12 +44,12 @@ public without sharing class PortalIftpUtils {
 			throw e;
 		}
 		Id accRoleRecTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Role__c', 'IFTP');
-	
+
 		Account_Role_Service__c accRoleSrv = [SELECT Id, Account_Role_Services__r.Name,
 													Account_Role__c, Account_Role__r.Status__c, Account_Role__r.RecordType.Name
 												FROM Account_Role_Service__c
 												WHERE Account_Role__r.Account__c = :userAcc.contact.accountid
-												AND Account_Role__r.RecordTypeId  = :accRoleRecTypeId 
+												AND Account_Role__r.RecordTypeId  = :accRoleRecTypeId
 												LIMIT 1];
 
 		List<Account_Contact_Role__c> lContactRole = [SELECT Id, Contact_Role__c, Contact_Roles__c, Contact_Roles__r.Name
@@ -458,7 +458,7 @@ public without sharing class PortalIftpUtils {
 
 	@AuraEnabled (cacheable=false)
 	public static InsertStationWrapper updateStation(List<Object> dataToSave, String origin, Id accountId){
-		
+
 		List<Role_Address__c> stationsToUpdate = new List<Role_Address__c>();
 		InsertStationWrapper irw;
 		List<Airport_Detail__c> ITPStationsInDatabase = getITPStations(accountId);
@@ -1604,7 +1604,7 @@ public without sharing class PortalIftpUtils {
 											Contact_Role_Certification__r.Account_Contact_Role__r.Last_Name__c, Address__r.City__c,
 											Address__r.Code__c, Contact_Role_Certification__r.Certification__r.Name,
 											Proficiency_level__c, Proficiency_Granted_By__c
-										  FROM Role_Address__c WHERE Id=:roleAddressId];
+											FROM Role_Address__c WHERE Id=:roleAddressId];
 
 			Account itpAcc = [SELECT name FROM Account WHERE id = :roleAddress.Contact_Role_Certification__r.Account_Contact_Role__r.Contact__r.AccountId LIMIT 1];
 
@@ -1622,7 +1622,7 @@ public without sharing class PortalIftpUtils {
 
 			IFTP_History__c iftpH = new IFTP_History__c();
 			iftpH.Event_Type__c = String.valueOf(portalIftpHistoryManagement.Employee_Loose_Proficiency);
-			iftpH.ITP_Name__c = itpAcc.name; 
+			iftpH.ITP_Name__c = itpAcc.name;
 			iftpH.Employee_Code__c = roleAddress.Contact_Role_Certification__r.Account_Contact_Role__r.Company_Code__c;
 			iftpH.Employee_First_Name__c = roleAddress.Contact_Role_Certification__r.Account_Contact_Role__r.First_Name__c;
 			iftpH.Employee_Last_Name__c = roleAddress.Contact_Role_Certification__r.Account_Contact_Role__r.Last_Name__c;

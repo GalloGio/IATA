@@ -691,7 +691,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 			recordtypeId=RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Country_Specific_Attribute__c','RTS_Risk_Alert_Notification')
 	 	);
 
-	  	insert csa;
+			insert csa;
 
 		Operational_Calendar__c op = new operational_Calendar__c( ISS_Operation__c = [SELECT Id FROM AMS_Settlement_System__c WHERE Name = 'BSP-FR'][0].Id,
 			First_Day__c = Date.today(), Last_Day__c = Date.today(), Frequency_code__c = 'M', Remittance_Day__c = Date.today() );
@@ -721,9 +721,9 @@ private class ANG_RHCAlertTriggerHandler_test {
 		List<ISSP_Web_Service_Log__c> logs = [Select Id From ISSP_Web_Service_Log__c where Case__c = :c.get(0).Id];
 		System.assertEquals(logs.size(), 1, 'Response was not saved');
 
-  	}
+		}
 
-  	private static testmethod void testRedAlertCreationNoConfigurationMatched(){
+		private static testmethod void testRedAlertCreationNoConfigurationMatched(){
 		// no configuration for the account country found, so it will use the default one
 		AMS_Settlement_System__c iss = new AMS_Settlement_System__c(Name = 'BSP-PT');
 		insert iss;
@@ -758,7 +758,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 			IATA_ISO_Country__c = country2.id,
 			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account','IATA_Agency')
 		);
-	   	insert a;
+		 	insert a;
 
 		operational_Calendar__c op = new operational_Calendar__c( ISS_Operation__c = iss.id,
 			First_Day__c = Date.today(), Last_Day__c = Date.today(), Frequency_code__c = 'M', Remittance_Day__c = Date.today() );
@@ -821,7 +821,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 			IATA_ISO_Country__c = country2.id,
 			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account','IATA_Agency')
 		);
-	   	insert a;
+		 	insert a;
 
 		operational_Calendar__c op = new operational_Calendar__c( ISS_Operation__c = iss.id,
 			First_Day__c = Date.today(), Last_Day__c = Date.today(), Frequency_code__c = 'M', Remittance_Day__c = Date.today() );

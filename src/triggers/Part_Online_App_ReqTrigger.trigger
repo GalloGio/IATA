@@ -10,17 +10,17 @@
  	1.0		  	Joao Ferreira		2019-01-14  	INITIAL DEVELOPMENT
 */
 trigger Part_Online_App_ReqTrigger on Participant_Online_App_Requirement__c (
-	before delete, 
+	before delete,
 	after delete) {
 
 	if (Trigger.isBefore) {
-    	if (Trigger.isDelete) {
-    		Part_Online_App_ReqTriggerHandler.handleBeforeDelete(Trigger.old);
-    	}	    
-	} 
+		if (Trigger.isDelete) {
+			Part_Online_App_ReqTriggerHandler.handleBeforeDelete(Trigger.old);
+		}
+	}
 	if (Trigger.isAfter) {
-    	if (Trigger.isDelete) {
-    		Part_Online_App_ReqTriggerHandler.handleAfterDelete(Trigger.old);
-    	}	    
-	} 
+		if (Trigger.isDelete) {
+			Part_Online_App_ReqTriggerHandler.handleAfterDelete(Trigger.old);
+		}
+	}
 }

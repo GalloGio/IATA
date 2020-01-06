@@ -12,7 +12,7 @@
  * coverage, and prevent regressions. All Apex classes are
  * required to have at least 75% code coverage in order to be deployed
  * to a production organization. In addition, all triggers must have some code coverage.
- * 
+ *
  * The @isTest class annotation indicates this class only contains test
  * methods. Classes defined with the @isTest annotation do not count against
  * the organization size limit for all Apex scripts.
@@ -22,13 +22,13 @@
 @isTest
 private class clsCustomCaseListController_Test {
 
-    static testMethod void myControllerTest() {
-    	//Test converage for the Page_CustomCaseListPage visualforce page
+		static testMethod void myControllerTest() {
+			//Test converage for the Page_CustomCaseListPage visualforce page
  		PageReference pageRef = Page.CustomCaseListPage;
  		Test.setCurrentPageReference(pageRef);
- 		
-       	clsCustomCaseListController aClass = new clsCustomCaseListController();
-       	
-       	List<Case> caseList = aClass.getCList();
-    }
+
+			 	clsCustomCaseListController aClass = new clsCustomCaseListController();
+
+			 	List<Case> caseList = aClass.getCList();
+		}
 }

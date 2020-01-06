@@ -190,20 +190,20 @@ private class AmazonFinancialTest {
 		 insert Amazon_Cred;
 
 		 list<AWSKey__c> AWS_KEYs = new list<AWSKey__c>{new AWSKey__c(name = 'aprodconf',
-																	  Key__c = 'asd',
-																	  Secret__c = 'asd',
-																	  IAS_configuration_name__c = 'asdas',
-																	  IAS_Access_Point__c = 'asd',
-																	  Bucket__c = 'asd',
-																	   AWS_ENDPOINT_URL__c = 'asd'),
+																		Key__c = 'asd',
+																		Secret__c = 'asd',
+																		IAS_configuration_name__c = 'asdas',
+																		IAS_Access_Point__c = 'asd',
+																		Bucket__c = 'asd',
+																		 AWS_ENDPOINT_URL__c = 'asd'),
 														 new AWSKey__c(name = 'adevconf' ,
-																	  Key__c = 'asd',
-																	  Secret__c = 'asd',
-																	  IAS_configuration_name__c = 'asdas',
-																	  IAS_Access_Point__c = 'asd',
-																	  Bucket__c = 'asd',
-																	  AWS_ENDPOINT_URL__c = 'asd')
-																	   };
+																		Key__c = 'asd',
+																		Secret__c = 'asd',
+																		IAS_configuration_name__c = 'asdas',
+																		IAS_Access_Point__c = 'asd',
+																		Bucket__c = 'asd',
+																		AWS_ENDPOINT_URL__c = 'asd')
+																		 };
 
 		 insert AWS_KEYs;
 		 UtilityCS__c sup = new UtilityCS__c(name = 'Emails',value__c='arandomEmail@gmail.com');
@@ -241,13 +241,13 @@ private class AmazonFinancialTest {
 		testCase1  = [select id, Status,CaseNumber,ArchivedDate__c,account.type,
 							 account.IATA_ISO_Country__r.iso_code__c ,account.Country_ISO_Code__c,
 							 IFAP_Agent_Code__c,AccountId ,Financial_Review_Type__c,IsComplaint__c
-							  from Case where id =: testCase1.id ];
+								from Case where id =: testCase1.id ];
 
 
 		ApexPages.StandardController stand = new ApexPages.StandardController(testCase1);
 		AmazonFinancialCtrl controller = new AmazonFinancialCtrl(stand);
 		//system.debug('asdasd '+ controller.listFile);
-	  // throw new transformationException('asdasd '+ controller.listFile);
+		// throw new transformationException('asdasd '+ controller.listFile);
 		system.assertEquals(controller.listFile.size(),1);
 
 		controller.refreshAll();
@@ -310,24 +310,24 @@ private class AmazonFinancialTest {
 		PageReference pageRef = Page.AmazonFinancial;
 		Test.setCurrentPage(pageRef);
 
-		  Amazon_Cred__c Amazon_Cred =  new Amazon_Cred__c(name = 'IFAP', Prod_Configuration__c = 'aprodconf' , Dev_Configuration__c = 'adevconf');
+			Amazon_Cred__c Amazon_Cred =  new Amazon_Cred__c(name = 'IFAP', Prod_Configuration__c = 'aprodconf' , Dev_Configuration__c = 'adevconf');
 		 insert Amazon_Cred;
 
 		 list<AWSKey__c> AWS_KEYs = new list<AWSKey__c>{new AWSKey__c(name = 'aprodconf',
-																	  Key__c = 'asd',
-																	  Secret__c = 'asd',
-																	  IAS_configuration_name__c = 'asdas',
-																	  IAS_Access_Point__c = 'asd',
-																	  Bucket__c = 'asd',
-																	   AWS_ENDPOINT_URL__c = 'asd'),
+																		Key__c = 'asd',
+																		Secret__c = 'asd',
+																		IAS_configuration_name__c = 'asdas',
+																		IAS_Access_Point__c = 'asd',
+																		Bucket__c = 'asd',
+																		 AWS_ENDPOINT_URL__c = 'asd'),
 														 new AWSKey__c(name = 'adevconf' ,
-																	  Key__c = 'asd',
-																	  Secret__c = 'asd',
-																	  IAS_configuration_name__c = 'asdas',
-																	  IAS_Access_Point__c = 'asd',
-																	  Bucket__c = 'asd',
-																	  AWS_ENDPOINT_URL__c = 'asd')
-																	   };
+																		Key__c = 'asd',
+																		Secret__c = 'asd',
+																		IAS_configuration_name__c = 'asdas',
+																		IAS_Access_Point__c = 'asd',
+																		Bucket__c = 'asd',
+																		AWS_ENDPOINT_URL__c = 'asd')
+																		 };
 
 		 insert AWS_KEYs;
 
@@ -370,7 +370,7 @@ private class AmazonFinancialTest {
 		ApexPages.StandardController stand = new ApexPages.StandardController(testCase1);
 		AmazonFinancialCtrl controller = new AmazonFinancialCtrl(stand);
 
-	  //  throw new transformationException('asdasd '+ controller.cse);
+		//  throw new transformationException('asdasd '+ controller.cse);
 		system.assertEquals(controller.Archived, true);
 		system.assertEquals(controller.docs.size(), 1);
 

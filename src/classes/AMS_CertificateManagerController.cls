@@ -38,7 +38,7 @@ public class AMS_CertificateManagerController {
 		get{
 			if(year == null) year = String.valueOf(System.today().year());
 			return year;
-		} 
+		}
 		set;
 	}
 
@@ -110,7 +110,7 @@ public class AMS_CertificateManagerController {
 			return [SELECT Id, Name, (SELECT Id, Name FROM Attachments) FROM AMS_Certificate_Request__c WHERE Id IN :reqids];
 		}
 	}
-	
+
 	public Blob fileBody { get; set; }
 	public Id requestCreation { get; set; }
 	public String yearText { get; set; }
@@ -221,7 +221,7 @@ public class AMS_CertificateManagerController {
 		}
 		insert requestsToInsert;
 		reqIds = new Map<Id, AMS_Certificate_Request__c>(requestsToInsert).keySet();
-		
+
 		requestCreation = System.enqueueJob(new AMS_CertificateHelper.CertificateCreation(requests, (year == 'Other' ? yearText : year), UserInfo.getUserEmail()));
 
 		updateAccounts(accountIds);

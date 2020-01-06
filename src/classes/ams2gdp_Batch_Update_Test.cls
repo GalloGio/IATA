@@ -6,62 +6,62 @@ private class ams2gdp_Batch_Update_Test {
 	@testSetup static void loadData() {
 		List<AMS2GDP_Log__c> logs = new List<AMS2GDP_Log__c>();
 		logs.add(new AMS2GDP_Log__c(
-		             Job_Name__c = 'Job1'
-		         ));
+								 Job_Name__c = 'Job1'
+						 ));
 		insert logs;
 
 		List<GDP_Reference_Table__c> gdsTables = new List<GDP_Reference_Table__c>();
 		gdsTables.add(new GDP_Reference_Table__c(Name = 'Amadeus'
-		              , Code__c = 'AM'
-		                          , Definition__c = 'Amadeus'
-		                                  , Table__c = 'AIRSYS'
-		                                        ));
+									, Code__c = 'AM'
+															, Definition__c = 'Amadeus'
+																			, Table__c = 'AIRSYS'
+																						));
 		gdsTables.add(new GDP_Reference_Table__c(Name = 'Apollo'
-		              , Code__c = 'AP'
-		                          , Definition__c = 'Apollo'
-		                                  , Table__c = 'AIRSYS'
-		                                        ));
+									, Code__c = 'AP'
+															, Definition__c = 'Apollo'
+																			, Table__c = 'AIRSYS'
+																						));
 
 		List<GDP_Reference_Table__c> catTables = new List<GDP_Reference_Table__c>();
 		catTables.add(new GDP_Reference_Table__c(Name = 'Administrative Office'
-		              , Code__c = 'AO'
-		                          , Definition__c = 'Apollo'
-		                                  , Table__c = 'LOCCAT'
-		                                        ));
+									, Code__c = 'AO'
+															, Definition__c = 'Apollo'
+																			, Table__c = 'LOCCAT'
+																						));
 
 		List<GDP_Reference_Table__c> classTables = new List<GDP_Reference_Table__c>();
 		classTables.add(new GDP_Reference_Table__c(Name = 'Cargo'
-		                , Code__c = 'C'
-		                            , Definition__c = 'Cargo'
-		                                    , Table__c = 'ORGCLASS'
-		                                          ));
+										, Code__c = 'C'
+																, Definition__c = 'Cargo'
+																				, Table__c = 'ORGCLASS'
+																							));
 
 		List<GDP_Reference_Table__c> airCodeTables = new List<GDP_Reference_Table__c>();
 		airCodeTables.add(new GDP_Reference_Table__c(Name = 'IATA'
-		                  , Code__c = 'IATA'
-		                              , Definition__c = 'IATA'
-		                                      , Table__c = 'ORGABB'
-		                                            ));
+											, Code__c = 'IATA'
+																	, Definition__c = 'IATA'
+																					, Table__c = 'ORGABB'
+																								));
 		List<GDP_Reference_Table__c> statusTables = new List<GDP_Reference_Table__c>();
 		statusTables.add(new GDP_Reference_Table__c(Name = 'Accredited'
-		                 , Code__c = '9'
-		                             , Definition__c = 'Accredited'
-		                                     , Table__c = 'STATUS'
-		                                           ));
+										 , Code__c = '9'
+																 , Definition__c = 'Accredited'
+																				 , Table__c = 'STATUS'
+																							 ));
 
 		List<GDP_Reference_Table__c> assocTables = new List<GDP_Reference_Table__c>();
 		assocTables.add(new GDP_Reference_Table__c(Name = 'ABAV'
-		                , Code__c = 'ABAV'
-		                            , Definition__c = 'ABAV'
-		                                    , Table__c = 'ASSC'
-		                                          ));
+										, Code__c = 'ABAV'
+																, Definition__c = 'ABAV'
+																				, Table__c = 'ASSC'
+																							));
 
 		List<GDP_Reference_Table__c> airportTables = new List<GDP_Reference_Table__c>();
 		airportTables.add(new GDP_Reference_Table__c(Name = 'ABIDJAN'
-		                  , Code__c = 'ABJ'
-		                              , Definition__c = 'ABIDJAN'
-		                                      , Table__c = 'AIRPORT'
-		                                            ));
+											, Code__c = 'ABJ'
+																	, Definition__c = 'ABIDJAN'
+																					, Table__c = 'AIRPORT'
+																								));
 
 
 
@@ -91,135 +91,135 @@ private class ams2gdp_Batch_Update_Test {
 		//GDS & Account Categories
 		List<Account_Category__c> accountCategories = new List<Account_Category__c>();
 		accountCategories.add(new Account_Category__c(Category_Code__c = catTables[0].Id
-		                      , RecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Category__c', 'GDP')
-		                                       , Related_GDP_Products_Account_View__c = gdpProducts[0].Id
-		                                               , Related_Account__c = accounts[0].Id
-		                                                       , AIMS_ID__c = 'AIMS001GDP'
-		                                             ));
+													, RecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Category__c', 'GDP')
+																					 , Related_GDP_Products_Account_View__c = gdpProducts[0].Id
+																									 , Related_Account__c = accounts[0].Id
+																													 , AIMS_ID__c = 'AIMS001GDP'
+																								 ));
 
 		insert accountCategories;
 
 		List<GDS__c> gds = new List<GDS__c>();
 		gds.add(new GDS__c(Computer_Reservation_System__c = gdsTables[0].Id
-		                   , RecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('GDS__c', 'GDP')
-		                                    , Related_GDP_Products_Account_View__c = gdpProducts[0].Id
-		                                            , Related_Account__c = accounts[0].Id
-		                                                    , AIMS_ID__c = 'AIMS001GDP'
-		                  ));
+											 , RecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('GDS__c', 'GDP')
+																				, Related_GDP_Products_Account_View__c = gdpProducts[0].Id
+																								, Related_Account__c = accounts[0].Id
+																												, AIMS_ID__c = 'AIMS001GDP'
+											));
 		gds.add(new GDS__c(Computer_Reservation_System__c = gdsTables[1].Id
-		                   , RecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('GDS__c', 'Live')
-		                                    , Related_GDP_Products_Account_View__c = gdpProducts[1].Id
-		                                            , Related_Account__c = accounts[1].Id
-		                                                    , Webstar_Id__c = 'WEB001GDP'
-		                  ));
+											 , RecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('GDS__c', 'Live')
+																				, Related_GDP_Products_Account_View__c = gdpProducts[1].Id
+																								, Related_Account__c = accounts[1].Id
+																												, Webstar_Id__c = 'WEB001GDP'
+											));
 		insert gds;
 
 		//Accreditations
 		List<Accreditation__c> accreditations = new List<Accreditation__c>();
-		
+
 		accreditations.add(new Accreditation__c(AIMS_ID__c = 'AIMS001ACC1GDP'
-		                                        , Accreditation_ID__c = 1
-		                                                , Class__c = classTables[0].Id
-		                                                        , Status__c = statusTables[0].Id
-		                                                                , RecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Accreditation__c', 'GDP')
-		                                                                        , Related_Account__c = accounts[0].Id
-		                                                                                , Related_GDP_Products_Account_View__c = gdpProducts[0].Id
-		                                       ));
+																						, Accreditation_ID__c = 1
+																										, Class__c = classTables[0].Id
+																														, Status__c = statusTables[0].Id
+																																		, RecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Accreditation__c', 'GDP')
+																																						, Related_Account__c = accounts[0].Id
+																																										, Related_GDP_Products_Account_View__c = gdpProducts[0].Id
+																					 ));
 		accreditations.add(new Accreditation__c(Webstar_Id__c = 'WEBSTAR001ACC1GDP'
-		                                        , Accreditation_ID__c = 2
-		                                                , Class__c = classTables[0].Id
-		                                                        , Status__c = statusTables[0].Id
-		                                                                , RecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Accreditation__c', 'GDP')
-		                                                                        , Related_Account__c = accounts[0].Id
-		                                                                                , Related_GDP_Products_Account_View__c = gdpProducts[0].Id
-		                                       ));
+																						, Accreditation_ID__c = 2
+																										, Class__c = classTables[0].Id
+																														, Status__c = statusTables[0].Id
+																																		, RecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Accreditation__c', 'GDP')
+																																						, Related_Account__c = accounts[0].Id
+																																										, Related_GDP_Products_Account_View__c = gdpProducts[0].Id
+																					 ));
 		insert accreditations;
 
 		//GDP Phones & Address
 		AMS_Address__c adr =  new AMS_Address__c(Legacy_System__c = 'AIMS'
-		        , Legacy_External_Id__c = 'AIMS001'
-		                                  , Address_Type__c = 'Shipping'
-		                                        );
+						, Legacy_External_Id__c = 'AIMS001'
+																			, Address_Type__c = 'Shipping'
+																						);
 		insert adr;
 
 		List<GDP_Phone__c> phones = new List<GDP_Phone__c>();
 		phones.add(new GDP_Phone__c(AIMS_ID__c = 'AIMS001P1GDP'
-		                            , Phone_Type__c = 'Phone 1'
-		                                    , Related_Account__c = accounts[0].Id
-		                                            , Related_GDP_Products_Account_View__c = gdpProducts[0].Id
-		                                                    , RecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('GDP_Phone__c', 'GDP')
-		                                                            , Number__c = '1234567890'
-		                                                                    , ISD_Code__c = '1'
-		                           ));
+																, Phone_Type__c = 'Phone 1'
+																				, Related_Account__c = accounts[0].Id
+																								, Related_GDP_Products_Account_View__c = gdpProducts[0].Id
+																												, RecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('GDP_Phone__c', 'GDP')
+																																, Number__c = '1234567890'
+																																				, ISD_Code__c = '1'
+															 ));
 		insert phones;
 
 		List<GDP_Address__c> addresses = new List<GDP_Address__c>();
 		addresses.add(new GDP_Address__c(AIMS_ID__c = 'AIMS001MAIGDP'
-		                                 , Address_Type__c = 'Mailing'
-		                                         , Related_Account__c = accounts[0].Id
-		                                                 , Related_GDP_Products_Account_View__c = gdpProducts[0].Id
-		                                                         , RecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('GDP_Address__c', 'GDP')
-		                                ));
+																		 , Address_Type__c = 'Mailing'
+																						 , Related_Account__c = accounts[0].Id
+																										 , Related_GDP_Products_Account_View__c = gdpProducts[0].Id
+																														 , RecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('GDP_Address__c', 'GDP')
+																		));
 		insert addresses;
 
 		//Agency Owner
 		List<Agency_Owner__c> owners = new List<Agency_Owner__c>();
 		owners.add(new Agency_Owner__c(AIMS_ID__c = 'AIMS001GDP'
-		                               , Owner_ID__c = 1
-		                                       , Percent__c = 60
-		                                               , Related_Account__c = accounts[0].Id
-		                                                       , Related_GDP_Products_Account_View__c = gdpProducts[0].Id
-		                                                               , RecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Owner__c', 'GDP')
-		                              ));
+																	 , Owner_ID__c = 1
+																					 , Percent__c = 60
+																									 , Related_Account__c = accounts[0].Id
+																													 , Related_GDP_Products_Account_View__c = gdpProducts[0].Id
+																																	 , RecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Owner__c', 'GDP')
+																	));
 		owners.add(new Agency_Owner__c(Name = 'Marley', Webstar_Id__c = 'WEB001GDP'
-		                               , Owner_ID__c = 2
-		                                       , Percent__c = 40
-		                                               , Related_Account__c = accounts[0].Id
-		                                                       , Related_GDP_Products_Account_View__c = gdpProducts[0].Id
-		                                                               , RecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Owner__c', 'GDP')
-		                              ));
+																	 , Owner_ID__c = 2
+																					 , Percent__c = 40
+																									 , Related_Account__c = accounts[0].Id
+																													 , Related_GDP_Products_Account_View__c = gdpProducts[0].Id
+																																	 , RecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Owner__c', 'GDP')
+																	));
 		insert owners;
 
 		//Assoc Affiliation
 		List<Assoc_Affiliation_Membership__c> assocAffiliations = new List<Assoc_Affiliation_Membership__c>();
 		assocAffiliations.add(new Assoc_Affiliation_Membership__c(AIMS_ID__c = 'AIMS001GDP'
-		                      , Assoc_Affiliation_Code__c = assocTables[0].Id
-		                              , Assoc_Affiliation_ID__c = 1
-		                                      , Related_Account__c = accounts[0].Id
-		                                              , Related_GDP_Products_Account_View__c = gdpProducts[0].Id
-		                                                      , RecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Assoc_Affiliation_Membership__c', 'GDP')
-		                                                         ));
+													, Assoc_Affiliation_Code__c = assocTables[0].Id
+																	, Assoc_Affiliation_ID__c = 1
+																					, Related_Account__c = accounts[0].Id
+																									, Related_GDP_Products_Account_View__c = gdpProducts[0].Id
+																													, RecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Assoc_Affiliation_Membership__c', 'GDP')
+																														 ));
 		insert assocAffiliations;
 
 		//Adjacent Airports
 		List<Adjacent_Airport__c> adjacentAirports = new List<Adjacent_Airport__c>();
 		adjacentAirports.add(new Adjacent_Airport__c(AIMS_ID__c = 'AIMS001GDP'
-		                     , AirportCode__c = airportTables[0].Id
-		                                        , Airport_ID__c = 1
-		                                                , Related_Account__c = accounts[0].Id
-		                                                        , Related_GDP_Products_Account_View__c = gdpProducts[0].Id
-		                                                                , RecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Adjacent_Airport__c', 'GDP')
-		                                            ));
+												 , AirportCode__c = airportTables[0].Id
+																						, Airport_ID__c = 1
+																										, Related_Account__c = accounts[0].Id
+																														, Related_GDP_Products_Account_View__c = gdpProducts[0].Id
+																																		, RecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Adjacent_Airport__c', 'GDP')
+																								));
 		insert adjacentAirports;
 
 		//Agency profiles
 		List<GDP_Agency_Profile_Specialization__c> agencies = new List<GDP_Agency_Profile_Specialization__c>();
 		agencies.add(new GDP_Agency_Profile_Specialization__c(AIMS_ID__c = 'AIMS001GDP'
-		             , Related_Account__c = accounts[0].Id
-		                                    , Related_GDP_Products_Account_View__c = gdpProducts[0].Id
-		                                            , RecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('GDP_Agency_Profile_Specialization__c', 'GDP')
-		                                                     ));
+								 , Related_Account__c = accounts[0].Id
+																				, Related_GDP_Products_Account_View__c = gdpProducts[0].Id
+																								, RecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('GDP_Agency_Profile_Specialization__c', 'GDP')
+																												 ));
 		insert agencies;
 
 		//GSA Territories
 		List<GSA_Territory__c> territories = new List<GSA_Territory__c>();
 
 		territories.add(new GSA_Territory__c(AIMS_ID__c = 'AIMS001GDP'
-		                                     , Related_Accreditation__c = accreditations[0].Id
-		                                             , AIMS_Territory_Unique_Reference__c = '1234'
-		                                                     , Related_Account__c = accounts[0].Id
-		                                                             , Related_GDP_Products_Account_View__c = gdpProducts[0].Id
-		                                    ));
+																				 , Related_Accreditation__c = accreditations[0].Id
+																								 , AIMS_Territory_Unique_Reference__c = '1234'
+																												 , Related_Account__c = accounts[0].Id
+																																 , Related_GDP_Products_Account_View__c = gdpProducts[0].Id
+																				));
 		insert territories;
 
 	}

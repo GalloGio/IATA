@@ -406,9 +406,9 @@ public class pkb_mobile_Test {
 		system.assertEquals( (initialSize + 1) , finalSize );
 
 		PKB_Article_Feedback_Deflection__c dF = [   select  Article_ID__c, Article_Number__c, Article_Title__c, Feedback_Source__c, Comments__c,
-										   Session_ID__c, Channel__c, Deflection__c, Keyword_Searched__c
-										   from PKB_Article_Feedback_Deflection__c
-										   where Session_ID__c = : 'TESTSESSION' and Article_Number__c = 'ARTTTTNUM' ];
+											 Session_ID__c, Channel__c, Deflection__c, Keyword_Searched__c
+											 from PKB_Article_Feedback_Deflection__c
+											 where Session_ID__c = : 'TESTSESSION' and Article_Number__c = 'ARTTTTNUM' ];
 
 		system.assertEquals(dF.Article_ID__c, testRequestItem.articleFeedback.kavId);
 
@@ -547,9 +547,9 @@ public class pkb_mobile_Test {
 		system.assertEquals( (initialSize + 1) , finalSize );
 
 		PKB_Article_Feedback_Deflection__c dF = [   select  Article_ID__c, Article_Number__c, Article_Title__c, Feedback_Source__c, Comments__c,
-										   Session_ID__c, Channel__c, Deflection__c, Keyword_Searched__c
-										   from PKB_Article_Feedback_Deflection__c
-										   where Session_ID__c = : 'TESTSESSION' and Article_Number__c = 'ARTTTTNUM' ];
+											 Session_ID__c, Channel__c, Deflection__c, Keyword_Searched__c
+											 from PKB_Article_Feedback_Deflection__c
+											 where Session_ID__c = : 'TESTSESSION' and Article_Number__c = 'ARTTTTNUM' ];
 
 		system.assertEquals(dF.Article_ID__c, testRequestItem.articleFeedback.kavId);
 
@@ -574,10 +574,10 @@ public class pkb_mobile_Test {
 		pkb_SiteMap.DEFAULT_PUBLISH_STATUS = 'Draft';
 		Integer initialNumber = 0;
 		String q = ' SELECT  count() ' +
-				   ' FROM KnowledgeArticleVersion ' +
-				   ' WHERE ' +
-				   ' (PublishStatus = \'' + pkb_SiteMap.DEFAULT_PUBLISH_STATUS + '\' AND IsVisibleInPkb = true AND Language=\'en_US\' )  ' +
-				   ' LIMIT ' + Limits.getLimitQueryRows();
+					 ' FROM KnowledgeArticleVersion ' +
+					 ' WHERE ' +
+					 ' (PublishStatus = \'' + pkb_SiteMap.DEFAULT_PUBLISH_STATUS + '\' AND IsVisibleInPkb = true AND Language=\'en_US\' )  ' +
+					 ' LIMIT ' + Limits.getLimitQueryRows();
 
 		Integer current_en_Us  =  Database.countQuery(q);
 		q = ' SELECT  count() ' +

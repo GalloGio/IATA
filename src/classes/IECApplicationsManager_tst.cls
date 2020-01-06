@@ -422,8 +422,8 @@ private class IECApplicationsManager_tst {
 					 + ', lstSearchResult:' + lstSearchResult);
 		System.assert(lstSearchResult != null && lstSearchResult.size() > 0, 'The Agency #3 should be found.');
 		System.assert(lstSearchResult != null && lstSearchResult.size() == 1
-					  && oGDPAccount3New.Id == lstSearchResult.get(0).Id
-					  , 'The Agency #3 should be found based on agency name and city');
+						&& oGDPAccount3New.Id == lstSearchResult.get(0).Id
+						, 'The Agency #3 should be found based on agency name and city');
 	} // end of testCustomerSearch4_Address
 
 	// test testLiveUsageTracking

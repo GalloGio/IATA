@@ -21,31 +21,31 @@
  */
 @isTest(SeeAllData=true)
 public class IDFS_Util_Test{
-    TestMethod static void WebserviceMethodsTest(){
-        IDFS_Util.getIATACountryEmail('Canada');
-        IDFS_Util.getIATACountryEmail('');
-        IDFS_Util.getRecordTypeEmail('ProcessEuropeSCE','','');
-        IDFS_Util.getRecordTypeEmail('','','');
-    }
+	TestMethod static void WebserviceMethodsTest(){
+		IDFS_Util.getIATACountryEmail('Canada');
+		IDFS_Util.getIATACountryEmail('');
+		IDFS_Util.getRecordTypeEmail('ProcessEuropeSCE','','');
+		IDFS_Util.getRecordTypeEmail('','','');
+	}
 
-    TestMethod static void createInternalCaseTest(){
-        Case cse = new Case(
-            Subject = 'test',
-            Region__c = 'Europe',
-            BSPCountry__c = 'Switzerland',
-            Reason1__c = '',
-            CaseArea__c = '',
-            Complaint_Analysis__c = ''
-        );
-        insert cse;
+	TestMethod static void createInternalCaseTest(){
+		Case cse = new Case(
+			Subject = 'test',
+			Region__c = 'Europe',
+			BSPCountry__c = 'Switzerland',
+			Reason1__c = '',
+			CaseArea__c = '',
+			Complaint_Analysis__c = ''
+		);
+		insert cse;
 
-        Test.startTest();
-        IDFS_Util.createInternalCase(cse.Id);
-        Test.stopTest();
+		Test.startTest();
+		IDFS_Util.createInternalCase(cse.Id);
+		Test.stopTest();
 
-        list<Case> results = [Select Id from Case where ParentId = :cse.Id];
-        System.assert(results.size() == 1);
-    }
+		list<Case> results = [Select Id from Case where ParentId = :cse.Id];
+		System.assert(results.size() == 1);
+	}
 
 
 }

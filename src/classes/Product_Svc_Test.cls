@@ -6,22 +6,22 @@ private class Product_Svc_Test
 	public static final Date DEFAULT_EFFECTIVE_END_DATE = Date.today().addYears(1);
 
 	static void setup() {
-	  List<IATA_ISO_Country__c> countryList = new List<IATA_ISO_Country__c> {
+		List<IATA_ISO_Country__c> countryList = new List<IATA_ISO_Country__c> {
 		new IATA_ISO_Country__c(
-		  Name = 'Test Country 1',
-		  ISO_Code__c = 'T1',
-		  Tax_ID_Mandatory__c = TRUE,
-		  VAT_Validation_Required__c = TRUE
+			Name = 'Test Country 1',
+			ISO_Code__c = 'T1',
+			Tax_ID_Mandatory__c = TRUE,
+			VAT_Validation_Required__c = TRUE
 		),
 		new IATA_ISO_Country__c(
-		  Name = 'Test Country 1',
-		  ISO_Code__c = 'T2',
-		  Tax_ID_Mandatory__c = FALSE,
-		  VAT_Validation_Required__c = FALSE
+			Name = 'Test Country 1',
+			ISO_Code__c = 'T2',
+			Tax_ID_Mandatory__c = FALSE,
+			VAT_Validation_Required__c = FALSE
 		)
-	  };
+		};
 
-	  insert countryList;
+		insert countryList;
 	}
 
 	@isTest(seeAllData=true)
@@ -34,12 +34,12 @@ private class Product_Svc_Test
 		}
 		Product_Information__c oProdInfo;
 		for (Product_Information__c pi : [select Id
-											   , (select Id, Name
-												  from Product_Rate_Plans_Information__r
-												  where Product_Rate_Plan__c in (select zqu__ProductRatePlan__c from zqu__ProductRatePlanCharge__c)
+												 , (select Id, Name
+													from Product_Rate_Plans_Information__r
+													where Product_Rate_Plan__c in (select zqu__ProductRatePlan__c from zqu__ProductRatePlanCharge__c)
 													and Is_Triable__c = false
-												  limit 1)
-										  from Product_Information__c])
+													limit 1)
+											from Product_Information__c])
 			if (pi.Product_Rate_Plans_Information__r.size() > 0)
 			{
 				oProdInfo = pi;
@@ -203,7 +203,7 @@ private class Product_Svc_Test
 
 			Pricebook2 standardPriceBook =[select id from Pricebook2 where IsStandard=true];
 			List<PricebookEntry> pbe = [SELECT id,Product2Id from PricebookEntry WHERE Pricebook2Id = :standardPriceBook.Id AND Product2Id = :listProd[0].Id];
-		   //system.assertEquals(pbe[0].Product2Id, listProd[0].Id);
+			 //system.assertEquals(pbe[0].Product2Id, listProd[0].Id);
 
 		}
 
