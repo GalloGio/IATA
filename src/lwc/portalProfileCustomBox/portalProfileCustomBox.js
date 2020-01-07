@@ -472,12 +472,11 @@ export default class PortalProfileCustomBox extends LightningElement {
     handleServiceSearch(event) {
         let toSearch = event.detail.searchTerm;
         let results = this.services.filter(elem => elem.title.toLowerCase().search(toSearch) !== -1);
-        this.template.querySelector('[data-id="servicesearch"]').setSearchResults(results);
+        this.template.querySelector('[data-id="servicesearch"]').setSearchResults(results,true);
     }
 
     showServiceResults(){
-        this.template.querySelector('[data-id="servicesearch"]').setSearchResults(this.services);
-
+        this.template.querySelector('[data-id="servicesearch"]').setSearchResults(this.services,true);
     }
 
     addNewServiceButtonClick(){
