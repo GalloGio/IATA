@@ -12,6 +12,7 @@
     <aura:attribute name="isEmailAddressAvailable" type="Boolean" default="true"/>
     <aura:attribute name="isServiceUser" type="Boolean" />
     <aura:attribute name="isServiceEligible" type="Boolean" />
+    <aura:attribute name="isInvited" type="Boolean" default="false" />
 
     <div class="slds-grid slds-gutters slds-wrap ">
         <div class="slds-col slds-col--padded">
@@ -69,11 +70,16 @@
             </aura:if>
             
             <aura:if isTrue="{! v.serviceName != 'NDCMM' || v.isGuest}">
-            	<div class="slds-size--1-of-1">
-            	    <ui:inputCheckbox value="{!v.Terms}" aura:id="termsaccepted" class="uiInput uiInputCheckbox uiInput--default uiInput--checkbox ckb" labelClass="slds-form-element__label" required="true" click="{!c.checkTerms}" />
-            	    <a class="terms" href="http://www.iata.org/customer-portal/Pages/terms.aspx" target="_blank">{!$Label.c.ISSP_Registration_acceptGeneralConditions}</a>
-            	</div>
-            	    
+                <aura:if isTrue="{! and(v.serviceName == 'GADM', not(v.isInvited))}">
+                	Invitation required
+                    <aura:set attribute="else">
+                    <div class="slds-size--1-of-1">
+                        <ui:inputCheckbox value="{!v.Terms}" aura:id="termsaccepted" class="uiInput uiInputCheckbox uiInput--default uiInput--checkbox ckb" labelClass="slds-form-element__label" required="true" click="{!c.checkTerms}" />
+                        <a class="terms" href="http://www.iata.org/customer-portal/Pages/terms.aspx" target="_blank">{!$Label.c.ISSP_Registration_acceptGeneralConditions}</a>
+                    </div>
+                </aura:set>
+                    </aura:if>
+                
             	<aura:set attribute="else">
             	   	<div class="slds-grid slds-grid_align-end">
             			<ui:button label="Next" press="{!c.next}" />

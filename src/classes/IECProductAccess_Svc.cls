@@ -6,7 +6,7 @@ public with sharing class IECProductAccess_Svc {
 		try
 		{
 			Set<Id> setPaidOrderId = new Set<Id>();
-			
+
 			// First retrieve Order Ids for Paid orders
 			for (Order ord : lstCurrentOrder)
 			{
@@ -15,16 +15,16 @@ public with sharing class IECProductAccess_Svc {
 					setPaidOrderId.add(ord.Id);
 				}
 			}
-			
+
 			// Now retrieve the Order Items with subscription numbers
 			Map<Id, List<OrderItem>> mapOrderId_OrderItem = new OrderItem_Sel().getOrderItems(setPaidOrderId);
 
 			//Map of subscription number by number of month of subscription
 			Map<String,Decimal> numberOfMonthOfSubscriptionByNumber = new Map<String,Decimal>();
-			
+
 			// Get the subscription number from the order items
 			Set<String> setSubscriptionNumber = new Set<String>();
-			
+
 			for (List<OrderItem> lstOrdItem : mapOrderId_OrderItem.values())
 			{
 				for (OrderItem oi : lstOrdItem)
@@ -36,10 +36,10 @@ public with sharing class IECProductAccess_Svc {
 					}
 				}
 			}
-			
+
 			// Now retrieve inactive product access by subscription number
 			List<IEC_Product_Access__c> lstProdAccess = new IECProductAccess_Sel().getInactiveProductAccessBySubscriptionNumber(setSubscriptionNumber);
-			
+
 			// Set all these product access to active since the orders has been paid
 			for (IEC_Product_Access__c prodAccess: lstProdAccess)
 			{
@@ -51,10 +51,10 @@ public with sharing class IECProductAccess_Svc {
 					prodAccess.Effective_End_Date__c = Datetime.now().AddMonths(Integer.valueOf(nbMonth));
 				}
 			}
-			
+
 			update lstProdAccess;
-    	}
-    	catch (Exception e){IECErrorLogger.logApexException('IECProductAccess_Svc.ActivateProductAccessForPaidOrders', 'Exception thrown while activating product access:\nlstCurrentOrder: ' + lstCurrentOrder + '\nmapOldOrder: ' + mapOldOrder, e.getMessage(), e.getStackTraceString());}
+		}
+		catch (Exception e){IECErrorLogger.logApexException('IECProductAccess_Svc.ActivateProductAccessForPaidOrders', 'Exception thrown while activating product access:\nlstCurrentOrder: ' + lstCurrentOrder + '\nmapOldOrder: ' + mapOldOrder, e.getMessage(), e.getStackTraceString());}
 	}
 
 	// Determines which product access are inactive and set them to true based on Paid OrderItems
@@ -63,7 +63,7 @@ public with sharing class IECProductAccess_Svc {
 		try
 		{
 			Set<String> setSubscriptionNumber = new Set<String>();
-			
+
 			// Get the subscription number from the OrderItem items with Paid flag set to true
 			for (OrderItem oi : lstCurrentOrderItem)
 			{
@@ -73,18 +73,18 @@ public with sharing class IECProductAccess_Svc {
 						setSubscriptionNumber.add(oi.Zuora_Subscription_Number__c);
 				}
 			}
-			
+
 			// Now retrieve inactive product access by subscription number
 			List<IEC_Product_Access__c> lstProdAccess = new IECProductAccess_Sel().getInactiveProductAccessBySubscriptionNumber(setSubscriptionNumber);
-			
+
 			// Set all these product access to active since the OrderItems has been paid
 			for (IEC_Product_Access__c prodAccess: lstProdAccess)
 			{
 				prodAccess.Active__c = true;
 			}
-			
+
 			update lstProdAccess;
-    	}
-    	catch (Exception e){IECErrorLogger.logApexException('IECProductAccess_Svc.ActivateProductAccessForPaidOrderItems', 'Exception thrown while activating product access:\nlstCurrentOrderItem: ' + lstCurrentOrderItem + '\nmapOldOrderItem: ' + mapOldOrderItem , e.getMessage() , e.getStackTraceString());}
+		}
+		catch (Exception e){IECErrorLogger.logApexException('IECProductAccess_Svc.ActivateProductAccessForPaidOrderItems', 'Exception thrown while activating product access:\nlstCurrentOrderItem: ' + lstCurrentOrderItem + '\nmapOldOrderItem: ' + mapOldOrderItem , e.getMessage() , e.getStackTraceString());}
 	}
 }

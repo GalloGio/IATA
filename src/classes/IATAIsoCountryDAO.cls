@@ -64,7 +64,7 @@ public class IATAIsoCountryDAO {
 																								 State_Province_Picklist__c, ANG_IEP_Model__c,
 												 Region_Province_and_Cities_Enabled__c,
 						AMS_Settlement_System__r.Name, AMS_Settlement_System__r.Remittance_Frequency_per_State__c,
-																								 (SELECT Id, Name, ISO_Code__c, IEC_Valid_SAP__c
+																								 (SELECT Id, Name, ISO_Code__c, IEC_Valid_SAP__c, Valid_for_Address__c
 																									FROM IATA_ISO_States__r
 																									ORDER BY Name),
 

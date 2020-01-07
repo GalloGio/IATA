@@ -1411,11 +1411,6 @@
             <value>&quot;C,R&quot;</value>
         </filters>
         <filters>
-            <field>Reference__c</field>
-            <operation>equals</operation>
-            <value>Reference - GSS Non Member</value>
-        </filters>
-        <filters>
             <field>Magnitude__c</field>
             <operation>notEqual</operation>
             <value>Master</value>
@@ -1440,11 +1435,6 @@
             <field>Class__c</field>
             <operation>equals</operation>
             <value>&quot;C,R&quot;</value>
-        </filters>
-        <filters>
-            <field>Reference__c</field>
-            <operation>equals</operation>
-            <value>Reference - GSS Non Member</value>
         </filters>
         <filters>
             <field>Magnitude__c</field>
