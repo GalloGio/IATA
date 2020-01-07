@@ -296,6 +296,7 @@ export default class PortalProfileCustomBox extends LightningElement {
         } else {
             this.isLoading = false;
             this.hasError = true;
+			this.template.querySelector('.customPopupInteriorHalfScreenCentered').scrollIntoView();
         }
     }
 
