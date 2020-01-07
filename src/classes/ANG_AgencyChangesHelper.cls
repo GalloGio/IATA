@@ -1582,7 +1582,7 @@ public with sharing class ANG_AgencyChangesHelper {
 				Account__r.IATA_ISO_Country__r.AMS_Settlement_System__c
 			 FROM AMS_Process_Detail__c
 			 WHERE
-			 	OSCAR__c = :oscarId
+				OSCAR__c = :oscarId
 			]
 		);
 	}
@@ -2334,7 +2334,7 @@ public with sharing class ANG_AgencyChangesHelper {
 				prevOptOut = String.valueOf(acc.ANG_FA_Opt_out__c);
 
 				if (changesContainer.accountsMap.keySet().contains(acc.Id)){
-			   		changesContainer.accountsMap.get(acc.Id).ANG_FA_Opt_out__c = valueToAgency;
+					changesContainer.accountsMap.get(acc.Id).ANG_FA_Opt_out__c = valueToAgency;
 				} else {
 					acc.ANG_FA_Opt_out__c = valueToAgency;
 					changesContainer.accountsMap.put(acc.Id,acc);
@@ -2354,8 +2354,8 @@ public with sharing class ANG_AgencyChangesHelper {
 	}
 
 	/* NEWGEN-4856 - When performing a change of Location / Hierarchy
-	 	* Move the Risk Alerts into the Main account
-	 	* Set Monitored Account with the previous account when Sanity Check is passed
+		* Move the Risk Alerts into the Main account
+		* Set Monitored Account with the previous account when Sanity Check is passed
 	*/
 	private static void processRiskAlerts(AChangeStructure changesContainer, Id newParentId){
 
