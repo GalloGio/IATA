@@ -18,6 +18,7 @@ public without sharing class ISSP_Case {
 	public boolean isISSPortalPwCCase {set; get;}
 	public boolean isNewCase {get; set;}
 	public boolean isSISCase {get; set;}
+	public boolean isCloneDPC {get; set;}
 	public boolean isPWCCase {get; set;}
 	public boolean isAPCase {get; set;}
 	public boolean isOSCARCase {get; set;}
@@ -49,6 +50,9 @@ public without sharing class ISSP_Case {
 	public String caseAreaa { get; set; }
 	public String additionalRecipients { get; set; }
 	public String JSONcontacts { get; set; }
+	public String JSONcontactSelected { get; set; }
+	public String JSONcontactsHighPriority { get; set; }
+	public List<DPC2DPCCasesEmails__c> DPC2DPCCasesEmails { get; set; } 
 
 	public Id runningUserId {get; set;}
 	public Contact con {get; set;}
@@ -153,6 +157,7 @@ public without sharing class ISSP_Case {
 
 
 	public PageReference pageLoad() {
+		isCloneDPC = false;
 		if (ApexPages.currentPage().getParameters().containsKey('caseId')) {
 			string caseId = ApexPages.currentPage().getParameters().get('caseId');
 			newCase = DAL_ISSP.getCase(caseId);
@@ -232,6 +237,19 @@ public without sharing class ISSP_Case {
 			}
 			showAlertMessage();
 
+		}
+
+		if (ApexPages.currentPage().getParameters().containsKey('cloneDPCId')) {
+			string caseId = ApexPages.currentPage().getParameters().get('cloneDPCId');
+			newCase = DAL_ISSP.getCase(caseId);
+			Case cloneCase = new Case();
+			cloneCase.CaseArea__c = newCase.CaseArea__c;
+			cloneCase.Reason1__c = newCase.Reason1__c;
+			cloneCase.Applicable_to_Which_Version_s__c = newCase.Applicable_to_Which_Version_s__c;
+			cloneCase.SUbject = newCase.SUbject;
+			cloneCase.Description = newCase.Description;
+			newCase = cloneCase;
+			isCloneDPC = true;
 		}
 		return null;
 	}
@@ -696,22 +714,17 @@ public without sharing class ISSP_Case {
 					}
 				}
 
-				List<Contact> lsContacts = new list<Contact>();
-				for (User user: [SELECT ContactId, Contact.Name, Contact.Email, Contact.AccountId
-						FROM User
-						WHERE isActive = true
-						AND Contact.AccountId IN :lsAccounts
-						AND Contact.User_Portal_Status__c IN ('Approved Admin', 'Approved User')
-						AND Contact.Status__c = 'Active']) {
-					lsContacts.add(user.contact);
-				}
+				//This custom setting contains emails to be automatically added to the "Additional Recipients" field. 
+				//Before this option was made by a query to the User object.
+				//For this you have to configure the custom setting where the Name field is the account id and the email is the intended email to be added.
 
-				JSONcontacts = JSON.serialize(lsContacts);
-				System.debug(lsAccounts);
+				DPC2DPCCasesEmails = [SELECT Name, Email__c 
+							FROM DPC2DPCCasesEmails__c];
+
+				JSONcontacts = JSON.serialize(DPC2DPCCasesEmails);
 				newCase.ACCA_Owner__c = Userinfo.getUserId();
 				newCase.Status = 'Action Needed';
 
-				System.debug(profileRole);
 
 				this.lst_whoToContact = new list<SelectOption>();
 				this.lst_whoToContact.add(new SelectOption('',''));
@@ -742,6 +755,11 @@ public without sharing class ISSP_Case {
 		statusValMapped=getFieldMappedValue(ISSP_Case.STATUS_FLD_NAME,newCase.Status);
 
 		progressBarHelper = new ANG_ProgressBarHelper(newCase);
+	}
+
+	//  This method shall take the user to a new case creation page with the 5 above field values copied from the original case.
+	public PageReference CloneDPC(){
+		return new Pagereference('/ISSP_Case?cloneDPCId='+newCase.id);
 	}
 
 	@TestVisible private String getCustomLabel(String labelName) {
@@ -868,15 +886,6 @@ public without sharing class ISSP_Case {
 	}
 
 	public Pagereference save() {
-		//TF - SP9-C5
-		system.debug('newCase.Classification_SIS__c: ' + newCase.Classification_SIS__c);
-		system.debug('newCase.Defect_Issue__c: ' + newCase.Defect_Issue__c);
-		system.debug('newCase.Type: ' + newCase.Type);
-		system.debug('isGSAOnly: ' + isGSAOnly);
-		//system.debug('IATAcode__c: ' + newCase.IATAcode__c);
-		system.debug('isGSAUser: ' + isGSAUser);
-		system.debug('isFDSRecordType: ' + isFDSRecordType);
-		system.debug('AccountId: ' + accountId);
 
 		//DPC
 		if(isDPCUser) {
@@ -886,11 +895,7 @@ public without sharing class ISSP_Case {
 				newCase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Inter_DPCs');
 				newCase.Account_Concerned__c = whoToContact;
 			} else {
-				if(newCase.CaseArea__c == 'iiNet'){
-					newCase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Cases_Global');
-				} else{
-					newCase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Service_Request');
-				}
+				newCase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Service_Request');
 			}
 			Database.DMLOptions dmo = new Database.DMLOptions();
 			dmo.assignmentRuleHeader.useDefaultRule = true;
@@ -978,11 +983,7 @@ public without sharing class ISSP_Case {
 				newCase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Inter_DPCs');
 				newCase.Account_Concerned__c = whoToContact;
 			} else {
-				if(newCase.CaseArea__c == 'iiNet'){
-					newCase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Cases_Global');
-				} else{
-					newCase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Service_Request');
-				}
+				newCase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Service_Request');
 			}
 			Database.DMLOptions dmo = new Database.DMLOptions();
 			dmo.assignmentRuleHeader.useDefaultRule = true;
@@ -1324,7 +1325,6 @@ public without sharing class ISSP_Case {
 		}
 		}
 		*/
-		system.debug('FOUND THIS: ' + selectedArtical.articleText);
 		return null;
 
 	}
@@ -1559,16 +1559,41 @@ public without sharing class ISSP_Case {
 		}
 		User myUser = [SELECT Id, Contact.AccountId FROM User WHERE Id = :UserInfo.getUserId()];
 		List<CaseTeamMember> lsCaseTeamMembers = new List<CaseTeamMember>();
-		List<String> lsNewEmails = new List<String>();
-		// only add Users from Account_Concerned__c or from current user's account
-		List<User> lsUsers =
-			[SELECT Id, Name, Email, AccountId, Contact.AccountId
-			FROM User
-			WHERE Email IN :setEmail
-			AND isActive = true
-			AND Contact.AccountId IN (:newCase.Account_Concerned__c,:myUser.Contact.AccountId)];
+		Set<String> lsNewEmails = new Set<String>();
 
-		for(User user : lsUsers) {
+		//On DPC case creation with Priority, automatically add additional recipients
+		Set<String> setEmailPriority = new Set<String>();
+
+		String emailCurrentAcc = [select contactid, contact.accountid from user where id = :UserInfo.getUserId()].contact.accountid;
+
+		if(DPC2DPCCasesEmails != null){
+			if(emailCurrentAcc != ''){
+				for(DPC2DPCCasesEmails__c d2dca : DPC2DPCCasesEmails){
+					if(d2dca.Name == emailCurrentAcc){
+						setEmailPriority.add(d2dca.Email__c);
+					}
+				}
+			}
+		}
+		List<DPCCasePriorityHigh__c> DPCCasePriorityEmails = [SELECT Priority__c, Email__c 
+                                                                FROM DPCCasePriorityHigh__c 
+                                                                WHERE Priority__c =: newCase.Priority];
+		if(!DPCCasePriorityEmails.isEmpty()){
+			for(DPCCasePriorityHigh__c dcph : DPCCasePriorityEmails){
+				setEmailPriority.add(dcph.Email__c);
+			}                                   
+		}
+		if(JSONcontactSelected != null && JSONcontactSelected != ''){
+			setEmailPriority.add(JSONcontactSelected.removeEnd(','));
+		}
+
+		if(!setEmailPriority.isEmpty()){
+			List<User> lsUsersPriority =
+				[SELECT Id, Name, Email, AccountId, Contact.AccountId
+				 FROM User
+				 WHERE Email IN :setEmailPriority];
+
+		for(User user : lsUsersPriority) {
 			CaseTeamMember teammember = new CaseTeamMember(
 				ParentId = newCase.Id,
 				MemberId = user.Id,
@@ -1598,6 +1623,11 @@ public without sharing class ISSP_Case {
 			}
 		}
 
+		List<String> listCCOthers = new List<String>();
+		for(String st: lsNewEmails){
+			listCCOthers.add(st);
+		}
+
 		// insert found users as a team member of the case
 		Savepoint sp = Database.setSavepoint();
 		try {
@@ -1610,6 +1640,8 @@ public without sharing class ISSP_Case {
 			sendMassEmail(newCase.Id,template.Id);
 
 		} catch (DMLException e) {
+			System.debug('DMLException::: error ' + e);
+			ApexPages.addMessages(e);
 			Database.rollback(sp);
 		}
 	}
