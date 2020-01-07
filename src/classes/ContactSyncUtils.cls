@@ -37,10 +37,12 @@ public with sharing class ContactSyncUtils extends SObjectSyncUtils {
 			}
 		}
 
-		if((Limits.getLimitQueueableJobs() - Limits.getQueueableJobs()) > 0 && !System.isFuture() && !System.isBatch()) {
-			System.enqueueJob(new PlatformEvents_Helper(mapToSend, 'AccountContactRole__e', 'Account_Contact_Role__c', trigger.isInsert, trigger.isUpdate, trigger.isDelete, trigger.isUndelete));
-		} else {
-			PlatformEvents_Helper.publishEvents(mapToSend, 'AccountContactRole__e', 'Account_Contact_Role__c', trigger.isInsert, trigger.isUpdate, trigger.isDelete, trigger.isUndelete);
+		if(!FeatureManagement.checkPermission('Bypass_Platform_Events')){
+			if((Limits.getLimitQueueableJobs() - Limits.getQueueableJobs()) > 0 && !System.isFuture() && !System.isBatch()) {
+				System.enqueueJob(new PlatformEvents_Helper(mapToSend, 'AccountContactRole__e', 'Account_Contact_Role__c', trigger.isInsert, trigger.isUpdate, trigger.isDelete, trigger.isUndelete));
+			} else {
+				PlatformEvents_Helper.publishEvents(mapToSend, 'AccountContactRole__e', 'Account_Contact_Role__c', trigger.isInsert, trigger.isUpdate, trigger.isDelete, trigger.isUndelete);
+			}
 		}
 	}
 

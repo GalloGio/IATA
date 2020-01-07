@@ -81,10 +81,12 @@ public with sharing class CustomerSyncUtils extends SObjectSyncUtils {
 
 		}
 
-		if((Limits.getLimitQueueableJobs() - Limits.getQueueableJobs()) > 0 && !System.isFuture() && !System.isBatch()) {
-			System.enqueueJob(new PlatformEvents_Helper(mapToSend, 'AddressRoleBusinessContext__e', 'Address_Role_Business_Context__c', trigger.isInsert, trigger.isUpdate, trigger.isDelete, trigger.isUndelete));
-		} else {
-			PlatformEvents_Helper.publishEvents(mapToSend, 'AddressRoleBusinessContext__e', 'Address_Role_Business_Context__c', trigger.isInsert, trigger.isUpdate, trigger.isDelete, trigger.isUndelete);
+		if(!FeatureManagement.checkPermission('Bypass_Platform_Events')){
+			if((Limits.getLimitQueueableJobs() - Limits.getQueueableJobs()) > 0 && !System.isFuture() && !System.isBatch()) {
+				System.enqueueJob(new PlatformEvents_Helper(mapToSend, 'AddressRoleBusinessContext__e', 'Address_Role_Business_Context__c', trigger.isInsert, trigger.isUpdate, trigger.isDelete, trigger.isUndelete));
+			} else {
+				PlatformEvents_Helper.publishEvents(mapToSend, 'AddressRoleBusinessContext__e', 'Address_Role_Business_Context__c', trigger.isInsert, trigger.isUpdate, trigger.isDelete, trigger.isUndelete);
+			}
 		}
 	}
 
