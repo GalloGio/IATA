@@ -121,7 +121,7 @@ private class ISSP_AMS_MSO_Request_Controller_Test {
         IATA_ISO_Country__c isoc = new IATA_ISO_Country__c(Name = 'Test', ISO_Code__c = 'FR', Case_BSP_Country__c='Test');       
         insert isoc;
 
-        IATA_ISO_State__c isos = new IATA_ISO_State__c(Name='Test_state', IATA_ISO_Country__c = isoc.Id, ISO_Code__c='FR');
+        IATA_ISO_State__c isos = new IATA_ISO_State__c(Name='Test_state', IATA_ISO_Country__c = isoc.Id, ISO_Code__c='FR', Valid_for_address__c = true);
         insert isos;
 
         Account acc = new Account (
@@ -174,7 +174,8 @@ private class ISSP_AMS_MSO_Request_Controller_Test {
             ctrl.countrySelected = isoc.Id;
             ctrl.refreshStates();
             ctrl.billingState = isos.Id;
-
+            ctrl.refreshCities();
+            String cities = ctrl.billingCityListStr;
             Test.startTest();
                 ctrl.accreditationForm.Branch_Office_Email__c = 'a';
                 ctrl.accreditationForm.Branch_Office_Street_name_number__c = '';

@@ -74,7 +74,11 @@
             }
 
         }
-        
+
+        if(servName == 'ISSP' || servName == 'CSP'){
+            helper.redirectToCustomerPortal(component, event);
+        }
+
         component.set("v.loaded", true);
     },
     

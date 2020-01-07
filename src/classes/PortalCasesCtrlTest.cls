@@ -112,13 +112,13 @@ private class PortalCasesCtrlTest {
                 portFilterWrapper.searchText = 'Bla';
                 portFilterWrapper.casesComponent = casesCmp;
                 
-                PortalCasesCtrl.PagedResult pag1 = PortalCasesCtrl.getFilteredCasesResultsPage(JSON.serialize(portFilterWrapper), '0', CSP_Utils.isAdmin());
+                CSP_Utils.PagedResult pag1 = PortalCasesCtrl.getFilteredCasesResultsPage(JSON.serialize(portFilterWrapper), '0', CSP_Utils.isAdmin());
                 
-                PortalCasesCtrl.PagedResult pag = PortalCasesCtrl.getRecentCases(false, false, false);
+                CSP_Utils.PagedResult pag = PortalCasesCtrl.getRecentCases(false, false, false);
                 
                 PortalCasesCtrl.ReturnWrapper addNewRecipientTest = PortalCasesCtrl.addNewRecipient(newCase1.Id, '');
                 
-                PortalCasesCtrl.ReturnWrapper submitNewMessageTest = PortalCasesCtrl.submitNewMessage(newCase.Id, 'Test Message');
+                DAL_WithoutSharing.ReturnWrapper submitNewMessageTest = DAL_WithoutSharing.submitNewMessage(newCase.Id, 'Test Message');
             }
             PortalCasesCtrl.ReturnWrapper addNewRecipientTest1 = PortalCasesCtrl.addNewRecipient(newCase.Id, 'testeW@csp.testclass');
             PortalCasesCtrl.ReturnWrapper addNewRecipientTest2 = PortalCasesCtrl.addNewRecipient(newCase.Id, 'testemailNEW@csp.testclass');
@@ -151,11 +151,11 @@ private class PortalCasesCtrlTest {
                                         Visible_on_ISS_Portal__c = true, ContactId = usr.ContactId);
                 insert newCase4;
                 
-                PortalCasesCtrl.PagedResult pag = PortalCasesCtrl.getRecentCases(true, true, true);
+                CSP_Utils.PagedResult pag = PortalCasesCtrl.getRecentCases(true, true, true);
                 
                 PortalCasesCtrl.ReturnWrapper addNewRecipientTest = PortalCasesCtrl.addNewRecipient(newCase1.Id, '');
                 
-                PortalCasesCtrl.ReturnWrapper submitNewMessageTest = PortalCasesCtrl.submitNewMessage(newCase.Id, 'Test Message');
+                DAL_WithoutSharing.ReturnWrapper submitNewMessageTest = DAL_WithoutSharing.submitNewMessage(newCase.Id, 'Test Message');
             }
             PortalCasesCtrl.ReturnWrapper addNewRecipientTest1 = PortalCasesCtrl.addNewRecipient(newCase.Id, 'testeW@csp.testclass');
             PortalCasesCtrl.ReturnWrapper addNewRecipientTest2 = PortalCasesCtrl.addNewRecipient(newCase.Id, 'testemailNEW@csp.testclass');
@@ -179,11 +179,11 @@ private class PortalCasesCtrlTest {
                 PortalSearchFilterWrapper portFilterWrapper = new PortalSearchFilterWrapper();
                 portFilterWrapper.searchText = 'Bla';
                 
-                PortalCasesCtrl.PagedResult pag1 = PortalCasesCtrl.getFilteredCasesResultsPage(JSON.serialize(portFilterWrapper), '0', CSP_Utils.isAdmin());
+                CSP_Utils.PagedResult pag1 = PortalCasesCtrl.getFilteredCasesResultsPage(JSON.serialize(portFilterWrapper), '0', CSP_Utils.isAdmin());
                 
                 PortalCasesCtrl.ReturnWrapper addNewRecipientTest = PortalCasesCtrl.addNewRecipient(newCase1.Id, '');
                 
-                PortalCasesCtrl.ReturnWrapper submitNewMessageTest = PortalCasesCtrl.submitNewMessage(newCase.Id, 'Test Message');
+                DAL_WithoutSharing.ReturnWrapper submitNewMessageTest = DAL_WithoutSharing.submitNewMessage(newCase.Id, 'Test Message');
 
 
                 PortalCasesCtrl.MessageWrapper mw = new PortalCasesCtrl.MessageWrapper();
@@ -243,7 +243,7 @@ private class PortalCasesCtrlTest {
                 PortalSearchFilterWrapper portFilterWrapper = new PortalSearchFilterWrapper();
                 portFilterWrapper.searchText = 'Bla';
                 
-                PortalCasesCtrl.PagedResult pag1 = PortalCasesCtrl.getFilteredCasesResultsPage(JSON.serialize(portFilterWrapper), '0', CSP_Utils.isAdmin());
+                CSP_Utils.PagedResult pag1 = PortalCasesCtrl.getFilteredCasesResultsPage(JSON.serialize(portFilterWrapper), '0', CSP_Utils.isAdmin());
                 List<CSP_Utils.PickListWrapper> contactPickOptions = PortalCasesCtrl.companyCasesContactsPicklist();
                 System.assertNotEquals(0, contactPickOptions.size());
             }              
@@ -262,7 +262,7 @@ private class PortalCasesCtrlTest {
                 PortalSearchFilterWrapper portFilterWrapper = new PortalSearchFilterWrapper();
                 portFilterWrapper.searchText = 'Bla';
                 
-                PortalCasesCtrl.PagedResult pag1 = PortalCasesCtrl.getFilteredCasesResultsPage(JSON.serialize(portFilterWrapper), '0', CSP_Utils.isAdmin());
+                CSP_Utils.PagedResult pag1 = PortalCasesCtrl.getFilteredCasesResultsPage(JSON.serialize(portFilterWrapper), '0', CSP_Utils.isAdmin());
             }              
            
         Test.stopTest();
@@ -278,7 +278,7 @@ private class PortalCasesCtrlTest {
                 PortalSearchFilterWrapper portFilterWrapper = new PortalSearchFilterWrapper();
                 portFilterWrapper.searchText = 'Bla';
                 
-                PortalCasesCtrl.PagedResult pag1 = PortalCasesCtrl.getFilteredCasesResultsPage(JSON.serialize(portFilterWrapper), '0', CSP_Utils.isAdmin());
+                CSP_Utils.PagedResult pag1 = PortalCasesCtrl.getFilteredCasesResultsPage(JSON.serialize(portFilterWrapper), '0', CSP_Utils.isAdmin());
             }              
            
         Test.stopTest();
@@ -294,7 +294,7 @@ private class PortalCasesCtrlTest {
                 PortalSearchFilterWrapper portFilterWrapper = new PortalSearchFilterWrapper();
                 portFilterWrapper.searchText = 'Bla';
                 
-                PortalCasesCtrl.PagedResult pag1 = PortalCasesCtrl.getFilteredCasesResultsPage(JSON.serialize(portFilterWrapper), '0', CSP_Utils.isAdmin());
+                CSP_Utils.PagedResult pag1 = PortalCasesCtrl.getFilteredCasesResultsPage(JSON.serialize(portFilterWrapper), '0', CSP_Utils.isAdmin());
             }              
            
         Test.stopTest();
@@ -310,7 +310,7 @@ private class PortalCasesCtrlTest {
                 PortalSearchFilterWrapper portFilterWrapper = new PortalSearchFilterWrapper();
                 portFilterWrapper.searchText = 'Bla';
                 
-                PortalCasesCtrl.PagedResult pag1 = PortalCasesCtrl.getFilteredCasesResultsPage(JSON.serialize(portFilterWrapper), '0', CSP_Utils.isAdmin());
+                CSP_Utils.PagedResult pag1 = PortalCasesCtrl.getFilteredCasesResultsPage(JSON.serialize(portFilterWrapper), '0', CSP_Utils.isAdmin());
             }              
            
         Test.stopTest();
@@ -326,7 +326,7 @@ private class PortalCasesCtrlTest {
                 PortalSearchFilterWrapper portFilterWrapper = new PortalSearchFilterWrapper();
                 portFilterWrapper.searchText = 'Bla';
                 
-                PortalCasesCtrl.PagedResult pag1 = PortalCasesCtrl.getFilteredCasesResultsPage(JSON.serialize(portFilterWrapper), '0', CSP_Utils.isAdmin());
+                CSP_Utils.PagedResult pag1 = PortalCasesCtrl.getFilteredCasesResultsPage(JSON.serialize(portFilterWrapper), '0', CSP_Utils.isAdmin());
             }              
            
         Test.stopTest();
@@ -342,7 +342,7 @@ private class PortalCasesCtrlTest {
                 PortalSearchFilterWrapper portFilterWrapper = new PortalSearchFilterWrapper();
                 portFilterWrapper.searchText = 'Bla';
                 
-                PortalCasesCtrl.PagedResult pag1 = PortalCasesCtrl.getFilteredCasesResultsPage(JSON.serialize(portFilterWrapper), '0', CSP_Utils.isAdmin());
+                CSP_Utils.PagedResult pag1 = PortalCasesCtrl.getFilteredCasesResultsPage(JSON.serialize(portFilterWrapper), '0', CSP_Utils.isAdmin());
             }              
            
         Test.stopTest();
@@ -359,7 +359,7 @@ private class PortalCasesCtrlTest {
                 PortalSearchFilterWrapper portFilterWrapper = new PortalSearchFilterWrapper();
                 portFilterWrapper.searchText = 'Bla';
                 
-                PortalCasesCtrl.PagedResult pag1 = PortalCasesCtrl.getFilteredCasesResultsPage(JSON.serialize(portFilterWrapper), '0', CSP_Utils.isAdmin());
+                CSP_Utils.PagedResult pag1 = PortalCasesCtrl.getFilteredCasesResultsPage(JSON.serialize(portFilterWrapper), '0', CSP_Utils.isAdmin());
             }              
            
         Test.stopTest();
@@ -383,6 +383,8 @@ private class PortalCasesCtrlTest {
         
         AMS_Pax_Accreditation_Form__c ams = new AMS_Pax_Accreditation_Form__c();
         ams.SAAM_Case__c = newCase4.id;
+        ams.Operation_Type__c = 'Travel_Agent';
+        ams.Notify_Change_Location__c = true;
         insert ams;
 
         AP_Process_Form__c apForm = new AP_Process_Form__c(
@@ -409,4 +411,26 @@ private class PortalCasesCtrlTest {
         System.assert(link != null);
 
     }   
+
+    @IsTest static void testPortalGlobalSearch() {
+
+	User testUser = [SELECT Id FROM User WHERE Email LIKE '%testemail1@csp.testclass' LIMIT 1];
+
+	Test.startTest();
+	System.runAs(testUser) {
+		CSP_Utils.PagedResult test = new CSP_Utils.PagedResult();
+		List<CSP_Utils.PickListWrapper> caseTypeOptions = PortalCasesCtrl.typeOfCasePortalCustomPicklist();
+
+		PortalSearchFilterWrapper.casesComponent casesCmp = new PortalSearchFilterWrapper.casesComponent();
+		casesCmp.caseTypeFilter = caseTypeOptions[0].value;
+		casesCmp.caseCountryFilter = 'Portugal';
+		casesCmp.show = true;
+		PortalSearchFilterWrapper filtersWrapper = new PortalSearchFilterWrapper();
+		filtersWrapper.searchText = 'Bla';
+		filtersWrapper.casesComponent = casesCmp;
+
+		test = PortalGlobalSearchCtrl.portalGlobalSearch(JSON.serialize(filtersWrapper), 'Cases');
+	}
+	Test.stopTest();
+}
 }

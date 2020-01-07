@@ -28,7 +28,7 @@
     </values>
     <values>
         <field>DataCategoryLabel_en_US__c</field>
-        <value xsi:type="xsd:string">Product delivery</value>
+        <value xsi:type="xsd:string">NDClink</value>
     </values>
     <values>
         <field>DataCategoryLabel_es__c</field>
@@ -80,7 +80,7 @@
     </values>
     <values>
         <field>DataSubtopicName__c</field>
-        <value xsi:type="xsd:string">Product_delivery_NDClink</value>
+        <value xsi:type="xsd:string">NDClink1</value>
     </values>
     <values>
         <field>DataTopicName__c</field>
@@ -104,11 +104,15 @@
     </values>
     <values>
         <field>Order__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:double">3.0</value>
     </values>
     <values>
         <field>Permission_Set_Name__c</field>
         <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Requires_Level2_Registration__c</field>
+        <value xsi:type="xsd:boolean">false</value>
     </values>
     <values>
         <field>SectorExceptions__c</field>

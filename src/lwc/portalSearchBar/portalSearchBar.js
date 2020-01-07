@@ -8,6 +8,8 @@ import CSP_Search_AdvancedSearch from '@salesforce/label/c.CSP_Search_AdvancedSe
 import CSP_Search_NoResults_text1 from '@salesforce/label/c.CSP_Search_NoResults_text1';
 import CSP_Search_NoResults_text2 from '@salesforce/label/c.CSP_Search_NoResults_text2';
 import CSP_Search_NoResults_text3 from '@salesforce/label/c.CSP_Search_NoResults_text3';
+import ISSP_See_more from '@salesforce/label/c.ISSP_See_more';
+
 
 import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 
@@ -30,7 +32,8 @@ export default class PortalSearchBar extends NavigationMixin(LightningElement) {
         CSP_Search_AdvancedSearch,
         CSP_Search_NoResults_text1,
         CSP_Search_NoResults_text2,
-        CSP_Search_NoResults_text3
+        CSP_Search_NoResults_text3,
+        ISSP_See_more
     }
 
     @track showHoverResults = false;
@@ -182,6 +185,9 @@ export default class PortalSearchBar extends NavigationMixin(LightningElement) {
     }
 
     removeTextSearch() {
+        if(this.filteringObject.searchText !== ''){
+            this.template.querySelector('c-portal-search-results-list').reloadData();
+        }
         this.filteringObject.searchText = '';
         this.searchText = '';
         this.showCross = false;

@@ -1,0 +1,60 @@
+<aura:component>
+    <aura:attribute name="accountId" type="Id"/>
+    <aura:attribute name="canEdit" type="Boolean"/>
+
+    <aura:attribute name="tabId" type="String" default="identification"/>
+    <aura:handler name="change" value="{!v.tabId}" action="{!c.handleChange}"/>
+
+    <lightning:tabset aura:id="tabs" selectedTabId="{!v.tabId}">
+        <lightning:tab label="IDENTIFICATION" id="identification">
+            <aura:if isTrue="{!v.tabId == 'identification'}">
+                <c:AWW_AccountIdentification accountId="{!v.accountId}" canEdit="{!v.canEdit}"/>
+            </aura:if>
+        </lightning:tab>
+        <lightning:tab label="HEAD OFFICES" id="head_offices">
+            <aura:if isTrue="{!v.tabId == 'head_offices'}">
+                <c:AWW_HeadOffices accountId="{!v.accountId}" canEdit="{!v.canEdit}"/>
+            </aura:if>
+        </lightning:tab>
+        <lightning:tab label="KEY CONTACTS" id="key_contacts">
+            <aura:if isTrue="{!v.tabId == 'key_contacts'}">
+                <c:AWW_KeyContacts accountId="{!v.accountId}"/>
+            </aura:if>
+        </lightning:tab>
+        <lightning:tab label="ISSUES AND PRIORITIES" id="issues_and_priorities">
+            <aura:if isTrue="{!v.tabId == 'issues_and_priorities'}">
+                <c:AWW_IssuesAndPriorities accountId="{!v.accountId}" canEdit="{!v.canEdit}"/>
+            </aura:if>
+        </lightning:tab>
+        <lightning:tab label="CORE RELATIONSHIP" id="core_relationship">
+            <aura:if isTrue="{!v.tabId == 'core_relationship'}">
+                <c:AWW_CoreRelationship accountId="{!v.accountId}" canEdit="{!v.canEdit}"/>
+            </aura:if>
+        </lightning:tab>
+        <lightning:tab label="PRODUCTS AND SERVICES" id="products_and_services">
+            <aura:if isTrue="{!v.tabId == 'products_and_services'}">
+                <c:AWW_ProductsServices accountId="{!v.accountId}"/>
+            </aura:if>
+        </lightning:tab>
+        <lightning:tab label="GROUPS" id="groups">
+            <aura:if isTrue="{!v.tabId == 'groups'}">
+                <c:AWW_AccountGroups accountId="{!v.accountId}"/>
+            </aura:if>
+        </lightning:tab>
+        <lightning:tab label="PERFORMANCE MEASURES" id="performance_measures">
+            <aura:if isTrue="{!v.tabId == 'performance_measures'}">
+                <c:AWW_Performance accountId="{!v.accountId}" canEdit="{!v.canEdit}"/>
+            </aura:if>
+        </lightning:tab>
+        <lightning:tab label="ACCOUNT PLAN" id="account_plan">
+            <aura:if isTrue="{!v.tabId == 'account_plan'}">
+                <c:AWW_AccountPlan accountId="{!v.accountId}" canEdit="{!v.canEdit}"/>
+            </aura:if>
+        </lightning:tab>
+        <lightning:tab label="NEWS" id="news">
+            <aura:if isTrue="{!v.tabId == 'news'}">
+                <c:AWW_AccountNews accountId="{!v.accountId}"/>
+            </aura:if>
+        </lightning:tab>
+    </lightning:tabset>
+</aura:component>

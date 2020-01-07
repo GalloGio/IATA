@@ -1,0 +1,120 @@
+@media only screen and (max-width: 400px) {
+   .customPadding {
+       padding-top: 0px !important;
+   }
+   .containerHeight{
+       /*height:925px;
+       min-height:2500px;*/
+   }
+
+}
+
+@media only screen and (min-width: 401px) and (max-width: 960px) {
+   .customPadding {
+       padding-top: 15px !important;
+   }
+   .containerHeight{
+       /*height:925px;
+       min-height:2500px;*/
+   }
+}
+
+@media only screen and (min-width: 961px) {
+   .customPadding {
+       padding-top: 40px !important;
+   }
+   .customPaddingHeader{
+       /*padding-top: 2rem !important;
+       padding-bottom: 6rem !important;*/
+   }
+   .fixedPosition{
+       /*max-width: 600px;*/
+       height: 100%;
+       /*position: fixed; */
+   }
+   .containerHeight{
+       /*height:925px;
+       min-height:2000px;*/
+   }
+   .bodyContent{
+       /*overflow-y: scroll;
+       height: 925px;*/
+       flex-grow: 1;
+       overflow: auto;
+   }
+
+   .welcomePanelContainer{
+    max-width: 550px;
+    }
+}
+
+@media only screen and (max-width: 1023px) {
+   .welcomePanelContainer{
+       display: none;
+   }
+}
+
+.containerHeight{
+    align-items: stretch;
+    min-height: 100%;
+    position: absolute;
+    width: 100%;
+} 
+
+.contentWrapper{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    justify-content: stretch;
+}
+
+.bodyContent{
+    background-color: #f0f2f5;
+    min-height: 100vh;
+}
+
+.fixedPosition{
+    position: fixed;
+    left: 0;
+    width: inherit;
+    max-width: inherit;
+}
+
+
+
+/*----Footer----*/
+.loginFooter{
+    display: flex;
+    justify-content: flex-end;
+    flex-grow: 1;
+    align-items: flex-end;
+    padding-top: 10px;
+}
+
+.footerlinks{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0 20px 20px 20px;
+    font-size: 14px;
+}
+
+@media only screen and (max-width: 1023px) {
+    .loginFooter{
+        justify-content: center;
+    }
+}
+
+.leftLink{
+    padding-right: 10px;
+}
+
+.rightLink{
+    padding-left: 10px;
+}
+
+.welcomePanel{
+    display: flex;
+    height: 100%;
+}
