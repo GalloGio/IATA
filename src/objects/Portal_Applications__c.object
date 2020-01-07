@@ -982,7 +982,9 @@ Name
     <fields>
         <fullName>Visible__c</fullName>
         <externalId>false</externalId>
-        <formula>IF(OR(
+        <formula>IF(AND(Name = &quot;ID Card Online Platform&quot;, $User.ANG_Sector__c = &quot;Airline&quot;),
+			false,
+IF(OR(
     Name = &quot;IFG Production&quot;, Name = &quot;IFG Sandbox&quot;),
     $User.IFG_Account_Member__c,
 				IF(
@@ -1053,7 +1055,8 @@ Name
             NOT($User.CNS_Account_or_Agency__c),
             NOT($User.ANG_Sector__c=&quot;Cargo Agent&quot;))
 ))
-))</formula>
+))
+)</formula>
         <label>Visible</label>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
