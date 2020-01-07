@@ -274,11 +274,11 @@ global class ANG_OscarProcessHelper {
 
 			}
 
-      if(iataCodeGeneration && dataMigration && changecodeGeneration && !updater.oscarMap.get(oscar.Id).Flag_Data_to_SAPECC__c){
-        updater.oscarMap.get(oscar.Id).Flag_Data_to_SAPECC__c = true;
-        updater.oscarMap.get(oscar.Id).STEP8__c = AMS_Utils.IN_PROGRESS;
-        updater.toUpdate = true;
-      }
+	  if(iataCodeGeneration && dataMigration && changecodeGeneration && !updater.oscarMap.get(oscar.Id).Flag_Data_to_SAPECC__c){
+		updater.oscarMap.get(oscar.Id).Flag_Data_to_SAPECC__c = true;
+		updater.oscarMap.get(oscar.Id).STEP8__c = AMS_Utils.IN_PROGRESS;
+		updater.toUpdate = true;
+	  }
 
 			System.debug('[ANG_OscarProcessHelper] iataCodeGeneration is:'+iataCodeGeneration);
 			System.debug('[ANG_OscarProcessHelper] dataMigration is:'+dataMigration);
@@ -433,45 +433,45 @@ global class ANG_OscarProcessHelper {
 
 		System.debug('Copying Data from Staging to Account');
 
-        List<Account> accountsToUpdate = new List<Account>();
-        Map<Id, Set<Id>> stagingToAccount = new Map<Id, Set<Id>>();
-        
-        //DT: reindented and added 3 fields for iso shipping/billin
-        //PASS - Added IMPC_Code__c to the fields that need to be mapped to the Account
-        Map<String, String> fieldsMapping = new Map<String, String> {'Name' => 'Account_Name__c'
-                                                                    ,'IATACode__c' => 'IATACode__c'
-                                                                    ,'Short_Name__c' => 'Short_Name__c'
-                                                                    ,'TradeName__c' => 'Trade_Name__c'
-                                                                    ,'License_Number__c' => 'ISSP_AMS_License_No__c'
-                                                                    ,'VAT_Number__c' => 'ISSP_AMS_VAT_number__c'
-                                                                    ,'BillingStreet' => 'Branch_Office_Street_name_number__c'
-                                                                    ,'Website' => 'Website__c'
-                                                                    ,'BillingPostalCode' => 'Branch_Office_Postal_code__c'
-                                                                    ,'BillingCity' => 'Branch_Office_City__c'
-                                                                    ,'IATA_ISO_Country__c' => 'Branch_Office_Country__c'
-                                                                    ,'Iso_State__c' => 'IATA_ISO_State__c'
-                                                                    ,'ShippingStreet' => 'Shipping_Street__c'
-                                                                    ,'ShippingPostalCode' => 'Shipping_Postal_Code__c'
-                                                                    ,'Email__c' => 'Branch_Office_Email__c'
-                                                                    ,'Phone' => 'Branch_Office_Phone__c'
-                                                                    ,'Fax' => 'Branch_Office_FAX__c'
-                                                                    ,'ShippingCity' => 'Shipping_City__c'
-                                                                    ,'Operation__c' => 'Operation__c'
-                                                                    ,'Abbreviated_name__c' => 'Abbreviated_name__c'
-                                                                    ,'Abbreviated_address__c' => 'Abbreviated_Address__c'
-                                                                    ,'Remittance_frequency__c' => 'Remittance_frequency__c'
-                                                                    ,'Solicitation_Flag__c' => 'Solicitation_Flag__c'
-                                                                    ,'VAT_Number_2__c' => 'VAT_Number_2__c'
-                                                                    ,'CASS_Number__c' => 'CASS_Number__c'
-                                                                    ,'Location_Class__c' => 'Location_Class__c'
-                                                                    ,'Location_Type__c' => 'Location_Type__c'
-                                                                    ,'Mobile__c' => 'Mobile__c'
-                                                                    ,'Is_your_firm_handling_Dangerous_Goods__c' => 'Is_your_firm_handling_Dangerous_Goods__c'
-                                                                    ,'IATA_ISO_Billing_State__c' => 'IATA_ISO_State__c'
-                                                                    ,'IATA_ISO_Shipping_Country__c' => 'Shipping_ISO_Country__c'
-                                                                    ,'IATA_ISO_Shipping_State__c' => 'Shipping_ISO_State__c'
-                                                                    ,'Link_agent_name__c' => 'Link_agent_name__c'
-                                                                	,'IMPC_Code__c' => 'IMPC_Code__c'};
+		List<Account> accountsToUpdate = new List<Account>();
+		Map<Id, Set<Id>> stagingToAccount = new Map<Id, Set<Id>>();
+
+		//DT: reindented and added 3 fields for iso shipping/billin
+		//PASS - Added IMPC_Code__c to the fields that need to be mapped to the Account
+		Map<String, String> fieldsMapping = new Map<String, String> {'Name' => 'Account_Name__c'
+																	,'IATACode__c' => 'IATACode__c'
+																	,'Short_Name__c' => 'Short_Name__c'
+																	,'TradeName__c' => 'Trade_Name__c'
+																	,'License_Number__c' => 'ISSP_AMS_License_No__c'
+																	,'VAT_Number__c' => 'ISSP_AMS_VAT_number__c'
+																	,'BillingStreet' => 'Branch_Office_Street_name_number__c'
+																	,'Website' => 'Website__c'
+																	,'BillingPostalCode' => 'Branch_Office_Postal_code__c'
+																	,'BillingCity' => 'Branch_Office_City__c'
+																	,'IATA_ISO_Country__c' => 'Branch_Office_Country__c'
+																	,'Iso_State__c' => 'IATA_ISO_State__c'
+																	,'ShippingStreet' => 'Shipping_Street__c'
+																	,'ShippingPostalCode' => 'Shipping_Postal_Code__c'
+																	,'Email__c' => 'Branch_Office_Email__c'
+																	,'Phone' => 'Branch_Office_Phone__c'
+																	,'Fax' => 'Branch_Office_FAX__c'
+																	,'ShippingCity' => 'Shipping_City__c'
+																	,'Operation__c' => 'Operation__c'
+																	,'Abbreviated_name__c' => 'Abbreviated_name__c'
+																	,'Abbreviated_address__c' => 'Abbreviated_Address__c'
+																	,'Remittance_frequency__c' => 'Remittance_frequency__c'
+																	,'Solicitation_Flag__c' => 'Solicitation_Flag__c'
+																	,'VAT_Number_2__c' => 'VAT_Number_2__c'
+																	,'CASS_Number__c' => 'CASS_Number__c'
+																	,'Location_Class__c' => 'Location_Class__c'
+																	,'Location_Type__c' => 'Location_Type__c'
+																	,'Mobile__c' => 'Mobile__c'
+																	,'Is_your_firm_handling_Dangerous_Goods__c' => 'Is_your_firm_handling_Dangerous_Goods__c'
+																	,'IATA_ISO_Billing_State__c' => 'IATA_ISO_State__c'
+																	,'IATA_ISO_Shipping_Country__c' => 'Shipping_ISO_Country__c'
+																	,'IATA_ISO_Shipping_State__c' => 'Shipping_ISO_State__c'
+																	,'Link_agent_name__c' => 'Link_agent_name__c'
+																	,'IMPC_Code__c' => 'IMPC_Code__c'};
 
 		List<Account> createRHCInfo = new List<Account>();
 
@@ -576,7 +576,7 @@ global class ANG_OscarProcessHelper {
 				Map<Id,Account> listAccount;
 				if(!accrConPerAccount.keySet().isEmpty() && !(accrConPerAccount.keySet().size() == 1 && accrConPerAccount.keySet().contains(acc.Id))){
 
-            		listAccount = new Map<Id,Account>([SELECT Id, Has_a_Financial_Assessment_Contact__c, Has_an_Administrator_User_Portal__c, Location_Class__c, Sector__c , Category__c,
+					listAccount = new Map<Id,Account>([SELECT Id, Has_a_Financial_Assessment_Contact__c, Has_an_Administrator_User_Portal__c, Location_Class__c, Sector__c , Category__c,
 																	(SELECT Financial_Assessment_Contact__c, User_Portal_Status__c FROM Contacts WHERE Id NOT IN: conIds)
 																	FROM Account
 																	WHERE id IN: accrConPerAccount.keySet()]);

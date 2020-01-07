@@ -1362,13 +1362,13 @@ global with sharing class ANG_ConversionHelper {
 
 	private static void createAgencyAuthorizations(Set<Account> accts){
 
-        List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
-        
-        ID FormOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
-        
-        List<Account> acctToInsert = [SELECT Id, IATACode__c, Status__c, Purge_Flag__c, Is_PCI_compliant__c, ANG_PCI_compliance_expiry_date__c, Sector__c, Category__c from Account where Id in:accts];
-        
-        String statusAA, statusCC = null;
+		List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
+
+		ID FormOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
+
+		List<Account> acctToInsert = [SELECT Id, IATACode__c, Status__c, Purge_Flag__c, Is_PCI_compliant__c, ANG_PCI_compliance_expiry_date__c, Sector__c, Category__c from Account where Id in:accts];
+
+		String statusAA, statusCC = null;
 
 		for(Account acct:acctToInsert){
 
@@ -1399,7 +1399,7 @@ global with sharing class ANG_ConversionHelper {
 
 		Map<Id,Agency_Applied_Change_code__c> mapAACCAccounts = new Map<Id,Agency_Applied_Change_code__c>();
 
-        //Accounts are reQueried to avoid conflicts with Risk Assessment (performed on an earlier step)
+		//Accounts are reQueried to avoid conflicts with Risk Assessment (performed on an earlier step)
 		List<Account> accounts = [SELECT Id, Status__c, CNS_Agency__c, Location_Class__c, Sector__c, Category__c, (SELECT Reason_Code__c, Reason_Description__c,Account__r.Status__c, Account__r.Sector__c, Account__r.Category__c, Account__r.Location_Class__c FROM Agencies_Applied_Change_codes__r WHERE Active__c = TRUE ORDER BY CreatedDate DESC) FROM Account WHERE Id in :accountsToApply];
 
 		for(Account a : accounts){

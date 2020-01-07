@@ -916,12 +916,12 @@ public with sharing class ANG_AgencyChangesHelper {
 			//For the Change Of Hierarchy (HE Included), we need to take care of the hidden accounts
 			//(with Status terminated, "Terminated", "Not accreditated","New application pending" and "Not in Operation") and disconnect them from their parent
 
-      if(isAllHierarchySelected){
-        if(isMulticountry && allRelations.containsKey(oscar.New_Parent__c)){
-          allRelations.remove(oscar.New_Parent__c);
-        }
-        changesContainer = detachTerminatedAccountsFromHierarchy(allRelations,changesContainer);
-      }
+	  if(isAllHierarchySelected){
+		if(isMulticountry && allRelations.containsKey(oscar.New_Parent__c)){
+		  allRelations.remove(oscar.New_Parent__c);
+		}
+		changesContainer = detachTerminatedAccountsFromHierarchy(allRelations,changesContainer);
+	  }
 
 		}
 
@@ -2240,24 +2240,24 @@ public with sharing class ANG_AgencyChangesHelper {
 					objectChangesByChangeCode = objectChanges.get(index);
 
 			}
-            
-            if(cc.Name == 'COR'){
-            	for(Account ac : oscarAgencies){//when changeCode = COR, same change code for all Acc
-            		//changeCodeResult = AMS_ChangeCodesHelper.createAAChangeCode(objectChangesByChangeCode,cc, oscars.get(0), ac, isActive, fOPs.get(accId));
+
+			if(cc.Name == 'COR'){
+				for(Account ac : oscarAgencies){//when changeCode = COR, same change code for all Acc
+					//changeCodeResult = AMS_ChangeCodesHelper.createAAChangeCode(objectChangesByChangeCode,cc, oscars.get(0), ac, isActive, fOPs.get(accId));
 					changeCodeResult = AMS_ChangeCodesHelper.createAAChangeCode(objectChangesByChangeCode,cc, oscars.get(0), accountInfoMap.get(ac.Id), isActive, fOPs.get(accId));
-            		changesContainer.addChangeCode(changeCodeResult.changeCode);
+					changesContainer.addChangeCode(changeCodeResult.changeCode);
 
 					aaccHistoryToProcess.put(accId, changeCodeResult);
 
 					if (!accountsToUpdate.contains(changeCodeResult.acct)){
 						changesContainer.addAccount(changeCodeResult.acct);
 					}
-            	}
-            }
-            else{
+				}
+			}
+			else{
 				//changeCodeResult = AMS_ChangeCodesHelper.createAAChangeCode(objectChangesByChangeCode,cc, oscars.get(0), oscarAgencies.get(index), isActive, fOPs.get(accId));
 				changeCodeResult = AMS_ChangeCodesHelper.createAAChangeCode(objectChangesByChangeCode,cc, oscars.get(0), accountInfoMap.get(oscarAgencies.get(index).id), isActive, fOPs.get(accId));
-            	changesContainer.addChangeCode(changeCodeResult.changeCode);
+				changesContainer.addChangeCode(changeCodeResult.changeCode);
 
 				aaccHistoryToProcess.put(accId, changeCodeResult);
 

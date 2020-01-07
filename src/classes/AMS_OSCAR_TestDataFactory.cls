@@ -22,15 +22,15 @@ public with sharing class AMS_OSCAR_TestDataFactory
 
 		List<Account> accountList = new List<Account>();
 		Account a1 = new Account(
-                                IATA_ISO_Country__c = ctry.id,
-                                RecordTypeId = accountRT,
+								IATA_ISO_Country__c = ctry.id,
+								RecordTypeId = accountRT,
 								IATACode__c='1234566',
-            					Name='Test1 Agency',
-            					Short_Name__c='Test1 Agency',
-                                Sector__c = AMS_Utils.SECTOR_PASSENGER,
-                                Category__c = AMS_Utils.CATEGORY_TOUR_OPERATOR,
-            					Reason_for_creation__c = 'New Agency'
-        						);
+								Name='Test1 Agency',
+								Short_Name__c='Test1 Agency',
+								Sector__c = AMS_Utils.SECTOR_PASSENGER,
+								Category__c = AMS_Utils.CATEGORY_TOUR_OPERATOR,
+								Reason_for_creation__c = 'New Agency'
+								);
 		insert a1;
 
 		AMS_OSCAR__c OSCAR = new AMS_OSCAR__c(STEP1__c = 'In Progress', Account__c = a1.id,Change_effective_as_of__c = Date.today());

@@ -474,7 +474,7 @@ public class ANG_RHCAlertTriggerHandler{
 					accountsChangeCode.put(accId, changeCode);
 		}
 
-        List<Account> accountToCreateCC = [Select Id, Status__c, CNS_Agency__c, Location_Class__c, Sector__c, Category__c from Account where Id in :accountIds];
+		List<Account> accountToCreateCC = [Select Id, Status__c, CNS_Agency__c, Location_Class__c, Sector__c, Category__c from Account where Id in :accountIds];
 
 		List<AMS_OSCAR_JSON.ChangeCode> listOfCCToInsert = new List<AMS_OSCAR_JSON.ChangeCode>();
 		List<AMS_OSCAR__c> oscarsToAdd = new List<AMS_OSCAR__c>();
