@@ -4,17 +4,17 @@ private class ANG_AgencyAuthorizationTriggerTest {
 	@testSetup static void setup(){
 
 		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US', ANG_Enable_NewGen__c = true);
-        insert ctry ;
+		insert ctry ;
 
-        Id accountAgencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+		Id accountAgencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
-        Account a1 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234561',Location_Type__c='HE',Name='Test1 Agency OK',Short_Name__c='Test1 Agency', Sector__c = 'Travel Agent', Location_Class__c = 'P');
+		Account a1 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234561',Location_Type__c='HE',Name='Test1 Agency OK',Short_Name__c='Test1 Agency', Sector__c = 'Travel Agent', Location_Class__c = 'P');
 
-        insert a1;
+		insert a1;
 
-        Account a2 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234562',Location_Type__c='HE',Name='Test2 Agency OK',Short_Name__c='Test2 Agency', Sector__c = 'Travel Agent', Location_Class__c = 'P');
+		Account a2 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234562',Location_Type__c='HE',Name='Test2 Agency OK',Short_Name__c='Test2 Agency', Sector__c = 'Travel Agent', Location_Class__c = 'P');
 
-        insert a2;
+		insert a2;
 
 		GDP_Products_Account_View__c prod1 = new GDP_Products_Account_View__c();
 		prod1.Name = a1.Id;
@@ -29,17 +29,17 @@ private class ANG_AgencyAuthorizationTriggerTest {
 
 		List<Account> accts = [select Id from Account ];
 
-        List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
+		List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
 
-        ID BSPLinkRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','BSPLink');
+		ID BSPLinkRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','BSPLink');
 
 		ID FormOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
 
 		Account acct1 = accts.get(0);
 
-    	authorizations.add(new Agency_Authorization__c(Account__c = acct1.Id, ANG_FormOfPayment_ID__c = 'CC', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
-    	authorizations.add(new Agency_Authorization__c(Account__c = acct1.Id, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
-    	authorizations.add(new Agency_Authorization__c(Account__c = acct1.Id, ANG_FormOfPayment_ID__c = 'EP', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
+		authorizations.add(new Agency_Authorization__c(Account__c = acct1.Id, ANG_FormOfPayment_ID__c = 'CC', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
+		authorizations.add(new Agency_Authorization__c(Account__c = acct1.Id, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
+		authorizations.add(new Agency_Authorization__c(Account__c = acct1.Id, ANG_FormOfPayment_ID__c = 'EP', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
 
 		insert authorizations;
 
@@ -83,15 +83,15 @@ private class ANG_AgencyAuthorizationTriggerTest {
 
 		List<Account> accts = [select Id from Account WHERE IATACode__c = '1234561' ];
 
-        List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
+		List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
 
 		ID FormOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
 
 		Account acct1 = accts.get(0);
 
-    	authorizations.add(new Agency_Authorization__c(Account__c = acct1.Id, ANG_FormOfPayment_ID__c = 'CC', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
-    	authorizations.add(new Agency_Authorization__c(Account__c = acct1.Id, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
-    	authorizations.add(new Agency_Authorization__c(Account__c = acct1.Id, ANG_FormOfPayment_ID__c = 'EP', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
+		authorizations.add(new Agency_Authorization__c(Account__c = acct1.Id, ANG_FormOfPayment_ID__c = 'CC', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
+		authorizations.add(new Agency_Authorization__c(Account__c = acct1.Id, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
+		authorizations.add(new Agency_Authorization__c(Account__c = acct1.Id, ANG_FormOfPayment_ID__c = 'EP', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
 
 		insert authorizations;
 
@@ -126,17 +126,17 @@ private class ANG_AgencyAuthorizationTriggerTest {
 
 		List<Account> accts = [select Id from Account ];
 
-        List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
+		List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
 
-        ID BSPLinkRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','BSPLink');
+		ID BSPLinkRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','BSPLink');
 
 		ID FormOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
 
 		Account acct1 = accts.get(0);
 
-    	authorizations.add(new Agency_Authorization__c(Account__c = acct1.Id, ANG_FormOfPayment_ID__c = 'CC', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
-    	authorizations.add(new Agency_Authorization__c(Account__c = acct1.Id, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
-    	authorizations.add(new Agency_Authorization__c(Account__c = acct1.Id, ANG_FormOfPayment_ID__c = 'EP', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
+		authorizations.add(new Agency_Authorization__c(Account__c = acct1.Id, ANG_FormOfPayment_ID__c = 'CC', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
+		authorizations.add(new Agency_Authorization__c(Account__c = acct1.Id, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
+		authorizations.add(new Agency_Authorization__c(Account__c = acct1.Id, ANG_FormOfPayment_ID__c = 'EP', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
 
 		insert authorizations;
 
@@ -200,23 +200,23 @@ private class ANG_AgencyAuthorizationTriggerTest {
 
 		List<Account> accts = [select Id from Account];
 
-        List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
+		List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
 
-        ID BSPLinkRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','BSPLink');
+		ID BSPLinkRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','BSPLink');
 
 		ID FormOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
 
 		Account acct1 = accts.get(0);
 
-    	authorizations.add(new Agency_Authorization__c(Account__c = acct1.Id, ANG_FormOfPayment_ID__c = 'CC', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
-    	authorizations.add(new Agency_Authorization__c(Account__c = acct1.Id, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
-    	authorizations.add(new Agency_Authorization__c(Account__c = acct1.Id, ANG_FormOfPayment_ID__c = 'EP', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
+		authorizations.add(new Agency_Authorization__c(Account__c = acct1.Id, ANG_FormOfPayment_ID__c = 'CC', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
+		authorizations.add(new Agency_Authorization__c(Account__c = acct1.Id, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
+		authorizations.add(new Agency_Authorization__c(Account__c = acct1.Id, ANG_FormOfPayment_ID__c = 'EP', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
 
 		Account acct2 = accts.get(1);
 
-    	authorizations.add(new Agency_Authorization__c(Account__c = acct2.Id, ANG_FormOfPayment_ID__c = 'CC', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
-    	authorizations.add(new Agency_Authorization__c(Account__c = acct2.Id, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
-    	authorizations.add(new Agency_Authorization__c(Account__c = acct2.Id, ANG_FormOfPayment_ID__c = 'EP', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
+		authorizations.add(new Agency_Authorization__c(Account__c = acct2.Id, ANG_FormOfPayment_ID__c = 'CC', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
+		authorizations.add(new Agency_Authorization__c(Account__c = acct2.Id, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
+		authorizations.add(new Agency_Authorization__c(Account__c = acct2.Id, ANG_FormOfPayment_ID__c = 'EP', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
 
 		insert authorizations;
 

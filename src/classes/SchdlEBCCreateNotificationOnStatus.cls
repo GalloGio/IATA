@@ -1,31 +1,31 @@
 /**
-  * Description: This class schedule the creation and deletion of EBC_Account Notification
-  * Author: Sonny Leman
-  *
-  * Related class
-  *  - BtchEBCCreateNotificationOnStatus
-  *  
-  * Note:
-  *  - For simplicity, current version need to be scheduled manually on Salesforce
-  *  - Suggested schedule: first day of each month
-  *
-  * History: 
-  *   20160819-sl: initial version
-  *
-  */
- 
+	* Description: This class schedule the creation and deletion of EBC_Account Notification
+	* Author: Sonny Leman
+	*
+	* Related class
+	*  - BtchEBCCreateNotificationOnStatus
+	*
+	* Note:
+	*  - For simplicity, current version need to be scheduled manually on Salesforce
+	*  - Suggested schedule: first day of each month
+	*
+	* History:
+	*   20160819-sl: initial version
+	*
+	*/
+
 global class SchdlEBCCreateNotificationOnStatus implements Schedulable {
-	
+
 	global void execute(SchedulableContext sc) {
 		try {
 			// Only run the job if the schedule interface is activated through the custom settings
-			
+
 			BtchEBCCreateNotificationOnStatus.callBatchEBCCreateNotification();
-			
-			/* 
+
+			/*
 			// the following is used if we want the job to auto reschedule
 			//optional: add here if (IECConstants.BtchEBCCreateAccountNotificationOnStatus EBCPeriodicAgencyQuery_ScheduleActive)
-			
+
 			// This section of code will schedule the next execution X hours from now depending on the configured setting
 			Datetime nextScheduleTime = system.now().addMonths(1);
 			//datetime nextScheduleTime = system.now().addMinutes(IECConstants.EBCPeriodicAgencyQuery_Period);
@@ -36,9 +36,9 @@ global class SchdlEBCCreateNotificationOnStatus implements Schedulable {
 			string second = string.valueof(nextScheduleTime.second ());
 			string cronvalue = second + ' ' + minute + ' ' + hour + ' ' + day + ' ' + month + ' ?';
 			string jobName = 'BtchEBCCreateAccountNotificationOnStatus ' + (Test.isRunningTest() ? 'Test' : '') + nextScheduleTime.format('yyyy-MM-dd HH:mm:ss');
-			
+
 			System.schedule(jobName, cronvalue , new SchdlEBCCreateNotificationOnStatus());
-			
+
 			// this section of code will abort the current schedule job
 			System.abortJob(sc.getTriggerId());
 			*/
@@ -48,7 +48,7 @@ global class SchdlEBCCreateNotificationOnStatus implements Schedulable {
 			IECErrorLogger.logError(null, 'Error while starting SchdlEBCCreateNotificationOnStatus schedule.', ex.getMessage(), null, 'SchdlEBCCreateNotificationOnStatus', ex.getStackTraceString());
 			//throw ex;
 		}
-	} // end of execute 
-	
-	
+	} // end of execute
+
+
 }

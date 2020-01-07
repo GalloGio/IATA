@@ -53,26 +53,6 @@
         <formula>Case.Effective_time_spent__c</formula>
     </fieldOverrides>
     <fieldOverrides>
-        <field>First_Business_Day__c</field>
-        <formula>Case.First_Business_Day__c</formula>
-    </fieldOverrides>
-    <fieldOverrides>
-        <field>First_closure_date__c</field>
-        <formula>Case.First_closure_date__c</formula>
-    </fieldOverrides>
-    <fieldOverrides>
-        <field>First_Contact_w_Client_in_Business_Hours__c</field>
-        <formula>Case.First_Contact_w_Client_in_Business_Hours__c</formula>
-    </fieldOverrides>
-    <fieldOverrides>
-        <field>First_Contact_with_Client__c</field>
-        <formula>Case.First_Contact_with_Client__c</formula>
-    </fieldOverrides>
-    <fieldOverrides>
-        <field>First_time_resolution__c</field>
-        <formula>Case.First_time_resolution__c</formula>
-    </fieldOverrides>
-    <fieldOverrides>
         <field>Groups__c</field>
         <formula>TEXT(Case.Groups__c )</formula>
     </fieldOverrides>
@@ -134,7 +114,7 @@
     </fieldOverrides>
     <fieldOverrides>
         <field>Status</field>
-        <formula>TEXT( Case.Status)</formula>
+        <literalValue>Open</literalValue>
     </fieldOverrides>
     <fieldOverrides>
         <field>Subject</field>
@@ -151,26 +131,6 @@
     <fieldOverrides>
         <field>SuppliedName</field>
         <formula>Case.SuppliedName</formula>
-    </fieldOverrides>
-    <fieldOverrides>
-        <field>Time_Escalated__c</field>
-        <formula>Case.Time_Escalated__c</formula>
-    </fieldOverrides>
-    <fieldOverrides>
-        <field>Time_Escalated_Externally__c</field>
-        <formula>Case.Time_Escalated_Externally__c</formula>
-    </fieldOverrides>
-    <fieldOverrides>
-        <field>Time_Unassigned__c</field>
-        <formula>Case.Time_Unassigned__c</formula>
-    </fieldOverrides>
-    <fieldOverrides>
-        <field>Time_With_Customer__c</field>
-        <formula>Case.Time_With_Customer__c</formula>
-    </fieldOverrides>
-    <fieldOverrides>
-        <field>Time_With_Support__c</field>
-        <formula>Case.Time_With_Support__c</formula>
     </fieldOverrides>
     <fieldOverrides>
         <field>Topic__c</field>
