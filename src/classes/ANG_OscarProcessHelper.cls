@@ -104,7 +104,7 @@ global class ANG_OscarProcessHelper {
 				return new String[]{'-1', Label.ANG_Multicountry_Process_Parent_Account_Error, '-1'};
 			}
 
-			/*** AMSU-162 ***/                                                       /************************ ENHC0012583 *************************/
+			/*** AMSU-162 ***/														 /************************ ENHC0012583 *************************/
 			if((AMS_Utils.AMS_ProcessesAddressToValidate.contains(oscar.Process__c) || AMS_Utils.oscarNewGenNewAppProcesses.contains(oscar.Process__c)) && !isShippingAddressValid(theAccreditation)) {
 				isIATACodeGenerationRunning = false;
 				System.debug('[ANG_OscarProcessHelper] Incomplete shipping address.');
@@ -274,11 +274,11 @@ global class ANG_OscarProcessHelper {
 
 			}
 
-	  if(iataCodeGeneration && dataMigration && changecodeGeneration && !updater.oscarMap.get(oscar.Id).Flag_Data_to_SAPECC__c){
+		if(iataCodeGeneration && dataMigration && changecodeGeneration && !updater.oscarMap.get(oscar.Id).Flag_Data_to_SAPECC__c){
 		updater.oscarMap.get(oscar.Id).Flag_Data_to_SAPECC__c = true;
 		updater.oscarMap.get(oscar.Id).STEP8__c = AMS_Utils.IN_PROGRESS;
 		updater.toUpdate = true;
-	  }
+		}
 
 			System.debug('[ANG_OscarProcessHelper] iataCodeGeneration is:'+iataCodeGeneration);
 			System.debug('[ANG_OscarProcessHelper] dataMigration is:'+dataMigration);
@@ -424,7 +424,7 @@ global class ANG_OscarProcessHelper {
 	}
 
 	//Map data from staging area (AMS Online Accreditation) to account
-	public static EntityUpdater copyDataToAccount(AMS_OSCAR__c oscar, Account acc,  AMS_Pax_Accreditation_Form__c onlineAcc, Boolean runOwnershipMigration, EntityUpdater updaterObj) {
+	public static EntityUpdater copyDataToAccount(AMS_OSCAR__c oscar, Account acc,	AMS_Pax_Accreditation_Form__c onlineAcc, Boolean runOwnershipMigration, EntityUpdater updaterObj) {
 
 		if(updaterObj == null)
 			updaterObj = new EntityUpdater();
@@ -690,8 +690,8 @@ global class ANG_OscarProcessHelper {
 		else
 			changeCode.memoText = AMS_Utils.getChangeCodeMemoText(theOSCAR.Process__c, changeCodeId, n);
 
-		changeCode.reasonDesc  = n.Reason_Code_Description__c;
-		changeCode.status  = n.Account_status_change__c;
+		changeCode.reasonDesc	= n.Reason_Code_Description__c;
+		changeCode.status	= n.Account_status_change__c;
 		changeCode.publishedOnEBulletin = n.Published_in_bulletin__c;
 
 		List<Account> acctList = AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {theOSCAR}, new List<Account> {acct}, false);
@@ -755,8 +755,8 @@ global class ANG_OscarProcessHelper {
 												(SELECT Id, Reason_Code__c, Reason_Description__c
 												 FROM Agencies_Applied_Change_codes__r
 												 WHERE Active__c = true)
-										  FROM Account
-										  WHERE ParentId =: theOSCAR.Account__c];
+											FROM Account
+											WHERE ParentId =: theOSCAR.Account__c];
 
 		Set<Account> childrenAccountsSet = new Set<Account>();
 		childrenAccountsSet.addAll(childrenAccounts);
@@ -832,7 +832,7 @@ global class ANG_OscarProcessHelper {
 
 		System.debug('[ANG_OscarProcessHelper] 1. Number of Queries used in this apex code so far: ' + Limits.getQueries());
 		System.debug('[ANG_OscarProcessHelper] 2 .Number of rows queried in this apex code so far: ' + Limits.getDmlRows());
-		System.debug('[ANG_OscarProcessHelper] 3. Number of script statements used so far : ' +  Limits.getDmlStatements());
+		System.debug('[ANG_OscarProcessHelper] 3. Number of script statements used so far : ' +	Limits.getDmlStatements());
 	}
 
 	webservice static String[] processRestoreFOP(String oscarId, Boolean restoreCC , Boolean restoreCA){
@@ -977,8 +977,8 @@ global class ANG_OscarProcessHelper {
 
 		for(AgencyAuthorizationOBject aaOjectToAnalyze: accountsAA.values()){
 
-			process =  	 restoreCash  && restoreCreditCard  && !aaOjectToAnalyze.preventCCActivation? 'Restore All' :
-						 restoreCash  && restoreCreditCard  && aaOjectToAnalyze.preventCCActivation? 'Restore Cash':
+			process =		 restoreCash	&& restoreCreditCard	&& !aaOjectToAnalyze.preventCCActivation? 'Restore All' :
+						 restoreCash	&& restoreCreditCard	&& aaOjectToAnalyze.preventCCActivation? 'Restore Cash':
 						 restrictCash && restrictCreditCard ? 'Restrict All' :
 						 restrictCash ? 'Restrict Cash' :
 						 restrictCreditCard ? 'Restrict Credit Card' :
@@ -1128,7 +1128,7 @@ global class ANG_OscarProcessHelper {
 				memoTextTemp = memoTextTemp.replace('due to <SIDRA Lite Reason>.','due to '+theOscar.SIDRA_lite_reason__c+'.');
 
 			changeCode.memoText = memoTextTemp;
-			changeCode.reasonDesc  = changeCodeConfig.Reason_Code_Description__c;
+			changeCode.reasonDesc	= changeCodeConfig.Reason_Code_Description__c;
 
 			if(changeCode.reasonCode == null && accountsChangeCode.get(acctToAddCC.Id) != null || changeCode.reasonCode.toUpperCase()=='CURRENT' ){
 				changeCode.reasonCode = accountsChangeCode.get(acctToAddCC.Id).Reason_Code__c;
@@ -1138,7 +1138,7 @@ global class ANG_OscarProcessHelper {
 				changeCode.reasonDesc = accountsChangeCode.get(acctToAddCC.Id).Reason_Description__c;
 			}
 
-			changeCode.status  = changeCodeConfig.Account_status_change__c;
+			changeCode.status	= changeCodeConfig.Account_status_change__c;
 
 			System.debug('Adding changeCode:' + changeCode);
 
@@ -1877,7 +1877,7 @@ global class ANG_OscarProcessHelper {
 
 	}
 
-	  private static void createPortalNotifications(Set<Account> acctSet,  Map<Id,Case> acctIdCasesMap, Notification_Template__c notificationTemplate,Map<Id,List<Contact>> keyContactMap){
+		private static void createPortalNotifications(Set<Account> acctSet,	Map<Id,Case> acctIdCasesMap, Notification_Template__c notificationTemplate,Map<Id,List<Contact>> keyContactMap){
 
 		List<Contact> contactsToSend = new List<Contact>();
 		Map<Id,Id> contactAccts = new Map<Id,Id>();
@@ -1957,7 +1957,7 @@ global class ANG_OscarProcessHelper {
 				contactsToReturn.add(new ContactOrdered(con,10));
 			else if(con.BSP_CASS_Payment_contact__c)
 				contactsToReturn.add(new ContactOrdered(con,20));
-			else if(con.User_Portal_Status__c <> 'Approved Admin' && !con.Financial_Assessment_Contact__c &&  !con.BSP_CASS_Payment_contact__c)
+			else if(con.User_Portal_Status__c <> 'Approved Admin' && !con.Financial_Assessment_Contact__c &&	!con.BSP_CASS_Payment_contact__c)
 				contactsToReturn.add(new ContactOrdered(con,30));
 
 		}
@@ -1972,7 +1972,7 @@ global class ANG_OscarProcessHelper {
 					contactsToReturn.add(new ContactOrdered(con,10));
 				else if(con.BSP_CASS_Payment_contact__c)
 					contactsToReturn.add(new ContactOrdered(con,20));
-				else if(con.User_Portal_Status__c <> 'Approved Admin' && !con.Financial_Assessment_Contact__c &&  !con.BSP_CASS_Payment_contact__c)
+				else if(con.User_Portal_Status__c <> 'Approved Admin' && !con.Financial_Assessment_Contact__c &&	!con.BSP_CASS_Payment_contact__c)
 					contactsToReturn.add(new ContactOrdered(con,30));
 
 			}
@@ -2274,7 +2274,7 @@ global class ANG_OscarProcessHelper {
 	}
 
 	// to be removed
-  public void fakeMethod(){
+	public void fakeMethod(){
 	Integer i = 0;
 	i=0;
 	i=0;
@@ -2620,7 +2620,7 @@ global class ANG_OscarProcessHelper {
 	i=0;
 	i=0;
 	i=0;
-  }
+	}
 
 	public static Set<String> fetchOptOutFromFinancialReviewCountriesCfg(Set<Id> countryIdSet){
 

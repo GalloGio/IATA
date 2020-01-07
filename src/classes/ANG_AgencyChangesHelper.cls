@@ -254,7 +254,7 @@ public with sharing class ANG_AgencyChangesHelper {
 		}
 
 
-		if(oscar.Process__c == AMS_Utils.NGCHANGES && oscar.STEP6__c == AMS_Utils.PASSED  && oscar.ANG_Type_Of_Change__c != null && !isMigrationRunning && oscar.Backup_In_Progress__c){
+		if(oscar.Process__c == AMS_Utils.NGCHANGES && oscar.STEP6__c == AMS_Utils.PASSED	&& oscar.ANG_Type_Of_Change__c != null && !isMigrationRunning && oscar.Backup_In_Progress__c){
 				oscar.addError('There is a backup in progress for this Oscar, please wait a few moments until it finishes.');
 				return;
 		}
@@ -328,7 +328,7 @@ public with sharing class ANG_AgencyChangesHelper {
 				if(containsChange(New List<String>{AMS_Utils.ANG_ACCREDITATION_TYPE},oscar.ANG_Type_Of_Change__c)){
 					changesContainer = applyChangeOfAccreditationType(oscar, accountIdsInvolvedSet, changesContainer);
 
-					if((oscarOnlineAccreditation.ANG_Accreditation_Type__c ==  AMS_Utils.ACCREDITATIONMODEL_CASH) && (prevAccreditationModel == AMS_Utils.ACCREDITATIONMODEL_CASHLESS)){
+					if((oscarOnlineAccreditation.ANG_Accreditation_Type__c ==	AMS_Utils.ACCREDITATIONMODEL_CASH) && (prevAccreditationModel == AMS_Utils.ACCREDITATIONMODEL_CASHLESS)){
 						Set<String> optOutCountryConfig = ANG_OscarProcessHelper.fetchOptOutFromFinancialReviewCountriesCfg(new Set<Id>{oscarOnlineAccreditation.Branch_Office_Country__c});
 						String optOutCfgKey = oscarOnlineAccreditation.Branch_Office_Country__c + '.' + oscarOnlineAccreditation.Location_Class__c;
 						//If for the associated country we have a 'Opt out at Accreditation' configuration record
@@ -447,7 +447,7 @@ public with sharing class ANG_AgencyChangesHelper {
 						System.debug('[ANG_AgencyChangesHelper] oscar.AMS_Correction_change_code__c = ' +oscar.AMS_Correction_change_code__c);
 						AMS_OSCAR_JSON.ChangeCode changeCode = new AMS_OSCAR_JSON.ChangeCode();
 
-						changeCode.status  = null;
+						changeCode.status	= null;
 						if(oscar.AMS_Correction_change_code__c == 'COR') {
 							changeCode.name = 'COR';
 							changeCode.memoText = 'Correction';
@@ -481,8 +481,8 @@ public with sharing class ANG_AgencyChangesHelper {
 						changeCode.name = 'LET';
 						changeCode.reasonCode = '91';
 						changeCode.memoText = '';
-						changeCode.reasonDesc  = 'ACCREDITED-MEETS-STANDARDS';
-						changeCode.status  = '9';
+						changeCode.reasonDesc	= 'ACCREDITED-MEETS-STANDARDS';
+						changeCode.status	= '9';
 
 						//changesContainer = ANGcreateAAChangeCodes(null,new List<AMS_OSCAR_JSON.ChangeCode> {changeCode}, new List<AMS_OSCAR__c> {oscar}, new List<Id> (accountIdsInvolvedSet), false, changesContainer);
 						changesContainer.accountsToApplyChangeCodes.add(changesContainer.accountsMap.get(oscar.Account__c));
@@ -521,7 +521,7 @@ public with sharing class ANG_AgencyChangesHelper {
 
 				Boolean applyOptOutFA =
 					containsChange(New List<String>{AMS_Utils.ANG_ACCREDITATION_TYPE}, oscar.ANG_Type_Of_Change__c) &&
-					(oscarOnlineAccreditation.ANG_Accreditation_Type__c ==  AMS_Utils.ACCREDITATIONMODEL_CASH) &&
+					(oscarOnlineAccreditation.ANG_Accreditation_Type__c ==	AMS_Utils.ACCREDITATIONMODEL_CASH) &&
 					(oscar.ANG_FA_Opt_out__c == AMS_Utils.FA_OPT_OUT);
 
 				if (containsChange(New List<String>{AMS_Utils.ANG_HIERARCHY},oscar.ANG_Type_Of_Change__c)) {
@@ -869,7 +869,7 @@ public with sharing class ANG_AgencyChangesHelper {
 
 		}
 
-  }
+	}
 
 	public static boolean isAllHierarchySelected(AMS_OSCAR__c oscar, Set<Id> accountHierarchyRelationships){
 
@@ -916,19 +916,19 @@ public with sharing class ANG_AgencyChangesHelper {
 			//For the Change Of Hierarchy (HE Included), we need to take care of the hidden accounts
 			//(with Status terminated, "Terminated", "Not accreditated","New application pending" and "Not in Operation") and disconnect them from their parent
 
-	  if(isAllHierarchySelected){
+		if(isAllHierarchySelected){
 		if(isMulticountry && allRelations.containsKey(oscar.New_Parent__c)){
-		  allRelations.remove(oscar.New_Parent__c);
+			allRelations.remove(oscar.New_Parent__c);
 		}
 		changesContainer = detachTerminatedAccountsFromHierarchy(allRelations,changesContainer);
-	  }
+		}
 
 		}
 
 		return changesContainer;
 	}
 
-	public static AChangeStructure  detachTerminatedAccountsFromHierarchy(Map<Id, List<AMS_Agencies_relationhip__c>> allRelations, AChangeStructure toReturn){
+	public static AChangeStructure	detachTerminatedAccountsFromHierarchy(Map<Id, List<AMS_Agencies_relationhip__c>> allRelations, AChangeStructure toReturn){
 
 		Set<String> terminatedStatus = new Set <String>{AMS_Utils.ACC_S0_TERMINATED, AMS_Utils.ACC_S1_NOTACCREDITED, AMS_Utils.ACC_S2_NEWAPPLICATIONPENDING, AMS_Utils.ACC_S3_NOTINOPERATION, ''};
 
@@ -939,7 +939,7 @@ public with sharing class ANG_AgencyChangesHelper {
 
 				if(String.isBlank(rel.Child_Account__r.Status__c) || terminatedStatus.contains(rel.Child_Account__r.Status__c)){
 
-					Account childAccount = toReturn.accountsMap.get(rel.Child_Account__c) != null ?  toReturn.accountsMap.get(rel.Child_Account__c) : new Account(Id = rel.Child_Account__c);
+					Account childAccount = toReturn.accountsMap.get(rel.Child_Account__c) != null ?	toReturn.accountsMap.get(rel.Child_Account__c) : new Account(Id = rel.Child_Account__c);
 
 					childAccount.ParentId = null;
 					childAccount.Top_Parent__c = null;
@@ -992,7 +992,7 @@ public with sharing class ANG_AgencyChangesHelper {
 
 			hierarchyId = rel.Hierarchy__c;
 
-			Account childAcct  = accountsMap.get(rel.Child_Account__c);
+			Account childAcct	= accountsMap.get(rel.Child_Account__c);
 			Account parentAcct = accountsMap.get(rel.Parent_Account__c);
 
 			Id childBSP = rel.Child_Account__r.IATA_ISO_Country__r.AMS_Settlement_System__c;
@@ -1052,7 +1052,7 @@ public with sharing class ANG_AgencyChangesHelper {
 				//we need to update the account itself (parent and eventually top parent if the GE was swaped)
 				if(childAcct == NULL){
 
-					Account acct  = new Account(Id = rel.Child_Account__c);
+					Account acct	= new Account(Id = rel.Child_Account__c);
 
 					//Update the parent according to the new parent in this relationship
 					acct.ParentId = rel.Parent_Account__c;
@@ -1127,7 +1127,7 @@ public with sharing class ANG_AgencyChangesHelper {
 				parentAccount.ParentId = oscarToProcess.Account__c;
 				parentAccount.Top_Parent__c = oscarToProcess.Account__c;
 
-				Account childAccount = toReturn.accountsMap.get(rel.Child_Account__c) != null ?  toReturn.accountsMap.get(rel.Child_Account__c) : new Account(Id = rel.Child_Account__c);
+				Account childAccount = toReturn.accountsMap.get(rel.Child_Account__c) != null ?	toReturn.accountsMap.get(rel.Child_Account__c) : new Account(Id = rel.Child_Account__c);
 
 				childAccount.Location_Type__c = AMS_Utils.HE;
 				childAccount.ParentId = null;
@@ -1390,7 +1390,7 @@ public with sharing class ANG_AgencyChangesHelper {
 
 				List<Agency_Authorization__c> toUpsert = new List<Agency_Authorization__c>();
 
-				if(newAccreditationModel ==  'Cashless'){
+				if(newAccreditationModel ==	'Cashless'){
 					toUpsert = performCashLessTransformation(accountsAffected);
 					removeContactsFlag(accountsAffected);
 
@@ -1399,7 +1399,7 @@ public with sharing class ANG_AgencyChangesHelper {
 							toReturn.accountsMap.get(accountId).Has_a_Financial_Assessment_Contact__c = false;
 
 				}
-				if(newAccreditationModel ==  'Cash')
+				if(newAccreditationModel ==	'Cash')
 					toUpsert = performCashTransformation(accountsAffected);
 
 				if(!toUpsert.isEmpty())
@@ -1526,7 +1526,7 @@ public with sharing class ANG_AgencyChangesHelper {
 
 			List<Agency_Authorization__c> toUpsert = new List<Agency_Authorization__c>();
 
-			if(newAccreditationModel ==  'Cashless'){
+			if(newAccreditationModel ==	'Cashless'){
 				toUpsert = performCashLessTransformation(accountsAffected);
 
 				removeContactsFlag(accountsAffected);
@@ -1537,7 +1537,7 @@ public with sharing class ANG_AgencyChangesHelper {
 
 			}
 
-			if(newAccreditationModel ==  'Cash')
+			if(newAccreditationModel ==	'Cash')
 				toUpsert = performCashTransformation(accountsAffected);
 
 			if(!toUpsert.isEmpty()){
@@ -1641,9 +1641,9 @@ public with sharing class ANG_AgencyChangesHelper {
 
 		System.debug('[ANG_AgencyChangesHelper]: fields to migrate (' + fieldsToMigrate + ') for accounts: ' + accountsAffected);
 
-		//Map<ID,AMS_ChangeCodesHelper.ObjectChangesStruct> accountsToUpdate = new  Map<ID,AMS_ChangeCodesHelper.ObjectChangesStruct>();
+		//Map<ID,AMS_ChangeCodesHelper.ObjectChangesStruct> accountsToUpdate = new	Map<ID,AMS_ChangeCodesHelper.ObjectChangesStruct>();
 
-		Map<String, Schema.SObjectField>  acctFieldsMap= Schema.SObjectType.Account.fields.getMap();
+		Map<String, Schema.SObjectField>	acctFieldsMap= Schema.SObjectType.Account.fields.getMap();
 
 		// Account Fields => AMS Pax Accreditation Fields (Staging area)
 		Map<String, String> fieldsMapping = new Map<String, String> {'Name' => 'Account_Name__c'
@@ -1715,11 +1715,11 @@ public with sharing class ANG_AgencyChangesHelper {
 				Account acc = toReturn.accountsMap.get(accId) == null ? New Account(Id = accId) : toReturn.accountsMap.get(accId);
 
 
-				if(oscarToProcess.Process__c ==  AMS_Utils.NGCORRECTION && oscarToProcess.Is_PCI_compliant__c != acc.Is_PCI_compliant__c){
+				if(oscarToProcess.Process__c ==	AMS_Utils.NGCORRECTION && oscarToProcess.Is_PCI_compliant__c != acc.Is_PCI_compliant__c){
 					acc.Is_PCI_compliant__c = oscarToProcess.Is_PCI_compliant__c;
 				}
 
-				if(oscarToProcess.Process__c ==  AMS_Utils.NGCORRECTION && oscarToProcess.ANG_PCI_compliance_expiry_date__c != null && oscarToProcess.ANG_PCI_compliance_expiry_date__c != acc.ANG_PCI_compliance_expiry_date__c){
+				if(oscarToProcess.Process__c ==	AMS_Utils.NGCORRECTION && oscarToProcess.ANG_PCI_compliance_expiry_date__c != null && oscarToProcess.ANG_PCI_compliance_expiry_date__c != acc.ANG_PCI_compliance_expiry_date__c){
 					acc.ANG_PCI_compliance_expiry_date__c = oscarToProcess.ANG_PCI_compliance_expiry_date__c;
 				}
 
@@ -1819,7 +1819,7 @@ public with sharing class ANG_AgencyChangesHelper {
 		stagingToAccount.put(oscarToProcess.AMS_Online_Accreditation__c, accountsAffected);
 
 		// get from the struct
-		//Map<ID,AMS_ChangeCodesHelper.ObjectChangesStruct> objectChanges = new  Map<ID,AMS_ChangeCodesHelper.ObjectChangesStruct>();
+		//Map<ID,AMS_ChangeCodesHelper.ObjectChangesStruct> objectChanges = new	Map<ID,AMS_ChangeCodesHelper.ObjectChangesStruct>();
 		Map<Id,AMS_AccountRoleCreator.OldAndNewOwners> oldAndNewOwnersMap = new Map<Id,AMS_AccountRoleCreator.OldAndNewOwners>();
 
 		oldAndNewOwnersMap = AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(stagingToAccount, isCorrection, false, new Map<Id,AMS_OSCAR__c>{oscarToProcess.Id => oscarToProcess},
@@ -1880,7 +1880,7 @@ public with sharing class ANG_AgencyChangesHelper {
 
 		List<Agency_Authorization__c> toUpsert = new List<Agency_Authorization__c>();
 
-		if(oscarOnlineAccreditation.ANG_Accreditation_Type__c ==  'Cashless'){
+		if(oscarOnlineAccreditation.ANG_Accreditation_Type__c ==	'Cashless'){
 
 			toUpsert = performCashLessTransformation(accountsAffected);
 
@@ -1892,7 +1892,7 @@ public with sharing class ANG_AgencyChangesHelper {
 
 			ANG_RHCHelper.deactivateRHCInfo(new Set<Id>{oscarToProcess.Account__c});
 		}
-		if(oscarOnlineAccreditation.ANG_Accreditation_Type__c ==  'Cash'){
+		if(oscarOnlineAccreditation.ANG_Accreditation_Type__c ==	'Cash'){
 			toUpsert = performCashTransformation(accountsAffected);
 			if(toReturn.accountsMap.get(oscarToProcess.Account__c)!=null)
 				ANG_RHCHelper.createRHCInfo(new List<Account>{toReturn.accountsMap.get(oscarToProcess.Account__c)}, false);
@@ -1960,7 +1960,7 @@ public with sharing class ANG_AgencyChangesHelper {
 		List<Agency_Authorization__c> toUpsert = new List<Agency_Authorization__c>();
 
 		List<Account> accs = [SELECT ID,Country_ISO_Code__c, Location_Class__c, Sector__c , Category__c, (SELECT Id ,Account__c, Status__c FROM Agency_Authorizations__r
-															  WHERE ANG_FormOfPayment_ID__c = 'CA' and Status__c != 'Active' and RecordType.DeveloperName = 'FormOfPayment')
+																WHERE ANG_FormOfPayment_ID__c = 'CA' and Status__c != 'Active' and RecordType.DeveloperName = 'FormOfPayment')
 							FROM ACCOUNT WHERE ID IN :accountsAffected];
 
 		Id formOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
@@ -2139,7 +2139,7 @@ public with sharing class ANG_AgencyChangesHelper {
 		}
 
 		if(CountryIds != null){
-			for(IATA_ISO_Country__c  country : IATAIsoCountryDAO.getIsoCountriesByIds(countryIds)){
+			for(IATA_ISO_Country__c	country : IATAIsoCountryDAO.getIsoCountriesByIds(countryIds)){
 				if(country.AMS_Settlement_System__c != null) operationsIds.add(country.AMS_Settlement_System__c);
 			}
 		}
@@ -2222,7 +2222,7 @@ public with sharing class ANG_AgencyChangesHelper {
 
 			Id accId = oscarAgencies.get(index).Id;
 
-			Account acct = changesContainer.accountsMap.get(accId) != null ?  changesContainer.accountsMap.get(accId) : new Account(Id = accId);
+			Account acct = changesContainer.accountsMap.get(accId) != null ?	changesContainer.accountsMap.get(accId) : new Account(Id = accId);
 
 			Boolean isActive = false;
 
