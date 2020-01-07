@@ -1,5 +1,5 @@
 global class AMS_VouchersCreationBatch implements Database.Batchable<sObject>, Database.Stateful  {
-	
+
 	public final Integer GOVERNORLIMIT = 10000;
 
 	public final Integer VOUCHERSPERPDF = 1000;
@@ -49,7 +49,7 @@ global class AMS_VouchersCreationBatch implements Database.Batchable<sObject>, D
 		//String yearToProcess = String.valueOf(System.today().year());
 
 		this.query = 'SELECT Id, Account__c, Exchange_Rate__c, Amount_Currency__c, Number_Of_Vouchers__c , Account__r.IATA_ISO_Country__r.Region__c , AmountLastYearSales__c , Account__r.IATA_ISO_Country__c, Account__r.IATA_ISO_Country__r.Name, Account__r.Location_Class__c,Account__r.IATA_ISO_Country__r.AMS_Max_Vouchers_Per_Year__c, Account__r.IATA_ISO_Country__r.AMS_Vouchers_Benchmark__c FROM AMS_Voucher_Information__c WHERE IsAgencyEligible__c = true and Year__c = \'' + yearToProcess + '\' and Account__r.IATA_ISO_Country__c in :countries';
-	
+
 		List<AMS_Voucher_Region__c> regions = [SELECT Id, Name from AMS_Voucher_Region__c];
 
 		for(AMS_Voucher_Region__c reg: regions){
@@ -60,14 +60,14 @@ global class AMS_VouchersCreationBatch implements Database.Batchable<sObject>, D
 
 		System.debug('Entry query for vouchers to create on AMS_VouchersCreationBatch:' + this.query);
 	}
-	
+
 	global Database.QueryLocator start(Database.BatchableContext BC) {
 
 		return Database.getQueryLocator(query);
 	}
 
-   	global void execute(Database.BatchableContext BC, List<AMS_Voucher_Information__c> scope) {
-	
+	 	global void execute(Database.BatchableContext BC, List<AMS_Voucher_Information__c> scope) {
+
 		// just get the region for the first (they should be the same !!)
 
 		region = regionsMap.get(scope.get(0).Account__r.IATA_ISO_Country__r.Region__c);
@@ -76,7 +76,7 @@ global class AMS_VouchersCreationBatch implements Database.Batchable<sObject>, D
 
 		for(AMS_Voucher_Information__c vInfo: scope){
 
-			//If an Agency already has vouchers assigned for a specific Year, 
+			//If an Agency already has vouchers assigned for a specific Year,
 			//it will not generate more vouchers. In this case the agency needs to remove the assigned vouchers to be ready to run again.
 			if(vInfo.Number_Of_Vouchers__c > 0){
 				continue;
@@ -90,7 +90,7 @@ global class AMS_VouchersCreationBatch implements Database.Batchable<sObject>, D
 			Integer nVouchers = AMS_VoucherCalculationHelper.calculateNumberOfVouchers(totalAgencySales,countryAverage,maxAmountVouchersCountry,countryBenchmark);
 
 			vouchersToCreate.put(vInfo.Id, nVouchers);
-			
+
 		}
 
 		vouchers = AMS_VoucherCalculationHelper.createVouchersForAgencies(vouchersToCreate,process.Id,totalVouchersCreated,VOUCHERSPERPDF,region.Name);
@@ -98,7 +98,7 @@ global class AMS_VouchersCreationBatch implements Database.Batchable<sObject>, D
 		totalVouchersCreated += vouchers.size();
 
 		if(!vouchers.isEmpty()){
-	
+
 			if(vouchers.size() > GOVERNORLIMIT)
 				divideAndConquer(vouchers);
 			else
@@ -112,10 +112,10 @@ global class AMS_VouchersCreationBatch implements Database.Batchable<sObject>, D
 		}
 
 	}
-	
+
 
 	global void finish(Database.BatchableContext BC) {
-		
+
 		System.debug('Finishing AMS_VoucherPDFCreationBatch and sending ' + vouchersToPrint.size() + ' vouchers to print.');
 
 		AMS_VoucherPDFCreationBatch pdfCreationBatch = new AMS_VoucherPDFCreationBatch(vouchersToPrint,region,process);
@@ -134,7 +134,7 @@ global class AMS_VouchersCreationBatch implements Database.Batchable<sObject>, D
 			divideAndConquer(vouchers);
 		else
 			insert vouchers;
-		
+
 	}
 
 	public void divideAndConquer(List<AMS_Voucher__c> vouchers){
@@ -142,5 +142,5 @@ global class AMS_VouchersCreationBatch implements Database.Batchable<sObject>, D
 		insert vouchers;
 	}
 
-	
+
 }

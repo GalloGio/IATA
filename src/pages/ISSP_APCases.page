@@ -187,11 +187,11 @@
  <div class="container" style="min-height: 500px;">
       <div class="panel-primary">
         <div class="panel-heading head_panel_green">
-          <h3 class="panel-title">Airline Participation</h3>
+          <h3 class="panel-title">{!app.ServiceName__c}</h3>
         </div>
         <div class="panel-body">
     <p/>
-      <apex:outputText rendered="{!dupeDraftExists}" style="color: red; font-weight:bold" value="A {!$CurrentPage.parameters.cdupetype} {!IF($CurrentPage.parameters.proc=='chg','change request','joining application')} for {!apCountry} has already been submitted for {!hqAccount.Name}. (Case no. {!newCase.CaseNumber}, status '{!newCase.Status}')"/>
+      <apex:outputText rendered="{!dupeDraftExists}" style="color: red; font-weight:bold" value="A {!$CurrentPage.parameters.cdupetype} {!IF($CurrentPage.parameters.proc=='chg','change request','joining application')} for {!apCountry} was already created for {!hqAccount.Name}. (Case no. {!newCase.CaseNumber}, status '{!newCase.Status}')"/>
     <p/>
     <apex:image value="/img/msg_icons/info24.png" style="vertical-align:middle;margin-right:5px;float:left" />
     <div style="margin-bottom:6px;padding-left:24px">
@@ -213,7 +213,7 @@
         <div class="panel-body">
           <apex:pageBlockTable value="{!APDraftCases}" var="MyIFAPCases" styleClass="table">
             <apex:column headerValue="{!$Label.ISSP_CaseNumber}">
-              <apex:outputLink value="/ISSP_APProcess?caseId={!MyIFAPCases.Id}&step=2">{!MyIFAPCases.CaseNumber}</apex:outputLink>
+              <apex:outputLink value="/ISSP_APProcess2?caseId={!MyIFAPCases.Id}&step=2">{!MyIFAPCases.CaseNumber}</apex:outputLink>
             </apex:column>
             <apex:column value="{!MyIFAPCases.Account_Concerned__r.Site}"/>
             <apex:column value="{!MyIFAPCases.Subject}"/>

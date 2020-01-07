@@ -486,7 +486,7 @@ private class ANG_FinancialAssessmentTest {
 		update ifapCase;
 
 		Test.startTest();
-  		WSSidraLite.updateSecondAndThirdDeadline(ifapCase.id);
+			WSSidraLite.updateSecondAndThirdDeadline(ifapCase.id);
 		Test.stopTest();
 
 		//For Newgen Agents -> Check the parentCase.FA_Third_Deadline_Date__c
@@ -533,7 +533,7 @@ private class ANG_FinancialAssessmentTest {
 		Test.stopTest();
 
 		Account accountUpdated = [SELECT id, Financial_Assessment_Points__c, Financial_Review_Result__c, Assessment_Performed_Date__c
-								  FROM Account WHERE ANG_IsNewGenAgency__c = TRUE LIMIT 1];
+									FROM Account WHERE ANG_IsNewGenAgency__c = TRUE LIMIT 1];
 
 		System.assertEquals('Satisfactory - No Action', accountUpdated.Financial_Review_Result__c);
 		System.assertEquals(100, accountUpdated.Financial_Assessment_Points__c);

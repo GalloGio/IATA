@@ -28,7 +28,6 @@
 		<header class="col-xs-12" style="margin-bottom: 10px;">
 		  <div class="section-header">
 			<apex:image value="{!URLFOR($Resource.ISSP_RHC_Page_Icons,'img/Payment.png')}"/>
-			<!--i class="fa fa-google-wallet" aria-hidden="true"></i--> 
 			<strong>{!IF(wrapper.isChinaAgent, $Label.ISSP_RHC_HUB_AFP_China, $Label.ISSP_RHC_HUB_AFP)}</strong>
 		  </div>
 		</header>
@@ -37,9 +36,6 @@
 		  	<apex:image value="{!URLFOR($Resource.ISSP_RHC_Page_Icons,'img/cash.jpg')}" width="100" height="100"/>
 		  	<strong class="show">{!$Label.ISSP_RHC_HUB_AFP_Cash}</strong>
 		  	<i class="{! wrapper.isCash}" aria-hidden="true" style="color:{!IF(wrapper.isCashFlag,'green','red')}; display: {!IF(wrapper.isChinaAgent, 'none', 'block')}"></i>
-	  
-		  	<!--i class="fa fa-money fa-5x show" aria-hidden="true"></i> <strong>{!$Label.ISSP_RHC_HUB_AFP_Cash}</strong>
-		  	<i class="{! wrapper.isCash}" aria-hidden="true"></i-->
 		  	<apex:outputPanel rendered="{! AND(wrapper.isCashless, NOT(wrapper.isSearch))}">
 				<apex:outputText escape="false" value="{! wrapper.cashlessMessage}"/>
 		  	</apex:outputPanel>      
@@ -48,8 +44,8 @@
 		<div class="col-md-4 col-sm-12 text-center" style="display: {!IF(wrapper.isChinaAgent, 'none', 'block')}">
 			<img id="theImage" src="{!URLFOR($Resource.ISSP_RHC_Page_Icons,'img/wallet.jpg')}" width="100" height="100"/>
 			<strong class="show">{!$Label.ANG_ISSP_IATA_EasyPay}</strong>
-			<i class="{! wrapper.isIEP}" aria-hidden="true" style="color:{!IF(wrapper.isIEPFlag,'green','red')}; display: {!IF(wrapper.iepModel == 'Banking Model', 'none', 'block')}"></i>
-			<a style="display:{!IF(wrapper.isSearch,'none','')};" id="iepLink" href="{!IF(isNewPortal, portalRedirectToIEP , wrapper.iepLink)}" onclick="errorMessageModal('{! wrapper.modalErrorMessageFlag}')">{! wrapper.iepLinkLabel}</a>
+			<i class="{! wrapper.isIEP}" aria-hidden="true" style="color:{!IF(wrapper.isIEPFlag,'green','red')}; display: {!IF(OR(wrapper.iepModel == 'Banking Model', NOT(wrapper.displayIcons)), 'none', 'block')}"></i>
+			<a style="display:{!IF(OR(wrapper.isSearch, AND(wrapper.isDomestic, wrapper.isIndonesiaAgent)), 'none', '')};" id="iepLink" href="{!wrapper.iepLink}" onclick="errorMessageModal('{! wrapper.modalErrorMessageFlag}')">{! wrapper.iepLinkLabel}</a>
 		</div>
 
     	<div class="{!IF(wrapper.authQuantity == 2, 'col-md-6', IF(wrapper.authQuantity == 1, 'col-md-12', 'col-md-4'))} col-sm-12 text-center" style="display: {!IF(AND(wrapper.isChinaAgent, wrapper.isBOPFlag), 'block', 'none')}"> 
@@ -65,7 +61,7 @@
 			<i class="{! wrapper.isCreditCard}" aria-hidden="true" style="color:{!IF(wrapper.isCreditCardFlag,'green','red')}; display: {!IF(wrapper.isChinaAgent, 'none', 'block')}"></i>
 			<apex:outputPanel rendered="{! AND(NOT(wrapper.isCreditCardFlag), NOT(wrapper.isSearch))}">
 				<apex:outputText escape="false" value="{!wrapper.creditCardMessage}"/>
-			</apex:outputPanel>      
+			</apex:outputPanel>
 		</div>
 	</section>
 
@@ -73,25 +69,25 @@
     	<apex:outputPanel layout="block" styleClass="modal-dialog" id="myErrorModalContent"> 
       		<div class="modal-content"> 
         		<div class="modal-header"> 
-          			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          			<button type="button" class="close" data-dismiss="modal" aria-hidden="true" onclick="hideModal('#ModalErrorMessage')">&times;</button>
           			<h4 class="modal-title">{!$Label.ANG_ISSP_Open_IATA_EasyPay_Account}</h4>
         		</div>
 
 	    		<div class="modal-body">
 	          		<div class="row">
 	            		<div class="col-md-12">
-	              			<p>              
+	              			<p>
 	                			<apex:outputLabel escape = "false" id="errorMessage" value="{! wrapper.modalErrorMessage}"/>
 	              			</p>
 	            		</div>
-	          		</div>            
+	          		</div>
 	        	</div>
         	
         		<div class="modal-footer">
           			<div class="row">
             			<div class="col-md-12">
-              				<a onclick="hideModal('#ModalErrorMessage')" class="{!IF(wrapper.iepModel == 'Banking Model', 'btn_iata_success', 'btn_iata_cancel')}  btn-block btn">
-                				{!IF(wrapper.iepModel == 'Banking Model', $Label.IFAP_close, $Label.ISSP_Cancel)}
+              				<a onclick="hideModal('#ModalErrorMessage')" class="{!IF(OR(wrapper.iepModel == 'Banking Model', wrapper.isIndonesiaAgent), 'btn_iata_success', 'btn_iata_cancel')}  btn-block btn">
+                				{!IF(OR(wrapper.iepModel == 'Banking Model', wrapper.isIndonesiaAgent), $Label.IFAP_close, $Label.ISSP_Cancel)}
               				</a>
             			</div>
           			</div>            

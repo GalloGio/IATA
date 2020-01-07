@@ -8,13 +8,13 @@ public class IATAIsoCountryDAO_Test {
 
 		countryList.add(new IATA_ISO_Country__c(Name='Canada', ISO_Code__c = 'CA', Case_BSP_Country__c = 'Canada', AIMS_Area_Name__c = 'CANADA', Region__C = 'Americas'));
 		countryList.add(new IATA_ISO_Country__c(Name='Chile', ISO_Code__c = 'CL', Case_BSP_Country__c = 'Chile', AIMS_Area_Name__c = 'CHILE', Region__C = 'Americas', VAT_Validation_Required__c = true));
-        countryList.add(new IATA_ISO_Country__c(Name='Mexico', ISO_Code__c = 'MX', Case_BSP_Country__c = '', AIMS_Area_Name__c = 'MEXICO', Region__C = 'Americas'));
-        countryList.add(new IATA_ISO_Country__c(Name='United States', ISO_Code__c = 'US', AIMS_Area_Name__c = 'UNITED STATES', Region__C = 'Americas', VAT_Validation_Required__c = true));
-        countryList.add(new IATA_ISO_Country__c(Name='Portugal', ISO_Code__c = 'PT', AIMS_Area_Name__c = 'PORTUGAL', Region__C = 'Europe', IEC_Zip_Postal_Code_required__c = true));
+		countryList.add(new IATA_ISO_Country__c(Name='Mexico', ISO_Code__c = 'MX', Case_BSP_Country__c = '', AIMS_Area_Name__c = 'MEXICO', Region__C = 'Americas'));
+		countryList.add(new IATA_ISO_Country__c(Name='United States', ISO_Code__c = 'US', AIMS_Area_Name__c = 'UNITED STATES', Region__C = 'Americas', VAT_Validation_Required__c = true));
+		countryList.add(new IATA_ISO_Country__c(Name='Portugal', ISO_Code__c = 'PT', AIMS_Area_Name__c = 'PORTUGAL', Region__C = 'Europe', IEC_Zip_Postal_Code_required__c = true));
 
-		insert countryList; 
+		insert countryList;
 	}
-	
+
 	/**
 	 * Test the method that return a list of the IATA_ISO_Country__c.
 	 */
@@ -26,7 +26,7 @@ public class IATAIsoCountryDAO_Test {
 		System.assertEquals(isoCountryList.get(0).ISO_Code__c, 'CA');
 		System.assertEquals(isoCountryList.size(), 5);
 		Test.stopTest();
-	} 
+	}
 
 	/**
 	 * Test the method that return a list of the IATA_ISO_Country__c filtered by IDs
@@ -51,10 +51,10 @@ public class IATAIsoCountryDAO_Test {
 		System.assertEquals(isoCountryList2.get(0).ISO_Code__c, 'CH');
 
 		Test.stopTest();
-	} 
+	}
 
 	/**
-	 * Test the method that return a list of the IATA_ISO_Country__c 
+	 * Test the method that return a list of the IATA_ISO_Country__c
 	 * filtered by Contries Name
 	 */
 	@isTest static void testGetIsoCountryByCountriesName(){
@@ -69,10 +69,10 @@ public class IATAIsoCountryDAO_Test {
 		System.assertEquals(isoCountryList.get(1).Name, 'Portugal');
 
 		Test.stopTest();
-	} 
+	}
 
 	/**
-	 * Test the method that return a list of the IATA_ISO_Country__c 
+	 * Test the method that return a list of the IATA_ISO_Country__c
 	 * filtered by Iso Code
 	 */
 	@isTest static void testGetIsoCountryByIsoCode(){
@@ -87,11 +87,11 @@ public class IATAIsoCountryDAO_Test {
 		System.assertEquals(isoCountryList.get(1).Name, 'Portugal');
 
 		Test.stopTest();
-	} 
+	}
 
 
 	/**
-	 * Test Method that return a list of IATA_ISO_Country__c 
+	 * Test Method that return a list of IATA_ISO_Country__c
 	 * filtered by Region__C field
 	 */
 	@isTest static void testGetIsoCountriesByRegion(){
@@ -105,7 +105,7 @@ public class IATAIsoCountryDAO_Test {
 		System.assertEquals(isoCountryList.get(0).Name, 'Portugal');
 
 		Test.stopTest();
-	} 
+	}
 
 
 	/**
@@ -144,7 +144,7 @@ public class IATAIsoCountryDAO_Test {
 
 	/**
 	 * Test Method return a list of IATA_ISO_Country__c that have field
-	 * Case_BSP_Country__c != null Or Case_BSP_Country__c != '' 
+	 * Case_BSP_Country__c != null Or Case_BSP_Country__c != ''
 	 */
 	@isTest static void testGetIsoCountriesByCaseBSPCountryNotNull(){
 
@@ -159,7 +159,7 @@ public class IATAIsoCountryDAO_Test {
 	}
 
 	/**
-	 * Test Method return a list of IATA_ISO_Country__c filtered by 
+	 * Test Method return a list of IATA_ISO_Country__c filtered by
 	 * the Set passed by parameter
 	 */
 	@isTest static void testGetIsoCountriesByCaseBSPCountries(){
@@ -199,7 +199,7 @@ public class IATAIsoCountryDAO_Test {
 
 	/**
 	 * Test Method that orders a list of IATA_ISO_Country__c by the datafield passed by parameter.
-	 * 
+	 *
 	 */
 	@isTest static void testSortIATAIsoCountryList(){
 
@@ -214,7 +214,7 @@ public class IATAIsoCountryDAO_Test {
 		System.assertEquals(isoCountryList.get(3).AIMS_Area_Name__c, 'PORTUGAL');
 		System.assertEquals(isoCountryList.get(4).AIMS_Area_Name__c, 'UNITED STATES');
 
-		Test.stopTest();	
+		Test.stopTest();
 
 	}
 }

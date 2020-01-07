@@ -5,131 +5,131 @@
 @isTest
 public class ISSP_AMC_CaseCleanUpBatchTest {
 
-    @isTest
-    static void testStaleCases() {
+	@isTest
+	static void testStaleCases() {
 
-        String recordTypeName = 'Airline Coding Application';
+		String recordTypeName = 'Airline Coding Application';
 
-        //create custom setting
-        ISSP_AMC_ParticipationFactory.createcustomSetting(true);
+		//create custom setting
+		ISSP_AMC_ParticipationFactory.createcustomSetting(true);
 
-        //create cases
-        List<Case> testCaseList = new List<Case>();
-        testCaseList = ISSP_AMC_ParticipationFactory.createAListOfCases(recordTypeName, 10);
+		//create cases
+		List<Case> testCaseList = new List<Case>();
+		testCaseList = ISSP_AMC_ParticipationFactory.createAListOfCases(recordTypeName, 10);
 
-        //create Participation_Online_Application__c
-        List<Participation_Online_Application__c> participationOnlineApplicationsList= new List<Participation_Online_Application__c>();
-        participationOnlineApplicationsList = ISSP_AMC_ParticipationFactory.createParticipationOnlineApplication(testCaseList, -90);
+		//create Participation_Online_Application__c
+		List<Participation_Online_Application__c> participationOnlineApplicationsList= new List<Participation_Online_Application__c>();
+		participationOnlineApplicationsList = ISSP_AMC_ParticipationFactory.createParticipationOnlineApplication(testCaseList, -90);
 
-        //create Participation_Application_Requirement__c
-        List<Participation_Application_Requirement__c> participationApplicationRequirementsList = new List<Participation_Application_Requirement__c>();
-        participationApplicationRequirementsList = ISSP_AMC_ParticipationFactory.createParticipationApplicationRequirement(10);
+		//create Participation_Application_Requirement__c
+		List<Participation_Application_Requirement__c> participationApplicationRequirementsList = new List<Participation_Application_Requirement__c>();
+		participationApplicationRequirementsList = ISSP_AMC_ParticipationFactory.createParticipationApplicationRequirement(10);
 
-        //create Participant_Online_App_Requirement__c
-        List<Participant_Online_App_Requirement__c> participantOnlineAppRequirementsList = new List<Participant_Online_App_Requirement__c>();
-        participantOnlineAppRequirementsList = ISSP_AMC_ParticipationFactory.createParticipantOnlineAppRequirement(participationOnlineApplicationsList,
-                                                                    participationApplicationRequirementsList, 10);
-
-
-        Test.startTest();
-
-            ISSP_AMC_CaseCleanUpBatch cleanUpBatch = new ISSP_AMC_CaseCleanUpBatch();
-            Database.executeBatch(cleanUpBatch);
-
-        Test.stopTest();
-
-            List<Case> batchedCaseList = [SELECT id FROM Case];
-            List<Participation_Online_Application__c> batchedParticipationOnlineApplications = [SELECT Id FROM Participation_Online_Application__c ];
-            List<Participant_Online_App_Requirement__c> batchedParticipantOnlineAppRequirements = [SELECT Id FROM Participant_Online_App_Requirement__c];
-
-            System.assertEquals( 0 , batchedCaseList.size());
-            System.assertEquals( 0 , batchedParticipantOnlineAppRequirements.size());
-            System.assertEquals( 0 , batchedParticipationOnlineApplications.size());
-
-    }
-
-    @isTest
-    static void testNonStaleCases() {
-
-        String recordTypeName = 'Airline Coding Application';
-
-        //create custom setting
-        ISSP_AMC_ParticipationFactory.createcustomSetting(true);
-
-        //create cases
-        List<Case> testCaseList = new List<Case>();
-        testCaseList = ISSP_AMC_ParticipationFactory.createAListOfCases(recordTypeName, 10);
-
-        //create Participation_Online_Application__c
-        List<Participation_Online_Application__c> participationOnlineApplicationsList= new List<Participation_Online_Application__c>();
-        participationOnlineApplicationsList = ISSP_AMC_ParticipationFactory.createParticipationOnlineApplication(testCaseList, -10);
-
-        //create Participation_Application_Requirement__c
-        List<Participation_Application_Requirement__c> participationApplicationRequirementsList = new List<Participation_Application_Requirement__c>();
-        participationApplicationRequirementsList = ISSP_AMC_ParticipationFactory.createParticipationApplicationRequirement(10);
-
-        //create Participant_Online_App_Requirement__c
-        List<Participant_Online_App_Requirement__c> participantOnlineAppRequirementsList = new List<Participant_Online_App_Requirement__c>();
-        participantOnlineAppRequirementsList = ISSP_AMC_ParticipationFactory.createParticipantOnlineAppRequirement(participationOnlineApplicationsList,
-                participationApplicationRequirementsList, 10);
+		//create Participant_Online_App_Requirement__c
+		List<Participant_Online_App_Requirement__c> participantOnlineAppRequirementsList = new List<Participant_Online_App_Requirement__c>();
+		participantOnlineAppRequirementsList = ISSP_AMC_ParticipationFactory.createParticipantOnlineAppRequirement(participationOnlineApplicationsList,
+																	participationApplicationRequirementsList, 10);
 
 
-        Test.startTest();
+		Test.startTest();
 
-            ISSP_AMC_CaseCleanUpBatch cleanUpBatch = new ISSP_AMC_CaseCleanUpBatch();
-            Database.executeBatch(cleanUpBatch);
+			ISSP_AMC_CaseCleanUpBatch cleanUpBatch = new ISSP_AMC_CaseCleanUpBatch();
+			Database.executeBatch(cleanUpBatch);
 
-        Test.stopTest();
+		Test.stopTest();
 
-        List<Case> batchedCaseList = [SELECT id FROM Case];
-        List<Participation_Online_Application__c> batchedParticipationOnlineApplications = [SELECT Id FROM Participation_Online_Application__c ];
-        List<Participant_Online_App_Requirement__c> batchedParticipantOnlineAppRequirements = [SELECT Id FROM Participant_Online_App_Requirement__c];
+			List<Case> batchedCaseList = [SELECT id FROM Case];
+			List<Participation_Online_Application__c> batchedParticipationOnlineApplications = [SELECT Id FROM Participation_Online_Application__c ];
+			List<Participant_Online_App_Requirement__c> batchedParticipantOnlineAppRequirements = [SELECT Id FROM Participant_Online_App_Requirement__c];
 
-        System.assertEquals( 10 , batchedCaseList.size());
-        System.assertEquals( 10 , batchedParticipantOnlineAppRequirements.size());
-        System.assertEquals( 10 , batchedParticipationOnlineApplications.size());
-    }
+			System.assertEquals( 0 , batchedCaseList.size());
+			System.assertEquals( 0 , batchedParticipantOnlineAppRequirements.size());
+			System.assertEquals( 0 , batchedParticipationOnlineApplications.size());
 
-    @isTest
-    static void deleteViaScheduler() {
-        String CRON_EXP = '0 0 0 15 3 ? 2022';
+	}
 
-        String recordTypeName = 'Airline Coding Application';
+	@isTest
+	static void testNonStaleCases() {
 
-        //create custom setting
-        ISSP_AMC_ParticipationFactory.createcustomSetting(true);
+		String recordTypeName = 'Airline Coding Application';
 
-        //create cases
-        List<Case> testCaseList = new List<Case>();
-        testCaseList = ISSP_AMC_ParticipationFactory.createAListOfCases(recordTypeName, 10);
+		//create custom setting
+		ISSP_AMC_ParticipationFactory.createcustomSetting(true);
 
-        //create Participation_Online_Application__c
-        List<Participation_Online_Application__c> participationOnlineApplicationsList= new List<Participation_Online_Application__c>();
-        participationOnlineApplicationsList = ISSP_AMC_ParticipationFactory.createParticipationOnlineApplication(testCaseList, -10);
+		//create cases
+		List<Case> testCaseList = new List<Case>();
+		testCaseList = ISSP_AMC_ParticipationFactory.createAListOfCases(recordTypeName, 10);
 
-        //create Participation_Application_Requirement__c
-        List<Participation_Application_Requirement__c> participationApplicationRequirementsList = new List<Participation_Application_Requirement__c>();
-        participationApplicationRequirementsList = ISSP_AMC_ParticipationFactory.createParticipationApplicationRequirement(10);
+		//create Participation_Online_Application__c
+		List<Participation_Online_Application__c> participationOnlineApplicationsList= new List<Participation_Online_Application__c>();
+		participationOnlineApplicationsList = ISSP_AMC_ParticipationFactory.createParticipationOnlineApplication(testCaseList, -10);
 
-        //create Participant_Online_App_Requirement__c
-        List<Participant_Online_App_Requirement__c> participantOnlineAppRequirementsList = new List<Participant_Online_App_Requirement__c>();
-        participantOnlineAppRequirementsList = ISSP_AMC_ParticipationFactory.createParticipantOnlineAppRequirement(participationOnlineApplicationsList,
-        participationApplicationRequirementsList, 10);
+		//create Participation_Application_Requirement__c
+		List<Participation_Application_Requirement__c> participationApplicationRequirementsList = new List<Participation_Application_Requirement__c>();
+		participationApplicationRequirementsList = ISSP_AMC_ParticipationFactory.createParticipationApplicationRequirement(10);
 
-        Test.startTest();
-        String jobId = System.schedule('ScheduledApexTest',
-                CRON_EXP,
-                new ISSP_AMC_CaseCleanUpBatchScheduler());
+		//create Participant_Online_App_Requirement__c
+		List<Participant_Online_App_Requirement__c> participantOnlineAppRequirementsList = new List<Participant_Online_App_Requirement__c>();
+		participantOnlineAppRequirementsList = ISSP_AMC_ParticipationFactory.createParticipantOnlineAppRequirement(participationOnlineApplicationsList,
+				participationApplicationRequirementsList, 10);
 
-        Test.stopTest();
 
-        List<Case> batchedCaseList = [SELECT id FROM Case];
-        List<Participation_Online_Application__c> batchedParticipationOnlineApplications = [SELECT Id FROM Participation_Online_Application__c ];
-        List<Participant_Online_App_Requirement__c> batchedParticipantOnlineAppRequirements = [SELECT Id FROM Participant_Online_App_Requirement__c];
+		Test.startTest();
 
-        System.assertEquals( 10 , batchedCaseList.size());
-        System.assertEquals( 10 , batchedParticipantOnlineAppRequirements.size());
-        System.assertEquals( 10 , batchedParticipationOnlineApplications.size());
+			ISSP_AMC_CaseCleanUpBatch cleanUpBatch = new ISSP_AMC_CaseCleanUpBatch();
+			Database.executeBatch(cleanUpBatch);
 
-    }
+		Test.stopTest();
+
+		List<Case> batchedCaseList = [SELECT id FROM Case];
+		List<Participation_Online_Application__c> batchedParticipationOnlineApplications = [SELECT Id FROM Participation_Online_Application__c ];
+		List<Participant_Online_App_Requirement__c> batchedParticipantOnlineAppRequirements = [SELECT Id FROM Participant_Online_App_Requirement__c];
+
+		System.assertEquals( 10 , batchedCaseList.size());
+		System.assertEquals( 10 , batchedParticipantOnlineAppRequirements.size());
+		System.assertEquals( 10 , batchedParticipationOnlineApplications.size());
+	}
+
+	@isTest
+	static void deleteViaScheduler() {
+		String CRON_EXP = '0 0 0 15 3 ? 2022';
+
+		String recordTypeName = 'Airline Coding Application';
+
+		//create custom setting
+		ISSP_AMC_ParticipationFactory.createcustomSetting(true);
+
+		//create cases
+		List<Case> testCaseList = new List<Case>();
+		testCaseList = ISSP_AMC_ParticipationFactory.createAListOfCases(recordTypeName, 10);
+
+		//create Participation_Online_Application__c
+		List<Participation_Online_Application__c> participationOnlineApplicationsList= new List<Participation_Online_Application__c>();
+		participationOnlineApplicationsList = ISSP_AMC_ParticipationFactory.createParticipationOnlineApplication(testCaseList, -10);
+
+		//create Participation_Application_Requirement__c
+		List<Participation_Application_Requirement__c> participationApplicationRequirementsList = new List<Participation_Application_Requirement__c>();
+		participationApplicationRequirementsList = ISSP_AMC_ParticipationFactory.createParticipationApplicationRequirement(10);
+
+		//create Participant_Online_App_Requirement__c
+		List<Participant_Online_App_Requirement__c> participantOnlineAppRequirementsList = new List<Participant_Online_App_Requirement__c>();
+		participantOnlineAppRequirementsList = ISSP_AMC_ParticipationFactory.createParticipantOnlineAppRequirement(participationOnlineApplicationsList,
+		participationApplicationRequirementsList, 10);
+
+		Test.startTest();
+		String jobId = System.schedule('ScheduledApexTest',
+				CRON_EXP,
+				new ISSP_AMC_CaseCleanUpBatchScheduler());
+
+		Test.stopTest();
+
+		List<Case> batchedCaseList = [SELECT id FROM Case];
+		List<Participation_Online_Application__c> batchedParticipationOnlineApplications = [SELECT Id FROM Participation_Online_Application__c ];
+		List<Participant_Online_App_Requirement__c> batchedParticipantOnlineAppRequirements = [SELECT Id FROM Participant_Online_App_Requirement__c];
+
+		System.assertEquals( 10 , batchedCaseList.size());
+		System.assertEquals( 10 , batchedParticipantOnlineAppRequirements.size());
+		System.assertEquals( 10 , batchedParticipationOnlineApplications.size());
+
+	}
 }

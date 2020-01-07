@@ -23,14 +23,14 @@ private class ams2gdp_Batch_AMS_Agency_Auth_Test
 		// //for(AMS_Address__c adr : [SELECT Id FROM AMS_Address__c])
 		// for(Account accIds : [SELECT Id FROM Account])
 		// {
-        //
+		//
 		// 	addressIds.add(accIds.Id+'LOCGDP');
 		// 	addressIds.add(accIds.Id+'MAIGDP');
 		// 	phoneKeys.add(accIds.Id+'-P1GDP');
 		// 	phoneKeys.add(accIds.Id+'-FXGDP');
-        //
+		//
 		// }
-        //
+		//
 		// //-- Validate GDP Address & Phones are created
 		// System.assert([SELECT count() FROM GDP_Address__c WHERE AMS_GDP_Key__c IN : addressIds] > 0);
 		// System.assert([SELECT count() FROM GDP_Phone__c WHERE AMS_GDP_Key__c IN : phoneKeys] > 0); // Phone 1, Phone2 and Fax

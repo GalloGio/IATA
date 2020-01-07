@@ -1,18 +1,18 @@
 trigger EF_RelatedRecordsTrigger on EF_Related_Records__c (
-	before insert, 
-    before update, 
-    before delete, 
-    after insert, 
-    after update, 
-    after delete, 
-    after undelete
+	before insert,
+	before update,
+	before delete,
+	after insert,
+	after update,
+	after delete,
+	after undelete
 )
 {
 	Set<Id> efRelationshipRtIds = new Set<Id>();
 	Id efRelationshipRtId = RecordTypeSingleton.getInstance().getRecordTypeId('EF_Related_Records__c', 'Relationship');
 	if(efRelationshipRtId != null)
 		efRelationshipRtIds.add(efRelationshipRtId);
-	
+
 	List<EF_Related_Records__c> efRRList = new List<EF_Related_Records__c>();
 	Map<Id, EF_Related_Records__c> efRRMap = new Map<Id, EF_Related_Records__c>();
 	if(Trigger.new != null)

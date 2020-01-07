@@ -25,7 +25,7 @@
  		try{
  			appr.Favourite_Service__c = isFavourite;
  			update appr;
- 		} 
+ 		}
  		catch(exception e){
  			System.Debug('ERROR : ' + e);
  		}

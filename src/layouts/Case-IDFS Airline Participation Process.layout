@@ -613,6 +613,9 @@
         <fields>NAME</fields>
         <relatedList>AP_Process_Form__c.Case__c</relatedList>
     </relatedLists>
+    <relatedLists>
+        <relatedList>RelatedAttachmentList</relatedList>
+    </relatedLists>
     <relatedObjects>ContactId</relatedObjects>
     <relatedObjects>AccountId</relatedObjects>
     <runAssignmentRulesDefault>false</runAssignmentRulesDefault>

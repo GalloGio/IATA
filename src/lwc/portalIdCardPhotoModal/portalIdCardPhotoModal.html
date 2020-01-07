@@ -1,0 +1,25 @@
+<template>
+    <section aria-modal="true" class="slds-modal slds-fade-in-open" style="z-index: 10000;">
+        <div class="modal">
+            <div class="idCardPopup" style="max-width: 300px; max-height: 400px">
+                <div class="customWhiteBackground">
+                    <div class="slds-m-horizontal_large slds-p-bottom_large">
+                        <div class="cardBodyContent">
+                            <div class="slds-card__body">
+                                <div class="slds-p-bottom_xx-large slds-p-top_x-large">
+                                    <div class="slds-p-bottom_x-large" style="text-align:center">
+                                        <img src={photoUrl} style="height: 150px;"/>
+                                    </div>
+
+                                    <div class="slds-p-bottom_large slds-float_left" style="width:100%">
+                                        <lightning-button class="outlinedButtonCancel" label={labels.cancelLabel} onclick={handleCancel}></lightning-button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</template>
