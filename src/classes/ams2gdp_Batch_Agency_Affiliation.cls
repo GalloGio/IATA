@@ -29,7 +29,7 @@ global class ams2gdp_Batch_Agency_Affiliation implements Database.Batchable<sObj
 			+ ', Affiliation__r.Name, Affiliation__r.Affiliation_Code__c ';
 
 
-	    List<String> conditions = new List<String>{'Account__r.RecordTypeId= \''+ RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency') +'\''};
+			List<String> conditions = new List<String>{'Account__r.RecordTypeId= \''+ RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency') +'\''};
 		conditions.addAll(ams2gdp_BusinessLogic.queryClauseAccountAndRelated(batchName));
 
 
@@ -100,7 +100,7 @@ global class ams2gdp_Batch_Agency_Affiliation implements Database.Batchable<sObj
 
 	global ams2gdp_Batch_Agency_Affiliation(Boolean runNext, List<String> extra, Boolean manual)
 	{
-		init(runNext,extra,manual);	
+		init(runNext,extra,manual);
 	}
 
 	global Database.QueryLocator start(Database.BatchableContext BC)
@@ -114,30 +114,30 @@ global class ams2gdp_Batch_Agency_Affiliation implements Database.Batchable<sObj
 		return Database.getQueryLocator(query);
 	}
 
-   	global void execute(Database.BatchableContext BC, List<AMS_Agency_Affiliation__c> agencies)
-   	{
-   		//-- Total records to be processed
-   		totalRecords += agencies.size();
+	 	global void execute(Database.BatchableContext BC, List<AMS_Agency_Affiliation__c> agencies)
+	 	{
+	 		//-- Total records to be processed
+	 		totalRecords += agencies.size();
 
-   		// Process Errors
+	 		// Process Errors
 		List<ams2gdp_Error> errors = new List<ams2gdp_Error>();
 
-   		List<Assoc_Affiliation_Membership__c> records_to_save = new List<Assoc_Affiliation_Membership__c>();
-   		try
-   		{
-   			records_to_save = ams2gdp_BusinessLogic.formatAgency2Membership(agencies);
+	 		List<Assoc_Affiliation_Membership__c> records_to_save = new List<Assoc_Affiliation_Membership__c>();
+	 		try
+	 		{
+	 			records_to_save = ams2gdp_BusinessLogic.formatAgency2Membership(agencies);
 
-   			//-- Raise exception for Unit Tests
+	 			//-- Raise exception for Unit Tests
 			if(Test.isRunningTest() &&   throwException) insert new Account();
-   		}
-   		catch(Exception ex)
-   		{
-   			errors.add(ams2gdp_Error.Exception2Error(batchName, ex));
-   		}
+	 		}
+	 		catch(Exception ex)
+	 		{
+	 			errors.add(ams2gdp_Error.Exception2Error(batchName, ex));
+	 		}
 
-   		List<Database.UpsertResult> save_results = Database.upsert(records_to_save,Assoc_Affiliation_Membership__c.AMS_GDP_Key__c.getDescribe().getSObjectField(),false);
+	 		List<Database.UpsertResult> save_results = Database.upsert(records_to_save,Assoc_Affiliation_Membership__c.AMS_GDP_Key__c.getDescribe().getSObjectField(),false);
 
-   		//--Check if there is orphan GDP_Address records
+	 		//--Check if there is orphan GDP_Address records
 		for(Assoc_Affiliation_Membership__c aam: records_to_save)
 		{
 			if(aam.Related_GDP_Products_Account_View__c == null)

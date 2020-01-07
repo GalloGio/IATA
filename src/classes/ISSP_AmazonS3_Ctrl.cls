@@ -269,7 +269,7 @@ global class ISSP_AmazonS3_Ctrl {
 		String FOLDER = FOLDER_STEM;
 
 		String idVal = String.valueOf(cse.Id);
-		
+
 		if(String.isNotBlank(this.formId)){
 			idVal += String.valueOf(this.formId);
 		}
@@ -431,7 +431,7 @@ global class ISSP_AmazonS3_Ctrl {
 		params.put('Signature', signature);
 
 		String result = page.getUrl();
-	   //  throw new transformationexception(''+result);
+		 //  throw new transformationexception(''+result);
 		system.debug('stringToSign  '+  stringToSign + '  queryString  ' + queryString + '   result '  + result );
 
 		return   result ;

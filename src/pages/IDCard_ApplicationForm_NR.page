@@ -1094,13 +1094,27 @@ rendered="{!isEmployee}" accept="application/pdf" />
                             </apex:inputField>
                             <apex:outputText />
                             
-                            <apex:outputText value="{!IDCardApplicationNR.ID_Card_Fee__c} {!IDCardApplicationNR.CurrencyIsoCode}"  label="{!$Label.IDCard_fee}" /><br/>
-                            <apex:outputText value="{!IDCardApplicationNR.Physical_Card_Fee__c} {!IDCardApplicationNR.CurrencyIsoCode}"  label="{!$Label.IDCard_FeesPhysical}" /><br/>
-                            <apex:outputText value="{!IDCardApplicationNR.IDCard_Expedite_Delivery_Fee__c} {!IDCardApplicationNR.CurrencyIsoCode}"  label="{!$Label.IDCard_ExpediteFee}" /><br/>
-                            <apex:outputText value="{!IDCardApplicationNR.ITDI_Courses_Fee__c} {!IDCardApplicationNR.CurrencyIsoCode}"  label="{!$Label.ID_Card_Training_Fee}" /><br/>
-                            <apex:outputText value="{!vatPrice} {!IDCardApplicationNR.CurrencyIsoCode}"  label="{!$Label.ID_Card_Taxes}" /><br/>
-                            <apex:outputText value="{!IDCardApplicationNR.ID_Card_Fee_Discount__c} {!IDCardApplicationNR.CurrencyIsoCode}"  label="{!$Label.IDCard_Discount}" /><br/>
-                            <apex:outputText value="{!IDCardApplicationNR.Applicable_Fee__c} {!IDCardApplicationNR.CurrencyIsoCode}"  label="{!$Label.Total_Cost}" />                            
+                            <apex:outputText value="{0, number, ###,##0.00} {!IDCardApplicationNR.CurrencyIsoCode}"  label="{!$Label.IDCard_fee}">
+                                <apex:param value="{!IF(OR(ISNULL(IDCardApplicationNR.ID_Card_Fee__c),ISBLANK(IDCardApplicationNR.ID_Card_Fee__c)), 0, IDCardApplicationNR.ID_Card_Fee__c)}" />
+                            </apex:outputText><br/>
+                            <apex:outputText value="{0, number, ###,##0.00} {!IDCardApplicationNR.CurrencyIsoCode}"  label="{!$Label.IDCard_FeesPhysical}">
+                                <apex:param value="{!IF(OR(ISNULL(IDCardApplicationNR.Physical_Card_Fee__c),ISBLANK(IDCardApplicationNR.Physical_Card_Fee__c)), 0, IDCardApplicationNR.Physical_Card_Fee__c)}" />
+                            </apex:outputText><br/>
+                            <apex:outputText value="{0, number, ###,##0.00} {!IDCardApplicationNR.CurrencyIsoCode}"  label="{!$Label.IDCard_ExpediteFee}">
+                                <apex:param value="{!IF(OR(ISNULL(IDCardApplicationNR.IDCard_Expedite_Delivery_Fee__c),ISBLANK(IDCardApplicationNR.IDCard_Expedite_Delivery_Fee__c)), 0, IDCardApplicationNR.IDCard_Expedite_Delivery_Fee__c)}" />
+                            </apex:outputText><br/>
+                            <apex:outputText value="{0, number, ###,##0.00} {!IDCardApplicationNR.CurrencyIsoCode}"  label="{!$Label.ID_Card_Training_Fee}">
+                                <apex:param value="{!IF(OR(ISNULL(IDCardApplicationNR.ITDI_Courses_Fee__c),ISBLANK(IDCardApplicationNR.ITDI_Courses_Fee__c)), 0, IDCardApplicationNR.ITDI_Courses_Fee__c)}" />
+                            </apex:outputText><br/>
+                            <apex:outputText value="{0, number, ###,##0.00} {!IDCardApplicationNR.CurrencyIsoCode}"  label="{!$Label.ID_Card_Taxes}">
+                                <apex:param value="{!IF(OR(ISNULL(vatPrice),ISBLANK(vatPrice)), 0, vatPrice)}" />
+                            </apex:outputText><br/>
+                            <apex:outputText value="{0, number, ###,##0.00} {!IDCardApplicationNR.CurrencyIsoCode}"  label="{!$Label.IDCard_Discount}">
+                                <apex:param value="{!IF(OR(ISNULL(IDCardApplicationNR.ID_Card_Fee_Discount__c),ISBLANK(IDCardApplicationNR.ID_Card_Fee_Discount__c)), 0, IDCardApplicationNR.ID_Card_Fee_Discount__c)}" />
+                            </apex:outputText><br/>
+                            <apex:outputText value="{0, number, ###,##0.00} {!IDCardApplicationNR.CurrencyIsoCode}"  label="{!$Label.Total_Cost}">
+                                <apex:param value="{!IF(OR(ISNULL(IDCardApplicationNR.Applicable_Fee__c),ISBLANK(IDCardApplicationNR.Applicable_Fee__c)), 0, IDCardApplicationNR.Applicable_Fee__c)}" />
+                            </apex:outputText>
                             <apex:outputText value="{!$Label.IDCard_ExpediteDeliveryAddedtoCardPrice}" rendered="{!IsExpediteDeliveryAddedtoIDCardPrice}"/>
                             
                         </apex:pageBlockSection>
