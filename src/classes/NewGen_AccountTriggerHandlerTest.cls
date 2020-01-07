@@ -1,9 +1,9 @@
 @isTest
 private class NewGen_AccountTriggerHandlerTest {
-	
+
 	@testSetup static void createData() {
-        Id accRT = AMS_Utils.RECTYPE_IATAAGENCY;
-        Id riskStatusAssessmentRT = ANG_Risk_Helper.RECTYPE_RISKSTATUSASSESSMENT;
+		Id accRT = AMS_Utils.RECTYPE_IATAAGENCY;
+		Id riskStatusAssessmentRT = ANG_Risk_Helper.RECTYPE_RISKSTATUSASSESSMENT;
 
 		IATA_ISO_Country__c countryNew = new IATA_ISO_Country__c( Name = 'Switzerland', ISO_Code__c = 'CH', ANG_Enable_NewGen__c = true);
 		insert countryNew;
@@ -22,8 +22,8 @@ private class NewGen_AccountTriggerHandlerTest {
 
 	static testMethod void test_riskStatus_Change() {
 		NewGenApp_Custom_Settings__c newgenCS = new NewGenApp_Custom_Settings__c();
-        newgenCS.Push_Notifications_State__c = true;
-        insert newgenCS;
+		newgenCS.Push_Notifications_State__c = true;
+		insert newgenCS;
 
 		Account a = [SELECT Id, ANG_RiskStatus__c FROM Account WHERE Name = 'Test'];
 		System.assertEquals(null, a.ANG_RiskStatus__c);
@@ -34,7 +34,7 @@ private class NewGen_AccountTriggerHandlerTest {
 
 		a = [SELECT Id, ANG_RiskStatus__c FROM Account WHERE Name = 'Test'];
 		System.assertEquals('A', a.ANG_RiskStatus__c);
-		
+
 		// when status changes, it should send a push notification to mobile user.
 		a.Financial_Review_Result__c = ANG_Risk_Helper.FR_UNSATISFACTORY;
 		a.ANG_HE_RiskHistoryAssessment__c = AMS_Utils.FAILED;

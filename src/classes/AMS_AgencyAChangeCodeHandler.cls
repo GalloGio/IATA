@@ -42,7 +42,7 @@ public class AMS_AgencyAChangeCodeHandler {
 		AMS_Irregularities_Utils.CalculateAccumulatedIrregularitiesFromChangeCode(aaccToBeProcessed, mapAccntToUpdate, AMS_OscarCase_RiskMgmt.irrsToExp);
 
 		if(AMS_AccountTriggerHandler.processMinorChangesValidationFlag || AMS_AccountTriggerHandler.minorChangesComingFromOSCAR){
-		   updateAccountReason(setIdAACC, false);
+			 updateAccountReason(setIdAACC, false);
 		}
 
 		if(!mapAccntToUpdate.isEmpty()){
@@ -76,8 +76,8 @@ public class AMS_AgencyAChangeCodeHandler {
 		List<Case> casesToUpdate = new List<Case>();
 
 		for(Case caseToProcess : [SELECT Id, Parent.BusinessHoursId, ParentId, Parent.New_IFAP_Deadline_date__c
-								  FROM Case
-								  WHERE Id IN :aaccLstCase AND RecordType.DeveloperName = 'Sidra_Lite' AND ParentId != null AND Account.CNS_Agency__c = true]) {
+									FROM Case
+									WHERE Id IN :aaccLstCase AND RecordType.DeveloperName = 'Sidra_Lite' AND ParentId != null AND Account.CNS_Agency__c = true]) {
 
 			Case parentCase = new Case(Id = caseToProcess.parentId);
 			Date newDateToUpdate = BusinessDays.addNBusinessDays(DateTime.now(), 7, caseToProcess.Parent.BusinessHoursId).date();

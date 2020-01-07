@@ -64,9 +64,9 @@ private class ANG_RiskEventGeneratorTest {
 		insert new List<ANG_Risk_Event_Configuration__c>{configActive, configInactive, configMultiple};
 
 	}
-	
+
 	static testMethod void test_generation_Match() {
-	
+
 		Case c = [SELECT Id, AccountId, RecordTypeId, Update_AIMS_IRR__c, Subject FROM Case LIMIT 1];
 		c.Update_AIMS_IRR__c = System.now().addDays(-1);
 		c.IRR_Approval_Rejection__c = ANG_Risk_Helper.CASE_IRR_APPROVED; //pass validation
@@ -83,7 +83,7 @@ private class ANG_RiskEventGeneratorTest {
 		Map<Id, Case> caseMap = new Map<Id, Case>();
 		caseMap.put(c.Id, oldCase);
 
-		
+
 		Test.startTest();
 
 		new ANG_RiskEventGenerator(caseList, caseMap).generate();
@@ -110,11 +110,11 @@ private class ANG_RiskEventGeneratorTest {
 		System.assertEquals(1, riskEvents.size());
 		System.assertEquals(riskEvents[0].ANG_Event_Status__c, ANG_Risk_Helper.STATUS_REVOKED);
 		System.assertEquals(riskEvents[0].ANG_Risk_Type__c, [SELECT Id FROM ANG_Risk_Event_Type__c LIMIT 1].Id);
-	
+
 	}
-	
+
 	static testMethod void test_generation_noMatch() {
-	
+
 		Case c = [SELECT Id, AccountId, RecordTypeId, Update_AIMS_IRR__c, Subject FROM Case LIMIT 1];
 
 		Case oldCase = c.clone(true, true);
@@ -133,11 +133,11 @@ private class ANG_RiskEventGeneratorTest {
 
 		List<ANG_Agency_Risk_Event__c> riskEvents = [SELECT Id FROM ANG_Agency_Risk_Event__c];
 		System.assertEquals(0, riskEvents.size());
-		
+
 	}
-	
+
 	static testMethod void test_generation_noChange() {
-	
+
 		Case c = [SELECT Id, AccountId, RecordTypeId, Update_AIMS_IRR__c, Subject FROM Case LIMIT 1];
 		Case oldCase = c.clone(true, true);
 
@@ -155,7 +155,7 @@ private class ANG_RiskEventGeneratorTest {
 		List<ANG_Agency_Risk_Event__c> riskEvents = [SELECT Id FROM ANG_Agency_Risk_Event__c];
 		System.assertEquals(0, riskEvents.size());
 	}
-	
+
 	static testMethod void test_generation_configError() {
 		Case c = [SELECT Id, AccountId, RecordTypeId, Update_AIMS_IRR__c, Subject FROM Case LIMIT 1];
 		Case oldCase = c.clone(true, true);
@@ -177,7 +177,7 @@ private class ANG_RiskEventGeneratorTest {
 			System.assertEquals('ANG_RiskEventGenerator.RiskEventGeneratorException',  e.getTypeName());
 			System.assert(e.getMessage().contains('Some of the fields mentioned were not found'));
 		}
-		
+
 
 		Test.stopTest();
 
@@ -186,7 +186,7 @@ private class ANG_RiskEventGeneratorTest {
 	}
 
 	static testMethod void test_multipleGeneration() {
-		
+
 		Account a = [SELECT Id, RecordTypeId FROM Account];
 		Id accRecType = a.RecordTypeId;
 
@@ -236,7 +236,7 @@ private class ANG_RiskEventGeneratorTest {
 		System.assertEquals(a.Id, riskEvents[0].ANG_HE_AccountId__c);
 	}
 
-	
+
 	@isTest static void testGenerateRiskEventOnChangeOfHierarchy() {
 
 		ANG_Risk_Event_Type__c riskType = [SELECT id, Name FROM ANG_Risk_Event_Type__c Limit 1];
@@ -278,14 +278,14 @@ private class ANG_RiskEventGeneratorTest {
 
 		oscar.New_Parent__c = a1.id;
 		oscar.ANG_Type_Of_Change__c = AMS_Utils.ANG_HIERARCHY;
-		update oscar; // trigger the ANS_RiskEventGenerator 
+		update oscar; // trigger the ANS_RiskEventGenerator
 
 		List<ANG_Agency_Risk_Event__c> agencyRiskEvent = [SELECT id FROM ANG_Agency_Risk_Event__c];
 
 		System.assert(agencyRiskEvent.size() > 0);
 		Test.stopTest();
 
-	}	
-	
-	
+	}
+
+
 }

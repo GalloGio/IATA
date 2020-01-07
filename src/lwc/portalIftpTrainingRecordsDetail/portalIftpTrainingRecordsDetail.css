@@ -1,0 +1,12 @@
+.mainSearchClass label{
+    display: none !important;
+}
+
+.align-right-class{
+    display: flex;
+    justify-content: end;
+}
+
+.align_button_right_class{
+    float: right;
+}

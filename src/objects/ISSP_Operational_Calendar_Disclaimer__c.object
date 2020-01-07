@@ -43,6 +43,9 @@ This CS defines a disclaimer to be shown on the calendar page, based on Country 
         <columns>NAME</columns>
         <columns>Country__c</columns>
         <columns>Operation_Type__c</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>UPDATEDBY_USER</columns>
         <filterScope>Everything</filterScope>
         <label>All with details</label>
         <language>en_US</language>
