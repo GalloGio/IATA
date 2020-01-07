@@ -22,6 +22,15 @@ private class TIP_BINRangeTriggerHandlerTest {
         provider.HQ_Location__c = country.Id;
         insert provider;
 
+        Id externalRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact_Roles__c', 'External');
+        Id functionalRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'Functional');
+
+        Contact_Roles__c contactRole = new Contact_Roles__c();
+        contactRole.Name = 'Test User';
+        contactRole.RecordTypeId = externalRecordTypeId;
+
+        insert contactRole;
+
         Contact contact = new Contact(FirstName = 'First Name', LastName = 'Last Name2', Salutation = 'Mr.', 
         							  Title = 'title', Email = 'abcde@test.org', Phone = '123456789');
         insert contact;
@@ -29,6 +38,8 @@ private class TIP_BINRangeTriggerHandlerTest {
         Account_Contact_Role__c acr = new Account_Contact_Role__c();
         acr.Account__c = account.Id;
         acr.Account_Role__c = provider.Id;
+        acr.Contact_Roles__c = contactRole.Id;
+        acr.RecordTypeId = functionalRecordTypeId;
         acr.Contact_Role__c = 'Primary Contact';
         acr.Contact__c = contact.Id;
         acr.Service_Rendered__c = 'TIP';

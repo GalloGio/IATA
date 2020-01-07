@@ -57,6 +57,18 @@
                 <behavior>Readonly</behavior>
                 <field>Number_of_GDP_Billing_accounts__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Business_Street__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Business_City__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Business_Postal_Code__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -179,6 +191,11 @@
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
+    <miniLayout>
+        <fields>Name</fields>
+        <fields>RecordTypeId</fields>
+        <fields>ParentId</fields>
+    </miniLayout>
     <quickActionList>
         <quickActionListItems>
             <quickActionName>SendEmail</quickActionName>

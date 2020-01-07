@@ -7,6 +7,7 @@
     <customButtons>New_ICCS_Checklist</customButtons>
     <customButtons>New_Manage_Fees_Checklist</customButtons>
     <customButtons>Reset_New_interactions</customButtons>
+    <customButtons>Escalate_within_IATA</customButtons>
     <emailDefault>false</emailDefault>
     <excludeButtons>Delete</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
@@ -401,6 +402,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>CreatedById</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Created_By_Role__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>

@@ -62,7 +62,7 @@
         <relationshipLabel>Risk Alerts</relationshipLabel>
         <relationshipName>Risk_Alerts</relationshipName>
         <relationshipOrder>0</relationshipOrder>
-        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <reparentableMasterDetail>true</reparentableMasterDetail>
         <trackTrending>false</trackTrending>
         <type>MasterDetail</type>
         <writeRequiresMasterRead>false</writeRequiresMasterRead>
@@ -76,6 +76,16 @@
         <scale>0</scale>
         <trackTrending>false</trackTrending>
         <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>ANG_Agent_current_standing__c</fullName>
+        <description>List of all the rules that are monitored on the agent with their respective values. All the rules are %, except the last one which is a boolean</description>
+        <externalId>false</externalId>
+        <label>Agent Current Standing</label>
+        <length>32768</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>7</visibleLines>
     </fields>
     <fields>
         <fullName>ANG_Direction__c</fullName>
@@ -128,6 +138,17 @@
         <label>Case Created</label>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ANG_Open_Cash_Position__c</fullName>
+        <description>Consumed RHC amount (only for NewGen accounts)</description>
+        <externalId>false</externalId>
+        <label>Open Cash Position</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
     </fields>
     <fields>
         <fullName>ANG_RHC_Information__c</fullName>
@@ -218,12 +239,91 @@
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>ANG_Triggered_Rules__c</fullName>
+        <description>List of the rules that have triggered the EDS alert</description>
+        <externalId>false</externalId>
+        <label>Triggered Rules</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>edsRule_cashSales_ratio_L3M</fullName>
+                    <default>false</default>
+                    <label>Cash Sales Shift</label>
+                </value>
+                <value>
+                    <fullName>edsRule_ticketsAbroad_ratio_L3M</fullName>
+                    <default>false</default>
+                    <label>Cross Border Sales</label>
+                </value>
+                <value>
+                    <fullName>edsRule_fastGrowth_decrease_L12M_P12M</fullName>
+                    <default>false</default>
+                    <label>Fast Growth Decrease Last 12m</label>
+                </value>
+                <value>
+                    <fullName>edsRule_fastGrowth_decrease_L3M_P3M</fullName>
+                    <default>false</default>
+                    <label>Fast Growth Decrease Last 3m</label>
+                </value>
+                <value>
+                    <fullName>edsRule_fastGrowth_decrease_L3M_L3MPY</fullName>
+                    <default>false</default>
+                    <label>Fast Growth Decrease Last 3m vs previous year</label>
+                </value>
+                <value>
+                    <fullName>edsRule_fastGrowth_increase_L12M_P12M</fullName>
+                    <default>false</default>
+                    <label>Fast Growth Increase Last 12m</label>
+                </value>
+                <value>
+                    <fullName>edsRule_fastGrowth_increase_L3M_P3M</fullName>
+                    <default>false</default>
+                    <label>Fast Growth Increase Last 3m</label>
+                </value>
+                <value>
+                    <fullName>edsRule_fastGrowth_increase_L3M_L3MPY</fullName>
+                    <default>false</default>
+                    <label>Fast Growth Increase Last 3m vs previous year</label>
+                </value>
+                <value>
+                    <fullName>edsRule_cashSales_shift_L3M_P3M</fullName>
+                    <default>false</default>
+                    <label>Shift of FoP</label>
+                </value>
+                <value>
+                    <fullName>edsRule_market_intelligence</fullName>
+                    <default>false</default>
+                    <label>Market Intelligence</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+        <visibleLines>6</visibleLines>
+    </fields>
+    <fields>
         <fullName>ANG_email_sent__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Email Sent</label>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Monitored_Account__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Reference to the previous account before the change of Hierarchy / Location Type / Location Type to Different Legal Entity</description>
+        <externalId>false</externalId>
+        <label>Monitored Account</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Risk Alerts (Monitored Account)</relationshipLabel>
+        <relationshipName>MoniteredAccount</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
     </fields>
     <label>Risk Alert</label>
     <listViews>
@@ -277,6 +377,128 @@
                 <default>false</default>
             </values>
         </picklistValues>
+        <picklistValues>
+            <picklist>ANG_Triggered_Rules__c</picklist>
+            <values>
+                <fullName>edsRule_cashSales_ratio_L3M</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>edsRule_cashSales_shift_L3M_P3M</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>edsRule_fastGrowth_decrease_L12M_P12M</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>edsRule_fastGrowth_decrease_L3M_L3MPY</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>edsRule_fastGrowth_decrease_L3M_P3M</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>edsRule_fastGrowth_increase_L12M_P12M</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>edsRule_fastGrowth_increase_L3M_L3MPY</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>edsRule_fastGrowth_increase_L3M_P3M</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>edsRule_market_intelligence</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>edsRule_ticketsAbroad_ratio_L3M</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Risk_Alert_EDS</fullName>
+        <active>true</active>
+        <description>EDS Alert received from external systems for newgen and non newgen accounts</description>
+        <label>Risk Alert EDS</label>
+        <picklistValues>
+            <picklist>ANG_Direction__c</picklist>
+            <values>
+                <fullName>DOWN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SAME</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_Severity__c</picklist>
+            <values>
+                <fullName>Orange</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Red</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yellow</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_Triggered_Rules__c</picklist>
+            <values>
+                <fullName>edsRule_cashSales_ratio_L3M</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>edsRule_cashSales_shift_L3M_P3M</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>edsRule_fastGrowth_decrease_L12M_P12M</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>edsRule_fastGrowth_decrease_L3M_L3MPY</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>edsRule_fastGrowth_decrease_L3M_P3M</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>edsRule_fastGrowth_increase_L12M_P12M</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>edsRule_fastGrowth_increase_L3M_L3MPY</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>edsRule_fastGrowth_increase_L3M_P3M</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>edsRule_market_intelligence</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>edsRule_ticketsAbroad_ratio_L3M</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
     </recordTypes>
     <recordTypes>
         <fullName>Risk_Alert_RTS</fullName>
@@ -309,6 +531,49 @@
             </values>
             <values>
                 <fullName>Yellow</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_Triggered_Rules__c</picklist>
+            <values>
+                <fullName>edsRule_cashSales_ratio_L3M</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>edsRule_cashSales_shift_L3M_P3M</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>edsRule_fastGrowth_decrease_L12M_P12M</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>edsRule_fastGrowth_decrease_L3M_L3MPY</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>edsRule_fastGrowth_decrease_L3M_P3M</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>edsRule_fastGrowth_increase_L12M_P12M</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>edsRule_fastGrowth_increase_L3M_L3MPY</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>edsRule_fastGrowth_increase_L3M_P3M</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>edsRule_market_intelligence</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>edsRule_ticketsAbroad_ratio_L3M</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

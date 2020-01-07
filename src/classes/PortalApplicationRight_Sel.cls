@@ -8,7 +8,8 @@ public with sharing class PortalApplicationRight_Sel extends Selector {
             Portal_Application_Right__c.Contact__c,
             Portal_Application_Right__c.Right__c,
             Portal_Application_Right__c.Technical_Provisioning_Status__c,
-            Portal_Application_Right__c.IsSCIMIFG__c
+            Portal_Application_Right__c.IsSCIMIFG__c,
+			Portal_Application_Right__c.Is_Favorite__c
 		};
 	}
 
@@ -28,6 +29,8 @@ public with sharing class PortalApplicationRight_Sel extends Selector {
 			'Portal_Application_Right__c.Contact__c', 
 			'Portal_Application_Right__c.Application_Start_URL__c',
 			'Portal_Application_Right__c.Case_creation_record_Type__c',
+            		'Portal_Application_Right__c.IsSCIMIFG__c',   
+            		'Technical_Provisioning_Status__c',
 			'Portal_Application_Right__c.Contact__r.Id', 
 			'Portal_Application_Right__c.Contact__r.Name', 
 			'Portal_Application_Right__c.Contact__r.Email',
@@ -40,7 +43,8 @@ public with sharing class PortalApplicationRight_Sel extends Selector {
 			'Portal_Application_Right__c.Contact__r.Status__c',
 			'Portal_Application_Right__c.Account__c',		
 			'Portal_Application_Right__c.Contact__r.Account.IATACode__c',		
-			'Portal_Application_Right__c.Contact__r.Account.BillingCity'		
+			'Portal_Application_Right__c.Contact__r.Account.BillingCity',
+			'Portal_Application_Right__c.Contact__r.Account_Country__c'		
 		};
 	}
 

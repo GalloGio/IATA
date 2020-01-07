@@ -28,17 +28,22 @@ public class PortalPasswordHandlerTest {
         Contact con = ISSP_ObjectFactory.createNewContact();
         con.AccountId = acc.Id;
         con.Email='contact@bucketairline.com';
+        con.Preferred_Language__c = 'English';
         insert con;
 
         Contact con2 = ISSP_ObjectFactory.createNewContact();
         con2.AccountId = acc.Id;
         con2.Email='contac2t@bucketairline.com';
+        con2.Preferred_Language__c = 'English';
         insert con2;
 
         ISSP_ObjectFactory.createPortalUser(con);
         User portalUser = ISSP_ObjectFactory.createPortalUser(con2);
+        portalUser.contact = con2;
 
         System.runAs(portalUser) {
+            insert new Preferred_Language_on_ISS_Portal__c(Name = 'Test', Language__c = 'English', LanguageLocalKey__c = 'English');
+
             EmailTemplate emailTemplate = new EmailTemplate (developerName = 'test', Subject = 'subject', HtmlValue = '', Body = '', TemplateType = 'Text', Name = 'test', folderId = UserInfo.getUserId());
             insert emailTemplate;
 

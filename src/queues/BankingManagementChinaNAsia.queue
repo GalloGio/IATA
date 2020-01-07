@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Queue xmlns="http://soap.sforce.com/2006/04/metadata">
-    <doesSendEmailToMembers>false</doesSendEmailToMembers>
+    <doesSendEmailToMembers>true</doesSendEmailToMembers>
     <email>liy@iata.org</email>
     <name>Banking Management - China &amp; N. Asia</name>
     <queueMembers>
         <users>
-            <user>lusm@iata.org</user>
-            <user>zhangt@iata.org</user>
-            <user>dengww@iata.org</user>
             <user>liyang@iata.org</user>
             <user>zhousf@iata.org</user>
         </users>

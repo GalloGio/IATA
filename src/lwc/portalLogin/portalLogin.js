@@ -118,13 +118,14 @@ export default class PortalLogin extends LightningElement {
 
         if(pageParams !== undefined){
             if(pageParams.startURL !== undefined){
-            this.startURL = pageParams.startURL;
-        }
+                this.startURL = pageParams.startURL;
+            }
             if(pageParams.RelayState !== undefined){
                 this.relayState = pageParams.RelayState;
             }
 
         }
+
         const RegistrationUtilsJs = new RegistrationUtils();
 
         RegistrationUtilsJs.checkUserIsSystemAdmin().then(result=> {
@@ -151,7 +152,6 @@ export default class PortalLogin extends LightningElement {
             }else{
                 getInitialConfig().then(result => {
                     var config = JSON.parse(JSON.stringify(result));
-                    console.log('config: ', config);
                     config.selfRegistrationUrl = result.selfRegistrationUrl.substring(result.selfRegistrationUrl.indexOf(CSP_PortalPath));
                     config.forgotPasswordUrl = result.forgotPasswordUrl.substring(result.forgotPasswordUrl.indexOf(CSP_PortalPath));
                     this.config = config;
@@ -295,7 +295,6 @@ export default class PortalLogin extends LightningElement {
             }else{
                 login({username: this.email, password: this.password, landingPage: this.startURL, relayState: this.relayState }).then(result => {
                     var response = JSON.parse(JSON.stringify(result));
-                    console.log('response: ', response);
                     if(response.isSuccess == true){
                         navigateToPage(response.sessionUrl, {});
                     }else{

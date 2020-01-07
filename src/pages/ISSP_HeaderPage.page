@@ -75,7 +75,7 @@
     </span> 
     
     <span class="header-link">
-        <a href="/secur/logout.jsp?retUrl={!$Site.BaseUrl}/ISSP_Homepage" role="menuitem" title="Logout" target="_top">
+        <a href="/secur/logout.jsp?retUrl={!$Site.BaseRequestURL}/ISSP_Homepage" role="menuitem" title="Logout" target="_top">
         <apex:image value="{!$Resource.arrow_white_circle}" styleClass="img-arrow" />
             {!$Label.Logout}
         </a>

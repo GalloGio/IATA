@@ -1,25 +1,5 @@
 public with sharing class AMS_OSCAR_TestDataFactory
 {
-	public static void loadCredentials() {
-	    
-	    Amazon_Cred__c Amazon_Cred =  new Amazon_Cred__c(name = 'GenericAttach', Prod_Configuration__c = 'adevconf' , Dev_Configuration__c = 'adevconf');
-	    insert Amazon_Cred;
-	    Amazon_Cred__c Amazon_Cred2 =  new Amazon_Cred__c(name = 'RecycleBin', Prod_Configuration__c = 'adevconf' , Dev_Configuration__c = 'adevconf');
-	    insert Amazon_Cred2;
-
-	    list<AWSKey__c> AWS_KEYs = new list<AWSKey__c>{
-	        new AWSKey__c(
-	            name = 'adevconf',
-	            Key__c = 'asd', 
-	            Secret__c = 'asd',  
-	            IAS_configuration_name__c = 'asdas', 
-	            IAS_Access_Point__c = 'asd',
-	            Bucket__c = 'asd',
-	            AWS_ENDPOINT_URL__c = 'asd')
-	    };
-	    insert AWS_KEYs;
-	}
-
 	public static void createOSCARtestData()
 	{
 		AMS_Person__c per = new AMS_Person__c(Name = 'teste', User__c = UserInfo.getUserId());
@@ -35,11 +15,22 @@ public with sharing class AMS_OSCAR_TestDataFactory
 		Account account = new Account();
 		account.Name = 'TestAccount';
 		account.Type = 'Airport';
+        account.Sector__c = AMS_Utils.SECTOR_INFRASTRUCTURE;
+        account.Category__c = AMS_Utils.CATEGORY_AIRPORT_AUTHORITY;
 		account.IATACode__c = '1234567';
 		insert account;
 		
 		List<Account> accountList = new List<Account>();
-		Account a1 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountRT, IATACode__c='1234567',Name='Test1 Agency',Short_Name__c='Test1 Agency');
+		Account a1 = new Account(
+                                IATA_ISO_Country__c = ctry.id,
+                                RecordTypeId = accountRT,
+            					IATACode__c='1234567',
+            					Name='Test1 Agency',
+            					Short_Name__c='Test1 Agency',
+                                Sector__c = AMS_Utils.SECTOR_PASSENGER,
+                                Category__c = AMS_Utils.CATEGORY_TOUR_OPERATOR,
+            					Reason_for_creation__c = 'New Agency'
+        						);
 		insert a1;
         
 		AMS_OSCAR__c OSCAR = new AMS_OSCAR__c(STEP1__c = 'In Progress', Account__c = a1.id,Change_effective_as_of__c = Date.today());
@@ -102,10 +93,21 @@ public with sharing class AMS_OSCAR_TestDataFactory
 		account.Name = 'TestAccount';
 		account.Type = 'Airport';
 		account.IATACode__c = '1234567';
+       	account.Sector__c = AMS_Utils.SECTOR_PASSENGER;
+		account.Category__c = AMS_Utils.CATEGORY_TOUR_OPERATOR;
 		insert account;
 		
 		List<Account> accountList = new List<Account>();
-		Account a1 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountRT, IATACode__c='1234567',Name='Test1 Agency',Short_Name__c='Test1 Agency');
+		Account a1 = new Account(
+            					IATA_ISO_Country__c = ctry.id,
+            					RecordTypeId = accountRT,
+            					IATACode__c='1234567',
+            					Name='Test1 Agency',
+            					Short_Name__c='Test1 Agency',
+                                Sector__c = AMS_Utils.SECTOR_PASSENGER,
+                                Category__c = AMS_Utils.CATEGORY_TOUR_OPERATOR,
+            					Reason_for_creation__c = 'New Agency'
+                                );
 		insert a1;
 
 		IATA_ISO_Country__c italy = new IATA_ISO_Country__c(Name='Italy', ISO_Code__c='IT', Region__c='Europe', ISS_Office_Location__c='Italy');
@@ -122,7 +124,12 @@ public with sharing class AMS_OSCAR_TestDataFactory
    						 Reason_for_creation__c = 'Created by customer' );   
 		
 		//Create a separate Account for the Owners
-		Account OwnersAccount =  new Account(Name = 'General account for owners');
+		Account OwnersAccount =  new Account(
+                                            Name = 'General account for owners',
+                                            Sector__c = AMS_Utils.SECTOR_PASSENGER,
+                                            Category__c = AMS_Utils.CATEGORY_TOUR_OPERATOR,
+                                            Reason_for_creation__c = 'New Agency'
+        									);
 		
 		List<Account> accs = new List<Account>{HO1, HO2, OwnersAccount};
 		insert accs;
@@ -201,7 +208,7 @@ public with sharing class AMS_OSCAR_TestDataFactory
 		AMS_Person__c per = new AMS_Person__c(Name = 'teste', User__c = UserInfo.getUserId());
 		insert per;
 
-		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US', AIMS_Area_Name__c = 'UNITED STATES')  ;
+		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US', AIMS_Area_Name__c = 'UNITED STATES',AMS_Default_State__c = 'US')  ;
         insert ctry ;
 
         IATA_ISO_State__c stt = new IATA_ISO_State__c(Name= 'Test', ISO_Code__c = 'TS', IATA_ISO_Country__c = ctry.Id);
@@ -212,6 +219,8 @@ public with sharing class AMS_OSCAR_TestDataFactory
 		account.Name = 'TestAccount';
 		account.Type = 'Airport';
 		account.IATACode__c = '1234567';
+        account.Sector__c = AMS_Utils.SECTOR_INFRASTRUCTURE;
+		account.Category__c = AMS_Utils.CATEGORY_AIRPORT_OPERATOR;
 		insert account;
 
 		Id airlineRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
@@ -220,6 +229,8 @@ public with sharing class AMS_OSCAR_TestDataFactory
 		airline.Sector__c = 'Airline';
 		airline.IATA_ISO_Country__c = ctry.id;
 		airline.RecordTypeId = airlineRT;
+        airline.Sector__c = AMS_Utils.SECTOR_PASSENGER;
+		airline.Category__c = AMS_Utils.CATEGORY_TOUR_OPERATOR;
 		insert airline;
 		
 		List<Account> accountList = new List<Account>();
@@ -258,7 +269,7 @@ public with sharing class AMS_OSCAR_TestDataFactory
         oscarCase.ContactId = co1.Id;
         insert oscarCase;
 
-        AMS_Pax_Accreditation_Form__c stagingArea = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = oscarCase.Id, Account_Name__c=a1.Name, Short_Name__c=a1.Short_Name__c );
+        AMS_Pax_Accreditation_Form__c stagingArea = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = oscarCase.Id, Account_Name__c=a1.Name, Short_Name__c=a1.Short_Name__c,Branch_Office_Country__c = ctry.id,IATA_ISO_State__c=stt.Id);
         insert stagingArea;
 
         OSCAR.AMS_Online_Accreditation__c = stagingArea.Id;
@@ -296,8 +307,8 @@ public with sharing class AMS_OSCAR_TestDataFactory
 	public static void createCargoAgencyOSCARtestData()
 	{
 
-		IATA_ISO_Country__c ctry1 = new IATA_ISO_Country__c (Name='FR',ISO_Code__c='FR');
-		IATA_ISO_Country__c ctry2 = new IATA_ISO_Country__c (Name='AR',ISO_Code__c='AR');
+		IATA_ISO_Country__c ctry1 = new IATA_ISO_Country__c (Name='FR',ISO_Code__c='FR',AMS_Default_State__c = 'FR');
+		IATA_ISO_Country__c ctry2 = new IATA_ISO_Country__c (Name='AR',ISO_Code__c='AR',AMS_Default_State__c = 'AR');
 		insert new List<IATA_ISO_Country__c>{ctry1, ctry2};
 
 		AMS_Country_Specific_Attribute__c csa1 = new AMS_Country_Specific_Attribute__c(RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Country_Specific_Attribute__c', 'DGR_Minimum_Requirements'), Location_Class__c='R', Minimum_DGR_BR__c=1, Minimum_DGR_HO__c=1, IATA_ISO_Country__c=ctry1.Id);
@@ -310,20 +321,20 @@ public with sharing class AMS_OSCAR_TestDataFactory
 		Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
 		Account cargoHO = new Account(IATA_ISO_Country__c = ctry1.id, RecordTypeId = accountRT, IATACode__c='12345670001',
-									Name='Test Cargo HO',Short_Name__c='Test Cargo', Sector__c = 'Cargo Agent',
+									Name='Test Cargo HO',Short_Name__c='Test Cargo', Sector__c = AMS_Utils.SECTOR_CARGO,
 									Location_Class__c = 'C', Location_type__c = 'HO', Reason_for_creation__c = 'none',
 									Is_your_firm_handling_Dangerous_Goods__c='Yes');
 
 		insert cargoHO;
 
 		Account cargoBR = new Account(IATA_ISO_Country__c = ctry1.id, RecordTypeId = accountRT, IATACode__c='12345670001',
-									Name='Test Cargo BR',Short_Name__c='Test Cargo', Sector__c = 'Cargo Agent',
+									Name='Test Cargo BR',Short_Name__c='Test Cargo', Sector__c = AMS_Utils.SECTOR_CARGO,
 									Location_Class__c = 'C', Location_type__c = 'BR', Reason_for_creation__c = 'none', ParentId = cargoHO.Id);
         insert cargoBR;
 
 		AMS_OSCAR__c OSCAR = new AMS_OSCAR__c(Account__c = cargoHO.id, RecordTypeId = AMS_Utils.RECTYPE_NEW, Process__c =AMS_Utils.new_HO);
 		insert OSCAR;
-
+		
 		Contact co1 = new Contact(AccountId = cargoHO.id, Firstname = 'teste1', Lastname='test1', Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com', BSP_CASS_Payment_contact__c = true, User_Portal_Status__c = 'Approved Admin');
 		Contact co2 = new Contact(AccountId = cargoHO.id, Firstname = 'teste2', Lastname='test2', Phone = '911111112', MobilePhone = '911111112', Email = 'test2@test.com', BSP_CASS_Payment_contact__c = false, User_Portal_Status__c = 'Approved Admin');
 		Contact co3 = new Contact(AccountId = cargoHO.id, Firstname = 'teste3', Lastname='test3', Phone = '911111113', MobilePhone = '911111113', Email = 'test3@test.com', BSP_CASS_Payment_contact__c = false, User_Portal_Status__c = 'Approved');
@@ -340,6 +351,7 @@ public with sharing class AMS_OSCAR_TestDataFactory
         AMS_Pax_Accreditation_Form__c stagingArea = new  AMS_Pax_Accreditation_Form__c(Account_Name__c = cargoHO.Name,
                 IATAcode__c = cargoHO.IATAcode__c,
                 Branch_Office_Country__c = cargoHO.IATA_ISO_Country__c,
+				IATA_ISO_State__c = stt.Id,
                 Location_Class__c = cargoHO.Location_Class__c,
                 Location_Type__c = cargoHO.Location_Type__c,
                 SAAM_Case__c = oscarCase.Id,
@@ -358,7 +370,7 @@ public with sharing class AMS_OSCAR_TestDataFactory
 		AMS_Accreditation_Contact__c acontact2 = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = stagingArea.Id, First_name__c='Greg', Last_name__c='Plitt', Valid_until__c = Date.today().addYears(2), Type_Of_Certificate__c = AMS_Utils.CERT_DGA, RecordTypeId=trainedStaff);
 
 		AMS_Accreditation_Contact__c acontact3 = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = stagingArea.Id, First_name__c='Daff', Last_name__c='Duck', Valid_until__c = Date.today().addYears(2), Type_Of_Certificate__c = AMS_Utils.CERT_CATA, RecordTypeId=trainedStaff);
-
+		
 		insert new List<AMS_Accreditation_Contact__c>{acontact1,acontact2,acontact3};
 
 	}
@@ -404,406 +416,5 @@ public with sharing class AMS_OSCAR_TestDataFactory
         OSCAR.AMS_Online_Accreditation__c = stagingArea.Id;
         update oscar;
 
-	}
-	
-	//EM - To be deleted
-	public static void increasecoverage() {
-		Integer i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		i=0;
-		
-	
-	
 	}
 }

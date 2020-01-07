@@ -1,6 +1,11 @@
-import { LightningElement, track, api } from 'lwc';
+import { LightningElement, track } from 'lwc';
+
+import { navigateToPage } from 'c/navigationUtils';
+
 import getCaseById from '@salesforce/apex/PortalCasesCtrl.getCaseById';
 import getFieldLabels from '@salesforce/apex/CSP_Utils.getSelectedColumns';
+import optionBuilder from '@salesforce/apex/PortalCasesCtrl.optionBuilder';
+
 
 import { getParamsFromPage } from 'c/navigationUtils';
 
@@ -9,23 +14,61 @@ import AddDocumentsMsg from '@salesforce/label/c.CSP_No_Documents_Message';
 import DocumentsLabel from '@salesforce/label/c.ISSP_Documents';
 import CaseDetails from '@salesforce/label/c.IDCard_CaseDetails';
 import RelatedAccount from '@salesforce/label/c.csp_CreateNewCaseMainPicklistLabel';
+import Open from '@salesforce/label/c.Open';
+
+import Email from '@salesforce/label/c.Email';
+import CSP_Remittantce_Date from '@salesforce/label/c.CSP_Remittantce_Date';
+import CSP_Case_Currency from '@salesforce/label/c.CSP_Case_Currency';
+import ISSP_SIDRA_Irregularity_Date from '@salesforce/label/c.ISSP_SIDRA_Irregularity_Date';
+import CSP_IATA_Country from '@salesforce/label/c.CSP_IATA_Country';
+import CSP_AdditionalDetails from '@salesforce/label/c.csp_AdditionalDetails';
+import ISSP_Description from '@salesforce/label/c.ISSP_Description';
+import CSP_ContactName from '@salesforce/label/c.Contact_Name';
+import CSP_AccountName from '@salesforce/label/c.ICCS_Account_Name_Label';
+
+/* PDF Labels */
+import ISSP_AMS_Download_PDF_Copy from '@salesforce/label/c.ISSP_AMS_Download_PDF_Copy';
+import ISSP_AMS_Download_PDF_NOC from '@salesforce/label/c.ISSP_AMS_Download_PDF_NOC';
+
+
+import PDFICON from '@salesforce/resourceUrl/PDF_icon_large';
 
 export default class PortalCaseDetailsDetails extends LightningElement {
 
     @track loading = true;
     @track caseDetails;
     @track caseId;
+    @track surveyLink;
+    @track optionBuilder;
+
+    @track pdfImage = PDFICON;
 
     @track showAddDocsModal = false;
 
 
     @track nrDocs = 0;
 
+    @track showNewDescriptionSection = false;
+	@track isCollapsedWhenNewDescriptionInPlace = "slds-p-around_medium ";
+	
+
     @track labels = {
         AddDocumentsMsg,
         CaseDetails,
         DocumentsLabel,
-        RelatedAccount
+        RelatedAccount,
+        Open,
+        ISSP_AMS_Download_PDF_Copy,
+        ISSP_AMS_Download_PDF_NOC,
+        Email,
+        CSP_Remittantce_Date,
+        CSP_Case_Currency,
+        ISSP_SIDRA_Irregularity_Date,
+        CSP_IATA_Country,
+        CSP_AdditionalDetails,
+		ISSP_Description,
+		CSP_ContactName,
+		CSP_AccountName
     };
 
     acceptedFormats = ['.pdf', '.jpeg', '.jpg', '.png', '.ppt', '.pptx', '.xls', '.xlsx', '.tif', '.tiff', '.zip'];
@@ -41,7 +84,25 @@ export default class PortalCaseDetailsDetails extends LightningElement {
             getCaseById({ caseId: this.pageParams.caseId })
                 .then(results => {
                     this.caseDetails = results;
+
+                    this.showNewDescriptionSection = this.caseDetails.RecordType__c === 'Cases - Africa & Middle East'
+                        || this.caseDetails.RecordType__c === 'Cases - Americas'
+                        || this.caseDetails.RecordType__c === 'Cases - Asia & Pacific'
+                        || this.caseDetails.RecordType__c === 'Cases - China & North Asia'
+                        || this.caseDetails.RecordType__c === 'Cases - Europe'
+                        || this.caseDetails.RecordType__c === 'Cases - Global'
+                        || this.caseDetails.RecordType__c === 'Complaint (IDFS ISS)'
+                        || this.caseDetails.RecordType__c === 'Process';
+
+                    this.isCollapsedWhenNewDescriptionInPlace = this.showNewDescriptionSection ? "slds-p-around_medium collapsed " : "slds-p-around_medium ";
+
+                    optionBuilder({ caseObj: results })
+                        .then(result => {
+                            this.optionBuilder = result;
+                        });
+
                     this.loading = false;
+                    
                 })
                 .catch(error => {
                     console.log('error: ', error);
@@ -61,19 +122,19 @@ export default class PortalCaseDetailsDetails extends LightningElement {
 
             });
         }
-
+        
     }
 
     renderedCallback() {
-        
+
         if (this.pageParams.Att !== undefined && this.pageParams.Att === "true") {
             //display modal on attachment component
             this.toggleCollapsed('[data-docdiv]', 'collapsed');
             this.toggleCollapsed('[data-docicon]', 'arrowExpanded');
             this.showAddDocsModal = true;
             this.pageParams.Att = "";
-            console.log('open sayz me!');
         }
+        
     }
 
     get hasTopic() {
@@ -101,11 +162,111 @@ export default class PortalCaseDetailsDetails extends LightningElement {
     }
 
     get hasDescription() {
-        return this.caseDetails !== undefined && this.caseDetails.Description !== undefined;
+        return this.caseDetails !== undefined && this.caseDetails.Description !== undefined && !(this.caseDetails.RecordType.Name === 'SAAM' || this.caseDetails.RecordType.Name === 'OSCAR Communication' || this.caseDetails.RecordType.Name === 'SIDRA');
     }
+
     get showNrDocs() {
         return this.nrDocs > 0;
     }
+    
+
+    get hasAccount() {
+        return this.caseDetails !== undefined && this.caseDetails.AccountId !== undefined;
+    }
+
+    openCompanyProfile() {
+        navigateToPage("company-profile");
+    }
+
+    get hasContact() {
+        return this.caseDetails !== undefined && this.caseDetails.ContactId !== undefined;
+    }
+
+    openCompanyProfileContactTab() {
+        navigateToPage("company-profile?tab=contact&contactName=" + this.caseDetails.Contact.FirstName + ' ' + this.caseDetails.Contact.LastName);
+    }
+
+    get getDisplayPDF() {
+        let caseDetailsLocal = this.caseDetails;
+
+        if (this.optionBuilder) {
+            return this.optionBuilder.isOnlineOSCARCase && this.optionBuilder.showAccreditation && !this.optionBuilder.isMSOcase && caseDetailsLocal.Reason1__c !== 'FoP Management' && caseDetailsLocal.Reason1__c !== 'PCI DSS Compliant' && caseDetailsLocal.Reason1__c !== 'CLO - Closure' &&
+                caseDetailsLocal.Reason1__c !== 'New MSO' && caseDetailsLocal.Reason1__c !== 'Financial review opt-in / opt-out' &&
+                caseDetailsLocal.Reason1__c !== 'Annual revalidation';
+        }
+        return null;
+    }
+
+    get getPDF1() {
+
+        let caseDetailsLocal = this.caseDetails;
+        if (this.optionBuilder) {
+            return this.optionBuilder.isOnlineOSCARCase && this.optionBuilder.showAccreditation &&
+                caseDetailsLocal.Reason1__c.startsWith('New') && caseDetailsLocal.Reason1__c !== 'New HE standard' &&
+                caseDetailsLocal.Reason1__c !== 'New HE lite' && caseDetailsLocal.Reason1__c !== 'New AE';
+        }
+        return null;
+    }
+
+    get getPDFLink1() {
+        if (this.optionBuilder) {
+            let link = '';
+            if (this.optionBuilder.isTravelAccreditation) {
+                link = '/ISSP_AMS_PDF_ApplicationForm?caseId=' + this.caseDetails.Id;
+            } else {
+                link = '/ISSP_AMS_PDF_CGO?caseId=' + this.caseDetails.Id;
+            }
+
+            return link;
+        }
+        return null;
+    }
+
+    get getPDF2_3() {
+        if (this.caseDetails && this.optionBuilder) {
+            return this.caseDetails.Reason1__c === 'Bank Detail Update' || this.caseDetails.Reason1__c.startsWith('CH') || this.caseDetails.Reason1__c.startsWith('CL') || this.caseDetails.Reason1__c === 'Major Change' || this.optionBuilder.isNoticeOfChange;
+        }
+        return null;
+    }
+
+    get getPDFLink2_3() {
+        if (this.optionBuilder) {
+            let link = this.optionBuilder.fullnameNOCFile;
+            return link;
+        }
+        return null;
+    }
+
+    get getPDF4() {
+        if (this.caseDetails) {
+            return this.caseDetails.Reason1__c === 'New HE standard' || this.caseDetails.Reason1__c === 'New HE lite';
+        }
+        return null;
+    }
+
+    get getPDFLink4() {
+        if (this.optionBuilder) {
+            let link = '/ISSP_AMS_PDF_ANG_PAX_HE?caseId=' + this.caseDetails.Id;
+            return link;
+        }
+        return null;
+    }
+
+    get getPDF5() {
+        if (this.caseDetails) {
+            return this.caseDetails.Reason1__c === 'New AE';
+        }
+        return null;
+    }
+
+    get getPDFLink5() {
+        if (this.optionBuilder) {
+            let link = '/ISSP_AMS_PDF_ANG_PAX_AE?caseId=' + this.caseDetails.Id;
+            return link;
+        }
+        return null;
+    }
+
 
     updateNdocs(event) {
         //sets nr of docs in panel
@@ -123,6 +284,11 @@ export default class PortalCaseDetailsDetails extends LightningElement {
         this.showAddDocsModal = false;
     }
 
+    toggleDescriptionSection() {
+        this.toggleCollapsed('[data-detdiv]', 'collapsed');
+        this.toggleCollapsed('[data-deticon]', 'arrowExpanded');
+    }
+
     toggleCollapsed(elem, cssclass) {
         this.template.querySelector(elem).classList.toggle(cssclass);
     }
@@ -131,5 +297,4 @@ export default class PortalCaseDetailsDetails extends LightningElement {
         //display modal on attachment component
         this.showAddDocsModal = true;
     }
-
 }

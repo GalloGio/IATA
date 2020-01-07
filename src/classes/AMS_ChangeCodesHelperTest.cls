@@ -52,6 +52,7 @@ private class AMS_ChangeCodesHelperTest {
 			'Account__c' => acc.Id,
 			'Termination_Date__c' => System.today()+30,
 			'Change_Effective_as_of__c' => system.today(),
+			'Form_Effective_Date__c' => system.today(),
 			'Business_Process__c' => 'AMS'
 		});
 		AMS_OSCAR__c oscar = (AMS_OSCAR__c)JSON.deserialize(JSONOscar, AMS_OSCAR__c.class);
@@ -148,4 +149,40 @@ private class AMS_ChangeCodesHelperTest {
 
 
 	}
+
+	@isTest
+    public static void testGenerateFOPStringForChina() {
+
+		Id accountAgencyRT =RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+		String changeCode = 'LSP';
+		Boolean isNewgen = true;
+
+		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='China',ISO_Code__c='CN', ANG_Enable_NewGen__c = true, 
+			Region__c = 'Asia', BSP_Country_free_text__c = 'CN')  ;
+        insert ctry ;
+
+        Account chinaHE = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234561',
+        	Location_Type__c='HE', Name='Test1 Agency OK',Short_Name__c='Test1 Agency', 
+        	Sector__c = 'Travel Agent', Location_Class__c = 'P');
+        insert ChinaHE;
+
+        Id formOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
+
+		Agency_Authorization__c cashfop = new Agency_Authorization__c(Account__c = chinaHE.id, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Authorized', RecordTypeId = formOfPaymentRT);
+		insert cashfop;
+		Agency_Authorization__c creditCardfop = new Agency_Authorization__c(Account__c = chinaHE.id, ANG_FormOfPayment_ID__c = 'CC', Status__c = 'Authorized', RecordTypeId = formOfPaymentRT);
+		insert creditCardfop;
+		Agency_Authorization__c bopMethod = new Agency_Authorization__c(Account__c = chinaHE.id, ANG_FormOfPayment_ID__c = 'BOP', Status__c = 'Authorized', RecordTypeId = formOfPaymentRT);
+		insert bopMethod;
+
+		List<Agency_Authorization__c> listAgencyAuth = [SELECT id, Authority__c, Status__c, ISO_Country__c FROM Agency_Authorization__c];
+
+		Test.startTest();
+		String formOfPayments = AMS_ChangeCodesHelper.generateFOPString(listAgencyAuth, isNewgen, changeCode);
+		Test.stopTest();
+
+		System.assertEquals('BOP - Cash - Credit Card: Authorized', formOfPayments);
+	}
+
+
 }

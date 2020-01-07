@@ -2,6 +2,10 @@
  * Created by pvavruska on 8/8/2019.
  */
 
+.page{
+    margin: 10px;
+}
+
 .slds-combobox__input, .slds-combobox_container .customborder {
     transition: border .1s linear, box-shadow .1 linear;
 }
@@ -94,10 +98,6 @@
     width:100%;
 }
 
-userSeachInput{
-    font-size:18px;
-}
-
 .breakWord{
     word-break: break-all;
 }
@@ -107,7 +107,222 @@ userSeachInput{
 }
 
 .contactListbox{
-    margin-top:0.5rem;
+    margin-top:0;
     border-radius:0;
     padding-bottom:0;
 }
+
+.warningBox{
+	border: 2px solid orange; 
+	border-radius: 5px; 
+	padding:5px; 
+	margin:auto;
+	color:#706e6b;
+	font-size: .75rem;
+}
+
+.inputBackgroundGrey{
+    background-color: #f7f8fa !important;
+}
+
+.ResultTableHeader {
+    height: 20px;
+    font-size: 14px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.43;
+    letter-spacing: normal;
+    color: #999999;
+  }
+  
+  .ResultTableHeaderSelect {
+    height: 20px;
+    font-size: 14px;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.43;
+    letter-spacing: normal;
+    color: #333333;
+  }
+  
+  .ResultTableData {
+    height: 66px;
+    font-size: 16px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.25;
+    letter-spacing: normal;
+    color: #525252;
+  }
+
+  .currentPage {
+    width: 41px;
+    height: 40px;
+    line-height: 40px;
+    border-radius: 1px;
+    border: solid 1px #e2e2e2;
+    background-color: #ffffff;
+    color: #525252;
+    text-align:center; 
+    display: inline-block;
+  }
+  
+  .otherPages {
+    width: 41px;
+    height: 40px;
+    line-height: 40px;
+    background-color: #ffffff;
+    color: #525252;
+    text-align:center;
+    display: inline-block;
+  }
+  
+  .inactivePages {
+    width: 41px;
+    height: 40px;
+    line-height: 40px;
+    background-color: #ffffff;
+    color: #999999;
+    text-align:center;
+    display: inline-block;
+  }
+  
+  .SearchResultsTitle {
+    font-size: 22px;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.18;
+    letter-spacing: normal;
+    color: #525252;
+  }
+  
+  .SearchResultsDescription {
+    font-size: 16px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.63;
+    letter-spacing: normal;
+    color: #525252;
+  }
+
+  .NoResultLabel {
+    /*height: 70px;*/
+    font-size: 20px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.63;
+    letter-spacing: normal;
+    text-align: center;
+    color: #525252;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .noResultsDescription{
+    margin-bottom: 24px;
+  }
+
+  .NoResultLabel .NoResultDescription {
+    font-size: 16px;
+    font-weight: normal;
+    color: #333333;
+  }
+  
+  .textAlignCenter {
+    text-align: center;
+  }
+
+  .citySuggestion{
+      font-size: 16px;
+      border: 0px 1px 1px 1px solid #d4d4d4;
+  }
+
+.containedButton{
+    box-shadow: none !important;
+}
+
+.customBtn .slds-button:disabled{
+    box-shadow: none;
+}
+
+.formLabelContainer{
+    padding-bottom: 11px;
+}
+
+.addressItem{
+    margin-bottom: 40px;
+}
+
+.addressItem:nth-child(odd){
+    padding-right: 7px;
+}
+
+.addressItem:nth-child(even){
+    padding-left: 7px;
+}
+
+.searchContainer{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.noResultsIcon{
+    margin-bottom: 15px;
+}
+
+.outlinedBtn{
+    box-shadow: none;
+}
+
+.searchContainer{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.searchTitleContainer{
+    padding-bottom: 0;
+}
+
+.tableContainer{
+    overflow-x: auto;
+}
+
+.paginationContainer{
+    text-align: center;
+    padding-bottom: 16px;
+}
+  
+.radioBtn{
+    text-align: center;
+    padding-left: 1rem;
+}
+
+.noResultsTitle{
+    margin-bottom: 30px;
+}
+
+.NoResultLabel .NoResultDescription {
+    font-size: 16px;
+    font-weight: normal;
+    color: #333333;
+}
+
+.floatItem{
+    float: right;
+}
+
+@media only screen and (max-width: 800px) {
+    .addressItem{
+        width: 100%;
+        padding: 0;
+    }
+  }

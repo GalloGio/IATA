@@ -11,6 +11,8 @@
 .recordDetail {
     background-color:#f7f8fa;
     box-shadow: 0px 10px 15px -5px #e2e2e2 inset;
+    white-space: normal;
+    word-break: break-word;
 }
 
 .textInfo {
@@ -36,4 +38,9 @@
 
 .fourthColInfo {
     width: 15%;
+}
+
+.titleTruncation {
+    text-overflow: ellipsis;
+    overflow: hidden;
 }

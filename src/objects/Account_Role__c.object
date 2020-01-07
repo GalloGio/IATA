@@ -42,10 +42,19 @@
     </actionOverrides>
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <compactLayouts>
+        <fullName>IFTP_Compact_Layout</fullName>
+        <fields>Account__c</fields>
+        <fields>Account_Roles__c</fields>
+        <fields>Name</fields>
+        <fields>Status__c</fields>
+        <label>IFTP Compact Layout</label>
+    </compactLayouts>
     <deploymentStatus>Deployed</deploymentStatus>
     <description>Used to extend the role of any existing account type e.g. an airline that also acts as a payment provider. A record type should be created for each type of account role required.</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableEnhancedLookup>true</enableEnhancedLookup>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableLicensing>false</enableLicensing>
@@ -54,6 +63,16 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>ControlledByParent</externalSharingModel>
+    <fields>
+        <fullName>Account_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Account Name</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
     <fields>
         <fullName>Account_Role_Name__c</fullName>
         <description>A functional role that an Account may assume when interacting with an IATA Salesforce functional capability. This designation technically supports the provisioning of IATA Salesforce functional capabilities.
@@ -138,6 +157,25 @@ The Account Role record should be named after the functional capability for whic
         </valueSet>
     </fields>
     <fields>
+        <fullName>GADM_Unique_Key__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <externalId>false</externalId>
+        <label>GADM Unique Key</label>
+        <length>40</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>Global_ID__c</fullName>
+        <displayFormat>aB5{0000000000}</displayFormat>
+        <externalId>false</externalId>
+        <label>Global ID</label>
+        <trackTrending>false</trackTrending>
+        <type>AutoNumber</type>
+    </fields>
+    <fields>
         <fullName>HQ_Location__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <description>Select the country where provider&apos;s headquarter is located</description>
@@ -159,6 +197,33 @@ The Account Role record should be named after the functional capability for whic
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>OJT_File_Id__c</fullName>
+        <description>id of the latestePublishedversion of the file</description>
+        <externalId>false</externalId>
+        <label>OJT File Id</label>
+        <length>150</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>OJT_file__c</fullName>
+        <externalId>false</externalId>
+        <label>OJT file</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Url</type>
+    </fields>
+    <fields>
+        <fullName>OJT_file_validated__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>OJT file validated</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>Primary_Contact_Count__c</fullName>
@@ -247,6 +312,15 @@ The Account Role record should be named after the functional capability for whic
         <unique>true</unique>
     </fields>
     <label>Account Role</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Account__c</columns>
+        <columns>Account_Name__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
     <nameField>
         <displayFormat>AR-{0000}</displayFormat>
         <label>Account Role Name</label>
@@ -258,13 +332,6 @@ The Account Role record should be named after the functional capability for whic
         <active>true</active>
         <description>For records migrated and synchronized with Amsterdam Publications system.</description>
         <label>Amsterdam Publications</label>
-        <picklistValues>
-            <picklist>Functional_Role__c</picklist>
-            <values>
-                <fullName>E%26F</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
         <picklistValues>
             <picklist>Provider_Type__c</picklist>
             <values>
@@ -301,12 +368,41 @@ The Account Role record should be named after the functional capability for whic
         <active>true</active>
         <label>Default</label>
         <picklistValues>
-            <picklist>Functional_Role__c</picklist>
+            <picklist>Provider_Type__c</picklist>
             <values>
-                <fullName>E%26F</fullName>
+                <fullName>Closed Loop</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Open Loop</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inactive</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Terminated</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>IFTP</fullName>
+        <active>true</active>
+        <compactLayoutAssignment>IFTP_Compact_Layout</compactLayoutAssignment>
+        <label>IFTP</label>
         <picklistValues>
             <picklist>Provider_Type__c</picklist>
             <values>
@@ -341,10 +437,6 @@ The Account Role record should be named after the functional capability for whic
         <label>Master</label>
         <picklistValues>
             <picklist>Functional_Role__c</picklist>
-            <values>
-                <fullName>E%26F</fullName>
-                <default>false</default>
-            </values>
             <values>
                 <fullName>Training</fullName>
                 <default>false</default>
@@ -386,13 +478,6 @@ The Account Role record should be named after the functional capability for whic
         <active>true</active>
         <label>Payment Provider</label>
         <picklistValues>
-            <picklist>Functional_Role__c</picklist>
-            <values>
-                <fullName>E%26F</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Provider_Type__c</picklist>
             <values>
                 <fullName>Closed Loop</fullName>
@@ -423,7 +508,17 @@ The Account Role record should be named after the functional capability for whic
             </values>
         </picklistValues>
     </recordTypes>
-    <searchLayouts/>
+    <searchLayouts>
+        <lookupDialogsAdditionalFields>Account_Name__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Account_Roles__c</lookupDialogsAdditionalFields>
+        <lookupFilterFields>Account_Roles__c</lookupFilterFields>
+        <lookupFilterFields>Account_Name__c</lookupFilterFields>
+        <lookupFilterFields>NAME</lookupFilterFields>
+        <searchFilterFields>Account__c</searchFilterFields>
+        <searchFilterFields>Account_Roles__c</searchFilterFields>
+        <searchResultsAdditionalFields>Account__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Account_Roles__c</searchResultsAdditionalFields>
+    </searchLayouts>
     <sharingModel>ControlledByParent</sharingModel>
     <startsWith>Vowel</startsWith>
     <validationRules>
@@ -437,7 +532,11 @@ The Account Role record should be named after the functional capability for whic
     <validationRules>
         <fullName>Primary_Contact_Mandatory</fullName>
         <active>true</active>
-        <errorConditionFormula>AND(!(ISBLANK(TEXT(Status__c))), Primary_Contact_Count__c == 0)</errorConditionFormula>
+        <errorConditionFormula>AND(
+	!(ISBLANK(TEXT(Status__c))), 
+	Primary_Contact_Count__c == 0,
+	RecordType.DeveloperName=&quot;TIP_Payment_Provider&quot;
+)</errorConditionFormula>
         <errorMessage>Please first save without the Effective From Date, ensure that a Primary Contact is identified (Account Contact Role), and only then enter the Effective From Date.</errorMessage>
     </validationRules>
     <validationRules>

@@ -45,8 +45,8 @@
                             </div>
                         </div>
 
-                        <lightning-layout multiple-rows vertical-align="end">
-
+                        <lightning-layout multiple-rows vertical-align="end" class="IEFixDisplayContainer">
+                            <div class="IEFixDisplayContainer">
                             <lightning-layout-item size="12">
                                 <!------------------------------------------      E-Mail      --------------------------------------------->
                                 <lightning-layout-item size="12">
@@ -71,7 +71,7 @@
                                     </div>
                                 </lightning-layout-item>
 
-                                <!------------------------------------------      First Name      --------------------------------------------->
+                                    <!------------------------------------------      First Name      ------------------------------------------ -->
                                 <lightning-layout-item size="12">
                                     <div class="formElementContainer">
                                         <div class="formLabelContainer">
@@ -132,8 +132,9 @@
                             </lightning-layout-item>
                             <lightning-layout-item size="12">
                                 <div class="slds-form-element__control registrationComboBox custTextInputSmall">
-                                    <lightning-combobox class="" placeholder=" "
+                                    <lightning-combobox class="firstLevelRegistrationCombobox" placeholder=" "
                                                         name="" label=""
+                                                        dropdown-alignment="auto"
                                                         variant="label-hidden"
                                                         value={registrationForm.country} options={countryOptions}
                                                         onchange={handleCountryChange}>
@@ -155,9 +156,9 @@
                                 </div>
                             </lightning-layout-item>
                             <lightning-layout-item size="12">
-                                <div class="slds-form-element__control registrationComboBox custTextInput custTextInputSmall">
+                                    <div data-id={rerender} class="slds-form-element__control registrationComboBox custTextInput custTextInputSmall">
                                     <input data-id="phone" name="phone" class="phoneFormat slds-input" type="tel" placeholder=" "
-                                           onkeyup={handleInputValueChange} value={registrationForm.phone}/>
+                                            onkeyup={handlePhoneInputChange} value={registrationForm.phone} />
                                 </div>
                             </lightning-layout-item>
                             <lightning-layout-item size="12">
@@ -270,8 +271,9 @@
                             </lightning-layout-item>
                             <lightning-layout-item size="12">
                                 <div class="slds-form-element__control registrationComboBox custTextInputSmall">
-                                    <lightning-combobox class="" placeholder=" "
+                                    <lightning-combobox class="firstLevelRegistrationCombobox" placeholder=" "
                                                         name="" label="" required
+                                                        dropdown-alignment="auto"
                                                         variant="label-hidden"
                                                         value={registrationForm.language}
                                                         options={languageOptions}
@@ -291,7 +293,7 @@
                                 </div>
 
                             </lightning-layout-item>
-
+                            </div>
                         </lightning-layout>
                     </div>
                 </div>

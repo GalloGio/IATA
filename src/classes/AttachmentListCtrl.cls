@@ -28,7 +28,7 @@ public with sharing class AttachmentListCtrl {
             return FileIdentifierPickValues;
         }
         set;
-    }   
+    }  
 
     @AuraEnabled
     public static List<CSP_Utils.PickListWrapper> getFileIdentifierPickValues(){
@@ -53,6 +53,7 @@ public with sharing class AttachmentListCtrl {
         propWrapper.hasOscar = false;
         propWrapper.isPortal = isPortal;
         
+       
 
         propWrapper.Id = parentId;
         //Assign the name of the object
@@ -124,7 +125,7 @@ public with sharing class AttachmentListCtrl {
     }
 
     @AuraEnabled(cacheable=true)
-    public static List<WrapperAttach> getAllAttachmentsByParentIdAndPortal(string parentId, boolean isPortal, boolean isSAAMorSIDRA) {
+    public static List<WrapperAttach> getAllAttachmentsByParentIdAndPortal(string parentId, boolean isPortal, boolean isSAAMorSIDRA,boolean withBody) {
     //public static List<WrapperAttach> getAllAttachments(String parentId, Boolean isPortal) {
         System.debug('parentId: ' + parentId);
         System.debug('isPortal: ' + isPortal);
@@ -187,7 +188,7 @@ public with sharing class AttachmentListCtrl {
                             }
                         }*/
 
-                        listAttachments.addAll(WrapperAttach.getContentAttachments(parentId,isPortal));                        
+                        listAttachments.addAll(WrapperAttach.getContentAttachments(parentId,isPortal,false,null));                        
                     }
                 }                
             }
@@ -217,7 +218,7 @@ public with sharing class AttachmentListCtrl {
         list<ContentDistribution> linkList= new list<ContentDistribution>(); 
         set<id> lastVersionIdSet= new set<id>();
         for(ContentDocument cd :WrapperAttach.getContentDocInfo(attachSet)){
-            lastVersionIdSet.add(cd.LatestPublishedVersionId);
+            lastVersionIdSet.add(cd.LatestPublishedVersionId);           
         }
         
         //gets file details
@@ -229,7 +230,7 @@ public with sharing class AttachmentListCtrl {
         ReturnWrapper returnWrapper = new ReturnWrapper();
         
         try{
-            List<WrapperAttach> lstattachWrapper = getAllAttachmentsByParentIdAndPortal(parentId, isPortal, isSAAMorSIDRA);
+            List<WrapperAttach> lstattachWrapper = getAllAttachmentsByParentIdAndPortal(parentId, isPortal, isSAAMorSIDRA,false);
             WrapperAttach wrapperAttachAux = null;
             for(Integer i = 0; i<lstattachWrapper.size(); i++){
                 if(lstattachWrapper.get(i).id == attachId){
@@ -258,7 +259,7 @@ public with sharing class AttachmentListCtrl {
         ReturnWrapper returnWrapper = new ReturnWrapper();
         
         try{
-            List<WrapperAttach> lstattachWrapper = getAllAttachmentsByParentIdAndPortal(parentId, isPortal, isSAAMorSIDRA);
+            List<WrapperAttach> lstattachWrapper = getAllAttachmentsByParentIdAndPortal(parentId, isPortal, isSAAMorSIDRA,false);
             WrapperAttach wrapperAttachAux = null;
             for(Integer i = 0; i<lstattachWrapper.size(); i++){
                 if(lstattachWrapper.get(i).id == attachId){
@@ -292,7 +293,7 @@ public with sharing class AttachmentListCtrl {
         ReturnWrapper returnWrapper = new ReturnWrapper();
         
         try{
-            List<WrapperAttach> lstattachWrapper = getAllAttachmentsByParentIdAndPortal(parentId, isPortal, isSAAMorSIDRA);
+            List<WrapperAttach> lstattachWrapper = getAllAttachmentsByParentIdAndPortal(parentId, isPortal, isSAAMorSIDRA,false);
             for(Integer i = 0; i<lstattachWrapper.size(); i++){
                 lstattachWrapper.get(i).changePermission(false);
             }
@@ -309,7 +310,7 @@ public with sharing class AttachmentListCtrl {
         ReturnWrapper returnWrapper = new ReturnWrapper();
         
         try{
-            List<WrapperAttach> lstattachWrapper = getAllAttachmentsByParentIdAndPortal(parentId, isPortal, isSAAMorSIDRA);
+            List<WrapperAttach> lstattachWrapper = getAllAttachmentsByParentIdAndPortal(parentId, isPortal, isSAAMorSIDRA,false);
             for(Integer i = 0; i<lstattachWrapper.size(); i++){
                 lstattachWrapper.get(i).changePermission(true);
             }
@@ -360,7 +361,7 @@ public with sharing class AttachmentListCtrl {
 
         if(recObjTp ==Schema.AmazonFile__C.getSObjectType() ){  // IF amazon file record       
             AmazonFile__c amazonFile = [select Full_Name_Unique__c from AmazonFile__C where id=:idRec];
-           
+            
             link = AmazonRest.genPublicExpiringAWSLink( amazonFile.Full_Name_Unique__c, WrapperAttach.CREDENTIAL, secondsValid);
         }else if(recObjTp ==Schema.ContentDocument.getSObjectType()){ // If content document file
            ContentDocument cd=[select title,LatestPublishedVersionId  from ContentDocument where id =:idRec];
@@ -705,14 +706,19 @@ public with sharing class AttachmentListCtrl {
         for(string attId:(List<String>)System.JSON.deserialize(selIdAttachmentStr, List<String>.class)){
             selAttachIdSet.add(attId);
         }
-
+        
+		//gets body from salesforce files
+		map<id,contentVersion> cvBodyMap= wrapperAttach.getContentVersionWithVersionData(selAttachIdSet);
 
         list<WrapperAttach> listAttachmentSelected= new list<WrapperAttach>();
-        for(WrapperAttach wa: getAllAttachmentsByParentIdAndPortal(parentId, isPortal, isSAAMorSIDRA)){
-            system.debug(wa);
-            if(selAttachIdSet.contains(wa.id))
+        for(WrapperAttach wa: wrapperAttach.getListAttachments(parentId,true)){
+            
+            if(selAttachIdSet.contains(wa.id)){
+
+                if(wa.sfdcContext == 'content') wa.contentVersion=cvBodyMap.get(wa.id);
                 listAttachmentSelected.add(wa);
-        }
+            }
+		}
 
         if ( listAttachmentSelected.isEmpty() ) {
            // ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,Label.Select_one_Attachment));
@@ -759,12 +765,13 @@ public with sharing class AttachmentListCtrl {
             }
         }
 
-        
 
         // list of attachments to be created
         list<Attachment> lstNewAttachments = new list<Attachment>();
         //list<Archived_Attachment__c> lstNewArchived = new list<Archived_Attachment__c>();
         list<AmazonFile__c> lstNewAmazon = new list<AmazonFile__c>();
+
+        list<ContentDocumentLink> lstDocumentLinks = new list<ContentDocumentLink>();
 
         // go through the list of related cases and create the new attachment(s) for every selected case
         for (case cw : selectedTargeCaseList) {
@@ -773,7 +780,7 @@ public with sharing class AttachmentListCtrl {
                 //ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO, 'is SF ' + attach.getIsSalesforce() ));
 
                 // if is a regular attachment, clone it
-                if (attach.getIsSalesforce() ) {
+                if (attach.getIsSalesforce() && !attach.getIsContent() ) {
                     Attachment newAtt = attach.fileAttachment.clone();
                     newAtt.Body = attach.fileAttachment.Body;
                     newAtt.ParentId = cw.Id;
@@ -794,6 +801,18 @@ public with sharing class AttachmentListCtrl {
 
                     if ( newAtt == null ) errors++;
                     else lstNewAmazon.add(newAtt.amazonFile);
+                }
+                if(attach.getIsContent()){
+					// Temporary Conversion from ContentDocument to Attachment
+                    Attachment newAtt = new Attachment();
+                    newAtt.name = attach.name;
+                    newAtt.description = attach.description;
+                    newAtt.Body =attach.contentVersion.versionData;
+                    newAtt.ParentId = cw.Id;
+                    newAtt.OwnerId = UserInfo.getUserId();
+
+                    lstNewAttachments.add(newAtt);
+
                 }
             }
         }
@@ -821,6 +840,7 @@ public with sharing class AttachmentListCtrl {
                 }
             }
         }
+                    
         list<object> formattingArguments = new list<object>{String.ValueOf(success),String.ValueOf(errors),String.ValueOf(parentId)};
        
         string message =string.format(Label.Response_message, formattingArguments);
@@ -833,6 +853,7 @@ public with sharing class AttachmentListCtrl {
     @AuraEnabled
     public static ApexMessageHandling createAttachment(String parentId, String body, String name,Long filesize, string contentType){
       
+    
 
         Attachment newAtt = new Attachment();
                     newAtt.Body = EncodingUtil.base64Decode(body);
@@ -858,6 +879,20 @@ public with sharing class AttachmentListCtrl {
         @AuraEnabled
         public String strRelationship {get; set;}
     }
+
+	//ACAMBAS - WMO-611: Begin
+	@AuraEnabled
+	public static Boolean updateParentRecord(String recordId) {
+		List<Customer_Invoice__c> invoiceList = [SELECT Id, Has_Attachments__c FROM Customer_Invoice__c WHERE Id = :recordId];
+
+		if(invoiceList != null && invoiceList[0].Has_Attachments__c != true) {
+			invoiceList[0].Has_Attachments__c = true;
+			update invoiceList;
+		}
+
+		return true;
+	}
+	//ACAMBAS - WMO-611: End
 
 
 }

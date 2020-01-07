@@ -1,0 +1,54 @@
+<aura:component controller="GADM_TabsContainerController" implements="flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes,force:hasRecordId,force:appHostable,lightning:isUrlAddressable" access="global">
+
+    <!--DISPLAY TABS-->
+    <aura:attribute name="doDisplayTab" type="Boolean" default="false"/>
+
+    <!--SELECTED TAB ID-->
+    <aura:attribute name="tabId" type="String" default="1"/>
+
+    <!--TABS VISIBILITY-->
+    <aura:attribute name="isDataSubmissionVisible" type="Boolean" default="false"/>
+    <aura:attribute name="isDataSubmissionResultVisible" type="Boolean" default="false"/>
+    <aura:attribute name="isDashboardsVisible" type="Boolean" default="false"/>
+
+    <!--HANDLER-->
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+
+    <!--TRACK USAGE EVENT-->
+    <aura:registerEvent name="serviceUsageEvent" type="c:Service_Usage_Event"/>
+
+    <div class="body_content">
+        <aura:if isTrue="{!v.doDisplayTab}">
+            <lightning:tabset  aura:id="tabs" selectedTabId="{!v.tabId}" onselect="{! c.trackUsage}">
+
+                <!--ALWAYS VISIBLE-->
+                <lightning:tab class="first" label="HOME" id="1" onactive="{! c.activateTab}"/>
+
+
+                <aura:if isTrue="{!v.isDataSubmissionVisible}">
+                    <lightning:tab  label="DATA SUBMISSION" id="2" onactive="{! c.activateTab}"/>
+                </aura:if>
+
+
+                <aura:if isTrue="{! v.isDataSubmissionResultVisible}">
+                    <lightning:tab  label="DATA SUBMISSION RESULTS" id="3" onactive="{! c.activateTab}">
+                        <c:Data_Submission_List/>
+                    </lightning:tab>
+                </aura:if>
+
+
+                <!--ALWAYS VISIBLE-->
+                <lightning:tab  label="USER MANAGEMENT" id="4" onactive="{! c.activateTab}">
+                    <c:GADM_ExternalUserContactList/>
+                </lightning:tab>
+
+
+                <aura:if isTrue="{!v.isDashboardsVisible}">
+                    <lightning:tab label="DASHBOARDS" id="5" onactive="{! c.activateTab}"/>
+                </aura:if>
+
+            </lightning:tabset>
+        </aura:if>
+    </div>
+
+</aura:component>

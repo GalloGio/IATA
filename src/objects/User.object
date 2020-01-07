@@ -1010,14 +1010,14 @@ If( Contact.Account.ICH_Member__c = true,&quot;ICH&quot;, &quot;&quot;)</formula
     <fields>
         <fullName>Is_Account_s_sector_General_Public__c</fullName>
         <externalId>false</externalId>
-        <formula>IF( ISNULL(ContactId), false,  TEXT(Contact.Account.Sector__c) == &#39;General Public&#39;)</formula>
+        <formula>IF( ISNULL(ContactId), false,  TEXT(Contact.Account.Sector__c) == &apos;General Public&apos;)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Is Account&#39;s sector General Public</label>
+        <label>Is Account&apos;s sector General Public</label>
         <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>Is_General_Public_User__c</fullName>
-        <description>Field is checked if the User&#39;s account is a General Public Account</description>
+        <description>Field is checked if the User&apos;s account is a General Public Account</description>
         <externalId>false</externalId>
         <formula>IF( ISNULL(ContactId), false, Contact.Account.Is_General_Public_Account__c)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>

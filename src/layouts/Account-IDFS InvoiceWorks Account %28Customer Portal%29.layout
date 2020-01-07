@@ -40,6 +40,18 @@
                 <behavior>Readonly</behavior>
                 <field>Number_of_GDP_Billing_accounts__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Business_Street__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Business_City__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Business_Postal_Code__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -279,6 +291,7 @@
     </layoutSections>
     <miniLayout>
         <fields>Name</fields>
+        <fields>RecordTypeId</fields>
         <fields>ParentId</fields>
         <fields>Site</fields>
         <fields>BillingAddress</fields>
@@ -286,9 +299,11 @@
         <fields>TradeName__c</fields>
         <fields>Accreditation_date__c</fields>
         <relatedLists>
+            <fields>FULL_NAME</fields>
             <relatedList>RelatedContactList</relatedList>
         </relatedLists>
         <relatedLists>
+            <fields>CASES.CASE_NUMBER</fields>
             <relatedList>RelatedCaseList</relatedList>
         </relatedLists>
     </miniLayout>

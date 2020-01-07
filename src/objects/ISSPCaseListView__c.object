@@ -100,12 +100,37 @@
         <columns>SOQL_Filter__c</columns>
         <columns>Profiles_Id__c</columns>
         <columns>Permission_set__c</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <columns>LAST_UPDATE</columns>
         <filterScope>Everything</filterScope>
         <label>ALL</label>
         <language>en_US</language>
         <sharedTo>
             <allInternalUsers></allInternalUsers>
         </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>DPC2DPC</fullName>
+        <columns>NAME</columns>
+        <columns>Field_Set_API_Name__c</columns>
+        <columns>Label_API_name__c</columns>
+        <columns>SOQL_Filter__c</columns>
+        <columns>Profiles_Id__c</columns>
+        <columns>isMyAccount__c</columns>
+        <columns>isOwnedByMe__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Profiles_Id__c</field>
+            <operation>contains</operation>
+            <value>00ew0000001QVfv</value>
+        </filters>
+        <filters>
+            <field>isAdmin__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>DPC2DPC</label>
+        <language>en_US</language>
     </listViews>
     <visibility>Public</visibility>
 </CustomObject>

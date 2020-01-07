@@ -59,6 +59,565 @@ two record types:
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>ReadWrite</externalSharingModel>
     <fields>
+        <fullName>ASF_Completed_Travel_Courses__c</fullName>
+        <description>Have you completed Travel Courses in your career?</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Have you completed Travel Courses in your career?</inlineHelpText>
+        <label>Completed Travel Courses</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>N/A</fullName>
+                    <default>false</default>
+                    <label>N/A</label>
+                </value>
+                <value>
+                    <fullName>AT</fullName>
+                    <default>false</default>
+                    <label>Airline Training Program</label>
+                </value>
+                <value>
+                    <fullName>HR</fullName>
+                    <default>false</default>
+                    <label>Hotel/Resort Training Program</label>
+                </value>
+                <value>
+                    <fullName>CT</fullName>
+                    <default>false</default>
+                    <label>Cruise Training Program</label>
+                </value>
+                <value>
+                    <fullName>GT</fullName>
+                    <default>false</default>
+                    <label>GDS Training Program</label>
+                </value>
+                <value>
+                    <fullName>DT</fullName>
+                    <default>false</default>
+                    <label>Destination Training Program</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>ASF_Current_Function__c</fullName>
+        <description>What is your current function in your Agency?</description>
+        <externalId>false</externalId>
+        <inlineHelpText>What is your current function in your Agency?</inlineHelpText>
+        <label>Current Function</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>N/A</fullName>
+                    <default>false</default>
+                    <label>N/A</label>
+                </value>
+                <value>
+                    <fullName>AF1</fullName>
+                    <default>false</default>
+                    <label>Booking Agent</label>
+                </value>
+                <value>
+                    <fullName>AF2</fullName>
+                    <default>false</default>
+                    <label>Online Sales</label>
+                </value>
+                <value>
+                    <fullName>AF3</fullName>
+                    <default>false</default>
+                    <label>Administration (IT, Finance...)</label>
+                </value>
+                <value>
+                    <fullName>AF4</fullName>
+                    <default>false</default>
+                    <label>Marketing</label>
+                </value>
+                <value>
+                    <fullName>AF5</fullName>
+                    <default>false</default>
+                    <label>Meeting planner</label>
+                </value>
+                <value>
+                    <fullName>AF6</fullName>
+                    <default>false</default>
+                    <label>Sales Leisure</label>
+                </value>
+                <value>
+                    <fullName>AF7</fullName>
+                    <default>false</default>
+                    <label>Sales Corporate</label>
+                </value>
+                <value>
+                    <fullName>AF8</fullName>
+                    <default>false</default>
+                    <label>Ticketing</label>
+                </value>
+                <value>
+                    <fullName>AF9</fullName>
+                    <default>false</default>
+                    <label>General Management</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>ASF_FAM_Trips__c</fullName>
+        <description>How often do you participate to FAM Trips?</description>
+        <externalId>false</externalId>
+        <inlineHelpText>How often do you participate to FAM Trips?</inlineHelpText>
+        <label>FAM Trips</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>N/A</fullName>
+                    <default>false</default>
+                    <label>N/A</label>
+                </value>
+                <value>
+                    <fullName>FT1</fullName>
+                    <default>false</default>
+                    <label>Multiple times a year</label>
+                </value>
+                <value>
+                    <fullName>FT2</fullName>
+                    <default>false</default>
+                    <label>Once per year</label>
+                </value>
+                <value>
+                    <fullName>FT3</fullName>
+                    <default>false</default>
+                    <label>Once every 2 years</label>
+                </value>
+                <value>
+                    <fullName>FT4</fullName>
+                    <default>false</default>
+                    <label>Never</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>ASF_Last_Completed_Travel_Course__c</fullName>
+        <description>When was the last time you completed a Travel Course?</description>
+        <externalId>false</externalId>
+        <inlineHelpText>When was the last time you completed a Travel Course?</inlineHelpText>
+        <label>Last Completed Travel Course</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>N/A</fullName>
+                    <default>false</default>
+                    <label>N/A</label>
+                </value>
+                <value>
+                    <fullName>TC1</fullName>
+                    <default>false</default>
+                    <label>Less than 1 year ago</label>
+                </value>
+                <value>
+                    <fullName>TC2</fullName>
+                    <default>false</default>
+                    <label>Less than 2 years ago</label>
+                </value>
+                <value>
+                    <fullName>TC3</fullName>
+                    <default>false</default>
+                    <label>Less than 5 years ago</label>
+                </value>
+                <value>
+                    <fullName>TC4</fullName>
+                    <default>false</default>
+                    <label>Over 5 years ago</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>ASF_Market_Focus__c</fullName>
+        <description>Market Focus - Leisure vs Corporate</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Market Focus - Leisure vs Corporate</inlineHelpText>
+        <label>Market Focus</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>N/A</fullName>
+                    <default>false</default>
+                    <label>N/A</label>
+                </value>
+                <value>
+                    <fullName>MF1</fullName>
+                    <default>false</default>
+                    <label>Leisure - 1 to 25%</label>
+                </value>
+                <value>
+                    <fullName>MF2</fullName>
+                    <default>false</default>
+                    <label>Leisure - 25 to 50%</label>
+                </value>
+                <value>
+                    <fullName>MF3</fullName>
+                    <default>false</default>
+                    <label>Leisure - 50 to 75%</label>
+                </value>
+                <value>
+                    <fullName>MF4</fullName>
+                    <default>false</default>
+                    <label>Leisure - over 75%</label>
+                </value>
+                <value>
+                    <fullName>MC1</fullName>
+                    <default>false</default>
+                    <label>Corporate - 1 to 25%</label>
+                </value>
+                <value>
+                    <fullName>MC2</fullName>
+                    <default>false</default>
+                    <label>Corporate - 25 to 50%</label>
+                </value>
+                <value>
+                    <fullName>MC3</fullName>
+                    <default>false</default>
+                    <label>Corporate - 50 to 75%</label>
+                </value>
+                <value>
+                    <fullName>MC4</fullName>
+                    <default>false</default>
+                    <label>Corporate - over 75%</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>ASF_Market_Specialization_Comment__c</fullName>
+        <externalId>false</externalId>
+        <label>Market Specialization Comment</label>
+        <length>32768</length>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>ASF_Market_Specialization__c</fullName>
+        <description>What is you market specialization</description>
+        <externalId>false</externalId>
+        <inlineHelpText>What is you market specialization</inlineHelpText>
+        <label>Market Specialization</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>N/A</fullName>
+                    <default>false</default>
+                    <label>N/A</label>
+                </value>
+                <value>
+                    <fullName>AD</fullName>
+                    <default>false</default>
+                    <label>Adventure</label>
+                </value>
+                <value>
+                    <fullName>CE</fullName>
+                    <default>false</default>
+                    <label>Conference / Exhibitions</label>
+                </value>
+                <value>
+                    <fullName>CO</fullName>
+                    <default>false</default>
+                    <label>Corporate</label>
+                </value>
+                <value>
+                    <fullName>CR</fullName>
+                    <default>false</default>
+                    <label>Cruises</label>
+                </value>
+                <value>
+                    <fullName>ED</fullName>
+                    <default>false</default>
+                    <label>Educational</label>
+                </value>
+                <value>
+                    <fullName>ET</fullName>
+                    <default>false</default>
+                    <label>Ethnic</label>
+                </value>
+                <value>
+                    <fullName>FT</fullName>
+                    <default>false</default>
+                    <label>Family Travel</label>
+                </value>
+                <value>
+                    <fullName>FH</fullName>
+                    <default>false</default>
+                    <label>Fitness/Health</label>
+                </value>
+                <value>
+                    <fullName>GE</fullName>
+                    <default>false</default>
+                    <label>General</label>
+                </value>
+                <value>
+                    <fullName>HD</fullName>
+                    <default>false</default>
+                    <label>Handicapped</label>
+                </value>
+                <value>
+                    <fullName>HC</fullName>
+                    <default>false</default>
+                    <label>Historical/ Cultural</label>
+                </value>
+                <value>
+                    <fullName>IN</fullName>
+                    <default>false</default>
+                    <label>Incentive</label>
+                </value>
+                <value>
+                    <fullName>LQ</fullName>
+                    <default>false</default>
+                    <label>LGBTQ</label>
+                </value>
+                <value>
+                    <fullName>MC</fullName>
+                    <default>false</default>
+                    <label>Medical Travel</label>
+                </value>
+                <value>
+                    <fullName>MI</fullName>
+                    <default>false</default>
+                    <label>Military</label>
+                </value>
+                <value>
+                    <fullName>RE</fullName>
+                    <default>false</default>
+                    <label>Religious</label>
+                </value>
+                <value>
+                    <fullName>RB</fullName>
+                    <default>false</default>
+                    <label>Resort/Beaches</label>
+                </value>
+                <value>
+                    <fullName>RT</fullName>
+                    <default>false</default>
+                    <label>Romance Travel</label>
+                </value>
+                <value>
+                    <fullName>SA</fullName>
+                    <default>false</default>
+                    <label>Safari</label>
+                </value>
+                <value>
+                    <fullName>SE</fullName>
+                    <default>false</default>
+                    <label>Seniors</label>
+                </value>
+                <value>
+                    <fullName>SI</fullName>
+                    <default>false</default>
+                    <label>Singles</label>
+                </value>
+                <value>
+                    <fullName>SP</fullName>
+                    <default>false</default>
+                    <label>Sports</label>
+                </value>
+                <value>
+                    <fullName>WT</fullName>
+                    <default>false</default>
+                    <label>Wellness Travel</label>
+                </value>
+                <value>
+                    <fullName>OT</fullName>
+                    <default>false</default>
+                    <label>Other: Please Specify</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>ASF_Percentage_of_Annual_Booking__c</fullName>
+        <description>Percentage of annual bookings by sector</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Percentage of annual bookings by sector</inlineHelpText>
+        <label>Percentage of Annual Booking</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>N/A</fullName>
+                    <default>false</default>
+                    <label>N/A</label>
+                </value>
+                <value>
+                    <fullName>BA1</fullName>
+                    <default>false</default>
+                    <label>Air Travel - 1 to 25%          </label>
+                </value>
+                <value>
+                    <fullName>BA2</fullName>
+                    <default>false</default>
+                    <label>Air Travel - 25 to 50%</label>
+                </value>
+                <value>
+                    <fullName>BA3</fullName>
+                    <default>false</default>
+                    <label>Air Travel - 50 to 75%</label>
+                </value>
+                <value>
+                    <fullName>BA4</fullName>
+                    <default>false</default>
+                    <label>Air Travel - over 75%</label>
+                </value>
+                <value>
+                    <fullName>BL1</fullName>
+                    <default>false</default>
+                    <label>Land Travel - 1 to 25%</label>
+                </value>
+                <value>
+                    <fullName>BL2</fullName>
+                    <default>false</default>
+                    <label>Land Travel - 25 to 50%</label>
+                </value>
+                <value>
+                    <fullName>BL3</fullName>
+                    <default>false</default>
+                    <label>Land Travel - 50 to 75%</label>
+                </value>
+                <value>
+                    <fullName>BL4</fullName>
+                    <default>false</default>
+                    <label>Land Travel - over 75%</label>
+                </value>
+                <value>
+                    <fullName>BC1</fullName>
+                    <default>false</default>
+                    <label>Sea/Cruise - 1 to 25%</label>
+                </value>
+                <value>
+                    <fullName>BC2</fullName>
+                    <default>false</default>
+                    <label>Sea/Cruise - 25 to 50%</label>
+                </value>
+                <value>
+                    <fullName>BC3</fullName>
+                    <default>false</default>
+                    <label>Sea/Cruise - 50 to 75%</label>
+                </value>
+                <value>
+                    <fullName>BC4</fullName>
+                    <default>false</default>
+                    <label>Sea/Cruise - over 75%</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>ASF_Specializing_on_Destination__c</fullName>
+        <description>Are you specializing on a Destination?</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Are you specializing on a Destination?</inlineHelpText>
+        <label>Specializing on Destination</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>N/A</fullName>
+                    <default>false</default>
+                    <label>N/A</label>
+                </value>
+                <value>
+                    <fullName>NA</fullName>
+                    <default>false</default>
+                    <label>North America</label>
+                </value>
+                <value>
+                    <fullName>SA</fullName>
+                    <default>false</default>
+                    <label>South America</label>
+                </value>
+                <value>
+                    <fullName>EY</fullName>
+                    <default>false</default>
+                    <label>Europe</label>
+                </value>
+                <value>
+                    <fullName>ME</fullName>
+                    <default>false</default>
+                    <label>Middle East</label>
+                </value>
+                <value>
+                    <fullName>AF</fullName>
+                    <default>false</default>
+                    <label>Africa</label>
+                </value>
+                <value>
+                    <fullName>AS</fullName>
+                    <default>false</default>
+                    <label>Asia</label>
+                </value>
+                <value>
+                    <fullName>OC</fullName>
+                    <default>false</default>
+                    <label>Oceania</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
         <fullName>Agency_Accreditation_Class__c</fullName>
         <description>Agency Accreditation Class taken from the related GDP Account View</description>
         <externalId>false</externalId>
@@ -78,6 +637,20 @@ two record types:
         <length>8</length>
         <required>false</required>
         <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Agency_ISO_Country_Code__c</fullName>
+        <description>ISO Country Code taken from the related GDP Account View</description>
+        <externalId>false</externalId>
+        <formula>GDP_Products_Account_View__r.Country_ISO_Code__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>ISO Country Code taken from the related GDP Account View</inlineHelpText>
+        <label>Agency ISO Country Code</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -242,6 +815,31 @@ two record types:
         </valueSet>
     </fields>
     <fields>
+        <fullName>Card_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Card Type</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>plastic</fullName>
+                    <default>true</default>
+                    <label>Plastic</label>
+                </value>
+                <value>
+                    <fullName>digital</fullName>
+                    <default>false</default>
+                    <label>Digital</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
         <fullName>Card_Variation_Code__c</fullName>
         <defaultValue>&quot;2&quot;</defaultValue>
         <externalId>false</externalId>
@@ -347,7 +945,7 @@ two record types:
     <fields>
         <fullName>Fee_Applicable__c</fullName>
         <externalId>false</externalId>
-        <label>Fee Applicable</label>
+        <label>Total Fee</label>
         <precision>18</precision>
         <required>false</required>
         <scale>2</scale>
@@ -443,7 +1041,7 @@ two record types:
         <fullName>ID_Card_Application__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
-        <label>ID Card Application</label>
+        <label>Latest ID Card Application</label>
         <referenceTo>ID_Card_Application__c</referenceTo>
         <relationshipLabel>ID Cards</relationshipLabel>
         <relationshipName>ID_Cards</relationshipName>
@@ -518,6 +1116,7 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
 &quot;\&quot;card-expiry-date\&quot;:\&quot;&quot;+ TEXT(Month(Valid_To_Date__c))+ &quot;-&quot; +TEXT(Day(Valid_To_Date__c))+ &quot;-&quot; +TEXT(Year(Valid_To_Date__c)) + &quot;\&quot;,&quot;+ 
 &quot;\&quot;agency-code\&quot;:\&quot;&quot;+Agency_IATA_Code__c + &quot;\&quot;,&quot;+ 
 &quot;\&quot;agency-name\&quot;:\&quot;&quot;+EBC_Agency_Name__c + &quot;\&quot;,&quot;+ 
+&quot;\&quot;agency-country-iso\&quot;:\&quot;&quot;+Agency_ISO_Country_Code__c + &quot;\&quot;,&quot;+ 
 &quot;\&quot;cardholder-photo\&quot;:\&quot;&quot;+Photo__c + &quot;\&quot;,&quot;+ 
 &quot;\&quot;card-type\&quot;:\&quot;&quot;+TEXT(Type_of_ID_Card__c) + &quot;\&quot;,&quot;+ 
 &quot;\&quot;cardholder-gender\&quot;:\&quot;&quot;+TEXT(Gender__c) + &quot;\&quot;,&quot;+ 
@@ -1046,11 +1645,10 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
         <columns>Card_Status__c</columns>
         <columns>Is_Expedite__c</columns>
         <columns>Missing_Information__c</columns>
+        <columns>UPDATEDBY_USER</columns>
         <columns>CREATEDBY_USER</columns>
         <columns>CIN__c</columns>
-        <columns>Sent_to_AIMS_on__c</columns>
         <columns>Valid_To_Date__c</columns>
-        <columns>CREATED_DATE</columns>
         <columns>LAST_UPDATE</columns>
         <columns>Agency_Name__c</columns>
         <columns>Agency_IATA_Code__c</columns>
@@ -1149,6 +1747,354 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
         <active>true</active>
         <label>AIMS</label>
         <picklistValues>
+            <picklist>ASF_Completed_Travel_Courses__c</picklist>
+            <values>
+                <fullName>AT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N%2FA</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ASF_Current_Function__c</picklist>
+            <values>
+                <fullName>AF1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AF2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AF3</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AF4</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AF5</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AF6</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AF7</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AF8</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AF9</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N%2FA</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ASF_FAM_Trips__c</picklist>
+            <values>
+                <fullName>FT1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FT2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FT3</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FT4</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N%2FA</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ASF_Last_Completed_Travel_Course__c</picklist>
+            <values>
+                <fullName>N%2FA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TC1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TC2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TC3</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TC4</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ASF_Market_Focus__c</picklist>
+            <values>
+                <fullName>MC1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MC2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MC3</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MC4</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MF1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MF2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MF3</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MF4</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N%2FA</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ASF_Market_Specialization__c</picklist>
+            <values>
+                <fullName>AD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ED</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ET</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FH</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LQ</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N%2FA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>OT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RB</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>WT</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ASF_Percentage_of_Annual_Booking__c</picklist>
+            <values>
+                <fullName>BA1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BA2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BA3</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BA4</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BC1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BC2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BC3</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BC4</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BL1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BL2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BL3</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BL4</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N%2FA</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ASF_Specializing_on_Destination__c</picklist>
+            <values>
+                <fullName>AF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EY</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ME</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N%2FA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>OC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SA</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Card_Code__c</picklist>
             <values>
                 <fullName>TACB</fullName>
@@ -1188,6 +2134,17 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
             <values>
                 <fullName>Valid ID Card</fullName>
                 <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Card_Type__c</picklist>
+            <values>
+                <fullName>digital</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>plastic</fullName>
+                <default>true</default>
             </values>
         </picklistValues>
         <picklistValues>
@@ -1278,6 +2235,354 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
         <active>true</active>
         <label>WebStar</label>
         <picklistValues>
+            <picklist>ASF_Completed_Travel_Courses__c</picklist>
+            <values>
+                <fullName>AT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N%2FA</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ASF_Current_Function__c</picklist>
+            <values>
+                <fullName>AF1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AF2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AF3</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AF4</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AF5</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AF6</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AF7</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AF8</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AF9</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N%2FA</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ASF_FAM_Trips__c</picklist>
+            <values>
+                <fullName>FT1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FT2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FT3</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FT4</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N%2FA</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ASF_Last_Completed_Travel_Course__c</picklist>
+            <values>
+                <fullName>N%2FA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TC1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TC2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TC3</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TC4</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ASF_Market_Focus__c</picklist>
+            <values>
+                <fullName>MC1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MC2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MC3</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MC4</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MF1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MF2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MF3</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MF4</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N%2FA</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ASF_Market_Specialization__c</picklist>
+            <values>
+                <fullName>AD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ED</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ET</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FH</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>HD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LQ</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N%2FA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>OT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RB</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>WT</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ASF_Percentage_of_Annual_Booking__c</picklist>
+            <values>
+                <fullName>BA1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BA2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BA3</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BA4</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BC1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BC2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BC3</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BC4</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BL1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BL2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BL3</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BL4</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N%2FA</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ASF_Specializing_on_Destination__c</picklist>
+            <values>
+                <fullName>AF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EY</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ME</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N%2FA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>OC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SA</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Card_Code__c</picklist>
             <values>
                 <fullName>TACB</fullName>
@@ -1309,6 +2614,17 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
             <values>
                 <fullName>Valid ID Card</fullName>
                 <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Card_Type__c</picklist>
+            <values>
+                <fullName>digital</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>plastic</fullName>
+                <default>true</default>
             </values>
         </picklistValues>
         <picklistValues>

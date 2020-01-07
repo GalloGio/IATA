@@ -35,21 +35,21 @@ public with sharing class PortalSupportReachUsCreateNewCaseTest {
         
         Account child2 = ISSP_ObjectFactory.createNewAccount();
         child2.BillingCity = 'GB';
-        child2.Name = 'GB';
+        child2.Name = 'GB1';
         child2.Site = 'headSite';
         child2.sector__c = 'Travel Agent';
         child2.Top_Parent__c = parent.Id;
-        child2.IATAcode__c = '1234568';
+        child2.IATAcode__c = '1234565';
         child2.IATA_ISO_Country__c = country.Id;
         child2.RecordTypeId = rtIdBr;
         insert child2;
         
         Account child3 = ISSP_ObjectFactory.createNewAccount();
-        child3.Name = 'GB';
+        child3.Name = 'GB2';
         child3.Site = 'headSite';
         child3.sector__c = 'Travel Agent';
         child3.Top_Parent__c = parent.Id;
-        child3.IATAcode__c = '1234568';
+        child3.IATAcode__c = '1234566';
         child3.IATA_ISO_Country__c = country.Id;
         child3.RecordTypeId = rtIdBr;
         insert child3;
@@ -90,6 +90,13 @@ public with sharing class PortalSupportReachUsCreateNewCaseTest {
             Topic__c = 'ICCS__c',
             Subtopic__c = '',
             Country_concerned_by_the_query__c = 'GB'));
+        listFaq2CaseRT.add( new ISSP_FAQ2Case_Record_Type__c(
+            Name = '4',
+            Complaint__c = true,
+            Recordtype__c = 'Cases_Global',
+            Topic__c = '',
+            Subtopic__c = '',
+            Country_concerned_by_the_query__c = 'GB'));
         insert listFaq2CaseRT;
         
         test.startTest();
@@ -120,6 +127,62 @@ public with sharing class PortalSupportReachUsCreateNewCaseTest {
             Case insertedcase =  PortalSupportReachUsCreateNewCaseCtrl.insertCase(newcase,lstRecipient);
         }
         test.stopTest();
+    }
+
+    @IsTest
+    private static void createCaseTreasuryDashboardTest() {
+
+        IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', IATA_Contry_KR__c = 'test', CASS_Import__c = 'Yes',
+                                    IATA_COUNTRY_EN__c = 'testEN', IATA_Country_FR__c = 'testFR', IATA_Country_ZH__c = 'testZH',
+                                    IATA_Country_IT__c = 'testIT', IATA_Country_JP__c = 'testJP', ISO_Code__c = 'tq',
+                                    IATA_Country_PT__c = 'testPT', IATA_Country_SP__c = 'testSP', Case_BSP_Country__c = 'test' );
+
+        Id rtIdBr = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+
+        Account parent = ISSP_ObjectFactory.createNewAccount();
+        parent.BillingCity = 'test';
+        parent.Name = 'test';
+        parent.sector__c = 'Travel Agent';
+        parent.Location_Type__c = 'HO';
+        parent.RecordTypeId = rtIdBr;
+        parent.IATACode__c = '100';
+        insert parent;
+
+        Account child = ISSP_ObjectFactory.createNewAccount();
+        child.BillingCity = 'GB';
+        child.Name = 'GB';
+        child.Site = 'headSite';
+        child.sector__c = 'Travel Agent';
+        child.Top_Parent__c = parent.Id;
+        child.IATAcode__c = '1234567';
+        child.IATA_ISO_Country__c = country.Id;
+        child.RecordTypeId = rtIdBr;
+        insert child;
+
+        Contact con = ISSP_ObjectFactory.createNewContact();
+        con.AccountId = child.Id;
+        con.Email = 'Test@test11.com';
+        insert con;
+
+        User newUser = ISSP_ObjectFactory.createPortalUser(con);
+
+        Id caseRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'FDS_ICCS_Email_to_Case');
+
+        Case resultCase = null;
+
+        Test.startTest();
+
+        System.runAs(newUser) {
+            resultCase = PortalSupportReachUsCreateNewCaseCtrl.createCaseTreasuryDashboard(caseRecordTypeId);
+        }
+
+        Test.stopTest();
+
+        System.assertEquals('Open', resultCase.Status, 'Wrong Status for case!');
+        System.assertEquals('Customer Portal', resultCase.CaseArea__c, 'Wrong CaseArea__c for case!');
+        System.assertEquals('Portal', resultCase.Origin, 'Wrong Origin for Case!');
+        System.assertEquals(caseRecordTypeId, resultCase.RecordTypeId, 'Wrong RecortTypeId for case!');
+
     }
     
 }

@@ -47,7 +47,7 @@ export default class PortalDocumentsSearchPage extends LightningElement {
             categories: [],
             categorySelected: this.category,
             docId: this.docId,
-            topResults: this.topResults,
+            topResults: this.topResults
         };
 
         this.documentObject = _documentObject;
@@ -65,21 +65,10 @@ export default class PortalDocumentsSearchPage extends LightningElement {
 
     handleFilter(event) {
         this.loading = true; 
-        let detailObject = JSON.parse(JSON.stringify(event.detail));
+        let detailObject = JSON.parse(JSON.stringify(event.detail));        
 
         this.documentObject = detailObject;
-        let _documentObject = JSON.parse(JSON.stringify(this.documentObject));
-        let _categories = [];
-
-        for(let i = 0; i < _documentObject.categories.length; i++) {
-            if(_documentObject.categories[i].name === detailObject.categorySelected) {
-                _categories[0] = _documentObject.categories[i];
-                break;
-            }
-        }
-
-        this.categories = [];
-        this.categories = Object.keys(_categories).length > 0 ? _categories : this.documentObject.categories;
+        this.categories = this.documentObject.categories;
 
         this.resultsToRender();
     }
@@ -90,7 +79,7 @@ export default class PortalDocumentsSearchPage extends LightningElement {
         let detailObject = JSON.parse(JSON.stringify(this.documentObject));   
 
         for(let i = 0; i < detailObject.categories.length; i++) {
-            if(detailObject.categories[i].name === detailCategory.name &&
+            if(detailObject.categories[i].apiName === detailCategory.apiName &&
                 (
                     (detailObject.categories[i].noResults !== detailCategory.noResults) ||
                     detailObject.categories[i].searchText !== detailCategory.searchText ||
@@ -119,7 +108,7 @@ export default class PortalDocumentsSearchPage extends LightningElement {
             }
         } else {
             for(let i = 0; i < detailObject.categories.length; i++) {
-                if(detailObject.categorySelected === detailObject.categories[i].name && detailObject.categories[i].noResults !== 0) {
+                if(detailObject.categorySelected === detailObject.categories[i].apiName && detailObject.categories[i].noResults !== 0) {
                     found = true; 
                     break;
                 }
@@ -146,7 +135,7 @@ export default class PortalDocumentsSearchPage extends LightningElement {
 
         // eslint-disable-next-line @lwc/lwc/no-async-operation
         this.timeout = setTimeout(() => {
-            if(this.searchText.length > 3 || this.searchText === '') {
+            if(this.searchText.length > 2 || this.searchText === '') {
                 let _documentObject = JSON.parse(JSON.stringify(this.documentObject));
                 for(let i = 0; i < _documentObject.categories.length; i++) {
                     _documentObject.categories[i].searchText = this.searchText;

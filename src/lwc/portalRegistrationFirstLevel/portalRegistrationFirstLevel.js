@@ -14,7 +14,6 @@ import { ShowToastEvent }                       from 'lightning/platformShowToas
 
 import getConfig                                from '@salesforce/apex/PortalRegistrationFirstLevelCtrl.getConfig';
 import getUserInformationFromEmail              from '@salesforce/apex/PortalRegistrationFirstLevelCtrl.getUserInformationFromEmail';
-//import getUserInformationFromAdditionalEmail    from '@salesforce/apex/PortalRegistrationFirstLevelCtrl.getUserInformationFromAdditionalEmail';
 import register                                 from '@salesforce/apex/PortalRegistrationFirstLevelCtrl.simulateRegister';
 import getCustomerTypePicklists                 from '@salesforce/apex/PortalRegistrationFirstLevelCtrl.getCustomerTypePicklists';
 import getMetadataCustomerType                  from '@salesforce/apex/PortalRegistrationFirstLevelCtrl.getMetadataCustomerType';
@@ -64,7 +63,7 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 	@track displayTermsAndUsage = false;
 	@track userCountry = "";
 	@track userCountryCode = "";
-	@track selectedCountryFlag = "";
+    @track selectedCountryFlag = "";
 	@track isSanctioned = false;
 	@track isLoading = true;
 	@track config = {};
@@ -99,8 +98,8 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 	successIcon = CSP_PortalPath + 'CSPortal/Images/Icons/success.png';
 	cancelIcon = CSP_PortalPath + 'CSPortal/Images/Icons/cancel_white.svg';
 	@track jsLoaded = false;
-	phoneRegExp = /^\(?[+]\)?([()\d]*)$/
-	@track rerender = false;
+    phoneRegExp = /^\(?[+]\)?([()\d]*)$/
+    @track rerender = false;
 
 
 	_labels = {
@@ -181,7 +180,7 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 			this.isLoading = false;
 		} else if (error) {
 			var result = JSON.parse(JSON.stringify(error));
-			console.info('error: ', result);
+            console.info('error: ', result);
 			this.isLoading = false;
 		}
 	};
@@ -194,7 +193,7 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 
 		} else if (error) {
 			var result = JSON.parse(JSON.stringify(error));
-			console.info('error: ', error);
+            console.info('error: ', error);
 		}
 	}
 
@@ -250,8 +249,9 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 								let pageParams = getParamsFromPage();
 								if(pageParams !== undefined){
 									if(pageParams.language !== undefined){
-                                        this.registrationForm.language = pageParams.language.toLowerCase();
+										this.registrationForm.language = pageParams.language.toLowerCase();
 									}
+
 									if(pageParams.email !== undefined){
 										this.registrationForm.email = decodeURIComponent(pageParams.email);
 										//this.isEmailFieldReadOnly = true;
@@ -295,7 +295,7 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 
 					})
 					.catch(error => {
-						console.info('Error: ', JSON.parse(JSON.stringify(error)));
+                        console.info('Error: ', JSON.parse(JSON.stringify(error)));
 						this.isLoading = false;
 					});
 				}
@@ -413,7 +413,7 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 									this.isLoading = false;
 								}else{
 									if(userInfo.isEmailAddressAvailable == true){
-										//show form
+											//show form
 										if(this.userCountry != ""){
 											this.registrationForm.country = this.userCountry;
 										}
@@ -424,7 +424,7 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 										this._initializePhoneInput();
 
 									}else{
-										//inform user to pick another email
+											//inform user to pick another email
 										this._showEmailValidationError(true, this.labels.CSP_Invalid_Email);
 										this.isLoading = false;
 									}
@@ -432,7 +432,7 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 							}
 						})
 						.catch(error => {
-							console.info('Error: ', error);
+                            console.info('Error: ', error);
 							this.isLoading = false;
 						});
 					}
@@ -444,19 +444,19 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 	handleSubmit(event){
 
 		this.isLoading = true;
-		if(this.registrationForm.phone.length < 5){
-			this.registrationForm.phone = "";
-		}
+        if(this.registrationForm.phone.length < 5){
+            this.registrationForm.phone = "";
+        }
 
 		var contactId = this.userInfo.contactId;
 		var accountId = this.userInfo.accountId;
 
 		register({ registrationForm : JSON.stringify(this.registrationForm),
-				customerType : JSON.stringify(this.selectedMetadataCustomerType),
-				contactId : contactId,
-				accountId : accountId,
-				userInfo : JSON.stringify(this.userInfo)
-				}).then(result => {
+				   	customerType : JSON.stringify(this.selectedMetadataCustomerType),
+				   	contactId : contactId,
+					accountId : accountId,
+					userInfo : JSON.stringify(this.userInfo)
+				 }).then(result => {
 			var dataAux = JSON.parse(JSON.stringify(result));
 
 			if(dataAux.isSuccess == true){
@@ -471,7 +471,7 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 		})
 		.catch(error => {
 			var dataAux = JSON.parse(JSON.stringify(error));
-			console.info(dataAux);
+            console.info(dataAux);
 			this._showSubmitError(true, 'Error Creating User');
 			this.isLoading = false;
 		});
@@ -500,48 +500,48 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 
 	}
 
-	handlePhoneInputChange(event){
-		this.rerender = false;
-		var inputValue = event.target.value;
-		if(inputValue == ""){
-			inputValue = this.selectedCountryFlag;
-		}
-		var isValid = this.phoneRegExp.test(inputValue);
-		if(isValid == false){
-			inputValue = inputValue.replace(/[^0-9()+]|(?!^)\+/g, '');
-		}
-		this.registrationForm.phone = inputValue;
-		this.selectedCountryFlag = this.selectedCountryFlag;
-		this.rerender = true;
-	}
+    handlePhoneInputChange(event){
+        this.rerender = false;
+        var inputValue = event.target.value;
+        if(inputValue == ""){
+            inputValue = this.selectedCountryFlag;
+        }
+        var isValid = this.phoneRegExp.test(inputValue);
+        if(isValid == false){
+            inputValue = inputValue.replace(/[^0-9()+]|(?!^)\+/g, '');
+        }
+        this.registrationForm.phone = inputValue;
+        this.selectedCountryFlag = this.selectedCountryFlag;
+        this.rerender = true;
+    }
 
-	handlePhoneInputCountryChange(){
-		let input = this.template.querySelector('[data-id="phone"]');
-		let iti = window.intlTelInputGlobals.getInstance(input);
-		let selectedCountry = iti.getSelectedCountryData();
-		let countryCode = "";
+    handlePhoneInputCountryChange(){
+        let input = this.template.querySelector('[data-id="phone"]');
+        let iti = window.intlTelInputGlobals.getInstance(input);
+        let selectedCountry = iti.getSelectedCountryData();
+        let countryCode = "";
 
-		if(selectedCountry.dialCode !== undefined){
-			countryCode = "+" + selectedCountry.dialCode;
-		}else{
-			countryCode = this.selectedCountryFlag;
-		}
-		let inputValue = this.registrationForm.phone;
-		let currentPhoneValue = this.registrationForm.phone;
-		//check if previous flag selection exists to prevent overriding phone value on page refresh due to language change
-		let newPhoneValue = "";
-		if(this.selectedCountryFlag){
-			if(currentPhoneValue.includes(this.selectedCountryFlag)){
-				newPhoneValue = currentPhoneValue.replace(this.selectedCountryFlag, countryCode);
-			}else{
-				newPhoneValue = countryCode;
-			}
-		}else{
-			newPhoneValue = countryCode;
-		}
-		this.selectedCountryFlag = countryCode;
-		this.registrationForm.phone = newPhoneValue;
-	}
+        if(selectedCountry.dialCode !== undefined){
+            countryCode = "+" + selectedCountry.dialCode;
+        }else{
+            countryCode = this.selectedCountryFlag;
+        }
+        let inputValue = this.registrationForm.phone;
+        let currentPhoneValue = this.registrationForm.phone;
+        //check if previous flag selection exists to prevent overriding phone value on page refresh due to language change
+        let newPhoneValue = "";
+        if(this.selectedCountryFlag){
+            if(currentPhoneValue.includes(this.selectedCountryFlag)){
+                newPhoneValue = currentPhoneValue.replace(this.selectedCountryFlag, countryCode);
+            }else{
+                newPhoneValue = countryCode;
+            }
+        }else{
+            newPhoneValue = countryCode;
+        }
+        this.selectedCountryFlag = countryCode;
+        this.registrationForm.phone = newPhoneValue;
+    }
 
 	handleTouChange(event){
 		var inputValue = event.target.checked;
@@ -695,7 +695,7 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 				selectedMetadataCustomerType : this.selectedMetadataCustomerType,
 				userCountry : this.userCountry,
 				userCountryCode : this.userCountryCode,
-				selectedCountryFlag : this.selectedCountryFlag,
+                selectedCountryFlag : this.selectedCountryFlag,
 				isRegistrationComplete : this.isRegistrationComplete,
 				userInfo : this.userInfo
 			};
@@ -786,7 +786,7 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 		this.selectedMetadataCustomerType = registrationState.selectedMetadataCustomerType;
 		this.userCountry = registrationState.userCountry;
 		this.userCountryCode = registrationState.userCountryCode;
-		this.selectedCountryFlag = registrationState.selectedCountryFlag;
+        this.selectedCountryFlag = registrationState.selectedCountryFlag;
 		this.isRegistrationComplete = registrationState.isRegistrationComplete;
 		this.userInfo = registrationState.userInfo;
 		if(this.isRegistrationComplete == false){
@@ -864,7 +864,7 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 		var input = this.template.querySelector('[data-id="phone"]');
 		var countryCode = this.userCountryCode;
 
-		var iti = window.intlTelInput(input,{
+        var iti = window.intlTelInput(input,{
 			initialCountry: countryCode,
 			preferredCountries: [countryCode],
 			placeholderNumberType : "FIXED_LINE",
@@ -872,14 +872,14 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 			/*autoPlaceholder : "aggressive"*/
 		});
 
-		var selectedCountryData = iti.getSelectedCountryData();
+        var selectedCountryData = iti.getSelectedCountryData();
 
-		if(!this.selectedCountryFlag){
-			this.selectedCountryFlag = "+" + selectedCountryData.dialCode;
-			this.registrationForm.phone = "+" + selectedCountryData.dialCode;
-		}
+        if(!this.selectedCountryFlag){
+            this.selectedCountryFlag = "+" + selectedCountryData.dialCode;
+            this.registrationForm.phone = "+" + selectedCountryData.dialCode;
+        }
 
-		input.addEventListener("countrychange", this.handlePhoneInputCountryChange.bind(this));
+        input.addEventListener("countrychange", this.handlePhoneInputCountryChange.bind(this));
 	}
 
 }

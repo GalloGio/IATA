@@ -1,36 +1,37 @@
 <template>
+    <template if:true={internalUser}>
 
-	<div if:true={showBackdrop} class="slds-backdrop slds-backdrop_open" style={mainBackground} onclick={close}></div>
+        <div if:true={showBackdrop} class="slds-backdrop slds-backdrop_open" style={mainBackground} onclick={close}></div>
+    
+        <template if:false={displayAcceptTerms}>
+            <c-portal-accept-terms oncloseacceptterms={logOut} onacceptterms={acceptTerms}></c-portal-accept-terms>
+        </template>
+    
+    <template if:true={displayRegistrationConfirmation}>
+        <c-portal-registration-first-level-confirmation oncloseregistrationpopup={logOut} onhideregistrationpopup={hideRegistration}
+                                                        onconfirmregistration={confirmRegistration}>
+        </c-portal-registration-first-level-confirmation>
+    </template>
 
-	<template if:false={displayAcceptTerms}>
-		<c-portal-accept-terms oncloseacceptterms={logOut} onacceptterms={acceptTerms}></c-portal-accept-terms>
-	</template>
+    <template if:true={displayFirstLogin}>
+        <c-portal-first-login registrationlevel={registrationlevel}
+                            onclosefirstloginpopup={hideFirstLogin} 
+                            ontriggersecondlevelregistration={triggerSecondLevelRegistration}
+                            ontriggerthirdlevelregistrationlms={triggerThirdLevelRegistrationLMS}>
 
-	<template if:true={displayRegistrationConfirmation}>
-		<c-portal-registration-first-level-confirmation oncloseregistrationpopup={logOut} onhideregistrationpopup={hideRegistration}
-														onconfirmregistration={confirmRegistration}>
-		</c-portal-registration-first-level-confirmation>
-	</template>
+        </c-portal-first-login>
+    </template>
 
-	<template if:true={displayFirstLogin}>
-		<c-portal-first-login registrationlevel={registrationlevel}
-							onclosefirstloginpopup={hideFirstLogin}
-							ontriggersecondlevelregistration={triggerSecondLevelRegistration}
-							ontriggerthirdlevelregistrationlms={triggerThirdLevelRegistrationLMS}>
-
-		</c-portal-first-login>
-	</template>
-
-	<template if:true={displaySecondLevelRegistration}>
-		<c-portal-registration-second-level
-			trigger={level2RegistrationTrigger}
-			is-triggered-by-request={isTriggeredByRequest}
-			onclosesecondlevelregistration={closeSecondLevelRegistration}
-			onsecondlevelregistrationcompletedactiontwo={secondLevelRegistrationCompleted}>
-		</c-portal-registration-second-level>
-	</template>
-
-	<template if:true={displayThirdLevelRegistrationLMS}>
+    <template if:true={displaySecondLevelRegistration}>
+        <c-portal-registration-second-level 
+            trigger={level2RegistrationTrigger}
+            is-triggered-by-request={isTriggeredByRequest}
+            onclosesecondlevelregistration={closeSecondLevelRegistration} 
+            onsecondlevelregistrationcompletedactiontwo={secondLevelRegistrationCompleted}>
+        </c-portal-registration-second-level>
+    </template>
+    
+    <template if:true={displayThirdLevelRegistrationLMS}>
 		<c-portal-registration-third-level-l-m-s
 			trigger={level3LMSRegistrationTrigger}
 			is-triggered-by-request={isTriggeredByRequest}
@@ -40,291 +41,670 @@
 		</c-portal-registration-third-level-l-m-s>
 	</template>
 
-	<div class="headerContainer">
-		<div class="slds-grid slds-wrap maxWidthHeader">
+<div class="headerContainer borderTransition">
+            <div class="slds-grid slds-wrap maxWidthHeader">
+    
+                <!-- MODAL -->
+                <template if:true={openModal}>
+                    <section role="dialog" aria-modal="true" style="z-index: 10005;" class="slds-modal slds-fade-in-open">
+                        <div class="slds-modal__container">
+                            <header class="slds-modal__header headerTitle">
+                                <span>{labels.NotificationDetail}</span>
+                                <span class="slds-float_right slds-m-horizontal_x-small close-mark" onclick={closeModal}>
+                                    <lightning-icon icon-name="utility:close" size="x-small" class="cursorPointer"
+                                        onclick={closeModal}></lightning-icon>
+                                </span>
+                            </header>
+    
+                            <div class="slds-is-relative addOverflow">
+                                <div class="slds-p-around_large slds-p-horizontal_small slds-p-horizontal_large background">
+    
+                                    <div class="slds-p-top_small modalType">
+                                        <div class="slds-grid slds-grid_horizontal">
+                                            <div class="slds-col slds-size_1-of-2">
+                                                <span class="notificationCenterTextsize text-xxsmall slds-m-left_large notificationTitle">
+                                                    {notification.typeNotification}
+                                                </span>
+                                            </div>
+                                            <div class="slds-col slds-size_1-of-2 align-right">
+                                                <span class="notificationCenterTextsize text-xxsmall slds-m-left_large">
+                                                    <lightning-formatted-date-time value={notification.createdDate} year="2-digit"
+                                                        month="short" day="2-digit" hour="numeric" minute="numeric">
+                                                    </lightning-formatted-date-time>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="slds-hyphenate text-xsmall slds-m-left_large slds-p-top_small">
+                                        {notification.subject}
+                                    </div>
+                                    <div class="text-xsmall slds-m-left_large slds-p-top_small"
+                                        style="text-align: justify; text-justify: inter-word;">
+                                        <lightning-formatted-rich-text value={notification.message}>
+                                        </lightning-formatted-rich-text>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+    
+    
+                    <!-- END MODAL -->
+                </template>
+    
+                <div class="customBlueBackground headerBar headerBarLeft headerBarLeftRightWidth slds-show_medium"></div>
+    
+                <!-- ################## menu for mobile -->
+                
+                <!-- main menu -->
+                <div class="slds-col customBlueBackground headerBar slds-hide_medium">
+                    <span>
+                        <div class="slds-grid headerBarContainer">
+                            <!-- side menu tab -->
+                            <div class="slds-col slds-size_2-of-6 mobile-menu-icon">
+                                <div class={mobileMenuStyle} onclick={toggleSideMenu}>
+                                    <img class="slds-m-left_medium" src={mobileMenuIcon} />
+                                </div>
+                            </div>
+                            
+                            <!-- home tab -->
+                            <div class="slds-col slds-size_2-of-6 slds-text-align_center">
+                                <span onclick={navigateToHomePage}>
+                                    <img src={logoWhiteIcon} class="mobileLogoWhite">
+                                </span>
+                            </div>
+                            
+                            <div class="slds-grid slds-size_2-of-6 slds-grid_align-end">
+                                <!-- notifications tab -->
+                                <div class="slds-col slds-size_1-of-3 slds-p-vertical_xx-small headerButtonNotificationsContainer slds-text-align_center"
+                                    style={headerButtonNotificationsContainerStyle} onclick={toggleNotifications}>
+                                    <img style={headerButtonNotificationsStyle} src={notificationIcon} />
+                                    <div class="slds-p-horizontal_xx-small notificationNumber text-darkGray"
+                                        style={notificationNumberStyle}>{numberOfNotifications}</div>
+                                    <div class="headerButtonNotificationsCloseIcon" style={headerButtonNotificationsCloseIconStyle}>
+                                        <div class="closeButton"> + </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- notifications "popup" -->
+                                <div class="openNotifications customCardWhite slds-m-horizontal_medium displayTransition"
+                                    style={openNotificationsStyle}>
+                                    <div style={displayBodyStyle}>
+                                        <div
+                                            class="slds-m-around_large notificationCenterTitle text-bold text-medium text-black">
+                                            {labels.NotificationCenter} </div>
+                                        <!--lightning-tabset class="tabContent" tabNotificationCenter-->
+                                        <lightning-tabset class="tabNotificationCenter">
+                                            <div if:true={userAdmin}>
+                                                <!-- ALL NOTIFICATION TAB-->
+                                                <lightning-tab label={allNotificationTab}>
+                                                    <div if:true={totalNotification}>
+                                                        <hr class="hrConfig">
+                                                        <div
+                                                            class="slds-hyphenate text-xsmall slds-m-left_large slds-p-top_medium">
+                                                            {labels.CSP_You_Dont_Have_Notifications}
+                                                        </div>
+                                                    </div>
+                                                    <div if:false={totalNotification}>
+                                                        <template for:each={notificationsList} for:item='not'>
+                                                            <hr key={not.id} class="hrConfig">
+                                                            <div key={not.id} class={not.styles}>
+                                                                <div key={not.id} class="text-bold notificationBox"
+                                                                    style={displayNotificationStyle} data-item={not.id}>
+                                                                    <div class="slds-p-top_small" data-item={not.id}>
+                                                                        <span
+                                                                            class="notificationCenterTextsize text-xxsmall slds-m-left_large notificationTitle"
+                                                                            data-item={not.id}>{not.typeNotification}</span>
+                                                                        <span
+                                                                            class="notificationCenterTextsize text-xxsmall slds-m-left_large"
+                                                                            data-item={not.id}>
+                                                                            <lightning-formatted-date-time
+                                                                                value={not.createdDate} year="2-digit"
+                                                                                month="short" day="2-digit" hour="numeric"
+                                                                                minute="numeric">
+                                                                            </lightning-formatted-date-time>
+                                                                        </span>
+                                                                        <template if:true={not.isNotification}>
+                                                                            <template if:false={not.viewed}>
+                                                                                <span class="circle cursorPointer tooltipMark"
+                                                                                    data-item={not.id} data-changebody="1"
+                                                                                    onclick={onClickAllNotificationsView}>
+                                                                                    <span class="tooltiptext" data-item={not.id}
+                                                                                        data-changebody="1"
+                                                                                        onclick={onClickAllNotificationsView}>{labels.MarkAsRead}</span>
+                                                                                </span>
+                                                                            </template>
+                                                                        </template>
+                                                                    </div>
+        
+                                                                    <div class="notificationBody text-xsmall slds-m-left_large slds-p-top_small"
+                                                                        data-item={not.id}>
+                                                                        <template if:true={not.isNotification}>
+                                                                            <span class="cursorPointer" data-item={not.id}
+                                                                                data-changebody="1" onclick={openmodal}>
+                                                                                {not.subject}
+                                                                            </span>
+                                                                        </template>
+                                                                        <template if:false={not.isNotification}>
+                                                                            <span class="cursorPointer" data-item={not.id}
+                                                                                data-changebody="1"
+                                                                                onclick={onClickAllNotificationsView}>
+                                                                                {not.subject}
+                                                                            </span>
+                                                                        </template>
+                                                                    </div>
+        
+                                                                </div>
+                                                            </div>
+        
+                                                        </template>
+                                                        <hr class="hrConfig">
+                                                    </div>
+                                                </lightning-tab>
+                                            </div>
+        
+                                            <!-- ANNOUNCEMENT TAB-->
+                                            <lightning-tab label={announcementTab}>
+                                                <div if:true={announcementNumber}>
+                                                    <hr class="hrConfig">
+                                                    <div class="slds-hyphenate text-xsmall slds-m-left_large slds-p-top_medium">
+                                                        {labels.CSP_You_Dont_Have_Announcements}
+                                                    </div>
+                                                </div>
+                                                <div if:false={announcementNumber}>
+                                                    <template for:each={notificationsList} for:item='not'>
+                                                        <template if:true={not.isNotification}>
+                                                            <hr key={not.id} class="hrConfig">
+                                                            <div key={not.id} class={not.styles}>
+                                                                <div key={not.id} class="text-bold notificationBox"
+                                                                    style={displayNotificationStyle} data-item={not.id}>
+                                                                    <div class="slds-p-top_small" data-item={not.id}>
+                                                                        <span
+                                                                            class="notificationCenterTextsize text-xxsmall slds-m-left_large notificationTitle"
+                                                                            data-item={not.id}>{not.typeNotification}</span>
+                                                                        <span
+                                                                            class="notificationCenterTextsize text-xxsmall slds-m-left_large"
+                                                                            data-item={not.id}>
+                                                                            <lightning-formatted-date-time
+                                                                                value={not.createdDate} year="2-digit"
+                                                                                month="short" day="2-digit" hour="numeric"
+                                                                                minute="numeric">
+                                                                            </lightning-formatted-date-time>
+                                                                        </span>
+                                                                        <template if:false={not.viewed}>
+                                                                            <span
+                                                                                class="circle cursorPointer slds-m-right_small tooltipMark"
+                                                                                data-item={not.id} data-changebody="1"
+                                                                                onclick={onClickAllNotificationsView}>
+                                                                                <span class="tooltiptext" data-item={not.id}
+                                                                                    data-changebody="1"
+                                                                                    onclick={onClickAllNotificationsView}>{labels.MarkAsRead}</span>
+                                                                            </span>
+                                                                        </template>
+                                                                    </div>
+                                                                    <div class="notificationBody text-xsmall slds-m-left_large slds-p-top_small"
+                                                                        data-item={not.id}>
+                                                                        <span class="cursorPointer" data-item={not.id}
+                                                                            data-changebody="1" onclick={openmodal}>
+                                                                            {not.subject}
+                                                                        </span>
+        
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </template>
+                                                    </template>
+                                                    <hr class="hrConfig">
+                                                </div>
+                                            </lightning-tab>
+        
+        
+                                            <!-- TASK TAB-->
+                                            <div if:true={userAdmin}>
+                                                <lightning-tab label={taskTab}>
+                                                    <div if:true={taskNumber}>
+                                                        <hr class="hrConfig">
+                                                        <div
+                                                            class="slds-hyphenate text-xsmall slds-m-left_large slds-p-top_medium">
+                                                            {labels.CSP_You_Dont_Have_Tasks}
+                                                        </div>
+                                                    </div>
+                                                    <div if:false={taskNumber}>
+                                                        <template for:each={notificationsList} for:item='not'>
+                                                            <template if:false={not.isNotification}>
+                                                                <hr key={not.id} class="hrConfig">
+                                                                <div key={not.id} class={not.styles}>
+                                                                    <div key={not.id} class="text-bold notificationBox"
+                                                                        style={displayNotificationStyle} data-item={not.id}>
+                                                                        <div class="slds-p-top_small" data-item={not.id}>
+                                                                            <span
+                                                                                class="notificationCenterTextsize text-xxsmall slds-m-left_large notificationTitle"
+                                                                                data-item={not.id}>{not.typeNotification}</span>
+                                                                            <span
+                                                                                class="notificationCenterTextsize text-xxsmall slds-m-left_large"
+                                                                                data-item={not.id}>
+                                                                                <lightning-formatted-date-time
+                                                                                    value={not.createdDate} year="2-digit"
+                                                                                    month="short" day="2-digit" hour="numeric"
+                                                                                    minute="numeric">
+                                                                                </lightning-formatted-date-time>
+                                                                            </span>
+                                                                        </div>
+                                                                        <div class="notificationBody text-xsmall slds-m-left_large slds-p-top_small"
+                                                                            data-item={not.id}>
+                                                                            <span class="cursorPointer" data-item={not.id}
+                                                                                data-changebody="1"
+                                                                                onclick={onClickAllNotificationsView}>
+                                                                                {not.subject}
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </template>
+                                                        </template>
+                                                        <hr class="hrConfig">
+                                                    </div>
+                                                </lightning-tab>
+                                            </div>
+                                        </lightning-tabset>
+                                    </div>
+                                </div>
 
-			<!-- MODAL -->
-			<template if:true={openmodel}>
-				<section role="dialog" aria-modal="true" style="z-index: 10005;" class="slds-modal slds-fade-in-open">
-					<div class="slds-modal__container">
-						<header class="slds-modal__header headerTitle">
-							<span>{labels.NotificationDetail}</span>
-							<span class="slds-float_right slds-m-horizontal_x-small close-mark" onclick={closeModal}>
-								<lightning-icon icon-name="utility:close" size="x-small" class="cursorPointer"
-									onclick={closeModal}></lightning-icon>
-							</span>
-						</header>
+                                <!-- search tab -->
+                                <div class="slds-col slds-size_1-of-3 slds-p-vertical_xx-small slds-m-right_medium cursorPointer headerButtonSearchContainer slds-text-align_center"
+                                style={headerButtonSearchContainerStyle} onclick={toggleSearch}>
+                                    <img style={headerButtonSearchStyle} src={searchWhiteIcon} />
+                                    <div class="headerButtonSearchCloseIcon" style={headerButtonSearchCloseIconStyle}>
+                                        <img src={searchBlueIcon} />
+                                    </div>
+                                </div>
 
-						<div class="slds-is-relative addOverflow">
-							<div class="slds-p-around_large slds-p-horizontal_small slds-p-horizontal_large background">
+                                <!-- search popup -->
+                                <div if:true={openSearch} class="openSearch customCardWhite slds-m-horizontal_medium slds-text-body_small"
+                                    style={openSearchStyle}>
+                                    <div style={displayBodyStyle}>
+                                        <!-- ALL Search TAB-->
+                                        <div>
+                                            <c-portal-search-top-menu></c-portal-search-top-menu>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </span>
+                </div>
 
-								<div class="slds-p-top_small modalType">
-									<span
-										class="notificationCenterTextsize text-xxsmall slds-m-left_large notificationTitle">{notification.typeNotification}</span>
-									<span class="notificationCenterTextsize text-xxsmall slds-m-left_large">
-										<lightning-formatted-date-time value={notification.createdDate} year="2-digit"
-											month="short" day="2-digit" hour="numeric" minute="numeric">
-										</lightning-formatted-date-time>
-									</span>
-								</div>
-								<div class="slds-hyphenate text-xsmall slds-m-left_large slds-p-top_small">
-									{notification.subject}
-								</div>
-								<div class="text-xsmall slds-m-left_large slds-p-top_small"
-									style="text-align: justify; text-justify: inter-word;">
-									<lightning-formatted-rich-text value={notification.message}>
-									</lightning-formatted-rich-text>
-								</div>
-							</div>
-						</div>
-					</div>
-				</section>
+                <!-- ################## side menu for mobile -->
 
+                <div class="slds-col whiteBackground sideBar topMenu slds-hide_medium widthTransition" style={sideMenuBarStyle}>
+                </div>
+                <div class="slds-col customBlueBackground sideMenuOpacity sideBar topMenu slds-hide_medium widthTransition" style={sideMenuBarStyle}>
+                    <span>
+                        <div class="slds-grid slds-grid_vertical sideBarContainer">
+                            <!-- close button -->
+                            <div onclick={toggleSideMenu} class="slds-col slds-size_1-of-1 slds-p-vertical_x-small sideMenuBackIcon">
+                                <lightning-icon class="sideMenuBackIcon" icon-name="utility:back" variant="inverse"></lightning-icon>
+                            </div>
+                            <!-- services link -->
+                            <div class="slds-col slds-size_1-of-1 slds-p-vertical_xx-small spacer-border">
+                                <div class={buttonSideMenuServiceStyle} onclick={navigateToServices}>
+                                    <img class="slds-m-right_small" src={servicesIcon} />
+                                    <span class="text-xsmall text-white slds-p-right_x-small tabText">{labels.ISSP_Services}</span>
+                                </div>
+                            </div>
+                            <!-- support link -->
+                            <div class="slds-col slds-size_1-of-1 slds-p-vertical_xx-small spacer-border">
+                                <div class={buttonSideMenuSupportStyle} onclick={navigateToSupport}>
+                                    <img class="slds-m-right_small" src={supportIcon} />
+                                    <span class="text-xsmall text-white slds-p-right_x-small tabText">{labels.CSP_Support}</span>
+                                </div>
+                            </div>
+                            <!-- search link -->
+                            <div class="slds-col slds-size_1-of-1 slds-p-vertical_xx-small spacer-border">
+                                <div class={buttonSideMenuSearchStyle} onclick={goToAdvancedSearchPage}>
+                                    <img class="slds-m-right_small" src={searchWhiteIcon} />
+                                    <span class="text-xsmall text-white slds-p-right_x-small tabText">{labels.CSP_Breadcrumb_AdvancedSearch_Title}</span>
+                                </div>
+                            </div>
+                            <!-- profile link -->
+                            <div class="slds-col slds-size_1-of-1 slds-p-vertical_xx-small">
+                                <div class="slds-grid slds-grid_vertical">
+                                    <div class="slds-col slds-grid slds-grid_horizontal slds-grid_align-spread" onclick={toggleSideMenuProfile}>
+                                        <div class="slds-col slds-size_3-of-4">
+                                            <img class="slds-m-right_small" src={profileIcon} />
+                                            <span class="text-xsmall text-white slds-p-right_x-small tabText">{labels.ICCS_Profile}</span>
+                                        </div>
+                                        <div class="slds-col slds-size_1-of-4 align-right">
+                                            <img if:true={openSideBarMenuProfile} class="headerButtonProfileArrow rotate-180" src={arrowIcon} />
+                                            <img if:false={openSideBarMenuProfile} class="headerButtonProfileArrow" src={arrowIcon} />
+                                        </div>
+                                    </div>
+                                    <div style={sideMenuBarProfileStyle} class="slds-col slds-grid slds-grid_vertical sideBarProfileContainer heightTransition">
+                                        <!-- my profile -->
+                                        <div class="slds-col slds-size_1-of-1 slds-p-vertical_xx-small">
+                                            <div class={buttonSideMenuProfileStyle} onclick={navigateToMyProfile}>
+                                                <span class="text-xsmall text-white slds-p-right_x-small tabText">{labels.ISSP_MyProfile}</span>
+                                            </div>
+                                        </div>
+                                        <!-- company -->
+                                        <div if:true={displayCompanyTab} class="slds-col slds-size_1-of-1 slds-p-vertical_xx-small">
+                                            <div class={buttonSideMenuCompanyStyle} onclick={navigateToCompanyProfile}>
+                                                <span class="text-xsmall text-white slds-p-right_x-small tabText">{labels.CSP_CompanyProfile}</span>
+                                            </div>
+                                        </div>
+                                        <!-- cases -->
+                                        <div class="slds-col slds-size_1-of-1 slds-p-vertical_xx-small">
+                                            <div class={buttonSideMenuCasesStyle} onclick={navigateToCases}>
+                                                <span class="text-xsmall text-white slds-p-right_x-small tabText">{labels.CSP_Cases}</span>
+                                            </div>
+                                        </div>
+                                        <!-- reset password -->
+                                        <div class="slds-col slds-size_1-of-1 slds-p-vertical_xx-small">
+                                            <div class={buttonSideMenuResetPwStyle} onclick={navigateToChangePassword}>
+                                                <span class="text-xsmall text-white slds-p-right_x-small tabText">{labels.ISSP_Reset_Password}</span>
+                                            </div>
+                                        </div>
+                                        <!-- logout -->
+                                        <div class="slds-col slds-size_1-of-1 slds-p-vertical_xx-small">
+                                            <div class={buttonSideMenuLogoutStyle} onclick={logOut}>
+                                                <span class="text-xsmall text-white slds-p-right_x-small tabText">{labels.CSP_LogOut}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- language link -->
+                            <div class="slds-col slds-size_1-of-1 slds-p-vertical_xx-small language-picker">
+                                <div class="slds-grid slds-grid_horizontal">
+                                    <div if:true={chagingLang} class="changingLangSpinner slds-size_1-of-1">
+                                        <lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
+                                    </div>
+                                    <div class="slds-size_1-of-5"></div>
+                                    <div class="langSelect slds-size_3-of-5">
+                                        <template if:true={loadingLangs}>
+                                            <lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
+                                        </template>
+                                        <lightning-combobox
+                                            if:false={loadingLangs}
+                                            name="language"
+                                            dropdown-alignment="auto"
+                                            value={selectedLang}
+                                            options={langOptions}
+                                            onchange={handleChangeLang} ></lightning-combobox>
+                                    </div>
+                                    <div class="slds-size_1-of-5"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </span>
+                </div>
+    
+                <!-- ################## menu for table and pc -->
+    
+                <!-- home tab -->
+                <div class="headerBarLogo slds-p-horizontal_x-small slds-show_medium">
+                    <span onclick={navigateToHomePage}>
+                        <img src={logoIcon}>
+                    </span>
+                </div>
+    
+                <div class="slds-col customBlueBackground headerBar headerBarRight slds-show_medium">
+                    <span>
+                        <div class="slds-grid headerBarContainer">
+                            <!-- service tab -->
+                            <div class={buttonServiceStyle} onclick={navigateToServices}>
+                                <img class="slds-m-right_small" src={servicesIcon} />
+                                <span class="text-xsmall text-white slds-p-right_x-small tabText slds-show_large">{labels.ISSP_Services}</span>
+                            </div>
+    
+                            <!-- support tab -->
+                            <div class={buttonSupportStyle} onclick={navigateToSupport}>
+                                <img class="slds-m-right_small" src={supportIcon} />
+                                <span class="text-xsmall text-white slds-p-right_x-small tabText slds-show_large">{labels.CSP_Support}</span>
+                            </div>
+                            <!-- profile menu -->
+                            <div class="slds-col_bump-left headerBarButton headerButtonProfileContainer">
+                                <img class="slds-m-left_x-small headerButtonProfileIcon" src={profileIcon} />
+                                <img class="slds-m-left_x-small headerButtonProfileIconOver" src={profileIconBlue} />
+                                <span class="text-xsmall text-white slds-p-left_small slds-p-right_x-small tabText slds-show_large">{labels.ICCS_Profile}</span>
+                                <img class="slds-p-right_x-small headerButtonProfileArrow" src={arrowIcon} />
+                                <img class="slds-p-right_x-small headerButtonProfileArrowOver" src={arrowIconBlue} />
+                                <div class="openProfile customCardWhite">
+                                    <span class="slds-p-around_small text-xsmall text-black profileOption"
+                                        onclick={navigateToMyProfile}>{labels.ISSP_MyProfile}</span>
+                                    <span if:true={displayCompanyTab}
+                                        class="slds-p-around_small text-xsmall text-black profileOption"
+                                        onclick={navigateToCompanyProfile}>{labels.CSP_CompanyProfile}</span>
+                                    <span class="slds-p-around_small text-xsmall text-black profileOption"
+                                        onclick={navigateToCases}>{labels.CSP_Cases}</span>
+                                    <!--WMO-627 - ACAMBAS: Begin-->
+                                    <span if:true={displayInvoicesMenu} class="slds-p-around_small text-xsmall text-black profileOption" onclick={navigateToInvoices}>{labels.CSP_IATA_Invoices}</span>
+                                    <!--WMO-627 - ACAMBAS: End-->
+                                    <span class="slds-p-around_small text-xsmall text-black profileOption"
+                                    onclick={navigateToCspChangePassword}> {labels.ISSP_Reset_Password} </span>
+                                    <span class="slds-p-around_small text-xsmall text-black profileOption"
+                                        onclick={logOut}>{labels.CSP_LogOut}</span>
+                                </div>
+                            </div>
+    
+                            <!-- notifications tab -->
+                            <div class="slds-m-horizontal_small slds-p-vertical_xx-small headerButtonNotificationsContainer"
+                                style={headerButtonNotificationsContainerStyle} onclick={toggleNotifications}>
+                                <img style={headerButtonNotificationsStyle} src={notificationIcon} />
+                                <div class="slds-p-horizontal_xx-small notificationNumber text-darkGray"
+                                style={notificationNumberStyle}>{numberOfNotifications}</div>
+                                <div class="headerButtonNotificationsCloseIcon" style={headerButtonNotificationsCloseIconStyle}>
+                                    <div class="closeButton"> + </div>
+                                </div>
+                            </div>
+    
+                            <!-- notifications "popup" -->
+                            <div class="openNotifications customCardWhite slds-m-horizontal_medium"
+                                style={openNotificationsStyle}>
+                                <div style={displayBodyStyle}>
+                                    <div
+                                        class="slds-m-around_large notificationCenterTitle text-bold text-medium text-black">
+                                        {labels.NotificationCenter} </div>
+                                    <!--lightning-tabset class="tabContent" tabNotificationCenter-->
+                                    <lightning-tabset class="tabNotificationCenter">
+                                        <div if:true={userAdmin}>
+                                            <!-- ALL NOTIFICATION TAB-->
+                                            <lightning-tab label={allNotificationTab}>
+                                                <div if:true={totalNotification}>
+                                                    <hr class="hrConfig">
+                                                    <div
+                                                        class="slds-hyphenate text-xsmall slds-m-left_large slds-p-top_medium">
+                                                        {labels.CSP_You_Dont_Have_Notifications}
+                                                    </div>
+                                                </div>
+                                                <div if:false={totalNotification}>
+                                                    <template for:each={notificationsList} for:item='not'>
+                                                        <hr key={not.id} class="hrConfig">
+                                                        <div key={not.id} class={not.styles}>
+                                                            <div key={not.id} class="text-bold notificationBox"
+                                                                style={displayNotificationStyle} data-item={not.id}>
+                                                                <div class="slds-p-top_small" data-item={not.id}>
+                                                                    <span
+                                                                        class="notificationCenterTextsize text-xxsmall slds-m-left_large notificationTitle"
+                                                                        data-item={not.id}>{not.typeNotification}</span>
+                                                                    <span
+                                                                        class="notificationCenterTextsize text-xxsmall slds-m-left_large"
+                                                                        data-item={not.id}>
+                                                                        <lightning-formatted-date-time
+                                                                            value={not.createdDate} year="2-digit"
+                                                                            month="short" day="2-digit" hour="numeric"
+                                                                            minute="numeric">
+                                                                        </lightning-formatted-date-time>
+                                                                    </span>
+                                                                    <template if:true={not.isNotification}>
+                                                                        <template if:false={not.viewed}>
+                                                                            <span class="circle cursorPointer tooltipMark"
+                                                                                data-item={not.id} data-changebody="1"
+                                                                                onclick={onClickAllNotificationsView}>
+                                                                                <span class="tooltiptext" data-item={not.id}
+                                                                                    data-changebody="1"
+                                                                                    onclick={onClickAllNotificationsView}>{labels.MarkAsRead}</span>
+                                                                            </span>
+                                                                        </template>
+                                                                    </template>
+                                                                </div>
+    
+                                                                <div class="notificationBody text-xsmall slds-m-left_large slds-p-top_small"
+                                                                    data-item={not.id}>
+                                                                    <template if:true={not.isNotification}>
+                                                                        <span class="cursorPointer" data-item={not.id}
+                                                                            data-changebody="1" onclick={openmodal}>
+                                                                            {not.subject}
+                                                                        </span>
+                                                                    </template>
+                                                                    <template if:false={not.isNotification}>
+                                                                        <span class="cursorPointer" data-item={not.id}
+                                                                            data-changebody="1"
+                                                                            onclick={onClickAllNotificationsView}>
+                                                                            {not.subject}
+                                                                        </span>
+                                                                    </template>
+                                                                </div>
+    
+                                                            </div>
+                                                        </div>
+    
+                                                    </template>
+                                                    <hr class="hrConfig">
+                                                </div>
+                                            </lightning-tab>
+                                        </div>
+    
+                                        <!-- ANNOUNCEMENT TAB-->
+                                        <lightning-tab label={announcementTab}>
+                                            <div if:true={announcementNumber}>
+                                                <hr class="hrConfig">
+                                                <div class="slds-hyphenate text-xsmall slds-m-left_large slds-p-top_medium">
+                                                    {labels.CSP_You_Dont_Have_Announcements}
+                                                </div>
+                                            </div>
+                                            <div if:false={announcementNumber}>
+                                                <template for:each={notificationsList} for:item='not'>
+                                                    <template if:true={not.isNotification}>
+                                                        <hr key={not.id} class="hrConfig">
+                                                        <div key={not.id} class={not.styles}>
+                                                            <div key={not.id} class="text-bold notificationBox"
+                                                                style={displayNotificationStyle} data-item={not.id}>
+                                                                <div class="slds-p-top_small" data-item={not.id}>
+                                                                    <span
+                                                                        class="notificationCenterTextsize text-xxsmall slds-m-left_large notificationTitle"
+                                                                        data-item={not.id}>{not.typeNotification}</span>
+                                                                    <span
+                                                                        class="notificationCenterTextsize text-xxsmall slds-m-left_large"
+                                                                        data-item={not.id}>
+                                                                        <lightning-formatted-date-time
+                                                                            value={not.createdDate} year="2-digit"
+                                                                            month="short" day="2-digit" hour="numeric"
+                                                                            minute="numeric">
+                                                                        </lightning-formatted-date-time>
+                                                                    </span>
+                                                                    <template if:false={not.viewed}>
+                                                                        <span
+                                                                            class="circle cursorPointer slds-m-right_small tooltipMark"
+                                                                            data-item={not.id} data-changebody="1"
+                                                                            onclick={onClickAllNotificationsView}>
+                                                                            <span class="tooltiptext" data-item={not.id}
+                                                                                data-changebody="1"
+                                                                                onclick={onClickAllNotificationsView}>{labels.MarkAsRead}</span>
+                                                                        </span>
+                                                                    </template>
+                                                                </div>
+                                                                <div class="notificationBody text-xsmall slds-m-left_large slds-p-top_small"
+                                                                    data-item={not.id}>
+                                                                    <span class="cursorPointer" data-item={not.id}
+                                                                        data-changebody="1" onclick={openmodal}>
+                                                                        {not.subject}
+                                                                    </span>
+    
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </template>
+                                                </template>
+                                                <hr class="hrConfig">
+                                            </div>
+                                        </lightning-tab>
+    
+    
+                                        <!-- TASK TAB-->
+                                        <div if:true={userAdmin}>
+                                            <lightning-tab label={taskTab}>
+                                                <div if:true={taskNumber}>
+                                                    <hr class="hrConfig">
+                                                    <div
+                                                        class="slds-hyphenate text-xsmall slds-m-left_large slds-p-top_medium">
+                                                        {labels.CSP_You_Dont_Have_Tasks}
+                                                    </div>
+                                                </div>
+                                                <div if:false={taskNumber}>
+                                                    <template for:each={notificationsList} for:item='not'>
+                                                        <template if:false={not.isNotification}>
+                                                            <hr key={not.id} class="hrConfig">
+                                                            <div key={not.id} class={not.styles}>
+                                                                <div key={not.id} class="text-bold notificationBox"
+                                                                    style={displayNotificationStyle} data-item={not.id}>
+                                                                    <div class="slds-p-top_small" data-item={not.id}>
+                                                                        <span
+                                                                            class="notificationCenterTextsize text-xxsmall slds-m-left_large notificationTitle"
+                                                                            data-item={not.id}>{not.typeNotification}</span>
+                                                                        <span
+                                                                            class="notificationCenterTextsize text-xxsmall slds-m-left_large"
+                                                                            data-item={not.id}>
+                                                                            <lightning-formatted-date-time
+                                                                                value={not.createdDate} year="2-digit"
+                                                                                month="short" day="2-digit" hour="numeric"
+                                                                                minute="numeric">
+                                                                            </lightning-formatted-date-time>
+                                                                        </span>
+                                                                    </div>
+                                                                    <div class="notificationBody text-xsmall slds-m-left_large slds-p-top_small"
+                                                                        data-item={not.id}>
+                                                                        <span class="cursorPointer" data-item={not.id}
+                                                                            data-changebody="1"
+                                                                            onclick={onClickAllNotificationsView}>
+                                                                            {not.subject}
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </template>
+                                                    </template>
+                                                    <hr class="hrConfig">
+                                                </div>
+                                            </lightning-tab>
+                                        </div>
+                                    </lightning-tabset>
+                                </div>
+                            </div>
+    
+                            <!-- search tab -->
+                            <div class="headerMarginRight slds-m-horizontal_medium slds-p-left_x-small cursorPointer headerButtonSearchContainer"
+                            style={headerButtonSearchContainerStyle} onclick={toggleSearch}>
+                                <img style={headerButtonSearchStyle} src={searchWhiteIcon} />
+                                <div class="headerButtonSearchCloseIcon" style={headerButtonSearchCloseIconStyle}>
+                                    <img src={searchBlueIcon} />
+                                </div>
+                            </div>
 
-				<!-- END MODAL -->
-			</template>
-
-			<div class="customBlueBackground headerBar headerBarLeft headerBarLeftRightWidth slds-show_medium"></div>
-			<div class="headerBarLogo slds-p-horizontal_x-small slds-show_medium">
-				<span onclick={navigateToHomePage}>
-					<img src={logoIcon}>
-				</span>
-			</div>
-			<div class="slds-col customBlueBackground headerBar headerBarRight">
-				<span>
-					<div class="slds-grid headerBarConatiner">
-						<div class={buttonServiceStyle} onclick={navigateToServices}>
-							<img class="slds-m-right_small" src={servicesIcon} />
-							<span
-								class="text-xsmall text-white slds-p-right_x-small tabText slds-show_large">{labels.ISSP_Services}</span>
-						</div>
-						<div class={buttonSupportStyle} onclick={navigateToSupport}>
-							<img class="slds-m-right_small" src={supportIcon} />
-							<span
-								class="text-xsmall text-white slds-p-right_x-small tabText slds-show_large">{labels.CSP_Support}</span>
-						</div>
-						<div class="slds-col_bump-left headerBarButton headerButtonProfileContainer">
-							<img class="slds-m-left_x-small headerButtonProfileIcon" src={profileIcon} />
-							<img class="slds-m-left_x-small headerButtonProfileIconOver" src={profileIconBlue} />
-							<span
-								class="text-xsmall text-white slds-p-left_small slds-p-right_x-small tabText slds-show_large">{labels.ICCS_Profile}</span>
-							<img class="slds-p-right_x-small headerButtonProfileArrow" src={arrowIcon} />
-							<img class="slds-p-right_x-small headerButtonProfileArrowOver" src={arrowIconBlue} />
-							<div class="openProfile customCardWhite">
-								<span class="slds-p-around_small text-xsmall text-black profileOption"
-									onclick={navigateToMyProfile}>{labels.ISSP_MyProfile}</span>
-								<span if:true={displayCompanyTab}
-									class="slds-p-around_small text-xsmall text-black profileOption"
-									onclick={navigateToCompanyProfile}>{labels.CSP_CompanyProfile}</span>
-								<span class="slds-p-around_small text-xsmall text-black profileOption"
-									onclick={navigateToCases}>{labels.CSP_Cases}</span>
-								<span class="slds-p-around_small text-xsmall text-black profileOption"
-									onclick={navigateToCspChangePassword}> {labels.ISSP_Reset_Password} </span>
-								<span class="slds-p-around_small text-xsmall text-black profileOption"
-									onclick={logOut}>{labels.CSP_LogOut}</span>
-							</div>
-						</div>
-						<div class="slds-m-horizontal_medium slds-p-left_x-small slds-p-vertical_xx-small headerButtonNotificationsContainer"
-							style={headerButtonNotificationsContainerStyle} onclick={toggleNotifications}>
-							<div class="slds-p-horizontal_xx-small notificationNumber text-darkGray"
-								style={notificationNumberStyle}>{numberOfNotifications}</div>
-							<img style={headerButtonNotificationsStyle} src={notificationIcon} />
-							<div class="headerButtonNotificationsCloseIcon"
-								style={headerButtonNotificationsCloseIconStyle}>
-								<div class="closeButton"> + </div>
-							</div>
-						</div>
-
-						<div class="openNotifications customCardWhite slds-m-horizontal_medium"
-							style={openNotificationsStyle}>
-							<div style={displayBodyStyle}>
-								<div
-									class="slds-m-around_large notificationCenterTitle text-bold text-medium text-black">
-									{labels.NotificationCenter} </div>
-								<!--lightning-tabset class="tabContent" tabNotificationCenter-->
-								<lightning-tabset class="tabNotificationCenter">
-									<div if:true={userAdmin}>
-										<!-- ALL NOTIFICATION TAB-->
-										<lightning-tab label={allNotificationTab}>
-											<div if:true={totalNotification}>
-												<hr class="hrConfig">
-												<div
-													class="slds-hyphenate text-xsmall slds-m-left_large slds-p-top_medium">
-													{labels.CSP_You_Dont_Have_Notifications}
-												</div>
-											</div>
-											<div if:false={totalNotification}>
-												<template for:each={notificationsList} for:item='not'>
-													<hr key={not.id} class="hrConfig">
-													<div key={not.id} class={not.styles}>
-														<div key={not.id} class="text-bold notificationBox"
-															style={displayNotificationStyle} data-item={not.id}>
-															<div class="slds-p-top_small" data-item={not.id}>
-																<span
-																	class="notificationCenterTextsize text-xxsmall slds-m-left_large notificationTitle"
-																	data-item={not.id}>{not.typeNotification}</span>
-																<span
-																	class="notificationCenterTextsize text-xxsmall slds-m-left_large"
-																	data-item={not.id}>
-																	<lightning-formatted-date-time
-																		value={not.createdDate} year="2-digit"
-																		month="short" day="2-digit" hour="numeric"
-																		minute="numeric">
-																	</lightning-formatted-date-time>
-																</span>
-																<template if:true={not.isNotification}>
-																	<template if:false={not.viewed}>
-																		<span class="circle cursorPointer tooltipMark"
-																			data-item={not.id} data-changebody="1"
-																			onclick={onClickAllNotificationsView}>
-																			<span class="tooltiptext" data-item={not.id}
-																				data-changebody="1"
-																				onclick={onClickAllNotificationsView}>{labels.MarkAsRead}</span>
-																		</span>
-																	</template>
-																</template>
-															</div>
-
-															<div class="notificationBody text-xsmall slds-m-left_large slds-p-top_small"
-																data-item={not.id}>
-																<template if:true={not.isNotification}>
-																	<span class="cursorPointer" data-item={not.id}
-																		data-changebody="1" onclick={openmodal}>
-																		{not.subject}
-																	</span>
-																</template>
-																<template if:false={not.isNotification}>
-																	<span class="cursorPointer" data-item={not.id}
-																		data-changebody="1"
-																		onclick={onClickAllNotificationsView}>
-																		{not.subject}
-																	</span>
-																</template>
-															</div>
-
-														</div>
-													</div>
-
-												</template>
-												<hr class="hrConfig">
-											</div>
-										</lightning-tab>
-									</div>
-
-									<!-- ANNOUNCEMENT TAB-->
-									<lightning-tab label={announcementTab}>
-										<div if:true={announcementNumber}>
-											<hr class="hrConfig">
-											<div class="slds-hyphenate text-xsmall slds-m-left_large slds-p-top_medium">
-												{labels.CSP_You_Dont_Have_Announcements}
-											</div>
-										</div>
-										<div if:false={announcementNumber}>
-											<template for:each={notificationsList} for:item='not'>
-												<template if:true={not.isNotification}>
-													<hr key={not.id} class="hrConfig">
-													<div key={not.id} class={not.styles}>
-														<div key={not.id} class="text-bold notificationBox"
-															style={displayNotificationStyle} data-item={not.id}>
-															<div class="slds-p-top_small" data-item={not.id}>
-																<span
-																	class="notificationCenterTextsize text-xxsmall slds-m-left_large notificationTitle"
-																	data-item={not.id}>{not.typeNotification}</span>
-																<span
-																	class="notificationCenterTextsize text-xxsmall slds-m-left_large"
-																	data-item={not.id}>
-																	<lightning-formatted-date-time
-																		value={not.createdDate} year="2-digit"
-																		month="short" day="2-digit" hour="numeric"
-																		minute="numeric">
-																	</lightning-formatted-date-time>
-																</span>
-																<template if:false={not.viewed}>
-																	<span
-																		class="circle cursorPointer slds-m-right_small tooltipMark"
-																		data-item={not.id} data-changebody="1"
-																		onclick={onClickAllNotificationsView}>
-																		<span class="tooltiptext" data-item={not.id}
-																			data-changebody="1"
-																			onclick={onClickAllNotificationsView}>{labels.MarkAsRead}</span>
-																	</span>
-																</template>
-															</div>
-															<div class="notificationBody text-xsmall slds-m-left_large slds-p-top_small"
-																data-item={not.id}>
-																<span class="cursorPointer" data-item={not.id}
-																	data-changebody="1" onclick={openmodal}>
-																	{not.subject}
-																</span>
-
-															</div>
-														</div>
-													</div>
-												</template>
-											</template>
-											<hr class="hrConfig">
-										</div>
-									</lightning-tab>
-
-
-									<!-- TASK TAB-->
-									<div if:true={userAdmin}>
-										<lightning-tab label={taskTab}>
-											<div if:true={taskNumber}>
-												<hr class="hrConfig">
-												<div
-													class="slds-hyphenate text-xsmall slds-m-left_large slds-p-top_medium">
-													{labels.CSP_You_Dont_Have_Tasks}
-												</div>
-											</div>
-											<div if:false={taskNumber}>
-												<template for:each={notificationsList} for:item='not'>
-													<template if:false={not.isNotification}>
-														<hr key={not.id} class="hrConfig">
-														<div key={not.id} class={not.styles}>
-															<div key={not.id} class="text-bold notificationBox"
-																style={displayNotificationStyle} data-item={not.id}>
-																<div class="slds-p-top_small" data-item={not.id}>
-																	<span
-																		class="notificationCenterTextsize text-xxsmall slds-m-left_large notificationTitle"
-																		data-item={not.id}>{not.typeNotification}</span>
-																	<span
-																		class="notificationCenterTextsize text-xxsmall slds-m-left_large"
-																		data-item={not.id}>
-																		<lightning-formatted-date-time
-																			value={not.createdDate} year="2-digit"
-																			month="short" day="2-digit" hour="numeric"
-																			minute="numeric">
-																		</lightning-formatted-date-time>
-																	</span>
-																</div>
-																<div class="notificationBody text-xsmall slds-m-left_large slds-p-top_small"
-																	data-item={not.id}>
-																	<span class="cursorPointer" data-item={not.id}
-																		data-changebody="1"
-																		onclick={onClickAllNotificationsView}>
-																		{not.subject}
-																	</span>
-																</div>
-															</div>
-														</div>
-													</template>
-												</template>
-												<hr class="hrConfig">
-											</div>
-										</lightning-tab>
-									</div>
-								</lightning-tabset>
-							</div>
-						</div>
-
-						<div class="headerMarginRight slds-m-horizontal_medium slds-p-left_x-small slds-m-vertical_xx-small cursorPointer"
-							onclick={goToAdvancedSearchPage}>
-							<img src={searchWhiteIcon} />
-						</div>
-					</div>
-				</span>
-			</div>
-		</div>
-	</div>
+                            <!-- search popup -->
+                            <div if:true={openSearch} class="openSearch customCardWhite slds-m-horizontal_medium"
+                                style={openSearchStyle}>
+                                <div style={displayBodyStyle}>
+                                    <!-- ALL Search TAB-->
+                                    <div>
+                                        <c-portal-search-top-menu></c-portal-search-top-menu>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </template>
 </template>

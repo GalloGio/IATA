@@ -464,6 +464,16 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Is_Favorite__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Indicates if the service is in the list of favorite services</description>
+        <externalId>false</externalId>
+        <label>Is Favorite</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Kavi_user__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
@@ -575,15 +585,17 @@ In the Portal Service object, the ServiceName__c field has the same functionalit
 &quot;Standards Setting Workspace&quot;, $Label.ISSP_KAVI,
 &quot;ICE – IATA Customer E-Statement&quot;,&quot;ICE - IATA Customer E-statement&quot;,
 &quot;MITA Agreements&quot;, $Label.ISSP_MITA_Agreements_Service_Name,
-&quot;IATA EasyPay (WEX)&quot;, $Label.ANG_ISSP_IATA_EasyPay,
+&quot;IATA EasyPay (2C2P)&quot;, $Label.ANG_ISSP_IATA_EasyPay,
 &quot;IATA EasyPay (EDENRED)&quot;, $Label.ANG_ISSP_IATA_EasyPay,
 &quot;IATA EasyPay (MSTS)&quot;, $Label.ANG_ISSP_IATA_EasyPay,
 &quot;IFACP Endorsement &amp; Changes&quot;, $Label.ISSP_IFACP_Endorsement_Changes,
 &quot;Currency Center&quot;, $Label.ISSP_CurrencyCenter,
 &quot;GSA Appointments&quot;, $Label.ISSP_AMS_MSO_GSA_GSA_Service_Name,
 &quot;MSO Management&quot;, $Label.ISSP_AMS_MSO_GSA_MSO_Service_Name,
-&quot;Risk Profile and RHC&quot;, $Label.ANG_ISSP_RHC_Information,
+&quot;Risk Profile and RHC&quot;, IF(Contact__r.Account.IATA_ISO_Country__r.ISO_Code__c = &quot;CN&quot;, $Label.ANG_ISSP_RHC_Information_China, $Label.ANG_ISSP_RHC_Information),
 &quot;ICCS&quot;, &quot;ICCS&quot;,
+&quot;IATAN Online Services&quot;, $Label.ISSP_IdCard_US,
+&quot;ID Card Online Platform&quot;, $Label.ISSP_IdCard_NonUS,
 Application_Name__c
 )</formula>
         <inlineHelpText>This formula field looks up the service Name and the points to a custom label</inlineHelpText>
@@ -768,7 +780,7 @@ ISPICKVAL( Right__c , &apos;Access Granted&apos;))</formula>
     <label>Portal Service Access</label>
     <listViews>
         <fullName>All</fullName>
-        <columns>OBJECT_ID</columns>
+        <columns>NAME</columns>
         <columns>Contact__c</columns>
         <columns>Portal_Application__c</columns>
         <columns>Right__c</columns>
@@ -783,32 +795,6 @@ ISPICKVAL( Right__c , &apos;Access Granted&apos;))</formula>
         <language>en_US</language>
         <sharedTo>
             <allPartnerUsers></allPartnerUsers>
-        </sharedTo>
-    </listViews>
-    <listViews>
-        <fullName>All1</fullName>
-        <columns>Contact__c</columns>
-        <columns>Portal_Application__c</columns>
-        <columns>Right__c</columns>
-        <columns>CREATED_DATE</columns>
-        <filterScope>Everything</filterScope>
-        <label>All</label>
-        <language>en_US</language>
-        <sharedTo>
-            <allInternalUsers></allInternalUsers>
-        </sharedTo>
-    </listViews>
-    <listViews>
-        <fullName>All_Internal</fullName>
-        <columns>Contact__c</columns>
-        <columns>Portal_Application__c</columns>
-        <columns>Right__c</columns>
-        <columns>CREATED_DATE</columns>
-        <filterScope>Everything</filterScope>
-        <label>All</label>
-        <language>en_US</language>
-        <sharedTo>
-            <allInternalUsers></allInternalUsers>
         </sharedTo>
     </listViews>
     <listViews>
@@ -1089,6 +1075,25 @@ ISPICKVAL( Right__c , &apos;Access Granted&apos;))</formula>
     </searchLayouts>
     <sharingModel>ControlledByParent</sharingModel>
     <validationRules>
+        <fullName>ACRM_MIR_Service_Contact_Restriction</fullName>
+        <active>true</active>
+        <description>Contacts must have certain conditions in order to have access to Service &quot;Management Information Report&quot;</description>
+        <errorConditionFormula>AND(
+  Application_Name__c = &apos;Management Information Report&apos;,
+  ISPICKVAL(Right__c,&apos;Access Granted&apos;),
+  Contact__r.Distribution_Risk_Expert__c=false,
+  Contact__r.Airline_Credit_Risk_Manager__c=false,
+  Contact__r.PaConf_Representative__c=false,
+  NOT(ISPICKVAL(Contact__r.CEO_CFO__c,&apos;CFO&apos;)
+)
+)</errorConditionFormula>
+        <errorMessage>You are not allow to assign &quot;Management Information Report&quot; if the contact is not one of the following:
+  * Distribution Risk Expert
+  * Distribution Risk Leader
+  * PAConf Representative
+  * or be a CFO</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>Biller_Direct_Granted_Invoice_Type</fullName>
         <active>true</active>
         <errorConditionFormula>AND(ISBLANK(Invoice_Type__c), RecordType.Name = &quot;Biller Direct&quot;,   ISPICKVAL(Right__c , &quot;Access Granted&quot;) )</errorConditionFormula>
@@ -1182,11 +1187,29 @@ NOT(BEGINS($Profile.Name, &apos;identity&apos;))
         <errorMessage>Access to the TIP Portal Service can only be granted to contacts of a Payment Provider account.</errorMessage>
     </validationRules>
     <validationRules>
+        <fullName>Restrict_IAC_request</fullName>
+        <active>true</active>
+        <description>Internal users must not be able to assign an IATA Accreditation &amp; Changes portal service with Access Status = Access Requested to a contact under accounts registered as Freight Forwarders in a CNS country.</description>
+        <errorConditionFormula>AND(
+    OR(
+    Text(Right__c) = &apos;Access Requested&apos;,
+    Text(Right__c) = &apos;Access Granted&apos;),
+    CONTAINS(Application_Name__c, &apos;IATA Accreditation &amp; Changes&apos;),
+    OR(Contact__r.Account.CNS_Account__c ,Contact__r.Account.CNS_Agency__c),
+    OR(Contact__r.Account.RecordType.DeveloperName =&apos;IATA_Agency&apos;,Contact__r.Account.RecordType.DeveloperName =&apos;Standard_Account&apos;),
+    ISPICKVAL(Contact__r.Account.Sector__c,&apos;Cargo Agent&apos;),
+    NOT(BEGINS($Profile.Name, &apos;System Administrator&apos;))
+    )</errorConditionFormula>
+        <errorMessage>Access to an IATA IATA Accreditation &amp; Changes portal service cannot be requested internally to a contact under accounts registered as Freight Forwarders in a CNS country.</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>Restrict_IEP_request</fullName>
         <active>true</active>
         <description>Internal users must not be able to assign an IATA EasyPay portal service with Access Status = Access Requested to a contact.</description>
         <errorConditionFormula>and(
+OR(
 Text(Right__c) = &apos;Access Requested&apos;,
+Text(Right__c) = &apos;Access Granted&apos;),
 CONTAINS(Application_Name__c, &apos;IATA EasyPay&apos;),
 NOT(BEGINS($Profile.Name, &apos;System Administrator&apos;)),
 $Profile.Name != &apos;ISS Portal Agency Delegated Admin User&apos;,

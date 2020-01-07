@@ -1,0 +1,67 @@
+.THIS .inblock{
+	display: block!important;
+}
+
+.THIS .puCheckExisting{
+    display: inline-block;
+    margin-left: 10px;
+}
+.THIS .functionsSelect{
+    display: inline-block !important;
+    border-radius: 0px;
+    float:none;
+    height:100px !important;
+}
+
+.THIS .content{
+    display: block;
+    width:80%;
+    margin: 0 auto;
+    background-color:white;
+}
+
+.THIS.sfContainer{
+     padding-bottom:30px;
+     padding-top:30px;
+     background-color:white;
+}
+
+.THIS .button_width {
+    width:112px;
+}
+
+.THIS .right {
+    margin:10px;
+}
+
+.THIS .left {
+    margin:10px;
+}
+
+.THIS .center {
+    margin: 0 auto;
+}
+
+.THIS .text_center {
+    text-align:center;
+}
+
+.THIS .emailError {
+    color:#F04632;
+    display:inline-block;
+    font-size:12px;
+}
+
+.THIS .slds-has-error .slds-form-element__help {
+    color:#F04632;
+    font-size:12px;
+}
+
+.THIS .disabled {
+    opacity: 0.4;
+    pointer-events:none;
+}
+
+.THIS .phoneInternal {
+    width:100%;
+}

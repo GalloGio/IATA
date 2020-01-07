@@ -4,7 +4,7 @@
 
         <span slot="serviceName">{service.recordService.ServiceName__c}</span>
         <span slot="serviceDescription">
-            <lightning-formatted-rich-text value={service.recordService.Service_Description__c} class="breakWord"></lightning-formatted-rich-text>
+            <lightning-formatted-rich-text value={service.serviceDescriptionLabel} class="breakWord"></lightning-formatted-rich-text>
         </span>
     
         <span slot="leftButton">
@@ -16,7 +16,7 @@
             </lightning-button>
         </span>
         <span slot="rightButton">
-            <span class="text-xsamll text-bold text-lightGray">{label.CSP_Services_AccessRequested}</span>
+            <span class="text-xsamll text-bold text-lightGray">{rightSlotLabel}</span>
         </span>
     </c-portal-services-card-container>
     

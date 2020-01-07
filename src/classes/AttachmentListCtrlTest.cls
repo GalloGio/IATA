@@ -48,12 +48,12 @@ private  class AttachmentListCtrlTest {
 
         AttachmentListCtrl.PropertiesWrapper pw= AttachmentListCtrl.getPanelProperties(cse.id, false, '');
 
-        List<WrapperAttach>wrlist= AttachmentListCtrl.getAllAttachmentsByParentIdAndPortal(cse.id, false,false);
+        List<WrapperAttach>wrlist= AttachmentListCtrl.getAllAttachmentsByParentIdAndPortal(cse.id, false,false,false);
         
         wrapperAttach wa= wrlist.get(0);
         AttachmentListCtrl.ReturnWrapper rw=AttachmentListCtrl.changeAttachVisibility(cse.id, wa.id, false, false);
         system.assertEquals(rw.severity,'SUCCESS');
-        wrlist= AttachmentListCtrl.getAllAttachmentsByParentIdAndPortal(cse.id, false,false);
+        wrlist= AttachmentListCtrl.getAllAttachmentsByParentIdAndPortal(cse.id, false,false,false);
         system.assertEquals(wrlist.get(0).permission.ShowToPortalUsers__c,true);
 
     }
@@ -69,7 +69,7 @@ private  class AttachmentListCtrlTest {
 
         AttachmentListCtrl.PropertiesWrapper pw= AttachmentListCtrl.getPanelProperties(cse.id, false, '');
 
-        List<WrapperAttach>wrlist= AttachmentListCtrl.getAllAttachmentsByParentIdAndPortal(cse.id, false,false);
+        List<WrapperAttach>wrlist= AttachmentListCtrl.getAllAttachmentsByParentIdAndPortal(cse.id, false,false,false);
         
         wrapperAttach wa= wrlist.get(0);
         
@@ -103,7 +103,7 @@ private  class AttachmentListCtrlTest {
         AttachmentListCtrl.ReturnWrapper rw=AttachmentListCtrl.makeAllAttachPublic(cse.id, false, false);
 
         integer c=0;
-        for(wrapperAttach wa: AttachmentListCtrl.getAllAttachmentsByParentIdAndPortal(cse.id, false,false)){
+        for(wrapperAttach wa: AttachmentListCtrl.getAllAttachmentsByParentIdAndPortal(cse.id, false,false,false)){
             if(wa.permission.ShowToPortalUsers__c)c++;
         }
         system.assertEquals(c,2);
@@ -223,7 +223,7 @@ private  class AttachmentListCtrlTest {
         Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
         Case cse = new Case();
         cse.recordtypeId=recordTypeId;
-        insert cse;
+        insert cse; 
 
         //Check if case is SAAM or Sidra, should return false
         system.assertEquals(AttachmentListCtrl.checkIfSidraSaam(cse.id),false);
@@ -270,4 +270,27 @@ private  class AttachmentListCtrlTest {
            system.AssertEquals(res.severity=='SUCCESS',true);
         Test.stopTest();
      }
+
+     //ACAMBAS - WMO-611: Begin
+     static testMethod void testUpdateParentRecord() {
+        //Account
+        Id accountAgencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+        Account newAcc = new Account(Name='Account Test Headquarter', Site = 'Site Test', Sector__c = 'Airline', 
+                                    IATACode__c = '123', Field_Head_Office__c = 'Headquarter', SIS_ID__c = '12345', Accounting_Code__c = 'xx', 
+                                    RecordTypeId = accountAgencyRT);
+        insert newAcc;
+
+        //Invoice
+        Customer_Invoice__c newInv = new Customer_Invoice__c(Invoice_ID__c = 'id-123', Billed_Member_Id__c = '12345', 
+                                                             Billing_Member_IS_Sub_Status__c = 'IATA OFFICE', Invoice_Status__c = 'Unpaid Invoice');
+        insert newInv;
+
+
+        AttachmentListCtrl.updateParentRecord(newInv.id);
+
+        newInv = [SELECT Has_Attachments__c FROM Customer_Invoice__c LIMIT 1];
+
+        system.AssertEquals(newInv.Has_Attachments__c, true);
+     }
+     //ACAMBAS - WMO-611: End
 }

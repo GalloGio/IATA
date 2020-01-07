@@ -22,24 +22,59 @@ public class PortalFAQsCtrlTest {
 
             User usr = ISSP_ObjectFactory.createPortalUser(con);
 
+            List<PermissionSet> permSet = [SELECT Id FROM PermissionSet WHERE Name = 'All_DataCategories_Visible' LIMIT 1];
+            String permissionId = permSet[0].Id;
+
+            PermissionSetAssignment ps = new PermissionSetAssignment();
+            ps.AssigneeId = usr.Id;
+		    ps.PermissionSetId = permissionId;
+		    insert ps;
+
             FAQ__kav kavObj = new FAQ__kav();
-            kavObj.Title = 'Article Portal Documents Test';
-            kavObj.UrlName = 'Article-Portal-Documents-Test';
+            kavObj.Title = 'Sample Article Portal Test';
+            kavObj.UrlName = 'Sample-Article-Portal-Test';
             kavObj.Summary = 'Summary';
             insert kavObj;
-            
+			
+			System.runAs(usr) { 
+				PortalKnowledge__c faqCategory = new PortalKnowledge__c();
+				faqCategory.Name = 'Travel';
+				faqCategory.FAQsStructure__c = true;
+				faqCategory.DataCategoryName__c = 'Travel';
+				faqCategory.DataCategoryLabel_en_US__c = 'Travel';
+				faqCategory.Order__c = 1;
+
+				PortalKnowledge__c faqTopic = new PortalKnowledge__c();
+				faqTopic.Name = 'IATA EasyPay';
+				faqTopic.FAQsStructure__c = true;
+				faqTopic.DataCategoryName__c = 'Travel';
+				faqTopic.DataTopicName__c = 'IATA_EasyPay';
+				faqTopic.DataCategoryLabel_en_US__c = 'TravelCategory';
+				faqTopic.Order__c = 1;
+
+				PortalKnowledge__c faqSubtopic = new PortalKnowledge__c();
+				faqSubtopic.Name = 'Changes to my Agency';
+				faqSubtopic.FAQsStructure__c = true;
+				faqSubtopic.DataCategoryName__c = 'Travel';
+				faqSubtopic.DataTopicName__c = 'IATA_EasyPay';
+				faqSubtopic.DataSubtopicName__c = 'PAX_Changes_to_my_Agency';
+				faqSubtopic.DataCategoryLabel_en_US__c = 'Changes to my Agency';
+				faqSubtopic.Order__c = 1;
+				insert new List<PortalKnowledge__c>{ faqCategory, faqTopic, faqSubtopic };
+            }
             //retrieve master article Id created on FAQ__kav record insertion
             //in order to get the KnowledgeArticleId
-            kavObj = [SELECT Title, PublishStatus, KnowledgeArticleId FROM FAQ__kav WHERE Id = :kavObj.Id];
+            kavObj = [SELECT KnowledgeArticleId FROM FAQ__kav WHERE Id = :kavObj.Id];
             //publish it
             KbManagement.PublishingService.publishArticle(kavObj.KnowledgeArticleId, true);
 
             DescribeDataCategoryGroupResult[] results = Schema.describeDataCategoryGroups(
                 new String[] { 'KnowledgeArticleVersion'}
             );
+
             FAQ__DataCategorySelection tempCat = new FAQ__DataCategorySelection ();
             tempCat.DataCategoryGroupName = results[0].getName();
-            tempCat.DataCategoryName = 'ID_Card';
+            tempCat.DataCategoryName = 'Travel';
             tempCat.ParentId = kavObj.Id;
 
             insert tempCat;
@@ -48,31 +83,42 @@ public class PortalFAQsCtrlTest {
 
     @isTest static void testGetFAQs() {
         User testUser = [SELECT Id FROM User WHERE Email LIKE '%testemail1@csp.testclass' LIMIT 1];
-        FAQ__kav kavObj = [SELECT Id, Title, ArticleNumber, PublishStatus FROM FAQ__kav WHERE Title = 'Article Portal Documents Test' LIMIT 1];
-        
+        FAQ__kav kavObj = [SELECT Id, Title, ArticleNumber, PublishStatus FROM FAQ__kav WHERE Title = 'Sample Article Portal Test' LIMIT 1];
+
         Test.startTest();
         System.runAs(testUser) {
-            List<DescribeDataCategoryGroupStructures.DataCategoryWrapper> faqsInfo = PortalFAQsCtrl.getCategoryTiles();
-            System.assertNotEquals(0, faqsInfo.size());
-
             PortalSearchFilterWrapper filtersWrapper = new PortalSearchFilterWrapper();
             filtersWrapper.searchText = 'Test Publish Online';
             filtersWrapper.faqsComponent = null;
-            PortalFAQsCtrl.PagedResult resultsWithoutSubtopic = PortalFAQsCtrl.getFilteredFAQsResultsPage(JSON.serialize(filtersWrapper), '0');
+            filtersWrapper.language = 'en_US';
+            CSP_Utils.PagedResult resultsWithoutSubtopic = PortalFAQsCtrl.getFilteredFAQsResultsPage(JSON.serialize(filtersWrapper), '0');
+
+            filtersWrapper.language = '';
+            resultsWithoutSubtopic = PortalFAQsCtrl.getFilteredFAQsResultsPage(JSON.serialize(filtersWrapper), '0');
 
             PortalSearchFilterWrapper.faqsComponent faqsComponent = new PortalSearchFilterWrapper.faqsComponent();
-            faqsComponent.faqSubtopicsList = new List<String>{'ID_Card'};
+            faqsComponent.faqSubtopicsList = new List<String>{'Travel'};
             filtersWrapper.faqsComponent = faqsComponent;
-            PortalFAQsCtrl.PagedResult resultsWithSubtopic = PortalFAQsCtrl.getFilteredFAQsResultsPage(JSON.serialize(filtersWrapper), '1');
+            filtersWrapper.language = 'en_US';
+            CSP_Utils.PagedResult resultsWithSubtopic = PortalFAQsCtrl.getFilteredFAQsResultsPage(JSON.serialize(filtersWrapper), '1');
+        }
+        Test.stopTest();
+    }
 
-            List<FAQ__kav> article = PortalFAQsCtrl.getArticles('ID_Card__c');
+    @isTest static void testGetArticles() {
+        User testUser = [SELECT Id FROM User WHERE Email LIKE '%testemail1@csp.testclass' LIMIT 1];
+
+        Test.startTest();
+        System.runAs(testUser) {
+            List<FAQ__kav> article = PortalFAQsCtrl.getArticles('Travel__c');
+            List<FAQ__kav> articleByLanguage = PortalFAQsCtrl.getArticlesByLanguage('Travel__c', 'en_US');
         }
         Test.stopTest();
     }
 
     @isTest static void testArticleFeedback() {
         User testUser = [SELECT Id FROM User WHERE Email LIKE '%testemail1@csp.testclass' LIMIT 1];
-        FAQ__kav kavObj = [SELECT Id, Title, ArticleNumber, PublishStatus FROM FAQ__kav WHERE Title = 'Article Portal Documents Test' LIMIT 1];
+        FAQ__kav kavObj = [SELECT Id, Title, ArticleNumber, PublishStatus FROM FAQ__kav WHERE Title = 'Sample Article Portal Test' LIMIT 1];
 
         Test.startTest();
         System.runAs(testUser) {
@@ -85,5 +131,70 @@ public class PortalFAQsCtrlTest {
             System.assertNotEquals(0, articleFeedback.size());
         }
         Test.stopTest();
+    }
+
+    @isTest static void testUpdateArticleCategoriesAndApproval() {
+        FAQ__kav kavObj = [SELECT Id, Categories__c, PublishStatus, ValidationStatus FROM FAQ__kav WHERE Title = 'Sample Article Portal Test' LIMIT 1];
+        
+        Test.startTest();
+            ApexMessageHandling articleToUpdate;
+            articleToUpdate = PortalFAQsCtrl.updateArticleCategories(new List<Id>{ kavObj.Id });
+            System.assertEquals(false, articleToUpdate.isSuccess);
+
+            FAQ__kav articleToSubmit = new FAQ__kav();
+            articleToSubmit.Title = 'Sample Article Portal Test Draft';
+            articleToSubmit.UrlName = 'Sample-Article-Portal-Test-Draft';
+            articleToSubmit.Summary = 'Summary';
+            articleToSubmit.ValidationStatus = 'Not Validated';
+            insert articleToSubmit;
+            
+            DescribeDataCategoryGroupResult[] results = Schema.describeDataCategoryGroups(new String[] {'KnowledgeArticleVersion'});
+
+            FAQ__DataCategorySelection tempCat = new FAQ__DataCategorySelection();
+            tempCat.DataCategoryGroupName = results[0].getName();
+            tempCat.DataCategoryName = 'RHC';
+            tempCat.ParentId = articleToSubmit.Id;
+
+            FAQ__DataCategorySelection tempCat2 = new FAQ__DataCategorySelection();
+            tempCat2.DataCategoryGroupName = results[0].getName();
+            tempCat2.DataCategoryName = 'CargoIS';
+            tempCat2.ParentId = articleToSubmit.Id;
+            insert new List<FAQ__DataCategorySelection>{ tempCat, tempCat2 };
+
+            articleToUpdate = PortalFAQsCtrl.updateArticleCategories(new List<Id>{ articleToSubmit.Id });
+            System.assertEquals(true, articleToUpdate.isSuccess);
+
+            FAQ__kav kavObjUpdated = [SELECT Categories__c, PublishStatus, ValidationStatus FROM FAQ__kav WHERE Id = :articleToSubmit.Id LIMIT 1];
+            System.assertNotEquals(null, kavObjUpdated.Categories__c);
+
+            try {
+                PortalFAQsCtrl.submitArticleForApproval(null, articleToSubmit.Id, UserInfo.getUserId(), 'This is a comment.');
+            } catch(Exception e) {
+                System.assert(e.getMessage().contains('No applicable approval process was found'), e.getMessage());
+                PortalFAQsCtrl.submitArticleForApproval('KnowledgeFAQArticles', articleToSubmit.Id, UserInfo.getUserId(), 'This is a comment.');
+            }
+        Test.stopTest();
+    }
+
+    @isTest static void portalGlobalSearch() {
+        
+	    User testUser = [SELECT Id FROM User WHERE Email LIKE '%testemail1@csp.testclass' LIMIT 1];
+    
+	    Test.startTest();
+	    System.runAs(testUser) {
+	    	CSP_Utils.PagedResult test = new CSP_Utils.PagedResult();
+    
+	    	PortalSearchFilterWrapper.faqsComponent faqsComponent = new PortalSearchFilterWrapper.faqsComponent();
+	    	faqsComponent.faqSubtopicsList = new List<String> {'Travel'};
+	    	faqsComponent.show = true;
+    
+	    	PortalSearchFilterWrapper filtersWrapper = new PortalSearchFilterWrapper();
+	    	filtersWrapper.searchText = 'Travel';
+	    	filtersWrapper.faqsComponent = faqsComponent;
+	    	filtersWrapper.language = 'en_US';
+    
+	    	test = PortalGlobalSearchCtrl.portalGlobalSearch(JSON.serialize(filtersWrapper), 'FAQS');
+	    }
+	    Test.stopTest();
     }
 }

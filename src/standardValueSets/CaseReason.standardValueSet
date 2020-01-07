@@ -26,6 +26,12 @@
         <cssExposed>true</cssExposed>
     </standardValue>
     <standardValue>
+        <fullName>EDS</fullName>
+        <default>false</default>
+        <label>EDS</label>
+        <cssExposed>true</cssExposed>
+    </standardValue>
+    <standardValue>
         <fullName>Implementation of a new Agent</fullName>
         <default>false</default>
         <label>Implementation of a new Agent</label>
@@ -239,6 +245,12 @@
         <fullName>DIP Annual Review - Tier 3</fullName>
         <default>false</default>
         <label>DIP Annual Review - Tier 3</label>
+        <cssExposed>false</cssExposed>
+    </standardValue>
+    <standardValue>
+        <fullName>Multicountry Review</fullName>
+        <default>false</default>
+        <label>Multicountry Review</label>
         <cssExposed>false</cssExposed>
     </standardValue>
 </StandardValueSet>

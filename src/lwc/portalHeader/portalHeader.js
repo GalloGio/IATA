@@ -1,5 +1,10 @@
 import { LightningElement, track, wire, api } from 'lwc';
 
+// language
+import userId from '@salesforce/user/Id';
+import changeUserLanguage from '@salesforce/apex/CSP_Utils.changeUserLanguage';
+import getCommunityAvailableLanguages from '@salesforce/apex/CSP_Utils.getCommunityAvailableLanguages';
+
 //navigation
 import { NavigationMixin, CurrentPageReference } from 'lightning/navigation';
 import { navigateToPage, getPageName, getParamsFromPage } from 'c/navigationUtils';
@@ -8,11 +13,14 @@ import getBreadcrumbs from '@salesforce/apex/PortalBreadcrumbCtrl.getBreadcrumbs
 //notification apex method
 import getNotifications from '@salesforce/apex/PortalHeaderCtrl.getNotifications';
 import isAdmin from '@salesforce/apex/CSP_Utils.isAdmin';
+import showIATAInvoices from '@salesforce/apex/PortalHeaderCtrl.showIATAInvoices'; //WMO-696 - ACAMBAS
 import increaseNotificationView from '@salesforce/apex/PortalHeaderCtrl.increaseNotificationView';
 import goToManageService from '@salesforce/apex/PortalHeaderCtrl.goToManageService';
 import goToOldChangePassword from '@salesforce/apex/PortalHeaderCtrl.goToOldChangePassword';
 import redirectChangePassword from '@salesforce/apex/PortalHeaderCtrl.redirectChangePassword';
 import getContactInfo from '@salesforce/apex/PortalRegistrationSecondLevelCtrl.getContactInfo';
+import getLoggedUser from '@salesforce/apex/CSP_Utils.getLoggedUser';
+import isGuestUser from '@salesforce/apex/CSP_Utils.isGuestUser';
 import getPortalServiceId from '@salesforce/apex/PortalServicesCtrl.getPortalServiceId';
 import verifyCompleteL3Data from '@salesforce/apex/PortalServicesCtrl.verifyCompleteL3Data';
 
@@ -24,6 +32,8 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent'
 //custom labels
 import ISSP_Services from '@salesforce/label/c.ISSP_Services';
 import CSP_Support from '@salesforce/label/c.CSP_Support';
+import CSP_YouAndIATA from '@salesforce/label/c.CSP_YouAndIATA';
+import CSP_Breadcrumb_AdvancedSearch_Title from '@salesforce/label/c.CSP_Breadcrumb_AdvancedSearch_Title';
 import ICCS_Profile from '@salesforce/label/c.ICCS_Profile';
 import ISSP_MyProfile from '@salesforce/label/c.ISSP_MyProfile';
 import CSP_CompanyProfile from '@salesforce/label/c.CSP_CompanyProfile';
@@ -36,6 +46,7 @@ import NotificationCenter from '@salesforce/label/c.NotificationCenter_Title';
 import ViewDetails from '@salesforce/label/c.ViewDetails_Notification';
 import NotificationDetail from '@salesforce/label/c.NotificationDetail_Detail';
 import ISSP_Reset_Password from '@salesforce/label/c.ISSP_Reset_Password';
+import CSP_IATA_Invoices from '@salesforce/label/c.CSP_IATA_Invoices'; //WMO-627 - ACAMBAS
 
 import Announcement from '@salesforce/label/c.Announcements_Notification';
 import Tasks from '@salesforce/label/c.Tasks_Notification';
@@ -57,179 +68,289 @@ import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 
 
 export default class PortalHeader extends NavigationMixin(LightningElement) {
-	@track displayAcceptTerms = true;
-	@track displayRegistrationConfirmation = false;
-	@track displayFirstLogin = false;
-	@track firstLogin = false;
-	level2RegistrationTrigger = 'homepage';
-	level3LMSRegistrationTrigger = 'homepage';
-	isTriggeredByRequest = false;
 
+    @api showServices = false;
+    @api showCases = false;
+    @api showFAQs = false;
+    @api showDocuments = false;
+    @api showAdvancedSearch = false;
+    @api language;
+    @api searchBarPlaceholder;
+
+    @track filteringObject;
+    // language
+    @track selectedLang = 'en_US';
+    @track langOptions = [];
+    @track chagingLang = false;
+    @track loadingLangs = true;
+    @track userId = userId;
+    @track internalUser = false;
+
+    @wire(getRecord, { recordId: "$userId", fields: ['User.LanguageLocaleKey'] })
+    getUserLang(result) {
+        if (result.data) {
+            let data = JSON.parse(JSON.stringify(result.data));
+            if (data.fields) {
+                this.selectedLang = data.fields.LanguageLocaleKey.value;
+            }
+        }
+    }
+
+    handleChangeLang(event) {
+        this.chagingLang = true;
+        let lang = event.detail.value;
+        changeUserLanguage({lang}).then(() => {
+            window.location.reload(); // Review this
+        }).catch(error => {
+            console.error('Error changeUserLanguage', error);
+            this.chagingLang = false;
+        });
+    }
+
+    getLanguagesOptions() {
+        this.loadingLangs = true;
+        getCommunityAvailableLanguages().then(result => {
+            if (result) {
+                this.langOptions = result;
+            }
+            this.loadingLangs = false;
+        }).catch(error => {
+            console.error('Error getCommunityAvailableLanguages', error);
+            this.loadingLangs = false;
+        });
+    }
+
+    // terms
+    @track displayAcceptTerms = true;
+    @track displayRegistrationConfirmation = false;
+    @track displayFirstLogin = false;
+    @track firstLogin = false;
+
+    // l2 registration
+    level2RegistrationTrigger = 'homepage';
+	level3LMSRegistrationTrigger = 'homepage';
+    isTriggeredByRequest = false;
+    
 	@track registrationlevel = ''; //FOR LMS L3
 	@track thirdLoginLMS = false; //FOR LMS L3
 	@track serviceid = ''; //FOR LMS L3
 	@wire(CurrentPageReference) pageRef;
 
-	@wire(getRecord, { recordId: Id, fields: [User_ToU_accept, Portal_Registration_Required] })
-	WiregetUserRecord(result) {
-		if (result.data) {
-			let user = JSON.parse(JSON.stringify(result.data));
-			let acceptTerms = user.fields.ToU_accepted__c.value;
-			let registrationRequired = user.fields.Portal_Registration_Required__c.value;
-			let currentURL = window.location.href;
-			if (currentURL.includes(this.labels.PortalName)) {
-				this.displayAcceptTerms = acceptTerms;
-			}
+    @wire(getRecord, { recordId: Id, fields: [User_ToU_accept, Portal_Registration_Required] })
+    WiregetUserRecord(result) {
+        if (result.data) {
+            let user = JSON.parse(JSON.stringify(result.data));
+            let acceptTerms = user.fields.ToU_accepted__c.value;
+            let registrationRequired = user.fields.Portal_Registration_Required__c.value;
+            let currentURL = window.location.href;
+            if (currentURL.includes(this.labels.PortalName)) {
+                this.displayAcceptTerms = acceptTerms;
+            }
 
-			console.log('displayAcceptTerms: ', this.displayAcceptTerms);
-			console.log('firstLogin: ', this.firstLogin);
-			console.log('registrationRequired: ', registrationRequired);
+            console.log('displayAcceptTerms: ', this.displayAcceptTerms);
+            console.log('firstLogin: ', this.firstLogin);
+            console.log('registrationRequired: ', registrationRequired);
 
-			if(acceptTerms == true){
-				if(registrationRequired == true){
-					this.displayRegistrationConfirmation = true;
-				}else{
-					if(this.firstLogin == true){
-						this.displayFirstLogin = true;
-					}
-				}
-			}
-		}
-	}
+            if(acceptTerms == true){
+                if(registrationRequired == true){
+                    this.displayRegistrationConfirmation = true;
+                }else{
+                    if(this.firstLogin == true){
+                        this.displayFirstLogin = true;
+                    }
+                }
+            }
 
-	@track displayCompanyTab = false;
+        }
+    }
 
-/*
-	Replaced by getContactInfo() in connectedCallback()
+    // company tab on profile
+    @track displayCompanyTab = false;
 
-	@wire(getRecord, { recordId: Id, fields: [AccountSector] })
-	WiregetAccountSector(result) {
-		if (result.data) {
-			let user = JSON.parse(JSON.stringify(result.data));
-			let sector = user.fields.Contact.value.fields.Account.value.fields.Sector__c.value;
+    @wire(getRecord, { recordId: Id, fields: [AccountSector] })
+    WiregetAccountSector(result) {
+        if (result.data) {
+            let user = JSON.parse(JSON.stringify(result.data));
+            let accountSector = user.fields.Contact.value.fields.Account.value.fields.Sector__c.value;
 
-			if (sector === 'General Public') {
-				this.displayCompanyTab = false;
-			} else {
-				this.displayCompanyTab = true;
-			}
-		}
-	}*/
+            if (accountSector === 'General Public') {
+                this.displayCompanyTab = false;
+            } else {
+                this.displayCompanyTab = true;
+            }
+        }
+    }
 
+    // labels
+    _labels = {
+        ISSP_Services,
+        CSP_Support,
+        CSP_YouAndIATA,
+        CSP_Breadcrumb_AdvancedSearch_Title,
+        ICCS_Profile,
+        ISSP_MyProfile,
+        CSP_CompanyProfile,
+        CSP_Cases,
+        CSP_Settings,
+        CSP_LogOut,
+        PortalName,
+        MarkAsRead,
+        NotificationCenter,
+        ViewDetails,
+        NotificationDetail,
+        Announcement,
+        Tasks,
+        AllNotifications,
+        ISSP_Reset_Password,
+        CSP_You_Dont_Have_Notifications,
+        CSP_You_Dont_Have_Announcements,
+        CSP_You_Dont_Have_Tasks,
+        CSP_IATA_Invoices //WMO-627 - ACAMBAS
+    };
 
-	_labels = {
-		ISSP_Services,
-		CSP_Support,
-		ICCS_Profile,
-		ISSP_MyProfile,
-		CSP_CompanyProfile,
-		CSP_Cases,
-		CSP_Settings,
-		CSP_LogOut,
-		PortalName,
-		MarkAsRead,
-		NotificationCenter,
-		ViewDetails,
-		NotificationDetail,
-		Announcement,
-		Tasks,
-		AllNotifications,
-		ISSP_Reset_Password,
-		CSP_You_Dont_Have_Notifications,
-		CSP_You_Dont_Have_Announcements,
-		CSP_You_Dont_Have_Tasks
+    get labels() {
+        return this._labels;
+    }
+    set labels(value) {
+        this._labels = value;
+    }
 
-	};
+    //links for images
+    logoIcon = CSP_PortalPath + 'CSPortal/Images/Logo/group.svg';
+    logoWhiteIcon = CSP_PortalPath + 'CSPortal/Images/Logo/logo-group-white.svg';
+    servicesIcon = CSP_PortalPath + 'CSPortal/Images/Icons/service-white.svg';
+    supportIcon = CSP_PortalPath + 'CSPortal/Images/Icons/support-white.svg';
+    youAndIATA = CSP_PortalPath + 'CSPortal/Images/Icons/youiata-white.svg';
+    profileIcon = CSP_PortalPath + 'CSPortal/Images/Icons/profile-white.svg';
+    profileIconBlue = CSP_PortalPath + 'CSPortal/Images/Icons/profile-blue.svg';
+    arrowIcon = CSP_PortalPath + 'CSPortal/Images/Icons/arrow-down-white.svg';
+    arrowIconBlue = CSP_PortalPath + 'CSPortal/Images/Icons/arrow-down-blue.svg';
+    notificationIcon = CSP_PortalPath + 'CSPortal/Images/Icons/notification-white.svg';
+    searchWhiteIcon = CSP_PortalPath + 'CSPortal/Images/Icons/searchWhite.svg';
+    searchBlueIcon = CSP_PortalPath + 'CSPortal/Images/Icons/searchBlue.svg';
+    mobileMenuIcon = CSP_PortalPath + 'CSPortal/Images/Icons/menu.svg';
 
-	get labels() {
-		return this._labels;
-	}
-	set labels(value) {
-		this._labels = value;
-	}
+    //notifications
+    @track numberOfNotifications;
+    @track openNotifications = false;
+    @track openSearch = false;
+    @track openSideBarMenu = false;
+    @track openSideBarMenuProfile = false;
+    @track notification;
 
-	//links for images
-	logoIcon = CSP_PortalPath + 'CSPortal/Images/Logo/group.svg';
-	servicesIcon = CSP_PortalPath + 'CSPortal/Images/Icons/service-white.svg';
-	supportIcon = CSP_PortalPath + 'CSPortal/Images/Icons/support-white.svg';
-	profileIcon = CSP_PortalPath + 'CSPortal/Images/Icons/profile-white.svg';
-	profileIconBlue = CSP_PortalPath + 'CSPortal/Images/Icons/profile-blue.svg';
-	arrowIcon = CSP_PortalPath + 'CSPortal/Images/Icons/arrow-down-white.svg';
-	arrowIconBlue = CSP_PortalPath + 'CSPortal/Images/Icons/arrow-down-blue.svg';
-	notificationIcon = CSP_PortalPath + 'CSPortal/Images/Icons/notification-white.svg';
-	searchWhiteIcon = CSP_PortalPath + 'CSPortal/Images/Icons/searchWhite.svg';
+    //notification Center Tab
+    @track allNotificationTab;
+    @track announcementTab;
+    @track taskTab;
 
-	//notifications
-	@track numberOfNotifications;
-	@track openNotifications = false;
-	@track notification;
+    //notification counter
+    @track notificationCounter = 0;
+    @track taskCounter = 0;
 
-	//notification Center Tab
-	@track allNotificationTab;
-	@track announcementTab;
-	@track taskTab;
+    @track notificationsList;
+    @track currentURL;
+    @track baseURL;
+    @track showBackdrop = false;
 
-	//notification counter
-	@track notificationCounter = 0;
-	@track taskCounter = 0;
+    @track showHoverResults = false;
 
-	@track notificationsList;
-	@track currentURL;
-	@track baseURL;
-	@track showBackdrop = false;
+    //User Type
+    @track userAdmin;
 
-	//User Type
-	@track userAdmin;
+    //Flag that defines if the IATA Invoices entry is displayed in the menu
+    @track displayInvoicesMenu; //WMO-696 - ACAMBAS
 
-	//style variables for notifications
-	@track headerButtonNotificationsContainerStyle;
-	@track headerButtonNotificationsCloseIconStyle;
-	@track headerButtonNotificationsStyle;
-	@track notificationNumberStyle;
-	@track openNotificationsStyle;
-	@track displayBodyStyle;
-	@track displayNotificationStyle;
-	//
-	@track checkDisplayBodyStyle
+    //style variables for notifications
+    @track sideMenuBarStyle;
+    @track headerButtonNotificationsContainerStyle;
+    @track headerButtonNotificationsCloseIconStyle;
+    @track headerButtonNotificationsStyle;
+    @track notificationNumberStyle='display: none;';
+    @track openNotificationsStyle;
+    @track displayBodyStyle;
+    @track displayNotificationStyle;
+    //style variables for search
+    @track headerButtonSearchContainerStyle;
+    @track headerButtonSearchCloseIconStyle;
+    @track headerButtonSearchStyle;
+    @track openSearchStyle;
+    @track displayBodyStyle;
+    @track displaySearchStyle;
+    //
+    @track checkDisplayBodyStyle
 
-	// MODAL
-	@track openmodel = false;
+    // MODAL
+    @track openModal = false;
 
-	@track mainBackground = 'z-index: 9999;';
+    @track mainBackground = 'z-index: 9999;';
 
-	@track buttonServiceStyle = 'slds-m-left_xx-large slds-p-left_x-small headerBarButton buttonService';
-	@track buttonSupportStyle = 'slds-m-left_medium slds-p-left_x-small headerBarButton buttonSupport';
+    @track mobileMenuStyle = 'headerBarButton';
+    @track buttonServiceStyle = 'slds-m-left_xx-large slds-p-left_x-small headerBarButton buttonService';
+    @track buttonYouIATAStyle = 'slds-m-left_medium slds-p-left_x-small headerBarButton buttonYouIATA';
+    @track buttonSupportStyle = 'slds-m-left_medium slds-p-left_x-small headerBarButton buttonSupport';
+    @track buttonSideMenuServiceStyle = 'headerBarButton buttonService';
+    @track buttonSideMenuYouIATAStyle = 'headerBarButton buttonYouIATA';
+    @track buttonSideMenuSupportStyle = 'headerBarButton buttonSupport';
+    @track buttonSideMenuSearchStyle = 'headerBarButton buttonSearch';
+    @track buttonSideMenuProfileStyle = 'headerBarButton buttonProfile';
+    @track buttonSideMenuCompanyStyle = 'headerBarButton buttonCompany';
+    @track buttonSideMenuCasesStyle = 'headerBarButton buttonCases';
+    @track buttonSideMenuResetPwStyle = 'headerBarButton buttonResetPw';
+    @track buttonSideMenuLogoutStyle = 'headerBarButton buttonLogout';
 
-	@track trackedIsInOldPortal;
+    @track trackedIsInOldPortal;
 
-	@api
-	get isInOldPortal() {
-		return this.trackedIsInOldPortal;
-	}
-	set isInOldPortal(value) {
-		this.trackedIsInOldPortal = value;
-	}
+    @api
+    get isInOldPortal() {
+        return this.trackedIsInOldPortal;
+    }
+    set isInOldPortal(value) {
+        this.trackedIsInOldPortal = value;
+    }
 
-	@wire(CurrentPageReference)
-	getPageRef() {
-		this.handlePageRefChanged();
-	}
+    @wire(CurrentPageReference)
+    getPageRef() {
+        this.handlePageRefChanged();
+    }
 
-	connectedCallback() {
+    connectedCallback() {
 
-		isAdmin().then(result => {
-			this.userAdmin = result;
-		});
+        isGuestUser().then(results => {            
+            this.internalUser = !results;
+        });
+        
+        getLoggedUser()
+        .then(results => {
+            if(results.Contact !== undefined) {
+                let userPortalStatus = results.Contact.User_Portal_Status__c !== undefined ? results.Contact.User_Portal_Status__c : '';
+                let accountCategory = results.Contact.Account !== undefined && results.Contact.Account.Category__c !== undefined ? results.Contact.Account.Category__c : '';
+                let accountSector = results.Contact.Account !== undefined && results.Contact.Account.Sector__c !== undefined ? results.Contact.Account.Sector__c : '';
+                let isoCode = results.Contact.Account.IATA_ISO_Country__r !== undefined && results.Contact.Account.IATA_ISO_Country__r.ISO_Code__c !== undefined ? results.Contact.Account.IATA_ISO_Country__r.ISO_Code__c : '';
+                let jobFunction = results.Contact.Membership_Function__c !== undefined ? results.Contact.Membership_Function__c.replace(/;/g, ',') : '';
+                
+                this.setCookie('userguiding_acc_categ', accountCategory, 1);
+                this.setCookie('userguiding_acc_sector', accountSector, 1);
+                this.setCookie('userguiding_iso-code', isoCode, 1);
+                this.setCookie('userguiding_user-status', userPortalStatus, 1);
+                this.setCookie('userguiding_job-function', jobFunction, 1);
+            }
+        });
 
-		let pageParams = getParamsFromPage();
-		if(pageParams !== undefined && pageParams.firstLogin !== undefined){
-			if(pageParams.firstLogin == "true"){
-				this.firstLogin = true;
+        this.getLanguagesOptions();
+
+        isAdmin().then(result => {
+            this.userAdmin = result;
+        });
+
+        let pageParams = getParamsFromPage();
+        if(pageParams !== undefined && pageParams.firstLogin !== undefined){
+            if(pageParams.firstLogin == "true"){
+                this.firstLogin = true;
 				this.displayFirstLogin = true;
-			}
-		}
-
-		// FOR LMS L3
+            }
+        }
+        
+        // FOR LMS L3
 		if(pageParams !== undefined &&
 			(pageParams.lms !== undefined || pageParams.lmsflow !== undefined ) ){
 		
@@ -279,381 +400,529 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
 			}
 
 		}
-		this.redirectChangePassword();
 
-		getNotifications().then(result => {
-			this.baseURL = window.location.href;
-			let resultsAux = JSON.parse(JSON.stringify(result));
+        //WMO-696 - ACAMBAS: Begin
+        showIATAInvoices().then(result => {
+            this.displayInvoicesMenu = result;
+        });
+        //WMO-696 - ACAMBAS: End
 
-			resultsAux.sort(function (a, b) {
-				return new Date(b.createdDate) - new Date(a.createdDate);
-			});
+        this.redirectChangePassword();
 
-			this.notificationsList = resultsAux;
+        getNotifications().then(result => {
+            this.baseURL = window.location.href;
+            let resultsAux = JSON.parse(JSON.stringify(result));
 
-			let notificationCounter = 0;
-			let taskCounter = 0;
-			resultsAux.forEach(function (element) {
-				if (element.type === 'Notification') {
-					if (element.viewed === false) {
-						notificationCounter++;
-					}
-				} else {
-					taskCounter++;
-				}
-			});
+            resultsAux.sort(function (a, b) {
+                return new Date(b.createdDate) - new Date(a.createdDate);
+            });
 
-			this.notificationCounter = notificationCounter;
-			this.taskCounter = taskCounter;
+            this.notificationsList = resultsAux;
 
-			this.announcementTab = this.labels.Announcement + ' (' + notificationCounter + ')';
-			this.taskTab = this.labels.Tasks + ' (' + taskCounter + ')';
-			this.allNotificationTab = this.labels.AllNotifications + ' (' + (notificationCounter + taskCounter) + ')';
-			this.numberOfNotifications = (notificationCounter + taskCounter);
+            let notificationCounter = 0;
+            let taskCounter = 0;
+            resultsAux.forEach(function (element) {
+                if (element.type === 'Notification') {
+                    if (element.viewed === false) {
+                        notificationCounter++;
+                    }
+                } else {
+                    taskCounter++;
+                }
+            });
 
-			if (this.numberOfNotifications === "0" || this.numberOfNotifications === 0) {
-				this.notificationNumberStyle = 'display: none;';
+            this.notificationCounter = notificationCounter;
+            this.taskCounter = taskCounter;
+
+            this.announcementTab = this.labels.Announcement + ' (' + notificationCounter + ')';
+            this.taskTab = this.labels.Tasks + ' (' + taskCounter + ')';
+            this.allNotificationTab = this.labels.AllNotifications + ' (' + (notificationCounter + taskCounter) + ')';
+            this.numberOfNotifications = (notificationCounter + taskCounter);
+
+            if (this.numberOfNotifications === "0" || this.numberOfNotifications === 0) {
+                this.notificationNumberStyle = 'display: none;';
+            }else{
+				this.notificationNumberStyle = 'display: inline;';
+				this.headerButtonNotificationsStyle='display: inline; vertical-align:top;';
 			}
 
-		});
+        });
 
-		getContactInfo().then(result => {
-			this.displayCompanyTab = !result.Account.Is_General_Public_Account__c;
-		});
-	}
+        getContactInfo().then(result => {
+            this.displayCompanyTab = !result.Account.Is_General_Public_Account__c;
+        });
+    }
 
-	redirectChangePassword() {
-		redirectChangePassword().then(result => {
-			if (result) {
-				let location = window.location.href;
-				location = String(location);
-				let terms = JSON.parse(JSON.stringify(this.displayAcceptTerms));
-				if (!location.includes("ISSP_ChangePassword") && terms === true) {
-					this.navigateToChangePassword();
-				}
-			}
-		});
-	}
+    redirectChangePassword() {
+        redirectChangePassword().then(result => {
+            if (result) {
+                let location = window.location.href;
+                location = String(location);
+                let terms = JSON.parse(JSON.stringify(this.displayAcceptTerms));
+                if (!location.includes("ISSP_ChangePassword") && terms === true) {
+                    this.navigateToChangePassword();
+                }
+            }
+        });
+    }
 
 
-	//navigation methods
-	navigateToOtherPage(pageNameToNavigate) {
-		this[NavigationMixin.Navigate]({
-			type: "standard__namedPage",
-			attributes: {
-				pageName: pageNameToNavigate
-			},
-		});
-	}
+    //navigation methods
+    navigateToOtherPage(pageNameToNavigate) {
+        this[NavigationMixin.Navigate]({
+            type: "standard__namedPage",
+            attributes: {
+                pageName: pageNameToNavigate
+            },
+        });
+    }
 
-	// Check if we are in the Old/New Portal
-	navigationCheck(pageNameToNavigate, currentService) {
+    // Check if we are in the Old/New Portal
+    navigationCheck(pageNameToNavigate, currentService) {
+        
+        this.closeSideMenu();
+        if (this.trackedIsInOldPortal) {
+            redirectfromPortalHeader({ pageName: currentService }).then(result => {
+                window.location.href = result;
+            });
+        } else {
+            this.navigateToOtherPage(pageNameToNavigate);
+        }
+    }
 
+    //WMO-627 - ACAMBAS: Begin
+    // Navigate to other page tab
+	navigationCheckToPageTab(pageNameToNavigate, currentService, tab) {
 		if (this.trackedIsInOldPortal) {
-			redirectfromPortalHeader({ pageName: currentService }).then(result => {
-				window.location.href = result;
-			});
-		} else {
-			this.navigateToOtherPage(pageNameToNavigate);
-		}
+            redirectfromPortalHeader({ pageName: currentService }).then(result => {
+                if (tab != null && tab != '')
+                    window.location.href = result + '?tab=' + tab;
+                else
+                    window.location.href = result;
+                });
+        } else {
+            let params = {};
+            if (tab !== undefined && tab !== null) {
+                params.tab = tab;
+            }
 
-	}
+            this[NavigationMixin.GenerateUrl]({
+                type: "standard__namedPage",
+                attributes: {
+                    pageName: pageNameToNavigate
+                }
+            })
+            .then(url => navigateToPage(url, params));
+        }
+    }
+    //WMO-627 - ACAMBAS: End
 
-	navigateToHomePage() {
-		this.navigationCheck("home", "");
-		//this.navigateToOtherPage("home");
-	}
+    navigateToHomePage() {
+        this.navigationCheck("home", "");
+        //this.navigateToOtherPage("home");
+    }
 
-	navigateToServices() {
-		this.navigationCheck("services", "services");
-		//this.navigateToOtherPage("services");
-	}
+    navigateToServices() {
+        this.navigationCheck("services", "services");
+        //this.navigateToOtherPage("services");
+    }
 
-	navigateToSupport() {
-		this.navigationCheck("support", "support");
-		//this.navigateToOtherPage("support");
-	}
+    navigateToSupport() {
+        this.navigationCheck("support", "support");
+        //this.navigateToOtherPage("support");
+    }
 
-	navigateToMyProfile() {
-		this.navigationCheck("my-profile", "my-profile");
-	}
+    navigateToYouIata() {
+        this.navigationCheck("youIATA", "youIATA");
+    }
 
-	navigateToCompanyProfile() {
-		this.navigationCheck("company-profile", "company-profile");
-	}
+    navigateToMyProfile() {
+        this.navigationCheck("my-profile", "my-profile");
+    }
 
-	navigateToCases() {
-		this.navigationCheck("cases-list", "cases-list");
-	}
+    navigateToCompanyProfile() {
+        //WMO-627 - ACAMBAS: Begin
+        //this.navigationCheck("company-profile", "company-profile");
+        this.navigationCheckToPageTab("company-profile", "company-profile", null);
+        //WMO-627 - ACAMBAS: End
+    }
 
-	navigateToSettings() {
-		//this.navigateToOtherPage("");
-	}
+    navigateToCases() {
+        this.navigationCheck("cases-list", "cases-list");
+    }
 
-	navigateToChangePassword() {
-		goToOldChangePassword({}).then(results => {
-			window.open(results, "_self");
-		});
+    //WMO-627 - ACAMBAS: Begin
+    navigateToInvoices() {
+        this.navigationCheckToPageTab("company-profile", "company-profile", "invoices");
+    }
+    //WMO-627 - ACAMBAS: End
 
-	}
+    navigateToSettings() {
+        //this.navigateToOtherPage("");
+    }
 
-	navigateToCspChangePassword() {
-		this.navigationCheck("changePassword", "changePassword");
-	}
+    navigateToChangePassword() {
+        goToOldChangePassword({}).then(results => {
+            window.open(results, "_self");
+        });
 
-	//user logout
-	logOut() {
-		navigateToPage("/secur/logout.jsp?retUrl=" + CSP_PortalPath + "login");
-	}
+    }
+
+    navigateToCspChangePassword() {
+        this.navigationCheck("changePassword", "changePassword");
+    }
+
+    //user logout
+    logOut() {
+        navigateToPage("/secur/logout.jsp?retUrl=" + CSP_PortalPath + "login");
+    }
 
 
-	//method to change the style when the user clicks on the notifications
-	toggleNotifications() {
+    //method to change the style when the user clicks on the notifications
+    toggleNotifications() {
 
-		this.openNotifications = !this.openNotifications;
+        this.openNotifications = !this.openNotifications;
 
-		if (this.openNotifications) {
-			this.headerButtonNotificationsContainerStyle = 'background-color: #ffffff; z-index: 10000; padding-right: 6px; padding-left: 6px;';
-			this.headerButtonNotificationsCloseIconStyle = 'display: flex; align-items: center; justify-content: center;';
-			this.headerButtonNotificationsStyle = 'display: none;';
-			this.notificationNumberStyle = 'display: none;';
-			this.openNotificationsStyle = 'display: block;';
-			this.showBackdrop = true;
-			this.displayBodyStyle = 'width: 35vw';
-			this.displayNotificationStyle = 'width: 100%'
-		} else {
-			this.headerButtonNotificationsContainerStyle = 'z-index: 100;';
-			this.headerButtonNotificationsCloseIconStyle = 'display: none; ';
-			this.headerButtonNotificationsStyle = 'display: block;';
-			this.notificationNumberStyle = (this.numberOfNotifications === 0 ? 'display: none;' : 'display: block;');
-			this.openNotificationsStyle = 'display: none;';
-			this.showBackdrop = false;
-		}
+        if (this.openNotifications) {
+            this.headerButtonNotificationsContainerStyle = 'background-color: #ffffff; z-index: 10000; padding-right: 6px; padding-left: 6px;';
+            this.headerButtonNotificationsCloseIconStyle = 'display: flex; align-items: center; justify-content: center;';
+            this.headerButtonNotificationsStyle = 'display: none;';
+            this.notificationNumberStyle = 'display: none;';
+            this.openNotificationsStyle = 'display: block;';
+            this.showBackdrop = true;
+            this.displayBodyStyle = '';
+            this.displayNotificationStyle = 'width: 100%'
+            this.closeSideMenu();
+        } else {
+            this.headerButtonNotificationsContainerStyle = 'z-index: 100;';
+            this.headerButtonNotificationsCloseIconStyle = 'display: none; ';
+            this.headerButtonNotificationsStyle = 'display: inline; vertical-align:top;';
+            this.notificationNumberStyle = (this.numberOfNotifications === 0 ? 'display: none;' : 'display: inline;');
+            this.openNotificationsStyle = 'display: none;';
+            this.showBackdrop = false;
+        }
+           
+    }
+    //method to change the style when the user clicks on the search
+    toggleSearch() {
+        this.openSearch = !this.openSearch;
 
-	}
+        if (this.openSearch) {
+            this.headerButtonSearchContainerStyle = 'background-color: #ffffff; z-index: 10000; padding-right: 6px; padding-left: 6px; padding-top: 6px; padding-bottom:90px; margin-top: 0; margin-bottom: 0;';
+            this.headerButtonSearchCloseIconStyle = 'display: flex; align-items: center; justify-content: center;';
+            this.headerButtonSearchStyle = 'display: none;';
+            this.openSearchStyle = 'display: block;';
+            this.showBackdrop = true;
+            this.displayBodyStyle = '';
+            this.displaySearchStyle = 'width: 100%';
+            this.closeSideMenu();
+            
+        } else {
+            this.headerButtonSearchContainerStyle = 'z-index: 100;';
+            this.headerButtonSearchCloseIconStyle = 'display: none; ';
+            this.headerButtonSearchStyle = 'display: block; vertical-align:top;';
+            this.openSearchStyle = 'display: none;';
+            this.showBackdrop = false;
+        }
+           
+    }
 
-	onClickAllNotificationsView(event) {
-		this.notificationsView(event);
-	}
+    toggleSideMenu()
+    {
+        this.openSideBarMenu = ! this.openSideBarMenu;
 
-	openmodal(event) {
-		this.notificationsView(event);
+        if (this.openSideBarMenu) {
+            this.sideMenuBarStyle = 'display: block; width: 300px;';
+        } else {
+            this.sideMenuBarStyle = 'width: 0px;';
+        }
+    }
 
-		this.mainBackground = "z-index: 10004;";
-		this.openmodel = true;
-	}
+    toggleSideMenuProfile()
+    {
+        this.openSideBarMenuProfile = ! this.openSideBarMenuProfile;
 
-	closeModal() {
-		this.mainBackground = "z-index: 10000;";
-		this.openmodel = false;
-	}
+        if (this.openSideBarMenuProfile) {
+            this.sideMenuBarProfileStyle = 'display: block; height: 240px;';
+        } else {
+            this.sideMenuBarProfileStyle = 'height: 1px;';
+        }
+    }
 
-	notificationsView(event) {
-		let selectedNotificationId = event.target.dataset.item;
+    closeSideMenu()
+    {
+        if (this.openSideBarMenu) {
+            this.toggleSideMenu();
+        }
+    }
 
-		let notificationsListAux = JSON.parse(JSON.stringify(this.notificationsList));
+    onClickAllNotificationsView(event) {
+        this.notificationsView(event);
+    }
 
-		let notification = notificationsListAux.find(function (element) {
-			if (element.id === selectedNotificationId) {
-				return element;
-			}
-			return null;
-		});
+    openmodal(event) {
+        this.notificationsView(event);
 
-		this.notification = notification;
+        this.mainBackground = "z-index: 10004;";
+        this.openModal = true;
+    }
 
-		if (notification.type === 'Notification') {
-			increaseNotificationView({ id: selectedNotificationId })
-				.then(results => {
+    closeModal() {
+        this.mainBackground = "z-index: 10000;";
+        this.openModal = false;
+    }
 
-					if (!notification.viewed) {
-						let notificationCounter = this.notificationCounter;
-						let taskCounter = this.taskCounter;
+    notificationsView(event) {
+        let selectedNotificationId = event.target.dataset.item;
 
-						notificationCounter--;
-						this.numberOfNotifications = notificationCounter + taskCounter;
-						this.announcementTab = this.labels.Announcement + ' (' + notificationCounter + ')';
-						this.allNotificationTab = this.labels.AllNotifications + ' (' + (notificationCounter + taskCounter) + ')';
-						this.notificationCounter = notificationCounter;
+        let notificationsListAux = JSON.parse(JSON.stringify(this.notificationsList));
 
-						this.numberOfNotifications = (notificationCounter + taskCounter);
-						if (this.numberOfNotifications === "0" || this.numberOfNotifications === 0) {
-							this.notificationNumberStyle = 'display: none;';
-						}
+        let notification = notificationsListAux.find(function (element) {
+            if (element.id === selectedNotificationId) {
+                return element;
+            }
+            return null;
+        });
 
-						notification.viewed = true;
-						notification.styles = 'readNotification';
-						this.notificationsList = notificationsListAux;
-					}
+        this.notification = notification;
 
-				})
-				.catch(error => {
-					const showError = new ShowToastEvent({
-						title: 'Error',
-						message: 'An error has occurred: ' + error.getMessage,
-						variant: 'error',
-					});
-					this.dispatchEvent(showError);
+        if (notification.type === 'Notification') {
+            increaseNotificationView({ id: selectedNotificationId })
+                .then(results => {
 
-				});
-		} else if (notification.type === "Portal Service") {
+                    if (!notification.viewed) {
+                        let notificationCounter = this.notificationCounter;
+                        let taskCounter = this.taskCounter;
 
-			let params = {};
-			params.serviceId = notification.id;
-			this.currentURL = window.location.href;
+                        notificationCounter--;
+                        this.numberOfNotifications = notificationCounter + taskCounter;
+                        this.announcementTab = this.labels.Announcement + ' (' + notificationCounter + ')';
+                        this.allNotificationTab = this.labels.AllNotifications + ' (' + (notificationCounter + taskCounter) + ')';
+                        this.notificationCounter = notificationCounter;
 
-			if (this.currentURL.includes(this.labels.PortalName)) {
-				this[NavigationMixin.GenerateUrl]({
-					type: "standard__namedPage",
-					attributes: {
-						pageName: "manage-service"
-					}
-				})
-					.then(url => navigateToPage(url, params));
-			} else {
-				goToManageService().then(results => {
-					navigateToPage(results, params);
-				});
-			}
-		} else {
-			navigateToPage("company-profile?tab=contact&contactName=" + notification.contactName);
-		}
-	}
+                        this.numberOfNotifications = (notificationCounter + taskCounter);
+                        if (this.numberOfNotifications === "0" || this.numberOfNotifications === 0) {
+                            this.notificationNumberStyle = 'display: none;';
+                        }
 
-	goToAdvancedSearchPage() {
-		this.navigationCheck("advanced-search", "advanced-search");
-	}
+                        notification.viewed = true;
+                        notification.styles = 'readNotification';
+                        this.notificationsList = notificationsListAux;
+                    }
 
-	handlePageRefChanged() {
-		let pagename = getPageName();
-		if (pagename) {
-			getBreadcrumbs({ pageName: pagename })
-				.then(results => {
-					let breadCrumbs = JSON.parse(JSON.stringify(results));
-					if (breadCrumbs && breadCrumbs[1] && (breadCrumbs[1].DeveloperName === 'services' || breadCrumbs[1].DeveloperName === 'support')) {
-						if (breadCrumbs[1].DeveloperName === 'services') {
-							this.buttonServiceStyle = `${this.buttonServiceStyle} selectedButton`;
-							this.buttonSupportStyle = this.buttonSupportStyle.replace(/selectedButton/g, '');
-						} else if (breadCrumbs[1].DeveloperName === 'support') {
-							this.buttonServiceStyle = this.buttonServiceStyle.replace(/selectedButton/g, '');
-							this.buttonSupportStyle = `${this.buttonSupportStyle} selectedButton`;
-						}
-					} else {
-						this.buttonServiceStyle = this.buttonServiceStyle.replace(/selectedButton/g, '');
-						this.buttonSupportStyle = this.buttonSupportStyle.replace(/selectedButton/g, '');
-					}
-				});
-		} else {
-			this.buttonServiceStyle = this.buttonServiceStyle.replace(/selectedButton/g, '');
-			this.buttonSupportStyle = this.buttonSupportStyle.replace(/selectedButton/g, '');
-		}
-	}
+                })
+                .catch(error => {
+                    const showError = new ShowToastEvent({
+                        title: 'Error',
+                        message: 'An error has occurred: ' + error.getMessage,
+                        variant: 'error',
+                    });
+                    this.dispatchEvent(showError);
 
-	acceptTerms() {
+                });
+        } else if (notification.type === "Portal Service") {
 
-		const fields = {};
-		fields.Id = Id;
-		fields.ToU_accepted__c = true;
-		fields.Date_ToU_accepted__c = new Date().toISOString();
-		const recordInput = { fields };
+            let params = {};
+            params.serviceId = notification.id;
+            //Parameter added to force filtrage for Access Requested Contacts on the Service Management Page.
+            params.status = "Access_Request";
+            this.currentURL = window.location.href;
 
-		updateRecord(recordInput)
-			.then(() => {
-				this.displayAcceptTerms = true;
-				this.redirectChangePassword();
-			});
+            if (this.currentURL.includes(this.labels.PortalName)) {
+                this[NavigationMixin.GenerateUrl]({
+                    type: "standard__namedPage",
+                    attributes: {
+                        pageName: "manage-service"
+                    }
+                })
+                    .then(url => navigateToPage(url, params));
+            } else {
+                goToManageService().then(results => {
+                    navigateToPage(results, params);
+                });
+            }
+        } else if (notification.type === "Portal Access") {
+            navigateToPage("company-profile?tab=contact&contactName=" + notification.contactName);
+        } else {
+            navigateToPage("company-profile?tab=contact");
+        }
+    }
 
-	}
+    goToAdvancedSearchPage() {
+        this.navigationCheck("advanced-search", "advanced-search");
+    }
 
-	confirmRegistration() {
-		const fields = {};
-		fields.Id = Id;
-		fields.Portal_Registration_Required__c = false;
-		const recordInput = { fields };
+    handlePageRefChanged() {
+        let pagename = getPageName();
+        
+        this.buttonServiceStyle = this.buttonServiceStyle.replace(/selectedButton/g, '');
+        this.buttonYouIATAStyle = this.buttonYouIATAStyle.replace(/selectedButton/g, '');
+        this.buttonSupportStyle = this.buttonSupportStyle.replace(/selectedButton/g, '');
+        this.buttonSideMenuServiceStyle = this.buttonSideMenuServiceStyle.replace(/selectedButton/g, '');
+        this.buttonSideMenuYouIATAStyle = this.buttonSideMenuYouIATAStyle.replace(/selectedButton/g,'');
+        this.buttonSideMenuSupportStyle = this.buttonSideMenuSupportStyle.replace(/selectedButton/g, '');
+        this.buttonSideMenuSearchStyle = this.buttonSideMenuSearchStyle.replace(/selectedButton/g, '');
+        this.buttonSideMenuProfileStyle = this.buttonSideMenuProfileStyle.replace(/selectedButton/g, '');
+        this.buttonSideMenuCompanyStyle = this.buttonSideMenuCompanyStyle.replace(/selectedButton/g, '');
+        this.buttonSideMenuCasesStyle = this.buttonSideMenuCasesStyle.replace(/selectedButton/g, '');
 
-		updateRecord(recordInput)
-			.then(() => {
-				window.location.reload();
-				//this.displayRegistrationConfirmation = false;
-		});
-	}
+        if (pagename) {
+            getBreadcrumbs({ pageName: pagename })
+                .then(results => {
+                    let breadCrumbs = JSON.parse(JSON.stringify(results));
+                    if (breadCrumbs && breadCrumbs[1])
+                    {
+                        if (breadCrumbs[1].DeveloperName === 'services') {
+                            this.buttonServiceStyle = `${this.buttonServiceStyle} selectedButton`;
+                            this.buttonSideMenuServiceStyle = `${this.buttonSideMenuServiceStyle} selectedButton`;
+                        } else if (breadCrumbs[1].DeveloperName === 'youIATA') {
+                            this.buttonYouIATAStyle = `${this.buttonYouIATAStyle} selectedButton`;
+                            this.buttonSideMenuYouIATAStyle = `${this.buttonSideMenuYouIATAStyle} selectedButton`;
+                        } else if (breadCrumbs[1].DeveloperName === 'support') {
+                            this.buttonSupportStyle = `${this.buttonSupportStyle} selectedButton`;
+                            this.buttonSideMenuSupportStyle = `${this.buttonSideMenuSupportStyle} selectedButton`;
+                        } else if (breadCrumbs[1].DeveloperName === 'advanced_search') {
+                            this.buttonSideMenuSearchStyle = `${this.buttonSideMenuSearchStyle} selectedButton`;
+                        } else if (breadCrumbs[1].DeveloperName === 'my_profile') {
+                            this.buttonSideMenuProfileStyle = `${this.buttonSideMenuProfileStyle} selectedButton`;
+                        } else if (breadCrumbs[1].DeveloperName === 'company_profile') {
+                            this.buttonSideMenuCompanyStyle = `${this.buttonSideMenuCompanyStyle} selectedButton`;
+                        } else if (breadCrumbs[1].DeveloperName === 'cases_list') {
+                            this.buttonSideMenuCasesStyle = `${this.buttonSideMenuCasesStyle} selectedButton`;
+                        }
+                    }
+                });
+        }
+    }
 
-	close() {
-		if (this.openNotifications) {
-			this.openNotifications = true;
-			this.toggleNotifications();
-		}
+    acceptTerms() {
 
-	}
+        const fields = {};
+        fields.Id = Id;
+        fields.ToU_accepted__c = true;
+        fields.Date_ToU_accepted__c = new Date().toISOString();
+        const recordInput = { fields };
 
-	hideRegistration() {
-		this.displayRegistrationConfirmation = false;
-	}
+        updateRecord(recordInput)
+            .then(() => {
+                this.displayAcceptTerms = true;
+                this.redirectChangePassword();
+            });
 
-	hideFirstLogin() {
-		this.displayFirstLogin = false;
-		this.firstLogin = false;
-	}
+    }
 
-	get totalNotification() {
-		let toReturn = true;
-		if (this.notificationsList !== undefined) {
-			let notList = JSON.parse(JSON.stringify(this.notificationsList));
-			if (notList !== undefined && notList.length > 0) {
-				notList.forEach(function (element) {
-					if (element.type === 'Notification' || element.type === 'Portal Service' || element.type === 'Portal Access')
-						toReturn = false;
-				});
-			}
-		}
-		return toReturn;
-	}
+    confirmRegistration() {
+        const fields = {};
+        fields.Id = Id;
+        fields.Portal_Registration_Required__c = false;
+        const recordInput = { fields };
 
-	get announcementNumber() {
-		let toReturn = true;
-		if (this.notificationsList !== undefined) {
-			let notList = JSON.parse(JSON.stringify(this.notificationsList));
-			if (notList !== undefined && notList.length > 0) {
-				notList.forEach(function (element) {
-					if (element.type === 'Notification')
-						toReturn = false;
-				});
-			}
-		}
-		return toReturn;
-	}
+        updateRecord(recordInput)
+            .then(() => {
+                window.location.reload();
+                //this.displayRegistrationConfirmation = false;
+        });
+    }
 
-	get taskNumber() {
-		let toReturn = true;
-		if (this.notificationsList !== undefined) {
-			let notList = JSON.parse(JSON.stringify(this.notificationsList));
-			if (notList !== undefined && notList.length > 0) {
-				notList.forEach(function (element) {
-					if (element.type === 'Portal Service' || element.type === 'Portal Access')
-						toReturn = false;
-				});
-			}
-		}
-		return toReturn;
-	}
+    close() {
+        if (this.openNotifications) {
+            this.openNotifications = true;
+            this.toggleNotifications();
+        }
+        if (this.openSearch) {
+            this.toggleSearch();
+        }
+    }
 
-	@track displaySecondLevelRegistration = false;
+    hideRegistration() {
+        this.displayRegistrationConfirmation = false;
+    }
 
-	triggerSecondLevelRegistration(){
-		this.displayFirstLogin = false;
-		this.firstLogin = false;
-		this.displaySecondLevelRegistration= true;
-	}
+    hideFirstLogin() {
+        this.displayFirstLogin = false;
+        this.firstLogin = false;
+    }
 
-	closeSecondLevelRegistration(){
-		this.displaySecondLevelRegistration = false;
-	}
+    get totalNotification() {
+        let toReturn = true;
+        if (this.notificationsList !== undefined) {
+            let notList = JSON.parse(JSON.stringify(this.notificationsList));
+            if (notList !== undefined && notList.length > 0) {
+                notList.forEach(function (element) {
+                    if (element.type === 'Notification' || element.type === 'Portal Service' || element.type === 'Portal Access' || element.type === 'Customer Invoice')
+                        toReturn = false;
+                });
+            }
+        }
+        return toReturn;
+    }
 
-	secondLevelRegistrationCompleted(){
-		navigateToPage(CSP_PortalPath,{});
-	}
+    get announcementNumber() {
+        let toReturn = true;
+        if (this.notificationsList !== undefined) {
+            let notList = JSON.parse(JSON.stringify(this.notificationsList));
+            if (notList !== undefined && notList.length > 0) {
+                notList.forEach(function (element) {
+                    if (element.type === 'Notification')
+                        toReturn = false;
+                });
+            }
+        }
+        return toReturn;
+    }
 
-	@track displayThirdLevelRegistrationLMS = false;
+    get taskNumber() {
+        let toReturn = true;
+        if (this.notificationsList !== undefined) {
+            let notList = JSON.parse(JSON.stringify(this.notificationsList));
+            if (notList !== undefined && notList.length > 0) {
+                notList.forEach(function (element) {
+                    if (element.type === 'Portal Service' || element.type === 'Portal Access' || element.type === 'Customer Invoice')
+                        toReturn = false;
+                });
+            }
+        }
+        return toReturn;
+    }
+
+    @track displaySecondLevelRegistration = false;
+
+    triggerSecondLevelRegistration(){
+        this.displayFirstLogin = false;
+        this.firstLogin = false;
+        this.displaySecondLevelRegistration= true;
+    }
+
+    closeSecondLevelRegistration(){
+        this.displaySecondLevelRegistration = false;
+    }
+
+    secondLevelRegistrationCompleted(){
+        navigateToPage(CSP_PortalPath,{});
+    }
+
+    setCookie(name, value, days) {
+        let expires = "";
+        if (days) {
+          let date = new Date();
+          date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+          expires = "; expires=" + date.toUTCString();
+        }
+        document.cookie = name + "=" + (value || "") + expires + "; path=/";
+    }
+      
+    getCookie(name) {
+        let nameEQ = name + "=";
+        let ca = document.cookie.split(';');
+        for (let i = 0; i < ca.length; i++) {
+          let c = ca[i];
+          while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+          if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+        }
+        return null;
+    }
+    
+    @track displayThirdLevelRegistrationLMS = false;
 
 	triggerThirdLevelRegistrationLMS(){
 		this.displayFirstLogin = false;

@@ -3,23 +3,28 @@
  */
 trigger FinancialSecurityHandler on Financial_Security__c (after delete, after insert, after undelete, after update, before delete, before insert, before update) {
     
+    //WMO-470
+    if(FinancialSecurityUtil.acknowledgeRunning) {
+        return;
+    }
+
     if (Trigger.isInsert) {
         
         if (Trigger.isBefore) {
             new ANG_FinancialSecurityTriggerHandler().onBeforeInsert();
         } else if (Trigger.isAfter) {
             new ANG_FinancialSecurityTriggerHandler().onAfterInsert();
-            new FinancialSecurityUtil().onAfterInsert(Trigger.newMap, Trigger.oldMap);
         }
         
         
     } else if (Trigger.isUpdate) {
         if (Trigger.isBefore ){
             new ANG_FinancialSecurityTriggerHandler().onBeforeUpdate();
-            if(userinfo.getProfileId() != '00e20000000h0gFAAQ') FinancialSecurityUtil.HandleFSBeforeUpdate(Trigger.newMap, Trigger.oldMap);// exclude system administrator profile
+            FinancialSecurityUtil.HandleFSBeforeUpdate(Trigger.newMap, Trigger.oldMap);
             if(userinfo.getProfileId() == '00e20000000h0gFAAQ' && Test.isRunningTest()) FinancialSecurityUtil.HandleFSBeforeUpdate(Trigger.newMap, Trigger.oldMap);// include system administrator profile for code coverage
         } else if (Trigger.isAfter) {
             new ANG_FinancialSecurityTriggerHandler().onAfterUpdate();
+            FinancialSecurityUtil.sendAcknowledge(Trigger.new);
         }
         
         

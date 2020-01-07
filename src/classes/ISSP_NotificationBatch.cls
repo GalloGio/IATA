@@ -20,8 +20,16 @@ global class ISSP_NotificationBatch implements Database.Batchable<sObject>
 	 */
 	global Map<String, String> MessagesByGroupMap;
 
-	global String ContactGroupField; //Field which grouped the messages for contact, as described above.
+    /**
+        This is an enhancement for MessagesByGroupMap,
+        If MessagesByGroupMap is Empty, but there is a ContactGroupField then this map will apply
+        It contains 2 nested maps, the key works as in MessagesByGroupMap, having the value representing a group: Contact.Id for example
+        The list inside the value contains a list of strings to be replaced in the message with the tags {0},{1},{2}...
+    **/
+    global Map<String, list<String>> FieldBindingByGroupMap;
 
+	global String ContactGroupField; //Field which grouped the messages for contact, as described above.
+	
 	/**
 	 * [
 	 * Batch constructor, init fields
@@ -34,6 +42,7 @@ global class ISSP_NotificationBatch implements Database.Batchable<sObject>
 		Query = '';
 		NotificationTemplate = null;
 		MessagesByGroupMap = null;
+		FieldBindingByGroupMap = null;
 		ContactGroupField = '';
 	}
 	
@@ -64,7 +73,7 @@ global class ISSP_NotificationBatch implements Database.Batchable<sObject>
    	global void execute(Database.BatchableContext BC, List<sObject> scope) 
    	{
    		System.debug('KTC - ISSP_NotificationBatch - execute - scope: ' + scope);
-        ISSP_NotificationUtilities.insertNotifications((List<Contact>)scope, NotificationTemplate, MessagesByGroupMap, ContactGroupField);
+        ISSP_NotificationUtilities.insertNotifications((List<Contact>)scope, NotificationTemplate, MessagesByGroupMap, FieldBindingByGroupMap, ContactGroupField);
 	}
 	
 	/**

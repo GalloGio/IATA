@@ -363,7 +363,8 @@ private class ANG_LocalFinancialCriteriaTest {
         	IATA_ISO_Country__c = countrySG.Id,
         	Location_Class__c = 'P',
         	Remittance_frequency__c = 'M',
-        	ANG_HE_RiskStatus__c = 'A'
+        	ANG_HE_RiskStatus__c = 'A',
+            ANG_Accreditation_Model__c = 'Cash'
         );
 
 		Account agentHK = new Account(
@@ -375,7 +376,8 @@ private class ANG_LocalFinancialCriteriaTest {
         	IATA_ISO_Country__c = countryHK.Id,
         	Location_Class__c = 'P',
         	Remittance_frequency__c = 'M',
-        	ANG_HE_RiskStatus__c = 'A'
+        	ANG_HE_RiskStatus__c = 'A',
+            ANG_Accreditation_Model__c = 'Cash'
         );
 
 		Account agentMO = new Account(
@@ -387,7 +389,8 @@ private class ANG_LocalFinancialCriteriaTest {
         	IATA_ISO_Country__c = countryMO.Id,
         	Location_Class__c = 'P',
         	Remittance_frequency__c = 'M',
-        	ANG_HE_RiskStatus__c = 'A'
+        	ANG_HE_RiskStatus__c = 'A',
+            ANG_Accreditation_Model__c = 'Cash'
         );
 
 		Account agentFR = new Account(
@@ -399,11 +402,12 @@ private class ANG_LocalFinancialCriteriaTest {
         	IATA_ISO_Country__c = countryFR.Id,
         	Location_Class__c = 'P',
         	Remittance_frequency__c = 'M',
-        	ANG_HE_RiskStatus__c = 'A'
+        	ANG_HE_RiskStatus__c = 'A',
+            ANG_Accreditation_Model__c = 'Cash'
         );
-
-        insert new List<Account>{agentSG, agentHK, agentMO, agentFR};
         
+        insert new List<Account>{agentSG, agentHK, agentMO, agentFR};
+            
         Test.stopTest();
         
 	}
@@ -458,7 +462,8 @@ private class ANG_LocalFinancialCriteriaTest {
       		Region__c = 'Asia & Pacific', 
       		Reception_Date__c = System.today(), 
       		Reasonforrequest__c = 'New Application',
-      		Reception_Case__c = cc.Id
+      		Reception_Case__c = cc.Id,
+      		Financial_Security_Validation_Case__c = cc.Id
      	);
 
         insert fs; 
@@ -470,17 +475,20 @@ private class ANG_LocalFinancialCriteriaTest {
 
 		Account acct = [SELECT Id FROM Account WHERE Name = 'Agent FR'];
 
-      	Financial_Security__c fs = createFinancialData(acct.Id);
-
 		ANG_RHC_Information__c rhcInfo = new ANG_RHC_Information__c(
-			ANG_AccountId__c = acct.Id,
-			CurrencyIsoCode = 'EUR',
-			RecordTypeId = ANG_RHCHelper.RECTYPE_STDRHCINFO,
-			ANG_RHC_Amount_Equals_FS__c = TRUE,
-			RHC_Amount_Equals_FS_Percent__c = 200
+			ANG_AccountId__c = acct.Id
 		);
 
 		insert rhcInfo;
+        
+        Financial_Security__c fs = createFinancialData(acct.Id);
+        
+        rhcInfo.CurrencyIsoCode = 'EUR';
+		rhcInfo.RecordTypeId = ANG_RHCHelper.RECTYPE_STDRHCINFO;
+		rhcInfo.ANG_RHC_Amount_Equals_FS__c = TRUE;
+        rhcInfo.RHC_Amount_Equals_FS_Percent__c = 200;
+        
+        update rhcInfo;
 
 		ANG_RHC_Information__c rhcUpdated = 
 			[SELECT 
@@ -502,18 +510,21 @@ private class ANG_LocalFinancialCriteriaTest {
 
 		Account acct = [SELECT Id FROM Account WHERE Name = 'Agent SG'];
 
-		Financial_Security__c fs = createFinancialData(acct.Id);
-
 		ANG_RHC_Information__c rhcInfo = new ANG_RHC_Information__c(
-			ANG_AccountId__c = acct.Id,
-			CurrencyIsoCode = 'EUR',
-			RecordTypeId = ANG_RHCHelper.RECTYPE_STDRHCINFO,
-			RHC_Amount_Equals_FS_Percent__c = 200,
-			ANG_CashCondition__c = TRUE
+			ANG_AccountId__c = acct.Id
 		);
 
 		insert rhcInfo;
+        
+		Financial_Security__c fs = createFinancialData(acct.Id);
 
+        rhcInfo.CurrencyIsoCode = 'EUR';
+		rhcInfo.RecordTypeId = ANG_RHCHelper.RECTYPE_STDRHCINFO;
+		rhcInfo.RHC_Amount_Equals_FS_Percent__c = 200;
+		rhcInfo.ANG_CashCondition__c = TRUE;
+        
+        update rhcInfo;
+        
 		ANG_RHC_Information__c rhcUpdated = 
 			[SELECT 
 				ANG_RHC_Amount__c, 
@@ -534,17 +545,20 @@ private class ANG_LocalFinancialCriteriaTest {
 
 		Account acct = [SELECT Id FROM Account WHERE Name = 'Agent SG'];
 
-		Financial_Security__c fs = createFinancialData(acct.Id);
-
 		ANG_RHC_Information__c rhcInfo = new ANG_RHC_Information__c(
-			ANG_AccountId__c = acct.Id,
-			CurrencyIsoCode = 'EUR',
-			RecordTypeId = ANG_RHCHelper.RECTYPE_STDRHCINFO,
-			RHC_Amount_Equals_FS_Percent__c = 200,
-			ANG_CashCondition__c = FALSE
+			ANG_AccountId__c = acct.Id
 		);
 
 		insert rhcInfo;
+        
+		Financial_Security__c fs = createFinancialData(acct.Id);
+        
+        rhcInfo.CurrencyIsoCode = 'EUR';
+		rhcInfo.RecordTypeId = ANG_RHCHelper.RECTYPE_STDRHCINFO;
+		rhcInfo.RHC_Amount_Equals_FS_Percent__c = 200;
+		rhcInfo.ANG_CashCondition__c = FALSE;
+        
+        update rhcInfo;
 
 		ANG_RHC_Information__c rhcUpdated = 
 			[SELECT 
@@ -624,17 +638,19 @@ private class ANG_LocalFinancialCriteriaTest {
 
 		update acct;
 
-      	Financial_Security__c fs = createFinancialData(acct.Id);
-
+        test.startTest();
+        
 		ANG_RHC_Information__c rhcInfo = new ANG_RHC_Information__c(
-			ANG_AccountId__c = acct.Id,
-			CurrencyIsoCode = 'EUR',
-			RecordTypeId = ANG_RHCHelper.RECTYPE_STDRHCINFO,
-			RHC_Amount_Equals_FS_Percent__c = 214
+			ANG_AccountId__c = acct.Id, 
+            CurrencyIsoCode = 'EUR',
+            RecordTypeId = ANG_RHCHelper.RECTYPE_STDRHCINFO,
+            RHC_Amount_Equals_FS_Percent__c = 214
 		);
 
 		insert rhcInfo;
-
+        
+      	Financial_Security__c fs = createFinancialData(acct.Id);
+        
 		ANG_RHC_Information__c rhcUpdated = 
 			[SELECT 
 				ANG_RHC_Amount__c, 
@@ -655,7 +671,7 @@ private class ANG_LocalFinancialCriteriaTest {
 		update acct;
 
 		fs.Amount__c = (FS_AMOUNT*2);
-        update fs; 
+        update fs;
 
 		rhcUpdated = 
 			[SELECT 
@@ -670,6 +686,7 @@ private class ANG_LocalFinancialCriteriaTest {
 		expectedAmount = (FS_AMOUNT * 2 * secondPercentage/100);
 		
 		System.assert(expectedAmount == rhcUpdated.ANG_RHC_Amount_Forecasted__c);
+        test.stopTest();
 
 	}
 
@@ -677,16 +694,19 @@ private class ANG_LocalFinancialCriteriaTest {
 
 		Account acct = [SELECT Id FROM Account WHERE Name = 'Agent FR'];
 
-      	Financial_Security__c fs = createFinancialData(acct.Id);
-
 		ANG_RHC_Information__c rhcInfo = new ANG_RHC_Information__c(
-			ANG_AccountId__c = acct.Id,
-			CurrencyIsoCode = 'EUR',
-			RecordTypeId = ANG_RHCHelper.RECTYPE_STDRHCINFO,
-			RHC_Amount_Equals_FS_Percent__c = 200
+			ANG_AccountId__c = acct.Id
 		);
 
 		insert rhcInfo;
+            
+        Financial_Security__c fs = createFinancialData(acct.Id);
+        
+        rhcInfo.CurrencyIsoCode = 'EUR';
+		rhcInfo.RecordTypeId = ANG_RHCHelper.RECTYPE_STDRHCINFO;
+		rhcInfo.RHC_Amount_Equals_FS_Percent__c = 200;
+        
+        update rhcInfo;
 
 		ANG_RHC_Information__c rhcUpdated = 
 			[SELECT 
@@ -738,16 +758,19 @@ private class ANG_LocalFinancialCriteriaTest {
         agentHK.Financial_Assessment_Points__c = 100;
         update agentHK;
 
-        Financial_Security__c fs = createFinancialData(agentHK.Id);
-
         ANG_RHC_Information__c rhcInfo = new ANG_RHC_Information__c(
-            ANG_AccountId__c = agentHK.Id,
-            CurrencyIsoCode = 'EUR',
-            RecordTypeId = ANG_RHCHelper.RECTYPE_STDRHCINFO,
-            RHC_Amount_Equals_FS_Percent__c = 100
+            ANG_AccountId__c = agentHK.Id
         );
 
         insert rhcInfo;
+        
+        Financial_Security__c fs = createFinancialData(agentHK.Id);
+        
+        rhcInfo.CurrencyIsoCode = 'EUR';
+        rhcInfo.RecordTypeId = ANG_RHCHelper.RECTYPE_STDRHCINFO;
+        rhcInfo.RHC_Amount_Equals_FS_Percent__c = 100;
+        
+        update rhcInfo;
 
         ANG_RHC_Information__c rhcUpdated = 
             [SELECT 
@@ -797,16 +820,19 @@ private class ANG_LocalFinancialCriteriaTest {
                 Name = 'Agent MO'
             ];
 
-        Financial_Security__c fs = createFinancialData(acct.Id);
-
         ANG_RHC_Information__c rhcInfo = new ANG_RHC_Information__c(
-            ANG_AccountId__c = acct.Id,
-            CurrencyIsoCode = 'EUR',
-            RecordTypeId = ANG_RHCHelper.RECTYPE_STDRHCINFO,
-            RHC_Amount_Equals_FS_Percent__c = 200
+            ANG_AccountId__c = acct.Id
         );
 
         insert rhcInfo;
+        
+        Financial_Security__c fs = createFinancialData(acct.Id);
+        
+        rhcInfo.CurrencyIsoCode = 'EUR';
+        rhcInfo.RecordTypeId = ANG_RHCHelper.RECTYPE_STDRHCINFO;
+        rhcInfo.RHC_Amount_Equals_FS_Percent__c = 200;
+        
+        update rhcInfo;
 
         ANG_RHC_Information__c rhcUpdated = 
             [SELECT 

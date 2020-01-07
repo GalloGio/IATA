@@ -54,3 +54,23 @@
 .breakWord{
   word-break: break-word;
 }
+
+.extIconClass {
+  color: blue;
+  float: right;
+}
+
+.serviceImageStyles {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.favoriteIcon{
+  cursor: pointer;
+  height: 24px;
+  width: 24px;
+  position: absolute;
+  top: 8px;
+  left: 8px;
+}

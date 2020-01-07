@@ -27,6 +27,12 @@ private class ANG_financialReviewOnCaseTest {
             Change_Code__c = 'UGR', 
             Integration_RecId__c = 'C'
         );
+        
+        insert new AMS_ChangeCodes__c(
+            Name = 'UpgDownRisk', 
+            Change_Code__c = 'RSK', 
+            Integration_RecId__c = 'C'
+        );
 
         Notification_Template__c nt = new Notification_Template__c();
 		nt.Identifier__c = 'Risk_Information_Update';
@@ -73,6 +79,7 @@ private class ANG_financialReviewOnCaseTest {
             Location_Class__c = 'P',
             Type = 'IATA Passenger Sales Agent',
             Sector__c = 'Travel Agent',
+            Reason__c = 'testreason',
             IATA_ISO_Country__c = country.Id,
             ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_CASH,
             ANG_HE_RiskHistoryAssessment__c = AMS_Utils.PASSED,
@@ -106,13 +113,7 @@ private class ANG_financialReviewOnCaseTest {
                 IFAP_Area__c = 'asda'
                  );
         insert c;
-                
-        // Create a new Financial Security
-        Financial_Security__c fs = new Financial_Security__c(Region__c = 'Americas', Security_status__c = 'Active', Account__c = a.Id, CurrencyIsoCode = 'USD', Amount__c = 100,
-                        Expiry_date__c = Date.today().addYears(2), Financial_Institution__c = fi.Id, Security_Type__c = 'Cross Border Guarantee', 
-                        ValIdity_Start_Date__c = Date.today().addDays(-2), Reception_Case__c = c.Id, Reception_Date__c = Date.today(), Reasonforrequest__c = 'New Application');
-        insert fs;
-       
+            
         ANG_RHC_Information__c rhcInfo = new ANG_RHC_Information__c(
 			ANG_AccountId__c = a.Id,
 			CurrencyIsoCode = 'EUR',
@@ -120,7 +121,12 @@ private class ANG_financialReviewOnCaseTest {
 		);
 
 		insert rhcInfo;
-        
+        // Create a new Financial Security
+        Financial_Security__c fs = new Financial_Security__c(Region__c = 'Americas', Security_status__c = 'Active', Account__c = a.Id, CurrencyIsoCode = 'USD', Amount__c = 100,
+                        Expiry_date__c = Date.today().addYears(2), Financial_Institution__c = fi.Id, Security_Type__c = 'Cross Border Guarantee', 
+                        ValIdity_Start_Date__c = Date.today().addDays(-2), Reception_Case__c = c.Id, Reception_Date__c = Date.today(), Reasonforrequest__c = 'New Application');
+        insert fs;
+       
     }
 
     static testMethod void updateCaseStatusToNOTUpdateFinancialReview(){

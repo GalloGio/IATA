@@ -126,6 +126,32 @@ public without sharing class ISSP_Case {
 
     public ANG_ProgressBarHelper progressBarHelper{get; set;}
 
+
+    public Boolean isNewPortal {
+    get {
+        if(isNewPortal == null) {
+            isNewPortal = CSP_Utils.isNewPortalActive();
+        }
+        return isNewPortal;
+    }
+    set;
+    }
+
+    public String portalRedirectToUserProfile {
+    get {
+        if (!isNewPortal) {
+            return '/ISSP_Contact?id=' + newCase.ContactId + '&mid=M1S2' + (communityName == 'CNS' ? '&CommunityName=' + communityName : '');
+        } else 
+        {
+            String url = CSP_Utils.redirectfromPortalHeader('my-profile');
+            return url;
+        }
+        
+    }
+    set;
+    }
+
+
     public PageReference pageLoad() {
         if (ApexPages.currentPage().getParameters().containsKey('caseId')) {
             string caseId = ApexPages.currentPage().getParameters().get('caseId');
@@ -860,7 +886,11 @@ public without sharing class ISSP_Case {
                 newCase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Inter_DPCs');
                 newCase.Account_Concerned__c = whoToContact;
             } else {
-                newCase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Service_Request');
+                if(newCase.CaseArea__c == 'iiNet'){
+                    newCase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Cases_Global');
+                } else{
+                    newCase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Service_Request');
+                }
             }
             Database.DMLOptions dmo = new Database.DMLOptions();
             dmo.assignmentRuleHeader.useDefaultRule = true;
@@ -948,7 +978,11 @@ public without sharing class ISSP_Case {
                 newCase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Inter_DPCs');
                 newCase.Account_Concerned__c = whoToContact;
             } else {
-                newCase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Service_Request');
+                if(newCase.CaseArea__c == 'iiNet'){
+                    newCase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Cases_Global');
+                } else{
+                    newCase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Service_Request');
+                }
             }
             Database.DMLOptions dmo = new Database.DMLOptions();
             dmo.assignmentRuleHeader.useDefaultRule = true;

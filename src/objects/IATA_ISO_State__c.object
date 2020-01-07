@@ -54,6 +54,41 @@
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>ControlledByParent</externalSharingModel>
     <fields>
+        <fullName>Admin_Subdivision_Level__c</fullName>
+        <externalId>false</externalId>
+        <label>Admin Subdivision Level</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Adm1</fullName>
+                    <default>false</default>
+                    <label>Adm1</label>
+                </value>
+                <value>
+                    <fullName>Adm2</fullName>
+                    <default>false</default>
+                    <label>Adm2</label>
+                </value>
+                <value>
+                    <fullName>Adm3</fullName>
+                    <default>false</default>
+                    <label>Adm3</label>
+                </value>
+                <value>
+                    <fullName>Adm4</fullName>
+                    <default>false</default>
+                    <label>Adm4</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
         <fullName>GeonameAsciiName__c</fullName>
         <externalId>false</externalId>
         <label>GeonameAsciiName</label>
@@ -199,8 +234,12 @@
         <columns>CURRENCY_ISO_CODE</columns>
         <columns>numeric_code__c</columns>
         <filterScope>Everything</filterScope>
+        <filters>
+            <field>IATA_ISO_Country__c</field>
+            <operation>equals</operation>
+            <value>canada</value>
+        </filters>
         <label>All</label>
-        <language>en_US</language>
     </listViews>
     <listViews>
         <fullName>ISO_States_in_AU_BR_CA_MX_US_VE</fullName>

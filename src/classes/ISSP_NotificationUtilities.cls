@@ -4,7 +4,7 @@
  * Modified By: Tiago.Ferreira 12-12-2014
  * Modified By: Niv.Goldenberg 13-12-2014
  */
-public class ISSP_NotificationUtilities 
+public class ISSP_NotificationUtilities
 {
     /**
      * [
@@ -18,17 +18,20 @@ public class ISSP_NotificationUtilities
      *                               If we want to give contacts of account with id 1 a message A, 
      *                               and to contacts of account with id 2 a message B, 
      *                               the map will look like this: 1-->A, 2-->B, and the contactGroupField will be AccountId]
+     * @param fieldBindingByGroupMap [Only used if MessagesByGroupMap is null
+     *                                Allows to replace tags {0},{1},{2}... in template's message]
      * @param contactGroupField     [Field which grouped the messages for contact, as described above]
      * Created By:  Niv.Goldenberg 19-11-2014
      * Modified By: Tiago.Ferreira 12-12-2014
      * Modified By: Niv.Goldenberg 13-12-2014
      */
-	public static void sendNotification(List<Contact> lstContacts, Notification_template__c notificationTemplate, 
-                                        Map<String, String> messagesByGroupMap, String contactGroupField){
+    public static void sendNotification(List<Contact> lstContacts, Notification_template__c notificationTemplate, 
+                                        Map<String, String> messagesByGroupMap, Map<String, list<String>> fieldBindingByGroupMap,
+                                        String contactGroupField) {
         if (!lstContacts.isEmpty()){
-            ISSP_NotificationUtilities.insertNotifications(lstContacts, notificationTemplate, messagesByGroupMap, contactGroupField);
+            ISSP_NotificationUtilities.insertNotifications(lstContacts, notificationTemplate, messagesByGroupMap, fieldBindingByGroupMap, contactGroupField);
         }
-	}
+    }
 
     /**
      * [Insert Notifications by contacts]
@@ -40,19 +43,27 @@ public class ISSP_NotificationUtilities
      *                               If we want to give contacts of account with id 1 a message A, 
      *                               and to contacts of account with id 2 a message B, 
      *                               the map will look like this: 1-->A, 2-->B, and the contactGroupField will be AccountId]
+     * @param fieldBindingByGroupMap [Only used if MessagesByGroupMap is null
+     *                                Allows to replace tags {0},{1},{2}... in template's message]
      * @param contactGroupField     [Field which grouped the messages for contact, as described above]
      * Created By:  Niv.Goldenberg 13-12-2014
      * Modified By: Niv.Goldenberg 13-12-2014
      */
     public static void insertNotifications(List<Contact> lstContacts, Notification_template__c notificationTemplate, 
-                                        Map<String, String> messagesByGroupMap, String contactGroupField)
+                                        Map<String, String> messagesByGroupMap, Map<String, list<String>> fieldBindingByGroupMap,
+                                        String contactGroupField)
     {
         List<Notification__c> lstNotifications = new List<Notification__c>();
         for (Contact con : lstContacts)
         {
+
             Notification_template__c selectedTemplate = findLanguageTemplate(con, notificationTemplate);
+
+            //set default subject and replace variables in it having the form {number}
+            String subject = selectedTemplate != null ? selectedTemplate.Subject__c : '';
             
-            //Set default message by notification template message.
+
+            //Set default message by notification template message and replace variables in it having the form {number}
             String message = selectedTemplate != null ? selectedTemplate.Message__c : '';
 
             //Check if there is a message by group field, if there is set is as the curreny message.
@@ -63,8 +74,22 @@ public class ISSP_NotificationUtilities
                 {
                     message = messagesByGroupMap.get(key) != null ? messagesByGroupMap.get(key) : message;
                 }
+                // find a list of variables in fieldBindingByGroupMap, if the key exists a specific list of vars
+                // will replace the {} tags in subject and body
+                else if (fieldBindingByGroupMap!=null && fieldBindingByGroupMap.containsKey(key)) {
+                    list<String> listBindings = fieldBindingByGroupMap.get(key);
+                    subject = replaceVariables(subject, listBindings);
+                    message = replaceVariables(message, listBindings);
+                }
             }
-			
+            // special case, fieldBindingByGroupMap may contain a list of variables for the key null
+            // meaning that those variables will be used for all emails
+            else if (fieldBindingByGroupMap!=null && fieldBindingByGroupMap.containsKey(null)) {
+                list<String> listBindings = fieldBindingByGroupMap.get(null);
+                subject = replaceVariables(subject, listBindings);
+                message = replaceVariables(message, listBindings);
+            }
+
 			DateTime expirationDate = null;
 			if (selectedTemplate.Expire_in_days__c != null){
         		expirationDate = system.Now() + selectedTemplate.Expire_in_days__c;
@@ -78,7 +103,7 @@ public class ISSP_NotificationUtilities
                 contact__c = con.Id,
                 Message__c = message,
                 Alert_Contact_By_Email__c = selectedTemplate.Alert_Contact_By_Email__c,
-                Subject__c = selectedTemplate.Subject__c,
+                Subject__c = subject,
                 Type__c = selectedTemplate.Type__c,
                 Notificatin_color__c = selectedTemplate.Notification_color__c ,
                 Notification_Campagne_Name__c = null,
@@ -165,5 +190,21 @@ public class ISSP_NotificationUtilities
 
         query += ')';
         return query;
-    } 
+    }
+
+    /**
+     * Replaces all tags: {varnumber}
+     * in the input text using the variables in the input list
+     */
+    public static String replaceVariables(String text, list<String> listVars) {
+        if (text==null) return '';
+        if (listVars==null) return text;
+        for (Integer i=0; i<listVars.size(); i++) {
+            String value = listVars[i];
+            value = value==null? '': value;
+            text = text.replace('{' + i + '}', value);
+        }
+        return text;
+    }
+
 }

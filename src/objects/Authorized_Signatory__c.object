@@ -105,7 +105,6 @@
     </fields>
     <fields>
         <fullName>Contact__c</fullName>
-        <deleteConstraint>Restrict</deleteConstraint>
         <externalId>false</externalId>
         <label>Contact</label>
         <lookupFilter>
@@ -120,9 +119,11 @@
         <referenceTo>Contact</referenceTo>
         <relationshipLabel>Authorized Signatories</relationshipLabel>
         <relationshipName>Authorized_Signatories</relationshipName>
-        <required>true</required>
+        <relationshipOrder>1</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
         <trackTrending>false</trackTrending>
-        <type>Lookup</type>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
     </fields>
     <fields>
         <fullName>Image_Attachment_Id__c</fullName>

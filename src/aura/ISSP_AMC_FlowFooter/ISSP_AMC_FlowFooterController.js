@@ -81,6 +81,8 @@
                     component.set("v.finishVariant", "brand");
                 }
                 
+                component.set('v.stageStatus', stageA_Status);
+                
                 // You would typically fire a event here to trigger 
                 // client-side notification that the server-side 
                 // action is complete

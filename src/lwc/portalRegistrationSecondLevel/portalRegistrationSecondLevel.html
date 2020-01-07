@@ -1,343 +1,168 @@
-<!--
- - Created by mmercier on 30.07.2019.
- -->
-
-<!-- Portal Registration Second Level -->
 <template>
-
-    <template if:true={openRegistrationModal}>
-        <div class="modal">
-            <div class="customPopupInteriorHalfScreenCentered">
-                <span slot="pageBody">
-                    <c-portal-custom-card-container>
-                        <span slot="cardTitle">
-                            <!--span class="text-medium">{labels.CreateNewAccountLabel}</span-->
-                            <span class="text-medium">Level 2</span>
-                        </span>
-
-                        <span slot="cardBody">
-                            <div class="scrollable-body">
-                                <lightning-layout multiple-rows vertical-align="end">
-                                    <template if:true={contactFound}>
-                                        <template if:false={contactInfo.Account.Is_General_Public_Account__c}>
-                                            <div class="slds-form-element__help">Level 2 registration already performed</div>
-                                        </template>
-
-                                        <template if:true={contactInfo.Account.Is_General_Public_Account__c}>
-
-                                            <!-- Show account selection -->
-                                            <template if:true={showAccountSelection}>
-
-                                                <span class="text-medium">Account Selection</span>
-
-                                                <lightning-layout-item size="12">
-                                                    <span class="fixed-text">Complete the basic registration process to join IATA Customer Portal.</span>
-                                                </lightning-layout-item>
-                                                <lightning-layout-item padding="around-small" size="12">
-                                                </lightning-layout-item>
-
-                                                <!------------------------------------------      Job Function      --------------------------------------------->
-                                                <lightning-layout-item size="12">
-                                                    <div style="display: flex;justify-content: center;align-items: center;">
-                                                        <div style="display: flex;flex: 1 0 auto;align-items: center;justify-content: center;">
-                                                            <div style="width:100%;" class="text-xxsmall text-gray">
-                                                                <abbr class="slds-required" title="required">* </abbr>{functionLabel}
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </lightning-layout-item>
-                                                <lightning-layout-item size="12">
-                                                    <div data-id="jobFunctionDiv" class="slds-form-element jobFunctionDiv">
-                                                        <div class="slds-form-element__control custTextInput custTextInputSmall">
-                                                            <template if:true={jobFunctionsPicklistOptions}>
-                                                                <select class="slds-select jobFunctionInput" multiple id="select-02" required onchange={changeSelectedJobFunctions}>
-                                                                     <template for:each = {jobFunctionsPicklistOptions} for:item="jobFunction">
-                                                                        <option key={jobFunction.value} selected={jobFunction.isSelected} value={jobFunction.value}>{jobFunction.label}</option>
-                                                                     </template>
-                                                                </select>
-                                                                <div if:true={isJobFunctionMissing} class="slds-form-element__help">
-                                                                    Mandatory field!
-                                                                </div>
-                                                            </template>
-                                                        </div>
-                                                    </div>
-                                                </lightning-layout-item>
-                                                <lightning-layout-item padding="around-small" size="12">
-                                                </lightning-layout-item>
-
-                                                <!------------------------------------------      Job Title      --------------------------------------------->
-                                                <lightning-layout-item size="12">
-                                                    <div style="display: flex;justify-content: center;align-items: center;">
-                                                        <div style="display: flex;flex: 1 0 auto;align-items: center;justify-content: center;">
-                                                            <div style="width:100%;" class="text-xxsmall text-gray">
-                                                               <abbr class="slds-required" title="required">* </abbr>{labels.jobTitle}
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </lightning-layout-item>
-                                                <lightning-layout-item size="12">
-                                                    <div data-id="jobTitleDiv" class="slds-form-element jobTitleDiv">
-                                                        <div class="slds-form-element__control custTextInput custTextInputSmall">
-                                                            <template if:true={contactInfo}>
-                                                                <input type="text" class="slds-input jobTitleInput" required value={contactInfo.Title} onchange={changeTitle}/>
-                                                                <div if:true={isJobTitleMissing} class="slds-form-element__help">
-                                                                    Mandatory field!
-                                                                </div>
-                                                            </template>
-                                                        </div>
-                                                    </div>
-                                                </lightning-layout-item>
-                                                <lightning-layout-item padding="around-small" size="12">
-                                                </lightning-layout-item>
-
-                                                <!------------------------------------------      Customer Type      --------------------------------------------->
-                                                <template if:true={customerTypePicklistOptions}>
-                                                    <template for:each={customerTypePicklistOptions} for:item="picklist">
-                                                            <lightning-layout-item size="12" key={picklist.picklistLabel}>
-                                                                <div style="display: flex;justify-content: center;align-items: center;">
-                                                                    <div style="display: flex;flex: 1 0 auto;align-items: center;justify-content: center;">
-                                                                        <div style="width:100%;" class="text-xxsmall text-gray">
-                                                                            {picklist.picklistLabel}
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </lightning-layout-item>
-                                                            <lightning-layout-item size="12" key={picklist.picklistLabel}>
-                                                                <div data-id="customerTypeDiv" class="slds-form-element">
-                                                                    <div class="slds-form-element__control custTextInput custTextInputSmall">
-                                                                        <select class="slds-select" onchange={changeSelectedCustomerType}>
-                                                                             <template for:each = {picklist.picklistOptions} for:item="picklistOption">
-                                                                                    <option key={picklistOption.key} selected={picklistOption.isSelected} value={picklistOption.key}>{picklistOption.label}</option>
-                                                                             </template>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                            </lightning-layout-item>
-                                                            <lightning-layout-item padding="around-small" size="12" key={picklist.picklistLabel}>
-                                                            </lightning-layout-item>
-                                                    </template>
-                                                </template>
-
-                                                <!------------------------------------------      Country      --------------------------------------------->
-                                                <template if:true={displayCountryPicklist}>
-                                                    <lightning-layout-item size="12">
-                                                        <div style="display: flex;justify-content: center;align-items: center;">
-                                                            <div style="display: flex;flex: 1 0 auto;align-items: center;justify-content: center;">
-                                                                <div style="width:100%;" class="text-xxsmall text-gray">
-                                                                    <template if:true={isCustomerTypeGeneralPublic}>
-                                                                        {labels.isspCountry}
-                                                                    </template>
-                                                                    <template if:false={isCustomerTypeGeneralPublic}>
-                                                                        {labels.isspCompanyLocation}
-                                                                    </template>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </lightning-layout-item>
-                                                    <lightning-layout-item size="12">
-                                                        <div data-id="countryDiv" class="slds-form-element">
-                                                            <div class="slds-form-element__control custTextInput custTextInputSmall">
-                                                                <template if:true={isoCountriesPicklistOptions}>
-                                                                    <select class="slds-select" id="select-01" onchange={changeSelectedCountry}>
-                                                                        <!--option-- value="">{labels.select}</option-->
-                                                                         <template for:each = {isoCountriesPicklistOptions} for:item="wrappedCountry">
-                                                                            <option key={wrappedCountry.country.Id} selected={wrappedCountry.isSelected} value={wrappedCountry.country.Id}>{wrappedCountry.country.Name}</option>
-                                                                         </template>
-                                                                    </select>
-                                                                </template>
-                                                            </div>
-                                                        </div>
-                                                    </lightning-layout-item>
-                                                    <lightning-layout-item padding="around-small" size="12">
-                                                    </lightning-layout-item>
-                                                </template>
-
-                                                <!------------------------------------------      Search Fields      --------------------------------------------->
-                                                <template if:true={displayUserSearch}>
-
-                                                    <template if:true={displayIataCodeSearch}>
-                                                        <lightning-layout-item size="12" >
-                                                            <div style="display: flex;justify-content: center;align-items: center;">
-                                                                <div style="display: flex;flex: 1 0 auto;align-items: center;justify-content: center;">
-                                                                    <div style="width:100%;" class="text-xxsmall text-gray">
-                                                                        {labels.isspEnterIataCode}
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </lightning-layout-item>
-                                                        <lightning-layout-item size="12">
-                                                            <div data-id="iataCodeDiv" class="slds-form-element">
-                                                                <div class="slds-form-element__control custTextInput custTextInputSmall">
-                                                                    <input type="text"  placeholder="" class="slds-input" value={iataCodeInput}
-                                                                           onkeyup={searchOnIataCode} />
-                                                                </div>
-                                                            </div>
-                                                        </lightning-layout-item>
-                                                        <lightning-layout-item padding="around-small" size="12">
-                                                        </lightning-layout-item>
-                                                    </template>
-
-                                                    <lightning-layout-item size="12" >
-                                                        <div style="display: flex;justify-content: center;align-items: center;">
-                                                            <div style="display: flex;flex: 1 1 auto;align-items: center;justify-content: center;">
-                                                                <div style="width:100%;" class="text-xxsmall text-gray">
-                                                                    <template if:true={displayIataCodeSearch}>
-                                                                        {labels.isspEnterCompanyName}
-                                                                    </template>
-                                                                    <template if:false={displayIataCodeSearch}>
-                                                                        {labels.companyName}
-                                                                    </template>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </lightning-layout-item>
-                                                    <lightning-layout-item size="12">
-                                                        <div data-id="accountNameDiv" class="slds-form-element">
-                                                            <div class="slds-form-element__control custTextInput custTextInputSmall">
-                                                                <input type="text"  placeholder="" class="slds-input" value={accountNameInput}
-                                                                       onkeyup={searchOnAccountName} />
-                                                            </div>
-                                                        </div>
-                                                    </lightning-layout-item>
-                                                    <lightning-layout-item padding="around-small" size="12">
-                                                    </lightning-layout-item>
-                                                </template>
-
-                                                <!-- End of Account Selection -->
-
-                                                <!------------------------------------------      Search Results      --------------------------------------------->
-                                                <template if:true={displaySearchResults} >
-                                                    <lightning-layout-item size="12" >
-                                                        <div style="display: flex;justify-content: center;align-items: center;" data-name="searchResultWrapper2">
-                                                            <div style="display: flex;flex: 1 1 auto;align-items: center;justify-content: center;">
-                                                                <table class="slds-col slds-size_1-of-1 slds-m-vertical_medium slds-table">
-                                                                <!--table class="slds-m-vertical_medium profileTable slds-table" -->
-
-                                                                    <thead>
-                                                                        <tr class="slds-p-vertical_x-large text-xsmall openTransition">
-                                                                            <template for:each = {searchResults.fieldLabels} for:item="fieldLabel">
-                                                                                <th class="wrap" key={fieldLabel} scope="col">
-                                                                                    <!--div-- class="slds-truncate" title={fieldLabel}>{fieldLabel}</div-->
-                                                                                    {fieldLabel}
-                                                                                </th>
-                                                                            </template>
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                        <template for:each={searchResults.wrappedResults} for:item="row">
-                                                                            <tr key={row.accountId} onclick={selectAccount} class="slds-p-vertical_x-large text-xsmall openTransition">
-                                                                                <template for:each={row.fields} for:item="field">
-                                                                                    <td class="wrap" key={field} data-id={row.accountId} data-name={row.accountName}>{field}</td>
-                                                                                </template>
-                                                                            </tr>
-                                                                        </template>
-                                                                        <template if:false={accountFounds}>
-                                                                            <tr class="slds-p-vertical_x-large text-xsmall openTransition">
-                                                                                <td class="wrap" colspan={numberOfFields}>{labels.oneIdNoResults}</td>
-                                                                            </tr>
-                                                                        </template>
-                                                                       <template if:true={displayCreateNew}>
-                                                                            <tr class="slds-p-vertical_x-large text-xsmall openTransition">
-                                                                                <td class="wrap" colspan={numberOfFields}>
-                                                                                    <div role="presentation" class="slds-listbox__item lastRow">
-                                                                                        {labels.oneIdAccountNotFound} <span onclick={createNew}>{labels.oneIdCreateNew}</span>
-                                                                                    </div>
-                                                                                </td>
-                                                                            </tr>
-                                                                        </template>
-
-                                                                    </tbody>
-                                                                </table>
-
-                                                            </div>
-                                                        </div>
-                                                    </lightning-layout-item>
-                                                    <lightning-layout-item padding="around-small" size="12">
-                                                    </lightning-layout-item>
-                                                </template>
-                                                <div class="results" data-name="searchResultWrapper">   </div>
-
-                                            </template>
-                                        </template>
-
-                                        <template if:false={contactFound}>
-                                            <div class="slds-form-element__help">Contact not found, ensure you are logged in</div>
-                                        </template>
-
-                                    </template>
-
-                                    <template if:false={contactFound}>
-                                        <div class="slds-form-element__help">Contact not found, ensure you are logged in</div>
-                                    </template>
-                                </lightning-layout>
-
-                                <template if:true={showAccountCreation}>
-                                    <c-portal-registration-account-creation selected-country-id={selectedCountryId} iso-countries={isoCountriesPicklistOptions} customer-type={selectedCustomerType} account-name={accountNameInput}>
-                                    </c-portal-registration-account-creation>
-                                </template>
-                            </div>
-
-                            <div class="slds-p-around_medium topLightGrayBorder customWhiteBackground slds-clearfix">
-                                <lightning-button class="slds-float_right containedButton" data-id="submitButton" label={labels.submit} disabled={submitDisabled} variant="brand"  onclick={submit} >
-                                </lightning-button>
-                                <lightning-button class="slds-float_right containedButtonWhite slds-m-right_medium" data-id="cancelButton" label={labels.cancel} variant="brand"  onclick={cancel} >
-                                </lightning-button>
-                            </div>
-
-
-                        </span>
-
-                        <!--span-- slot="cardButton">
-                            <lightning-button variant="base" label="Submit" class="slds-p-right_small blueCustomButtonLinkSmall" onclick={submit}></lightning-button>
-                        </span-->
-                    </c-portal-custom-card-container>
-                </span>
-
-                <div data-id="spinnerId" class="slds-spinner_container" if:true={isLoading}>
-                    <div class="slds-spinner slds-spinner_medium" role="status">
-                        <span class="slds-assistive-text">Loading</span>
-                        <!--span-- class="slds-assistive-text">{labels.LoadingLabel}</span-->
-                        <div class="slds-spinner__dot-a"></div>
-                        <div class="slds-spinner__dot-b"></div>
-                    </div>
+    <div class="registration-modal">
+        <div data-name="top" class="banner">
+            <div class="header">
+                <div class="headerHome">
+                    <img src={homeIcon} height="24" width="24" onclick={openSaveAndGoToHomePopup}>
+                </div>
+                <div class="headerTitle">{labels.CSP_L2_Banner_Title}</div>
+                <div class="headerClose">
+                    <img src={crossIcon} height="32" width="32" onclick={openSaveAndClosePopup}>
                 </div>
             </div>
-        </div>
-    </template>
-
-    <template if:true={openConfirmationModal}>
-        <div class="modal">
-            <div class="customPopupInteriorQuarterScreenCentered">
-                <div class="slds-p-top_x-large slds-p-bottom_x-small">
-                    <div style="width:100%;">
-                        <span class="slds-p-left_large">
-                            <span><img src="/csportal/s/check2xGreen.svg" height="42" width="42" class="slds-p-left_small"></span>
-                        </span>
-                    </div>
-                </div>
-
-                <div class="slds-m-horizontal_x-large">
-                    <div class="cardBodyContent">
-                        <div class="slds-card__body">
-                            <div class="slds-p-bottom_x-small">
-                                <span class="text-medium text-darkGray text-bold">
-                                    <span>Success</span>
-                                </span>
-                            </div>
-                            <div class="slds-p-bottom_x-small">
-                                <div class="slds-p-bottom_medium">
-                                    <span class="fixed-text text-gray">Your registration was completed successfully.</span>
-                                </div>
-
-                                <div class="slds-p-around_medium topLightGrayBorder slds-clearfix">
-                                    <lightning-button class="slds-float_right containedButton slds-m-right_medium" data-id="cancelButton" label="Close" variant="brand"  onclick={closeConfirmationModal} >
-                                    </lightning-button>
-                                </div>
-                            </div>
+            <div class="progressBarContainer">
+                <div class="progressBar">
+                    <div class="progressItem">
+                        <div class="itemIcon">
+                            <template if:true={isStep1LogoChecked}>
+                                <img src={step1Logo} class="checkedIcon">
+                            </template>
+                            <template if:false={isStep1LogoChecked}>
+                                <img src={step1Logo} class="uncheckedIcon">
+                            </template>
                         </div>
+                        <template if:true={hasStep1Link}>
+                            <div class="itemTitle itemClickable" onclick={goToProfileDetailsFromBanner}><span>{labels.CSP_L2_Profile_Details}</span></div>
+                        </template>
+                        <template if:false={hasStep1Link}>
+                            <div class="itemTitle"><span>{labels.CSP_L2_Profile_Details}</span></div>
+                        </template>    
+                    </div>
+                    <div class="progressItem">
+                        <div class="itemIcon">
+                            <template if:true={isStep2LogoChecked}>
+                                <img src={step2Logo} class="checkedIcon">
+                            </template>
+                            <template if:false={isStep2LogoChecked}>
+                                <img src={step2Logo} class="uncheckedIcon">
+                            </template>
+                        </div>
+                        <template if:true={hasStep2Link}>
+                            <div class="itemTitle itemClickable" onclick={goToAccountSelectionFromBanner}><span>{labels.CSP_L2_Account_Selection}</span></div>
+                        </template>
+                        <template if:false={hasStep2Link}>
+                            <div class="itemTitle"><span>{labels.CSP_L2_Account_Selection}</span></div>
+                        </template>
+                    </div>
+                    <div class="progressItem">
+                        <div class="itemIcon">
+                            <template if:true={isStep3LogoChecked}>
+                                <img src={step3Logo} class="checkedIcon">
+                            </template>
+                            <template if:false={isStep3LogoChecked}>
+                                <img src={step3Logo} class="uncheckedIcon">
+                            </template>
+                        </div>
+                        <template if:true={hasStep3Link}>
+                            <div class="itemTitle itemClickable" onclick={goToConfirmationFromBanner}><span>{labels.CSP_L2_Confirmation}</span></div>
+                        </template>
+                        <template if:false={hasStep3Link}>
+                            <div class="itemTitle"><span>{labels.CSP_L2_Confirmation}</span></div>
+                        </template>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="customLightShadow customPopupInterior60PercentScreenCentered slds-is-relative">
+            <span slot="pageBody">
+                <c-portal-custom-card-container>
+                    <span slot="cardBody">
+                        <div>
+                            <template if:true={contactFound}>
+                                <template if:true={isProfileInformationStep}>
+                                    <c-portal-registration-profile-details
+                                        contact-info={contactInfo}
+                                        ongotostep={goToStep}
+                                        onstartloading={startLoading}
+                                        onstoploading={stopLoading}
+                                        onscrolltotop={scrollToTop}
+                                        oncompletionstatus={step1CompletionStatus}>
+                                    </c-portal-registration-profile-details>
+                                </template>
+
+                                <template if:true={isAccountSelectionStep}>
+                                    <c-portal-registration-account-selection
+                                        customer-type={selectedCustomerType}
+                                        country-id={selectedCountryId}
+                                        account-id={selectedAccountId}
+                                        search-results={searchResults}
+                                        is-triggered-by-request={isTriggeredByRequest}
+                                        ongotostep={goToStep}
+                                        onscrolltotop={scrollToTop}
+                                        onstartloading={startLoading}
+                                        onstoploading={stopLoading}
+                                        oncompletionstatus={step2CompletionStatus}>
+                                    </c-portal-registration-account-selection>
+                                </template>
+                                <template if:true={isCompanyInformationStep}>
+                                    <c-portal-registration-company-information
+                                        account={account}
+                                        country-id={selectedCountryId}
+                                        customer-type={selectedCustomerType}
+                                        original-customer-type={originalCustomerType}
+                                        is-triggered-by-request={isTriggeredByRequest}
+                                        ongotostep={goToStep}
+                                        onscrolltotop={scrollToTop}
+                                        oncompletionstatus={step3CompletionStatus}>
+                                    </c-portal-registration-company-information>
+                                </template>
+                                <template if:true={isAddressInformationStep}>
+                                    <c-portal-registration-address-information
+                                        account={account}
+                                        address={address}
+                                        country-id={selectedCountryId}
+                                        original-customer-type={originalCustomerType}
+                                        ongotostep={goToStep}
+                                        onscrolltotop={scrollToTop}
+                                        onstartloading={startLoading}
+                                        onstoploading={stopLoading}
+                                        oncompletionstatus={step4CompletionStatus}>
+                                    </c-portal-registration-address-information>
+                                </template>
+                                <template if:true={isConfirmationStep}>
+                                    <c-portal-registration-confirmation
+                                        contact-info={contactInfo}
+                                        trigger={trigger}
+                                        address={address}
+                                        account={account}
+                                        search-results={searchResults}
+                                        selected-account-id={selectedAccountId}
+                                        country-id={selectedCountryId}
+                                        is-triggered-by-request={isTriggeredByRequest}
+                                        ongotostep={goToStep}
+                                        onscrolltotop={scrollToTop}
+                                        onstartloading={startLoading}
+                                        onstoploading={stopLoading}
+                                        onsecondlevelregistrationcompletedactionone={secondLevelRegistrationCompletedAction1}
+                                        onsecondlevelregistrationcompletedactiontwo={secondLevelRegistrationCompletedAction2}>
+                                    </c-portal-registration-confirmation>
+                                </template>
+                            </template>
+                        </div>
+                    </span>
+                </c-portal-custom-card-container>        
+            </span>
+            
+        </div>
+
+        <div data-id="spinnerId" class="slds-spinner_container spinnerContainer" if:true={isLoading}>
+            <div class="slds-spinner slds-spinner_medium" role="status">
+                <span class="slds-assistive-text">Loading</span>
+                <div class="slds-spinner__dot-a"></div>
+                <div class="slds-spinner__dot-b"></div>
+            </div>
+        </div>
+    </div>
+
+    <template if:true={openMessageModal}>
+        <c-portal-registration-generic-modal
+            icon={alertIcon}
+            title={labels.CSP_L2_Profile_Incomplete}
+            message={labels.CSP_L2_Profile_Incomplete_Message}
+            button1-label={labels.CSP_L2_Yes}
+            button2-label={labels.CSP_L2_No}
+            onbuttononeaction={saveAndClose}
+            onbuttontwoaction={cancel}>
+        </c-portal-registration-generic-modal>
     </template>
 </template>
