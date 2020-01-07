@@ -1954,7 +1954,7 @@ public without sharing class ISSP_AMS_Accreditation {
 				newCase.IFAP_Country_ISO__c = con.Account.IATA_ISO_Country__r.ISO_Code__c;
 			}
 
-			isocountry = (isMultiCountryNewAE || isMCAccredited) ? fetchISOCountry(mcformCountryISO) : fetchISOCountry(newCase.IFAP_Country_ISO__c);
+			isocountry = ((isMultiCountryNewAE || isMCAccredited) && sectorValue == 'Travel_Agent' && mcformCountryISO != null) ? fetchISOCountry(mcformCountryISO) : fetchISOCountry(newCase.IFAP_Country_ISO__c);
 
 			if (isocountry.OSCAR_enabled__c && (!isocountry.SAAM_enable_non_IATA_Cargo_Agents__c ||
 				(newForm.Agent_Type__c != AMS_Utils.CATEGORY_CASSASSOCIATE && newForm.Agent_Type__c != AMS_Utils.CATEGORY_IMPORT_AGENT
