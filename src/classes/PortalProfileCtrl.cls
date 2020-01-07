@@ -440,20 +440,21 @@ public static Contact contactInfo = new Contact();
 		@AuraEnabled
 		public String cardKey;
 
-        public CardWrapper(String cardTitleAux, List<FieldWrapper> lstFieldWrapperAux, Boolean isEditableAux){
+        public CardWrapper(String cardTitleAux, List<FieldWrapper> lstFieldWrapperAux, Boolean isEditableAux, String cardKeyAux){
         	this.cardTitle = cardTitleAux;
         	this.lstFieldWrapper = lstFieldWrapperAux;
         	this.isEditable = isEditableAux;
-		this.idCardUrl = '';
+			this.cardKey = cardKeyAux;
+		    this.idCardUrl = '';
         }
 
-	public CardWrapper(String cardTitleAux, List<FieldWrapper> lstFieldWrapperAux, Boolean isEditableAux, String cardKeyAux, String idCardUrl){
-		this.cardTitle = cardTitleAux;
-		this.lstFieldWrapper = lstFieldWrapperAux;
-		this.isEditable = isEditableAux;
-		this.cardKey = cardKeyAux;
-		this.idCardUrl = idCardUrl;
-	}
+	    public CardWrapper(String cardTitleAux, List<FieldWrapper> lstFieldWrapperAux, Boolean isEditableAux, String cardKeyAux, String idCardUrl){
+		    this.cardTitle = cardTitleAux;
+		    this.lstFieldWrapper = lstFieldWrapperAux;
+		    this.isEditable = isEditableAux;
+		    this.cardKey = cardKeyAux;
+		    this.idCardUrl = idCardUrl;
+	    }
 
     }
 
@@ -483,7 +484,7 @@ public static Contact contactInfo = new Contact();
         fw.isRequired = true;
         lstfw2.add(fw);
         lstfw2.add(new FieldWrapper('MobilePhone',true,true));
-        lstCardWrapper.add(new CardWrapper(LABEL_PERSONAL_CONTACT, lstfw2, true));
+        lstCardWrapper.add(new CardWrapper(LABEL_PERSONAL_CONTACT, lstfw2, true,LABEL_EN_PERSONAL_CONTACT));
 
         //ACCESSIBILITY CARD
         List<FieldWrapper> lstfw3 = new List<FieldWrapper>();
@@ -550,7 +551,7 @@ public static Contact contactInfo = new Contact();
         lstfw1.add(new FieldWrapper('BillingState',false,true));
         lstfw1.add(new FieldWrapper('BillingStreet',false,true));
         lstfw1.add(new FieldWrapper('BillingPostalCode',false,true));
-        lstCardWrapper.add(new CardWrapper(LABEL_BUSINESS_CONTACT, lstfw1, true));
+        lstCardWrapper.add(new CardWrapper(LABEL_BUSINESS_CONTACT, lstfw1, true,LABEL_EN_BUSINESS_CONTACT));
 
         return lstCardWrapper;
     }
@@ -681,7 +682,7 @@ public static Contact contactInfo = new Contact();
                 lstfw1.add(new FieldWrapper(f.getFieldPath(),editable,true));
             }
         }
-        lstCardWrapper.add(new CardWrapper(LABEL_BASICS, lstfw1, true));
+        lstCardWrapper.add(new CardWrapper(LABEL_BASICS, lstfw1, true,LABEL_EN_BASICS));
 
         if (isAccountDomain) {
 			lstfw1.add(new FieldWrapper('AccountDomainPermission',false,false));
@@ -706,7 +707,7 @@ public static Contact contactInfo = new Contact();
         if(isGDPOptInDisplayed()){
             lstfw2.add(new FieldWrapper('GDP_Opt_In__c',true,true));
         }
-        lstCardWrapper.add(new CardWrapper(LABEL_COMPANY_CONTACT, lstfw2, true));
+        lstCardWrapper.add(new CardWrapper(LABEL_COMPANY_CONTACT, lstfw2, true,LABEL_EN_COMPANY_CONTACT));
 
         return lstCardWrapper;
 
