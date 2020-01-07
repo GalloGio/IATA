@@ -26,10 +26,11 @@ import CSP_DateFrom from '@salesforce/label/c.CSP_DateFrom';
 import CSP_DateTo from '@salesforce/label/c.CSP_DateTo';
 import CSP_RemoveAllFilters from '@salesforce/label/c.CSP_RemoveAllFilters';
 import CSP_Apply from '@salesforce/label/c.CSP_Apply';
+import CSP_FAQReachUsBanner_ButtonText from '@salesforce/label/c.CSP_FAQReachUsBanner_ButtonText';
 
 export default class PortalCasesList extends NavigationMixin(LightningElement) {
 
-    label = {
+    @track label = {
         CSP_RecentCases,
         CSP_SeeAll,
         Created_By,
@@ -43,6 +44,7 @@ export default class PortalCasesList extends NavigationMixin(LightningElement) {
         CSP_DateFrom,
         CSP_DateTo,
         CSP_RemoveAllFilters,
+        CSP_FAQReachUsBanner_ButtonText,
         CSP_Apply
     };
 
