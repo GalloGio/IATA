@@ -409,16 +409,5 @@
 
     <antcallback target="getStaticResourceAndLayouts" />
   </target>
-  <target name="getStaticResourceAndLayouts">
-    <echo level="info">Retrieving the server's version of STATIC RESOURCES</echo>
-    <mkdir dir="${basedir}/${sfdc.retrieveTarget}" />
-    <sf:retrieve retrieveTarget="${basedir}/${sfdc.retrieveTarget}" username="${sfdc.username}" password="${sfdc.password}" serverurl="${sfdc.serverurl}" unpackaged="src/layoutPackageandStatic.xml" />
-    <move file="${basedir}/${sfdc.retrieveTarget}/package.xml" tofile="src/layoutPackageandStatic.xml" />
-    <move file="${basedir}/${sfdc.retrieveTarget}" tofile="src" />
-
-
-  </target>
-
-
 
 </project>
