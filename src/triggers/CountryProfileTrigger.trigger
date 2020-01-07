@@ -6,7 +6,7 @@ trigger CountryProfileTrigger on Country_Profile__c (after insert, before update
 		if (Trigger.isUpdate && CountryProfileTriggerHandler.firstExec) {
 			CountryProfileTriggerHandler.handleBeforeUpdate(Trigger.newMap, Trigger.oldMap);
 		}
-		
+
 		if (Trigger.isInsert || Trigger.isUpdate) {
 			CountryProfileTriggerHandler.PopulateIsoCode(Trigger.new);
 		}
@@ -16,7 +16,7 @@ trigger CountryProfileTrigger on Country_Profile__c (after insert, before update
 		if (Trigger.isInsert) {
 			CountryProfileTriggerHandler.SubscribeUsersToNewCountryProfile(Trigger.newMap);
 		}
-		
+
 		if (Trigger.isInsert || Trigger.isUpdate) {
 			CountryProfileTriggerHandler.CreateUpdateFeedsSendNotifications(Trigger.newMap);
 		}

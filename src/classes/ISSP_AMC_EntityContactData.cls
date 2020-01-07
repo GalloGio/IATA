@@ -18,7 +18,7 @@ public class ISSP_AMC_EntityContactData {
 	public String searchHobEmail { get; set; }
 	public String currentContactId { get; set; }
 	public List<Contact> contactList { get; set; }
-	
+
 	public Participation_Online_Application__c controllerParticipation {
 		get {
 			return controllerParticipation;
@@ -29,72 +29,72 @@ public class ISSP_AMC_EntityContactData {
 		}
 	}
 
-	public List <SelectOption> countryList { 
-        get { 
-            vfISSP_FAQ2Case faq2Case = new vfISSP_FAQ2Case();
-            return faq2Case.countryList;
-        } 
-    }
-    
-    public List <SelectOption> salutationListSIS {
-        get {
-            if(salutationListSIS == null){
-                List <SelectOption> optionList = new List <SelectOption>();
-            
-                Schema.DescribeFieldResult fieldResult = Participation_Online_Application__c.SIS_Salutation__c.getDescribe();
-                List<Schema.PicklistEntry> ple = fieldResult.getPicklistValues();
+	public List <SelectOption> countryList {
+		get {
+			vfISSP_FAQ2Case faq2Case = new vfISSP_FAQ2Case();
+			return faq2Case.countryList;
+		}
+	}
 
-                for( Schema.PicklistEntry f : ple){
-                    optionList.add(new SelectOption( f.getValue(),f.getLabel()));
-                }
-                return optionList;
-            }
-            return salutationListSIS;
-        }
-    }
-    
-    public List <SelectOption> salutationListHOC {
-        get {
-            if(salutationListHOC == null){
-                List <SelectOption> optionList = new List <SelectOption>();
-            
-                Schema.DescribeFieldResult fieldResult = Participation_Online_Application__c.HOC_Salutation__c.getDescribe();
-                List<Schema.PicklistEntry> ple = fieldResult.getPicklistValues();
+	public List <SelectOption> salutationListSIS {
+		get {
+			if(salutationListSIS == null){
+				List <SelectOption> optionList = new List <SelectOption>();
 
-                for( Schema.PicklistEntry f : ple){
-                    optionList.add(new SelectOption( f.getValue(),f.getLabel()));
-                }
-                return optionList;
-            }
-            return salutationListHOC;
-        }
-    }
-    
-        public List <SelectOption> salutationListHOB {
-        get {
-            if(salutationListHOB == null){
-                List <SelectOption> optionList = new List <SelectOption>();
-            
-                Schema.DescribeFieldResult fieldResult = Participation_Online_Application__c.HOB_Salutation__c.getDescribe();
-                List<Schema.PicklistEntry> ple = fieldResult.getPicklistValues();
+				Schema.DescribeFieldResult fieldResult = Participation_Online_Application__c.SIS_Salutation__c.getDescribe();
+				List<Schema.PicklistEntry> ple = fieldResult.getPicklistValues();
 
-                for( Schema.PicklistEntry f : ple){
-                    optionList.add(new SelectOption( f.getValue(),f.getLabel()));
-                }
-                return optionList;
-            }
-            return salutationListHOB;
-        }
-    }
+				for( Schema.PicklistEntry f : ple){
+					optionList.add(new SelectOption( f.getValue(),f.getLabel()));
+				}
+				return optionList;
+			}
+			return salutationListSIS;
+		}
+	}
 
-    public Account accountRecord {get;set;}
-    
-    public ISSP_AMC_EntityContactData(){
-        
-    }
+	public List <SelectOption> salutationListHOC {
+		get {
+			if(salutationListHOC == null){
+				List <SelectOption> optionList = new List <SelectOption>();
+
+				Schema.DescribeFieldResult fieldResult = Participation_Online_Application__c.HOC_Salutation__c.getDescribe();
+				List<Schema.PicklistEntry> ple = fieldResult.getPicklistValues();
+
+				for( Schema.PicklistEntry f : ple){
+					optionList.add(new SelectOption( f.getValue(),f.getLabel()));
+				}
+				return optionList;
+			}
+			return salutationListHOC;
+		}
+	}
+
+		public List <SelectOption> salutationListHOB {
+		get {
+			if(salutationListHOB == null){
+				List <SelectOption> optionList = new List <SelectOption>();
+
+				Schema.DescribeFieldResult fieldResult = Participation_Online_Application__c.HOB_Salutation__c.getDescribe();
+				List<Schema.PicklistEntry> ple = fieldResult.getPicklistValues();
+
+				for( Schema.PicklistEntry f : ple){
+					optionList.add(new SelectOption( f.getValue(),f.getLabel()));
+				}
+				return optionList;
+			}
+			return salutationListHOB;
+		}
+	}
+
+	public Account accountRecord {get;set;}
+
+	public ISSP_AMC_EntityContactData(){
+
+	}
 
 	public void selectHocContact() {
-		
+
 		Contact contactRecord = getContact(currentContactId);
 		if(contactRecord != null) {
 			controllerParticipation.HOC_Email__c = contactRecord.Email;
@@ -104,11 +104,11 @@ public class ISSP_AMC_EntityContactData {
 			controllerParticipation.HOC_Salutation__c = contactRecord.Salutation;
 			controllerParticipation.HOC_Title__c = contactRecord.Title;
 		}
-		
+
 	}
 
 	public void selectHobContact() {
-		
+
 		Contact contactRecord = getContact(currentContactId);
 		if(contactRecord != null) {
 			controllerParticipation.HOB_Email__c = contactRecord.Email;
@@ -121,16 +121,16 @@ public class ISSP_AMC_EntityContactData {
 
 	}
 
-	private Contact getContact(id contactId) {	
+	private Contact getContact(id contactId) {
 		Contact contactRecord;
 		List<Contact> contactList = [
-	    			SELECT 
+					SELECT
 						id, Name, FirstName, LastName, Email, Fax, Phone, Salutation, Title
-	        		FROM 
-	        			Contact
-	            	WHERE 
-	            		Id = :contactId
-	        		
+					FROM
+						Contact
+					WHERE
+						Id = :contactId
+
 			];
 
 		if(contactList != null && contactList.size() > 0) {
@@ -148,101 +148,101 @@ public class ISSP_AMC_EntityContactData {
 		controllerParticipation.HOC_Phone__c = contactRecord.Phone;
 		controllerParticipation.HOC_Salutation__c = contactRecord.Salutation;
 		controllerParticipation.HOC_Title__c = contactRecord.Title;
-    }
+	}
 
-    /*public void searchHeadOfficeContact1() {
-    	Contact contactInfo = OneIdProfileCompanySettings.getUserContact();
-    	String sFirstName = '%';
-    	String sLastName = '%';
-    	String sEmail = '%';
-    	if(!String.isBlank(searchFirstName)) {
-    		sFirstName = '%' + searchFirstName + '%';
-    	}
-    	if(!String.isBlank(searchLastName)) {
-    		sLastName = '%' + searchLastName + '%';
-    	}
-    	if(!String.isBlank(searchEmail)) {
-    		sEmail = '%' + searchEmail + '%';
-    	}
-   		
-    	List<Contact> contactList = [
-    			SELECT 
+	/*public void searchHeadOfficeContact1() {
+		Contact contactInfo = OneIdProfileCompanySettings.getUserContact();
+		String sFirstName = '%';
+		String sLastName = '%';
+		String sEmail = '%';
+		if(!String.isBlank(searchFirstName)) {
+			sFirstName = '%' + searchFirstName + '%';
+		}
+		if(!String.isBlank(searchLastName)) {
+			sLastName = '%' + searchLastName + '%';
+		}
+		if(!String.isBlank(searchEmail)) {
+			sEmail = '%' + searchEmail + '%';
+		}
+
+		List<Contact> contactList = [
+				SELECT
 					id, Name, FirstName, LastName, Email, Fax, Phone, Salutation, Title, Account.Name
-        		FROM 
-        			Contact
-            	WHERE 
-            		Account.Id = :contactInfo.AccountId 
-        		AND
-        			FirstName LIKE :sFirstName
-        		AND 
-        			LastName LIKE :sLastName
-        		AND 
-        			Email LIKE :sEmail
+				FROM
+					Contact
+				WHERE
+					Account.Id = :contactInfo.AccountId
+				AND
+					FirstName LIKE :sFirstName
+				AND
+					LastName LIKE :sLastName
+				AND
+					Email LIKE :sEmail
 		];
 
-        this.contactList = contactList;
-        
-    }*/
+		this.contactList = contactList;
 
-    public void searchBillingContact() {
+	}*/
+
+	public void searchBillingContact() {
 		searchContact(searchHobFirstName, searchHobLastName, searchHobEmail);
 		System.debug('JCFF searchHobFirstName ' + searchHobFirstName);
 		System.debug('JCFF searchHobLastName ' + searchHobLastName);
 		System.debug('JCFF searchHobEmail ' + searchHobEmail);
-    }
+	}
 
-    public void searchHeadOfficeContact() {
+	public void searchHeadOfficeContact() {
 		searchContact(searchHocFirstName, searchHocLastName, searchHocEmail);
 		System.debug('JCFF searchHocFirstName ' + searchHocFirstName);
 		System.debug('JCFF searchHocLastName ' + searchHocLastName);
 		System.debug('JCFF searchHocEmail ' + searchHocEmail);
-    }
+	}
 
-    public void searchContact(String searchFirstName, String searchLastName, String searchEmail ) {
-    	Contact contactInfo = OneIdProfileCompanySettings.getUserContact();
-    	User userInfo = [SELECT accountId FROM USER WHERE id=: UserInfo.getUserId()];
-    	System.debug('Tiago Mendes user ' + userInfo);
-    	String sFirstName = '%';
-    	String sLastName = '%';
-    	String sEmail = '%';
-    	if(!String.isBlank(searchFirstName)) {
-    		sFirstName = '%' + searchFirstName + '%';
-    	}
-    	if(!String.isBlank(searchLastName)) {
-    		sLastName = '%' + searchLastName + '%';
-    	}
-    	if(!String.isBlank(searchEmail)) {
-    		sEmail = '%' + searchEmail + '%';
-    	}   		
-    	List<Contact> contactList = [
-    			SELECT 
+	public void searchContact(String searchFirstName, String searchLastName, String searchEmail ) {
+		Contact contactInfo = OneIdProfileCompanySettings.getUserContact();
+		User userInfo = [SELECT accountId FROM USER WHERE id=: UserInfo.getUserId()];
+		System.debug('Tiago Mendes user ' + userInfo);
+		String sFirstName = '%';
+		String sLastName = '%';
+		String sEmail = '%';
+		if(!String.isBlank(searchFirstName)) {
+			sFirstName = '%' + searchFirstName + '%';
+		}
+		if(!String.isBlank(searchLastName)) {
+			sLastName = '%' + searchLastName + '%';
+		}
+		if(!String.isBlank(searchEmail)) {
+			sEmail = '%' + searchEmail + '%';
+		}
+		List<Contact> contactList = [
+				SELECT
 					id, Name, FirstName, LastName, Email, Fax, Phone, Salutation, Title, Account.Name
-        		FROM 
-        			Contact
-        		
-            	//WHERE 
-            		//Account.Id = :contactInfo.AccountId 
-        		WHERE
-        			FirstName LIKE :sFirstName
-        		AND 
-        			LastName LIKE :sLastName
-        		AND 
-        			Email LIKE :sEmail
-        		AND
-        			AccountId = :userInfo.AccountId
-        		LIMIT 100
+				FROM
+					Contact
+
+				//WHERE
+					//Account.Id = :contactInfo.AccountId
+				WHERE
+					FirstName LIKE :sFirstName
+				AND
+					LastName LIKE :sLastName
+				AND
+					Email LIKE :sEmail
+				AND
+					AccountId = :userInfo.AccountId
+				LIMIT 100
 		];
 		System.debug('Tiago Mendes user accountID ' + userInfo.AccountId);
 		System.debug('JCFF sFirstName ' + sFirstName);
 		System.debug('JCFF sLastName ' + sLastName);
 		System.debug('JCFF sEmail ' + sEmail);
 		System.debug('JCFF contactList ' + contactList.size());
-        this.contactList = contactList;
-        
-    }
+		this.contactList = contactList;
+
+	}
 
 
-    public void addMeToBillingContact() {
+	public void addMeToBillingContact() {
 		Contact contactRecord = OneIdProfileCompanySettings.getUserContact();
 		controllerParticipation.HOB_Email__c = contactRecord.Email;
 		controllerParticipation.HOB_First_Name__c = contactRecord.FirstName;
@@ -250,23 +250,23 @@ public class ISSP_AMC_EntityContactData {
 		controllerParticipation.HOB_Phone__c = contactRecord.Phone;
 		controllerParticipation.HOB_Salutation__c = contactRecord.Salutation;
 		controllerParticipation.HOB_Title__c = contactRecord.Title;
-    }
+	}
 
-    private void fillDefaultParticipationData() {
-    	Account accountRecord;
-    	Contact contactInfo = OneIdProfileCompanySettings.getUserContact();
-    	List<Account> accountList = [
-    			SELECT 
+	private void fillDefaultParticipationData() {
+		Account accountRecord;
+		Contact contactInfo = OneIdProfileCompanySettings.getUserContact();
+		List<Account> accountList = [
+				SELECT
 					id, Name, CurrencyIsoCode, Email__c, BillingCountry, BillingPostalCode, BillingState, BillingCity
-	            	, BillingStreet, ShippingCountry, ShippingPostalCode, ShippingState, ShippingCity, ShippingStreet, ParentId, Region__c
-	            	, Customer_Type__c, Default_Payment_Type__c, IATA_ISO_Billing_State__c, IATA_ISO_Country__c, IATA_ISO_Shipping_State__c
-	            	, VAT_Number__c, Region_formula__c, SoldTo_Location__c, ICH_Member__c
-	            	, IATA_ISO_Country__r.ISO_Code__c, IATA_ISO_Billing_State__r.ISO_Code__c, IATA_ISO_Shipping_State__r.ISO_Code__c 
-	            	, Parent.Name, Parent.SoldTo_Location__c, TradeName__c, Legal_name__c
-        		FROM 
-        			Account
-            	WHERE 
-            		Id = :contactInfo.AccountId];
+					, BillingStreet, ShippingCountry, ShippingPostalCode, ShippingState, ShippingCity, ShippingStreet, ParentId, Region__c
+					, Customer_Type__c, Default_Payment_Type__c, IATA_ISO_Billing_State__c, IATA_ISO_Country__c, IATA_ISO_Shipping_State__c
+					, VAT_Number__c, Region_formula__c, SoldTo_Location__c, ICH_Member__c
+					, IATA_ISO_Country__r.ISO_Code__c, IATA_ISO_Billing_State__r.ISO_Code__c, IATA_ISO_Shipping_State__r.ISO_Code__c
+					, Parent.Name, Parent.SoldTo_Location__c, TradeName__c, Legal_name__c
+				FROM
+					Account
+				WHERE
+					Id = :contactInfo.AccountId];
 
 		if(accountList != null && accountList.size() > 0) {
 			accountRecord = accountList.get(0);
@@ -302,8 +302,8 @@ public class ISSP_AMC_EntityContactData {
 			controllerParticipation.Legal_Name__c = accountRecord.Legal_name__c;
 			//controllerParticipation.Name_of_Issuing_Authority__c = accountRecord.;
 			controllerParticipation.Name_of_Organization__c = accountRecord.Name;
-			
+
 
 		}
-    }
+	}
 }

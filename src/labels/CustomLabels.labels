@@ -1715,6 +1715,13 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <value>&lt;br/&gt;&lt;br/&gt;As a Portal Administrator you can either update your &lt;a href=&quot;/ISSP_PersonalInformation?mid=M5S1&quot;&gt;Personal Information&lt;/a&gt; to designate yourself as a Legal Authorized Signatory, or assign the correct person from the &lt;a href=&quot;/ISSP_ContactList?MainNav=Admin&amp;subNav=contacts&amp;mid=M4S1&quot;&gt;Company Administration -&gt; Contacts&lt;/a&gt; page and ask them to open your EasyPay account.</value>
     </labels>
     <labels>
+        <fullName>ANG_ISSP_IEP_Indonesia_msg</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_IEP_Indonesia_msg</shortDescription>
+        <value>Thank you for your enquiry. Please log a query in the Customer Portal with subject Easy Pay Account Opening Indonesia.</value>
+    </labels>
+    <labels>
         <fullName>ANG_ISSP_IEP_ModelBanking_India_msg</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -2831,6 +2838,13 @@ IATA Easy Pay 계좌 개설을 희망하시는 여행사는 아래 우리은행 
         <value>Special needs travelers represent a promising market for the travel industry. To unlock this business opportunity, travel suppliers and agents must first be able to identify customers who may have special travel needs. Then they must deliver the services that make their journey safe and pleasant... (&lt;a href=\&quot;http://www.iata.org/training/courses/Pages/travelers-special-needs-tttg98.aspx\&quot; target=\&quot;_blank\&quot;&gt;read more&lt;/a&gt;)</value>
     </labels>
     <labels>
+        <fullName>Attach_Proof_Of_Payment</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Attach_Proof_Of_Payment</shortDescription>
+        <value>Please attach your proof of payment in case you have paid this invoice.</value>
+    </labels>
+    <labels>
         <fullName>Attachment_Name</fullName>
         <categories>TransferAttachmentToCase</categories>
         <language>en_US</language>
@@ -2922,6 +2936,27 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>Bank transfer validation for auto renew</shortDescription>
         <value>Cannot pay with Bank Transfer when a product is on Auto Renew</value>
+    </labels>
+    <labels>
+        <fullName>Billing_Member_Accounting_Code</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Billing Member Accounting Code</shortDescription>
+        <value>Billing Member Accounting Code</value>
+    </labels>
+    <labels>
+        <fullName>Billing_Member_Designator_Code</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Billing Member Designator Code</shortDescription>
+        <value>Billing Member Designator Code</value>
+    </labels>
+    <labels>
+        <fullName>Billing_Member_Name</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Billing Member Name</shortDescription>
+        <value>Billing Member Name</value>
     </labels>
     <labels>
         <fullName>Billing_address</fullName>
@@ -3308,6 +3343,13 @@ Payment required on receipt of this Payment Advice
         <value>Was this article helpful?</value>
     </labels>
     <labels>
+        <fullName>CSP_Assign_New_Service</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Assign New Service</shortDescription>
+        <value>Assign New Service</value>
+    </labels>
+    <labels>
         <fullName>CSP_Branch_Offices</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -3578,6 +3620,14 @@ Payment required on receipt of this Payment Advice
         <value>You can use your new password to log in.</value>
     </labels>
     <labels>
+        <fullName>CSP_Close</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Close</shortDescription>
+        <value>Close</value>
+    </labels>
+    <labels>
         <fullName>CSP_Community</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -3642,6 +3692,14 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP_Confirmed_Requested_Service_Message</shortDescription>
         <value>Your {0} access request has been sent to your company’s portal administrators. &lt;br/&gt;Your portal administrator can be fund under your</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Contact_Id_Card_Error_Msg</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Contact Id Card Error Msg</shortDescription>
+        <value>Changing your profile name will impact the validity of your ID Card. Please contact our Customer Service Team to change your profile name.</value>
     </labels>
     <labels>
         <fullName>CSP_Contacts_NoResults_text1</fullName>
@@ -3738,11 +3796,27 @@ Payment required on receipt of this Payment Advice
         <value>Dear</value>
     </labels>
     <labels>
+        <fullName>CSP_Deduction_Notice</fullName>
+        <categories>CSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Deduction_Notice</shortDescription>
+        <value>Deduction Notice</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Deduction_Notice_Israel_Description</fullName>
+        <categories>CSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Deduction Notice Israel Description</shortDescription>
+        <value>This deduction form allows travel agents participating in BSP Israel to advise airlines and IATA BSP management of offset of any specific amount from due payment, as per Israel Anti-Trust Commissioner&apos;s instructions.</value>
+    </labels>
+    <labels>
         <fullName>CSP_Deny_User_Access_Title</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_Deny_User_Access_Title</shortDescription>
-        <value>Deny User Access</value>
+        <value>Deny Access</value>
     </labels>
     <labels>
         <fullName>CSP_Documents</fullName>
@@ -3783,6 +3857,14 @@ Payment required on receipt of this Payment Advice
         <protected>false</protected>
         <shortDescription>CSP_Documents_PubliCountry</shortDescription>
         <value>Publication Countries</value>
+    </labels>
+    <labels>
+        <fullName>CSP_EF_Invoices</fullName>
+        <categories>CSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>EF Invoices</shortDescription>
+        <value>E&amp;F Invoices</value>
     </labels>
     <labels>
         <fullName>CSP_Email</fullName>
@@ -3963,7 +4045,7 @@ Payment required on receipt of this Payment Advice
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP Existing User Message</shortDescription>
-        <value>It seems you are already a portal user. Please login with your password.</value>
+        <value>It seems you already are a portal user. Please login with your password.</value>
     </labels>
     <labels>
         <fullName>CSP_Expired_Email_Success_Msg</fullName>
@@ -4115,7 +4197,7 @@ Payment required on receipt of this Payment Advice
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP First Login Desc</shortDescription>
-        <value>Your account is created successfully. You can discover the portal features now. Please complete your profile to get more personalized content</value>
+        <value>Your account has been created successfully. You can now discover the standard features within the Portal. Some other features require further details, please complete your Profile for full access.</value>
     </labels>
     <labels>
         <fullName>CSP_First_Login_Title</fullName>
@@ -4190,11 +4272,19 @@ Payment required on receipt of this Payment Advice
         <value>Since you have not logged in the last 90 days, we’ve sent you an email with a new password.</value>
     </labels>
     <labels>
+        <fullName>CSP_Go_to_Webstar</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Go to Webstar</shortDescription>
+        <value>IATAN Online Service</value>
+    </labels>
+    <labels>
         <fullName>CSP_Grant_User_Access_Title</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_Grant_User_Access_Title</shortDescription>
-        <value>Grant User Access</value>
+        <value>Grant Access</value>
     </labels>
     <labels>
         <fullName>CSP_Home_WelcomeTitle</fullName>
@@ -4205,6 +4295,15 @@ Payment required on receipt of this Payment Advice
         <value>Welcome [username]</value>
     </labels>
     <labels>
+        <fullName>CSP_IATAN_Register_Info</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP IATAN Register Info</shortDescription>
+        <value>&lt;p&gt;To create an “IATAN Passenger Sales Agent (US only)” or “Travel Service Intermediaries TSI (US only)” account,you can request the creation of your company account through &lt;a href=&quot;https://webstar.iatan.org/WebStarExtranetWEB/login.jsp?token=void&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;IATAN online service&lt;/a&gt;.&lt;/p&gt;&lt;/br&gt;
+	&lt;p&gt;Once the registration is finalized in Webstar, you will be able to identify your organization in the IATA Customer Portal.&lt;/p&gt;</value>
+    </labels>
+    <labels>
         <fullName>CSP_IATA_Country</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -4212,11 +4311,74 @@ Payment required on receipt of this Payment Advice
         <value>IATA Country</value>
     </labels>
     <labels>
+        <fullName>CSP_IATA_Invoices</fullName>
+        <categories>CSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IATA Invoices</shortDescription>
+        <value>IATA Invoices</value>
+    </labels>
+    <labels>
+        <fullName>CSP_IDCard_Name</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP IDCard Name</shortDescription>
+        <value>Name on the ID Card</value>
+    </labels>
+    <labels>
+        <fullName>CSP_IDCard_Photo</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP IDCard Photo</shortDescription>
+        <value>Click here to see your ID Card photo</value>
+    </labels>
+    <labels>
+        <fullName>CSP_IDCard_Photo_Title</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP IDCard Photo Title</shortDescription>
+        <value>Photo</value>
+    </labels>
+    <labels>
+        <fullName>CSP_IDCard_Status</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP IDCard Status</shortDescription>
+        <value>ID Card Status</value>
+    </labels>
+    <labels>
+        <fullName>CSP_IDCard_Valid_To</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP IdCard Valid To</shortDescription>
+        <value>ID Card Expiry Date</value>
+    </labels>
+    <labels>
+        <fullName>CSP_IDCard_Ver_Number</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP IDCard Ver Number</shortDescription>
+        <value>ID Card VER Number</value>
+    </labels>
+    <labels>
         <fullName>CSP_IMPORTANT</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_IMPORTANT</shortDescription>
         <value>IMPORTANT</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Id_Card</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Id Card</shortDescription>
+        <value>ID Card</value>
     </labels>
     <labels>
         <fullName>CSP_Invalid_Email</fullName>
@@ -4451,7 +4613,7 @@ You can easily create a company account in two steps</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_L2_Country</shortDescription>
-        <value>Country</value>
+        <value>Country/Territory</value>
     </labels>
     <labels>
         <fullName>CSP_L2_Create_Account_Message</fullName>
@@ -4675,7 +4837,7 @@ You can easily create a company account in two steps</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_L2_No_Matching_Results</shortDescription>
-        <value>There is no matching results found</value>
+        <value>No matching results found</value>
     </labels>
     <labels>
         <fullName>CSP_L2_Other_Sector</fullName>
@@ -4811,7 +4973,7 @@ You can easily create a company account in two steps</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_L2_Requested_Modal_Title</shortDescription>
-        <value>Hi</value>
+        <value>Tell us more</value>
     </labels>
     <labels>
         <fullName>CSP_L2_Required</fullName>
@@ -4939,7 +5101,7 @@ You can easily create a company account in two steps</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_L2_Title</shortDescription>
-        <value>Title</value>
+        <value>Salutation</value>
     </labels>
     <labels>
         <fullName>CSP_L2_Trade_Name</fullName>
@@ -5194,6 +5356,13 @@ You can easily create a company account in two steps</value>
         <value>But once you have, you&apos;ll see the most recent ones here.</value>
     </labels>
     <labels>
+        <fullName>CSP_NoRecordsFiltered</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_NoRecordsFiltered</shortDescription>
+        <value>Sorry, no results found for the applied filters</value>
+    </labels>
+    <labels>
         <fullName>CSP_NoSearchResults</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -5224,6 +5393,14 @@ You can easily create a company account in two steps</value>
         <protected>false</protected>
         <shortDescription>CSP_OperationalCalendar_SeeMonthlyLink</shortDescription>
         <value>See Monthly</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Outstanding_Invoices</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Outstanding_Invoices</shortDescription>
+        <value>Outstanding Invoices</value>
     </labels>
     <labels>
         <fullName>CSP_Password</fullName>
@@ -5607,7 +5784,7 @@ You can easily create a company account in two steps</value>
         <shortDescription>CSP Restricted Login Message</shortDescription>
         <value>Your computer IP has been identified as sourcing from one of the countries listed as embargoed by U.S. authorities. &lt;br/&gt;
 The platform supporting our Customer Portal complies with this U.S. regulations and thus, we are currently unable to provide access to Customer Portal from your current IP address. &lt;br/&gt;
-Click &lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;here&lt;/a&gt; to contact us.</value>
+Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;here&lt;/a&gt; to contact us.</value>
     </labels>
     <labels>
         <fullName>CSP_Restricted_Login_Title</fullName>
@@ -5861,6 +6038,14 @@ Click &lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.as
         <value>Access Requested</value>
     </labels>
     <labels>
+        <fullName>CSP_Services_AddFavorite</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Services_AddFavorite</shortDescription>
+        <value>Add Favorite</value>
+    </labels>
+    <labels>
         <fullName>CSP_Services_AvailableServicesHelpText</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -5925,6 +6110,14 @@ Click &lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.as
         <value>My Services</value>
     </labels>
     <labels>
+        <fullName>CSP_Services_RemoveFavorite</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Services_RemoveFavorite</shortDescription>
+        <value>Remove Favorite</value>
+    </labels>
+    <labels>
         <fullName>CSP_Services_RequestServiceBannerButton</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -5955,6 +6148,22 @@ Click &lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.as
         <protected>false</protected>
         <shortDescription>CSP_Services_ServiceInformation</shortDescription>
         <value>Service Information</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Services_ShowAll</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Services_ShowAll</shortDescription>
+        <value>Show All</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Services_ShowOnlyFavorites</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Services_ShowOnlyFavorites</shortDescription>
+        <value>Show Only Favorites</value>
     </labels>
     <labels>
         <fullName>CSP_Services_Title</fullName>
@@ -6081,6 +6290,13 @@ Click &lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.as
         <protected>false</protected>
         <shortDescription>CSP_Travel_Agent_Accreditation_Changes_Request</shortDescription>
         <value>&lt;a href=&quot;/s/manage-service?serviceId=a2ww0000001D7GOAA0&quot; target=&quot;_self&quot;&gt;Click here to request the IATA Accreditation and Changes&lt;/a&gt;</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Treasury_Dashboard</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Treasury Dashboard</shortDescription>
+        <value>Treasury Dashboard</value>
     </labels>
     <labels>
         <fullName>CSP_Troubleshooting</fullName>
@@ -6658,6 +6874,13 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <protected>false</protected>
         <shortDescription>Creation date</shortDescription>
         <value>Creation date</value>
+    </labels>
+    <labels>
+        <fullName>Credit_Card_Payment_Link</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Credit_Card_Payment_Link</shortDescription>
+        <value>For credit card payment please click &lt;a href=&quot;{1}&quot; target=&quot;_blank&quot; style=&quot;color: blue; text-decoration-line: underline;&quot;&gt;here&lt;/a&gt;.</value>
     </labels>
     <labels>
         <fullName>Credit_card_payment_msg</fullName>
@@ -7980,6 +8203,13 @@ Message: {2}</value>
         <value>FW</value>
     </labels>
     <labels>
+        <fullName>Fee_Codes</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Fee Codes</shortDescription>
+        <value>Category</value>
+    </labels>
+    <labels>
         <fullName>Feed_Item_Invalid_Topics</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -8409,6 +8639,20 @@ You can choose one or more of the following topics:</value>
         <value>GADM Power User</value>
     </labels>
     <labels>
+        <fullName>GADM_Status_Change_Template_Link</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Status Change Template Link</shortDescription>
+        <value>Please click on link to access {0}.</value>
+    </labels>
+    <labels>
+        <fullName>GADM_User_Already_Invited</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM User Already Invited</shortDescription>
+        <value>User is already invited to GADM program.</value>
+    </labels>
+    <labels>
         <fullName>GADM_User_Invitation_Mr</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -8562,7 +8806,7 @@ You can choose one or more of the following topics:</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Generic_Sanctions_Message</shortDescription>
-        <value>Your computer IP has been identified as sourcing from one of the countries listed as embargoed by U.S. authorities.&lt;br/&gt;The platform supporting our  Portal complies with this U.S. regulations and thus, we are currently unable to provide access to Portal from your current IP address.&lt;br/&gt;Click &lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.aspx&quot; &gt;here&lt;/a&gt; to contact your regional IATA office.</value>
+        <value>Your computer IP has been identified as sourcing from one of the countries listed as embargoed by U.S. authorities.&lt;br/&gt;The platform supporting our  Portal complies with this U.S. regulations and thus, we are currently unable to provide access to Portal from your current IP address.&lt;br/&gt;Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quot; &gt;here&lt;/a&gt; to contact your regional IATA office.</value>
     </labels>
     <labels>
         <fullName>GetQuoteConfirmationMsg</fullName>
@@ -12293,6 +12537,14 @@ For new applicants and returning agents who do not have their existing ID Card c
         <value>The application form can not be modified after the payment has been made</value>
     </labels>
     <labels>
+        <fullName>IDCard_NoUSServiceDescription</fullName>
+        <categories>IATA Passenger Sales Agent,TIDS Agent,Domestic Agent</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IDCard_NoUSServiceDescription</shortDescription>
+        <value>Apply &amp; pay for your ID Card (new, renew, change of agency) and get IATA travel agent benefits.</value>
+    </labels>
+    <labels>
         <fullName>IDCard_No_Price_Table_Found</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -12804,6 +13056,14 @@ Kindly note that home-based agents are required to coordinate with their colleag
         <protected>false</protected>
         <shortDescription>IDCard_TrxNum</shortDescription>
         <value>Transaction #:</value>
+    </labels>
+    <labels>
+        <fullName>IDCard_USServiceDescription</fullName>
+        <categories>IATAN Passenger Sales Agent (USA Only),Travel Service Intermediaries-TSI (USA Only),IATA Passenger Sales Agent</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IDCard_USServiceDescription</shortDescription>
+        <value>(For US agents only) Request for ID Cards, register Agents, pay Annual Service Fee, process Agency Recertification, etc</value>
     </labels>
     <labels>
         <fullName>IDCard_Update_Application</fullName>
@@ -24987,6 +25247,14 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <value>Type of Agency:</value>
     </labels>
     <labels>
+        <fullName>ISSP_ANG_DISCARD_APPLICATION</fullName>
+        <categories>ISSP,ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_DISCARD_APPLICATION</shortDescription>
+        <value>Discard Application</value>
+    </labels>
+    <labels>
         <fullName>ISSP_ANG_ENTIRE_HIERARCHY</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -25778,7 +26046,7 @@ Separate legal entities cannot share the same Legal Name.</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AP_Bank_Details_Change</shortDescription>
-        <value>BSP / CASS Change of Bank details</value>
+        <value>Joining Change of Bank details</value>
     </labels>
     <labels>
         <fullName>ISSP_AP_Bank_Details_Change_Description</fullName>
@@ -26010,6 +26278,14 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <protected>false</protected>
         <shortDescription>ISSP Add FAP Contact</shortDescription>
         <value>Add Financial Assessment Contact</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Add_New_Associate_Entity</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Add_New_Associate_Entity</shortDescription>
+        <value>Add New Associate Entity</value>
     </labels>
     <labels>
         <fullName>ISSP_Add_User_to_this_service</fullName>
@@ -26574,7 +26850,8 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_CalendarDisclaimer</shortDescription>
-        <value>Note: There are Local Specific Dates in the Calendar for this operation. Please download the full version of the Calendar in the Resource Center, Document Tab.</value>
+        <value>&quot;Note: The calendar for this market contains local dpecific dates that are not reflected in this application. 
+Please make sure you download the full pdf version of the Calendar for your market by clicking on the support tab and then selecting calendars under documents on the right hand side of the page.&quot;</value>
     </labels>
     <labels>
         <fullName>ISSP_CampaignNotification_Confirm</fullName>
@@ -26907,7 +27184,7 @@ Can you please confirm which country you&apos;ve previously received support for
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Change_Request</shortDescription>
-        <value>BSP / CASS Change Request</value>
+        <value>Joining Change Request</value>
     </labels>
     <labels>
         <fullName>ISSP_Change_Request_Description</fullName>
@@ -29951,6 +30228,22 @@ this is the tiess topic help</value>
         <value>Please, note that a change to your name will not be reflected on your ID Card. For changing it on ID Card, please, login to ID Card platform.</value>
     </labels>
     <labels>
+        <fullName>ISSP_IdCard_NonUS</fullName>
+        <categories>IATA Passenger Sales Agent,TIDS Agent,Domestic Agent</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_IdCard_NonUS</shortDescription>
+        <value>ID Card Online Platform</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_IdCard_US</fullName>
+        <categories>IATAN Passenger Sales Agent (USA Only),Travel Service Intermediaries-TSI (USA Only),IATA Passenger Sales Agent</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_IdCard_US</shortDescription>
+        <value>IATAN Online Services</value>
+    </labels>
+    <labels>
         <fullName>ISSP_In_Progress</fullName>
         <categories>Portal</categories>
         <language>en_US</language>
@@ -30052,7 +30345,7 @@ this is the tiess topic help</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Join_BSP_CASS</shortDescription>
-        <value>Join BSP / CASS</value>
+        <value>Joining Settlement Services</value>
     </labels>
     <labels>
         <fullName>ISSP_Join_BSP_CASS_Description</fullName>
@@ -31172,7 +31465,7 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP OperationalCalendar PDFFooterText</shortDescription>
-        <value>This is the footer, please change the value of this custom label: ISSP_OperationalCalendar_PDFFooterText</value>
+        <value>.</value>
     </labels>
     <labels>
         <fullName>ISSP_OperationalCalendar_Reset</fullName>
@@ -33836,7 +34129,7 @@ If you are not sure if your company based in {0} is subject to the EU laws on da
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Sanctions_Message</shortDescription>
-        <value>Your computer IP has been identified as sourcing from one of the countries listed as embargoed by U.S. authorities.&lt;br/&gt;The platform supporting our Customer Portal complies with this U.S. regulations and thus, we are currently unable to provide access to Customer Portal from your current IP address.&lt;br/&gt;Click &lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.aspx&quot; &gt;here&lt;/a&gt; to contact your regional IATA office.</value>
+        <value>Your computer IP has been identified as sourcing from one of the countries listed as embargoed by U.S. authorities.&lt;br/&gt;The platform supporting our Customer Portal complies with this U.S. regulations and thus, we are currently unable to provide access to Customer Portal from your current IP address.&lt;br/&gt;Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quot; &gt;here&lt;/a&gt; to contact your regional IATA office.</value>
     </labels>
     <labels>
         <fullName>ISSP_Satisfactory</fullName>
@@ -35548,6 +35841,27 @@ Please use hashtags (#) to define the topic(s) of your post.
 You can choose one or more of the following topics:</value>
     </labels>
     <labels>
+        <fullName>Invoice_Amount</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Invoice Amount</shortDescription>
+        <value>Amount</value>
+    </labels>
+    <labels>
+        <fullName>Invoice_Date</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Invoice Date</shortDescription>
+        <value>Invoice Date</value>
+    </labels>
+    <labels>
+        <fullName>Invoice_Status</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Invoice Status</shortDescription>
+        <value>Status</value>
+    </labels>
+    <labels>
         <fullName>Invoice_number</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -36686,6 +37000,13 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <value>Line of Business (LoB)</value>
     </labels>
     <labels>
+        <fullName>Link_To_SIS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Link To SIS</shortDescription>
+        <value>{1} For more information about this invoice &lt;a href=&quot;{2}&quot; target=&quot;_blank&quot; style=&quot;color: blue; text-decoration-line: underline;&quot;&gt;Go to SIS&lt;/a&gt;.</value>
+    </labels>
+    <labels>
         <fullName>LiveAgentButtonLanguage</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -37102,6 +37423,13 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <protected>false</protected>
         <shortDescription>NoSameName</shortDescription>
         <value>There is already an attachment with the same name. Please rename it.</value>
+    </labels>
+    <labels>
+        <fullName>No_Invoices_To_Display</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>No_Invoices_To_Display</shortDescription>
+        <value>There is no outstanding invoices at the moment.</value>
     </labels>
     <labels>
         <fullName>No_Reply</fullName>
@@ -38320,7 +38648,7 @@ If you continue to experience issues registering for the IATA Customer Portal th
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_Online Help Link</shortDescription>
-        <value>http://www.iata.org/customer-portal/Pages/contactus-v2.aspx</value>
+        <value>https://www.iata.org/en/contact-support/contactus-v2/</value>
     </labels>
     <labels>
         <fullName>OneId_Password</fullName>
@@ -40705,6 +41033,13 @@ title,Title,Name</value>
         <value>Top Sellers</value>
     </labels>
     <labels>
+        <fullName>See_Bank_Account_Details</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>See_Bank_Account_Details</shortDescription>
+        <value>Please see below bank account details for bank transfer payment.</value>
+    </labels>
+    <labels>
         <fullName>See_details</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -40979,6 +41314,14 @@ title,Title,Name</value>
         <value>Stay Informed!</value>
     </labels>
     <labels>
+        <fullName>Stop_creating_accounts_from_Owners_and_Subsidiaries</fullName>
+        <categories>Owners, Subsidiaries</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Stop creating accounts from Owners and Subsidiaries</shortDescription>
+        <value>No account was found with this name, please create a Standard account first in order to add it here!</value>
+    </labels>
+    <labels>
         <fullName>Street_cannot_be_empty</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -41099,6 +41442,13 @@ title,Title,Name</value>
         <value>IATA: International Air Transport Association</value>
     </labels>
     <labels>
+        <fullName>Total_Amount</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Total Amount</shortDescription>
+        <value>Total Amount</value>
+    </labels>
+    <labels>
         <fullName>Total_Cost</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -41126,6 +41476,209 @@ title,Title,Name</value>
         <protected>false</protected>
         <shortDescription>Transfer Attachments</shortDescription>
         <value>Transfer Attachments</value>
+    </labels>
+    <labels>
+        <fullName>Treasury_Dashboard_BSP</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Treasury Dashboard BSP</shortDescription>
+        <value>BSP</value>
+    </labels>
+    <labels>
+        <fullName>Treasury_Dashboard_BSP_Long</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Treasury Dashboard BSP Long</shortDescription>
+        <value>Billing and Settlement Plan (BSP)</value>
+    </labels>
+    <labels>
+        <fullName>Treasury_Dashboard_Bank_Holidays</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Treasury Dashboard Bank Holidays</shortDescription>
+        <value>Bank holidays</value>
+    </labels>
+    <labels>
+        <fullName>Treasury_Dashboard_Bank_Holidays_URL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Treasury Dashboard Bank Holidays URL</shortDescription>
+        <value>http://www.bank-holidays.com</value>
+    </labels>
+    <labels>
+        <fullName>Treasury_Dashboard_CASS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Treasury Dashboard CASS</shortDescription>
+        <value>CASS</value>
+    </labels>
+    <labels>
+        <fullName>Treasury_Dashboard_CASS_Long</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Treasury Dashboard CASS Long</shortDescription>
+        <value>Cargo Accounts Settlement Systems (CASS)</value>
+    </labels>
+    <labels>
+        <fullName>Treasury_Dashboard_Central_Banks_World_Wide</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Treasury Dashboard Central Banks World Wide</shortDescription>
+        <value>Central Banks World Wide</value>
+    </labels>
+    <labels>
+        <fullName>Treasury_Dashboard_Central_Banks_World_Wide_URL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Treasury Dashboard Central Banks World Wide URL</shortDescription>
+        <value>http://www.bis.org/cbanks.htm</value>
+    </labels>
+    <labels>
+        <fullName>Treasury_Dashboard_Currency_Center</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Treasury Dashboard Currency Center</shortDescription>
+        <value>Currency Center</value>
+    </labels>
+    <labels>
+        <fullName>Treasury_Dashboard_Currency_Center_URL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Treasury Dashboard Currency Center URL</shortDescription>
+        <value>https://portal.iata.org/myservices/ISSP_CurrencyCenterHome</value>
+    </labels>
+    <labels>
+        <fullName>Treasury_Dashboard_Exchange_Rates</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Treasury Dashboard Exchange Rates</shortDescription>
+        <value>Exchange rates</value>
+    </labels>
+    <labels>
+        <fullName>Treasury_Dashboard_Exchange_Rates_Long</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Treasury Dashboard Exchange Rates Long</shortDescription>
+        <value>Exchange Rates Services</value>
+    </labels>
+    <labels>
+        <fullName>Treasury_Dashboard_FX_Rates</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Treasury Dashboard FX Rates</shortDescription>
+        <value>FX Rates</value>
+    </labels>
+    <labels>
+        <fullName>Treasury_Dashboard_FX_Rates_URL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Treasury Dashboard FX Rates URL</shortDescription>
+        <value>http://www.oanda.com/currency/converter/</value>
+    </labels>
+    <labels>
+        <fullName>Treasury_Dashboard_Header_Text</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Treasury Dashboard Header Text</shortDescription>
+        <value>One Source. Global View.</value>
+    </labels>
+    <labels>
+        <fullName>Treasury_Dashboard_ICCS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Treasury Dashboard ICCS</shortDescription>
+        <value>ICCS</value>
+    </labels>
+    <labels>
+        <fullName>Treasury_Dashboard_ICCS_Long</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Treasury Dashboard ICCS Long</shortDescription>
+        <value>IATA Currency Clearance Service (ICCS)</value>
+    </labels>
+    <labels>
+        <fullName>Treasury_Dashboard_ICH</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Treasury Dashboard ICH</shortDescription>
+        <value>ICH</value>
+    </labels>
+    <labels>
+        <fullName>Treasury_Dashboard_ICH_Long</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Treasury Dashboard ICH Long</shortDescription>
+        <value>IATA Clearing House (ICH)</value>
+    </labels>
+    <labels>
+        <fullName>Treasury_Dashboard_Links</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Treasury Dashboard Links</shortDescription>
+        <value>Useful Links</value>
+    </labels>
+    <labels>
+        <fullName>Treasury_Dashboard_Market_News</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Treasury Dashboard Market News</shortDescription>
+        <value>Market News</value>
+    </labels>
+    <labels>
+        <fullName>Treasury_Dashboard_Market_News_URL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Treasury Dashboard Market News URL</shortDescription>
+        <value>http://www.bloomberg.com</value>
+    </labels>
+    <labels>
+        <fullName>Treasury_Dashboard_Premium_Dashboard</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Treasury Dashboard Premium Dashboard</shortDescription>
+        <value>Premium</value>
+    </labels>
+    <labels>
+        <fullName>Treasury_Dashboard_Service_Name</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Treasury Dashboard Service Name</shortDescription>
+        <value>Treasury Dashboard</value>
+    </labels>
+    <labels>
+        <fullName>Treasury_Dashboard_Standard_Dashboard</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Treasury Dashboard Standard Dashboard</shortDescription>
+        <value>Standard</value>
+    </labels>
+    <labels>
+        <fullName>Treasury_Dashboard_Terms_Of_Use</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Treasury Dashboard Terms Of Use</shortDescription>
+        <value>Terms of Use</value>
+    </labels>
+    <labels>
+        <fullName>Treasury_Dashboard_Terms_of_Use_URL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Treasury Dashboard Terms of Use URL</shortDescription>
+        <value>https://www.iata.org/Pages/terms.aspx</value>
+    </labels>
+    <labels>
+        <fullName>Treasury_Dashboard_User_Guide</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Treasury Dashboard User Guide</shortDescription>
+        <value>User Guide</value>
+    </labels>
+    <labels>
+        <fullName>Treasury_Dashboard_User_Guide_URL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Treasury Dashboard User Guide URL</shortDescription>
+        <value>https://iata--c.eu12.content.force.com/servlet/servlet.FileDownload?file=015w0000002P5Dl</value>
     </labels>
     <labels>
         <fullName>Trust_Weaver</fullName>

@@ -8,21 +8,21 @@ private class ISSP_Ctrl_Country_Requirements_Test {
 		IATA_ISO_Country__c c3 = new IATA_ISO_Country__c(Name = 'Portugal', ISO_Code__c = 'PT', ANG_Enable_NewGen__c = true);
 
 		insert new List<IATA_ISO_Country__c>{c1, c2, c3};
-		
-		AP_Country_Requierment__c apcr1 = new AP_Country_Requierment__c(Name = 'Req1', 
+
+		AP_Country_Requierment__c apcr1 = new AP_Country_Requierment__c(Name = 'Req1',
 																		Country__c = c1.Id,
 																		Line_of_business__c = 'BSP');
 
 		AP_Country_Requierment__c apcr2 = new AP_Country_Requierment__c(Name = 'Req2',
 																		Country__c = c2.Id,
 																		Line_of_business__c = 'CASS');
-		
+
 		AP_Country_Requierment__c apcr3 = new AP_Country_Requierment__c(Name = 'Req3',
 																		Country__c = c3.Id,
 																		Line_of_business__c = 'XPTO');
-	
+
 		insert new List<AP_Country_Requierment__c>{apcr1, apcr2, apcr3};
-		
+
 		AMS_Accreditation_Country_CheckList__c cc1 = new AMS_Accreditation_Country_CheckList__c(IATA_ISO_Country__c = c3.Id,
 																								Operation__c = 'Airline');
 
@@ -67,7 +67,7 @@ private class ISSP_Ctrl_Country_Requirements_Test {
 																					Requirement_text__c = 'Text3',
 																					Location_type__c = 'HO',
 																					ANG_Accreditation_Model__c = 'Legacy',
-																					Language__c = 'de');		
+																					Language__c = 'de');
 
 		insert new List<AMS_Accreditation_Requirement__c>{ar1, ar2, ar3, ar4, ar5};
 	}
@@ -99,7 +99,7 @@ private class ISSP_Ctrl_Country_Requirements_Test {
 		Test.stopTest();
 
 		// 2 elements + null value
-		System.assertEquals(listResult.size(),3);
+		System.assertEquals(4,listResult.size());
 	}
 
 	// with type filter, 1 results
@@ -110,7 +110,7 @@ private class ISSP_Ctrl_Country_Requirements_Test {
 		controller.runSearch();
 		Test.stopTest();
 
-        System.assert(controller.countryRequirement==null);
+		System.assert(controller.countryRequirement==null);
 	}
 
 	// with country filter, 1 results
@@ -118,11 +118,11 @@ private class ISSP_Ctrl_Country_Requirements_Test {
 		Test.startTest();
 		ISSP_Ctrl_Country_Requirements controller = new ISSP_Ctrl_Country_Requirements();
 		controller.countryFilter = [Select Id from IATA_ISO_Country__c where Name = 'Canada'].id;
-        controller.typeFilter = 'CASS';
+		controller.typeFilter = 'CASS';
 		controller.runSearch();
 		Test.stopTest();
 
-        System.assert(controller.countryRequirement!=null);
+		System.assert(controller.countryRequirement!=null);
 	}
 
 	// with string filter, 1 results
@@ -133,166 +133,166 @@ private class ISSP_Ctrl_Country_Requirements_Test {
 		controller.runSearch();
 		Test.stopTest();
 
-        System.assert(controller.countryRequirement==null);
+		System.assert(controller.countryRequirement==null);
 	}
 
-    private static User createPortalUser() {
-        Account account = ISSP_ObjectFactory.createNewAccount();
-        insert account;
+	private static User createPortalUser() {
+		Account account = ISSP_ObjectFactory.createNewAccount();
+		insert account;
 
-        Contact con = ISSP_ObjectFactory.createNewContact();
-        con.AccountId = account.Id;
-        con.Email = 'Test@test11.com';
-        insert con;
+		Contact con = ISSP_ObjectFactory.createNewContact();
+		con.AccountId = account.Id;
+		con.Email = 'Test@test11.com';
+		insert con;
 
-        User newUser = ISSP_ObjectFactory.createPortalUser(con);
-        con.OwnerId = newUser.Id;
-        update con;
+		User newUser = ISSP_ObjectFactory.createPortalUser(con);
+		con.OwnerId = newUser.Id;
+		update con;
 
-        newUser = [Select Id, ContactId from User where Id = :newUser.Id];
-        return newUser;
-     }
+		newUser = [Select Id, ContactId from User where Id = :newUser.Id];
+		return newUser;
+	 }
 
-    @isTest static void test_checkAccess_False() {
-        User testUser = ISSP_Ctrl_AccountStatements_AcceptTest.createPortalUser();
+	@isTest static void test_checkAccess_False() {
+		User testUser = ISSP_Ctrl_AccountStatements_AcceptTest.createPortalUser();
 
-        PageReference result;
-        Test.startTest();
-        System.runAs(testUser) {
-            ISSP_Ctrl_Country_Requirements controller = new ISSP_Ctrl_Country_Requirements();
-            result = controller.checkAccess();
-        }
-        Test.stopTest();
+		PageReference result;
+		Test.startTest();
+		System.runAs(testUser) {
+			ISSP_Ctrl_Country_Requirements controller = new ISSP_Ctrl_Country_Requirements();
+			result = controller.checkAccess();
+		}
+		Test.stopTest();
 
-        System.assert(result!=null);
-    }
+		System.assert(result!=null);
+	}
 
-    @isTest static void test_checkAccess_True() {
-    	IATA_ISO_Country__c country = [SELECT Id FROM IATA_ISO_Country__c WHERE Name = 'Portugal'];
+	@isTest static void test_checkAccess_True() {
+		IATA_ISO_Country__c country = [SELECT Id FROM IATA_ISO_Country__c WHERE Name = 'Portugal'];
 
-        User testUser = ISSP_Ctrl_AccountStatements_AcceptTest.createPortalUser();
+		User testUser = ISSP_Ctrl_AccountStatements_AcceptTest.createPortalUser();
 
-        Account acc = [Select Sector__c from Account limit 1];
-        acc.Sector__c = 'Airline';
-        acc.IATACode__c = '1234567890';
-        acc.IATA_ISO_Country__c = country.Id;
-        update acc;
+		Account acc = [Select Sector__c from Account limit 1];
+		acc.Sector__c = 'Airline';
+		acc.IATACode__c = '1234567890';
+		acc.IATA_ISO_Country__c = country.Id;
+		update acc;
 
-        PageReference result;
-        Test.startTest();
+		PageReference result;
+		Test.startTest();
 
-        System.runAs(testUser) {
-            ISSP_Ctrl_Country_Requirements controller = new ISSP_Ctrl_Country_Requirements();
-            result = controller.checkAccess();
-            controller.getNewLayout();
-            controller.getCountryRequirementsList();
-            controller.getAccreditationTypes();
-            controller.refreshRequirementsList();
-        }	
+		System.runAs(testUser) {
+			ISSP_Ctrl_Country_Requirements controller = new ISSP_Ctrl_Country_Requirements();
+			result = controller.checkAccess();
+			controller.getNewLayout();
+			controller.getCountryRequirementsList();
+			controller.getAccreditationTypes();
+			controller.refreshRequirementsList();
+		}
 
-        Test.stopTest();
+		Test.stopTest();
 
-        System.assert(result==null);
-    }
+		System.assert(result==null);
+	}
 
-    @isTest static void test_checkAccess_True_2() {
-    	IATA_ISO_Country__c country = [SELECT Id FROM IATA_ISO_Country__c WHERE Name = 'Portugal'];
+	@isTest static void test_checkAccess_True_2() {
+		IATA_ISO_Country__c country = [SELECT Id FROM IATA_ISO_Country__c WHERE Name = 'Portugal'];
 
-        Account topParent = new Account (
-                name = 'AccountTest',
-                IATA_ISO_Country__c = country.Id,
-                Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
-                ANG_IEP_Status__c = ANG_ISSP_PortalServiceHelper.STATUS_OPEN,
-                Location_type__c = 'HE',
+		Account topParent = new Account (
+				name = 'AccountTest',
+				IATA_ISO_Country__c = country.Id,
+				Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
+				ANG_IEP_Status__c = ANG_ISSP_PortalServiceHelper.STATUS_OPEN,
+				Location_type__c = 'HE',
 				Location_Class__c = 'P'
-            );
+			);
 
-        insert topParent;
+		insert topParent;
 
-        Account a = new Account (
-                name = 'AccountTest',
-                IATA_ISO_Country__c = country.Id,
-                Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
-                ANG_IEP_Status__c = ANG_ISSP_PortalServiceHelper.STATUS_OPEN,
-                Location_type__c = 'HE',
-                status__c = 'Approved',
-                Top_Parent__c = topParent.id,
+		Account a = new Account (
+				name = 'AccountTest',
+				IATA_ISO_Country__c = country.Id,
+				Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
+				ANG_IEP_Status__c = ANG_ISSP_PortalServiceHelper.STATUS_OPEN,
+				Location_type__c = 'HE',
+				status__c = 'Approved',
+				Top_Parent__c = topParent.id,
 				Location_Class__c = 'P'
-            );
+			);
 
-        insert a;
+		insert a;
 
-        User testUser = ISSP_Ctrl_AccountStatements_AcceptTest.createPortalUser();
-        
-        PageReference result;
-        Test.startTest();
+		User testUser = ISSP_Ctrl_AccountStatements_AcceptTest.createPortalUser();
 
-        System.runAs(testUser) {
-            ISSP_Ctrl_Country_Requirements controller = new ISSP_Ctrl_Country_Requirements();
+		PageReference result;
+		Test.startTest();
 
-            controller.getLanguagesMap();
-            controller.getCountryRequirementsList();
-        }	
+		System.runAs(testUser) {
+			ISSP_Ctrl_Country_Requirements controller = new ISSP_Ctrl_Country_Requirements();
 
-        Test.stopTest();
+			controller.getLanguagesMap();
+			controller.getCountryRequirementsList();
+		}
 
-        System.assert(result==null);
-    } 
+		Test.stopTest();
 
-    @isTest static void test_getCountryRequirementsList() {
-    	IATA_ISO_Country__c country = [SELECT Id FROM IATA_ISO_Country__c WHERE Name = 'Portugal'];
+		System.assert(result==null);
+	}
 
-        User testUser = ISSP_Ctrl_AccountStatements_AcceptTest.createPortalUser();
+	@isTest static void test_getCountryRequirementsList() {
+		IATA_ISO_Country__c country = [SELECT Id FROM IATA_ISO_Country__c WHERE Name = 'Portugal'];
 
-        Account acc = [Select Sector__c from Account limit 1];
-        acc.Sector__c = 'Travel Agent';
-        acc.IATACode__c = '1234567890';
-        acc.Location_type__c = 'HO';
-        acc.IATA_ISO_Country__c = country.Id;
-        update acc;
+		User testUser = ISSP_Ctrl_AccountStatements_AcceptTest.createPortalUser();
 
-        PageReference result;
-        Test.startTest();
+		Account acc = [Select Sector__c from Account limit 1];
+		acc.Sector__c = 'Travel Agent';
+		acc.IATACode__c = '1234567890';
+		acc.Location_type__c = 'HO';
+		acc.IATA_ISO_Country__c = country.Id;
+		update acc;
 
-        System.runAs(testUser) {
-            ISSP_Ctrl_Country_Requirements controller = new ISSP_Ctrl_Country_Requirements();
-            result = controller.checkAccess();
-            controller.getNewLayout();
-            controller.getCountryRequirementsList();
-            controller.getAccreditationTypes();
-            controller.refreshRequirementsList();
-        }	
+		PageReference result;
+		Test.startTest();
 
-        Test.stopTest();
-    }
+		System.runAs(testUser) {
+			ISSP_Ctrl_Country_Requirements controller = new ISSP_Ctrl_Country_Requirements();
+			result = controller.checkAccess();
+			controller.getNewLayout();
+			controller.getCountryRequirementsList();
+			controller.getAccreditationTypes();
+			controller.refreshRequirementsList();
+		}
 
-    @isTest static void test_getCountryRequirementsList2() {
-    	IATA_ISO_Country__c country = [SELECT Id FROM IATA_ISO_Country__c WHERE Name = 'Switzerland'];
+		Test.stopTest();
+	}
 
-        User testUser = ISSP_Ctrl_AccountStatements_AcceptTest.createPortalUser();
+	@isTest static void test_getCountryRequirementsList2() {
+		IATA_ISO_Country__c country = [SELECT Id FROM IATA_ISO_Country__c WHERE Name = 'Switzerland'];
 
-        Account acc = [Select Sector__c from Account limit 1];
-        acc.recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
-        acc.Sector__c = 'Travel Agent';
-        acc.IATACode__c = '1234567890';
-        acc.Location_type__c = 'HO';
-        acc.Status__c = 'Approved';
-        acc.Category__c = AMS_UTILS.CATEGORY_PASSENGER_SALES_AGENT;
-        acc.IATA_ISO_Country__c = country.Id;
-        update acc;
+		User testUser = ISSP_Ctrl_AccountStatements_AcceptTest.createPortalUser();
 
-        PageReference result;
-        Test.startTest();
+		Account acc = [Select Sector__c from Account limit 1];
+		acc.recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+		acc.Sector__c = 'Travel Agent';
+		acc.IATACode__c = '1234567890';
+		acc.Location_type__c = 'HO';
+		acc.Status__c = 'Approved';
+		acc.Category__c = AMS_UTILS.CATEGORY_PASSENGER_SALES_AGENT;
+		acc.IATA_ISO_Country__c = country.Id;
+		update acc;
 
-        System.runAs(testUser) {
-            ISSP_Ctrl_Country_Requirements controller = new ISSP_Ctrl_Country_Requirements();
-            result = controller.checkAccess();
-            controller.getNewLayout();
-            controller.getCountryRequirementsList();
-            controller.getAccreditationTypes();
-            controller.refreshRequirementsList();
-        }	
+		PageReference result;
+		Test.startTest();
 
-        Test.stopTest();
-    }
+		System.runAs(testUser) {
+			ISSP_Ctrl_Country_Requirements controller = new ISSP_Ctrl_Country_Requirements();
+			result = controller.checkAccess();
+			controller.getNewLayout();
+			controller.getCountryRequirementsList();
+			controller.getAccreditationTypes();
+			controller.refreshRequirementsList();
+		}
+
+		Test.stopTest();
+	}
 }

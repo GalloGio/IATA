@@ -4,29 +4,29 @@ public without sharing class ISSP_TC_SIS_Accept {
 	public list<String> errorMessage {get; set;}
 
 	public ISSP_TC_SIS_Accept(){
-		
+
 	}
-	
+
 	public PageReference pageLoad(){
 		errorMessage = new list<string>();
-        //check if user has access to SIS service
-        PageReference pr = new PageReference('/ISSP_Homepage');
-        String userId = UserInfo.getUserId();
-        if (userId != null && userId != ''){
-            List <User> userList = [SELECT Id, ContactId FROM User WHERE Id = :userId];
-            if(!userList.isEmpty()){
-                String contactId = userList[0].ContactId;
-                if (contactId != null && contactId != ''){
-                    List <Portal_Application_Right__c> appList =
-                                            [SELECT Id FROM Portal_Application_Right__c
-                                            WHERE Portal_Application__r.Name = 'SIS'
-                                            AND Right__c = 'Access Granted'
-                                            AND Contact__c = :contactId];
-                    if (appList.isEmpty()){
-                        return pr;
-                    }
-                    else{
-                    	List <Contact> contactList = [SELECT Id, AccountId, Account.Top_Parent__c FROM Contact WHERE Id = :contactId];
+		//check if user has access to SIS service
+		PageReference pr = new PageReference('/ISSP_Homepage');
+		String userId = UserInfo.getUserId();
+		if (userId != null && userId != ''){
+			List <User> userList = [SELECT Id, ContactId FROM User WHERE Id = :userId];
+			if(!userList.isEmpty()){
+				String contactId = userList[0].ContactId;
+				if (contactId != null && contactId != ''){
+					List <Portal_Application_Right__c> appList =
+											[SELECT Id FROM Portal_Application_Right__c
+											WHERE Portal_Application__r.Name = 'SIS'
+											AND Right__c = 'Access Granted'
+											AND Contact__c = :contactId];
+					if (appList.isEmpty()){
+						return pr;
+					}
+					else{
+						List <Contact> contactList = [SELECT Id, AccountId, Account.Top_Parent__c FROM Contact WHERE Id = :contactId];
 						if (!contactList.isEmpty()){
 							string topParentId = contactList[0].Account.Top_Parent__c==null?contactList[0].AccountId:contactList[0].Account.Top_Parent__c;
 							List <Account> accountList = [SELECT Id, ISS_SIS_TC_Accepted__c, ISS_SIS_TC_Accepted_Date__c,
@@ -44,22 +44,22 @@ public without sharing class ISSP_TC_SIS_Accept {
 								}
 							}
 						}
-                    }
-                }
-            }
-        }
-        return pr;
+					}
+				}
+			}
+		}
+		return pr;
 	}
-	
+
 	public PageReference docontinue(){
 		if(!accept){
 			system.debug('not accept');
 			errorMessage = new list<string>();
-            errorMessage.add(Label.ISSP_accept_General_Conditions);
-            return null;
-        }
-        else{
-        	system.debug('user id:' + UserInfo.getUserId());
+			errorMessage.add(Label.ISSP_accept_General_Conditions);
+			return null;
+		}
+		else{
+			system.debug('user id:' + UserInfo.getUserId());
 			List <User> userList = [SELECT Id, ContactId FROM User WHERE Id =:UserInfo.getUserId()];
 			system.debug('userList:' + userList);
 			if (!userList.isEmpty()){
@@ -92,7 +92,7 @@ public without sharing class ISSP_TC_SIS_Accept {
 			PageReference pr = new PageReference('/ISSP_Homepage');
 			pr.setRedirect(true);
 			return pr;
-        }
+		}
 	}
-        
+
 }

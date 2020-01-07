@@ -1,6 +1,6 @@
 /****************************************************************************************************
-    Created by CGI, Thai 2017-01-23
-        Cover code of classes "ContactAddressZSync", "ContactAddressZSync_Batch" and "ContactAddressZSync_Queueable"
+	Created by CGI, Thai 2017-01-23
+		Cover code of classes "ContactAddressZSync", "ContactAddressZSync_Batch" and "ContactAddressZSync_Queueable"
 ****************************************************************************************************/
 @isTest(seeAllData=true)
 private class ContactAddressZSync_Test {

@@ -431,7 +431,7 @@ private class AMS_OSCAR_Case_Detail_ControllerTest {
 		Case c = [SELECT Id, OSCAR__c
 			 	FROM Case
 			 	WHERE Oscar__c IN
-				  	(SELECT Id
+						(SELECT Id
 			 		 FROM AMS_OSCAR__c
 			 		 WHERE AMS_Online_Accreditation__c != ''
 			 		)
@@ -510,7 +510,7 @@ private class AMS_OSCAR_Case_Detail_ControllerTest {
 
 		AMS_Agencies_Hierarchy__c hierarchy = new AMS_Agencies_Hierarchy__c(
 			Hierarchy_Name__c='Test Hierarchy'
-	   	);
+		 	);
 
 		insert hierarchy;
 
@@ -519,7 +519,7 @@ private class AMS_OSCAR_Case_Detail_ControllerTest {
 			Hierarchy__c = hierarchy.id,
 			Child_Account__c = account.id,
 			Parent_Account__c = c.AccountId
-	   	);
+		 	);
 
 		insert agenciesRel;
 

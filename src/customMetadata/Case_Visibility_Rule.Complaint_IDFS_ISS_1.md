@@ -27,7 +27,8 @@
         <value xsi:type="xsd:string">Internal Case 
 Voicemail 
 Phone 
-Chat</value>
+Chat
+IATA Internal User</value>
     </values>
     <values>
         <field>Reason1__c</field>
