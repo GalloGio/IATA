@@ -1,13 +1,13 @@
 public with sharing class AWW_AccountOwnershipCtrl {
 
 	@AuraEnabled
-	public static List<AccountRole> getOwners(Id accountId) {   
+	public static List<AccountRole> getOwners(Id accountId) {
 		Id rtId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
 		List<AMS_Account_Role__c> owners = [SELECT Id, Account__c, Account__r.Name, Owner_Account__c, Owner_Account__r.Name,
 												Percentage__c, Owner_Type__c, Subsidiary_Type__c
 											FROM AMS_Account_Role__c
-											WHERE Account__c = :accountId AND Active__c = true AND RecordTypeId = :rtId];     
-		
+											WHERE Account__c = :accountId AND Active__c = true AND RecordTypeId = :rtId];
+
 		List<AccountRole> res = new List<AccountRole>();
 		for(AMS_Account_Role__c owner : owners) {
 			res.add(new AccountRole(owner));
@@ -22,8 +22,8 @@ public with sharing class AWW_AccountOwnershipCtrl {
 		List<AMS_Account_Role__c> owners = [SELECT Id, Account__c, Account__r.Name, Owner_Account__c, Owner_Account__r.Name,
 												Percentage__c, Owner_Type__c, Subsidiary_Type__c
 											FROM AMS_Account_Role__c
-											WHERE Owner_Account__c = :accountId AND Active__c = true AND RecordTypeId = :rtId];     
-		
+											WHERE Owner_Account__c = :accountId AND Active__c = true AND RecordTypeId = :rtId];
+
 		List<AccountRole> res = new List<AccountRole>();
 		for(AMS_Account_Role__c owner : owners) {
 			res.add(new AccountRole(owner));
@@ -32,7 +32,7 @@ public with sharing class AWW_AccountOwnershipCtrl {
 		return res;
 	}
 
-	@AuraEnabled 
+	@AuraEnabled
 	public static void addRecord(String request) {
 		List<AccountRole> rolesRequest = (List<AccountRole>) JSON.deserialize(request, List<AccountRole>.class);
 
@@ -64,13 +64,13 @@ public with sharing class AWW_AccountOwnershipCtrl {
 		return acc;
 	}
 
-	@AuraEnabled 
+	@AuraEnabled
 	public static void removeRecord(Id recordId) {
 		AMS_Account_Role__c record = new AMS_Account_Role__c(Id= recordId);
 		delete record;
 	}
 
-	@AuraEnabled 
+	@AuraEnabled
 	public static void removeListRecords(List<Id> listIdsToRemove) {
 		list<AMS_Account_Role__c> recordList = new list<AMS_Account_Role__c>();
 		for(Id recordId: listIdsToRemove){
@@ -82,14 +82,14 @@ public with sharing class AWW_AccountOwnershipCtrl {
 	}
 
 	@AuraEnabled
-	public static List<AccountRole> searchByOwners(String key, Id accountId) {   
+	public static List<AccountRole> searchByOwners(String key, Id accountId) {
 		Id rtId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
 		List<AMS_Account_Role__c> owners = [SELECT Id, Account__c, Account__r.Name, Owner_Account__c, Owner_Account__r.Name,
 												Percentage__c, Owner_Type__c, Subsidiary_Type__c
 											FROM AMS_Account_Role__c
-											WHERE Account__c = :accountId AND Active__c = true AND RecordTypeId = :rtId 
-													AND (Owner_Account__r.Name LIKE : '%' + key + '%' OR Account__r.Name LIKE : '%' + key + '%')];     
-		
+											WHERE Account__c = :accountId AND Active__c = true AND RecordTypeId = :rtId
+													AND (Owner_Account__r.Name LIKE : '%' + key + '%' OR Account__r.Name LIKE : '%' + key + '%')];
+
 		List<AccountRole> res = new List<AccountRole>();
 		for(AMS_Account_Role__c owner : owners) {
 			res.add(new AccountRole(owner));
@@ -105,8 +105,8 @@ public with sharing class AWW_AccountOwnershipCtrl {
 												Percentage__c, Owner_Type__c, Subsidiary_Type__c
 											FROM AMS_Account_Role__c
 											WHERE Owner_Account__c = :accountId AND Active__c = true AND RecordTypeId = :rtId
-												AND (Owner_Account__r.Name LIKE : '%' + key + '%' OR Account__r.Name LIKE : '%' + key + '%')];     
-		
+												AND (Owner_Account__r.Name LIKE : '%' + key + '%' OR Account__r.Name LIKE : '%' + key + '%')];
+
 		List<AccountRole> res = new List<AccountRole>();
 		for(AMS_Account_Role__c owner : owners) {
 			res.add(new AccountRole(owner));
@@ -119,10 +119,10 @@ public with sharing class AWW_AccountOwnershipCtrl {
 	public static SearchWrapper searchBy(String key, Id accountId, String type) {
 		String queryStr = 'SELECT Id, Name, IATACode__c, IATA_ISO_Country__c, IATA_ISO_Country__r.Name FROM Account ';
 		if(type == 'Owner') {
-			queryStr += 'WHERE (Name LIKE \'%' + key + '%\') '; 
+			queryStr += 'WHERE (Name LIKE \'%' + key + '%\') ';
 		} else {
 			queryStr += 'WHERE (Name LIKE \'%' + key + '%\' OR Legal_Name__c LIKE \'%' + key + '%\' OR IATACode__c  LIKE \'%' + key + '%\') ';
-			queryStr += 'AND (RecordType.DeveloperName = \'IATA_Agency\' OR RecordType.DeveloperName = \'Standard_Account\') '; 
+			queryStr += 'AND (RecordType.DeveloperName = \'IATA_Agency\' OR RecordType.DeveloperName = \'Standard_Account\') ';
 		}
 
 		if(type == 'Owner') {
@@ -171,7 +171,7 @@ public with sharing class AWW_AccountOwnershipCtrl {
 			this.iataCode = acc.IATACode__c;
 			this.country = acc.IATA_ISO_Country__c == null ? '' : acc.IATA_ISO_Country__r.Name;
 		}
-	}    
+	}
 
 	public class AccountRole {
 		@AuraEnabled Id ownershipRecordId {get;set;}
@@ -200,7 +200,7 @@ public with sharing class AWW_AccountOwnershipCtrl {
 			this.subsidiaryType = role.Subsidiary_Type__c;
 			if(role.Percentage__c <> null) {
 				this.percentageTable = role.Percentage__c.divide(100, 4);
-			}            
+			}
 			this.percentage = role.Percentage__c;
 		}
 

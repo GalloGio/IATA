@@ -6,14 +6,14 @@ global class ISSP_Ctrl_AccountStatements {
 	public ContentVersion faq {get;set;}
 	public ContentVersion document {get;set;}
 	public Account account {get; set;}
-    public Account headofficeAccount {get; set;}
+		public Account headofficeAccount {get; set;}
 	public DateTime lastUpdatedOn {get; set;}
 	public list<Account_Statement__c> listStatements {get; set;}
 	public list<WrapperStatement> listWrapper {get; set;}
-    public list<String> listCurrency {get; set;}
+		public list<String> listCurrency {get; set;}
 	public list<String> listMessages {get; set;}
 	private User currentUser;
-    public Portal_Application_Right__c appRight {get; set;}
+		public Portal_Application_Right__c appRight {get; set;}
 	public String accountSelectedId {get; set;}
 	public String accountStatementSelectedId {get; set;}
 	public String accountSelectedName {get; set;}
@@ -124,10 +124,10 @@ global class ISSP_Ctrl_AccountStatements {
 		return URL.getSalesforceBaseUrl().toExternalForm();
 	}
 
-    public Pagereference updateAppRight() {
-        update this.appRight;
-        return null;
-    }
+		public Pagereference updateAppRight() {
+				update this.appRight;
+				return null;
+		}
 
 	/**
 		CONSTRUCTOR
@@ -162,28 +162,28 @@ global class ISSP_Ctrl_AccountStatements {
 		// get Account Statements related with all accounts in the hierarchy
 		this.listStatements = [
 							Select Id,
-								   Period__c,
-								   Operation__c,
-								   Name,
-								   Key__c,
-								   CurrencyIsoCode,
-								   Account__c,
-								   Amount_to_be_Paid__c,
-								   Balance__c,
-								   Billing_Amount__c,
-								   Paid__c,
-								   Remittance_Date__c,
-								   Status__c,
-								   Billing_Adjustment__c,
-								   Group__c,
-								   Account__r.Site,
-								   Account__r.Name,
-								   LastModifiedDate
-								   From Account_Statement__c
-								   Where Account__c in :listAccount
-								   And Remittance_Date__c >= :getMinimumRemmitanceDateToSearch(listAccount)
-								   Order By Remittance_Date__c desc, Operation__c asc
-								   ];
+									 Period__c,
+									 Operation__c,
+									 Name,
+									 Key__c,
+									 CurrencyIsoCode,
+									 Account__c,
+									 Amount_to_be_Paid__c,
+									 Balance__c,
+									 Billing_Amount__c,
+									 Paid__c,
+									 Remittance_Date__c,
+									 Status__c,
+									 Billing_Adjustment__c,
+									 Group__c,
+									 Account__r.Site,
+									 Account__r.Name,
+									 LastModifiedDate
+									 From Account_Statement__c
+									 Where Account__c in :listAccount
+									 And Remittance_Date__c >= :getMinimumRemmitanceDateToSearch(listAccount)
+									 Order By Remittance_Date__c desc, Operation__c asc
+									 ];
 		system.debug('ISSP_Ctrl_AccountStatements AccountStatement' +this.listStatements);
 		// create a list of wrappers with collected Account Statements
 		map<String,WrapperStatement> mapWrapper = new map<String,WrapperStatement>();
@@ -210,7 +210,7 @@ global class ISSP_Ctrl_AccountStatements {
 		this.listWrapper.sort();
 		markLastUpdated();
 		markFirstOldPeriod();
-        initListCurrency();
+				initListCurrency();
 	}
 
 	/**
@@ -223,16 +223,16 @@ global class ISSP_Ctrl_AccountStatements {
 		if(acc.listWrapper != null && !acc.listWrapper.isEmpty()){
 			String disclaimer = Label.ISSP_Account_Statements_Disclaimer;
 
-	        if(acc.account.Country_ISO_Code__c == 'CN' && acc.account.Sector__c == 'Travel Agent'){
-	        	disclaimer += Label.ISSP_Account_Statements_Disclaimer_China_TravelAgent;
-	        }
+					if(acc.account.Country_ISO_Code__c == 'CN' && acc.account.Sector__c == 'Travel Agent'){
+						disclaimer += Label.ISSP_Account_Statements_Disclaimer_China_TravelAgent;
+					}
 
-	        for(WrapperStatement wrapper : acc.listWrapper){
-	        	wrapper.disclaimer = disclaimer;
-	        	wrapper.listCurrency = acc.listCurrency;
-	        	wrapper.location = Label.ISSP_Account_Statement_Location;
-	        }
-	    }
+					for(WrapperStatement wrapper : acc.listWrapper){
+						wrapper.disclaimer = disclaimer;
+						wrapper.listCurrency = acc.listCurrency;
+						wrapper.location = Label.ISSP_Account_Statement_Location;
+					}
+			}
 
 		return acc.listWrapper;
 	}
@@ -260,13 +260,13 @@ global class ISSP_Ctrl_AccountStatements {
 	private Date getMinimumRemmitanceDateToSearch(list<Account> listAccount) {
 		try {
 			list<AggregateResult> listResult = [
-			  Select Remittance_Date__c
-			  from Account_Statement__c
-			  Where Account__c in :listAccount
-			  and Remittance_Date__c <= TODAY
-			  group by Remittance_Date__c
-			  order by Remittance_Date__c desc
-			  limit 3
+				Select Remittance_Date__c
+				from Account_Statement__c
+				Where Account__c in :listAccount
+				and Remittance_Date__c <= TODAY
+				group by Remittance_Date__c
+				order by Remittance_Date__c desc
+				limit 3
 			]; // search last 3 Remittance dates
 			AggregateResult ar = listResult.get( listResult.size()-1 );
 			return (Date)ar.get('Remittance_Date__c');
@@ -390,7 +390,7 @@ global class ISSP_Ctrl_AccountStatements {
 
 	public void saveAttachment()
 	{
-        //System.debug('===============saveAttachment======== ');
+				//System.debug('===============saveAttachment======== ');
 		this.showPopUp =false ;
 		//System.debug('===============saveAttachment======== '+this.showPopUp);
 
@@ -444,10 +444,10 @@ global class ISSP_Ctrl_AccountStatements {
 		global Boolean showDetail {get;set;}
 		global DateTime lastUpdatedDate {get; set;}
 		global Boolean lastUpdatedMark {get; set;}
-        global Boolean showSeparation {get; set;}
-        global String disclaimer { get; set; }
-        global List <String> listCurrency {get; set;}
-        global String location { get; set;}
+				global Boolean showSeparation {get; set;}
+				global String disclaimer { get; set; }
+				global List <String> listCurrency {get; set;}
+				global String location { get; set;}
 		global String accountSatementId {get;set;}
 		global String accountName {get;set;}
 

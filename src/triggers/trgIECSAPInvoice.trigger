@@ -1,9 +1,9 @@
-/**  
-  * Description: Trigger for the SAP Invoice object for the IEC project
-  * Author: Samy Saied
-  * Version: 1.0
-  * History: 
-  */
+/**
+	* Description: Trigger for the SAP Invoice object for the IEC project
+	* Author: Samy Saied
+	* Version: 1.0
+	* History:
+	*/
 
 trigger trgIECSAPInvoice on IEC_SAP_Invoice__c (before insert, before update, after insert, after update, after delete) {
 	if(Trigger.isUpdate && Trigger.isAfter) {
@@ -12,7 +12,7 @@ trigger trgIECSAPInvoice on IEC_SAP_Invoice__c (before insert, before update, af
 
 	if (Trigger.isBefore) { //INC295559
 		if(Trigger.isInsert || Trigger.isUpdate){
-			trgHndlrIECSAPInvoice.OnBeforeInsert(Trigger.new);			
+			trgHndlrIECSAPInvoice.OnBeforeInsert(Trigger.new);
 		}
 	}
 }

@@ -1,23 +1,23 @@
 public class AMS_AgencyAChangeCodeTriggerHandler{
-    
+
 //    public static void handleBeforeInsert(List<Agency_Applied_Change_code__c> aaccList){
 //        processChanges(aaccList);
 //    }
-    
+
 //    public static void handleBeforeUpdate(List<Agency_Applied_Change_code__c> aaccList){
 //        processChanges(aaccList);
 //    }
-    
+
 //    private static void processChanges(List<Agency_Applied_Change_code__c> aaccList){
-        
+
 //        /*Map<String,String> bulletinMemos = buildBulletinMemosMap();
-        
+
 //        Map<Id,Schema.RecordTypeInfo> rtMap = Agency_Applied_Change_code__c.sObjectType.getDescribe().getRecordTypeInfosById();
-        
+
 //        Set<Id> agencyIds = (new Map<Id, AMS_Agency__c>([SELECT Id FROM AMS_Agency__c])).keySet();
 //        Map<Id,AMS_Agency__c> agencyMap = new Map<Id, AMS_Agency__c>([SELECT Id, Agency_Status__c FROM AMS_Agency__c WHERE Id IN :agencyIds]);
 //        List<AMS_Agency__c> agenciesToUpdate = new List<AMS_Agency__c>();
-        
+
 //        //find the bulletin memo text
 //        for(Agency_Applied_Change_code__c aacc: aaccList){
 //            String rtName = rtMap.get(aacc.recordTypeID).getName();
@@ -28,29 +28,29 @@ public class AMS_AgencyAChangeCodeTriggerHandler{
 //            if(agToupdate != null)
 //                agenciesToUpdate.add(agToupdate);
 //        }
-        
+
 //        update agenciesToUpdate;*/
-        
+
 //    }
-    
+
 //    private static Map<String,String> buildBulletinMemosMap(){
-        
+
 //        /*Map<String,String> bulletinMemosMap = new Map<String,String>();
-        
+
 //        for(AMS_ChangeCode_BulletinMemo__c bm: AMS_ChangeCode_BulletinMemo__c.getall().values()){
 //            String key = (bm.Record_Type__c + bm.Reason__c).toLowerCase();
 //            bulletinMemosMap.put(key, bm.Bulletin_Memo_Text__c);
 //        }
-        
+
 //        return bulletinMemosMap;*/
 //        return null;
-        
+
 //    }
-    
+
 //    private static AMS_Agency__c setAgencyStatus(AMS_Agency__c ag, String recordTypeName, String reason){
-        
+
 //        String status;
-        
+
 //        if(Pattern.matches('CCF|CHF|CLF|CMF|CNF|COR|CSF|CWD|FIN|NCA|RCR|REC|TCH', recordTypeName)){status = '9';}
 //        else if(Pattern.matches('DIS|TAP|TER', recordTypeName)){status = '0';}
 //        else if(Pattern.matches('NAC|NEP|NEW', recordTypeName)){status = '2';}
@@ -78,18 +78,18 @@ public class AMS_AgencyAChangeCodeTriggerHandler{
 //        	else
 //                status = '6';
 //        }
-        
+
 //        if(status != null && status != ''){
 //        	ag.Agency_Status__c = getIATAReadableStatus(status);
 //            return ag;
 //        }
-                
+
 //        return null;
 
 //    }
-    
+
 //    public static String getIATAReadableStatus(String endorsmentCode){
-        
+
 //        if(endorsmentCode == '0')
 //            return 'Terminated';
 //        if(endorsmentCode == '1')
@@ -110,12 +110,12 @@ public class AMS_AgencyAChangeCodeTriggerHandler{
 //            return 'Changes processed';
 //        if(endorsmentCode == '9')
 //            return 'Accredited';
-        
+
 //        return null;
 //    }
-    
+
 //    public static String getIATANReadableStatus(String endorsmentCode){
-        
+
 //        if(endorsmentCode == '0')
 //            return 'Terminated';
 //        if(endorsmentCode == '2')
@@ -123,17 +123,17 @@ public class AMS_AgencyAChangeCodeTriggerHandler{
 //        if(endorsmentCode == '4')
 //            return 'Listed';
 //        if(endorsmentCode ==  '5')
-//            return 'Listed(BSP)';        
+//            return 'Listed(BSP)';
 //        if(endorsmentCode == '6')
 //            return 'Under review';
 //        if(endorsmentCode == '7')
 //            return 'Accredited';
-        
+
 //        return null;
 //    }
-    
+
 //    public static Integer getIATANumericStatus(String endorsmentCode){
-        
+
 //        if(endorsmentCode == 'Terminated')
 //            return 0;
 //        else if(endorsmentCode == 'Not accreditated')
@@ -154,12 +154,12 @@ public class AMS_AgencyAChangeCodeTriggerHandler{
 //            return 8;
 //        else if(endorsmentCode == 'Accredited')
 //            return 9;
-        
+
 //        return null;
 //    }
-    
+
 //    public static Integer getIATANNumericStatus(String endorsmentCode){
-        
+
 //        if(endorsmentCode == 'Terminated')
 //            return 0;
 //        else if(endorsmentCode == 'New application pending')
@@ -172,8 +172,8 @@ public class AMS_AgencyAChangeCodeTriggerHandler{
 //            return 6;
 //        else if(endorsmentCode == 'Accredited')
 //            return 7;
-        
+
 //        return null;
 //    }
-    
+
 }

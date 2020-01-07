@@ -1,9 +1,9 @@
-/**  
-  * Description: Test the class IECSAPHelper
-  * Author: Alexandre McGraw
-  * Version: 1.0
-  * History: 
-  */
+/**
+	* Description: Test the class IECSAPHelper
+	* Author: Alexandre McGraw
+	* Version: 1.0
+	* History:
+	*/
 @isTest
 public with sharing class IECSAPHelper_tst {
 
@@ -17,17 +17,17 @@ public with sharing class IECSAPHelper_tst {
 	private static IEC_SAP_Invoice__c oSAPInvoice;
 	private static IEC_SAP_Invoice_Item__c oSAPInvoiceItem1;
 	private static IEC_SAP_Invoice_Item__c oSAPInvoiceItem2;
-	
+
 	static void setupData() {
-		
+
 		// create customer related objects
-		
+
 		oAccount = IECTestUtil.createSampleAccount();
 		insert oAccount;
-		
+
 		oBillingAccount = IECTestUtil.createSampleBillingAccount(oAccount);
 		insert oBillingAccount;
-		
+
 		// create test SAP Invoice
 		oSAPInvoice = new IEC_SAP_Invoice__c();
 		oSAPInvoice.Billing_Name__c = 'John Doe';
@@ -52,7 +52,7 @@ public with sharing class IECSAPHelper_tst {
 		oSAPInvoice.Text_Print__c = IECSAPManager_tst.TEST_FLAG_SUCCESS;
 		oSAPInvoice.Number_of_Zuora_Items__c = 2;
 		insert oSAPInvoice;
-		
+
 		oSAPInvoiceItem1 = new IEC_SAP_Invoice_Item__c();
 		oSAPInvoiceItem1.IEC_SAP_Invoice__c = oSAPInvoice.Id;
 		oSAPInvoiceItem1.Material__c = 'MAT123';
@@ -66,7 +66,7 @@ public with sharing class IECSAPHelper_tst {
 		oSAPInvoiceItem1.Status_Date__c = DateTime.now();
 		oSAPInvoiceItem1.Name = 'II-0000012345';
 		insert oSAPInvoiceItem1;
-		
+
 		oSAPInvoiceItem2 = new IEC_SAP_Invoice_Item__c();
 		oSAPInvoiceItem2.IEC_SAP_Invoice__c = oSAPInvoice.Id;
 		oSAPInvoiceItem2.Material__c = 'MAT123';
@@ -86,26 +86,26 @@ public with sharing class IECSAPHelper_tst {
 	 *
 	 */
 	static testMethod void testMethods() {
-		
+
 		try {
 			setupData();
-			
+
 			IEC_SAP_Invoice__c oSAPInv = IECSAPManager.getSAPInvoiceByInvoiceNumber(TEST_INV_NUM);
-			
-            system.debug('oSAPInv ' + oSAPInv);
-            
+
+						system.debug('oSAPInv ' + oSAPInv);
+
 			system.assert(oSAPInv != null, 'The SAP Invoice should be found');
 			//system.assert(oSAPInv.Ready_for_SAP__c, 'The SAP Invoice should be ready for SAP');
-			
+
 			// test create methods
 			iataComXiSalesforceOtcWid5600Sales3.Header_element oElement = IECSAPHelper.createHeaderForInvoiceSending(oSAPInv);
 			iataComXiSalesforceOtcWid5600Sales3.Address_element oAddress = IECSAPHelper.createAddressElementForInvoiceSending(oSAPInv);
 			iataComXiSalesforceOtcWid5600Sales3.Item_element[] arrItemElements = IECSAPHelper.createItemElementsForInvoiceSending(oSAPInv);
-			
+
 			// since we simulated an upgrade, therse should only be 1 invoice item and it should be the ajusted price
 			system.assertEquals(1, arrItemElements.size(), 'should only be 1 invoice item created');
 			system.assertEquals(TEST_SECONDRATEPLAN_AMOUNT - TEST_FIRSTRATEPLAN_AMOUNT, Decimal.valueOf(arrItemElements[0].UnitPrice), 'The unit price that is sent should be the adjusted one');
-			
+
 		}
 		catch (Exception ex) {
 			system.assert(false, 'Shouldnt throw an error: ' + ex.getMessage());

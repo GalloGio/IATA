@@ -144,8 +144,8 @@ public class PortalIftpUtilsTest {
 		Test.startTest();
 
 		System.runAs(u2) {
-		   Boolean res =  PortalIftpUtils.manageUploadStationOJT(ItpOJTId, roleAddrList3[0].Id, 'PTX - Airport');
-		   System.assertEquals(res, true);
+			 Boolean res =  PortalIftpUtils.manageUploadStationOJT(ItpOJTId, roleAddrList3[0].Id, 'PTX - Airport');
+			 System.assertEquals(res, true);
 		}
 		Test.stopTest();
 

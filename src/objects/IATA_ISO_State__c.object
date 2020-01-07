@@ -234,12 +234,8 @@
         <columns>CURRENCY_ISO_CODE</columns>
         <columns>numeric_code__c</columns>
         <filterScope>Everything</filterScope>
-        <filters>
-            <field>IATA_ISO_Country__c</field>
-            <operation>equals</operation>
-            <value>canada</value>
-        </filters>
         <label>All</label>
+        <language>en_US</language>
     </listViews>
     <listViews>
         <fullName>ISO_States_in_AU_BR_CA_MX_US_VE</fullName>

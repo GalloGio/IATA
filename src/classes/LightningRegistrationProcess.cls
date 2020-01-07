@@ -10,9 +10,9 @@ public without sharing class LightningRegistrationProcess{
 
 		ID rtId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
 		User [] u = [SELECT Id FROM User
-			  WHERE email =: email AND IsActive = true limit 1];
+				WHERE email =: email AND IsActive = true limit 1];
 		Contact [] c = [SELECT Id, email, RecordType.Id FROM Contact
-			  WHERE email =: email LIMIT 1];
+				WHERE email =: email LIMIT 1];
 		System.Debug('Checking User: ' + u);
 		System.Debug('Checking Contact: ' + c);
 		if (u.size() == 0){
@@ -36,8 +36,8 @@ public without sharing class LightningRegistrationProcess{
 	@AuraEnabled
 	public Static List<String> GetContactSalutationValues()
 	{
-	  String ObjectApi_name = 'Contact';
-	  String picklistField = 'Salutation';
+		String ObjectApi_name = 'Contact';
+		String picklistField = 'Salutation';
 		Schema.SObjectType targetType = Schema.getGlobalDescribe().get(ObjectApi_name);
 		Sobject Object_name = targetType.newSObject();
 		Schema.sObjectType sobject_type = Object_name.getSObjectType();
@@ -54,8 +54,8 @@ public without sharing class LightningRegistrationProcess{
 	@AuraEnabled
 	public Static List<String> GetContactJobFunctionValues()
 	{
-	  String ObjectApi_name = 'Contact';
-	  String picklistField = 'Function__c';
+		String ObjectApi_name = 'Contact';
+		String picklistField = 'Function__c';
 		Schema.SObjectType targetType = Schema.getGlobalDescribe().get(ObjectApi_name);
 		Sobject Object_name = targetType.newSObject();
 		Schema.sObjectType sobject_type = Object_name.getSObjectType();
@@ -70,13 +70,13 @@ public without sharing class LightningRegistrationProcess{
 	}
 
 
-   // @AuraEnabled
+	 // @AuraEnabled
 	//public Static List<PicklistWrapper> GetAccountCategoryValues()
-   // public Static List <String> GetAccountCategoryValues() 
+	 // public Static List <String> GetAccountCategoryValues()
 	//{
 		/*
-	  String ObjectApi_name = 'Account';
-	  String picklistField = 'Sector__c';
+		String ObjectApi_name = 'Account';
+		String picklistField = 'Sector__c';
 		Schema.SObjectType targetType = Schema.getGlobalDescribe().get(ObjectApi_name);
 		Sobject Object_name = targetType.newSObject();
 		Schema.sObjectType sobject_type = Object_name.getSObjectType();
@@ -90,22 +90,22 @@ public without sharing class LightningRegistrationProcess{
 		List <String> result = new List <String>();
 		String sep = '%%%';
 		for (integer i=0;i<val.size();i++){
-			//PicklistWrapper w = new PicklistWrapper();   
+			//PicklistWrapper w = new PicklistWrapper();
 			//w.rec = val[i].record_type__c;
 			//w.rec = 'Test';
 			//w.sec = val[i].sector__c;
 			//w.cat = val[i].category__c;
 			result.add(val[i].record_type__c +sep+ val[i].sector__c +sep+ val[i].category__c);
 			//pl.add(w);
-			
+
 		}
 		//system.debug('@@@pl: ' +pl);
 		//return pl;
 		return result;
 	}
 	*/
-	
-	
+
+
 
 	/*
 	@AuraEnabled
@@ -115,8 +115,8 @@ public without sharing class LightningRegistrationProcess{
 		// Map<String,List<String>> mg = TStringUtils.GetDependentOptions('Account', 'Sector__c', 'Category__c');
 		// System.debug('aaaaaaaaa ' + mg);
 
-	  String ObjectApi_name = 'Account';
-	  String picklistField = 'Category__c';
+		String ObjectApi_name = 'Account';
+		String picklistField = 'Category__c';
 		Schema.SObjectType targetType = Schema.getGlobalDescribe().get(ObjectApi_name);
 		Sobject Object_name = targetType.newSObject();
 		Schema.sObjectType sobject_type = Object_name.getSObjectType();
@@ -133,7 +133,7 @@ public without sharing class LightningRegistrationProcess{
 	@AuraEnabled
 	public Static Map<String,String> GetContactLabels()
 	{
-	  Map<String,String> labels = new Map<String,String>();
+		Map<String,String> labels = new Map<String,String>();
 		String type='Contact';
 		List<String> contactFields = new String [] {
 			// 'Id',
@@ -156,13 +156,13 @@ public without sharing class LightningRegistrationProcess{
 		 labels.put(fieldName, fieldMap.get(fieldName).getDescribe().getLabel());
 		 }
 		//fieldMap.get(fieldName).getDescribe().getLabel();//It provides to get the object fields label.
-	  return labels;
+		return labels;
 	}
 
 	@AuraEnabled
 	public Static Map<String,String> GetAccountLabels()
 	{
-	  Map<String,String> labels = new Map<String,String>();
+		Map<String,String> labels = new Map<String,String>();
 		String type='Account';
 		List<String> contactFields = new String [] {
 						//', 'Id',
@@ -198,32 +198,32 @@ public without sharing class LightningRegistrationProcess{
 		 labels.put(fieldName, fieldMap.get(fieldName).getDescribe().getLabel());
 		 }
 		//fieldMap.get(fieldName).getDescribe().getLabel();//It provides to get the object fields label.
-	  return labels;
+		return labels;
 	}
 
 	@AuraEnabled
 	public Static List<String> GetFieldPicklistValuesCountry(){
 		List <IATA_ISO_Country__c> countries = IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountries(), 'Name');
-  
+
 		List <String> cnt = new List <String>();
 		cnt.add('');
 		for (integer i=0;i<countries.size();i++)
-		  cnt.add(countries[i].Name);
+			cnt.add(countries[i].Name);
 		return cnt;
 	}
-	
+
 	/*
 
 	//Invoked in the third page of the registration, queries the accounts in the system according to the filters selected by the end-user
 	@AuraEnabled
 	public Static List <Account> SearchCompany (String acctype, String designatorcode, String iatacode, String country, String name, String cargotravel) {
-	  //return null;
+		//return null;
 
 
-	  String whereStr = '';
-	  system.debug('WhereStr: ' +wherestr);
+		String whereStr = '';
+		system.debug('WhereStr: ' +wherestr);
 
-	  if (acctype == 'Airline' && (!String.isBlank(designatorcode) || (!String.isBlank(iatacode)))) {
+		if (acctype == 'Airline' && (!String.isBlank(designatorcode) || (!String.isBlank(iatacode)))) {
 			whereStr = 'Id != null';
 
 			if (!String.isBlank(designatorcode)){
@@ -235,47 +235,47 @@ public without sharing class LightningRegistrationProcess{
 			if (!String.isBlank(country)){
 				whereStr += ' AND IATA_ISO_Country__r.Name=\'' + country + '\'';
 			}
-			
+
 			whereStr += ' AND Sector__c != \'General Public\'';
 		}
 		else if (acctype == 'Airline' && String.isBlank(designatorcode)) {
 			whereStr = 'Name like \'%' + name + '%\' and IATA_ISO_Country__r.Name=\'' + country + '\' AND Sector__c != \'General Public\'';
 		}
-		
-		
-		
+
+
+
 
 		else if (acctype == 'GSA') {
 			whereStr = 'Name like \'%' + name + '%\' and IATA_ISO_Country__r.Name=\'' + country + '\'';
 		}
-		
-		
-		
+
+
+
 		else if (acctype == 'Agency') {
 			whereStr = 'Id != null';
 
 
 			if (!String.isBlank(iatacode))
 				whereStr += ' AND IATACode__c=\'' + iatacode + '\'';
-			
+
 			if (cargotravel == 'Cargo')
 				whereStr += ' AND Sector__c=\'Cargo Agent\'';
 			if (cargotravel == 'Travel')
 				whereStr += ' AND Sector__c=\'Travel Agent\'';
 			if (!String.isBlank(name))
 				whereStr += ' AND Name like \'%' + name + '%\'';
-				
-		
+
+
 		}
-		
-		
-		
+
+
+
 		else if (acctype == 'Other Company') {
 			whereStr = 'Name like \'%' + name + '%\' and IATA_ISO_Country__r.Name=\'' + country + '\' AND Sector__c != \'General Public\'';
 
 		}
-		
-		
+
+
 		else if (acctype == 'General Public'){
 			whereStr = 'Sector__c=\'General Public\' and IATA_ISO_Country__r.Name=\'' + country + '\'';
 		}
@@ -292,7 +292,7 @@ public without sharing class LightningRegistrationProcess{
 						 + whereStr + ' and RecordType.DeveloperName in :recordTypesSet';
 		//String queryStr = 'Select id from Account';
 		List <Account> res = database.query(querystr);
-		
+
 		//Management of airline selection
 		if (acctype == 'Airline') {
 			if (res.size() !=0) {
@@ -313,7 +313,7 @@ public without sharing class LightningRegistrationProcess{
 				else{
 					res= accListNotVerified;
 				}
-		
+
 			}
 			*/
 			//Airline and no result found: old branch case
@@ -322,35 +322,35 @@ public without sharing class LightningRegistrationProcess{
 				if (!String.isBlank(designatorcode)){
 					whereStr = 'Id != null';
 					whereStr += ' AND Airline_designator__c=\'' + designatorcode+ '\'';
-					
+
 					if (!String.isBlank(iatacode)){
 						whereStr += ' AND IATACode__c=\'' + iatacode+ '\'';
 					}
 					queryStr = 'select Id,IATACode__c,Field_Head_Office__c,Name,BillingStreet,BillingCity,BillingCountry, IATA_ISO_Country__r.Name, Top_Parent__c, Top_Parent__r.Name, Sector__c, Category__c, RecordType.Name, Airline_designator__c from Account where '
 							 + whereStr + ' and RecordType.DeveloperName = \'IATA_Airline\'';
-					
+
 					try {
 						res= Database.query(queryStr);
 					} catch (Exception e) {
 					}
-					
+
 				}
-				
-			} */		 
-		  
-		
-	   // }
-  
 
-   // return res;
+			} */
 
-	//}  
+
+		 // }
+
+
+	 // return res;
+
+	//}
 
 	@AuraEnabled
 	public Static String createUserFromExistingContact(String email){
 		try{
 		Contact con = [SELECT Id, title,firstname, lastname, email, Salutation, AccountId, RecordType.Id FROM Contact
-			  WHERE email =: email LIMIT 1];
+				WHERE email =: email LIMIT 1];
 
 		String thisNickname;
 			if (String.isNotBlank(con.lastName) && con.lastName.length() > 3)
@@ -374,28 +374,28 @@ public without sharing class LightningRegistrationProcess{
 			string UID = Comm_User_Helper.NewGuid();
 
 			User u = new User (
-				CommunityNickname= thisNickname, 
-				title=con.title, 
-				contactid = con.id, 
-				Firstname = con.firstname, 
-				lastname = con.lastname, 
-				emailencodingkey = 'UTF-8', 
-				localesidkey = 'en_US', 
+				CommunityNickname= thisNickname,
+				title=con.title,
+				contactid = con.id,
+				Firstname = con.firstname,
+				lastname = con.lastname,
+				emailencodingkey = 'UTF-8',
+				localesidkey = 'en_US',
 				email = con.email,
-				UID__c = UID, 
-				username=ISSP_Utilities.buildPortalUserName(con.email), 
-				Alias = ISSP_Utilities.buildPortalUserName(con.email).left(5), 
-				timezonesidkey = 'America/Los_Angeles', 
+				UID__c = UID,
+				username=ISSP_Utilities.buildPortalUserName(con.email),
+				Alias = ISSP_Utilities.buildPortalUserName(con.email).left(5),
+				timezonesidkey = 'America/Los_Angeles',
 				languagelocalekey = 'en_US',
-				Date_ToU_accepted__c = system.Now(), 
+				Date_ToU_accepted__c = system.Now(),
 				ToU_accepted__c = true
-				);  
+				);
 			//User u = new User (CommunityNickname= thisNickname , contactid = con.id, Firstname = con.firstname, lastname = con.lastname, emailencodingkey = 'UTF-8', localesidkey = 'en_US', email = con.email, username=ISSP_Utilities.buildPortalUserName(con.email), languagelocalekey = 'en_US', Date_ToU_accepted__c = system.Now(), ToU_accepted__c = true);
 
 			System.debug('User ' + u + ' AccountId ' + con.accountId + ' Contact ' + con);
 			String password = Comm_User_Helper.generateRandomString(6) + '1a';
 			String userId = Site.createPortalUser(u, con.accountId, password, false);
-		
+
 			// Assign Identity permission set to user
 			//PermissionSet ps = [SELECT Id,Name FROM PermissionSet WHERE Name = 'Identity_User'];
 			//PermissionSetAssignment psa = new PermissionSetAssignment (PermissionSetId = ps.Id, AssigneeId = u.Id);
@@ -407,22 +407,22 @@ public without sharing class LightningRegistrationProcess{
 			if(!Test.isRunningTest()){
 				sendWelcomeEmail(con, u, password);
 			}
-			
+
 			System.debug('Got here: ' + u);
-		
+
 			return userid;
 		} catch (Exception e) {
 			return e.getMessage() + ' - line: ' + e.getLineNumber();
 		}
 	}
-	
+
 	@AuraEnabled
 	public Static void checkConAvailable (Contact con){
 		System.debug('CheckConAvailable: ' + con);
-		Id rtId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');		
+		Id rtId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
 		Contact [] ec = [Select id, email, AccountId, RecordType.Id FROM Contact WHERE email =:con.email AND AccountId =:con.AccountId LIMIT 1];
 		System.debug('Record Type: ' + rtId);
-		
+
 		if(ec.size() > 0){
 			System.debug('Update Contact');
 			con.Id = ec[0].Id;
@@ -434,7 +434,7 @@ public without sharing class LightningRegistrationProcess{
 		}
 	}
 
-	@AuraEnabled	
+	@AuraEnabled
 	public Static String createContactAndAccount (Contact con, Account acc, String customerType, String servName) {
 		// ISSP_Registration registration = new ISSP_Registration();
 		// Boolean b = registration.pageIsValid();
@@ -456,10 +456,10 @@ public without sharing class LightningRegistrationProcess{
 				Id rtID = RecordTypeSingleton.getInstance().getRecordTypeId('Account', recname);
 					if (rtID!=null)
 				acc.recordtypeid = rtID;
-				
+
 				if (!String.isBlank(acc.Category__c) && acc.Category__c != 'Other')
 					acc.Category_Other_Value__c = null;
-				
+
 				//Assign countries and states
 				if (!String.isBlank(acc.BillingCountry)) {
 					List <Iata_Iso_Country__c> cn = IATAIsoCountryDAO.getIsoCountryByCountriesName(new Set<String>{acc.BillingCountry});
@@ -467,7 +467,7 @@ public without sharing class LightningRegistrationProcess{
 						acc.IATA_ISO_Country__c = acc.IATA_ISO_Shipping_Country__c = cn[0].id;
 					}
 				}
-				
+
 				database.insert(acc);
 			}
 			List <Account> lstacc = [select id from account where id=:acc.id];
@@ -504,43 +504,43 @@ public without sharing class LightningRegistrationProcess{
 			string UID = Comm_User_Helper.NewGuid();
 			User u = new User ( CommunityNickname= thisNickname , title=con.title, contactid = con.id, Firstname = con.firstname, lastname = con.lastname, emailencodingkey = 'UTF-8', localesidkey = 'en_US', email = con.email, username=ISSP_Utilities.buildPortalUserName(con.email), Alias = ISSP_Utilities.buildPortalUserName(con.email).left(5), timezonesidkey = 'America/Los_Angeles', languagelocalekey = 'en_US',Date_ToU_accepted__c = system.Now(), ToU_accepted__c = true, UID__c = UID);
 			//User u = new User (CommunityNickname= thisNickname , contactid = con.id, Firstname = con.firstname, lastname = con.lastname, emailencodingkey = 'UTF-8', localesidkey = 'en_US', email = con.email, username=ISSP_Utilities.buildPortalUserName(con.email), languagelocalekey = 'en_US', Date_ToU_accepted__c = system.Now(), ToU_accepted__c = true);
-		   
-			
+
+
 			if(servName == 'ISSP' || servName == 'FRED')
 				u.Community__c = servName;
 
 			if(servName == 'FRED') {
-				// Set Fred profile 
+				// Set Fred profile
 				//u.ProfileID = [SELECT Id FROM profile WHERE name = 'FRED Portal (Partner)' LIMIT 1][0].Id;
 				// Mehdi request to use existing profile so above line is commented
 			}
-		   
+
 
 			System.debug('User ' + u);
-			System.debug('con.accountId ' + con.accountId);			
+			System.debug('con.accountId ' + con.accountId);
 			String password = Comm_User_Helper.generateRandomString(6) + '1a';
 			System.debug('password ' + password);
 			String userId = Site.createPortalUser(u, con.accountId, password, false);
 			System.debug('userId ' + userId);
-			
+
 			//String userId = Site.createExternalUser( u, con.accountId, password, false);
 
 			/*if(String.isNotBlank(userId))
 				setFederationId(userId, con.email);
 			*/
 			System.debug('Done Registration UserId: what 2' + u);
-			
-			
+
+
 			sendWelcomeEmail(con, u, password);
-			
+
 			return userid;
-			
+
 
 		} catch (Exception e) {
 			return e.getMessage() + ' - line: ' + e.getLineNumber();
 		}
-		
-	} 
+
+	}
 
 	@AuraEnabled
 	public Static String createContactAndAccount (Contact con, Account acc, String customerType) {
@@ -557,7 +557,7 @@ public without sharing class LightningRegistrationProcess{
 				acc.Reason_for_creation__c = 'Created by customer';
 				//Since we need to create a portal user, we need to assign the account to a user with a specified role, otherwise an error is thrown
 				acc.ownerid = ISSP_Constant.newAccountOwnerId;
-				
+
 				String recname = ISSP_Constant.accountDefaultRecordTypeByCustomerType.get(customerType);
 				Id rtId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', recname);
 				if (String.isNotBlank(rtId)){
@@ -566,7 +566,7 @@ public without sharing class LightningRegistrationProcess{
 
 				if (!String.isBlank(acc.Category__c) && acc.Category__c != 'Other')
 					acc.Category_Other_Value__c = null;
-				
+
 				//Assign countries and states
 				if (!String.isBlank(acc.BillingCountry)) {
 					List <Iata_Iso_Country__c> cn = IATAIsoCountryDAO.getIsoCountryByCountriesName(new Set<String>{acc.BillingCountry});
@@ -574,7 +574,7 @@ public without sharing class LightningRegistrationProcess{
 						acc.IATA_ISO_Country__c = acc.IATA_ISO_Shipping_Country__c = cn[0].id;
 					}
 				}
-				
+
 				database.insert(acc);
 			}
 			List <Account> lstacc = [select id from account where id=:acc.id];
@@ -617,19 +617,19 @@ public without sharing class LightningRegistrationProcess{
 			if(String.isNotBlank(userId))
 				setFederationId(userId, con.email);
 			System.debug('Done Registration UserId: ' + u);
-			
-			
+
+
 			sendWelcomeEmail(con, u, password);
-			
+
 			return userid;
-			
+
 
 		} catch (Exception e) {
 			return e.getMessage() + ' - line: ' + e.getLineNumber();
 		}
-		
-	} 
-   
+
+	}
+
 	public Static void sendWelcomeEmail(Contact con, User u, String password){
 		String cleanUsername = u.userName.replace('+', Comm_User_Helper.plusReplacer);
 		String encodedPart ='c='+EncodingUtil.urlEncode(Comm_User_Helper.EncryptString(cleanUsername+Comm_User_Helper.SEPARATOR+password+Comm_User_Helper.SEPARATOR+u.UID__c), 'UTF-8');
@@ -641,22 +641,22 @@ public without sharing class LightningRegistrationProcess{
 			template = 'Identity_Portal_ISSP_New_User';
 			link = 'https://' + String.ValueOF(ISSP_CS__c.getValues('Host').value__c) + '/ISSP_First_Login?'+encodedPart;
 		}
-		if(serviceName == 'FRED'){ 
+		if(serviceName == 'FRED'){
 			system.debug('serviceName: '+String.ValueOF(ISSP_CS__c.getValues('Host').value__c));
-			template = 'Identity_Portal_FRED_New_User';			
+			template = 'Identity_Portal_FRED_New_User';
 			link = prefix + '/s/IdentityFirstLogin?'+encodedPart+'&serviceName=FRED';
-			system.debug('aqui link ' + link);			
+			system.debug('aqui link ' + link);
 			//link = 'https://' + String.ValueOF(ISSP_CS__c.getValues('Host').value__c) + '/FRED_First_Login?'+encodedPart;
-		}  
-		
+		}
+
 		Map<String,String> emailWrap = new Map<String,String>();
-		
+
 		//emailWrap = Identity_PassWordBuilMessageWrapper(con, password, link);   // OneIdEnh CSP-ID002: replace with service aware method
 
 		emailWrap = Comm_User_Helper.ISSP_PassWordBuilMessageWrapper(con, password, link, Comm_User_Helper.ONEIDENTITY, serviceName);
 		Comm_User_Helper.sendEmail(template, emailWrap, con, serviceName);
 	}
-	
+
 	public static  Map<String, String> Identity_PassWordBuilMessageWrapper(Contact con, String password, String link){
 		String portalName = Label.OneId_Community_Name;
 
@@ -668,7 +668,7 @@ public without sharing class LightningRegistrationProcess{
 			'{!Receiving_User.LastName}' => con.LastName,
 			'{!Receiving_User.Email}' => con.Email,
 			'{!Community_Name}' => portalName ,
-			'{!Community_Url}' => link, 
+			'{!Community_Url}' => link,
 			'{!$Label.ISSP_Email_Here}' => 'here',
 			'{!$Label.ISSP_Email_do_not_reply}' => Label.ISSP_Email_do_not_reply,
 			'{!$Label.OneId_IATA_represent_lead_and_serve_the_airline_industry}' => Label.OneId_IATA_represent_lead_and_serve_the_airline_industry
@@ -676,34 +676,34 @@ public without sharing class LightningRegistrationProcess{
 
 		return mapBodyParamsIdentity;
 	}
-	
-	@future 
+
+	@future
 	public Static Void assignIdentityPermissionSet (Id userId) {
 			System.debug('Assigning PermissionSet');
 			// Assign Identity permission set to user
 			PermissionSet ps = [SELECT Id,Name FROM PermissionSet WHERE Name = 'Identity_Portal_User'];
 			PermissionSetAssignment psa = new PermissionSetAssignment (PermissionSetId = ps.Id, AssigneeId = userId);
-			database.upsert(psa); 
-			System.debug('End Assigning PermissionSet'); 
+			database.upsert(psa);
+			System.debug('End Assigning PermissionSet');
 	}
 
-	@future 
+	@future
 	public Static Void assignGDPRPermissionSet (Id userId) {
 			System.debug('Assigning GDPR PermissionSet');
 			// Assign GDPR permission set to user
 			PermissionSet ps = [SELECT Id,Name FROM PermissionSet WHERE Name = 'GDPR'];
 			list<PermissionSetAssignment> gdprAssignment = [SELECT Assignee.name FROM PermissionSetAssignment WHERE PermissionSetId =: ps.Id and AssigneeId =: userId];
 			// Assign only when user doesn't have the permission set yet
-			if(gdprAssignment.isEmpty()){ 
+			if(gdprAssignment.isEmpty()){
 				PermissionSetAssignment psa = new PermissionSetAssignment (PermissionSetId = ps.Id, AssigneeId = userId);
-				database.upsert(psa); 
+				database.upsert(psa);
 			}
-			System.debug('End Assigning GDPR PermissionSet'); 
+			System.debug('End Assigning GDPR PermissionSet');
 	}
-	
+
 	@future
 	public static void setFederationId (String userid, String email) {
-		User u = new User(id=userid); 
+		User u = new User(id=userid);
 		u.FederationIdentifier = u.id;
 		database.update(u);
 	}
@@ -716,23 +716,23 @@ public without sharing class LightningRegistrationProcess{
 						ANG_Sector__c, ANG_Category__c, Customer_Type__c, ANG_Is_Accredited_Agent__c,
 						ANG_Customer_Country_ISO__c, Contact.User_Portal_Status__c
 						FROM User WHERE Id =: userId];
-		
-		if(oneUser.ANG_Sector__c == 'Travel Agent' 
+
+		if(oneUser.ANG_Sector__c == 'Travel Agent'
 			&& oneUser.ANG_Category__c == 'IATA Passenger Sales Agent'
 			&& oneUser.Customer_type__c == 'Agency'
 			&& oneUser.ANG_Is_Accredited_Agent__c == true
 			&& oneUser.ANG_Customer_Country_ISO__c == 'IL'
-			&& (oneUser.Contact.User_Portal_Status__c == 'Approved User' 
+			&& (oneUser.Contact.User_Portal_Status__c == 'Approved User'
 			|| oneUser.Contact.User_Portal_Status__c == 'Approved Admin')){
-				list<Portal_Applications__c> lstApp = [SELECT Id 
-													   FROM Portal_Applications__c 
-													   WHERE Application_URL__c LIKE '%israel-disputes-create-new-case%' 
-													   LIMIT 1];
-				List<Portal_Application_Right__c> appRight = [SELECT Id 
-															  FROM Portal_Application_Right__c 
-															  WHERE Contact__c =: oneUser.ContactId 
-															  AND Portal_Application__c =: lstApp[0].Id
-															  AND Right__c = 'Access Granted'];
+				list<Portal_Applications__c> lstApp = [SELECT Id
+														 FROM Portal_Applications__c
+														 WHERE Application_URL__c LIKE '%israel-disputes-create-new-case%'
+														 LIMIT 1];
+				List<Portal_Application_Right__c> appRight = [SELECT Id
+																FROM Portal_Application_Right__c
+																WHERE Contact__c =: oneUser.ContactId
+																AND Portal_Application__c =: lstApp[0].Id
+																AND Right__c = 'Access Granted'];
 				if(appRight.isEmpty()){
 					Portal_Application_Right__c par = new Portal_Application_Right__c();
 					par.Contact__c = oneUser.ContactId;
@@ -762,6 +762,6 @@ public without sharing class LightningRegistrationProcess{
 	@AuraEnabled
 	public Static String getCommunityName(){
 		return OneIdUtils.getCommunityUrlName();
-	}	
-	
+	}
+
 }

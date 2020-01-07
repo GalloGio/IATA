@@ -30,9 +30,9 @@ public class PriceTableSelector {
 	public static PriceTableSelector getInstance(){
 		if(instance == null){
 			instance = new PriceTableSelector();
-		} 
-	    
-	    return instance;
+		}
+
+		return instance;
 	}
 
 	/**

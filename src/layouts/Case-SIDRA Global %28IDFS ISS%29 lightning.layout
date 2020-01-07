@@ -1371,6 +1371,10 @@
         <fields>ANG_Event_Status__c</fields>
         <relatedList>ANG_Agency_Risk_Event__c.ANG_CaseId__c</relatedList>
     </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>Tracked_Email__c.Case__c</relatedList>
+    </relatedLists>
     <relatedObjects>ContactId</relatedObjects>
     <relatedObjects>AccountId</relatedObjects>
     <runAssignmentRulesDefault>false</runAssignmentRulesDefault>
