@@ -2578,7 +2578,7 @@ public without sharing class ISSP_AMS_Accreditation {
 		Boolean isFirstHE = accountsByBSP.get(newForm.Branch_Office_Country__r.AMS_Settlement_System__c) == null ||
 			accountsByBSP.get(newForm.Branch_Office_Country__r.AMS_Settlement_System__c).isEmpty();
 
-		if (isMultiCountryNewAE){
+		if (isMultiCountryNewAE || con.Account.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY) {
 			if(isFirstHE) {
 				SFDCAccount.Location_Type__c = AMS_Utils.HE;
 			}else {
