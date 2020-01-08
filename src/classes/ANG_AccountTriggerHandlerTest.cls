@@ -11,116 +11,116 @@ private class ANG_AccountTriggerHandlerTest {
 		customsettings.add(new ANG_CalloutMapping__c(Name = 'MBPDD', Change_Code__c = 'MBPDD', CalloutClass__c = 'ANG_CalloutIEPMasterdata', Action__c = 'PUT', Event_Type__C = 'MS_Update', Credential__c = '/agencies/v1/', Named_Credential__c = 'Mulesoft_Credential_Masterdata', Type__c = 'ChangeCode'));
 		customsettings.add(
 			new ANG_CalloutMapping__c(
-				Name = 'IEP_PCI_Compliance', 
-				Change_Code__c = 'IEPPC', 
-				CalloutClass__c = 'ANG_CalloutIEPMasterdata', 
+				Name = 'IEP_PCI_Compliance',
+				Change_Code__c = 'IEPPC',
+				CalloutClass__c = 'ANG_CalloutIEPMasterdata',
 				Action__c = 'PUT',
-				Event_Type__C = 'MS_Update', 
-				Credential__c = '/agencies/v1/', 
-				Named_Credential__c = 'Mulesoft_Credential_Masterdata', 
-				Integration_System__c = 'Mulesoft', 
-				Type__c = 'Account', 
+				Event_Type__C = 'MS_Update',
+				Credential__c = '/agencies/v1/',
+				Named_Credential__c = 'Mulesoft_Credential_Masterdata',
+				Integration_System__c = 'Mulesoft',
+				Type__c = 'Account',
 				Field__c = 'Is_PCI_compliant__c'
 			)
 		);
-		
+
 		insert customsettings;
 
-        Id accRT = AMS_Utils.RECTYPE_IATAAGENCY;
-        Id riskStatusAssessmentRT = ANG_Risk_Helper.RECTYPE_RISKSTATUSASSESSMENT;
+		Id accRT = AMS_Utils.RECTYPE_IATAAGENCY;
+		Id riskStatusAssessmentRT = ANG_Risk_Helper.RECTYPE_RISKSTATUSASSESSMENT;
 
-        List<IATA_ISO_Country__c> countries = new List<IATA_ISO_Country__c>();
+		List<IATA_ISO_Country__c> countries = new List<IATA_ISO_Country__c>();
 
-        IATA_ISO_Country__c isoTest = new IATA_ISO_Country__c(
-        		Name = 'Iso Country Name Test', 
-        		CurrencyIsoCode = 'EUR', 
-        		ISO_Code_Numeric__c = 620, 
-        		ISO_Code__c = 'PT',
-        		AIMS_Area_ID__c='1',
-        		ANG_Enable_NewGen__c = true,
-        		ANG_IEP_Model__c = 'Model A'
-        	);
-        countries.add(isoTest);
+		IATA_ISO_Country__c isoTest = new IATA_ISO_Country__c(
+				Name = 'Iso Country Name Test',
+				CurrencyIsoCode = 'EUR',
+				ISO_Code_Numeric__c = 620,
+				ISO_Code__c = 'PT',
+				AIMS_Area_ID__c='1',
+				ANG_Enable_NewGen__c = true,
+				ANG_IEP_Model__c = 'Model A'
+			);
+		countries.add(isoTest);
 
-        IATA_ISO_Country__c isoTest2 = new IATA_ISO_Country__c(
-        		Name = 'Iso Country Name Test2', 
-        		CurrencyIsoCode = 'EUR', 
-        		ISO_Code_Numeric__c = 625, 
-        		ISO_Code__c = 'ES',
-        		AIMS_Area_ID__c='1',
-        		ANG_Enable_NewGen__c = true,
-        		ANG_IEP_Model__c = 'Model B'
-        	);
-        countries.add(isoTest2);
+		IATA_ISO_Country__c isoTest2 = new IATA_ISO_Country__c(
+				Name = 'Iso Country Name Test2',
+				CurrencyIsoCode = 'EUR',
+				ISO_Code_Numeric__c = 625,
+				ISO_Code__c = 'ES',
+				AIMS_Area_ID__c='1',
+				ANG_Enable_NewGen__c = true,
+				ANG_IEP_Model__c = 'Model B'
+			);
+		countries.add(isoTest2);
 
 		IATA_ISO_Country__c ukCountry = new IATA_ISO_Country__c(
-        		Name = 'United Kingdom', 
-        		CurrencyIsoCode = 'EUR', 
-        		ISO_Code_Numeric__c = 999, 
-        		ISO_Code__c = 'UK',
-        		AIMS_Area_ID__c='1',
-        		ANG_Enable_NewGen__c = true,
-        		ANG_IEP_Model__c = 'Model B+'
-        	);
+				Name = 'United Kingdom',
+				CurrencyIsoCode = 'EUR',
+				ISO_Code_Numeric__c = 999,
+				ISO_Code__c = 'UK',
+				AIMS_Area_ID__c='1',
+				ANG_Enable_NewGen__c = true,
+				ANG_IEP_Model__c = 'Model B+'
+			);
 
-        countries.add(ukCountry);
+		countries.add(ukCountry);
 
-        insert countries;
+		insert countries;
 
-        List<Account> accs = new List<Account>();
+		List<Account> accs = new List<Account>();
 
-        Account a = new Account(
-        		Name ='Test', 
-        		Type = 'IATA Passenger Sales Agent',
-        		Sector__c='Travel Agent', 
-        		Location_Type__c = AMS_Utils.HE,
-        		Location_Class__c = 'P',
-        		ANG_FA_Opt_out__c = false,
-        		IATACode__c='12345678',
-        		IATA_ISO_Country__c = countries[0].Id,
-        		BillingCountry='Iso Country Name Test',
-        		ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_CASH,
-        		Status__c = AMS_Utils.ACC_S9_APPROVED,
-        		ANG_HE_RiskHistoryAssessment__c = ANG_Risk_Helper.RISK_ASSESSMENT_PASSED,
-        		Financial_Review_Result__c = ANG_Risk_Helper.FR_UNSATISFACTORY,
-        		RecordTypeId = accRT
-        	);
+		Account a = new Account(
+				Name ='Test',
+				Type = 'IATA Passenger Sales Agent',
+				Sector__c='Travel Agent',
+				Location_Type__c = AMS_Utils.HE,
+				Location_Class__c = 'P',
+				ANG_FA_Opt_out__c = false,
+				IATACode__c='12345678',
+				IATA_ISO_Country__c = countries[0].Id,
+				BillingCountry='Iso Country Name Test',
+				ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_CASH,
+				Status__c = AMS_Utils.ACC_S9_APPROVED,
+				ANG_HE_RiskHistoryAssessment__c = ANG_Risk_Helper.RISK_ASSESSMENT_PASSED,
+				Financial_Review_Result__c = ANG_Risk_Helper.FR_UNSATISFACTORY,
+				RecordTypeId = accRT
+			);
 		accs.add(a);
 
 		Account a2 = new Account(
-        		Name ='Test2', 
-        		Type = 'IATA Passenger Sales Agent',
-        		Sector__c='Travel Agent', 
-        		Location_Type__c = AMS_Utils.HE,
-        		Location_Class__c = 'P',
-        		ANG_FA_Opt_out__c = false,
-        		IATACode__c='12345677',
-        		IATA_ISO_Country__c = countries[1].Id,
-        		BillingCountry='Iso Country Name Test2',
-        		ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_CASH,
-        		Status__c = AMS_Utils.ACC_S9_APPROVED,
-        		ANG_HE_RiskHistoryAssessment__c = ANG_Risk_Helper.RISK_ASSESSMENT_PASSED,
-        		Financial_Review_Result__c = ANG_Risk_Helper.FR_UNSATISFACTORY,
-        		RecordTypeId = accRT
-        	);
+				Name ='Test2',
+				Type = 'IATA Passenger Sales Agent',
+				Sector__c='Travel Agent',
+				Location_Type__c = AMS_Utils.HE,
+				Location_Class__c = 'P',
+				ANG_FA_Opt_out__c = false,
+				IATACode__c='12345677',
+				IATA_ISO_Country__c = countries[1].Id,
+				BillingCountry='Iso Country Name Test2',
+				ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_CASH,
+				Status__c = AMS_Utils.ACC_S9_APPROVED,
+				ANG_HE_RiskHistoryAssessment__c = ANG_Risk_Helper.RISK_ASSESSMENT_PASSED,
+				Financial_Review_Result__c = ANG_Risk_Helper.FR_UNSATISFACTORY,
+				RecordTypeId = accRT
+			);
 		accs.add(a2);
 
 		Account a3 = new Account(
-        		Name ='UK Test', 
-        		Type = 'IATA Passenger Sales Agent',
-        		Sector__c='Travel Agent', 
-        		Location_Type__c = AMS_Utils.HE,
-        		Location_Class__c = 'P',
-        		ANG_FA_Opt_out__c = false,
-        		IATACode__c='12345699',
-        		IATA_ISO_Country__c = ukCountry.Id,
-        		BillingCountry='UK Test',
-        		ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_CASH,
-        		Status__c = AMS_Utils.ACC_S9_APPROVED,
-        		ANG_HE_RiskHistoryAssessment__c = ANG_Risk_Helper.RISK_ASSESSMENT_PASSED,
-        		Financial_Review_Result__c = ANG_Risk_Helper.FR_UNSATISFACTORY,
-        		RecordTypeId = accRT
-        	);
+				Name ='UK Test',
+				Type = 'IATA Passenger Sales Agent',
+				Sector__c='Travel Agent',
+				Location_Type__c = AMS_Utils.HE,
+				Location_Class__c = 'P',
+				ANG_FA_Opt_out__c = false,
+				IATACode__c='12345699',
+				IATA_ISO_Country__c = ukCountry.Id,
+				BillingCountry='UK Test',
+				ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_CASH,
+				Status__c = AMS_Utils.ACC_S9_APPROVED,
+				ANG_HE_RiskHistoryAssessment__c = ANG_Risk_Helper.RISK_ASSESSMENT_PASSED,
+				Financial_Review_Result__c = ANG_Risk_Helper.FR_UNSATISFACTORY,
+				RecordTypeId = accRT
+			);
 		accs.add(a3);
 
 		insert accs;
@@ -128,28 +128,28 @@ private class ANG_AccountTriggerHandlerTest {
 		insert new ANG_RHC_Information__c (ANG_AccountId__c = a.Id);
 
 		ANG_Agency_Risk_Calculation__c calcA = new ANG_Agency_Risk_Calculation__c(
-			RecordTypeId = riskStatusAssessmentRT, 
-			ANG_Financial_Review_Result__c = ANG_Risk_Helper.FR_SATISFACTORY, 
+			RecordTypeId = riskStatusAssessmentRT,
+			ANG_Financial_Review_Result__c = ANG_Risk_Helper.FR_SATISFACTORY,
 			ANG_Risk_History_Assessment__c = ANG_Risk_Helper.RISK_ASSESSMENT_PASSED,
-			ANG_Risk_History__c = ANG_Risk_Helper.RISK_STATUS_A, 
+			ANG_Risk_History__c = ANG_Risk_Helper.RISK_STATUS_A,
 			ANG_Limit_Cash_Condition__c = false);
 
 		ANG_Agency_Risk_Calculation__c calcB = new ANG_Agency_Risk_Calculation__c(
-			RecordTypeId = riskStatusAssessmentRT, 
-			ANG_Financial_Review_Result__c = ANG_Risk_Helper.FR_UNSATISFACTORY, 
+			RecordTypeId = riskStatusAssessmentRT,
+			ANG_Financial_Review_Result__c = ANG_Risk_Helper.FR_UNSATISFACTORY,
 			ANG_Risk_History_Assessment__c = ANG_Risk_Helper.RISK_ASSESSMENT_PASSED,
 			ANG_Risk_History__c = ANG_Risk_Helper.RISK_STATUS_B,
 			ANG_Limit_Cash_Condition__c = false);
 
 		ANG_Agency_Risk_Calculation__c calcB2 = new ANG_Agency_Risk_Calculation__c(
-			RecordTypeId = riskStatusAssessmentRT, 
-			ANG_Financial_Review_Result__c = ANG_Risk_Helper.FR_SATISFACTORY, 
+			RecordTypeId = riskStatusAssessmentRT,
+			ANG_Financial_Review_Result__c = ANG_Risk_Helper.FR_SATISFACTORY,
 			ANG_Risk_History_Assessment__c = ANG_Risk_Helper.RISK_ASSESSMENT_FAILED,
 			ANG_Risk_History__c = ANG_Risk_Helper.RISK_STATUS_B,
 			ANG_Limit_Cash_Condition__c = false);
 
 		ANG_Agency_Risk_Calculation__c calcC = new ANG_Agency_Risk_Calculation__c(
-			RecordTypeId = riskStatusAssessmentRT, 
+			RecordTypeId = riskStatusAssessmentRT,
 			ANG_Financial_Review_Result__c = ANG_Risk_Helper.FR_UNSATISFACTORY,
 			ANG_Risk_History_Assessment__c = ANG_Risk_Helper.RISK_ASSESSMENT_FAILED,
 			ANG_Risk_History__c = ANG_Risk_Helper.RISK_STATUS_C,
@@ -159,30 +159,30 @@ private class ANG_AccountTriggerHandlerTest {
 			RecordTypeId = riskStatusAssessmentRT,
 		 	ANG_Financial_Review_Result__c = null,
 		 	ANG_Risk_History_Assessment__c = ANG_Risk_Helper.RISK_ASSESSMENT_FAILED,
-		 	ANG_Risk_History__c = ANG_Risk_Helper.RISK_STATUS_C, 
+		 	ANG_Risk_History__c = ANG_Risk_Helper.RISK_STATUS_C,
 		 	ANG_Limit_Cash_Condition__c = true);
 
-        ANG_Agency_Risk_Calculation__c rule = new ANG_Agency_Risk_Calculation__c(
-        	ANG_Order__c = 1, 
-        	ANG_Occurrence_Num__c = 1, 
-        	ANG_Adjusted__c = ANG_Risk_Helper.ADJ_NO, 
-        	ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_CASH, 
-        	RecordTypeId = ANG_Risk_Helper.RECTYPE_RULES);
+		ANG_Agency_Risk_Calculation__c rule = new ANG_Agency_Risk_Calculation__c(
+			ANG_Order__c = 1,
+			ANG_Occurrence_Num__c = 1,
+			ANG_Adjusted__c = ANG_Risk_Helper.ADJ_NO,
+			ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_CASH,
+			RecordTypeId = ANG_Risk_Helper.RECTYPE_RULES);
 
 		insert new List<ANG_Agency_Risk_Calculation__c>{calcA, calcB, calcB2, calcC, calcC2, rule};
 
-        ANG_Risk_Event_Type__c ret = new ANG_Risk_Event_Type__c(
-	            Name = 'Risk Event Test',
-	            ANG_Description__c = 'Risk Event Test',
-	            ANG_Expiration__c = 24,
-	            ANG_Risk_ID__c = 'testRiskId',
-	            ANG_Agency_Risk_Calculation__c = rule.Id,
-	            Limit_Cash_conditions__c = false
-        	);
-        insert ret;
+		ANG_Risk_Event_Type__c ret = new ANG_Risk_Event_Type__c(
+				Name = 'Risk Event Test',
+				ANG_Description__c = 'Risk Event Test',
+				ANG_Expiration__c = 24,
+				ANG_Risk_ID__c = 'testRiskId',
+				ANG_Agency_Risk_Calculation__c = rule.Id,
+				Limit_Cash_conditions__c = false
+			);
+		insert ret;
 
 	}
-	
+
 	static testMethod void test_riskStatus_allcases() {
 		Account a = [SELECT Id FROM Account WHERE Name = 'Test'];
 		// fill accounts last financial review result and risk history and assert new risk status
@@ -223,7 +223,7 @@ private class ANG_AccountTriggerHandlerTest {
 	}
 
 	static testMethod void test_RHCupdate() {
-		
+
 		Account a = [SELECT Id FROM Account WHERE Name = 'Test'];
 		a.Status__c = AMS_Utils.ACC_S0_TERMINATED;
 
@@ -237,24 +237,24 @@ private class ANG_AccountTriggerHandlerTest {
 
 		Test.stopTest();
 	}
-	
+
 	static testMethod void test_shortNameModification() {
-		
+
 		Id accRT = AMS_Utils.RECTYPE_IATAAGENCY;
 		ID standardRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account') ;
 
-		Account a1 = new Account(Name = 'NameTest1', IATACode__c = '12344560', TradeName__c = 'tradeName1', RecordTypeId = standardRT,      Short_Name__c = 'ShortNameTest1Example1');	
+		Account a1 = new Account(Name = 'NameTest1', IATACode__c = '12344560', TradeName__c = 'tradeName1', RecordTypeId = standardRT,      Short_Name__c = 'ShortNameTest1Example1');
 		Account a2 = new Account(Name = 'NameTest2', IATACode__c = '12344568', TradeName__c = 'tradeName2', RecordTypeId = accRT, Short_Name__c = 'ShortNameTest1Example2');
 		Account a3 = new Account(Name = 'NameTest3', IATACode__c = '12344569', TradeName__c = '', RecordTypeId = accRT, Short_Name__c = 'ShortNameTest1Example3');
-		
+
 		insert new List<Account>{a1,a2,a3};
-		
+
 		Test.startTest();
 
 		List<Account> acctsRetreived = [Select Id, Name, Short_Name__c, TradeName__c from Account where Name in ('NameTest1','NameTest2','NameTest3')];
 
 		Map<String,Account> acctsRetreivedMap = new Map<String,Account>();
-		
+
 		for(Account a: acctsRetreived){
 			acctsRetreivedMap.put(a.Name,a);
 		}
@@ -275,7 +275,7 @@ private class ANG_AccountTriggerHandlerTest {
 		acctsRetreived = [Select Id, Name, Short_Name__c, TradeName__c from Account where Name in ('NameTest11','NameTest2','NameTest33')];
 
 		acctsRetreivedMap = new Map<String,Account>();
-		
+
 		for(Account a: acctsRetreived){
 			acctsRetreivedMap.put(a.Name,a);
 		}
@@ -301,11 +301,11 @@ private class ANG_AccountTriggerHandlerTest {
 									FROM IATA_ISO_Country__c
 									WHERE Name = 'Iso Country Name Test'];
 
-		Account a = new Account(ANG_FA_Opt_out__c = true, 
-								Name = 'NameTest1', 
-								IATACode__c = '12344567', 
-								TradeName__c = 'tradeName1', 
-								RecordTypeId = standardRT, 
+		Account a = new Account(ANG_FA_Opt_out__c = true,
+								Name = 'NameTest1',
+								IATACode__c = '12344567',
+								TradeName__c = 'tradeName1',
+								RecordTypeId = standardRT,
 								Short_Name__c = 'ShortNameTest1Example1',
 								IATA_ISO_Country__c = isoTest.Id);
 
@@ -319,15 +319,15 @@ private class ANG_AccountTriggerHandlerTest {
 													   RHC_Amount_Equals_FS_Percent__c, ANG_RHC_Amount_Equals_FS__c,
 													   ANG_CashCondition__c, ANG_Exceeding_Financial_Security__c,
 													   ANG_RHC_Amount_Forecasted__c, ANG_Forecasted_RHC_Effective_date__c
-												  from ANG_RHC_Information__c 
+												  from ANG_RHC_Information__c
 												 Where ANG_AccountId__c =: a.id];
 
 		ANG_RHCHelper.calculateRHCAmount(rhcList1);
-        
-        rhcList1[0].CurrencyIsoCode = 'USD';
-        rhcList1[0].ANG_RME_Amount__c = 200;
+
+		rhcList1[0].CurrencyIsoCode = 'USD';
+		rhcList1[0].ANG_RME_Amount__c = 200;
 		rhcList1[0].ANG_RHC_Amount__c = rhcList1[0].ANG_RHC_Amount_Forecasted__c;
-        upsert rhcList1[0];
+		upsert rhcList1[0];
 
 		ANG_RME_Alert_Service.RHCMessage message = new ANG_RME_Alert_Service.RHCMessage();
 
@@ -339,7 +339,7 @@ private class ANG_AccountTriggerHandlerTest {
 		message.eventTime = System.now();
 		message.storedRHCValue = 200;
 
-		Test.setMock(HttpCalloutMock.class, new HttpResponseGenerator(200, JSON.serialize(message)));		
+		Test.setMock(HttpCalloutMock.class, new HttpResponseGenerator(200, JSON.serialize(message)));
 
 		a.ANG_FA_Opt_out__c = false;
 
@@ -348,14 +348,14 @@ private class ANG_AccountTriggerHandlerTest {
 		update a;
 
 		//forcing call as test will not "chain" processes
-		//new ANG_UpdateRHCInformationBatch(new Set<Id>{a.Id}, ANG_UpdateRHCInformationBatch.Process.PROVISIONAL, true, 100).execute(null); 
-		new ANG_UpdateRHCInformationQueueable(new Set<Id>{a.Id}, ANG_UpdateRHCInformationBatch.Process.PROVISIONAL, true, 100).execute(null); 
+		//new ANG_UpdateRHCInformationBatch(new Set<Id>{a.Id}, ANG_UpdateRHCInformationBatch.Process.PROVISIONAL, true, 100).execute(null);
+		new ANG_UpdateRHCInformationQueueable(new Set<Id>{a.Id}, ANG_UpdateRHCInformationBatch.Process.PROVISIONAL, true, 100).execute(null);
 		Test.stopTest();
 
 		List<ANG_RHC_Information__c> rhcList = [Select ANG_RHC_Amount_Provisional__c,
 													   ANG_Provisional_RHC_Last_Update__c,
 													   ANG_RME_Amount__c
-												  from ANG_RHC_Information__c 
+												  from ANG_RHC_Information__c
 												 Where ANG_AccountId__c =: a.id];
 
 		System.assertEquals(message.provisionalRHC, rhcList[0].ANG_RME_Amount__c);
@@ -375,11 +375,11 @@ private class ANG_AccountTriggerHandlerTest {
 									FROM IATA_ISO_Country__c
 									WHERE Name = 'Iso Country Name Test'];
 
-		Account a = new Account(ANG_FA_Opt_out__c = true, 
-								Name = 'NameTest1', 
-								IATACode__c = '12344567', 
-								TradeName__c = 'tradeName1', 
-								RecordTypeId = standardRT, 
+		Account a = new Account(ANG_FA_Opt_out__c = true,
+								Name = 'NameTest1',
+								IATACode__c = '12344567',
+								TradeName__c = 'tradeName1',
+								RecordTypeId = standardRT,
 								Short_Name__c = 'ShortNameTest1Example1',
 								IATA_ISO_Country__c = isoTest.Id);
 
@@ -393,15 +393,15 @@ private class ANG_AccountTriggerHandlerTest {
 													   RHC_Amount_Equals_FS_Percent__c, ANG_RHC_Amount_Equals_FS__c,
 													   ANG_CashCondition__c, ANG_Exceeding_Financial_Security__c,
 													   ANG_RHC_Amount_Forecasted__c, ANG_Forecasted_RHC_Effective_date__c
-												  from ANG_RHC_Information__c 
+												  from ANG_RHC_Information__c
 												 Where ANG_AccountId__c =: a.id];
 
 		ANG_RHCHelper.calculateRHCAmount(rhcList1);
-        
-        rhcList1[0].CurrencyIsoCode = 'USD';
-        rhcList1[0].ANG_RME_Amount__c = 200;
+
+		rhcList1[0].CurrencyIsoCode = 'USD';
+		rhcList1[0].ANG_RME_Amount__c = 200;
 		rhcList1[0].ANG_RHC_Amount__c = rhcList1[0].ANG_RHC_Amount_Forecasted__c;
-        upsert rhcList1[0];
+		upsert rhcList1[0];
 
 		ANG_RME_Alert_Service.RHCMessage message = new ANG_RME_Alert_Service.RHCMessage();
 
@@ -413,7 +413,7 @@ private class ANG_AccountTriggerHandlerTest {
 		message.eventTime = System.now();
 		message.storedRHCValue = 200;
 
-		Test.setMock(HttpCalloutMock.class, new HttpResponseGenerator(200, JSON.serialize(message)));		
+		Test.setMock(HttpCalloutMock.class, new HttpResponseGenerator(200, JSON.serialize(message)));
 
 		a.ANG_FA_Opt_out__c = false;
 
@@ -422,14 +422,14 @@ private class ANG_AccountTriggerHandlerTest {
 		update a;
 
 		//forcing call as test will not "chain" processes
-		//new ANG_UpdateRHCInformationBatch(new Set<Id>{a.Id}, ANG_UpdateRHCInformationBatch.Process.PROVISIONAL, true, 100).execute(null); 
-		new ANG_UpdateRHCInformationQueueable(new Set<Id>{a.Id}, ANG_UpdateRHCInformationBatch.Process.PROVISIONAL, true).execute(null); 
+		//new ANG_UpdateRHCInformationBatch(new Set<Id>{a.Id}, ANG_UpdateRHCInformationBatch.Process.PROVISIONAL, true, 100).execute(null);
+		new ANG_UpdateRHCInformationQueueable(new Set<Id>{a.Id}, ANG_UpdateRHCInformationBatch.Process.PROVISIONAL, true).execute(null);
 		Test.stopTest();
 
 		List<ANG_RHC_Information__c> rhcList = [Select ANG_RHC_Amount_Provisional__c,
 													   ANG_Provisional_RHC_Last_Update__c,
 													   ANG_RME_Amount__c
-												  from ANG_RHC_Information__c 
+												  from ANG_RHC_Information__c
 												 Where ANG_AccountId__c =: a.id];
 
 		System.assertEquals(message.provisionalRHC, rhcList[0].ANG_RME_Amount__c);
@@ -443,29 +443,29 @@ private class ANG_AccountTriggerHandlerTest {
   		Contact cont = new Contact(
 				lastName ='lastName',
 				Financial_Assessment_Contact__c = true,
-				AccountId = a.Id, 
+				AccountId = a.Id,
 				email ='test@test.com'
 			);
 		insert cont;
 
-        ANG_Risk_Event_Type__c ret = [Select Id from ANG_Risk_Event_Type__c Where Name = 'Risk Event Test'];
-	            
-        ANG_Agency_Risk_Event__c re1 = new ANG_Agency_Risk_Event__c(
-	            ANG_AccountId__c = a.id,
-	            ANG_Risk_Type__c = ret.id,
-	            ANG_Issued_Date__c = System.today(),
-	            ANG_Event_Status__c = ANG_Risk_Helper.STATUS_ACTIVE
-        	);
+		ANG_Risk_Event_Type__c ret = [Select Id from ANG_Risk_Event_Type__c Where Name = 'Risk Event Test'];
 
-        insert re1;	
+		ANG_Agency_Risk_Event__c re1 = new ANG_Agency_Risk_Event__c(
+				ANG_AccountId__c = a.id,
+				ANG_Risk_Type__c = ret.id,
+				ANG_Issued_Date__c = System.today(),
+				ANG_Event_Status__c = ANG_Risk_Helper.STATUS_ACTIVE
+			);
 
-        Test.startTest();
-		   
+		insert re1;
+
+		Test.startTest();
+
 		Case cFS = new Case(
 				Subject = 'rception case',
-				AccountId = a.Id, 
+				AccountId = a.Id,
 				contactId = cont.Id,
-				Status = 'Open', 
+				Status = 'Open',
 				Assessment_Performed_Date__c = system.today(),
 				Financial_Review_Result__c = ANG_Risk_Helper.FR_SATISFACTORY,
 				RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review'),
@@ -481,15 +481,15 @@ private class ANG_AccountTriggerHandlerTest {
 													   RHC_Amount_Equals_FS_Percent__c, ANG_RHC_Amount_Equals_FS__c,
 													   ANG_CashCondition__c, ANG_Exceeding_Financial_Security__c,
 													   ANG_RHC_Amount_Forecasted__c, ANG_Forecasted_RHC_Effective_date__c
-												  from ANG_RHC_Information__c 
+												  from ANG_RHC_Information__c
 												 Where ANG_AccountId__c =: a.id];
 
 		ANG_RHCHelper.calculateRHCAmount(rhcList1);
-        
-        rhcList1[0].CurrencyIsoCode = 'USD';
-        rhcList1[0].ANG_RME_Amount__c = 200;
+
+		rhcList1[0].CurrencyIsoCode = 'USD';
+		rhcList1[0].ANG_RME_Amount__c = 200;
 		rhcList1[0].ANG_RHC_Amount__c = rhcList1[0].ANG_RHC_Amount_Forecasted__c;
-        upsert rhcList1[0];
+		upsert rhcList1[0];
 
 		ANG_RME_Alert_Service.RHCMessage message = new ANG_RME_Alert_Service.RHCMessage();
 
@@ -501,23 +501,23 @@ private class ANG_AccountTriggerHandlerTest {
 		message.eventTime = System.now();
 		message.storedRHCValue = 200;
 
-		Test.setMock(HttpCalloutMock.class, new HttpResponseGenerator(200, JSON.serialize(message)));		
+		Test.setMock(HttpCalloutMock.class, new HttpResponseGenerator(200, JSON.serialize(message)));
 
 		update cFS;
 
 		//forcing call as test will not "chain" processes
-        //new ANG_UpdateRHCInformationBatch(new Set<Id>{a.Id}, ANG_UpdateRHCInformationBatch.Process.PROVISIONAL, true, 100).execute(null);
+		//new ANG_UpdateRHCInformationBatch(new Set<Id>{a.Id}, ANG_UpdateRHCInformationBatch.Process.PROVISIONAL, true, 100).execute(null);
 		new ANG_UpdateRHCInformationQueueable(new Set<Id>{a.Id}, ANG_UpdateRHCInformationBatch.Process.PROVISIONAL, true, 100).execute(null);
 		Test.stopTest();
 
 		List<ANG_RHC_Information__c> rhcList = [Select ANG_RHC_Amount_Provisional__c,
 													   ANG_Provisional_RHC_Last_Update__c,
 													   ANG_RME_Amount__c
-												  from ANG_RHC_Information__c 
+												  from ANG_RHC_Information__c
 												 Where ANG_AccountId__c =: a.id];
 
 		System.assertEquals(message.provisionalRHC, rhcList[0].ANG_RME_Amount__c);
-	}	
+	}
 
 	@isTest static void test_CreateIEPOscars() {
 
@@ -525,19 +525,19 @@ private class ANG_AccountTriggerHandlerTest {
 
 		List<Contact> cons = new List<Contact>();
 		Contact con1 = new Contact(LastName = 'con1',
-				Email = 'test1@istest.newgen', 
+				Email = 'test1@istest.newgen',
 				Preferred_Language__c = 'English',
-				BSP_CASS_Payment_contact__c = true, 
-				Financial_Assessment_Contact__c = true, 
+				BSP_CASS_Payment_contact__c = true,
+				Financial_Assessment_Contact__c = true,
 				AccountId = accs[0].Id
 		);
 		cons.add(con1);
 
 		Contact con2 = new Contact(LastName = 'con2',
-				Email = 'test2@istest.newgen', 
+				Email = 'test2@istest.newgen',
 				Preferred_Language__c = 'English',
-				BSP_CASS_Payment_contact__c = true, 
-				Financial_Assessment_Contact__c = true, 
+				BSP_CASS_Payment_contact__c = true,
+				Financial_Assessment_Contact__c = true,
 				AccountId = accs[1].Id
 		);
 		cons.add(con2);
@@ -554,42 +554,77 @@ private class ANG_AccountTriggerHandlerTest {
 		pars.add(new Portal_Application_Right__c(Right__c = 'Access Granted', ANG_Portal_Service_Role__c = 'IEP Admin', Portal_Application__c = pas[1].Id, Contact__c = con2.Id ));
 		insert pars;
 
-        Test.startTest();
+		Test.startTest();
 
-        Test.setMock(HttpCalloutMock.class, new MockHttpResponseSuccessGenerator());
+		Test.setMock(HttpCalloutMock.class, new MockHttpResponseSuccessGenerator());
 
-        
-        for (Account a :accs){
-        	a.ANG_IEP_Status__c = 'In Progress';
-        }
 
-        update accs;
+		for (Account a :accs){
+			a.ANG_IEP_Status__c = 'In Progress';
+		}
 
-        List<AMS_Oscar__c> oscars = [SELECT Id, STEP17__c FROM AMS_Oscar__c WHERE Process__c = :AMS_Utils.IEPMODELAACCOUNTSETUP OR Process__c = :AMS_Utils.IEPMODELBACCOUNTSETUP];
+		update accs;
 
-        System.assertEquals(2,oscars.size());
+		List<AMS_Oscar__c> oscars = [SELECT Id, STEP17__c FROM AMS_Oscar__c WHERE Process__c = :AMS_Utils.IEPMODELAACCOUNTSETUP OR Process__c = :AMS_Utils.IEPMODELBACCOUNTSETUP];
 
-        for (AMS_Oscar__c oscar : oscars){
-        	oscar.STEP17__c = 'Passed';
-        }
+		System.assertEquals(2,oscars.size());
 
-        update oscars;
+		for (AMS_Oscar__c oscar : oscars){
+			oscar.STEP17__c = 'Passed';
+		}
 
-        Test.stopTest();
+		update oscars;
 
-        System.assertEquals(2, [SELECT Id FROM AMS_Agency_Updates__c WHERE Change_Code__c = 'MAPDF' OR Change_Code__c ='MBDIL'].size());
-    }
+		Test.stopTest();
+
+		System.assertEquals(2, [SELECT Id FROM AMS_Agency_Updates__c WHERE Change_Code__c = 'MAPDF' OR Change_Code__c ='MBDIL'].size());
+	}
+
+	@isTest static void testChangeFOPsStatusAccordingly(){
+
+		List<Agency_Authorization__c> fops = new List<Agency_Authorization__c>();
+		Id formOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
+		Account a = [SELECT Id,Is_PCI_compliant__c FROM Account WHERE Name = 'Test'];
+
+		Agency_Authorization__c cashfop = new Agency_Authorization__c(Account__c = a.id, ANG_FormOfPayment_ID__c = 'CA', RecordTypeId = formOfPaymentRT);
+		   fops.add(cashfop);
+
+		   Agency_Authorization__c creditCardfop = new Agency_Authorization__c(Account__c = a.id, ANG_FormOfPayment_ID__c = 'CC', RecordTypeId = formOfPaymentRT);
+		   fops.add(creditCardfop);
+
+		   Agency_Authorization__c bopMethod = new Agency_Authorization__c(Account__c = a.id, ANG_FormOfPayment_ID__c = 'EP', RecordTypeId = formOfPaymentRT);
+		   fops.add(bopMethod);
+		   insert fops;
+
+		a.Status__c = AMS_Utils.ACC_S0_TERMINATED;
+		update a;
+
+		for(Agency_Authorization__c aa : [SELECT Status__c FROM Agency_Authorization__c ]){
+			system.assertEquals(aa.Status__c, 'Non-Active');
+		}
+
+		a.Status__c = AMS_Utils.ACC_S9_APPROVED;
+		update a;
+
+		for(Agency_Authorization__c aa : [SELECT ANG_FormOfPayment_ID__c, Status__c FROM Agency_Authorization__c ]){
+
+			if(aa.ANG_FormOfPayment_ID__c == AMS_Utils.CC)
+				system.assertEquals(aa.Status__c, 'Non-Active');
+			else
+				system.assertEquals(aa.Status__c, 'Active');
+		}
+	}
 
 	@isTest static void dueDiligenceModelBPlusTest(){
-		
+
 		List<Account> accs = [SELECT Id, ANG_IEP_Status__c FROM Account WHERE Name = 'UK Test'];
 
 		List<Contact> cons = new List<Contact>();
 		Contact con1 = new Contact(LastName = 'con1',
-				Email = 'test1@istest.newgen', 
+				Email = 'test1@istest.newgen',
 				Preferred_Language__c = 'English',
-				BSP_CASS_Payment_contact__c = true, 
-				Financial_Assessment_Contact__c = true, 
+				BSP_CASS_Payment_contact__c = true,
+				Financial_Assessment_Contact__c = true,
 				AccountId = accs[0].Id
 		);
 		cons.add(con1);
@@ -605,27 +640,27 @@ private class ANG_AccountTriggerHandlerTest {
 		pars.add(new Portal_Application_Right__c(Right__c = 'Access Granted', ANG_Portal_Service_Role__c = 'IEP Admin', Portal_Application__c = pas[0].Id, Contact__c = con1.Id ));
 		insert pars;
 
-        Test.startTest();
+		Test.startTest();
 
-        Test.setMock(HttpCalloutMock.class, new MockHttpResponseSuccessGenerator());
+		Test.setMock(HttpCalloutMock.class, new MockHttpResponseSuccessGenerator());
 
-        for (Account a :accs){
-        	a.ANG_IEP_Status__c = 'In Progress';
-        }
+		for (Account a :accs){
+			a.ANG_IEP_Status__c = 'In Progress';
+		}
 
-        update accs;
+		update accs;
 
-        List<AMS_Oscar__c> oscars = [SELECT Id, STEP17__c FROM AMS_Oscar__c WHERE Process__c = :AMS_Utils.IEPMODELBPLUSACCOUNTSETUP];
+		List<AMS_Oscar__c> oscars = [SELECT Id, STEP17__c FROM AMS_Oscar__c WHERE Process__c = :AMS_Utils.IEPMODELBPLUSACCOUNTSETUP];
 
-        for (AMS_Oscar__c oscar : oscars){
-        	oscar.STEP17__c = 'Passed';
-        }
+		for (AMS_Oscar__c oscar : oscars){
+			oscar.STEP17__c = 'Passed';
+		}
 
-        update oscars;
+		update oscars;
 
-        Test.stopTest();
+		Test.stopTest();
 
-        System.assertEquals(1, [SELECT Id FROM AMS_Agency_Updates__c WHERE Change_Code__c = :AMS_Utils.MBPDD_CHANGE_CODE].size());
+		System.assertEquals(1, [SELECT Id FROM AMS_Agency_Updates__c WHERE Change_Code__c = :AMS_Utils.MBPDD_CHANGE_CODE].size());
 
 	}
 
@@ -635,19 +670,19 @@ private class ANG_AccountTriggerHandlerTest {
 
 		List<Contact> cons = new List<Contact>();
 		Contact con1 = new Contact(LastName = 'con1',
-				Email = 'test1@istest.newgen', 
+				Email = 'test1@istest.newgen',
 				Preferred_Language__c = 'English',
-				BSP_CASS_Payment_contact__c = true, 
-				Financial_Assessment_Contact__c = true, 
+				BSP_CASS_Payment_contact__c = true,
+				Financial_Assessment_Contact__c = true,
 				AccountId = accs[0].Id
 		);
 		cons.add(con1);
 
 		Contact con2 = new Contact(LastName = 'con2',
-				Email = 'test2@istest.newgen', 
+				Email = 'test2@istest.newgen',
 				Preferred_Language__c = 'English',
-				BSP_CASS_Payment_contact__c = true, 
-				Financial_Assessment_Contact__c = true, 
+				BSP_CASS_Payment_contact__c = true,
+				Financial_Assessment_Contact__c = true,
 				AccountId = accs[1].Id
 		);
 		cons.add(con2);
@@ -664,27 +699,27 @@ private class ANG_AccountTriggerHandlerTest {
 		pars.add(new Portal_Application_Right__c(Right__c = 'Access Granted', ANG_Portal_Service_Role__c = 'IEP Admin', Portal_Application__c = pas[1].Id, Contact__c = con2.Id ));
 		insert pars;
 
-        Test.startTest();
+		Test.startTest();
 
-        Test.setMock(HttpCalloutMock.class, new MockHttpResponseSuccessGenerator());
+		Test.setMock(HttpCalloutMock.class, new MockHttpResponseSuccessGenerator());
 
-        integer i=0;
-        for (Account a :accs){
+		integer i=0;
+		for (Account a :accs){
 			a.Is_PCI_compliant__c = (Math.mod(i, 2) == 0) ? 'Corporate Card' : 'Nil CC';
-        	a.ANG_IEP_Status__c = 'In Progress';
+			a.ANG_IEP_Status__c = 'In Progress';
 			i++;
-        }
+		}
 
-        update accs;
+		update accs;
 
 		Test.stopTest();
 
 		List<AMS_Agency_Updates__c> agencyUpdLst = new List<AMS_Agency_Updates__c>(
-			[SELECT 
-				Id, 
-				Account__c, 
+			[SELECT
+				Id,
+				Account__c,
 				Change_Code__c
-			 FROM 
+			 FROM
 			 	AMS_Agency_Updates__c
 			]
 		);
@@ -695,7 +730,7 @@ private class ANG_AccountTriggerHandlerTest {
 			system.assert(upd.Change_Code__c == 'IEPPC', 'Should have created an update for the IEPPC pci compliant callout entry');
 		}
 
-    }
+	}
 
 	@isTest static void pciCompliantUpdateDoNotTriggerMasterDataTest() {
 
@@ -703,19 +738,19 @@ private class ANG_AccountTriggerHandlerTest {
 
 		List<Contact> cons = new List<Contact>();
 		Contact con1 = new Contact(LastName = 'con1',
-				Email = 'test1@istest.newgen', 
+				Email = 'test1@istest.newgen',
 				Preferred_Language__c = 'English',
-				BSP_CASS_Payment_contact__c = true, 
-				Financial_Assessment_Contact__c = true, 
+				BSP_CASS_Payment_contact__c = true,
+				Financial_Assessment_Contact__c = true,
 				AccountId = accs[0].Id
 		);
 		cons.add(con1);
 
 		Contact con2 = new Contact(LastName = 'con2',
-				Email = 'test2@istest.newgen', 
+				Email = 'test2@istest.newgen',
 				Preferred_Language__c = 'English',
-				BSP_CASS_Payment_contact__c = true, 
-				Financial_Assessment_Contact__c = true, 
+				BSP_CASS_Payment_contact__c = true,
+				Financial_Assessment_Contact__c = true,
 				AccountId = accs[1].Id
 		);
 		cons.add(con2);
@@ -732,40 +767,40 @@ private class ANG_AccountTriggerHandlerTest {
 		pars.add(new Portal_Application_Right__c(Right__c = 'Access Granted', ANG_Portal_Service_Role__c = 'IEP Admin', Portal_Application__c = pas[1].Id, Contact__c = con2.Id ));
 		insert pars;
 
-        Test.startTest();
+		Test.startTest();
 
-        Test.setMock(HttpCalloutMock.class, new MockHttpResponseSuccessGenerator());
+		Test.setMock(HttpCalloutMock.class, new MockHttpResponseSuccessGenerator());
 
-        integer i=0;
-        for (Account a :accs){
+		integer i=0;
+		for (Account a :accs){
 			a.Is_PCI_compliant__c = (Math.mod(i, 2) == 0) ? 'Corporate Card' : 'Nil CC';
-        	a.ANG_IEP_Status__c = 'No IEP Account';
+			a.ANG_IEP_Status__c = (Math.mod(i, 2) == 0) ? 'No IEP Account' : NULL;
 			i++;
-        }
+		}
 
-        update accs;
+		update accs;
 
 		Test.stopTest();
 
 		List<AMS_Agency_Updates__c> agencyUpdLst = new List<AMS_Agency_Updates__c>(
-			[SELECT 
+			[SELECT
 				Id
-			 FROM 
+			 FROM
 			 	AMS_Agency_Updates__c
 			]
 		);
 
 		system.assert(agencyUpdLst.size() == 0, 'Should NOT have created agency updates records');
 
-    }
+	}
 
-    public class MockHttpResponseSuccessGenerator implements HttpCalloutMock {
+	public class MockHttpResponseSuccessGenerator implements HttpCalloutMock {
 		// Implement this interface method
 		public HTTPResponse respond(HTTPRequest req) {
 			// Optionally, only send a mock response for a specific endpoint
 			// and method.
 			System.assertEquals('PUT', req.getMethod());
-			
+
 			// Create a fake response
 			HttpResponse res = new HttpResponse();
 			res.setHeader('Content-Type', 'application/json');
@@ -773,5 +808,5 @@ private class ANG_AccountTriggerHandlerTest {
 			return res;
 		}
 	}
-	
+
 }

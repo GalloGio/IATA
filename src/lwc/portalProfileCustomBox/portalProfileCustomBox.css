@@ -15,7 +15,6 @@
 }
 
 .specialLabel {
-  font-family: AktivGrotesk;
   font-size: 14px;
   font-style: normal;
   font-stretch: normal;
@@ -103,4 +102,17 @@ input[type="checkbox"] {
 
 .workingAreasRemoveError {
   text-decoration: none;
+}
+
+.custom-recipients {
+  display: inline-block;
+  border-radius: 1px;
+  background-color: #f7f8fc;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.71;
+  letter-spacing: normal;
+  color: #4a4d61;
 }

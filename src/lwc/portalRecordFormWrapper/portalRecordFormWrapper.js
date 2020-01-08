@@ -11,6 +11,17 @@ import { navigateToPage } from 'c/navigationUtils';
 
 import isAdmin from '@salesforce/apex/CSP_Utils.isAdmin';
 import getPickListValues from '@salesforce/apex/CSP_Utils.getPickListValues';
+import goToPrivacyPortal from '@salesforce/apex/PortalProfileCtrl.goToPrivacyPortal';
+import getAccountDomains from '@salesforce/apex/PortalProfileCtrl.getAccountDomains';
+import checkIfIsAirlineUser from '@salesforce/apex/CSP_Utils.isAirlineUser';
+import checkHasAccessToAccred from '@salesforce/apex/DAL_WithoutSharing.hasAccessToService'; // check if user has access to IATA Accreditation and changes
+import getMapHierarchyAccounts from '@salesforce/apex/PortalProfileCtrl.getMapHierarchyAccounts';
+import getPhotoFromAPI from '@salesforce/apex/PortalProfileCtrl.getPhotoFromAPI';
+import isCountryEligibleForPaymentLink from '@salesforce/apex/PortalProfileCtrl.isCountryEligibleForPaymentLink'; //WMO-699 - ACAMBAS
+import paymentLinkRedirect from '@salesforce/apex/PortalServicesCtrl.paymentLinkRedirect'; //WMO-699 - ACAMBAS
+import hasAccessToSIS from '@salesforce/apex/DAL_WithoutSharing.hasAccessToService'; //WMO-736 - ACAMBAS
+import getPortalServiceDetails from '@salesforce/apex/PortalServicesCtrl.getPortalServiceDetails'; //WMO-736 - ACAMBAS
+import goToOldPortalService from '@salesforce/apex/PortalServicesCtrl.goToOldPortalService'; //WMO-736 - ACAMBAS
 
 import SaveLabel from '@salesforce/label/c.CSP_Save';
 import CancelLabel from '@salesforce/label/c.CSP_Cancel';
@@ -19,20 +30,42 @@ import Area from '@salesforce/label/c.csp_WorkingAreas';
 import ServicesTitle from '@salesforce/label/c.CSP_Services_Title';
 import InvalidValue from '@salesforce/label/c.csp_InvalidPhoneValue';
 import CompleteField from '@salesforce/label/c.csp_CompleteField';
+import RelocateAccount from '@salesforce/label/c.ISSP_Relocate_Contact';
 
-import IdCardNumber from '@salesforce/label/c.ISSP_IDCard_VER_Number';
-import IdCardValidTo from '@salesforce/label/c.ISSP_IDCard_Valid_To';
+import IdCard from '@salesforce/label/c.CSP_Id_Card';
+import IdCardNumber from '@salesforce/label/c.CSP_IDCard_Ver_Number';
+import IdCardValidTo from '@salesforce/label/c.CSP_IDCard_Valid_To';
+import IdCardPhoto from '@salesforce/label/c.CSP_IDCard_Photo';
+import IdCardPhotoTitle from '@salesforce/label/c.CSP_IDCard_Photo_Title';
+import IdCardName from '@salesforce/label/c.CSP_IDCard_Name';
+import IdCardStatus from '@salesforce/label/c.CSP_IDCard_Status';
 import CSP_Error_Message_Mandatory_Fields_Contact from '@salesforce/label/c.CSP_Error_Message_Mandatory_Fields_Contact';
+import LastLoginDate from '@salesforce/label/c.csp_LastLoginDate';
+import CompanyInformation_EMADOMVAL_Title from '@salesforce/label/c.ISSP_CompanyInformation_EMADOMVAL_Title';
 
+import remove from '@salesforce/label/c.Button_Remove';
+import contact from '@salesforce/label/c.ISSP_Contact';
+
+import CompanyInformation from '@salesforce/label/c.ISSP_CompanyInformation';
+import CSP_CompanyAdministration_Link from '@salesforce/label/c.CSP_CompanyAdministration_Link';
+import CSP_Travel_Agent_Accreditation_Changes_Access from '@salesforce/label/c.CSP_Travel_Agent_Accreditation_Changes_Access';
+import CSP_Travel_Agent_Accreditation_Changes_Request from '@salesforce/label/c.CSP_Travel_Agent_Accreditation_Changes_Request';
+import CSP_Airline_Changes_Access from '@salesforce/label/c.CSP_Airline_Changes_Access';
+import See_Bank_Account_Details from '@salesforce/label/c.See_Bank_Account_Details'; //WMO-699 - ACAMBAS
+import Credit_Card_Payment_Link from '@salesforce/label/c.Credit_Card_Payment_Link'; //WMO-699 - ACAMBAS
+import Link_To_SIS from '@salesforce/label/c.Link_To_SIS'; //WMO-736 - ACAMBAS
 
 
 export default class PortalRecordFormWrapper extends NavigationMixin(LightningElement) {
-
+    
     @api sectionClass;
     @api headerClass;
     @api sectionTitle;
     @api showEdit;
     @api editBasics;
+    @api editIdcard;
+    @api idCardRedirectionUrl;
+    @api allowContactDelete=false;
 
     @api editFields;
     @api recordId;
@@ -43,6 +76,8 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     @api showarea;
     @api services;
     @api showfunction;
+
+    @api relatedAccounts = [];
 
     @api isForEdit = false;
 
@@ -57,6 +92,18 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     @track fieldsValid = true;
     @track fieldsLocal;
     @track jobFunctions;
+    @track removeContact = false;
+    @track idCardErrorPopup = false;
+    @track photoURL;
+    @track photoPopUp = false;
+    @track isEligibleForPaymentLink; //WMO-699 - ACAMBAS
+    @track paymentLinkURL; //WMO-699 - ACAMBAS
+    @track hasAccessToSISPortal; //WMO-736 - ACAMBAS
+    @track SISPortalLink; //WMO-736 - ACAMBAS
+
+    @track iconUrl;
+    @track sisPage;
+
 
     timeout = null;
 
@@ -64,14 +111,51 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     @track contactTypeStatus = [];
 
     @track changeUserPortalStatus = false;
+    @track openRelocateAccount = false;
 
     @track hasError = false;
-
+    @track accountEmailDomains = [];
+    @track emailDomain = false;
+    @track canRelocate = true;
     @api
-    get fields() { return this.fieldsLocal; }
-    set fields(value) { this.fieldsLocal = value; }
+    get fields(){ return this.fieldsLocal;}
+    set fields(value){ this.fieldsLocal = value;}
 
-    _labels = { SaveLabel, CancelLabel, MembershipFunction, Area, ServicesTitle, InvalidValue, CompleteField, IdCardNumber, IdCardValidTo, CSP_Error_Message_Mandatory_Fields_Contact };
+    _labels = {
+        SaveLabel,
+        CancelLabel,
+        MembershipFunction,
+        Area,
+        ServicesTitle,
+        InvalidValue,
+        CompleteField,
+        IdCardNumber,
+        IdCardValidTo,
+        remove,
+        contact,
+        CSP_Error_Message_Mandatory_Fields_Contact,
+        LastLoginDate,
+        RelocateAccount,
+        CompanyInformation_EMADOMVAL_Title,
+        CompanyInformation,
+		CSP_Travel_Agent_Accreditation_Changes_Access,
+		CSP_Travel_Agent_Accreditation_Changes_Request,
+		CSP_Airline_Changes_Access,
+        CSP_CompanyAdministration_Link,
+        IdCardName,
+        IdCardPhoto,
+        IdCardStatus,
+        IdCard,
+        IdCardPhotoTitle,
+        See_Bank_Account_Details,
+        Credit_Card_Payment_Link
+    };
+
+    @api tabName = '';
+	@track isAdminUser = false;
+	@track isAirline=false;
+	@track linkToDoChanges='';
+    
     get labels() { return this._labels; }
     set labels(value) { this._labels = value; }
 
@@ -129,14 +213,92 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
             });
 
         }
+        
+        isAdmin().then(result => {
+            this.showEdit = result && this.showEdit;
+            if (this._labels.CompanyInformation.trim() === this.tabName.trim()){
+				this.isAdminUser = result;
+                this.showEdit = true;
+                this.editBasics = true;
+            }
+        });
+		checkIfIsAirlineUser().then(result=>{
+			this.isAirline = result;
+			if(!result){
+				
+				checkHasAccessToAccred({
+					str:'IATA%Acc%',
+					conId:null
+				}).then(result=>{
+					if(result)
+						this.linkToDoChanges =this._labels.CSP_Travel_Agent_Accreditation_Changes_Access;
+					else
+						this.linkToDoChanges =this._labels.CSP_Travel_Agent_Accreditation_Changes_Request;					
+				});
+			}
 
+		});
+
+        //WMO-699 - ACAMBAS: Begin
+        isCountryEligibleForPaymentLink().then(result => {
+            this.isEligibleForPaymentLink = result;
+        });
+
+
+        paymentLinkRedirect().then(result => {
+            let myUrl;
+            if (result !== undefined && result !== '') {
+                myUrl = result;
+                if (!myUrl.startsWith('http')) {
+                    myUrl = window.location.protocol + '//' + myUrl;
+                }
+            }
+            this.paymentLinkURL = myUrl;
+
+            let creditCardPaymentLink = Credit_Card_Payment_Link.replace('{1}', this.paymentLinkURL);
+            this._labels.Credit_Card_Payment_Link = creditCardPaymentLink;
+        });
+        //WMO-699 - ACAMBAS: End
+
+        //WMO-736 - ACAMBAS: Begin
+        let SISPortalService = 'SIS';
+
+        hasAccessToSIS({ str: SISPortalService }).then(result => {
+            this.hasAccessToSISPortal = result;
+
+            if(this.hasAccessToSISPortal) {
+                getPortalServiceDetails({ serviceName: SISPortalService }).then(result => {
+                    let portalService = JSON.parse(JSON.stringify(result));
+
+                    if (portalService !== undefined && portalService !== '') {
+                        //let SISIconHTML = portalService.recordService.Application_icon__c;
+                        let SISPortalURL = portalService.recordService.Application_URL__c;
+                        this.iconUrl = portalService.recordService.Application_icon_URL__c;
+                        goToOldPortalService({ myurl: SISPortalURL }).then(result => {
+                            //this.SISPortalLink = Link_To_SIS.replace('{1}', SISIconHTML);
+                            //this.SISPortalLink = this.SISPortalLink.replace('{2}', result);
+                            this.sisPage = result;
+                        })
+                    }
+                });
+            }
+        });
+        //WMO-736 - ACAMBAS: End
+
+        this.getAccountEmailDomains();
     }
+	get showHelpText(){
+		return this.isAdminUser;
+	}
 
     get accessibilityGetter() {
 
+        let accessibilityTextLocal = '';
         let contactTypeStatus = [];
         let contactType = [];
         let fieldsToIterate = JSON.parse(JSON.stringify(this.fields));
+
+        if (fieldsToIterate) {
         fieldsToIterate.forEach(function (item) {
             if (item.isAccessibility) {
                 contactType = item.accessibilityList;
@@ -147,11 +309,12 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
                 });
             }
         });
+        }
 
-        this.accessibilityText = contactTypeStatus.join(', ');
+        accessibilityTextLocal = contactTypeStatus.join(', ');
         this.contactTypeStatus = contactType;
         this.listSelected = contactTypeStatus;
-
+        
         isAdmin().then(result => {
             this.showEdit = (result ? true : false);
         });
@@ -165,6 +328,10 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     loaded(event) {
         this.isLoading = false;
         let fields = JSON.parse(JSON.stringify(event.detail.objectInfos.Contact.fields));
+
+        if(this.sectionTitle === this._labels.IdCard){
+            this.template.querySelector('[data-id="sectionId"]').classList.add('grayBackgroundSection');
+        }
     }
 
     loadedEdit() {
@@ -173,13 +340,11 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     }
 
     handleSucess(event) {
-        const updatedRecord = event.detail.id;
         this.isSaving = false;
 
-        let listSelected = JSON.parse(JSON.stringify(this.listSelected));
-        this.dispatchEvent(new CustomEvent('refreshview'));
         this.closeModal();
-        //eval("$A.get('e.force:refreshView').fire();");
+
+        this.updateMembershipFunctions(event.detail);
     }
 
     handleError(event) {
@@ -198,12 +363,48 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
         return this.objectName != null && this.objectName.toLowerCase() == 'contact';
     }
 
+    //WMO-699 - ACAMBAS: Begin
+    get isCustomerInvoice() {
+        return this.objectName != null && this.objectName.toLowerCase() == 'customer_invoice__c';
+    }
+
+    get displayPaymentLinkLabel() {
+        let isCustomerInvoiceObject = this.objectName != null && this.objectName.toLowerCase() == 'customer_invoice__c';
+        return this.isEligibleForPaymentLink && isCustomerInvoiceObject;
+    }
+
+    get getPaymentLinkURL() {
+        return this.paymentLinkURL;
+    }
+    //WMO-699 - ACAMBAS: End
+
     get showAreas() {
         return this.showarea;
     }
 
     get showMembershipFunction() {
         return this.showfunction;
+    }
+
+    get removeContactLabel(){
+        return this.labels.remove +' '+this.labels.contact;
+    }
+
+    removeUser(){
+        this.removeContact = true;
+        this.changeUserPortalStatus = true;
+        this.showEditModal = false;
+    }
+
+    updateMembershipFunctions(eventDetail) {
+        if(eventDetail.fields.hasOwnProperty('Membership_Function__c')) {
+            let functions = [];
+            if(eventDetail.fields.Membership_Function__c) {
+                const values = eventDetail.fields.Membership_Function__c.value.split(";");
+                values.forEach( (value) => { functions.push(value); });
+            }
+            this.jobFunctions = functions;
+        }
     }
 
     styleInputs() {
@@ -214,7 +415,7 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
 
         let fields = haveEditFields ? JSON.parse(JSON.stringify(this.editFields)) : JSON.parse(JSON.stringify(this.fields));
         let fieldsChanged = false;
-        let numberFields = ['Phone', 'MobilePhone', 'Phone_Number__c'];
+        let numberFields = ['Phone','MobilePhone','Phone_Number__c'];
         let requiredFields = [];
         let skipValidation = false;
 
@@ -356,6 +557,18 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
             let fields = event.detail.fields;
             fields.accountId = this.accountId;
 
+            let contact = JSON.parse(JSON.stringify(this.staticFields));
+            if(contact.ID_Card_Holder__c && (fields.FirstName != contact.FirstName || fields.LastName != contact.LastName || (fields.Birthdate != contact.Birthdate && contact.Birthdate))){
+                this.isSaving = false;
+                this.closeModal();
+                this.idCardErrorPopup = true;
+                return;
+            }
+            else if(contact.ID_Card_Holder__c && !contact.Birthdate && fields.Birthdate){
+                contact.Birthdate = fields.Birthdate;
+                this.staticFields = contact;
+            }
+
             if (selected.length > 0) {
                 fields.Area__c = selected;
             }
@@ -390,15 +603,23 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
             let listSelected = JSON.parse(JSON.stringify(this.listSelected));
             if (listSelected.length > 0) {
                 let contactTypeStatusLocal = JSON.parse(JSON.stringify(this.contactTypeStatus));
-
+                
                 contactTypeStatusLocal.forEach(function (item) {
                     if (listSelected.includes(item.label)) {
                         fields[item.APINAME] = true;
+                        item.checked = true;
                     } else {
                         fields[item.APINAME] = false;
+                        item.checked = false;
                     }
                 });
 
+                // Update accessibility fields
+                this.fields.forEach(function (item) {
+                    if (item.isAccessibility) {
+                        item.accessibilityList = contactTypeStatusLocal;
+                    }
+                });
             }
 
             if (canSave) {
@@ -480,18 +701,26 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
         this.listSelected = fieldValue;
 
     }
-
+    
+    opensRelocateAccount() {
+        this.checkCanRelocate();
+    }
+    
     openChangeUserPortalStatus() {
         this.changeUserPortalStatus = true;
     }
 
     closePortalChangeUserStatus() {
+        this.removeContact = false;
         this.changeUserPortalStatus = false;
+        this.openRelocateAccount = false;
     }
 
     closePortalChangeUserStatusWithRefresh() {
         this.dispatchEvent(new CustomEvent('refreshview'));
+        this.removeContact = false;
         this.changeUserPortalStatus = false;
+        this.openRelocateAccount = false;
     }
 
     get canSave() {
@@ -518,4 +747,66 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     get hasStaticServices() {
         return this.staticFields !== undefined && this.staticFields.services !== undefined && this.staticFields.services.length > 0;
     }
+
+
+    navigateToPrivacyPortal() {
+        goToPrivacyPortal({})
+            .then(results => {
+                window.open(results);
+            });
+    }
+
+    get accountDomains() {
+        return this.accountEmailDomains;
+    }
+
+    getAccountEmailDomains() {
+        getAccountDomains({ accountId: this.recordId }).then(result => {
+            this.accountEmailDomains = result;
+        });
+    }
+
+    openEmailDomain() {
+        this.emailDomain = true;
+    }
+
+    closeEmailDomain() {
+        this.getAccountEmailDomains();
+        this.emailDomain = false;
+    }
+
+    checkCanRelocate() {
+        let contactId = this.recordId;
+        getMapHierarchyAccounts({ contactId: contactId })
+        .then(result => {
+            this.isLoading = false;
+            this.openRelocateAccount = true;
+            this.relatedAccounts = JSON.parse(JSON.stringify(result));
+        });
+    }
+
+    hideIdCardErrorPopup() {
+        this.idCardErrorPopup = false;
+    }
+
+    redirectToIdCardPortal() {
+        if(this.idCardRedirectionUrl  != ''){
+           window.location.href = this.idCardRedirectionUrl;
+        }
+    }
+
+    openPhotoPopUp() {
+        if(this.staticFields.cardPhoto != ''){
+           getPhotoFromAPI({ photoName : this.staticFields.cardPhoto})
+           .then(result => {
+              this.photoURL = result;
+              this.photoPopUp = true;
+           });
+        }
+    }
+
+    hideIdCardPhotoPopup() {
+        this.photoPopUp = false;
+    }
+
 }

@@ -1,6 +1,6 @@
 @isTest
 private class ANG_ContactHandlerTest {
-	
+
 	//insert 2 accounts and 1 contact
 	//change account on contact and update. should not be possible to do
 
@@ -27,9 +27,9 @@ private class ANG_ContactHandlerTest {
 
 		}
 
-		
+
 
 	}
-	
+
 
 }

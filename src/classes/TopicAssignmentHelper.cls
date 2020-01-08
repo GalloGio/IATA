@@ -5,7 +5,7 @@ public with sharing class TopicAssignmentHelper {
 	 * Applies to items posted to Airline HQ accounts that are IATA Members.
 	 */
 	public static void AccountTopicValidation(list<TopicAssignment> TriggerNew) {
-		
+
 		TopicHelper.TopicsWrapper topicWrapper = TopicHelper.getTopicsInfo();
 
 		String strAcceptedValues = topicWrapper.acceptedTopics;
@@ -16,6 +16,7 @@ public with sharing class TopicAssignmentHelper {
 			// get list of related Topic that are NOT in the accepted list
 			set<Id> setRelatedTopicsIds = new set<Id>();
 			set<Id> setParentEntityIds = new set<Id>();
+			set<String> setFeedItemTypes = new set<String>{'TextPost','ContentPost','LinkPost','PollPost','QuestionPost'};
 
 			for (TopicAssignment ta : TriggerNew) {
 				setRelatedTopicsIds.add(ta.TopicId);
@@ -34,7 +35,7 @@ public with sharing class TopicAssignmentHelper {
 
 				// for all the unacceptable topics, check whether they are attached to a feed item whose parent is an account
 				// only apply to text posts (e.g. not to automatic feed tracking)
-				map<Id,FeedItem> mapParentFeedItemsPerIds = new map<Id, FeedItem>([SELECT Id, ParentId FROM FeedItem WHERE Id IN :setParentEntityIds AND Type = 'TextPost']);
+				map<Id,FeedItem> mapParentFeedItemsPerIds = new map<Id, FeedItem>([SELECT Id, ParentId FROM FeedItem WHERE Id IN :setParentEntityIds AND Type in :setFeedItemTypes]);
 
 				// broadcast helper topics
 				Set<String> stBroadcastTopics = new Set<String>();
@@ -50,11 +51,11 @@ public with sharing class TopicAssignmentHelper {
 				if (!setRelatedAccountIds.isEmpty()) {
 
 					Map<Id, Account> mapAccountsPerId = new Map<Id, Account>(
-						[SELECT 
-							Id 
-						 FROM 
+						[SELECT
+							Id
+						 FROM
 						 	Account
-						 WHERE 
+						 WHERE
 						 	 Id IN :setRelatedAccountIds
 						 AND RecordType.DeveloperName = 'IATA_Airline'
 						 AND Sector__c = 'Airline'

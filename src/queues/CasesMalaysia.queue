@@ -10,7 +10,7 @@
             <publicGroup>IDFSAsiaPacificallusers</publicGroup>
         </publicGroups>
         <roleAndSubordinatesInternal>
-            <roleAndSubordinateInternal>APCustomerServiceStaffI</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>APCustomerServiceStaff</roleAndSubordinateInternal>
         </roleAndSubordinatesInternal>
         <users>
             <user>chopras@iata.org</user>

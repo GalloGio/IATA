@@ -79,57 +79,58 @@ public class ams2gdp_BusinessLogic {
 			else if (account.Is_PCI_compliant__c == 'Corporate Card') {PCICompliance = 'C';}
 
 			result.add(new GDP_Products_Account_View__c(AMS_GDP_Key__c  = mapping_key
-			           , Parent_GDP_Account_View__c = (account.ParentId != null) ? parentMap.get(account.ParentId) : null
-			           , Related_GDP_Address__c = addressMap.get(account.Id)
-			           , Related_Accreditation_Class__c = accredMap.get(account.Id)
-			           , Related_Main_Phone__c = phoneMap.get(account.Id)
-			           , Name = account.Name.left(80)
-			           , Airline_Code__c =  airlineCode
-			           , CNS_Agency__c = account.CNS_Agency__c
-			           , BSP_CASS_Code__c =  account.BSP_CASS_Code__c
-			           , CASS_Number__c =  account.CASS_Number__c
-                       , Check_Digit__c =   account.Check_Digit__c
-                       , Email_Address__c =  account.Email__c
-                       , GDP_Opt_In__c =  account.GDP_Opt_In__c
-                       , IATA_Code__c =  (String.isNotBlank(account.IATACode__c)) ? (account.IATACode__c.left(1).equalsIgnoreCase('x') ? account.IATACode__c.left(8) : account.IATACode__c.left(7)) : null
-                       , Incorporation_Type__c =  (tbl_company_types.containsKey(account.Company_Type__c)) ? tbl_company_types.get(account.Company_Type__c).Id : account.Incorporation_Type__c
-                       , Agency_Short_Name__c  = account.Short_Name__c
-                       , Legal_Name_1__c =   (legalNameParts.size() > 0) ? legalNameParts.get(0) : null
-                       , Legal_Name_2__c =   (legalNameParts.size() > 1) ? legalNameParts.get(1) : null
-                       , Legal_Name_3__c =   (legalNameParts.size() > 2) ? legalNameParts.get(2) : null
-                       , License_Number__c =   account.License_Number__c
-                       , Location_Type__c =  (tbl_location_types.containsKey(account.Location_Type__c)) ? tbl_location_types.get(account.Location_Type__c).Id : account.GDP_Location_Type__c
-                       , Manager_First_Name__c =   account.Manager_First_Name__c
-                       , Manager_Last_Name__c =   account.Manager_Last_Name__c
-                       , Passenger_And_Cargo__c =   account.PAX_Cargo__c
-                       , Preferred_Language__c =   account.Preferred_Language__c
-                       , Tax_ID_1__c =  (String.isNotBlank(account.VAT_Number__c)) ? account.VAT_Number__c.left(20) : null
-                       , Tax_ID_2__c =  (String.isNotBlank(account.VAT_Number_2__c)) ? account.VAT_Number_2__c.left(20) : null
-                       , Ticketing_Agent_First_Name__c =   account.Ticketing_Agent_First_Name__c
-                       , Ticketing_Agent_Last_Name__c =   account.Ticketing_Agent_Last_Name__c
-                       , Trading_Name_1__c =   (tradeNameParts.size() > 0) ? tradeNameParts.get(0) : null
-                       , Trading_Name_2__c =   (tradeNameParts.size() > 1) ? tradeNameParts.get(1) : null
-                       , TTY__c =  account.TTY__c
-                       , Website__c =  account.Website
-                       , WebStar_ID__c = (String.isNotBlank(account.WebStar_ID__c)) ? account.WebStar_ID__c + 'GDP' : null
-                       , AIMS_ID__c = (String.isNotBlank(account.AIMS_ID__c)) ? account.AIMS_ID__c + 'GDP' : null
-                       , Parent_Account_WebStar_ID__c = (account.ParentId != null && String.isNotBlank(account.Parent.WebStar_ID__c)) ? account.Parent.WebStar_ID__c : null
-                       , Parent_Account_AIMS_ID__c = (account.ParentId != null && String.isNotBlank(account.Parent.AIMS_ID__c)) ? account.Parent.AIMS_ID__c : null
-                       // , account.ANG_IsNewGenAgency__c
-		               , Due_Diligence_Status__c = account.Due_Diligence_Status__c
-                       , PCI_Compliance__c = PCICompliance
-                       , PCI_compliance_expiry_date__c = account.ANG_PCI_compliance_expiry_date__c
+								 , Parent_GDP_Account_View__c = (account.ParentId != null) ? parentMap.get(account.ParentId) : null
+								 , Related_GDP_Address__c = addressMap.get(account.Id)
+								 , Related_Accreditation_Class__c = accredMap.get(account.Id)
+								 , Related_Main_Phone__c = phoneMap.get(account.Id)
+								 , Name = account.Name.left(80)
+								 , Airline_Code__c =  airlineCode
+								 , CNS_Agency__c = account.CNS_Agency__c
+								 , BSP_CASS_Code__c =  account.BSP_CASS_Code__c
+								 , CASS_Number__c =  account.CASS_Number__c
+											 , Check_Digit__c =   account.Check_Digit__c
+											 , Email_Address__c =  account.Email__c
+											 , GDP_Opt_In__c =  account.GDP_Opt_In__c
+											 , IATA_Code__c =  (String.isNotBlank(account.IATACode__c)) ? (account.IATACode__c.left(1).equalsIgnoreCase('x') ? account.IATACode__c.left(8) : account.IATACode__c.left(7)) : null
+											 , IDCard_Key_Account__c = account.IDCard_Key_Account__c
+											 , Incorporation_Type__c =  (tbl_company_types.containsKey(account.Company_Type__c)) ? tbl_company_types.get(account.Company_Type__c).Id : account.Incorporation_Type__c
+											 , Agency_Short_Name__c  = account.Short_Name__c
+											 , Legal_Name_1__c =   (legalNameParts.size() > 0) ? legalNameParts.get(0) : null
+											 , Legal_Name_2__c =   (legalNameParts.size() > 1) ? legalNameParts.get(1) : null
+											 , Legal_Name_3__c =   (legalNameParts.size() > 2) ? legalNameParts.get(2) : null
+											 , License_Number__c =   account.License_Number__c
+											 , Location_Type__c =  (tbl_location_types.containsKey(account.Location_Type__c)) ? tbl_location_types.get(account.Location_Type__c).Id : account.GDP_Location_Type__c
+											 , Manager_First_Name__c =   account.Manager_First_Name__c
+											 , Manager_Last_Name__c =   account.Manager_Last_Name__c
+											 , Passenger_And_Cargo__c =   account.PAX_Cargo__c
+											 , Preferred_Language__c =   account.Preferred_Language__c
+											 , Tax_ID_1__c =  (String.isNotBlank(account.VAT_Number__c)) ? account.VAT_Number__c.left(20) : null
+											 , Tax_ID_2__c =  (String.isNotBlank(account.VAT_Number_2__c)) ? account.VAT_Number_2__c.left(20) : null
+											 , Ticketing_Agent_First_Name__c =   account.Ticketing_Agent_First_Name__c
+											 , Ticketing_Agent_Last_Name__c =   account.Ticketing_Agent_Last_Name__c
+											 , Trading_Name_1__c =   (tradeNameParts.size() > 0) ? tradeNameParts.get(0) : null
+											 , Trading_Name_2__c =   (tradeNameParts.size() > 1) ? tradeNameParts.get(1) : null
+											 , TTY__c =  account.TTY__c
+											 , Website__c =  account.Website
+											 , WebStar_ID__c = (String.isNotBlank(account.WebStar_ID__c)) ? account.WebStar_ID__c + 'GDP' : null
+											 , AIMS_ID__c = (String.isNotBlank(account.AIMS_ID__c)) ? account.AIMS_ID__c + 'GDP' : null
+											 , Parent_Account_WebStar_ID__c = (account.ParentId != null && String.isNotBlank(account.Parent.WebStar_ID__c)) ? account.Parent.WebStar_ID__c : null
+											 , Parent_Account_AIMS_ID__c = (account.ParentId != null && String.isNotBlank(account.Parent.AIMS_ID__c)) ? account.Parent.AIMS_ID__c : null
+											 // , account.ANG_IsNewGenAgency__c
+									 , Due_Diligence_Status__c = account.Due_Diligence_Status__c
+											 , PCI_Compliance__c = PCICompliance
+											 , PCI_compliance_expiry_date__c = account.ANG_PCI_compliance_expiry_date__c
 
-                       , Remittance_Frequency_1__c =  (remittance_frequency_references.containsKey(remittance1)) ? remittance_frequency_references.get(remittance1).Id : null
-                       , Remittance_Frequency_2__c =  (remittance_frequency_references.containsKey(remittance2)) ? remittance_frequency_references.get(remittance2).Id : null
-	                   , EasyPay_Account_Status__c =  (easy_pay_status_references.containsKey(account.ANG_IEP_Status_FF__c)) ? easy_pay_status_references.get(account.ANG_IEP_Status_FF__c).Id : null
+											 , Remittance_Frequency_1__c =  (remittance_frequency_references.containsKey(remittance1)) ? remittance_frequency_references.get(remittance1).Id : null
+											 , Remittance_Frequency_2__c =  (remittance_frequency_references.containsKey(remittance2)) ? remittance_frequency_references.get(remittance2).Id : null
+										 , EasyPay_Account_Status__c =  (easy_pay_status_references.containsKey(account.ANG_IEP_Status_FF__c)) ? easy_pay_status_references.get(account.ANG_IEP_Status_FF__c).Id : null
 			));
 		}
 
 		return result;
 	}
 
-    public static Map<String,List<Account_Category__c>> formatAccount2AccountCategory(List<Account> accounts)
+		public static Map<String,List<Account_Category__c>> formatAccount2AccountCategory(List<Account> accounts)
 	{
 		Map<String,List<Account_Category__c>> CRUD_map = new Map<String,List<Account_Category__c>>();
 
@@ -146,41 +147,41 @@ public class ams2gdp_BusinessLogic {
 
 		Map<String, GDP_Reference_Table__c> tbl_category_codes 	= ams2gdp_Selector.getGDPReferenceTableByCodeAndTable(category_codes, 'LOCCAT');
 		Map<String, String> gdpProductIdByAccountId = ams2gdp_Selector.getGDP_Products_Account_View_By_Account(accountIds);
-        String GDPId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Category__c', 'GDP');
-	
-        List<Account_Category__c> toDelete = new List<Account_Category__c>();
-        List<Account_Category__c> toUpdate = new List<Account_Category__c>();
+				String GDPId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Category__c', 'GDP');
 
-        List<Account_Category__c> categories = [Select Id
-										          ,Category_Code__c
-										          ,Related_Account__c
-										        From Account_Category__c
-										        Where Related_Account__c In :accountIds
-										          And RecordTypeId =:GDPId 
-										        Order By Related_Account__c, Category_Code__c];
+				List<Account_Category__c> toDelete = new List<Account_Category__c>();
+				List<Account_Category__c> toUpdate = new List<Account_Category__c>();
+
+				List<Account_Category__c> categories = [Select Id
+															,Category_Code__c
+															,Related_Account__c
+														From Account_Category__c
+														Where Related_Account__c In :accountIds
+															And RecordTypeId =:GDPId
+														Order By Related_Account__c, Category_Code__c];
 
 		List<Boolean> recordexists = new List<Boolean>();
 		for (Account_Category__c cat:categories){recordexists.add(false);}
-        Integer i=-1;
-        for(Account account : accounts)
+				Integer i=-1;
+				for(Account account : accounts)
 		{
 			if(String.isBlank(account.Location_Category__c)) continue;
 			String gdp_product = (gdpProductIdByAccountId.containsKey(account.Id))? gdpProductIdByAccountId.get(account.Id):null;
 			Integer rank =1;
-		    for(String code:account.Location_Category__c.split(';'))
+				for(String code:account.Location_Category__c.split(';'))
 			{
 				if(!tbl_category_codes.containsKey(code)) continue;
 				i=-1;
 				for (Account_Category__c cat:categories){
 					i++;
 					if (recordexists[i]) continue;
-                    if (cat.Category_Code__c==tbl_category_codes.get(code).Id && cat.Related_Account__c==account.Id){
-                    	recordexists[i]=true;
-                    	break;
-                    }
+										if (cat.Category_Code__c==tbl_category_codes.get(code).Id && cat.Related_Account__c==account.Id){
+											recordexists[i]=true;
+											break;
+										}
 				}
 
-				//upsert 
+				//upsert
 				String mapping_key = account.Id +'-'+ code;
 
 				toUpdate.add(new Account_Category__c(AMS_GDP_Key__c = mapping_key+'GDP'
@@ -188,7 +189,7 @@ public class ams2gdp_BusinessLogic {
 					, Related_Account__c = account.Id
 					, Related_GDP_Products_Account_View__c = gdpProductIdByAccountId.get(account.Id)
 					, Category_Code__c = tbl_category_codes.get(code).Id
-					, RecordTypeId = GDPId 
+					, RecordTypeId = GDPId
 				));
 
 				rank++;
@@ -196,8 +197,8 @@ public class ams2gdp_BusinessLogic {
 		}
 		i=-1;
 		for (Account_Category__c cat:categories){i++; if (!recordexists[i]) toDelete.add(cat);}
-        if (toDelete.size()>0) CRUD_map.put('D',toDelete);
-        if (toUpdate.size()>0) CRUD_map.put('S',toUpdate);
+				if (toDelete.size()>0) CRUD_map.put('D',toDelete);
+				if (toUpdate.size()>0) CRUD_map.put('S',toUpdate);
 
 		return CRUD_map;
 	}
@@ -244,7 +245,7 @@ public class ams2gdp_BusinessLogic {
 			}
 		}
 
-	
+
 		Map<String, String> gdpProductIdByAccountId = ams2gdp_Selector.getGDP_Products_Account_View_By_Account(accountIds);
 		Map<String, String> definitionByCode = new Map<String, String>{
 			'ABAC' =>  'Abacus',
@@ -272,23 +273,23 @@ public class ams2gdp_BusinessLogic {
 		}
 
 		Map<String, GDP_Reference_Table__c> tbl_gds_codes 	= ams2gdp_Selector.getGDPReferenceTablebyDescriptionAndTable(gds_definitions, 'AIRSYS');
-	    String GDPId = RecordTypeSingleton.getInstance().getRecordTypeId('GDS__c', 'GDP');
-			
+			String GDPId = RecordTypeSingleton.getInstance().getRecordTypeId('GDS__c', 'GDP');
 
-        List<GDS__c> toDelete = new List<GDS__c>();
-        List<GDS__c> toUpdate = new List<GDS__c>();
-        List<GDS__c> gdss = [Select Id
-						          	,Computer_Reservation_System__c
-						            ,Related_Account__c 
-						        From GDS__c
-						        Where Related_Account__c In :accountIds
-						          And RecordTypeId =:GDPId 
-						        Order By Related_Account__c, Computer_Reservation_System__c];
+
+				List<GDS__c> toDelete = new List<GDS__c>();
+				List<GDS__c> toUpdate = new List<GDS__c>();
+				List<GDS__c> gdss = [Select Id
+												,Computer_Reservation_System__c
+												,Related_Account__c
+										From GDS__c
+										Where Related_Account__c In :accountIds
+											And RecordTypeId =:GDPId
+										Order By Related_Account__c, Computer_Reservation_System__c];
 
 		List<Boolean> recordexists = new List<Boolean>();
 		for (GDS__c cat:gdss){recordexists.add(false);}
-        Integer i=-1;
-        for(Account account : accounts)
+				Integer i=-1;
+				for(Account account : accounts)
 		{
 			if(String.isBlank(account.GDS__c)) continue;
 			for(String code : account.GDS__c.split(';'))
@@ -300,11 +301,11 @@ public class ams2gdp_BusinessLogic {
 				for (GDS__c cat:gdss){
 					i++;
 					if (recordexists[i]) continue;
-				    if (cat.Computer_Reservation_System__c==tbl_gds_codes.get(definition).Id &&  cat.Related_Account__c==account.Id){
-				    	recordexists[i]=true;
-				    	break;
-				    }
-		        }
+						if (cat.Computer_Reservation_System__c==tbl_gds_codes.get(definition).Id &&  cat.Related_Account__c==account.Id){
+							recordexists[i]=true;
+							break;
+						}
+						}
 			}
 			Map<String, Integer> rankByAccount = new Map<String, Integer>();
 
@@ -333,10 +334,10 @@ public class ams2gdp_BusinessLogic {
 		for (GDS__c cat:gdss){
 			i++;
 			if (recordexists[i]) continue;
-		    toDelete.add(cat);
-        }
-        if (toDelete.size()>0) CRUD_map.put('D', toDelete);
-        if (toUpdate.size()>0) CRUD_map.put('S', toUpdate);
+				toDelete.add(cat);
+				}
+				if (toDelete.size()>0) CRUD_map.put('D', toDelete);
+				if (toUpdate.size()>0) CRUD_map.put('S', toUpdate);
 
 		return CRUD_map;
 	}
@@ -382,37 +383,37 @@ public class ams2gdp_BusinessLogic {
 			List<String> streetPartsBS = ams2gdp_Utils.WrapText(acc.BillingStreet, 32);
 			String countryIdBS = (acc.IATA_ISO_Country__c != null) ? acc.IATA_ISO_Country__c : countryIdByName.get(acc.BillingCountry);
 			result.add(new GDP_Address__c(AMS_GDP_Key__c = acc.Id + 'LOCGDP'
-			                              , Address_Type__c = 'Location'
-	                                      , Address_Line_1__c = (streetPartsBS.size() > 0) ? streetPartsBS.get(0) : ''
-                                          , Address_Line_2__c = (streetPartsBS.size() > 1) ? streetPartsBS.get(1) : ''
-                                          , Address_Line_3__c = (streetPartsBS.size() > 2) ? streetPartsBS.get(2) : ''
-                                          , Address_City__c = String.isBlank(acc.BillingCity) ? '' : acc.BillingCity.left(30)
-                                          , IATA_ISO_State__c = (acc.IATA_ISO_Billing_State__c != null) ? acc.IATA_ISO_Billing_State__c : stateIdByName.get(acc.BillingState)
-                                          , GDP_Geo_Detail__c = geoDetailByCountry.get(countryIdBS)
-                                          , IATA_ISO_Country__c = countryIdBS
-                                          , Address_Postal_Code__c = String.isNotBlank(acc.BillingPostalCode) ? acc.BillingPostalCode.left(10) : ''
-                                          , Related_Account__c = acc.Id
-                                          , Related_GDP_Products_Account_View__c = gdpProductIdByAccountId.get(acc.Id)
-                                          , RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('GDP_Address__c', 'GDP')
-			                             ));
+																		, Address_Type__c = 'Location'
+																				, Address_Line_1__c = (streetPartsBS.size() > 0) ? streetPartsBS.get(0) : ''
+																					, Address_Line_2__c = (streetPartsBS.size() > 1) ? streetPartsBS.get(1) : ''
+																					, Address_Line_3__c = (streetPartsBS.size() > 2) ? streetPartsBS.get(2) : ''
+																					, Address_City__c = String.isBlank(acc.BillingCity) ? '' : acc.BillingCity.left(30)
+																					, IATA_ISO_State__c = (acc.IATA_ISO_Billing_State__c != null) ? acc.IATA_ISO_Billing_State__c : stateIdByName.get(acc.BillingState)
+																					, GDP_Geo_Detail__c = geoDetailByCountry.get(countryIdBS)
+																					, IATA_ISO_Country__c = countryIdBS
+																					, Address_Postal_Code__c = String.isNotBlank(acc.BillingPostalCode) ? acc.BillingPostalCode.left(10) : ''
+																					, Related_Account__c = acc.Id
+																					, Related_GDP_Products_Account_View__c = gdpProductIdByAccountId.get(acc.Id)
+																					, RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('GDP_Address__c', 'GDP')
+																	 ));
 
 			//Generate Mailing Address
 			List<String> streetPartsSH = ams2gdp_Utils.WrapText(acc.ShippingStreet, 32);
 			String countryIdSH = (acc.IATA_ISO_Shipping_Country__c != null) ? acc.IATA_ISO_Shipping_Country__c : countryIdByName.get(acc.ShippingCountry);
 			result.add(new GDP_Address__c(AMS_GDP_Key__c = acc.Id + 'MAIGDP'
-			                              , Address_Type__c = 'Mailing'
-	                                      , Address_Line_1__c = (streetPartsSH.size() > 0) ? streetPartsSH.get(0) : ''
-                                          , Address_Line_2__c = (streetPartsSH.size() > 1) ? streetPartsSH.get(1) : ''
-                                          , Address_Line_3__c = (streetPartsSH.size() > 2) ? streetPartsSH.get(2) : ''
-                                          , Address_City__c = String.isBlank(acc.ShippingCity) ? '' : acc.ShippingCity.left(30)
-                                          , IATA_ISO_State__c = (acc.IATA_ISO_Shipping_State__c != null) ? acc.IATA_ISO_Shipping_State__c : stateIdByName.get(acc.ShippingState)
-                                          , GDP_Geo_Detail__c = geoDetailByCountry.get(countryIdSH)
-                                          , IATA_ISO_Country__c = countryIdSH
-                                          , Address_Postal_Code__c = String.isNotBlank(acc.ShippingPostalCode) ? acc.ShippingPostalCode.left(10) : ''
-                                          , Related_Account__c = acc.Id
-                                          , Related_GDP_Products_Account_View__c = gdpProductIdByAccountId.get(acc.Id)
-                                          , RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('GDP_Address__c', 'GDP')
-			                             ));
+																		, Address_Type__c = 'Mailing'
+																				, Address_Line_1__c = (streetPartsSH.size() > 0) ? streetPartsSH.get(0) : ''
+																					, Address_Line_2__c = (streetPartsSH.size() > 1) ? streetPartsSH.get(1) : ''
+																					, Address_Line_3__c = (streetPartsSH.size() > 2) ? streetPartsSH.get(2) : ''
+																					, Address_City__c = String.isBlank(acc.ShippingCity) ? '' : acc.ShippingCity.left(30)
+																					, IATA_ISO_State__c = (acc.IATA_ISO_Shipping_State__c != null) ? acc.IATA_ISO_Shipping_State__c : stateIdByName.get(acc.ShippingState)
+																					, GDP_Geo_Detail__c = geoDetailByCountry.get(countryIdSH)
+																					, IATA_ISO_Country__c = countryIdSH
+																					, Address_Postal_Code__c = String.isNotBlank(acc.ShippingPostalCode) ? acc.ShippingPostalCode.left(10) : ''
+																					, Related_Account__c = acc.Id
+																					, Related_GDP_Products_Account_View__c = gdpProductIdByAccountId.get(acc.Id)
+																					, RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('GDP_Address__c', 'GDP')
+																	 ));
 
 		}
 		return result;
@@ -434,26 +435,26 @@ public class ams2gdp_BusinessLogic {
 			String gdp_product = (gdpProductIdByAccountId.containsKey(acc.Id)) ? gdpProductIdByAccountId.get(acc.Id) : null;
 			Map<String, String> phoneParts = ams2gdp_Utils.getPhoneNumberParts(acc.Phone, acc.IATA_ISO_Country__r.ISO_Code__c, phoneCodesByCountry);
 			result.add(new GDP_Phone__c(AMS_GDP_Key__c = acc.Id + '-P1GDP'
-			                            , Number__c = phoneParts.get('phone')
-	                                    , ISD_Code__c 	= phoneParts.get('isd')
-                                        , STD_Code__c 	= phoneParts.get('std')
-                                        , Name = acc.Phone
-                                        , Phone_Type__c = 'Phone 1'
-                                        , Related_GDP_Products_Account_View__c = gdp_product
-                                        , Related_Account__c = acc.Id
-                                        , RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('GDP_Phone__c', 'GDP')
-			                           ));
+																	, Number__c = phoneParts.get('phone')
+																			, ISD_Code__c 	= phoneParts.get('isd')
+																				, STD_Code__c 	= phoneParts.get('std')
+																				, Name = acc.Phone
+																				, Phone_Type__c = 'Phone 1'
+																				, Related_GDP_Products_Account_View__c = gdp_product
+																				, Related_Account__c = acc.Id
+																				, RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('GDP_Phone__c', 'GDP')
+																 ));
 			Map<String, String> faxParts = ams2gdp_Utils.getPhoneNumberParts(acc.Fax, acc.IATA_ISO_Country__r.ISO_Code__c, phoneCodesByCountry);
 			result.add(new GDP_Phone__c(AMS_GDP_Key__c = acc.Id + '-FXGDP'
-			                            , Number__c = faxParts.get('phone')
-	                                    , ISD_Code__c 	= faxParts.get('isd')
-                                        , STD_Code__c 	= faxParts.get('std')
-                                        , Name = acc.Fax
-                                        , Phone_Type__c = 'Fax'
-                                        , Related_GDP_Products_Account_View__c = gdp_product
-                                        , Related_Account__c = acc.Id
-                                        , RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('GDP_Phone__c', 'GDP')
-			                           ));
+																	, Number__c = faxParts.get('phone')
+																			, ISD_Code__c 	= faxParts.get('isd')
+																				, STD_Code__c 	= faxParts.get('std')
+																				, Name = acc.Fax
+																				, Phone_Type__c = 'Fax'
+																				, Related_GDP_Products_Account_View__c = gdp_product
+																				, Related_Account__c = acc.Id
+																				, RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('GDP_Phone__c', 'GDP')
+																 ));
 		}
 
 		return result;
@@ -493,12 +494,12 @@ public class ams2gdp_BusinessLogic {
 			rankByAccount.put(agency.Account__c, rank);
 
 			result.add(new Assoc_Affiliation_Membership__c(AMS_GDP_Key__c = key + 'GDP'
-			           , Assoc_Affiliation_ID__c = rank
-                       , Assoc_Affiliation_Code__c = (ref_table.containsKey(agency.Affiliation__r.Affiliation_Code__c)) ? ref_table.get(agency.Affiliation__r.Affiliation_Code__c).Id : null
-                       , Related_GDP_Products_Account_View__c = gdpProductIdByAccountId.get(agency.Account__c)
-                       , Related_Account__c = agency.Account__c
-                       , RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Assoc_Affiliation_Membership__c', 'GDP')
-                      ));
+								 , Assoc_Affiliation_ID__c = rank
+											 , Assoc_Affiliation_Code__c = (ref_table.containsKey(agency.Affiliation__r.Affiliation_Code__c)) ? ref_table.get(agency.Affiliation__r.Affiliation_Code__c).Id : null
+											 , Related_GDP_Products_Account_View__c = gdpProductIdByAccountId.get(agency.Account__c)
+											 , Related_Account__c = agency.Account__c
+											 , RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Assoc_Affiliation_Membership__c', 'GDP')
+											));
 		}
 
 		return result;
@@ -538,13 +539,13 @@ public class ams2gdp_BusinessLogic {
 
 			String name = arole.Unified_Owner_Name__c;
 			result.add(new Agency_Owner__c(AMS_GDP_Key__c = key + 'GDP'
-			                               , Name =  name
-	                                       , Percent__c = arole.Percentage__c
-                                           , Related_GDP_Products_Account_View__c = gdpProductIdByAccountId.get(arole.Account__c)
-                                           , Related_Account__c = arole.Account__c
-       	                                   , Owner_ID__c = rank
-                                           , RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Owner__c', 'GDP')
-                  ));
+																		 , Name =  name
+																				 , Percent__c = arole.Percentage__c
+																					 , Related_GDP_Products_Account_View__c = gdpProductIdByAccountId.get(arole.Account__c)
+																					 , Related_Account__c = arole.Account__c
+			 																		 , Owner_ID__c = rank
+																					 , RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Owner__c', 'GDP')
+									));
 		}
 
 		return result;
@@ -562,21 +563,21 @@ public class ams2gdp_BusinessLogic {
 		if (batchname=='Job 2: Accreditation') queryClause = '';
 		if (batchname=='Job 3: GSA Territory')  queryClause = 'Appointment__r.Account__r.';
 		//delete and insert for GDS
-        if (batchname=='Job 4: GDS & Account Category') queryClause = ''; //no Main_Accreditation_Organization__c
-        if (batchname=='Job 5: Address & Phone') queryClause = '';
+				if (batchname=='Job 4: GDS & Account Category') queryClause = ''; //no Main_Accreditation_Organization__c
+				if (batchname=='Job 5: Address & Phone') queryClause = '';
 		if (batchname=='Job 6: Assoc Affiliation Membership')  queryClause = 'Account__r.';
 		//delete and insert for Agency Owner
 		if (batchname=='Job 7: Agency Owner')  queryClause = 'Account__r.';
 		if (batchname=='Job 8: Adjacent Airport')  queryClause = 'Account__r.';
 		if (batchname=='Job 9: Agency Profile and Specialization')  queryClause = 'Account__r.';
-    	if (batchname=='Job 10: Agency Authorization')  queryClause = 'Account__r.';
+			if (batchname=='Job 10: Agency Authorization')  queryClause = 'Account__r.';
 
  		List<String> conditions = new List<String>{queryClause+'IATACode__c != null'
- 		  ,queryClause+'Main_Accreditation_Organization__c IN (\'IATA\',\'IATAN\',\'DOM\') '
-          ,'('+queryClause+'CNS_Agency__c!=false or '+queryClause+'CNS_Account__c!=true)'
+ 			,queryClause+'Main_Accreditation_Organization__c IN (\'IATA\',\'IATAN\',\'DOM\') '
+					,'('+queryClause+'CNS_Agency__c!=false or '+queryClause+'CNS_Account__c!=true)'
  		};
 
-        return conditions;
+				return conditions;
  	}
  	/**
  	 * This function format a List of Account Role (AMS) records to Agency Owner (GDP) records
@@ -586,29 +587,29 @@ public class ams2gdp_BusinessLogic {
  	 * @return Map<String,List<Agency_Owner__c>> String = { I, U, D}
  	 * @author Aku Luukka <luukkaa@iata.org>
  	 */
-  	public static Map<String,List<Agency_Owner__c>>  getAgencyOwnersToDelete(List<AMS_Account_Role__c> roles)
+		public static Map<String,List<Agency_Owner__c>>  getAgencyOwnersToDelete(List<AMS_Account_Role__c> roles)
  	{
 		Map<String,List<Agency_Owner__c>> CRUD_map = new Map<String,List<Agency_Owner__c>>();
 		Set<String> accountIds = new Set<String>();
 		List<Id> recordexists = new List<Id>();
 		for(AMS_Account_Role__c a: roles)
 		{
-		    if(a.Account__c == null) continue;
-		    accountIds.add(a.Account__c);
-		    //userNameList.add(arole.Owner_Name__c);
+				if(a.Account__c == null) continue;
+				accountIds.add(a.Account__c);
+				//userNameList.add(arole.Owner_Name__c);
 		}
 		//Reload the same list
 		roles = [Select Id
-		         ,Owner_Name__c
-		         ,Percentage__c
-		         ,Account__c
-		         ,Contact__r.Name
-		         ,Unified_Owner_Name__c
-		         From AMS_Account_Role__c
-		         Where Account__c IN :accountIds
-		           And Active__c=true
-		           And RecordType.Name = 'Ownership'
-		         Order By Account__c ASC, Percentage__c DESC];
+						 ,Owner_Name__c
+						 ,Percentage__c
+						 ,Account__c
+						 ,Contact__r.Name
+						 ,Unified_Owner_Name__c
+						 From AMS_Account_Role__c
+						 Where Account__c IN :accountIds
+							 And Active__c=true
+							 And RecordType.Name = 'Ownership'
+						 Order By Account__c ASC, Percentage__c DESC];
 
 
 		Map<String, Integer> rankByAccount = new Map<String, Integer>();
@@ -616,66 +617,66 @@ public class ams2gdp_BusinessLogic {
 
 
 		List<Agency_Owner__c> result= [SELECT Id
-		                               ,Name
-		                               ,Percent__c
-		                               ,Owner_ID__c
-		                               ,Related_GDP_Products_Account_View__c
-		                               ,Related_Account__c
-		                               ,AMS_GDP_Key__c
-		                               FROM Agency_Owner__c 
-		                               WHERE Related_Account__c IN :accountIds];
+																	 ,Name
+																	 ,Percent__c
+																	 ,Owner_ID__c
+																	 ,Related_GDP_Products_Account_View__c
+																	 ,Related_Account__c
+																	 ,AMS_GDP_Key__c
+																	 FROM Agency_Owner__c
+																	 WHERE Related_Account__c IN :accountIds];
 
 		List<Agency_Owner__c> toDelete = new List<Agency_Owner__c>();
 		List<Agency_Owner__c> toUpdate = new List<Agency_Owner__c>();
 		Integer i=-1;
-        for(AMS_Account_Role__c a: roles)recordexists.add(null);
+				for(AMS_Account_Role__c a: roles)recordexists.add(null);
 		for(Agency_Owner__c r:result){
-            i=-1;
-            Boolean recordisin=false;
-            String ReferenceName=r.Name;
-            if (ReferenceName!=null) ReferenceName=ReferenceName.ToLowerCase();
-            for(AMS_Account_Role__c a:roles){
-                i++;
-                String key = a.Id;
-                String Name =a.Unified_Owner_Name__c;
-                if (Name!=null) Name=Name.ToLowerCase();
-                if (((ReferenceName==Name && r.Related_Account__c==a.Account__c) || r.AMS_GDP_Key__c==key+'GDP') && recordexists[i]==null) {
-                    //find if exist
-                    recordexists[i]=r.Id;
-                    recordisin=true;
-                    break;
-                }
-            }
-            if (!recordisin) toDelete.add(r);
-        }
+						i=-1;
+						Boolean recordisin=false;
+						String ReferenceName=r.Name;
+						if (ReferenceName!=null) ReferenceName=ReferenceName.ToLowerCase();
+						for(AMS_Account_Role__c a:roles){
+								i++;
+								String key = a.Id;
+								String Name =a.Unified_Owner_Name__c;
+								if (Name!=null) Name=Name.ToLowerCase();
+								if (((ReferenceName==Name && r.Related_Account__c==a.Account__c) || r.AMS_GDP_Key__c==key+'GDP') && recordexists[i]==null) {
+										//find if exist
+										recordexists[i]=r.Id;
+										recordisin=true;
+										break;
+								}
+						}
+						if (!recordisin) toDelete.add(r);
+				}
 		//those are the records to update and to delete
 		if (toDelete.size()>0) CRUD_map.put('D',toDelete);
 		System.debug('toDelete>>'+toDelete);
 		i=-1;
 		for(AMS_Account_Role__c a:roles){
-		    i++;
-		    Integer rank = (rankByAccount.containsKey(a.Account__c)) ? rankByAccount.get(a.Account__c)+1 : 1;
-		    rankByAccount.put(a.Account__c, rank);
-		    //-- Mapping Key
-		    String key = a.Id;
-		    String name = a.Unified_Owner_Name__c;
-            Agency_Owner__c newowner = new Agency_Owner__c(AMS_GDP_Key__c=key+'GDP'
-                                             , Name =  name
-                                             , Percent__c=a.Percentage__c
-                                             , Related_GDP_Products_Account_View__c=gdpProductIdByAccountId.get(a.Account__c)
-                                             , Related_Account__c=a.Account__c
-                                             , Owner_ID__c = rank
-                                             , RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Owner__c', 'GDP')
-                                            );
-            if (recordexists[i]!=null) newowner.Id=recordexists[i];
-            toUpdate.add(newowner);
-            	    
+				i++;
+				Integer rank = (rankByAccount.containsKey(a.Account__c)) ? rankByAccount.get(a.Account__c)+1 : 1;
+				rankByAccount.put(a.Account__c, rank);
+				//-- Mapping Key
+				String key = a.Id;
+				String name = a.Unified_Owner_Name__c;
+						Agency_Owner__c newowner = new Agency_Owner__c(AMS_GDP_Key__c=key+'GDP'
+																						 , Name =  name
+																						 , Percent__c=a.Percentage__c
+																						 , Related_GDP_Products_Account_View__c=gdpProductIdByAccountId.get(a.Account__c)
+																						 , Related_Account__c=a.Account__c
+																						 , Owner_ID__c = rank
+																						 , RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Owner__c', 'GDP')
+																						);
+						if (recordexists[i]!=null) newowner.Id=recordexists[i];
+						toUpdate.add(newowner);
+
 		}
 		//those are the records to upsert
 		System.debug('toUpdate>>'+toUpdate);
 		if (toUpdate.size()>0) CRUD_map.put('S',toUpdate);
-		
-    	return CRUD_map;
+
+			return CRUD_map;
  	}
 
 	/**
@@ -713,12 +714,12 @@ public class ams2gdp_BusinessLogic {
 			rankByAccount.put(agency.Account__c, rank);
 
 			result.add(new Adjacent_Airport__c(AMS_GDP_Key__c = key + 'GDP'
-			                                   , Airport_ID__c = rank
-	                                           , Related_GDP_Products_Account_View__c = gdp_product
-                                               , Related_Account__c = agency.Account__c
-                                               , AirportCode__c = (ref_table.containsKey(agency.Airport__r.Code__c)) ? ref_table.get(agency.Airport__r.Code__c).Id : null
-                                               , RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Adjacent_Airport__c', 'GDP')
-                      ));
+																				 , Airport_ID__c = rank
+																						 , Related_GDP_Products_Account_View__c = gdp_product
+																							 , Related_Account__c = agency.Account__c
+																							 , AirportCode__c = (ref_table.containsKey(agency.Airport__r.Code__c)) ? ref_table.get(agency.Airport__r.Code__c).Id : null
+																							 , RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Adjacent_Airport__c', 'GDP')
+											));
 		}
 
 		return result;
@@ -766,25 +767,25 @@ public class ams2gdp_BusinessLogic {
 			}
 
 			result.add(new GSA_Territory__c(AMS_GDP_Key__c = key + 'GDP'
-			                                , Accreditation_ID__c = rank
-	                                        , Related_Accreditation__c = accreditationIdByAccountId.get(territory.Appointment__r.Account__c)
-                                            , Related_Account__c = territory.Appointment__r.Account__c
-                                            , Related_GDP_Products_Account_View__c = gdpProductIdByAccountId.get(territory.Appointment__r.Account__c)
-                                            , AIMS_Area_ID__c = territory.Appointment__r.Account__r.IATA_ISO_Country__r.AIMS_Area_ID__c
-                                            , IATA_Code__c = (territory.Appointment__r.Account__r.IATACode__c != null) ? territory.Appointment__r.Account__r.IATACode__c.left(7) : null
-                                            , Check_Digit__c = territory.Appointment__r.Account__r.Check_Digit__c
-                                            , IATA_ISO_Country__c = territory.Appointment__r.Account__r.IATA_ISO_Country__r.ISO_Code__c
-                                            , Location_Country_Name__c = (territory.Appointment__r.Account__r.IATA_ISO_Country__r.ISO_Country_Short_Name__c.left(30) == null ? '' : territory.Appointment__r.Account__r.IATA_ISO_Country__r.ISO_Country_Short_Name__c.left(30))
-                                            , Airline_Code__c = code
-                                            , Airline_Name__c = name
-                                            , Appointment_Date__c = territory.Appointment__r.Date_Organisation_Status_attained__c
-                                            , Appointment_Type__c = territory.Appointment__r.AMS_Appointment_Type__c
-                                            , Territory_ISO_Country__c = territory.ISO_Country__r.ISO_Code__c
-                                            , Territory_IATA_Numeric_Country_Code__c = territory.Appointment__r.Account__r.state_numeric_code__c
-                                            , Territory_Country_Name__c = (territory.ISO_Country__r.ISO_Country_Short_Name__c.left(30) == null ? '' : territory.ISO_Country__r.ISO_Country_Short_Name__c.left(30))
-                                            , Territory_State_Abbreviation__c = territory.ISO_State__r.ISO_Code__c
-                                            , Territory_Description__c = (String.isNotBlank(territory.Comments__c)) ? territory.Comments__c.left(40) : null
-                       ));
+																			, Accreditation_ID__c = rank
+																					, Related_Accreditation__c = accreditationIdByAccountId.get(territory.Appointment__r.Account__c)
+																						, Related_Account__c = territory.Appointment__r.Account__c
+																						, Related_GDP_Products_Account_View__c = gdpProductIdByAccountId.get(territory.Appointment__r.Account__c)
+																						, AIMS_Area_ID__c = territory.Appointment__r.Account__r.IATA_ISO_Country__r.AIMS_Area_ID__c
+																						, IATA_Code__c = (territory.Appointment__r.Account__r.IATACode__c != null) ? territory.Appointment__r.Account__r.IATACode__c.left(7) : null
+																						, Check_Digit__c = territory.Appointment__r.Account__r.Check_Digit__c
+																						, IATA_ISO_Country__c = territory.Appointment__r.Account__r.IATA_ISO_Country__r.ISO_Code__c
+																						, Location_Country_Name__c = (territory.Appointment__r.Account__r.IATA_ISO_Country__r.ISO_Country_Short_Name__c.left(30) == null ? '' : territory.Appointment__r.Account__r.IATA_ISO_Country__r.ISO_Country_Short_Name__c.left(30))
+																						, Airline_Code__c = code
+																						, Airline_Name__c = name
+																						, Appointment_Date__c = territory.Appointment__r.Date_Organisation_Status_attained__c
+																						, Appointment_Type__c = territory.Appointment__r.AMS_Appointment_Type__c
+																						, Territory_ISO_Country__c = territory.ISO_Country__r.ISO_Code__c
+																						, Territory_IATA_Numeric_Country_Code__c = territory.Appointment__r.Account__r.state_numeric_code__c
+																						, Territory_Country_Name__c = (territory.ISO_Country__r.ISO_Country_Short_Name__c.left(30) == null ? '' : territory.ISO_Country__r.ISO_Country_Short_Name__c.left(30))
+																						, Territory_State_Abbreviation__c = territory.ISO_State__r.ISO_Code__c
+																						, Territory_Description__c = (String.isNotBlank(territory.Comments__c)) ? territory.Comments__c.left(40) : null
+											 ));
 
 		}
 		return result;
@@ -858,13 +859,13 @@ public class ams2gdp_BusinessLogic {
 			rankByAccount.put(acc.Id, rank);
 
 			Accreditation__c accreditation = new Accreditation__c(AMS_GDP_Key__c = key
-														        , Accreditation_ID__c = rank
-										                        , Last_change_date__c = acc.Organization_Last_Change_Date__c
-								                                , Last_re_inspection_date__c = acc.Verification_Date__c
-						                                        , Original_approval_date__c = acc.Accreditation_date__c
-				                                                , Related_Account__c = acc.Id
-		                                                        , Date__c = acc.Date_Organisation_Status_attained__c
-			                                                     );
+																		, Accreditation_ID__c = rank
+																						, Last_change_date__c = acc.Organization_Last_Change_Date__c
+																								, Last_re_inspection_date__c = acc.Verification_Date__c
+																										, Original_approval_date__c = acc.Accreditation_date__c
+																												, Related_Account__c = acc.Id
+																														, Date__c = acc.Date_Organisation_Status_attained__c
+																													 );
 
 
 
@@ -1067,11 +1068,11 @@ public class ams2gdp_BusinessLogic {
 		// because the AMS_GDP_Key__c == accountId we can query based on them
 		List<Authorized_Forms_Of_Payment__c> result = new List<Authorized_Forms_Of_Payment__c>();
 		for (Agency_Authorization__c aa : authorizations) {
-			result.add(new Authorized_Forms_Of_Payment__c(AMS_GDP_Key__c = aa.Account__c + aa.ANG_FormOfPayment_ID__c
-			           , Form_of_Payment_Code__c = aa.ANG_FormOfPayment_ID__c
-			                                       , Status__c = aa.Status__c
-			                                               , Related_GDP_Products_Account_View__c = gdpProductIdByAccountId.get(aa.Account__c)
-			                                             ));
+			String aaFopId = aa.ANG_FormOfPayment_ID__c == AMS_Utils.BOP ? AMS_Utils.EP : aa.ANG_FormOfPayment_ID__c;
+			result.add(new Authorized_Forms_Of_Payment__c(AMS_GDP_Key__c = aa.Account__c + aaFopId
+								, Form_of_Payment_Code__c = aaFopId
+								, Status__c = aa.Status__c
+								, Related_GDP_Products_Account_View__c = gdpProductIdByAccountId.get(aa.Account__c)));
 		}
 
 		return result;

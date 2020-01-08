@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Metadata to control which customer invoices should be displayed based in their status</description>
+    <label>Customer Invoices Visible Status</label>
+    <pluralLabel>Customer Invoices Visible Statuses</pluralLabel>
+    <visibility>Public</visibility>
+</CustomObject>

@@ -1,7 +1,7 @@
 /**
 
 	Project: eCommerce Enhancements
-	   File: IEC_Trace_Test.cls
+		 File: IEC_Trace_Test.cls
 	Subject: Test Class for Utility class that handles Trace requests for IEC Application.
 	History: 2017-05-02, asantos, Initial Release.
 
@@ -134,7 +134,7 @@ public with sharing class IEC_Trace_Test {
 		List<IEC_Trace.TraceItem> traceItemList = IEC_Trace.getTraceItemList();
 
 		String traceString = IEC_Trace.exportTrace();
-		
+
 		traceString = IEC_Trace.getTraceAsString();
 		traceString = IEC_Trace.getTraceAsHTML();
 

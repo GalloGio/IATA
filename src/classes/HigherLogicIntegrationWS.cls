@@ -1,7 +1,7 @@
 public class HigherLogicIntegrationWS {
-	
+
 	public class HigherLogicException extends Exception {}
-	
+
 	public class MemberDetails {
 		public String LegacyContactKey 	{get;set;}
 		public Integer Age 				{get;set;}
@@ -53,24 +53,24 @@ public class HigherLogicIntegrationWS {
 		public String BloggerURL 	{get;set;}
 		public String WordPressURL 	{get;set;}
 		public String OtherBlogURL 	{get;set;}
-	}	
-	
+	}
+
 	public class Items {
 		public MemberDetails MemberDetails {get; set;}
 	}
-	
+
 	public class HigherLogicRequest {
 		public String TenantCode {get; set;}
 		public List<Items> Items {get; set;}
 	}
-	
+
 	public class HigherLogicResponse {
 		public String statusCode {get; set;}
 		public String responseBody {get; set;}
 	}
-	
+
 	private static List<ISSP_Web_Service_Log__c> wsServiceLogLst = new List<ISSP_Web_Service_Log__c>();
-	
+
 	/**
 	* Invokes Higher Logic Push API
 	*
@@ -80,55 +80,55 @@ public class HigherLogicIntegrationWS {
 	*
 	*/
 	private static HigherLogicResponse invoke(HigherLogicRequest requestBody){
-		
+
 		HigherLogicResponse hlResp = new HigherLogicResponse();
 
 		try {
-			
+
 			requestBody.TenantCode = '{!$Credential.Username}';
-			
+
 			String requestBodyJSON = JSON.serializePretty(requestBody);
-			
+
 			HttpRequest request = new HttpRequest();
-			
+
 			request.setEndpoint('callout:Higher_Logic_Push_API');
 			request.setHeader('x-api-key', '{!$Credential.Password}');
 			request.setMethod('POST');
 			request.setHeader('content-type', 'application/json');
 			request.setBody(requestBodyJSON);
-			
+
 			addLog('invoke', '200', requestBodyJSON);
 			System.debug(LoggingLevel.FINE, '____ [cls HigherLogicIntegrationWS - invoke] WS Request Body: ' + request.getBody());
-			
+
 			Http http = new Http();
-			
+
 			HttpResponse response = http.send(request);
-			
+
 			System.debug(LoggingLevel.FINE, '____ [cls HigherLogicIntegrationWS - invoke] WS Response: ' + response);
 
 			hlResp.statusCode = String.valueOf(response.getStatusCode());
 			hlResp.responseBody = response.getBody();
-			
+
 		}
 		catch(Exception e){
-			
+
 			String exceptionMsg = e.getMessage();
-			
+
 			System.debug(LoggingLevel.ERROR, '____ [cls HigherLogicIntegrationWS - invoke] Exception: ' + exceptionMsg);
-			
+
 			hlResp.statusCode = 'ERR';
 			hlResp.responseBody = exceptionMsg;
-		
+
 		}
-		
+
 		return hlResp;
-		
+
 	}
-	
+
 	/**
 	* Creates a new instance of MemberDetails
 	* considering the sObj information
-	* 
+	*
 	* @param sObject: sObject (User or Account)
 	* @param legacyContactsMap: Map<Id, Id> (only used if the sObj is an instance of Account)
 	* @param activeUserMap: Map<Id, Boolean> (only used if the sObj is an instance of User)
@@ -137,17 +137,17 @@ public class HigherLogicIntegrationWS {
 	*
 	*/
 	private static MemberDetails createMemberDetail(sObject sObj, Map<Id, Id> legacyContactsMap, Map<Id, Boolean> activeUserMap){
-		
+
 		MemberDetails memberDetails = new MemberDetails();
-		
+
 		// Person Mapping
 		if(sObj instanceof User){
-			
+
 			User user = (User) sObj;
 
 			Id accountId = user.Contact.AccountId;
 			String accountName = user.Contact.Account.Name;
-			
+
 			if(String.isNotBlank(user.Contact.Account.Parent.ParentId)){
 				accountId = user.Contact.Account.Parent.ParentId;
 				accountName = user.Contact.Account.Parent.Parent.Name;
@@ -156,17 +156,17 @@ public class HigherLogicIntegrationWS {
 				accountId = user.Contact.Account.ParentId;
 				accountName = user.Contact.Account.Parent.Name;
 			}
-		    else if(String.isBlank(user.ContactId)){
-				Account a = ProvisionKaviAccess.getFakeAccount();
-			    accountId = a.Id;
-			    accountName = a.Name;
-		    }
-			
+			else if(String.isBlank(user.ContactId)){
+				Account a = ProvisionKaviAccess.IATASSWAccount;
+				accountId = a.Id;
+				accountName = a.Name;
+			}
+
 			// Active status is defined based on the Portal Application Right
 			// PAR with Access Granted => ACTIVE
 			// PAR with Access Denied => INACTIVE
 			Boolean activeUser = activeUserMap.get(user.Id);
-			
+
 			memberDetails.LegacyContactKey 	= user.Id;
 			memberDetails.ParentMemberKey	= accountId;
 			memberDetails.CompanyName		= accountName;
@@ -188,16 +188,16 @@ public class HigherLogicIntegrationWS {
 			memberDetails.IsActive			= activeUser;
 			memberDetails.IsMember			= true;
 			memberDetails.IsOrganization	= false;
-			
+
 		}
 		// Company Mapping
 		else if(sObj instanceof Account){
-			
+
 			Account acct = (Account) sObj;
-			
+
 			Id legacyContactId = legacyContactsMap.get(acct.Id);
-			
-			memberDetails.CompanyName						= acct.Name; 
+
+			memberDetails.CompanyName						= acct.Name;
 			memberDetails.WebsiteURL						= acct.Website;
 			memberDetails.EmailAddress						= acct.Email__c;
 			memberDetails.PrimaryContactLegacyContactKey	= legacyContactId;
@@ -209,13 +209,13 @@ public class HigherLogicIntegrationWS {
 			memberDetails.PostalCode		 				= acct.BillingPostalCode;
 			memberDetails.IsActive			 				= true;
 			memberDetails.IsOrganization	 				= true;
-			
+
 		}
-		
+
 		return memberDetails;
-		
+
 	}
-	
+
 	/**
 	* Creates a new request body for Higher Logic Push API
 	* considering the members given (Users and/or Accounts)
@@ -228,47 +228,47 @@ public class HigherLogicIntegrationWS {
 	*
 	*/
 	private static HigherLogicRequest createRequestBody(List<sObject> sObjectLst, Map<Id, Id> legacyContactMap, Map<Id, Boolean> activeUserMap){
-		
+
 		HigherLogicRequest hlRequest = new HigherLogicRequest();
-		
+
 		List<Items> itemsLst = new List<Items>();
-		
+
 		for(sObject sObj : sObjectLst){
 
 			MemberDetails memberDetails = createMemberDetail(sObj, legacyContactMap, activeUserMap);
 
 			Items items = new Items();
-			
+
 			items.MemberDetails = memberDetails;
-			
+
 			itemsLst.add(items);
 
 		}
-		
+
 		hlRequest.Items = itemsLst;
-		
-		return hlRequest;	
-	
+
+		return hlRequest;
+
 	}
-	
+
 	/**
 	* Pushes members (users & accounts) to HigherLogic
 	*
-	* @param sObjectLst: List<sObject>  
+	* @param sObjectLst: List<sObject>
 	* @param contactIdMap: Map<Id, Id>
 	* @param activeUserMap: Map<Id, Boolean>
 	*
 	*/
 	public static void pushMembers(List<sObject> sObjectLst, Map<Id, Id> contactIdMap, Map<Id, Boolean> activeUserMap){
-		
+
 		HigherLogicRequest request = createRequestBody(sObjectLst, contactIdMap, activeUserMap);
-		
+
 		HigherLogicResponse response = invoke(request);
-		
+
 		addLog('pushMembers', response.statusCode, response.responseBody);
-		
+
 	}
-	
+
 	/**
 	* Processes the HigherLogic Push API response
 	*
@@ -281,11 +281,11 @@ public class HigherLogicIntegrationWS {
 		wsServiceLogLst.add(log);
 		return JSON.serializePretty(log);
 	}
-	
+
 	/**
 	* Creates a new ISSP_Web_Service_Log record
 	* considering the web service response
-	* 
+	*
 	* @param wsMethod: String
 	* @param wsResponse: HigherLogicResponse
 	*
@@ -293,9 +293,9 @@ public class HigherLogicIntegrationWS {
 	*
 	*/
 	private static ISSP_Web_Service_Log__c createNewWSLog(String wsMethod, String errorCode, String body){
-		
+
 		ISSP_Web_Service_Log__c newLog = new ISSP_Web_Service_Log__c();
-		
+
 		newLog.Web_Service__c	 = 'HigherLogicIntegrationWS';
 		newLog.Method__c		 = wsMethod;
 		newLog.System__c		 = 'Standards Setting Workspace';
@@ -307,33 +307,33 @@ public class HigherLogicIntegrationWS {
 		if(newLog.Error_Code__c == '200'){
 			newLog.Success__c = true;
 		}
-		
+
 		return newLog;
-		
+
 	}
-	
+
 	/**
 	* Inserts all the collected logs
 	*
 	*/
 	public static void flushWebServiceLogs(){
-		
+
 		try{
-			
+
 			insert wsServiceLogLst;
-			
+
 		} catch (DMLException e){
-			
+
 			System.debug(LoggingLevel.ERROR, '____ [cls HigherLogicIntegrationWS - flushWebServiceLogs] Exception: ' + e.getMessage());
-			
+
 			for (ISSP_Web_Service_Log__c wslog: wsServiceLogLst) {
 				wslog.addError('There was a problem updating the Web Service Log');
 			}
-			
+
 		}
-		
+
 		wsServiceLogLst.clear();
-		
+
 	}
-	
+
 }

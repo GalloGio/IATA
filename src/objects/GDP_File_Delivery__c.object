@@ -399,7 +399,7 @@ Should be one of - Daily, Weekly, Semi-Monthly, Monthly</inlineHelpText>
         <columns>File_Specification__c</columns>
         <columns>File_Name__c</columns>
         <columns>File_Size_KB__c</columns>
-        <columns>Delivery_Frequency__c</columns>
+        <columns>Notification__c</columns>
         <columns>Quantity_of_file_in_delivery__c</columns>
         <columns>Message__c</columns>
         <columns>Status__c</columns>
@@ -432,6 +432,28 @@ Should be one of - Daily, Weekly, Semi-Monthly, Monthly</inlineHelpText>
             <value>YESTERDAY</value>
         </filters>
         <label>04-Yesterday&apos;s Deliveries</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>X06_Yesterday_s_and_Today_s_Deliveries</fullName>
+        <columns>NAME</columns>
+        <columns>Subscription__c</columns>
+        <columns>File_Specification__c</columns>
+        <columns>File_Name__c</columns>
+        <columns>File_Size__c</columns>
+        <columns>File_Size_KB__c</columns>
+        <columns>Delivery_Frequency__c</columns>
+        <columns>Quantity_of_file_in_delivery__c</columns>
+        <columns>Message__c</columns>
+        <columns>Status__c</columns>
+        <columns>Delivery_Date__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Delivery_Date__c</field>
+            <operation>equals</operation>
+            <value>YESTERDAY,TODAY</value>
+        </filters>
+        <label>06-Yesterday&apos;s and Today&apos;s Deliveries</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -477,7 +499,11 @@ Should be one of - Daily, Weekly, Semi-Monthly, Monthly</inlineHelpText>
         <filters>
             <field>GSS_Subscription_Detail__c</field>
             <operation>equals</operation>
-            <value>A-S00017801</value>
+            <value>A-S00003333</value>
+        </filters>
+        <filters>
+            <field>Subscription__c</field>
+            <operation>equals</operation>
         </filters>
         <label>ZZ: Search by GSS Subscription Detail</label>
         <language>en_US</language>

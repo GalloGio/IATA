@@ -1,0 +1,60 @@
+<template>
+    <section aria-modal="true" class="slds-modal slds-fade-in-open" style="z-index: 10001;">
+        <div class="modal">
+            <div class="customPopupInteriorHalfScreenCentered">
+
+                <!-- Popup Header -->
+                <div class="slds-p-horizontal_large slds-p-vertical_medium headerTitle">
+                    <span class="modalTitle"> {title} </span>
+                    <span class="slds-float_right slds-m-horizontal_x-small close-mark" onclick={closeModal}>
+                        <lightning-icon icon-name="utility:close" size="x-small" class="cursorPointer"
+                            onclick={closeModal}></lightning-icon>
+                    </span>
+                </div>
+
+                <div class="slds-is-relative">
+                    <template if:true={loading}>
+                        <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                    </template>
+
+                    <div class="customWhiteBackground">
+
+                        <div if:true={showSpinner}>
+                            <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                        </div>
+
+                        <div class="slds-p-around_large">
+                            <div class="form-label text-bold">
+                                <div if:false={isNewRecord} class="slds-grid slds-wrap">
+                                    <label>
+                                        {message}
+                                    </label>
+                                </div>
+                                <div if:true={isNewRecord}>
+                                    <lightning-input label="Domain" onchange={handleDomainChange}
+                                        class="slds-m-bottom_x-small"></lightning-input>
+                                    <div if:true={hasError} class="fieldError">
+                                        {labels.CSP_Email_Domain_Error_Message}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- BUTTON -->
+                        <div class="slds-align_absolute-center slds-p-around_large topLightGrayBorder">
+                            <button
+                                class="containedButtonAlt containedButton-size cursorPointer uiButton contactSupport slds-m-horizontal_small"
+                                name="cancelBtn" title={btnCancel} onclick={cancel}>{btnCancel}
+                            </button>
+                            <button class="containedButton containedButton-size slds-m-horizontal_small"
+                                name="successBtn" title={btnSuccess} onclick={addDomain}>{btnSuccess}
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</template>

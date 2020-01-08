@@ -1,0 +1,108 @@
+/**
+ * Created by ukaya01 on 29/07/2019.
+ */
+
+/*
+.slds-has-error input{
+    border-radius: 1px !important;
+    border: solid 2px rgba(240, 70, 50, 0.8) !important;
+    box-shadow: none !important;
+}
+
+.slds-has-error .slds-form-element__help{
+    color: #f04632 !important;
+    font-size: 14px !important;
+}
+
+.slds-has-error .slds-form-element__help div{
+    color: #f04632 !important;
+}
+*/
+
+.inputBackgroundGrey{
+    background-color: #f7f8fa !important;
+}
+
+.slds-combobox_container input[role="textbox"]:not(:placeholder-shown) {
+    background-color: #f7f8fa;
+}
+/*
+input.slds-input:not(:placeholder-shown){
+    background-color: #f7f8fa;
+}
+*/
+
+.c-portallogincontainer_portallogincontainer{
+    height: 2000px !important;
+}
+
+.slds-spinner_container{
+    position: fixed;
+}
+
+.formElementContainer{
+    display: flex;
+    /*justify-content: center;*/
+    align-items: center;
+    height : 40px;
+}
+
+.formLabelContainer{
+    /*display: flex;*/
+    flex: 1 0 auto;
+    /*align-items: center;*/
+    /*justify-content: center;*/
+}
+
+.formElementSpacer{
+    padding-bottom:40px;
+}
+
+
+.slds-checkbox .slds-checkbox_faux {
+    width: 14px !important;
+    height: 14px !important;
+}
+
+.snackbar {
+  width: 100%;
+  background-color: #333; /* Black background color */
+  color: #fff; /* White text color */
+  text-align: center; /* Centered text */
+  border-radius: 2px; /* Rounded borders */
+  padding: 16px; /* Padding */
+}
+
+.snackbar .a {
+    color: #fff; /* White text color */
+    text-decoration: underline;
+}
+
+.cancelIcon {
+    cursor: pointer;
+    -webkit-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
+    -o-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+}
+
+.cancelIconContainer svg{
+    fill: white;
+}
+
+.IEFixDisplay{
+    display: inherit;
+}
+
+/* Fixes IE display */
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+    .IEFixDisplay{
+        display: inline-block;
+        width: 100%;
+    }
+}
+
+/* Removes the icon from IE input */
+input::-ms-clear {  display: none; width : 0; height: 0; }
+input::-ms-reveal {  display: none; width : 0; height: 0; }

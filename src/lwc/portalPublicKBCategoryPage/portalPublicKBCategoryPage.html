@@ -1,0 +1,21 @@
+<template>
+
+        <c-portal-page-container>
+            <span slot="componentContent">
+                <div class="slds-grid slds-wrap slds-gutters_medium slds-p-vertical_x-large">
+                    
+                    <!-- Topics / Subtopics -->
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3 slds-large-size_1-of-3" >
+                        <c-portal-f-a-q-subtopic-tiles faq-object={faqObject} oncategorieschange={categoriesChange}></c-portal-f-a-q-subtopic-tiles>
+                    </div>
+    
+                    <!-- Articles -->
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_2-of-3 slds-large-size_2-of-3" >
+                       <c-portal-f-a-q-article-accordion faq-object={faqObject}></c-portal-f-a-q-article-accordion>
+                    </div>
+    
+                </div>
+            </span>
+        </c-portal-page-container>
+        
+    </template>

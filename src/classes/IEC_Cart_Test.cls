@@ -1,10 +1,10 @@
 /**
 
 		Project: eCommerce Enhancements
-	       File: IEC_Cart_Test.cls
+				 File: IEC_Cart_Test.cls
 	Description: Test class for Cart Class.
-	     Author: blue-infinity sa
-	    History: aosantos, 2017-07-04, Initial Release.
+			 Author: blue-infinity sa
+			History: aosantos, 2017-07-04, Initial Release.
 
 
 */
@@ -14,7 +14,7 @@ private class IEC_Cart_Test {
 	static List<EComProduct_DTO> ecomProducts = Product_Sel.getEComProduct(null, false, null, null, false, null);
 
 	@isTest(seeAllData=true)
-	static void test1() {		
+	static void test1() {
 		IEC_Cart cart;
 		List<IEC_Cart.CartItem> items;
 		List<OrderItem_DTO> orderItems;
@@ -46,13 +46,13 @@ private class IEC_Cart_Test {
 		}
 	}
 
-	@isTest(seeAllData=true) 
+	@isTest(seeAllData=true)
 	static void test2() {
 		IEC_Cart cart;
 		IEC_Cart.CartItem cartItem;
 		String str;
 		String productNumber = ecomProducts[0].ProductNumber;
-		
+
 		System.runAs(oUser) {
 			cart = IEC_Cart.getInstance();
 
@@ -88,11 +88,11 @@ private class IEC_Cart_Test {
 		}
 
 		cart = IEC_Cart.getInstance();
-		
+
 		cartItem = new IEC_Cart.CartItem(null, productNumber, 1, null);
 
 		cart.cartItemMap.put(cartItem.productNumber, cartItem);
-		
+
 		cart.serializeCartInCookies();
 
 		cart.deserializeCartFromCookies();
@@ -150,7 +150,7 @@ private class IEC_Cart_Test {
 
 			Test.stopTest();
 		}
-		
+
 		ecomProductList = cart.getEcomProductsByProductIdList(productIdList);
 	}*/
 

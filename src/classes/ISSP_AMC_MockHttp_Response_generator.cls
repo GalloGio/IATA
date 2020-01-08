@@ -4,7 +4,7 @@
 
 	Copyright @Right IT Services
 
-	Purpose: This class aims to create a fake response to test Http requests 
+	Purpose: This class aims to create a fake response to test Http requests
 
 	VERSION  	AUTHOR				DATE    		DETAIL/CHANGE REFERENCE
  	1.0		  	Filipa Martins		31-01-2019   	INITIAL DEVELOPMENT
@@ -21,7 +21,7 @@ public class ISSP_AMC_MockHttp_Response_generator implements HttpCalloutMock{
 		Constructor method
 		*/
 		public ISSP_AMC_MockHttp_Response_generator(Integer code, String status, String body,
-                                         Map<String, String> responseHeaders) {
+																				 Map<String, String> responseHeaders) {
 			this.code = code;
 			this.status = status;
 			this.bodyAsString = body;
@@ -32,8 +32,8 @@ public class ISSP_AMC_MockHttp_Response_generator implements HttpCalloutMock{
 		/*
 		Method to generate the response
 		*/
-	    public HTTPResponse respond(HTTPRequest req) {
-	        HttpResponse resp = new HttpResponse();
+			public HTTPResponse respond(HTTPRequest req) {
+					HttpResponse resp = new HttpResponse();
 			resp.setStatusCode(code);
 			resp.setStatus(status);
 			if (bodyAsBlob != null) {
@@ -43,11 +43,11 @@ public class ISSP_AMC_MockHttp_Response_generator implements HttpCalloutMock{
 			}
 
 			if (responseHeaders != null) {
-			     for (String key : responseHeaders.keySet()){
+					 for (String key : responseHeaders.keySet()){
 					resp.setHeader(key, responseHeaders.get(key));
-			     }
+					 }
 			}
 			return resp;
-	    }
+			}
 
 }

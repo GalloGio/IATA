@@ -119,6 +119,7 @@
                                         item-name="iatalookup" oniatalookup={showIataResults}
                                         required-class={requiredClass} single-lookup-result={singleresult}
                                         placeholder={label.csp_searchIataCodeLocationNamePlaceHolder}
+                                        hide-icon=true
                                         onclick={removeRequired}>
                                     </c-portal-search-lookup-component>
                                 </div>
@@ -148,29 +149,31 @@
                                 <!--DESCRIPTION-->
 
                                 <!--EMAIL RECIPIENTS-->
-                                <div class="slds-p-horizontal_xx-large">
-                                    <p class="text-xsmall">{label.csp_CreateNewCaseMainInputEmailsTopLabel} (Optional)
-                                    </p>
-                                    <p class="text-xxsmall text-gray slds-p-bottom_small">
-                                        {label.csp_CreateNewCaseMainInputEmailsSubLabel}</p>
-                                    <c-portal-search-lookup-component onsearch={handleContactSearch}
-                                        item-name="emaillookup" data-id="emaillookup" onemaillookup={showEmailResults}
-                                        required-class={requiredClass} placeholder="Search Email Recipient"
-                                        onselectionchange={addNewRecipientButtonClick}>
-                                    </c-portal-search-lookup-component>
-                                    <div class="slds-m-top_large slds-scrollable_y recipients-box">
-                                        <template for:each={lstRecipients} for:item="recipient">
-                                            <span key={recipient.id}
-                                                class="slds-p-around_x-small slds-m-around_xx-small custom-recipients">
-                                                {recipient.email}
-                                                <lightning-icon class="cursorPointer" key={recipient.id}
-                                                    icon-name="utility:close" size="x-small" onclick={removeRecipient}
-                                                    data-item={recipient.email}>
-                                                </lightning-icon>
-                                            </span>
-                                        </template>
+                                <template if:false={Level1User}>
+                                    <div class="slds-p-horizontal_xx-large">
+                                        <p class="text-xsmall">{label.csp_CreateNewCaseMainInputEmailsTopLabel} (Optional)
+                                        </p>
+                                        <p class="text-xxsmall text-gray slds-p-bottom_small">
+                                            {label.csp_CreateNewCaseMainInputEmailsSubLabel}</p>
+                                        <c-portal-search-lookup-component onsearch={handleContactSearch}
+                                            item-name="emaillookup" data-id="emaillookup" onemaillookup={showEmailResults}
+                                            required-class={requiredClass} placeholder="Search Email Recipient"
+                                            onselectionchange={addNewRecipientButtonClick}>
+                                        </c-portal-search-lookup-component>
+                                        <div class="slds-m-top_large slds-scrollable_y recipients-box">
+                                            <template for:each={lstRecipients} for:item="recipient">
+                                                <span key={recipient.id}
+                                                    class="slds-p-around_x-small slds-m-around_xx-small custom-recipients">
+                                                    {recipient.email}
+                                                    <lightning-icon class="cursorPointer" key={recipient.id}
+                                                        icon-name="utility:close" size="x-small" onclick={removeRecipient}
+                                                        data-item={recipient.email}>
+                                                    </lightning-icon>
+                                                </span>
+                                            </template>
+                                        </div>
                                     </div>
-                                </div>
+                                </template>
                                 <!--EMAIL RECIPIENTS-->
                                 <div class="slds-align_absolute-center slds-m-around_x-large slds-p-vertical_large">
                                     <div class="slds-grid slds-gutters">

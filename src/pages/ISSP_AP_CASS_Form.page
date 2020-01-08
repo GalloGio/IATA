@@ -1,6 +1,4 @@
 <apex:page controller="ISSP_APProcess" showHeader="false" sidebar="false" standardStylesheets="true">
-    <c:iss_ap_css />
-    
     <script>
     function changePercentBox(myBox, myCheckBox, myPanel){
         var thisBox = document.getElementById(myBox);
@@ -46,6 +44,8 @@
     </script>
 
     <!-- Modal -->
+    <apex:stylesheet value="{!$Resource.CSP_VF_Stylesheet}" />
+
 <div class="modal fade" id="ModalCountryReqs" tabIndex="-1" data-backdrop='false' role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -159,20 +159,12 @@
                 <h3 class="panel-title">Airline Participation Joining Process</h3>
             </div>
     <div class="panel-body" id="body-enquiries">
-        <div class="progress">
-            <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
-            A. Participation Country &amp; Type
-            </div>
-            <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="0" style="width: 25%;">
-            B. {!strLoB} Country Requirements
-            </div>
-            <div class="progress-bar" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
-            C. CASS Joining Form
-            </div>
-            <div class="progress-bar progress-bar-off" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
-            D. Submit to IATA
-            </div>
-        </div>
+        <c:ISSP_APProcess_Progress 
+            step="{!stepNumber}"
+            operationType="{!strOperationType}"
+            areaType="{!strAreaType}"
+            changeType="{!strChangeType}"
+            isSIS="{!isSISMember}" />
 
     <apex:outputPanel layout="block" styleclass="alert alert-info" html-role="alert" rendered="{!DocumentGuide!=null}">
         Any doubts? Please check out our&nbsp;
@@ -186,17 +178,17 @@
                         <apex:actionStatus id="blockButtons">
                             <apex:facet name="start">
                                 <apex:outputPanel layout="none">
-                                    <apex:commandButton disabled="true" value="Previous"/>
-                                    <apex:commandButton disabled="true" value="Next"/>
-                                    <apex:commandButton disabled="true" value="Save Draft and Leave"/>
+                                    <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-topMargin iatabtn-right" disabled="true" value="Next"/>
+                                    <apex:commandButton styleclass="iatabtn iatabtn-danger iatabtn-topMargin iatabtn-right" disabled="true" value="Previous"/>
+                                    <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-topMargin iatabtn-left" disabled="true" value="Save Draft and Leave"/>
                                 </apex:outputPanel>
                             </apex:facet>
                             
                             <apex:facet name="stop">
                                 <apex:outputPanel layout="none">
-                                    <apex:commandButton action="{!saveBSPFormAndGoBack}" status="blockButtons" value="Previous"/>   
-                                    <apex:commandButton action="{!saveBSPFormAndGoForward}" status="blockButtons" value="Next"/>
-                                    <apex:commandButton action="{!saveBSPFormAndLeave}" status="blockButtons" value="Save Draft and Leave"/>                
+                                    <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-topMargin iatabtn-right" action="{!saveBSPFormAndGoForward}" status="blockButtons" value="Next"/>
+                                    <apex:commandButton styleclass="iatabtn iatabtn-danger iatabtn-topMargin iatabtn-right" action="{!saveBSPFormAndGoBack}" status="blockButtons" value="Previous"/> 
+                                    <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-topMargin iatabtn-left" action="{!saveBSPFormAndLeave}" status="blockButtons" value="Save Draft and Leave"/>                
                                 </apex:outputPanel>
                             </apex:facet>
                         </apex:actionStatus>      
@@ -547,7 +539,7 @@
                         </apex:inputField>
                     </apex:pageBlockSectionItem>
                     <apex:pageBlockSectionItem >
-                        <apex:actionRegion>
+                        <apex:actionRegion >
                             <apex:outputLabel value="HOT file receipt preference"
                                 styleclass="{!IF(OR(newForm.Receive_HOT_files__c=='YES - Billing Period HOT',newForm.Receive_HOT_files__c=='YES - Remittance Period HOT') ,'ap-required','')}"/>
                         </apex:actionRegion>

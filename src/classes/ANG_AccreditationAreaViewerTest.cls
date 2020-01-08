@@ -1,17 +1,17 @@
 @isTest
 private class ANG_AccreditationAreaViewerTest {
-	
+
 	@testSetup static void setup(){
 		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US', Region__c = 'Europe', ANG_Enable_NewGen__c = true);
-        insert ctry ;
+		insert ctry ;
 
-        Id accountAgencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+		Id accountAgencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
-        Account acct = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234561',Location_Type__c='HE',Name='The Agency CIA',Short_Name__c='The Agency CIA', Sector__c = 'Travel Agent', Type ='IATA Passenger Sales Agent', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S9_APPROVED);
-        
-        insert acct;
-        
-        Contact co1 = new Contact(AccountId = acct.id, Firstname = 'John', Lastname='Rambo', Phone = '666123456', MobilePhone = '911111111', Email = 'rambo.johnj@test.com', Financial_Assessment_Contact__c = true);
+		Account acct = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountAgencyRT, IATACode__c='1234561',Location_Type__c='HE',Name='The Agency CIA',Short_Name__c='The Agency CIA', Sector__c = 'Travel Agent', Type ='IATA Passenger Sales Agent', Location_Class__c = 'P', Status__c = AMS_Utils.ACC_S9_APPROVED);
+
+		insert acct;
+
+		Contact co1 = new Contact(AccountId = acct.id, Firstname = 'John', Lastname='Rambo', Phone = '666123456', MobilePhone = '911111111', Email = 'rambo.johnj@test.com', Financial_Assessment_Contact__c = true);
 		insert co1;
 
 	}
@@ -83,7 +83,7 @@ private class ANG_AccreditationAreaViewerTest {
 		Map<String,Object> fieldsOfObject = new Map<String,Object>();
 
 		For(String fieldValue: fieldsMapping.keySet()){
-			
+
 			fieldsOfObject.put(fieldsMapping.get(fieldValue),acct.get(fieldValue));
 
 		}
@@ -102,8 +102,8 @@ private class ANG_AccreditationAreaViewerTest {
 		ApexPages.StandardController sc = new ApexPages.StandardController(accr);
 
 		PageReference pageRef = Page.ANG_AccreditationAreaViewer;
-     	Test.setCurrentPage(pageRef);
-     	pageRef.getParameters().put('Id', String.valueOf(accr.Id));
+	 	Test.setCurrentPage(pageRef);
+	 	pageRef.getParameters().put('Id', String.valueOf(accr.Id));
 
 		ANG_AccreditationAreaViewer accreditationAreaV = new ANG_AccreditationAreaViewer(sc);
 
@@ -114,6 +114,9 @@ private class ANG_AccreditationAreaViewerTest {
 		Set<String> notes = accreditationAreaV.notes;
 		String existingOscarCaseNumber = accreditationAreaV.existingOscarCaseNumber;
 		Id existingOscarCaseId = accreditationAreaV.existingOscarCaseId;
+		Set<String> pageSections = accreditationAreaV.pageSections;
+		Map<String, String> fieldsSectionMap = accreditationAreaV.fieldsSectionMap;
+		List<ANG_AccreditationAreaViewer.AccreditationContact> accreditationContactFormList = accreditationAreaV.accreditationContactFormList;
 
 		ANG_OscarProcessHelper.checkSFDCLimits();
 
@@ -126,7 +129,7 @@ private class ANG_AccreditationAreaViewerTest {
 		Test.startTest();
 
 		ANG_AnualRevalCaseCreationBatch anualRevalCaseCreationBatch = new ANG_AnualRevalCaseCreationBatch(new Set<Id>{[Select Id from Account].Id});
-		Id anualRevalCaseCreationBatchId = Database.executeBatch(anualRevalCaseCreationBatch,1);	
+		Id anualRevalCaseCreationBatchId = Database.executeBatch(anualRevalCaseCreationBatch,1);
 
 		Test.stopTest();
 	}
@@ -287,7 +290,7 @@ private class ANG_AccreditationAreaViewerTest {
 		Map<String,Object> fieldsOfObject = new Map<String,Object>();
 
 		For(String fieldValue: fieldsMapping.keySet()){
-			
+
 			fieldsOfObject.put(fieldsMapping.get(fieldValue),acct.get(fieldValue));
 
 		}

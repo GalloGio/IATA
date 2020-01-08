@@ -62,15 +62,13 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Contact.CNTC_FIRST_NAME</fields>
         <fields>Contact.NAME</fields>
-        <fields>Contact__c</fields>
         <fields>Contact_Title__c</fields>
         <fields>ASP_Effective_Date__c</fields>
         <fields>Attachment_Link__c</fields>
         <fields>Signature_Snapshot__c</fields>
         <relatedList>Authorized_Signatory__c.Authorized_Signatories_Package__c</relatedList>
-        <sortField>Contact__c</sortField>
-        <sortOrder>Asc</sortOrder>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
@@ -78,7 +76,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h11000000hhri</masterLabel>
+        <masterLabel>00hw000000ZYqui</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

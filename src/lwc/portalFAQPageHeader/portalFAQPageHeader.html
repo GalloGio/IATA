@@ -7,16 +7,25 @@
                         <c-portal-breadcrumbs show-in-white=true last-breadcrumb-label={category}></c-portal-breadcrumbs>
                     </div>
 
-                    <div class="headerContainer headerContainerShadow">
-                        <div class="headerIconContainer">
-                            <div class="headerIconDiv">    
+                    <div class="slds-grid headerContainer headerContainerShadow">
+                        <div class="headerIconContaine slds_col slds-shrink-none">
+                            <div class="headerIconDiv">
                                 <img src={iconLink}/>
                             </div>
                         </div>
-                        <div class="slds-p-left_small headerTextContainer">
-                            <div class="headerTextAlign">
-                                <div  class="slds-p-top_medium text-white text-xxxsmall text-bold slds-text-title_caps">{label.CSP_FAQ_HeaderTitle}</div>
-                                <div  class="slds-p-vertical_x-small text-white text-large text-bold">{category}</div>
+                        <div class="slds-p-left_small slds_col slds-size_11-of-12">
+                            <div  class="slds-p-top_medium text-white text-xxxsmall text-bold slds-text-title_caps">{label.CSP_FAQ_HeaderTitle}</div>
+                            <div  class="slds-p-vertical_x-small">
+                                <lightning-combobox 
+                                    name="categories"
+                                    label={label.CSP_FAQ_HeaderTitle}
+                                    variant="label-hidden"
+                                    value={categoryValue}
+                                    placeholder={categoryValue}
+                                    options={categoriesOptions}
+                                    onchange={handleChangeCategory}
+                                    class="borderlessCombobox textSize combobox-categories icon-combobox text-xxxsmall text-bold combobox-list-options">
+                                </lightning-combobox>
                             </div>
                         </div>
                     </div>

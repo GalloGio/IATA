@@ -1,7 +1,32 @@
+.borderTransition {
+  transition: border-top 0.5s;
+  -webkit-transition: border-top 0.5s;
+}
+
+.displayTransition {
+  transition: display 0.5s;
+  -webkit-transition: display 0.5s;
+}
+
+.widthTransition {
+  transition: width 0.5s;
+  -webkit-transition: width 0.5s;
+}
+
+.heightTransition {
+  transition: height 0.5s;
+  -webkit-transition: height 0.5s;
+}
+
 .headerContainer {
-  background-color: #1e32fa;
   border-top: 29px solid #fff;
+  background-color: #1e32fa;
   border-bottom: 29px solid #fff;
+}
+@media only screen and (max-width: 767px) {
+  .headerContainer {
+    border-top: 0px solid #fff;
+  }
 }
 
 .maxWidthHeader {
@@ -108,16 +133,33 @@
   cursor: pointer;
 }
 
+.buttonYouIATA{
+	white-space:nowrap;
+}
 .buttonService:hover:after,
 .buttonSupport:hover:after,
+.buttonYouIATA:hover:after,
 .buttonService.selectedButton:after,
-.buttonSupport.selectedButton:after {
+.buttonSupport.selectedButton:after,
+.buttonYouIATA.selectedButton:after {
   content: "";
   width: 100%;
   height: 4px;
   background-color: #fac832;
   position: absolute;
   bottom: 1px;
+  right: 0;
+  left: 0;
+}
+
+.sideBarContainer .headerBarButton:hover:after,
+.sideBarContainer .headerBarButton.selectedButton:after {
+  content: "";
+  width: 100%;
+  height: 2px;
+  background-color: #fac832;
+  position: absolute;
+  bottom: 0px;
   right: 0;
   left: 0;
 }
@@ -143,13 +185,22 @@
   background-color: #1e32fa;
 }
 
-.headerButtonNotificationsContainer:hover {
-  cursor: pointer;
+.headerButtonNotificationsContainer {
+  white-space: nowrap;
 }
 
 
+.headerButtonNotificationsContainer:hover {
+  cursor: pointer;
+}
+.headerButtonSearchContainer {
+  padding-right: 6px;
+  padding-left: 6px;
+  padding-top: 6px;
+}
 
-.headerButtonNotificationsCloseIcon {
+.headerButtonNotificationsCloseIcon,
+.headerButtonSearchCloseIcon {
   display: none;
   width: 24px;
   height: 24px;
@@ -160,9 +211,8 @@
   font-size: 11px;
   text-align: center;
   z-index: 2;
-  float: right;
-  position: relative;
   margin-left: -6px;
+  display: inline;
 }
 
 .headerButtonProfileContainer:hover .openProfile,
@@ -212,13 +262,9 @@
   box-shadow: 5px 10px 20px #e2e2e2;
 }
 
-
-
 .headerBarButton:hover div.headerButtonArrow {
   transform: rotate(180deg);
 }
-
-
 
 .headerMarginRight {
   margin-right: 10%;
@@ -232,6 +278,12 @@
 .notificationCenterTextsize {
   font-size: 14px;
 }
+@media only screen and (max-width: 767px) {
+  .notificationCenterTextsize {
+    font-size: 12px;
+  }
+}
+
 .unreadNotification {
   background-color: #f7f8fa;
 }
@@ -245,10 +297,41 @@
   position: absolute;
   top: 40px;
   z-index: 10000;
-  min-width: 340px;
+  width: 100%;
+  max-width: 500px;
   height: 550px;
   max-height: 550px;
   right: calc(10% + 1.5rem + 24px);
+}
+
+.openSearch {
+  display: none;
+  position: absolute;
+  top: 40px;
+  z-index: 10000;
+  width: 100%;
+  max-width: 480px;
+  height: auto;
+  max-height: 730px;
+  right: calc(10% - 1.5rem + 8px);
+  background-color:#fff;
+}
+
+@media only screen and (max-width: 767px) {
+  .openNotifications {
+    width: 90%;
+    height: 400px;
+    max-height: 440px;
+    right: calc(16px - 16px); /* parent margin - this margin */
+  }
+
+  .openSearch {
+    width: 90%;
+    height: auto;
+    right: calc(16px - 16px); /* parent margin - this margin */
+    top: 90px;
+    overflow: hidden;
+  }
 }
 
 .closeButton {
@@ -259,7 +342,8 @@
   font-family: Arial;
 }
 
-.notificationOption {
+.notificationOption,
+.SearchOption {
   display: block;
   font-weight: 500;
 }
@@ -277,7 +361,6 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  width: 93.5%;
   display: block;
 }
 
@@ -367,7 +450,7 @@
   visibility: visible;
 }
 
-.headerBarConatiner {
+.headerBarContainer {
   height: calc(100% - 2px);
   margin-top: 4px;
 }
@@ -380,4 +463,115 @@
   line-height: 1.6;
   letter-spacing: normal;
   color: #333333;
+}
+
+.mobile-menu-icon {
+  min-width: 40px;
+}
+
+.whiteBackground {
+  background-color: white;
+  z-index: 10010;
+}
+
+.sideBar {
+  height: 100%;
+  position: fixed;
+  overflow-y: auto;
+  overflow-x: hidden;
+  white-space: nowrap;
+  z-index: 10011;
+  color: white;
+}
+
+.sideBar::-webkit-scrollbar-track
+{
+	background-color: transparent;
+}
+
+.sideBar::-webkit-scrollbar
+{
+	width: 6px;
+	background-color: #1e32fa;
+}
+
+.sideBar::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	background-image: -webkit-gradient(linear,
+									   left bottom,
+									   left top,
+									   color-stop(0.44, #1a29d3),
+									   color-stop(0.86, #1422b3));
+}
+
+.sideBar.topMenu {
+  width: 0px;
+}
+
+.sideBar img {
+  width: 30px;
+  min-width: 30px;
+  height: 30px;
+  min-height: 30px;
+}
+
+.sideMenuOpacity {
+  opacity: 0.68;
+}
+
+.sideBarContainer {
+  margin-left: 15px;
+  margin-right: 15px;
+  margin-top: 20px;
+}
+
+.sideBarContainer .spacer-border .headerBarButton {
+  border-bottom: 1px solid rgba(255, 255, 255, .19);
+}
+
+.sideBarContainer .language-picker {
+  border-top: 1px solid rgba(255, 255, 255, .19);
+  margin-top: 50px;
+  font-size: 1em;
+}
+
+.sideBarProfileContainer .headerBarButton {
+  margin-left: 2.7em;
+}
+
+.sideMenuBackIcon {
+  /*width: 15px;*/
+  margin-bottom: 10px;
+}
+
+.sideBarProfileContainer {
+  overflow: hidden;
+  height: 0px;
+}
+
+.align-right {
+  text-align: right;
+}
+
+.rotate-180 {
+  transform: rotate(180deg);
+}
+
+.spacer {
+  width: 2.7em;
+}
+
+@media only screen and (max-width: 767px) {
+  /* css class defined on the 'CSP_StyleSheet' file */
+  .tabNotificationCenter .slds-tabs_default__content {
+    margin-left: 3px;
+    margin-right: 3px;
+    min-width: 294px;
+    max-height: 255px;
+  }
+  .mobileLogoWhite {
+    max-height: 85%;
+    width: auto;
+  }
 }
