@@ -1,0 +1,6 @@
+<aura:component implements="force:hasSObjectName,flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes,force:lightningQuickActionWithoutHeader,force:hasRecordId" >
+
+        <aura:attribute name="recordId" type="String" />        
+        <c:KeyCustomerAlert recordId="{!v.recordId}" urlVisualForcePage="/apex/LogPhoneCase?CaseId="/>
+
+</aura:component>

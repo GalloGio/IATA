@@ -35927,6 +35927,20 @@ You can choose one or more of the following topics:</value>
         <value>sis.servicedesk@accelya.com</value>
     </labels>
     <labels>
+        <fullName>KEY_CUSTOMER_ALERT</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Key Customer alert message</shortDescription>
+        <value>&lt;p&gt;KEY CUSTOMER!&lt;/p&gt;&lt;p&gt;This is a reminder that this case is related to a KEY CUSTOMER.&lt;/p&gt;</value>
+    </labels>
+    <labels>
+        <fullName>KEY_CUSTOMER_ALERT_TITLE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Key Customer alert title</shortDescription>
+        <value>KEY CUSTOMER!</value>
+    </labels>
+    <labels>
         <fullName>KPI1RT</fullName>
         <language>en_US</language>
         <protected>false</protected>

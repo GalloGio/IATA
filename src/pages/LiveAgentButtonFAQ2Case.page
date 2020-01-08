@@ -387,6 +387,7 @@
                         liveagent.addCustomDetail('Case Priority', "{!IF(isEmergency,'Emergency','Normal')}");
                         liveagent.addCustomDetail('userContactId', '{!contactId}');
                         liveagent.addCustomDetail('userAccountId', '{!accountId}');
+                        liveagent.addCustomDetail('keyCustomer', '{!account.Identify_as_Key_Customer__c}'); //ACAMBAS - WMO-436
                         liveagent.addCustomDetail('caseRTId', '{!caseRecordTypeId}');
                         liveagent.addCustomDetail('caseCountryConcerned',"{!country.Name}").saveToTranscript('Country_Concerned__c');
                         liveagent.addCustomDetail('buttonlanguage','{!buttonLanguage}');

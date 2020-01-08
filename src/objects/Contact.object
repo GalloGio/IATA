@@ -20863,13 +20863,26 @@ myuser={!User.Id}</url>
         <fullName>Log_Phone_Case</fullName>
         <availability>online</availability>
         <displayType>button</displayType>
-        <encodingKey>UTF-8</encodingKey>
-        <height>600</height>
-        <linkType>url</linkType>
+        <linkType>javascript</linkType>
         <masterLabel>Log Phone Case</masterLabel>
-        <openType>sidebar</openType>
+        <openType>onClickJavaScript</openType>
         <protected>false</protected>
-        <url>/apex/LogPhoneCase?ContactId={!Contact.Id}</url>
+        <url>{!REQUIRESCRIPT(&quot;/resource/1552329049000/keyCustomerAlert&quot;)}
+{!REQUIRESCRIPT(&quot;/soap/ajax/40.0/connection.js&quot;)} 
+{!REQUIRESCRIPT(&quot;/soap/ajax/40.0/apex.js&quot;)}
+{!REQUIRESCRIPT(&quot;/support/console/30.0/integration.js&quot;)}
+
+try {
+    var targetURL = &quot;/apex/LogPhoneCase?ContactId={!Contact.Id}&quot;;
+
+    if({!Account.Identify_as_Key_Customer__c}) {
+            displayKeyCustomerAlert(targetURL, &quot;{!$Label.KEY_CUSTOMER_ALERT_TITLE}&quot;, &quot;{!$Label.KEY_CUSTOMER_ALERT}&quot;); 
+    } else {
+        goToURL(targetURL);
+    }
+} catch(e) {
+    alert(&apos;An error has occurred. Error: &apos; + e);
+}</url>
     </webLinks>
     <webLinks>
         <fullName>LogaCall</fullName>

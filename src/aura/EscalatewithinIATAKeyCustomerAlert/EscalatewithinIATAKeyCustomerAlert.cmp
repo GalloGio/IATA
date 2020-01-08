@@ -1,0 +1,10 @@
+<aura:component implements="force:hasSObjectName,flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes,
+force:lightningQuickActionWithoutHeader,force:hasRecordId" controller="EscalatewithinIATAKeyCustomerAlertCtrl">
+
+        <aura:attribute name="recordId" type="String" />   
+        <aura:attribute name="urlVisualForcePage" type="String" default=""/> 
+        <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+        <aura:if isTrue="{!v.urlVisualForcePage != ''}">
+            <c:KeyCustomerAlert recordId="{!v.recordId}" urlVisualForcePage="{!v.urlVisualForcePage}"/>
+        </aura:if>
+</aura:component>

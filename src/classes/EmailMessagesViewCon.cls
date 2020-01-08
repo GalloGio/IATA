@@ -180,6 +180,7 @@ public class EmailMessagesViewCon {
 	public transient List<Tracked_Email__c> trackedEmails {get; set;}
 	public boolean hasAttachment  {get; set;}
 	public Boolean isUserAllowedToCreateEditCase {get; set;} //ACAMBAS - WMO-482
+	public Boolean isEligibleForKeyCustomerAlert {get; set;} //ACAMBAS - WMO-436
 
 
 	public EmailMessagesViewCon (ApexPages.StandardController controller) {
@@ -191,6 +192,7 @@ public class EmailMessagesViewCon {
 			loadEmails();
 			loadAttachments();
 			setUserAllowedToCreateEditCase(this.cse); //ACAMBAS - WMO-482
+			setEligibilityForKeyCustomerAlert(); //ACAMBAS - WMO-436
 		} catch (Exception e) {
 			String temp = ApexPages.currentPage().getParameters().get('fieldValue');
 			this.cse = [Select id, Status, CaseNumber, BSPCountry__c, ContactId, RecordType.DeveloperName from Case where id = :temp];
@@ -269,4 +271,18 @@ public class EmailMessagesViewCon {
 		}
 	}
 	//ACAMBAS - WMO-482 - End
+
+	//ACAMBAS - WMO-436 - Begin
+	public void setEligibilityForKeyCustomerAlert() {
+		List<Case_RTs_for_Key_Customer_alert__c> csRecords = [SELECT Record_Type__c FROM Case_RTs_for_Key_Customer_alert__c];
+
+		List<String> eligibleCaseRTs = new List<String>();
+
+		for(Case_RTs_for_Key_Customer_alert__c cs : csRecords) {
+			eligibleCaseRTs.add(cs.Record_Type__c);
+		}
+
+		this.isEligibleForKeyCustomerAlert = eligibleCaseRTs.contains(cse.RecordType.Name);
+	}
+	//ACAMBAS - WMO-436 - End
 }
