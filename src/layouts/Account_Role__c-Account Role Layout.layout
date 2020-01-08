@@ -105,6 +105,8 @@
     <relatedLists>
         <fields>NAME</fields>
         <relatedList>UIS_Account_Role_Details__c.Account_Role__c</relatedList>
+    </relatedLists>
+    <relatedLists>
 		<fields>Contact_Role_Name__c</fields>
         <fields>First_Name__c</fields>
         <fields>Last_Name__c</fields>
