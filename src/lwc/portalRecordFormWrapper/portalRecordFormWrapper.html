@@ -602,14 +602,11 @@
 
                                                             <div class="slds-m-left_x-small slds-m-bottom_small">
                                                                 <label class="checkbox-button">
-                                                                    <input data-item={item.label} data-type="Area__c"
+                                                                    <input data-item={item.value} data-type="Area__c"
                                                                         type="checkbox" class="checkbox-button__input"
-                                                                        onchange={getValueSelected} name={item.label}
+                                                                        onchange={getValueSelected} name={item.value}
                                                                         checked={item.checked}>
-                                                                    <span data-item={item.label} data-type="Area__c"
-                                                                        class="checkbox-button__control"
-                                                                        onchange={getValueSelected}></span>
-                                                                    <span data-item={item.label} data-type="Area__c"
+                                                                    <span data-item={item.value} data-type="Area__c"
                                                                         class="checkbox-button__label"
                                                                         onchange={getValueSelected}>{item.value}</span>
                                                                 </label>
@@ -638,19 +635,19 @@
 
                                                             <div class="slds-m-left_x-small slds-m-bottom_small">
                                                                 <label class="checkbox-button">
-                                                                    <input data-item={item.label}
+                                                                    <input data-item={item.value}
                                                                         data-type="Membership_Function__c"
                                                                         type="checkbox" class="checkbox-button__input"
-                                                                        onchange={getValueSelected} name={item.label}
+                                                                        onchange={getValueSelected} name={item.value}
                                                                         checked={item.checked}>
-                                                                    <span data-item={item.label}
+                                                                    <span data-item={item.value}
                                                                         data-type="Membership_Function__c"
                                                                         class="workingAreasChangeOnError checkbox-button__control"
                                                                         onchange={getValueSelected}></span>
-                                                                    <span data-item={item.label}
+                                                                    <span data-item={item.value}
                                                                         data-type="Membership_Function__c"
                                                                         class="checkbox-button__label"
-                                                                        onchange={getValueSelected}>{item.value}</span>
+                                                                        onchange={getValueSelected}>{item.label}</span>
                                                                 </label>
                                                             </div>
 

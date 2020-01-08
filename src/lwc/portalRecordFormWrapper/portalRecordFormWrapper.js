@@ -153,7 +153,7 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
         Credit_Card_Payment_Link
     };
 
-    @api tabName = '';
+    @api tabName;
 	@track isAdminUser = false;
 	@track isAirline=false;
 	@track linkToDoChanges='';
@@ -205,14 +205,14 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
 
                 if (contact.Membership_Function__c != null) {
 
-                    let values = contact.Membership_Function__c.split(";");
-                    values.forEach(function (value) {
-                        functions.push(value);
-                        options.forEach(function (option) {
-                            if (option.label == value) { option.checked = true; selectedV.push(option.value); }
-                        });
-                    });
-
+                    let userMemFunct = contact.Membership_Function__c;
+                    for(let i=0;i<options.length;i++){
+                        if (userMemFunct.indexOf(options[i].value)!=-1){ 
+                            options[i].checked = true; 
+                            selectedV.push(options[i].value);
+                            functions.push(options[i].label);
+                        }
+                    }
                     this.selectedValuesFunction = selectedV;
                 }
 
@@ -417,10 +417,17 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
         if(eventDetail.fields.hasOwnProperty('Membership_Function__c')) {
             let functions = [];
             if(eventDetail.fields.Membership_Function__c) {
-                const values = eventDetail.fields.Membership_Function__c.value.split(";");
-                values.forEach( (value) => { functions.push(value); });
+                const userMemFunct = eventDetail.fields.Membership_Function__c.value;
+                let options=this.functionOptions;
+
+                for(let i=0;i<options.length;i++){
+                    if (userMemFunct.indexOf(options[i].value)!=-1){                         
+                        functions.push(options[i].label);
+                    }
+                }
             }
-            this.jobFunctions = functions;
+            functions.sort();            
+            this.jobFunctions = functions;            
         }
     }
 
@@ -571,11 +578,11 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
             let selectedF = '';
             selectedFunction.forEach(function (item) { selectedF += item + ';'; });
 
-            let fields = event.detail.fields;
+            let fields = JSON.parse(JSON.stringify(event.detail.fields));
             fields.accountId = this.accountId;
 
             let contact = JSON.parse(JSON.stringify(this.staticFields));
-            if(this.sectionName=='Basics' && contact.ID_Card_Holder__c && (fields.FirstName != contact.FirstName || fields.LastName != contact.LastName || (fields.Birthdate != contact.Birthdate && contact.Birthdate))){
+            if(this.sectionName=='Basics' &&contact.ID_Card_Holder__c && (fields.FirstName != contact.FirstName || fields.LastName != contact.LastName || (fields.Birthdate != contact.Birthdate && contact.Birthdate))){
                 this.isSaving = false;
                 this.closeModal();
                 this.idCardErrorPopup = true;
@@ -653,19 +660,23 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
         let options = isArea ? JSON.parse(JSON.stringify(this.areasOptions)) : JSON.parse(JSON.stringify(this.functionOptions));
         let selectedV = isArea ? JSON.parse(JSON.stringify(this.selectedvalues)) : JSON.parse(JSON.stringify(this.selectedValuesFunction));
 
-
         if (!selectedV.includes(selected)) {
             selectedV.push(selected);
-            options.forEach(function (option) {
-                if (option.value == selected) { option.checked = true; }
-            });
+			for (let i = 0; i < options.length; i++) {
+				if (options[i].value == selected) {
+					options[i].checked = true; 
+				}
+			}
+			
         } else {
             let index = selectedV.indexOf(selected);
             if (index > -1) {
                 selectedV.splice(index, 1);
-                options.forEach(function (option) {
-                    if (option.value == selected) { option.checked = false; }
-                });
+				for (let i = 0; i < options.length; i++) {
+					if (options[i].value == selected) {
+						options[i].checked = false; 
+					}
+				}
             }
         }
 
