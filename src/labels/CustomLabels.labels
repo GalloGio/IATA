@@ -43801,14 +43801,6 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <value>IATA needs your Personal Email to maintain your lifelong Training record with us. We also need your Work Email to access some specific Services on the Portal and to be able to bill your company, instead of you as an individual.</value>
     </labels>
     <labels>
-        <fullName>CSP_L_LoginEmail_LMS</fullName>
-        <categories>CS Portal</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP Login Email</shortDescription>
-        <value>Login Email</value>
-    </labels>
-    <labels>
         <fullName>CSP_Next_EmailValidation_LMS</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
