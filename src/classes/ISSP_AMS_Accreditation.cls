@@ -3325,7 +3325,7 @@ public without sharing class ISSP_AMS_Accreditation {
 
 		if (isNoticeOfChange) {
 			pageURL += '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange;
-		} else if(isPassAccreditation)
+		} else if(isPassAccreditation){
 			return new Pagereference('/ISSP_AMS_PASS_Accreditation?caseId=' + newCase.Id + '&step=2' + commParam);
 		} else if (isMultiCountryNewAE && !isMultiCountryAccredittedAddingAEs()) {
 			pageURL += '&isMultiCountryNewAE=true&currentMCFormId=' + currentMCFormId;

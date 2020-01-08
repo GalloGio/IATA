@@ -1289,7 +1289,6 @@ global without sharing class ISSP_APProcess {
 			}
 			isPASS = true;
 			strLoB = 'PASS';
-		}
 		} else if (strType=='ICH') {
 			strReason='New ICH participant';
 			isICH = true;

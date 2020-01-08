@@ -854,7 +854,7 @@ public without sharing class OneId_RegistrationProcessController {
 
 			//create contact role after contact is created
 			if(servName == 'GADM') {
-				Account_Role__c accountRole = OneId_RegistrationHelper_GADM.getAccountRole(acc.Id);
+				accountRole = OneId_RegistrationHelper_GADM.getAccountRole(acc.Id);
 
 				if(serviceSpecificParams.get('isPowerUser') != null && accountRole != null) {
 					OneId_RegistrationHelper_GADM.createContactRole(con, accountRole, Boolean.valueOf(serviceSpecificParams.get('isPowerUser')));
