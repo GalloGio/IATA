@@ -32,6 +32,7 @@ import CSP_CaseDetails from '@salesforce/label/c.CSP_Case_Details';
 import CSP_AddOrRemove_Recipients from '@salesforce/label/c.CSP_AddOrRemove_Recipients';
 import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 import CSP_EmailAddress from '@salesforce/label/c.Email_address';
+import CSP_NoSearchResults from '@salesforce/label/c.CSP_NoSearchResults';
 
 export default class PortalHomeCalendar extends LightningElement {
 
@@ -78,6 +79,7 @@ export default class PortalHomeCalendar extends LightningElement {
 	ISSP_Case_Closed_More_Than_2_Months,
 	CSP_Status,
 	CSP_CreatedOn,
+    CSP_NoSearchResults,
 	CSP_LastUpdate,
         CSP_Manage_Recipients,
         CSP_CaseDetails,
@@ -273,7 +275,7 @@ export default class PortalHomeCalendar extends LightningElement {
     }
     
 	get hasSurveyLink() {
-        return this.surveyLink !== undefined && this.surveyLink.length > 0;
+        return this.surveyLink && this.surveyLink.length > 0;
     }
 
     addNewRecipientButtonClick(){
@@ -358,7 +360,7 @@ export default class PortalHomeCalendar extends LightningElement {
 
 
     get manageRecipients(){
-        return this.haveRecipients && !this.Level1User;
+        return !this.Level1User;
     }
     getSurveyLink() {
         getSurveyLink({ caseId: this.pageParams.caseId })
