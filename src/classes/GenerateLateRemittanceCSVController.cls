@@ -68,7 +68,7 @@ public without sharing class GenerateLateRemittanceCSVController {
 
 		/* REPORT 1 - Late payment fee report */
 		List<Case> tmpListCases = [SELECT Id, Account.IATA_ISO_Country__r.SAP_Sales_Org__c, IFAP_Agent_Code__c, Short_Payment_Amount__c, Short_Payment_Date__c, Late_Payment_Date__c,
-										Remittance_Date__c, Remittance_Period__c, Currency__c, BSP_CASS__c, CaseNumber, Region__c, Account.IATA_ISO_Country__r.Name
+										Remittance_Date__c, Remittance_Period__c, Currency__c, BSP_CASS__c, CaseNumber, Region__c, Account.IATA_ISO_Country__r.Name, Confirm_ALL_Outstanding_Amounts_Paid__c
 									FROM Case
 									WHERE RecordType.DeveloperName = 'SIDRA'
 									AND Update_AIMS_IRR__c <> null
@@ -157,11 +157,43 @@ public without sharing class GenerateLateRemittanceCSVController {
 				cw.Material = '801185';
 			}
 			cw.MatDesc = 'Late Remittance Interest ' + c.Remittance_Period__c;
-			cw.Quantity = (c.Late_Payment_Date__c != null && c.Remittance_Date__c != null) ? String.valueOf(c.Remittance_Date__c.daysBetween(c.Late_Payment_Date__c)) : 'ERROR: Remittance Date or Late Payment Date missing';
+			//WMO-778 - ACAMBAS - Begin
+			Datetime tempDatetime;
+			Date confirmAllOutstandingAmountsPaid;
+
+			if(c.Confirm_ALL_Outstanding_Amounts_Paid__c != null) {
+				tempDatetime = c.Confirm_ALL_Outstanding_Amounts_Paid__c;
+				confirmAllOutstandingAmountsPaid = Date.newinstance(tempDatetime.year(), tempDatetime.month(), tempDatetime.day());
+			}
+
+			//cw.Quantity = (c.Late_Payment_Date__c != null && c.Remittance_Date__c != null) ? String.valueOf(c.Remittance_Date__c.daysBetween(c.Late_Payment_Date__c)) : 'ERROR: Remittance Date or Late Payment Date missing';
+			if(c.Late_Payment_Date__c != null && c.Remittance_Date__c != null) {
+				cw.Quantity = String.valueOf(c.Remittance_Date__c.daysBetween(c.Late_Payment_Date__c));
+			}
+			else {
+				if(c.Remittance_Date__c != null && c.Confirm_ALL_Outstanding_Amounts_Paid__c != null) {
+					cw.Quantity = String.valueOf(c.Remittance_Date__c.daysBetween(confirmAllOutstandingAmountsPaid));
+				}
+				else {
+					cw.Quantity = 'ERROR: Remittance Date or Late Payment Date/Confirm ALL Outst. Amounts Paid missing';
+				}
+			}
+			//WMO-778 - ACAMBAS - End
 			cw.UnitPrice = c.Short_Payment_Amount__c != null ? String.valueOf(c.Short_Payment_Amount__c) : '';
 			cw.UnitPriceCurr = c.Currency__c != null ? c.Currency__c : '';
 			cw.DateFrom = c.Remittance_Date__c != null ? c.Remittance_Date__c.format().replace('/','.') : '';
-			cw.DateTo = c.Late_Payment_Date__c != null ? c.Late_Payment_Date__c.format().replace('/','.') : '';
+			//WMO-778 - ACAMBAS - Begin
+			//cw.DateTo = c.Late_Payment_Date__c != null ? c.Late_Payment_Date__c.format().replace('/','.') : '';
+			if(c.Late_Payment_Date__c != null) {
+				cw.DateTo = c.Late_Payment_Date__c.format().replace('/','.');
+			}
+			else if(c.Confirm_ALL_Outstanding_Amounts_Paid__c != null) {
+				cw.DateTo = confirmAllOutstandingAmountsPaid.format().replace('/','.');
+			}
+			else {
+				cw.DateTo = '';
+			}
+			//WMO-778 - ACAMBAS - End
 			cw.CaseNumber = c.CaseNumber;
 			cw.Region = c.Region__c;
 			cw.IATACountry = c.Account.IATA_ISO_Country__r.Name;
@@ -172,7 +204,7 @@ public without sharing class GenerateLateRemittanceCSVController {
 
 		/* REPORT 2 - Reinstatement fee report */
 		tmpListCases = [SELECT Id, Account.IATA_ISO_Country__r.SAP_Sales_Org__c, IFAP_Agent_Code__c, Short_Payment_Amount__c, Short_Payment_Date__c, Late_Payment_Date__c,
-								Remittance_Date__c, Remittance_Period__c, Currency__c, BSP_CASS__c, CaseNumber, Region__c, Account.IATA_ISO_Country__r.Name
+								Remittance_Date__c, Remittance_Period__c, Currency__c, BSP_CASS__c, CaseNumber, Region__c, Account.IATA_ISO_Country__r.Name, Confirm_ALL_Outstanding_Amounts_Paid__c
 						FROM Case
 						WHERE RecordType.DeveloperName = 'SIDRA'
 						AND Update_AIMS_REI_DEFWITH__c <> null
@@ -261,11 +293,43 @@ public without sharing class GenerateLateRemittanceCSVController {
 				cw.Material = '801185';
 			}
 			cw.MatDesc = 'Late Remittance Interest ' + c.Remittance_Period__c;
-			cw.Quantity = (c.Late_Payment_Date__c != null && c.Remittance_Date__c != null) ? String.valueOf(c.Remittance_Date__c.daysBetween(c.Late_Payment_Date__c)) : 'ERROR: Remittance Date or Late Payment Date missing';
+			//WMO-778 - ACAMBAS - Begin
+			Datetime tempDatetime;
+			Date confirmAllOutstandingAmountsPaid;
+
+			if(c.Confirm_ALL_Outstanding_Amounts_Paid__c != null) {
+				tempDatetime = c.Confirm_ALL_Outstanding_Amounts_Paid__c;
+				confirmAllOutstandingAmountsPaid = Date.newinstance(tempDatetime.year(), tempDatetime.month(), tempDatetime.day());
+			}
+
+			//cw.Quantity = (c.Late_Payment_Date__c != null && c.Remittance_Date__c != null) ? String.valueOf(c.Remittance_Date__c.daysBetween(c.Late_Payment_Date__c)) : 'ERROR: Remittance Date or Late Payment Date missing';
+			if(c.Late_Payment_Date__c != null && c.Remittance_Date__c != null) {
+				cw.Quantity = String.valueOf(c.Remittance_Date__c.daysBetween(c.Late_Payment_Date__c));
+			}
+			else {
+				if(c.Remittance_Date__c != null && c.Confirm_ALL_Outstanding_Amounts_Paid__c != null) {
+					cw.Quantity = String.valueOf(c.Remittance_Date__c.daysBetween(confirmAllOutstandingAmountsPaid));
+				}
+				else {
+					cw.Quantity = 'ERROR: Remittance Date or Late Payment Date/Confirm ALL Outst. Amounts Paid missing';
+				}
+			}
+			//WMO-778 - ACAMBAS - End
 			cw.UnitPrice = c.Short_Payment_Amount__c != null ? String.valueOf(c.Short_Payment_Amount__c) : '';
 			cw.UnitPriceCurr = c.Currency__c != null ? c.Currency__c : '';
 			cw.DateFrom = c.Remittance_Date__c != null ? c.Remittance_Date__c.format().replace('/','.') : ''; // Short_Payment_Date__c
-			cw.DateTo = c.Late_Payment_Date__c != null ? c.Late_Payment_Date__c.format().replace('/','.') : '';
+			//WMO-778 - ACAMBAS - Begin
+			//cw.DateTo = c.Late_Payment_Date__c != null ? c.Late_Payment_Date__c.format().replace('/','.') : '';
+			if(c.Late_Payment_Date__c != null) {
+				cw.DateTo = c.Late_Payment_Date__c.format().replace('/','.');
+			}
+			else if(c.Confirm_ALL_Outstanding_Amounts_Paid__c != null) {
+				cw.DateTo = confirmAllOutstandingAmountsPaid.format().replace('/','.');
+			}
+			else {
+				cw.DateTo = '';
+			}
+			//WMO-778 - ACAMBAS - End
 			cw.CaseNumber = c.CaseNumber;
 			cw.Region = c.Region__c;
 			cw.IATACountry = c.Account.IATA_ISO_Country__r.Name;
