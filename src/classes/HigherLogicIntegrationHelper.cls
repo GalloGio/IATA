@@ -1,7 +1,7 @@
 public class HigherLogicIntegrationHelper {
 
 	public static Boolean preventTrigger = false;
-	
+
 	public static String PUSH_MEMBERS = 'PUSH_MEMBERS';
 	public static String PUSH_INTERNAL_MEMBERS = 'PUSH_INTERNAL_MEMBERS';
 	public static String PUSH_EXISTING_MEMBERS = 'PUSH_EXISTING_MEMBERS';
@@ -12,10 +12,10 @@ public class HigherLogicIntegrationHelper {
 	private static String AGENCY_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 	private static String BRANCH_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline_BR');
 	private static String HEADQUARTER_RECORD_TYPE_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
-	
-    private static List<Account> fetchAccountRecords(Set<Id> accountIdSet){
-    	
-    	List<Account> accountLst = new List<Account>(
+
+	private static List<Account> fetchAccountRecords(Set<Id> accountIdSet){
+
+		List<Account> accountLst = new List<Account>(
 			[SELECT
 				Id,
 				Name,
@@ -26,19 +26,19 @@ public class HigherLogicIntegrationHelper {
 				BillingStreet,
 				BillingCountry,
 				BillingPostalCode
-			 FROM 
-			 	Account 
+			 FROM
+			 	Account
 			 WHERE
 			 	Id IN :accountIdSet
 			]
 		);
-		
+
 		return accountLst;
 
 	}
-	
+
 	/**
-	* Fetch the correct account Id considering 
+	* Fetch the correct account Id considering
 	* the record type, parent accounts and airline type
 	*
 	* @param accountId: Id
@@ -51,19 +51,19 @@ public class HigherLogicIntegrationHelper {
 	*
 	*/
 	private static Id fetchAssociatedAccountId(User u){
-					
+
 		Id accountId = u.Contact.AccountId;
-		
+
 		if(String.isNotBlank(u.Contact.Account.Parent.ParentId)){
 			accountId = u.Contact.Account.Parent.ParentId;
 		}
 		else if(String.isNotBlank(u.Contact.Account.ParentId)){
 			accountId = u.Contact.Account.ParentId;
 		}
-		
+
 		return accountId;
 	}
-	
+
 	/*
 	* Push all given accounts details into HigherLogic
 	*
@@ -71,18 +71,18 @@ public class HigherLogicIntegrationHelper {
 	* @param legacyContactMap: Map<Id, Id>
 	*
 	*/
-	@future(callout=true)	
+	@future(callout=true)
 	public static void pushCompanyMembers(Set<Id> accountIdSet, Map<Id, Id> legacyContactMap){
-		
+
 		List<Account> accountLst = fetchAccountRecords(accountIdSet);
-		
+
 		if(!accountLst.isEmpty()){
 			HigherLogicIntegrationWS.pushMembers(accountLst, legacyContactMap, null);
 			HigherLogicIntegrationWS.flushWebServiceLogs();
 		}
-		
+
 	}
-	
+
 	/**
 	* Push all users detail into HigherLogic
 	*
@@ -91,25 +91,25 @@ public class HigherLogicIntegrationHelper {
 	*
 	*/
 	public static void pushPersonMembers(List<User> usersToPushLst, Map<Id, Boolean> activeUserMap){
-		
+
 		if(!usersToPushLst.isEmpty()){
 			HigherLogicIntegrationWS.pushMembers(usersToPushLst, null, activeUserMap);
 			HigherLogicIntegrationWS.flushWebServiceLogs();
 		}
-		
+
 	}
-	
+
 	/**
 	* Updates an existing relationship in Higher Logic
 	*
-	* @param contactIdSet 
+	* @param contactIdSet
 	*
 	*/
 	@future(callout=true)
 	public static void updateMembersRelationships(Set<Id> contactIdSet){
-		
+
 		List<User> newUsersLst = new List<User>(
-			[SELECT 
+			[SELECT
 				Id,
 				ContactId,
 				ContactKaviId__c,
@@ -117,7 +117,7 @@ public class HigherLogicIntegrationHelper {
 				Contact.Account.ParentId,
 				Contact.Account.Parent.ParentId
 			 FROM
-			 	User 
+			 	User
 			 WHERE
 			 	ContactId IN :contactIdSet
 			 OR ContactKaviId__c IN :contactIdSet
@@ -130,14 +130,14 @@ public class HigherLogicIntegrationHelper {
 			Id accId = fetchAssociatedAccountId(newUser);
 			contactIdMap.put(accId, newUser.ContactId != null ? newUser.ContactId : newUser.ContactKaviId__c);
 		}
-		
+
 		Set<Id> accountIdSet = new Set<Id>(contactIdMap.keySet());
-		
+
 		List<Account> accountLst = fetchAccountRecords(accountIdSet);
-		
+
 		HigherLogicIntegrationWS.pushMembers(accountLst, contactIdMap, null);
 		HigherLogicIntegrationWS.flushWebServiceLogs();
-		
+
 	}
 
 	public static List<String> getQueryFields() {
@@ -169,9 +169,9 @@ public class HigherLogicIntegrationHelper {
 			'Contact.Account.Parent.Parent.Name'
 		};
 	}
-	
+
 	/**
-	* Processes each User/Account pair 
+	* Processes each User/Account pair
 	* and pushes their detail into HigherLogic
 	*
 	* @param operation: String . One of 4 possible values: PUSH_MEMBERS, PUSH_INTERNAL_MEMBERS, PUSH_EXISTING_MEMBERS, DISABLE_EXISTING_MEMBERS
@@ -180,7 +180,7 @@ public class HigherLogicIntegrationHelper {
 	*/
 	@future(callout=true)
 	public static void pushPersonCompanyMembers(String operation, Set<Id> contactIdSet){
-	
+
 		String whereClause = '';
 		if (operation == PUSH_INTERNAL_MEMBERS){
 			whereClause += ' ContactKaviId__c IN :contactIdSet ';
@@ -189,15 +189,15 @@ public class HigherLogicIntegrationHelper {
 			whereClause += ' ContactId IN :contactIdSet ';
 		}
 
-		String usersQuery = String.format('SELECT {0} FROM User WHERE {1}', 
+		String usersQuery = String.format('SELECT {0} FROM User WHERE {1}',
 			new List<String>{String.join(getQueryFields(), ', '),
 			whereClause}
-		);			
-				
+		);
+
 		List<User> userLst = (List<User>) Database.query(usersQuery);
-		
+
 		List<sObject> membersToPushLst = new List<sObject>();
-		
+
 		Map<Id, User> newUsersMap = new Map<Id, User>(userLst);
 
 		List<Portal_Application_Right__c> portalAppRightsLst = new List<Portal_Application_Right__c>(
@@ -213,19 +213,19 @@ public class HigherLogicIntegrationHelper {
 			 AND Portal_Application__r.Name = 'Standards Setting Workspace'
 			]
 		);
-		
+
 		Map<Id, Portal_Application_Right__c> contactRightsMap = new Map<Id, Portal_Application_Right__c>();
 
 		for (Portal_Application_Right__c par : portalAppRightsLst){
 			contactRightsMap.put(par.ContactId__c, par);
 		}
-		
+
 		Set<Id> newAccountsIds = new Set<Id>();
 		Map<Id, Id> contactIdMap = new Map<Id, Id>();
 		Map<Id, Boolean> activeUserMap = new Map<Id, Boolean>();
-		
+
 		for(User newUser : userLst){
-			
+
 			Id contactId = newUser.ContactId != null ? newUser.ContactId : newUser.ContactKaviId__c;
 
 			if(!contactRightsMap.containsKey(contactId)){
@@ -234,16 +234,16 @@ public class HigherLogicIntegrationHelper {
 				if(operation != DISABLE_EXISTING_MEMBERS) newUsersMap.remove(newUser.Id);
 			}else{
 				String access = contactRightsMap.get(contactId).Right__c;
-				
+
 				activeUserMap.put(newUser.Id, access == 'Access Granted');
 			}
 
 			if(operation == PUSH_EXISTING_MEMBERS|| operation == DISABLE_EXISTING_MEMBERS){
-				continue;	
+				continue;
 			}
-			
+
 			Id accId;
-			
+
 			if (operation == PUSH_MEMBERS){
 				accId = fetchAssociatedAccountId(newUser);
 			}
@@ -254,7 +254,7 @@ public class HigherLogicIntegrationHelper {
 			contactIdMap.put(accId, contactId);
 
 		}
-		
+
 		if(newUsersMap.isEmpty()) return;
 
 		if(operation == PUSH_EXISTING_MEMBERS || operation == DISABLE_EXISTING_MEMBERS){
@@ -262,32 +262,32 @@ public class HigherLogicIntegrationHelper {
 			HigherLogicIntegrationWS.flushWebServiceLogs();
 			return;
 		}
-		
+
 		List<Account> accountLst = fetchAccountRecords(newAccountsIds);
-		
+
 		membersToPushLst.addAll(accountLst);
 		membersToPushLst.addAll(newUsersMap.values());
-		
+
 		HigherLogicIntegrationWS.pushMembers(membersToPushLst, contactIdMap, activeUserMap);
-		
+
 		Boolean hasChanged = false;
 		for(User newUser : newUsersMap.values()){
-			
+
 			Id contactId = newUser.ContactId != null ? newUser.ContactId : newUser.ContactKaviId__c;
-			
+
 			if(contactRightsMap.containsKey(contactId)){
 				contactRightsMap.get(contactId).Kavi_user__c = true;
 				hasChanged = true;
 			}
-			
+
 		}
 
-		if(hasChanged) update contactRightsMap.values();	
-		
+		if(hasChanged) update contactRightsMap.values();
+
 		HigherLogicIntegrationWS.flushWebServiceLogs();
-		
+
 	}
-	
+
 	/**
 	* Assigns or removes the Higher Logic Permission Set
 	* to the users related to the given contacts
@@ -296,40 +296,40 @@ public class HigherLogicIntegrationHelper {
 	* @param action: String
 	*
 	*/
-	@future(callout=true) 
+	@future(callout=true)
 	public static void assignHLPermissionSet(Set<Id> contactIdSet, String action){
 
 		PermissionSet permSet = [SELECT Id FROM PermissionSet WHERE Name = 'HL_UsersAccess'][0];
-		
+
 		List<User> userLst = new List<User>(
-			[SELECT 
+			[SELECT
 				Id
-			 FROM 
-			 	User 
-			 WHERE 
+			 FROM
+			 	User
+			 WHERE
 			 	ContactId IN :contactIdSet
 			]
 		);
 
 		if(action == GRANT_ACCESS){
-			
+
 			List<PermissionSetAssignment> grantPSALst  = new List<PermissionSetAssignment>();
-			
+
 			for(User usr : userLst){
 				grantPSALst.add(new PermissionSetAssignment(PermissionSetId = permSet.Id, AssigneeId = usr.Id));
 			}
-			
+
 			if(!grantPSALst.isEmpty()){
 				insert grantPSALst;
 			}
-			
+
 		}
 		else if(action == REMOVE_ACCESS){
-		
+
 			List<PermissionSetAssignment> removePSALst  = new List<PermissionSetAssignment>(
 				[SELECT
 					Id
-				 FROM 
+				 FROM
 					PermissionSetAssignment
 				 WHERE
 				 	AssigneeId IN :userLst
@@ -338,12 +338,12 @@ public class HigherLogicIntegrationHelper {
 				]
 			);
 
-			if(!removePSALst.isEmpty()){ 
+			if(!removePSALst.isEmpty()){
 				delete removePSALst;
 			}
-			
+
 		}
-		
+
 	}
 
 }

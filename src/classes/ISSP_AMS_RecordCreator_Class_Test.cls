@@ -16,7 +16,7 @@ public with sharing class ISSP_AMS_RecordCreator_Class_Test {
 		ISSP_AMS_RecordCreator_Class.AllowFieldTruncationHeader_element AllowFieldTruncationHeader_element = new ISSP_AMS_RecordCreator_Class.AllowFieldTruncationHeader_element();
 		ISSP_AMS_RecordCreator_Class.AMS_RecordCreatorWebservice AMS_RecordCreatorWebservice = new ISSP_AMS_RecordCreator_Class.AMS_RecordCreatorWebservice();
 
-		
+
 		try {
 			AMS_RecordCreatorWebservice.createAccreditation(null,null,null,null);
 		}
@@ -30,7 +30,7 @@ try {
 		}
 
 		catch (Exception e) {
-			
+
 		}
 
 		DebuggingInfo.debugLog = 'test';
@@ -58,14 +58,14 @@ try {
 		//AsyncISSP_AMS_RecordCreator_Class.AllowFieldTruncationHeader_element AllowFieldTruncationHeader_element = new AsyncISSP_AMS_RecordCreator_Class.AllowFieldTruncationHeader_element();
 		//AsyncISSP_AMS_RecordCreator_Class.AMS_RecordCreatorWebservice AMS_RecordCreatorWebservice = new AsyncISSP_AMS_RecordCreator_Class.AMS_RecordCreatorWebservice();
 
-		
+
 		try {
-			AsyncISSP_AMS_RecordCreator_Class.createAccreditationResponse_elementFuture var1 = 
-		   			ca.beginCreateAccreditation(conti,
-		   										'accountId',
-		   										'accreditationId',
-		   										'NEW.HO',
-		   										'caseId');
+			AsyncISSP_AMS_RecordCreator_Class.createAccreditationResponse_elementFuture var1 =
+			 			ca.beginCreateAccreditation(conti,
+			 										'accountId',
+			 										'accreditationId',
+			 										'NEW.HO',
+			 										'caseId');
 		}
 
 		catch (Exception e) {
@@ -74,13 +74,13 @@ try {
 
 		try {
 			ISSP_AMS_RecordCreator_Class.AccountChanges[] accountChanges = null;
-			AsyncISSP_AMS_RecordCreator_Class.createMinorChangesChangeCodeResponse_elementFuture var2 = 
-		   			ca.beginCreateMinorChangesChangeCode(conti,'accountId',accountChanges);
-            
+			AsyncISSP_AMS_RecordCreator_Class.createMinorChangesChangeCodeResponse_elementFuture var2 =
+			 			ca.beginCreateMinorChangesChangeCode(conti,'accountId',accountChanges);
+
 		}
 
 		catch (Exception e) {
-			
+
 		}
 
 		try {
@@ -89,7 +89,7 @@ try {
 		}
 
 		catch (Exception e) {
-			
+
 		}
 
 		try {
@@ -98,8 +98,8 @@ try {
 		}
 
 		catch (Exception e) {
-			
+
 		}
-    }
-    
+		}
+
 }

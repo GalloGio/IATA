@@ -1,6 +1,6 @@
 @isTest
 private class ISSP_AddComment_Test {
-	
+
 	@isTest static void test_method_one() {
 		Case newCase = new Case();
 		newCase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'CasesEurope'); //ACAMBAS - WMO-395
@@ -15,8 +15,8 @@ private class ISSP_AddComment_Test {
 
 		Apexpages.currentPage().getParameters().put('Caseid', newcase.Id);
 		ISSP_AddComment controller = new ISSP_AddComment();
-        controller.upload();
+		controller.upload();
 
-        controller.getAdditionalCC(); //ACAMBAS - WMO-395
+		controller.getAdditionalCC(); //ACAMBAS - WMO-395
 	}
 }

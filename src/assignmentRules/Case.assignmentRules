@@ -4,11 +4,648 @@
         <fullName>FDS Support Assignment</fullName>
         <active>true</active>
         <ruleEntry>
+            <assignedTo>GCS_DDS_DataQuality_L3</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>AND(
+or(
+RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;,
+RecordType.Name = &quot;Process&quot;
+),
+
+ISPICKVAL(CaseArea__c, &quot;Direct Data Solutions (DDS)&quot;),
+
+or(
+ISPICKVAL(Reason1__c,&quot;Database Related Query&quot;)
+
+)
+)</formula>
+            <template>All/IDFS_Caseassignmentqueue</template>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>GCS_BIS_Ops_Cargo_L3</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>AND(
+or(
+RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;,
+RecordType.Name = &quot;Process&quot;
+),
+
+ISPICKVAL(CaseArea__c, &quot;CargoIS&quot;),
+
+or(
+ISPICKVAL(Reason1__c,&quot;Content inquiry / issue&quot;),
+ISPICKVAL(Reason1__c,&quot;Data Quality&quot;),
+ISPICKVAL(Reason1__c,&quot;System Performance&quot;),
+ISPICKVAL(Reason1__c,&quot;Login &amp; Password&quot;),
+ISPICKVAL(Reason1__c,&quot;Delivery Status&quot;)
+))</formula>
+            <template>All/IDFS_Caseassignmentqueue</template>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>SNOW_integration_to_ITS_ICCS</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>AND(
+RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;,
+ISPICKVAL(CaseArea__c, &quot;ICCS&quot;),
+ISPICKVAL(Reason1__c,&quot;Report issue / Technical Issue&quot;)
+)</formula>
+            <template>All/IDFS_Caseassignmentqueue</template>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>SNOW_integration_to_ITS_MITA</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>AND(
+RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;,
+ISPICKVAL(CaseArea__c, &quot;MITA&quot;),
+ISPICKVAL(Reason1__c,&quot;Report issue / Technical Issue&quot;)
+)</formula>
+            <template>All/IDFS_Caseassignmentqueue</template>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>L3_ICCS_Finance</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>AND(
+or(
+RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;,
+RecordType.Name = &quot;Complaint (IDFS ISS)&quot;,
+RecordType.Name = &quot;Process&quot;
+),
+
+ISPICKVAL(CaseArea__c, &quot;ICCS&quot;),
+ISPICKVAL(Reason1__c,&quot;Invoicing&quot;)
+)</formula>
+            <template>All/IDFS_Caseassignmentqueue</template>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>L3_ICCS_Product</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>AND(
+or(
+RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;,
+RecordType.Name = &quot;Complaint (IDFS ISS)&quot;,
+RecordType.Name = &quot;Process&quot;
+),
+
+ISPICKVAL(CaseArea__c, &quot;ICCS&quot;),
+ISPICKVAL(Reason1__c,&quot;General Information&quot;)
+)</formula>
+            <template>All/IDFS_Caseassignmentqueue</template>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>L3_MITA_Product</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>AND(
+or(
+RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;,
+RecordType.Name = &quot;Complaint (IDFS ISS)&quot;,
+RecordType.Name = &quot;Process&quot;
+),
+
+Or(
+
+and(
+ISPICKVAL(CaseArea__c, &quot;MITA&quot;),
+ISPICKVAL(Reason1__c,&quot;Content inquiry / issue&quot;)
+),
+
+and(
+ISPICKVAL(CaseArea__c, &quot;BIETA&quot;),
+ISPICKVAL(Reason1__c,&quot;Order / Subscription request&quot;)
+)
+
+)
+)</formula>
+            <template>All/IDFS_Caseassignmentqueue</template>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>L3_Publications_PUS003</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>AND(
+or(
+RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;,
+RecordType.Name = &quot;Complaint (IDFS ISS)&quot;,
+RecordType.Name = &quot;Process&quot;
+),
+
+ISPICKVAL(CaseArea__c, &quot;Airline and Location Coding&quot;),
+ISPICKVAL(Reason1__c,&quot;Report issue / Technical Issue&quot;)
+)</formula>
+            <template>All/IDFS_Caseassignmentqueue</template>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>L3_Airline_and_Location_Codes</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>AND(
+or(
+RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;,
+RecordType.Name = &quot;Complaint (IDFS ISS)&quot;,
+RecordType.Name = &quot;Process&quot;
+),
+
+ISPICKVAL(CaseArea__c, &quot;Airline and Location Coding&quot;),
+
+or(
+ISPICKVAL(Reason1__c,&quot;General Information&quot;),
+ISPICKVAL(Reason1__c,&quot;Changes / Updates&quot;),
+ISPICKVAL(Reason1__c,&quot;Closure / Cancellation &quot;),
+ISPICKVAL(Reason1__c,&quot;Content inquiry / issue&quot;),
+ISPICKVAL(Reason1__c,&quot;Payment related query&quot;),
+ISPICKVAL(Reason1__c,&quot;Status of Application&quot;)
+
+)
+)</formula>
+            <template>All/IDFS_Caseassignmentqueue</template>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>GCSTASF</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>And(
+
+RecordType.Name = &quot;Cases - Global&quot;,
+
+ISPICKVAL(Topic__c, &quot;TASF&quot;)
+
+)</formula>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>GCSICCS</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>And(
+
+RecordType.Name = &quot;Cases - Global&quot;,
+ISPICKVAL(Topic__c, &quot;ICCS - IATA Currency Clearance Service&quot;)
+
+)</formula>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>GCSMITABIETA</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>And(
+
+RecordType.Name = &quot;Cases - Global&quot;,
+ISPICKVAL(Topic__c, &quot;Interline Agreements (MITA/BIETA)&quot;)
+
+)</formula>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>GCS_Coding</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>And(
+
+RecordType.Name = &quot;Cases - Global&quot;,
+ISPICKVAL(Topic__c, &quot;IATA Codes (not applicable to Agents)&quot;)
+
+)</formula>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>InvoicingManagementHO</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>AND(or(RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;,RecordType.Name = &quot;Complaint (IDFS ISS)&quot;,RecordType.Name = &quot;Process&quot;),
+
+ISPICKVAL(CaseArea__c, &quot;Airline and Location Coding&quot;),ISPICKVAL(Reason1__c,&quot;Invoicing&quot;))</formula>
+            <template>All/IDFS_Caseassignmentqueue</template>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>AirlineParticipationHeadOffice</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>AND(or(RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;,RecordType.Name = &quot;Complaint (IDFS ISS)&quot;,RecordType.Name = &quot;Process&quot;),
+
+Or(
+
+and(ISPICKVAL(CaseArea__c, &quot;MITA&quot;),or(ISPICKVAL(Reason1__c,&quot;General Information&quot;),ISPICKVAL(Reason1__c,&quot;Order / Subscription request&quot;),ISPICKVAL(Reason1__c,&quot;Closure / Cancellation&quot;),ISPICKVAL(Reason1__c,&quot;User management&quot;),ISPICKVAL(Reason1__c,&quot;Status of Application&quot;))),
+
+and(ISPICKVAL(CaseArea__c, &quot;MITA&quot;),RecordType.Name = &quot;Process&quot;,ISPICKVAL(Reason1__c,&quot;Report issue / Technical Issue&quot;)),
+
+and(ISPICKVAL(CaseArea__c, &quot;BIETA&quot;),or(ISPICKVAL(Reason1__c,&quot;General Information&quot;),ISPICKVAL(Reason1__c,&quot;Changes / Updates&quot;),ISPICKVAL(Reason1__c,&quot;Closure / Cancellation&quot;),ISPICKVAL(Reason1__c,&quot;Order / Subscription request&quot;)))
+
+))</formula>
+            <template>All/IDFS_Caseassignmentqueue</template>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>AirlineParticipationHeadOffice</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>AND(or(RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;,RecordType.Name = &quot;Complaint (IDFS ISS)&quot;,RecordType.Name = &quot;Process&quot;),
+
+ISPICKVAL(CaseArea__c, &quot;ICCS&quot;),
+
+or(ISPICKVAL(Reason1__c,&quot;Airline participation/details&quot;),ISPICKVAL(Reason1__c,&quot;Changes / Updates&quot;),ISPICKVAL(Reason1__c,&quot;Closure / Cancellation&quot;),ISPICKVAL(Reason1__c,&quot;Documentation received (IN)&quot;),ISPICKVAL(Reason1__c,&quot;Joining ISS&quot;),ISPICKVAL(Reason1__c,&quot;User management&quot;),ISPICKVAL(Reason1__c,&quot;Online reports&quot;),
+
+and(RecordType.Name = &quot;Process&quot;,ISPICKVAL(Reason1__c,&quot;Report issue / Technical Issue&quot;))
+
+))</formula>
+            <template>All/IDFS_Caseassignmentqueue</template>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>FDS_ICCS_Head_Office</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>AND(or(RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;,RecordType.Name = &quot;Complaint (IDFS ISS)&quot;,RecordType.Name = &quot;Process&quot;),
+
+ISPICKVAL(CaseArea__c, &quot;ICCS&quot;),
+
+or(ISPICKVAL(Reason1__c,&quot;Content inquiry / issue&quot;),ISPICKVAL(Reason1__c,&quot;ISS Calendar Maintenance&quot;),ISPICKVAL(Reason1__c,&quot;Settlement related query&quot;),ISPICKVAL(Reason1__c,&quot;Task request&quot;)
+
+))</formula>
+            <template>All/IDFS_Caseassignmentqueue</template>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>AirlineParticipationHeadOffice</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>AND(RecordType.Name = &quot;IDFS Airline Participation Process&quot;,ISPICKVAL(CaseArea__c, &quot;Airline Change&quot;),ISPICKVAL(Reason1__c, &quot;User Management&quot;))</formula>
+            <template>All/IDFS_Caseassignmentqueue</template>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>L3_Publications_OPS005</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>And(
+or(
+RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;,
+RecordType.Name = &quot;Process&quot;
+),
+ISPICKVAL(CaseArea__c, &quot;YMQ Publications&quot;),
+ISPICKVAL(Reason1__c, &quot;Content inquiry / issue&quot;),
+
+Product__r.Product_Section__c = &quot;OPS005&quot;
+
+)</formula>
+            <template>All/IDFS_Caseassignmentqueue</template>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>L3_Publications_SMX004</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>And(
+or(
+RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;,
+RecordType.Name = &quot;Process&quot;
+),
+ISPICKVAL(CaseArea__c, &quot;YMQ Publications&quot;),
+ISPICKVAL(Reason1__c, &quot;Content inquiry / issue&quot;),
+
+Product__r.Product_Section__c = &quot;SMX004&quot;
+
+)</formula>
+            <template>All/IDFS_Caseassignmentqueue</template>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>L3_Publications_PUQ003</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>And(
+or(
+RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;,
+RecordType.Name = &quot;Process&quot;
+),
+ISPICKVAL(CaseArea__c, &quot;YMQ Publications&quot;),
+ISPICKVAL(Reason1__c, &quot;Content inquiry / issue&quot;),
+
+Product__r.Product_Section__c = &quot;PUQ003&quot;
+
+)</formula>
+            <template>All/IDFS_Caseassignmentqueue</template>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>L3_Publications_PUS005</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>And(
+or(
+RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;,
+RecordType.Name = &quot;Process&quot;
+),
+ISPICKVAL(CaseArea__c, &quot;YMQ Publications&quot;),
+ISPICKVAL(Reason1__c, &quot;Content inquiry / issue&quot;),
+
+Product__r.Product_Section__c = &quot;PUS005&quot;
+
+)</formula>
+            <template>All/IDFS_Caseassignmentqueue</template>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>L3_Publications_PUS004</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>And(
+or(
+RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;,
+RecordType.Name = &quot;Process&quot;
+),
+ISPICKVAL(CaseArea__c, &quot;YMQ Publications&quot;),
+ISPICKVAL(Reason1__c, &quot;Content inquiry / issue&quot;),
+
+Product__r.Product_Section__c = &quot;PUS004&quot;
+
+)</formula>
+            <template>All/IDFS_Caseassignmentqueue</template>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>L3_Publications_PUS003</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>And(
+or(
+RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;,
+RecordType.Name = &quot;Process&quot;
+),
+ISPICKVAL(CaseArea__c, &quot;YMQ Publications&quot;),
+ISPICKVAL(Reason1__c, &quot;Content inquiry / issue&quot;),
+
+Product__r.Product_Section__c = &quot;PUS003&quot;
+
+)</formula>
+            <template>All/IDFS_Caseassignmentqueue</template>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>L3_Publications_PUQ005</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>And(
+or(
+RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;,
+RecordType.Name = &quot;Process&quot;
+),
+ISPICKVAL(CaseArea__c, &quot;YMQ Publications&quot;),
+ISPICKVAL(Reason1__c, &quot;Content inquiry / issue&quot;),
+
+Product__r.Product_Section__c = &quot;PUQ005&quot;
+
+)</formula>
+            <template>All/IDFS_Caseassignmentqueue</template>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>L3_Publications_PUQ004</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>And(
+or(
+RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;,
+RecordType.Name = &quot;Process&quot;
+),
+ISPICKVAL(CaseArea__c, &quot;YMQ Publications&quot;),
+ISPICKVAL(Reason1__c, &quot;Content inquiry / issue&quot;),
+
+Product__r.Product_Section__c = &quot;PUQ004&quot;
+
+)</formula>
+            <template>All/IDFS_Caseassignmentqueue</template>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>L3_Publications_PUA001</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>And(
+or(
+RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;,
+RecordType.Name = &quot;Process&quot;
+),
+ISPICKVAL(CaseArea__c, &quot;YMQ Publications&quot;),
+ISPICKVAL(Reason1__c, &quot;Content inquiry / issue&quot;),
+
+Product__r.Product_Section__c = &quot;PUA001&quot;
+
+)</formula>
+            <template>All/IDFS_Caseassignmentqueue</template>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>L3_Publications_OPS007</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>And(
+or(
+RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;,
+RecordType.Name = &quot;Process&quot;
+),
+ISPICKVAL(CaseArea__c, &quot;YMQ Publications&quot;),
+ISPICKVAL(Reason1__c, &quot;Content inquiry / issue&quot;),
+
+Product__r.Product_Section__c = &quot;OPS007&quot;
+
+)</formula>
+            <template>All/IDFS_Caseassignmentqueue</template>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>L3_Publications_OPS003</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>And(
+or(
+RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;,
+RecordType.Name = &quot;Process&quot;
+),
+ISPICKVAL(CaseArea__c, &quot;YMQ Publications&quot;),
+ISPICKVAL(Reason1__c, &quot;Content inquiry / issue&quot;),
+
+Product__r.Product_Section__c = &quot;OPS003&quot;
+
+)</formula>
+            <template>All/IDFS_Caseassignmentqueue</template>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>L3_Publications_OPS002</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>And(
+or(
+RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;,
+RecordType.Name = &quot;Process&quot;
+),
+ISPICKVAL(CaseArea__c, &quot;YMQ Publications&quot;),
+ISPICKVAL(Reason1__c, &quot;Content inquiry / issue&quot;),
+
+Product__r.Product_Section__c = &quot;OPS002&quot;
+
+)</formula>
+            <template>All/IDFS_Caseassignmentqueue</template>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>L3_Publications_OPS001</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>And(
+or(
+RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;,
+RecordType.Name = &quot;Process&quot;
+),
+ISPICKVAL(CaseArea__c, &quot;YMQ Publications&quot;),
+ISPICKVAL(Reason1__c, &quot;Content inquiry / issue&quot;),
+
+Product__r.Product_Section__c = &quot;OPS001&quot;
+
+)</formula>
+            <template>All/IDFS_Caseassignmentqueue</template>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>L3_Publications_MPWP01</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>And(
+or(
+RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;,
+RecordType.Name = &quot;Process&quot;
+),
+ISPICKVAL(CaseArea__c, &quot;YMQ Publications&quot;),
+ISPICKVAL(Reason1__c, &quot;Content inquiry / issue&quot;),
+
+Product__r.Product_Section__c = &quot;MPWP01&quot;
+
+)</formula>
+            <template>All/IDFS_Caseassignmentqueue</template>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>L3_T_T_Global_Data_Product</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>And(
+or(
+RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;,
+RecordType.Name = &quot;Process&quot;
+),
+ISPICKVAL(CaseArea__c, &quot;YMQ Publications&quot;),
+ISPICKVAL(Reason1__c, &quot;Content inquiry / issue&quot;),
+
+Product__r.Product_Section__c = &quot;DBP001&quot;
+
+)</formula>
+            <template>All/IDFS_Caseassignmentqueue</template>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>L3_Publications_CCM007</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>And(
+or(
+RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;,
+RecordType.Name = &quot;Process&quot;
+),
+ISPICKVAL(CaseArea__c, &quot;YMQ Publications&quot;),
+ISPICKVAL(Reason1__c, &quot;Content inquiry / issue&quot;),
+
+Product__r.Product_Section__c = &quot;CCM007&quot;
+
+)</formula>
+            <template>All/IDFS_Caseassignmentqueue</template>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>L3_Publications_CAR003</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>And(
+or(
+RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;,
+RecordType.Name = &quot;Process&quot;
+),
+ISPICKVAL(CaseArea__c, &quot;YMQ Publications&quot;),
+ISPICKVAL(Reason1__c, &quot;Content inquiry / issue&quot;),
+
+Product__r.Product_Section__c = &quot;CAR003&quot;
+
+)</formula>
+            <template>All/IDFS_Caseassignmentqueue</template>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>L3_Publications_BIS007</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>And(
+or(
+RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;,
+RecordType.Name = &quot;Process&quot;
+),
+ISPICKVAL(CaseArea__c, &quot;YMQ Publications&quot;),
+ISPICKVAL(Reason1__c, &quot;Content inquiry / issue&quot;),
+
+Product__r.Product_Section__c = &quot;BIS007&quot;
+
+)</formula>
+            <template>All/IDFS_Caseassignmentqueue</template>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>L3_Publications_BIS003</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>And(
+or(
+RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;,
+RecordType.Name = &quot;Process&quot;
+),
+ISPICKVAL(CaseArea__c, &quot;YMQ Publications&quot;),
+ISPICKVAL(Reason1__c, &quot;Content inquiry / issue&quot;),
+
+Product__r.Product_Section__c = &quot;BIS003&quot;
+
+)</formula>
+            <template>All/IDFS_Caseassignmentqueue</template>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>L3_Publications_BGA001</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>And(
+or(
+RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;,
+RecordType.Name = &quot;Process&quot;
+),
+ISPICKVAL(CaseArea__c, &quot;YMQ Publications&quot;),
+ISPICKVAL(Reason1__c, &quot;Content inquiry / issue&quot;),
+
+Product__r.Product_Section__c = &quot;BGA001&quot;
+
+)</formula>
+            <template>All/IDFS_Caseassignmentqueue</template>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>L3_Publications_APWP02</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>And(
+or(
+RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;,
+RecordType.Name = &quot;Process&quot;
+),
+ISPICKVAL(CaseArea__c, &quot;YMQ Publications&quot;),
+ISPICKVAL(Reason1__c, &quot;Content inquiry / issue&quot;),
+
+Product__r.Product_Section__c = &quot;APWP02&quot;
+
+)</formula>
+            <template>All/IDFS_Caseassignmentqueue</template>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>GCS_CargoIS_L3</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>And(
+or(
+RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;,
+RecordType.Name = &quot;Process&quot;
+),
+ISPICKVAL(CaseArea__c, &quot;YMQ Publications&quot;),
+ISPICKVAL(Reason1__c, &quot;Content inquiry / issue&quot;),
+
+Product__r.Product_Section__c = &quot;BIS007&quot;
+
+)</formula>
+            <template>All/IDFS_Caseassignmentqueue</template>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>L3_Publications_APWP01</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>And(
+or(
+RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;,
+RecordType.Name = &quot;Process&quot;
+),
+ISPICKVAL(CaseArea__c, &quot;YMQ Publications&quot;),
+ISPICKVAL(Reason1__c, &quot;Content inquiry / issue&quot;),
+
+Product__r.Product_Section__c = &quot;APWP01&quot;
+
+)</formula>
+            <template>All/IDFS_Caseassignmentqueue</template>
+        </ruleEntry>
+        <ruleEntry>
             <assignedTo>Cases_Emergency_BJS_GDC</assignedTo>
             <assignedToType>Queue</assignedToType>
             <formula>AND(
   OR(
   ISPICKVAL(Priority , &quot;Emergency&quot;),
+AND(
+OR(
+CONTAINS(Subject,&quot;Emergency&quot;),
+CONTAINS(Subject,&quot;emergency&quot;),
+CONTAINS(Subject,&quot;EMERGENCY&quot;),
+CONTAINS(Subject,&quot;Urgent&quot;),
+CONTAINS(Subject,&quot;urgent&quot;),
+CONTAINS(Subject,&quot;URGENT&quot;),
+CONTAINS(Subject,&quot;Very important&quot;),
+CONTAINS(Subject,&quot;Very Important&quot;),
+CONTAINS(Subject,&quot;VERY IMPORTANT&quot;),
+CONTAINS(Subject,&quot;very important&quot;),
+CONTAINS(Subject,&quot;IMPORTANT&quot;),
+CONTAINS(Subject,&quot;Critical&quot;),
+CONTAINS(Subject,&quot;critical&quot;),
+CONTAINS(Subject,&quot;CRITICAL&quot;)
+),
+ ISPICKVAL(Origin,&quot;Portal&quot;)
+),
   AND(
   ISPICKVAL(Origin,&quot;Escalation&quot;),
   OR(
@@ -34,6 +671,25 @@ AND(RecordType.DeveloperName =&quot;Cases_Global&quot;,ISPICKVAL(Region__c,&quot
 OR(
 ISPICKVAL(Priority , &quot;Emergency&quot;),
 AND(
+OR(
+CONTAINS(Subject,&quot;Emergency&quot;),
+CONTAINS(Subject,&quot;emergency&quot;),
+CONTAINS(Subject,&quot;EMERGENCY&quot;),
+CONTAINS(Subject,&quot;Urgent&quot;),
+CONTAINS(Subject,&quot;urgent&quot;),
+CONTAINS(Subject,&quot;URGENT&quot;),
+CONTAINS(Subject,&quot;Very important&quot;),
+CONTAINS(Subject,&quot;Very Important&quot;),
+CONTAINS(Subject,&quot;VERY IMPORTANT&quot;),
+CONTAINS(Subject,&quot;very important&quot;),
+CONTAINS(Subject,&quot;IMPORTANT&quot;),
+CONTAINS(Subject,&quot;Critical&quot;),
+CONTAINS(Subject,&quot;critical&quot;),
+CONTAINS(Subject,&quot;CRITICAL&quot;)
+),
+ISPICKVAL(Origin,&quot;Portal&quot;)
+),
+AND(
 ISPICKVAL(Origin,&quot;Escalation&quot;),
 OR(Key_Customer_Case__c &lt;&gt; &quot; &quot;,
 ISPICKVAL(Priority,&quot;High&quot;)
@@ -56,6 +712,25 @@ AND(RecordType.DeveloperName =&quot;Cases_Global&quot;,OR(ISPICKVAL(Region__c,&q
 OR(
 ISPICKVAL(Priority , &quot;Emergency&quot;),
 AND(
+OR(
+CONTAINS(Subject,&quot;Emergency&quot;),
+CONTAINS(Subject,&quot;emergency&quot;),
+CONTAINS(Subject,&quot;EMERGENCY&quot;),
+CONTAINS(Subject,&quot;Urgent&quot;),
+CONTAINS(Subject,&quot;urgent&quot;),
+CONTAINS(Subject,&quot;URGENT&quot;),
+CONTAINS(Subject,&quot;Very important&quot;),
+CONTAINS(Subject,&quot;Very Important&quot;),
+CONTAINS(Subject,&quot;VERY IMPORTANT&quot;),
+CONTAINS(Subject,&quot;very important&quot;),
+CONTAINS(Subject,&quot;IMPORTANT&quot;),
+CONTAINS(Subject,&quot;Critical&quot;),
+CONTAINS(Subject,&quot;critical&quot;),
+CONTAINS(Subject,&quot;CRITICAL&quot;)
+),
+ISPICKVAL(Origin,&quot;Portal&quot;)
+),
+AND(
 ISPICKVAL(Origin,&quot;Escalation&quot;),
 OR(Key_Customer_Case__c &lt;&gt; &quot; &quot;,
 ISPICKVAL(Priority,&quot;High&quot;)
@@ -73,6 +748,25 @@ AND(RecordType.DeveloperName =&quot;Cases_Global&quot;,ISPICKVAL(Region__c,&quot
 
 OR(
 ISPICKVAL(Priority , &quot;Emergency&quot;),
+AND(
+OR(
+CONTAINS(Subject,&quot;Emergency&quot;),
+CONTAINS(Subject,&quot;emergency&quot;),
+CONTAINS(Subject,&quot;EMERGENCY&quot;),
+CONTAINS(Subject,&quot;Urgent&quot;),
+CONTAINS(Subject,&quot;urgent&quot;),
+CONTAINS(Subject,&quot;URGENT&quot;),
+CONTAINS(Subject,&quot;Very important&quot;),
+CONTAINS(Subject,&quot;Very Important&quot;),
+CONTAINS(Subject,&quot;VERY IMPORTANT&quot;),
+CONTAINS(Subject,&quot;very important&quot;),
+CONTAINS(Subject,&quot;IMPORTANT&quot;),
+CONTAINS(Subject,&quot;Critical&quot;),
+CONTAINS(Subject,&quot;critical&quot;),
+CONTAINS(Subject,&quot;CRITICAL&quot;)
+),
+ISPICKVAL(Origin,&quot;Portal&quot;)
+),
 AND(
 ISPICKVAL(Origin,&quot;Escalation&quot;),
 OR(Key_Customer_Case__c &lt;&gt; &quot; &quot;,
@@ -102,6 +796,25 @@ AND(RecordType.DeveloperName =&quot;Cases_Global&quot;,OR(ISPICKVAL(Region__c,&q
 OR(
 ISPICKVAL(Priority , &quot;Emergency&quot;),
 AND(
+OR(
+CONTAINS(Subject,&quot;Emergency&quot;),
+CONTAINS(Subject,&quot;emergency&quot;),
+CONTAINS(Subject,&quot;EMERGENCY&quot;),
+CONTAINS(Subject,&quot;Urgent&quot;),
+CONTAINS(Subject,&quot;urgent&quot;),
+CONTAINS(Subject,&quot;URGENT&quot;),
+CONTAINS(Subject,&quot;Very important&quot;),
+CONTAINS(Subject,&quot;Very Important&quot;),
+CONTAINS(Subject,&quot;VERY IMPORTANT&quot;),
+CONTAINS(Subject,&quot;very important&quot;),
+CONTAINS(Subject,&quot;IMPORTANT&quot;),
+CONTAINS(Subject,&quot;Critical&quot;),
+CONTAINS(Subject,&quot;critical&quot;),
+CONTAINS(Subject,&quot;CRITICAL&quot;)
+),
+ISPICKVAL(Origin,&quot;Portal&quot;)
+),
+AND(
 ISPICKVAL(Origin,&quot;Escalation&quot;),
 OR(Key_Customer_Case__c &lt;&gt; &quot; &quot;,
 ISPICKVAL(Priority,&quot;High&quot;)
@@ -121,6 +834,25 @@ AND(RecordType.DeveloperName = &quot;Cases_Global&quot;,OR(ISPICKVAL(Region__c,&
 ),
 OR(
 ISPICKVAL(Priority , &quot;Emergency&quot;),
+AND(
+OR(
+CONTAINS(Subject,&quot;Emergency&quot;),
+CONTAINS(Subject,&quot;emergency&quot;),
+CONTAINS(Subject,&quot;EMERGENCY&quot;),
+CONTAINS(Subject,&quot;Urgent&quot;),
+CONTAINS(Subject,&quot;urgent&quot;),
+CONTAINS(Subject,&quot;URGENT&quot;),
+CONTAINS(Subject,&quot;Very important&quot;),
+CONTAINS(Subject,&quot;Very Important&quot;),
+CONTAINS(Subject,&quot;VERY IMPORTANT&quot;),
+CONTAINS(Subject,&quot;very important&quot;),
+CONTAINS(Subject,&quot;IMPORTANT&quot;),
+CONTAINS(Subject,&quot;Critical&quot;),
+CONTAINS(Subject,&quot;critical&quot;),
+CONTAINS(Subject,&quot;CRITICAL&quot;)
+),
+ISPICKVAL(Origin,&quot;Portal&quot;)
+),
 AND(
 ISPICKVAL(Origin,&quot;Escalation&quot;),
 OR(Key_Customer_Case__c &lt;&gt; &quot; &quot;,
@@ -173,6 +905,46 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
                 <field>Account.Site</field>
                 <operation>startsWith</operation>
                 <value>CA 999,SQ 618</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>Differentiated_Service_Model_Agency</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <booleanFilter>1 AND (2 OR 3 OR 4 OR 5 OR 6 OR 7)</booleanFilter>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Cases - Europe,Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia,Complaint (IDFS ISS)</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Account.Parent_account_IATAcode__c</field>
+                <operation>equals</operation>
+                <value>57527470,67797612,02361133,02359851,08327410,13309450,14308582,14341412,16314642,17328500,20313742,24344036,24345683,28305034,32307623,32308043,35308431,34309015,08208222,08202364,81207534,23270973,17208483,17260320,78224193,78200076,19200510,20263051</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Account.Parent_account_IATAcode__c</field>
+                <operation>equals</operation>
+                <value>91266313,91245836,57205864,60299024,06020562,80212064,80201590,57275050,57205820,20300641,35304183,19210601,17210992,23274904,36203053,60210883,77209893,91212391,86210515,80212521,61516335,86725063,14336641,02333623,24334855,42301943,32334750,08315193</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Account.Parent_account_IATAcode__c</field>
+                <operation>equals</operation>
+                <value>13310172,27313613</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Account.IATACode__c</field>
+                <operation>equals</operation>
+                <value>57527470,67797612,02361133,02359851,08327410,13309450,14308582,14341412,16314642,17328500,20313742,24344036,24345683,28305034,32307623,32308043,35308431,34309015,08208222,08202364,81207534,23270973,17208483,17260320,78224193,78200076,19200510,20263051</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Account.IATACode__c</field>
+                <operation>equals</operation>
+                <value>91266313,91245836,57205864,60299024,06020562,80212064,80201590,57275050,57205820,20300641,35304183,19210601,17210992,23274904,36203053,60210883,77209893,91212391,86210515,80212521,61516335,86725063,14336641,02333623,24334855,42301943,32334750,08315193</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Account.IATACode__c</field>
+                <operation>equals</operation>
+                <value>13310172,27313613</value>
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
@@ -2706,38 +3478,11 @@ ISPICKVAL(Reason1__c,&quot;Payment confirmation - Others&quot;)
         <ruleEntry>
             <assignedTo>L3_Publications_YMQ_Online_Store_Support</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <formula>AND(
+            <formula>AND(or( RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;,RecordType.Name = &quot;Process&quot;),
 
-or(
-RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;,
-RecordType.Name = &quot;Process&quot;
-),
+or(and(ISPICKVAL(CaseArea__c, &quot;eCommerce Support&quot;) ,
 
-or(
-and(
-ISPICKVAL(CaseArea__c, &quot;eCommerce Support&quot;) ,
-or(
-ISPICKVAL(Reason1__c, &quot;Changes / Updates&quot;),
-ISPICKVAL(Reason1__c, &quot;Invoicing&quot;),
-ISPICKVAL(Reason1__c, &quot;Renewal Request&quot;)
-)
-),
-and(
-ISPICKVAL(CaseArea__c, &quot;YMQ Publications&quot;) ,
-ISPICKVAL(Reason1__c, &quot;Credit Card Issues&quot;)
-),
-and(
-ISPICKVAL(CaseArea__c, &quot;YMQ Publications&quot;) ,
-ISPICKVAL(Reason1__c, &quot;Master Data Management&quot;)
-),
-and(
-ISPICKVAL(CaseArea__c, &quot;YMQ Publications&quot;) ,
-ISPICKVAL(Reason1__c, &quot;Delivery Status&quot;),
-ISPICKVAL(Product__r.Delivery_Fulfillment_Support__c , &quot;Amazon S3 ITS&quot;),
-ISPICKVAL(Product__r.Refinement_Format__c, &quot;Digital&quot;)
-)
-)
-)</formula>
+or(ISPICKVAL(Reason1__c, &quot;Changes / Updates&quot;),ISPICKVAL(Reason1__c, &quot;Invoicing&quot;),ISPICKVAL(Reason1__c, &quot;Renewal Request&quot;))),and( ISPICKVAL(CaseArea__c, &quot;YMQ Publications&quot;) ,ISPICKVAL(Reason1__c, &quot;Credit Card Issues&quot;)),and(ISPICKVAL(CaseArea__c, &quot;YMQ Publications&quot;),ISPICKVAL(Reason1__c, &quot;IATA Store issue&quot;)),and( ISPICKVAL(CaseArea__c, &quot;YMQ Publications&quot;) ,ISPICKVAL(Reason1__c, &quot;Master Data Management&quot;)),and( ISPICKVAL(CaseArea__c, &quot;YMQ Publications&quot;) ,ISPICKVAL(Reason1__c, &quot;Delivery Status&quot;),ISPICKVAL(Product__r.Delivery_Fulfillment_Support__c , &quot;Amazon S3 ITS&quot;),ISPICKVAL(Product__r.Refinement_Format__c, &quot;Digital&quot;))))</formula>
             <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
@@ -3740,21 +4485,9 @@ ISPICKVAL(Reason1__c, &quot;Product delivery issue&quot;)
         <ruleEntry>
             <assignedTo>L3_Publications_ITS</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <formula>AND(
+            <formula>AND(or(RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;,RecordType.Name = &quot;Process&quot;),
 
-or( RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;,
-RecordType.Name = &quot;Process&quot;
-),
-ISPICKVAL(CaseArea__c, &quot;YMQ Publications&quot;),
-OR( 
-ISPICKVAL(Reason1__c, &quot;IATA Store issue&quot;),
-and( 
-ISPICKVAL(Reason1__c, &quot;Product delivery issue&quot;),
-ISPICKVAL(Product__r.Refinement_Format__c,&quot;Digital&quot;), 
-ISPICKVAL(Product__r.Delivery_Fulfillment_Support__c, &quot;Amazon S3 ITS&quot;)
-)
-) 
-)</formula>
+ISPICKVAL(CaseArea__c, &quot;YMQ Publications&quot;),ISPICKVAL(Reason1__c, &quot;Product delivery issue&quot;),ISPICKVAL(Product__r.Refinement_Format__c,&quot;Digital&quot;),ISPICKVAL(Product__r.Delivery_Fulfillment_Support__c, &quot;Amazon S3 ITS&quot;))</formula>
             <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
@@ -4177,41 +4910,21 @@ ISPICKVAL(Reason1__c, &quot;Credit Card Deletion&quot;)
         <ruleEntry>
             <assignedTo>GCS_GAP_L3</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <criteriaItems>
-                <field>Case.RecordTypeId</field>
-                <operation>equals</operation>
-                <value>Internal Cases (IDFS ISS),Process</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.CaseArea__c</field>
-                <operation>equals</operation>
-                <value>GAP</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.Reason1__c</field>
-                <operation>equals</operation>
-                <value>Change of Payment method / Terms,Changes,Consulting / events,Other,Product management,Subscription</value>
-            </criteriaItems>
+            <formula>AND(or(RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;,RecordType.Name = &quot;Process&quot;),
+
+ISPICKVAL(CaseArea__c, &quot;GAP&quot;),
+
+Or(ISPICKVAL(Reason1__c,&quot;Change of Payment method / Terms&quot;),ISPICKVAL(Reason1__c,&quot;Changes&quot;),ISPICKVAL(Reason1__c,&quot;Consulting / events&quot;),ISPICKVAL(Reason1__c,&quot;Other&quot;),ISPICKVAL(Reason1__c,&quot;Product management&quot;),ISPICKVAL(Reason1__c,&quot;Subscription&quot;),ISPICKVAL(Reason1__c,&quot;Data Quality&quot;),ISPICKVAL(Reason1__c,&quot;Supporting Documents&quot;)))</formula>
             <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>GCS_DDS_L3</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <criteriaItems>
-                <field>Case.RecordTypeId</field>
-                <operation>equals</operation>
-                <value>Internal Cases (IDFS ISS),Process</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.CaseArea__c</field>
-                <operation>equals</operation>
-                <value>Direct Data Solutions (DDS)</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.Reason1__c</field>
-                <operation>equals</operation>
-                <value>Change of Payment method / Terms,Changes,Consulting / events,Other,Product management,Subscription</value>
-            </criteriaItems>
+            <formula>AND(or(RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;,RecordType.Name = &quot;Process&quot;),
+
+ISPICKVAL(CaseArea__c, &quot;Direct Data Solutions (DDS)&quot;),
+
+Or(ISPICKVAL(Reason1__c,&quot;Change of Payment method / Terms&quot;),ISPICKVAL(Reason1__c,&quot;Changes&quot;),ISPICKVAL(Reason1__c,&quot;Consulting / events&quot;),ISPICKVAL(Reason1__c,&quot;Other&quot;),ISPICKVAL(Reason1__c,&quot;Product management&quot;),ISPICKVAL(Reason1__c,&quot;Subscription&quot;),ISPICKVAL(Reason1__c,&quot;Data Quality&quot;),ISPICKVAL(Reason1__c,&quot;Supporting Documents&quot;)))</formula>
             <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
@@ -4237,101 +4950,51 @@ ISPICKVAL(Reason1__c, &quot;Credit Card Deletion&quot;)
         <ruleEntry>
             <assignedTo>GCS_PaxIs_L3</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <criteriaItems>
-                <field>Case.RecordTypeId</field>
-                <operation>equals</operation>
-                <value>Internal Cases (IDFS ISS),Process</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.CaseArea__c</field>
-                <operation>equals</operation>
-                <value>PaxIS</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.Reason1__c</field>
-                <operation>equals</operation>
-                <value>Change of Payment method / Terms,Changes,Consulting / events,Other,Product management,Subscription</value>
-            </criteriaItems>
+            <formula>AND(or(RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;,RecordType.Name = &quot;Process&quot;),
+
+ISPICKVAL(CaseArea__c, &quot;PaxIS&quot;),
+
+Or(ISPICKVAL(Reason1__c,&quot;Change of Payment method / Terms&quot;),ISPICKVAL(Reason1__c,&quot;Changes&quot;),ISPICKVAL(Reason1__c,&quot;Consulting / events&quot;),ISPICKVAL(Reason1__c,&quot;Other&quot;),ISPICKVAL(Reason1__c,&quot;Product management&quot;),ISPICKVAL(Reason1__c,&quot;Subscription&quot;),ISPICKVAL(Reason1__c,&quot;Data Quality&quot;),ISPICKVAL(Reason1__c,&quot;Supporting Documents&quot;)))</formula>
             <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>GCS_MarketIS_L3</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <criteriaItems>
-                <field>Case.RecordTypeId</field>
-                <operation>equals</operation>
-                <value>Internal Cases (IDFS ISS),Process</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.CaseArea__c</field>
-                <operation>equals</operation>
-                <value>MarketIS</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.Reason1__c</field>
-                <operation>equals</operation>
-                <value>Change of Payment method / Terms,Changes,Consulting / events,Other,Product management,Subscription</value>
-            </criteriaItems>
+            <formula>AND(or(RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;,RecordType.Name = &quot;Process&quot;),
+
+ISPICKVAL(CaseArea__c, &quot;MarketIS&quot;),
+
+Or(ISPICKVAL(Reason1__c,&quot;Change of Payment method / Terms&quot;),ISPICKVAL(Reason1__c,&quot;Changes&quot;),ISPICKVAL(Reason1__c,&quot;Consulting / events&quot;),ISPICKVAL(Reason1__c,&quot;Other&quot;),ISPICKVAL(Reason1__c,&quot;Product management&quot;),ISPICKVAL(Reason1__c,&quot;Subscription&quot;),ISPICKVAL(Reason1__c,&quot;Data Quality&quot;),ISPICKVAL(Reason1__c,&quot;Supporting Documents&quot;)))</formula>
             <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>GCS_AirportIS_L3</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <criteriaItems>
-                <field>Case.RecordTypeId</field>
-                <operation>equals</operation>
-                <value>Internal Cases (IDFS ISS),Process</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.CaseArea__c</field>
-                <operation>equals</operation>
-                <value>AirportIS</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.Reason1__c</field>
-                <operation>equals</operation>
-                <value>Change of Payment method / Terms,Changes,Consulting / events,Other,Product management,Subscription</value>
-            </criteriaItems>
+            <formula>AND(or(RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;,RecordType.Name = &quot;Process&quot;),
+
+ISPICKVAL(CaseArea__c, &quot;AirportIS&quot;),
+
+Or(ISPICKVAL(Reason1__c,&quot;Change of Payment method / Terms&quot;),ISPICKVAL(Reason1__c,&quot;Changes&quot;),ISPICKVAL(Reason1__c,&quot;Consulting / events&quot;),ISPICKVAL(Reason1__c,&quot;Other&quot;),ISPICKVAL(Reason1__c,&quot;Product management&quot;),ISPICKVAL(Reason1__c,&quot;Subscription&quot;),ISPICKVAL(Reason1__c,&quot;Data Quality&quot;),ISPICKVAL(Reason1__c,&quot;Supporting Documents&quot;)))</formula>
             <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>GCS_CargoIS_L3</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <criteriaItems>
-                <field>Case.RecordTypeId</field>
-                <operation>equals</operation>
-                <value>Internal Cases (IDFS ISS),Process</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.CaseArea__c</field>
-                <operation>equals</operation>
-                <value>CargoIS</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.Reason1__c</field>
-                <operation>equals</operation>
-                <value>Change of Payment method / Terms,Changes,Consulting / events,Other,Product management,Subscription</value>
-            </criteriaItems>
+            <formula>AND(or(RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;,RecordType.Name = &quot;Process&quot;),
+
+ISPICKVAL(CaseArea__c, &quot;Direct Data Solutions (DDS)&quot;),
+
+Or(ISPICKVAL(Reason1__c,&quot;Change of Payment method / Terms&quot;),ISPICKVAL(Reason1__c,&quot;Changes&quot;),ISPICKVAL(Reason1__c,&quot;Consulting / events&quot;),ISPICKVAL(Reason1__c,&quot;Other&quot;),ISPICKVAL(Reason1__c,&quot;Product management&quot;),ISPICKVAL(Reason1__c,&quot;Subscription&quot;),ISPICKVAL(Reason1__c,&quot;Data Quality&quot;),ISPICKVAL(Reason1__c,&quot;Database related query&quot;),ISPICKVAL(Reason1__c,&quot;Supporting Documents&quot;)))</formula>
             <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>GCS_Bis_Ops_L3</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <criteriaItems>
-                <field>Case.RecordTypeId</field>
-                <operation>equals</operation>
-                <value>Internal Cases (IDFS ISS),Process</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.CaseArea__c</field>
-                <operation>equals</operation>
-                <value>AirportIS,CargoIS,Direct Data Solutions (DDS),GAP,MarketIS,PaxIS</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.Reason1__c</field>
-                <operation>equals</operation>
-                <value>Support escalation</value>
-            </criteriaItems>
+            <formula>AND(or(RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;,RecordType.Name = &quot;Process&quot;),or(ISPICKVAL(CaseArea__c, &quot;Direct Data Solutions (DDS)&quot;),ISPICKVAL(CaseArea__c, &quot;MarketIS&quot;),ISPICKVAL(CaseArea__c, &quot;PaxIS&quot;),ISPICKVAL(CaseArea__c, &quot;GAP&quot;),ISPICKVAL(CaseArea__c, &quot;AirportIS&quot;)),
+
+or(ISPICKVAL(Reason1__c,&quot;Content inquiry / issue&quot;),
+
+ISPICKVAL(Reason1__c,&quot;Support escalation&quot;),ISPICKVAL(Reason1__c,&quot;Data Quality&quot;),ISPICKVAL(Reason1__c,&quot;System Performance&quot;),ISPICKVAL(Reason1__c,&quot;Login &amp; Password&quot;),ISPICKVAL(Reason1__c,&quot;Delivery Status&quot;)))</formula>
             <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
@@ -5711,6 +6374,25 @@ ISPICKVAL(BSPCountry__c,&quot;Russian Federation&quot;)
                 <field>Case.Reason1__c</field>
                 <operation>equals</operation>
                 <value>Asia &amp; Pacific</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>Agency_Management_Emergency_GDC</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Internal Cases (IDFS ISS)</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Priority</field>
+                <operation>equals</operation>
+                <value>Emergency</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Agency Management</value>
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
@@ -7112,12 +7794,17 @@ AND(ISPICKVAL(CaseArea__c,&apos;IDPC&apos;),RecordType.DeveloperName=&apos;Inter
             <criteriaItems>
                 <field>Case.CaseArea__c</field>
                 <operation>equals</operation>
-                <value>Operational Management</value>
+                <value>Operational Management,Airline Management</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.Priority</field>
                 <operation>equals</operation>
                 <value>Emergency</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Internal Cases (IDFS ISS)</value>
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
@@ -7489,6 +8176,25 @@ AND(ISPICKVAL(CaseArea__c,&apos;IDPC&apos;),RecordType.DeveloperName=&apos;Inter
                 <value>Application Change Request (Salesforce)</value>
             </criteriaItems>
             <template>All/IDFS_Caseassignmentqueue</template>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>R_S_Emergency_GDC</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Internal Cases (IDFS ISS)</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Priority</field>
+                <operation>equals</operation>
+                <value>Emergency</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Remittance &amp; Settlement</value>
+            </criteriaItems>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>CasesRS</assignedTo>

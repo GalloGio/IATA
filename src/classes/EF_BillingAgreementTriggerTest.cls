@@ -1,10 +1,10 @@
 @isTest
 private class EF_BillingAgreementTriggerTest {
-	
-    static void setup()
-    {
-    	EF_TestDataFactory.createBaseData();	
-    }
+
+		static void setup()
+		{
+			EF_TestDataFactory.createBaseData();
+		}
 
 	@isTest static void testDisallowBillingAgreementsThrowsAnError()
 	{
@@ -16,7 +16,7 @@ private class EF_BillingAgreementTriggerTest {
 		Contract contract = [select Id, AccountId, Account.Name, EF_Allow_Billing_Agreements__c from Contract where Account.Name = 'Test Account Client'];
 		Account customer = [select Id, Name from Account where Name = 'Test Account customer'];
 		Account client = [select Id, Name from Account where Name = 'Test Account client'];
-		
+
 		contract.EF_Allow_Billing_Agreements__c = 'Not Allowed';
 		update contract;
 
@@ -32,26 +32,26 @@ private class EF_BillingAgreementTriggerTest {
 		Test.startTest();
 		try
 		{
-		   insert rel;
+			 insert rel;
 		} catch(Exception e)
 		{
 			System.assert(e.getMessage().contains('The selected Contract record has &quot;Allow Billing Agreements&quot; set to &quot;Not Allowed&quot;. Please choose a different Contract or update the currently selected Contract to allow Billing Agreements.'));
 		}
-		
+
 		baList = [select id from EF_Billing_Agreement__c];
 		System.assertEquals(2, baList.size());
 		Test.stopTest();
 	}
 
 	@isTest static void EF_BillingAgreementTriggger_LocationInContract() {
-		
+
 		System.runAs(EF_TestDataFactory.getEfProfileAndRole(0, 2)) {
 			setup();
 			// query for test data
 			Contract contract = [select Id, AccountId, Account.Name from Contract where Account.Name = 'Test Account Client'];
 			Account customer = [select Id, Name from Account where Name = 'Test Account customer'];
 			Account client = [select Id, Name from Account where Name = 'Test Account client'];
-			
+
 			// create billing agreement
 			// location ID chosen exist in Location Currency in contract
 			EF_Billing_Agreement__c rel = new EF_Billing_Agreement__c();
@@ -61,7 +61,7 @@ private class EF_BillingAgreementTriggerTest {
 			rel.EF_Location_ID__c =  [select Id, Name from EF_Related_Records__c where Name='Main' limit 1].Id;
 
 			Test.startTest();
-			   insert rel;
+				 insert rel;
 			Test.stopTest();
 
 			//check update of currency was made
@@ -70,7 +70,7 @@ private class EF_BillingAgreementTriggerTest {
 			System.assertEquals(baAfter.Billing_Currency__c, 'QAR');
 		}
 	}
-	
+
 	@isTest static void EF_BillingAgreementTrigger_LocationNOTInContract() {
 
 		System.runAs(EF_TestDataFactory.getEfProfileAndRole(0, 2)) {
@@ -79,7 +79,7 @@ private class EF_BillingAgreementTriggerTest {
 			Contract contract = [select Id, AccountId, Account.Name from Contract where Account.Name = 'Test Account Client'];
 			Account customer = [select Id, Name from Account where Name = 'Test Account customer'];
 			Account client = [select Id, Name from Account where Name = 'Test Account client'];
-			
+
 			// create billing agreement
 			// location ID chosen exist in Location Currency in contract
 			EF_Billing_Agreement__c rel = new EF_Billing_Agreement__c();
@@ -89,17 +89,17 @@ private class EF_BillingAgreementTriggerTest {
 			rel.EF_Location_ID__c =  [select Id, Name from EF_Related_Records__c where Name='1' limit 1].Id;
 
 			Test.startTest();
-			   try{
-			   	insert rel;
-			    System.assert(false,'A test that should have resulted in an exception did not.');
-			   }catch(Exception e){
-			   	System.assert(e instanceof DMLException, 'The test ended in an exception other than DMLException' + e.getTypeName());
-			  
-			   }	
+				 try{
+				 	insert rel;
+					System.assert(false,'A test that should have resulted in an exception did not.');
+				 }catch(Exception e){
+				 	System.assert(e instanceof DMLException, 'The test ended in an exception other than DMLException' + e.getTypeName());
+
+				 }
 			Test.stopTest();
 		}
 	}
-	
+
 	@isTest static void EF_BillingAgreementTrigger_ContractWithNoLocCurrencies() {
 
 		System.runAs(EF_TestDataFactory.getEfProfileAndRole(0, 2)) {
@@ -110,16 +110,16 @@ private class EF_BillingAgreementTriggerTest {
 
 			// create contract without location currencies
 			Contract contract2 = new Contract (
-	        	accountId= client.Id,
-	        	CCF_Number__c= '2',
-	        	Budget_Section__c='aaaa',
-	        	CCF_Amount__c=250000,
-	        	ContractTerm=12,
-	        	StartDate= Date.today(),
-	        	Type__c='Revenue'
-	        	);
-	        insert contract2;
-			
+						accountId= client.Id,
+						CCF_Number__c= '2',
+						Budget_Section__c='aaaa',
+						CCF_Amount__c=250000,
+						ContractTerm=12,
+						StartDate= Date.today(),
+						Type__c='Revenue'
+						);
+					insert contract2;
+
 			// create billing agreement
 			// location ID chosen exist in Location Currency in contract
 			EF_Billing_Agreement__c rel = new EF_Billing_Agreement__c();
@@ -129,13 +129,13 @@ private class EF_BillingAgreementTriggerTest {
 			rel.EF_Location_ID__c =  [select Id, Name from EF_Related_Records__c where Name='2' limit 1].Id;
 
 			Test.startTest();
-			   try{
-			   	insert rel;
-			    System.assert(false,'A test that should have resulted in an exception did not.');
-			   }catch(Exception e){
-			   	System.assert(e instanceof DMLException, 'The test ended in an exception other than DMLException' + e.getTypeName());
-			  
-			   }	
+				 try{
+				 	insert rel;
+					System.assert(false,'A test that should have resulted in an exception did not.');
+				 }catch(Exception e){
+				 	System.assert(e instanceof DMLException, 'The test ended in an exception other than DMLException' + e.getTypeName());
+
+				 }
 			Test.stopTest();
 		}
 	}

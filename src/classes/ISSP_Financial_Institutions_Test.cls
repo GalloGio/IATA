@@ -1,368 +1,368 @@
 @isTest
 private class ISSP_Financial_Institutions_Test {
-    
-    @testSetup
-    static void setup() {
-        List<IATA_ISO_Country__c> countries = new List<IATA_ISO_Country__c>();
-
-        IATA_ISO_Country__c portugal = new IATA_ISO_Country__c (Name = 'Portugal', 
-                                                                ISO_Code__c = 'PT',
-                                                                ANG_Enable_NewGen__c = true,
-                                                                ANG_GDI_Enabled__c = true);
-
-        IATA_ISO_Country__c spain = new IATA_ISO_Country__c (Name = 'Spain', 
-                                                             ISO_Code__c = 'ES',
-                                                             ANG_Enable_NewGen__c = true,
-                                                             ANG_GDI_Enabled__c = false);
-
-        countries.add(portugal);
-        countries.add(spain);
-        insert countries;
-
-        List<Account> agencies = new List<Account>();
-
-        Account travelAgencyPortugal = new Account(Name = 'Travel Agency Portugal',
-                                                   Status__c = AMS_Utils.ACC_S9_APPROVED,
-                                                   Location_Type__c = 'HE',
-                                                   RecordTypeId = AMS_Utils.RECTYPE_IATAAGENCY,
-                                                   IATA_ISO_Country__c = portugal.Id,
-                                                   Location_Class__c = 'P',
-                                                   Category__c = 'IATA Passenger Sales Agent',
-                                                   Sector__c = AMS_Utils.SECTOR_PASSENGER);
-
-        Account travelAgencySpain = new Account(Name = 'Travel Agency Spain',
-                                                Status__c = AMS_Utils.ACC_S9_APPROVED,
-                                                Location_Type__c = 'HE',
-                                                RecordTypeId = AMS_Utils.RECTYPE_IATAAGENCY,
-                                                IATA_ISO_Country__c = spain.Id,
-                                                Location_Class__c = 'P',
-                                                Category__c = 'IATA Passenger Sales Agent',
-                                                Sector__c = AMS_Utils.SECTOR_PASSENGER);
-
-        agencies.add(travelAgencyPortugal);
-        agencies.add(travelAgencySpain);
-        insert agencies;
-
-        List<Contact> contacts = new List<Contact>();
-
-        Contact portuguese = ISSP_ObjectFactory.createNewContact();
-        portuguese.AccountId = travelAgencyPortugal.Id;
-        portuguese.Email = 'pt@pt.com';
-
-        Contact spanish = ISSP_ObjectFactory.createNewContact();
-        spanish.AccountId = travelAgencySpain.Id;
-        spanish.Email = 'es@es.com';
-
-        contacts.add(portuguese);
-        contacts.add(spanish);
-        insert contacts;
-
-        Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency Delegated Admin User'];
-
-        List<User> users = new List<User>();
-
-        User ptUser = new User (Alias = 'ptptpt', 
-                                Email='pt@pt.com', 
-                                EmailEncodingKey='UTF-8', 
-                                LastName='ptptpt', 
-                                LanguageLocaleKey='en_US', 
-                                ContactId = portuguese.id,            
-                                LocaleSidKey='en_US',
-                                ProfileId = p.Id, 
-                                TimeZoneSidKey='America/Los_Angeles', 
-                                UserName='pt@pt.com',
-                                Mgmt_Report_Team__c = true);
-
-        User esUser = new User (Alias = 'eseses', 
-                                Email='es@es.com', 
-                                EmailEncodingKey='UTF-8', 
-                                LastName='eseses', 
-                                LanguageLocaleKey='en_US', 
-                                ContactId = spanish.id,            
-                                LocaleSidKey='en_US',
-                                ProfileId = p.Id, 
-                                TimeZoneSidKey='America/Los_Angeles', 
-                                UserName='es@es.com',
-                                Mgmt_Report_Team__c = true);
-
-        users.add(ptUser);
-        users.add(esUser);
-        insert users;
-
-        portuguese.OwnerId = ptUser.Id;
-        update portuguese;
-
-        spanish.OwnerId = esUser.Id;
-        update spanish;
-
-        Portal_Applications__c portalApp = new Portal_Applications__c(Name = ISSP_Financial_Institutions.GDI_PORTAL_SERVICE,
-                                                                      ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
-                                                                      ANG_Accredited_Agents_Only__c = false,
-                                                                      Agency__c = true);
-        insert portalApp;
-
-        List<Financial_Institution__c> financialInstitutions = new List<Financial_Institution__c>();
 
-        Id rtGenericFIId = Schema.SObjectType.Financial_Institution__c.getRecordTypeInfosByDeveloperName().get('Generic_FI').getRecordTypeId();
-        Id rtCCBankId = Schema.SObjectType.Financial_Institution__c.getRecordTypeInfosByDeveloperName().get('Currency_Center_Bank').getRecordTypeId();
+	@testSetup
+	static void setup() {
+		List<IATA_ISO_Country__c> countries = new List<IATA_ISO_Country__c>();
+
+		IATA_ISO_Country__c portugal = new IATA_ISO_Country__c (Name = 'Portugal',
+																ISO_Code__c = 'PT',
+																ANG_Enable_NewGen__c = true,
+																ANG_GDI_Enabled__c = true);
+
+		IATA_ISO_Country__c spain = new IATA_ISO_Country__c (Name = 'Spain',
+															 ISO_Code__c = 'ES',
+															 ANG_Enable_NewGen__c = true,
+															 ANG_GDI_Enabled__c = false);
+
+		countries.add(portugal);
+		countries.add(spain);
+		insert countries;
+
+		List<Account> agencies = new List<Account>();
+
+		Account travelAgencyPortugal = new Account(Name = 'Travel Agency Portugal',
+												   Status__c = AMS_Utils.ACC_S9_APPROVED,
+												   Location_Type__c = 'HE',
+												   RecordTypeId = AMS_Utils.RECTYPE_IATAAGENCY,
+												   IATA_ISO_Country__c = portugal.Id,
+												   Location_Class__c = 'P',
+												   Category__c = 'IATA Passenger Sales Agent',
+												   Sector__c = AMS_Utils.SECTOR_PASSENGER);
+
+		Account travelAgencySpain = new Account(Name = 'Travel Agency Spain',
+												Status__c = AMS_Utils.ACC_S9_APPROVED,
+												Location_Type__c = 'HE',
+												RecordTypeId = AMS_Utils.RECTYPE_IATAAGENCY,
+												IATA_ISO_Country__c = spain.Id,
+												Location_Class__c = 'P',
+												Category__c = 'IATA Passenger Sales Agent',
+												Sector__c = AMS_Utils.SECTOR_PASSENGER);
+
+		agencies.add(travelAgencyPortugal);
+		agencies.add(travelAgencySpain);
+		insert agencies;
+
+		List<Contact> contacts = new List<Contact>();
+
+		Contact portuguese = ISSP_ObjectFactory.createNewContact();
+		portuguese.AccountId = travelAgencyPortugal.Id;
+		portuguese.Email = 'pt@pt.com';
+
+		Contact spanish = ISSP_ObjectFactory.createNewContact();
+		spanish.AccountId = travelAgencySpain.Id;
+		spanish.Email = 'es@es.com';
+
+		contacts.add(portuguese);
+		contacts.add(spanish);
+		insert contacts;
+
+		Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency Delegated Admin User'];
+
+		List<User> users = new List<User>();
+
+		User ptUser = new User (Alias = 'ptptpt',
+								Email='pt@pt.com',
+								EmailEncodingKey='UTF-8',
+								LastName='ptptpt',
+								LanguageLocaleKey='en_US',
+								ContactId = portuguese.id,
+								LocaleSidKey='en_US',
+								ProfileId = p.Id,
+								TimeZoneSidKey='America/Los_Angeles',
+								UserName='pt@pt.com',
+								Mgmt_Report_Team__c = true);
+
+		User esUser = new User (Alias = 'eseses',
+								Email='es@es.com',
+								EmailEncodingKey='UTF-8',
+								LastName='eseses',
+								LanguageLocaleKey='en_US',
+								ContactId = spanish.id,
+								LocaleSidKey='en_US',
+								ProfileId = p.Id,
+								TimeZoneSidKey='America/Los_Angeles',
+								UserName='es@es.com',
+								Mgmt_Report_Team__c = true);
+
+		users.add(ptUser);
+		users.add(esUser);
+		insert users;
+
+		portuguese.OwnerId = ptUser.Id;
+		update portuguese;
+
+		spanish.OwnerId = esUser.Id;
+		update spanish;
+
+		Portal_Applications__c portalApp = new Portal_Applications__c(Name = ISSP_Financial_Institutions.GDI_PORTAL_SERVICE,
+																	  ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
+																	  ANG_Accredited_Agents_Only__c = false,
+																	  Agency__c = true);
+		insert portalApp;
+
+		List<Financial_Institution__c> financialInstitutions = new List<Financial_Institution__c>();
 
-        Financial_Institution__c exampleOne = new Financial_Institution__c(Name = 'One',
-                                                                           RecordTypeId = rtGenericFIId,
-                                                                           Institution_Status__c = 'Active',
-                                                                           Financial_Security_Country_Coverage__c = 'PT',
-                                                                           Country__c = 'Portugal',
-                                                                           Region__c = 'Europe');
+		Id rtGenericFIId = Schema.SObjectType.Financial_Institution__c.getRecordTypeInfosByDeveloperName().get('Generic_FI').getRecordTypeId();
+		Id rtCCBankId = Schema.SObjectType.Financial_Institution__c.getRecordTypeInfosByDeveloperName().get('Currency_Center_Bank').getRecordTypeId();
 
-        Financial_Institution__c exampleGDI = new Financial_Institution__c(Name = 'Euler Hermes',
-                                                                           RecordTypeId = rtGenericFIId,
-                                                                           Institution_Status__c = 'Active',
-                                                                           Financial_Security_Country_Coverage__c = 'PT',
-                                                                           Country__c = 'Portugal',
-                                                                           Region__c = 'Europe');
-        Financial_Institution__c exampleCCBank = new Financial_Institution__c(Name = 'Euler Hermes',
-                                                                           RecordTypeId = rtCCBankId,
-                                                                           Institution_Status__c = 'Active',
-                                                                           Financial_Security_Country_Coverage__c = 'PT',
-                                                                           Country__c = 'Portugal',
-                                                                           Region__c = 'Europe');
+		Financial_Institution__c exampleOne = new Financial_Institution__c(Name = 'One',
+																		   RecordTypeId = rtGenericFIId,
+																		   Institution_Status__c = 'Active',
+																		   Financial_Security_Country_Coverage__c = 'PT',
+																		   Country__c = 'Portugal',
+																		   Region__c = 'Europe');
 
-        financialInstitutions.add(exampleOne);
-        financialInstitutions.add(exampleGDI);
-        financialInstitutions.add(exampleCCBank);//must be ignored
-        insert financialInstitutions;
+		Financial_Institution__c exampleGDI = new Financial_Institution__c(Name = 'Euler Hermes',
+																		   RecordTypeId = rtGenericFIId,
+																		   Institution_Status__c = 'Active',
+																		   Financial_Security_Country_Coverage__c = 'PT',
+																		   Country__c = 'Portugal',
+																		   Region__c = 'Europe');
+		Financial_Institution__c exampleCCBank = new Financial_Institution__c(Name = 'Euler Hermes',
+																		   RecordTypeId = rtCCBankId,
+																		   Institution_Status__c = 'Active',
+																		   Financial_Security_Country_Coverage__c = 'PT',
+																		   Country__c = 'Portugal',
+																		   Region__c = 'Europe');
 
-        Connected_App_Roles__c gdiCar = new Connected_App_Roles__c(Name = ISSP_Financial_Institutions.GDI_PORTAL_SERVICE,
-                                                                   Connected_App__c = ISSP_Financial_Institutions.GDI_PORTAL_SERVICE,
-                                                                   Permission_set_SSO__c = 'GDI_SSO',
-                                                                   Min_Users_With_Role__c = 0);
-        insert gdiCar;
-    }
+		financialInstitutions.add(exampleOne);
+		financialInstitutions.add(exampleGDI);
+		financialInstitutions.add(exampleCCBank);//must be ignored
+		insert financialInstitutions;
 
-    @isTest static void noFinancialInstitutionsListedTest() {
-        User esUser = [SELECT Id FROM User WHERE Email = 'es@es.com'];
+		Connected_App_Roles__c gdiCar = new Connected_App_Roles__c(Name = ISSP_Financial_Institutions.GDI_PORTAL_SERVICE,
+																   Connected_App__c = ISSP_Financial_Institutions.GDI_PORTAL_SERVICE,
+																   Permission_set_SSO__c = 'GDI_SSO',
+																   Min_Users_With_Role__c = 0);
+		insert gdiCar;
+	}
 
-        Test.startTest();
+	@isTest static void noFinancialInstitutionsListedTest() {
+		User esUser = [SELECT Id FROM User WHERE Email = 'es@es.com'];
 
-        System.runAs(esUser) {
-            ISSP_Financial_Institutions controller = new ISSP_Financial_Institutions();
+		Test.startTest();
 
-            Test.setCurrentPageReference(new PageReference('Page.ISSP_Financial_Institutions'));
+		System.runAs(esUser) {
+			ISSP_Financial_Institutions controller = new ISSP_Financial_Institutions();
 
-            System.assertEquals(0, controller.financialInstitutionList.size());
-            System.assertEquals(false, controller.financialInstitutionsFound);
-        }
+			Test.setCurrentPageReference(new PageReference('Page.ISSP_Financial_Institutions'));
 
-        Test.stopTest();
-    }
+			System.assertEquals(0, controller.financialInstitutionList.size());
+			System.assertEquals(false, controller.financialInstitutionsFound);
+		}
 
-    @isTest static void noGDIFinancialInstitutionsListedTest() {
-        User ptUser = [SELECT Id FROM User WHERE Email = 'pt@pt.com'];
-        
-        IATA_ISO_Country__c pt = [SELECT Id FROM IATA_ISO_Country__c WHERE Name = 'Portugal'];
-        pt.ANG_GDI_Enabled__c = false;
-        update pt;
+		Test.stopTest();
+	}
 
-        Test.startTest();
+	@isTest static void noGDIFinancialInstitutionsListedTest() {
+		User ptUser = [SELECT Id FROM User WHERE Email = 'pt@pt.com'];
 
-        System.runAs(ptUser) {
-            ISSP_Financial_Institutions controller = new ISSP_Financial_Institutions();
+		IATA_ISO_Country__c pt = [SELECT Id FROM IATA_ISO_Country__c WHERE Name = 'Portugal'];
+		pt.ANG_GDI_Enabled__c = false;
+		update pt;
 
-            Test.setCurrentPageReference(new PageReference('Page.ISSP_Financial_Institutions'));
+		Test.startTest();
 
-            System.assertEquals(1, controller.financialInstitutionList.size());
-            System.assertEquals(true, controller.financialInstitutionsFound);
-        }
+		System.runAs(ptUser) {
+			ISSP_Financial_Institutions controller = new ISSP_Financial_Institutions();
 
-        Test.stopTest();
-    }
+			Test.setCurrentPageReference(new PageReference('Page.ISSP_Financial_Institutions'));
 
-    @isTest static void financialInstitutionsListedTest() {
-        User ptUser = [SELECT Id FROM User WHERE Email = 'pt@pt.com'];
+			System.assertEquals(1, controller.financialInstitutionList.size());
+			System.assertEquals(true, controller.financialInstitutionsFound);
+		}
 
-        Test.startTest();
+		Test.stopTest();
+	}
 
-        System.runAs(ptUser) {
-            ISSP_Financial_Institutions controller = new ISSP_Financial_Institutions();
+	@isTest static void financialInstitutionsListedTest() {
+		User ptUser = [SELECT Id FROM User WHERE Email = 'pt@pt.com'];
 
-            Test.setCurrentPageReference(new PageReference('Page.ISSP_Financial_Institutions'));
+		Test.startTest();
 
-            System.assertEquals(2, controller.financialInstitutionList.size());
-            System.assertEquals(true, controller.financialInstitutionsFound);
-            System.assertEquals(false, controller.userCanRequestGDI);
-        }
+		System.runAs(ptUser) {
+			ISSP_Financial_Institutions controller = new ISSP_Financial_Institutions();
 
-        Test.stopTest();
-    }
+			Test.setCurrentPageReference(new PageReference('Page.ISSP_Financial_Institutions'));
 
-    @isTest static void requestGDIAccessWithSuccessTest() {
-        User ptUser = [SELECT Id FROM User WHERE Email = 'pt@pt.com'];
+			System.assertEquals(2, controller.financialInstitutionList.size());
+			System.assertEquals(true, controller.financialInstitutionsFound);
+			System.assertEquals(false, controller.userCanRequestGDI);
+		}
 
-        Test.startTest();
+		Test.stopTest();
+	}
 
-        System.runAs(ptUser) {
-            ISSP_Financial_Institutions controller = new ISSP_Financial_Institutions();
+	@isTest static void requestGDIAccessWithSuccessTest() {
+		User ptUser = [SELECT Id FROM User WHERE Email = 'pt@pt.com'];
 
-            Test.setCurrentPageReference(new PageReference('Page.ISSP_Financial_Institutions'));
+		Test.startTest();
 
-            System.assertEquals(2, controller.financialInstitutionList.size());
-            System.assertEquals(true, controller.financialInstitutionsFound);
-            System.assertEquals(false, controller.userCanRequestGDI);
+		System.runAs(ptUser) {
+			ISSP_Financial_Institutions controller = new ISSP_Financial_Institutions();
 
-            List<SelectOption> paginationSizeOptions = controller.paginationSizeOptions;
+			Test.setCurrentPageReference(new PageReference('Page.ISSP_Financial_Institutions'));
 
-            controller.next();
-            controller.previous();
-            controller.last();
-            controller.first();
-            controller.refreshPageSize();
-            Boolean hasPrevious = controller.hasPrevious;
-            Boolean hasNext = controller.hasNext;
+			System.assertEquals(2, controller.financialInstitutionList.size());
+			System.assertEquals(true, controller.financialInstitutionsFound);
+			System.assertEquals(false, controller.userCanRequestGDI);
 
-            controller.termsAndConditions = true;
-            controller.startGDIPortalAppRightCreation();
-            controller.createPortalAppRight();
+			List<SelectOption> paginationSizeOptions = controller.paginationSizeOptions;
 
-            controller.pollingStatus();
+			controller.next();
+			controller.previous();
+			controller.last();
+			controller.first();
+			controller.refreshPageSize();
+			Boolean hasPrevious = controller.hasPrevious;
+			Boolean hasNext = controller.hasNext;
 
-            PermissionSet gdiSSOPermSet = [SELECT Id FROM PermissionSet WHERE Name = :controller.gdiPermSetSSO];
-            insert new PermissionSetAssignment(AssigneeId = ptUser.Id, PermissionSetId = gdiSSOPermSet.Id);
+			controller.termsAndConditions = true;
+			controller.startGDIPortalAppRightCreation();
+			controller.createPortalAppRight();
 
-            controller.pollingStatus();
-        }
+			controller.pollingStatus();
 
-        Test.stopTest();
-    }
+			PermissionSet gdiSSOPermSet = [SELECT Id FROM PermissionSet WHERE Name = :controller.gdiPermSetSSO];
+			insert new PermissionSetAssignment(AssigneeId = ptUser.Id, PermissionSetId = gdiSSOPermSet.Id);
 
-    @isTest static void requestGDIAccessWithFailureTest() {
-        User ptUser = [SELECT Id FROM User WHERE Email = 'pt@pt.com'];
+			controller.pollingStatus();
+		}
 
-        Test.startTest();
+		Test.stopTest();
+	}
 
-        System.runAs(ptUser) {
-            ISSP_Financial_Institutions controller = new ISSP_Financial_Institutions();
+	@isTest static void requestGDIAccessWithFailureTest() {
+		User ptUser = [SELECT Id FROM User WHERE Email = 'pt@pt.com'];
 
-            Test.setCurrentPageReference(new PageReference('Page.ISSP_Financial_Institutions'));
+		Test.startTest();
 
-            System.assertEquals(2, controller.financialInstitutionList.size());
-            System.assertEquals(true, controller.financialInstitutionsFound);
+		System.runAs(ptUser) {
+			ISSP_Financial_Institutions controller = new ISSP_Financial_Institutions();
 
-            List<SelectOption> paginationSizeOptions = controller.paginationSizeOptions;
+			Test.setCurrentPageReference(new PageReference('Page.ISSP_Financial_Institutions'));
 
-            controller.next();
-            controller.previous();
-            controller.last();
-            controller.first();
-            controller.refreshPageSize();
-            Boolean hasPrevious = controller.hasPrevious;
-            Boolean hasNext = controller.hasNext;
+			System.assertEquals(2, controller.financialInstitutionList.size());
+			System.assertEquals(true, controller.financialInstitutionsFound);
 
-            controller.termsAndConditions = true;
-            controller.startGDIPortalAppRightCreation();
-            controller.createPortalAppRight();
+			List<SelectOption> paginationSizeOptions = controller.paginationSizeOptions;
 
-            controller.pollingStatus();
+			controller.next();
+			controller.previous();
+			controller.last();
+			controller.first();
+			controller.refreshPageSize();
+			Boolean hasPrevious = controller.hasPrevious;
+			Boolean hasNext = controller.hasNext;
 
-            insert new UserProvisioningRequest(SalesforceUserId = ptUser.Id, State = 'Failed', Operation = 'Create', ApprovalStatus = 'Denied');
+			controller.termsAndConditions = true;
+			controller.startGDIPortalAppRightCreation();
+			controller.createPortalAppRight();
 
-            controller.pollingStatus();
-        }
+			controller.pollingStatus();
 
-        Test.stopTest();
-    }
+			insert new UserProvisioningRequest(SalesforceUserId = ptUser.Id, State = 'Failed', Operation = 'Create', ApprovalStatus = 'Denied');
 
-    @isTest static void requestGDIAccessWithoutTermsAcceptedTest() {
-        User ptUser = [SELECT Id FROM User WHERE Email = 'pt@pt.com'];
+			controller.pollingStatus();
+		}
 
-        Test.startTest();
+		Test.stopTest();
+	}
 
-        System.runAs(ptUser) {
-            ISSP_Financial_Institutions controller = new ISSP_Financial_Institutions();
+	@isTest static void requestGDIAccessWithoutTermsAcceptedTest() {
+		User ptUser = [SELECT Id FROM User WHERE Email = 'pt@pt.com'];
 
-            Test.setCurrentPageReference(new PageReference('Page.ISSP_Financial_Institutions'));
+		Test.startTest();
 
-            System.assertEquals(2, controller.financialInstitutionList.size());
+		System.runAs(ptUser) {
+			ISSP_Financial_Institutions controller = new ISSP_Financial_Institutions();
 
-            controller.termsAndConditions = false;
-            controller.startGDIPortalAppRightCreation();
+			Test.setCurrentPageReference(new PageReference('Page.ISSP_Financial_Institutions'));
 
-            System.assertEquals(System.Label.ISSP_Accept_Terms_Warning, controller.currentErrorMessage);
-        }
+			System.assertEquals(2, controller.financialInstitutionList.size());
 
-        Test.stopTest();
-    }
+			controller.termsAndConditions = false;
+			controller.startGDIPortalAppRightCreation();
 
-    @isTest static void requestedGDIAccessTest() {
-        User ptUser = [SELECT Id, ContactId FROM User WHERE Email = 'pt@pt.com'];
-        Portal_Applications__c portalApp = [SELECT Id FROM Portal_Applications__c WHERE Name = :ISSP_Financial_Institutions.GDI_PORTAL_SERVICE];
+			System.assertEquals(System.Label.ISSP_Accept_Terms_Warning, controller.currentErrorMessage);
+		}
 
-        Portal_Application_Right__c gdiPar = new Portal_Application_Right__c(Contact__c = ptUser.ContactId,
-                                                                             Portal_Application__c = portalApp.Id,
-                                                                             Right__c = 'Access Requested');
-        insert gdiPar;
+		Test.stopTest();
+	}
 
-        Test.startTest();
+	@isTest static void requestedGDIAccessTest() {
+		User ptUser = [SELECT Id, ContactId FROM User WHERE Email = 'pt@pt.com'];
+		Portal_Applications__c portalApp = [SELECT Id FROM Portal_Applications__c WHERE Name = :ISSP_Financial_Institutions.GDI_PORTAL_SERVICE];
 
-        System.runAs(ptUser) {
-            ISSP_Financial_Institutions controller = new ISSP_Financial_Institutions();
+		Portal_Application_Right__c gdiPar = new Portal_Application_Right__c(Contact__c = ptUser.ContactId,
+																			 Portal_Application__c = portalApp.Id,
+																			 Right__c = 'Access Requested');
+		insert gdiPar;
 
-            Test.setCurrentPageReference(new PageReference('Page.ISSP_Financial_Institutions'));
+		Test.startTest();
 
-            System.assertEquals(2, controller.financialInstitutionList.size());
-            System.assertEquals(true, controller.gdiAppRightRequested);
-            System.assertEquals(false, controller.gdiAppRightGranted);
-            System.assertEquals(false, controller.gdiAppRightDenied);
-        }
+		System.runAs(ptUser) {
+			ISSP_Financial_Institutions controller = new ISSP_Financial_Institutions();
 
-        Test.stopTest();
-    }
+			Test.setCurrentPageReference(new PageReference('Page.ISSP_Financial_Institutions'));
 
-    @isTest static void grantedGDIAccessTest() {
-        User ptUser = [SELECT Id, ContactId FROM User WHERE Email = 'pt@pt.com'];
-        Portal_Applications__c portalApp = [SELECT Id FROM Portal_Applications__c WHERE Name = :ISSP_Financial_Institutions.GDI_PORTAL_SERVICE];
+			System.assertEquals(2, controller.financialInstitutionList.size());
+			System.assertEquals(true, controller.gdiAppRightRequested);
+			System.assertEquals(false, controller.gdiAppRightGranted);
+			System.assertEquals(false, controller.gdiAppRightDenied);
+		}
 
-        Portal_Application_Right__c gdiPar = new Portal_Application_Right__c(Contact__c = ptUser.ContactId,
-                                                                             Portal_Application__c = portalApp.Id,
-                                                                             Right__c = 'Access Granted');
-        insert gdiPar;
+		Test.stopTest();
+	}
 
-        Test.startTest();
+	@isTest static void grantedGDIAccessTest() {
+		User ptUser = [SELECT Id, ContactId FROM User WHERE Email = 'pt@pt.com'];
+		Portal_Applications__c portalApp = [SELECT Id FROM Portal_Applications__c WHERE Name = :ISSP_Financial_Institutions.GDI_PORTAL_SERVICE];
 
-        System.runAs(ptUser) {
-            ISSP_Financial_Institutions controller = new ISSP_Financial_Institutions();
+		Portal_Application_Right__c gdiPar = new Portal_Application_Right__c(Contact__c = ptUser.ContactId,
+																			 Portal_Application__c = portalApp.Id,
+																			 Right__c = 'Access Granted');
+		insert gdiPar;
 
-            Test.setCurrentPageReference(new PageReference('Page.ISSP_Financial_Institutions'));
+		Test.startTest();
 
-            System.assertEquals(2, controller.financialInstitutionList.size());
-            System.assertEquals(false, controller.gdiAppRightRequested);
-            System.assertEquals(true, controller.gdiAppRightGranted);
-            System.assertEquals(false, controller.gdiAppRightDenied);
-        }
+		System.runAs(ptUser) {
+			ISSP_Financial_Institutions controller = new ISSP_Financial_Institutions();
 
-        Test.stopTest();
-    }
+			Test.setCurrentPageReference(new PageReference('Page.ISSP_Financial_Institutions'));
 
-    @isTest static void deniedGDIAccessTest() {
-        User ptUser = [SELECT Id, ContactId FROM User WHERE Email = 'pt@pt.com'];
-        Portal_Applications__c portalApp = [SELECT Id FROM Portal_Applications__c WHERE Name = :ISSP_Financial_Institutions.GDI_PORTAL_SERVICE];
+			System.assertEquals(2, controller.financialInstitutionList.size());
+			System.assertEquals(false, controller.gdiAppRightRequested);
+			System.assertEquals(true, controller.gdiAppRightGranted);
+			System.assertEquals(false, controller.gdiAppRightDenied);
+		}
 
-        Portal_Application_Right__c gdiPar = new Portal_Application_Right__c(Contact__c = ptUser.ContactId,
-                                                                             Portal_Application__c = portalApp.Id,
-                                                                             Right__c = 'Access Denied');
-        insert gdiPar;
+		Test.stopTest();
+	}
 
-        Test.startTest();
+	@isTest static void deniedGDIAccessTest() {
+		User ptUser = [SELECT Id, ContactId FROM User WHERE Email = 'pt@pt.com'];
+		Portal_Applications__c portalApp = [SELECT Id FROM Portal_Applications__c WHERE Name = :ISSP_Financial_Institutions.GDI_PORTAL_SERVICE];
 
-        System.runAs(ptUser) {
-            ISSP_Financial_Institutions controller = new ISSP_Financial_Institutions();
+		Portal_Application_Right__c gdiPar = new Portal_Application_Right__c(Contact__c = ptUser.ContactId,
+																			 Portal_Application__c = portalApp.Id,
+																			 Right__c = 'Access Denied');
+		insert gdiPar;
 
-            Test.setCurrentPageReference(new PageReference('Page.ISSP_Financial_Institutions'));
+		Test.startTest();
 
-            System.assertEquals(2, controller.financialInstitutionList.size());
-            System.assertEquals(false, controller.gdiAppRightRequested);
-            System.assertEquals(false, controller.gdiAppRightGranted);
-            System.assertEquals(true, controller.gdiAppRightDenied);
-        }
+		System.runAs(ptUser) {
+			ISSP_Financial_Institutions controller = new ISSP_Financial_Institutions();
 
-        Test.stopTest();
-    }
+			Test.setCurrentPageReference(new PageReference('Page.ISSP_Financial_Institutions'));
+
+			System.assertEquals(2, controller.financialInstitutionList.size());
+			System.assertEquals(false, controller.gdiAppRightRequested);
+			System.assertEquals(false, controller.gdiAppRightGranted);
+			System.assertEquals(true, controller.gdiAppRightDenied);
+		}
+
+		Test.stopTest();
+	}
 }
