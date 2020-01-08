@@ -99,3 +99,4 @@
         component.set('v.gridData', filteredData);
         component.set('v.gridExpandedRows', filteredExpRows);
     }        
+})
