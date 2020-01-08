@@ -4492,9 +4492,9 @@ public without sharing class ISSP_AMS_Accreditation {
 						FROM AMS_Accreditation_Country_CheckList__c
 						WHERE IATA_ISO_Country__r.ISO_Code__c = :iso AND Operation__c = :sector
 					];
-
-				return (!aux.isEmpty()) ? aux[0] : null;
 				}
+				return (!aux.isEmpty()) ? aux[0] : null;
+
 			}
 		set;
 	}
