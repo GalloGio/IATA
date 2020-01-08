@@ -606,6 +606,9 @@
                                                                         type="checkbox" class="checkbox-button__input"
                                                                         onchange={getValueSelected} name={item.value}
                                                                         checked={item.checked}>
+                                                                    <span data-item={item.label} data-type="Area__c"
+                                                                        class="checkbox-button__control"
+                                                                        onchange={getValueSelected}></span>
                                                                     <span data-item={item.value} data-type="Area__c"
                                                                         class="checkbox-button__label"
                                                                         onchange={getValueSelected}>{item.value}</span>
