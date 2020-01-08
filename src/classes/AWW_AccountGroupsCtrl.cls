@@ -35,7 +35,7 @@ public with sharing class AWW_AccountGroupsCtrl {
 		String query = 'SELECT Id, Contact__r.FirstName, Contact__r.LastName, Contact__r.Salutation, Contact__r.Title, Participant_Type__c,' +
 			'Contact__r.AM_First_Name_Latin_Char__c, Contact__r.AM_Last_Name_Latin_Char__c, Contact__r.AM_Job_Title_English__c,' +
 			'Contact__r.Email,Hidden_Account_Id__c, Local_Governance__c, Local_Governance__r.Group_Owner__c,' +
-			'Local_Governance__r.Name, Local_Governance__r.Mission__c, Local_Governance__r.Group_Owner__r.Name, Contact__r.Account.Name,' + 
+			'Local_Governance__r.Name, Local_Governance__r.Mission__c, Local_Governance__r.Group_Owner__r.Name, Contact__r.Account.Name,' +
 			'Local_Governance__r.Group_Owner_Text__c, Local_Governance__r.AM_Under__r.Name, Representing__c,' +
 			'Local_Governance__r.AM_Under__r.Group_Owner__c, Local_Governance__r.AM_Under__r.Group_Owner__r.Name, Local_Governance__r.Country__c ' +
 			'FROM Participant__c ';
