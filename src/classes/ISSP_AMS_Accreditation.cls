@@ -3426,8 +3426,7 @@ public without sharing class ISSP_AMS_Accreditation {
 			} else {
 				pageURL += '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange;
 			}
-		}
-		}else if(isPassAccreditation)
+		}else if(isPassAccreditation){
 			return new Pagereference('/ISSP_AMS_PASS_Accreditation?caseId=' + newCase.Id + '&step=4' + commParam);
 		}else if (isMultiCountryNewAE && !isMultiCountryAccredittedAddingAEs()) {
 			pageURL += '&isMultiCountryNewAE=true&currentMCFormId=' + currentMCFormId;
@@ -3445,7 +3444,7 @@ public without sharing class ISSP_AMS_Accreditation {
 
 		if (isNoticeOfChange) {
 			pageURL += '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange;
-		} else if(isPassAccreditation)
+		} else if(isPassAccreditation){
 			return new Pagereference('/ISSP_AMS_PASS_Accreditation?caseId=' + newCase.Id + '&step=5' + commParam+passParam);
 		} else if (isMultiCountryNewAE && !isMultiCountryAccredittedAddingAEs()) {
 			pageURL += '&isMultiCountryNewAE=true&currentMCFormId=' + currentMCFormId;
