@@ -456,8 +456,6 @@ public without sharing class ISSP_AMS_Accreditation {
 		set;
 	}
 
-	public Boolean isPassAccreditation {get; set;}
-
 	public List<SelectOption> nonSelectedCountryIsos {
 		get {
 			if (nonSelectedCountryIsos == null) {
@@ -4482,21 +4480,22 @@ public without sharing class ISSP_AMS_Accreditation {
 
 			List<AMS_Accreditation_Country_CheckList__c> aux=new List<AMS_Accreditation_Country_CheckList__c>();
 
-			if(isPassAccreditation){
-				aux = [
-					SELECT License_required__c, Registration_required__c, Statement_of_International_Sales__c, Statement_of_International_Sales_Branch__c
-					FROM AMS_Accreditation_Country_CheckList__c
-					WHERE Operation__c = :sector LIMIT 1
-				];
-			}else{
-				aux = [
-					SELECT License_required__c, Registration_required__c, Statement_of_International_Sales__c, Statement_of_International_Sales_Branch__c
-					FROM AMS_Accreditation_Country_CheckList__c
-					WHERE IATA_ISO_Country__r.ISO_Code__c = :iso AND Operation__c = :sector
-				];
+				if(isPassAccreditation){
+					aux = [
+						SELECT License_required__c, Registration_required__c, Statement_of_International_Sales__c, Statement_of_International_Sales_Branch__c
+						FROM AMS_Accreditation_Country_CheckList__c
+						WHERE Operation__c = :sector LIMIT 1
+					];
+				}else{
+					aux = [
+						SELECT License_required__c, Registration_required__c, Statement_of_International_Sales__c, Statement_of_International_Sales_Branch__c
+						FROM AMS_Accreditation_Country_CheckList__c
+						WHERE IATA_ISO_Country__r.ISO_Code__c = :iso AND Operation__c = :sector
+					];
 
-			return (!aux.isEmpty()) ? aux[0] : null;
-		}
+				return (!aux.isEmpty()) ? aux[0] : null;
+				}
+			}
 		set;
 	}
 
