@@ -4,6 +4,7 @@
     <aura:attribute name="filteredData" type="Object"/>
     <aura:attribute name="columns" type="List"/>
     <aura:attribute name="showClosed" type="Boolean" default="false"/>
+    <aura:attribute name="haveAMPIssuesAndPriorities" type="Boolean" default="false"/>
     <aura:attribute name="canEdit" type="Boolean"/>
     <aura:attribute name="sortBy" type="String"/>
     <aura:attribute name="sortDirection" type="String"/>
@@ -30,7 +31,7 @@
                                 title="Export Details" 
                                 onclick="{!c.export}"/>
                         </div>
-                        <div class="{!'slds-col ' + if(v.canEdit,'','slds-hide')}">
+                        <div class="{!'slds-col ' + if(v.haveAMPIssuesAndPriorities,'','slds-hide')}">
                             <lightning:button 
                                 variant="Neutral" 
                                 label="New" 
@@ -41,6 +42,7 @@
                 </aura:set>
                 <div class="slds-m-around_medium slds-table_bordered slds-border_left slds-border_right">
                     <lightning:datatable
+					    class="no-truncate"
                         keyField="Id"
                         data="{!v.filteredData}"
                         columns="{!v.columns}"

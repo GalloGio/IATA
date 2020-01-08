@@ -35,7 +35,7 @@ public with sharing class AWW_AccountGroupsCtrl {
 		String query = 'SELECT Id, Contact__r.FirstName, Contact__r.LastName, Contact__r.Salutation, Contact__r.Title, Participant_Type__c,' +
 			'Contact__r.AM_First_Name_Latin_Char__c, Contact__r.AM_Last_Name_Latin_Char__c, Contact__r.AM_Job_Title_English__c,' +
 			'Contact__r.Email,Hidden_Account_Id__c, Local_Governance__c, Local_Governance__r.Group_Owner__c,' +
-			'Local_Governance__r.Name, Local_Governance__r.Mission__c, Local_Governance__r.Group_Owner__r.Name,' +
+			'Local_Governance__r.Name, Local_Governance__r.Mission__c, Local_Governance__r.Group_Owner__r.Name, Contact__r.Account.Name,' + 
 			'Local_Governance__r.Group_Owner_Text__c, Local_Governance__r.AM_Under__r.Name, Representing__c,' +
 			'Local_Governance__r.AM_Under__r.Group_Owner__c, Local_Governance__r.AM_Under__r.Group_Owner__r.Name, Local_Governance__r.Country__c ' +
 			'FROM Participant__c ';
@@ -78,7 +78,8 @@ public with sharing class AWW_AccountGroupsCtrl {
 			String lastName = p.Contact__r.LastName;
 			String title = p.Contact__r.Title;
 			String email = p.Contact__r.Email;
-			Member m = new Member(null,role,salutation,firstName,lastName,title,email,p.Representing__c <> null);
+			String accountName = p.Contact__r.Account.Name;
+			Member m = new Member(null,role,salutation,firstName,lastName,title,email,accountName,p.Representing__c <> null);
 			mainGroup.members.add(m);
 		}
 	}
@@ -117,7 +118,8 @@ public with sharing class AWW_AccountGroupsCtrl {
 			String lastName = p.Contact__r.LastName;
 			String title = p.Contact__r.Title;
 			String email = p.Contact__r.Email;
-			Member m = new Member('member-'+index, role, salutation, firstName, lastName, title, email,  p.Representing__c <> null);
+			String accountName = p.Contact__r.Account.Name;
+			Member m = new Member('member-'+index, role, salutation, firstName, lastName, title, email, accountName, p.Representing__c <> null);
 			lg.childrens.add(m);
 			childRelations.get(lg.rowId).add(m.rowId);
 			index++;
@@ -203,16 +205,18 @@ public with sharing class AWW_AccountGroupsCtrl {
 		@AuraEnabled public String salutation {get;set;}
 		@AuraEnabled public String firstName {get;set;}
 		@AuraEnabled public String lastName {get;set;}
+		@AuraEnabled public String accountName {get;set;}
 		@AuraEnabled public String title {get;set;}
 		@AuraEnabled public String email {get;set;}
 		@AuraEnabled public Boolean isRepresentative {get;set;}
 
-		public Member(String rowId, String role, String salutation, String firstName, String lastName, String title, String email, Boolean isRepresentative) {
+		public Member(String rowId, String role, String salutation, String firstName, String lastName, String title, String email, String accountName, Boolean isRepresentative) {
 			this.rowId = rowId;
 			this.role = role;
 			this.salutation = salutation;
 			this.firstName = firstName;
 			this.lastName = lastName;
+			this.accountName = accountName;
 			this.title = title;
 			this.email = email;
 			this.isRepresentative = isRepresentative;

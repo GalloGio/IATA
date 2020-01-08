@@ -58,23 +58,6 @@
                                     </aura:iteration>
                                 </lightning:select>
                             </div>
-                            <div class="slds-col slds-size_1-of-3">
-                                <lightning:input type="date" aura:id="deadline" label="Deadline" value="{!v.record.Deadline__c}" required="true"/>
-                            </div>
-                            <div class="slds-col slds-size_1-of-3">
-                                <lightning:select aura:id="division" label="Division" value="{!v.record.Division__c}" required="true">
-                                    <aura:iteration items="{!v.divisionList}" var="option">
-                                        <option text="{!option.label}" value="{!option.id}"/>
-                                    </aura:iteration>
-                                </lightning:select>
-                            </div>
-                            <div class="slds-col slds-size_1-of-3">
-                                <lightning:select aura:id="type" label="Unit Type" value="{!v.record.Unit_Type__c}" required="true">
-                                    <aura:iteration items="{!v.unitList}" var="option">
-                                        <option text="{!option.label}" value="{!option.id}"/>
-                                    </aura:iteration>
-                                </lightning:select>
-                            </div>
                         </aura:if>
                     </div>
                 </div>

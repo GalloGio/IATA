@@ -38,16 +38,16 @@
                     <div class="slds-grid slds-gutters slds-wrap">
                         <aura:if isTrue="{!v.fieldValidity}">
                             <div class="slds-col slds-size_1-of-3">
-                                <lightning:textarea aura:id="subject" label="Milestone" required="true" value="{!v.record.Subject__c}"/>
+                                <lightning:textarea maxlength="255" aura:id="subject" label="Milestone" required="true" value="{!v.record.Subject__c}"/>
                             </div>
                             <div class="slds-col slds-size_1-of-3">
-                                <lightning:input aura:id="responsible" label="Responsible" type="text" value="{!v.record.AM_Responsible__c}"/>
+                                <lightning:input maxlength="255" aura:id="responsible" label="Responsible" type="text" value="{!v.record.AM_Responsible__c}"/>
                             </div>
                             <div class="slds-col slds-size_1-of-3">
-                                <lightning:textarea aura:id="involved" label="Involved" value="{!v.record.AM_Involved__c}"/>
+                                <lightning:textarea maxlength="255" aura:id="involved" label="Involved" value="{!v.record.AM_Involved__c}"/>
                             </div>
                             <div class="slds-col slds-size_1-of-3">
-                                <lightning:textarea aura:id="support" label="Support Required From Account" value="{!v.record.AM_Support_Required_from_Account__c}"/>
+                                <lightning:textarea maxlength="255" aura:id="support" label="Support Required From Account" value="{!v.record.AM_Support_Required_from_Account__c}"/>
                             </div>
                             <div class="slds-col slds-size_1-of-3">
                                 <lightning:select aura:id="status" label="Milestone Status" value="{!v.record.Status}" required="true">
@@ -60,7 +60,7 @@
                                 <lightning:input aura:id="endDate" label="End Date" type="date" value="{!v.record.ActivityDate}" required="true"/>
                             </div>
                             <div class="slds-col slds-size_3-of-3">
-                                <lightning:textarea aura:id="comments" label="Comments" value="{!v.record.Description}"/>
+                                <lightning:textarea maxlength="32000" aura:id="comments" label="Comments" value="{!v.record.Description}"/>
                             </div>  
                         </aura:if>                   
                     </div>

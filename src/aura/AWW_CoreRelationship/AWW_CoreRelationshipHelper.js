@@ -68,7 +68,7 @@
         rows.push(['','']);
     },
     handleExport : function(component,rows) {        
-        var csvContent = 'data:text/csv;charset=utf-8,' + rows.map(e => e.join(',')).join('\n');
+        var csvContent = 'data:text/csv;charset=utf-8,' + rows.map(e => e.join(';')).join('\n');
         var encodedUri = encodeURI(csvContent);
         var encodedUri = encodeURI(csvContent);
         var link = document.createElement('a');
@@ -84,6 +84,7 @@
             var state = response.getState();
             if (component.isValid() && state === "SUCCESS") {                
                 var result = response.getReturnValue();
+                console.log(result);
                 component.set('v.haveAMPAgencyManagement',result );
             }   
         });

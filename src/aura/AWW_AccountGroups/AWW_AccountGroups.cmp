@@ -45,7 +45,7 @@
                         <tbody>
                             <aura:iteration items="{!v.gridData}" var="topGroup">
                                 <tr id="{!topGroup.rowId}" class="underGroup">
-                                    <td colspan="8">
+                                    <td colspan="9">
                                         <div style="display: flex">
                                             <div id="{!topGroup.rowId_expand}" onclick="{!c.expandRow}">
                                                 <lightning:icon class="slds-p-right_x-small expandRows" iconName="utility:chevronright" size="xx-small"/>
@@ -66,13 +66,14 @@
                                                     <lightning:formattedUrl label="{!localGroup.groupName}" value="{!localGroup.groupLink}" target="_blank"/>
                                                 </div>
                                             </td>
+                                            <td><c:AMP_LongText text="{!member.accountName}"/></td>
                                             <td ><lightning:formattedText value="{!localGroup.ownerName}"/></td>
                                             <td ><c:AMP_LongText text="{!localGroup.mission}"/></td>
                                             <td ><lightning:formattedText value="{!member.role}"/></td>
                                             <td ><lightning:formattedText value="{!member.salutation}"/></td>
                                             <td ><lightning:formattedText value="{!member.firstName}"/></td>
                                             <td ><lightning:formattedText value="{!member.lastName}"/></td>
-                                            <td >
+                                            <td style="white-space: normal;">
                                                 <lightning:formattedText value="{!member.title}"/>
                                                 <aura:if isTrue="{!member.isRepresentative}">
                                                     <lightning:icon class="slds-m-left_xx-small" size="x-small" iconName="utility:info" alternativeText="info" />

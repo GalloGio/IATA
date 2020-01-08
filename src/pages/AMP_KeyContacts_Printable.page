@@ -32,7 +32,8 @@
 					                <th class="headerRow" scope="col" colspan="7" ><div style="text-align:center;">Key Contacts for {!accountName}</div></th>
 					            </tr>
 					            <tr class="headerRow" >
-					                <th class="headerRow" ><div>Contact Name</div></th>
+									<th class="headerRow" ><div>Contact Name</div></th>
+									<th class="headerRow" style="display:{!IF((isWWAccount == 'true'),'block', 'None')}"><div>Account Name</div></th>
 					                <th class="headerRow" ><div>Contact Type</div></th>
 					                <th class="headerRow" ><div>Primary for</div></th>
 					                <th class="headerRow" ><div>Title</div></th>
@@ -43,9 +44,10 @@
 					        </thead>
 					
 					        <apex:repeat value="{!lsKeyContactsWrapped}" var="i">
-					            <tr class="dataRow" >
+					            <tr class="dataRow">
 					
-					                <td class="dataCell " >{!i.con.Name}</td>
+									<td class="dataCell " >{!i.con.Name}</td>
+									<td class="dataCell " style="display:{!IF((isWWAccount == 'true'),'block', 'None')}">{!i.con.Account.Name}</td>
 					                <td class="dataCell " ><apex:outputField value="{!i.con.Airline_Contact_Type__c}"/></td>
 					                <td class="dataCell " ><apex:outputText value="{!i.primaryFor}" escape="false"/></td>
 					                <td class="dataCell " >{!i.con.Title}</td>
