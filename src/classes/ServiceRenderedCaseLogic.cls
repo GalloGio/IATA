@@ -76,7 +76,7 @@ public class ServiceRenderedCaseLogic {
 		List<Case> changingCases = new List<Case>();
 		list<Id> ConsumerIdsFromNewCases = new list<Id>();
 		list<Services_Rendered__c> newSRList = new list<Services_Rendered__c>();
-
+		Set<Id> passCaseIdList = new Set<Id>();
 		for (Case c : caseWithServicesOK) {
 			if (c.CaseArea__c == airlineJoining  ) {
 				joiningCases.add(c);
@@ -92,6 +92,13 @@ public class ServiceRenderedCaseLogic {
 
 			if(!leavingCases.isEmpty())
 				newSRList.addAll(ServiceRenderedCaseLogic.leavingCases(leavingCases, ConsumerIdsFromNewCases, ServicesPerReason));
+			
+			if(c.Reason1__c.startsWith('PASS')){
+				if(c.Reason1__c==AMS_Utils.passCountryCaseReason){
+					passCaseIdList.add(c.ParentId);
+					}
+					passCaseIdList.add(c.Id);
+				}
 		}
 
 		if (!changingCases.isEmpty()) {
@@ -101,6 +108,24 @@ public class ServiceRenderedCaseLogic {
 		if (newSRList.size() > 0) {
 				TransformationHelper.setComingFromCase();
 				upsert(newSRList);
+			//logic to publish the platform events
+				if(passCaseIdList.size()>0){
+					Map<Id,sObject> objectMapAPProcessForm=new Map<Id,sObject>();
+					Map<Id,sObject> objectMapServiceRendered=new Map<Id,sObject>();
+
+					for(AP_Process_Form__c formRecord: [SELECT Id,RecordTypeId FROM AP_Process_Form__c WHERE Case__c IN: passCaseIdList]){
+						objectMapAPProcessForm.put(formRecord.Id, formRecord);
+					}
+					for(Services_Rendered__c serviceRendered : newSRList){
+						if(passCaseIdList.contains(serviceRendered.Source_Case__c)){
+							objectMapServiceRendered.put(serviceRendered.Id, serviceRendered);
+						}
+					}
+					if(objectMapServiceRendered.size()>0){
+						PlatformEvents_Helper.publishEvents(objectMapServiceRendered, 'Service_Rendered__e', 'Services_Rendered__c', false, true, false, false);
+					}
+				}
+			}
 		}
 	}
 
@@ -419,10 +444,12 @@ public class ServiceRenderedCaseLogic {
 					for (Account a : mapHQAccountsPerId.values()) {
 							a.Airline_BSP_Participations__c = 0;
 							a.Airline_CASS_Participations__c = 0;
+							a.Airline_PASS_Participations__c = 0;
 					}
 
 					set<String> setCASSParticipationNames = new set<String>{'CASS Participation', 'CASS Representation', 'CASS via GSSA', 'CASS Export Direct Participation', 'CASS Import Direct Participation', 'CASS Export via GSSA', 'CASS Import via GHA'};
 					set<String> setBSPParticipationNames = new set<String>{'BSP Participation', 'BSP via IBCS'};
+					set<String> setPASSParticipationNames = new set<String>{'PASS Participation', 'PASS Country','PASS Country Aggregator'};
 
 					// count the participations by type
 					for (Services_Rendered__c sr : lstParticipations) {
@@ -437,6 +464,9 @@ public class ServiceRenderedCaseLogic {
 							if (setBSPParticipationNames.contains(sr.Services_Rendered_Type__c)) {
 									//mapBSPParticipationsPerAccountHQId.get(HQAccountId) += 1;
 									mapHQAccountsPerId.get(HQAccountId).Airline_BSP_Participations__c  += 1;
+							}
+							if (setPASSParticipationNames.contains(sr.Services_Rendered_Type__c)) {
+								mapHQAccountsPerId.get(HQAccountId).Airline_PASS_Participations__c  += 1;
 							}
 					}
 

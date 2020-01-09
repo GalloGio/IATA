@@ -133,6 +133,8 @@ public without sharing class ISSP_AMS_Accreditation {
 	public string txtHelpGrossSales {get; set;}
 	public string txtHelpTrainedStaffOrganization {get; set;} //FM - AMSU-20
 	public string txtHelpTrainedStaffReference {get; set;} //FM - AMSU-20
+	public String txtHelpPassAdmin {get; set;}
+	public String txtHelpPassUser {get; set;}
 
 	//Labels to come up in user's portal language (and not lang set on VF page)
 	public string txtLocalAgencyDetailsTitle {get; set;}
@@ -395,6 +397,18 @@ public without sharing class ISSP_AMS_Accreditation {
 		set;
 	}
 
+	public Boolean isPassAccreditation{
+		get{ 
+			if(ApexPages.currentPage().getParameters().get('accType')=='PASS')
+				return true;
+			else
+				return false;
+			}
+		set;
+	}
+
+    public String passParam { get { if(isPassAccreditation==true){ return '&accType=PASS';} return '';} set;}
+
 	public Boolean isNewPortal {
 	get {
 		if(isNewPortal == null) {
@@ -572,7 +586,7 @@ public without sharing class ISSP_AMS_Accreditation {
 		if (con.Account.Top_Parent__c == null) { //User is from HQ Account
 			vHQAccountId = con.AccountId;
 			fetchHQAccountDetails();
-			if (con.Account.IATACode__c != null && con.Account.RecordType.DeveloperName == 'IATA_Agency' && con.Account.Status__c != 'Terminated' && con.Account.Status__c != 'Not accreditated' && con.Account.Status__c != 'New application pending' &&
+			if (con.Account.IATACode__c != null && (con.Account.RecordType.DeveloperName == 'IATA_Agency' || con.Account.Sector__c==AMS_Utils.SECTOR_PASS) && con.Account.RecordType.DeveloperName == 'IATA_Agency' && con.Account.Status__c != 'Terminated' && con.Account.Status__c != 'Not accreditated' && con.Account.Status__c != 'New application pending' &&
 				con.Account.Status__c != 'No longer a customer' && con.Account.Status__c != 'Not in operation' &&
 				(con.Account.Status__c != 'Endorsed' || (con.Account.Location_Class__c != 'V' && con.Account.Location_Class__c != 'P') || (isocountry != null && isocountry.ISO_Code__c != 'US' && isocountry.ISO_Code__c != 'UP')) &&
 				(con.Account.Status__c != 'Listed' || (isocountry != null && isocountry.ISO_Code__c != 'CN')) ){
@@ -622,6 +636,9 @@ public without sharing class ISSP_AMS_Accreditation {
 			if (sector == AMS_Utils.SECTOR_PASSENGER) {
 				sectorDisplay = Label.ISSP_Travel_Agent;
 				sectorValue = 'Travel_Agent';
+			}else if(sector == AMS_Utils.SECTOR_PASS){
+				sectorDisplay = AMS_Utils.SECTOR_PASS;
+				sectorValue = AMS_Utils.sectorValuePass;
 			} else {
 				sectorDisplay = isocountry.AMS_Accreditation_New_Labels__c? Label.ISSP_Cargo_Agent_New: Label.ISSP_Cargo_Agent;
 				sectorValue = 'Cargo_Agent';
@@ -648,10 +665,18 @@ public without sharing class ISSP_AMS_Accreditation {
 		newForm.Multicountry_Apply_Language__c = applyLanguage;
 
 		//Labels set in controller remain in portal's user language
-		lblStepA = isocountry.AMS_Accreditation_New_Labels__c? Label.ISSP_AMS_Step1_ProgressBar_New: Label.ISSP_AMS_Step1_ProgressBar;
-		lblStepB = Label.ISSP_AMS_Step2_ProgressBar;
-		lblStepC = Label.ISSP_AMS_Step3_ProgressBar;
-		lblStepD = Label.ISSP_AMS_Step4_ProgressBar;
+		if(isPassAccreditation){
+			lblStepA=Label.ISSP_AMS_Step1_ProgressBar_PASS;
+			lblStepB = Label.ISSP_AMS_Step2_ProgressBar_PASS;
+			lblStepC = Label.ISSP_AMS_Step3_ProgressBar_PASS;
+			lblStepD = Label.ISSP_AMS_Step4_ProgressBar_PASS;
+			lblStep1Title=Label.ISSP_AMS_Step1_Title_PASS;
+		}else{
+			lblStepA = isocountry.AMS_Accreditation_New_Labels__c? Label.ISSP_AMS_Step1_ProgressBar_New: Label.ISSP_AMS_Step1_ProgressBar;
+			lblStepB = Label.ISSP_AMS_Step2_ProgressBar;
+			lblStepC = Label.ISSP_AMS_Step3_ProgressBar;
+			lblStepD = Label.ISSP_AMS_Step4_ProgressBar;
+		}
 		lblStepE = communityName == 'CNS' ? Label.ISSP_AMS_Step5_ProgressBar_CNS : Label.ISSP_AMS_Step5_ProgressBar;
 
 		lblNoCStepA = Label.ISSP_AMS_NoC_StepA;
@@ -666,7 +691,12 @@ public without sharing class ISSP_AMS_Accreditation {
 		lblCargoTitle = communityName == 'CNS' ? Label.ISSP_AMS_StepsAll_Cargo_Title_CNS : isocountry.AMS_Accreditation_New_Labels__c ? Label.ISSP_AMS_StepsAll_Cargo_Title_New : Label.ISSP_AMS_StepsAll_Cargo_Title;
 
 		lblEACPTitle = Label.ISSP_AMS_StepsAll_Cargo_EACP_Intermediary_Title;
-		lblCASSTitle = Label.ISSP_AMS_StepsAll_Cargo_CASS_Associate_Title;
+		if(isPassAccreditation){
+			lblCASSTitle = Label.ISSP_AMS_StepsAll_PASS_Participant_Title;
+		}
+		else{
+			lblCASSTitle = Label.ISSP_AMS_StepsAll_Cargo_CASS_Associate_Title;
+		}
 		lblImporAgentTitle = Label.ISSP_AMS_StepsAll_Import_Agent_Title;
 		lblCourierTitle = Label.ISSP_AMS_StepsAll_Courier_Title;
 
@@ -769,7 +799,7 @@ public without sharing class ISSP_AMS_Accreditation {
 				if (!isMultiCountryNewAE && !isMCAccredited && (newCase.Reason1__c == AMS_Utils.CASE_REASON_NEW_HO || newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_ABROAD
 					|| newCase.Reason1__c == AMS_Utils.CASE_REASON_HE_STANDARD || newCase.Reason1__c == AMS_Utils.CASE_REASON_HE_LITE || newCase.Reason1__c == AMS_Utils.CASE_REASON_HE_MULTICOUNTRY)) {
 					amsOfficeType = AMS_Utils.HO; //Branches Abroad have same country requirements as HO in that country
-				} else if (newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_IP || (newCase.Reason1__c == AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD || isMultiCountryNewAE || isMCAccredited)) {
+				} else if (newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_IP || newCase.Reason1__c == AMS_Utils.CASE_REASON_NEW_BR || (newCase.Reason1__c == AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD || isMultiCountryNewAE || isMCAccredited)) {
 					amsOfficeType = 'Branch';
 				}
 
@@ -850,6 +880,8 @@ public without sharing class ISSP_AMS_Accreditation {
 						sectorDisplay = Label.ISSP_AMS_NoC_Request_for_Change;
 					} else if (sectorValue.StartsWith('Travel_Agent')) {
 						sectorDisplay = Label.ISSP_Travel_Agent;
+					}else if (sectorValue.StartsWith(AMS_Utils.sectorValuePass)) {
+						sectorDisplay = Label.ISSP_PASS_Agent;
 					} else {
 						sectorDisplay = isocountry.AMS_Accreditation_New_Labels__c? Label.ISSP_Cargo_Agent_New: Label.ISSP_Cargo_Agent;
 						getCGORegionData();
@@ -1027,6 +1059,16 @@ public without sharing class ISSP_AMS_Accreditation {
 		}
 
 		amsLocationLabelTranslation();
+		if(isHOAccredited) {
+			amsLocationTypeLabelHq = translateAccreditationModel(hqAccount.ANG_Accreditation_Model__c);
+			amsLocationTypeLabel = translateAccreditationModel(newForm.ANG_Accreditation_type__c);
+			if(amsLocationTypeLabelHq == null) {
+				amsLocationTypeLabelHq = amsLocationTypeLabel;
+			}
+		} else {
+			amsLocationTypeLabel = translateAccreditationModel(newForm.ANG_Accreditation_type__c);
+			amsLocationTypeLabelHq = amsLocationTypeLabel;
+		}
 
 		namPaxAgent = (sector == 'Travel Agent' && namEnabled);
 
@@ -1797,9 +1839,18 @@ public without sharing class ISSP_AMS_Accreditation {
 					includedPageName = 'ISSP_AMS_Cargo_Branch_Form';
 					includedSummaryPage = 'ISSP_AMS_CGO_BR_ReadOnly';
 				}
-			} else if (newForm.Agent_Type__c != 'IATA Cargo Agent' && newCase.Reason1__c == AMS_Utils.CASE_REASON_NEW_HO) {
+			} else if (newForm.Agent_Type__c != 'IATA Cargo Agent' && newCase.Reason1__c == AMS_Utils.CASE_REASON_NEW_HO && !isPassAccreditation) {
 				includedPageName = 'ISSP_AMS_CASS_Associate_Form';
 				includedSummaryPage = 'ISSP_AMS_CASS_HO_ReadOnly';
+			} else if (isPassAccreditation) {//If the user is in the ISSP_AMS_Upload page on the PASS process
+				if(newCase.Reason1__c == AMS_UTILS.CASE_REASON_NEW_BR){
+					includedPageName = 'ISSP_AMS_PASS_Branch_Form';
+					includedSummaryPage = 'ISSP_AMS_PASS_BR_ReadOnly';
+				}
+				else{
+					includedPageName = 'ISSP_AMS_PASS_Form';
+					includedSummaryPage = 'ISSP_AMS_PASS_HO_ReadOnly';
+				}
 			} else {
 				includedPageName = 'ISSP_AMS_Cargo_Branch_Form';
 				includedSummaryPage = 'ISSP_AMS_CGO_BR_ReadOnly';
@@ -1875,6 +1926,16 @@ public without sharing class ISSP_AMS_Accreditation {
 
 			if(ISSP_Utilities.isCNS()) {
 				newCase.CNSCase__c=true;
+			}
+			if(isHOAccredited) {
+				amsLocationTypeLabelHq = translateAccreditationModel(hqAccount.ANG_Accreditation_Model__c);
+				amsLocationTypeLabel = translateAccreditationModel(newForm.ANG_Accreditation_type__c);
+				if(amsLocationTypeLabelHq == null) {
+					amsLocationTypeLabelHq = amsLocationTypeLabel;
+				}
+			} else {
+				amsLocationTypeLabel = translateAccreditationModel(newForm.ANG_Accreditation_type__c);
+				amsLocationTypeLabelHq = amsLocationTypeLabel;
 			}
 
 			String agentType = amsLocationType.substring(amsLocationType.indexOf('-') + 1).trim();
@@ -3234,7 +3295,9 @@ public without sharing class ISSP_AMS_Accreditation {
 		String pageURL = '/ISSP_AMS_Accreditation?caseId=' + newCase.Id + '&step=1' + commParam;
 
 		if (isNoticeOfChange) pageURL += '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange;
-		else {
+		else if(isPassAccreditation){
+			return new Pagereference('/ISSP_AMS_PASS_Accreditation?caseId=' + newCase.Id + '&step=1' + commParam);
+		} else {
 			if (isMultiCountryNewAE) {
 				pageURL += '&isMultiCountryNewAE=true';
 				if (currentMCFormId != null) {
@@ -3257,7 +3320,8 @@ public without sharing class ISSP_AMS_Accreditation {
 			pageURL += '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange;
 		} else if (isMultiCountryNewAE && !isMultiCountryAccredittedAddingAEs()) {
 			pageURL += '&isMultiCountryNewAE=true&currentMCFormId=' + currentMCFormId;
-		}
+		}else if(isPassAccreditation)
+			return new Pagereference('/ISSP_AMS_PASS_Accreditation?caseId=' + newCase.Id + '&step=2' + commParam);
 
 		return new Pagereference(pageURL);
 	}
@@ -3356,7 +3420,8 @@ public without sharing class ISSP_AMS_Accreditation {
 			}
 		} else if (isMultiCountryNewAE && !isMultiCountryAccredittedAddingAEs()) {
 			pageURL += '&isMultiCountryNewAE=true&currentMCFormId=' + currentMCFormId;
-		}
+		}else if(isPassAccreditation)
+			return new Pagereference('/ISSP_AMS_PASS_Accreditation?caseId=' + newCase.Id + '&step=4' + commParam);
 
 		if (newCase.Reason1__c == AMS_Utils.CASE_REASON_HE_MULTICOUNTRY) {
 			pageURL += '&formId=' + newForm.Id;
@@ -3372,7 +3437,8 @@ public without sharing class ISSP_AMS_Accreditation {
 			pageURL += '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange;
 		} else if (isMultiCountryNewAE && !isMultiCountryAccredittedAddingAEs()) {
 			pageURL += '&isMultiCountryNewAE=true&currentMCFormId=' + currentMCFormId;
-		}
+		} else if(isPassAccreditation)
+			return new Pagereference('/ISSP_AMS_PASS_Accreditation?caseId=' + newCase.Id + '&step=5' + commParam+passParam);
 
 		return new Pagereference(pageURL);
 	}
@@ -3454,6 +3520,9 @@ public without sharing class ISSP_AMS_Accreditation {
 	}
 
 	public Pagereference redirectToCasesList() {
+		if(isPassAccreditation){
+			return new Pagereference('/ISSP_AMSCases?accType=PASS' + commParam);
+		}
 		return new Pagereference('/ISSP_AMSCases' + commParamFirst);
 	}
 
@@ -4388,19 +4457,32 @@ public without sharing class ISSP_AMS_Accreditation {
 			return Label.ISSP_ANG_OPTION_PAX_HE_standard;
 		} else if (amsLocationType == AMS_Utils.TYPE_HE_LITE_NO_CASH) {
 			return Label.ISSP_ANG_OPTION_PAX_HE_lite;
-		} else {
+		} else if (amsLocationType == AMS_Utils.TYPE_PAX_PASS_HO ){
+			return Label.ISSP_AMS_OPTION_PAX_PASS_HO;
+		} else if (amsLocationType == AMS_Utils.TYPE_PAX_PASS_BRANCH ){
+			return Label.ISSP_AMS_OPTION_PAX_PASS_BRANCH;
+ 		}else {
 			return Label.ISSP_AMS_OPTION_PAX_BRANCH;
 		}
 	}
 
 	public AMS_Accreditation_Country_CheckList__c CountryCheckList {
 		get{
+			List<AMS_Accreditation_Country_CheckList__c> aux;
 			String iso = (isMultiCountryNewAE) ? mcformCountryISO : newCase.IFAP_Country_ISO__c;
 
-			List<AMS_Accreditation_Country_CheckList__c> aux = [SELECT License_required__c, Registration_required__c, Statement_of_International_Sales__c, Statement_of_International_Sales_Branch__c
+			if(isPassAccreditation){
+				aux = [
+					SELECT License_required__c, Registration_required__c, Statement_of_International_Sales__c, Statement_of_International_Sales_Branch__c
+					FROM AMS_Accreditation_Country_CheckList__c
+					WHERE Operation__c = :sector LIMIT 1
+                ];
+			}else{
+			aux = [SELECT License_required__c, Registration_required__c, Statement_of_International_Sales__c, Statement_of_International_Sales_Branch__c
 																FROM AMS_Accreditation_Country_CheckList__c
 																WHERE IATA_ISO_Country__r.ISO_Code__c = :iso
 																	AND Operation__c = :sector];
+			}
 
 			return (!aux.isEmpty()) ? aux[0] : null;
 		}
@@ -4486,6 +4568,8 @@ public without sharing class ISSP_AMS_Accreditation {
 			retNoCCargoCountryReqments(false);
 		} else if (sectorValue.StartsWith('Travel_Agent') && isNoticeOfChange) {
 			retNoCTravelCountryReqments(false);
+		} else if (sectorValue.StartsWith('Cargo_Agent') && isPassAccreditation) {
+			retPASSReqments(false);
 		}
 	}
 
@@ -4758,7 +4842,8 @@ public without sharing class ISSP_AMS_Accreditation {
 		if (paramCodeSelect == AccredContactEnum.PARAMCODE_PREV_OWNERS || paramCodeSelect == AccredContactEnum.PARAMCODE_CURR_OWNERS || paramCodeSelect == AccredContactEnum.PARAMCODE_AGENCY_CONTACTS) {
 			query += 'AMS_Pax_Accreditation_Form__c, Name, First_name__c, Last_name__c, Salutation__c, Agency_owner__c, Agency_role__c, Email__c, Phone__c, ';
 			query += 'Financial_interest__c, Contact_Id__c, Contact__c, AMS_OwnershipId__c, AMS_ContactId__c, Local_First_name__c, Local_Last_name__c, Number_Of_Shares__c, ';
-			query += 'AddressStreet__c, AddressCity__c, AddressCountry__c, AddressPostcode__c, Time_devoted_to_Agency_business__c, FAX__c, Financial_Assessment_Contact__c, Mobile__c ';
+			query += 'AddressStreet__c, AddressCity__c, AddressCountry__c, AddressPostcode__c, Time_devoted_to_Agency_business__c, FAX__c, Financial_Assessment_Contact__c, Mobile__c, ';
+			query += 'PASS_admin__c, PASS_user__c'
 		}
 
 		Id trainedStaffRecType = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Trained_Staff');
@@ -5603,6 +5688,28 @@ public without sharing class ISSP_AMS_Accreditation {
 
 		return selectedLang;
 	}
+	private void retPASSReqments(boolean isFromValidation){
+		SYSTEM.DEBUG('Getting PASS requirements');
+
+		String selectedLang;
+
+		if (applyLanguage == 'fr') {
+			selectedLang = 'French';
+		} else if (applyLanguage == 'es') {
+			selectedLang = 'Spanish';
+		} else {
+			selectedLang = 'English';
+		}
+
+		RecordType PASSReqRecType = [Select Id From RecordType  Where SobjectType = 'AMS_Accreditation_Requirement__c' and DeveloperName = 'PASS'];
+		this.List_CountryReqments = [SELECT Id, Name, Requirement_text__c, File_to_Upload__c, File_Identifier2__c
+									FROM AMS_Accreditation_Requirement__c
+									WHERE AMS_Accreditation_Country_CheckList__r.Operation__c = :sector
+									AND Location_type__c INCLUDES (:amsOfficeType) AND Language__c = :selectedLang
+									AND RecordTypeId = :PASSReqRecType.Id
+									ORDER BY Sort_Order__c ASC
+                                    ];
+    }
 
 	private void retCargoCountryReqments(Boolean isFromValidation) {
 		Set<String> allowIdentifierSet = new Set<String>();
@@ -7305,6 +7412,13 @@ public without sharing class ISSP_AMS_Accreditation {
 		if (hlpMap.containsKey('TRAINED_STAFF_REFERENCE')) {
 			txtHelpTrainedStaffReference = (String) hlpMap.get('TRAINED_STAFF_REFERENCE').get(fldName);
 		}
+		if (hlpMap.containsKey('PASS_ADMIN')) {
+			txtHelpPassAdmin = (String) hlpMap.get('PASS_ADMIN').get(fldName);
+		}
+		if (hlpMap.containsKey('PASS_USER)) {
+			txtHelpPassUser = (String) hlpMap.get('PASS_USER').get(fldName);
+		}
+		
 
 		txtLocalAgencyDetailsTitle = Label.ISSP_AMS_Local_Details_Title;
 		txtLocalAgencyDetailsPleaseEnter = Label.ISSP_AMS_Local_Details_Please_Enter;
