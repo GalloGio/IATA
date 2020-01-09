@@ -146,6 +146,7 @@ public without sharing class AMS_Utils {
     public static final String CERT_DGA         = 'DGA';
     public static final String CERT_CATA        = 'CATA';
     public static final String CERT_TSA         = 'TSA';
+    public static final String CERT_ULD         = 'ULD';
 
     //Record Types
     public static final String RECTYPE_NEW          = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NEW');

@@ -43,7 +43,8 @@ public class AMS_AgencyRegulationTriggerHandler {
                         oldAgRegulationValues.get(agReg.Id).Notification_Date__c != agReg.Notification_Date__c)
                     )
                     && (agReg.Type_of_Certificate__c == AMS_Utils.CERT_DGR 
-                        || agReg.Type_of_Certificate__c == AMS_Utils.CERT_TSA) 
+                        || agReg.Type_of_Certificate__c == AMS_Utils.CERT_TSA
+                        || agReg.Type_of_Certificate__c == AMS_Utils.CERT_ULD) 
                     && agReg.Handling_Account__c)
                     dgrRegulationsExpiringIn90Days.add(agReg);
                     if(!renewalCertPerAccount.containsKey(agReg.Account__c+agReg.Type_of_Certificate__c))

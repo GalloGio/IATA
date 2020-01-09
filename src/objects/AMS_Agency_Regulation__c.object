@@ -368,6 +368,11 @@
                     <default>false</default>
                     <label>CATA</label>
                 </value>
+                <value>
+                    <fullName>ULD</fullName>
+                    <default>false</default>
+                    <label>ULD</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
@@ -431,6 +436,18 @@
         <active>true</active>
         <errorConditionFormula>AND(ISPICKVAL(Type_Of_Certificate__c, &quot;DGR&quot;),  ISBLANK( Expiry_Date__c ))</errorConditionFormula>
         <errorMessage>DGR certificates must have an expiry date.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>ULD_Certificates_expire_limitation</fullName>
+        <active>true</active>
+        <description>Users can&quot;t save an expiry date less than 90 days in ULC Certificates</description>
+        <errorConditionFormula>AND(
+OR(ISNEW(),ISCHANGED(Expiry_Date__c)),
+ISPICKVAL(Type_Of_Certificate__c,&quot;ULD&quot;),
+(Expiry_Date__c-TODAY()) &lt; 90
+    )</errorConditionFormula>
+        <errorDisplayField>Expiry_Date__c</errorDisplayField>
+        <errorMessage>Must be more than 90 days</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Uncheck_notification_sent</fullName>
