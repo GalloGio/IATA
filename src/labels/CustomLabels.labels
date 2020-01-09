@@ -25145,6 +25145,14 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <value>Only Legal Authorized Signatories can notify IATA about office closures. You can designate your Agency&apos;s Authorized Signatory in the &apos;Company Administration -&gt; Contacts section&apos;.</value>
     </labels>
     <labels>
+        <fullName>ISSP_ANG_BANK_DETAILS_MC_BLOCK</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_ANG_BANK_DETAILS_MC_BLOCK</shortDescription>
+        <value>In order to notify IATA of a change of bank account details please contact us</value>
+    </labels>	
+    <labels>
         <fullName>ISSP_ANG_BRANCH_OFFICE</fullName>
         <categories>ISSP,ANG</categories>
         <language>en_US</language>
