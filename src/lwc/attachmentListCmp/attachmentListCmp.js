@@ -196,7 +196,7 @@ export default class AttachmentListCmp extends LightningElement {
 
         //gets details from the inserted files
         getContentDetails({ attachList: newFiles }).then(result => {
-            this.newDocsList = templist.concat(this.prepareData(result));
+            this.newDocsList = templist.concat(this.prepareData(JSON.parse(JSON.stringify(result))));
             this.loading = false;
         });
 
