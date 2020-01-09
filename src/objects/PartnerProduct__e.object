@@ -44,4 +44,5 @@
     </fields>
     <label>Partner Product</label>
     <pluralLabel>Partner Products</pluralLabel>
+    <publishBehavior>PublishImmediately</publishBehavior>
 </CustomObject>
