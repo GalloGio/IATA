@@ -12,8 +12,6 @@ import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 import { NavigationMixin } from 'lightning/navigation';
 import { navigateToPage } from 'c/navigationUtils';
 
-import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
-
 //import labels
 import CSP_Services_ManageService from '@salesforce/label/c.CSP_Services_ManageService';
 import CSP_Services_GoToService from '@salesforce/label/c.CSP_Services_GoToService';
