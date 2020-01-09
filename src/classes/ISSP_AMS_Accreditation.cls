@@ -1929,7 +1929,7 @@ public without sharing class ISSP_AMS_Accreditation {
 
 			if(ISSP_Utilities.isCNS()) {
 				newCase.CNSCase__c=true;
-
+			}
 			if(isHOAccredited) {
 				amsLocationTypeLabelHq = translateAccreditationModel(hqAccount.ANG_Accreditation_Model__c);
 				amsLocationTypeLabel = translateAccreditationModel(newForm.ANG_Accreditation_type__c);
@@ -3309,7 +3309,7 @@ public without sharing class ISSP_AMS_Accreditation {
 			if (isMCAccredited) {
 				pageURL += '&isMultiCountryNewAE=true&isMCAccredited=true';
 			}
-			
+
 			if(isPassAccreditation){
 				return new Pagereference('/ISSP_AMS_PASS_Accreditation?caseId=' + newCase.Id + '&step=1' + commParam);
 			}
