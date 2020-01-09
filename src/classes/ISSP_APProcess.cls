@@ -1566,10 +1566,12 @@ global without sharing class ISSP_APProcess {
 	public List<SelectOption> getListOptionCountries() {
 		List <AP_Country_Requierment__c> isoListJoining;
 		List <Services_Rendered__c> isoListChange = new List <Services_Rendered__c>();
+		List<SelectOption> options = new List<SelectOption>();
+		Set<String> sISOCode = New Set<String>();
 
 		strOperationType = Apexpages.currentPage().getParameters().get('strOT');
 
-			if(strOperationType!='PASS' || (strOperationType=='PASS' && isGSSAUser)){
+		if(strOperationType!='PASS' || (strOperationType=='PASS' && isGSSAUser)){
 				strLOB = null;
 			
 				if(strOperationType != null) {
@@ -1614,9 +1616,6 @@ global without sharing class ISSP_APProcess {
 								ORDER BY ISO_Country_formula__c];
 				}
 			}
-
-			List<SelectOption> options = new List<SelectOption>();
-			Set<String> sISOCode = New Set<String>();
 
 			options.add(new SelectOption('', '--None--'));
 			if(strAreaType=='Airline Joining') {
@@ -1693,7 +1692,7 @@ global without sharing class ISSP_APProcess {
 		if(category <> 'IBCS consolidator'){
 			setTypes.add('CASS Export');
 			setTypes.add('CASS Import');
-			setTyoes.add(AMS_Utils.passParticipation);
+			setTypes.add(AMS_Utils.passParticipation);
 		}
 
 		if (!getICHSubtypes().isEmpty()) {
