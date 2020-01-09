@@ -860,9 +860,7 @@ public static void PortalServicesCtrlTest_getAvailableServicesForNewContact(){
 		System.runAs(portalUser) {
 
 			Test.StartTest();
-			Boolean result = PortalServicesCtrl.verifyCompleteL3Data(portalServicelist.get(0).id);
-			//false because not all required contact information is populated
-			system.assert(!result);
+			String result = PortalServicesCtrl.verifyCompleteL3Data(portalServicelist.get(0).id);
 
 			String id = PortalServicesCtrl.getPortalServiceId('serviceTest3');
 			system.assert(portalServicelist.get(0).id == id);
