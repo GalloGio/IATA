@@ -882,13 +882,13 @@ global without sharing class ISSP_APProcess {
 			dupeDraft = [
 				SELECT id, AccountId, Reason1__c, Country_concerned_by_the_query__c,CaseArea__c,Account_Concerned__c,Account_Concerned__r.Top_Parent__c
 				FROM Case
-				WHERE Case.Status IN ('Draft','Pending customer','For Review and Acceptance') AND Case.RecordTypeId=:RECORD_TYPE_ID 
-				AND Case.Verification__c = : joiningType 
-				AND Case.CaseArea__c = 'Airline Joining' 
+				WHERE Case.Status IN ('Draft','Pending customer','For Review and Acceptance') AND Case.RecordTypeId=:RECORD_TYPE_ID
+				AND Case.Verification__c = : joiningType
+				AND Case.CaseArea__c = 'Airline Joining'
 				AND Case.Reason1__c!=:AMS_Utils.passCountryCaseReason
 				AND Case.Case_Group__c!='Recycle Bin'
-				AND (Case.Account_Concerned__c = :vAccountConcerned OR Case.Account_Concerned__r.Top_Parent__c=:vAccountConcerned OR 
-				((Case.Account_Concerned__c = :accountConcernedTopParentList[0].Top_Parent__c OR 
+				AND (Case.Account_Concerned__c = :vAccountConcerned OR Case.Account_Concerned__r.Top_Parent__c=:vAccountConcerned OR
+				((Case.Account_Concerned__c = :accountConcernedTopParentList[0].Top_Parent__c OR
 				Case.Account_Concerned__r.Top_Parent__c =:accountConcernedTopParentList[0].Top_Parent__c) AND Case.Account_Concerned__r.Top_Parent__c !=null))];
 
 		} else {
@@ -946,10 +946,10 @@ global without sharing class ISSP_APProcess {
 		String description;
 
 		 if(isGSSAUser) {
-			 if(strOperationType=='Airline Joining') {
-			   vGSSAAccountId = con.AccountId;
-			  vHQAccountId = cassairlineid; //For Joining selected AL in list is a HQ Account Id
-			 } else { //whereas for Chhanges (Services Rendered) selected Account Id may well be a BR account
+			if(strOperationType=='Airline Joining') {
+				vGSSAAccountId = con.AccountId;
+				vHQAccountId = cassairlineid; //For Joining selected AL in list is a HQ Account Id
+			} else { //whereas for Chhanges (Services Rendered) selected Account Id may well be a BR account
 				List <Account> airlineList = [SELECT Id, Name, IATACode__c, Airline_designator__c, Airline_Prefix__c, Top_Parent__c FROM Account WHERE Id = :cassairlineid];
 				if (!airlineList.isEmpty()){
 					if(airlineList[0].Top_Parent__c==null) {
@@ -1010,7 +1010,7 @@ global without sharing class ISSP_APProcess {
 					retrieveCountryRequirements(newCase.IFAP_Country_ISO__c, strLoB);
 					newCase.Account_Concerned__c = retrieveAirlineConcerned(hqAccount, con.Account.Airline_designator__c,
 																		con.Account.IATACode__c,
-																		apCountryisocode, con.Account.Name, vHqAccountId);                                                 
+																		apCountryisocode, con.Account.Name, vHqAccountId);
 					newCase.AccountId = newCase.Account_Concerned__c;
 				}else{//if there are several selected countries, there will be one parent case with IFAP_Country_ISO__c empty, and one child case per country. In this case, the Country_Concerned__c field will hold the selected countries
 					newCase.Account_Concerned__c = hqAccount.id;//to be confirmed
@@ -1023,7 +1023,7 @@ global without sharing class ISSP_APProcess {
 					for(SelectOption option : selectedPASSCountries) {
 						if(countryConcerned=='' || countryConcerned==null){
 							countryConcerned=option.getValue();
-						}else{       
+						}else{
 							countryConcerned = countryConcerned + ';' + option.getValue();
 						}
 					}
@@ -1057,7 +1057,7 @@ global without sharing class ISSP_APProcess {
 																	con.Account.IATACode__c,
 																	apCountryisocode, con.Account.Name, vHqAccountId);
 			}
-		}
+
 		}
 		if((isPassAirline && selectedPASSCountries.size()==1) || !isPassAirline || isGSSAUser){//If the Airline is not PASS or if there is only one selected country, the Country related fields can be populated
 			isocountry = fetchISOCountry(newCase.IFAP_Country_ISO__c);
@@ -1236,7 +1236,7 @@ global without sharing class ISSP_APProcess {
                 strReason=AMS_Utils.passAirlineCaseReason;
 			} else {
 				strReason='CASS Export via GSSA' + strReasonMembership;
-			
+
 				isCASS = true;
 				strLoB = 'CASS';
 			}
@@ -1260,7 +1260,7 @@ global without sharing class ISSP_APProcess {
 			if(managePASS){
 				strReason=AMS_Utils.passAggregatorCaseReason;
 			} else {
-				strReason=AMS_Utils.passAirlineCaseReason;    
+				strReason=AMS_Utils.passAirlineCaseReason;
 			}
 			isPASS = true;
 			strLoB = 'PASS';
@@ -1284,7 +1284,7 @@ global without sharing class ISSP_APProcess {
 
 			passParam='&airline=PASS';
 			if(isStep3){
-				return new Pagereference('/ISSP_APProcess2?caseId='+newCase.Id+'&step=1'+passParam); 
+				return new Pagereference('/ISSP_APProcess2?caseId='+newCase.Id+'&step=1'+passParam);
 			}else if(managePASS){
 				passParam=passParam+'&managePASS=true';
 				return new Pagereference('/ISSP_APProcess2?caseId='+newCase.Id+'&step=4'+passParam);
@@ -1356,9 +1356,9 @@ global without sharing class ISSP_APProcess {
 				newForm.RecordTypeId = apProcessFormRecordTypesMap.get(strLoB + ' Change');
 			}
 			if(!managePASS){ // No form record is needed when user is just adding countries to PASS airline
-				upsert newForm;    
+				upsert newForm;
 			}
-			
+
 			//*******************************
  			if(isPassAirline && !string.isEmpty(newCase.Country_Concerned__c)){
 				String countryWithoutBankMandate='';
@@ -1376,7 +1376,7 @@ global without sharing class ISSP_APProcess {
 					for(String country : isocodeList){
 					Case newChildCase = newCase.clone(false, true, false, false);
 					newChildCase.BSPCountry__c = isoCountryMap.get(country).Name;
-					newChildCase.Subject = 'Airline Participation - PASS Country - ' + newChildCase.BSPCountry__c;    
+					newChildCase.Subject = 'Airline Participation - PASS Country - ' + newChildCase.BSPCountry__c;
 					newChildCase.Country_concerned_by_the_query__c=isoCountryMap.get(country).Name;
 					newChildCase.CurrencyIsoCode=isoCountryMap.get(country).CurrencyIsoCode;
 					newChildCase.IFAP_Country_ISO__c=country;
@@ -1390,7 +1390,7 @@ global without sharing class ISSP_APProcess {
 					}
 					newChildCase.ParentId = newCase.Id;
 					newChildCase.Visible_on_ISS_Portal__c = false;
-                    
+
 					caseWithAttachment=false;
 					for(Attachment attachmentRecord:attch){
 						if(attachmentRecord.Name.startsWith(newChildCase.IFAP_Country_ISO__c+' - ')){
@@ -1413,15 +1413,15 @@ global without sharing class ISSP_APProcess {
 					newForm.addError('Please attach the bank mandate (one for each currency) before submitting the application for these countries: '+countryWithoutBankMandate+'.');
 					return null;
 				}
-                
+
  				insert childCaseList;
 				Map<Id,String> childCaseIdIsoCodeMap=new Map<Id,String>();
 				for(Case childCaseRecord:childCaseList){
 					childCaseIdIsoCodeMap.put(childCaseRecord.id,childCaseRecord.IFAP_Country_ISO__c);
 				}
-                
+
 				copyAttachmentsToChildCases(vCaseId,childCaseIdIsoCodeMap);
-                
+
 			}
 			newCase.Status = 'For Review and Acceptance';
 			newCase.Dossier_Reception_Date__c = Date.today();
@@ -1439,7 +1439,7 @@ global without sharing class ISSP_APProcess {
 
 		return null;
 	}
-	
+
 	@future(callout=true)
 	public static void copyAttachmentsToChildCases(Id parentCase, Map<Id,String> childCaseIdIsoCodeMap){
 
@@ -1457,7 +1457,7 @@ global without sharing class ISSP_APProcess {
 		if(!AFList.isEmpty()){
 			insert AFList;
 		}
-        
+
 
 	}
 
@@ -1549,7 +1549,7 @@ global without sharing class ISSP_APProcess {
     public Pagereference cancel(){
 		String retURL = ApexPages.currentPage().getParameters().get('retURL');
 		String APprocess = ApexPages.currentPage().getParameters().get('proc');
-        
+
 		if (retURL == null) {
 			return new Pagereference('/ISSP_APCases');
 		} else {
@@ -1564,7 +1564,7 @@ global without sharing class ISSP_APProcess {
 	public List<SelectOption> getListOptionCountries() {
 		List <AP_Country_Requierment__c> isoListJoining;
 		List <Services_Rendered__c> isoListChange = new List <Services_Rendered__c>();
-		
+
 		strOperationType = Apexpages.currentPage().getParameters().get('strOT');
 
 		if(strOperationType!='PASS' || (strOperationType=='PASS' && isGSSAUser)){
@@ -2045,7 +2045,7 @@ global without sharing class ISSP_APProcess {
 	@future(callout=true)
 	private static void deleteAmazonAttachment(String strId, String fullName) {
 		try {
-            
+
 			Id sObjectId = Id.ValueOf(strId);
 			WrapperAttach attach = WrapperAttach.getAmazonAttachment( sObjectId, fullName);
 			attach.moveToBucket();
@@ -2231,7 +2231,7 @@ global without sharing class ISSP_APProcess {
 					concernedAccountExists=true;
 					countryAccountConcernedIdMap.put(countryCode,concernedAccount.Id);
 				}
-			} 
+			}
 			if(!concernedAccountExists){//If there is not any account with the defined Site, the system needs to create a new Account
 				Account airlineBR = new Account();
 				airlineBR.RecordTypeId = Schema.SObjectType.Account.RecordTypeInfosByName.get('Standard Account').RecordTypeId;
@@ -2255,9 +2255,9 @@ global without sharing class ISSP_APProcess {
 
 				countryAccountConcernedIdMap.put(countryCode,airlineBR.Id);
 			}
-            
+
 		}
-        
+
 		return countryAccountConcernedIdMap;
 	}
 	// ApexPages.StandardSetController must be instantiated
@@ -3050,7 +3050,7 @@ global without sharing class ISSP_APProcess {
 
 	//dummy method to be remoded
 	public List<System.SelectOption> getItems() {return null;}
-	
+
 	//PASS
 	public Pagereference changeIsPassAirlineMethod(){
 		strOperationType = Apexpages.currentPage().getParameters().get('strOT');
