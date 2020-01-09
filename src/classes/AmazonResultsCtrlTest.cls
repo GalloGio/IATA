@@ -3,16 +3,16 @@ public class AmazonResultsCtrlTest {
 
 	public  static void loadCredentials() {
 				IfapToolManagerTest.beforeTest();
-		
+
 		Amazon_Cred__c Amazon_Cred =  new Amazon_Cred__c(name = 'IFAP', Prod_Configuration__c = 'adevconf' , Dev_Configuration__c = 'adevconf');
 		insert Amazon_Cred;
 
 		list<AWSKey__c> AWS_KEYs = new list<AWSKey__c>{
 			new AWSKey__c(
 				name = 'adevconf',
-				Key__c = 'asd', 
-				Secret__c = 'asd',  
-				IAS_configuration_name__c = 'asdas', 
+				Key__c = 'asd',
+				Secret__c = 'asd',
+				IAS_configuration_name__c = 'asdas',
 				IAS_Access_Point__c = 'asd',
 				Bucket__c = 'asd',
 				AWS_ENDPOINT_URL__c = 'asd')
@@ -21,7 +21,7 @@ public class AmazonResultsCtrlTest {
 	}
 
 	private static testMethod void testControllerError() {
-		
+
 		Case cse = new Case();
 
 		Test.startTest();
@@ -37,7 +37,7 @@ public class AmazonResultsCtrlTest {
 	}
 
 	private static testMethod void testControllerCaseNotArchived() {
-		
+
 		loadCredentials();
 
 		Case cse = new Case();

@@ -3,6 +3,61 @@ public class ANG_MulticountryOscarCreatorBatch_Test
 {
 
 	@testSetup static void setup(){
+
+		list<Amazon_Cred__c> listAmazonCred =  new list<Amazon_Cred__c>{
+			new Amazon_Cred__c(
+				name = 'GenericAttach',
+				Dev_Configuration__c = 'GenericAttach-dev',
+				Prod_Configuration__c = 'GenericAttach-prod'
+			),
+			new Amazon_Cred__c(
+				name = 'RecycleBin',
+				Dev_Configuration__c = 'RecycleBin-dev',
+				Prod_Configuration__c = 'RecycleBin-prod'
+			)
+		};
+		insert listAmazonCred;
+
+		list<AWSKey__c> AWS_KEYs = new list<AWSKey__c>{
+			new AWSKey__c(
+				name = 'GenericAttach-dev' ,
+				Key__c = 'asd',
+				Secret__c = 'asd',
+				IAS_configuration_name__c = 'asdas',
+				IAS_Access_Point__c = 'asd',
+				Bucket__c = 'asd',
+				AWS_ENDPOINT_URL__c = 'asd'
+			),
+			new AWSKey__c(
+				name = 'RecycleBin-dev' ,
+				Key__c = 'asd',
+				Secret__c = 'asd',
+				IAS_configuration_name__c = 'asdas',
+				IAS_Access_Point__c = 'asd',
+				Bucket__c = 'asd',
+				AWS_ENDPOINT_URL__c = 'asd'
+			),
+			new AWSKey__c(
+				name = 'GenericAttach-prod' ,
+				Key__c = 'asd',
+				Secret__c = 'asd',
+				IAS_configuration_name__c = 'asdas',
+				IAS_Access_Point__c = 'asd',
+				Bucket__c = 'asd',
+				AWS_ENDPOINT_URL__c = 'asd'
+			),
+			new AWSKey__c(
+				name = 'RecycleBin-prod' ,
+				Key__c = 'asd',
+				Secret__c = 'asd',
+				IAS_configuration_name__c = 'asdas',
+				IAS_Access_Point__c = 'asd',
+				Bucket__c = 'asd',
+				AWS_ENDPOINT_URL__c = 'asd'
+			)
+		};
+		insert AWS_KEYs;
+
 	}
 
 	static testMethod void executePortalMCAccreditationAE() {
@@ -103,15 +158,39 @@ public class ANG_MulticountryOscarCreatorBatch_Test
 
 		insert new List<AMS_Pax_Accreditation_Form__c>{theAccreditation,theSecondAccreditation};
 
-		Set<Id> idAccountSet = new Set<Id>();
+		AmazonFile__c firstAmazonFile = new AmazonFile__c(
+			Name = '00000002.xml',
+			Full_Name_Unique__c = 'IFAP/FinancialResults/00000002/00000002.xml',
+			File_Identifier__c = 'ARTICLES_ASSOC',
+			File_Identifier_picklist__c = 'ARTICLES_ASSOC',
+			Review_Status__c = 'Pending',
+			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AmazonFile__c', 'AMS_File'),
+			Size_MB__c = 0.0000005,
+			isPublic__c = true,
+			Case__c = oscarCase.Id,
+			Form__c = theSecondAccreditation.Id
+		);
 
-		For(Account acct : [Select id from Account where IATA_ISO_Country__r.Name = 'Portugal']){
-			idAccountSet.add(acct.id);
-		}
+		AmazonFile__c secondAmazonFile = new AmazonFile__c(
+			Name = 'b.pdf',
+			Full_Name_Unique__c = 'IFAP/50011000006kn5PAAQ/b.pdf',
+			File_Identifier__c = 'ARTICLES_ASSOC',
+			File_Identifier_picklist__c = 'ARTICLES_ASSOC',
+			Review_Status__c = 'Pending',
+			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AmazonFile__c', 'AMS_File'),
+			Size_MB__c = 0.0000005,
+			isPublic__c = true,
+			Case__c = oscarCase.Id,
+			Form__c = theSecondAccreditation.Id
+		);
+
+		insert new List<AmazonFile__c>{firstAmazonFile, secondAmazonFile};
+
+		Set<Id> idAccountSet = new Set<Id>{newBSPCountryAcc.Id};
 
 		Test.startTest();
 
-		ANG_MulticountryOscarCreatorBatch a = new ANG_MulticountryOscarCreatorBatch(idAccountSet);
+		ANG_MulticountryOscarCreatorBatch a = new ANG_MulticountryOscarCreatorBatch(oscarCase.Id, idAccountSet);
 
 		Database.executeBatch(a, 1);
 
@@ -200,15 +279,10 @@ public class ANG_MulticountryOscarCreatorBatch_Test
 
 		insert new List<AMS_Pax_Accreditation_Form__c>{theAccreditation};
 
-		Set<Id> idAccountSet = new Set<Id>();
-
-		For(Account acct : [Select id from Account where IATA_ISO_Country__r.Name = 'Portugal']){
-			idAccountSet.add(acct.id);
-		}
-
+		Set<Id> idAccountSet = new Set<Id>{newBSPCountryAcc.Id};
 		Test.startTest();
 
-		ANG_MulticountryOscarCreatorBatch a = new ANG_MulticountryOscarCreatorBatch(idAccountSet);
+		ANG_MulticountryOscarCreatorBatch a = new ANG_MulticountryOscarCreatorBatch(oscarCase.Id, idAccountSet);
 
 		Database.executeBatch(a, 1);
 

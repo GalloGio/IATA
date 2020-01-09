@@ -1,27 +1,27 @@
 trigger AMS_InspectionTrigger on AMS_Inspection__c (before insert, before update, after insert, after update, after delete) {
 
-	   
-    if(!AMS_TriggerExecutionManager.checkExecution(AMS_Inspection__c.getSObjectType(), 'AMS_InspectionTrigger')) { return; }
 
-     //Delete Agency Owner created by AMS AccountRole
-    //if(Trigger.isAfter && Trigger.isDelete) ams2gdp_TriggerHelper.crossDeleteAccreditations(Trigger.old);
-    
-    /*AMSU-161 - begin*/
-    if(Trigger.isBefore && Trigger.isInsert){
-        AMS_InspectionTriggerHandler.handleBeforeInsert(Trigger.new);
-    }
-    /*AMSU-161 - end*/
+	if(!AMS_TriggerExecutionManager.checkExecution(AMS_Inspection__c.getSObjectType(), 'AMS_InspectionTrigger')) { return; }
 
-    if(Trigger.isAfter && Trigger.isInsert){
+	 //Delete Agency Owner created by AMS AccountRole
+	//if(Trigger.isAfter && Trigger.isDelete) ams2gdp_TriggerHelper.crossDeleteAccreditations(Trigger.old);
 
-        AMS_InspectionTriggerHandler.handleAfterInsert(Trigger.old, Trigger.new);
+	/*AMSU-161 - begin*/
+	if(Trigger.isBefore && Trigger.isInsert){
+		AMS_InspectionTriggerHandler.handleBeforeInsert(Trigger.new);
+	}
+	/*AMSU-161 - end*/
 
-    }
+	if(Trigger.isAfter && Trigger.isInsert){
 
-    if(Trigger.isAfter && Trigger.isUpdate){
+		AMS_InspectionTriggerHandler.handleAfterInsert(Trigger.old, Trigger.new);
 
-        AMS_InspectionTriggerHandler.handleAfterUpdate(Trigger.old, Trigger.new);
+	}
 
-    }
+	if(Trigger.isAfter && Trigger.isUpdate){
+
+		AMS_InspectionTriggerHandler.handleAfterUpdate(Trigger.old, Trigger.new);
+
+	}
 
 }
