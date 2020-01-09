@@ -96,7 +96,7 @@ public without sharing class OneId_RegistrationProcessController {
 				Account acc = [SELECT RecordTypeId, fredp_aircraftoperator_eligibility__c, RecordType.DeveloperName FROM Account WHERE Id =: usr.AccountId];
 
 
-				if((acc.RecordType.DeveloperName == 'IATA_Airline' ||	acc.RecordType.DeveloperName == 'Operator') && acc.fredp_aircraftoperator_eligibility__c){
+				if((acc.RecordType.DeveloperName == 'IATA_Airline' ||  acc.RecordType.DeveloperName == 'Operator') && acc.fredp_aircraftoperator_eligibility__c){
 					userInformation.isServiceEligible = true;
 				}
 				else if(acc.RecordType.DeveloperName == 'ICAO_Member_State' || acc.RecordType.DeveloperName == 'Verifiers'){
@@ -192,8 +192,8 @@ public without sharing class OneId_RegistrationProcessController {
 
 		if((!conList.isEmpty()) && userInformation.isEmailAddressAvailable){
 			//String UID = Comm_User_Helper.NewGuid();
-			//Id userCreated = Comm_User_Helper.createNewUser(conList.get(0), '' , serviceName , (conList.get(0).Preferred_Language__c != null ?	conList.get(0).Preferred_Language__c : languageString) , false, false);
-			//Boolean userCreated = Comm_User_Helper.createNewUser(conList.get(0), '' , serviceName , (conList.get(0).Preferred_Language__c != null ?	conList.get(0).Preferred_Language__c : languageString) , false, false) != null ? TRUE : FALSE;
+			//Id userCreated = Comm_User_Helper.createNewUser(conList.get(0), '' , serviceName , (conList.get(0).Preferred_Language__c != null ?  conList.get(0).Preferred_Language__c : languageString) , false, false);
+			//Boolean userCreated = Comm_User_Helper.createNewUser(conList.get(0), '' , serviceName , (conList.get(0).Preferred_Language__c != null ?  conList.get(0).Preferred_Language__c : languageString) , false, false) != null ? TRUE : FALSE;
 
 			if(serviceName != 'FRED' && serviceName != 'NDCMM'){
 				isAlreadyContact = true;
@@ -215,7 +215,7 @@ public without sharing class OneId_RegistrationProcessController {
 				userInformation.con = conList.get(0);
 				Account acc = [SELECT Name, RecordTypeId, RecordType.Name, fredp_aircraftoperator_eligibility__c, RecordType.DeveloperName FROM Account WHERE Id =: conList.get(0).Account.Id];
 
-				if((acc.RecordType.DeveloperName == 'IATA_Airline' ||	acc.RecordType.DeveloperName == 'Operator') && acc.fredp_aircraftoperator_eligibility__c){
+				if((acc.RecordType.DeveloperName == 'IATA_Airline' ||  acc.RecordType.DeveloperName == 'Operator') && acc.fredp_aircraftoperator_eligibility__c){
 					userInformation.isServiceEligible = true;
 				}
 				else if(acc.RecordType.DeveloperName == 'ICAO_Member_State' || acc.RecordType.DeveloperName == 'Verifiers'){
@@ -249,7 +249,7 @@ public without sharing class OneId_RegistrationProcessController {
 					userInformation.isServiceUser = fredAccess > 0;
 
 					if(!userInformation.isServiceUser){
-						if((acc.RecordType.DeveloperName == 'IATA_Airline' ||	acc.RecordType.DeveloperName == 'Operator') && acc.fredp_aircraftoperator_eligibility__c){
+						if((acc.RecordType.DeveloperName == 'IATA_Airline' ||  acc.RecordType.DeveloperName == 'Operator') && acc.fredp_aircraftoperator_eligibility__c){
 							userInformation.isServiceEligible = true;
 						}
 						else if(acc.RecordType.DeveloperName == 'ICAO_Member_State' || acc.RecordType.DeveloperName == 'Verifiers'){
@@ -272,7 +272,7 @@ public without sharing class OneId_RegistrationProcessController {
 	}
 
 	private static Boolean isNDCMMEligible(Account acc){
-		Boolean isEligible =	(acc.Sector__c == 'Airline'
+		Boolean isEligible =  (acc.Sector__c == 'Airline'
 				&& (acc.RecordType.DeveloperName == 'IATA_Airline' || acc.RecordType.DeveloperName == 'Operator'))
 				|| (acc.Sector__c == 'Travel Agent'
 				&& ((acc.Category__c == 'IATA Passenger Sales Agent'&& (acc.RecordType.DeveloperName == 'IATA_Agency' || acc.RecordType.DeveloperName == 'Standard_Account')) || (acc.Category__c == 'Non-IATA Travel Agent' && (acc.RecordType.DeveloperName == 'Non_IATA_Agency' || acc.RecordType.DeveloperName == 'Standard_Account'))))
@@ -330,7 +330,7 @@ public without sharing class OneId_RegistrationProcessController {
 					Email = email,
 					Username = ISSP_Utilities.buildPortalUserName(email), //myEmail@company.com because myEmail.company.com@partner.iata.org
 					ProfileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal (Partner)' LIMIT 1].Id,
-					ContactId =	!conlist.isEmpty() ? conList.get(0).Id : [SELECT Id FROM Contact WHERE Id NOT IN (SELECT ContactId FROM User) LIMIT 1].Id,
+					ContactId =  !conlist.isEmpty() ? conList.get(0).Id : [SELECT Id FROM Contact WHERE Id NOT IN (SELECT ContactId FROM User) LIMIT 1].Id,
 					TimeZoneSidKey = 'GMT',
 					LanguageLocaleKey = 'en_US',
 					EmailEncodingKey = 'UTF-8',
@@ -443,7 +443,7 @@ public without sharing class OneId_RegistrationProcessController {
 
 	@AuraEnabled(cacheable=true)
 	public static List<PicklistEntry> getContactJobFunctionValues(){
-		List<PicklistEntry> values =	new	List<PicklistEntry>();
+		List<PicklistEntry> values =  new  List<PicklistEntry>();
 
 		List<Schema.PicklistEntry> controllingFieldValues = Schema.Contact.Function__c.getDescribe().getPickListValues();
 		for (Schema.PicklistEntry p : controllingFieldValues){
@@ -454,7 +454,7 @@ public without sharing class OneId_RegistrationProcessController {
 
 	@AuraEnabled
 	public static Map<String, PicklistEntry> getSectors(){
-		Map<String, PicklistEntry> values =	new	Map<String, PicklistEntry>();
+		Map<String, PicklistEntry> values =  new  Map<String, PicklistEntry>();
 		values.put('', new PicklistEntry(System.Label.ISSP_Registration_None, ''));
 
 		for (Schema.PicklistEntry p : Schema.Account.Sector__c.getDescribe().getPickListValues()){
@@ -485,7 +485,7 @@ public without sharing class OneId_RegistrationProcessController {
 	public static CountryInformation getISOCountries() {
 		List<IATA_ISO_Country__c> countries = new List<IATA_ISO_Country__c>();
 		for(IATA_ISO_Country__c iso : IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountries(), 'Name')){
-			if (iso.Name != 'All Countries' &&	iso.Name != 'NO COUNTRY'){
+			if (iso.Name != 'All Countries' &&  iso.Name != 'NO COUNTRY'){
 				countries.add(iso);
 			}
 		}
@@ -554,10 +554,10 @@ public without sharing class OneId_RegistrationProcessController {
 	public static boolean registration(Account acc, Contact con, String serviceName, Map<String, String> serviceSpecificParams, Boolean l1UserExists){
 
 		system.debug('OneId registration process starting...');
-		system.debug('account	--> ' + acc);
-		system.debug('contact	--> ' + con);
-		system.debug('serviceName	--> ' + serviceName);
-		system.debug('l1UserExists	--> ' + l1UserExists);
+		system.debug('account  --> ' + acc);
+		system.debug('contact  --> ' + con);
+		system.debug('serviceName  --> ' + serviceName);
+		system.debug('l1UserExists  --> ' + l1UserExists);
 		if(l1UserExists == null){
 			l1UserExists = false;
 		}
@@ -567,8 +567,8 @@ public without sharing class OneId_RegistrationProcessController {
 
 		//it's general public account? create contact / user
 		if(acc.Id == null && acc.Sector__c == 'General Public'){
-			List<Account> gpAccount = [SELECT id, IATA_ISO_Country__c FROM Account WHERE Sector__c = 'General Public' and	IATA_ISO_Country__c =:acc.IATA_ISO_Country__c];
-			if(!gpAccount.isEmpty()) acc.Id	= gpAccount[0].Id;
+			List<Account> gpAccount = [SELECT id, IATA_ISO_Country__c FROM Account WHERE Sector__c = 'General Public' and  IATA_ISO_Country__c =:acc.IATA_ISO_Country__c];
+			if(!gpAccount.isEmpty()) acc.Id  = gpAccount[0].Id;
 		}
 
 		//it's a branch
@@ -651,14 +651,8 @@ public without sharing class OneId_RegistrationProcessController {
 					permissionNewAgency(returnedString);
 					updatePortalUseProfile(returnedString);
 
-					if((acc.Sector__c == 'Travel Agent' || acc.Sector__c == 'Cargo Agent') && acc.Category__c != AMS_Utils.categoryPass){
+					if(acc.Sector__c == 'Travel Agent' || acc.Sector__c == 'Cargo Agent')
 						portalServiceNewAgency(con.Id);
-					}
-				}
-				//PASS-71
-
-				if(acc.Sector__c == AMS_Utils.SECTOR_PASS && acc.Category__c == AMS_Utils.categoryPass){
-					portalServiceNewPASSAgency(con.Id);
 				}
 				/**
 				IFTP Accounts - IFTP Service
@@ -720,7 +714,7 @@ public without sharing class OneId_RegistrationProcessController {
 	}
 
 	private static String createContactAndAccount (Contact con, Account acc, String servName, Map<String, String> serviceSpecificParams, Boolean l1UserExists) {
-		system.debug('createContactAndAccount starting contact -->	' + con);
+		system.debug('createContactAndAccount starting contact -->  ' + con);
 		system.debug('createContactAndAccount starting account -- ' + acc);
 
 		Id rtId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
@@ -766,11 +760,6 @@ public without sharing class OneId_RegistrationProcessController {
 					acc.IsPartner = true;
 					update acc;
 				}
-			}
-
-			Account_Role__c accountRole = new Account_Role__c();
-			if(servName == 'GADM') {
-				accountRole = OneId_RegistrationHelper_GADM.createAccountRole(acc);
 			}
 
 			con.AccountId = acc.Id;
@@ -854,7 +843,7 @@ public without sharing class OneId_RegistrationProcessController {
 
 			//create contact role after contact is created
 			if(servName == 'GADM') {
-				accountRole = OneId_RegistrationHelper_GADM.getAccountRole(acc.Id);
+				Account_Role__c accountRole = OneId_RegistrationHelper_GADM.getAccountRole(acc.Id);
 
 				if(serviceSpecificParams.get('isPowerUser') != null && accountRole != null) {
 					OneId_RegistrationHelper_GADM.createContactRole(con, accountRole, Boolean.valueOf(serviceSpecificParams.get('isPowerUser')));
@@ -1061,21 +1050,6 @@ public without sharing class OneId_RegistrationProcessController {
 		}
 	}
 
-	public static void portalServiceNewPASSAgency(String conId){
-		if (conId != null && conId != '') {
-			List<Portal_Applications__c> pApplication = [SELECT id FROM Portal_Applications__c WHERE Name = :AMS_UTILS.IATA_PASS_SERVICE_NAME];
-
-			if(!pApplication.isEmpty()){
-				Portal_Application_Right__c appRight = new Portal_Application_Right__c();
-				appRight.Contact__c = conId;
-				appRight.Portal_Application__c = pApplication[0].Id;
-				appRight.Right__c = 'Access Granted';
-				insert appRight;
-			}
-
-		}
-	}
-
 	@AuraEnabled
 	public static void checkConAvailable (Contact con){
 
@@ -1091,7 +1065,7 @@ public without sharing class OneId_RegistrationProcessController {
 				try {
 					database.update(con);
 				} catch(Exception e) {
-					System.debug('Update Contact FAILED ::: ' +	e.getMessage());
+					System.debug('Update Contact FAILED ::: ' +  e.getMessage());
 				}
 
 			} else {
@@ -1109,7 +1083,7 @@ public without sharing class OneId_RegistrationProcessController {
 			try {
 				database.update(con);
 			} catch(Exception e) {
-				System.debug('Update Contact FAILED ::: ' +	e.getMessage());
+				System.debug('Update Contact FAILED ::: ' +  e.getMessage());
 			}
 		}
 	}
@@ -1170,7 +1144,7 @@ public without sharing class OneId_RegistrationProcessController {
 
 	 @AuraEnabled
 	public static StatesAndAlternateNames getStates(String country){
-		List<IATA_ISO_State__c> liis =	[SELECT ID, Name, GeonameAsciiName__c, IATA_ISO_Country__r.State_Province_Mandatory__c, IATA_ISO_Country__r.IEC_Zip_Postal_Code_required__c, (SELECT IATA_ISO_State__r.Name, GeonameName__c, GeonameAlternateNames__c, GeonameHierarchy_label__c, Name, Is_PO_Box_City__c FROM IATA_ISO_Cities__r WHERE Status__c <> 'Pending') FROM IATA_ISO_State__c WHERE IATA_ISO_Country__r.Name = :country AND Valid_for_Address__c = true ORDER BY IATA_ISO_Country__r.Name];
+		List<IATA_ISO_State__c> liis =  [SELECT ID, Name, GeonameAsciiName__c, IATA_ISO_Country__r.State_Province_Mandatory__c, IATA_ISO_Country__r.IEC_Zip_Postal_Code_required__c, (SELECT IATA_ISO_State__r.Name, GeonameName__c, GeonameAlternateNames__c, GeonameHierarchy_label__c, Name, Is_PO_Box_City__c FROM IATA_ISO_Cities__r WHERE Status__c <> 'Pending') FROM IATA_ISO_State__c WHERE IATA_ISO_Country__r.Name = :country AND Valid_for_Address__c = true ORDER BY IATA_ISO_Country__r.Name];
 		Map<ID, IATA_ISO_City__c> ma = new Map<ID,IATA_ISO_City__c>([SELECT Name, GeonameAlternateNames__c, IATA_ISO_State__r.Id, Is_PO_Box_City__c FROM IATA_ISO_City__c WHERE Status__c <> 'Pending' AND IATA_ISO_State__r.IATA_ISO_Country__r.Name = :country]);
 		StatesAndAlternateNames states = new StatesAndAlternateNames(liis, ma);
 
