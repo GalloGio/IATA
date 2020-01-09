@@ -702,7 +702,7 @@
     }
 
     function getExportFileNameCSV() {
-        return getExportFileNamePDF() + '_' + new Date().toDateString().replace(/ /g , "-");
+        return getExportFileNamePDF().replace(/[+]/g , "_") + '_' + new Date().toDateString().replace(/ /g , "-").trim();
     }
     function getExportFileNamePDF() {
         var filename = "{!$Label.ISSP_OperationalCalendar}";
@@ -711,8 +711,16 @@
             filename += "All Countries";
         } else {
             filename += $("#countryFilter option:selected").text();
-        } 
-        filename += "-" + $("#typeFilter option:selected").text();
+        }
+        var operationType = $("#typeFilter option:selected");
+        if (operationType.val()=='BSP/CASS') {
+            filename += "-" + $("#subtypeFilter option:selected").text();
+        } else if (operationType.val()=='SIS') {
+            filename += "-" + $("#subtypeFilter option:selected").text();
+        } else {
+            filename += "-" + $("#typeFilter option:selected").text();
+        }
+        
         filename += " " + $("#billingPeriodFilter option:selected").text().replace("Billing Period", "");
         return filename;
     }
