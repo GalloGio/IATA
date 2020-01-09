@@ -2241,7 +2241,7 @@ public with sharing class ANG_AgencyChangesHelper {
 					objectChangesByChangeCode = objectChanges.get(index);
 
 			}
-            
+
 			if(cc.Name == 'COR'){
 				for(Account ac : oscarAgencies){//when changeCode = COR, same change code for all Acc
 					//changeCodeResult = AMS_ChangeCodesHelper.createAAChangeCode(objectChangesByChangeCode,cc, oscars.get(0), ac, isActive, fOPs.get(accId));
