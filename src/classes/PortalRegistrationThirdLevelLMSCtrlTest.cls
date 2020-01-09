@@ -67,7 +67,7 @@ public class PortalRegistrationThirdLevelLMSCtrlTest{
 
 			PortalRegistrationThirdLevelLMSCtrl.sendSingleEmail(c.Name, c.Email, 'flow3', paramsJSON3);
 
-			Boolean valid = PortalRegistrationThirdLevelLMSCtrl.validateYasUserId(UserInfo.getUserId());
+			Boolean valid = PortalRegistrationThirdLevelLMSCtrl.validateYasUserId(UserInfo.getUserId(), UserInfo.getUserName(), UserInfo.getFirstName(), UserInfo.getLastName());
 			system.assert(valid);
 
 		test.stopTest();
