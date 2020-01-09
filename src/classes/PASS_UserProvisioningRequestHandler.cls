@@ -75,7 +75,8 @@ public class PASS_UserProvisioningRequestHandler {
 		}
 	}
 
-	@future
+	@future 
+    @TestVisible
 	private static void addPassPrimaryPermissionSet(List<Id> userIds){
 		List<PermissionSetAssignment> passPrimaryUserAssignment = new List<PermissionSetAssignment>();
 

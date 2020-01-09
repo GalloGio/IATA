@@ -92,7 +92,7 @@ public class ServiceRenderedCaseLogic {
 
 			if(!leavingCases.isEmpty())
 				newSRList.addAll(ServiceRenderedCaseLogic.leavingCases(leavingCases, ConsumerIdsFromNewCases, ServicesPerReason));
-			
+
 			if(c.Reason1__c.startsWith('PASS')){
 				if(c.Reason1__c==AMS_Utils.passCountryCaseReason){
 					passCaseIdList.add(c.ParentId);
@@ -127,7 +127,7 @@ public class ServiceRenderedCaseLogic {
 				}
 			}
 		}
-	}
+
 
 	public static void massInsertDuplicateCheck(list<Case> Cases, map<String,Case_Reason_Service__c> ServicesPerReason){
 
@@ -369,7 +369,7 @@ public class ServiceRenderedCaseLogic {
 		return changingServices;
 	}
 
- public static list<Case> airlineConsumerValidation(list<Case> cases){
+	public static list<Case> airlineConsumerValidation(list<Case> cases){
 	list<case> casesOkConsumer = new list<Case>();
 	map<Id,list<Case>>  CasesPerConsumer = new map<Id,list<Case>>();
 
@@ -399,7 +399,7 @@ public class ServiceRenderedCaseLogic {
 		}
 	}
 	return casesOkConsumer;
-}
+	}
 
 	/*
 	 *  This method calculates the number of active participations split by CASS / BSP of an airline and stores it at HQ level

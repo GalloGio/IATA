@@ -112,7 +112,7 @@ global with sharing class PASSSCIMUser extends SCIMUser {
 
 	}
 
-
+	@TestVisible
 	private void fillUpSCIMMessage(String email){
 		//basto1p added new required field for IFG
 		User userIn = [SELECT Id, name, contact.account.RecordType.DeveloperName,AccountId, contact.account.X8585_Code__c, contact.account.Country_ISO_Code__c, contact.account.name, contact.account.IATACode__c, contact.account.sector__c, contact.account.category__c,FederationIdentifier, SmallPhotoUrl ,createdDate,lastModifiedDate,contact.Phone,CommunityNickname, TimeZoneSidKey, LanguageLocaleKey, Contact.Title, Contact.MobilePhone, Contact.Fax, contact.Salutation from user where email = :email and IsActive = true limit 1];
