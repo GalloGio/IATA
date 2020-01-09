@@ -90,7 +90,7 @@ public with sharing class AWW_CoreRelationshipCtrl {
 			if(locationClass == 'T') {
 				Integer totalTids = mapLocationTypes.get('TIDS');
 				mapLocationTypes.put('TIDS', totalTids + totals);
-			}else if(rtype == 'IATA_Agency' && country == 'US' && category == 'IATAN Passenger Sales Agent') {
+			}else if(rtype == 'IATA_Agency' && country == 'US' && category == 'IATA Passenger Sales Agent') {
 				Integer totalIATAN = mapLocationTypes.get('IATAN Codes');
 				mapLocationTypes.put('IATAN Codes', totalIATAN + totals);
 			}else if(cnsAgency && rtype == 'IATA_Agency') {

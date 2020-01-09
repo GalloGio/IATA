@@ -24,6 +24,13 @@ private class AMP_IssuesAndprioritiesExtensionTest
 									RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline')
 									);
 			insert a;
+			
+			//Check execution before adding the PermissionSet
+			AMP_IssuesAndPrioritiesExtension.getHaveAMPIssuesAndPriorities();
+
+			PermissionSet ps = [SELECT Id FROM PermissionSet WHERE Name = 'AMP_Issues_and_Priorities'];
+
+			insert new PermissionSetAssignment(AssigneeId = testUser.Id, PermissionSetId = ps.Id);
 
 			Id objectiveRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Objective__c', 'Account_Issues_and_Priorities');
 
