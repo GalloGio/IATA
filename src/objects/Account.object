@@ -14989,7 +14989,7 @@ J-Joint Vent</inlineHelpText>
             </valueSetDefinition>
         </valueSet>
     </fields>
-    </fields>
+    <fields>
         <fullName>NDC_engagement__c</fullName>
         <defaultValue>false</defaultValue>
         <description>Flag to indicate NDC</description>
