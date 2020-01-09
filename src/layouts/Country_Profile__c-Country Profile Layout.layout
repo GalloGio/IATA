@@ -634,7 +634,13 @@
     </layoutSections>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Status__c</fields>
+        <fields>RECORDTYPE</fields>
+        <fields>Parent_Id__c</fields>
+        <fields>CREATED_DATE</fields>
         <relatedList>Currency_Center_Survey__c.Country__c</relatedList>
+        <sortField>CREATED_DATE</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>TASK.SUBJECT</fields>
