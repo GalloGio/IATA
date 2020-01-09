@@ -87,10 +87,7 @@ public with sharing class AWW_CoreRelationshipCtrl {
 			Boolean cnsAgency = (Boolean) ar.get('CNS_Agency__c');
 			Integer totals = (Integer) ar.get('expr0');
 
-			if(locationClass == 'T') {
-				Integer totalTids = mapLocationTypes.get('TIDS');
-				mapLocationTypes.put('TIDS', totalTids + totals);
-			}else if(rtype == 'IATA_Agency' && country == 'US' && category == 'IATA Passenger Sales Agent') {
+			if(rtype == 'IATA_Agency' && country == 'US' && category == 'IATA Passenger Sales Agent') {
 				Integer totalIATAN = mapLocationTypes.get('IATAN Codes');
 				mapLocationTypes.put('IATAN Codes', totalIATAN + totals);
 			}else if(cnsAgency && rtype == 'IATA_Agency') {
