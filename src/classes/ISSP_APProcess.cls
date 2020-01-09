@@ -977,7 +977,7 @@ global without sharing class ISSP_APProcess {
 		SYSTEM.DEBUG('HQ Account Id: ' + vHQAccountId);
 		retrieveHQAccountDetails(vHQAccountId);  //Especially to get AL Membershhip status at this stage for initial case creation
 		getLoB(strOperationType);
-		if(strLoB = 'PASS'){
+		if(strLoB == 'PASS'){
 			isPassAirline=true;
 		}
 
@@ -1569,70 +1569,71 @@ global without sharing class ISSP_APProcess {
 
 		strOperationType = Apexpages.currentPage().getParameters().get('strOT');
 
-		if(strOperationType!='PASS' || (strOperationType=='PASS' && isGSSAUser)){
-		strLOB = null;
-		if(strOperationType != null) {
-			strOperationTypeAux = strOperationType;
-			getLoB(strOperationType);
-		} else if (strOperationTypeAux != null) {
-			strOperationType = strOperationTypeAux;
-			getLoB(strOperationType);
-		}
-
-		SYSTEM.DEBUG('Area Type: ' + strAreaType);
-		SYSTEM.DEBUG('Operation Type: ' + strOperationType);
-		SYSTEM.DEBUG('LoB: ' + strLoB);
-
-		if(strLOB != null) //INC300017
-			dupLoB = strLOB;
-
-		if(strLOB==null || strLOB=='ICH') {
-			return null;
-		}
-
-		if(strAreaType=='Airline Joining') {
-			 isoListJoining = [SELECT Id, Name, Country__r.Name, Country__r.Case_BSP_Country__c, Country__r.ISO_Code__c from AP_Country_Requierment__c
-							  WHERE Line_of_business__c = :strLoB ORDER by Name];
-		} else {  //AP Change process, so based country list on Services Rendered
-			if(!isGSSAUser) {
-				if(strLOB=='CASS' || dupLoB == 'CASS') {
-					isoListChange = [SELECT Id, ISO_Country_formula__c, ISO_Country_Code__c from Services_Rendered__c
-							WHERE Services_Rendered_By__c = :vHQAccountId AND Services_Rendered_Type__c LIKE '%CASS%' AND Services_Rendered_Status__c='Active'
-							ORDER BY ISO_Country_formula__c];
+			if(strOperationType!='PASS' || (strOperationType=='PASS' && isGSSAUser)){
+				strLOB = null;
+			
+				if(strOperationType != null) {
+					strOperationTypeAux = strOperationType;
+					getLoB(strOperationType);
+				} else if (strOperationTypeAux != null) {
+					strOperationType = strOperationTypeAux;
+					getLoB(strOperationType);
 				}
-				if(strLOB=='BSP' || dupLoB == 'BSP') {
+
+			SYSTEM.DEBUG('Area Type: ' + strAreaType);
+			SYSTEM.DEBUG('Operation Type: ' + strOperationType);
+			SYSTEM.DEBUG('LoB: ' + strLoB);
+
+			if(strLOB != null) //INC300017
+				dupLoB = strLOB;
+
+			if(strLOB==null || strLOB=='ICH') {
+				return null;
+			}
+
+			if(strAreaType=='Airline Joining') {
+				isoListJoining = [SELECT Id, Name, Country__r.Name, Country__r.Case_BSP_Country__c, Country__r.ISO_Code__c from AP_Country_Requierment__c
+								WHERE Line_of_business__c = :strLoB ORDER by Name];
+			} else {  //AP Change process, so based country list on Services Rendered
+				if(!isGSSAUser) {
+					if(strLOB=='CASS' || dupLoB == 'CASS') {
+						isoListChange = [SELECT Id, ISO_Country_formula__c, ISO_Country_Code__c from Services_Rendered__c
+								WHERE Services_Rendered_By__c = :vHQAccountId AND Services_Rendered_Type__c LIKE '%CASS%' AND Services_Rendered_Status__c='Active'
+								ORDER BY ISO_Country_formula__c];
+					}
+					if(strLOB=='BSP' || dupLoB == 'BSP') {
+						isoListChange = [SELECT Id, ISO_Country_formula__c, ISO_Country_Code__c from Services_Rendered__c
+								WHERE Services_Rendered_By__c = :vHQAccountId AND Services_Rendered_Type__c='BSP Participation' AND Services_Rendered_Status__c='Active'
+								ORDER BY ISO_Country_formula__c];
+					}
+				} else {
+					System.DEBUG('GSSA HQ Id: ' + vGSSAAccountId);
+
 					isoListChange = [SELECT Id, ISO_Country_formula__c, ISO_Country_Code__c from Services_Rendered__c
-							WHERE Services_Rendered_By__c = :vHQAccountId AND Services_Rendered_Type__c='BSP Participation' AND Services_Rendered_Status__c='Active'
-							ORDER BY ISO_Country_formula__c];
+								WHERE Services_Rendered_By__c = :vGSSAAccountId AND Services_Rendered_Type__c='CASS Export via GSSA' AND Services_Rendered_Status__c='Active'
+								ORDER BY ISO_Country_formula__c];
 				}
-			} else {
-				System.DEBUG('GSSA HQ Id: ' + vGSSAAccountId);
-
-				isoListChange = [SELECT Id, ISO_Country_formula__c, ISO_Country_Code__c from Services_Rendered__c
-							WHERE Services_Rendered_By__c = :vGSSAAccountId AND Services_Rendered_Type__c='CASS Export via GSSA' AND Services_Rendered_Status__c='Active'
-							ORDER BY ISO_Country_formula__c];
 			}
-		}
 
-		List<SelectOption> options = new List<SelectOption>();
-		Set<String> sISOCode = New Set<String>();
+			List<SelectOption> options = new List<SelectOption>();
+			Set<String> sISOCode = New Set<String>();
 
-		options.add(new SelectOption('', '--None--'));
-		 if(strAreaType=='Airline Joining') {
-			for(AP_Country_Requierment__c iso : isoListJoining){
-			//        if (sISOCode.Contains(iso.Country__r.ISO_Code__c) == FALSE){ ---INC314169---
-					  sISOCode.add(iso.Country__r.ISO_Code__c);
-						options.add(new SelectOption(iso.Country__r.ISO_Code__c,iso.Name));
-			//        }
+			options.add(new SelectOption('', '--None--'));
+			if(strAreaType=='Airline Joining') {
+				for(AP_Country_Requierment__c iso : isoListJoining){
+				//if (sISOCode.Contains(iso.Country__r.ISO_Code__c) == FALSE){ ---INC314169---
+						sISOCode.add(iso.Country__r.ISO_Code__c);
+							options.add(new SelectOption(iso.Country__r.ISO_Code__c,iso.Name));
+				//}
+				}
+				} else {
+				for(Services_Rendered__c iso : isoListChange){
+					if (sISOCode.Contains(iso.ISO_Country_Code__c) == FALSE){
+						sISOCode.add(iso.ISO_Country_Code__c);
+					options.add(new SelectOption(iso.ISO_Country_Code__c,iso.ISO_Country_formula__c));
+						}
+				}
 			}
-			} else {
-			  for(Services_Rendered__c iso : isoListChange){
-				  if (sISOCode.Contains(iso.ISO_Country_Code__c) == FALSE){
-					   sISOCode.add(iso.ISO_Country_Code__c);
-				  options.add(new SelectOption(iso.ISO_Country_Code__c,iso.ISO_Country_formula__c));
-					 }
-			}
-		  }
 		}
 		return options;
 	}
@@ -2058,8 +2059,6 @@ global without sharing class ISSP_APProcess {
 	}
 
 	///Keeping these lines to avoid deployment issues, can be removed after successful prod deployment
-	public pagereference UploadFile(){return null;}
-	public List<Attachment> getAttachList(){return new List<Attachment>();}
 	public string strParentLegalName {get; set;}
 	public string strParentTradeName {get; set;}
 	///
