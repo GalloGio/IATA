@@ -686,6 +686,10 @@
                 <default>false</default>
             </values>
             <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>TIP</fullName>
                 <default>false</default>
             </values>

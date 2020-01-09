@@ -58,12 +58,10 @@ public class PortalRegistrationThirdLevelLMSCtrlTest{
 
 			String paramsJSON3= '{"flow":"flow3","Id":"' + c.Id + '","Birthdate":"2019-11-04","stateId":"' + isoState[0].Id + '","existingContactId":"' + c2.Id + '","hasExistingContact":"true","Phone":"21212121"}}';
 
-			PortalRegistrationThirdLevelLMSCtrl.completeRegistration(paramsJSON3);
 			PortalRegistrationThirdLevelLMSCtrl.RegistrationResult res = PortalRegistrationThirdLevelLMSCtrl.completeRegistration(paramsJSON3);
 
 			system.assert(res.isSuccess);
 			system.assert(res.message == 'Regitration Completed!');
-
 
 			PortalRegistrationThirdLevelLMSCtrl.sendSingleEmail(c.Name, c.Email, 'flow3', paramsJSON3);
 
