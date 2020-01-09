@@ -5392,7 +5392,7 @@
     <fieldUpdates>
         <fullName>DPCtoRBest</fullName>
         <field>Product_Manager_ACR__c</field>
-        <lookupValue>chaziran@iata.org.prod</lookupValue>
+        <lookupValue>kalasha@iata.org</lookupValue>
         <lookupValueType>User</lookupValueType>
         <name>DPCtoRBest</name>
         <notifyAssignee>false</notifyAssignee>
