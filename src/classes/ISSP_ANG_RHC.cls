@@ -1,4 +1,4 @@
-public with sharing class ISSP_ANG_RHC {
+public without sharing class ISSP_ANG_RHC {
 
 	public String accreditationType {get; set;}
 	public String riskStatus {get; set;}
