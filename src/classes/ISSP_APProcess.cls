@@ -302,6 +302,7 @@ global without sharing class ISSP_APProcess {
 		showPDFReportsPreference=true;
 		showPDFReportsEmail=false;
 		changePass=false;
+		isPassAirline=false;
 
 		newForm = new AP_Process_Form__c();
 		newCase = new Case();
