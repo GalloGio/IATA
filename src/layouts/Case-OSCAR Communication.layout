@@ -253,6 +253,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>ClosedDate</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>Local_Inspection_time__c</field>
             </layoutItems>
             <layoutItems>
