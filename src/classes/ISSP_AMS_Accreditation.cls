@@ -457,8 +457,6 @@ public without sharing class ISSP_AMS_Accreditation {
 		set;
 	}
 
-	public Boolean isPassAccreditation {get; set;}
-
 	public List<SelectOption> nonSelectedCountryIsos {
 		get {
 			if (nonSelectedCountryIsos == null) {

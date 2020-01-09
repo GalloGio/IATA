@@ -687,6 +687,7 @@ global without sharing class ISSP_APProcess {
 						allfieldsfilled = true;
 					}
 				}
+			}
 			}else if(stepNumber == 'Final'){
 				isFinalStep = true;
 				retrieveCase(vCaseId);
@@ -1038,26 +1039,27 @@ global without sharing class ISSP_APProcess {
         }else{
 			newCase.Country_Concerned__c=null;
 			retrieveCountryRequirements(newCase.IFAP_Country_ISO__c, strLoB);
-		if (isGSSAUser){
-			//GSSA user has selected Airline HQ account for Joining, or BR AL Account for Change (from Services Rendered), from dropdown list of Airlines in Step 1
-			if (cassairlineid != '' && cassairlineid != null){
-				List <Account> airlineList = [SELECT Id, Name, IATACode__c, Airline_designator__c, Airline_Prefix__c FROM Account WHERE Id = :cassairlineid];
-				if (!airlineList.isEmpty()){
-					newCase.IATAcode__c = airlineList[0].IATACode__c;
-					newCase.Provider__c = con.AccountId;  //Put GSSA as Provider for backwards compatibility
-					newCase.Account_Concerned__c = retrieveAirlineConcerned(hqAccount, hqAccount.Airline_designator__c,
-																			hqAccount.Airline_Prefix__c,
-																			apCountryisocode, airlineList[0].Name, airlineList[0].Id);
+			if (isGSSAUser){
+				//GSSA user has selected Airline HQ account for Joining, or BR AL Account for Change (from Services Rendered), from dropdown list of Airlines in Step 1
+				if (cassairlineid != '' && cassairlineid != null){
+					List <Account> airlineList = [SELECT Id, Name, IATACode__c, Airline_designator__c, Airline_Prefix__c FROM Account WHERE Id = :cassairlineid];
+					if (!airlineList.isEmpty()){
+						newCase.IATAcode__c = airlineList[0].IATACode__c;
+						newCase.Provider__c = con.AccountId;  //Put GSSA as Provider for backwards compatibility
+						newCase.Account_Concerned__c = retrieveAirlineConcerned(hqAccount, hqAccount.Airline_designator__c,
+																				hqAccount.Airline_Prefix__c,
+																				apCountryisocode, airlineList[0].Name, airlineList[0].Id);
+					}
 				}
-			}
-		} else {
-			newCase.IATAcode__c = con.Account.IATACode__c;  //Web IATA Code on case
-			if (newCase.Account_Concerned__c==null) {
-				newCase.Account_Concerned__c = retrieveAirlineConcerned(hqAccount, con.Account.Airline_designator__c,
-																	con.Account.IATACode__c,
-																	apCountryisocode, con.Account.Name, vHqAccountId);
-			}
+			} else {
+				newCase.IATAcode__c = con.Account.IATACode__c;  //Web IATA Code on case
+				if (newCase.Account_Concerned__c==null) {
+					newCase.Account_Concerned__c = retrieveAirlineConcerned(hqAccount, con.Account.Airline_designator__c,
+																		con.Account.IATACode__c,
+																		apCountryisocode, con.Account.Name, vHqAccountId);
+				}
 
+			}
 		}
 		if((isPassAirline && selectedPASSCountries.size()==1) || !isPassAirline || isGSSAUser){//If the Airline is not PASS or if there is only one selected country, the Country related fields can be populated
 			isocountry = fetchISOCountry(newCase.IFAP_Country_ISO__c);
