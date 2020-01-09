@@ -23,10 +23,11 @@ public class PortalRegistrationThirdLevelLMSCtrlTest{
 		insert accRole;
 
 		Id accContactRole_RT = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'Master');
-		Account_Contact_Role__c acr = new Account_Contact_Role__c(Account_Role__c = accRole.Id, Contact__c = c2.Id, Service_Rendered__c = 'Other', RecordTypeId = accContactRole_RT, Contact_Role_Name__c = 'Trainee');
+		Account_Contact_Role__c acr = new Account_Contact_Role__c(Account_Role__c = accRole.Id, Contact__c = c2.Id, Service_Rendered__c = 'Other', RecordTypeId = accContactRole_RT, Contact_Role_Name__c = 'Trainee', Functional_Role__c =  'Training');
 		insert acr;
 
-		Training_Contact_Role_Details__c tcrd = new Training_Contact_Role_Details__c(Account_Contact_Role__c = acr.Id);
+		String RECTYPE_Trainee_YASContDet = RecordTypeSingleton.getInstance().getRecordTypeId('Training_Contact_Role_Details__c', 'Yardstick_Trainee');
+		Training_Contact_Role_Details__c tcrd = new Training_Contact_Role_Details__c(Account_Contact_Role__c = acr.Id, RecordTypeId = RECTYPE_Trainee_YASContDet);
 		insert tcrd;
 
 		Portal_Applications__c pa = new Portal_Applications__c(Name = 'Training Platform (LMS)');
@@ -124,6 +125,57 @@ public class PortalRegistrationThirdLevelLMSCtrlTest{
 		system.assert(res.message == 'Regitration Completed!');
 
 		test.stopTest();
+	}
+
+	@isTest
+	static void testCompleteRegistrationFlow6(){
+
+		List<Contact> contacts = [SELECT Id, Name, Email FROM Contact];
+		Contact c;
+		Contact c2;
+		for(Contact con: contacts){
+			if(con.Name == 'Doe')
+				c = con;
+			else if(con.Name == 'Don'){
+				c2 = con;
+			}
+
+		}
+
+		List<IATA_ISO_State__c> isoState = [SELECT Id, Name FROM IATA_ISO_State__c];
+
+		Test.startTest();
+
+		String paramsJSON6 = '{"flow":"flow6","Id":"' + c.Id + '","Birthdate":"2019-11-04","stateId":"' + isoState[0].Id + '","existingContactId":"' + c2.Id + '","Phone":"21212121"}';
+		PortalRegistrationThirdLevelLMSCtrl.RegistrationResult res = PortalRegistrationThirdLevelLMSCtrl.completeRegistration(paramsJSON6);
+
+		system.assert(res.isSuccess);
+		system.assert(res.message == 'Regitration Completed!');
+
+		test.stopTest();
+	}
+
+	@isTest
+	static void testGetLmsContactInfo(){
+
+		Test.startTest();
+
+		PortalRegistrationThirdLevelLMSCtrl.getLMSContactInfo('yas');
+
+		Test.stopTest();
+	}
+
+	@isTest
+	static void testGetParameters(){
+
+		Test.startTest();
+
+		String paramsJSON = '{"Additional_Email":"ad@test.test","Email":"em@test.test"}';
+		string encryptedStr = PortalPasswordHandler.EncryptString(paramsJSON);
+		String encodedPart = 'c=' + EncodingUtil.urlEncode(encryptedStr, 'UTF-8');
+		PortalRegistrationThirdLevelLMSCtrl.getParameters('apex/TestPage?'+encodedPart);
+
+		Test.stopTest();
 	}
 
 }
