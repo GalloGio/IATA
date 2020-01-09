@@ -27,7 +27,6 @@ public with sharing class ANG_AgencyChangesHelper {
 		public List<Agency_Authorization__c> agencyAuthorizationToUpdateLst;
 		public Map<Id, Map<Id, Integer>> calculateRiskAssessmentMap;
 		public List<ANG_Risk_Alert__c> riskAlertsToUpdateLst;
-
 		public Set<Id> accountsChanged;
 
 		public Map<Id,AMS_Agencies_Hierarchy__c> hierarchies;

@@ -104,7 +104,7 @@ global class ANG_OscarProcessHelper {
 				return new String[]{'-1', Label.ANG_Multicountry_Process_Parent_Account_Error, '-1'};
 			}
 
-			/*** AMSU-162 ***/                                                       /************************ ENHC0012583 *************************/
+			/*** AMSU-162 ***/                                                    /************************ ENHC0012583 *************************/
 			if((AMS_Utils.AMS_ProcessesAddressToValidate.contains(oscar.Process__c) || AMS_Utils.oscarNewGenNewAppProcesses.contains(oscar.Process__c)) && !isShippingAddressValid(theAccreditation)) {
 				isIATACodeGenerationRunning = false;
 				System.debug('[ANG_OscarProcessHelper] Incomplete shipping address.');
