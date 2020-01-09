@@ -1602,9 +1602,6 @@ public without sharing class ISSP_AMS_Accreditation {
 				}
 			}
 		}
-		if(newForm.Agency_Codes_Concerned__c != null)
-			accountList = getSelectedBranchList(newForm.Agency_Codes_Concerned__c.split(','));
-
 		return getAccountOptions(accountList);
 	}
 
