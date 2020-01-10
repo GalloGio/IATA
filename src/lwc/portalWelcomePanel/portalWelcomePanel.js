@@ -65,4 +65,7 @@ export default class PortalWelcomePanel extends LightningElement {
         navigateToPage('https://portal.iata.org/faq/');
     }
 
+    handleNavigateToLogin(){
+        navigateToPage(CSP_PortalPath);
+    }
 }
