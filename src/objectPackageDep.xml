@@ -36,10 +36,13 @@
         <members>*</members>
         <name>EmailTemplate</name>
     </types>
-
     <types>
         <members>*</members>
         <name>Workflow</name>
+    </types>
+    <types>
+        <members>*</members>
+        <name>Flow</name>
     </types>
     <types>
         <members>*</members>
@@ -89,5 +92,5 @@
 		<members>TaskType</members>
         <name>StandardValueSet</name>
 	</types>
-    <version>45.0</version>
+    <version>47.0</version>
 </Package>
