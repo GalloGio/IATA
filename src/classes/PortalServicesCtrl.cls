@@ -33,6 +33,12 @@ public static List<Portal_Applications__c> getNonRequestableServicesList(String 
 					' AND ANG_Flag_Restrict_by_Agency_Category__c = true' +
 					' AND ANG_Accre_Tp__c = true';
 
+	if(con.Account.RecordTypeId == Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('IATA_Agency').getRecordTypeId()){
+		//if contact is of type Agency we check the restriction by sector and category
+		query += ' AND (ANG_Restrict_by_Agency_Sector__c = \'' + con.account.Sector__c + '\' OR ANG_Restrict_by_Agency_Sector__c = null)' +
+		' AND (ANG_Restrict_by_Agency_Category__c INCLUDES (\''+con.account.Category__c+'\') OR ANG_Restrict_by_Agency_Category__c = null)';
+	}
+
 	portalApplicationList = Database.query(query);
 
 	// Second search based in Custom Metadata for all those remaining apps
