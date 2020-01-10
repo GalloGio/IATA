@@ -67,13 +67,14 @@ private class FlowGetBusinessContextsInvocableTest {
 			List<FlowGetBusinessContextsInvocable.Request> requests = new List<FlowGetBusinessContextsInvocable.Request>();
 			FlowGetBusinessContextsInvocable.Request request = new FlowGetBusinessContextsInvocable.Request();
 			request.accountId = account.Id;
+			request.useCase = 'BC';
 			requests.add(request);
 
 			Test.startTest();
 			List<FlowGetBusinessContextsInvocable.Response> responses = FlowGetBusinessContextsInvocable.execute(requests);
 			Test.stopTest();
 
-			System.assertEquals(true, responses[0].businessContextAvailable.contains('E&F'));
+			System.assertEquals(true, responses[0].picklistValues.contains('E&F'));
 		}
 	}
 
@@ -107,14 +108,76 @@ private class FlowGetBusinessContextsInvocableTest {
 			List<FlowGetBusinessContextsInvocable.Request> requests = new List<FlowGetBusinessContextsInvocable.Request>();
 			FlowGetBusinessContextsInvocable.Request request = new FlowGetBusinessContextsInvocable.Request();
 			request.accountId = account.Id;
+			request.useCase = 'BC';
 			requests.add(request);
 
 			Test.startTest();
 			List<FlowGetBusinessContextsInvocable.Response> responses = FlowGetBusinessContextsInvocable.execute(requests);
 			Test.stopTest();
 
-			System.assertEquals(false, responses[0].businessContextAvailable.contains('E&F'));
+			System.assertEquals(false, responses[0].picklistValues.contains('E&F'));
 		}
 	}
 
+	@IsTest static void testFlowGetSalesAreasInvocableForBusinessContextEF(){
+		User admin = [SELECT Id FROM User WHERE Username LIKE 'test-%@weitclick.de.test' LIMIT 1];
+		System.runAs(admin) {
+			Account account = [SELECT Id FROM Account WHERE Name = 'test account' LIMIT 1];
+
+			List<FlowGetBusinessContextsInvocable.Request> requests = new List<FlowGetBusinessContextsInvocable.Request>();
+			FlowGetBusinessContextsInvocable.Request request = new FlowGetBusinessContextsInvocable.Request();
+			request.accountId = account.Id;
+			request.useCase = 'SA';
+			request.selectedBusinessContext = 'E&F';
+			requests.add(request);
+
+			Test.startTest();
+			List<FlowGetBusinessContextsInvocable.Response> responses = FlowGetBusinessContextsInvocable.execute(requests);
+			Test.stopTest();
+
+			System.assertEquals(true, responses[0].picklistValues.contains('E&F Standard'));
+		}
+	}
+
+	@IsTest static void testFlowGetSalesAreasInvocableForBusinessContextEFAfterFlowCompleted(){
+		User admin = [SELECT Id FROM User WHERE Username LIKE 'test-%@weitclick.de.test' LIMIT 1];
+		System.runAs(admin){
+			Account account = [SELECT Id FROM Account WHERE Name = 'test account' LIMIT 1];
+
+			Account_Role__c accountRoleEF = [SELECT Id FROM Account_Role__c WHERE Account__c = :account.Id AND Functional_Role__c = 'E&F' LIMIT 1];
+			update new Account_Role__c(Id = accountRoleEF.Id, Flow_Status__c = 'Completed');
+
+			Address__c businessAddress = [SELECT Id FROM Address__c WHERE Is_Business_Address__c = true AND Account__c = :account.Id LIMIT 1];
+
+			Address_Role__c addrR = [SELECT Id FROM Address_Role__c WHERE Address__c = :businessAddress.Id AND Role_Type__c = 'Business' LIMIT 1];
+
+			Business_Context__c bC = new Business_Context__c(
+					Business_Context__c = 'E&F',
+					CurrencyIsoCode = 'USD',
+					Name = 'E&F - E&F Standard',
+					Sub_Context__c = 'E&F Standard'
+			);
+			insert bC;
+
+			Address_Role_Business_Context__c addrBC = new Address_Role_Business_Context__c(
+					Address_Role__c = addrR.Id,
+					Business_Context__c = bC.Id,
+					Account_Activation_Context_Status__c = 'Completed'
+			);
+			insert addrBC;
+
+			List<FlowGetBusinessContextsInvocable.Request> requests = new List<FlowGetBusinessContextsInvocable.Request>();
+			FlowGetBusinessContextsInvocable.Request request = new FlowGetBusinessContextsInvocable.Request();
+			request.accountId = account.Id;
+			request.useCase = 'SA';
+			request.selectedBusinessContext = 'E&F';
+			requests.add(request);
+
+			Test.startTest();
+			List<FlowGetBusinessContextsInvocable.Response> responses = FlowGetBusinessContextsInvocable.execute(requests);
+			Test.stopTest();
+
+			System.assertEquals(false, responses[0].picklistValues.contains('E&F Standard'));
+		}
+	}
 }

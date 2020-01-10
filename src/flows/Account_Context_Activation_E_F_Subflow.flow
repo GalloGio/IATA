@@ -4,12 +4,18 @@
         <name>Retrieve_available_Sales_Areas</name>
         <label>Retrieve available Sales Areas</label>
         <locationX>292</locationX>
-        <locationY>1092</locationY>
-        <actionName>FlowGetSalesAreasInvocable</actionName>
+        <locationY>1099</locationY>
+        <actionName>FlowGetBusinessContextsInvocable</actionName>
         <actionType>apex</actionType>
         <connector>
             <targetReference>Sales_area_available</targetReference>
         </connector>
+        <inputParameters>
+            <name>useCase</name>
+            <value>
+                <stringValue>SA</stringValue>
+            </value>
+        </inputParameters>
         <inputParameters>
             <name>accountId</name>
             <value>
@@ -24,7 +30,7 @@
         </inputParameters>
         <outputParameters>
             <assignToReference>SalesAreaAvailable</assignToReference>
-            <name>salesAreaAvailable</name>
+            <name>picklistValues</name>
         </outputParameters>
     </actionCalls>
     <actionCalls>

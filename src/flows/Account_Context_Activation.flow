@@ -11,6 +11,12 @@
             <targetReference>Business_context_available</targetReference>
         </connector>
         <inputParameters>
+            <name>useCase</name>
+            <value>
+                <stringValue>BC</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
             <name>accountId</name>
             <value>
                 <elementReference>AccountId</elementReference>
@@ -18,7 +24,7 @@
         </inputParameters>
         <outputParameters>
             <assignToReference>BusinessContextAvailable</assignToReference>
-            <name>businessContextAvailable</name>
+            <name>picklistValues</name>
         </outputParameters>
     </actionCalls>
     <constants>
