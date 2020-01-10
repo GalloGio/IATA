@@ -2,11 +2,11 @@
  * Description: This class contains unit tests for the (GDP Replication) batches
  * Author: Samy Saied
  * Version: 1.0
- * History: 
+ * History:
  *  Alexandre Jaimes 08/01/2016
- *   - Changed insert of single objects to inserting lists, fixing a max SOQL error 
+ *   - Changed insert of single objects to inserting lists, fixing a max SOQL error
  *   - Conversion of init method to @testSetup for speed optimization
- *  Alexandre Jaimes 19/01/2016  
+ *  Alexandre Jaimes 19/01/2016
  *   - Replaced IECUtil.GetRecordTypeId calls by map to reduce SOQL calls under 100 transaction limit
  *  Sonny Leman 04/02/2016
  *   - Add testing for BtchGDPReplicateTerritories
@@ -16,31 +16,31 @@
  * Important note (Sonny Leman):
  *   - During the addition of test method for BtchGDPReplicateTerritories, I come to a realization that this test class was not intended to do any test, except get a high coverage.
  *   - While we tried to reduce the bad model, we are limited to the the fact that as this batch is running in cascading process with other and we avoid changing other codes.
- *   - Our suggestion is to correct this whole model. 
+ *   - Our suggestion is to correct this whole model.
  *
  **/
- 
+
 @isTest (SeeAllData=false)
 private class BtchGDPReplicate_tst {
 	private static string aimsID_good = '1234567890'; // oAccount1.AIMS_ID__c , good AIMS_ID__c for territory testing
 	private static string iataCode_good = '1234567'; // oAccount1.IATACode__c.substring(0,7), good IATA_Code__c for territory testing
-	//private static string iataCode_bad = '9234560'; // bad IATA_Code__c for territory testing that has match in the 
-		
-	
+	//private static string iataCode_bad = '9234560'; // bad IATA_Code__c for territory testing that has match in the
+
+
 	 @testSetup static void Init() {
 		insert new IEC_GDP_Replication__c(Schedule_Active__c = true, Schedule_Period__c = 24, System_Admin_Email__c = 'saieds@iata.org');
-		
+
 		list<sObject> sObjList = new list<sObject>();
-		
+
 		GDP_Reference_Table__c refTableEndorser = new GDP_Reference_Table__c( Code__c = 'IATA', Name='IATA'
 			, Definition__c = 'Test IATA', System_ID__c='ORGABBIATA', System__c='Global', Table__c ='ORGABB');
 		GDP_Reference_Table__c refTableClass = new GDP_Reference_Table__c( Code__c = 'C', Name='Corporation'
-			, Definition__c = 'Corporation' 
+			, Definition__c = 'Corporation'
 			, System_ID__c='LGLTYP', System__c='Global', Table__c ='LGLTYP');
 		List<GDP_Reference_Table__c> refTable = new List<GDP_Reference_Table__c> { refTableEndorser, refTableClass};
 		upsert refTable;
 		System.debug( 'GDP_Reference_Table upserted:' + refTable);
-		
+
 		// Live Data
 		Account oAccount1 = IECTestUtil.CreateSampleAccount();
 		//oAccount1.AIMS_ID__c = IECUtil.NewGuid().substring(0, 10);
@@ -48,7 +48,7 @@ private class BtchGDPReplicate_tst {
 		oAccount1.RecordTypeId = IECUtil.GetRecordTypeId('Account', 'IATA_Agency');
 		oAccount1.IATACode__c = '12345678';
 		sObjList.add(oAccount1);
-		 
+
 		Account oAccount2 = IECTestUtil.CreateSampleAccount();
 		oAccount2.WebStar_ID__c = IECUtil.NewGuid().substring(0, 10);
 		oAccount2.RecordTypeId = IECUtil.GetRecordTypeId('Account', 'IATA_Agency');
@@ -57,26 +57,26 @@ private class BtchGDPReplicate_tst {
 
 		insert sObjList;
 		sObjList.clear();
-		
+
 		Account oAccount3 = IECTestUtil.CreateSampleAccount();
 		oAccount3.AIMS_ID__c = IECUtil.NewGuid().substring(0, 10);
 		oAccount3.RecordTypeId = IECUtil.GetRecordTypeId('Account', 'IATA_Agency');
 		oAccount3.IATACode__c = '45698723';
 		oAccount3.ParentId = oAccount1.Id;
 		sObjList.add(oAccount3);
-		
+
 		Account oAccount4 = IECTestUtil.CreateSampleAccount();
 		oAccount4.WebStar_ID__c = IECUtil.NewGuid().substring(0, 10);
 		oAccount4.RecordTypeId = IECUtil.GetRecordTypeId('Account', 'IATA_Agency');
 		oAccount4.IATACode__c = '32178945';
 		oAccount4.ParentId = oAccount2.Id;
 		sObjList.add(oAccount4);
-				
+
 		Account_Category__c oAccount_Category1 = IECTestUtil.CreateSampleAccountCategory(oAccount1);
 		oAccount_Category1.AIMS_ID__c = oAccount1.AIMS_ID__c + '1';
 		oAccount_Category1.WebStar_ID__c = null;
 		sObjList.add(oAccount_Category1);
-		
+
 		Account_Category__c oAccount_Category2 = IECTestUtil.CreateSampleAccountCategory(oAccount2);
 		oAccount_Category2.WebStar_ID__c = oAccount2.WebStar_ID__c + '1';
 		oAccount_Category2.AIMS_ID__c = null;
@@ -85,10 +85,10 @@ private class BtchGDPReplicate_tst {
 		Accreditation__c oAccreditation1 = IECTestUtil.CreateSampleAccreditation(oAccount1);
 		oAccreditation1.AIMS_ID__c = oAccount1.AIMS_ID__c + 'ACC1';
 		oAccreditation1.WebStar_ID__c = null;
-		
+
 		// oAccreditation1.Endorsed_Accredited_By_Formula__c = refTableEndorser.Id; // this is used for testing BtchGDPReplicateTerritories
 		oAccreditation1.Class__c = refTableClass.Id; // this is used for testing BtchGDPReplicateTerritories
-		
+
 		sObjList.add(oAccreditation1);
 
 		Accreditation__c oAccreditation2 = IECTestUtil.CreateSampleAccreditation(oAccount2);
@@ -167,12 +167,12 @@ private class BtchGDPReplicate_tst {
 		oGDS2.WebStar_ID__c = oAccount2.WebStar_ID__c + '1';
 		oGDS2.AIMS_ID__c = null;
 		sObjList.add(oGDS2);
-		
+
 		//Insert at mid of list to avoid folling error
 		//Cannot have more than 10 types in a single save operation. Please reduce number of types in one save operation.
 		insert sObjList;
 		sObjList.clear();
-			
+
 		// GDP Data
 		GDP_Products_Account_View__c oGDPAccount1 = IECTestUtil.createSampleGDPAccount('Account 1', '1234567'); // aimsID_good
 		oGDPAccount1.AIMS_ID__c = oAccount1.AIMS_ID__c + 'GDP';
@@ -180,7 +180,7 @@ private class BtchGDPReplicate_tst {
 		oGDPAccount1.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('GDP_Products_Account_View__c', 'GDP');
 		oGDPAccount1.IATA_Code__c = '1234561';
 		sObjList.add(oGDPAccount1);
-		
+
 		GDP_Products_Account_View__c oGDPAccount2 = IECTestUtil.createSampleGDPAccount('Account 1', '87654321');
 		oGDPAccount2.WebStar_ID__c = oAccount2.WebStar_ID__c + 'GDP';
 		oGDPAccount2.AIMS_ID__c = null;
@@ -195,7 +195,7 @@ private class BtchGDPReplicate_tst {
 		oGDPAccount3.Parent_Account_AIMS_ID__c = oAccount1.AIMS_ID__c;
 		oGDPAccount3.IATA_Code__c = '1234563';
 		sObjList.add(oGDPAccount3);
-		
+
 		GDP_Products_Account_View__c oGDPAccount4 = IECTestUtil.createSampleGDPAccount('Account 1', '32178945');
 		oGDPAccount4.WebStar_ID__c = oAccount4.WebStar_ID__c + 'GDP';
 		oGDPAccount4.AIMS_ID__c = null;
@@ -235,47 +235,47 @@ private class BtchGDPReplicate_tst {
 		oGDP_Phone2_GDP.WebStar_ID__c = oAccount2.WebStar_ID__c + 'P1GDP';
 		oGDP_Phone2_GDP.AIMS_ID__c = null;
 		sObjList.add(oGDP_Phone2_GDP);
-		
-		
+
+
 		sObjList.sort();
 		SYstem.debug('sObjList::'+sObjList);
 		insert sObjList;
-		
+
 		// set static variable for testing the territory
 		aimsID_good = oAccount1.AIMS_ID__c; // this is for testing the territory
 		iataCode_good = oAccount1.IATACode__c.substring(0,7); // this is for testing the territory
-	
+
 		System.debug('Init(): iataCode_:' + iataCode_good);
 		System.debug('Init: aimsID:' + aimsID_good);
-		
+
 /*
 		System.debug('iataCode_:' + iataCode_good);
 		System.debug('aimsID:' + aimsID_good);
-		
+
 		GSA_Territory__c oGSA_Territory_GDP = newTerritory( aimsID_good) ; // oAccount1.AIMS_ID__c;
 		oGSA_Territory_GDP.IATA_Code__c = iataCode_good; // '1234567'; // oAccount1.IATACode__c.substring(0,7);
-		
-		insert oGSA_Territory_GDP;	
-*/	
-	
+
+		insert oGSA_Territory_GDP;
+*/
+
 	} // end of Init
-	
+
 	private static void showTerritory( DateTime batchStartTime)
 	{
 		List<GSA_Territory__c> gterall = [select Id, Name, LastModifiedDate, AIMS_ID__c
-										  , Related_account__c, Related_Accreditation__c 
-										  from GSA_Territory__c];
+											, Related_account__c, Related_Accreditation__c
+											from GSA_Territory__c];
 		System.debug( 'all territory :' + gterall);
-		
+
 		List<Accreditation__c> accredall = [select Id, Name, AIMS_ID__c, Related_Account__c
 												, Related_Account__r.Name
-												, Endorsed_Accredited_By_Formula__c 
+												, Endorsed_Accredited_By_Formula__c
 												, Class__c, Class__r.Code__c
 												from Accreditation__c
-										   		order by Id];
+											 		order by Id];
 		System.debug( 'all accreditation:' + accredall);
-		
-		
+
+
 		IEC_Batch_Replication__c btchRep = IECUtil.GetBatchReplication('GDP Replicate: Territories' );
 		System.debug( 'showTerritory btchRep: ' + btchRep);
 		String query =
@@ -302,16 +302,16 @@ private class BtchGDPReplicate_tst {
 			+ '		AND LastModifiedDate < ' + batchStartTime.formatGMT('yyyy-MM-dd\'T\'HH:mm:ss\'Z\'')
 			+ '		AND (AIMS_ID__c != null)'
 			//+ '		AND RecordTypeId = \'' + IECUtil.GetRecordTypeId('GSA_Territory__c', 'Live') + '\''
-			+ '     AND Related_Account__c IN (SELECT Id FROM Account WHERE Location_Class__c IN (\'C\',\'D\',\'E\',\'F\',\'G\',\'K\',\'M\',\'N\',\'O\',\'P\',\'S\',\'T\',\'V\',\'X\') AND Main_Accreditation_Organization__c IN (\'IATA\',\'IATAN\',\'DOM\'))'                   
+			+ '     AND Related_Account__c IN (SELECT Id FROM Account WHERE Location_Class__c IN (\'C\',\'D\',\'E\',\'F\',\'G\',\'K\',\'M\',\'N\',\'O\',\'P\',\'S\',\'T\',\'V\',\'X\') AND Main_Accreditation_Organization__c IN (\'IATA\',\'IATAN\',\'DOM\'))'
 			+ '		AND Related_Accreditation__c != null '
 			;
-			
+
 		System.debug( 'territories: query: ' + query);
 		List<GSA_Territory__c> gterlist = Database.query(query);
 		System.debug( '\n\nterritory result:' + gterlist.size());
 		System.debug( 'territories: ' + gterlist);
 	}
-	
+
 	// create but not insert a territory
 	private static GSA_Territory__c newTerritory( String acctAimsId )
 	{
@@ -333,18 +333,18 @@ private class BtchGDPReplicate_tst {
 			, Territory_Description__c
 */
 		);
-		if (acctAimsId != null) 
+		if (acctAimsId != null)
 		{
 			//Account relatedAccount = new Account( AIMS_ID__c = acctAimsId );
 			//returnTerritory.Related_Account__r = relatedAccount;
-			
+
 			Accreditation__c relatedAccreditation = new Accreditation__c( AIMS_ID__c = acctAimsId + 'ACC1');
 			returnTerritory.Related_Accreditation__r = relatedAccreditation;
 		}
-		
+
 		return returnTerritory;
 	}
-	
+
 	// ========================================================================
 	// The test methods are listed below
 	// ========================================================================
@@ -354,7 +354,7 @@ private class BtchGDPReplicate_tst {
 
 
 		Test.startTest();
-		
+
 		//*
 		// Schedule - Account
 		//*
@@ -370,22 +370,22 @@ private class BtchGDPReplicate_tst {
  		system.schedule(jobName, cronvalue , new SchdlIECGDPReplication());
 
 		Test.stopTest();
-		
+
 		System.debug('Unit Test: Finish: TestGDPReplicateScheduleAccount');
 	}
-	
-	
+
+
 	@isTest
 	static void TestGDPReplicateAccount2() {
 		System.debug('Unit Test: Start: TestGDPReplicateAccount 2');
 
-		
+
 		IECUtil.SetBatchReplication('GDP Replicate: Account', System.now().addHours(4));
 
 		Test.startTest();
 
 		//*
-		// Account 2 
+		// Account 2
 		//*
 		IEC_Batch_Replication__c btchRepAcc = IECUtil.GetBatchReplication('GDP Replicate: Account');
 		IEC_Batch_Replication__c btchRep = IECUtil.GetBatchReplication('GDP Replicate: Account Category');
@@ -403,22 +403,22 @@ private class BtchGDPReplicate_tst {
 			+ '	WHERE LastModifiedDate >= ' + btchRep.Last_Modified_Date__c.formatGMT('yyyy-MM-dd\'T\'HH:mm:ss\'Z\'')
 			+ '		AND LastModifiedDate < ' + btchRepAcc.Last_Modified_Date__c.formatGMT('yyyy-MM-dd\'T\'HH:mm:ss\'Z\'')
 			+ '		AND (AIMS_ID__c != null OR Webstar_ID__c != null)'
-			+ '		AND RecordTypeId = \'' 
-			+ IECUtil.GetRecordTypeId('Account', 'IATA_Agency') 
+			+ '		AND RecordTypeId = \''
+			+ IECUtil.GetRecordTypeId('Account', 'IATA_Agency')
 			+ '\'';
 		System.debug('SSS: SOQL Query: ' + btchProc.query);
 		Database.executeBatch(btchProc);
 
 		Test.stopTest();
-		
+
 		System.debug('Unit Test: Finish: TestGDPReplicateAccount');
 	}
-	
+
 	@isTest
 	static void TestGDPReplicateAccountCategory() {
 		System.debug('Unit Test: Start: TestGDPReplicateAccountCategory');
 
-		
+
 		IECUtil.SetBatchReplication('GDP Replicate: Account', System.now().addHours(4));
 
 		Test.startTest();
@@ -443,15 +443,15 @@ private class BtchGDPReplicate_tst {
 		Database.executeBatch(btchProc);
 
 		Test.stopTest();
-		
+
 		System.debug('Unit Test: Finish: TestGDPReplicateAccountCategory');
 	}
-	
+
 	@isTest
 	static void TestGDPReplicateAccreditation() {
 		System.debug('Unit Test: Start: TestGDPReplicateAccreditation');
 
-		
+
 		IECUtil.SetBatchReplication('GDP Replicate: Account', System.now().addHours(4));
 
 		Test.startTest();
@@ -478,15 +478,15 @@ private class BtchGDPReplicate_tst {
 		Database.executeBatch(btchProc);
 
 		Test.stopTest();
-		
+
 		System.debug('Unit Test: Finish: TestGDPReplicateAccreditation');
 	}
-	
+
 	@isTest
 	static void TestGDPReplicateAdjacentAirport() {
 		System.debug('Unit Test: Start: TestGDPReplicateAdjacentAirport');
 
-		
+
 		IECUtil.SetBatchReplication('GDP Replicate: Account', System.now().addHours(4));
 
 		Test.startTest();
@@ -511,15 +511,15 @@ private class BtchGDPReplicate_tst {
 		Database.executeBatch(btchProc);
 
 		Test.stopTest();
-		
+
 		System.debug('Unit Test: Finish: TestGDPReplicateAdjacentAirport');
 	}
-	
+
 	@isTest
 	static void TestGDPReplicateAgencyOwner() {
 		System.debug('Unit Test: Start: TestGDPReplicateAgencyOwner');
 
-		
+
 		IECUtil.SetBatchReplication('GDP Replicate: Account', System.now().addHours(4));
 
 		Test.startTest();
@@ -544,16 +544,16 @@ private class BtchGDPReplicate_tst {
 		Database.executeBatch(btchProc);
 
 		Test.stopTest();
-		
+
 		System.debug('Unit Test: Finish: TestGDPReplicateAgencyOwner');
 	}
-	
+
 	@isTest
 	static void TestGDPReplicateAffiliation() {
 		System.debug('Unit Test: Start: TestGDPReplicateAffiliation');
 
 		//Init();
-		
+
 		IECUtil.SetBatchReplication('GDP Replicate: Account', System.now().addHours(4));
 
 		Test.startTest();
@@ -577,15 +577,15 @@ private class BtchGDPReplicate_tst {
 		Database.executeBatch(btchProc);
 
 		Test.stopTest();
-		
+
 		System.debug('Unit Test: Finish: TestGDPReplicateAffiliation');
 	}
-	
+
 	@isTest
 	static void TestGDPReplicateAddress() {
 		System.debug('Unit Test: Start: TestGDPReplicateAddress');
 
-		
+
 		IECUtil.SetBatchReplication('GDP Replicate: Account', System.now().addHours(4));
 
 		Test.startTest();
@@ -612,15 +612,15 @@ private class BtchGDPReplicate_tst {
 		Database.executeBatch(btchProc);
 
 		Test.stopTest();
-		
+
 		System.debug('Unit Test: Finish: TestGDPReplicateAddress');
 	}
-	
+
 	@isTest
 	static void TestGDPReplicateAgencyProfile() {
 		System.debug('Unit Test: Start: TestGDPReplicateAgencyProfile');
 
-		
+
 		IECUtil.SetBatchReplication('GDP Replicate: Account', System.now().addHours(4));
 
 		Test.startTest();
@@ -649,19 +649,19 @@ private class BtchGDPReplicate_tst {
 		Database.executeBatch(btchProc);
 
 		Test.stopTest();
-		
+
 		System.debug('Unit Test: Finish: TestGDPReplicateAgencyProfile');
 	}
-	
+
 	@isTest
 	static void TestGDPReplicatePhone() {
 		System.debug('Unit Test: Start: TestGDPReplicatePhone');
 
-		
+
 		IECUtil.SetBatchReplication('GDP Replicate: Account', System.now().addHours(4));
 
 		Test.startTest();
-		
+
 		//*
 		// GDP Phone
 		//*
@@ -682,19 +682,19 @@ private class BtchGDPReplicate_tst {
 		Database.executeBatch(btchProc);
 
 		Test.stopTest();
-		
+
 		System.debug('Unit Test: Finish: TestGDPReplicatePhone');
 	}
-	
+
 	@isTest
 	static void TestGDPReplicateGDS() {
 		System.debug('Unit Test: Start: TestGDPReplicateGDS');
 
-		
+
 		IECUtil.SetBatchReplication('GDP Replicate: Account', System.now().addHours(4));
 
 		Test.startTest();
-		
+
 		//*
 		// GDS
 		//*
@@ -715,11 +715,11 @@ private class BtchGDPReplicate_tst {
 		Database.executeBatch(btchProc);
 
 		Test.stopTest();
-		
+
 		System.debug('Unit Test: Finish: TestGDPReplicateGDS');
 	}
-	
-	
+
+
 	@isTest
 	static void TestGDPReplicateAccountUpdate() {
 		System.debug('Unit Test: Start: TestGDPReplicateAccountUpdate');
@@ -741,26 +741,26 @@ private class BtchGDPReplicate_tst {
 			+ '		AND RecordTypeId = \'' + IECUtil.GetRecordTypeId('GDP_Products_Account_View__c', 'GDP') + '\'';
 		System.debug('SSS: SOQL Query: ' + btchProc.query);
 		Database.executeBatch(btchProc);
-		
+
 		Test.stopTest();
-		
+
 		System.debug('Unit Test: Finish: TestGDPReplicateAccountUpdate');
 	}
-	
-	
+
+
 	@isTest
 	static void TestIECErrorLog() {
-		 
+
 		IECErrorLogger logger = new IECErrorLogger();
-		 
+
 	 	//cover the if string > 255 chars
 	 	String tempString = 'temptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemptemp';
-	
+
 		IECErrorLogger.logBatchError(tempString, tempString, tempString, 'tempString', 'tempString');
 		IECErrorLogger.logError(null, tempString, tempString, 'tempString', 'tempString', 'tempString');
 		IECErrorLogger.logInfo(null, tempString, tempString, 'tempString', 'tempString');
-		  
+
 	}
-	
-	
+
+
 }

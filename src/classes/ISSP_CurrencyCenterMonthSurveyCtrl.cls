@@ -2,11 +2,11 @@
 	Class Name: ISSP_CurrencyCenterMonthSurveyCtrl
 
 	Related Page: ISSP_CurrencyCenterReportingActionMonth.page
-	
+
 	Copyright © [IATA]
-	
-	Purpose: This class aims to implement all actions from month survey page                                                      
-	
+
+	Purpose: This class aims to implement all actions from month survey page
+
 	VERSION  AUTHOR            DATE              DETAIL/CHANGE REFERENCE
 	1.0 -    Luís Ferreira     15/11/2018       	INITIAL DEVELOPMENT
 */
@@ -28,7 +28,7 @@ public without sharing class ISSP_CurrencyCenterMonthSurveyCtrl {
 	public Boolean 										displayPopupDeleteSection		{ get; set; }
 	public Boolean 										errorMessage 					{ get; set; }
 	public String 										surveyStatus 					{ get; set; }					//survey status
-	public Boolean 										surveyStatusBoolean				{ get; set; }					
+	public Boolean 										surveyStatusBoolean				{ get; set; }
 	public Date 										reportingDate 					{ get; set; }					//REMOVE
 	public String 										sectionReportKey 				{ get; set; }             		// get reporting type of the section
 	public String 										sectionCurrencyKey				{ get; set; }					// get currency of the section
@@ -37,7 +37,7 @@ public without sharing class ISSP_CurrencyCenterMonthSurveyCtrl {
 	public Integer 										numRowCountryCommentsPanel 		{ get; set; }
 	public Integer 										yearSurvey 						{ get; set; }					//year of the survey
 	public Integer 										monthSurvey 					{ get; set; }					//month of the survey
-	public String 										monthSurveyString 				{ get; set; }					//month string 
+	public String 										monthSurveyString 				{ get; set; }					//month string
 	public String 										airlineId						{ get; set; }					//airline if of the online user
 	public Boolean 										loadSuccessful 					{ get; set; }
 	public String 										countriesNamesString 			{ get; set; }					//string with all existing countries
@@ -64,7 +64,7 @@ public without sharing class ISSP_CurrencyCenterMonthSurveyCtrl {
 	public Map<String, Country_Profile__c>				countriesProfileIdMap			{ get; set; }
 
 
-	public static Map<String, IATA_ISO_Country__c>	iataIsoCountryMap{ 
+	public static Map<String, IATA_ISO_Country__c>	iataIsoCountryMap{
 		get{
 			if(iataIsoCountryMap == null){
 				iataIsoCountryMap = new Map<String, IATA_ISO_Country__c>();
@@ -93,15 +93,15 @@ public without sharing class ISSP_CurrencyCenterMonthSurveyCtrl {
 	//get country from object Country_Profile__c
 	public Country_Profile__c countryProfile { get; set; }
 
-	
+
 
 	//selected reporting type
 	public String selectedReportingType {get; set;}
 	/*
-		Purpose:  get all reporting type                                                         
-		Parameters: none 
+		Purpose:  get all reporting type
+		Parameters: none
 		Returns: reportingTypeList
-		Throws: none                                                        
+		Throws: none
 	*/
 	public List<SelectOption> getReportingType() {
 		List<SelectOption> reportingTypeList = new List<SelectOption>();
@@ -111,8 +111,8 @@ public without sharing class ISSP_CurrencyCenterMonthSurveyCtrl {
 		for(Schema.PicklistEntry val : fieldResult.getPicklistValues()) {
 			reportingTypeList.add(new SelectOption(val.getLabel(),val.getLabel()));
 		}
-		
-		
+
+
 
 		return reportingTypeList;
 	}
@@ -121,10 +121,10 @@ public without sharing class ISSP_CurrencyCenterMonthSurveyCtrl {
 	public String selectedCurrency {get; set;}
 
 	/*
-		Purpose:  get all currencies                                                         
-		Parameters: none 
+		Purpose:  get all currencies
+		Parameters: none
 		Returns:  List<SelectOption>
-		Throws: none                                                        
+		Throws: none
 	*/
 	public List<SelectOption> getCurrencyType() {
 		List<SelectOption> currencyList = new List<SelectOption>();
@@ -142,14 +142,14 @@ public without sharing class ISSP_CurrencyCenterMonthSurveyCtrl {
 	}
 
 	/*
-		Purpose:  get banks from specific country                                                        
-		Parameters: none 
+		Purpose:  get banks from specific country
+		Parameters: none
 		Returns:  List<SelectOption>
-		Throws: none                                                        
+		Throws: none
 	*/
 	public List<SelectOption> getBankOptions() {
 		List<SelectOption> banksListOptions = new List<SelectOption>();
-		
+
 
 		List<Financial_Institution__c> countryBanksList = [
 			SELECT Id, Name
@@ -200,7 +200,7 @@ public without sharing class ISSP_CurrencyCenterMonthSurveyCtrl {
 					}
 				}
 
-				
+
 
 			}
 		}
@@ -248,32 +248,32 @@ public without sharing class ISSP_CurrencyCenterMonthSurveyCtrl {
 
 		User[] contactUser = [SELECT id,
 								Contact.Account.id
-								From User 
-								where id = :userId 
+								From User
+								where id = :userId
 								LIMIT 1];
 
 		for(User cont: contactUser) {
 
 			airlineId = cont.Contact.Account.id;
-			
+
 		}
 	}
 
 	/*
-		Purpose: inicialize all the variables in construtor                                                    
+		Purpose: inicialize all the variables in construtor
 		Parameters: none
 		Returns: none
-		Throws: none                                                      
+		Throws: none
 	*/
 	public void init() {
 		//Initialize list of country surveys
 		wccsObjectMap = new Map<String, wrapperCurrencyCenterSurvey>();
 		wccsObject = new wrapperCurrencyCenterSurvey();
 		deleteCurrencyCenterSet = new Set<Currency_Center_Survey__c>();
-		countriesKeysMap = new Map<String, List<String>>();							
+		countriesKeysMap = new Map<String, List<String>>();
 
 		//add first reporting type record
-		reportingTypeRecords = new List<Currency_Center_Survey__c>(); 
+		reportingTypeRecords = new List<Currency_Center_Survey__c>();
 		Currency_Center_Survey__c newRecordReportingType = new Currency_Center_Survey__c();
 		reportingTypeRecords.add(newRecordReportingType);
 
@@ -312,10 +312,10 @@ public without sharing class ISSP_CurrencyCenterMonthSurveyCtrl {
 		displayPopupDeleteBankRow = true;
 	}
 	/*
-		Purpose: get month of the survey                                                  
+		Purpose: get month of the survey
 		Parameters: none
 		Returns: none
-		Throws: none                                                      
+		Throws: none
 	*/
 	public void surveyDate() {
 		DateTime myDate = DateTime.newInstance(yearSurvey, monthSurvey, 1);
@@ -323,10 +323,10 @@ public without sharing class ISSP_CurrencyCenterMonthSurveyCtrl {
 	}
 
 	/*
-		Purpose: build the countries Map                                                       
+		Purpose: build the countries Map
 		Parameters: none
 		Returns: none
-		Throws: none                                                      
+		Throws: none
 	*/
 	public void buildCountriesMap() {
 
@@ -358,10 +358,10 @@ public without sharing class ISSP_CurrencyCenterMonthSurveyCtrl {
 	}
 
 	/*
-		Purpose: build the countrynamestring for the selectlist in the 'add country to survey' tab                                                       
+		Purpose: build the countrynamestring for the selectlist in the 'add country to survey' tab
 		Parameters: none
 		Returns: none
-		Throws: none                                                      
+		Throws: none
 	*/
 	public void buildCountriesNameString() {
 		countriesNamesString = '';
@@ -371,14 +371,14 @@ public without sharing class ISSP_CurrencyCenterMonthSurveyCtrl {
 	}
 
 	/*
-		Purpose:  change the selected country when tab is clicked                                                       
+		Purpose:  change the selected country when tab is clicked
 		Parameters: none
 		Returns: none
-		Throws: none                                                      
+		Throws: none
 	*/
 	public void countryObject() {
 		this.selectedCountrySurvey = ApexPages.CurrentPage().getParameters().get('countryName');
-		
+
 		System.debug('Country ' + selectedCountrySurvey);
 		wccsObject = wccsObjectMap.get(selectedCountrySurvey);
 
@@ -390,10 +390,10 @@ public without sharing class ISSP_CurrencyCenterMonthSurveyCtrl {
 	}
 
 	/*
-		Purpose: when create the a new tab, we load the data from salesforce and put in the wrapper object                                                     
+		Purpose: when create the a new tab, we load the data from salesforce and put in the wrapper object
 		Parameters: none
 		Returns: wrapperCurrencyCenterSurvey
-		Throws: none                                                      
+		Throws: none
 	*/
 
 	public void buildSurvey() {
@@ -421,15 +421,15 @@ public without sharing class ISSP_CurrencyCenterMonthSurveyCtrl {
 
 			//add to the list of reporting type
 			wccsObjectMap.get(selectedCountrySurvey).typeReportMap.put(key, new Currency_Center_Survey__c(Reporting_Type__c = 'Blocked Amount', Currency__c = countryCurrency, Country_Name__c = selectedCountrySurvey, Section__c = 'Report Type Record', RecordTypeId = ISSP_CurrencyCenterUtil.rtIdMonthlyReportType));
-			
+
 			//get exchange rate for report type
 			if(!countryCurrency.equals('USD')) {
-				if((!iataIsoCountryMap.get(selectedCountrySurvey).CurrencyIsoCode.equals('USD') && iataIsoCountryMap.get(selectedCountrySurvey).CurrencyIsoCode.equals(countryCurrency)) 
+				if((!iataIsoCountryMap.get(selectedCountrySurvey).CurrencyIsoCode.equals('USD') && iataIsoCountryMap.get(selectedCountrySurvey).CurrencyIsoCode.equals(countryCurrency))
 					|| !countriesProfileMap.get(selectedCountrySurvey).Currency__c.equals('USD')) {
 					wccsObjectMap.get(selectedCountrySurvey).typeReportMap.get(key).Average_Exchange_Rate__c = countriesProfileMap.get(selectedCountrySurvey).Currency_Exchange_Rate__c;
 				}
 			} else {
-				
+
 				wccsObjectMap.get(selectedCountrySurvey).typeReportMap.get(key).Average_Exchange_Rate__c = 1;
 			}
 			//add empty bank if list of banks is empty
@@ -503,10 +503,10 @@ public without sharing class ISSP_CurrencyCenterMonthSurveyCtrl {
 	}
 
 	/*
-		Purpose:  save all records into salesforce                                                         
+		Purpose:  save all records into salesforce
 		Parameters: none
 		Returns: none
-		Throws: none                                                      
+		Throws: none
 	*/
 	public PageReference save() {
 
@@ -607,8 +607,8 @@ public without sharing class ISSP_CurrencyCenterMonthSurveyCtrl {
 			System.debug('***** Save END - deleteCurrencyCenterSet: ' + deleteCurrencyCenterSet);
 
 			PageReference retURL = new PageReference('/ISSP_CurrencyCenterReportingActionsMonth?id=' + parentQueryResult.id);
-	      	retURL.setRedirect(true);
-	      	return retURL;
+		  	retURL.setRedirect(true);
+		  	return retURL;
 		} else {
 			System.debug('***** UNSAVED - wccsObjectMap: ' + wccsObjectMap);
 			return null;
@@ -616,10 +616,10 @@ public without sharing class ISSP_CurrencyCenterMonthSurveyCtrl {
 	}
 
 	/*
-		Purpose:  submit the survey in the object Currency_Center_Survey__c                                                         
+		Purpose:  submit the survey in the object Currency_Center_Survey__c
 		Parameters: none
 		Returns: none
-		Throws: none                                                      
+		Throws: none
 	*/
 	public PageReference submit() {
 
@@ -633,10 +633,10 @@ public without sharing class ISSP_CurrencyCenterMonthSurveyCtrl {
 	}
 
 	/*
-		Purpose:  send email to countrys managers when survey is submitted                                                         
+		Purpose:  send email to countrys managers when survey is submitted
 		Parameters: none
 		Returns: none
-		Throws: none                                                      
+		Throws: none
 	*/
 	public void sendEmail() {
 
@@ -644,7 +644,7 @@ public without sharing class ISSP_CurrencyCenterMonthSurveyCtrl {
 
 		String emailReportTemplate = 'Currency_Center_Monthly_Survey_Submitted';
 
-		Set<Id> setOfContactEmails = loadEmails(); 
+		Set<Id> setOfContactEmails = loadEmails();
 
 		if(!setOfContactEmails.isEmpty()) {
 
@@ -658,49 +658,49 @@ public without sharing class ISSP_CurrencyCenterMonthSurveyCtrl {
 			 	Messaging.Email[] mailMsgs = new Messaging.Email[]{};
 			 	List<Messaging.SendEmailResult> sendEmailResults = new List<Messaging.SendEmailResult>();
 
-                for(String cid : setOfContactEmails) {
-                    Messaging.SingleEmailMessage mailMsg = new Messaging.SingleEmailMessage();
-                    mailMsg.setOrgWideEmailAddressId(owa[0].Id);
-                    mailMsg.setTargetObjectId(cid);
-                    mailMsg.setTemplateID(et[0].Id);
-                    mailMsg.setSaveAsActivity(false);
-                    mailMsgs.add(mailMsg);
-                }
+				for(String cid : setOfContactEmails) {
+					Messaging.SingleEmailMessage mailMsg = new Messaging.SingleEmailMessage();
+					mailMsg.setOrgWideEmailAddressId(owa[0].Id);
+					mailMsg.setTargetObjectId(cid);
+					mailMsg.setTemplateID(et[0].Id);
+					mailMsg.setSaveAsActivity(false);
+					mailMsgs.add(mailMsg);
+				}
 
-                if(!mailMsgs.isEmpty()){
-                    try {
-	                    sendEmailResults = Messaging.sendEmail(mailMsgs);
-    	                for(Messaging.SendEmailResult ser: sendEmailResults) {
-                        	if(!ser.isSuccess()) {
-                            	System.debug('sendEmail errorMessage: ' + ser.getErrors()[0].getMessage() + ' - TargetObjectId:' + ser.getErrors()[0].getTargetObjectId());
-                        	} else {
-                        		errorMessage = false;
-                        	}
-                    	}
-                	}
-                	catch (Exception ex){
-                    	System.debug('sendEmail error: ' + ex.getMessage());
-                	}
-                }
+				if(!mailMsgs.isEmpty()){
+					try {
+						sendEmailResults = Messaging.sendEmail(mailMsgs);
+						for(Messaging.SendEmailResult ser: sendEmailResults) {
+							if(!ser.isSuccess()) {
+								System.debug('sendEmail errorMessage: ' + ser.getErrors()[0].getMessage() + ' - TargetObjectId:' + ser.getErrors()[0].getTargetObjectId());
+							} else {
+								errorMessage = false;
+							}
+						}
+					}
+					catch (Exception ex){
+						System.debug('sendEmail error: ' + ex.getMessage());
+					}
+				}
 
 			}
 			else if (owa.isEmpty()){
-            	System.debug('sendEmail Couldn\'t find OrgWideEmailAddress \'IATA Noreply\'');
-        	}
-        	else if(et.isEmpty()){
-            	System.debug('sendEmail Couldn\'t find EmailTemplate \'Currency_Center_Annual_Survey_Initial_Notification\'');
-        	}
+				System.debug('sendEmail Couldn\'t find OrgWideEmailAddress \'IATA Noreply\'');
+			}
+			else if(et.isEmpty()){
+				System.debug('sendEmail Couldn\'t find EmailTemplate \'Currency_Center_Annual_Survey_Initial_Notification\'');
+			}
 		}
 		else{
-            System.debug('sendEmail No contacts with access to Currency Center service');
-        }
+			System.debug('sendEmail No contacts with access to Currency Center service');
+		}
 	}
 
 	/*
-		Purpose:  send email to countrys managers when survey is submitted                                                         
+		Purpose:  send email to countrys managers when survey is submitted
 		Parameters: none
 		Returns: none
-		Throws: none                                                      
+		Throws: none
 	*/
 	public Set<Id> loadEmails() {
 		Set<Id> countryManagerEmailList = new Set<Id>();
@@ -715,23 +715,23 @@ public without sharing class ISSP_CurrencyCenterMonthSurveyCtrl {
 		return countryManagerEmailList;
 	}
 	/*
-		Purpose:  delete certain records from salesfore                                                        
+		Purpose:  delete certain records from salesfore
 		Parameters: none
 		Returns: none
-		Throws: none                                                      
+		Throws: none
 	*/
 	public void deleteRecords() {
 		List<Currency_Center_Survey__c> deleteCurrencyCenterList = new List<Currency_Center_Survey__c>(deleteCurrencyCenterSet);
 		System.debug('deleteRecords ' + deleteCurrencyCenterList);
-		
+
 		delete deleteCurrencyCenterList;
 	}
 
 	/*
-		Purpose:  add new row in the bank table                                                        
+		Purpose:  add new row in the bank table
 		Parameters: none
 		Returns: none
-		Throws: none                                                      
+		Throws: none
 	*/
 	public void addRow() {
 		String key = buildReportTypeMapKey(sectionReportKey, sectionCurrencyKey);
@@ -764,10 +764,10 @@ public without sharing class ISSP_CurrencyCenterMonthSurveyCtrl {
 	}
 
 	/*
-		Purpose:  delete row in the bank table                                                        
+		Purpose:  delete row in the bank table
 		Parameters: none
 		Returns: none
-		Throws: none                                                      
+		Throws: none
 	*/
 	public void deleteRow() {
 		System.debug('deleteRow');
@@ -795,10 +795,10 @@ public without sharing class ISSP_CurrencyCenterMonthSurveyCtrl {
 	}
 
 	/*
-		Purpose:  add new section in the country                                                        
+		Purpose:  add new section in the country
 		Parameters: none
 		Returns: none
-		Throws: none                                                      
+		Throws: none
 	*/
 	public void addSection() {
 
@@ -868,13 +868,13 @@ public without sharing class ISSP_CurrencyCenterMonthSurveyCtrl {
 			countriesKeysMap.put(selectedCountrySurvey, new List<String>());
 			countriesKeysMap.get(selectedCountrySurvey).add(key);
 		}
-    }
+	}
 
-    /*
-		Purpose:  delete section in the country                                                        
+	/*
+		Purpose:  delete section in the country
 		Parameters: none
 		Returns: none
-		Throws: none                                                      
+		Throws: none
 	*/
 	public void deleteSection() {
 		String countryCurrency = countryCurrentCurrency();
@@ -895,13 +895,13 @@ public without sharing class ISSP_CurrencyCenterMonthSurveyCtrl {
 			wccsObjectMap.get(selectedCountrySurvey).bankMap.remove(key);
 		}
 		closePopupDeleteSection();
-    }
-  	
+	}
+
   	/*
-		Purpose:  Calculate the total amount of each section and each bank %.                                                        
+		Purpose:  Calculate the total amount of each section and each bank %.
 		Parameters: none
 		Returns: none
-		Throws: none                                                      
+		Throws: none
 	*/
 	public void calculate() {
 		System.debug('calculate');
@@ -931,20 +931,20 @@ public without sharing class ISSP_CurrencyCenterMonthSurveyCtrl {
 			System.debug('calculate totalAmount = 0; 2');
 			totalAmount = 0;
 		}
-		
+
 
 		if(totalAmount != null && totalAmount > 0) {
 
 			if(numberOfBanks > 1) {
 				for(Currency_Center_Survey__c bank: wccsObjectMap.get(selectedCountrySurvey).bankMap.get(key)) {
-						
+
 						if(bank.Amount__c != null && wccsObject.typeReportMap.get(key).Average_Exchange_Rate__c != null) {
 
 							wccsObject.typeReportMap.get(key).Total_Currency__c = totalAmount;
 
 							//total currency in USD
 							wccsObject.typeReportMap.get(key).Total_Amount_USD__c = totalAmount / wccsObject.typeReportMap.get(key).Average_Exchange_Rate__c;
-							
+
 							//Convert the amount of the bank to USD
 							bank.Amount_USD__c = bank.Amount__c / wccsObject.typeReportMap.get(key).Average_Exchange_Rate__c;
 
@@ -957,13 +957,13 @@ public without sharing class ISSP_CurrencyCenterMonthSurveyCtrl {
 				for(Currency_Center_Survey__c bank: wccsObjectMap.get(selectedCountrySurvey).bankMap.get(key)) {
 
 					if(bank.Amount__c != null && wccsObject.typeReportMap.get(key).Average_Exchange_Rate__c != null) {
-						
+
 						// total currency in the country currency
 						wccsObject.typeReportMap.get(key).Total_Currency__c = bank.Amount__c;
 
 						//total currency in USD
 						wccsObject.typeReportMap.get(key).Total_Amount_USD__c = bank.Amount__c / wccsObject.typeReportMap.get(key).Average_Exchange_Rate__c;
-					
+
 						//Convert the amount of the bank to USD
 						bank.Amount_USD__c = bank.Amount__c / wccsObject.typeReportMap.get(key).Average_Exchange_Rate__c;
 
@@ -976,7 +976,7 @@ public without sharing class ISSP_CurrencyCenterMonthSurveyCtrl {
 
 			if(wccsObjectMap.get(selectedCountrySurvey).bankMap.get(key).size() > 0) {
 				for(Currency_Center_Survey__c bank: wccsObjectMap.get(selectedCountrySurvey).bankMap.get(key)) {
-					
+
 					// total currency in the country currency
 					wccsObject.typeReportMap.get(key).Total_Currency__c = 0;
 
@@ -1000,10 +1000,10 @@ public without sharing class ISSP_CurrencyCenterMonthSurveyCtrl {
 	}
 
 	/*
-		Purpose:  Calculate the total amount USD of the last allocation Amount                                                       
+		Purpose:  Calculate the total amount USD of the last allocation Amount
 		Parameters: none
 		Returns: none
-		Throws: none                                                      
+		Throws: none
 	*/
 	public void calculateLastAllocationUSD() {
 
@@ -1017,10 +1017,10 @@ public without sharing class ISSP_CurrencyCenterMonthSurveyCtrl {
 	}
 
 	/*
-		Purpose:  Calculate the delay in days                                                       
+		Purpose:  Calculate the delay in days
 		Parameters: none
 		Returns: none
-		Throws: none                                                      
+		Throws: none
 	*/
 	public void calculateDelayInDays() {
 
@@ -1038,16 +1038,16 @@ public without sharing class ISSP_CurrencyCenterMonthSurveyCtrl {
 	}
 
 	/*
-		Purpose: to build the typeReportMap and bankMap keys                                                 
+		Purpose: to build the typeReportMap and bankMap keys
 		Parameters: none
 		Returns: none
-		Throws: none                                                      
+		Throws: none
 	*/
 	public String buildReportTypeMapKey(String reportType, String currencyName) {
 		return reportType+'|'+currencyName;
 	}
 
-	// Inner Classes 
+	// Inner Classes
 	public class wrapperCurrencyCenterSurvey	{
 
 		public Currency_Center_Survey__c 	  			 		parent 					{ get; set; }
@@ -1063,7 +1063,7 @@ public without sharing class ISSP_CurrencyCenterMonthSurveyCtrl {
 
 		}
 	}
-	
+
 	public void loadAll() {
 		countriesResult = new List<Currency_Center_Survey__c>();
 		reportingTypesResult = new List<Currency_Center_Survey__c>();
@@ -1118,10 +1118,10 @@ public without sharing class ISSP_CurrencyCenterMonthSurveyCtrl {
 
 
 	/*
-		Purpose: load country records to the wrapper object                                                 
+		Purpose: load country records to the wrapper object
 		Parameters: none
 		Returns: none
-		Throws: none                                                      
+		Throws: none
 	*/
 	public void loadCountry() {
 
@@ -1139,10 +1139,10 @@ public without sharing class ISSP_CurrencyCenterMonthSurveyCtrl {
 
 				//insert in the country wrapper is country record
 				wccsObjectMap.get(countriesProfileIdMap.get(country.country__c).Name).country = country;
-				
+
 				//build a string that will have all countries loaded to send to javascript
 				countriesSurveyString += countriesProfileIdMap.get(country.country__c).Name + '|';
-				
+
 			}
 			//check if is needed because we have countryResult
 			countryIds.add(country.Id);
@@ -1150,10 +1150,10 @@ public without sharing class ISSP_CurrencyCenterMonthSurveyCtrl {
 	}
 
 	/*
-		Purpose: load report types records to the wrapper object                                                 
+		Purpose: load report types records to the wrapper object
 		Parameters: none
 		Returns: none
-		Throws: none                                                      
+		Throws: none
 	*/
 	public void loadReportType() {
 
@@ -1196,10 +1196,10 @@ public without sharing class ISSP_CurrencyCenterMonthSurveyCtrl {
 	}
 
 	/*
-		Purpose: load bank records to the wrapper object                                                 
+		Purpose: load bank records to the wrapper object
 		Parameters: none
 		Returns: none
-		Throws: none                                                      
+		Throws: none
 	*/
 	public void loadBanks() {
 
@@ -1226,7 +1226,7 @@ public without sharing class ISSP_CurrencyCenterMonthSurveyCtrl {
 			wccsObjectMap.get(report.Country_Name__c).bankMap.put(key, new List<Currency_Center_Survey__c>());
 
 			for(Currency_Center_Survey__c bank: bankResult) {
-				
+
 				if(bank.Parent_Id__c.equals(report.Id) && bank.Country_Name__c.equals(report.Country_Name__c)) {
 					System.debug('Add bank: ' + bank);
 					wccsObjectMap.get(bank.Country_Name__c).bankMap.get(key).add(bank);
@@ -1242,10 +1242,10 @@ public without sharing class ISSP_CurrencyCenterMonthSurveyCtrl {
 	}
 
 	/*
-		Purpose: get the parent survey                                                 
+		Purpose: get the parent survey
 		Parameters: none
 		Returns: Currency_Center_Survey__c
-		Throws: none                                                      
+		Throws: none
 	*/
 	public Currency_Center_Survey__c parentQuery() {
 		Id surveyId = apexpages.currentpage().getparameters().get('id');
@@ -1261,9 +1261,9 @@ public without sharing class ISSP_CurrencyCenterMonthSurveyCtrl {
 														FROM Currency_Center_Survey__c
 														WHERE Id = :surveyId
 														LIMIT 1];
-														
+
 		DateTime dT = tempParent.get(0).LastModifiedDate;
-		lastSaveDate = dT.format('dd-MM-yyyy');												
+		lastSaveDate = dT.format('dd-MM-yyyy');
 		surveyStatus = tempParent.get(0).Status__c;
 		if(surveyStatus.equals('Submitted')){
 			surveyStatusBoolean = true;
@@ -1271,15 +1271,15 @@ public without sharing class ISSP_CurrencyCenterMonthSurveyCtrl {
 			surveyStatusBoolean = false;
 		}
 		monthSurvey = Integer.valueOf(tempParent.get(0).Month_Survey__c);
-		yearSurvey = Integer.valueOf(tempParent.get(0).Year_Survey__c);								
+		yearSurvey = Integer.valueOf(tempParent.get(0).Year_Survey__c);
 		return tempParent.get(0);
 	}
 
 	/*
-		Purpose: get all countries from a specific survey                                                
+		Purpose: get all countries from a specific survey
 		Parameters: none
 		Returns: List<Currency_Center_Survey__c>
-		Throws: none                                                      
+		Throws: none
 	*/
 	public List<Currency_Center_Survey__c> countriesQuery() {
 		return [SELECT Id,
@@ -1289,16 +1289,16 @@ public without sharing class ISSP_CurrencyCenterMonthSurveyCtrl {
 					Parent_Id__c,
 					Other_Currency_Business__c,
 					Reporting_Date__c
-				FROM Currency_Center_Survey__c 
+				FROM Currency_Center_Survey__c
 				WHERE Parent_Id__c = :parentQueryResult.Id
 				AND (Section__c = 'Country Record' OR RecordTypeId=:ISSP_CurrencyCenterUtil.rtIdMonthlyCountry)];
 	}
 
 	/*
-		Purpose: get all reporting types records                                            
+		Purpose: get all reporting types records
 		Parameters: none
 		Returns: List<Currency_Center_Survey__c>
-		Throws: none                                                      
+		Throws: none
 	*/
 	public List<Currency_Center_Survey__c> reportingTypeQuery() {
 		return [SELECT Id,
@@ -1321,16 +1321,16 @@ public without sharing class ISSP_CurrencyCenterMonthSurveyCtrl {
 					Last_Allocation_Amount__c,
 					Last_Allocation_Total_Amount_USD__c,
 					Report_Type_Comments__c
-				FROM Currency_Center_Survey__c 
+				FROM Currency_Center_Survey__c
 				WHERE Parent_Id__c IN :countryIds
 				AND (Section__c = 'Report Type Record' OR RecordTypeId=:ISSP_CurrencyCenterUtil.rtIdMonthlyReportType)];
 	}
 
 	/*
-		Purpose: get all banks records                                                
+		Purpose: get all banks records
 		Parameters: none
 		Returns: List<Currency_Center_Survey__c>
-		Throws: none                                                      
+		Throws: none
 	*/
 	public List<Currency_Center_Survey__c> banksQuery() {
 		return [SELECT Id,
@@ -1345,7 +1345,7 @@ public without sharing class ISSP_CurrencyCenterMonthSurveyCtrl {
 					Amount_USD__c,
 					Bank_Percentage__c,
 					Total_Amount_USD__c
-				FROM Currency_Center_Survey__c 
+				FROM Currency_Center_Survey__c
 				WHERE Parent_Id__c IN :reportingTypesIds
 				AND (Section__c = 'Bank Record' OR RecordTypeId=:ISSP_CurrencyCenterUtil.rtIdMonthlyBank)];
 	}

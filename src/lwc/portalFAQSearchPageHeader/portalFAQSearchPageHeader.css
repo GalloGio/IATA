@@ -19,7 +19,7 @@
 }
 
 .mainDiv {
-    background-color: #1e32fa;
+    background-color: rgba(30,50,250,.7);
     background-size: cover;
     height: 184px;
 }

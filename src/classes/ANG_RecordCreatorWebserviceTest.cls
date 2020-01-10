@@ -1,10 +1,10 @@
 @isTest
 private class ANG_RecordCreatorWebserviceTest {
-	
-    private static void createNewGenData(){
-		
+
+	private static void createNewGenData(){
+
 		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c(Name='Portugal', ISO_Code__c='PT', Region__c='Europe', ISS_Office_Location__c='Portugal', ANG_Enable_NewGen__c=true);
-        insert ctry;
+		insert ctry;
 
 		Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
 
@@ -60,9 +60,9 @@ private class ANG_RecordCreatorWebserviceTest {
 		System.debug('Accounts created');
 
 		Contact co1 = new Contact(AccountId = acct.Id, Firstname = 'teste1', Lastname='test1', Phone = '911111111', MobilePhone = '911111111', Email = 'test@test.com', Financial_Assessment_Contact__c = false);
-		
+
 		Contact co2 = new Contact(AccountId = acct2.Id, Firstname = 'teste2', Lastname='test2', Phone = '911111111', MobilePhone = '911111111', Email = 'test2@test.com', Financial_Assessment_Contact__c = false);
-		
+
 		List<Contact> contacts = new List<Contact>{co1,co2};
 		insert contacts;
 
@@ -80,24 +80,24 @@ private class ANG_RecordCreatorWebserviceTest {
 		System.debug('Cases created');
 
 		AMS_Pax_Accreditation_Form__c accre = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = oscarCase.id);
-        
+
 		AMS_Pax_Accreditation_Form__c accre2 = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = oscarCase2.id);
-        
-        List<AMS_Pax_Accreditation_Form__c> acredts = new List<AMS_Pax_Accreditation_Form__c>{accre,accre2};
+
+		List<AMS_Pax_Accreditation_Form__c> acredts = new List<AMS_Pax_Accreditation_Form__c>{accre,accre2};
 
 		insert acredts;
 
 		System.debug('Accreditations created');
 
 
-    }
-	
+	}
+
 	@isTest static void createAccreditation() {
 
 		createNewGenData();
 
 		Test.startTest();
-		
+
 		List<Account> acctLst = [SELECT Id, Name, ParentId from Account];
 
 		Account acct = acctLst.get(0);
@@ -141,7 +141,7 @@ private class ANG_RecordCreatorWebserviceTest {
 		System.assertEquals(hierarchies.size(),1);
 
 
-		
+
 
 
 		Test.stopTest();

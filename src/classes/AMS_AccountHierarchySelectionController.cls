@@ -74,9 +74,9 @@ public class AMS_AccountHierarchySelectionController {
 			if(!isCorrection){
 
 				if(isVoluntaryRelinquishment) notes.add('Voluntary relinquishment: select from the below list all the agencies listed in the pdf form received as attachment of the OSCAR. All the selected Agencies will be processed in the same way, there is no distinction between Main Agency and the other ones.');
-	
+
 				else if(oscar.Type_of_Change__c != null){
-					
+
 					if(tocList.contains(AMS_Utils.LEGAL_STATUS) || tocList.contains(AMS_Utils.NAME)) notes.add('Change of name/ legal status / vmfr will be applied to all the agencies selected');
 					if(tocList.contains(AMS_Utils.LOCATION) || tocList.contains(AMS_Utils.LOCATION_INSPECTION)) notes.add('The change of location will be applied only to the main agency. If the change is for an SA, the OSCAR opened for HO or BR, will also change the address for SAs associated to it, please make sure to select the SA Account also.');
 					//if(tocList.contains(AMS_Utils.LOCATION) || tocList.contains(AMS_Utils.LOCATION_INSPECTION)) notes.add('The change of location will be applied only to the main agency. If the change is for an SA, it is possible to select the HO or a BR as target agency. In this case the SA will be moved in the hierarchy to be placed under the selected agency');
@@ -235,13 +235,13 @@ public class AMS_AccountHierarchySelectionController {
 				if((tocList.contains(AMS_Utils.LOCATION) || tocList.contains(AMS_Utils.LOCATION_INSPECTION)) && mainAccount.Location_Type__c == AMS_Utils.SA) return true;
 				if(tocList.contains(AMS_Utils.OWNERSHIP_IATA)) return true;
 			}
-			
+
 			oscar.AMS_Target_Agency__c = null;
 			return false;
 		}
 		set;
 	}
-	
+
 	public Boolean showLocationTypeBehavior{
 		get{
 			if(oscar.Type_of_Change__c != null && tocList.contains(AMS_Utils.LOCATION_TYPE)){
@@ -302,7 +302,7 @@ public class AMS_AccountHierarchySelectionController {
 				//to prevent nullpointer on agencies with no hierarchy
 				accountIds.add(oscar.Account__c);
 				childAccounts.put(oscar.Account__c, new Set<Id>());
-				
+
 				for(AMS_Agencies_relationhip__c r : relationshipMap.get(oscar.Account__c)){
 					accountIds.add(r.Child_Account__c);
 					accountIds.add(r.Parent_Account__c);
@@ -332,44 +332,44 @@ public class AMS_AccountHierarchySelectionController {
 
 	private Integer rowsPerPage = 100;
 
-    public Integer currentPage{
-        get{
-            if(currentPage == null){
-                currentPage = 0;
-            }
-            return currentPage;
-        }
-        set;
-    }
-    
+	public Integer currentPage{
+		get{
+			if(currentPage == null){
+				currentPage = 0;
+			}
+			return currentPage;
+		}
+		set;
+	}
+
 	public Integer totalPages{
-        get{
-            return hierarchyValuesForDisplay.size();
-        }
-    }
-    
-    public List<List<HierarchyItem>> hierarchyValuesForDisplay{
-        get{
-            if(hierarchyValuesForDisplay == null){
-                hierarchyValuesForDisplay = new List<List<HierarchyItem>>();
+		get{
+			return hierarchyValuesForDisplay.size();
+		}
+	}
 
-                // create as many sub-lists as necessary
-                for(Integer i = 0; i <= (hierarchy.values().size()-1)/rowsPerPage; i++){
-                    hierarchyValuesForDisplay.add(new List<HierarchyItem>());
-                }
+	public List<List<HierarchyItem>> hierarchyValuesForDisplay{
+		get{
+			if(hierarchyValuesForDisplay == null){
+				hierarchyValuesForDisplay = new List<List<HierarchyItem>>();
 
-                // fill HierarchyItems in the sub-lists
-                Integer itemNumber = 0;
-                for(HierarchyItem item : hierarchy.values()){
-                    hierarchyValuesForDisplay.get(itemNumber++/rowsPerPage).add(item);
-                }
-            }
-            System.debug(loggingLevel.Info, '[cls AMS_AccountHierarchySelectionController] hierarchy items lists - ' + hierarchyValuesForDisplay);
-            return hierarchyValuesForDisplay;
-        }
-        set;
-    }
-    
+				// create as many sub-lists as necessary
+				for(Integer i = 0; i <= (hierarchy.values().size()-1)/rowsPerPage; i++){
+					hierarchyValuesForDisplay.add(new List<HierarchyItem>());
+				}
+
+				// fill HierarchyItems in the sub-lists
+				Integer itemNumber = 0;
+				for(HierarchyItem item : hierarchy.values()){
+					hierarchyValuesForDisplay.get(itemNumber++/rowsPerPage).add(item);
+				}
+			}
+			System.debug(loggingLevel.Info, '[cls AMS_AccountHierarchySelectionController] hierarchy items lists - ' + hierarchyValuesForDisplay);
+			return hierarchyValuesForDisplay;
+		}
+		set;
+	}
+
 	// ***********************************
 	// ********** constructor ************
 	// ***********************************
@@ -410,7 +410,7 @@ public class AMS_AccountHierarchySelectionController {
 			errorChecks.put(AMS_Utils.LOCATION, true);
 
 		for(HierarchyItem hi : hierarchyValues){
-			
+
 			if(tocList.contains(AMS_Utils.LOCATION_TYPE) && hi.selected){
 				errorChecks.put(AMS_Utils.LOCATION_TYPE, true);
 			}
@@ -430,7 +430,7 @@ public class AMS_AccountHierarchySelectionController {
 				errorChecks.put(AMS_Utils.MIN_SHAREHOLDING, true);
 			}
 
-			
+
 			if(tocList.contains(AMS_Utils.VFMR) && !hi.selected && !hi.main && hi.acc.Is_Branch_Abroad__c!='Yes'){
 				errorChecks.put(AMS_Utils.VFMR, true);
 			}
@@ -441,12 +441,12 @@ public class AMS_AccountHierarchySelectionController {
 			}
 
 			if(isVoluntaryRelinquishment && isPartialHierarchy(hi)) errorChecks.put('Partial VR selection', true);
-			
+
 			if(tocList.contains(AMS_Utils.REMOVALTRADENAME)){
 				if(hi.acc.CNS_Agency__c!=true)
-					errorChecks.put(AMS_Utils.REMOVALTRADENAME, true);				
+					errorChecks.put(AMS_Utils.REMOVALTRADENAME, true);
 			}
-			
+
 		}
 
 		//Second check for VMFR. If only BR abroad are selected, the system should allow to save
@@ -512,7 +512,7 @@ public class AMS_AccountHierarchySelectionController {
 			List<Case> lstCases = [SELECT Id FROM Case WHERE Oscar__c = :oscarId AND RecordType.Name = 'OSCAR Communication' AND ( ParentId = null or Parent.RecordType.Name != 'OSCAR Communication' ) ];
 			if(!lstCases.isEmpty()) {
 				update new Case(Id = lstCases[0].Id, AccountId = oscar.Account__c);
-			}			
+			}
 		}catch(Exception e){
 			System.debug('updateRelatedRecords exception: ' + e + ' -- ' + e.getStackTraceString() );
 			ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, 'Couldn\'t save changes '+ e.getMessage()));
@@ -532,7 +532,7 @@ public class AMS_AccountHierarchySelectionController {
 		return false;
 	}
 
-	public Boolean getDisablePrevious() { 
+	public Boolean getDisablePrevious() {
 		//this will disable the previous and beginning buttons
 		return (currentPage <= 0);
 	}
@@ -548,7 +548,7 @@ public class AMS_AccountHierarchySelectionController {
 
 	//AMSU-1
 	public void checkCorrectionProcess(){
-		
+
 		if(isCorrection){
 			//Check if all selected or not
 			Boolean allSelected = true;
@@ -560,7 +560,7 @@ public class AMS_AccountHierarchySelectionController {
 			}
 			//if all selected we want to deselect them and if only 1 selected we want to select all!
 			selectAll = !allSelected;
-			
+
 			doSelectAll();
 
 			//save();
@@ -586,7 +586,7 @@ public class AMS_AccountHierarchySelectionController {
 		}
 	}
 
-    public PageReference Beginning() { //user clicked beginning
+	public PageReference Beginning() { //user clicked beginning
 		currentPage = 0;
 		return null;
 	}

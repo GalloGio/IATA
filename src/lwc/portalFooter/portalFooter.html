@@ -1,53 +1,55 @@
 <template>
-    <div class="portalFooter">
-        <div if:true={chagingLang} class="changingLangSpinner">
-            <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+    <template if:true={internalUser}>
+        <div class="portalFooter">
+            <div if:true={chagingLang} class="changingLangSpinner">
+                <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+            </div>
+            <div class="mission">
+                <span>{labels.FooterLeadMessage}</span>
+            </div>
+            <div class="iataLogo">
+                <img src={iataLogo}/>
+            </div>
+            <div class="iataPages2 slds-grid slds-wrap slds-grid_align-center">
+                <div class="slds-col slds-size_1-of-4">
+                    <a onclick={navigateToSupport}>{labels.CSP_Breadcrumb_Support_Title}</a>
+                </div>
+                <div class="slds-col slds-size_1-of-4">
+                    <a onclick={navigateToServices}>{labels.CSP_Breadcrumb_Services_Title}</a>
+                </div>     
+                <div class="slds-col slds-size_1-of-4">
+                    <a onclick={navigateToPrivacy}>{labels.ISSP_Registration_Privacy}</a>
+                </div>
+                <div class="slds-col slds-size_1-of-4">
+                    <a onclick={navigateToLegal}>{labels.ISSP_Registration_Legal}</a>
+                </div>
+            </div>
+            <div class="iataSocial">
+                <div onclick={navigateToFacebook}>
+                    <span><img class="opacityHigh" src={facebookIcon}/></span>
+                </div>
+                <div onclick={navigateToTwitter}>
+                    <span><img class="opacityHigh" src={twitterIcon}/></span>
+                </div>
+                <div onclick={navigateToLinkedin}>
+                    <span><img class="opacityHigh" src={linkedinIcon}/></span>
+                </div>
+                <div onclick={navigateToYoutube} class="youtube">
+                    <span><img class="opacityHigh" src={youtubeIcon}/></span>
+                </div>
+            </div>
+            <div class="langSelect">
+                <template if:true={loadingLangs}>
+                    <lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
+                </template>
+                <lightning-combobox
+                    if:false={loadingLangs}
+                    name="language"
+                    dropdown-alignment="auto"
+                    value={selectedLang}
+                    options={langOptions}
+                    onchange={handleChangeLang} ></lightning-combobox>
+            </div>
         </div>
-        <div class="mission">
-            <span>{labels.FooterLeadMessage}</span>
-        </div>
-        <div class="iataLogo">
-            <img src={iataLogo}/>
-        </div>
-        <div class="iataPages2 slds-grid slds-wrap slds-grid_align-center">
-            <div class="slds-col slds-size_1-of-4">
-                <a onclick={navigateToSupport}>{labels.CSP_Breadcrumb_Support_Title}</a>
-            </div>
-            <div class="slds-col slds-size_1-of-4">
-                <a onclick={navigateToServices}>{labels.CSP_Breadcrumb_Services_Title}</a>
-            </div>     
-            <div class="slds-col slds-size_1-of-4">
-                <a onclick={navigateToPrivacy}>{labels.ISSP_Registration_Privacy}</a>
-            </div>
-            <div class="slds-col slds-size_1-of-4">
-                <a onclick={navigateToLegal}>{labels.ISSP_Registration_Legal}</a>
-            </div>
-        </div>
-        <div class="iataSocial">
-            <div onclick={navigateToFacebook}>
-                <span><img class="opacityHigh" src={facebookIcon}/></span>
-            </div>
-            <div onclick={navigateToTwitter}>
-                <span><img class="opacityHigh" src={twitterIcon}/></span>
-            </div>
-            <div onclick={navigateToLinkedin}>
-                <span><img class="opacityHigh" src={linkedinIcon}/></span>
-            </div>
-            <div onclick={navigateToYoutube} class="youtube">
-                <span><img class="opacityHigh" src={youtubeIcon}/></span>
-            </div>
-        </div>
-        <div class="langSelect">
-            <template if:true={loadingLangs}>
-                <lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
-            </template>
-            <lightning-combobox
-                if:false={loadingLangs}
-                name="language"
-                dropdown-alignment="auto"
-                value={selectedLang}
-                options={langOptions}
-                onchange={handleChangeLang} ></lightning-combobox>
-        </div>
-    </div>
+    </template>
 </template>

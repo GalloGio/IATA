@@ -1,7 +1,7 @@
 @IsTest(SeeAllData = false)
 public with sharing class SCIMProvisioningRequestUpdateTest {
 
-    private static final String PERM_SET_PROV='IFG_Provisioning_Prod';
+	private static final String PERM_SET_PROV='IFG_Provisioning_Prod';
 	private static final String PERM_SET_SSO='IFG_SSO_Production';
 	private static final String CON_APP_PROV='IFG Provisioning PreProd Conn App';
 
