@@ -46,6 +46,9 @@
             c.set("v.account.ShippingState", c.get("v.account.BillingState"));            
             c.set("v.account.ShippingPostalCode", c.get("v.account.BillingPostalCode"));
             c.set("v.countryHasStatesShipping", c.get("v.countryHasStatesBilling"));
+            c.set("v.suggestionShipping", c.get("v.suggestionBilling"));
+            c.set("v.cityFirstSuggestionShipping", c.get("v.cityFirstSuggestionBilling"));
+            c.set("v.predictionsShipping", c.get("v.predictionsBilling"));
             c.set("v.validShipping", c.get("v.validBilling"));
             c.set("v.init",false);
         }
@@ -105,23 +108,43 @@
         for (var i = 0; i < citiesOfThisState.length; i++){
             if(citiesOfThisState[i]){
 
-                let hierarchyAsciiName = citiesOfThisState[i]["GeonameHierarchy_label__c"].toLowerCase();
-                let hierarchyGeoName = citiesOfThisState[i]["IATA_ISO_State__r"].Name.toLowerCase()+' > '+citiesOfThisState[i]["GeonameName__c"].toLowerCase();
+                let hierarchyAsciiName;
+                let stateName;
 
-                hierarchyCities[hierarchyAsciiName] = {
-                                                        "CityName" : citiesOfThisState[i]["Name"], 
-                                                        "StateName": citiesOfThisState[i]["IATA_ISO_State__r"].Name,
-                                                        "CityId"   : citiesOfThisState[i]["Id"], 
-                                                        "StateId"  : citiesOfThisState[i]["IATA_ISO_State__r"].Id
-                                                      };
-                hierarchyCities[hierarchyGeoName] = {
-                                                        "CityName" : citiesOfThisState[i]["Name"], 
-                                                        "StateName": citiesOfThisState[i]["IATA_ISO_State__r"].Name,
-                                                        "CityId"   : citiesOfThisState[i]["Id"], 
-                                                        "StateId"  : citiesOfThisState[i]["IATA_ISO_State__r"].Id
-                                                    };                                                      
+                if(citiesOfThisState[i]["GeonameHierarchy_label__c"]) hierarchyAsciiName = citiesOfThisState[i]["GeonameHierarchy_label__c"].toLowerCase();
+                if(citiesOfThisState[i]["IATA_ISO_State__r"]) stateName = citiesOfThisState[i]["IATA_ISO_State__r"].Name.toLowerCase();
+                
+                let geonameName;
+                let hierarchyGeoName;
+
+                if(stateName){
+                    
+                    if(citiesOfThisState[i]["GeonameName__c"]) geonameName = citiesOfThisState[i]["GeonameName__c"].toLowerCase();
+                    
+                    if(geonameName) hierarchyGeoName = stateName+' > '+geonameName;
+                                        
+                }
+                
+
+                if(hierarchyAsciiName){
+                    hierarchyCities[hierarchyAsciiName] = {
+                        "CityName" : citiesOfThisState[i]["Name"], 
+                        "StateName": citiesOfThisState[i]["IATA_ISO_State__r"].Name,
+                        "CityId"   : citiesOfThisState[i]["Id"], 
+                        "StateId"  : citiesOfThisState[i]["IATA_ISO_State__r"].Id
+                      };
+                }
+                                
+                if(hierarchyGeoName){
+                    hierarchyCities[hierarchyGeoName] = {
+                        "CityName" : citiesOfThisState[i]["Name"], 
+                        "StateName": citiesOfThisState[i]["IATA_ISO_State__r"].Name,
+                        "CityId"   : citiesOfThisState[i]["Id"], 
+                        "StateId"  : citiesOfThisState[i]["IATA_ISO_State__r"].Id
+                    };
+                }                                                      
                   
-                                                }  
+            }  
         }
         
         if(mode){
@@ -173,7 +196,7 @@
                         
                         let value = cityName;
 
-                        if(alternateNames) value+=alternateNames;
+                        if(alternateNames) value+=','+alternateNames;
                                             
                         if(value.toLowerCase().includes(inputValue)) cityNames.push(hierarchy);
                                                     
@@ -319,6 +342,8 @@
         
         let stateElement = c.find(m+'State');
         let currentState;
+        let cityElement = c.find(m+'City');
+        let city = cityElement.get('v.value');
 
         if(Array.isArray(stateElement)){
             currentState = stateElement[0].get('v.value');
@@ -327,11 +352,20 @@
         }  
         
         let predictions = c.get('v.predictions'+m);
-        if(!(currentState?true:false) && predictions.length > 0) {
+        let hierarchyCities = c.get('v.hierarchyCities'+m);
+        let idAndAlternateNames = c.get('v.idAndAlternateNames'+m);
+        let isInputInAlternateNames = false;
+
+        if(predictions.length === 1){
+            let alternateNames = idAndAlternateNames[hierarchyCities[predictions[0].toLowerCase()].CityId]["GeonameAlternateNames__c"];            
+            
+            if(alternateNames) isInputInAlternateNames = alternateNames.toLowerCase().includes(city.toLowerCase());                        
+        }
+        
+        if((!(currentState?true:false) && predictions.length > 0) || isInputInAlternateNames) {
             c.set('v.cityFirstSuggestion'+m,true);
             var warningElement = document.getElementById("firstSuggestion"+m);
-            warningElement.classList.remove("slds-hide");
-            let hierarchyCities = c.get('v.hierarchyCities'+m);
+            warningElement.classList.remove("slds-hide");            
             c.set('v.suggestion'+m,predictions[0]);
             let selectedHierarchy = predictions[0].toLowerCase();        
             c.set('v.predictions'+m, []); 

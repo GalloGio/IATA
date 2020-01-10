@@ -1,7 +1,7 @@
 @isTest
 public class ANG_RHC_Information_test{
 	@testSetup static void testSetup(){
-		  // Create a new ISO Country
+			// Create a new ISO Country
 		IATA_ISO_Country__c country = new IATA_ISO_Country__c(
 			Name = 'France',
 			ISO_Code__c = 'FR',
@@ -51,7 +51,7 @@ public class ANG_RHC_Information_test{
 
 
 
-	   Case c = new Case(
+		 Case c = new Case(
 				Origin = 'asd',
 				IFAP_Area__c = 'asda',
 				Financial_Review_Type__c ='bla',
@@ -63,9 +63,9 @@ public class ANG_RHC_Information_test{
 				Financial_Security_Currency__c= 'EUR',
 				Financial_Security_Amount__c=10000
 			);
-	   insert c;
+		 insert c;
 
-	   ANG_RHC_Information__c rhcInfo = new ANG_RHC_Information__c(
+		 ANG_RHC_Information__c rhcInfo = new ANG_RHC_Information__c(
 			ANG_AccountId__c =a.id,
 			CurrencyIsoCode ='USD',
 			RecordTypeId = ANG_RHCHelper.RECTYPE_STDRHCINFO,
@@ -119,7 +119,7 @@ public class ANG_RHC_Information_test{
 		ANG_RHC_Information__c rhc1=[select ANG_Financial_Security__c,ANG_Minimum_Financial_Security__c,CurrencyIsoCode from ANG_RHC_Information__c limit 1];
 		Financial_Security__c fs1=[select ANG_ConvertedAmount__c,ANG_Minimum_Financial_Security__c,CurrencyIsoCode from Financial_Security__c limit 1];
 		system.assertEquals(rhc1.ANG_Financial_Security__c,fs1.ANG_ConvertedAmount__c);
-   		system.assertEquals(rhc1.ANG_Minimum_Financial_Security__c,ANG_Risk_Helper.currencyConverter(fs1.CurrencyIsoCode,fs1.ANG_Minimum_Financial_Security__c,rhc1.CurrencyIsoCode));
+	 		system.assertEquals(rhc1.ANG_Minimum_Financial_Security__c,ANG_Risk_Helper.currencyConverter(fs1.CurrencyIsoCode,fs1.ANG_Minimum_Financial_Security__c,rhc1.CurrencyIsoCode));
 
 
 		account a=[select id from account limit 1];
@@ -177,13 +177,13 @@ public class ANG_RHC_Information_test{
 	}
 	TestMethod static void updateFinancialSecurityRecordToInactive(){
 
-	   	test.StartTest();
+		 	test.StartTest();
 
 			Financial_Security__c f1 =[select id,ANG_ConvertedAmount__c,security_Status__C from Financial_Security__c limit 1];
 			f1.security_Status__C ='Not Active yet';
 			update  f1;
 
-		  	system.assertEquals([select ANG_Financial_Security__c from ANG_RHC_Information__c limit 1].ANG_Financial_Security__c,0);
+				system.assertEquals([select ANG_Financial_Security__c from ANG_RHC_Information__c limit 1].ANG_Financial_Security__c,0);
 
 		test.StopTest();
 
@@ -249,7 +249,7 @@ public class ANG_RHC_Information_test{
 
 		insert c;
 
-		  test.StartTest();
+			test.StartTest();
 
 		Financial_Security__c fs = new Financial_Security__c(
 			Region__c = 'Americas',

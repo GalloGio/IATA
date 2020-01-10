@@ -869,7 +869,7 @@ public with sharing class ANG_AgencyChangesHelper {
 
 		}
 
-  }
+	}
 
 	public static boolean isAllHierarchySelected(AMS_OSCAR__c oscar, Set<Id> accountHierarchyRelationships){
 
@@ -917,6 +917,9 @@ public with sharing class ANG_AgencyChangesHelper {
 			//(with Status terminated, "Terminated", "Not accreditated","New application pending" and "Not in Operation") and disconnect them from their parent
 
 			if(isAllHierarchySelected){
+				if(isMulticountry && allRelations.containsKey(oscar.New_Parent__c)){
+					allRelations.remove(oscar.New_Parent__c);
+				}
 				changesContainer = detachTerminatedAccountsFromHierarchy(allRelations,changesContainer);
 			}
 
@@ -1676,7 +1679,9 @@ public with sharing class ANG_AgencyChangesHelper {
 		,'IATA_ISO_Shipping_Country__c' => 'Shipping_ISO_Country__c'
 		,'IATA_ISO_Shipping_State__c' => 'Shipping_ISO_State__c'
 		,'Link_agent_name__c' => 'Link_agent_name__c'
-		,'ANG_Accreditation_Model__c' => 'ANG_Accreditation_type__c'};
+		,'ANG_Accreditation_Model__c' => 'ANG_Accreditation_type__c'
+		,'Geoname_Billing_City__c' => 'Geoname_Billing_City__c'
+		,'Geoname_Shipping_City__c' => 'Geoname_Shipping_City__c'};
 
 		if (fieldsToMigrate != null && oscarOnlineAccreditation != null) {
 			Map<String, Object> accountFieldNewValue = new Map<String,Object>();
@@ -1957,7 +1962,7 @@ public with sharing class ANG_AgencyChangesHelper {
 		List<Agency_Authorization__c> toUpsert = new List<Agency_Authorization__c>();
 
 		List<Account> accs = [SELECT ID,Country_ISO_Code__c, (SELECT Id ,Account__c, Status__c FROM Agency_Authorizations__r
-															  WHERE ANG_FormOfPayment_ID__c = 'CA' and Status__c != 'Active' and RecordType.DeveloperName = 'FormOfPayment')
+																WHERE ANG_FormOfPayment_ID__c = 'CA' and Status__c != 'Active' and RecordType.DeveloperName = 'FormOfPayment')
 							FROM ACCOUNT WHERE ID IN :accountsAffected];
 
 		Id formOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
@@ -2102,7 +2107,8 @@ public with sharing class ANG_AgencyChangesHelper {
 				Billing_State__c, Branch_Office_City__c, ISO_Country__c, IATA_ISO_State__c, Shipping_Country__c, Shipping_Street__c, Shipping_Postal_Code__c,
 				Shipping_State__c, Shipping_City__c, Branch_Office_Email__c, Website__c, Branch_Office_Phone__c, Branch_Office_FAX__c, ISSP_AMS_Premises_located_at_airport__c,
 				Abbreviated_name__c, Abbreviated_address__c, Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c,
-				Shipping_ISO_Country__c, Shipping_ISO_State__c, Shipping_ISO_Country__r.Name, Shipping_ISO_State__r.Name, IATA_ISO_State__r.Name, IATA_ISO_State__r.Valid_for_Address__c, ANG_Accreditation_type__c
+				Shipping_ISO_Country__c, Shipping_ISO_State__c, Shipping_ISO_Country__r.Name, Shipping_ISO_State__r.Name, IATA_ISO_State__r.Name, IATA_ISO_State__r.Valid_for_Address__c, ANG_Accreditation_type__c,
+				Geoname_Billing_City__c, Geoname_Shipping_City__c, Geoname_Billing_City__r.Name, Geoname_Shipping_City__r.Name
 		FROM AMS_Pax_Accreditation_Form__c
 		WHERE Id =: oscarOnlineAccredId limit 1];
 	}
@@ -2326,7 +2332,7 @@ public with sharing class ANG_AgencyChangesHelper {
 				prevOptOut = String.valueOf(acc.ANG_FA_Opt_out__c);
 
 				if (changesContainer.accountsMap.keySet().contains(acc.Id)){
-			   		changesContainer.accountsMap.get(acc.Id).ANG_FA_Opt_out__c = valueToAgency;
+				 		changesContainer.accountsMap.get(acc.Id).ANG_FA_Opt_out__c = valueToAgency;
 				} else {
 					acc.ANG_FA_Opt_out__c = valueToAgency;
 					changesContainer.accountsMap.put(acc.Id,acc);

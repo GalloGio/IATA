@@ -72,7 +72,7 @@ public static List<Participant__c> getParticipants(Id accountId) {
 	 FROM Participant__c
 	 WHERE (Hidden_Account_Id__c = :accountId15 OR Representing__c = :accountId15)
 	 AND Local_Governance__r.Active__c = true
-	                                     AND Local_Governance__r.Name IN :groupNames];
+																			 AND Local_Governance__r.Name IN :groupNames];
 
 	// for case sensitivity
 	List<Participant__c> filteredList = new List<Participant__c>();

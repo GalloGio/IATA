@@ -67,3 +67,7 @@
     height: 1.2em;
     background: linear-gradient(to right, rgba(247, 248, 250, 0), rgba(247, 248, 250, 1) 50%);
 }
+
+.favoriteIconDiv{
+    position: relative;
+}

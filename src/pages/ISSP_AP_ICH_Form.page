@@ -1,0 +1,362 @@
+<apex:page controller="ISSP_APProcess" showHeader="false" sidebar="false" standardStylesheets="true" applyBodyTag="false" applyHtmlTag="false">
+<link href="{!URLFOR($Resource.ISSP_APProcess,'css/ich-form-main.min.css')}" rel="stylesheet" />
+<script>
+    var EMAIL_PATTERN = "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)";
+    $(document).ready(function() {
+        setRequired();
+        preventEnter();
+        setInvalidClass($(".form-container span.select2-selection"));
+        $(".form-container span.select2-selection").on('DOMSubtreeModified',function() {
+           setInvalidClass($(this));
+        });
+        // collapse all sections
+        $(".hideListButton").each(function( index, value ) {
+            twistSection(value);
+        });
+        twistSection($(".showListButton")[0]);
+    });
+    function setInvalidClass(jobj) {
+       if(jobj.text()=="" || jobj.text()=='{!$Label.ISSP_SELECT_COUNTRY}') {
+           jobj.addClass("invalid");
+       } else {
+           jobj.removeClass("invalid");
+       }
+    }
+    function setRequired() {
+         $(".form-container input.required").prop('required',true);
+         $(".form-container textarea.required").prop('required',true);
+         $(".form-container table.required input").prop('required',true);
+         $(".form-container select.required").prop('required',true);
+         $(".form-container input.email").prop('pattern',EMAIL_PATTERN);
+    }
+
+    function preventEnter() {
+        $(window).keydown(function(event){
+            if(event.keyCode == 13) {
+                event.preventDefault();
+                return false;
+            }
+        });
+    }
+
+    function section1CopyInfo() {
+        var legalName = "{!hqAccount.Legal_name__c}";
+        if (legalName=="") legalName = $(".form-origin-legalname").val();
+        $(".form-legalname").val(legalName);
+        $(".form-address").val("{!hqAccount.BillingStreet}");
+        $(".form-city").val("{!hqAccount.BillingCity}");
+        $(".form-state").val("{!hqAccount.BillingState}");
+        $(".form-postalcode").val("{!hqAccount.BillingPostalCode}");
+        $(".form-country").val("{!hqAccount.IATA_ISO_Country__c}").trigger("change");
+        $(".form-email").val("{!hqAccount.Email__c}").trigger("change");
+    }
+
+    function twistSection(twisty) {
+        var parentDiv = twisty;
+        while (parentDiv.tagName != 'DIV') { parentDiv = parentDiv.parentNode; }
+        var div = parentDiv.nextSibling;
+        var elemWasOn = false;
+        if (div.style.display != 'none') {
+            div.style.display = 'none';
+            twisty.className ='showListButton';
+            elemWasOn = true;
+        } else {
+            div.style.display = 'block';
+            twisty.className ='hideListButton';
+            elemWasOn = false;
+        }
+    }
+
+    async function saveFormAndGoForward() {
+        var result = await verifyAllSections();
+        if (result) {
+            document.getElementById("hidden-input").value = "OK";
+            saveBSPFormAndGoForward();
+        } else {
+
+        }
+    }
+
+    function hideAllSections() {
+        $(".hideListButton").each( function(index,elem){
+            twistSection(this);
+        });
+    }
+
+    async function verifyAllSections() {
+        hideAllSections();
+        var sections = $(".showListButton");
+        for (var i=0; i<sections.length; i++) {
+            try {
+                var section = sections[i];
+                //find parent section div
+                while (section.tagName != 'DIV') { section = section.parentNode; }
+                section = section.parentNode;
+                // show section if not valid
+                if (!await validateSection(section)) {
+                    twistSection(sections[i]);
+                    return false;
+                }
+            } catch (e) {}
+        }
+        return true;
+    }
+
+    function getCheckUploadedFiles_Promise(files){
+        return new Promise( function (resolve, reject){
+            Visualforce.remoting.Manager.invokeAction(
+                '{!$RemoteAction.ISSP_APProcess.checkMandatoryFiles}',
+                '{!newCase.Id}',files, 
+                function(response, event){
+                    if(event.statusCode == '200'){
+                        resolve(response);
+                    } else {
+                        reject();
+                    }
+                },{ escape: true, timeout: 30000 }
+            );
+        });
+    }
+
+    function checkUploadedFiles(files) {
+        var CheckUploadedFiles_Promise = getCheckUploadedFiles_Promise(files);
+        CheckUploadedFiles_Promise.then( 
+            function (response){
+                return response;
+            },
+            function (err){
+                console.log('error checkUploadedFiles ' + err);
+               return false;
+            }
+        ).catch( function(err){
+            console.log('exception checkUploadedFiles ' + err);
+            return false;
+        });
+        return CheckUploadedFiles_Promise;
+    }
+
+    async function validateSection(section) {
+        var inputs = $(section).find(".required");
+        for (var i=0; i<inputs.length; i++) {
+            try {
+                var checkInput = inputs[i];
+                while (!["INPUT","SELECT","TEXTAREA"].includes(checkInput.tagName)) {
+                    checkInput = checkInput.children[0];
+                }
+                $(checkInput).removeClass("blink-me");
+                if (!checkInput.checkValidity() || checkInput.value=="") {
+                    var input = $(checkInput);
+                    input.focus();
+                    input.addClass("blink-me");
+                    return false;
+                }
+            } catch (e) {}
+        }
+        // check file uploads (in iframes)
+        var iframes = $(section).find("iframe");
+        var fileNames = [];
+        for (var i=0; i<iframes.length; i++) {
+            try {
+                var iframe = iframes[i];
+                var parsedUrl = parseURL(iframe.src);
+                var name = parsedUrl.searchObject.reqIdentifier;
+                var required = parsedUrl.searchObject.reqRequired;
+                if (name!='undefined' && required=="Mandatory") fileNames.push(name);
+            } catch (e) {}
+        }
+        if (fileNames.length>0) {
+            return await checkUploadedFiles(fileNames);
+        }
+        return true;
+    }
+
+    function parseURL(url) {
+        var parser = document.createElement('a'),
+            searchObject = {},
+            queries, split, i;
+        parser.href = url;
+        queries = parser.search.replace(/^\?/, '').split('&');
+        for( i = 0; i < queries.length; i++ ) {
+            split = queries[i].split('=');
+            searchObject[split[0]] = split[1];
+        }
+        return {
+            protocol: parser.protocol,
+            host: parser.host,
+            hostname: parser.hostname,
+            port: parser.port,
+            pathname: parser.pathname,
+            search: parser.search,
+            searchObject: searchObject,
+            hash: parser.hash
+        };
+    }
+
+    async function saveContact() {
+        var section = $(".modalPanel")[0];
+        if (await validateSection(section)){
+            saveContactController();
+        }
+    }
+</script>
+
+<div class="panel-primary">
+
+    <div class="panel-heading head_panel_green">
+        <h3 class="panel-title">{!PageTitle}</h3>
+    </div>
+
+    <div class="panel-body" id="body-enquiries">
+        <c:ISSP_APProcess_Progress step="{!stepNumber}"
+            operationType="{!strOperationType}"
+            areaType="{!strAreaType}"
+            changeType="{!strChangeType}"
+            isSIS="{!isSISMember}" />
+
+        <apex:form id="ICHForm" styleClass="inline form-container">
+
+            <input id="hidden-input" type="hidden" class="required" required=""/>
+
+            <apex:actionFunction name="saveContactController" action="{!saveContact}" rerender="ICHForm" status="WaitingStatus"/>
+            <apex:actionFunction name="saveBSPFormAndGoForward" action="{!saveBSPFormAndGoForward}" rerender="ICHForm" status="WaitingStatus"/>
+            <apex:actionFunction name="newContact" action="{!newContact}" rerender="ICHForm" status="WaitingStatus"/>
+            <apex:actionFunction name="editContact" action="{!editContact}" rerender="ICHForm" status="WaitingStatus">
+                <apex:param name="contactEndorsement" assignTo="{!selectedContactId}" value=""/>
+            </apex:actionFunction>
+            <apex:actionFunction name="deleteContact" action="{!deleteContact}" rerender="ICHForm" status="WaitingStatus">
+                <apex:param name="contactEndorsement" assignTo="{!selectedContactId}" value=""/>
+            </apex:actionFunction>
+
+            <apex:pageBlock mode="edit">
+                <!-- BUTTON SECTION -->
+                <apex:pageBlockButtons location="bottom">
+                    <apex:actionStatus id="blockButtons">
+                        <apex:facet name="start">
+                            <apex:outputPanel layout="none">
+                                <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-topMargin iatabtn-right" disabled="true" value="Next" />
+                                <apex:commandButton styleclass="iatabtn iatabtn-danger iatabtn-topMargin iatabtn-right" disabled="true" value="Previous"/>
+                                <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-topMargin iatabtn-save" disabled="true" value="Save Draft and Leave"/>
+                            </apex:outputPanel>
+                        </apex:facet>
+                        
+                        <apex:facet name="stop">
+                            <apex:outputPanel layout="none">
+                                <input type="button" value="Next" class="iatabtn iatabtn-default iatabtn-topMargin iatabtn-right" onclick="saveFormAndGoForward();"/>
+                                <apex:commandButton action="{!saveBSPFormAndGoBack}" styleclass="iatabtn iatabtn-danger iatabtn-topMargin iatabtn-right" status="blockButtons" value="Previous" html-novalidate="" html-formnovalidate=""/>
+                                <apex:commandButton action="{!saveBSPFormAndLeave}" status="blockButtons" value="Save Draft and Leave" styleclass="iatabtn iatabtn-default iatabtn-topMargin iatabtn-save" html-novalidate="" html-formnovalidate=""/>
+                            </apex:outputPanel>
+                        </apex:facet>
+                    </apex:actionStatus>
+                </apex:pageBlockButtons>
+
+                <apex:pageMessages />
+
+                <apex:outputPanel layout="block" styleclass="apcontainer" rendered="{!strAreaType=='Airline Joining'}">
+                    <c:ICH_Form_IATA_Member ctrl="{!thisController}" rendered="{!IsICHType_IATAMember}"/>
+                    <c:ICH_Form_Non_IATA_Member ctrl="{!thisController}" rendered="{!IsICHType_NonIATAMember}"/>
+                    <c:ICH_Form_AssociateAggregator ctrl="{!thisController}" rendered="{!IsICHType_AssociateAggregator}"/>
+                    <c:ICH_Form_AssociateSubsidiary ctrl="{!thisController}" rendered="{!OR(IsICHType_AssociateSubsidiary,IsICHType_AssociateSP)}"/>
+                    <c:ICH_Form_SponsoredAirline ctrl="{!thisController}" rendered="{!IsICHType_SponsoredAirline}"/>
+                    <c:ICH_Form_SponsoredAssociates ctrl="{!thisController}" rendered="{!IsICHType_SponsoredAssociates}"/>
+                </apex:outputPanel>
+                <apex:outputPanel layout="block" styleclass="apcontainer" rendered="{!strAreaType=='Airline Change'}">
+                    <c:ICH_Form_Changes ctrl="{!thisController}" />
+                </apex:outputPanel>
+            </apex:pageBlock>
+
+            <!-- MODAL for Contacts -->
+            <apex:OutputPanel rendered="{!selectedContact!=null}">
+                <div class="modalBackground"></div>
+                <div class="modalPanel">
+                    <apex:pageBlock id="contactBlock">
+
+                        <apex:pageBlockSection columns="2" collapsible="false">
+                            <apex:facet name="header">
+                              <apex:outputpanel >
+                                  Contact details
+                              </apex:outputpanel>
+                            </apex:facet>
+
+                            <apex:pageBlockSectionItem rendered="{!!isSISMember}">
+                                <apex:outputLabel >SIS Super User</apex:outputLabel>
+                                <apex:inputCheckbox value="{!selectedContactPosition_SISSuperUser}"/>
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel >ICH Primary Contact</apex:outputLabel>
+                                <apex:inputCheckbox value="{!selectedContactPosition_ICHPrimaryContact}"/>
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel >ICH Financial Contact</apex:outputLabel>
+                                <apex:inputCheckbox value="{!selectedContactPosition_ICHFinancialContact}"/>
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel >ICH Advice Day Contact</apex:outputLabel>
+                                <apex:inputCheckbox value="{!selectedContactPosition_ICHAdvice}"/>
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel >ICH Clearance Confirmation Contact</apex:outputLabel>
+                                <apex:inputCheckbox value="{!selectedContactPosition_ICHCleanConfirmation}"/>
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel >ICH Clearance Initialization Contact</apex:outputLabel>
+                                <apex:inputCheckbox value="{!selectedContactPosition_ICHCleanInitialization}"/>
+                            </apex:pageBlockSectionItem>
+
+                            <tr>
+                              <td colspan="4"><div class="blue-label text-center">{!$Label.ISSP_AMS_Step3_PersonModal_CheckBoxes}</div></td>
+                            </tr>
+
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="{!$Label.Salutation}"/>
+                                <apex:inputField value="{!selectedContact.Salutation__c}" styleclass="required test"/>
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem rendered="{!isSISMember}"/>
+
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="{!$Label.First_name}"/>
+                                <apex:inputField styleclass="required" value="{!selectedContact.First_Name__c}"/>
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="{!$Label.Phone}"/>
+                                <apex:inputField styleclass="required" value="{!selectedContact.Phone__c}"/>
+                            </apex:pageBlockSectionItem>
+
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="{!$Label.Last_name}"/>
+                                <apex:inputField styleclass="required" value="{!selectedContact.Last_Name__c}"/>
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="{!$Label.ISSP_Registration_MobilePhone}"/>
+                                <apex:inputField value="{!selectedContact.Mobile_Phone__c}"/>
+                            </apex:pageBlockSectionItem>
+
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="{!$Label.Email}"/>
+                                <apex:inputField styleclass="required email" value="{!selectedContact.Email__c}"/>
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="{!$Label.ISSP_Fax}"/>
+                                <apex:inputField value="{!selectedContact.Fax__c}"/>
+                            </apex:pageBlockSectionItem>
+                        </apex:pageBlockSection>
+                        <!-- BUTTON SECTION -->
+                        <apex:pageBlockButtons location="bottom">
+                            <input type="button" class="iatabtn iatabtn-default iatabtn-topMargin iatabtn-right" value="Save" onclick="saveContact();"/>
+                            <apex:commandButton action="{!exitContact}" styleclass="iatabtn iatabtn-danger iatabtn-topMargin iatabtn-left" value="Cancel" html-novalidate="" html-formnovalidate="" rerender="ICHForm" status="WaitingStatus"/>
+                        </apex:pageBlockButtons>
+                    </apex:pageBlock>
+                </div>
+            </apex:outputPanel>
+            <!-- END MODAL for Contacts -->
+
+        <script>
+            $(".select2").select2();
+            $(".checked").prop("checked",true);
+        </script>
+        </apex:form>
+
+
+    </div>
+</div>
+
+</apex:page>

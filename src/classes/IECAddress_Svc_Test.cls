@@ -1,21 +1,21 @@
 @isTest(SeeAllData=false)
-private class IECAddress_Svc_Test 
+private class IECAddress_Svc_Test
 {
 	/****************************************************************************************************
-	    Created by Thai 2016-12-15
-	        Cover method syncCustomerWithSAP that indirectly covers methods setCalloutHeader,
-	        getRequestType, getSAPPaymentType, getSAPRegion, getSAPVATNumber, getSAPPaymentType, 
-	        syncCustomerMasterWithSAP, createNewIECAddress
-	        and classes Location_Queue, Location_Batch
+			Created by Thai 2016-12-15
+					Cover method syncCustomerWithSAP that indirectly covers methods setCalloutHeader,
+					getRequestType, getSAPPaymentType, getSAPRegion, getSAPVATNumber, getSAPPaymentType,
+					syncCustomerMasterWithSAP, createNewIECAddress
+					and classes Location_Queue, Location_Batch
 	****************************************************************************************************/
 	@isTest static void test_syncCustomerWithSAP()
 	{
 		Test.setMock(WebServiceMock.class, new SAP_CustomerMaster_Mock());
-		
+
 		//*** cover creation scenarios
 		Test.startTest();
 			TestDataGenerator.generateApexSetting();
-			
+
 			List<IATA_ISO_Country__c> lstCountryState = TestDataGenerator.generateISOCountryState();
 			IATA_ISO_Country__c countryCanada;
 			IATA_ISO_State__c stateOntario, stateQuebec;
@@ -30,18 +30,18 @@ private class IECAddress_Svc_Test
 							stateQuebec = state;
 					break;
 				}
-			
+
 			Account accountHQ1 = new Account(Name = 'Test HQ 1', Sector__c = 'Test', Category__c = 'Test'
-			                               , BillingStreet ='Billing Street 1', BillingCity= 'Billing City 1', BillingPostalCode ='H0H0H0'
-			                               , IATA_ISO_Country__c = countryCanada.Id , IATA_ISO_Billing_State__c = stateQuebec.Id);
+																		 , BillingStreet ='Billing Street 1', BillingCity= 'Billing City 1', BillingPostalCode ='H0H0H0'
+																		 , IATA_ISO_Country__c = countryCanada.Id , IATA_ISO_Billing_State__c = stateQuebec.Id);
 			insert accountHQ1;
 			Account accountHQ2 = new Account(Name = 'Test HQ 2', Sector__c = 'Test', Category__c = 'Test'
-			                               , BillingStreet ='Billing Street 2', BillingCity= 'Billing City 2', BillingPostalCode ='H0H0H0'
-			                               , IATA_ISO_Country__c = countryCanada.Id , IATA_ISO_Billing_State__c = stateOntario.Id
-			                               , ShippingStreet ='Shipping Street 2', ShippingCity = 'Shipping City 2', ShippingPostalCode ='H0H0H0'
-			                               , IATA_ISO_Shipping_State__c = stateOntario.Id);
+																		 , BillingStreet ='Billing Street 2', BillingCity= 'Billing City 2', BillingPostalCode ='H0H0H0'
+																		 , IATA_ISO_Country__c = countryCanada.Id , IATA_ISO_Shipping_Country__c = countryCanada.Id, IATA_ISO_Billing_State__c = stateOntario.Id
+																		 , ShippingStreet ='Shipping Street 2', ShippingCity = 'Shipping City 2', ShippingPostalCode ='H0H0H0'
+																		 , IATA_ISO_Shipping_State__c = stateOntario.Id);
 			insert accountHQ2;
-			
+
 			List<Contact> lstContact = TestDataGenerator.generateContacts(accountHQ1.Id, 1, false);
 			lstContact.addAll(TestDataGenerator.generateContacts(accountHQ2.Id, 1, false));
 			insert lstContact;
@@ -63,10 +63,10 @@ private class IECAddress_Svc_Test
 			insert lstLocation;
 		Test.stopTest();
 		system.assert(6 == [select count()
-		                    from Location__c
-		                    where (Id = :lstLocation[0].Id and SAP_Id__c = 'Sold1') or (Id = :lstLocation[3].Id and SAP_Id__c = 'Sold1')
-		                       or (Id = :lstLocation[1].Id and SAP_Id__c = 'Bill1') or (Id = :lstLocation[2].Id and SAP_Id__c = 'Ship1')
-		                       or (Id = :lstLocation[4].Id and SAP_Id__c = 'Bill1') or (Id = :lstLocation[5].Id and SAP_Id__c = 'Ship1')], 'Wrong count');
+												from Location__c
+												where (Id = :lstLocation[0].Id and SAP_Id__c = 'Sold1') or (Id = :lstLocation[3].Id and SAP_Id__c = 'Sold1')
+													 or (Id = :lstLocation[1].Id and SAP_Id__c = 'Bill1') or (Id = :lstLocation[2].Id and SAP_Id__c = 'Ship1')
+													 or (Id = :lstLocation[4].Id and SAP_Id__c = 'Bill1') or (Id = :lstLocation[5].Id and SAP_Id__c = 'Ship1')], 'Wrong count');
 
 		//*** cover update scenario for sold to
 		IECAddress_Svc.syncCustomerWithSAP(Location_Sel.getLocationToSyncSAP(new List<Id>{lstLocation[0].Id}, null, null, null, null).values(), null, true);
@@ -100,16 +100,16 @@ private class IECAddress_Svc_Test
 
 
 	/****************************************************************************************************
-	    Created by Thai 2016-12-15
-	        Cover method syncCustomerWithSAP that indirectly covers methods setCalloutHeader,
-	        getRequestType, getSAPPaymentType, getSAPRegion, getSAPVATNumber, getSAPPaymentType, 
-	        syncCustomerMasterWithSAP
-	        and classes Location_Queue, Location_Batch
+			Created by Thai 2016-12-15
+					Cover method syncCustomerWithSAP that indirectly covers methods setCalloutHeader,
+					getRequestType, getSAPPaymentType, getSAPRegion, getSAPVATNumber, getSAPPaymentType,
+					syncCustomerMasterWithSAP
+					and classes Location_Queue, Location_Batch
 	****************************************************************************************************/
 	@isTest static void test_miscMethods()
 	{
 		TestDataGenerator.generateApexSetting();
-		
+
 		List<IATA_ISO_Country__c> lstCountryState = TestDataGenerator.generateISOCountryState();
 		IATA_ISO_Country__c countryCanada, countryChile;
 		IATA_ISO_State__c stateOntario, stateQuebec;
@@ -125,16 +125,16 @@ private class IECAddress_Svc_Test
 			}
 			else if (country.ISO_Code__c == 'CL')
 				countryChile = country;
-		
+
 		//*** cover method "newAddress"
 		IECAddress__c address1 = IECAddress_Svc.newAddress('Street', 'City', countryCanada.ISO_Code__c, stateQuebec.ISO_Code__c, 'H0H0H0');
-		
+
 		//*** cover method "newAddressForSAPSync"
 		IECAddress__c address2 = IECAddress_Svc.newAddressForSAPSync('Street1~~for~~test coverage', 'City', countryCanada.ISO_Code__c, stateQuebec.ISO_Code__c, 'H0H0H0');
 		insert address2;
 		IECAddress__c address3 = IECAddress_Svc.newAddressForSAPSync('Street1~~for~~test coverage', 'City', countryChile.ISO_Code__c, null, null);
 		insert address3;
-		
+
 		Boolean check;
 		List<Account> lstAccount = TestDataGenerator.generateAccounts(1, true);
 		List<Contact> lstContact = TestDataGenerator.generateContacts(lstAccount[0].Id, 1, true);
@@ -143,11 +143,11 @@ private class IECAddress_Svc_Test
 		Location__c location2 = TestDataGenerator.generateLocations('Other', address2.Id, null, null);
 		Address_DTO addressDTO1 = Address_DTO.format2DTO(location1.Id);
 		Address_DTO addressDTO2 = Address_DTO.format2DTO(location2.Id);
-		
+
 		//*** cover methods "syncIECAddressWithSAP", "syncIECAddressWithZuora"
 		IECAddress_Svc.syncIECAddressWithSAP(new Set<Id>{location1.Address__c});
 		IECAddress_Svc.syncIECAddressWithZuora(new Set<Id>{location1.Address__c});
-		
+
 		//*** cover method "isAddressChanged" for type "IECAddress__c"
 		check = IECAddress_Svc.isAddressChanged(address1, null);
 		system.assert(check == true, 'Wrong value');
@@ -159,7 +159,7 @@ private class IECAddress_Svc_Test
 		address2 = null;
 		check = IECAddress_Svc.isAddressChanged(address1, address2);
 		system.assert(check == false, 'Wrong value');
-		
+
 		//*** cover method "isAddressChanged" for type "Address_DTO"
 		check = IECAddress_Svc.isAddressChanged(addressDTO1, null);
 		system.assert(check == true, 'Wrong value');
@@ -171,11 +171,11 @@ private class IECAddress_Svc_Test
 		addressDTO2 = null;
 		check = IECAddress_Svc.isAddressChanged(addressDTO1, addressDTO2);
 		system.assert(check == false, 'Wrong value');
-		
+
 		//*** cover methods in "Location_Batch": class is not used anymore -> no assert
 		Database.executeBatch(new Location_Batch(new Set<Id>{location1.Id}));
 		Database.executeBatch(new Location_Batch(new Set<Id>{location1.Id}, new Set<Id>{location0.Id}));
-		
+
 		//*** cover methods in "IECAddress_Sel"
 		IECAddress_Sel selector = new IECAddress_Sel();
 		List<IECAddress__c> lstCheck = new List<IECAddress__c>();

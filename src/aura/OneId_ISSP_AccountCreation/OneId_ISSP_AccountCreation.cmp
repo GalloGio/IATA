@@ -243,7 +243,7 @@
 		</aura:if>
 
     <div class="slds-grid slds-wrap slds-gutters slds-grid_pull-padded-small slds-p-horizontal_medium">
-        <div class="slds-col slds-m-bottom_medium slds-size_1-of-1 slds slds-order_2 slds-medium-order_1">
+        <div class="slds-col slds-m-bottom_medium slds-size_1-of-2 slds slds-order_2 slds-medium-order_1">
             <div class="slds-form-element">
                 <label class="slds-form-element__label">{!$Label.c.ISSP_CopyBillingAddress}</label>
                 
@@ -251,7 +251,12 @@
                     <ui:inputCheckbox value="{!v.copyAddress}" change="{!c.copyBilling}"/>
                 </div>
             </div>
-        </div>
+		</div>
+		<div class="slds-col slds-m-bottom_medium slds-size_1-of-2 slds slds-order_2 slds-medium-order_1">
+			<div class="slds-form-element">
+				<label class="slds-form-element__label">{!$Label.c.AMS_DQ_Select_From_List}</label>
+			</div>
+		</div>
         
         <div class="slds-col slds-m-bottom_medium slds-size_1-of-1 slds-medium-size_1-of-2 slds-order_1 slds-medium-order_2">
             <div class="slds-media slds-media_center slds-m-bottom_small">

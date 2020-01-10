@@ -5,7 +5,27 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
+        <actionName>Accept</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
         <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Small</formFactor>
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
@@ -13,7 +33,27 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
+        <actionName>Clone</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
         <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Small</formFactor>
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
@@ -21,7 +61,27 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
         <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Small</formFactor>
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
@@ -29,7 +89,27 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
+        <actionName>New</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
         <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Small</formFactor>
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
@@ -37,7 +117,27 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
+        <actionName>Tab</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
         <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <formFactor>Small</formFactor>
         <type>Default</type>
     </actionOverrides>
     <allowInChatterGroups>false</allowInChatterGroups>
@@ -625,7 +725,7 @@
     <fields>
         <fullName>Applicable_Fee__c</fullName>
         <externalId>false</externalId>
-        <label>Applicable Fee</label>
+        <label>Total Cost</label>
         <precision>18</precision>
         <required>false</required>
         <scale>2</scale>
@@ -1029,7 +1129,7 @@ Completed: Process is complete</inlineHelpText>
     <fields>
         <fullName>IDCard_Expedite_Delivery_Fee__c</fullName>
         <externalId>false</externalId>
-        <label>IDCard Expedite Delivery Fee</label>
+        <label>Expedite Delivery Fee</label>
         <precision>18</precision>
         <required>false</required>
         <scale>2</scale>
@@ -1076,10 +1176,22 @@ Completed: Process is complete</inlineHelpText>
         </valueSet>
     </fields>
     <fields>
+        <fullName>ID_Card_Fee_Discount__c</fullName>
+        <description>Discount for the fee for the card.</description>
+        <externalId>false</externalId>
+        <label>ID Card Fee Discount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
         <fullName>ID_Card_Fee__c</fullName>
         <description>Fee for the card.</description>
         <externalId>false</externalId>
-        <label>IDCard Fee</label>
+        <label>ID Card Fee</label>
         <precision>8</precision>
         <required>false</required>
         <scale>2</scale>
@@ -1088,10 +1200,23 @@ Completed: Process is complete</inlineHelpText>
         <type>Currency</type>
     </fields>
     <fields>
+        <fullName>ID_Card__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>ID Card</label>
+        <referenceTo>ID_Card__c</referenceTo>
+        <relationshipLabel>ID Card Applications</relationshipLabel>
+        <relationshipName>ID_Card_Applications</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>ITDI_Courses_Fee__c</fullName>
         <description>ITTDI Courses Fee</description>
         <externalId>false</externalId>
-        <label>ITDI Courses Fee</label>
+        <label>IATA Training Courses Fee</label>
         <precision>12</precision>
         <required>false</required>
         <scale>2</scale>
@@ -1102,7 +1227,7 @@ Completed: Process is complete</inlineHelpText>
     <fields>
         <fullName>ITDI_Courses_Status__c</fullName>
         <externalId>false</externalId>
-        <label>ITDI Courses Status</label>
+        <label>IATA Training Courses Status</label>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
@@ -1196,7 +1321,7 @@ Completed: Process is complete</inlineHelpText>
         <description>IATA Package of Travel Professionals Course 1</description>
         <externalId>false</externalId>
         <inlineHelpText>IATA Package of Travel Professionals Course 1</inlineHelpText>
-        <label>Package of Travel Professionals Course 1</label>
+        <label>IATA Training Course 1</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -1307,7 +1432,7 @@ Completed: Process is complete</inlineHelpText>
         <description>IATA Package of Travel Professionals Course 2</description>
         <externalId>false</externalId>
         <inlineHelpText>IATA Package of Travel Professionals Course 2</inlineHelpText>
-        <label>Package of Travel Professionals Course 2</label>
+        <label>IATA Training Course 2</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -1517,6 +1642,18 @@ Completed: Process is complete</inlineHelpText>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Physical_Card_Fee__c</fullName>
+        <description>Fee for printing the physical card.</description>
+        <externalId>false</externalId>
+        <label>Printing Fee</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
     </fields>
     <fields>
         <fullName>Position_Code__c</fullName>

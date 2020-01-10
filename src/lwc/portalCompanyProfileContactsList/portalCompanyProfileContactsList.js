@@ -1,4 +1,4 @@
-import { LightningElement,track } from 'lwc';
+import { LightningElement,track,api } from 'lwc';
 
 import goToOldIFAP from '@salesforce/apex/PortalProfileCtrl.goToOldIFAP';
 import getContactsListFields from '@salesforce/apex/PortalProfileCtrl.getContactsListFields';
@@ -41,6 +41,14 @@ export default class PortalCompanyProfileContactsList extends LightningElement {
         CSP_ALPHAFILTER_Other
     };
 
+    @api 
+    reloadData(){
+        //reloads Data when the Contacts tab (active) is clicked
+        if(this.contactsFilteringObject.searchInput !== ''){
+            this.removeTextSearch();
+        }
+    }
+
     @track contactsLoaded = false;
 
     @track contactsFilteringObject = {
@@ -49,6 +57,8 @@ export default class PortalCompanyProfileContactsList extends LightningElement {
         sortDirection: 'ASC',
         firstLetter: 'All'
     };
+
+ 
 
     /*@track paginationObject = {
         totalItems : 15,
@@ -70,6 +80,7 @@ export default class PortalCompanyProfileContactsList extends LightningElement {
     @track accountId;
     @track objectid;
     @track action = '';
+    @track showCross = false;
 
     @track alphaFiltersNormal = [
         { value:'A', label: 'A', selected: false },
@@ -284,7 +295,7 @@ export default class PortalCompanyProfileContactsList extends LightningElement {
 
             this.contactsLoaded = false;
             this.retrieveContactsList(1);
-
+            this.showCross = searchtext.length > 0;
         }, 500, this);
     }
 
@@ -436,4 +447,10 @@ export default class PortalCompanyProfileContactsList extends LightningElement {
         downloadElement.click();
         this.contactsLoaded = true;
     }    
+
+    removeTextSearch() {
+        this.showCross = false;
+        this.contactsLoaded = false;
+        this.resetContactsList();
+    }
 }
