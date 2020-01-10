@@ -1723,7 +1723,7 @@
                                 </apex:commandLink>
                             </apex:column>
                             <apex:column >
-                                <apex:commandLink onfocus="confirmContactDelete('{!agencycon.Id}', ''{!JSENCODE(agencycon.Name)}', 'company')" styleClass="glyphicon glyphicon-trash" rerender="companyList"/>
+                                <apex:commandLink onfocus="confirmContactDelete('{!agencycon.Id}', '{!JSENCODE(agencycon.Name)}', 'company')" styleClass="glyphicon glyphicon-trash" rerender="companyList"/>
                             </apex:column>
                      </apex:pageBlockTable>
                         <apex:actionFunction name="deleteContact" action="{!deleteAgencyContact}" oncomplete="setPortalAdmin('{!$Component.PortalAdminId}');" rerender="contactList,companyList,ownerList, importOwnersMCModal, ownershipLinks">
