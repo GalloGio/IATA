@@ -34,19 +34,19 @@ global class AmazonFinancialCtrl {
 		set;
 	}
    ////////////  	GxA Project	/////////////////////
-    public case ifapCaseRec{
-        get{
-            // get the case Id from the URL
-            Id caseId = apexpages.currentpage().getparameters().get('id');
-            // get the GxA flag from the case Id
-            Case IFAP = [Select Account.IATA_ISO_Country__r.GxA_Enable__c, status FROM Case where Id =:caseId];
-            
-            return IFAP; 
+	public case ifapCaseRec{
+		get{
+			// get the case Id from the URL
+			Id caseId = apexpages.currentpage().getparameters().get('id');
+			// get the GxA flag from the case Id
+			Case IFAP = [Select Account.IATA_ISO_Country__r.GxA_Enable__c, status FROM Case where Id =:caseId];
 
-        }
-        set;
-    }   
-    ////////////////////////////////////////////////////
+			return IFAP;
+
+		}
+		set;
+	}
+	////////////////////////////////////////////////////
 
 	public boolean hasMessage {get{return (ApexPages.hasmessages());} private set;}
 	@TestVisible
@@ -529,7 +529,7 @@ private static String mergedFileName(case Cse, list<AmazonFile> listFile) {
 		return totalSizeInMB < FILE_SIZE_LIMIT_MB;
 	}
 
-private string messageDocumentsFromJson(List<IfapMessage> desFile, case c) {
+	private string messageDocumentsFromJson(List<IfapMessage> desFile, case c) {
 
 		string returnMessage;
 		if (c.account == null || c.account.type == null
