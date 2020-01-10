@@ -23,6 +23,7 @@ export default class PortalCustomCardContainer extends LightningElement {
     }
 
     @api specialCard = false;
+    @api specialBody = false;
 
     @track bodyStyle = 'slds-m-horizontal_x-large';
     @track customCardCss = "customLightShadow background-white";
@@ -34,6 +35,11 @@ export default class PortalCustomCardContainer extends LightningElement {
             this.customCardCss = "background-white";
             this.headerCss = "slds-p-bottom_x-small";
         }
+
+        if (this.specialBody){
+            this.bodyStyle = 'slds-m-horizontal_medium';
+        }
+        
     }
 
 }

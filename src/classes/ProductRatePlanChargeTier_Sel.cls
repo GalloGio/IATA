@@ -1,8 +1,8 @@
-public with sharing class ProductRatePlanChargeTier_Sel extends Selector 
+public with sharing class ProductRatePlanChargeTier_Sel extends Selector
 {
 	public List<Schema.SObjectField> getSObjectFieldList()
 	{
-		return new List<Schema.SObjectField> 
+		return new List<Schema.SObjectField>
 		{
 			zqu__ProductRatePlanChargeTier__c.Id,
 			zqu__ProductRatePlanChargeTier__c.Name,
@@ -56,10 +56,10 @@ public with sharing class ProductRatePlanChargeTier_Sel extends Selector
 	public List<zqu__ProductRatePlanChargeTier__c> getActiveTiers(Set<String> zChargeIds)
 	{
 		String query = String.format(
-			'SELECT {0}  ' + 
-			'FROM {1} ' + 
-			'WHERE zqu__ProductRatePlanCharge__c IN :zChargeIds  '  + 
-			'  AND zqu__Deleted__c!=true', 
+			'SELECT {0}  ' +
+			'FROM {1} ' +
+			'WHERE zqu__ProductRatePlanCharge__c IN :zChargeIds  '  +
+			'  AND zqu__Deleted__c!=true',
 			new List<String>{
 				String.join(getDefaultFields(), ', '),
 				getSObjectType().getDescribe().getName()
@@ -72,12 +72,12 @@ public with sharing class ProductRatePlanChargeTier_Sel extends Selector
 	public List<zqu__ProductRatePlanChargeTier__c> getProductTiers(Set<String> productNumbers)
 	{
 		String query = String.format(
-			'SELECT {0}  ' + 
-			'FROM {1} ' + 
-			'WHERE Product_Number__c IN :productNumbers  '  + 
+			'SELECT {0}  ' +
+			'FROM {1} ' +
+			'WHERE Product_Number__c IN :productNumbers  '  +
 			'  AND ZProduct_Deleted__c!=true AND ZRatePlan_Deleted__c!=true AND ZCharge_Deleted__c!=true AND zqu__Deleted__c!=true ' +
-			'  AND ZProduct_EffectiveStartDate__c <= TODAY AND ZProduct_EffectiveEndDate__c >= TODAY ' + 
-			'  AND ZRatePlan_EffectiveStartDate__c <= TODAY AND ZRatePlan_EffectiveEndDate__c >= TODAY ', 
+			'  AND ZProduct_EffectiveStartDate__c <= TODAY AND ZProduct_EffectiveEndDate__c >= TODAY ' +
+			'  AND ZRatePlan_EffectiveStartDate__c <= TODAY AND ZRatePlan_EffectiveEndDate__c >= TODAY ',
 			new List<String>{
 				String.join(getDefaultFields(), ', '),
 				getSObjectType().getDescribe().getName()
@@ -95,16 +95,16 @@ public with sharing class ProductRatePlanChargeTier_Sel extends Selector
 
 	public List<zqu__ProductRatePlanChargeTier__c> getProductTiers(Set<String> productNumbers, String customerType, String customerRegion, String customerCountry)
 	{
-		String soqlStr = 'SELECT {0}  ' + 
-				'FROM {1} ' + 
-				'WHERE Product_Number__c IN :productNumbers  ' ; 
+		String soqlStr = 'SELECT {0}  ' +
+				'FROM {1} ' +
+				'WHERE Product_Number__c IN :productNumbers  ' ;
 
 		if(String.isNotBlank(customerType)) soqlStr += '  AND (ZRatePlan_CustomerType__c=null OR ZRatePlan_CustomerType__c= :customerType)' ;
 		if(String.isNotBlank(customerRegion)) soqlStr +=  '  AND (ZRatePlan_Region__c=null OR ZRatePlan_Region__c= :customerRegion)';
 		if(String.isNotBlank(customerCountry)) soqlStr +=  '  AND (ZRatePlan_Country__c=null OR ZRatePlan_Country__c= :customerCountry)';
 
 		soqlStr += '  AND ZProduct_Deleted__c!=true AND ZRatePlan_Deleted__c!=true AND ZCharge_Deleted__c!=true AND zqu__Deleted__c!=true ' +
-				'  AND ZProduct_EffectiveStartDate__c <= TODAY AND ZProduct_EffectiveEndDate__c >= TODAY ' + 
+				'  AND ZProduct_EffectiveStartDate__c <= TODAY AND ZProduct_EffectiveEndDate__c >= TODAY ' +
 				'  AND ZRatePlan_EffectiveStartDate__c <= TODAY AND ZRatePlan_EffectiveEndDate__c >= TODAY ';
 
 		String query = String.format(soqlStr, new List<String>{
@@ -121,12 +121,12 @@ public with sharing class ProductRatePlanChargeTier_Sel extends Selector
 	public List<zqu__ProductRatePlanChargeTier__c> getProductTiersByRatePlan(Set<String> ratePlanZIds)
 	{
 		String query = String.format(
-			'SELECT {0}  ' + 
-			'FROM {1} ' + 
-			'WHERE ZRatePlan_ZuoraId__c IN :ratePlanZIds  '  + 
+			'SELECT {0}  ' +
+			'FROM {1} ' +
+			'WHERE ZRatePlan_ZuoraId__c IN :ratePlanZIds  '  +
 			'  AND ZProduct_Deleted__c!=true AND ZRatePlan_Deleted__c!=true AND ZCharge_Deleted__c!=true AND zqu__Deleted__c!=true ' +
-			'  AND ZProduct_EffectiveStartDate__c <= TODAY AND ZProduct_EffectiveEndDate__c >= TODAY ' + 
-			'  AND ZRatePlan_EffectiveStartDate__c <= TODAY AND ZRatePlan_EffectiveEndDate__c >= TODAY ', 
+			'  AND ZProduct_EffectiveStartDate__c <= TODAY AND ZProduct_EffectiveEndDate__c >= TODAY ' +
+			'  AND ZRatePlan_EffectiveStartDate__c <= TODAY AND ZRatePlan_EffectiveEndDate__c >= TODAY ',
 			new List<String>{
 				String.join(getDefaultFields(), ', '),
 				getSObjectType().getDescribe().getName()
@@ -138,8 +138,8 @@ public with sharing class ProductRatePlanChargeTier_Sel extends Selector
 
 	public static Boolean isStandardPrice(zqu__ProductRatePlanChargeTier__c zTier)
 	{
-		return (String.isBlank(zTier.ZRatePlan_CustomerType__c) 
-			&& String.isBlank(zTier.ZRatePlan_Region__c) 
+		return (String.isBlank(zTier.ZRatePlan_CustomerType__c)
+			&& String.isBlank(zTier.ZRatePlan_Region__c)
 			&& String.isBlank(zTier.ZRatePlan_Country__c)
 			&& String.isBlank(zTier.ZRatePlan_CouponCode__c)
 			&& (zTier.ZRatePlan_IsPreSale__c != 'Yes')

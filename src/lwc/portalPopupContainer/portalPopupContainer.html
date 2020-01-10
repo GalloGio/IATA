@@ -1,0 +1,22 @@
+<template>
+	<div class="modal">
+		<div class={widthClass}>
+	
+			<!-- Popup Header -->
+			<div class="slds-p-horizontal_large slds-p-vertical_large text-bold text-small">
+				<slot name="modalHeader"></slot>
+			</div>
+
+			<!-- Popup Body -->
+			<div class="slds-p-around_large customWhiteBackground">
+				<slot name="modalBody"></slot>
+			</div>
+
+			<!-- Popup Footer -->
+			<div class="slds-p-around_large topLightGrayBorder customWhiteBackground">
+				<slot name="modalFooter"></slot>
+			</div>
+
+		</div>
+	</div>
+</template>

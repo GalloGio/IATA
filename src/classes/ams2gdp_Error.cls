@@ -1,4 +1,4 @@
-public class ams2gdp_Error 
+public class ams2gdp_Error
 {
 	public String jobName;
 	public String amsRecordId;
@@ -7,12 +7,12 @@ public class ams2gdp_Error
 
 
 	//public ams2gdp_Error(){}
-	
+
 	public ams2gdp_Error(String job, String ams, String gdp, String msg)
 	{
 		jobName = job;
 		amsRecordId = ams;
-		gdpRecordId = gdp; 
+		gdpRecordId = gdp;
 		message = msg;
 	}
 
@@ -40,7 +40,7 @@ public class ams2gdp_Error
 						+'\nFields: '+ err.getFields()
 						+'\nMessage: ' + err.getMessage();
 
-					String externalKeyValue = (String)rec.get(externalKey); 
+					String externalKeyValue = (String)rec.get(externalKey);
 					if(String.isNotBlank(externalKeyValue))
 						externalKeyValue = externalKeyValue.left(18);
 
@@ -51,7 +51,7 @@ public class ams2gdp_Error
 
 		system.debug('errors-----'+errors);
 
-		return errors;		
+		return errors;
 	}
 
 }

@@ -16,5 +16,5 @@ private class AMS_AccountOwnersControllerTest {
 		List<AMS_Account_Role__c> owners = accOwnersController.owners;
 		Test.stopTest();
 	}
-		
+
 }

@@ -1,10 +1,10 @@
 public with sharing class ISSP_AP_Cities {
-	
+
 	public List<cityRecord> cityList {get; set;}
 
 	public ISSP_AP_Cities(Apexpages.Standardcontroller ctrl){
-        AP_Process_Form__c apForm = [SELECT Id, Colombia_City_selection__c, Colombia_City_percentage__c
-        							FROM AP_Process_Form__c WHERE Id=:ctrl.getId()];
+		AP_Process_Form__c apForm = [SELECT Id, Colombia_City_selection__c, Colombia_City_percentage__c
+									FROM AP_Process_Form__c WHERE Id=:ctrl.getId()];
 		cityList = new List<cityRecord>();
 		if (apForm.Colombia_City_selection__c != '' && apForm.Colombia_City_selection__c != null){
 			List<String> cityStringList = apForm.Colombia_City_selection__c.split(';');
@@ -18,9 +18,9 @@ public with sharing class ISSP_AP_Cities {
 				cityList.add(thisCityRecord);
 			}
 		}
-        							
+
 	}
-	
+
 	public class cityRecord{
 		public String city {get; set;}
 		public String percentage {get; set;}

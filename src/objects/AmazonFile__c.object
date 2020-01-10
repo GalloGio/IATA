@@ -734,9 +734,22 @@
         </valueSet>
     </fields>
     <fields>
+        <fullName>Form__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Form</label>
+        <referenceTo>AMS_Pax_Accreditation_Form__c</referenceTo>
+        <relationshipLabel>AmazonFiles</relationshipLabel>
+        <relationshipName>AmazonFiles</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>Full_Name_Unique__c</fullName>
         <caseSensitive>true</caseSensitive>
-        <externalId>false</externalId>
+        <externalId>true</externalId>
         <label>Full Name (Unique)</label>
         <length>255</length>
         <required>true</required>
@@ -1169,7 +1182,6 @@
         <columns>Case__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
-        <language>en_US</language>
     </listViews>
     <listViews>
         <fullName>CasesACCEuropeOffOnshore_AmazonFile</fullName>
@@ -1190,7 +1202,7 @@
         <filters>
             <field>Case__c</field>
             <operation>equals</operation>
-            <value>10771908</value>
+            <value>10688738</value>
         </filters>
         <label>files by case</label>
         <language>en_US</language>

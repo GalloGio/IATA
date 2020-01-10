@@ -1,0 +1,4 @@
+<aura:event type="COMPONENT" description="Event to control confirmation popup decision">
+    <aura:attribute name="action" type="String"/>
+    <aura:attribute name="decision" type="String"/>
+</aura:event>

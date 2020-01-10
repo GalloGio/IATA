@@ -2,7 +2,7 @@ public with sharing class PricebookEntry_Sel extends Selector
 {
 	public List<Schema.SObjectField> getSObjectFieldList()
 	{
-		return new List<Schema.SObjectField> 
+		return new List<Schema.SObjectField>
 		{
 			PricebookEntry.Id,
 			PricebookEntry.Pricebook2Id,
@@ -17,17 +17,17 @@ public with sharing class PricebookEntry_Sel extends Selector
 	}
 
 	/****************************************************************************************************
-        Created by CGI - David
-            this function list pricebookEntries for given pricebook and products
-    ****************************************************************************************************/
-    public Map<Id, PricebookEntry> getPricebookEntryByProductId(Id pricebookId, Set<Id> productId)
-    {
-    	Map<Id, PricebookEntry> ret = new Map<Id, PricebookEntry>();
+		Created by CGI - David
+			this function list pricebookEntries for given pricebook and products
+	****************************************************************************************************/
+	public Map<Id, PricebookEntry> getPricebookEntryByProductId(Id pricebookId, Set<Id> productId)
+	{
+		Map<Id, PricebookEntry> ret = new Map<Id, PricebookEntry>();
 
-    	String query = String.format(
-			'SELECT {0}  ' + 
-			'FROM {1} ' + 
-			'WHERE Pricebook2Id = :pricebookId AND Product2Id IN :productId ' , 
+		String query = String.format(
+			'SELECT {0}  ' +
+			'FROM {1} ' +
+			'WHERE Pricebook2Id = :pricebookId AND Product2Id IN :productId ' ,
 			new List<String>{
 				String.join(getDefaultFields(), ', '),
 				getSObjectType().getDescribe().getName()
@@ -42,25 +42,25 @@ public with sharing class PricebookEntry_Sel extends Selector
 		}
 
 		return ret;
-    }
+	}
 
-    /****************************************************************************************************
-        getPricebookEntryByProductId, function that retrieves a list of pricebookEntries for given
-        							 pricebook and product
-        @Id pricebookId, Id of the pricebook
-        @Id productId, Id of the product
-        @return, list of priceEntry by ProductId
-        
-        Author: Ângela Lázaro 
-    ****************************************************************************************************/
+	/****************************************************************************************************
+		getPricebookEntryByProductId, function that retrieves a list of pricebookEntries for given
+									 pricebook and product
+		@Id pricebookId, Id of the pricebook
+		@Id productId, Id of the product
+		@return, list of priceEntry by ProductId
+
+		Author: Ângela Lázaro
+	****************************************************************************************************/
 	public Map<Id, PricebookEntry> getPricebookEntryByProductId(Id pricebookId, Id productId)
-    {
-    	Map<Id, PricebookEntry> ret = new Map<Id, PricebookEntry>();
+	{
+		Map<Id, PricebookEntry> ret = new Map<Id, PricebookEntry>();
 
-    	String query = String.format(
-			'SELECT {0}  ' + 
-			'FROM {1} ' + 
-			'WHERE Pricebook2Id = :pricebookId AND Product2Id = :productId ' , 
+		String query = String.format(
+			'SELECT {0}  ' +
+			'FROM {1} ' +
+			'WHERE Pricebook2Id = :pricebookId AND Product2Id = :productId ' ,
 			new List<String>{
 				String.join(getDefaultFields(), ', '),
 				getSObjectType().getDescribe().getName()
@@ -75,5 +75,5 @@ public with sharing class PricebookEntry_Sel extends Selector
 		}
 
 		return ret;
-    }
+	}
 }

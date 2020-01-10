@@ -1,0 +1,93 @@
+/**
+ * Created by ukaya01 on 27/06/2019.
+ */
+
+.containerBorderTop {
+    border-top-style: solid;
+    color: rgba(212, 212, 212, 0.52);
+    /*margin-bottom: 15px;*/
+}
+
+.textAlignCenter {
+    text-align: center;
+}
+
+.showPasswordButton{
+    margin-top: -10px;
+    width: 30px;
+    height: 20px;
+    box-shadow: none;
+}
+
+.showPasswordIcon{
+    width: 20px;
+    height: 20px;
+}
+
+.showPasswordIconDisabled{
+    opacity:0.5;
+}
+
+.slds-has-error input{
+    border-radius: 1px !important;
+    border: solid 2px rgba(240, 70, 50, 0.8) !important;
+    box-shadow: none !important;
+}
+
+.slds-has-error .slds-form-element__help{
+    color: #f04632 !important;
+    font-size: 14px !important;
+}
+
+.slds-has-error .slds-form-element__help div{
+    color: #f04632 !important;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active  {
+    -webkit-box-shadow: 0 0 0 30px inset #f7f8fa !important;
+}
+
+.slds-spinner_container{
+    position: fixed;
+}
+
+.inputBackgroundGrey{
+    background-color: #f7f8fa !important;
+}
+
+.formElementContainer{
+    display: flex;
+    /*justify-content: center;*/
+    align-items: center;
+    height : 40px;
+}
+
+.formLabelContainer{
+    /*display: flex;*/
+    flex: 1 0 auto;
+    /*align-items: center;*/
+    /*justify-content: center;*/
+}
+
+.formElementSpacer{
+    padding-bottom:40px;
+}
+
+.IEFixDisplay{
+    display: inherit;
+}
+
+/* Fixes IE display */
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+    .IEFixDisplay{
+        display: inline-block;
+        width: 100%;
+    }
+}
+
+/* Removes the icon from IE input */
+input::-ms-clear {  display: none; width : 0; height: 0; }
+input::-ms-reveal {  display: none; width : 0; height: 0; }

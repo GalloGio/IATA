@@ -21,15 +21,15 @@ global class AMS_MajorDefaultCommunication implements Database.Batchable<sObject
 			}
 		}
 
-		List<Case> cases = [SELECT Id, AccountId, Account.IATA_ISO_Country__r.ISO_Code__c, Short_Payment_Amount_USD__c, 
+		List<Case> cases = [SELECT Id, AccountId, Account.IATA_ISO_Country__r.ISO_Code__c, Short_Payment_Amount_USD__c,
 								Account.Name, BSPCountry__c, ContactId
 							FROM Case
 							WHERE Id IN :caseIds AND BSP_CASS__c = 'BSP'];
 
 		Map<String,Default_Agency_Payment__mdt> countriesDefaults = new Map<String,Default_Agency_Payment__mdt>();
 		List<Default_Agency_Payment__mdt> defaults = [SELECT MasterLabel, Country_Codes__c, Default_Amount__c, Visibility__c
-													  FROM Default_Agency_Payment__mdt
-													  WHERE Active__c = true];													  
+														FROM Default_Agency_Payment__mdt
+														WHERE Active__c = true];
 		for(Default_Agency_Payment__mdt def : defaults) {
 			if(def.MasterLabel != 'All') {
 				List<String> countryCodes = def.Country_Codes__c.split(';');
@@ -71,7 +71,7 @@ global class AMS_MajorDefaultCommunication implements Database.Batchable<sObject
 					accountIdsByCountry.put(cse.Account.IATA_ISO_Country__r.ISO_Code__c, accountIds);
 				}
 				accountIds.add(cse.AccountId);
-			
+
 		}
 	}
 	}
@@ -88,7 +88,7 @@ global class AMS_MajorDefaultCommunication implements Database.Batchable<sObject
 	}
 
 	global void execute(Database.BatchableContext BC, List<Services_Rendered__c> scope) {
-		Map<String, Set<Id>> airlinesByCountry = new Map<String, Set<Id>>(); //Map airlines to notify per country	
+		Map<String, Set<Id>> airlinesByCountry = new Map<String, Set<Id>>(); //Map airlines to notify per country
 		Map<Id,Id> airlinesMap = new Map<Id,Id>(); //Map each airline to his parent (Headquarters are mapped to null)
 		for(Services_Rendered__c service : scope) {
 			Id airlineId = service.Services_Rendered_to_Airline__c;
@@ -134,7 +134,7 @@ global class AMS_MajorDefaultCommunication implements Database.Batchable<sObject
 				System.debug('Final list of contacts for airline: ' + contacts);
 				for(Id agencyId : accountIdsByCountry.get(country)) {
 					Case cse = caseByAccounts.get(agencyId);
-					for(Contact con : contacts) {							
+					for(Contact con : contacts) {
 						EmailTemplate templateId = templates.get(con.Preferred_Language__c);
 						List<Id> caseIds = mapContactToCase.get(con.Id);
 						if(caseIds == null) {
@@ -147,7 +147,7 @@ global class AMS_MajorDefaultCommunication implements Database.Batchable<sObject
 							templateId = templates.get('Default');
 						}
 						mapContactToTemplate.put(con.Id, templateId);
-						contactIds.add(con.Id);						
+						contactIds.add(con.Id);
 					}
 				}
 			}
@@ -172,13 +172,13 @@ global class AMS_MajorDefaultCommunication implements Database.Batchable<sObject
 		Id rtHeadquarter = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
 		Map<Id,Set<Contact>> mapContacts = new Map<Id,Set<Contact>>();
 		List<Contact> contacts = [SELECT Id, AccountId, Name, Preferred_Language__c
-								  FROM Contact 
-								  WHERE AccountId IN :accountIds AND 
-								  	(
-								  		(PSG_Member__c = true OR PaConf_Representative__c = true) OR  
-								  		((Airline_Credit_Risk_Manager__c = true OR APJC_Participant__c = true OR BSP_CASS_Payment_contact__c = true) AND Account.RecordTypeId = :rtHeadquarter)
-								  	)
-								  	AND Status__c = 'Active' AND Email <> null];
+									FROM Contact
+									WHERE AccountId IN :accountIds AND
+										(
+											(PSG_Member__c = true OR PaConf_Representative__c = true) OR
+											((Airline_Credit_Risk_Manager__c = true OR APJC_Participant__c = true OR BSP_CASS_Payment_contact__c = true) AND Account.RecordTypeId = :rtHeadquarter)
+										)
+										AND Status__c = 'Active' AND Email <> null];
 
 		for(Contact c : contacts) {
 			Set<Contact> contactIds = mapContacts.get(c.AccountId);
