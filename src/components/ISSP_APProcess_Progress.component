@@ -4,6 +4,11 @@
     <apex:attribute name="areaType" description="Area Type can be Airline Joining or Joining Form" type="String" required="true"/>
     <apex:attribute name="changeType" description="Change Type can be Minor database changes or Change Request" type="String" required="true"/>
     <apex:attribute name="isSIS" description="used for operationType=ICH only" type="Boolean" required="false" default="false"/>
+    <apex:attribute name="isPassAirline" description="used for operationType=PASS" type="Boolean" required="false" default="false"/>
+    <apex:attribute name="managePASS" description="used for operationType=managePASS" type="Boolean" required="false" default="false"/>
+    <apex:attribute name="strAreaType" description="" type="String" required="false" default="false"/>
+    <apex:attribute name="strChangeType" description="" type="String" required="false" default="false"/>
+
 
 <style>
     .progress-bar-off {
@@ -12,7 +17,7 @@
         background-image:none !important;
         background-color:transparent !important;
         border-right:2px solid white;
-    } 
+    }
 </style>
 
     <!-- BSP -->

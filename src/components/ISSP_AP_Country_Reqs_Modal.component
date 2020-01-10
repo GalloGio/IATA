@@ -1,12 +1,16 @@
 <apex:component>
     <apex:attribute name="ctrl" description="controller" type="ISSP_APProcess" required="true" />
 
-    <c:ISSP_APProcess_Progress 
+    <c:ISSP_APProcess_Progress
         step="{!ctrl.stepNumber}"
         operationType="{!ctrl.strOperationType}"
         areaType="{!ctrl.strAreaType}"
         changeType="{!ctrl.strChangeType}"
-        isSIS="{!OR(ctrl.isISPAActive,ctrl.isISUAActive)}" />
+        isSIS="{!OR(ctrl.isISPAActive,ctrl.isISUAActive)}"
+        isPassAirline="{!ctrl.isPassAirline}"
+        managePASS="{!ctrl.managePass}"
+        strAreaType="{!ctrl.strAreaType}"
+        strChangeType="{!ctrl.strChangeType}"/>
 
     <apex:outputPanel layout="block" styleclass="alert alert-info" html-role="alert" rendered="{!ctrl.DocumentGuide!=null}">
         Any doubts? Please check out our&nbsp;
@@ -15,27 +19,27 @@
 
     <apex:outputPanel rendered="{!OR(ctrl.isBSP,ctrl.isCASS)}">
         <div class="alert alert-info" role="alert">Please make sure you are compliant with the list of local requirements below before proceeding.</div>
-        
+
         <table class="table table-striped">
             <tbody>
                 <apex:outputPanel rendered="{!NOT(ctrl.strChangeType=='Bank Account Instructions')}">
                     <tr><td scope="row"><strong>Local representation mandatory:</strong></td><td>{!ctrl.countryRequirement.Local_Representation_Mandatory__c}</td><td><apex:outputField value="{!ctrl.countryRequirement.Local_Representation_Mandatory_com__c}"/></td></tr>
-                
+
                 <tr><td scope="row"><strong>Local accountant mandatory:</strong></td><td>{!ctrl.countryRequirement.Local_accountant_mandatory__c}</td><td><apex:outputField value="{!ctrl.countryRequirement.Local_accountant_mandatory_com__c}" /></td></tr>
-                
+
                 <tr><td scope="row"><strong>Local VAT (or equivalent such as GST, RUC, RUT, NIT) mandatory:</strong></td><td>{!ctrl.countryRequirement.Local_VAT_Mandatory__c}</td><td><apex:outputField value="{!ctrl.countryRequirement.Local_VAT_Mandatory_com__c}" /></td></tr>
-                
+
                 <tr><td scope="row"><strong>Foreign VAT accepted:</strong></td><td>{!ctrl.countryRequirement.Foreign_VAT_accepted__c}</td><td><apex:outputField value="{!ctrl.countryRequirement.Foreign_VAT_accepted_com__c}" /></td></tr>
-                
+
                 <tr><td scope="row"><strong>Airline can have a special VAT status</strong></td><td>{!ctrl.countryRequirement.Special_VAT_status_allowed__c}</td><td><apex:outputField value="{!ctrl.countryRequirement.Special_VAT_status_allowed_com__c}" /></td></tr>
-                
+
                 <tr><td scope="row"><strong>Airline needs Local Representation for Fiscal requirements:</strong></td><td>{!ctrl.countryRequirement.Local_Representation_for_Fiscal_requirem__c}</td><td><apex:outputField value="{!ctrl.countryRequirement.Local_Representation_for_Fiscal_req_com__c}" /></td></tr>
                 </apex:outputPanel>
                 <apex:outputPanel rendered="{!NOT(ctrl.strChangeType=='Minor database changes')}">
                 <tr><td scope="row"><strong>Currency of the Settlement must be the same as the bank account in case airline selects settlement mode:</strong></td><td>{!ctrl.countryRequirement.Currency_of_the_Settlement__c}</td><td><apex:outputField value="{!ctrl.countryRequirement.Currency_of_the_Settlement_com__c}" /></td></tr>
-                
+
                 <tr><td scope="row"><strong>Operation has dual currencies:</strong></td><td>{!ctrl.countryRequirement.Dual_currencies__c}</td><td><apex:outputField value="{!ctrl.countryRequirement.Dual_currencies_com__c}" /></td></tr>
-                
+
                 <tr><td scope="row"><strong>Airline can (regardless of local representation or not) open a local bank account in the settlement currency:</strong></td>
                 <td>{!ctrl.countryRequirement.bank_account_in_of_the_settlement__c}</td>
                 <td><apex:outputField value="{!ctrl.countryRequirement.bank_account_in_of_the_settlement_com__c}" /></td></tr>
@@ -44,15 +48,15 @@
                 <tr><td scope="row"><strong>Legally mandatory for airlines to give commission to agencies:</strong></td>
                     <td>{!ctrl.countryRequirement.Mandatory_to_give_commission_to_agencies__c}</td>
                     <td><apex:outputField value="{!ctrl.countryRequirement.Mandatory_to_give_commission_to_agen_com__c}" /></td></tr>
-                
+
                 <tr><td scope="row"><strong>Government requirements are included in the joining package:</strong></td>
                     <td>{!ctrl.countryRequirement.Government_requirements__c}</td>
                     <td><apex:outputField value="{!ctrl.countryRequirement.Government_requirements_com__c}" /></td></tr>
-                
+
                     <tr><td scope="row"><strong>Which type of address is accepted, inserted into ISS systems (BSPLink, CASSLink etc..):</strong></td>
                         <td>{!ctrl.countryRequirement.Type_of_address_accepted__c}</td>
                         <td><apex:outputField value="{!ctrl.countryRequirement.Type_of_address_accepted_com__c}" /></td></tr>
-                
+
                 <tr><td scope="row"><strong>VAT no. is always inserted into ISS systems (BSPLink, Casslink etc..:</strong></td>
                     <td>{!ctrl.countryRequirement.VAT_no_always_inserted_into_ISS_systems__c}</td>
                     <td><apex:outputField value="{!ctrl.countryRequirement.VAT_no_always_ins_into_ISS_systems_com__c}" /></td></tr>
