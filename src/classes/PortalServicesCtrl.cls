@@ -1636,7 +1636,8 @@ public static Boolean grantAccess(string contactId,string serviceId,string reaso
 															AND RecordTypeId = :RECTYPE_Trainee_YASContDet
 															LIMIT 1];
 			//https://preprod-customer-portal-iata.cs109.force.com/csportal/idp/login?app=0sp0Q0000008OTD&RelayState=
-			resURL = baseUrl + pathPrefix + ami[0].StartUrl + '&RelayState=' + EncodingUtil.urlEncode(tcrd.Preferred_Course__c, 'UTF-8');
+			if(ami != null && !ami.isEmpty())
+				resURL = baseUrl + pathPrefix + ami[0].StartUrl + '&RelayState=' + EncodingUtil.urlEncode(tcrd.Preferred_Course__c, 'UTF-8');
 		}else{
 			resURL = 'not_complete';
 		}

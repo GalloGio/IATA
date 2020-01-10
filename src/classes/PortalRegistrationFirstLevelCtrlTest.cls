@@ -210,6 +210,25 @@ public class PortalRegistrationFirstLevelCtrlTest {
 	}
 
 	@isTest
+	static void testGetYASUserInformationFromEmail(){
+
+		Test.StartTest();
+
+		PortalRegistrationFirstLevelCtrl.UserInformation userInfo1 = PortalRegistrationFirstLevelCtrl.getUserInformationFromEmail('contact1@bucketairline.com' , 'yas');
+		System.assertEquals(userInfo1.hasExistingContact == true, true);
+		System.assertEquals(userInfo1.hasExistingUser == true, true);
+		System.assertEquals(userInfo1.isEmailAddressAvailable == false, true);
+
+		PortalRegistrationFirstLevelCtrl.UserInformation userInfo2 = PortalRegistrationFirstLevelCtrl.getUserInformationFromEmail('newcontact1@bucketairline.com', 'yas');
+		System.assertEquals(userInfo2.hasExistingContact == false, true);
+		System.assertEquals(userInfo2.hasExistingUser == false, true);
+		System.assertEquals(userInfo2.isEmailAddressAvailable == true, true);
+
+		Test.StopTest();
+
+	}
+
+	@isTest
 	static void testSimulateRegisterForExistingContact(){
 
 		Test.StartTest();
