@@ -145,10 +145,10 @@ public with sharing class AMP_IssuesAndPrioritiesExtension {
 	}
 
 	public PageReference filterIssuesAndPriorities() {
-	  lsIssuesAndPriorities = getIssuesAndPriorities();
-	  System.debug(lsIssuesAndPriorities);
-	  return null;
-  }
+		lsIssuesAndPriorities = getIssuesAndPriorities();
+		System.debug(lsIssuesAndPriorities);
+		return null;
+	}
 
 	@AuraEnabled
 	public static Boolean getHaveAMPIssuesAndPriorities() {
@@ -165,28 +165,28 @@ public with sharing class AMP_IssuesAndPrioritiesExtension {
 		}
 	}
 
-  @AuraEnabled
-  public static Boolean getCanEdit() {
-	  Boolean canEdit = true;
-	  // Obtain the field name/token map for the Objective__c object
-	  Map<String,Schema.SObjectField> m = Schema.SObjectType.Objective__c.fields.getMap();
+	@AuraEnabled
+	public static Boolean getCanEdit() {
+		Boolean canEdit = true;
+		// Obtain the field name/token map for the Objective__c object
+		Map<String,Schema.SObjectField> m = Schema.SObjectType.Objective__c.fields.getMap();
 
-	  List<String> lsIssueFields = getIssueFields();
-	  for (String fieldToCheck : lsIssueFields) {
-		  // Check if the user has access to view field
-		  if (!m.get(fieldToCheck).getDescribe().isUpdateable() ) {
-			  canEdit = false;
-		  }
-	  }
+		List<String> lsIssueFields = getIssueFields();
+		for (String fieldToCheck : lsIssueFields) {
+			// Check if the user has access to view field
+			if (!m.get(fieldToCheck).getDescribe().isUpdateable() ) {
+				canEdit = false;
+			}
+		}
 
-	  return canEdit;
-  }
+		return canEdit;
+	}
 
 
-  @AuraEnabled
-  public static List<Objective__c> getIssuesAndPriorities(Id accountId, String SortOrder) {
-	  Id objectiveRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Objective__c', 'Account_Issues_and_Priorities');
-	  List<Objective__c> lsIssuesAndPriorities = new List<Objective__c>();
+	@AuraEnabled
+	public static List<Objective__c> getIssuesAndPriorities(Id accountId, String SortOrder) {
+		Id objectiveRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Objective__c', 'Account_Issues_and_Priorities');
+		List<Objective__c> lsIssuesAndPriorities = new List<Objective__c>();
 		List<String> lsIssueFields = getIssueFields();
 
 		String queryString = 'SELECT Id,';
@@ -219,34 +219,34 @@ public with sharing class AMP_IssuesAndPrioritiesExtension {
 
 	@AuraEnabled
 	public static Objective__c deleteIssue(Objective__c issue) {
-	  delete issue;
-	  return issue;
-  }
+		delete issue;
+		return issue;
+	}
 
 	public void newLine() {
-	  try {
-		  newIssue = new Objective__c();
-		  newIssue.Account__c = accountId;
-		  newIssue.RecordTypeId = this.objectiveRecordTypeId;
-		  //newIssue.Name = 'new issue or priority';
-		  //insert newIssue;
-		  List<Objective__c> newList = new List<Objective__c>();
-		  newList.add(newIssue);
-		  newList.addAll(lsIssuesAndPriorities);
-		  lsIssuesAndPriorities.clear();
-		  lsIssuesAndPriorities.addAll(newList);
-		//   lsIssuesAndPriorities.add(newIssue);
-		//   lsIssuesAndPriorities.clear();
+		try {
+			newIssue = new Objective__c();
+			newIssue.Account__c = accountId;
+			newIssue.RecordTypeId = this.objectiveRecordTypeId;
+			//newIssue.Name = 'new issue or priority';
+			//insert newIssue;
+			List<Objective__c> newList = new List<Objective__c>();
+			newList.add(newIssue);
+			newList.addAll(lsIssuesAndPriorities);
+			lsIssuesAndPriorities.clear();
+			lsIssuesAndPriorities.addAll(newList);
+			//lsIssuesAndPriorities.add(newIssue);
+			//lsIssuesAndPriorities.clear();
 
-		  isEditMode = true;
-		  isNewLine = true;
-		  IdConcerned = null;
-		  sortOrder = ' CreatedDate ASC ';
-		//   lsIssuesAndPriorities = getIssuesAndPriorities();
+			isEditMode = true;
+			isNewLine = true;
+			IdConcerned = null;
+			sortOrder = ' CreatedDate ASC ';
+			//lsIssuesAndPriorities = getIssuesAndPriorities();
 
-	  } catch(Exception e) {
-		  ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,e.getDmlMessage(0)));
-	  }
+		} catch(Exception e) {
+			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,e.getDmlMessage(0)));
+		}
 
 	}
 

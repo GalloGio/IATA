@@ -8,19 +8,19 @@ private class AWW_AgencyManagementTest {
 			ISO_Code_Numeric__c= 580
 		);
 		insert country;
-        IATA_ISO_Country__c countryPT = new IATA_ISO_Country__c(
+		IATA_ISO_Country__c countryPT = new IATA_ISO_Country__c(
 			Name= 'Portugal',
 			ISO_Code__c= 'PT',
 			ISO_Code_Numeric__c= 11
 		);
-        insert countryPT;
-        IATA_ISO_Country__c countryCNS = new IATA_ISO_Country__c(
+		insert countryPT;
+		IATA_ISO_Country__c countryCNS = new IATA_ISO_Country__c(
 			Name= 'Puerto Rico',
 			ISO_Code__c= 'PR',
 			ISO_Code_Numeric__c= 630,
-            CNS_Country__c = true
+			CNS_Country__c = true
 		);
-        insert countryCNS;
+		insert countryCNS;
 		Account wwAccount = new Account(
 			Name= 'World Wide Account',
 			RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Agency_WW_HQ'),
@@ -38,11 +38,11 @@ private class AWW_AgencyManagementTest {
 			Sector__c= 'Travel Agent',
 			Category__c= 'IATA Passenger Sales Agent',
 			IATACode__c= '145362',
-            Status__c = 'Approved'
+			Status__c = 'Approved'
 		);
 		insert acc;
-        
-        Account acc2 = new Account(
+
+		Account acc2 = new Account(
 			Name= 'Test Ag2',
 			RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency'),
 			IATA_ISO_Country__c= country.Id,
@@ -52,10 +52,10 @@ private class AWW_AgencyManagementTest {
 			Sector__c= 'Travel Agent',
 			Category__c= 'IATA Passenger Sales Agent',
 			IATACode__c= '345127',
-            Status__c = 'Approved'
+			Status__c = 'Approved'
 		);
 		insert acc2;
-        Account acc3 = new Account(
+		Account acc3 = new Account(
 			Name= 'Test Ag3',
 			RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency'),
 			IATA_ISO_Country__c= countryCNS.Id,
@@ -65,7 +65,7 @@ private class AWW_AgencyManagementTest {
 			Sector__c= 'Travel Agent',
 			Category__c= 'IATA Passenger Sales Agent',
 			IATACode__c= '675123',
-            Status__c = 'Approved'
+			Status__c = 'Approved'
 		);
 		insert acc3;
 	}
