@@ -71,7 +71,7 @@ public with sharing class PortalRecommendationCtrl {
 
 		whereClause += '(Sector__c = \'All\' OR (Sector__c = \'' + usr.Contact.Account.Sector__c + '\' AND Category__c INCLUDES (\'' + usr.Contact.Account.Category__c + '\'))) AND Recommendation_Visibility__r.IsActive__c = true AND Recommendation_Visibility__r.Visible__c = true';
 
-		if( type.equals('Services') ) {
+		if(type != null && type.equals('Services') ) {
 			whereClause += ' AND Recommendation_Visibility__r.RecordTypeId = \'' + serviceRecommendationRecTypeId + '\'';
 		}
 

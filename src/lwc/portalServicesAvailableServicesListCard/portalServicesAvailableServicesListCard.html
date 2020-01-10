@@ -2,6 +2,12 @@
 
     <c-portal-services-card-container image-url={service.recordService.Application_icon_URL__c} background-variant="white">
 
+		<span slot="serviceImage">
+			<template if:true={hasIcon}>
+				<img class="slds-p-around_small serviceImageStyles" src={service.recordService.Application_icon_URL__c}/>
+			</template>
+		</span>
+
         <span slot="serviceName">{service.recordService.ServiceName__c}</span>
         <span slot="serviceDescription">
             <lightning-formatted-rich-text value={service.serviceDescriptionLabel} class="breakWord introMessage"></lightning-formatted-rich-text>
