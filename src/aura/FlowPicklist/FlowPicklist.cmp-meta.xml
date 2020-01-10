@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <AuraDefinitionBundle xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>46.0</apiVersion>
-    <description>A Lightning Component Bundle</description>
+    <description>
+        Picklist component used only in flows. It allows to have a picklist with dynamic values.
+        The standard picklist component in flows is not dynamic (you have to define the choices). 
+        Because it's not possible to have an attribute of type "Object", values of the picklist has been concatened.
+        The concatenation of the picklist values is a semi-colon of the value colon the label.
+        Example value1:label1;value2:label2;
+    </description>
 </AuraDefinitionBundle>
