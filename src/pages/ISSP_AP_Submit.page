@@ -28,7 +28,7 @@
         }
     </script>
     <c:iss_ap_css />
-    
+
     <div class="panel-primary">
             <div class="panel-heading head_panel_green">
                <h3 class="panel-title">{!pageTitle}</h3>
@@ -81,22 +81,22 @@
 
      <apex:form id="FinalForm">
         <c:UploadFileToAmazonButton />
-        <apex:actionFunction name="updateAmazonFileName" action="{!UploadAmazonFile}" rerender="AttachmentTable" oncomplete="stopLoading();"/> 
+        <apex:actionFunction name="updateAmazonFileName" action="{!UploadAmazonFile}" rerender="AttachmentTable" oncomplete="stopLoading();"/>
         <apex:pageBlock rendered="{!isStep4}" title="" mode="edit">
-            
+
             <apex:pageBlockButtons location="bottom">
                 <apex:commandButton styleclass="iatabtn iatabtn-danger iatabtn-topMargin iatabtn-right" action="{!goToStep3}" value="Previous" html-novalidate="" html-formnovalidate="" />
                 <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-topMargin iatabtn-left" action="{!saveBSPFormAndLeave}" value="Save Draft and Leave" html-novalidate="" html-formnovalidate="" />
                 <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-topMargin iatabtn-right" action="{!goToFinalStep}" value="Submit to IATA" disabled="{!NOT(allfieldsfilled)}" status="WaitingStatus" />
             </apex:pageBlockButtons>
-            
+
             <apex:pageMessages />
 
             <!-- BASP/CASS Submit section -->
             <apex:outputPanel rendered="{!OR(isBSP,isCASS)}">
                 <apex:outputPanel id="mainPanel" layout="block" styleclass="apcontainer">
                     <apex:pageBlockSection title="Application Status" columns="1" collapsible="false">
-                        <apex:outputtext styleclass="{!IF(allfieldsfilled,'ap-green','ap-red')}" value="{!IF(allfieldsfilled,'All mandatory fields have been filled; You are ready to submit your application','You cannot submit your application until you go back and fill all the required fields, and agree to the Terms and Conditions below')}"/>                  
+                        <apex:outputtext styleclass="{!IF(allfieldsfilled,'ap-green','ap-red')}" value="{!IF(allfieldsfilled,'All mandatory fields have been filled; You are ready to submit your application','You cannot submit your application until you go back and fill all the required fields, and agree to the Terms and Conditions below')}"/>
                     </apex:pageBlockSection>
                     <apex:pageBlockSection title="Bank Mandate" columns="1" rendered="{!OR(strAreaType=='Airline Joining', strChangeType=='Bank Account Instructions')}" collapsible="false">
                         <apex:outputText rendered="{!!isPassAirline}">
@@ -106,7 +106,7 @@
                                     <p>1- an ICCS account (for cross border transfers) </p>
                                     <p>2- or a local bank account in the ISS country and currency of settlement. </p>
                                 </div>
-                                
+
                             </div>
                         </apex:outputText>
 
@@ -150,7 +150,7 @@
                             </apex:outputPanel>
                             <br/>
                                 <div style="font-weight:bold;margin-left:100px;display:block">
-                                    <apex:outputText value="{!$Label.IATA_Global_Delivery_Center_Address}" escape="false" /> 
+                                    <apex:outputText value="{!$Label.IATA_Global_Delivery_Center_Address}" escape="false" />
                                 </div>
                             <br/>
                             <div style="padding-bottom:5px"><b>NOTE:</b>&nbsp;For countries / operations with dual currencies, please submit separate bank mandates for each currency.</div>
@@ -180,7 +180,7 @@
                 </apex:pageBlockSection>
 
                 <!-- With ICCS and is not a Member -->
-                <apex:pageBlockSection title="Information required to join ICCS" columns="1" rendered="{!showJoinICCS && !isPassAirline}" collapsible="false>
+                <apex:pageBlockSection title="Information required to join ICCS" columns="1" rendered="{!showJoinICCS && !isPassAirline}" collapsible="false">
                     <p>
                         Thank you for your interest in IATA’s ICCS services.<br/>
                         As per our records your company is not active member of ICCS; in order to activate your application with ICCS, please complete the package in the link below:
@@ -231,11 +231,11 @@
         <!-- Attachment List -->
                 <div id="bankmandateattachment_p" style="{!IF(OR(newForm.Airline_wish_to_join_ICCS__c == 'No'), '', 'display:none')}">
                     <apex:pageBlockSection id="AttachmentTable" title="Attachments" columns="1"  rendered="{!isPassAirline}">
-                        
+
                         <apex:pageBlockTable value="{!attachList}" var="attach" style="width:100%">
                             <apex:column style="width:100%" value="{!attach.Name}"/>
                         </apex:pageBlockTable>
-                        
+
                     </apex:pageBlockSection>
                 </div>
 
@@ -264,7 +264,7 @@
                         <br/><br/>
                         Please click here to download the form(s):&nbsp;
                     </apex:outputText>
-                    
+
                     <apex:outputText rendered="{!apcountryisocode='EC'}">
                         <div>
                         Please be aware that the below documents are mandatory to operate in Ecuador.<br/><br/>
@@ -275,19 +275,19 @@
                             - Local Comercialization permit/ Permiso de comercializaci?n: <b>OFF-line carriers</b><br/>
                         - Legal Constitution of the Airline or its GSA (including shareholding details)<br/>
                         </div>
-                        </div>    
+                        </div>
                     </apex:outputText>
-                   
+
                     <apex:pageBlockSectionItem helpText="The EDRPOU must belong to the beneficiary account holder indicated in the bank mandate." rendered="{!AND(apcountryisocode='UA', strLOB='BSP')}">
                         <apex:outputLabel style="color:#a31717; font-weight: bold !important;">*&nbsp;Beneficiary Registration Code/ Local Registration Number (EDRPOU)</apex:outputLabel>
                         <apex:inputField value="{!newForm.BSP_UA_LocalReg_Number_EDRPOU__c}" label=""/>
                     </apex:pageBlockSectionItem>
-              
+
                     <apex:pageBlockSectionItem rendered="{!AND(apcountryisocode='UA', strLOB='BSP')}">
                         <apex:outputLabel style="color:#a31717; font-weight: bold !important;">*&nbsp;Bank Code (MFO)</apex:outputLabel>
                         <apex:inputField value="{!newForm.BSP_UA_BankCode_MFO__c}" label=""/>
                     </apex:pageBlockSectionItem>
-                    
+
                     <apex:outputText rendered="{!AND(apcountryisocode='UA', strLOB='BSP')}">
                         In addition the following Agreements are mandatory to be submitted to the IATA local office in Ukraine:
                         <br/><br/>
@@ -297,13 +297,13 @@
                         OR<br/><br/>
                         IATA-Carrier-GSA Agreement (If the Airline has a GSA as its representative in Ukraine)<br/><br/>
                         (2) IATA-Carrier BG Agreement<br/><br/>
-                        
+
                         The documents must be submitted in [ Word format ] to onatskya@iata.org, cc: kostyuky@iata.org and gogenkoi@iata.org.
                         <br/><br/>
                         Please click here to download the form(s):&nbsp;
-                        
+
                     </apex:outputText>
-                    
+
                     <apex:outputText rendered="{!AND(apcountryisocode='KR', strLOB='BSP')}">
                         For BSP Korea, Airlines who wish to impose ticket capping for travel agents must inform the ETSPs/GDSs directly.<br/><br/>
                         Alternatively, an Airline may avail of an optional service called Airline Capping Network.<br/>
@@ -311,13 +311,13 @@
                         <br/><br/>
                         Click here for further details and to download the form.
                     </apex:outputText>
-                    
+
                     <apex:outputText rendered="{!apcountryisocode='PE'}">
                         For {!strLOB} Peru, the Disclaimer in Spanish must be signed by the applicant and included in the joining package / documents.
                         <br/><br/>
                         Please click here to download the disclaimer form:&nbsp;
                     </apex:outputText>
-                    
+
                     <apex:outputText rendered="{!apcountryisocode='RU'}">
                         <div style="margin-bottom:30px;line-height:16px">
                         <apex:pageBlockSectionItem >
@@ -331,31 +331,31 @@
                         </div>
                         <b>Please NOTE:</b>&nbsp;Processes should only be submitted to IATA if the applicable documents have been sent to the respective Local Office.
                         <br/><br/>
-  
+
                         Airlines who intend to use a local bank account for settlements must include the Company Card Draft in the joining package/documents.  The document must be submitted in [ Word format ].
                         <br/><br/>
                         Please click here to download the form:&nbsp;
                     </apex:outputText>
-                    
+
                     <apex:dataList value="{!urlList}" var="urlItem">
                         <apex:outputLink value="{!urlItem.Download_URL__c}" target="_blank">{!urlItem.Link_label__c}</apex:outputLink>
                     </apex:dataList>
-                    
+
                 </apex:pageBlockSection>
-                
-                <!-- IATA EasyPay -->   
+
+                <!-- IATA EasyPay -->
                 <apex:pageBlockSection title="IATA EasyPay" columns="1" rendered="{! AND(strOperationType = 'BSP', isoCountryEligible)}" collapsible="false">
                     <div class="aplabel">
                         <p>Kindly note that IATA EasyPay is secure and voluntary payment method for agents to issue tickets through the BSP. IATA EasyPay is an industry standard, established in Resolution and available by default to all carriers in <b>{!apcountry}</b>. However, should your airline wish to opt out of accepting IATA EasyPay please notify IATA through written notice a minimum of 30 days prior to the opt-out taking effect. Prior to doing so, please also ensure that your airline has fully assessed the impact of opting out of this payment method. Your airline’s opt-out will be communicated to all Accredited Agents in the market.
                         </p>
 
                         <apex:pageBlockSectionItem >
-                            <apex:outputLabel value="* Will your Airline accept IATA EasyPay transactions in this BSP?" 
+                            <apex:outputLabel value="* Will your Airline accept IATA EasyPay transactions in this BSP?"
                                 style="color:#a31717; font-weight: bold !important;"/>
-                            <apex:inputField id="mandateSelectEasyPay" 
+                            <apex:inputField id="mandateSelectEasyPay"
                                 value="{!newForm.ANG_Airline_accepts_EasyPay_tr_in_BSP__c}"
                                 label=""/>
-                        </apex:pageBlockSectionItem>      
+                        </apex:pageBlockSectionItem>
 
                     </div>
                 </apex:pageBlockSection>
@@ -416,17 +416,17 @@
 
             </apex:outputPanel>
 
-            <!-- Accept terms and conditions -->   
+            <!-- Accept terms and conditions -->
             <apex:pageBlockSection title="Terms and conditions" columns="1" collapsible="false">
                     <div class="aplabel">
                         <p>By submitting the present application form to IATA,  I hereby confirm that all information is correct; that I am aware of the local laws and regulations governing the operations of air carriers in {!IF(isPassAirline==true && isGSSAUser==false,'the selected countries',apcountry)} and that the {!IF(isPassAirline==true,'PASS','ISS')} Participant on whose behalf I am executing the present form, will hold IATA, its directors, officers, employees and {!IF(isPassAirline==true,'postal operators','agents')} free from any liability, costs and expenses in case of non-compliance with these laws, including without limitations, any reasonable legal expenses.</p><br/>
                         <p>
                             I hereby confirm to IATA and duly represent that I am duly authorized to submit this Participation Details Form on behalf of the {!IF(isPassAirline==true,'PASS','ISS')} Participant, and that I am fully authorized to bind the {!IF(isPassAirline==true,'PASS','ISS')} Participant, as provided herein, including the indemnity mentioned at the preceding paragraph.
-                        </p><br/> 
+                        </p><br/>
                         <p>
                             I also confirm that said participation in the {!IF(isPassAirline==true,'PASS','ISS')} system is not to be construed as an admission of any liability and acceptance of assumption of any responsibility whatsoever by IATA regarding any default or non- compliance by the {!IF(isPassAirline==true,'PASS','ISS')} Participant with respect to the applicable laws and governmental regulations.
                         </p>
-                    
+
                     <apex:outputText rendered="{!AND(apcountryisocode='PE', strLOB='BSP')}">
                         <div style="line-height: 20px;font-weight:bold">
                         In addition I confirm that my airline fulfills the following legal requirements to operate in PERU:<br/>
@@ -442,11 +442,11 @@
                     </div>
                     <div class="aplabel">
                     By signing I, the undersigned, confirm that the above information is correct and that I am duly authorized to submit this {!IF(isPassAirline==true,'PASS','BSP')} Participation Details Form on behalf of my Airline.
-                         
+
                     <br/>
                     <apex:inputField value="{!newForm.Accept_terms_and_conditions__c}" required="true"/>
                     </div>
-                    
+
                 </apex:pageBlockSection>
             </apex:outputPanel>
 
@@ -480,7 +480,7 @@
                             {!$Label.ISSP_SIS_Membership_Participation_Agreement}
                         </apex:outputpanel>
                     </apex:facet>
-                    
+
                     <!-- ISPA form -->
                     <apex:outputPanel rendered="{!ShowISPAForm}">
                         <img src="{!URLFOR($Resource.PDF_icon_large)}" style="vertical-align:middle"/>
