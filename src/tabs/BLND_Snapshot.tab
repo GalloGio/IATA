@@ -3,7 +3,6 @@
     <frameHeight>600</frameHeight>
     <hasSidebar>false</hasSidebar>
     <label>Snapshot</label>
-    <mobileReady>false</mobileReady>
     <motif>Custom67: Gears</motif>
     <url>https://www.dreamfactory.net/sforce/snapshot/snapshot.html?
 sforce_session_id={!API.Session_ID}&amp;
