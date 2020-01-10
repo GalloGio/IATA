@@ -27,8 +27,10 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
     @track stationValue;
     @track itpValue;
     @track experiationstatusValue = 'All';
-    @track aircraftTypeValue = 'All Level 2';
-    @track levelValue = 'Level 2';
+    @track aircraftTypeValue = 'All';
+    //@track aircraftTypeValue = 'All Level 2';
+    @track levelValue = 'All';
+    //@track levelValue = 'Level 2';
 
     @track fromDateValue;
     @track fromDateMinValue = new Date(2019, 0, 1);
@@ -49,7 +51,7 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
     
     get experiationstatusOptions() {
         return [
-            { label: 'All', value: 'All' },
+            { label: '- All -', value: 'All' },
             { label: 'Not Expired', value: 'Not Expired' },
             { label: 'Expired', value: 'Expired' },
             { label: 'Expired in 30 days', value: 'Expired in 30 days' },
@@ -61,9 +63,9 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
 
     get levelOptions() {
         return [
+            { label: '- All - ', value: 'All' },
             { label: 'Level 2', value: 'Level 2' },
             { label: 'Level 3', value: 'Level 3' },
-            { label: 'All', value: 'All' },
         ];
     }
  
@@ -85,7 +87,7 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
         this.itpOptions = this.sortData('label', 'asc', myTopicOptions);
         
         if(myTopicOptions.length > 1){
-            this.itpOptions.unshift({label: 'All', value: 'All'}); 
+            this.itpOptions.unshift({label: '- All -', value: 'All'}); 
         }
     }
 
@@ -210,6 +212,14 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
         this.itpValue = null;
         this.itpOptions = [];
         this.experiationstatusValue = 'All';
+        
+        this.aircraftTypeValue = 'All';
+        let myTopicOptions = [{ label: '- All -', value: 'All' }];
+
+        this.certificationTypesWithLevel.forEach(cert =>{
+            myTopicOptions.push({ label: cert.Certification__r.Name, value: cert.Certification__c });
+        });
+        /*
         this.aircraftTypeValue = 'All Level 2';
         let myTopicOptions = [{ label: '- All Level 2 -', value: 'All Level 2'}];
         this.certificationTypesWithLevel.forEach(cert =>{
@@ -217,8 +227,10 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
                 myTopicOptions.push({ label: cert.Certification__r.Name, value: cert.Certification__c });
             }  
         });
+        */
         this.aircraftTypeOptions = this.sortData('label', 'asc', myTopicOptions); 
-        this.levelValue = 'Level 2';
+        //this.levelValue = 'Level 2';
+        this.levelValue = 'All';
         this.fromDateValue = undefined;
         this.fromDateMaxValue = undefined;
         let today = new Date();
@@ -259,7 +271,7 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
             let myResult = JSON.parse(JSON.stringify(result));
 
             this.certificationTypesWithLevel = myResult;
-
+/*
             let myTopicOptions = [{ label: '- All Level 2 -', value: 'All Level 2'}];
             myResult.forEach(cert =>{
                 if(cert.Prerequisite_Level__c === 'Level 2'){
@@ -268,6 +280,14 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
             });
             this.aircraftTypeOptions = this.sortData('label', 'asc', myTopicOptions);
             this.aircraftTypeValue = 'All Level 2';
+*/
+            let myTopicOptions = [{ label: '- All -', value: 'All'}];
+            myResult.forEach(cert =>{
+                myTopicOptions.push({ label: cert.Certification__r.Name, value: cert.Certification__c });
+ 
+            });
+            this.aircraftTypeOptions = this.sortData('label', 'asc', myTopicOptions);
+            this.aircraftTypeValue = 'All';
             
         })
         .catch(error => {
