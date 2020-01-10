@@ -11,7 +11,6 @@
 		if (innerComponents != undefined) {
 			if (innerComponents.length) {
 				allValid = innerComponents.reduce(function (validSoFar, inputCmp) {
-					console.log(inputCmp.getGlobalId());
 					inputCmp.showHelpMessageIfInvalid();
 					return validSoFar && !inputCmp.get('v.validity').valueMissing;
 				}, true);
