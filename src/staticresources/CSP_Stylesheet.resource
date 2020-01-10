@@ -2414,9 +2414,22 @@ input::-ms-reveal {  display: none; width : 0; height: 0; }
 .remove_focus .slds-table [role="gridcell"]:focus, .remove_focus .slds-table [role="gridcell"].slds-has-focus{
 	box-shadow: unset;
 }
-.displayWrapText .slds-button_icon-bare {
+
+.displayCalendarIcon .slds-button_icon-bare {
   display: block;
 }
+
+.displayWrapText .slds-button_icon-bare {
+  display: none;
+}
+
+.displayWrapText tbody .slds-truncate {
+    text-overflow: inherit;
+    white-space: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word; 
+}
+
 
 /* FM - added for error toast to work correctly on IFTP app*/
 .toastContainer .slds-button_icon-bare {

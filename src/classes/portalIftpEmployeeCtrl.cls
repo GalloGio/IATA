@@ -61,6 +61,7 @@ public without sharing class portalIftpEmployeeCtrl {
 
 	@AuraEnabled (cacheable=false)
 	public static List<EmployeeRecordsWrapper> getEmployeeRecords(List<String> searchValues, Id accountId){
+		Id accContactRoleRecTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'ITP');
 		String firstNameValue = String.isnotblank(searchValues[0])? searchValues[0].trim(): '';
 		String lastNameValue = String.isnotblank(searchValues[1])? searchValues[1].trim(): '';
 		String emailValue = String.isnotblank(searchValues[2])? searchValues[2].trim(): '';
@@ -78,6 +79,7 @@ public without sharing class portalIftpEmployeeCtrl {
 
 		lConditions.add('Status__c <> \'Inactive\'');
 		lConditions.add('Contact__r.accountid = :accountId');
+		lConditions.add('RecordTypeId = :accContactRoleRecTypeId');
 		if(String.isnotblank(firstNameValue)){
 			firstNameValue = firstNameValue + '%';
 			lConditions.add('First_Name__c like :firstNameValue');
