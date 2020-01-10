@@ -207,6 +207,12 @@ export default class PortalLogin extends LightningElement {
             }
         }
         */
+        if(this.isEmailFieldReadOnly === true){
+        	this.template.querySelector('[data-id="passwordInput"]').focus();
+	    }
+	    else{
+	        this.template.querySelector('[data-id="emailInput"]').focus();
+	    }
     }
 
     /* ==============================================================================================================*/
