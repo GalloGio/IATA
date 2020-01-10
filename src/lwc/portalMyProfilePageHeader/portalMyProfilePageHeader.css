@@ -18,6 +18,7 @@
   line-height: 1.63;
   letter-spacing: normal;
   color: #525252;
+  word-break: break-word;
 }
 
 .breadcrumbsPosition {
