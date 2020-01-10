@@ -521,7 +521,7 @@ public with sharing class AMS_OSCAR_Automation {
 				}
 			}
 
-			if (oscar != null && ((oscar.STEP12__c != AMS_Utils.IN_PROGRESS && oscar.STEP12__c != 'Not Started') || (oscar.Process__c == AMS_Utils.NEWHELITE || oscar.Process__c == AMS_Utils.NEWHESTANDARD || oscar.Process__c == AMS_Utils.NEWGESTANDARD || oscar.Process__c == AMS_Utils.NEWAE || oscar.Process__c == AMS_Utils.NGCHANGES || oscar.Process__c == AMS_Utils.MCAE || oscar.Process__c == AMS_Utils.NGCHINACONVERSION || oscar.Process__c == AMS_Utils.NGCONVERSIONTOMULTICOUNTRY))
+			if (oscar != null && ((oscar.STEP12__c != AMS_Utils.IN_PROGRESS && oscar.STEP12__c != 'Not Started') || (oscar.Process__c == AMS_Utils.NEWHELITE || oscar.Process__c == AMS_Utils.NEWHESTANDARD || oscar.Process__c == AMS_Utils.NEWGESTANDARD || oscar.Process__c == AMS_Utils.NEWAE || oscar.Process__c == AMS_Utils.NGCHANGES || oscar.Process__c == AMS_Utils.MCAE || oscar.Process__c == AMS_Utils.NGCHINACONVERSION || oscar.Process__c == AMS_Utils.new_PASS_HO || oscar.Process__c == AMS_Utils.new_PASS_BR|| oscar.Process__c == AMS_Utils.NGCONVERSIONTOMULTICOUNTRY))
 				&& !hasFRRequiredStep) {
 				oscar.Dossier_Validation__c = Date.today();
 				oscar.Validation_result__c = 'Passed';

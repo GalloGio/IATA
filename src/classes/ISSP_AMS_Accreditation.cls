@@ -4566,9 +4566,9 @@ public without sharing class ISSP_AMS_Accreditation {
 
 			cleanCSSRequirements(this.List_CountryReqments);
 
-		} else if (sectorValue.StartsWith('Cargo_Agent') && !isNoticeOfChange) {
+		} else if (sectorValue.StartsWith('Cargo_Agent') && !isNoticeOfChange && !isPassAccreditation) {
 			retCargoCountryReqments(false);
-		} else if (sectorValue.StartsWith('Cargo_Agent') && isNoticeOfChange) {
+		} else if (sectorValue.StartsWith('Cargo_Agent') && isNoticeOfChange && !isPassAccreditation) {
 			retNoCCargoCountryReqments(false);
 		} else if (sectorValue.StartsWith('Travel_Agent') && isNoticeOfChange) {
 			retNoCTravelCountryReqments(false);
