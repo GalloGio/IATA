@@ -5,3 +5,6 @@
 .THIS .fullWidth{
     width:100%;
 }
+.THIS .slds-combobox .slds-combobox__form-element .slds-pill .slds-pill__remove{
+    right:0.55rem;
+}

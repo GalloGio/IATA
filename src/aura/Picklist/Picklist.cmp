@@ -33,21 +33,19 @@
         <div class="slds-form-element__control">
             <div class="slds-combobox_container slds-has-inline-listbox">
                 <aura:if isTrue="{!and(v.iconName != '', not(empty(v.value)))}">
-                    <div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open" style="width:95%">
+                    <div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open">
                         <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right">
                             <div>
-                                <div style="padding: 5px;">
+                                <div class="slds-p-left_x-small">
                                     <span class="slds-pill slds-pill_link fullWidth">
                                         <a href="javascript:void(0);"
-                                           class="slds-pill__action slds-p-left_x-small" title="{!v.valueLabel}"
-                                           style="padding: 5px;">
+                                           class="slds-pill__action slds-p-left_x-small" title="{!v.valueLabel}">
                                             <lightning:icon iconName="{#v.iconName}" alternativeText="{#iconName}" size="x-small"/>
                                             <span class="slds-pill__label slds-p-left_x-small">{!v.valueLabel}</span>
                                         </a>
                                         <button onclick="{!c.clearSelection}"
                                                 class="slds-button slds-button_icon slds-button_icon slds-pill__remove"
-                                                title="Remove"
-                                                style="right:0.55rem;">
+                                                title="Remove">
                                             <lightning:icon iconName="utility:close" alternativeText="close" size="small" />
                                         </button>
                                     </span>
