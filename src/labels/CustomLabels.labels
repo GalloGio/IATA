@@ -6756,6 +6756,13 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <value>Click here</value>
     </labels>
     <labels>
+        <fullName>Close_All_Tabs</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Close All Tabs</shortDescription>
+        <value>Close All Tabs</value>
+    </labels>
+    <labels>
         <fullName>Company</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -41385,6 +41392,20 @@ title,Title,Name</value>
         <protected>false</protected>
         <shortDescription>TSI USA Only</shortDescription>
         <value>Travel Service Intermediaries-TSI (USA Only)</value>
+    </labels>
+    <labels>
+        <fullName>Tab_Name</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Tab_Name</shortDescription>
+        <value>Tab Name</value>
+    </labels>
+    <labels>
+        <fullName>Tab_Close</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Tab_Close</shortDescription>
+        <value>Click To Close Tab</value>
     </labels>
     <labels>
         <fullName>Tasks_Notification</fullName>
