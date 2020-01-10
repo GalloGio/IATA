@@ -30,6 +30,7 @@ private class Order_Ext_Test
 		accounts[0].ICH_Member__c = true;
 		accounts[0].Payment_Term__c = '0011';
 		accounts[0].IATA_ISO_Country__c = countryCanada.Id;
+		accounts[0].IATA_ISO_Shipping_Country__c = countryCanada.Id;
 		accounts[0].IATA_ISO_Billing_State__c = stateQuebec.Id;
 		accounts[0].IATA_ISO_Shipping_State__c = stateQuebec.Id;
 		accounts[1].RecordTypeId = IECUserManager.getAccountRecordTypeForIEC(ClientType);
@@ -37,6 +38,7 @@ private class Order_Ext_Test
 		accounts[1].ICH_Member__c = true;
 		accounts[1].Payment_Term__c = '0011';
 		accounts[1].IATA_ISO_Country__c = countryCanada.Id;
+		accounts[1].IATA_ISO_Shipping_Country__c = countryCanada.Id;
 		accounts[1].IATA_ISO_Billing_State__c = stateQuebec.Id;
 		accounts[1].IATA_ISO_Shipping_State__c = stateQuebec.Id;
 		insert accounts;

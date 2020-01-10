@@ -236,6 +236,9 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 		}
 		set;
 	}
+	
+	public String cityBillingIdStr{get;set;}
+	public String cityShippingIdStr{get;set;}
 
 	public ISSP_ANG_ANNUAL_REVALIDATION() {
 		this.setHe = true;
@@ -475,7 +478,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 					   Abbreviated_name__c, Abbreviated_Address__c, Remittance_frequency__c,
 					   Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Sector__c, Category__c,
 					   License_Number__c, GDS__c, Site,
-					   IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_State__c
+					   IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_State__c, Geoname_Billing_City__c, Geoname_Shipping_City__c
 				  From Account
 				 Where Id in :accountIds
 				   And RecordTypeId = :recordType
@@ -670,27 +673,38 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 	}
 
 	private void migrateExtraFields() {
-		String isoCountryForm = currentAccount.fw.newform.Shipping_Country__c;
+		
 		String billingStateForm = currentAccount.fw.newform.State_Province__c;
+		
+		if (currentAccount.isoCountry.State_Province_Picklist__c && !String.isEmpty(billingStateForm)) {
+			IATA_ISO_State__c state = [SELECT Id, Name
+									FROM IATA_ISO_State__c
+									WHERE IATA_ISO_Country__c = :currentAccount.account.IATA_ISO_Country__c
+										AND Name = :billingStateForm];
 
+			currentAccount.fw.newform.IATA_ISO_State__c = state.Id;
+		}
+
+		String isoCountryForm = currentAccount.fw.newform.Shipping_Country__c;
 		if (String.isEmpty(isoCountryForm)) return;
 
+		String shippingStateForm = currentAccount.fw.newform.Shipping_State__c;
+		Boolean shippingStateProvincePicklist = false;
 		for(IATA_ISO_Country__c ctr : IATAIsoCountryDAO.getIsoCountries()){
 			if(ctr.Name.toupperCase() == isoCountryForm.toupperCase()){
 				currentAccount.fw.newform.Shipping_ISO_Country__c = ctr.Id;
+				shippingStateProvincePicklist = ctr.State_Province_Picklist__c;
 				break;
 			}
 		}
 
-		if (currentAccount.isoCountry.State_Province_Picklist__c && !String.isEmpty(billingStateForm)) {
+		if (shippingStateProvincePicklist && !String.isEmpty(shippingStateForm)) {
+			IATA_ISO_State__c state = [SELECT Id, Name
+									FROM IATA_ISO_State__c
+									WHERE IATA_ISO_Country__c = :currentAccount.fw.newform.Shipping_ISO_Country__c
+										AND Name = :shippingStateForm];
 
-			for(IATA_ISO_State__c state : IATAIsoStateDAO.getIsoStateByStateName(new Set<String>{billingStateForm})){
-				if(state.IATA_ISO_Country__c == currentAccount.account.IATA_ISO_Country__c){
-					currentAccount.fw.newform.IATA_ISO_State__c = state.Id;
-					break;
-				}
-			}
-
+			currentAccount.fw.newform.Shipping_ISO_State__c = state.Id;
 		}
 	}
 
@@ -1045,7 +1059,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 			'Abbreviated_Address__c' => 'Abbreviated_Address__c', 'Remittance_frequency__c' => 'Remittance_frequency__c', 'Solicitation_Flag__c' => 'Solicitation_Flag__c',
 			'VAT_Number_2__c' => 'VAT_Number_2__c', 'CASS_Number__c' => 'CASS_Number__c', 'VAT_Number__c' => 'ISSP_AMS_VAT_number__c', 'ANG_Accreditation_Model__c' => 'ANG_Accreditation_type__c',
 			'License_Number__c' => 'ISSP_AMS_License_No__c', 'GDS__c' => 'ISSP_AMS_GDS_with_signed_contract__c', 'IATA_ISO_Shipping_Country__c' => 'Shipping_ISO_Country__c',
-			'IATA_ISO_Shipping_State__c' => 'Shipping_ISO_State__c', 'Company_Type__c' => 'ISSP_AMS_Legal_Status__c'
+			'IATA_ISO_Shipping_State__c' => 'Shipping_ISO_State__c', 'Company_Type__c' => 'ISSP_AMS_Legal_Status__c', 'Geoname_Billing_City__c' => 'Geoname_Billing_City__c', 'Geoname_Shipping_City__c' => 'Geoname_Shipping_City__c'
 			};
 
 		for (String accountApiName : mapAccountToAccrFormFields.keyset()) {
@@ -2169,6 +2183,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 			currentAccount.fw.newform.shipping_country__c = '';
 			currentAccount.fw.newform.Shipping_ISO_Country__c = null;
 			currentAccount.fw.newform.Shipping_ISO_State__c = null;
+			currentAccount.fw.newform.Geoname_Shipping_City__c = null;
 		}
 	}
 }

@@ -87,18 +87,7 @@ public class AMS_AccountTriggerHandler {
 
 	public static void handleBeforeUpdate(List<Account> accs, Map<Id,Account> oldMap){
 		//resizeNumericString
-		for(Account  ag: accs){
-			validateCharacters(ag);//AMSU-179
-			if(ag.Sector__c == AMS_Utils.SECTOR_PASSENGER || ag.Sector__c == AMS_Utils.SECTOR_CARGO){
-
-				if(ag.Cass_Number__c!=null && ag.Cass_number__c.isNumeric() && oldMap.get(ag.Id).Cass_number__c!=ag.Cass_number__c){
-					ag.Cass_Number__c = AMS_AgencyHelper.resizeNumericString(ag.Cass_Number__c,3);
-				}
-			}
-			if(ag.Status__c!= null && ag.Status__c!=oldMap.get(ag.Id).Status__c)
-				ag.Date_Organisation_Status_attained__c = Date.today();
-
-		}
+		handleSectorChangesChanges(accs, oldMap);
 
 		 System.debug('Start CASS verification');
 		 verifyCassNumberUniqueness(accs,oldMap);
@@ -575,6 +564,60 @@ public class AMS_AccountTriggerHandler {
 		if(certs != null && !certs.isEmpty()){
 			update certs;
 		}
+	}
+
+	private static void handleSectorChangesChanges(List<Account> accs, Map<Id,Account> oldMap){
+		Set<Id> citiesIds = new Set<Id>();
+		Set<Id> statesIds = new Set<Id>();
+		Set<Id> countriesIds = new Set<Id>();
+
+		for(Account  ag: accs){  
+			
+			validateCharacters(ag);//AMSU-179
+			if(ag.Sector__c == AMS_Utils.SECTOR_PASSENGER || ag.Sector__c == AMS_Utils.SECTOR_CARGO){
+				
+				if(ag.Cass_Number__c!=null && ag.Cass_number__c.isNumeric() && oldMap.get(ag.Id).Cass_number__c!=ag.Cass_number__c){
+					ag.Cass_Number__c = AMS_AgencyHelper.resizeNumericString(ag.Cass_Number__c,3);
+				}
+			}
+			if(ag.Status__c!= null && ag.Status__c!=oldMap.get(ag.Id).Status__c)
+				ag.Date_Organisation_Status_attained__c = Date.today();
+			
+
+			countriesIds.add(ag.IATA_ISO_Country__c);
+
+			countriesIds.add(ag.IATA_ISO_Shipping_Country__c);
+			
+			citiesIds.add(ag.Geoname_Billing_City__c);
+			
+			citiesIds.add(ag.Geoname_Shipping_City__c);
+			
+			statesIds.add(ag.IATA_ISO_Billing_State__c);
+
+			statesIds.add(ag.IATA_ISO_Shipping_State__c);
+				   
+		}
+
+		Map<Id, IATA_ISO_City__c> citiesMap =  new Map<Id, IATA_ISO_City__c>([SELECT Name FROM IATA_ISO_City__c WHERE Id in :citiesIds]);
+		
+		Map<Id, IATA_ISO_State__c> statesMap = new Map<Id, IATA_ISO_State__c>(IATAIsoStateDAO.getIsoStatesByIds(statesIds));
+		
+		Map<Id, IATA_ISO_Country__c> countriesMap = new Map<Id, IATA_ISO_Country__c>(IATAIsoCountryDAO.getIsoCountriesByIds(countriesIds));
+		
+		updateAddressAccordingToLookup(accs, citiesMap, statesMap, countriesMap, oldMap);        
+	}
+
+	private static void updateAddressAccordingToLookup(List<Account> accs, Map<Id, IATA_ISO_City__c> citiesMap, Map<Id, IATA_ISO_State__c> statesMap, Map<Id, IATA_ISO_Country__c> countriesMap, Map<Id,Account> oldMap ){
+		
+		for(Account a : accs){
+			if(oldMap.get(a.Id).Geoname_Billing_City__c != a.Geoname_Billing_City__c && a.Geoname_Billing_City__c != null) a.BillingCity  =  citiesMap.get(a.Geoname_Billing_City__c)!=null?citiesMap.get(a.Geoname_Billing_City__c).Name:null;
+			if(oldMap.get(a.Id).IATA_ISO_Billing_State__c != a.IATA_ISO_Billing_State__c && a.IATA_ISO_Billing_State__c != null) a.BillingState = statesMap.get(a.IATA_ISO_Billing_State__c)!=null?statesMap.get(a.IATA_ISO_Billing_State__c).Name:null;
+			if(oldMap.get(a.Id).IATA_ISO_Country__c != a.IATA_ISO_Country__c && a.IATA_ISO_Country__c != null) a.BillingCountry = countriesMap.get(a.IATA_ISO_Country__c)!=null?countriesMap.get(a.IATA_ISO_Country__c).Name:null;
+
+			if(oldMap.get(a.Id).Geoname_Shipping_City__c != a.Geoname_Shipping_City__c &&  a.Geoname_Shipping_City__c != null )  a.ShippingCity = citiesMap.get(a.Geoname_Shipping_City__c)!=null?citiesMap.get(a.Geoname_Shipping_City__c).Name:null;
+			if(oldMap.get(a.Id).IATA_ISO_Shipping_State__c != a.IATA_ISO_Shipping_State__c && a.IATA_ISO_Shipping_State__c != null) a.ShippingState = statesMap.get(a.IATA_ISO_Shipping_State__c)!=null?statesMap.get(a.IATA_ISO_Shipping_State__c).Name:null;
+			if(oldMap.get(a.Id).IATA_ISO_Shipping_Country__c != a.IATA_ISO_Shipping_Country__c && a.IATA_ISO_Shipping_Country__c != null) a.ShippingCountry =  countriesMap.get(a.IATA_ISO_Shipping_Country__c)!=null?countriesMap.get(a.IATA_ISO_Shipping_Country__c).Name:null;
+		}        
 	}
 
 }

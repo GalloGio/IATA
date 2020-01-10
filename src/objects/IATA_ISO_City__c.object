@@ -54,6 +54,18 @@
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>ControlledByParent</externalSharingModel>
     <fields>
+        <fullName>Country__c</fullName>
+        <externalId>false</externalId>
+        <formula>IATA_ISO_State__r.IATA_ISO_Country__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Country</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>GeonameAlternateNames__c</fullName>
         <externalId>false</externalId>
         <label>GeonameAlternateNames</label>
@@ -209,6 +221,8 @@
     </nameField>
     <pluralLabel>IATA Geonames Cities</pluralLabel>
     <searchLayouts>
+        <lookupDialogsAdditionalFields>GeonameHierarchy_label__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Country__c</lookupDialogsAdditionalFields>
         <searchResultsAdditionalFields>IATA_ISO_State__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Status__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>GeonameId__c</searchResultsAdditionalFields>

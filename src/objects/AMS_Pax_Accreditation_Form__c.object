@@ -1063,6 +1063,11 @@
         <fullName>ANG_location</fullName>
         <description>fields to be migrated when we have a change of location process</description>
         <displayedFields>
+            <field>Geoname_Billing_City__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
             <field>Branch_Office_City__c</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
@@ -1109,6 +1114,11 @@
         </displayedFields>
         <displayedFields>
             <field>Branch_Office_Postal_code__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Geoname_Shipping_City__c</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
@@ -2963,7 +2973,7 @@ Used in multicountry related pages to have additional information on the staging
             <filterItems>
                 <field>IATA_ISO_City__c.IATA_ISO_State__c</field>
                 <operation>equals</operation>
-                <valueField>$Source.Shipping_ISO_Country__c</valueField>
+                <valueField>$Source.Shipping_ISO_State__c</valueField>
             </filterItems>
             <isOptional>true</isOptional>
         </lookupFilter>
@@ -3223,6 +3233,21 @@ If(LEN( SAAM_Case__r.Account.ShippingCountry) &gt;0, SAAM_Case__r.Account.Shippi
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
         <label>Billing ISO State</label>
+        <lookupFilter>
+            <active>true</active>
+            <booleanFilter>1 OR 2</booleanFilter>
+            <filterItems>
+                <field>IATA_ISO_State__c.IATA_ISO_Country__c</field>
+                <operation>equals</operation>
+                <valueField>$Source.ISO_Country__c</valueField>
+            </filterItems>
+            <filterItems>
+                <field>IATA_ISO_State__c.IATA_ISO_Country__c</field>
+                <operation>equals</operation>
+                <valueField>$Source.Branch_Office_Country__c</valueField>
+            </filterItems>
+            <isOptional>true</isOptional>
+        </lookupFilter>
         <referenceTo>IATA_ISO_State__c</referenceTo>
         <relationshipLabel>AMS Online Accreditations</relationshipLabel>
         <relationshipName>AMS_Online_Accreditations</relationshipName>
@@ -5766,6 +5791,15 @@ Account_Name__c != null  &amp;&amp;  TEXT(Location_Class__c) != null &amp;&amp; 
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
         <label>Shipping ISO State</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>IATA_ISO_State__c.IATA_ISO_Country__c</field>
+                <operation>equals</operation>
+                <valueField>$Source.Shipping_ISO_Country__c</valueField>
+            </filterItems>
+            <isOptional>true</isOptional>
+        </lookupFilter>
         <referenceTo>IATA_ISO_State__c</referenceTo>
         <relationshipLabel>AMS Online Accreditations (Shipping ISO State)</relationshipLabel>
         <relationshipName>AMS_Online_Accreditations1</relationshipName>

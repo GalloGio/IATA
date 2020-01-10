@@ -105,6 +105,8 @@ global with sharing class ANG_AccreditationAreaViewer {
 					,'Shipping_Country__c' => 'Physical and Correspondence Address'
 					,'Shipping_ISO_Country__c' => 'Physical and Correspondence Address'
 					,'Shipping_ISO_State__c' => 'Physical and Correspondence Address'
+					,'Geoname_Billing_City__c' => 'Physical and Correspondence Address'
+					,'Geoname_Shipping_City__c' => 'Physical and Correspondence Address'
 					,'Local_Legally_Registered_Name__c' => 'Agency Details (In Local Language)'
 					,'Local_Physical_Address_Street__c' => 'Agency Details (In Local Language)'
 					,'Local_Postal_Address_Street__c' => 'Agency Details (In Local Language)'
@@ -157,6 +159,8 @@ global with sharing class ANG_AccreditationAreaViewer {
 																,'ISSP_AMS_Legal_Status__c' => 'Company_Type__c'
 																,'Shipping_Country__c' => 'ShippingCountry'
 																,'Shipping_State__c' => 'ShippingState'
+																,'Geoname_Billing_City__c' => 'Geoname_Billing_City__c'
+                                                                ,'Geoname_Shipping_City__c' => 'Geoname_Shipping_City__c'
 
 		};
 			}
@@ -304,6 +308,8 @@ global with sharing class ANG_AccreditationAreaViewer {
 				,AMS_Pax_Accreditation_Form__c.ANG_Accreditation_Model_to_Change__c
 				//,AMS_Pax_Accreditation_Form__c.TradeName__c
 				,AMS_Pax_Accreditation_Form__c.Local_Postal_Address_Street__c
+				, AMS_Pax_Accreditation_Form__c.Geoname_Billing_City__c
+				, AMS_Pax_Accreditation_Form__c.Geoname_Shipping_City__c
 			};
 		}
 	}

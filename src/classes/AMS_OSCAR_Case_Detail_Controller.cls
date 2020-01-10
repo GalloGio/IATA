@@ -136,6 +136,8 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
 				, AMS_Pax_Accreditation_Form__c.ANG_IsNewGenAgency__c
 				, AMS_Pax_Accreditation_Form__c.ANG_Accreditation_type__c
 				, AMS_Pax_Accreditation_Form__c.Preferred_RHC_currency__c
+				, AMS_Pax_Accreditation_Form__c.Geoname_Billing_City__c
+				, AMS_Pax_Accreditation_Form__c.Geoname_Shipping_City__c
 			};
 		}
 	}
@@ -244,6 +246,10 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
 		if(fieldName == 'ANG_Accreditation_Type__c' && isNewGenProcess && !isAgencyChanges) return false;
 		if(fieldName == 'Location_Type__c' && !isAgencyChanges && accreditationObj.Location_Type__c == AMS_Utils.HO && !String.isBlank(accreditationObj.IATACode__c)) return false; //AC-ENHC0012276
 		if(!isAgencyChanges && !isAgencyCorrection  && !isConversionFromStandardToMulticountry) return true;
+		if(fieldName == 'Branch_Office_City__c' && accreditationObj.Geoname_Billing_City__c != null) return false;
+		if(fieldName == 'Shipping_City__c' && accreditationObj.Geoname_Shipping_City__c != null) return false;
+		if(fieldName == 'Geoname_Billing_City__c' && !accreditationObj.Branch_Office_Country__r.State_Province_Picklist__c) return false;
+		if(fieldName == 'Geoname_Shipping_City__c' && !accreditationObj.Shipping_ISO_Country__r.State_Province_Picklist__c) return false;
 		if (fieldName == 'Remittance_frequency__c'
 			&& isNewGenProcess
 			&& !isConversionFromStandardToMulticountry
@@ -750,7 +756,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
 				from AMS_Pax_Accreditation_Form__c where Id = :accreditationId];*/
 
 		//query is done using the same fields that will appear on the page
-		List<AMS_Pax_Accreditation_Form__c> accreditationLst = Database.query('SELECT Id, '+String.join(accreditationFieldNames, ', ')+', Branch_Office_Country__r.AMS_Settlement_System__r.Remittance_Frequency_per_State__c FROM AMS_Pax_Accreditation_Form__c WHERE Id = :accreditationId');
+		List<AMS_Pax_Accreditation_Form__c> accreditationLst = Database.query('SELECT Id, '+String.join(accreditationFieldNames, ', ')+', Branch_Office_Country__r.AMS_Settlement_System__r.Remittance_Frequency_per_State__c, Branch_Office_Country__r.State_Province_Picklist__c, Shipping_ISO_Country__r.State_Province_Picklist__c FROM AMS_Pax_Accreditation_Form__c WHERE Id = :accreditationId');
 
 		if(accreditationLst.isEmpty()) return null;
 

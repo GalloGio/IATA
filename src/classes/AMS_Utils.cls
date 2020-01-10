@@ -1873,6 +1873,8 @@ public without sharing class AMS_Utils {
 		String errorString = ex.getMessage();
 		String searchString = 'FIELD_CUSTOM_VALIDATION_EXCEPTION';
 		String searchString2 = '##';
+		String searchString3 = 'FIELD_FILTER_VALIDATION_EXCEPTION';
+		String searchString4 = 'Geoname';
 		System.debug('EXCEPTION!! ' + ex.getMessage() + '\n ' + ex.getStackTraceString());
 		if (ex.getMessage().containsIgnoreCase(searchString)) {
 			System.debug(ex.getMessage().indexOfIgnoreCase(searchString));
@@ -1884,6 +1886,12 @@ public without sharing class AMS_Utils {
 			Integer startOfErrorMessage = ex.getMessage().indexOfIgnoreCase(searchString2) + searchString2.length();
 			errorString = ex.getMessage().substring(startOfErrorMessage, ex.getMessage().length());
 			errorString = errorString.substringBefore('##');
+		}
+
+		if(ex.getMessage().containsIgnoreCase(searchString3) && ex.getMessage().containsIgnoreCase(searchString4)){
+			Integer startOfErrorMessage = ex.getMessage().indexOfIgnoreCase(searchString3) + searchString3.length() + 2;
+			errorString = ex.getMessage().substring(startOfErrorMessage, ex.getMessage().length());
+			errorString = errorString.substringBefore(': [');
 		}
 		return 'ERROR: ' + errorString.unescapeHtml4();
 	}

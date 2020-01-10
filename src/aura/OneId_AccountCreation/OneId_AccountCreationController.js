@@ -60,7 +60,11 @@
         var addressObj = e.getParam("addressSelected");
         var addressType = e.getParam("addressType");
 
-        c.set("v.account."+addressType+"Street", addressObj.street);
+        if(!$A.util.isEmpty(addressObj.street)){
+            c.set("v.account."+addressType+"Street", addressObj.street);
+        }else if(!$A.util.isEmpty(addressObj.deliveryservice)){
+            c.set("v.account."+addressType+"Street", addressObj.deliveryservice);
+        }
         
         //Commented as per Data Quality project
         //This way the only boxes that are filled according address doctor are Street and Postal Code
@@ -148,13 +152,13 @@
             let hierarchyLower; 
             if(currentState) hierarchyLower = currentState.toLowerCase()+' > '+currentCityLowerCase;
 
-            let predictions = c.get('v.predictions'+mode);
+            
             let citiesAvailable = c.get('v.cities'+mode);            
             let citiesToSearch = citiesAvailable["All"];
             let cityAndStateMatch = false;
             let cityMatch = false;
             
-            cityAndStateMatch = (hierarchyCities[hierarchyLower]?true:false || predictions.length === 1)?true:false;
+            cityAndStateMatch = hierarchyCities[hierarchyLower]?true:false;
 
             for(var i = 0; i < citiesToSearch.length; i++){                
                 if(citiesToSearch[i]){
@@ -288,6 +292,9 @@
             c.set("v.account.ShippingState", '');            
             c.set("v.account.ShippingPostalCode", '');
             c.set("v.countryHasStatesShipping",false);
+            c.set("v.suggestionShipping", '');
+            c.set("v.predictionsShipping", '');
+            c.set("v.cityFirstSuggestionShipping", false);
             c.set("v.validShipping", 0);
         }
 
@@ -370,32 +377,15 @@
             let hierarchyLower = hierarchy.toLowerCase();
             let predictions = c.get("v.predictions"+modes[i]);
             
-            if(hierarchyCities){
-
-            
-                switch(true){
-                
-                    case hierarchyCities[hierarchyLower]?true:false:
-
-                        if(i===0){
-                            billingCityId = hierarchyCities[hierarchyLower].CityId;
-                            billingStateId = hierarchyCities[hierarchyLower].StateId;
-                        }else{
-                            shippingCityId = hierarchyCities[hierarchyLower].CityId;
-                            shippingStateId = hierarchyCities[hierarchyLower].StateId;
-                        }
-                    break;
-                    
-                    case predictions.length === 1:
-                            if(i===0){
-                                billingCityId = hierarchyCities[predictions[0].toLowerCase()].CityId;
-                                billingStateId = hierarchyCities[predictions[0].toLowerCase()].StateId;
-                            }else{
-                                shippingCityId = hierarchyCities[predictions[0].toLowerCase()].CityId;
-                                shippingStateId = hierarchyCities[predictions[0].toLowerCase()].StateId;
-                            }
-                    break;
-
+            if(hierarchyCities[hierarchyLower]){
+                if(i===0){
+                    billingCityId = hierarchyCities[hierarchyLower].CityId;
+                    billingStateId = hierarchyCities[hierarchyLower].StateId;                    
+                    c.set('v.account.BillingCity', hierarchyCities[hierarchyLower].CityName);
+                }else{
+                    shippingCityId = hierarchyCities[hierarchyLower].CityId;
+                    shippingStateId = hierarchyCities[hierarchyLower].StateId;
+                    c.set('v.account.ShippingCity', hierarchyCities[hierarchyLower].CityName);
                 }
             }
 

@@ -11027,6 +11027,16 @@ WSPN-Worldspan</inlineHelpText>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
         <label>Geoname Billing City</label>
+        <lookupFilter>
+            <active>true</active>
+            <errorMessage>The selected Geoname Billing City doesn&apos;t belong to the selected Billing ISO State, please amend your selection.</errorMessage>
+            <filterItems>
+                <field>IATA_ISO_City__c.IATA_ISO_State__c</field>
+                <operation>equals</operation>
+                <valueField>$Source.IATA_ISO_Billing_State__c</valueField>
+            </filterItems>
+            <isOptional>true</isOptional>
+        </lookupFilter>
         <referenceTo>IATA_ISO_City__c</referenceTo>
         <relationshipLabel>Accounts with this Billing City</relationshipLabel>
         <relationshipName>Accounts</relationshipName>
@@ -11040,6 +11050,16 @@ WSPN-Worldspan</inlineHelpText>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
         <label>Geoname Shipping City</label>
+        <lookupFilter>
+            <active>true</active>
+            <errorMessage>The selected Geoname Shipping City doesn&apos;t belong to the selected Shipping ISO State, please amend your selection.</errorMessage>
+            <filterItems>
+                <field>IATA_ISO_City__c.IATA_ISO_State__c</field>
+                <operation>equals</operation>
+                <valueField>$Source.IATA_ISO_Shipping_State__c</valueField>
+            </filterItems>
+            <isOptional>true</isOptional>
+        </lookupFilter>
         <referenceTo>IATA_ISO_City__c</referenceTo>
         <relationshipLabel>Accounts with this Shipping City</relationshipLabel>
         <relationshipName>AccountsShipping</relationshipName>
@@ -11407,6 +11427,16 @@ WSPN-Worldspan</inlineHelpText>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
         <label>ISO Billing State</label>
+        <lookupFilter>
+            <active>true</active>
+            <errorMessage>The selected State doesn&apos;t belong to the selected Country.</errorMessage>
+            <filterItems>
+                <field>IATA_ISO_State__c.IATA_ISO_Country__c</field>
+                <operation>equals</operation>
+                <valueField>$Source.IATA_ISO_Country__c</valueField>
+            </filterItems>
+            <isOptional>true</isOptional>
+        </lookupFilter>
         <referenceTo>IATA_ISO_State__c</referenceTo>
         <relationshipLabel>Accounts (ISO Billing State)</relationshipLabel>
         <relationshipName>Accounts1</relationshipName>
@@ -11446,6 +11476,16 @@ WSPN-Worldspan</inlineHelpText>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
         <label>ISO Shipping State</label>
+        <lookupFilter>
+            <active>true</active>
+            <errorMessage>The selected State doesn&apos;t belong to the selected Country.</errorMessage>
+            <filterItems>
+                <field>IATA_ISO_State__c.IATA_ISO_Country__c</field>
+                <operation>equals</operation>
+                <valueField>$Source.IATA_ISO_Shipping_Country__c</valueField>
+            </filterItems>
+            <isOptional>true</isOptional>
+        </lookupFilter>
         <referenceTo>IATA_ISO_State__c</referenceTo>
         <relationshipLabel>Accounts (ISO Shipping State)</relationshipLabel>
         <relationshipName>Accounts2</relationshipName>
@@ -13981,6 +14021,15 @@ Approval: Key Contact can see pending request approve it one by one</inlineHelpT
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
         <label>IATA ISO State</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>IATA_ISO_State__c.IATA_ISO_Country__c</field>
+                <operation>equals</operation>
+                <valueField>$Source.IATA_ISO_Country__c</valueField>
+            </filterItems>
+            <isOptional>true</isOptional>
+        </lookupFilter>
         <referenceTo>IATA_ISO_State__c</referenceTo>
         <relationshipLabel>Accounts</relationshipLabel>
         <relationshipName>Accounts</relationshipName>

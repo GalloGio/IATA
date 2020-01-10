@@ -8,7 +8,37 @@ public with sharing class ISSP_ANG_ANNUAL_REV_UPDATE {
 	public string txtHelpTaxNumber {get; set;}
 	public String vatNumber {get; set;}
 	public String vatNumber2 {get; set;}
+
+	public boolean chsb{get;set;}
+	public boolean chss{get;set;}
+
 	public Map<String, List<IATA_ISO_State__c>> stateListByCountryNameMap {get; set;}
+
+	public static Map<String, List<Iata_Iso_City__c>> cityListByStateNameMap {get; set;}
+	public static Map<String, List<Iata_Iso_City__c>> cityListByStateNameMapShipping {get; set;}
+
+	public String cityMapStr {get;set;}
+		
+	public List<IATA_ISO_City__c> billingCityListName {get;set;}    
+	public List<IATA_ISO_City__c> shippingCityListName {get;set;}
+
+	public String geonameBillingCityId {get;set{ geonameBillingCityId = value; if(!String.isBlank(geonameBillingCityId)) ca.fw.newForm.Geoname_Billing_City__c = geonameBillingCityId; }}
+
+	public String geonameShippingCityId {get;set{ geonameShippingCityId = value; if(!String.isBlank(geonameShippingCityId)) ca.fw.newForm.Geoname_Shipping_City__c = geonameShippingCityId; }}
+
+	public String billingCityListNameStr {
+	get{
+		return JSON.serialize(billingCityListName);
+	}
+	set;
+	}
+	
+	public String shippingCityListNameStr {
+	get{
+		return JSON.serialize(shippingCityListName);
+	}
+	set;
+	}
 
 	public List<SelectOption> countryList {
 		get {
@@ -139,11 +169,25 @@ public with sharing class ISSP_ANG_ANNUAL_REV_UPDATE {
 	public void currentShippingCountryStates() {
 		shippingStateList = new List<SelectOption>{new SelectOption('', Label.ISSP_SELECT_STATE)};
 
-		if(stateListByCountryNameMap.containsKey(ca.fw.newform.Shipping_Country__c.toUpperCase())) {
+		if(stateListByCountryNameMap.containsKey(ca.fw.newform.Shipping_Country__c != null ? ca.fw.newform.Shipping_Country__c.toUpperCase():'')) {
 			for (IATA_ISO_State__c state: stateListByCountryNameMap.get(ca.fw.newform.Shipping_Country__c.toUpperCase())) {
 				shippingStateList.add(new SelectOption(state.Name, state.Name));
 			}
 		}
+	}
+	
+	public void currentBillingStateCities() {        
+		billingCityListName = new List<IATA_ISO_City__c>([SELECT Id, Name, GeonameName__c 
+														  FROM IATA_ISO_City__c
+														  WHERE IATA_ISO_State__r.Name = :ca.fw.newform.State_Province__c                                       
+														  ORDER BY Name]);                
+	}
+	public void currentShippingStateCities() {       
+		
+		shippingCityListName = new List<IATA_ISO_City__c>([SELECT Id, Name, GeonameName__c
+														  FROM IATA_ISO_City__c
+														  WHERE IATA_ISO_State__r.Name = :ca.fw.newform.Shipping_State__c                                       
+														  ORDER BY Name]);                
 	}
 
 	public void validateVATNumber2() {
@@ -211,6 +255,7 @@ public with sharing class ISSP_ANG_ANNUAL_REV_UPDATE {
 									   ca.fw.newform.shipping_postal_code__c = '';
 									   ca.fw.newform.shipping_state__c = '';
 									   ca.fw.newform.shipping_country__c = '';
+									   ca.fw.newform.Geoname_Shipping_City__c = null;
 								   }
 
 			}
@@ -225,6 +270,7 @@ public with sharing class ISSP_ANG_ANNUAL_REV_UPDATE {
 				ca.fw.newform.shipping_postal_code__c = '';
 				ca.fw.newform.shipping_state__c = '';
 				ca.fw.newform.shipping_country__c = '';
+				ca.fw.newForm.Geoname_Shipping_City__c = null;
 			}
 		}
 	}
@@ -236,6 +282,7 @@ public with sharing class ISSP_ANG_ANNUAL_REV_UPDATE {
 		ca.fw.newform.shipping_postal_code__c = ca.Account.ShippingPostalCode;
 		ca.fw.newform.shipping_state__c = ca.Account.ShippingState;
 		ca.fw.newform.shipping_country__c = ca.Account.ShippingCountry;
+		ca.fw.newForm.Geoname_Shipping_City__c = ca.Account.Geoname_Shipping_City__c;
 	}
 
 }
