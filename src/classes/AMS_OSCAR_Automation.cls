@@ -1488,6 +1488,7 @@ public with sharing class AMS_OSCAR_Automation {
 			Portal_Applications__c pa;
 			List<Portal_Application_Right__c> parList = new List<Portal_Application_Right__c>();
 			List<String> conList = new List<String>();
+			Set <Id> idSet = new Set <Id>();
 
 			if(oscar.Location_Class__c == 'L') {
 				//only contacts without Application Rights
@@ -1497,21 +1498,24 @@ public with sharing class AMS_OSCAR_Automation {
 				for(AMS_Accreditation_Contact__c accrCon : accredList) {
 					if(!accredList.isEmpty() && accrCon.Contact__c != null){
 						conList.add(accrCon.contact__c);
-							Portal_Application_Right__c par = new Portal_Application_Right__c (
-														Right__c = AMS_Utils.PORTAL_APP_ACCESS_GRANTED,
-														Contact__c = accrCon.Contact__c,
-														Portal_Application__c = pa.Id
-											);
-							parList.add(par);
+						idSet.add(accrCon.contact__c);
+						Portal_Application_Right__c par = new Portal_Application_Right__c (
+													Right__c = AMS_Utils.PORTAL_APP_ACCESS_GRANTED,
+													Contact__c = accrCon.Contact__c,
+													Portal_Application__c = pa.Id
+										);
+						parList.add(par);
 					}
 				}
-				ISSP_AMS_PASS_Accreditation.createNewUser(profileId, conList);
+				ISSP_ContactList ctrl = new ISSP_ContactList();
+				ctrl.processMultiplePortalUserStatusChange(idSet, 'Approved User', 'Active');
+				//ISSP_AMS_PASS_Accreditation.createNewUser(profileId, conList);
 				insert parList;
 			} else {
-			   accredList = [select Id, Contact__c FROM AMS_Accreditation_Contact__c WHERE AMS_Pax_Accreditation_Form__c =: oscar.AMS_Online_Accreditation__c AND Portal_administrator__c = true LIMIT 1];
-			   pa = [SELECT Id FROM Portal_Applications__c WHERE Name =:ANG_RHCHelper.RISK_PROFILE_AND_RHC_PORTAL_SERVICE LIMIT 1];
+				accredList = [select Id, Contact__c FROM AMS_Accreditation_Contact__c WHERE AMS_Pax_Accreditation_Form__c =: oscar.AMS_Online_Accreditation__c AND Portal_administrator__c = true LIMIT 1];
+				pa = [SELECT Id FROM Portal_Applications__c WHERE Name =:ANG_RHCHelper.RISK_PROFILE_AND_RHC_PORTAL_SERVICE LIMIT 1];
 
-			   if(!accredList.isEmpty() && accredList.get(0).Contact__c != null){
+				if(!accredList.isEmpty() && accredList.get(0).Contact__c != null){
 					Portal_Application_Right__c par = new Portal_Application_Right__c (
 												Right__c = AMS_Utils.PORTAL_APP_ACCESS_GRANTED,
 												Contact__c = accredList.get(0).Contact__c,
@@ -1521,7 +1525,9 @@ public with sharing class AMS_OSCAR_Automation {
 				}
 			}
 
-
+			if(parList.size()>0){
+				insert parList; //PASS - avoid MIXED_DML
+			}
 		}
 	}
 }

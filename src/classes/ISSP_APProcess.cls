@@ -999,9 +999,9 @@ global without sharing class ISSP_APProcess {
 				newCase.Country_concerned_by_the_query__c = isocountry.Case_BSP_Country__c;
 				newForm.ANG_Enable_NewGen__c = (isocountry.ANG_Portal_Service__c != null);
 			}
-			newCase.Visible_on_ISS_Portal__c = true;
+			
 		}
-
+		newCase.Visible_on_ISS_Portal__c = true;
 		//AS - R03 SP03; for when GSSA create joining processs on behalf of Airline
 		if(isPassAirline && !isGSSAUser){// One of the countries that is chosen for the Pass Joining will be in the IFAP_Country_ISO__c case field. If there are more than one country, the rest of them are going to be in the Country_Concerned__c case field
 			String countryConcerned='';
@@ -1069,6 +1069,7 @@ global without sharing class ISSP_APProcess {
 			newForm.ANG_Enable_NewGen__c = (isocountry.ANG_Portal_Service__c != null);
 			newCase.Region__c=null;
 		}
+
 		//Defining default values for the case
 		//create case with RT IDFS Airline Participation Process
 		newCase.recordTypeId = RECORD_TYPE_ID;
@@ -1376,7 +1377,7 @@ global without sharing class ISSP_APProcess {
 																	con.Account.IATACode__c,
 																	isocodeList, con.Account.Name, vHqAccountId);
 
-					for(String country : isocodeList){
+				for(String country : isocodeList){
 					Case newChildCase = newCase.clone(false, true, false, false);
 					newChildCase.BSPCountry__c = isoCountryMap.get(country).Name;
 					newChildCase.Subject = 'Airline Participation - PASS Country - ' + newChildCase.BSPCountry__c;
