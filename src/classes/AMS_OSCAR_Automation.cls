@@ -1510,7 +1510,7 @@ public with sharing class AMS_OSCAR_Automation {
 				ISSP_ContactList ctrl = new ISSP_ContactList();
 				ctrl.processMultiplePortalUserStatusChange(idSet, 'Approved User', 'Active');
 				//ISSP_AMS_PASS_Accreditation.createNewUser(profileId, conList);
-				insert parList;
+				
 			} else {
 				accredList = [select Id, Contact__c FROM AMS_Accreditation_Contact__c WHERE AMS_Pax_Accreditation_Form__c =: oscar.AMS_Online_Accreditation__c AND Portal_administrator__c = true LIMIT 1];
 				pa = [SELECT Id FROM Portal_Applications__c WHERE Name =:ANG_RHCHelper.RISK_PROFILE_AND_RHC_PORTAL_SERVICE LIMIT 1];

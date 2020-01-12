@@ -216,8 +216,8 @@
           <apex:pageBlockTable value="{!APDraftCases}" var="MyIFAPCases" styleClass="table">
             <apex:column headerValue="{!$Label.ISSP_CaseNumber}">
               <apex:outputLink value="/ISSP_APProcess2?caseId={!MyIFAPCases.Id}&step=2" rendered="{!MyIFAPCases.Reason1__c!='PASS Participation' && MyIFAPCases.Reason1__c!='PASS Country Aggregator'}">{!MyIFAPCases.CaseNumber}</apex:outputLink>
-              <apex:outputLink value="/ISSP_APProcess2?caseId={!MyIFAPCases.Id}&airline=PASS" rendered="{!MyIFAPCases.Reason1__c=='PASS Participation'}">{!MyIFAPCases.CaseNumber}</apex:outputLink>
-              <apex:outputLink value="/ISSP_APProcess2?caseId={!MyIFAPCases.Id}&airline=PASS&managePASS=true" rendered="{!MyIFAPCases.Reason1__c=='PASS Country Aggregator'}">{!MyIFAPCases.CaseNumber}</apex:outputLink>
+              <apex:outputLink value="/ISSP_APProcess2?caseId={!MyIFAPCases.Id}&airline=PASS&step=2" rendered="{!MyIFAPCases.Reason1__c=='PASS Participation'}">{!MyIFAPCases.CaseNumber}</apex:outputLink>
+              <apex:outputLink value="/ISSP_APProcess3?caseId={!MyIFAPCases.Id}&airline=PASS&managePASS=true&step=3" rendered="{!MyIFAPCases.Reason1__c=='PASS Country Aggregator'}">{!MyIFAPCases.CaseNumber}</apex:outputLink>
 
             </apex:column>
             <apex:column value="{!MyIFAPCases.Account_Concerned__r.Site}"/>

@@ -302,7 +302,6 @@ global without sharing class ISSP_APProcess {
 		showPDFReportsPreference=true;
 		showPDFReportsEmail=false;
 		changePass=false;
-		isPassAirline=false;
 
 		newForm = new AP_Process_Form__c();
 		newCase = new Case();
@@ -1287,13 +1286,13 @@ global without sharing class ISSP_APProcess {
 			deleteUnusedCountryFiles();
 
 			passParam='&airline=PASS';
-			if(isStep3){
+			if(isStep3 && !managePASS){
 				return new Pagereference('/ISSP_APProcess2?caseId='+newCase.Id+'&step=1'+passParam);
-			}else if(managePASS){
+			}else if(managePASS && isStep1){
 				passParam=passParam+'&managePASS=true';
-				return new Pagereference('/ISSP_APProcess2?caseId='+newCase.Id+'&step=4'+passParam);
+				return new Pagereference('/ISSP_APProcess3?caseId='+newCase.Id+'&step=3'+passParam);
 			}else{
-				return new Pagereference('/ISSP_APProcess2?caseId='+newCase.Id+'&step=3'+passParam);
+				return new Pagereference('/ISSP_APProcess2?caseId='+newCase.Id+'&step=2'+passParam);
 			}
 		}
 		if(countryRequirementFound) {
@@ -1306,7 +1305,7 @@ global without sharing class ISSP_APProcess {
 	public Pagereference goToStep3(){
 		if(managePASS){
 			passParam=passParam+'&managePASS=true';
-			return new Pagereference('/ISSP_APProcess3?caseId='+newCase.Id+'&step=1'+passParam);
+			return new Pagereference('/ISSP_APProcess3?caseId='+newCase.Id+'&step=3'+passParam);
 		}else{
 			return new Pagereference('/ISSP_APProcess3?caseId='+newCase.Id+'&step=3'+passParam);
 		}
