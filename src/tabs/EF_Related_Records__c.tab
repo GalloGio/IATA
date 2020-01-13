@@ -2,6 +2,5 @@
 <CustomTab xmlns="http://soap.sforce.com/2006/04/metadata">
     <customObject>true</customObject>
     <description>Helper Object to store E&amp;F information under different record types, such as FIR Codes.</description>
-    <mobileReady>false</mobileReady>
     <motif>Custom7: Square</motif>
 </CustomTab>
