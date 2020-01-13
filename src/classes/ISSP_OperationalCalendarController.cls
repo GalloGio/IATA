@@ -314,17 +314,19 @@ global without sharing class ISSP_OperationalCalendarController {
 
 	public list<String> initPicklistValuesBSPCASS() {
 		// mapFrequencies, its a relation between countries and their frequencies
-		list<AMS_Settlement_System__c> listOp = [
-			SELECT Id, Name,
-				( SELECT Id FROM IATA_ISO_Countries__r),
-				( SELECT Id FROM CASS_COUNTRIES__r),
-				( SELECT frequency_code__c, Operation_Currency__c, Operation_Type__c, Operation_Code__c
-					FROM Operational_Calendars__r
-					WHERE RecordTypeId = :RT_ISS_CALENDAR.getRecordTypeId()
-					AND First_Day__c >= LAST_YEAR
-					AND Visible_on_the_portal__c=true)
-			FROM AMS_Settlement_System__c
-		];
+		list<AMS_Settlement_System__c> listOp = new List<AMS_Settlement_System__c>();
+
+        for(AMS_Settlement_System__c settSystem :  [SELECT Id, Name,
+                                                        ( SELECT Id FROM IATA_ISO_Countries__r),
+                                                        ( SELECT Id FROM CASS_COUNTRIES__r),
+                                                        ( SELECT frequency_code__c, Operation_Currency__c, Operation_Type__c, Operation_Code__c
+                                                            FROM Operational_Calendars__r
+                                                            WHERE RecordTypeId = :RT_ISS_CALENDAR.getRecordTypeId()
+                                                            AND First_Day__c >= LAST_YEAR
+                                                            AND Visible_on_the_portal__c=true)
+                                                    FROM AMS_Settlement_System__c]){
+            listOp.add(settSystem);
+        }
 
 		list<String> listResult = new list<String>();
 		set<Id> setCountryId = new set<Id>();
