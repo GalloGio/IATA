@@ -211,41 +211,6 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 				
 				this.contactInfo.serviceid = this.serviceid;
 
-				//Address Info
-				// if(this.contactInfo.Shipping_Address__c != null &&
-				// 	this.contactInfo.Shipping_Address__c != undefined &&
-				// 	this.contactInfo.Shipping_Address__c !== ''){
-
-					
-				// 	this.address.countryId = this.contactInfo.Shipping_Address__r.Country_Reference__c;
-				// 	this.address.countryName = this.contactInfo.Shipping_Address__r.Country__c;
-
-				// 	// this.address.stateId = this.contactInfo.Shipping_Address__r.State_Reference__c;
-				// 	if(this.contactInfo.Shipping_Address__r.State_Reference__c != null &&
-				// 		this.contactInfo.Shipping_Address__r.State_Reference__c != undefined &&
-				// 		this.contactInfo.Shipping_Address__r.State_Reference__c !== '' &&
-				// 		this.contactInfo.Shipping_Address__r.State_Reference__r.iso_code__c != null &&
-				// 		this.contactInfo.Shipping_Address__r.State_Reference__r.iso_code__c != undefined &&
-				// 		this.contactInfo.Shipping_Address__r.State_Reference__r.iso_code__c !== ''){
-
-				// 		this.address.stateId = this.contactInfo.Shipping_Address__r.State_Reference__r.iso_code__c;
-				// 	}else{
-				// 		this.address.stateId = this.contactInfo.Shipping_Address__r.State_Name__c !== undefined? this.contactInfo.Shipping_Address__r.State_Name__c : '';
-				// 	}
-				// 	this.address.stateName =  this.contactInfo.Shipping_Address__r.State_Name__c !== undefined? this.contactInfo.Shipping_Address__r.State_Name__c : '';
-				// 	this.address.cityId = this.contactInfo.Shipping_Address__r.City_Reference__c !== undefined? this.contactInfo.Shipping_Address__r.City_Reference__c : '';
-				// 	this.address.cityName = this.contactInfo.Shipping_Address__r.City_Name__c !== undefined? this.contactInfo.Shipping_Address__r.City_Name__c : '';
-					
-				// 	this.address.isPoBox =  this.contactInfo.Shipping_Address__r.PO_Box__c === undefined || this.contactInfo.Shipping_Address__r.PO_Box__c === ''? false : true;
-				// 	this.address.PoBoxAddress =  this.contactInfo.Shipping_Address__r.PO_Box_Address__c !== undefined? this.contactInfo.Shipping_Address__r.PO_Box_Address__c : false;
-					
-				// 	this.address.street = this.contactInfo.Shipping_Address__r.Street__c;
-				// 	this.address.street2 = this.contactInfo.Shipping_Address__r.Street2__c !== undefined? this.contactInfo.Shipping_Address__r.Street2__c : '';
-				// 	this.address.zip = this.contactInfo.Shipping_Address__r.Postal_Code__c !== undefined? this.contactInfo.Shipping_Address__r.Postal_Code__c : '';
-				// }
-
-				
-
 			})
 		.catch((error) => {
 			this.openMessageModalFlowRegister = true;

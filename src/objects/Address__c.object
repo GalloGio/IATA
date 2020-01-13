@@ -183,19 +183,6 @@
         <type>Lookup</type>
     </fields>
     <fields>
-        <fullName>City__c</fullName>
-        <description>Populated by a workflow rule when the City Reference is changed.</description>
-        <externalId>false</externalId>
-        <inlineHelpText>Populated by a workflow rule when the City Reference is changed.</inlineHelpText>
-        <label>City</label>
-        <length>80</length>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
         <fullName>Country_Reference__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <description>Country Reference</description>
@@ -235,19 +222,6 @@
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Location</type>
-    </fields>
-    <fields>
-        <fullName>PO_Box_Number__c</fullName>
-        <description>PO Box Number</description>
-        <externalId>false</externalId>
-        <inlineHelpText>PO Box Number</inlineHelpText>
-        <label>PO Box Number</label>
-        <length>10</length>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
     </fields>
     <fields>
         <fullName>PO_Box__c</fullName>
@@ -313,19 +287,6 @@
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
-    </fields>
-    <fields>
-        <fullName>State__c</fullName>
-        <description>Populated by a workflow rule when the State Reference is changed.</description>
-        <externalId>false</externalId>
-        <inlineHelpText>Populated by a workflow rule when the State Reference is changed.</inlineHelpText>
-        <label>State</label>
-        <length>80</length>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Street2__c</fullName>

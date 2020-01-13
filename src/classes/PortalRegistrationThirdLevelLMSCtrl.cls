@@ -86,54 +86,9 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 			String RECTYPE_Master_AccContRole = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'Master');
 			String RECTYPE_Trainee_YASContDet = RecordTypeSingleton.getInstance().getRecordTypeId('Training_Contact_Role_Details__c', 'Yardstick_Trainee');
 
-
-			// List<Address__c> listAddr = [SELECT City_Reference__c, City_Name__c, Country_Reference__c, Country__c,
-			// 								Id,PO_Box_Address__c,Postal_Code__c,State_Reference__c,State_Name__c,Street__c, Street2__c
-			// 							FROM Address__c
-			// 							WHERE Id = :con.Shipping_Address__c LIMIT 1];
-			// Address__c addr = new Address__c();
-
-			// //Check State
-			// if(sStateId != ''){
-			// 	List<IATA_ISO_State__c> listStates = [SELECT Id,ISO_Code__c,Name,Valid_for_Address__c
-			// 							FROM IATA_ISO_State__c
-			// 							WHERE Id = :sStateId
-			// 							OR ISO_Code__c = :sStateId LIMIT 1];
-			// 	if(listStates.size() > 0){
-			// 		addr.State_Reference__c = listStates[0].Id;
-			// 		addr.State_Name__c = listStates[0].Name;
-			// 	}else{
-			// 		addr.State_Name__c = sStateId;
-			// 	}
-			// }
-
-			// if(isPoBox){
-			// 	addr.PO_Box_Address__c = (sStreet != null) ? sStreet : '';
-			// }else{
-			// 	addr.Street__c = (sStreet != null) ? sStreet : '';
-			// }
-			
-			// addr.Street2__c = (sStreet2 != null) ? sStreet2 : '';
-			// addr.Postal_Code__c = (sZipCode != null) ? sZipCode : '';
-			// addr.Country_Reference__c = (sCountryId != null && sCountryId != '') ? sCountryId : null;
-			// addr.City_Reference__c = (sCityId != null && sCityId != '') ? sCityId : null;
-			// addr.City_Name__c = (sCity != null && sCity != '') ? sCity : null;
-			
-			// if(listAddr.size() > 0){
-			// 	addr.Id = listAddr[0].Id;
-
-			// 	update addr;
-			// }else{
-			// 	insert addr;
-			// }
-
-			// con.Shipping_Address__c = addr.Id;
-
-			//Update Contact
 			update con;
 
 			//Create Account Role if not existing
-			//TO DO FM: Change query to use Functional Role
 			List<Account_Role__c> listAR = [SELECT Id,Account__c,RecordTypeId 
 											FROM Account_Role__c 
 											WHERE Account__c = :con.AccountId 
@@ -156,9 +111,8 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 			if(existingTrainingId != ''){
 				contIds.add(existingTrainingId);
 			}
-System.debug('contIds: ' + contIds);
+
 			//Getting existing Account Contact Role from the new Contact to set it up to on the old contact
-			//TO DO FM: Change query to use Functional Role
 			List<Account_Contact_Role__c> listACR = [SELECT Id,Account_Role__c,Contact__c,Contact_Role_Name__c,RecordTypeId
 													FROM Account_Contact_Role__c
 													WHERE Contact__c in :contIds
@@ -168,9 +122,6 @@ System.debug('contIds: ' + contIds);
 			Account_Contact_Role__c acrOld = new Account_Contact_Role__c();
 			Account_Contact_Role__c acr = new Account_Contact_Role__c();
 
-System.debug('acrNew: ' + acrNew);
-System.debug('acrOld: ' + acrOld);
-
 			for(Account_Contact_Role__c acrItem : listACR){
 				if(acrItem.Contact__c == con.Id){
 					acrNew = acrItem;
@@ -178,8 +129,7 @@ System.debug('acrOld: ' + acrOld);
 					acrOld = acrItem;
 				}
 			}
-System.debug('acrNew: ' + acrNew);
-System.debug('acrOld: ' + acrOld);
+
 			if(acrOld != null && acrOld.Id != null){
 				acr = acrOld;
 				acr.Account_Role__c = ar.Id;
@@ -200,7 +150,7 @@ System.debug('acrOld: ' + acrOld);
 
 				insert acr;
 			}
-System.debug('acr: ' + acrNew);
+
 			if(existingTrainingId != ''){
 				Contact toDeleteContact = new Contact(Id = existingTrainingId);
 				delete toDeleteContact;
@@ -277,8 +227,6 @@ System.debug('acr: ' + acrNew);
 		catch(Exception e){
 			result.isSuccess = false;
 			result.message = 'An Error Occurred - '+ e.getStackTraceString() ;
-			System.debug('[PortalRegistrationThirdLevelLMSCtrl] registration : Exception : ' + e);
-			System.debug('[PortalRegistrationThirdLevelLMSCtrl] registration : Exception stack : ' + e.getStackTraceString());
 			Database.rollback(sp);
 			return result;
 		}
@@ -373,7 +321,6 @@ System.debug('acr: ' + acrNew);
 					conToInactivate.Additional_Email__c = conToInactivate.Additional_Email__c + '.inactive';
 				}
 
-				// conToInactivate.status__c = 'Inactive';
 				update conToInactivate;
 
 				Contact con = [SELECT Id,AccountId,Email,Additional_Email__c,Phone,OtherPhone,Salutation,Birthdate,Shipping_Address__c
@@ -412,7 +359,6 @@ System.debug('acr: ' + acrNew);
 				if(regRes.isSuccess){
 
 					//Getting existing Account Contact Role from the new Contact to set it up to on the old contact
-					//TO DO FM: Change query to use Functional Role
 					List<Account_Contact_Role__c> listACR = [SELECT Id,Account_Role__c,Contact__c,Contact_Role_Name__c,RecordTypeId
 															FROM Account_Contact_Role__c
 															WHERE Contact__c in :contIds
@@ -546,14 +492,13 @@ System.debug('acr: ' + acrNew);
 				if(regRes.isSuccess){
 
 					//Getting existing Account Contact Role to set it up to the new Contact
-					//TO DO FM: Change query to use Functional Role
 					List<Account_Contact_Role__c> listACR = [SELECT Id,Account_Role__c,Contact__c,Contact_Role_Name__c,RecordTypeId
 															FROM Account_Contact_Role__c
 															WHERE Contact__c in :contIds
 															AND Contact_Role_Name__c = 'Trainee'
 															AND Functional_Role__c =  'Training'];
-					Account_Contact_Role__c acrNew;// = new Account_Contact_Role__c();
-					Account_Contact_Role__c acrOld;// = new Account_Contact_Role__c();
+					Account_Contact_Role__c acrNew;
+					Account_Contact_Role__c acrOld;
 
 					for(Account_Contact_Role__c acr : listACR){
 						if(acr.Contact__c == con.Id){
@@ -602,7 +547,6 @@ System.debug('acr: ' + acrNew);
 						conToInactivate.Additional_Email__c = conToInactivate.Additional_Email__c + '.inactive';
 					}
 
-					// conToInactivate.status__c = 'Inactive';
 					update conToInactivate;
 
 					Set<String> conIdSet = new Set<String>();
@@ -618,8 +562,6 @@ System.debug('acr: ' + acrNew);
 		catch(Exception e){
 			result.isSuccess = false;
 			result.message = 'An Error Occurred - '+ e.getStackTraceString() ;
-			System.debug('[PortalRegistrationThirdLevelLMSCtrl] registration : Exception : ' + e);
-			System.debug('[PortalRegistrationThirdLevelLMSCtrl] registration : Exception stack : ' + e.getStackTraceString());
 			return result;
 		}
 		return result;
@@ -692,8 +634,6 @@ System.debug('acr: ' + acrNew);
 			return params;
 
 		}catch(Exception e){
-
-
 			return null;
 		}
 
@@ -839,8 +779,6 @@ System.debug('acr: ' + acrNew);
 		}catch(Exception e ){
 			result.isSuccess = false;
 			result.message = 'An Error Occurred - '+ e.getStackTraceString() ;
-			System.debug('[PortalRegistrationThirdLevelLMSCtrl] registration : Exception : ' + e);
-			System.debug('[PortalRegistrationThirdLevelLMSCtrl] registration : Exception stack : ' + e.getStackTraceString());
 			return result;
 		}
 		return result;
