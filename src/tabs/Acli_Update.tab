@@ -2,7 +2,6 @@
 <CustomTab xmlns="http://soap.sforce.com/2006/04/metadata">
     <description>VisualForce Page/ Task to Update The Accts: only fot Sys Amins</description>
     <label>Acli Update</label>
-    <mobileReady>false</mobileReady>
     <motif>Custom68: Globe</motif>
     <page>AcliMassUpdate</page>
 </CustomTab>
