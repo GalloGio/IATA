@@ -5,9 +5,9 @@
 	ISSP_OperationalCaledarDetail: showing the Operational calendar records in a table
 **/
 global without sharing class ISSP_OperationalCalendarController {
-	
+
 	public class OperationalCalendarException extends Exception {}
-	
+
 	private static final map<String,Schema.RecordTypeInfo> MAP_OP_CALENDAR_INFO=Schema.SObjectType.Operational_Calendar__c.getRecordTypeInfosByDeveloperName();
 	public static final Schema.RecordTypeInfo RT_ICCS_CALENDAR = MAP_OP_CALENDAR_INFO.get('ICCS_Calendar');
 	public static final Schema.RecordTypeInfo RT_ISS_CALENDAR = MAP_OP_CALENDAR_INFO.get('ISS_Calendar');
@@ -60,7 +60,7 @@ global without sharing class ISSP_OperationalCalendarController {
 	public static final String FIELD_Billing_Availability = MAP_CALENDAR_FIELDS.get('Billing_Availability__c').getDescribe().getLabel();
 	public static final String FIELD_Agent_Correction_Cut_Off = MAP_CALENDAR_FIELDS.get('Agent_Correction_Cut_Off__c').getDescribe().getLabel();
 	public static final String FIELD_CASS_reports_Availability = MAP_CALENDAR_FIELDS.get('CASS_reports_Availability__c').getDescribe().getLabel();
-	
+
 	public static final String THIS_PROFILE = String.ValueOf(UserInfo.getProfileId()).left(15);
 	public static Boolean IS_AIRLINE = AIRLINE_PROFILES.contains(THIS_PROFILE);
 	public static Boolean IS_AGENT = AGENT_PROFILES.contains(THIS_PROFILE);
@@ -110,11 +110,11 @@ global without sharing class ISSP_OperationalCalendarController {
 	public String defaultFrequency {get; set;}
 	public Date maxDate {get; set;}
 	public Date minDate {get; set;}
-	
+
 	//Filters
 	public list<SelectOption> countryOptions {get;set;}
 	public set<String> setFilter{get;set;}
-	
+
 	/**** GETTERS ****/
 	public String getListFiltersJson() {
 		return JSON.serialize(this.setFilter,true);
@@ -180,14 +180,14 @@ global without sharing class ISSP_OperationalCalendarController {
 	}
 
 	/**** END GETTERS ****/
-	
+
 	/**
 	Returns true only if the user is in list of available profiles to use this page
 	**/
 	public static Boolean isAllowedAccess() {
 		return (IS_AIRLINE || IS_AGENT);
 	}
-	
+
 	/**** CONTROLLER ****/
 	public ISSP_OperationalCalendarController() {
 		this.user = [
@@ -222,7 +222,7 @@ global without sharing class ISSP_OperationalCalendarController {
 		initPicklistValues();
 		initAdvFilters();
 	}
-	
+
 	public Set<Id> getSetIds(list<sObject> listObject) {
 		try {
 			return (new Map<Id,SObject>(listObject)).keySet();
@@ -257,7 +257,7 @@ global without sharing class ISSP_OperationalCalendarController {
 				} else {
 					this.defaultOperationSubtype = 'SIS';
 				}
-			} 
+			}
 		}
 		// next ICCS
 		if (getIsICCSAccount()) {
@@ -315,7 +315,7 @@ global without sharing class ISSP_OperationalCalendarController {
 	public list<String> initPicklistValuesBSPCASS() {
 		// mapFrequencies, its a relation between countries and their frequencies
 		list<AMS_Settlement_System__c> listOp = [
-			SELECT Id, Name,  
+			SELECT Id, Name,
 				( SELECT Id FROM IATA_ISO_Countries__r),
 				( SELECT Id FROM CASS_COUNTRIES__r),
 				( SELECT frequency_code__c, Operation_Currency__c, Operation_Type__c, Operation_Code__c
@@ -323,9 +323,9 @@ global without sharing class ISSP_OperationalCalendarController {
 					WHERE RecordTypeId = :RT_ISS_CALENDAR.getRecordTypeId()
 					AND First_Day__c >= LAST_YEAR
 					AND Visible_on_the_portal__c=true)
-			FROM AMS_Settlement_System__c 
+			FROM AMS_Settlement_System__c
 		];
-		
+
 		list<String> listResult = new list<String>();
 		set<Id> setCountryId = new set<Id>();
 		for (AMS_Settlement_System__c op: listOp ) {
@@ -350,7 +350,7 @@ global without sharing class ISSP_OperationalCalendarController {
 							this.defaultCountry = countryId;
 						}
 					}
-					// special case for caribean countries, use only currencies from operations 
+					// special case for caribean countries, use only currencies from operations
 					//with the OperationCode starting with the country Code
 					if (SPECIAL_CASE_COUNTRIES.containsKey(countryId)) {
 						String isocode=SPECIAL_CASE_COUNTRIES.get(countryId).ISO_Code__c;
@@ -423,8 +423,8 @@ global without sharing class ISSP_OperationalCalendarController {
 			}
 		}
 		return description;
-	} 
-	
+	}
+
 	/**
 		Creates a list of events based on queried operational calendars
 		these events are created based on the user type, airlines or agent users
@@ -585,7 +585,7 @@ global without sharing class ISSP_OperationalCalendarController {
 		listEvents.addAll(mapICCSEvent2.values());
 		return listEvents;
 	}
-	
+
 	public static String getEventTitle(Operational_Calendar__c operation, String eventName, Boolean isGrouped) {
 		if (isGrouped) {
 			String operationType = nvl(operation.Operation_Type__c);
@@ -595,7 +595,7 @@ global without sharing class ISSP_OperationalCalendarController {
 			return eventName + ' - ' + operation.Operation_Currency__c;
 		}
 	}
-	
+
 	/**
 		Query the operational calendar records based on input filters
 	**/
@@ -608,7 +608,7 @@ global without sharing class ISSP_OperationalCalendarController {
 		}
 		return runQuery(operationType, cycle, country, frequency, currencyCode, billingPeriod);
 	}
-	
+
 	/**
 		Generate the query string and runs it, used only by queryListOperations()
 	**/
@@ -729,7 +729,7 @@ global without sharing class ISSP_OperationalCalendarController {
 		list<EventWrapper> listEvents = getOperationalCalendarEvents(listOperations, false, operationType);
 		return JSON.serialize(listEvents,true);
 	}
-	
+
 	/**
 		Get the event list for the mini calendar
 		This list is grouped by day, so there is only one event per day and each
@@ -820,7 +820,7 @@ global without sharing class ISSP_OperationalCalendarController {
 		}
 		throw new OperationalCalendarException('Field Set not found. isAirline ' + isAirline + '  operationType ' + operationType);
 	}
-	
+
 	public class TableDef {
 		public list<HeaderDef> headers;
 		public list<list<String>> data;
@@ -835,7 +835,7 @@ global without sharing class ISSP_OperationalCalendarController {
 			this.bVisible  = bVisible ;
 		}
 	}
-	
+
 	/**
 		Creates a JSON string having full data to populate the table
 		first line is the header, and subsequent the data
@@ -878,7 +878,7 @@ global without sharing class ISSP_OperationalCalendarController {
 			String rowclass = getDateClassName(dateToCompare, firstNoPastDate);
 			listLine.add(rowclass);
 			listLine.add(''+operation.LastModifiedDate);
-			
+
 			// regular data fields
 			for(Schema.FieldSetMember f : fieldset.getFields()) {
 				String fieldValue = getFieldValue(operation, f);
@@ -896,7 +896,7 @@ global without sharing class ISSP_OperationalCalendarController {
 		}
 		return JSON.serialize(table,true);
 	}
-	
+
 	private class EventWrapper {
 		public Integer id;
 		public String title;
@@ -911,7 +911,7 @@ global without sharing class ISSP_OperationalCalendarController {
 		public String textColor;
 		public String description;
 	}
-	
+
 	/**
 		Returns the class name, if it's past, present, future or the first non past date
 	**/
@@ -927,22 +927,22 @@ global without sharing class ISSP_OperationalCalendarController {
 		}
 		return 'future-row';
 	}
-	
+
 	public static String nvl(String input) {
 		return input==null? '': input;
 	}
-	
+
 	public static String getFieldValue(Operational_Calendar__c obj, Schema.FieldSetMember f) {
 		try {
 			if (obj.get(f.getFieldPath()) == null) return '';
 			return String.ValueOf((obj.get(f.getFieldPath())));
-			
+
 		} catch (Exception e) {
 			System.debug('**ERROR in getFieldValue ' + e.getMessage());
 			return '';
 		}
 	}
-	
+
 	public static list<EventWrapper> groupEvents(list<EventWrapper> listEvents) {
 		map<Date,EventWrapper> mapEvents = new map<Date,EventWrapper>();
 		if (listEvents!=null) {
@@ -960,16 +960,16 @@ global without sharing class ISSP_OperationalCalendarController {
 				newEvent.description+= event.title + '</br>';
 				mapEvents.put(dateKey, newEvent);
 			}
-		} 
+		}
 		return mapEvents.values();
 	}
-	
+
 	public string getUserLanguage() {
 		return UserInfo.getLanguage();
 	}
 
 	/**
-		Find a disclaimer label based on the selected country and type using 
+		Find a disclaimer label based on the selected country and type using
 		the custom setting ISSP_Operational_Calendar_Disclaimer__c
 	**/
 	public String selectedCountry {get; set;}
@@ -1018,7 +1018,7 @@ global without sharing class ISSP_OperationalCalendarController {
 		}
 
 		options.sort();
-		
+
 		return options;
 	}
 
@@ -1128,7 +1128,7 @@ global without sharing class ISSP_OperationalCalendarController {
 		queryStr += ' ORDER BY Settlement_Day__c';
 
 		System.debug('queryStr: ' + queryStr);
-		//List<Operational_Calendar__c> operationsCalendar = (List<Operational_Calendar__c>) Database.query(queryStr); 
+		//List<Operational_Calendar__c> operationsCalendar = (List<Operational_Calendar__c>) Database.query(queryStr);
 
 		//System.debug('Operations: ' + operationsCalendar);
 		for(Operational_Calendar__c opc : Database.query(queryStr)) {
@@ -1236,8 +1236,8 @@ global without sharing class ISSP_OperationalCalendarController {
 
 		if(option == 'allservices') {
 			List<Services_Rendered__c> services = [SELECT ISO_Country_Code__c
-												   FROM Services_Rendered__c 
-												   WHERE Services_Rendered_to_Airline__c = :accountId AND ISO_Country_Code__c <> null];
+													 FROM Services_Rendered__c
+													 WHERE Services_Rendered_to_Airline__c = :accountId AND ISO_Country_Code__c <> null];
 			Set<String> countryCodes = new Set<String>();
 			for(Services_Rendered__c service : services) {
 				countryCodes.add(service.ISO_Country_Code__c);
@@ -1288,7 +1288,7 @@ global without sharing class ISSP_OperationalCalendarController {
 
 	private static String formatDate(Date dt) {
 		if(dt != null) {
-			Datetime dtOut = Datetime.newInstance(dt.year(), dt.month(), dt.day(), 0,0,0);   
+			Datetime dtOut = Datetime.newInstance(dt.year(), dt.month(), dt.day(), 0,0,0);
 			return dtOut.format('d MMM yyyy');
 		} else {
 			return '';
@@ -1346,8 +1346,8 @@ global without sharing class ISSP_OperationalCalendarController {
 		}
 	}
 
-	public class TableBodyWrapper {        
-		public List<List<CellWrapper>> body {get;set;} 
+	public class TableBodyWrapper {
+		public List<List<CellWrapper>> body {get;set;}
 
 		public TableBodyWrapper(List<Schema.FieldSetMember> fieldsList) {
 			this.body = new List<List<CellWrapper>>();

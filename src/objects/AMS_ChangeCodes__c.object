@@ -547,8 +547,8 @@ Values must be Separated by &quot;;&quot;</inlineHelpText>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Change_Code__c</field>
-            <operation>equals</operation>
-            <value>LGC</value>
+            <operation>contains</operation>
+            <value>IEP</value>
         </filters>
         <label>AMS_debug</label>
         <language>en_US</language>

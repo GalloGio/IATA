@@ -29,13 +29,13 @@ private class AMS_Change_Code_Notification_Contr_Test {
 		insert new List<Account> {airlineAccount, msoAccount};
 
 		Contact con = new Contact (
-		  AccountId = airlineAccount.id,
-		  RecordTypeId = conRtId,
-		  LastName = 'portalUser',
+			AccountId = airlineAccount.id,
+			RecordTypeId = conRtId,
+			LastName = 'portalUser',
 			FirstName = 'firstname',
 			Phone = '123456789',
-		  User_Portal_Status__c = 'Approved User'
-		  );
+			User_Portal_Status__c = 'Approved User'
+			);
 		insert con;
 
 		AMS_OSCAR__c oscar = new AMS_OSCAR__c();
@@ -103,13 +103,13 @@ private class AMS_Change_Code_Notification_Contr_Test {
 		insert new List<Account> {airlineAccount, msoAccount};
 
 		Contact con = new Contact (
-		  AccountId = airlineAccount.id,
-		  RecordTypeId = conRtId,
-		  LastName = 'portalUser',
+			AccountId = airlineAccount.id,
+			RecordTypeId = conRtId,
+			LastName = 'portalUser',
 			FirstName = 'firstname',
 			Phone = '123456789',
-		  User_Portal_Status__c = 'Approved User'
-		  );
+			User_Portal_Status__c = 'Approved User'
+			);
 		insert con;
 
 		Case ccase = new Case();

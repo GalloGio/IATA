@@ -1,0 +1,69 @@
+<aura:component controller="AWW_AccountPlanCtrl">
+    <aura:attribute name="accountId" type="Id"/>
+    <aura:attribute name="activityView" type="String" default="current"/>
+    <aura:attribute name="milestoneView" type="Boolean" default="false"/>
+    <aura:attribute name="historyData" type="Object"/>
+    <aura:attribute name="currentData" type="Object"/>
+    <aura:attribute name="data" type="Object"/>
+    <aura:attribute name="columns" type="List"/>
+    <aura:attribute name="canEdit" type="Boolean"/>
+    <aura:attribute name="sortBy" type="String"/>
+    <aura:attribute name="sortDirection" type="String"/>
+    <aura:attribute name="haveUserAMPIssuesAndPriorities" type="Boolean" default="fasle"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler name="refreshTab" event="c:AWW_RefreshTabEvent" action="{!c.refreshTab}"/>
+    <aura:handler name="closeMilestones" event="c:AWW_CloseMilestones" action="{!c.closeMilestones}"/>
+
+    <aura:if isTrue="{!!v.milestoneView}">
+        <div class="slds-p-around_medium">
+            <div class="slds-box slds-p-around_none slds-theme_shade">
+                <lightning:card class="bckColor" title="Activities" iconName="standard:event">
+                    <aura:set attribute="actions">
+                        <div class="slds-grid slds-gutters slds-grid_vertical-align-end">
+                            <div class="slds-col">
+                                <lightning:buttonGroup>
+                                    <lightning:button variant="{!if(v.activityView == 'current', 'Brand', 'Neutral')}" label="Current" title="Current" onclick="{!c.viewCurrent}"/>
+                                    <lightning:button variant="{!if(v.activityView == 'history', 'Brand', 'Neutral')}" label="History" title="History" onclick="{!c.viewHistory}"/> 
+                                </lightning:buttonGroup>
+                            </div>
+                            <div class="slds-col">
+                                <lightning:button variant="Neutral" label="Print" title="Print" onclick="{!c.print}"/>
+                            </div>
+                            <aura:if isTrue="{!v.canEdit}">
+                                <div class="slds-col">
+                                    <lightning:button variant="Neutral" label="New" title="New" onclick="{!c.new}"/> 
+                                </div>
+                                <aura:set attribute="else">
+                                    <aura:if isTrue="{!v.haveUserAMPIssuesAndPriorities}">
+                                        <div class="slds-col">
+                                            <lightning:button variant="Neutral" label="New" title="New" onclick="{!c.new}"/> 
+                                        </div>
+                                    </aura:if> 
+                                </aura:set>
+                            </aura:if> 
+                        </div>
+                    </aura:set>
+                </lightning:card>
+                <div class="slds-m-around_medium slds-table_bordered slds-border_left slds-border_right">
+                    <lightning:datatable
+                        keyField="rowId"
+                        data="{!v.data}"
+                        columns="{!v.columns}"
+                        resizeColumnDisabled="true"
+                        hideCheckboxColumn="true"
+                        onrowaction="{!c.handleRowAction}"
+                        sortedBy="{!v.sortBy}"
+                        sortedDirection="{!v.sortDirection}"
+                        onsort="{!c.handleSort}"/>
+                </div>
+            </div>
+        </div>
+        <aura:set attribute="else">
+            <c:AWW_AccountPlanMilestones aura:id="milestones" accountId="{!v.accountId}" canEdit="{!v.canEdit}"/>
+        </aura:set>
+    </aura:if>
+
+    <c:AWW_AccountPlanEdit aura:id="manage-record" accountId="{!v.accountId}"/>
+    <c:AWW_AccountPlanDelete aura:id="delete-record"/>     
+</aura:component>

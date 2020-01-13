@@ -1,0 +1,27 @@
+<aura:component controller="AMP_AccountNewsFeedExtension">
+    <aura:attribute name="accountId" type="Id"/>
+    <aura:attribute name="data" type="Object"/>
+    <aura:attribute name="columns" type="List"/>
+    <aura:attribute name="sortBy" type="String"/>
+    <aura:attribute name="sortDirection" type="String"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+    <div class="slds-p-around_medium">
+        <div class="slds-box slds-p-around_none slds-theme_shade">        
+            <lightning:card class="bckColor" title="News" iconName="standard:news">
+                <div class="slds-p-around_none slds-m-around_medium slds-table_striped slds-border_top slds-border_left slds-border_right">
+                    <lightning:datatable 
+                        keyField="time"
+                        data="{!v.data}"
+                        columns="{!v.columns}"
+                        resizeColumnDisabled="true"
+                        hideCheckboxColumn="true"
+                        sortedBy="{!v.sortBy}"
+                        sortedDirection="{!v.sortDirection}"
+                        onsort="{!c.handleSort}"/>
+                </div>
+            </lightning:card>
+        </div>
+    </div>
+</aura:component>

@@ -406,6 +406,16 @@
                     <default>false</default>
                     <label>Travel Agency Association</label>
                 </value>
+                <value>
+                    <fullName>IATAN Passenger Sales Agent (USA Only)</fullName>
+                    <default>false</default>
+                    <label>IATAN Passenger Sales Agent (USA Only)</label>
+                </value>
+                <value>
+                    <fullName>Travel Service Intermediaries-TSI (USA Only)</fullName>
+                    <default>false</default>
+                    <label>Travel Service Intermediaries-TSI (USA Only)</label>
+                </value>
             </valueSetDefinition>
             <valueSettings>
                 <controllingFieldValue>Governmental Institution</controllingFieldValue>
@@ -526,6 +536,14 @@
             <valueSettings>
                 <controllingFieldValue>Travel Agent</controllingFieldValue>
                 <valueName>TIDS Agent</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Travel Agent</controllingFieldValue>
+                <valueName>IATAN Passenger Sales Agent (USA Only)</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Travel Agent</controllingFieldValue>
+                <valueName>Travel Service Intermediaries-TSI (USA Only)</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Accommodation</controllingFieldValue>
