@@ -1593,15 +1593,17 @@ public without sharing class ISSP_Case {
 				 FROM User
 				 WHERE Email IN :setEmailPriority];
 
-		for(User user : lsUsersPriority) {
-			CaseTeamMember teammember = new CaseTeamMember(
-				ParentId = newCase.Id,
-				MemberId = user.Id,
-				TeamRoleId = PARTNER_USER_ROLE);
-			lsCaseTeamMembers.add(teammember);
-			lsNewEmails.add(user.Email);
-			setEmail.remove(user.Email);
+			for(User user : lsUsersPriority) {
+				CaseTeamMember teammember = new CaseTeamMember(
+					ParentId = newCase.Id,
+					MemberId = user.Id,
+					TeamRoleId = PARTNER_USER_ROLE);
+				lsCaseTeamMembers.add(teammember);
+				lsNewEmails.add(user.Email);
+				setEmail.remove(user.Email);
+			}
 		}
+
 		// Find the contacts for the emails not found
 		if (!setEmail.isEmpty()) {
 			list<Contact> listContact = [
@@ -1633,7 +1635,7 @@ public without sharing class ISSP_Case {
 		try {
 			this.e2cpFieldAccess = new E2CPFieldAccess(newCase.Id);
 			// modify the ccother field in the case before inserting the new team members
-			insertListAddressInE2CP_CCOthers(lsNewEmails);
+			insertListAddressInE2CP_CCOthers(listCCOthers);
 			insert lsCaseTeamMembers;
 			//finally sends an email to the full recipients list
 			EmailTemplate template = [SELECT Id FROM EmailTemplate WHERE DeveloperName = 'New_DPC_Case'];
