@@ -14,9 +14,9 @@ public class UploadMultipleFileToAmazonButtonCtrlTest {
 		controller.folder = '';
 		Test.StopTest();
 	}
-	
+
 	static testMethod void testCreateUploadFile() {
-		
+
 		Case cse = new Case();
 		insert cse;
 		String parentId = cse.Id;
@@ -24,9 +24,9 @@ public class UploadMultipleFileToAmazonButtonCtrlTest {
 		String contentType = 'application/pdf';
 		String folder = '/folder/' + filenameupload;
 		String credentialName = 'GenericAttach';
-		
+
 		UploadMultipleFileToAmazonButtonCtrl.UploadFile upf;
-		
+
 		Test.StartTest();
 		// test error
 		Long bigFilesize = UploadMultipleFileToAmazonButtonCtrl.MAX_FILE_SIZE + 1;
@@ -36,37 +36,37 @@ public class UploadMultipleFileToAmazonButtonCtrlTest {
 		Long filesize = 100;
 		upf = UploadMultipleFileToAmazonButtonCtrl.createUploadFile(parentId, filenameupload, contentType, filesize, folder, credentialName);
 		System.assert(upf.isSuccess);
-		
+
 		Test.StopTest();
-		
+
 	}
-	
-	
+
+
 	static testMethod void testCreateAmazonObject_Ok() {
 		Case cse = new Case();
 		insert cse;
 		String parentId = cse.Id;
 		Long filesize = 100;
 		String amazonKey = 'path/testfileName.pdf';
-		
+
 		Test.StartTest();
 		Boolean result = UploadMultipleFileToAmazonButtonCtrl.createAmazonFileObject(amazonKey, filesize, parentId, null, null, null);
 		Test.StopTest();
-		
+
 		System.assert(result);
 		list<AmazonFile__c> listAmazonFile = [Select Id from AmazonFile__c where Case__c = :cse.Id ];
 		System.assert(listAmazonFile.size() == 1);
 	}
-	
+
 	static testMethod void testCreateAmazonObject_Error() {
 		String parentId = '';
 		Long filesize = 100;
 		String amazonKey = null;
-		
+
 		Test.StartTest();
 		Boolean result = UploadMultipleFileToAmazonButtonCtrl.createAmazonFileObject(amazonKey, filesize, parentId, null, null, null);
 		Test.StopTest();
-		
+
 		System.assert(!result);
 	}
 
@@ -79,5 +79,5 @@ public class UploadMultipleFileToAmazonButtonCtrlTest {
 		system.debug(result);
 		Test.StopTest();
 	}
-	
+
 }

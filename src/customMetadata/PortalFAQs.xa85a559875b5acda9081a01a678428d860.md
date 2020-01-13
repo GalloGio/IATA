@@ -80,7 +80,7 @@
     </values>
     <values>
         <field>DataSubtopicName__c</field>
-        <value xsi:type="xsd:string">General_Information_FFP_Frequent_Flyer_Program_Benchmark</value>
+        <value xsi:type="xsd:string">General_Information_FFP</value>
     </values>
     <values>
         <field>DataTopicName__c</field>
@@ -109,6 +109,10 @@
     <values>
         <field>Permission_Set_Name__c</field>
         <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Requires_Level2_Registration__c</field>
+        <value xsi:type="xsd:boolean">false</value>
     </values>
     <values>
         <field>SectorExceptions__c</field>

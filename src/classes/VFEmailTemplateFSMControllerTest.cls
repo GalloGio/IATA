@@ -10,7 +10,7 @@ public class VFEmailTemplateFSMControllerTest {
 		template.Signature_Details__c = 'signature';
 		template.Text_1__c = 'text1';
 		insert template;
-		
+
 		Case caseObj = new Case();
 		caseObj.Reminder_EmailTemplate__c = template.id;
 		caseObj.Financial_Security_Amount_2__c = 100;
@@ -18,18 +18,18 @@ public class VFEmailTemplateFSMControllerTest {
 		insert caseObj;
 		return caseObj;
 	}
-	
+
 	static testMethod void testInit() {
 		Case caseObj = createCase();
-		
+
 		Test.StartTest();
 		VFEmailTemplateFSMController ctrl = new VFEmailTemplateFSMController();
 		ctrl.caseObjId = caseObj.Id;
 		ctrl.init();
 		Test.StopTest();
-		
+
 	}
-	
+
 	static testMethod void testImageHeader() {
 		//Folder folder = [Select Id from Folder limit 1];
 		Folder folder = [Select Id from Folder WHERE AccessType = 'Public' AND Type = 'Document' limit 1];
@@ -39,7 +39,7 @@ public class VFEmailTemplateFSMControllerTest {
 		//DTULLO: Workaround for folder id: use personal folder...
 		//Document doc = new Document( Name = 'FSM Email Template Header', FolderId = UserInfo.getUserId());
 		insert doc;
-		
+
 		Test.StartTest();
 		VFEmailTemplateFSMController ctrl = new VFEmailTemplateFSMController();
 		ctrl.getImageHeader();

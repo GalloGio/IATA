@@ -12,7 +12,7 @@
  * coverage, and prevent regressions. All Apex classes are
  * required to have at least 75% code coverage in order to be deployed
  * to a production organization. In addition, all triggers must have some code coverage.
- * 
+ *
  * The @isTest class annotation indicates this class only contains test
  * methods. Classes defined with the @isTest annotation do not count against
  * the organization size limit for all Apex scripts.
@@ -21,16 +21,16 @@
  */
 @isTest
 private class MultiselectControllerTest {
-    static testMethod void testMultiselectController() {
-        MultiselectController c = new MultiselectController();
-        
-        c.leftOptions = new List<SelectOption>();
-        c.rightOptions = new List<SelectOption>();
+	static testMethod void testMultiselectController() {
+		MultiselectController c = new MultiselectController();
 
-        c.leftOptionsHidden = 'A&a&b&b&C&c';
-        c.rightOptionsHidden = '';
-        
-        System.assertEquals(c.leftOptions.size(), 3);
-        System.assertEquals(c.rightOptions.size(), 0);
-    }
+		c.leftOptions = new List<SelectOption>();
+		c.rightOptions = new List<SelectOption>();
+
+		c.leftOptionsHidden = 'A&a&b&b&C&c';
+		c.rightOptionsHidden = '';
+
+		System.assertEquals(c.leftOptions.size(), 3);
+		System.assertEquals(c.rightOptions.size(), 0);
+	}
 }
