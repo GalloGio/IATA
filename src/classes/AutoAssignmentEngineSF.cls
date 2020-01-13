@@ -28,11 +28,11 @@ global class AutoAssignmentEngineSF implements Database.Batchable<sObject> {
 				String mailSubject = 'AutoAssignmentEngine: Job failed!';
 				String errorMessage = 'CompletedDate: ' + a.CompletedDate + 'Number of Cases processed: ' + a.JobItemsProcessed;
 
-				emailAlert(mailSubject, errorMessage, getUserIds(getSupportEmails()));
+				emailAlert(mailSubject, errorMessage, getSupportEmails());
 			}
 
 		} catch (Exception ex) {
-			emailAlert('Auto Assignment Engine Exception', ex.getMessage() + ' ' + ex.getStackTraceString(), null, getUserIds(getSupportEmails()));
+			emailAlert('Auto Assignment Engine Exception', ex.getMessage() + ' ' + ex.getStackTraceString(), null, getSupportEmails());
 		}
 
 	}
@@ -54,11 +54,7 @@ global class AutoAssignmentEngineSF implements Database.Batchable<sObject> {
 		} catch (Exception ex)   {
 			String mailSubject = 'AutoAssignmentEngine: No System Settings were found!';
 			String errorMessage = ex.getStackTraceString();
-
-			List<ID> supportUserIDs = new List<ID>();
-
-			supportUserIDs = getUserIds(getSupportEmails());
-			emailAlert(mailSubject, errorMessage, supportUserIDs);
+			emailAlert(mailSubject, errorMessage, getSupportEmails());
 
 		}
 		Auto_Queue__c[] aAutoQueue = [select Queue_ID__c from Auto_Queue__c where Active__c = true and Region__c in : regionList];
@@ -100,9 +96,7 @@ global class AutoAssignmentEngineSF implements Database.Batchable<sObject> {
 
 			//Need to get the IDs from the internal users to whom we want to send the email notifications
 			List<ID> regionUserIDs =  new List<ID>();
-			List<ID> supportUserIDs = new List<ID>();
-
-			supportUserIDs = getUserIds(getSupportEmails());
+			List<ID> supportUserIDs = getSupportEmails();
 			// ******************************
 			// 1) Calculate Case Skills
 			// ******************************
@@ -476,9 +470,8 @@ global class AutoAssignmentEngineSF implements Database.Batchable<sObject> {
 	private static List<String> getSupportEmails() {
 		List<String> supEmails = new List<String>();
 		for (SalesforceSupportEmails__c email : SalesforceSupportEmails__c.getAll().values())
-			supEmails.add(email.Support_Email__c);
+			supEmails.add(email.Support_User_Id__c);
 
 		return supEmails;
 	}
-
 }

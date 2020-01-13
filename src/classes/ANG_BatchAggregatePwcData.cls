@@ -248,19 +248,19 @@ global class ANG_BatchAggregatePwcData implements Database.Batchable<Account>, D
 		if (!upsertErrors.isEmpty()){
 
 			System.debug('[ANG_BatchAggregatePwcData] upsertErrors: '+upsertErrors);
-			List<String> emailAddresses = new List<String>();
-			for (SalesforceSupportEmails__c supportEmail: SalesforceSupportEmails__c.getAll().values()){
-				emailAddresses.add(supportEmail.Support_Email__c);
-				//add more email addresses if needed
-			}
-
-			if (!emailAddresses.isEmpty()){
+			List<Messaging.SingleEmailMessage> mails = new List<Messaging.SingleEmailMessage>();
+			for (SalesforceSupportEmails__c supportEmail: SalesforceSupportEmails__c.getAll().values()){								
 				Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-				mail.setToAddresses(emailAddresses);
+				mail.setTargetObjectId(supportEmail.Support_User_Id__c);
 				mail.setSubject('PWC Batch Completed With Errors');
 				mail.setSenderDisplayName('Batch Processing Completed');
 				mail.setPlainTextBody('Batch Process has been completed. Start Time: ' + dStartTime + '; endTime ' + system.now() + '\n\nERRORS:\n' + String.join(upsertErrors,'\n'));
-				Messaging.sendEmail(new Messaging.SingleEmailMessage[] {mail});
+				mail.setSaveAsActivity(false);
+				mails.add(mail);
+			}
+
+			if (!mails.isEmpty()){
+				Messaging.sendEmail(mails);
 			}
 		}
 	}

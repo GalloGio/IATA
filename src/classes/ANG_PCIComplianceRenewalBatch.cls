@@ -75,21 +75,22 @@ global class ANG_PCIComplianceRenewalBatch implements Database.Batchable<Account
 				noContactAgents = +String.join(agenciesWithoutContact,'\n');
 
 			//send email w/ errors to support
-			List<String> emailAddresses = new List<String>();
+			List<Messaging.SingleEmailMessage> mails = new List<Messaging.SingleEmailMessage>();
 			for (SalesforceSupportEmails__c supportEmail: SalesforceSupportEmails__c.getAll().values()){
-								emailAddresses.add(supportEmail.Support_Email__c);
-								//add more email addresses if needed
-						}
+				Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+				mail.setTargetObjectId(supportEmail.Support_User_Id__c);
+				mail.setSubject('ANG_PCIComplianceRenewalBatch Completed With Issues - End time: '+ System.now());
+				mail.setSenderDisplayName('Batch Processing Completed');
+				mail.setPlainTextBody('Batch Process has been completed with issues. Some OSCARs were not created due to the following issues: \n\n\tUNEXPECTED ERRORS:\n\n'
+					+errorMsg+'\n\n-------------------\n\n\tAGENTS WITHOUT VALID CONTACTS:\n\n'+noContactAgents);
+				mail.setSaveAsActivity(false);
+				mails.add(mail);
+				//add more email addresses if needed
+			}
 
-						if (!emailAddresses.isEmpty()){
-								Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-								mail.setToAddresses(emailAddresses);
-								mail.setSubject('ANG_PCIComplianceRenewalBatch Completed With Issues - End time: '+ System.now());
-								mail.setSenderDisplayName('Batch Processing Completed');
-								mail.setPlainTextBody('Batch Process has been completed with issues. Some OSCARs were not created due to the following issues: \n\n\tUNEXPECTED ERRORS:\n\n'
-								 +errorMsg+'\n\n-------------------\n\n\tAGENTS WITHOUT VALID CONTACTS:\n\n'+noContactAgents);
-								Messaging.sendEmail(new Messaging.SingleEmailMessage[] {mail});
-						}
+			if (!mails.isEmpty()){
+					Messaging.sendEmail(mails);
+			}
 
 			System.debug('[ANG_PCIComplianceRenewalBatch] ERRORS: '+errorMsg);
 			System.debug('[ANG_PCIComplianceRenewalBatch] AGENTS WITHOUT CONTACTS: '+noContactAgents);

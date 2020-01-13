@@ -159,10 +159,6 @@ global class IfapProcessResultsBatch implements Database.Batchable<sObject>, Dat
 			System.debug(LoggingLevel.ERROR, '######################### (IfapProcessResultsBatch) BATCH FINISHED: '+errors.size()+' ERRORS');
 
 			//Sending email if something wrong happend
-			List<String> supEmails = new List<String>();
-			 for (SalesforceSupportEmails__c email : SalesforceSupportEmails__c.getAll().values())
-					supEmails.add(email.Support_Email__c);
-
 			if(!errorMap.isEmpty()){
 				String body = 'The IfapProcessResultsBatch job has finished\n'
 								+ 'There were ' + errorMap.size() + ' erros. Please find error list attached.';
@@ -177,20 +173,26 @@ global class IfapProcessResultsBatch implements Database.Batchable<sObject>, Dat
 					finalstr = finalstr + recordString;
 				}
 
-				Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
+				List<Messaging.SingleEmailMessage> emails = new List<Messaging.SingleEmailMessage>();
+				for (SalesforceSupportEmails__c supportEmail : SalesforceSupportEmails__c.getAll().values()){
+					Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
 
-				Messaging.EmailFileAttachment efa = new Messaging.EmailFileAttachment();
-				efa.setFileName('IfapProcessResultsBatchErrors_'+datetime.now()+'.csv');
-				efa.setBody(Blob.valueOf(finalstr));
+					Messaging.EmailFileAttachment efa = new Messaging.EmailFileAttachment();
+					efa.setFileName('IfapProcessResultsBatchErrors_'+datetime.now()+'.csv');
+					efa.setBody(Blob.valueOf(finalstr));
 
-				//Set email parametrs
-				email.setSubject(subject);
-				email.setToAddresses(supEmails);
-				email.setPlainTextBody( body );
-				email.setFileAttachments(new Messaging.EmailFileAttachment[] {efa});
+					//Set email parametrs
+					email.setSubject(subject);
+					email.setTargetObjectId(supportEmail.Support_User_Id__c);
+					email.setPlainTextBody( body );
+					email.setFileAttachments(new Messaging.EmailFileAttachment[] {efa});
+					email.setSaveAsActivity(false);
+					emails.add(email);
+				}
 
-				Messaging.SendEmailResult [] r = Messaging.sendEmail(new Messaging.SingleEmailMessage[] {email});
-
+				if (!emails.isEmpty()){
+					Messaging.sendEmail(emails);
+				}
 			}
 
 		}catch(Exception e){

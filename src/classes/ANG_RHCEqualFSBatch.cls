@@ -56,24 +56,22 @@ global class ANG_RHCEqualFSBatch implements Database.Batchable<Account>, Databas
 			errors.add('Error running batch for Agencies with Iata code(s): '+String.join(iataCodesAndNames,'\n')+' - '+e.getMessage()+' - '+e.getStackTraceString());
 		}
 
-		List<String> emailAddresses = new List<String>();
-
-		if(!errors.isEmpty()){
-
+		if(!errors.isEmpty()){				
+			List<Messaging.SingleEmailMessage> mails = new List<Messaging.SingleEmailMessage>();
 			for(SalesforceSupportEmails__c supportEmail: SalesforceSupportEmails__c.getAll().values()){
-				emailAddresses.add(supportEmail.Support_Email__c);
-				//add more email addresses if needed
+				Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+				mail.setTargetObjectId(supportEmail.Support_User_Id__c);	
+				mail.setSubject((applyFlag ? 'Apply' : 'Revert') + ' RHC Equal to FS Batch completed' + (errors.isEmpty() ? ' successfully: '+iataCodesAndNames.size()+' agents processed.'  :' with errors')+' - End time: '+ System.now());
+				mail.setPlainTextBody('Batch Process has been completed'+ (errors.isEmpty() ? ' successfully.'+'\n\nBSPs: '+String.join(new List<String>(bsps), ',') + '\n\nAgencies processed:\n\n'+String.join(iataCodesAndNames,'\n') : ' with errors: ' +
+				(errors.isEmpty() ?'':'\n\n\tERRORS:\n\n' +errors+'\n')));
+				mails.add(mail);
+			}
+
+			if (!mails.isEmpty()){
+				Messaging.sendEmail(mails);
 			}
 		}
-
-		Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-		emailAddresses.add(UserInfo.getUserEmail());
-		mail.setToAddresses(emailAddresses);
-		mail.setSubject((applyFlag ? 'Apply' : 'Revert') + ' RHC Equal to FS Batch completed' + (errors.isEmpty() ? ' successfully: '+iataCodesAndNames.size()+' agents processed.'  :' with errors')+' - End time: '+ System.now());
-		mail.setSenderDisplayName('Batch Processing Completed');
-		mail.setPlainTextBody('Batch Process has been completed'+ (errors.isEmpty() ? ' successfully.'+'\n\nBSPs: '+String.join(new List<String>(bsps), ',') + '\n\nAgencies processed:\n\n'+String.join(iataCodesAndNames,'\n') : ' with errors: ' +
-		(errors.isEmpty() ?'':'\n\n\tERRORS:\n\n' +errors+'\n')));
-		Messaging.sendEmail(new Messaging.SingleEmailMessage[] {mail});
+		
 
 		System.debug('[ANG_RHCEqualFSBatch] ERRORS: '+errors);
 		System.debug('[ANG_RHCEqualFSBatch] PROCESSED AGENTS: '+iataCodesAndNames.size());
