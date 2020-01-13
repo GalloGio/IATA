@@ -44,4 +44,5 @@
     </fields>
     <label>Account</label>
     <pluralLabel>Accounts</pluralLabel>
+    <publishBehavior>PublishImmediately</publishBehavior>
 </CustomObject>
