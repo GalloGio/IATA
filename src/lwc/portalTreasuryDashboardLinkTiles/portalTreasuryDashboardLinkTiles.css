@@ -1,0 +1,71 @@
+.link {
+  width: 54px;
+  height: 54px;
+  object-fit: contain;
+}
+
+.subtitleHeight{
+  min-height: 75px;
+}
+
+.sideLinks {
+    display:flex;
+}
+
+.linksContainer {
+    display: flex;
+    padding-bottom: 20px;
+    flex-direction: column;
+}
+
+.linksCard {
+    box-shadow: 5px 5px 20px #999999;
+    border-radius: 1px;
+    border: solid 1px#FFFFFF;
+    background-color:#FFFFFF;
+}
+
+.linksContainer .links {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 30px;
+}
+
+.linksContainer .links>div {
+     display: flex;
+     justify-content: center;
+     padding: 0 20px;
+     margin-bottom:10px;
+     border-right: 2px solid rgba(0, 0, 0, 0.1);
+ }
+
+ .linksContainer .links>div:last-child {
+     border-right: 0;
+ }
+
+.linksContainer .links>div a {
+    color: rgba(0, 0, 0, 0.8);
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* modal */
+.linksModal {
+    position: fixed;
+    z-index: 9999;
+    padding-top: 100px;
+    padding-bottom: 50px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+}
+
+.modalBottom {
+    margin: auto auto 50px !important;
+}
+

@@ -66,7 +66,7 @@ public class ISSP_AMC_Constants {
 
 
 
-	//Constants for Type_of_Operation__c 
+	//Constants for Type_of_Operation__c
 	//Airline Designator Code
 	public static final String AMC_PAR_TYPEOFOPERATION_SCHEDULED_PASSENGER = 'Scheduled Passenger';
 	public static final String AMC_PAR_TYPEOFOPERATION_SCHEDULED_CARGO = 'Scheduled Cargo';
@@ -77,8 +77,8 @@ public class ISSP_AMC_Constants {
 	public static final String AMC_PAR_TYPEOFOPERATION_ULD = 'ULD';
 	public static final String AMC_PAR_TYPEOFOPERATION_BUS_COMPANY = 'Bus Company';
 	public static final String AMC_PAR_TYPEOFOPERATION_RAILWAY_COMPANY = 'Railway Company';
-	
-	//Constants for Location Type 
+
+	//Constants for Location Type
 	//Airline Location Identifier
 	public static final String AMC_PAR_LOCATION_TYPE_AIRPORT = 'Airport';
 	public static final String AMC_PAR_LOCATION_TYPE_HELIPORT = 'Heliport';
@@ -87,13 +87,13 @@ public class ISSP_AMC_Constants {
 	public static final String AMC_PAR_LOCATION_TYPE_FERRY_PORT = 'Ferry Port';
 	public static final String AMC_PAR_LOCATION_TYPE_OFF_LINE_POINT = 'Off-line Point';
 	public static final String AMC_PAR_LOCATION_TYPE_METROPOLITAN_AREA = 'Metropolitan Area';
-	
+
 
 	//Constants for ACLI_Codes__c
-	public Enum AMC_PAR_ACLI_CODES_ENUM { AMC_PAR_ACLI_CODES_DESIGNATOR_CODE, 
-										  AMC_PAR_ACLI_CODES_ACCOUNTING_OR_PREFIX_CODE, 
-										  AMC_PAR_ACLI_CODES_LOCATION_CODE,
-										  AMC_PAR_ACLI_CODES_BAGGAGE_CODE }
+	public Enum AMC_PAR_ACLI_CODES_ENUM { AMC_PAR_ACLI_CODES_DESIGNATOR_CODE,
+											AMC_PAR_ACLI_CODES_ACCOUNTING_OR_PREFIX_CODE,
+											AMC_PAR_ACLI_CODES_LOCATION_CODE,
+											AMC_PAR_ACLI_CODES_BAGGAGE_CODE }
 	public static final String AMC_PAR_ACLI_CODES_DESIGNATOR_CODE = 'Designator Code';
 	public static final String AMC_PAR_ACLI_CODES_ACCOUNTING_OR_PREFIX_CODE = 'Accounting or Prefix Code';
 	public static final String AMC_PAR_ACLI_CODES_LOCATION_CODE = 'Location Code';
@@ -142,5 +142,5 @@ public class ISSP_AMC_Constants {
 	// Constants for Scenario
 	public static final String AMC_CASE_SCENARIO_WITHDRAW = 'Application Code Withdraw';
 
-	
+
 }

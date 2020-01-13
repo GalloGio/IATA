@@ -568,6 +568,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 
                 if (results === 'okauto' || results === 'ok') {
                     this.SSWSSuccessModal = true;
+                    this.clearURL();
                 }
             });
     }
@@ -753,12 +754,10 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                 //this.showSpinner = false;
                 if (this.isAdmin) {
                     this.showPopUp = false; // for admins no success box
+                    this.dispatchEvent(new CustomEvent('requestcompleted', { detail: { success: true } }));// sends to parent the nr of records
                 } else {
                     this.showSpinner = false;
                 }
-
-                this.dispatchEvent(new CustomEvent('requestcompleted', { detail: { success: true } }));// sends to parent the nr of records
-
             }).catch(error => {
                 console.error(error);
             });
@@ -781,4 +780,14 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 
     }
 
+    clearURL() {
+        let windowURL = window.location.href;
+        windowURL = windowURL.split('?');
+        
+        if (windowURL[1].split('&').length > 1) {
+            let param = windowURL[1].split('&');
+            windowURL = windowURL[0] + '?' + param[0];
+            window.history.pushState(null, null, windowURL);
+        }
+    }
 }

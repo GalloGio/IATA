@@ -1,0 +1,5 @@
+<messaging:emailTemplate subject="{!$Label.CSP_Lvl2_Reminder_Subject}" recipientType="User" language="{!recipient.languagelocalekey}">
+<messaging:plainTextEmailBody >
+    <c:CSP_Lvl2_Reminder_Notification />
+</messaging:plainTextEmailBody>
+</messaging:emailTemplate>

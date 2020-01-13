@@ -179,7 +179,7 @@ export default class Lookup extends LightningElement {
         this.searchResults = [];
 
         // Notify parent component that selection has changed **Email Only**
-        if (this.itemName === 'emaillookup') {
+        if (this.itemName === 'emaillookup' || this.itemName === 'servicesearch') {
             this.dispatchEvent(new CustomEvent('selectionchange'));
             this.selection = savepoint;
         }

@@ -1,33 +1,33 @@
 @isTest
 private class PlatformEvents_Helper_Test {
 
-    static testMethod void Test_Platform_Event_On_Account() {
-        IATA_ISO_Country__c country = new IATA_ISO_Country__c (Name = 'US', ISO_Code__c = 'US');
-        insert country;
+	static testMethod void Test_Platform_Event_On_Account() {
+		IATA_ISO_Country__c country = new IATA_ISO_Country__c (Name = 'US', ISO_Code__c = 'US');
+		insert country;
 
-		
+
 		Account provider = new Account(Name = 'ProviderTest1',
 			Accreditation_date__c = Date.today(),
 			IataCode__c = '1234',
 			status__C='Active'
 			);
-        
-        test.startTest();
-        	insert provider;
-        	provider.IataCode__c = '1235';
-        	update provider;
-        
-        	delete provider;
 
-        	undelete provider;
+		test.startTest();
+			insert provider;
+			provider.IataCode__c = '1235';
+			update provider;
 
-        test.stopTest();
-    }
-    
-    
-    static testMethod void Test_Platform_Event_On_Contact() {
-    	IATA_ISO_Country__c country = new IATA_ISO_Country__c (Name = 'US', ISO_Code__c = 'US');
-        insert country;
+			delete provider;
+
+			undelete provider;
+
+		test.stopTest();
+	}
+
+
+	static testMethod void Test_Platform_Event_On_Contact() {
+		IATA_ISO_Country__c country = new IATA_ISO_Country__c (Name = 'US', ISO_Code__c = 'US');
+		insert country;
 
 		Account provider = new Account(Name = 'ProviderTest1',
 			Accreditation_date__c = Date.today(),
@@ -35,29 +35,29 @@ private class PlatformEvents_Helper_Test {
 			status__C='Active'
 			);
 		insert provider;
-		
-        Contact con = new Contact(FirstName='test', LastName='test', AccountId=provider.Id, User_Portal_Status__c = 'Approved Admin');
-        
-        test.startTest();
-        	insert con;
-        
-	        con.phone = '123123132';
-        
-        	update con;
-        
-        	delete con;
 
-        	//undelete con;
+		Contact con = new Contact(FirstName='test', LastName='test', AccountId=provider.Id, User_Portal_Status__c = 'Approved Admin');
 
-        test.stopTest();
-    }
-    
-    
-    static testMethod void Test_Platform_Event_On_PArtner_Product() {
-    	IATA_ISO_Country__c country = new IATA_ISO_Country__c (Name = 'US', ISO_Code__c = 'US');
-        insert country;
+		test.startTest();
+			insert con;
 
-		
+			con.phone = '123123132';
+
+			update con;
+
+			delete con;
+
+			//undelete con;
+
+		test.stopTest();
+	}
+
+
+	static testMethod void Test_Platform_Event_On_PArtner_Product() {
+		IATA_ISO_Country__c country = new IATA_ISO_Country__c (Name = 'US', ISO_Code__c = 'US');
+		insert country;
+
+
 		Account account = new Account(Name = 'ProviderTest1',
 			Accreditation_date__c = Date.today(),
 			IataCode__c = '1234',
@@ -67,27 +67,31 @@ private class PlatformEvents_Helper_Test {
 
 		Account_Role__c provider = new Account_Role__c();
 		provider.RecordTypeId = TIP_UTils.ACCOUNT_ROLE_PAYMENT_PROVIDER_RECORDTYPE_ID;
-        provider.Account__c = account.Id;
-        provider.Provider_Code__c = '1000';
-        provider.HQ_Location__c = country.Id;
-        insert provider;
+		provider.Account__c = account.Id;
+		provider.Provider_Code__c = '1000';
+		provider.HQ_Location__c = country.Id;
+		insert provider;
 
-        Contact contact = new Contact(FirstName = 'First Name', LastName = 'Last Name2', Salutation = 'Dear', Title = 'Eng.', Email = 'lastname2@test.com', Phone = '123456789');
-        insert contact;
+		Contact contact = new Contact(FirstName = 'First Name', LastName = 'Last Name2', Salutation = 'Dear', Title = 'Eng.', Email = 'lastname2@test.com', Phone = '123456789');
+		insert contact;
 
-        Account_Contact_Role__c acr = new Account_Contact_Role__c();
-        acr.Account__c = account.Id;
-        acr.Account_Role__c = provider.Id;
-        acr.Contact_Role__c = 'Primary Contact';
-        acr.Contact__c = contact.Id;
-        acr.Service_Rendered__c = 'TIP';
-        insert acr;
+		Id functionalRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'Functional');
 
-        //provider.Status__c = TIP_UTils.PARTNER_STATUS_ACTIVE;
-        provider.Effective_From_Date__c = System.today();
+		Account_Contact_Role__c acr = new Account_Contact_Role__c();
+		acr.Account__c = account.Id;
+		acr.Account_Role__c = provider.Id;
+		acr.Contact_Roles__c = createContactRoles('1').Id;
+		acr.RecordTypeId = functionalRecordTypeId;
+		acr.Contact_Role__c = 'Primary Contact';
+		acr.Contact__c = contact.Id;
+		acr.Service_Rendered__c = 'TIP';
+		insert acr;
+
+		//provider.Status__c = TIP_UTils.PARTNER_STATUS_ACTIVE;
+		provider.Effective_From_Date__c = System.today();
 		update provider;
-		
-		Partner_products__c product = new Partner_products__c(Name = 'ProductTest1', 
+
+		Partner_products__c product = new Partner_products__c(Name = 'ProductTest1',
 			PP_Payment_Product_Code__c = 'co',
 			PP_Form_of_payment__c = 'CC',
 			Provider__c = account.Id,
@@ -104,23 +108,23 @@ private class PlatformEvents_Helper_Test {
 			PP_status__c = 'ACTIVE',
 			PP_Payment_Network__c = 'AX',
 			PP_Category__c = 'CONSUMER');
-			
+
 		test.startTest();
 		insert product;
-		
-		product.PP_Payment_Product_Code__c = 'CD';       
-        update product;
-        
-        delete product;
 
-       	undelete product;
+		product.PP_Payment_Product_Code__c = 'CD';
+		update product;
 
-        test.stopTest();
-    }
-    
-    static testMethod void Test_Platform_Event_On_PArtner_Product_BIN_Range() {
-    	IATA_ISO_Country__c country = new IATA_ISO_Country__c (Name = 'US', ISO_Code__c = 'US');
-        insert country;
+		delete product;
+
+	   	undelete product;
+
+		test.stopTest();
+	}
+
+	static testMethod void Test_Platform_Event_On_PArtner_Product_BIN_Range() {
+		IATA_ISO_Country__c country = new IATA_ISO_Country__c (Name = 'US', ISO_Code__c = 'US');
+		insert country;
 
 		Account account = new Account(Name = 'ProviderTest1',
 			Accreditation_date__c = Date.today(),
@@ -131,27 +135,31 @@ private class PlatformEvents_Helper_Test {
 
 		Account_Role__c provider = new Account_Role__c();
 		provider.RecordTypeId = TIP_UTils.ACCOUNT_ROLE_PAYMENT_PROVIDER_RECORDTYPE_ID;
-        provider.Account__c = account.Id;
-        provider.Provider_Code__c = '1000';
-        provider.HQ_Location__c = country.Id;
-        insert provider;
+		provider.Account__c = account.Id;
+		provider.Provider_Code__c = '1000';
+		provider.HQ_Location__c = country.Id;
+		insert provider;
 
-        Contact contact = new Contact(FirstName = 'First Name', LastName = 'Last Name2', Salutation = 'Dear', Title = 'Eng.', Email = 'lastname2@test.com', Phone = '123456789');
-        insert contact;
+		Contact contact = new Contact(FirstName = 'First Name', LastName = 'Last Name2', Salutation = 'Dear', Title = 'Eng.', Email = 'lastname2@test.com', Phone = '123456789');
+		insert contact;
 
-        Account_Contact_Role__c acr = new Account_Contact_Role__c();
-        acr.Account__c = account.Id;
-        acr.Account_Role__c = provider.Id;
-        acr.Contact_Role__c = 'Primary Contact';
-        acr.Contact__c = contact.Id;
-        acr.Service_Rendered__c = 'TIP';
-        insert acr;
+		Id functionalRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'Functional');
 
-        //provider.Status__c = TIP_UTils.PARTNER_STATUS_ACTIVE;
-        provider.Effective_From_Date__c = System.today();
+		Account_Contact_Role__c acr = new Account_Contact_Role__c();
+		acr.Account__c = account.Id;
+		acr.Account_Role__c = provider.Id;
+		acr.Contact_Roles__c = createContactRoles('1').Id;
+		acr.RecordTypeId = functionalRecordTypeId;
+		acr.Contact_Role__c = 'Primary Contact';
+		acr.Contact__c = contact.Id;
+		acr.Service_Rendered__c = 'TIP';
+		insert acr;
+
+		//provider.Status__c = TIP_UTils.PARTNER_STATUS_ACTIVE;
+		provider.Effective_From_Date__c = System.today();
 		update provider;
-		
-		Partner_products__c product = new Partner_products__c(Name = 'ProductTest1', 
+
+		Partner_products__c product = new Partner_products__c(Name = 'ProductTest1',
 			PP_Payment_Product_Code__c = 'co',
 			PP_Form_of_payment__c = 'CC',
 			Provider__c = account.Id,
@@ -169,32 +177,32 @@ private class PlatformEvents_Helper_Test {
 			PP_Payment_Network__c = 'AX',
 			PP_Category__c = 'CONSUMER');
 		insert product;
-		
-		
+
+
 		TIP_BIN_Range__c BinRange = new TIP_BIN_Range__c(TIP_Payment_Provider_Product__c = product.Id,
 			TIP_Effective_From_Date__c = Date.today(),
 			TIP_Range_Start__c = '5000',
 			TIP_Range_End__c = '5500',
 			RecordTypeId = TIP_Utils.BIN_RANGE_PROVIDER_RECORD_TYPE_ID);
-		
+
 		test.startTest();
-        	insert BinRange;
-        
-	        //BinRange.TIP_Range_End__c = '6000';
-	        BinRange.TIP_Effective_To_Date__c = Date.today()+30;
-        
-        	update BinRange;
-        
-        	delete BinRange;
+			insert BinRange;
 
-        	undelete BinRange;
+			//BinRange.TIP_Range_End__c = '6000';
+			BinRange.TIP_Effective_To_Date__c = Date.today()+30;
 
-        test.stopTest();
-    }
-    
-    static testMethod void Test_Platform_Event_On_PArtner_Product_Config() {
-    	IATA_ISO_Country__c country = new IATA_ISO_Country__c (Name = 'US', ISO_Code__c = 'US', BSP_Country_free_text__c = 'US');
-        insert country;
+			update BinRange;
+
+			delete BinRange;
+
+			undelete BinRange;
+
+		test.stopTest();
+	}
+
+	static testMethod void Test_Platform_Event_On_PArtner_Product_Config() {
+		IATA_ISO_Country__c country = new IATA_ISO_Country__c (Name = 'US', ISO_Code__c = 'US', BSP_Country_free_text__c = 'US');
+		insert country;
 
 		Account account = new Account(Name = 'ProviderTest1',
 					Accreditation_date__c = Date.today(),
@@ -205,27 +213,31 @@ private class PlatformEvents_Helper_Test {
 
 		Account_Role__c provider = new Account_Role__c();
 		provider.RecordTypeId = TIP_UTils.ACCOUNT_ROLE_PAYMENT_PROVIDER_RECORDTYPE_ID;
-        provider.Account__c = account.Id;
-        provider.Provider_Code__c = '1000';
-        provider.HQ_Location__c = country.Id;
-        insert provider;
+		provider.Account__c = account.Id;
+		provider.Provider_Code__c = '1000';
+		provider.HQ_Location__c = country.Id;
+		insert provider;
 
-        Contact contact = new Contact(FirstName = 'First Name', LastName = 'Last Name2', Salutation = 'Dear', Title = 'Eng.', Email = 'lastname2@test.com', Phone = '123456789');
-        insert contact;
+		Contact contact = new Contact(FirstName = 'First Name', LastName = 'Last Name2', Salutation = 'Dear', Title = 'Eng.', Email = 'lastname2@test.com', Phone = '123456789');
+		insert contact;
 
-        Account_Contact_Role__c acr = new Account_Contact_Role__c();
-        acr.Account__c = account.Id;
-        acr.Account_Role__c = provider.Id;
-        acr.Contact_Role__c = 'Primary Contact';
-        acr.Contact__c = contact.Id;
-        acr.Service_Rendered__c = 'TIP';
-        insert acr;
+		Id functionalRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'Functional');
 
-        //provider.Status__c = TIP_UTils.PARTNER_STATUS_ACTIVE;
-        provider.Effective_From_Date__c = System.today();
+		Account_Contact_Role__c acr = new Account_Contact_Role__c();
+		acr.Account__c = account.Id;
+		acr.Account_Role__c = provider.Id;
+		acr.Contact_Roles__c = createContactRoles('1').Id;
+		acr.RecordTypeId = functionalRecordTypeId;
+		acr.Contact_Role__c = 'Primary Contact';
+		acr.Contact__c = contact.Id;
+		acr.Service_Rendered__c = 'TIP';
+		insert acr;
+
+		//provider.Status__c = TIP_UTils.PARTNER_STATUS_ACTIVE;
+		provider.Effective_From_Date__c = System.today();
 		update provider;
-		
-		Partner_products__c product = new Partner_products__c(Name = 'ProductTest1', 
+
+		Partner_products__c product = new Partner_products__c(Name = 'ProductTest1',
 			PP_Payment_Product_Code__c = 'co',
 			PP_Form_of_payment__c = 'CC',
 			Provider__c = account.Id,
@@ -243,7 +255,7 @@ private class PlatformEvents_Helper_Test {
 			PP_Payment_Network__c = 'AX',
 			PP_Category__c = 'CONSUMER');
 		insert product;
-		
+
 		TIP_Pay_Prov_Prod_Country_Config__c conf = new TIP_Pay_Prov_Prod_Country_Config__c(TIP_Product__c = product.Id,
 			TIP_BSP_Country__c = country.Id,
 			TIP_Effective_From_Date__c = system.today(),
@@ -251,30 +263,39 @@ private class PlatformEvents_Helper_Test {
 			TIP_Interchange_Fee__c = 'aa',
 			Network_Fee__c = 'BB',
 			TIP_Status__c = 'IN_PROGRESS');
-		
+
 		test.startTest();
-        	insert conf;
-        
-	        conf.TIP_Status__c = 'ACTIVE';
-        
-        	update conf;
-        
-        	delete conf;
+			insert conf;
 
-        	undelete conf;
+			conf.TIP_Status__c = 'ACTIVE';
 
-        test.stopTest();
-    }
-    
-    
-    static testMethod void Test_LogCreation() {
-    	system.assertEquals(0, [select id from ISSP_Web_Service_Log__c].size());
-    	list<ISSP_Web_Service_Log__c> lsLogs = new list<ISSP_Web_Service_Log__c>();
-    	test.startTest();
-    	lsLogs.add(PlatformEvents_Helper.CreateLog('a','b','c','d','e'));
-    	
-    	insert lsLogs;
-    	test.stopTest();
-    	system.assertEquals(1, [select id from ISSP_Web_Service_Log__c].size());
-    }
+			update conf;
+
+			delete conf;
+
+			undelete conf;
+
+		test.stopTest();
+	}
+
+
+	static testMethod void Test_LogCreation() {
+		system.assertEquals(0, [select id from ISSP_Web_Service_Log__c].size());
+		list<ISSP_Web_Service_Log__c> lsLogs = new list<ISSP_Web_Service_Log__c>();
+		test.startTest();
+		lsLogs.add(PlatformEvents_Helper.CreateLog('a','b','c','d','e'));
+
+		insert lsLogs;
+		test.stopTest();
+		system.assertEquals(1, [select id from ISSP_Web_Service_Log__c].size());
+	}
+
+	private static Contact_Roles__c createContactRoles(string suffix){
+		Id externalRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact_Roles__c', 'External');
+		Contact_Roles__c contactRole = new Contact_Roles__c();
+		contactRole.Name = 'Test User ' + suffix;
+		contactRole.RecordTypeId = externalRecordTypeId;
+		insert contactRole;
+		return contactRole;
+	}
 }

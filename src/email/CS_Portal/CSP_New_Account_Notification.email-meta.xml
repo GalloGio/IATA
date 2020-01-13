@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Email notification for new account creation</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>CSP New Account Notification</name>
+    <style>none</style>
+    <subject>New Account</subject>
+    <textOnly>A new account has been registered. For full details go to:
+
+{!accountUrl}  Requester: {!contactName} - {!contactEmail}  Details:
+
+{!tradeName} {!legalName} {!address} {!phoneNumber}</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

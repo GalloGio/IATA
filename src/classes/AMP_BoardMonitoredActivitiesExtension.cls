@@ -17,23 +17,23 @@ public with sharing class AMP_BoardMonitoredActivitiesExtension {
 	public Boolean showNotApplicableMsg {get; set;}
 
 	public AMP_BoardMonitoredActivitiesExtension(ApexPages.StandardController stdController) {
-  			// stdController.addFields(new List<String>{'Sector__c','Category__c'});
-  			this.acc = (Account)stdController.getRecord();
-  			this.acc = [SELECT Id, Name, Sector__c, Category__c, Membership_status__c, RecordType.DeveloperName FROM Account WHERE Id=:this.acc.Id];
-  			AccountRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Objective__c', 'Account');
-  			DivisionRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Objective__c', 'Division');
-  			CommentRecordTypeId =  RecordTypeSingleton.getInstance().getRecordTypeId('Comment__c', 'Objective_Related');
-  			lstBMAs = getBMAs();
-  			lstDivisionBMAs = getDivisionBMAs();
+				// stdController.addFields(new List<String>{'Sector__c','Category__c'});
+				this.acc = (Account)stdController.getRecord();
+				this.acc = [SELECT Id, Name, Sector__c, Category__c, Membership_status__c, RecordType.DeveloperName FROM Account WHERE Id=:this.acc.Id];
+				AccountRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Objective__c', 'Account');
+				DivisionRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Objective__c', 'Division');
+				CommentRecordTypeId =  RecordTypeSingleton.getInstance().getRecordTypeId('Comment__c', 'Objective_Related');
+				lstBMAs = getBMAs();
+				lstDivisionBMAs = getDivisionBMAs();
 			canEdit = getCanEdit();
-			
-			showNotApplicableMsg = (acc.RecordType.DeveloperName == 'IATA_Airline' && acc.Membership_status__c != 'IATA member');
-			
-  		}
 
-  		public list<Objective__c> getBMAs() {
-  			List<Objective__c> lstBMAs = new List<Objective__c>();
-  			lstBMAs =
+			showNotApplicableMsg = (acc.RecordType.DeveloperName == 'IATA_Airline' && acc.Membership_status__c != 'IATA member');
+
+			}
+
+			public list<Objective__c> getBMAs() {
+				List<Objective__c> lstBMAs = new List<Objective__c>();
+				lstBMAs =
 			// [SELECT Id, Name, Details__c, Type__c, Status__c, AM_Comments__c
 			// FROM Objective__c WHERE RecordTypeId = :AccountRecordTypeId];
 			[SELECT Id, Name, Details__c, Type__c, Status__c, AM_Comments__c,
@@ -185,7 +185,7 @@ public with sharing class AMP_BoardMonitoredActivitiesExtension {
 					}
 				}
 				System.debug(newObjective);
-				try {					
+				try {
 					if(selectedComment.Status__c == null ) {
 						ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Please select an Account Status for the activity'));
 					}
@@ -236,20 +236,20 @@ public with sharing class AMP_BoardMonitoredActivitiesExtension {
 			}
 
 		@AuraEnabled
-	    public static Boolean getCanEdit() {
-	        Boolean canEdit = true;
-	        // Obtain the field name/token map for the Comment__c object
-	        Map<String,Schema.SObjectField> m = Schema.SObjectType.Comment__c.fields.getMap();
+			public static Boolean getCanEdit() {
+					Boolean canEdit = true;
+					// Obtain the field name/token map for the Comment__c object
+					Map<String,Schema.SObjectField> m = Schema.SObjectType.Comment__c.fields.getMap();
 
-	        List<String> lsCommentFields = getCommentFields();
-	        for (String fieldToCheck : lsCommentFields) {
-	            // Check if the user has access to view field
-	            if (!m.get(fieldToCheck).getDescribe().isUpdateable() ) {
-	                canEdit = false;
-	            }
-	        }
+					List<String> lsCommentFields = getCommentFields();
+					for (String fieldToCheck : lsCommentFields) {
+							// Check if the user has access to view field
+							if (!m.get(fieldToCheck).getDescribe().isUpdateable() ) {
+									canEdit = false;
+							}
+					}
 
-	        return canEdit;
-	    }
+					return canEdit;
+			}
 
 	}

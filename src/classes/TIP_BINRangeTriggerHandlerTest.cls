@@ -2,10 +2,10 @@
 private class TIP_BINRangeTriggerHandlerTest {
 
 	//public Id listedByIATARecordTypeId = TIP_Utils.LISTED_BY_IATA_RECORD_TYPE_ID;
-	
+
 	@testSetup static void createData() {
 		IATA_ISO_Country__c country = new IATA_ISO_Country__c (Name = 'US', ISO_Code__c = 'US');
-        insert country;
+		insert country;
 
 		Account account = new Account(Name = 'ProviderTest1',
 			Accreditation_date__c = Date.today(),
@@ -17,28 +17,39 @@ private class TIP_BINRangeTriggerHandlerTest {
 
 		Account_Role__c provider = new Account_Role__c();
 		provider.RecordTypeId = TIP_UTils.ACCOUNT_ROLE_PAYMENT_PROVIDER_RECORDTYPE_ID;
-        provider.Account__c = account.Id;
-        provider.Provider_Code__c = '1000';
-        provider.HQ_Location__c = country.Id;
-        insert provider;
+		provider.Account__c = account.Id;
+		provider.Provider_Code__c = '1000';
+		provider.HQ_Location__c = country.Id;
+		insert provider;
 
-        Contact contact = new Contact(FirstName = 'First Name', LastName = 'Last Name2', Salutation = 'Mr.', 
-        							  Title = 'title', Email = 'abcde@test.org', Phone = '123456789');
-        insert contact;
+		Id externalRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact_Roles__c', 'External');
+		Id functionalRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'Functional');
 
-        Account_Contact_Role__c acr = new Account_Contact_Role__c();
-        acr.Account__c = account.Id;
-        acr.Account_Role__c = provider.Id;
-        acr.Contact_Role__c = 'Primary Contact';
-        acr.Contact__c = contact.Id;
-        acr.Service_Rendered__c = 'TIP';
-        insert acr;
+		Contact_Roles__c contactRole = new Contact_Roles__c();
+		contactRole.Name = 'Test User';
+		contactRole.RecordTypeId = externalRecordTypeId;
 
-        //provider.Status__c = TIP_UTils.PARTNER_STATUS_ACTIVE;
-        provider.Effective_From_Date__c = System.today();
+		insert contactRole;
+
+		Contact contact = new Contact(FirstName = 'First Name', LastName = 'Last Name2', Salutation = 'Mr.',
+									  Title = 'title', Email = 'abcde@test.org', Phone = '123456789');
+		insert contact;
+
+		Account_Contact_Role__c acr = new Account_Contact_Role__c();
+		acr.Account__c = account.Id;
+		acr.Account_Role__c = provider.Id;
+		acr.Contact_Roles__c = contactRole.Id;
+		acr.RecordTypeId = functionalRecordTypeId;
+		acr.Contact_Role__c = 'Primary Contact';
+		acr.Contact__c = contact.Id;
+		acr.Service_Rendered__c = 'TIP';
+		insert acr;
+
+		//provider.Status__c = TIP_UTils.PARTNER_STATUS_ACTIVE;
+		provider.Effective_From_Date__c = System.today();
 		update provider;
 
-		Partner_products__c product = new Partner_products__c(Name = 'ProductTest1', 
+		Partner_products__c product = new Partner_products__c(Name = 'ProductTest1',
 			PP_Payment_Product_Code__c = 'co',
 			PP_Form_of_payment__c = 'CC',
 			Provider__c = account.Id,
@@ -124,7 +135,7 @@ private class TIP_BINRangeTriggerHandlerTest {
 			String endPrefix = bin.TIP_Range_End__c.substring(0,4);
 			System.assertEquals(startPrefix + '00000000000', bin.TIP_Range_Start__c, 'Not the expected padded number');
 			System.assertEquals(endPrefix + '99999999999', bin.TIP_Range_End__c, 'Not the expected padded number');
-		}		
+		}
 	}
 
 	@isTest static void testOverlaps() {
@@ -315,9 +326,9 @@ private class TIP_BINRangeTriggerHandlerTest {
 		} catch (Exception e) {
 			System.debug('exception: ' + e);
 		}
-		
+
 		if (updateResult.isSuccess()) sucessCounter ++;
-		
+
 		System.assertEquals(0, sucessCounter);
 
 		//Update multiple BINs to deploy error type B, expected success = 0
@@ -406,6 +417,6 @@ private class TIP_BINRangeTriggerHandlerTest {
 	}
 
 	@isTest public static void testCreateConflict(){
-		System.assertEquals(6, [SELECT ID FROM BIN_Range_Conflict__c].size());	
+		System.assertEquals(6, [SELECT ID FROM BIN_Range_Conflict__c].size());
 	}
 }
