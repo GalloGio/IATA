@@ -112860,7 +112860,7 @@ ISPICKVAL(Verification_Status__c, &apos;Partial&apos;),
     <validationRules>
         <fullName>EF_VerificationStatus_Partial_Permission</fullName>
         <active>true</active>
-        <description>Only user with &quot;E&amp;F Account Partical Verification&quot; permission set</description>
+        <description>Only user with &quot;E&amp;F Account Partial Verification&quot; permission set</description>
         <errorConditionFormula>AND(
 ISPICKVAL(Verification_Status__c, &apos;Partial&apos;),
 !$Permission.E_F_account_Partial_Verification
