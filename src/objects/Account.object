@@ -112723,15 +112723,6 @@ OR(ISPICKVAL(Industry, &apos;Airline&apos;),ISPICKVAL(Industry, &apos;Travel Age
         <errorMessage>For a Virtual Branch Iso Country is mandatory</errorMessage>
     </validationRules>
     <validationRules>
-        <fullName>Address_StandardRecordtype</fullName>
-        <active>false</active>
-        <errorConditionFormula>AND(
- RecordType.DeveloperName =&apos;Standard_Account&apos;,
-NOT(ISBLANK( Business_City_Name__c ))
-)</errorConditionFormula>
-        <errorMessage>The bucket needs to be changed before entering an address.</errorMessage>
-    </validationRules>
-    <validationRules>
         <fullName>EF_Branch_ParentAccount</fullName>
         <active>true</active>
         <errorConditionFormula>AND(
