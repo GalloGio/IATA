@@ -1,6 +1,6 @@
 /*
 	Class Name: ISSP_AMC_Airline_Designators
-	Related Classes: 
+	Related Classes:
 
 	Copyright @Right IT Services
 
@@ -8,7 +8,7 @@
 
 	VERSION     AUTHOR              DATE            DETAIL/CHANGE REFERENCE
 	1.0         João Ferreira       30-10-2018      INITIAL DEVELOPMENT
-	2.0         Miguel              
+	2.0         Miguel
 */
 public without sharing class ISSP_AMC_Baggage_Tag_Range {
 
