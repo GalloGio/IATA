@@ -1,9 +1,9 @@
-/**  
-  * Description: Trigger for the Swap Configuration object for the IEC project
-  * Author: Samy Saied
-  * Version: 1.0
-  * History: 
-  */
+/**
+	* Description: Trigger for the Swap Configuration object for the IEC project
+	* Author: Samy Saied
+	* Version: 1.0
+	* History:
+	*/
 
 trigger trgIECSwapConfiguration on Swap_Configuration__c (before insert, before update) {
 	if(Trigger.isInsert && Trigger.isBefore) {

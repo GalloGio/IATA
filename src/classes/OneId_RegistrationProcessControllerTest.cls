@@ -14,13 +14,13 @@ private class OneId_RegistrationProcessControllerTest {
 		System.assert([select isPortalEnabled
 						 from user
 						where id = :pu.id].isPortalEnabled,
-					  'User was not flagged as portal enabled.');
+						'User was not flagged as portal enabled.');
 
 		System.RunAs(pu) {
 			System.assert([select isPortalEnabled
 							 from user
 							where id = :UserInfo.getUserId()].isPortalEnabled,
-						  'User wasnt portal enabled within the runas block. ');
+							'User wasnt portal enabled within the runas block. ');
 		}
 	}*/
 
@@ -415,7 +415,7 @@ private class OneId_RegistrationProcessControllerTest {
 
 		Test.stopTest();
 	}
-	
+
 	@isTest
 	public static void testRegistration_VII() {
 
@@ -572,14 +572,14 @@ private class OneId_RegistrationProcessControllerTest {
 				IsActive = true
 			);
 
-	   insert user;
+		 insert user;
 		Test.startTest();
 
-		   OneId_RegistrationProcessController.updatePortalUseProfile(user.Id);
-		   OneId_RegistrationProcessController.permissionNewAgency(user.Id);
-		   OneId_RegistrationProcessController.permissionCSPortal(user.Id);
-		   OneId_RegistrationProcessController.portalServiceNewAgency(contact.Id);
-		   OneId_RegistrationProcessController.permissionGADMPortal(user.Id);
+			 OneId_RegistrationProcessController.updatePortalUseProfile(user.Id);
+			 OneId_RegistrationProcessController.permissionNewAgency(user.Id);
+			 OneId_RegistrationProcessController.permissionCSPortal(user.Id);
+			 OneId_RegistrationProcessController.portalServiceNewAgency(contact.Id);
+			 OneId_RegistrationProcessController.permissionGADMPortal(user.Id);
 
 		Test.stopTest();
 
@@ -999,7 +999,7 @@ private class OneId_RegistrationProcessControllerTest {
 @isTest
 	 static void amsDataQuality(){
 		IATA_ISO_Country__c country = new IATA_ISO_Country__c (Name='Canada',
-															   ISO_Code__c='CA')  ;
+																 ISO_Code__c='CA')  ;
 		insert country ;
 
 		IATA_ISO_STATE__C state = new IATA_ISO_STATE__c (Name='Quebec',
@@ -1010,19 +1010,19 @@ private class OneId_RegistrationProcessControllerTest {
 														 GeonameId__c='6115047');
 		 insert state;
 		 IATA_ISO_City__c city = new IATA_ISO_City__c(Name = 'Montreal',
-													   IATA_ISO_State__c = state.ID,
-													   GeonameID__c = '6077243',
-													   GeonameAlternateNames__c = 'Lungsod ng Montreal,Lungsod ng Montréal,Monreal,Monreal\','+
-																				  'Monreala,Monrealis,Monreyal,Monreāla,Mons Regius,Mont-real,Montreal,Montreal - Montreal,Montreal - Montréal,Montreal City,Montreali,Montrealo,'+
-																				  'Montréal,YMQ,meng te li er,monreali,monteuliol,montorioru,mwntral,mwntryal,Μοντρεαλ,Μόντρεαλ,Монреал,Монреаль,Монтреал,מונטריאול,مونترآل,مونتریال,مونترېئال,'+
-																				  'მონრეალი,ᒧᕆᐊᓪ,モントリオール,蒙特利尔,몬트리올' );
+														 IATA_ISO_State__c = state.ID,
+														 GeonameID__c = '6077243',
+														 GeonameAlternateNames__c = 'Lungsod ng Montreal,Lungsod ng Montréal,Monreal,Monreal\','+
+																					'Monreala,Monrealis,Monreyal,Monreāla,Mons Regius,Mont-real,Montreal,Montreal - Montreal,Montreal - Montréal,Montreal City,Montreali,Montrealo,'+
+																					'Montréal,YMQ,meng te li er,monreali,monteuliol,montorioru,mwntral,mwntryal,Μοντρεαλ,Μόντρεαλ,Монреал,Монреаль,Монтреал,מונטריאול,مونترآل,مونتریال,مونترېئال,'+
+																					'მონრეალი,ᒧᕆᐊᓪ,モントリオール,蒙特利尔,몬트리올' );
 		insert city;
 
 		OneId_RegistrationProcessController.getStates('Canada');
 		OneId_RegistrationProcessController.registrationAux(new Account(), new Contact(), null, new Map<String, String>{'billingCityId' => String.valueOf(city.Id),
-																													   'billingStateId' => String.valueOf(state.Id),
-																													   'shippingCityId' => String.valueOf(city.Id),
-																													   'shippingStateId' => String.valueOf(state.Id)});
+																														 'billingStateId' => String.valueOf(state.Id),
+																														 'shippingCityId' => String.valueOf(city.Id),
+																														 'shippingStateId' => String.valueOf(state.Id)});
 	 }
 
 	 @isTest

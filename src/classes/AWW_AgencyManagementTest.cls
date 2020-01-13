@@ -1,7 +1,7 @@
 @isTest
 private class AWW_AgencyManagementTest {
 
-	@testSetup static void setup() {         
+	@testSetup static void setup() {
 		IATA_ISO_Country__c country = new IATA_ISO_Country__c(
 			Name= 'Portugal',
 			ISO_Code__c= 'PT',
@@ -146,7 +146,7 @@ private class AWW_AgencyManagementTest {
 		AWW_AccountOwnershipCtrl.searchBy('A1', wwAccount.Id, 'Subsidiary');
 
 		Id agencyRecTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
-		
+
 		Account a = new Account(Name = 'Test Account', RecordTypeId = agencyRecTypeId);
 		insert a;
 
@@ -195,7 +195,7 @@ private class AWW_AgencyManagementTest {
 		Test.startTest();
 		Objective__c obj = new Objective__c(
 			Unit_Type__c= 'Percentage', Deadline__c= Date.today(), Status__c= 'On Track', Type__c= 'BMA'
-		);        
+		);
 		AWW_PerformanceCtrl.upsertRecord(obj, wwAccount.Id);
 		List<Objective__c> objectives = AWW_PerformanceCtrl.getRecords(wwAccount.Id);
 		System.assertEquals(1, objectives.size());
@@ -207,16 +207,16 @@ private class AWW_AgencyManagementTest {
 		Account wwAccount = [SELECT Id FROM Account WHERE RecordType.DeveloperName = 'Agency_WW_HQ'];
 		Test.startTest();
 		Objective__c obj = new Objective__c(
-			Unit_Type__c= 'Percentage', 
-			Deadline__c= Date.today(), 
-			Status__c= 'On Track', 
-			Type__c= 'BMA', 
+			Unit_Type__c= 'Percentage',
+			Deadline__c= Date.today(),
+			Status__c= 'On Track',
+			Type__c= 'BMA',
 			Account__c= wwAccount.Id,
 			Description__c= 'Test',
 			Name= 'Test',
 			RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('Objective__c', 'Key_Account_Plan')
-		);     
-		AWW_AccountPlanCtrl.ObjectiveWrapper objWrapper = new AWW_AccountPlanCtrl.ObjectiveWrapper(obj);   
+		);
+		AWW_AccountPlanCtrl.ObjectiveWrapper objWrapper = new AWW_AccountPlanCtrl.ObjectiveWrapper(obj);
 		AWW_AccountPlanCtrl.upsertRecord(objWrapper);
 		List<AWW_AccountPlanCtrl.ObjectiveWrapper> objectives = AWW_AccountPlanCtrl.getObjectives(wwAccount.Id);
 		System.assertEquals(1, objectives.size());
@@ -225,8 +225,8 @@ private class AWW_AgencyManagementTest {
 		AWW_AccountPlanCtrl.getUserAccessRightsAMPIssuesAndPriorities();
 		System.assertEquals(0, objectives.size());
 		Test.stopTest();
-	}    
-	
+	}
+
 	@isTest static void canEditOtherTypeofSubsidiariesTest() {
 		List<PermissionSet> permissions = [SELECT Id, Name FROM PermissionSet WHERE Name IN ('AMP_Manage_Account_Ownership')];
 		List<PermissionSetAssignment> assignedPermissions = [SELECT Id FROM PermissionSetAssignment WHERE  AssigneeId = :UserInfo.getUserId() AND PermissionSetId IN :permissions];
@@ -247,7 +247,7 @@ private class AWW_AgencyManagementTest {
 		System.assertEquals(true, userAccessRight);
 
 		Test.stopTest();
-	}    
+	}
 	@isTest static void haveAMPAgencyManagement() {
 		List<PermissionSet> permissions = [SELECT Id, Name FROM PermissionSet WHERE Name IN ('AMP_Agency_Management')];
 		List<PermissionSetAssignment> assignedPermissions = [SELECT Id FROM PermissionSetAssignment WHERE  AssigneeId = :UserInfo.getUserId() AND PermissionSetId IN :permissions];
@@ -268,5 +268,5 @@ private class AWW_AgencyManagementTest {
 		System.assertEquals(true, userAccessRight);
 
 		Test.stopTest();
-	}  
+	}
 }

@@ -1,7 +1,7 @@
 public class ISSP_ICCS_SiEditController extends ISSP_ICCS_ComponentController{
 
-    public ISSP_ICCS_SiEditController thisCtrl {get{return this;}}
- 
+	public ISSP_ICCS_SiEditController thisCtrl {get{return this;}}
+
 	public String siProcessTitle {get;set;}
 
 	// This object will be serialized and sent to the core
@@ -15,14 +15,14 @@ public class ISSP_ICCS_SiEditController extends ISSP_ICCS_ComponentController{
 
 	// Map of Bank Accounts Codes
 	// This Map is filled while filling the bankAccountCodes list
-	// Used when the bank account code is changed in the selectOptions list of an instruction line to automatically fill some other fields 
+	// Used when the bank account code is changed in the selectOptions list of an instruction line to automatically fill some other fields
 	public Map<Integer, ISSP_ICCS_CoreRest.BankAccountCode> bankAccountCodesMap {get;set;}
 
 	public String siStandard {get{ return ISSP_ICCS_Utils.SI_STANDARD;}}
 	public String siFuture {get{ return ISSP_ICCS_Utils.SI_FUTURE;}}
 	public String siAdhoc {get{ return ISSP_ICCS_Utils.SI_ADHOC;}}
 
-    public Map<String, Integer> instructionTypeMap {get;set;}
+	public Map<String, Integer> instructionTypeMap {get;set;}
 
 	// SelectOption list of instruction line types
 	public List<SelectOption> instructionLineTypes {
@@ -80,7 +80,7 @@ public class ISSP_ICCS_SiEditController extends ISSP_ICCS_ComponentController{
 		return ISSP_ICCS_Utils.Page.SI_EDIT;
 	}
 
-    public override Boolean resetController(ISSP_ICCS_ServiceController pageController){
+	public override Boolean resetController(ISSP_ICCS_ServiceController pageController){
 		System.debug('ISSP_ICCS_SiEditController.resetController(ISSP_ICCS_ServiceController pageController) : increment ' + ++ISSP_ICCS_ServiceController.increment);
 
 		// Retrieve parameters from previous component
@@ -100,8 +100,8 @@ public class ISSP_ICCS_SiEditController extends ISSP_ICCS_ComponentController{
 			settlementInstructionId = previousComponentController.settlementInstructionIdParameter;
 			settlementInstructionType = previousComponentController.settlementInstructionTypeParameter;
 		}
-    	
-    	try{
+
+		try{
 			/* Check what can be discarded in the following instructions */
 			bankAccountCodes = new List<SelectOption>{new SelectOption('-1', ISSP_ICCS_Utils.NONE)};
 
@@ -111,7 +111,7 @@ public class ISSP_ICCS_SiEditController extends ISSP_ICCS_ComponentController{
 			fakeBankAccountCode.bankAccount = new ISSP_ICCS_CoreRest.BankAccount();
 			fakeBankAccountCode.bankAccount.currency_x = '';
 			fakeBankAccountCode.bankAccount.number_x = '';
-			
+
 			bankAccountCodesMap = new Map<Integer, ISSP_ICCS_CoreRest.BankAccountCode>{-1 => fakeBankAccountCode};
 
 			if(settlementInstructionType == ISSP_ICCS_Utils.SI_ADHOC){
@@ -130,23 +130,23 @@ public class ISSP_ICCS_SiEditController extends ISSP_ICCS_ComponentController{
 
 			// This list is retrieved from the core to have the id of the type of settlement instruction the user is creating (adhoc or future adhoc)
 			List<ISSP_ICCS_CoreRest.InstructionType> instructionTypes = pageController.coreRest.getInstructionTypes();
-			
+
 			System.debug('instructionTypes from the core : ' + instructionTypes);
-			
+
 			// Fill the instruction type map
 			instructionTypeMap = new Map<String, Integer>();
 			for(ISSP_ICCS_CoreRest.InstructionType instructionType : instructionTypes){
 				instructionTypeMap.put(instructionType.code, instructionType.id);
 			}
-			
+
 			// We might not need the instructionTypes if we are only updating a settlement instruction whose instruction type id is already set
 			// So there is no need to quit the method now (maybe later)
 
 			// Case 1 : Creating an Adhoc or a Future SI
 			/* Replace -1 by null ? */
-	    	if(settlementInstructionId == null){
+			if(settlementInstructionId == null){
 
-	    		// Set the page title
+				// Set the page title
 				siProcessTitle = 'New ' + settlementInstructionType + ' Settlement Instruction';
 
 				// Create the settlement instruction
@@ -161,7 +161,7 @@ public class ISSP_ICCS_SiEditController extends ISSP_ICCS_ComponentController{
 							participation = cycleParticipation;
 
 							ISSP_ICCS_CoreRest.Cashflow cycleCashflow;
-							
+
 							// Retrieve the cycle version of the cashflow
 							for(ISSP_ICCS_CoreRest.Cashflow cashflow : pageController.coreRest.getCycleCashflows(cycleId)){
 								if(cashflow.id == participation.cashflow.id){
@@ -169,7 +169,7 @@ public class ISSP_ICCS_SiEditController extends ISSP_ICCS_ComponentController{
 									break;
 								}
 							}
-	
+
 							// Update the cycle version of the cashflow as it lacks information
 							for(ISSP_ICCS_CoreRest.Cashflow cashflow : pageController.coreRest.getCashflows()){
 								if(cashflow.code == participation.cashflow.code){
@@ -193,7 +193,7 @@ public class ISSP_ICCS_SiEditController extends ISSP_ICCS_ComponentController{
 						}
 					}
 				}
-				
+
 				// Set the participation
 				settlementInstruction.participation = participation;
 
@@ -203,7 +203,7 @@ public class ISSP_ICCS_SiEditController extends ISSP_ICCS_ComponentController{
 
 				// Add an instruction line
 				addInstructionLine();
-	
+
 				if(instructionTypes == null){
 					// If we were not able to retrieve the list of instruction types from the core
 					// there is no reason to continue, we just display an error message
@@ -226,8 +226,8 @@ public class ISSP_ICCS_SiEditController extends ISSP_ICCS_ComponentController{
 				if(settlementInstructionType == ISSP_ICCS_Utils.SI_ADHOC){
 					// Retrieve the settlement instruction from the Core
 					settlementInstruction = pageController.coreRest.getCycleSettlementInstruction(cycleId, settlementInstructionId);
-	
-					// Update the settlement instruction type code (set Adhoc) 
+
+					// Update the settlement instruction type code (set Adhoc)
 					if(instructionTypes == null){
 						// If we were not able to retrieve the list of instruction types from the core
 						// there is no reason to continue, we just display an error message
@@ -250,22 +250,22 @@ public class ISSP_ICCS_SiEditController extends ISSP_ICCS_ComponentController{
 				else{
 					// Retrieve the settlement instruction from the Core
 					settlementInstruction = pageController.coreRest.getSettlementInstruction(settlementInstructionId);
-					/* LABEL ?? */					
+					/* LABEL ?? */
 					siProcessTitle = 'Edit ' + settlementInstruction.type.code + ' Settlement Instruction';
 				}
 				settlementInstruction.instructionLines.sort();
 			}
-    	}
+		}
 		catch(Exception e){
 			pageController.setMessage(e.getMessage(), false);
 		}
-		
+
 		return true;
-    }
+	}
 
 	public override void cleanController(){
 		System.debug('ISSP_ICCS_SiEditController.cleanController() : increment ' + ++ISSP_ICCS_ServiceController.increment);
-		
+
 		siProcessTitle = null;
 
 		cycleId = null;
@@ -295,7 +295,7 @@ public class ISSP_ICCS_SiEditController extends ISSP_ICCS_ComponentController{
 		instructionLine.order = settlementInstruction.instructionLines.size() + 1;
 		instructionLine.accountCode.id = -1;
 		instructionLine.type.id = -1;
-		settlementInstruction.instructionLines.add(instructionLine);		
+		settlementInstruction.instructionLines.add(instructionLine);
 	}
 
 	// Delete an instruction line in the list
@@ -310,14 +310,14 @@ public class ISSP_ICCS_SiEditController extends ISSP_ICCS_ComponentController{
 		}
 
 		settlementInstruction.instructionLines.remove(instructionLineOrder-1);
-		
+
 		// Decrease the order of the instruction lines with a higher order
 		for(Integer i = instructionLineOrder-1; i < settlementInstruction.instructionLines.size(); i++){
 			settlementInstruction.instructionLines.get(i).order--;
 		}
 
 		// Following instruction probably unnecessary as the order of the instruction lines is unchanged
-		settlementInstruction.instructionLines.sort();		
+		settlementInstruction.instructionLines.sort();
 	}
 
 	// Used to update the order of the instruction lines if we change the order of one of them
@@ -326,7 +326,7 @@ public class ISSP_ICCS_SiEditController extends ISSP_ICCS_ComponentController{
 
 		Integer oldOrder = instructionLineOrder;
 		Integer newOrder = settlementInstruction.instructionLines.get(instructionLineOrder-1).order;
-		
+
 		// Change the order of all instructions lines with order between the old and the new order of the
 		// instruction line who changed
 		if(oldOrder < newOrder){
@@ -339,16 +339,16 @@ public class ISSP_ICCS_SiEditController extends ISSP_ICCS_ComponentController{
 				settlementInstruction.instructionLines.get(i).order++;
 			}
 		}
-		
+
 		// Sort the list to display the instruction lines by ascending order
 		settlementInstruction.instructionLines.sort();
 	}
 
-    public void submit(){
+	public void submit(){
 		pageController.resetMessage();
-		
+
 		/* CHECK IF WE MAKE ADDITIONAL DEVS IF SOMETHING GOES WRONG (STATUS FOR INSTANCE)  */
-    	
+
 		try{
 			// Creation of Future or Adhoc Si
 			/* Replace by null ? */
@@ -367,14 +367,14 @@ public class ISSP_ICCS_SiEditController extends ISSP_ICCS_ComponentController{
 					pageController.saveAndClose('Your ' + settlementInstruction.type.code + ' Settlement Instruction was succesfully created.');
 				}
 			}
-			// Clone of Adhoc, Future or Standard SI 
+			// Clone of Adhoc, Future or Standard SI
 			else if(settlementInstructionType == ISSP_ICCS_Utils.SI_ADHOC){
 				// Remove the settlement instruction id and the instruction lines ids
 				settlementInstruction.id = null;
 				for(ISSP_ICCS_CoreRest.InstructionLine instructionLine : settlementInstruction.instructionLines){
 					instructionLine.id = null;
 				}
-				
+
 				pageController.coreRest.createCycleSettlementInstruction(settlementInstruction);
 				/* LABEL FOR MESSAGE */
 				pageController.saveAndClose('Your ' + settlementInstruction.type.code + ' Settlement Instruction was succesfully created.');
@@ -389,5 +389,5 @@ public class ISSP_ICCS_SiEditController extends ISSP_ICCS_ComponentController{
 		catch(ISSP_ICCS_CoreRest.ICCS_Exception e){
 			pageController.setMessage(e.getMessage(), false);
 		}
-    }
+	}
 }

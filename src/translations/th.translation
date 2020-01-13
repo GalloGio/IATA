@@ -1073,6 +1073,10 @@
         <name>ANG_ISSP_IEP_AuthorisedSignatory_auth_msg_Administrator</name>
     </customLabels>
     <customLabels>
+        <label><!-- ANG_ISSP_IEP_Indonesia_msg --></label>
+        <name>ANG_ISSP_IEP_Indonesia_msg</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ModelBanking India --></label>
         <name>ANG_ISSP_IEP_ModelBanking_India_msg</name>
     </customLabels>
@@ -3145,7 +3149,7 @@
         <name>CSP_Reset_Password_Success_Msg_2</name>
     </customLabels>
     <customLabels>
-        <label>มีการระบุว่า IP ของคอมพิวเตอร์ของคุณมีแหล่งที่มาจากหนึ่งในประเทศที่อยู่ในรายการที่ถูกระงับโดยหน่วยงานในสหรัฐอเมริกา แพลตฟอร์มที่สนับสนุนพอร์ทัลสำหรับลูกค้าของเรานั้น ปฏิบัติตามกฎระเบียบของสหรัฐอเมริกา และด้วยเหตุนี้ เราจึงไม่สามารถให้การเข้าถึงพอร์ทัลสำหรับลูกค้าจากที่อยู่ IP ปัจจุบันของคุณได้ &lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;คลิกที่นี่เพื่อติดต่อเรา&lt;/a&gt;</label>
+        <label>มีการระบุว่า IP ของคอมพิวเตอร์ของคุณมีแหล่งที่มาจากหนึ่งในประเทศที่อยู่ในรายการที่ถูกระงับโดยหน่วยงานในสหรัฐอเมริกา แพลตฟอร์มที่สนับสนุนพอร์ทัลสำหรับลูกค้าของเรานั้น ปฏิบัติตามกฎระเบียบของสหรัฐอเมริกา และด้วยเหตุนี้ เราจึงไม่สามารถให้การเข้าถึงพอร์ทัลสำหรับลูกค้าจากที่อยู่ IP ปัจจุบันของคุณได้ &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;คลิกที่นี่เพื่อติดต่อเรา&lt;/a&gt;</label>
         <name>CSP_Restricted_Login_Message</name>
     </customLabels>
     <customLabels>
@@ -14274,7 +14278,10 @@ and
         <name>ISSP_CNS_quote2</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_CalendarDisclaimer --></label>
+        <label>&quot;หมายเหตุ: ปฏิทินสำหรับตลาดนี้ระบุถึงวันที่ตามท้องถิ่นโดยเฉพาะ ที่ไม่ปรากฏอยู่ในแอปพลิเคชันนี้
+
+
+โปรดตรวจสอบให้แน่ใจว่าท่านได้ดาวน์โหลดปฏิทินไฟล์ pdf เวอร์ชันเต็มสำหรับตลาดของท่าน โดยคลิกที่แถบบริการช่วยเหลือ (Support) จากนั้นให้เลือกปฏิทินที่อยู่ภายใต้หัวข้อเอกสาร ที่อยู่ทางด้านขวามือของหน้าเว็บ&quot;</label>
         <name>ISSP_CalendarDisclaimer</name>
     </customLabels>
     <customLabels>
@@ -17975,7 +17982,7 @@ GSA - ตัวอักษร 3 ตัว
         <name>ISSP_Salutation</name>
     </customLabels>
     <customLabels>
-        <label>คอมพิวเตอร์ IP ของคุณอยู่ในรายชื่อห้ามประเทศส่งสินค้าของสหรัฐฯ&lt;br/&gt;แพลตฟอร์มของ Customer Portal ปฏิบัติตามกฏระเบียบของสหรัฐฯ ดังนั้นเราจึงไม่สามารถอนุมัติการเข้าสู่ Customer Portal จากคอมพิวเตอร์ IP ของคุณ&lt;br/&gt;คลิก&lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.aspx&quot; &gt;ที่นี่&lt;/a&gt;เพื่อติดต่อ IATA ในพื้นที่ของคุณ</label>
+        <label>คอมพิวเตอร์ IP ของคุณอยู่ในรายชื่อห้ามประเทศส่งสินค้าของสหรัฐฯ&lt;br/&gt;แพลตฟอร์มของ Customer Portal ปฏิบัติตามกฏระเบียบของสหรัฐฯ ดังนั้นเราจึงไม่สามารถอนุมัติการเข้าสู่ Customer Portal จากคอมพิวเตอร์ IP ของคุณ&lt;br/&gt;คลิก&lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quot; &gt;ที่นี่&lt;/a&gt;เพื่อติดต่อ IATA ในพื้นที่ของคุณ</label>
         <name>ISSP_Sanctions_Message</name>
     </customLabels>
     <customLabels>

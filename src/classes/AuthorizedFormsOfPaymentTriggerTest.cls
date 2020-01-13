@@ -6,21 +6,21 @@ public class AuthorizedFormsOfPaymentTriggerTest {
 
 		GDP_Products_Account_View__c gdpProdAccView = new GDP_Products_Account_View__c();
 		insert gdpProdAccView;
-		
-		
+
+
 		List<Authorized_Forms_Of_Payment__c> fopList = new List<Authorized_Forms_Of_Payment__c>();
 
 		Authorized_Forms_Of_Payment__c fopCA = new Authorized_Forms_Of_Payment__c(Form_of_Payment_Code__c = AMS_Utils.CA,
-																							    Status__c = 'Active',//9
+																								Status__c = 'Active',//9
 																	 Related_GDP_Products_Account_View__c = gdpProdAccView.Id,
 																						   AMS_GDP_Key__c = '12332112331111');
 
-		Authorized_Forms_Of_Payment__c fopCC = new Authorized_Forms_Of_Payment__c(Form_of_Payment_Code__c = AMS_Utils.CC, 
-																							    Status__c = 'Non-Active',//1
+		Authorized_Forms_Of_Payment__c fopCC = new Authorized_Forms_Of_Payment__c(Form_of_Payment_Code__c = AMS_Utils.CC,
+																								Status__c = 'Non-Active',//1
 																	 Related_GDP_Products_Account_View__c = gdpProdAccView.Id,
 																	 					   AMS_GDP_Key__c = '12332112332222');
 
-		
+
 		fopList.add(fopCA);
 		fopList.add(fopCC);
 
@@ -38,14 +38,14 @@ public class AuthorizedFormsOfPaymentTriggerTest {
 
 		List<GDP_Products_Account_View__c> gdpProdAccViewList = [Select Id from GDP_Products_Account_View__c limit 1];
 
-		Authorized_Forms_Of_Payment__c fopEP = new Authorized_Forms_Of_Payment__c(Form_of_Payment_Code__c = AMS_Utils.EP, 
-																							    Status__c = 'Not Authorized',//0
+		Authorized_Forms_Of_Payment__c fopEP = new Authorized_Forms_Of_Payment__c(Form_of_Payment_Code__c = AMS_Utils.EP,
+																								Status__c = 'Not Authorized',//0
 																	 Related_GDP_Products_Account_View__c = gdpProdAccViewList.get(0).Id,
 																	 					   AMS_GDP_Key__c = '12332112333333');
 		insert fopEP;
 
 		List<GDP_Products_Account_View__c> gdpProdAccViewListAfterInsert = [Select Id, CA_FoP_Status__c, CC_FoP_Status__c, EP_FoP_Status__c from GDP_Products_Account_View__c limit 1];
-		List<Authorized_Forms_Of_Payment__c> fopListAfterInsert = [Select Status_Code__c, Form_of_Payment_Code__c from Authorized_Forms_Of_Payment__c 
+		List<Authorized_Forms_Of_Payment__c> fopListAfterInsert = [Select Status_Code__c, Form_of_Payment_Code__c from Authorized_Forms_Of_Payment__c
 														where Related_GDP_Products_Account_View__c = :gdpProdAccViewListAfterInsert.get(0).Id];
 
 
@@ -66,7 +66,7 @@ public class AuthorizedFormsOfPaymentTriggerTest {
 			if(fop.Form_of_Payment_Code__c == AMS_Utils.EP){
 
 				System.assertEquals(fop.Status_Code__c, gdpProdAccViewListAfterInsert.get(0).EP_FoP_Status__c, 'FoP Status not ok for EP');
-			
+
 			}
 
 		}
@@ -83,8 +83,8 @@ public class AuthorizedFormsOfPaymentTriggerTest {
 
 		List<GDP_Products_Account_View__c> gdpProdAccViewList = [Select Id from GDP_Products_Account_View__c limit 1];
 
-		List<Authorized_Forms_Of_Payment__c> fopListBeforeUpdate = [Select Status_Code__c, Status__c, Form_of_Payment_Code__c from Authorized_Forms_Of_Payment__c 
-														where Related_GDP_Products_Account_View__c = :gdpProdAccViewList.get(0).Id 
+		List<Authorized_Forms_Of_Payment__c> fopListBeforeUpdate = [Select Status_Code__c, Status__c, Form_of_Payment_Code__c from Authorized_Forms_Of_Payment__c
+														where Related_GDP_Products_Account_View__c = :gdpProdAccViewList.get(0).Id
 														and Form_of_Payment_Code__c = :AMS_Utils.CC];
 
 		fopListBeforeUpdate.get(0).Form_of_Payment_Code__c = AMS_Utils.EP;
@@ -92,8 +92,8 @@ public class AuthorizedFormsOfPaymentTriggerTest {
 		update fopListBeforeUpdate.get(0);
 
 		List<GDP_Products_Account_View__c> gdpProdAccViewListAfterUpdate = [Select Id, CA_FoP_Status__c, CC_FoP_Status__c, EP_FoP_Status__c from GDP_Products_Account_View__c limit 1];
-		
-		List<Authorized_Forms_Of_Payment__c> fopListAfterUpdate = [Select Status_Code__c, Form_of_Payment_Code__c from Authorized_Forms_Of_Payment__c 
+
+		List<Authorized_Forms_Of_Payment__c> fopListAfterUpdate = [Select Status_Code__c, Form_of_Payment_Code__c from Authorized_Forms_Of_Payment__c
 														where Related_GDP_Products_Account_View__c = :gdpProdAccViewListAfterUpdate.get(0).Id];
 
 		for(Authorized_Forms_Of_Payment__c fop : fopListAfterUpdate){
@@ -107,7 +107,7 @@ public class AuthorizedFormsOfPaymentTriggerTest {
 			if(fop.Form_of_Payment_Code__c == AMS_Utils.EP){
 
 				System.assertEquals(fop.Status_Code__c, gdpProdAccViewListAfterUpdate.get(0).EP_FoP_Status__c, 'FoP Status not ok for EP');
-			
+
 			}
 
 		}
@@ -125,14 +125,14 @@ public class AuthorizedFormsOfPaymentTriggerTest {
 
 		List<GDP_Products_Account_View__c> gdpProdAccViewList = [Select Id from GDP_Products_Account_View__c limit 1];
 
-		List<Authorized_Forms_Of_Payment__c> fopListBeforeUpdate = [Select Status_Code__c, Form_of_Payment_Code__c from Authorized_Forms_Of_Payment__c 
-														where Related_GDP_Products_Account_View__c = :gdpProdAccViewList.get(0).Id 
+		List<Authorized_Forms_Of_Payment__c> fopListBeforeUpdate = [Select Status_Code__c, Form_of_Payment_Code__c from Authorized_Forms_Of_Payment__c
+														where Related_GDP_Products_Account_View__c = :gdpProdAccViewList.get(0).Id
 														and Form_of_Payment_Code__c = :AMS_Utils.CC];
 
 		delete fopListBeforeUpdate.get(0);
 
 		List<GDP_Products_Account_View__c> gdpProdAccViewListAfterDelete = [Select Id, CA_FoP_Status__c, CC_FoP_Status__c, EP_FoP_Status__c from GDP_Products_Account_View__c limit 1];
-		
+
 		System.assertEquals(null, gdpProdAccViewListAfterDelete.get(0).CC_FoP_Status__c);
 
 

@@ -24,10 +24,10 @@ global class ams2gdp_Batch_Account implements Database.Batchable<sObject> , Data
 		//-- Fields used for Sync
 
 		String fields = ' Id, Airline_Code__c, BSP_CASS_Code__c, CASS_Number__c, Check_Digit__c, Company_Type__c, Email__c, GDP_Location_Type__c, GDP_Opt_In__c, IATACode__c, Incorporation_Type__c, IDCard_Key_Account__c, GDS__c'
-		                +	', License_Number__c, Location_Category__c, Location_Type__c, Manager_First_Name__c, Manager_Last_Name__c, Name, PAX_Cargo__c, Preferred_Language__c'
-		                +	', Short_Name__c , Ticketing_Agent_First_Name__c, Ticketing_Agent_Last_Name__c, TradeName__c, TTY__c, VAT_Number__c, VAT_Number_2__c, Website'
+										+	', License_Number__c, Location_Category__c, Location_Type__c, Manager_First_Name__c, Manager_Last_Name__c, Name, PAX_Cargo__c, Preferred_Language__c'
+										+	', Short_Name__c , Ticketing_Agent_First_Name__c, Ticketing_Agent_Last_Name__c, TradeName__c, TTY__c, VAT_Number__c, VAT_Number_2__c, Website'
 						+   ', ANG_IsNewGenAgency__c, ANG_Accreditation_Model__c, Remittance_frequency__c, ANG_IEP_Status_FF__c, Is_PCI_compliant__c, ANG_PCI_compliance_expiry_date__c, Due_Diligence_Status__c'
-		                +	', ParentId, AIMS_ID__c, Parent.AIMS_ID__c, WebStar_ID__c, Parent.WebStar_ID__c, Location_Class__c, CNS_Agency__c ';
+										+	', ParentId, AIMS_ID__c, Parent.AIMS_ID__c, WebStar_ID__c, Parent.WebStar_ID__c, Location_Class__c, CNS_Agency__c ';
 
 		String idsCondition;
 		if (extraIds != null && extraIds.size() > 0) {
@@ -36,19 +36,19 @@ global class ams2gdp_Batch_Account implements Database.Batchable<sObject> , Data
 			if (!String.isBlank(AMS_2_GDP_Settings__c.getOrgDefaults().Status__c)) {
 				statusSet = new Set<String>(AMS_2_GDP_Settings__c.getOrgDefaults().Status__c.split(';'));
 				if (idsCondition!=null) idsCondition += ' AND '; else idsCondition='';
-                idsCondition += 'Status__c IN :statusSet ';
+								idsCondition += 'Status__c IN :statusSet ';
 
 			}
 			if (!String.isBlank(AMS_2_GDP_Settings__c.getOrgDefaults().Location_Classes__c)) {
 				locationsSet = new Set<String>(AMS_2_GDP_Settings__c.getOrgDefaults().Location_Classes__c.split(';'));
 				if (idsCondition!=null) idsCondition += ' AND '; else idsCondition='';
-                idsCondition += 'Location_Class__c IN :locationsSet';
+								idsCondition += 'Location_Class__c IN :locationsSet';
 			}
 		}
 
 		//-- Query conditions
 		List<String> conditions = new List<String> {'RecordTypeId= \'' + RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency') + '\''};
-        if (idsCondition!=null) conditions.add(idsCondition);
+				if (idsCondition!=null) conditions.add(idsCondition);
 		conditions.addAll(ams2gdp_BusinessLogic.queryClauseAccountAndRelated(batchName));
 
 
@@ -96,11 +96,11 @@ global class ams2gdp_Batch_Account implements Database.Batchable<sObject> , Data
 		}
 
 		query = String.format('SELECT {0} '
-		                      +	'FROM Account '
-		                      + 	'WHERE {1} '
-		                      +	'ORDER BY ParentId DESC ',
-		                      new List<String> {fields, String.join(conditions, ' AND ')}
-		                     );
+													+	'FROM Account '
+													+ 	'WHERE {1} '
+													+	'ORDER BY ParentId DESC ',
+													new List<String> {fields, String.join(conditions, ' AND ')}
+												 );
 	}
 
 	global ams2gdp_Batch_Account() {

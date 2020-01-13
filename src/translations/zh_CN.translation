@@ -1073,6 +1073,10 @@
         <name>ANG_ISSP_IEP_AuthorisedSignatory_auth_msg_Administrator</name>
     </customLabels>
     <customLabels>
+        <label><!-- ANG_ISSP_IEP_Indonesia_msg --></label>
+        <name>ANG_ISSP_IEP_Indonesia_msg</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ModelBanking India --></label>
         <name>ANG_ISSP_IEP_ModelBanking_India_msg</name>
     </customLabels>
@@ -2553,7 +2557,7 @@
         <name>CSP_L2_Contact_Support</name>
     </customLabels>
     <customLabels>
-        <label>国家</label>
+        <label>国家/地区</label>
         <name>CSP_L2_Country</name>
     </customLabels>
     <customLabels>
@@ -3145,7 +3149,7 @@
         <name>CSP_Reset_Password_Success_Msg_2</name>
     </customLabels>
     <customLabels>
-        <label>您的电脑 IP 地址已被确定来自美国当局列出的禁运国家之一。&lt;br/&gt;支持我们客户门户的平台遵守美国法规，因此，我们目前无法为您当前的 IP 地址提供访问客户门户的权限。&lt;br/&gt;&lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;点击这里与我们联系。&lt;/a&gt;</label>
+        <label>您的电脑 IP 地址已被确定来自美国当局列出的禁运国家之一。&lt;br/&gt;支持我们客户门户的平台遵守美国法规，因此，我们目前无法为您当前的 IP 地址提供访问客户门户的权限。&lt;br/&gt;&lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;点击这里与我们联系。&lt;/a&gt;</label>
         <name>CSP_Restricted_Login_Message</name>
     </customLabels>
     <customLabels>
@@ -3173,7 +3177,7 @@
         <name>CSP_Search_AdvancedSearch</name>
     </customLabels>
     <customLabels>
-        <label>国家</label>
+        <label>国家/地区</label>
         <name>CSP_Search_Case_Country</name>
     </customLabels>
     <customLabels>
@@ -14273,7 +14277,10 @@ and
         <name>ISSP_CNS_quote2</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_CalendarDisclaimer --></label>
+        <label>&quot;注意：此市场的日历包含本地特定日期，该日期未反映在此应用程序中。
+
+
+确保下载适用于您市场的完整 pdf 版本的日历，方法是点击支持标签，然后选择页面右侧文档下方的日历。&quot;</label>
         <name>ISSP_CalendarDisclaimer</name>
     </customLabels>
     <customLabels>
@@ -17967,7 +17974,7 @@ and
         <name>ISSP_Salutation</name>
     </customLabels>
     <customLabels>
-        <label>通过您电脑IP地址识别出您正尝试从一个美国制裁的国家登录客服入口。 &lt;br/&gt;客服入口的系统所属公司遵从此政策，因此，您在当前的IP地址无法访问。&lt;br/&gt;点击&lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.aspx&quot; &gt;这里&lt;/a&gt;联系IATA区域办事处</label>
+        <label>通过您电脑IP地址识别出您正尝试从一个美国制裁的国家登录客服入口。 &lt;br/&gt;客服入口的系统所属公司遵从此政策，因此，您在当前的IP地址无法访问。&lt;br/&gt;点击&lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quot; &gt;这里&lt;/a&gt;联系IATA区域办事处</label>
         <name>ISSP_Sanctions_Message</name>
     </customLabels>
     <customLabels>
@@ -22450,7 +22457,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>csp_SupportReachUs_ConcernTile</name>
     </customLabels>
     <customLabels>
-        <label>国家／地区</label>
+        <label>国家/地区</label>
         <name>csp_SupportReachUs_Country</name>
     </customLabels>
     <customLabels>

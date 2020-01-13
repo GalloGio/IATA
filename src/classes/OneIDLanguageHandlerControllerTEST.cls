@@ -4,15 +4,15 @@
 @isTest
 public class OneIDLanguageHandlerControllerTEST {
 
-    @isTest static void Metodostest()
-        {
+	@isTest static void Metodostest()
+		{
 
-            Test.startTest();
+			Test.startTest();
 
-            OneIdLanguageHandlerController.getLanguageInfo();
-            OneIdLanguageHandlerController.changeLanguage('pt_BR');
+			OneIdLanguageHandlerController.getLanguageInfo();
+			OneIdLanguageHandlerController.changeLanguage('pt_BR');
 
-            Test.stopTest();
+			Test.stopTest();
 
-        }
+		}
 }

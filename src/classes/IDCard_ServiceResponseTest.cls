@@ -36,7 +36,7 @@ public class IDCard_ServiceResponseTest
 		System.assert(r2.apiResponse instanceOf IDCard_ServiceResponse.ErrorResponse);
 		System.assert(r3.apiResponse instanceOf IDCard_ServiceResponse.ErrorResponse);
 	}
-	
+
 	@isTest
 	public static void testMakeErrorServiceResponse()
 	{
@@ -46,7 +46,7 @@ public class IDCard_ServiceResponseTest
 
 		System.assert(r.apiResponse instanceOf IDCard_ServiceResponse.ErrorResponse);
 	}
-	
+
 	@isTest
 	public static void testMakeCreatedServiceResponse()
 	{
@@ -56,7 +56,7 @@ public class IDCard_ServiceResponseTest
 
 		System.assert(r.apiResponse instanceOf IDCard_ServiceResponse.GenericResponse);
 	}
-	
+
 	@isTest
 	public static void testMakeGenericServiceResponse()
 	{

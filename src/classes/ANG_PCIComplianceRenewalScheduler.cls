@@ -12,14 +12,14 @@ global class ANG_PCIComplianceRenewalScheduler implements Schedulable {
 			setStatusBatch.add('Queued');
 			test.enqueueBatchJobs(5);
 		}
-			
-		if ([SELECT count() FROM AsyncApexJob WHERE JobType='BatchApex' AND Status in: setStatusBatch] < 5){ 
+
+		if ([SELECT count() FROM AsyncApexJob WHERE JobType='BatchApex' AND Status in: setStatusBatch] < 5){
 			Database.executeBatch(new ANG_PCIComplianceRenewalBatch(), BATCH_SCOPE);
 		} else {
-		   //schedule this same schedulable class again in 30 mins
-		   Datetime dt = Datetime.now().addMinutes(30);
-		   String timeForScheduler = dt.format('s m H d M \'?\' yyyy');
-		   Id schedId = System.Schedule('ANG_PCIComplianceRenewalBatch_'+timeForScheduler,timeForScheduler,new ANG_PCIComplianceRenewalScheduler());
+			 //schedule this same schedulable class again in 30 mins
+			 Datetime dt = Datetime.now().addMinutes(30);
+			 String timeForScheduler = dt.format('s m H d M \'?\' yyyy');
+			 Id schedId = System.Schedule('ANG_PCIComplianceRenewalBatch_'+timeForScheduler,timeForScheduler,new ANG_PCIComplianceRenewalScheduler());
 		}
 
 	}

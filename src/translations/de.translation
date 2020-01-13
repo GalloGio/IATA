@@ -1073,6 +1073,10 @@
         <name>ANG_ISSP_IEP_AuthorisedSignatory_auth_msg_Administrator</name>
     </customLabels>
     <customLabels>
+        <label><!-- ANG_ISSP_IEP_Indonesia_msg --></label>
+        <name>ANG_ISSP_IEP_Indonesia_msg</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ModelBanking India --></label>
         <name>ANG_ISSP_IEP_ModelBanking_India_msg</name>
     </customLabels>
@@ -3151,7 +3155,7 @@ und &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-port
         <name>CSP_Reset_Password_Success_Msg_2</name>
     </customLabels>
     <customLabels>
-        <label>Ihre Computer-IP stammt aus einem der Länder, die von den US-Behörden mit einem Embargo belegt sind. &lt;br/&gt; Die Plattform, die unser Kundenportal unterstützt, entspricht diesen US-Vorschriften. Daher können wir derzeit keinen Zugang zum Kundenportal von Ihrer aktuellen IP-Adresse aus anbieten können. &lt;br/&gt; &lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Klicken Sie hier&lt;/a&gt;, um mit uns Kontakt aufzunehmen.</label>
+        <label>Ihre Computer-IP stammt aus einem der Länder, die von den US-Behörden mit einem Embargo belegt sind. &lt;br/&gt; Die Plattform, die unser Kundenportal unterstützt, entspricht diesen US-Vorschriften. Daher können wir derzeit keinen Zugang zum Kundenportal von Ihrer aktuellen IP-Adresse aus anbieten können. &lt;br/&gt; &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Klicken Sie hier&lt;/a&gt;, um mit uns Kontakt aufzunehmen.</label>
         <name>CSP_Restricted_Login_Message</name>
     </customLabels>
     <customLabels>
@@ -17980,7 +17984,7 @@ Wenn Sie Ihr Passwort zurücksetzen möchten, gehen Sie bitte zum Log-in-Bildsch
         <name>ISSP_Salutation</name>
     </customLabels>
     <customLabels>
-        <label>Ihre Computer IP stammt aus einem Staat, der einem Embargo der U.S. Behörden unterliegt&lt;br/&gt;Die Plattform unseres Kundenportal entspricht den U.S., Richtlinien. Daher können Ihnen von dieser IP Adresse keinen Zugang zum Kundenportal gewähren.&lt;br/&gt;Klicken Sie&lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.aspx&quot; &gt;hier&lt;/a&gt;um Ihr regionales IATA Büro zu kontaktieren</label>
+        <label>Ihre Computer IP stammt aus einem Staat, der einem Embargo der U.S. Behörden unterliegt&lt;br/&gt;Die Plattform unseres Kundenportal entspricht den U.S., Richtlinien. Daher können Ihnen von dieser IP Adresse keinen Zugang zum Kundenportal gewähren.&lt;br/&gt;Klicken Sie&lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quot; &gt;hier&lt;/a&gt;um Ihr regionales IATA Büro zu kontaktieren</label>
         <name>ISSP_Sanctions_Message</name>
     </customLabels>
     <customLabels>
