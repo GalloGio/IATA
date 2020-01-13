@@ -9,8 +9,8 @@ public class NewLocalGroupMeetingCtrl {
 													'Date_Legal_Signed_off_Agenda__c','Criteria_Reviewed__c','Remittance_Frequency_Reviewed__c','VMFR__c',
 													'Date_Legal_Requested_to_Sign_Off_Minutes__c','Date_Legal_Signed_Off_the_Minutes__c',
 													'Date_Legal_REJECTED_the_minutes__c','Comments__c', 'Local_Governance__c',
-                                                    'Reason_for_Rejection_Agenda__c','Legal_Remarks_Agenda__c','Other__c',
-                                                    'Comments_checklist__c','Reason_for_Rejection_Minutes__c','Proposal_to_Conference__c',
+													'Reason_for_Rejection_Agenda__c','Legal_Remarks_Agenda__c','Other__c',
+													'Comments_checklist__c','Reason_for_Rejection_Minutes__c','Proposal_to_Conference__c',
 													'Local_Governance__r.Local_Governance_type__c','Date_Legal_REJECTED_the_agenda__c'};
 
 		if(!Test.isRunningTest()) ctrl.addFields(fieldNames);
