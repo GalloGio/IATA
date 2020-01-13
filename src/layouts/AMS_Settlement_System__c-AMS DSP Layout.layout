@@ -43,12 +43,16 @@
                 <field>DPC__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
+                <field>ISS_Joining_fee_cluster__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>CurrencyIsoCode</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>ISS_Joining_fee_cluster__c</field>
+                <field>ANG_RHC_Amount_Equals_FS__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -144,6 +148,7 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>RECORDTYPE</fields>
         <fields>Class_Type__c</fields>
         <fields>Remittance_Frequency__c</fields>
         <fields>Risk_Status__c</fields>

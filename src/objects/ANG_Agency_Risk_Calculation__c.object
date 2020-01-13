@@ -5,7 +5,27 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
+        <actionName>Accept</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
         <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Small</formFactor>
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
@@ -13,7 +33,27 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
+        <actionName>Clone</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
         <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Small</formFactor>
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
@@ -21,7 +61,27 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
         <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Small</formFactor>
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
@@ -29,7 +89,27 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
+        <actionName>New</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
         <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Small</formFactor>
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
@@ -37,7 +117,27 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
+        <actionName>Tab</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
         <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <formFactor>Small</formFactor>
         <type>Default</type>
     </actionOverrides>
     <allowInChatterGroups>false</allowInChatterGroups>
@@ -143,6 +243,32 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>ANG_Max_Range__c</fullName>
+        <description>Maximum number of remittances</description>
+        <externalId>false</externalId>
+        <label>Max Range</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ANG_Min_Range__c</fullName>
+        <description>Minimum number of remittances</description>
+        <externalId>false</externalId>
+        <label>Min Range</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>ANG_Occurrence_Num__c</fullName>
         <externalId>false</externalId>
         <label>Number of occurrence</label>
@@ -190,6 +316,32 @@
         <trackTrending>false</trackTrending>
         <type>Number</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ANG_RF_Sum_Type__c</fullName>
+        <description>Remittance frequency sum type used for risk assessment for multicountry</description>
+        <externalId>false</externalId>
+        <label>RF Sum Type</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>CEILING[Σ(RF)*0.0075]</fullName>
+                    <default>false</default>
+                    <label>CEILING[Σ(RF)*0.0075]</label>
+                </value>
+                <value>
+                    <fullName>Σ(RF)</fullName>
+                    <default>false</default>
+                    <label>Σ(RF)</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>ANG_Remittance_Frequency__c</fullName>
@@ -377,6 +529,17 @@
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_RF_Sum_Type__c</picklist>
+            <values>
+                <fullName>CEILING%5BΣ%28RF%29*0%2E0075%5D</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Σ%28RF%29</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>ANG_Remittance_Frequency__c</picklist>
             <values>
                 <fullName>B</fullName>
@@ -400,6 +563,169 @@
             </values>
             <values>
                 <fullName>S</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>V</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>W</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_Risk_History_Assessment__c</picklist>
+            <values>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_Risk_History__c</picklist>
+            <values>
+                <fullName>A</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>B</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>C</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Remittance_Frequency_Values</fullName>
+        <active>true</active>
+        <description>Record type to track the value that each type of remittance frequency has for multicountry</description>
+        <label>Remittance Frequency Values</label>
+        <picklistValues>
+            <picklist>ANG_Accreditation_Model__c</picklist>
+            <values>
+                <fullName>Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cashless</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Legacy</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Multicountry</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_Adjusted__c</picklist>
+            <values>
+                <fullName>Mixed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_Financial_Review_Result__c</picklist>
+            <values>
+                <fullName>Satisfactory</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Satisfactory - New Financial Security</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Satisfactory - No Action</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Satisfactory - Release Financial Security</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Satisfactory - Update Financial Security</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Unsatisfactory - New Financial Security</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Unsatisfactory - No action</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Unsatisfactory - Release Financial Security</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Unsatisfactory - Update Financial Security</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_RF_Sum_Type__c</picklist>
+            <values>
+                <fullName>CEILING%5BΣ%28RF%29*0%2E0075%5D</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Σ%28RF%29</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_Remittance_Frequency__c</picklist>
+            <values>
+                <fullName>B</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>D</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>F</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>M</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>R</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>S</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>T</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -520,6 +846,17 @@
             </values>
             <values>
                 <fullName>Unsatisfactory - Update Financial Security</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_RF_Sum_Type__c</picklist>
+            <values>
+                <fullName>CEILING%5BΣ%28RF%29*0%2E0075%5D</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Σ%28RF%29</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -671,6 +1008,17 @@
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ANG_RF_Sum_Type__c</picklist>
+            <values>
+                <fullName>CEILING%5BΣ%28RF%29*0%2E0075%5D</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Σ%28RF%29</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>ANG_Remittance_Frequency__c</picklist>
             <values>
                 <fullName>B</fullName>
@@ -753,6 +1101,40 @@
         <errorConditionFormula>ANG_Occurrence_Num__c&lt;0</errorConditionFormula>
         <errorDisplayField>ANG_Occurrence_Num__c</errorDisplayField>
         <errorMessage>Number of occurrence has to be a positive number</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>ANG_RF_Sum_Type_Only_for_Multicountry</fullName>
+        <active>true</active>
+        <description>Remittance Frequency Sum Type field can only be updated when the accreditation model is set as Multicountry</description>
+        <errorConditionFormula>AND(
+ NOT(ISPICKVAL(ANG_RF_Sum_Type__c, &apos;&apos;)),
+ NOT(ISPICKVAL(ANG_Accreditation_Model__c, &apos;Multicountry&apos;))
+)</errorConditionFormula>
+        <errorMessage>RF Sum Type must only be filled when the accreditation model is &apos;Multicountry&apos;</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>ANG_Ranges_Only_for_Mixed_Multicountry</fullName>
+        <active>true</active>
+        <description>Minimum and maximum ranges can only be filled when Adjusted = &apos;Mixed&apos; and parent rule accreditation model is &apos;Multicountry&apos;</description>
+        <errorConditionFormula>AND(
+ NOT(ISPICKVAL(ANG_Adjusted__c, &apos;Mixed&apos;)),
+ NOT(ISPICKVAL(ANG_Calculation_Rule__r.ANG_Accreditation_Model__c, &apos;Multicountry&apos;)),
+ OR(NOT(ISBLANK(ANG_Min_Range__c)), 
+    NOT(ISBLANK(ANG_Max_Range__c)))
+)</errorConditionFormula>
+        <errorMessage>Min and Max Range can only be filled when Adjusted = &apos;Mixed&apos; and Accreditation Model = &apos;Multicountry&apos;</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>ANG_Remittance_Frequency_Adj_Required</fullName>
+        <active>true</active>
+        <description>Remittance Frequency is required for Adjustments when the accreditation model is NOT multicountry</description>
+        <errorConditionFormula>AND(
+ RecordType.DeveloperName == &apos;Adjustment&apos;,
+ NOT(ISPICKVAL(ANG_Calculation_Rule__r.ANG_Accreditation_Model__c, &apos;Multicountry&apos;)),
+ ISPICKVAL(ANG_Remittance_Frequency__c, &apos;&apos;)
+)</errorConditionFormula>
+        <errorDisplayField>ANG_Remittance_Frequency__c</errorDisplayField>
+        <errorMessage>You must select a value</errorMessage>
     </validationRules>
     <visibility>Public</visibility>
 </CustomObject>

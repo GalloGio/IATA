@@ -165,14 +165,14 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 						update agReg;
 					}else{
 						String sContactName = agReg.First_Name__c + ' ' +agReg.Last_Name__c;
-						
+
 						oscar = [SELECT Id, Region__c,Oscar_Communication_Case_Id__c FROM AMS_OSCAR__c WHERE Account__c = :agReg.Account__c
 										AND AMS_Online_Accreditation__r.DGR_Agency_Regulation__c = :agReg.Id
 										AND Process__c = :AMS_Utils.CERTIFICATION
 										order by CreatedDate desc
 										limit 1];
 					}
-					
+
 					System.debug('oscar: ' + oscar);
 					sendEmailAlert(keyContactsPerAccount.get(agReg.Account__c), oscar.Id, DGRcountryTemplates, oscar.Oscar_Communication_Case_Id__c, owea[0], true);
 
@@ -323,7 +323,7 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 		//Creating the DMLOptions for "Assign using active assignment rules" checkbox
 		Database.DMLOptions dmlOpts = new Database.DMLOptions();
 		dmlOpts.assignmentRuleHeader.assignmentRuleId= AR.id;
-		
+
 		Case theCommunicationCase = new Case();
 
 		theCommunicationCase.RecordTypeId = AMS_Utils.RECTYPE_OSCARCOMM;
@@ -383,7 +383,7 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 		theStagingArea.Website__c                               = accountData.Website;
 		theStagingArea.ISSP_AMS_Legal_Status__c                 = AMS_AgencyHelper.transformCompanyType(accountData.Company_Type__c);
 		//FM 19-07-2017 - AMSU-14 -
-		theStagingArea.DGR_Agency_Regulation__c					= agReg.Id;	
+		theStagingArea.DGR_Agency_Regulation__c                 = agReg.Id;
 
 		insert theStagingArea;
 

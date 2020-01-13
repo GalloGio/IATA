@@ -1,21 +1,21 @@
 public without sharing class ISSP_PersonalInformationWithoutSharing {
-	
+
 	ISSP_PersonalInformation theParentController { get; set; }
 	public Contact theUserContact { get; set; }
 	public String ifapName {get; set;}
-    public String ifapEmail {get; set;}
-	
+	public String ifapEmail {get; set;}
+
 	public ISSP_PersonalInformationWithoutSharing(ISSP_PersonalInformation parentController) {
 		theParentController = parentController;
 		theUserContact = theParentController.con;
-		loadPortalAdmins(); 
+		loadPortalAdmins();
 	}
-	
+
 	public void loadPortalAdmins() {
-        //TF - SP10-N1 - IFAP contact
-        ifapName = '';
+		//TF - SP10-N1 - IFAP contact
+		ifapName = '';
 		ifapEmail = '';
-    	if (theUserContact.User_Portal_Status__c == 'Approved Admin'){
+		if (theUserContact.User_Portal_Status__c == 'Approved Admin'){
 			List <Contact> ifapList = [SELECT Id, Name, Email,
 									(SELECT Id FROM Portal_Application_Rights__r
 									WHERE Right__c = 'Access Granted'
@@ -30,88 +30,88 @@ public without sharing class ISSP_PersonalInformationWithoutSharing {
 					}
 				}
 			}
-    	}
-		
-        if (theUserContact.User_Portal_Status__c != 'Active'
-            && theUserContact.User_Portal_Status__c != 'Approved Admin' //WMO-386  
-        	&& theUserContact.User_Portal_Status__c != 'Regional Administrator'
-        	&& theUserContact.User_Portal_Status__c != 'Approved User'
-        	&& theUserContact.User_Portal_Status__c != 'Pending Approval')
-            return;
-            
-        //WMO-386  
-        try {
-        	String currentUserProfile ='';
-            
-            List<Id> accountIds = new List<Id> {theUserContact.AccountId, theUserContact.Account.ParentId};
-            List<ISSP_PersonalInformation.UserWrapper> admins = getPortalAdminAndSuperUsers(accountIds);
+		}
 
-            ISSP_Utilities.log(admins);
+		if (theUserContact.User_Portal_Status__c != 'Active'
+			&& theUserContact.User_Portal_Status__c != 'Approved Admin' //WMO-386
+			&& theUserContact.User_Portal_Status__c != 'Regional Administrator'
+			&& theUserContact.User_Portal_Status__c != 'Approved User'
+			&& theUserContact.User_Portal_Status__c != 'Pending Approval')
+			return;
 
-            for(ISSP_PersonalInformation.UserWrapper admin : admins) {
-                if(theUserContact.Id == admin.contactId) {
-                    if(String.isBlank(currentUserProfile)) {
-                        currentUserProfile = admin.userRole;
-                    } else if(currentUserProfile.contains('Portal Administrator')){
-                        if(!admin.userRole.contains('Portal Administrator')) {
-                            currentUserProfile = admin.userRole;
-        			}
-                    } else if(currentUserProfile.contains('Portal Regional Administrator')){
-                        if(!admin.userRole.contains('Portal Administrator') && !admin.userRole.contains('Portal Regional Administrator')){
-                            currentUserProfile = admin.userRole;
-        				}
-        			}
-        				}
-        			}
+		//WMO-386
+		try {
+			String currentUserProfile ='';
 
-            for (ISSP_PersonalInformation.UserWrapper admin : admins) {
-                if (admin.userRole.contains('Portal Administrator')) {
-                    theParentController.listAdmins.add(admin);
-        		}
-        	}
-        } catch (Exception e) {
-            ISSP_Utilities.log(e);
-        }
-    }
-    
-    public static List<AccountTeamMember> getPortalAdmins(list<Id> accountIds) {
-		
-		list<AccountTeamMember> teamMembers = 
+			List<Id> accountIds = new List<Id> {theUserContact.AccountId, theUserContact.Account.ParentId};
+			List<ISSP_PersonalInformation.UserWrapper> admins = getPortalAdminAndSuperUsers(accountIds);
+
+			ISSP_Utilities.log(admins);
+
+			for(ISSP_PersonalInformation.UserWrapper admin : admins) {
+				if(theUserContact.Id == admin.contactId) {
+					if(String.isBlank(currentUserProfile)) {
+						currentUserProfile = admin.userRole;
+					} else if(currentUserProfile.contains('Portal Administrator')){
+						if(!admin.userRole.contains('Portal Administrator')) {
+							currentUserProfile = admin.userRole;
+					}
+					} else if(currentUserProfile.contains('Portal Regional Administrator')){
+						if(!admin.userRole.contains('Portal Administrator') && !admin.userRole.contains('Portal Regional Administrator')){
+							currentUserProfile = admin.userRole;
+						}
+					}
+						}
+					}
+
+			for (ISSP_PersonalInformation.UserWrapper admin : admins) {
+				if (admin.userRole.contains('Portal Administrator')) {
+					theParentController.listAdmins.add(admin);
+				}
+			}
+		} catch (Exception e) {
+			ISSP_Utilities.log(e);
+		}
+	}
+
+	public static List<AccountTeamMember> getPortalAdmins(list<Id> accountIds) {
+
+		list<AccountTeamMember> teamMembers =
 									[SELECT Id,
-											UserId, 
+											UserId,
 											TeamMemberRole,
 											User.Contact.User_Portal_Status__c,
-											User.Contact.Salutation, 
-											User.Contact.Name, 
+											User.Contact.Salutation,
+											User.Contact.Name,
 											User.Contact.Email,
 											User.Contact.AccountId,
-											User.Contact.Account.Name, 
+											User.Contact.Account.Name,
 											User.Contact.Account.BillingCountry
-									   FROM AccountTeamMember 
-									  WHERE accountId IN: accountIds 
-									    AND (TeamMemberRole='Portal Administrator' 
-									  	     OR TeamMemberRole='Portal Regional Administrator')];
-				
+									   FROM AccountTeamMember
+									  WHERE accountId IN: accountIds
+										AND (TeamMemberRole='Portal Administrator'
+									  		 OR TeamMemberRole='Portal Regional Administrator')];
+
 		return teamMembers;
-		
+
 	}
-	
-    //WMO-386
-    public static List<ISSP_PersonalInformation.UserWrapper> getPortalAdminAndSuperUsers(List<Id> accountIds) {
-        Set<String> roles = new Set<String> {'Portal Administrator', 'Portal Regional Administrator'};
-        List<AccountTeamMember> members = [SELECT Id, UserId, TeamMemberRole, User.ContactId, User.Contact.Salutation,
-                                                User.Contact.Name, User.Contact.Email, User.Contact.AccountId,
-                                                User.Contact.Account.Name, User.Contact.Account.BillingCountry, AccountId
-                                           FROM AccountTeamMember
-                                           WHERE AccountId IN :accountIds AND TeamMemberRole IN :roles];
 
-        Map<Id,ISSP_PersonalInformation.UserWrapper> mapContacts = new Map<Id,ISSP_PersonalInformation.UserWrapper>();
-        for(AccountTeamMember member : members) {
-            ISSP_PersonalInformation.UserWrapper uw = new ISSP_PersonalInformation.UserWrapper(member.User.Contact.Salutation, member.User.Contact.Name, 
-                member.User.Contact.Email, member.User.Contact.Account.BillingCountry, member.TeamMemberRole, member.User.Contact.AccountId, member.User.ContactId);
-            mapContacts.put(member.User.ContactId, uw);
-        }
+	//WMO-386
+	public static List<ISSP_PersonalInformation.UserWrapper> getPortalAdminAndSuperUsers(List<Id> accountIds) {
+		Set<String> roles = new Set<String> {'Portal Administrator', 'Portal Regional Administrator'};
+		List<AccountTeamMember> members = [SELECT Id, UserId, TeamMemberRole, User.ContactId, User.Contact.Salutation,
+												User.Contact.Name, User.Contact.Email, User.Contact.AccountId,
+												User.Contact.Account.Name, User.Contact.Account.BillingCountry, AccountId
+										   FROM AccountTeamMember
+										   WHERE AccountId IN :accountIds AND TeamMemberRole IN :roles];
 
-        return mapContacts.values();
-    }
+		Map<Id,ISSP_PersonalInformation.UserWrapper> mapContacts = new Map<Id,ISSP_PersonalInformation.UserWrapper>();
+		for(AccountTeamMember member : members) {
+			ISSP_PersonalInformation.UserWrapper uw = new ISSP_PersonalInformation.UserWrapper(member.User.Contact.Salutation, member.User.Contact.Name,
+				member.User.Contact.Email, member.User.Contact.Account.BillingCountry, member.TeamMemberRole, member.User.Contact.AccountId, member.User.ContactId);
+			mapContacts.put(member.User.ContactId, uw);
+		}
+
+		return mapContacts.values();
+	}
 }

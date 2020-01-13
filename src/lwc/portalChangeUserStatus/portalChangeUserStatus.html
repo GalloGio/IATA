@@ -46,7 +46,7 @@
                                     </lightning-combobox>
                                 </lightning-layout-item>
                             </div>
-                            <div class="slds-col slds-size_1-of-1">
+                            <div if:true={inactiveStatus} class="slds-col slds-size_1-of-1">
                                 <label class="form-label text-bold">
                                     {reasonLabel}
                                 </label>
@@ -64,18 +64,17 @@
                         </div>
 
                         <!-- BUTTON -->
-                        <div class="slds-align_absolute-center slds-p-around_large topLightGrayBorder">
-                            <lightning-button variant="brand" class="slds-m-right_medium containedButtonWhite"
-                                name="sendPasswordbtn" label={label.submitLABEL} title={label.submitLABEL}
-                                onclick={submitAction} disabled={noSelected}>
-                            </lightning-button>
-
-                            <lightning-button variant="neutral" class="containedButton"
-                                              name="closeModal" label={label.cancelLABEL} title={label.cancelLABEL}
-                                              onclick={closeModal}
-                                              if:true={removeContactLocal}>
-                            </lightning-button>
-
+                        <div class="slds-p-around_large topLightGrayBorder customWhiteBackground">
+                            <div class="slds-grid slds-wrap slds-gutters_medium slds-grid--vertical-stretch">
+                                <div class="slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2">    
+                                    <lightning-button class="baseButton newLinkButton buttonMinHeightMedium text-xsmall fullWidth" 
+                                        label={label.cancelLABEL} variant="neutral" onclick={closeModal}></lightning-button>
+                                </div>
+                                <div class="slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2">
+                                    <lightning-button class="baseButton newContainedButton buttonMinHeightMedium text-xsmall fullWidth" 
+                                        label={label.submitLABEL} variant="neutral" onclick={submitAction} disabled={noSelected}></lightning-button>
+                                </div>
+                            </div>
                         </div>
 
                     </div>

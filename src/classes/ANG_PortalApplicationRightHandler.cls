@@ -41,19 +41,19 @@ public class ANG_PortalApplicationRightHandler {
 
 		Set<String> contactIds = new Set<String>();
 		for(Portal_Application_Right__c access : filterRequestedAccess()) {
-			contactIds.add(access.Contact__c);			
+			contactIds.add(access.Contact__c);
 		}
-		
+
 		map<id, User> mapUser = new map<id, User>();
 		set<id> setUserId = new set<id>();
-		
+
 		for(user u: [select id, ContactId, FederationIdentifier from User where ContactId in:contactIds]){
 			mapUser.put(u.ContactId, u);
 			setUserId.add(u.Id);
 		}
-		
+
 		List<UserProvAccount> ExistingUPA = [Select ExternalUserId, ConnectedAppId From UserProvAccount Where SalesforceUserId in : setUserId];
-		
+
 		for(Portal_Application_Right__c access : filterRequestedAccess()) {
 			if(roles.containsKey(access.Application_Name__c + ' - ' + access.ANG_Portal_Service_Role__c)){
 				string sConnId = roles.get(access.Application_Name__c + ' - ' + access.ANG_Portal_Service_Role__c).Provisioning_Id__c;
@@ -65,29 +65,29 @@ public class ANG_PortalApplicationRightHandler {
 						if(string.ValueOf(upa.ConnectedAppId).left(15) == sConnId)
 							UPAToCreate = false;
 					}
-					
+
 					if(UPAToCreate){
 						string sExtUserId = '';
 						if(mapUser.get(access.Contact__c).FederationIdentifier==null)
 							sExtUserId = access.Contact__c;
 						else
-		            		sExtUserId = mapUser.get(access.Contact__c).FederationIdentifier;
-			            
+							sExtUserId = mapUser.get(access.Contact__c).FederationIdentifier;
+
 						UserProvAccount upa = new UserProvAccount (
-		            		ExternalUserId = sExtUserId,
-			                SalesforceUserId = mapUser.get(access.Contact__c).Id,
-			                ConnectedAppId = roles.get(access.Application_Name__c + ' - ' + access.ANG_Portal_Service_Role__c).Provisioning_Id__c,
-			                LinkState = 'Linked',
-			                Status = 'Active'
-			            );
-			            upal.add(upa);
+							ExternalUserId = sExtUserId,
+							SalesforceUserId = mapUser.get(access.Contact__c).Id,
+							ConnectedAppId = roles.get(access.Application_Name__c + ' - ' + access.ANG_Portal_Service_Role__c).Provisioning_Id__c,
+							LinkState = 'Linked',
+							Status = 'Active'
+						);
+						upal.add(upa);
 					}
 				}
 			}
 		}
-		
+
 		System.debug(LoggingLevel.ERROR, 'INSERT UserProvAccount --> ' + upal);
-		
+
 		if(!upal.isEmpty())
 			insert upal;
 	}
@@ -126,7 +126,7 @@ public class ANG_PortalApplicationRightHandler {
 		}
 
 		//assign/remove users to the permission sets (must be future to prevent MIXED DML errors)
-		if(helper.isChanged()) helper.enqueueJob(); 
+		if(helper.isChanged()) helper.enqueueJob();
 	}
 
 	// ************************************************************
@@ -209,7 +209,7 @@ public class ANG_PortalApplicationRightHandler {
 			if(access.Application_Name__c.startsWith('IATA EasyPay') && access.Right__c == 'Access Granted') {
 				parSet.add(access.id);
 			}
-		}	
+		}
 
 		List<Portal_Application_Right__c> errorList	= ANG_PortalApplicationRightHelper.getCheckMinimumUsersAllowedErrorList(parSet);
 
@@ -223,10 +223,10 @@ public class ANG_PortalApplicationRightHandler {
 		for(Portal_Application_Right__c access : triggerNew) {
 			//
 			// Only take in consideration IEP services
-			//			
+			//
 			if(access.Right__c == 'Access Denied' && access.Application_Name__c.startsWith('IATA EasyPay')) {
-				parSet.add(access.id);	
-			}						
+				parSet.add(access.id);
+			}
 		}
 
 		List<Portal_Application_Right__c> errorList	= ANG_PortalApplicationRightHelper.getCheckMinimumUsersAllowedErrorList(parSet);
@@ -234,63 +234,64 @@ public class ANG_PortalApplicationRightHandler {
 		for(Portal_Application_Right__c par : errorList) {
 			newMap.get(par.id).addError(System.label.ANG_ISSP_Min_Users_With_Role_Error_Msg.replace('$$ROLE$$', par.ANG_Portal_Service_Role__c));
 		}
-	}	
-	
+	}
+
 	/** ENHC0012690 **/
 	private void manageShareUsers(){
-		
+
 		List<ISSP_External_Reports_Config__c> extRepConfigList = ISSP_External_Reports_Config__c.getall().values();
 		Set<Id> portalApps = new Set<Id>();
+		Set<Id> portalAccounts = new Set<Id>();
 		Set<Id> portalContacts = new Set<Id>();
+
 		//Gets Portal Services IDs to filter the ISSP_External_Reports_Config__c to avoid later pulling every single record
 		for(Portal_Application_Right__c par : triggerNew){
 			if(par.Right__c == 'Access Granted'){
 				portalApps.add(par.Portal_Application__c);
+				portalAccounts.add(par.Account__c);
 				portalContacts.add(par.Contact__c);
 			}
+			System.debug('Portal_Application_Right__c being changed: ' + par);
 		}
-		
 		Set<String> relevantERCs = new Set<String>();
-		
+
 		for(ISSP_External_Reports_Config__c erc: extRepConfigList){
 			if(portalApps.contains(erc.Portal_Service_Id__c)){
 				relevantERCs.add(erc.Report_ID__c);
 			}
 		}
-		
-		List<ISSP_External_Report__c> externalReports = [SELECT Id, Account__c, Report_ID__c FROM ISSP_External_Report__c WHERE Report_ID__c in :relevantERCs];
-		
+		System.debug('ISSP_External_Reports_Config__c being used: '+relevantERCs);
+
+		List<ISSP_External_Report__c> externalReports = [SELECT Id, Account__c, Report_ID__c FROM ISSP_External_Report__c WHERE Report_ID__c in :relevantERCs AND Account__c in :portalAccounts];
+		System.debug('Relevant ISSP_External_Report__c: '+externalReports);
+
 		if(!externalReports.isEmpty()){
-			
-			Set<Id> accountIDs = new Set<Id>();
-			
+
+			Map<Id, Set<Id>> accountReports = new Map<Id, Set<Id>>();
+
 			for(ISSP_External_Report__c er : externalReports){
-				accountIDs.add(er.Account__c);
-			}
-			
-			List<User> users = [SELECT Id, ContactId, AccountId FROM User WHERE AccountId in :accountIDs AND isActive = true];
-			
-			for(Portal_Application_Right__c par : triggerNew){
-				
-				Map<Id,Set<Id>> usersToGetAccess = new Map<Id,Set<Id>>();
-								
-				for(ISSP_External_Report__c er : externalReports){
-					for(User u : users){
-						if(u.ContactId == par.Contact__c && u.AccountId == er.Account__c){
-                            if(usersToGetAccess.containsKey(er.Id)){
-                                Set<Id> newUser = usersToGetAccess.get(er.Id);
-                                newUser.add(u.Id);
-                                usersToGetAccess.put(er.Id,newUser);
-                            }
-							else
-                                usersToGetAccess.put(er.Id, new Set<Id>{u.Id});
-						}
-					}
-					
-					if(!usersToGetAccess.isEmpty())
-						System.enqueueJob(new ExternalFilesUtils(usersToGetAccess, 'Read'));
+				if(accountReports.containsKey(er.Account__c)){
+					Set<Id> eReport = accountReports.get(er.Account__c);
+					eReport.add(er.Id);
+					accountReports.put(er.Account__c, eReport);
 				}
+				else
+					accountReports.put(er.Account__c, new Set<Id>{er.id});
 			}
+			System.debug('acount-reports Map: '+accountReports);
+
+			List<User> users = [SELECT Id, ContactId, AccountId FROM User WHERE ContactId in :portalContacts AND isActive = true];
+			System.debug('Users to share reports: '+ users);
+
+			Map<Id,Set<Id>> usersToGetAccess = new Map<Id,Set<Id>>();
+			for(User u : users){
+				if(accountReports.containsKey(u.AccountId))
+					usersToGetAccess.put(u.Id, accountReports.get(u.AccountId));
+			}
+
+			System.debug('User-reports Map: '+ usersToGetAccess);
+			if(!usersToGetAccess.isEmpty())
+				System.enqueueJob(new ExternalFilesUtils(usersToGetAccess, 'Read'));
 		}
 	}
 }

@@ -1,7 +1,7 @@
 /**
-           File: AMS_CaseTriggerHandler_Test.cls
-        Subject: Test Class for AMS_CaseTriggerHandler class.
-        History: amtosantos, 2017-04-17, Initial Release.
+		   File: AMS_CaseTriggerHandler_Test.cls
+		Subject: Test Class for AMS_CaseTriggerHandler class.
+		History: amtosantos, 2017-04-17, Initial Release.
 
 
 */
@@ -173,7 +173,7 @@ private class AMS_CaseTriggerHandler_Test {
 		insert supportRequestList;
 
 		Boolean isRunOnce = AMS_CaseTriggerHandler.runOnce();
-		
+
 		isRunOnce = AMS_CaseTriggerHandler.runOnce();
 
 		AMS_CaseTriggerHandler.handleAfterInsert(supportRequestList);

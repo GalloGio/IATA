@@ -19,6 +19,10 @@ import CSP_Manage_Services from '@salesforce/label/c.CSP_Manage_Services';
 import CSP_Breadcrumb_Company_Profile_Title from '@salesforce/label/c.CSP_Breadcrumb_CompanyProfile_Title';
 import CSP_Breadcrump_MyProfile_Title from '@salesforce/label/c.CSP_Breadcrump_MyProfile_Title';
 import CSP_Cases from '@salesforce/label/c.CSP_Cases';
+import CSP_Treasury_Dashboard from '@salesforce/label/c.CSP_Treasury_Dashboard';
+import CSP_Breadcrump_You_IATA from '@salesforce/label/c.CSP_Breadcrump_You_IATA';
+import CSP_Breadcrumb_CaseDetails_Title from '@salesforce/label/c.CSP_Breadcrumb_CaseDetails_Title';
+import CSP_Deduction_Notice from '@salesforce/label/c.CSP_Deduction_Notice';
 
 export default class PortalBreadcrumbs extends NavigationMixin(LightningElement) {
 
@@ -30,11 +34,15 @@ export default class PortalBreadcrumbs extends NavigationMixin(LightningElement)
         CSP_Breadcrumb_Support_ReachUs,
         CSP_Breadcrumb_Support_CreateNewCase,
         CSP_Breadcrumb_FAQ_Title,
+		CSP_Breadcrumb_CaseDetails_Title,
         CSP_Breadcrumb_Services_Title,
         CSP_Manage_Services,
         CSP_Breadcrumb_Company_Profile_Title,
         CSP_Breadcrump_MyProfile_Title,
-        CSP_Cases
+        CSP_Cases,
+        CSP_Treasury_Dashboard,
+		CSP_Breadcrump_You_IATA,
+		CSP_Deduction_Notice
     };
 
     //Used to replace last breadcrumb with given label

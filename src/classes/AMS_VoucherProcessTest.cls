@@ -1,18 +1,18 @@
 @isTest
 private class AMS_VoucherProcessTest {
-	
+
 	@testSetup static void setup(){
 
 		Date myDate = Date.newInstance(2012, 2, 17);
 
 
-        ID rtAgency = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+		ID rtAgency = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
-        IATA_ISO_Country__c portugal = new IATA_ISO_Country__c(AMS_Vouchers_Benchmark__c=600000 ,AMS_Max_Vouchers_Per_Year__c = 4, Name='Portugal', ISO_Code__c='IT', Region__c='Europe', ISS_Office_Location__c='Portugal');
-        insert portugal;
+		IATA_ISO_Country__c portugal = new IATA_ISO_Country__c(AMS_Vouchers_Benchmark__c=600000 ,AMS_Max_Vouchers_Per_Year__c = 4, Name='Portugal', ISO_Code__c='IT', Region__c='Europe', ISS_Office_Location__c='Portugal');
+		insert portugal;
 
-        AMS_Voucher_Region__c region = new AMS_Voucher_Region__c(Name='Europe');
-        insert region;
+		AMS_Voucher_Region__c region = new AMS_Voucher_Region__c(Name='Europe');
+		insert region;
 
 		// create test account1
 		Account account1 = new Account();
@@ -26,7 +26,7 @@ private class AMS_VoucherProcessTest {
 		account1.Accreditation_date__c = myDate;
 		account1.recordTypeId = rtAgency;
 		account1.IATA_ISO_Country__c = portugal.Id;
-		account1.Location_Class__c = 'C'; 
+		account1.Location_Class__c = 'C';
 		insert account1;
 
 		// create test account1
@@ -46,13 +46,13 @@ private class AMS_VoucherProcessTest {
 
 		AMS_Voucher_Information__c voucherInfo1 = new  AMS_Voucher_Information__c(Account__c = account1.Id, Amount_Currency__c = 'USD', AmountLastYearSales__c = 1000000, Exchange_Rate__c =1 , Year__c = '2016');
 		AMS_Voucher_Information__c voucherInfo2 = new  AMS_Voucher_Information__c(Account__c = account2.Id, Amount_Currency__c = 'USD', AmountLastYearSales__c = 2000000, Exchange_Rate__c =1 , Year__c = '2016');
-	
+
 		insert new List<AMS_Voucher_Information__c>{voucherInfo1,voucherInfo2};
 
 	}
 
 	@isTest static void runProcessForVouchersAssignation() {
-		
+
 		Test.startTest();
 
 		List<Account> accts = [SELECT Id, Accreditation_date__c, Status__c , Location_Class__c, IATA_ISO_Country__r.AMS_Max_Vouchers_Per_Year__c, IATA_ISO_Country__r.AMS_Vouchers_Benchmark__c from Account];
@@ -67,8 +67,8 @@ private class AMS_VoucherProcessTest {
 
 		AMS_Voucher_Process_Run__c process = new AMS_Voucher_Process_Run__c(status__c = 'Started');
 
-        insert process;
-    
+		insert process;
+
 		AMS_VoucherProcessManager ams_VPM = new AMS_VoucherProcessManager(process);
 
 		Set<Id> setCountries = new Set<Id>();
@@ -76,9 +76,9 @@ private class AMS_VoucherProcessTest {
 		IATA_ISO_Country__c portugal = [SELECT Id from IATA_ISO_Country__c];
 		setCountries.add(portugal.Id);
 
-        ams_VPM.setCountries(setCountries);
+		ams_VPM.setCountries(setCountries);
 
-        Id batchCountryAverageId = ams_VPM.runVouchersProcess('2016');
+		Id batchCountryAverageId = ams_VPM.runVouchersProcess('2016');
 
 		Test.stopTest();
 
@@ -96,25 +96,25 @@ private class AMS_VoucherProcessTest {
 
 		PageReference pageRef = Page.AMS_VoucherManagerPage;
 
-        Test.setCurrentPageReference(pageRef);
+		Test.setCurrentPageReference(pageRef);
 
-        AMS_VoucherManagerController controller = new AMS_VoucherManagerController();
+		AMS_VoucherManagerController controller = new AMS_VoucherManagerController();
 
-        Test.startTest();
-        
-        //AMS_VoucherManagerPage page = new AMS_VoucherManagerPage(sc);
-        
-        controller.runCountryAverageBatch();
+		Test.startTest();
 
-        controller.getcanExecuteBatch();
+		//AMS_VoucherManagerPage page = new AMS_VoucherManagerPage(sc);
 
-        controller.getcountryobj();
+		controller.runCountryAverageBatch();
 
-        controller.getregionobj();
+		controller.getcanExecuteBatch();
 
-        Set<String> notesTest = controller.notes;
+		controller.getcountryobj();
 
-        Test.stopTest();
+		controller.getregionobj();
+
+		Set<String> notesTest = controller.notes;
+
+		Test.stopTest();
 
 	}
 
@@ -122,25 +122,25 @@ private class AMS_VoucherProcessTest {
 
 		PageReference pageRef = Page.AMS_VoucherPDFGeneratorPage;
 
-        Test.setCurrentPageReference(pageRef);
+		Test.setCurrentPageReference(pageRef);
 
-        ApexPages.currentPage().getParameters().put('runId', '0');
+		ApexPages.currentPage().getParameters().put('runId', '0');
 		ApexPages.currentPage().getParameters().put('runExec', '0');
 
-        AMS_VoucherPDFGeneratorController controller = new AMS_VoucherPDFGeneratorController();
+		AMS_VoucherPDFGeneratorController controller = new AMS_VoucherPDFGeneratorController();
 
-        Test.startTest();
-        
-        controller.getParametersFromBatch();
+		Test.startTest();
 
-        List<String> idsToPrint = new List<String>();
+		controller.getParametersFromBatch();
 
-        controller.fetchVouchersInfo();
+		List<String> idsToPrint = new List<String>();
 
-        Test.stopTest();
+		controller.fetchVouchersInfo();
+
+		Test.stopTest();
 
 	}
 
-	
-	
+
+
 }

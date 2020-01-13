@@ -1,0 +1,71 @@
+<apex:page controller="ISSP_APProcess"
+           cache="false"
+           sidebar="false"
+           showHeader="false"
+           standardStylesheets="true"
+           applyBodyTag="false"
+           applyHtmlTag="false"
+           action="{!securityCheck}">
+    
+    <html> 
+        <c:ISSP_Header ></c:ISSP_Header>
+        <body>
+            <link href="{!URLFOR($Resource.ISSP_APProcess,'css/select2.min.css')}" rel="stylesheet" />
+            <script src="{!URLFOR($Resource.ISSP_APProcess,'js/select2.min.js')}"></script>
+            
+            <link href="{!URLFOR($Resource.ISSP_APProcess,'css/main.min.css')}" rel="stylesheet" />
+            <script src="{!URLFOR($Resource.ISSP_APProcess,'js/main.min.js')}"></script>
+            <c:iss_ap_css />
+            <apex:stylesheet value="{!$Resource.CSP_VF_Stylesheet}" />
+                
+            <c:ISSP_CustomNavigation />
+            <div class="container">
+                <div id="contentWrapper">
+                    
+                    <c:ISSP_WaitingStatus />
+                    <!-- --------------------------------------- -->
+                    <!--STEP 2 Display the country requirements  -->
+                    <!-- --------------------------------------- -->
+                    <apex:outputText rendered="{!isStep2&&countryRequirementFound}">
+                        <div class="panel-primary">
+                            <div class="panel-heading head_panel_green">
+                                <h3 class="panel-title">{!PageTitle}</h3>
+                            </div>
+                            <div class="panel-body" id="body-enquiries">
+                                <c:ISSP_AP_Country_Reqs_Modal ctrl="{!thisController}"/>
+                            </div>
+                            <apex:form >
+                                <center>
+                                    <apex:pageBlock mode="edit">
+                                        <apex:pageBlockButtons location="bottom">
+                                            <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-right" action="{!goToStep3}" value="Next" id="Next"/>&nbsp;
+                                        </apex:pageBlockButtons>
+                                    </apex:pageBlock>
+                                </center>
+                            </apex:form>
+                        </div>
+                    </apex:outputText>
+                    
+                    <apex:pageBlock rendered="{!isStep2&&!countryRequirementFound}" title="Country requirements for {!apCountry} - {!strLOB}">
+                        <div class="apcontainer">
+                            <apex:outPutText >
+                                <div class="aplabel">
+                                    <br/><br/><br/>The {!strLOB} operation you have selected is not available in {!apCountry}. Please go back and choose another Operation or Country.<br/><br/><br/> 
+                                </div>
+                            </apex:outPutText>
+                            <apex:form >
+                                <center>
+                                    <apex:pageBlock >
+                                        <apex:commandButton styleclass="apbutton" action="{!goToStep3}" disabled="True" value="Next" id="Next"/>
+                                    </apex:pageBlock>
+                                </center>
+                            </apex:form>
+                        </div>
+                    </apex:pageBlock>
+                </div>
+            </div>
+            <c:ISSP_CustomFooter />
+        </body>
+    </html>
+    
+</apex:page>

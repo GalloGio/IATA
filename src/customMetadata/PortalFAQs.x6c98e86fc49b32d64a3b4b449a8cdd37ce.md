@@ -12,7 +12,7 @@
     </values>
     <values>
         <field>CategoryExceptions__c</field>
-        <value xsi:type="xsd:string">Ground Handler;Caterer;Consultancy Firm;Fuel Supplier;Maintenance;Repair;Overhaul;Security;Processor;System Solutions Provider;IATA Passenger Sales Agent;Non-IATA Travel Agent</value>
+        <value xsi:type="xsd:string">Ground Handler;Caterer;Consultancy Firm;Fuel Supplier;Maintenance;Repair;Overhaul;Security;Processor;System Solutions Provider;Global Distribution System</value>
     </values>
     <values>
         <field>DataCategoryLabel_TR__c</field>
@@ -111,7 +111,11 @@
         <value xsi:nil="true"/>
     </values>
     <values>
+        <field>Requires_Level2_Registration__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
         <field>SectorExceptions__c</field>
-        <value xsi:type="xsd:string">Airline Supplier;Travel Agent</value>
+        <value xsi:type="xsd:string">Airline Supplier</value>
     </values>
 </CustomMetadata>

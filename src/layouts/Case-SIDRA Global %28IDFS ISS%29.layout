@@ -27,10 +27,17 @@
                 <behavior>Readonly</behavior>
                 <field>SIDRA_logo__c</field>
             </layoutItems>
+            <layoutItems>
+                <height>50</height>
+                <page>DetailPageMessageClassicCase</page>
+                <showLabel>false</showLabel>
+                <showScrollbars>false</showScrollbars>
+                <width>100%</width>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
-                <height>50</height>
+                <height>100</height>
                 <page>AMS_Change_Code_Notification</page>
                 <showLabel>false</showLabel>
                 <showScrollbars>false</showScrollbars>
@@ -108,10 +115,6 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Case_count_last_30_days__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>SIDRA_Exclude_from_report_exceptions__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
