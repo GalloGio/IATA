@@ -1068,7 +1068,7 @@ global without sharing class ISSP_OperationalCalendarController {
 			if (op.contains('ICCS')) otherOperations.add(op);
 		}
 		mapFilesByFolder.putAll(findDataForBSPCASS(option,bspcassOperations,remittance,countries,accountId, billingPeriod));
-		mapFilesByFolder.putAll(findDataForOthers(option,otherOperations,remittance,accountId));
+		mapFilesByFolder.putAll(findDataForOthers(option,otherOperations,remittance,accountId,billingPeriod));
 
 		// set folders
 		Map<String,FolderWrapper> mapFolders = new Map<String,FolderWrapper>();
@@ -1130,9 +1130,6 @@ global without sharing class ISSP_OperationalCalendarController {
 		System.debug('queryStr: ' + queryStr);
 		//List<Operational_Calendar__c> operationsCalendar = (List<Operational_Calendar__c>) Database.query(queryStr); 
 
-		
-		Integer currentYear = Date.today().year();
-
 		//System.debug('Operations: ' + operationsCalendar);
 		for(Operational_Calendar__c opc : Database.query(queryStr)) {
 			System.debug('___opc ' + opc);
@@ -1156,7 +1153,7 @@ global without sharing class ISSP_OperationalCalendarController {
 				}
 				FileWrapper countryFile = filesByCountryOp.get(country.Name);
 				if(countryFile == null) {
-					String fileName = Label.ISSP_OperationalCalendar + ' ' + country.Name + '-' + operationType + ' ' + currentYear;
+					String fileName = Label.ISSP_OperationalCalendar + ' ' + country.Name + '-' + operationType + ' ' + billingPeriod;
 					countryFile = new FileWrapper(fileName, orientation, fieldsListSelected, country.Name, operationType);
 					filesByCountryOp.put(country.Name, countryFile);
 				}
@@ -1172,7 +1169,7 @@ global without sharing class ISSP_OperationalCalendarController {
 		return mapFilesByFolder;
 	}
 
-	private static Map<String,Map<String,FileWrapper>> findDataForOthers(String option, List<String> operations, List<String> remittance, Id accountId) {
+	private static Map<String,Map<String,FileWrapper>> findDataForOthers(String option, List<String> operations, List<String> remittance, Id accountId, String billingPeriod) {
 		Map<String,Map<String,FileWrapper>> mapFilesByFolder = new Map<String,Map<String,FileWrapper>>();
 		for (String operation: operations) {
 			Id recordtypeId;
@@ -1214,10 +1211,9 @@ global without sharing class ISSP_OperationalCalendarController {
 
 			// create files
 			String orientation = fieldsList.size() > 6 ? 'landscape' : 'portrait';
-			Integer currentYear = Date.today().year();
 			for(Operational_Calendar__c opc : Database.query(queryStr)) {
 				// create row using the operational calendar record
-				String fileName = Label.ISSP_OperationalCalendar + ' ' + opc.Country__r.Name + ' - ' + operation + ' ' + currentYear;
+				String fileName = Label.ISSP_OperationalCalendar + ' ' + opc.Country__r.Name + ' - ' + operation + ' ' + billingPeriod;
 				FileWrapper countryFile = new FileWrapper(fileName, orientation, fieldsList, opc.Country__r.Name, operation);
 				List<CellWrapper> row = createRow(opc, fieldsList, 'tableBodyOdd');
 				countryFile.table.body.add(row);
