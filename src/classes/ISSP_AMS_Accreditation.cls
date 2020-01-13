@@ -3052,7 +3052,7 @@ public without sharing class ISSP_AMS_Accreditation {
 	}
 
 	public Pagereference securityCheck() {
-		if(con.Account.Sector__c != AMS_Utils.SECTOR_PASSENGER && con.Account.Sector__c != AMS_Utils.SECTOR_CARGO) {
+		if(con.Account.Sector__c != AMS_Utils.SECTOR_PASSENGER && con.Account.Sector__c != AMS_Utils.SECTOR_CARGO && con.Account.Sector__c != AMS_Utils.SECTOR_PASS) {
 			return new Pagereference('/ISSP_Homepage?mid=M0S1' + commParam);
 		}
 
