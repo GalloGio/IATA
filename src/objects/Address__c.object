@@ -224,12 +224,12 @@
         <type>Location</type>
     </fields>
     <fields>
-        <fullName>PO_Box__c</fullName>
+        <fullName>Is_PO_Box__c</fullName>
         <defaultValue>false</defaultValue>
         <description>check if address is PO Box</description>
         <externalId>false</externalId>
         <inlineHelpText>check if address is PO Box</inlineHelpText>
-        <label>PO Box</label>
+        <label>Is PO Box</label>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
