@@ -23,6 +23,7 @@ trigger ParticipantTrigger on Participant__c (after delete, after insert, after 
 	} else if (Trigger.isDelete) {
 
 		if (Trigger.isBefore) {
+			ParticipantHelper.blockDeletingFromInactiveGroups(Trigger.old);
 			ParticipantHelper.beforeDelete(Trigger.old);
 		} else if (Trigger.isAfter) {
 			ParticipantHelper.afterDelete(Trigger.old);
