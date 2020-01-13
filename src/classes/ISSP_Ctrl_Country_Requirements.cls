@@ -255,7 +255,7 @@ public with sharing class ISSP_Ctrl_Country_Requirements {
 
 	//Search the country Requirements aplying any active filter
 	public PageReference runSearch() {
-		if(String.isBlank(typeFilter) || String.isBlank(countryFilter))
+		if(String.isBlank(typeFilter) || String.isBlank(countryFilter)){
 			this.countryRequirement = null;
 			return null;
 		}
