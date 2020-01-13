@@ -81,6 +81,8 @@ public with sharing class AMS_PCI_Compliant_Mass_OSCAR_CreationCtr{
 		get{
 			if(availableLocations == null){
 				availableLocations = new List<SelectOption>();
+				if (operation == 'FOP')
+					availableLocations.add(new SelectOption(AMS_Utils.GE, AMS_Utils.GE));
 				if(operation == 'PCI') availableLocations.add(new SelectOption(AMS_Utils.HO,AMS_Utils.HO));
 				availableLocations.add(new SelectOption(AMS_Utils.HE,AMS_Utils.HE));
 				if(operation == 'PCI')  availableLocations.add(new SelectOption(AMS_Utils.BR,AMS_Utils.BR));
