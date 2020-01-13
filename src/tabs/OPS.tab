@@ -4,7 +4,6 @@
     <frameHeight>600</frameHeight>
     <hasSidebar>false</hasSidebar>
     <label>OPS</label>
-    <mobileReady>false</mobileReady>
     <motif>Custom40: Credit card</motif>
     <url>http://ymq-msprodops1.corp.ad.iata.org/IATA.OPS.Web.UI/login/login.aspx</url>
     <urlEncodingKey>UTF-8</urlEncodingKey>
