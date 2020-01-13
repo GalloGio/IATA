@@ -5857,6 +5857,8 @@ public without sharing class ISSP_AMS_Accreditation {
 
 		AggregateResult[] distinctReqmentLangs;
 
+		this.List_CountryReqments = new List<AMS_Accreditation_Requirement__c>();
+
 		//Get distinct set of Languages for this country / operation requirements
 		if (stepNumber != '5') {
 			String queryAuxReqsList = 'SELECT Id, Name, Requirement_text__c, File_to_Upload__c, File_Identifier2__c, Language__c, AMS_Accreditation_Country_CheckList__r.IATA_ISO_Country__r.Name FROM AMS_Accreditation_Requirement__c ';
