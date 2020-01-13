@@ -3,7 +3,6 @@
     <frameHeight>600</frameHeight>
     <hasSidebar>false</hasSidebar>
     <label>Access to Services</label>
-    <mobileReady>false</mobileReady>
     <motif>Custom84: Presenter</motif>
     <scontrol>My_Application</scontrol>
 </CustomTab>
