@@ -1115,7 +1115,7 @@
                                     Check_CountryReqments();
                                 </script>
                             </apex:outputPanel>
-                            <apex:pageblock mode="detail" id="countryreqs" rendered="{!AND(List_CountryReqments.size > 0, OR(NOT(hqAccount.ANG_Accreditation_Model__c == 'Multicountry'), NOT(isNoticeOfChange)))}" title="{!$Label.ISSP_AMS_Step2_Instructions}">
+                            <apex:pageblock mode="detail" id="countryreqs" rendered="{!AND(List_CountryReqments.size > 0, OR(NOT(hqAccount.ANG_Accreditation_Model__c == AMS_Utils.AGENTTYPE_MULTICOUNTRY), NOT(isNoticeOfChange)))}" title="{!$Label.ISSP_AMS_Step2_Instructions}">
                                 <apex:dataTable value="{!List_CountryReqments}" var="reqs"  style="background-color:white" styleClass="table table-condensed" >
                                     <apex:column headerClass="info">
                                         <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
@@ -1129,7 +1129,7 @@
                                 </apex:dataTable>
 							</apex:pageblock>
 							
-							<apex:pageblock mode="detail" id="countryreqsMC" rendered="{!AND(List_CountryReqments.size > 0, hqAccount.ANG_Accreditation_Model__c == 'Multicountry', isNoticeOfChange)}" title="{!$Label.ISSP_AMS_Step2_Instructions}">
+							<apex:pageblock mode="detail" id="countryreqsMC" rendered="{!AND(List_CountryReqments.size > 0, hqAccount.ANG_Accreditation_Model__c == AMS_Utils.AGENTTYPE_MULTICOUNTRY, isNoticeOfChange)}" title="{!$Label.ISSP_AMS_Step2_Instructions}">
 								<apex:repeat value="{!mcNoCRequirementsMapKeys}" var="country">
 									<apex:dataTable value="{!mcNoCRequirementsMap[country]}" var="req" style="background-color:white" styleClass="table table-condensed" >
 										<apex:column headerClass="info">
