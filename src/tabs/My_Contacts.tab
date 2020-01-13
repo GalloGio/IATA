@@ -3,7 +3,6 @@
     <frameHeight>600</frameHeight>
     <hasSidebar>false</hasSidebar>
     <label>My Contacts</label>
-    <mobileReady>false</mobileReady>
     <motif>Custom55: Books</motif>
     <scontrol>My_Contacts</scontrol>
 </CustomTab>
