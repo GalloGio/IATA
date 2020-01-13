@@ -44,4 +44,5 @@
     </fields>
     <label>Contact</label>
     <pluralLabel>Contacts</pluralLabel>
+    <publishBehavior>PublishImmediately</publishBehavior>
 </CustomObject>
