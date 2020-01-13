@@ -5,8 +5,8 @@
     <name>Agency Mgmt - Americas Data Validation</name>
     <queueMembers>
         <roles>
-            <role>AmericasAgencyManagementManagerA</role>
-            <role>AmericasAgencyManagementStaffA</role>
+            <role>AmericasAgencyManagementManager</role>
+            <role>AmericasAgencyManagementStaff</role>
             <role>Americas_Agency_Risk_Management_Staff</role>
         </roles>
     </queueMembers>

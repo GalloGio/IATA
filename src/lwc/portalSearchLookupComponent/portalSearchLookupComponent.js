@@ -14,6 +14,13 @@ export default class Lookup extends LightningElement {
     @api selection = [];
     @api placeholder = '';
     @api isMultiEntry = false;
+    @api 
+    get hideIcon(){
+        return this._hideIcon;
+    } 
+    set hideIcon(val){
+        this._hideIcon=val;
+    } 
     @api errors = [];
     @api scrollAfterNItems;
     @api itemName;
@@ -22,6 +29,7 @@ export default class Lookup extends LightningElement {
     @track searchResults = [];
     @track hasFocus = false;
     @track getContainerClass;
+    @track _hideIcon=false;
 
     cleanSearchTerm;
     blurTimeout;
@@ -171,7 +179,7 @@ export default class Lookup extends LightningElement {
         this.searchResults = [];
 
         // Notify parent component that selection has changed **Email Only**
-        if (this.itemName === 'emaillookup') {
+        if (this.itemName === 'emaillookup' || this.itemName === 'servicesearch') {
             this.dispatchEvent(new CustomEvent('selectionchange'));
             this.selection = savepoint;
         }
@@ -200,6 +208,7 @@ export default class Lookup extends LightningElement {
         if (!this.isSelectionAllowed()) {
             return;
         }
+        this.searchTerm = '';
         // Delay hiding combobox so that we can capture selected result
         // eslint-disable-next-line @lwc/lwc/no-async-operation
         this.blurTimeout = window.setTimeout(() => {
@@ -221,6 +230,10 @@ export default class Lookup extends LightningElement {
         this.selection = [];
         // Notify parent components that selection has changed
         //this.dispatchEvent(new CustomEvent('selectionchange'));
+
+
+        this.handleFocus();
+
     }
 
 

@@ -39,3 +39,8 @@
 .fourthColInfo {
     width: 15%;
 }
+
+.titleTruncation {
+    text-overflow: ellipsis;
+    overflow: hidden;
+}

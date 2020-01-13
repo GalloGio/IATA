@@ -25,26 +25,26 @@ public class ANG_ActivateDeactivateREBatch_Test{
 		);
 
 		Notification_Template__c nt = new Notification_Template__c();
-        
-                nt.Identifier__c ='Risk_Information_Update';
-                nt.Language__c ='English';
-                nt.Subject__c ='Risk Information Update';
-                nt.Type__c ='Information';
-                nt.Notification_color__c ='#007FFF';
-                nt.Expire_in_days__c =180;
-                nt.Admins_Users__c ='Administrators';
-                nt.Message__c = 
-        'We would like to inform you that your Risk Status has been updated. '+
-        'Your risk information now stands as follow:'+
-        '<br><br>Risk Status: #RISK_STATUS#'+
-        '<br>Cash conditions limited to Financial Security: #CASH_CONDITION#'+
-        '<br>RHC Amount: #RHC_AMOUNT#'+
-        '<br>RHC Effective Date: #RHC_EFFECTIVE_DATE#'+
-        '<p>Please check more details on the RHC Information page.'+
-        '<br>Thank you</p>'+
-        '<p>IATA – Global Delivery Center</p>';
-         
-        insert nt;
+
+				nt.Identifier__c ='Risk_Information_Update';
+				nt.Language__c ='English';
+				nt.Subject__c ='Risk Information Update';
+				nt.Type__c ='Information';
+				nt.Notification_color__c ='#007FFF';
+				nt.Expire_in_days__c =180;
+				nt.Admins_Users__c ='Administrators';
+				nt.Message__c =
+		'We would like to inform you that your Risk Status has been updated. '+
+		'Your risk information now stands as follow:'+
+		'<br><br>Risk Status: #RISK_STATUS#'+
+		'<br>Cash conditions limited to Financial Security: #CASH_CONDITION#'+
+		'<br>RHC Amount: #RHC_AMOUNT#'+
+		'<br>RHC Effective Date: #RHC_EFFECTIVE_DATE#'+
+		'<p>Please check more details on the RHC Information page.'+
+		'<br>Thank you</p>'+
+		'<p>IATA – Global Delivery Center</p>';
+
+		insert nt;
 
 		insert new AMS_ChangeCodes__c(Name = 'UpgradedRisk', Change_Code__c = 'UGR', Integration_RecId__c = 'C', Bulletin_Memo_Text__c = 'Agent has complied to Agency Rules. Card payment methods are reinstated.');
 
@@ -71,12 +71,12 @@ public class ANG_ActivateDeactivateREBatch_Test{
 		insert new List<IATA_ISO_Country__c>{isoCntr1, isoCntr2, isoCntr3};
 
 		//Account
-		Account acc1= new Account(Name='Acc1', Location_Class__c = 'P', IATA_ISO_Country__c=isoCntr1.id, Location_Type__c= AMS_Utils.HE, recordtypeId=AMS_Utils.RECTYPE_IATAAGENCY, ANG_HE_RiskStatus__c = ANG_Risk_Helper.RISK_STATUS_C);
-		Account acc2= new Account(Name='Acc2', Location_Class__c = 'P', IATA_ISO_Country__c=isoCntr2.id, Location_Type__c= AMS_Utils.HE, recordtypeId=AMS_Utils.RECTYPE_IATAAGENCY, ANG_HE_RiskStatus__c = ANG_Risk_Helper.RISK_STATUS_C);
-		Account acc3= new Account(Name='Acc3', Location_Class__c = 'P', IATA_ISO_Country__c=isoCntr3.id, Location_Type__c= AMS_Utils.HE, recordtypeId=AMS_Utils.RECTYPE_IATAAGENCY, ANG_HE_RiskStatus__c = ANG_Risk_Helper.RISK_STATUS_C);		
+		Account acc1= new Account(Name='Acc1', Location_Class__c = 'P', IATA_ISO_Country__c=isoCntr1.id, Location_Type__c= AMS_Utils.HE, recordtypeId=AMS_Utils.RECTYPE_IATAAGENCY, ANG_HE_RiskStatus__c = ANG_Risk_Helper.RISK_STATUS_C, Reason__c = '21-NEW APPLICATION');
+		Account acc2= new Account(Name='Acc2', Location_Class__c = 'P', IATA_ISO_Country__c=isoCntr2.id, Location_Type__c= AMS_Utils.HE, recordtypeId=AMS_Utils.RECTYPE_IATAAGENCY, ANG_HE_RiskStatus__c = ANG_Risk_Helper.RISK_STATUS_C, Reason__c = '21-NEW APPLICATION');
+		Account acc3= new Account(Name='Acc3', Location_Class__c = 'P', IATA_ISO_Country__c=isoCntr3.id, Location_Type__c= AMS_Utils.HE, recordtypeId=AMS_Utils.RECTYPE_IATAAGENCY, ANG_HE_RiskStatus__c = ANG_Risk_Helper.RISK_STATUS_C, Reason__c = '21-NEW APPLICATION');
 		insert new List<Account>{acc1, acc2, acc3};
 
-		
+
 		ANG_Agency_Risk_Event__c re1 = new ANG_Agency_Risk_Event__c(
 			ANG_AccountId__c = acc1.id,
 			ANG_Risk_Type__c = ret.id,
@@ -94,7 +94,7 @@ public class ANG_ActivateDeactivateREBatch_Test{
 
 		ANG_Agency_Risk_Event__c re3= new ANG_Agency_Risk_Event__c(
 			ANG_AccountId__c = acc3.id,
-			ANG_Risk_Type__c = ret.id, 
+			ANG_Risk_Type__c = ret.id,
 			ANG_Issued_Date__c = System.today().addDays(5),
 			ANG_Event_Status__c = ANG_Risk_Helper.STATUS_INACTIVE
 		);
@@ -105,7 +105,7 @@ public class ANG_ActivateDeactivateREBatch_Test{
 	}
 
 	static testMethod void testBatch(){ // testing batch 3 records(one to be set active, one to be set inactive, one to ignore)
-		
+
 		Test.startTest();
 
 		Account acc2 =[select id from account where name='Acc2'];
@@ -125,10 +125,10 @@ public class ANG_ActivateDeactivateREBatch_Test{
 		insert par;
 
 		insert new Portal_Application_Right__c(Portal_Application__c = par.Id, Right__c = 'Access Granted', Contact__c = c.Id);
-	
+
 		ANG_ActivateDeactivateRiskEventsBatch bat= new ANG_ActivateDeactivateRiskEventsBatch(new list<string>{'Europe','Americas','Asia'});
 		bat.execute(null);
-		
+
 		test.StopTest();
 
 		Map<String, ANG_Agency_Risk_Event__c> riskEvents = new Map<String, ANG_Agency_Risk_Event__c>();
@@ -140,13 +140,13 @@ public class ANG_ActivateDeactivateREBatch_Test{
 		System.assertEquals(ANG_Risk_Helper.STATUS_INACTIVE, riskEvents.get('Americas').ANG_Event_Status__c, 'RE3 should be inactive');
 
 		System.assertEquals(1, [SELECT Id, Subject__c FROM Notification__c].size(), 'Notification was not created');
-		
+
 	}
 
 	static testMethod void testscheduleEasternRegion(){
 		//test method to schedule batch for the eastern region to run next week
 		Test.startTest();
-		ANG_ActivateDeactivateRiskEventsBatch.scheduleEasternRegion(time.newInstance(18, 0, 0, 0));	
+		ANG_ActivateDeactivateRiskEventsBatch.scheduleEasternRegion(time.newInstance(18, 0, 0, 0));
 		test.StopTest();
 
 		List<AsyncApexJob> joblist =Database.query('select Id from AsyncApexJob where JobType in (\'BatchApexWorker\',\'ScheduledApex\') and status =\'Queued\' and  ApexClass.Name =\'ANG_ActivateDeactivateRiskEventsBatch\'');
@@ -160,6 +160,6 @@ public class ANG_ActivateDeactivateREBatch_Test{
 		test.StopTest();
 
 		List<AsyncApexJob> joblist =Database.query('select Id from AsyncApexJob where JobType in (\'BatchApexWorker\',\'ScheduledApex\') and status =\'Queued\' and  ApexClass.Name =\'ANG_ActivateDeactivateRiskEventsBatch\'');
-		System.assertEquals(1,joblist.size(),'There should be just one batch scheduled'); 
+		System.assertEquals(1,joblist.size(),'There should be just one batch scheduled');
 	}
 }

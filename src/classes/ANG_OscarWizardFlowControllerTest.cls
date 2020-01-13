@@ -1,222 +1,222 @@
 @isTest
 private class ANG_OscarWizardFlowControllerTest {
-    
-    @testSetup static void setup(){
 
-        IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US', ANG_Enable_NewGen__c = true);
-        IATA_ISO_Country__c chinaCountry = new IATA_ISO_Country__c (Name='China',ISO_Code__c='CN', Enable_NewGen_Pilot__c = true);
-        
-        insert new List<IATA_ISO_Country__c>{ctry, chinaCountry};    
+	@testSetup static void setup(){
 
-        Account acc = new Account();
-        acc.Name = 'HE Account';
-        acc.Sector__c = 'Travel Agent';
-        acc.Category__c = 'IATA Passenger Sales Agent';
-        acc.Location_Type__c = 'HE';
-        acc.Location_Class__c = 'P';
-        acc.IATA_ISO_Country__c = ctry.Id;
-        acc.Reason_for_creation__c = 'Account is missing';
-        acc.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account') ;
+		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US', ANG_Enable_NewGen__c = true);
+		IATA_ISO_Country__c chinaCountry = new IATA_ISO_Country__c (Name='China',ISO_Code__c='CN', Enable_NewGen_Pilot__c = true, ANG_Enable_NewGen__c = true);
 
-        Account chinaAcct = new Account();
-        chinaAcct.Name = 'China HE Account';
-        chinaAcct.Sector__c = 'Travel Agent';
-        chinaAcct.Category__c = 'IATA Passenger Sales Agent';
-        chinaAcct.Location_Type__c = 'HE';
-        chinaAcct.Location_Class__c = 'D';
-        chinaAcct.IATA_ISO_Country__c = chinaCountry.Id;
-        chinaAcct.IATACode__c = '123455666';
-        chinaAcct.Reason_for_creation__c = 'Account is missing';
-        chinaAcct.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency') ;
+		insert new List<IATA_ISO_Country__c>{ctry, chinaCountry};
 
-        insert new List<Account>{acc, chinaAcct};
+		Account acc = new Account();
+		acc.Name = 'HE Account';
+		acc.Sector__c = 'Travel Agent';
+		acc.Category__c = 'IATA Passenger Sales Agent';
+		acc.Location_Type__c = 'HE';
+		acc.Location_Class__c = 'P';
+		acc.IATA_ISO_Country__c = ctry.Id;
+		acc.Reason_for_creation__c = 'Account is missing';
+		acc.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account') ;
 
-    }
+		Account chinaAcct = new Account();
+		chinaAcct.Name = 'China HE Account';
+		chinaAcct.Sector__c = 'Travel Agent';
+		chinaAcct.Category__c = 'IATA Passenger Sales Agent';
+		chinaAcct.Location_Type__c = 'HE';
+		chinaAcct.Location_Class__c = 'D';
+		chinaAcct.IATA_ISO_Country__c = chinaCountry.Id;
+		chinaAcct.IATACode__c = '123455666';
+		chinaAcct.Reason_for_creation__c = 'Account is missing';
+		chinaAcct.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency') ;
 
-    public static testMethod void OscarWizardFlowControllerTest() {
+		insert new List<Account>{acc, chinaAcct};
 
-        Account heAccount = [SELECT Id FROM Account WHERE Name = 'HE Account'];
-        
-        PageReference pageRef = Page.AMS_AccountOscarWizardPage;
-        pageRef.getParameters().put('id', heAccount.Id);
-        pageRef.getParameters().put('accountId', heAccount.Id);
+	}
 
-        Test.setCurrentPage(pageRef);
+	public static testMethod void OscarWizardFlowControllerTest() {
 
-        AMS_OSCAR__c oscar = new AMS_OSCAR__c();
+		Account heAccount = [SELECT Id FROM Account WHERE Name = 'HE Account'];
 
-        ApexPages.StandardController sc = new ApexPages.standardController(oscar);
+		PageReference pageRef = Page.AMS_AccountOscarWizardPage;
+		pageRef.getParameters().put('id', heAccount.Id);
+		pageRef.getParameters().put('accountId', heAccount.Id);
 
-        AMS_AccountOscarWizardController flowController = new AMS_AccountOscarWizardController(sc);
+		Test.setCurrentPage(pageRef);
 
-        flowController.getAccount();
+		AMS_OSCAR__c oscar = new AMS_OSCAR__c();
 
-        flowController.myflow = new Flow.Interview.OSCAR_Wizard_SIMPLEX(new Map<String, Object>());
-        
-        try{
-            String oscarId = flowController.getoscarId();
-        }Catch(Exception e){
-            // do nothing ... Right now there is no real way to test the controller. You would need an Apex API for Flow to do this, which is something we SFDC is working on.
-        }
+		ApexPages.StandardController sc = new ApexPages.standardController(oscar);
 
-        try{
-            String oscarName = flowController.getoscarName() ;
-        }Catch(Exception e){
-            // do nothing ... Right now there is no real way to test the controller. You would need an Apex API for Flow to do this, which is something we SFDC is working on.
-        }
+		AMS_AccountOscarWizardController flowController = new AMS_AccountOscarWizardController(sc);
 
-        try{
-            String caseId = flowController.getcaseId();
-        }Catch(Exception e){
-            // do nothing ... Right now there is no real way to test the controller. You would need an Apex API for Flow to do this, which is something we SFDC is working on.
-        }
+		flowController.getAccount();
 
-        try{
-            String errorMessage = flowController.geterrorMessage();
-        }Catch(Exception e){
-            // do nothing ... Right now there is no real way to test the controller. You would need an Apex API for Flow to do this, which is something we SFDC is working on.
-        }
+		flowController.myflow = new Flow.Interview.OSCAR_Wizard_SIMPLEX(new Map<String, Object>());
 
+		try{
+			String oscarId = flowController.getoscarId();
+		}Catch(Exception e){
+			// do nothing ... Right now there is no real way to test the controller. You would need an Apex API for Flow to do this, which is something we SFDC is working on.
+		}
 
-        flowController.errorMessage = 'test errorMessage';
-        
-    }
+		try{
+			String oscarName = flowController.getoscarName() ;
+		}Catch(Exception e){
+			// do nothing ... Right now there is no real way to test the controller. You would need an Apex API for Flow to do this, which is something we SFDC is working on.
+		}
 
-    public static testMethod void NewGenOscarWizardFlowControllerTest() {
+		try{
+			String caseId = flowController.getcaseId();
+		}Catch(Exception e){
+			// do nothing ... Right now there is no real way to test the controller. You would need an Apex API for Flow to do this, which is something we SFDC is working on.
+		}
 
-        Account heAccount = [SELECT Id FROM Account WHERE Name = 'HE Account'];
-        
-        PageReference pageRef = Page.AMS_AccountOscarWizardPage;
-        pageRef.getParameters().put('id', heAccount.Id);
-        pageRef.getParameters().put('accountId', heAccount.Id);
-
-        Test.setCurrentPage(pageRef);
-
-        AMS_OSCAR__c oscar = new AMS_OSCAR__c();
-
-        ApexPages.StandardController sc = new ApexPages.standardController(oscar);
-
-        AMS_AccountOscarWizardController flowController = new AMS_AccountOscarWizardController(sc);
-
-        flowController.getAccount();
-
-        flowController.myFlowNG = new Flow.Interview.NewGen_OSCAR_Wizard_SIMPLEX(new Map<String, Object>());
-        
-        try{
-            String oscarId = flowController.getoscarId();
-        }Catch(Exception e){
-            // do nothing ... Right now there is no real way to test the controller. You would need an Apex API for Flow to do this, which is something we SFDC is working on.
-        }
-
-        try{
-            String oscarName = flowController.getoscarName() ;
-        }Catch(Exception e){
-            // do nothing ... Right now there is no real way to test the controller. You would need an Apex API for Flow to do this, which is something we SFDC is working on.
-        }
-
-        try{
-            String caseId = flowController.getcaseId();
-        }Catch(Exception e){
-            // do nothing ... Right now there is no real way to test the controller. You would need an Apex API for Flow to do this, which is something we SFDC is working on.
-        }
-
-        try{
-            String errorMessage = flowController.geterrorMessage();
-        }Catch(Exception e){
-            // do nothing ... Right now there is no real way to test the controller. You would need an Apex API for Flow to do this, which is something we SFDC is working on.
-        }
+		try{
+			String errorMessage = flowController.geterrorMessage();
+		}Catch(Exception e){
+			// do nothing ... Right now there is no real way to test the controller. You would need an Apex API for Flow to do this, which is something we SFDC is working on.
+		}
 
 
-        flowController.errorMessage = 'test errorMessage';
-        
-    }
-    
-    public static testMethod void ChinaPilotWizardFlowControllerTest() {
-    
-        Account heAccount = [SELECT Id FROM Account WHERE Name = 'China HE Account'];
-        
-        PageReference pageRef = Page.AMS_AccountOscarWizardPage;
+		flowController.errorMessage = 'test errorMessage';
 
-        Test.setCurrentPage(pageRef);
+	}
 
-        ApexPages.StandardController sc = new ApexPages.standardController(heAccount);
+	public static testMethod void NewGenOscarWizardFlowControllerTest() {
 
-        AMS_AccountOscarWizardController flowController = new AMS_AccountOscarWizardController(sc);
+		Account heAccount = [SELECT Id FROM Account WHERE Name = 'HE Account'];
 
-        flowController.getAccount();
+		PageReference pageRef = Page.AMS_AccountOscarWizardPage;
+		pageRef.getParameters().put('id', heAccount.Id);
+		pageRef.getParameters().put('accountId', heAccount.Id);
 
-        flowController.myFlowNGPilot = new Flow.Interview.NewGen_Pilot_OSCAR_Wizard_China(new Map<String, Object>());
-        
-        try{
-            String oscarId = flowController.getoscarId();
-        }Catch(Exception e){
-            // do nothing ... Right now there is no real way to test the controller. You would need an Apex API for Flow to do this, which is something we SFDC is working on.
-        }
+		Test.setCurrentPage(pageRef);
 
-        try{
-            String oscarName = flowController.getoscarName() ;
-        }Catch(Exception e){
-            // do nothing ... Right now there is no real way to test the controller. You would need an Apex API for Flow to do this, which is something we SFDC is working on.
-        }
+		AMS_OSCAR__c oscar = new AMS_OSCAR__c();
 
-        try{
-            String caseId = flowController.getcaseId();
-        }Catch(Exception e){
-            // do nothing ... Right now there is no real way to test the controller. You would need an Apex API for Flow to do this, which is something we SFDC is working on.
-        }
+		ApexPages.StandardController sc = new ApexPages.standardController(oscar);
 
-        try{
-            String errorMessage = flowController.geterrorMessage();
-        }Catch(Exception e){
-            // do nothing ... Right now there is no real way to test the controller. You would need an Apex API for Flow to do this, which is something we SFDC is working on.
-        }
+		AMS_AccountOscarWizardController flowController = new AMS_AccountOscarWizardController(sc);
 
-        flowController.errorMessage = 'test errorMessage';
-        
-    }
-    
-    public static testMethod void OscarWizardFlowControllerInvalidTest() {
-    
-        Account heAccount = [SELECT Id FROM Account WHERE Name = 'HE Account'];
-        
-        PageReference pageRef = Page.AMS_AccountOscarWizardPage;
-        pageRef.getParameters().put('id', heAccount.Id);
-        pageRef.getParameters().put('accountId', heAccount.Id);
+		flowController.getAccount();
 
-        Test.setCurrentPage(pageRef);
+		flowController.myFlowNG = new Flow.Interview.NewGen_OSCAR_Wizard_SIMPLEX(new Map<String, Object>());
 
-        ApexPages.StandardController sc = new ApexPages.standardController(heAccount);
+		try{
+			String oscarId = flowController.getoscarId();
+		}Catch(Exception e){
+			// do nothing ... Right now there is no real way to test the controller. You would need an Apex API for Flow to do this, which is something we SFDC is working on.
+		}
 
-        AMS_AccountOscarWizardController flowController = new AMS_AccountOscarWizardController(sc);
+		try{
+			String oscarName = flowController.getoscarName() ;
+		}Catch(Exception e){
+			// do nothing ... Right now there is no real way to test the controller. You would need an Apex API for Flow to do this, which is something we SFDC is working on.
+		}
 
-        flowController.getAccount();
-        
-        try{
-            String oscarId = flowController.getoscarId();
-        }Catch(Exception e){
-            // do nothing ... Right now there is no real way to test the controller. You would need an Apex API for Flow to do this, which is something we SFDC is working on.
-        }
+		try{
+			String caseId = flowController.getcaseId();
+		}Catch(Exception e){
+			// do nothing ... Right now there is no real way to test the controller. You would need an Apex API for Flow to do this, which is something we SFDC is working on.
+		}
 
-        try{
-            String oscarName = flowController.getoscarName() ;
-        }Catch(Exception e){
-            // do nothing ... Right now there is no real way to test the controller. You would need an Apex API for Flow to do this, which is something we SFDC is working on.
-        }
+		try{
+			String errorMessage = flowController.geterrorMessage();
+		}Catch(Exception e){
+			// do nothing ... Right now there is no real way to test the controller. You would need an Apex API for Flow to do this, which is something we SFDC is working on.
+		}
 
-        try{
-            String caseId = flowController.getcaseId();
-        }Catch(Exception e){
-            // do nothing ... Right now there is no real way to test the controller. You would need an Apex API for Flow to do this, which is something we SFDC is working on.
-        }
 
-        try{
-            String errorMessage = flowController.geterrorMessage();
-        }Catch(Exception e){
-            // do nothing ... Right now there is no real way to test the controller. You would need an Apex API for Flow to do this, which is something we SFDC is working on.
-        }
+		flowController.errorMessage = 'test errorMessage';
 
-        flowController.errorMessage = 'test errorMessage';
-        
-    }
-    
+	}
+
+	public static testMethod void ChinaPilotWizardFlowControllerTest() {
+
+		Account heAccount = [SELECT Id FROM Account WHERE Name = 'China HE Account'];
+
+		PageReference pageRef = Page.AMS_AccountOscarWizardPage;
+
+		Test.setCurrentPage(pageRef);
+
+		ApexPages.StandardController sc = new ApexPages.standardController(heAccount);
+
+		AMS_AccountOscarWizardController flowController = new AMS_AccountOscarWizardController(sc);
+
+		flowController.getAccount();
+
+		flowController.myFlowNGPilot = new Flow.Interview.NewGen_Pilot_OSCAR_Wizard_China(new Map<String, Object>());
+
+		try{
+			String oscarId = flowController.getoscarId();
+		}Catch(Exception e){
+			// do nothing ... Right now there is no real way to test the controller. You would need an Apex API for Flow to do this, which is something we SFDC is working on.
+		}
+
+		try{
+			String oscarName = flowController.getoscarName() ;
+		}Catch(Exception e){
+			// do nothing ... Right now there is no real way to test the controller. You would need an Apex API for Flow to do this, which is something we SFDC is working on.
+		}
+
+		try{
+			String caseId = flowController.getcaseId();
+		}Catch(Exception e){
+			// do nothing ... Right now there is no real way to test the controller. You would need an Apex API for Flow to do this, which is something we SFDC is working on.
+		}
+
+		try{
+			String errorMessage = flowController.geterrorMessage();
+		}Catch(Exception e){
+			// do nothing ... Right now there is no real way to test the controller. You would need an Apex API for Flow to do this, which is something we SFDC is working on.
+		}
+
+		flowController.errorMessage = 'test errorMessage';
+
+	}
+
+	public static testMethod void OscarWizardFlowControllerInvalidTest() {
+
+		Account heAccount = [SELECT Id FROM Account WHERE Name = 'HE Account'];
+
+		PageReference pageRef = Page.AMS_AccountOscarWizardPage;
+		pageRef.getParameters().put('id', heAccount.Id);
+		pageRef.getParameters().put('accountId', heAccount.Id);
+
+		Test.setCurrentPage(pageRef);
+
+		ApexPages.StandardController sc = new ApexPages.standardController(heAccount);
+
+		AMS_AccountOscarWizardController flowController = new AMS_AccountOscarWizardController(sc);
+
+		flowController.getAccount();
+
+		try{
+			String oscarId = flowController.getoscarId();
+		}Catch(Exception e){
+			// do nothing ... Right now there is no real way to test the controller. You would need an Apex API for Flow to do this, which is something we SFDC is working on.
+		}
+
+		try{
+			String oscarName = flowController.getoscarName() ;
+		}Catch(Exception e){
+			// do nothing ... Right now there is no real way to test the controller. You would need an Apex API for Flow to do this, which is something we SFDC is working on.
+		}
+
+		try{
+			String caseId = flowController.getcaseId();
+		}Catch(Exception e){
+			// do nothing ... Right now there is no real way to test the controller. You would need an Apex API for Flow to do this, which is something we SFDC is working on.
+		}
+
+		try{
+			String errorMessage = flowController.geterrorMessage();
+		}Catch(Exception e){
+			// do nothing ... Right now there is no real way to test the controller. You would need an Apex API for Flow to do this, which is something we SFDC is working on.
+		}
+
+		flowController.errorMessage = 'test errorMessage';
+
+	}
+
 }

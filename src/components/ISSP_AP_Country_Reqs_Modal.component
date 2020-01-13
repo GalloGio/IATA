@@ -1,78 +1,102 @@
-<apex:component controller="ISSP_APProcess">
-        <apex:outputPanel layout="block" styleclass="alert alert-info" html-role="alert" rendered="{!DocumentGuide!=null}">
-            Any doubts? Please check out our&nbsp;
-            <apex:outputLink value="{!DocumentGuide}" style="color:#31708f; text-decoration: underline;" target="_blank" onclick="updateGuideCounter();">guide</apex:outputLink>
-        </apex:outputPanel>
-		<div class="alert alert-info" role="alert">Please make sure you are compliant with the list of local requirements below before proceeding.</div>
+<apex:component>
+    <apex:attribute name="ctrl" description="controller" type="ISSP_APProcess" required="true" />
+
+    <c:ISSP_APProcess_Progress 
+        step="{!ctrl.stepNumber}"
+        operationType="{!ctrl.strOperationType}"
+        areaType="{!ctrl.strAreaType}"
+        changeType="{!ctrl.strChangeType}"
+        isSIS="{!OR(ctrl.isISPAActive,ctrl.isISUAActive)}" />
+
+    <apex:outputPanel layout="block" styleclass="alert alert-info" html-role="alert" rendered="{!ctrl.DocumentGuide!=null}">
+        Any doubts? Please check out our&nbsp;
+        <apex:outputLink value="{!ctrl.DocumentGuide}" style="color:#31708f; text-decoration: underline;" target="_blank" onclick="updateGuideCounter();">guide</apex:outputLink>
+    </apex:outputPanel>
+
+    <apex:outputPanel rendered="{!OR(ctrl.isBSP,ctrl.isCASS)}">
+        <div class="alert alert-info" role="alert">Please make sure you are compliant with the list of local requirements below before proceeding.</div>
         
-    	<table class="table table-striped">
-        	<tbody>
-                <apex:outputPanel rendered="{!NOT(strChangeType=='Bank Account Instructions')}">
-                    <tr><td scope="row"><strong>Local representation mandatory:</strong></td><td>{!countryRequirement.Local_Representation_Mandatory__c}</td><td><apex:outputField value="{!countryRequirement.Local_Representation_Mandatory_com__c}"/></td></tr>
+        <table class="table table-striped">
+            <tbody>
+                <apex:outputPanel rendered="{!NOT(ctrl.strChangeType=='Bank Account Instructions')}">
+                    <tr><td scope="row"><strong>Local representation mandatory:</strong></td><td>{!ctrl.countryRequirement.Local_Representation_Mandatory__c}</td><td><apex:outputField value="{!ctrl.countryRequirement.Local_Representation_Mandatory_com__c}"/></td></tr>
                 
-                <tr><td scope="row"><strong>Local accountant mandatory:</strong></td><td>{!countryRequirement.Local_accountant_mandatory__c}</td><td><apex:outputField value="{!countryRequirement.Local_accountant_mandatory_com__c}" /></td></tr>
+                <tr><td scope="row"><strong>Local accountant mandatory:</strong></td><td>{!ctrl.countryRequirement.Local_accountant_mandatory__c}</td><td><apex:outputField value="{!ctrl.countryRequirement.Local_accountant_mandatory_com__c}" /></td></tr>
                 
-                <tr><td scope="row"><strong>Local VAT (or equivalent such as GST, RUC, RUT, NIT) mandatory:</strong></td><td>{!countryRequirement.Local_VAT_Mandatory__c}</td><td><apex:outputField value="{!countryRequirement.Local_VAT_Mandatory_com__c}" /></td></tr>
+                <tr><td scope="row"><strong>Local VAT (or equivalent such as GST, RUC, RUT, NIT) mandatory:</strong></td><td>{!ctrl.countryRequirement.Local_VAT_Mandatory__c}</td><td><apex:outputField value="{!ctrl.countryRequirement.Local_VAT_Mandatory_com__c}" /></td></tr>
                 
-                <tr><td scope="row"><strong>Foreign VAT accepted:</strong></td><td>{!countryRequirement.Foreign_VAT_accepted__c}</td><td><apex:outputField value="{!countryRequirement.Foreign_VAT_accepted_com__c}" /></td></tr>
+                <tr><td scope="row"><strong>Foreign VAT accepted:</strong></td><td>{!ctrl.countryRequirement.Foreign_VAT_accepted__c}</td><td><apex:outputField value="{!ctrl.countryRequirement.Foreign_VAT_accepted_com__c}" /></td></tr>
                 
-                <tr><td scope="row"><strong>Airline can have a special VAT status</strong></td><td>{!countryRequirement.Special_VAT_status_allowed__c}</td><td><apex:outputField value="{!countryRequirement.Special_VAT_status_allowed_com__c}" /></td></tr>
+                <tr><td scope="row"><strong>Airline can have a special VAT status</strong></td><td>{!ctrl.countryRequirement.Special_VAT_status_allowed__c}</td><td><apex:outputField value="{!ctrl.countryRequirement.Special_VAT_status_allowed_com__c}" /></td></tr>
                 
-                <tr><td scope="row"><strong>Airline needs Local Representation for Fiscal requirements:</strong></td><td>{!countryRequirement.Local_Representation_for_Fiscal_requirem__c}</td><td><apex:outputField value="{!countryRequirement.Local_Representation_for_Fiscal_req_com__c}" /></td></tr>
+                <tr><td scope="row"><strong>Airline needs Local Representation for Fiscal requirements:</strong></td><td>{!ctrl.countryRequirement.Local_Representation_for_Fiscal_requirem__c}</td><td><apex:outputField value="{!ctrl.countryRequirement.Local_Representation_for_Fiscal_req_com__c}" /></td></tr>
                 </apex:outputPanel>
-                <apex:outputPanel rendered="{!NOT(strChangeType=='Minor database changes')}">
-                <tr><td scope="row"><strong>Currency of the Settlement must be the same as the bank account in case airline selects settlement mode:</strong></td><td>{!countryRequirement.Currency_of_the_Settlement__c}</td><td><apex:outputField value="{!countryRequirement.Currency_of_the_Settlement_com__c}" /></td></tr>
+                <apex:outputPanel rendered="{!NOT(ctrl.strChangeType=='Minor database changes')}">
+                <tr><td scope="row"><strong>Currency of the Settlement must be the same as the bank account in case airline selects settlement mode:</strong></td><td>{!ctrl.countryRequirement.Currency_of_the_Settlement__c}</td><td><apex:outputField value="{!ctrl.countryRequirement.Currency_of_the_Settlement_com__c}" /></td></tr>
                 
-                <tr><td scope="row"><strong>Operation has dual currencies:</strong></td><td>{!countryRequirement.Dual_currencies__c}</td><td><apex:outputField value="{!countryRequirement.Dual_currencies_com__c}" /></td></tr>
+                <tr><td scope="row"><strong>Operation has dual currencies:</strong></td><td>{!ctrl.countryRequirement.Dual_currencies__c}</td><td><apex:outputField value="{!ctrl.countryRequirement.Dual_currencies_com__c}" /></td></tr>
                 
                 <tr><td scope="row"><strong>Airline can (regardless of local representation or not) open a local bank account in the settlement currency:</strong></td>
-                <td>{!countryRequirement.bank_account_in_of_the_settlement__c}</td>
-                <td><apex:outputField value="{!countryRequirement.bank_account_in_of_the_settlement_com__c}" /></td></tr>
+                <td>{!ctrl.countryRequirement.bank_account_in_of_the_settlement__c}</td>
+                <td><apex:outputField value="{!ctrl.countryRequirement.bank_account_in_of_the_settlement_com__c}" /></td></tr>
                 </apex:outputPanel>
-                <apex:outputPanel rendered="{!NOT(strChangeType=='Bank Account Instructions')}">
+                <apex:outputPanel rendered="{!NOT(ctrl.strChangeType=='Bank Account Instructions')}">
                 <tr><td scope="row"><strong>Legally mandatory for airlines to give commission to agencies:</strong></td>
-                    <td>{!countryRequirement.Mandatory_to_give_commission_to_agencies__c}</td>
-                    <td><apex:outputField value="{!countryRequirement.Mandatory_to_give_commission_to_agen_com__c}" /></td></tr>
+                    <td>{!ctrl.countryRequirement.Mandatory_to_give_commission_to_agencies__c}</td>
+                    <td><apex:outputField value="{!ctrl.countryRequirement.Mandatory_to_give_commission_to_agen_com__c}" /></td></tr>
                 
                 <tr><td scope="row"><strong>Government requirements are included in the joining package:</strong></td>
-                    <td>{!countryRequirement.Government_requirements__c}</td>
-                    <td><apex:outputField value="{!countryRequirement.Government_requirements_com__c}" /></td></tr>
+                    <td>{!ctrl.countryRequirement.Government_requirements__c}</td>
+                    <td><apex:outputField value="{!ctrl.countryRequirement.Government_requirements_com__c}" /></td></tr>
                 
-                 <tr><td scope="row"><strong>Which type of address is accepted, inserted into ISS systems (BSPLink, CASSLink etc..):</strong></td>
-                     <td>{!countryRequirement.Type_of_address_accepted__c}</td>
-                     <td><apex:outputField value="{!countryRequirement.Type_of_address_accepted_com__c}" /></td></tr>
+                    <tr><td scope="row"><strong>Which type of address is accepted, inserted into ISS systems (BSPLink, CASSLink etc..):</strong></td>
+                        <td>{!ctrl.countryRequirement.Type_of_address_accepted__c}</td>
+                        <td><apex:outputField value="{!ctrl.countryRequirement.Type_of_address_accepted_com__c}" /></td></tr>
                 
                 <tr><td scope="row"><strong>VAT no. is always inserted into ISS systems (BSPLink, Casslink etc..:</strong></td>
-                    <td>{!countryRequirement.VAT_no_always_inserted_into_ISS_systems__c}</td>
-                    <td><apex:outputField value="{!countryRequirement.VAT_no_always_ins_into_ISS_systems_com__c}" /></td></tr>
-                 </apex:outputPanel>
-                <apex:outputPanel rendered="{!countryRequirement.Bank_Account_Change_Comment__c != ''}">
-                <tr><td scope="row"><strong>Comment regarding Bank Account Changes for: {!StrLOB} {!apcountry}</strong></td>
-                     <td>-</td>
-                     <td><apex:outputField value="{!countryRequirement.Bank_Account_Change_Comment__c}"/></td>
+                    <td>{!ctrl.countryRequirement.VAT_no_always_inserted_into_ISS_systems__c}</td>
+                    <td><apex:outputField value="{!ctrl.countryRequirement.VAT_no_always_ins_into_ISS_systems_com__c}" /></td></tr>
+                    </apex:outputPanel>
+                <apex:outputPanel rendered="{!ctrl.countryRequirement.Bank_Account_Change_Comment__c != ''}">
+                <tr><td scope="row"><strong>Comment regarding Bank Account Changes for: {!ctrl.StrLOB} {!ctrl.apcountry}</strong></td>
+                        <td>-</td>
+                        <td><apex:outputField value="{!ctrl.countryRequirement.Bank_Account_Change_Comment__c}"/></td>
                 </tr>
                 </apex:outputPanel>
-                <tr><td scope="row"><strong>General Comment - {!StrLOB} {!apcountry}</strong></td>
-                     <td>-</td>
-                     <td><apex:outputField value="{!countryRequirement.Comments__c}"/></td></tr>
+                <tr><td scope="row"><strong>General Comment - {!ctrl.StrLOB} {!ctrl.apcountry}</strong></td>
+                        <td>-</td>
+                        <td><apex:outputField value="{!ctrl.countryRequirement.Comments__c}"/></td></tr>
             </tbody>
-    	</table>
+        </table>
+    </apex:outputPanel>
 
-        <!-- for CASS show an Accept conditions box -->
-        <apex:outputPanel layout="block" style="padding: 40px;" rendered="{!AND(isCASS,strAreaType=='Airline Joining')}">
-        <div class="alert alert-danger" role="alert">Please note that as part of the joining process, a test file for CASSlink billing have to be submitted. The requirements dor this file are described in the CASSlink specifications handbook, and we have also prepared a guide with the most frequent issues encuntered during the testing process. Please make sure you read the documents below and made the necessary preparation.</div>
-        <div class="row">
-            <apex:outputPanel layout="block" styleclass="col center" rendered="{!DocumentCASSSpecificationUrl!=null}">
-                Download the&nbsp;<apex:outputLink value="{!DocumentCASSSpecificationUrl}" styleclass="doc-link" target="_blank" onclick="updateGuideCounter();">{!DocumentCASSSpecificationName}</apex:outputLink>&nbsp;(pdf)
-                <br/>
-                <apex:image styleclass="doc-border" value="{!URLFOR($Resource.ISSP_APProcess,'/img/CASS_Technical_Specifications_Handbook_screenshot.png')}"/>
-            </apex:outputPanel>
-            <apex:outputPanel layout="block" styleclass="col center" rendered="{!DocumentAppendixAUrl!=null}">
-                Download the&nbsp;<apex:outputLink value="{!DocumentAppendixAUrl}" styleclass="doc-link" target="_blank" onclick="updateGuideCounter();">{!DocumentAppendixAName}</apex:outputLink>&nbsp;(pdf)
-                <br/>
-                <apex:image styleclass="doc-border" value="{!URLFOR($Resource.ISSP_APProcess,'/img/AppendixA_screenshot.png')}"/>
-            </apex:outputPanel>
-        </div>
+    <!-- for CASS show an Accept conditions box -->
+    <apex:outputPanel layout="block" style="padding: 40px;" rendered="{!AND(ctrl.isCASS,ctrl.strAreaType=='Airline Joining')}">
+    <div class="alert alert-danger" role="alert">Please note that as part of the joining process, a test file for CASSlink billing have to be submitted. The requirements dor this file are described in the CASSlink specifications handbook, and we have also prepared a guide with the most frequent issues encuntered during the testing process. Please make sure you read the documents below and made the necessary preparation.</div>
+    <div class="row">
+        <apex:outputPanel layout="block" styleclass="col center" rendered="{!ctrl.DocumentCASSSpecificationUrl!=null}">
+            Download the&nbsp;<apex:outputLink value="{!ctrl.DocumentCASSSpecificationUrl}" styleclass="doc-link" target="_blank" onclick="updateGuideCounter();">{!ctrl.DocumentCASSSpecificationName}</apex:outputLink>&nbsp;(pdf)
+            <br/>
+            <apex:image styleclass="doc-border" value="{!URLFOR($Resource.ISSP_APProcess,'/img/CASS_Technical_Specifications_Handbook_screenshot.png')}"/>
         </apex:outputPanel>
+        <apex:outputPanel layout="block" styleclass="col center" rendered="{!ctrl.DocumentAppendixAUrl!=null}">
+            Download the&nbsp;<apex:outputLink value="{!ctrl.DocumentAppendixAUrl}" styleclass="doc-link" target="_blank" onclick="updateGuideCounter();">{!ctrl.DocumentAppendixAName}</apex:outputLink>&nbsp;(pdf)
+            <br/>
+            <apex:image styleclass="doc-border" value="{!URLFOR($Resource.ISSP_APProcess,'/img/AppendixA_screenshot.png')}"/>
+        </apex:outputPanel>
+    </div>
+    </apex:outputPanel>
 
+    <!-- ICH Requirements-->
+    <apex:outputPanel rendered="{!AND(ctrl.isICH)}">
+        <apex:outputPanel rendered="{!ctrl.countryRequirement.ICH_Requirements__c!=null}">
+            <apex:outputText value="{!ctrl.countryRequirement.ICH_Requirements__c}" escape="false"/>
+        </apex:outputPanel>
+        <apex:outputPanel rendered="{!AND(ctrl.countryRequirement.ISPA_Requirements__c!=null,NOT(ctrl.isSISMember))}">
+            <apex:outputText value="{!ctrl.countryRequirement.ISPA_Requirements__c}" escape="false"/>
+        </apex:outputPanel>
+        <apex:outputPanel rendered="{!AND(ctrl.countryRequirement.ISUA_Requirements__c!=null,NOT(ctrl.isSISMember))}">
+            <apex:outputText value="{!ctrl.countryRequirement.ISUA_Requirements__c}" escape="false"/>
+        </apex:outputPanel>
+    </apex:outputPanel>
 </apex:component>

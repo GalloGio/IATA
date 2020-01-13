@@ -9,7 +9,7 @@ public with sharing class SIDRACaseHelper {
 	private static Id sidraLiteRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA_Lite');
 	private static Map<Id, Account> sidraCasesAccounts;
 	private static Map<Id, Account> accountsToUpdate = new Map<Id, Account>();
-	public static Boolean isSAAMChildCaseCreated = false; //ACAMBAS - WMO-384 
+	public static Boolean isSAAMChildCaseCreated = false; //ACAMBAS - WMO-384
 
 	// IRR withdrawal reasons used to have a comment record in SIDRA cases
 	public final static string IATACHARGES = 'IATA Charges';
@@ -31,11 +31,12 @@ public with sharing class SIDRACaseHelper {
 	}
 
 	/**
-	    After Update Action
+			After Update Action
 	**/
 	public static void doAfterUpdate(map<Id, Case> newCases, map<Id, Case> oldCases) {
 
 		Map<Id, Case> sidraCasesToBeProcessed = new Map<Id, Case>();
+		List<String> reasonToBeProcessed = new List<String>{'Technical Default', 'Non-payment', 'Common Ownership'};
 
 		for (Case thisCase : newCases.values()) {
 			Case oldCase = oldCases.get(thisCase.Id);
@@ -67,13 +68,13 @@ public with sharing class SIDRACaseHelper {
 
 			//ACAMBAS - WMO-384 - Start
 
-			if(((thisCase.RecordTypeId == sidraRecordTypeId || thisCase.RecordTypeId == sidraLiteRecordTypeId) && 
-				(!thisCase.isClosed //&& !string.valueOf(thisCase.Owner).contains('Recycle') 
-					&& thisCase.DEF_Approval_Rejection__c == 'Approved' && thisCase.Agent_holds_FS_requiring_first_call__c == 'Yes')) && 
-			   !((oldCase.RecordTypeId == sidraRecordTypeId || oldCase.RecordTypeId == sidraLiteRecordTypeId) && 
-				(oldCase.DEF_Approval_Rejection__c == 'Approved' && oldCase.Agent_holds_FS_requiring_first_call__c == 'Yes'))) {
+			if(((thisCase.RecordTypeId == sidraRecordTypeId || thisCase.RecordTypeId == sidraLiteRecordTypeId) &&
+				(!thisCase.isClosed //&& !string.valueOf(thisCase.Owner).contains('Recycle')
+					&& thisCase.DEF_Approval_Rejection__c == 'Approved' && thisCase.Agent_holds_FS_requiring_first_call__c == 'Yes' && reasonToBeProcessed.contains(thisCase.Reason_for_Default__c))) &&
+				 !((oldCase.RecordTypeId == sidraRecordTypeId || oldCase.RecordTypeId == sidraLiteRecordTypeId) &&
+				(oldCase.DEF_Approval_Rejection__c == 'Approved' && oldCase.Agent_holds_FS_requiring_first_call__c == 'Yes' && reasonToBeProcessed.contains(oldCase.Reason_for_Default__c)))) {
 				sidraCasesToBeProcessed.put(thisCase.Id, thisCase);
-			}		
+			}
 		}
 
 		if (sidraCasesToBeProcessed.size() > 0 && !isSAAMChildCaseCreated) {
@@ -82,30 +83,30 @@ public with sharing class SIDRACaseHelper {
 		}
 
 		//ACAMBAS - WMO-384 - End
-		
+
 		if (accountsToUpdate.size() > 0) {
 			update accountsToUpdate.values();
 		}
 	}
 
 	//ACAMBAS - WMO-384 - Start
-	
+
 	private static void createChildCaseToSidraCasesOnInsert(map<Id, Case> newCases)	{
 		Map<Id, Case> sidraCasesToBeProcessed = new Map<Id, Case>();
+		List<String> reasonToBeProcessed = new List<String>{'Technical Default', 'Non-payment', 'Common Ownership'};
 
 		for(Case thisCase : newCases.values()) {
-			if(((thisCase.RecordTypeId == sidraRecordTypeId || thisCase.RecordTypeId == sidraLiteRecordTypeId) && 
-				(!thisCase.isClosed //&& !string.valueOf(thisCase.Owner).contains('Recycle') 
-					&& thisCase.DEF_Approval_Rejection__c == 'Approved' && thisCase.Agent_holds_FS_requiring_first_call__c == 'Yes'))
-			   ) {
+			if(((thisCase.RecordTypeId == sidraRecordTypeId || thisCase.RecordTypeId == sidraLiteRecordTypeId) &&
+				(!thisCase.isClosed	&& thisCase.DEF_Approval_Rejection__c == 'Approved' && thisCase.Agent_holds_FS_requiring_first_call__c == 'Yes' && reasonToBeProcessed.contains(thisCase.Reason_for_Default__c)))
+				 ) {
 				sidraCasesToBeProcessed.put(thisCase.Id, thisCase);
-			}	
+			}
 		}
-			
+
 		if (sidraCasesToBeProcessed.size() > 0 && !isSAAMChildCaseCreated) {
 			System.enqueueJob(new createChildCaseToSidraCases(sidraCasesToBeProcessed));
-			isSAAMChildCaseCreated = true; 
-		}	
+			isSAAMChildCaseCreated = true;
+		}
 	}
 
 	public class createChildCaseToSidraCases implements Queueable {
@@ -123,22 +124,22 @@ public with sharing class SIDRACaseHelper {
 			List<Case> casesToProcess = new List<Case>([SELECT Id, OwnerId, Owner.Name, Account.Name, Account.IATACode__c, Region__c, BSPCountry__c, AccountId, ContactId,
 																(SELECT Id, ParentId
 																 FROM Cases
-																 WHERE RecordTypeId = :SAAMRecordTypeId AND CaseArea__c = 'Risk Management Process' AND 
-																	   Reason1__c = 'First call letter') FROM Case WHERE Id = : parentCases.keyset()]);
+																 WHERE RecordTypeId = :SAAMRecordTypeId AND CaseArea__c = 'Risk Management Process' AND
+																		 Reason1__c = 'First call letter') FROM Case WHERE Id = : parentCases.keyset()]);
 
 			for(Case c : casesToProcess) {
 				if(c.Cases.size() == 0 && !c.Owner.Name.contains('Recycle')) {
 
-				 	Case newCase = new Case(recordtypeID = SAAMRecordTypeId,	
-											ParentId = c.Id,																		
+				 	Case newCase = new Case(recordtypeID = SAAMRecordTypeId,
+											ParentId = c.Id,
 											CaseArea__c = 'Risk Management Process',
 											Reason1__c = 'First call letter',
 											Origin = 'IATA Internal User',
 											Subject = 'First call letter - ' + c.Account.Name + ' - ' + c.Account.IATACode__c,
 											Region__c = c.Region__c,
-                              				BSPCountry__c = c.BSPCountry__c,
-                              				AccountId = c.AccountId,
-                              				ContactId = c.ContactId);
+																			BSPCountry__c = c.BSPCountry__c,
+																			AccountId = c.AccountId,
+																			ContactId = c.ContactId);
 
 					Database.DMLOptions dmlOpts = new Database.DMLOptions();
 					//dmlOpts.assignmentRuleHeader.assignmentRuleId= AR.id;
@@ -163,15 +164,15 @@ public with sharing class SIDRACaseHelper {
 
 		// find all related accounts with their related SIDRA Cases
 		sidraCasesAccounts = new Map<Id, Account>([
-		            SELECT Id, Identify_as_Last_SIDRA_Date__c,
-		            (SELECT Id, CaseNumber, CreatedDate, Remittance_Period__c, IRR_Withdrawal_Reason__c, ParentId,
-		             IRR_Approval_Rejection__c, IRR_Approval_Rejection_Date__c, IRR_Type__c, Short_Payment_Amount__c,
-		             CurrencyISOCode, Currency__c, Short_Payment_Amount_USD__c, Remittance_Date__c
-		             FROM Account.Cases
-		             WHERE RecordTypeId = :sidraRecordTypeId
-		                                  ORDER BY createdDate DESC)
-		            FROM Account
-		            WHERE Id IN (SELECT AccountId From Case WHERE Id IN :mapCases.keyset())]);
+								SELECT Id, Identify_as_Last_SIDRA_Date__c,
+								(SELECT Id, CaseNumber, CreatedDate, Remittance_Period__c, IRR_Withdrawal_Reason__c, ParentId,
+								 IRR_Approval_Rejection__c, IRR_Approval_Rejection_Date__c, IRR_Type__c, Short_Payment_Amount__c,
+								 CurrencyISOCode, Currency__c, Short_Payment_Amount_USD__c, Remittance_Date__c
+								 FROM Account.Cases
+								 WHERE RecordTypeId = :sidraRecordTypeId
+																			ORDER BY createdDate DESC)
+								FROM Account
+								WHERE Id IN (SELECT AccountId From Case WHERE Id IN :mapCases.keyset())]);
 
 
 		map<Id, Account> mapAccountsToUpdate = new Map<Id, Account>();
@@ -232,7 +233,7 @@ public with sharing class SIDRACaseHelper {
 	}
 
 	/**
-	    Creating a caseComment record for SIDRA case based on input cases
+			Creating a caseComment record for SIDRA case based on input cases
 	**/
 	private static CaseComment createSidraComments(Case parentCase, Case relatedCase) {
 		String comment = Label.SIDRA_Automated_Case_Message;
@@ -245,7 +246,7 @@ public with sharing class SIDRACaseHelper {
 	}
 
 	/**
-	    Helper functions to handle null values
+			Helper functions to handle null values
 	**/
 	private static String nvl(String input) {
 		return input == null ? '' : input;
@@ -276,11 +277,11 @@ public with sharing class SIDRACaseHelper {
 	private static Map<Id, Account> getMapSidra(Set<Id> newCases){
 		if (sidraCasesAccounts == null)
 			return new Map<Id, Account>([SELECT Id, Identify_as_Last_SIDRA_Date__c,
-								        (SELECT Id, CaseNumber, CreatedDate FROM Account.Cases
-								         WHERE RecordTypeId = :sidraRecordTypeId
-								                              ORDER BY createdDate DESC LIMIT 1)
-								        FROM Account WHERE Id IN (SELECT AccountId From Case WHERE Id IN :newCases)]);
-		else 
+												(SELECT Id, CaseNumber, CreatedDate FROM Account.Cases
+												 WHERE RecordTypeId = :sidraRecordTypeId
+																							ORDER BY createdDate DESC LIMIT 1)
+												FROM Account WHERE Id IN (SELECT AccountId From Case WHERE Id IN :newCases)]);
+		else
 			return sidraCasesAccounts;
 	}
 

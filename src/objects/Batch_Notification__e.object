@@ -27,4 +27,5 @@
     </fields>
     <label>Batch Notification</label>
     <pluralLabel>Batch Notifications</pluralLabel>
+    <publishBehavior>PublishImmediately</publishBehavior>
 </CustomObject>

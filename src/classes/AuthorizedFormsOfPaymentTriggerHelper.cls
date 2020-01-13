@@ -13,16 +13,16 @@ public class AuthorizedFormsOfPaymentTriggerHelper {
 			if(!String.isEmpty(afop.Form_of_Payment_Code__c)){
 
 				GDP_Products_Account_View__c gdpProductAccView;
-				
-				//A single GDP Product Account View may contain several forms of payments, this way we just have a list with unique 
-				//GDP Product Account View to be updated. 
+
+				//A single GDP Product Account View may contain several forms of payments, this way we just have a list with unique
+				//GDP Product Account View to be updated.
 				if(gdpProductsAccViewMap.containsKey(afop.Related_GDP_Products_Account_View__c)){
-					
+
 					gdpProductAccView = gdpProductsAccViewMap.get(afop.Related_GDP_Products_Account_View__c);
 				}else{
-					
+
 					gdpProductAccView = new GDP_Products_Account_View__c();
-					gdpProductAccView.Id = afop.Related_GDP_Products_Account_View__c; 
+					gdpProductAccView.Id = afop.Related_GDP_Products_Account_View__c;
 				}
 
 				//Depending of the form of payment code a unique field of the GDP Product Account View will be update
@@ -49,16 +49,16 @@ public class AuthorizedFormsOfPaymentTriggerHelper {
 			if(!String.isEmpty(afop.Form_of_Payment_Code__c)){
 
 				GDP_Products_Account_View__c gdpProductAccView;
-				
-				//A single GDP Product Account View may contain several forms of payments, this way we just have a list with unique 
-				//GDP Product Account View to be updated. 
+
+				//A single GDP Product Account View may contain several forms of payments, this way we just have a list with unique
+				//GDP Product Account View to be updated.
 				if(gdpProductsAccViewMap.containsKey(afop.Related_GDP_Products_Account_View__c)){
-					
+
 					gdpProductAccView = gdpProductsAccViewMap.get(afop.Related_GDP_Products_Account_View__c);
 				}else{
-					
+
 					gdpProductAccView = new GDP_Products_Account_View__c();
-					gdpProductAccView.Id = afop.Related_GDP_Products_Account_View__c; 
+					gdpProductAccView.Id = afop.Related_GDP_Products_Account_View__c;
 				}
 
 
@@ -66,7 +66,7 @@ public class AuthorizedFormsOfPaymentTriggerHelper {
 				fillFormsOfPaymentsStatus(gdpProductAccView, triggerOldMap.get(afop.Id).Form_of_Payment_Code__c, '');
 
 				//Update with the new values
-				//Depending of the form of payment code a unique field of the GDP Product Account View will be update 
+				//Depending of the form of payment code a unique field of the GDP Product Account View will be update
 				fillFormsOfPaymentsStatus(gdpProductAccView, afop.Form_of_Payment_Code__c, afop.Status_Code__c);
 
 				gdpProductsAccViewMap.put(gdpProductAccView.Id, gdpProductAccView);
@@ -87,7 +87,7 @@ public class AuthorizedFormsOfPaymentTriggerHelper {
 		}
 
 		if(formOfPaymentCode == AMS_Utils.CC){
-			
+
 			gdpProductAccView.CC_FoP_Status__c = value;
 		}
 

@@ -1,9 +1,12 @@
 import { LightningElement, track, api } from 'lwc';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent'
 
 import getPickListValues from '@salesforce/apex/CSP_Utils.getPickListValues';
 import createUserForContact from '@salesforce/apex/ISSP_PortalUserStatusChange.preformActionNewPortal';
 import getAccounts from '@salesforce/apex/portalProfileCustomBoxCtrl.getAccounts';
 import updateUserStatus from '@salesforce/apex/portalProfileCustomBoxCtrl.updateUserStatus';
+import searchServices from '@salesforce/apex/PortalServicesCtrl.getAvailableServicesForNewContact';
+import createPortalApplicationRigth from '@salesforce/apex/portalProfileCustomBoxCtrl.createPortalApplicationRigth';
 
 import New_Contact_Profile from '@salesforce/label/c.CSP_cpcc_New_Contact_Profile';
 import Working_Areas from '@salesforce/label/c.CSP_cpcc_Working_Areas';
@@ -20,6 +23,12 @@ import InvalidValue from '@salesforce/label/c.csp_InvalidPhoneValue';
 import completeField from '@salesforce/label/c.CSP_Create_Contact_Complete_Field';
 import ICCS_Account_Name_Label from '@salesforce/label/c.ICCS_Account_Name_Label';
 import CSP_Error_Message_Mandatory_Fields_Contact from '@salesforce/label/c.CSP_Error_Message_Mandatory_Fields_Contact';
+import Service_Access from '@salesforce/label/c.CSP_Service_Access';
+import Assign_Service_Access from '@salesforce/label/c.CSP_Assign_New_Service';
+import Search from '@salesforce/label/c.Placeholder_Search';
+import NoResults from '@salesforce/label/c.CSP_NoSearchResults';
+
+
 
 
 
@@ -30,7 +39,11 @@ export default class PortalProfileCustomBox extends LightningElement {
     @api recordId;
     @api objectId;
     @api objectName;
-
+    @track services = [];
+    @track lstServices = [];
+    contactServices = [];
+    contact = {};
+    
     @api
     get fieldsList() {
         return this.trackedFieldsList === undefined ? [] : this.trackedFieldsList;
@@ -77,7 +90,11 @@ export default class PortalProfileCustomBox extends LightningElement {
         InvalidValue,
         completeField,
         ICCS_Account_Name_Label,
-        CSP_Error_Message_Mandatory_Fields_Contact
+        CSP_Error_Message_Mandatory_Fields_Contact,
+        Service_Access,
+        Assign_Service_Access,
+        Search,
+        NoResults
     };
 
     get labels() {
@@ -86,6 +103,10 @@ export default class PortalProfileCustomBox extends LightningElement {
 
     set labels(value) {
         this._labels = value;
+    }
+
+    get placeholder(){
+        return this.services.length > 0 ? this.labels.Search : this.labels.NoResults;
     }
 
     @track numberHasError = false;
@@ -117,6 +138,15 @@ export default class PortalProfileCustomBox extends LightningElement {
                 accountBuilder.push({ 'label': account.label, 'value': account.accountId });
             });
             this.accountList = accountBuilder;
+        });
+
+        searchServices().then(result => {
+            let parsedResult = JSON.parse(JSON.stringify(result));
+            let aux = [];
+            parsedResult.forEach(service => {
+                aux.push({ 'title': service.ServiceName__c, 'id': service.Id})
+            });
+            this.services = aux;
         });
     }
 
@@ -267,28 +297,47 @@ export default class PortalProfileCustomBox extends LightningElement {
             this.isLoading = false;
             this.hasError = true;
         }
-
     }
 
     handleSuccess(event) {
-
-        let contact = JSON.parse(JSON.stringify(event.detail));
-        let res;
-
-        createUserForContact({ contactId: contact.id, portalStatus: this.userType, oldPortalStatus: '' }).then(result => {
-            res = JSON.parse(JSON.stringify(result));
-
+        this.contact = JSON.parse(JSON.stringify(event.detail));
+        
+        let createUser = createUserForContact({ contactId: this.contact.id, portalStatus: this.userType, oldPortalStatus: '' })
+        .then(result => {
+            let res = JSON.parse(JSON.stringify(result));
             if (res.status === 'ok') {
-                updateUserStatus({ contactId: contact.id, userPortalStatus: this.userType }).then(results => {
-                    this.isLoading = false;
-                    this.dispatchEvent(new CustomEvent('closemodalwithsuccess'));
-                });
+                updateUserStatus({ contactId: this.contact.id, userPortalStatus: this.userType });
+            } 
+        });
 
-            } else {
-                this.isLoading = false;
-                this.dispatchEvent(new CustomEvent('closemodalwithsuccess'));
-            }
+        let giveServiceAccess;
+        if(this.contactServices.length > 0){
+            giveServiceAccess = createPortalApplicationRigth({contactId: this.contact.id, servicesIds: this.contactServices})
+                .then( result => {
+                    if(!result){
+                        this.dispatchEvent(new ShowToastEvent({
+                            variant: 'error',
+                            title: 'Error associanting services',
+                            message: 'There was an error while trying to give the user access to the selected services'
+                        }));
+                    }
+                }).catch(() => {                   
+                    this.dispatchEvent(new ShowToastEvent({
+                        variant: 'error',
+                        title: 'Error associanting services',
+                        message: 'There was an error while trying to give the user access to the selected services'
+                    }));
+            });
+        }
+        
+        let promises = [createUser];
+        if(this.contactServices.length > 0){
+            promises.push(giveServiceAccess);
+        }
 
+        Promise.all(promises).then(() => {
+            this.isLoading = false;
+            this.dispatchEvent(new CustomEvent('closemodalwithsuccess'));
         });
     }
 
@@ -419,4 +468,41 @@ export default class PortalProfileCustomBox extends LightningElement {
         this.numberHasError = isNumberError;
 
     }
+
+    handleServiceSearch(event) {
+        let toSearch = event.detail.searchTerm;
+        let results = this.services.filter(elem => elem.title.toLowerCase().search(toSearch) !== -1);
+        this.template.querySelector('[data-id="servicesearch"]').setSearchResults(results);
+    }
+
+    showServiceResults(){
+        this.template.querySelector('[data-id="servicesearch"]').setSearchResults(this.services);
+
+    }
+
+    addNewServiceButtonClick(){
+        let inputCmp = this.template.querySelector('[data-id="servicesearch"]').getSelection()[0];
+        let comp = this.template.querySelector('[data-id="servicesearch"]');
+        let lstAdditionalServices = this.lstServices;
+        
+        comp.focus();        
+        if (!lstAdditionalServices.some(service => service.id === inputCmp.id)) {
+            lstAdditionalServices.push(JSON.parse(JSON.stringify(inputCmp)));
+            this.contactServices.push(inputCmp.id);
+        }
+        this.lstServices = lstAdditionalServices;         
+    }
+
+    removeService(event){
+        let lstAdditionalServices = this.lstServices;
+        let itemVal = event.target.dataset.item;
+        
+        if (lstAdditionalServices.some(service => service.id === itemVal)) {
+            lstAdditionalServices = lstAdditionalServices.filter(service => service.id !== itemVal);
+            this.contactServices = this.contactServices.filter(item => item !== itemVal);
+        }
+
+        this.lstServices = lstAdditionalServices;
+    }
+    
 }

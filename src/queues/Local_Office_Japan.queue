@@ -5,8 +5,8 @@
     <name>Local Office - Japan</name>
     <queueMembers>
         <roleAndSubordinatesInternal>
-            <roleAndSubordinateInternal>CountryManagerJapanI</roleAndSubordinateInternal>
-            <roleAndSubordinateInternal>StaffJapanI</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>CountryManagerJapan</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>StaffJapan</roleAndSubordinateInternal>
         </roleAndSubordinatesInternal>
     </queueMembers>
     <queueSobject>

@@ -34,7 +34,7 @@ global class AMP_Batch_EmailChatterDigest implements Database.Batchable<sObject>
 		return Database.getQueryLocator(query);
 	}
 
-   	global void execute(Database.BatchableContext BC, List<User> lsUsers) {
+	 	global void execute(Database.BatchableContext BC, List<User> lsUsers) {
 		System.debug('execute');
 		System.debug(dailyOrWeekly);
 		System.debug(lsUsers);

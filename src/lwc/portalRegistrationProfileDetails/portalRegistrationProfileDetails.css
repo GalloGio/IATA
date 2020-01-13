@@ -1,0 +1,199 @@
+.Profile-Details {
+    width: 688px;
+    height: 32px;
+    font-family: AktivGrotesk;
+    font-size: 22px;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.45;
+    letter-spacing: normal;
+    color: #333333;
+  }
+
+  .Add-your-personal-details {
+    width: 688px;
+    height: 26px;
+    font-family: AktivGrotesk;
+    font-size: 16px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.63;
+    letter-spacing: normal;
+    color: #525252;
+  }
+
+  .Line {
+    width: 688px;
+    height: 1px;
+    background-color: #e6e6e6;
+  }
+
+.scrollable-body{
+    height:70vh;
+    overflow:auto;
+}
+
+/* A lovely scroller - needs height recalculation
+.scrollable-body::-webkit-scrollbar {
+    width: 68px;
+}
+
+.scrollable-body::-webkit-scrollbar-thumb{
+     width: 68px;
+      background-image: url("/csportal/s/cat.gif"),
+        linear-gradient(
+          90deg,
+          transparent,
+          magenta,
+          red,
+          yellow,
+          limegreen,
+          turquoise,
+          blue,
+          magenta,
+          transparent
+        );
+      background-position: center bottom, center -20px;
+      background-repeat: no-repeat, no-repeat;
+      background-size: contain, contain;
+}*/
+
+.slds-has-error input{
+    border-radius: 1px !important;
+    border: solid 2px rgba(240, 70, 50, 0.8) !important;
+    box-shadow: none !important;
+}
+
+.slds-has-error .slds-form-element__help{
+    color: #f04632 !important;
+    font-size: 14px !important;
+}
+
+.slds-has-error .slds-form-element__help div{
+    color: #f04632 !important;
+}
+
+.inputBackgroundGrey{
+    background-color: #f7f8fa !important;
+}
+
+.slds-combobox_container input[role="textbox"]:not(:placeholder-shown) {
+    background-color: #f7f8fa;
+}
+
+.wrap{
+    white-space:unset;
+}
+
+.customPopupInteriorQuarterScreenCentered {
+    background-color: #F7F8FA;
+    width: 25%;
+    margin: auto;
+    box-shadow: 5px 5px 20px #808080;
+    border-radius: 1px;
+    border: solid 1px #e2e2e2;
+}
+
+/*
+.leftItem{
+    padding-right: 7px;
+}
+
+.rightItem{
+    padding-left: 7px;
+}*/
+
+.profileContainer{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.profileItem{
+    width: 50%;
+    padding: 7px;
+    margin-bottom: 20px;
+}
+
+.profileItem:nth-child(odd){
+    padding-left: 0;
+}
+
+.profileItem:nth-child(even){
+    padding-right: 0;
+}
+
+.nextBtn{
+    padding-left: 7px;
+    /*Temporary*/
+    margin-top: 40px;
+    margin-bottom: 30px;
+}
+
+.cancelBtn{
+    padding-right: 7px;
+}
+
+.containedButton{
+    box-shadow: none !important;
+}
+
+@media only screen and (max-width: 900px){
+
+    .profileItem{
+      width: 100%;
+      padding: 0;
+    }
+  }
+
+/* PROGRESS BAR */
+
+.progressBar{
+    display: flex;
+    align-items: stretch;
+    justify-content: space-evenly;
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+.progressItem{
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.itemIcon{
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    border: 2px solid #289632;
+    margin-right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.itemTitle span{
+    font-size: 16px;
+    font-style: normal;
+    font-stretch: normal;
+    letter-spacing: normal;
+    color: #525252;
+}
+
+.formLabelContainer{
+    padding-bottom: 11px;
+}
+
+.topLabel{
+    padding: 32px 0;
+}
+.calendarIcon{
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 15px;
+}

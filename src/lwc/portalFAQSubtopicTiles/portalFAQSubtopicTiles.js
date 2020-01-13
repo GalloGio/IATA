@@ -1,5 +1,5 @@
 import { LightningElement, api, track } from 'lwc';
-import getFAQsInfo from '@salesforce/apex/PortalFAQsCtrl.getFAQsInfo';
+import getFAQsInfoByLanguage from '@salesforce/apex/PortalFAQsCtrl.getFAQsInfoByLanguage';
 
 export default class PortalFAQSubtopicTiles extends LightningElement {
     @track error;
@@ -7,26 +7,40 @@ export default class PortalFAQSubtopicTiles extends LightningElement {
     @track topicTiles;
     @track subTopicTiles;
     @track accordionMap;
-    @api category;
     @track topic;
     @track counter = 0;
 
+    @api category;
+    @api language;
+    @track _faqObject = {};
+
+    @api
+    get faqObject() {
+        return this._faqObject;
+    }
+    set faqObject(value) {
+        let _value = JSON.parse(JSON.stringify(value));
+        this._faqObject = _value;
+    }
+
     connectedCallback() {
-        getFAQsInfo()
+        this.category = this._faqObject.category;
+        this.language = this._faqObject.language;
+
+        getFAQsInfoByLanguage({ lang : this.language })
             .then(results => {
                 let result = JSON.parse(JSON.stringify(results));
-            
+                
                 this.topicTiles = [];
                 this.accordionMap = []; //Save all Data Category visibility information. Contains category(Tile), childs(Subtopic), topicLabel, topicName
                 let tempTopicOptions = [];
                 let tempAccordionMap = [];
                 
-                let tempCategoryName = this.category; //Contains selected category from portalFAQPage
+                let tempCategoryName = this._faqObject.category; //Contains selected category from portalFAQPage
         
-                Object.keys(result).forEach(function (el) {                
-                    tempAccordionMap[result[el].topicName] = result[el];
-
+                Object.keys(result).forEach(function (el) {
                     if(tempCategoryName === result[el].categoryName) {
+                        tempAccordionMap[result[el].topicName] = result[el];
                         tempTopicOptions.push({ label: result[el].topicLabel, value: result[el].topicName, open: false, class: 'slds-p-around_medium customCardTitleBox cursorPointer borderStyle cardStyle' });
                     }
                 });
@@ -48,7 +62,7 @@ export default class PortalFAQSubtopicTiles extends LightningElement {
         this.topic = topicName;
         
         let topicVals = JSON.parse(JSON.stringify(this.topicTiles));
-        
+
         Object.keys(topicVals).forEach(function (el) {
             if(topicName === topicVals[el].value && topicVals[el].open === false) {
                 topicVals[el].open = true;
@@ -58,8 +72,10 @@ export default class PortalFAQSubtopicTiles extends LightningElement {
                 topicVals[el].class = 'slds-p-around_medium customCardTitleBox cursorPointer borderStyle cardStyle';
             }
         });
-
+        
         this.topicTiles = topicVals;
+
+        let categorySelected = topicVals.filter(topic => topic.open === true); //Check if a topic is selected
 
         let tempSubTopics = [];
         let subtopicVals = JSON.parse(JSON.stringify(this.accordionMap[topicName].childs)); //Get subtopics under each topic
@@ -69,14 +85,15 @@ export default class PortalFAQSubtopicTiles extends LightningElement {
         });
 
         this.subTopicTiles = [];
-        this.subTopicTiles = tempSubTopics.reverse();
+        this.subTopicTiles = tempSubTopics;
 
-        //portalFAQPage handles the event and send parameters to portalFAQArticleAccordion to show the articles under selected topic  
-        let topicInfo = {
-            topic: this.topic,
-            counter: this.counter++
-        };      
-        this.selectedEvent('topicselected', topicInfo);
+        let __faqObject = JSON.parse(JSON.stringify(this._faqObject));
+        __faqObject.category = categorySelected.length > 0 ? '' : this.category;
+        __faqObject.topic = categorySelected.length > 0 ? topicName : '';
+        __faqObject.subtopic = '';
+
+        const selectedEvent = new CustomEvent('categorieschange', { detail: __faqObject });
+        this.dispatchEvent(selectedEvent);
     }
     
     subTopicSelected(event) {        
@@ -94,23 +111,16 @@ export default class PortalFAQSubtopicTiles extends LightningElement {
         });
 
         this.subTopicTiles = [];
-        this.subTopicTiles = tempSubTopics.reverse();      
-        
-        //portalFAQPage handles the event and send parameters to portalFAQArticleAccordion to show the articles under selected subtopic
-        let subtopicInfo = {
-            topic: this.topic,
-            subtopic: subtopicName
-        };   
-        this.selectedEvent('subtopicselected', subtopicInfo);
-    }
+        this.subTopicTiles = tempSubTopics;
 
-    selectedEvent(eventName, params) {
-        const selectedEvent = new CustomEvent(eventName, {
-            detail: {
-                options: params
-            }
-        });
+        let __faqObject = JSON.parse(JSON.stringify(this._faqObject));
+        __faqObject.category = '';
+        __faqObject.topic = '';
+        __faqObject.subtopic = subtopicName;
 
+        const selectedEvent = new CustomEvent('categorieschange', { detail: __faqObject });
         this.dispatchEvent(selectedEvent);
+
+        window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
     }
 }

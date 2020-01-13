@@ -23,6 +23,24 @@
         <content>ACLI_Processes</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.InternalCasesEuropeSCE</recordType>
+        <type>Flexipage</type>
+        <profile>IDFS Airline Participation Staff - HO</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>ACLI_Processes</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.Invoicing_Collection_Cases</recordType>
+        <type>Flexipage</type>
+        <profile>IDFS Airline Participation Staff - HO</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>ACLI_Processes</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.Airline_Coding_Application</recordType>
         <type>Flexipage</type>
         <profile>Admin</profile>
@@ -296,15 +314,28 @@
         <recordType>Case.Invoicing_Collection_Cases</recordType>
         <type>Flexipage</type>
         <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>ACLI_Processes</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.Airline_Coding_Application</recordType>
+        <type>Flexipage</type>
+        <profile>IDFS Airline Participation Staff - HO</profile>
     </profileActionOverrides>
     <setupExperience>service</setupExperience>
     <tabs>standard-Case</tabs>
     <tabs>Participation_Online_Application__c</tabs>
     <tabs>Participation_Application_Requirement__c</tabs>
     <tabs>Participant_Online_App_Requirement__c</tabs>
+    <tabs>IATA_ISO_City__c</tabs>
     <uiType>Lightning</uiType>
     <utilityBar>ACLI_UtilityBar</utilityBar>
     <workspaceConfig>
+        <mappings>
+            <tab>IATA_ISO_City__c</tab>
+        </mappings>
         <mappings>
             <tab>Participant_Online_App_Requirement__c</tab>
         </mappings>

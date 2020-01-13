@@ -1,0 +1,98 @@
+<template>
+        <div class="rectangle">
+
+            <lightning-layout multiple-rows=true>
+                <lightning-layout-item size=12 class="slds-p-around_small">
+                    <lightning-layout multiple-rows=false>
+                        <lightning-layout-item size=2>
+                            <img src={serviceIcon} class="service">
+                        </lightning-layout-item>
+                        <lightning-layout-item size=10>
+                            <div class="cardItemTitle">
+                                {labels.CSP_Welcome_Panel_Bullet_1_Title}
+                            </div>
+                            <div class="description">
+                                {labels.CSP_Welcome_Panel_Bullet_1_Desc}
+                            </div>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </lightning-layout-item>
+                <lightning-layout-item size=12 class="slds-p-around_small">
+                    <lightning-layout multiple-rows=false>
+                        <lightning-layout-item size=2>
+                            <img src={uptodateIcon} class="service">
+                        </lightning-layout-item>
+                        <lightning-layout-item size=10>
+                            <div class="cardItemTitle">
+                                {labels.CSP_Welcome_Panel_Bullet_2_Title}
+                            </div>
+                            <div class="description">
+                                {labels.CSP_Welcome_Panel_Bullet_2_Desc}
+                            </div>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </lightning-layout-item>
+                <lightning-layout-item size=12 class="slds-p-around_small">
+                    <lightning-layout multiple-rows=false>
+                        <lightning-layout-item size=2>
+                            <img src={offerIcon} class="service">
+                        </lightning-layout-item>
+                        <lightning-layout-item size=10>
+                            <div class="cardItemTitle">
+                                {labels.CSP_Welcome_Panel_Bullet_3_Title}
+                            </div>
+                            <div class="description">
+                                {labels.CSP_Welcome_Panel_Bullet_3_Desc}
+                            </div>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </lightning-layout-item>
+                <lightning-layout-item size=12 class="slds-p-around_small">
+                    <lightning-layout multiple-rows=false>
+                        <lightning-layout-item size=2>
+                            <img src={supportIcon} class="service">
+                        </lightning-layout-item>
+                        <lightning-layout-item size=10>
+                            <div class="cardItemTitle">
+                                {labels.CSP_Welcome_Panel_Bullet_4_Title}
+                            </div>
+                            <div class="description">
+                                {labels.CSP_Welcome_Panel_Bullet_4_Desc}
+                            </div>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </lightning-layout-item>
+
+                <lightning-layout-item size=12 class="faqContainer">
+                    <lightning-layout multiple-rows=false>
+                        <lightning-layout-item size=2>
+
+                        </lightning-layout-item>
+                        <lightning-layout-item size=10>
+                            <div class="textAlignCenter text-xsmall">
+                                <!-- LOGIN -->
+                                <lightning-button variant="base"
+                                    label="Login"
+                                    title="Login"
+                                    class="blueCustomButtonLinkSmall"
+                                    onclick={handleNavigateToLogin}>
+                                </lightning-button>
+                                <img src={arrowIcon} class="service faqPointer" onclick={handleNavigateToLogin}>
+
+                                <!-- SIGN UP -->
+                                <lightning-button variant="base"
+                                    label="Sign Up"
+                                    title="Sign Up"
+                                    class="blueCustomButtonLinkSmall"
+                                    onclick={handleNavigateToSignUp}>
+                                </lightning-button>
+                                <img src={arrowIcon} class="service faqPointer" onclick={handleNavigateToSignUp}>
+                            </div>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </lightning-layout-item>
+
+            </lightning-layout>
+
+        </div>
+</template>

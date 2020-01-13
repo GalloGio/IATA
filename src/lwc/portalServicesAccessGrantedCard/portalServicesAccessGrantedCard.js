@@ -1,24 +1,42 @@
-import { LightningElement, api } from 'lwc';
+import { LightningElement, api, track } from 'lwc';
 
 import goToOldPortalService from '@salesforce/apex/PortalServicesCtrl.goToOldPortalService';
 import updateLastModifiedService from '@salesforce/apex/PortalServicesCtrl.updateLastModifiedService';
+import paymentLinkRedirect from '@salesforce/apex/PortalServicesCtrl.paymentLinkRedirect';
+import changeIsFavoriteStatus from '@salesforce/apex/PortalServicesCtrl.changeIsFavoriteStatus';
 
 //navigation
 import { NavigationMixin } from 'lightning/navigation';
 import { navigateToPage } from 'c/navigationUtils';
 
+import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
+
 //import labels
 import CSP_Services_ManageService from '@salesforce/label/c.CSP_Services_ManageService';
 import CSP_Services_GoToService from '@salesforce/label/c.CSP_Services_GoToService';
+import CSP_Services_AddFavorite from '@salesforce/label/c.CSP_Services_AddFavorite';
+import CSP_Services_RemoveFavorite from '@salesforce/label/c.CSP_Services_RemoveFavorite';
 
 export default class PortalServicesAccessGrantedCard extends NavigationMixin(LightningElement) {
+    /* Images */
+    favoriteIcon = CSP_PortalPath + 'CSPortal/Images/Icons/favorite.png';
+    notFavoriteIcon = CSP_PortalPath + 'CSPortal/Images/Icons/not_favorite.png';
 
     @api service;
+    @api showOnlyFavorites;
+
+    @track isLoading = false;
 
     label = {
         CSP_Services_ManageService,
-        CSP_Services_GoToService
+        CSP_Services_GoToService,
+        CSP_Services_AddFavorite,
+        CSP_Services_RemoveFavorite
     };
+
+    get hasIcon(){
+        return this.service.recordService.Application_icon_URL__c !== undefined;
+    }
 
     goToManageServiceButtonClick(event) {
         let serviceAux = JSON.parse(JSON.stringify(this.service));
@@ -46,6 +64,7 @@ export default class PortalServicesAccessGrantedCard extends NavigationMixin(Lig
         let openWindowData = serviceAux.New_Window__c;
         let requestable = serviceAux.Requestable__c;
         let recordId = serviceAux.Id;
+        let appName = serviceAux.ServiceName__c;
 
         // update Last Visit Date on record
         updateLastModifiedService({ serviceId: recordId })
@@ -57,6 +76,9 @@ export default class PortalServicesAccessGrantedCard extends NavigationMixin(Lig
             flag = true;
         } else if (appFullUrlData !== '') {
             myUrl = appFullUrlData;
+            flag = true;
+        } else if (appName === 'Payment Link' || appName === 'Paypal') {
+            myUrl = '';
             flag = true;
         }
         if (flag) {
@@ -80,11 +102,26 @@ export default class PortalServicesAccessGrantedCard extends NavigationMixin(Lig
                             });
 
                     } else {
-                        if (!myUrl.startsWith('http')) {
-                            myUrl = window.location.protocol + '//' + myUrl;
+                        if (appName === 'Payment Link' || appName === 'Paypal') {
+                            paymentLinkRedirect()
+                                .then(result => {
+                                    if (result !== undefined && result !== '') {
+                                        myUrl = result;
+                                        if (!myUrl.startsWith('http')) {
+                                            myUrl = window.location.protocol + '//' + myUrl;
+                                        }
+                                    }
+                                    window.open(myUrl);
+                                    this.toggleSpinner();
+                                });
+
+                        } else {
+                            if (!myUrl.startsWith('http')) {
+                                myUrl = window.location.protocol + '//' + myUrl;
+                            }
+                            window.open(myUrl);
+                            this.toggleSpinner();
                         }
-                        window.open(myUrl);
-                        this.toggleSpinner();
                     }
 
 
@@ -111,5 +148,17 @@ export default class PortalServicesAccessGrantedCard extends NavigationMixin(Lig
 
     }
 
+    changeIsFavoriteStatus(){
+        this.startLoading();
+        changeIsFavoriteStatus({portalApplicationId:this.service.recordService.Id, portalApplicationRightId:this.service.portalApplicationRightId, isFavorite: !this.service.isFavorite})
+            .then(result => {
+                if(result){
+                    this.dispatchEvent(new CustomEvent('changefavoritestatus'));
+                }
+            });
+    }
 
+    startLoading(){
+        this.dispatchEvent(new CustomEvent('startloading'));
+    }
 }

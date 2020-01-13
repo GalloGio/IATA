@@ -18,7 +18,7 @@
         //$('#ModalShowSurvey').modal({show:true})
            window.open('{!SurveyLink}', "mywindow", "location=1,status=1,scrollbars=1,height=350,width=400");
       }else{
-            window.open('/secur/logout.jsp?retUrl={!$Site.BaseUrl}/ISSP_Homepage{!if(communityName=='CNS','&CommunityName='+communityName,'')}','_self');
+            window.open('/secur/logout.jsp?retUrl={!$Site.BaseRequestURL}/ISSP_Homepage{!if(communityName=='CNS','&CommunityName='+communityName,'')}','_self');
       }
     }
  </script><!-- end jquery initialisation -->
@@ -566,7 +566,7 @@ background-color:#428bca;
   <apex:includeScript value="/lightning/lightning.out.js"/>
   <apex:stylesheet value="{!URLFOR($Resource.PortalHeader_NotiticationCenter_Tab_CSS, '/CSP_CSS/portalHeader_NotiticationCenter_Tab_CSS.css')}"/>
   <script>
-      $Lightning.use("c:portalHeaderApp", function() {
+      $Lightning.use("c:pageBuilderApp", function() {
           $Lightning.createComponent(
               "c:portalHeader",
               {isInOldPortal: true},
@@ -832,7 +832,7 @@ background-color:#428bca;
             </apex:outputPanel>
           </div>
           <center>
-            <a href="/secur/logout.jsp?retUrl={!$Site.BaseUrl}/ISSP_Homepage{!if(communityName=='CNS','?CommunityName='+communityName,'')}" role="menuitem" title="Logout" target="_top"> 
+            <a href="/secur/logout.jsp?retUrl={!$Site.BaseRequestURL}/ISSP_Homepage{!if(communityName=='CNS','?CommunityName='+communityName,'')}" role="menuitem" title="Logout" target="_top"> 
               <span class="glyphicon glyphicon-log-out" aria-hidden="true" style="font-size:1.5em;"></span>
                <h3>{!$Label.Logout}</h3>
            </a>

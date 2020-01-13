@@ -1,0 +1,17 @@
+<template>
+    <c-portal-page-container>
+        <span slot="componentContent">
+            <div class="slds-grid slds-wrap slds-gutters_medium slds-p-vertical_x-large">
+                <!-- CATEGORIES -->
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3" >
+                    <c-portal-f-a-q-category-tiles render-with-icons={renderas}></c-portal-f-a-q-category-tiles>
+                </div>
+
+                <!-- ARTICLES -->
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_2-of-3" >
+                    <c-portal-f-a-q-article-accordion article-view={article}></c-portal-f-a-q-article-accordion>
+                </div>
+            </div>
+        </span>
+    </c-portal-page-container>
+</template>
