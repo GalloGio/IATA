@@ -1049,7 +1049,7 @@ global with sharing class ANG_ConversionHelper {
 			}
 
 			// we are not getting all the relations and we need them to adjust the actual hierarchy.
-			Map<Id,Account> accountsSearched = new Map<Id,Account>([SELECT Id, Name, Top_Parent__c, Top_Parent__r.Location_Type__c, Location_Type__c, Location_Class__c, ParentId, Status__c, IATA_ISO_Country__r.BSP_Country_free_text__c, IATA_ISO_Country__r.BSP__c, IATA_ISO_Country__r.ISO_Code__c, Remittance_frequency__c, Financial_Review_Result__c, IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode, ANG_RiskStatus__c, ANG_Accreditation_Model__c, Email__c,ANG_CashCondition__c, IATACode__c, (select Id, ANG_Financial_Security__c, ANG_RHC_Amount__c from RHC_Informations__r), Guaranteed_amount__c from Account where Id in :accountNotSearch]);
+			Map<Id,Account> accountsSearched = new Map<Id,Account>([SELECT Id, Name, Top_Parent__c, Top_Parent__r.Location_Type__c, Location_Type__c, Location_Class__c, ParentId, Status__c, IATA_ISO_Country__r.BSP_Country_free_text__c, IATA_ISO_Country__r.BSP__c, IATA_ISO_Country__r.ISO_Code__c, Remittance_frequency__c, Financial_Review_Result__c, IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode, ANG_RiskStatus__c, ANG_Accreditation_Model__c, Email__c,ANG_CashCondition__c, IATACode__c, (select Id, ANG_Financial_Security__c, ANG_RHC_Amount__c from RHC_Informations__r), Guaranteed_amount__c, Sector__c, Category__c from Account where Id in :accountNotSearch]);
 
 
 			For(AMS_Agencies_relationhip__c rel: relsToUpdate){
