@@ -2,7 +2,6 @@
 <CustomTab xmlns="http://soap.sforce.com/2006/04/metadata">
     <description>Financial Security Request</description>
     <label>Financial Security Request</label>
-    <mobileReady>false</mobileReady>
     <motif>Custom26: Flag</motif>
     <page>FinancialSecurityRequest</page>
 </CustomTab>
