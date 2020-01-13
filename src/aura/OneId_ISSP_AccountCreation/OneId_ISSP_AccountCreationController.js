@@ -58,8 +58,7 @@
         }else if(!$A.util.isEmpty(addressObj.deliveryservice)){
             component.set("v.account."+addressType+"Street", addressObj.deliveryservice);
         }
-
-        component.set("v.account."+addressType+"Street", addressObj.street);
+        
         
 /*        if(!$A.util.isEmpty(addressObj.locality)){
             component.set("v.account."+addressType+"City", addressObj.locality);

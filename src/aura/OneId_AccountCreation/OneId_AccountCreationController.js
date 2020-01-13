@@ -375,7 +375,6 @@
             let emptyStreet =$A.util.isEmpty(street);
             let hierarchy = state+' > '+city;
             let hierarchyLower = hierarchy.toLowerCase();
-            let predictions = c.get("v.predictions"+modes[i]);
             
             if(hierarchyCities[hierarchyLower]){
                 if(i===0){
