@@ -42,6 +42,8 @@ public with sharing class CustomerSyncUtils extends SObjectSyncUtils {
 	 */
 	private Set<Id> hasSynchronizedBusinessAddressAccountIds;
 
+	@TestVisible static Map<Id, SObject> mapToSend;
+
 	/**
 	 * Handle synchronize logic between Salesforce and SAP/DMS
 	 *
@@ -62,7 +64,7 @@ public with sharing class CustomerSyncUtils extends SObjectSyncUtils {
 
 		getAccountInformation(contexts, ARBCIdsByAccountId.keySet());
 
-		Map<Id, SObject> mapToSend = new Map<Id, SObject>();
+		mapToSend = new Map<Id, SObject>();
 
 		Account account;
 		for (Id accountId : ARBCIdsByAccountId.keySet()) {

@@ -5,6 +5,8 @@ public with sharing class ContactSyncUtils extends SObjectSyncUtils {
 
 	public class ContactSyncException extends Exception {}
 
+	@TestVisible static Map<Id, SObject> mapToSend;
+
 	public ContactSyncUtils() {
 		this.getFieldsToCheckOnUpdate(SObjectSyncUtils.Context.Contact);
 	}
@@ -23,7 +25,7 @@ public with sharing class ContactSyncUtils extends SObjectSyncUtils {
 			return;
 		}
 
-		Map<Id, SObject> mapToSend = new Map<Id, SObject>();
+		mapToSend = new Map<Id, SObject>();
 
 		Set<String> doneKeys = new Set<String>();
 		String key;
