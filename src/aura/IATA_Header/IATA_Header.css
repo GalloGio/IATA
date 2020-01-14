@@ -3,12 +3,28 @@
 }
 .THIS.fixCommunity {
     margin-right: 0px ;
-    margin-left: 0px ;
+    margin-left: 0px ;    
 }
 .THIS .gdpr {
     min-width: 55px;
 }
 
+.THIS .logo-second_small{
+    margin-right:15px;
+    margin-left:40px;
+    margin-top:15px;
+    margin-bottom:15px;
+    width:73px;
+    height:50px;
+}
+.THIS hr{
+    margin-top:26px;
+    margin-right:15px;
+    height:34px; 
+    width:1px; 
+    transform:rotate(45deg); 
+    background-color:#A5ADFD;
+}
 @media (max-width: 600px) {
     .THIS .logo {
         padding-top: 20px;

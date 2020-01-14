@@ -197,7 +197,7 @@
 
 						<div class="inner-wrapper">
 							<ol class="list breadcrumb">
-								<li><a href="{!$Site.BaseUrl}">{!$Label.Home}</a></li>
+								<li><a href="{!$Site.BaseRequestURL}">{!$Label.Home}</a></li>
 								<li>Search Result</li>
 							</ol>
 							<h1 class="page-title search-results">Search Results</h1>
@@ -205,7 +205,7 @@
 
 							<apex:outputPanel styleClass="sub-container refine-container">
 								<div class="search-container">
-					                <form class="form form-search" action="{!$Site.BaseUrl}/IEC_SearchResults" name="form-search-results">
+					                <form class="form form-search" action="{!$Site.BaseRequestURL}/IEC_SearchResults" name="form-search-results">
 					                    <label>
 					                        <span class="reader-only">{!$Label.Search}</span>
 					                        <input class="user-input text" type="text" name="site-search" placeholder="{!$Label.Search}" value="{!searchToken}" />
@@ -327,7 +327,7 @@
 											<li class="list-item">
 												<div class="item-wrapper">
 													<figure class="item-image">
-														<a href="{!$Site.BaseUrl}/IEC_ProductDetails?id={!prod.ProductNumber}" onclick="clickProductPush('{!prod.InventoryStatus}','{!prod.ProductNumber}' ,{!prod.productNameAnalytic});">
+														<a href="{!$Site.BaseRequestURL}/IEC_ProductDetails?id={!prod.ProductNumber}" onclick="clickProductPush('{!prod.InventoryStatus}','{!prod.ProductNumber}' ,{!prod.productNameAnalytic});">
                                                             <apex:outputPanel layout="block" style="height: 180px;" rendered="{!prod.imageFile != '' }">
 
                                                             <div class="fileImage" layout="block" style="height: 180px;">
@@ -340,7 +340,7 @@
 														</a>
 													</figure>
 													<h2 class="item-name">
-														<a href="{!$Site.BaseUrl}/IEC_ProductDetails?id={!prod.ProductNumber}" onclick="clickProductPush('{!prod.InventoryStatus}','{!prod.ProductNumber}' ,{!prod.productNameAnalytic});">{!prod.ProductName}</a>
+														<a href="{!$Site.BaseRequestURL}/IEC_ProductDetails?id={!prod.ProductNumber}" onclick="clickProductPush('{!prod.InventoryStatus}','{!prod.ProductNumber}' ,{!prod.productNameAnalytic});">{!prod.ProductName}</a>
 													</h2>
 													<h3 class="item-description-title" style="{! IF(isBlank(prod.Media), 'display:none', 'display:inline')}">
 														{!prod.Media}
@@ -385,7 +385,7 @@
 														<span class="price-label">{!$Label.Direct_Sales}</span>
 													</apex:outputPanel>
 
-                                                    <a class="button" href="{!$Site.BaseUrl}/IEC_ProductDetails?id={!prod.ProductNumber}"
+                                                    <a class="button" href="{!$Site.BaseRequestURL}/IEC_ProductDetails?id={!prod.ProductNumber}"
                                                     	onclick="clickProductPush('{!prod.InventoryStatus}','{!prod.ProductNumber}' ,{!prod.productNameAnalytic});">
                                                     	{! IF(OR(prod.InventoryStatus == 'Out of stock', prod.InventoryStatus == 'Coming Soon'), $Label.PreOrderAddToCart, $Label.Button_Select)}
                                                     </a>

@@ -8,10 +8,10 @@ private class ProvisionKaviAccessTest {
 	static user me;
 	static {
 
-		Profile p = [SELECT Id FROM Profile WHERE Name='Standard User']; 
-		User u = new User(Alias = 'standt', Email='1231323123@123132.com', 
-				EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US', 
-				LocaleSidKey='en_US', ProfileId = p.Id, 
+		Profile p = [SELECT Id FROM Profile WHERE Name='Standard User'];
+		User u = new User(Alias = 'standt', Email='1231323123@123132.com',
+				EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',
+				LocaleSidKey='en_US', ProfileId = p.Id,
 				TimeZoneSidKey='America/Los_Angeles', UserName='12312312@12312312312.com',
 				Is_Kavi_Internal_User__c = true, License_Cost_Center__c = 'XSMW01JO01');
 		insert u;

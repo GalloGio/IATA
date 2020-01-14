@@ -274,6 +274,32 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>ANG_RHC_LocationType__c</fullName>
+        <description>Defines if RHC should take into account only the HE or include the AE from the hierarchy</description>
+        <externalId>false</externalId>
+        <label>RHC Location Type</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>HE only</fullName>
+                    <default>true</default>
+                    <label>HE only</label>
+                </value>
+                <value>
+                    <fullName>Include all AEs</fullName>
+                    <default>false</default>
+                    <label>Include all AEs</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
         <fullName>Acli_Country__c</fullName>
         <description>The country name for acli</description>
         <externalId>false</externalId>
@@ -2090,6 +2116,11 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
                     <label>Venezuela</label>
                 </value>
                 <value>
+                    <fullName>Virgin British Islands</fullName>
+                    <default>false</default>
+                    <label>Virgin British Islands</label>
+                </value>
+                <value>
                     <fullName>Yemen</fullName>
                     <default>false</default>
                     <label>Yemen</label>
@@ -2490,6 +2521,15 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <externalId>false</externalId>
         <inlineHelpText>AMS SFDC to MDM SAP Integration - when checked the agencies of the country will be integrated with MDM</inlineHelpText>
         <label>MDM Integration</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Multicountry_Enabled__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Multicountry Enabled</label>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>

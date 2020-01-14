@@ -1,6 +1,6 @@
 @isTest
 private class ISSP_CurrencyCenterCountryControllerTest {
-	
+
 	@isTest static void testSectionChanged(){
 		Test.startTest();
 
@@ -24,14 +24,14 @@ private class ISSP_CurrencyCenterCountryControllerTest {
 		PageReference checkAccess = ctrl.checkAccess();
 
 		// check "isSectionChanged" methods - all should be false as it's a new country profile;
-        System.assertEquals(false,ctrl.isGeneralInformationChanged);
-        System.assertEquals(false,ctrl.isBspCassChanged);
-        System.assertEquals(false,ctrl.isEconomicProfileChanged);
-        System.assertEquals(false,ctrl.isCurrencyChanged);
-        System.assertEquals(false,ctrl.isRepatriationChanged);
-        System.assertEquals(false,ctrl.isImportantContactsChanged);
-        System.assertEquals(false,ctrl.isIccsChanged);
-        System.assertEquals(false,ctrl.isAirlinesChargesChanged);
+		System.assertEquals(false,ctrl.isGeneralInformationChanged);
+		System.assertEquals(false,ctrl.isBspCassChanged);
+		System.assertEquals(false,ctrl.isEconomicProfileChanged);
+		System.assertEquals(false,ctrl.isCurrencyChanged);
+		System.assertEquals(false,ctrl.isRepatriationChanged);
+		System.assertEquals(false,ctrl.isImportantContactsChanged);
+		System.assertEquals(false,ctrl.isIccsChanged);
+		System.assertEquals(false,ctrl.isAirlinesChargesChanged);
 		System.assertEquals(false,ctrl.isNextActionChanged);
 
 		// check "sectionLastUpdate" - all should be equal to created date as it´s a new country profile
@@ -44,15 +44,15 @@ private class ISSP_CurrencyCenterCountryControllerTest {
 		System.assertEquals(cp.CreatedDate,ctrl.iccsLastUpdate);
 		System.assertEquals(cp.CreatedDate,ctrl.airlinesChargesLastUpdate);
 
-        //insert some fake history value for general information and test again
-        Country_Profile_History__c cph = new Country_Profile_History__c(Country_Profile__c=cp.Id,Field__c='Presence_of_BSP__c');
-        insert cph;
+		//insert some fake history value for general information and test again
+		Country_Profile_History__c cph = new Country_Profile_History__c(Country_Profile__c=cp.Id,Field__c='Presence_of_BSP__c');
+		insert cph;
 		sc = new ApexPages.StandardController(cp);
 		ctrl = new ISSP_CurrencyCenterCountryController(sc);
 		//as we inserted history entry for Presence_of_BSP__c, general information section should be changed
 		System.assertEquals(true,ctrl.isGeneralInformationChanged);
-    	
-    	Test.stopTest();
+
+		Test.stopTest();
 	}
 
 	@isTest static void testActions(){
@@ -97,8 +97,8 @@ private class ISSP_CurrencyCenterCountryControllerTest {
 		System.assertEquals(4,ctrl.pastActionList.size());
 		// we should have 3 future actions (2 tasks + 1 event)
 		System.assertEquals(3,ctrl.futureActionList.size());
-    	
-    	Test.stopTest();
+
+		Test.stopTest();
 	}
 
 	@isTest static void testAttachments(){
@@ -111,42 +111,42 @@ private class ISSP_CurrencyCenterCountryControllerTest {
 		// create attachments
 		List<Attachment> aList = new List<Attachment>();
 		aList.add(new Attachment(ParentId=cp.Id,Name='test',
-        						Body=Blob.valueof('some text'),
-        						Description='1__###__General Information__###__Sample Description'
-        						));
+								Body=Blob.valueof('some text'),
+								Description='1__###__General Information__###__Sample Description'
+								));
 		aList.add(new Attachment(ParentId=cp.Id,Name='test',
-        						Body=Blob.valueof('some text'),
-        						Description='1__###__BSP Profile__###__Sample Description'
-        						));
+								Body=Blob.valueof('some text'),
+								Description='1__###__BSP Profile__###__Sample Description'
+								));
 		aList.add(new Attachment(ParentId=cp.Id,Name='test',
-        						Body=Blob.valueof('some text'),
-        						Description='1__###__CASS Profile__###__Sample Description'
-        						));
+								Body=Blob.valueof('some text'),
+								Description='1__###__CASS Profile__###__Sample Description'
+								));
 		aList.add(new Attachment(ParentId=cp.Id,Name='test',
-        						Body=Blob.valueof('some text'),
-        						Description='1__###__Economic Profile__###__Sample Description'
-        						));
+								Body=Blob.valueof('some text'),
+								Description='1__###__Economic Profile__###__Sample Description'
+								));
 		aList.add(new Attachment(ParentId=cp.Id,Name='test',
-        						Body=Blob.valueof('some text'),
-        						Description='1__###__Currency__###__Sample Description'
-        						));
+								Body=Blob.valueof('some text'),
+								Description='1__###__Currency__###__Sample Description'
+								));
 		aList.add(new Attachment(ParentId=cp.Id,Name='test',
-        						Body=Blob.valueof('some text'),
-        						Description='1__###__Repatriation Process__###__Sample Description'
-        						));
+								Body=Blob.valueof('some text'),
+								Description='1__###__Repatriation Process__###__Sample Description'
+								));
 		aList.add(new Attachment(ParentId=cp.Id,Name='test',
-        						Body=Blob.valueof('some text'),
-        						Description='1__###__Important Contacts__###__Sample Description'
-        						));
+								Body=Blob.valueof('some text'),
+								Description='1__###__Important Contacts__###__Sample Description'
+								));
 		aList.add(new Attachment(ParentId=cp.Id,Name='test',
-        						Body=Blob.valueof('some text'),
-        						Description='1__###__ICCS Content__###__Sample Description'
-        						));
+								Body=Blob.valueof('some text'),
+								Description='1__###__ICCS Content__###__Sample Description'
+								));
 		aList.add(new Attachment(ParentId=cp.Id,Name='test',
-        						Body=Blob.valueof('some text'),
-        						Description='1__###__Airlines Charges__###__Sample Description'
-        						));
-        insert aList;
+								Body=Blob.valueof('some text'),
+								Description='1__###__Airlines Charges__###__Sample Description'
+								));
+		insert aList;
 
 		//set page to ISSP_CurrencyCenterCountry and set the country profile id
 		PageReference pageRef = Page.ISSP_CurrencyCenterCountry;
@@ -159,16 +159,16 @@ private class ISSP_CurrencyCenterCountryControllerTest {
 
 		//all sections should have 1 attachment
 		System.assertEquals(1,ctrl.attGI.size());
-    	System.assertEquals(1,ctrl.attBSP.size());
-    	System.assertEquals(1,ctrl.attCASS.size());
-    	System.assertEquals(1,ctrl.attEconomic.size());
-    	System.assertEquals(1,ctrl.attCurr.size());
-    	System.assertEquals(1,ctrl.attRP.size());
-    	System.assertEquals(1,ctrl.attIC.size());
-    	System.assertEquals(1,ctrl.attICCS.size());
-    	System.assertEquals(1,ctrl.attAC.size());
+		System.assertEquals(1,ctrl.attBSP.size());
+		System.assertEquals(1,ctrl.attCASS.size());
+		System.assertEquals(1,ctrl.attEconomic.size());
+		System.assertEquals(1,ctrl.attCurr.size());
+		System.assertEquals(1,ctrl.attRP.size());
+		System.assertEquals(1,ctrl.attIC.size());
+		System.assertEquals(1,ctrl.attICCS.size());
+		System.assertEquals(1,ctrl.attAC.size());
 
-    	Test.stopTest();
+		Test.stopTest();
 	}
 
 	@isTest static void testSelectCountries(){

@@ -7,37 +7,37 @@ private class AMS_UpdateAccountStateTest {
 		IATA_ISO_Country__c ctry1 = new IATA_ISO_Country__c (Name='Australia',AIMS_Area_Name__c='AUSTRALIA',ISO_Code__c='AU');
 		countries.add(ctry);
 		countries.add(ctry1);
-        insert countries;
+		insert countries;
 
-        List<IATA_ISO_State__c> states = new List<IATA_ISO_State__c>();
-        IATA_ISO_State__c stt = new IATA_ISO_State__c(Name='Alabama',ISO_Code__c='US-AL',IATA_ISO_Country__c=ctry.id);
-        IATA_ISO_State__c stt1 = new IATA_ISO_State__c(Name='ALABAMA-BAD',ISO_Code__c='US12',IATA_ISO_Country__c=ctry.id);
-        IATA_ISO_State__c stt2 = new IATA_ISO_State__c(Name='Australian Capital Territory',ISO_Code__c='AU-AC',IATA_ISO_Country__c=ctry1.id);
-        IATA_ISO_State__c stt3 = new IATA_ISO_State__c(Name='AUSTRALIAN CAPITAL TERR-BAD',ISO_Code__c='AU30',IATA_ISO_Country__c=ctry1.id);
-        IATA_ISO_State__c stt4 = new IATA_ISO_State__c(Name='AU30',ISO_Code__c='AU30',IATA_ISO_Country__c=ctry1.id);
-        IATA_ISO_State__c stt5 = new IATA_ISO_State__c(Name='AU',ISO_Code__c='AU30',IATA_ISO_Country__c=ctry1.id);
-        IATA_ISO_State__c stt6 = new IATA_ISO_State__c(Name='AUSTRALIA',ISO_Code__c='AU30',IATA_ISO_Country__c=ctry1.id);
-        states.add(stt);
-        states.add(stt1);
-        states.add(stt2);
-        states.add(stt3);
-        states.add(stt4);
-        states.add(stt5);
-        states.add(stt6);
-        insert states;
+		List<IATA_ISO_State__c> states = new List<IATA_ISO_State__c>();
+		IATA_ISO_State__c stt = new IATA_ISO_State__c(Name='Alabama',ISO_Code__c='US-AL',IATA_ISO_Country__c=ctry.id);
+		IATA_ISO_State__c stt1 = new IATA_ISO_State__c(Name='ALABAMA-BAD',ISO_Code__c='US12',IATA_ISO_Country__c=ctry.id);
+		IATA_ISO_State__c stt2 = new IATA_ISO_State__c(Name='Australian Capital Territory',ISO_Code__c='AU-AC',IATA_ISO_Country__c=ctry1.id);
+		IATA_ISO_State__c stt3 = new IATA_ISO_State__c(Name='AUSTRALIAN CAPITAL TERR-BAD',ISO_Code__c='AU30',IATA_ISO_Country__c=ctry1.id);
+		IATA_ISO_State__c stt4 = new IATA_ISO_State__c(Name='AU30',ISO_Code__c='AU30',IATA_ISO_Country__c=ctry1.id);
+		IATA_ISO_State__c stt5 = new IATA_ISO_State__c(Name='AU',ISO_Code__c='AU30',IATA_ISO_Country__c=ctry1.id);
+		IATA_ISO_State__c stt6 = new IATA_ISO_State__c(Name='AUSTRALIA',ISO_Code__c='AU30',IATA_ISO_Country__c=ctry1.id);
+		states.add(stt);
+		states.add(stt1);
+		states.add(stt2);
+		states.add(stt3);
+		states.add(stt4);
+		states.add(stt5);
+		states.add(stt6);
+		insert states;
 
-        AMS_Agency__c a4 = new AMS_Agency__c(Country__c = ctry1.id, RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Agency__c', 'PASSENGER'), Name='Test Agency4', IATAcode__c = '1234561', Chk_dgt__c = '8', Legal_Name_1__c = 'Test Agency4', Legacy_External_ID__c = '12345618', Legacy_System__c = 'AIMS',OwnerId = UserInfo.getUserId());
-        insert a4;
+		AMS_Agency__c a4 = new AMS_Agency__c(Country__c = ctry1.id, RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Agency__c', 'PASSENGER'), Name='Test Agency4', IATAcode__c = '1234561', Chk_dgt__c = '8', Legal_Name_1__c = 'Test Agency4', Legacy_External_ID__c = '12345618', Legacy_System__c = 'AIMS',OwnerId = UserInfo.getUserId());
+		insert a4;
 	}
-	
+
 	@isTest static void test_UpdateStates() {
 		IATA_ISO_Country__c ctry = [select id,Name,ISO_Code__c,AIMS_Area_Name__c from IATA_ISO_Country__c where ISO_Code__c = 'AU'];
 		IATA_ISO_State__c fakeState = [select id,Name,ISO_Code__c,IATA_ISO_Country__c from IATA_ISO_State__c where Name = 'AU30'];
 		AMS_Agency__c a4 = [select id, Account__r.BillingState from AMS_Agency__c];
 		Test.startTest();
-        AMS_Address__c add4 = new AMS_Address__c(Country__c=ctry.id,State__c=fakeState.id,Agency__c=a4.id,Address_type__c='Billing');
-        insert add4;
-        //a4 = [select id, Account__r.BillingState from AMS_Agency__c];
+		AMS_Address__c add4 = new AMS_Address__c(Country__c=ctry.id,State__c=fakeState.id,Agency__c=a4.id,Address_type__c='Billing');
+		insert add4;
+		//a4 = [select id, Account__r.BillingState from AMS_Agency__c];
 		//system.assertEquals('AU30',a4.Account__r.BillingState);
 		Database.executeBatch(new AMS_UpdateAccountState(), 100);
 		Test.stopTest();
@@ -49,9 +49,9 @@ private class AMS_UpdateAccountStateTest {
 		IATA_ISO_State__c fakeState = [select id,Name,ISO_Code__c,IATA_ISO_Country__c from IATA_ISO_State__c where Name = 'AU'];
 		AMS_Agency__c a4 = [select id, Account__r.BillingState from AMS_Agency__c];
 		Test.startTest();
-        AMS_Address__c add4 = new AMS_Address__c(Country__c=ctry.id,State__c=fakeState.id,Agency__c=a4.id,Address_type__c='Billing');
-        insert add4;
-        //a4 = [select id, Account__r.BillingState from AMS_Agency__c];
+		AMS_Address__c add4 = new AMS_Address__c(Country__c=ctry.id,State__c=fakeState.id,Agency__c=a4.id,Address_type__c='Billing');
+		insert add4;
+		//a4 = [select id, Account__r.BillingState from AMS_Agency__c];
 		//system.assertEquals('AU30',a4.Account__r.BillingState);
 		Database.executeBatch(new AMS_UpdateAccountState(), 100);
 		Test.stopTest();
@@ -63,9 +63,9 @@ private class AMS_UpdateAccountStateTest {
 		IATA_ISO_State__c fakeState = [select id,Name,ISO_Code__c,IATA_ISO_Country__c from IATA_ISO_State__c where Name = 'AUSTRALIA'];
 		AMS_Agency__c a4 = [select id, Account__r.BillingState from AMS_Agency__c];
 		Test.startTest();
-        AMS_Address__c add4 = new AMS_Address__c(Country__c=ctry.id,State__c=fakeState.id,Agency__c=a4.id,Address_type__c='Billing');
-        insert add4;
-        //a4 = [select id, Account__r.BillingState from AMS_Agency__c];
+		AMS_Address__c add4 = new AMS_Address__c(Country__c=ctry.id,State__c=fakeState.id,Agency__c=a4.id,Address_type__c='Billing');
+		insert add4;
+		//a4 = [select id, Account__r.BillingState from AMS_Agency__c];
 		//system.assertEquals('AU30',a4.Account__r.BillingState);
 		Database.executeBatch(new AMS_UpdateAccountState(), 100);
 		Test.stopTest();
@@ -98,14 +98,14 @@ private class AMS_UpdateAccountStateTest {
 		);
 
 		insert state;
-		
+
 		address = new AMS_Address__c(
 			State__c = state.Id,
 			Country__c = country.Id
 		);
 
 		insert address;
-		
+
 		account = new Account(
 			Name = 'Test Account',
 			BillingState = 'Lisboa',
@@ -143,7 +143,7 @@ private class AMS_UpdateAccountStateTest {
 			FROM
 				AMS_Agency__c
 			WHERE
-				    Primary_Address__c <> NULL
+					Primary_Address__c <> NULL
 				AND Primary_Address__r.State__c <> NULL
 				AND Primary_Address__r.Country__c <> NULL
 				AND Account__r.BillingState <> NULL

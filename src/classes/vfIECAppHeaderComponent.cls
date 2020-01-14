@@ -1,30 +1,30 @@
 public with sharing class vfIECAppHeaderComponent {
 	public String sApplicationTitle 					{get; set;}
 	public vfIECSubscriptionInfo subscriptionInfoCtr 	{get; set;}
-	public vfIECSavedFilters savedFiltersCtr			{get; set;} 
+	public vfIECSavedFilters savedFiltersCtr			{get; set;}
 	public Boolean bShowSubscriptioninfo				{get; set;}
 	public Boolean bShowSearchOptions					{get; set;}
 	public Boolean bShowSavedFilters					{get; set;}
 	private static DateTime dtLastUpdate				{get; set;}
-	
-    public String sProductCode {
-        get { 
-            if (sProductCode == null) {
-                Cookie storedIECProductCode = ApexPages.currentPage().getCookies().get('IECProductCode');
-                if (ApexPages.currentPage().getParameters().containsKey(IECConstants.PARAM_PRODUCT_CODE)) {
-        			sProductCode = IECUtil.DecodeDecryptParameter(ApexPages.currentPage().getParameters().get(IECConstants.PARAM_PRODUCT_CODE));
-                    storedIECProductCode = new Cookie('IECProductCode',sProductCode,null,-1,false);
-                } else if (storedIECProductCode != null) {
-                    sProductCode = (String)storedIECProductCode.getValue();
-                }
-                
-                ApexPages.currentPage().setCookies(new Cookie[]{storedIECProductCode});
-            }
-            return sProductCode;
-        }
-        private set;
-    }
-    
+
+	public String sProductCode {
+		get {
+			if (sProductCode == null) {
+				Cookie storedIECProductCode = ApexPages.currentPage().getCookies().get('IECProductCode');
+				if (ApexPages.currentPage().getParameters().containsKey(IECConstants.PARAM_PRODUCT_CODE)) {
+					sProductCode = IECUtil.DecodeDecryptParameter(ApexPages.currentPage().getParameters().get(IECConstants.PARAM_PRODUCT_CODE));
+					storedIECProductCode = new Cookie('IECProductCode',sProductCode,null,-1,false);
+				} else if (storedIECProductCode != null) {
+					sProductCode = (String)storedIECProductCode.getValue();
+				}
+
+				ApexPages.currentPage().setCookies(new Cookie[]{storedIECProductCode});
+			}
+			return sProductCode;
+		}
+		private set;
+	}
+
 	public DateTime dtDBLastUpdate {
 		get {
 
@@ -39,8 +39,8 @@ public with sharing class vfIECAppHeaderComponent {
 			return dtDBLastUpdate;
 		}
 	}
-	
-	
+
+
 	public vfIECAppHeaderComponent() {
 		bShowSubscriptioninfo = true;
 		bShowSearchOptions = false;
@@ -52,26 +52,26 @@ public with sharing class vfIECAppHeaderComponent {
 		bShowSearchOptions = false;
 		bShowSavedFilters = false;
 	}
-	
+
 	public void switchToSearchOptions() {
 		bShowSubscriptioninfo = false;
 		bShowSearchOptions = true;
 		bShowSavedFilters = false;
 	}
-	
+
 	public void switchToSavedFilters() {
 		bShowSubscriptioninfo = false;
 		bShowSearchOptions = false;
 		bShowSavedFilters = true;
 	}
-	
+
 	public Boolean isUserLoggedIn {
 		get {
 			return IECUserManager.isUserLoggedIn();
 		}
 		private set;
 	}
-	
+
 	/**
 	 * Handles the logout link
 	 */

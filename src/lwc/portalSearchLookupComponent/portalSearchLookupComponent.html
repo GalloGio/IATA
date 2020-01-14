@@ -17,8 +17,8 @@
                         <!-- Text input autocomplete does not work with 'off'. Setting 'no' seems to work-->
                         <input type="text" class={getInputClass} aria-autocomplete="list" aria-controls="listbox"
                             autocomplete="no" role="textbox" id="combobox" placeholder={placeholder}
-                            value={getInputValue} readonly={isInputReadonly} onfocus={handleFocus} onblur={handleBlur}
-                            oninput={handleInput}></input>
+                            onclick={handleClearSelection} value={getInputValue} readonly={isInputReadonly} 
+                            onfocus={handleFocus} onblur={handleBlur} oninput={handleInput}></input>
 
                         <!-- Spinner -->
                         <div role="presentation"
@@ -28,14 +28,14 @@
 
                         <!-- Search icon -->
                         <lightning-icon icon-name="utility:search" size="x-small" alternative-text="Search icon"
-                            class={getSearchIconClass}></lightning-icon>
+                            class={getSearchIconClass} if:false ={hideIcon}></lightning-icon>
 
                         <!-- Clear selection button icon for single entry lookups -->
                         <template if:false={isMultiEntry}>
                             <button title="Remove selected option" 
                                 class={getClearSelectionButtonClass}>
                                 <lightning-icon icon-name="utility:close" size="x-small"
-                                    alternative-text="Remove selected option" class="slds-button__icon">
+                                    alternative-text="Remove selected option" class="slds-button__icon" if:false ={hideIcon} >
                                 </lightning-icon>
                             </button>
                         </template>
@@ -51,7 +51,8 @@
                                     <span
                                         class="slds-media slds-listbox__option slds-listbox__option_entity slds-listbox__option_has-meta"
                                         role="option" onclick={handleResultClick} data-recordid={result.id}>
-                                        <span class="slds-media__figure">
+
+                                        <span if:false ={hideIcon} class="slds-media__figure">
                                             <lightning-icon icon-name={result.icon} size="small"
                                                 alternative-text="Result item icon"></lightning-icon>
                                         </span>

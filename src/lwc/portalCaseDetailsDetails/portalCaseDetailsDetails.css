@@ -9,15 +9,57 @@
 
 .arrowExpanded{
     transform: rotate(90deg);
-}.linkColor {
-    color: #337ab7;
 }
 
 .linkColor:hover {
-    color: #337ab7;
     text-decoration: underline;
     cursor: pointer;
 }
 .blue{
     color:blue;
+}
+.a {
+    color: blue;
+}
+.documentsAccordionTransition {
+    transition: height 0.8s ease;
+}
+@media print {
+    .caseAditionalDetails {
+        display: none;
+    }
+    .caseDetailsDocuments .slds-scrollable_y,
+    .caseDetailsDocuments .slds-scrollable_y table {
+        width: 100%;
+        min-width:100%;
+    }
+    .caseDetailsDocuments .slds-scrollable_y table td {
+        width: 25%;
+        min-width:25%;
+    }
+    .dimensionContainer {
+        max-height: none;
+    }
+    .slds-scrollable_y, .slds-scrollable--y {
+        overflow-y: auto;
+        max-width: none;
+        max-height: none;
+    }
+    .collapsed {
+        visibility: visible;
+        display: block;
+    }
+    .slds-icon-utility-chevronright.arrowExpanded{
+        transform: rotate(90deg);
+    }
+    .slds-icon-utility-chevronright{
+        transform: rotate(90deg);
+    }
+    .customCard {
+        box-shadow: 0px 0px 0px #fff;
+        border-radius: 0px;
+        border: solid 0px #fff;
+        background-color: rgba(255, 255, 255, 1);
+    }
+
 }
