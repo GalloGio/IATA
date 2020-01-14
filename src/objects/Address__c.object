@@ -138,7 +138,7 @@
         <referenceTo>IATA_ISO_Country__c</referenceTo>
         <relationshipLabel>Addresses</relationshipLabel>
         <relationshipName>Addresses</relationshipName>
-        <required>true</required>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
