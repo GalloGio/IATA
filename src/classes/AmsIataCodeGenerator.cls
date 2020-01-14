@@ -772,16 +772,11 @@ global class AmsIataCodeGenerator{
 	public static void sendLogsToUser(String body, String title)
 	{
 		List<Messaging.SingleEmailMessage> emails = new List<Messaging.SingleEmailMessage>();
-		List<String> receivers = new List<String>();
-		for(User u:[Select Id,Name,Email from User where Id=:userinfo.getuserId()])
-		{
-			receivers.add(u.Email);
-		}
-
 		Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
 		mail.setSubject('[IATA CODE GENERATION] Logger '+title);
-		mail.setToAddresses(receivers) ;
 		mail.setPlainTextBody(body);
+		mail.setTargetObjectId(Userinfo.getUserId());
+		mail.setSaveAsActivity(false);
 		emails.add( mail);
 		Messaging.sendEmail(emails);
 	}
