@@ -215,8 +215,10 @@ private class ANG_AccountTriggerHandlerTest {
 
 		a = [SELECT Id, ANG_RiskStatus__c, (SELECT Id, RecordType.DeveloperName FROM Cases ORDER BY CreatedDate) FROM Account WHERE Name = 'Test'];
 		System.assertEquals(ANG_Risk_Helper.RISK_STATUS_C, a.ANG_RiskStatus__c);
-		System.assertEquals(2, a.Cases.size());
-		System.assertEquals('OSCAR_Communication', a.Cases[1].RecordType.DeveloperName);
+		/* Due to new implementation that creates Oscar Comunication on a batch, in real time there will be no case created. (tr18-184)
+			System.assertEquals(2, a.Cases.size());
+			System.assertEquals('OSCAR_Communication', a.Cases[1].RecordType.DeveloperName);
+		*/
 		System.assert([SELECT Id, ANG_CashCondition__c FROM ANG_RHC_Information__c WHERE ANG_AccountId__c = :a.Id].ANG_CashCondition__c);
 
 		Test.stopTest();

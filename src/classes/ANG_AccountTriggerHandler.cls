@@ -207,10 +207,8 @@ public class ANG_AccountTriggerHandler {
 		if (! downGradeBtoC.isEmpty())
 		{
 			// NEWGEN-4460 - also update the child multicountry HE accounts
-			Set<Id> multicountryGEAccounts = getGEAccountIds(downGradeBtoC);
-			launchPlatformEventForMulticoutryDowngrade(multicountryGEAccounts);
-
-			createVMFROscars(downGradeBtoC, rhcContacts);
+			Set<Id> accountsToProcess = getAccountIDs(downGradeBtoC);
+			launchPlatformEventForMulticoutryDowngrade(accountsToProcess);
 		}
 
 		//downgrade of cash conditions from "Fail Financial Statements" Risk Event
@@ -631,19 +629,19 @@ public class ANG_AccountTriggerHandler {
 		}
 	}
 
-	private Set<Id> getGEAccountIds(List<Account> accounts)
+	private Set<Id> getAccountIDs(List<Account> accounts)
 	{
-		Set<Id> geAccountIds = new Set<Id>();
+		Set<Id> accountIds = new Set<Id>();
 
-		// get the GE accounts
+		// get the GE and HE accounts
 		for (Account a : accounts)
 		{
-			if (AMS_Utils.GE.equals(a.Location_Type__c))
-				geAccountIds.add(a.Id);
+			if ( AMS_Utils.GE.equals(a.Location_Type__c) || (AMS_Utils.HE.equals(a.Location_Type__c) && !ANG_MulticountryHelper.isMulticountryAccount(a)))
+				accountIds.add(a.Id);
 		}
 
 		// look for the child HE accounts
-		return geAccountIds;
+		return accountIds;
 	}
 
 	private List<Account> getMulticountryAccounts(List<Account> accounts)
@@ -667,7 +665,9 @@ public class ANG_AccountTriggerHandler {
 		ANG_Risk_Status_Downgrade__e evt = new ANG_Risk_Status_Downgrade__e(
 			Accounts__c = JSON.serialize(geAccounts)
 		);
+	
 		EventBus.publish(evt);
+	
 	}
 
 	private void createFOPOscar(List<Account> accounts, Map<Id, Id> contacts) {
@@ -744,7 +744,7 @@ public class ANG_AccountTriggerHandler {
 		 	agOpMap.keySet());
 
 		Map<Id, String> freqMap = new Map<Id, String>();
-
+	
 		Map<Id, ANG_BSP_Attributes__c> attrMap = new Map<Id, ANG_BSP_Attributes__c>();
 		for (AMS_Settlement_System__c op : ops)
 		{
