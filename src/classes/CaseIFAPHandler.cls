@@ -14,8 +14,6 @@ public class CaseIFAPHandler {
 	@InvocableMethod(label='User provisioning IFAP' description='User provisioning for Mulesoft when IFAP case is created.')
 	public static List<String> getContactInfo(List<String> listIds) {
 
-		System.debug('Begin of the getContactInfo method');
-
 		// Set of Ids from the input
 		Set<String> inputIds = new Set<String>(listIds);
 
@@ -98,8 +96,6 @@ public class CaseIFAPHandler {
 			// serielize all the JSONs into a string
 			String stringToSend = JSON.serialize(wrapperList);
 
-			System.debug('stringToSend:: ' + stringToSend.substring(1, stringToSend.length()-1));
-
 			// remove substring if Mulesoft supports multiple requests in 1 JSON
 			String mulesoftResult = sendJSON(stringToSend.substring(1, stringToSend.length()-1));
 
@@ -130,7 +126,6 @@ public class CaseIFAPHandler {
 
 		// Parse the JSON response
 		if (response.getStatusCode() != 200) {
-			System.debug('The status code returned was not expected: ' + response.getStatusCode() + ' ' + response.getStatus());
 
 			Error1Class responseValue = new Error1Class();
 			responseValue = (Error1Class)System.JSON.deserialize(response.getBody(), Error1Class.class);
@@ -139,7 +134,6 @@ public class CaseIFAPHandler {
 
 				responseString = responseValue.errors.get(0).detail;
 				responseCode = responseValue.errors.get(0).status;
-				System.debug('responseString:: ' + responseString);
 			}
 			else{
 
@@ -158,14 +152,11 @@ public class CaseIFAPHandler {
 					}
 				}
 
-				System.debug('responseString2:: ' + responseString);
 			}
 
 			return 'The status code returned was not expected: ' + responseCode + ' - ' + responseString;
 
 		} else {
-			System.debug('response.getBody()');
-			System.debug(response.getBody());
 			return 'The connection with Mulesoft was successfully';
 		}
 	}
