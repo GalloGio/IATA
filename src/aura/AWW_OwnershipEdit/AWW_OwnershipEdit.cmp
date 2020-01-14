@@ -150,7 +150,7 @@
                         </aura:if>
                         <aura:set attribute="else">
                             <aura:if isTrue="{!!empty(v.searchName)}">
-                                <lightning:button variant="brand" label="Save" title="Save" onclick="{!c.save}"/>
+                                <lightning:button aura:id="greaterThanOneHundred" variant="brand" label="Save" title="Save" onclick="{!c.save}"/>
                             </aura:if>
                         </aura:set>
                     </aura:if>

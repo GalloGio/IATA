@@ -2,6 +2,7 @@
     handleModalVisibility : function(component,event,helper) {
         var args = event.getParam('arguments');
         component.set("v.isGreaterThanOneHundred", false);
+        $A.util.removeClass(component.find("greaterThanOneHundred"), "slds-hide");
         if(args) {
             helper.initTable(component);
             helper.initModal(component,args);
