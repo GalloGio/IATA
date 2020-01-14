@@ -882,6 +882,7 @@ global with sharing class IDCardUtil {
             idCard.MustSyncWithAIMS__c = true;
             idCard.Sent_to_AIMS_on__c = null;
             idCard.Received_From_AIMS__c = null;
+			idCard.Cancellation_Date__c = null;
 
             if (IdCardAIMSrt == null)
                 IdCardAIMSrt = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card__c', 'AIMS');
@@ -909,7 +910,9 @@ global with sharing class IDCardUtil {
             ID_Card__c lastIdCard;
             if (theContact != null) {
                 idCard.Related_Contact__c = theContact.Id;
-                lastIdCard = LastIdCardForGivenContact(theContact);
+                lastIdCard = [SELECT Id, Valid_To_Date__c, Valid_From_Date__c
+							FROM ID_Card__c WHERE Related_Contact__c = :theContact.id
+							ORDER BY Name DESC NULLS LAST LIMIT 1];
             }
 
             if(lastIdCard != null) {
