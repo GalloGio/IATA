@@ -302,7 +302,9 @@ color: #000;
                                 </td>
                                 <td style="text-align: left; width: 150px;">
                                     <div class="outputText2" style="text-align: left; width: 125px;">
-                                        <apex:outputText id="vat" value="{!vatPrice} {!idCardApplication.CurrencyIsoCode}" style="width:150px" />
+                                        <apex:outputText id="vat" value="{0, number, 0.00} {!idCardApplication.CurrencyIsoCode}" style="width:150px">
+											<apex:param value="{!IF(OR(ISNULL(vatPrice),ISBLANK(vatPrice)), 0, vatPrice)}" />
+                                        </apex:outputText>
                                     </div>
                                 </td>
                             </tr>
