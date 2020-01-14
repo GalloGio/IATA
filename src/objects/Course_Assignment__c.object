@@ -143,7 +143,7 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
-    <description>LMS Course Assignments data</description>
+    <description>Course Assignments data</description>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
@@ -156,7 +156,7 @@
     <externalSharingModel>ControlledByParent</externalSharingModel>
     <fields>
         <fullName>Course__c</fullName>
-        <description>LMS Course lookup</description>
+        <description>Course lookup</description>
         <externalId>false</externalId>
         <label>Course</label>
         <referenceTo>Course__c</referenceTo>
@@ -169,20 +169,10 @@
         <writeRequiresMasterRead>false</writeRequiresMasterRead>
     </fields>
     <fields>
-        <fullName>School_Name__c</fullName>
-        <externalId>false</externalId>
-        <label>School Name</label>
-        <length>255</length>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
         <fullName>Status__c</fullName>
-        <description>LMS Course Assigmnet Status</description>
+        <description>Course Assigmnet Status</description>
         <externalId>false</externalId>
-        <inlineHelpText>LMS Course Assigmnet Status</inlineHelpText>
+        <inlineHelpText>Course Assigmnet Status</inlineHelpText>
         <label>Status</label>
         <required>false</required>
         <trackTrending>false</trackTrending>

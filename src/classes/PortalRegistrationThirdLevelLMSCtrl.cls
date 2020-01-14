@@ -18,15 +18,7 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
     public static Training_Contact_Role_Details__c getLMSContactInfo(String lms) {
         User loggedUser = CSP_Utils.getLoggedUser();
 
-		String RECTYPE_lms = '';
 		String RECTYPE_Trainee_YASContDet = RecordTypeSingleton.getInstance().getRecordTypeId('Training_Contact_Role_Details__c', 'Yardstick_Trainee');
-
-		if(lms == 'yas'){
-			RECTYPE_lms = RECTYPE_Trainee_YASContDet;
-		}
-
-		Training_Contact_Role_Details__c tcrd = new Training_Contact_Role_Details__c();
-
 		
         List<Training_Contact_Role_Details__c> con = [SELECT Id, Username__c, UserId__c, Preferred_Course__c, RecordTypeId
 														FROM Training_Contact_Role_Details__c
@@ -34,7 +26,7 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 														AND RecordTypeId = :RECTYPE_Trainee_YASContDet
 														LIMIT 1];
 
-        if(con.isEmpty() || con.size() < 1){
+        if(con.isEmpty()){
             return null;
         }
 

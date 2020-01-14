@@ -143,7 +143,7 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
-    <description>LMS Courses data</description>
+    <description>Courses data</description>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
@@ -156,7 +156,7 @@
     <externalSharingModel>ControlledByParent</externalSharingModel>
     <fields>
         <fullName>Certification__c</fullName>
-        <description>lms Certification reference</description>
+        <description>Certification reference</description>
         <externalId>false</externalId>
         <label>Certification</label>
         <referenceTo>Certification__c</referenceTo>
@@ -170,9 +170,9 @@
     </fields>
     <fields>
         <fullName>Code__c</fullName>
-        <description>LMS Course Code</description>
+        <description>Course Code</description>
         <externalId>false</externalId>
-        <inlineHelpText>LMS Course Code</inlineHelpText>
+        <inlineHelpText>Course Code</inlineHelpText>
         <label>Code</label>
         <length>20</length>
         <required>true</required>
@@ -182,9 +182,9 @@
     </fields>
     <fields>
         <fullName>Description__c</fullName>
-        <description>LMS Course Description</description>
+        <description>Course Description</description>
         <externalId>false</externalId>
-        <inlineHelpText>LMS Course Description</inlineHelpText>
+        <inlineHelpText>Course Description</inlineHelpText>
         <label>Description</label>
         <length>32768</length>
         <trackTrending>false</trackTrending>
@@ -193,9 +193,9 @@
     </fields>
     <fields>
         <fullName>Name__c</fullName>
-        <description>LMS Course Name</description>
+        <description>Course Name</description>
         <externalId>false</externalId>
-        <inlineHelpText>LMS Course Name</inlineHelpText>
+        <inlineHelpText>Course Name</inlineHelpText>
         <label>Name</label>
         <length>255</length>
         <required>true</required>
@@ -205,9 +205,9 @@
     </fields>
     <fields>
         <fullName>Status__c</fullName>
-        <description>LMS Course Status</description>
+        <description>Course Status</description>
         <externalId>false</externalId>
-        <inlineHelpText>LMS Course Status</inlineHelpText>
+        <inlineHelpText>Course Status</inlineHelpText>
         <label>Status</label>
         <required>false</required>
         <trackTrending>false</trackTrending>
