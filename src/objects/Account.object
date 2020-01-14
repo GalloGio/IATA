@@ -6884,6 +6884,11 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                     <label>Travel Agency Association</label>
                 </value>
                 <value>
+                    <fullName>Truck Line</fullName>
+                    <default>false</default>
+                    <label>Truck Line</label>
+                </value>
+                <value>
                     <fullName>Vendor</fullName>
                     <default>false</default>
                     <label>Vendor</label>
@@ -6976,6 +6981,10 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
             <valueSettings>
                 <controllingFieldValue>Non-Airline Transportation</controllingFieldValue>
                 <valueName>Transfer Service</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Non-Airline Transportation</controllingFieldValue>
+                <valueName>Truck Line</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Recreational</controllingFieldValue>
@@ -90529,6 +90538,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
+                <fullName>Truck Line</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Vendor</fullName>
                 <default>false</default>
             </values>
@@ -96574,6 +96587,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Travel Agency Association</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Truck Line</fullName>
                 <default>false</default>
             </values>
             <values>
