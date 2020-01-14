@@ -4,72 +4,72 @@ private class AMS_Change_Code_Notification_Contr_Test {
 	@isTest static void test_Oscar_notification() {
 
 		Id conRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
-        Id agcRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
-        Id airRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
+		Id agcRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+		Id airRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
 
-        IATA_ISO_Country__c isoc = new IATA_ISO_Country__c(Name = 'Test', ISO_Code__c = 'TS');       
-        insert isoc;
+		IATA_ISO_Country__c isoc = new IATA_ISO_Country__c(Name = 'Test', ISO_Code__c = 'TS');       
+		insert isoc;
 
-        Account airlineAccount = new Account(
+		Account airlineAccount = new Account(
 				RecordTypeId = airRtId,
 				Name = 'Airline',
 				IATACode__c = '123',
-                Airline_designator__c='AA',
-                IATA_ISO_Country__c = isoc.Id
+				Airline_designator__c='AA',
+				IATA_ISO_Country__c = isoc.Id
 		);
 
-        Account msoAccount =  new Account (
-            RecordTypeId = agcRtId,
-            Name = 'Agency', 
-            Location_Class__c = 'M',
-            IATA_ISO_Country__c = isoc.Id,
-            Status__c = 'Approved'
-            );  
-        
-        insert new List<Account> {airlineAccount, msoAccount};
+		Account msoAccount =  new Account (
+			RecordTypeId = agcRtId,
+			Name = 'Agency', 
+			Location_Class__c = 'M',
+			IATA_ISO_Country__c = isoc.Id,
+			Status__c = 'Approved'
+			);  
+		
+		insert new List<Account> {airlineAccount, msoAccount};
 
-        Contact con = new Contact (
-          AccountId = airlineAccount.id,
-          RecordTypeId = conRtId, 
-          LastName = 'portalUser',
-            FirstName = 'firstname',
-            Phone = '123456789',
-          User_Portal_Status__c = 'Approved User'
-          );
-        insert con;
+		Contact con = new Contact (
+		  AccountId = airlineAccount.id,
+		  RecordTypeId = conRtId, 
+		  LastName = 'portalUser',
+			FirstName = 'firstname',
+			Phone = '123456789',
+		  User_Portal_Status__c = 'Approved User'
+		  );
+		insert con;
 
-        AMS_OSCAR__c oscar = new AMS_OSCAR__c();
-        oscar.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'VOLUNTARY_RELINQUISHMENT');
-        oscar.Name = 'tempName'; 
-        oscar.Process__c = AMS_Utils.VOLRELINQUISH_CA;
-        oscar.Account__c = msoAccount.Id;
-        insert oscar;
+		AMS_OSCAR__c oscar = new AMS_OSCAR__c();
+		oscar.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'VOLUNTARY_RELINQUISHMENT');
+		oscar.Name = 'tempName'; 
+		oscar.Process__c = AMS_Utils.VOLRELINQUISH_CA;
+		oscar.Account__c = msoAccount.Id;
+		insert oscar;
 
-        Case oscarCase = new Case();
-        oscarCase.AccountId = airlineAccount.Id;
-        oscarCase.ContactId = con.Id; 
-        oscarCase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
-        oscarCase.OSCAR__c = oscar.Id;
-        oscarCase.Status = 'Open';
-        oscarCase.Account_Concerned__c = msoAccount.Id;
-        insert oscarCase;
+		Case oscarCase = new Case();
+		oscarCase.AccountId = airlineAccount.Id;
+		oscarCase.ContactId = con.Id; 
+		oscarCase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
+		oscarCase.OSCAR__c = oscar.Id;
+		oscarCase.Status = 'Open';
+		oscarCase.Account_Concerned__c = msoAccount.Id;
+		insert oscarCase;
 
 
-        Agency_Applied_Change_code__c ccode= new Agency_Applied_Change_code__c();
-        ccode.Change_Code__c = 'TER';
-        ccode.OSCAR__c = oscar.Id;
-        ccode.Account__c = msoAccount.Id;
+		Agency_Applied_Change_code__c ccode= new Agency_Applied_Change_code__c();
+		ccode.Change_Code__c = 'TER';
+		ccode.OSCAR__c = oscar.Id;
+		ccode.Account__c = msoAccount.Id;
 		insert ccode;
 
-        Test.startTest();
+		Test.startTest();
 
-	        ApexPages.StandardController stdController = new ApexPages.StandardController(oscarCase);
+			ApexPages.StandardController stdController = new ApexPages.StandardController(oscarCase);
 
-	        AMS_Change_Code_Notification_Controller ctrl = new AMS_Change_Code_Notification_Controller(stdController);
+			AMS_Change_Code_Notification_Controller ctrl = new AMS_Change_Code_Notification_Controller(stdController);
 
-	        ctrl.setNotificationMessage();
+			ctrl.setNotificationMessage();
 
-        Test.stopTest();
+		Test.stopTest();
 
 	}
 
@@ -78,65 +78,65 @@ private class AMS_Change_Code_Notification_Contr_Test {
 	@isTest static void test_Case_notification() {
 
 		Id conRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
-        Id agcRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
-        Id airRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
+		Id agcRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+		Id airRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
 
-        IATA_ISO_Country__c isoc = new IATA_ISO_Country__c(Name = 'Test', ISO_Code__c = 'TS');       
-        insert isoc;
+		IATA_ISO_Country__c isoc = new IATA_ISO_Country__c(Name = 'Test', ISO_Code__c = 'TS');       
+		insert isoc;
 
-        Account airlineAccount = new Account(
+		Account airlineAccount = new Account(
 				RecordTypeId = airRtId,
 				Name = 'Airline',
 				IATACode__c = '123',
-                Airline_designator__c='AA',
-                IATA_ISO_Country__c = isoc.Id
+				Airline_designator__c='AA',
+				IATA_ISO_Country__c = isoc.Id
 		);
 
-        Account msoAccount =  new Account (
-            RecordTypeId = agcRtId,
-            Name = 'Agency', 
-            Location_Class__c = 'M',
-            IATA_ISO_Country__c = isoc.Id,
-            Status__c = 'Approved'
-            );  
-        
-        insert new List<Account> {airlineAccount, msoAccount};
+		Account msoAccount =  new Account (
+			RecordTypeId = agcRtId,
+			Name = 'Agency', 
+			Location_Class__c = 'M',
+			IATA_ISO_Country__c = isoc.Id,
+			Status__c = 'Approved'
+			);  
+		
+		insert new List<Account> {airlineAccount, msoAccount};
 
-        Contact con = new Contact (
-          AccountId = airlineAccount.id,
-          RecordTypeId = conRtId, 
-          LastName = 'portalUser',
-            FirstName = 'firstname',
-            Phone = '123456789',
-          User_Portal_Status__c = 'Approved User'
-          );
-        insert con;
+		Contact con = new Contact (
+		  AccountId = airlineAccount.id,
+		  RecordTypeId = conRtId, 
+		  LastName = 'portalUser',
+			FirstName = 'firstname',
+			Phone = '123456789',
+		  User_Portal_Status__c = 'Approved User'
+		  );
+		insert con;
 
-        Case ccase = new Case();
-        ccase.AccountId = airlineAccount.Id;
-        ccase.ContactId = con.Id; 
-        ccase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
-        ccase.Status = 'Open';
+		Case ccase = new Case();
+		ccase.AccountId = airlineAccount.Id;
+		ccase.ContactId = con.Id; 
+		ccase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
+		ccase.Status = 'Open';
 		ccase.Late_Payment_Date__c = Date.today();
 		ccase.Account_Concerned__c = msoAccount.Id;
-        insert ccase;
+		insert ccase;
 
-        Agency_Applied_Change_code__c ccode= new Agency_Applied_Change_code__c();
-        ccode.Change_Code__c = 'TER';
-        ccode.SIDRA_Case__c = ccase.Id;
-        ccode.Account__c = msoAccount.Id;
-        insert ccode;
+		Agency_Applied_Change_code__c ccode= new Agency_Applied_Change_code__c();
+		ccode.Change_Code__c = 'TER';
+		ccode.SIDRA_Case__c = ccase.Id;
+		ccode.Account__c = msoAccount.Id;
+		insert ccode;
 
-        Test.startTest();
+		Test.startTest();
 
-	        ApexPages.StandardController stdController = new ApexPages.StandardController(ccase);
+			ApexPages.StandardController stdController = new ApexPages.StandardController(ccase);
 
-	        AMS_Change_Code_Notification_Controller ctrl = new AMS_Change_Code_Notification_Controller(stdController);
+			AMS_Change_Code_Notification_Controller ctrl = new AMS_Change_Code_Notification_Controller(stdController);
 			AMS_Change_Code_Notification_Controller.fakemethod();
 
-	        ctrl.setNotificationMessage();
+			ctrl.setNotificationMessage();
 
-        Test.stopTest();
+		Test.stopTest();
 
 	}
 
@@ -145,8 +145,8 @@ private class AMS_Change_Code_Notification_Contr_Test {
 	@isTest static void test_Attachment_notification() {
 
 		Id conRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
-        	Id agcRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
-        Id airRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
+			Id agcRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+		Id airRtId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
 
 		IATA_ISO_Country__c isoc = new IATA_ISO_Country__c(Name = 'Test', ISO_Code__c = 'TS');
 		insert isoc;
@@ -155,8 +155,8 @@ private class AMS_Change_Code_Notification_Contr_Test {
 				RecordTypeId = airRtId,
 				Name = 'Airline',
 				IATACode__c = '123',
-                Airline_designator__c='AA',
-                IATA_ISO_Country__c = isoc.Id
+				Airline_designator__c='AA',
+				IATA_ISO_Country__c = isoc.Id
 		);
 
 		Account msoAccount =  new Account (
@@ -186,8 +186,8 @@ private class AMS_Change_Code_Notification_Contr_Test {
 				ccase.RecordTypeId = caseRecrdType;
 				ccase.Status = 'Open';
 				ccase.Remittance_Period__c='20180615W';
-        		ccase.Late_Payment_Date__c = Date.today();	
-        		ccase.Account_Concerned__c = msoAccount.Id;
+				ccase.Late_Payment_Date__c = Date.today();	
+				ccase.Account_Concerned__c = msoAccount.Id;
 		insert ccase;
 
 		Amazon_Cred__c Amazon_Cred =  new Amazon_Cred__c(name = 'GenericAttach', Prod_Configuration__c = 'adevconf' , Dev_Configuration__c = 'adevconf');
