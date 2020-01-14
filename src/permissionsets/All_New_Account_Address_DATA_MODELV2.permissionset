@@ -27,7 +27,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Account.Business_Po_Box__c</field>
+        <field>Account.Business_PO_Box__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -228,6 +228,21 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Address__c.TechUpdate_AddressFlow__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Business_Context__c.Business_Context__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Business_Context__c.SAP_Sales_Area_Code__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Business_Context__c.Sub_Context__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
