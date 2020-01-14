@@ -6789,11 +6789,6 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                     <label>Other</label>
                 </value>
                 <value>
-                    <fullName>Other Equipment Manufacturer</fullName>
-                    <default>false</default>
-                    <label>Other Equipment Manufacturer</label>
-                </value>
-                <value>
                     <fullName>Other Private Sector Association</fullName>
                     <default>false</default>
                     <label>Other Private Sector Association</label>
