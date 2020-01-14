@@ -2,7 +2,6 @@
 <CustomTab xmlns="http://soap.sforce.com/2006/04/metadata">
     <description>FSM - Page to send batch emails</description>
     <label>Mass Email Request</label>
-    <mobileReady>false</mobileReady>
     <motif>Custom46: Postage</motif>
     <page>FSM_Mass_Email_Reminder</page>
 </CustomTab>

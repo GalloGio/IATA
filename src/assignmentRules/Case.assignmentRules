@@ -910,7 +910,7 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
         <ruleEntry>
             <assignedTo>Differentiated_Service_Model_Agency</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>1 AND (2 OR 3 OR 4 OR 5 OR 6 OR 7)</booleanFilter>
+            <booleanFilter>1 AND (2 OR 3 OR 4 OR 5 OR 6 OR 7 OR 8 OR 9)</booleanFilter>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
@@ -929,7 +929,7 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
             <criteriaItems>
                 <field>Account.Parent_account_IATAcode__c</field>
                 <operation>equals</operation>
-                <value>13310172,27313613</value>
+                <value>13310172,27313613,08309722,08332741,08332424,08332391,08332413,08333754,08309560,08313981,08325564,08342283,08336893,08331842,08331271,08331326,08331864,08331886,08332730,08336882,08337092,08337055,08337070,08337081,08337184</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Account.IATACode__c</field>
@@ -944,7 +944,17 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
             <criteriaItems>
                 <field>Account.IATACode__c</field>
                 <operation>equals</operation>
-                <value>13310172,27313613</value>
+                <value>13310172,27313613,08309722,08332741,08332424,08332391,08332413,08333754,08309560,08313981,08325564,08342283,08336893,08331842,08331271,08331326,08331864,08331886,08332730,08336882,08337092,08337055,08337070,08337081,08337184</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Account.Parent_account_IATAcode__c</field>
+                <operation>equals</operation>
+                <value>08337022,08344641,08344991,32300085,17334144,2365160,24345801,16335340,91200723,57230670</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Account.IATACode__c</field>
+                <operation>equals</operation>
+                <value>08337022,08344641,08344991,32300085,17334144,2365160,24345801,16335340,91200723,57230670</value>
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
@@ -5431,7 +5441,7 @@ ISPICKVAL(Reason1__c,&quot;Support escalation&quot;),ISPICKVAL(Reason1__c,&quot;
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
                 <operation>notEqual</operation>
-                <value>Complaint (IDFS ISS),IATA Financial Review</value>
+                <value>Complaint (IDFS ISS),IATA Financial Review,OSCAR Communication</value>
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>

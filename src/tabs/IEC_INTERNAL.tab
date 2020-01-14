@@ -2,7 +2,6 @@
 <CustomTab xmlns="http://soap.sforce.com/2006/04/metadata">
     <description>IEC For internal Users</description>
     <label>IEC INTERNAL</label>
-    <mobileReady>false</mobileReady>
     <motif>Custom16: Bank</motif>
     <page>IECHomepage</page>
 </CustomTab>
