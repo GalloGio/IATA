@@ -1,6 +1,6 @@
 @isTest
 private class ANG_UserTriggerHandlerTest {
-	
+
 	static testMethod void test_createPortalUser() {
 		Test.startTest();
 
@@ -8,21 +8,21 @@ private class ANG_UserTriggerHandlerTest {
 
 		System.runAs([SELECT Id FROM User WHERE Id = :UserInfo.getUserId()][0]){
 
-			Account acc = ISSP_ObjectFactory.createNewAccount();  
+			Account acc = ISSP_ObjectFactory.createNewAccount();
 			insert acc;
-			
+
 			Contact contact = ISSP_ObjectFactory.createNewContact();
 			contact.AccountId = acc.Id;
 			insert contact;
-			
+
 			u = new User(
-				Alias = 'dsfsdfds', 
-				Email = contact.email, 
-				Emailencodingkey = 'UTF-8', 
-				Firstname = contact.firstName, 
-				Lastname = contact.lastname, 
-				Languagelocalekey = 'en_US', 
-				Localesidkey = 'en_US', 
+				Alias = 'dsfsdfds',
+				Email = contact.email,
+				Emailencodingkey = 'UTF-8',
+				Firstname = contact.firstName,
+				Lastname = contact.lastname,
+				Languagelocalekey = 'en_US',
+				Localesidkey = 'en_US',
 				ContactId = contact.Id,
 				Timezonesidkey = 'Asia/Dubai',
 				Username = contact.email+'dfgdf',
@@ -33,7 +33,7 @@ private class ANG_UserTriggerHandlerTest {
 			);
 
 			insert u;
-			
+
 		}
 
 		Test.stopTest();
@@ -46,14 +46,14 @@ private class ANG_UserTriggerHandlerTest {
 		Test.startTest();
 
 		User u;
-			
+
 		u = new User(
-			Alias = 'dsfsdfds', 
-			Email = 'test@email.com', 
-			Emailencodingkey = 'UTF-8', 
-			Firstname = 'Test', 
-			Lastname = 'Contact', 
-			Languagelocalekey = 'en_US', 
+			Alias = 'dsfsdfds',
+			Email = 'test@email.com',
+			Emailencodingkey = 'UTF-8',
+			Firstname = 'Test',
+			Lastname = 'Contact',
+			Languagelocalekey = 'en_US',
 			Localesidkey = 'en_US',
 			Timezonesidkey = 'Asia/Dubai',
 			Username = 'test@email.comdfgdf',
@@ -69,5 +69,5 @@ private class ANG_UserTriggerHandlerTest {
 		Test.stopTest();
 
 		User check = [SELECT Id, ContactId, FederationIdentifier FROM User WHERE Id = :u.Id];
-	}	
+	}
 }

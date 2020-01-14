@@ -1,0 +1,321 @@
+<aura:component controller="GADM_ExternalUserContactList_CTRL" implements="forceCommunity:availableForAllPageTypes" access="global" description="GADM_ExternalUserContactList">
+    <!--Title-->
+    <aura:attribute name="Title" type="String" default="" description="Title displayed above the table. If empty, title is not showed up." />
+    <!--Page Size-->
+    <aura:attribute name="PageSize" type="Integer" default="10" description="How many records should be displayed by default?" />
+    <aura:attribute name="AvailablePageSizes" type="Integer[]" default="[5,10,20,25,50]" description="What page sizes should be available to select?" />
+    <!--Sorting-->
+    <aura:attribute name="SortByField" type="String" default="Id" description="Default sorting by field." />
+    <aura:attribute name="SortOrder" type="String" default="ASC" description="Default sorting order." />
+    <!--Checkbox column-->
+    <aura:attribute name="SelectionColumn" type="Boolean" default="false" description="Should selection column be displayed?" />
+    <aura:attribute name="PreserveSelectedRecords" type="Boolean" default="false" description="Should selected rows be preserved when the selection condition changes?" />
+    <!--Criteria-->
+    <aura:attribute name="SObjectName" type="String" required="true" default="Data_Submission__c" description="SObject from which records will be retrieved." />
+    <aura:attribute name="FieldNames" type="String[]" required="true" default="" description="Fields, which should be retrieved. One field = one column." />
+    <aura:attribute name="MatchCriteria" type="String" required="true" description="Only records which meet this criteria will be retrieved." />
+    <aura:attribute name="FieldLabels" type="String[]" default="" description="Custom labels for retrieved fields." />
+    <aura:attribute name="SortableFieldNames" type="String[]" default="Name" description="Which fields should be sortable? If not specified, all fields will be sortable." />
+    <aura:attribute name="ReferenceFields" type="String[]" default="" description="Which fields should be linked converted into references to records? If not specified, none of fields will be converted." />
+    <aura:attribute name="OverrideFieldType" type="String[]" description="Which fields should be converted to be another type? If not specified, none of fields will be converted." />
+    <!--SHOWN PROPERTIES-->
+	<aura:attribute name="invitationShown" type="Boolean" default="False"/>
+    <aura:attribute name="detailsShown" type="Boolean" default="False"/>
+    <!--USER INFO-->
+    <aura:attribute name="currentUserInfo" type="Object" default=""/>
+    <aura:attribute name="detailsData" type="Object[]"/>
+    <aura:attribute name="selectedUserInfo" type="Object"/>
+    <aura:attribute name="isPowerUser" type="Boolean" default="false"/>
+    <aura:attribute name="isSuperUser" type="Boolean" default="false"/>
+    <aura:attribute name="isGadmUser" type="Boolean" default="false"/>
+    <aura:attribute name="businessUnits" type="List" default="[]"/>
+    <!--DATA SAVED-->
+    <aura:attribute name="dataModified" type="Boolean" default="false"/>
+    <!--RELOAD DATA-->
+    <aura:attribute name="tabId" type="String"/>
+    <aura:attribute name="selectedTabId" type="String"/>
+    <!--Private attributes-->
+    <aura:attribute name="AllRecords" type="Object[]" access="private" />
+    <aura:attribute name="SelectedRecordsMap" type="Map" access="private" />
+    <aura:attribute name="ColumnMetadata" type="Object[]" access="private" />
+    <aura:attribute name="TableColumns" type="Object[]" access="private" />
+    <aura:attribute name="TableRows" type="Object[]" access="private" />
+    <aura:attribute name="PageNumber" type="Integer" access="private" default="1" />
+    <aura:attribute name="PageTotal" type="Integer" access="private" default="1" />
+    <aura:attribute name="FirstRecordOnPage" type="Integer" access="private" default="0" />
+    <aura:attribute name="LastRecordOnPage" type="Integer" access="private" default="0" />
+    <aura:attribute name="TotalRecordsLoaded" type="Integer" access="private" default="0" />
+    <aura:attribute name="TotalRecords" type="Integer" access="private" default="0" />
+    <aura:attribute name="HasPrevious" type="Boolean" access="private" default="false" />
+    <aura:attribute name="HasNext" type="Boolean" access="private" default="false" />
+    <aura:attribute name="AllRecordsSelected" type="Boolean" access="private" default="false"/>
+    <aura:attribute name="PrivateMatchCriteria" type="String" access="private" />
+    <aura:attribute name="ErrorMessage" type="String" access="private" />
+    <!--Attribute for selected rows-->
+    <aura:attribute name="SelectedRecords" type="Object[]" />
+    <!--Event handlers-->
+    <aura:handler name="init" value="{!this}" action="{!c.initializeComponent}" />
+    <aura:handler name="change" value="{!v.MatchCriteria}" action="{!c.updateMatchCriteria}" />
+    <aura:handler name="Back_EVT" event="c:GADM_ExternalUserContactList_EVT" action="{!c.handleDetailsBackEvt}"/>
+    <aura:handler name="change" value="{! v.selectedTabId}" action="{! c.showList}"/>
+
+    <div class="page_container">
+		 <!--TABLE-->
+        <div aura:id="tableContainer" class="slds-hide">
+			<aura:if isTrue="{!empty(v.ErrorMessage)}">
+                <article class="slds-card">
+                    <aura:if isTrue="{!not(empty(v.Title))}">
+                        <div class="slds-card__header slds-grid">
+                            <header class="slds-media slds-media--center slds-has-flexi-truncate">
+                                <div class="slds-media__body slds-truncate">
+                                    <h2>
+                                        <span class="slds-text-heading--small">{!v.Title}</span>
+                                    </h2>
+                                </div>
+                            </header>
+                        </div>
+                    </aura:if>
+
+
+                    <div class="slds-card__body">
+                        <table class="slds-table slds-table_cell-buffer slds-no-row-hover slds-table_bordered/*slds-table slds-no-row-hover/*slds-table--bordered slds-table--fixed-layout slds-table--cell-buffer*/">
+                            <colgroup>
+                                <col class="firstColumn "/>
+                                <col class="secondColumn "/>
+                                <col class="thirdColumn "/>
+                            </colgroup>
+                            <thead>
+                            <tr>
+                                <!-- additional column for displaying popup button -->
+                                <th scope="col" class="slds-is-sortable">
+                                    <div data-id="" class="slds-truncate" title=""></div>
+
+                                </th>
+                                <aura:iteration items="{!v.TableColumns}" var="column">
+                                    <aura:if isTrue="{!column.is_selection_column}">
+
+                                        <aura:set attribute="else">
+                                            <aura:if isTrue="{!column.field_is_sortable}">
+                                                <th scope="col" class="{!(v.SortByField == column.field_name) ? ((v.SortOrder == 'DESC') ? 'slds-is-sortable slds-is-resizable slds-is-sorted slds-is-sorted--desc' : 'slds-is-sortable slds-is-resizable slds-is-sorted slds-is-sorted--asc') : 'slds-is-sortable'}">
+
+                                                    <a data-id="{!column.field_name}" class="slds-th__action slds-text-link--reset sortableField" onclick="{!c.changeSort}">
+                                                        <div data-id="{!column.field_name}" class="slds-assistive-text">Sort </div>
+                                                        <div data-id="{!column.field_name}" class="slds-truncate sortableFieldName" title="{!column.field_label}">{!column.field_label}</div>
+                                                        <lightning:icon class="sortableFieldArrow" iconName="{! (v.SortOrder == 'DESC') ? 'utility:arrowdown' : 'utility:arrowup'}" size="xx-small"/>
+                                                    </a>
+
+                                                </th>
+                                                <aura:set attribute="else">
+                                                    <th scope="col" class="{!(v.SortByField == column.field_name) ? ((v.SortOrder == 'DESC') ? 'slds-is-sortable slds-is-resizable slds-is-sorted slds-is-sorted--desc' : 'slds-is-sortable slds-is-resizable slds-is-sorted slds-is-sorted--asc') : 'slds-is-sortable'}">
+                                                        <a data-id="{!column.field_name}" class="no_pointer">
+
+                                                            <div data-id="{!column.field_name}" class="" title="{!column.field_label}">{!column.field_label}</div>
+                                                        </a>
+                                                    </th>
+                                                </aura:set>
+                                            </aura:if>
+                                        </aura:set>
+                                    </aura:if>
+                                </aura:iteration>
+
+
+                            </tr>
+                            </thead>
+
+
+                            <tbody>
+                            <!-- TEXT MESSAGE IF TABLE HAS NO ROWS -->
+                            <aura:if isTrue="{!v.TotalRecords == 0}">
+                                <tr>
+                                    <td colspan="{!if(v.SelectionColumn, v.TableColumns.length+1, v.TableColumns.length)}">
+                                        <div class="slds-p-around--small slds-align--absolute-center">
+                                            {! $Label.c.GADM_User_Management_no_records}
+                                        </div>
+                                    </td>
+                                </tr>
+                                <aura:set attribute="else">
+                                    <!--TABLE ROWS-->
+                                    <aura:iteration items="{!v.TableRows}" var="row" indexVar="index">
+                                        <tr class="{! if(index % 2 == 1, 'oddLine', if(index == 0, 'evenLine', 'evenLine'))}">
+
+                                            <!-- DETAIL BUTTON-->
+                                            <td class="right2px button_padding" >
+                                                <lightning:buttonIcon  iconName="utility:preview" alternativeText="Details" name="{!index}"  onclick="{!c.handleDetailsShow}"/>
+                                            </td>
+
+                                            <!--ROWS-->
+                                            <aura:iteration items="{!row}" var="column" indexVar="indexColumn">
+                                                <aura:if isTrue="{!column.is_selection_column}">
+
+                                                    <aura:set attribute="else">
+                                                        <td class="{! if(indexColumn == row.length - 1, '', 'right2px')}">
+                                                            <div class="slds-truncate">
+                                                                <aura:if isTrue="{!column.value != null}">
+                                                                    <aura:if isTrue="{!column.field_type == 'BOOLEAN'}">
+                                                                        <aura:if isTrue="{!column.reference != null}">
+                                                                            <a id="{!column.reference}" onclick="{!c.navigateToSObject}"><ui:outputCheckbox value="{!column.value}" /></a>
+                                                                            <aura:set attribute="else">
+                                                                                <ui:outputCheckbox value="{!column.value}" />
+                                                                            </aura:set>
+                                                                        </aura:if>
+                                                                    </aura:if>
+                                                                    <aura:if isTrue="{!column.field_type == 'CURRENCY'}">
+                                                                        <aura:if isTrue="{!column.reference != null}">
+                                                                            <a id="{!column.reference}" onclick="{!c.navigateToSObject}"><ui:outputCurrency value="{!column.value}" /></a>
+                                                                            <aura:set attribute="else">
+                                                                                <ui:outputCurrency value="{!column.value}" />
+                                                                            </aura:set>
+                                                                        </aura:if>
+                                                                    </aura:if>
+                                                                    <aura:if isTrue="{!column.field_type == 'DATE'}">
+                                                                        <aura:if isTrue="{!column.reference != null}">
+                                                                            <a id="{!column.reference}" onclick="{!c.navigateToSObject}"><ui:outputDate value="{!column.value}" /></a>
+                                                                            <aura:set attribute="else">
+                                                                                <ui:outputDate value="{!column.value}" />
+                                                                            </aura:set>
+                                                                        </aura:if>
+                                                                    </aura:if>
+                                                                    <aura:if isTrue="{!column.field_type == 'DATETIME'}">
+                                                                        <aura:if isTrue="{!column.reference != null}">
+                                                                            <a id="{!column.reference}" onclick="{!c.navigateToSObject}"><ui:outputDateTime value="{!column.value}" format="DD/MM/YYYY"/></a>
+                                                                            <aura:set attribute="else">
+                                                                                <ui:outputDateTime value="{!column.value}" format="DD/MM/YYYY"/>
+                                                                            </aura:set>
+                                                                        </aura:if>
+                                                                    </aura:if>
+                                                                    <aura:if isTrue="{!or(column.field_type == 'DOUBLE', column.field_type == 'INTEGER')}">
+                                                                        <aura:if isTrue="{!column.reference != null}">
+                                                                            <a id="{!column.reference}" onclick="{!c.navigateToSObject}"><ui:outputNumber value="{!column.value}" /></a>
+                                                                            <aura:set attribute="else">
+                                                                                <ui:outputNumber value="{!column.value}" />
+                                                                            </aura:set>
+                                                                        </aura:if>
+                                                                    </aura:if>
+                                                                    <aura:if isTrue="{!column.field_type == 'EMAIL'}">
+                                                                        <aura:if isTrue="{!column.reference != null}">
+                                                                            <a id="{!column.reference}" onclick="{!c.navigateToSObject}"><ui:outputText value="{!column.value}" /></a>
+                                                                            <aura:set attribute="else">
+                                                                                <ui:outputEmail value="{!column.value}" />
+                                                                            </aura:set>
+                                                                        </aura:if>
+                                                                    </aura:if>
+                                                                    <aura:if isTrue="{!or(column.field_type == 'STRING', or(column.field_type == 'ID', or(column.field_type == 'TEXTAREA', or(column.field_type == 'PICKLIST', column.field_type == 'MULTIPICKLIST'))))}">
+                                                                        <aura:if isTrue="{!column.reference != null}">
+                                                                            <a id="{!column.reference}" onclick="{!c.navigateToSObject}"><ui:outputText title="{!column.value}" value="{!column.value}" /></a>
+                                                                            <aura:set attribute="else">
+                                                                                <ui:outputText title="{!column.value}" value="{!column.value}" />
+                                                                            </aura:set>
+                                                                        </aura:if>
+                                                                    </aura:if>
+                                                                    <aura:if isTrue="{!column.field_type == 'PERCENT'}">
+                                                                        <aura:if isTrue="{!column.reference != null}">
+                                                                            <a id="{!column.reference}" onclick="{!c.navigateToSObject}"><ui:outputNumber value="{!column.value}" />%</a>
+                                                                            <aura:set attribute="else">
+                                                                                <ui:outputNumber value="{!column.value}" />%
+                                                                            </aura:set>
+                                                                        </aura:if>
+                                                                    </aura:if>
+                                                                    <aura:if isTrue="{!column.field_type == 'PHONE'}">
+                                                                        <aura:if isTrue="{!column.reference != null}">
+                                                                            <a id="{!column.reference}" onclick="{!c.navigateToSObject}"><ui:outputText value="{!column.value}" /></a>
+                                                                            <aura:set attribute="else">
+                                                                                <ui:outputPhone value="{!column.value}" />
+                                                                            </aura:set>
+                                                                        </aura:if>
+                                                                    </aura:if>
+                                                                    <aura:if isTrue="{!column.field_type == 'URL'}">
+                                                                        <aura:if isTrue="{!column.reference != null}">
+                                                                            <a id="{!column.reference}" onclick="{!c.navigateToSObject}"><ui:outputText value="{!column.value}" /></a>
+                                                                            <aura:set attribute="else">
+                                                                                <ui:outputURL value="{!column.value}" label="{!column.value}"/>
+                                                                            </aura:set>
+                                                                        </aura:if>
+                                                                    </aura:if>
+                                                                </aura:if>
+                                                            </div>
+                                                        </td>
+                                                    </aura:set>
+                                                </aura:if>
+                                            </aura:iteration>
+                                        </tr>
+                                    </aura:iteration>
+                                </aura:set>
+                            </aura:if>
+                            </tbody>
+                        </table>
+
+                        <aura:if isTrue="{! v.TableRows.length % 2 == 0}">
+                            <div class="evenRows"></div>
+                        </aura:if>
+
+                    </div>
+
+                    <div class="slds-card__footer">
+                        <div class="slds-grid">
+                            <div class="slds-p-horizontal_small slds-size_1-of-3 slds-text-align--left">
+                                <div style="margin-top: 8px;">
+                                    Showing {!v.FirstRecordOnPage} - {!v.LastRecordOnPage} out of
+                                    <aura:if isTrue="{!v.TotalRecords > v.TotalRecordsLoaded}">
+                                        {!v.TotalRecordsLoaded}+
+                                        <aura:set attribute="else">
+                                            {!v.TotalRecords}
+                                        </aura:set>
+                                    </aura:if>
+                                </div>
+                            </div>
+                            <div class="slds-p-horizontal_small slds-size_1-of-3 slds-text-align--center">
+                                <div class="slds-align--absolute-center">
+                                    <div class="slds-button-group" role="group">
+                                        <lightning:button aura:id="firstButton" class="slds-button slds-button--neutral" onclick="{!c.firstPage}" label="First" disabled="true"/>
+                                        <lightning:button aura:id="previousButton" class="slds-button slds-button--neutral" onclick="{!c.previousPage}" label="Previous" disabled="true"/>
+                                        <lightning:button aura:id="nextButton" class="slds-button slds-button--neutral" onclick="{!c.nextPage}" label="Next" disabled="true"/>
+                                        <lightning:button aura:id="lastButton" class="slds-button slds-button--neutral" onclick="{!c.lastPage}" label="Last" disabled="true"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-p-horizontal_small slds-size_1-of-3 slds-text-align--right">
+                                <ui:inputSelect aura:id="pageSizeInput" class="pageSizeSelect small-picklist" change="{!c.changePageSize}" label="Show:&nbsp;&nbsp;&nbsp;" />
+                            </div>
+                        </div>
+                    </div>
+
+                </article>
+                <aura:set attribute="else">
+                    <div class="recordError">
+                        <ui:message title="DataTable Error" severity="error" closable="false">
+                    {!v.ErrorMessage}
+                </ui:message>
+                    </div>
+                </aura:set>
+			
+                
+            </aura:if>
+            
+			<aura:if isTrue="{!or(v.isPowerUser, v.isSuperUser)}">
+            		<lightning:button variant="base" label="Invite user" title="Invite user" onclick="{! c.handleInvitationShow }" class="btn btn-primary btn-grey" />
+                </aura:if>
+        </div>
+
+        <!--RECORD DETAIL-->
+        <aura:if isTrue="{! v.detailsShown}">
+            <div aura:id="detailContainer" class="slds-hide">
+                <c:GADM_ExternalUserContactListDetail Back_EVT="{!c.handleDetailsBackEvt}" selectedUserInfo="{!v.selectedUserInfo}" currentUserInfo ="{! v.currentUserInfo}" isPowerUser="{! v.isPowerUser}" isSuperUser="{! v.isSuperUser}" isGadmUser="{! v.isGadmUser}" businessUnits="{!v.businessUnits}"/>
+            </div>
+        </aura:if>
+
+		<!--INVITE USER-->
+        <aura:if isTrue="{! v.invitationShown}">
+            <div aura:id="invitationContainer" class="slds-hide">
+                <c:Invite_User Back_EVT="{!c.handleDetailsBackEvt}"/>
+            </div>
+        </aura:if>
+
+        <!--SPINNER-->
+        <div aura:id="spinner" class="slds-hide">
+            <lightning:spinner alternativeText="Loading"/>
+        </div>
+
+    </div>
+
+
+</aura:component>

@@ -2,7 +2,6 @@
 <CustomTab xmlns="http://soap.sforce.com/2006/04/metadata">
     <description>IFAP portal tab to let the user change language</description>
     <label>Change Language</label>
-    <mobileReady>false</mobileReady>
     <motif>Custom99: CRT TV</motif>
     <page>IFAP_Change_Language_Tab</page>
 </CustomTab>

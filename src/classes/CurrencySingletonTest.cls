@@ -2,7 +2,7 @@
 public class CurrencySingletonTest {
 
 	static testMethod void TestOk() {
-		
+
 		Test.StartTest();
 		CurrencySingleton cs = CurrencySingleton.getInstance();
 		Decimal rate = cs.convertCurrency(1,'EUR','USD');
@@ -10,9 +10,9 @@ public class CurrencySingletonTest {
 
 		System.assert(rate != null);
 	}
-	
+
 	static testMethod void TestError() {
-		
+
 		Test.StartTest();
 		CurrencySingleton cs = CurrencySingleton.getInstance();
 		Decimal rate = cs.convertCurrency(1,'AAA','BBB');

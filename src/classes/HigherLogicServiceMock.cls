@@ -7,9 +7,9 @@ global class HigherLogicServiceMock implements HttpCalloutMock {
 		res.setHeader('Content-Type', 'application/json');
 		res.setBody('{"success":true,"count":1}');
 		res.setStatusCode(200);
-		
+
 		return res;
 
 	}
-	
+
 }

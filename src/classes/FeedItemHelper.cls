@@ -1,14 +1,14 @@
 public with sharing class FeedItemHelper {
-	
+
 	/*
 	 *  This method checks that hashtags exist in the feed items attached to Accounts, to ensure that topics have
 	 *  been used. Otherwise, an error is thrown.
 	 *  Validation put in place for the Account Management project.
 	 */
 	public static void CheckPostTopics(list<FeedItem> lstTriggerNew) {
-		
+
 		// get the accounts of interest to which the feed items are linked - we only apply the logic to Airline HQ accounts that are IATA Members
-		set<Id> setRelatedAccountIds = new set<Id>();	
+		set<Id> setRelatedAccountIds = new set<Id>();
 		set<String> setFeedItemTypes = new set<String>{'TextPost','ContentPost','LinkPost','PollPost','QuestionPost'};
 
 		for (FeedItem fi : lstTriggerNew) {
@@ -21,23 +21,23 @@ public with sharing class FeedItemHelper {
 				}
 				Pattern p = Pattern.compile('.*#\\w+(?s).*');
 				Matcher regexMatcher = p.matcher(finalS);
-	
-				if (String.valueOf(fi.ParentId).startsWith('001') 
-					&& !regexMatcher.matches() 
+
+				if (String.valueOf(fi.ParentId).startsWith('001')
+					&& !regexMatcher.matches()
 					&& setFeedItemTypes.contains(fi.Type)) {
 						setRelatedAccountIds.add(fi.ParentId);
 				}
 			}
  	   	}
- 	   	
+
 		if (!setRelatedAccountIds.isEmpty()) {
 
 			Map<Id, Account> mapAccountsPerId = new Map<Id, Account>(
-				[SELECT 
-					Id 
-				 FROM 
+				[SELECT
+					Id
+				 FROM
 				 	Account
-				 WHERE 
+				 WHERE
 				 	 Id IN :setRelatedAccountIds
 				 AND RecordType.DeveloperName = 'IATA_Airline'
 				 AND Sector__c = 'Airline'
@@ -48,15 +48,15 @@ public with sharing class FeedItemHelper {
 			if (!mapAccountsPerId.values().isEmpty()) {
 
 				TopicHelper.TopicsWrapper topicWrapper = TopicHelper.getTopicsInfo();
-				
+
 				String strAcceptedValues = topicWrapper.acceptedTopics;
-		
+
 				for (FeedItem fi : lstTriggerNew) {
  	   				fi.addError(Label.Feed_Item_Invalid_Topics + '\r\n' + strAcceptedValues);
 				}
- 	   		
+
  	   		}
  	   	}
 	}
-	
+
 }
