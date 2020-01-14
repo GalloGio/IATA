@@ -89,10 +89,7 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 	@track workEmailInput ='';
 
 	get blockConfirmation(){
-console.log('this.reverseEmailVisibility: ',this.reverseEmailVisibility);
-console.log('this.isReverseEmail: ',this.isReverseEmail);
 		let res = true;
-		console.log('res: ',res);
 
 		if(this.reverseEmailVisibility){
 			if(this.isReverseEmail !== undefined && this.isReverseEmail !== ''){
@@ -107,7 +104,6 @@ console.log('this.isReverseEmail: ',this.isReverseEmail);
 				res = false;
 			}
 		}
-		console.log('res: ',res);
 
 		return res;
 
@@ -183,7 +179,6 @@ console.log('this.isReverseEmail: ',this.isReverseEmail);
 
 	connectedCallback() {
 		this.localContactInfo = JSON.parse(JSON.stringify(this.contactInfo));
-console.log('this.localContactInfo: ', this.localContactInfo);
 
 		let pageParams = getParamsFromPage();// FOR LMS L3
 		if(pageParams !== undefined && pageParams.lms !== undefined){
@@ -261,7 +256,6 @@ console.log('this.localContactInfo: ', this.localContactInfo);
 	}
 
 	next(){
-console.log('next this.localContactInfo: ', this.localContactInfo);
 		if(this.flow === 'flow1'){
 			if(this.isReverseEmail === 'yes'){
 				this.flow = 'flow0';
@@ -377,14 +371,10 @@ console.log('next this.localContactInfo: ', this.localContactInfo);
 													this.localContactInfo.hasExistingContactPersonalEmail = userInfo.hasExistingContactPersonalEmail;
 													this.localContactInfo.hasExistingUserPersonalEmail = userInfo.hasExistingUserPersonalEmail;
 
-													this.messageFlow7 = CSP_L3_ExistingContact_LMS;
-console.log('this.messageFlow7: ', this.messageFlow7);		
-console.log('userInfo.existingContactEmail: ', userInfo.existingContactEmail);													
-console.log('userInfo.Email: ', this.localContactInfo.Email);													
+													this.messageFlow7 = CSP_L3_ExistingContact_LMS;									
 													this.messageFlow7 = this.messageFlow7.replace('[Existing_email]',userInfo.existingContactEmail);
 													this.messageFlow7 = this.messageFlow7.replace('[Existing_email]',userInfo.existingContactEmail);
 													this.messageFlow7 = this.messageFlow7.replace('[Email]',this.localContactInfo.Email);
-console.log('this.messageFlow7: ', this.messageFlow7);		
 
 													this._showEmailValidationError(true, this.labels.CSP_Registration_Existing_User_Message);
 													this.stopLoading();
@@ -401,7 +391,7 @@ console.log('this.messageFlow7: ', this.messageFlow7);
 										this.validated = true;
 									})
 									.catch(error => {
-										console.log('Error: ', error);
+										console.error('Error: ', error);
 										this.isLoading = false;
 									});
 								}
