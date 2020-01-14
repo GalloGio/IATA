@@ -97,7 +97,6 @@ export default class PortalRegistrationProfileDetailsLMS extends LightningElemen
 
 	connectedCallback() {
 		this.localContactInfo = JSON.parse(JSON.stringify(this.contactInfo));
-console.log('this.localContactInfo: ', this.localContactInfo);
 		//Initialize missing fields
 		this.localContactInfo.Additional_Email__c = this.localContactInfo.Additional_Email__c === undefined ? '' : this.localContactInfo.Additional_Email__c;
 
@@ -190,12 +189,6 @@ console.log('this.localContactInfo: ', this.localContactInfo);
 		validateYasUserId({userId : this.localContactInfo.UserId})
 		.then(result => {
 			this.isUserIdValid = result;
-			var inputCmp = this.template.querySelector(".userIdInputClass");
-			inputCmp.setCustomValidity('');
-			if(result === false) {
-				inputCmp.setCustomValidity("");
-			}
-			inputCmp.reportValidity();
 
 			var userDiv = this.template.querySelector('[data-id="userDiv"]');
 			if(!this.isUserIdValid){
@@ -209,7 +202,7 @@ console.log('this.localContactInfo: ', this.localContactInfo);
 			}
 		})
 		.catch((error) => {
-			console.log('Error: ', JSON.parse(JSON.stringify(error)));
+			console.error('Error: ', JSON.parse(JSON.stringify(error)));
 		});
 	}
 
@@ -229,13 +222,6 @@ console.log('this.localContactInfo: ', this.localContactInfo);
 		if( age < 18 ){
 			this.isBirthdateValid = false;
 		}
-
-		var inputCmp = this.template.querySelector(".birthdateInputClass");
-		inputCmp.setCustomValidity('');
-		if(this.isBirthdateValid === false) {
-			inputCmp.setCustomValidity("");
-		}
-		inputCmp.reportValidity();
 
 		var birthdateDiv = this.template.querySelector('[data-id="birthdateDiv"]');
 		if(!this.isBirthdateValid){
