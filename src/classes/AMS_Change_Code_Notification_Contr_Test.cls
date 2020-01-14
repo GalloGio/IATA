@@ -21,7 +21,7 @@ private class AMS_Change_Code_Notification_Contr_Test {
 		Account msoAccount =  new Account (
 			RecordTypeId = agcRtId,
 			Name = 'Agency', 
-			Location_Class__c = 'M',
+			Location_Class__c = 'N',
 			IATA_ISO_Country__c = isoc.Id,
 			Status__c = 'Approved'
 			);  
@@ -95,7 +95,7 @@ private class AMS_Change_Code_Notification_Contr_Test {
 		Account msoAccount =  new Account (
 			RecordTypeId = agcRtId,
 			Name = 'Agency', 
-			Location_Class__c = 'M',
+			Location_Class__c = 'N',
 			IATA_ISO_Country__c = isoc.Id,
 			Status__c = 'Approved'
 			);  
@@ -162,7 +162,7 @@ private class AMS_Change_Code_Notification_Contr_Test {
 		Account msoAccount =  new Account (
 				RecordTypeId = agcRtId,
 				Name = 'Agency',
-				Location_Class__c = 'M',
+				Location_Class__c = 'N',
 				IATA_ISO_Country__c = isoc.Id,
 				Status__c = 'Approved'
 		);
