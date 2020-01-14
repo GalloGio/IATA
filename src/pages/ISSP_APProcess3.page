@@ -31,7 +31,7 @@
                         <apex:include pageName="ISSP_AP_CASS_Form" rendered="{!AND(strAreaType=='Airline Joining', isCASS)}"/>
                         <apex:include pageName="ISSP_AP_Changes" rendered="{!AND(strAreaType=='Airline Change', OR(isBSP,isCASS))}"/>
                         <apex:include pageName="ISSP_AP_ICH_Form" rendered="{!AND(isICH)}"/>
-                        <apex:include pageName="ISSP_AP_PASS_Form" rendered="{!AND(strAreaType=='Airline Joining', isPassAirline, isStep3)}"/>
+                        <apex:include pageName="ISSP_AP_PASS_Form" rendered="{!AND(strAreaType=='Airline Joining', isPassAirline)}"/>
                     </apex:outputPanel>
                 </div>
             </div>

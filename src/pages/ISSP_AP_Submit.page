@@ -98,7 +98,7 @@
             <apex:pageMessages />
 
             <!-- BASP/CASS Submit section -->
-            <apex:outputPanel rendered="{!OR(isBSP,isCASS)}">
+            <apex:outputPanel rendered="{!OR(isBSP,isCASS,isPassAirline,managePASS)}">
                 <apex:outputPanel id="mainPanel" layout="block" styleclass="apcontainer">
                     <apex:pageBlockSection title="Application Status" columns="1" collapsible="false">
                         <apex:outputtext styleclass="{!IF(allfieldsfilled,'ap-green','ap-red')}" value="{!IF(allfieldsfilled,'All mandatory fields have been filled; You are ready to submit your application','You cannot submit your application until you go back and fill all the required fields, and agree to the Terms and Conditions below')}"/>

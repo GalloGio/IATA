@@ -1029,14 +1029,14 @@ global without sharing class ISSP_APProcess {
 						}
 					}
 				}
-                newCase.Country_Concerned__c=countryConcerned;
-                newCase.IATAcode__c = con.Account.IATACode__c;//to be confirmed
-            }else{
+			newCase.Country_Concerned__c=countryConcerned;
+			newCase.IATAcode__c = con.Account.IATACode__c;//to be confirmed
+		}else{
 				ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.ERROR, 'Please select a Country.');
 				ApexPages.addMessage(myMsg);
 				return null;
 			}
-        }else{
+	}else{
 			newCase.Country_Concerned__c=null;
 			retrieveCountryRequirements(newCase.IFAP_Country_ISO__c, strLoB);
 			if (isGSSAUser){
@@ -1236,7 +1236,7 @@ global without sharing class ISSP_APProcess {
 			if (strType=='CASS Import') {
 				strReason='CASS Import via GHA' + strReasonMembership;
 			}else if(isPASSAirline){
-                strReason=AMS_Utils.passAirlineCaseReason;
+				strReason=AMS_Utils.passAirlineCaseReason;
 			} else {
 				strReason='CASS Export via GSSA' + strReasonMembership;
 
@@ -1290,7 +1290,10 @@ global without sharing class ISSP_APProcess {
 				return new Pagereference('/ISSP_APProcess2?caseId='+newCase.Id+'&step=1'+passParam);
 			}else if(managePASS && isStep1){
 				passParam=passParam+'&managePASS=true';
-				return new Pagereference('/ISSP_APProcess3?caseId='+newCase.Id+'&step=3'+passParam);
+				return new Pagereference('/ISSP_APProcess4?caseId='+newCase.Id+'&step=4'+passParam);
+			}else if(managePASS && isStep3){
+				passParam=passParam+'&managePASS=true';
+				return new Pagereference('/ISSP_APProcess1?caseId='+newCase.Id+'&step=1'+passParam);
 			}else{
 				return new Pagereference('/ISSP_APProcess2?caseId='+newCase.Id+'&step=2'+passParam);
 			}
@@ -1305,7 +1308,7 @@ global without sharing class ISSP_APProcess {
 	public Pagereference goToStep3(){
 		if(managePASS){
 			passParam=passParam+'&managePASS=true';
-			return new Pagereference('/ISSP_APProcess3?caseId='+newCase.Id+'&step=3'+passParam);
+			return new Pagereference('/ISSP_APProcess?caseId='+newCase.Id+'&step=1'+passParam);
 		}else{
 			return new Pagereference('/ISSP_APProcess3?caseId='+newCase.Id+'&step=3'+passParam);
 		}
@@ -1414,6 +1417,10 @@ global without sharing class ISSP_APProcess {
 
 				if(!String.isEmpty(countryWithoutBankMandate)){
 					newForm.addError('Please attach the bank mandate (one for each currency) before submitting the application for these countries: '+countryWithoutBankMandate+'.');
+					return null;
+				}
+				if (!newForm.Accept_terms_and_conditions__c) {
+					newForm.addError('Please Accept our Terms and Conditions.');
 					return null;
 				}
 
@@ -1549,7 +1556,7 @@ global without sharing class ISSP_APProcess {
 		return new Pagereference('/ISSP_APCases?proc=' + APprocess + '&cdupetype=' + strOperationType + '&caseId=' + dupeDraft[0].Id + '&retURL=/ISSP_HomePage');
 	}
 
-    public Pagereference cancel(){
+	public Pagereference cancel(){
 		String retURL = ApexPages.currentPage().getParameters().get('retURL');
 		String APprocess = ApexPages.currentPage().getParameters().get('proc');
 
@@ -3076,7 +3083,7 @@ global without sharing class ISSP_APProcess {
 		List<String> isoCountriesList = new List<String>();
 		List<String> isoCountriesInactiveList = new List<String>();
 		if(withdrawPassCountries == null || withdrawPassCountries.size() == 0) {
-			ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.ERROR,'Please choose at least one contry to invalidate');
+			ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.ERROR,'Please choose at least one country to invalidate');
 			ApexPages.addMessage(myMsg);
 			return;
 		}
@@ -3090,14 +3097,17 @@ global without sharing class ISSP_APProcess {
 														WHERE Services_Rendered_Type__c LIKE 'PASS%'
 														AND (Services_Rendered_By__r.Id=:con.accountId OR Services_Rendered_By__r.Top_Parent__r.Id=:con.accountId)
 														AND BSP_Country__c IN:isoCountriesList];
+		Map<Id,sObject> objectMapServiceRendered=new Map<Id,sObject>();
 
 		for(Services_Rendered__c service : serviceRenderedList){
 			service.Services_Rendered_Status__c = 'Inactive';
+			objectMapServiceRendered.put(service.Id, service);
 		}
 		System.debug('DB:: serviceRenderedList updated '+serviceRenderedList);
 		try {
 			update serviceRenderedList;
 			fetchPassCountries(newCase);
+			PlatformEvents_Helper.publishEvents(objectMapServiceRendered, 'Service_Rendered__e', 'Services_Rendered__c', false, true, false, false);
 			ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.INFO,'The following countries were successfully inactivated: ' + isoCountriesInactiveList);
 			ApexPages.addMessage(myMsg);
 		} catch(DmlException ex) {

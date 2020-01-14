@@ -10,6 +10,25 @@
     <html> 
         <c:ISSP_Header ></c:ISSP_Header>
         <body>
+            <script>
+            function disableJoiningCountryDiv(){
+                document.getElementById('loadingCountryListMessage').style.display='block';
+                document.getElementById('loadingCountryListPASSMessage').style.display='block';
+                document.getElementById('countryListId').style.display='none';
+                document.getElementById('countryListPass').style.display='none';
+            }
+            
+            
+            function enableJoiningCountryDiv(){
+                document.getElementById('loadingCountryListMessage').style.display='none';
+                document.getElementById('loadingCountryListPASSMessage').style.display='none';
+                document.getElementById('countryListId').style.display='block';
+                document.getElementById('countryListPass').style.display='block';
+            }
+
+            
+            </script>
+            
             <link href="{!URLFOR($Resource.ISSP_APProcess,'css/select2.min.css')}" rel="stylesheet" />
             <script src="{!URLFOR($Resource.ISSP_APProcess,'js/select2.min.js')}"></script>
             
@@ -45,23 +64,24 @@
                             </apex:outputPanel>
                             
                             <apex:form id="step1-form" styleClass="form-horizontal">
-                                <apex:actionFunction name="changeIsPassAirline" action="{!changeIsPassAirlineMethod}" immediate="true" reRender="cmdButtonsBlock" oncomplete="refreshCountryList();">
+                                <apex:actionFunction name="changeIsPassAirline" action="{!changeIsPassAirlineMethod}" immediate="true" rerender="step1-form,cmdButtonsBlock" status="WaitingStatus" oncomplete="refreshCountryList();">
                                         <apex:param value="" assignTo="{!strOT}" name="strOT"/>
                                     </apex:actionFunction>
-                                    <apex:actionFunction name="refreshCountryList" action="{!null}" reRender="countryList" oncomplete="enableJoiningCountryDiv();$('.country-select').select2({width : 'resolve'});">
+                                    <apex:actionFunction name="refreshCountryList" action="{!null}" reRender="countryList,cmdButtonsBlock" oncomplete="enableJoiningCountryDiv();$('.country-select').select2({width : 'resolve'});">
                                       <apex:param value="" assignTo="{!strOT}" name="strOT"/>
                                     </apex:actionFunction>
                                 <apex:actionFunction action="{!null}" name="refreshCASSAirlineList" reRender="cassAirlineList" oncomplete="$('.cass-airlines-select').select2({width : 'resolve'});">
                                     <apex:param value="" assignTo="{!gssaCountryISOCode}" name="gssaCountryISOCode"/>
                                 </apex:actionFunction>
-                                <apex:pageBlock mode="edit">
-                                    <apex:pageBlockButtons location="bottom" style="padding-left:100px">
-                                    <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-right" action="{!withdrawCountries}" value="Continue" rendered="{!changePass}" reRender="strmessages,countryListPassToWithdraw"/>
-                                    <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-right" action="{!save}" value="Continue" />&nbsp;
-                                    <apex:commandButton styleclass="iatabtn iatabtn-danger iatabtn-right" action="{!cancel}" value="{!$Label.ISSP_Cancel}"
-                                        immediate="true" />
+                                <apex:pageBlock mode="edit" >
+                                    <apex:pageBlockButtons location="bottom" style="padding-left:100px" >
+                                        <apex:outputPanel id="cmdButtonsBlock">
+                                            <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-right" onclick="confirmDeletePASS()" action="{!withdrawCountries}" rendered="{!changePass}" value="Continue" status="WaitingStatus"  reRender="strmessages,countryListPassToWithdraw"/>
+                                                <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-right" action="{!save}" rendered="{!!changePass}" value="Continue" />&nbsp;
+                                                <apex:commandButton styleclass="iatabtn iatabtn-danger iatabtn-right" action="{!cancel}" value="{!$Label.ISSP_Cancel}" immediate="true" />
+                                            </apex:outputPanel>
                                 </apex:pageBlockButtons>
-                                    <apex:pageMessages ></apex:pageMessages>
+                                    <apex:pageMessages id="strmessages" ></apex:pageMessages>
                                     <div class="alert alert-info" role="alert">You can save your {!CASE(APProcess, 'chg', 'change request', 'bnk', 'change of bank account', 'joining form')} at anytime and come back later to complete it.</div>
                                     <div class="alert alert-warning" role="alert">{!IF(strAreaType=='Airline Joining', 'Online Joining Applications', IF(strChangeType=='Minor database changes','Online Change Requests','Online changes of bank details'))} must be submitted within 8 weeks, otherwise you will need to restart the process for each participation type and country.
                                     </div>
@@ -70,15 +90,16 @@
                                         <label for="jointype" class="col-sm-2 control-label">* Type of Participation</label>
                                         <div class="col-sm-10">
                                             <apex:actionRegion >
-                                                <apex:selectList id="jointype" Label="Type of Participation" styleClass="join-type-select" value="{!strOperationType}" onchange="if('{!isGSSAUser}'=='false'){changeIsPassAirline(this.value);disableJoiningCountryDiv();}else{changeIsPassAirline(this.value);disableJoiningCountryDiv();refreshCountryList(this.value);}" required="true" size="1">
+                                                <apex:selectList id="jointype" Label="Type of Participation"  styleClass="join-type-select" value="{!strOperationType}" onchange="if('{!isGSSAUser}'=='false'){changeIsPassAirline(this.value);disableJoiningCountryDiv();}else{changeIsPassAirline(this.value);disableJoiningCountryDiv();refreshCountryList(this.value);}" required="true" size="1" disabled="{!managePASS}" >
+
+                                                <!--<apex:selectList id="jointype" Label="Type of Participation" styleClass="join-type-select" value="{!strOperationType}" required="true" size="1">-->
                                                     <apex:selectOptions value="{!APTypes}"/>
-                                                    <apex:actionSupport event="onchange" rerender="step1-form" status="WaitingStatus"/>
+                                                    <!--<apex:actionSupport event="onchange" rerender="step1-form" status="WaitingStatus"/>-->
                                                 </apex:selectList>
                                             </apex:actionRegion>
                                         </div>
                                     </div>
-
-                                    <apex:outputPanel id="optional-form-groups" >
+                                    <apex:outputPanel id="optional-form-groups" rendered="!managePASS" >
                                         <div class="form-group {!IF(listOptionCountries=null,'hidden','')}">
                                             <label for="countryconcerned" class="col-sm-2 control-label">* BSP / CASS Country</label>
                                             <div class="col-sm-10">
@@ -112,13 +133,13 @@
                                         </div>
                                     </apex:outputPanel>
 
-                                    <apex:outputPanel>
-                                        <div class="form-group" style="display:{!IF(isPassAirline == true && APprocess!='chg' && isGSSAUser!= true, 'block','none')}">
+                                    <apex:outputPanel >
+                                        <div class="form-group" style="display:{!IF(strOperationType == 'PASS' && APprocess!='chg' && isGSSAUser!= true, 'block','none')}">
                                             <label for="countryconcernedPASS" class="col-sm-2 control-label">* Joining Countries</label>
-                                            <div id="loadingCountryListPASSMessage">
+                                            <!--<div id="loadingCountryListPASSMessage">
                                                 <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>
                                                 Loading Countries...
-                                            </div>
+                                            </div>-->
                                             <div id="countryListPass" class="col-sm-10">
                                                 <c:MultiselectPicklist leftLabel="Available Countries"
                                                 leftOptions="{!possiblePassCountries}"
@@ -129,9 +150,9 @@
                                             </div>
                                         </div>
                                     </apex:outputPanel>
-                                    <apex:outputPanel>
-                                        <div  class="form-group" style="display:{!IF(isPassAirline == true && APprocess=='chg' && isGSSAUser!= true, 'block','none')}">
-                                            <label for="countryconcernedPASSWithdraw" class="col-sm-2 control-label">* Countries to Withdraw</label> <!-- Withdraw -->
+                                    <apex:outputPanel >
+                                        <div  class="form-group" style="display:{!IF(strOperationType == 'PASS' && APprocess=='chg' && isGSSAUser!= true, 'block','none')}">
+                                            <label for="countryconcernedPASSWithdraw" class="col-sm-2 control-label">* Active Countries</label> <!-- Withdraw -->
                                             <!--<div id="loadingCountryListPASSMessageWithdraw">
                                                 <!--<span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>
                                                 Loading Countries...
