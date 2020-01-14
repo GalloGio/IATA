@@ -203,7 +203,7 @@ export default class PortalRegistrationConfirmationLMS extends LightningElement 
 		.catch((error) => {
 			this.openMessageModalFlowRegister = true;
 			this.message = CSP_L2_RegistrationFailed_LMS + error;
-			console.log('Error: ', JSON.parse(JSON.stringify(error)));
+			console.error('Error: ', JSON.parse(JSON.stringify(error)));
 		});
 
 	}
@@ -266,9 +266,6 @@ export default class PortalRegistrationConfirmationLMS extends LightningElement 
 			this.localContactInfo.existingTrainingId
 		];
 
-console.log('this.localContactInfo.lmsCourse: ',this.localContactInfo.lmsCourse);
-console.log('auxSearchValues: ',auxSearchValues);
-
 		//Move address info into ContactInfo
 		this.localContactInfo.isPoBox = this.localAddress.isPoBox;
 		this.localContactInfo.countryId = this.localAddress.countryId;
@@ -301,7 +298,6 @@ console.log('auxSearchValues: ',auxSearchValues);
 						this.stopLoading();
 					})
 					.catch(error => {
-						console.log('Error: ', JSON.parse(JSON.stringify(error)));
 						this.openErrorModal = true;
 						this.errorModalMessage = JSON.parse(JSON.stringify(error));
 						this.stopLoading();
@@ -311,10 +307,6 @@ console.log('auxSearchValues: ',auxSearchValues);
 		if(this.flow === 'flow3' || this.flow === 'flow4' || this.flow === 'flow5' || this.flow === 'flow6' || this.flow === 'flow7' ){
 
 			this.localContactInfo.flow = this.flow;
-			this.localContactInfo.existingContactId = this.localContactInfo.existingContactId;
-			this.localContactInfo.existingContactName = this.localContactInfo.existingContactName;
-			this.localContactInfo.existingContactEmail = this.localContactInfo.existingContactEmail;
-			this.localContactInfo.existingContactAccount = this.localContactInfo.existingContactAccount;
 
 			let contactName = this.localContactInfo.FirstName + ' ' + this.localContactInfo.LastName;
 
@@ -338,7 +330,6 @@ console.log('auxSearchValues: ',auxSearchValues);
 					this.stopLoading();
 				})
 				.catch(error => {
-					console.log('Error: ', JSON.parse(JSON.stringify(error)));
 					this.openErrorModal = true;
 					this.errorModalMessage = JSON.parse(JSON.stringify(error));
 					this.stopLoading();
@@ -383,7 +374,6 @@ console.log('auxSearchValues: ',auxSearchValues);
 	}
 
 	goToService(){
-console.log('entrei');
 		this.startLoading();
 		getPortalServiceId({ serviceName: 'Training Platform (LMS)' })
 			.then(serviceId => {
