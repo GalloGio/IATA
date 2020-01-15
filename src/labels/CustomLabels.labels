@@ -44057,4 +44057,53 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <shortDescription>CSP Registration Existing work Message</shortDescription>
         <value>The Personal email you have provided is already associated with an existing user. Please check that the personal email address you provided is correct. If so please click next. Once you confirm you have access to this personal email address, the user you are currently logged in with (associated with your work email) will be merged with the existing user associated with your personal email address. &lt;b&gt;From now on you will only be able to login with your work email address.&lt;/b&gt;</value>
     </labels>
+    <labels>
+        <fullName>Contact_Email</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Contact Email</shortDescription>
+        <value>Contact Email</value>
+    </labels>
+    <labels>
+        <fullName>Contact_Username</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Contact Username</shortDescription>
+        <value>Contact Username</value>
+    </labels>
+    <labels>
+        <fullName>Contact_Account</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Contact Account</shortDescription>
+        <value>Contact Account</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Email_Confirmation_Note_1</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Confirmation Note 1</shortDescription>
+        <value>If you are still working for {!ExistingContactAccount}, please login to the portal using the username above.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Email_Confirmation_Note_2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Confirmation Note 2</shortDescription>
+        <value>Please click on this</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Email_Confirmation_Note_3</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Confirmation Note 3</shortDescription>
+        <value>to confirm that you still have access to this personal email.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Email_Confirmation_Note_4</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Confirmation Note 4</shortDescription>
+        <value>The user associated with your work email will then be merged with the existing user associated with this personal email address. Your training record will be maintained under this merged user. &lt;b&gt;From now on you will only be able to login with your work email address.&lt;/b&gt;</value>
+    </labels>
 </CustomLabels>
