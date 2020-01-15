@@ -378,8 +378,8 @@
     </echo>
     <mkdir dir="${basedir}/${sfdc.retrieveTarget}" />
     <sf:retrieve retrieveTarget="${basedir}/${sfdc.retrieveTarget}" username="${sfdc.username}" password="${sfdc.password}" serverurl="${sfdc.serverurl}" unpackaged="src/layoutPackageandStatic.xml" />
-    <copy file="${basedir}/${sfdc.retrieveTarget}/package.xml" tofile="src/layoutPackageandStatic.xml" />
-    <copy file="${basedir}/${sfdc.retrieveTarget}" tofile="src" />
+    <move file="${basedir}/${sfdc.retrieveTarget}/package.xml" tofile="src/layoutPackageandStatic.xml" />
+    <move file="${basedir}/${sfdc.retrieveTarget}" tofile="src" />
   </target>
 
 
