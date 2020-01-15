@@ -2,21 +2,7 @@
     <html>
 
     <head>
-        <style>
-            body {
-                font-family: "Open Sans", "GillSansMT", "Lucida Sans Unicode", "Lucida Grande", sans-serif;
-                color: #004577;
-            }
-
-            div.main {
-                margin: auto;
-                width: 90%;
-            }
-
-            hr {
-                color: #0A4279;
-            }
-        </style>
+        <apex:stylesheet value="{!URLFOR($Resource.CSP_LMS,'css/emailtemplate.css')}"/>
     </head>
 
     <body>
