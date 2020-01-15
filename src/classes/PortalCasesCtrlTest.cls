@@ -34,9 +34,9 @@ private class PortalCasesCtrlTest {
 
 		User newUser = ISSP_ObjectFactory.createPortalUser(newCon1);
 		
-		Portal_Applications__c pa = new Portal_Applications__c(Name = TIP_Utils.PORTAL_SERVICE_NAME_TIP, Country_Visibility_Control__c = 'SHOW');
-		Portal_Applications__c pa1 = new Portal_Applications__c(Name = 'Airline Joinings Test', Country_Visibility_Control__c = 'SHOW');
-		Portal_Applications__c pa2 = new Portal_Applications__c(name = 'Agency Service Test', Country_Visibility_Control__c = 'SHOW');
+		Portal_Applications__c pa = new Portal_Applications__c(Name = TIP_Utils.PORTAL_SERVICE_NAME_TIP);
+		Portal_Applications__c pa1 = new Portal_Applications__c(Name = 'Airline Joinings Test');
+		Portal_Applications__c pa2 = new Portal_Applications__c(name = 'Agency Service Test');
 		insert new List<Portal_Applications__c>{pa, pa1, pa2};
 		
 		ISSP_Portal_Service_Ids__c psi = new ISSP_Portal_Service_Ids__c(
