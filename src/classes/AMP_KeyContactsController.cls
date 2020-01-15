@@ -23,11 +23,30 @@ public with sharing class AMP_KeyContactsController {
 		String accountId =  ApexPages.currentPage().getParameters().get('accountId');
 		isWWAccount = ApexPages.currentPage().getParameters().get('isWWAccount');
 		accountName = [SELECT Id, Name FROM Account WHERE Id =:accountId LIMIT 1].Name;
-		lsKeyContactsWrapped = getKeyContactsWrapped(accountId);
+		if(Boolean.valueOf(isWWAccount)){
+			lsKeyContactsWrapped = getAwwKeyContactsWrapped(accountId);
+		}
+		else{
+			lsKeyContactsWrapped = getKeyContactsWrapped(accountId);
+		}
 	}
 
 	public String getRecordId() {
 		return (Id)myAccount.get('Id');
+	}
+
+	@AuraEnabled
+	public static List<ContactWrapper> getAwwKeyContactsWrapped (Id AccountId) {
+
+		List<Contact> lsKeyContacts = AWW_KeyContactsCtrl.searchKeyContacts(AccountId);
+		List<ContactWrapper> wrappedContacts = new List<ContactWrapper>();
+
+		if(!lsKeyContacts.isEmpty()){
+			for(Contact con : lsKeyContacts){
+				wrappedContacts.add(new ContactWrapper(con));
+			}
+		}
+		return wrappedContacts;
 	}
 
 	@AuraEnabled
