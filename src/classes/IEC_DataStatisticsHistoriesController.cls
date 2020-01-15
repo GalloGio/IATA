@@ -5,12 +5,12 @@ public class IEC_DataStatisticsHistoriesController extends IECPageController {
 	//public String similarProdSubscriptionId 						{get; set;}
 
 	Map<String,Zuora__Subscription__c> subscriptionMap;
-	
+
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//Executes when the page is loaded
 	public Pagereference pageLoad() {
 		try {
-			
+
 			// first check if the user is logged in
 			if (IECUserManager.isUserLoggedIn() == false) {
 				Pagereference prLogin = Page.IEC_Login;
@@ -26,7 +26,7 @@ public class IEC_DataStatisticsHistoriesController extends IECPageController {
 
 				lstInactiveSubscriptions = new List<ZuoraSubscription_DTO>();
 				subscriptionMap = new Map<String,Zuora__Subscription__c>();
-				
+
 				//Query for the active subscription list related to the current logged user
 				List<Zuora__Subscription__c> lstListInactiveSubscriptions = getInactiveSubscriptionsList();
 
@@ -56,7 +56,7 @@ public class IEC_DataStatisticsHistoriesController extends IECPageController {
 
 				//Get Last Accpted Terms and Condition By Subscription Name
 				Map<String,Terms_and_Conditions__c> getLastAcceptedTermsAndConditionBySubscriptionName = IECProductManager.getLastAcceptedTermsAndConditionBySubscriptionName(subscriptionNumbers);
-				
+
 				//Get subscriptions invoices
 				Map<String,Invoice_Item__c> invoiceItemBySFSubscriptionName = IECSubscriptionManager.getInvoiceItemBySFSubscriptionName(subscriptionNumbers);
 				set<Id> invoiceIds = new set<Id>();
@@ -64,9 +64,9 @@ public class IEC_DataStatisticsHistoriesController extends IECPageController {
 					invoiceIds.add(ii.Invoice__c);
 				}
 
-				// Get SWAP if the client type doesn't match using the Swap Configuration (Source -> Target) 
+				// Get SWAP if the client type doesn't match using the Swap Configuration (Source -> Target)
 				Map<ID, Product_Rate_Plan_Information__c> targetRatePlans = IECSubscriptionManager.getTargetSwappedRatePlans(prodRatePlanInfoIds, clientType);
-						
+
 				// Get SWAP if the client type doesn't match using the Swap Configuration (Target -> Source)
 				Map<ID, Product_Rate_Plan_Information__c> sourceRatePlans = IECSubscriptionManager.getSourceSwappedRatePlans(prodRatePlanInfoIds, clientType);
 
@@ -80,8 +80,8 @@ public class IEC_DataStatisticsHistoriesController extends IECPageController {
 				Map<Id,Boolean> orderItemZuoraSubscribeById = new OrderItem_Sel().getOrderItemZuoraSubscribeById(orderItemIds);
 
 				Map<Id, Boolean> isProductCategoryAvailable = IECProductManager.isProductCategoryAvailable(prodCategoryIds);
-				
-				if(lstListInactiveSubscriptions != null && lstListInactiveSubscriptions.size() > 0){				
+
+				if(lstListInactiveSubscriptions != null && lstListInactiveSubscriptions.size() > 0){
 					for(Zuora__Subscription__c subscription : lstListInactiveSubscriptions){
 						ZuoraSubscription_DTO aSubscription = new ZuoraSubscription_DTO();
 
@@ -104,12 +104,12 @@ public class IEC_DataStatisticsHistoriesController extends IECPageController {
 							aSubscription.dUnitsPurchased =
 								aSubscription.dUnitsConsumed =
 								aSubscription.dUnitsLeft = 0;
-								
+
 							for (IEC_Product_Access__c access : productAccess) {
 								aSubscription.dUnitsPurchased += ((access.Usage_Qty_Start__c != null) ? access.Usage_Qty_Start__c : 0);
 								aSubscription.dUnitsConsumed += (((access.Usage_Qty_Start__c != null) ? access.Usage_Qty_Start__c : 0)
 									- ((access.Usage_Qty_Left__c != null) ? access.Usage_Qty_Left__c : 0));
-								
+
 								// Only count units left if they are still valid
 								if (access.Effective_Start_Date__c <= DateTime.now()
 									&& access.Effective_End_Date__c >= DateTime.now()
@@ -144,7 +144,7 @@ public class IEC_DataStatisticsHistoriesController extends IECPageController {
 								aSubscription.idSelectedRatePlanInfo  = (sourceRatePlans != null && !sourceRatePlans.isEmpty()) ? sourceRatePlans.values().get(0).Id : null;
 							}
 						}
-						
+
 						aSubscription.bDisplaySimProdBtn = isProductCategoryAvailable.get(subscription.Product_Rate_Plan_Information__r.Related_Product_Information__r.Related_Product_Category__c);
 						Boolean ratePlanAvailable = false;
 						if(isRatePlanAvailable.containsKey(subscription.Product_Rate_Plan_Information__c)) ratePlanAvailable = true;
@@ -157,7 +157,7 @@ public class IEC_DataStatisticsHistoriesController extends IECPageController {
 						if (oInvoiceItem != null) {
 							//Get the Invoice related to InvoiceItem
 							aSubscription.invoice = IECSubscriptionManager.getInvoiceById(oInvoiceItem.Invoice__c);
-									
+
 							if (aSubscription.invoice != null) {
 								if (aSubscription.invoice.Zuora__Payments__r != null && aSubscription.invoice.Zuora__Payments__r.size() > 0) {
 									//Get the Payment related to the Invoice
@@ -177,9 +177,9 @@ public class IEC_DataStatisticsHistoriesController extends IECPageController {
 				}
 			}
 		}
-		catch(Exception ex) { 
+		catch(Exception ex) {
 			system.debug('ex ' + ex.getLineNumber() + ' ' + ex.getStackTraceString());
-			addErrorMessage(ex.getMessage()); 
+			addErrorMessage(ex.getMessage());
 		} return null;
 	}
 
@@ -193,7 +193,7 @@ public class IEC_DataStatisticsHistoriesController extends IECPageController {
 			// *** IECCUstomer is based on the IECUserManager current logged user
 			IECCustomer currentCustomer = IECCustomer.getCurrentIECCustomer();
 			if (currentCustomer == null) return null;
-				
+
 			//Query the active subscriptions related to the billing account of logged user
 			if (currentCustomer.RelatedBillingAccount != null)
 				return IECSubscriptionManager.getInactiveSubscriptionsByBillingAccount(currentCustomer.RelatedBillingAccount.Id);
@@ -209,30 +209,30 @@ public class IEC_DataStatisticsHistoriesController extends IECPageController {
 	public Pagereference addToCart() {
 
 		try{
-			
+
 			Product2 p = [
-				SELECT Id, IEC_Parent_Product__c, SAP_Material_Number__c , IEC_Product_Rate_Plan_Information__c, Name, IEC_Parent_Product__r.Name 
-				FROM Product2 
+				SELECT Id, IEC_Parent_Product__c, SAP_Material_Number__c , IEC_Product_Rate_Plan_Information__c, Name, IEC_Parent_Product__r.Name
+				FROM Product2
 				WHERE IEC_Product_Rate_Plan_Information__c = :idSelectedRatePlanInfo
 				LIMIT 1
 			];
 
 			list<Id> productsIds = new List<Id>();
 			productsIds.add(p.Id);
-			
+
 			List<Product2> sibblingProducts = [
 				SELECT SAP_Material_Number__c FROM Product2 WHERE IEC_Parent_Product__c = :p.IEC_Parent_Product__c AND Id != :p.Id
 			];
-			Set<String> sibblingProductNumbers = new Set<String>(); 
+			Set<String> sibblingProductNumbers = new Set<String>();
 			for(Product2 prod : sibblingProducts){
 				sibblingProductNumbers.add(prod.SAP_Material_Number__c);
-			} 
+			}
 
 			String productNumber2Add = p.SAP_Material_Number__c;
 			Map<String, Decimal> cookieContent = IECOrder_Svc.getItemsInCookie();
 
-			//Validate another sub-product does not exist in the cart 
-			Boolean sibblingInCart = false; 
+			//Validate another sub-product does not exist in the cart
+			Boolean sibblingInCart = false;
 			for(String item : cookieContent.keySet()){
 				if(sibblingProductNumbers.contains(item)){
 					sibblingInCart = true; break;
@@ -240,16 +240,16 @@ public class IEC_DataStatisticsHistoriesController extends IECPageController {
 			}
 
 			if(!sibblingInCart){
-				return IECOrder_Svc.addCartToCookie(p.SAP_Material_Number__c, 1);	
+				return IECOrder_Svc.addCartToCookie(p.SAP_Material_Number__c, 1);
 			}else{
-				//--- Sibbling already in Cart 
+				//--- Sibbling already in Cart
 				ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.WARNING, String.format(Label.Item_already_in_your_cart, new List<String> {p.IEC_Parent_Product__r.Name}))); return null;
 			}
-			
-		} 
+
+		}
 		catch (Exception e){
-	        ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, e.getMessage() + ' - ' +e.getStackTraceString())); return null;
-		}	
+			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, e.getMessage() + ' - ' +e.getStackTraceString())); return null;
+		}
 
 	}
 
@@ -261,7 +261,7 @@ public class IEC_DataStatisticsHistoriesController extends IECPageController {
 	//		Zuora__Subscription__c subscriptionObj = subscriptionMap.get(similarProdSubscriptionId);
 	//		Pagereference pgRef = Page.IECProductViewer;
  // 			pgRef.getParameters().put(IECConstants.PARAM_PRODUCT_CODE, IECUtil.EncryptEncodeParameter(subscriptionObj.Product_Rate_Plan_Information__r.Related_Product_Information__r.Related_Product_Category__r.Name));
-	//	    pgRef.setRedirect(true); 
+	//	    pgRef.setRedirect(true);
 	//	    return pgRef;
 	//	}
 	//	catch (Exception ex) {

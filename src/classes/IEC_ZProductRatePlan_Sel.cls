@@ -18,18 +18,18 @@ public class IEC_ZProductRatePlan_Sel extends Selector
 		return zqu__ProductRatePlan__c.sObjectType;
 	}
 
-    public List<zqu__ProductRatePlan__c> getZProductRatePlanByZId(Set<String> setZuoraIds)
-    {
-        String query = String.format(
-            'SELECT {0}  ' + 
-            'FROM {1} ' + 
-            'WHERE zqu__ZuoraId__c IN :setZuoraIds ' , 
-            new List<String>{
-                String.join(getDefaultFields(), ', '),
-                getSObjectType().getDescribe().getName()
-            }
-        );
+	public List<zqu__ProductRatePlan__c> getZProductRatePlanByZId(Set<String> setZuoraIds)
+	{
+		String query = String.format(
+			'SELECT {0}  ' +
+			'FROM {1} ' +
+			'WHERE zqu__ZuoraId__c IN :setZuoraIds ' ,
+			new List<String>{
+				String.join(getDefaultFields(), ', '),
+				getSObjectType().getDescribe().getName()
+			}
+		);
 
-        return Database.query(query);
-    }
+		return Database.query(query);
+	}
 }

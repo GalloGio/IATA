@@ -1,0 +1,41 @@
+<apex:component id="CSP_Lvl2_Reminder_Email" access="global">
+    <html>
+
+    <head>
+        <style>
+            body {
+                font-family: "Open Sans", "GillSansMT", "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+                color: #004577;
+            }
+
+            div.main {
+                margin: auto;
+                width: 90%;
+            }
+
+            hr {
+                color: #0A4279;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="main">
+            <p>{!$Label.CSP_Dear} [CustomerName],</p>
+            <p>{!$Label.CSP_Lvl2_Reminder_1}</p>
+            <p>{!$Label.CSP_Lvl2_Reminder_2}</p>
+            <p>{!$Label.CSP_Lvl2_Reminder_3}</p>
+            <p>{!$Label.CSP_Lvl2_Reminder_4}</p>
+            <p>{!$Label.CSP_Lvl2_Reminder_5}</p>
+            <p>{!$Label.CSP_Lvl2_Reminder_6}</p>
+            <p>{!$Label.CSP_Lvl2_Reminder_7}</p>
+            <p>{!$Label.CSP_Lvl2_Reminder_8}</p>
+            <p>{!$Label.CSP_Lvl2_Reminder_9}</p>
+            <p>{!$Label.CSP_Email_Signature_Part_1}</p>
+            <p>{!$Label.CSP_Email_Signature_Part_2}</p>
+        </div>
+    </body>
+
+    </html>
+
+</apex:component>

@@ -1,6 +1,6 @@
 import { LightningElement, track } from 'lwc';
 import getCaseMessages from '@salesforce/apex/PortalCasesCtrl.getCaseMessages';
-import submitNewMessage from '@salesforce/apex/PortalCasesCtrl.submitNewMessage';
+import submitNewMessage from '@salesforce/apex/DAL_WithoutSharing.submitNewMessage';
 
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
@@ -23,15 +23,15 @@ export default class PortalHomeCalendar extends LightningElement {
     };
 
     @track loading = true;
-    @track caseDetails ;
+    @track caseDetails;
     @track lstMessages;
 
     @track newMessage = '';
     @track showSendMessageButton = false;
     @track messageInputLoading = false;
+	@track loadingCom = false;
 
-    @track showCaseMessagingSection = false;
-    @track messagingHeight = 'height:400px;';
+    @track showCaseMessagingSection = true;
 
     conversationImageURL = CSP_PortalPath + 'CSPortal/Images/Icons/messageBallons.svg';
 
@@ -87,6 +87,7 @@ export default class PortalHomeCalendar extends LightningElement {
     sendNewMessageJS(){
         if(this.newMessage.length > 0){
             this.messageInputLoading = true;
+			this.loadingCom = true;
             this.showSendMessageButton = false;
             submitNewMessage({ caseId : this.pageParams.caseId, messageTextAux : this.newMessage})
                 .then(results => {
@@ -101,10 +102,11 @@ export default class PortalHomeCalendar extends LightningElement {
                         this.dispatchEvent(toastEvent);
 
                         this.newMessage = '';
-                        this.template.querySelector('textarea').style.height  = '5px';
-                        this.template.querySelector('textarea').value = '';
-                        this.showSendMessageButton = false;
+						this.showSendMessageButton = false;
+						this.loadingCom = false;                                        
                         this.getCaseMessagesJS();
+						this.template.querySelector('textarea').style.height  = '5px';
+                        this.template.querySelector('textarea').value = '';
                     }
                 })
                 .catch(error => {
@@ -118,12 +120,18 @@ export default class PortalHomeCalendar extends LightningElement {
     toggleCaseMessagingSection(){
         if(this.showCaseMessagingSection){
             this.showCaseMessagingSection = false;
-            this.messagingHeight = 'height:400px;transition: height 0.3s ease;';
         }else{
             this.showCaseMessagingSection = true;
-            this.messagingHeight = 'height:100%;transition: height 0.3s ease;';
         }
+        
+        this.toggleCollapsed('[data-msgdiv]', 'collapsed');
+        this.toggleCollapsed('[data-msgicon ]', 'arrowExpanded');
+        
     }
-
+	
+	toggleCollapsed(elem, cssclass) {
+		this.template.querySelector(elem).classList.toggle(cssclass);
+	}
+	
 
 }

@@ -7,6 +7,7 @@
     <customButtons>New_ICCS_Checklist</customButtons>
     <customButtons>New_Manage_Fees_Checklist</customButtons>
     <customButtons>Reset_New_interactions</customButtons>
+    <customButtons>Escalate_within_IATA</customButtons>
     <emailDefault>false</emailDefault>
     <excludeButtons>Delete</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
@@ -611,6 +612,9 @@
     <relatedLists>
         <fields>NAME</fields>
         <relatedList>AP_Process_Form__c.Case__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <relatedList>RelatedAttachmentList</relatedList>
     </relatedLists>
     <relatedObjects>ContactId</relatedObjects>
     <relatedObjects>AccountId</relatedObjects>

@@ -6,6 +6,7 @@
     <customButtons>Change_Routing</customButtons>
     <customButtons>IDFS_Request_Operational_Improvement</customButtons>
     <customButtons>Move_to_Recycle_Bin</customButtons>
+    <customButtons>Reset_New_interactions</customButtons>
     <emailDefault>false</emailDefault>
     <excludeButtons>Delete</excludeButtons>
     <excludeButtons>Share</excludeButtons>
