@@ -123,7 +123,7 @@
         <showHeader>true</showHeader>
     </screens>
     <startElementReference>DisplayTest</startElementReference>
-    <status>Active</status>
+    <status>Obsolete</status>
     <variables>
         <name>BlankSpaceField</name>
         <dataType>String</dataType>
