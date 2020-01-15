@@ -2348,7 +2348,7 @@ public without sharing class ISSP_AMS_PASS_Accreditation {
 			selectedLang = 'English';
 		}
 
-	Id passReqRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Requirement__c', 'PASS');
+	Id passReqRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Requirement__c', AMS_Utils.passParticipation);
 		this.List_CountryReqments = [SELECT Id, Name, Requirement_text__c, File_to_Upload__c, File_Identifier2__c
 									 FROM AMS_Accreditation_Requirement__c
 									 WHERE AMS_Accreditation_Country_CheckList__r.Operation__c = :sector

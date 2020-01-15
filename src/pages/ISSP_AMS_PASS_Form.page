@@ -1,4 +1,4 @@
-<apex:page controller="ISSP_AMS_PASS_Accreditation" showHeader="false" sidebar="false" standardStylesheets="true" language="{!displayLanguage}" applyBodyTag="false" applyHtmlTag="false"  action="{!securityCheck}">
+<apex:page controller="ISSP_AMS_Accreditation" showHeader="false" sidebar="false" standardStylesheets="true" language="{!displayLanguage}" applyBodyTag="false" applyHtmlTag="false"  action="{!securityCheck}">
     <html> 
         <c:ISSP_Header communityName="{!communityName}"></c:ISSP_Header>
         <c:iss_ap_css />

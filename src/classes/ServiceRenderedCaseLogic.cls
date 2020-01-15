@@ -93,7 +93,7 @@ public class ServiceRenderedCaseLogic {
 			if(!leavingCases.isEmpty())
 				newSRList.addAll(ServiceRenderedCaseLogic.leavingCases(leavingCases, ConsumerIdsFromNewCases, ServicesPerReason));
 
-			if(c.Reason1__c.startsWith('PASS')){
+			if(c.Reason1__c.startsWith(AMS_Utils.passParticipation)){
 				if(c.Reason1__c==AMS_Utils.passCountryCaseReason){
 					passCaseIdList.add(c.ParentId);
 					}
@@ -449,7 +449,7 @@ public class ServiceRenderedCaseLogic {
 
 					set<String> setCASSParticipationNames = new set<String>{'CASS Participation', 'CASS Representation', 'CASS via GSSA', 'CASS Export Direct Participation', 'CASS Import Direct Participation', 'CASS Export via GSSA', 'CASS Import via GHA'};
 					set<String> setBSPParticipationNames = new set<String>{'BSP Participation', 'BSP via IBCS'};
-					set<String> setPASSParticipationNames = new set<String>{'PASS Participation', 'PASS Country','PASS Country Aggregator'};
+					set<String> setPASSParticipationNames = new set<String>{AMS_Utils.passAirlineCaseReason, AMS_Utils.passCountryCaseReason,AMS_Utils.passAggregatorCaseReason};
 
 					// count the participations by type
 					for (Services_Rendered__c sr : lstParticipations) {

@@ -19,9 +19,9 @@ private class ISSP_APProcess_Test
 		insert APCountrySpecsSettings;
 
 		List<Case_Reason_Service__c> caseReasonServiceSettings = new List<Case_Reason_Service__c> {
-			new Case_Reason_Service__c(Name = 'PASS Country', Provider_Required__c = false,Service__c='PASS Country'),
-			new Case_Reason_Service__c(Name = ' PASS Country Aggregator', Provider_Required__c = false,Service__c='PASS Country'),
-			new Case_Reason_Service__c(Name = 'PASS Participation', Provider_Required__c = false,Service__c='PASS Country')
+			new Case_Reason_Service__c(Name = AMS_Utils.passCountryCaseReason, Provider_Required__c = false,Service__c=AMS_Utils.passCountryCaseReason),
+			new Case_Reason_Service__c(Name = AMS_Utils.passAggregatorCaseReason, Provider_Required__c = false,Service__c=AMS_Utils.passCountryCaseReason),
+			new Case_Reason_Service__c(Name = AMS_Utils.passAirlineCaseReason, Provider_Required__c = false,Service__c=AMS_Utils.passCountryCaseReason)
 		};
 		insert caseReasonServiceSettings;
 
@@ -1884,13 +1884,13 @@ private class ISSP_APProcess_Test
 		update con;
 
 		AP_Country_Requierment__c APCountryRequirementTestPT= new AP_Country_Requierment__c();
-		APCountryRequirementTestPT.Line_of_business__c='PASS';
+		APCountryRequirementTestPT.Line_of_business__c=AMS_Utils.passParticipation;
 		APCountryRequirementTestPT.Country__c=countryPT.id;
 		APCountryRequirementTestPT.Name='Portugal';
 		insert APCountryRequirementTestPT;
 
 		AP_Country_Requierment__c APCountryRequirementTestES= new AP_Country_Requierment__c();
-		APCountryRequirementTestES.Line_of_business__c='PASS';
+		APCountryRequirementTestES.Line_of_business__c=AMS_Utils.passParticipation;
 		APCountryRequirementTestES.Country__c=countryES.id;
 		APCountryRequirementTestES.Name='Spain';
 		insert APCountryRequirementTestES;
@@ -1904,7 +1904,7 @@ private class ISSP_APProcess_Test
 		System.runAs(newUser) {
 
 			Case testCase = ISSP_ObjectFactory.createNewCase();
-			testCase.Verification__c='PASS';
+			testCase.Verification__c=AMS_Utils.passParticipation;
 			testCase.Account_Concerned__c=headquarter.id;
 			testCase.Country_Concerned__c='PT;ES';
 			testCase.CaseArea__c='Airline Joining';
@@ -1933,10 +1933,10 @@ private class ISSP_APProcess_Test
 			esAttachment.Case__c=testCase.id;
 			insert esAttachment;
 
-			ApexPages.currentPage().getParameters().put('airline' ,'PASS');
+			ApexPages.currentPage().getParameters().put('airline' ,AMS_Utils.passParticipation);
 			ApexPages.currentPage().getParameters().put('step' ,'1');
 			ApexPages.currentPage().getParameters().put('caseId' ,testCase.id);
-			ApexPages.currentPage().getParameters().put('strOT' ,'PASS');
+			ApexPages.currentPage().getParameters().put('strOT' ,AMS_Utils.passParticipation);
 
 			ISSP_APProcess ctrl = new ISSP_APProcess();
 
@@ -1948,7 +1948,6 @@ private class ISSP_APProcess_Test
 			ctrl.goToFinalStep();
 			ctrl.changeIsPassAirlineMethod();
 
-			//mmsa
 			System.assert(ctrl.isPassAirline);
 			System.assertEquals(ctrl.passParam, '&airline=PASS');
 		}
@@ -1956,7 +1955,7 @@ private class ISSP_APProcess_Test
 		Test.stopTest();
 	}
 
-	 @isTest static void testAPProcessManagePASS() {
+	 @isTest static void testAPProcessPASS6() {
 		Portal_Applications__c portalApp = new Portal_Applications__c(Name = 'Stuff');
 		insert portalApp;
 
@@ -2001,7 +2000,7 @@ private class ISSP_APProcess_Test
 		update con;
 
 		AP_Country_Requierment__c APCountryRequirementTest= new AP_Country_Requierment__c();
-		APCountryRequirementTest.Line_of_business__c='PASS';
+		APCountryRequirementTest.Line_of_business__c=AMS_Utils.passParticipation;
 		APCountryRequirementTest.Country__c=countryPT.id;
 		APCountryRequirementTest.Name='test';
 		insert APCountryRequirementTest;
@@ -2015,7 +2014,7 @@ private class ISSP_APProcess_Test
 		System.runAs(newUser) {
 
 			Case testCase = ISSP_ObjectFactory.createNewCase();
-			testCase.Verification__c='PASS';
+			testCase.Verification__c=AMS_Utils.passParticipation;
 			testCase.Account_Concerned__c=headquarter.id;
 			testCase.Country_Concerned__c='PT';
 			testCase.CaseArea__c='Airline Joining';
@@ -2066,7 +2065,7 @@ private class ISSP_APProcess_Test
 
 
 	@isTest
-	static void goToStep2_test_m() {
+	static void testAPProcessPASS2() {
 		IATA_ISO_Country__c ic = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='Pt');
 		Account a = new Account(name = 'test', Sector__c = 'NOT General Public', Category__c = 'Non-IATA Travel Agent', IATA_ISO_Country__c = ic.Id);
 		insert a;
@@ -2097,11 +2096,10 @@ private class ISSP_APProcess_Test
 			System.assertEquals(ap.passParam, ap.passParam + '&managePASS=true');
 		}
 		Test.stopTest();
-		//System.assertEquals(pref, '/ISSP_APProcess?caseId='+ap.newCase.Id+'&step=4'+ap.passParam);
 	}
 
 	@isTest
-	static void goToStep3_test_m() {
+	static void testAPProcessPASS3() {
 		Case fakeCase = new Case();
 		insert fakeCase;
 
@@ -2115,11 +2113,10 @@ private class ISSP_APProcess_Test
 			/*pref = */ ap.goToStep3();
 		Test.stopTest();
 		System.assertEquals(ap.passParam, ap.passParam + '&managePASS=true');
-		//System.assertEquals(pref, '/ISSP_APProcess?caseId='+ap.newCase.Id+'&step=1'+ap.passParam);
 	}
 
 	@isTest
-	static void goToStep4_test_m() {
+	static void testAPProcessPASS4() {
 		Case fakeCase = new Case();
 		insert fakeCase;
 
@@ -2133,7 +2130,6 @@ private class ISSP_APProcess_Test
 			/*pref = */ ap.goToStep3();
 		Test.stopTest();
 		System.assertEquals(ap.passParam, ap.passParam + '&managePASS=true');
-		//System.assertEquals(pref, '/ISSP_APProcess?caseId='+ap.newCase.Id+'&step=4'+ap.passParam);
 	}
 
 }

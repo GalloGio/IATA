@@ -1,4 +1,4 @@
-<apex:page controller="ISSP_AMS_PASS_Accreditation"
+<apex:page controller="ISSP_AMS_Accreditation"
            cache="false"
            sidebar="false"
            showHeader="false"

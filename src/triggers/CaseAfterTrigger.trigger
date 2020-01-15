@@ -593,25 +593,19 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 				set<Id> checkChildCasesId=new set<Id>();
 				//Initial Validation
 				for (Case c : casesToTrigger){
-					if (ServicesToCheck.contains(c.reason1__c) && c.Status == 'Closed' && (c.BSPCountry__c != AMS_Utils.passIATAMultipleCountries || !c.Reason1__c.startsWith('PASS')) && (trigger.isInsert || trigger.oldmap.get(c.id).Status != 'Closed')){
+					if (ServicesToCheck.contains(c.reason1__c) && c.Status == 'Closed' && (c.BSPCountry__c != AMS_Utils.passIATAMultipleCountries || !c.Reason1__c.startsWith(AMS_Utils.passParticipation)) && (trigger.isInsert || trigger.oldmap.get(c.id).Status != 'Closed')){
 						caseMap.put(c.id,c); //child cases that are coming from Opened to Closed
 
 						caseIdPerAccID.put(c.accountID,c.id);
 					} else if( !ServicesToCheck.contains(c.reason1__c)){
 						c.addError(' The reason you entered is not mapped to a service. \n Please contact the administrators.\n Administration Error:Custom Setting ' );
 					}
-					/*if(c.Status == 'Closed' && c.BSPCountry__c == AMS_Utils.passIATAMultipleCountries && c.Reason1__c.startsWith('PASS') && trigger.oldmap.get(c.id).Status != 'Closed'){
-						checkChildCasesId.add(c.Id); //all (--closed--) cases Ids
-					}
-					if(c.Reason1__c.startsWith('PASS')){
-						checkChildCasesId.add(c.Id); //all (--closed--) cases Ids
-					}*/
 
 				}
 
 				//Previous validations for PASS are now done in a validation rule in Case object
 
-			   	if(caseMap.size()>0){ //validation and at the same time change of recordtype of the accts if they were standard
+				if(caseMap.size()>0){ //validation and at the same time change of recordtype of the accts if they were standard
 					map<Id,Case> casesWithErrorOnAcct = ServiceRenderedCaseLogic.changeRTtoBranchAccts(caseIdPerAccID, caseMap);
 					for (Id idc : caseMap.keySet()) {
 						if(casesWithErrorOnAcct.get(idc) <> null){

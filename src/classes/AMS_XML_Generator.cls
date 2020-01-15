@@ -1708,7 +1708,7 @@ public with sharing class AMS_XML_Generator {
 				}
 			}
 
-			if(agency.Sector__c != Null && agency.Sector__c.equalsIgnoreCase('Cargo Agent') && agency.Location_Class__c=='L'){
+			if(agency.Sector__c != Null && agency.Sector__c.equalsIgnoreCase(AMS_Utils.SECTOR_PASS) && agency.Location_Class__c=='L'){
 				getElementNode(agencyNode, 'pas_cgo', 'L');
 			}else{
 				getElementNode(agencyNode, 'pas_cgo', sPasCargo);

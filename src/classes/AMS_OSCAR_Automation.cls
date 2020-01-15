@@ -1492,9 +1492,8 @@ public with sharing class AMS_OSCAR_Automation {
 
 			if(oscar.Location_Class__c == 'L') {
 				//only contacts without Application Rights
-				accredList = [select Id, Contact__c, Contact__r.Name FROM AMS_Accreditation_Contact__c WHERE (AMS_Pax_Accreditation_Form__c =:oscar.AMS_Online_Accreditation__c) AND  (Contact__r.Available_Services__c EXCLUDES ('PASSlink Single Sign-On'))];
+				accredList = [select Id, Contact__c, Contact__r.Name FROM AMS_Accreditation_Contact__c WHERE (AMS_Pax_Accreditation_Form__c =:oscar.AMS_Online_Accreditation__c) AND  (Contact__r.Available_Services__c EXCLUDES (AMS_Utils.passSSOPortalService))];
 				pa = [SELECT Id FROM Portal_Applications__c WHERE Name =:AMS_Utils.passSSOPortalService LIMIT 1];
-				Id profileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal (Partner)' LIMIT 1].Id;
 				for(AMS_Accreditation_Contact__c accrCon : accredList) {
 					if(!accredList.isEmpty() && accrCon.Contact__c != null){
 						conList.add(accrCon.contact__c);
@@ -1509,7 +1508,6 @@ public with sharing class AMS_OSCAR_Automation {
 				}
 				ISSP_ContactList ctrl = new ISSP_ContactList();
 				ctrl.processMultiplePortalUserStatusChange(idSet, 'Approved User', 'Active');
-				//ISSP_AMS_PASS_Accreditation.createNewUser(profileId, conList);
 				
 			} else {
 				accredList = [select Id, Contact__c FROM AMS_Accreditation_Contact__c WHERE AMS_Pax_Accreditation_Form__c =: oscar.AMS_Online_Accreditation__c AND Portal_administrator__c = true LIMIT 1];

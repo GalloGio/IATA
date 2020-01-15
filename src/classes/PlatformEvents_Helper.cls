@@ -47,7 +47,6 @@ public class PlatformEvents_Helper implements Queueable {
 				'TIP_BIN_Range__c' => 'Product_Bin_Range__e',
 				'Remote_Invocation__c' => 'RemoteInvocation__e',
 				'GADM_Account_Service_Detail__c' => 'GadmAccountServiceDetail__e',
-				//PASS
 				'AP_Process_Form__c' => 'Airline_Account__e',
 				'Services_Rendered__c' => 'Service_Rendered__e'
 		};

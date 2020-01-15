@@ -316,7 +316,7 @@ global without sharing class ISSP_APProcess {
 
 		//PASS
 		selectedPassCountries= new List<SelectOption>();
-		if(ApexPages.currentPage().getParameters().get('airline')=='PASS'){
+		if(ApexPages.currentPage().getParameters().get('airline')==AMS_Utils.passParticipation){
 			isPassAirline=true;
 			passParam='&airline=PASS';
 		}else{
@@ -977,7 +977,7 @@ global without sharing class ISSP_APProcess {
 		SYSTEM.DEBUG('HQ Account Id: ' + vHQAccountId);
 		retrieveHQAccountDetails(vHQAccountId);  //Especially to get AL Membershhip status at this stage for initial case creation
 		getLoB(strOperationType);
-		if(strLoB == 'PASS'){
+		if(strLoB == AMS_Utils.passParticipation){
 			isPassAirline=true;
 		}
 
@@ -1259,14 +1259,14 @@ global without sharing class ISSP_APProcess {
 			strReason='New ICH participant';
 			isICH = true;
 			strLoB = 'ICH';
-		}else if(strType=='PASS'){
+		}else if(strType==AMS_Utils.passParticipation){
 			if(managePASS){
 				strReason=AMS_Utils.passAggregatorCaseReason;
 			} else {
 				strReason=AMS_Utils.passAirlineCaseReason;
 			}
 			isPASS = true;
-			strLoB = 'PASS';
+			strLoB = AMS_Utils.passParticipation;
 		}
 
 		return strReason;
@@ -1579,7 +1579,7 @@ global without sharing class ISSP_APProcess {
 
 		strOperationType = Apexpages.currentPage().getParameters().get('strOT');
 
-		if(strOperationType!='PASS' || (strOperationType=='PASS' && isGSSAUser)){
+		if(strOperationType!=AMS_Utils.passParticipation || (strOperationType==AMS_Utils.passParticipation && isGSSAUser)){
 				strLOB = null;
 			
 				if(strOperationType != null) {
@@ -2333,9 +2333,9 @@ global without sharing class ISSP_APProcess {
 		} else if(strLine.startsWith('ICH')){
 			isICH = true;
 			strLoB = 'ICH';
-		}else if(strLine.startsWith('PASS')){
+		}else if(strLine.startsWith(AMS_Utils.passParticipation)){
 			isPASS = true;
-			strLoB = 'PASS';
+			strLoB = AMS_Utils.passParticipation;
 		}
 	}
 
@@ -3063,9 +3063,7 @@ global without sharing class ISSP_APProcess {
 	public Pagereference changeIsPassAirlineMethod(){
 		strOperationType = Apexpages.currentPage().getParameters().get('strOT');
 		changePass = false;
-		System.debug('JCFF strOperationType changeIsPassAirlineMethod ' + strOperationType);
-		System.debug('JCFF Approcess changeIsPassAirlineMethod ' + Approcess);
-		if(strOperationType=='PASS'){
+		if(strOperationType==AMS_Utils.passParticipation){
 			isPassAirline=true;
 			if(Approcess == 'chg'){
 				changePass = true;
@@ -3077,7 +3075,7 @@ global without sharing class ISSP_APProcess {
 		return null;
 	}
 
-	//DB :: PASS JCFF
+	//DB :: PASS
 	public void withdrawCountries(){
 
 		List<String> isoCountriesList = new List<String>();
@@ -3103,7 +3101,6 @@ global without sharing class ISSP_APProcess {
 			service.Services_Rendered_Status__c = 'Inactive';
 			objectMapServiceRendered.put(service.Id, service);
 		}
-		System.debug('DB:: serviceRenderedList updated '+serviceRenderedList);
 		try {
 			update serviceRenderedList;
 			fetchPassCountries(newCase);
@@ -3130,7 +3127,7 @@ global without sharing class ISSP_APProcess {
 
 		List <AP_Country_Requierment__c> isoListJoining = [SELECT Id, Name, Country__r.Name, Country__r.ISO_Code__c
 															FROM AP_Country_Requierment__c
-															WHERE Line_of_business__c = 'PASS' ORDER by Name];
+															WHERE Line_of_business__c =:AMS_Utils.passParticipation ORDER by Name];
 
 		if(con.Account!=null){
 			//List<Case> passCaseList=[SELECT Id,IFAP_Country_ISO__c,BSPCountry__c, Country_Concerned__c FROM Case WHERE AccountId=:con.Account.Id AND (Reason1__c=:AMS_Utils.passAirlineCaseReason OR Reason1__c=:AMS_Utils.passAggregatorCaseReason) AND Status!='Draft'];
@@ -3156,7 +3153,6 @@ global without sharing class ISSP_APProcess {
 				selectedCountriesAux.addAll(passCase.Country_Concerned__c.split(';'));
 			}
 		}
-		System.debug('DB:: isoListinJoining' + isoListJoining);
 		for(AP_Country_Requierment__c isoJoiningCountry : isoListJoining){
 			/*if(existingPassCountriesIso.contains(isoJoiningCountry.Country__r.ISO_Code__c)){
 				existingPassCountries.add(isoJoiningCountry.Country__r.Name);
@@ -3186,7 +3182,7 @@ global without sharing class ISSP_APProcess {
 
 		List <AP_Country_Requierment__c> isoListJoining = [SELECT Id, Name, Country__r.Name, Country__r.ISO_Code__c,Country__r.Id
 															FROM AP_Country_Requierment__c
-															WHERE Line_of_business__c = 'PASS' AND Country__r.ISO_Code__c IN:isocodeList ORDER by Name];
+															WHERE Line_of_business__c =:AMS_Utils.passParticipation AND Country__r.ISO_Code__c IN:isocodeList ORDER by Name];
 
 		for(AP_Country_Requierment__c isoJoining : isoListJoining) {
 			passCountryAux=new passCountriesWrapper(isoJoining.Country__r.Name,isoJoining.Country__r.ISO_Code__c,isoJoining.Country__r.Id);
