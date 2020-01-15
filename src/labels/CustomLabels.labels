@@ -26850,7 +26850,7 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_CalendarDisclaimer</shortDescription>
-        <value>&quot;Note: The calendar for this market contains local dpecific dates that are not reflected in this application. 
+        <value>&quot;Note: The calendar for this market contains local specific dates that are not reflected in this application. 
 Please make sure you download the full pdf version of the Calendar for your market by clicking on the support tab and then selecting calendars under documents on the right hand side of the page.&quot;</value>
     </labels>
     <labels>
