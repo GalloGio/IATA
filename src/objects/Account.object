@@ -31116,10 +31116,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
-                <fullName>Other Equipment Manufacturer</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Other Private Sector Association</fullName>
                 <default>false</default>
             </values>
@@ -46268,10 +46264,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Other</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Other Equipment Manufacturer</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -65918,10 +65910,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Other</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Other Equipment Manufacturer</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -96510,10 +96498,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
-                <fullName>Other Equipment Manufacturer</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Other Private Sector Association</fullName>
                 <default>false</default>
             </values>
@@ -103094,10 +103078,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Other</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Other Equipment Manufacturer</fullName>
                 <default>false</default>
             </values>
             <values>
