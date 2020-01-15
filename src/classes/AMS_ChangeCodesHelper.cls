@@ -383,7 +383,7 @@ public class AMS_ChangeCodesHelper {
 			oscarAgency.Certificate_Generated_Current_Year__c = true;
 		}
 		//PASS
-		if(aacNew.Change_Code__c == 'FIN' && oscar.Location_Class__c == 'L'  && oscarAgency.Sector__c == AMS_Utils && oscarAgency.Category__c == AMS_Utils.categoryPass) {
+		if(aacNew.Change_Code__c == 'FIN' && oscar.Location_Class__c == 'L'  && oscarAgency.Sector__c == AMS_Utils.SECTOR_PASS && oscarAgency.Category__c == AMS_Utils.categoryPass) {
 			System.enqueueJob(new AMS_OSCAR_Automation.PortalRightsForPortalAdmins(oscar));
 		}
 		if( aacNEW.Change_Code__c == 'FIN'){
