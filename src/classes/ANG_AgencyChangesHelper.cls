@@ -2203,7 +2203,7 @@ public with sharing class ANG_AgencyChangesHelper {
 			accountIds.add(acc.Id);
 
 		// get Additional Account Fields Location_Class__c, Status__c, Sector__c , Category__c
-		Map<Id, Account> accountInfoMap = new Map<Id,Account>([SELECT Id, Location_Class__c, Status__c, Sector__c , Category__c FROM Account WHERE Id IN :accountIds]);
+		Map<Id, Account> accountInfoMap = new Map<Id,Account>([SELECT Id, Location_Class__c, Status__c, Sector__c , Category__c, CNS_Agency__c FROM Account WHERE Id IN :accountIds]);
 
 		// get the forms of payment for all accounts involved in the changes to display on eBulletin
 		Map<Id,List<Agency_Authorization__c>> fOPs = AMS_ChangeCodesHelper.fetchFormsOfPayment(accountIds);
