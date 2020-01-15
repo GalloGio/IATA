@@ -1,4 +1,4 @@
-public with sharing class IsraelDisputesCreateNewCaseCtrl {
+public without sharing class IsraelDisputesCreateNewCaseCtrl {
 
 	private final static Integer MAX_RESULTS = 20;
 
@@ -27,7 +27,7 @@ public with sharing class IsraelDisputesCreateNewCaseCtrl {
 		for (Account account : searchRelatedAccounts(searchTerm)) {
 			PortalLookupSearchResult res = new PortalLookupSearchResult(account.Id, 'Account', accountIcon, account.Name + '', '(' + account.Airline_Designator__c + ' ' + account.Airline_Prefix__c + ')');
 			Map<String,String> extraFields = new Map<String,String>();
-			extraFields.put('iataCode',account.Site);
+			extraFields.put('airlineCode',account.Airline_Prefix__c);
 			res.setExtraFields(extraFields);
 			results.add(res);
 		}
@@ -66,5 +66,48 @@ public with sharing class IsraelDisputesCreateNewCaseCtrl {
 
 		return allAccts;
 
+	}
+
+	//Inserts the Case. But sets a savepoint in case the Emails do not exist.
+	@AuraEnabled
+	public static Case insertCase(Case caseToInsert, List<String> recipientsToAdd) {
+		try{
+			if(!recipientsToAdd.isEmpty()) {
+				caseToInsert.E2CP__AdditionalCC__c = String.join(recipientsToAdd, ',');
+			}
+			insert caseToInsert;
+		}
+		catch(DmlException e) {
+			throw new AuraHandledException(e.getMessage());
+		}
+		return [SELECT Id, CaseNumber FROM Case WHERE id =: caseToInsert.Id LIMIT 1];
+	}
+
+	@future
+	public static void airlineEmailNotification(List<Id> cIdList) {
+		List<Case> cList = [SELECT Id, Airline_E_mail__c, E2CP__AdditionalCC__c FROM Case WHERE Id =: cIdList];
+		EmailTemplate template = [SELECT Id FROM EmailTemplate WHERE Name = 'GCS Dispute Notification Agent Israel VF' LIMIT 1];
+		OrgWideEmailAddress[] fromAddress = [SELECT Id FROM OrgWideEmailAddress WHERE Address = 'noreply@iata.org'];
+		ISSP_CS__c customSetting = ISSP_CS__c.getValues('No Notification Email Contact Id');
+
+		List<Messaging.SingleEmailMessage> emails = new List<Messaging.SingleEmailMessage>();
+
+		for(Case aCase : cList){
+			Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+
+			mail.setSaveAsActivity(false);
+			mail.setTemplateId(template.Id);
+			mail.setTargetObjectId(customSetting.Value__c);
+			mail.setWhatId(aCase.Id);
+			mail.setToAddresses(new String[] { aCase.Airline_E_mail__c });
+			if(aCase.E2CP__AdditionalCC__c != null){
+				List<String> items = aCase.E2CP__AdditionalCC__c.split('\\s*,\\s*');
+				mail.setBccAddresses(items);
+			}
+			mail.setOrgWideEmailAddressId(fromAddress.get(0).Id);
+
+			emails.add(mail);
+		}
+		Messaging.sendEmail(emails); 
 	}
 }

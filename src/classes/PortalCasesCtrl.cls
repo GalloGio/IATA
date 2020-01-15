@@ -669,7 +669,8 @@ public with sharing class PortalCasesCtrl {
                         Subtopic__c, Region__c, Reason1__c, Country_concerned__c, Account_Concerned__r.IATACode__c, 
                         Description,E2CP__AdditionalCC__c,Account_Concerned__c, Status,RecordType__c,
                         RecordType.Name, WhoClosedCase__c,WhoClosedCase__r.UserRole.Name, BSPCountry__c, AccountId,
-                        Account.Name, ContactId, Contact.FirstName, Contact.LastName, Contact.Email,Contact.Phone
+                        Account.Name, ContactId, Contact.FirstName, Contact.LastName, Contact.Email,Contact.Phone,
+						Airline__c, Airline_E_mail__c, Document_number__c, Reporting_date__c, Amount_disputed__c
                         FROM Case 
                         WHERE Id = :caseId];
 

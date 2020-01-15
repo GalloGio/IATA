@@ -128,15 +128,18 @@ ISBLANK(ANG_Restrict_by_Accreditation_Type__c)
         <fullName>ANG_Flag_Country_Coverage__c</fullName>
         <description>Flag used to filter the Portal Services SOQL Query configured on the custom setting: ISSP Service List View</description>
         <externalId>false</externalId>
-        <formula>OR (
-  AND(
-    CONTAINS(Name, &quot;IATA EasyPay&quot;),
-    CONTAINS(ANG_Country_Coverage__c, $User.ANG_Customer_Country_ISO__c),
-    TRIM(ANG_Country_Coverage__c) != &quot;&quot;
-  ),
-  AND(
-    NOT(CONTAINS(Name, &quot;IATA EasyPay&quot;))
-  )
+        <formula>IF(ISPICKVAL(Country_Visibility_Control__c, &quot;SHOW_ALL&quot;), TRUE,
+OR (
+AND(
+IF(
+     ISPICKVAL(Country_Visibility_Control__c, &quot;HIDE&quot;),
+        NOT(CONTAINS(ANG_Country_Coverage__c, $User.ANG_Customer_Country_ISO__c)),
+     CONTAINS(ANG_Country_Coverage__c, $User.ANG_Customer_Country_ISO__c)
+     ),
+TRIM(ANG_Country_Coverage__c) != &quot;&quot;
+),
+TRIM(ANG_Country_Coverage__c) = &quot;&quot;
+)
 )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Flag Country Coverage</label>
@@ -509,6 +512,41 @@ NOT(CONTAINS($User.Customer_type__c,&quot;Agency&quot;))
         <trackTrending>false</trackTrending>
         <type>Html</type>
         <visibleLines>25</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Country_Visibility_Control__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Listed Countries Only: Only available to &#39;Country Visibility Restriction&#39; listed countries (DEFAULT)
+
+    Hide from Listed Countries: Available to all countries EXCEPT the listed countries
+
+    All Countries: Available to all countries; ignores related list</inlineHelpText>
+        <label>Country Visibility Control</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>SHOW</fullName>
+                    <default>false</default>
+                    <label>Listed Countries Only</label>
+                </value>
+                <value>
+                    <fullName>HIDE</fullName>
+                    <default>false</default>
+                    <label>Hide from Listed Countries</label>
+                </value>
+                <value>
+                    <fullName>SHOW_ALL</fullName>
+                    <default>false</default>
+                    <label>Display to All Countries</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Critical_Service__c</fullName>

@@ -98,12 +98,32 @@ public with sharing class IsraelDisputesCreateNewCaseTest {
 		List<PortalLookupSearchResult> lstSearchAccounts = new List<PortalLookupSearchResult>();
 		List<PortalLookupSearchResult> lstSearchAccountsNoEntry = new List<PortalLookupSearchResult>();
 
+		insert new ISSP_CS__c(Name = 'No Notification Email Contact Id', Value__c = con.Id);
+
+		Case newcase = new Case();
+
+		Id recTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Disputes');
+		newcase.RecordTypeId = recTypeId;
+		newcase.BSPCountry__c = 'GB';
+		newcase.Subject = 'test';
+		newcase.Description = 'test';
+		newCase.Status = 'Open';
+		newCase.CaseArea__c = 'Customer Portal';
+		newCase.Origin = 'Portal';
+		newCase.Airline_E_mail__c = 'TestoPesto@testopesto.com';
+		List<String> lstRecipient = new List<String>();
+		lstRecipient.add('Test11112@test11.com');
+
 		test.startTest();
 		
 		System.runAs(newUser) {
 			Boolean fifteenth = IsraelDisputesCreateNewCaseCtrl.isBeforeFifteenth();
 			lstSearchAccounts = IsraelDisputesCreateNewCaseCtrl.searchAccounts('112');
 			lstSearchAccountsNoEntry = IsraelDisputesCreateNewCaseCtrl.searchAccounts('');
+			Case insertedcase =  IsraelDisputesCreateNewCaseCtrl.insertCase(newcase,lstRecipient);
+			List<Id> lId = new List<Id>();
+			lId.add(insertedcase.Id);
+			IsraelDisputesCreateNewCaseCtrl.airlineEmailNotification(lId);
 		}
 
 		test.stopTest();

@@ -30,6 +30,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 	boolean trgAccelyaRequestSetCountry = true;
 	boolean trgCase = true;
 	boolean trgCaseCheckOwnerChangeForOrchestrator = true;
+	boolean caseEmailNotif = true;
 	
 	if(!Test.isRunningTest()){
 		trgCaseIFAP_AfterInsertDeleteUpdateUndelete = GlobalCaseTrigger__c.getValues('AT trgCaseIFAP_AfterInsertDelete').ON_OFF__c;     //55555555555555
@@ -46,6 +47,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 		trgAccelyaRequestSetCountry = GlobalCaseTrigger__c.getValues('AT trgAccelyaRequestSetCountry').ON_OFF__c;                       //33333333333333
 		trgCase = GlobalCaseTrigger__c.getValues('AT trgCase').ON_OFF__c;                                                               //33333333333333
 		trgCaseCheckOwnerChangeForOrchestrator = GlobalCaseTrigger__c.getValues('ISSP_AMC_CaseTriggerHelper').ON_OFF__c;
+		caseEmailNotif = false;
 	}
     /**********************************************************************************************************************************/
     
@@ -66,6 +68,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
     Id OscarComRTId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
     Id APCaseRTID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IDFS_Airline_Participation_Process');
     Id CNSRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'CNS_Collection_Process');
+	ID IsraelDispute  = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Disputes');
 /*Record type*/	
     
     /*Variables*/
@@ -830,6 +833,17 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
             DPCCasesUtil.addAdditionalContactsAfter();
 		}
 		/*trgCase Trigger.isInsert*/
+
+		//Sends an email notification to the Airline Email entered in the Web to Case form at http://www.iata.org/customer_portal_europe/deduction-israel.htm.
+		if(caseEmailNotif){
+			List<Id> disputeCasesToNotify = new List<Id>();
+			for (Case aCase: trigger.New){
+				if((aCase.Origin == 'Web' || aCase.Origin == 'Portal') && aCase.CaseArea__c == 'Dispute' && aCase.Airline_E_mail__c != null && aCase.RecordTypeId == IsraelDispute){
+					disputeCasesToNotify.add(aCase.Id);
+				}
+			}
+			if(!disputeCasesToNotify.isEmpty()) IsraelDisputesCreateNewCaseCtrl.airlineEmailNotification(disputeCasesToNotify);
+		}
 
 		/*ANG Triggers*/
 		new ANG_CaseTriggerHandler().onAfterInsert();

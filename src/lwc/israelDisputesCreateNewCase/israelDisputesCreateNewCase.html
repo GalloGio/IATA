@@ -87,10 +87,23 @@
                         <div class="slds-p-horizontal_xx-large slds-p-bottom_large slds-p-top_xx-large ">
                             <p class="text-xsmall slds-p-bottom_small">This deduction form allows travel agents participating in BSP Israel to advise airlines and IATA BSP management of offset of any specific amount from due payment, as per Israel Anti-Trust Commissioner's instructions.
                                 </p>
+						</div>
+						
+						<!--RELATED LOOKUP-->
+                        <div class="slds-p-horizontal_xx-large slds-p-bottom_large slds-p-top_xx-large ">
+                            <p class="text-xsmall slds-p-bottom_small">IATA Code</p>
+                            <c-portal-search-lookup-component onsearch={handleRelatedSearch} data-id="relatedLookup"
+                                item-name="iatalookup" oniatalookup={showRelatedResults}
+                                required-class={requiredClass2} single-lookup-result={singleresult2}
+                                placeholder={label.csp_searchIataCodeLocationNamePlaceHolder}
+                                hide-icon=true
+                                onclick={removeRequired}>
+                            </c-portal-search-lookup-component>
                         </div>
+                        <!--RELATED LOOKUP-->
 
                         <!--AIRLINE LOOKUP-->
-                        <div class="slds-p-horizontal_xx-large slds-p-bottom_large slds-p-top_xx-large ">
+                        <div class="slds-p-horizontal_xx-large slds-p-bottom_large">
                             <p class="text-xsmall slds-p-bottom_small">Airline</p>
                             <c-portal-search-lookup-component onsearch={handleIataSearch} data-id="iatalookup"
                                 item-name="iatalookup" oniatalookup={showIataResults}

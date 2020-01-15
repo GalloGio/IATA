@@ -161,7 +161,40 @@
                   </span>
                 </div>
               </div>
-            </div>
+			</div>
+			
+			<!-- Israel Deduction Case Rows -->
+			<div if:true={israelCase}
+			class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-around_medium">
+				<span class="grey">{labels.Airline__c}</span><br />
+				<span>{caseDetails.Airline__c}</span>
+			</div>
+			<div if:true={israelCase}
+			class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-around_medium">
+				<span class="grey">{labels.Airline_E_mail__c}</span><br />
+				<span>{caseDetails.Airline_E_mail__c}</span>
+			</div>
+			<div if:true={israelCase}
+			class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-around_medium">
+				<span class="grey">Request Type</span><br />
+				<span>{caseDetails.Reason1__c}</span>
+			</div>
+			<div if:true={israelCase}
+			class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-around_medium">
+				<span class="grey">{labels.Document_number__c}</span><br />
+				<span>{caseDetails.Document_number__c}</span>
+			</div>
+			<div if:true={israelCase}
+			class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-around_medium">
+				<span class="grey">Document Issue Date</span><br />
+				<span>{caseDetails.Reporting_date__c}</span>
+			</div>
+			<div if:true={israelCase}
+			class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-around_medium">
+				<span class="grey">{labels.Amount_disputed__c}</span><br />
+				<span>{caseDetails.Amount_disputed__c}</span>
+			</div>
+			<!-- Israel Deduction Case Rows -->
 
             <!-- ROW 7 Display PDF -->
             <div if:true={getDisplayPDF}
