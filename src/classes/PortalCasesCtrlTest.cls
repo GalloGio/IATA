@@ -34,9 +34,9 @@ private class PortalCasesCtrlTest {
 
 		User newUser = ISSP_ObjectFactory.createPortalUser(newCon1);
 		
-		Portal_Applications__c pa = new Portal_Applications__c(Name = TIP_Utils.PORTAL_SERVICE_NAME_TIP);
-		Portal_Applications__c pa1 = new Portal_Applications__c(Name = 'Airline Joinings Test');
-		Portal_Applications__c pa2 = new Portal_Applications__c(name = 'Agency Service Test');
+		Portal_Applications__c pa = new Portal_Applications__c(Name = TIP_Utils.PORTAL_SERVICE_NAME_TIP, Country_Visibility_Control__c = 'SHOW');
+		Portal_Applications__c pa1 = new Portal_Applications__c(Name = 'Airline Joinings Test', Country_Visibility_Control__c = 'SHOW');
+		Portal_Applications__c pa2 = new Portal_Applications__c(name = 'Agency Service Test', Country_Visibility_Control__c = 'SHOW');
 		insert new List<Portal_Applications__c>{pa, pa1, pa2};
 		
 		ISSP_Portal_Service_Ids__c psi = new ISSP_Portal_Service_Ids__c(
@@ -46,9 +46,9 @@ private class PortalCasesCtrlTest {
 		);
 		insert psi;
 		
-		Portal_Applications__c pa = new Portal_Applications__c(Name = TIP_Utils.PORTAL_SERVICE_NAME_TIP, Country_Visibility_Control__c = 'SHOW');
-		Portal_Applications__c pa1 = new Portal_Applications__c(Name = 'Airline Joinings Test', Country_Visibility_Control__c = 'SHOW');
-		Portal_Applications__c pa2 = new Portal_Applications__c(name = 'Agency Service Test', Country_Visibility_Control__c = 'SHOW');
+		Portal_Application_Right__c right1 = new Portal_Application_Right__c(Contact__c = newCon1.Id, Right__c = 'Access Granted', Portal_Application__c = pa.Id);
+		Portal_Application_Right__c right2 = new Portal_Application_Right__c(Contact__c = newCon1.Id, Right__c = 'Access Granted', Portal_Application__c = pa1.Id);
+		Portal_Application_Right__c right3 = new Portal_Application_Right__c(Contact__c = newCon1.Id, Right__c = 'Access Granted', Portal_Application__c = pa2.Id);
 		insert new List<Portal_Application_Right__c>{right1, right2, right3};
 		
 		ISSPCaseListView__c customSet = new ISSPCaseListView__c();
