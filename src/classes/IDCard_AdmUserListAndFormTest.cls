@@ -713,6 +713,9 @@ private class IDCard_AdmUserListAndFormTest {
 
 		IDCard_AdmPendingOpsController pendingctrl = new IDCard_AdmPendingOpsController();
 
+		List<ID_Card_Application__c> app = [select id from ID_Card_Application__c];
+		idcs[0].ID_Card_Application__c = app[1].id;
+		update idcs[0];
 
 		ApexPages.currentPage().getParameters().put('id',apps[0].id);
 		pendingctrl.validationApplication();
