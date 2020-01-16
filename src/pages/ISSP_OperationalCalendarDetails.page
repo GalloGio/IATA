@@ -459,6 +459,7 @@
         } else if (operationType.includes('ICCS')) {
             $("#timezone-disclaimer").addClass("hidden");
             $("#subtypeFilter").parent().parent().addClass("hidden");
+            $("#subtypeFilter").val("");
             $("#cycleFilter").parent().parent().removeClass("hidden");
             $("#countryFilter").parent().parent().removeClass("hidden");
             $("#frequencyFilter").parent().parent().addClass("hidden");
@@ -473,6 +474,7 @@
         } else {
             $("#timezone-disclaimer").addClass("hidden");
             $("#subtypeFilter").parent().parent().addClass("hidden");
+            $("#subtypeFilter").val("");
             $("#cycleFilter").parent().parent().addClass("hidden");
             $("#countryFilter").parent().parent().addClass("hidden");
             $("#frequencyFilter").parent().parent().addClass("hidden");
@@ -588,8 +590,15 @@
             }, 
             {escape: false}
         );
+        callShowDisclaimer();
     }
-    
+
+    function callShowDisclaimer() {
+        var countryId = $("#countryFilter").val();
+        var typeFilter = $("#subtypeFilter").val();
+        showDisclaimer(countryId, typeFilter);
+    }
+
     function initTable(cols, data) {
         var table = $('.table-pagination').DataTable({
             "language": {
