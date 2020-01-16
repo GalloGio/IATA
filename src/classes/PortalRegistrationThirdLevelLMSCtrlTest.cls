@@ -67,6 +67,7 @@ public class PortalRegistrationThirdLevelLMSCtrlTest{
 			PortalRegistrationThirdLevelLMSCtrl.sendSingleEmail(c.Name, c.Email, 'flow3', paramsJSON3);
 
 			String result = PortalRegistrationThirdLevelLMSCtrl.validateYasUserId(UserInfo.getUserId(), UserInfo.getUserName(), UserInfo.getFirstName(), UserInfo.getLastName());
+			system.assert(result == 'not_existing');
 
 		test.stopTest();
 	}
@@ -173,7 +174,10 @@ public class PortalRegistrationThirdLevelLMSCtrlTest{
 		String paramsJSON = '{"Additional_Email":"ad@test.test","Email":"em@test.test"}';
 		string encryptedStr = PortalPasswordHandler.EncryptString(paramsJSON);
 		String encodedPart = 'c=' + EncodingUtil.urlEncode(encryptedStr, 'UTF-8');
-		PortalRegistrationThirdLevelLMSCtrl.getParameters('apex/TestPage?'+encodedPart);
+		PortalRegistrationThirdLevelLMSCtrl.returnWrapper result = PortalRegistrationThirdLevelLMSCtrl.getParameters('apex/TestPage?'+encodedPart);
+		Map<String, Object> res = (Map<String, Object>)JSON.deserializeUntyped(result.userInfo);
+		system.assert(res.get('Additional_Email') == 'ad@test.test');
+		system.assert(res.get('Email') == 'em@test.test');
 
 		Test.stopTest();
 	}
