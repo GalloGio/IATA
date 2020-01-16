@@ -1612,17 +1612,17 @@ public static Boolean grantAccess(string contactId,string serviceId,string reaso
 			}
 		}
 
-		List<Term_and_Condition__c> tosList = [SELECT Id FROM Term_and_Condition__c WHERE NewGenApp_PortalService__c =: serviceId AND Is_Latest__c = true AND Status__c = 'Final'];
-		
-		if(tosList != null && tosList.isEmpty()){
-			latestToSAccepted = false;
-			Set<Id> tosIds = (new Map<Id,SObject>(tosList)).keySet();
+		List<Term_and_Condition__c> tosList = [SELECT Id, (SELECT Id, Is_Accepted__c FROM Term_and_Condition_Acceptances__r WHERE Is_Accepted__c = true AND Contact__c =: userAux.ContactId) FROM Term_and_Condition__c WHERE NewGenApp_PortalService__c =: serviceId AND Is_Latest__c = true AND Status__c = 'Final'];
+
+		if(tosList != null && !tosList.isEmpty()){
 			
-			List<Term_and_Condition_Acceptance__c> tosAccept = [SELECT Id, Is_Accepted__c FROM Term_and_Condition_Acceptance__c WHERE Term_Condition__c IN :tosIds AND Contact__c =: userAux.ContactId AND Is_Accepted__c = true];
-
-			if(tosList.size() == tosAccept.size())
-				latestToSAccepted = true;
-
+			for(Term_and_Condition__c tos: tosList){
+				if(tos.Term_and_Condition_Acceptances__r.IsEmpty()){
+					latestToSAccepted = false;
+					break;
+				}
+			}
+			
 		}
 
 		String baseUrl = Site.getBaseSecureUrl();
