@@ -6,44 +6,6 @@
     font-family: DaMaWebFont;
 }
 
-.customPopupInteriorHalfScreenCentered{
-    overflow-y: scroll;
-    max-height: 83vh;
-}
-
-.customPopupInteriorHalfScreenCentered::-webkit-scrollbar {
-    width: 68px;
-}
-
-.customPopupInteriorHalfScreenCentered::-webkit-scrollbar-thumb{
-     width: 68px;
-      background-image: url("/csportal/s/cat.gif"),
-        linear-gradient(
-          90deg,
-          transparent,
-          magenta,
-          red,
-          yellow,
-          limegreen,
-          turquoise,
-          blue,
-          magenta,
-          transparent
-        );
-      background-position: center bottom, center -20px;
-      background-repeat: no-repeat, no-repeat;
-      background-size: contain, contain;
-}
-
-/*.customPopupInteriorHalfScreenCentered::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-}*/
-
-/*.customPopupInteriorHalfScreenCentered::-webkit-scrollbar-thumb {
-  background-color: darkgrey;
-  outline: 1px solid slategrey;
-}*/
-
 .maxWidth{
     width: 100%;
 }
@@ -109,21 +71,6 @@
 
 .inputBackgroundGrey{
     background-color: #f7f8fa !important;
-}
-
-.slds-has-error input{
-    border-radius: 1px !important;
-    border: solid 2px rgba(240, 70, 50, 0.8) !important;
-    box-shadow: none !important;
-}
-
-.slds-has-error .slds-form-element__help{
-    color: #f04632 !important;
-    font-size: 14px !important;
-}
-
-.slds-has-error .slds-form-element__help div{
-    color: #f04632 !important;
 }
 
 .font-small{
