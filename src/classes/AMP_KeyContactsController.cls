@@ -23,7 +23,7 @@ public with sharing class AMP_KeyContactsController {
 		String accountId =  ApexPages.currentPage().getParameters().get('accountId');
 		isWWAccount = ApexPages.currentPage().getParameters().get('isWWAccount');
 		accountName = [SELECT Id, Name FROM Account WHERE Id =:accountId LIMIT 1].Name;
-		if(Boolean.valueOf(isWWAccount)){
+		if(isWWAccount != null && Boolean.valueOf(isWWAccount)){
 			lsKeyContactsWrapped = getAwwKeyContactsWrapped(accountId);
 		}
 		else{
