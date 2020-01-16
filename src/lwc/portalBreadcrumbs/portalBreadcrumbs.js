@@ -22,6 +22,7 @@ import CSP_Cases from '@salesforce/label/c.CSP_Cases';
 import CSP_Treasury_Dashboard from '@salesforce/label/c.CSP_Treasury_Dashboard';
 import CSP_Breadcrump_You_IATA from '@salesforce/label/c.CSP_Breadcrump_You_IATA';
 import CSP_Breadcrumb_CaseDetails_Title from '@salesforce/label/c.CSP_Breadcrumb_CaseDetails_Title';
+import CSP_Treasury_Dashboard_Report from '@salesforce/label/c.CSP_Treasury_Dashboard_Report';
 
 export default class PortalBreadcrumbs extends NavigationMixin(LightningElement) {
 
@@ -41,6 +42,7 @@ export default class PortalBreadcrumbs extends NavigationMixin(LightningElement)
         CSP_Cases,
         CSP_Treasury_Dashboard,
         CSP_Breadcrump_You_IATA,
+        CSP_Treasury_Dashboard_Report
     };
 
     //Used to replace last breadcrumb with given label

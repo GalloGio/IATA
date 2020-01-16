@@ -1,9 +1,12 @@
 import { LightningElement, track, api } from 'lwc';
 
-import getAccessToken from '@salesforce/apex/PowerBiCtrl.getAccessToken';
-import getReportDetails from '@salesforce/apex/PowerBiCtrl.getReportsDetails';
-import getDatasetDetail from '@salesforce/apex/PowerBiCtrl.getDataset';
-import getEmbedToken from '@salesforce/apex/PowerBiCtrl.getEmbedToken';
+import getAccessToken from '@salesforce/apex/TreasuryDashboardCtrl.getAccessToken';
+//import getReportDetails from '@salesforce/apex/PowerBiCtrl.getReportsDetails';
+import getReportDetails from '@salesforce/apex/TreasuryDashboardCtrl.getReportsDetails';
+//import getDatasetDetail from '@salesforce/apex/PowerBiCtrl.getDataset';
+import getDatasetDetail from '@salesforce/apex/TreasuryDashboardCtrl.getDataset';
+//import getEmbedToken from '@salesforce/apex/PowerBiCtrl.getEmbedToken';
+import getEmbedToken from '@salesforce/apex/TreasuryDashboardCtrl.getEmbedToken';
 import getReportConfigDetails from '@salesforce/apex/PowerBiCtrl.getReportConfigDetails';
 import newPremiumAccessRequest from '@salesforce/apex/TreasuryDashboardCtrl.premiumAccessRequest';
 import getPowerBICredentials from '@salesforce/apex/PowerBiCtrl.getPowerBICredentials';

@@ -59,5 +59,39 @@ public with sharing class PowerBICalloutMockProvider implements HttpCalloutMock{
             return res;
         }
     }
+
+
+    public class PowerBIServicePrincipalAccessErrorMock implements HttpCalloutMock {
+
+
+        public HttpResponse respond(HttpRequest req) {
+            HTTPResponse res = new HTTPResponse();
+            res.setHeader('Content-type', 'application/json');
+            if (req.getEndpoint().contains('/oauth2/token')) {
+                String body = '{"error": "No HTTP resource was found that matches the request URI."}';
+                res.setBody(body);
+                res.setStatusCode(400);
+            }
+
+            return res;
+        }
+    }
+
+    public class PowerBIServicePrincipalEmbedTokenErrorMock implements HttpCalloutMock {
+
+
+        public HttpResponse respond(HttpRequest req) {
+            HTTPResponse res = new HTTPResponse();
+            res.setHeader('Content-type', 'application/json');
+            if (req.getEndpoint().contains('GenerateToken')) {
+                Datetime expires = Datetime.now().addMinutes(60);
+                String body = '{"error": {"code":"404", "message":"No HTTP resource was found that matches the request URI."}}';
+                res.setBody(body);
+                res.setStatusCode(400);
+            }
+
+            return res;
+        }
+    }
 }
 

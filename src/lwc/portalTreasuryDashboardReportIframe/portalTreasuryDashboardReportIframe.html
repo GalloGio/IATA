@@ -1,0 +1,92 @@
+
+<template>
+
+    <template if:false={loading}>
+
+        <!-- ACCESS DENIED POP-UP -->
+        <div if:false={userHasAccessToReport} class="noAccessModal" >
+            <div class="noAccessContainer">
+                <div class="slds-p-horizontal_large slds-p-vertical_large mediumTitle text-bold text-small">
+                    <span class="slds-float_right slds-m-horizontal_x-small close-mark" onclick={abortRequest}>
+                        <lightning-icon icon-name="utility:close" size="x-small" class="cursorPointer" onclick={closeAccessDenied}></lightning-icon>
+                    </span>
+                    <span>Access denied!</span>
+                </div>
+                <!-- MODAL BODY -->
+                <div class="slds-p-vertical_small slds-p-horizontal_large slds-size_1-of-1 customWhiteBackground">
+                    <lightning-formatted-rich-text class="richTextlinks introMessage"
+                                                   value={errorText}>
+                    </lightning-formatted-rich-text>
+                </div>
+
+                <div class="slds-p-around_medium topLightGrayBorder customWhiteBackground slds-clearfix center">
+                    <button class="containedButton containedButton-size buttonRights slds-m-horizontal_small" onclick={closeAccessDenied}>
+                        Cancel
+                    </button>
+                </div>
+
+            </div>
+        </div>
+        <!-- ACCESS DENIED POP-UP END -->
+
+
+        <!-- REPORT HEADER -->
+        <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1">
+
+            <!-- REPORT NAME -->
+            <div class="text-medium text-darkGray text-bold slds-float_left">
+                {reportLabel}
+            </div>
+            <!-- REPORT NAME END -->
+
+            <!-- FULL SCREEN ICON -->
+            <button class="slds-button slds-button_icon slds-float_right top10" onclick={handleFullScreen}>
+                <img class="slds-button_icon small-icon" src={expandIcon}>
+            </button>
+            <!-- FULL SCREEN ICON END -->
+
+        </div>
+        <!-- REPORT HEADER END -->
+
+        <!-- REPORT IFRAME -->
+        <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-m-vertical_small slds-float_left iframeCard borderless">
+
+            <div class={fullScreenContainerClass}>
+                <template if:true={showFullScreen}>
+                    <div class="slds-p-horizontal_large slds-p-vertical_large mediumTitle text-bold text-small">
+                        <span class="slds-float_right slds-m-horizontal_x-large close-mark" onclick={closeFullScreen}>
+                            <lightning-icon icon-name="utility:close" size="small" variant="inverse" title="Close" class="cursorPointer" onclick={closeFullScreen}></lightning-icon>
+                        </span>
+                    </div>
+                </template>
+
+                <div class={fullScreenBodyClass}>
+
+                    <div class={iframeContainerClass}>
+                        <iframe  class="resp-iframe" src={powerBiSource}></iframe>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+        <!-- REPORT IFRAME END -->
+
+
+        <!-- GET SCROLLBAR WIDTH -->
+        <div class="outer" style="width: 20px; overflow-y: scroll; position:relative; top: -9999px;">
+            <div class="inner" style="height: 5px;"></div>
+        </div>
+
+    </template>
+
+
+    <template if:true={loading}>
+        <div class="slds-m-around_xx-large ">
+            <lightning-spinner class="spinnerContainer" alternative-text="Loading" size="medium"></lightning-spinner>
+        </div>
+    </template>
+
+
+</template>

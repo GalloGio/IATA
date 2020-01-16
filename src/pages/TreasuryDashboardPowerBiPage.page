@@ -23,6 +23,7 @@
         let obj = "{!objectId}";
         let token = "{!accessToken}";
         let type = "{!tokenType}";
+        let embedUrl = "{!embedUrl}";
 
         let typeOfToken = 0;
         if(type === 'Aad') {
@@ -31,6 +32,10 @@
         if(type === 'Embed') {
             typeOfToken = models.TokenType.Embed;
         }
+
+        /*console.log('embedUrl:: ' , embedUrl);
+        console.log('obj:: ', obj);
+        console.log('token:: ' , token);*/
 
 
         var embedConfiguration = {
@@ -43,6 +48,10 @@
             settings : {
                 filterPaneEnabled: false,
                 navContentPaneEnabled: false,
+                /*localeSettings: {
+                    language: "en",
+                    formatLocale: "us"
+                }*/
                 //background: models.BackgroundType.Transparent
             }
         };

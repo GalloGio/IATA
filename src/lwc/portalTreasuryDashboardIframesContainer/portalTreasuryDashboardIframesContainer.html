@@ -5,7 +5,7 @@
     <div class="slds-grid slds-wrap slds-gutters_direct-medium">
 
         <!-- STANDARD DASHBOARD -->
-        <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-m-vertical_small">
+        <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-m-vertical_small dashboardContainer">
 
             <c-portal-treasury-dashboard-iframe application-name={applicationName} report-name={reportName} user-id={userId}></c-portal-treasury-dashboard-iframe>
 
@@ -13,7 +13,7 @@
         <!-- STANDARD DASHBOARD END -->
 
         <!-- PREMIUM DASHBOARD -->
-        <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-m-vertical_small">
+        <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-m-vertical_small dashboardContainer">
 
             <c-portal-treasury-dashboard-iframe application-name={applicationName} report-name={premiumReportName} user-id={userId} contact-id={contactId} is-premium-user={isPremiumUser} td-premium-service={tdPremiumService}></c-portal-treasury-dashboard-iframe>
 
