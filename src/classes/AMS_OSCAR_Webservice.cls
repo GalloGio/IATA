@@ -95,7 +95,7 @@ global class AMS_OSCAR_Webservice {
 
 			ID IFAPcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
 
-			List<AMS_OSCAR__c> oscarLst = [select Name, Account__c, Account__r.ANG_Accreditation_Model__c, Account__r.BillingCountry, Account__r.Type, Account__r.Name from AMS_OSCAR__c where Id = : oscarId];
+			List<AMS_OSCAR__c> oscarLst = [select Name, Account__c, Account__r.ANG_Accreditation_Model__c, Account__r.BillingCountry, Account__r.Type, Account__r.Name, Account__r.Sector__c, Account__r.Category__c from AMS_OSCAR__c where Id = : oscarId];
 			if (oscarLst != null && oscarLst.size() > 0) {
 
 				AMS_OSCAR__c oscar = oscarLst[0];

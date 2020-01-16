@@ -1893,4 +1893,48 @@ public class  AmsIataCodeGeneratorTest
 
 
 		}
+	@isTest
+	static void createPassNumber() {
+		Case cse = new Case();
+		insert cse;
+		IATA_ISO_Country__c ic = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='Pt');
+		Account acc = new Account(name = 'test', Sector__c = AMS_Utils., Category__c = AMS_Utils.categoryPass, IATA_ISO_Country__c = ic.Id);
+		insert acc;
+		AMS_Pax_Accreditation_Form__c accre = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = cse.id, CASS_Number__c = '123', Location_Class__c = 'C', Location_Type__c = 'HO', IATA_ISO_State__c = null, HO_Account__c = acc.Id); //Branch_Office_Country__c = ctries[6].id,
+		insert accre;
+
+		Test.startTest();
+			AmsIataCodeGenerator.createPassNumber(accre);
+		Test.stopTest();
+	}
+
+	@isTest
+	static void createPassNumber2() {
+		Case cse = new Case();
+		insert cse;
+		IATA_ISO_Country__c ic = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='Pt');
+		Account acc = new Account(name = 'test', Sector__c = AMS_Utils., Category__c = AMS_Utils.categoryPass, IATA_ISO_Country__c = ic.Id);
+		insert acc;
+		AMS_Pax_Accreditation_Form__c accre = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = cse.id, CASS_Number__c = '123', Location_Class__c = 'C', Location_Type__c = 'BR', IATA_ISO_State__c = null, HO_Account__c = acc.Id); //Branch_Office_Country__c = ctries[6].id,
+		insert accre;
+
+		Test.startTest();
+			AmsIataCodeGenerator.createPassNumber(accre);
+		Test.stopTest();
+	}
+
+	@isTest
+	static void createPassNumber3() {
+		Case cse = new Case();
+		insert cse;
+		IATA_ISO_Country__c ic = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='Pt');
+		Account acc = new Account(name = 'test', Sector__c = AMS_Utils., Category__c = AMS_Utils.categoryPass, IATA_ISO_Country__c = ic.Id);
+		insert acc;
+		AMS_Pax_Accreditation_Form__c accre = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = cse.id, CASS_Number__c = '123', Location_Class__c = 'L', Location_Type__c = 'BR', IATA_ISO_State__c = null, HO_Account__c = acc.Id); //Branch_Office_Country__c = ctries[6].id,
+		insert accre;
+
+		Test.startTest();
+			AmsIataCodeGenerator.generateIATACodeWithCheckDigit(accre, acc);
+		Test.stopTest();
+	}
 }
