@@ -27,7 +27,10 @@ public class Training_Contact_Role_DetailsTest {
 
 			tcrd.UserId__c = 'id&rekt';
 			update tcrd;
-
+			
+			//this update above is supposed to published an event.
+			//although events are not being published when running tests
+			//so we cannot make an assertion of this logic.
 
 		Test.stopTest();
 
