@@ -11,7 +11,11 @@ public without sharing class ISSP_AMS_Accreditation {
 	private static final String WAREHOUSE_SUBCONTRACTED = 'WAREHOUSE_SUBCONTRACTED';
 	private static final String BNK_ACCNT_DTLS = 'BNK_ACCNT_DTLS';
 	private static final String OTHERS = 'OTHERS';
-	//private static final string ISO_8859_1_regEx = '^[0-9\\\\A-z\\u00C0-\\u00ff\\s\\.,-\\/#!$%\\^&\\*;:{}=\\-_`~()]+$';
+
+	public static final String HO_ONLY = 'HO Only';
+	public static final String HO_ALL_BRANCHES = 'HO - All Branches';
+	public static final String SELECTED_BRANCHES = 'Selected Branches Only';
+
 	private static final string ISO_8859_1_regEx { //Reg exp to limit inputted chars to ISO-8859-1
 		get{
 			if(ISO_8859_1_regEx == null) {
@@ -722,7 +726,7 @@ public without sharing class ISSP_AMS_Accreditation {
 			newForm.Is_change_bank_account_details__c = true;
 		} else {
 			newForm.Type_of_Change__c = 'Yes';
-			newForm.Scope_of_Change__c = isHOcontact ? 'HO Only' : 'Selected Branches Only'; //Set default
+			newForm.Scope_of_Change__c = isHOcontact ? HO_ONLY : SELECTED_BRANCHES; //Set default
 			newForm.Is_change_legal_name__c = true;
 			newForm.Is_change_location__c = true;
 			newForm.Is_change_ownership_or_shareholding__c = true;
@@ -733,7 +737,7 @@ public without sharing class ISSP_AMS_Accreditation {
 			isStep1 = true;
 		}
 
-		newForm.Scope_of_Change__c = isHOcontact ? 'HO Only' : 'Selected Branches Only'; //Set default
+		newForm.Scope_of_Change__c = isHOcontact ? HO_ONLY : SELECTED_BRANCHES; //Set default
 
 		if (ApexPages.currentPage().getParameters().containsKey('caseId')) {
 			//Retrieve information linked to the case Id
@@ -1533,7 +1537,7 @@ public without sharing class ISSP_AMS_Accreditation {
 		String optionLabel = conAccount.IATACode__c + ' - ' + (!getIsAccreditationModelNotNullOrLegacy() ? conAccount.Location_Type__c : conAccount.Name) + ' (' + conAccount.BillingCity + (conAccount.BillingState!= null ? ' ' + conAccount.BillingState : '') + ')';
 
 		agencyCodesConcerned = new List<SelectOption>{new SelectOption(conAccount.IATACode__c, optionLabel)};
-		newForm.Scope_of_Change__c = 'Selected Branches Only';
+		newForm.Scope_of_Change__c = SELECTED_BRANCHES;
 
 		return optionLabel;
 	}
@@ -1589,7 +1593,7 @@ public without sharing class ISSP_AMS_Accreditation {
 	}
 
 	public Boolean getCanChangeAccreditationType() {
-		return !((getContactAccountAEsChilds() > 0 && newForm.Scope_of_Change__c != 'HO - All Branches') || (newForm.Scope_of_Change__c != 'HO - All Branches' && newForm.Scope_of_Change__c != 'HO Only'));
+		return !((getContactAccountAEsChilds() > 0 && newForm.Scope_of_Change__c != HO_ALL_BRANCHES) || (newForm.Scope_of_Change__c != HO_ALL_BRANCHES && newForm.Scope_of_Change__c != HO_ONLY));
 	}
 
 	public List<SelectOption> getOfficeTypes() {
@@ -2116,7 +2120,7 @@ public without sharing class ISSP_AMS_Accreditation {
 				agencyCodesConcerned = getAgencyCodesConcerned();
 			}
 
-			if ((newForm.Scope_of_Change__c == 'HO - Selected Branches' || newForm.Scope_of_Change__c == 'Selected Branches Only')  && agencyCodesConcerned.size()==0) { //rui
+			if ((newForm.Scope_of_Change__c == 'HO - Selected Branches' || newForm.Scope_of_Change__c == SELECTED_BRANCHES)  && agencyCodesConcerned.size()==0) {
 				ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, (getIsAccreditationModelNotNullOrLegacy() ? Label.ISSP_NoC_Least_One_AE : Label.ISSP_NoC_Least_One_BO)));
 				return null;
 			}
@@ -2144,12 +2148,12 @@ public without sharing class ISSP_AMS_Accreditation {
 				Boolean first = true;
 				String countriesMC = '';
 
-				if (newForm.Scope_of_Change__c == 'HO - All Branches') {
+				if (newForm.Scope_of_Change__c == HO_ALL_BRANCHES) {
 					populateHierarchy();
 				}
 
 				for (HierarchyItem hi: hierarchyValues) {
-					if (hi.selected || newForm.Scope_of_Change__c == 'HO - All Branches') {
+					if (hi.selected || newForm.Scope_of_Change__c == HO_ALL_BRANCHES) {
 						if (first) {
 							countriesMC = hi.acc.Country_ISO_Code__c;
 							first = false;
@@ -2166,7 +2170,7 @@ public without sharing class ISSP_AMS_Accreditation {
 				newForm.MultiCountry_Countries_Concerned__c = countriesMC;
 			}
 
-			if (newForm.Scope_of_Change__c=='HO Only' || newForm.Scope_of_Change__c=='HO - All Branches') {
+			if (newForm.Scope_of_Change__c==HO_ONLY || newForm.Scope_of_Change__c==HO_ALL_BRANCHES) {
 				if (newCase.Account_Concerned__c != null) {
 					changeOfAccountConcerned = true;
 				}
@@ -2187,7 +2191,7 @@ public without sharing class ISSP_AMS_Accreditation {
 
 				newForm.Agency_Codes_Concerned__c = agencyCodes;
 
-				if (newForm.Scope_of_Change__c=='Selected Branches Only') {
+				if (newForm.Scope_of_Change__c==SELECTED_BRANCHES) {
 					Account branchAccount = [SELECT Id, Name, IATACode__c
 											FROM Account
 											WHERE IATACode__c = :agencyCodesConcerned[0].getValue()
@@ -2205,15 +2209,15 @@ public without sharing class ISSP_AMS_Accreditation {
 
 			if(getIsAccreditationModelNotNullOrLegacy()) {
 				//NEWGEN-668
-				if (newForm.Scope_Of_Change__c == 'Selected Branches Only') {
+				if (newForm.Scope_Of_Change__c == SELECTED_BRANCHES) {
 					newForm.Is_this_Head_Office_becoming_a_Branch__c = 'No';
 				} //END - NEWGEN-668
 
 				if (newForm.Last_Scope_Of_Change__c == null) { //NEWGEN-205
 					newForm.Last_Scope_Of_Change__c = newForm.Scope_of_Change__c;
 				} else if ( newForm.Last_Scope_Of_Change__c != newForm.Scope_of_Change__c) {
-					if ((newForm.Last_Scope_Of_Change__c == 'Selected Branches Only' && newForm.Scope_of_Change__c != 'Selected Branches Only') ||
-						(newForm.Last_Scope_Of_Change__c != 'Selected Branches Only' && newForm.Scope_of_Change__c == 'Selected Branches Only')) {
+					if ((newForm.Last_Scope_Of_Change__c == SELECTED_BRANCHES && newForm.Scope_of_Change__c != SELECTED_BRANCHES) ||
+						(newForm.Last_Scope_Of_Change__c != SELECTED_BRANCHES && newForm.Scope_of_Change__c == SELECTED_BRANCHES)) {
 						isScopeOfChangeChanged = true;
 						setOwners('NoC');
 					}
@@ -3694,7 +3698,7 @@ public without sharing class ISSP_AMS_Accreditation {
 			}
 
 			//Create child OSCAR Comm cases for Change of Bank details where one or more (but not all) Branches are involved
-			if (isNoticeOfChange && isBankAccountChange && (newForm.Scope_of_Change__c == 'HO - Selected Branches' || newForm.Scope_of_Change__c=='Selected Branches Only')){
+			if (isNoticeOfChange && isBankAccountChange && (newForm.Scope_of_Change__c == 'HO - Selected Branches' || newForm.Scope_of_Change__c==SELECTED_BRANCHES)){
 				createChildCases();
 			}
 
@@ -5863,7 +5867,7 @@ public without sharing class ISSP_AMS_Accreditation {
 		if (stepNumber != '5') {
 			String queryAuxReqsList = 'SELECT Id, Name, Requirement_text__c, File_to_Upload__c, File_Identifier2__c, Language__c, AMS_Accreditation_Country_CheckList__r.IATA_ISO_Country__r.Name FROM AMS_Accreditation_Requirement__c ';
 			
-			if (hqAccount.ANG_Accreditation_Model__c != AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY || (newForm.Scope_of_Change__c == 'HO Only' && hqAccount.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY)) {
+			if (hqAccount.ANG_Accreditation_Model__c != AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY || (newForm.Scope_of_Change__c == HO_ONLY && hqAccount.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY)) {
 				queryAuxReqsList += 'WHERE AMS_Accreditation_Country_CheckList__r.IATA_ISO_Country__r.ISO_Code__c = \'' + newCase.IFAP_Country_ISO__c + '\' ';
 			} else {
 				String mcCountriesIsosAux = '(\'';
@@ -6344,7 +6348,7 @@ public without sharing class ISSP_AMS_Accreditation {
 				}
 			} //EO check for Change of Location & Local Agency Details fields
 
-			if (newForm.Is_this_Head_Office_becoming_a_Branch__c == null && newForm.Scope_of_Change__c != 'Selected Branches Only') {
+			if (newForm.Is_this_Head_Office_becoming_a_Branch__c == null && newForm.Scope_of_Change__c != SELECTED_BRANCHES) {
 				newForm.Is_this_Head_Office_becoming_a_Branch__c.addError(Label.ISSP_YouMustEnter);
 				errorFound = true;
 			}
@@ -7791,7 +7795,7 @@ system.debug('aqui sectorValue ' + sectorValue);
 			return;
 		}
 
-		if(newForm.Scope_of_Change__c == 'HO - All Branches'){
+		if(newForm.Scope_of_Change__c == HO_ALL_BRANCHES){
 			if(agencySelectedBranches == null) {
 				agencySelectedBranches = new List<String>();
 			} else {
@@ -7880,7 +7884,7 @@ system.debug('aqui sectorValue ' + sectorValue);
 
 		List<AMS_Accreditation_Contact__c> countAccreditationContact = [SELECT Id, ANG_contactFromAccount__c, RecordTypeId FROM AMS_Accreditation_Contact__c WHERE AMS_Pax_Accreditation_Form__c = :newForm.Id];
 		//NEWGEN-205
-		ID lAccountConcerned = ((newForm.Scope_of_Change__c == 'Selected Branches Only' && newCase.Account_Concerned__c != null) ? newCase.Account_Concerned__c : vHQAccountId);
+		ID lAccountConcerned = ((newForm.Scope_of_Change__c == SELECTED_BRANCHES && newCase.Account_Concerned__c != null) ? newCase.Account_Concerned__c : vHQAccountId);
 
 		if (isScopeOfChangeChanged && countAccreditationContact.size() != 0) {
 			List<AMS_Accreditation_Contact__c> prevAndCurrOwnersList = new List<AMS_Accreditation_Contact__c>();
@@ -8345,7 +8349,7 @@ system.debug('aqui sectorValue ' + sectorValue);
 		for(Account a : getBranchList(true)){
 			if (isNoticeOfChange) {
 				if (isMCAccredited) {
-					if (newForm.Scope_of_Change__c != 'HO - All Branches' && !isStep3) {
+					if (newForm.Scope_of_Change__c != HO_ALL_BRANCHES && !isStep3) {
 						if (!mcCountryIsos.contains(a.Country_ISO_Code__c)) {
 							continue;
 						}
