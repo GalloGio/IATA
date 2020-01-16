@@ -175,7 +175,7 @@ private class ISSP_AMS_MSO_Request_Controller_Test {
 			ctrl.refreshStates();
 			ctrl.billingState = isos.Id;
 			ctrl.refreshCities();
-			String cities = ctrl.billingCityListStr;
+			String cities = ISSP_AMS_MSO_Request_Controller.billingCityListStr;
 			Test.startTest();
 				ctrl.accreditationForm.Branch_Office_Email__c = 'a';
 				ctrl.accreditationForm.Branch_Office_Street_name_number__c = '';
