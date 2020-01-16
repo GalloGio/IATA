@@ -1591,11 +1591,11 @@ public static Boolean grantAccess(string contactId,string serviceId,string reaso
 		return toReturn;
 	}
 	
-		@AuraEnabled (cacheable=false)
+	@AuraEnabled (cacheable=false)
 	public static String verifyCompleteL3Data(String serviceId){
 
 		Boolean requiredDataPopulated = true;
-		Boolean latestToSAccepted = false;
+		Boolean latestToSAccepted = true;
 
 		String resURL = '';
 
@@ -1612,13 +1612,18 @@ public static Boolean grantAccess(string contactId,string serviceId,string reaso
 			}
 		}
 
-		List<Term_and_Condition__c> tos = [SELECT Id FROM Term_and_Condition__c WHERE NewGenApp_PortalService__c =: serviceId AND Is_Latest__c = true AND Status__c = 'Final'];
-		system.assert(tos.size() == 1, 'Terms of Service data integrity compromised. Found none more than one active ToS for the service.');
+		List<Term_and_Condition__c> tosList = [SELECT Id FROM Term_and_Condition__c WHERE NewGenApp_PortalService__c =: serviceId AND Is_Latest__c = true AND Status__c = 'Final'];
+		
+		if(tosList != null && tosList.isEmpty()){
+			latestToSAccepted = false;
+			Set<Id> tosIds = (new Map<Id,SObject>(tosList)).keySet();
+			
+			List<Term_and_Condition_Acceptance__c> tosAccept = [SELECT Id, Is_Accepted__c FROM Term_and_Condition_Acceptance__c WHERE Term_Condition__c IN :tosIds AND Contact__c =: userAux.ContactId AND Is_Accepted__c = true];
 
-		//check if the tos has been accepted
-		List<Term_and_Condition_Acceptance__c> tosAccept = [SELECT Id, Is_Accepted__c FROM Term_and_Condition_Acceptance__c WHERE Term_Condition__c =:tos[0].Id AND Contact__c =: userAux.ContactId AND Is_Accepted__c = true];
-		if(!tosAccept.isEmpty())
-			latestToSAccepted = true;
+			if(tosList.size() == tosAccept.size())
+				latestToSAccepted = true;
+
+		}
 
 		String baseUrl = Site.getBaseSecureUrl();
 		String pathPrefix = Site.getPathPrefix().replace('/s', '');
