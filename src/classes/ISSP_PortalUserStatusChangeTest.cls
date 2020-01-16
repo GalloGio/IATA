@@ -501,7 +501,7 @@ private class ISSP_PortalUserStatusChangeTest {
        
         // activate user
         ApexMessageHandling result= ISSP_PortalUserStatusChange.saveNewStatusAura('ISS Customer Portal', 'Approved User', con.id,'');
-        system.assertEquals(false, result.isSuccess);
+        system.assertEquals(true, result.isSuccess);
         
 
     }
