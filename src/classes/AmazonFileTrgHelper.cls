@@ -538,7 +538,9 @@ public class AmazonFileTrgHelper {
 			FROM Case
 			WHERE Id IN :listCaseId
 			AND isClosed=false
-			AND (NOT Owner.Name like '%recycle%')];
+			AND (NOT Owner.Name like '%recycle%')
+			AND Contact.isEmailBounced = false 
+			AND (NOT Contact.Email LIKE '%.inactive')];
 		System.debug('*** listCase ' + listCase);
 		String templateName = 'AoP_permit_or_Commercial_Registry_reminder';
 		sendCertificateReminder(templateName,listCase,'ContactId');
@@ -563,7 +565,9 @@ public class AmazonFileTrgHelper {
 			FROM Case
 			WHERE Id IN :listCaseId
 			AND isClosed=false
-			AND (NOT Owner.Name like '%recycle%')];
+			AND (NOT Owner.Name like '%recycle%')
+			AND Contact.isEmailBounced = false 
+			AND (NOT Contact.Email LIKE '%.inactive')];
 		String templateName1 = 'AOC_permit_OR_Commercial_registry_expired';
 		sendCertificateReminder(templateName1,listCase,'ContactId');
 		String templateName2 = 'AOC_permit_OR_Commercial_registry_expired_internal';
@@ -782,7 +786,7 @@ public class AmazonFileTrgHelper {
 					}
 				}
 
-				List<User> userList = [Select id, ContactId From User Where ContactId In :contactsIds];
+				List<User> userList = [Select id, ContactId From User Where ContactId In :contactsIds AND isActive = true AND Contact.isEmailBounced = false];
 
 				for(User u : userList) {
 					contactUserMap.put(u.ContactId, u.Id);

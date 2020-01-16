@@ -145,8 +145,6 @@ private class AMS_RecordCreatorWebserviceTest {
 
 		System.assertEquals(aaccList.size() , 1);
 
-		AMS_RecordCreatorWebservice.testsendNotification(acct.Id,changes);
-
 		Test.stopTest();
 	}
 

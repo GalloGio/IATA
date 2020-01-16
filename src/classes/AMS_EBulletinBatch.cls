@@ -56,36 +56,13 @@ global class AMS_EBulletinBatch implements Database.Batchable<sObject> {
 			profIds.add(ebProfile.Id);
 		}
 
-		Map<Id, Id> ebprofContactsMap = new Map<Id, Id>();
-
 		List<AMS_eBulletin_Profile__c> eBprofContacts = new List<AMS_eBulletin_Profile__c>();
 
-		eBprofContacts = [SELECT Id, User__r.ContactId FROM AMS_eBulletin_Profile__c WHERE Id IN :profIds AND User__c != null];
+		eBprofContacts = [SELECT Id, User__r.ContactId, User__r.Contact.isEmailBounced, User__r.isActive FROM AMS_eBulletin_Profile__c WHERE Id IN :profIds AND User__c != null];
 
 		for(AMS_eBulletin_Profile__c prof : eBprofContacts) {
-
-			ebprofContactsMap.put(prof.User__r.ContactId, prof.Id);
-		}
-
-		Map<Id, Boolean> conBouncedMap = new Map<Id, Boolean>();
-
-		List<Contact> conBounced = new List<Contact>();
-
-		Set<Id> contacts = ebprofContactsMap.keySet();
-
-		conBounced = [SELECT Id, IsEmailBounced FROM Contact WHERE Id IN :contacts];
-
-		for(Contact con : conBounced) {
-
-			conBouncedMap.put(con.Id, con.IsEmailBounced);
-		}
-
-		profBouncedMap = new Map<Id,Boolean>();
-
-		for(Id conId : contacts) {
-
-			profBouncedMap.put(ebprofContactsMap.get(conId), conBouncedMap.get(conId));
-		}
+			profBouncedMap.put(prof.Id, prof.User__r.isActive ? prof.User__r.Contact.isEmailBounced : true);
+		}		
 
 		System.debug('AMS_EBulletinBatch - ebulletin profiles and value of IsEmailBounced (Contact field) : ' + profBouncedMap);
 

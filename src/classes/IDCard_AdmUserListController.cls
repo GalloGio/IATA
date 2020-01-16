@@ -497,7 +497,7 @@ global with sharing class IDCard_AdmUserListController extends IDCardAbstractCon
 		for (String s : selectedContact.keyset())
 			if (selectedContact.get(s))
 				selectedVerNums.add(s);
-		for (Contact c : [SELECT VER_Number_2__c, Email, IDCard_Email__c, FirstName, LastName FROM Contact WHERE VER_Number_2__c IN :selectedVerNums]) {
+		for (Contact c : [SELECT VER_Number_2__c, Email, IDCard_Email__c, FirstName, LastName FROM Contact WHERE VER_Number_2__c IN :selectedVerNums AND isEmailBounced = false AND (NOT Email LIKE '%.inactive')]) {
 
 			if (c.Email == null && c.IDCard_Email__c == null) {
 				printerr('It\'s not possible to send an email to ' + c.FirstName + ' ' + c.LastName + ' because he has not a valid email address.');
