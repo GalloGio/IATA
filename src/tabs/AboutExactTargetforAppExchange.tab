@@ -3,7 +3,6 @@
     <frameHeight>800</frameHeight>
     <hasSidebar>true</hasSidebar>
     <label>About ExactTarget for AppExchange</label>
-    <mobileReady>false</mobileReady>
     <motif>Custom15: People</motif>
     <url>https://members.s6.exacttarget.com/Integration/SalesforceUI/About.aspx</url>
     <urlEncodingKey>UTF-8</urlEncodingKey>
