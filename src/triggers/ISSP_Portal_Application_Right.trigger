@@ -240,7 +240,7 @@ trigger ISSP_Portal_Application_Right on Portal_Application_Right__c (after inse
 			}
 		}
 		//PASS
-		else if (access.Application_Name__c.startsWith('PASSlink Single Sign-On')){
+		else if (access.Application_Name__c.startsWith(AMS_Utils.passSSOPortalService)){
 
 			if (trigger.isInsert && access.Right__c == 'Access Granted') {
 				system.debug('IS INSERT AND GRANTED');

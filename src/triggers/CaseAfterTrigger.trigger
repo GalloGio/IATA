@@ -1050,15 +1050,13 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 
 	/* Trigger.isAfter && Trigger.isUpdate */
 
-	//PASS
 	if(trigger.isAfter && Trigger.isUpdate) {
+
+		// START PASS
 		Map<Id, AP_Process_Form__c> casePassCountryMap = new Map<Id, AP_Process_Form__c>();
 
-		List<Case> closedParentCaseList = [SELECT Id,CaseNumber,ParentId, Status
-																FROM Case
-																WHERE Status = 'Closed' AND ParentId = null AND  Reason1__c LIKE 'PASS Participation%' AND Id IN:Trigger.new];
+		List<AP_Process_Form__c> apFormList = [SELECT Id, RecordTypeId FROM AP_Process_Form__c WHERE Case__c IN:[SELECT Id,CaseNumber,ParentId, Status FROM Case WHERE Status = 'Closed' AND ParentId = null AND  Reason1__c AND Reason1__c LIKE 'PASS Participation%'];
 
-		List<AP_Process_Form__c> apFormList = [SELECT Id, RecordTypeId FROM AP_Process_Form__c WHERE Case__c IN:closedParentCaseList];
 			for(Case c : Trigger.new) {
 				Case oldCase = Trigger.oldMap.get(c.Id);
 				if(c.Status == 'Closed' && oldCase.Status != 'Closed'){
@@ -1075,6 +1073,9 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 				PlatformEvents_Helper.publishEvents(casePassCountryMap, 'Airline_Account__e', 'AP_Process_Form__c', trigger.isInsert, true, trigger.isDelete, trigger.isUndelete);
 			}
 		}
+		// END PASS
+
+
 	}
 	/* trigger.isAfter && Trigger.isUpdate */
 }

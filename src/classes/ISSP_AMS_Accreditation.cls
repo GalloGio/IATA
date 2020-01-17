@@ -5754,14 +5754,12 @@ public without sharing class ISSP_AMS_Accreditation {
 			selectedLang = 'English';
 		}
 
-		RecordType PASSReqRecType = [Select Id From RecordType  Where SobjectType = 'AMS_Accreditation_Requirement__c' and DeveloperName =:AMS_Utils.passParticipation];
-
 		System.debug('retPASSReqments - sector: ' + sector + '; amsOfficeType: ' + amsOfficeType);
 		this.List_CountryReqments = [SELECT Id, Name, Requirement_text__c, File_to_Upload__c, File_Identifier2__c
 									 FROM AMS_Accreditation_Requirement__c
 									 WHERE AMS_Accreditation_Country_CheckList__r.Operation__c = :sector
 												AND Location_type__c INCLUDES (:amsOfficeType) AND Language__c = :selectedLang
-												AND RecordTypeId = :PASSReqRecType.Id
+												AND Recordtype.Developername =:AMS_Utils.passParticipation
 														ORDER BY Sort_Order__c ASC
 									];
 	}
