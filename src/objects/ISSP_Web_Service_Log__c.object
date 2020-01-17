@@ -628,6 +628,28 @@
         <label>05/07/2018_logs</label>
         <language>en_US</language>
     </listViews>
+    <listViews>
+        <fullName>today_logs</fullName>
+        <columns>NAME</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>Error_Code__c</columns>
+        <columns>Error_Message__c</columns>
+        <columns>Input_Description__c</columns>
+        <columns>Method__c</columns>
+        <columns>Response__c</columns>
+        <columns>Success__c</columns>
+        <columns>System__c</columns>
+        <columns>Web_Service__c</columns>
+        <columns>CREATEDBY_USER</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>CREATED_DATE</field>
+            <operation>equals</operation>
+            <value>TODAY</value>
+        </filters>
+        <label>today logs</label>
+        <language>en_US</language>
+    </listViews>
     <nameField>
         <displayFormat>WSL-{00000000}</displayFormat>
         <label>ISSP Web Service Log Name</label>

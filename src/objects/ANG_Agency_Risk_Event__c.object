@@ -601,7 +601,7 @@ ISPICKVAL(PRIORVALUE(ANG_Event_Status__c),&apos;Active&apos; )||
 ISPICKVAL(PRIORVALUE(ANG_Event_Status__c),&apos;Inactive_Withdrawn&apos;)|| 
 ISPICKVAL(PRIORVALUE(ANG_Event_Status__c),&apos;Inactive_Revoked&apos;)|| 
 (ISPICKVAL(PRIORVALUE(ANG_Event_Status__c),&apos;Inactive&apos;)&amp;&amp; 
-PRIORVALUE(ANG_Expired__c)))</errorConditionFormula>
+PRIORVALUE(ANG_Expired__c)))&amp;&amp;( $User.Id != &apos;005w0000004fo0x&apos;)</errorConditionFormula>
         <errorDisplayField>ANG_Issued_Date__c</errorDisplayField>
         <errorMessage>You can only change the Issue Date on Risk Events Pending Activation</errorMessage>
     </validationRules>
