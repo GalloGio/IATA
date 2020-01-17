@@ -98,6 +98,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 		public String existingContactEmail{get;set;}
 		public String existingContactAccount{get;set;}
 		public String existingContactUsername{get;set;}
+		public String emailConfirmationTemplate{get;set;}
 	}
 
 	public class UserInformation {
@@ -404,12 +405,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 			userId = userList.get(0).Id;
 		}
 
-		if(params.existingContactName != null && params.existingContactName != ''){
-			result = sendEmailVF(params.email, 'CSP_New_Member_Confirmation_YAS_Email_VF', emailMap, userId);
-		}
-		else{
-			result = sendEmailVF(params.email, 'CSP_New_Member_Confirmation_Email_VF', emailMap, userId);
-		}
+		result = sendEmailVF(params.email, params.emailConfirmationTemplate, emailMap, userId);
 
 		return result;
 	}
@@ -472,6 +468,8 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 			params.existingContactUsername = (userInfoMap.get('existingContactUsername') != null) ? string.valueOf(userInfoMap.get('existingContactUsername')) : '';
 			params.lms  = (inputMap.get('lmsRedirectFrom') != null) ? string.valueOf(inputMap.get('lmsRedirectFrom')) : '';
 			params.lmsCourse  = (inputMap.get('lmsCourse') != null) ? string.valueOf(inputMap.get('lmsCourse')) : '';
+			
+			params.emailConfirmationTemplate = (params.lms == 'yas') ? 'CSP_New_Member_Confirmation_YAS_Email_VF' : 'CSP_New_Member_Confirmation_Email_VF';
 
 			if(params.contactId.length() < 1){
 				if(params.email.length() < 1 || params.firstName.length() < 1 || params.lastName.length() < 1){
