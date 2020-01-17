@@ -866,7 +866,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 			}else{
 				//Specific LMS Yardstick flow
 				if(params.existingContactId != null){
-					createOrMigrateContactStructure(con, params.existingContactId);
+					createOrMigrateContactStructure(con, params.existingContactId, false);
 				}
 
 				return con;
@@ -1234,52 +1234,86 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 		return orderedPicklists;
 	}
 
-	public static void createOrMigrateContactStructure(Contact con, String existingConId){
+	public static Account_Contact_Role__c createOrMigrateContactStructure(Contact con, String existingTrainingId, Boolean deleteOldContact){
 
 		String RECTYPE_Master_AccRole = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Role__c', 'Master');
 		String RECTYPE_Master_AccContRole = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'Master');
 
-		//Create Account Role if not existing
-		List<Account_Role__c> ars = [SELECT Id,Account__c,RecordTypeId FROM Account_Role__c WHERE Account__c = :con.AccountId AND Account_Role_Name__c = 'Training' AND Functional_Role__c = 'Training' LIMIT 1];
+		List<Account_Role__c> listAR = [SELECT Id,Account__c,RecordTypeId 
+								FROM Account_Role__c 
+								WHERE Account__c = :con.AccountId 
+								AND Account_Role_Name__c = 'Training' 
+								AND Functional_Role__c =  'Training' LIMIT 1];
 
 		Account_Role__c ar = new Account_Role__c();
 
-		if(ars.size() > 0){
-			ar = ars[0];
+		if(listAR.size() > 0){
+			ar = listAR[0];
 		}else{
 			ar.Account__c = con.AccountId;
 			ar.RecordTypeId = RECTYPE_Master_AccRole;
-			ar.Account_Role_Name__c = 'Training';
-			ar.Functional_Role__c = 'Training';
+			ar.Account_Role_Name__c =  'Training';
+			ar.Functional_Role__c =  'Training';
 			insert ar;
 		}
 
-		//Check if existing contact has account contact role
-		List<Account_Contact_Role__c> acrs = [SELECT Id,Account_Role__c,Contact__c,Contact_Role_Name__c,RecordTypeId FROM Account_Contact_Role__c WHERE Contact__c = :existingConId AND Contact_Role_Name__c = 'Trainee' AND Functional_Role__c = 'Training' LIMIT 1];
+		Set<String> contIds = new Set<String>();
+		contIds.add(con.Id);
+		if(existingTrainingId != ''){
+			contIds.add(existingTrainingId);
+		}
 
-		if(acrs != null && !acrs.isEmpty())
-		{
-			//migrate this account contact role to the new contact
-			acrs[0].Account_Role__c = ar.Id;
-			acrs[0].Contact__c = con.Id;
-			update acrs[0];
+		//Getting existing Account Contact Role from the new Contact to set it up to on the old contact
+		List<Account_Contact_Role__c> listACR = [SELECT Id,Account_Role__c,Contact__c,Contact_Role_Name__c,RecordTypeId
+												FROM Account_Contact_Role__c
+												WHERE Contact__c in :contIds
+												AND Contact_Role_Name__c = 'Trainee'
+												AND Functional_Role__c =  'Training'];
+		Account_Contact_Role__c acrNew;
+		Account_Contact_Role__c acrOld;
+		Account_Contact_Role__c acr = new Account_Contact_Role__c();
+
+		for(Account_Contact_Role__c acrItem : listACR){
+			if(acrItem.Contact__c == con.Id){
+				acrNew = acrItem;
+			}else if(acrItem.Contact__c == existingTrainingId){
+				acrOld = acrItem;
+			}
+		}
+
+		if(acrOld != null){
+			acr = acrOld;
+			acr.Account_Role__c = ar.Id;
+			acr.Contact__c = con.Id;
+
+			update acr;
+			
+			if(acrNew != null)
+				delete acrNew;
+
+		}else if(acrNew != null){
+			acr = acrNew;
 		}else{
-			//Create Account Contact Role if not existing
-			Account_Contact_Role__c acr = new Account_Contact_Role__c();
-
 			acr.Account_Role__c = ar.Id;
 			acr.Contact__c = con.Id;
 			acr.Contact_Role_Name__c = 'Trainee';
-			acr.Functional_Role__c = 'Training';
+			acr.Functional_Role__c =  'Training';
 			acr.RecordTypeId = RECTYPE_Master_AccContRole;
 			acr.Service_Rendered__c = 'Other';
 
 			insert acr;
 		}
 
+		if(existingTrainingId != '' && deleteOldContact){
+			Contact toDeleteContact = new Contact(Id = existingTrainingId);
+			delete toDeleteContact;
+		}
+
 		//deactivate user
-		if(existingConId != null && existingConId != '')
-		futureDeactivateUsers(new Set<String>{existingConId});
+		if(existingTrainingId != null && existingTrainingId != '' && !deleteOldContact)
+			futureDeactivateUsers(new Set<String>{existingTrainingId});
+
+		return acr;
 	}
 
 	@future

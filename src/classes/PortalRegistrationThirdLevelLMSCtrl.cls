@@ -74,79 +74,11 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 			String sStreet2 = extraValues[12];
 			String existingTrainingId = extraValues[13];
 
-			String RECTYPE_Master_AccRole = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Role__c', 'Master');
-			String RECTYPE_Master_AccContRole = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'Master');
 			String RECTYPE_Trainee_YASContDet = RecordTypeSingleton.getInstance().getRecordTypeId('Training_Contact_Role_Details__c', 'Yardstick_Trainee');
 
 			update con;
 
-			//Create Account Role if not existing
-			List<Account_Role__c> listAR = [SELECT Id,Account__c,RecordTypeId 
-											FROM Account_Role__c 
-											WHERE Account__c = :con.AccountId 
-											AND Account_Role_Name__c = 'Training' 
-											AND Functional_Role__c =  'Training' LIMIT 1];
-			Account_Role__c ar = new Account_Role__c();
-
-			if(listAR.size() > 0){
-				ar = listAR[0];
-			}else{
-				ar.Account__c = con.AccountId;
-				ar.RecordTypeId = RECTYPE_Master_AccRole;
-				ar.Account_Role_Name__c =  'Training';
-				ar.Functional_Role__c =  'Training';
-				insert ar;
-			}
-
-			Set<String> contIds = new Set<String>();
-			contIds.add(con.Id);
-			if(existingTrainingId != ''){
-				contIds.add(existingTrainingId);
-			}
-
-			//Getting existing Account Contact Role from the new Contact to set it up to on the old contact
-			List<Account_Contact_Role__c> listACR = [SELECT Id,Account_Role__c,Contact__c,Contact_Role_Name__c,RecordTypeId
-													FROM Account_Contact_Role__c
-													WHERE Contact__c in :contIds
-													AND Contact_Role_Name__c = 'Trainee'
-													AND Functional_Role__c =  'Training'];
-			Account_Contact_Role__c acrNew = new Account_Contact_Role__c();
-			Account_Contact_Role__c acrOld = new Account_Contact_Role__c();
-			Account_Contact_Role__c acr = new Account_Contact_Role__c();
-
-			for(Account_Contact_Role__c acrItem : listACR){
-				if(acrItem.Contact__c == con.Id){
-					acrNew = acrItem;
-				}else if(acrItem.Contact__c == existingTrainingId){
-					acrOld = acrItem;
-				}
-			}
-
-			if(acrOld != null && acrOld.Id != null){
-				acr = acrOld;
-				acr.Account_Role__c = ar.Id;
-				acr.Contact__c = con.Id;
-
-				update acr;
-
-				delete acrNew;
-			}else if(acrNew != null && acrNew.Id != null){
-				acr = acrNew;
-			}else{
-				acr.Account_Role__c = ar.Id;
-				acr.Contact__c = con.Id;
-				acr.Contact_Role_Name__c = 'Trainee';
-				acr.Functional_Role__c =  'Training';
-				acr.RecordTypeId = RECTYPE_Master_AccContRole;
-				acr.Service_Rendered__c = 'Other';
-
-				insert acr;
-			}
-
-			if(existingTrainingId != ''){
-				Contact toDeleteContact = new Contact(Id = existingTrainingId);
-				delete toDeleteContact;
-			}
+			Account_Contact_Role__c acr = PortalRegistrationFirstLevelCtrl.createOrMigrateContactStructure(con, existingTrainingId, true);
 
 			//Create Yardstick Contact Role Detail
 			List<Training_Contact_Role_Details__c> listYCD = [SELECT Id,RecordTypeId,Account_Contact_Role__c,Username__c,UserId__c,Preferred_Course__c 
