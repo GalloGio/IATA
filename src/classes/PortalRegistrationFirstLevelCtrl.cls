@@ -469,7 +469,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 			params.lms  = (inputMap.get('lmsRedirectFrom') != null) ? string.valueOf(inputMap.get('lmsRedirectFrom')) : '';
 			params.lmsCourse  = (inputMap.get('lmsCourse') != null) ? string.valueOf(inputMap.get('lmsCourse')) : '';
 			
-			params.emailConfirmationTemplate = (params.lms == 'yas') ? 'CSP_New_Member_Confirmation_YAS_Email_VF' : 'CSP_New_Member_Confirmation_Email_VF';
+			params.emailConfirmationTemplate = (params.lms == 'yas' && params.existingContactId != '') ? 'CSP_New_Member_Confirmation_YAS_Email_VF' : 'CSP_New_Member_Confirmation_Email_VF';
 
 			if(params.contactId.length() < 1){
 				if(params.email.length() < 1 || params.firstName.length() < 1 || params.lastName.length() < 1){
@@ -1309,19 +1309,27 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 
 		//deactivate user
 		if(existingTrainingId != null && existingTrainingId != '' && !deleteOldContact)
-			futureDeactivateUsers(new Set<String>{existingTrainingId});
+			System.enqueueJob(new AsyncDeactivateUser(new Set<String>{existingTrainingId}));
 
 		return acr;
 	}
 
-	@future
-	public static void futureDeactivateUsers(set<string> conIdSet) {
-		List<User> userList = [select Id,IsActive,IsPortalEnabled from User where ContactId in:conIdSet];
-		for(User user : userList){
-			 user.IsActive = false;
+	public class AsyncDeactivateUser implements Queueable {
+
+		Set<string> IdsToDeactivate;
+
+		AsyncDeactivateUser(Set<string> IdsToDeactivate){
+			this.IdsToDeactivate = IdsToDeactivate;
 		}
-		if(!userList.isEmpty())
-			update userList;
+
+		public void execute(QueueableContext context) {
+			List<User> userList = [select Id,IsActive,IsPortalEnabled from User where ContactId in:IdsToDeactivate];
+			for(User user : userList){
+				user.IsActive = false;
+			}
+			if(!userList.isEmpty())
+				update userList;
+		}
 	}
 
 }
