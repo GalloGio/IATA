@@ -910,9 +910,10 @@ global with sharing class IDCardUtil {
 			ID_Card__c lastIdCard;
 			if (theContact != null) {
 				idCard.Related_Contact__c = theContact.Id;
-				lastIdCard = [SELECT Id, Valid_To_Date__c, Valid_From_Date__c
-							FROM ID_Card__c WHERE Related_Contact__c = :theContact.id
-							ORDER BY Name DESC NULLS LAST LIMIT 1];
+				List<ID_Card__c> card = [SELECT Id, Valid_To_Date__c, Valid_From_Date__c
+										 FROM ID_Card__c WHERE Related_Contact__c = :theContact.id
+										 ORDER BY Name DESC NULLS LAST LIMIT 1];
+				if(!card.isEmpty()) lastIdCard = card[0];
 			}
 
 			if(lastIdCard != null) {
