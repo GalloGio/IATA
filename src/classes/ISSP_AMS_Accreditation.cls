@@ -596,7 +596,7 @@ public without sharing class ISSP_AMS_Accreditation {
 		if (con.Account.Top_Parent__c == null) { //User is from HQ Account
 			vHQAccountId = con.AccountId;
 			fetchHQAccountDetails();
-			if (con.Account.IATACode__c != null && (con.Account.RecordType.DeveloperName == 'IATA_Agency' || con.Account.Sector__c==AMS_Utils.SECTOR_PASS) && con.Account.RecordType.DeveloperName == 'IATA_Agency' && con.Account.Status__c != 'Terminated' && con.Account.Status__c != 'Not accreditated' && con.Account.Status__c != 'New application pending' &&
+			if (con.Account.IATACode__c != null && (con.Account.RecordType.DeveloperName == 'IATA_Agency' || con.Account.Sector__c==AMS_Utils.SECTOR_PASS) && con.Account.Status__c != 'Terminated' && con.Account.Status__c != 'Not accreditated' && con.Account.Status__c != 'New application pending' &&
 				con.Account.Status__c != 'No longer a customer' && con.Account.Status__c != 'Not in operation' &&
 				(con.Account.Status__c != 'Endorsed' || (con.Account.Location_Class__c != 'V' && con.Account.Location_Class__c != 'P') || (isocountry != null && isocountry.ISO_Code__c != 'US' && isocountry.ISO_Code__c != 'UP')) &&
 				(con.Account.Status__c != 'Listed' || (isocountry != null && isocountry.ISO_Code__c != 'CN')) ){
