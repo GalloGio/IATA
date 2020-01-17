@@ -814,7 +814,7 @@ global class AmsIataCodeGenerator{
 		if(accreditationForm.Location_Type__c=='HO'){
 			passNumber=AmsIataCodeGenerator.resizeNumericString('0', 3);
 		}else if(accreditationForm.Location_Type__c=='BR'){
-			List<AMS_Pax_Accreditation_Form__c> otherAccreditationFormList=[SELECT Id FROM AMS_Pax_Accreditation_Form__c WHERE IATACode__c!='' AND HO_Account__c=:accreditationForm.HO_Account__c AND Location_Type__c='BR'];
+			List<AMS_Pax_Accreditation_Form__c> otherAccreditationFormList = [SELECT Id FROM AMS_Pax_Accreditation_Form__c WHERE IATACode__c!='' AND HO_Account__c=:accreditationForm.HO_Account__c AND SAAM_Case__r.OSCAR__r.Process__c =:AMS_Utils.new_PASS_BR];
 
 			passNumber=AmsIataCodeGenerator.resizeNumericString(String.valueOf(otherAccreditationFormList.size()+1), 3);
 		}
