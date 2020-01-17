@@ -1,7 +1,5 @@
 public class AMS_CertificateForPrintController {
 
-	public Map<String, GenerateCertificate__c> allLabels {get;set;}
-
 	public List<List<Account>> certificates{
 		get{
 			if(accountIds.isEmpty()) return null;
@@ -41,6 +39,5 @@ public class AMS_CertificateForPrintController {
 	}
 
 	public AMS_CertificateForPrintController() {
-		allLabels = GenerateCertificate__c.getAll();
 	}
 }
