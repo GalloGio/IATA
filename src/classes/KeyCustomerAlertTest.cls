@@ -1,4 +1,4 @@
-@isTest(SeeAllData=true)
+@isTest
 private class KeyCustomerAlertTest {
  @isTest
 	static void testEmailMessageViewCon()
