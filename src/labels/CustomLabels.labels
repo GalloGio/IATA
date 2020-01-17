@@ -43986,30 +43986,6 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <value>IATA needs your Training Information to maintain your lifelong Training record with us. We also need your Training Information access directly to your Exams and Courses.</value>
     </labels>
     <labels>
-        <fullName>CSP_Verification_L3_Email_1_LMS</fullName>
-        <categories>CS Portal</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP_Verification_L3_Email_1_LMS</shortDescription>
-        <value>Thank you for updating your profile on the IATA Customer Portal.</value>
-    </labels>
-    <labels>
-        <fullName>CSP_Verification_L3_Email_2_LMS</fullName>
-        <categories>CS Portal</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP_Verification_L3_Email_2_LMS</shortDescription>
-        <value>Please confirm your email address by clicking on this &lt;a href="[URL]" target="_blank"&gt;link&lt;/a&gt;.</value>
-    </labels>
-    <labels>
-        <fullName>CSP_Verification_L3_Email_3_LMS</fullName>
-        <categories>CS Portal</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP_Verification_L3_Email_3_LMS</shortDescription>
-        <value>Thank you for your interest in IATA</value>
-    </labels>
-    <labels>
         <fullName>CSP_Verification_L3_Email_PE_1_LMS</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -44105,5 +44081,18 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <protected>false</protected>
         <shortDescription>Confirmation Note 4</shortDescription>
         <value>The user associated with your work email will then be merged with the existing user associated with this personal email address. Your training record will be maintained under this merged user. &lt;b&gt;From now on you will only be able to login with your work email address.&lt;/b&gt;</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Verification_L3_Email_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LMS verification email</shortDescription>
+        <value>
+            &lt;p&gt;Dear [CustomerName],&lt;/p&gt;
+            &lt;p&gt;Thank you for updating your profile on the IATA Customer Portal.&lt;/p&gt;
+            &lt;p&gt;Please confirm your email address by clicking on this &lt;a href="[URL]" target="_blank"&gt;link&lt;/a&gt;.&lt;/p&gt;
+            &lt;p&gt;Thank you for your interest in IATA&lt;/p&gt;
+        </value>
     </labels>
 </CustomLabels>
