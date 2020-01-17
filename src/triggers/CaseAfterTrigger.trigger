@@ -1055,7 +1055,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 		// START PASS
 		Map<Id, AP_Process_Form__c> casePassCountryMap = new Map<Id, AP_Process_Form__c>();
 
-		List<AP_Process_Form__c> apFormList = [SELECT Id, RecordTypeId FROM AP_Process_Form__c WHERE Case__c IN:[SELECT Id,CaseNumber,ParentId, Status FROM Case WHERE Status = 'Closed' AND ParentId = null AND  Reason1__c AND Reason1__c LIKE 'PASS Participation%'];
+		List<AP_Process_Form__c> apFormList = [SELECT Id, RecordTypeId FROM AP_Process_Form__c WHERE Case__c IN:[SELECT Id,CaseNumber,ParentId, Status FROM Case WHERE Status = 'Closed' AND ParentId = null AND Reason1__c LIKE 'PASS Participation%'];
 
 			for(Case c : Trigger.new) {
 				Case oldCase = Trigger.oldMap.get(c.Id);
