@@ -4,7 +4,7 @@ public class ContentVersionTriggerHandler {
 	public static Set<Id> getAllActiveCurrencyCenterContactIds() {
 		Set<Id> setOfContacts = new Set<Id>();
 
-		List<Portal_Application_Right__c> parList = [SELECT Id, Name, Contact__c FROM Portal_Application_Right__c WHERE Right__c = 'Access Granted' AND Portal_Application__r.ServiceName__c = 'Currency Center' AND Contact__r.Status__c = 'Active' AND Contact__r.Account.recordType.developerName = 'iata_airline'];
+		List<Portal_Application_Right__c> parList = [SELECT Id, Name, Contact__c FROM Portal_Application_Right__c WHERE Right__c = 'Access Granted' AND Portal_Application__r.ServiceName__c = 'Currency Center' AND Contact__r.Status__c = 'Active' AND Contact__r.isEmailBounced = false AND (NOT Contact__r.Email LIKE '%.inactive') AND Contact__r.Account.recordType.developerName = 'iata_airline'];
 		System.debug('ContentVersionTriggerHandler.afterInsertContentVersionTriggerHandler> parList ' + parList);
 
 		for (Portal_Application_Right__c par : parList){

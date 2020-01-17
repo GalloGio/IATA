@@ -20,7 +20,7 @@ global class AMS_MajorDefaultCommunicationEmailSender implements Database.Batcha
 	}
 
 	global Database.QueryLocator start(Database.BatchableContext BC) {
-		return Database.getQueryLocator('SELECT Id, Name, Email, Account.Name, (SELECT Id FROM Users LIMIT 1) FROM Contact WHERE Id IN :contactIds');
+		return Database.getQueryLocator('SELECT Id, Name, Email, Account.Name, (SELECT Id FROM Users WHERE isActive = true LIMIT 1) FROM Contact WHERE Id IN :contactIds AND IsEmailBounced = false AND (NOT Email LIKE \'%.inactive\')');
 	}
 
    	global void execute(Database.BatchableContext BC, List<Contact> scope) {
@@ -127,7 +127,7 @@ global class AMS_MajorDefaultCommunicationEmailSender implements Database.Batcha
 	}
 
 	public static void notifyGroup(ResultReport results, Map<Id,List<Id>> mapContactToCase, Blob emailExampleContent) {
-		List<User> users = [SELECT Id FROM User WHERE Id IN (SELECT UserOrGroupId FROM GroupMember WHERE Group.DeveloperName  = 'AMS_Agency_Default_Notification')];
+		List<User> users = [SELECT Id FROM User WHERE Id IN (SELECT UserOrGroupId FROM GroupMember WHERE Group.DeveloperName  = 'AMS_Agency_Default_Notification') AND isActive = true];
 		EmailTemplate template = [SELECT Id FROM EmailTemplate WHERE DeveloperName = 'Internal_Major_default_notification'];
 		List<Messaging.SingleEmailMessage> notifications = new List<Messaging.SingleEmailMessage>();
 

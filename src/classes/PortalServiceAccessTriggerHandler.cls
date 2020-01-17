@@ -200,7 +200,11 @@ public without sharing class PortalServiceAccessTriggerHandler {
 		return
 			[SELECT Id,
 					UserId,
-					AccountId
+					AccountId,
+					User.Email,
+					User.isActive,
+					User.ContactId,
+					User.Contact.isEmailBounced
 			FROM AccountTeamMember
 			WHERE AccountId IN: accountIds
 				AND TeamMemberRole=: ENV.TeamMemberRolePL.PortalAdministrator];

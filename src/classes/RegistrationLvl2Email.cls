@@ -8,9 +8,12 @@ public without sharing class RegistrationLvl2Email {
 			Id contactId = contactIds.get(0);
 
 			//Get address
-			Contact contact = [SELECT Name, Email FROM CONTACT WHERE Id = :contactId];
-			String address = contact.Email;
+			List<Contact> contacts = [SELECT Name, Email FROM CONTACT WHERE Id = :contactId AND isEmailBounced = false AND (NOT Email LIKE '%.inactive')];
+			if(contacts.isEmpty()) {
+				return new List<Boolean>{false};
+			}
 
+			String address = contacts[0].Email;
 			if(address == null){
 				return new List<Boolean>{false};
 			}
@@ -46,7 +49,7 @@ public without sharing class RegistrationLvl2Email {
 			String plainBody = message.getPlainTextBody();
 
 			if(plainBody != null) {
-				plainBody = plainBody.replace('[CustomerName]', contact.Name).replace('[URL]','"'+ url +'" target="_blank"');
+				plainBody = plainBody.replace('[CustomerName]', contacts[0].Name).replace('[URL]','"'+ url +'" target="_blank"');
 				message.setHtmlBody(plainBody);
 			}
 

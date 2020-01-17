@@ -22,38 +22,12 @@ public class InstantSurveyTriggerHelper {
 			if (mapInstantSurveysPerCaseId.get(is.Relationship_to_Case__c) != null) {
 				is.addError('The contact has already replied to the survey for this case.');
 
-				/*
-				if (is.X2015_Email__c != null) {
-					setEmailsToReceiveNotification.add(is.X2015_Email__c);
-				}*/
 			} else {
 				// add the new survey to the map, to cover the situation where there are several new surveys added to the same case in the same batch operation
 				 mapInstantSurveysPerCaseId.put(is.Relationship_to_Case__c, is);
 			}
 		}
 
-
-		// send notifications to the contacts
-		/*
-		if (!setEmailsToReceiveNotification.isEmpty()) {
-			EmailTemplate et = [SELECT Id, HtmlValue, Subject FROM EmailTemplate WHERE DeveloperName = 'Instant_Surveys_Already_Replied'];
-			OrgWideEmailAddress noreply = [SELECT Id FROM OrgWideEmailAddress WHERE DisplayName = 'IATA Noreply'];
-
-			list<Messaging.SingleEmailMessage> lstNotificationEmails = new list<Messaging.SingleEmailMessage>();
-
-			for (String email : setEmailsToReceiveNotification) {
-				Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-
-				mail.setOrgWideEmailAddressId(noreply.Id);
-				mail.setToAddresses(new String[] {email});
-				mail.setSubject(et.Subject);
-				mail.setHtmlBody(et.HtmlValue);
-
-				lstNotificationEmails.add(mail);
-			}
-
-			Messaging.sendEmail(lstNotificationEmails);
-		} */
 	}
 
 	//ACAMBAS - WMO-392 - Start

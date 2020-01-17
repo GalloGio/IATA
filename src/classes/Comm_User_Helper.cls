@@ -397,7 +397,7 @@ global without sharing class Comm_User_Helper {
 																						);
 				}
 
-				List <User> userList = [SELECT Id FROM User WHERE ContactId = :con.Id AND UserType = 'PowerPartner'];
+				List <User> userList = [SELECT Id FROM User WHERE ContactId = :con.Id AND UserType = 'PowerPartner' AND isActive = true AND Contact.IsEmailBounced = false AND (NOT Contact.Email LIKE '%.inactive')];
 				if (!userList.isEmpty()){
 					system.debug('SENDING MAIL TO USER');
 					EmailMessageWrapper.sendEmail(new List<EmailMessageWrapper>{ew},emailTemplateDeveloperName, userList[0].Id, commName);

@@ -26,7 +26,13 @@ global class ANG_ISSP_MailIEPStatusInProgressToOpen {
 			templateIdB = PortalServiceAccessTriggerHandler.getEmailTemplateIdByName(ENV.EmailTemplateData.ISSPChangeIEPStatusInProgressToOpen);
 
 		Set<String> roles = ANG_ISSP_IEPMailRecipientsUtils.getIEPDefaultRoles();
-		Map<String, Set<Id>> accIdToUserIdMapIep = ANG_ISSP_IEPMailRecipientsUtils.getRecipients(accountIDsIepAux, roles);
+		Map<String, Set<Id>> accIdToUserIdMapIepAux = ANG_ISSP_IEPMailRecipientsUtils.getRecipients(accountIDsIepAux, roles);
+
+		Set<Id> allUserIds = new Set<Id>();
+		for(Set<Id> idsPerAccount : accIdToUserIdMapIepAux.values())
+			allUserIds.addAll(idsPerAccount);
+
+		Map<Id,User> accIdToUserIdMapIep = new Map<Id,User>([SELECT Id FROM User WHERE isActive = true AND Contact.IsEmailBounced = false]);
 
 		// Send emails
 
@@ -37,7 +43,7 @@ global class ANG_ISSP_MailIEPStatusInProgressToOpen {
 			String auxId = String.valueOf(request.accountId).substring(0, 15);
 
 			Set<ID> portalAdminUserIDs = new Set<ID>();
-			portalAdminUserIDs = accIdToUserIdMapIep.get(auxId);
+			portalAdminUserIDs = accIdToUserIdMapIepAux.get(auxId);
 
 			if(portalAdminUserIDs == null) {
 				continue;
@@ -45,7 +51,7 @@ global class ANG_ISSP_MailIEPStatusInProgressToOpen {
 
 			for(ID userId : portalAdminUserIDs) {
 
-				if(!accsMap.containsKey(auxId)) continue;
+				if(!accsMap.containsKey(auxId) || !accIdToUserIdMapIep.containsKey(userId)) continue;
 
 				Messaging.SingleEmailMessage emailMsg = new Messaging.SingleEmailMessage();
 				emailMsg.setTemplateId(accsMap.get(auxId).IATA_Iso_country__r.ANG_IEP_Model__c == 'Model A' ? templateIdA : templateIdB);

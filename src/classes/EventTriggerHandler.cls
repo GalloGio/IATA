@@ -30,7 +30,7 @@ public class EventTriggerHandler {
 		System.debug('jmc - EventTriggerHandler.handleCountryProfileEvents getLimitEmailInvocations: ' + Limits.getLimitEmailInvocations());
 
 		if(!lsWhatIds.isEmpty()){
-			List<EntitySubscription> lstSubscriptions = [SELECT Id, ParentId, Subscriber.ContactId FROM EntitySubscription WHERE ParentId in :lsWhatIds];
+			List<EntitySubscription> lstSubscriptions = [SELECT Id, ParentId, Subscriber.ContactId, Subscriber.Contact.IsEmailBounced, Subscriber.Contact.Email FROM EntitySubscription WHERE ParentId in :lsWhatIds];
 			System.debug('jmc - EventTriggerHandler.handleCountryProfileEvents lstSubscriptions: ' + lstSubscriptions);
 
 			List<Country_Profile__c> lstCountryProfile = [SELECT Id, Name FROM Country_Profile__c WHERE Id in:lsWhatIds];
@@ -39,12 +39,15 @@ public class EventTriggerHandler {
 			// subscrivers per country: Map<CountryProfileId,Set<SubscriverId>>
 			Map<String,Set<String>> subscrivers = new Map<String, Set<String>>();
 			for (EntitySubscription es : lstSubscriptions) {
-				Set<String> tmpCountrySubscrivers = new Set<String>();
-				if(subscrivers.containsKey(es.ParentId)){
-					tmpCountrySubscrivers = subscrivers.get(es.ParentId);
+
+				if(es.Subscriber.ContactId != null && !es.Subscriber.Contact.IsEmailBounced && String.isNotBlank(es.Subscriber.Contact.Email) && !es.Subscriber.Contact.Email.endsWithIgnoreCase('.inactive')){
+					Set<String> tmpCountrySubscrivers = new Set<String>();
+					if(subscrivers.containsKey(es.ParentId)){
+						tmpCountrySubscrivers = subscrivers.get(es.ParentId);
+					}
+					tmpCountrySubscrivers.add(es.Subscriber.ContactId);
+					subscrivers.put(es.ParentId, tmpCountrySubscrivers);
 				}
-				tmpCountrySubscrivers.add(es.Subscriber.ContactId);
-				subscrivers.put(es.ParentId, tmpCountrySubscrivers);
 			}
 			System.debug('jmc - EventTriggerHandler.handleCountryProfileEvents subscrivers: ' + subscrivers);
 

@@ -196,12 +196,13 @@ public with sharing class ISSP_CreateNotification {
 		System.debug('zZzZ accountIDs==>'+accountIDs);
 		map<ID, Set<ID>> accIdToUserIdMap = new map<ID, Set<ID>>();
 		for(AccountTeamMember member : PortalServiceAccessTriggerHandler.getPortalAdmins(accountIDs)) {
-			Set<ID> userIDs = accIdToUserIdMap.get(member.AccountId);
-			if(null == userIDs)
-				userIDs = new Set<ID>();
-
-			userIDs.add(member.UserId);
-			accIdToUserIdMap.put(member.AccountId, userIDs);
+			if(member.User.IsActive && member.User.ContactId != null && !member.User.Contact.IsEmailBounced && String.isNotBlank(member.User.Email) && !member.User.Email.endsWithIgnoreCase('.inactive')) {
+				Set<ID> userIDs = accIdToUserIdMap.get(member.AccountId);
+				if(null == userIDs)
+					userIDs = new Set<ID>();
+				userIDs.add(member.UserId);
+				accIdToUserIdMap.put(member.AccountId, userIDs);
+			}
 		}
 
 		ID standartReplyUserID = PortalServiceAccessTriggerHandler.getStandartReplyUserID(ENV.Reply_Email);

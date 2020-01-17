@@ -277,6 +277,9 @@ public class ISSP_AddAttachment {
 		}
 
 		public void sendConfirmationEmail(Case saCase) {
+
+			if(!con.IsEmailBounced && String.isNotBlank(con.Email) && !con.Email.endsWithIgnoreCase('.inactive')){
+
 				String emailTemplateName;
 				String fromaddress;
 
@@ -306,5 +309,6 @@ public class ISSP_AddAttachment {
 						SYSTEM.DEBUG('Sending NoC Confirmation 2');
 						Messaging.sendEmail(emails);
 				}
+			}
 		}
 }

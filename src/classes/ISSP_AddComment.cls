@@ -63,7 +63,7 @@ public class ISSP_AddComment {
 
 			if(isEligibleCaseRT) {
 					User user = [SELECT Id, ContactId FROM User WHERE Id = :userInfo.getUserId()][0];
-					List<Contact> contactList = [SELECT Id, Preferred_Language__c, Email FROM Contact WHERE Id = :user.ContactId];
+					List<Contact> contactList = [SELECT Id, Preferred_Language__c, Email FROM Contact WHERE Id = :user.ContactId AND isEmailBounced = false AND (NOT Email LIKE '%.inactive')];
 
 					List<Messaging.SingleEmailMessage> emailsToSend = EmailUtils.createEmails(contactList, 'Portal_Case_Comment_Autoreply', 'noreply@iata.org', tmpCase.Id);
 

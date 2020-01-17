@@ -477,7 +477,9 @@ public class ANG_RHCHelper {
 		Map<Id, Contact> contactMap = new Map<Id, Contact>(
 			[SELECT
 				Id,
-				Preferred_Language__c
+				Preferred_Language__c,
+				IsEmailBounced,
+				Email
 			 FROM Contact
 			 WHERE
 			 	Id IN :contactIdSet
@@ -555,11 +557,11 @@ public class ANG_RHCHelper {
 
 		System.debug(LoggingLevel.FINE, '____ [cls ANG_RHCHelper - handleRiskOrForecastedRhcAmountUpdates] Risk Information Wrapper - ' + riuwLst);
 
-		triggerRiskOrForecastedRhcAmountNotifications(riuwLst);
+		triggerRiskOrForecastedRhcAmountNotifications(riuwLst, contactMap);
 
 	}
 
-	private static void triggerRiskOrForecastedRhcAmountNotifications(List<RiskInformationUpdateWrapper> infoLst){
+	private static void triggerRiskOrForecastedRhcAmountNotifications(List<RiskInformationUpdateWrapper> infoLst, Map<Id, Contact> contactMap){
 
 		Map<String, EmailTemplate> emailTemplateMap = new Map<String, EmailTemplate>();
 
@@ -618,7 +620,8 @@ public class ANG_RHCHelper {
 			plainBody = plainBody.replace('#RHC_AMOUNT#', String.valueOf(wrap.rhcAmountForecasted) + ' ' + wrap.CurrencyIsoCode);
 			plainBody = plainBody.replace('#RHC_EFFECTIVE_DATE#', (wrap.rhcForecastedEffectiveDate == null ? '' :String.valueOf(wrap.rhcForecastedEffectiveDate)));
 
-			emailLst.add(new Email(wrap.contactId, wrap.accountId, template.Subject, plainBody, htmlBody));
+			if(contactMap.containsKey(wrap.contactId) && !contactMap.get(wrap.contactId).IsEmailBounced && !contactMap.get(wrap.contactId).Email.endsWithIgnoreCase('.inactive'))
+				emailLst.add(new Email(wrap.contactId, wrap.accountId, template.Subject, plainBody, htmlBody));
 
 			updateNotificationAlreadySent.add(wrap.accountId);
 

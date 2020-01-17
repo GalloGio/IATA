@@ -64,7 +64,7 @@ public with sharing  class IDCard_CheckoutSingleApplication   extends IDCardAbst
 
 	private void alertKeyContactForNewApplication() {
 		//keyContact = [select ID, Name, Email from Contact where AccountId = :account.Id and IDCardContactType__c like   '%Key Contact %'];
-		List<Managed_agency__c> managedAccountList = [select m.Id, m.Account__c, m.Contact__r.Email, m.Contact__r.IDcard_Email__c,
+		List<Managed_agency__c> managedAccountList = [select m.Id, m.Account__c, m.Contact__r.Email, m.Contact__r.IDcard_Email__c, m.Contact__r.IsEmailBounced,
 								m.Contact__r.Id,  m.Account__r.IATACode__c , m.delegate__c from Managed_agency__c m where m.Account__c = :account.Id ];
 		if (managedAccountList.size() == 0) {
 			DevsTools.sendSFDevsAlertMessage('ID Card purchase alert', 'No Key contact for account ' + account.Id + ' Id card application womn t be process: ' + idCardApplication.Id);
@@ -77,12 +77,13 @@ public with sharing  class IDCard_CheckoutSingleApplication   extends IDCardAbst
 		/*for(Contact c :keyContact)
 			toRecipients.add(c.Email);*/
 		for (Managed_agency__c c : managedAccountList ) {
-			if (!c.Delegate__c && !String.isBlank(c.Contact__r.IDCard_Email__c)) {
+			if (!c.Delegate__c && String.isNotBlank(c.Contact__r.IDCard_Email__c) && !c.Contact__r.IsEmailBounced && String.isNotBlank(c.Contact__r.Email) && !c.Contact__r.Email.endsWithIgnoreCase('.inactive')) {
 				keyContactEmail = c.Contact__r.IDCard_Email__c;
 				email.setTargetObjectId(c.Contact__r.Id);
 			}
 
-			toRecipients.add(c.Contact__r.IDCard_Email__c);
+			if(!String.isNotBlank(c.Contact__r.IDCard_Email__c) && !c.Contact__r.IDCard_Email__c.endsWithIgnoreCase('.inactive'))
+				toRecipients.add(c.Contact__r.IDCard_Email__c);
 		}
 
 		String language = getSelectedLanguage();

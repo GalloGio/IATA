@@ -77,20 +77,22 @@ public with sharing class clsICCSPMCaseCloseController {
 				// Send the Notifications
 
 				// Get the contact on the case, check if it is set to receive notifications
-				Contact con = [SELECT Id, Contact_on_Close_Case__c FROM Contact WHERE Id = :pmCase.ContactId];
+				Contact con = [SELECT Id, Contact_on_Close_Case__c, Email, IsEmailBounced FROM Contact WHERE Id = :pmCase.ContactId];
 				Account a = [SELECT Id FROM Account WHERE Id = :pmCase.AccountId];
 
 				if (con.Contact_on_Close_Case__c) {
 					ApexPages.StandardController std = new ApexPages.StandardController(a);
 					cslICCSPdfPAGeneratorController pdfGen = new cslICCSPdfPAGeneratorController(std);
 
-					if (pmCase.CaseArea__c == 'ICCS – Assign Product') {
+					Boolean validEmail = con.Email != null && !con.Email.endsWithIgnoreCase('.inactive') && !con.IsEmailBounced;
+
+					if (validEmail && pmCase.CaseArea__c == 'ICCS – Assign Product') {
 						pdfGen.sendPDF('Notification_to_ICCS_Contact_PA',pmCase.ContactId, pmCase.Id);
 						pmCase.ICCS_Case_Notification_Status__c = 'Notification sent';
-					} else if (pmCase.CaseArea__c == 'ICCS – Remove Product') {
+					} else if (validEmail && pmCase.CaseArea__c == 'ICCS – Remove Product') {
 						pdfGen.sendPDF('Notification_to_ICCS_Contact_PR',pmCase.ContactId, pmCase.Id);
 						pmCase.ICCS_Case_Notification_Status__c = 'Notification sent';
-					} else if (pmCase.CaseArea__c == 'ICCS – Update Payment Instructions') {
+					} else if (validEmail && pmCase.CaseArea__c == 'ICCS – Update Payment Instructions') {
 						pdfGen.sendPDF('Notification_to_ICCS_Contact_PIU',pmCase.ContactId, pmCase.Id);
 						pmCase.ICCS_Case_Notification_Status__c = 'Notification sent';
 					} else {

@@ -403,255 +403,6 @@ public without sharing class ISSP_UserTriggerHandler {
 		}
 
 		}
-	/*
-	@future
-	public static void addBaggageSharing(Set<Id> contactIds){
-		Set <Id> accountIds = new Set <Id>(); // affected accounts
-		Map <Id, Id> accountMap = new Map <Id, Id>();
-		// affected contacts
-		List <Contact> contactList = [SELECT Id, AccountId, Account.Top_Parent__c FROM Contact WHERE Id IN :contactIds];
-		for (Contact thisContact : contactList){
-			if (!accountMap.containsKey(thisContact.AccountId)){
-				accountMap.put(thisContact.AccountId, thisContact.AccountId);
-				accountIds.add(thisContact.AccountId);
-			}
-			if (thisContact.Account.Top_Parent__c != null && thisContact.Account.Top_Parent__c != ''){
-				if (!accountMap.containsKey(thisContact.Account.Top_Parent__c)){
-					accountMap.put(thisContact.Account.Top_Parent__c, thisContact.Account.Top_Parent__c);
-					accountIds.add(thisContact.Account.Top_Parent__c);
-				}
-			}
-		}
-		// with the account list, we'll retrieve all records to share
-		List <PIR_Form__c> formList = [SELECT Id, (SELECT Id, UserOrGroupId FROM Shares) FROM PIR_Form__c
-									WHERE Airline_issuing__c IN :accountIds];
-		List <Baggage_Claim__c> claimList = [SELECT Id, (SELECT Id, UserOrGroupId FROM Shares) FROM Baggage_Claim__c
-									WHERE Parent_PIR_Form__r.Airline_issuing__c IN :accountIds];
-	List <Baggage_Claim__c> claimListRO = [SELECT Id, (SELECT Id, UserOrGroupId FROM Shares) FROM Baggage_Claim__c
-									WHERE Airline_receiving__c IN :accountIds];
-		List <Baggage_Claim_Comment__c> commentList = [SELECT Id, (SELECT Id, UserOrGroupId FROM Shares) FROM Baggage_Claim_Comment__c
-									WHERE Baggage_Claim__r.Parent_PIR_Form__r.Airline_issuing__c IN :accountIds
-									OR Baggage_Claim__r.Airline_receiving__c IN :accountIds];
-
-		// lists to handle inserts
-		List <PIR_Form__Share> formShareListAdd = new List <PIR_Form__Share>();
-		List <Baggage_Claim__Share> claimShareListAdd = new List <Baggage_Claim__Share>();
-		List <Baggage_Claim_Comment__Share> commentShareListAdd = new List <Baggage_Claim_Comment__Share>();
-
-		// users related to affected contacts
-	List <User> userList = [SELECT Id FROM User WHERE ContactId IN :contactIds];
-	for (User thisUser : userList){
-
-		// handle PIR_Form__c sharing
-		for (PIR_Form__c thisForm : formList){
-			Boolean addNewForm = true;
-			for (PIR_Form__Share thisShare : thisForm.Shares){
-				if (thisShare.UserOrGroupId == thisUser.Id){
-					addNewForm = false;
-				}
-			}
-			if (addNewForm){
-				PIR_Form__Share newFormShare = new PIR_Form__Share();
-					newFormShare.AccessLevel = 'Edit';
-					newFormShare.ParentId = thisForm.Id;
-					newFormShare.UserOrGroupId = thisUser.Id;
-					formShareListAdd.add(newFormShare);
-			}
-		}
-
-		// handle Baggage_Claim__c sharing
-		for (Baggage_Claim__c thisClaim : claimList){
-			Boolean addNewClaim = true;
-			for (Baggage_Claim__Share thisShare : thisClaim.Shares){
-				if (thisShare.UserOrGroupId == thisUser.Id){
-					addNewClaim = false;
-				}
-			}
-			if (addNewClaim){
-				Baggage_Claim__Share newClaimShare = new Baggage_Claim__Share();
-				 	newClaimShare.AccessLevel = 'Edit';
-					newClaimShare.ParentId = thisClaim.Id;
-					newClaimShare.UserOrGroupId = thisUser.Id;
-					claimShareListAdd.add(newClaimShare);
-			}
-		}
-
-		// handle Baggage_Claim__c sharing RO
-		for (Baggage_Claim__c thisClaim : claimListRO){
-			Boolean addNewClaim = true;
-			for (Baggage_Claim__Share thisShare : thisClaim.Shares){
-				if (thisShare.UserOrGroupId == thisUser.Id){
-					addNewClaim = false;
-				}
-			}
-			if (addNewClaim){
-				Baggage_Claim__Share newClaimShare = new Baggage_Claim__Share();
-					newClaimShare.AccessLevel = 'Read';
-					newClaimShare.ParentId = thisClaim.Id;
-					newClaimShare.UserOrGroupId = thisUser.Id;
-					claimShareListAdd.add(newClaimShare);
-			}
-		}
-
-		// handle PIR_Form__c sharing
-		for (Baggage_Claim_Comment__c thisComment : commentList){
-			Boolean addNewComment = true;
-			for (Baggage_Claim_Comment__Share thisShare : thisComment.Shares){
-				if (thisShare.UserOrGroupId == thisUser.Id){
-					addNewComment = false;
-				}
-			}
-			if (addNewComment){
-				Baggage_Claim_Comment__Share newCommentShare = new Baggage_Claim_Comment__Share();
-					newCommentShare.AccessLevel = 'Read';
-					newCommentShare.ParentId = thisComment.Id;
-					newCommentShare.UserOrGroupId = thisUser.Id;
-					commentShareListAdd.add(newCommentShare);
-			}
-		}
-	}
-	if (!formShareListAdd.isEmpty()){
-		insert formShareListAdd;
-	}
-	if (!claimShareListAdd.isEmpty()){
-		insert claimShareListAdd;
-	}
-	if (!commentShareListAdd.isEmpty()){
-		insert commentShareListAdd;
-	}
-
-	}
-
-	@future
-	public static void giveBaggagePermissionSet(Set<Id> contactIds){
-	String permissionSetId = [SELECT Id FROM PermissionSet WHERE Name = 'Baggage_Claim_Permission'].Id;
-	Set <Id> userSetId = new Set <Id>();
-		Map <Id, Id> userMap = new Map <Id, Id>();
-		List <User> userList = [SELECT Id FROM User WHERE ContactId IN :contactIds];
-	for (User thisUser : userList){
-		userSetId.add(thisUser.Id);
-		userMap.put(thisUser.Id, thisUser.Id);
-	}
-	if (permissionSetId != null && permissionSetId != ''){
-		List <PermissionSetAssignment> assignmentList = [SELECT Id, AssigneeId FROM PermissionSetAssignment
-																											WHERE AssigneeId IN :userSetId
-																											AND PermissionSetId = :permissionSetId];
-			if (!assignmentList.isEmpty()){
-					for (PermissionSetAssignment thisAssignment : assignmentList){
-							if (userMap.containsKey(thisAssignment.AssigneeId)){
-									userMap.remove(thisAssignment.AssigneeId);
-							}
-					}
-			}
-			if (!userMap.isEmpty()){
-					List <PermissionSetAssignment> newPermissionList = new List <PermissionSetAssignment>();
-					List <Id> idList = userMap.values();
-					for (Id thisId : idList){
-							PermissionSetAssignment newPermission = new PermissionSetAssignment();
-							newPermission.AssigneeId = thisId;
-							newPermission.PermissionSetId = permissionSetId;
-							newPermissionList.add(newPermission);
-					}
-					insert newPermissionList;
-			}
-	}
-	}
-
-	@future
-	public static void removeBaggageSharing(Set<Id> contactIds){
-		Set <Id> accountIds = new Set <Id>(); // affected accounts
-		Map <Id, Id> accountMap = new Map <Id, Id>();
-		// affected contacts
-		List <Contact> contactList = [SELECT Id, AccountId, Account.Top_Parent__c FROM Contact WHERE Id IN :contactIds];
-		for (Contact thisContact : contactList){
-			if (!accountMap.containsKey(thisContact.AccountId)){
-				accountMap.put(thisContact.AccountId, thisContact.AccountId);
-				accountIds.add(thisContact.AccountId);
-			}
-			if (thisContact.Account.Top_Parent__c != null && thisContact.Account.Top_Parent__c != ''){
-				if (!accountMap.containsKey(thisContact.Account.Top_Parent__c)){
-					accountMap.put(thisContact.Account.Top_Parent__c, thisContact.Account.Top_Parent__c);
-					accountIds.add(thisContact.Account.Top_Parent__c);
-				}
-			}
-		}
-
-		// with the account list, we'll retrieve all records to remove sharing
-		List <PIR_Form__c> formList = [SELECT Id, (SELECT Id, UserOrGroupId FROM Shares) FROM PIR_Form__c
-									WHERE Airline_issuing__c IN :accountIds];
-		List <Baggage_Claim__c> claimList = [SELECT Id, (SELECT Id, UserOrGroupId FROM Shares) FROM Baggage_Claim__c
-									WHERE Parent_PIR_Form__r.Airline_issuing__c IN :accountIds
-									OR Airline_receiving__c IN :accountIds];
-		List <Baggage_Claim_Comment__c> commentList = [SELECT Id, (SELECT Id, UserOrGroupId FROM Shares) FROM Baggage_Claim_Comment__c
-									WHERE Baggage_Claim__r.Parent_PIR_Form__r.Airline_issuing__c IN :accountIds
-									OR Baggage_Claim__r.Airline_receiving__c IN :accountIds];
-
-		// lists to handle deletes
-		List <PIR_Form__Share> formShareListDelete = new List <PIR_Form__Share>();
-		List <Baggage_Claim__Share> claimShareListDelete = new List <Baggage_Claim__Share>();
-		List <Baggage_Claim_Comment__Share> commentShareListDelete = new List <Baggage_Claim_Comment__Share>();
-
-	// users related to affected contacts
-	List <User> userList = [SELECT Id FROM User WHERE ContactId IN :contactIds];
-	for (User thisUser : userList){
-
-		// handle PIR_Form__c sharing
-		for (PIR_Form__c thisForm : formList){
-			for (PIR_Form__Share thisShare : thisForm.Shares){
-				if (thisShare.UserOrGroupId == thisUser.Id){
-					formShareListDelete.add(thisShare);
-				}
-			}
-		}
-
-		// handle Baggage_Claim__c sharing
-		for (Baggage_Claim__c thisClaim : claimList){
-			for (Baggage_Claim__Share thisShare : thisClaim.Shares){
-				if (thisShare.UserOrGroupId == thisUser.Id){
-					claimShareListDelete.add(thisShare);
-				}
-			}
-		}
-
-		// handle Baggage_Claim_Comment__c sharing
-		for (Baggage_Claim_Comment__c thisComment : commentList){
-			for (Baggage_Claim_Comment__Share thisShare : thisComment.Shares){
-				if (thisShare.UserOrGroupId == thisUser.Id){
-					commentShareListDelete.add(thisShare);
-				}
-			}
-		}
-	}
-
-	if (!formShareListDelete.isEmpty()){
-		delete formShareListDelete;
-	}
-	if (!claimShareListDelete.isEmpty()){
-		delete claimShareListDelete;
-	}
-	if (!commentShareListDelete.isEmpty()){
-		delete commentShareListDelete;
-	}
-	}
-
-	@future
-	public static void removeBaggagePermissionSet(Set<Id> contactIds){
-	String permissionSetId = [SELECT Id FROM PermissionSet WHERE Name = 'Baggage_Claim_Permission'].Id;
-	Set <Id> userSetId = new Set <Id>();
-		List <User> userList = [SELECT Id FROM User WHERE ContactId IN :contactIds];
-	for (User thisUser : userList){
-		userSetId.add(thisUser.Id);
-	}
-	if (permissionSetId != null && permissionSetId != ''){
-				List <PermissionSetAssignment> assignmentListRemove = [SELECT Id, AssigneeId FROM PermissionSetAssignment
-																												WHERE AssigneeId IN :userSetId
-																												AND PermissionSetId = :permissionSetId];
-				if (!assignmentListRemove.isEmpty()){
-						delete assignmentListRemove;
-				}
-	}
-	}
-	*/
 
 		@future
 		public static void addNonTdReportSharing(Set<Id> contactIds){
@@ -751,7 +502,7 @@ public without sharing class ISSP_UserTriggerHandler {
 				Deactivate SIS permission for input contacts and send an email to helpdesk
 		**/
 		public static void alertSISContactsChangingAccount(set<Id> setContactId){
-				List <Portal_Application_Right__c> appRightList = [SELECT Id, Contact__c, Access_Status_Reason__c
+				List <Portal_Application_Right__c> appRightList = [SELECT Id, Contact__c, Access_Status_Reason__c, Contact__r.IsEmailBounced, Contact__r.Email
 																													 FROM Portal_Application_Right__c
 																													 WHERE Application_Name__c = 'SIS'
 																														AND Right__c = 'Access Granted'
@@ -789,7 +540,9 @@ public without sharing class ISSP_UserTriggerHandler {
 						Database.SaveResult[] listResult = Database.update(appRightList, false);
 						// create an emails to inform helpdesk
 						for (Integer i=0; i<appRightList.size(); i++) {
-								Portal_Application_Right__c right = appRightList[i];
+							Portal_Application_Right__c right = appRightList[i];
+							if(right.Contact__c != null && !right.Contact__r.IsEmailBounced && String.isNotBlank(right.Contact__r.Email) && !right.Contact__r.Email.endsWithIgnoreCase('.inactive')){
+								
 								Database.SaveResult result = listResult[i];
 
 								// create an emails to inform helpdesk
@@ -802,6 +555,7 @@ public without sharing class ISSP_UserTriggerHandler {
 								EmailTemplate template = result.isSuccess()? templateOK: templateERROR;
 								email.setTemplateId(template.Id);
 								listEmail.add(email);
+							}
 						}
 						// send all emails created
 						Messaging.sendEmail(listEmail);

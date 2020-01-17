@@ -226,7 +226,7 @@ public class FSM_MassEmailReminderController {
 		if (this.selectedCaseIds.isEmpty()) {
 			ApexPages.addMessage(new ApexPages.message(ApexPages.severity.WARNING, 'Please, select at least one agent before sending emails'));
 		} else {
-			List<Case> cases = [Select c.Contact.Email, c.Account.AIMS_ID__c, c.CaseNumber, c.Account.Name, c.CurrencyISOCode, c.Financial_Security_Amount_2__c, c.FS_Deadline_Date__c, c.Account.Industry, c.Mass_Email_Send__c, c.EmailTemplate__c, c.FS_Reminder_EmailTemplate__c, c.Reminder_EmailTemplate__c, c.FS_Mass_Email_Send__c From Case c Where c.Id IN :selectedCaseIds];
+			List<Case> cases = [Select c.Contact.Id, c.Contact.Email, c.Contact.IsEmailBounced, c.Account.AIMS_ID__c, c.CaseNumber, c.Account.Name, c.CurrencyISOCode, c.Financial_Security_Amount_2__c, c.FS_Deadline_Date__c, c.Account.Industry, c.Mass_Email_Send__c, c.EmailTemplate__c, c.FS_Reminder_EmailTemplate__c, c.Reminder_EmailTemplate__c, c.FS_Mass_Email_Send__c From Case c Where c.Id IN :selectedCaseIds];
 			FSM_MassEmailReminderBatch cBatch = new FSM_MassEmailReminderBatch();
 			cBatch.caseList = cases;
 			ID batchprocessid = Database.executeBatch(cBatch, 10);

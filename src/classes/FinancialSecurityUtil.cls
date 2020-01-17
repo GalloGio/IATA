@@ -173,7 +173,7 @@ public with sharing class FinancialSecurityUtil {
 		List<Contact> contacts = [
 			SELECT Id, AccountId, Account.Top_Parent__c, Preferred_Language__c
 			FROM Contact
-			WHERE AccountId IN :accountIds AND IsEmailBounced = false AND
+			WHERE AccountId IN :accountIds AND IsEmailBounced = false AND (NOT Email LIKE '%.inactive') AND
 				(Financial_Assessment_Contact__c = true OR User_Portal_Status__c = 'Approved Admin')
 			ORDER BY Account.Top_Parent__c ASC NULLS FIRST
 		];

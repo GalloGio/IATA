@@ -412,12 +412,12 @@ public class Product_Svc
 								//get the manager email
 								User user = userId_User.get(produtInfo.Product_Manager_lookup__c);
 								String managerMail = (user != null) ? user.Email : '';
-								if(managerMail != null && managerMail != ''){ productLstEmails.get(produtInfo.Id).add(managerMail); }
+								if(String.isNotBlank(managerMail) && !managerMail.endsWithIgnoreCase('.inactive')){ productLstEmails.get(produtInfo.Id).add(managerMail); }
 
 								//get the Alternate manager email
 								User alternateUser = userId_User.get(produtInfo.Alternate_Product_Manager__c);
 								String altManagerEmail = (alternateUser != Null) ? alternateUser.Email : '';
-								if(altManagerEmail != null && altManagerEmail != ''){ productLstEmails.get(produtInfo.Id).add(altManagerEmail); }
+								if(String.isNotBlank(altManagerEmail) && !altManagerEmail.endsWithIgnoreCase('.inactive')){ productLstEmails.get(produtInfo.Id).add(altManagerEmail); }
 						}
 
 				}

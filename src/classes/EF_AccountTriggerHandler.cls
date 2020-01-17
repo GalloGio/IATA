@@ -288,7 +288,7 @@ public class EF_AccountTriggerHandler {
 					 }
 					 emailBody = emailBody + '</table>';
 					 if(a.RecordTypeId==RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Others')){
-					 		if(a.EF_Client_Services_Specialist__c!=null){
+					 		if(a.EF_Client_Services_Specialist__c!=null && a.EF_Client_Services_Specialist_Email__c != null && !a.EF_Client_Services_Specialist_Email__c.endsWithIgnoreCase('.inactive')){
 					 Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
 					 mail.setSaveAsActivity(false);
 							mail.setToAddresses(new List <String> {'efs@iata.org', a.EF_Client_Services_Specialist_Email__c});
