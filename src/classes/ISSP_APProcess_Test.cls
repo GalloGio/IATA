@@ -1963,7 +1963,7 @@ private class ISSP_APProcess_Test
 		Test.stopTest();
 	}
 
-	 @isTest static void testAPProcessPASS2() {
+	 @isTest static void testAPProcessPASS5() {
         insertPASSSettings();
 		Portal_Applications__c portalApp = new Portal_Applications__c(Name = 'Stuff');
 		insert portalApp;
