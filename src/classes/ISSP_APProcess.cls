@@ -837,7 +837,7 @@ global without sharing class ISSP_APProcess {
 	}
 
 	public Contact retrieveContact (String vContactID){
-		List<Contact> contact = [SELECT Id, FirstName, LastName , Email, AccountId, Account.Top_Parent__c FROM Contact where Id = :vContactID ];
+		List<Contact> contact = [SELECT Id, FirstName, LastName , Email, AccountId, Account.Top_Parent__c, Title FROM Contact where Id = :vContactID ];
 		if(contact.size()>0){
 			return contact[0];
 		}else{

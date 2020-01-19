@@ -2202,9 +2202,6 @@ public with sharing class ANG_AgencyChangesHelper {
 		for(Account acc: oscarAgencies)
 			accountIds.add(acc.Id);
 
-		// get Additional Account Fields Location_Class__c, Status__c, Sector__c , Category__c
-		Map<Id, Account> accountInfoMap = new Map<Id,Account>([SELECT Id, Location_Class__c, Status__c, Sector__c , Category__c FROM Account WHERE Id IN :accountIds]);
-
 		// get the forms of payment for all accounts involved in the changes to display on eBulletin
 		Map<Id,List<Agency_Authorization__c>> fOPs = AMS_ChangeCodesHelper.fetchFormsOfPayment(accountIds);
 
@@ -2243,8 +2240,7 @@ public with sharing class ANG_AgencyChangesHelper {
 
 			if(cc.Name == 'COR'){
 				for(Account ac : oscarAgencies){//when changeCode = COR, same change code for all Acc
-					//changeCodeResult = AMS_ChangeCodesHelper.createAAChangeCode(objectChangesByChangeCode,cc, oscars.get(0), ac, isActive, fOPs.get(accId));
-					changeCodeResult = AMS_ChangeCodesHelper.createAAChangeCode(objectChangesByChangeCode,cc, oscars.get(0), accountInfoMap.get(ac.Id), isActive, fOPs.get(accId));
+					changeCodeResult = AMS_ChangeCodesHelper.createAAChangeCode(objectChangesByChangeCode,cc, oscars.get(0), ac, isActive, fOPs.get(accId));
 					changesContainer.addChangeCode(changeCodeResult.changeCode);
 
 					aaccHistoryToProcess.put(accId, changeCodeResult);
@@ -2255,8 +2251,7 @@ public with sharing class ANG_AgencyChangesHelper {
 				}
 			}
 			else{
-				//changeCodeResult = AMS_ChangeCodesHelper.createAAChangeCode(objectChangesByChangeCode,cc, oscars.get(0), oscarAgencies.get(index), isActive, fOPs.get(accId));
-				changeCodeResult = AMS_ChangeCodesHelper.createAAChangeCode(objectChangesByChangeCode,cc, oscars.get(0), accountInfoMap.get(oscarAgencies.get(index).id), isActive, fOPs.get(accId));
+				changeCodeResult = AMS_ChangeCodesHelper.createAAChangeCode(objectChangesByChangeCode,cc, oscars.get(0), oscarAgencies.get(index), isActive, fOPs.get(accId));
 				changesContainer.addChangeCode(changeCodeResult.changeCode);
 
 				aaccHistoryToProcess.put(accId, changeCodeResult);

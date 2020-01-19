@@ -1415,7 +1415,7 @@ private class ISSP_AMS_Accreditation_Test {
 		ISSP_AMS_Accreditation_Acc_Req2.Name = 'TestReq2';
 		insert ISSP_AMS_Accreditation_Acc_Req2;
 
-		Test.startTest();
+		
 		System.runAs(newUser) {
 			Case testCase = ISSP_ObjectFactory.createNewCase();
 			testCase.BSPCountry__c = 'Hong Kong (SAR), China';
@@ -1466,7 +1466,7 @@ private class ISSP_AMS_Accreditation_Test {
 			String iatanCodeL = ctrl.iatanAccount;
 			String accreditationTypeL = ctrl.accredidationType;
 			String loginURL = ctrl.Portal_Login_URL;
-
+			Test.startTest();
 			ctrl.amsOfficeType = 'HO';
 			ctrl.sector = 'Travel Agent';
 			ctrl.iatacode = '100';
@@ -1906,7 +1906,7 @@ private class ISSP_AMS_Accreditation_Test {
 			ctrl.saveAMSForm();
 			ctrl.newCase.Reason1__c = 'New HO';
 			ctrl.saveAMSForm();
-
+			Test.startTest();
 			ctrl.contactType = 'House';
 			ctrl.newContact.Agencies_prev_worked_for__c = '';
 			ctrl.newContact.Agency_owner__c = true;
@@ -1930,7 +1930,7 @@ private class ISSP_AMS_Accreditation_Test {
 			ctrl.newContact.Prev_Job1_employer__c = 'test';
 			ctrl.createAgencyContact();
 
-			Test.startTest();
+			
 
 			ctrl.saveAMSFormAndGoToStep1();
 			List<AMS_Accreditation_Contact__c> accList = ctrl.List_AgencyContacts;
@@ -3083,7 +3083,7 @@ private class ISSP_AMS_Accreditation_Test {
 																			Location_type__c, Requirement_text__c, Sort_Order__c, Name
 																		FROM AMS_Accreditation_Requirement__c
 																		WHERE Name = 'TestReq1'];
-
+		Test.startTest();
 		System.runAs(newUser) {
 			Case testCase2 = ISSP_ObjectFactory.createNewCase();
 			testCase2.BSPCountry__c = 'Hong Kong (SAR), China';
@@ -3113,9 +3113,6 @@ private class ISSP_AMS_Accreditation_Test {
 			ApexPages.currentPage().getParameters().put('isNoticeOfChange', 'true');
 			ISSP_AMS_Accreditation ctrl2 = new ISSP_AMS_Accreditation();
 			ctrl2.newCase = testCase2;
-
-			Test.startTest();
-
 			ctrl2.isNoticeOfChange = true;
 			ctrl2.isBankAccountChange = true;
 
@@ -3130,9 +3127,9 @@ private class ISSP_AMS_Accreditation_Test {
 			ctrl2.goToFinalStep();
 			ctrl2.isTerminatedAgent = false;
 
-			Test.stopTest();
+			
 		}
-
+		Test.stopTest();
 		List<Case> childCases = [SELECT Id, ParentId, OSCAR__c FROM Case ORDER BY CreatedDate ASC];
 		System.assertNotEquals(true, childCases.isEmpty());
 		System.assertEquals(null, childCases[0].ParentId);

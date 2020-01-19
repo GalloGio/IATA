@@ -12,7 +12,8 @@ private class ISSP_APProcess_Test
 			new ISSP_CS__c(Name = 'EasyPay Opt-Out Days', Value__c = '30')
 		};
 		insert settings;
-
+	}
+	static void insertPASSSettings(){
 		List<AP_Country_specs__c> APCountrySpecsSettings = new List<AP_Country_specs__c> {
 			new AP_Country_specs__c(Name = 'DEFAULT-BankMandate', Link_label__c = 'test',Download_URL__c='test')
 		};
@@ -417,7 +418,7 @@ private class ISSP_APProcess_Test
 																Name = 'test1');
 		insert csCity;
 
-		Test.startTest();
+		
 		System.runAs(newUser)
 		{
 			//Case testCase = (Case)ISSP_ObjectFactory.createSObject('Case',false,1);
@@ -437,7 +438,7 @@ private class ISSP_APProcess_Test
 			testCase.IFAP_Country_ISO__c = 'PT';
 			insert testCase;
 			System.debug('testCase Id: ' + testCase.Id);
-
+			Test.startTest();
 			//AP_Process_Form__c ap = (AP_Process_Form__c)ISSP_ObjectFactory.createSObject('AP_Process_Form__c',false,1);
 			AP_Process_Form__c ap = new AP_Process_Form__c();
 			ap.Case__c = testCase.Id;
@@ -476,8 +477,9 @@ private class ISSP_APProcess_Test
 
 			ctrl.fileBody = Blob.toPDF('test');
 			ctrl.fileName = 'testName';
+			Test.stopTest();
 		}
-		Test.stopTest();
+		
 
 	}
 
@@ -518,7 +520,7 @@ private class ISSP_APProcess_Test
 																Name = 'test1');
 		insert csCity;
 
-		Test.startTest();
+		
 		System.runAs(newUser)
 		{
 			//Case testCase = (Case)ISSP_ObjectFactory.createSObject('Case',false,1);
@@ -538,7 +540,7 @@ private class ISSP_APProcess_Test
 			testCase.IFAP_Country_ISO__c = 'PT';
 			insert testCase;
 			System.debug('testCase Id: ' + testCase.Id);
-
+			Test.startTest();
 			//AP_Process_Form__c ap = (AP_Process_Form__c)ISSP_ObjectFactory.createSObject('AP_Process_Form__c',false,1);
 			AP_Process_Form__c ap = new AP_Process_Form__c();
 			ap.Case__c = testCase.Id;
@@ -575,10 +577,11 @@ private class ISSP_APProcess_Test
 
 			ctrl.fileBody = Blob.toPDF('test');
 			ctrl.fileName = 'testName';
+			Test.stopTest();
 		}
 
 
-		Test.stopTest();
+		
 
 	}
 
@@ -737,7 +740,7 @@ private class ISSP_APProcess_Test
 																Name = 'test1');
 		insert csCity;
 
-		Test.startTest();
+		
 		System.runAs(newUser)
 		{
 			//Case testCase = (Case)ISSP_ObjectFactory.createSObject('Case',false,1);
@@ -761,7 +764,7 @@ private class ISSP_APProcess_Test
 			insert testCase;
 
 			System.debug('testCase Id: ' + testCase.Id);
-
+			Test.startTest();
 			//AP_Process_Form__c ap = (AP_Process_Form__c)ISSP_ObjectFactory.createSObject('AP_Process_Form__c',false,1);
 			AP_Process_Form__c ap = new AP_Process_Form__c();
 			ap.Case__c = testCase.Id;
@@ -799,10 +802,11 @@ private class ISSP_APProcess_Test
 
 			ctrl.fileBody = Blob.toPDF('test');
 			ctrl.fileName = 'testName';
+			Test.stopTest();
 		}
 
 
-		Test.stopTest();
+		
 
 	}
 
@@ -852,7 +856,7 @@ private class ISSP_APProcess_Test
 
 		insert new Case_Reason_Service__c(Name='CASS HOT', Service__c='CASS HOT');
 
-		Test.startTest();
+		
 		System.runAs(newUser)
 		{
 			Case testCase = ISSP_ObjectFactory.createNewCase();
@@ -871,7 +875,7 @@ private class ISSP_APProcess_Test
 			testCase.IFAP_Country_ISO__c = country.ISO_Code__c;
 			insert testCase;
 			System.debug('testCase Id: ' + testCase.Id);
-
+			Test.startTest();
 			AP_Process_Form__c ap = new AP_Process_Form__c();
 			ap.Case__c = testCase.Id;
 			ap.Accept_payment_Cards_for_BSP_ticket__c = 'Yes';
@@ -908,10 +912,11 @@ private class ISSP_APProcess_Test
 
 			ctrl.fileBody = Blob.toPDF('test');
 			ctrl.fileName = 'testName';
+			Test.stopTest();
 		}
 
 
-		Test.stopTest();
+		
 
 	}
 
@@ -961,7 +966,7 @@ private class ISSP_APProcess_Test
 
 		insert new Case_Reason_Service__c(Name='CASS HOT', Service__c='CASS HOT');
 
-		Test.startTest();
+		
 		System.runAs(newUser)
 		{
 			Case testCase = ISSP_ObjectFactory.createNewCase();
@@ -980,7 +985,7 @@ private class ISSP_APProcess_Test
 			testCase.IFAP_Country_ISO__c = country.ISO_Code__c;
 			insert testCase;
 			System.debug('testCase Id: ' + testCase.Id);
-
+			Test.startTest();
 			AP_Process_Form__c ap = new AP_Process_Form__c();
 			ap.Case__c = testCase.Id;
 			ap.Accept_payment_Cards_for_BSP_ticket__c = 'Yes';
@@ -1018,8 +1023,9 @@ private class ISSP_APProcess_Test
 
 			ctrl.fileBody = Blob.toPDF('test');
 			ctrl.fileName = 'testName';
+			Test.stopTest();
 		}
-		Test.stopTest();
+		
 	}
 
 	@isTest static void test_method_i()
@@ -1068,7 +1074,7 @@ private class ISSP_APProcess_Test
 
 		insert new Case_Reason_Service__c(Name='CASS HOT', Service__c='CASS HOT');
 
-		Test.startTest();
+		
 		System.runAs(newUser)
 		{
 			Case testCase = ISSP_ObjectFactory.createNewCase();
@@ -1087,7 +1093,7 @@ private class ISSP_APProcess_Test
 			testCase.IFAP_Country_ISO__c = country.ISO_Code__c;
 			insert testCase;
 			System.debug('testCase Id: ' + testCase.Id);
-
+			Test.startTest();
 			AP_Process_Form__c ap = new AP_Process_Form__c();
 			ap.Case__c = testCase.Id;
 			ap.Accept_payment_Cards_for_BSP_ticket__c = 'Yes';
@@ -1125,8 +1131,9 @@ private class ISSP_APProcess_Test
 
 			ctrl.fileBody = Blob.toPDF('test');
 			ctrl.fileName = 'testName';
+			Test.stopTest();
 		}
-		Test.stopTest();
+		
 	}
 
 	@isTest static void test_sendEmail1() {
@@ -1841,6 +1848,7 @@ private class ISSP_APProcess_Test
 	}
 
 	@isTest static void testAPProcessPASS() {
+        insertPASSSettings();
 		Portal_Applications__c portalApp = new Portal_Applications__c(Name = 'Stuff');
 		insert portalApp;
 
@@ -1955,7 +1963,8 @@ private class ISSP_APProcess_Test
 		Test.stopTest();
 	}
 
-	 @isTest static void testAPProcessPASS6() {
+	 @isTest static void testAPProcessPASS2() {
+        insertPASSSettings();
 		Portal_Applications__c portalApp = new Portal_Applications__c(Name = 'Stuff');
 		insert portalApp;
 

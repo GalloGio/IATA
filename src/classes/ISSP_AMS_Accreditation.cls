@@ -4894,8 +4894,7 @@ public without sharing class ISSP_AMS_Accreditation {
 		if (paramCodeSelect == AccredContactEnum.PARAMCODE_PREV_OWNERS || paramCodeSelect == AccredContactEnum.PARAMCODE_CURR_OWNERS || paramCodeSelect == AccredContactEnum.PARAMCODE_AGENCY_CONTACTS) {
 			query += 'AMS_Pax_Accreditation_Form__c, Name, First_name__c, Last_name__c, Salutation__c, Agency_owner__c, Agency_role__c, Email__c, Phone__c, ';
 			query += 'Financial_interest__c, Contact_Id__c, Contact__c, AMS_OwnershipId__c, AMS_ContactId__c, Local_First_name__c, Local_Last_name__c, Number_Of_Shares__c, ';
-			query += 'AddressStreet__c, AddressCity__c, AddressCountry__c, AddressPostcode__c, Time_devoted_to_Agency_business__c, FAX__c, Financial_Assessment_Contact__c, Mobile__c, ';
-			query += 'PASS_admin__c, PASS_user__c';
+			query += 'AddressStreet__c, AddressCity__c, AddressCountry__c, AddressPostcode__c, Time_devoted_to_Agency_business__c, FAX__c, Financial_Assessment_Contact__c, PASS_admin__c, PASS_user__c, Mobile__c ';
 		}
 
 		Id trainedStaffRecType = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Trained_Staff');
