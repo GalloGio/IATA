@@ -522,14 +522,14 @@ public with sharing class PortalCasesCtrl {
 			}
 		} else if(record.RecordType.Name == 'OSCAR Communication') {
 			if(!agencyRightList.isEmpty()) {
-				if(amsListForm != null && amsListForm.contains(record.Id) && (record.Status == 'Draft' || record.Status == 'Open - EDMC') ) {
+				if(amsListForm != null && amsListForm.contains(record.Id) && (record.Status == TIP_Utils.CASE_STATUS_DRAFT || record.Status == 'Open - EDMC') ) {
 					if(record.Reason1__c == AMS_Utils.CASE_REASON_FOR_MANAGEMENT || record.Reason1__c == AMS_Utils.CASE_REASON_PCI_DSS_COMPLIANT) {
 						return new Map<Id, String>{
 							record.Id =>
 							OneIdUtils.getOrgUrl() + OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, 'ISSP_ANG_PCI?caseId=' + record.Id)
 						};
 					} else if(record.Reason1__c.startsWith('New')) {
-						if (record.Reason1__c == AMS_Utils.CASE_REASON_HE_MULTICOUNTRY && record.Status == 'Draft') {
+						if (record.Reason1__c == AMS_Utils.CASE_REASON_HE_MULTICOUNTRY && record.Status == TIP_Utils.CASE_STATUS_DRAFT) {
 							return new Map<Id, String>{
 								record.Id =>
 								OneIdUtils.getOrgUrl() + OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, 'ISSP_AMSCases')
@@ -583,12 +583,12 @@ public with sharing class PortalCasesCtrl {
 
 		/* If case is a SIS Joining Form */
 		if(record.RecordType.DeveloperName == 'IDFS_Airline_Participation_Process') {
-			if(record.Status == 'Draft' && record.Classification_SIS__c == 'SIS Membership' && !record.isClosed && !record.Owner.Name.StartsWith('Recycle Bin')) {
+			if(record.Status == TIP_Utils.CASE_STATUS_DRAFT && record.Classification_SIS__c == 'SIS Membership' && !record.isClosed && !record.Owner.Name.StartsWith('Recycle Bin')) {
 				return new Map<Id, String>{
 					record.Id =>
 					OneIdUtils.getOrgUrl() + OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, 'ISSP_SISMembershipApplicationForm?id=' + record.Id + '&step=2')
 				};
-			} else if((record.Status == 'Draft' || record.Status == 'Open - EDMC' || record.Status == 'Return application to customer') &&
+			} else if((record.Status == TIP_Utils.CASE_STATUS_DRAFT || record.Status == 'Open - EDMC' || record.Status == 'Return application to customer') &&
 					apListForm != null && apListForm.contains(record.Id) &&
 					airlineRightList != null && !airlineRightList.isEmpty()) {
 						return new Map<Id, String>{
