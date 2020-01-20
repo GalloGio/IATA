@@ -923,11 +923,11 @@ public without sharing class Order_Svc
 					clientMail.orgWideEmailAddressId = Utility.getTextSetting('Ecom OrgWideEmailAddressId for notif');
 					clientMail.recipients = new List<String>();
 
-					if (order.BillToContact_Email__c != null) {
+					if (order.BillToContact_Email__c != null && !order.BillToContact_Email__c.endsWithIgnoreCase('.inactive')) {
 						emails.add(order.BillToContact_Email__c);
 					}
 
-					if (order.ShipToContact_Email__c != null) {
+					if (order.ShipToContact_Email__c != null && !order.ShipToContact_Email__c.endsWithIgnoreCase('.inactive')) {
 						emails.add(order.ShipToContact_Email__c);
 					}
 
@@ -1135,16 +1135,12 @@ public without sharing class Order_Svc
 								if(pen.Internal_user__c != null){
 									//userIdToSendNotif.add(pen.Internal_user__c);
 									User internal = userId_User.get(pen.Internal_user__c);
-									lstRecipients.add(internal.Email);
+									if(internal.Email != null && !internal.Email.endsWithIgnoreCase('.inactive')) lstRecipients.add(internal.Email);
 								}
 								//Add the external email address to notified
-								if(pen.External_email_address__c != null){ lstRecipients.add(pen.External_email_address__c); }
+								if(pen.External_email_address__c != null && !pen.External_email_address__c.endsWithIgnoreCase('.inactive')){ lstRecipients.add(pen.External_email_address__c); }
 							}
 						}
-
-						//Add the administrator email
-						/*list<String> adminEmails = Utility.getAdminEmails();
-						lstRecipients.addAll(adminEmails);*/
 
 						//For external emails
 						if(lstRecipients.size() > 0){

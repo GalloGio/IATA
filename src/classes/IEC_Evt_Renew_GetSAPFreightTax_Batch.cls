@@ -73,7 +73,8 @@ global class IEC_Evt_Renew_GetSAPFreightTax_Batch implements Database.Batchable<
 
 						//*** send notification to creator
 						releaseToUpdate = [select Name, CreatedBy.Email, CreatedBy.FirstName from IEC_Event_Release__c where Id = :eventReleaseId limit 1];
-						Utility.sendEmail(new List<String> {releaseToUpdate.CreatedBy.Email}
+						if(releaseToUpdate.CreatedBy.Email != null && !releaseToUpdate.CreatedBy.Email.endsWithIgnoreCase('.inactive')){
+							Utility.sendEmail(new List<String> {releaseToUpdate.CreatedBy.Email}
 														, 'Process for event release "' + releaseToUpdate.Name + '" is complete'
 														, 'Dear ' + releaseToUpdate.CreatedBy.FirstName + '<br/><br/>'
 															+ 'The process launched for event release "' + releaseToUpdate.Name + '" was complete.  For more detail, click on this link '
@@ -81,6 +82,7 @@ global class IEC_Evt_Renew_GetSAPFreightTax_Batch implements Database.Batchable<
 															+ 'Best regards,<br/>'
 															+ 'eCommerce Support Team<br/>'
 														, true, null);
+						}
 		}
 		else
 			//*** when reprocessing, perform payment to complete the cycle

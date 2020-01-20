@@ -2227,13 +2227,15 @@ void buildPaymentTypePicklist() {
 				update new OrderItem(Id = orderItemId, AWS_download_link__c = null);
 
 				// Now send the email
-				Mail_DTO clientMail = new Mail_DTO();
-				clientMail.whatId = orderItemId;
-				clientMail.templateId = Utility.getTextSetting('OrderItem sold templateId for client');
-				clientMail.recipients = new list<String> {vfOrder.ShipToContact_Email__c};
-				Utility.sendBulkEmails(new List<Mail_DTO> {clientMail});
+				if(String.isNotBlank(vfOrder.ShipToContact_Email__c) && !vfOrder.ShipToContact_Email__c.endsWithIgnoreCase('.inactive'))
+					Mail_DTO clientMail = new Mail_DTO();
+					clientMail.whatId = orderItemId;
+					clientMail.templateId = Utility.getTextSetting('OrderItem sold templateId for client');
+					clientMail.recipients = new list<String> {vfOrder.ShipToContact_Email__c};
+					Utility.sendBulkEmails(new List<Mail_DTO> {clientMail});
 
-				ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.CONFIRM, Label.IEC_Confirm_EmailSent));
+					ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.CONFIRM, Label.IEC_Confirm_EmailSent));
+				}
 			}
 		}
 		catch (Exception e) {

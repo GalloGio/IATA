@@ -19,15 +19,16 @@ global with sharing class WSJavascript {
 		Send an email to the input case suign the input template
 	**/
 	webservice static void sendEmail(Id caseId, String templateName) {
-		Case cse = [SELECT Id, ContactId FROM Case WHERE Id = :caseId];
+		List<Case> cseList = [SELECT Id, ContactId FROM Case WHERE Id = :caseId AND Contact.IsEmailBounced = false AND (NOT Contact.Email LIKE '%.inactive')];
+		if(cseList.isEmpty()) return;
 		EmailTemplate template = [SELECT Id FROM EmailTemplate WHERE DeveloperName = :templateName];
 		OrgWideEmailAddress orgAddress = [SELECT Id FROM OrgWideEmailAddress WHERE Address = 'noreply@iata.org'];
 
 		Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
 		mail.setOrgWideEmailAddressId(orgAddress.Id);
 		mail.setTemplateId(template.Id);
-		mail.setTargetObjectId(cse.ContactId);
-		mail.setWhatId(cse.Id);
+		mail.setTargetObjectId(cseList.get(0).ContactId);
+		mail.setWhatId(cseList.get(0).Id);
 		mail.setTreatTargetObjectAsRecipient(true);
 		mail.setSaveAsActivity(true);
 		Messaging.SendEmailResult [] r = Messaging.sendEmail(new Messaging.SingleEmailMessage[] { mail });

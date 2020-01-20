@@ -653,23 +653,21 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 			}
 
 			if(!ICHcases.isEmpty()){
-				List<Contact> Ctc = [Select id from Contact where LastName = 'ICH Help Desk'];
-				EmailTemplate et = [Select id from EmailTemplate where DeveloperName='ICH_Escalation_notification_to_YMQ_ICH_support_team'];
-			 	id ContactId;
+				List<Contact> Ctc = [SELECT Id FROM Contact WHERE LastName = 'ICH Help Desk' AND IsEmailBounced = false AND (NOT Email LIKE '%.invalid')];
 			 	if(Ctc.size() > 0){
-						ContactId = Ctc[0].Id;
-						for (Case c : ICHcases){
-									Messaging.SingleEmailMessage CaseNotificationmail = new Messaging.SingleEmailMessage();
-									CaseNotificationmail.setTargetObjectId(ContactId);
-									CaseNotificationmail.setReplyTo(Label.ICHEmail);//'ichhelpdesk@iata.org');
-									CaseNotificationmail.setSenderDisplayName('Salesforce Support');
-									CaseNotificationmail.setTemplateId(et.id);
-									CaseNotificationmail.setWhatId(c.Id);
+					EmailTemplate et = [Select id from EmailTemplate where DeveloperName='ICH_Escalation_notification_to_YMQ_ICH_support_team'];
+					for (Case c : ICHcases){
+						Messaging.SingleEmailMessage CaseNotificationmail = new Messaging.SingleEmailMessage();
+						CaseNotificationmail.setTargetObjectId(Ctc[0].Id);
+						CaseNotificationmail.setReplyTo(Label.ICHEmail);//'ichhelpdesk@iata.org');
+						CaseNotificationmail.setSenderDisplayName('Salesforce Support');
+						CaseNotificationmail.setTemplateId(et.id);
+						CaseNotificationmail.setWhatId(c.Id);
 
-									mails.add(CaseNotificationmail);
-							}
-						if(!mails.isEmpty())
-							Messaging.sendEmail(mails);
+						mails.add(CaseNotificationmail);
+					}
+					if(!mails.isEmpty())
+						Messaging.sendEmail(mails);
 			 	}
 			}
 		}
