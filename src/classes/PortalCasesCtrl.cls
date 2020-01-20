@@ -529,10 +529,17 @@ public with sharing class PortalCasesCtrl {
 							OneIdUtils.getOrgUrl() + OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, 'ISSP_ANG_PCI?caseId=' + record.Id)
 						};
 					} else if(record.Reason1__c.startsWith('New')) {
-						return new Map<Id, String>{
-							record.Id =>
-							OneIdUtils.getOrgUrl() + OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, 'ISSP_AMS_Accreditation?caseId=' + record.Id + '&step=2')
-						};
+						if (record.Reason1__c == AMS_Utils.CASE_REASON_HE_MULTICOUNTRY && record.Status == 'Draft') {
+							return new Map<Id, String>{
+								record.Id =>
+								OneIdUtils.getOrgUrl() + OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, 'ISSP_AMSCases')
+							};
+						} else {
+							return new Map<Id, String>{
+								record.Id =>
+								OneIdUtils.getOrgUrl() + OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, 'ISSP_AMS_Accreditation?caseId=' + record.Id + '&step=2')
+							};
+						}
 					} else if(record.Reason1__c == 'CLO – Closure') {
 						return new Map<Id, String>{
 							record.Id =>
