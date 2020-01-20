@@ -283,6 +283,24 @@ private class PortalCasesCtrlTest {
 
 		Test.stopTest();
 	}
+
+	@IsTest
+	static void testHandleResult_MC(){
+		User usr = [SELECT Id, ContactId FROM User WHERE Email LIKE '%testemail1@csp.testclass' LIMIT 1];
+
+		Test.startTest();
+			System.runAs(usr) {
+
+				createOscar(AMS_Utils.CASE_REASON_HE_MULTICOUNTRY,'Test','Draft',usr.ContactId,'OSCAR_Communication');
+				PortalSearchFilterWrapper portFilterWrapper = new PortalSearchFilterWrapper();
+				portFilterWrapper.searchText = 'Bla';
+
+				CSP_Utils.PagedResult pag1 = PortalCasesCtrl.getFilteredCasesResultsPage(JSON.serialize(portFilterWrapper), '0', CSP_Utils.isAdmin());
+			}
+
+		Test.stopTest();
+	}
+
 	@IsTest
 	static void testHandleResult7(){
 		User usr = [SELECT Id, ContactId FROM User WHERE Email LIKE '%testemail1@csp.testclass' LIMIT 1];
