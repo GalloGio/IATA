@@ -22892,6 +22892,10 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
         <name>Apply_RHC_Equal_to_FS</name>
     </customTabs>
     <customTabs>
+        <label><!-- Attachment Manager --></label>
+        <name>AttachmentManager</name>
+    </customTabs>
+    <customTabs>
         <label>Servicios disponibles</label>
         <name>Available_Services</name>
     </customTabs>

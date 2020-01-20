@@ -22859,6 +22859,10 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
         <name>Apply_RHC_Equal_to_FS</name>
     </customTabs>
     <customTabs>
+        <label><!-- Attachment Manager --></label>
+        <name>AttachmentManager</name>
+    </customTabs>
+    <customTabs>
         <label>Dịch Vụ Khả Dụng</label>
         <name>Available_Services</name>
     </customTabs>
