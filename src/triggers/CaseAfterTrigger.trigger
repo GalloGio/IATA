@@ -653,7 +653,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 			}
 
 			if(!ICHcases.isEmpty()){
-				List<Contact> Ctc = [SELECT Id FROM Contact WHERE LastName = 'ICH Help Desk' AND IsEmailBounced = false AND (NOT Email LIKE '%.invalid')];
+				List<Contact> Ctc = [SELECT Id FROM Contact WHERE LastName = 'ICH Help Desk' AND IsEmailBounced = false AND (NOT Email LIKE '%.inactive')];
 			 	if(Ctc.size() > 0){
 					EmailTemplate et = [Select id from EmailTemplate where DeveloperName='ICH_Escalation_notification_to_YMQ_ICH_support_team'];
 					for (Case c : ICHcases){
