@@ -72,11 +72,7 @@ global class AMS_VoucherPDFCreationBatch implements Database.Batchable<sObject>,
 		if(!attachments.isEmpty())
 			insert attachments;
 
-		String userName = UserInfo.getUserName();
-
-		User activeUser = [Select Email From User where Username = : userName limit 1];
-
-		sendSingleMail(buildCustomReport(),activeUser,region);
+		sendSingleMail(buildCustomReport(), region);
 
 		process.Status__c = 'Ended';
 
@@ -127,7 +123,7 @@ global class AMS_VoucherPDFCreationBatch implements Database.Batchable<sObject>,
 
 	}
 
-	public static void sendSingleMail(String myCustomString,User activeUser, AMS_Voucher_Region__c region){
+	public static void sendSingleMail(String myCustomString, AMS_Voucher_Region__c region){
 
 		// grab the email template
 		EmailTemplate emailTemplate = [select Id, Subject, HtmlValue, Body from EmailTemplate where name = 'Vouchers Creation Report'];
@@ -146,7 +142,7 @@ global class AMS_VoucherPDFCreationBatch implements Database.Batchable<sObject>,
 			//build the email message
 		Messaging.Singleemailmessage email = new Messaging.Singleemailmessage();
 
-		email.setTargetObjectId(activeUser.Id);
+		email.setTargetObjectId(UserInfo.getUserId());
 		email.setSaveAsActivity(false);
 		email.setReplyTo('testuserdonotreply@iatas.test');
 		email.setSenderDisplayName('IATA PDF Generation Process');

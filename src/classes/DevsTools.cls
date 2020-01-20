@@ -24,7 +24,7 @@ public with sharing class DevsTools {
 	}
 
 
-	 private static Id[] receivers = new List<Id>();
+	private static List<User> receivers = new List<User>();
 
 	/**
 	* Send an Alert Alert email to devs
@@ -33,22 +33,21 @@ public with sharing class DevsTools {
 	public static void sendSFDevsAlertMessage(String title, String message){
 		try{
 			if(receivers.size()==0){
-				List<User> users = [SELECT Id, Email, ProfileId FROM User WHERE IsActive = true AND Receive_Apex_emails__c = true];
-				for(User u:users)
-					receivers.add(u.Id);
+				receivers = [SELECT Id, Email, ProfileId FROM User WHERE IsActive = true AND Receive_Apex_emails__c = true];
 			}
 
 			if(receivers.size()>0){
 				List<Messaging.SingleEmailMessage> emails = new List<Messaging.SingleEmailMessage>();
-				for(Id userId: receivers) {
+				for(User u: receivers) {
 					Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
 					mail.setSubject(title);
-					mail.setTargetObjectId(userId) ;
+					mail.setTargetObjectId(u.Id) ;
 					mail.setPlainTextBody(message);
 					mail.setSaveAsActivity(false);
 					emails.add(mail);
-				}			
+				}
 				Messaging.sendEmail(emails);
+				
 			}else {
 				system.debug('no user with request SELECT Email, ProfileId FROM User where IsActive = true and Receive_Apex_emails__c = true');
 			}
