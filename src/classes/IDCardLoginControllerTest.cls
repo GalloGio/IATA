@@ -345,7 +345,6 @@ public class IDCardLoginControllerTest {
 		
 		IATA_ISO_Country__c aCountry = new IATA_ISO_Country__c();
 		aCountry.Name = 'Canada';
-		aCountry.AIMS_Area_Name__c = 'CANADA';
 		aCountry.ISO_Code_Numeric__c = 990;
 		aCountry.AIMS_Area_ID__c = '1';
 		aCountry.ISO_Code__c = 'CA';
@@ -358,21 +357,22 @@ public class IDCardLoginControllerTest {
 		theAccount.Industry = 'Cargo Agent';
 		theAccount.Type = 'TIDS Agent';
 		theAccount.BillingCity = 'Montreal';
-		theAccount.BillingCountry = 'teste';
+		theAccount.WebStar_ID__c = null;
+		theAccount.BillingCountry = 'Canada';
 		theAccount.BillingPostalCode = 'H0H 0H0';       
 		theAccount.Status__c = IDCardUtil.ACCOUNT_STATUS_APPROVED;
 		theAccount.Location_Class__c = 'D';
 		theAccount.IATA_ISO_Country__c = aCountry.Id;
 		insert theAccount;
 
-		String country = aCountry.Name;
-		String countryAccount = theAccount.BillingCountry;
-		System.assert(country != countryAccount);
-						
 		Test.startTest();   
-			
-		idCardLoginController.verifyAlternative();
 		
+		try{
+			idCardLoginController.verifyAlternative();
+		}catch(Exception e){
+			System.assert(checkMessages(ApexPages.getMessages(), 'Please Contact IDCard Support with the following message: ISO Country not found for the following Account:'));
+		}
+
 		Test.stopTest();  
 	}
 	
