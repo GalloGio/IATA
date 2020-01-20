@@ -90535,6 +90535,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
+                <fullName>General Public</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Global Distribution System</fullName>
                 <default>false</default>
             </values>
@@ -90672,6 +90676,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Security</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Student</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -93355,6 +93363,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Financial Institution</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>General Public</fullName>
                 <default>false</default>
             </values>
             <values>
