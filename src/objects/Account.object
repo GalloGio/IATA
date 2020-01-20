@@ -111049,7 +111049,7 @@ ISCHANGED(BillingCountry),
 					),
 				 RecordType.DeveloperName = &apos;Agency_WW_HQ&apos;
 )</errorConditionFormula>
-        <errorMessage>You do not have permission to edit ISO Country, VAT Number, Billing Address. Please contact your administrator.</errorMessage>
+        <errorMessage>You do not have permission to edit ISO Country, VAT Number, Billing Address, Legal Name, Trade Name, Sector, Category, Account Type, Agency Business Model, Website and Ownership Type. Please contact your administrator.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>CASS_Number_3_Digits</fullName>
