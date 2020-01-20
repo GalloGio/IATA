@@ -8,12 +8,12 @@ public without sharing class ISSP_AMS_MSO_Request_Controller {
 	public String reason {get; set;}
 	public List<SelectOption> billingStatesList {get; set; }
 
-	public List<IATA_ISO_City__c> billingCityList;
+	public static List<IATA_ISO_City__c> billingCityList;
 
 	public String billingCity{get;set;}
 
-	public String billingCityListStr {get {return JSON.serialize(billingCityList);} set;}
-	private map<String,list<IATA_ISO_State__c>> mapBillingStatesPerCountry;
+	public static String billingCityListStr {get {return JSON.serialize(billingCityList);} set;}
+	private static map<String,list<IATA_ISO_State__c>> mapBillingStatesPerCountry = new map<String,list<IATA_ISO_State__c>>();
 	private User currentUser;
 
 	public Account msoAccount {get; set;}
