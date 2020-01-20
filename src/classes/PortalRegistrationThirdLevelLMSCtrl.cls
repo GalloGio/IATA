@@ -371,7 +371,7 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 
 					Set<String> conIdSet = new Set<String>();
 					conIdSet.add(conToInactivate.Id);
-					PortalRegistrationFirstLevelCtrl.futureDeactivateUsers(conIdSet);
+					System.enqueueJob(new PortalRegistrationFirstLevelCtrl.AsyncDeactivateUser(conIdSet));
 
 					regRes.isSuccess = true;
 					regRes.message = 'Regitration Completed!';
@@ -475,7 +475,7 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 
 					Set<String> conIdSet = new Set<String>();
 					conIdSet.add(conToInactivate.Id);
-					PortalRegistrationFirstLevelCtrl.futureDeactivateUsers(conIdSet);
+					System.enqueueJob(new PortalRegistrationFirstLevelCtrl.AsyncDeactivateUser(conIdSet));
 
 					regRes.isSuccess = true;
 					regRes.message = 'Regitration Completed!';

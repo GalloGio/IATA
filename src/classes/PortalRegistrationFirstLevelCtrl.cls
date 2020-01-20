@@ -1318,7 +1318,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 
 		Set<string> IdsToDeactivate;
 
-		AsyncDeactivateUser(Set<string> IdsToDeactivate){
+		public AsyncDeactivateUser(Set<string> IdsToDeactivate){
 			this.IdsToDeactivate = IdsToDeactivate;
 		}
 
