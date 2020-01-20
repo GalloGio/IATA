@@ -22853,6 +22853,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>Apply_RHC_Equal_to_FS</name>
     </customTabs>
     <customTabs>
+        <label><!-- Attachment Manager --></label>
+        <name>AttachmentManager</name>
+    </customTabs>
+    <customTabs>
         <label>可用服务</label>
         <name>Available_Services</name>
     </customTabs>

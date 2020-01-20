@@ -379,7 +379,7 @@ public static Contact contactInfo = new Contact();
 	public static CSP_Utils.PagedResult searchForCompanyContacts(String companybranchFilterWrapper, String requestedPage){
 		Integer requestedPageAux = Integer.valueof(requestedPage);
 
-		CSP_Utils.PagedResult pagedResultAux = DAL_WithoutSharing.searchForCompanyContacts(companybranchFilterWrapper, requestedPageAux, PortalProfileCtrl.RESULTS_PER_PAGE , myContact.AccountId);
+		CSP_Utils.PagedResult pagedResultAux = DAL_WithoutSharing.searchForCompanyContacts(companybranchFilterWrapper, requestedPageAux, PortalProfileCtrl.RESULTS_PER_PAGE , String.isNotBlank(myContact.Account.Top_Parent__c) ? myContact.Account.Top_Parent__c : myContact.AccountId);
 
 		CSP_Utils.PagedResult pagedResultToReturn = new CSP_Utils.PagedResult();
 		pagedResultToReturn.recordsString = JSON.serialize(getContactWrappers(pagedResultAux.records, false));
