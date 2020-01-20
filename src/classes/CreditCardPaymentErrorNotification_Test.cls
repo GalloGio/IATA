@@ -10,7 +10,7 @@ private class CreditCardPaymentErrorNotification_Test {
 
 		CreditCardPaymentErrorNotification_Ctrl controller = new CreditCardPaymentErrorNotification_Ctrl();
 
-		controller.orderId = orders.get(0).ID;	
+		controller.orderId = orders.get(0).ID;
 		List<OrderItem> listOrderItem = controller.orderItemList;
 
 		System.assertEquals(3, listOrderItem.size());
@@ -32,8 +32,8 @@ private class CreditCardPaymentErrorNotification_Test {
 		List<Order> orders = TestDataGenerator.generateOrder(1, accounts[0].Id, contacts[0].Id, contacts[1].Id,true); // 1 Order
 		List<OrderItem> orderItems = TestDataGenerator.generateOrderItem(orders[0].Id, 1,true);// 1 lineItems for Order1
 
-		OrderItem orderItem = orderItems.get(0); 
-		orderItem.Setup_Fee__c = 1; 
+		OrderItem orderItem = orderItems.get(0);
+		orderItem.Setup_Fee__c = 1;
 		update orderItem;
 
 		Test.startTest();

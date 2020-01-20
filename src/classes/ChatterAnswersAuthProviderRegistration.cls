@@ -2,7 +2,7 @@ global class ChatterAnswersAuthProviderRegistration implements Auth.Registration
 global User createUser(Id portalId, Auth.UserData data){
 	Savepoint sp = Database.setSavepoint();
 	String accountId = null;
-	try { 
+	try {
 		accountId = new ChatterAnswersRegistration().createAccount(data.firstname, data.lastname, Site.getAdminId());
 	} catch (Exception e) {
 		Database.rollback(sp);

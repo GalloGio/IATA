@@ -40,7 +40,7 @@ public class IDCardCloseCaseAndCompleteApplication extends TriggerAction {
 		System.debug('____ [cls IDCardCloseCaseAndCompleteApplication - execute] [UP]Should consider ' + singleApplicationIds.size() + ' ID CARD for update ');
 
 		List<ID_Card_Application__c> singlesApplication = [SELECT Id , Application_Status__c, Mass_order_Application__c FROM ID_Card_Application__c WHERE RecordTypeID = :RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Single_ID_Card_Operation') and Id in :singleApplicationIds ];
-		
+
 		//Get Mass application from single App
 		for(ID_Card_Application__c singleApp :singlesApplication){
 
@@ -53,7 +53,7 @@ public class IDCardCloseCaseAndCompleteApplication extends TriggerAction {
 		if(!massApplicationIds.isEmpty()) {
 
 			System.debug('____ [cls IDCardCloseCaseAndCompleteApplication - execute] [UP] Should consider ' + singlesApplication.size() + ' Single APp for ' + massAppStatus.size() + ' mass appli');
-			
+
 			massApplication = [SELECT Id , Mass_order_Application__c FROM ID_Card_Application__c WHERE RecordTypeID = :RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Mass_Order_Application') and Id in :massApplicationIds ];
 		}
 
@@ -63,7 +63,7 @@ public class IDCardCloseCaseAndCompleteApplication extends TriggerAction {
 		}
 
 		System.debug('____ [cls IDCardCloseCaseAndCompleteApplication - execute] [UP]  Got  ' + allSingleAppPerMassId.size() + ' mass appli');
-		
+
 		System.debug('____ [cls IDCardCloseCaseAndCompleteApplication - execute] [DOWN] ');
 
 		//Now get all all single from all mass and get all card card from all single
@@ -72,7 +72,7 @@ public class IDCardCloseCaseAndCompleteApplication extends TriggerAction {
 
 			allSinglesApplication = [select Id , Mass_order_Application__c from ID_Card_Application__c where RecordTypeID = :RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Single_ID_Card_Operation') and Mass_order_Application__c in :allSingleAppPerMassId.keySet() ];
 		}
-		
+
 		for(ID_Card_Application__c sa:allSinglesApplication){
 
 			allSingleAppPerMassId.get(sa.Mass_order_Application__c).add(sa);
@@ -85,10 +85,10 @@ public class IDCardCloseCaseAndCompleteApplication extends TriggerAction {
 			System.debug('____ [cls IDCardCloseCaseAndCompleteApplication - execute] [DOWN] All single from MAss:  ' + allSinglesApplication.size());
 
 			allCard = [select Id , Card_Status__c, ID_Card_Application__c from ID_Card__c where ID_Card_Application__c in :massAppIdFromSingleAppid.keySet() ];
-			
+
 			System.debug('____ [cls IDCardCloseCaseAndCompleteApplication - execute] [DOWN] All card from Mass: ' + allCard.size());
 		}
-		
+
 		//from all card: if card status isn t printed/delvied: then mass related application status shlould be false
 		//else we let it at true.
 		for(ID_Card__c acard : allCard){
@@ -99,10 +99,10 @@ public class IDCardCloseCaseAndCompleteApplication extends TriggerAction {
 				System.debug('____ [cls IDCardCloseCaseAndCompleteApplication - execute] [DOWN] FIND A card which should cancel the update for his mass.');
 			}
 		}
-		
+
 		//now we know which application should have their case updated
 		List<String> massApplicationIdForCaseUpdate = new List<String>();
-			
+
 		for(String key : massAppStatus.keySet()) {
 
 			if(massAppStatus.get(key)){
@@ -111,11 +111,11 @@ public class IDCardCloseCaseAndCompleteApplication extends TriggerAction {
 				System.debug('____ [cls IDCardCloseCaseAndCompleteApplication - execute] [FINAL] FIND a mass to update case:  ' + key);
 			}
 		}
-			
+
 		if(!massApplicationIdForCaseUpdate.isEmpty()){
 
 			List<Case> cases2update = [select Id,Status, Related_ID_Card_Application__c from Case  where Related_ID_Card_Application__c in :massApplicationIdForCaseUpdate];
-			
+
 			for(Case acase : cases2update)
 				acase.Status = 'Closed';
 
@@ -124,7 +124,7 @@ public class IDCardCloseCaseAndCompleteApplication extends TriggerAction {
 				Map<String, SObjectField> sObjectFieldMapCase = Schema.getGlobalDescribe().get('Case').getDescribe().fields.getMap();
 
 				uw.registerDirty(cases2update, new List<SObjectField>{sObjectFieldMapCase.get('Status')});
-			}		
+			}
 		}
 
 		if(!idcardAppToUpdate.isEmpty()){

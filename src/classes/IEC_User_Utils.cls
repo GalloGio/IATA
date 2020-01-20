@@ -1,5 +1,5 @@
 public without sharing class IEC_User_Utils {
-	
+
 	private static IEC_User_Utils instance = null;
 
 	public String userEmail {get;set;}
@@ -8,7 +8,7 @@ public without sharing class IEC_User_Utils {
 	public String userZipCode {get;set;}
 	public String userCity {get;set;}
 	public String userCountry {get;set;}
-	public String userRegion {get;set;}	
+	public String userRegion {get;set;}
 	public String userCompany {get;set;}
 	public String userSessionId  {get;set;}
 	public String userMemberStatus {get;set;}
@@ -17,7 +17,7 @@ public without sharing class IEC_User_Utils {
 	private IEC_User_Utils() {
 		User usr = [SELECT Id, Email, UserType, Contact.Gender__c, Contact_Account_Region__c, Contact_Account_Country__c, Contact_Account_Name__c, Contact.Name,
 						Profile.Name, Contact.Account.BillingCity, Contact.Account.BillingPostalCode
-				 	FROM User 
+				 	FROM User
 				 	WHERE Id = :UserInfo.getUserId()];
 
 		userEmail = usr.Email;

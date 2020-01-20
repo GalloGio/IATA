@@ -5,7 +5,7 @@ public class MITA_MemorandumsCtrl_Test {
 		m.memorandumNumber = '';
 		m.getMEMOConcurrences();
 		m.getMEMOWithdrawals();
-		
+
 		m.fromdate = new MITA_Agreement__c(Agreement_Processed_Date__c = date.today());
 		m.todate = new MITA_Agreement__c(Agreement_Processed_Date__c = date.today().addDays(2));
 		m.selectedAgreement = 'MITA';
@@ -23,6 +23,6 @@ public class MITA_MemorandumsCtrl_Test {
 		m.getMemorandumTypes();
 		m.showmemorandum();
 		m.hideMemorandum();
-		
+
 	}
 }

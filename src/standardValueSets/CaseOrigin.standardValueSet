@@ -1212,6 +1212,11 @@
         <label>IATA Internal User</label>
     </standardValue>
     <standardValue>
+        <fullName>ID Card Mobile</fullName>
+        <default>false</default>
+        <label>ID Card Mobile</label>
+    </standardValue>
+    <standardValue>
         <fullName>Internal Case</fullName>
         <default>false</default>
         <label>Internal Case</label>

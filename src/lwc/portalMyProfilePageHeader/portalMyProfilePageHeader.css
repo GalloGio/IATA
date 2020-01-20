@@ -1,5 +1,5 @@
 .fieldLabel {
-  height: 20px;
+  font-family: AktivGrotesk;
   font-size: 14px;
   font-weight: normal;
   font-style: normal;
@@ -10,7 +10,7 @@
 }
 
 .fieldValue {
-  height: 26px;
+  font-family: AktivGrotesk;
   font-size: 16px;
   font-weight: normal;
   font-style: normal;
@@ -33,7 +33,7 @@
   width: 100%;
   min-height: 150px;
   margin-bottom: 2rem;
-  background-color: #ffff;
+  background-color: #fff;
 }
 
 .imagespacer {
@@ -48,6 +48,90 @@
 }
 
 .headerMyProfile {
-  padding: 1rem;
-  max-width: 800px;
+  width: 100%;
+  padding: 1rem 2rem;
+  margin: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: space-between;
+}
+
+.headerProfileImage{
+  position: relative;
+  width: 160px;
+  height: 115px;
+}
+
+.profileImageContainer{
+  position: absolute;
+  top: -60px;
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  box-shadow: 0 8px 18px 0 rgba(0, 0, 0, 0.08), 0 1px 4px 0 rgba(0, 0, 0, 0.04);
+  
+  /*Temporary*/
+  background-color: white;
+}
+
+.headerProfileContent{
+  display: flex;
+  flex-basis: 83%;
+  flex-shrink: 1;
+  flex-wrap: wrap;
+}
+
+.headerMessage{
+  width: 100%;
+  padding: 2rem;
+  margin: 0;
+}
+
+.messageContainer{
+  width: 100%;
+  background-color: #f7f8fc;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.headerMessageContent{
+  padding: 20px;
+  align-items: center;
+  flex-wrap: nowrap;
+  width: 100%;
+  margin: 0;
+}
+
+.headerProgressBarWrapper{
+  margin-bottom: 10px;
+}
+
+.profileContactName{
+  margin-bottom: 15px;
+}
+
+.warningIconWrapper{
+  padding-right: 0;
+  padding-left: 0;
+  min-width: 60px;
+}
+
+.warningIcon{
+  margin: auto;
+  display: block;
+}
+
+.contentItem{
+  min-width: 250px;
+}
+
+@media only screen and (max-width: 800px) {
+  .warningIconWrapper{
+    display: none;
+  }
+
+  .headerProfileImage{
+    margin: auto;
+  }
 }

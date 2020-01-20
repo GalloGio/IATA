@@ -32,7 +32,7 @@ public class Contact_Svc {
 		set<Id> soldToLocationIds2CreateFirst = new set<Id>();
 
 		if(setContactIdsToSync.size() > 0){
-			
+
 
 			locationMap = new Location_Sel().getContactsLocations(setContactIdsToSync);
 
@@ -69,11 +69,11 @@ public class Contact_Svc {
 			if(toCreateSoldToLocation.size() > 0){
 				List<Location__c> lstLocation = Location_Svc.locationToCreate(toCreateSoldToLocation);
 				if(lstLocation != null && lstLocation.size() > 0){
-		    		for(Location__c location : lstLocation)
-		    			soldToLocationIds2CreateFirst.add(location.Id);
-		    	}
+					for(Location__c location : lstLocation)
+						soldToLocationIds2CreateFirst.add(location.Id);
+				}
 			}
-			
+
 			//Call SAP to sync the Customer information
 			if(soldToLocationIds2CreateFirst.size() > 0){
 				IECAddress_Svc.syncCustomerMasterWithSAP(locationIds,soldToLocationIds2CreateFirst);
@@ -82,5 +82,5 @@ public class Contact_Svc {
 			}
 		}
 	}
-	
+
 }

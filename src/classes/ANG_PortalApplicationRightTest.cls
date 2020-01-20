@@ -1,16 +1,16 @@
 @isTest
 private class ANG_PortalApplicationRightTest {
-	
+
 	static {
 		//initilize static variables
 	}
 
 	@testSetup static void createData() {
 
-		Account acc = ISSP_ObjectFactory.createNewAccount();  		
+		Account acc = ISSP_ObjectFactory.createNewAccount();
 
 		acc.Location_Type__c = 'HO';
-		acc.Location_Class__c = 'P';				
+		acc.Location_Class__c = 'P';
 
 		insert acc;
 
@@ -23,7 +23,7 @@ private class ANG_PortalApplicationRightTest {
 		Account acc3 = ISSP_ObjectFactory.createNewAccount();
 
 		insert new List<Account>{acc2, acc3};
-		
+
 		Contact contact = ISSP_ObjectFactory.createNewContact();
 		Contact contact2 = ISSP_ObjectFactory.createNewContact();
 		Contact contact3 = ISSP_ObjectFactory.createNewContact();
@@ -37,7 +37,7 @@ private class ANG_PortalApplicationRightTest {
 
 		Portal_Applications__c app = new Portal_Applications__c(Name = 'IATA EasyPay - Tester');
 		Portal_Applications__c app2 = new Portal_Applications__c(Name = 'IATA EasyPay');
-		
+
 		insert new List<Portal_Applications__c>{app, app2};
 
 		ConnectedApplication capp;
@@ -57,16 +57,16 @@ private class ANG_PortalApplicationRightTest {
 			);
 
 			insert new List<PermissionSet>{ang_ssoapp, ang_provapp};
-			
+
 			insert new List<User>{
 				new User(
-					Alias = 'dsfsdfds', 
-					Email = contact.email, 
-					Emailencodingkey = 'UTF-8', 
-					Firstname = contact.firstName, 
-					Lastname = contact.lastname, 
-					Languagelocalekey = 'en_US', 
-					Localesidkey = 'en_US', 
+					Alias = 'dsfsdfds',
+					Email = contact.email,
+					Emailencodingkey = 'UTF-8',
+					Firstname = contact.firstName,
+					Lastname = contact.lastname,
+					Languagelocalekey = 'en_US',
+					Localesidkey = 'en_US',
 					ContactId = contact.Id,
 					Timezonesidkey = 'Asia/Dubai',
 					Username = contact.email+System.now()+'portalappright.test1',
@@ -76,13 +76,13 @@ private class ANG_PortalApplicationRightTest {
 					IsActive = true
 				),
 				new User(
-					Alias = 'stest', 
-					Email = contactShare.email, 
-					Emailencodingkey = 'UTF-8', 
-					Firstname = contactShare.firstName, 
-					Lastname = 'share Test', 
-					Languagelocalekey = 'en_US', 
-					Localesidkey = 'en_US', 
+					Alias = 'stest',
+					Email = contactShare.email,
+					Emailencodingkey = 'UTF-8',
+					Firstname = contactShare.firstName,
+					Lastname = 'share Test',
+					Languagelocalekey = 'en_US',
+					Localesidkey = 'en_US',
 					ContactId = contactShare.Id,
 					Timezonesidkey = 'Asia/Dubai',
 					Username = contactShare.email+'portalappright.test2',
@@ -118,47 +118,47 @@ private class ANG_PortalApplicationRightTest {
 				Permission_set_SSO__c = 'IATA EasyPay',
 				Role__c = 'Wallet Gone',
 				Min_Users_With_Role__c = 1
-			);		
+			);
 
 			insert new List<Connected_App_Roles__c>{car, car2, car3};
 		}
 
 		Portal_Application_Right__c par = new Portal_Application_Right__c(
-			Contact__c = contact.Id, 
+			Contact__c = contact.Id,
 			Portal_Application__c = app.Id,
 			Right__c = 'Access Requested',
 			ANG_Portal_Service_Role__c = 'Tester'
 		);
 
 		Portal_Application_Right__c par2 = new Portal_Application_Right__c(
-			Contact__c = contact.Id, 
+			Contact__c = contact.Id,
 			Portal_Application__c = app2.Id,
 			Right__c = 'Access Requested',
 			ANG_Portal_Service_Role__c = 'IEP Admin'
 		);
 
 		Portal_Application_Right__c par3 = new Portal_Application_Right__c(
-			Contact__c = contact2.Id, 
+			Contact__c = contact2.Id,
 			Portal_Application__c = app2.Id,
 			Right__c = 'Access Granted',
 			ANG_Portal_Service_Role__c = 'IEP Admin'
 		);
 
 		Portal_Application_Right__c par4 = new Portal_Application_Right__c(
-			Contact__c = contact3.Id, 
+			Contact__c = contact3.Id,
 			Portal_Application__c = app2.Id,
 			Right__c = 'Access Granted',
 			ANG_Portal_Service_Role__c = 'Wallet Gone'
 		);
 
 		insert new List<Portal_Application_Right__c>{par, par2, par3, par4};
-		
+
 		ISSP_External_Reports_Config__c erc = new ISSP_External_Reports_Config__c(Name = 'test', Report_ID__c = 'test', Portal_Service_ID__c = app.Id);
 		insert erc;
-		
+
 		insert new ISSP_External_Report__c(Account__c = acc.Id, Report_ID__c = erc.Report_ID__c);
 	}
-	
+
 	static testMethod void test_grantingAccess() {
 		Portal_Application_Right__c par = [SELECT Id, Contact__c FROM Portal_Application_Right__c WHERE ANG_Portal_Service_Role__c = 'Tester'];
 
@@ -177,7 +177,7 @@ private class ANG_PortalApplicationRightTest {
 		Integer ssoAssignments = [SELECT Id FROM PermissionSetAssignment WHERE PermissionSet.Name = 'ANG_SSOApp' AND AssigneeId IN (SELECT Id FROM User WHERE ContactId = :par.Contact__c)].size();
 		System.assertEquals(1, ssoAssignments);
 	}
-	
+
 	static testMethod void test_removingAccess() {
 		Portal_Application_Right__c par = [SELECT Id, Contact__c FROM Portal_Application_Right__c WHERE ANG_Portal_Service_Role__c = 'Tester'];
 		par.Right__c = 'Access Granted';
@@ -194,7 +194,7 @@ private class ANG_PortalApplicationRightTest {
 		Integer assignments = [SELECT Id FROM PermissionSetAssignment WHERE PermissionSet.Name in ('ANG_ProvApp', 'ANG_SSOApp') AND AssigneeId IN (SELECT Id FROM User WHERE ContactId = :par.Contact__c)].size();
 		System.assertEquals(0, assignments);
 	}
-	
+
 	static testMethod void test_denyingAccess() {
 		Portal_Application_Right__c par = [SELECT Id, Contact__c FROM Portal_Application_Right__c WHERE ANG_Portal_Service_Role__c = 'Tester'];
 
@@ -213,7 +213,7 @@ private class ANG_PortalApplicationRightTest {
 		Integer assignments = [SELECT Id FROM PermissionSetAssignment WHERE PermissionSet.Name in ('ANG_ProvApp', 'ANG_SSOApp') AND AssigneeId IN (SELECT Id FROM User WHERE ContactId = :par.Contact__c)].size();
 		System.assertEquals(0, assignments);
 	}
-	
+
 	static testMethod void test_failProvisioning() {
 		UserProvisioningRequest request = [SELECT Id, SalesforceUserId, AppName, State FROM UserProvisioningRequest];
 
@@ -237,14 +237,14 @@ private class ANG_PortalApplicationRightTest {
 		par.Right__c = 'Access Denied';
 
 		try {
-			update par;	
+			update par;
 			System.assert(true);
 		} catch(Exception e) {
 			System.assert(false);
 		}
 
 		try {
-			delete par;	
+			delete par;
 			System.assert(true);
 		} catch(Exception e) {
 			System.assert(false);
@@ -263,14 +263,14 @@ private class ANG_PortalApplicationRightTest {
 		par.Right__c = 'Access Denied';
 
 		try {
-			update par;	
+			update par;
 			System.assert(false);
 		} catch(Exception e) {
 			System.assert(e.getMessage().contains(Label.ANG_ISSP_Min_Users_With_Role_Error_Msg));
 		}
 
 		try {
-			delete par;	
+			delete par;
 			System.assert(false);
 		} catch(Exception e) {
 			System.assert(e.getMessage().contains(Label.ANG_ISSP_Min_Users_With_Role_Error_Msg));
@@ -287,14 +287,14 @@ private class ANG_PortalApplicationRightTest {
 		par.Right__c = 'Access Denied';
 
 		try {
-			update par;	
+			update par;
 			System.assert(false);
 		} catch(Exception e) {
 			System.assert(e.getMessage().contains(Label.ANG_ISSP_Min_Users_With_Role_Error_Msg));
 		}
 
 		try {
-			delete par;	
+			delete par;
 			System.assert(false);
 		} catch(Exception e) {
 			System.assert(e.getMessage().contains(Label.ANG_ISSP_Min_Users_With_Role_Error_Msg));
@@ -302,26 +302,26 @@ private class ANG_PortalApplicationRightTest {
 
 		Test.stopTest();
 	}
-	
+
 	@isTest
 	private static void manageShareUsersTest(){
-        System.debug('[ANG_PortalApplicationRightTest.manageShareUsersTest](before insert) Number of Queries used in this apex code so far: ' + Limits.getQueries());
-        //test on insert
-        Portal_Application_Right__c par = new Portal_Application_Right__c(
+		System.debug('[ANG_PortalApplicationRightTest.manageShareUsersTest](before insert) Number of Queries used in this apex code so far: ' + Limits.getQueries());
+		//test on insert
+		Portal_Application_Right__c par = new Portal_Application_Right__c(
 											Contact__c = [SELECT Id, ContactId FROM User WHERE Lastname = 'share Test' LIMIT 1].ContactId,
 											Portal_Application__c = [SELECT Id FROM Portal_Applications__c WHERE Name = 'IATA EasyPay - Tester' LIMIT 1].Id,
 											Right__c = 'Access Granted'
 											);
-        Test.startTest();
-            insert par;
-            System.debug('[ANG_PortalApplicationRightTest.manageShareUsersTest](after insert) Number of Queries used in this apex code so far: ' + Limits.getQueries());
-            par.Right__c = 'Access Denied';
-            update par;
-            System.debug('[ANG_PortalApplicationRightTest.manageShareUsersTest](after update \'Access Denied\') Number of Queries used in this apex code so far: ' + Limits.getQueries());
-            //test on update (needs to be on Access Granted)
-            par.Right__c = 'Access Granted';
-            update par;
-        Test.stopTest();
-        System.debug('[ANG_PortalApplicationRightTest.manageShareUsersTest](after update \'Access Granted\') Number of Queries used in this apex code so far: ' + Limits.getQueries());
+		Test.startTest();
+			insert par;
+			System.debug('[ANG_PortalApplicationRightTest.manageShareUsersTest](after insert) Number of Queries used in this apex code so far: ' + Limits.getQueries());
+			par.Right__c = 'Access Denied';
+			update par;
+			System.debug('[ANG_PortalApplicationRightTest.manageShareUsersTest](after update \'Access Denied\') Number of Queries used in this apex code so far: ' + Limits.getQueries());
+			//test on update (needs to be on Access Granted)
+			par.Right__c = 'Access Granted';
+			update par;
+		Test.stopTest();
+		System.debug('[ANG_PortalApplicationRightTest.manageShareUsersTest](after update \'Access Granted\') Number of Queries used in this apex code so far: ' + Limits.getQueries());
 	}
 }

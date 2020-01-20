@@ -32,14 +32,14 @@ public class IEC_SubscriptionsController extends IECPageController {
 
 				//Query for the active subscription list related to the current logged user
 				List<Zuora__Subscription__c> lstListActiveSubscriptions = getActiveSubscriptionsList();
-				
+
 				set<String> subscriptionNumbers = new set<String>();
 				set<String> prodRatePlanInfomationIds = new set<String>();
 				set<Id> prodRatePlanInfoIds = new set<Id>();
 				set<Id> orderItemIds = new set<Id>();
-				
+
 				if(lstListActiveSubscriptions == null || lstListActiveSubscriptions.isEmpty()) return null;
-				
+
 				for(Zuora__Subscription__c subscription : lstListActiveSubscriptions){
 					subscriptionNumbers.add(subscription.Name);
 					prodRatePlanInfomationIds.add(subscription.Product_Rate_Plan_Information__c);
@@ -65,7 +65,7 @@ public class IEC_SubscriptionsController extends IECPageController {
 
 				//check if there are upgrades available for the subscription rate plan
 				Map<Id,Product_Rate_Plan_Information__c> ratePlanInformationUpgradesBySourceRatePlan = IECProductManager.getRatePlanInformationUpgradesBySourceRatePlan(prodRatePlanInfomationIds, clientType);
-				
+
 				//Determines the availability of the product rate plan according to the specified user type
 				Map<Id,Boolean> isRatePlanAvailable = IECProductManager.isRatePlanAvailable(prodRatePlanInfoIds, clientType);
 
@@ -100,7 +100,7 @@ public class IEC_SubscriptionsController extends IECPageController {
 					if(productAccess != null && !productAccess.isEmpty()){
 						aSubscription.bShowUsage = true;
 						aSubscription.dUnitsPurchased = 0;
-					    aSubscription.dUnitsConsumed = 0;
+							aSubscription.dUnitsConsumed = 0;
 						aSubscription.dUnitsLeft = 0;
 
 						for (IEC_Product_Access__c access : productAccess) {
@@ -112,12 +112,12 @@ public class IEC_SubscriptionsController extends IECPageController {
 								&& access.Effective_End_Date__c >= DateTime.now()
 								&& access.Active__c)
 							aSubscription.dUnitsLeft += ((access.Usage_Qty_Left__c != null) ? access.Usage_Qty_Left__c : aSubscription.dUnitsPurchased);
-			                
-			                if(access.Usage_Unlimited__c)
-			                {
-			                    aSubscription.dUnitsLeft = -999;
-			                    aSubscription.dUnitsPurchased = -999; 
-			                }
+
+											if(access.Usage_Unlimited__c)
+											{
+													aSubscription.dUnitsLeft = -999;
+													aSubscription.dUnitsPurchased = -999;
+											}
 						}
 					}else
 						aSubscription.bShowUsage = false;
@@ -148,14 +148,14 @@ public class IEC_SubscriptionsController extends IECPageController {
 							&& subscription.Zuora__SubscriptionEndDate__c.addDays((-1 * integer.valueOf(subscription.Product_Rate_Plan_Information__r.Related_Product_Information__r.Related_Product_Category__r.Renewal_Window__c))) <= Date.today()
 							&& subscription.Zuora__SubscriptionEndDate__c >= Date.today()
 							&& ((aSubscription.idSelectedRatePlanInfo != null) ? isRatePlanAvail : false);
-					
+
 					//Get InvoiceItem related to the subscription
 					Invoice_Item__c invoiceItem = invoiceItemBySFSubscriptionName.get(subscription.Name);
 					if (invoiceItem != null) {
 						//Get the Invoice related to InvoiceItem
 						//invoice = IECSubscriptionManager.getInvoiceById(invoiceItem.Invoice__c);
 						aSubscription.invoice = invoiceById.get(invoiceItem.Invoice__c);
-								
+
 						if (aSubscription.invoice != null) {
 							if (aSubscription.invoice.Zuora__Payments__r != null && aSubscription.invoice.Zuora__Payments__r.size() > 0) {
 								//Get the Payment related to the Invoice
@@ -169,11 +169,11 @@ public class IEC_SubscriptionsController extends IECPageController {
 							}
 						} // END if (invoice != null)
 					} // END if (invoiceItemResult != null)
-					
+
 					//check if there are upgrades available for the subscription rate plan
 					aSubscription.bDisplayUpgradeBtn = false;
 					Product_Rate_Plan_Information__c ratePlanInfoUpgrades = ratePlanInformationUpgradesBySourceRatePlan.get(subscription.Product_Rate_Plan_Information__c);
-					
+
 					if(ratePlanInfoUpgrades != null){ aSubscription.bDisplayUpgradeBtn = true; }
 					/*aSubscription.bDisplayUpgradeBtn = true;*/
 					if(ratePlanInfoUpgrades != null && ratePlanInfoUpgrades.Related_Product_Information__c != null && ratePlanInfoUpgrades.Related_Product_Information__r.Related_Product_Category__r.Button_Type__c == IECConstants.ProductCategory_ButtonType_GetAQuote){
@@ -188,10 +188,10 @@ public class IEC_SubscriptionsController extends IECPageController {
 							break;
 						}
 					}
-					
+
 					lstActiveSubscriptions.add(aSubscription);
 				}
-					
+
 			}
 		}
 		catch(Exception ex) { addErrorMessage(ex.getMessage() + '<br />' + ex.getStackTraceString()); }
@@ -213,7 +213,7 @@ public class IEC_SubscriptionsController extends IECPageController {
 			// *** IECCUstomer is based on the IECUserManager current logged user
 			IECCustomer currentCustomer = IECCustomer.getCurrentIECCustomer();
 			if (currentCustomer == null) return null;
-				
+
 			//Return the active subscriptions related to the billing account of logged user
 			if (currentCustomer.RelatedBillingAccount != null)
 				return IECSubscriptionManager.getActiveSubscriptionsByBillingAccount(currentCustomer.RelatedBillingAccount.Id);
@@ -221,7 +221,7 @@ public class IEC_SubscriptionsController extends IECPageController {
 
 		}
 		catch(Exception ex) { addErrorMessage(ex.getMessage()); }
-		
+
 		return null;
 	}
 
@@ -231,26 +231,26 @@ public class IEC_SubscriptionsController extends IECPageController {
 		try {
 
 			Zuora__Subscription__c subscriptionObj = subscriptionMap.get(subsId);
-			
+
 			if (subscriptionObj != null) {
 				//Get the customer account
 				//IECCustomer currentCustomer = IECCustomer.getCurrentIECCustomer();
-				
+
 				//Get the new valu to be pushed to Zuora
 				boolean newAutoRenewValue = !subscriptionObj.Zuora__AutoRenew__c;
-					
+
 				//Push the information to Zuora
 				Zuora.zApi.AmendResult zResult = IECZuoraHelper.updateZuoraAutoRenew(loggedCustomer, subscriptionObj.Zuora__Zuora_Id__c ,newAutoRenewValue);
-					
+
 				//Request a sync of data between Zuora and SF for the account related to the logged user
 				Zuora.zObject zuoraAccountId = loggedCustomer.RelatedZuoraAccount;
 				List<Zuora.SyncResult> syncResult = IECSubscriptionManager.OnDemandSyncAccounts(new Set<String> {(String)zuoraAccountId.getValue('Id')});
-				
+
 				//Hides the confirmation popup and trigger the refres of the page
 				//bDisplayPopUp = false;
 				bRefreshEnabled = true; //The refresh is required to reflect the new data record synched from Zuora
-				
-				//Show feedback to the user telling the page will refresh in few seconds. 
+
+				//Show feedback to the user telling the page will refresh in few seconds.
 				addInfoMessage('The page should refresh in 10 seconds');
 
 				//Add entry to user log
@@ -284,7 +284,7 @@ public class IEC_SubscriptionsController extends IECPageController {
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//Refreshes the page. Usualy it will be called after an update of Zuora records to refresh synched records in SF
 	public Pagereference refreshPage() {
-		
+
 		Pagereference prActiveSubs = Page.IEC_DataStatisticsSubscriptions;
 		//prActiveSubs.getParameters().put(IECConstants.PARAM_SUBSCRIPTION_NAME, IECUtil.EncryptEncodeParameter(subscriptionObj.Name));
 		prActiveSubs.setRedirect(true);
@@ -299,11 +299,11 @@ public class IEC_SubscriptionsController extends IECPageController {
 		Zuora__Subscription__c subscriptionObj = subscriptionMap.get(subscriptionToUpgradeId);
 		try {
 			if (subscriptionObj == null) throw new IECApplicationException(Label.IEC_Error_SubscriptionNotFound);
-			
-  			Pagereference pgRef = Page.IECUpgrade;
-  			pgRef.getParameters().put(IECConstants.PARAM_SUBSCRIPTION_ID, IECUtil.EncryptEncodeParameter(subscriptionObj.Id));
-		    pgRef.setRedirect(true); 
-		    return pgRef;
+
+				Pagereference pgRef = Page.IECUpgrade;
+				pgRef.getParameters().put(IECConstants.PARAM_SUBSCRIPTION_ID, IECUtil.EncryptEncodeParameter(subscriptionObj.Id));
+				pgRef.setRedirect(true);
+				return pgRef;
 		}
 		catch (Exception ex) { ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage())); return null; }
 	}
@@ -313,18 +313,18 @@ public class IEC_SubscriptionsController extends IECPageController {
 	 */
 	public Pagereference renewRatePlan() {
 		try {
-  			Pagereference pgRef = Page.IECRenew;
-  			pgRef.getParameters().put(IECConstants.PARAM_SUBSCRIPTION_ID, IECUtil.EncryptEncodeParameter(subscriptionToRenewId));
-  			pgRef.getParameters().put(IECConstants.PARAM_PRODINFO_ID, IECUtil.EncryptEncodeParameter(idSelectedProdInfo));
-  			pgRef.getParameters().put(IECConstants.PARAM_RATEPLANINFO_ID, IECUtil.EncryptEncodeParameter(idSelectedRatePlanInfo));
-		    pgRef.setRedirect(true); 
-		    return pgRef;
+				Pagereference pgRef = Page.IECRenew;
+				pgRef.getParameters().put(IECConstants.PARAM_SUBSCRIPTION_ID, IECUtil.EncryptEncodeParameter(subscriptionToRenewId));
+				pgRef.getParameters().put(IECConstants.PARAM_PRODINFO_ID, IECUtil.EncryptEncodeParameter(idSelectedProdInfo));
+				pgRef.getParameters().put(IECConstants.PARAM_RATEPLANINFO_ID, IECUtil.EncryptEncodeParameter(idSelectedRatePlanInfo));
+				pgRef.setRedirect(true);
+				return pgRef;
 		}
 		catch (Exception ex) {
 			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage()));
 			return null;
 		}
 	}
-	
+
 
 }
