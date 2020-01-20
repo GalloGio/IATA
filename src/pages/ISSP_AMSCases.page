@@ -208,7 +208,7 @@
                     $('#modalChooseAccreditationType').modal('toggle');
                 } else {
 					if('{!isPassAccreditation}'== 'true'){
-                        navigateToUrl('/ISSP_AMS_PASS_Accreditation?{!if(communityName=='CNS', 'CommunityName=CNS&', '')}retUrl=/ISSP_HomePage','LIST_VIEW','newCase');
+                        navigateToUrl('/ISSP_AMS_PASS_Accreditation?accType=PASS&{!if(communityName=='CNS', 'CommunityName=CNS&', '')}retUrl=/ISSP_HomePage','LIST_VIEW','newCase');
                     }
                     else{
                     	navigateToUrl('/ISSP_AMS_Accreditation?{!if(communityName=='CNS', 'CommunityName=CNS&', '')}{!IF(con.Account.ANG_Accreditation_Model__c == ACCREDITATION_MODEL_MC, 'isMultiCountryNewAE=true&isMCAccredited=true&', '')}retUrl=/ISSP_HomePage','LIST_VIEW','newCase');
@@ -395,12 +395,12 @@
                                 <apex:commandLink action="{!redirectToCountryRequirementPage}" value="{!$Label.ISSP_ANG_Country_Req}" id="countryReq" rendered="{!OR(con.Account.Category__c == 'IATA Passenger Sales Agent',con.Account.Category__c == 'Non-IATA Travel Agent', AND(con.Account.Category__c == 'Domestic Agent', isoCountry.ISO_Code__c == 'CN'))}"/><br/><br/>
                             </div>
                                     
-                            <div class="col-md-5">
+                            <!--<div class="col-md-5">
                                 <input type="button" class="btn btn_iata_primary" onClick="newSectorApplicationNavigateTo();" value="{!IF(sector=='Travel Agent', $Label.ISSP_AMS_Apply_New_Cargo_Head_Office, IF(NOT(namEnabled) , IF(con.Account.Location_Class__c=='R', $Label.ISSP_AMS_Apply_New_Travel_Cargo_Head_Office, $Label.ISSP_AMS_Apply_New_Travel_Head_Office), $Label.ISSP_AMS_Apply_New_Travel_Head_Entity))}" style="display:{!IF(isHOAccredited, '','none')};"/>
                             </div>
                             <div class="col-md-5">
                                 <input type="button" class="btn btn_iata_primary" onClick="newSectorApplicationNavigateTo();" value="{!IF(sector=='Travel Agent', $Label.ISSP_AMS_Apply_New_Cargo_Head_Office, IF(NOT(namEnabled) , IF(con.Account.Location_Class__c=='R', $Label.ISSP_AMS_Apply_New_Travel_Cargo_Head_Office2, $Label.ISSP_AMS_Apply_New_Travel_Head_Office), $Label.ISSP_AMS_Apply_New_Travel_Head_Entity))}" style="display:{!IF(AND(isHOAccredited,con.Account.Location_Class__c=='R'), '','none')};"/>
-                            </div>
+                            </div>-->
                         </div>
 
                         <div class="row" style="padding-bottom: 20px; {!IF(isMCAccredited, 'padding-top: 20px;', '')}">
@@ -517,9 +517,9 @@
 
                                             <apex:outputLink value="/ISSP_AMS_Accreditation?caseId={!MyAMSCases.Id}&isNoticeOfChange=true&isBankAccountChange=false&step=2{!if(communityName=='CNS', '&CommunityName=CNS', '')}" rendered="{!NOT(OR(BEGINS(MyAMSCases.Reason1__c, 'New'),MyAMSCases.Reason1__c=='Bank Detail Update',MyAMSCases.Reason1__c=='FoP Management'))}">{!MyAMSCases.CaseNumber}</apex:outputLink>
                                         </apex:column> !-->
-										<apex:outputLink value="{!IF(isPassAccreditation==true, '/ISSP_AMS_PASS_Accreditation?caseId=' + MyAMSCases.Id +'&step=2'+IF(communityName=='CNS', '&CommunityName=CNS', ''), '/ISSP_AMS_Accreditation?caseId='+ MyAMSCases.Id +'&step=2'+IF(communityName=='CNS', '&CommunityName=CNS', ''))}" rendered="{!BEGINS(MyAMSCases.Reason1__c, 'New')}">{!MyAMSCases.CaseNumber}</apex:outputLink>
+										<apex:outputLink value="{!IF(isPassAccreditation==true, '/ISSP_AMS_PASS_Accreditation?caseId=' + MyAMSCases.Id +'&step=2&accType=PASS'+IF(communityName=='CNS', '&CommunityName=CNS', ''), '/ISSP_AMS_Accreditation?caseId='+ MyAMSCases.Id +'&step=2'+IF(communityName=='CNS', '&CommunityName=CNS', ''))}" rendered="{!BEGINS(MyAMSCases.Reason1__c, 'New')}">{!MyAMSCases.CaseNumber}</apex:outputLink>
 
-                                        <apex:outputLink value="{!IF(isPassAccreditation==true, '/ISSP_AMS_PASS_Accreditation?caseId=' + MyAMSCases.Id +'&isNoticeOfChange=true&isBankAccountChange=true&step=2'+IF(communityName=='CNS', '&CommunityName=CNS', ''), '/ISSP_AMS_Accreditation?caseId='+ MyAMSCases.Id +'&isNoticeOfChange=true&isBankAccountChange=true&step=2'+IF(communityName=='CNS', '&CommunityName=CNS', ''))}" rendered="{!MyAMSCases.Reason1__c=='Bank Detail Update'}">{!MyAMSCases.CaseNumber}</apex:outputLink>
+                                        <apex:outputLink value="{!IF(isPassAccreditation==true, '/ISSP_AMS_PASS_Accreditation?caseId=' + MyAMSCases.Id +'&isNoticeOfChange=true&isBankAccountChange=true&step=2&accType=PASS'+IF(communityName=='CNS', '&CommunityName=CNS', ''), '/ISSP_AMS_Accreditation?caseId='+ MyAMSCases.Id +'&isNoticeOfChange=true&isBankAccountChange=true&step=2'+IF(communityName=='CNS', '&CommunityName=CNS', ''))}" rendered="{!MyAMSCases.Reason1__c=='Bank Detail Update'}">{!MyAMSCases.CaseNumber}</apex:outputLink>
 
                                         <apex:outputLink value="/ISSP_ANG_PCI?caseId={!MyAMSCases.Id}&step=1{!if(communityName=='CNS', '&CommunityName=CNS', '')}{!if(isPassAccreditation==true, '&accType=PASS', '')}" rendered="{!MyAMSCases.Reason1__c=='FoP Management'}">{!MyAMSCases.CaseNumber}</apex:outputLink>
 

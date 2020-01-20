@@ -341,7 +341,7 @@ public without sharing class ISSP_AMS_Accreditation {
 
 	public Boolean isPassAccreditation{
 		get{
-			if(ApexPages.currentPage().getParameters().get('accType')==AMS_Utils.passParticipation)
+			if(ApexPages.currentPage().getParameters().get('accType')==AMS_Utils.passParticipation || (con.Account.Sector__c==AMS_Utils.SECTOR_PASS && con.Account.Category__c == AMS_Utils.categoryPass ))
 				return true;
 			else
 				return false;
@@ -2374,7 +2374,7 @@ public without sharing class ISSP_AMS_Accreditation {
 
 		selectPageName();
 
-		return step1GoToNumber == '5' ? goToStep5() : step1GoToNumber == '4' ? goToStep4() : step1GoToNumber == '3' ? goToStep3() : goToStep2();
+		return step1GoToNumber == '5' ? goToStep5() : step1GoToNumber == '4' ? goToStep4() : step1GoToNumber == '3' ? goToStep3() : step1GoToNumber == null && isPassAccreditation ? goToStep3() : goToStep2();
 	}
 
 	public void saveAMSForm() {
@@ -6067,12 +6067,14 @@ public without sharing class ISSP_AMS_Accreditation {
 		redirectToStepE = false;
 
 		//Need to refresh CGO requirements on validation to include Signed Application from STEP E in list
-		if (sectorValue.StartsWith('Cargo_Agent') && isNoticeOfChange) {
+		if (sectorValue.StartsWith('Cargo_Agent') && isNoticeOfChange && !isPassAccreditation ) {
 			retNoCCargoCountryReqments(true);
-		} else if (sectorValue.startsWith('Cargo_Agent') && !isNoticeOfChange) {
+		} else if (sectorValue.startsWith('Cargo_Agent') && !isNoticeOfChange && !isPassAccreditation) {
 			retCargoCountryReqments(true);
 		} else if (sectorValue.StartsWith('Travel_Agent') && isNoticeOfChange) {
 			retNoCTravelCountryReqments(true);
+		}else if (sectorValue.StartsWith('Cargo_Agent') && isPassAccreditation) {
+			retPASSReqments(false);
 		}
 
 		Map<String, String> folderMap = getMapAmazonFileIdentifiers();
