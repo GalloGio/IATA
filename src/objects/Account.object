@@ -7304,10 +7304,6 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Cargo Agent</controllingFieldValue>
-                <valueName>Handling Agent</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>Cargo Agent</controllingFieldValue>
                 <valueName>IATA Cargo Agent</valueName>
             </valueSettings>
             <valueSettings>
@@ -16400,6 +16396,11 @@ IF ((RecordType.DeveloperName = &quot;Agency_WW_HQ&quot; || RecordType.Developer
                     <fullName>L</fullName>
                     <default>false</default>
                     <label>Long Daily</label>
+                </value>
+                <value>
+                    <fullName>E</fullName>
+                    <default>false</default>
+                    <label>EasyPay</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
