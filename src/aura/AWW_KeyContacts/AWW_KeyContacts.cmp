@@ -61,9 +61,6 @@
                                             <lightning:formattedText value="{!item.contactName}"/>
                                         </a>
                                     </th>
-                                    <th data-label="Account Name" scope="row" class="slds-cell-wrap">
-                                        <lightning:formattedText value="{!item.accountName}"/>
-                                    </th>  
                                     <th data-label="Type" scope="row" class="slds-cell-wrap">
                                         <lightning:formattedRichText value="{!item.contactType}"/>
                                     </th>  
