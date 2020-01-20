@@ -2227,7 +2227,7 @@ void buildPaymentTypePicklist() {
 				update new OrderItem(Id = orderItemId, AWS_download_link__c = null);
 
 				// Now send the email
-				if(String.isNotBlank(vfOrder.ShipToContact_Email__c) && !vfOrder.ShipToContact_Email__c.endsWithIgnoreCase('.inactive'))
+				if(String.isNotBlank(vfOrder.ShipToContact_Email__c) && !vfOrder.ShipToContact_Email__c.endsWithIgnoreCase('.inactive')) {
 					Mail_DTO clientMail = new Mail_DTO();
 					clientMail.whatId = orderItemId;
 					clientMail.templateId = Utility.getTextSetting('OrderItem sold templateId for client');
