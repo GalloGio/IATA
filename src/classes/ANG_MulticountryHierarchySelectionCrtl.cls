@@ -40,6 +40,7 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 				accountFields.add('IATA_ISO_Country__r.ISO_Code__c');
 				accountFields.add('IATA_ISO_Country__r.Region__c');
 				accountFields.add('IATA_ISO_Country__r.AMS_Settlement_System__r.Name');
+				accountFields.add('IATA_ISO_Country__r.AMS_Settlement_System__r.Remittance_Frequency_per_State__c');
 			}
 			return accountFields;
 		}
@@ -766,7 +767,7 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 		for(BSPAttributes bspAtt: bspMap.values()){
 
 			if(isConversionProcess){
-				if(!bspAtt.rfIsAlignInBSP){
+				if (!bspAtt.rfIsAlignInBSP && !bspAtt.rfPerState) {
 					ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, 'Please align the Remittance Frequencies in the same BSP and then proceed with the multicountry conversion'));
 					toReturn = false;
 				}
@@ -799,6 +800,7 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 		public Integer numberOfAE;
 		public String remittanceFrequency;
 		public Boolean rfIsAlignInBSP;
+		public Boolean rfPerState;
 		public Boolean isGE;
 
 		public BSPAttributes(Account a){
@@ -806,6 +808,7 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 			numberOfHE = 0;
 			numberOfAE = 0;
 			rfIsAlignInBSP = true;
+			rfPerState = a.IATA_ISO_Country__r.AMS_Settlement_System__r.Remittance_Frequency_per_State__c;
 			remittanceFrequency = a.Remittance_Frequency__c;
 			isGE = false;
 
