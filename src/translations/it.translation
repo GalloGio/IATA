@@ -22868,6 +22868,10 @@ Se desideri ripristinare la password, torna alla schermata di accesso e utilizza
         <name>Apply_RHC_Equal_to_FS</name>
     </customTabs>
     <customTabs>
+        <label><!-- Attachment Manager --></label>
+        <name>AttachmentManager</name>
+    </customTabs>
+    <customTabs>
         <label>Servizi disponibili</label>
         <name>Available_Services</name>
     </customTabs>
