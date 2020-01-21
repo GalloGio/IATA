@@ -9893,6 +9893,17 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Accept_Online_Corrections__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Accept_payment_Cards_for_BSP_ticket__c</picklist>
             <values>
                 <fullName>No</fullName>
@@ -10867,6 +10878,17 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
             </values>
             <values>
                 <fullName>YES - Per Period</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Receive_PDF_Reports__c</picklist>
+            <values>
+                <fullName>NO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>YES</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -10995,6 +11017,17 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Accept_Online_Corrections__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Accept_payment_Cards_for_BSP_ticket__c</picklist>
             <values>
                 <fullName>No</fullName>
@@ -11969,6 +12002,17 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
             </values>
             <values>
                 <fullName>YES - Per Period</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Receive_PDF_Reports__c</picklist>
+            <values>
+                <fullName>NO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>YES</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -14286,6 +14330,17 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Accept_Online_Corrections__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Accept_payment_Cards_for_BSP_ticket__c</picklist>
             <values>
                 <fullName>No</fullName>
@@ -15349,6 +15404,17 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
         </picklistValues>
         <picklistValues>
             <picklist>AP_BR_BankBeneficiary_Account_Holder__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Accept_Online_Corrections__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
