@@ -49,6 +49,15 @@
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
         <workflowTimeTriggers>
             <actions>
+                <name>AMS_DGR_Notification_Sent</name>
+                <type>FieldUpdate</type>
+            </actions>
+            <offsetFromField>AMS_Agency_Regulation__c.Expiry_Date__c</offsetFromField>
+            <timeLength>-90</timeLength>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+        <workflowTimeTriggers>
+            <actions>
                 <name>AMS_DGR_60_days_Notification_Sent</name>
                 <type>FieldUpdate</type>
             </actions>
@@ -63,15 +72,6 @@
             </actions>
             <offsetFromField>AMS_Agency_Regulation__c.Expiry_Date__c</offsetFromField>
             <timeLength>-30</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-        <workflowTimeTriggers>
-            <actions>
-                <name>AMS_DGR_Notification_Sent</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <offsetFromField>AMS_Agency_Regulation__c.Expiry_Date__c</offsetFromField>
-            <timeLength>-90</timeLength>
             <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
         </workflowTimeTriggers>
     </rules>

@@ -122,6 +122,8 @@ src/customMetadata/Fobidden_Disposal_Email_Domain.yopmail_net.md
 src/customMetadata/Fobidden_Disposal_Email_Domain.yopmail_pp_ua.md
 src/customMetadata/Fobidden_Disposal_Email_Domain.yopmail_usa_cc.md
 
+src/quickActions/GuestCommunityCase.quickAction
+src/quickActions/NewCommunityCase.quickAction
 
 
 src/layouts/EntityMilestone-Object Milestone Layout.layout
