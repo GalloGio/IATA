@@ -24,33 +24,35 @@ public with sharing class DevsTools {
 	}
 
 
-	 private static String[] receivers = new List<String>();
+	private static List<User> receivers = new List<User>();
 
-		/**
-		* Send an Alert Alert email to devs
-		*
-		*/
-		public static void sendSFDevsAlertMessage(String title, String message){
-					try{
-						if(receivers.size()==0){
-							List<User> users = [SELECT Email, ProfileId FROM User where IsActive = true and Receive_Apex_emails__c = true];
-							for(User u:users)
-								receivers.add(u.Email);
-					}
-						if(receivers.size()>0){
-							//if(URL.getSalesforceBaseUrl().getHost().contains('cs'))receiver = 'jfonteray@gmail.com';
-							List<Messaging.SingleEmailMessage> emails = new List<Messaging.SingleEmailMessage>();
-							Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-							mail.setSubject(title);
-							mail.setToAddresses(receivers) ;
-							mail.setPlainTextBody(message);
-							emails.add( mail);
-							Messaging.sendEmail(emails);
-						}else {
-							system.debug('no user with request SELECT Email, ProfileId FROM User where IsActive = true and Receive_Apex_emails__c = true');
-						}
-				}catch(Exception  e){
-						system.debug('Failed to send email to webdev'+e.getMessage());
+	/**
+	* Send an Alert Alert email to devs
+	*
+	*/
+	public static void sendSFDevsAlertMessage(String title, String message){
+		try{
+			if(receivers.size()==0){
+				receivers = [SELECT Id, Email, ProfileId FROM User WHERE IsActive = true AND Receive_Apex_emails__c = true];
+			}
+
+			if(receivers.size()>0){
+				List<Messaging.SingleEmailMessage> emails = new List<Messaging.SingleEmailMessage>();
+				for(User u: receivers) {
+					Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+					mail.setSubject(title);
+					mail.setTargetObjectId(u.Id) ;
+					mail.setPlainTextBody(message);
+					mail.setSaveAsActivity(false);
+					emails.add(mail);
 				}
+				Messaging.sendEmail(emails);
+				
+			}else {
+				system.debug('no user with request SELECT Email, ProfileId FROM User where IsActive = true and Receive_Apex_emails__c = true');
+			}
+		}catch(Exception  e){
+				system.debug('Failed to send email to webdev'+e.getMessage());
 		}
+	}
 }

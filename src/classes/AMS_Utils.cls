@@ -532,42 +532,6 @@ public without sharing class AMS_Utils {
 
 	public AMS_Utils() {}
 
-	@future
-	public static void sendEmailAmsSupport( string subject, string message) {
-		List<ID> userIDs = new List<ID>();
-		userIDs.add('0057E000000HpGoQAK');
-
-
-		List<Messaging.SingleEmailMessage> emailsToSend = new List<Messaging.SingleEmailMessage>();
-
-		try {
-			system.debug('Try to send message . ' + subject + ' ******  ' + message);
-
-			for (ID userId : userIDs) {
-				Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-				String[] toAddresses = new String[] {'fernando.mouzinho@gmail.com'};
-				mail.setToAddresses(toAddresses);
-				mail.setSenderDisplayName('Apex error message');
-				mail.setSubject(subject);
-				mail.setSaveAsActivity(false);
-				mail.setPlainTextBody(message);
-				emailsToSend.add(mail);
-
-			}
-
-			if (Test.isRunningTest() ) {
-				Messaging.sendEmail(emailsToSend);
-				System.debug('AMS_ApplicationException.SendEmailSupport skipped because this is a Test. Subject: ' + subject + ', message: ' + message);
-				return;
-			}
-
-		} catch (Exception  e1) {
-			system.debug('Failed to send email to users:' + e1.getMessage());
-			system.debug('Failed to send email to users:' + e1.getStackTraceString());
-		}
-
-	}
-
 	/**
 	 * Encrypts a string to be used as a GET parameter
 	 * @param sValue The string parameter to encrypt

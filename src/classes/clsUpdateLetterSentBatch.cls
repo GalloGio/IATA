@@ -50,29 +50,27 @@ global class clsUpdateLetterSentBatch implements Database.Batchable<sObject>{
 
 		global void finish(Database.BatchableContext BC){
 
-			 User currentUser = [Select Id, Email, FirstName, LastName from User where Id =: UserInfo.getUserId() limit 1];
+			// build email body
+			String htmlEmailBody = '<html><body link=\'blue\' vlink=\'purple\' style=\'font-family:"Calibri","sans-serif";color:#1F497D;\'>Dear ' + UserInfo.getFirstName() + ' ' + UserInfo.getLastName() + ', <br />';
+			htmlEmailBody += '<br />';
+			htmlEmailBody += 'The '+type+' task for the Batch :'+batchNum+' has been completed.<br />';
+			htmlEmailBody += '<br />';
 
-				// build email body
-				String htmlEmailBody = '<html><body link=\'blue\' vlink=\'purple\' style=\'font-family:"Calibri","sans-serif";color:#1F497D;\'>Dear ' + currentUser.FirstName + ' ' + currentUser.LastName + ', <br />';
-				htmlEmailBody += '<br />';
-				htmlEmailBody += 'The '+type+' task for the Batch :'+batchNum+' has been completed.<br />';
-				htmlEmailBody += '<br />';
+			htmlEmailBody += '<br />Best Regards,<br />IFAP SF Administrator</body></html>';
 
-				htmlEmailBody += '<br />Best Regards,<br />IFAP SF Administrator</body></html>';
+			// build email object
+			Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+			mail.setSenderDisplayName('IATA Financial Review');
+			mail.setTargetObjectId(UserInfo.getUserId());
+			mail.setSubject('IFAP - ' +type+ ' Batch Completed');
+			mail.setHtmlBody(htmlEmailBody);
+			mail.saveAsActivity = false;
 
-				// build email object
-				Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-				mail.setSenderDisplayName('IATA Financial Review');
-				mail.setTargetObjectId(currentUser.id);
-				mail.setSubject('IFAP - ' +type+ ' Batch Completed');
-				mail.setHtmlBody(htmlEmailBody);
-				mail.saveAsActivity = false;
+			// send email if not running test
+			//if (!Test.isRunningTest())
+			Messaging.sendEmail(new Messaging.SingleEmailMessage[] {mail});
 
-				// send email if not running test
-				//if (!Test.isRunningTest())
-						Messaging.sendEmail(new Messaging.SingleEmailMessage[] {mail});
-
-				 System.debug('** Send Batch Email 3');
+			System.debug('** Send Batch Email 3');
 
 		}
 

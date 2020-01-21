@@ -121,10 +121,8 @@ global class clsMassCaseCreationBatch implements Database.Batchable<sObject>, Da
 
 		List<BatchError__c> batchErrors = [Select BatchID__c,ErrorMsg__c, AccountInfo__c from BatchError__c where BatchID__c =: batchName];
 
-		User currentUser = [Select Id, Email, FirstName, LastName from User where Id =: UserInfo.getUserId() limit 1];
-
 		// build email body
-		String htmlEmailBody = '<html><body link=\'blue\' vlink=\'purple\' style=\'font-family:"Calibri","sans-serif";color:#1F497D;\'>Dear ' + currentUser.FirstName + ' ' + currentUser.LastName + ', <br />';
+		String htmlEmailBody = '<html><body link=\'blue\' vlink=\'purple\' style=\'font-family:"Calibri","sans-serif";color:#1F497D;\'>Dear ' + UserInfo.getFirstName() + ' ' + UserInfo.getLastName() + ', <br />';
 		htmlEmailBody += '<br />';
 		htmlEmailBody += 'Here is a summary of the batch that was just launched by your user:<br />';
 		htmlEmailBody += '<br />';
@@ -165,7 +163,7 @@ global class clsMassCaseCreationBatch implements Database.Batchable<sObject>, Da
 		// build email object
 		Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
 		mail.setSenderDisplayName('IATA Financial Review');
-		mail.setTargetObjectId(currentUser.id);
+		mail.setTargetObjectId(UserInfo.getUserId());
 		mail.setSubject('IFAP - Case Mass Creation confirmation email - Batch Number ' + batchName );
 		mail.setHtmlBody(htmlEmailBody);
 		mail.saveAsActivity = false;

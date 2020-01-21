@@ -66,51 +66,51 @@ global class AMS_PurgeGDPIATACodeBatch implements Database.Batchable<sObject>,  
 
 	public void handleErrors(Database.BatchableContext BC){
 
-				 //Send an email to the User after your batch completes
-			 if(!errorMap.isEmpty()){
-						AsyncApexJob a = [SELECT id, ApexClassId,
-											 JobItemsProcessed, TotalJobItems,
-											 NumberOfErrors, CreatedBy.Email
-											 FROM AsyncApexJob
-											 WHERE id = :BC.getJobId()];
-						String body = 'Your batch job '
-						 + 'Purge IATA Codes '
-						 + 'has finished. \n'
-						 + 'There were '
-						 + errorMap.size()
-						 + ' errors. Please find the error list attached to the Email.';
+		//Send an email to the User after your batch completes
+		if(!errorMap.isEmpty()){
+			AsyncApexJob a = [SELECT id, ApexClassId,
+									JobItemsProcessed, TotalJobItems,
+									NumberOfErrors, CreatedBy.Email
+									FROM AsyncApexJob
+									WHERE id = :BC.getJobId()];
+			String body = 'Your batch job '
+				+ 'Purge IATA Codes '
+				+ 'has finished. \n'
+				+ 'There were '
+				+ errorMap.size()
+				+ ' errors. Please find the error list attached to the Email.';
 
-						// Creating the CSV file
-						String finalstr = 'Id, Name, Error \n';
-						String subject = 'GDP_Products_Account_View__c - Apex Batch Error List';
-						String attName = 'GDP_Products_Account_View__c Errors.csv';
-						for(Id id  : errorMap.keySet()){
-								string err = errorMap.get(id);
-								GDP_Products_Account_View__c acct = (GDP_Products_Account_View__c) IdToSObjectMap.get(id);
-								string recordString = '"'+id+'","'+acct.Name+'","'+err+'"\n';
-								finalstr = finalstr +recordString;
-						}
+			// Creating the CSV file
+			String finalstr = 'Id, Name, Error \n';
+			String subject = 'GDP_Products_Account_View__c - Apex Batch Error List';
+			String attName = 'GDP_Products_Account_View__c Errors.csv';
+			for(Id id  : errorMap.keySet()){
+					string err = errorMap.get(id);
+					GDP_Products_Account_View__c acct = (GDP_Products_Account_View__c) IdToSObjectMap.get(id);
+					string recordString = '"'+id+'","'+acct.Name+'","'+err+'"\n';
+					finalstr = finalstr +recordString;
+			}
 
-						// Define the email
-						Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
+			// Define the email
+			Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
 
-						// Create the email attachment
-						Messaging.EmailFileAttachment efa = new Messaging.EmailFileAttachment();
-						efa.setFileName(attName);
-						efa.setBody(Blob.valueOf(finalstr));
+			// Create the email attachment
+			Messaging.EmailFileAttachment efa = new Messaging.EmailFileAttachment();
+			efa.setFileName(attName);
+			efa.setBody(Blob.valueOf(finalstr));
 
-						// Sets the paramaters of the email
-						email.setSubject( subject );
-						email.setToAddresses( new String[] {a.CreatedBy.Email} );
-						email.setPlainTextBody( body );
-						email.setFileAttachments(new Messaging.EmailFileAttachment[] {efa});
+			// Sets the paramaters of the email
+			email.setSubject( subject );
+			email.setTargetObjectId(a.CreatedBy);
+			email.setSaveAsActivity(false);
+			email.setPlainTextBody( body );
+			email.setFileAttachments(new Messaging.EmailFileAttachment[] {efa});
 
- 			if(!Test.isRunningTest()){
-						// Sends the email
-						Messaging.SendEmailResult [] r =
-								Messaging.sendEmail(new Messaging.SingleEmailMessage[] {email});
-						}
-					 }
+			if(!Test.isRunningTest()){
+				// Sends the email
+				Messaging.SendEmailResult [] r = Messaging.sendEmail(new Messaging.SingleEmailMessage[] {email});
+			}
+		}
 
 	}
 

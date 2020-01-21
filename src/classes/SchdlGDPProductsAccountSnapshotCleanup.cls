@@ -60,8 +60,8 @@ global class SchdlGDPProductsAccountSnapshotCleanup implements Schedulable, Data
 		// Send an email to the Apex job's submitter 
 		//   notifying of job completion. 
 		Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-		String[] toAddresses = new String[] {a.CreatedBy.Email};
-		mail.setToAddresses(toAddresses);
+		mail.setTargetObjectId(a.CreatedBy);
+		mail.setSaveAsActivity(false);
 		mail.setCcAddresses(new List<String>{'debonol@iata.org'});
 		mail.setSubject('SchdlGDPProductsAccountSnapshotCleanup Status: ' + a.Status);
 		mail.setPlainTextBody('The batch Apex job processed ' + a.TotalJobItems + ' batches with '+ a.NumberOfErrors + ' failures.');
