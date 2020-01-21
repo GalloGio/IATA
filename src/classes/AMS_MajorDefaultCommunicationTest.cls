@@ -29,7 +29,7 @@ private class AMS_MajorDefaultCommunicationTest {
 		airlineContact1.Status__c = 'Active';
 		airlineContact1.AccountId = airline.Id;
 		airlineContact1.PSG_Member__c = true;
-		airlineContact1.PaConf_Representative__c = true; 
+		airlineContact1.PaConf_Representative__c = true;
 
 		Contact airlineContact2 = new Contact();
 		airlineContact2.FirstName = 'FirstName2';
@@ -38,7 +38,7 @@ private class AMS_MajorDefaultCommunicationTest {
 		airlineContact2.Status__c = 'Active';
 		airlineContact2.AccountId = airline.Id;
 		airlineContact2.PSG_Member__c = true;
-		airlineContact2.PaConf_Representative__c = true; 
+		airlineContact2.PaConf_Representative__c = true;
 
 		Contact agencyContact = new Contact();
 		agencyContact.FirstName = 'FirstName';
@@ -66,7 +66,7 @@ private class AMS_MajorDefaultCommunicationTest {
 		service.Services_Rendered_Type__c  = 'BSP Participation';
 		insert service;
 	}
-	
+
 	@isTest static void testDefaultNotification() {
 		User admin = [SELECT Id, ProfileId FROM User WHERE Id <> :UserInfo.getUserId() AND ProfileId = :UserInfo.getProfileId() AND IsActive = true LIMIT 1];
 
@@ -80,9 +80,9 @@ private class AMS_MajorDefaultCommunicationTest {
 
 			Contact c = [SELECT Id, FirstName, LastName, Email FROM Contact WHERE Email = 'test2@mail.com'];
 			User u = ISSP_WS_Utilities.createUser(c.FirstName, c.LastName, c.email, 'OtherCompany', c.Id, false);
-        	u.FederationIdentifier = String.valueOf(c.Id).substring(0, 15);
-        	u.ProfileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal Airline Delegated Admin User'].Id;
-        	insert u;
+			u.FederationIdentifier = String.valueOf(c.Id).substring(0, 15);
+			u.ProfileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal Airline Delegated Admin User'].Id;
+			insert u;
 		}
 
 		Test.startTest();
@@ -95,6 +95,6 @@ private class AMS_MajorDefaultCommunicationTest {
 
 		Test.stopTest();
 	}
-	
+
 
 }

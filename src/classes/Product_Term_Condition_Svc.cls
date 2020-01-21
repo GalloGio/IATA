@@ -1,17 +1,17 @@
-public with sharing class Product_Term_Condition_Svc 
+public with sharing class Product_Term_Condition_Svc
 {
 	/****************************************************************************************************
-	     Created By David D
-	     	validate that each item the combination of T&C-Product-CustomerType 
-	     		where IsActive=true is uniq
+			 Created By David D
+			 	validate that each item the combination of T&C-Product-CustomerType
+			 		where IsActive=true is uniq
 	****************************************************************************************************/
 	public static void validateProductTnC(List<Product_Term_Condition__c> productTnCs2Save)
 	{
-		Term_And_Condition_Sel tncSelector = new Term_And_Condition_Sel(); 
+		Term_And_Condition_Sel tncSelector = new Term_And_Condition_Sel();
 
 		//-- Existing Active Product T&C for current Products & T&C
 		Set<Id> productIds = new Set<Id>();
-		
+
 		for(Product_Term_Condition__c ptnc: productTnCs2Save)
 		{
 			productIds.add(ptnc.Product__c);
@@ -50,9 +50,9 @@ public with sharing class Product_Term_Condition_Svc
 			}
 		}
 
-			
+
 
 	}
 
-	
+
 }

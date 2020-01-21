@@ -37,8 +37,8 @@ public class ISSP_AMC_OrchestratorHandler_Test {
 
 
 				List<IATA_Process_Orchestrator__c> oneOrchestratorList = [SELECT Status__c, IATA_Orchestrator_Process__r.Overall_Status__c, IATA_Orchestrator_Process__c
-																		  FROM IATA_Process_Orchestrator__c 
-																		  WHERE id =: orchestrator.Id];
+																			FROM IATA_Process_Orchestrator__c
+																			WHERE id =: orchestrator.Id];
 
 
 				Test.stopTest();

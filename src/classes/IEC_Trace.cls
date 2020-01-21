@@ -1,10 +1,10 @@
 /**
 
 	Project: eCommerce Enhancements
-	   File: IEC_Trace.cls
+		 File: IEC_Trace.cls
 	Subject: Utility class to handle Trace requests for IEC Application.
 	History: 2017-05-02, asantos, Initial Release.
-             2017-05-07, asantos, Added the export to CSV functionality.
+						 2017-05-07, asantos, Added the export to CSV functionality.
 
 */
 public with sharing class IEC_Trace {
@@ -14,13 +14,13 @@ public with sharing class IEC_Trace {
 	public static final Integer LOG_LEVEL_ERROR = -1;
 
 	private static final String DEFAULT_TIMESTAMP_FORMAT = 'yyyy-MM-dd HH:mm:ss.SSS z';
-	
+
 	private static final Integer MAX_MESSAGE_LENGTH = 512;
 	private static final Integer MAX_INPUT_LENGTH = 4096;
 	private static final Integer MAX_OUTPUT_LENGTH = 4096;
 	private static final Integer MAX_EXCEPTION_MESSAGE_LENGTH = 512;
 	private static final Integer MAX_EXCEPTION_STACK_TRACE_LENGTH = 1024;
-	
+
 	private static IEC_Trace_Setting__c traceSetting = initializeTraceSetting();
 
 	private static final Map<Integer,String> traceTypeMap = new Map<Integer,String> {
@@ -38,7 +38,7 @@ public with sharing class IEC_Trace {
 
 	public static String exportTrace() {
 		String content = getExportTraceHeader() + '\n';
-		
+
 		for (TraceItem item : traceBuffer) {
 			content += item.getCsv() + '\n';
 		}
@@ -48,7 +48,7 @@ public with sharing class IEC_Trace {
 
 	public static String getTraceAsString() {
 		String content = getExportTraceHeader() + '\n';
-		
+
 		for (TraceItem item : traceBuffer) {
 			content += item.getCsv() + '\n';
 		}
@@ -256,7 +256,7 @@ public with sharing class IEC_Trace {
 		Exception exceptionCaught
 	) {
 		try {
-			if (isLogLevelActive(logLevel) == true) {			
+			if (isLogLevelActive(logLevel) == true) {
 				String traceMessage = message;
 				String traceExceptionCaughtMessage;
 				String traceExceptionCaughtStackTrace;
@@ -318,13 +318,13 @@ public with sharing class IEC_Trace {
 
 	public static Boolean isWarningActive {
 		get {
-			return isLogLevelActive(LOG_LEVEL_WARNING);	
+			return isLogLevelActive(LOG_LEVEL_WARNING);
 		}
 	}
 
 	public static Boolean isInfoActive {
 		get {
-			return isLogLevelActive(LOG_LEVEL_INFO);	
+			return isLogLevelActive(LOG_LEVEL_INFO);
 		}
 	}
 
@@ -352,7 +352,7 @@ public with sharing class IEC_Trace {
 
 		return false;
 	}
-	
+
 	@testVisible
 	private static void addTrace(TraceItem traceItem) {
 		if (traceItem != null) {
