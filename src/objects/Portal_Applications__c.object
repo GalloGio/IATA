@@ -1241,6 +1241,42 @@ Name
         <label>My Company Services</label>
         <language>en_US</language>
     </listViews>
+    <listViews>
+        <fullName>YY_Services_Requiring_Level_2_Registr</fullName>
+        <columns>NAME</columns>
+        <columns>Requires_Level2_Registration__c</columns>
+        <columns>ANG_Cannot_move_contact_between_Agencies__c</columns>
+        <columns>Hide_on_Homepage__c</columns>
+        <columns>Requestable__c</columns>
+        <columns>Visible__c</columns>
+        <columns>Critical_Service__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Requires_Level2_Registration__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>YY- Services Requiring Level 2 Registr.</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>ZZ_Services_Where_Contact_Cant_Be_Moved</fullName>
+        <columns>NAME</columns>
+        <columns>ANG_Cannot_move_contact_between_Agencies__c</columns>
+        <columns>Hide_on_Homepage__c</columns>
+        <columns>Requestable__c</columns>
+        <columns>Visible__c</columns>
+        <columns>Application_URL__c</columns>
+        <columns>Critical_Service__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>ANG_Cannot_move_contact_between_Agencies__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>ZZ- Services Where Contact Cant Be Moved</label>
+        <language>en_US</language>
+    </listViews>
     <nameField>
         <label>Service</label>
         <trackHistory>true</trackHistory>
