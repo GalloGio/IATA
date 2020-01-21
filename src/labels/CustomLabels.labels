@@ -2922,6 +2922,24 @@ ASD is an innovative, internet-based system, which facilitates these interaction
         <value>This service facilitates interaction and exchange of information between travel agents and airlines participating in IATA Billing and Settlement Plan (BSP).</value>
     </labels>
     <labels>
+        <fullName>BSP_CASS_Ch_Bank_Service_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>BSP/CASS Ch Bank Service Description</shortDescription>
+        <value>Using the BSP/CASS Change of Bank Details service, you can modify the bank account details used for your airline&apos;s settlement online in a simple but safe and secure way.
+
+This service is free of charge.</value>
+    </labels>
+    <labels>
+        <fullName>BSP_CASS_Ch_Request_Service_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>BSP/CASS Ch Request Service Description</shortDescription>
+        <value>You can use the BSP/CASS Change Request to modify your airline&apos;s BSP/CASS Participation details. These details include your airline&apos;s local address, the tax number or the Financial/Admin contact. You can also opt-in for IATA EasyPay. Directly online, this service simplifies processing the BSP/CASS changes to keep your data always up to date. 
+
+This service is free of charge.</value>
+    </labels>
+    <labels>
         <fullName>Bank_Transfer_Payment_terms</fullName>
         <language>en_US</language>
         <protected>false</protected>
