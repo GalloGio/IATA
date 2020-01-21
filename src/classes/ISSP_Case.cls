@@ -713,13 +713,12 @@ public without sharing class ISSP_Case {
 							WHERE Id IN :lsAccountIds];
 					}
 				}
-
+				
 				//This custom setting contains emails to be automatically added to the "Additional Recipients" field. 
 				//Before this option was made by a query to the User object.
 				//For this you have to configure the custom setting where the Name field is the account id and the email is the intended email to be added.
-
-				DPC2DPCCasesEmails = [SELECT Name, Email__c 
-							FROM DPC2DPCCasesEmails__c];
+				
+				List<DPC2DPCCasesEmails__c> DPC2DPCCasesEmails = DPC2DPCCasesEmails__c.getall().values();
 
 				JSONcontacts = JSON.serialize(DPC2DPCCasesEmails);
 				newCase.ACCA_Owner__c = Userinfo.getUserId();
@@ -1575,14 +1574,17 @@ public without sharing class ISSP_Case {
 				}
 			}
 		}
-		List<DPCCasePriorityHigh__c> DPCCasePriorityEmails = [SELECT Priority__c, Email__c 
-                                                                FROM DPCCasePriorityHigh__c 
-                                                                WHERE Priority__c =: newCase.Priority];
+
+		List<DPCCasePriorityHigh__c> DPCCasePriorityEmails = DPCCasePriorityHigh__c.getall().values();
+
 		if(!DPCCasePriorityEmails.isEmpty()){
 			for(DPCCasePriorityHigh__c dcph : DPCCasePriorityEmails){
-				setEmailPriority.add(dcph.Email__c);
+				if(dcph.Priority__c == newCase.Priority){
+					setEmailPriority.add(dcph.Email__c);
+				}
 			}                                   
 		}
+
 		if(JSONcontactSelected != null && JSONcontactSelected != ''){
 			setEmailPriority.add(JSONcontactSelected.removeEnd(','));
 		}
