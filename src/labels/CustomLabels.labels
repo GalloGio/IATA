@@ -2592,6 +2592,15 @@ IATA Easy Pay 계좌 개설을 희망하시는 여행사는 아래 우리은행 
         <value>https://iata.my.salesforce.com/services/Soap/c/9.0</value>
     </labels>
     <labels>
+        <fullName>ASD_Service_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ASD Service Description</shortDescription>
+        <value>IATA provides services for the settlement of financial transactions between travel agents and the airlines. Air Service Desk (ASD) consolidates the amounts owed by each agent and the amounts due to each airline. It enables the settlement to be made through one single financial transfer for each participant. 
+
+ASD is an innovative, internet-based system, which facilitates these interactions and exchanges of information between all participants in the Billing and Settlement Plan (BSP). Using this service through the IATA Customer Portal will allow you access to ASD, without the need for separate login details.</value>
+    </labels>
+    <labels>
         <fullName>Acc_Fin_Mgmt_Agencies_Description</fullName>
         <categories>IDCard</categories>
         <language>en_US</language>
