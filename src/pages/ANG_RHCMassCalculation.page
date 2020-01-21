@@ -12,7 +12,6 @@
 	<apex:form >
 
 	<apex:pageMessage summary="For GoGlobal account, please request the recalculation on the RHC of the GE." severity="warning" strength="2" />
-        <apex:pageMessages />
 		<apex:outputPanel id="tables">            
 			<apex:pageBlock title="Search">
 				<apex:pageBlockButtons location="bottom">
