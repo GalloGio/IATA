@@ -9089,6 +9089,54 @@ IATA currently offers four different code types:
 Through the IATA Certificates service, you can easily request a new Certificate for your agency.</value>
     </labels>
     <labels>
+        <fullName>IATA_EasyPay_2C2P_Service_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IATA EasyPay (2C2P) Service Description</shortDescription>
+        <value>IATA EasyPay is a voluntary pay-as-you-go e-wallet solution for travel agents to issue tickets in the BSP providing you greater flexibility and new ways to work in the BSP. It allows agents to reduce the financial security amounts with IATA while ensuring a failsafe transaction method.
+
+To start using IATA EasyPay, you first need to set up an IATA EasyPay account (wallet) via this EasyPay service.
+
+There is no cost or minimum balance required, so as an IATA accredited agents you can open their dedicated IEP account at any time.
+
+Once your IATA EasyPay accounts are opened, you can use this service to:
+• Load funds into your dedicated e-wallet
+• Generate IATA EasyPay number to enter in the GDS at the time of ticket issuance
+• Access transaction listings directly with the EasyPay service</value>
+    </labels>
+    <labels>
+        <fullName>IATA_EasyPay_EDENRED_Service_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IATA EasyPay (EDENRED) Service Description</shortDescription>
+        <value>IATA EasyPay is a voluntary pay-as-you-go e-wallet solution for travel agents to issue tickets in the BSP providing you greater flexibility and new ways to work in the BSP. It allows agents to reduce the financial security amounts with IATA while ensuring a failsafe transaction method.
+
+To start using IATA EasyPay, you first need to set up an IATA EasyPay account (wallet) via this EasyPay service.
+
+There is no cost or minimum balance required, so as an IATA accredited agents you can open their dedicated IEP account at any time.
+
+Once your IATA EasyPay accounts are opened, you can use this service to:
+• Load funds into your dedicated e-wallet
+• Generate IATA EasyPay number to enter in the GDS at the time of ticket issuance
+• Access transaction listings directly with the EasyPay service</value>
+    </labels>
+    <labels>
+        <fullName>IATA_EasyPay_MSTS_Service_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IATA EasyPay (MSTS) Service Description</shortDescription>
+        <value>IATA EasyPay is a voluntary pay-as-you-go e-wallet solution for travel agents to issue tickets in the BSP providing you greater flexibility and new ways to work in the BSP. It allows agents to reduce the financial security amounts with IATA while ensuring a failsafe transaction method.
+
+To start using IATA EasyPay, you first need to set up an IATA EasyPay account (wallet) via this EasyPay service.
+
+There is no cost or minimum balance required, so as an IATA accredited agents you can open their dedicated IEP account at any time.
+
+Once your IATA EasyPay accounts are opened, you can use this service to:
+• Load funds into your dedicated e-wallet
+• Generate IATA EasyPay number to enter in the GDS at the time of ticket issuance
+• Access transaction listings directly with the EasyPay service</value>
+    </labels>
+    <labels>
         <fullName>IATA_GDPR_URL</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -9102,6 +9150,15 @@ Through the IATA Certificates service, you can easily request a new Certificate 
         <protected>false</protected>
         <shortDescription>IATA GDPR White Logo</shortDescription>
         <value>https://iata--c.eu12.content.force.com/sfc/dist/version/renditionDownload?rendition=ORIGINAL_Png&amp;versionId=0681r00000BTmVA&amp;operationContext=DELIVERY&amp;contentId=05T1r00000dOEHZ&amp;page=0&amp;d=/a/1r000000EU6r/LOi9lDSOQ.C8HaVJIasBLxLjxSbtA35uT1V0eFm8.Wc&amp;oid=00D2000000008TF&amp;dpt=null&amp;viewId=</value>
+    </labels>
+    <labels>
+        <fullName>IATA_Store_Service_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IATA Store Service Description</shortDescription>
+        <value>IATA offers over 400 titles consisting of standards, manuals and guidelines that cover a variety of aviation topics, from Safety, Passenger, Cargo, to Security and more directly through the IATA Store. 
+
+Browse through our extensive catalogue or purchase any of the IATA publications, data &amp; statistics or even IATA Branded Merchandise.</value>
     </labels>
     <labels>
         <fullName>ICAddressDoctor_adns</fullName>
@@ -11279,6 +11336,13 @@ The sum of percentage cannot exceed 100%</value>
         <protected>false</protected>
         <shortDescription>ICE Portal Service</shortDescription>
         <value>IATA Customer E-statement (ICE) is designed to provide you with the details of your balances for the most recent IATA Billing cycles. The service will also allow you to view your upcoming remittance dates and incorporate them in your phone’s calendar.</value>
+    </labels>
+    <labels>
+        <fullName>ICE_Service_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ICE Service Description</shortDescription>
+        <value>Through the IATA Customer E-Statement service (ICE), you can directly confirm whether IATA has received your agency&apos;s payment. You can check the outstanding balances, and reconfirm the amounts corresponding to the latest periods. It&apos;s an intuitive, free and easy to use tool providing you tranquility when paying your BSP/CASS billings.</value>
     </labels>
     <labels>
         <fullName>ICH</fullName>
@@ -15133,6 +15197,15 @@ In order to upload your financial documents, please, login to Customer Portal on
         <value>Save</value>
     </labels>
     <labels>
+        <fullName>IFAP_Service_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IFAP Service Description</shortDescription>
+        <value>IATA Accredited agencies submit on a regular basis financial documents to IATA. Through this service, you can fulfill all the financial assessment requirements directly online - including the upload of your financial documents. Easy to use and convenient for you!
+
+This service is free of charge.</value>
+    </labels>
+    <labels>
         <fullName>IFAP_Submit_for_approval_message</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -15173,6 +15246,13 @@ In order to upload your financial documents, please, login to Customer Portal on
         <protected>false</protected>
         <shortDescription>IFAP name</shortDescription>
         <value>Name</value>
+    </labels>
+    <labels>
+        <fullName>IFG_Production_Service_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IFG Production Service Description</shortDescription>
+        <value>The IATA Financial Gateway (IFG) provides a consolidated and cost efficient solution for airlines and travel suppliers to optimize their different sales payment processes, irrespective of their distribution networks, business models or payment methods.</value>
     </labels>
     <labels>
         <fullName>IFG_Prov_Declined</fullName>
@@ -36021,6 +36101,15 @@ If you continue to experience issues registering for the CNS Customer Portal ple
         <value>Please fill in your</value>
     </labels>
     <labels>
+        <fullName>Insurance_Providers_Service_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Insurance Providers Service Description</shortDescription>
+        <value>For travel agents who are required to provide IATA with a Financial Security, several options are available. Apart from providing a bank guarantee, you can also choose to use a Global Default Insurance (GDI), or a local Default Insurance Programs (called DIPs). 
+
+Through this Portal service of Insurance Providers, you can get an overview of the local insurance programs (DIPs) available to you in your market.</value>
+    </labels>
+    <labels>
         <fullName>Internal_and_external_emails_error</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -36122,6 +36211,17 @@ You can choose one or more of the following topics:</value>
         <protected>false</protected>
         <shortDescription>Job title required</shortDescription>
         <value>Please fill in your job title.</value>
+    </labels>
+    <labels>
+        <fullName>Join_BSP_CASS_Service_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Join BSP/CASS Service Description</shortDescription>
+        <value>The Billing and Settlement Plan (BSP) and the Cargo Accounts Settlement System (CASS) are systems designed to facilitate and simplify the selling, reporting and remitting procedures of IATA Accredited agents, as well as improve financial control and cash flow for Airlines.
+
+Participation in a BSP is open to all airlines (IATA members and non-members) serving the country or area concerned.
+
+Using the Join BSP/CASS service, you can directly manage the joining process online - directly in the IATA Customer Portal.</value>
     </labels>
     <labels>
         <fullName>KALE_SUPPORT_EMAIL</fullName>
@@ -37401,6 +37501,26 @@ msgErrorRenewalOrderExpired:Your renewal notification order link is either  expi
         <protected>false</protected>
         <shortDescription>Logout</shortDescription>
         <value>Logout</value>
+    </labels>
+    <labels>
+        <fullName>MIR_Service_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>MIR Service Description</shortDescription>
+        <value>This service enables you to access and download the Management Information Report.
+
+This service is free of charge.</value>
+    </labels>
+    <labels>
+        <fullName>MITA_Agreements_Service_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>MITA Agreements Service Description</shortDescription>
+        <value>The IATA Multilateral Interline Traffic Agreements (MITA) is an agreement whereby passengers and cargo use a standard traffic document (i.e. passenger ticket or air waybill) to travel on various modes of transport involved in a routing in order to reach a final destination.
+
+One Multilateral Agreement concluded with another airline through IATA results in joining a partnership of the growing network of over 350 participating worldwide domestic and international airlines. You can easily manage your MITA Agreements directly within this service on the IATA Customer Portal.
+
+Participation in MITA is open to all IATA and non-IATA member airlines holding valid IATA assigned airline codes (airline designator, airline accounting and/or prefix code) and operating international and/or domestic scheduled air services.</value>
     </labels>
     <labels>
         <fullName>Make_All_Private</fullName>
@@ -40593,6 +40713,14 @@ Also, the package has changed the setting to prevent the creation of Contacts an
         <value>Payment number</value>
     </labels>
     <labels>
+        <fullName>Paymentlink_Service_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Paymentlink Service Description</shortDescription>
+        <value>Paymentlink is IATA&apos;s online credit card payment platform. As you purchase products &amp; services from IATA, you can use this service to pay easily and instantly. 
+Whether to use Paymentlink for your payments is either indicated on the IATA invoices, or confirmed to you by an IATA representative.</value>
+    </labels>
+    <labels>
         <fullName>Period</fullName>
         <categories>ICE Service</categories>
         <language>en_US</language>
@@ -41078,6 +41206,13 @@ respect to decisions and/or actions affecting Agents and applicants under the IA
         <protected>false</protected>
         <shortDescription>Reset your password?</shortDescription>
         <value>Reset your password?</value>
+    </labels>
+    <labels>
+        <fullName>Resource_Center_Service_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Resource Center Service Description</shortDescription>
+        <value>Through the Resource Center, you will gain access to all required documentation from IATA. The Resource Center contains key information for agencies interested in becoming IATA Accredited.</value>
     </labels>
     <labels>
         <fullName>Response_message</fullName>
@@ -41585,6 +41720,15 @@ title,Title,Name</value>
         <value>Data Privacy</value>
     </labels>
     <labels>
+        <fullName>TIP_Reports_Service_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>TIP Reports Service Description</shortDescription>
+        <value>Transparency in Payments (TIP) is an industry initiative focused on providing airlines with increased transparency and control in the collection of their sales through the travel agency channel. At the same time, it will enable travel agents to take advantage of new forms of payment for the remittance of customer funds.
+
+Through this service, you can directly access TIP Reports.</value>
+    </labels>
+    <labels>
         <fullName>TSI_USA_Only</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -41672,6 +41816,15 @@ title,Title,Name</value>
         <protected>false</protected>
         <shortDescription>Tracking Number</shortDescription>
         <value>Tracking Number</value>
+    </labels>
+    <labels>
+        <fullName>Training_Platform_LMS_Service_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Training Platform (LMS) Service Description</shortDescription>
+        <value>Through the IATA Training Platform, you can consult our extensive training portfolio which includes topics for airlines, airports, cargo operators, governments, ground service providers, travel agents, young professionals and more. 
+
+Upscale your skills by signing up for one of our training programs, directly online!</value>
     </labels>
     <labels>
         <fullName>Transfer_Attachments</fullName>
