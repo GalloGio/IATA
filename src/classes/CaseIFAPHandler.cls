@@ -12,48 +12,33 @@
 public class CaseIFAPHandler {
 
 	@InvocableMethod(label='User provisioning IFAP' description='User provisioning for Mulesoft when IFAP case is created.')
-	public static List<String> getContactInfo(List<String> listIds) {
-
-		// Set of Ids from the input
-		Set<String> inputIds = new Set<String>(listIds);
+	public static List<String> getContactInfo(List<Id> listIds) {
 
 		Set<Id> contactIds = new Set<Id>();
 		List<String> returnList = new List<String>();
 
-		if(inputIds != null && inputIds.size() != 0){
+		if(listIds != null && listIds.size() != 0){
 
-			Id idFromList = Id.valueOf(listIds[0]);
-			String sObjectType;
+			switch on (String.valueOf(listIds[0].getSObjectType())) {
+  				when 'User' {
+					List<User> userList = new List<User>([SELECT ContactId FROM User WHERE Id =: listIds AND ContactId != null]);
 
-			try{
-				sObjectType = idFromList.getSObjectType().getDescribe().getName().toLowerCase();
-			}
-			catch(Exception e) {
-				returnList.add('An unexpected error occured: ' + e);
-				return returnList;
-			}
+					for(User us : userList){
+						contactIds.add(us.ContactId);
+					}
+				}
+				when 'Case'{
+					List<Case> caseList = new List<Case>([SELECT ContactId FROM Case WHERE Id =: listIds AND ContactId != null]);
 
-			if(sObjectType == 'user'){
-
-				List<User> userList = new List<User>([SELECT ContactId FROM User WHERE Id =: inputIds AND ContactId != null]);
-
-				for(User us : userList){
-					contactIds.add(us.ContactId);
+					for(case cs : caseList){
+						contactIds.add(cs.ContactId);
+					}
+				}
+				when else{
+					returnList.add('The object type in the parameter is not supported.');
+					return returnList;
 				}
 			}
-			else if(sObjectType == 'case'){
-
-				List<Case> caseList = new List<Case>([SELECT ContactId FROM Case WHERE Id =: inputIds AND ContactId != null]);
-
-				for(case cs : caseList){
-					contactIds.add(cs.ContactId);
-				}
-			}
-			else{
-				returnList.add('The object type in the parameter is not supported.');
-				return returnList;
-			}
-
 
 			if(contactIds.size() > 0){
 
@@ -205,6 +190,4 @@ public class CaseIFAPHandler {
 		public String title {get;set;}
 		public String detail {get;set;}
 	}
-
-
 }
