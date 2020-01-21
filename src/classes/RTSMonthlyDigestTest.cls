@@ -2,7 +2,7 @@
 public class RTSMonthlyDigestTest {
 
 	 static testmethod void testMonthlyDigest() {
-		insert new RTS_Senior_Manager__c(Name = 'Test', Email__c = 'test.2005@yopmail.com');
+		insert new RTS_Senior_Manager__c(Name = 'Test', Email__c = 'test.2005@yopmail.com', User_Id__c = UserInfo.getUserId());
    		Test.startTest();
 			String jobId = System.schedule('testRTSMonthlyDigest',
 				RTSMonthlyDigest.CRON_EXP,
