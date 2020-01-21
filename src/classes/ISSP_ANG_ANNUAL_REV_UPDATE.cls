@@ -179,14 +179,14 @@ public with sharing class ISSP_ANG_ANNUAL_REV_UPDATE {
 	public void currentBillingStateCities() {        
 		billingCityListName = new List<IATA_ISO_City__c>([SELECT Id, Name, GeonameName__c 
 														  FROM IATA_ISO_City__c
-														  WHERE IATA_ISO_State__r.Name = :ca.fw.newform.State_Province__c                                       
+														  WHERE IATA_ISO_State__r.Name = :ca.fw.newform.State_Province__c AND Status__c <> 'Pending'                                       
 														  ORDER BY Name]);                
 	}
 	public void currentShippingStateCities() {       
 		
 		shippingCityListName = new List<IATA_ISO_City__c>([SELECT Id, Name, GeonameName__c
 														  FROM IATA_ISO_City__c
-														  WHERE IATA_ISO_State__r.Name = :ca.fw.newform.Shipping_State__c                                       
+														  WHERE IATA_ISO_State__r.Name = :ca.fw.newform.Shipping_State__c AND Status__c <> 'Pending'                                       
 														  ORDER BY Name]);                
 	}
 
