@@ -3269,6 +3269,24 @@ Information search on routes can include any combination of airport, city or cou
 Gain a rare, increased advantage by knowing your business environment inside out. Master how your markets and routes are performing from the data intelligence.</value>
     </labels>
     <labels>
+        <fullName>CASSlink_Export_Service_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CASSlink Export Service Description</shortDescription>
+        <value>IATA provides services for the settlement of financial transactions between freight forwarders and the airlines. CASSlink consolidates the amounts owed by each agent and the amounts due to each airline. It enables the settlement to be made through one single financial transfer for each participant. 
+
+CASSlink is an internet-based system which facilitates these interactions and exchanges of information between all participants in the Cargo Accounts Settlement System (CASS). Using this service through the IATA Customer Portal will allow you access to CASSlink, without the need for separate login details.</value>
+    </labels>
+    <labels>
+        <fullName>CASSlink_Import_Service_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CASSlink Import Service Description</shortDescription>
+        <value>IATA provides services for the settlement of financial transactions between freight forwarders and the airlines. CASSlink consolidates the amounts owed by each agent and the amounts due to each airline. It enables the settlement to be made through one single financial transfer for each participant. 
+
+CASSlink is an internet-based system which facilitates these interactions and exchanges of information between all participants in the Cargo Accounts Settlement System (CASS). Using this service through the IATA Customer Portal will allow you access to CASSlink, without the need for separate login details.</value>
+    </labels>
+    <labels>
         <fullName>CASSlink_Service_Description</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -3283,6 +3301,26 @@ CASSlink is an internet-based system which facilitates these interactions and ex
         <protected>false</protected>
         <shortDescription>CC</shortDescription>
         <value>CC</value>
+    </labels>
+    <labels>
+        <fullName>CNS_CASSlink_Service_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CNS CASSlink Service Description</shortDescription>
+        <value>IATA provides services for the settlement of financial transactions between freight forwarders and the airlines. CNS CASSlink consolidates the amounts owed by each agent and the amounts due to each airline in the United States. It enables the settlement to be made through one single financial transfer for each participant. 
+
+CNS CASSlink is an internet-based system which facilitates these interactions and exchanges of information between all participants in the Cargo Accounts Settlement System (CASS). Using this service through the IATA Customer Portal will allow you access to CNS CASSlink, without the need for separate login details.</value>
+    </labels>
+    <labels>
+        <fullName>CNS_End_Changes_Service_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CNS End Changes Service Description</shortDescription>
+        <value>Setting clear standards of professionalism and financial responsibility is one of the keystones of any industry performance and credibility. That is why since its creation in 1985, CNS has served the industry in the US as a key gatekeeper. We require a set of financial, operational and compliance standards before endorsing any individuals wanting to act as air cargo agents, forwarders or intermediaries.
+
+Through this online service, you can manage your endorsement process directly online.
+
+If you are already CNS Endorsed, you can use this service to update information on a change of address or ownership. You can also use this service to add additional branches.</value>
     </labels>
     <labels>
         <fullName>CSP_ALPHAFILTER_All</fullName>
@@ -6899,6 +6937,17 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <protected>false</protected>
         <shortDescription>Country</shortDescription>
         <value>Country</value>
+    </labels>
+    <labels>
+        <fullName>Country_Requirements_Service_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Country Requirements Service Description</shortDescription>
+        <value>For any airline, joining a BSP/CASS operation opens up new business opportunities. 
+
+You can use the Country Requirements Service to find out more information about the local requirements per country or market for your airline to join a new BSP/CASS operation - even before you begin the BSP/CASS Joining procedure.
+
+This service is free of charge.</value>
     </labels>
     <labels>
         <fullName>Country_cannot_be_empty</fullName>
