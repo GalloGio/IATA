@@ -22,6 +22,16 @@ private class ANG_RHCMassCalculationTest {
 
 				List<Account> agencies = new List<Account>();
 
+				Account agencyGE = new Account(Name = 'Agency GE',
+																		 Status__c = AMS_Utils.ACC_S9_APPROVED,
+																		 Location_Type__c = 'GE',
+																		 RecordTypeId = AMS_Utils.RECTYPE_IATAAGENCY,
+																		 IATA_ISO_Country__c = countryBB.Id,
+																		 Location_Class__c = 'P',
+																		 Remittance_frequency__c = 'M',
+																		 BillingCountry = 'BB',
+																		 Type = 'IATA Passenger Sales Agent');
+
 				Account agencyRevertBSP = new Account(Name = 'AgencyRevertBSP',
 																		 Status__c = AMS_Utils.ACC_S9_APPROVED,
 																		 Location_Type__c = 'HE',
@@ -63,6 +73,7 @@ private class ANG_RHCMassCalculationTest {
 																		 IataCode__c = '11111111',
 																		 BillingCountry = 'AA',
 																		 Type = 'IATA Passenger Sales Agent');
+				agencies.add(agencyGE);
 				agencies.add(agencyRevertBSP);
 				agencies.add(agencyApplyBSP);
 				agencies.add(agencyRevertIATA);
@@ -124,7 +135,7 @@ private class ANG_RHCMassCalculationTest {
 
 				List<ANG_RHC_Information__c> rhcInfos = new List<ANG_RHC_Information__c>();
 
-				ANG_RHC_Information__c rhcInfoToRevertBSP = new ANG_RHC_Information__c(ANG_AccountId__c = agencyRevertBSP.Id,
+				ANG_RHC_Information__c rhcInfoToRevertBSP = new ANG_RHC_Information__c(ANG_AccountId__c = agencyGE.Id,
 																																							 CurrencyIsoCode = 'USD',
 																																							 RecordTypeId = ANG_RHCHelper.RECTYPE_STDRHCINFO,
 																																							 ANG_Financial_Security__c = 0,
@@ -208,4 +219,44 @@ private class ANG_RHCMassCalculationTest {
 
 				Test.stopTest();
 		}
+
+	@isTest static void excludeMulticountryAccountsFromCalculationTest() {
+		User newUser = ISSP_ObjectFactory.createAdminUser();
+		newUser.IDFS_Region__c = 'Europe';
+		update newUser;
+
+		List<Case> retrievedCases = [SELECT Id FROM Case];
+
+		for (Case c: retrievedCases) {
+			Test.setCreatedDate(c.Id, Datetime.newInstance(Date.today() - 15, Time.newInstance(0, 0, 0, 0)));
+			c.Status = 'Closed';
+		}
+		update retrievedCases;
+
+		Test.startTest();
+
+		System.runAs(newUser) {
+			ANG_RHCMassCalculation controller = new ANG_RHCMassCalculation();
+			Integer days = controller.days;
+			List<SelectOption> regions = controller.regions;
+			Integer totalPages = controller.totalPages;
+			controller.search();
+			controller.first();
+			controller.next();
+			controller.previous();
+			controller.last();
+			controller.pageNumber = 20;
+			controller.selectAll = true;
+			controller.calculate();
+
+			Id geAccount = [Select Id From Account Where Location_Type__c = 'GE'].Id;
+			System.assert(!controller.agents.isEmpty(), 'List of agents should not be empty');
+			for (ANG_RHCMassCalculation.Agent i :controller.agents){
+				System.assert(i.rhcInfo.ANG_AccountId__c != geAccount, 'GE Accounts should not be retrieved in rhcQuery()');
+			} 
+			controller.fetchResults();
+		}
+
+		Test.stopTest();
+	}
 }

@@ -106,7 +106,7 @@ public class ANG_RHCMassCalculation {
 						', ANG_RHC_Amount_Forecasted__c' +
 						', ANG_RHC_Amount_Provisional__c' +
 					' FROM ANG_RHC_Information__c' +
-					' WHERE ANG_CashCondition__c = false' +
+					' WHERE ANG_CashCondition__c = false' + ' AND ANG_AccountId__r.Location_Type__c != \''+AMS_Utils.GE+'\'' +
 					' AND ANG_AccountId__c IN (SELECT AccountId FROM Case WHERE RecordTypeId = :ifap AND isClosed = true AND ClosedDate = LAST_N_DAYS:'+days+' AND Region__c = :userRegion)';
 		}
 	}
