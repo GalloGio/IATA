@@ -44095,4 +44095,12 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
             &lt;p&gt;Thank you for your interest in IATA&lt;/p&gt;
         </value>
     </labels>
+    <labels>
+        <fullName>CSP_Verification_L3_Email_3_LMS</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Verification_L3_Email_3_LMS</shortDescription>
+        <value>Thank you for your interest in IATA</value>
+    </labels>
 </CustomLabels>
