@@ -7892,6 +7892,17 @@ The databases, posted on a secure web-based platform, offer user-friendly interf
 &lt;a href=&quot;http://www.iata.org/services/finance/Pages/ttbs.aspx&quot; target=&quot;_blank&quot;&gt;Click here for details&lt;/a&gt;</value>
     </labels>
     <labels>
+        <fullName>Currency_Center_Service_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Currency Center Service Description</shortDescription>
+        <value>&quot;The IATA Currency Center is a new, dynamic and web-based information tool that provides currency information from an economic, financial markets and IATA perspective for different sets of countries. Detailed currency updates and analysis of IATA’s repatriation efforts are also available within the platform.
+
+The IATA Currency Center is updated in real-time with new information, ensuring the best support to our members in helping them managing their foreign exchange repatriation and the associated risks, in order to make informed decisions.
+
+This service is free of charge.</value>
+    </labels>
+    <labels>
         <fullName>Current_password</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -8030,6 +8041,15 @@ Case description: {!Case.Description}
         <value>Date</value>
     </labels>
     <labels>
+        <fullName>Deduction_Notice_Service_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Deduction Notice Service Description</shortDescription>
+        <value>The Deduction Form service allows travel agents participating in BSP Israel to submit deduction requests.
+
+This service is free of charge.</value>
+    </labels>
+    <labels>
         <fullName>Del</fullName>
         <categories>Generic Attachments</categories>
         <language>en_US</language>
@@ -8126,6 +8146,15 @@ Case description: {!Case.Description}
         <protected>false</protected>
         <shortDescription>E&amp;F Line Item Not In Contract Error</shortDescription>
         <value>Can&apos;t select E&amp;F Material not present in the related Contract</value>
+    </labels>
+    <labels>
+        <fullName>E_Bulletin_Service_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>E-Bulletin Service Description</shortDescription>
+        <value>The online e-Bulletin service allows airlines to generate daily &amp; weekly reports for agency related changes. Through this service, you can activate automated email reports ensuring you always have the latest agency related information available.
+
+This service is free of charge.</value>
     </labels>
     <labels>
         <fullName>E_mail_to_Case_IS_Help_Desk</fullName>
@@ -8396,6 +8425,15 @@ You can choose one or more of the following topics:</value>
         <protected>false</protected>
         <shortDescription>Financial_Documents</shortDescription>
         <value>Financial Documents</value>
+    </labels>
+    <labels>
+        <fullName>Financial_Securities_Service_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Financial Securities Service Description</shortDescription>
+        <value>Using the Financial Securities service you can directly see the current financial security applicable for your agency.
+
+This service is free of charge.</value>
     </labels>
     <labels>
         <fullName>First_name</fullName>
@@ -8750,6 +8788,15 @@ You can choose one or more of the following topics:</value>
         <value>GADM Power User</value>
     </labels>
     <labels>
+        <fullName>GADM_Service_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GADM Service Description</shortDescription>
+        <value>The Global Aviation Data Management (GADM) program is a data management platform which integrates all sources of operational data received from various channels. 
+
+Techniques to improve aviation safety have moved beyond the analyses of isolated accidents, to data-driven analyses of trends and the interaction between the links in the air transport chain. This is what the GADM program is about. It offers a comprehensive, cross-database analysis, supporting a proactive data-driven approach for advanced trend analysis and predictive risk mitigation.</value>
+    </labels>
+    <labels>
         <fullName>GADM_Status_Change_Template_Link</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -8897,6 +8944,15 @@ You can choose one or more of the following topics:</value>
         <value>active GADM User role/s already reached!</value>
     </labels>
     <labels>
+        <fullName>GDI_Service_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GDI Service Description</shortDescription>
+        <value>Global Default Insurance (GDI) is a new option for agents required to provide IATA with a Financial Security. Offered by Euler Hermes, a top credit-risk insurance provider, GDI consists of a global default insurance policy, held by IATA on behalf of Billing Settlement Plan (BSP) participating airlines. Agents can request coverage under this policy for the amount of financial security required by IATA.
+
+You can use this Portal service to obtain more information on GDI or request a quote.</value>
+    </labels>
+    <labels>
         <fullName>GeneralPublicLocation</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -8989,11 +9045,48 @@ You will receive an email with a copy of your quote or you can retrieve the quot
 Ensuring that the industry adapts and adheres to these global standards and recommended practices underpins a safe, secure, and integrated global air transport system.</value>
     </labels>
     <labels>
+        <fullName>IATA_Acr_Changes_Service_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IATA Acr Changes Service Description</shortDescription>
+        <value>IATA accreditation greatly simplifies the business relationship between agents and airlines.
+
+As an IATA Accredited Agency, you&apos;ll stand out as a recognized industry partner. You&apos;ll hold a unique IATA numeric code, opening opportunities to work with global airlines.
+
+Through this IATA Accreditation &amp; Changes service you can directly apply to become an IATA Accredited Agency
+
+If you are already IATA Accredited, you can use this service to update information on a change of address or ownership. You can also use this service to add additional branches.</value>
+    </labels>
+    <labels>
+        <fullName>IATA_Airl_Location_Codes_Service_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IATA Airl Location Codes Service Description</shortDescription>
+        <value>IATA Codes are an integral part of the travel industry and essential for the identification of an airline, its destinations and its traffic documents. They are also fundamental to the smooth running of hundreds of electronic applications which have been built around these coding systems for passenger and cargo traffic purposes.
+
+You can use this service to request and manage all the different IATA Airlines and Location codes.
+
+IATA currently offers four different code types:
+• Airline Designator Codes
+• Accounting or Prefix Codes
+• Baggage Tag Issuer Code (BTIC)
+• Location Identifiers</value>
+    </labels>
+    <labels>
         <fullName>IATA_Alpha</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IATA Alpha/Numeric Code</shortDescription>
         <value>IATA Alpha/Numeric Code</value>
+    </labels>
+    <labels>
+        <fullName>IATA_Certificates_Service_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IATA Certificates Service Description</shortDescription>
+        <value>As an IATA Accredited Agency, you&apos;ll stand out as a recognized industry partner. A vital document for tenders, the IATA Certificate will help others recognize your agency as an IATA Accredited Agency, bringing more visibility and credibility to you.
+
+Through the IATA Certificates service, you can easily request a new Certificate for your agency.</value>
     </labels>
     <labels>
         <fullName>IATA_GDPR_URL</fullName>
