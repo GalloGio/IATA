@@ -130,7 +130,19 @@ private class ISSP_AMS_Accreditation_Test {
 										RecordTypeId = rtIdBr,
 										IATACode__c = '100');
 
-		insert new List<Account>{parentAccountTravel, parentAccountCargo, optOutAcc, parentAccIcc, basicParent, mcParentAcc, mcbranchAcc};
+		Account cashParentAcc = new Account(BillingCity = 'test',
+											Name = 'cashParentAccount',
+											Sector__c = 'Travel Agent',
+											Location_Type__c = 'HE',
+											RecordTypeId = rtIdBr,
+											IATACode__c = '10013555',
+											Status__c = 'Approved',
+											Location_Class__c = 'P',
+											IATA_ISO_Country__c = country3.Id,
+											Type = AMS_Utils.CATEGORY_PASSENGER_SALES_AGENT,
+											ANG_Accreditation_Model__c = 'Cash');
+
+		insert new List<Account>{parentAccountTravel, parentAccountCargo, optOutAcc, parentAccIcc, basicParent, mcParentAcc, mcbranchAcc, cashParentAcc};
 
 		Account childAccIcc = new Account(BillingCity = 'test2',
 										Name = 'childAccIcc',
@@ -144,13 +156,28 @@ private class ISSP_AMS_Accreditation_Test {
 		Account basicChild = new Account(BillingCity = 'test2',
 										Name = 'basicChild',
 										Site = 'headSite',
-										Sector__c = 'Travel Agent',
+										Sector__c = AMS_Utils.SECTOR_PASSENGER,
 										Top_Parent__c = basicParent.Id,
 										IATA_ISO_Country__c = country.Id,
 										RecordTypeId = rtIdBr,
 										ParentId = basicParent.Id);
 
-		insert new List<Account>{childAccIcc, basicChild};
+		Account cashChild = new Account(BillingCity = 'test2',
+										Name = 'cashChild',
+										Site = 'headSite',
+										Sector__c = AMS_Utils.SECTOR_PASSENGER,
+										Top_Parent__c = cashParentAcc.Id,
+										IATA_ISO_Country__c = country3.Id,
+										RecordTypeId = rtIdBr,
+										ParentId = cashParentAcc.Id,
+										IATACode__c = '12314477',
+										Location_Class__c = 'P',
+										Location_Type__c = 'AE',
+										Status__c = 'Approved',
+										Type = AMS_Utils.CATEGORY_PASSENGER_SALES_AGENT,
+										ANG_Accreditation_Model__c = 'Cash');
+
+		insert new List<Account>{childAccIcc, basicChild, cashChild};
 
 		Contact conMulticountry = ISSP_ObjectFactory.createNewContact();
 		conMulticountry.AccountId = mcParentAcc.Id;
@@ -159,6 +186,10 @@ private class ISSP_AMS_Accreditation_Test {
 		Contact conTravel = ISSP_ObjectFactory.createNewContact();
 		conTravel.AccountId = parentAccountTravel.Id;
 		conTravel.Email = 'parenttravel@test11.com';
+
+		Contact conCash = ISSP_ObjectFactory.createNewContact();
+		conCash.AccountId = cashParentAcc.Id;
+		conCash.Email = 'parentcash@test11.com';
 
 		Contact conCargo = ISSP_ObjectFactory.createNewContact();
 		conCargo.AccountId = parentAccountCargo.Id;
@@ -181,7 +212,7 @@ private class ISSP_AMS_Accreditation_Test {
 		conBasicChild.AccountId = basicChild.Id;
 		conBasicChild.Email = 'conBasicChild@test11.com';
 
-		insert new List<Contact>{conTravel, conCargo, conChildIcc, conOptOut, conOptOutAdmin, conBasicChild, conMulticountry};
+		insert new List<Contact>{conTravel, conCargo, conChildIcc, conOptOut, conOptOutAdmin, conBasicChild, conMulticountry, conCash};
 
 		User userIcc = ISSP_ObjectFactory.createPortalUser(conChildIcc);
 		conChildIcc.OwnerId = userIcc.Id;
@@ -198,7 +229,13 @@ private class ISSP_AMS_Accreditation_Test {
 		User userMC = ISSP_ObjectFactory.createPortalUser(conMulticountry);
 		conMulticountry.OwnerId = userMC.Id;
 
-		update new List<Contact>{conChildIcc, conOptOut, conOptOutAdmin, conBasicChild, conMulticountry};
+		User userParentTravel = ISSP_ObjectFactory.createPortalUser(conTravel);
+		conTravel.OwnerId = userParentTravel.Id;
+
+		User userParentCash = ISSP_ObjectFactory.createPortalUser(conCash);
+		conCash.OwnerId = userParentCash.Id;
+
+		update new List<Contact>{conChildIcc, conOptOut, conOptOutAdmin, conBasicChild, conMulticountry, conTravel, conCash};
 
 		mcbranchAcc.OwnerId = userMC.Id;
 		update mcbranchAcc;
@@ -2675,11 +2712,9 @@ private class ISSP_AMS_Accreditation_Test {
 		conChild.AccountId = child.Id;
 		conChild.Email = 'child@test11.com';
 
-		Contact con = fetchContact('parenttravel@test11.com');
+		User newUser = fetchUser('parenttravel@test11.com');
 
-		User newUser = ISSP_ObjectFactory.createPortalUser(con);
-		con.OwnerId = newUser.Id;
-		upsert new List<Contact>{con, conChild};
+		upsert conChild;
 
 		AMS_Accreditation_Requirement__c ISSP_AMS_Accreditation_Acc_Req = [SELECT Id, AMS_Accreditation_Country_CheckList__c, Language__c,
 																			Location_type__c, Requirement_text__c, Sort_Order__c, Name
@@ -2795,9 +2830,9 @@ private class ISSP_AMS_Accreditation_Test {
 
 		Contact con = fetchContact('parenttravel@test11.com');
 
-		User newUser = ISSP_ObjectFactory.createPortalUser(con);
-		con.OwnerId = newUser.Id;
-		upsert new List<Contact>{con, conChild};
+		User newUser = fetchUser('parenttravel@test11.com');
+		
+		upsert conChild;
 
 		AMS_Person__c p1 = new AMS_Person__c(Name = 'Test1 Person', User__c = newUser.Id, Lastname__c = 'person', Phone__c = '123123123');
 		insert p1;
@@ -3056,11 +3091,9 @@ private class ISSP_AMS_Accreditation_Test {
 		conChild.AccountId = child.Id;
 		conChild.Email = 'child@test11.com';
 
-		Contact con = fetchContact('parenttravel@test11.com');
+		User newUser = fetchUser('parenttravel@test11.com');
 
-		User newUser = ISSP_ObjectFactory.createPortalUser(con);
-		con.OwnerId = newUser.Id;
-		upsert new List<Contact>{con, conChild};
+		upsert conChild;
 
 		AMS_Person__c p1 = new AMS_Person__c(Name = 'Test1 Person', User__c = newUser.Id);
 		insert p1;
@@ -3422,9 +3455,9 @@ private class ISSP_AMS_Accreditation_Test {
 
 		Contact con = fetchContact('parenttravel@test11.com');
 
-		User newUser = ISSP_ObjectFactory.createPortalUser(con);
-		con.OwnerId = newUser.Id;
-		upsert new List<Contact>{con, conChild};
+		User newUser = fetchUser('parenttravel@test11.com');
+		
+		upsert conChild;
 
 		AMS_Person__c p1 = new AMS_Person__c(Name = 'Test1 Person', User__c = newUser.Id);
 		insert p1;
@@ -4394,7 +4427,7 @@ private class ISSP_AMS_Accreditation_Test {
 		Test.stopTest();
 	}
 
-	 @isTest static void multiCountryNewHE_NA_Discard() {
+	@isTest static void multiCountryNewHE_NA_Discard() {
 		User mcUser = fetchUser('multicountry@test11.com');
 
 		Test.startTest();
@@ -4420,6 +4453,62 @@ private class ISSP_AMS_Accreditation_Test {
 
 			ISSP_AMS_Accreditation ctrl = new ISSP_AMS_Accreditation();
 			ctrl.discardMCApplication();
+		}
+		Test.stopTest();
+	}
+
+	@isTest static void nocMCConversion() {
+		User cashUser = fetchUser('parenttravel@test11.com');
+
+		Account a = fetchSingleAccount('cashParentAccount');
+
+		Test.startTest();
+		System.runAs(cashUser) {
+			Case c = new Case(ContactId = cashUser.ContactId,
+							AccountId = cashUser.Contact.Account.Id,
+							RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE'),
+							Status = 'Draft',
+							Origin = 'Portal',
+							Subject = 'Notification of Change',
+							CurrencyIsoCode = 'USD',
+							CaseArea__c = 'Accreditation Process',
+							Reason1__c = 'Major Change',
+							Type_of_customer__c = 'IATA Passenger Sales Agent',
+							Visible_on_ISS_Portal__c = true);
+
+			insert c;
+
+			AMS_Pax_Accreditation_Form__c form = new AMS_Pax_Accreditation_Form__c(Scope_of_Change__c = 'HO - All Branches',
+																				Notify_Change_Accreditation_Type__c = true,
+																				ANG_Accreditation_Model_to_Change__c = 'Multicountry',
+																				Confirm_Legal_Details_are_correct__c = true,
+																				Confirm_Location_Details_are_correct__c = true,
+																				Confirm_Ownership_details_are_correct__c = true,
+																				SAAM_Case__c = c.Id,
+																				HO_Account__c = cashUser.Contact.Account.Id);
+
+			insert form;
+
+			PageReference pageRef = Page.ISSP_AMS_Notice_Of_Change;
+			pageRef.getParameters().put('isBankAccountChange', 'false');
+			pageRef.getParameters().put('isNoticeOfChange', 'false');
+			pageRef.getParameters().put('step', '3');
+			pageRef.getParameters().put('caseId', c.Id);
+
+			Test.setCurrentPage(pageRef);
+
+			ISSP_AMS_Accreditation ctrl = new ISSP_AMS_Accreditation();
+			ctrl.accountToBeFetchedOrRemoved = '12314477';
+			ctrl.fetchHeadEntityMC();
+			ctrl.addToAccountsToConvert();
+
+			System.assertEquals(1, ctrl.accountsToBeConverted.values().size(), 'Parent account should have been added to the list');
+
+			ctrl.accountToBeFetchedOrRemoved = a.Id;
+
+			ctrl.removeFromAccountsToConvert();
+
+			System.assertEquals(0, ctrl.accountsToBeConverted.values().size(), 'Parent account should have been removed to the list');
 		}
 		Test.stopTest();
 	}
