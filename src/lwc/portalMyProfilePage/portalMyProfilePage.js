@@ -5,6 +5,7 @@ import getLoggedUser from '@salesforce/apex/CSP_Utils.getLoggedUser';
 import getServices from '@salesforce/apex/PortalServicesCtrl.getUserAccessGrantedServices';
 
 import getContactDetails from '@salesforce/apex/PortalMyProfileCtrl.getContactInfo';
+import getTrainingId from '@salesforce/apex/PortalMyProfileCtrl.getTrainingInfo';
 
 import IdCard from '@salesforce/label/c.CSP_Id_Card';
 
@@ -23,11 +24,14 @@ export default class PortalMyProfilePage extends LightningElement {
     @track currentSection;
     @track sectionMapContact = [];
     @track sectionMapAccount = [];
+    @track sectionMapTraining = [];
 
     @track loggedUser;
+    @track trainingId;
 
     @track mapOfValuesContact = [];
     @track mapOfValuesAccount = [];
+    @track mapOfValuesTraining = [];
 
     connectedCallback() {
 
@@ -55,6 +59,10 @@ export default class PortalMyProfilePage extends LightningElement {
             this.contactInfo = contact;
         });
 
+        getTrainingId().then(result => {
+            this.trainingId = JSON.parse(JSON.stringify(result));
+        });
+
     }
 
     renderedCallback() {
@@ -70,6 +78,10 @@ export default class PortalMyProfilePage extends LightningElement {
 
             for(let i = 0; i < this.sectionMapAccount.length; i++){
                 navItems.push({ label: this.sectionMapAccount[i].cardTitle, value: this.sectionMapAccount[i].cardTitle, open: true });
+            }
+
+            for(let i = 0; i < this.sectionMapTraining.length; i++){
+                navItems.push({ label: this.sectionMapTraining[i].cardTitle, value: this.sectionMapTraining[i].cardTitle, open: true });
             }
 
             leftNav.navItems = navItems;
@@ -93,12 +105,52 @@ export default class PortalMyProfilePage extends LightningElement {
                     'showfunction': (sectionMapContactLocal[i].cardTitle === 'Professional'),
                     'isEditable': sectionMapContactLocal[i].isEditable,
                     'isEditIdCard': (sectionMapContactLocal[i].cardTitle === IdCard),
-		    'sectionKeyName': sectionMapContactLocal[i].cardKey,
+		            'sectionKeyName': sectionMapContactLocal[i].cardKey,
                     'idCardRedirectionUrl':sectionMapContactLocal[i].idCardUrl
                 });
             }
 
             this.mapOfValuesContact = mapOfValuesContactLocal;
+
+        });
+
+        getFieldsMap({ type: 'MyProfileTraining' }).then(result => {
+
+            this.sectionMapTraining = JSON.parse(JSON.stringify(result));
+
+            let sectionMap = this.sectionMapTraining;
+
+            let localMap = [];
+            for (let key in this.sectionMapTraining) {
+
+                if (sectionMap.hasOwnProperty(key)) {
+                    let value = sectionMap[key];
+                    localMap.push({ 'value': value, 'key': key,'showfunction' : (key === 'Professional') });
+
+                }
+            }
+            this.mapOfValuesTraining = localMap;
+
+
+            this.sectionMapTraining = JSON.parse(JSON.stringify(result));
+            let sectionMapTrainingLocal = JSON.parse(JSON.stringify(result));
+
+            this.mapOfValuesTraining = [];
+            let mapOfValuesTrainingLocal = [];
+
+            for (let i = 0; i < sectionMapTrainingLocal.length; i++) {
+                mapOfValuesTrainingLocal.push({
+                    'value': sectionMapTrainingLocal[i].lstFieldWrapper,
+                    'key': sectionMapTrainingLocal[i].cardTitle,
+                    'showfunction': (sectionMapTrainingLocal[i].cardTitle === 'Professional'),
+                    'isEditable': sectionMapTrainingLocal[i].isEditable,
+                    'isEditIdCard': (sectionMapTrainingLocal[i].cardTitle === IdCard),
+		            'sectionKeyName': sectionMapTrainingLocal[i].cardKey,
+                    'idCardRedirectionUrl':sectionMapTrainingLocal[i].idCardUrl
+                });
+            }
+
+            this.mapOfValuesTraining = mapOfValuesTrainingLocal;
 
         });
     }
