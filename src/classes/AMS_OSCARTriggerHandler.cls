@@ -138,11 +138,28 @@ public class AMS_OSCARTriggerHandler {
 
 	public static List<Account> accToGenerateCC = new List<Account>();
 
+	public static Map<Id, AMS_OSCAR__c> queriedOscarsMap = null;
+
 	//*************************************
 	//********* context methods ***********
 	//*************************************
 
 	public static void handleBeforeUpdate(List<AMS_OSCAR__c> oscars) {
+
+		queriedOscarsMap = new Map<Id, AMS_OSCAR__c>(
+			[SELECT 
+				Id, 
+				Account__c,
+				Process__c,
+				Location_Type__c,
+				Account__r.Sector__c, 
+				Account__r.CNS_Agency__c,
+				Account__r.Parent.Status__c,
+				Account__r.Parent.Source_System__c
+			 FROM AMS_OSCAR__c 
+			 WHERE Id IN :Trigger.New
+			]
+		);
 
 		prepopulateValues();
 
@@ -2326,14 +2343,12 @@ public class AMS_OSCARTriggerHandler {
 
 		Map<Id, AMS_OSCAR__c> oldMap = (Map<Id,AMS_OSCAR__c>) Trigger.oldMap;
 
-		Map<Id,AMS_OSCAR__c> oscarAux = new Map<Id, AMS_OSCAR__c>([SELECT Id, Account__r.Sector__c, Account__r.CNS_Agency__c FROM AMS_OSCAR__c WHERE Id IN :Trigger.New]);
-
 		//check which oscars are related to Cargo Agencies and have passed sanity check
 		//for(AMS_OSCAR__c oscar:[SELECT Id, Account__r.Sector__c FROM AMS_OSCAR__c WHERE Id IN :Trigger.New]){
 		for(AMS_OSCAR__c oscar:(List<AMS_OSCAR__c>)Trigger.New){
 			if ((oscar.RecordTypeId == AMS_Utils.RECTYPE_NEW || oscar.RecordTypeId == AMS_Utils.RECTYPE_CERT) && oldMap.get(oscar.Id).STEP6__c <> AMS_Utils.PASSED && oscar.STEP6__c == AMS_Utils.PASSED){
 
-				if(oscarAux.get(oscar.Id).Account__r.Sector__c == AMS_Utils.SECTOR_CARGO)
+				if(queriedOscarsMap.get(oscar.Id).Account__r.Sector__c == AMS_Utils.SECTOR_CARGO)
 					oscarsToProcess.add(oscar);
 			}
 		}
@@ -2343,7 +2358,7 @@ public class AMS_OSCARTriggerHandler {
 			for(AMS_OSCAR__c oscar : oscarsToProcess){
 
 				// bypass validation for CNS if Custom Setting is not enabled
-				if(!oscarAux.get(oscar.Id).Account__r.CNS_Agency__c || (oscarAux.get(oscar.Id).Account__r.CNS_Agency__c && CNS_Settings__c.getInstance().DGR_Validate_Certificates__c))
+				if(!queriedOscarsMap.get(oscar.Id).Account__r.CNS_Agency__c || (queriedOscarsMap.get(oscar.Id).Account__r.CNS_Agency__c && CNS_Settings__c.getInstance().DGR_Validate_Certificates__c))
 					oscarsToValidate.add(oscar);
 			}
 
@@ -3598,13 +3613,20 @@ public class AMS_OSCARTriggerHandler {
 
 			if(targetProcessesSet.contains(updatedOscar.Process__c)){
 
-				if(updatedOscar.Process__c == AMS_Utils.MCAE && !ANG_MulticountryHelper.allowApprovalStep(updatedOscar)){
+				if(allOnlineAccr == null || allOnlineAccr.isEmpty()) {
+					allOnlineAccr = getAllAccreditations((List<AMS_OSCAR__c>) Trigger.New);
+				}
+
+				AMS_OSCAR__c queriedOscar = queriedOscarsMap.get(updatedOscar.Id);
+
+				if(updatedOscar.Process__c == AMS_Utils.MCAE && !ANG_MulticountryHelper.allowApprovalStep(queriedOscar)){
 					updatedOscar.addError(Label.ANG_Multicountry_Process_Parent_Account_Error);
 				}
 
 				//NEWGEN-4850
-				if(ANG_MulticountryHelper.multicountryAccountHasRemittenceFrequencyEmpty(updatedOscar))
-					updatedOscar.addError('Approval can\'t be set if Remittance frequency is empty');
+				if(ANG_MulticountryHelper.multicountryAccountHasRemittanceFrequencyEmpty(updatedOscar, allOnlineAccr.get(updatedOscar.AMS_Online_Accreditation__c))){
+					updatedOscar.addError('Approval can\'t be set if Remittance frequency is empty.');
+				}
 
 				//NEWGEN-5110 - Added validation FS mandatory in new GE accreditations
 				if ((updatedOscar.Process__c == AMS_Utils.NEWHESTANDARD || updatedOscar.Process__c == AMS_Utils.NEWGESTANDARD) && updatedOscar.STEP34__c != AMS_Utils.PASSED)

@@ -111,9 +111,9 @@ public class ANG_MulticountryHelper {
 	*/
 	public static Boolean allowIATACodeGeneration(AMS_OSCAR__c oscar){
 		return
-			(parentHasChangeCode(oscar.Account__c, 'NEW') &&
+			((String.isNotBlank(oscar.Account__r.Parent.Source_System__c) || parentHasChangeCode(oscar.Account__c, AMS_Utils.NEW_CHANGE_CODE)) &&
 			 (AMS_Utils.ACTIVEAGENCYSTATUS.contains(oscar.Account__r.Parent.Status__c) ||
-				oscar.Account__r.Parent.Status__c == AMS_Utils.ACC_S2_NEWAPPLICATIONPENDING)
+			  oscar.Account__r.Parent.Status__c == AMS_Utils.ACC_S2_NEWAPPLICATIONPENDING)
 			);
 	}
 
@@ -125,7 +125,7 @@ public class ANG_MulticountryHelper {
 	*
 	*/
 	public static Boolean allowApprovalStep(AMS_OSCAR__c oscar){
-		return parentHasChangeCode(oscar.Account__c, 'FIN');
+		return (String.isNotBlank(oscar.Account__r.Parent.Source_System__c) || parentHasChangeCode(oscar.Account__c, AMS_Utils.FIN_CHANGE_CODE));
 	}
 
 	/**
@@ -156,7 +156,7 @@ public class ANG_MulticountryHelper {
 
 		if(account.Location_Type__c == AMS_Utils.AE){
 
-			 	if(account.IATA_ISO_Country__r.AMS_Settlement_System__c != account.Parent.IATA_ISO_Country__r.AMS_Settlement_System__c){
+			if(account.IATA_ISO_Country__r.AMS_Settlement_System__c != account.Parent.IATA_ISO_Country__r.AMS_Settlement_System__c){
 				vw.valid = false;
 				vw.message = Label.ANG_Multicountry_Already_Has_Locations_Only_Allow_HE_Error;
 				return vw;
@@ -241,9 +241,9 @@ public class ANG_MulticountryHelper {
 
 			if(acct.Location_Type__c == AMS_Utils.HE){
 
-				String bspId     = acct.IATA_ISO_Country__r.AMS_Settlement_System__c;
-				String topParent = acct.Top_Parent__c;
-				String aggrKey   = bspId+topParent;
+				String bspId		= acct.IATA_ISO_Country__r.AMS_Settlement_System__c;
+				String topParent 	= acct.Top_Parent__c;
+				String aggrKey		= bspId+topParent;
 
 				if(accountsHePerBspMap.containsKey(aggrKey)){
 					accountsHePerBspMap.get(aggrKey).add(acct.Id);
@@ -294,27 +294,6 @@ public class ANG_MulticountryHelper {
 
 	}
 
-	 /**
-	* Gets the Remittance frequency from the current AMS Online Accreditation
-	*
-	* @param accreditationID: ID
-	* @return String
-	*
-	*/
-	private static String getPaxRemittanceFrequencyByID(Id accreditationID){
-
-		List<AMS_Pax_Accreditation_Form__c> onlineAccred = [SELECT Remittance_frequency__c
-															FROM AMS_Pax_Accreditation_Form__c
-															WHERE id = :accreditationID];
-
-		String rf;
-
-		if(!onlineAccred.isEmpty()) rf = onlineAccred[0].Remittance_frequency__c;
-
-		return rf;
-	}
-
-
 	/**
 	 * Checks if an Multicountry account (GE or HE)
 	 * has an empty Remittance_frequency__c
@@ -323,8 +302,8 @@ public class ANG_MulticountryHelper {
 	 * @param oscar: AMS_OSCAR__c
 	 * @return Boolean
 	 */
-	public static Boolean multicountryAccountHasRemittenceFrequencyEmpty(AMS_OSCAR__c oscar){
-		return ( String.isEmpty(getPaxRemittanceFrequencyByID(oscar.AMS_Online_Accreditation__c))
+	public static Boolean multicountryAccountHasRemittanceFrequencyEmpty(AMS_OSCAR__c oscar, AMS_Pax_Accreditation_Form__c accreditationForm){
+		return ( accreditationForm != null && String.isEmpty(accreditationForm.Remittance_Frequency__c)
 			&& ((oscar.Location_Type__c == AMS_Utils.HE && oscar.Process__c == AMS_Utils.MCAE)
 				|| oscar.Location_Type__c == AMS_Utils.GE));
 	}

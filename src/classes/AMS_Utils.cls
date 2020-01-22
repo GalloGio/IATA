@@ -383,6 +383,8 @@ public without sharing class AMS_Utils {
 	public static final String APP_WITHDRAWN = '11-APPLICATION WITHDRAWN';
 
 	public static final String MBPDD_CHANGE_CODE = 'MBPDD';
+	public static final String NEW_CHANGE_CODE = 'NEW';
+	public static final String FIN_CHANGE_CODE = 'FIN';
 
 	public static final Set<String> TOPLOCATIONSNEWGEN = new Set<String>{'HE','GE'};
 

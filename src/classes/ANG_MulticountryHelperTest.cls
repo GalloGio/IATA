@@ -198,7 +198,13 @@ private class ANG_MulticountryHelperTest {
 
 		Test.startTest();
 
-		AMS_OSCAR__c oscarWithRels = [SELECT Account__c, Account__r.Parent.Status__c FROM AMS_OSCAR__c];
+		AMS_OSCAR__c oscarWithRels = 
+			[SELECT 
+				Account__c, 
+				Account__r.Parent.Status__c, 
+				Account__r.Parent.Source_System__c 
+			 FROM AMS_OSCAR__c
+			];
 
 		Boolean allowIATACodeGeneration = ANG_MulticountryHelper.allowIATACodeGeneration(oscarWithRels);
 
@@ -213,13 +219,19 @@ private class ANG_MulticountryHelperTest {
 
 		Agency_Applied_Change_code__c changeCodeApplied = new Agency_Applied_Change_code__c(
 			Account__c = accountGE.Id,
-			Change_Code__c = 'NEW',
+			Change_Code__c = AMS_Utils.NEW_CHANGE_CODE,
 			Sent_to_external_system__c = false
 		);
 
 		insert changeCodeApplied;
 
-		oscarWithRels = [SELECT Account__c, Account__r.Parent.Status__c FROM AMS_OSCAR__c];
+		oscarWithRels = 
+			[SELECT 
+				Account__c, 
+				Account__r.Parent.Status__c, 
+				Account__r.Parent.Source_System__c 
+			 FROM AMS_OSCAR__c
+			];
 
 		allowIATACodeGeneration = ANG_MulticountryHelper.allowIATACodeGeneration(oscarWithRels);
 
@@ -233,12 +245,11 @@ private class ANG_MulticountryHelperTest {
 
 		List<Account> accountLst = new List<Account>(
 			[SELECT
-				Id
+				Id,
+				Parent.Source_System__c
 			 FROM Account
-			 WHERE
-				Name IN ('Multicountry AE PT', 'Multicountry GE PT')
-			 ORDER BY
-				Name ASC
+			 WHERE Name IN ('Multicountry AE PT', 'Multicountry GE PT')
+			 ORDER BY Name ASC
 			]
 		);
 
@@ -261,6 +272,8 @@ private class ANG_MulticountryHelperTest {
 
 		Test.startTest();
 
+		oscar.putSObject('Account__r', accountAE);
+
 		Boolean allowApproval = ANG_MulticountryHelper.allowApprovalStep(oscar);
 
 		System.assert(!allowApproval, 'Should not allow the approval step.');
@@ -269,7 +282,7 @@ private class ANG_MulticountryHelperTest {
 
 		Agency_Applied_Change_code__c changeCodeApplied = new Agency_Applied_Change_code__c(
 			Account__c = accountGE.Id,
-			Change_Code__c = 'FIN',
+			Change_Code__c = AMS_Utils.FIN_CHANGE_CODE,
 			Sent_to_external_system__c = false
 		);
 
@@ -413,7 +426,8 @@ private class ANG_MulticountryHelperTest {
 			 FROM Account
 			 WHERE  Name IN ('Multicountry HE UK')
 			 ORDER BY Name ASC
-			]);
+			]
+		);
 
 		Account accountHE = accountLst.get(0);
 
@@ -442,14 +456,9 @@ private class ANG_MulticountryHelperTest {
 		AMS_Oscar__c oscar2 = [SELECT Id, Account__c, Process__c, Location_Type__c, AMS_Online_Accreditation__c
 								FROM AMS_Oscar__c WHERE Account__c = : accountHE.Id limit 1];
 
-		Test.startTest();
-
-		Boolean hasRF = ANG_MulticountryHelper.multicountryAccountHasRemittenceFrequencyEmpty(oscar2);
-
-		Test.stopTest();
-
+		Boolean hasRF = ANG_MulticountryHelper.multicountryAccountHasRemittanceFrequencyEmpty(oscar2, paxAccreditation);
 		//Has empty Remittance Frequency
-		System.assert(hasRF);
+		System.assert(hasRF, 'Remittance Frequency must be empty');
 
 	}
 
@@ -533,10 +542,9 @@ private class ANG_MulticountryHelperTest {
 
 	}
 
-
 	@isTest static void testGEAccreditationWithoutRequestFinancialSecurityStep() {
 
-		AMS_ChangeCodes__c changeCodeCustomsettings = new AMS_ChangeCodes__c(Name = 'FIN-AMS', Change_Code__c = 'FIN', Reason_Code__c = '', Reason_Code_Description__c = '', Account_status_change__c = '',Integration_RecId__c = 'C');
+		AMS_ChangeCodes__c changeCodeCustomsettings = new AMS_ChangeCodes__c(Name = 'FIN-AMS', Change_Code__c = AMS_Utils.FIN_CHANGE_CODE, Reason_Code__c = '', Reason_Code_Description__c = '', Account_status_change__c = '',Integration_RecId__c = 'C');
 		insert changeCodeCustomsettings;
 
 		Account accountGE = [SELECT Id, ParentId, Name FROM Account WHERE Name IN ('Multicountry GE PT') Limit 1];
@@ -568,7 +576,7 @@ private class ANG_MulticountryHelperTest {
 
 		AMS_ChangeCodes__c finChgCode = new AMS_ChangeCodes__c(
 			Name = 'FIN-AMS',
-			Change_Code__c = 'FIN',
+			Change_Code__c = AMS_Utils.FIN_CHANGE_CODE,
 			Reason_Code__c = '',
 			Reason_Code_Description__c = '',
 			Account_status_change__c = '',
@@ -599,13 +607,13 @@ private class ANG_MulticountryHelperTest {
 
 		Agency_Applied_Change_code__c changeCodeAppliedNew = new Agency_Applied_Change_code__c(
 			Account__c = accountGE.Id,
-			Change_Code__c = 'NEW',
+			Change_Code__c = AMS_Utils.NEW_CHANGE_CODE,
 			Sent_to_external_system__c = false
 		);
 
 		Agency_Applied_Change_code__c changeCodeAppliedFin = new Agency_Applied_Change_code__c(
 			Account__c = accountGE.Id,
-			Change_Code__c = 'FIN',
+			Change_Code__c = AMS_Utils.FIN_CHANGE_CODE,
 			Sent_to_external_system__c = false
 		);
 
@@ -661,7 +669,7 @@ private class ANG_MulticountryHelperTest {
 
 		changeCodeAppliedNew = new Agency_Applied_Change_code__c(
 			Account__c = accountHE.Id,
-			Change_Code__c = 'NEW',
+			Change_Code__c = AMS_Utils.NEW_CHANGE_CODE,
 			Sent_to_external_system__c = false
 		);
 
