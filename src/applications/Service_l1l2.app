@@ -295,123 +295,6 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>BSP</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Case</pageOrSobjectType>
-        <recordType>Case.BSPlink_Customer_Service_Requests_CSR</recordType>
-        <type>Flexipage</type>
-        <profile>Admin</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Account_l1_l2_support_user</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Account</pageOrSobjectType>
-        <recordType>Account.Others</recordType>
-        <type>Flexipage</type>
-        <profile>GCS - Staff - AI</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Account_l1_l2_support_user</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Account</pageOrSobjectType>
-        <recordType>Account.IATA_GSA</recordType>
-        <type>Flexipage</type>
-        <profile>GCS - Staff</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Account_l1_l2_support_user</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Account</pageOrSobjectType>
-        <recordType>Account.Operator</recordType>
-        <type>Flexipage</type>
-        <profile>GCS - Management</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Account_l1_l2_support_user</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Account</pageOrSobjectType>
-        <recordType>Account.Operator</recordType>
-        <type>Flexipage</type>
-        <profile>GCS - Management - AI</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Account_l1_l2_support_user</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Account</pageOrSobjectType>
-        <recordType>Account.IATA_GSA</recordType>
-        <type>Flexipage</type>
-        <profile>GCS - Staff - AI</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Account_l1_l2_support_user</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Account</pageOrSobjectType>
-        <recordType>Account.Operator</recordType>
-        <type>Flexipage</type>
-        <profile>GCS - Staff</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Account_l1_l2_support_user</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Account</pageOrSobjectType>
-        <recordType>Account.IATA_Airline</recordType>
-        <type>Flexipage</type>
-        <profile>GCS - Management</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Account_l1_l2_support_user</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Account</pageOrSobjectType>
-        <recordType>Account.Operator</recordType>
-        <type>Flexipage</type>
-        <profile>GCS - Staff - AI</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Account_l1_l2_support_user</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Account</pageOrSobjectType>
-        <recordType>Account.IATA_Airline</recordType>
-        <type>Flexipage</type>
-        <profile>GCS - Management - AI</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Account_l1_l2_support_user</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Account</pageOrSobjectType>
-        <recordType>Account.IATA_GSA</recordType>
-        <type>Flexipage</type>
-        <profile>GCS - Management</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Account_l1_l2_support_user</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Account</pageOrSobjectType>
-        <recordType>Account.IATA_GSA</recordType>
-        <type>Flexipage</type>
-        <profile>GCS - Management - AI</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Account_l1_l2_support_user</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Account</pageOrSobjectType>
-        <recordType>Account.IATA_Airline</recordType>
-        <type>Flexipage</type>
-        <profile>GCS - Staff</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
         <content>Global_case_record_type</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
@@ -424,33 +307,6 @@
         <content>Global_case_record_type</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
-        <recordType>Case.CasesEurope</recordType>
-        <type>Flexipage</type>
-        <profile>GCS - Management - AI</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Global_case_record_type</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Case</pageOrSobjectType>
-        <recordType>Case.CasesEurope</recordType>
-        <type>Flexipage</type>
-        <profile>GCS - Staff</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Global_case_record_type</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Case</pageOrSobjectType>
-        <recordType>Case.CasesEurope</recordType>
-        <type>Flexipage</type>
-        <profile>GCS - Staff - AI</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Global_case_record_type</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.Cases_Global</recordType>
         <type>Flexipage</type>
         <profile>GCS - Management - AI</profile>
@@ -472,15 +328,6 @@
         <recordType>Case.Cases_Global</recordType>
         <type>Flexipage</type>
         <profile>GCS - Management</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Global_case_record_type</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Case</pageOrSobjectType>
-        <recordType>Case.Cases_China_North_Asia</recordType>
-        <type>Flexipage</type>
-        <profile>L3 Global CS</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
@@ -505,6 +352,69 @@
         <content>Global_case_record_type</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.Cases_Global</recordType>
+        <type>Flexipage</type>
+        <profile>L3 Global CS</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Global_case_record_type</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.CasesEurope</recordType>
+        <type>Flexipage</type>
+        <profile>L3 Global CS</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Global_case_record_type</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.CasesEurope</recordType>
+        <type>Flexipage</type>
+        <profile>GCS - Management</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Global_case_record_type</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.CasesEurope</recordType>
+        <type>Flexipage</type>
+        <profile>GCS - Management - AI</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Global_case_record_type</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.CasesEurope</recordType>
+        <type>Flexipage</type>
+        <profile>GCS - Staff</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Global_case_record_type</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.CasesEurope</recordType>
+        <type>Flexipage</type>
+        <profile>GCS - Staff - AI</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Global_case_record_type</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.Cases_China_North_Asia</recordType>
+        <type>Flexipage</type>
+        <profile>L3 Global CS</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Global_case_record_type</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.Cases_China_North_Asia</recordType>
         <type>Flexipage</type>
         <profile>GCS - Management</profile>
@@ -517,15 +427,6 @@
         <recordType>Case.Cases_China_North_Asia</recordType>
         <type>Flexipage</type>
         <profile>GCS - Management - AI</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Global_case_record_type</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Case</pageOrSobjectType>
-        <recordType>Case.Cases_Global</recordType>
-        <type>Flexipage</type>
-        <profile>L3 Global CS</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
@@ -559,15 +460,6 @@
         <content>Global_case_record_type</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
-        <recordType>Case.CasesEurope</recordType>
-        <type>Flexipage</type>
-        <profile>L3 Global CS</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Global_case_record_type</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.ExternalCasesIDFSglobal</recordType>
         <type>Flexipage</type>
         <profile>GCS - Management</profile>
@@ -589,15 +481,6 @@
         <recordType>Case.ExternalCasesIDFSglobal</recordType>
         <type>Flexipage</type>
         <profile>GCS - Staff</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Global_case_record_type</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Case</pageOrSobjectType>
-        <recordType>Case.CasesEurope</recordType>
-        <type>Flexipage</type>
-        <profile>GCS - Management</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
@@ -616,6 +499,69 @@
         <recordType>Case.CasesAmericas</recordType>
         <type>Flexipage</type>
         <profile>L3 Global CS</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Global_case_record_type</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.CasesAmericas</recordType>
+        <type>Flexipage</type>
+        <profile>GCS - Management</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Global_case_record_type</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.CasesAmericas</recordType>
+        <type>Flexipage</type>
+        <profile>GCS - Management - AI</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Global_case_record_type</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.CasesAmericas</recordType>
+        <type>Flexipage</type>
+        <profile>GCS - Staff</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Global_case_record_type</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.CasesMENA</recordType>
+        <type>Flexipage</type>
+        <profile>L3 Global CS</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Global_case_record_type</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.CasesMENA</recordType>
+        <type>Flexipage</type>
+        <profile>GCS - Management</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Global_case_record_type</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.CasesMENA</recordType>
+        <type>Flexipage</type>
+        <profile>GCS - Staff</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Global_case_record_type</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.CasesMENA</recordType>
+        <type>Flexipage</type>
+        <profile>GCS - Staff - AI</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
@@ -641,15 +587,6 @@
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.ComplaintIDFS</recordType>
-        <type>Flexipage</type>
-        <profile>GCS - Management</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Global_case_record_type</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Case</pageOrSobjectType>
-        <recordType>Case.CasesAmericas</recordType>
         <type>Flexipage</type>
         <profile>GCS - Management</profile>
     </profileActionOverrides>
@@ -898,57 +835,120 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Global_case_record_type</content>
+        <content>Account_l1_l2_support_user</content>
         <formFactor>Large</formFactor>
-        <pageOrSobjectType>Case</pageOrSobjectType>
-        <recordType>Case.CasesAmericas</recordType>
+        <pageOrSobjectType>Account</pageOrSobjectType>
+        <recordType>Account.Others</recordType>
         <type>Flexipage</type>
-        <profile>GCS - Management - AI</profile>
+        <profile>GCS - Staff - AI</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Global_case_record_type</content>
+        <content>Account_l1_l2_support_user</content>
         <formFactor>Large</formFactor>
-        <pageOrSobjectType>Case</pageOrSobjectType>
-        <recordType>Case.CasesAmericas</recordType>
-        <type>Flexipage</type>
-        <profile>GCS - Staff</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Global_case_record_type</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Case</pageOrSobjectType>
-        <recordType>Case.CasesMENA</recordType>
-        <type>Flexipage</type>
-        <profile>L3 Global CS</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>Global_case_record_type</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Case</pageOrSobjectType>
-        <recordType>Case.CasesMENA</recordType>
+        <pageOrSobjectType>Account</pageOrSobjectType>
+        <recordType>Account.Operator</recordType>
         <type>Flexipage</type>
         <profile>GCS - Management</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Global_case_record_type</content>
+        <content>Account_l1_l2_support_user</content>
         <formFactor>Large</formFactor>
-        <pageOrSobjectType>Case</pageOrSobjectType>
-        <recordType>Case.CasesMENA</recordType>
+        <pageOrSobjectType>Account</pageOrSobjectType>
+        <recordType>Account.Operator</recordType>
+        <type>Flexipage</type>
+        <profile>GCS - Management - AI</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Account_l1_l2_support_user</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Account</pageOrSobjectType>
+        <recordType>Account.Operator</recordType>
         <type>Flexipage</type>
         <profile>GCS - Staff</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>Global_case_record_type</content>
+        <content>Account_l1_l2_support_user</content>
         <formFactor>Large</formFactor>
-        <pageOrSobjectType>Case</pageOrSobjectType>
-        <recordType>Case.CasesMENA</recordType>
+        <pageOrSobjectType>Account</pageOrSobjectType>
+        <recordType>Account.Operator</recordType>
         <type>Flexipage</type>
         <profile>GCS - Staff - AI</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Account_l1_l2_support_user</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Account</pageOrSobjectType>
+        <recordType>Account.IATA_GSA</recordType>
+        <type>Flexipage</type>
+        <profile>GCS - Management</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Account_l1_l2_support_user</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Account</pageOrSobjectType>
+        <recordType>Account.IATA_GSA</recordType>
+        <type>Flexipage</type>
+        <profile>GCS - Management - AI</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Account_l1_l2_support_user</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Account</pageOrSobjectType>
+        <recordType>Account.IATA_GSA</recordType>
+        <type>Flexipage</type>
+        <profile>GCS - Staff</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Account_l1_l2_support_user</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Account</pageOrSobjectType>
+        <recordType>Account.IATA_GSA</recordType>
+        <type>Flexipage</type>
+        <profile>GCS - Staff - AI</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Account_l1_l2_support_user</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Account</pageOrSobjectType>
+        <recordType>Account.IATA_Airline</recordType>
+        <type>Flexipage</type>
+        <profile>GCS - Management</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Account_l1_l2_support_user</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Account</pageOrSobjectType>
+        <recordType>Account.IATA_Airline</recordType>
+        <type>Flexipage</type>
+        <profile>GCS - Management - AI</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Account_l1_l2_support_user</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Account</pageOrSobjectType>
+        <recordType>Account.IATA_Airline</recordType>
+        <type>Flexipage</type>
+        <profile>GCS - Staff</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>BSP</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.BSPlink_Customer_Service_Requests_CSR</recordType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
     </profileActionOverrides>
     <tabs>standard-home</tabs>
     <tabs>standard-Feed</tabs>
