@@ -193,11 +193,13 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
 							FROM ANG_RHC_Information__c
 							WHERE ANG_RHC_Amount_Equals_FS__c = :rhcFlag
 								AND ANG_AccountId__r.Status__c IN :AMS_Utils.ACTIVEAGENCYSTATUS
-							AND ANG_AccountId__r.Location_Type__c = 'HE'
+								AND ((ANG_AccountId__r.Location_Type__c = :AMS_Utils.HE
+									  AND ANG_AccountId__r.ANG_Accreditation_Model__c = :AMS_Utils.ACCREDITATIONMODEL_CASH)
+									 OR (ANG_AccountId__r.Location_Type__c = :AMS_Utils.GE
+										 AND ANG_AccountId__r.ANG_Accreditation_Model__c = :AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY))
 							AND ANG_AccountId__r.ANG_IsNewGenAgency__c = true
 							AND ANG_AccountId__r.RecordTypeId = :AMS_Utils.RECTYPE_IATAAGENCY
 								AND ANG_AccountId__r.IATACode__c = :iataCode
-							AND ANG_AccountId__r.ANG_Accreditation_Model__c = :AMS_Utils.ACCREDITATIONMODEL_CASH
 							ORDER BY Name];
 
 				if(actionValue == 'Revert_RHC_regardless' && !agencies.isEmpty()) percentageFS = '' + agencies[0].RHC_Amount_Equals_FS_Percent__c;
