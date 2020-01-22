@@ -38,16 +38,16 @@
 					</tr>
 					<tr  style="height: 223px;">
 						<td colspan="2">
-							<div style="height:103px;">
+							<div style="{!'height:'+acc.topSizePosition+'px;'}">
 							</div>
-							<div style="height:50px;font-size: 2.9em;">
-								<apex:outputText value="{!acc.Name}"/>
+							<div style="{!'height:'+acc.bottomtSizePosition+'px;font-size:'+acc.textSize+'em;'}">
+								<apex:outputText value="{!acc.accn.Name}"/>
 							</div>
 							<div style="font-weight: bold;height:22px;font-size: 2.9em;">
 							</div>
-							<div style="height:70px;font-size: 30px;">
-								<apex:outputText value="{!acc.TradeName__c}"/><br></br>
-								<apex:outputText value="{!acc.BillingCity}"/>,&nbsp;<apex:outputText value="{!acc.IATA_ISO_Country__r.Name}"/>
+							<div style="{!'height:70px;font-size:'+acc.tradeNameTextSize+'px;'}">
+								<apex:outputText value="{!acc.accn.TradeName__c}"/><br></br>
+								<apex:outputText value="{!acc.accn.BillingCity}"/><apex:outputText rendered="{!!ISBLANK(acc.accn.BillingCity)}">,&nbsp;</apex:outputText><apex:outputText value="{!acc.accn.IATA_ISO_Country__r.Name}"/>
 							</div>
 							<div  style="height:6px;">
 							</div>
@@ -58,7 +58,7 @@
 							<div  style="height:40px;">
 								<table style="margin-left: 80px">
 									<tr>
-										<td style="width:570px;font-size: 16px;"><apex:outputText value="{!acc.IATACode__c}"/></td>
+										<td style="width:570px;font-size: 16px;"><apex:outputText value="{!acc.accn.IATACode__c}"/></td>
 										<td style="width:100px;font-size: 16px;">{!IF(ISBLANK($CurrentPage.Parameters.year), YEAR(TODAY()), $CurrentPage.Parameters.year)}</td>
 									</tr>
 								</table>
