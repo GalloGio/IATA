@@ -3,6 +3,7 @@ public with sharing class AMS_Change_Code_Notification_Controller {
 	public String caseId {get; set;}
 	public Case currentCase {get; set;}
 	public Boolean isSidra {get; set;}
+	
 
 
 	public AMS_Change_Code_Notification_Controller(ApexPages.StandardController stdController) {
