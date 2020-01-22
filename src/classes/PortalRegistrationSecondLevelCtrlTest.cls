@@ -346,7 +346,9 @@ public class PortalRegistrationSecondLevelCtrlTest {
 		Account_Role__c accRole = new Account_Role__c(account__c = acc.id, recordtypeid = RECTYPE_ITP_AccRole);
 		insert accRole;
 
+		Test.startTest();
 		Boolean success = PortalRegistrationSecondLevelCtrl.registrationWithExistingAccount(acc, con);
+		Test.stopTest();
 
 	}
 
