@@ -2557,7 +2557,7 @@
         <name>CSP_L2_Contact_Support</name>
     </customLabels>
     <customLabels>
-        <label>国家</label>
+        <label>国家/地区</label>
         <name>CSP_L2_Country</name>
     </customLabels>
     <customLabels>
@@ -3177,7 +3177,7 @@
         <name>CSP_Search_AdvancedSearch</name>
     </customLabels>
     <customLabels>
-        <label>国家</label>
+        <label>国家/地区</label>
         <name>CSP_Search_Case_Country</name>
     </customLabels>
     <customLabels>
@@ -22457,7 +22457,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>csp_SupportReachUs_ConcernTile</name>
     </customLabels>
     <customLabels>
-        <label>国家／地区</label>
+        <label>国家/地区</label>
         <name>csp_SupportReachUs_Country</name>
     </customLabels>
     <customLabels>
@@ -22851,6 +22851,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
     <customTabs>
         <label><!-- Apply RHC Equal to FS --></label>
         <name>Apply_RHC_Equal_to_FS</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- Attachment Manager --></label>
+        <name>AttachmentManager</name>
     </customTabs>
     <customTabs>
         <label>可用服务</label>

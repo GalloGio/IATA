@@ -308,11 +308,11 @@
         <label>ID Card Production Details</label>
         <layoutColumns>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>MustSyncWithAIMS__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>Sent_to_AIMS_on__c</field>
             </layoutItems>
             <layoutItems>

@@ -3,7 +3,6 @@
     <frameHeight>600</frameHeight>
     <hasSidebar>false</hasSidebar>
     <label>My Services</label>
-    <mobileReady>false</mobileReady>
     <motif>Custom108: TV Widescreen</motif>
     <scontrol>My_Application</scontrol>
 </CustomTab>
