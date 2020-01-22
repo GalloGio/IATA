@@ -509,6 +509,8 @@ public class PortalServicesCtrlTest {
 	@isTest
 	public static void PortalServicesCtrlTest_grantAccessToContactWithoutUser() {
 
+		Test.StartTest();
+		
 		Account  acc =[select id from account where name='AccountTest'];
 
 		Contact con = ISSP_ObjectFactory.createNewContact();
@@ -529,9 +531,7 @@ public class PortalServicesCtrlTest {
 			);
 
 		insert appRight;
-
-
-		Test.StartTest();
+		
 		Boolean isReq =PortalServicesCtrl.grantAccess(con.id, portalServicelist[0].id, 'Test');
 		Test.StopTest();
 	}
