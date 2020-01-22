@@ -2,7 +2,6 @@
 <CustomTab xmlns="http://soap.sforce.com/2006/04/metadata">
     <description>Agent status page as part of Case Auto-Assignment</description>
     <label>My Status</label>
-    <mobileReady>false</mobileReady>
     <motif>Custom75: IP Phone</motif>
     <page>Agent_Status_Page</page>
 </CustomTab>

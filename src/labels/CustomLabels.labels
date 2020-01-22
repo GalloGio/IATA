@@ -6653,7 +6653,7 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CaseValidation - InDepthArea</shortDescription>
-        <value>Airline Management,Invoicing,Remittance &amp; Settlement</value>
+        <value>Invoicing,Remittance &amp; Settlement</value>
     </labels>
     <labels>
         <fullName>CaseValidation_Reason</fullName>
@@ -26850,7 +26850,7 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_CalendarDisclaimer</shortDescription>
-        <value>&quot;Note: The calendar for this market contains local dpecific dates that are not reflected in this application. 
+        <value>&quot;Note: The calendar for this market contains local specific dates that are not reflected in this application. 
 Please make sure you download the full pdf version of the Calendar for your market by clicking on the support tab and then selecting calendars under documents on the right hand side of the page.&quot;</value>
     </labels>
     <labels>
@@ -31505,7 +31505,7 @@ If you continue to experience issues registering for the CNS Customer Portal the
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_OperationalCalendar_Timezone_Disclaimer</shortDescription>
-        <value>Times based in Montreal’s timezone</value>
+        <value>Please note that in case there will be any future calendar changes, you will be receiving an automatic notification.</value>
     </labels>
     <labels>
         <fullName>ISSP_OperationalCalendar_TypeFilter</fullName>

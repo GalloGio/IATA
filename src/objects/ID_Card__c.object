@@ -1138,6 +1138,18 @@ two record types:
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>IDCard_Key_Account__c</fullName>
+        <description>Indicates if the Agent benefits from ID Card Key Account Conditions. Lookup on &quot;IDCard Key Account&quot; from related GDP Product Account View.</description>
+        <externalId>false</externalId>
+        <formula>GDP_Products_Account_View__r.IDCard_Key_Account__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Indicates if the Agent benefits from ID Card Key Account Conditions. Lookup on &quot;IDCard Key Account&quot; from related GDP Product Account View.</inlineHelpText>
+        <label>IDCard Key Account</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>ID_Card_Application__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
@@ -1216,6 +1228,7 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
 &quot;\&quot;card-expiry-date\&quot;:\&quot;&quot;+ TEXT(Month(Valid_To_Date__c))+ &quot;-&quot; +TEXT(Day(Valid_To_Date__c))+ &quot;-&quot; +TEXT(Year(Valid_To_Date__c)) + &quot;\&quot;,&quot;+ 
 &quot;\&quot;agency-code\&quot;:\&quot;&quot;+Agency_IATA_Code__c + &quot;\&quot;,&quot;+ 
 &quot;\&quot;agency-name\&quot;:\&quot;&quot;+EBC_Agency_Name__c + &quot;\&quot;,&quot;+ 
+&quot;\&quot;agency-key-account\&quot;:\&quot;&quot;+IF(IDCard_Key_Account__c, &quot;True&quot;, &quot;False&quot;) + &quot;\&quot;,&quot;+
 &quot;\&quot;agency-country-iso\&quot;:\&quot;&quot;+Agency_ISO_Country_Code__c + &quot;\&quot;,&quot;+ 
 &quot;\&quot;cardholder-photo\&quot;:\&quot;&quot;+Photo__c + &quot;\&quot;,&quot;+ 
 &quot;\&quot;card-type\&quot;:\&quot;&quot;+TEXT(Type_of_ID_Card__c) + &quot;\&quot;,&quot;+ 
@@ -1737,19 +1750,57 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
         <language>en_US</language>
     </listViews>
     <listViews>
+        <fullName>Must_Sync</fullName>
+        <columns>NAME</columns>
+        <columns>Related_Contact__c</columns>
+        <columns>CIN__c</columns>
+        <columns>Photo__c</columns>
+        <columns>Card_Status__c</columns>
+        <columns>Missing_Information__c</columns>
+        <columns>Nature_of_ID_Card__c</columns>
+        <columns>Valid_To_Date__c</columns>
+        <columns>Agency_Name__c</columns>
+        <columns>Agency_IATA_Code__c</columns>
+        <columns>Payment_Type__c</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Card_Status__c</field>
+            <operation>notEqual</operation>
+            <value>Cancelled</value>
+        </filters>
+        <filters>
+            <field>MustSyncWithAIMS__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <filters>
+            <field>Sent_to_AIMS_on__c</field>
+            <operation>equals</operation>
+        </filters>
+        <filters>
+            <field>Photo__c</field>
+            <operation>contains</operation>
+            <value>NULL</value>
+        </filters>
+        <label>Photo Issue</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
         <fullName>Must_Sync1</fullName>
         <columns>MustSyncWithAIMS__c</columns>
         <columns>NAME</columns>
         <columns>Related_Contact__c</columns>
+        <columns>CIN__c</columns>
         <columns>Photo__c</columns>
         <columns>Card_Status__c</columns>
         <columns>Is_Expedite__c</columns>
         <columns>Missing_Information__c</columns>
         <columns>UPDATEDBY_USER</columns>
-        <columns>CREATEDBY_USER</columns>
-        <columns>CIN__c</columns>
-        <columns>Valid_To_Date__c</columns>
         <columns>LAST_UPDATE</columns>
+        <columns>CREATEDBY_USER</columns>
+        <columns>Valid_To_Date__c</columns>
         <columns>Agency_Name__c</columns>
         <columns>Agency_IATA_Code__c</columns>
         <filterScope>Everything</filterScope>

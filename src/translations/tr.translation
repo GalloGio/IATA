@@ -13654,7 +13654,7 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_ANG_OPT_OUT_MODAL_TITLE</name>
     </customLabels>
     <customLabels>
-        <label>&quot;Yalnızca Acentenizin IFAP İrtibat Kişisi, Finansal Değerlendirme sürecinin Dışında Kalmayı talep edebilir&quot;</label>
+        <label>Yalnızca Acentenizin IFAP İrtibat Kişisi, Finansal Değerlendirme sürecinin Dışında Kalmayı talep edebilir</label>
         <name>ISSP_ANG_OPT_OUT_NON_FINANCIAL_ASSESSEMENT_ERROR</name>
     </customLabels>
     <customLabels>
@@ -22866,6 +22866,10 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
     <customTabs>
         <label><!-- Apply RHC Equal to FS --></label>
         <name>Apply_RHC_Equal_to_FS</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- Attachment Manager --></label>
+        <name>AttachmentManager</name>
     </customTabs>
     <customTabs>
         <label><!-- Available Services --></label>
