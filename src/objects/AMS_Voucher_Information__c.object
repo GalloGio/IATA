@@ -471,6 +471,11 @@
                     <default>false</default>
                     <label>VUV</label>
                 </value>
+                <value>
+                    <fullName>NGN</fullName>
+                    <default>false</default>
+                    <label>NGN</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>

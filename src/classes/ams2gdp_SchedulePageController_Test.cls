@@ -14,13 +14,13 @@ private class ams2gdp_SchedulePageController_Test {
 		insert new_account;
 
 		upsert new AMS_GDP_Batch__c(
-			Batch_Name__c='Job 1: GDP Products - Account View', 
-			Last_Sync_Start_Date__c=Datetime.now(), 
+			Batch_Name__c='Job 1: GDP Products - Account View',
+			Last_Sync_Start_Date__c=Datetime.now(),
 			Last_Sync_End_Date__c=Datetime.now(),
 			Total_Failed_Records__c = 1,
 			Total_Records_Processed__c = nb,
 			Failed_Records__c = new_account.Id
-		) Batch_Name__c; 
+		) Batch_Name__c;
 
 		ams2gdp_SchedulerPageController schedule= new ams2gdp_SchedulerPageController();
 
@@ -48,6 +48,6 @@ private class ams2gdp_SchedulePageController_Test {
 
 		// Implement test code
 	}
-	
-		
+
+
 }

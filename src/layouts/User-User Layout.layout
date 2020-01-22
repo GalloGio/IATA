@@ -68,6 +68,10 @@
                 <behavior>Edit</behavior>
                 <field>Is_Kavi_Internal_User__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Portal_Registration_Required__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>

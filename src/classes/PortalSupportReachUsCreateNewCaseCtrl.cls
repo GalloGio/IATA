@@ -57,7 +57,7 @@ private static List<Account> searchRelatedAccounts(String searchTerm) {
 
 
 	String finalQuery = 'SELECT ID, IATAcode__c, Name, BillingCity FROM Account '
-	                    + 'WHERE IATAcode__c != null ';
+						+ 'WHERE IATAcode__c != null ';
 
 	finalQuery +=
 		' AND (Id = \'' + parentId
@@ -115,11 +115,11 @@ private static List<Contact> searchRelatedContacts(String searchTerm) {
 
 	//prepare query
 	String finalQuery = 'SELECT Id, Name, Email FROM Contact '
-	                    + ' WHERE Email != \'' + CONTACT.Email + '\'';
+						+ ' WHERE Email != \'' + CONTACT.Email + '\'';
 
 	if(String.isNotEmpty(searchTerm)) {
 		finalQuery += ' AND (Email LIKE \'%' + String.escapeSingleQuotes(searchTerm)
-		              + '%\' OR Name like \'%' + String.escapeSingleQuotes(searchTerm) + '%\')';
+					  + '%\' OR Name like \'%' + String.escapeSingleQuotes(searchTerm) + '%\')';
 	}
 
 	finalQuery += ' LIMIT ' + MAX_RESULTS;
@@ -179,7 +179,21 @@ public static Case createCase(String countryiso, Boolean isConcernCase, String t
 	newCase.CaseArea__c = 'Customer Portal';
 	newCase.Origin = 'Portal';
 
-	
+
+
+	return newCase;
+
+}
+
+@AuraEnabled(cacheable=true)
+public static Case createCaseTreasuryDashboard(String recordTypeId) {
+
+	Case newCase = new Case();
+
+	newCase.RecordTypeId = recordTypeId;
+	newCase.Status = 'Open';
+	newCase.CaseArea__c = 'Customer Portal';
+	newCase.Origin = 'Portal';
 
 	return newCase;
 
@@ -219,24 +233,24 @@ private static List<ISSP_FAQ2Case_Record_Type__c> setRecordType (String country,
 		Map<String, ISSP_FAQ2Case_Record_Type__c> mapRecordType = new Map<String, ISSP_FAQ2Case_Record_Type__c>();
 		List<ISSP_FAQ2Case_Record_Type__c> finalRecordType = new  List<ISSP_FAQ2Case_Record_Type__c>();
 		List<ISSP_FAQ2Case_Record_Type__c> lstRecordType = [SELECT RecordType__c, OwnerId__c,Topic__c,SubTopic__c,Complaint__c,Country_concerned_by_the_query__c,
-		                                                    Country_concerned_by_the_query2__c, Country_concerned_by_the_query3__c,Flag_Assignment_Rules__c
-		                                                    FROM ISSP_FAQ2Case_Record_Type__c
-		                                                    WHERE Complaint__c =: isComplaint
-		                                                                         AND ( Country_concerned_by_the_query__c like: country
-		                                                                               OR Country_concerned_by_the_query2__c like: country
-                                                                                       OR Country_concerned_by_the_query3__c like: country)];
-        for(ISSP_FAQ2Case_Record_Type__c rt : lstRecordType)
-        {
-            if(rt.SubTopic__c != null && rt.SubTopic__c.contains(',')){
-                List<String> lstSubtopic = rt.SubTopic__c.split(',');
-                for(String subT : lstSubtopic){
-                    mapRecordType.put(rt.Topic__c + '#' + subT, rt);
-                }
-            }else{
+															Country_concerned_by_the_query2__c, Country_concerned_by_the_query3__c,Flag_Assignment_Rules__c
+															FROM ISSP_FAQ2Case_Record_Type__c
+															WHERE Complaint__c =: isComplaint
+																				 AND ( Country_concerned_by_the_query__c like: country
+																					   OR Country_concerned_by_the_query2__c like: country
+																					   OR Country_concerned_by_the_query3__c like: country)];
+		for(ISSP_FAQ2Case_Record_Type__c rt : lstRecordType)
+		{
+			if(rt.SubTopic__c != null && rt.SubTopic__c.contains(',')){
+				List<String> lstSubtopic = rt.SubTopic__c.split(',');
+				for(String subT : lstSubtopic){
+					mapRecordType.put(rt.Topic__c + '#' + subT, rt);
+				}
+			}else{
 				String keymap=(rt.Topic__c==null?'': rt.Topic__c)+'#'+(rt.SubTopic__c==null?'': rt.SubTopic__c);
 				mapRecordType.put(keymap, rt);
-            }
-        }
+			}
+		}
 
 		if(mapRecordType.containsKey(topic + '#' + subtopic)) {
 			finalRecordType.add(mapRecordType.get(topic + '#' + subtopic));
@@ -254,13 +268,13 @@ private static List<ISSP_FAQ2Case_Record_Type__c> setRecordType (String country,
 	}else{
 
 		return [SELECT RecordType__c, OwnerId__c,Topic__c,SubTopic__c,Complaint__c,Country_concerned_by_the_query__c,
-		        Country_concerned_by_the_query2__c, Country_concerned_by_the_query3__c, Flag_Assignment_Rules__c
-		        FROM ISSP_FAQ2Case_Record_Type__c
-		        WHERE  (Topic__c =: topic
-		                           OR SubTopic__c = : subtopic
-		                                            OR Country_concerned_by_the_query__c like: country
-		                                            OR Country_concerned_by_the_query2__c like: country
-		                                            OR Country_concerned_by_the_query3__c like: country)];
+				Country_concerned_by_the_query2__c, Country_concerned_by_the_query3__c, Flag_Assignment_Rules__c
+				FROM ISSP_FAQ2Case_Record_Type__c
+				WHERE  (Topic__c =: topic
+								   OR SubTopic__c = : subtopic
+													OR Country_concerned_by_the_query__c like: country
+													OR Country_concerned_by_the_query2__c like: country
+													OR Country_concerned_by_the_query3__c like: country)];
 	}
 }
 
@@ -280,4 +294,10 @@ private static void createCaseTeamMemberList(Case cse, list<Contact> listContact
 	}
 	insert listCaseTeam;
 }
+
+	//Checks if user is a level 1 user (haven't completed level 2 registration)
+	@AuraEnabled
+	public static Boolean isUserLevelOne(Id userId){
+		return  [SELECT Contact.Account.Is_General_Public_Account__c  FROM User WHERE Id = :userId].Contact.Account.Is_General_Public_Account__c;
+	}
 }

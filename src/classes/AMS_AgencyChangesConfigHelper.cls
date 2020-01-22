@@ -63,7 +63,7 @@ public class AMS_AgencyChangesConfigHelper{
 
 	public static void setNotApplicableSteps(AMS_AgencyChangesConfig__c config, AMS_OSCAR__c oscar) {
 		if(config == null || config.TCA_Not_Applicable_Steps__c == null) return;
-		
+
 		for (String step : config.TCA_Not_Applicable_Steps__c.split(';')){
 			oscar.put(step + '__c', 'Not Applicable');
 		}
@@ -77,7 +77,7 @@ public class AMS_AgencyChangesConfigHelper{
 		ChangesConfig config = getConfig(oscar);
 
 		if(config == null || config.config.TCA_Fields_to_Migrate__c == null) return fieldsToMigrate;
-		
+
 		Map<String, Schema.FieldSet> fieldSets = Schema.SObjectType.AMS_Pax_Accreditation_Form__c.fieldSets.getMap();
 		for(String fs: config.config.TCA_Fields_to_Migrate__c.split(';')){
 			if(fieldSets.containsKey(fs)) fieldsToMigrate.addAll(getFieldSetFieldsApiName(fieldSets.get(fs)));

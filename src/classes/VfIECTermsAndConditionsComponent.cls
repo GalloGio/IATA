@@ -1,9 +1,9 @@
 /**
-  * Description: This class is the VisualForce controller for the component IECTermsAndConditions
-  * It accepts a String[] of Product Information IDs as a parameter, then displays the T&Cs related to those products
-  * Author: Alexandre McGraw
-  * Version: 1.0
-  * History: 
+	* Description: This class is the VisualForce controller for the component IECTermsAndConditions
+	* It accepts a String[] of Product Information IDs as a parameter, then displays the T&Cs related to those products
+	* Author: Alexandre McGraw
+	* Version: 1.0
+	* History:
  */
 public with sharing class VfIECTermsAndConditionsComponent extends IECComponentControllerBase {
 
@@ -20,16 +20,16 @@ public with sharing class VfIECTermsAndConditionsComponent extends IECComponentC
 		}
 	}
 	*/
-	
+
 	// member variables
 	public List<UITermsAndConditions> lstTnCsToDisplay;
-	
-	public Boolean hasAcceptedAllTCs { 
+
+	public Boolean hasAcceptedAllTCs {
 		get {
 			try {
 				if (lstTnCsToDisplay == null)
 					return false;
-					
+
 				Boolean bAllTnCChecked = true;
 				for (UITermsAndConditions tc : lstTnCsToDisplay) {
 					bAllTnCChecked &= tc.checked;
@@ -41,10 +41,10 @@ public with sharing class VfIECTermsAndConditionsComponent extends IECComponentC
 				return false;
 			}
 		}
-		private set; 
+		private set;
 	}
-	
-	public List<UITermsAndConditions> listTermsAndConditionsToDisplay { 
+
+	public List<UITermsAndConditions> listTermsAndConditionsToDisplay {
 		get {
 			try {
 				if (lstTnCsToDisplay == null)
@@ -55,11 +55,11 @@ public with sharing class VfIECTermsAndConditionsComponent extends IECComponentC
 				ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage()));
 				return null;
 			}
-		} 
-		private set; 
+		}
+		private set;
 	}
-	
-	public List<Terms_and_Conditions__c> listTermsAndConditions { 
+
+	public List<Terms_and_Conditions__c> listTermsAndConditions {
 		get {
 			try {
 				List<Terms_and_Conditions__c> lstTnC = new List<Terms_and_Conditions__c>();
@@ -73,10 +73,10 @@ public with sharing class VfIECTermsAndConditionsComponent extends IECComponentC
 				ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage()));
 				return null;
 			}
-		} 
-		private set; 
+		}
+		private set;
 	}
-	
+
 	public Boolean hasTermsAndConditions {
 		get {
 			try {
@@ -89,7 +89,7 @@ public with sharing class VfIECTermsAndConditionsComponent extends IECComponentC
 		}
 		private set;
 	}
-	
+
 	/**
 	 * Constructor
 	 */
@@ -102,7 +102,7 @@ public with sharing class VfIECTermsAndConditionsComponent extends IECComponentC
 			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, ex.getMessage()));
 		}
 	}
-	
+
 	/**
 	 * Gets all the T&Cs for the product infos specified as parameter
 	 * @return A list of current UITermsAndConditions associated to the product infos
@@ -110,7 +110,7 @@ public with sharing class VfIECTermsAndConditionsComponent extends IECComponentC
 	private List<UITermsAndConditions> getTermsAndConditions() {
 		try {
 			List<UITermsAndConditions> listTCToDisplay = new List<UITermsAndConditions>();
-			
+
 			if (listProductInformationIDs != null) {
 				// for each product information id passed as component parameter
 				for (String productInformationID : listProductInformationIDs) {
@@ -130,7 +130,7 @@ public with sharing class VfIECTermsAndConditionsComponent extends IECComponentC
 			return null;
 		}
 	}
-	
+
 	public void reset() {
 		try {
 			lstTnCsToDisplay = null;
@@ -142,12 +142,12 @@ public with sharing class VfIECTermsAndConditionsComponent extends IECComponentC
 			return;
 		}
 	}
-	
+
 	/**
 	 * Inner class to display and capture the acceptance of T&Cs
 	 */
 	public class UITermsAndConditions {
-		
+
 		public Terms_and_Conditions__c TermsAndConditions { get; private set; }
 		public Boolean checked { get; set; }
 

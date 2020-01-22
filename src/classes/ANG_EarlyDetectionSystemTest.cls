@@ -2,7 +2,7 @@
 private class ANG_EarlyDetectionSystemTest {
 
 	@testSetup static void setup(){
-		
+
 		Test.startTest();
 
 		EDS_Alert_Stakeholders__c edsStakeholder = new EDS_Alert_Stakeholders__c();
@@ -48,19 +48,19 @@ private class ANG_EarlyDetectionSystemTest {
 
 		insert new List<AMS_Settlement_System__c>{bspSG, bspPT};
 
-		Operational_Calendar__c opSG = new Operational_Calendar__c( 
-			ISS_Operation__c = bspSG.id, 
-			First_Day__c = Date.today().addDays(-30), 
-			Last_Day__c = Date.today().addDays(1), 
-			Frequency_code__c = 'W', 
+		Operational_Calendar__c opSG = new Operational_Calendar__c(
+			ISS_Operation__c = bspSG.id,
+			First_Day__c = Date.today().addDays(-30),
+			Last_Day__c = Date.today().addDays(1),
+			Frequency_code__c = 'W',
 			Remittance_Day__c = Date.today()
 		);
-		
-		Operational_Calendar__c opPT = new Operational_Calendar__c( 
-			ISS_Operation__c = bspPT.id, 
-			First_Day__c = Date.today().addDays(-30), 
-			Last_Day__c = Date.today().addDays(1), 
-			Frequency_code__c = 'W', 
+
+		Operational_Calendar__c opPT = new Operational_Calendar__c(
+			ISS_Operation__c = bspPT.id,
+			First_Day__c = Date.today().addDays(-30),
+			Last_Day__c = Date.today().addDays(1),
+			Frequency_code__c = 'W',
 			Remittance_Day__c = Date.today()
 		);
 
@@ -72,21 +72,21 @@ private class ANG_EarlyDetectionSystemTest {
 		);
 
 		IATA_ISO_Country__c countrySG = new IATA_ISO_Country__c (
-			Name = 'Singapore', 
+			Name = 'Singapore',
 			ISO_Code__c = 'SG',
 			AMS_Settlement_System__c = bspSG.Id,
 			ANG_Enable_NewGen__c = true
 		);
 
 		IATA_ISO_Country__c countryPT = new IATA_ISO_Country__c (
-			Name = 'Portugal', 
+			Name = 'Portugal',
 			ISO_Code__c = 'PT',
 			AMS_Settlement_System__c = bspPT.Id,
 			ANG_Enable_NewGen__c = false
 		);
 
 		insert new List<IATA_ISO_Country__c>{countryWW, countrySG, countryPT};
-		
+
 		Account agentSG = new Account(
 			Name = 'Agent SG',
 			IATACode__c ='999999999',
@@ -162,7 +162,7 @@ private class ANG_EarlyDetectionSystemTest {
 			Status__c = 'Active',
 			User_Portal_Status__c = ANG_Risk_Helper.USER_PORTAL_STATUS_APPROVED_ADIM
 		);
-		
+
 		Contact contInactivePT = new Contact(
 			FirstName = 'Agent Inactive',
 			LastName = 'Portugal',
@@ -188,12 +188,12 @@ private class ANG_EarlyDetectionSystemTest {
 
 	@isTest static void doNotcreateSMAPCaseOnEdsAlertTest(){
 
-		Map<Id, Account> acctMap = new Map<Id, Account>( 
-			[SELECT 
+		Map<Id, Account> acctMap = new Map<Id, Account>(
+			[SELECT
 				Id
-			 FROM 
-				Account 
-			 WHERE 
+			 FROM
+				Account
+			 WHERE
 				Location_Type__c = :AMS_Utils.AE
 			 OR
 				Location_Type__c = :AMS_Utils.BR
@@ -206,7 +206,7 @@ private class ANG_EarlyDetectionSystemTest {
 
 		for(Account acct : acctMap.values()){
 			ANG_Risk_Alert__c ra = new ANG_Risk_Alert__c(
-				RecordTypeId = riskAlertEDSRecType, 
+				RecordTypeId = riskAlertEDSRecType,
 				ANG_Account__c = acct.Id,
 				ANG_Open_Cash_Position__c = 634.46,
 				ANG_Triggered_Rules__c = 'edsRule_cashSales_ratio_L3M;edsRule_ticketsAbroad_ratio_L3M',
@@ -222,14 +222,14 @@ private class ANG_EarlyDetectionSystemTest {
 		Test.stopTest();
 
 		List<Case> cseLst = new List<Case>(
-			[SELECT 
+			[SELECT
 				Id
-			 FROM 
-				Case 
-			 WHERE 
+			 FROM
+				Case
+			 WHERE
 				AccountId IN :acctMap.keySet()
 			 AND
-				RecordType.DeveloperName = 'sMAP_sales_Monitoring_Alert_Process' 
+				RecordType.DeveloperName = 'sMAP_sales_Monitoring_Alert_Process'
 			]
 		);
 
@@ -238,9 +238,9 @@ private class ANG_EarlyDetectionSystemTest {
 	}
 
 	private static void assessSMAPCaseCreationOnEdsAlert(String locationType){
-		
-		Account acct = 
-			[SELECT 
+
+		Account acct =
+			[SELECT
 				Id,
 				Name,
 				IATACode__c,
@@ -248,19 +248,19 @@ private class ANG_EarlyDetectionSystemTest {
 				IATA_ISO_Country__r.Name,
 				IATA_ISO_Country__r.ISO_Code__c,
 				IATA_ISO_Country__r.AMS_Settlement_System__c,
-				(SELECT 
-					Id, 
-					Name, 
+				(SELECT
+					Id,
+					Name,
 					User_Portal_Status__c,
 					Financial_Assessment_Contact__c
-				 FROM 
-					Contacts 
-				 WHERE 
+				 FROM
+					Contacts
+				 WHERE
 					Status__c = 'Active'
 				)
-			 FROM 
-				Account 
-			 WHERE 
+			 FROM
+				Account
+			 WHERE
 				Location_Type__c = :locationType
 			 LIMIT 1
 			];
@@ -268,7 +268,7 @@ private class ANG_EarlyDetectionSystemTest {
 		Id riskAlertEDSRecType = RecordTypeSingleton.getInstance().getRecordTypeId('ANG_Risk_Alert__c','Risk_Alert_EDS');
 
 		ANG_Risk_Alert__c ra = new ANG_Risk_Alert__c(
-			RecordTypeId = riskAlertEDSRecType, 
+			RecordTypeId = riskAlertEDSRecType,
 			ANG_Account__c = acct.Id,
 			ANG_Open_Cash_Position__c = 634.46,
 			ANG_Triggered_Rules__c = 'edsRule_cashSales_ratio_L3M;edsRule_ticketsAbroad_ratio_L3M ',
@@ -281,11 +281,11 @@ private class ANG_EarlyDetectionSystemTest {
 
 		Test.stopTest();
 
-		Case cse = 
-			[SELECT 
-				Id, 
+		Case cse =
+			[SELECT
+				Id,
 				Status,
-				Reason, 
+				Reason,
 				Origin,
 				Subject,
 				Region__c,
@@ -299,25 +299,25 @@ private class ANG_EarlyDetectionSystemTest {
 				Visible_on_ISS_Portal__c,
 				End_Date_of_Sales_Period__c,
 				Start_Date_of_Sales_Period__c
-			 FROM 
-				Case 
-			 WHERE 
+			 FROM
+				Case
+			 WHERE
 				AccountId = :acct.Id
 			 AND
 				RecordType.DeveloperName = 'sMAP_sales_Monitoring_Alert_Process'
 			 LIMIT 1
 			];
 
-		Operational_Calendar__c oc = 
-			[SELECT 
-				Id, 
-				First_Day__c, 
-				Last_Day__c, 
+		Operational_Calendar__c oc =
+			[SELECT
+				Id,
+				First_Day__c,
+				Last_Day__c,
 				Remittance_Day__c,
 				Frequency_Code__c
-			 FROM 
-				Operational_Calendar__c 
-			 WHERE 
+			 FROM
+				Operational_Calendar__c
+			 WHERE
 				ISS_Operation__c = :acct.IATA_ISO_Country__r.AMS_Settlement_System__c
 			 LIMIT 1
 			];
@@ -342,7 +342,7 @@ private class ANG_EarlyDetectionSystemTest {
 		Contact expectedContact = null;
 
 		for(Contact c : contactLst){
-			
+
 			if(c.User_Portal_Status__c == ANG_Risk_Helper.USER_PORTAL_STATUS_APPROVED_ADIM){
 				expectedContact = c;
 				break;
@@ -352,9 +352,9 @@ private class ANG_EarlyDetectionSystemTest {
 			}
 
 		}
-		
+
 		system.assert(cse.ContactId == expectedContact.Id, 'The SMAP Contact must be \'' + expectedContact.Name + '\'(' + expectedContact.Id + ')');
-	
+
 	}
 
 	@isTest
@@ -382,12 +382,12 @@ private class ANG_EarlyDetectionSystemTest {
 		Test.stopTest();
 
 		List<ANG_Risk_Alert__c> alerts = new List<ANG_Risk_Alert__c>(
-			[SELECT 
+			[SELECT
 				Id,
 				ANG_Triggered_Rules__c,
 				ANG_Open_Cash_Position__c,
-				ANG_Agent_current_standing__c 
-			 FROM 
+				ANG_Agent_current_standing__c
+			 FROM
 			 	ANG_Risk_Alert__c
 			]
 		);
@@ -422,12 +422,12 @@ private class ANG_EarlyDetectionSystemTest {
 		Test.stopTest();
 
 		List<ANG_Risk_Alert__c> alerts = new List<ANG_Risk_Alert__c>(
-			[SELECT 
+			[SELECT
 				Id,
 				ANG_Triggered_Rules__c,
 				ANG_Open_Cash_Position__c,
-				ANG_Agent_current_standing__c 
-			 FROM 
+				ANG_Agent_current_standing__c
+			 FROM
 			 	ANG_Risk_Alert__c
 			]
 		);
@@ -453,7 +453,7 @@ private class ANG_EarlyDetectionSystemTest {
 		message.eventTime = System.now();
 
 		message.triggeredRules = new List<String>{
-			'edsRule_fastGrowth_decrease_L12M_P12M', 
+			'edsRule_fastGrowth_decrease_L12M_P12M',
 			'edsRule_ticketsAbroad_ratio_L3M'
 		};
 
@@ -479,7 +479,7 @@ private class ANG_EarlyDetectionSystemTest {
 		agentStateLst.add(ticketsAbroadState);
 		agentStateLst.add(marketIntelligence);
 		agentStateLst.add(consumedRHC);
-		
+
 		system.debug('agentStateLst: ' + agentStateLst);
 
 		message.agentStates = agentStateLst;
@@ -495,12 +495,12 @@ private class ANG_EarlyDetectionSystemTest {
 		Test.stopTest();
 
 		List<ANG_Risk_Alert__c> alerts = new List<ANG_Risk_Alert__c>(
-			[SELECT 
+			[SELECT
 				Id,
 				ANG_Triggered_Rules__c,
 				ANG_Open_Cash_Position__c,
-				ANG_Agent_current_standing__c 
-			 FROM 
+				ANG_Agent_current_standing__c
+			 FROM
 			 	ANG_Risk_Alert__c
 			]
 		);

@@ -1,7 +1,7 @@
 /**
 
 	Project: eCommerce Enhancements
-	   File: IEC_Payment_Test.cls
+		 File: IEC_Payment_Test.cls
 	Subject: Test Class for IEC Payments Enhancements.
 	History: 2017-05-17, asantos, Initial Release.
 
@@ -31,7 +31,7 @@ private class IEC_Payment_Test {
 	private static Zuora__SubscriptionProductCharge__c subscriptionProductCharge;
 
 	private static final double QTY = 42.0;
-	
+
 	private static void setup() {
 		user = IECTestUtil.createSampleGuestUserAndLogin();
 
@@ -163,7 +163,7 @@ private class IEC_Payment_Test {
 
 			System.debug(String.valueOf(ApexPages.getMessages()));
 
-			// ------------------------------------------- 
+			// -------------------------------------------
 		}
 
 		Zuora__Payment__c zuoraPaymentInsert = new Zuora__Payment__c(
@@ -247,7 +247,7 @@ private class IEC_Payment_Test {
 
 			System.debug(String.valueOf(ApexPages.getMessages()));
 
-			// ------------------------------------------- 
+			// -------------------------------------------
 		}
 
 		Zuora__Payment__c zuoraPaymentInsert2 = new Zuora__Payment__c(
@@ -279,7 +279,7 @@ private class IEC_Payment_Test {
 			insert zuoraPaymentInsert2;
 		} catch (Exception e) {
 		}
-		
+
 		try {
 			zuoraPaymentInsert2.Bypass_Trigger_Logic__c = true;
 
@@ -351,7 +351,7 @@ private class IEC_Payment_Test {
 
 			System.debug(String.valueOf(ApexPages.getMessages()));
 
-			// ------------------------------------------- 
+			// -------------------------------------------
 		}
 
 		Zuora__Payment__c zuoraPaymentInsert3 = new Zuora__Payment__c(
@@ -416,17 +416,17 @@ private class IEC_Payment_Test {
 
 		subscriptionProductCharge = IECTestUtil.createSampleSubscriptionCharge2(subscription.Id, Date.today().addMonths(-6), product, productRatePlan);
 		insert subscriptionProductCharge;
-		
+
 		// Create Locations
 		Test.setMock(WebServiceMock.class, new SAP_CustomerMaster_Mock());
-		
+
 		SAP_CustomerMaster_Mock.returnError = 'test';
 		SAP_CustomerMaster_Mock.returnOK = null;
 
 		Location_Svc.initializeDefaultLocations(new List<Id> { contact.Id });
 
 		Map<String,Location__c> locationMap = new Map<String,Location__c>();
-		
+
 		for (Location__c location : [SELECT Id, Type__c, SAP_Id__c FROM Location__c WHERE Account__c = :contact.AccountId]) {
 			locationMap.put(location.Type__c.left(4).toLowerCase(), location);
 		}
@@ -460,7 +460,7 @@ private class IEC_Payment_Test {
 
 			IECOrder_Svc.addProductToCookie(orderItem.Product_Number__c, orderItem.Quantity, true);
 		}
-		
+
 		List<Product2> productList = [SELECT Id, SAP_Material_Number__c FROM Product2 WHERE Id IN :productIdSet];
 
 		List<zqu__ProductRatePlan__c> zRatePlanList = new List<zqu__ProductRatePlan__c>();
@@ -480,26 +480,26 @@ private class IEC_Payment_Test {
 		insert zRatePlanList;
 
 		List<zqu__ProductRatePlanCharge__c> zCharges = new List<zqu__ProductRatePlanCharge__c>();
-		 //Create Unit Price Charge & Discount for each Plan 
+		 //Create Unit Price Charge & Discount for each Plan
 		for(zqu__ProductRatePlan__c rp : zRatePlanList)
 		{
 			//Unit Price Volume Price & Discount
 			List<zqu__ProductRatePlanCharge__c> charges = TestDataGenerator.generateZCharges(rp.Id, 3, false);
 			charges[0].zqu__Model__c = ZuoraUtil.ZCHARGE_MODEL_PER_UNIT;
-			charges[1].zqu__Model__c = ZuoraUtil.ZCHARGE_MODEL_VOLUME; 
+			charges[1].zqu__Model__c = ZuoraUtil.ZCHARGE_MODEL_VOLUME;
 			charges[2].zqu__Model__c = ZuoraUtil.ZCHARGE_MODEL_DISCOUNT_FIXED_AMOUNT;
 			zCharges.addAll(charges);
 		}
 		insert zCharges;
 		List<zqu__ProductRatePlanChargeTier__c> zTiers = new List<zqu__ProductRatePlanChargeTier__c>();
-		//-- Generate Tiers for Volume Prices 
+		//-- Generate Tiers for Volume Prices
 		for(zqu__ProductRatePlanCharge__c c : zCharges)
 			if(c.zqu__Model__c == ZuoraUtil.ZCHARGE_MODEL_VOLUME)
 				zTiers.addAll(TestDataGenerator.generateZTiers(c.Id, 3, false));
 			else
 				zTiers.addAll(TestDataGenerator.generateZTiers(c.Id, 1, false));
 		insert zTiers;
-		
+
 		update ProductList;
 	}
 }
