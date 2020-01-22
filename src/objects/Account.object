@@ -6949,11 +6949,6 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                     <label>Other</label>
                 </value>
                 <value>
-                    <fullName>Other Equipment Manufacturer</fullName>
-                    <default>false</default>
-                    <label>Other Equipment Manufacturer</label>
-                </value>
-                <value>
                     <fullName>Other Private Sector Association</fullName>
                     <default>false</default>
                     <label>Other Private Sector Association</label>
@@ -7047,6 +7042,11 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                     <fullName>Travel Agency Association</fullName>
                     <default>false</default>
                     <label>Travel Agency Association</label>
+                </value>
+                <value>
+                    <fullName>Truck Line</fullName>
+                    <default>false</default>
+                    <label>Truck Line</label>
                 </value>
                 <value>
                     <fullName>Vendor</fullName>
@@ -7143,6 +7143,10 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                 <valueName>Transfer Service</valueName>
             </valueSettings>
             <valueSettings>
+                <controllingFieldValue>Non-Airline Transportation</controllingFieldValue>
+                <valueName>Truck Line</valueName>
+            </valueSettings>
+            <valueSettings>
                 <controllingFieldValue>Recreational</controllingFieldValue>
                 <valueName>Box Office</valueName>
             </valueSettings>
@@ -7168,7 +7172,6 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Travel Agent</controllingFieldValue>
-                <controllingFieldValue>Cargo Agent</controllingFieldValue>
                 <valueName>Handling Agent</valueName>
             </valueSettings>
             <valueSettings>
@@ -31273,10 +31276,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
-                <fullName>Other Equipment Manufacturer</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Other Private Sector Association</fullName>
                 <default>false</default>
             </values>
@@ -46425,10 +46424,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Other</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Other Equipment Manufacturer</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -66075,10 +66070,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Other</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Other Equipment Manufacturer</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -90703,6 +90694,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
+                <fullName>Truck Line</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Vendor</fullName>
                 <default>false</default>
             </values>
@@ -96675,10 +96670,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
-                <fullName>Other Equipment Manufacturer</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Other Private Sector Association</fullName>
                 <default>false</default>
             </values>
@@ -96752,6 +96743,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Travel Agency Association</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Truck Line</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -103255,10 +103250,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Other</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Other Equipment Manufacturer</fullName>
                 <default>false</default>
             </values>
             <values>
