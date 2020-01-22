@@ -97,7 +97,7 @@ public class CaseIFAPHandler {
 				// remove substring if Mulesoft supports multiple requests in 1 JSON
 				sendJSONFuture(stringToSend.substring(1, stringToSend.length()-1));
 			}
-			
+
 
 			return mulesoftResult;
 
@@ -153,7 +153,7 @@ public class CaseIFAPHandler {
 					}
 				}
 			}
-		} 
+		}
 	}
 
 	private static String sendJSON(String JSONString){
