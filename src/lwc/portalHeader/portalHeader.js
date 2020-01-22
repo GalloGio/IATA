@@ -249,6 +249,9 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
     //User Type
     @track userAdmin;
 
+	//Flag to know if userAdmin variable is already defined. We can only load the modal after that or wrong tab migth be selected
+	@track canLoadNotifications = false;
+
     //Flag that defines if the IATA Invoices entry is displayed in the menu
     @track displayInvoicesMenu; //WMO-696 - ACAMBAS
 
@@ -332,6 +335,9 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
 
         isAdmin().then(result => {
             this.userAdmin = result;
+			this.canLoadNotifications = true;
+        }).catch(error => {
+			this.canLoadNotifications = true;
         });
 
         let pageParams = getParamsFromPage();

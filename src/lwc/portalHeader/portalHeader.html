@@ -122,7 +122,7 @@
                                             class="slds-m-around_large notificationCenterTitle text-bold text-medium text-black">
                                             {labels.NotificationCenter} </div>
                                         <!--lightning-tabset class="tabContent" tabNotificationCenter-->
-                                        <lightning-tabset class="tabNotificationCenter">
+                                        <lightning-tabset if:true={canLoadNotifications} class="tabNotificationCenter">
                                             <div if:true={userAdmin}>
                                                 <!-- ALL NOTIFICATION TAB-->
                                                 <lightning-tab label={allNotificationTab}>
@@ -494,7 +494,7 @@
                                         class="slds-m-around_large notificationCenterTitle text-bold text-medium text-black">
                                         {labels.NotificationCenter} </div>
                                     <!--lightning-tabset class="tabContent" tabNotificationCenter-->
-                                    <lightning-tabset class="tabNotificationCenter">
+                                    <lightning-tabset if:true={canLoadNotifications} class="tabNotificationCenter">
                                         <div if:true={userAdmin}>
                                             <!-- ALL NOTIFICATION TAB-->
                                             <lightning-tab label={allNotificationTab}>
