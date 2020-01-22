@@ -60,8 +60,10 @@ global class AMS_EBulletinBatch implements Database.Batchable<sObject> {
 
 		eBprofContacts = [SELECT Id, User__r.ContactId, User__r.Contact.isEmailBounced, User__r.isActive FROM AMS_eBulletin_Profile__c WHERE Id IN :profIds AND User__c != null];
 
+		profBouncedMap = new Map<Id,Boolean>();
+
 		for(AMS_eBulletin_Profile__c prof : eBprofContacts) {
-			profBouncedMap.put(prof.Id, prof.User__r.isActive ? prof.User__r.Contact.isEmailBounced : true);
+			profBouncedMap.put(prof.Id, prof.User__r.isActive && prof.User__r.ContactId != null ? prof.User__r.Contact.isEmailBounced : true);
 		}		
 
 		System.debug('AMS_EBulletinBatch - ebulletin profiles and value of IsEmailBounced (Contact field) : ' + profBouncedMap);

@@ -60,13 +60,12 @@ public without sharing class ContactRoleServiceAccessTriggerHandler {
 
 		List<Messaging.SingleEmailMessage> allmsg = new List<Messaging.SingleEmailMessage>();
 
-		Map<Id, Contact> contacts = new Map<Id, Contact>([SELECT Id, Email FROM Contact WHERE Id =: contactIds]);
+		Map<Id, Contact> contacts = new Map<Id, Contact>([SELECT Id, Email FROM Contact WHERE Id =: contactIds AND IsEmailBounced = false AND (NOT Email LIKE '%.inactive')]);
 		Set<Id> grantedContacts = getGrantedContacts(contactIds);
 		for(NotificationWrapper wrapper: statusChangedWithContacts) {
 			if(!grantedContacts.contains(wrapper.ContactId) && wrapper.Role != 'GADM User' && wrapper.Role != 'Service Power User') {continue;}
-			Contact cnt = contacts.get(wrapper.ContactId);
-			if(cnt != null) {
-				allmsg.add(createNotification(wrapper.AccessId, cnt, wrapper.Status));
+			if(!contacts.isEmpty() && contacts.containsKey(wrapper.ContactId)) {
+				allmsg.add(createNotification(wrapper.AccessId, contacts.get(wrapper.ContactId), wrapper.Status));
 			}
 		}
 

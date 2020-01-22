@@ -155,7 +155,7 @@ public without sharing class GADM_DataSubmissionPeriodHelper {
 		}
 
 		List<Contact_Role_Service_Access__c> usersAccess = [SELECT Status__c, Account__c, Contact__c, Email_Address__c, Contact_Roles_Name__c FROM Contact_Role_Service_Access__c
-		WHERE Contact__c =: contactIds AND Status__c = 'Granted' AND
+		WHERE Contact__c =: contactIds AND Contact__r.IsEmailBounced = false AND (NOT Contact__r.Email LIKE '%.inactive') AND Status__c = 'Granted' AND
 		(Contact_Roles_Name__c = 'GADM Data Submitter' OR Contact_Roles_Name__c = 'Service Super User' OR Contact_Roles_Name__c = 'GADM User') ];
 		Set<Id> businessUnitsIds = new Set<Id>();
 		Map<Id, List<Contact_Role_Service_Access__c>> accountAccess = new Map<Id, List<Contact_Role_Service_Access__c>>();
@@ -319,7 +319,7 @@ public without sharing class GADM_DataSubmissionPeriodHelper {
 
 
 		Id groupRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'Group');
-		List<Account_Contact_Role__c> accountContactRoles = [SELECT Id, Contact__c, Account_Role__r.Account__c FROM Account_Contact_Role__c WHERE Contact__c = :gadmAndSuperUsers AND Account_Role__r.Account__c = :activeUsersForAccount.keySet() AND RecordTypeId = :groupRecordTypeId AND Contact_Roles__r.Name = 'GADM User' AND Service_Rendered__c =  'GADM'];
+		List<Account_Contact_Role__c> accountContactRoles = [SELECT Id, Contact__c, Account_Role__r.Account__c FROM Account_Contact_Role__c WHERE Contact__c = :gadmAndSuperUsers AND Contact__r.IsEmailBounced = false AND (NOT Contact__r.Email LIKE '%.inactive') AND Account_Role__r.Account__c = :activeUsersForAccount.keySet() AND RecordTypeId = :groupRecordTypeId AND Contact_Roles__r.Name = 'GADM User' AND Service_Rendered__c =  'GADM'];
 
 		for(Account_Contact_Role__c contactRole : accountContactRoles) {
 			if(activeSuperUsersToAccountMap.get(contactRole.Account_Role__r.Account__c) == null) {

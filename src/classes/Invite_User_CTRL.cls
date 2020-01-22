@@ -214,7 +214,7 @@ public without sharing class Invite_User_CTRL {
 			emailTemplate = 'Invite_user_new';
 			linkSuffix = '/login/SelfRegister?serviceName=GADM&token=' + obj.get('Id');
 			Invitation__c invitation = (Invitation__c) obj;
-			emailAddress = invitation.Email__c;
+			emailAddress = invitation.Email__c.endsWithIgnoreCase('.inactive') ? '' : invitation.Email__c;
 			whatId = invitation.Id;
 			accountId = invitation.AccountId__c;
 
@@ -233,7 +233,7 @@ public without sharing class Invite_User_CTRL {
 			emailTemplate = 'Invite_user_already_exists';
 			linkSuffix = '/login/';
 			Contact con = (Contact) obj;
-			emailAddress = con.Email;
+			emailAddress = con.Email.endsWithIgnoreCase('.inactive') ? '' : con.Email;
 			whatId = con.Id;
 			accountId = existingUserInvitationAccountId;
 		}
@@ -256,10 +256,11 @@ public without sharing class Invite_User_CTRL {
 		EmailTemplate et = [SELECT Id, Name, Subject, Body FROM EmailTemplate WHERE DeveloperName = :emailTemplate];
 		Messaging.SingleEmailMessage mail = Messaging.renderStoredEmailTemplate(et.Id, UserInfo.getUserId(), whatId);
 		string link = OneIdUtils.getSiteCompleteUrl(OneIdUtils.Mode.IDENTITY) + linkSuffix;
-
-		mail.setToAddresses(new List<string>{
-				emailAddress
-		});
+		if(String.isNotBlank(emailAddress)) {
+			mail.setToAddresses(new List<string>{
+					emailAddress
+			});
+		}
 		mail.setSaveAsActivity(false);
 		if(iataNoReplyId != null) {
 			mail.setOrgWideEmailAddressId(iataNoReplyId);

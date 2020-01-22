@@ -85,7 +85,7 @@ global  class AMS_PCI_Batch_Remainder implements Database.Batchable<sObject>, Da
 		system.debug('subjects: ' + subjects);
 
 		String query = 'SELECT Id, Subject, CaseNumber, Oscar__c, Account.ANG_PCI_compliance_expiry_date__c, Reason1__c, CreatedDate, IATA_Code__c, ContactId, ';
-		query += 'Contact.Name, AccountId, Account.Is_PCI_compliant__c, Account.IATACode__c, Contact.Preferred_Language__c, Account.IATA_ISO_Country__c, ';
+		query += 'Contact.Name, Contact.IsEmailBounced, Contact.Email, AccountId, Account.Is_PCI_compliant__c, Account.IATACode__c, Contact.Preferred_Language__c, Account.IATA_ISO_Country__c, ';
 		query += 'Account.IATA_ISO_Country__r.Name, Account.IATA_ISO_Country__r.Region__c, ';
 		query += 'Contact.Account.IATA_ISO_Country__r.BSP__c, '; //AMSU-177
 		query += '(SELECT Subject, CreatedDate FROM EmailMessages WHERE Subject IN :subjects) ';
@@ -127,7 +127,7 @@ global  class AMS_PCI_Batch_Remainder implements Database.Batchable<sObject>, Da
 			return;
 		}
 
-		List<User> users = [SELECT ContactId, Id, Email FROM User WHERE ContactId = :contactsIds];
+		List<User> users = [SELECT ContactId, Id, Email, isActive FROM User WHERE ContactId = :contactsIds];
 		Map<Id,User> contactUserMap = new Map<Id,User>();
 		for(User user: users){
 			contactUserMap.put(user.ContactId, user);
@@ -193,7 +193,7 @@ global  class AMS_PCI_Batch_Remainder implements Database.Batchable<sObject>, Da
 
 			Boolean isRenewal = cse.Subject.contains('Renewal');
 
-			if(cse.ContactId == null) {
+			if(cse.ContactId == null || cse.Contact.IsEmailBounced || ( String.isNotBlank(cse.Contact.Email) && cse.Contact.Email.endsWithIgnoreCase('.inactive'))) {
 				String countryName = cse.AccountId != null && cse.Account.IATA_ISO_Country__c != null ? cse.Account.IATA_ISO_Country__r.Name : '-';
 				String regionName = cse.AccountId != null && cse.Account.IATA_ISO_Country__c != null ? cse.Account.IATA_ISO_Country__r.Region__c : '-';
 				if(!isRenewal) {
@@ -203,7 +203,7 @@ global  class AMS_PCI_Batch_Remainder implements Database.Batchable<sObject>, Da
 			}
 
 			User usr = contactUserMap.get(cse.contactId);
-			if(usr == null) {
+			if(usr == null || !usr.isActive) {
 				String contactName = cse.Contact.Name;
 				String countryName = cse.AccountId != null && cse.Account.IATA_ISO_Country__c != null ? cse.Account.IATA_ISO_Country__r.Name : '-';
 				String regionName = cse.AccountId != null && cse.Account.IATA_ISO_Country__c != null ? cse.Account.IATA_ISO_Country__r.Region__c : '-';
@@ -212,8 +212,6 @@ global  class AMS_PCI_Batch_Remainder implements Database.Batchable<sObject>, Da
 				}
 				continue;
 			}
-
-			system.debug('has user');
 
 			//AMSU-177 - add bsp info
 			String emailTemplateName = 'AMS_PCI_Compliant'+ (cse.Contact.Account.IATA_ISO_Country__r.BSP__c == 'No' ? '_NonBSP':'') +'_reminder_' + (isRenewal ? 'renewal_' : '');

@@ -242,7 +242,7 @@ public without sharing class GADM_ActorMembershipNotifier {
 				}
 
 				List<User> usersFromGroup = GADM_InternalUsersHandler.getUsersFromGroup(GADM_NOTIFICATION_GROUP);
-				Map<Id, User> usersMap = new Map<Id, User>([SELECT Id, FirstName, LastName, Email FROM User WHERE Id = :usersFromGroup]);
+				Map<Id, User> usersMap = new Map<Id, User>([SELECT Id, FirstName, LastName, Email FROM User WHERE Id = :usersFromGroup AND IsActive = true AND Contact.IsEmailBounced = false]);
 
 				//create wrappers for users from public group
 				for(Account_Role__c accountRole : accountRoles) {

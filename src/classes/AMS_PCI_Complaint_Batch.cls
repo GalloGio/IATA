@@ -420,7 +420,6 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
 		Boolean templateToIATA = false;
 		List<EmailTemplate> tempIata = new List<EmailTemplate>();
 		Map<Id, Id> mapContactsVs_User = new Map<Id, Id>();
-		Map<Id, String> mapUsersVsContactName = new Map<Id, String>();
 		Map<Id, String> mapUserVsEmail = new Map<Id, String>();
 		Set<Id> contactsId = new Set<Id>();
 
@@ -453,12 +452,9 @@ global class AMS_PCI_Complaint_Batch implements Database.Batchable<sObject>, Dat
 			contactsId.add(c.Id);
 		}
 
-		Map<Id,User> mapUsers = new Map<Id,User>();
-		For(User u :  [Select Id, ContactId, Email, Name FROM User WHERE ContactId in :contactsId]){
+		For(User u :  [Select Id, ContactId, Email, Name FROM User WHERE ContactId in :contactsId AND isActive = true AND Contact.IsEmailBounced = false AND (NOT Contact.Email LIKE '%.inactive')]){
 			mapContactsVs_User.put(u.ContactId, u.Id);
 			mapUserVsEmail.put(u.Id, u.Email);
-			mapUsersVsContactName.put(u.Id, u.Name);
-			mapUsers.put(u.Id, u);
 		}
 
 		system.debug('DGR sendEmailAlert: mapContactsVs_User : ' + mapContactsVs_User);
