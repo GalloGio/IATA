@@ -1138,6 +1138,18 @@ two record types:
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>IDCard_Key_Account__c</fullName>
+        <description>Indicates if the Agent benefits from ID Card Key Account Conditions. Lookup on &quot;IDCard Key Account&quot; from related GDP Product Account View.</description>
+        <externalId>false</externalId>
+        <formula>GDP_Products_Account_View__r.IDCard_Key_Account__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Indicates if the Agent benefits from ID Card Key Account Conditions. Lookup on &quot;IDCard Key Account&quot; from related GDP Product Account View.</inlineHelpText>
+        <label>IDCard Key Account</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>ID_Card_Application__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
