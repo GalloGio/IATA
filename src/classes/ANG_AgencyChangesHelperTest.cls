@@ -2788,7 +2788,6 @@ public class ANG_AgencyChangesHelperTest {
 		oscar.AMS_Online_Accreditation__c = stagingArea.Id;
 		update oscar;
 
-		Test.startTest();
 
 		List<AMS_Accreditation_Contact__c> accreditationContacts = new List<AMS_Accreditation_Contact__c>();
 
@@ -2815,6 +2814,8 @@ public class ANG_AgencyChangesHelperTest {
 
 		insert att;
 
+		Test.startTest();
+		
 		oscar.ANG_FA_Opt_out__c = 'Opt-Out';
 		oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
 		oscar.STEP15__c = AMS_Utils.PASSED;

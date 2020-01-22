@@ -1609,8 +1609,10 @@
         
         if(currentBillingCity && listOfCurrentStateCitiesBilling){
             for(var i = 0; i < listOfCurrentStateCitiesBilling.length; i++){
+                let geonameNameBilling;
+                if(listOfCurrentStateCitiesBilling[i]["GeonameName__c"]) geonameNameBilling = listOfCurrentStateCitiesBilling[i]["GeonameName__c"].toUpperCase();
                 if(currentBillingCity.toUpperCase() === listOfCurrentStateCitiesBilling[i]["Name"].toUpperCase() || 
-                    currentBillingCity.toUpperCase() === listOfCurrentStateCitiesBilling[i]["GeonameName__c"].toUpperCase()){
+                    currentBillingCity.toUpperCase() === geonameNameBilling){
                     
                         $('[id$=cityBillingIdHidden]').val(listOfCurrentStateCitiesBilling[i]["Id"]);
                 } 
@@ -1629,8 +1631,10 @@
         let currentShippingCity = $('#shipping_city__c > input').val();
         if(currentShippingCity && listOfCurrentStateCitiesShipping){
             for(var i = 0; i < listOfCurrentStateCitiesShipping.length; i++){
+                let geonameNameShipping;
+                if(listOfCurrentStateCitiesShipping[i]["GeonameName__c"]) geonameNameShipping = listOfCurrentStateCitiesShipping[i]["GeonameName__c"].toUpperCase();
                 if(currentShippingCity.toUpperCase() === listOfCurrentStateCitiesShipping[i]["Name"].toUpperCase() ||
-                   currentShippingCity.toUpperCase() === listOfCurrentStateCitiesShipping[i]["GeonameName__c"].toUpperCase() ){
+                   currentShippingCity.toUpperCase() === geonameNameShipping){
                     
                         $('[id$=cityShippingIdHidden]').val(listOfCurrentStateCitiesShipping[i]["Id"]);
                 } 
@@ -1676,10 +1680,11 @@
             let count = 0;
             /*for each item in the array...*/
             for (i = 0; i < listOfCurrentStateCities.length; i++) {
-                
+                let geonameName;
+                if(listOfCurrentStateCities[i]["GeonameName__c"]) geonameName = listOfCurrentStateCities[i]["GeonameName__c"].substr(0, val.length).toUpperCase();
                 /*check if the item starts with the same letters as the text field value:*/
                 if (listOfCurrentStateCities[i]["Name"].substr(0, val.length).toUpperCase() === val.toUpperCase() ||
-                    listOfCurrentStateCities[i]["GeonameName__c"].substr(0, val.length).toUpperCase() === val.toUpperCase()) {
+                    geonameName === val.toUpperCase()) {
                     /*create a DIV element for each matching element:*/
                     if(count < 5){
                         b = document.createElement("DIV");
