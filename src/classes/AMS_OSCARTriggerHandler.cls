@@ -2110,9 +2110,9 @@ public class AMS_OSCARTriggerHandler {
 				c.Process_Start_Date__c = updatedOSCAR.Termination_Date__c;
 				caseChanged = true;
 			}
-			if(newMap.get(updatedOSCAR.Id).Process__c == AMS_Utils.NGCHANGES && newMap.get(updatedOSCAR.Id).ANG_Type_Of_Change__c != oldMap.get(updatedOSCAR.Id).ANG_Type_Of_Change__c ){
+			if((newMap.get(updatedOSCAR.Id).Process__c == AMS_Utils.NGCHANGES && newMap.get(updatedOSCAR.Id).ANG_Type_Of_Change__c != oldMap.get(updatedOSCAR.Id).ANG_Type_Of_Change__c) || (newMap.get(updatedOSCAR.Id).Process__c == AMS_Utils.AGENCYCHANGES && newMap.get(updatedOSCAR.Id).Type_Of_Change__c != oldMap.get(updatedOSCAR.Id).Type_Of_Change__c)){
 
-				String newReason = fetchCaseReason(newMap.get(updatedOSCAR.Id).ANG_Type_Of_Change__c);
+				String newReason = (newMap.get(updatedOSCAR.Id).Process__c == AMS_Utils.NGCHANGES ? fetchCaseReason(newMap.get(updatedOSCAR.Id).ANG_Type_Of_Change__c):fetchCaseReason(newMap.get(updatedOSCAR.Id).Type_of_change__c));
 
 				if(newReason != null){
 					c.Reason1__c = newReason;
@@ -2226,7 +2226,7 @@ public class AMS_OSCARTriggerHandler {
 		if(typeOfChange.contains('VMFR'))
 			return 'VMFR Setup/Update';
 		if(typeOfChange.contains('Minor shareholding'))
-			return 'CHG – Data Maintenance';
+			return 'MCH – Minor Change of Shareholding';
 		if(typeOfChange.contains('Hierarchy'))
 			return 'Change of Hierarchy';
 		if(typeOfChange.contains('Accreditation type'))

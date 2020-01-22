@@ -1479,7 +1479,7 @@
 		System.assertEquals(result, 'VMFR Setup/Update');
 
 		result = AMS_OSCARTriggerHandler.fetchCaseReason('Minor shareholding');
-		System.assertEquals(result, 'CHG – Data Maintenance');
+		System.assertEquals(result, 'MCH – Minor Change of Shareholding');
 
 		result = AMS_OSCARTriggerHandler.fetchCaseReason('Hierarchy');
 		System.assertEquals(result, 'Change of Hierarchy');

@@ -52,6 +52,11 @@ private class CaseProcessTypeHelperTest {
 			Account__c= acc.Id
 		);
 		insert oscar;
+
+		AMS_OSCAR_reset_dossier_reception__c resetDossierReceptionDateStatus = new AMS_OSCAR_reset_dossier_reception__c();
+		resetDossierReceptionDateStatus.Name = 'Closed_Rejected';
+		resetDossierReceptionDateStatus.Status__c = 'Closed_Rejected';
+		insert resetDossierReceptionDateStatus;
 	}
 
 	@isTest static void testKPICalculation() {
@@ -67,11 +72,18 @@ private class CaseProcessTypeHelperTest {
 		);
 		update cse;
 
-		cse = [SELECT Id, KPI_Calculation__c FROM Case LIMIT 1];
-		oscar = [SELECT Id, Accreditation_Process_Type__c FROM AMS_OSCAR__c LIMIT 1];
+		cse = [SELECT Id, KPI_Calculation__c, Oscar__c FROM Case LIMIT 1];
+		oscar = [SELECT Id, Accreditation_Process_Type__c, Status__c FROM AMS_OSCAR__c LIMIT 1];
 		Case_Process_Type__mdt process = [SELECT Type__c FROM Case_Process_Type__mdt process WHERE Reason__c = 'New HO'];
 
 		System.assertNotEquals(null, cse.KPI_Calculation__c);
+
+		oscar.Status__c = 'Open';
+		update oscar;
+
+		cse.Status = 'Open';
+		cse.Oscar__c = oscar.Id;
+		update cse;
 		Test.stopTest();
 	}
 

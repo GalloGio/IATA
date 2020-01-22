@@ -107,6 +107,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 	/** WMO-564 **/
 	if(Trigger.isUpdate) {
 		CaseProcessTypeHelper.processOSCAREffAge(Trigger.new, Trigger.oldMap);
+		CaseProcessTypeHelper.resetOscarDossierReceptionDate(Trigger.new, Trigger.oldMap);
 	}
 
 
