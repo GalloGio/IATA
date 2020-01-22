@@ -11,6 +11,8 @@
 
 public class CaseIFAPHandler {
 
+	public static boolean isUser;
+
 	@InvocableMethod(label='User provisioning IFAP' description='User provisioning for Mulesoft when IFAP case is created.')
 	public static List<String> getContactInfo(List<Id> listIds) {
 
@@ -26,6 +28,8 @@ public class CaseIFAPHandler {
 					for(User us : userList){
 						contactIds.add(us.ContactId);
 					}
+
+					isUser = true;
 				}
 				when 'Case'{
 					List<Case> caseList = new List<Case>([SELECT ContactId FROM Case WHERE Id =: listIds AND ContactId != null]);
@@ -33,6 +37,8 @@ public class CaseIFAPHandler {
 					for(case cs : caseList){
 						contactIds.add(cs.ContactId);
 					}
+
+					isUser = false;
 				}
 				when else{
 					returnList.add('The object type in the parameter is not supported.');
@@ -81,8 +87,17 @@ public class CaseIFAPHandler {
 			// serielize all the JSONs into a string
 			String stringToSend = JSON.serialize(wrapperList);
 
-			// remove substring if Mulesoft supports multiple requests in 1 JSON
-			String mulesoftResult = sendJSON(stringToSend.substring(1, stringToSend.length()-1));
+			String mulesoftResult;
+
+			if(isUser){
+				// remove substring if Mulesoft supports multiple requests in 1 JSON
+				mulesoftResult = sendJSON(stringToSend.substring(1, stringToSend.length()-1));
+			}
+			else {
+				// remove substring if Mulesoft supports multiple requests in 1 JSON
+				sendJSONFuture(stringToSend.substring(1, stringToSend.length()-1));
+			}
+			
 
 			return mulesoftResult;
 
@@ -90,6 +105,55 @@ public class CaseIFAPHandler {
 		else{
 			return 'Unable to query information to build the JSON message';
 		}
+	}
+
+	@future(callout=true)
+	private static void sendJSONFuture(String JSONString){
+
+		Http http = new Http();
+		HttpRequest request = new HttpRequest();
+		String responseString;
+		String responseCode;
+
+		request.setHeader('Content-Type', 'application/json;charset=UTF-8');
+		// endpoint, username and password defined in Mulesoft_GXA_Credentials
+		request.setEndpoint('callout:Mulesoft_GXA_Credentials/users');
+		request.setMethod('POST');
+
+		// Set the body as a JSON object
+		request.setBody(JSONString);
+
+		HttpResponse response = http.send(request);
+
+		// Parse the JSON response
+		if (response.getStatusCode() != 200) {
+
+			Error1Class responseValue = new Error1Class();
+			responseValue = (Error1Class)System.JSON.deserialize(response.getBody(), Error1Class.class);
+
+			if(responseValue.errors != null){
+
+				responseString = responseValue.errors.get(0).detail;
+				responseCode = responseValue.errors.get(0).status;
+			}
+			else{
+
+				JSONParser parser = JSON.createParser(response.getBody());
+				while (parser.nextToken() != null) {
+					if (parser.getCurrentToken() == JSONToken.FIELD_NAME){
+						String fieldName = parser.getText();
+						parser.nextToken();
+
+						if(fieldName == 'description'){
+							responseString = parser.getText();
+						}
+						else if(fieldName == 'code'){
+							responseCode = parser.getText();
+						}
+					}
+				}
+			}
+		} 
 	}
 
 	private static String sendJSON(String JSONString){
