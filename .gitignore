@@ -163,3 +163,4 @@ sfdx-project.json
 .sfdx/
 .vscode/
 src/lwc/jsconfig.json
+src/lwc/.eslintrc.json
