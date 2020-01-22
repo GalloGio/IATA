@@ -70,6 +70,7 @@ private class vfIECGAD_tst {
 		Test.setCurrentPage(pgRef);
 
 		User usr = IECTestUtil.createSampleGuestUserAndLogin();
+        Test.startTest();
 		System.runAs(usr) {
 			Init();
 
@@ -115,6 +116,7 @@ private class vfIECGAD_tst {
 
 			// Misc Coverage
 			pgCont.onClickOKError();
+            Test.stopTest();
 		}
 		System.debug('Unit Test: Finish: TestGAD');
 	}
