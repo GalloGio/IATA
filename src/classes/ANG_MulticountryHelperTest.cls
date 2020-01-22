@@ -241,6 +241,72 @@ private class ANG_MulticountryHelperTest {
 
 	}
 
+	@isTest static void allowIATACodeGenerationMigratedAgenciesTest(){
+
+		List<Account> accountLst = new List<Account>(
+			[SELECT
+				Id
+			 FROM Account
+			 WHERE
+				Name IN ('Multicountry HE UK', 'Multicountry GE PT')
+			 ORDER BY
+				Name ASC
+			]
+		);
+
+		Account accountHE = accountLst.get(1);
+
+		AMS_Oscar__c oscar = new AMS_OSCAR__c(
+			RecordTypeId = AMS_Utils.RECTYPE_MCAE,
+			Account__c = accountHE.Id
+		);
+
+		insert oscar;
+
+		Case cse = new Case(
+			RecordTypeId = AMS_Utils.RECTYPE_OSCARCOMM,
+			AccountId = accountHE.Id,
+			Oscar__c = oscar.Id
+		);
+
+		insert cse;
+
+		Test.startTest();
+
+		AMS_OSCAR__c oscarWithRels = 
+			[SELECT 
+				Account__c, 
+				Account__r.Parent.Status__c, 
+				Account__r.Parent.Source_System__c 
+			 FROM AMS_OSCAR__c
+			];
+
+		Boolean allowIATACodeGeneration = ANG_MulticountryHelper.allowIATACodeGeneration(oscarWithRels);
+
+		System.assert(!allowIATACodeGeneration, 'Should not allow the IATA code generation.');
+
+		Account accountGE = accountLst.get(0);
+		accountGE.Status__c = AMS_Utils.ACC_S2_NEWAPPLICATIONPENDING;
+		accountGE.IATACode__c = '12345678';
+		accountGE.Source_System__c = 'AIMS';
+		update accountGE;
+
+		oscarWithRels = 
+			[SELECT 
+				Account__c, 
+				Account__r.Parent.Status__c, 
+				Account__r.Parent.Source_System__c 
+			 FROM AMS_OSCAR__c
+			];
+
+		allowIATACodeGeneration = ANG_MulticountryHelper.allowIATACodeGeneration(oscarWithRels);
+
+		System.assert(allowIATACodeGeneration, 'Should allow the IATA code generation.');
+
+		Test.stopTest();
+
+	}
+
 	@isTest static void allowApprovalStepTest(){
 
 		List<Account> accountLst = new List<Account>(
@@ -287,6 +353,58 @@ private class ANG_MulticountryHelperTest {
 		);
 
 		insert changeCodeApplied;
+
+		allowApproval = ANG_MulticountryHelper.allowApprovalStep(oscar);
+
+		System.assert(allowApproval, 'Should allow the approval step.');
+
+		Test.stopTest();
+
+	}
+
+	@isTest static void allowApprovalStepMigratedAgenciesTest(){
+
+		List<Account> accountLst = new List<Account>(
+			[SELECT
+				Id,
+				Parent.Source_System__c
+			 FROM Account
+			 WHERE Name IN ('Multicountry AE PT', 'Multicountry GE PT')
+			 ORDER BY Name ASC
+			]
+		);
+
+		Account accountAE = accountLst.get(0);
+
+		AMS_Oscar__c oscar = new AMS_OSCAR__c(
+			RecordTypeId = AMS_Utils.RECTYPE_MCAE,
+			Account__c = accountAE.Id
+		);
+
+		insert oscar;
+
+		Case cse = new Case(
+			RecordTypeId = AMS_Utils.RECTYPE_OSCARCOMM,
+			AccountId = accountAE.Id,
+			Oscar__c = oscar.Id
+		);
+
+		insert cse;
+
+		Test.startTest();
+
+		oscar.putSObject('Account__r', accountAE);
+
+		Boolean allowApproval = ANG_MulticountryHelper.allowApprovalStep(oscar);
+
+		System.assert(!allowApproval, 'Should not allow the approval step.');
+
+		Account accountGE = accountLst.get(1);
+		accountGE.Source_System__c = 'AIMS';
+		update accountGE;
+
+		accountAE.putSObject('Parent', accountGE);
+		oscar.putSObject('Account__r', accountAE);
 
 		allowApproval = ANG_MulticountryHelper.allowApprovalStep(oscar);
 
