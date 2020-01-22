@@ -214,10 +214,11 @@ public class ANG_RHCHelper {
 			Decimal fsAmount = (rhc.ANG_Financial_Security__c == NULL) ? 0 : rhc.ANG_Financial_Security__c;
 			Decimal rhcAmountFsPercent = (rhc.RHC_Amount_Equals_FS_Percent__c == NULL) ? 0 : rhc.RHC_Amount_Equals_FS_Percent__c;
 
-			//If RHC equal FS % condition is applied on the agent
-			//retrieve % of FS from the RHC information (rhcAmountFsPercent)
-			//and calculate RHC amount
-			if(rhc.ANG_RHC_Amount_Equals_FS__c && !isMulticountry){
+			Boolean shouldApplyRhcPercentage = ! isMulticountry || rhcAmountFsPercent != 0;
+
+			// If RHC equal FS % condition is applied on the agent
+			// retrieve % of FS from the RHC information (rhcAmountFsPercent) and calculate RHC amount
+			if (rhc.ANG_RHC_Amount_Equals_FS__c && shouldApplyRhcPercentage) {
 				System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - calculateRHCAmount] RHC Amount Equals FS');
 				applyRhcAmountFsPercentage(rhc, fsAmount, rhcAmountFsPercent, mapBillingPeriodPerAccount);
 				continue;
