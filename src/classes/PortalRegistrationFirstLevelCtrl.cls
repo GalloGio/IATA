@@ -293,6 +293,12 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 		FROM Profile
 		WHERE (UserLicense.Name = 'Partner Community' OR UserLicense.Name = 'Identity')]);
 
+		Contact[] recordCont = [SELECT Id FROM Contact WHERE Id NOT IN (SELECT ContactId FROM User) LIMIT 1];
+
+		if(recordCont.isEmpty()){
+		return false;
+		}
+		else{
 		try {
 			User testingUser = new User(LastName = 'DUMMY',
 					FirstName='DUMMY',
@@ -301,7 +307,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 					Email = email,
 					Username = ISSP_Utilities.buildPortalUserName(email), //myEmail@company.com because myEmail.company.com@partner.iata.org
 					ProfileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal (Partner)' LIMIT 1].Id,
-					ContactId =  !conlist.isEmpty() ? conList.get(0).Id : [SELECT Id FROM Contact WHERE Id NOT IN (SELECT ContactId FROM User) LIMIT 1].Id,
+					ContactId =  !conlist.isEmpty() ? conList.get(0).Id : recordCont.get(0).Id,
 					TimeZoneSidKey = 'GMT',
 					LanguageLocaleKey = 'en_US',
 					EmailEncodingKey = 'UTF-8',
@@ -318,6 +324,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 			System.debug(loggingLevel.ERROR, '____ [cls OneId_RegistrationProcessControllere - checkIsUsernameIsAvailableInGlobalSalesforce] e.getMessage() - ' + e.getMessage());
 			Database.rollback(sp);
 			return false;
+		}
 		}
 	}
 
