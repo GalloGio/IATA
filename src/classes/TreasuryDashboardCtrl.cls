@@ -20,6 +20,18 @@ public without sharing class TreasuryDashboardCtrl {
 
 
     @AuraEnabled
+    public static PowerBI_Config__c getPowerBICredentials(String configurationName) {
+        return PowerBiCtrl.getPowerBICredentials(configurationName);
+    }
+
+
+    @AuraEnabled
+    public static PowerBiCtrl.ReportDetails getReportConfigDetails(String reportName) {
+        return PowerBiCtrl.getReportConfigDetails(reportName);
+    }
+
+
+    @AuraEnabled
     public static UserInformation getUserInformation() {
 
         UserInformation userInfoToReturn = new UserInformation();
@@ -231,9 +243,98 @@ public without sharing class TreasuryDashboardCtrl {
         return PowerBiCtrl.getReportsDetails(accessToken, reportId, conf);
     }
 
-    @AuraEnabled
+    /*@AuraEnabled
     public static PowerBiCtrl.EmbedTokenResult getEmbedToken(String accessToken, String userId, String groupId, String reportId, String datasetId, PowerBI_Config__c conf) {
         return PowerBiCtrl.getEmbedToken(accessToken, userId,  groupId, reportId, datasetId, conf);
+    }*/
+
+    @AuraEnabled
+    public static PowerBiCtrl.EmbedTokenResult getEmbedToken(String accessToken, String userId, String groupId, String reportId, String datasetId, PowerBI_Config__c conf) {
+        System.debug('accessToken: ' + accessToken);
+        System.debug('userId: ' + userId);
+        System.debug('groupId: ' + groupId);
+        System.debug('reportId: ' + reportId);
+        System.debug('datasetId: ' + datasetId);
+        System.debug('conf: ' + conf);
+
+        if(conf == null) {
+            return null;
+        }
+
+        PowerBiCtrl.EmbedTokenResult result = new PowerBiCtrl.EmbedTokenResult();
+        Cache.SessionPartition sessionPartition = null;
+
+        String cacheKey = reportId.replaceAll('-', '');
+
+        if(Test.isRunningTest()) {
+
+            try{
+
+                sessionPartition = Cache.Session.getPartition('local.PowerBiSession');
+
+            }catch(Cache.Session.SessionCacheException e) {
+
+                return PowerBiCtrl.getEmbedToken(accessToken, userId,  groupId, reportId, datasetId, conf);
+
+            }
+
+        } else {
+
+            sessionPartition = Cache.Session.getPartition('local.PowerBiSession');
+
+        }
+
+
+        if(sessionPartition != null) {
+
+            if(sessionPartition.contains(cacheKey)) {
+
+                result.token = (String)sessionPartition.get(cacheKey);
+
+                if(sessionPartition.contains(cacheKey+'expireson')) {
+
+                    //expireson present in cache
+                    String cacheExpireson = (String)sessionPartition.get(cacheKey + 'expireson');
+                    if(String.isNotBlank(cacheExpireson)) {
+
+                        Datetime expiresonDatetime = getExpiresOnDatetime(cacheExpireson);
+                        System.debug('expiresonDatetime:: ' + expiresonDatetime);
+
+                        if(expiresonDatetime.addMinutes(-10) < Datetime.now()) {
+                            //token expires in less than 10 minutes - get new
+                            result = PowerBiCtrl.getEmbedToken(accessToken, userId, groupId, reportId, datasetId, conf);
+                            saveEmbedTokenInSessionCache(sessionPartition, result, conf, cacheKey);
+
+                        } else {
+                            //token is OK
+                            result.expiration = cacheExpireson;
+
+                        }
+
+                    }
+
+                } else {
+                    //no expires on in cache
+                    result = PowerBiCtrl.getEmbedToken(accessToken, userId, groupId, reportId, datasetId, conf);
+                    saveEmbedTokenInSessionCache(sessionPartition, result, conf, cacheKey);
+                }
+
+            } else {
+                // no embed token in cache
+                result = PowerBiCtrl.getEmbedToken(accessToken, userId, groupId, reportId, datasetId, conf);
+                saveEmbedTokenInSessionCache(sessionPartition, result, conf, cacheKey);
+            }
+
+        }
+
+
+        return result;
+    }
+
+    private static Datetime getExpiresOnDatetime(String expiresOn) {
+        String expiresonString = '"' + expiresOn + '"';
+        Datetime expiresonDatetime = (DateTime)JSON.deserialize(expiresonString, DateTime.class);
+        return expiresonDatetime;
     }
 
     private static void saveAccessTokenInOrgCache(Cache.OrgPartition orgPartition, PowerBiCtrl.OAuthResult result, PowerBI_Config__c conf) {
@@ -250,5 +351,22 @@ public without sharing class TreasuryDashboardCtrl {
         }
 
     }
+
+
+    private static void saveEmbedTokenInSessionCache(Cache.SessionPartition sessionPartition, PowerBiCtrl.EmbedTokenResult result, PowerBI_Config__c conf, String cacheKey) {
+        if(result.error != null) {
+            TransformationHelper.sendEmailSupport('FATAL: PowerBI Master Account Embed token: ' + conf.Name + ' ' + result.error, 'PowerBI Master Account Embed token: ' + conf.Name + ' ' +result.error);
+            throw new transformationException('PowerBI Master Account Embed token: ' + result.error);
+        } else if(result.token != null && result.expiration != null){
+            System.debug('saving master account embed token to cache');
+
+            sessionPartition.put(cacheKey, result.token, 3600);
+            sessionPartition.put(cacheKey+'expireson', result.expiration, 3600);
+
+        }
+    }
+
+
+
 
 }

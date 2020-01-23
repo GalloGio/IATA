@@ -148,6 +148,45 @@ public class TreasuryDashboardCtrlTest {
     }
 
 
+    @IsTest
+    private static void getPowerBICredentialsTest() {
+
+        User testUser = [SELECT Id FROM User WHERE Email = 'petr.novak.test.xyz@somedomain.xyz.com'];
+
+        PowerBI_Config__c config = null;
+
+        Test.startTest();
+        System.runAs(testUser) {
+            config = TreasuryDashboardCtrl.getPowerBICredentials('TreasuryDashboard');
+        }
+        Test.stopTest();
+
+        System.assertEquals(false, config == null, 'PowerBI config should not be null!');
+
+    }
+
+
+    @IsTest
+    private static void getReportConfigDetailsTest() {
+
+        User testUser = [SELECT Id FROM User WHERE Email = 'petr.novak.test.xyz@somedomain.xyz.com'];
+
+        PowerBiCtrl.ReportDetails result = null;
+
+        Test.startTest();
+
+        System.runAs(testUser) {
+            result = TreasuryDashboardCtrl.getReportConfigDetails('Treasury_Dashboard');
+        }
+
+        Test.stopTest();
+
+        System.assertEquals(true, result.reportId != null, 'ReportId should not be null!');
+        System.assertEquals(true, result.groupId != null, 'GroupId should not be null!');
+
+    }
+
+
 
     @IsTest
     private static void getUserInformationTest() {
@@ -245,6 +284,78 @@ public class TreasuryDashboardCtrlTest {
             orgPartition.put('PowerBIaccessToken'+appIdentifier, 'someKey');
             orgPartition.put('PowerBIexpiersOn'+appIdentifier, 1573465202);
             orgPartition.put('PowerBIrefreshToken'+appIdentifier, 'someRefreshToken');
+        }
+
+
+        PowerBiCtrl.OAuthResult result = null;
+
+        Test.startTest();
+
+        System.runAs(testUser) {
+
+            Test.setMock(HttpCalloutMock.class, new PowerBICalloutMockProvider());
+            PowerBI_Config__c config = PowerBiCtrl.getPowerBICredentials('TreasuryDashboard');
+            result = TreasuryDashboardCtrl.getAccessToken(config);
+
+        }
+
+        Test.stopTest();
+
+        System.assertEquals('testTokenString', result.access_token, 'Wrong access token retrieved!');
+        System.assertEquals('refreshTokenString', result.refresh_token, 'Wrong refresh token retrieved!');
+        System.assertEquals(1561019267, result.expires_on, 'Wrong expires on retrieved!');
+        System.assertEquals(null, result.error, 'There should be no error!');
+    }
+
+    @IsTest
+    private static void getAccessToken_missingExpiresonTest() {
+
+        User testUser = [SELECT Id FROM User WHERE Email = 'petr.novak.test.xyz@somedomain.xyz.com'];
+
+        PowerBI_Config__c conf = PowerBiCtrl.getPowerBICredentials('TreasuryDashboard');
+
+        String  appIdentifier = conf.Application_Identifier__c;
+
+        Cache.OrgPartition  orgPartition = Cache.Org.getPartition('local.PowerBI');
+        if(orgPartition != null) {
+            orgPartition.put('PowerBIaccessToken'+appIdentifier, 'someKey');
+            orgPartition.put('PowerBIrefreshToken'+appIdentifier, 'someRefreshToken');
+        }
+
+
+        PowerBiCtrl.OAuthResult result = null;
+
+        Test.startTest();
+
+        System.runAs(testUser) {
+
+            Test.setMock(HttpCalloutMock.class, new PowerBICalloutMockProvider());
+            PowerBI_Config__c config = PowerBiCtrl.getPowerBICredentials('TreasuryDashboard');
+            result = TreasuryDashboardCtrl.getAccessToken(config);
+
+        }
+
+        Test.stopTest();
+
+        System.assertEquals('testTokenString', result.access_token, 'Wrong access token retrieved!');
+        System.assertEquals('refreshTokenString', result.refresh_token, 'Wrong refresh token retrieved!');
+        System.assertEquals(1561019267, result.expires_on, 'Wrong expires on retrieved!');
+        System.assertEquals(null, result.error, 'There should be no error!');
+    }
+
+    @IsTest
+    private static void getAccessToken_missingRefreshTokenTest() {
+
+        User testUser = [SELECT Id FROM User WHERE Email = 'petr.novak.test.xyz@somedomain.xyz.com'];
+
+        PowerBI_Config__c conf = PowerBiCtrl.getPowerBICredentials('TreasuryDashboard');
+
+        String  appIdentifier = conf.Application_Identifier__c;
+
+        Cache.OrgPartition  orgPartition = Cache.Org.getPartition('local.PowerBI');
+        if(orgPartition != null) {
+            orgPartition.put('PowerBIaccessToken'+appIdentifier, 'someKey');
+            orgPartition.put('PowerBIexpiersOn'+appIdentifier, 1573465202);
         }
 
 
@@ -410,6 +521,142 @@ public class TreasuryDashboardCtrlTest {
         System.assertEquals('someToken', result.token, 'Wrong reportid retrieved!');
         System.assertEquals('someTokenId', result.tokenId, 'Wrong reportname retrieved!');
         System.assertEquals('1561019567', result.expiration, 'Wrong datasetId name retrieved!');
+
+    }
+
+    @IsTest
+    private static void getEmbedToken_cacheTest() {
+
+        User testUser = [SELECT Id FROM User WHERE Email = 'petr.novak.test.xyz@somedomain.xyz.com'];
+
+        PowerBiCtrl.EmbedTokenResult result = null;
+
+        Test.startTest();
+
+        //current time + one hour
+        Datetime now = Datetime.now().addMinutes(60);
+        String expTime = now.formatGMT('yyyy-MM-dd\'T\'HH:mm:ss\'Z\'');
+
+        System.runAs(testUser) {
+
+            Test.setMock(HttpCalloutMock.class, new PowerBICalloutMockProvider());
+            PowerBI_Config__c config = PowerBiCtrl.getPowerBICredentials('TreasuryDashboard');
+
+
+            Cache.SessionPartition  sessionPartition = Cache.Session.getPartition('local.PowerBiSession');
+            if(sessionPartition != null) {
+                sessionPartition.put('reportid', 'servicePrincipalSomeKey');
+                sessionPartition.put('reportidexpireson',expTime);
+            }
+
+
+            result = TreasuryDashboardCtrl.getEmbedToken('access_token', 'federationId', 'groupId', 'reportid', 'datasetId',config);
+        }
+
+        Test.stopTest();
+
+        System.assertEquals('servicePrincipalSomeKey', result.token, 'Wrong reportid retrieved!');
+        System.assertEquals(expTime, result.expiration, 'Wrong datasetId name retrieved!');
+
+    }
+
+
+    @IsTest
+    private static void getEmbedToken_cacheExpieredTest() {
+
+        User testUser = [SELECT Id FROM User WHERE Email = 'petr.novak.test.xyz@somedomain.xyz.com'];
+
+        PowerBiCtrl.EmbedTokenResult result = null;
+
+        Test.startTest();
+
+        //current time + one hour
+        Datetime now = Datetime.now().addMinutes(-30);
+        String expTime = now.formatGMT('yyyy-MM-dd\'T\'HH:mm:ss\'Z\'');
+
+        System.runAs(testUser) {
+
+            Test.setMock(HttpCalloutMock.class, new PowerBICalloutMockProvider());
+            PowerBI_Config__c config = PowerBiCtrl.getPowerBICredentials('TreasuryDashboard');
+
+
+            Cache.SessionPartition  sessionPartition = Cache.Session.getPartition('local.PowerBiSession');
+            if(sessionPartition != null) {
+                sessionPartition.put('reportid', 'servicePrincipalSomeKey');
+                sessionPartition.put('reportidexpireson',expTime);
+            }
+
+
+            result = TreasuryDashboardCtrl.getEmbedToken('access_token', 'federationId', 'groupId', 'reportid', 'datasetId',config);
+        }
+
+        Test.stopTest();
+
+        System.assertEquals('someToken', result.token, 'Wrong reportid retrieved!');
+        System.assertEquals('1561019567', result.expiration, 'Wrong datasetId name retrieved!');
+
+    }
+
+    @IsTest
+    private static void getEmbedToken_expiresOnNotInCacheTest() {
+
+        User testUser = [SELECT Id FROM User WHERE Email = 'petr.novak.test.xyz@somedomain.xyz.com'];
+
+        PowerBiCtrl.EmbedTokenResult result = null;
+
+        Test.startTest();
+
+
+        System.runAs(testUser) {
+
+            Test.setMock(HttpCalloutMock.class, new PowerBICalloutMockProvider());
+            PowerBI_Config__c config = PowerBiCtrl.getPowerBICredentials('TreasuryDashboard');
+
+
+            Cache.SessionPartition  sessionPartition = Cache.Session.getPartition('local.PowerBiSession');
+            if(sessionPartition != null) {
+                sessionPartition.put('reportid', 'servicePrincipalSomeKey');
+
+            }
+
+
+            result = TreasuryDashboardCtrl.getEmbedToken('access_token', 'federationId', 'groupId', 'reportid', 'datasetId',config);
+        }
+
+        Test.stopTest();
+
+        System.assertEquals('someToken', result.token, 'Wrong reportid retrieved!');
+        System.assertEquals('1561019567', result.expiration, 'Wrong datasetId name retrieved!');
+
+    }
+
+
+    @IsTest
+    private static void getEmbedToken_errorTest() {
+
+        User testUser = [SELECT Id FROM User WHERE Email = 'petr.novak.test.xyz@somedomain.xyz.com'];
+
+        PowerBiCtrl.EmbedTokenResult result = null;
+        Exception testException = null;
+
+        Test.startTest();
+
+        System.runAs(testUser) {
+
+            Test.setMock(HttpCalloutMock.class, new PowerBICalloutMockProvider.PowerBIEmbeddedTokenErrorMock());
+            PowerBI_Config__c config = PowerBiCtrl.getPowerBICredentials('TreasuryDashboard');
+
+            try{
+                result = TreasuryDashboardCtrl.getEmbedToken('access_token', 'federationId', 'groupId', 'reportId', 'datasetId',config);
+            }catch(Exception e) {
+                testException = e;
+            }
+
+                    }
+
+        Test.stopTest();
+
+        System.assertEquals(true, testException.getMessage().contains('No HTTP resource was found that matches the request URI.'));
 
     }
 

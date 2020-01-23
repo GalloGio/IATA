@@ -1,27 +1,38 @@
 
 <template>
 
-    <!-- IFRAMES CONTAINER -->
-    <div class="slds-grid slds-wrap slds-gutters_direct-medium">
+    <div if:false={loading}>
+        <!-- IFRAMES CONTAINER -->
+        <div class="slds-grid slds-wrap slds-gutters_direct-medium">
 
-        <!-- STANDARD DASHBOARD -->
-        <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-m-vertical_small dashboardContainer">
+            <!-- STANDARD DASHBOARD -->
+            <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-m-vertical_small dashboardContainer">
 
-            <c-portal-treasury-dashboard-iframe application-name={applicationName} report-name={reportName} user-id={userId}></c-portal-treasury-dashboard-iframe>
+                <c-portal-treasury-dashboard-iframe power-bi-config={powerBiConfig} access-token={accessToken} application-name={applicationName} report-name={reportName} user-id={userId}></c-portal-treasury-dashboard-iframe>
+
+            </div>
+            <!-- STANDARD DASHBOARD END -->
+
+            <!-- PREMIUM DASHBOARD -->
+            <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-m-vertical_small dashboardContainer">
+
+                <c-portal-treasury-dashboard-iframe power-bi-config={powerBiConfig} access-token={accessToken} application-name={applicationName} report-name={premiumReportName} user-id={userId} contact-id={contactId} is-premium-user={isPremiumUser} td-premium-service={tdPremiumService}></c-portal-treasury-dashboard-iframe>
+
+            </div>
+            <!-- PREMIUM DASHBOARD END -->
 
         </div>
-        <!-- STANDARD DASHBOARD END -->
-
-        <!-- PREMIUM DASHBOARD -->
-        <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-m-vertical_small dashboardContainer">
-
-            <c-portal-treasury-dashboard-iframe application-name={applicationName} report-name={premiumReportName} user-id={userId} contact-id={contactId} is-premium-user={isPremiumUser} td-premium-service={tdPremiumService}></c-portal-treasury-dashboard-iframe>
-
-        </div>
-        <!-- PREMIUM DASHBOARD END -->
-
+        <!-- IFRAMES CONTAINER END -->
     </div>
-    <!-- IFRAMES CONTAINER END -->
 
+    <div if:true={loading}>
+        <div class="slds-grid slds-wrap slds-gutters_direct-medium">
+            <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-m-vertical_small dashboardContainer">
+                <div class="slds-m-around_xx-large ">
+                    <lightning-spinner class="spinnerContainer" alternative-text="Loading" size="medium"></lightning-spinner>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </template>

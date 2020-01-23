@@ -1,38 +1,39 @@
 @IsTest
-public class TreasuryDashboardPowerBiPageCtrlTest {
+public with sharing class TreasuryDashboardPowerBiReportPageCtTst {
 
     @TestSetup
     private static void setup() {
 
         PowerBI_Cred__c cred = new PowerBI_Cred__c();
-        cred.Name = 'TreasuryDashboard';
-        cred.Dev_Configuration__c = 'TreasuryDashboard_PowerBI_Dev';
-        cred.Prod_Configuration__c = 'TreasuryDashboard_PowerBI_Production';
-
+        cred.Name = 'TreasuryDashboardReport';
+        cred.Dev_Configuration__c = 'TreasuryDashboardReport_PowerBI_Dev';
+        cred.Prod_Configuration__c = 'TreasuryDashboardReport_PowerBI_Prod';
         insert cred;
 
         List<PowerBI_Config__c> configsToInsert = new List<PowerBI_Config__c>();
 
         PowerBI_Config__c configDev = new PowerBI_Config__c();
-        configDev.Name = 'TreasuryDashboard_PowerBI_Dev';
+        configDev.Name = 'TreasuryDashboardReport_PowerBI_Dev';
         configDev.ClientId__c = 'some-client-id';
+        configDev.Client_secret__c = 'some-client-secret';
         configDev.Tenant_Id__c = 'some-tennt-id';
         configDev.Username__c = 'some.username@iata.org';
         configDev.Resource__c = 'https://analysis.windows.net/powerbi/api';
         configDev.Password__c = 'some-password';
-        configDev.Application_Identifier__c = 'TDdev';
+        configDev.Application_Identifier__c = 'TDRepDev';
         configDev.Details_Resource__c = 'https://api.powerbi.com/v1.0/myorg';
         configDev.Report_Resource__c = 'https://app.powerbi.com';
         configsToInsert.add(configDev);
 
         PowerBI_Config__c configProd = new PowerBI_Config__c();
-        configProd.Name = 'TreasuryDashboard_PowerBI_Production';
+        configProd.Name = 'TreasuryDashboardReport_PowerBI_Prod';
         configProd.ClientId__c = 'some-client-id-prod';
+        configProd.Client_secret__c = 'some-client-secret';
         configProd.Tenant_Id__c = 'some-tenant-id-prod';
         configProd.Username__c = 'some.username.prod@iata.org';
         configProd.Resource__c = 'https://analysis.windows.net/powerbi/api';
         configProd.Password__c = 'some-password-prod';
-        configProd.Application_Identifier__c = 'TDprod';
+        configProd.Application_Identifier__c = 'TDRepProd';
         configProd.Details_Resource__c = 'https://api.powerbi.com/v1.0/myorg';
         configProd.Report_Resource__c = 'https://app.powerbi.com';
         configsToInsert.add(configProd);
@@ -126,10 +127,11 @@ public class TreasuryDashboardPowerBiPageCtrlTest {
         return testUser;
     }
 
+
     @IsTest
     private static void getPageParams() {
         Test.startTest();
-        PageReference pageRef = Page.TreasuryDashboardPowerBiPage;
+        PageReference pageRef = Page.TreasuryDashboardPowerBiReportPage;
         Test.setCurrentPage(pageRef);
         ApexPages.currentPage().getParameters().put('tokenType', 'tokenType');
         ApexPages.currentPage().getParameters().put('embedUrl', 'embedUrl');
@@ -137,10 +139,9 @@ public class TreasuryDashboardPowerBiPageCtrlTest {
         ApexPages.currentPage().getParameters().put('objectId', 'objectId');
         ApexPages.currentPage().getParameters().put('objectId', 'objectId');
         ApexPages.currentPage().getParameters().put('groupId', 'groupId');
-        ApexPages.currentPage().getParameters().put('datasetId', 'datasetId');
         ApexPages.currentPage().getParameters().put('expiration', 'expiration');
 
-        TreasuryDashboardPowerBiPageCtrl pageController = new TreasuryDashboardPowerBiPageCtrl();
+        TreasuryDashboardPowerBiReportPageCtrl pageController = new TreasuryDashboardPowerBiReportPageCtrl();
 
 
         System.assertEquals(pageController.tokenType, 'tokenType');
@@ -148,7 +149,6 @@ public class TreasuryDashboardPowerBiPageCtrlTest {
         System.assertEquals(pageController.accessToken, 'accessToken');
         System.assertEquals(pageController.objectId, 'objectId');
         System.assertEquals(pageController.groupId, 'groupId');
-        System.assertEquals(pageController.datasetId, 'datasetId');
         System.assertEquals(pageController.expiration, 'expiration');
         System.assertEquals(pageController.redirect(), null);
         Test.stopTest();
@@ -167,7 +167,7 @@ public class TreasuryDashboardPowerBiPageCtrlTest {
 
             Test.setMock(HttpCalloutMock.class, new PowerBICalloutMockProvider());
 
-            refreshResultString = TreasuryDashboardPowerBiPageCtrl.refreshEmbedToken('groupId', 'reportId', 'datasetId');
+            refreshResultString = TreasuryDashboardPowerBiReportPageCtrl.refreshEmbedToken('groupId', 'reportId');
 
         }
 

@@ -1,9 +1,8 @@
-<apex:page id="TreasuryDashboardPowerBiPage" controller="TreasuryDashboardPowerBiPageCtrl" showHeader="false" showChat="false" sideBar="false" action="{!redirect}">
-
+<apex:page id="TreasuryDashboardPowerBiReportPage" controller="TreasuryDashboardPowerBiReportPageCtrl" showHeader="false" showChat="false" sideBar="false" action="{!redirect}">
     <apex:includeScript value="{!$Resource.PBIJS}"/>
 
     <div>
-        <div id="dashboard" style="position:absolute; height:100%; width:100%"></div>
+        <div id="paginatedReport" style="position:absolute; height:100%; width:100%"></div>
     </div>
 
     <style type="text/css">
@@ -12,12 +11,11 @@
                 border:none;
             }
 
-        </style>
-
+    </style>
 
     <script>
 
-        let element = document.getElementById('dashboard');
+        let element = document.getElementById('paginatedReport');
 
         let models = window['powerbi-client'].models;
         let obj = "{!objectId}";
@@ -25,7 +23,6 @@
         let type = "{!tokenType}";
         let embedUrl = "{!embedUrl}";
         let groupId = "{!groupId}";
-        let datasetId = "{!datasetId}";
         let expiration = "{!expiration}";
 
         let typeOfToken = 0;
@@ -36,11 +33,12 @@
             typeOfToken = models.TokenType.Embed;
         }
 
-        /*console.log('embedUrl:: ' , embedUrl);
+
+        console.log('ON PAGE');
+        console.log('embedUrl:: ' , embedUrl);
         console.log('obj:: ', obj);
         console.log('token:: ' , token);
         console.log('groupId: ', groupId);
-        console.log('datasetId: ', datasetId);*/
 
 
         var embedConfiguration = {
@@ -48,7 +46,6 @@
             type: "report",
             embedUrl: "{!embedUrl}",
             tokenType: typeOfToken,
-            pageView: "actualSize",
             accessToken: "{!accessToken}",
             settings : {
                 filterPaneEnabled: false,
@@ -68,13 +65,22 @@
         var expDate = new Date(expiration);
         console.log('expiration: ', expiration);
 
-        report.off("loaded");
+        //normally we would use this piece of code, but there is error in promise in loaded powerbi.js
+        /*report.off("loaded");
         report.on("loaded", function() {
-            // Set token expiration listener (expDate, minutesBeforeExpiration, reportId, groupId, datasetId)
-            setTokenExpirationListener(expDate, 3, obj, groupId, datasetId);
+            // Set token expiration listener (expDate, minutesBeforeExpiration, reportId, groupId)
+            setTokenExpirationListener(expDate, 3, obj, groupId);
+        });*/
+
+        //this is workaround
+        window.addEventListener("DOMContentLoaded",
+        function() {
+            setTokenExpirationListener(expDate, 3, obj, groupId);
         });
 
-        function setTokenExpirationListener(tokenExpiration, minutesToRefresh, reportId, groupId, datasetId){
+
+
+        function setTokenExpirationListener(tokenExpiration, minutesToRefresh, reportId, groupId){
             console.log('setting token expiration');
             // get current time
             var currentTime = Date.now();
@@ -86,25 +92,25 @@
 
             // if token already expired, generate new token and set the access token
             if (timeout<=0) {
-                updateEmbedToken(reportId, groupId, datasetId);
+                updateEmbedToken(reportId, groupId);
             }
             // set timeout so minutesToRefresh minutes before token expires, token will be updated
             else {
                 console.log("Report Embed Token will be updated in " + timeout + " milliseconds.");
                 setTimeout(function() {
-                    updateEmbedToken(reportId, groupId, datasetId);
+                    updateEmbedToken(reportId, groupId);
                 }, timeout);
             }
 
 
-            function updateEmbedToken(reportId, groupId, datasetId) {
+            function updateEmbedToken(reportId, groupId) {
                 console.log('updating embed token');
                 Visualforce.remoting.Manager.invokeAction(
-                    '{!$RemoteAction.TreasuryDashboardPowerBiPageCtrl.refreshEmbedToken}', reportId, groupId, datasetId,
+                    '{!$RemoteAction.TreasuryDashboardPowerBiReportPageCtrl.refreshEmbedToken}', reportId, groupId,
                     function(result, event){
                         if (event.status) {
                             console.log('updateEmbedToken OK');
-                            setNewEmbedToken(result, groupId, reportId, datasetId);
+                            setNewEmbedToken(result, groupId, reportId);
                             //response OK
                         } else if (event.type === 'exception') {
                             //exception
@@ -119,9 +125,9 @@
             }
 
 
-            function setNewEmbedToken(result, groupId, reportId, datasetId) {
+            function setNewEmbedToken(result, groupId, reportId) {
                 // Get a reference to the embedded report HTML element
-                var embedContainer = document.getElementById('dashboard');
+                var embedContainer = document.getElementById('paginatedReport');
 
                 // Get a reference to the embedded report.
                 var report = powerbi.get(embedContainer);
@@ -136,14 +142,13 @@
 
                 report.setAccessToken(newToken)
                     .then(function() {
-                        // Set token expiration listener (expDate, minutesBeforeExpiration, reportId, groupId, datasetId)
-                        setTokenExpirationListener(newExpDate, 3, reportId, groupId, datasetId);
+                        // Set token expiration listener (expDate, minutesBeforeExpiration, reportId, groupId)
+                        setTokenExpirationListener(newExpDate, 3, reportId, groupId);
                     });
             }
     }
 
-        </script>
-
+    </script>
 
 
 </apex:page>

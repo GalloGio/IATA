@@ -1,5 +1,5 @@
 @IsTest
-public with sharing class PowerBICalloutMockProvider implements HttpCalloutMock{
+public without sharing class PowerBICalloutMockProvider implements HttpCalloutMock{
     public HTTPResponse respond(HTTPRequest req) {
 
         HTTPResponse res = new HTTPResponse();
@@ -52,6 +52,22 @@ public with sharing class PowerBICalloutMockProvider implements HttpCalloutMock{
             if (req.getEndpoint().contains('/oauth2/token')) {
                 Long expireTime = (System.currentTimeMillis()/1000) + 3600;
                 String body = '{"error": "user_password_expired","access_token":"testTokenString","refresh_token":"refreshTokenString","expires_on":'+ expireTime + '}';
+                res.setBody(body);
+                res.setStatusCode(400);
+            }
+
+            return res;
+        }
+    }
+
+    public class PowerBIEmbeddedTokenErrorMock implements HttpCalloutMock {
+
+        public HTTPResponse respond(HTTPRequest req) {
+
+            HTTPResponse res = new HTTPResponse();
+            res.setHeader('Content-type', 'application/json');
+            if (req.getEndpoint().contains('GenerateToken')) {
+                String body = '{"error": {"code":"404", "message":"No HTTP resource was found that matches the request URI."} }';
                 res.setBody(body);
                 res.setStatusCode(400);
             }

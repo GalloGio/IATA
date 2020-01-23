@@ -1,38 +1,35 @@
-global with sharing class TreasuryDashboardPowerBiPageCtrl {
+global with sharing class TreasuryDashboardPowerBiReportPageCtrl {
 
     public String embedUrl{get;set;}
     public String accessToken{get;set;}
     public String objectId{get;set;}
     public String tokenType{get;set;}
     public String groupId{get;set;}
-    public String datasetId{get;set;}
     public String expiration{get; set;}
 
 
-    public TreasuryDashboardPowerBiPageCtrl() {
+    public TreasuryDashboardPowerBiReportPageCtrl() {
         this.embedUrl = Apexpages.currentPage().getParameters().get('embedUrl');
         this.accessToken = Apexpages.currentPage().getParameters().get('accessToken');
         this.objectId = Apexpages.currentPage().getParameters().get('objectId');
         this.tokenType = Apexpages.currentPage().getParameters().get('tokenType');
         this.groupId = Apexpages.currentPage().getParameters().get('groupId');
-        this.datasetId = Apexpages.currentPage().getParameters().get('datasetId');
         this.expiration = Apexpages.currentPage().getParameters().get('expiration');
     }
 
-
     @RemoteAction
-    global static String  refreshEmbedToken(String reportId, String groupId, String datasetId) {
+    global static String  refreshEmbedToken(String reportId, String groupId) {
         System.debug('refreshEmbedToken');
         String toReturn = '';
 
-        PowerBI_Config__c conf = PowerBiCtrl.getPowerBICredentials('TreasuryDashboard');
+        PowerBI_Config__c conf = PowerBiCtrl.getPowerBICredentials('TreasuryDashboardReport');
 
-        PowerBiCtrl.OAuthResult result = TreasuryDashboardCtrl.getAccessToken(conf);
+        PowerBiCtrl.ServicePrincipalAccessTokenResult result = TreasuryDashboardReportCtrl.getServicePrincipalAccessToken(conf);
         String accessToken = result.access_token;
 
         if(String.isNotBlank(accessToken)) {
             String userId = UserInfo.getUserId();
-            PowerBiCtrl.EmbedTokenResult resultEmbed = TreasuryDashboardCtrl.getEmbedToken(accessToken, userId, groupId, reportId, datasetId, conf);
+            PowerBiCtrl.ServicePrincipalEmbedTokenResult resultEmbed = TreasuryDashboardReportCtrl.getServicePrincipalEmbedToken(accessToken, userId, groupId, reportId, conf);
             toReturn = resultEmbed.token+'expiration='+resultEmbed.expiration;
 
             return toReturn;
@@ -40,7 +37,6 @@ global with sharing class TreasuryDashboardPowerBiPageCtrl {
 
         return toReturn;
     }
-
 
     public PageReference redirect() {
         return null;

@@ -3,6 +3,21 @@ public without sharing class TreasuryDashboardReportCtrl {
     public static String SERVICE_PRINCIPAL_ACCESS_TOKEN = 'PrincipalAccessToken';
     public static String SERVICE_PRINCIPAL_EXPIERS_ON = 'PrincipalExpiresOn';
 
+
+
+    @AuraEnabled
+    public static PowerBI_Config__c getPowerBICredentials(String configurationName) {
+        return PowerBiCtrl.getPowerBICredentials(configurationName);
+    }
+
+
+    @AuraEnabled
+    public static PowerBiCtrl.ReportDetails getReportConfigDetails(String reportName) {
+        return PowerBiCtrl.getReportConfigDetails(reportName);
+    }
+
+
+
     @AuraEnabled
     public static PowerBiCtrl.ServicePrincipalAccessTokenResult getServicePrincipalAccessToken(PowerBI_Config__c conf) {
 
@@ -122,7 +137,6 @@ public without sharing class TreasuryDashboardReportCtrl {
 
                         if(expiresonDatetime.addMinutes(-10) < Datetime.now()) {
                             //token expires in less than 10 minutes - get new
-                            System.debug('expireson check');
                             result = PowerBiCtrl.getServicePrincipalEmbedToken(accessToken, userId, groupId, reportId, conf);
                             saveEmbedTokenInSessionCache(sessionPartition, result, cacheKey);
 

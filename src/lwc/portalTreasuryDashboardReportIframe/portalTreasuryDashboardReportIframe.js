@@ -4,8 +4,8 @@ import { LightningElement, track } from 'lwc';
 import { navigateToPage, getPageName } from 'c/navigationUtils';
 
 import userId from '@salesforce/user/Id';
-import getPowerBICredentials from '@salesforce/apex/PowerBiCtrl.getPowerBICredentials';
-import getReportConfigDetails from '@salesforce/apex/PowerBiCtrl.getReportConfigDetails';
+import getPowerBICredentials from '@salesforce/apex/TreasuryDashboardReportCtrl.getPowerBICredentials';
+import getReportConfigDetails from '@salesforce/apex/TreasuryDashboardReportCtrl.getReportConfigDetails';
 import getServicePrincipalAccessToken from '@salesforce/apex/TreasuryDashboardReportCtrl.getServicePrincipalAccessToken';
 import getServicePrincipalEmbedToken from '@salesforce/apex/TreasuryDashboardReportCtrl.getServicePrincipalEmbedToken';
 
@@ -125,9 +125,9 @@ export default class PortalTreasuryDashboardReportIframe extends LightningElemen
                                         this.isPremiumUser = result.isPremiumUser;
 
 
-                                        //TODO:temporal
-                                        this.isStandardUser = true;
-                                        this.isPremiumUser = false;
+                                        //TODO:temporal - delete this
+                                        this.isStandardUser = false;
+                                        this.isPremiumUser = true;
 
 
                                         let isEligible = false;
@@ -158,7 +158,7 @@ export default class PortalTreasuryDashboardReportIframe extends LightningElemen
 
                                                                 if(result.token) {
                                                                     console.log('sp embed token:: ', result.token);
-                                                                    this.createSrcAddress(this.reportId, this.groupId, result.token, this.reportId, this.tokenType, this.conf);
+                                                                    this.createSrcAddress(this.reportId, this.groupId, result.token, this.reportId, this.tokenType, this.conf, result.expiration);
 
                                                                 }else{
                                                                     //embed token is empty
@@ -241,13 +241,13 @@ export default class PortalTreasuryDashboardReportIframe extends LightningElemen
         console.log('Report iframe error: ', message);
     }
 
-    createSrcAddress(reportId, groupId, accessToken, objectId, tokenType, conf) {
+    createSrcAddress(reportId, groupId, accessToken, objectId, tokenType, conf, expiration) {
         if(this.reportParams) {
             console.log('in report params');
             reportId += this.reportParams;
         }
 
-        let address= '/TreasuryDashboardPowerBiPage?embedUrl='+encodeURIComponent(conf.Report_Resource__c + '?reportId=' + reportId) +'&accessToken='+accessToken+'&objectId='+objectId+'&tokenType='+tokenType;
+        let address= '/TreasuryDashboardPowerBiReportPage?embedUrl='+encodeURIComponent(conf.Report_Resource__c + '?reportId=' + reportId) +'&accessToken='+accessToken+'&objectId='+objectId+'&tokenType='+tokenType+'&groupId='+groupId+'&expiration='+expiration;
         this.powerBiSource = address;
         this.loading = false;
     }

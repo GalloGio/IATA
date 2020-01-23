@@ -127,6 +127,45 @@ public class TreasuryDashboardReportCtrlTest {
     }
 
 
+    @IsTest
+    private static void getPowerBICredentialsTest() {
+
+        User testUser = [SELECT Id FROM User WHERE Email = 'petr.novak.xyz.abc.test@somedomain.com'];
+
+        PowerBI_Config__c config = null;
+
+        Test.startTest();
+        System.runAs(testUser) {
+            config = TreasuryDashboardReportCtrl.getPowerBICredentials('TreasuryDashboardReport');
+        }
+        Test.stopTest();
+
+        System.assertEquals(false, config == null, 'PowerBI config should not be null!');
+
+    }
+
+
+    @IsTest
+    private static void getReportConfigDetailsTest() {
+
+        User testUser = [SELECT Id FROM User WHERE Email = 'petr.novak.xyz.abc.test@somedomain.com'];
+
+        PowerBiCtrl.ReportDetails result = null;
+
+        Test.startTest();
+
+        System.runAs(testUser) {
+            result = TreasuryDashboardReportCtrl.getReportConfigDetails('Treasury_Dashboard_Premium');
+        }
+
+        Test.stopTest();
+
+        System.assertEquals(true, result.reportId != null, 'ReportId should not be null!');
+        System.assertEquals(true, result.groupId != null, 'GroupId should not be null!');
+
+    }
+
+
 
     @IsTest
     private static void getServicePrincipalAccessToken_newTokenTest() {
@@ -347,10 +386,6 @@ public class TreasuryDashboardReportCtrlTest {
         PowerBI_Config__c conf = PowerBiCtrl.getPowerBICredentials('TreasuryDashboardReport');
 
         PowerBiCtrl.ServicePrincipalEmbedTokenResult result = null;
-
-        //current time + one hour
-        Datetime now = Datetime.now().addMinutes(60);
-        String expTime = now.formatGMT('yyyy-MM-dd\'T\'HH:mm:ss\'Z\'');
 
         Test.startTest();
 

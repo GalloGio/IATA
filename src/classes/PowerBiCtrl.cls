@@ -23,7 +23,7 @@ public without sharing class PowerBiCtrl {
         @AuraEnabled
         public String expiration {get; set;}
         @AuraEnabled
-        public String error {get; set;}
+        public EmbedError error {get; set;}
     }
 
     public class ReportDetailResult {
@@ -119,7 +119,6 @@ public without sharing class PowerBiCtrl {
     }
 
 
-    @AuraEnabled
     public static PowerBI_Config__c getPowerBICredentials(String configurationName) {
         PowerBI_Cred__c powerBiCred = PowerBI_Cred__c.getInstance(configurationName);
         if(powerBiCred != null) {
@@ -140,7 +139,6 @@ public without sharing class PowerBiCtrl {
     }
 
 
-    @AuraEnabled
     public static ReportDetails getReportConfigDetails(String reportName) {
         ReportDetails detailsToReturn = new ReportDetails();
 
@@ -205,7 +203,6 @@ public without sharing class PowerBiCtrl {
 
         Http h = new Http();
         HttpResponse res = h.send(req);
-        System.debug('getNewAccessToken:: '+res.getBody());
         OAuthResult result = (OAuthResult)(JSON.deserialize(res.getBody(), OAuthResult.class));
 
         return result;
@@ -258,7 +255,6 @@ public without sharing class PowerBiCtrl {
         req.setHeader('Authorization', 'Bearer ' + accessToken);
 
         HttpResponse res = h.send(req);
-        System.debug('getDataset:: '+res.getBody());
         DatasetDetailResult result = (DatasetDetailResult)(JSON.deserialize(res.getBody(), DatasetDetailResult.class));
 
         return result;
@@ -307,7 +303,6 @@ public without sharing class PowerBiCtrl {
         req.setBody(sBody);
 
         HttpResponse res = h.send(req);
-        System.debug('getEmbedToken:: '+res.getBody());
         EmbedTokenResult result = (EmbedTokenResult)(JSON.deserialize(res.getBody(), EmbedTokenResult.class));
 
         return result;
@@ -336,9 +331,7 @@ public without sharing class PowerBiCtrl {
 
         Http h = new Http();
         HttpResponse res = h.send(req);
-        System.debug('sp access token:: ' + res.getBody());
         ServicePrincipalAccessTokenResult result = (ServicePrincipalAccessTokenResult)(JSON.deserialize(res.getBody(), ServicePrincipalAccessTokenResult.class));
-        System.debug('sp access token result:: ' + result);
 
         return result;
 
@@ -368,12 +361,8 @@ public without sharing class PowerBiCtrl {
         req.setHeader('Accept', 'application/json');
         req.setBody(sBody);
 
-        System.debug('sp embed token request:: ' + req);
-
         HttpResponse res = h.send(req);
-        System.debug('res body:: ' + res.getBody());
         ServicePrincipalEmbedTokenResult result = (ServicePrincipalEmbedTokenResult)(JSON.deserialize(res.getBody(), ServicePrincipalEmbedTokenResult.class));
-        System.debug('sp embed token result:: ' + result);
 
         return result;
 

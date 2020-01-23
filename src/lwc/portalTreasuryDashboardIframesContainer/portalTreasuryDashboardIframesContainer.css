@@ -1,8 +1,10 @@
-/**
-*CSS
-*/
 
 .dashboardContainer {
     min-height:250px;
+}
+
+.spinnerContainer {
+    height: 250px;
+    background-color: #f0f2f5 !important;
 }
 
