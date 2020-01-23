@@ -1,5 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sharingCriteriaRules>
+        <fullName>Training_PM</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>Training PM</label>
+        <sharedTo>
+            <group>Training_PM</group>
+        </sharedTo>
+        <booleanFilter>1 OR 2</booleanFilter>
+        <criteriaItems>
+            <field>First_Campaign__c</field>
+            <operation>equals</operation>
+            <value>701w0000001SolN</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Campaign_comments__c</field>
+            <operation>equals</operation>
+            <value>IATA Training In-Company Form</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
     <sharingOwnerRules>
         <fullName>CorporateCommunications</fullName>
         <accessLevel>Edit</accessLevel>
