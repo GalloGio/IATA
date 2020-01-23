@@ -118,7 +118,7 @@ private class CaseIFAPHandlerTest {
 
 		List<String> result = CaseIFAPHandler.getContactInfo(listIds);
 		// Assert needs to be changed with correct responde from Mulesoft
-		System.assertEquals('The status code returned was not expected: 400 - Error validating JSON. Error: - Invalid type Integer, expected String for state', result[0]);
+		System.assertEquals(null, result[0]);
 		Test.stopTest();
 	}
 
@@ -142,6 +142,32 @@ private class CaseIFAPHandlerTest {
 
 		for(Case cs : cases){
 			listIds.add(cs.Id);
+		}
+
+		List<String> result = CaseIFAPHandler.getContactInfo(listIds);
+		// Assert needs to be changed with correct responde from Mulesoft
+		System.assertEquals(null, result[0]);
+		Test.stopTest();
+	}
+
+	@isTest
+	static void getContactInfoForUsersErrorTest() {
+
+		List<User> users = new List<User>([SELECT Id FROM User WHERE Alias = 'alias']);
+		List<Id> listIds = new List<Id>();
+		String body = '{"apiStatus": {"transactionId": "ac26fd60-103c-11ea-8586-06e8b32e1e4c","api": "","code": "500","description": "Error connecting to GXA system api","title": "TARGET_SYSTEM_CONNECTIVITY"}}';
+
+		ISSP_AMC_MockHttp_Response_generator fakeResponse = new ISSP_AMC_MockHttp_Response_generator(500,
+												 'Complete',
+												 body,
+												 null);
+
+		Test.setMock(HttpCalloutMock.class, fakeResponse);
+
+		Test.startTest();
+
+		for(User us : users){
+			listIds.add(us.Id);
 		}
 
 		List<String> result = CaseIFAPHandler.getContactInfo(listIds);
