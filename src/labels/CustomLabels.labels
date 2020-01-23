@@ -26073,6 +26073,30 @@ Separate legal entities cannot share the same Legal Name.</value>
         <value>Joining form</value>
     </labels>
     <labels>
+        <fullName>ISSP_AP_New_Change_Bank_Details</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_New_Change_Bank_Details</shortDescription>
+        <value>New Change of bank details</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AP_New_Change_Req</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_New_Change_Req</shortDescription>
+        <value>New Change Request</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AP_New_Joining_App</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_New_Joining_App</shortDescription>
+        <value>New Joining Application</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AP_Partnership_Download_PDF</fullName>
         <categories>ISSP AP</categories>
         <language>en_US</language>
