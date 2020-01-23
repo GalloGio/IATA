@@ -38352,11 +38352,25 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <value>- Select the Type of Organization -</value>
     </labels>
     <labels>
+        <fullName>OneId_GADM_Terms_of_Use_Link</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId GADM Terms of Use Link</shortDescription>
+        <value>https://www.iata.org/en/terms/</value>
+    </labels>
+    <labels>
         <fullName>OneId_GADM_Troubleshooting</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId GADM Troubleshooting</shortDescription>
         <value>Troubleshooting</value>
+    </labels>
+    <labels>
+        <fullName>OneId_GADM_Troubleshooting_Link</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId GADM Troubleshooting Link</shortDescription>
+        <value>mailto:idx@iata.org</value>
     </labels>
     <labels>
         <fullName>OneId_GSAWarning</fullName>

@@ -20128,8 +20128,16 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>OneId_Fred_Select_Type_of_Company</name>
     </customLabels>
     <customLabels>
+        <label><!-- OneId GADM Terms of Use Link --></label>
+        <name>OneId_GADM_Terms_of_Use_Link</name>
+    </customLabels>
+    <customLabels>
         <label><!-- OneId GADM Troubleshooting --></label>
         <name>OneId_GADM_Troubleshooting</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId GADM Troubleshooting Link --></label>
+        <name>OneId_GADM_Troubleshooting_Link</name>
     </customLabels>
     <customLabels>
         <label>หากไม่พบบริษัทหลังจากใส่รหัส GSA และประเทศของคุณแล้ว โปรดตรวจสอบความถูกต้องของข้อมูลอีกครั้ง หรือขอคำแนะนำจากเราที่ &lt;ahref=&quot;http://theiatahub.force.com/iatapkb/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US&quot; target=&quot;_blank&quot;&gt;troubleshooting guide&lt;/a&gt;</label>
