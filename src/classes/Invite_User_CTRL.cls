@@ -214,7 +214,7 @@ public without sharing class Invite_User_CTRL {
 			emailTemplate = 'Invite_user_new';
 			linkSuffix = '/login/SelfRegister?serviceName=GADM&token=' + obj.get('Id');
 			Invitation__c invitation = (Invitation__c) obj;
-			emailAddress = invitation.Email__c.endsWithIgnoreCase('.inactive') ? '' : invitation.Email__c;
+			emailAddress = String.isBlank(invitation.Email__c) || invitation.Email__c.endsWithIgnoreCase('.inactive') ? '' : invitation.Email__c;
 			whatId = invitation.Id;
 			accountId = invitation.AccountId__c;
 
@@ -233,7 +233,7 @@ public without sharing class Invite_User_CTRL {
 			emailTemplate = 'Invite_user_already_exists';
 			linkSuffix = '/login/';
 			Contact con = (Contact) obj;
-			emailAddress = con.Email.endsWithIgnoreCase('.inactive') ? '' : con.Email;
+			emailAddress = String.isBlank(con.Email) || con.Email.endsWithIgnoreCase('.inactive') ? '' : con.Email;
 			whatId = con.Id;
 			accountId = existingUserInvitationAccountId;
 		}
