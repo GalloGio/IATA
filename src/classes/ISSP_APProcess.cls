@@ -1577,7 +1577,6 @@ global without sharing class ISSP_APProcess {
 		List<SelectOption> options = new List<SelectOption>();
 		Set<String> sISOCode = New Set<String>();
 
-		strOperationType = Apexpages.currentPage().getParameters().get('strOT');
 
 		if(strOperationType!=AMS_Utils.passParticipation || (strOperationType==AMS_Utils.passParticipation && isGSSAUser)){
 				strLOB = null;

@@ -1053,29 +1053,36 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 	if(trigger.isAfter && Trigger.isUpdate) {
 
 		// START PASS
-		Map<Id, AP_Process_Form__c> casePassCountryMap = new Map<Id, AP_Process_Form__c>();
-
-		List<AP_Process_Form__c> apFormList = [SELECT Id, RecordTypeId FROM AP_Process_Form__c WHERE Case__c IN:[SELECT Id,CaseNumber,ParentId, Status FROM Case WHERE Status = 'Closed' AND ParentId = null AND Reason1__c LIKE 'PASS Participation%']];
-
-			for(Case c : Trigger.new) {
-				Case oldCase = Trigger.oldMap.get(c.Id);
-				if(c.Status == 'Closed' && oldCase.Status != 'Closed'){
-					for(AP_Process_Form__c form : apFormList) {
-						casePassCountryMap.put(form.Id,form);
-					}
-				}
-			}
-
-		if(casePassCountryMap != null && casePassCountryMap.size() > 0) {
-			if((Limits.getLimitQueueableJobs() - Limits.getQueueableJobs()) > 0 && !System.isFuture() && !System.isBatch()) {
-				System.enqueueJob(new PlatformEvents_Helper(casePassCountryMap, 'Airline_Account__e', 'AP_Process_Form__c', trigger.isInsert, true, trigger.isDelete, trigger.isUndelete));
-			} else {
-				PlatformEvents_Helper.publishEvents(casePassCountryMap, 'Airline_Account__e', 'AP_Process_Form__c', trigger.isInsert, true, trigger.isDelete, trigger.isUndelete);
+		List<Case> passCaseList = new List<Case>();
+		for(Case cs : Trigger.New){
+			if(cs.Status == 'Closed' && cs.Reason1__c.startsWith('PASS Participation')){
+				passCaseList.add(cs);
 			}
 		}
+		if(passCaseList.size() > 0){
+			Map<Id, AP_Process_Form__c> casePassCountryMap = new Map<Id, AP_Process_Form__c>();
+
+			List<AP_Process_Form__c> apFormList = [SELECT Id, RecordTypeId FROM AP_Process_Form__c WHERE Case__c IN:[SELECT Id,CaseNumber,ParentId, Status FROM Case WHERE Status = 'Closed' AND ParentId = null AND Reason1__c LIKE 'PASS Participation%']];
+
+				for(Case c : Trigger.new) {
+					Case oldCase = Trigger.oldMap.get(c.Id);
+					if(c.Status == 'Closed' && oldCase.Status != 'Closed'){
+						for(AP_Process_Form__c form : apFormList) {
+							casePassCountryMap.put(form.Id,form);
+						}
+					}
+				}
+
+			if(casePassCountryMap != null && casePassCountryMap.size() > 0) {
+				if((Limits.getLimitQueueableJobs() - Limits.getQueueableJobs()) > 0 && !System.isFuture() && !System.isBatch()) {
+					System.enqueueJob(new PlatformEvents_Helper(casePassCountryMap, 'Airline_Account__e', 'AP_Process_Form__c', trigger.isInsert, true, trigger.isDelete, trigger.isUndelete));
+				} else {
+					PlatformEvents_Helper.publishEvents(casePassCountryMap, 'Airline_Account__e', 'AP_Process_Form__c', trigger.isInsert, true, trigger.isDelete, trigger.isUndelete);
+				}
+			}
+		}
+
 		// END PASS
-
-
 	}
 	/* trigger.isAfter && Trigger.isUpdate */
 }

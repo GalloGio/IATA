@@ -3083,7 +3083,7 @@ private class ISSP_AMS_Accreditation_Test {
 																			Location_type__c, Requirement_text__c, Sort_Order__c, Name
 																		FROM AMS_Accreditation_Requirement__c
 																		WHERE Name = 'TestReq1'];
-		Test.startTest();
+		
 		System.runAs(newUser) {
 			Case testCase2 = ISSP_ObjectFactory.createNewCase();
 			testCase2.BSPCountry__c = 'Hong Kong (SAR), China';
@@ -3107,7 +3107,7 @@ private class ISSP_AMS_Accreditation_Test {
 			newForm2.Agency_Codes_Concerned__c = '2000000';
 			newForm2.Scope_of_Change__c = 'HO - Selected Branches';
 			insert newForm2;
-
+			
 			ApexPages.currentPage().getParameters().put('caseId', testCase2.Id);
 			ApexPages.currentPage().getParameters().put('isBankAccountChange', 'true');
 			ApexPages.currentPage().getParameters().put('isNoticeOfChange', 'true');
@@ -3120,7 +3120,7 @@ private class ISSP_AMS_Accreditation_Test {
 			ctrl2.newForm.Agency_Codes_Concerned__c = '2000000';
 			ctrl2.newform.Accept_terms_and_conditions__c = true;
 			ctrl2.newform.Agent_Type__c = AMS_UTILS.NEWFORM_AGENTTYPE_NO_CASH;
-
+			Test.startTest();
 			Pagereference pr1 = ctrl2.goToFinalStep();
 
 			ctrl2.isTerminatedAgent = true;
