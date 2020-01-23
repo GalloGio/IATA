@@ -20111,8 +20111,16 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>OneId_Fred_Select_Type_of_Company</name>
     </customLabels>
     <customLabels>
+        <label><!-- OneId GADM Terms of Use Link --></label>
+        <name>OneId_GADM_Terms_of_Use_Link</name>
+    </customLabels>
+    <customLabels>
         <label><!-- OneId GADM Troubleshooting --></label>
         <name>OneId_GADM_Troubleshooting</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId GADM Troubleshooting Link --></label>
+        <name>OneId_GADM_Troubleshooting_Link</name>
     </customLabels>
     <customLabels>
         <label>&quot;في حال لم يُعثر على شركة تحمل توليفة رمز وكيل المبيعات العامة (GSA) والبلد الخاصة بكم، فيُرجى التأكد من أنكم أدخلتم المعلومات الصحيحة أو استشارة &lt;a href=&quot;&quot;http://theiatahub.force.com/iatapkb/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US&quot;&quot; target=&quot;&quot;_blank&quot;&quot;&gt;دليل اكتشاف الأعطال وتصليحها&lt;/a&gt; الخاص بنا.&quot;</label>
