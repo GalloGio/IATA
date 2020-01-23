@@ -2,7 +2,7 @@
 public with sharing class IsraelDisputesCreateNewCaseTest {
 
 	public static testmethod void IsraelDisputesCreateNewCaseTest() {
-		String recordTypeId = Schema.getGlobalDescribe().get('Account').getDescribe().getRecordTypeInfosByName().get('Airline Headquarters').getRecordTypeId();
+		String recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
 
 		IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', IATA_Contry_KR__c = 'test', CASS_Import__c = 'Yes',
 															  IATA_COUNTRY_EN__c = 'testEN', IATA_Country_FR__c = 'testFR', IATA_Country_ZH__c = 'testZH',
@@ -128,7 +128,9 @@ public with sharing class IsraelDisputesCreateNewCaseTest {
 
 		test.stopTest();
 
+		List<Case> cases = [SELECT Id, BSPCountry__c FROM Case];
 		System.assertEquals(2, lstSearchAccounts.size());
 		System.assertEquals(4, lstSearchAccountsNoEntry.size());
+		System.assertEquals('GB', cases[0].BSPCountry__c);
 	}
 }

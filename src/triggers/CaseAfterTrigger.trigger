@@ -47,7 +47,6 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 		trgAccelyaRequestSetCountry = GlobalCaseTrigger__c.getValues('AT trgAccelyaRequestSetCountry').ON_OFF__c;                       //33333333333333
 		trgCase = GlobalCaseTrigger__c.getValues('AT trgCase').ON_OFF__c;                                                               //33333333333333
 		trgCaseCheckOwnerChangeForOrchestrator = GlobalCaseTrigger__c.getValues('ISSP_AMC_CaseTriggerHelper').ON_OFF__c;
-		caseEmailNotif = false;
 	}
     /**********************************************************************************************************************************/
     
@@ -835,15 +834,13 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 		/*trgCase Trigger.isInsert*/
 
 		//Sends an email notification to the Airline Email entered in the Web to Case form at http://www.iata.org/customer_portal_europe/deduction-israel.htm.
-		if(caseEmailNotif){
-			List<Id> disputeCasesToNotify = new List<Id>();
-			for (Case aCase: trigger.New){
-				if((aCase.Origin == 'Web' || aCase.Origin == 'Portal') && aCase.CaseArea__c == 'Dispute' && aCase.Airline_E_mail__c != null && aCase.RecordTypeId == IsraelDispute){
-					disputeCasesToNotify.add(aCase.Id);
-				}
+		List<Id> disputeCasesToNotify = new List<Id>();
+		for (Case aCase: trigger.New){
+			if((aCase.Origin == 'Web' || aCase.Origin == 'Portal') && aCase.CaseArea__c == 'Dispute' && aCase.Airline_E_mail__c != null && aCase.RecordTypeId == IsraelDispute){
+				disputeCasesToNotify.add(aCase.Id);
 			}
-			if(!disputeCasesToNotify.isEmpty()) IsraelDisputesCreateNewCaseCtrl.airlineEmailNotification(disputeCasesToNotify);
 		}
+		if(!disputeCasesToNotify.isEmpty()) IsraelDisputesCreateNewCaseCtrl.airlineEmailNotification(disputeCasesToNotify);
 
 		/*ANG Triggers*/
 		new ANG_CaseTriggerHandler().onAfterInsert();

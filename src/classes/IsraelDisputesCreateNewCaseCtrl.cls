@@ -68,7 +68,7 @@ public without sharing class IsraelDisputesCreateNewCaseCtrl {
 
 	}
 
-	//Inserts the Case. But sets a savepoint in case the Emails do not exist.
+	//Inserts the Case
 	@AuraEnabled
 	public static Case insertCase(Case caseToInsert, List<String> recipientsToAdd) {
 		try{

@@ -2,7 +2,7 @@
 public with sharing class PortalServiceAssTriggerTest {
 
 	public static testmethod void PortalServiceAssTriggerTest() {
-		String recordTypeId = Schema.getGlobalDescribe().get('Portal_Service_Assignment__c').getDescribe().getRecordTypeInfosByName().get('Country Assignment').getRecordTypeId();
+		String recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Portal_Service_Assignment__c', 'Country_Assignment');
 		IATA_ISO_Country__c country = new IATA_ISO_Country__c();
 		country.Name = 'Czech Republic';
 		country.ISO_Code__c = 'CS';
@@ -17,7 +17,7 @@ public with sharing class PortalServiceAssTriggerTest {
         insert country2;
 		Portal_Applications__c app = new Portal_Applications__c(Name = 'Appo', Country_Visibility_Control__c = 'SHOW'); 
 		insert app;
-		Portal_Service_Assignment__c ass = new Portal_Service_Assignment__c(ANG_Portal_Service__c = app.Id, IATA_ISO_Country__c = country.Id, RecordTypeId = recordTypeId);
+		Portal_Service_Assignment__c ass = new Portal_Service_Assignment__c(Portal_Service__c = app.Id, IATA_ISO_Country__c = country.Id, RecordTypeId = recordTypeId);
 
 		test.startTest();
 		insert ass;

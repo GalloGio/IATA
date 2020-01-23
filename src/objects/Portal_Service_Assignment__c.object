@@ -165,7 +165,7 @@
     <sharingModel>ControlledByParent</sharingModel>
     <visibility>Public</visibility>
     <fields>
-        <fullName>ANG_Portal_Service__c</fullName>
+        <fullName>Portal_Service__c</fullName>
         <externalId>false</externalId>
         <label>Portal Service</label>
         <referenceTo>Portal_Applications__c</referenceTo>
