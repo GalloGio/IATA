@@ -20132,8 +20132,16 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>OneId_Fred_Select_Type_of_Company</name>
     </customLabels>
     <customLabels>
+        <label><!-- OneId GADM Terms of Use Link --></label>
+        <name>OneId_GADM_Terms_of_Use_Link</name>
+    </customLabels>
+    <customLabels>
         <label><!-- OneId GADM Troubleshooting --></label>
         <name>OneId_GADM_Troubleshooting</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId GADM Troubleshooting Link --></label>
+        <name>OneId_GADM_Troubleshooting_Link</name>
     </customLabels>
     <customLabels>
         <label>&quot;Apabila tidak ada perusahaan yang ditemukan untuk kombinasi kode GSA dan negara Anda, pastikan Anda telah memasukkan informasi yang benar atau baca &lt;a href=&quot;&quot;http://theiatahub.force.com/iatapkb/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US&quot;&quot; target=&quot;&quot;_blank&quot;&quot;&gt;panduan pemecahan masalah&lt;/a&gt; kami&quot;</label>
