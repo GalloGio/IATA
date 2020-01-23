@@ -103,8 +103,6 @@ public with sharing class ISSP_PortalUserCreation {
 		}
 
 		Map<String,String> res;
-		//Save Account,Iso country and prefered language in a temporary contact
-		//In order to restore it after the rollback
 
 		//Save backup point before the contac is saved
 		Savepoint sPointContact = Database.setSavepoint();
@@ -124,17 +122,9 @@ public with sharing class ISSP_PortalUserCreation {
 			update con;
 		}
 		catch(Exception e){
-			//ApexPages.addMessages(e);
 			errorMessage.add(e.getMessage());
 			return false;
 		}
-		/*
-		if(res.containsKey('error')){
-			//if error occurred while creating a portal user erase the contact as well.
-			Database.rollback(sPointContact);
-			return false;
-		}
-		*/
 		return true;
 
 

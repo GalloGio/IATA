@@ -850,7 +850,6 @@ public without sharing class Order_Svc
 			}
 		}
 
-		//Get the list of field that do not allows modifications
 		Id profileId = userinfo.getProfileId();
 		String profileName=[Select Id,Name from Profile where Id=:profileId].Name;
 

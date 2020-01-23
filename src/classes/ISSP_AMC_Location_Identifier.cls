@@ -100,12 +100,7 @@ public without sharing class ISSP_AMC_Location_Identifier {
 		severity = '';
 		hasError = false;
 
-
-
-		//participation.ISSP_AMC_Submitted_Date__c = datetime.now();
-
 		ISSP_AMC_DAO.saveForm(participation, appRequirementList, step, ISSP_AMC_Constants.AMC_PAR_ACLI_CODES_LOCATION_CODE);
-		//ISSP_AMC_DAO.saveDesignatorCode(participation, appRequirementList, step);
 
 		List <Apexpages.Message> msgs = ApexPages.getMessages();
 		if(msgs != null && !msgs.isEmpty()){
@@ -141,7 +136,6 @@ public without sharing class ISSP_AMC_Location_Identifier {
 			}
 			displayMessage = true;
 		}
-		//calculateApplicationRequirementsToShow();
 		CalculateWhichComponentsToShow();
 		return null;
 	}
@@ -168,7 +162,6 @@ public without sharing class ISSP_AMC_Location_Identifier {
 
 		participation = ISSP_AMC_DAO.getCompleteDesignatorCode(participationId);
 
-		//participation = ISSP_AMC_DAO.getCompleteParticipation(ISSP_AMC_Constants.AMC_CASE_REASON_LOCATION_FORM);
 		System.debug('DB : participation ' + participation);
 		System.debug('DB : appRequirementList' + appRequirementList);
 
