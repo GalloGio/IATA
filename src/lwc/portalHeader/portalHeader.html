@@ -122,10 +122,10 @@
                                             class="slds-m-around_large notificationCenterTitle text-bold text-medium text-black">
                                             {labels.NotificationCenter} </div>
                                         <!--lightning-tabset class="tabContent" tabNotificationCenter-->
-                                        <lightning-tabset if:true={canLoadNotifications} class="tabNotificationCenter">
+                                        <lightning-tabset if:true={canLoadNotifications} active-tab-value={defaultTab} class="tabNotificationCenter">
                                             <div if:true={userAdmin}>
                                                 <!-- ALL NOTIFICATION TAB-->
-                                                <lightning-tab label={allNotificationTab}>
+                                                <lightning-tab label={allNotificationTab} value="allNotificationTab">
                                                     <div if:true={totalNotification}>
                                                         <hr class="hrConfig">
                                                         <div
@@ -192,7 +192,7 @@
                                             </div>
         
                                             <!-- ANNOUNCEMENT TAB-->
-                                            <lightning-tab label={announcementTab}>
+                                            <lightning-tab label={announcementTab} value="announcementTab">
                                                 <div if:true={announcementNumber}>
                                                     <hr class="hrConfig">
                                                     <div class="slds-hyphenate text-xsmall slds-m-left_large slds-p-top_medium">
@@ -494,10 +494,10 @@
                                         class="slds-m-around_large notificationCenterTitle text-bold text-medium text-black">
                                         {labels.NotificationCenter} </div>
                                     <!--lightning-tabset class="tabContent" tabNotificationCenter-->
-                                    <lightning-tabset if:true={canLoadNotifications} class="tabNotificationCenter">
+                                    <lightning-tabset if:true={canLoadNotifications} active-tab-value={defaultTab} class="tabNotificationCenter">
                                         <div if:true={userAdmin}>
                                             <!-- ALL NOTIFICATION TAB-->
-                                            <lightning-tab label={allNotificationTab}>
+                                            <lightning-tab label={allNotificationTab} value="allNotificationTab">
                                                 <div if:true={totalNotification}>
                                                     <hr class="hrConfig">
                                                     <div
@@ -564,7 +564,7 @@
                                         </div>
     
                                         <!-- ANNOUNCEMENT TAB-->
-                                        <lightning-tab label={announcementTab}>
+                                        <lightning-tab label={announcementTab}  value="announcementTab">
                                             <div if:true={announcementNumber}>
                                                 <hr class="hrConfig">
                                                 <div class="slds-hyphenate text-xsmall slds-m-left_large slds-p-top_medium">
