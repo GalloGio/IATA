@@ -20131,8 +20131,16 @@ IATA Müşteri Portalına kaydolurken sorun yaşamaya devam ederseniz, lütfen &
         <name>OneId_Fred_Select_Type_of_Company</name>
     </customLabels>
     <customLabels>
+        <label><!-- OneId GADM Terms of Use Link --></label>
+        <name>OneId_GADM_Terms_of_Use_Link</name>
+    </customLabels>
+    <customLabels>
         <label><!-- OneId GADM Troubleshooting --></label>
         <name>OneId_GADM_Troubleshooting</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId GADM Troubleshooting Link --></label>
+        <name>OneId_GADM_Troubleshooting_Link</name>
     </customLabels>
     <customLabels>
         <label>&quot;GSA kodu ve ülke kombinasyonunuz için şirket bulunamaması ihtimaline karşı lütfen doğru bilgileri girdiğinizden emin olun veya &lt;a href=&quot;&quot;http://theiatahub.force.com/iatapkb/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US&quot;&quot; target=&quot;&quot;_blank&quot;&quot;&gt;sorun giderme kılavuzu&lt;/a&gt; bölümümüze başvurun.&quot;</label>
