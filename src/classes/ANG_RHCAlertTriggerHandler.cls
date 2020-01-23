@@ -935,11 +935,6 @@ public class ANG_RHCAlertTriggerHandler{
 			}
 		}
 
-	/*	for(User u : [SELECT Id, Email from User where Email IN :toAddresses]) {
-			toAddressesUsers.add(u.Id);
-			toAddresses.remove(u.Email);
-		} */
-		
 		if(String.isEmpty(emailTemplate)){
 			System.debug('Warning: No email Template defined');
 			return emailLst;
@@ -971,17 +966,13 @@ public class ANG_RHCAlertTriggerHandler{
 			tBody = tBody.replace('{{currencyIsoCode}}', (agentSales == '' ? '' : riskAlert.CurrencyIsoCode));
 			tbody = tBody.replace('{{fsAmount}}', gAmount);
 
-			if(!toAddressesNoUsers.isEmpty()){
-				Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-				mail.setToAddresses(toAddressesNoUsers);
-				mail.setOrgWideEmailAddressId(orgWideEmail.get(0).Id);
-				mail.setPlainTextBody(tBody);
-				mail.setSubject('Real Time Sales Monitoring – '+ riskAlert.ANG_Severity__c.toUpperCase() +' Alert ('+ subjectName + subjectIATACode + subjectCountry + ')');
-				emailLst.add(mail);
-			}
-		
+			Boolean aux = true;
 			for(Id targetUser: toAddressesUsers) {
 				Messaging.SingleEmailMessage targetEmail = new Messaging.SingleEmailMessage();
+				if(aux && !toAddressesNoUsers.isEmpty()){
+					targetEmail.setToAddresses(toAddressesNoUsers);
+					aux = false;
+				}
 				targetEmail.setTargetObjectId(targetUser);
 				targetEmail.setOrgWideEmailAddressId(orgWideEmail.get(0).Id);
 				targetEmail.saveAsActivity = false;
