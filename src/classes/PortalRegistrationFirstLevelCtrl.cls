@@ -296,37 +296,38 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 		Contact[] recordCont = [SELECT Id FROM Contact WHERE Id NOT IN (SELECT ContactId FROM User) LIMIT 1];
 
 		if(recordCont.isEmpty()) {
+			Database.rollback(sp);
 			return false;
 		}
-		else{
-			try {
-				User testingUser = new User(LastName = 'DUMMY',
-						FirstName='DUMMY',
-						Alias = 'DUMMY',
-						CommunityNickname = 'DUMMY',
-						Email = email,
-						Username = ISSP_Utilities.buildPortalUserName(email), //myEmail@company.com because myEmail.company.com@partner.iata.org
-						ProfileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal (Partner)' LIMIT 1].Id,
-						ContactId =  !conlist.isEmpty() ? conList.get(0).Id : recordCont.get(0).Id,
-						TimeZoneSidKey = 'GMT',
-						LanguageLocaleKey = 'en_US',
-						EmailEncodingKey = 'UTF-8',
-						LocaleSidKey = 'en_US',
-						License_Cost_center__c = 'ISF005CH01'
-				);
-				insert testingUser;
 
-				// Rollback to avoid creation of the user
-				Database.rollback(sp);
-				return true;
+		try {
+			User testingUser = new User(LastName = 'DUMMY',
+					FirstName='DUMMY',
+					Alias = 'DUMMY',
+					CommunityNickname = 'DUMMY',
+					Email = email,
+					Username = ISSP_Utilities.buildPortalUserName(email), //myEmail@company.com because myEmail.company.com@partner.iata.org
+					ProfileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal (Partner)' LIMIT 1].Id,
+					ContactId =  !conlist.isEmpty() ? conList.get(0).Id : recordCont.get(0).Id,
+					TimeZoneSidKey = 'GMT',
+					LanguageLocaleKey = 'en_US',
+					EmailEncodingKey = 'UTF-8',
+					LocaleSidKey = 'en_US',
+					License_Cost_center__c = 'ISF005CH01'
+			);
+			insert testingUser;
 
-			} catch(Exception e) {
-				System.debug(loggingLevel.ERROR, '____ [cls OneId_RegistrationProcessControllere - checkIsUsernameIsAvailableInGlobalSalesforce] e.getMessage() - ' + e.getMessage());
-				Database.rollback(sp);
-				return false;
-				}
-			}
+			// Rollback to avoid creation of the user
+			Database.rollback(sp);
+			return true;
+
+		} catch(Exception e) {
+			System.debug(loggingLevel.ERROR, '____ [cls OneId_RegistrationProcessControllere - checkIsUsernameIsAvailableInGlobalSalesforce] e.getMessage() - ' + e.getMessage());
+			Database.rollback(sp);
+			return false;
+		}
 	}
+	
 
 	public static boolean sendConfirmationEmailVF(RegistrationParameters params, string lang){
 		Boolean result = false;
