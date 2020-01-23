@@ -534,7 +534,7 @@
                         <apex:actionRegion >
                             <apex:outputLabel value="If iiNET please provide your account number" styleclass="{!IF(newForm.Hot_files_delivery_format__c=='iiNET','ap-required','')}" />
                         </apex:actionRegion>
-                        <apex:inputField value="{!newForm.IINET_account_number__c}" html-pattern="[A-Z]{2}[0-9]{2}" html-placeholder="Example: AA11"/>
+                        <apex:inputField value="{!newForm.IINET_account_number__c}" html-pattern="[a-zA-Z0-9]{4}" html-placeholder="Example: AA11"/>
                     </apex:pageBlockSectionItem>
                     
                     <apex:pageBlockSectionItem >
