@@ -628,7 +628,7 @@ public without sharing class ISSP_AMS_Accreditation {
 		} else {
 			if (sector == AMS_Utils.SECTOR_PASSENGER) {
 				sectorDisplay = Label.ISSP_Travel_Agent;
-				sectorValue = 'Travel_Agent';
+				sectorValue = AMS_Utils.SECTOR_TRAVEL_AGENT;
 			} else {
 				sectorDisplay = isocountry.AMS_Accreditation_New_Labels__c? Label.ISSP_Cargo_Agent_New: Label.ISSP_Cargo_Agent;
 				sectorValue = 'Cargo_Agent';
@@ -636,7 +636,7 @@ public without sharing class ISSP_AMS_Accreditation {
 		}
 
 		// NewGen is only valid for Travel Agents
-		newAccreditationModels = (isocountry.ANG_Enable_NewGen__c && sectorValue.StartsWith('Travel_Agent'));
+		newAccreditationModels = (isocountry.ANG_Enable_NewGen__c && sectorValue.StartsWith(AMS_Utils.SECTOR_TRAVEL_AGENT));
 		namEnabled = isocountry.ANG_Enable_NewGen__c;
 
 		checkEligibilityForAChange();
@@ -753,7 +753,7 @@ public without sharing class ISSP_AMS_Accreditation {
 				isocountry = fetchISOCountry(newCase.IFAP_Country_ISO__c);
 
 				// NewGen is only valid for Travel Agents
-				newAccreditationModels = (isocountry.ANG_Enable_NewGen__c && sectorValue.StartsWith('Travel_Agent'));
+				newAccreditationModels = (isocountry.ANG_Enable_NewGen__c && sectorValue.StartsWith(AMS_Utils.SECTOR_TRAVEL_AGENT));
 				namEnabled = isocountry.ANG_Enable_NewGen__c;
 
 				amsAllLangCountryLabel = getAmsAllLangCountryLabel(isocountry, UserInfo.getLanguage());
@@ -849,13 +849,13 @@ public without sharing class ISSP_AMS_Accreditation {
 				if (sectorValue != null) {
 					sector = sectorValue.replace('_', ' ');
 
-					if (isocountry.ISO_Code__c == 'CN' && !sector.contains('-') && sectorValue.StartsWith('Travel_Agent')) { //PRB41686
+					if (isocountry.ISO_Code__c == 'CN' && !sector.contains('-') && sectorValue.StartsWith(AMS_Utils.SECTOR_TRAVEL_AGENT)) { //PRB41686
 						sector += ' - ' + newForm.Local_Agent_Type__c;
 					}
 
 					if (isNoticeOfChange) {
 						sectorDisplay = Label.ISSP_AMS_NoC_Request_for_Change;
-					} else if (sectorValue.StartsWith('Travel_Agent')) {
+					} else if (sectorValue.StartsWith(AMS_Utils.SECTOR_TRAVEL_AGENT)) {
 						sectorDisplay = Label.ISSP_Travel_Agent;
 					} else {
 						sectorDisplay = isocountry.AMS_Accreditation_New_Labels__c? Label.ISSP_Cargo_Agent_New: Label.ISSP_Cargo_Agent;
@@ -944,7 +944,7 @@ public without sharing class ISSP_AMS_Accreditation {
 						mcformCountryISO = newForm.Branch_Office_Country__r.ISO_Code__c;
 					}
 
-					isocountry = ((isMultiCountryNewAE || isMCAccredited) && sectorValue == 'Travel_Agent') ? fetchISOCountry(mcformCountryISO) : fetchISOCountry(newCase.IFAP_Country_ISO__c);
+					isocountry = ((isMultiCountryNewAE || isMCAccredited) && sectorValue == AMS_Utils.SECTOR_TRAVEL_AGENT) ? fetchISOCountry(mcformCountryISO) : fetchISOCountry(newCase.IFAP_Country_ISO__c);
 
 					//Set default currency, as defined in IATA ISO Country record
 					if (isocountry != null) {
@@ -952,7 +952,7 @@ public without sharing class ISSP_AMS_Accreditation {
 					}
 
 					// NewGen is only valid for Travel Agents
-					newAccreditationModels = (isocountry.ANG_Enable_NewGen__c && sectorValue.StartsWith('Travel_Agent'));
+					newAccreditationModels = (isocountry.ANG_Enable_NewGen__c && sectorValue.StartsWith(AMS_Utils.SECTOR_TRAVEL_AGENT));
 					namEnabled = isocountry.ANG_Enable_NewGen__c;
 
 					setContextualHelp(userInfo.getLanguage());
@@ -984,7 +984,7 @@ public without sharing class ISSP_AMS_Accreditation {
 							retCargoCountryReqments(false);
 						} else if (sectorValue.StartsWith('Cargo_Agent') && isNoticeOfChange == true) {
 							retNoCCargoCountryReqments(false);
-						} else if (sectorValue.StartsWith('Travel_Agent') && isNoticeOfChange == true) {
+						} else if (sectorValue.StartsWith(AMS_Utils.SECTOR_TRAVEL_AGENT) && isNoticeOfChange == true) {
 							retNoCTravelCountryReqments(false);
 						}
 						isValError = true;
@@ -1110,7 +1110,7 @@ public without sharing class ISSP_AMS_Accreditation {
 		}
 
 		// NewGen is only valid for Travel Agents
-		newAccreditationModels = (isocountry.ANG_Enable_NewGen__c && !String.isBlank(sectorValue) && sectorValue.StartsWith('Travel_Agent'));//fix amsu-113
+		newAccreditationModels = (isocountry.ANG_Enable_NewGen__c && !String.isBlank(sectorValue) && sectorValue.StartsWith(AMS_Utils.SECTOR_TRAVEL_AGENT));//fix amsu-113
 
 		if (sectorValue != null) {
 			if (sectorValue.StartsWith('Cargo_Agent'))
@@ -1118,13 +1118,13 @@ public without sharing class ISSP_AMS_Accreditation {
 
 			sector = sectorValue.replace('_', ' ');
 
-			if (isocountry.ISO_Code__c == 'CN' && !sector.contains('-') && sectorValue.StartsWith('Travel_Agent')) { //PRB41686
+			if (isocountry.ISO_Code__c == 'CN' && !sector.contains('-') && sectorValue.StartsWith(AMS_Utils.SECTOR_TRAVEL_AGENT)) { //PRB41686
 				sector += ' - ' + newForm.Local_Agent_Type__c;
 			}
 
 			if(isNoticeOfChange) {
 				stepNumber='5'; //Set to Step 5, so together with isValidation=true, STEP E docs such as signed contract (NOC_SIGNED_CONTRACT) also appears in list of attachments
-				if(sectorValue.StartsWith('Travel_Agent')) {
+				if(sectorValue.StartsWith(AMS_Utils.SECTOR_TRAVEL_AGENT)) {
 					 retNoCTravelCountryReqments(true);
 				} else {
 					 retNoCCargoCountryReqments(true);
@@ -1722,7 +1722,7 @@ public without sharing class ISSP_AMS_Accreditation {
 					}
 				}
 			}
-		} else if (sectorValue.StartsWith('Travel_Agent')) { //User has selected Travel in STEP A
+		} else if (sectorValue.StartsWith(AMS_Utils.SECTOR_TRAVEL_AGENT)) { //User has selected Travel in STEP A
 
 			if (isHOAccredited && (con.Account.Category__c == AMS_Utils.CATEGORY_PASSENGER_SALES_AGENT) || (con.Account.Category__c == AMS_Utils.CATEGORY_DOMESTIC_AGENT && AMS_Utils.setDomesticCountries.contains(isocountry.ISO_Code__c))) { //And this is an Accredited PAX Agent
 
@@ -1782,7 +1782,7 @@ public without sharing class ISSP_AMS_Accreditation {
 		if (isNoticeOfChange) {
 			includedPageName = 'ISSP_AMS_Notice_Of_Change';
 			includedSummaryPage = 'ISSP_AMS_NoC_ReadOnly';
-		} else if (sectorValue.StartsWith('Travel_Agent')) {
+		} else if (sectorValue.StartsWith(AMS_Utils.SECTOR_TRAVEL_AGENT)) {
 			if (newForm.Agent_Type__c != AMS_UTILS.NEWFORM_AGENTTYPE_CASH && newForm.Agent_Type__c != AMS_UTILS.NEWFORM_AGENTTYPE_NO_CASH && newForm.Agent_Type__c != AMS_UTILS.NEWFORM_AGENTTYPE_MULTICOUNTRY) {
 				includedPageName = 'ISSP_AMS_Pax_Form';
 				includedSummaryPage = 'ISSP_AMS_PAX_ReadOnly';
@@ -1888,7 +1888,7 @@ public without sharing class ISSP_AMS_Accreditation {
 
 			newCase.Reason1__c = isMCAccredited ? AMS_Utils.CASE_REASON_AE_MULTICOUNTRY : amsLocationType.left(amsLocationType.indexOf('-')).trim();
 
-			if (newCase.IFAP_Country_ISO__c == 'CN' && sectorValue.startsWith('Travel_Agent')) {
+			if (newCase.IFAP_Country_ISO__c == 'CN' && sectorValue.startsWith(AMS_Utils.SECTOR_TRAVEL_AGENT)) {
 				if (newCase.Reason1__c == AMS_Utils.CASE_REASON_NEW_HO) {
 					sectorValue = sectorValue + ' - ' + newForm.Local_Agent_Type__c;
 				} else {
@@ -1903,12 +1903,12 @@ public without sharing class ISSP_AMS_Accreditation {
 				}
 			}
 
-			if (amsIsGSA == 'YES' && sectorValue.startsWith('Travel_Agent')) {
+			if (amsIsGSA == 'YES' && sectorValue.startsWith(AMS_Utils.SECTOR_TRAVEL_AGENT)) {
 				ApexPages.addmessage(new ApexPages.message(ApexPages.severity.INFO, Label.ISSP_AMS_Step1_IS_GSA_Warning));
 				return null;
 			}
 
-			if (sectorValue == 'Travel_Agent' && amsIsGSA == null) {
+			if (sectorValue == AMS_Utils.SECTOR_TRAVEL_AGENT && amsIsGSA == null) {
 				ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_Step1_Is_GSA + ': ' + Label.ISSP_YouMustEnter));
 				return null;
 			}
@@ -1918,18 +1918,18 @@ public without sharing class ISSP_AMS_Accreditation {
 				return null;
 			}*/
 
-			if (sectorValue == 'Travel_Agent' && (newCase.Reason1__c == AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD || isMultiCountryNewAE || newCase.Reason1__c == AMS_Utils.CASE_REASON_AE_MULTICOUNTRY) && newForm.AE_separate_Legal_Entity__c == null) {
+			if (sectorValue == AMS_Utils.SECTOR_TRAVEL_AGENT && (newCase.Reason1__c == AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD || isMultiCountryNewAE || newCase.Reason1__c == AMS_Utils.CASE_REASON_AE_MULTICOUNTRY) && newForm.AE_separate_Legal_Entity__c == null) {
 				ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_IS_Separate_Entity_Null));
 				return null;
 			}
 
-			if (sectorValue == 'Travel_Agent' && (String.isBlank(mcformCountryISO) && isMultiCountryNewAE)) {
+			if (sectorValue == AMS_Utils.SECTOR_TRAVEL_AGENT && (String.isBlank(mcformCountryISO) && isMultiCountryNewAE)) {
 				ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_Country_Not_Selected)); //newerror, Giulio to define
 				return null;
 			}
 
 			if (String.isBlank(newForm.Account_Name__c)) {
-				if (sectorValue == 'Travel_Agent' && ((isMultiCountryNewAE && !isMCAccredited && String.isBlank(newForm.Same_Legal_Entity_Agency_Form__c)) || (isMCAccredited && String.isBlank(newForm.Same_Legal_Entity_Agency_Account__c)))){
+				if (sectorValue == AMS_Utils.SECTOR_TRAVEL_AGENT && ((isMultiCountryNewAE && !isMCAccredited && String.isBlank(newForm.Same_Legal_Entity_Agency_Form__c)) || (isMCAccredited && String.isBlank(newForm.Same_Legal_Entity_Agency_Account__c)))){
 					if (newForm.AE_separate_Legal_Entity__c == 'Yes') {
 						ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_IS_Legal_Name_Selected_Blank));
 					} else {
@@ -1961,7 +1961,7 @@ public without sharing class ISSP_AMS_Accreditation {
 				newCase.IFAP_Country_ISO__c = con.Account.IATA_ISO_Country__r.ISO_Code__c;
 			}
 
-			isocountry = ((isMultiCountryNewAE || isMCAccredited) && sectorValue == 'Travel_Agent' && mcformCountryISO != null) ? fetchISOCountry(mcformCountryISO) : fetchISOCountry(newCase.IFAP_Country_ISO__c);
+			isocountry = ((isMultiCountryNewAE || isMCAccredited) && sectorValue == AMS_Utils.SECTOR_TRAVEL_AGENT && mcformCountryISO != null) ? fetchISOCountry(mcformCountryISO) : fetchISOCountry(newCase.IFAP_Country_ISO__c);
 
 			if (isocountry.OSCAR_enabled__c && (!isocountry.SAAM_enable_non_IATA_Cargo_Agents__c ||
 				(newForm.Agent_Type__c != AMS_Utils.CATEGORY_CASSASSOCIATE && newForm.Agent_Type__c != AMS_Utils.CATEGORY_IMPORT_AGENT
@@ -1979,7 +1979,7 @@ public without sharing class ISSP_AMS_Accreditation {
 
 			newCase.Country_concerned_by_the_query__c = isocountry.Name;
 
-			if(sectorValue == 'Travel_Agent') {
+			if(sectorValue == AMS_Utils.SECTOR_TRAVEL_AGENT) {
 				newCase.Type_of_customer__c = 'IATA Travel Agent';
 			} else if (sectorValue == 'Cargo_Agent') {
 				newCase.Type_of_customer__c = 'IATA Cargo Agent';
@@ -2278,7 +2278,7 @@ public without sharing class ISSP_AMS_Accreditation {
 				newForm.SAAM_Case__c = newCase.Id;
 			}
 
-			newForm.Operation_Type__c = sector.equalsIgnoreCase(AMS_Utils.SECTOR_PASSENGER) ? 'Travel_Agent' : 'Cargo_Agent';
+			newForm.Operation_Type__c = sector.equalsIgnoreCase(AMS_Utils.SECTOR_PASSENGER) ? AMS_Utils.SECTOR_TRAVEL_AGENT : 'Cargo_Agent';
 
 			if (newCase.IFAP_Country_ISO__c == 'CN' && sector.equalsIgnoreCase(AMS_Utils.SECTOR_PASSENGER)) {
 				if (con.Account.Category__c == 'Domestic Agent') {
@@ -2327,14 +2327,14 @@ public without sharing class ISSP_AMS_Accreditation {
 					newForm.ANG_Accreditation_Type__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
 				}
 
-			} else if (sectorValue.StartsWith('Travel_Agent')) {
+			} else if (sectorValue.StartsWith(AMS_Utils.SECTOR_TRAVEL_AGENT)) {
 				newForm.Agent_Type__c = AMS_Utils.CATEGORY_PASSENGER_SALES_AGENT;
 			} else {
 				newForm.Agent_Type__c = 'IATA Cargo Agent';
 			}
 		}
 
-		if (sectorValue.StartsWith('Travel_Agent')) {
+		if (sectorValue.StartsWith(AMS_Utils.SECTOR_TRAVEL_AGENT)) {
 			if (newCase.Reason1__c == AMS_Utils.CASE_REASON_NEW_HO) {
 				newForm.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'Travel_Agent_HO');
 			} else if (newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_IP) {
@@ -2728,7 +2728,7 @@ public without sharing class ISSP_AMS_Accreditation {
 
 		newHOAccount.Location_Class__c = getLocationClass();
 
-		if (sectorValue.StartsWith('Travel_Agent')) {
+		if (sectorValue.StartsWith(AMS_Utils.SECTOR_TRAVEL_AGENT)) {
 			newHOAccount.Sector__c = AMS_Utils.SECTOR_PASSENGER;
 		} else {
 			newHOAccount.Sector__c = AMS_Utils.SECTOR_CARGO;
@@ -4431,10 +4431,10 @@ public without sharing class ISSP_AMS_Accreditation {
 		Set<String> allowIdentifierSetTravel = new Set<String>();
 		Set<String> identifierSetTravel = new Set<String>{AMS_UTILS.PCI_COMPLIANCE, AMS_Utils.NDC};
 
-		if (sectorValue.StartsWith('Travel_Agent') && !isNoticeOfChange) {
+		if (sectorValue.StartsWith(AMS_Utils.SECTOR_TRAVEL_AGENT) && !isNoticeOfChange) {
 			String selectedLang;
 			String accredModel;
-			Id TravelReqRecTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Requirement__c', 'Travel_Agent');
+			Id TravelReqRecTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Requirement__c', AMS_Utils.SECTOR_TRAVEL_AGENT);
 
 			if (applyLanguage == 'fr') {
 				selectedLang = 'French';
@@ -4508,7 +4508,7 @@ public without sharing class ISSP_AMS_Accreditation {
 			retCargoCountryReqments(false);
 		} else if (sectorValue.StartsWith('Cargo_Agent') && isNoticeOfChange) {
 			retNoCCargoCountryReqments(false);
-		} else if (sectorValue.StartsWith('Travel_Agent') && isNoticeOfChange) {
+		} else if (sectorValue.StartsWith(AMS_Utils.SECTOR_TRAVEL_AGENT) && isNoticeOfChange) {
 			retNoCTravelCountryReqments(false);
 		}
 	}
@@ -6005,7 +6005,7 @@ public without sharing class ISSP_AMS_Accreditation {
 			retNoCCargoCountryReqments(true);
 		} else if (sectorValue.startsWith('Cargo_Agent') && !isNoticeOfChange) {
 			retCargoCountryReqments(true);
-		} else if (sectorValue.StartsWith('Travel_Agent') && isNoticeOfChange) {
+		} else if (sectorValue.StartsWith(AMS_Utils.SECTOR_TRAVEL_AGENT) && isNoticeOfChange) {
 			retNoCTravelCountryReqments(true);
 		}
 
@@ -6443,7 +6443,7 @@ public without sharing class ISSP_AMS_Accreditation {
 					errorFound = true;
 				}
 			}
-		} else if (sectorValue.StartsWith('Travel_Agent') && !isNoticeOfChange) {
+		} else if (sectorValue.StartsWith(AMS_Utils.SECTOR_TRAVEL_AGENT) && !isNoticeOfChange) {
 			if (amsOfficeType == AMS_Utils.HO) {
 				if (includeErrorMsgs) {
 					if(newCase.Reason1__c==AMS_Utils.CASE_REASON_NEW_HO || newCase.Reason1__c == AMS_UTILS.CASE_REASON_HE_STANDARD || newCase.Reason1__c == AMS_UTILS.CASE_REASON_HE_LITE
@@ -7518,11 +7518,11 @@ public without sharing class ISSP_AMS_Accreditation {
 	public PageReference redirectToPDF() {
 		PageReference np;
 
-		if (sectorValue.StartsWith('Travel_Agent') && (newform.Agent_Type__c != AMS_UTILS.NEWFORM_AGENTTYPE_NO_CASH && newform.Agent_Type__c != AMS_UTILS.NEWFORM_AGENTTYPE_CASH && newform.Agent_Type__c != AMS_UTILS.NEWFORM_AGENTTYPE_MULTICOUNTRY)) {
+		if (sectorValue.StartsWith(AMS_Utils.SECTOR_TRAVEL_AGENT) && (newform.Agent_Type__c != AMS_UTILS.NEWFORM_AGENTTYPE_NO_CASH && newform.Agent_Type__c != AMS_UTILS.NEWFORM_AGENTTYPE_CASH && newform.Agent_Type__c != AMS_UTILS.NEWFORM_AGENTTYPE_MULTICOUNTRY)) {
 			np = new PageReference('/ISSP_AMS_PDF_ApplicationForm?caseid=' + newCase.id);
-		} else if (sectorValue.StartsWith('Travel_Agent') && (newform.Agent_Type__c == AMS_UTILS.NEWFORM_AGENTTYPE_NO_CASH || newform.Agent_Type__c == AMS_UTILS.NEWFORM_AGENTTYPE_CASH) && newCase.Reason1__c != AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD) { //NEWGEN - 605
+		} else if (sectorValue.StartsWith(AMS_Utils.SECTOR_TRAVEL_AGENT) && (newform.Agent_Type__c == AMS_UTILS.NEWFORM_AGENTTYPE_NO_CASH || newform.Agent_Type__c == AMS_UTILS.NEWFORM_AGENTTYPE_CASH) && newCase.Reason1__c != AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD) { //NEWGEN - 605
 			np = new PageReference('/ISSP_AMS_PDF_ANG_PAX_HE?caseid=' + newCase.id);
-		} else if (sectorValue.StartsWith('Travel_Agent') && (newCase.Reason1__c == AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD || isMultiCountryNewAE || newCase.Reason1__c == AMS_Utils.CASE_REASON_AE_MULTICOUNTRY)) {
+		} else if (sectorValue.StartsWith(AMS_Utils.SECTOR_TRAVEL_AGENT) && (newCase.Reason1__c == AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD || isMultiCountryNewAE || newCase.Reason1__c == AMS_Utils.CASE_REASON_AE_MULTICOUNTRY)) {
 			np = new PageReference('/ISSP_AMS_PDF_ANG_PAX_AE?caseid=' + newCase.id);
 		} else {
 			np = new PageReference('/ISSP_AMS_PDF_CGO?caseid=' + newCase.id + '&mode=pdf');
@@ -7625,7 +7625,7 @@ public without sharing class ISSP_AMS_Accreditation {
 	public boolean getIsGSARequired() {
 		Boolean isreq;
 system.debug('aqui sectorValue ' + sectorValue);
-		if (sectorValue == 'Travel_Agent') {
+		if (sectorValue == AMS_Utils.SECTOR_TRAVEL_AGENT) {
 			isreq = true;
 		} else {
 			isreq = false;
@@ -8029,7 +8029,7 @@ system.debug('aqui sectorValue ' + sectorValue);
 		Those differences apply to both New Application and Notice Of Change
 	**/
 	public Boolean getIsPartnership() {
-		return this.sectorValue=='Travel_Agent' && (this.hqAccount.Ownership=='Partnership' || this.newForm.ISSP_AMS_Legal_Status__c=='Partnership');
+		return this.sectorValue==AMS_Utils.SECTOR_TRAVEL_AGENT && (this.hqAccount.Ownership=='Partnership' || this.newForm.ISSP_AMS_Legal_Status__c=='Partnership');
 	}
 
 	public Pagereference runOptInOut() {

@@ -1394,7 +1394,7 @@ private class ISSP_AMS_Accreditation_Test {
 			ctrl.setPageLegalStatusAfterChangeLabels();
 			ctrl.newForm.Validation_ERRORS__c = true;
 			ctrl.highLightPageForErrors();
-			ctrl.sectorValue = 'Travel_Agent';
+			ctrl.sectorValue = AMS_Utils.SECTOR_TRAVEL_AGENT;
 			ctrl.fetchCountryRequirements();
 			ctrl.newform.Agent_Type__c = AMS_UTILS.NEWFORM_AGENTTYPE_NO_CASH;
 			ctrl.goToFinalStep();
@@ -1619,7 +1619,7 @@ private class ISSP_AMS_Accreditation_Test {
 
 			ctrl.newForm.Validation_ERRORS__c = true;
 			ctrl.highLightPageForErrors();
-			ctrl.sectorValue = 'Travel_Agent';
+			ctrl.sectorValue = AMS_Utils.SECTOR_TRAVEL_AGENT;
 			ctrl.fetchCountryRequirements();
 			ctrl.newform.Agent_Type__c = AMS_UTILS.NEWFORM_AGENTTYPE_NO_CASH;
 			ctrl.goToFinalStep();
@@ -1972,7 +1972,7 @@ Registration_required__c, Statement_of_International_Sales__c
 			ctrl.newform.Agent_Type__c = AMS_UTILS.NEWFORM_AGENTTYPE_NO_CASH;
 			ctrl.goToFinalStep();
 
-			ctrl.sectorValue = 'Travel_Agent';
+			ctrl.sectorValue = AMS_Utils.SECTOR_TRAVEL_AGENT;
 			ctrl.newCase.Reason1__c = 'New BR / IP';
 			ctrl.saveAMSForm();
 			ctrl.sectorValue = 'Cargo_Agent';
@@ -2087,7 +2087,7 @@ Registration_required__c, Statement_of_International_Sales__c
 
 			ApexPages.currentPage().getParameters().put('caseId', testCase.Id);
 			ApexPages.currentPage().getParameters().put('step', '1');
-			ApexPages.currentPage().getParameters().put('sectorValue', 'Travel_Agent');
+			ApexPages.currentPage().getParameters().put('sectorValue', AMS_Utils.SECTOR_TRAVEL_AGENT);
 			ISSP_AMS_Accreditation ctrl = new ISSP_AMS_Accreditation();
 
 			ctrl.goToStep1();
@@ -2110,7 +2110,7 @@ Registration_required__c, Statement_of_International_Sales__c
 			ctrl.vatNumber = '123';
 			ctrl.amsLocationType = 'New HO - IATA Passenger Sales Agent';
 			ctrl.save();
-			ctrl.sectorValue = 'Travel_Agent';
+			ctrl.sectorValue = AMS_Utils.SECTOR_TRAVEL_AGENT;
 			ctrl.newForm.Agent_Type__c = 'IATA Passenger Sales Agent';
 			ctrl.amsOfficeType = 'HO';
 			ctrl.sector = 'Travel Agent';
@@ -2199,12 +2199,12 @@ Registration_required__c, Statement_of_International_Sales__c
 
 			ApexPages.currentPage().getParameters().put('caseId', testCase.Id);
 			ApexPages.currentPage().getParameters().put('step', '1');
-			ApexPages.currentPage().getParameters().put('sectorValue', 'Travel_Agent');
+			ApexPages.currentPage().getParameters().put('sectorValue', AMS_Utils.SECTOR_TRAVEL_AGENT);
 			ISSP_AMS_Accreditation ctrl = new ISSP_AMS_Accreditation();
 
 			ctrl.newCase.IFAP_Country_ISO__c = 'GI';
 
-			ctrl.sectorValue = 'Travel_Agent';
+			ctrl.sectorValue = AMS_Utils.SECTOR_TRAVEL_AGENT;
 			ctrl.con.Account.Sector__c = 'Travel Agent';
 			ctrl.con.Account.Category__c = AMS_Utils.CATEGORY_PASSENGER_SALES_AGENT;
 			ctrl.isHOAccredited = true;
@@ -2337,7 +2337,7 @@ Registration_required__c, Statement_of_International_Sales__c
 			ctrl.fetchCountryRequirements();
 
 			ctrl.isHOAccredited = false;
-			ctrl.sectorValue = 'Travel_Agent';
+			ctrl.sectorValue = AMS_Utils.SECTOR_TRAVEL_AGENT;
 			ctrl.con.Account.Sector__c = 'Travel Agent';
 			ctrl.isocountry.ANG_Enable_NewGen__c = true;
 			ctrl.isocountry.Multicountry_Enabled__c = true;
@@ -2418,7 +2418,7 @@ WHERE Name = 'TestReq1'];
 			ctrl.draftHQCaseExists = true;
 			ctrl.isDupeSAAMCase = true;
 			ctrl.amsIsGSA = 'YES';
-			ctrl.sectorValue = 'Travel_Agent';
+			ctrl.sectorValue = AMS_Utils.SECTOR_TRAVEL_AGENT;
 
 			ctrl.newCase.Reason1__c = 'New HO';
 			ctrl.draftHQCaseExists = true;
@@ -2476,7 +2476,7 @@ WHERE Name = 'TestReq1'];
 			ctrl.amsOfficeType = 'HO';
 			ctrl.draftHQCaseExists = false;
 			ctrl.amsIsGSA = 'NO';
-			ctrl.sectorValue = 'Travel_Agent';
+			ctrl.sectorValue = AMS_Utils.SECTOR_TRAVEL_AGENT;
 			ctrl.isDupeSAAMCase = true;
 			ctrl.amsLocationType = 'New HO - IATA Cargo Agent';
 			ctrl.save();
@@ -2621,7 +2621,7 @@ WHERE Name = 'TestReq1'];
 
 			Test.startTest();
 
-			ctrl.sectorValue = 'Travel_Agent';
+			ctrl.sectorValue = AMS_Utils.SECTOR_TRAVEL_AGENT;
 			ctrl.newCase.Reason1__c = 'New BR / IP';
 			ctrl.getCGORegionData();
 			ctrl.newForm.CGO_Region_Selection__c = 'Africa';
@@ -3850,7 +3850,7 @@ Location_Type__c = 'BR');
 			accr.goToFinalStep();
 			accr.isTerminatedAgent = false;
 
-			accr.sectorValue = 'Travel_Agent';
+			accr.sectorValue = AMS_Utils.SECTOR_TRAVEL_AGENT;
 
 			pageRef = accr.goToFinalStep();
 
@@ -4075,7 +4075,7 @@ Location_Type__c = 'BR');
 		Test.startTest();
 		System.runAs(mcUser) { //STEP A
 			PageReference pageRef = Page.ISSP_AMS_Accreditation;
-			pageRef.getParameters().put('sectorValue', 'Travel_Agent');
+			pageRef.getParameters().put('sectorValue', AMS_Utils.SECTOR_TRAVEL_AGENT);
 			pageRef.getParameters().put('accredType', 'New HE Multicountry - Multicountry');
 			pageRef.getParameters().put('step', '1');
 
@@ -4085,7 +4085,7 @@ Location_Type__c = 'BR');
 
 			ctrl.getOfficeTypes();
 
-			ctrl.sectorValue = 'Travel_Agent';
+			ctrl.sectorValue = AMS_Utils.SECTOR_TRAVEL_AGENT;
 			ctrl.amsLocationType = AMS_Utils.TYPE_HE_MULTICOUNTRY;
 			ctrl.newCase.IFAP_Country_ISO__c = 'pt';
 			ctrl.applyLanguage = 'es';
@@ -4245,7 +4245,7 @@ Location_Type__c = 'BR');
 			Test.setCurrentPage(pageRef);
 
 			ISSP_AMS_Accreditation ctrl = new ISSP_AMS_Accreditation();
-			ctrl.sectorValue = 'Travel_Agent';
+			ctrl.sectorValue = AMS_Utils.SECTOR_TRAVEL_AGENT;
 			ctrl.newCase.IFAP_Country_ISO__c = 'es';
 			ctrl.applyLanguage = 'fr';
 			ctrl.amsIsGSA = 'No';
@@ -4542,13 +4542,13 @@ Location_Type__c = 'BR');
 			ctrl.fetchHeadEntityMC();
 			ctrl.addToAccountsToConvert();
 
-			System.assertEquals(1, ctrl.accountsToBeConverted.values().size(), 'Parent account should have been added to the list');
+			System.assertEquals(1, ctrl.getAccountsToBeConverted().size(), 'Parent account should have been added to the list');
 
 			ctrl.accountToBeFetchedOrRemoved = a.Id;
 
 			ctrl.removeFromAccountsToConvert();
 
-			System.assertEquals(0, ctrl.accountsToBeConverted.values().size(), 'Parent account should have been removed to the list');
+			System.assertEquals(0, ctrl.getAccountsToBeConverted().size(), 'Parent account should have been removed to the list');
 		}
 		Test.stopTest();
 	}

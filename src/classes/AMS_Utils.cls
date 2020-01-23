@@ -327,6 +327,7 @@ public without sharing class AMS_Utils {
 	public static final String IATAN_PASSENGER_SALES_AGENT_USA_ONLY = 'IATAN Passenger Sales Agent (USA Only)';
 	public static final String TRAVEL_SERVICE_INTERMEDIATES_TSI_USA_ONLY = 'Travel Service Intermediaries-TSI (USA Only)';
 
+	public static final String SECTOR_TRAVEL_AGENT = 'Travel_Agent';
 
 	//Account - Location_Class__c
 	public static final String LC_PASSENGER = 'P';
