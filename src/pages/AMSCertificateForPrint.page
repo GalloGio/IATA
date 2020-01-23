@@ -19,13 +19,15 @@
 		</style>
 	</head>
 	<body>
+		<apex:variable var="controlLastNum" value="{!0}"></apex:variable>
 		<apex:repeat value="{!certificates}" var="page">
 			<apex:repeat value="{!page}" var="acc">
+				<apex:variable var="controlLastNum" value="{!controlLastNum + 1}"></apex:variable>
+				<div style="{!if(controlLastNum > 1, 'height:6px;', '')}"></div>
 				<table class="tabeStyle" id="myTable">
 					<tr style="height: 180px;">
 						<td style="width: 50%;">
 							<div class="headerImg">
-								
 							</div>
 							<div style="font-size: 2.2em;">
 							</div>
@@ -65,7 +67,7 @@
 							</div>
 						</td>
 					</tr>
-					<tr  style="height: 223px;">
+					<tr  style="height: 226px;">
 						<td>
 							<table  style="height:200px;width: 100%;">
 								<tr>
@@ -83,6 +85,7 @@
 						</td>
 					</tr>
 				</table>
+				<div style="{!if(controlLastNum < page.size, 'page-break-before:always;', 'page-break-before:avoid;')}"/>
 			</apex:repeat>
 		</apex:repeat>
 	</body>
