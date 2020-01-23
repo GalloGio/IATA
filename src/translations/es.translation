@@ -20157,8 +20157,16 @@ El Panel de contabilidad de IATA es una herramienta que contiene información di
         <name>OneId_Fred_Select_Type_of_Company</name>
     </customLabels>
     <customLabels>
+        <label><!-- OneId GADM Terms of Use Link --></label>
+        <name>OneId_GADM_Terms_of_Use_Link</name>
+    </customLabels>
+    <customLabels>
         <label><!-- OneId GADM Troubleshooting --></label>
         <name>OneId_GADM_Troubleshooting</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId GADM Troubleshooting Link --></label>
+        <name>OneId_GADM_Troubleshooting_Link</name>
     </customLabels>
     <customLabels>
         <label>&quot;En caso de que no se encuentre ninguna empresa para su combinación de código y país GSA, asegúrese de que haya indicado la información correcta o consulte nuestra &lt;a href=&quot;&quot;http://theiatahub.force.com/iatapkb/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US&quot;&quot; target=&quot;&quot;_blank&quot;&quot;&gt;guía de resolución de problemas&lt;/a&gt;&quot;</label>
@@ -22890,6 +22898,10 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
     <customTabs>
         <label><!-- Apply RHC Equal to FS --></label>
         <name>Apply_RHC_Equal_to_FS</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- Attachment Manager --></label>
+        <name>AttachmentManager</name>
     </customTabs>
     <customTabs>
         <label>Servicios disponibles</label>

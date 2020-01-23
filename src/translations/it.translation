@@ -20133,8 +20133,16 @@ ll Dashboard di tesoreria IATA è uno strumento web dinamico  che assiste e supp
         <name>OneId_Fred_Select_Type_of_Company</name>
     </customLabels>
     <customLabels>
+        <label><!-- OneId GADM Terms of Use Link --></label>
+        <name>OneId_GADM_Terms_of_Use_Link</name>
+    </customLabels>
+    <customLabels>
         <label><!-- OneId GADM Troubleshooting --></label>
         <name>OneId_GADM_Troubleshooting</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId GADM Troubleshooting Link --></label>
+        <name>OneId_GADM_Troubleshooting_Link</name>
     </customLabels>
     <customLabels>
         <label>&quot;Nel caso in cui non siano presenti aziende corrispondenti alla combinazione di codice GSA e Paese indicata, verificare che le informazioni inserite siano corrette o consultare la nostra &lt;a href=&quot;&quot;http://theiatahub.force.com/iatapkb/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US&quot;&quot; target=&quot;&quot;_blank&quot;&quot;&gt;guida alla risoluzione dei problemi&lt;/a&gt;&quot;</label>
@@ -22866,6 +22874,10 @@ Se desideri ripristinare la password, torna alla schermata di accesso e utilizza
     <customTabs>
         <label><!-- Apply RHC Equal to FS --></label>
         <name>Apply_RHC_Equal_to_FS</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- Attachment Manager --></label>
+        <name>AttachmentManager</name>
     </customTabs>
     <customTabs>
         <label>Servizi disponibili</label>
