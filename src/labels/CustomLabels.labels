@@ -3437,13 +3437,6 @@ Payment required on receipt of this Payment Advice
         <value>User Profile</value>
     </labels>
     <labels>
-        <fullName>CSP_Breadcrump_You_IATA</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP_Breadcrump_You_IATA</shortDescription>
-        <value>You &amp; IATA</value>
-    </labels>
-    <labels>
         <fullName>CSP_Buy_Online</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -6435,25 +6428,11 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
 IATA Customer Portal</value>
     </labels>
     <labels>
-        <fullName>CSP_YouAndIATA</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP_YouAndIATA</shortDescription>
-        <value>You &amp; IATA</value>
-    </labels>
-    <labels>
         <fullName>CSP_YouIATA_Highlights</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_YouIATA_Highlights</shortDescription>
         <value>Selected Highlights For You</value>
-    </labels>
-    <labels>
-        <fullName>CSP_YouIATA_Highlights_Text</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP_YouIATA_Highlights_Text</shortDescription>
-        <value>Here you can discover a wide variety of IATA services, publications, products, and resources on aviation industry. Specially tailored after your interests and activity history.</value>
     </labels>
     <labels>
         <fullName>CSP_You_Dont_Have_Announcements</fullName>
@@ -38345,11 +38324,25 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <value>- Select the Type of Organization -</value>
     </labels>
     <labels>
+        <fullName>OneId_GADM_Terms_of_Use_Link</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId GADM Terms of Use Link</shortDescription>
+        <value>https://www.iata.org/en/terms/</value>
+    </labels>
+    <labels>
         <fullName>OneId_GADM_Troubleshooting</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId GADM Troubleshooting</shortDescription>
         <value>Troubleshooting</value>
+    </labels>
+    <labels>
+        <fullName>OneId_GADM_Troubleshooting_Link</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OneId GADM Troubleshooting Link</shortDescription>
+        <value>mailto:idx@iata.org</value>
     </labels>
     <labels>
         <fullName>OneId_GSAWarning</fullName>
