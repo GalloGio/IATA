@@ -6427,7 +6427,7 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
         <value>Welcome to the&amp;lt;br/&amp;gt;
 IATA Customer Portal</value>
     </labels>
-	<labels>
+    <labels>
         <fullName>CSP_YouIATA_Highlights</fullName>
         <language>en_US</language>
         <protected>false</protected>
