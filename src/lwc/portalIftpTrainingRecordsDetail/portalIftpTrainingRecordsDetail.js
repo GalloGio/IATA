@@ -28,9 +28,7 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
     @track itpValue;
     @track experiationstatusValue = 'All';
     @track aircraftTypeValue = 'All';
-    //@track aircraftTypeValue = 'All Level 2';
     @track levelValue = 'All';
-    //@track levelValue = 'Level 2';
 
     @track fromDateValue;
     @track fromDateMinValue = new Date(2019, 0, 1);
@@ -219,17 +217,7 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
         this.certificationTypesWithLevel.forEach(cert =>{
             myTopicOptions.push({ label: cert.Certification__r.Name, value: cert.Certification__c });
         });
-        /*
-        this.aircraftTypeValue = 'All Level 2';
-        let myTopicOptions = [{ label: '- All Level 2 -', value: 'All Level 2'}];
-        this.certificationTypesWithLevel.forEach(cert =>{
-            if(cert.Prerequisite_Level__c === 'Level 2'){
-                myTopicOptions.push({ label: cert.Certification__r.Name, value: cert.Certification__c });
-            }  
-        });
-        */
         this.aircraftTypeOptions = this.sortData('label', 'asc', myTopicOptions); 
-        //this.levelValue = 'Level 2';
         this.levelValue = 'All';
         this.fromDateValue = undefined;
         this.fromDateMaxValue = undefined;
@@ -271,16 +259,7 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
             let myResult = JSON.parse(JSON.stringify(result));
 
             this.certificationTypesWithLevel = myResult;
-/*
-            let myTopicOptions = [{ label: '- All Level 2 -', value: 'All Level 2'}];
-            myResult.forEach(cert =>{
-                if(cert.Prerequisite_Level__c === 'Level 2'){
-                    myTopicOptions.push({ label: cert.Certification__r.Name, value: cert.Certification__c });
-                }  
-            });
-            this.aircraftTypeOptions = this.sortData('label', 'asc', myTopicOptions);
-            this.aircraftTypeValue = 'All Level 2';
-*/
+
             let myTopicOptions = [{ label: '- All -', value: 'All'}];
             myResult.forEach(cert =>{
                 myTopicOptions.push({ label: cert.Certification__r.Name, value: cert.Certification__c });
@@ -351,7 +330,6 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
     }
 
     handleSearch(){
-        //let auxSearchValues = new Map();
         let auxSearchValues = {};
         let i;
         // It is mandatory to choose one station, and one station only, checked before intering this method
@@ -360,7 +338,6 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
 
         let auxExperiationstatus = (this.experiationstatusValue == null) ? 'null' : this.experiationstatusValue;
         let auxAircraftType = (this.aircraftTypeValue == null) ? 'null' : this.aircraftTypeValue;
-        //let auxProficiency = (this.proficiencyValue == null) ? 'null' : this.proficiencyValue;
         let auxLevel = (this.levelValue == null) ? 'null' : this.levelValue;
         let auxProficiency = 'Yes';
         let auxFromDate = (this.fromDateValue == null) ? 'null' : this.fromDateValue;
