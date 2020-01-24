@@ -1963,10 +1963,6 @@
         <name>CSP_Breadcrump_MyProfile_Title</name>
     </customLabels>
     <customLabels>
-        <label>Bạn &amp; IATA</label>
-        <name>CSP_Breadcrump_You_IATA</name>
-    </customLabels>
-    <customLabels>
         <label>Mua trực tuyến</label>
         <name>CSP_Buy_Online</name>
     </customLabels>
@@ -3483,16 +3479,8 @@
         <name>CSP_Welcome_Title</name>
     </customLabels>
     <customLabels>
-        <label>Bạn &amp; IATA</label>
-        <name>CSP_YouAndIATA</name>
-    </customLabels>
-    <customLabels>
         <label>Những điểm nổi bật dành riêng cho bạn</label>
         <name>CSP_YouIATA_Highlights</name>
-    </customLabels>
-    <customLabels>
-        <label>Tại đây bạn có thể khám phá rất nhiều dịch vụ, ấn phẩm, sản phẩm và tài nguyên của IATA về ngành hàng không. Lựa chọn đặc biệt dựa trên sở thích và lịch sử hoạt động của bạn.</label>
-        <name>CSP_YouIATA_Highlights_Text</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_You_Dont_Have_Announcements --></label>
@@ -20124,8 +20112,16 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>OneId_Fred_Select_Type_of_Company</name>
     </customLabels>
     <customLabels>
+        <label><!-- OneId GADM Terms of Use Link --></label>
+        <name>OneId_GADM_Terms_of_Use_Link</name>
+    </customLabels>
+    <customLabels>
         <label><!-- OneId GADM Troubleshooting --></label>
         <name>OneId_GADM_Troubleshooting</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId GADM Troubleshooting Link --></label>
+        <name>OneId_GADM_Troubleshooting_Link</name>
     </customLabels>
     <customLabels>
         <label>&quot;Trong trường hợp không tìm thấy công ty nào cho tổ hợp mã GSA và quốc gia của bạn, xin vui lòng đảm bảo bạn đã nhập đúng thông tin hoặc tham khảo &lt;a href=&quot;&quot;http://theiatahub.force.com/iatapkb/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US&quot;&quot; target=&quot;&quot;_blank&quot;&quot;&gt;hướng dẫn khắc phục sự cố&lt;/a&gt; của chúng tôi&quot;</label>

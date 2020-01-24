@@ -1965,10 +1965,6 @@
         <name>CSP_Breadcrump_MyProfile_Title</name>
     </customLabels>
     <customLabels>
-        <label>Sie &amp; International Air Transport Association (IATA)</label>
-        <name>CSP_Breadcrump_You_IATA</name>
-    </customLabels>
-    <customLabels>
         <label>Online kaufen</label>
         <name>CSP_Buy_Online</name>
     </customLabels>
@@ -3487,16 +3483,8 @@ und &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-port
         <name>CSP_Welcome_Title</name>
     </customLabels>
     <customLabels>
-        <label>Sie &amp; International Air Transport Association (IATA)</label>
-        <name>CSP_YouAndIATA</name>
-    </customLabels>
-    <customLabels>
         <label>Ausgewählte Highlights für Sie</label>
         <name>CSP_YouIATA_Highlights</name>
-    </customLabels>
-    <customLabels>
-        <label>Hier finden Sie eine Vielzahl von International Air Transport Association (IATA)-Diensten, Veröffentlichungen, Produkten und Ressourcen zur Luftfahrtindustrie. Speziell auf Ihre Interessen und Tätigkeitsgeschichte zugeschnitten.</label>
-        <name>CSP_YouIATA_Highlights_Text</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_You_Dont_Have_Announcements --></label>
@@ -20131,8 +20119,16 @@ einer von TIESS akkreditierten Agentur gehören, klicken Sie auf die Schaltfläc
         <name>OneId_Fred_Select_Type_of_Company</name>
     </customLabels>
     <customLabels>
+        <label><!-- OneId GADM Terms of Use Link --></label>
+        <name>OneId_GADM_Terms_of_Use_Link</name>
+    </customLabels>
+    <customLabels>
         <label><!-- OneId GADM Troubleshooting --></label>
         <name>OneId_GADM_Troubleshooting</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId GADM Troubleshooting Link --></label>
+        <name>OneId_GADM_Troubleshooting_Link</name>
     </customLabels>
     <customLabels>
         <label>&quot;Falls für Ihre Kombination aus GSA-Code und Land keine Ergebnisse gefunden wurden, stellen Sie bitte sicher, dass Ihre Angaben stimmen, oder wenden Sie sich an unser &lt;a href=&quot;&quot;http://theiatahub.force.com/iatapkb/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US&quot;&quot; target=&quot;&quot;_blank&quot;&quot;&gt;troubleshooting guide&lt;/a&quot;</label>
