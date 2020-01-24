@@ -1963,10 +1963,6 @@
         <name>CSP_Breadcrump_MyProfile_Title</name>
     </customLabels>
     <customLabels>
-        <label>Bạn &amp; IATA</label>
-        <name>CSP_Breadcrump_You_IATA</name>
-    </customLabels>
-    <customLabels>
         <label>Mua trực tuyến</label>
         <name>CSP_Buy_Online</name>
     </customLabels>
@@ -3483,16 +3479,8 @@
         <name>CSP_Welcome_Title</name>
     </customLabels>
     <customLabels>
-        <label>Bạn &amp; IATA</label>
-        <name>CSP_YouAndIATA</name>
-    </customLabels>
-    <customLabels>
         <label>Những điểm nổi bật dành riêng cho bạn</label>
         <name>CSP_YouIATA_Highlights</name>
-    </customLabels>
-    <customLabels>
-        <label>Tại đây bạn có thể khám phá rất nhiều dịch vụ, ấn phẩm, sản phẩm và tài nguyên của IATA về ngành hàng không. Lựa chọn đặc biệt dựa trên sở thích và lịch sử hoạt động của bạn.</label>
-        <name>CSP_YouIATA_Highlights_Text</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_You_Dont_Have_Announcements --></label>
