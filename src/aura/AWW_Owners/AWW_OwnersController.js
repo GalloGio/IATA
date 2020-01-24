@@ -3,6 +3,9 @@
         helper.initTable(component);
         helper.fetchData(component);
     },
+    doRefresh: function(component,event,helper) {
+        helper.initTable(component);
+    },
     handleRowAction : function(component,event,helper) {
         var action = event.getParam('action').name;
         switch (action) {

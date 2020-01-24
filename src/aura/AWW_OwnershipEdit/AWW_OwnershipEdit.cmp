@@ -17,6 +17,8 @@
     <aura:attribute name="noAccount" type="Boolean" default="false"/>
     <aura:attribute name="selectedAction" type="String" default="add"/>
     <aura:attribute name="whatType" type="String"/>
+    <aura:attribute name="allRecords" type="List"/>
+    <aura:attribute name="isGreaterThanOneHundred" type="Boolean" default="false"/>
 
     <aura:method name="showModal" action="{!c.handleModalVisibility}">
         <aura:attribute name="typeOfRecord" type="String"/>
@@ -64,9 +66,18 @@
                         </div>
                         <aura:renderIf isTrue="{!v.selectedAction == 'add'}">
                             <div class="slds-col slds-size_1-of-3">
-                                <lightning:input aura:id="percentageHeld" value="{!v.record.percentage}" label="Percentage Held" type="number" step="0.01" max="100" min="0"/>
+                                <lightning:input onchange="{!c.handleGreaterThanOneHundred}" aura:id="percentageHeld" value="{!v.record.percentage}" label="Percentage Held" type="number" step="0.01" max="100" min="0"/>
                             </div>
                         </aura:renderIf>
+                        <aura:if isTrue="{!v.isGreaterThanOneHundred}">
+                            <div class="slds-col slds-size_1-of-1">
+                                <div class="slds-m-top_medium slds-table_bordered slds-border_left slds-border_right">
+                                    <ui:message title="Warning" severity="Warning" closable="true">
+                                            {!$Label.c.Control_Total_Percentage_Owners_And_Subsidiaries}
+                                    </ui:message>
+                                </div>
+                            </div>
+                        </aura:if>
                         <aura:if isTrue="{!v.noAccount}">
                             <div class="slds-col slds-size_1-of-1">
                                 <div class="slds-m-top_medium slds-table_bordered slds-border_left slds-border_right">
@@ -130,7 +141,7 @@
                         <aura:if isTrue="{!v.selectedRowsCount == 0}">
                             <aura:set attribute="else">
                                 <aura:renderIf isTrue="{!v.selectedAction == 'add'}">
-                                    <lightning:button variant="brand" label="Add" title="Add" onclick="{!c.save}"/>
+                                    <lightning:button aura:id="greaterThanOneHundred" variant="brand" label="Add" title="Add" onclick="{!c.save}"/>
                                 </aura:renderIf>
                                 <aura:renderIf isTrue="{!v.selectedAction != 'add'}">
                                     <lightning:button variant="brand" label="Remove" title="Remove" onclick="{!c.save}"/>
@@ -139,7 +150,7 @@
                         </aura:if>
                         <aura:set attribute="else">
                             <aura:if isTrue="{!!empty(v.searchName)}">
-                                <lightning:button variant="brand" label="Save" title="Save" onclick="{!c.save}"/>
+                                <lightning:button aura:id="greaterThanOneHundred" variant="brand" label="Save" title="Save" onclick="{!c.save}"/>
                             </aura:if>
                         </aura:set>
                     </aura:if>

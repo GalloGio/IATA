@@ -43,7 +43,7 @@
 					        </thead>
 					
 					        <apex:repeat value="{!lsKeyContactsWrapped}" var="i">
-					            <tr class="dataRow" >
+					            <tr class="dataRow">
 					
 					                <td class="dataCell " >{!i.con.Name}</td>
 					                <td class="dataCell " ><apex:outputField value="{!i.con.Airline_Contact_Type__c}"/></td>

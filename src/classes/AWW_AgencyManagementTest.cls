@@ -3,11 +3,24 @@ private class AWW_AgencyManagementTest {
 
 	@testSetup static void setup() {
 		IATA_ISO_Country__c country = new IATA_ISO_Country__c(
+			Name= 'United States',
+			ISO_Code__c= 'US',
+			ISO_Code_Numeric__c= 580
+		);
+		insert country;
+		IATA_ISO_Country__c countryPT = new IATA_ISO_Country__c(
 			Name= 'Portugal',
 			ISO_Code__c= 'PT',
 			ISO_Code_Numeric__c= 11
 		);
-		insert country;
+		insert countryPT;
+		IATA_ISO_Country__c countryCNS = new IATA_ISO_Country__c(
+			Name= 'Puerto Rico',
+			ISO_Code__c= 'PR',
+			ISO_Code_Numeric__c= 630,
+			CNS_Country__c = true
+		);
+		insert countryCNS;
 		Account wwAccount = new Account(
 			Name= 'World Wide Account',
 			RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Agency_WW_HQ'),
@@ -18,15 +31,43 @@ private class AWW_AgencyManagementTest {
 		Account acc = new Account(
 			Name= 'Test Ag',
 			RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency'),
+			IATA_ISO_Country__c= countryPT.Id,
+			World_Wide_Account__c= wwAccount.Id,
+			Location_Type__c= 'HO',
+			Location_Class__c= 'P',
+			Sector__c= 'Travel Agent',
+			Category__c= 'IATA Passenger Sales Agent',
+			IATACode__c= '145362',
+			Status__c = 'Approved'
+		);
+		insert acc;
+
+		Account acc2 = new Account(
+			Name= 'Test Ag2',
+			RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency'),
 			IATA_ISO_Country__c= country.Id,
 			World_Wide_Account__c= wwAccount.Id,
 			Location_Type__c= 'HO',
 			Location_Class__c= 'P',
 			Sector__c= 'Travel Agent',
 			Category__c= 'IATA Passenger Sales Agent',
-			IATACode__c= '145362'
+			IATACode__c= '345127',
+			Status__c = 'Approved'
 		);
-		insert acc;
+		insert acc2;
+		Account acc3 = new Account(
+			Name= 'Test Ag3',
+			RecordTypeId= RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency'),
+			IATA_ISO_Country__c= countryCNS.Id,
+			World_Wide_Account__c= wwAccount.Id,
+			Location_Type__c= 'HO',
+			Location_Class__c= 'C',
+			Sector__c= 'Travel Agent',
+			Category__c= 'IATA Passenger Sales Agent',
+			IATACode__c= '675123',
+			Status__c = 'Approved'
+		);
+		insert acc3;
 	}
 
 	@isTest static void testUserPermissions() {
@@ -176,7 +217,7 @@ private class AWW_AgencyManagementTest {
 
 	@isTest static void testHeadOffices() {
 		Account wwAccount = [SELECT Id FROM Account WHERE RecordType.DeveloperName = 'Agency_WW_HQ'];
-		Account agency = [SELECT Id FROM Account WHERE RecordType.DeveloperName = 'IATA_Agency'];
+		Account agency = [SELECT Id FROM Account WHERE RecordType.DeveloperName = 'IATA_Agency' AND IATACode__c= '145362'];
 		List<Id> listAcc = new List<Id>();
 		listAcc.add(agency.id);
 		Test.startTest();

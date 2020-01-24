@@ -111189,18 +111189,30 @@ $User.ProfileId = &apos;00ew0000001R7Ci&apos;)))</errorConditionFormula>
     </validationRules>
     <validationRules>
         <fullName>Blocks_Users_Editing_Fields_AgencyWWHQ</fullName>
-        <active>false</active>
+        <active>true</active>
         <description>Blocks users editing ISO Country, VAT Number, Billing address standard field fields if they don’t have the permission set AMP_Agency_Management and record Type Agency WW HQ</description>
         <errorConditionFormula>AND(
 				$Permission.AMP_Agency_Management = False, 
-				 OR(
-				     ISCHANGED( BillingAddress ),
+OR(
+ISCHANGED(BillingStreet),
+ISCHANGED(BillingCity),
+ISCHANGED(BillingState),
+ISCHANGED(BillingPostalCode),
+ISCHANGED(BillingCountry),
 						 		ISCHANGED( IATA_ISO_Country__c ),
-				 				ISCHANGED( VAT_Number__c )
+				 				ISCHANGED( VAT_Number__c ),
+						 		ISCHANGED( Legal_name__c ),  
+						 		ISCHANGED( TradeName__c ),
+						 		ISCHANGED( Sector__c ),
+						 		ISCHANGED( Category__c ),
+						 		ISCHANGED( Account_Type__c ),
+						 		ISCHANGED( Agency_Business_Model__c ),
+						 		ISCHANGED( Website ),
+						 		ISCHANGED( AM_Ownership_Type__c )
 					),
 				 RecordType.DeveloperName = &apos;Agency_WW_HQ&apos;
 )</errorConditionFormula>
-        <errorMessage>You do not have permission to edit ISO Country, VAT Number, Billing Address. Please contact your administrator.</errorMessage>
+        <errorMessage>You do not have permission to edit ISO Country, VAT Number, Billing Address, Legal Name, Trade Name, Sector, Category, Account Type, Agency Business Model, Website and Ownership Type. Please contact your administrator.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>CASS_Number_3_Digits</fullName>

@@ -6,6 +6,7 @@ public with sharing class AMP_KeyContactsController {
 	public String accountName {get;set;}
 
 	public List<ContactWrapper> lsKeyContactsWrapped {get;set;}
+	public String isWWAccount {get;set;}
 
 	// The extension constructor initializes the private member
 	// variable myAccount by using the getRecord method from the standard
@@ -20,12 +21,32 @@ public with sharing class AMP_KeyContactsController {
 
 	public AMP_KeyContactsController() {
 		String accountId =  ApexPages.currentPage().getParameters().get('accountId');
+		isWWAccount = ApexPages.currentPage().getParameters().get('isWWAccount');
 		accountName = [SELECT Id, Name FROM Account WHERE Id =:accountId LIMIT 1].Name;
-		lsKeyContactsWrapped = getKeyContactsWrapped(accountId);
+		if(isWWAccount != null && Boolean.valueOf(isWWAccount)){
+			lsKeyContactsWrapped = getAwwKeyContactsWrapped(accountId);
+		}
+		else{
+			lsKeyContactsWrapped = getKeyContactsWrapped(accountId);
+		}
 	}
 
 	public String getRecordId() {
 		return (Id)myAccount.get('Id');
+	}
+
+	@AuraEnabled
+	public static List<ContactWrapper> getAwwKeyContactsWrapped (Id AccountId) {
+
+		List<Contact> lsKeyContacts = AWW_KeyContactsCtrl.searchKeyContacts(AccountId);
+		List<ContactWrapper> wrappedContacts = new List<ContactWrapper>();
+
+		if(!lsKeyContacts.isEmpty()){
+			for(Contact con : lsKeyContacts){
+				wrappedContacts.add(new ContactWrapper(con));
+			}
+		}
+		return wrappedContacts;
 	}
 
 	@AuraEnabled
@@ -34,7 +55,7 @@ public with sharing class AMP_KeyContactsController {
 			[SELECT Id, Name, Airline_Contact_Type__c, Title, Phone,
 					MobilePhone, Email, Membership_Function__c, Function__c,
 					AM_First_Name_Latin_Char__c, AM_Last_Name_Latin_Char__c, AM_Job_Title_English__c,
-					CEO_CFO__c, Membership_Main_Contact__c
+					CEO_CFO__c, Membership_Main_Contact__c, Account.Name
 			FROM Contact
 			WHERE (AccountId = :accountId OR Account.ParentId = :accountId )
 			AND Account_Management_Key_Contact__c = true

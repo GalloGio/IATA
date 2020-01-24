@@ -123,11 +123,11 @@ public with sharing class AMP_IssuesAndPrioritiesExtension {
 			'AM_Regional__c',
 			'AM_Local__c',
 			'AM_Issue_with_IATA__c',
-			'AM_Public__c',
 			'AM_Level_of_importance__c',
 			'Status__c',
 			'Details__c',
-			'AM_Source_Text__c'
+			'AM_Source_Text__c',
+			'AM_Public__c'
 		};
 		return issueAccessFields;
 
@@ -145,33 +145,48 @@ public with sharing class AMP_IssuesAndPrioritiesExtension {
 	}
 
 	public PageReference filterIssuesAndPriorities() {
-	  lsIssuesAndPriorities = getIssuesAndPriorities();
-	  System.debug(lsIssuesAndPriorities);
-	  return null;
-  }
+		lsIssuesAndPriorities = getIssuesAndPriorities();
+		System.debug(lsIssuesAndPriorities);
+		return null;
+	}
 
-  @AuraEnabled
-  public static Boolean getCanEdit() {
-	  Boolean canEdit = true;
-	  // Obtain the field name/token map for the Objective__c object
-	  Map<String,Schema.SObjectField> m = Schema.SObjectType.Objective__c.fields.getMap();
+	@AuraEnabled
+	public static Boolean getHaveAMPIssuesAndPriorities() {
+		List<PermissionSetAssignment> permissions = [
+			SELECT PermissionSet.Name
+			FROM PermissionSetAssignment 
+			WHERE AssigneeId = :UserInfo.getUserId() AND PermissionSet.Name IN ('AMP_Issues_and_Priorities')
+		];
 
-	  List<String> lsIssueFields = getIssueFields();
-	  for (String fieldToCheck : lsIssueFields) {
-		  // Check if the user has access to view field
-		  if (!m.get(fieldToCheck).getDescribe().isUpdateable() ) {
-			  canEdit = false;
-		  }
-	  }
+		if(permissions.isEmpty()) {
+			return false;
+		} else {
+			return (permissions[0].PermissionSet.Name == 'AMP_Issues_and_Priorities' ? true : false);
+		}
+	}
 
-	  return canEdit;
-  }
+	@AuraEnabled
+	public static Boolean getCanEdit() {
+		Boolean canEdit = true;
+		// Obtain the field name/token map for the Objective__c object
+		Map<String,Schema.SObjectField> m = Schema.SObjectType.Objective__c.fields.getMap();
+
+		List<String> lsIssueFields = getIssueFields();
+		for (String fieldToCheck : lsIssueFields) {
+			// Check if the user has access to view field
+			if (!m.get(fieldToCheck).getDescribe().isUpdateable() ) {
+				canEdit = false;
+			}
+		}
+
+		return canEdit;
+	}
 
 
-  @AuraEnabled
-  public static List<Objective__c> getIssuesAndPriorities(Id accountId, String SortOrder) {
-	  Id objectiveRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Objective__c', 'Account_Issues_and_Priorities');
-	  List<Objective__c> lsIssuesAndPriorities = new List<Objective__c>();
+	@AuraEnabled
+	public static List<Objective__c> getIssuesAndPriorities(Id accountId, String SortOrder) {
+		Id objectiveRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Objective__c', 'Account_Issues_and_Priorities');
+		List<Objective__c> lsIssuesAndPriorities = new List<Objective__c>();
 		List<String> lsIssueFields = getIssueFields();
 
 		String queryString = 'SELECT Id,';
@@ -204,34 +219,34 @@ public with sharing class AMP_IssuesAndPrioritiesExtension {
 
 	@AuraEnabled
 	public static Objective__c deleteIssue(Objective__c issue) {
-	  delete issue;
-	  return issue;
-  }
+		delete issue;
+		return issue;
+	}
 
 	public void newLine() {
-	  try {
-		  newIssue = new Objective__c();
-		  newIssue.Account__c = accountId;
-		  newIssue.RecordTypeId = this.objectiveRecordTypeId;
-		  //newIssue.Name = 'new issue or priority';
-		  //insert newIssue;
-		  List<Objective__c> newList = new List<Objective__c>();
-		  newList.add(newIssue);
-		  newList.addAll(lsIssuesAndPriorities);
-		  lsIssuesAndPriorities.clear();
-		  lsIssuesAndPriorities.addAll(newList);
-		//   lsIssuesAndPriorities.add(newIssue);
-		//   lsIssuesAndPriorities.clear();
+		try {
+			newIssue = new Objective__c();
+			newIssue.Account__c = accountId;
+			newIssue.RecordTypeId = this.objectiveRecordTypeId;
+			//newIssue.Name = 'new issue or priority';
+			//insert newIssue;
+			List<Objective__c> newList = new List<Objective__c>();
+			newList.add(newIssue);
+			newList.addAll(lsIssuesAndPriorities);
+			lsIssuesAndPriorities.clear();
+			lsIssuesAndPriorities.addAll(newList);
+			//lsIssuesAndPriorities.add(newIssue);
+			//lsIssuesAndPriorities.clear();
 
-		  isEditMode = true;
-		  isNewLine = true;
-		  IdConcerned = null;
-		  sortOrder = ' CreatedDate ASC ';
-		//   lsIssuesAndPriorities = getIssuesAndPriorities();
+			isEditMode = true;
+			isNewLine = true;
+			IdConcerned = null;
+			sortOrder = ' CreatedDate ASC ';
+			//lsIssuesAndPriorities = getIssuesAndPriorities();
 
-	  } catch(Exception e) {
-		  ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,e.getDmlMessage(0)));
-	  }
+		} catch(Exception e) {
+			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,e.getDmlMessage(0)));
+		}
 
 	}
 

@@ -1,6 +1,7 @@
 ({
     doInit : function(component, event, helper) {
         helper.initTable(component);
+        helper.fetchHaveAMPIssuesAndPriorities(component);
         helper.fetchData(component);
     },
     newRecord : function(component, event, helper) {

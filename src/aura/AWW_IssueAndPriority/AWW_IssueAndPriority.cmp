@@ -39,7 +39,7 @@
                     </aura:renderIf>
                     <div class="slds-grid slds-gutters slds-wrap">
                         <div class="slds-col slds-size_1-of-3">
-                            <lightning:input aura:id="recordName" label="Name" type="text" required="true" value="{!v.record.Name}"/>
+                            <lightning:input maxlength="80" aura:id="recordName" label="Name" type="text" required="true" value="{!v.record.Name}"/>
                         </div>
                         <div class="slds-col slds-size_1-of-3">
                             <lightning:select label="Division" value="{!v.record.Division__c}">
@@ -49,7 +49,7 @@
                             </lightning:select>
                         </div>
                         <div class="slds-col slds-size_1-of-3">
-                            <lightning:input label="Source" type="text" value="{!v.record.AM_Source_Text__c}"/>   
+                            <lightning:input maxlength="128" label="Source" type="text" value="{!v.record.AM_Source_Text__c}"/>   
                         </div>
                         <div class="slds-col slds-size_1-of-3">
                             <lightning:textarea aura:id="recordDescription" label="Description" type="text" value="{!v.record.Details__c}" maxlength="2048"/>   

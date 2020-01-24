@@ -53,10 +53,20 @@
                 refreshTab.fire(); 
                 this.hideModal(component);
             } else {
-                var message = 'Unknown error';
-                var errors = response.getError();
-                if(errors && Array.isArray(errors) && errors.length > 0 && Array.isArray(errors[0].pageErrors) && errors[0].pageErrors.length > 0) {
-                    message = errors[0].pageErrors[0].message;
+                let errors = response.getError();
+                let message = 'Unknown error'; 
+                if (errors[0]) {
+                    if (errors[0].fieldErrors) {
+                        if (errors[0].fieldErrors.Name) {
+                            if (errors[0].fieldErrors.Name[0]) {
+                                message = errors[0].fieldErrors.Name[0].message;
+                            }
+                        }else if(errors[0].fieldErrors.AM_Source_Text__c){
+                            if (errors[0].fieldErrors.AM_Source_Text__c[0]) {
+                                message = errors[0].fieldErrors.AM_Source_Text__c[0].message;
+                            }
+                        }
+                    }
                 }
 
                 component.set('v.errorMessage', message);

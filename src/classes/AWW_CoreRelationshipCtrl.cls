@@ -6,13 +6,13 @@ public with sharing class AWW_CoreRelationshipCtrl {
 		List<PermissionSetAssignment> permissions = [
 			SELECT PermissionSet.Name
 			FROM PermissionSetAssignment
-			WHERE AssigneeId = :UserInfo.getUserId() AND PermissionSet.Name IN ('AMP_Agency_Management')
+			WHERE AssigneeId = :UserInfo.getUserId() AND PermissionSet.Name IN ('AMP_Manage_Account_Ownership')
 		];
 
 		if(permissions.isEmpty()) {
 			return false;
 		} else {
-			return (permissions[0].PermissionSet.Name == 'AMP_Agency_Management' ? true : false);
+			return (permissions[0].PermissionSet.Name == 'AMP_Manage_Account_Ownership' ? true : false);
 		}
 	}
 
@@ -59,7 +59,8 @@ public with sharing class AWW_CoreRelationshipCtrl {
 											FROM Account
 											WHERE (World_Wide_Account__c = :accountId OR Top_Parent__r.World_Wide_Account__c = :accountId) AND
 												RecordType.DeveloperName = 'IATA_Agency' AND IATACode__c <> null AND
-												Status__c <> 'Terminated'AND Location_Type__c IN ('GE', 'HE', 'HO', 'AO', 'AE', 'BR')
+												Status__c IN ('Approved', 'ARC registered', 'Cash basis/no commission', 'Cash basis/with commission', 'Changes processed', 'Endorsed', 'Listed', 'Review', 'Under review') AND 
+												Location_Type__c IN ('GE', 'HE', 'HO', 'AO', 'AE', 'BR')
 											GROUP BY Location_Type__c, Location_Class__c, RecordType.DeveloperName, Category__c, IATA_ISO_Country__r.ISO_Code__c, CNS_Agency__c];
 
 		List<Row> rows = new List<Row>();
@@ -70,8 +71,10 @@ public with sharing class AWW_CoreRelationshipCtrl {
 			'AO' => 0,
 			'AE' => 0,
 			'BR' => 0,
+			'AW' => 0,
+			'SA' => 0,
+			'ST' => 0,
 			'IATAN Codes' => 0,
-			'TIDS' => 0,
 			'CNS Codes' => 0
 		};
 		Integer countTIDS = 0;
@@ -84,23 +87,17 @@ public with sharing class AWW_CoreRelationshipCtrl {
 			Boolean cnsAgency = (Boolean) ar.get('CNS_Agency__c');
 			Integer totals = (Integer) ar.get('expr0');
 
-			if(locationClass == 'T') {
-				Integer totalTids = mapLocationTypes.get('TIDS');
-				mapLocationTypes.put('TIDS', totalTids + totals);
-			}
-
-			if(rtype == 'IATA_Agency' && country == 'US' && category == 'IATAN Passenger Sales Agent') {
+			if(rtype == 'IATA_Agency' && country == 'US' && category == 'IATA Passenger Sales Agent') {
 				Integer totalIATAN = mapLocationTypes.get('IATAN Codes');
-				mapLocationTypes.put('ATAN Codes', totalIATAN + totals);
-			}
-
-			if(cnsAgency && rtype == 'IATA_Agency') {
+				mapLocationTypes.put('IATAN Codes', totalIATAN + totals);
+			}else if(cnsAgency && rtype == 'IATA_Agency') {
 				Integer totalCNS= mapLocationTypes.get('CNS Codes');
 				mapLocationTypes.put('CNS Codes', totalCNS + totals);
+			}else{
+				Integer currVal = mapLocationTypes.get(locationType);
+				mapLocationTypes.put(locationType,currVal + totals);
 			}
 
-			Integer currVal = mapLocationTypes.get(locationType);
-			mapLocationTypes.put(locationType,currVal + totals);
 		}
 
 		for(String lt : mapLocationTypes.keySet()) {
@@ -117,7 +114,7 @@ public with sharing class AWW_CoreRelationshipCtrl {
 											FROM Account
 											WHERE (World_Wide_Account__c = :accountId OR Top_Parent__r.World_Wide_Account__c = :accountId) AND
 												RecordType.DeveloperName = 'IATA_Agency' AND IATACode__c <> null AND
-												Status__c <> 'Terminated'
+												Status__c IN ('Approved', 'ARC registered', 'Cash basis/no commission', 'Cash basis/with commission', 'Changes processed', 'Endorsed', 'Listed', 'Review', 'Under review')
 											GROUP BY IATA_ISO_Country__r.Name, IATA_ISO_Country__r.Region__c];
 
 		Map<String,Integer> countries = new Map<String,Integer>();
