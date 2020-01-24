@@ -1964,10 +1964,6 @@
         <name>CSP_Breadcrump_MyProfile_Title</name>
     </customLabels>
     <customLabels>
-        <label>お客様と IATA</label>
-        <name>CSP_Breadcrump_You_IATA</name>
-    </customLabels>
-    <customLabels>
         <label>オンラインで購入する</label>
         <name>CSP_Buy_Online</name>
     </customLabels>
@@ -3485,16 +3481,8 @@
         <name>CSP_Welcome_Title</name>
     </customLabels>
     <customLabels>
-        <label>お客様とIATA</label>
-        <name>CSP_YouAndIATA</name>
-    </customLabels>
-    <customLabels>
         <label>お客様のために厳選されたハイライト</label>
         <name>CSP_YouIATA_Highlights</name>
-    </customLabels>
-    <customLabels>
-        <label>こちらでは、航空業界の種々多様なIATAサービス、出版物、製品、およびリソースをお探しいただけます。お客様のご興味やご活動履歴に合わせて特別に仕立てられております。</label>
-        <name>CSP_YouIATA_Highlights_Text</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_You_Dont_Have_Announcements --></label>

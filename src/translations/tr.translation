@@ -1961,10 +1961,6 @@
         <name>CSP_Breadcrump_MyProfile_Title</name>
     </customLabels>
     <customLabels>
-        <label>Siz &amp; IATA</label>
-        <name>CSP_Breadcrump_You_IATA</name>
-    </customLabels>
-    <customLabels>
         <label>Çevrim içi satın alın</label>
         <name>CSP_Buy_Online</name>
     </customLabels>
@@ -3481,16 +3477,8 @@
         <name>CSP_Welcome_Title</name>
     </customLabels>
     <customLabels>
-        <label>Siz &amp; IATA</label>
-        <name>CSP_YouAndIATA</name>
-    </customLabels>
-    <customLabels>
         <label>Sizin İçin Seçilmiş Önemli Noktalar</label>
         <name>CSP_YouIATA_Highlights</name>
-    </customLabels>
-    <customLabels>
-        <label>Burada çok çeşitli IATA Hizmetlerini, havacılık endüstrisi ile ilgili yayınları, ürünleri ve kaynakları keşfedebilirsiniz. İlgi alanlarınız ve faaliyet geçmişiniz göz önüne alınarak özel olarak hazırlanmıştır.</label>
-        <name>CSP_YouIATA_Highlights_Text</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_You_Dont_Have_Announcements --></label>
