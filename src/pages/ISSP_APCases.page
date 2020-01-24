@@ -202,9 +202,9 @@
       <apex:pageBlockButtons location="top" style="Width:100%;margin-top:20px;">
         <apex:form >
           <center style="padding-top:15px;">
-            <apex:commandButton rendered="{!strAreaType='Airline Joining'}" styleClass="btn btn-default" onClick="navigateToUrl('/ISSP_APProcess?retUrl=/ISSP_HomePage','LIST_VIEW','newCase');return false;" value="New Joining Application" style="margin-right: 30px;"/>
-            <apex:commandButton rendered="{!APprocess=='chg'}" styleClass="btn btn-default" onClick="navigateToUrl('/ISSP_APProcess?proc=chg&retUrl=/ISSP_HomePage','LIST_VIEW','newCase');return false;" value="New Change Request" style="margin-right: 30px;"/>
-            <apex:commandButton rendered="{!APprocess=='bnk'}" styleClass="btn btn-default" onClick="navigateToUrl('/ISSP_APProcess?proc=bnk&retUrl=/ISSP_HomePage','LIST_VIEW','newCase');return false;" value="New Change of bank details"/>
+            <apex:commandButton rendered="{!strAreaType='Airline Joining'}" styleClass="btn btn-default" onClick="navigateToUrl('/ISSP_APProcess?retUrl=/ISSP_HomePage','LIST_VIEW','newCase');return false;" value="{!$Label.ISSP_AP_New_Joining_App}" style="margin-right: 30px;"/>
+            <apex:commandButton rendered="{!APprocess=='chg'}" styleClass="btn btn-default" onClick="navigateToUrl('/ISSP_APProcess?proc=chg&retUrl=/ISSP_HomePage','LIST_VIEW','newCase');return false;" value="{!$Label.ISSP_AP_New_Change_Req}" style="margin-right: 30px;"/>
+            <apex:commandButton rendered="{!APprocess=='bnk'}" styleClass="btn btn-default" onClick="navigateToUrl('/ISSP_APProcess?proc=bnk&retUrl=/ISSP_HomePage','LIST_VIEW','newCase');return false;" value="{!$Label.ISSP_AP_New_Change_Bank_Details}"/>
             <apex:commandButton rendered="{!APprocess=='chg'}" styleClass="btn btn-default" onClick="optInOut();return false;" value="IATA EasyPay Opt-In / Opt-Out"/>
           </center>
         </apex:form>
@@ -231,8 +231,13 @@
         <img src="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=01520000000zGve&oid=00D2000000008TF&lastMod=1401896785000"/><br/>
         <h3>You don't have any pending Airline Participation {!IF(APprocess=='chg', 'Change Requests', IF(APprocess=='bnk', 'change of bank account details', 'Joining Processes'))}</h3><br/>
         <div class="row">
-          <a class="iatabtn iatabtn-default" href="/ISSP_APProcess?proc={!APprocess}&retURL=/ISSP_APCases">New {!IF(APprocess=='chg', 'Changing', 'Joining')} Request</a>&nbsp;
-          <button style="display: {!IF(APprocess=='chg','','none')};" type="button" id="modalButton" onclick="optInOut();" class="iatabtn iatabtn-default">IATA EasyPay Opt-In / Opt-Out</button>
+        	<apex:form >
+	          	<center style="padding-top:15px;">
+		          	<apex:commandButton rendered="{!APprocess=='chg'}" styleClass="btn btn-default" onClick="navigateToUrl('/ISSP_APProcess?proc=chg&retUrl=/ISSP_HomePage','LIST_VIEW','newCase');return false;" value="{!$Label.ISSP_AP_New_Change_Req}" style="margin-right: 30px;"/>
+		          	<apex:commandButton rendered="{!APprocess=='bnk'}" styleClass="btn btn-default" onClick="navigateToUrl('/ISSP_APProcess?proc=bnk&retUrl=/ISSP_HomePage','LIST_VIEW','newCase');return false;" value="{!$Label.ISSP_AP_New_Change_Bank_Details}"/>
+		          	<apex:commandButton rendered="{!APprocess=='chg'}" styleClass="btn btn-default" onClick="optInOut();return false;" value="IATA EasyPay Opt-In / Opt-Out"/>
+	          	</center>
+	        </apex:form>
         </div>
       </div>
     </apex:pageBlock>
