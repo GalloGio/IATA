@@ -19,21 +19,21 @@ public with sharing class ISSP_ANG_ANNUAL_REV_UPDATE {
 
 	public String cityMapStr {get;set;}
 		
-	public List<IATA_ISO_City__c> billingCityListName {get;set;}    
-	public List<IATA_ISO_City__c> shippingCityListName {get;set;}
+	public static List<IATA_ISO_City__c> billingCityListName {get;set;}    
+	public static List<IATA_ISO_City__c> shippingCityListName {get;set;}
 
 	public String geonameBillingCityId {get;set{ geonameBillingCityId = value; if(!String.isBlank(geonameBillingCityId)) ca.fw.newForm.Geoname_Billing_City__c = geonameBillingCityId; }}
 
 	public String geonameShippingCityId {get;set{ geonameShippingCityId = value; if(!String.isBlank(geonameShippingCityId)) ca.fw.newForm.Geoname_Shipping_City__c = geonameShippingCityId; }}
 
-	public String billingCityListNameStr {
+	public static String billingCityListNameStr {
 	get{
 		return JSON.serialize(billingCityListName);
 	}
 	set;
 	}
 	
-	public String shippingCityListNameStr {
+	public static String shippingCityListNameStr {
 	get{
 		return JSON.serialize(shippingCityListName);
 	}
@@ -104,6 +104,9 @@ public with sharing class ISSP_ANG_ANNUAL_REV_UPDATE {
 											WHERE IATA_ISO_Country__c = :ca.account.IATA_ISO_Country__c
 											ORDER BY Name]) {
 					billingStateList.add(new SelectOption(state.Name, state.Name));
+					if(!String.isBlank(state.Name) && !String.isBlank(ca.fw.newform.State_Province__c)){
+						ca.fw.newform.State_Province__c = state.Name.toUpperCase() == ca.fw.newform.State_Province__c.toUpperCase()?state.Name:ca.fw.newform.State_Province__c;
+					}
 				}
 			}
 			return billingStateList;
@@ -172,6 +175,9 @@ public with sharing class ISSP_ANG_ANNUAL_REV_UPDATE {
 		if(stateListByCountryNameMap.containsKey(ca.fw.newform.Shipping_Country__c != null ? ca.fw.newform.Shipping_Country__c.toUpperCase():'')) {
 			for (IATA_ISO_State__c state: stateListByCountryNameMap.get(ca.fw.newform.Shipping_Country__c.toUpperCase())) {
 				shippingStateList.add(new SelectOption(state.Name, state.Name));
+				if(!String.isBlank(state.Name) && !String.isBlank(ca.fw.newform.Shipping_State__c)){
+						ca.fw.newform.Shipping_State__c = state.Name.toUpperCase() == ca.fw.newform.Shipping_State__c.toUpperCase()?state.Name:ca.fw.newform.Shipping_State__c;
+					}
 			}
 		}
 	}
