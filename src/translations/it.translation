@@ -1965,10 +1965,6 @@ la seguente procedura per completarlo :
         <name>CSP_Breadcrump_MyProfile_Title</name>
     </customLabels>
     <customLabels>
-        <label>Lei e IATA</label>
-        <name>CSP_Breadcrump_You_IATA</name>
-    </customLabels>
-    <customLabels>
         <label>Comprare on line</label>
         <name>CSP_Buy_Online</name>
     </customLabels>
@@ -3486,16 +3482,8 @@ la seguente procedura per completarlo :
         <name>CSP_Welcome_Title</name>
     </customLabels>
     <customLabels>
-        <label>Lei e IATA</label>
-        <name>CSP_YouAndIATA</name>
-    </customLabels>
-    <customLabels>
         <label>Punti salienti selezionati per lei</label>
         <name>CSP_YouIATA_Highlights</name>
-    </customLabels>
-    <customLabels>
-        <label>Qui troverà una vasta gamma di servizi IATA, pubblicazioni, prodotti e risorse nel settore dell&apos;aviazione. Appositamente studiata in base ai suoi interessi e alla cronologia delle attività.</label>
-        <name>CSP_YouIATA_Highlights_Text</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_You_Dont_Have_Announcements --></label>
