@@ -23,7 +23,7 @@
         var checkNDC = (function ndcLogic() {
 			$j('[id$=ndc-empty]').parent().attr('style', 'display: none;');
 
-            if ($j('[id$=dgs-options_selected]')[0].children.length > 1) {
+            if ($j('[id$=dgs-options_selected]')[0].getElementsByTagName("option").length >= 1) {
                 $j('[name$=ndcQuestion]')[0].disabled = true;
                 $j('[name$=ndcQuestion]')[1].checked = true;
                 $j('[name$=ndcQuestion]')[1].disabled = true;
