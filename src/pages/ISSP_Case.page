@@ -764,7 +764,7 @@
 
                                         <apex:pageblocksectionitem rendered="{!showAP}">
                                             <apex:outputlabel value="{!$Label.ISSP_AP_Form}" for="apFormLink" />
-                                            <apex:outputlink value="/ISSP_APProcess?caseId={!newCase.Id}&step=2" id="apFormLink">
+                                            <apex:outputlink value="/ISSP_APProcess2?caseId={!newCase.Id}&step=2" id="apFormLink">
                                                 {!CASE(newCase.Reason1__c, 'Minor database changes', 'Click here to continue with your BSP/CASS Change Request', 'Bank Account Instructions', 'Click here to continue with your BSP/CASS Bank Account Change',  $Label.ISSP_Click_Here)}
                                             </apex:outputlink>
                                         </apex:pageblocksectionitem>

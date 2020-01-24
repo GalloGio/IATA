@@ -586,7 +586,7 @@ public with sharing class PortalCasesCtrl {
 					airlineRightList != null && !airlineRightList.isEmpty()) {
 						return new Map<Id, String>{
 							record.Id =>
-							OneIdUtils.getOrgUrl() + OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, 'ISSP_APProcess?caseId=' + record.Id + '&step=2')
+							OneIdUtils.getOrgUrl() + OneIdUtils.getCommunityRedirection(OneIdUtils.Mode.ISSP, 'ISSP_APProcess2?caseId=' + record.Id + '&step=2')
 						};
 			}
 		}
