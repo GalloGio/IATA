@@ -111442,10 +111442,7 @@ PRIORVALUE( Total_Value_Won_Opportunities__c ) = Total_Value_Won_Opportunities__
         <description>Only administrators can edit General Public accounts</description>
         <errorConditionFormula>AND
 (
-OR
-(CONTAINS(UPPER(Name), &quot;GENERAL PUBLIC&quot;) ||
-TEXT(Sector__c) = &quot;General Public&quot; ||
-ISPICKVAL(PRIORVALUE(Sector__c),&quot;General Public&quot;))
+Is_General_Public_Account__c
 ,
 OR
 (ISCHANGED(Sector__c),
