@@ -20,7 +20,6 @@ import CSP_Breadcrumb_Company_Profile_Title from '@salesforce/label/c.CSP_Breadc
 import CSP_Breadcrump_MyProfile_Title from '@salesforce/label/c.CSP_Breadcrump_MyProfile_Title';
 import CSP_Cases from '@salesforce/label/c.CSP_Cases';
 import CSP_Treasury_Dashboard from '@salesforce/label/c.CSP_Treasury_Dashboard';
-import CSP_Breadcrump_You_IATA from '@salesforce/label/c.CSP_Breadcrump_You_IATA';
 import CSP_Breadcrumb_CaseDetails_Title from '@salesforce/label/c.CSP_Breadcrumb_CaseDetails_Title';
 import CSP_Deduction_Notice from '@salesforce/label/c.CSP_Deduction_Notice';
 
@@ -41,7 +40,6 @@ export default class PortalBreadcrumbs extends NavigationMixin(LightningElement)
         CSP_Breadcrump_MyProfile_Title,
         CSP_Cases,
         CSP_Treasury_Dashboard,
-		CSP_Breadcrump_You_IATA,
 		CSP_Deduction_Notice
     };
 
