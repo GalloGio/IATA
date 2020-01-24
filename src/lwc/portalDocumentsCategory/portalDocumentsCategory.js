@@ -44,7 +44,7 @@ export default class PortalDocumentsCategory extends LightningElement {
                 _value.searchText !== __documentObject.searchText ||
                 _value.productCategory !== __documentObject.productCategory ||
                 _value.countryOfPublication !== __documentObject.countryOfPublication) ||
-                _value.show !== __documentObject.show) {
+                _value.show === true) {
 
                 this.resetPagination();
                 this.searchDocuments();
@@ -119,13 +119,15 @@ export default class PortalDocumentsCategory extends LightningElement {
                                 category: docs[el].Document_Category__c, 
                                 language: docs[el].Language__c, 
                                 filetype: docs[el].FileType, 
+								url: docs[el].ContentUrl,
+                                isLink: docs[el].FileType === 'LINK' ? true : false,
                                 open: docs[el].Id === __documentObject.docId ? true : false});
                         }
                     });
                     
                     let tempDocs = {};
                     tempDocs = JSON.parse(JSON.stringify(docsMap));
-
+                            
                     let docsList = [];
                     for(let key in tempDocs) {
                         if (tempDocs.hasOwnProperty(key)) {
@@ -135,7 +137,11 @@ export default class PortalDocumentsCategory extends LightningElement {
                             if(this._documentObject.topResults === false) { // INFINITE SCROLL
                                 this.concatValues = this.concatValues.concat(tempDocs[this._documentObject.apiName]);
                                 docsList.push({ key: key, label : labelForKey, value: this.concatValues, noResults: this.totalResults });
-                                __documentObject.noResults = this.totalResults;
+                                if(this._documentObject.show === true) {
+                                    __documentObject.noResults = this.totalResults;
+                                } else {
+                                    __documentObject.noResults = this.totalResults > 10 ? '10+' : this.totalResults;
+                                }
                             } else {
                                 let noResults = results.totalItemCount > 10 ? '10+' : results.totalItemCount;
                                 docsList.push({ key: key, label : labelForKey, value: tempDocs[key], noResults: noResults });
@@ -145,7 +151,7 @@ export default class PortalDocumentsCategory extends LightningElement {
                             }
                         }
                     }
-
+                    
 
                     
                     const selectedEvent = new CustomEvent('categoryfilter', { bubbles: true, detail: __documentObject });
@@ -190,24 +196,41 @@ export default class PortalDocumentsCategory extends LightningElement {
 
     viewDocument(event) {
         this.loading = true;
+        let url = event.target.dataset.url;
+        if(url !== undefined && url.length>0){
+             url = url.trim();
+            if(url.substring(0,4) !== 'http')
+                url = 'https://' + url;   
+       
+            window.open(url, '_blank'); 
+
+        } else{
         getContentDistribution({ documentName: event.target.dataset.name, documentId: event.target.dataset.item })
             .then(results => {
                 window.open(results.DistributionPublicUrl, '_blank');
-                this.loading = false;});
+                });
+        }
+        this.loading = false;
     }
 
     downloadDocument(event) {
-        this.loading = true;
-        getContentDistribution({ documentName: event.target.dataset.name, documentId: event.target.dataset.item })
-            .then(results => {
-                window.open(results.ContentDownloadUrl, '_self');
-                this.loading = false;});
+		let url = event.target.dataset.url;
+
+        if(url !== undefined && url.length>0){
+            this.viewDocument(event);
+        } else{
+			this.loading = true;
+			getContentDistribution({ documentName: event.target.dataset.name, documentId: event.target.dataset.item })
+				.then(results => {
+					window.open(results.ContentDownloadUrl, '_self');
+					this.loading = false;});
+		  }
     }
 
     categorySelected(event) {
         let categoryName = event.target.dataset.item;
         let __documentObject = JSON.parse(JSON.stringify(this._documentObject));
-
+        
         if(__documentObject.categorySelected !== categoryName) {
             
             __documentObject.categorySelected = categoryName;

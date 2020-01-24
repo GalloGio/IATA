@@ -133,15 +133,10 @@
   cursor: pointer;
 }
 
-.buttonYouIATA{
-	white-space:nowrap;
-}
 .buttonService:hover:after,
 .buttonSupport:hover:after,
-.buttonYouIATA:hover:after,
 .buttonService.selectedButton:after,
-.buttonSupport.selectedButton:after,
-.buttonYouIATA.selectedButton:after {
+.buttonSupport.selectedButton:after {
   content: "";
   width: 100%;
   height: 4px;
@@ -186,29 +181,33 @@
 }
 
 .headerButtonNotificationsContainer {
-	white-space: nowrap;
+  white-space: nowrap;
 }
 
 
 .headerButtonNotificationsContainer:hover {
   cursor: pointer;
 }
+.headerButtonSearchContainer {
+  padding-right: 6px;
+  padding-left: 6px;
+  padding-top: 6px;
+}
 
-
-
-.headerButtonNotificationsCloseIcon {
+.headerButtonNotificationsCloseIcon,
+.headerButtonSearchCloseIcon {
   display: none;
   width: 24px;
   height: 24px;
 }
 
 .notificationNumber {
-	background-color: #fac832;
-	font-size: 11px;
-	text-align: center;
-	z-index: 2;
-	margin-left: -6px;
-	display: inline;
+  background-color: #fac832;
+  font-size: 11px;
+  text-align: center;
+  z-index: 2;
+  margin-left: -6px;
+  display: inline;
 }
 
 .headerButtonProfileContainer:hover .openProfile,
@@ -258,13 +257,9 @@
   box-shadow: 5px 10px 20px #e2e2e2;
 }
 
-
-
 .headerBarButton:hover div.headerButtonArrow {
   transform: rotate(180deg);
 }
-
-
 
 .headerMarginRight {
   margin-right: 10%;
@@ -304,12 +299,33 @@
   right: calc(10% + 1.5rem + 24px);
 }
 
+.openSearch {
+  display: none;
+  position: absolute;
+  top: 40px;
+  z-index: 10000;
+  width: 100%;
+  max-width: 480px;
+  height: auto;
+  max-height: 730px;
+  right: calc(10% - 1.5rem + 8px);
+  background-color:#fff;
+}
+
 @media only screen and (max-width: 767px) {
   .openNotifications {
     width: 90%;
     height: 400px;
     max-height: 440px;
     right: calc(16px - 16px); /* parent margin - this margin */
+  }
+
+  .openSearch {
+    width: 90%;
+    height: auto;
+    right: calc(16px - 16px); /* parent margin - this margin */
+    top: 90px;
+    overflow: hidden;
   }
 }
 
@@ -321,7 +337,8 @@
   font-family: Arial;
 }
 
-.notificationOption {
+.notificationOption,
+.SearchOption {
   display: block;
   font-weight: 500;
 }
@@ -547,5 +564,9 @@
     margin-right: 3px;
     min-width: 294px;
     max-height: 255px;
+  }
+  .mobileLogoWhite {
+    max-height: 85%;
+    width: auto;
   }
 }

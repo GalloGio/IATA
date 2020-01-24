@@ -3,6 +3,5 @@
     <description>Created by Lightning App Builder</description>
     <flexiPage>Manage_Provisioning_Requests</flexiPage>
     <label>Manage Provisioning Requests</label>
-    <mobileReady>false</mobileReady>
     <motif>Custom67: Gears</motif>
 </CustomTab>

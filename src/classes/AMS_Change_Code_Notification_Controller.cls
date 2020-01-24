@@ -10,11 +10,11 @@ public with sharing class AMS_Change_Code_Notification_Controller {
 		isSidra = false;
 
 		list<Case> lstCases = [SELECT Id, RecordType.DeveloperName, Remittance_Period__c, Status, AccountId,
-							   Account.Name, Account.IATACode__c, Account.Location_Type__c,
-							   Account.Top_Parent__r.Name, Account.Top_Parent__r.IATACode__c,
-							   Account.ANG_Accreditation_Model__c, OSCAR__c
-							   FROM Case
-							   WHERE Id = :caseId];
+								 Account.Name, Account.IATACode__c, Account.Location_Type__c,
+								 Account.Top_Parent__r.Name, Account.Top_Parent__r.IATACode__c,
+								 Account.ANG_Accreditation_Model__c, OSCAR__c
+								 FROM Case
+								 WHERE Id = :caseId];
 		if (!lstCases.isEmpty()) {
 			currentCase = lstCases[0];
 

@@ -1,6 +1,6 @@
 @isTest
 private class ANG_OscarProcessHelperTest {
-	
+
 	private static void loadCredentials() {
 		Amazon_Cred__c Amazon_Cred =  new Amazon_Cred__c(name = 'IFAP', Prod_Configuration__c = 'adevconf' , Dev_Configuration__c = 'adevconf');
 		Amazon_Cred__c GenericAttach =  new Amazon_Cred__c(name = 'GenericAttach', Prod_Configuration__c = 'adevconf' , Dev_Configuration__c = 'adevconf');
@@ -35,7 +35,7 @@ private class ANG_OscarProcessHelperTest {
 		
 		Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
 		Id caseRT = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
-		
+
 		List<Account> accountList = new List<Account>();
 		Account a1 = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = accountRT ,Name='NewGenAgency',Short_Name__c='NewGenAgency', Location_Class__c = 'P', Location_Type__c = 'HE', Remittance_frequency__c = 'M', Sector__C = 'Travel Agent' , Category__C = 'Non-IATA Passenger Agent', Reason_for_creation__c = 'Account is missing' , Company_Type__c = 'A');
 
@@ -66,7 +66,7 @@ private class ANG_OscarProcessHelperTest {
 			Case__c = oscarCase.Id
 		);
 		insert aFile;
-		
+
 		ID rtNew = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c','Travel_Agent_Head_Entity_Standard_no_Cash');
 
 		AMS_Pax_Accreditation_Form__c theAccreditation = new AMS_Pax_Accreditation_Form__c(RecordTypeId = rtNew);
@@ -87,12 +87,13 @@ private class ANG_OscarProcessHelperTest {
 		theAccreditation.Location_Type__c='HE';
 		theAccreditation.SAAM_Case__c=oscarCase.Id;
 		theAccreditation.Account_Name__c = a1.Id;
+		theAccreditation.ISSP_AMS_GDS_with_signed_contract__c = 'Amadeus';
 
 		insert theAccreditation;
 
 		ID personRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Person');
 
-		AMS_Accreditation_Contact__c acontact = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = theAccreditation.Id, 
+		AMS_Accreditation_Contact__c acontact = new AMS_Accreditation_Contact__c(AMS_Pax_Accreditation_Form__c = theAccreditation.Id,
 			First_name__c='Bugs', Last_name__c='Bunny', Agency_owner__c = true, Email__c='bugsandbunny@imagsd.com' , PhoneNational__c = '123123123',
 			Phone__c='123123123', Contact__c = co1.Id, Financial_interest__c = 100, RecordTypeId=personRT);
 
@@ -152,9 +153,9 @@ private class ANG_OscarProcessHelperTest {
 		AMS_OSCAR__c oscar = [SELECT Id, Account__c, AMS_Online_Accreditation__c FROM AMS_OSCAR__c LIMIT 1];
 		
 		Test.startTest();
-		
+
 		String[] result = ANG_OscarProcessHelper.processIATACodeGeneration(oscar.Account__c, oscar.AMS_Online_Accreditation__c, oscar.Id);
-		
+
 		system.debug('testIATACodeGenerationOKNoDueDiligenceCase Result code is:'+result[0]);
 		system.debug('testIATACodeGenerationOKNoDueDiligenceCase Result message is:'+result[1]);
 
@@ -171,7 +172,7 @@ private class ANG_OscarProcessHelperTest {
 
 		Test.stopTest();
 	}
-	
+
 	@isTest static void testIATACodeGenerationOKWithDueDiligenceCase() {
 
 		System.debug('Starting testIATACodeGenerationOKWithDueDiligenceCase');
@@ -183,9 +184,9 @@ private class ANG_OscarProcessHelperTest {
 		update theCountry;
 
 		Test.startTest();
-		
+
 		String[] result = ANG_OscarProcessHelper.processIATACodeGeneration(oscar.Account__c, oscar.AMS_Online_Accreditation__c, oscar.Id);
-		
+
 		system.debug('testIATACodeGenerationOKWithDueDiligenceCase Result code is:'+result[0]);
 		system.debug('testIATACodeGenerationOKWithDueDiligenceCase Result message is:'+result[1]);
 
@@ -203,7 +204,7 @@ private class ANG_OscarProcessHelperTest {
 
 		Test.stopTest();
 	}
-	
+
 	@isTest static void testIATACodeGenerationOKTwice() {
 
 		System.debug('Starting testIATACodeGenerationOKTwice');
@@ -215,7 +216,7 @@ private class ANG_OscarProcessHelperTest {
 		update theCountry;
 
 		Test.startTest();
-		
+
 		String[] result = ANG_OscarProcessHelper.processIATACodeGeneration(oscar.Account__c, oscar.AMS_Online_Accreditation__c, oscar.Id);
 
 		System.debug('Finished the first IATA Code Generation.');
@@ -247,7 +248,7 @@ private class ANG_OscarProcessHelperTest {
 	}
 
 	@isTest static void testIATACodeGenerationOKAlreadyIATACodeGenerated() {
-		
+
 		System.debug('Starting testIATACodeGenerationOKAlreadyIATACodeGenerated');
 
 		AMS_OSCAR__c oscar = [SELECT Id, Account__c, AMS_Online_Accreditation__c FROM AMS_OSCAR__c LIMIT 1];
@@ -281,7 +282,7 @@ private class ANG_OscarProcessHelperTest {
 	}
 
 	@isTest static void testIATACodeGenerationOKAlreadyDataCopied() {
-		
+
 		System.debug('Starting testIATACodeGenerationOKAlreadyDataCopied');
 
 		AMS_OSCAR__c oscar = [SELECT Id, Account__c, AMS_Online_Accreditation__c FROM AMS_OSCAR__c LIMIT 1];
@@ -290,7 +291,7 @@ private class ANG_OscarProcessHelperTest {
 		update oscar;
 
 		Test.startTest();
-		
+
 		String[] result = ANG_OscarProcessHelper.processIATACodeGeneration(oscar.Account__c, oscar.AMS_Online_Accreditation__c, oscar.Id);
 
 		system.debug('testIATACodeGenerationOKAlreadyDataCopied Result code is:'+result[0]);
@@ -312,7 +313,7 @@ private class ANG_OscarProcessHelperTest {
 
 
 	@isTest static void testIATACodeGenerationOKAlreadyChangeCodeNew() {
-		
+
 		System.debug('Starting testIATACodeGenerationOKAlreadyChangeCodeNew');
 
 		AMS_OSCAR__c oscar = [SELECT Id, Account__c, AMS_Online_Accreditation__c FROM AMS_OSCAR__c LIMIT 1];
@@ -363,9 +364,9 @@ private class ANG_OscarProcessHelperTest {
 		update acct;
 
 		Test.startTest();
-		
+
 		String[] result = ANG_OscarProcessHelper.processIATACodeGeneration(oscar.Account__c, oscar.AMS_Online_Accreditation__c, oscar.Id);
-		
+
 		system.debug('testIATACodeGenerationOKWithDueDiligenceCaseInProgress Result code is:'+result[0]);
 		system.debug('testIATACodeGenerationOKWithDueDiligenceCaseInProgress Result message is:'+result[1]);
 
@@ -384,7 +385,7 @@ private class ANG_OscarProcessHelperTest {
 	}
 
  	@isTest static void testIATACodeGenerationOKWithNOSTEP6PASSED() {
-		
+
 		System.debug('Starting testIATACodeGenerationOKWithNOSTEP6PASSED');
 
 		AMS_OSCAR__c oscar = [SELECT Id, Account__c, AMS_Online_Accreditation__c FROM AMS_OSCAR__c LIMIT 1];
@@ -393,9 +394,9 @@ private class ANG_OscarProcessHelperTest {
 		update oscar;
 
 		Test.startTest();
-		
+
 		String[] result = ANG_OscarProcessHelper.processIATACodeGeneration(oscar.Account__c, oscar.AMS_Online_Accreditation__c, oscar.Id);
-		
+
 		system.debug('testIATACodeGenerationOKWithNOSTEP6PASSED Result code is:'+result[0]);
 		system.debug('testIATACodeGenerationOKWithNOSTEP6PASSED Result message is:'+result[1]);
 
@@ -417,7 +418,7 @@ private class ANG_OscarProcessHelperTest {
 
 
 	@isTest static void testIATACodeGenerationBadDataMigration() {
-		
+
 		System.debug('Starting testIATACodeGenerationBadDataMigration');
 
 		AMS_OSCAR__c oscar = [SELECT Id, Account__c, AMS_Online_Accreditation__c FROM AMS_OSCAR__c LIMIT 1];
@@ -429,9 +430,9 @@ private class ANG_OscarProcessHelperTest {
 		update theAccreditation;
 
 		Test.startTest();
-		
+
 		String[] result = ANG_OscarProcessHelper.processIATACodeGeneration(oscar.Account__c, oscar.AMS_Online_Accreditation__c, oscar.Id);
-		
+
 		system.debug('testIATACodeGenerationBadDataMigration Result code is:'+result[0]);
 		system.debug('testIATACodeGenerationBadDataMigration Result message is:'+result[1]);
 
@@ -624,7 +625,7 @@ private class ANG_OscarProcessHelperTest {
 
 		System.assertEquals(1, oscars.size(), '1 Oscar record should to be created for this account');
 		System.assertEquals(1, oscars[0].cases__r.size(), '1 case record should to be created for the account');
-		
+
 		// test Change Code and SIDRA Lite creation
 		oscars[0].step43__c = AMS_Utils.PASSED;
 		oscars[0].step44__c = 'Passed';
@@ -657,8 +658,8 @@ private class ANG_OscarProcessHelperTest {
 
 			List<Contact> contactsInserted =  new List<Contact>{co1,co4,co3};
 			insert contactsInserted;
-			
-	
+
+
 
 			List<Contact> contactsOrdered = ANG_OscarProcessHelper.fetchKeyContacts(a1, contactsInserted);
 
@@ -956,52 +957,52 @@ private class ANG_OscarProcessHelperTest {
 		System.assertEquals('43', changeCodes[0].Reason_Code__c);
 		System.assertEquals('VOLUNTARY RELINQUISHMENT', changeCodes[0].Reason_Description__c);
 		System.assertEquals('AGENT IS UPGRADING FROM DOMESTIC TO INTERNATIONAL', changeCodes[0].Bulletin_Information__c);
-		System.assertEquals(true, changeCodes[0].To_Publish_in_e_Bulletin__c);	
-	
+		System.assertEquals(true, changeCodes[0].To_Publish_in_e_Bulletin__c);
+
 		Test.stopTest();
 	}
-	
+
 	@isTest static void createOscarChangesCaseTest(){
-		
+
 		Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
 		Account accHO = new Account(name = 'HO test Account', RecordTypeId = accountRT);
 		insert accHO;
-		
+
 		Test.startTest();
 			AMS_Pax_Accreditation_Form__c accred = [SELECT Id, HO_Account__c, SAAM_Case__c FROM AMS_Pax_Accreditation_Form__c LIMIT 1];
 			accred.HO_Account__c = accHO.Id;
 			update accred;
-			
+
 			String[] str = ANG_OscarProcessHelper.createOscarChangesCase(accred.Id);
 			AMS_OSCAR__c oscar = [SELECT Id, Account__c, Process__c FROM AMS_OSCAR__c WHERE Account__c =: accHO.Id];
 			Case oscarCase = [SELECT Id, Oscar__c, Casenumber FROM Case WHERE Oscar__c =: oscar.Id];
-			
+
 			System.assertEquals(str[0], oscarCase.Id);
 			System.assertEquals(str[1], oscarCase.Casenumber);
 			System.assertEquals(AMS_Utils.NGCHANGES, oscar.Process__c);
-			
+
 		Test.stopTest();
 	}
-	
+
 	@isTest static void createOscarCorrectionCaseTest(){
-		
+
 		Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
 		Account accHO = new Account(name = 'HO test Account', RecordTypeId = accountRT);
 		insert accHO;
-		
+
 		Test.startTest();
 			AMS_Pax_Accreditation_Form__c accred = [SELECT Id, HO_Account__c, SAAM_Case__c FROM AMS_Pax_Accreditation_Form__c LIMIT 1];
 			accred.HO_Account__c = accHO.Id;
 			update accred;
-			
+
 			String[] str = ANG_OscarProcessHelper.createOscarCorrectionCase(accred.Id);
 			AMS_OSCAR__c oscar = [SELECT Id, Account__c, Process__c FROM AMS_OSCAR__c WHERE Account__c =: accHO.Id];
 			Case oscarCase = [SELECT Id, Oscar__c, Casenumber FROM Case WHERE Oscar__c =: oscar.Id];
-			
+
 			System.assertEquals(str[0], oscarCase.Id);
 			System.assertEquals(str[1], oscarCase.Casenumber);
 			System.assertEquals(AMS_Utils.NGCORRECTION, oscar.Process__c);
-			
+
 		Test.stopTest();
 	}
 }

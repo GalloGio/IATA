@@ -1,6 +1,6 @@
 @isTest
 private class AMS_TriggerExecutionManagerTest {
-	
+
 	static testMethod void test_checkExecution() {
 
 		//test no Custom Setting created
@@ -28,5 +28,5 @@ private class AMS_TriggerExecutionManagerTest {
 		//test unsupported object (exception)
 		System.assert(AMS_TriggerExecutionManager.checkExecution(Case.getSObjectType(), 'SomeTest'));
 	}
-	
+
 }

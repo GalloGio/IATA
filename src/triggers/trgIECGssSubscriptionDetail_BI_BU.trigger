@@ -1,5 +1,5 @@
 /* trgIECGssSubscriptionDetail_BI_BU: trigger on GSS_Subscription_Detail__c before upsert.
- *  - field initialization: Calendar_Next_Submission_Date__c 
+ *  - field initialization: Calendar_Next_Submission_Date__c
  *
  * Author: Sonny Leman
  * Change log:

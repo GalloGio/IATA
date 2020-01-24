@@ -1,6 +1,6 @@
 public with sharing virtual class IECComponentControllerBase {
 
-	public String key { 
+	public String key {
 		get;
 		set{
 			if(value != null) {
@@ -10,9 +10,9 @@ public with sharing virtual class IECComponentControllerBase {
 			}
 		}
 	}
-	
-	public IECPageController pageController { 
-		get; 
+
+	public IECPageController pageController {
+		get;
 		set {
 			if (value != null) {
 				pageController = value;

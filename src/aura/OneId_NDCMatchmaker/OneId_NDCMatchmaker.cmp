@@ -1,245 +1,356 @@
 <aura:component implements="forceCommunity:availableForAllPageTypes" controller="OneId_NDCMatchmakerController">
-    
-    <aura:attribute type="String" name="serviceName"/>
-    
-    <aura:attribute type="User" name="usr"/>
-    <aura:attribute type="NDC_Account_Service_Detail__c" name="ndcCapabilities"/>
-    
-    <aura:attribute type="Boolean" name="isEditMode" default="false"/>
-    <aura:attribute type="Boolean" name="displayRichContentTypes"/>
-    <aura:attribute type="Boolean" name="displayTypesOfCCAccepted" default="false"/>
-    <aura:attribute type="Boolean" name="submittableForApproval" default="false"/>
-    <aura:attribute type="Boolean" name="submittedForApproval" default="false"/>
-    
-    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
-    <aura:handler event="c:oneIdURLParams" action="{!c.renderPage}"/>
-    
-    <aura:registerEvent name="fetchParams" type="c:oneIdURLParams"/>
+
+    <aura:attribute type="String" name="serviceName" />
+
+    <aura:attribute type="User" name="usr" />
+    <aura:attribute type="NDC_Account_Service_Detail__c" name="ndcCapabilities" />
+
+    <aura:attribute type="Boolean" name="isEditMode" default="false" />
+    <aura:attribute type="Boolean" name="displayRichContentTypes" />
+    <aura:attribute type="Boolean" name="displayTypesOfCCAccepted" default="false" />
+    <aura:attribute type="Boolean" name="submittableForApproval" default="false" />
+    <aura:attribute type="Boolean" name="submittedForApproval" default="false" />
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:handler event="c:oneIdURLParams" action="{!c.renderPage}" />
+
+    <aura:registerEvent name="fetchParams" type="c:oneIdURLParams" />
     <div aura:id="mainContainer" class="slds-container_medium slds-container_center">
-        <lightning:spinner alternativeText="Loading" aura:id="spinner"/>
+        <lightning:spinner alternativeText="Loading" aura:id="spinner" />
         <aura:if isTrue="{! !v.isEditMode}">
             <lightning:recordViewForm recordId="{! v.ndcCapabilities.Id}" objectApiName="NDC_Account_Service_Detail__c">
                 <div class="slds-m-top_medium">
-                    <lightning:button disabled="{!v.disabled}" variant="brand" onclick="{! c.handleEdit}" name="edit" label="Edit"/>
+                    <lightning:button disabled="{!v.disabled}" variant="brand" onclick="{! c.handleEdit}" name="edit"
+                        label="Edit" />
                     <aura:if isTrue="{! ! v.submittedForApproval &amp;&amp; v.submittableForApproval}">
-                        <lightning:button disabled="{!v.disabled}" variant="brand" onclick="{! c.handleSubmitForApproval}" name="submitForApproval" label="Submit For Approval" />
+                        <lightning:button disabled="{!v.disabled}" variant="brand"
+                            onclick="{! c.handleSubmitForApproval}" name="submitForApproval"
+                            label="Submit For Approval" />
                     </aura:if>
                 </div>
-                <br/>
+                <br />
                 <h2> Account Information </h2>
                 <lightning:layout multipleRows="true">
                     <lightning:layoutItem size="6" padding="horizontal-small">
                         <ui:outputText class="slds-form-element__label" value="Account Name" /><br />
-                        <ui:outputText class="slds-form-element__static" value="{! v.usr.Account.Name}" />             
+                        <ui:outputText class="slds-form-element__static" value="{! v.usr.Account.Name}" />
                     </lightning:layoutItem>
                     <lightning:layoutItem size="6" padding="horizontal-small">
                         <lightning:outputField fieldName="Company_Type__c" />
                     </lightning:layoutItem>
                     <lightning:layoutItem size="6" padding="horizontal-small">
-                        <ui:outputText class="slds-form-element__label" value="Website" /><br />
-                        <ui:outputText class="slds-form-element__static" value="{! v.usr.Account.Website}" />             
+                        <ui:outputText class="slds-form-element__label" value="Headquarter Country" /><br />
+                        <ui:outputText class="slds-form-element__static"
+                            value="{! v.usr.Account.IATA_ISO_Country__r.Name}" />
                     </lightning:layoutItem>
+                    <aura:if isTrue="{! v.ndcCapabilities.Company_Type__c == 'Seller'}">
+                        <lightning:layoutItem size="6" padding="horizontal-small">
+                            <lightning:outputField fieldName="Operating_Countries__c" />
+                        </lightning:layoutItem>
+                    </aura:if>
+
                     <lightning:layoutItem size="6" padding="horizontal-small">
-                        <aura:if isTrue="{! v.ndcCapabilities.Company_Type__c != 'Airline'}">
+                        <ui:outputText class="slds-form-element__label" value="Region" /><br />
+                        <ui:outputText class="slds-form-element__static" value="{! v.usr.Account.Region_formula__c}" />
+                    </lightning:layoutItem>
+
+                    <aura:if isTrue="{! v.ndcCapabilities.Company_Type__c == 'Airline'}">
+                        <lightning:layoutItem size="6" padding="horizontal-small">
+                            <ui:outputText class="slds-form-element__label" value="Website" /><br />
+                            <ui:outputText class="slds-form-element__static" value="{! v.usr.Account.Website}" />
+                        </lightning:layoutItem>
+                        <aura:set attribute="else">
+                            <lightning:layoutItem size="6" padding="horizontal-small">
+                                <lightning:outputField fieldName="Website__c" />
+                            </lightning:layoutItem>
+                        </aura:set>
+                    </aura:if>
+                    <lightning:layoutItem size="6" padding="horizontal-small">
+                        <aura:if isTrue="{! v.ndcCapabilities.Company_Type__c == 'Seller'}">
                             <ui:outputText class="slds-form-element__label" value="Agent Identifier" /><br />
                             <ui:outputText class="slds-form-element__static" value="{! v.usr.Account.IATACode__c}" />
-                            <aura:set attribute="else">
-                                <lightning:outputField fieldName="NDC_Travel_Agents_on_boarding_portal__c" />
-                            </aura:set>
+                        </aura:if>
+                        <aura:if isTrue="{! v.ndcCapabilities.Company_Type__c == 'Aggregator'}">
+                            <lightning:outputField fieldName="Aggregator_Identifier__c" />
                         </aura:if>
                     </lightning:layoutItem>
                     <lightning:layoutItem size="6" padding="horizontal-small">
-                        <ui:outputText class="slds-form-element__label" value="Country" /><br />
-                        <ui:outputText class="slds-form-element__static" value="{! v.usr.Account.IATA_ISO_Country__r.Name}" />             
+                        <lightning:outputField fieldName="Contact_Person__c" />
                     </lightning:layoutItem>
                     <lightning:layoutItem size="6" padding="horizontal-small">
-                        <ui:outputText class="slds-form-element__label" value="Region" /><br />
-                        <ui:outputText class="slds-form-element__static" value="{! v.usr.Account.Region_formula__c}" />             
+                        <lightning:outputField fieldName="Contact_Email__c" />
                     </lightning:layoutItem>
-                    <lightning:layoutItem size="6" padding="horizontal-small"><lightning:outputField fieldName="Contact_Person__c" /></lightning:layoutItem>
-                    <lightning:layoutItem size="6" padding="horizontal-small"><lightning:outputField fieldName="Contact_Email__c" /></lightning:layoutItem>
-                    <lightning:layoutItem size="6" padding="horizontal-small"><lightning:outputField fieldName="NDC_Certification_Level__c" /></lightning:layoutItem>
-                    <lightning:layoutItem size="6" padding="horizontal-small"><lightning:outputField fieldName="NDC_Schema_Version__c" /></lightning:layoutItem>
+                    <aura:if isTrue="{! v.ndcCapabilities.Company_Type__c == 'Seller'}">
+                        <lightning:layoutItem size="6" padding="horizontal-small">
+                            <lightning:outputField fieldName="Live_on_NDC__c" />
+                        </lightning:layoutItem>
+                    </aura:if>
+                    <lightning:layoutItem size="6" padding="horizontal-small">
+                        <lightning:outputField fieldName="NDC_Certification_Level__c" />
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="6" padding="horizontal-small">
+                        <lightning:outputField fieldName="NDC_Schema_Version__c" />
+                    </lightning:layoutItem>
                     <aura:if isTrue="{! v.ndcCapabilities.Company_Type__c == 'Aggregator'}">
-                        <lightning:layoutItem size="6" padding="horizontal-small"><lightning:outputField fieldName="Reach_Number_of_Sellers_Connected__c" /></lightning:layoutItem>
+                        <lightning:layoutItem size="6" padding="horizontal-small">
+                            <lightning:outputField fieldName="Target_Customers__c" />
+                        </lightning:layoutItem>
+                        <lightning:layoutItem size="6" padding="horizontal-small">
+                            <lightning:outputField fieldName="Operating_Countries__c" />
+                        </lightning:layoutItem>
+                        <lightning:layoutItem size="6" padding="horizontal-small">
+                            <lightning:outputField fieldName="Reach_Number_of_Sellers_Connected__c" />
+                        </lightning:layoutItem>
                     </aura:if>
                 </lightning:layout>
-                
-                <aura:if isTrue="{! v.ndcCapabilities.Company_Type__c == 'Airline' || v.ndcCapabilities.Company_Type__c == 'Seller'}">
-                    <br/>
+
+                <aura:if
+                    isTrue="{! v.ndcCapabilities.Company_Type__c == 'Airline' || v.ndcCapabilities.Company_Type__c == 'Seller'}">
+                    <br />
                     <h2> NDC Capabilities </h2>
                 </aura:if>
-                
+
                 <aura:if isTrue="{! v.ndcCapabilities.Company_Type__c == 'Airline'}">
                     <lightning:layout multipleRows="true">
-                        <lightning:layoutItem size="6" padding="horizontal-small"><lightning:outputField fieldName="NDC_Servicing__c" /></lightning:layoutItem>
-                        <lightning:layoutItem size="6" padding="horizontal-small"><lightning:outputField fieldName="NDC_Personalisation__c" /></lightning:layoutItem>
-                        <lightning:layoutItem size="6" padding="horizontal-small"><lightning:outputField fieldName="NDC_Airline_Profile__c" /></lightning:layoutItem>
-                        <lightning:layoutItem size="6" padding="horizontal-small"><lightning:outputField fieldName="NDC_Types_of_Fares__c" /></lightning:layoutItem>
-                        <lightning:layoutItem size="6" padding="horizontal-small"><lightning:outputField fieldName="NDC_Rich_Content__c" /></lightning:layoutItem>
                         <lightning:layoutItem size="6" padding="horizontal-small">
-                        	<aura:if isTrue="{! v.displayRichContentTypes}">
-	                            <lightning:outputField fieldName="NDC_Rich_Content_Types__c" />
+                            <lightning:outputField fieldName="NDC_Servicing__c" />
+                        </lightning:layoutItem>
+                        <lightning:layoutItem size="6" padding="horizontal-small">
+                            <lightning:outputField fieldName="NDC_Personalisation__c" />
+                        </lightning:layoutItem>
+                        <lightning:layoutItem size="6" padding="horizontal-small">
+                            <lightning:outputField fieldName="NDC_Airline_Profile__c" />
+                        </lightning:layoutItem>
+                        <lightning:layoutItem size="6" padding="horizontal-small">
+                            <lightning:outputField fieldName="NDC_Types_of_Fares__c" />
+                        </lightning:layoutItem>
+                        <lightning:layoutItem size="6" padding="horizontal-small">
+                            <lightning:outputField fieldName="NDC_Rich_Content__c" />
+                        </lightning:layoutItem>
+                        <lightning:layoutItem size="6" padding="horizontal-small">
+                            <aura:if isTrue="{! v.displayRichContentTypes}">
+                                <lightning:outputField fieldName="NDC_Rich_Content_Types__c" />
                             </aura:if>
                         </lightning:layoutItem>
-                        <lightning:layoutItem size="6" padding="horizontal-small"><lightning:outputField fieldName="NDC_Forms_of_Payment_Accepted__c" /></lightning:layoutItem>
+                        <lightning:layoutItem size="6" padding="horizontal-small">
+                            <lightning:outputField fieldName="NDC_Forms_of_Payment_Accepted__c" />
+                        </lightning:layoutItem>
                         <lightning:layoutItem size="6" padding="horizontal-small">
                             <aura:if isTrue="{! v.displayTypesOfCCAccepted}">
                                 <lightning:outputField fieldName="NDC_Type_of_CC_Accepted__c" />
                             </aura:if>
                         </lightning:layoutItem>
-                        <lightning:layoutItem size="6" padding="horizontal-small"><lightning:outputField fieldName="NDC_Content_Differentiation__c" /></lightning:layoutItem>
-                        <lightning:layoutItem size="6" padding="horizontal-small"><lightning:outputField fieldName="Content_Differentiation_Products_and_Se__c" /></lightning:layoutItem>
-                        <lightning:layoutItem size="6" padding="horizontal-small"><lightning:outputField fieldName="NDC_Forms_of_Remittance_and_Settlement__c" /></lightning:layoutItem>
+                        <lightning:layoutItem size="6" padding="horizontal-small">
+                            <lightning:outputField fieldName="NDC_Content_Differentiation__c" />
+                        </lightning:layoutItem>
+                        <lightning:layoutItem size="6" padding="horizontal-small">
+                            <lightning:outputField fieldName="Content_Differentiation_Products_and_Se__c" />
+                        </lightning:layoutItem>
+                        <lightning:layoutItem size="6" padding="horizontal-small">
+                            <lightning:outputField fieldName="NDC_Forms_of_Remittance_and_Settlement__c" />
+                        </lightning:layoutItem>
                         <!--<lightning:layoutItem size="6" padding="horizontal-small"><lightning:outputField fieldName="NDC_Public_Incentive_Schemes_for_Sellers__c" /></lightning:layoutItem>-->
                     </lightning:layout>
-                    
-                    
+
+
                 </aura:if>
                 <aura:if isTrue="{! v.ndcCapabilities.Company_Type__c == 'Seller'}">
-                    <lightning:layoutItem size="6" padding="horizontal-small"><lightning:outputField fieldName="NDC_Seller_Type__c" /></lightning:layoutItem>
-                    <lightning:layoutItem size="6" padding="horizontal-small"><lightning:outputField fieldName="NDC_Type_of_Connectivity__c" /></lightning:layoutItem>
+                    <lightning:layoutItem size="6" padding="horizontal-small">
+                        <lightning:outputField fieldName="NDC_Seller_Type__c" />
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="6" padding="horizontal-small">
+                        <lightning:outputField fieldName="NDC_Type_of_Connectivity__c" />
+                    </lightning:layoutItem>
                 </aura:if>
                 <div class="slds-m-top_medium">
-                    <lightning:button disabled="{!v.disabled}" variant="brand" onclick="{! c.handleEdit}" name="edit" label="Edit" />
+                    <lightning:button disabled="{!v.disabled}" variant="brand" onclick="{! c.handleEdit}" name="edit"
+                        label="Edit" />
                 </div>
             </lightning:recordViewForm>
         </aura:if>
         <aura:if isTrue="{! v.isEditMode}">
-            <lightning:recordEditForm 
-                                      aura:id="myform" 
-                                      recordId="{! v.ndcCapabilities.Id}"
-                                      onload="{! c.showRequiredFields}"
-                                      onsubmit="{! c.handleSubmit}"
-                                      onsuccess="{! c.handleSuccess}"
-                                      objectApiName="NDC_Account_Service_Detail__c">
-                
+            <lightning:recordEditForm aura:id="myform" recordId="{! v.ndcCapabilities.Id}"
+                onload="{! c.showRequiredFields}" onsubmit="{! c.handleSubmit}" onsuccess="{! c.handleSuccess}"
+                objectApiName="NDC_Account_Service_Detail__c">
+
                 <lightning:messages />
-                
+
                 <div class="slds-m-top_medium">
                     <lightning:button disabled="{!v.disabled}" variant="brand" type="submit" name="save" label="Save" />
-                    <lightning:button disabled="{!v.disabled}" variant="brand" onclick="{! c.handleCancel}" name="cancel" label="Cancel" />
+                    <lightning:button disabled="{!v.disabled}" variant="brand" onclick="{! c.handleCancel}"
+                        name="cancel" label="Cancel" />
                 </div>
-                <br/>
+                <br />
                 <h2> Account Information </h2>
                 <lightning:layout multipleRows="true">
                     <lightning:layoutItem size="6" padding="horizontal-small">
                         <ui:outputText class="slds-form-element__label" value="Account Name" /><br />
-                        <ui:outputText class="slds-form-element__static" value="{! v.usr.Account.Name}" />             
+                        <ui:outputText class="slds-form-element__static" value="{! v.usr.Account.Name}" />
                     </lightning:layoutItem>
                     <lightning:layoutItem size="6" padding="horizontal-small">
                         <lightning:outputField fieldName="Company_Type__c" />
                     </lightning:layoutItem>
                     <lightning:layoutItem size="6" padding="horizontal-small">
-                        <ui:outputText class="slds-form-element__label" value="Website" /><br />
-                        <ui:outputText class="slds-form-element__static" value="{! v.usr.Account.Website}" />             
+                        <ui:outputText class="slds-form-element__label" value="Headquarter Country" /><br />
+                        <ui:outputText class="slds-form-element__static"
+                            value="{! v.usr.Account.IATA_ISO_Country__r.Name}" />
                     </lightning:layoutItem>
+                    <aura:if isTrue="{! v.ndcCapabilities.Company_Type__c == 'Seller'}">
+                        <lightning:layoutItem size="6" padding="horizontal-small">
+                            <lightning:inputField fieldName="Operating_Countries__c" />
+                        </lightning:layoutItem>
+                    </aura:if>
                     <lightning:layoutItem size="6" padding="horizontal-small">
-                        <aura:if isTrue="{! v.ndcCapabilities.Company_Type__c != 'Airline'}">
+                        <ui:outputText class="slds-form-element__label" value="Region" /><br />
+                        <ui:outputText class="slds-form-element__static" value="{! v.usr.Account.Region_formula__c}" />
+                    </lightning:layoutItem>
+                    <aura:if isTrue="{! v.ndcCapabilities.Company_Type__c == 'Airline'}">
+                        <lightning:layoutItem size="6" padding="horizontal-small">
+                            <ui:outputText class="slds-form-element__label" value="Website" /><br />
+                            <ui:outputText class="slds-form-element__static" value="{! v.usr.Account.Website}" />
+                        </lightning:layoutItem>
+                        <aura:set attribute="else">
+                            <lightning:layoutItem size="6" padding="horizontal-small">
+                                <lightning:inputField fieldName="Website__c" />
+                            </lightning:layoutItem>
+                        </aura:set>
+                    </aura:if>
+                    <lightning:layoutItem size="6" padding="horizontal-small">
+                        <aura:if isTrue="{! v.ndcCapabilities.Company_Type__c == 'Seller'}">
                             <ui:outputText class="slds-form-element__label" value="Agent Identifier" /><br />
                             <ui:outputText class="slds-form-element__static" value="{! v.usr.Account.IATACode__c}" />
-                            <aura:set attribute="else">
-                                <lightning:inputField fieldName="NDC_Travel_Agents_on_boarding_portal__c" />
-                            </aura:set>
+                        </aura:if>
+                        <aura:if isTrue="{! v.ndcCapabilities.Company_Type__c == 'Aggregator'}">
+                            <lightning:inputField fieldName="Aggregator_Identifier__c" />
                         </aura:if>
                     </lightning:layoutItem>
                     <lightning:layoutItem size="6" padding="horizontal-small">
-                        <ui:outputText class="slds-form-element__label" value="Country" /><br />
-                        <ui:outputText class="slds-form-element__static" value="{! v.usr.Account.IATA_ISO_Country__r.Name}" />             
+                        <lightning:inputField class="customRequired none" aura:id="Contact_Person__c"
+                            fieldName="Contact_Person__c" />
                     </lightning:layoutItem>
                     <lightning:layoutItem size="6" padding="horizontal-small">
-                        <ui:outputText class="slds-form-element__label" value="Region" /><br />
-                        <ui:outputText class="slds-form-element__static" value="{! v.usr.Account.Region_formula__c}" />             
+                        <lightning:inputField class="customRequired none" aura:id="Contact_Email__c"
+                            fieldName="Contact_Email__c" />
                     </lightning:layoutItem>
+                    <aura:if isTrue="{! v.ndcCapabilities.Company_Type__c == 'Seller'}">
+                        <lightning:layoutItem size="6" padding="horizontal-small">
+                            <lightning:inputField fieldName="Live_on_NDC__c" />
+                        </lightning:layoutItem>
+                    </aura:if>
                     <lightning:layoutItem size="6" padding="horizontal-small">
-                        <lightning:inputField class="customRequired none"  aura:id="Contact_Person__c" fieldName="Contact_Person__c"/>
+                        <lightning:inputField fieldName="NDC_Certification_Level__c" />
                     </lightning:layoutItem>
-                    <lightning:layoutItem size="6" padding="horizontal-small">
-                        <lightning:inputField class="customRequired none"  aura:id="Contact_Email__c" fieldName="Contact_Email__c"/>
-                    </lightning:layoutItem>
-                    <lightning:layoutItem size="6" padding="horizontal-small"><lightning:inputField fieldName="NDC_Certification_Level__c" /></lightning:layoutItem>
                     <aura:if isTrue="{! v.ndcCapabilities.Company_Type__c == 'Airline'}">
                         <lightning:layoutItem size="6" padding="horizontal-small">
-                            <lightning:inputField class="customRequired none"  aura:id="NDC_Schema_Version__c" fieldName="NDC_Schema_Version__c"/>
+                            <lightning:inputField class="customRequired none" aura:id="NDC_Schema_Version__c"
+                                fieldName="NDC_Schema_Version__c" />
                         </lightning:layoutItem>
 
                         <aura:set attribute="else">
-		                    <lightning:layoutItem size="6" padding="horizontal-small"><lightning:inputField fieldName="NDC_Schema_Version__c" /></lightning:layoutItem>
+                            <lightning:layoutItem size="6" padding="horizontal-small">
+                                <lightning:inputField fieldName="NDC_Schema_Version__c" />
+                            </lightning:layoutItem>
                         </aura:set>
                     </aura:if>
                     <aura:if isTrue="{! v.ndcCapabilities.Company_Type__c == 'Aggregator'}">
-                        <lightning:layoutItem size="6" padding="horizontal-small"><lightning:inputField fieldName="Reach_Number_of_Sellers_Connected__c" /></lightning:layoutItem>
+                        <lightning:layoutItem size="6" padding="horizontal-small">
+                            <lightning:inputField fieldName="Target_Customers__c" />
+                        </lightning:layoutItem>
+                        <lightning:layoutItem size="6" padding="horizontal-small">
+                            <lightning:inputField fieldName="Operating_Countries__c" />
+                        </lightning:layoutItem>
+                        <lightning:layoutItem size="6" padding="horizontal-small">
+                            <lightning:inputField fieldName="Reach_Number_of_Sellers_Connected__c" />
+                        </lightning:layoutItem>
                     </aura:if>
                 </lightning:layout>
-                
-                <aura:if isTrue="{! v.ndcCapabilities.Company_Type__c == 'Airline' || v.ndcCapabilities.Company_Type__c == 'Seller'}">
-                    <br/>
+
+                <aura:if
+                    isTrue="{! v.ndcCapabilities.Company_Type__c == 'Airline' || v.ndcCapabilities.Company_Type__c == 'Seller'}">
+                    <br />
                     <h2> NDC Capabilities </h2>
                 </aura:if>
-                
+
                 <aura:if isTrue="{! v.ndcCapabilities.Company_Type__c == 'Airline'}">
                     <lightning:layout multipleRows="true">
                         <lightning:layoutItem size="6" padding="horizontal-small">
-                            <lightning:inputField class="customRequired none"  aura:id="NDC_Servicing__c" fieldName="NDC_Servicing__c" />
+                            <lightning:inputField class="customRequired none" aura:id="NDC_Servicing__c"
+                                fieldName="NDC_Servicing__c" />
                         </lightning:layoutItem>
                         <lightning:layoutItem size="6" padding="horizontal-small">
-                            <lightning:inputField class="customRequired none"  aura:id="NDC_Personalisation__c" fieldName="NDC_Personalisation__c" />
+                            <lightning:inputField class="customRequired none" aura:id="NDC_Personalisation__c"
+                                fieldName="NDC_Personalisation__c" />
                         </lightning:layoutItem>
                         <lightning:layoutItem size="6" padding="horizontal-small">
-                            <lightning:inputField class="customRequired none"  aura:id="NDC_Airline_Profile__c" fieldName="NDC_Airline_Profile__c" />
+                            <lightning:inputField class="customRequired none" aura:id="NDC_Airline_Profile__c"
+                                fieldName="NDC_Airline_Profile__c" />
                         </lightning:layoutItem>
                         <lightning:layoutItem size="6" padding="horizontal-small">
-                            <lightning:inputField class="customRequired none"  aura:id="NDC_Types_of_Fares__c" fieldName="NDC_Types_of_Fares__c" />
+                            <lightning:inputField class="customRequired none" aura:id="NDC_Types_of_Fares__c"
+                                fieldName="NDC_Types_of_Fares__c" />
                         </lightning:layoutItem>
                         <lightning:layoutItem size="6" padding="horizontal-small">
-                            <lightning:inputField class="customRequired none"  aura:id="NDC_Rich_Content__c" fieldName="NDC_Rich_Content__c" onchange="{! c.checkRichContent}"/>
+                            <lightning:inputField class="customRequired none" aura:id="NDC_Rich_Content__c"
+                                fieldName="NDC_Rich_Content__c" onchange="{! c.checkRichContent}" />
                         </lightning:layoutItem>
                         <lightning:layoutItem size="6" padding="horizontal-small">
                             <aura:if isTrue="{! v.displayRichContentTypes}">
-                                <lightning:inputField class="customRequired none"  aura:id="NDC_Rich_Content_Types__c" fieldName="NDC_Rich_Content_Types__c" />
+                                <lightning:inputField class="customRequired none" aura:id="NDC_Rich_Content_Types__c"
+                                    fieldName="NDC_Rich_Content_Types__c" />
                             </aura:if>
                         </lightning:layoutItem>
                         <lightning:layoutItem size="6" padding="horizontal-small">
-                            <lightning:inputField class="customRequired none"  aura:id="NDC_Forms_of_Payment_Accepted__c" fieldName="NDC_Forms_of_Payment_Accepted__c" onchange="{! c.checkFormsOfPaymentAccepted}"/>
+                            <lightning:inputField class="customRequired none" aura:id="NDC_Forms_of_Payment_Accepted__c"
+                                fieldName="NDC_Forms_of_Payment_Accepted__c"
+                                onchange="{! c.checkFormsOfPaymentAccepted}" />
                         </lightning:layoutItem>
                         <lightning:layoutItem size="6" padding="horizontal-small">
                             <aura:if isTrue="{! v.displayTypesOfCCAccepted}">
-                                <lightning:inputField class="customRequired none"  aura:id="NDC_Type_of_CC_Accepted__c" fieldName="NDC_Type_of_CC_Accepted__c" />
+                                <lightning:inputField class="customRequired none" aura:id="NDC_Type_of_CC_Accepted__c"
+                                    fieldName="NDC_Type_of_CC_Accepted__c" />
                             </aura:if>
                         </lightning:layoutItem>
                         <lightning:layoutItem size="6" padding="horizontal-small">
-                            <lightning:inputField class="customRequired none"  aura:id="NDC_Content_Differentiation__c" fieldName="NDC_Content_Differentiation__c" />
+                            <lightning:inputField class="customRequired none" aura:id="NDC_Content_Differentiation__c"
+                                fieldName="NDC_Content_Differentiation__c" />
                         </lightning:layoutItem>
                         <lightning:layoutItem size="6" padding="horizontal-small">
-                            <lightning:inputField class="customRequired none"  aura:id="Content_Differentiation_Products_and_Se__c" fieldName="Content_Differentiation_Products_and_Se__c" />
+                            <lightning:inputField class="customRequired none"
+                                aura:id="Content_Differentiation_Products_and_Se__c"
+                                fieldName="Content_Differentiation_Products_and_Se__c" />
                         </lightning:layoutItem>
                         <lightning:layoutItem size="6" padding="horizontal-small">
-                            <lightning:inputField class="customRequired none"  aura:id="NDC_Forms_of_Remittance_and_Settlement__c" fieldName="NDC_Forms_of_Remittance_and_Settlement__c" />
+                            <lightning:inputField class="customRequired none"
+                                aura:id="NDC_Forms_of_Remittance_and_Settlement__c"
+                                fieldName="NDC_Forms_of_Remittance_and_Settlement__c" />
                         </lightning:layoutItem>
                         <!--<lightning:layoutItem size="6" padding="horizontal-small">
                             <lightning:inputField fieldName="NDC_Public_Incentive_Schemes_for_Sellers__c" />
                         </lightning:layoutItem>-->
                     </lightning:layout>
-                    
+
                 </aura:if>
                 <aura:if isTrue="{! v.ndcCapabilities.Company_Type__c == 'Seller'}">
                     <lightning:layoutItem size="6" padding="horizontal-small">
-                        <lightning:inputField class="customRequired none" aura:id="NDC_Seller_Type__c" fieldName="NDC_Seller_Type__c" />
+                        <lightning:inputField class="customRequired none" aura:id="NDC_Seller_Type__c"
+                            fieldName="NDC_Seller_Type__c" />
                     </lightning:layoutItem>
                     <lightning:layoutItem size="6" padding="horizontal-small">
-                        <lightning:inputField class="customRequired none" aura:id="NDC_Type_of_Connectivity__c" fieldName="NDC_Type_of_Connectivity__c" />
+                        <lightning:inputField class="customRequired none" aura:id="NDC_Type_of_Connectivity__c"
+                            fieldName="NDC_Type_of_Connectivity__c" />
                     </lightning:layoutItem>
                 </aura:if>
                 <div class="slds-m-top_medium">
                     <lightning:button disabled="{!v.disabled}" variant="brand" type="submit" name="save" label="Save" />
-                    <lightning:button disabled="{!v.disabled}" variant="brand" onclick="{! c.handleCancel}" name="cancel" label="Cancel" />
+                    <lightning:button disabled="{!v.disabled}" variant="brand" onclick="{! c.handleCancel}"
+                        name="cancel" label="Cancel" />
                 </div>
             </lightning:recordEditForm>
-            
+
         </aura:if>
         <!--Products And Services Component-->
         <aura:if isTrue="{! v.ndcCapabilities.Company_Type__c == 'Airline'}">
-            <c:OneId_NDCProductsAndServices/>
+            <c:OneId_NDCProductsAndServices />
         </aura:if>
     </div>
 </aura:component>

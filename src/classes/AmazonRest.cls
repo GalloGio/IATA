@@ -191,7 +191,7 @@ public static string TESTSTRING =
 										'AKIAJVPKEUZ4GL4KZDZA',
 										'/pRJY7OCsLKKnwZdzjIRV9Us0tyIip0ax3YiwpOz'); 
 
-AmazonXMLParser.ListBucketResult  ListBucketResult = 
+AmazonXMLParser.ListBucketResult  ListBucketResult =
 AmazonRest.listFiles( 'IFAP/',Credentials);
 					
 throw new transformationException('' +ListBucketResult);*/

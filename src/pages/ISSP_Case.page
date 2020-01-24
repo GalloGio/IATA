@@ -13,6 +13,7 @@
           fixMultipicklistArrowStyle();
           try {refreshSubtypePicklist();} catch(e){}
           changeSubsectionStyle();
+          hideiiNetReason();
         });
         window.onload = function toggleButtons() {
             window.document.getElementsByName('newComment')[0].style.display = 'none';
@@ -34,6 +35,12 @@
                 subsections[i].classList.add("blueback");
             }
         }
+        /* VALINHO */
+        function hideiiNetReason(){
+            $(".caseAreaField  option[value='iiNet']").prop('disabled', true);
+            $(".caseAreaField  option[value='iiNet']").hide();
+        }
+        /* END VALINHO */
         </script>
         <style>
             ul li, ol li {
@@ -362,12 +369,33 @@
                                         var listOfEmails = '';
                                         // parse
                                         obj.forEach(function(item, index) {
-                                            if(item.AccountId === selectedAccount) listOfEmails += item.Email +',';
+                                            if(item.Name === selectedAccount){
+                                                listOfEmails += item.Email__c +',';
+                                                $("[id$='a_idJSONcontactSelected']").val(item.Email__c);
+                                            } 
                                         });
                                         $('input[id$=additionalRecipients]').val(listOfEmails);
 
                                     }
 
+									//NEW VALINHO
+									function manageCaseAreaAvaiableOptions(element) {
+                                        let selectedLabel = $(element).find(":selected").text();
+										if(selectedLabel == "IATA"){
+                                            //enable option iiNet only for IATA
+                                            $(".caseAreaField  option[value='iiNet']").prop('disabled', false);
+											$(".caseAreaField  option[value='iiNet']").show();
+										} else {
+                                            //disable option iiNet and if it was selected, unselect it and the reason (dependent picklist)
+                                            $(".caseAreaField  option[value='iiNet']").prop('disabled', true);
+											$(".caseAreaField  option[value='iiNet']").hide();
+											if ($(".caseAreaField option:selected").val() === 'iiNet') {
+												$(".caseAreaField option:selected").removeAttr("selected");
+												$(".reason1Field option:selected").removeAttr("selected");
+											}
+										}
+									}
+									//END NEW VALINHO
 
                                     </script>
                                     <!-- oncomplete="GenerateSubTopicHelpText();" immediate="true" status="actStatusId"-->
@@ -376,16 +404,16 @@
                                         <apex:outputlabel value="{!$Label.ISSP_Who_to_contact}" />
                                         <apex:outputpanel layout="block" styleclass="requiredInput">
                                             <apex:outputpanel layout="block" styleclass="requiredBlock" />
-                                            <apex:selectlist styleclass="form-control"
+                                            <apex:selectlist styleclass="form-control" label="{!$Label.ISSP_Who_to_contact}"
                                                 value="{!whoToContact}" required="true" multiselect="false" size="1"
-                                                onchange="autofillCCOthers(this);">
+                                                onchange="autofillCCOthers(this); manageCaseAreaAvaiableOptions(this);">
                                                 <apex:selectoptions value="{!lst_whoToContact}" />
                                             </apex:selectlist>
                                         </apex:outputpanel>
                                     </apex:pageblocksectionitem>
-
+                                    <apex:inputHidden value="{!JSONcontactSelected}" id="a_idJSONcontactSelected"/>
                                     <apex:inputField value="{!newCase.CaseArea__c}" rendered="{!isDPCUser}" styleclass="form-control" required="true">
-                                        <apex:actionSupport event="onchange" reRender="reason1Picklist"/>
+                                        <apex:actionSupport event="onchange" reRender="reason1Picklist" rendered="{!NOT(isCloneDPC)}"/>
                                     </apex:inputField>
                                     <apex:inputField id="reason1Picklist" value="{!newCase.Reason1__c}" rendered="{!isDPCUser}" styleclass="form-control" required="true"/>
 
@@ -499,11 +527,11 @@
                                                 <apex:actionSupport event="onchange" reRender="subtypePicklist"/>
                                             </apex:inputField>
                                         </apex:pageblocksectionitem>
-                                        <apex:inputField id="subtypePicklist" value="{!newCase.Sub_Type__c}" required="false" rendered="{!isDPCUser}" styleclass="form-control" />
+                                        <apex:inputField id="subtypePicklist" value="{!newCase.Sub_Type__c}" required="false" rendered="{!isDPCUser}" styleclass="form-control" html-disabled="{!IF(isCloneDPC,true,false)}"/>
 
                                         <apex:inputfield value="{!newCase.BSP_s_concerned__c}" label="{!$Label.ISSP_BSP_Concerned}" required="false" rendered="{!isDPCUser}" styleclass="form-control" />
 
-                                        <apex:inputfield value="{!newCase.Priority}" required="true" rendered="{!isDPCUser}" styleclass="form-control" />
+                                        <apex:inputfield label="Priority" value="{!newCase.Priority}" required="true" rendered="{!isDPCUser}" styleclass="form-control"/>
 
                                         <!-- CC Others info -->
                                         <apex:pageblocksectionitem rendered="{!isDPCUser}">
@@ -644,6 +672,7 @@
                                             <apex:outputpanel layout="none" rendered=" {!AND(isDPCUser, NOT(isEditMode), OR(isDPCAccepted,isACRAccepted), OR(caseType='ACR', caseType='IATASR'))}">
                                                 <input type="button" class="btn" value="Change DPC Owner" onclick="openCustomlkp('{!newCase.id}')" styleclass="btn btn_iata_primary" />
                                             </apex:outputpanel>
+                                            <apex:commandbutton action="{!CloneDPC}" value="Clone" rerender="existingCaseForm" styleclass="btn btn_iata_primary" />
                                             <apex:actionfunction action="{!changeDpcOwner}" name="changeDpcOwner" rerender="existingCaseForm" status="changeOwnerStatus" />
                                             <apex:commandbutton action="{!close}" value="Close Case" rendered="{!AND(NOT(IsInterDPCCase), newCase.Status!='Closed',OR(AND(caseType='IATASR', newCase.isDPCCurrentUser__c),AND(caseType='DPCSR', isDPCAdmin)))}" styleclass="btn btn_iata_primary" />
                                             <apex:commandbutton action="{!close}" value="Close Case" rendered="{!AND(IsInterDPCCase, newCase.OwnerId==$User.Id, newCase.Status!='Closed')}" styleclass="btn btn_iata_primary" />

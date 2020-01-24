@@ -22,7 +22,7 @@ private class AMS_Change_Code_Notification_Contr_Test {
 		Account msoAccount =  new Account (
 			RecordTypeId = agcRtId,
 			Name = 'Agency',
-			Location_Class__c = 'M',
+			Location_Class__c = 'N',
 			IATA_ISO_Country__c = isoc.Id,
 			Status__c = 'Approved'
 		);
@@ -64,9 +64,23 @@ private class AMS_Change_Code_Notification_Contr_Test {
 			ccase.Late_Payment_Date__c = Date.today();
 			ccase.Account_Concerned__c = msoAccount.Id;
 		insert ccase;
-		
-		Id caseRecrdType = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
-				
+
+		Agency_Applied_Change_code__c ccode= new Agency_Applied_Change_code__c();
+		ccode.Change_Code__c = 'TER';
+		ccode.SIDRA_Case__c = ccase.Id;
+		ccode.Account__c = msoAccount.Id;
+		insert ccode;
+
+		Test.startTest();
+
+			ApexPages.StandardController stdController = new ApexPages.StandardController(ccase);
+
+			AMS_Change_Code_Notification_Controller ctrl = new AMS_Change_Code_Notification_Controller(stdController);
+
+			ctrl.setNotificationMessage();
+
+		Test.stopTest();
+
 		Amazon_Cred__c Amazon_Cred =  new Amazon_Cred__c(name = 'GenericAttach', Prod_Configuration__c = 'adevconf' , Dev_Configuration__c = 'adevconf');
 		insert Amazon_Cred;
 		Amazon_Cred__c Amazon_Cred2 =  new Amazon_Cred__c(name = 'RecycleBin', Prod_Configuration__c = 'adevconf' , Dev_Configuration__c = 'adevconf');
@@ -123,8 +137,10 @@ private class AMS_Change_Code_Notification_Contr_Test {
 		);
 		insert azFile;
 
+
 	}
-	
+
+
 	@isTest static void test_Oscar_notification() {
 		
 		IATA_ISO_Country__c isoc = [SELECT Id FROM IATA_ISO_Country__c LIMIT 1];

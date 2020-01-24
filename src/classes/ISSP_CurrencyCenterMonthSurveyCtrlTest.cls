@@ -4,130 +4,130 @@ public class ISSP_CurrencyCenterMonthSurveyCtrlTest {
 	public static final Id RT_CURRENCY_CENTER_ID = Schema.SObjectType.Financial_Institution__c.getRecordTypeInfosByDeveloperName().get('Currency_Center_Bank').getRecordTypeId();
 
 	public ISSP_CurrencyCenterMonthSurveyCtrlTest() {
-		
+
 	}
 	public static User portalSetup(){
-        //Create portal account owner
-        UserRole portalRole = [Select Id From UserRole Where PortalType = 'None' Limit 1];
-        Profile profile1 = [Select Id from Profile where name = 'System Administrator'];
-        User portalAccountOwner1 = new User(
-            UserRoleId = portalRole.Id,
-            ProfileId = profile1.Id,
-            Username = System.now().millisecond() + Math.random() + 'test2@test.com',
-            Alias = 'batman',
-            Email='bruce.wayne@wayneenterprises.com',
-            EmailEncodingKey='UTF-8',
-            Firstname='Bruce',
-            Lastname='Wayne',
-            LanguageLocaleKey='en_US',
-            LocaleSidKey='en_US',
-            TimeZoneSidKey='America/Chicago',
-            License_Cost_Center__c = 'ISF005CH01'
-        );
-        Database.insert(portalAccountOwner1);
+		//Create portal account owner
+		UserRole portalRole = [Select Id From UserRole Where PortalType = 'None' Limit 1];
+		Profile profile1 = [Select Id from Profile where name = 'System Administrator'];
+		User portalAccountOwner1 = new User(
+			UserRoleId = portalRole.Id,
+			ProfileId = profile1.Id,
+			Username = System.now().millisecond() + Math.random() + 'test2@test.com',
+			Alias = 'batman',
+			Email='bruce.wayne@wayneenterprises.com',
+			EmailEncodingKey='UTF-8',
+			Firstname='Bruce',
+			Lastname='Wayne',
+			LanguageLocaleKey='en_US',
+			LocaleSidKey='en_US',
+			TimeZoneSidKey='America/Chicago',
+			License_Cost_Center__c = 'ISF005CH01'
+		);
+		Database.insert(portalAccountOwner1);
 
-        //Create account
-        Account portalAccount1 = new Account(
-            Name = 'TestAirline',
-            OwnerId = portalAccountOwner1.Id,
-            RecordType = RecordTypeSingleton.getInstance().getRecordType('Account', 'IATA_Airline')
-        );
-        Database.insert(portalAccount1);
-                
-        //Create contact
-        Contact contact1 = new Contact(
-            FirstName = 'Test',
-            Lastname = 'McTesty',
-            AccountId = portalAccount1.Id,
-            Email = System.now().millisecond() + 'test@test.com',
-            RecordType = RecordTypeSingleton.getInstance().getRecordType('Account', 'Standard_Contact')
-        );
-        Database.insert(contact1);
-                
-        //Create user
-        Profile portalProfile = [SELECT Id FROM Profile WHERE Name LIKE 'ISS Portal Airline Delegated Admin User' Limit 1];
-        User user1 = new User(
-            Username = System.now().millisecond() + Math.random() + 'test12345@test.com',
-            ContactId = contact1.Id,
-            ProfileId = portalProfile.Id,
-            Alias = 'test123',
-            Email = 'test12345@test.com',
-            EmailEncodingKey = 'UTF-8',
-            LastName = 'McTesty',
-            CommunityNickname = 'test12345',
-            TimeZoneSidKey = 'America/Los_Angeles',
-            LocaleSidKey = 'en_US',
-            LanguageLocaleKey = 'en_US'
-        );
-        Database.insert(user1);
+		//Create account
+		Account portalAccount1 = new Account(
+			Name = 'TestAirline',
+			OwnerId = portalAccountOwner1.Id,
+			RecordType = RecordTypeSingleton.getInstance().getRecordType('Account', 'IATA_Airline')
+		);
+		Database.insert(portalAccount1);
 
-        return user1;
-    }
+		//Create contact
+		Contact contact1 = new Contact(
+			FirstName = 'Test',
+			Lastname = 'McTesty',
+			AccountId = portalAccount1.Id,
+			Email = System.now().millisecond() + 'test@test.com',
+			RecordType = RecordTypeSingleton.getInstance().getRecordType('Account', 'Standard_Contact')
+		);
+		Database.insert(contact1);
+
+		//Create user
+		Profile portalProfile = [SELECT Id FROM Profile WHERE Name LIKE 'ISS Portal Airline Delegated Admin User' Limit 1];
+		User user1 = new User(
+			Username = System.now().millisecond() + Math.random() + 'test12345@test.com',
+			ContactId = contact1.Id,
+			ProfileId = portalProfile.Id,
+			Alias = 'test123',
+			Email = 'test12345@test.com',
+			EmailEncodingKey = 'UTF-8',
+			LastName = 'McTesty',
+			CommunityNickname = 'test12345',
+			TimeZoneSidKey = 'America/Los_Angeles',
+			LocaleSidKey = 'en_US',
+			LanguageLocaleKey = 'en_US'
+		);
+		Database.insert(user1);
+
+		return user1;
+	}
 
   	/*
-		Purpose:  create the annual survey (parent record)                                                         
-		Parameters: none 
+		Purpose:  create the annual survey (parent record)
+		Parameters: none
 		Returns:  Currency_Center_Survey__C
-		Throws: none                                                        
+		Throws: none
 	*/
-    public static Currency_Center_Survey__C createParentSurvey(String idAccount) {
+	public static Currency_Center_Survey__C createParentSurvey(String idAccount) {
 
-    	Currency_Center_Survey__C parent = new Currency_Center_Survey__C(Section__c = 'Survey Record', 
-    																		Survey__c = 'Monthly', 
-    																		Year_Survey__c = '2019',
-    																		Month_Survey__c = '1',
-    																		Status__c = 'Draft',
-    																		Airline__c = idAccount);
-    	return parent;
-    }
+		Currency_Center_Survey__C parent = new Currency_Center_Survey__C(Section__c = 'Survey Record',
+																			Survey__c = 'Monthly',
+																			Year_Survey__c = '2019',
+																			Month_Survey__c = '1',
+																			Status__c = 'Draft',
+																			Airline__c = idAccount);
+		return parent;
+	}
 
-    public static Currency_Center_Survey__C createCountry(String parentId) {
-    	IATA_ISO_Country__c iataISOCountry = new IATA_ISO_Country__c(Name='Portugal', 
-    																	ISO_Code__c = 'PT', 
-    																	AIMS_Area_Name__c = 'PORTUGAL', 
-    																	Region__C = 'Europe', 
-    																	IEC_Zip_Postal_Code_required__c = true);
+	public static Currency_Center_Survey__C createCountry(String parentId) {
+		IATA_ISO_Country__c iataISOCountry = new IATA_ISO_Country__c(Name='Portugal',
+																		ISO_Code__c = 'PT',
+																		AIMS_Area_Name__c = 'PORTUGAL',
+																		Region__C = 'Europe',
+																		IEC_Zip_Postal_Code_required__c = true);
 		insert iataISOCountry;
 
 		Country_Profile__c countryProfile = new Country_Profile__c(Name = iataISOCountry.Name,
-																	Send_Notifications__C = 'No', 
+																	Send_Notifications__C = 'No',
 																	IATA_ISO_Country__c = iataISOCountry.Id,
 																	Currency_Exchange_Rate__c = 2,
 																	CurrencyIsoCode = 'EUR');
 		insert countryProfile;
 
-		Currency_Center_Survey__C countryRecord = new Currency_Center_Survey__C(Section__c = 'Country Record', 
-    																				Country__c = countryProfile.Id, 
-    																				Country_Name__c = countryProfile.Name,
-    																				Parent_Id__c = parentId);
-    	return countryRecord;
-    }
+		Currency_Center_Survey__C countryRecord = new Currency_Center_Survey__C(Section__c = 'Country Record',
+																					Country__c = countryProfile.Id,
+																					Country_Name__c = countryProfile.Name,
+																					Parent_Id__c = parentId);
+		return countryRecord;
+	}
 
-    public static Currency_Center_Survey__C createReportType(String countryId, String countryName, String countryCurrency) {
+	public static Currency_Center_Survey__C createReportType(String countryId, String countryName, String countryCurrency) {
 
-		Currency_Center_Survey__C reportTypeRecord = new Currency_Center_Survey__C(Section__c = 'Report Type Record', 
-    																				Reporting_Type__c = 'Blocked Amount', 
-    																				Country_Name__c = countryName,
-    																				Currency__c = countryCurrency,
-    																				Parent_Id__c = countryId);
-    	return reportTypeRecord;
-    }
+		Currency_Center_Survey__C reportTypeRecord = new Currency_Center_Survey__C(Section__c = 'Report Type Record',
+																					Reporting_Type__c = 'Blocked Amount',
+																					Country_Name__c = countryName,
+																					Currency__c = countryCurrency,
+																					Parent_Id__c = countryId);
+		return reportTypeRecord;
+	}
 
-    public static Currency_Center_Survey__C createBank(String reportTypeId, String countryName, String countryCurrency) {
+	public static Currency_Center_Survey__C createBank(String reportTypeId, String countryName, String countryCurrency) {
 
-		Currency_Center_Survey__C bankRecord = new Currency_Center_Survey__C(Section__c = 'Bank Record', 
-    																			Reporting_Type__c = 'Blocked Amount', 
-    																			Country_Name__c = countryName,
-    																			Currency__c = countryCurrency,
-    																			Parent_Id__c = reportTypeId);
-    	return bankRecord;
-    }
+		Currency_Center_Survey__C bankRecord = new Currency_Center_Survey__C(Section__c = 'Bank Record',
+																				Reporting_Type__c = 'Blocked Amount',
+																				Country_Name__c = countryName,
+																				Currency__c = countryCurrency,
+																				Parent_Id__c = reportTypeId);
+		return bankRecord;
+	}
 
-    	/*
-		Purpose:  load all records from the survey                                                         
-		Parameters: none 
+		/*
+		Purpose:  load all records from the survey
+		Parameters: none
 		Returns:  none
-		Throws: none                                                      
+		Throws: none
 	*/
 	public static testMethod void loadAllSurvey(){
 
@@ -136,7 +136,7 @@ public class ISSP_CurrencyCenterMonthSurveyCtrlTest {
 		Test.StartTest();
 			System.runAs(myUser)
 			{
-				User user1 = portalSetup();		
+				User user1 = portalSetup();
 				System.runAs(user1){
 
 					//insert the annual survey
@@ -168,17 +168,17 @@ public class ISSP_CurrencyCenterMonthSurveyCtrlTest {
 					System.assertEquals(country.Section__c, monthlySurvey.countriesResult[0].Section__c);
 					System.assertEquals(country.Country__c, monthlySurvey.countriesResult[0].Country__c);
 					System.assertEquals(country.Parent_Id__c, monthlySurvey.countriesResult[0].Parent_Id__c);
-					
+
 				}
 			}
 		Test.StopTest();
 	}
 
 	/*
-		Purpose:  save all changes                                                        
-		Parameters: none 
+		Purpose:  save all changes
+		Parameters: none
 		Returns:  none
-		Throws: none                                                      
+		Throws: none
 	*/
 	public static testMethod void saveSurvey() {
 		User myUser = [select Id from User WHERE Profile.Name = 'System Administrator' AND IsActive = true LIMIT 1];
@@ -186,7 +186,7 @@ public class ISSP_CurrencyCenterMonthSurveyCtrlTest {
 		Test.StartTest();
 			System.runAs(myUser)
 			{
-				User user1 = portalSetup();		
+				User user1 = portalSetup();
 				System.runAs(user1){
 
 					//insert the annual survey
@@ -216,17 +216,17 @@ public class ISSP_CurrencyCenterMonthSurveyCtrlTest {
 					//verify if the values are correct or loaded
 					List<Currency_Center_Survey__C> ccs = [SELECT Name FROM Currency_Center_Survey__C];
 					System.assertEquals(4, ccs.size());
-					
+
 				}
 			}
 		Test.StopTest();
 	}
 
 	/*
-		Purpose:  save all changes                                                        
-		Parameters: none 
+		Purpose:  save all changes
+		Parameters: none
 		Returns:  none
-		Throws: none                                                      
+		Throws: none
 	*/
 	public static testMethod void buildCountrySurvey() {
 		User myUser = [select Id from User WHERE Profile.Name = 'System Administrator' AND IsActive = true LIMIT 1];
@@ -234,7 +234,7 @@ public class ISSP_CurrencyCenterMonthSurveyCtrlTest {
 		Test.StartTest();
 			System.runAs(myUser)
 			{
-				User user1 = portalSetup();		
+				User user1 = portalSetup();
 				System.runAs(user1){
 
 					//insert the annual survey
@@ -245,15 +245,15 @@ public class ISSP_CurrencyCenterMonthSurveyCtrlTest {
 					Currency_Center_Survey__C country = createCountry(parent.Id);
 					insert country;
 
-					IATA_ISO_Country__c iataISOCountry = new IATA_ISO_Country__c(Name='France', 
-    																	ISO_Code__c = 'FR', 
-    																	AIMS_Area_Name__c = 'FRANCE', 
-    																	Region__C = 'Europe', 
-    																	IEC_Zip_Postal_Code_required__c = true);
+					IATA_ISO_Country__c iataISOCountry = new IATA_ISO_Country__c(Name='France',
+																		ISO_Code__c = 'FR',
+																		AIMS_Area_Name__c = 'FRANCE',
+																		Region__C = 'Europe',
+																		IEC_Zip_Postal_Code_required__c = true);
 					insert iataISOCountry;
 
 					Country_Profile__c countryProfile = new Country_Profile__c(Name = iataISOCountry.Name,
-																				Send_Notifications__C = 'No', 
+																				Send_Notifications__C = 'No',
 																				IATA_ISO_Country__c = iataISOCountry.Id,
 																				Currency_Exchange_Rate__c = 2,
 																				CurrencyIsoCode = 'EUR');
@@ -277,10 +277,10 @@ public class ISSP_CurrencyCenterMonthSurveyCtrlTest {
 	}
 
 	/*
-		Purpose:  add bank                                                        
-		Parameters: none 
+		Purpose:  add bank
+		Parameters: none
 		Returns:  none
-		Throws: none                                                      
+		Throws: none
 	*/
 	public static testMethod void addBank() {
 		User myUser = [select Id from User WHERE Profile.Name = 'System Administrator' AND IsActive = true LIMIT 1];
@@ -288,7 +288,7 @@ public class ISSP_CurrencyCenterMonthSurveyCtrlTest {
 		Test.StartTest();
 			System.runAs(myUser)
 			{
-				User user1 = portalSetup();		
+				User user1 = portalSetup();
 				System.runAs(user1){
 
 					//insert the annual survey
@@ -305,10 +305,10 @@ public class ISSP_CurrencyCenterMonthSurveyCtrlTest {
 					Currency_Center_Survey__C reportType = createReportType(country.Id, countryProfileSF.Name, countryProfileSF.Currency__c);
 					insert reportType;
 
-					Financial_Institution__c bank = new Financial_Institution__c(Name = 'Novo Banco', 
+					Financial_Institution__c bank = new Financial_Institution__c(Name = 'Novo Banco',
 																					RecordTypeId = RT_CURRENCY_CENTER_ID,
-																					Region__c = 'Europe', 
-																					Country__c = reportType.Country_Name__c, 
+																					Region__c = 'Europe',
+																					Country__c = reportType.Country_Name__c,
 																					Institution_Type__c = 'Bank');
 					insert bank;
 
@@ -335,10 +335,10 @@ public class ISSP_CurrencyCenterMonthSurveyCtrlTest {
 	}
 
 	/*
-		Purpose:  calculate amounts                                                       
-		Parameters: none 
+		Purpose:  calculate amounts
+		Parameters: none
 		Returns:  none
-		Throws: none                                                      
+		Throws: none
 	*/
 	public static testMethod void calculateTest() {
 		User myUser = [select Id from User WHERE Profile.Name = 'System Administrator' AND IsActive = true LIMIT 1];
@@ -346,7 +346,7 @@ public class ISSP_CurrencyCenterMonthSurveyCtrlTest {
 		Test.StartTest();
 			System.runAs(myUser)
 			{
-				User user1 = portalSetup();		
+				User user1 = portalSetup();
 				System.runAs(user1){
 
 					//insert the annual survey
@@ -354,59 +354,59 @@ public class ISSP_CurrencyCenterMonthSurveyCtrlTest {
 					insert parent;
 
 					//insert the country survey
-					IATA_ISO_Country__c iataISOCountry = new IATA_ISO_Country__c(Name='Portugal', 
-    																	ISO_Code__c = 'PT', 
-    																	AIMS_Area_Name__c = 'PORTUGAL', 
-    																	Region__C = 'Europe', 
-    																	IEC_Zip_Postal_Code_required__c = true);
+					IATA_ISO_Country__c iataISOCountry = new IATA_ISO_Country__c(Name='Portugal',
+																		ISO_Code__c = 'PT',
+																		AIMS_Area_Name__c = 'PORTUGAL',
+																		Region__C = 'Europe',
+																		IEC_Zip_Postal_Code_required__c = true);
 					insert iataISOCountry;
 
 					Country_Profile__c countryProfile = new Country_Profile__c(Name = iataISOCountry.Name,
-																				Send_Notifications__C = 'No', 
+																				Send_Notifications__C = 'No',
 																				IATA_ISO_Country__c = iataISOCountry.Id,
 																				Currency_Exchange_Rate__c = 2,
 																				CurrencyIsoCode = 'EUR');
 					insert countryProfile;
 
-					Currency_Center_Survey__C countryRecord = new Currency_Center_Survey__C(Section__c = 'Country Record', 
-			    																				Country__c = countryProfile.Id, 
-			    																				Country_Name__c = countryProfile.Name,
-			    																				Parent_Id__c = parent.Id);
+					Currency_Center_Survey__C countryRecord = new Currency_Center_Survey__C(Section__c = 'Country Record',
+																								Country__c = countryProfile.Id,
+																								Country_Name__c = countryProfile.Name,
+																								Parent_Id__c = parent.Id);
 					insert countryRecord;
 
 					Country_Profile__c countryProfileSF = [SELECT Name, Currency__c FROM Country_Profile__c WHERE Name = :countryRecord.Country_Name__c LIMIT 1];
 
 					//insert the report type survey
-					Currency_Center_Survey__C reportTypeRecord = new Currency_Center_Survey__C(Section__c = 'Report Type Record', 
-			    																				Reporting_Type__c = 'Blocked Amount', 
-			    																				Country_Name__c = countryRecord.Country_Name__c,
-			    																				Currency__c = countryProfileSF.Currency__c,
-			    																				Parent_Id__c = countryRecord.Id,
-			    																				Average_Exchange_Rate__c = countryProfile.Currency_Exchange_Rate__c);
+					Currency_Center_Survey__C reportTypeRecord = new Currency_Center_Survey__C(Section__c = 'Report Type Record',
+																								Reporting_Type__c = 'Blocked Amount',
+																								Country_Name__c = countryRecord.Country_Name__c,
+																								Currency__c = countryProfileSF.Currency__c,
+																								Parent_Id__c = countryRecord.Id,
+																								Average_Exchange_Rate__c = countryProfile.Currency_Exchange_Rate__c);
 					insert reportTypeRecord;
 
-					Financial_Institution__c bank = new Financial_Institution__c(Name = 'Novo Banco', 
+					Financial_Institution__c bank = new Financial_Institution__c(Name = 'Novo Banco',
 																					RecordTypeId = RT_CURRENCY_CENTER_ID,
-																					Region__c = 'Europe', 
-																					Country__c = reportTypeRecord.Country_Name__c, 
+																					Region__c = 'Europe',
+																					Country__c = reportTypeRecord.Country_Name__c,
 																					Institution_Type__c = 'Bank');
 					insert bank;
 
-					Financial_Institution__c bank2 = new Financial_Institution__c(Name = 'Mau Banco', 
+					Financial_Institution__c bank2 = new Financial_Institution__c(Name = 'Mau Banco',
 																					RecordTypeId = RT_CURRENCY_CENTER_ID,
-																					Region__c = 'Europe', 
-																					Country__c = reportTypeRecord.Country_Name__c, 
+																					Region__c = 'Europe',
+																					Country__c = reportTypeRecord.Country_Name__c,
 																					Institution_Type__c = 'Bank');
 					insert bank2;
 
 
-					Currency_Center_Survey__C bankRecord = new Currency_Center_Survey__C(Section__c = 'Bank Record', 
-			    																			Reporting_Type__c = 'Blocked Amount', 
-			    																			Country_Name__c = reportTypeRecord.Country_Name__c,
-			    																			Currency__c = countryProfileSF.Currency__c,
-			    																			Parent_Id__c = reportTypeRecord.Id,
-			    																			Amount__c = 10,
-			    																			Bank__c = bank.Id);
+					Currency_Center_Survey__C bankRecord = new Currency_Center_Survey__C(Section__c = 'Bank Record',
+																							Reporting_Type__c = 'Blocked Amount',
+																							Country_Name__c = reportTypeRecord.Country_Name__c,
+																							Currency__c = countryProfileSF.Currency__c,
+																							Parent_Id__c = reportTypeRecord.Id,
+																							Amount__c = 10,
+																							Bank__c = bank.Id);
 					insert bankRecord;
 
 					IATAIsoCountryDAO.resetMapIataIsoCountry();
@@ -435,10 +435,10 @@ public class ISSP_CurrencyCenterMonthSurveyCtrlTest {
 	}
 
 	/*
-		Purpose:  delete bank                                                       
-		Parameters: none 
+		Purpose:  delete bank
+		Parameters: none
 		Returns:  none
-		Throws: none                                                      
+		Throws: none
 	*/
 	public static testMethod void deleteBank() {
 		User myUser = [select Id from User WHERE Profile.Name = 'System Administrator' AND IsActive = true LIMIT 1];
@@ -446,7 +446,7 @@ public class ISSP_CurrencyCenterMonthSurveyCtrlTest {
 		Test.StartTest();
 			System.runAs(myUser)
 			{
-				User user1 = portalSetup();		
+				User user1 = portalSetup();
 				System.runAs(user1){
 
 					//insert the annual survey
@@ -486,10 +486,10 @@ public class ISSP_CurrencyCenterMonthSurveyCtrlTest {
 	}
 
 	/*
-		Purpose:  delete country                                                       
-		Parameters: none 
+		Purpose:  delete country
+		Parameters: none
 		Returns:  none
-		Throws: none                                                      
+		Throws: none
 	*/
 	public static testMethod void deleteCountrySurvey() {
 		User myUser = [select Id from User WHERE Profile.Name = 'System Administrator' AND IsActive = true LIMIT 1];
@@ -497,7 +497,7 @@ public class ISSP_CurrencyCenterMonthSurveyCtrlTest {
 		Test.StartTest();
 			System.runAs(myUser)
 			{
-				User user1 = portalSetup();		
+				User user1 = portalSetup();
 				System.runAs(user1){
 
 					//insert the annual survey
@@ -533,18 +533,18 @@ public class ISSP_CurrencyCenterMonthSurveyCtrlTest {
 	}
 
 	/*
-		Purpose:  reload All Seclect lists                                                     
-		Parameters: none 
+		Purpose:  reload All Seclect lists
+		Parameters: none
 		Returns:  none
-		Throws: none                                                      
+		Throws: none
 	*/
-    public static testMethod void reloadSelectListTest() {
+	public static testMethod void reloadSelectListTest() {
 		User myUser = [select Id from User WHERE Profile.Name = 'System Administrator' AND IsActive = true LIMIT 1];
 
 		Test.StartTest();
 			System.runAs(myUser)
 			{
-				User user1 = portalSetup();		
+				User user1 = portalSetup();
 				System.runAs(user1){
 
 					//insert the annual survey
@@ -561,10 +561,10 @@ public class ISSP_CurrencyCenterMonthSurveyCtrlTest {
 					Currency_Center_Survey__C reportType = createReportType(country.Id, countryProfileSF.Name, countryProfileSF.Currency__c);
 					insert reportType;
 
-					Financial_Institution__c bank = new Financial_Institution__c(Name = 'Novo Banco', 
+					Financial_Institution__c bank = new Financial_Institution__c(Name = 'Novo Banco',
 																					RecordTypeId = RT_CURRENCY_CENTER_ID,
-																					Region__c = 'Europe', 
-																					Country__c = reportType.Country_Name__c, 
+																					Region__c = 'Europe',
+																					Country__c = reportType.Country_Name__c,
 																					Institution_Type__c = 'Bank');
 					insert bank;
 
@@ -589,10 +589,10 @@ public class ISSP_CurrencyCenterMonthSurveyCtrlTest {
 	}
 
 	/*
-		Purpose:  submit the survey                                                     
-		Parameters: none 
+		Purpose:  submit the survey
+		Parameters: none
 		Returns:  none
-		Throws: none                                                      
+		Throws: none
 	*/
 	public static testMethod void submitSurveyTest() {
 		User myUser = [select Id from User WHERE Profile.Name = 'System Administrator' AND IsActive = true LIMIT 1];
@@ -600,7 +600,7 @@ public class ISSP_CurrencyCenterMonthSurveyCtrlTest {
 		Test.StartTest();
 			System.runAs(myUser)
 			{
-				User user1 = portalSetup();		
+				User user1 = portalSetup();
 				System.runAs(user1){
 
 					//insert the annual survey
@@ -608,25 +608,25 @@ public class ISSP_CurrencyCenterMonthSurveyCtrlTest {
 					insert parent;
 
 					//insert the country survey
-					IATA_ISO_Country__c iataISOCountry = new IATA_ISO_Country__c(Name='Portugal', 
-    																	ISO_Code__c = 'PT', 
-    																	AIMS_Area_Name__c = 'PORTUGAL', 
-    																	Region__C = 'Europe', 
-    																	IEC_Zip_Postal_Code_required__c = true,
-    																	Country_Manager__c = user1.Id);
+					IATA_ISO_Country__c iataISOCountry = new IATA_ISO_Country__c(Name='Portugal',
+																		ISO_Code__c = 'PT',
+																		AIMS_Area_Name__c = 'PORTUGAL',
+																		Region__C = 'Europe',
+																		IEC_Zip_Postal_Code_required__c = true,
+																		Country_Manager__c = user1.Id);
 					insert iataISOCountry;
 
 					Country_Profile__c countryProfile = new Country_Profile__c(Name = iataISOCountry.Name,
-																				Send_Notifications__C = 'No', 
+																				Send_Notifications__C = 'No',
 																				IATA_ISO_Country__c = iataISOCountry.Id,
 																				Currency_Exchange_Rate__c = 2,
 																				CurrencyIsoCode = 'EUR');
 					insert countryProfile;
 
-					Currency_Center_Survey__C countryRecord = new Currency_Center_Survey__C(Section__c = 'Country Record', 
-			    																				Country__c = countryProfile.Id, 
-			    																				Country_Name__c = countryProfile.Name,
-			    																				Parent_Id__c = parent.Id);
+					Currency_Center_Survey__C countryRecord = new Currency_Center_Survey__C(Section__c = 'Country Record',
+																								Country__c = countryProfile.Id,
+																								Country_Name__c = countryProfile.Name,
+																								Parent_Id__c = parent.Id);
 					insert countryRecord;
 
 					Country_Profile__c countryProfileSF = [SELECT Name, Currency__c FROM Country_Profile__c WHERE Name = :countryRecord.Country_Name__c LIMIT 1];
@@ -652,10 +652,10 @@ public class ISSP_CurrencyCenterMonthSurveyCtrlTest {
 	}
 
 	/*
-		Purpose:  add section                                                       
-		Parameters: none 
+		Purpose:  add section
+		Parameters: none
 		Returns:  none
-		Throws: none                                                      
+		Throws: none
 	*/
 	public static testMethod void addSection() {
 		User myUser = [select Id from User WHERE Profile.Name = 'System Administrator' AND IsActive = true LIMIT 1];
@@ -663,7 +663,7 @@ public class ISSP_CurrencyCenterMonthSurveyCtrlTest {
 		Test.StartTest();
 			System.runAs(myUser)
 			{
-				User user1 = portalSetup();		
+				User user1 = portalSetup();
 				System.runAs(user1){
 
 					//insert the annual survey
@@ -700,10 +700,10 @@ public class ISSP_CurrencyCenterMonthSurveyCtrlTest {
 	}
 
 	/*
-		Purpose:  delete section                                                       
-		Parameters: none 
+		Purpose:  delete section
+		Parameters: none
 		Returns:  none
-		Throws: none                                                      
+		Throws: none
 	*/
 	public static testMethod void deleteSection() {
 		User myUser = [select Id from User WHERE Profile.Name = 'System Administrator' AND IsActive = true LIMIT 1];
@@ -711,7 +711,7 @@ public class ISSP_CurrencyCenterMonthSurveyCtrlTest {
 		Test.StartTest();
 			System.runAs(myUser)
 			{
-				User user1 = portalSetup();		
+				User user1 = portalSetup();
 				System.runAs(user1){
 
 					//insert the annual survey
@@ -757,10 +757,10 @@ public class ISSP_CurrencyCenterMonthSurveyCtrlTest {
 	}
 
 	/*
-		Purpose:  calculate delay in days                                                      
-		Parameters: none 
+		Purpose:  calculate delay in days
+		Parameters: none
 		Returns:  none
-		Throws: none                                                      
+		Throws: none
 	*/
 	public static testMethod void calculateDelayInDays() {
 		User myUser = [select Id from User WHERE Profile.Name = 'System Administrator' AND IsActive = true LIMIT 1];
@@ -768,7 +768,7 @@ public class ISSP_CurrencyCenterMonthSurveyCtrlTest {
 		Test.StartTest();
 			System.runAs(myUser)
 			{
-				User user1 = portalSetup();		
+				User user1 = portalSetup();
 				System.runAs(user1){
 
 					//insert the annual survey

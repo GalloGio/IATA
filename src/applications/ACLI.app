@@ -23,6 +23,15 @@
         <content>ACLI_Processes</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.Airline_Coding_Application</recordType>
+        <type>Flexipage</type>
+        <profile>IDFS Airline Participation Staff - HO</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>ACLI_Processes</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.InternalCasesEuropeSCE</recordType>
         <type>Flexipage</type>
         <profile>IDFS Airline Participation Staff - HO</profile>
@@ -314,15 +323,6 @@
         <recordType>Case.Invoicing_Collection_Cases</recordType>
         <type>Flexipage</type>
         <profile>Admin</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>ACLI_Processes</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Case</pageOrSobjectType>
-        <recordType>Case.Airline_Coding_Application</recordType>
-        <type>Flexipage</type>
-        <profile>IDFS Airline Participation Staff - HO</profile>
     </profileActionOverrides>
     <setupExperience>service</setupExperience>
     <tabs>standard-Case</tabs>
