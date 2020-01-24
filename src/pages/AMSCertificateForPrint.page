@@ -45,7 +45,7 @@
 							<div style="{!'height:'+acc.bottomtSizePosition+'px;font-size:'+acc.textSize+'em;'}">
 								<apex:outputText value="{!acc.accn.Name}"/>
 							</div>
-							<div style="font-weight: bold;height:22px;font-size: 2.9em;">
+							<div style="{!'font-weight: bold;height:'+acc.topBigNameSmallTradeName+'px;font-size: 2.9em;'}">
 							</div>
 							<div style="{!'height:70px;font-size:'+acc.tradeNameTextSize+'px;'}">
 								<apex:outputText value="{!acc.accn.TradeName__c}"/><br></br>
@@ -53,7 +53,7 @@
 							</div>
 							<div  style="height:6px;">
 							</div>
-							<div  style="height:40px;font-size: 20px;">
+							<div  style="{!'height:'+acc.bottomBigNameSmallTradeName+'px;font-size: 20px;'}">
 							</div>
 							<div  style="height:16px;">
 							</div>
@@ -67,7 +67,7 @@
 							</div>
 						</td>
 					</tr>
-					<tr  style="height: 226px;">
+					<tr  style="height: 196px;">
 						<td>
 							<table  style="height:200px;width: 100%;">
 								<tr>
