@@ -424,11 +424,6 @@
 &apos;   ] &apos;</expression>
     </formulas>
     <formulas>
-        <name>PortalName</name>
-        <dataType>String</dataType>
-        <expression>{!UserFields.Contact.Account.IATA_ISO_Country__r.ANG_Portal_Service__r.Name}</expression>
-    </formulas>
-    <formulas>
         <name>ProjectFormula</name>
         <dataType>String</dataType>
         <expression>&apos;PASS&apos;</expression>
@@ -480,7 +475,13 @@
         <queriedFields>Email</queriedFields>
         <queriedFields>FederationIdentifier</queriedFields>
     </recordLookups>
-    <startElementReference>Fetch_More_User_Info_Pass</startElementReference>
+    <start>
+        <locationX>50</locationX>
+        <locationY>181</locationY>
+        <connector>
+            <targetReference>Fetch_More_User_Info_Pass</targetReference>
+        </connector>
+    </start>
     <status>Active</status>
     <variables>
         <name>Details</name>
