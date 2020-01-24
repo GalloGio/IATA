@@ -72,5 +72,19 @@
         <unique>false</unique>
     </fields>
     <label>ISSP SIS Account Status</label>
+    <listViews>
+        <fullName>All_w_details</fullName>
+        <columns>NAME</columns>
+        <columns>Status__c</columns>
+        <columns>Country_ISO_Codes__c</columns>
+        <columns>Location_Class__c</columns>
+        <columns>SETUP_TYPE</columns>
+        <columns>Recordtype__c</columns>
+        <columns>SIS_Status__c</columns>
+        <columns>SIS_Substatus__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All w details</label>
+        <language>en_US</language>
+    </listViews>
     <visibility>Public</visibility>
 </CustomObject>

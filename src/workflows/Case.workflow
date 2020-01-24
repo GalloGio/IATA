@@ -1366,10 +1366,6 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>badanovam@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
             <recipient>bokom@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -1379,6 +1375,10 @@
         </recipients>
         <recipients>
             <recipient>dovgano@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>garciatef@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -1422,6 +1422,10 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>martinezd@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>martinyuks@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -1451,10 +1455,6 @@
         </recipients>
         <recipients>
             <recipient>rabahh@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>rodriguezp@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -2910,7 +2910,7 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>garciam@iata.org</recipient>
+            <recipient>garciatef@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -2951,6 +2951,10 @@
         </recipients>
         <recipients>
             <recipient>lopezbaism@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>martinezd@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -3030,10 +3034,6 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>badanovam@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
             <recipient>bokom@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -3046,7 +3046,7 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>garciam@iata.org</recipient>
+            <recipient>garciatef@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -3094,6 +3094,10 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>martinezd@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>martinyuks@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -3127,10 +3131,6 @@
         </recipients>
         <recipients>
             <recipient>rabahh@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>rodriguezp@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
