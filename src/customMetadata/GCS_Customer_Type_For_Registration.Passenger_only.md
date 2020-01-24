@@ -40,7 +40,7 @@
     </values>
     <values>
         <field>Filter_on_Record_Type__c</field>
-        <value xsi:type="xsd:string">IATA_Airline,IATA_Airline_BR</value>
+        <value xsi:type="xsd:string">IATA_Airline,IATA_Airline_BR,Operator</value>
     </values>
     <values>
         <field>Filter_on_Sector__c</field>
