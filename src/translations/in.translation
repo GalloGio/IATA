@@ -1964,10 +1964,6 @@
         <name>CSP_Breadcrump_MyProfile_Title</name>
     </customLabels>
     <customLabels>
-        <label>Anda &amp; IATA</label>
-        <name>CSP_Breadcrump_You_IATA</name>
-    </customLabels>
-    <customLabels>
         <label>Beli secara online</label>
         <name>CSP_Buy_Online</name>
     </customLabels>
@@ -3485,16 +3481,8 @@ dan &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-port
         <name>CSP_Welcome_Title</name>
     </customLabels>
     <customLabels>
-        <label>Anda &amp; IATA</label>
-        <name>CSP_YouAndIATA</name>
-    </customLabels>
-    <customLabels>
         <label>Hal - Hal Penting Terpilih Untuk Anda.</label>
         <name>CSP_YouIATA_Highlights</name>
-    </customLabels>
-    <customLabels>
-        <label>Di sini Anda dapat menemukan berbagai layanan IATA, publikasi, produk, dan sumber daya di industri penerbangan. Didesain khusus setelah melihat minat dan riwayat aktivitas Anda.</label>
-        <name>CSP_YouIATA_Highlights_Text</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_You_Dont_Have_Announcements --></label>
