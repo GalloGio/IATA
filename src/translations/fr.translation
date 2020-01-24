@@ -1964,10 +1964,6 @@
         <name>CSP_Breadcrump_MyProfile_Title</name>
     </customLabels>
     <customLabels>
-        <label>Vous et IATA</label>
-        <name>CSP_Breadcrump_You_IATA</name>
-    </customLabels>
-    <customLabels>
         <label>Acheter en ligne</label>
         <name>CSP_Buy_Online</name>
     </customLabels>
@@ -3485,16 +3481,8 @@
         <name>CSP_Welcome_Title</name>
     </customLabels>
     <customLabels>
-        <label>Vous et IATA</label>
-        <name>CSP_YouAndIATA</name>
-    </customLabels>
-    <customLabels>
         <label>Points principaux sélectionnés pour vous</label>
         <name>CSP_YouIATA_Highlights</name>
-    </customLabels>
-    <customLabels>
-        <label>Vous pourrez y découvrir une grande variété de services, publications, produits et ressources de l&apos;IATA sur l’industrie aéronautique. Spécialement adapté à vos intérêts et à votre historique d&apos;activité.</label>
-        <name>CSP_YouIATA_Highlights_Text</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_You_Dont_Have_Announcements --></label>
