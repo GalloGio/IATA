@@ -72,7 +72,6 @@
                     </template>
                     <!--WMO-699 - ACAMBAS: End -->
                     <div class="slds-grid slds-wrap slds-gutters_medium slds-p-vertical_small">
-
                         <template for:each={fields} for:item="field">
                             <template if:true={field.isAccountDomainPermission}>
                                 <span key={field.fieldName}
@@ -159,56 +158,58 @@
                                     <template if:false={field.isJobFunction}>
                                         <template if:false={field.isIdCardInfo}>
                                             <template if:false={field.isLastLogin}>
-                                                <span key={field.fieldName}
-                                                    class="text-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2">
-                                                    <div if:true={field.visible}>
-                                                        <template if:false={field.changeUserStatus}>
-                                                            
-                                                            <template if:true={field.canChangeAccount}>
-                                                                <lightning-icon if:true={canRelocate} icon-name="utility:rotate"
-                                                                    size="x-small"
-                                                                    class="darkBlueIcon cursorPointer leftIconPosition slds-m-vertical_large"
-                                                                    title={labels.RelocateAccount}
-                                                                    onclick={opensRelocateAccount}>
-                                                                </lightning-icon>
+                                                <template if:false={field.isTrainingInfo}>
+                                                    <span key={field.fieldName}
+                                                        class="text-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2">
+                                                        <div if:true={field.visible}>
+                                                            <template if:false={field.changeUserStatus}>
                                                                 
-                                                                <lightning-output-field class="labelValue textValue removeLinks"
-                                                                    field-name={field.fieldName}>
-                                                                </lightning-output-field>
+                                                                <template if:true={field.canChangeAccount}>
+                                                                    <lightning-icon if:true={canRelocate} icon-name="utility:rotate"
+                                                                        size="x-small"
+                                                                        class="darkBlueIcon cursorPointer leftIconPosition slds-m-vertical_large"
+                                                                        title={labels.RelocateAccount}
+                                                                        onclick={opensRelocateAccount}>
+                                                                    </lightning-icon>
+                                                                    
+                                                                    <lightning-output-field class="labelValue textValue removeLinks"
+                                                                        field-name={field.fieldName}>
+                                                                    </lightning-output-field>
+                                                                </template>
+
+                                                                <template if:false={field.canChangeAccount}>
+                                                                    <!--WMO-699 - ACAMBAS: Begin -->
+                                                                    <template if:true={isCustomerInvoice}>
+                                                                        <b><lightning-output-field field-name={field.fieldName}></lightning-output-field></b>
+                                                                    </template>
+                                                                    <template if:false={isCustomerInvoice}>
+                                                                        <lightning-output-field class="labelValue textValue" field-name={field.fieldName}></lightning-output-field>      
+                                                                    </template>
+                                                                    <!--WMO-699 - ACAMBAS: End -->
+                                                                </template>
                                                             </template>
 
-                                                            <template if:false={field.canChangeAccount}>
-                                                                <!--WMO-699 - ACAMBAS: Begin -->
-                                                        	    <template if:true={isCustomerInvoice}>
-                                                                    <b><lightning-output-field field-name={field.fieldName}></lightning-output-field></b>
-                                                                </template>
-                                                                <template if:false={isCustomerInvoice}>
-                                                                    <lightning-output-field class="labelValue textValue" field-name={field.fieldName}></lightning-output-field>      
-                                                                </template>
-                                                                <!--WMO-699 - ACAMBAS: End -->
+                                                            <template if:true={field.changeUserStatus}>
+                                                                <div class="changeUserStatus">
+
+                                                                    <lightning-output-field class="labelValue textValue"
+                                                                        field-name={field.fieldName}>
+                                                                    </lightning-output-field>
+                                                                    <template if:false={isForEdit}>
+                                                                        <span class="changeUserStatusButton">
+                                                                            <lightning-icon icon-name="utility:custom_apps"
+                                                                                size="x-small"
+                                                                                class="darkBlueIcon cursorPointer"
+                                                                                onclick={openChangeUserPortalStatus}>
+                                                                            </lightning-icon>
+                                                                        </span>
+                                                                    </template>
+                                                                </div>
+
                                                             </template>
-                                                        </template>
-
-                                                        <template if:true={field.changeUserStatus}>
-                                                            <div class="changeUserStatus">
-
-                                                                <lightning-output-field class="labelValue textValue"
-                                                                    field-name={field.fieldName}>
-                                                                </lightning-output-field>
-                                                                <template if:false={isForEdit}>
-                                                                    <span class="changeUserStatusButton">
-                                                                        <lightning-icon icon-name="utility:custom_apps"
-                                                                            size="x-small"
-                                                                            class="darkBlueIcon cursorPointer"
-                                                                            onclick={openChangeUserPortalStatus}>
-                                                                        </lightning-icon>
-                                                                    </span>
-                                                                </template>
-                                                            </div>
-
-                                                        </template>
-                                                    </div>
-                                                </span>
+                                                        </div>
+                                                    </span>
+                                                </template>
                                             </template>
                                         </template>
                                     </template>
@@ -337,6 +338,98 @@
                                         </div>
                                     </div>
                                 </div>
+                            </template>
+
+                            <!--TODO GCSDI: REPLACE labels.IdCardPhoto with new label specific for this case and add new labels for each of the hardcoded text below-->
+                            <template if:true={field.isTrainingInfo}>
+                                <template if:true={hasTrainingData}>
+
+                                    <div key={labels.IdCardPhoto}
+                                         class=" slds-col slds-size_1-of-1 labelValue slds-form-element_stacked slds-m-bottom--small">
+                                        <div class="slds-text-title_bold">
+                                            Shipping Address
+                                        </div>
+                                    </div>
+
+                                    <div key={labels.IdCardPhoto}
+                                         class=" slds-col slds-size_1-of-1 slds-medium-size_1-of-2 labelValue slds-form-element_stacked">
+                                        <div class="slds-form-element__label">
+                                            Shipping Street Address 1
+                                        </div>
+
+                                        <div class="textValue">
+                                            <div class="slds-form-element__static">
+                                                {staticFields.shippingStreet1}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div key={labels.IdCardPhoto}
+                                         class=" slds-col slds-size_1-of-1 slds-medium-size_1-of-2 labelValue slds-form-element_stacked">
+                                        <div class="slds-form-element__label">
+                                            Shipping Street Address 2
+                                        </div>
+
+                                        <div class="textValue">
+                                            <div class="slds-form-element__static">
+                                                {staticFields.shippingStreet2}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div key={labels.IdCardPhoto}
+                                         class=" slds-col slds-size_1-of-1 slds-medium-size_1-of-2 labelValue slds-form-element_stacked">
+                                        <div class="slds-form-element__label">
+                                            Shipping Postal Code
+                                        </div>
+
+                                        <div class="textValue">
+                                            <div class="slds-form-element__static">
+                                                {staticFields.shippingPostalCode}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div key={labels.IdCardPhoto}
+                                         class=" slds-col slds-size_1-of-1 slds-medium-size_1-of-2 labelValue slds-form-element_stacked">
+                                        <div class="slds-form-element__label">
+                                            Shipping City
+                                        </div>
+
+                                        <div class="textValue">
+                                            <div class="slds-form-element__static">
+                                                {staticFields.shippingCity}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div key={labels.IdCardPhoto}
+                                         class=" slds-col slds-size_1-of-1 slds-medium-size_1-of-2 labelValue slds-form-element_stacked">
+                                        <div class="slds-form-element__label">
+                                            Shipping State
+                                        </div>
+
+                                        <div class="textValue">
+                                            <div class="slds-form-element__static">
+                                                {staticFields.shippingState}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div key={labels.IdCardPhoto}
+                                         class=" slds-col slds-size_1-of-1 slds-medium-size_1-of-2 labelValue slds-form-element_stacked">
+                                        <div class="slds-form-element__label">
+                                            Shipping Country
+                                        </div>
+
+                                        <div class="textValue">
+                                            <div class="slds-form-element__static">
+                                                {staticFields.shippingCountry}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </template>
                             </template>
 
                         </template>
@@ -477,57 +570,59 @@
                                                         <template if:false={field.isAccessibility}>
                                                             <template if:false={field.isIdCardInfo}>
                                                                 <template if:false={field.isJobFunction}>
-                                                                    <span key={field.fieldName}
-                                                                        class="text-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2 slds-m-bottom_medium">
-                                                                        <div>
-                                                                            <!-- If field is visible -->
-                                                                            <template if:true={field.visible}>
-                                                                                <!-- If field is editable -->
-                                                                                <template if:false={field.outputOnly}>
-                                                                                    <template if:true={field.editable}>
-                                                                                        <lightning-input-field
-                                                                                            onchange={styleInputs}
-                                                                                            class="labelValue textValue"
+                                                                    <template if:false={field.isTrainingInfo}>
+                                                                        <span key={field.fieldName}
+                                                                            class="text-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2 slds-m-bottom_medium">
+                                                                            <div>
+                                                                                <!-- If field is visible -->
+                                                                                <template if:true={field.visible}>
+                                                                                    <!-- If field is editable -->
+                                                                                    <template if:false={field.outputOnly}>
+                                                                                        <template if:true={field.editable}>
+                                                                                            <lightning-input-field
+                                                                                                onchange={styleInputs}
+                                                                                                class="labelValue textValue"
+                                                                                                field-name={field.fieldName}>
+                                                                                            </lightning-input-field>
+
+                                                                                            <template
+                                                                                                if:true={field.invalid}>
+                                                                                                <div
+                                                                                                    class="slds-form-element__help invalidValueLabel">
+                                                                                                    {labels.InvalidValue}
+                                                                                                </div>
+                                                                                            </template>
+
+                                                                                            <template
+                                                                                                if:true={field.missing}>
+                                                                                                <div
+                                                                                                    class="slds-form-element__help invalidValueLabel">
+                                                                                                    {labels.CompleteField}
+                                                                                                </div>
+                                                                                            </template>
+                                                                                        </template>
+
+
+                                                                                        <!-- Read-only fields -->
+                                                                                        <template if:false={field.editable}>
+                                                                                            <lightning-input-field
+                                                                                                class="labelValue textValue disabledValue disabledInput"
+                                                                                                field-name={field.fieldName}
+                                                                                                disabled>
+                                                                                            </lightning-input-field>
+                                                                                        </template>
+                                                                                    </template>
+
+                                                                                    <template if:true={field.outputOnly}>
+                                                                                        <lightning-output-field
+                                                                                            class="labelValue textValue removeLinks"
                                                                                             field-name={field.fieldName}>
-                                                                                        </lightning-input-field>
-
-                                                                                        <template
-                                                                                            if:true={field.invalid}>
-                                                                                            <div
-                                                                                                class="slds-form-element__help invalidValueLabel">
-                                                                                                {labels.InvalidValue}
-                                                                                            </div>
-                                                                                        </template>
-
-                                                                                        <template
-                                                                                            if:true={field.missing}>
-                                                                                            <div
-                                                                                                class="slds-form-element__help invalidValueLabel">
-                                                                                                {labels.CompleteField}
-                                                                                            </div>
-                                                                                        </template>
-                                                                                    </template>
-
-
-                                                                                    <!-- Read-only fields -->
-                                                                                    <template if:false={field.editable}>
-                                                                                        <lightning-input-field
-                                                                                            class="labelValue textValue disabledValue disabledInput"
-                                                                                            field-name={field.fieldName}
-                                                                                            disabled>
-                                                                                        </lightning-input-field>
+                                                                                        </lightning-output-field>
                                                                                     </template>
                                                                                 </template>
-
-                                                                                <template if:true={field.outputOnly}>
-                                                                                    <lightning-output-field
-                                                                                        class="labelValue textValue removeLinks"
-                                                                                        field-name={field.fieldName}>
-                                                                                    </lightning-output-field>
-                                                                                </template>
-                                                                            </template>
-                                                                        </div>
-                                                                    </span>
+                                                                            </div>
+                                                                        </span>
+                                                                    </template>
                                                                 </template>
                                                             </template>
                                                         </template>

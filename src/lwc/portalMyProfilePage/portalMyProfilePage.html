@@ -24,15 +24,6 @@
                             </c-portal-record-form-wrapper>
                         </template>
                     </template>
-                    <template if:true={mapOfValuesTraining}>
-                        <template for:each={mapOfValuesTraining} for:item="keyValue">
-                            <c-portal-record-form-wrapper key={keyValue.key} object-name="Training_Contact_Role_Details__c"
-                                record-id={trainingId} fields={keyValue.value} show-edit="false" edit-basics="false"
-                                class="section" section-title={keyValue.key} has-address="true" data-name={keyValue.key} is-for-edit="false" onrefreshview={refreshview}
-                                section-class="slds-p-vertical_xx-large slds-p-horizontal_x-large customBorderlessCardWhite slds-m-bottom_medium section">
-                            </c-portal-record-form-wrapper>
-                        </template> 
-                    </template>
 
                 </div>
             </div>

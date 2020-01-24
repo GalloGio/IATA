@@ -485,6 +485,15 @@ public static Contact contactInfo = new Contact();
 		lstfw3.add(new FieldWrapper('Authorization',false,true));
 		lstCardWrapper.add(new CardWrapper(LABEL_ACCESSIBILITY, lstfw3, true));
 
+		//TRAINING DETAILS CARD
+		if(true){ //TODO: figure out a way to check if has training without having additional queries in this class
+			List<FieldWrapper> lstfw3_1 = new List<FieldWrapper>();
+			fw = new FieldWrapper('TRAINING',false,true,true);
+			fw.isTrainingInfo = true;
+			lstfw3_1.add(fw);
+			lstCardWrapper.add(new CardWrapper(LABEL_BASICS_TRAINING, lstfw3_1, true));
+		}
+
 		//PROFESSIONAL CARD
 		List<FieldWrapper> lstfw4 = new List<FieldWrapper>();
 		fw = new FieldWrapper('Membership_Function__c',false,true,true);
@@ -562,27 +571,6 @@ public static Contact contactInfo = new Contact();
 
 	}
 
-	public static List<CardWrapper> ContactFieldsTraining() {
-
-		//stores each card
-		List<CardWrapper> lstCardWrapper = new List<CardWrapper>();
-
-		//BASICS CARD
-		List<FieldWrapper> lstfw = new List<FieldWrapper>();
-		lstfw.add(new FieldWrapper('Username__c',false,true));
-		lstfw.add(new FieldWrapper('UserId__c',false,true));
-		lstfw.add(new FieldWrapper('Country__c',false,true));
-		lstfw.add(new FieldWrapper('State__c',false,true));
-		lstfw.add(new FieldWrapper('City__c',false,true));
-		lstfw.add(new FieldWrapper('Postal_Code__c',false,true));
-		lstfw.add(new FieldWrapper('BillingPostalCode',false,true));
-		lstCardWrapper.add(new CardWrapper(LABEL_BASICS_TRAINING, lstfw, true));
-
-		return lstCardWrapper;
-
-	}
-
-
 	public static List<CardWrapper> AccountFields() { return getFieldsByRecordType();}
 
 	@AuraEnabled
@@ -595,8 +583,6 @@ public static Contact contactInfo = new Contact();
 			sectionMap = ContactFields();
 		} else if (type == 'MyProfileAccFields') {
 			sectionMap = ContactFieldsAcc();
-		} else if (type == 'MyProfileTraining') {
-			sectionMap = ContactFieldsTraining();
 		} else {
 			sectionMap = AccountFields();
 		}
@@ -766,6 +752,9 @@ public static Contact contactInfo = new Contact();
 
 		@AuraEnabled
 		public Boolean isIdCardInfo;
+
+		@AuraEnabled
+		public Boolean isTrainingInfo;
 
 		@AuraEnabled
 		public Boolean isContactServices;
