@@ -3437,13 +3437,6 @@ Payment required on receipt of this Payment Advice
         <value>User Profile</value>
     </labels>
     <labels>
-        <fullName>CSP_Breadcrump_You_IATA</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP_Breadcrump_You_IATA</shortDescription>
-        <value>You &amp; IATA</value>
-    </labels>
-    <labels>
         <fullName>CSP_Buy_Online</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -6434,26 +6427,12 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
         <value>Welcome to the&amp;lt;br/&amp;gt;
 IATA Customer Portal</value>
     </labels>
-    <labels>
-        <fullName>CSP_YouAndIATA</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP_YouAndIATA</shortDescription>
-        <value>You &amp; IATA</value>
-    </labels>
-    <labels>
+	<labels>
         <fullName>CSP_YouIATA_Highlights</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_YouIATA_Highlights</shortDescription>
         <value>Selected Highlights For You</value>
-    </labels>
-    <labels>
-        <fullName>CSP_YouIATA_Highlights_Text</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP_YouIATA_Highlights_Text</shortDescription>
-        <value>Here you can discover a wide variety of IATA services, publications, products, and resources on aviation industry. Specially tailored after your interests and activity history.</value>
     </labels>
     <labels>
         <fullName>CSP_You_Dont_Have_Announcements</fullName>
