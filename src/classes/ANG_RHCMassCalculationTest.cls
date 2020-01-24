@@ -33,7 +33,7 @@ private class ANG_RHCMassCalculationTest {
 			Name = 'Agency GE',
 			Status__c = AMS_Utils.ACC_S9_APPROVED,
 			Location_Type__c = AMS_Utils.GE,
-			ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_CASH,
+			ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY,
 			RecordTypeId = AMS_Utils.RECTYPE_IATAAGENCY,
 			IATA_ISO_Country__c = countryBB.Id,
 			Location_Class__c = 'P',
