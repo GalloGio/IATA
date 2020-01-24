@@ -240,16 +240,10 @@ public class CaseIFAPHandler {
 	}
 
 	public class Error1Class{
-		Error1Class(){
-
-		}
 		public List<ErrorClass> errors {get;set;}
 	}
 
-	public class ErrorClass{
-		ErrorClass(){
-
-		}
+	private class ErrorClass{
 		public String status {get;set;}
 		public String title {get;set;}
 		public String detail {get;set;}
