@@ -43,13 +43,6 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
 				for (AMS_Process_Detail__c pd : pds)
 					agenciesAffectedWithHO.add(pd.Account__c);
 				
-				system.debug('isSplitMcHierarchy() -> pds : ' + pds);
-				system.debug('isSplitMcHierarchy() -> accountHierarchyRelationships : ' + this.accountHierarchyRelationships);
-				system.debug('isSplitMcHierarchy() -> accountIds : ' + this.hierarchyAccountsMap.keySet());
-				system.debug('isSplitMcHierarchy() -> hierarchyAccountsMap : ' + this.hierarchyAccountsMap);
-				system.debug('isSplitMcHierarchy() -> agenciesAffectedWithHO : ' + agenciesAffectedWithHO);
-				system.debug('isSplitMcHierarchy() -> New_parent__c : ' + oscarObj.New_parent__c);
-				
 				this.isSplitMcHierarchy = this.oscarObj.ANG_Type_of_change__c == AMS_Utils.ANG_HIERARCHY && !isConversionFromStandardToMulticountry
 					&& isMulticountry() && agenciesAffectedWithHO.contains(oscarObj.New_parent__c);
 			}
