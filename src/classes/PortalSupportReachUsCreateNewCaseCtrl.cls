@@ -98,33 +98,19 @@ private static List<Account> searchRelatedAccounts(String searchTerm) {
 //Searches contacts on user input on the Email Recipient field.
 @AuraEnabled(Cacheable=true)
 public static List<PortalLookupSearchResult> searchContacts(String searchTerm) {
+    
+    List<Account> lstAccounts = searchRelatedAccounts('');
 	// Prepare results
 	List<PortalLookupSearchResult> results = new List<PortalLookupSearchResult>();
+	PortalSupportReachUsCreateNewCaseCtrlWithoutSharing innObj = new PortalSupportReachUsCreateNewCaseCtrlWithoutSharing();
 
 	// Extract Contacts & convert them into PortalLookupSearchResult (check this class for more info)
 	String contactIcon = 'standard:contact';
-	for (Contact contact : searchRelatedContacts(searchTerm)) {
+	for (Contact contact : innObj.searchRelatedContacts(searchTerm, lstAccounts)) {
 		results.add(new PortalLookupSearchResult(contact.Id, 'Contact', contactIcon, contact.Name, contact.Email));
 	}
 
 	return results;
-}
-
-//Dynamic Query to perform searches on the Contact.
-private static List<Contact> searchRelatedContacts(String searchTerm) {
-
-	//prepare query
-	String finalQuery = 'SELECT Id, Name, Email FROM Contact ';
-
-	if(String.isNotEmpty(searchTerm)) {
-		finalQuery += 'WHERE (Email LIKE \'%' + String.escapeSingleQuotes(searchTerm)
-		              + '%\' OR Name like \'%' + String.escapeSingleQuotes(searchTerm) + '%\')';
-	}
-
-	finalQuery += ' LIMIT ' + MAX_RESULTS;
-
-	return Database.query(finalQuery);
-
 }
 
 //grabs the user profile name
@@ -298,5 +284,32 @@ private static void createCaseTeamMemberList(Case cse, list<Contact> listContact
 	@AuraEnabled
 	public static Boolean isUserLevelOne(Id userId){
 		return  [SELECT Contact.Account.Is_General_Public_Account__c  FROM User WHERE Id = :userId].Contact.Account.Is_General_Public_Account__c;
+public without sharing class PortalSupportReachUsCreateNewCaseCtrlWithoutSharing {
+
+	//Dynamic Query to perform searches on the Contact.
+public List<Contact> searchRelatedContacts(String searchTerm, List<Account> lstAccounts) { 
+
+	String userId = UserInfo.getUserId();
+
+	//String parentId = [SELECT ParentId FROM Account WHERE Id =: userId].ParentId;
+	
+    Set<Id> resultIds = (new Map<Id,Account>(lstAccounts)).keySet();
+
+	//prepare query
+	String finalQuery = 'SELECT Id, Name, Email FROM Contact '
+	                     + ' WHERE AccountId IN :resultIds ';
+
+	if(String.isNotEmpty(searchTerm)) {
+		finalQuery += ' AND (Email LIKE \'%' + String.escapeSingleQuotes(searchTerm)
+		              + '%\' OR Name like \'%' + String.escapeSingleQuotes(searchTerm) + '%\') ';
 	}
+
+	//finalQuery += ' LIMIT ' + MAX_RESULTS;
+
+	return Database.query(finalQuery);
+
+}
+
+}
+
 }
