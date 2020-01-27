@@ -431,13 +431,13 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
     handleExportToCsv(){
         let columns = JSON.parse(JSON.stringify(this.columns));
         let data = JSON.parse(JSON.stringify(this.data));
-        this.template.querySelector('c-portal-iftp-export-data').exportDataToCsv(columns, data, "TrainingRecordsDetailSearchResults.csv");
+        this.template.querySelector('c-portal-iftp-export-data').exportDataToCsv(columns, data, "TrainingRecordsDetailSearchResults");
     }
 
     handleExportToExcel(){
         let columns = JSON.parse(JSON.stringify(this.columns));
         let data = JSON.parse(JSON.stringify(this.data));
-        this.template.querySelector('c-portal-iftp-export-data').exportDataToExcel(columns, data, "TrainingRecordsDetailSearchResults.xls");
+        this.template.querySelector('c-portal-iftp-export-data').exportDataToExcel(columns, data, "TrainingRecordsDetailSearchResults");
     }
 
     handleExportAllDataToCSV(){
@@ -489,10 +489,10 @@ export default class portalIftpTrainingRecordsDetail extends LightningElement {
             if(results && results.length > 0) {
                 if(type === 'Excel'){
                     // 2nd - create excel file
-                    this.template.querySelector('c-portal-iftp-export-data').exportDataToExcel(columns, results, "AllDataRequestResults.xls");
+                    this.template.querySelector('c-portal-iftp-export-data').exportDataToExcel(columns, results, "AllDataRequestResults");
                 } else {
                     if(type === 'CSV'){
-                        this.template.querySelector('c-portal-iftp-export-data').exportDataToCsv(columns, results, "AllDataRequestResults.csv");
+                        this.template.querySelector('c-portal-iftp-export-data').exportDataToCsv(columns, results, "AllDataRequestResults");
                     }
                 }
             } else {
