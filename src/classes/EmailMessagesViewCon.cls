@@ -274,15 +274,13 @@ public class EmailMessagesViewCon {
 
 	//ACAMBAS - WMO-436 - Begin
 	public void setEligibilityForKeyCustomerAlert() {
-		List<Case_RTs_for_Key_Customer_alert__c> csRecords = [SELECT Record_Type__c FROM Case_RTs_for_Key_Customer_alert__c];
-
 		List<String> eligibleCaseRTs = new List<String>();
 
-		for(Case_RTs_for_Key_Customer_alert__c cs : csRecords) {
+		for(Case_RTs_for_Key_Customer_alert__c cs : Case_RTs_for_Key_Customer_alert__c.getall().values()) {
 			eligibleCaseRTs.add(cs.Record_Type__c);
 		}
 
-		this.isEligibleForKeyCustomerAlert = eligibleCaseRTs.contains(cse.RecordType.Name);
+		this.isEligibleForKeyCustomerAlert = eligibleCaseRTs.contains(cse.RecordType.DeveloperName);
 	}
 	//ACAMBAS - WMO-436 - End
 }
