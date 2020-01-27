@@ -19,8 +19,15 @@
 
 @RestResource(urlMapping='/case-create-details/*')
 global without sharing class ANG_CreateCaseDetails {
-	
-	public static final set<string> setValidPaymentStatus = new set<string>{'Paid','Outstanding','N/A','Fully paid','Over paid','Partially paid','Not paid'}; //Valid account type
+
+	public static final set<string> setValidPaymentStatus = new set<string>{
+		AMS_Utils.GDI_INVOICE_STATUS_NA,
+		AMS_Utils.GDI_INVOICE_STATUS_PAID,
+		AMS_Utils.GDI_INVOICE_STATUS_NOT_PAID,
+		AMS_Utils.GDI_INVOICE_STATUS_FULLY_PAID,
+		AMS_Utils.GDI_INVOICE_STATUS_OUTSTANDING
+	};
+
 	public static final set<string> setValidRequest = new set<string>{ANG_RestServiceHelper.URIRequest_CasePaymentStatus}; //Valid type of request, part of URI
 	public static final set<string> setValidCaller = new set<string>{ANG_RestServiceHelper.Caller_SAP}; //Valid caller
 
@@ -87,8 +94,6 @@ global without sharing class ANG_CreateCaseDetails {
 
 		private final Map<String,String> paymentStatusMap = new Map<String,String>{
 			'Fully paid' => 'Paid',
-			'Over paid' => 'Over paid',
-			'Partially paid' => 'Partially paid',
 			'Not paid' => 'Outstanding',
 			'Paid' => 'Paid',
 			'Outstanding' => 'Outstanding',
@@ -171,12 +176,9 @@ global without sharing class ANG_CreateCaseDetails {
 
 			oscar.Invoice_status__c = paymentStatusMap.get(paymentStatus);
 
-			if(oscar.Payment_Type__c == 'PPA' ){
-
+			if(oscar.Payment_Type__c == 'PPA'){
 				insert new CaseComment(ParentId = oscar.Oscar_Communication_Case_Id__c, CommentBody = 'Invoice ' +oscar.Billing_Document_Number__c+ ' is ' + paymentStatus);
 				update new Case(id = oscar.Oscar_Communication_Case_Id__c, New_interaction__c = 'New comment');
-				//oscar.step48__c = (paymentStatus == 'Paid' ? 'Passed' : (paymentStatus == 'Outstanding' ? 'Failed' : oscar.step48__c ));
-
 			}
 
 			update oscar;

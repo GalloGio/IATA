@@ -384,6 +384,12 @@ public without sharing class AMS_Utils {
 
 	public static final String MBPDD_CHANGE_CODE = 'MBPDD';
 
+	public static final String GDI_INVOICE_STATUS_NA = 'N/A';
+	public static final String GDI_INVOICE_STATUS_PAID = 'Paid';
+	public static final String GDI_INVOICE_STATUS_NOT_PAID = 'Not paid';
+	public static final String GDI_INVOICE_STATUS_FULLY_PAID = 'Fully paid';
+	public static final String GDI_INVOICE_STATUS_OUTSTANDING = 'Outstanding';
+
 	public static final Set<String> TOPLOCATIONSNEWGEN = new Set<String>{'HE','GE'};
 
 	public static String ENCRYPTION_KEY {
