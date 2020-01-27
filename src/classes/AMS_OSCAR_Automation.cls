@@ -1183,7 +1183,11 @@ public with sharing class AMS_OSCAR_Automation {
 			if (oscar != null) {
 
 				if(oscar.Process__c == AMS_Utils.NEWGESTANDARD || oscar.Process__c == AMS_Utils.NGCONVERSIONTOMULTICOUNTRY || oscar.Generate_risk_event_MC__c){
-					list<Account> acc = [SELECT ID, (SELECT ID FROM RHC_Informations__r) FROM ACCOUNT WHERE ID =:oscar.Account__c ];
+					List<Account> acc;
+					if (oscar.Generate_risk_event_MC__c)
+						acc = [SELECT Id, (SELECT Id FROM RHC_Informations__r) FROM Account WHERE Id = :oscar.New_parent__c ];
+					else
+						acc = [SELECT Id, (SELECT Id FROM RHC_Informations__r) FROM Account WHERE Id = :oscar.Account__c ];
 					List<AMS_Pax_Accreditation_Form__c> pax = [SELECT Preferred_RHC_currency__c FROM AMS_Pax_Accreditation_Form__c WHERE ID =:oscar.AMS_Online_Accreditation__c];
 
 					if(!acc[0].RHC_Informations__r.IsEmpty() && !pax.isEmpty() && !String.isBlank(pax[0].Preferred_RHC_currency__c)){
