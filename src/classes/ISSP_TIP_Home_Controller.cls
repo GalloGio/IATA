@@ -457,19 +457,15 @@ public without sharing class ISSP_TIP_Home_Controller {
 
 		//confirm that primary contact is choosen
 		Boolean hasPrimaryContact = false;
-        List<Contact> contactIsPrimary = new List<Contact>();
-        //INC517299
-        for(Contact c : contactList){
+		List<Contact> contactIsPrimary = new List<Contact>();
+		//INC517299
+		for(Contact c : contactList){
 			if (c.Primary_Contact__c){
-			hasPrimaryContact = true;
-			contactIsPrimary.add(c);
+				hasPrimaryContact = true;
+				contactIsPrimary.add(c);
 			}
 		}
-        
-		//ACAMBAS - TIP-234 ----------
-		/*for(Contact c : contactList){
-			if (c.Primary_Contact__c) hasPrimaryContact = true;
-		}*/
+
 		for(Account_Contact_Role__c c : AccountContactRoleList){
 			if (c.is_primary__c) hasPrimaryContact = true;
 		}
@@ -489,7 +485,7 @@ public without sharing class ISSP_TIP_Home_Controller {
 		dmo.EmailHeader.triggerAutoResponseEmail= true;
 		newCase.setOptions(dmo);
 		
-        update contactIsPrimary;
+		update contactIsPrimary;
 		update account;
 		update theAccountRole;
 		upsert newCase;
