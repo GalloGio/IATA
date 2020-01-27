@@ -241,4 +241,53 @@ private class ANG_CreateCaseDetailsTest {
         System.assertEquals(404, res.statusCode);
     
     }
+	
+	@isTest
+	static void testDoubleRequest() {
+		createData(true);
+		
+		String caseId = [SELECT Id FROM Case].Id;
+		
+		Test.startTest();
+		
+		// first request
+		RestRequest req = new RestRequest();
+		req.requestBody = Blob.valueOf('{"paymentStatus":"Outstanding"}');
+		RestResponse res = new RestResponse();
+		
+		req.requestURI = '/case-create-details/' + caseId + '/payment-status';
+		req.addParameter('caller', 'SAP');
+		req.httpMethod = 'POST';
+		
+		RestContext.request = req;
+		RestContext.response = res;
+		
+		ANG_CreateCaseDetails.doPost();
+
+		// middle validations
+		System.assertEquals(200, res.statusCode);
+		AMS_OSCAR__c oscar = [SELECT Id, Invoice_status__c, Step9__c, Process_Start_Date__c FROM AMS_OSCAR__C];
+		System.assertEquals('Outstanding', oscar.Invoice_status__c);
+
+		// second request
+		req = new RestRequest();
+		req.requestBody = Blob.valueOf('{"paymentStatus":"Paid"}');
+		res = new RestResponse();
+		
+		req.requestURI = '/case-create-details/' + caseId + '/payment-status';
+		req.addParameter('caller', 'SAP');
+		req.httpMethod = 'POST';
+		
+		RestContext.request = req;
+		RestContext.response = res;
+		
+		ANG_CreateCaseDetails.doPost();
+		
+		Test.stopTest();
+		
+		// final validations
+		System.assertEquals(200, res.statusCode, res.responseBody.toString());
+		oscar = [SELECT Id, Invoice_status__c, Step9__c, Process_Start_Date__c FROM AMS_OSCAR__C];
+		System.assertEquals('Paid', oscar.Invoice_status__c);
+	}
 }

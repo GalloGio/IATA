@@ -164,11 +164,6 @@ global without sharing class ANG_CreateCaseDetails {
 				return false;
 			}
 
-			if(oscar.Invoice_status__c != null){
-				ANG_RestServiceHelper.GenerateResponse(json.serialize(new ANG_RestServiceHelper.ErrorPayload('409', 'The Oscar Record from the case Id ' +caseID+' already has the payment status filled with value ' + oscar.Invoice_status__c) ), 404);
-				return false;
-			}
-
 			oscar.Invoice_status__c = paymentStatusMap.get(paymentStatus);
 
 			if(oscar.Payment_Type__c == 'PPA' ){
