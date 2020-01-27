@@ -2,6 +2,9 @@
 <CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
     <fields>
         <fullName>Account_Create_Permission_Name__c</fullName>
+        <description>The API name of the Custom Permission that is granted to Users who are permitted to create Accounts within this Business Context.
+
+                The Custom Permission will be referenced within a Flow allow a User (if they have the permission) to select the Business Context within which they are creating the Account; this may then be used to drive the flow e.g. to perform validations, trigger approvals etc.</description>
         <externalId>false</externalId>
         <fieldManageability>DeveloperControlled</fieldManageability>
         <label>Account Create Permission Name</label>
@@ -12,6 +15,7 @@
     </fields>
     <fields>
         <fullName>Functional_Role__c</fullName>
+        <description>functional role used in the configuration of the business context</description>
         <externalId>false</externalId>
         <fieldManageability>DeveloperControlled</fieldManageability>
         <label>Functional Role</label>

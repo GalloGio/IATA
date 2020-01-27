@@ -18,6 +18,7 @@
     </fields>
     <fields>
         <fullName>RecordId__c</fullName>
+        <description>id of the record where the plateform event is triggered</description>
         <externalId>false</externalId>
         <isFilteringDisabled>false</isFilteringDisabled>
         <isNameField>false</isNameField>
@@ -30,6 +31,7 @@
     </fields>
     <fields>
         <fullName>RecordType__c</fullName>
+        <description>name of the record type of the object where the plateform event is triggered</description>
         <externalId>false</externalId>
         <isFilteringDisabled>false</isFilteringDisabled>
         <isNameField>false</isNameField>

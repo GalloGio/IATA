@@ -168,6 +168,7 @@
     </fields>
     <fields>
         <fullName>Address__c</fullName>
+        <description>This is the Address to which this Address Role is associated.</description>
         <externalId>false</externalId>
         <label>Address</label>
         <referenceTo>Address__c</referenceTo>
@@ -192,6 +193,9 @@
     </fields>
     <fields>
         <fullName>Global_ID__c</fullName>
+        <description>Global Unique Identifier for Address Roles. External ID = TRUE
+            Display Format = &lt;3 character object prefix&gt; {0000000000}
+            The Object prefix can be obtained after the Object has been created (after the Address Role object has been created).</description>
         <displayFormat>a0N{0000000000}</displayFormat>
         <externalId>false</externalId>
         <label>Global ID</label>
@@ -201,6 +205,7 @@
     </fields>
     <fields>
         <fullName>Role_Type__c</fullName>
+        <description>Uses the Address_Roles picklist value set.</description>
         <externalId>false</externalId>
         <label>Role Type</label>
         <required>false</required>
@@ -258,6 +263,7 @@
     <validationRules>
         <fullName>AirportShiptoOnly</fullName>
         <active>true</active>
+        <description>Airport can Only have Shipping Role</description>
         <errorConditionFormula>AND(
 Address__r.Account__r.RecordTypeDeveloperName__c =&quot;Airport&quot;,
 OR(

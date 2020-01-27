@@ -55,6 +55,8 @@
     <externalSharingModel>ControlledByParent</externalSharingModel>
     <fields>
         <fullName>Child_Account__c</fullName>
+        <description>For Account related lists : 
+            Create a Manages / Operates" related lists for the child (hierarchies)</description>
         <externalId>false</externalId>
         <label>Child Account</label>
         <referenceTo>Account</referenceTo>
@@ -69,6 +71,7 @@
     </fields>
     <fields>
         <fullName>IATACode__c</fullName>
+        <description>As intended for airports, the code of the child account which represents the airport code</description>
         <externalId>false</externalId>
         <formula>Child_Account__r.IATACode__c</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -81,6 +84,8 @@
     </fields>
     <fields>
         <fullName>Parent_Account__c</fullName>
+        <description>For Account related lists : 
+            Create a "Manage by / Operate by" related lists for the Parent account</description>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
         <label>Parent Account</label>
@@ -113,6 +118,7 @@
     <recordTypes>
         <fullName>Hierarchy</fullName>
         <active>true</active>
+        <description>To represent a hierarchy instead of a grouping.</description>
         <label>Hierarchy</label>
     </recordTypes>
     <searchLayouts>

@@ -2,6 +2,7 @@
 <CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
     <fields>
         <fullName>Business_Context_Configuration__c</fullName>
+        <description>Represents the Business Context value from the custom metadata type.</description>
         <externalId>false</externalId>
         <fieldManageability>DeveloperControlled</fieldManageability>
         <label>Business Context</label>
@@ -14,6 +15,7 @@
     </fields>
     <fields>
         <fullName>Sales_Area__c</fullName>
+        <description>Represents the Sales Area within SAP.</description>
         <externalId>false</externalId>
         <fieldManageability>DeveloperControlled</fieldManageability>
         <label>Sales Area</label>

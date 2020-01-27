@@ -62,6 +62,7 @@
     </fields>
     <fields>
         <fullName>Account_name__c</fullName>
+        <description>Name of the account linked to the E&amp;F contact role detail</description>
         <externalId>false</externalId>
         <formula>Contact_Role__r.Account_Role__r.Account__r.Name</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -73,6 +74,7 @@
     </fields>
     <fields>
         <fullName>ContactFunctionalRole__c</fullName>
+        <description>Display functional role of the contact role linked to the E&amp;F contact role detail record</description>
         <externalId>false</externalId>
         <formula>TEXT(Contact_Role__r.Functional_Role__c)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -84,6 +86,7 @@
     </fields>
     <fields>
         <fullName>Contact_Role__c</fullName>
+        <description>Contact role record linked to the E&amp;F contact role detial</description>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
         <label>Contact Role</label>
@@ -96,6 +99,7 @@
     </fields>
     <fields>
         <fullName>Contact_name__c</fullName>
+        <description>Display the name of the contact linked to the E&amp;F contact role detail record</description>
         <externalId>false</externalId>
         <formula>Contact_Role__r.Contact__r.FirstName &amp;&quot; &quot;&amp;  Contact_Role__r.Contact__r.LastName</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -119,6 +123,7 @@
     </fields>
     <fields>
         <fullName>Display_Contact_Detailed_contact_role__c</fullName>
+        <description>Detailed contact role to use on the E&amp;F contact role detail</description>
         <externalId>false</externalId>
         <formula>Contact_name__c &amp;&quot; - &quot;&amp; TEXT(Detailed_contact_role__c)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>

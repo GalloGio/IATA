@@ -51,6 +51,7 @@
     <externalSharingModel>ControlledByParent</externalSharingModel>
     <fields>
         <fullName>AccountName__c</fullName>
+        <description>name of the account linked to the E&amp;F account role detail record</description>
         <externalId>false</externalId>
         <formula>Account_Role__r.Account__r.Name</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -306,6 +307,7 @@
     <recordTypes>
         <fullName>Client</fullName>
         <active>true</active>
+        <description>used to store informations related to Client</description>
         <label>Client</label>
         <picklistValues>
             <picklist>BSP__c</picklist>
@@ -393,6 +395,7 @@
     <recordTypes>
         <fullName>Operator</fullName>
         <active>true</active>
+        <description>used to store informations related to Operator</description>
         <label>Operator</label>
         <picklistValues>
             <picklist>BSP__c</picklist>

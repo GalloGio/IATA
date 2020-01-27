@@ -462,6 +462,7 @@
     </fields>
     <fields>
         <fullName>Functional_Role__c</fullName>
+        <description>Business context this detailed role will be related to</description>
         <externalId>false</externalId>
         <label>Functional Role</label>
         <required>false</required>

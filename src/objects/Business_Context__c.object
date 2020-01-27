@@ -51,6 +51,9 @@
     <externalSharingModel>Private</externalSharingModel>
     <fields>
         <fullName>Business_Context__c</fullName>
+        <description>The context for which this Business Process is associated to. These values must be aligned with those defined within the Business Context Custom Metadata (Business_Context__mdt).
+
+                The dependent field is &apos;Sub Context&apos;. The Sub Context values of &apos;E&amp;F Standard&apos; and &apos;E&amp;F India&apos; should be made dependent on the Business Context value of &apos;E&amp;F&apos;.</description>
         <externalId>false</externalId>
         <label>Business Context</label>
         <required>false</required>
@@ -70,6 +73,12 @@
     </fields>
     <fields>
         <fullName>SAP_Sales_Area_Code__c</fullName>
+        <description>To be entered manually at record creation by an administrator:
+                *   Context = 2 --&gt; E&amp;F standard (80EF)
+                *   Context = 3 --&gt; E&amp;F India (80IN)
+                *   Context = 4 --&gt; E&amp;F Venezuela (VE01)
+                *   Context = 5 --&gt; E&amp;F Indonesia (ID02), only for authorities
+                *   Context = 6 --&gt; E&amp;F Canada (CA01/01/54), only for authorities</description>
         <externalId>false</externalId>
         <label>SAP Sales Area Code</label>
         <length>3</length>
@@ -80,6 +89,7 @@
     </fields>
     <fields>
         <fullName>Sub_Context__c</fullName>
+        <description>Defines a Sub-Context for the Business Process. No custom metadat will be used because picklist global value set is not available in custom metadata</description>
         <externalId>false</externalId>
         <label>Sub Context</label>
         <required>false</required>

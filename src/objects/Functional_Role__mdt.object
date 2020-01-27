@@ -13,6 +13,7 @@
     </fields>
     <fields>
         <fullName>Role_Management_Permission__c</fullName>
+        <description>The name of the Custom Permission that enables a User to manage functional roles. The use case will be to determine which Roles an internal User is able to see when managing Contact allocation within a lightning flow e.g. when specifying which Contacts are participating in a particular Service.</description>
         <externalId>false</externalId>
         <fieldManageability>DeveloperControlled</fieldManageability>
         <label>Role Management Permission</label>

@@ -111093,6 +111093,7 @@ CONTAINS(Name,&quot;Intl&quot;))</errorConditionFormula>
     <validationRules>
         <fullName>Address_StandardRecordtype</fullName>
         <active>false</active>
+        <description>to be deleted, not used anymore</description>
         <errorConditionFormula>AND(
  RecordType.DeveloperName =&apos;Standard_Account&apos;,
 NOT(ISBLANK( Business_City_Name__c ))
@@ -112088,6 +112089,7 @@ COPY THE URL FROM THIS BUTTON and paste it into your own custom button or link. 
     <webLinks>
         <fullName>Account_Context_Activation</fullName>
         <availability>online</availability>
+        <description>used to launch the flow to send an account to other systems</description>
         <displayType>button</displayType>
         <encodingKey>UTF-8</encodingKey>
         <hasMenubar>false</hasMenubar>

@@ -76,6 +76,7 @@
     </fields>
     <fields>
         <fullName>Address_Role__c</fullName>
+        <description>used to reference the address role record getting extended with the selected context (sales area equivalent in SAP)</description>
         <externalId>false</externalId>
         <label>Address Role</label>
         <referenceTo>Address_Role__c</referenceTo>
@@ -88,6 +89,7 @@
     </fields>
     <fields>
         <fullName>Business_Context__c</fullName>
+        <description>used to reference the business context ( sales area equivalent in SAP) record the selected address role is extended for</description>
         <externalId>false</externalId>
         <label>Business Context</label>
         <referenceTo>Business_Context__c</referenceTo>

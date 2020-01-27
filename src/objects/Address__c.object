@@ -234,6 +234,7 @@
     <validationRules>
         <fullName>AirportOneRoleShipTo</fullName>
         <active>true</active>
+        <description>airport can have only one shipping role per address</description>
         <errorConditionFormula>and( Count_Roles_Shipping__c &gt;1,
  Account__r.RecordTypeDeveloperName__c =&quot;Airport&quot;)</errorConditionFormula>
         <errorMessage>airport can have only one shipping role per address</errorMessage>
@@ -269,18 +270,21 @@
     <validationRules>
         <fullName>OneRoleBilling</fullName>
         <active>true</active>
+        <description>Only one Billing role per address is allowed</description>
         <errorConditionFormula>Count_Roles_Billing__c &gt;1</errorConditionFormula>
         <errorMessage>Only one Billing role per address is allowed</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>OneRoleBusiness</fullName>
         <active>true</active>
+        <description>Only one Business role per address is allowed</description>
         <errorConditionFormula>Count_Roles_Business__c &gt;1</errorConditionFormula>
         <errorMessage>Only one Business role per address is allowed</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>OneRoleShipping</fullName>
         <active>true</active>
+        <description>Only one Shipping role per address is allowed</description>
         <errorConditionFormula>Count_Roles_Shipping__c &gt;1</errorConditionFormula>
         <errorMessage>Only one Shipping role per address is allowed</errorMessage>
     </validationRules>
