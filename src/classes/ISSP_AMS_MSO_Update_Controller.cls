@@ -22,11 +22,11 @@ public without sharing class ISSP_AMS_MSO_Update_Controller {
 	public List<SelectOption> countryISOCodeList {get;set;}
 	public List<SelectOption> billingStatesList {get; set; }
 
-	public List<IATA_ISO_City__c> billingCityList;
+	public static List<IATA_ISO_City__c> billingCityList;
 
 	public String billingCity{get;set;}
 
-	public String billingCityListStr {get { return JSON.serialize(billingCityList); } set;}
+	public static String billingCityListStr {get { return JSON.serialize(billingCityList); } set;}
 
 	private static final string ISO_8859_1_regEx = '^[\\x00-\\x7F\\xA0-\\xFF]+$';  //Reg exp to limit inputted chars to ISO-8859-1
 

@@ -1964,10 +1964,6 @@
         <name>CSP_Breadcrump_MyProfile_Title</name>
     </customLabels>
     <customLabels>
-        <label>Anda &amp; IATA</label>
-        <name>CSP_Breadcrump_You_IATA</name>
-    </customLabels>
-    <customLabels>
         <label>Beli secara online</label>
         <name>CSP_Buy_Online</name>
     </customLabels>
@@ -3485,16 +3481,8 @@ dan &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-port
         <name>CSP_Welcome_Title</name>
     </customLabels>
     <customLabels>
-        <label>Anda &amp; IATA</label>
-        <name>CSP_YouAndIATA</name>
-    </customLabels>
-    <customLabels>
         <label>Hal - Hal Penting Terpilih Untuk Anda.</label>
         <name>CSP_YouIATA_Highlights</name>
-    </customLabels>
-    <customLabels>
-        <label>Di sini Anda dapat menemukan berbagai layanan IATA, publikasi, produk, dan sumber daya di industri penerbangan. Didesain khusus setelah melihat minat dan riwayat aktivitas Anda.</label>
-        <name>CSP_YouIATA_Highlights_Text</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_You_Dont_Have_Announcements --></label>
@@ -20132,8 +20120,16 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>OneId_Fred_Select_Type_of_Company</name>
     </customLabels>
     <customLabels>
+        <label><!-- OneId GADM Terms of Use Link --></label>
+        <name>OneId_GADM_Terms_of_Use_Link</name>
+    </customLabels>
+    <customLabels>
         <label><!-- OneId GADM Troubleshooting --></label>
         <name>OneId_GADM_Troubleshooting</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId GADM Troubleshooting Link --></label>
+        <name>OneId_GADM_Troubleshooting_Link</name>
     </customLabels>
     <customLabels>
         <label>&quot;Apabila tidak ada perusahaan yang ditemukan untuk kombinasi kode GSA dan negara Anda, pastikan Anda telah memasukkan informasi yang benar atau baca &lt;a href=&quot;&quot;http://theiatahub.force.com/iatapkb/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US&quot;&quot; target=&quot;&quot;_blank&quot;&quot;&gt;panduan pemecahan masalah&lt;/a&gt; kami&quot;</label>
@@ -22865,6 +22861,10 @@ Jika Anda ingin mengganti kata sandi, kembali ke layar masuk lalu gunakan fungsi
     <customTabs>
         <label><!-- Apply RHC Equal to FS --></label>
         <name>Apply_RHC_Equal_to_FS</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- Attachment Manager --></label>
+        <name>AttachmentManager</name>
     </customTabs>
     <customTabs>
         <label><!-- Available Services --></label>
