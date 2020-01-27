@@ -1055,7 +1055,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 		// START PASS
 		List<Case> passCaseList = new List<Case>();
 		for(Case cs : Trigger.New){
-			if(cs.Status == 'Closed' && cs.Reason1__c.startsWith('PASS Participation')){
+			if(cs.Status!= null & cs.Reason1__c!=null && cs.Status == 'Closed' && cs.Reason1__c.startsWith('PASS Participation')){
 				passCaseList.add(cs);
 			}
 		}
