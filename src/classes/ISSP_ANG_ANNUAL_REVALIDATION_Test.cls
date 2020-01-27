@@ -176,11 +176,16 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 										IATA_Country_SP__c, Case_BSP_Country__c, ANG_Enable_NewGen__c
 									FROM IATA_ISO_Country__c
 									WHERE Name = 'test'];
-
+		
 		AMS_Accreditation_Country_CheckList__c aacc = [SELECT Id, IATA_ISO_Country__c, Operation__c
 													FROM AMS_Accreditation_Country_CheckList__c
 													WHERE Operation__c = 'Travel Agent'];
-		insert new IATA_ISO_State__c(IEC_Valid_SAP__c=true, IATA_ISO_Country__c = country.Id, Name='Ontario', ISO_Code__c='CA-ON');
+		IATA_ISO_State__c  state = new IATA_ISO_State__c(IEC_Valid_SAP__c=true, IATA_ISO_Country__c = country.Id, Name='Ontario', ISO_Code__c='CA-ON');
+
+		insert state;
+
+		IATA_ISO_City__c city = new IATA_ISO_City__c(Name = 'Toronto', IATA_ISO_State__c = state.id, Status__c = 'Verified', GeonameName__c = 'Toronto');
+		insert city;
 
 		Account account;
 		Account child;
@@ -284,6 +289,26 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 		ctrl.confirmUpdate();
 
 		ISSP_ANG_ANNUAL_REV_UPDATE upd = new ISSP_ANG_ANNUAL_REV_UPDATE();
+		upd.chsb = true;
+		upd.chss = true;
+		ctrl.currentAccount.account.IATA_ISO_Country__c = country.Id;
+		ctrl.currentAccount.fw.newform.State_Province__c = 'Ontario';
+		ctrl.currentAccount.fw.newform.Shipping_Country__c = country.Name;
+		ctrl.currentAccount.fw.newform.Shipping_State__c = 'Ontario';
+		ctrl.currentAccount.fw.newform.Geoname_Billing_City__c = Id.valueOf(city.Id);
+		ctrl.currentAccount.fw.newform.Geoname_Shipping_City__c = Id.valueOf(city.Id);
+		ctrl.confirmUpdate();	
+		upd.ca = ctrl.currentAccount;
+		String stateListByCountryName = upd.stateListByCountryName;	
+		String geonameBillingCityId = upd.geonameBillingCityId;
+		String geonameShippingCityId = upd.geonameShippingCityId;
+		upd.currentBillingStateCities();
+		upd.currentShippingStateCities();
+		upd.currentShippingCountryStates();
+		
+		String shippingCityName = ISSP_ANG_ANNUAL_REV_UPDATE.shippingCityListNameStr;
+		String cityName = ISSP_ANG_ANNUAL_REV_UPDATE.billingCityListNameStr;
+		
 		upd.ca = ctrl.currentAccount;
 		upd.newAgencyContact();
 		upd.editAgencyContact();

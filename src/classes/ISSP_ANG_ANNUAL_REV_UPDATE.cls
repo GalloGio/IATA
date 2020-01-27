@@ -13,12 +13,6 @@ public with sharing class ISSP_ANG_ANNUAL_REV_UPDATE {
 	public boolean chss{get;set;}
 
 	public Map<String, List<IATA_ISO_State__c>> stateListByCountryNameMap {get; set;}
-
-	public static Map<String, List<Iata_Iso_City__c>> cityListByStateNameMap {get; set;}
-	public static Map<String, List<Iata_Iso_City__c>> cityListByStateNameMapShipping {get; set;}
-
-	public String cityMapStr {get;set;}
-		
 	public static List<IATA_ISO_City__c> billingCityListName {get;set;}    
 	public static List<IATA_ISO_City__c> shippingCityListName {get;set;}
 
