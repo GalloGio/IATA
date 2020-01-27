@@ -176,7 +176,7 @@ global without sharing class ANG_CreateCaseDetails {
 
 			oscar.Invoice_status__c = paymentStatusMap.get(paymentStatus);
 
-			if(oscar.Payment_Type__c == 'PPA'){
+			if(oscar.Payment_Type__c == AMS_Utils.SAP_PAYMENT_TYPE_PPA){
 				insert new CaseComment(ParentId = oscar.Oscar_Communication_Case_Id__c, CommentBody = 'Invoice ' +oscar.Billing_Document_Number__c+ ' is ' + paymentStatus);
 				update new Case(id = oscar.Oscar_Communication_Case_Id__c, New_interaction__c = 'New comment');
 			}

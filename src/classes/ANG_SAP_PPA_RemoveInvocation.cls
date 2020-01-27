@@ -109,27 +109,13 @@ public with sharing class ANG_SAP_PPA_RemoveInvocation implements ANG_RemoteInvo
 
 				if(osc != null){
 
-					//Process Payment_Type == 'PPA'
-					if(remoteInovArt.Payment_type__c == 'PPA' && String.isBlank(mapRemoteInvocationArtifacts.get(osc.Oscar_Communication_Case_Id__c).External_Id__c)){
+					if(remoteInovArt.Payment_type__c == AMS_Utils.SAP_PAYMENT_TYPE_PPA && String.isBlank(mapRemoteInvocationArtifacts.get(osc.Oscar_Communication_Case_Id__c).External_Id__c)){
 						ri.Status_Detail__c = 'Remote Invocation Artefact must have an External ID';
 						ri.Status__c = 'Failed';
 						remoteInovArt.Request_Result__c = 'Failed';
 						remoteInovArt.Status_Detail__c = 'Remote Invocation Artefact must have an External ID';
 						rmtInvocationArtListToUpdate.add(remoteInovArt);
 						break;
-					}
-					//Process Payment_Type == 'SPDR'
-					else if(remoteInovArt.Payment_type__c == 'SPDR') {
-
-						if(!osc.Endorsement_Requested__c){
-							osc.Endorsement_Requested__c = true;
-							osc.Endorsement_requested_date__c = Date.today();
-							osc.STEP49__c = 'Passed';
-						}
-
-						//2 - Set Issue billing doc and Confirm Payment Received Steps as "Not Applicable"
-						osc.STEP47__c = 'Not Applicable';
-						osc.STEP9__c = 'Not Applicable';
 					}
 
 					osc.Payment_Type__c = remoteInovArt.Payment_type__c;
@@ -144,7 +130,7 @@ public with sharing class ANG_SAP_PPA_RemoveInvocation implements ANG_RemoteInvo
 					remoteInovArt.Status_Detail__c = '';
 					rmtInvocationArtListToUpdate.add(remoteInovArt);
 					oscarsToUpdate.add(osc);
-				}		
+				}
 			}
 
 
