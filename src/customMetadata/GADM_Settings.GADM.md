@@ -28,7 +28,7 @@
     </values>
     <values>
         <field>Max_File_Size_MB__c</field>
-        <value xsi:type="xsd:double">25.0</value>
+        <value xsi:type="xsd:double">50.0</value>
     </values>
     <values>
         <field>Max_Files_Count__c</field>
