@@ -22,7 +22,6 @@ global with sharing class TreasuryDashboardPowerBiPageCtrl {
 
     @RemoteAction
     global static String  refreshEmbedToken(String reportId, String groupId, String datasetId) {
-        System.debug('refreshEmbedToken');
         String toReturn = '';
 
         PowerBI_Config__c conf = PowerBiCtrl.getPowerBICredentials('TreasuryDashboard');

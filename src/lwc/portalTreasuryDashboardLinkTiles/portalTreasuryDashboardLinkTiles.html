@@ -14,9 +14,14 @@
         <div class="slds-grid slds-wrap slds-gutters_xx-small">
             <template for:each={lstTiles} for:item="tile" for:index="index">
                 <div key={tile.name} class="slds-col slds-size_1-of-1 slds-p-vertical_xx-small">
-                    <div class="slds-p-around_xx-small cursorPointer linksCard " onclick={linkClicked} data-item={tile.name}>
-                        <img src={tile.imageURL} class="link" data-item={tile.name}/>
-                        <span class="slds-p-left_x-small text-xsmall text-black" data-item={tile.name}>{tile.name}</span>
+                    <div class="slds-p-around_xx-small cursorPointer linksCard linksFlex" onclick={linkClicked} data-item={tile.name}>
+                        <div class="linksContent">
+                            <img src={tile.imageURL} class="link" data-item={tile.name}/>
+                        </div>
+                        <div class="linksMargin">
+                            <span  class=" text-xsmall text-black" data-item={tile.name}>{tile.name}</span>
+                        </div>
+
                     </div>
                 </div>
             </template>

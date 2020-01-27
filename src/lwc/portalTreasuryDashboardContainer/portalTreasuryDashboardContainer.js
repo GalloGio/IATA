@@ -34,9 +34,6 @@ export default class PortalTreasuryDashboardContainer extends LightningElement {
                 this.isPremiumUser = result.isPremiumUser;
                 this.tdPremiumService = result.tdPremium;
 
-                //TODO:temporal solution
-                this.hasTwoFactor = true;
-
                 //no two factor for user -> log out user
                 if(! this.hasTwoFactor) {
 

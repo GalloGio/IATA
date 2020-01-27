@@ -3,6 +3,10 @@ import { LightningElement, track } from 'lwc';
 //navigation
 import { navigateToPage, getPageName } from 'c/navigationUtils';
 
+//label
+import accessDeniedMessage from '@salesforce/label/c.Treasury_Dashboard_Report_Access_Denied';
+import accessDeniedMessageLink from '@salesforce/label/c.Treasury_Dashboard_Report_Access_Denied_Link';
+
 import userId from '@salesforce/user/Id';
 import getPowerBICredentials from '@salesforce/apex/TreasuryDashboardReportCtrl.getPowerBICredentials';
 import getReportConfigDetails from '@salesforce/apex/TreasuryDashboardReportCtrl.getReportConfigDetails';
@@ -21,6 +25,13 @@ export default class PortalTreasuryDashboardReportIframe extends LightningElemen
 
      //icons
     expandIcon = CSP_PortalPath + 'TreasuryDashboard/Icons/arrow-expand.png';
+
+    labels = {
+        accessDeniedMessage,
+        accessDeniedMessageLink
+    }
+
+
 
     //application name
     applicationName = 'TreasuryDashboardReport';
@@ -93,9 +104,6 @@ export default class PortalTreasuryDashboardReportIframe extends LightningElemen
             }
         }
 
-        console.log('report Name:: ', this.reportName);
-        console.log('report params:: ' + this.reportParams);
-
 
         if(this.reportName) {
 
@@ -113,22 +121,11 @@ export default class PortalTreasuryDashboardReportIframe extends LightningElemen
                                 this.reportLabel = result.reportLabel;
                                 this.reportType = result.type;
 
-                                console.log('reportId: ', this.reportId);
-                                console.log('groupId: ', this.groupId);
-                                console.log('reportType: ', this.reportType);
-
-
                                 getUserInformation({})
                                     .then(result => {
 
                                         this.isStandardUser = result.isStandardUser;
                                         this.isPremiumUser = result.isPremiumUser;
-
-
-                                        //TODO:temporal - delete this
-                                        this.isStandardUser = false;
-                                        this.isPremiumUser = true;
-
 
                                         let isEligible = false;
 
@@ -150,14 +147,14 @@ export default class PortalTreasuryDashboardReportIframe extends LightningElemen
 
                                             getServicePrincipalAccessToken({conf: this.conf})
                                                 .then(result => {
-                                                    console.log('sp access token: ', JSON.stringify(result.access_token));
+
                                                     if(result.access_token) {
 
                                                         getServicePrincipalEmbedToken({accessToken: result.access_token, userId: userId, groupId: this.groupId, reportId: this.reportId, conf: this.conf})
                                                             .then(result => {
 
                                                                 if(result.token) {
-                                                                    console.log('sp embed token:: ', result.token);
+
                                                                     this.createSrcAddress(this.reportId, this.groupId, result.token, this.reportId, this.tokenType, this.conf, result.expiration);
 
                                                                 }else{
@@ -243,7 +240,6 @@ export default class PortalTreasuryDashboardReportIframe extends LightningElemen
 
     createSrcAddress(reportId, groupId, accessToken, objectId, tokenType, conf, expiration) {
         if(this.reportParams) {
-            console.log('in report params');
             reportId += this.reportParams;
         }
 
@@ -287,20 +283,6 @@ export default class PortalTreasuryDashboardReportIframe extends LightningElemen
         return result;
     }
 
-    /*parseUrlParams() {
-
-        let url = location.search;
-        let query = url.substr(1);
-        let result = {};
-        query.split("&").forEach(function(part) {
-            let item = part.split("=");
-            result[item[0]] = decodeURIComponent(item[1]);
-        });
-
-        return result;
-
-    }*/
-
 
     showAccessDenied() {
         let name;
@@ -313,12 +295,23 @@ export default class PortalTreasuryDashboardReportIframe extends LightningElemen
         }else{
             name = this.reportLabel;
         }
-        this.errorText = '</br>You do not have access to <b>' + name + '</b> report!</br></br> If you would like to get access to this report, you need to subscribe to <b>Treasury Dashboard <font color="red">Premium</font></b>: (Link)';
+
+        this.errorText = this.getSubscriptionLink(name);
         this.userHasAccessToReport = false;
     }
 
     closeAccessDenied() {
         this.userHasAccessToReport = true;
+    }
+
+    navigateToTreasuryDashboard() {
+        navigateToPage("/csportal/s/treasury-dashboard");
+    }
+
+    getSubscriptionLink(reportName) {
+        let label = this.labels.accessDeniedMessage;
+        let message = label.replace('{name}', reportName);
+        return message;
     }
 
 }

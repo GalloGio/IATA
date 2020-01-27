@@ -101,6 +101,10 @@
     float: right;
 }
 
+.cursor_pointer {
+    cursor:pointer;
+}
+
 @media only screen and (max-width: 500px) {
     .noAccessContainer {
         background-color: #F7F8FA;

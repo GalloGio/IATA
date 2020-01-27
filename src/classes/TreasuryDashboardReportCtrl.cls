@@ -55,21 +55,18 @@ public without sharing class TreasuryDashboardReportCtrl {
                     //PowerBI is using timestamp without milliseconds - we need to divide by 1000
                     Long currentTime = (System.now().getTime()) / 1000;
 
-                    if((expiresOn - 360) < currentTime) {//token will expire in 6 minutes
+                    if((expiresOn - 1200) < currentTime) {//token will expire in 20 minutes
 
-                        System.debug('getting new principal access token! 3');
                         result = PowerBiCtrl.getServicePrincipalAccessToken(conf);
                         saveAccessTokenInOrgCache(orgPartition, result, conf);
 
                     } else {//token is OK
 
-                        System.debug('getting token from cache!');
                         result.expires_on = expiresOn;
                     }
 
                 } else {
                     //expiresOn not found - get new token
-                    System.debug('getting new principal access token! 2');
                     result = PowerBiCtrl.getServicePrincipalAccessToken(conf);
                     saveAccessTokenInOrgCache(orgPartition, result, conf);
                 }
@@ -77,7 +74,6 @@ public without sharing class TreasuryDashboardReportCtrl {
 
             } else {
                 //access token not found - get new token
-                System.debug('getting new principal access token! 1');
                 result = PowerBiCtrl.getServicePrincipalAccessToken(conf);
                 saveAccessTokenInOrgCache(orgPartition, result, conf);
             }
@@ -98,7 +94,8 @@ public without sharing class TreasuryDashboardReportCtrl {
         PowerBiCtrl.ServicePrincipalEmbedTokenResult result = new PowerBiCtrl.ServicePrincipalEmbedTokenResult();
         Cache.SessionPartition sessionPartition = null;
 
-        String cacheKey = reportId.replaceAll('-', '');
+        String reportIdReplaced = reportId.replaceAll('-', '');
+        String cacheKey = conf.Application_Identifier__c + reportIdReplaced;
 
         if(Test.isRunningTest()) {
 
@@ -132,10 +129,8 @@ public without sharing class TreasuryDashboardReportCtrl {
                     if(String.isNotBlank(cacheExpireson)) {
 
                         Datetime expiresonDatetime = getExpiresOnDatetime(cacheExpireson);
-                        System.debug('expiresonDatetime:: ' + expiresonDatetime);
-                        System.debug('time now:: ' + Datetime.now());
 
-                        if(expiresonDatetime.addMinutes(-10) < Datetime.now()) {
+                        if(expiresonDatetime.addMinutes(-20) < Datetime.now()) {
                             //token expires in less than 10 minutes - get new
                             result = PowerBiCtrl.getServicePrincipalEmbedToken(accessToken, userId, groupId, reportId, conf);
                             saveEmbedTokenInSessionCache(sessionPartition, result, cacheKey);
@@ -164,21 +159,10 @@ public without sharing class TreasuryDashboardReportCtrl {
 
         }
 
-        System.debug('principal embed token: ' + result);
         return result;
 
     }
 
-    /*private static DateTime getUTCDateTime(DateTime dt){
-        Datetime GMTDate = Datetime.newInstanceGmt(
-                dt.year(),
-                dt.month(),
-                dt.day(),
-                dt.hour(),
-                dt.minute(),
-                dt.second());
-        return GMTDate;
-    }*/
 
     private static void saveAccessTokenInOrgCache(Cache.OrgPartition orgPartition, PowerBiCtrl.ServicePrincipalAccessTokenResult result, PowerBI_Config__c conf) {
         if(result.error != null) {
@@ -186,7 +170,6 @@ public without sharing class TreasuryDashboardReportCtrl {
             throw new transformationException('PowerBI Service Principal Access token: ' + result.error);
         }
         else if(result.access_token != null && result.expires_on != null) {
-            System.debug('saving access token to cache');
             String applicationSufix = conf.Application_Identifier__c;
             orgPartition.put(SERVICE_PRINCIPAL_ACCESS_TOKEN + applicationSufix, result.access_token, 3600);
             orgPartition.put(SERVICE_PRINCIPAL_EXPIERS_ON + applicationSufix, result.expires_on, 3600);
@@ -208,7 +191,6 @@ public without sharing class TreasuryDashboardReportCtrl {
             throw new transformationException('PowerBI Service Principal Embed token: ' + result.error.message);
         }
         else if(result.token != null && result.expiration != null) {
-            System.debug('saving embed token to cache');
 
             sessionPartition.put(cacheKey, result.token, 3600);
             sessionPartition.put(cacheKey+'expireson', result.expiration, 3600);

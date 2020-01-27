@@ -41303,6 +41303,20 @@ title,Title,Name</value>
         <value>Premium</value>
     </labels>
     <labels>
+        <fullName>Treasury_Dashboard_Report_Access_Denied</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Treasury Dashboard Report Access Denied</shortDescription>
+        <value>&lt;/br&gt;You do not have access to &lt;b&gt; {name} &lt;/b&gt; report!&lt;/br&gt;&lt;/br&gt; If you would like to get access to this report, you need to subscribe to &lt;b&gt;Treasury Dashboard &lt;font color=&quot;red&quot;&gt;Premium&lt;/font&gt;&lt;/b&gt;:</value>
+    </labels>
+    <labels>
+        <fullName>Treasury_Dashboard_Report_Access_Denied_Link</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Treasury Dashboard Report Access Denied Link</shortDescription>
+        <value>Click here.</value>
+    </labels>
+    <labels>
         <fullName>Treasury_Dashboard_Service_Name</fullName>
         <language>en_US</language>
         <protected>false</protected>

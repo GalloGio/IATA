@@ -361,8 +361,8 @@ public class TreasuryDashboardReportCtrlTest {
 
             Cache.SessionPartition  sessionPartition = Cache.Session.getPartition('local.PowerBiSession');
             if(sessionPartition != null) {
-                sessionPartition.put('reportid', 'servicePrincipalSomeKey');
-                sessionPartition.put('reportidexpireson',expTime);
+                sessionPartition.put(conf.Application_Identifier__c + 'reportid', 'servicePrincipalSomeKey');
+                sessionPartition.put(conf.Application_Identifier__c + 'reportidexpireson',expTime);
             }
 
             result = TreasuryDashboardReportCtrl.getServicePrincipalEmbedToken('access_token', 'user_id', 'groupid', 'reportid', conf);

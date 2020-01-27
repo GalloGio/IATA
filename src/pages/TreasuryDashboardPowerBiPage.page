@@ -12,7 +12,7 @@
                 border:none;
             }
 
-        </style>
+    </style>
 
 
     <script>
@@ -36,12 +36,6 @@
             typeOfToken = models.TokenType.Embed;
         }
 
-        /*console.log('embedUrl:: ' , embedUrl);
-        console.log('obj:: ', obj);
-        console.log('token:: ' , token);
-        console.log('groupId: ', groupId);
-        console.log('datasetId: ', datasetId);*/
-
 
         var embedConfiguration = {
             id: "{!objectId}",
@@ -53,12 +47,13 @@
             settings : {
                 filterPaneEnabled: false,
                 navContentPaneEnabled: false,
-                //for forcing language to English
+                //Use this for forcing language to English:
                 /*localeSettings: {
                     language: "en",
                     formatLocale: "us"
                 }*/
-                //for transparent background in iFrame
+
+                //Use this for transparent background in iFrame:
                 //background: models.BackgroundType.Transparent
             }
         };
@@ -66,7 +61,6 @@
         var report = powerbi.embed(element, embedConfiguration);
 
         var expDate = new Date(expiration);
-        console.log('expiration: ', expiration);
 
         report.off("loaded");
         report.on("loaded", function() {
@@ -75,7 +69,6 @@
         });
 
         function setTokenExpirationListener(tokenExpiration, minutesToRefresh, reportId, groupId, datasetId){
-            console.log('setting token expiration');
             // get current time
             var currentTime = Date.now();
             var expiration = Date.parse(tokenExpiration);
@@ -98,20 +91,20 @@
 
 
             function updateEmbedToken(reportId, groupId, datasetId) {
-                console.log('updating embed token');
+                console.log('Updating embed token...');
                 Visualforce.remoting.Manager.invokeAction(
                     '{!$RemoteAction.TreasuryDashboardPowerBiPageCtrl.refreshEmbedToken}', reportId, groupId, datasetId,
                     function(result, event){
                         if (event.status) {
-                            console.log('updateEmbedToken OK');
-                            setNewEmbedToken(result, groupId, reportId, datasetId);
                             //response OK
+                            console.log('OK');
+                            setNewEmbedToken(result, groupId, reportId, datasetId);
                         } else if (event.type === 'exception') {
                             //exception
-                            console.log('Unable to update embed token - exception.');
+                            console.log('Unable to update embed token - exception: ', event.message);
                         } else {
                             //exception
-                            console.log('Unable to update embed token - error.');
+                            console.log('Unable to update embed token - error: ', event.message);
                         }
                     },
                     {escape: true}
@@ -131,9 +124,6 @@
                 var newToken = resultArray[0];
                 var newExpDate = new Date(resultArray[1]);
 
-                console.log('newToken: ', newToken);
-                console.log('newExpDate: ', newExpDate);
-
                 report.setAccessToken(newToken)
                     .then(function() {
                         // Set token expiration listener (expDate, minutesBeforeExpiration, reportId, groupId, datasetId)
@@ -142,7 +132,7 @@
             }
     }
 
-        </script>
+    </script>
 
 
 

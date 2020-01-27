@@ -207,7 +207,6 @@ public without sharing class TreasuryDashboardCtrl {
                         if (orgPartition.contains(POWERBI_REFRESH_TOKEN+applicationSufix)) {
 
                             result.refresh_token = (String) orgPartition.get(POWERBI_REFRESH_TOKEN+applicationSufix);
-                            System.debug('getting master account access token from cache');
 
                         } else {
                             //refresh token not found - get new token
@@ -250,12 +249,6 @@ public without sharing class TreasuryDashboardCtrl {
 
     @AuraEnabled
     public static PowerBiCtrl.EmbedTokenResult getEmbedToken(String accessToken, String userId, String groupId, String reportId, String datasetId, PowerBI_Config__c conf) {
-        System.debug('accessToken: ' + accessToken);
-        System.debug('userId: ' + userId);
-        System.debug('groupId: ' + groupId);
-        System.debug('reportId: ' + reportId);
-        System.debug('datasetId: ' + datasetId);
-        System.debug('conf: ' + conf);
 
         if(conf == null) {
             return null;
@@ -264,7 +257,8 @@ public without sharing class TreasuryDashboardCtrl {
         PowerBiCtrl.EmbedTokenResult result = new PowerBiCtrl.EmbedTokenResult();
         Cache.SessionPartition sessionPartition = null;
 
-        String cacheKey = reportId.replaceAll('-', '');
+        String reportIdReplaced = reportId.replaceAll('-', '');
+        String cacheKey = conf.Application_Identifier__c + reportIdReplaced;
 
         if(Test.isRunningTest()) {
 
@@ -298,7 +292,6 @@ public without sharing class TreasuryDashboardCtrl {
                     if(String.isNotBlank(cacheExpireson)) {
 
                         Datetime expiresonDatetime = getExpiresOnDatetime(cacheExpireson);
-                        System.debug('expiresonDatetime:: ' + expiresonDatetime);
 
                         if(expiresonDatetime.addMinutes(-10) < Datetime.now()) {
                             //token expires in less than 10 minutes - get new
@@ -343,7 +336,6 @@ public without sharing class TreasuryDashboardCtrl {
             throw new transformationException('PowerBI Master Account Access token: ' + result.error);
         }
         else if(result.access_token != null && result.expires_on != null && result.refresh_token != null) {
-            System.debug('saving master account access token to cache');
             String applicationSufix = conf.Application_Identifier__c;
             orgPartition.put(POWERBI_ACCESS_TOKEN + applicationSufix, result.access_token, 3600);
             orgPartition.put(POWERBI_EXPIERS_ON + applicationSufix, result.expires_on, 3600);
@@ -358,7 +350,6 @@ public without sharing class TreasuryDashboardCtrl {
             TransformationHelper.sendEmailSupport('FATAL: PowerBI Master Account Embed token: ' + conf.Name + ' ' + result.error, 'PowerBI Master Account Embed token: ' + conf.Name + ' ' +result.error);
             throw new transformationException('PowerBI Master Account Embed token: ' + result.error);
         } else if(result.token != null && result.expiration != null){
-            System.debug('saving master account embed token to cache');
 
             sessionPartition.put(cacheKey, result.token, 3600);
             sessionPartition.put(cacheKey+'expireson', result.expiration, 3600);

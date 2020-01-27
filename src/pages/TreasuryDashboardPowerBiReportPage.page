@@ -33,14 +33,6 @@
             typeOfToken = models.TokenType.Embed;
         }
 
-
-        console.log('ON PAGE');
-        console.log('embedUrl:: ' , embedUrl);
-        console.log('obj:: ', obj);
-        console.log('token:: ' , token);
-        console.log('groupId: ', groupId);
-
-
         var embedConfiguration = {
             id: "{!objectId}",
             type: "report",
@@ -63,7 +55,6 @@
         var report = powerbi.embed(element, embedConfiguration);
 
         var expDate = new Date(expiration);
-        console.log('expiration: ', expiration);
 
         //normally we would use this piece of code, but there is error in promise in loaded powerbi.js
         /*report.off("loaded");
@@ -81,7 +72,6 @@
 
 
         function setTokenExpirationListener(tokenExpiration, minutesToRefresh, reportId, groupId){
-            console.log('setting token expiration');
             // get current time
             var currentTime = Date.now();
             var expiration = Date.parse(tokenExpiration);
@@ -104,20 +94,20 @@
 
 
             function updateEmbedToken(reportId, groupId) {
-                console.log('updating embed token');
+                console.log('Updating embed token...');
                 Visualforce.remoting.Manager.invokeAction(
                     '{!$RemoteAction.TreasuryDashboardPowerBiReportPageCtrl.refreshEmbedToken}', reportId, groupId,
                     function(result, event){
                         if (event.status) {
-                            console.log('updateEmbedToken OK');
+                            console.log('OK');
                             setNewEmbedToken(result, groupId, reportId);
                             //response OK
                         } else if (event.type === 'exception') {
                             //exception
-                            console.log('Unable to update embed token - exception.');
+                            console.log('Unable to update embed token - exception: ', event.message);
                         } else {
                             //exception
-                            console.log('Unable to update embed token - error.');
+                            console.log('Unable to update embed token - error: ', event.message);
                         }
                     },
                     {escape: true}
@@ -136,9 +126,6 @@
 
                 var newToken = resultArray[0];
                 var newExpDate = new Date(resultArray[1]);
-
-                console.log('newToken: ', newToken);
-                console.log('newExpDate: ', newExpDate);
 
                 report.setAccessToken(newToken)
                     .then(function() {
