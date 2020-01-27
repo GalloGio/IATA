@@ -46,7 +46,8 @@
                                 placeholder="Select Aircraft Type" 
                                 options={aircraftTypeOptions} 
                                 onchange={handleChangeAircraftType} 
-                                class="slds-m-left_x-small slds-m-right_x-small" 
+                                class="slds-m-left_x-small slds-m-right_x-small"
+                                disabled={levelNotSelected} 
                                 required>
             </lightning-combobox>
             <br />

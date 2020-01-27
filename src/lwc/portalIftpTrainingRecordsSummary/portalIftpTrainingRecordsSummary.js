@@ -26,6 +26,7 @@ export default class PortalIftpTrainingRecordsSummary extends LightningElement {
     @track proficiencyValue ;
 
     @track aircraftTypeOptions;
+    @track levelNotSelected = true;
     @track allStations;
     @track selectedRows = null;
     @track queryTerm = null;
@@ -73,6 +74,7 @@ export default class PortalIftpTrainingRecordsSummary extends LightningElement {
         });
         this.aircraftTypeValue = null;
         this.aircraftTypeOptions = this.sortData('label', 'asc', myTopicOptions); 
+        this.levelNotSelected = false;
     }
         
     handleSearchButtonClick(){
@@ -119,7 +121,7 @@ export default class PortalIftpTrainingRecordsSummary extends LightningElement {
         this.aircraftTypeValue = null;
         this.proficiencyValue =null;
         this.aircraftTypeOptions = null; 
-
+        this.levelNotSelected = true;
         this.showSearch = false;
         this.cleanErrors();
     }
