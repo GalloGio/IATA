@@ -143,25 +143,41 @@ private class AMS_Change_Code_Notification_Contr_Test {
 
 	@isTest static void test_Oscar_notification() {
 		
-		IATA_ISO_Country__c isoc = [SELECT Id FROM IATA_ISO_Country__c LIMIT 1];
+		ID OSCAR_RT = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 	
-		Case oscarCase = [SELECT Id FROM Case WHERE Remittance_Period__c = null LIMIT 1];
+		Case oscarCase = [SELECT Id, OSCAR__c, AccountId FROM Case WHERE RecordTypeId =: OSCAR_RT LIMIT 1];
 
 		Test.startTest();
 
 			ApexPages.StandardController stdController = new ApexPages.StandardController(oscarCase);
 			AMS_Change_Code_Notification_Controller ctrl = new AMS_Change_Code_Notification_Controller(stdController);
+
+			Agency_Applied_Change_code__c cc = new Agency_Applied_Change_code__c();
+			cc.Change_Code__c = 'NEW';
+			cc.OSCAR__c = oscarCase.OSCAR__c;
+			cc.Account__c = oscarCase.AccountId;
+			insert cc;
+
 			ctrl.setNotificationMessage();
 		
 		Test.stopTest();
 
+		List<Apexpages.Message> messages = ApexPages.getMessages();
+
+		boolean b = false;
+
+		for(Apexpages.Message msg:messages){
+			if (msg.getDetail().contains(Label.AMS_New_Change_Code_Notification)) b = true;
+		}
+
+		System.assert(b);
 	}
 
 	@isTest static void test_Case_notification() {
 	
-		IATA_ISO_Country__c isoc = [SELECT Id FROM IATA_ISO_Country__c LIMIT 1];
-	
-		Case ccase = [SELECT Id FROM Case LIMIT 1];
+		ID SIDRA_RT = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
+		
+		Case ccase = [SELECT Id FROM Case WHERE RecordTypeId =: SIDRA_RT LIMIT 1];
 		
 		Test.startTest();
 
@@ -170,6 +186,17 @@ private class AMS_Change_Code_Notification_Contr_Test {
 			ctrl.setNotificationMessage();
 		
 		Test.stopTest();
+
+		List<Apexpages.Message> messages = ApexPages.getMessages();
+
+		boolean b = false;
+
+		for(Apexpages.Message msg:messages){
+			if (msg.getDetail().contains(Label.AMS_New_Change_Code_Notification)) b = true;
+		}
+
+		System.assert(b);
+		
 
 	}
 
@@ -180,13 +207,19 @@ private class AMS_Change_Code_Notification_Contr_Test {
 		ccase.Remittance_Period__c = '20180604W';
 		update ccase;
 
+		List<Technical_Logs__c> listTechnical_Logs = new List<Technical_Logs__c>();
+
 		Technical_Logs__c notif1 = new Technical_Logs__c();
 		notif1.Record__c = ccase.Id;
 		notif1.Log__c = 'some notification';
+		listTechnical_Logs.add(notif1);
+
 		Technical_Logs__c notif2 = new Technical_Logs__c();
 		notif2.Record__c = ccase.Id;
 		notif2.Log__c = 'NOT';
-		insert new List<Technical_Logs__c> { notif1, notif2 };
+		listTechnical_Logs.add(notif2);
+
+		insert listTechnical_Logs;
 
 		Test.startTest();
 			ApexPages.StandardController stdController = new ApexPages.StandardController(ccase);
@@ -196,7 +229,11 @@ private class AMS_Change_Code_Notification_Contr_Test {
 			ctrl.setNotificationMessage();
 			
 		Test.stopTest();
+		
+		List<Technical_Logs__c> listLog = [SELECT Id, Record__c, Log__c FROM Technical_Logs__c WHERE Id IN: listTechnical_Logs];
 
+		System.assert(!listLog.isEmpty());
+		
 	}
 
 	@isTest static void test_Amazon_File() {
@@ -218,7 +255,7 @@ private class AMS_Change_Code_Notification_Contr_Test {
 		AmazonFile__c  amazonFile = new AmazonFile__c();
 			amazonFile.Name = 'ICE POP 20180604W 13737.040';
 			amazonFile.Account__c = ccase2.AccountId;
-			amazonFile.Full_Name_Unique__c = 'cristianaFabio_test';
+			amazonFile.Full_Name_Unique__c = 'xxx_test';
 		insert amazonFile;
 			
 		Test.startTest();
@@ -230,6 +267,16 @@ private class AMS_Change_Code_Notification_Contr_Test {
 			ctrl.setNotificationMessage();
 			
 		Test.stopTest();
+
+		List<Apexpages.Message> messages = ApexPages.getMessages();
+
+		boolean b = false;
+
+		for(Apexpages.Message msg:messages){
+			if (msg.getDetail().contains(Label.ICE_POP_Sidra_Msg)) b = true;
+		}
+
+		System.assert(b);
 	}
 
 	
@@ -264,14 +311,15 @@ private class AMS_Change_Code_Notification_Contr_Test {
 
 		System.assert(b);
 
-
 	}
 
 	
 	@isTest
 	public static void test_Case_multicountry()
 	{
-		Case ccase = [SELECT Id, AccountId, Account_Concerned__c FROM Case WHERE RecordTypeId =: RecordTypeSingleton.getInstance().getRecordTypeId('Case','SIDRA') LIMIT 1];
+		Id SIDRA_RT = RecordTypeSingleton.getInstance().getRecordTypeId('Case','SIDRA');
+
+		Case ccase = [SELECT Id, AccountId, Account_Concerned__c FROM Case WHERE RecordTypeId =: SIDRA_RT LIMIT 1];
 		
 		Account acc1 = [SELECT Id, ANG_Accreditation_Model__c FROM Account WHERE Id =: ccase.AccountId LIMIT 1];
 		acc1.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
@@ -292,5 +340,16 @@ private class AMS_Change_Code_Notification_Contr_Test {
 		ctrl.setNotificationMessage();
 
 		Test.stopTest();
+
+		List<Apexpages.Message> messages = ApexPages.getMessages();
+
+		boolean b = false;
+
+		for(Apexpages.Message msg:messages){
+			if (msg.getDetail().contains(Label.SIDRA_GE_Info)) b = true;
+		}
+
+		System.assert(b);
+
 	}
 }
