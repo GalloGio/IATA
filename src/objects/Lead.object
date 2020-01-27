@@ -5774,6 +5774,35 @@ albam@iata.org</description>
         </sharedTo>
     </listViews>
     <listViews>
+        <fullName>Created_Online</fullName>
+        <columns>FULL_NAME</columns>
+        <columns>LEAD.COMPANY</columns>
+        <columns>LEAD.STATE</columns>
+        <columns>LEAD.EMAIL</columns>
+        <columns>LEAD.STATUS</columns>
+        <columns>LEAD.CREATED_DATE</columns>
+        <columns>CORE.USERS.ALIAS</columns>
+        <columns>LEAD.UNREAD</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>CREATEDBY_USER.ALIAS</field>
+            <operation>equals</operation>
+            <value>IATA-Sys</value>
+        </filters>
+        <filters>
+            <field>LEAD.CREATED_DATE</field>
+            <operation>greaterThan</operation>
+            <value>12/19/2019 12:00 AM</value>
+        </filters>
+        <label>Created Online</label>
+        <language>en_US</language>
+        <sharedTo>
+            <role>Distance_Learning</role>
+            <role>MarketingManager</role>
+            <role>Marketing_Specialist</role>
+        </sharedTo>
+    </listViews>
+    <listViews>
         <fullName>Created_Today1</fullName>
         <columns>FULL_NAME</columns>
         <columns>LEAD.COMPANY</columns>
