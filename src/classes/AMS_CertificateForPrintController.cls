@@ -31,6 +31,8 @@ public class AMS_CertificateForPrintController {
 			return 2.0;
 		}else if(nameSize > 64){
 			return (64 * 2.9)/nameSize;	 
+		}else if(nameSize < 65 && tradeNameSize > 58){
+			return 2.5;	 
 		}else{
 			return 2.9;	 
 		}
@@ -89,7 +91,7 @@ public class AMS_CertificateForPrintController {
 		Integer nameSize =  accountName.length();
 
 		if(nameSize > 32 && nameSize < 64 && tradeNameSize > 58){
-			return 52; 
+			return 42; 
 		}else{
 			return 22;	 
 		}
@@ -103,7 +105,7 @@ public class AMS_CertificateForPrintController {
 		Integer nameSize =  accountName.length();
 
 		if(nameSize > 32 && nameSize < 64 && tradeNameSize > 58){
-			return 10; 
+			return 20; 
 		}else{
 			return 40;	 
 		}
