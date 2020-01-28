@@ -1,0 +1,17 @@
+.innerHeaderCss {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.outerTitleCss {
+    display: flex;
+    flex: 1 1 auto;
+    align-items: center;
+    margin-left: 0;
+}
+
+.innerTitleCss {
+    display: block;
+    overflow: auto;
+}

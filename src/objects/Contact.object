@@ -20400,10 +20400,10 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
         <active>true</active>
         <errorConditionFormula>AND(
         Airline_Credit_Risk_Manager__c = true,
-        NOT(ISPICKVAL(Account.Sector__c, &apos;Airline&apos;))
+        NOT(ISPICKVAL(Account.Sector__c, &#39;Airline&#39;))
         )</errorConditionFormula>
         <errorDisplayField>Airline_Credit_Risk_Manager__c</errorDisplayField>
-        <errorMessage>Airline credit risk manager can only flagged for contacts under airline accounts</errorMessage>
+        <errorMessage>Airline credit risk manager can only be flagged for contacts under airline accounts.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>CFOCEO_contact_under_AL_HQ_only</fullName>

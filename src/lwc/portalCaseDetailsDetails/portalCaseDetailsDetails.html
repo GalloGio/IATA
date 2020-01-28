@@ -17,7 +17,7 @@
             <div if:true={hasDescription}
             class="slds-col slds-size_1-of-1 slds-p-around_medium">
               <span>
-                <lightning-formatted-text value={caseDetails.Description}></lightning-formatted-text>
+                <lightning-formatted-text class="descText" value={caseDetails.Description}></lightning-formatted-text>
               </span>
             </div>
           </div>
@@ -32,13 +32,14 @@
         </div>
         <div data-docdiv class="slds-p-around_medium slds-medium-size_1-of-1 slds-m-around-large collapsed documentsAccordionTransition" style="transition: height 0.8s ease;">
           <c-attachment-list-cmp shownorecords="false" parentid={caseId} isportal="true" show-modal={showAddDocsModal}
-            no-attachment-msg={labels.AddDocumentsMsg} onupdateddocs={updateNdocs} accepted-formats={acceptedFormats}>
+            no-attachment-msg={labels.AddDocumentsMsg} onupdateddocs={updateNdocs} accepted-formats={acceptedFormats} 
+            expired={trackedIsExpired}>
           </c-attachment-list-cmp>
         </div>
       </div>
       <!--Comment Accordion other component moved here on MTSL-811-->
       <div class="topLightGrayBorder">
-        <c-portal-case-details-messaging></c-portal-case-details-messaging>
+        <c-portal-case-details-messaging expired={trackedIsExpired}></c-portal-case-details-messaging>
       </div>
     </template>
   </div>
