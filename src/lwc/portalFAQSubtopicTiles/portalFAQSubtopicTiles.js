@@ -94,10 +94,18 @@ export default class PortalFAQSubtopicTiles extends LightningElement {
 
         const selectedEvent = new CustomEvent('categorieschange', { detail: __faqObject });
         this.dispatchEvent(selectedEvent);
+        var screenWidth = window.innerWidth;
+
+        if(screenWidth > 640) {
+            window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+        } else {
+            window.scrollTo(0, this.template.querySelector(".plsFocusOnThis").scrollHeight);
+        }
     }
     
-    subTopicSelected(event) {        
+    subTopicSelected(event) {
         let subtopicName = event.target.attributes.getNamedItem('data-name').value;
+        //let goBottom = document.body.scrollHeight - 600;
         
         let tempSubTopics = [];
         let subtopicVals = JSON.parse(JSON.stringify(this.accordionMap[this.topic].childs)); //Get subtopics under each topic
@@ -120,7 +128,12 @@ export default class PortalFAQSubtopicTiles extends LightningElement {
 
         const selectedEvent = new CustomEvent('categorieschange', { detail: __faqObject });
         this.dispatchEvent(selectedEvent);
+        var screenWidth = window.innerWidth;
 
-        window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+        if(screenWidth > 640) {
+            window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+        } else {
+            window.scrollTo(0, this.template.querySelector(".plsFocusOnThis").scrollHeight);
+        }
     }
 }
