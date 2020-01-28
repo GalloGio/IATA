@@ -4,8 +4,10 @@ private class AMS_CertificateTest {
 	@testSetup static void createData() {
 		id Art =  RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 		Account acc1 = new Account(Name = 'Test Account', IataCode__c = '1', Certificate_Generated_Current_Year__c = true, recordtypeid = Art);
-		Account acc2 = new Account(Name = 'Test Account', IataCode__c = '2', Certificate_Generated_Current_Year__c = false, recordtypeid = Art);
-		insert new List<Account>{acc1, acc2};
+		Account acc2 = new Account(Name = 'TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST', TradeName__c = 'TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST', IataCode__c = '2', Certificate_Generated_Current_Year__c = false, recordtypeid = Art);
+		Account acc3 = new Account(Name = 'TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST', TradeName__c = 'TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST', IataCode__c = '2', Certificate_Generated_Current_Year__c = false, recordtypeid = Art);
+		Account acc4 = new Account(Name = 'TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST', TradeName__c = 'TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST', IataCode__c = '2', Certificate_Generated_Current_Year__c = false, recordtypeid = Art);
+		insert new List<Account>{acc1, acc2, acc3, acc4};
 	}
 
 	static testMethod void manager() {
@@ -48,9 +50,6 @@ private class AMS_CertificateTest {
 		AMS_Certificate_Request__c request = new AMS_Certificate_Request__c();
 		request.AccountIds__c = JSON.serializePretty(accounts.keySet());
 		insert request;
-
-		System.debug(loggingLevel.Debug, '____ [cls AMS_CertificateTest - print] request.Id - ' + request.Id);
-		System.debug(loggingLevel.Debug, '____ [cls AMS_CertificateTest - print] request.AccountIds__c - ' + request.AccountIds__c);
 
 		PageReference pdf = Page.AMSCertificateForPrint;
 		pdf.getParameters().put('Id', request.Id);
