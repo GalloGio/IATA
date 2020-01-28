@@ -22,25 +22,10 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
 	public Boolean isSplitMcHierarchy {
 		get {
 			if (this.isSplitMcHierarchy == null) {
-				List<AMS_Process_Detail__c> pds = new List<AMS_Process_Detail__c>();
-				
-				// query the the Process Detail object for all the agencies that are being bought
-				List<AMS_Process_Detail__c> allProcessDetails = [SELECT Id, Account__c, OSCAR__c, Account__r.Status__c
-																 FROM AMS_Process_Detail__c
-																 WHERE OSCAR__c = :oscarObj.Id
-																	 AND RecordType.Developername = 'Agency_Involved'];
-				
-				for (AMS_Process_Detail__c pd : allProcessDetails) {
-					// TERMINATED AGENCIES IGNORED
-					if (pd.Account__c != null && pd.Account__r.Status__c != AMS_Utils.ACC_S0_TERMINATED) {
-						pds.add(pd);
-					}
-				}
-				
 				Set<Id> agenciesAffectedWithHO = new Set<Id>();
 				agenciesAffectedWithHO.add(oscarObj.Account__c);
 				
-				for (AMS_Process_Detail__c pd : pds)
+				for (AMS_Process_Detail__c pd : processDetails)
 					agenciesAffectedWithHO.add(pd.Account__c);
 				
 				this.isSplitMcHierarchy = this.oscarObj.ANG_Type_of_change__c == AMS_Utils.ANG_HIERARCHY && !isConversionFromStandardToMulticountry
@@ -48,6 +33,27 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
 			}
 			
 			return this.isSplitMcHierarchy;
+		}
+		set;
+	}
+	
+	private List<AMS_Process_Detail__c> processDetails {
+		get {
+			if (processDetails == null) {
+				processDetails = new List<AMS_Process_Detail__c>();
+				List<AMS_Process_Detail__c> allProcessDetails = [SELECT Id, Account__c, OSCAR__c, Account__r.Status__c
+																 FROM AMS_Process_Detail__c
+																 WHERE OSCAR__c = :oscarObj.Id
+																	 AND RecordType.Developername = 'Agency_Involved'];
+				
+				for (AMS_Process_Detail__c pd : allProcessDetails) {
+					// TERMINATED AGENCIES IGNORED
+					if (pd.Account__c != null && pd.Account__r.Status__c != AMS_Utils.ACC_S0_TERMINATED)
+						processDetails.add(pd);
+				}
+			}
+			
+			return processDetails;
 		}
 		set;
 	}
@@ -583,77 +589,30 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
 	}
 
 	//FM AMSU-1
-	public Boolean isAllHierarchySelected{
-		get{
-			System.debug('isAllHierarchySelected - entrei - isAllHierarchySelected : ' + isAllHierarchySelected);
-			if(isAllHierarchySelected != null){
-				return isAllHierarchySelected;
-			}else{
-				Map<Id, List<AMS_Process_Detail__c>> processDetailPerOSCAR = new Map<Id, List<AMS_Process_Detail__c>>();
-				Set<Id> oscarIds = new Set<Id>();
-				Set<Id> oscarOnlineAccredIds = new Set<Id>();
-				
-				oscarIds.add(oscarObj.Id);
-				oscarOnlineAccredIds.add(oscarObj.AMS_Online_Accreditation__c);
-
-				Map<Id, AMS_Pax_Accreditation_Form__c> onlineAccreditations = new Map<Id, AMS_Pax_Accreditation_Form__c>([SELECT Account_Name__c, IATACode__c, ISSP_AMS_Legal_Status__c, Short_Name__c, Trade_Name__c, ISSP_AMS_License_No__c, ISSP_AMS_VAT_number__c,
-					ISSP_AMS_GDS_with_signed_contract__c, Operation__c, Branch_Office_Country__r.Name, Branch_Office_Country__r.Due_diligence_mandatory__c, Branch_Office_Street_name_number__c, Branch_Office_Postal_code__c,
-					Billing_State__c, Branch_Office_City__c, ISO_Country__c, IATA_ISO_State__c, Shipping_Country__c, Shipping_Street__c, Shipping_Postal_Code__c,
-					Shipping_State__c, Shipping_City__c, Branch_Office_Email__c, Website__c, Branch_Office_Phone__c, Branch_Office_FAX__c, ISSP_AMS_Premises_located_at_airport__c,
-					Abbreviated_name__c, Abbreviated_address__c, Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c,
-					Shipping_ISO_Country__c, Shipping_ISO_State__c, Shipping_ISO_Country__r.Name, Shipping_ISO_State__r.Name, IATA_ISO_State__r.Name, IATA_ISO_State__r.Valid_for_Address__c   
-					FROM AMS_Pax_Accreditation_Form__c
-					WHERE Id IN :oscarOnlineAccredIds]);
-
-				AMS_Pax_Accreditation_Form__c oscarOnlineAccreditation = onlineAccreditations.get(oscarObj.AMS_Online_Accreditation__c);
-
-				//query the the Process Detail object for all the agencies that are being bought
-				List<AMS_Process_Detail__c> allProcessDetails = new List<AMS_Process_Detail__c>([SELECT Id, Account__c, OSCAR__c, Account__r.Status__c,Account__r.Is_Branch_Abroad__c, RecordType.Developername FROM AMS_Process_Detail__c WHERE OSCAR__c IN :oscarIds and RecordType.Developername = 'Agency_Involved']);
-
-				for (AMS_Process_Detail__c pd : allProcessDetails) {
-
-					//TERMINATED AGENCIES IGNORED
-					if(pd.Account__c != null && pd.Account__r.Status__c != AMS_Utils.ACC_S0_TERMINATED){
-						if (processDetailPerOSCAR.get(pd.OSCAR__c) == null)
-							processDetailPerOSCAR.put(pd.OSCAR__c, new List<AMS_Process_Detail__c> {pd});
-						else
-							processDetailPerOSCAR.get(pd.OSCAR__c).add(pd);
-					}
-
-					if(pd.Account__r.Is_Branch_Abroad__c == 'Yes'){
-						isBranchAbroadSelected = true;
-					}
-
-				}
-
-				List<AMS_Process_Detail__c> pds = processDetailPerOSCAR.get(oscarObj.Id);
-
-				Set<Id> agenciesAffected = new Set<Id>();
+	public Boolean isAllHierarchySelected {
+		get {
+			if (isAllHierarchySelected == null) {
+				// query the the Process Detail object for all the agencies that are being bought
 				Set<Id> agenciesAffectedWithHO = new Set<Id>();
 				agenciesAffectedWithHO.add(oscarObj.Account__c);
-
-				if (pds != null){
-					for (AMS_Process_Detail__c pd : pds){
-						agenciesAffected.add(pd.Account__c);
-						agenciesAffectedWithHO.add(pd.Account__c);
+				
+				for (AMS_Process_Detail__c pd : processDetails) {
+					if (pd.Account__r.Is_Branch_Abroad__c == 'Yes') {
+						isBranchAbroadSelected = true;
 					}
+					agenciesAffectedWithHO.add(pd.Account__c);
 				}
-
-				if(this.hierarchyAccountsMap.size() < 2){
+				
+				if (this.hierarchyAccountsMap.size() < 2) {
 					isSingleAccountHierarchy = true;
 				}
-
-				system.debug('applyChangeCodesWithDependencies() -> processDetailPerOSCAR : ' + processDetailPerOSCAR);
-				system.debug('applyChangeCodesWithDependencies() -> accountHierarchyRelationships : ' + this.accountHierarchyRelationships);
-				system.debug('applyChangeCodesWithDependencies() -> accountIds : ' + this.hierarchyAccountsMap.keySet());
-				system.debug('applyChangeCodesWithDependencies() -> hierarchyAccountsMap : ' + this.hierarchyAccountsMap);
-				system.debug('applyChangeCodesWithDependencies() -> agenciesAffected : ' + agenciesAffected);
 				
-				//Checks if all Hierarchy was Selected
-				isAllHierarchySelected = AMS_HierarchyHelper.isAllHierarchySelected(agenciesAffectedWithHO, this.accountHierarchyRelationships.get(oscarObj.Account__c), this.hierarchyAccountsMap);
-				return isAllHierarchySelected;
-				//system.debug('applyChangeCodesWithDependencies() -> isAllHierarchySelected : ' + isAllHierarchySelected);
+				// Checks if all Hierarchy was Selected
+				isAllHierarchySelected = AMS_HierarchyHelper.isAllHierarchySelected(agenciesAffectedWithHO, this.accountHierarchyRelationships
+					.get(oscarObj.Account__c), this.hierarchyAccountsMap);
 			}
+			
+			return isAllHierarchySelected;
 		}
 		private set;
 	}
