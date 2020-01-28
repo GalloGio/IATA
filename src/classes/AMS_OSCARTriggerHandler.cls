@@ -757,7 +757,7 @@ public class AMS_OSCARTriggerHandler {
 						updatedOSCAR.Process_Start_Date__c = Date.today();
 					}
 
-					if(!oldOSCAR.Endorsement_Requested__c && updatedOSCAR.process__c == AMS_Utils.NGGDI){
+					if(!oldOSCAR.Endorsement_Requested__c && updatedOSCAR.process__c == AMS_Utils.NGGDI && isAgencyInStatus(AMS_Utils.ACC_S2_NEWAPPLICATIONPENDING, updatedOSCAR.Account__c)){
 						updatedOSCAR.Endorsement_Requested__c = true;
 						updatedOSCAR.Endorsement_requested_date__c = Date.today();
 						updatedOSCAR.step49__c = AMS_Utils.PASSED;
@@ -2901,7 +2901,16 @@ public class AMS_OSCARTriggerHandler {
 		get{
 			//we just need to fetch the first time (or anytime we add a new Id)
 			if(accounts == null){
-				accounts = new Map<Id, Account>([SELECT Id, Name, Abbreviated_address__c, Abbreviated_name__c, ANG_FA_Opt_out__c, ANG_isNewGenAgency__c, BillingCity, BillingCountry, BillingPostalCode, BillingState, BillingStreet, CASS_Number__c, CNS_Agency__c, Company_Type__c, Covered_Ownership__c, Due_Diligence_Status__c, Email__c, Fax, GDS__c, Guaranteed_amount__c, IATA_ISO_Billing_State__c, IATA_ISO_Billing_State__r.Name, IATA_ISO_Country__c, IATA_ISO_Country__r.Name, IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_Country__r.Name, IATA_ISO_Shipping_State__r.Name, IATACode__c, In_a_Airport__c, Is_Branch_Abroad__c, Is_PCI_compliant__c, Is_your_firm_handling_Dangerous_Goods__c, Iso_State__c, ISO_State__r.Name, License_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Operation__c, Parent.IATACode__c, Parent.Location_Type__c, ParentId, Top_Parent__c, Phone, Remittance_frequency__c, ShippingCity, ShippingCountry, ShippingPostalCode, ShippingState, ShippingStreet, Short_Name__c, Solicitation_Flag__c, Status__c, TradeName__c, VAT_Number_2__c, VAT_Number__c, Website,
+				accounts = new Map<Id, Account>([SELECT Id, Name, Abbreviated_address__c, Abbreviated_name__c, ANG_FA_Opt_out__c, 
+					ANG_isNewGenAgency__c, BillingCity, BillingCountry, BillingPostalCode, BillingState, BillingStreet, CASS_Number__c, 
+					CNS_Agency__c, Company_Type__c, Covered_Ownership__c, Due_Diligence_Status__c, Email__c, Fax, GDS__c, Guaranteed_amount__c, 
+					IATA_ISO_Billing_State__c, IATA_ISO_Billing_State__r.Name, IATA_ISO_Country__c, IATA_ISO_Country__r.Name, 
+					IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_Country__r.Name, IATA_ISO_Shipping_State__r.Name, IATACode__c, 
+					In_a_Airport__c, Is_Branch_Abroad__c, Is_PCI_compliant__c, Is_your_firm_handling_Dangerous_Goods__c, Iso_State__c, 
+					ISO_State__r.Name, License_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Operation__c, Parent.IATACode__c, 
+					Parent.Location_Type__c, ParentId, Top_Parent__c, Phone, Remittance_frequency__c, ShippingCity, ShippingCountry, 
+					ShippingPostalCode, ShippingState, ShippingStreet, Short_Name__c, Solicitation_Flag__c, Status__c, TradeName__c, 
+					VAT_Number_2__c, VAT_Number__c, Website, Reason__c,
 					(SELECT Id, ParentId, Top_Parent__c, ANG_FA_Opt_out__c, Guaranteed_amount__c FROM ChildAccounts),
 					(SELECT Id, Account__c, Reason_Code__c, Reason_Description__c, Bulletin_Information__c FROM Agencies_Applied_Change_codes__r WHERE Active__c = true ORDER BY CreatedDate DESC)
 				FROM Account WHERE Id IN :accountIds]);
@@ -3899,13 +3908,13 @@ public class AMS_OSCARTriggerHandler {
 				changeCodeId = 'REC-' + updatedOscar.Business_Process__c;
 			}else if(oldOscar.STEP46__c != 'Passed' && updatedOscar.STEP46__c == 'Passed'){ 
 				// for GDI change code creation
-				Account oscarAccount = [SELECT Id, Status__c, Reason__c, CNS_Agency__c FROM Account WHERE Id =:updatedOscar.Account__c]; 
+				Account oscarAccount = getAccounts(updatedOscar.Account__c).get(0);
 				
 				if(oscarAccount.Status__c == AMS_Utils.ACC_S2_NEWAPPLICATIONPENDING){
-					changeCodeId = 'GDN';
+					changeCodeId = AMS_Utils.GDN_CHANGE_CODE;
 				}
 				else {
-					changeCodeId = 'GDI';
+					changeCodeId = AMS_Utils.GDI_CHANGE_CODE;
 				}
 
 				ANG_OscarProcessHelper.createChangeCodeForFOP(null, updatedOscar, new List<Account>{oscarAccount}, changeCodeId);
@@ -4909,6 +4918,14 @@ public class AMS_OSCARTriggerHandler {
 		for(String key : iataCodes.keySet())
 			ANG_RME_Alert_Service.requestGDIEndorsementCertificate(key,iataCodes.get(key));
 
+	}
+
+	private static Boolean isAgencyInStatus(String targetStatus, Id accountId){
+		List<Account> acctLst = getAccounts(accountId);
+		if(!acctLst.isEmpty()){
+			return (acctLst.get(0).Status__c == targetStatus);
+		}
+		return false;
 	}
 
 	// to be removed

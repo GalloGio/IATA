@@ -384,7 +384,9 @@ public without sharing class AMS_Utils {
 	public static final String APP_WITHDRAWN = '11-APPLICATION WITHDRAWN';
 
 	public static final String MBPDD_CHANGE_CODE = 'MBPDD';
-
+	public static final String GDI_CHANGE_CODE = 'GDI';
+	public static final String GDN_CHANGE_CODE = 'GDN';
+	
 	public static final String GDI_INVOICE_STATUS_NA = 'N/A';
 	public static final String GDI_INVOICE_STATUS_PAID = 'Paid';
 	public static final String GDI_INVOICE_STATUS_NOT_PAID = 'Not paid';
