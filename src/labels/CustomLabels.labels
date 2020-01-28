@@ -3280,6 +3280,13 @@ Payment required on receipt of this Payment Advice
         <shortDescription>CSP Account Domain Created</shortDescription>
         <value>Account Domain created</value>
     </labels>
+	<labels>
+        <fullName>CSP_AddOrRemove_Recipients</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_AddOrRemove_Recipients</shortDescription>
+        <value>You can manage the people that you want to be informed about this case. Add new recipients or remove existing ones.</value>
+	</labels>
     <labels>
         <fullName>CSP_Add_All</fullName>
         <categories>CS Portal</categories>
@@ -6244,7 +6251,7 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_Supported_File_Extensions</shortDescription>
-        <value>You can upload pdf, jpeg, jpg, png, ppt, pptx, xls,xlsx, tif, tiff, zip files. The size should
+        <value>You can upload pdf, jpeg, jpg, png, ppt, pptx, xls, xlsx, tif, tiff, doc, docx, zip files. The size should
                         be smaller than 50 MB.</value>
     </labels>
     <labels>
@@ -6733,6 +6740,13 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <protected>false</protected>
         <shortDescription>Click here</shortDescription>
         <value>Click here</value>
+    </labels>
+    <labels>
+        <fullName>Close_All_Tabs</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Close All Tabs</shortDescription>
+        <value>Close All Tabs</value>
     </labels>
     <labels>
         <fullName>Company</fullName>
@@ -41379,6 +41393,20 @@ title,Title,Name</value>
         <protected>false</protected>
         <shortDescription>TSI USA Only</shortDescription>
         <value>Travel Service Intermediaries-TSI (USA Only)</value>
+    </labels>
+    <labels>
+        <fullName>Tab_Name</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Tab_Name</shortDescription>
+        <value>Tab Name</value>
+    </labels>
+    <labels>
+        <fullName>Tab_Close</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Tab_Close</shortDescription>
+        <value>Click To Close Tab</value>
     </labels>
     <labels>
         <fullName>Tasks_Notification</fullName>

@@ -46,6 +46,13 @@ public with sharing class PortalCasesCtrl {
 
 	private static String AGENT_ACCREDITATION_PORTAL_SERVICE = ISSP_Portal_Service_Ids__c.getInstance().AgencyAccreditation__c;
 	private static Boolean isCaseFromReachUs = false;
+	
+	public static Set<String> CaseRecordTypesDescriptionVisibleSet = new Set<String>{'Cases - Africa & Middle East', 
+	'Cases - Americas','Cases - Asia & Pacific',
+	'Cases - China & North Asia','Cases - Europe',
+	'Cases - Global','Complaint (IDFS ISS)',
+	'Process'};
+	
 	/*
 	*
 	*
@@ -658,14 +665,40 @@ public with sharing class PortalCasesCtrl {
 						Subtopic__c, Region__c, Reason1__c, Country_concerned__c, Account_Concerned__r.IATACode__c,
 						Description,E2CP__AdditionalCC__c,Account_Concerned__c, Status,RecordType__c,
 						RecordType.Name, WhoClosedCase__c,WhoClosedCase__r.UserRole.Name, BSPCountry__c, AccountId,
-						Account.Name, ContactId, Contact.FirstName, Contact.LastName, Contact.Email,Contact.Phone
-						FROM Case
+						Account.Name, ContactId, Contact.FirstName, Contact.LastName, Contact.Email,Contact.Phone,RecordType.Id,RecordType.DeveloperName
+						FROM Case 
 						WHERE Id = :caseId];
 
 		if ( caseAux.RecordType__c.contains('SIDRA') ) {
 			caseAux = buildSubject(caseAux);
 		}
 		return caseAux;
+	}
+
+	/**
+	Returns true if the input case has an specific RecordType
+	and is closed for more than 2 weeks
+	**/
+	
+	@AuraEnabled
+	public static Boolean getHideForClosedCases(String caseId) {
+		set<String> validRecordtypes = new set<String>{'IDFS_Airline_Participation_Process', 'OSCAR_Communication', 'CasesMENA', 
+		'CasesAmericas', 'ExternalCasesIDFSglobal', 'Cases_China_North_Asia', 'CasesEurope', 'Cases_Global', 'ComplaintIDFS', 'Inter_DPCs'};
+		Case newCase = getCaseById(caseId);
+		boolean isMSO = isMSOcase(newCase);
+
+		List<Case> cases = 
+		[SELECT Id,RecordType.Id 
+		FROM Case 
+		WHERE 
+		RecordType.Id = :newCase.RecordType.Id
+		AND (RecordType.DeveloperName IN :validRecordtypes)];
+		
+		return ((!cases.isEmpty() && newCase.ClosedDate < Date.today().addDays(-14)) || isMSO );
+	}
+
+	private Static boolean isMSOcase(Case newCase){
+		return (newCase.RecordType.DeveloperName == 'OSCAR_Communication' && (newCase.Reason1__c == 'GSA / MSO / Handling Agent' || newCase.Subject.startsWith('MSO code ') ));
 	}
 
 	private Static Case buildSubject(Case caseAux){
@@ -745,7 +778,7 @@ public with sharing class PortalCasesCtrl {
 public static List<MessageWrapper> getCaseMessages(String caseId){
 	List<MessageWrapper> lstToReturn = new List<MessageWrapper>();
 
-	Case caseToFirstComment = [SELECT Id, Description, CreatedBy.Name, CreatedDate FROM Case WHERE Id =:caseId];
+	Case caseToFirstComment = [SELECT Id, Description, CreatedBy.Name, CreatedDate,RecordType__c FROM Case WHERE Id =:caseId];
 
 	List<CaseComment> lstCaseCommentsAux = [SELECT Id, ParentId, CommentBody, IsPublished,
 											CreatedDate, CreatedById, CreatedBy.Name, IsDeleted
@@ -753,7 +786,7 @@ public static List<MessageWrapper> getCaseMessages(String caseId){
 											WHERE ParentId = :caseId AND IsDeleted = false
 																					 ORDER BY CreatedDate ASC];
 
-	String caseDescription = caseToFirstComment.Description != null ? caseToFirstComment.Description : '';
+	String caseDescription = caseToFirstComment.Description != null && CaseRecordTypesDescriptionVisibleSet.contains(caseToFirstComment.RecordType__c) ? caseToFirstComment.Description : '';
 
 	lstToReturn.add(new MessageWrapper(caseDescription,
 										 caseToFirstComment.CreatedDate,
@@ -775,169 +808,20 @@ public static List<MessageWrapper> getCaseMessages(String caseId){
 	return lstToReturn;
 }
 
-	@AuraEnabled
-	public static ReturnWrapper submitNewMessage(String caseId, String messageTextAux){
-		ReturnWrapper returnWrapper = new ReturnWrapper();
-		Savepoint sp = Database.setSavepoint();
-		Case caseAux = new Case();
-		caseAux.Id = caseId;
-		caseAux.New_interaction__c = 'New Comment';
-		caseAux.New_Comment_From_Connection_User__c = true;
-		CaseComment caseCommentAux = new CaseComment();
-		caseCommentAux.ParentId = caseId;
-		caseCommentAux.CommentBody = messageTextAux;
-
-		try{
-			insert caseCommentAux;
-			update caseAux;
-			returnWrapper = new ReturnWrapper(true, Label.CSP_CaseMessage_SubmitSuccess, '');
-		}catch(Exception e){
-			Database.rollback(sp);
-			returnWrapper = new ReturnWrapper(false, e.getMessage(), '');
-		}
-
-		return returnWrapper;
-	}
-
 	/*
 	* Method that adds a new Recipient for this case
 	*/
-	@AuraEnabled
+	@AuraEnabled(cacheable=false)
 	public static ReturnWrapper addNewRecipient(String caseId, String newRecipientEmail){
-		ReturnWrapper returnWrapper = new ReturnWrapper();
-
-		String findEmail = newRecipientEmail.trim();
-
-		if (findEmail == null || findEmail == ''){
-			returnWrapper.success = false;
-			returnWrapper.returnMessage = 'No email was provided. ';
-			return returnWrapper;
-		}
-
-		// find contact with input email
-		list<Contact> listContact = [SELECT Id, Email, AccountId FROM Contact WHERE Email = :findEmail AND Status__c = 'Active' LIMIT 1];
-		if (listContact.size() != 1) {
-			returnWrapper.success = false;
-			returnWrapper.returnMessage = Label.ISSP_CCOther_Wrong_Emails.replace('{0}',findEmail);
-			return returnWrapper;
-		}
-
-		Boolean isDPCUser = false;
-		Id profileId = Userinfo.getProfileId();
-		String profileName = [Select Id, Name from Profile where Id = :profileId].Name;
-		//Verify if user is a PWC profile
-		if (profileName.startsWith('ISS Portal DPC Admin') ) {  isDPCUser = true; }
-
-		//get partner user role id
-		Id PARTNER_USER_ROLE = [SELECT id FROM CaseTeamRole WHERE Name = 'Partner User Role'].Id;
-
-		//get the case
-		Case caseAux = PortalCasesCtrl.getCaseById(caseId);
-
-		// insert found contact as a team member of the case
-		Savepoint sp = Database.setSavepoint();
-		try {
-			Contact contact = listContact.get(0);
-			Id memberId = contact.Id;
-			if(isDPCUser) {
-				// only add people from Account_Concerned__c by User
-				list<User> listUser = [
-					SELECT Id, Contact.AccountId
-					FROM User
-					WHERE ContactId = :contact.Id AND isActive = true AND Contact.AccountId = :caseAux.Account_Concerned__c AND Contact.User_Portal_Status__c IN ('Approved Admin', 'Approved User') ];
-				if (!listUser.isEmpty()) {
-					memberId = listUser[0].Id;
-				} else {
-					if (contact.AccountId != caseAux.Account_Concerned__c){
-						//if it's DPC, a user is not found and the selected contact is not in the
-						//same Account Concerned then we cannot continue
-
-						returnWrapper.success = false;
-						returnWrapper.returnMessage = 'User is now in the same account concerned';
-						return returnWrapper;
-					}
-				}
-			}
-			CaseTeamMember teammember = new CaseTeamMember(ParentId = caseAux.Id, MemberId = memberId, TeamRoleId = PARTNER_USER_ROLE);
-			System.debug(teammember);
-			insert teammember;
-
-			if(caseAux.E2CP__AdditionalCC__c != null && caseAux.E2CP__AdditionalCC__c != ''){
-				caseAux.E2CP__AdditionalCC__c =  caseAux.E2CP__AdditionalCC__c + ';' + contact.Email;
-			}else{
-				caseAux.E2CP__AdditionalCC__c = contact.Email;
-			}
-			update caseAux;
-
-			returnWrapper.success = true;
-			returnWrapper.returnMessage = 'Recipient added with success!';
-
-		} catch (DMLException e) {
-			String messages = '';
-			for (Integer i = 0; i < e.getNumDml(); i++) {
-				messages += ' ' + findemail + ': ' + e.getDmlMessage(i);
-			}
-			Database.rollback(sp);
-
-			returnWrapper.success = false;
-			returnWrapper.returnMessage = messages;
-		}
-
-		return returnWrapper;
+		return new PortalCasesCtrl_WithoutSharing().addNewRecipient(caseId,newRecipientEmail);
 	}
 
 	/*
 	* Method that removes a recipient from this case
 	*/
-	@AuraEnabled
+	@AuraEnabled(cacheable=false)
 	public static ReturnWrapper removeRecipient(String caseId, String recipientEmail){
-		ReturnWrapper returnWrapper = new ReturnWrapper();
-
-		String emailFiltered = recipientEmail==null ? '': recipientEmail.trim();
-
-		Case caseAux = PortalCasesCtrl.getCaseById(caseId);
-
-		Savepoint sp = Database.setSavepoint();
-		try {
-			List<String> listNews = new List<String>();
-			for (String email: caseAux.E2CP__AdditionalCC__c.split(';')) {
-				String trimEmail = email.trim();
-				if (trimEmail != emailFiltered) {
-					listNews.add(trimEmail);
-				}
-			}
-			caseAux.E2CP__AdditionalCC__c = (String.join(listNews,';'));
-
-			update caseAux;
-
-			//get partner user role id
-			Id PARTNER_USER_ROLE = [SELECT id FROM CaseTeamRole WHERE Name = 'Partner User Role'].Id;
-
-			list<Contact> listContact = [SELECT Id, AccountId FROM Contact WHERE email = :emailFiltered];
-			list<User> listUser = [SELECT Id, Contact.AccountId FROM User WHERE email = :emailFiltered];
-			list<CaseTeamMember> listMember = [SELECT id FROM CaseTeamMember
-				WHERE ParentId = :caseId AND TeamRoleId = :PARTNER_USER_ROLE AND (MemberId IN :listContact OR MemberId IN :listUser)];
-			if (!listMember.isEmpty()) {
-				delete listMember;
-			}
-
-			returnWrapper.success = true;
-			returnWrapper.returnMessage = 'Recipient removed with success!';
-
-		} catch (DMLException e) {
-			System.debug('ERROR delTeamMember ' + e.getMessage());
-
-			String messages = '';
-			for (Integer i = 0; i < e.getNumDml(); i++) {
-				messages += ' ' + emailFiltered + ': ' + e.getDmlMessage(i);
-			}
-			Database.rollback(sp);
-
-			returnWrapper.success = false;
-			returnWrapper.returnMessage = messages;
-		}
-
-		return returnWrapper;
+		return new PortalCasesCtrl_WithoutSharing().removeRecipient(caseId,recipientEmail);
 	}
 
 	public static String fullnameNOCFile(Case caseObj) {
@@ -1099,7 +983,143 @@ public static List<MessageWrapper> getCaseMessages(String caseId){
 
 	}
 
+	public without sharing class PortalCasesCtrl_WithoutSharing {
 
+		public ReturnWrapper addNewRecipient(String caseId, String newRecipientEmail){
+			ReturnWrapper returnWrapper = new ReturnWrapper();
+
+			String findEmail = newRecipientEmail.trim();
+
+			if (findEmail == null || findEmail == '') {
+				returnWrapper.success = false;
+				returnWrapper.returnMessage = 'No email was provided. ';
+				return returnWrapper;
+			}
+
+			// find contact with input email
+			list<Contact> listContact = [SELECT Id, Email, AccountId FROM Contact WHERE Email = :findEmail AND Status__c = 'Active' LIMIT 1];
+			if (listContact.size() != 1) {
+				returnWrapper.success = false;
+				returnWrapper.returnMessage = Label.ISSP_CCOther_Wrong_Emails.replace('{0}',findEmail);
+				return returnWrapper;
+			}
+
+			Boolean isDPCUser = false;
+			Id profileId = Userinfo.getProfileId();
+			String profileName = [Select Id, Name from Profile where Id = :profileId].Name;
+			//Verify if user is a PWC profile
+			if (profileName.startsWith('ISS Portal DPC Admin') ) {  isDPCUser = true; }
+
+			//get partner user role id
+			Id PARTNER_USER_ROLE = [SELECT id FROM CaseTeamRole WHERE Name = 'Partner User Role'].Id;
+
+			//get the case
+			Case caseAux = PortalCasesCtrl.getCaseById(caseId);
+
+			// insert found contact as a team member of the case
+			Savepoint sp = Database.setSavepoint();
+			try {
+				Contact contact = listContact.get(0);
+				Id memberId = contact.Id;
+				if(isDPCUser) {
+					// only add people from Account_Concerned__c by User
+					list<User> listUser = [
+						SELECT Id, Contact.AccountId
+						FROM User
+						WHERE ContactId = :contact.Id AND isActive = true AND Contact.AccountId = :caseAux.Account_Concerned__c AND Contact.User_Portal_Status__c IN ('Approved Admin', 'Approved User')
+					];
+					if (!listUser.isEmpty()) {
+						memberId = listUser[0].Id;
+					} else {
+						if (contact.AccountId != caseAux.Account_Concerned__c) {
+							//if it's DPC, a user is not found and the selected contact is not in the
+							//same Account Concerned then we cannot continue
+
+							returnWrapper.success = false;
+							returnWrapper.returnMessage = 'User is now in the same account concerned';
+							return returnWrapper;
+						}
+					}
+				}
+				CaseTeamMember teammember = new CaseTeamMember(ParentId = caseAux.Id, MemberId = memberId, TeamRoleId = PARTNER_USER_ROLE);
+				System.debug(teammember);
+				insert teammember;
+
+				if(caseAux.E2CP__AdditionalCC__c != null && caseAux.E2CP__AdditionalCC__c != '') {
+					caseAux.E2CP__AdditionalCC__c =  caseAux.E2CP__AdditionalCC__c + ';' + contact.Email;
+				}else{
+					caseAux.E2CP__AdditionalCC__c = contact.Email;
+				}
+				update caseAux;
+
+				returnWrapper.success = true;
+				returnWrapper.returnMessage = 'Recipient added with success!';
+
+			} catch (DMLException e) {
+				String messages = '';
+				for (Integer i = 0; i < e.getNumDml(); i++) {
+					messages += ' ' + findemail + ': ' + e.getDmlMessage(i);
+				}
+				Database.rollback(sp);
+
+				returnWrapper.success = false;
+				returnWrapper.returnMessage = messages;
+			}
+
+			return returnWrapper;
+		}
+
+		public ReturnWrapper removeRecipient(String caseId, String recipientEmail){
+			ReturnWrapper returnWrapper = new ReturnWrapper();
+
+			String emailFiltered = recipientEmail==null ? '' : recipientEmail.trim();
+
+			Case caseAux = PortalCasesCtrl.getCaseById(caseId);
+
+			Savepoint sp = Database.setSavepoint();
+			try {
+				List<String> listNews = new List<String>();
+				for (String email: caseAux.E2CP__AdditionalCC__c.split(';')) {
+					String trimEmail = email.trim();
+					if (trimEmail != emailFiltered) {
+						listNews.add(trimEmail);
+					}
+				}
+				caseAux.E2CP__AdditionalCC__c = (String.join(listNews,';'));
+
+				update caseAux;
+
+				//get partner user role id
+				Id PARTNER_USER_ROLE = [SELECT id FROM CaseTeamRole WHERE Name = 'Partner User Role'].Id;
+
+				list<Contact> listContact = [SELECT Id, AccountId FROM Contact WHERE email = :emailFiltered];
+				list<User> listUser = [SELECT Id, Contact.AccountId FROM User WHERE email = :emailFiltered];
+				list<CaseTeamMember> listMember = [SELECT id FROM CaseTeamMember
+												WHERE ParentId = :caseId AND TeamRoleId = :PARTNER_USER_ROLE AND (MemberId IN :listContact OR MemberId IN :listUser)];
+				if (!listMember.isEmpty()) {
+					delete listMember;
+				}
+
+				returnWrapper.success = true;
+				returnWrapper.returnMessage = 'Recipient removed with success!';
+
+			} catch (DMLException e) {
+				System.debug('ERROR delTeamMember ' + e.getMessage());
+
+				String messages = '';
+				for (Integer i = 0; i < e.getNumDml(); i++) {
+					messages += ' ' + emailFiltered + ': ' + e.getDmlMessage(i);
+				}
+				Database.rollback(sp);
+
+				returnWrapper.success = false;
+				returnWrapper.returnMessage = messages;
+			}
+
+			return returnWrapper;
+		}
+
+	}
 
 
 }
