@@ -284,31 +284,32 @@ private static void createCaseTeamMemberList(Case cse, list<Contact> listContact
 	@AuraEnabled
 	public static Boolean isUserLevelOne(Id userId){
 		return  [SELECT Contact.Account.Is_General_Public_Account__c  FROM User WHERE Id = :userId].Contact.Account.Is_General_Public_Account__c;
-	}
+public without sharing class PortalSupportReachUsCreateNewCaseCtrlWithoutSharing {
+
+	//Dynamic Query to perform searches on the Contact.
+public List<Contact> searchRelatedContacts(String searchTerm, List<Account> lstAccounts) { 
+
+	String userId = UserInfo.getUserId();
+
+	//String parentId = [SELECT ParentId FROM Account WHERE Id =: userId].ParentId;
 	
-	public without sharing class PortalSupportReachUsCreateNewCaseCtrlWithoutSharing {
+    Set<Id> resultIds = (new Map<Id,Account>(lstAccounts)).keySet();
 
-		//Dynamic Query to perform searches on the Contact.
-		public List<Contact> searchRelatedContacts(String searchTerm, List<Account> lstAccounts) { 
+	//prepare query
+	String finalQuery = 'SELECT Id, Name, Email FROM Contact '
+	                     + ' WHERE AccountId IN :resultIds ';
 
-			String userId = UserInfo.getUserId();
-
-			
-			Set<Id> resultIds = (new Map<Id,Account>(lstAccounts)).keySet();
-
-			//prepare query
-			String finalQuery = 'SELECT Id, Name, Email FROM Contact '
-								 + ' WHERE AccountId IN :resultIds ';
-
-			if(String.isNotEmpty(searchTerm)) {
-				finalQuery += ' AND (Email LIKE \'%' + String.escapeSingleQuotes(searchTerm)
-							  + '%\' OR Name like \'%' + String.escapeSingleQuotes(searchTerm) + '%\') ';
-			}
-
-			return Database.query(finalQuery);
-
-		}
-
+	if(String.isNotEmpty(searchTerm)) {
+		finalQuery += ' AND (Email LIKE \'%' + String.escapeSingleQuotes(searchTerm)
+		              + '%\' OR Name like \'%' + String.escapeSingleQuotes(searchTerm) + '%\') ';
 	}
+
+	//finalQuery += ' LIMIT ' + MAX_RESULTS;
+
+	return Database.query(finalQuery);
+
+}
+
+}
 
 }
