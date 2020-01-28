@@ -21,11 +21,11 @@
 global without sharing class ANG_CreateCaseDetails {
 
 	public static final set<string> setValidPaymentStatus = new set<string>{
-		AMS_Utils.GDI_INVOICE_STATUS_NA,
-		AMS_Utils.GDI_INVOICE_STATUS_PAID,
-		AMS_Utils.GDI_INVOICE_STATUS_NOT_PAID,
-		AMS_Utils.GDI_INVOICE_STATUS_FULLY_PAID,
-		AMS_Utils.GDI_INVOICE_STATUS_OUTSTANDING
+		AMS_Utils.INVOICE_STATUS_NA,
+		AMS_Utils.INVOICE_STATUS_PAID,
+		AMS_Utils.INVOICE_STATUS_NOT_PAID,
+		AMS_Utils.INVOICE_STATUS_FULLY_PAID,
+		AMS_Utils.INVOICE_STATUS_OUTSTANDING
 	};
 
 	public static final set<string> setValidRequest = new set<string>{ANG_RestServiceHelper.URIRequest_CasePaymentStatus}; //Valid type of request, part of URI

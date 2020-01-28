@@ -387,11 +387,11 @@ public without sharing class AMS_Utils {
 	public static final String GDI_CHANGE_CODE = 'GDI';
 	public static final String GDN_CHANGE_CODE = 'GDN';
 	
-	public static final String GDI_INVOICE_STATUS_NA = 'N/A';
-	public static final String GDI_INVOICE_STATUS_PAID = 'Paid';
-	public static final String GDI_INVOICE_STATUS_NOT_PAID = 'Not paid';
-	public static final String GDI_INVOICE_STATUS_FULLY_PAID = 'Fully paid';
-	public static final String GDI_INVOICE_STATUS_OUTSTANDING = 'Outstanding';
+	public static final String INVOICE_STATUS_NA = 'N/A';
+	public static final String INVOICE_STATUS_PAID = 'Paid';
+	public static final String INVOICE_STATUS_NOT_PAID = 'Not paid';
+	public static final String INVOICE_STATUS_FULLY_PAID = 'Fully paid';
+	public static final String INVOICE_STATUS_OUTSTANDING = 'Outstanding';
 
 	public static final String SAP_PAYMENT_TYPE_PPA = 'PPA';
 

@@ -748,7 +748,7 @@ public class AMS_OSCARTriggerHandler {
 			if(oldOSCAR.Invoice_status__c <> updatedOSCAR.Invoice_status__c &&  updatedOSCAR.Invoice_status__c != null){
 
 				if(updatedOSCAR.Payment_Type__c == AMS_Utils.SAP_PAYMENT_TYPE_PPA){
-					updatedOSCAR.STEP9__c = (updatedOSCAR.Invoice_status__c == AMS_Utils.GDI_INVOICE_STATUS_PAID) ? AMS_Utils.PASSED : (updatedOSCAR.Invoice_status__c == AMS_Utils.GDI_INVOICE_STATUS_OUTSTANDING) ? AMS_Utils.FAILED : updatedOSCAR.STEP9__c;
+					updatedOSCAR.STEP9__c = (updatedOSCAR.Invoice_status__c == AMS_Utils.INVOICE_STATUS_PAID) ? AMS_Utils.PASSED : (updatedOSCAR.Invoice_status__c == AMS_Utils.INVOICE_STATUS_OUTSTANDING) ? AMS_Utils.FAILED : updatedOSCAR.STEP9__c;
 				}
 
 				// this was pulled from Automation on STEP 9 since when he reaches this part of the code, he already passed the automation
