@@ -13,6 +13,7 @@ public without sharing class AMS_Utils {
 	public static final String FAILED = 'Failed';
 	public static final String IN_PROGRESS = 'In Progress';
 	public static final String NOT_APPLICABLE = 'Not Applicable';
+	public static final String NOT_STARTED = 'Not Started';
 
 	public static final String AUTH_APPROVAL = 'Authorize Approval';
 	public static final String AUTH_DISAPPROVAL ='Authorize Disapproval';
@@ -383,6 +384,16 @@ public without sharing class AMS_Utils {
 	public static final String APP_WITHDRAWN = '11-APPLICATION WITHDRAWN';
 
 	public static final String MBPDD_CHANGE_CODE = 'MBPDD';
+	public static final String GDI_CHANGE_CODE = 'GDI';
+	public static final String GDN_CHANGE_CODE = 'GDN';
+	
+	public static final String INVOICE_STATUS_NA = 'N/A';
+	public static final String INVOICE_STATUS_PAID = 'Paid';
+	public static final String INVOICE_STATUS_NOT_PAID = 'Not paid';
+	public static final String INVOICE_STATUS_FULLY_PAID = 'Fully paid';
+	public static final String INVOICE_STATUS_OUTSTANDING = 'Outstanding';
+
+	public static final String SAP_PAYMENT_TYPE_PPA = 'PPA';
 
 	public static final Set<String> TOPLOCATIONSNEWGEN = new Set<String>{'HE','GE'};
 

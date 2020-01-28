@@ -158,7 +158,7 @@ public with sharing class AMS_OSCAR_Automation {
 			if (oscar != null) {
 				oscar.Proof_of_payment_received__c = Date.today();
 				if(oscar.Process__c <> AMS_Utils.NGGDI){
-					oscar.Invoice_status__c = 'Paid';
+					oscar.Invoice_status__c = AMS_Utils.INVOICE_STATUS_PAID;
 				}
 
 				if (oscar.STEP17__c == 'Not Started' || oscar.STEP17__c == 'Not Applicable' || oscar.STEP17__c == 'Passed'){
@@ -180,7 +180,7 @@ public with sharing class AMS_OSCAR_Automation {
 
 			if (oscar != null) {
 				if(oscar.Process__c <> AMS_Utils.NGGDI){
-					oscar.Invoice_status__c = 'Outstanding';
+					oscar.Invoice_status__c = AMS_Utils.INVOICE_STATUS_OUTSTANDING;
 				}
 				oscar.Proof_of_payment_received__c = Date.today();
 				res = True;
@@ -199,7 +199,7 @@ public with sharing class AMS_OSCAR_Automation {
 			Boolean res = False;
 
 			if (oscar != null) {
-				oscar.Invoice_status__c = 'N/A';
+				oscar.Invoice_status__c = AMS_Utils.INVOICE_STATUS_NA;
 				res = True;
 			}
 
@@ -1386,7 +1386,7 @@ public with sharing class AMS_OSCAR_Automation {
 
 			if (oscar != null) {
 				oscar.Proof_of_payment_received__c = Date.today();
-				oscar.Invoice_status__c = 'Paid';
+				oscar.Invoice_status__c = AMS_Utils.INVOICE_STATUS_PAID;
 
 
 				res = true;
@@ -1403,7 +1403,7 @@ public with sharing class AMS_OSCAR_Automation {
 
 			if (oscar != null) {
 				oscar.Proof_of_payment_received__c = Date.today();
-				oscar.Invoice_status__c = 'Outstanding';
+				oscar.Invoice_status__c = AMS_Utils.INVOICE_STATUS_OUTSTANDING;
 
 				res = true;
 			}
@@ -1418,7 +1418,7 @@ public with sharing class AMS_OSCAR_Automation {
 			Boolean res = False;
 
 			if (oscar != null) {
-				oscar.Invoice_status__c = 'N/A';
+				oscar.Invoice_status__c = AMS_Utils.INVOICE_STATUS_NA;
 
 				res = true;
 			}
