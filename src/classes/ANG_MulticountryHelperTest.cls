@@ -415,7 +415,7 @@ private class ANG_MulticountryHelperTest {
 	}
 
 	@isTest static void multicountryAccountValidationsTest() {
-
+		
 		Id standardAcctRecId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
 
 		List<IATA_ISO_Country__c> countriesLst = new List<IATA_ISO_Country__c>(
@@ -537,7 +537,7 @@ private class ANG_MulticountryHelperTest {
 	}
 
 
-	@isTest static void testmulticountryAccountHasRemittenceFrequencyEmpty() {
+	@isTest static void testmulticountryAccountHasRemittanceFrequencyEmpty() {
 
 		List<Account> accountLst = new List<Account>(
 			[SELECT Id
@@ -554,6 +554,8 @@ private class ANG_MulticountryHelperTest {
 			Account__c = accountHE.Id,
 			Process__c = AMS_Utils.MCAE
 		);
+
+		Test.startTest();
 
 		insert oscar;
 
@@ -573,6 +575,8 @@ private class ANG_MulticountryHelperTest {
 
 		AMS_Oscar__c oscar2 = [SELECT Id, Account__c, Process__c, Location_Type__c, AMS_Online_Accreditation__c
 								FROM AMS_Oscar__c WHERE Account__c = : accountHE.Id limit 1];
+
+		Test.stopTest();
 
 		Boolean hasRF = ANG_MulticountryHelper.multicountryAccountHasRemittanceFrequencyEmpty(oscar2, paxAccreditation);
 		//Has empty Remittance Frequency
