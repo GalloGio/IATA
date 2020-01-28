@@ -516,7 +516,7 @@ NOT(CONTAINS($User.Customer_type__c,&quot;Agency&quot;))
     <fields>
         <fullName>Country_Visibility_Control__c</fullName>
         <externalId>false</externalId>
-        <inlineHelpText>Listed Countries Only: Only available to &#39;Country Visibility Restriction&#39; listed countries (DEFAULT)
+        <inlineHelpText>Listed Countries Only: Only available to &#39;Country Visibility Restriction&#39; listed countries
 
     Hide from Listed Countries: Available to all countries EXCEPT the listed countries
 

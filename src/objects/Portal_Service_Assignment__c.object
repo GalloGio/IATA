@@ -208,7 +208,7 @@
     <validationRules>
         <fullName>Block_IATA_EasyPay_Usage</fullName>
         <active>true</active>
-        <errorConditionFormula>CONTAINS(ANG_Portal_Service__r.Name, &#39;IATA EasyPay&#39;)</errorConditionFormula>
+        <errorConditionFormula>CONTAINS(Portal_Service__r.Name, &#39;IATA EasyPay&#39;)</errorConditionFormula>
         <errorMessage>This setting cannot be used to restrict IATA EasyPay Country Visibility. Link the IATA ISO Country to the IATA EasyPay service instead.</errorMessage>
     </validationRules>
 </CustomObject>
