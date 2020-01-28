@@ -34,7 +34,7 @@
     </fieldOverrides>
     <fieldOverrides>
         <field>Region__c</field>
-        <formula>Contact.Account.Region_formula__c</formula>
+        <formula>TEXT(Case.Region__c)</formula>
     </fieldOverrides>
     <fieldOverrides>
         <field>Status</field>
