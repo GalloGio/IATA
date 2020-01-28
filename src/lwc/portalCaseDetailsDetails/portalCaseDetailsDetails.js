@@ -1,4 +1,4 @@
-import { LightningElement, track } from 'lwc';
+import { LightningElement, track,api,wire } from 'lwc';
 
 import { navigateToPage } from 'c/navigationUtils';
 
@@ -49,8 +49,19 @@ export default class PortalCaseDetailsDetails extends LightningElement {
     @track nrDocs = 0;
 
     @track showNewDescriptionSection = false;
-	@track isCollapsedWhenNewDescriptionInPlace = "slds-p-around_medium ";
+    @track isCollapsedWhenNewDescriptionInPlace = "slds-p-around_medium ";
+    @track trackedIsExpired = false;
+
+
+    @api
+    get isexpired() {
+        return this.trackedIsExpired;
+    }
+    set isexpired(value) {
+        this.trackedIsExpired = value;
+	}
 	
+	@track caseobres;
 
     @track labels = {
         AddDocumentsMsg,
@@ -71,7 +82,7 @@ export default class PortalCaseDetailsDetails extends LightningElement {
 		CSP_AccountName
     };
 
-    acceptedFormats = ['.pdf', '.jpeg', '.jpg', '.png', '.ppt', '.pptx', '.xls', '.xlsx', '.tif', '.tiff', '.zip'];
+    acceptedFormats = '.pdf, .jpeg, .jpg, .png, .ppt, .pptx, .xls, .xlsx, .tif, .tiff, .zip, .doc, .docx';
 
 
 
@@ -271,6 +282,10 @@ export default class PortalCaseDetailsDetails extends LightningElement {
     updateNdocs(event) {
         //sets nr of docs in panel
         this.nrDocs = event.detail.ndocs;
+        if(this.nrDocs == 0 && this.trackedIsExpired){   
+            this.template.querySelector('[data-docicon]').setAttribute('class', 'hideDocsIcon');
+        } 
+
     }
 
     toggleCaseDetailsSection() {
@@ -279,9 +294,17 @@ export default class PortalCaseDetailsDetails extends LightningElement {
     }
 
     toggleDocumentsDetailsSection() {
-        this.toggleCollapsed('[data-docdiv]', 'collapsed');
-        this.toggleCollapsed('[data-docicon]', 'arrowExpanded');
-        this.showAddDocsModal = false;
+        if(!this.trackedIsExpired){
+            this.toggleCollapsed('[data-docdiv]', 'collapsed');
+            this.toggleCollapsed('[data-docicon]', 'arrowExpanded');
+            this.showAddDocsModal = false;
+        } else{
+            if(this.nrDocs != 0) {
+                this.toggleCollapsed('[data-docdiv]', 'collapsed');
+                this.toggleCollapsed('[data-docicon]', 'arrowExpanded');
+                this.showAddDocsModal = false;
+            }
+        }
     }
 
     toggleDescriptionSection() {

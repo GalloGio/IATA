@@ -282,7 +282,7 @@
 
     //Attachment Delete Popup methods
     handleCancelDeletePopup: function (component, event, helper) {
-        component.set("v.handleCancelDeletePopup", false);
+        component.set("v.viewDeleteAttachmentPopup", false);
     },
 
     handleConfirmDeletePopup: function (component, event, helper) {

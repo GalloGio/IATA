@@ -37,7 +37,7 @@
     <aura:attribute name="doneUploading" type="Boolean" default="false" />
     <aura:handler name="change" value="{!v.doneUploading}" action="{!c.doneUploadFiles}" />
 
-    <aura:attribute name="showLoadingSpinner" type="Boolean" default="true" />
+    <aura:attribute name="showLoadingSpinner" type="Boolean" default="false" />
 
     <aura:attribute name="isUploadingAttachments" type="Boolean" default="false" />
     <!-- POPUP SETTINGS -->

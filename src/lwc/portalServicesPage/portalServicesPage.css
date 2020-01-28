@@ -6,3 +6,7 @@
     color:#f04632;
     border-bottom: 5px solid #f04632;
 }
+
+.itemTab {
+    white-space: nowrap;
+}

@@ -16,28 +16,31 @@ private class LiveAgentCustomWindowControllerTest {
 
 		PageReference pg = Page.LiveAgentCustomWindow;
 		Test.setCurrentPage(pg);
+		Cookie cookie = new Cookie('chatlanguage', 'en', null, -1, false);
+		ApexPages.currentPage().setCookies(new Cookie[]{cookie});
 		LiveAgentCustomWindowController ctrl = new LiveAgentCustomWindowController();
 		System.assertEquals('en',ctrl.language);
 
 		pg = Page.LiveAgentCustomWindow;
-		pg.getHeaders().put('Referer','csButton=spanish&');
 		Test.setCurrentPage(pg);
+		cookie = new Cookie('chatlanguage', 'es', null, -1, false);
+		ApexPages.currentPage().setCookies(new Cookie[]{cookie});
 		ctrl = new LiveAgentCustomWindowController();
 		System.assertEquals('es',ctrl.language);
 
 		pg = Page.LiveAgentCustomWindow;
-		System.Cookie cookie = new System.Cookie('lang','fr','somepath',5,false);
-		pg.getCookies().put('lang',cookie);
 		Test.setCurrentPage(pg);
+		cookie = new Cookie('chatlanguage', 'fr', null, -1, false);
+		ApexPages.currentPage().setCookies(new Cookie[]{cookie});
 		ctrl = new LiveAgentCustomWindowController();
 		System.assertEquals('fr',ctrl.language);
 
 		System.assertEquals(false,ctrl.isRTL);
-
+		
 		pg = Page.LiveAgentCustomWindow;
-		cookie = new System.Cookie('lang','ar','somepath',5,false);
-		pg.getCookies().put('lang',cookie);
 		Test.setCurrentPage(pg);
+		cookie = new Cookie('chatlanguage', 'ar', null, -1, false);
+		ApexPages.currentPage().setCookies(new Cookie[]{cookie});
 		ctrl = new LiveAgentCustomWindowController();
 		System.assertEquals(true,ctrl.isRTL);
 

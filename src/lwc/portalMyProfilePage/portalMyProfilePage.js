@@ -45,7 +45,7 @@ export default class PortalMyProfilePage extends LightningElement {
         });
 
         getContactDetails().then(result => {
-            let contact = result.contact;
+            let contact = JSON.parse(JSON.stringify(result.contact));
             contact.cardName   = result.cardName   !== undefined ? result.cardName   : undefined;
             contact.cardPhoto  = result.cardPhoto  !== undefined ? result.cardPhoto  : undefined;
             contact.cardNumber = result.cardNumber !== undefined ? result.cardNumber : undefined;
@@ -90,7 +90,7 @@ export default class PortalMyProfilePage extends LightningElement {
                 mapOfValuesContactLocal.push({
                     'value': sectionMapContactLocal[i].lstFieldWrapper,
                     'key': sectionMapContactLocal[i].cardTitle,
-                    'showfunction': (sectionMapContactLocal[i].cardTitle === 'Professional'),
+                    'showfunction': (sectionMapContactLocal[i].cardKey === 'Professional'),
                     'isEditable': sectionMapContactLocal[i].isEditable,
                     'isEditIdCard': (sectionMapContactLocal[i].cardTitle === IdCard),
 		    'sectionKeyName': sectionMapContactLocal[i].cardKey,
