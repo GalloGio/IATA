@@ -2988,9 +2988,9 @@ IF(Financial_Assessment_received__c - Financial_Assessment_requested__c =6, TEXT
     <fields>
         <fullName>Generate_risk_event_MC__c</fullName>
         <defaultValue>false</defaultValue>
-        <description>Flag to know if we should generate a Risk Event - In case of a Change of Hierarchy that involves a Split</description>
+        <description>Flag which indicates if the last OSCAR of change of hierarchy generated a split on a multicountry hierarchy.</description>
         <externalId>false</externalId>
-        <label>Generate risk event (MC)</label>
+        <label>Split of Multicountry Hierarchy</label>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
