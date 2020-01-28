@@ -7,23 +7,23 @@
                 <div class="slds-grid slds-wrap slds-gutters_direct-medium">
                     
                     <!-- Services Component -->
-                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-m-vertical_medium" >
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-p-vertical_medium slds-scrollable_x" >
                         
                         <div class="emptyGrayAreaSize">
                             &nbsp;
                         </div>
 
                         <template for:each={lstTabs} for:item="tab">
-                            <span key={tab.id} class="text-small">
+                            <span key={tab.id} class="slds-p-around_small text-small">
 
                                 <!-- Active tab -->
-                                <span if:true={tab.active} data-item={tab.id} class="slds-p-around_small text-bold selectedTab">
+                                <span if:true={tab.active} data-item={tab.id} class="slds-p-around_small text-bold selectedTab itemTab">
                                     {tab.label}
                                 </span>
 
                                 <!-- Inactive tab -->
                                 <span if:false={tab.active} data-item={tab.id} style={tab.style} onmouseenter={onmouseenterTab} 
-                                            onmouseleave={onmouseleaveTab} onclick={onclickTab} class="slds-p-around_small cursorPointer text-darkGray" >
+                                            onmouseleave={onmouseleaveTab} onclick={onclickTab} class="slds-p-around_small cursorPointer text-darkGray itemTab" >
                                     {tab.label}
                                 </span>
 
