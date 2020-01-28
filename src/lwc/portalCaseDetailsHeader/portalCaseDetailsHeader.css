@@ -52,6 +52,32 @@
     padding: 0 10px;
 }
 
+.expiredCard {
+    background-color: #feeebe;
+    border-color: #ffeeba;
+}
+
+.caseClosed2W{
+  font-size: 12px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  letter-spacing: normal;
+  text-transform: uppercase;
+  color: #4a4d61;
+  
+}
+
+.caseClosed2W img{
+  margin-top: -4px;
+  
+}
+
+.caseClosed2W span{
+  margin-left: 10px;
+  
+}
+
 .border_gradient {
     position: relative;
     z-index: 1;
@@ -84,6 +110,28 @@
 .text-recipients {
     text-align: right;
 }
+
+.recipients-box{
+    height: 150px;
+}
+
+.custom-recipients {
+    display:inline-block;
+    border-radius: 1px;
+    background-color: #f7f8fc;
+    line-height: 1.71;
+    color: #4a4d61;
+}
+
+.manage-recipients {
+    font-size: 20px;
+    line-height: 1.6;   
+}
+
+.manage-recipientsinfo {
+    line-height: 1.63;
+}
+
 @media print {
     .text-recipients div,
     .slds-text-align_right div {
