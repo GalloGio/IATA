@@ -23,5 +23,14 @@
         <unique>false</unique>
     </fields>
     <label>DPC Case Priority High</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Email__c</columns>
+        <columns>Priority__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
     <visibility>Public</visibility>
 </CustomObject>
