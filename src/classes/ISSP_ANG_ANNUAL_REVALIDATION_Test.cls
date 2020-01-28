@@ -211,8 +211,6 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 						FROM Case
 						WHERE Reason1__c = 'Annual revalidation'];
 
-		Test.startTest();
-
 		Test.setCurrentPageReference(new PageReference('Page.ISSP_ANG_ANNUAL_REVALIDATION'));
 		System.currentPageReference().getParameters().put('caseId', testcase.id);
 
@@ -410,6 +408,8 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 
 		ctrl.createAgencyContact();
 
+		Test.startTest();
+
 		ctrl.contactType = 'Person';
 
 		ctrl.createAgencyContact();
@@ -443,8 +443,6 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 		ctrl.saveDraftAndLeave();
 
 		ctrl = null;
-
-		Test.stopTest();
 
 		Test.setCurrentPageReference(new PageReference('Page.ISSP_ANG_ANNUAL_REVALIDATION'));
 		System.currentPageReference().getParameters().put('caseId', testcase.id);
@@ -564,6 +562,7 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 		ctrl.currentAccount.fw.newform.Local_Postal_Address_Province__c = null;
 
 		ctrl.confirmUpdate();
+		Test.stopTest();
 	}
 
 	@isTest
