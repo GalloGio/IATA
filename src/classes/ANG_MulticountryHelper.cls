@@ -111,7 +111,7 @@ public class ANG_MulticountryHelper {
 	*/
 	public static Boolean allowIATACodeGeneration(AMS_OSCAR__c oscar){
 		return
-			((String.isNotBlank(oscar.Account__r.Parent.Source_System__c) || parentHasChangeCode(oscar.Account__c, AMS_Utils.NEW_CHANGE_CODE)) &&
+			((oscar.Account__r.Parent.Accreditation_date__c != null || parentHasChangeCode(oscar.Account__c, AMS_Utils.NEW_CHANGE_CODE)) &&
 			 (AMS_Utils.ACTIVEAGENCYSTATUS.contains(oscar.Account__r.Parent.Status__c) ||
 			  oscar.Account__r.Parent.Status__c == AMS_Utils.ACC_S2_NEWAPPLICATIONPENDING)
 			);
@@ -125,7 +125,7 @@ public class ANG_MulticountryHelper {
 	*
 	*/
 	public static Boolean allowApprovalStep(AMS_OSCAR__c oscar){
-		return (String.isNotBlank(oscar.Account__r.Parent.Source_System__c) || parentHasChangeCode(oscar.Account__c, AMS_Utils.FIN_CHANGE_CODE));
+		return (oscar.Account__r.Parent.Accreditation_date__c != null || parentHasChangeCode(oscar.Account__c, AMS_Utils.FIN_CHANGE_CODE));
 	}
 
 	/**

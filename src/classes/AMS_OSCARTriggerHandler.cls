@@ -155,7 +155,7 @@ public class AMS_OSCARTriggerHandler {
 				Account__r.Sector__c, 
 				Account__r.CNS_Agency__c,
 				Account__r.Parent.Status__c,
-				Account__r.Parent.Source_System__c
+				Account__r.Parent.Accreditation_date__c
 			 FROM AMS_OSCAR__c 
 			 WHERE Id IN :Trigger.New
 			]

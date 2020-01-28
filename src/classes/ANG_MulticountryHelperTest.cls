@@ -202,7 +202,7 @@ private class ANG_MulticountryHelperTest {
 			[SELECT 
 				Account__c, 
 				Account__r.Parent.Status__c, 
-				Account__r.Parent.Source_System__c 
+				Account__r.Parent.Accreditation_date__c 
 			 FROM AMS_OSCAR__c
 			];
 
@@ -229,7 +229,7 @@ private class ANG_MulticountryHelperTest {
 			[SELECT 
 				Account__c, 
 				Account__r.Parent.Status__c, 
-				Account__r.Parent.Source_System__c 
+				Account__r.Parent.Accreditation_date__c 
 			 FROM AMS_OSCAR__c
 			];
 
@@ -277,7 +277,7 @@ private class ANG_MulticountryHelperTest {
 			[SELECT 
 				Account__c, 
 				Account__r.Parent.Status__c, 
-				Account__r.Parent.Source_System__c 
+				Account__r.Parent.Accreditation_date__c 
 			 FROM AMS_OSCAR__c
 			];
 
@@ -288,14 +288,14 @@ private class ANG_MulticountryHelperTest {
 		Account accountGE = accountLst.get(0);
 		accountGE.Status__c = AMS_Utils.ACC_S2_NEWAPPLICATIONPENDING;
 		accountGE.IATACode__c = '12345678';
-		accountGE.Source_System__c = 'AIMS';
+		accountGE.Accreditation_date__c = System.today().addDays(-20);
 		update accountGE;
 
 		oscarWithRels = 
 			[SELECT 
 				Account__c, 
 				Account__r.Parent.Status__c, 
-				Account__r.Parent.Source_System__c 
+				Account__r.Parent.Accreditation_date__c 
 			 FROM AMS_OSCAR__c
 			];
 
@@ -312,7 +312,7 @@ private class ANG_MulticountryHelperTest {
 		List<Account> accountLst = new List<Account>(
 			[SELECT
 				Id,
-				Parent.Source_System__c
+				Parent.Accreditation_date__c
 			 FROM Account
 			 WHERE Name IN ('Multicountry AE PT', 'Multicountry GE PT')
 			 ORDER BY Name ASC
@@ -367,7 +367,7 @@ private class ANG_MulticountryHelperTest {
 		List<Account> accountLst = new List<Account>(
 			[SELECT
 				Id,
-				Parent.Source_System__c
+				Parent.Accreditation_date__c
 			 FROM Account
 			 WHERE Name IN ('Multicountry AE PT', 'Multicountry GE PT')
 			 ORDER BY Name ASC
@@ -400,7 +400,7 @@ private class ANG_MulticountryHelperTest {
 		System.assert(!allowApproval, 'Should not allow the approval step.');
 
 		Account accountGE = accountLst.get(1);
-		accountGE.Source_System__c = 'AIMS';
+		accountGE.Accreditation_date__c = System.today().addDays(-10);
 		update accountGE;
 
 		accountAE.putSObject('Parent', accountGE);
