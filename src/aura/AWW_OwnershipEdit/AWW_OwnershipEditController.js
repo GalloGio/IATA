@@ -28,45 +28,51 @@
         let totalPercentage = 0;
         let isNew = true;
         for(let i = 0; i < allRecords.length; i++){
-            if(allRecords[i].percentage){
-                if(component.get('v.whatType') == 'owner'){
-                    if(component.get('v.record') && component.get('v.record').ownerName == allRecords[i].ownerName){ 
-                            totalPercentage += parseFloat(component.get('v.record.percentage'));
-                            isNew = false;
-                    }else{
-                        totalPercentage += allRecords[i].percentage;
-                    }
+            if(!allRecords[i].percentage){
+                allRecords[i].percentage = 0;
+            }
+            if(component.get('v.whatType') == 'owner'){
+                if(component.get('v.record') && component.get('v.record').ownerName == allRecords[i].ownerName){ 
+                    totalPercentage += parseFloat(component.get('v.record.percentage'));
+                    isNew = false;
                 }else{
-
-                    if(component.get('v.record') && component.get('v.record').accountName == allRecords[i].accountName){ 
-                            totalPercentage += parseFloat(component.get('v.record.percentage'));
-                            isNew = false;
-                    }else{
-                        totalPercentage += allRecords[i].percentage;
-                    }
+                    totalPercentage += allRecords[i].percentage;
+                }
+            }else{
+                if(component.get('v.record') && component.get('v.record').accountName == allRecords[i].accountName){ 
+                    totalPercentage += parseFloat(component.get('v.record.percentage'));
+                    isNew = false;
+                }else{
+                    totalPercentage += allRecords[i].percentage;
                 }
             }
         }
         
         if(isNew){
-            totalPercentage += parseInt(component.get('v.record.percentage'));
+            for(var i = 0; i < component.get('v.selectedRowsCount'); i++){
+                totalPercentage += parseInt(component.get('v.record.percentage'));
+            }
         }  
         if(component.get('v.record.percentage') <= 100 && totalPercentage <= 100){
             $A.util.removeClass(component.find("greaterThanOneHundred"), "slds-hide");
+            $A.util.removeClass(component.find("greaterThanOneHundredTwo"), "slds-hide");
             component.set("v.isGreaterThanOneHundred", false);
         }else{
             if(totalPercentage > 100){
                 component.set("v.isGreaterThanOneHundred", true);
             }
             $A.util.addClass(component.find("greaterThanOneHundred"), "slds-hide");
+            $A.util.addClass(component.find("greaterThanOneHundredTwo"), "slds-hide");
         }
     },
     save : function(component,event,helper) {
         if(component.get('v.record.percentage') <= 100){
             helper.askConfirmation(component);
             $A.util.removeClass(component.find("greaterThanOneHundred"), "slds-hide");
+            $A.util.removeClass(component.find("greaterThanOneHundredTwo"), "slds-hide");
         }else{
             $A.util.addClass(component.find("greaterThanOneHundred"), "slds-hide");
+            $A.util.addClass(component.find("greaterThanOneHundredTwo"), "slds-hide");
         }
     },
     confirmation : function(component,event,helper) {
@@ -110,6 +116,8 @@
         if(results) {
             component.set('v.selectedRowsCount',results.getSelectedRows().length);
         }
+        var action = component.get('c.handleGreaterThanOneHundred');
+        $A.enqueueAction(action);
     }, 
     unselect : function(component,event,helper) {
         var results = component.find('search-results');
