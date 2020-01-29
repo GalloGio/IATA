@@ -20,7 +20,6 @@ private class CaseIFAPHandlerTest {
 		List<Case> caseList = new List<Case>();
 		List<User> userList = new List<User>();
 		Profile testProfile = [SELECT Id FROM Profile WHERE Name = 'ISS Portal Airline User (Partner)'];
-		UserRole testUserRole = [SELECT Id FROM UserRole LIMIT 1];
 
 		User thisUser = [SELECT Id FROM User WHERE Profile.Name = 'System Administrator' AND IsActive = true LIMIT 1];
 
@@ -59,7 +58,7 @@ private class CaseIFAPHandlerTest {
 
 			for(Integer i = 0; i < NUMBER_OF_RECORDS; i++){
 				userList.add(new User(Alias = 'alias', Email='standarduser@testorg.com', contactId = contactList[i].id,
-								  EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US', UserRoleId = testUserRole.Id,
+								  EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',
 								  LocaleSidKey='en_US', ProfileId = testProfile.Id, License_Cost_Center__c = 'ISF005CH01',
 								  TimeZoneSidKey='America/Los_Angeles', UserName='test.username@test.com'));
 			}
