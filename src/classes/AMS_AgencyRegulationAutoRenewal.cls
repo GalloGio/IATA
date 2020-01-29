@@ -392,8 +392,8 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 		AMS_OSCAR__c theOscar = new AMS_OSCAR__c();
 		theOscar.RecordTypeId = AMS_Utils.RECTYPE_CERT;
 		theOscar.Account__c = agReg.Account__c;
-		theOscar.Process__c = AMS_Utils.CERTIFICATION; 
-		theOscar.Status__c='Accepted_Future Date'; 
+		theOscar.Process__c = AMS_Utils.CERTIFICATION;
+		theOscar.Status__c='Accepted_Future Date';
 		theOscar.Change_effective_as_of__c = regulations[0].Expiry_Date__c;
 		theOscar.Oscar_Communication_Case_Id__c = theCommunicationCase.Id;
 		theOscar.Emails_reference_Id__c = AMS_Utils.caseRefId(UserInfo.getOrganizationId(), theCommunicationCase.Id);
@@ -452,10 +452,10 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 		sendEmailAlert(recipents, oscarId, countryTemplates, oscarCommCaseId, owea, isDGR, null);
 	}
 
-	private static List<OrgWideEmailAddress> getfromAddress(Id OrgWideEmailAddressId) {  
-			  return [select Address,DisplayName from OrgWideEmailAddress where ID = :OrgWideEmailAddressId limit 1];   
+	private static List<OrgWideEmailAddress> getfromAddress(Id OrgWideEmailAddressId) {
+			  return [select Address,DisplayName from OrgWideEmailAddress where ID = :OrgWideEmailAddressId limit 1];
 
-	} 
+	}
 
 	public static void sendEmailAlert(List<Contact> recipents, Id oscarId, Map<String, Id> countryTemplates, String oscarCommCaseId, OrgWideEmailAddress owea, boolean isDGR, Messaging.EmailFileAttachment[] attachments) {
 		Id templateId;
@@ -468,7 +468,7 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 
 			//getTemplate
 			tempIata = [SELECT Id, DeveloperName, HtmlValue, Subject FROM EmailTemplate WHERE DeveloperName = 'Info_To_IATA_AMS_DGR_Renewal_Not_Sent'];
-			
+
 			//get region
 			List<AMS_OSCAR__c> oscars = [SELECT Id, Region__c FROM AMS_OSCAR__c WHERE Id = :oscarId];
 			String region = oscars.get(0).Region__c;
@@ -481,7 +481,7 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 				if(cR.Region__c == region)
 					emailsToSend.add(cR.Contact_Email__c);
 			}
-			
+
 			//put the contacts in recipents list
 			recipents = [SELECT Id, Email, AccountId, Preferred_Language__c, User_Portal_Status__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c FROM Contact WHERE Email IN :emailsToSend and IsEmailBounced = false];
 			System.debug('IATA recipents list: ' + recipents);
@@ -514,12 +514,12 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 						mail.setTemplateId(getSpecificLangTemplate(recipient.Preferred_Language__c, countryTemplates));
 					}
 					mail.setTargetObjectId(recipient.Id);
-					
+
 					if(attachments != null){
 						mail.setFileAttachments(attachments);
 					}
 					mail.setWhatId(oscarId);
-				   
+
 					mail.setOrgWideEmailAddressId(owea.Id);
 
 					mailsToSend.add(mail);
@@ -530,7 +530,7 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 
 					system.debug('DGR sendEmailAlert: isDGR ' + isDGR);
 
-					//FM 24/10/2017 - AMSU-32 
+					//FM 24/10/2017 - AMSU-32
 					if(recipient.User_Portal_Status__c == 'Approved Admin'){
 
 						system.debug('DGR sendEmailAlert: Entrei!! - recipient.User_Portal_Status__c ' + recipient.User_Portal_Status__c);
@@ -563,9 +563,9 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 						mail.setTemplateId(getSpecificLangTemplate(recipient.Preferred_Language__c, countryTemplates));
 					}
 					mail.setTargetObjectId(recipient.Id);
-					
+
 					mail.setWhatId(oscarId);
-					   
+
 					mail.setOrgWideEmailAddressId(owea.Id);
 
 					mailsToSend.add(mail);
@@ -574,10 +574,10 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 
 			}
 
-			//FM 24/10/2017 - AMSU-32 
+			//FM 24/10/2017 - AMSU-32
 			if(mPortalAdminsEmailsDGR != null && mPortalAdminsEmailsDGR.size() > 0){
 				for(String key : mPortalAdminsEmailsDGR.keySet()){
-					
+
 					system.debug('DGR sendEmailAlert: key : ' + key);
 					system.debug('DGR sendEmailAlert: List : mPortalAdminsEmailsDGR.get(key) : ' + mPortalAdminsEmailsDGR.get(key));
 
@@ -594,7 +594,7 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 					mailPortalAdmin.setTargetObjectId(auxCont.Id);
 
 					mailPortalAdmin.setWhatId(oscarId);
-				   
+
 					mailPortalAdmin.setOrgWideEmailAddressId(owea.Id);
 					mailsToSend.add(mailPortalAdmin);
 			}
