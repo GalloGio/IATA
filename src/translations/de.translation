@@ -15414,7 +15414,7 @@ Bitte geben Sie an, für welches Land Sie zuletzt unsere Unterstützung erhalten
         <name>ISSP_FDS_PopupTitle</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_FDS_Remittance --></label>
+        <label>Zahlungsfrequenz</label>
         <name>ISSP_FDS_Remittance</name>
     </customLabels>
     <customLabels>
