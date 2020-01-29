@@ -123,7 +123,7 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
     isTriggeredByRequest = true;
 
     //label construct
-    label = {
+    @track label = {
         csp_SupportReachUs_IntentionOnThisPage,
         csp_SupportReachUs_ChooseOption,
         csp_SupportReachUs_Ask_Label,

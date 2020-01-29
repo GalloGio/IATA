@@ -1,6 +1,5 @@
 import { LightningElement, api, track } from 'lwc';
 
-import goToOldPortalService from '@salesforce/apex/PortalServicesCtrl.goToOldPortalService';
 import updateLastModifiedService from '@salesforce/apex/PortalServicesCtrl.updateLastModifiedService';
 import paymentLinkRedirect from '@salesforce/apex/PortalServicesCtrl.paymentLinkRedirect';
 import changeIsFavoriteStatus from '@salesforce/apex/PortalServicesCtrl.changeIsFavoriteStatus';
@@ -90,17 +89,9 @@ export default class PortalServicesAccessGrantedCard extends NavigationMixin(Lig
                     //open new tab with the redirection
 
                     if (myUrl.startsWith('/')) {
-                        goToOldPortalService({ myurl: myUrl })
-                            .then(result => {
                                 //open new tab with the redirection
-                                window.open(result);
-                                this.toggleSpinner();
-                            })
-                            .catch(error => {
-                                //throws error
-                                this.error = error;
-                            });
-
+                                window.open(myUrl);
+                                this.toggleSpinner();       
                     } else {
                         if (appName === 'Payment Link' || appName === 'Paypal') {
                             paymentLinkRedirect()
@@ -128,16 +119,11 @@ export default class PortalServicesAccessGrantedCard extends NavigationMixin(Lig
                 } else if (myUrl !== '') {
                     //redirects on the same page
                     //method that redirects the user to the old portal maintaing the same loginId
-                    goToOldPortalService({ myurl: myUrl })
-                        .then(result => {
-                            //open new tab with the redirection
-                            window.location.href = result;
-                            this.toggleSpinner();
-                        })
-                        .catch(error => {
-                            //throws error
-                            this.error = error;
-                        });
+ 
+                    //open with the redirection
+                    window.open(myUrl,"_self");
+                    this.toggleSpinner();
+                        
 
                 }
             }

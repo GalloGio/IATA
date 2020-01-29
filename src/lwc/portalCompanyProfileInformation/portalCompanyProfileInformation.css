@@ -6,4 +6,5 @@
 .adminContactsTable {
     max-height: 330px;
     display: flex;
+    overflow-y:auto;
 }
