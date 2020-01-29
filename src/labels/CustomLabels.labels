@@ -6068,13 +6068,6 @@ Click &lt;a href=&quot;http://www.iata.org/customer-portal/Pages/contactus-v2.as
         <shortDescription>CSP_Title</shortDescription>
         <value>Title</value>
     </labels>
-    <labels>
-        <fullName>CSP_Treasury_Dashboard</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP Treasury Dashboard</shortDescription>
-        <value>Treasury Dashboard</value>
-    </labels>
 	<labels>
         <fullName>CSP_Treasury_Dashboard_Report</fullName>
         <language>en_US</language>
