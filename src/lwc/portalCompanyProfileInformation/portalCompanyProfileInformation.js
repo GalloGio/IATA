@@ -12,6 +12,7 @@ import CSP_Name from '@salesforce/label/c.CSP_Name';
 import Email from '@salesforce/label/c.Email';
 import ISSP_Country from '@salesforce/label/c.ISSP_Country';
 import CSP_NoSearchResults from '@salesforce/label/c.CSP_NoSearchResults';
+import CompanyInformation from '@salesforce/label/c.ISSP_CompanyInformation';
 
 
 import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
@@ -49,7 +50,7 @@ export default class PortalCompanyProfileInformation extends LightningElement {
     ];
 
 
-    @track tabName = '';
+    @track tabName = CompanyInformation;
 
     @wire(getPortalAdmins) 
     getPortalAdminList({ error, data }) {

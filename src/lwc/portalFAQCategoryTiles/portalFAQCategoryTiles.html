@@ -13,7 +13,7 @@
                 {label.CSP_FAQ_Subtitle}
             </div>
                 
-            <div class="slds-grid slds-wrap slds-gutters_xx-small">
+            <div class="slds-grid slds-wrap slds-gutters_xx-small slds-show_medium">
                 <template for:each={lstTiles} for:item="tile" for:index="index">
                     <div key={tile.categoryName} class={tile.class} >
                         <div class="customBorderlessCardWhite cursorPointer heightInfo" onclick={handleTileButtonClick} data-item={tile.categoryName}>
@@ -22,6 +22,18 @@
                         </div>
                     </div>
                 </template>
+            </div>
+            <div class="slds-scrollable_x slds-hide_medium">
+                <div class="slds-grid slds-wrap slds-gutters_xx-small" style={sliderWidth}>
+                    <template for:each={lstTiles} for:item="tile" for:index="index">
+                        <div key={tile.categoryName} class={tile.class} >
+                            <div class="customBorderlessCardWhite cursorPointer heightInfo" onclick={handleTileButtonClick} data-item={tile.categoryName}>
+                                <img src={tile.imageURL} data-item={tile.categoryName}/>
+                                <div class="text-small text-black text-bold" data-item={tile.categoryName}>{tile.categoryLabel}</div>
+                            </div>
+                        </div>
+                    </template>
+                </div>
             </div>
         </div>
 
