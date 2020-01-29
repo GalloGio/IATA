@@ -142,7 +142,6 @@ public with sharing class ANG_ISSP_AfpWrapper {
 
 	public ANG_ISSP_AfpWrapper(Account account) {
 		this.account = account;
-		isSearch = true;
 
 		calculateAuthorizationFlags(account.Id);
 	}
@@ -196,30 +195,21 @@ public with sharing class ANG_ISSP_AfpWrapper {
 				isAdmin = true;
 			}
 
-			Boolean isAuthorisedSignatory = (isAdmin && contact.Authorized_Signatory__c);
-			
-			Boolean isIEPAccountEnable = false;
-
 			// A user has accecss to easypay when:
 			// If the IEP status is open
 			// If the IEP status is not open and is an admin and the account is HO or HE
-			if(isAuthorisedSignatory && (account.Location_Type__c == AMS_Utils.HO || account.Location_Type__c == AMS_Utils.HE|| (account.Location_Type__c == AMS_Utils.AO && account.Status__c == AMS_Utils.ACC_S4_LISTED))) {
-				isIEPAccountEnable = true;
+			if(isAdmin && contact.Authorized_Signatory__c && (account.Location_Type__c == AMS_Utils.HO || account.Location_Type__c == AMS_Utils.HE|| (account.Location_Type__c == AMS_Utils.AO && account.Status__c == AMS_Utils.ACC_S4_LISTED))) {
 				this.iepLink = availableServicesLink;
-			}
-
-			if(!isIEPAccountEnable) {
+			} else {
 				if(account.Location_Type__c == AMS_Utils.HO || account.Top_Parent__r.Location_Type__c == AMS_Utils.HO){
 					this.modalErrorMessage = Label.ANG_ISSP_IEP_AuthorisedSignatory_HO_auth_msg;
-				}else if(account.Location_Type__c == AMS_Utils.HE || account.Top_Parent__r.Location_Type__c == AMS_Utils.HE){
+				} else if(account.Location_Type__c == AMS_Utils.HE || account.Top_Parent__r.Location_Type__c == AMS_Utils.HE){
 					this.modalErrorMessage = Label.ANG_ISSP_IEP_AuthorisedSignatory_HE_auth_msg;
 				} else if (account.Location_Type__c == AMS_Utils.AO || account.Top_Parent__r.Location_Type__c == AMS_Utils.AO) {
 					this.modalErrorMessage = Label.ANG_ISSP_IEP_AuthorisedSignatory_AO_auth_msg;
 				}
-				this.iepLink = '#';
-			}
 
-			if(modalErrorMessage != '') {
+				this.iepLink = '#';
 				this.modalErrorMessageFlag = '-';
 			}
 
@@ -233,14 +223,14 @@ public with sharing class ANG_ISSP_AfpWrapper {
 			this.modalErrorMessageFlag = '-';
 			this.modalErrorMessage = modalMessageAux;
 		}
-
 	}
 
 	private String fetchIEPModalMessageLabel(String locationClass, Id isoCountry) {
 		for (AMS_Country_Specific_Attribute__c attribute: [SELECT Id, IEP_Model_Banking_Message__c, Location_Class__c
 														FROM AMS_Country_Specific_Attribute__c
 														WHERE RecordTypeId = :RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Country_Specific_Attribute__c', 'EasyPay_Model_Config')
-															AND IATA_ISO_Country__c = :isoCountry]) {
+															AND IATA_ISO_Country__c = :isoCountry
+															ORDER BY Location_Class__c DESC NULLS LAST]) {
 
 			if (attribute.Location_Class__c == null || attribute.Location_Class__c == locationClass) {
 				return AMS_Utils.getCustomLabel(attribute.IEP_Model_Banking_Message__c);
