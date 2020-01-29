@@ -384,6 +384,12 @@ public without sharing class AMS_Utils {
 
 	public static final String MBPDD_CHANGE_CODE = 'MBPDD';
 
+	
+	public static final String FINANCIAL_SECURITY_STATUS_ACTIVE = 'Active';
+	public static final String FINANCIAL_SECURITY_STATUS_CLOSE_EXPIRY = 'Close to Expiry Date';
+	public static final String FINANCIAL_SECURITY_STATUS_NOT_ACTIVE = 'Not Active yet';
+	public static final String FINANCIAL_SECURITY_TYPE_GDI = 'GDI';
+
 	public static final Set<String> TOPLOCATIONSNEWGEN = new Set<String>{'HE','GE'};
 
 	public static String ENCRYPTION_KEY {

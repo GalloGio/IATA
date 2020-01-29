@@ -1,5 +1,6 @@
 public without sharing class ANG_DGIStagingAreaCtrl {
 
+	private static final String FINANCIAL_SECURITY_ERROR_MESSAGE = 'Please select a GDI Financial Security of this Account in status "Active", "Close to Expiry Date" or "Not Active yet".';
 	public String amazonFileEId { get{
 
 		if(this.stagingFs != null){
@@ -29,13 +30,13 @@ public without sharing class ANG_DGIStagingAreaCtrl {
 		List<Financial_Security__c> toReturn = new List<Financial_Security__c>();
 
 		if(currentFS == null)
-			toReturn = [Select Id, Amount__c, Security_Type__c,Reception_Case__c from Financial_Security__c where Account__c = :stagingFs.OSCAR_GDI__r.Account__c and Security_Type__c = 'GDI' and Security_Status__c in ('Active','Close to Expiry Date') ORDER BY CREATEDDATE DESC LIMIT 1];
+			toReturn = [Select Id, Amount__c, Account__c, Security_Status__c, Security_Type__c,Reception_Case__c from Financial_Security__c where Account__c = :stagingFs.OSCAR_GDI__r.Account__c and Security_Type__c = 'GDI' and Security_Status__c in ('Active','Close to Expiry Date') ORDER BY CREATEDDATE DESC LIMIT 1];
 		else {
 		   if(currentFS.Id <> stagingFs.Financial_Security__c)
 				if(stagingFs != null && stagingFs.Financial_Security__c != null)
-					toReturn = [Select Id, Amount__c, Security_Type__c,Reception_Case__c from Financial_Security__c where Id = :stagingFs.Financial_Security__c];
+					toReturn = [Select Id, Account__c, Security_Status__c, Amount__c, Security_Type__c,Reception_Case__c from Financial_Security__c where Id = :stagingFs.Financial_Security__c];
 				else
-					toReturn = [Select Id, Amount__c, Security_Type__c,Reception_Case__c from Financial_Security__c where Account__c = :stagingFs.OSCAR_GDI__r.Account__c and Security_Type__c = 'GDI' and Security_Status__c in ('Active','Close to Expiry Date') ORDER BY CREATEDDATE DESC LIMIT 1];
+					toReturn = [Select Id, Amount__c, Security_Status__c, Account__c, Security_Type__c,Reception_Case__c from Financial_Security__c where Account__c = :stagingFs.OSCAR_GDI__r.Account__c and Security_Type__c = 'GDI' and Security_Status__c in ('Active','Close to Expiry Date') ORDER BY CREATEDDATE DESC LIMIT 1];
 		}
 
 		if(!toReturn.isEmpty())
@@ -47,6 +48,14 @@ public without sharing class ANG_DGIStagingAreaCtrl {
 		return currentFS;
 	}set;}
 
+	public boolean isValidFS(){
+		System.debug('FUNCTION VALIDATE');
+		List<String> statusList = new List<String>{AMS_Utils.FINANCIAL_SECURITY_STATUS_ACTIVE, AMS_Utils.FINANCIAL_SECURITY_STATUS_CLOSE_EXPIRY, AMS_Utils.FINANCIAL_SECURITY_STATUS_NOT_ACTIVE};
+		if(currentFS.Account__c != stagingFs.OSCAR_GDI__r.Account__c || currentFS.Security_Type__c != AMS_Utils.FINANCIAL_SECURITY_TYPE_GDI || !statusList.contains(currentFS.Security_Status__c)) {
+			return false;
+		}
+		return true;
+	}
 	public boolean hasAdendum {get;set;}
 
 	public AMS_OSCAR__c oscarObj {get;set;}
@@ -170,7 +179,9 @@ public without sharing class ANG_DGIStagingAreaCtrl {
 		}
 		catch(Exception e){
 
-			String errorMsg = (e.getMessage().substringBetween('FIELD_CUSTOM_VALIDATION_EXCEPTION, ', ': ') == '' ? e.getMessage() : e.getMessage().substringBetween('FIELD_CUSTOM_VALIDATION_EXCEPTION, ', ': ') );
+			String errorMessage = e.getMessage();
+			String errorMessageSplit = errorMessage.substringBetween('FIELD_CUSTOM_VALIDATION_EXCEPTION, ', ': ');
+			String errorMsg = (String.isBlank(errorMessageSplit)) ? errorMessage : errorMessageSplit;ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, errorMsg));
 			ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, errorMsg));
 			System.debug(e.getStackTraceString());
 		}
@@ -192,8 +203,9 @@ public without sharing class ANG_DGIStagingAreaCtrl {
 		}
 		catch(Exception e){
 
-			String errorMsg = (e.getMessage().substringBetween('FIELD_CUSTOM_VALIDATION_EXCEPTION, ', ': ') == '' ? e.getMessage() : e.getMessage().substringBetween('FIELD_CUSTOM_VALIDATION_EXCEPTION, ', ': ') );
-			ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, errorMsg));
+			String errorMessage = e.getMessage();
+			String errorMessageSplit = errorMessage.substringBetween('FIELD_CUSTOM_VALIDATION_EXCEPTION, ', ': ');
+			String errorMsg = (String.isBlank(errorMessageSplit)) ? errorMessage : errorMessageSplit;ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, errorMsg));
 			System.debug(e.getStackTraceString());
 			oscar.step50__c = 'Not Started';
 			oscarObj.step50__c = 'Not Started';
@@ -250,8 +262,8 @@ public without sharing class ANG_DGIStagingAreaCtrl {
 
 	public void performAcceptancewithAdendum(Case oscarCase){
 
-		if(currentFS == null){
-			throw new AMS_ApplicationException('There is no Financial Security or no correct Financial Security type/Status on the Account.');
+		if(currentFS == null || !isValidFS()){
+			throw new AMS_ApplicationException(FINANCIAL_SECURITY_ERROR_MESSAGE);
 		}
 
 
