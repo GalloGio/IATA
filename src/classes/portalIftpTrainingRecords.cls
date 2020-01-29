@@ -17,6 +17,7 @@ public without sharing class portalIftpTrainingRecords {
 	public static List<Account_Contact_Role__c> getITPTrainingCoordinators() {
 		List<Account_Contact_Role__c> itpTrainingCoordinatorsList = new List<Account_Contact_Role__c>();
 		PortalIftpUtils.UserInfoRecordsWrapper ui = PortalIftpUtils.getUserInfo();
+		Id accContactRoleRecTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'ITP');
 		Id accountId = ui.accountId;
 		itpTrainingCoordinatorsList = [SELECT   Id,
 												First_Name__c,
@@ -24,6 +25,7 @@ public without sharing class portalIftpTrainingRecords {
 												Company_Code__c
 										FROM Account_Contact_Role__c
 										WHERE Contact__r.accountid = :accountId
+										AND RecordTypeId = :accContactRoleRecTypeId
 										AND (Contact_Roles__r.Name = 'ITP Training Coordinator'
 										OR Contact_Role__c = 'ITP Training Coordinator')];
 		return itpTrainingCoordinatorsList;
@@ -84,11 +86,13 @@ public without sharing class portalIftpTrainingRecords {
 			Date dToDate = (auxToDate != 'null') ? Date.valueOf(auxToDate) : null;
 
 			PortalIftpUtils.UserInfoRecordsWrapper ui = PortalIftpUtils.getUserInfo();
+			Id accContactRoleRecTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'ITP');
 
 			String sQueryRolAddr = 'SELECT Account_Contact_Role__c, Account_Contact_Role__r.Company_Code__c, Address__c, Address__r.Code__c, Address__r.Description__c, Primary__c ';
 			sQueryRolAddr += 'FROM Role_Address__c ';
 			sQueryRolAddr += 'WHERE Account_Contact_Role__c != null ';
 			sQueryRolAddr += 'AND Account_Contact_Role__r.Status__c = \'Active\' ';
+			sQueryRolAddr += 'AND Account_Contact_Role__r.RecordTypeId = :accContactRoleRecTypeId ';
 			if(ui.profile.equalsIgnoreCase('ISS Portal (Partner)') || ui.profile.equalsIgnoreCase('ISS Portal Delegated Admin User')){
 				id accountId = ui.AccountId;
 				//ITP user
@@ -287,6 +291,8 @@ public without sharing class portalIftpTrainingRecords {
 		// Get logged user info
 		PortalIftpUtils.UserInfoRecordsWrapper ui = PortalIftpUtils.getUserInfo();
 
+		Id accContactRoleRecTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'ITP');
+
 		if(lProficiency.equalsIgnoreCase('All') || lProficiency.equalsIgnoreCase('Level 3')){
 			isToCheckValidParentCertificate = true;
 		}
@@ -305,6 +311,7 @@ public without sharing class portalIftpTrainingRecords {
 
 		//Condition: Only Active employees
 		lConditionsCertification.add('Account_Contact_Role__r.Status__c = \'Active\'');
+		lConditionsCertification.add('Account_Contact_Role__r.RecordTypeId = :accContactRoleRecTypeId');
 
 		//Condition: Only Non expired assessments (Contact_Role_Certification__c)
 		lConditionsCertification.add('Expiration_Status__c = \'Active\'');
@@ -810,8 +817,11 @@ public without sharing class portalIftpTrainingRecords {
 		lConditionsCertification.add('Id IN :contRolCertIds');
 
 
-		//Only search Active employees
+		//Only search Active employees with RecordType ITP
 		lConditionsCertification.add('Account_Contact_Role__r.Status__c = \'Active\'');
+
+		Id accContactRoleRecTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'ITP');
+		lConditionsCertification.add('Account_Contact_Role__r.RecordTypeId = :accContactRoleRecTypeId');
 
 		if(ui.profile.contains('ISS Portal Airline') && ui.accountRecordType.equalsIgnoreCase('IATA_Airline')){
 			// airline user
@@ -1239,6 +1249,7 @@ public without sharing class portalIftpTrainingRecords {
 		List<String> certificationsCodesList= new List<String>();
 		List<Id> contactRolCertificationIdsList = new List<Id>();
 		Id address_Id;
+		Id accContactRoleRecTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'ITP');
 		for(CertificationProficiencyWrapper rec: dataToUpdate){
 			Role_Address__c rolAddrToInsert = new Role_Address__c();
 			rolAddrToInsert.Address__c = rec.address_Id;
@@ -1276,7 +1287,8 @@ public without sharing class portalIftpTrainingRecords {
 										FROM Role_Address__c
 										WHERE Contact_Role_Certification__c IN :contactRolCertificationIdsList
 										AND Proficiency_Status__c = 'Active'
-										AND Address__c = :address_Id];
+										AND Address__c = :address_Id
+										AND Contact_Role_Certification__r.Account_Contact_Role__r.RecordTypeId = :accContactRoleRecTypeId];
 
 		if(proficiencyListInDatabase.size() > 0){
 			Integer index = 0;
@@ -1301,6 +1313,7 @@ public without sharing class portalIftpTrainingRecords {
 
 		}
 		// Check if it's renewal
+		
 		List<Role_Address__c> existingProficiencyList = [SELECT Id,
 														Address__c,
 														Address__r.Code__c,
@@ -1320,7 +1333,8 @@ public without sharing class portalIftpTrainingRecords {
 														WHERE Contact_Role_Certification__r.Certification__r.Code__c IN :certificationsCodesList
 														AND Proficiency_level__c = 'Yes'
 														AND Proficiency_Status__c = 'Active'
-														AND Address__c = :address_Id];
+														AND Address__c = :address_Id
+														AND Contact_Role_Certification__r.Account_Contact_Role__r.RecordTypeId = :accContactRoleRecTypeId];
 
 		for(Role_Address__c rolAddr: existingProficiencyList){
 			for(CertificationProficiencyWrapper dataToInsert: dataToUpdate){
@@ -1429,6 +1443,7 @@ public without sharing class portalIftpTrainingRecords {
 		List<Contact_Role_Certification__c> lContRolCertStop = new List<Contact_Role_Certification__c>();
 		Set<Id> contact_role_certifications_id_list = new Set<Id>();
 		Map<Id, CertificationEnrollmentWrapper> certificateToUpdateEnrollmentByIdMap = new Map<Id, CertificationEnrollmentWrapper>();
+		Id accContactRoleRecTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'ITP');
 
 		for(CertificationEnrollmentWrapper rec: dataToUpdate){
 			contact_role_certifications_id_list.add(rec.contact_role_certification_id);
@@ -1470,7 +1485,8 @@ public without sharing class portalIftpTrainingRecords {
 									Contact_Role_Certification__r.Account_Contact_Role__r.First_Name__c,
 									Contact_Role_Certification__r.Account_Contact_Role__r.Last_Name__c
 									FROM Role_Address__c
-									WHERE Contact_Role_Certification__c  IN :lContRolCertStop];
+									WHERE Contact_Role_Certification__c  IN :lContRolCertStop
+									AND Contact_Role_Certification__r.Account_Contact_Role__r.RecordTypeId = :accContactRoleRecTypeId];
 
 
 			for(Role_Address__c rolAddr: proficiencyToStop){
