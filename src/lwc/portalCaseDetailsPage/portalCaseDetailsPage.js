@@ -25,4 +25,10 @@ export default class PortalCaseDetailsPage extends LightningElement {
         window.print();
     }
 
+ @track isExpired;
+
+    handleExpired(event) {
+        this.isExpired = event.detail;
+      }
+
 }
