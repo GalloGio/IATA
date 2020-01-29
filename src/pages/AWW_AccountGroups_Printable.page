@@ -32,8 +32,9 @@
                             </tr>
                             <tr class="headerRow" >
                                 <th class="headerRow" scope="col" colspan="1" style="width: 17%;"><div>Main Group</div></th>
-                                <th class="headerRow" scope="col" colspan="1" style="width: 17%;"><div>Group Name</div></th>
-                                <th class="headerRow" scope="col" colspan="1" style="width: 12%;"><div>Group Owner</div></th>                            
+                                <th class="headerRow" scope="col" colspan="1" style="width: 17%;"><div>IATA Group Name</div></th>
+                                <th class="headerRow" scope="col" colspan="1" style="width: 12%;"><div>IATA Group Owner</div></th>  
+                                <th class="headerRow" scope="col" colspan="1" style="width: 12%;"><div>Mission Of IATA Group</div></th>                             
                                 <th class="headerRow" scope="col" colspan="1" style="width: 11%;"><div>Role</div></th>
                                 <th class="headerRow" scope="col" colspan="1" style="width: 8%;"><div>First Name</div></th>
                                 <th class="headerRow" scope="col" colspan="1" style="width: 8%;"><div>Last Name</div></th>
@@ -46,7 +47,7 @@
                             <tr class="dataRow">
                                 <td class="dataCell maingroup" rowspan="{!mainGroup.members.size + 1}">{!mainGroup.groupName}</td>
                                 <td class="dataCell maingroup" rowspan="{!mainGroup.members.size + 1}"></td>
-                                <td class="dataCell maingroup" rowspan="{!mainGroup.members.size + 1}">{!mainGroup.ownerName}</td>
+                                <td class="dataCell maingroup" rowspan="{!mainGroup.members.size + 1}"></td>
                                 <apex:outputPanel layout="none" rendered="{!mainGroup.members.size == 0}">
                                     <td class="dataCell maingroup"></td>
                                     <td class="dataCell maingroup"></td>
@@ -74,6 +75,7 @@
                                 </tr>
                                 <apex:repeat value="{!localGroup.childrens}" var="member">
                                     <tr>
+                                        <td class="dataCell">{!localGroup.mission}</td>
                                         <td class="dataCell">{!member.role}</td>
                                         <td class="dataCell">{!member.firstName}</td>
                                         <td class="dataCell">{!member.lastName}</td>
