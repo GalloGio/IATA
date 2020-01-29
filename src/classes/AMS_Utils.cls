@@ -2616,15 +2616,6 @@ public static String getChangeCodeMemoText(String process,String changeCodeId, A
 		return qId;
 	}
 
-	public static ANG_ISSP_AfpWrapper getANG_ISSP_AfpWrapper(Contact con, Account acc, Boolean isSearch) {
-		List<Agency_Authorization__c> authorizations = [SELECT Id, ANG_FormOfPayment_ID__c
-						FROM Agency_Authorization__c
-						WHERE Account__c = :acc.Id
-							AND (Status__c = 'Active' OR Status__c = 'Authorized')];
-
-		return new ANG_ISSP_AfpWrapper(con, authorizations, acc, isSearch);
-	}
-
 	public static List<Account> fetchAgentDetails(String iataCode) {
 		return [Select Id, BillingStreet, BillingCity, BillingState, BillingPostalCode,
 						 BillingCountry, Name

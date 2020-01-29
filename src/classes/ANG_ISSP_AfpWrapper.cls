@@ -1,12 +1,19 @@
 public with sharing class ANG_ISSP_AfpWrapper {
-	private static final String NO = 'glyphicon glyphicon-remove';
-	private static final String YES = 'glyphicon glyphicon-ok';
+	@TestVisible private static final String NO = 'glyphicon glyphicon-remove';
+	@TestVisible private static final String YES = 'glyphicon glyphicon-ok';
 	public static final String DOMESTIC = AMS_Utils.CATEGORY_DOMESTIC_AGENT;
 	public static final String INTERNATIONAL = AMS_Utils.CATEGORY_PASSENGER_SALES_AGENT;
+	@TestVisible private static final String AVAILABLE_SERVICES_OLD = '/ISSP_AvailableServices?MainNav=Services&subNav=Access&mid=M3S1';
 
 	private Contact contact {get; set;}
 	private Account account {get; set;}
-	public Boolean isSearch {get; set;}
+
+	public Boolean isSearch {
+		get {
+			return contact == null;
+		}
+		set;
+	}
 
 	public Boolean isInternational {
 		get {
@@ -133,39 +140,32 @@ public with sharing class ANG_ISSP_AfpWrapper {
 		private set;
 	}
 
-	public ANG_ISSP_AfpWrapper(Contact contact, List<Agency_Authorization__c> authorizations, Account account, Boolean isSearch) {
+	public ANG_ISSP_AfpWrapper(Account account) {
+		this.account = account;
+		isSearch = true;
+
+		calculateAuthorizationFlags(account.Id);
+	}
+
+	public ANG_ISSP_AfpWrapper(Contact contact, Account account) {
 		this.contact = contact;
 		this.account = account;
-		this.isSearch = isSearch;
 
-		String availableServicesLink = CSP_Utils.isNewPortalActive() ? CSP_Utils.redirectfromPortalHeader('services?tab=availableServices') : '/ISSP_AvailableServices?MainNav=Services&subNav=Access&mid=M3S1';
+		String availableServicesLink = CSP_Utils.isNewPortalActive() ? CSP_Utils.redirectfromPortalHeader('services?tab=availableServices') : AVAILABLE_SERVICES_OLD;
 
-		List<Portal_Application_Right__c> services = new List<Portal_Application_Right__c>();
+		calculateAuthorizationFlags(account.Id);
 
-		if (contact != null) {
-			services = [SELECT Id, Application_Name__c, Right__c, Application_Start_URL__c
-						FROM Portal_Application_Right__c
-						WHERE Contact__c = :contact.Id];
+		List<Portal_Application_Right__c> services = [SELECT Id, Application_Name__c, Right__c, Application_Start_URL__c
+													FROM Portal_Application_Right__c
+													WHERE Contact__c = :contact.Id];
 
-			checkAccreditationChangesAccess(services);
-		}
-
-		calculateAuthorizationFlags(authorizations);
+		checkAccreditationChangesAccess(services);
 
 		if (isChinaAgent) {
 			this.iepLink = Label.ANG_ISSP_BOP_China_URL;
 		} else if (iepModel == 'Banking Model') {
 			this.iepLink = '#';
 			this.iepLinkLabel = Label.ANG_ISSP_IEP_ModelBanking_link;
-			this.modalErrorMessageFlag = '-';
-
-			if (account.IATA_ISO_Country__r.Iso_Code__c == 'IN') {
-				this.modalErrorMessage = Label.ANG_ISSP_IEP_ModelBanking_India_msg;
-			}
-
-			if (account.IATA_ISO_Country__r.Iso_Code__c == 'KR') {
-				this.modalErrorMessage = Label.ANG_ISSP_IEP_ModelBanking_SouthKorea_msg;
-			}
 		} else if (account.ANG_IEP_Status_FF__c == Ams_Utils.OPEN) {
 			this.isIEP = YES;
 			this.isIEPFlag = true;
@@ -196,17 +196,14 @@ public with sharing class ANG_ISSP_AfpWrapper {
 				isAdmin = true;
 			}
 
-			Boolean isAuthorisedSignatory = false;
-			if (contact != null) {
-				isAuthorisedSignatory = (isAdmin && contact.Authorized_Signatory__c);
-			}
-
+			Boolean isAuthorisedSignatory = (isAdmin && contact.Authorized_Signatory__c);
+			
 			Boolean isIEPAccountEnable = false;
 
 			// A user has accecss to easypay when:
 			// If the IEP status is open
 			// If the IEP status is not open and is an admin and the account is HO or HE
-			if(isAuthorisedSignatory && isAdmin && (account.Location_Type__c == AMS_Utils.HO || account.Location_Type__c == AMS_Utils.HE|| (account.Location_Type__c == AMS_Utils.AO && account.Status__c == AMS_Utils.ACC_S4_LISTED))) {
+			if(isAuthorisedSignatory && (account.Location_Type__c == AMS_Utils.HO || account.Location_Type__c == AMS_Utils.HE|| (account.Location_Type__c == AMS_Utils.AO && account.Status__c == AMS_Utils.ACC_S4_LISTED))) {
 				isIEPAccountEnable = true;
 				this.iepLink = availableServicesLink;
 			}
@@ -229,11 +226,28 @@ public with sharing class ANG_ISSP_AfpWrapper {
 			this.iepLinkLabel = Label.ANG_ISSP_Open_IATA_EasyPay_Account;
 		}
 
-		if (isIndonesiaAgent && account.Category__c == INTERNATIONAL) {
+		String modalMessageAux = fetchIEPModalMessageLabel(this.account.Location_Class__c, this.account.IATA_ISO_Country__c);
+
+		if(String.isNotBlank(modalMessageAux)){
 			this.iepLink = '#';
 			this.modalErrorMessageFlag = '-';
-			this.modalErrorMessage = Label.ANG_ISSP_IEP_Indonesia_msg;
+			this.modalErrorMessage = modalMessageAux;
 		}
+
+	}
+
+	private String fetchIEPModalMessageLabel(String locationClass, Id isoCountry) {
+		for (AMS_Country_Specific_Attribute__c attribute: [SELECT Id, IEP_Model_Banking_Message__c, Location_Class__c
+														FROM AMS_Country_Specific_Attribute__c
+														WHERE RecordTypeId = :RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Country_Specific_Attribute__c', 'EasyPay_Model_Config')
+															AND IATA_ISO_Country__c = :isoCountry]) {
+
+			if (attribute.Location_Class__c == null || attribute.Location_Class__c == locationClass) {
+				return AMS_Utils.getCustomLabel(attribute.IEP_Model_Banking_Message__c);
+			}
+		}
+
+		return null;
 	}
 
 	private void checkAccreditationChangesAccess(List<Portal_Application_Right__c> services) {
@@ -253,8 +267,11 @@ public with sharing class ANG_ISSP_AfpWrapper {
 		this.creditCardMessage = hasAccess ? Label.ANG_ISSP_AFP_NoCreditCardMessage : Label.ANG_ISSP_AFP_CreditCardNoAccess;
 	}
 
-	private void calculateAuthorizationFlags(List<Agency_Authorization__c> authorizations) {
-		for(Agency_Authorization__c auth : authorizations) {
+	private void calculateAuthorizationFlags(Id accountId) {
+		for(Agency_Authorization__c auth : [SELECT Id, ANG_FormOfPayment_ID__c
+										FROM Agency_Authorization__c
+										WHERE Account__c = :accountId
+										AND (Status__c = 'Active' OR Status__c = 'Authorized')]) {
 			if(auth.ANG_FormOfPayment_ID__c == Ams_Utils.CA && !this.isCashless) {
 				this.isCash = YES;
 				this.isCashFlag = true;
