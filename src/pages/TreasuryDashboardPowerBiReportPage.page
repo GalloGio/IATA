@@ -41,14 +41,7 @@
             accessToken: "{!accessToken}",
             settings : {
                 filterPaneEnabled: false,
-                navContentPaneEnabled: false,
-                //for forcing language to English
-                /*localeSettings: {
-                    language: "en",
-                    formatLocale: "us"
-                }*/
-                //for transparent background in iFrame
-                //background: models.BackgroundType.Transparent
+                navContentPaneEnabled: false
             }
         };
 
@@ -56,14 +49,6 @@
 
         var expDate = new Date(expiration);
 
-        //normally we would use this piece of code, but there is error in promise in loaded powerbi.js
-        /*report.off("loaded");
-        report.on("loaded", function() {
-            // Set token expiration listener (expDate, minutesBeforeExpiration, reportId, groupId)
-            setTokenExpirationListener(expDate, 3, obj, groupId);
-        });*/
-
-        //this is workaround
         window.addEventListener("DOMContentLoaded",
         function() {
             setTokenExpirationListener(expDate, 3, obj, groupId);
@@ -86,7 +71,6 @@
             }
             // set timeout so minutesToRefresh minutes before token expires, token will be updated
             else {
-                console.log("Report Embed Token will be updated in " + timeout + " milliseconds.");
                 setTimeout(function() {
                     updateEmbedToken(reportId, groupId);
                 }, timeout);
@@ -94,20 +78,18 @@
 
 
             function updateEmbedToken(reportId, groupId) {
-                console.log('Updating embed token...');
                 Visualforce.remoting.Manager.invokeAction(
                     '{!$RemoteAction.TreasuryDashboardPowerBiReportPageCtrl.refreshEmbedToken}', reportId, groupId,
                     function(result, event){
                         if (event.status) {
-                            console.log('OK');
                             setNewEmbedToken(result, groupId, reportId);
                             //response OK
                         } else if (event.type === 'exception') {
                             //exception
-                            console.log('Unable to update embed token - exception: ', event.message);
+                            console.error('Unable to update embed token - exception: ', event.message);
                         } else {
                             //exception
-                            console.log('Unable to update embed token - error: ', event.message);
+                            console.error('Unable to update embed token - error: ', event.message);
                         }
                     },
                     {escape: true}

@@ -12,7 +12,7 @@
                     <!-- REPORT -->
                     <template if:false={loading}>
 
-                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-p-vertical_x-large reportContainer" >
+                        <div class="slds-col slds-size_1-of-1 slds-p-vertical_x-large reportContainer" >
 
                             <c-portal-treasury-dashboard-report-iframe ></c-portal-treasury-dashboard-report-iframe>
 
@@ -24,7 +24,7 @@
                     <!-- SPINNER -->
                     <template if:true={loading}>
 
-                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1">
+                        <div class="slds-col slds-size_1-of-1">
 
                             <div class="slds-m-around_xx-large">
                                 <lightning-spinner class="spinnerContainer" alternative-text="Loading" size="medium"></lightning-spinner>

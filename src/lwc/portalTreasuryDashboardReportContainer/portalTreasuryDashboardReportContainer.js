@@ -5,6 +5,6 @@ export default class PortalTreasuryDashboardReportContainer extends LightningEle
 
     @track loading = false;
 
-    //more logic can be added here
+    //prepared for next release planned for March/April 2020
 
 }

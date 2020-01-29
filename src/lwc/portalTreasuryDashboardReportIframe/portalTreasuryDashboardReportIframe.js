@@ -3,6 +3,8 @@ import { LightningElement, track } from 'lwc';
 //navigation
 import { navigateToPage, getPageName } from 'c/navigationUtils';
 
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+
 //label
 import accessDeniedMessage from '@salesforce/label/c.Treasury_Dashboard_Report_Access_Denied';
 import accessDeniedMessageLink from '@salesforce/label/c.Treasury_Dashboard_Report_Access_Denied_Link';
@@ -188,8 +190,6 @@ export default class PortalTreasuryDashboardReportIframe extends LightningElemen
 
                                             this.loading = false;
                                             this.showAccessDenied();
-                                            console.log('User does not have permission to see this report!');
-
                                         }
 
                                     })
@@ -231,11 +231,26 @@ export default class PortalTreasuryDashboardReportIframe extends LightningElemen
 
 
     logError(error) {
-        console.log('Report iframe error: ', JSON.parse(JSON.stringify(error)).body.message);
+        let message = JSON.parse(JSON.stringify(error)).body.message
+        console.error('Report iframe error: ', message);
+        this.showToast(message);
     }
 
     logMessage(message) {
-        console.log('Report iframe error: ', message);
+        console.error('Report iframe error: ', message);
+        this.showToast(message);
+    }
+
+    showToast(toastMessage) {
+        this.dispatchEvent(
+            new ShowToastEvent({
+                title: 'Error',
+                message: toastMessage,
+                variant: 'error',
+                mode: 'pester'
+            })
+        );
+
     }
 
     createSrcAddress(reportId, groupId, accessToken, objectId, tokenType, conf, expiration) {
@@ -305,7 +320,7 @@ export default class PortalTreasuryDashboardReportIframe extends LightningElemen
     }
 
     navigateToTreasuryDashboard() {
-        navigateToPage("/csportal/s/treasury-dashboard");
+        navigateToPage(CSP_PortalPath + 'treasury-dashboard');
     }
 
     getSubscriptionLink(reportName) {

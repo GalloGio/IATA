@@ -114,14 +114,7 @@ public without sharing class TreasuryDashboardCtrl {
 
     }
 
-    /* USE THIS AS GCS PORTAL DOES*/
-    /*@AuraEnabled
-    public static String premiumAccessRequest(String applicationId, String applicationName, String contactId) {
-        return PortalServicesCtrl.newAppsRequestICCS(applicationId, applicationName, contactId);
-    }*/
 
-
-    /*FROM ORIGINAL PAGE*/
     @AuraEnabled
     public static String premiumAccessRequest(String applicationId, String contactId) {
         return requestTreasuryDashboardPremium(applicationId, contactId);
@@ -152,13 +145,14 @@ public without sharing class TreasuryDashboardCtrl {
     @AuraEnabled
     public static PowerBiCtrl.OAuthResult getAccessToken(PowerBI_Config__c conf) {
 
-        Cache.OrgPartition orgPartition = null;
-        PowerBiCtrl.OAuthResult result = new PowerBiCtrl.OAuthResult();
-
         if(conf == null) {
             return null;
         }
 
+        Cache.OrgPartition orgPartition = null;
+        PowerBiCtrl.OAuthResult result = new PowerBiCtrl.OAuthResult();
+
+        //Tests run on sandbox without org cache(SIT) would fail
         if(Test.isRunningTest()){
 
             try{
@@ -242,10 +236,6 @@ public without sharing class TreasuryDashboardCtrl {
         return PowerBiCtrl.getReportsDetails(accessToken, reportId, conf);
     }
 
-    /*@AuraEnabled
-    public static PowerBiCtrl.EmbedTokenResult getEmbedToken(String accessToken, String userId, String groupId, String reportId, String datasetId, PowerBI_Config__c conf) {
-        return PowerBiCtrl.getEmbedToken(accessToken, userId,  groupId, reportId, datasetId, conf);
-    }*/
 
     @AuraEnabled
     public static PowerBiCtrl.EmbedTokenResult getEmbedToken(String accessToken, String userId, String groupId, String reportId, String datasetId, PowerBI_Config__c conf) {
@@ -260,6 +250,7 @@ public without sharing class TreasuryDashboardCtrl {
         String reportIdReplaced = reportId.replaceAll('-', '');
         String cacheKey = conf.Application_Identifier__c + reportIdReplaced;
 
+        //Tests run on sandbox without org cache(SIT) would fail
         if(Test.isRunningTest()) {
 
             try{

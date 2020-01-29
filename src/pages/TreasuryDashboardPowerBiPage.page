@@ -46,15 +46,7 @@
             accessToken: "{!accessToken}",
             settings : {
                 filterPaneEnabled: false,
-                navContentPaneEnabled: false,
-                //Use this for forcing language to English:
-                /*localeSettings: {
-                    language: "en",
-                    formatLocale: "us"
-                }*/
-
-                //Use this for transparent background in iFrame:
-                //background: models.BackgroundType.Transparent
+                navContentPaneEnabled: false
             }
         };
 
@@ -83,7 +75,6 @@
             }
             // set timeout so minutesToRefresh minutes before token expires, token will be updated
             else {
-                console.log("Report Embed Token will be updated in " + timeout + " milliseconds.");
                 setTimeout(function() {
                     updateEmbedToken(reportId, groupId, datasetId);
                 }, timeout);
@@ -91,20 +82,18 @@
 
 
             function updateEmbedToken(reportId, groupId, datasetId) {
-                console.log('Updating embed token...');
                 Visualforce.remoting.Manager.invokeAction(
                     '{!$RemoteAction.TreasuryDashboardPowerBiPageCtrl.refreshEmbedToken}', reportId, groupId, datasetId,
                     function(result, event){
                         if (event.status) {
                             //response OK
-                            console.log('OK');
                             setNewEmbedToken(result, groupId, reportId, datasetId);
                         } else if (event.type === 'exception') {
                             //exception
-                            console.log('Unable to update embed token - exception: ', event.message);
+                            console.error('Unable to update embed token - exception: ', event.message);
                         } else {
                             //exception
-                            console.log('Unable to update embed token - error: ', event.message);
+                            console.error('Unable to update embed token - error: ', event.message);
                         }
                     },
                     {escape: true}

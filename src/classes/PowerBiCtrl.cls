@@ -278,7 +278,7 @@ public without sharing class PowerBiCtrl {
         return result;
     }
 
-    //@AuraEnabled
+
     public static EmbedTokenResult getEmbedToken(String accessToken, String userId, String groupId, String reportId, String datasetId, PowerBI_Config__c conf) {
 
         IdentityData identityData = new IdentityData();

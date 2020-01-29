@@ -28,6 +28,7 @@ public without sharing class TreasuryDashboardReportCtrl {
         PowerBiCtrl.ServicePrincipalAccessTokenResult result = new PowerBiCtrl.ServicePrincipalAccessTokenResult();
         Cache.OrgPartition orgPartition = null;
 
+        //Tests run on sandbox without org cache(SIT) would fail
         if(Test.isRunningTest()){
 
             try{
@@ -97,6 +98,7 @@ public without sharing class TreasuryDashboardReportCtrl {
         String reportIdReplaced = reportId.replaceAll('-', '');
         String cacheKey = conf.Application_Identifier__c + reportIdReplaced;
 
+        //Tests run on sandbox without org cache(SIT) would fail
         if(Test.isRunningTest()) {
 
             try{

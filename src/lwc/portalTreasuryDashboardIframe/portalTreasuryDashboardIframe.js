@@ -1,5 +1,7 @@
 import { LightningElement, track, api } from 'lwc';
 
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+
 import getReportDetails from '@salesforce/apex/TreasuryDashboardCtrl.getReportsDetails';
 import getDatasetDetail from '@salesforce/apex/TreasuryDashboardCtrl.getDataset';
 import getEmbedToken from '@salesforce/apex/TreasuryDashboardCtrl.getEmbedToken';
@@ -203,11 +205,26 @@ export default class PortalTreasuryDashboardIframe extends LightningElement {
 
 
     logError(error) {
-        console.log('Iframe error: ', JSON.parse(JSON.stringify(error)).body.message);
+        let message = JSON.parse(JSON.stringify(error)).body.message;
+        console.error('Iframe error: ', message);
+        this.showToast(message);
     }
 
     logMessage(message) {
-        console.log('Iframe error: ', message);
+        console.error('Iframe error: ', message);
+        this.showToast(message);
+    }
+
+    showToast(toastMessage) {
+        this.dispatchEvent(
+            new ShowToastEvent({
+                title: 'Error',
+                message: toastMessage,
+                variant: 'error',
+                mode: 'pester'
+            })
+        );
+
     }
 
 
