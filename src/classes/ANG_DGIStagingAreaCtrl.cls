@@ -1,6 +1,13 @@
 public without sharing class ANG_DGIStagingAreaCtrl {
 
 	private static final String FINANCIAL_SECURITY_ERROR_MESSAGE = 'Please select a GDI Financial Security of this Account in status "Active", "Close to Expiry Date" or "Not Active yet".';
+	
+	private static final List<String> FINANCIAL_SECURITY_ACTIVE_STATUS = new List<String>{
+		AMS_Utils.FINANCIAL_SECURITY_STATUS_ACTIVE, 
+		AMS_Utils.FINANCIAL_SECURITY_STATUS_CLOSE_EXPIRY, 
+		AMS_Utils.FINANCIAL_SECURITY_STATUS_NOT_ACTIVE	
+	};
+
 	public String amazonFileEId { get{
 
 		if(this.stagingFs != null){
@@ -30,13 +37,13 @@ public without sharing class ANG_DGIStagingAreaCtrl {
 		List<Financial_Security__c> toReturn = new List<Financial_Security__c>();
 
 		if(currentFS == null)
-			toReturn = [Select Id, Amount__c, Account__c, Security_Status__c, Security_Type__c,Reception_Case__c from Financial_Security__c where Account__c = :stagingFs.OSCAR_GDI__r.Account__c and Security_Type__c = 'GDI' and Security_Status__c in ('Active','Close to Expiry Date') ORDER BY CREATEDDATE DESC LIMIT 1];
+			toReturn = [Select Id, Amount__c, Account__c, Security_Status__c, Security_Type__c,Reception_Case__c from Financial_Security__c where Account__c = :stagingFs.OSCAR_GDI__r.Account__c and Security_Type__c = 'GDI' and Security_Status__c in :FINANCIAL_SECURITY_ACTIVE_STATUS ORDER BY CREATEDDATE DESC LIMIT 1];
 		else {
 		   if(currentFS.Id <> stagingFs.Financial_Security__c)
 				if(stagingFs != null && stagingFs.Financial_Security__c != null)
 					toReturn = [Select Id, Account__c, Security_Status__c, Amount__c, Security_Type__c,Reception_Case__c from Financial_Security__c where Id = :stagingFs.Financial_Security__c];
 				else
-					toReturn = [Select Id, Amount__c, Security_Status__c, Account__c, Security_Type__c,Reception_Case__c from Financial_Security__c where Account__c = :stagingFs.OSCAR_GDI__r.Account__c and Security_Type__c = 'GDI' and Security_Status__c in ('Active','Close to Expiry Date') ORDER BY CREATEDDATE DESC LIMIT 1];
+					toReturn = [Select Id, Amount__c, Security_Status__c, Account__c, Security_Type__c,Reception_Case__c from Financial_Security__c where Account__c = :stagingFs.OSCAR_GDI__r.Account__c and Security_Type__c = 'GDI' and Security_Status__c in :FINANCIAL_SECURITY_ACTIVE_STATUS ORDER BY CREATEDDATE DESC LIMIT 1];
 		}
 
 		if(!toReturn.isEmpty())
@@ -49,9 +56,7 @@ public without sharing class ANG_DGIStagingAreaCtrl {
 	}set;}
 
 	public boolean isValidFS(){
-		System.debug('FUNCTION VALIDATE');
-		List<String> statusList = new List<String>{AMS_Utils.FINANCIAL_SECURITY_STATUS_ACTIVE, AMS_Utils.FINANCIAL_SECURITY_STATUS_CLOSE_EXPIRY, AMS_Utils.FINANCIAL_SECURITY_STATUS_NOT_ACTIVE};
-		if(currentFS.Account__c != stagingFs.OSCAR_GDI__r.Account__c || currentFS.Security_Type__c != AMS_Utils.FINANCIAL_SECURITY_TYPE_GDI || !statusList.contains(currentFS.Security_Status__c)) {
+		if(currentFS.Account__c != stagingFs.OSCAR_GDI__r.Account__c || currentFS.Security_Type__c != AMS_Utils.FINANCIAL_SECURITY_TYPE_GDI || !FINANCIAL_SECURITY_ACTIVE_STATUS.contains(currentFS.Security_Status__c)) {
 			return false;
 		}
 		return true;
@@ -126,7 +131,7 @@ public without sharing class ANG_DGIStagingAreaCtrl {
 
 		if(!lineItemsLst.isEmpty()){ stagingFs = lineItemsLst.get(0); fetchStagingFs();}
 
-		List<Financial_Security__c> currentFSLst = [Select Id, Amount__c, Security_Type__c,Reception_Case__c from Financial_Security__c where Account__c = :oscarObj.Account__c and Security_Type__c = 'GDI' and Security_Status__c in ('Active','Close to Expiry Date') ORDER BY CREATEDDATE DESC LIMIT 1];
+		List<Financial_Security__c> currentFSLst = [Select Id, Amount__c, Security_Type__c,Reception_Case__c from Financial_Security__c where Account__c = :oscarObj.Account__c and Security_Type__c = 'GDI' and Security_Status__c in :FINANCIAL_SECURITY_ACTIVE_STATUS ORDER BY CREATEDDATE DESC LIMIT 1];
 
 		if(!currentFSLst.isEmpty()){
 			currentFS=currentFSLst.get(0);
