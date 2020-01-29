@@ -1,16 +1,16 @@
 import { LightningElement, api, track } from 'lwc';
 
-import goToOldPortalService from '@salesforce/apex/PortalServicesCtrl.goToOldPortalService';
 import updateLastModifiedService from '@salesforce/apex/PortalServicesCtrl.updateLastModifiedService';
 import paymentLinkRedirect from '@salesforce/apex/PortalServicesCtrl.paymentLinkRedirect';
 import changeIsFavoriteStatus from '@salesforce/apex/PortalServicesCtrl.changeIsFavoriteStatus';
 import verifyCompleteL3Data from '@salesforce/apex/PortalServicesCtrl.verifyCompleteL3Data';
 import getPortalServiceId from '@salesforce/apex/PortalServicesCtrl.getPortalServiceId';
-import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 
 //navigation
 import { NavigationMixin } from 'lightning/navigation';
 import { navigateToPage } from 'c/navigationUtils';
+
+import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 
 //import labels
 import CSP_Services_ManageService from '@salesforce/label/c.CSP_Services_ManageService';
@@ -91,17 +91,9 @@ export default class PortalServicesAccessGrantedCard extends NavigationMixin(Lig
                     //open new tab with the redirection
 
                     if (myUrl.startsWith('/')) {
-                        goToOldPortalService({ myurl: myUrl })
-                            .then(result => {
                                 //open new tab with the redirection
-                                window.open(result);
+                                window.open(myUrl);
                                 this.toggleSpinner();
-                            })
-                            .catch(error => {
-                                //throws error
-                                this.error = error;
-                            });
-
                     } else {
                         if (appName === 'Payment Link' || appName === 'Paypal') {
                             paymentLinkRedirect()
@@ -152,16 +144,11 @@ export default class PortalServicesAccessGrantedCard extends NavigationMixin(Lig
                 } else if (myUrl !== '') {
                     //redirects on the same page
                     //method that redirects the user to the old portal maintaing the same loginId
-                    goToOldPortalService({ myurl: myUrl })
-                        .then(result => {
-                            //open new tab with the redirection
-                            window.location.href = result;
+ 
+                    //open with the redirection
+                    window.open(myUrl,"_self");
                             this.toggleSpinner();
-                        })
-                        .catch(error => {
-                            //throws error
-                            this.error = error;
-                        });
+                        
 
                 }
             }
