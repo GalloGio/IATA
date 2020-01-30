@@ -14,6 +14,9 @@ public without sharing class AMS_Utils {
 	public static final String IN_PROGRESS = 'In Progress';
 	public static final String NOT_APPLICABLE = 'Not Applicable';
 
+	public static final String ACTIVE = 'Active';
+	public static final String AUTHORIZED = 'Authorized';
+
 	public static final String AUTH_APPROVAL = 'Authorize Approval';
 	public static final String AUTH_DISAPPROVAL ='Authorize Disapproval';
 	public static final String LOCATION_TYPE = 'Location type';
@@ -2616,15 +2619,6 @@ public static String getChangeCodeMemoText(String process,String changeCodeId, A
 		System.DEBUG('Case region: ' + newCase.Region__c);
 		System.DEBUG('AM Queue returned: ' + qId);
 		return qId;
-	}
-
-	public static ANG_ISSP_AfpWrapper getANG_ISSP_AfpWrapper(Contact con, Account acc, Boolean isSearch) {
-		List<Agency_Authorization__c> authorizations = [SELECT Id, ANG_FormOfPayment_ID__c
-						FROM Agency_Authorization__c
-						WHERE Account__c = :acc.Id
-							AND (Status__c = 'Active' OR Status__c = 'Authorized')];
-
-		return new ANG_ISSP_AfpWrapper(con, authorizations, acc, isSearch);
 	}
 
 	public static List<Account> fetchAgentDetails(String iataCode) {
