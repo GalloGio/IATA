@@ -241,7 +241,6 @@ public class ANG_ISSP_AfpWrapper_Test {
 
 			System.assertEquals(ANG_ISSP_AfpWrapper.AVAILABLE_SERVICES_OLD, wrapper.iepLink, 'The link should not redirect to another page.');
 			System.assertEquals(Label.ANG_ISSP_Request_Access_IATA_EasyPay, wrapper.iepLinkLabel, 'The label should be the Model Banking one.');
-			System.assertEquals(ANG_ISSP_AfpWrapper.YES, wrapper.isIEP, 'There should be IEP authorizaation');
 			System.assert(wrapper.isIEPFlag, 'There should be IEP authorizaation');
 		}
 
@@ -274,7 +273,6 @@ public class ANG_ISSP_AfpWrapper_Test {
 			System.assertEquals('#', wrapper.iepLink, 'The link should not redirect to another page.');
 			System.assertEquals(Label.ANG_ISSP_Open_IATA_EasyPay_Account, wrapper.iepLinkLabel, 'The label should be the default IEP one');
 			System.assertEquals(Label.ANG_ISSP_IEP_AuthorisedSignatory_HE_auth_msg, wrapper.modalErrorMessage, 'The message should be the HE one.');
-			System.assertEquals('-', wrapper.modalErrorMessageFlag, 'The flag should be set to (-) ');
 			System.assert(wrapper.displayIcons, 'Icons should be displayed in this scneario');
 		}
 
@@ -293,8 +291,6 @@ public class ANG_ISSP_AfpWrapper_Test {
 			System.assert(wrapper.isBOPFlag, 'There should be BOP authorization.');
 			System.assert(wrapper.isCreditCardFlag, 'There should be Credit Card authorization.');
 			System.assert(wrapper.isCashFlag, 'There should be Cash authorization.');
-			System.assertEquals(ANG_ISSP_AfpWrapper.YES, wrapper.isCreditCard, 'There should be Credit Card authorization.');
-			System.assertEquals(ANG_ISSP_AfpWrapper.YES, wrapper.isCash, 'There should be Cash authorization.');
 		}
 
 		Test.stopTest();
