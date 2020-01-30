@@ -41,7 +41,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
 		get {
 			if (processDetails == null) {
 				processDetails = new List<AMS_Process_Detail__c>();
-				List<AMS_Process_Detail__c> allProcessDetails = [SELECT Id, Account__c, OSCAR__c, Account__r.Status__c
+				List<AMS_Process_Detail__c> allProcessDetails = [SELECT Id, Account__c, OSCAR__c, Account__r.Status__c, Account__r.Is_Branch_Abroad__c
 																 FROM AMS_Process_Detail__c
 																 WHERE OSCAR__c = :oscarObj.Id
 																	 AND RecordType.Developername = 'Agency_Involved'];
