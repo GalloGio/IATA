@@ -28,7 +28,7 @@
                             </button>
                         </div>
         <!-- LIST VIEW -->
-                        <div class="slds-text-align_right slds-p-horizontal--xxx-small slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_4-of-12fullHeight" if:true={viewNormalUserCasesTableViewButton}>    
+                        <div class="slds-text-align_right slds-p-horizontal--xxx-small slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_4-of-12 fullHeight" if:true={viewNormalUserCasesTableViewButton}>    
                             <lightning-button label={label.CSP_MyCases} class="containedButton fullWidth twoLines fullHeight" onclick={changeToUserCasesTableView} ></lightning-button>
                         </div>
                         <div class="slds-text-align_right slds-p-horizontal--xxx-small slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_4-of-12 fullHeight" if:true={viewAdminUserCasesTableViewButton}>
@@ -57,9 +57,9 @@
                         columns={columns} 
                         hide-checkbox-column min-column-width="140" class="casesListTableClass">
                     </lightning-datatable>
-                    <div class="endOfTableCases"></div>
-                    <div if:true={loadingMoreResults} class="spinnerContainer">
-                        <lightning-spinner class="background-white" alternative-text="Loading"></lightning-spinner>
+                    <div class="endOfTableCases">
+                        <!-- PAGINATION -->
+                        <c-portal-paginator pagination-object-parent={paginationObject} onselectedpage={handleSelectedPage}></c-portal-paginator>
                     </div>
                 </div>
                 <div if:false={viewResults}>
@@ -89,7 +89,7 @@
                             <div class="slds-p-around_xx-small">
                                 <div class="slds-p-horizontal_large slds-p-vertical_medium">
                                     <lightning-combobox
-                                        class="cursorPointerComboBox text-xxsmall customPickList backgroundCountry"
+                                        class="cursorPointerComboBox text-xxsmall customPickList"
                                         label={label.CSP_Search_Case_Country} value={filteringObject.casesComponent.caseCountryFilter}
                                         placeholder=" " options={countryPickOptions}
                                         onchange={countryPickOnchangeHandler}>

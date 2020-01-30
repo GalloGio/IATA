@@ -892,7 +892,6 @@ ISPICKVAL( Right__c , &apos;Access Granted&apos;))</formula>
             <value>0</value>
         </filters>
         <label>All</label>
-        <language>en_US</language>
         <sharedTo>
             <allPartnerUsers></allPartnerUsers>
         </sharedTo>
