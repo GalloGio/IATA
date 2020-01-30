@@ -2,9 +2,9 @@ public without sharing class PortalIftpUtils {
 	
 	//Recordtypes used in IFTP Context
 	//account contact role object - ITP Recordtype
-	Public Static Final ACC_CONT_ROLE_RT_ITP =RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'ITP');
+	Public Static Final String ACC_CONT_ROLE_RT_ITP =RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'ITP');
 	
-	Public Static Final ACC_ROLE_RT_IFTP =RecordTypeSingleton.getInstance().getRecordTypeId('Account_Role__c', 'IFTP');
+	Public Static Final String ACC_ROLE_RT_IFTP =RecordTypeSingleton.getInstance().getRecordTypeId('Account_Role__c', 'IFTP');
 
 	@AuraEnabled
 	public static boolean isCommunity(){
