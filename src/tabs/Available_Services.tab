@@ -3,7 +3,6 @@
     <frameHeight>600</frameHeight>
     <hasSidebar>false</hasSidebar>
     <label>Available Services</label>
-    <mobileReady>false</mobileReady>
     <motif>Custom51: Apple</motif>
     <scontrol>Applications</scontrol>
 </CustomTab>
