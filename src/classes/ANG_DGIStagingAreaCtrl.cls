@@ -344,8 +344,7 @@ public without sharing class ANG_DGIStagingAreaCtrl {
 	private String parseException(Exception e){
 		String errorMessage = e.getMessage();
 		String errorMessageSplit = errorMessage.substringBetween('FIELD_CUSTOM_VALIDATION_EXCEPTION, ', ': ');
-		String errorMsg = (String.isBlank(errorMessageSplit)) ? errorMessage : errorMessageSplit;
-		return errorMessage;
+		return (String.isBlank(errorMessageSplit)) ? errorMessage : errorMessageSplit;
 	}
 
 }
