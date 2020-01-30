@@ -47,7 +47,7 @@ public class PASSSCIMMessageEnhancer_Test {
 	static void UserProvisioningRequestUpdateTrigger(){
 
 		Test.startTest();
-
+			List<PermissionSetAssignment> oldPermissionList = [SELECT Id,PermissionSet.Name from PermissionSetAssignment WHERE AssigneeId=:UserInfo.getUserId() ];
 			UserProvisioningRequest u = new UserProvisioningRequest();
 			u.SalesforceUserId = UserInfo.getUserId();
 			u.ConnectedAppId = [SELECT id FROM ConnectedApplication WHERE name = 'PASS' LIMIT 1].id;
@@ -60,7 +60,7 @@ public class PASSSCIMMessageEnhancer_Test {
 			Test.stopTest();
 			//Upon insert of the UserProvisioningRequest, it will run the PASS flow and assign the Permisison Set to the User
 			List<PermissionSetAssignment> permissionList = [SELECT Id,PermissionSet.Name from PermissionSetAssignment WHERE AssigneeId=:UserInfo.getUserId() ];
-			System.assertEquals(1,permissionList.size());
+			System.assertEquals(oldPermissionList.size()+1,permissionList.size());
 
 	}
 }
