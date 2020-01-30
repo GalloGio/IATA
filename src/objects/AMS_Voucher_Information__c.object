@@ -576,6 +576,16 @@
                     <default>false</default>
                     <label>NGN</label>
                 </value>
+                <value>
+                    <fullName>BND</fullName>
+                    <default>false</default>
+                    <label>BND</label>
+                </value>
+                <value>
+                    <fullName>MMK</fullName>
+                    <default>false</default>
+                    <label>MMK</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>

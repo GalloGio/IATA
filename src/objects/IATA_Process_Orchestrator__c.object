@@ -418,6 +418,15 @@ IF( OR(Total_Actions_Progressing__c &gt; 0, Total_Actions_Completed__c &gt; 0), 
         <language>en_US</language>
     </listViews>
     <listViews>
+        <fullName>Cases_Airline_Coding_Draft_IATA_Process_Orchestrator</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - Airline Coding Draft</label>
+        <queue>Cases_Airline_Coding_Draft</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
         <fullName>RecycleBinAfricaMiddleEast_IATA_Process_Orchestrator</fullName>
         <filterScope>Queue</filterScope>
         <label>Recycle Bin Africa &amp; Middle East</label>
