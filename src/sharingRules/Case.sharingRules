@@ -409,6 +409,94 @@
         </sharedFrom>
     </sharingOwnerRules>
     <sharingOwnerRules>
+        <fullName>DPC_ACCA_Queue</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>DPC - ACCA Queue</label>
+        <sharedTo>
+            <portalRole>AccountingCentreofChinaAviationACCAPartnerUser</portalRole>
+        </sharedTo>
+        <sharedFrom>
+            <queue>DPC_ACCA</queue>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>DPC_ACCA_Role</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>DPC - ACCA Role</label>
+        <sharedTo>
+            <portalRole>AccountingCentreofChinaAviationACCAPartnerUser</portalRole>
+        </sharedTo>
+        <sharedFrom>
+            <portalRole>AccountingCentreofChinaAviationACCAPartnerUser</portalRole>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>DPC_ACCELYA_Queue</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>DPC - ACCELYA Queue</label>
+        <sharedTo>
+            <portalRole>ACCELYAPartnerUser</portalRole>
+        </sharedTo>
+        <sharedFrom>
+            <queue>DPC_Accelya</queue>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>DPC_ACCELYA_Role</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>DPC - ACCELYA Role</label>
+        <sharedTo>
+            <portalRole>ACCELYAPartnerUser</portalRole>
+        </sharedTo>
+        <sharedFrom>
+            <portalRole>ACCELYAPartnerUser</portalRole>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>DPC_Deutsche_Bank_Queue</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>DPC - Deutsche Bank Queue</label>
+        <sharedTo>
+            <portalRole>DeutscheBankAGPartnerUser</portalRole>
+        </sharedTo>
+        <sharedFrom>
+            <queue>DPC_Deutsche_Bank</queue>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>DPC_Deutsche_Bank_Role</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>DPC - Deutsche Bank Role</label>
+        <sharedTo>
+            <portalRole>DeutscheBankAGPartnerUser</portalRole>
+        </sharedTo>
+        <sharedFrom>
+            <portalRole>DeutscheBankAGPartnerUser</portalRole>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>DPC_Multicarta_Queue</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>DPC - Multicarta Queue</label>
+        <sharedTo>
+            <portalRole>MulticartaISSLtdPartnerUser</portalRole>
+        </sharedTo>
+        <sharedFrom>
+            <queue>DPC_Multicarta</queue>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>DPC_Multicarta_Role</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>DPC - Multicarta Role</label>
+        <sharedTo>
+            <portalRole>MulticartaISSLtdPartnerUser</portalRole>
+        </sharedTo>
+        <sharedFrom>
+            <portalRole>MulticartaISSLtdPartnerUser</portalRole>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
         <fullName>EFServices</fullName>
         <accessLevel>Edit</accessLevel>
         <label>E&amp;F Services</label>

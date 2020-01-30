@@ -1961,10 +1961,6 @@
         <name>CSP_Breadcrump_MyProfile_Title</name>
     </customLabels>
     <customLabels>
-        <label>Siz &amp; IATA</label>
-        <name>CSP_Breadcrump_You_IATA</name>
-    </customLabels>
-    <customLabels>
         <label>Çevrim içi satın alın</label>
         <name>CSP_Buy_Online</name>
     </customLabels>
@@ -3481,16 +3477,8 @@
         <name>CSP_Welcome_Title</name>
     </customLabels>
     <customLabels>
-        <label>Siz &amp; IATA</label>
-        <name>CSP_YouAndIATA</name>
-    </customLabels>
-    <customLabels>
         <label>Sizin İçin Seçilmiş Önemli Noktalar</label>
         <name>CSP_YouIATA_Highlights</name>
-    </customLabels>
-    <customLabels>
-        <label>Burada çok çeşitli IATA Hizmetlerini, havacılık endüstrisi ile ilgili yayınları, ürünleri ve kaynakları keşfedebilirsiniz. İlgi alanlarınız ve faaliyet geçmişiniz göz önüne alınarak özel olarak hazırlanmıştır.</label>
-        <name>CSP_YouIATA_Highlights_Text</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_You_Dont_Have_Announcements --></label>
@@ -13654,7 +13642,7 @@ Finansal belgelerinizi yüklemek için, lütfen &lt;b&gt;&lt;a href=&apos;http:/
         <name>ISSP_ANG_OPT_OUT_MODAL_TITLE</name>
     </customLabels>
     <customLabels>
-        <label>&quot;Yalnızca Acentenizin IFAP İrtibat Kişisi, Finansal Değerlendirme sürecinin Dışında Kalmayı talep edebilir&quot;</label>
+        <label>Yalnızca Acentenizin IFAP İrtibat Kişisi, Finansal Değerlendirme sürecinin Dışında Kalmayı talep edebilir</label>
         <name>ISSP_ANG_OPT_OUT_NON_FINANCIAL_ASSESSEMENT_ERROR</name>
     </customLabels>
     <customLabels>
@@ -20131,8 +20119,16 @@ IATA Müşteri Portalına kaydolurken sorun yaşamaya devam ederseniz, lütfen &
         <name>OneId_Fred_Select_Type_of_Company</name>
     </customLabels>
     <customLabels>
+        <label><!-- OneId GADM Terms of Use Link --></label>
+        <name>OneId_GADM_Terms_of_Use_Link</name>
+    </customLabels>
+    <customLabels>
         <label><!-- OneId GADM Troubleshooting --></label>
         <name>OneId_GADM_Troubleshooting</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId GADM Troubleshooting Link --></label>
+        <name>OneId_GADM_Troubleshooting_Link</name>
     </customLabels>
     <customLabels>
         <label>&quot;GSA kodu ve ülke kombinasyonunuz için şirket bulunamaması ihtimaline karşı lütfen doğru bilgileri girdiğinizden emin olun veya &lt;a href=&quot;&quot;http://theiatahub.force.com/iatapkb/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US&quot;&quot; target=&quot;&quot;_blank&quot;&quot;&gt;sorun giderme kılavuzu&lt;/a&gt; bölümümüze başvurun.&quot;</label>
@@ -22866,6 +22862,10 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
     <customTabs>
         <label><!-- Apply RHC Equal to FS --></label>
         <name>Apply_RHC_Equal_to_FS</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- Attachment Manager --></label>
+        <name>AttachmentManager</name>
     </customTabs>
     <customTabs>
         <label><!-- Available Services --></label>

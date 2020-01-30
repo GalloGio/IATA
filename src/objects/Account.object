@@ -6949,11 +6949,6 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                     <label>Other</label>
                 </value>
                 <value>
-                    <fullName>Other Equipment Manufacturer</fullName>
-                    <default>false</default>
-                    <label>Other Equipment Manufacturer</label>
-                </value>
-                <value>
                     <fullName>Other Private Sector Association</fullName>
                     <default>false</default>
                     <label>Other Private Sector Association</label>
@@ -7047,6 +7042,11 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                     <fullName>Travel Agency Association</fullName>
                     <default>false</default>
                     <label>Travel Agency Association</label>
+                </value>
+                <value>
+                    <fullName>Truck Line</fullName>
+                    <default>false</default>
+                    <label>Truck Line</label>
                 </value>
                 <value>
                     <fullName>Vendor</fullName>
@@ -7143,6 +7143,10 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
                 <valueName>Transfer Service</valueName>
             </valueSettings>
             <valueSettings>
+                <controllingFieldValue>Non-Airline Transportation</controllingFieldValue>
+                <valueName>Truck Line</valueName>
+            </valueSettings>
+            <valueSettings>
                 <controllingFieldValue>Recreational</controllingFieldValue>
                 <valueName>Box Office</valueName>
             </valueSettings>
@@ -7168,7 +7172,6 @@ If(LEN(BillingCountry) &gt;0, BillingCountry,&quot;&quot;)</formula>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Travel Agent</controllingFieldValue>
-                <controllingFieldValue>Cargo Agent</controllingFieldValue>
                 <valueName>Handling Agent</valueName>
             </valueSettings>
             <valueSettings>
@@ -31273,10 +31276,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
-                <fullName>Other Equipment Manufacturer</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Other Private Sector Association</fullName>
                 <default>false</default>
             </values>
@@ -46425,10 +46424,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Other</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Other Equipment Manufacturer</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -66075,10 +66070,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Other</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Other Equipment Manufacturer</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -90535,6 +90526,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
+                <fullName>General Public</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Global Distribution System</fullName>
                 <default>false</default>
             </values>
@@ -90675,6 +90670,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
+                <fullName>Student</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>System Solutions Provider</fullName>
                 <default>false</default>
             </values>
@@ -90692,6 +90691,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Travel Agency Association</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Truck Line</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -93355,6 +93358,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Financial Institution</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>General Public</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -96663,10 +96670,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
                 <default>false</default>
             </values>
             <values>
-                <fullName>Other Equipment Manufacturer</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Other Private Sector Association</fullName>
                 <default>false</default>
             </values>
@@ -96740,6 +96743,10 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Travel Agency Association</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Truck Line</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -103243,10 +103250,6 @@ This field is kept up-to-date with the feedback of ITDI at least twice a year du
             </values>
             <values>
                 <fullName>Other</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Other Equipment Manufacturer</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -111282,7 +111285,7 @@ NOT(CONTAINS($Profile.Name, &quot;Developer&quot;))
     </validationRules>
     <validationRules>
         <fullName>EF_AS_Specialist_Prevent_Client_Edit</fullName>
-        <active>true</active>
+        <active>false</active>
         <description>If User is Airline Service Specialist prevent editing Client Accounts</description>
         <errorConditionFormula>AND( 
 ISPICKVAL($User.EF_User_Role__c, &apos;Airline Services Specialists&apos;), 
@@ -111291,7 +111294,7 @@ RecordType.Name=&apos;Others&apos; )</errorConditionFormula>
     </validationRules>
     <validationRules>
         <fullName>EF_Account_Client_Reactivation</fullName>
-        <active>true</active>
+        <active>false</active>
         <description>E&amp;F Status on Client can be reactivated if the user has the correct setting on his user</description>
         <errorConditionFormula>AND(
 NOT($User.EF_Client_Reactivation__c),
@@ -111303,7 +111306,7 @@ RecordType.Name=&apos;Others&apos;
     </validationRules>
     <validationRules>
         <fullName>EF_Account_Customer_Reactivation</fullName>
-        <active>true</active>
+        <active>false</active>
         <description>E&amp;F Status on Customers can be reactivated if the user has the correct setting on his user</description>
         <errorConditionFormula>AND(
 NOT($User.EF_Customer_Reactivation__c),  
@@ -111338,7 +111341,7 @@ OR(RecordType.Name=&apos;Operator&apos;, RecordType.Name=&apos;Airline Branch&ap
     </validationRules>
     <validationRules>
         <fullName>EF_MandatoryFields</fullName>
-        <active>true</active>
+        <active>false</active>
         <description>Sets the mandatory fields for E&amp;F Profiles. (E&amp;F Type, E&amp;F Status, E&amp;F Sub-status, E&amp;F Status DAte Change)</description>
         <errorConditionFormula>AND( 
  CONTAINS($User.Profile_Name__c, &apos;E&amp;F&apos;),   
@@ -111351,7 +111354,7 @@ OR(ISPICKVAL(EF_Type__c,&quot;&quot;), ISPICKVAL( EF_Status__c, &quot;&quot;), A
     </validationRules>
     <validationRules>
         <fullName>EF_SIS_Location_ID_format_check</fullName>
-        <active>true</active>
+        <active>false</active>
         <description>E&amp;F SIS Location ID just can take values 1 to 99 and Main.</description>
         <errorConditionFormula>AND(
 NOT(ISBLANK(EF_SIS_Location_ID__c)),
