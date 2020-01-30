@@ -2,7 +2,6 @@
 <CustomTab xmlns="http://soap.sforce.com/2006/04/metadata">
     <description>FA and FS mass email reminder</description>
     <label>Mass Email Reminder</label>
-    <mobileReady>false</mobileReady>
     <motif>Custom46: Postage</motif>
     <page>MassEmailReminder</page>
 </CustomTab>

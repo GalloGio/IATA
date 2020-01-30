@@ -44,4 +44,5 @@
     </fields>
     <label>Account Contact Role</label>
     <pluralLabel>Account Contact Role</pluralLabel>
+    <publishBehavior>PublishImmediately</publishBehavior>
 </CustomObject>
