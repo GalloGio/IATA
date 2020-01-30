@@ -261,7 +261,7 @@ public with sharing class ANG_ISSP_AfpWrapper {
 		for(Agency_Authorization__c auth : [SELECT Id, ANG_FormOfPayment_ID__c
 										FROM Agency_Authorization__c
 										WHERE Account__c = :accountId
-										AND (Status__c = 'Active' OR Status__c = 'Authorized')]) {
+										AND (Status__c = :AMS_Utils.ACTIVE OR Status__c = :AMS_Utils.AUTHORIZED)]) {
 			if(auth.ANG_FormOfPayment_ID__c == Ams_Utils.CA && !this.isCashless) {
 				this.isCash = YES;
 				this.isCashFlag = true;

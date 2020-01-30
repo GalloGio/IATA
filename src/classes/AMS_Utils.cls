@@ -14,6 +14,9 @@ public without sharing class AMS_Utils {
 	public static final String IN_PROGRESS = 'In Progress';
 	public static final String NOT_APPLICABLE = 'Not Applicable';
 
+	public static final String ACTIVE = 'Active';
+	public static final String AUTHORIZED = 'Authorized';
+
 	public static final String AUTH_APPROVAL = 'Authorize Approval';
 	public static final String AUTH_DISAPPROVAL ='Authorize Disapproval';
 	public static final String LOCATION_TYPE = 'Location type';
