@@ -133,7 +133,7 @@ public class vfIECGSSCalendar_tst {
 			// trigger the Product Access creation
 			update subscriptionWeek;
 
-			Test.stopTest();
+			
 
 			//Instantiate Controller
 			vfIECGSSCalendar pgCont = new vfIECGSSCalendar();
@@ -198,6 +198,7 @@ public class vfIECGSSCalendar_tst {
 			system.assertEquals(Date.newInstance(2015, 11, 30), lstGSSSetting.get(0).Calendar_Next_Submission_Date__c, 'Existing submission must be changed to next week monday');
 			system.assertEquals(null, lstGSSSetting.get(0).Calendar_New_Submission_Effective_Date__c, 'New submission date should be empty');
 		}
+        Test.stopTest();
 		System.debug('Unit Test: Finish: TestGSSCalendarWeek');
 	}
 
@@ -222,7 +223,7 @@ public class vfIECGSSCalendar_tst {
 			// trigger the Product Access creation
 			update subscriptionBiMon;
 
-			Test.stopTest();
+			
 
 			//Instantiate Controller
 			vfIECGSSCalendar pgCont = new vfIECGSSCalendar();
@@ -352,6 +353,7 @@ public class vfIECGSSCalendar_tst {
 			system.assertEquals(Date.newInstance(2015, 12, 8), lstGSSSetting.get(0).Calendar_Next_Submission_Date__c, 'Existing submission must change to Dec 8');
 			system.assertEquals(null, lstGSSSetting.get(0).Calendar_New_Submission_Effective_Date__c, 'New submission date should be empty');
 		}
+        Test.stopTest();
 		System.debug('Unit Test: Finish: TestGSSCalendarBiMon');
 	}
 
@@ -375,7 +377,7 @@ public class vfIECGSSCalendar_tst {
 			// trigger the Product Access creation
 			update subscriptionMon;
 
-			Test.stopTest();
+			
 
 			//Instantiate Controller
 			vfIECGSSCalendar pgCont = new vfIECGSSCalendar();
@@ -440,6 +442,7 @@ public class vfIECGSSCalendar_tst {
 			system.assertEquals(Date.newInstance(2015, 12, 9), lstGSSSetting.get(0).Calendar_Next_Submission_Date__c, 'Existing submission must be changed to Dec 9');
 			system.assertEquals(null, lstGSSSetting.get(0).Calendar_New_Submission_Effective_Date__c, 'New submission date should be empty');
 		}
+        Test.stopTest();
 		System.debug('Unit Test: Finish: TestGSSCalendarMon');
 	}
 
