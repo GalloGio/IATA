@@ -369,7 +369,10 @@
                                         var listOfEmails = '';
                                         // parse
                                         obj.forEach(function(item, index) {
-                                            if(item.AccountId === selectedAccount) listOfEmails += item.Email +',';
+                                            if(item.Name === selectedAccount){
+                                                listOfEmails += item.Email__c +',';
+                                                $("[id$='a_idJSONcontactSelected']").val(item.Email__c);
+                                            } 
                                         });
                                         $('input[id$=additionalRecipients]').val(listOfEmails);
 
@@ -401,21 +404,18 @@
                                         <apex:outputlabel value="{!$Label.ISSP_Who_to_contact}" />
                                         <apex:outputpanel layout="block" styleclass="requiredInput">
                                             <apex:outputpanel layout="block" styleclass="requiredBlock" />
-                                            <apex:selectlist styleclass="form-control"
+                                            <apex:selectlist styleclass="form-control" label="{!$Label.ISSP_Who_to_contact}"
                                                 value="{!whoToContact}" required="true" multiselect="false" size="1"
                                                 onchange="autofillCCOthers(this); manageCaseAreaAvaiableOptions(this);">
                                                 <apex:selectoptions value="{!lst_whoToContact}" />
                                             </apex:selectlist>
                                         </apex:outputpanel>
                                     </apex:pageblocksectionitem>
-
-
-                                        <apex:inputField value="{!newCase.CaseArea__c}" rendered="{!isDPCUser}" styleclass="form-control caseAreaField" required="true">
-                                            <apex:actionSupport event="onchange" reRender="reason1Picklist" />
-                                        </apex:inputField>
-                                        <apex:inputField id="reason1Picklist" value="{!newCase.Reason1__c}" rendered="{!isDPCUser}" styleclass="form-control reason1Field"
-                                            required="true" />
-
+                                    <apex:inputHidden value="{!JSONcontactSelected}" id="a_idJSONcontactSelected"/>
+                                    <apex:inputField value="{!newCase.CaseArea__c}" rendered="{!isDPCUser}" styleclass="form-control" required="true">
+                                        <apex:actionSupport event="onchange" reRender="reason1Picklist" rendered="{!NOT(isCloneDPC)}"/>
+                                    </apex:inputField>
+                                    <apex:inputField id="reason1Picklist" value="{!newCase.Reason1__c}" rendered="{!isDPCUser}" styleclass="form-control" required="true"/>
 
                                     <!-- <label class=" lbl col-lg-5 control-label" for="exampleInputEmail1"><span class="required"></span></label> -->
                                     
@@ -527,11 +527,11 @@
                                                 <apex:actionSupport event="onchange" reRender="subtypePicklist"/>
                                             </apex:inputField>
                                         </apex:pageblocksectionitem>
-                                        <apex:inputField id="subtypePicklist" value="{!newCase.Sub_Type__c}" required="false" rendered="{!isDPCUser}" styleclass="form-control" />
+                                        <apex:inputField id="subtypePicklist" value="{!newCase.Sub_Type__c}" required="false" rendered="{!isDPCUser}" styleclass="form-control" html-disabled="{!IF(isCloneDPC,true,false)}"/>
 
                                         <apex:inputfield value="{!newCase.BSP_s_concerned__c}" label="{!$Label.ISSP_BSP_Concerned}" required="false" rendered="{!isDPCUser}" styleclass="form-control" />
 
-                                        <apex:inputfield value="{!newCase.Priority}" required="true" rendered="{!isDPCUser}" styleclass="form-control" />
+                                        <apex:inputfield label="Priority" value="{!newCase.Priority}" required="true" rendered="{!isDPCUser}" styleclass="form-control"/>
 
                                         <!-- CC Others info -->
                                         <apex:pageblocksectionitem rendered="{!isDPCUser}">
@@ -672,6 +672,7 @@
                                             <apex:outputpanel layout="none" rendered=" {!AND(isDPCUser, NOT(isEditMode), OR(isDPCAccepted,isACRAccepted), OR(caseType='ACR', caseType='IATASR'))}">
                                                 <input type="button" class="btn" value="Change DPC Owner" onclick="openCustomlkp('{!newCase.id}')" styleclass="btn btn_iata_primary" />
                                             </apex:outputpanel>
+                                            <apex:commandbutton action="{!CloneDPC}" value="Clone" rerender="existingCaseForm" styleclass="btn btn_iata_primary" />
                                             <apex:actionfunction action="{!changeDpcOwner}" name="changeDpcOwner" rerender="existingCaseForm" status="changeOwnerStatus" />
                                             <apex:commandbutton action="{!close}" value="Close Case" rendered="{!AND(NOT(IsInterDPCCase), newCase.Status!='Closed',OR(AND(caseType='IATASR', newCase.isDPCCurrentUser__c),AND(caseType='DPCSR', isDPCAdmin)))}" styleclass="btn btn_iata_primary" />
                                             <apex:commandbutton action="{!close}" value="Close Case" rendered="{!AND(IsInterDPCCase, newCase.OwnerId==$User.Id, newCase.Status!='Closed')}" styleclass="btn btn_iata_primary" />

@@ -23,6 +23,8 @@ export default class PortalFAQCategoryTiles extends NavigationMixin(LightningEle
     @track loading = true;
     @track guestUser = false;
     @track userLanguage = 'en_US';
+    @track windowWidth = window.innerWidth - 32;
+    @track sliderWidth = "width: " + this.windowWidth * 1.3+"px;";
 
     iconsBaseLink = CSP_PortalPath + 'CSPortal/Images/FAQ/';
     iconsExtension = '.svg';
@@ -47,14 +49,17 @@ export default class PortalFAQCategoryTiles extends NavigationMixin(LightningEle
     retrieveFaqsStructure() {
         getFaqsStructure()
         .then(results => {
+            console.log('results ', results);
             if(results.length) {
                 let resultsAux = JSON.parse(JSON.stringify(results));
                 
                 for(let i = 0; i < resultsAux.length; i++){
                     if(i === 0 || i === 1){
-                        resultsAux[i].class = 'slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2 slds-p-vertical_xx-small slds-text-align_center';
+                        resultsAux[i].class = 'slds-col slds-size_1-of-'+Math.ceil(resultsAux.length / 2)+' slds-medium-size_1-of-2 slds-large-size_1-of-2 slds-p-vertical_xx-small slds-text-align_center';
+                        this.sliderWidth = "width: " + this.windowWidth * (resultsAux.length / 4) * 1.3 + "px;";
                     }else{
-                        resultsAux[i].class = 'slds-col slds-size_1-of-1 slds-medium-size_1-of-3 slds-large-size_1-of-3 slds-p-vertical_xx-small slds-text-align_center';
+                        resultsAux[i].class = 'slds-col slds-size_1-of-'+Math.ceil(resultsAux.length / 2)+' slds-medium-size_1-of-3 slds-large-size_1-of-3 slds-p-vertical_xx-small slds-text-align_center';
+                        this.sliderWidth = "width: " + this.windowWidth * (resultsAux.length / 4) * 1.3 + "px;";
                     }
                     resultsAux[i].imageURL = this.iconsBaseLink + resultsAux[i].categoryName + this.iconsExtension;
                 }
@@ -72,9 +77,11 @@ export default class PortalFAQCategoryTiles extends NavigationMixin(LightningEle
                 
                 for(let i = 0; i < resultsAux.length; i++){
                     if(i === 0 || i === 1 || i == 2 || i == 3){
-                        resultsAux[i].class = 'slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2 slds-p-vertical_xx-small slds-text-align_center';
+                        resultsAux[i].class = 'slds-col slds-size_1-of-'+Math.ceil(resultsAux.length / 2)+' slds-medium-size_1-of-2 slds-large-size_1-of-2 slds-p-vertical_xx-small slds-text-align_center';
+                        this.sliderWidth = "width: " + this.windowWidth * (resultsAux.length / 4) * 1.3 + "px;";
                     }else{
-                        resultsAux[i].class = 'slds-col slds-size_1-of-1 slds-medium-size_1-of-3 slds-large-size_1-of-3 slds-p-vertical_xx-small slds-text-align_center';
+                        resultsAux[i].class = 'slds-col slds-size_1-of-'+Math.ceil(resultsAux.length / 2)+'slds-medium-size_1-of-3 slds-large-size_1-of-3 slds-p-vertical_xx-small slds-text-align_center';
+                        this.sliderWidth = "width: " + this.windowWidth * (resultsAux.length / 4) * 1.3 + "px;";
                     }
                     resultsAux[i].imageURL = this.iconsBaseLink + resultsAux[i].categoryName + this.iconsExtension;
                 }
