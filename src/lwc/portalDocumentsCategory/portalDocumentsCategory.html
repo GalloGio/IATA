@@ -6,8 +6,7 @@
             <template if:true={documentsResults}>
                 <div class="slds-grid slds-wrap slds-gutters_xx-small slds-p-vertical_xxx-small">
                     <template for:each={documentsList} for:item="keyValue" for:index="keyValueIndex">
-                        <template if:true={keyValue.show}>
-                            <c-portal-custom-card-container class="slds-p-bottom_medium" key={keyValue.key}>
+                        <c-portal-custom-card-container class="slds-p-bottom_medium" key={keyValue.key}>
 
                             <span slot="cardTitle" class="cursorPointer" onclick={categorySelected} data-item={keyValue.key}>
                                 {keyValue.label} ({keyValue.noResults})
@@ -53,8 +52,7 @@
                                 </span>
                             </template>
 
-                            </c-portal-custom-card-container>
-                        </template>
+                        </c-portal-custom-card-container>
                     </template>
                     <div class="endOfTable"></div>
                     <div if:true={loadingMoreResults} class="spinnerContainer">
