@@ -50,3 +50,14 @@
 .paddingRight {
     padding-right: 0;
 }
+
+@media screen and (max-width: 640px) {
+    .fullHeight,
+    .fullHeight button,
+    .fullHeight button:active,
+    .fullHeight button:visited,
+    .fullHeight button:focus,
+    .fullHeight button:hover {
+       height: auto;
+    }
+}
