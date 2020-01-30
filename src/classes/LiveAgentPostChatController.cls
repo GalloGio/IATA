@@ -52,26 +52,27 @@ public without sharing class LiveAgentPostChatController {
 	}
 	public String lang {
 		get{
-			if (lang == null) {
-				try{
-					String jsn = ApexPages.currentPage().getParameters().get('chatDetails');
-					WrapperDetailsChatDetails details = new WrapperDetailsChatDetails();
-					details = (WrapperDetailsChatDetails)System.JSON.deserialize(jsn, WrapperDetailsChatDetails.class);
-					List<WrapperCustomDetails> customDetails = details.customDetails;
-					lang = 'en';
-					for (WrapperCustomDetails detail : customDetails){
-						if (detail.label == 'buttonlanguage'){
-							lang = detail.value;
-							break;
-						}
-					}
-				}catch(Exception e) {
-				}
-			}
-			return lang;
-		}
+                if (lang == null){
+                        try{
+                            return getCookie('chatlanguage');
+                        }catch (Exception exc){
+                            return 'en';
+                        }
+                    
+                }
+
+                return lang;
+        }
 		set;
 	}
+	
+	// Private method used to retrieve the cookie value
+    private String getCookie(String cookieName){
+        Cookie ck = ApexPages.currentPage().getCookies().get(cookieName);
+        
+        return ck != null ? ck.getValue() : '';
+    }   
+	
 	public Case relatedCase {
 		get{
 			if (relatedCase == null){

@@ -8,6 +8,10 @@
         <field>BSPCountry__c</field>
         <formula>Contact.Account.IATA_ISO_Country__c</formula>
     </fieldOverrides>
+	<fieldOverrides>
+		<field>Case_record_type__c</field>
+        <formula>CASE( Contact.Account.Region_formula__c ,&quot;Europe&quot;,&quot;Cases - Europe&quot;,&quot;Africa &amp; Middle East&quot;,&quot;Cases - Africa &amp; Middle East&quot;,&quot;Americas&quot;,&quot;Cases - Americas&quot;,&quot;Asia &amp; Pacific&quot;,&quot;Cases - Africa &amp; Middle East&quot;,&quot;China &amp; North Asia&quot;,&quot;Cases - China&quot;,&quot;Cases - Global&quot;)</formula>
+	</fieldOverrides>
     <fieldOverrides>
         <field>Description</field>
         <formula>&quot;Phone call&quot;</formula>
