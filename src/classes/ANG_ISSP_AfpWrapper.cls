@@ -1,6 +1,4 @@
 public with sharing class ANG_ISSP_AfpWrapper {
-	@TestVisible private static final String NO = 'glyphicon glyphicon-remove';
-	@TestVisible private static final String YES = 'glyphicon glyphicon-ok';
 	public static final String DOMESTIC = AMS_Utils.CATEGORY_DOMESTIC_AGENT;
 	public static final String INTERNATIONAL = AMS_Utils.CATEGORY_PASSENGER_SALES_AGENT;
 	@TestVisible private static final String AVAILABLE_SERVICES_OLD = '/ISSP_AvailableServices?MainNav=Services&subNav=Access&mid=M3S1';
@@ -43,40 +41,12 @@ public with sharing class ANG_ISSP_AfpWrapper {
 		private set;
 	}
 
-	public String isCash {
-		get {
-			return isCash == null ? NO : isCash;
-		}
-		set;
-	}
-
-	public String isIEP {
-		get {
-			return isIEP == null ? NO : isIEP;
-		}
-		set;
-	}
-
-	public String isCreditCard {
-		get {
-			return isCreditCard == null ? NO : isCreditCard;
-		}
-		set;
-	}
-
 	public String iepLinkLabel {get; set;}
 	public String iepLink {get; set;}
 
 	public String modalErrorMessage {
 		get {
 			return modalErrorMessage == null ? '' : modalErrorMessage;
-		}
-		private set;
-	}
-
-	public String modalErrorMessageFlag {
-		get {
-			return modalErrorMessageFlag == null ? '' : modalErrorMessageFlag;
 		}
 		private set;
 	}
@@ -166,7 +136,6 @@ public with sharing class ANG_ISSP_AfpWrapper {
 			this.iepLink = '#';
 			this.iepLinkLabel = Label.ANG_ISSP_IEP_ModelBanking_link;
 		} else if (account.ANG_IEP_Status_FF__c == Ams_Utils.OPEN) {
-			this.isIEP = YES;
 			this.isIEPFlag = true;
 
 			if (contact != null) {
@@ -210,7 +179,6 @@ public with sharing class ANG_ISSP_AfpWrapper {
 				}
 
 				this.iepLink = '#';
-				this.modalErrorMessageFlag = '-';
 			}
 
 			this.iepLinkLabel = Label.ANG_ISSP_Open_IATA_EasyPay_Account;
@@ -220,7 +188,6 @@ public with sharing class ANG_ISSP_AfpWrapper {
 
 		if(String.isNotBlank(modalMessageAux)){
 			this.iepLink = '#';
-			this.modalErrorMessageFlag = '-';
 			this.modalErrorMessage = modalMessageAux;
 		}
 	}
@@ -263,13 +230,11 @@ public with sharing class ANG_ISSP_AfpWrapper {
 										WHERE Account__c = :accountId
 										AND (Status__c = :AMS_Utils.ACTIVE OR Status__c = :AMS_Utils.AUTHORIZED)]) {
 			if(auth.ANG_FormOfPayment_ID__c == Ams_Utils.CA && !this.isCashless) {
-				this.isCash = YES;
 				this.isCashFlag = true;
 				this.authQuantity++;
 			}
 
 			if(auth.ANG_FormOfPayment_ID__c == Ams_Utils.CC) {
-				this.isCreditCard = YES;
 				this.isCreditCardFlag = true;
 				this.authQuantity++;
 			}
