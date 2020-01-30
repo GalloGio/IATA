@@ -1881,6 +1881,10 @@
         <name>CSP_Account_Domain_Created</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_AddOrRemove_Recipients --></label>
+        <name>CSP_AddOrRemove_Recipients</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_Add_All --></label>
         <name>CSP_Add_All</name>
     </customLabels>
@@ -3647,6 +3651,10 @@
     <customLabels>
         <label><!-- Click here --></label>
         <name>Click_here</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Close All Tabs --></label>
+        <name>Close_All_Tabs</name>
     </customLabels>
     <customLabels>
         <label><!-- Company --></label>
@@ -21695,6 +21703,14 @@
     <customLabels>
         <label><!-- TSI USA Only --></label>
         <name>TSI_USA_Only</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Tab_Close --></label>
+        <name>Tab_Close</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Tab_Name --></label>
+        <name>Tab_Name</name>
     </customLabels>
     <customLabels>
         <label><!-- Tasks_Notification --></label>
