@@ -866,75 +866,11 @@ J-Joint Vent</description>
         <picklistValues>
             <picklist>Location_Class__c</picklist>
             <values>
-                <fullName>A</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>C</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>D</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>E</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>G</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>I</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>J</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>K</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>M</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>N</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>O</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>P</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Q</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>R</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>S</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>T</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>V</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>X</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
