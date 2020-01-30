@@ -211,7 +211,7 @@ public class ISSP_ANG_CodeSearch {
 				if (countryFound) {
 
 					if (this.agency.IATA_ISO_Country__r.ANG_Enable_NewGen__c) {
-						afpWrapper = AMS_Utils.getANG_ISSP_AfpWrapper(null, this.agency, true);
+						afpWrapper = new ANG_ISSP_AfpWrapper(this.agency);
 					}
 
 					if (this.agency.Active_Guarantees__c != 0) {

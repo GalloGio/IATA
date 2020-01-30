@@ -370,6 +370,16 @@
         <writeRequiresMasterRead>false</writeRequiresMasterRead>
     </fields>
     <fields>
+        <fullName>IEP_Model_Banking_Message__c</fullName>
+        <externalId>false</externalId>
+        <label>IEP Model Banking Message</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Irregularity_Type__c</fullName>
         <externalId>false</externalId>
         <label>Irregularity Type</label>
@@ -845,6 +855,22 @@ J-Joint Vent</description>
             </values>
             <values>
                 <fullName>Financial Security Request</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>EasyPay_Model_Config</fullName>
+        <active>true</active>
+        <label>EasyPay Model Config</label>
+        <picklistValues>
+            <picklist>Location_Class__c</picklist>
+            <values>
+                <fullName>D</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>P</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

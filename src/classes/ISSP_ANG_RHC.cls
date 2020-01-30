@@ -93,7 +93,8 @@ public with sharing class ISSP_ANG_RHC {
 											Account.IATA_ISO_Country__r.ANG_IEP_Model__c,
 											Account.IATA_ISO_Country__r.Name,
 											Account.IATA_ISO_Country__r.ISO_Code__c,
-											Account.Category__c
+											Account.Category__c,
+											Account.Location_Class__c
 										 FROM Contact
 										WHERE Id = :contactId];
 
@@ -117,7 +118,7 @@ public with sharing class ISSP_ANG_RHC {
 	}
 
 	private void initFormsOfPayment() {
-		this.afpWrapper = AMS_Utils.getANG_ISSP_AfpWrapper(this.contact, this.contact.Account, false);
+		this.afpWrapper = new ANG_ISSP_AfpWrapper(this.contact, this.contact.Account);
 	}
 
 	public void initializeRHCInfo() {
