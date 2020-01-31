@@ -90,7 +90,8 @@ public without sharing class ISSP_PersonalInformationWithoutSharing {
 									   FROM AccountTeamMember
 									  WHERE accountId IN: accountIds
 										AND (TeamMemberRole='Portal Administrator'
-									  		 OR TeamMemberRole='Portal Regional Administrator')];
+									  		 OR TeamMemberRole='Portal Regional Administrator')
+										AND User.isActive=true];
 
 		return teamMembers;
 
