@@ -10,7 +10,7 @@ public without sharing class PortalIftEmployeeRecordsManagement {
 	@AuraEnabled(cacheable=false)
 	public static List<Account_Contact_Role__c> getAllITPEmployees(Id accountId){
 		//cacheable=false MANDATORY
-		Id accContactRoleRecTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'ITP');
+		
 		List<Account_Contact_Role__c> emps = [SELECT Account__c,Business_Phone__c,Company_Code__c,Contact_Role__c,
 													Contact__c, Email__c,First_Name__c,Id,Integration_Status__c,
 													Last_Name__c,Name,Personal_Email__c,Contact_Roles__c,
@@ -18,7 +18,7 @@ public without sharing class PortalIftEmployeeRecordsManagement {
 													TransferFlag__c,UniqueKey__c, Details__c, Global_ID__c
 												FROM Account_Contact_Role__c
 												WHERE  Contact__r.accountid = :accountId
-												AND RecordTypeId = :accContactRoleRecTypeId];
+												AND RecordTypeId = :PortalIftpUtils.ACC_CONT_ROLE_RT_ITP];
 		return emps;
 	}
 
@@ -30,7 +30,7 @@ public without sharing class PortalIftEmployeeRecordsManagement {
 		System.debug('searchCriteriaValues' + searchCriteriaValues);
 
 		PortalIftpUtils.UserInfoRecordsWrapper ui = PortalIftpUtils.getUserInfo();
-		Id accContactRoleRecTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'ITP');
+	
 		Id accountId = ui.accountId;
 
 		String sQuery = 'SELECT Account__c,Business_Phone__c,Company_Code__c,Contact_Role__c, ';
@@ -51,7 +51,7 @@ public without sharing class PortalIftEmployeeRecordsManagement {
 
 		sQueryConditions.add('Status__c <> \'Inactive\'');
 		sQueryConditions.add('Contact__r.accountid = :accountId');
-		sQueryConditions.add('RecordTypeId = :accContactRoleRecTypeId');
+		sQueryConditions.add('RecordTypeId = :PortalIftpUtils.ACC_CONT_ROLE_RT_ITP');
 
 		if(searchCriteriaValues.firstName != null && String.isnotblank(searchCriteriaValues.firstName)){
 			String firstName = searchCriteriaValues.firstName + '%';
