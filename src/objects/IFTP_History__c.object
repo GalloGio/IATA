@@ -352,17 +352,7 @@
         <columns>ITP_Name__c</columns>
         <columns>Event_Type_Description__c</columns>
         <columns>Event_Type__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>ITP_Name__c</field>
-            <operation>equals</operation>
-            <value>Automation ITP</value>
-        </filters>
-        <filters>
-            <field>Event_Type__c</field>
-            <operation>equals</operation>
-            <value>5</value>
-        </filters>
+		<filterScope>Everything</filterScope>
         <label>All</label>
     </listViews>
     <listViews>
