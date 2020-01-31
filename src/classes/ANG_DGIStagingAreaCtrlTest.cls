@@ -272,7 +272,7 @@ private class ANG_DGIStagingAreaCtrlTest {
 
 		Financial_Security__c FS = new Financial_Security__c(CURRENCYISOCODE='USD', Account__c=a1.Id, AMOUNT__C=3000, EXPIRY_DATE__C=system.Today().AddDays(100), FINANCIAL_INSTITUTION__c=FI.Id, SECURITY_STATUS__C='Active', Security_Type__c='GDI', Region__c ='Europe', Reception_Date__c=system.today(), Reasonforrequest__c='New Application', Reception_Case__c=oscarCase.Id);
 		insert FS;
-		
+
 		AMS_OSCAR__c oscar = [Select id from AMS_OSCAR__c];
 
 		Test.startTest();
@@ -312,4 +312,85 @@ private class ANG_DGIStagingAreaCtrlTest {
 
 		Test.StopTest();
 	}
+    
+    @isTest static void acceptAdemdumWithInvalidFsTest() {
+
+		Case oscarCase = [Select id from Case where Oscar__c <> null];
+
+		Account a1 = [Select Id from Account];
+
+		Financial_Institution__c FI = [Select id from Financial_Institution__c];
+
+		Financial_Security__c FS = new Financial_Security__c(
+			CURRENCYISOCODE = 'USD', 
+			Account__c = a1.Id, 
+			AMOUNT__C = 3000,
+			EXPIRY_DATE__C = system.Today().AddDays(100), 
+			FINANCIAL_INSTITUTION__c = FI.Id, 
+			SECURITY_STATUS__C = AMS_Utils.FINANCIAL_SECURITY_STATUS_ACTIVE,
+			Security_Type__c = 'Bank Guarantee', 
+			Region__c = 'Europe', 
+			Reception_Date__c = system.today(), 
+			Reasonforrequest__c = 'New Application',
+			Reception_Case__c = oscarCase.Id
+		);
+		insert FS;
+
+		AMS_OSCAR__c oscar = [Select id from AMS_OSCAR__c];
+
+		Test.startTest();
+
+		PageReference pg = Page.ANG_DGIStagingArea;
+		pg.getParameters().put('Id', oscar.Id);
+
+		Test.setCurrentPage(pg);
+
+		ANG_DGIStagingAreaCtrl controller = new ANG_DGIStagingAreaCtrl();
+
+		controller.addCertificate = true;
+
+		controller.createStagingAreaDefault();
+
+		controller.createStagingArea();
+
+		controller.hasAdendum = true;
+
+		Boolean hasErrorMessages = controller.hasErrorMessages;
+		AMS_Oscar__c oscarObj = controller.oscarObj;
+		Case oscarCaseController = controller.oscarCase;
+		Boolean isOscarProcessed = controller.oscarProcessed;
+		List<String> stagingFields = controller.stagingAreaFields;
+		Boolean isWaitingForEndorsement = controller.waitingForEndorsement;
+		Boolean isAddCertificate = controller.addCertificate;
+
+		controller.stagingFs.AMOUNT__C = 1000;
+		controller.stagingFs.Reason__c = 'New Application';
+		controller.stagingFs.Expiry_Date__c = System.Today();
+
+		update controller.stagingFs;
+
+		controller.accept();
+        
+		System.assert(findApexPagesMessage(ANG_DGIStagingAreaCtrl.FINANCIAL_SECURITY_ERROR_MESSAGE), 'Expected apex message is: ' + ANG_DGIStagingAreaCtrl.FINANCIAL_SECURITY_ERROR_MESSAGE);
+
+		Test.StopTest();
+	}
+
+	private static Boolean findApexPagesMessage(String expectedMessage){
+
+		ApexPages.Message[] pageMessages = ApexPages.getMessages();
+
+		System.assertNotEquals(0, pageMessages.size());
+
+		Boolean messageFound = false;
+
+		for(ApexPages.Message message : pageMessages) {
+			if(message.getDetail().contains(expectedMessage)){
+				return true;
+			}
+		}
+
+		return false;
+
+    }
 }

@@ -1,6 +1,6 @@
 public without sharing class ANG_DGIStagingAreaCtrl {
 
-	private static final String FINANCIAL_SECURITY_ERROR_MESSAGE = 'Please select a GDI Financial Security of this Account in status "Active", "Close to Expiry Date" or "Not Active yet".';
+	@TestVisible private static final String FINANCIAL_SECURITY_ERROR_MESSAGE = 'Please select a GDI Financial Security of this Account in status "Active", "Close to Expiry Date" or "Not Active yet".';
 	
 	private static final List<String> FINANCIAL_SECURITY_ACTIVE_STATUS = new List<String>{
 		AMS_Utils.FINANCIAL_SECURITY_STATUS_ACTIVE, 
