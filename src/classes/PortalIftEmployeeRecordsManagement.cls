@@ -51,7 +51,7 @@ public without sharing class PortalIftEmployeeRecordsManagement {
 
 		sQueryConditions.add('Status__c <> \'Inactive\'');
 		sQueryConditions.add('Contact__r.accountid = :accountId');
-		sQueryConditions.add('RecordTypeId = :PortalIftpUtils.ACC_CONT_ROLE_RT_ITP');
+		sQueryConditions.add('RecordTypeId = \''+PortalIftpUtils.ACC_CONT_ROLE_RT_ITP+'\'');
 
 		if(searchCriteriaValues.firstName != null && String.isnotblank(searchCriteriaValues.firstName)){
 			String firstName = searchCriteriaValues.firstName + '%';
