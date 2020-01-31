@@ -1,0 +1,244 @@
+<aura:component controller="Invite_User_CTRL" implements="flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes">
+    <aura:attribute name="contact" type="Contact" default="{ 'sobjectType': 'Contact' }" />
+    <aura:attribute name="account" type="Account" default="{ 'sobjectType': 'Account' }" />
+    <aura:attribute name="invitation" type="SObject" default="{ 'sobjectType': 'Invitation__c' }" />
+    <aura:attribute name="jobFunctionOptions" type="List" />
+    <aura:attribute name="contactLabels" type="Map" />
+    <aura:attribute name="actors" type="List" default="[]" />
+    <aura:attribute name="allowedDomains" type="Object" default=""/>
+    <aura:attribute name="emailInputError" type="string" default="" />
+    <aura:attribute name="newUser" type="boolean" default="false" />
+    <aura:attribute name="showSpinner" type="Boolean" default="false"/>
+    <aura:attribute name="sendNotification" type="Boolean" default="false"/>
+    <aura:attribute name="showBack" type="Boolean" default="false"/>
+    <aura:attribute name="userCountry" type="String" />
+    <aura:attribute name="showPage" type="Boolean" default="False"/>
+    <aura:attribute name="existingRolePowerUser" type="Boolean" default="False"/>
+    <aura:attribute name="registeredUserAccount" type="Id" default=""/>
+    <aura:attribute name="contactIsAlreadyInvited" type="Boolean" default="false"/>
+
+    <!--ARE WE IN LIGHTNING OR CLASSIC?-->
+    <aura:attribute name="theme" type="String" default="Theme4d"/>
+    <aura:attribute name="userType" type="String" default="Standard"/>
+
+    <!--EVENTS-->
+    <aura:registerEvent name="Back_EVT" type="c:GADM_ExternalUserContactList_EVT"/>
+    <aura:registerEvent name="toastMessage" type="c:Invite_User_Message_EVT"/>
+
+    <!--INIT-->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:handler name="change" value="{!v.userCountry}" action="{!c.changedCountry}"/>
+
+    <!--SPINNER-->
+    <aura:if isTrue="{!v.showSpinner}">
+        <lightning:spinner alternativeText="Loading" size="medium" />
+    </aura:if>
+
+    <ltng:require
+            scripts="{!join(',', $Resource.InternationalPhoneNumberFormat2 + '/intl-tel-input-16.0.0/build/js/intlTelInput.js')}"
+            styles="{!$Resource.InternationalPhoneNumberFormat2 + '/intl-tel-input-16.0.0/build/css/intlTelInput.css'}"
+            afterScriptsLoaded="{!c.scriptsLoaded}"
+    />
+
+    <aura:if isTrue="{! v.showPage}">
+
+
+
+    <div aura:id="container" class="{!v.userType == 'Standard' ? 'sfContainer slds-container--fluid' : 'slds-container--fluid'}">
+
+        <div aura:id="form" class="slds-grid slds-wrap slds-size--8-of-12 content">
+
+            <div class="{!v.userType == 'Standard' ? 'slds-hide' : 'slds-col center slds-size--8-of-12 '}">
+                <h2>Invite User</h2>
+            </div>
+
+            <!--EMAIL FIELD-->
+            <div class="slds-col--padded slds-size--8-of-12 center">
+                <label class="slds-form-element__label">Email</label>
+                <ui:inputEmail aura:id="email" placeholder="test@email.com" value="{!v.invitation.Email__c}" class="slds-input" required="true" />
+                <span class="emailError" aura:id="emailError">{!v.emailInputError}</span>
+            </div>
+
+            <!--BACK AND VALIDATE BUTTONS-->
+            <div class="slds-grid slds-wrap slds-col slds-size--8-of-12 center">
+                <!--External-->
+                <aura:if isTrue="{! v.userType != 'Standard'}">
+
+                    <div class="slds-col slds-size-1-of-1 text_center">
+                        <lightning:button variant="base" label="Back" title="Back" onclick="{! c.back }" class="btn btn-primary btn-grey button_width right" />
+                        <lightning:button variant="base" label="Validate" title="Validate" onclick="{! c.checkUsername }" class="btn btn-primary btn-grey button_width left" />
+                    </div>
+
+                    <!--internal-->
+                    <aura:set attribute="else">
+                        <div class="slds-col--padded  text_center">
+                            <aura:if isTrue="{! v.showBack}">
+                                <lightning:button variant="base" label="Back" title="Back" onclick="{! c.backToEmailField }" class="btn btn-primary btn-grey button_width right" />
+                            </aura:if>
+                            <lightning:button variant="base" label="Validate" title="Validate" onclick="{! c.checkUsername }" class="btn btn-primary btn-grey button_width left"/>
+                        </div>
+                    </aura:set>
+
+                </aura:if>
+
+            </div>
+
+            <!--EMAIL EXISTS - NOTIFY USER-->
+            <div aura:id="contactIsAlreadyInvited" class="slds-grid slds-wrap slds-col slds-size--8-of-12 center slds-hide">
+                <div class="slds-col--padded  text_center">                    
+                    <div class="text_center">{!$Label.c.GADM_User_Already_Invited}</div>
+                </div>
+            </div>
+            <div aura:id="emailExists" class="slds-grid slds-wrap slds-col slds-size--8-of-12 center slds-hide">
+                <div class="slds-col--padded  text_center">                    
+                    <div class="text_center">{!$Label.c.GADM_User_Invitation_user_exists}</div>
+                    <p style="height=2rem;"/>
+                    <span class="slds-col--padded text_center"> 
+                        <aura:if isTrue="{! v.userType == 'Standard'}">
+                                <ui:inputCheckbox label="GADM Power User" class="puCheckExisting" value="{! v.existingRolePowerUser}" />  
+                        </aura:if>
+                        <lightning:combobox aura:id="actorExistingUser" name="accounts" label="Actor" value="{!v.registeredUserAccount}" placeholder="Select Actor" options="{! v.actors }" messageWhenValueMissing="Please select Actor" required="true" onchange="{! c.checkActorDomains}"/>
+                        <lightning:button aura:id="notifyUserButton" variant="base" label="Notify user" title="Notify user" onclick="{! c.inviteUser}" class="btn btn-primary btn-grey" disabled="{!or(v.emailInputError.length > 0, empty(v.registeredUserAccount))}" />
+                    	
+                    </span>
+                </div>
+            </div>
+
+
+            <!--FORM DETAIL-->
+            <div aura:id="detail" class="slds-grid slds-wrap slds-size--8-of-12 center slds-hide">
+                <!--ACTORS-->
+                <div class="slds-col--padded slds-size--1-of-1">
+                    <lightning:combobox aura:id="actor" name="accounts" label="Actor" value="{!v.invitation.AccountId__c}" placeholder="Select Actor" options="{! v.actors }" messageWhenValueMissing="Please select Actor" required="true" onchange="{! c.checkActorDomains}"/>
+                </div>
+                <!--SALUTATION-->
+                <div class="slds-col--padded slds-size--1-of-1">
+                    <label class="slds-form-element__label">{!v.contactLabels.Salutation}</label>
+                    <ui:inputSelect aura:id="salutation" class="slds-select" value="{!v.invitation.Salutation__c}" >
+                        <ui:inputSelectOption text="" label="{!$Label.c.GADM_User_Invitation_none}" />
+                        <ui:inputSelectOption text="Mr." label="{!$Label.c.GADM_User_Invitation_Mr}" />
+                        <ui:inputSelectOption text="Mrs." label="{!$Label.c.GADM_User_Invitation_Mrs}" />
+                        <ui:inputSelectOption text="Ms." label="{!$Label.c.GADM_User_Invitation_Ms}" />
+                    </ui:inputSelect>
+                </div>
+                <div class="slds-col--padded slds-size--1-of-1 slds-medium-size--1-of-2">
+                    <label class="slds-form-element__label">{!v.contactLabels.FirstName}</label>
+                    <ui:inputText aura:id="firstName" value="{!v.invitation.First_Name__c}" class="slds-input" />
+                </div>
+
+                <div class="slds-col--padded slds-size--1-of-1 slds-medium-size--1-of-2">
+                    <label class="slds-form-element__label">{!v.contactLabels.LastName}</label>
+                    <ui:inputText aura:id="lastName" value="{!v.invitation.Last_Name__c}" class="slds-input" />
+                </div>
+
+                <div class="slds-col--padded slds-size--1-of-1">
+                    <label class="slds-form-element__label">{!$Label.c.GADM_User_Invitation_job_title}</label>
+                    <ui:inputText aura:id="title" value="{!v.invitation.Job_Title__c}" class="slds-input" />
+                </div>
+                <div class="slds-col--padded slds-size--1-of-1">
+                    <label class="slds-form-element__label inblock">{!v.contactLabels.Membership_Function__c}</label>
+                    <ui:inputSelect multiple="true" class="multiple required functionsSelect" aura:id="membershipFunction" value="{!v.invitation.Job_Function__c}" >
+                        <aura:iteration items="{!v.jobFunctionOptions}" var="function" indexVar="index" aura:id="function">
+                            <ui:inputSelectOption text="{!function.value}" label="{!function.label}" /><!-- value="true" -->
+                        </aura:iteration>
+                    </ui:inputSelect>
+                    <ul aura:id="jobHelp inblock">
+                        <li class="slds-form-element__help inblock">{!$Label.c.GADM_User_Invitation_job_function_help_text}</li>
+                    </ul>
+                </div>
+
+                <aura:if isTrue="{! v.userType == 'Standard'}">
+                    <div class="slds-col--padded  slds-size--1-of-1">
+                        <label class="slds-form-element__label">{!$Label.c.GADM_Power_User}</label>
+                    </div>
+                    <div class="slds-col--padded  slds-size--1-of-1">
+                        <ui:inputCheckbox class="uiInput uiInputCheckbox uiInput--default uiInput--checkbox ckb" value="{! v.invitation.GADM_Power_User__c}" />
+                    </div>
+                </aura:if>
+
+                <div aura:id="phoneContainer" class="slds-col--padded slds-size--1-of-1 slds-medium-size--1-of-2">
+                    <label class="slds-form-element__label">
+                            {!v.contactLabels.Phone}
+                    </label>
+                     <input type="tel" id="phone" class="slds-input" value="{!v.invitation.Business_Phone__c}"  onkeyup="{! c.validateNumber}"  onchange="{! c.validateNumber}"/>
+                </div>
+
+                <div aura:id="mobilePhoneContainer" class="slds-col--padded slds-size--1-of-1 slds-medium-size--1-of-2">
+                    <label class="slds-form-element__label">
+                            {!v.contactLabels.MobilePhone}
+                    </label>
+                     <input type="tel" id="mobilePhone" class="slds-input" value="{!v.invitation.Mobile_Phone__c}" onkeyup="{! c.validateMobileNumber}" onchange="{! c.validateMobileNumber}"/>
+                </div>
+
+                <div class="slds-col--padded slds-size--1-of-1 slds-medium-size--1-of-2">
+                    <label class="slds-form-element__label">{!v.contactLabels.Fax}</label>
+                    <input type="tel" id="faxPhone" class="slds-input" value="{!v.invitation.Business_Fax__c}" onkeyup="{! c.validateFaxNumber}" onchange="{! c.validateFaxNumber}"/>
+                </div>
+
+                <!--INVITE BUTTON-->
+                <div class="slds-col--padded slds-size--1-of-1 text_center">
+                    <lightning:button class="btn btn-primary btn-grey" variant="base" label="Invite" title="Invite" onclick="{!c.inviteUser}"  disabled="{!v.emailInputError.length > 0}"/>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div aura:id="sent" class="slds-hide">
+
+            <!--PORTAL USER-->
+            <aura:if isTrue="{! v.userType != 'Standard'}">
+
+                <div class="slds-grid slds-wrap">
+
+                    <div class="slds-col--padded slds-size--8-of-12 center text_center">
+                        <aura:if isTrue="{! v.sendNotification}">
+                            <p>{!$Label.c.GADM_Invite_User_notification_sent}</p>
+                            <aura:set attribute="else">
+                                <p>{!$Label.c.GADM_Invite_User_invitation_sent}</p>
+                            </aura:set>
+                        </aura:if>
+                    </div>
+
+                    <div class="slds-col--padded slds-size--8-of-12 center text_center">
+                        <lightning:button variant="base" label="Back" title="Back" onclick="{! c.back }" class="btn btn-primary btn-grey button_width" />
+                    </div>
+
+
+                </div>
+
+
+                <!--INTERNAL USER-->
+                <aura:set attribute="else">
+
+                    <div class="slds-grid slds-wrap text_center">
+
+                        <div class="slds-col--padded slds-size--12-of-12">
+                            <aura:if isTrue="{! v.sendNotification}">
+                                <p>{!$Label.c.GADM_Invite_User_notification_sent}</p>
+                                <aura:set attribute="else">
+                                    <p>{!$Label.c.GADM_Invite_User_invitation_sent}</p>
+                                </aura:set>
+                            </aura:if>
+                        </div>
+
+                        <div class="slds-col--padded slds-size--12-of-12">
+                            <lightning:button variant="base" label="Back" title="Back" onclick="{! c.backToEmailField }" class="btn btn-primary btn-grey button_width" />
+                        </div>
+
+
+                    </div>
+
+                </aura:set>
+
+            </aura:if>
+
+
+        </div>
+
+
+    </div>
+
+    </aura:if>
+
+</aura:component>

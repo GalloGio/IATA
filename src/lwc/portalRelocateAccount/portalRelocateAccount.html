@@ -20,55 +20,53 @@
 
                         <div class="customWhiteBackground">
 
-                            <div class="slds-grid slds-wrap slds-p-around_large">
-
-                                <div class="slds-col slds-size_1-of-1">
-                                    <lightning-layout-item size="7" flexibility="auto" padding="around-small">
-                                        <lightning-combobox name="AccountSelected" label={label.ISSP_Relocate_Move_To}
-                                            placeholder={selectAccountPlaceholder} value={relatedAccountValue}
-                                            options={relatedAccountOptions} dropdown-alignment="auto"
-                                            onchange={handleRelatedAccountChange} required disabled={hasNoOptions}>
-                                        </lightning-combobox>
-                                    </lightning-layout-item>
-                                </div>
+                            <div class="slds-p-around_large">
+                                <lightning-combobox name="AccountSelected" label={label.ISSP_Relocate_Move_To}
+                                    placeholder={selectAccountPlaceholder} value={relatedAccountValue}
+                                    options={relatedAccountOptions} dropdown-alignment="auto"
+                                    onchange={handleRelatedAccountChange} required disabled={hasNoOptions}>
+                                </lightning-combobox>
                             </div>
 
                             <template if:true={showAccountInfo}>
-                                <lightning-record-view-form record-id={AccountInfo.Id} object-api-name="Account">
-                                    <div class="slds-box">
-                                        <lightning-output-field field-name="Name">
-                                        </lightning-output-field>
-                                        <lightning-output-field field-name="Site">
-                                        </lightning-output-field>
-                                        <lightning-output-field field-name="IATA_ISO_Country__r.Name">
-                                        </lightning-output-field>
-                                        <lightning-output-field field-name="Location_Type__c">
-                                        </lightning-output-field>
-                                        <lightning-output-field field-name="BillingStreet">
-                                        </lightning-output-field>
-                                        <lightning-output-field field-name="BillingCity">
-                                        </lightning-output-field>
-                                        <lightning-output-field field-name="BillingPostalCode">
-                                        </lightning-output-field>
-                                        <lightning-output-field field-name="BillingState">
-                                        </lightning-output-field>
-                                        <lightning-output-field field-name="BillingCountry">
-                                        </lightning-output-field>
-                                    </div>
-                                </lightning-record-view-form>
+                                <div class="slds-p-around_large">
+                                    <lightning-record-view-form record-id={AccountInfo.Id} object-api-name="Account">
+                                        <div class="slds-box">
+                                            <lightning-output-field field-name="Name">
+                                            </lightning-output-field>
+                                            <lightning-output-field field-name="Site">
+                                            </lightning-output-field>
+                                            <lightning-output-field field-name="IATA_ISO_Country__r.Name">
+                                            </lightning-output-field>
+                                            <lightning-output-field field-name="Location_Type__c">
+                                            </lightning-output-field>
+                                            <lightning-output-field field-name="BillingStreet">
+                                            </lightning-output-field>
+                                            <lightning-output-field field-name="BillingCity">
+                                            </lightning-output-field>
+                                            <lightning-output-field field-name="BillingPostalCode">
+                                            </lightning-output-field>
+                                            <lightning-output-field field-name="BillingState">
+                                            </lightning-output-field>
+                                            <lightning-output-field field-name="BillingCountry">
+                                            </lightning-output-field>
+                                        </div>
+                                    </lightning-record-view-form>
+                                </div>
                             </template>
 
                             <!-- BUTTON -->
-                            <div class="slds-align_absolute-center slds-p-around_large topLightGrayBorder">
-                                <lightning-button variant="neutral" class="slds-m-right_medium containedButtonWhite" name="closeModal"
-                                    label={label.cancelLABEL} title={label.cancelLABEL} onclick={closeModal}>
-                                </lightning-button>
-                                
-                                <lightning-button variant="brand" class="containedButton disabledButton"
-                                    name="sendPasswordbtn" label={label.submitLABEL} title={label.submitLABEL}
-                                    onclick={submitAction} disabled={isConfirmDisabled}>
-                                </lightning-button>
-
+                            <div class="slds-p-around_large topLightGrayBorder customWhiteBackground">
+                                <div class="slds-grid slds-wrap slds-gutters_medium slds-grid--vertical-stretch">
+                                    <div class="slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2">    
+                                        <lightning-button class="baseButton newLinkButton buttonMinHeightMedium text-xsmall fullWidth" name="closeModal" 
+                                            label={label.cancelLABEL} variant="neutral" onclick={closeModal}></lightning-button>
+                                    </div>
+                                    <div class="slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2">
+                                        <lightning-button class="baseButton newContainedButton buttonMinHeightMedium text-xsmall fullWidth" name="sendPasswordbtn" 
+                                            label={label.submitLABEL} variant="neutral" onclick={submitAction} disabled={isConfirmDisabled}></lightning-button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

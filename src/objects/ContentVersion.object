@@ -11,6 +11,17 @@
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <enableFeeds>false</enableFeeds>
     <fields>
+        <fullName>Category__c</fullName>
+        <description>Text category</description>
+        <externalId>false</externalId>
+        <label>Category</label>
+        <length>40</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>ContentSize</fullName>
     </fields>
     <fields>
@@ -2251,6 +2262,11 @@
             <valueSetDefinition>
                 <sorted>true</sorted>
                 <value>
+                    <fullName>Airline and Location Coding</fullName>
+                    <default>false</default>
+                    <label>Airline and Location Coding</label>
+                </value>
+                <value>
                     <fullName>AirportIS</fullName>
                     <default>false</default>
                     <label>AirportIS</label>
@@ -2299,6 +2315,11 @@
                     <fullName>MarketIS</fullName>
                     <default>false</default>
                     <label>MarketIS</label>
+                </value>
+                <value>
+                    <fullName>MITA/BIETA</fullName>
+                    <default>false</default>
+                    <label>MITA/BIETA</label>
                 </value>
                 <value>
                     <fullName>PaxIS</fullName>
@@ -2435,6 +2456,44 @@
             </valueSetDefinition>
         </valueSet>
         <visibleLines>5</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Valid_From__c</fullName>
+        <externalId>false</externalId>
+        <label>Valid From</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Valid_To__c</fullName>
+        <externalId>false</externalId>
+        <label>Valid To</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Version_Link_Label__c</fullName>
+        <description>Version Link Label</description>
+        <externalId>false</externalId>
+        <label>Version Link Label</label>
+        <length>100</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Version_Link__c</fullName>
+        <externalId>false</externalId>
+        <formula>HYPERLINK (&apos;/lightning/r/ContentVersion/&apos; &amp; Id &amp; &apos;/view&apos;, Version_Link_Label__c,&apos;_self&apos;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Version Link</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <recordTypes>
         <fullName>BIS</fullName>
@@ -5962,6 +6021,141 @@
                 <fullName>SIS - Simplified Invoicing %26 Settlement</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>iiNet</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Region__c</picklist>
+            <values>
+                <fullName>AME</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ASIA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ameria</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EUROPE</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>User_status_access__c</picklist>
+            <values>
+                <fullName>Approved Admin</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Approved User</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pending Approval</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>GADM</fullName>
+        <active>true</active>
+        <description>GADM Files</description>
+        <label>GADM</label>
+        <picklistValues>
+            <picklist>Country_of_publication__c</picklist>
+            <values>
+                <fullName>All - Globally</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Country_visibilty__c</picklist>
+            <values>
+                <fullName>All - Globally</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Document_Category__c</picklist>
+            <values>
+                <fullName>Accreditation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Bulletins and News</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Calendars</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Forms and Procedures</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Products and Services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Resolutions</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Taxation</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Language__c</picklist>
+            <values>
+                <fullName>English</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Product_Category__c</picklist>
+            <values>
+                <fullName>AirportIS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CargoIS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Direct Data Solutions %28DDS%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>E%26F - Enhancement %26 Financing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GAP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICH - IATA Clearing House</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MarketIS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PaxIS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SIS - Simplified Invoicing %26 Settlement</fullName>
+                <default>false</default>
+            </values>            
             <values>
                 <fullName>iiNet</fullName>
                 <default>false</default>

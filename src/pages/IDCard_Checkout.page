@@ -240,13 +240,26 @@ color: #000;
                             </tr> 
                             <tr>
                                 <td class="LabelsGray" style="text-align: left; width: 150px;">
-                                    {!$Label.ID_Card_Fees}
+                                    {!$Label.IDCard_Fee}
                                 </td>
                                 <td style="text-align: left; width: 100px;">
                                     <div class="outputText2" style="text-align: left; width: 125px;">
                                         <apex:outputText value="{0, number, 0.00} {!idCardApplication.CurrencyIsoCode}"
                                             style="width:75px">
                                             <apex:param value="{!idCardApplication.ID_Card_Fee__c}" />                                    
+                                        </apex:outputText>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="LabelsGray" style="text-align: left; width: 150px;">
+                                    {!$Label.IDCard_FeesPhysical}
+                                </td>
+                                <td style="text-align: left; width: 100px;">
+                                    <div class="outputText2" style="text-align: left; width: 125px;">
+                                        <apex:outputText value="{0, number, 0.00} {!idCardApplication.CurrencyIsoCode}"
+                                            style="width:75px">
+                                            <apex:param value="{!idCardApplication.Physical_Card_Fee__c}" />                                    
                                         </apex:outputText>
                                         <apex:outputText value=" {!$Label.IDCard_ExpediteDeliveryAddedtoCardPrice}" rendered="{!IsExpediteDeliveryAddedtoIDCardPrice}"/>
                                     </div>
@@ -267,7 +280,7 @@ color: #000;
                             </tr>
                             <tr id="itdi_fee_row">
                                 <td class="LabelsGray" style="text-align: left; width: 150px;">
-                                    {!$Label.IDCard_ITDIFee}
+                                    {!$Label.ID_Card_Training_Fee}
                                 </td>
                                 <td style="text-align: left; width: 150px;">
                                     <div class="outputText2" style="text-align: left; width: 125px;">
@@ -280,42 +293,36 @@ color: #000;
                             <tr>
                                 <td class="LabelsGray" style="text-align: left; width: 150px;"></td>
                                 <td style="width: 150px;"></td>
-                            </tr>
+                            </tr>                            
                             <tr>
                                 <td class="LabelsGray" style="text-align: left; width: 150px;">
                                     <font size="2">
-                                        <strong>
-                                            {!Tax1}
-                                        </strong>
-                                    </font>
-                                </td>
-                                <td style="text-align: left; width: 150px;">
-                                    <div class="outputText2" style="text-align: left; width: 125px;">  
-                                        {!Tax1Value}
-                                    </div>
-                                </td>
-                            </tr>
-                            
-                            <tr>
-                                <td class="LabelsGray" style="text-align: left; width: 150px;">
-                                    <font size="2">
-                                        <strong>
-                                            {!Tax2}
-                                        </strong>
+                                        {!$Label.ID_Card_Taxes}
                                     </font>
                                 </td>
                                 <td style="text-align: left; width: 150px;">
                                     <div class="outputText2" style="text-align: left; width: 125px;">
-                                        {!Tax2Value}
+                                        <apex:outputText id="vat" value="{!vatPrice} {!idCardApplication.CurrencyIsoCode}" style="width:150px" />
                                     </div>
                                 </td>
                             </tr>
-                            
+                            <tr id="discount_row">
+                                <td class="LabelsGray" style="text-align: left; width: 150px;">
+                                    {!$Label.IDCard_Discount}
+                                </td>
+                                <td style="text-align: left; width: 150px;">
+                                    <div class="outputText2" style="text-align: left; width: 125px;">
+                                        <apex:outputText value="{0, number, 0.00} {!idCardApplication.CurrencyIsoCode}" style="width:150px">
+                                            <apex:param value="{!idCardApplication.ID_Card_Fee_Discount__c}" />
+                                        </apex:outputText>
+                                    </div>
+                                </td>
+                            </tr>
                             <tr>
                                 <td class="LabelsBlue" style="text-align: left; width: 150px;">
                                     <font size="2">
                                         <strong>
-                                            {!$Label.IDCard_TOTAL}
+                                            {!$Label.Total_Cost}
                                         </strong>
                                     </font>
                                 </td>

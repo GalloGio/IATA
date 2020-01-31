@@ -1,10 +1,10 @@
 public class ISSP_ICCS_Mock{
 
 	public static HTTPResponse getMockToken(String participantId) {
-		
+
 		// Create a fake response
 		HttpResponse res = new HttpResponse();
-		
+
 		if(participantId == 'TO000'){
 			res = null;
 		}
@@ -18,13 +18,13 @@ public class ISSP_ICCS_Mock{
 			res.setBody('{"access_token" : "123abc"}');
 			res.setStatusCode(200);
 		}
-		
+
 		return res;
 	}
 
 
 	public static HTTPResponse getMockResponse(String endpoint, String participantId) {
-		
+
 		// Create a fake response
 		HttpResponse res = new HttpResponse();
 		res.setHeader('Content-Type', 'application/json');
@@ -34,7 +34,7 @@ public class ISSP_ICCS_Mock{
 		// Case 1 : Response will be successfull for participant LX724
 		if(participantId == 'LX724'){
 			res.setStatusCode(200);
-	
+
 			if(endpoint.endsWith('/cashflows')){
 				res.setBody(getCashflows());
 			}
@@ -142,9 +142,9 @@ public class ISSP_ICCS_Mock{
 			}
 			else{
 				res.setBody('');
-			}		
+			}
 		}
-		
+
 		// Case 2 : Response will be null for participantId NU000
 		else if(participantId == 'ER000'){
 			res = null;
@@ -248,7 +248,7 @@ public class ISSP_ICCS_Mock{
 	}
 
 
-	private static final String CYCLE_2017_12 = 
+	private static final String CYCLE_2017_12 =
 		'	{' +
 		'		"CycleId": "2017#12",' +
 		'		"Type": {' +
@@ -264,7 +264,7 @@ public class ISSP_ICCS_Mock{
 		'		"Comment": "string"' +
 		'	}';
 
-	private static final String CYCLE_2017_13 = 
+	private static final String CYCLE_2017_13 =
 		'	{' +
 		'		"CycleId": "2017#13",' +
 		'		"Type": {' +
@@ -280,7 +280,7 @@ public class ISSP_ICCS_Mock{
 		'		"Comment": "string"' +
 		'	}';
 
-	private static final String CYCLE_2017_14 = 
+	private static final String CYCLE_2017_14 =
 		'	{' +
 		'		"CycleId": "2017#14",' +
 		'		"Type": {' +
@@ -296,7 +296,7 @@ public class ISSP_ICCS_Mock{
 		'		"Comment": "string"' +
 		'	}';
 
-	private static final String CYCLE_2017_15 = 
+	private static final String CYCLE_2017_15 =
 		'	{' +
 		'		"CycleId": "2017#15",' +
 		'		"Type": {' +
@@ -312,7 +312,7 @@ public class ISSP_ICCS_Mock{
 		'		"Comment": "string"' +
 		'	}';
 
-	private static final String CYCLE_2017_23 = 
+	private static final String CYCLE_2017_23 =
 		'	{' +
 		'		"CycleId": "2017#23",' +
 		'		"Type": {' +
@@ -328,7 +328,7 @@ public class ISSP_ICCS_Mock{
 		'		"Comment": "string"' +
 		'	}';
 
-	private static final String CYCLE_2017_26 = 
+	private static final String CYCLE_2017_26 =
 		'	{' +
 		'		"CycleId": "2017#26",' +
 		'		"Type": {' +
@@ -351,19 +351,19 @@ public class ISSP_ICCS_Mock{
 	public static String getCreatedCycles(){
 		return '{"PagingInfo":{"Records":2},"Cycles":[' + CYCLE_2017_14 + ',' + CYCLE_2017_15 + ']}';
 	}
-	
+
 	public static String getAllCycles(){
 		return '{"PagingInfo":{"Records":6},"Cycles":[' + CYCLE_2017_12 + ',' + CYCLE_2017_13 + ',' + CYCLE_2017_14 + ',' + CYCLE_2017_15 + ',' + CYCLE_2017_23 + ',' + CYCLE_2017_26 + ']}';
 	}
-	
+
 	public static String getReportTypes(){
 		return	'[' +
-			    '	{ "Code": "30F", "Description": "Approximate Report" },' +
-			    '	{ "Code": "31F", "Description": "Final Report" }' +
+					'	{ "Code": "30F", "Description": "Approximate Report" },' +
+					'	{ "Code": "31F", "Description": "Final Report" }' +
 				']';
 	}
-	
-    public static String getBankAccountsCodes(){
+
+		public static String getBankAccountsCodes(){
 		return	'[{'+
 			'    "Id": 1,'+
 			'    "Code": "P-02792USD-01",'+
@@ -389,7 +389,7 @@ public class ISSP_ICCS_Mock{
 			'            "Bic": "abcdefghij"'+
 			'        }'+
 			'    }'+
-			'},'+		
+			'},'+
 			'{'+
 			'    "Id": 3,'+
 			'    "Code": "P-02793EUR-01",'+
@@ -402,7 +402,7 @@ public class ISSP_ICCS_Mock{
 			'            "Bic": "laksdjlaksjd"'+
 			'        }'+
 			'    }'+
-			'},'+		
+			'},'+
 			'{'+
 			'    "Id": 4,'+
 			'    "Code": "P-02792USD-01-01",'+
@@ -416,9 +416,9 @@ public class ISSP_ICCS_Mock{
 			'        }'+
 			'    }'+
 			'}]';
-    }
+		}
 
-    public static String getCycleBankAccountsCodes(String cycleId){
+		public static String getCycleBankAccountsCodes(String cycleId){
 		return	'[{'+
 			'    "Id": 1,'+
 			'    "Code": "P-02792USD-01",'+
@@ -444,7 +444,7 @@ public class ISSP_ICCS_Mock{
 			'            "Bic": "abcdefghij"'+
 			'        }'+
 			'    }'+
-			'},'+		
+			'},'+
 			'{'+
 			'    "Id": 3,'+
 			'    "Code": "P-02793EUR-01",'+
@@ -457,7 +457,7 @@ public class ISSP_ICCS_Mock{
 			'            "Bic": "laksdjlaksjd"'+
 			'        }'+
 			'    }'+
-			'},'+		
+			'},'+
 			'{'+
 			'    "Id": 4,'+
 			'    "Code": "P-02792USD-01-01",'+
@@ -471,10 +471,10 @@ public class ISSP_ICCS_Mock{
 			'        }'+
 			'    }'+
 			'}]';
-    }
+		}
 
 
-	private static final String PARTICIPATION_1 = 
+	private static final String PARTICIPATION_1 =
 		'  {'+
 		'    "Id": 1,'+
 		'	 "Participant":{' +
@@ -495,7 +495,7 @@ public class ISSP_ICCS_Mock{
 		'    "ModifiedOn": "2017-09-14T10:08:31.117Z"'+
 		'  }';
 
-	private static final String PARTICIPATION_2 = 
+	private static final String PARTICIPATION_2 =
 		'  {'+
 		'    "Id": 2,'+
 		'	 "Participant":{' +
@@ -519,23 +519,23 @@ public class ISSP_ICCS_Mock{
 
 
 
-    public static String getParticipations(){
-    	return '[' + PARTICIPATION_1 + ',' + PARTICIPATION_2 + ']';
-    }
-    
-    public static String getCycleParticipations(String cycleId){
-    	// TO BE REVIEWED
-    	return '[' + PARTICIPATION_1 + ',' + PARTICIPATION_2 + ']';
-    }
-    
-    public static String getParticipation(Integer participationId){
-    	if(participationId == 1){
-    		return PARTICIPATION_1;
-    	}
-    	else{
-    		return PARTICIPATION_2;
-    	}
-    }
+		public static String getParticipations(){
+			return '[' + PARTICIPATION_1 + ',' + PARTICIPATION_2 + ']';
+		}
+
+		public static String getCycleParticipations(String cycleId){
+			// TO BE REVIEWED
+			return '[' + PARTICIPATION_1 + ',' + PARTICIPATION_2 + ']';
+		}
+
+		public static String getParticipation(Integer participationId){
+			if(participationId == 1){
+				return PARTICIPATION_1;
+			}
+			else{
+				return PARTICIPATION_2;
+			}
+		}
 
 	private static final String STANDARD_SI_PARTICIPATION_1 =
 		'	  {'+
@@ -545,7 +545,7 @@ public class ISSP_ICCS_Mock{
 		'	        "Code": "' + ISSP_ICCS_Utils.SI_STANDARD + '"'+
 		'	    },'+
 		'		"ModifiedOn": "2017-09-14T10:08:31.117Z"'+
-		'	  }';	
+		'	  }';
 
 
 	private static final String STANDARD_SI_PARTICIPATION_1_DETAIL =
@@ -639,7 +639,7 @@ public class ISSP_ICCS_Mock{
 		'	        "ModifiedOn": "2017-09-14T10:08:31.117Z"'+
 		'	      }'+
 		'	    ]'+
-		'	  }';	
+		'	  }';
 
 	private static final String STANDARD_SI_PARTICIPATION_2 =
 		'	  {'+
@@ -953,7 +953,7 @@ public class ISSP_ICCS_Mock{
 		'    		}'+
 		'  		},'+
 		'  		"SettlementAmount": 10000.00'+
-		'	  }';	
+		'	  }';
 
 	private static final String ADHOC_STANDARD_SI_CYCLE_12_PARTICIPATION_1_DETAIL =
 		'	  {'+
@@ -1055,7 +1055,7 @@ public class ISSP_ICCS_Mock{
 		'	        "ModifiedOn": "2017-09-14T10:08:31.117Z"'+
 		'	      }'+
 		'	    ]'+
-		'	  }';	
+		'	  }';
 
 
 	private static final String ADHOC_STANDARD_SI_CYCLE_13_PARTICIPATION_1 =
@@ -1088,7 +1088,7 @@ public class ISSP_ICCS_Mock{
 		'    		}'+
 		'  		},'+
 		'  		"SettlementAmount": 20000.00'+
-		'	  }';	
+		'	  }';
 
 
 	private static final String ADHOC_STANDARD_SI_CYCLE_13_PARTICIPATION_1_DETAIL =
@@ -1223,7 +1223,7 @@ public class ISSP_ICCS_Mock{
 		'    		}'+
 		'  		},'+
 		'  		"SettlementAmount": 20000.00'+
-		'	  }';	
+		'	  }';
 
 
 	private static final String ADHOC_STANDARD_SI_CYCLE_12_PARTICIPATION_2_DETAIL =
@@ -1358,7 +1358,7 @@ public class ISSP_ICCS_Mock{
 		'    		}'+
 		'  		},'+
 		'  		"SettlementAmount": 20000.00'+
-		'	  }';	
+		'	  }';
 
 
 
@@ -1462,7 +1462,7 @@ public class ISSP_ICCS_Mock{
 		'	        "ModifiedOn": "2017-09-14T10:08:31.117Z"'+
 		'	      }'+
 		'	    ]'+
-		'	  }';	
+		'	  }';
 
 
 	private static final String ADHOC_FUTURE_SI_CYCLE_12_PARTICIPATION_1 =
@@ -1959,7 +1959,7 @@ public class ISSP_ICCS_Mock{
 			return '[' + STANDARD_SI_PARTICIPATION_2 + ',' + FUTURE_SI_CYCLE_15_PARTICIPATION_2 + ']';
 		}
 	}
-	
+
 	public static String getSettlementInstruction(Integer settlementInstructionId){
 		if(settlementInstructionId == 11){
 			return STANDARD_SI_PARTICIPATION_1_DETAIL;
@@ -2000,15 +2000,15 @@ public class ISSP_ICCS_Mock{
 	public static String getCycleSettlementInstruction(String cycleId, Integer settlementInstructionId){
 		return SI_DETAIL_MAP.get(settlementInstructionId);
 	}
-	
-	public static String getInstructionTypes(){ 
-	    return 	'['+
+
+	public static String getInstructionTypes(){
+			return 	'['+
 				'  {"Id": 1, "Code": "' + ISSP_ICCS_Utils.SI_STANDARD + '", "Description": "Standard"},'+
 				'  {"Id": 2, "Code": "' + ISSP_ICCS_Utils.SI_FUTURE + '", "Description": "Future"},'+
 				'  {"Id": 3, "Code": "' + ISSP_ICCS_Utils.SI_ADHOC + '", "Description": "Adhoc"}'+
 				']';
 	}
-	
+
 	public static String getInstructionLineTypes(){
 		return 	'['+
 				'    {"Id": 1, "Code": "Fixed", "Description": "Fixed"},'+
@@ -2018,1324 +2018,1324 @@ public class ISSP_ICCS_Mock{
 				']';
 	}
 
-	public static final String GET_REPORTS = 
+	public static final String GET_REPORTS =
 		'{' +
 			'"PagingInfo": {' +
 			'	"Records": 123' +
 			'},' +
 			'"Reports":' +
 				'[{' +
-			       ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378B115",' +
-			       ' "Name": "myfancyreport",' +
-			       ' "ParticipantCode": "4B184",' +
-			       ' "AvailableFormats": [' +
-			       ' 	{'+
-			       '		"format": "pdf",' +
-			       '		"mimetype": "application/pdf"' +
-			       '	},' +
-			       ' 	{'+
-			       '		"format": "csv",' +
-			       '		"mimetype": "text/csv"' +
-			       '	},' +
-			       ' 	{'+
-			       '		"format": "xlsx",' +
-			       '		"mimetype": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"' +
-			       '	}' +
-			       ' ],' +
-			       ' "CycleId": "2017#23",' +
-			       ' "Type": {'+
-			       '	"Code": "31A",' +
-			       '	"Description": "Some report"' +
-			       ' },' +
-			       ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
-				'},' + 
-				'{' +
-			       ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
-			       ' "Name": "myotherfancyreport",' +
-			       ' "AvailableFormats": [' +
-			       ' 	{'+
-			       '		"format": "pdf",' +
-			       '		"mimetype": "application/pdf"' +
-			       '	}' +
-			       ' ],' +
-			       ' "ParticipantCode": "4B1AA",' +
-			       ' "CycleId": "2017#26",' +
-			       ' "Type": {'+
-			       '	"Code": "31F",' +
-			       '	"Description": "Some final report"' +
-			       ' },' +
-			       ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
-				   '},' + 
-				'{' +
-			       ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
-			       ' "Name": "myotherfancyreport",' +
-			       ' "AvailableFormats": [' +
-			       ' 	{'+
-			       '		"format": "pdf",' +
-			       '		"mimetype": "application/pdf"' +
-			       '	}' +
-			       ' ],' +
-			       ' "ParticipantCode": "4B1AA",' +
-			       ' "CycleId": "2017#26",' +
-			       ' "Type": {'+
-			       '	"Code": "31F",' +
-			       '	"Description": "Some final report"' +
-			       ' },' +
-			       ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
-				   '},' + 
-				'{' +
-			       ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
-			       ' "Name": "myotherfancyreport",' +
-			       ' "AvailableFormats": [' +
-			       ' 	{'+
-			       '		"format": "pdf",' +
-			       '		"mimetype": "application/pdf"' +
-			       '	}' +
-			       ' ],' +
-			       ' "ParticipantCode": "4B1AA",' +
-			       ' "CycleId": "2017#26",' +
-			       ' "Type": {'+
-			       '	"Code": "31F",' +
-			       '	"Description": "Some final report"' +
-			       ' },' +
-			       ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
-				   '},' + 
-				'{' +
-			       ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
-			       ' "Name": "myotherfancyreport",' +
-			       ' "AvailableFormats": [' +
-			       ' 	{'+
-			       '		"format": "pdf",' +
-			       '		"mimetype": "application/pdf"' +
-			       '	}' +
-			       ' ],' +
-			       ' "ParticipantCode": "4B1AA",' +
-			       ' "CycleId": "2017#26",' +
-			       ' "Type": {'+
-			       '	"Code": "31F",' +
-			       '	"Description": "Some final report"' +
-			       ' },' +
-			       ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
-				   '},' + 
-				'{' +
-			       ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
-			       ' "Name": "myotherfancyreport",' +
-			       ' "AvailableFormats": [' +
-			       ' 	{'+
-			       '		"format": "pdf",' +
-			       '		"mimetype": "application/pdf"' +
-			       '	}' +
-			       ' ],' +
-			       ' "ParticipantCode": "4B1AA",' +
-			       ' "CycleId": "2017#26",' +
-			       ' "Type": {'+
-			       '	"Code": "31F",' +
-			       '	"Description": "Some final report"' +
-			       ' },' +
-			       ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
-				   '},' + 
-				'{' +
-			       ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
-			       ' "Name": "myotherfancyreport",' +
-			       ' "AvailableFormats": [' +
-			       ' 	{'+
-			       '		"format": "pdf",' +
-			       '		"mimetype": "application/pdf"' +
-			       '	}' +
-			       ' ],' +
-			       ' "ParticipantCode": "4B1AA",' +
-			       ' "CycleId": "2017#26",' +
-			       ' "Type": {'+
-			       '	"Code": "31F",' +
-			       '	"Description": "Some final report"' +
-			       ' },' +
-			       ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
-				   '},' + 
-				'{' +
-			       ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
-			       ' "Name": "myotherfancyreport",' +
-			       ' "AvailableFormats": [' +
-			       ' 	{'+
-			       '		"format": "pdf",' +
-			       '		"mimetype": "application/pdf"' +
-			       '	}' +
-			       ' ],' +
-			       ' "ParticipantCode": "4B1AA",' +
-			       ' "CycleId": "2017#26",' +
-			       ' "Type": {'+
-			       '	"Code": "31F",' +
-			       '	"Description": "Some final report"' +
-			       ' },' +
-			       ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
-				   '},' + 
-				'{' +
-			       ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
-			       ' "Name": "myotherfancyreport",' +
-			       ' "AvailableFormats": [' +
-			       ' 	{'+
-			       '		"format": "pdf",' +
-			       '		"mimetype": "application/pdf"' +
-			       '	}' +
-			       ' ],' +
-			       ' "ParticipantCode": "4B1AA",' +
-			       ' "CycleId": "2017#26",' +
-			       ' "Type": {'+
-			       '	"Code": "31F",' +
-			       '	"Description": "Some final report"' +
-			       ' },' +
-			       ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
-				   '},' + 
-				'{' +
-			       ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
-			       ' "Name": "myotherfancyreport",' +
-			       ' "AvailableFormats": [' +
-			       ' 	{'+
-			       '		"format": "pdf",' +
-			       '		"mimetype": "application/pdf"' +
-			       '	}' +
-			       ' ],' +
-			       ' "ParticipantCode": "4B1AA",' +
-			       ' "CycleId": "2017#26",' +
-			       ' "Type": {'+
-			       '	"Code": "31F",' +
-			       '	"Description": "Some final report"' +
-			       ' },' +
-			       ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
-				   '},' + 
-				'{' +
-			       ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
-			       ' "Name": "myotherfancyreport",' +
-			       ' "AvailableFormats": [' +
-			       ' 	{'+
-			       '		"format": "pdf",' +
-			       '		"mimetype": "application/pdf"' +
-			       '	}' +
-			       ' ],' +
-			       ' "ParticipantCode": "4B1AA",' +
-			       ' "CycleId": "2017#26",' +
-			       ' "Type": {'+
-			       '	"Code": "31F",' +
-			       '	"Description": "Some final report"' +
-			       ' },' +
-			       ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
-				   '},' + 
-				'{' +
-			       ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
-			       ' "Name": "myotherfancyreport",' +
-			       ' "AvailableFormats": [' +
-			       ' 	{'+
-			       '		"format": "pdf",' +
-			       '		"mimetype": "application/pdf"' +
-			       '	}' +
-			       ' ],' +
-			       ' "ParticipantCode": "4B1AA",' +
-			       ' "CycleId": "2017#26",' +
-			       ' "Type": {'+
-			       '	"Code": "31F",' +
-			       '	"Description": "Some final report"' +
-			       ' },' +
-			       ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
-				   '},' + 
-				'{' +
-			       ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
-			       ' "Name": "myotherfancyreport",' +
-			       ' "AvailableFormats": [' +
-			       ' 	{'+
-			       '		"format": "pdf",' +
-			       '		"mimetype": "application/pdf"' +
-			       '	}' +
-			       ' ],' +
-			       ' "ParticipantCode": "4B1AA",' +
-			       ' "CycleId": "2017#26",' +
-			       ' "Type": {'+
-			       '	"Code": "31F",' +
-			       '	"Description": "Some final report"' +
-			       ' },' +
-			       ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
-				   '},' + 
-				'{' +
-			       ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
-			       ' "Name": "myotherfancyreport",' +
-			       ' "AvailableFormats": [' +
-			       ' 	{'+
-			       '		"format": "pdf",' +
-			       '		"mimetype": "application/pdf"' +
-			       '	}' +
-			       ' ],' +
-			       ' "ParticipantCode": "4B1AA",' +
-			       ' "CycleId": "2017#26",' +
-			       ' "Type": {'+
-			       '	"Code": "31F",' +
-			       '	"Description": "Some final report"' +
-			       ' },' +
-			       ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
-				   '},' + 
-				'{' +
-			       ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
-			       ' "Name": "myotherfancyreport",' +
-			       ' "AvailableFormats": [' +
-			       ' 	{'+
-			       '		"format": "pdf",' +
-			       '		"mimetype": "application/pdf"' +
-			       '	}' +
-			       ' ],' +
-			       ' "ParticipantCode": "4B1AA",' +
-			       ' "CycleId": "2017#26",' +
-			       ' "Type": {'+
-			       '	"Code": "31F",' +
-			       '	"Description": "Some final report"' +
-			       ' },' +
-			       ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
-				   '},' + 
-				'{' +
-			       ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
-			       ' "Name": "myotherfancyreport",' +
-			       ' "AvailableFormats": [' +
-			       ' 	{'+
-			       '		"format": "pdf",' +
-			       '		"mimetype": "application/pdf"' +
-			       '	}' +
-			       ' ],' +
-			       ' "ParticipantCode": "4B1AA",' +
-			       ' "CycleId": "2017#26",' +
-			       ' "Type": {'+
-			       '	"Code": "31F",' +
-			       '	"Description": "Some final report"' +
-			       ' },' +
-			       ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
-				   '},' + 
-				'{' +
-			       ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
-			       ' "Name": "myotherfancyreport",' +
-			       ' "AvailableFormats": [' +
-			       ' 	{'+
-			       '		"format": "pdf",' +
-			       '		"mimetype": "application/pdf"' +
-			       '	}' +
-			       ' ],' +
-			       ' "ParticipantCode": "4B1AA",' +
-			       ' "CycleId": "2017#26",' +
-			       ' "Type": {'+
-			       '	"Code": "31F",' +
-			       '	"Description": "Some final report"' +
-			       ' },' +
-			       ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
-				   '},' + 
-				'{' +
-			       ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
-			       ' "Name": "myotherfancyreport",' +
-			       ' "AvailableFormats": [' +
-			       ' 	{'+
-			       '		"format": "pdf",' +
-			       '		"mimetype": "application/pdf"' +
-			       '	}' +
-			       ' ],' +
-			       ' "ParticipantCode": "4B1AA",' +
-			       ' "CycleId": "2017#26",' +
-			       ' "Type": {'+
-			       '	"Code": "31F",' +
-			       '	"Description": "Some final report"' +
-			       ' },' +
-			       ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
-				   '},' + 
-				'{' +
-			       ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
-			       ' "Name": "myotherfancyreport",' +
-			       ' "AvailableFormats": [' +
-			       ' 	{'+
-			       '		"format": "pdf",' +
-			       '		"mimetype": "application/pdf"' +
-			       '	}' +
-			       ' ],' +
-			       ' "ParticipantCode": "4B1AA",' +
-			       ' "CycleId": "2017#26",' +
-			       ' "Type": {'+
-			       '	"Code": "31F",' +
-			       '	"Description": "Some final report"' +
-			       ' },' +
-			       ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
-				   '},' + 
-				'{' +
-			       ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
-			       ' "Name": "myotherfancyreport",' +
-			       ' "AvailableFormats": [' +
-			       ' 	{'+
-			       '		"format": "pdf",' +
-			       '		"mimetype": "application/pdf"' +
-			       '	}' +
-			       ' ],' +
-			       ' "ParticipantCode": "4B1AA",' +
-			       ' "CycleId": "2017#26",' +
-			       ' "Type": {'+
-			       '	"Code": "31F",' +
-			       '	"Description": "Some final report"' +
-			       ' },' +
-			       ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
-				   '},' + 
-				'{' +
-			       ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
-			       ' "Name": "myotherfancyreport",' +
-			       ' "AvailableFormats": [' +
-			       ' 	{'+
-			       '		"format": "pdf",' +
-			       '		"mimetype": "application/pdf"' +
-			       '	}' +
-			       ' ],' +
-			       ' "ParticipantCode": "4B1AA",' +
-			       ' "CycleId": "2017#26",' +
-			       ' "Type": {'+
-			       '	"Code": "31F",' +
-			       '	"Description": "Some final report"' +
-			       ' },' +
-			       ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
-				   '},' + 
-				'{' +
-			       ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
-			       ' "Name": "myotherfancyreport",' +
-			       ' "AvailableFormats": [' +
-			       ' 	{'+
-			       '		"format": "pdf",' +
-			       '		"mimetype": "application/pdf"' +
-			       '	}' +
-			       ' ],' +
-			       ' "ParticipantCode": "4B1AA",' +
-			       ' "CycleId": "2017#26",' +
-			       ' "Type": {'+
-			       '	"Code": "31F",' +
-			       '	"Description": "Some final report"' +
-			       ' },' +
-			       ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
-				   '},' + 
-				'{' +
-			       ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
-			       ' "Name": "myotherfancyreport",' +
-			       ' "AvailableFormats": [' +
-			       ' 	{'+
-			       '		"format": "pdf",' +
-			       '		"mimetype": "application/pdf"' +
-			       '	}' +
-			       ' ],' +
-			       ' "ParticipantCode": "4B1AA",' +
-			       ' "CycleId": "2017#26",' +
-			       ' "Type": {'+
-			       '	"Code": "31F",' +
-			       '	"Description": "Some final report"' +
-			       ' },' +
-			       ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
-				   '},' + 
-				'{' +
-			       ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
-			       ' "Name": "myotherfancyreport",' +
-			       ' "AvailableFormats": [' +
-			       ' 	{'+
-			       '		"format": "pdf",' +
-			       '		"mimetype": "application/pdf"' +
-			       '	}' +
-			       ' ],' +
-			       ' "ParticipantCode": "4B1AA",' +
-			       ' "CycleId": "2017#26",' +
-			       ' "Type": {'+
-			       '	"Code": "31F",' +
-			       '	"Description": "Some final report"' +
-			       ' },' +
-			       ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
-				   '},' + 
-				'{' +
-			       ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
-			       ' "Name": "myotherfancyreport",' +
-			       ' "AvailableFormats": [' +
-			       ' 	{'+
-			       '		"format": "pdf",' +
-			       '		"mimetype": "application/pdf"' +
-			       '	}' +
-			       ' ],' +
-			       ' "ParticipantCode": "4B1AA",' +
-			       ' "CycleId": "2017#26",' +
-			       ' "Type": {'+
-			       '	"Code": "31F",' +
-			       '	"Description": "Some final report"' +
-			       ' },' +
-			       ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
-				   '},' + 
-				'{' +
-			       ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
-			       ' "Name": "myotherfancyreport",' +
-			       ' "AvailableFormats": [' +
-			       ' 	{'+
-			       '		"format": "pdf",' +
-			       '		"mimetype": "application/pdf"' +
-			       '	}' +
-			       ' ],' +
-			       ' "ParticipantCode": "4B1AA",' +
-			       ' "CycleId": "2017#26",' +
-			       ' "Type": {'+
-			       '	"Code": "31F",' +
-			       '	"Description": "Some final report"' +
-			       ' },' +
-			       ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
-				   '},' + 
-				'{' +
-			       ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
-			       ' "Name": "myotherfancyreport",' +
-			       ' "AvailableFormats": [' +
-			       ' 	{'+
-			       '		"format": "pdf",' +
-			       '		"mimetype": "application/pdf"' +
-			       '	}' +
-			       ' ],' +
-			       ' "ParticipantCode": "4B1AA",' +
-			       ' "CycleId": "2017#26",' +
-			       ' "Type": {'+
-			       '	"Code": "31F",' +
-			       '	"Description": "Some final report"' +
-			       ' },' +
-			       ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
-				   '},' + 
-				'{' +
-			       ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
-			       ' "Name": "myotherfancyreport",' +
-			       ' "AvailableFormats": [' +
-			       ' 	{'+
-			       '		"format": "pdf",' +
-			       '		"mimetype": "application/pdf"' +
-			       '	}' +
-			       ' ],' +
-			       ' "ParticipantCode": "4B1AA",' +
-			       ' "CycleId": "2017#26",' +
-			       ' "Type": {'+
-			       '	"Code": "31F",' +
-			       '	"Description": "Some final report"' +
-			       ' },' +
-			       ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
-				   '},' + 
-				'{' +
-			       ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
-			       ' "Name": "myotherfancyreport",' +
-			       ' "AvailableFormats": [' +
-			       ' 	{'+
-			       '		"format": "pdf",' +
-			       '		"mimetype": "application/pdf"' +
-			       '	}' +
-			       ' ],' +
-			       ' "ParticipantCode": "4B1AA",' +
-			       ' "CycleId": "2017#26",' +
-			       ' "Type": {'+
-			       '	"Code": "31F",' +
-			       '	"Description": "Some final report"' +
-			       ' },' +
-			       ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
-				   '},' + 
-				'{' +
-			       ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
-			       ' "Name": "myotherfancyreport",' +
-			       ' "AvailableFormats": [' +
-			       ' 	{'+
-			       '		"format": "pdf",' +
-			       '		"mimetype": "application/pdf"' +
-			       '	}' +
-			       ' ],' +
-			       ' "ParticipantCode": "4B1AA",' +
-			       ' "CycleId": "2017#26",' +
-			       ' "Type": {'+
-			       '	"Code": "31F",' +
-			       '	"Description": "Some final report"' +
-			       ' },' +
-			       ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
-				   '},' + 
-				'{' +
-			       ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
-			       ' "Name": "myotherfancyreport",' +
-			       ' "AvailableFormats": [' +
-			       ' 	{'+
-			       '		"format": "pdf",' +
-			       '		"mimetype": "application/pdf"' +
-			       '	}' +
-			       ' ],' +
-			       ' "ParticipantCode": "4B1AA",' +
-			       ' "CycleId": "2017#26",' +
-			       ' "Type": {'+
-			       '	"Code": "31F",' +
-			       '	"Description": "Some final report"' +
-			       ' },' +
-			       ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
-				   '},' + 
-				'{' +
-			       ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
-			       ' "Name": "myotherfancyreport",' +
-			       ' "AvailableFormats": [' +
-			       ' 	{'+
-			       '		"format": "pdf",' +
-			       '		"mimetype": "application/pdf"' +
-			       '	}' +
-			       ' ],' +
-			       ' "ParticipantCode": "4B1AA",' +
-			       ' "CycleId": "2017#26",' +
-			       ' "Type": {'+
-			       '	"Code": "31F",' +
-			       '	"Description": "Some final report"' +
-			       ' },' +
-			       ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
-				   '},' + 
-				'{' +
-			       ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
-			       ' "Name": "myotherfancyreport",' +
-			       ' "AvailableFormats": [' +
-			       ' 	{'+
-			       '		"format": "pdf",' +
-			       '		"mimetype": "application/pdf"' +
-			       '	}' +
-			       ' ],' +
-			       ' "ParticipantCode": "4B1AA",' +
-			       ' "CycleId": "2017#26",' +
-			       ' "Type": {'+
-			       '	"Code": "31F",' +
-			       '	"Description": "Some final report"' +
-			       ' },' +
-			       ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
-				   '},' + 
-				'{' +
-			       ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
-			       ' "Name": "myotherfancyreport",' +
-			       ' "AvailableFormats": [' +
-			       ' 	{'+
-			       '		"format": "pdf",' +
-			       '		"mimetype": "application/pdf"' +
-			       '	}' +
-			       ' ],' +
-			       ' "ParticipantCode": "4B1AA",' +
-			       ' "CycleId": "2017#26",' +
-			       ' "Type": {'+
-			       '	"Code": "31F",' +
-			       '	"Description": "Some final report"' +
-			       ' },' +
-			       ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
-				   '},' + 
-				'{' +
-			       ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
-			       ' "Name": "myotherfancyreport",' +
-			       ' "AvailableFormats": [' +
-			       ' 	{'+
-			       '		"format": "pdf",' +
-			       '		"mimetype": "application/pdf"' +
-			       '	}' +
-			       ' ],' +
-			       ' "ParticipantCode": "4B1AA",' +
-			       ' "CycleId": "2017#26",' +
-			       ' "Type": {'+
-			       '	"Code": "31F",' +
-			       '	"Description": "Some final report"' +
-			       ' },' +
-			       ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
-				   '},' + 
-				'{' +
-			       ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
-			       ' "Name": "myotherfancyreport",' +
-			       ' "AvailableFormats": [' +
-			       ' 	{'+
-			       '		"format": "pdf",' +
-			       '		"mimetype": "application/pdf"' +
-			       '	}' +
-			       ' ],' +
-			       ' "ParticipantCode": "4B1AA",' +
-			       ' "CycleId": "2017#26",' +
-			       ' "Type": {'+
-			       '	"Code": "31F",' +
-			       '	"Description": "Some final report"' +
-			       ' },' +
-			       ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
-				   '},' + 
-				'{' +
-			       ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
-			       ' "Name": "myotherfancyreport",' +
-			       ' "AvailableFormats": [' +
-			       ' 	{'+
-			       '		"format": "pdf",' +
-			       '		"mimetype": "application/pdf"' +
-			       '	}' +
-			       ' ],' +
-			       ' "ParticipantCode": "4B1AA",' +
-			       ' "CycleId": "2017#26",' +
-			       ' "Type": {'+
-			       '	"Code": "31F",' +
-			       '	"Description": "Some final report"' +
-			       ' },' +
-			       ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
-				   '},' + 
-				'{' +
-			       ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
-			       ' "Name": "myotherfancyreport",' +
-			       ' "AvailableFormats": [' +
-			       ' 	{'+
-			       '		"format": "pdf",' +
-			       '		"mimetype": "application/pdf"' +
-			       '	}' +
-			       ' ],' +
-			       ' "ParticipantCode": "4B1AA",' +
-			       ' "CycleId": "2017#26",' +
-			       ' "Type": {'+
-			       '	"Code": "31F",' +
-			       '	"Description": "Some final report"' +
-			       ' },' +
-			       ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
-				   '},' + 
-				'{' +
-			       ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
-			       ' "Name": "myotherfancyreport",' +
-			       ' "AvailableFormats": [' +
-			       ' 	{'+
-			       '		"format": "pdf",' +
-			       '		"mimetype": "application/pdf"' +
-			       '	}' +
-			       ' ],' +
-			       ' "ParticipantCode": "4B1AA",' +
-			       ' "CycleId": "2017#26",' +
-			       ' "Type": {'+
-			       '	"Code": "31F",' +
-			       '	"Description": "Some final report"' +
-			       ' },' +
-			       ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
-				   '},' + 
-				'{' +
-			       ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
-			       ' "Name": "myotherfancyreport",' +
-			       ' "AvailableFormats": [' +
-			       ' 	{'+
-			       '		"format": "pdf",' +
-			       '		"mimetype": "application/pdf"' +
-			       '	}' +
-			       ' ],' +
-			       ' "ParticipantCode": "4B1AA",' +
-			       ' "CycleId": "2017#26",' +
-			       ' "Type": {'+
-			       '	"Code": "31F",' +
-			       '	"Description": "Some final report"' +
-			       ' },' +
-			       ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
-				   '},' + 
-				'{' +
-			       ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
-			       ' "Name": "myotherfancyreport",' +
-			       ' "AvailableFormats": [' +
-			       ' 	{'+
-			       '		"format": "pdf",' +
-			       '		"mimetype": "application/pdf"' +
-			       '	}' +
-			       ' ],' +
-			       ' "ParticipantCode": "4B1AA",' +
-			       ' "CycleId": "2017#26",' +
-			       ' "Type": {'+
-			       '	"Code": "31F",' +
-			       '	"Description": "Some final report"' +
-			       ' },' +
-			       ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
-				   '},' + 
-				'{' +
-			       ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
-			       ' "Name": "myotherfancyreport",' +
-			       ' "AvailableFormats": [' +
-			       ' 	{'+
-			       '		"format": "pdf",' +
-			       '		"mimetype": "application/pdf"' +
-			       '	}' +
-			       ' ],' +
-			       ' "ParticipantCode": "4B1AA",' +
-			       ' "CycleId": "2017#26",' +
-			       ' "Type": {'+
-			       '	"Code": "31F",' +
-			       '	"Description": "Some final report"' +
-			       ' },' +
-			       ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
-				   '},' + 
-				'{' +
-			       ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
-			       ' "Name": "myotherfancyreport",' +
-			       ' "AvailableFormats": [' +
-			       ' 	{'+
-			       '		"format": "pdf",' +
-			       '		"mimetype": "application/pdf"' +
-			       '	}' +
-			       ' ],' +
-			       ' "ParticipantCode": "4B1AA",' +
-			       ' "CycleId": "2017#26",' +
-			       ' "Type": {'+
-			       '	"Code": "31F",' +
-			       '	"Description": "Some final report"' +
-			       ' },' +
-			       ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
-				   '},' + 
-				'{' +
-			       ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
-			       ' "Name": "myotherfancyreport",' +
-			       ' "AvailableFormats": [' +
-			       ' 	{'+
-			       '		"format": "pdf",' +
-			       '		"mimetype": "application/pdf"' +
-			       '	}' +
-			       ' ],' +
-			       ' "ParticipantCode": "4B1AA",' +
-			       ' "CycleId": "2017#26",' +
-			       ' "Type": {'+
-			       '	"Code": "31F",' +
-			       '	"Description": "Some final report"' +
-			       ' },' +
-			       ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
-				   '},' + 
-				'{' +
-			       ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
-			       ' "Name": "myotherfancyreport",' +
-			       ' "AvailableFormats": [' +
-			       ' 	{'+
-			       '		"format": "pdf",' +
-			       '		"mimetype": "application/pdf"' +
-			       '	}' +
-			       ' ],' +
-			       ' "ParticipantCode": "4B1AA",' +
-			       ' "CycleId": "2017#26",' +
-			       ' "Type": {'+
-			       '	"Code": "31F",' +
-			       '	"Description": "Some final report"' +
-			       ' },' +
-			       ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
-				   '},' + 
-				'{' +
-			       ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
-			       ' "Name": "myotherfancyreport",' +
-			       ' "AvailableFormats": [' +
-			       ' 	{'+
-			       '		"format": "pdf",' +
-			       '		"mimetype": "application/pdf"' +
-			       '	}' +
-			       ' ],' +
-			       ' "ParticipantCode": "4B1AA",' +
-			       ' "CycleId": "2017#26",' +
-			       ' "Type": {'+
-			       '	"Code": "31F",' +
-			       '	"Description": "Some final report"' +
-			       ' },' +
-			       ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
-				   '},' + 
-				'{' +
-			       ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
-			       ' "Name": "myotherfancyreport",' +
-			       ' "AvailableFormats": [' +
-			       ' 	{'+
-			       '		"format": "pdf",' +
-			       '		"mimetype": "application/pdf"' +
-			       '	}' +
-			       ' ],' +
-			       ' "ParticipantCode": "4B1AA",' +
-			       ' "CycleId": "2017#26",' +
-			       ' "Type": {'+
-			       '	"Code": "31F",' +
-			       '	"Description": "Some final report"' +
-			       ' },' +
-			       ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
-				   '},' + 
-				'{' +
-			       ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
-			       ' "Name": "myotherfancyreport",' +
-			       ' "AvailableFormats": [' +
-			       ' 	{'+
-			       '		"format": "pdf",' +
-			       '		"mimetype": "application/pdf"' +
-			       '	}' +
-			       ' ],' +
-			       ' "ParticipantCode": "4B1AA",' +
-			       ' "CycleId": "2017#26",' +
-			       ' "Type": {'+
-			       '	"Code": "31F",' +
-			       '	"Description": "Some final report"' +
-			       ' },' +
-			       ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
-				   '},' + 
-				'{' +
-			       ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
-			       ' "Name": "myotherfancyreport",' +
-			       ' "AvailableFormats": [' +
-			       ' 	{'+
-			       '		"format": "pdf",' +
-			       '		"mimetype": "application/pdf"' +
-			       '	}' +
-			       ' ],' +
-			       ' "ParticipantCode": "4B1AA",' +
-			       ' "CycleId": "2017#26",' +
-			       ' "Type": {'+
-			       '	"Code": "31F",' +
-			       '	"Description": "Some final report"' +
-			       ' },' +
-			       ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
-				   '},' + 
-				'{' +
-			       ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
-			       ' "Name": "myotherfancyreport",' +
-			       ' "AvailableFormats": [' +
-			       ' 	{'+
-			       '		"format": "pdf",' +
-			       '		"mimetype": "application/pdf"' +
-			       '	}' +
-			       ' ],' +
-			       ' "ParticipantCode": "4B1AA",' +
-			       ' "CycleId": "2017#26",' +
-			       ' "Type": {'+
-			       '	"Code": "31F",' +
-			       '	"Description": "Some final report"' +
-			       ' },' +
-			       ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
-				   '},' + 
-				'{' +
-			       ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
-			       ' "Name": "myotherfancyreport",' +
-			       ' "AvailableFormats": [' +
-			       ' 	{'+
-			       '		"format": "pdf",' +
-			       '		"mimetype": "application/pdf"' +
-			       '	}' +
-			       ' ],' +
-			       ' "ParticipantCode": "4B1AA",' +
-			       ' "CycleId": "2017#26",' +
-			       ' "Type": {'+
-			       '	"Code": "31F",' +
-			       '	"Description": "Some final report"' +
-			       ' },' +
-			       ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
-				   '},' + 
-				'{' +
-			       ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
-			       ' "Name": "myotherfancyreport",' +
-			       ' "AvailableFormats": [' +
-			       ' 	{'+
-			       '		"format": "pdf",' +
-			       '		"mimetype": "application/pdf"' +
-			       '	}' +
-			       ' ],' +
-			       ' "ParticipantCode": "4B1AA",' +
-			       ' "CycleId": "2017#26",' +
-			       ' "Type": {'+
-			       '	"Code": "31F",' +
-			       '	"Description": "Some final report"' +
-			       ' },' +
-			       ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
-				   '},' + 
-				'{' +
-			       ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
-			       ' "Name": "myotherfancyreport",' +
-			       ' "AvailableFormats": [' +
-			       ' 	{'+
-			       '		"format": "pdf",' +
-			       '		"mimetype": "application/pdf"' +
-			       '	}' +
-			       ' ],' +
-			       ' "ParticipantCode": "4B1AA",' +
-			       ' "CycleId": "2017#26",' +
-			       ' "Type": {'+
-			       '	"Code": "31F",' +
-			       '	"Description": "Some final report"' +
-			       ' },' +
-			       ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
-				   '},' + 
-				'{' +
-			       ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
-			       ' "Name": "myotherfancyreport",' +
-			       ' "AvailableFormats": [' +
-			       ' 	{'+
-			       '		"format": "pdf",' +
-			       '		"mimetype": "application/pdf"' +
-			       '	}' +
-			       ' ],' +
-			       ' "ParticipantCode": "4B1AA",' +
-			       ' "CycleId": "2017#26",' +
-			       ' "Type": {'+
-			       '	"Code": "31F",' +
-			       '	"Description": "Some final report"' +
-			       ' },' +
-			       ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
-				   '},' + 
-				'{' +
-			       ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
-			       ' "Name": "myotherfancyreport",' +
-			       ' "AvailableFormats": [' +
-			       ' 	{'+
-			       '		"format": "pdf",' +
-			       '		"mimetype": "application/pdf"' +
-			       '	}' +
-			       ' ],' +
-			       ' "ParticipantCode": "4B1AA",' +
-			       ' "CycleId": "2017#26",' +
-			       ' "Type": {'+
-			       '	"Code": "31F",' +
-			       '	"Description": "Some final report"' +
-			       ' },' +
-			       ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
-				   '},' + 
-				'{' +
-			       ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
-			       ' "Name": "myotherfancyreport",' +
-			       ' "AvailableFormats": [' +
-			       ' 	{'+
-			       '		"format": "pdf",' +
-			       '		"mimetype": "application/pdf"' +
-			       '	}' +
-			       ' ],' +
-			       ' "ParticipantCode": "4B1AA",' +
-			       ' "CycleId": "2017#26",' +
-			       ' "Type": {'+
-			       '	"Code": "31F",' +
-			       '	"Description": "Some final report"' +
-			       ' },' +
-			       ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
-				   '},' + 
-				'{' +
-			       ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
-			       ' "Name": "myotherfancyreport",' +
-			       ' "AvailableFormats": [' +
-			       ' 	{'+
-			       '		"format": "pdf",' +
-			       '		"mimetype": "application/pdf"' +
-			       '	}' +
-			       ' ],' +
-			       ' "ParticipantCode": "4B1AA",' +
-			       ' "CycleId": "2017#26",' +
-			       ' "Type": {'+
-			       '	"Code": "31F",' +
-			       '	"Description": "Some final report"' +
-			       ' },' +
-			       ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
-				   '},' + 
-				'{' +
-			       ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
-			       ' "Name": "myotherfancyreport",' +
-			       ' "AvailableFormats": [' +
-			       ' 	{'+
-			       '		"format": "pdf",' +
-			       '		"mimetype": "application/pdf"' +
-			       '	}' +
-			       ' ],' +
-			       ' "ParticipantCode": "4B1AA",' +
-			       ' "CycleId": "2017#26",' +
-			       ' "Type": {'+
-			       '	"Code": "31F",' +
-			       '	"Description": "Some final report"' +
-			       ' },' +
-			       ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
-				   '},' + 
-				'{' +
-			       ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
-			       ' "Name": "myotherfancyreport",' +
-			       ' "AvailableFormats": [' +
-			       ' 	{'+
-			       '		"format": "pdf",' +
-			       '		"mimetype": "application/pdf"' +
-			       '	}' +
-			       ' ],' +
-			       ' "ParticipantCode": "4B1AA",' +
-			       ' "CycleId": "2017#26",' +
-			       ' "Type": {'+
-			       '	"Code": "31F",' +
-			       '	"Description": "Some final report"' +
-			       ' },' +
-			       ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
-				   '},' + 
-				'{' +
-			       ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
-			       ' "Name": "myotherfancyreport",' +
-			       ' "AvailableFormats": [' +
-			       ' 	{'+
-			       '		"format": "pdf",' +
-			       '		"mimetype": "application/pdf"' +
-			       '	}' +
-			       ' ],' +
-			       ' "ParticipantCode": "4B1AA",' +
-			       ' "CycleId": "2017#26",' +
-			       ' "Type": {'+
-			       '	"Code": "31F",' +
-			       '	"Description": "Some final report"' +
-			       ' },' +
-			       ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
-				   '},' + 
-				'{' +
-			       ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
-			       ' "Name": "myotherfancyreport",' +
-			       ' "AvailableFormats": [' +
-			       ' 	{'+
-			       '		"format": "pdf",' +
-			       '		"mimetype": "application/pdf"' +
-			       '	}' +
-			       ' ],' +
-			       ' "ParticipantCode": "4B1AA",' +
-			       ' "CycleId": "2017#26",' +
-			       ' "Type": {'+
-			       '	"Code": "31F",' +
-			       '	"Description": "Some final report"' +
-			       ' },' +
-			       ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
-				   '},' + 
-				'{' +
-			       ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
-			       ' "Name": "myotherfancyreport",' +
-			       ' "AvailableFormats": [' +
-			       ' 	{'+
-			       '		"format": "pdf",' +
-			       '		"mimetype": "application/pdf"' +
-			       '	}' +
-			       ' ],' +
-			       ' "ParticipantCode": "4B1AA",' +
-			       ' "CycleId": "2017#26",' +
-			       ' "Type": {'+
-			       '	"Code": "31F",' +
-			       '	"Description": "Some final report"' +
-			       ' },' +
-			       ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
-				   '},' + 
-				'{' +
-			       ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
-			       ' "Name": "myotherfancyreport",' +
-			       ' "AvailableFormats": [' +
-			       ' 	{'+
-			       '		"format": "pdf",' +
-			       '		"mimetype": "application/pdf"' +
-			       '	}' +
-			       ' ],' +
-			       ' "ParticipantCode": "4B1AA",' +
-			       ' "CycleId": "2017#26",' +
-			       ' "Type": {'+
-			       '	"Code": "31F",' +
-			       '	"Description": "Some final report"' +
-			       ' },' +
-			       ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
-				   '},' + 
-				'{' +
-			       ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
-			       ' "Name": "myotherfancyreport",' +
-			       ' "AvailableFormats": [' +
-			       ' 	{'+
-			       '		"format": "pdf",' +
-			       '		"mimetype": "application/pdf"' +
-			       '	}' +
-			       ' ],' +
-			       ' "ParticipantCode": "4B1AA",' +
-			       ' "CycleId": "2017#26",' +
-			       ' "Type": {'+
-			       '	"Code": "31F",' +
-			       '	"Description": "Some final report"' +
-			       ' },' +
-			       ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
-				   '},' + 
-				'{' +
-			       ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
-			       ' "Name": "myotherfancyreport",' +
-			       ' "AvailableFormats": [' +
-			       ' 	{'+
-			       '		"format": "pdf",' +
-			       '		"mimetype": "application/pdf"' +
-			       '	}' +
-			       ' ],' +
-			       ' "ParticipantCode": "4B1AA",' +
-			       ' "CycleId": "2017#26",' +
-			       ' "Type": {'+
-			       '	"Code": "31F",' +
-			       '	"Description": "Some final report"' +
-			       ' },' +
-			       ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
-				   '},' + 
-				'{' +
-			       ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
-			       ' "Name": "myotherfancyreport",' +
-			       ' "AvailableFormats": [' +
-			       ' 	{'+
-			       '		"format": "pdf",' +
-			       '		"mimetype": "application/pdf"' +
-			       '	}' +
-			       ' ],' +
-			       ' "ParticipantCode": "4B1AA",' +
-			       ' "CycleId": "2017#26",' +
-			       ' "Type": {'+
-			       '	"Code": "31F",' +
-			       '	"Description": "Some final report"' +
-			       ' },' +
-			       ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
-				   '},' + 
-				'{' +
-			       ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
-			       ' "Name": "myotherfancyreport",' +
-			       ' "AvailableFormats": [' +
-			       ' 	{'+
-			       '		"format": "pdf",' +
-			       '		"mimetype": "application/pdf"' +
-			       '	}' +
-			       ' ],' +
-			       ' "ParticipantCode": "4B1AA",' +
-			       ' "CycleId": "2017#26",' +
-			       ' "Type": {'+
-			       '	"Code": "31F",' +
-			       '	"Description": "Some final report"' +
-			       ' },' +
-			       ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
-				   '},' + 
-				'{' +
-			       ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
-			       ' "Name": "myotherfancyreport",' +
-			       ' "AvailableFormats": [' +
-			       ' 	{'+
-			       '		"format": "pdf",' +
-			       '		"mimetype": "application/pdf"' +
-			       '	}' +
-			       ' ],' +
-			       ' "ParticipantCode": "4B1AA",' +
-			       ' "CycleId": "2017#26",' +
-			       ' "Type": {'+
-			       '	"Code": "31F",' +
-			       '	"Description": "Some final report"' +
-			       ' },' +
-			       ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
-				   '},' + 
-				'{' +
-			       ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
-			       ' "Name": "myotherfancyreport",' +
-			       ' "AvailableFormats": [' +
-			       ' 	{'+
-			       '		"format": "pdf",' +
-			       '		"mimetype": "application/pdf"' +
-			       '	}' +
-			       ' ],' +
-			       ' "ParticipantCode": "4B1AA",' +
-			       ' "CycleId": "2017#26",' +
-			       ' "Type": {'+
-			       '	"Code": "31F",' +
-			       '	"Description": "Some final report"' +
-			       ' },' +
-			       ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
-				   '},' + 
-				'{' +
-			       ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
-			       ' "Name": "myotherfancyreport",' +
-			       ' "AvailableFormats": [' +
-			       ' 	{'+
-			       '		"format": "pdf",' +
-			       '		"mimetype": "application/pdf"' +
-			       '	}' +
-			       ' ],' +
-			       ' "ParticipantCode": "4B1AA",' +
-			       ' "CycleId": "2017#26",' +
-			       ' "Type": {'+
-			       '	"Code": "31F",' +
-			       '	"Description": "Some final report"' +
-			       ' },' +
-			       ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
-				   '},' + 
-				'{' +
-			       ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
-			       ' "Name": "myotherfancyreport",' +
-			       ' "AvailableFormats": [' +
-			       ' 	{'+
-			       '		"format": "pdf",' +
-			       '		"mimetype": "application/pdf"' +
-			       '	}' +
-			       ' ],' +
-			       ' "ParticipantCode": "4B1AA",' +
-			       ' "CycleId": "2017#26",' +
-			       ' "Type": {'+
-			       '	"Code": "31F",' +
-			       '	"Description": "Some final report"' +
-			       ' },' +
-			       ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
-				   '},' + 
-				'{' +
-			       ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
-			       ' "Name": "myotherfancyreport",' +
-			       ' "AvailableFormats": [' +
-			       ' 	{'+
-			       '		"format": "pdf",' +
-			       '		"mimetype": "application/pdf"' +
-			       '	}' +
-			       ' ],' +
-			       ' "ParticipantCode": "4B1AA",' +
-			       ' "CycleId": "2017#26",' +
-			       ' "Type": {'+
-			       '	"Code": "31F",' +
-			       '	"Description": "Some final report"' +
-			       ' },' +
-			       ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
-				   '},' + 
-				'{' +
-			       ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
-			       ' "Name": "myotherfancyreport",' +
-			       ' "AvailableFormats": [' +
-			       ' 	{'+
-			       '		"format": "pdf",' +
-			       '		"mimetype": "application/pdf"' +
-			       '	}' +
-			       ' ],' +
-			       ' "ParticipantCode": "4B1AA",' +
-			       ' "CycleId": "2017#26",' +
-			       ' "Type": {'+
-			       '	"Code": "31F",' +
-			       '	"Description": "Some final report"' +
-			       ' },' +
-			       ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
-				   '},' + 
-				'{' +
-			       ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
-			       ' "Name": "myotherfancyreport",' +
-			       ' "AvailableFormats": [' +
-			       ' 	{'+
-			       '		"format": "pdf",' +
-			       '		"mimetype": "application/pdf"' +
-			       '	}' +
-			       ' ],' +
-			       ' "ParticipantCode": "4B1AA",' +
-			       ' "CycleId": "2017#26",' +
-			       ' "Type": {'+
-			       '	"Code": "31F",' +
-			       '	"Description": "Some final report"' +
-			       ' },' +
-			       ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
-				   '},' + 
-				'{' +
-			       ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
-			       ' "Name": "myotherfancyreport",' +
-			       ' "AvailableFormats": [' +
-			       ' 	{'+
-			       '		"format": "pdf",' +
-			       '		"mimetype": "application/pdf"' +
-			       '	}' +
-			       ' ],' +
-			       ' "ParticipantCode": "4B1AA",' +
-			       ' "CycleId": "2017#26",' +
-			       ' "Type": {'+
-			       '	"Code": "31F",' +
-			       '	"Description": "Some final report"' +
-			       ' },' +
-			       ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
-				   '},' + 
-				'{' +
-			       ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
-			       ' "Name": "myotherfancyreport",' +
-			       ' "AvailableFormats": [' +
-			       ' 	{'+
-			       '		"format": "pdf",' +
-			       '		"mimetype": "application/pdf"' +
-			       '	}' +
-			       ' ],' +
-			       ' "ParticipantCode": "4B1AA",' +
-			       ' "CycleId": "2017#26",' +
-			       ' "Type": {'+
-			       '	"Code": "31F",' +
-			       '	"Description": "Some final report"' +
-			       ' },' +
-			       ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
-				   '}' +
+						 ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378B115",' +
+						 ' "Name": "myfancyreport",' +
+						 ' "ParticipantCode": "4B184",' +
+						 ' "AvailableFormats": [' +
+						 ' 	{'+
+						 '		"format": "pdf",' +
+						 '		"mimetype": "application/pdf"' +
+						 '	},' +
+						 ' 	{'+
+						 '		"format": "csv",' +
+						 '		"mimetype": "text/csv"' +
+						 '	},' +
+						 ' 	{'+
+						 '		"format": "xlsx",' +
+						 '		"mimetype": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"' +
+						 '	}' +
+						 ' ],' +
+						 ' "CycleId": "2017#23",' +
+						 ' "Type": {'+
+						 '	"Code": "31A",' +
+						 '	"Description": "Some report"' +
+						 ' },' +
+						 ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
+				'},' +
+				'{' +
+						 ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
+						 ' "Name": "myotherfancyreport",' +
+						 ' "AvailableFormats": [' +
+						 ' 	{'+
+						 '		"format": "pdf",' +
+						 '		"mimetype": "application/pdf"' +
+						 '	}' +
+						 ' ],' +
+						 ' "ParticipantCode": "4B1AA",' +
+						 ' "CycleId": "2017#26",' +
+						 ' "Type": {'+
+						 '	"Code": "31F",' +
+						 '	"Description": "Some final report"' +
+						 ' },' +
+						 ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
+					 '},' +
+				'{' +
+						 ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
+						 ' "Name": "myotherfancyreport",' +
+						 ' "AvailableFormats": [' +
+						 ' 	{'+
+						 '		"format": "pdf",' +
+						 '		"mimetype": "application/pdf"' +
+						 '	}' +
+						 ' ],' +
+						 ' "ParticipantCode": "4B1AA",' +
+						 ' "CycleId": "2017#26",' +
+						 ' "Type": {'+
+						 '	"Code": "31F",' +
+						 '	"Description": "Some final report"' +
+						 ' },' +
+						 ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
+					 '},' +
+				'{' +
+						 ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
+						 ' "Name": "myotherfancyreport",' +
+						 ' "AvailableFormats": [' +
+						 ' 	{'+
+						 '		"format": "pdf",' +
+						 '		"mimetype": "application/pdf"' +
+						 '	}' +
+						 ' ],' +
+						 ' "ParticipantCode": "4B1AA",' +
+						 ' "CycleId": "2017#26",' +
+						 ' "Type": {'+
+						 '	"Code": "31F",' +
+						 '	"Description": "Some final report"' +
+						 ' },' +
+						 ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
+					 '},' +
+				'{' +
+						 ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
+						 ' "Name": "myotherfancyreport",' +
+						 ' "AvailableFormats": [' +
+						 ' 	{'+
+						 '		"format": "pdf",' +
+						 '		"mimetype": "application/pdf"' +
+						 '	}' +
+						 ' ],' +
+						 ' "ParticipantCode": "4B1AA",' +
+						 ' "CycleId": "2017#26",' +
+						 ' "Type": {'+
+						 '	"Code": "31F",' +
+						 '	"Description": "Some final report"' +
+						 ' },' +
+						 ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
+					 '},' +
+				'{' +
+						 ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
+						 ' "Name": "myotherfancyreport",' +
+						 ' "AvailableFormats": [' +
+						 ' 	{'+
+						 '		"format": "pdf",' +
+						 '		"mimetype": "application/pdf"' +
+						 '	}' +
+						 ' ],' +
+						 ' "ParticipantCode": "4B1AA",' +
+						 ' "CycleId": "2017#26",' +
+						 ' "Type": {'+
+						 '	"Code": "31F",' +
+						 '	"Description": "Some final report"' +
+						 ' },' +
+						 ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
+					 '},' +
+				'{' +
+						 ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
+						 ' "Name": "myotherfancyreport",' +
+						 ' "AvailableFormats": [' +
+						 ' 	{'+
+						 '		"format": "pdf",' +
+						 '		"mimetype": "application/pdf"' +
+						 '	}' +
+						 ' ],' +
+						 ' "ParticipantCode": "4B1AA",' +
+						 ' "CycleId": "2017#26",' +
+						 ' "Type": {'+
+						 '	"Code": "31F",' +
+						 '	"Description": "Some final report"' +
+						 ' },' +
+						 ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
+					 '},' +
+				'{' +
+						 ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
+						 ' "Name": "myotherfancyreport",' +
+						 ' "AvailableFormats": [' +
+						 ' 	{'+
+						 '		"format": "pdf",' +
+						 '		"mimetype": "application/pdf"' +
+						 '	}' +
+						 ' ],' +
+						 ' "ParticipantCode": "4B1AA",' +
+						 ' "CycleId": "2017#26",' +
+						 ' "Type": {'+
+						 '	"Code": "31F",' +
+						 '	"Description": "Some final report"' +
+						 ' },' +
+						 ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
+					 '},' +
+				'{' +
+						 ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
+						 ' "Name": "myotherfancyreport",' +
+						 ' "AvailableFormats": [' +
+						 ' 	{'+
+						 '		"format": "pdf",' +
+						 '		"mimetype": "application/pdf"' +
+						 '	}' +
+						 ' ],' +
+						 ' "ParticipantCode": "4B1AA",' +
+						 ' "CycleId": "2017#26",' +
+						 ' "Type": {'+
+						 '	"Code": "31F",' +
+						 '	"Description": "Some final report"' +
+						 ' },' +
+						 ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
+					 '},' +
+				'{' +
+						 ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
+						 ' "Name": "myotherfancyreport",' +
+						 ' "AvailableFormats": [' +
+						 ' 	{'+
+						 '		"format": "pdf",' +
+						 '		"mimetype": "application/pdf"' +
+						 '	}' +
+						 ' ],' +
+						 ' "ParticipantCode": "4B1AA",' +
+						 ' "CycleId": "2017#26",' +
+						 ' "Type": {'+
+						 '	"Code": "31F",' +
+						 '	"Description": "Some final report"' +
+						 ' },' +
+						 ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
+					 '},' +
+				'{' +
+						 ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
+						 ' "Name": "myotherfancyreport",' +
+						 ' "AvailableFormats": [' +
+						 ' 	{'+
+						 '		"format": "pdf",' +
+						 '		"mimetype": "application/pdf"' +
+						 '	}' +
+						 ' ],' +
+						 ' "ParticipantCode": "4B1AA",' +
+						 ' "CycleId": "2017#26",' +
+						 ' "Type": {'+
+						 '	"Code": "31F",' +
+						 '	"Description": "Some final report"' +
+						 ' },' +
+						 ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
+					 '},' +
+				'{' +
+						 ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
+						 ' "Name": "myotherfancyreport",' +
+						 ' "AvailableFormats": [' +
+						 ' 	{'+
+						 '		"format": "pdf",' +
+						 '		"mimetype": "application/pdf"' +
+						 '	}' +
+						 ' ],' +
+						 ' "ParticipantCode": "4B1AA",' +
+						 ' "CycleId": "2017#26",' +
+						 ' "Type": {'+
+						 '	"Code": "31F",' +
+						 '	"Description": "Some final report"' +
+						 ' },' +
+						 ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
+					 '},' +
+				'{' +
+						 ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
+						 ' "Name": "myotherfancyreport",' +
+						 ' "AvailableFormats": [' +
+						 ' 	{'+
+						 '		"format": "pdf",' +
+						 '		"mimetype": "application/pdf"' +
+						 '	}' +
+						 ' ],' +
+						 ' "ParticipantCode": "4B1AA",' +
+						 ' "CycleId": "2017#26",' +
+						 ' "Type": {'+
+						 '	"Code": "31F",' +
+						 '	"Description": "Some final report"' +
+						 ' },' +
+						 ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
+					 '},' +
+				'{' +
+						 ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
+						 ' "Name": "myotherfancyreport",' +
+						 ' "AvailableFormats": [' +
+						 ' 	{'+
+						 '		"format": "pdf",' +
+						 '		"mimetype": "application/pdf"' +
+						 '	}' +
+						 ' ],' +
+						 ' "ParticipantCode": "4B1AA",' +
+						 ' "CycleId": "2017#26",' +
+						 ' "Type": {'+
+						 '	"Code": "31F",' +
+						 '	"Description": "Some final report"' +
+						 ' },' +
+						 ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
+					 '},' +
+				'{' +
+						 ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
+						 ' "Name": "myotherfancyreport",' +
+						 ' "AvailableFormats": [' +
+						 ' 	{'+
+						 '		"format": "pdf",' +
+						 '		"mimetype": "application/pdf"' +
+						 '	}' +
+						 ' ],' +
+						 ' "ParticipantCode": "4B1AA",' +
+						 ' "CycleId": "2017#26",' +
+						 ' "Type": {'+
+						 '	"Code": "31F",' +
+						 '	"Description": "Some final report"' +
+						 ' },' +
+						 ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
+					 '},' +
+				'{' +
+						 ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
+						 ' "Name": "myotherfancyreport",' +
+						 ' "AvailableFormats": [' +
+						 ' 	{'+
+						 '		"format": "pdf",' +
+						 '		"mimetype": "application/pdf"' +
+						 '	}' +
+						 ' ],' +
+						 ' "ParticipantCode": "4B1AA",' +
+						 ' "CycleId": "2017#26",' +
+						 ' "Type": {'+
+						 '	"Code": "31F",' +
+						 '	"Description": "Some final report"' +
+						 ' },' +
+						 ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
+					 '},' +
+				'{' +
+						 ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
+						 ' "Name": "myotherfancyreport",' +
+						 ' "AvailableFormats": [' +
+						 ' 	{'+
+						 '		"format": "pdf",' +
+						 '		"mimetype": "application/pdf"' +
+						 '	}' +
+						 ' ],' +
+						 ' "ParticipantCode": "4B1AA",' +
+						 ' "CycleId": "2017#26",' +
+						 ' "Type": {'+
+						 '	"Code": "31F",' +
+						 '	"Description": "Some final report"' +
+						 ' },' +
+						 ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
+					 '},' +
+				'{' +
+						 ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
+						 ' "Name": "myotherfancyreport",' +
+						 ' "AvailableFormats": [' +
+						 ' 	{'+
+						 '		"format": "pdf",' +
+						 '		"mimetype": "application/pdf"' +
+						 '	}' +
+						 ' ],' +
+						 ' "ParticipantCode": "4B1AA",' +
+						 ' "CycleId": "2017#26",' +
+						 ' "Type": {'+
+						 '	"Code": "31F",' +
+						 '	"Description": "Some final report"' +
+						 ' },' +
+						 ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
+					 '},' +
+				'{' +
+						 ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
+						 ' "Name": "myotherfancyreport",' +
+						 ' "AvailableFormats": [' +
+						 ' 	{'+
+						 '		"format": "pdf",' +
+						 '		"mimetype": "application/pdf"' +
+						 '	}' +
+						 ' ],' +
+						 ' "ParticipantCode": "4B1AA",' +
+						 ' "CycleId": "2017#26",' +
+						 ' "Type": {'+
+						 '	"Code": "31F",' +
+						 '	"Description": "Some final report"' +
+						 ' },' +
+						 ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
+					 '},' +
+				'{' +
+						 ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
+						 ' "Name": "myotherfancyreport",' +
+						 ' "AvailableFormats": [' +
+						 ' 	{'+
+						 '		"format": "pdf",' +
+						 '		"mimetype": "application/pdf"' +
+						 '	}' +
+						 ' ],' +
+						 ' "ParticipantCode": "4B1AA",' +
+						 ' "CycleId": "2017#26",' +
+						 ' "Type": {'+
+						 '	"Code": "31F",' +
+						 '	"Description": "Some final report"' +
+						 ' },' +
+						 ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
+					 '},' +
+				'{' +
+						 ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
+						 ' "Name": "myotherfancyreport",' +
+						 ' "AvailableFormats": [' +
+						 ' 	{'+
+						 '		"format": "pdf",' +
+						 '		"mimetype": "application/pdf"' +
+						 '	}' +
+						 ' ],' +
+						 ' "ParticipantCode": "4B1AA",' +
+						 ' "CycleId": "2017#26",' +
+						 ' "Type": {'+
+						 '	"Code": "31F",' +
+						 '	"Description": "Some final report"' +
+						 ' },' +
+						 ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
+					 '},' +
+				'{' +
+						 ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
+						 ' "Name": "myotherfancyreport",' +
+						 ' "AvailableFormats": [' +
+						 ' 	{'+
+						 '		"format": "pdf",' +
+						 '		"mimetype": "application/pdf"' +
+						 '	}' +
+						 ' ],' +
+						 ' "ParticipantCode": "4B1AA",' +
+						 ' "CycleId": "2017#26",' +
+						 ' "Type": {'+
+						 '	"Code": "31F",' +
+						 '	"Description": "Some final report"' +
+						 ' },' +
+						 ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
+					 '},' +
+				'{' +
+						 ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
+						 ' "Name": "myotherfancyreport",' +
+						 ' "AvailableFormats": [' +
+						 ' 	{'+
+						 '		"format": "pdf",' +
+						 '		"mimetype": "application/pdf"' +
+						 '	}' +
+						 ' ],' +
+						 ' "ParticipantCode": "4B1AA",' +
+						 ' "CycleId": "2017#26",' +
+						 ' "Type": {'+
+						 '	"Code": "31F",' +
+						 '	"Description": "Some final report"' +
+						 ' },' +
+						 ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
+					 '},' +
+				'{' +
+						 ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
+						 ' "Name": "myotherfancyreport",' +
+						 ' "AvailableFormats": [' +
+						 ' 	{'+
+						 '		"format": "pdf",' +
+						 '		"mimetype": "application/pdf"' +
+						 '	}' +
+						 ' ],' +
+						 ' "ParticipantCode": "4B1AA",' +
+						 ' "CycleId": "2017#26",' +
+						 ' "Type": {'+
+						 '	"Code": "31F",' +
+						 '	"Description": "Some final report"' +
+						 ' },' +
+						 ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
+					 '},' +
+				'{' +
+						 ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
+						 ' "Name": "myotherfancyreport",' +
+						 ' "AvailableFormats": [' +
+						 ' 	{'+
+						 '		"format": "pdf",' +
+						 '		"mimetype": "application/pdf"' +
+						 '	}' +
+						 ' ],' +
+						 ' "ParticipantCode": "4B1AA",' +
+						 ' "CycleId": "2017#26",' +
+						 ' "Type": {'+
+						 '	"Code": "31F",' +
+						 '	"Description": "Some final report"' +
+						 ' },' +
+						 ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
+					 '},' +
+				'{' +
+						 ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
+						 ' "Name": "myotherfancyreport",' +
+						 ' "AvailableFormats": [' +
+						 ' 	{'+
+						 '		"format": "pdf",' +
+						 '		"mimetype": "application/pdf"' +
+						 '	}' +
+						 ' ],' +
+						 ' "ParticipantCode": "4B1AA",' +
+						 ' "CycleId": "2017#26",' +
+						 ' "Type": {'+
+						 '	"Code": "31F",' +
+						 '	"Description": "Some final report"' +
+						 ' },' +
+						 ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
+					 '},' +
+				'{' +
+						 ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
+						 ' "Name": "myotherfancyreport",' +
+						 ' "AvailableFormats": [' +
+						 ' 	{'+
+						 '		"format": "pdf",' +
+						 '		"mimetype": "application/pdf"' +
+						 '	}' +
+						 ' ],' +
+						 ' "ParticipantCode": "4B1AA",' +
+						 ' "CycleId": "2017#26",' +
+						 ' "Type": {'+
+						 '	"Code": "31F",' +
+						 '	"Description": "Some final report"' +
+						 ' },' +
+						 ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
+					 '},' +
+				'{' +
+						 ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
+						 ' "Name": "myotherfancyreport",' +
+						 ' "AvailableFormats": [' +
+						 ' 	{'+
+						 '		"format": "pdf",' +
+						 '		"mimetype": "application/pdf"' +
+						 '	}' +
+						 ' ],' +
+						 ' "ParticipantCode": "4B1AA",' +
+						 ' "CycleId": "2017#26",' +
+						 ' "Type": {'+
+						 '	"Code": "31F",' +
+						 '	"Description": "Some final report"' +
+						 ' },' +
+						 ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
+					 '},' +
+				'{' +
+						 ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
+						 ' "Name": "myotherfancyreport",' +
+						 ' "AvailableFormats": [' +
+						 ' 	{'+
+						 '		"format": "pdf",' +
+						 '		"mimetype": "application/pdf"' +
+						 '	}' +
+						 ' ],' +
+						 ' "ParticipantCode": "4B1AA",' +
+						 ' "CycleId": "2017#26",' +
+						 ' "Type": {'+
+						 '	"Code": "31F",' +
+						 '	"Description": "Some final report"' +
+						 ' },' +
+						 ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
+					 '},' +
+				'{' +
+						 ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
+						 ' "Name": "myotherfancyreport",' +
+						 ' "AvailableFormats": [' +
+						 ' 	{'+
+						 '		"format": "pdf",' +
+						 '		"mimetype": "application/pdf"' +
+						 '	}' +
+						 ' ],' +
+						 ' "ParticipantCode": "4B1AA",' +
+						 ' "CycleId": "2017#26",' +
+						 ' "Type": {'+
+						 '	"Code": "31F",' +
+						 '	"Description": "Some final report"' +
+						 ' },' +
+						 ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
+					 '},' +
+				'{' +
+						 ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
+						 ' "Name": "myotherfancyreport",' +
+						 ' "AvailableFormats": [' +
+						 ' 	{'+
+						 '		"format": "pdf",' +
+						 '		"mimetype": "application/pdf"' +
+						 '	}' +
+						 ' ],' +
+						 ' "ParticipantCode": "4B1AA",' +
+						 ' "CycleId": "2017#26",' +
+						 ' "Type": {'+
+						 '	"Code": "31F",' +
+						 '	"Description": "Some final report"' +
+						 ' },' +
+						 ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
+					 '},' +
+				'{' +
+						 ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
+						 ' "Name": "myotherfancyreport",' +
+						 ' "AvailableFormats": [' +
+						 ' 	{'+
+						 '		"format": "pdf",' +
+						 '		"mimetype": "application/pdf"' +
+						 '	}' +
+						 ' ],' +
+						 ' "ParticipantCode": "4B1AA",' +
+						 ' "CycleId": "2017#26",' +
+						 ' "Type": {'+
+						 '	"Code": "31F",' +
+						 '	"Description": "Some final report"' +
+						 ' },' +
+						 ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
+					 '},' +
+				'{' +
+						 ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
+						 ' "Name": "myotherfancyreport",' +
+						 ' "AvailableFormats": [' +
+						 ' 	{'+
+						 '		"format": "pdf",' +
+						 '		"mimetype": "application/pdf"' +
+						 '	}' +
+						 ' ],' +
+						 ' "ParticipantCode": "4B1AA",' +
+						 ' "CycleId": "2017#26",' +
+						 ' "Type": {'+
+						 '	"Code": "31F",' +
+						 '	"Description": "Some final report"' +
+						 ' },' +
+						 ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
+					 '},' +
+				'{' +
+						 ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
+						 ' "Name": "myotherfancyreport",' +
+						 ' "AvailableFormats": [' +
+						 ' 	{'+
+						 '		"format": "pdf",' +
+						 '		"mimetype": "application/pdf"' +
+						 '	}' +
+						 ' ],' +
+						 ' "ParticipantCode": "4B1AA",' +
+						 ' "CycleId": "2017#26",' +
+						 ' "Type": {'+
+						 '	"Code": "31F",' +
+						 '	"Description": "Some final report"' +
+						 ' },' +
+						 ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
+					 '},' +
+				'{' +
+						 ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
+						 ' "Name": "myotherfancyreport",' +
+						 ' "AvailableFormats": [' +
+						 ' 	{'+
+						 '		"format": "pdf",' +
+						 '		"mimetype": "application/pdf"' +
+						 '	}' +
+						 ' ],' +
+						 ' "ParticipantCode": "4B1AA",' +
+						 ' "CycleId": "2017#26",' +
+						 ' "Type": {'+
+						 '	"Code": "31F",' +
+						 '	"Description": "Some final report"' +
+						 ' },' +
+						 ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
+					 '},' +
+				'{' +
+						 ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
+						 ' "Name": "myotherfancyreport",' +
+						 ' "AvailableFormats": [' +
+						 ' 	{'+
+						 '		"format": "pdf",' +
+						 '		"mimetype": "application/pdf"' +
+						 '	}' +
+						 ' ],' +
+						 ' "ParticipantCode": "4B1AA",' +
+						 ' "CycleId": "2017#26",' +
+						 ' "Type": {'+
+						 '	"Code": "31F",' +
+						 '	"Description": "Some final report"' +
+						 ' },' +
+						 ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
+					 '},' +
+				'{' +
+						 ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
+						 ' "Name": "myotherfancyreport",' +
+						 ' "AvailableFormats": [' +
+						 ' 	{'+
+						 '		"format": "pdf",' +
+						 '		"mimetype": "application/pdf"' +
+						 '	}' +
+						 ' ],' +
+						 ' "ParticipantCode": "4B1AA",' +
+						 ' "CycleId": "2017#26",' +
+						 ' "Type": {'+
+						 '	"Code": "31F",' +
+						 '	"Description": "Some final report"' +
+						 ' },' +
+						 ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
+					 '},' +
+				'{' +
+						 ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
+						 ' "Name": "myotherfancyreport",' +
+						 ' "AvailableFormats": [' +
+						 ' 	{'+
+						 '		"format": "pdf",' +
+						 '		"mimetype": "application/pdf"' +
+						 '	}' +
+						 ' ],' +
+						 ' "ParticipantCode": "4B1AA",' +
+						 ' "CycleId": "2017#26",' +
+						 ' "Type": {'+
+						 '	"Code": "31F",' +
+						 '	"Description": "Some final report"' +
+						 ' },' +
+						 ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
+					 '},' +
+				'{' +
+						 ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
+						 ' "Name": "myotherfancyreport",' +
+						 ' "AvailableFormats": [' +
+						 ' 	{'+
+						 '		"format": "pdf",' +
+						 '		"mimetype": "application/pdf"' +
+						 '	}' +
+						 ' ],' +
+						 ' "ParticipantCode": "4B1AA",' +
+						 ' "CycleId": "2017#26",' +
+						 ' "Type": {'+
+						 '	"Code": "31F",' +
+						 '	"Description": "Some final report"' +
+						 ' },' +
+						 ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
+					 '},' +
+				'{' +
+						 ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
+						 ' "Name": "myotherfancyreport",' +
+						 ' "AvailableFormats": [' +
+						 ' 	{'+
+						 '		"format": "pdf",' +
+						 '		"mimetype": "application/pdf"' +
+						 '	}' +
+						 ' ],' +
+						 ' "ParticipantCode": "4B1AA",' +
+						 ' "CycleId": "2017#26",' +
+						 ' "Type": {'+
+						 '	"Code": "31F",' +
+						 '	"Description": "Some final report"' +
+						 ' },' +
+						 ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
+					 '},' +
+				'{' +
+						 ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
+						 ' "Name": "myotherfancyreport",' +
+						 ' "AvailableFormats": [' +
+						 ' 	{'+
+						 '		"format": "pdf",' +
+						 '		"mimetype": "application/pdf"' +
+						 '	}' +
+						 ' ],' +
+						 ' "ParticipantCode": "4B1AA",' +
+						 ' "CycleId": "2017#26",' +
+						 ' "Type": {'+
+						 '	"Code": "31F",' +
+						 '	"Description": "Some final report"' +
+						 ' },' +
+						 ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
+					 '},' +
+				'{' +
+						 ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
+						 ' "Name": "myotherfancyreport",' +
+						 ' "AvailableFormats": [' +
+						 ' 	{'+
+						 '		"format": "pdf",' +
+						 '		"mimetype": "application/pdf"' +
+						 '	}' +
+						 ' ],' +
+						 ' "ParticipantCode": "4B1AA",' +
+						 ' "CycleId": "2017#26",' +
+						 ' "Type": {'+
+						 '	"Code": "31F",' +
+						 '	"Description": "Some final report"' +
+						 ' },' +
+						 ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
+					 '},' +
+				'{' +
+						 ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
+						 ' "Name": "myotherfancyreport",' +
+						 ' "AvailableFormats": [' +
+						 ' 	{'+
+						 '		"format": "pdf",' +
+						 '		"mimetype": "application/pdf"' +
+						 '	}' +
+						 ' ],' +
+						 ' "ParticipantCode": "4B1AA",' +
+						 ' "CycleId": "2017#26",' +
+						 ' "Type": {'+
+						 '	"Code": "31F",' +
+						 '	"Description": "Some final report"' +
+						 ' },' +
+						 ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
+					 '},' +
+				'{' +
+						 ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
+						 ' "Name": "myotherfancyreport",' +
+						 ' "AvailableFormats": [' +
+						 ' 	{'+
+						 '		"format": "pdf",' +
+						 '		"mimetype": "application/pdf"' +
+						 '	}' +
+						 ' ],' +
+						 ' "ParticipantCode": "4B1AA",' +
+						 ' "CycleId": "2017#26",' +
+						 ' "Type": {'+
+						 '	"Code": "31F",' +
+						 '	"Description": "Some final report"' +
+						 ' },' +
+						 ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
+					 '},' +
+				'{' +
+						 ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
+						 ' "Name": "myotherfancyreport",' +
+						 ' "AvailableFormats": [' +
+						 ' 	{'+
+						 '		"format": "pdf",' +
+						 '		"mimetype": "application/pdf"' +
+						 '	}' +
+						 ' ],' +
+						 ' "ParticipantCode": "4B1AA",' +
+						 ' "CycleId": "2017#26",' +
+						 ' "Type": {'+
+						 '	"Code": "31F",' +
+						 '	"Description": "Some final report"' +
+						 ' },' +
+						 ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
+					 '},' +
+				'{' +
+						 ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
+						 ' "Name": "myotherfancyreport",' +
+						 ' "AvailableFormats": [' +
+						 ' 	{'+
+						 '		"format": "pdf",' +
+						 '		"mimetype": "application/pdf"' +
+						 '	}' +
+						 ' ],' +
+						 ' "ParticipantCode": "4B1AA",' +
+						 ' "CycleId": "2017#26",' +
+						 ' "Type": {'+
+						 '	"Code": "31F",' +
+						 '	"Description": "Some final report"' +
+						 ' },' +
+						 ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
+					 '},' +
+				'{' +
+						 ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
+						 ' "Name": "myotherfancyreport",' +
+						 ' "AvailableFormats": [' +
+						 ' 	{'+
+						 '		"format": "pdf",' +
+						 '		"mimetype": "application/pdf"' +
+						 '	}' +
+						 ' ],' +
+						 ' "ParticipantCode": "4B1AA",' +
+						 ' "CycleId": "2017#26",' +
+						 ' "Type": {'+
+						 '	"Code": "31F",' +
+						 '	"Description": "Some final report"' +
+						 ' },' +
+						 ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
+					 '},' +
+				'{' +
+						 ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
+						 ' "Name": "myotherfancyreport",' +
+						 ' "AvailableFormats": [' +
+						 ' 	{'+
+						 '		"format": "pdf",' +
+						 '		"mimetype": "application/pdf"' +
+						 '	}' +
+						 ' ],' +
+						 ' "ParticipantCode": "4B1AA",' +
+						 ' "CycleId": "2017#26",' +
+						 ' "Type": {'+
+						 '	"Code": "31F",' +
+						 '	"Description": "Some final report"' +
+						 ' },' +
+						 ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
+					 '},' +
+				'{' +
+						 ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
+						 ' "Name": "myotherfancyreport",' +
+						 ' "AvailableFormats": [' +
+						 ' 	{'+
+						 '		"format": "pdf",' +
+						 '		"mimetype": "application/pdf"' +
+						 '	}' +
+						 ' ],' +
+						 ' "ParticipantCode": "4B1AA",' +
+						 ' "CycleId": "2017#26",' +
+						 ' "Type": {'+
+						 '	"Code": "31F",' +
+						 '	"Description": "Some final report"' +
+						 ' },' +
+						 ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
+					 '},' +
+				'{' +
+						 ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
+						 ' "Name": "myotherfancyreport",' +
+						 ' "AvailableFormats": [' +
+						 ' 	{'+
+						 '		"format": "pdf",' +
+						 '		"mimetype": "application/pdf"' +
+						 '	}' +
+						 ' ],' +
+						 ' "ParticipantCode": "4B1AA",' +
+						 ' "CycleId": "2017#26",' +
+						 ' "Type": {'+
+						 '	"Code": "31F",' +
+						 '	"Description": "Some final report"' +
+						 ' },' +
+						 ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
+					 '},' +
+				'{' +
+						 ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
+						 ' "Name": "myotherfancyreport",' +
+						 ' "AvailableFormats": [' +
+						 ' 	{'+
+						 '		"format": "pdf",' +
+						 '		"mimetype": "application/pdf"' +
+						 '	}' +
+						 ' ],' +
+						 ' "ParticipantCode": "4B1AA",' +
+						 ' "CycleId": "2017#26",' +
+						 ' "Type": {'+
+						 '	"Code": "31F",' +
+						 '	"Description": "Some final report"' +
+						 ' },' +
+						 ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
+					 '},' +
+				'{' +
+						 ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
+						 ' "Name": "myotherfancyreport",' +
+						 ' "AvailableFormats": [' +
+						 ' 	{'+
+						 '		"format": "pdf",' +
+						 '		"mimetype": "application/pdf"' +
+						 '	}' +
+						 ' ],' +
+						 ' "ParticipantCode": "4B1AA",' +
+						 ' "CycleId": "2017#26",' +
+						 ' "Type": {'+
+						 '	"Code": "31F",' +
+						 '	"Description": "Some final report"' +
+						 ' },' +
+						 ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
+					 '},' +
+				'{' +
+						 ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
+						 ' "Name": "myotherfancyreport",' +
+						 ' "AvailableFormats": [' +
+						 ' 	{'+
+						 '		"format": "pdf",' +
+						 '		"mimetype": "application/pdf"' +
+						 '	}' +
+						 ' ],' +
+						 ' "ParticipantCode": "4B1AA",' +
+						 ' "CycleId": "2017#26",' +
+						 ' "Type": {'+
+						 '	"Code": "31F",' +
+						 '	"Description": "Some final report"' +
+						 ' },' +
+						 ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
+					 '},' +
+				'{' +
+						 ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
+						 ' "Name": "myotherfancyreport",' +
+						 ' "AvailableFormats": [' +
+						 ' 	{'+
+						 '		"format": "pdf",' +
+						 '		"mimetype": "application/pdf"' +
+						 '	}' +
+						 ' ],' +
+						 ' "ParticipantCode": "4B1AA",' +
+						 ' "CycleId": "2017#26",' +
+						 ' "Type": {'+
+						 '	"Code": "31F",' +
+						 '	"Description": "Some final report"' +
+						 ' },' +
+						 ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
+					 '},' +
+				'{' +
+						 ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
+						 ' "Name": "myotherfancyreport",' +
+						 ' "AvailableFormats": [' +
+						 ' 	{'+
+						 '		"format": "pdf",' +
+						 '		"mimetype": "application/pdf"' +
+						 '	}' +
+						 ' ],' +
+						 ' "ParticipantCode": "4B1AA",' +
+						 ' "CycleId": "2017#26",' +
+						 ' "Type": {'+
+						 '	"Code": "31F",' +
+						 '	"Description": "Some final report"' +
+						 ' },' +
+						 ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
+					 '},' +
+				'{' +
+						 ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
+						 ' "Name": "myotherfancyreport",' +
+						 ' "AvailableFormats": [' +
+						 ' 	{'+
+						 '		"format": "pdf",' +
+						 '		"mimetype": "application/pdf"' +
+						 '	}' +
+						 ' ],' +
+						 ' "ParticipantCode": "4B1AA",' +
+						 ' "CycleId": "2017#26",' +
+						 ' "Type": {'+
+						 '	"Code": "31F",' +
+						 '	"Description": "Some final report"' +
+						 ' },' +
+						 ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
+					 '},' +
+				'{' +
+						 ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
+						 ' "Name": "myotherfancyreport",' +
+						 ' "AvailableFormats": [' +
+						 ' 	{'+
+						 '		"format": "pdf",' +
+						 '		"mimetype": "application/pdf"' +
+						 '	}' +
+						 ' ],' +
+						 ' "ParticipantCode": "4B1AA",' +
+						 ' "CycleId": "2017#26",' +
+						 ' "Type": {'+
+						 '	"Code": "31F",' +
+						 '	"Description": "Some final report"' +
+						 ' },' +
+						 ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
+					 '},' +
+				'{' +
+						 ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
+						 ' "Name": "myotherfancyreport",' +
+						 ' "AvailableFormats": [' +
+						 ' 	{'+
+						 '		"format": "pdf",' +
+						 '		"mimetype": "application/pdf"' +
+						 '	}' +
+						 ' ],' +
+						 ' "ParticipantCode": "4B1AA",' +
+						 ' "CycleId": "2017#26",' +
+						 ' "Type": {'+
+						 '	"Code": "31F",' +
+						 '	"Description": "Some final report"' +
+						 ' },' +
+						 ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
+					 '},' +
+				'{' +
+						 ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
+						 ' "Name": "myotherfancyreport",' +
+						 ' "AvailableFormats": [' +
+						 ' 	{'+
+						 '		"format": "pdf",' +
+						 '		"mimetype": "application/pdf"' +
+						 '	}' +
+						 ' ],' +
+						 ' "ParticipantCode": "4B1AA",' +
+						 ' "CycleId": "2017#26",' +
+						 ' "Type": {'+
+						 '	"Code": "31F",' +
+						 '	"Description": "Some final report"' +
+						 ' },' +
+						 ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
+					 '},' +
+				'{' +
+						 ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
+						 ' "Name": "myotherfancyreport",' +
+						 ' "AvailableFormats": [' +
+						 ' 	{'+
+						 '		"format": "pdf",' +
+						 '		"mimetype": "application/pdf"' +
+						 '	}' +
+						 ' ],' +
+						 ' "ParticipantCode": "4B1AA",' +
+						 ' "CycleId": "2017#26",' +
+						 ' "Type": {'+
+						 '	"Code": "31F",' +
+						 '	"Description": "Some final report"' +
+						 ' },' +
+						 ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
+					 '},' +
+				'{' +
+						 ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
+						 ' "Name": "myotherfancyreport",' +
+						 ' "AvailableFormats": [' +
+						 ' 	{'+
+						 '		"format": "pdf",' +
+						 '		"mimetype": "application/pdf"' +
+						 '	}' +
+						 ' ],' +
+						 ' "ParticipantCode": "4B1AA",' +
+						 ' "CycleId": "2017#26",' +
+						 ' "Type": {'+
+						 '	"Code": "31F",' +
+						 '	"Description": "Some final report"' +
+						 ' },' +
+						 ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
+					 '},' +
+				'{' +
+						 ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
+						 ' "Name": "myotherfancyreport",' +
+						 ' "AvailableFormats": [' +
+						 ' 	{'+
+						 '		"format": "pdf",' +
+						 '		"mimetype": "application/pdf"' +
+						 '	}' +
+						 ' ],' +
+						 ' "ParticipantCode": "4B1AA",' +
+						 ' "CycleId": "2017#26",' +
+						 ' "Type": {'+
+						 '	"Code": "31F",' +
+						 '	"Description": "Some final report"' +
+						 ' },' +
+						 ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
+					 '},' +
+				'{' +
+						 ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
+						 ' "Name": "myotherfancyreport",' +
+						 ' "AvailableFormats": [' +
+						 ' 	{'+
+						 '		"format": "pdf",' +
+						 '		"mimetype": "application/pdf"' +
+						 '	}' +
+						 ' ],' +
+						 ' "ParticipantCode": "4B1AA",' +
+						 ' "CycleId": "2017#26",' +
+						 ' "Type": {'+
+						 '	"Code": "31F",' +
+						 '	"Description": "Some final report"' +
+						 ' },' +
+						 ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
+					 '},' +
+				'{' +
+						 ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
+						 ' "Name": "myotherfancyreport",' +
+						 ' "AvailableFormats": [' +
+						 ' 	{'+
+						 '		"format": "pdf",' +
+						 '		"mimetype": "application/pdf"' +
+						 '	}' +
+						 ' ],' +
+						 ' "ParticipantCode": "4B1AA",' +
+						 ' "CycleId": "2017#26",' +
+						 ' "Type": {'+
+						 '	"Code": "31F",' +
+						 '	"Description": "Some final report"' +
+						 ' },' +
+						 ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
+					 '},' +
+				'{' +
+						 ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
+						 ' "Name": "myotherfancyreport",' +
+						 ' "AvailableFormats": [' +
+						 ' 	{'+
+						 '		"format": "pdf",' +
+						 '		"mimetype": "application/pdf"' +
+						 '	}' +
+						 ' ],' +
+						 ' "ParticipantCode": "4B1AA",' +
+						 ' "CycleId": "2017#26",' +
+						 ' "Type": {'+
+						 '	"Code": "31F",' +
+						 '	"Description": "Some final report"' +
+						 ' },' +
+						 ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
+					 '},' +
+				'{' +
+						 ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
+						 ' "Name": "myotherfancyreport",' +
+						 ' "AvailableFormats": [' +
+						 ' 	{'+
+						 '		"format": "pdf",' +
+						 '		"mimetype": "application/pdf"' +
+						 '	}' +
+						 ' ],' +
+						 ' "ParticipantCode": "4B1AA",' +
+						 ' "CycleId": "2017#26",' +
+						 ' "Type": {'+
+						 '	"Code": "31F",' +
+						 '	"Description": "Some final report"' +
+						 ' },' +
+						 ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
+					 '},' +
+				'{' +
+						 ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
+						 ' "Name": "myotherfancyreport",' +
+						 ' "AvailableFormats": [' +
+						 ' 	{'+
+						 '		"format": "pdf",' +
+						 '		"mimetype": "application/pdf"' +
+						 '	}' +
+						 ' ],' +
+						 ' "ParticipantCode": "4B1AA",' +
+						 ' "CycleId": "2017#26",' +
+						 ' "Type": {'+
+						 '	"Code": "31F",' +
+						 '	"Description": "Some final report"' +
+						 ' },' +
+						 ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
+					 '},' +
+				'{' +
+						 ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
+						 ' "Name": "myotherfancyreport",' +
+						 ' "AvailableFormats": [' +
+						 ' 	{'+
+						 '		"format": "pdf",' +
+						 '		"mimetype": "application/pdf"' +
+						 '	}' +
+						 ' ],' +
+						 ' "ParticipantCode": "4B1AA",' +
+						 ' "CycleId": "2017#26",' +
+						 ' "Type": {'+
+						 '	"Code": "31F",' +
+						 '	"Description": "Some final report"' +
+						 ' },' +
+						 ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
+					 '},' +
+				'{' +
+						 ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
+						 ' "Name": "myotherfancyreport",' +
+						 ' "AvailableFormats": [' +
+						 ' 	{'+
+						 '		"format": "pdf",' +
+						 '		"mimetype": "application/pdf"' +
+						 '	}' +
+						 ' ],' +
+						 ' "ParticipantCode": "4B1AA",' +
+						 ' "CycleId": "2017#26",' +
+						 ' "Type": {'+
+						 '	"Code": "31F",' +
+						 '	"Description": "Some final report"' +
+						 ' },' +
+						 ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
+					 '},' +
+				'{' +
+						 ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
+						 ' "Name": "myotherfancyreport",' +
+						 ' "AvailableFormats": [' +
+						 ' 	{'+
+						 '		"format": "pdf",' +
+						 '		"mimetype": "application/pdf"' +
+						 '	}' +
+						 ' ],' +
+						 ' "ParticipantCode": "4B1AA",' +
+						 ' "CycleId": "2017#26",' +
+						 ' "Type": {'+
+						 '	"Code": "31F",' +
+						 '	"Description": "Some final report"' +
+						 ' },' +
+						 ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
+					 '},' +
+				'{' +
+						 ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
+						 ' "Name": "myotherfancyreport",' +
+						 ' "AvailableFormats": [' +
+						 ' 	{'+
+						 '		"format": "pdf",' +
+						 '		"mimetype": "application/pdf"' +
+						 '	}' +
+						 ' ],' +
+						 ' "ParticipantCode": "4B1AA",' +
+						 ' "CycleId": "2017#26",' +
+						 ' "Type": {'+
+						 '	"Code": "31F",' +
+						 '	"Description": "Some final report"' +
+						 ' },' +
+						 ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
+					 '},' +
+				'{' +
+						 ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
+						 ' "Name": "myotherfancyreport",' +
+						 ' "AvailableFormats": [' +
+						 ' 	{'+
+						 '		"format": "pdf",' +
+						 '		"mimetype": "application/pdf"' +
+						 '	}' +
+						 ' ],' +
+						 ' "ParticipantCode": "4B1AA",' +
+						 ' "CycleId": "2017#26",' +
+						 ' "Type": {'+
+						 '	"Code": "31F",' +
+						 '	"Description": "Some final report"' +
+						 ' },' +
+						 ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
+					 '},' +
+				'{' +
+						 ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
+						 ' "Name": "myotherfancyreport",' +
+						 ' "AvailableFormats": [' +
+						 ' 	{'+
+						 '		"format": "pdf",' +
+						 '		"mimetype": "application/pdf"' +
+						 '	}' +
+						 ' ],' +
+						 ' "ParticipantCode": "4B1AA",' +
+						 ' "CycleId": "2017#26",' +
+						 ' "Type": {'+
+						 '	"Code": "31F",' +
+						 '	"Description": "Some final report"' +
+						 ' },' +
+						 ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
+					 '},' +
+				'{' +
+						 ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
+						 ' "Name": "myotherfancyreport",' +
+						 ' "AvailableFormats": [' +
+						 ' 	{'+
+						 '		"format": "pdf",' +
+						 '		"mimetype": "application/pdf"' +
+						 '	}' +
+						 ' ],' +
+						 ' "ParticipantCode": "4B1AA",' +
+						 ' "CycleId": "2017#26",' +
+						 ' "Type": {'+
+						 '	"Code": "31F",' +
+						 '	"Description": "Some final report"' +
+						 ' },' +
+						 ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
+					 '},' +
+				'{' +
+						 ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
+						 ' "Name": "myotherfancyreport",' +
+						 ' "AvailableFormats": [' +
+						 ' 	{'+
+						 '		"format": "pdf",' +
+						 '		"mimetype": "application/pdf"' +
+						 '	}' +
+						 ' ],' +
+						 ' "ParticipantCode": "4B1AA",' +
+						 ' "CycleId": "2017#26",' +
+						 ' "Type": {'+
+						 '	"Code": "31F",' +
+						 '	"Description": "Some final report"' +
+						 ' },' +
+						 ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
+					 '},' +
+				'{' +
+						 ' "Id": "3ABF9348-F8AE-4AE2-869F-4C933378AAAA",' +
+						 ' "Name": "myotherfancyreport",' +
+						 ' "AvailableFormats": [' +
+						 ' 	{'+
+						 '		"format": "pdf",' +
+						 '		"mimetype": "application/pdf"' +
+						 '	}' +
+						 ' ],' +
+						 ' "ParticipantCode": "4B1AA",' +
+						 ' "CycleId": "2017#26",' +
+						 ' "Type": {'+
+						 '	"Code": "31F",' +
+						 '	"Description": "Some final report"' +
+						 ' },' +
+						 ' "UploadDate": "2017-09-06T15:09:46.263Z"' +
+					 '}' +
 				']' +
 		'}';
-		
-	public static final String GET_REPORT = 
+
+	public static final String GET_REPORT =
 		'{'+
 		'    "Id": "3ABF9348-F8AE-4AE2-869F-4C933378B115",'+
 		'    "Name": "myfancydata.xlsx",'+
 		'    "ParticipantCode": "4B184",'+
 		'    "CycleCode": "2017#23",'+
-        ' 	 "Type": {'+
-        '	 	"Code": "31A"' +
-        ' 	 },' +
+				' 	 "Type": {'+
+				'	 	"Code": "31A"' +
+				' 	 },' +
 		'    "UploadDate": "2017-09-06T15:09:46.263Z"'+
 		'}';
 }

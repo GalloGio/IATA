@@ -2,7 +2,7 @@ public with sharing class ProductRatePlanCharge_Sel /*extends Selector*/
 {
 	/*public List<Schema.SObjectField> getSObjectFieldList()
 	{
-		return new List<Schema.SObjectField> 
+		return new List<Schema.SObjectField>
 		{
 			zqu__ProductRatePlanCharge__c.Id,
 			zqu__ProductRatePlanCharge__c.Name,
@@ -40,10 +40,10 @@ public with sharing class ProductRatePlanCharge_Sel /*extends Selector*/
 	/*public List<zqu__ProductRatePlanCharge__c> getActiveCharges(Set<String> zRatePlanIds)
 	{
 		String query = String.format(
-			'SELECT {0}  ' + 
-			'FROM {1} ' + 
-			'WHERE zqu__ProductRatePlan__c IN :zRatePlanIds  '  + 
-			'  AND zqu__Deleted__c=false', 
+			'SELECT {0}  ' +
+			'FROM {1} ' +
+			'WHERE zqu__ProductRatePlan__c IN :zRatePlanIds  '  +
+			'  AND zqu__Deleted__c=false',
 			new List<String>{
 				String.join(getDefaultFields(), ', '),
 				getSObjectType().getDescribe().getName()
@@ -52,17 +52,17 @@ public with sharing class ProductRatePlanCharge_Sel /*extends Selector*/
 
 		return Database.query(query);
 	}*/
-	
+
 	public static list<zqu__ProductRatePlanCharge__c> getChargesToSetToZero(String planId, String chargeId){
-		
-		list<zqu__ProductRatePlanCharge__c> prpc = [Select 
-														zqu__ZuoraId__c, 
-														zqu__ProductRatePlan__r.zqu__ZuoraId__c, 
+
+		list<zqu__ProductRatePlanCharge__c> prpc = [Select
+														zqu__ZuoraId__c,
+														zqu__ProductRatePlan__r.zqu__ZuoraId__c,
 														zqu__ProductRatePlan__c,
 														zqu__Model__c,
 														Name,
 														Id
-													 From zqu__ProductRatePlanCharge__c 
+													 From zqu__ProductRatePlanCharge__c
 													 where zqu__ProductRatePlan__r.zqu__ZuoraId__c = :planId
 													 and zqu__ZuoraId__c <> :chargeId
 													 and zqu__Deleted__c = false];
@@ -70,20 +70,20 @@ public with sharing class ProductRatePlanCharge_Sel /*extends Selector*/
 	}
 
 	public static List<zqu__ProductRatePlanCharge__c> getProductRatePlanChargeByRatePlanId(set<Id> productRatePlanIds){
-		return [select id,zqu__Model__c,zqu__ListPrice__c,zqu__ProductRatePlan__c 
-                                                                                from zqu__ProductRatePlanCharge__c 
-                                                                                where zqu__ProductRatePlan__c in :productRatePlanIds];
+		return [select id,zqu__Model__c,zqu__ListPrice__c,zqu__ProductRatePlan__c
+																				from zqu__ProductRatePlanCharge__c
+																				where zqu__ProductRatePlan__c in :productRatePlanIds];
 	}
 
 	//Set the Product Rate Plan Charge pricing model by Zuora Id
 	public static Map<String,String> getProductRatePlanChargeModelByZuoraId(set<String> zuoraIds){
-		
+
 		Map<String,String> productRatePlanChargeModelByZuoraId = new Map<String,String>();
 
-		List<zqu__ProductRatePlanCharge__c> lstZproductRatePlanCharge = [select id, zqu__Model__c, zqu__ZuoraId__c 
-																			from zqu__ProductRatePlanCharge__c 
+		List<zqu__ProductRatePlanCharge__c> lstZproductRatePlanCharge = [select id, zqu__Model__c, zqu__ZuoraId__c
+																			from zqu__ProductRatePlanCharge__c
 																		where zqu__ZuoraId__c in :zuoraIds ];
-		
+
 		if(lstZproductRatePlanCharge != null && !lstZproductRatePlanCharge.isEmpty()){
 			for(zqu__ProductRatePlanCharge__c prpc : lstZproductRatePlanCharge){
 				productRatePlanChargeModelByZuoraId.put(prpc.zqu__ZuoraId__c, prpc.zqu__Model__c);
@@ -91,5 +91,5 @@ public with sharing class ProductRatePlanCharge_Sel /*extends Selector*/
 		}
 		return productRatePlanChargeModelByZuoraId;
 	}
-	
+
 }

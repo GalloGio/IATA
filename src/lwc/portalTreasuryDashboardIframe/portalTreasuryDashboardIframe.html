@@ -1,0 +1,229 @@
+<template>
+
+
+    <template if:false={loading}>
+
+        <!-- DASHBOARD HEADER -->
+        <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1">
+
+            <!-- REPORT NAME -->
+            <div class="text-medium text-darkGray text-bold slds-float_left">
+                {reportLabel}
+            </div>
+            <!-- REPORT NAME END -->
+
+            <!-- FULL SCREEN ICON -->
+            <template if:true={showEnlarge}>
+                <button class="slds-button slds-button_icon slds-float_right top10" onclick={handleFullScreen}><!-- onclick={enlarge}-->
+                    <img class="slds-button_icon small-icon" src={expandIcon}>
+                </button>
+            </template>
+            <!-- FULL SCREEN ICON END -->
+
+            <!-- COLLAPSE/ENLARGE ICONS -->
+            <template if:true={showCollapse}>
+
+                    <template if:true={showCollapseIcon}>
+                        <button class="slds-button slds-button_icon slds-float_right slds-m-right_small top10  iconCollapse" onclick={collapse}>
+                            <img class="slds-button_icon small-icon" src={collapseIcon}>
+                        </button>
+                    </template>
+
+                    <template if:true={showCollapseExpandIcon}>
+                        <button class="slds-button slds-button_icon slds-float_right slds-m-right_small top10 rotate180 iconCollapseExpand" onclick={expand}>
+                            <img class="slds-button_icon small-icon" src={collapseIcon}>
+                        </button>
+                    </template>
+
+
+            </template>
+            <!-- COLLAPSE/ENLARGE ICONS END -->
+
+
+        </div>
+        <!-- DASHBOARD HEADER END -->
+
+
+
+        <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-m-vertical_small slds-float_left iframeCard borderless">
+
+            <!-- STANDARD DASHBOARD -->
+            <template if:false={isPremiumDashboard}>
+                <div class={fullScreenContainerClass}>
+                    <template if:true={showFullScreen}>
+                        <div class="slds-p-horizontal_large slds-p-vertical_large mediumTitle text-bold text-small">
+                            <span class="slds-float_right slds-m-horizontal_x-large close-mark" onclick={closeFullScreen}>
+                                <lightning-icon icon-name="utility:close" size="small" variant="inverse" title="Close" class="cursorPointer" onclick={closeFullScreen}></lightning-icon>
+                            </span>
+                        </div>
+                    </template>
+
+                    <div class={fullScreenBodyClass}>
+
+                        <div class={iframeContainerClass}>
+                            <iframe  class="resp-iframe" src={powerBiSource}></iframe>
+                        </div>
+
+                    </div>
+                </div>
+            </template>
+            <!-- STANDARD DASHBOARD END -->
+
+
+            <!-- PREMIUM DASHBOARD -->
+            <template if:true={isPremiumDashboard}>
+
+
+                <!-- PREMIUM USER - DASHBOARD VISIBLE -->
+                <template if:true={isPremiumUser}>
+                    <div class={collapsibleContentClass}>
+                        <div class={fullScreenContainerClass}>
+                            <template if:true={showFullScreen}>
+                                <div class="slds-p-horizontal_large slds-p-vertical_large mediumTitle text-bold text-small">
+                                    <span class="slds-float_right slds-m-horizontal_x-large close-mark" onclick={closeFullScreen}>
+                                        <lightning-icon icon-name="utility:close" size="small" variant="inverse" title="Close" class="cursorPointer" onclick={closeFullScreen}></lightning-icon>
+                                    </span>
+                                </div>
+                            </template>
+
+                            <div class={fullScreenBodyClass}>
+
+                                <div class={iframeContainerClass}>
+                                    <iframe class="resp-iframe" src={powerBiSource}></iframe>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </template>
+                <!-- PREMIUM USER - DASHBOARD VISIBLE -->
+
+
+                <!-- NOT PREMIUM USER - DASHBOARD BLURRED -->
+                <template if:false= {isPremiumUser}>
+
+
+                    <!-- NOT INTERNET EXPLORER - SHOW BLURRED -->
+                    <template if:false={isIe}>
+
+                        <div class={collapsibleContentClass}>
+
+                            <div class="centered">
+                                <div class={requestButtonClass}><button class="containedButtonSlim" onclick={requestAccessClicked}>Request Access</button></div>
+                                <div class="overlay">
+                                    <div class="overlay-in"></div>
+                                    <div class="resp-container">
+                                        <iframe class="resp-iframe" src={powerBiSource} ></iframe>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </template>
+
+
+                    <!-- INTERNET EXPLORER SHOW PICTURE -->
+                    <template if:true={isIe}>
+
+                        <div class={collapsibleContentClass}>
+
+                            <div class="centered">
+                                <div class={requestButtonClass}><button class="containedButtonSlim" onclick={requestAccessClicked}>Request Access</button></div>
+
+                                    <!-- PICTURE FOR IE < 12 (DO NOT SUPPOERT BLUR)-->
+                                    <img src={iePremiumDashboardPicture}>
+
+                            </div>
+
+                        </div>
+
+                    </template>
+
+                </template>
+                <!-- NOT PREMIUM USER - DASHBOARD BLURRED END -->
+
+
+            </template>
+            <!-- PREMIUM DASHBOARD END -->
+
+        </div>
+
+
+
+        <!-- REQUEST PREMIUM ACCESS -->
+        <div class="requestAccessModal" if:true={showRequestAccess}>
+            <div class="requestAccessContainer">
+                <div class="slds-p-horizontal_large slds-p-vertical_large mediumTitle text-bold text-small">
+                    <span class="slds-float_right slds-m-horizontal_x-small close-mark" onclick={abortRequest}>
+                        <lightning-icon icon-name="utility:close" size="x-small" class="cursorPointer" onclick={abortRequest}></lightning-icon>
+                    </span>
+                    <span>{accessModalHeader}</span>
+                </div>
+                <!-- MODAL BODY -->
+                    <div class="slds-p-vertical_small slds-p-horizontal_large slds-size_1-of-1 customWhiteBackground">
+                        <div if:true={requestingAccess}>
+                            <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+                        </div>
+                        <lightning-formatted-rich-text class="richTextlinks introMessage"
+                                                       value={accessModalBody}>
+                        </lightning-formatted-rich-text>
+                    </div>
+
+                <div class="slds-p-around_medium topLightGrayBorder customWhiteBackground slds-clearfix center">
+                    <button class="containedButtonAlt containedButton-size slds-m-horizontal_small" onclick={abortRequest}>
+                        Cancel
+                    </button>
+                    <button class="containedButton containedButton-size slds-m-horizontal_small" onclick={requestPremiumAccess}>
+                        Confirm
+                    </button>
+                </div>
+
+            </div>
+        </div>
+        <!-- REQUEST PREMIUM ACCESS END -->
+
+
+        <!-- SUCCESS MODAL -->
+        <div class="requestAccessModal" if:true={showSuccessModal}>
+            <div class="requestAccessContainer">
+                <div class="slds-p-horizontal_large slds-p-vertical_large mediumTitle text-bold text-small">
+                    <lightning-formatted-rich-text class="richTextlinks introMessage"
+                                                   value={labels.ISSP_Access_Requested}>
+                    </lightning-formatted-rich-text>
+                </div>
+                <div class="slds-p-around_medium topLightGrayBorder customWhiteBackground slds-clearfix">
+                    <lightning-formatted-rich-text class="richTextlinks introMessage"
+                                                   value={labels.ISSP_Thanks_for_request}>
+                    </lightning-formatted-rich-text>
+                </div>
+                <div class="slds-p-around_medium topLightGrayBorder customWhiteBackground slds-clearfix">
+                    <div class="slds-align_absolute-center">
+                        <lightning-button class="containedButton" label="Close" variant="neutral"
+                                          onclick={reloadPage}>
+                        </lightning-button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- SUCCESS MODAL END -->
+
+        <!-- GET SCROLLBAR WIDTH -->
+        <div class="outer" style="width: 20px; overflow-y: scroll; position:relative; top: -9999px;">
+            <div class="inner" style="height: 5px;"></div>
+        </div>
+
+
+    </template>
+
+
+
+    <!-- SPINNER -->
+    <template if:true={loading}>
+        <div class="slds-m-around_xx-large ">
+            <lightning-spinner class="spinnerContainer" alternative-text="Loading" size="medium"></lightning-spinner>
+        </div>
+    </template>
+
+
+</template>

@@ -1,11 +1,12 @@
 import { api, LightningElement, track, wire } from 'lwc';
-import getAllAttachments from '@salesforce/apex/AttachmentListCtrl.getAllAttachmentsByParentIdAndPortal';
+import getAllAttachments from '@salesforce/apex/AttachmentListCtrl.getAllAttachmentsPortal';
 import checkIfSaamSidra from '@salesforce/apex/AttachmentListCtrl.checkIfSidraSaamOSCAR';
 import getExpiringLinkWithRecId from '@salesforce/apex/AttachmentListCtrl.getExpiringLinkWithRecId';
 import redirectToOldPortal from '@salesforce/apex/CSP_Utils.redirectToOldPortal';
 
 import getContentDetails from '@salesforce/apex/AttachmentListCtrl.getContentDetails';
 import deleteAttachment from '@salesforce/apex/AttachmentListCtrl.deleteAttachment';
+import updateParentRecord from '@salesforce/apex/AttachmentListCtrl.updateParentRecord'; //ACAMBAS - WMO-611
 
 import { refreshApex } from '@salesforce/apex';
 
@@ -58,6 +59,16 @@ export default class AttachmentListCmp extends LightningElement {
     }
     set acceptedFormats(value) {
         this.trackedAllowedFormats = value;
+    }
+
+    @track trackedIsExpired;
+
+    @api
+    get expired() {
+        return this.trackedIsExpired;
+    }
+    set expired(value) {
+        this.trackedIsExpired = value;
     }
 
    label = {
@@ -185,10 +196,20 @@ export default class AttachmentListCmp extends LightningElement {
 
         //gets details from the inserted files
         getContentDetails({ attachList: newFiles }).then(result => {
-            this.newDocsList = templist.concat(this.prepareData(result));
+            this.newDocsList = templist.concat(this.prepareData(JSON.parse(JSON.stringify(result))));
             this.loading = false;
         });
 
+        //ACAMBAS - WMO-611: Begin
+        //updates parent record
+        updateParentRecord({ recordId: this.parentid }).then(
+            result => {
+                //do nothing
+            }
+        ).error(error => {
+            console.error('Error', error);
+        });
+        //ACAMBAS - WMO-611: End
     }
 
     get renderModalDataTable() {

@@ -1,7 +1,7 @@
 @isTest
 private class EF_MaterialLineItemHandlerTest {
-		
-    @isTest static void testAddingContractMaterial_expectApprovalToStart()
+
+	@isTest static void testAddingContractMaterial_expectApprovalToStart()
 	{
 		System.runAs(EF_TestDataFactory.getEfProfileAndRole(0, 4)) {
 			EF_TestDataFactory.createCustomSettings();
@@ -25,7 +25,7 @@ private class EF_MaterialLineItemHandlerTest {
 			System.assertEquals(mat.Id, pwiList.get(1).ProcessInstance.TargetObjectId);
 		}
 	}
-	
+
 	@isTest static void testAddingContractAndBaMaterial_noApprovals()
 	{
 		System.runAs(EF_TestDataFactory.getEfProfileAndRole(0, 2)) {
@@ -46,7 +46,7 @@ private class EF_MaterialLineItemHandlerTest {
 			EF_Material_Line_Item__c mat = new EF_Material_Line_Item__c(RecordTypeId=contractMaterialRtId, EF_Material__c=prod.Id, Contract__c=contract.Id, EF_Status__c='Active');
 			insert mat;
 
-			// Create a billing agreement 
+			// Create a billing agreement
 			EF_Billing_Agreement__c ba = new EF_Billing_Agreement__c();
 			ba.Client__c = client.Id;
 			ba.Airline__c = customer.Id;
@@ -61,7 +61,7 @@ private class EF_MaterialLineItemHandlerTest {
 			System.assertEquals(0, pwiList.size());
 		}
 	}
-	
+
 	@isTest static void testAddingAndChangingMaterial()
 	{
 		System.runAs(EF_TestDataFactory.getEfProfileAndRole(0, 2)) {

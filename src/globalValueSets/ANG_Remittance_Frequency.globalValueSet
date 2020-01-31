@@ -45,6 +45,11 @@
         <default>false</default>
         <label>Daily</label>
     </customValue>
+    <customValue>
+        <fullName>L</fullName>
+        <default>false</default>
+        <label>Long Daily</label>
+    </customValue>
     <masterLabel>Remittance Frequency</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>

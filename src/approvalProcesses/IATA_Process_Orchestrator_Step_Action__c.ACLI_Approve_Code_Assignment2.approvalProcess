@@ -3,6 +3,14 @@
     <active>true</active>
     <allowRecall>true</allowRecall>
     <allowedSubmitters>
+        <submitter>Distribution_Airline_Coding</submitter>
+        <type>roleSubordinatesInternal</type>
+    </allowedSubmitters>
+    <allowedSubmitters>
+        <submitter>DistributionAirlineManagementHO</submitter>
+        <type>roleSubordinatesInternal</type>
+    </allowedSubmitters>
+    <allowedSubmitters>
         <submitter>amerz@iata.org</submitter>
         <type>user</type>
     </allowedSubmitters>

@@ -63,10 +63,10 @@ public with sharing class AMS_AddressTriggerHandler {
 		for(Id accountId : addressesByAccount.keySet()){
 
 			addressListOfAccount = addressesByAccount.get(accountId);
-		
+
 			checkForDuplicatedTypes(addressListOfAccount,addressesIds);
 		}
-		
+
 
 	}
 

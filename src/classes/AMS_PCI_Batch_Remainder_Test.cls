@@ -16,7 +16,7 @@ private class AMS_PCI_Batch_Remainder_Test {
 		state.IATA_ISO_Country__c = country.Id;
 		insert state;
 
-		Account agency = new Account(Name= 'Agency');		
+		Account agency = new Account(Name= 'Agency');
 		agency.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 		agency.Location_Type__c = 'P';
 		agency.Location_Class__c = 'HO';
@@ -32,10 +32,10 @@ private class AMS_PCI_Batch_Remainder_Test {
 
 		User usr = new User(ContactId= admin.Id, LastName= 'Contact', Alias= 'testA', Email= 'admin.contact@agency.xw', Username= 'admin.contact@test.xw');
 		usr.EmailEncodingKey = 'UTF-8';
-		usr.LanguageLocaleKey = 'en_US'; 
-        usr.LocaleSidKey = 'en_US';
-        usr.TimeZoneSidKey = 'Asia/Dubai'; 
-        usr.ProfileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal Agency Delegated Admin User' LIMIT 1].Id;
+		usr.LanguageLocaleKey = 'en_US';
+		usr.LocaleSidKey = 'en_US';
+		usr.TimeZoneSidKey = 'Asia/Dubai';
+		usr.ProfileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal Agency Delegated Admin User' LIMIT 1].Id;
 		insert usr;
 
 		Case cse = new Case();
@@ -92,7 +92,7 @@ private class AMS_PCI_Batch_Remainder_Test {
 		insert admin;
 
 		Case cse = [SELECT Id, ContactId FROM Case LIMIT 1];
-		cse.ContactId = admin.Id;		
+		cse.ContactId = admin.Id;
 		update cse;
 
 		Test.startTest();
@@ -103,13 +103,13 @@ private class AMS_PCI_Batch_Remainder_Test {
 
 	static testMethod void testBatch_5() {
 		Contact admin = [SELECT Id, Preferred_Language__c FROM Contact LIMIT 1];
-		admin.Preferred_Language__c = 'AAAA';		
+		admin.Preferred_Language__c = 'AAAA';
 		update admin;
 
 		Test.startTest();
 		AMS_PCI_Batch_Remainder ctrl = new AMS_PCI_Batch_Remainder();
 		Database.executeBatch(ctrl, 1);
 		Test.stopTest();
-	}	
+	}
 
 }

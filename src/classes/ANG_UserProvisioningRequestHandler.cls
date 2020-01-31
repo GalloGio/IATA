@@ -23,36 +23,36 @@ public class ANG_UserProvisioningRequestHandler {
 		Set<String> connectedAppRoles = new Set<String>();
 		Set<String> iepNames = new Set<String>();
 
-        for(Connected_App_Roles__c role : Connected_App_Roles__c.getAll().values()) {	
+		for(Connected_App_Roles__c role : Connected_App_Roles__c.getAll().values()) {
 			if(role.Connected_App__c != null && (role.Connected_App__c.contains('IATA EasyPay') || role.Connected_App__c.contains('Global Default Insurance (GDI)'))) {
 				connectedAppRoles.add(role.Connected_App_Provisioning_Name__c);
 				iepNames.add(role.Connected_App__c);
 			}
-        }
+		}
 
-        Set<Id> usersIds = new Set<Id>();
-        for(UserProvisioningRequest newUp : triggerNew) {
-        	usersIds.add(newUp.SalesforceUserId);
-        }
+		Set<Id> usersIds = new Set<Id>();
+		for(UserProvisioningRequest newUp : triggerNew) {
+			usersIds.add(newUp.SalesforceUserId);
+		}
 
-        List<User> users = [Select id, ContactId from User where id in : usersIds];
+		List<User> users = [Select id, ContactId from User where id in : usersIds];
 
 		Set<Id> contactsIds = new Set<Id>();
 		Map<id, id> userContact = new Map<id, id>();
-        for(User user : users) {
-        	contactsIds.add(user.ContactId);
-        	userContact.put(user.Id, user.ContactId);
-        }
+		for(User user : users) {
+			contactsIds.add(user.ContactId);
+			userContact.put(user.Id, user.ContactId);
+		}
 
-        List<Portal_Application_Right__c> parList = [Select id,
-        												    contact__c,
-        												    Application_Name__c,
-        												    ANG_Portal_Service_Role__c,
-        												    Right__c
-                                                       From Portal_Application_Right__c 
-                                                      Where contact__c in : contactsIds 
-                                                        and Application_Name__c in : iepNames
-                                                        and Right__c = 'Access Requested'];
+		List<Portal_Application_Right__c> parList = [Select id,
+															contact__c,
+															Application_Name__c,
+															ANG_Portal_Service_Role__c,
+															Right__c
+													   From Portal_Application_Right__c
+													  Where contact__c in : contactsIds
+														and Application_Name__c in : iepNames
+														and Right__c = 'Access Requested'];
 
 		if(!parList.isEmpty()) {
 
@@ -114,7 +114,7 @@ public class ANG_UserProvisioningRequestHandler {
 						roles.put(role.Connected_App__c + ' - ' + role.Role__c, role);
 					}
 				}
-				
+
 			}
 			return roles;
 		}

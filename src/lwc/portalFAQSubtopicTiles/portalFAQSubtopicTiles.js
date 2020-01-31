@@ -12,8 +12,21 @@ export default class PortalFAQSubtopicTiles extends LightningElement {
 
     @api category;
     @api language;
+    @track _faqObject = {};
 
-    connectedCallback() {        
+    @api
+    get faqObject() {
+        return this._faqObject;
+    }
+    set faqObject(value) {
+        let _value = JSON.parse(JSON.stringify(value));
+        this._faqObject = _value;
+    }
+
+    connectedCallback() {
+        this.category = this._faqObject.category;
+        this.language = this._faqObject.language;
+
         getFAQsInfoByLanguage({ lang : this.language })
             .then(results => {
                 let result = JSON.parse(JSON.stringify(results));
@@ -23,7 +36,7 @@ export default class PortalFAQSubtopicTiles extends LightningElement {
                 let tempTopicOptions = [];
                 let tempAccordionMap = [];
                 
-                let tempCategoryName = this.category; //Contains selected category from portalFAQPage
+                let tempCategoryName = this._faqObject.category; //Contains selected category from portalFAQPage
         
                 Object.keys(result).forEach(function (el) {
                     if(tempCategoryName === result[el].categoryName) {
@@ -49,7 +62,7 @@ export default class PortalFAQSubtopicTiles extends LightningElement {
         this.topic = topicName;
         
         let topicVals = JSON.parse(JSON.stringify(this.topicTiles));
-        
+
         Object.keys(topicVals).forEach(function (el) {
             if(topicName === topicVals[el].value && topicVals[el].open === false) {
                 topicVals[el].open = true;
@@ -59,8 +72,10 @@ export default class PortalFAQSubtopicTiles extends LightningElement {
                 topicVals[el].class = 'slds-p-around_medium customCardTitleBox cursorPointer borderStyle cardStyle';
             }
         });
-
+        
         this.topicTiles = topicVals;
+
+        let categorySelected = topicVals.filter(topic => topic.open === true); //Check if a topic is selected
 
         let tempSubTopics = [];
         let subtopicVals = JSON.parse(JSON.stringify(this.accordionMap[topicName].childs)); //Get subtopics under each topic
@@ -72,12 +87,13 @@ export default class PortalFAQSubtopicTiles extends LightningElement {
         this.subTopicTiles = [];
         this.subTopicTiles = tempSubTopics;
 
-        //portalFAQPage handles the event and send parameters to portalFAQArticleAccordion to show the articles under selected topic  
-        let topicInfo = {
-            topic: this.topic,
-            counter: this.counter++
-        };      
-        this.selectedEvent('topicselected', topicInfo);
+        let __faqObject = JSON.parse(JSON.stringify(this._faqObject));
+        __faqObject.category = categorySelected.length > 0 ? '' : this.category;
+        __faqObject.topic = categorySelected.length > 0 ? topicName : '';
+        __faqObject.subtopic = '';
+
+        const selectedEvent = new CustomEvent('categorieschange', { detail: __faqObject });
+        this.dispatchEvent(selectedEvent);
     }
     
     subTopicSelected(event) {        
@@ -95,23 +111,16 @@ export default class PortalFAQSubtopicTiles extends LightningElement {
         });
 
         this.subTopicTiles = [];
-        this.subTopicTiles = tempSubTopics;      
-        
-        //portalFAQPage handles the event and send parameters to portalFAQArticleAccordion to show the articles under selected subtopic
-        let subtopicInfo = {
-            topic: this.topic,
-            subtopic: subtopicName
-        };   
-        this.selectedEvent('subtopicselected', subtopicInfo);
-    }
+        this.subTopicTiles = tempSubTopics;
 
-    selectedEvent(eventName, params) {
-        const selectedEvent = new CustomEvent(eventName, {
-            detail: {
-                options: params
-            }
-        });
+        let __faqObject = JSON.parse(JSON.stringify(this._faqObject));
+        __faqObject.category = '';
+        __faqObject.topic = '';
+        __faqObject.subtopic = subtopicName;
 
+        const selectedEvent = new CustomEvent('categorieschange', { detail: __faqObject });
         this.dispatchEvent(selectedEvent);
+
+        window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
     }
 }

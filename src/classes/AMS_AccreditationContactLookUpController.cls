@@ -11,8 +11,8 @@ public with sharing class AMS_AccreditationContactLookUpController
 	private String fieldType;
 	public List<ContactPersonWrapper> wrapper {get; set;}
 	public List<AccountWrapper> accWrapper {get; set;}
-	
-	
+
+
 	public AMS_AccreditationContactLookUpController()
 	{
 		objectType = System.currentPageReference().getParameters().get('object');
@@ -24,11 +24,11 @@ public with sharing class AMS_AccreditationContactLookUpController
 		accountName = System.currentPageReference().getParameters().get('legalName');
 		iataCode = System.currentPageReference().getParameters().get('iataCode');
 		System.debug('***iataCode: ' + iataCode);
-		
+
 		wrapper = new List<ContactPersonWrapper>();
 		accWrapper = new List<AccountWrapper>();
-		
-		
+
+
 		if(objectType != 'account' && objectType != 'contact')
 		{
 			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, 'Object type (Account or Contact) needs to be defined.'));
@@ -36,7 +36,7 @@ public with sharing class AMS_AccreditationContactLookUpController
 		}
 		else if(objectType == 'account')
 		{
-			
+
 			List<Account> accountList = new List<Account>();
 			List<Account> accountListByIataCode = new List<Account>();
 			Set<Id> accountListAux = new Set<Id>();
@@ -56,7 +56,7 @@ public with sharing class AMS_AccreditationContactLookUpController
 					return;
 				}
 			}
- 
+
  			if(accountList.isEmpty())
  			{
  				if(accountName != null && accountName != '')
@@ -67,7 +67,7 @@ public with sharing class AMS_AccreditationContactLookUpController
 						accountListAux.add(ac.Id);
 					}
 				}
-				
+
 				if(iataCode != null && iataCode != '')
 				{
 					accountListByIataCode = [select id, Name, Legal_Name__c, IATACode__c from Account where RecordType.DeveloperName = 'IATA_Agency' and IATACode__c like :iataCode + '%'];
@@ -104,14 +104,14 @@ public with sharing class AMS_AccreditationContactLookUpController
 				ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, 'Please fill in at least First and Last Name or an email address to perform the contact lookup.'));
 				return;
 			}
-			
+
 			String[] values = searchString.split(':');
 			rowNumber = values[0];
 			fieldType = values[1];
-			
+
 			List<Contact> contactList = new List<Contact>();
 			List<AMS_Person__c> personList = new List<AMS_Person__c>();
-			
+
 			if(firstName != null && lastName != null && email != null)
 			{
 				contactList = AMS_AccreditationContactHelper.findContactsByNameOrEmail(firstName, lastName, email);
@@ -142,40 +142,40 @@ public with sharing class AMS_AccreditationContactLookUpController
 			}
 		}
 	}
-	
-	
+
+
 	public class ContactPersonWrapper
 	{
-        public String fName {get; set;}
-        public String lName {get; set;}
-        public String emailAddress {get; set;}
-        public String phone {get; set;}
-        public String recordId {get; set;}
-        
-        public ContactPersonWrapper(Id id, String fName, String lName, String email, String phone)
-        {
-            this.recordId = id;
-            this.fName = fName;
-            this.lName = lName;
-            this.emailAddress = email;
-            this.phone = phone;
-        }
-    }
-    
-    public class AccountWrapper
+		public String fName {get; set;}
+		public String lName {get; set;}
+		public String emailAddress {get; set;}
+		public String phone {get; set;}
+		public String recordId {get; set;}
+
+		public ContactPersonWrapper(Id id, String fName, String lName, String email, String phone)
+		{
+			this.recordId = id;
+			this.fName = fName;
+			this.lName = lName;
+			this.emailAddress = email;
+			this.phone = phone;
+		}
+	}
+
+	public class AccountWrapper
 	{
-        public String name {get; set;}
-        public String legalName {get; set;}
-        public String registrationNumber {get; set;}
-        public String iataCode {get; set;}
-        public String recordId {get; set;}
-        
-        public AccountWrapper(Id id, String accName, String accLegalName, String accIataCode)
-        {
-            this.recordId = id;
-            this.name = accName;
-            this.legalName = accLegalName;
-            this.iataCode = accIataCode;
-        }
-    }
+		public String name {get; set;}
+		public String legalName {get; set;}
+		public String registrationNumber {get; set;}
+		public String iataCode {get; set;}
+		public String recordId {get; set;}
+
+		public AccountWrapper(Id id, String accName, String accLegalName, String accIataCode)
+		{
+			this.recordId = id;
+			this.name = accName;
+			this.legalName = accLegalName;
+			this.iataCode = accIataCode;
+		}
+	}
 }

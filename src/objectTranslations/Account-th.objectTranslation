@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label>ประเภทคำถาม</label>
+        <name>Category__c</name>
+        <picklistValues>
+            <masterLabel>ANSP</masterLabel>
+            <translation>ANSP - ศูนย์ควบคุมการบิน</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Airline Alliance</masterLabel>
+            <translation>พันธมิตรสายการบิน</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Box Office</masterLabel>
+            <translation>บ็อกซ์ออฟฟิศ</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Coordinator</masterLabel>
+            <translation>ผู้ประสานงาน</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Landmark</masterLabel>
+            <translation>สถานที่สัญลักษณ์ของเมือง</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Park (Theme Park)</masterLabel>
+            <translation>สวนสนุก</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Payment Provider</masterLabel>
+            <translation>ผู้ให้บริการชำระเงิน</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Provider</masterLabel>
+            <translation>ผู้ให้บริการ</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sightseeing</masterLabel>
+            <translation>การเที่ยวชมสถานที่</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Transfer Service</masterLabel>
+            <translation>บริการรับส่ง</translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label>ภาค</label>
+        <name>Sector__c</name>
+        <picklistValues>
+            <masterLabel>Accommodation</masterLabel>
+            <translation>ที่พัก</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Airline</masterLabel>
+            <translation>สายการบิน</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Airline Supplier</masterLabel>
+            <translation>ผู้จัดจำหน่ายของสายการบิน</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Association</masterLabel>
+            <translation>สมาคม</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Equipment Manufacturer</masterLabel>
+            <translation>ผู้ผลิตอุปกรณ์</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Financial Institution</masterLabel>
+            <translation>สถาบันการเงิน</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Freight Forwarder</masterLabel>
+            <translation>ผู้รับจัดการขนส่งสินค้าระหว่างประเทศ</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>General Public</masterLabel>
+            <translation>บุคคลทั่วไป</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>General Sales Agent</masterLabel>
+            <translation>ตัวแทนจำหน่ายทั่วไป</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Governmental Institution</masterLabel>
+            <translation>สถาบันของรัฐ</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Holding Company</masterLabel>
+            <translation>บริษัทผู้ถือหุ้น</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Infrastructure Partner</masterLabel>
+            <translation>พันธมิตรโครงสร้างพื้นฐาน</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Media</masterLabel>
+            <translation>สื่อ</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Non-Airline Transportation</masterLabel>
+            <translation>การขนส่งที่ไม่ใช่ธุรกิจการบิน</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Recreational</masterLabel>
+            <translation>เพื่อนันทนาการ</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Training</masterLabel>
+            <translation>การฝึกอบรม</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Travel Agent</masterLabel>
+            <translation>ตัวแทนการท่องเที่ยว</translation>
+        </picklistValues>
+    </fields>
+</CustomObjectTranslation>

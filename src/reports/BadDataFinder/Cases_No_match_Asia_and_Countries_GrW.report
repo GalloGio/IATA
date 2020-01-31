@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>CASE_ID</field>
+    </columns>
+    <columns>
+        <field>Case.Region__c</field>
+    </columns>
+    <columns>
+        <field>Case.BSPCountry__c</field>
+    </columns>
+    <currency>USD</currency>
+    <description>This report will support us to find Countries and Region of Asia &amp; Pacific not compatibles.</description>
+    <filter>
+        <criteriaItems>
+            <column>Case.Region__c</column>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Asia &amp; Pacific</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Case.BSPCountry__c</column>
+            <isUnlocked>true</isUnlocked>
+            <operator>notContain</operator>
+            <value>,All region,Australia,Bangladesh,Bhutan,Brunei Darussalam,Cambodia,Cook Islands,Fiji,French Polynesia,Guam,India,Indonesia,Japan,Kiribati,Korea,Republic of,Lao People&apos;s Democratic Republic,Malaysia,Maldives,Marshall Islands,Micronesia,Federal States of,Myanmar,Nepal,New Caledonia,New Zealand,Northern Mariana Islands,Pakistan,Palau,Papua New Guinea,Philippines,Regional Office - Asia &amp; Pacific,Samoa,Singapore,Solomon Islands,Sri Lanka,Tahiti,Thailand,Tonga,Vanuatu,Vietnam,Wallis &amp; Futuna Islands</value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
+    <format>Tabular</format>
+    <name>Cases - No match Asia and Countries</name>
+    <params>
+        <name>units</name>
+        <value>h</value>
+    </params>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>CaseList</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>CREATED_DATEONLY</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

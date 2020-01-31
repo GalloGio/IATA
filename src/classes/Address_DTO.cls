@@ -1,4 +1,4 @@
-public class Address_DTO 
+public class Address_DTO
 {
 	public String street1{get;set;}
 	public String street2{get;set;}
@@ -18,11 +18,11 @@ public class Address_DTO
 
 	public static Address_DTO format2DTO(Location__c loc)
 	{
-		Address_DTO dto = new Address_DTO(); 
+		Address_DTO dto = new Address_DTO();
 		if(loc != null)
 		{
 			dto.street1 		= loc.Street__c;
-			//dto.street2 = 
+			//dto.street2 =
 			dto.city 			= loc.City__c;
 			dto.stateLabel 		= loc.ISO_State_Name__c;
 			dto.stateCode 		= loc.ISO_State_Code__c;
@@ -43,7 +43,7 @@ public class Address_DTO
 
 	public static Address_DTO format2DTO(Id locationId)
 	{
-		Address_DTO dto = new Address_DTO(); 
+		Address_DTO dto = new Address_DTO();
 
 		List<Location__c> locations = new Location_sel().getLocations(new Set<Id>{locationId});
 		if(locations != null && locations.size() > 0)
@@ -53,5 +53,5 @@ public class Address_DTO
 
 		return dto;
 	}
-	
+
 }

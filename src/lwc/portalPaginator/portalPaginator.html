@@ -1,0 +1,37 @@
+<template>
+    
+    <div class="slds-m-around_large text-gray text-xsmall" style="text-align: center;">
+        <span if:false={enableBackwardButtons} class="smallBoxSizeIcons"><img src={paginatorFirstPageDisabled} /></span>
+        <span if:false={enableBackwardButtons} class="smallBoxSizeIcons"><img src={paginatorPreviousPageDisabled} /></span>
+        <span if:true={enableBackwardButtons} class="smallBoxSizeIcons cursorPointer"><img src={paginatorFirstPageEnabled} onclick={handleNavigateToFirstPage} /></span>
+        <span if:true={enableBackwardButtons} class="smallBoxSizeIcons cursorPointer"><img src={paginatorPreviousPageEnabled} onclick={handleNavigateToPreviousPage} /></span>
+
+        <span if:true={viewFirstPage} class="smallBoxSize">
+            <a data-page name="1" onclick={handleNavigateToFirstPage} >1</a>
+        </span>
+
+        <span if:true={viewFirstThreeDots} class="smallBoxSize">
+            ...
+        </span>
+        
+        <template for:each={pages} for:item="item">
+            <span class={item.class} key={item.number}>
+                <a data-page value={item.number} name={item.number} onclick={handleNavigateToSelectedPage}>{item.number}</a>
+            </span>
+        </template>
+        
+        <span if:true={viewLastThreeDots} class="smallBoxSize">
+            ...
+        </span>
+
+        <span if:true={viewLastPage} class="smallBoxSize">
+            <a data-page name={totalPages} onclick={handleNavigateToLastPage} >{totalPages}</a>
+        </span>
+
+        <span if:true={enableForwardButtons} class="smallBoxSizeIcons cursorPointer"><img src={paginatorNextPageEnabled} onclick={handleNavigateToNextPage} /></span>
+        <span if:true={enableForwardButtons} class="smallBoxSizeIcons cursorPointer"><img src={paginatorLastPageEnabled} onclick={handleNavigateToLastPage} /></span>
+        <span if:false={enableForwardButtons} class="smallBoxSizeIcons"><img src={paginatorNextPageDisabled} /></span>
+        <span if:false={enableForwardButtons} class="smallBoxSizeIcons"><img src={paginatorLastPageDisabled} /></span>
+    </div>
+
+</template>

@@ -12,6 +12,10 @@
                 <field>ANG_Account__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Monitored_Account__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>ANG_Agent_Sales__c</field>
             </layoutItems>

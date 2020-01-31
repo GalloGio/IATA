@@ -3,9 +3,9 @@ public with sharing class TestPortalSupportReachUsCtrl {
 
 public static testMethod void TestPortalSupportReachUsCtrl(){
 	IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', IATA_Contry_KR__c = 'test', CASS_Import__c = 'Yes',
-	                                                      IATA_COUNTRY_EN__c = 'testEN', IATA_Country_FR__c = 'testFR', IATA_Country_ZH__c = 'testZH',
-	                                                      IATA_Country_IT__c = 'testIT', IATA_Country_JP__c = 'testJP', ISO_Code__c = 'tq',
-	                                                      IATA_Country_PT__c = 'testPT', IATA_Country_SP__c = 'testSP', Case_BSP_Country__c = 'test' );
+														  IATA_COUNTRY_EN__c = 'testEN', IATA_Country_FR__c = 'testFR', IATA_Country_ZH__c = 'testZH',
+														  IATA_Country_IT__c = 'testIT', IATA_Country_JP__c = 'testJP', ISO_Code__c = 'tq',
+														  IATA_Country_PT__c = 'testPT', IATA_Country_SP__c = 'testSP', Case_BSP_Country__c = 'test' );
 	insert country;
 	IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'GB', ISO_Code__c = 'GB', Case_BSP_Country__c = 'GB', CASS_Import__c = 'Yes');
 	insert country2;
@@ -17,7 +17,7 @@ public static testMethod void TestPortalSupportReachUsCtrl(){
 	parent.Name = 'test';
 	parent.sector__c = 'Travel Agent';
 	parent.Location_Type__c = 'HO';
-	parent.RecordTypeId = rtIdBr; 
+	parent.RecordTypeId = rtIdBr;
 	parent.IATACode__c = '100';
 
 	insert parent;
@@ -64,7 +64,7 @@ public static testMethod void TestPortalSupportReachUsCtrl(){
 
 	System.runAs(newUser) {
 
-        Map<String,String> myMapRTContry = new Map<String,String>();
+		Map<String,String> myMapRTContry = new Map<String,String>();
 
 		Map<String,String> myMapEs = new Map<String,String>();
 		Map<String,String> myMapKo = new Map<String,String>();
@@ -96,12 +96,12 @@ public static testMethod void TestPortalSupportReachUsCtrl(){
 		newUser.LanguageLocaleKey ='it';
 		update newUser;
 		myMapIT = PortalSupportReachUsCtrl.getCountryList();
-        
-        List<PortalSupportReachUsCtrl.LVA_CallUsConfigClass> phoneNumbers = PortalSupportReachUsCtrl.getCallUsPhoneNumber();
 
-        Contact cont = PortalSupportReachUsCtrl.getContactInfo();
+		List<PortalSupportReachUsCtrl.LVA_CallUsConfigClass> phoneNumbers = PortalSupportReachUsCtrl.getCallUsPhoneNumber();
 
-        myMapRTContry = PortalSupportReachUsCtrl.getCaseTypeAndCountry(cont,'GB');
+		Contact cont = PortalSupportReachUsCtrl.getContactInfo();
+
+		myMapRTContry = PortalSupportReachUsCtrl.getCaseTypeAndCountry(cont,'GB');
 		List<LiveAgentButtonSettings__c> labstest = PortalSupportReachUsCtrl.getLiveAgentButton('AirportIS','GB',cont,false);
 		List<LiveAgentButtonSettings__c> labstests = PortalSupportReachUsCtrl.getLiveAgentButton('AirportIS','',cont, true);
 		List<ISSP_FAQ2Case_Emergencies__c> caseEmergencies = PortalSupportReachUsCtrl.getEmergencyDependencies();

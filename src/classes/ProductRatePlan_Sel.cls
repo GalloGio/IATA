@@ -5,7 +5,7 @@ public with sharing class ProductRatePlan_Sel extends Selector
 			zqu__ProductRatePlan__c.Id,
 			zqu__ProductRatePlan__c.Name,
 			zqu__ProductRatePlan__c.CustomerType__c,
-			zqu__ProductRatePlan__c.zqu__Deleted__c, 
+			zqu__ProductRatePlan__c.zqu__Deleted__c,
 			zqu__ProductRatePlan__c.zqu__Description__c,
 			zqu__ProductRatePlan__c.zqu__EffectiveEndDate__c,
 			zqu__ProductRatePlan__c.zqu__EffectiveStartDate__c,
@@ -29,8 +29,8 @@ public with sharing class ProductRatePlan_Sel extends Selector
 
 
 	/****************************************************************************************************
-	    Created by CGI, David D 2015-09-22
-	        Method return Map of chargeId with corresponding rate plan
+		Created by CGI, David D 2015-09-22
+			Method return Map of chargeId with corresponding rate plan
 	****************************************************************************************************/
 	public Map<Id, zqu__ProductRatePlan__c> getRatePlanByCharge(List<zqu__ProductRatePlanCharge__c> zCharges, Boolean onlyStandardRatePlan)
 	{
@@ -45,14 +45,14 @@ public with sharing class ProductRatePlan_Sel extends Selector
 
 		Map<Id, zqu__ProductRatePlan__c> ratePlanById = new Map<Id, zqu__ProductRatePlan__c>((List<zqu__ProductRatePlan__c>) selectSObjectById(ratePlanIds));
 
-		for(Id chargeId : planIdByChargeId.keySet()){	
-			Id planId = planIdByChargeId.get(chargeId); 
+		for(Id chargeId : planIdByChargeId.keySet()){
+			Id planId = planIdByChargeId.get(chargeId);
 
 			if(ratePlanById.containsKey(planId)){
 				zqu__ProductRatePlan__c ratePlan = ratePlanById.get(planId);
 
 				if(onlyStandardRatePlan == true){
-					//-- Validate RatePlan is Standard 
+					//-- Validate RatePlan is Standard
 					if(isStandardRatePlan(ratePlan)){
 						ret.put(chargeId, ratePlan);
 					}
@@ -66,8 +66,8 @@ public with sharing class ProductRatePlan_Sel extends Selector
 	{
 		return (
 			String.isBlank(rp.CustomerType__c) &&
-			String.isBlank(rp.Region__c) && 
-			String.isBlank(rp.Country__c) && 
+			String.isBlank(rp.Region__c) &&
+			String.isBlank(rp.Country__c) &&
 			String.isBlank(rp.Couponcode__c)
 		);
 	}

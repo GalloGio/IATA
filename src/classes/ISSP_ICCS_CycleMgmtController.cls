@@ -67,7 +67,7 @@ public class ISSP_ICCS_CycleMgmtController extends ISSP_ICCS_ComponentController
 			catch(ISSP_ICCS_CoreRest.ICCS_Exception e){
 				pageController.setMessage(e.getMessage(), false);
 			}
-			
+
 			return adhocCycleParticipationTable;
 		}
 		set;
@@ -80,20 +80,20 @@ public class ISSP_ICCS_CycleMgmtController extends ISSP_ICCS_ComponentController
 			}
 			else{
 				List<ISSP_ICCS_Utils.ParticipationRow> rowsList = new List<ISSP_ICCS_Utils.ParticipationRow>();
-				
+
 				Integer i = 0;
-				
+
 				for(ISSP_ICCS_Utils.ParticipationRow participationRow : adhocCycleParticipationTable.participationRows){
 					if(!participationRow.isFilteredOut){
 						rowsList.add(participationRow);
 						i++;
-						
+
 						if(i == ISSP_ICCS_Utils.COLLAPSED_TABLE_ROWS){
 							break;
 						}
 					}
 				}
-				
+
 				return rowsList;
 			}
 		}
@@ -128,7 +128,7 @@ public class ISSP_ICCS_CycleMgmtController extends ISSP_ICCS_ComponentController
 		}
 		set;
 	}
-		
+
 	// Size of the Future Cycles list
 	public Integer futureCyclesSize { get{ return futureCyclesList.size(); }}
 
@@ -178,7 +178,7 @@ public class ISSP_ICCS_CycleMgmtController extends ISSP_ICCS_ComponentController
 			catch(ISSP_ICCS_CoreRest.ICCS_Exception e){
 				pageController.setMessage(e.getMessage(), false);
 			}
-			
+
 			return futureCycleParticipationTable;
 		}
 		set;
@@ -191,20 +191,20 @@ public class ISSP_ICCS_CycleMgmtController extends ISSP_ICCS_ComponentController
 			}
 			else{
 				List<ISSP_ICCS_Utils.ParticipationRow> rowsList = new List<ISSP_ICCS_Utils.ParticipationRow>();
-				
+
 				Integer i = 0;
-				
+
 				for(ISSP_ICCS_Utils.ParticipationRow participationRow : futureCycleParticipationTable.participationRows){
 					if(!participationRow.isFilteredOut){
 						rowsList.add(participationRow);
 						i++;
-						
+
 						if(i == ISSP_ICCS_Utils.COLLAPSED_TABLE_ROWS){
 							break;
 						}
 					}
 				}
-				
+
 				return rowsList;
 			}
 		}
@@ -218,7 +218,7 @@ public class ISSP_ICCS_CycleMgmtController extends ISSP_ICCS_ComponentController
 
 	public Boolean isFutureParticipationTableExpanded {get;set;}
 
-	
+
 
 	// Indicates if the tables structure have to be kept next time the component is displayed
 	public Boolean adhocRequiresDataReset {get;set;}
@@ -233,16 +233,16 @@ public class ISSP_ICCS_CycleMgmtController extends ISSP_ICCS_ComponentController
 	public String settlementInstructionTypeParameter {get;set;}
 	public String modifiedOnParameter {get;set;}
 
-	
+
 	/* CONSTRUCTOR */
-	
+
 	public ISSP_ICCS_CycleMgmtController(){}
 
 
 	public override ISSP_ICCS_Utils.Page getComponentType(){
 		return ISSP_ICCS_Utils.Page.CYCLE_MGMT;
 	}
-	
+
 	public override Boolean resetController(ISSP_ICCS_ServiceController pageController){
 		System.debug('ISSP_ICCS_CycleMgmtController.resetController(ISSP_ICCS_ServiceController pageController) : increment ' + ++ISSP_ICCS_ServiceController.increment);
 
@@ -259,39 +259,39 @@ public class ISSP_ICCS_CycleMgmtController extends ISSP_ICCS_ComponentController
 		else{
 			// If an Adhoc cycle was previously selected, we check when returning on the page if the cycle is still an AdHoc cycle
 			Boolean selectedCycleStillExists = false;
-			
+
 			for(String adhocCycle : adhocCyclesList){
 				if(adhocCycle == selectedAdhocCycle){
 					selectedCycleStillExists = true;
 					break;
 				}
 			}
-			
+
 			// If not, set it to null. It's value will be set when retrieving it
 			selectedAdhocCycle = selectedCycleStillExists ? selectedAdhocCycle : null;
 		}
-		
+
 		if(selectedFutureCycle == null){
 			selectedFutureCycle = '';
 		}
 		else{
 			// If a Future cycle was previously selected, we check when returning on the page if the cycle is still an Future cycle
 			Boolean selectedCycleStillExists = false;
-			
+
 			for(String futureCycle : futureCyclesList){
 				if(futureCycle == selectedFutureCycle){
 					selectedCycleStillExists = true;
 					break;
 				}
 			}
-			
+
 			// If not, set it to null. It's value will be set when retrieving it
 			selectedFutureCycle = selectedCycleStillExists ? selectedFutureCycle : null;
 		}
-		
+
 		return true;
 	}
-	
+
 	// Called when the page is left through page controller navigation methods
 	public override void cleanController(){
 		System.debug('ISSP_ICCS_CycleMgmtController.cleanController() : increment ' + ++ISSP_ICCS_ServiceController.increment);
@@ -325,24 +325,24 @@ public class ISSP_ICCS_CycleMgmtController extends ISSP_ICCS_ComponentController
 	public void expandCollapseFutureParticipationTable(){
 		isFutureParticipationTableExpanded = !isFutureParticipationTableExpanded;
 	}
-		
+
 	// Dedicated to Future SIs only
 	public void editSettlementInstruction(){
 		pageController.navigateToSiEdit();
 	}
-	
+
 	// Dedicated to Future and AdHoc SIs
 	public void createSettlementInstruction(){
 		pageController.navigateToSiEdit();
 	}
-	
+
 	// Dedicated to AdHoc SIs only
 	public void cloneCycleSettlementInstruction(){
 		settlementInstructionTypeParameter = ISSP_ICCS_Utils.SI_ADHOC;
 
 		pageController.navigateToSiEdit();
 	}
-	
+
 	// Dedicated to Future SIs only
 	public void deleteSettlementInstruction(){
 		pageController.resetMessage();
@@ -352,12 +352,12 @@ public class ISSP_ICCS_CycleMgmtController extends ISSP_ICCS_ComponentController
 			settlementInstruction.id = settlementInstructionIdParameter;
 			settlementInstruction.modifiedOn = modifiedOnParameter;
 			pageController.coreRest.deleteSettlementInstruction(settlementInstruction, settlementInstructionIdParameter);
-			
+
 			futureRequiresDataReset = true;
-			
+
 			settlementInstructionIdParameter = null;
 			modifiedOnParameter = null;
-			
+
 			pageController.setMessage('The Settlement Instruction has been successfully deleted.', true);
 		}
 		catch(ISSP_ICCS_CoreRest.ICCS_Exception e){

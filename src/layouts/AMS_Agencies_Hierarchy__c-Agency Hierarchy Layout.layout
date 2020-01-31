@@ -16,6 +16,10 @@
                 <behavior>Required</behavior>
                 <field>Hierarchy_Name__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Main_Account__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

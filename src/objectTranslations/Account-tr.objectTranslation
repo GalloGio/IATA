@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label>Kategori</label>
+        <name>Category__c</name>
+        <picklistValues>
+            <masterLabel>ANSP</masterLabel>
+            <translation>ANSP</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Airline Alliance</masterLabel>
+            <translation>Havayolu Birliği</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Box Office</masterLabel>
+            <translation>Gişe</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Coordinator</masterLabel>
+            <translation>Koordinatör</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Park (Theme Park)</masterLabel>
+            <translation>Park (Tema Parkı)</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Payment Provider</masterLabel>
+            <translation>Ödeme Sağlayıcısı</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Provider</masterLabel>
+            <translation>Sağlayıcı</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sightseeing</masterLabel>
+            <translation>Gezi</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Transfer Service</masterLabel>
+            <translation>Aktarma hizmeti</translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label>Sektör</label>
+        <name>Sector__c</name>
+        <picklistValues>
+            <masterLabel>Accommodation</masterLabel>
+            <translation>Konaklama</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Airline</masterLabel>
+            <translation>Havayolu</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Airline Supplier</masterLabel>
+            <translation>Havayolu Tedarikçisi</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Association</masterLabel>
+            <translation>Ortaklık</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Equipment Manufacturer</masterLabel>
+            <translation>Ekipman Üreticisi</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Financial Institution</masterLabel>
+            <translation>Finansal Kurum</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Freight Forwarder</masterLabel>
+            <translation>Taşıma İşleri Komisyoncusu</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>General Public</masterLabel>
+            <translation>Kamuoyu</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>General Sales Agent</masterLabel>
+            <translation>Genel Satış Temsilcisi</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Governmental Institution</masterLabel>
+            <translation>Devlet Kurumu</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Holding Company</masterLabel>
+            <translation>Holding</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Infrastructure Partner</masterLabel>
+            <translation>Altyapı Ortağı</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Media</masterLabel>
+            <translation>Medya</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Non-Airline Transportation</masterLabel>
+            <translation>Havayolu Dışı Ulaşım</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Recreational</masterLabel>
+            <translation>Rekreasyonel</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Training</masterLabel>
+            <translation>Eğitim</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Travel Agent</masterLabel>
+            <translation>Seyahat acentesi</translation>
+        </picklistValues>
+    </fields>
+</CustomObjectTranslation>

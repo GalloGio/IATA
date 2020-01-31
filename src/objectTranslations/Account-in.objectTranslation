@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label>Kategori</label>
+        <name>Category__c</name>
+        <picklistValues>
+            <masterLabel>ANSP</masterLabel>
+            <translation>ANSP</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Airline Alliance</masterLabel>
+            <translation>Aliansi Maskapai Penerbangan</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Box Office</masterLabel>
+            <translation>Box Office</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Coordinator</masterLabel>
+            <translation>Koordinator</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Park (Theme Park)</masterLabel>
+            <translation>Taman (Taman Bermain)</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Payment Provider</masterLabel>
+            <translation>Penyedia Pembayaran</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Provider</masterLabel>
+            <translation>Penyedia</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sightseeing</masterLabel>
+            <translation>Tamasya</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Transfer Service</masterLabel>
+            <translation>Layanan Transfer</translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label>Sektor</label>
+        <name>Sector__c</name>
+        <picklistValues>
+            <masterLabel>Accommodation</masterLabel>
+            <translation>Akomodasi</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Airline</masterLabel>
+            <translation>Maskapai penerbangan</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Airline Supplier</masterLabel>
+            <translation>Pemasok Maskapai Penerbangan</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Association</masterLabel>
+            <translation>Asosiasi</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Equipment Manufacturer</masterLabel>
+            <translation>Pabrikan Peralatan</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Financial Institution</masterLabel>
+            <translation>Lembaga Keuangan</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Freight Forwarder</masterLabel>
+            <translation>Penerus Muatan</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>General Public</masterLabel>
+            <translation>Khalayak Ramai</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>General Sales Agent</masterLabel>
+            <translation>Agen Penjualan Umum</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Governmental Institution</masterLabel>
+            <translation>Lembaga Pemerintah</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Holding Company</masterLabel>
+            <translation>Perusahaan Induk</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Infrastructure Partner</masterLabel>
+            <translation>Mitra Infrastruktur</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Media</masterLabel>
+            <translation>Media</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Non-Airline Transportation</masterLabel>
+            <translation>Transportasi Non-Maskapai Penerbangan</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Recreational</masterLabel>
+            <translation>Rekreasi</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Training</masterLabel>
+            <translation>Latihan</translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Travel Agent</masterLabel>
+            <translation>Agen Travel</translation>
+        </picklistValues>
+    </fields>
+</CustomObjectTranslation>

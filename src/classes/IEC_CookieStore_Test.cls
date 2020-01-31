@@ -1,7 +1,7 @@
 /**
 
 	Project: eCommerce Enhancements
-	   File: IEC_CookieStore_Test.cls
+		 File: IEC_CookieStore_Test.cls
 	Subject: Test Class for IEC Cookie Store Management Class.
 	History: 2017-06-20, asantos, Initial Release.
 
@@ -31,7 +31,7 @@ private class IEC_CookieStore_Test {
 		}
 
 		Test.startTest();
-		
+
 		System.runAs(user) {
 			Test.setCurrentPage(Page.IEC_ConfirmOrder);
 
@@ -58,7 +58,7 @@ private class IEC_CookieStore_Test {
 			System.assert(readContent.equals(sampleContentBig), 'Content is not the same: expecting \'' + sampleContentBig + '\', got \'' + readContent + '\'');
 
 			cookieStore.storeContent(sampleContentSmall);
-			
+
 			readContent = cookieStore.retrieveContent();
 
 			System.assert(readContent.equals(sampleContentSmall), 'Content is not the same: expecting \'' + sampleContentSmall + '\', got \'' + readContent + '\'');

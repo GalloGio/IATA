@@ -28,9 +28,9 @@ public class IDCardCheckUserAdminOrAutomatedProcess extends TriggerAction {
 
 			if (profileName[0].name.toLowerCase() != 'restricted profile - automated process' && !profileName[0].name.containsIgnoreCase('system administrator')){
 
-                if(idcard.Received_From_AIMS__c == null)
-                    idcard.addError(Label.Card_can_t_be_updated);
-            }
+				if(idcard.Received_From_AIMS__c == null)
+					idcard.addError(Label.Card_can_t_be_updated);
+			}
 		}
 	}
 }

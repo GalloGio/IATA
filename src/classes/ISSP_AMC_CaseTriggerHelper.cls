@@ -1,5 +1,5 @@
 public with sharing class ISSP_AMC_CaseTriggerHelper {
-	
+
 	public static void isOwnerChanged() {
 		Map<Id, Case> oldMap = (Map<Id, Case>)Trigger.oldMap;
 		Id airlineRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Airline_Coding_Application');
@@ -19,7 +19,7 @@ public with sharing class ISSP_AMC_CaseTriggerHelper {
 
 		if(!caseIdsWithNewOwners.isEmpty()){
 			List <IATA_Process_Orchestrator__c> orchestrators = new List <IATA_Process_Orchestrator__c>([SELECT Id, Associated_Case__c
-																										 FROM 	IATA_Process_Orchestrator__c 
+																										 FROM 	IATA_Process_Orchestrator__c
 																										 WHERE 	Associated_Case__c IN :caseIdsWithNewOwners.keySet()]);
 
 			if(!orchestrators.isEmpty()){

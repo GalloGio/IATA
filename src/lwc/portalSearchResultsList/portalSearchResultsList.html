@@ -1,0 +1,100 @@
+<template>
+
+    <div if:true={showComponent} class="background-anotherGray">
+
+        <span slot="cardBody">
+
+            <div if:true={filteringObject.faqsComponent.loading} class="spinnerContainer">
+                <lightning-spinner class="background-white" alternative-text="Loading"></lightning-spinner>
+            </div>
+            <div if:false={filteringObject.faqsComponent.loading}>
+                <div if:true={viewResults}>
+                    <div if:false={menuSearch} class="slds-grid slds-wrap slds-p-vertical_medium slds-is-relative show-results-card slds-grid--vertical-stretch">
+                        <template for:each={resultsList2} for:item="article">
+                            <div key={article.Id} class="slds-cold slds-size_1-of-1 slds-small-size_1-of-2 slds-medium-size_1-of-3 slds-is-relative">
+                                <div class="slds-grid slds-gutters slds-p-around_medium slds-is-relative slds-m-around_xx-small customCardWhite search-result-card" data-item={article.Id} data-url={article.url} onclick={renderArticle}>
+                                    <div name="bg-box" class={article.class}></div>
+                                    <div class="slds-col slds-size_5-of-6 slds-hover slds-p-horizontal_none" data-item={article.Id} data-url={article.url} data-category={article.category} onclick={renderArticle}>
+                                        <div class="text-black" data-item={article.Id} data-url={article.url} data-category={article.category} onclick={renderArticle}><span class="slds-grey_box-label slds-p-around_xx-small" data-item={article.Id} data-url={article.url} onclick={renderArticle}>{article.category}</span></div>
+                                        <div if:true={article.title}>
+                                            <div if:true={article.description}> 
+                                                <h2 class="cursorPointer slds-m-top_small slds-m-top_x-small slds-truncate" data-item={article.Id} data-url={article.url} data-category={article.category} onclick={renderArticle} title={article.title}>{article.title}</h2>
+                                                <p class="cursorPointer slds-truncate" data-item={article.Id} data-url={article.url} data-category={article.category} onclick={renderArticle} title={article.description}>{article.description}</p>
+                                            </div>
+                                            <div if:false={article.description}> 
+                                                <h2 class="cursorPointer slds-m-top_small slds-m-top_x-small slds-truncate-twolines" data-item={article.Id} data-url={article.url} data-category={article.category} onclick={renderArticle} title={article.title}>{article.title}</h2>
+                                            </div>
+                                        </div>
+                                        <div if:true={article.description}>
+                                            <div if:false={article.title}>
+                                                <p class="cursorPointer slds-truncate-twolines" data-item={article.Id} data-url={article.url} data-category={article.category} onclick={renderArticle} title={article.description}>{article.description}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-6 slds-align_absolute-center" data-item={article.Id} data-url={article.url} data-category={article.category} onclick={renderArticle}>
+                                        <lightning-button icon-name="utility:forward" size="x-small"
+                                            class="baseButton newLinkButton buttonMinHeightMedium text-xsmall fullWidth cursorPointer" data-item={article.Id} data-url={article.url} data-category={article.category} onclick={renderArticle}>
+                                        </lightning-button>
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                    <div if:true={menuSearch} class="slds-grid slds-wrap slds-grid_vertical slds-is-relative show-results-card">
+                        <template for:each={resultsList2} for:item="article">
+                            <div key={article.Id} class="slds-col slds-size_1-of-1 slds-is-relative">
+                                <div class="slds-grid slds-p-vertical_medium slds-p-left_large slds-is-relative slds-border_top customCardWhite search-result-card" data-item={article.Id} data-url={article.url} onclick={renderArticle}>
+                                    <div name="bg-box-2" class={article.class}></div>
+                                    <div class="slds-col slds-size_10-of-12 slds-hover" data-item={article.Id} data-url={article.url} data-category={article.category} onclick={renderArticle}>
+                                        <div class="text-black" data-item={article.Id} data-url={article.url} data-category={article.category} onclick={renderArticle}><span class="slds-grey_box-label slds-p-around_xx-small" data-item={article.Id} data-url={article.url} onclick={renderArticle}>{article.category}</span></div>
+                                        <div if:true={article.title}>
+                                            <div if:true={article.description}> 
+                                                <h2 class="cursorPointer slds-m-top_small slds-m-top_x-small slds-truncate" data-item={article.Id} data-url={article.url} data-category={article.category} onclick={renderArticle} title={article.title}>{article.title}</h2>
+                                                <p class="cursorPointer slds-truncate" data-item={article.Id} data-url={article.url} data-category={article.category} onclick={renderArticle} title={article.description}>{article.description}</p>
+                                            </div>
+                                            <div if:false={article.description}> 
+                                                <h2 class="cursorPointer slds-m-top_small slds-m-top_x-small slds-truncate-twolines" data-item={article.Id} data-url={article.url} data-category={article.category} onclick={renderArticle} title={article.title}>{article.title}</h2>
+                                            </div>
+                                        </div>
+                                        <div if:true={article.description}>
+                                            <div if:false={article.title}>
+                                                <p class="cursorPointer slds-truncate-twolines" data-item={article.Id} data-url={article.url} data-category={article.category} onclick={renderArticle} title={article.description}>{article.description}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-size_2-of-12 slds-align_absolute-center slds-text-align_right" data-item={article.Id} data-url={article.url} data-category={article.category} onclick={renderArticle}>
+                                        <lightning-button icon-name="utility:forward" size="x-small"
+                                            class="baseButton newLinkButton buttonMinHeightMedium text-xsmall fullWidth cursorPointer" data-item={article.Id} data-url={article.url} data-category={article.category} onclick={renderArticle}>
+                                        </lightning-button>
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+                        <div class="seeMore slds-col slds-size_1-of-1 slds-align_absolute-center background-white text-blue">
+                            <span if:true={filteringObject.advancedSearch}
+                                title={label.ISSP_See_more} 
+                                onclick={goToAdvancedSearch}>{label.ISSP_See_more}
+                            </span>
+                        </div>
+                    </div>
+                    <div if:true={loadingMoreResults} class="spinnerContainer">
+                        <lightning-spinner class="background-white" alternative-text="Loading"></lightning-spinner>
+                    </div>
+                </div>
+                <div if:false={viewResults}>
+                    <div if:false={menuSearch}
+                        class="slds-p-vertical_small slds-text-align_center text-small text-bold text-linkBlue">
+                        {label.CSP_NoSearchResults}
+                    </div>
+                    <div if:true={menuSearch}
+                        class="slds-p-vertical_small slds-text-align_center text-small text-bold text-linkBlue background-white">
+                        {label.CSP_NoSearchResults}
+                    </div>
+                </div>
+
+            </div>
+        </span>
+
+    </div>
+
+</template>

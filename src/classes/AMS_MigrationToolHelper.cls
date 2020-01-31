@@ -1,18 +1,19 @@
 public without sharing class AMS_MigrationToolHelper {
 	// this class is responsible for migrating Portal SAAM cases and SAAM cases that need to be converted into Comunication Cases (w/ AMS_OSCAR__c objects)
-	
+
 	final static ID rtCommCase = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
 	private static final Set<String> newgenProcesses = new Set<String>{'ANG.MAJOR.CHANGES.1.0','VR.1.0','CER.1.0','CORRECTION.1.0','BANK.ACCOUNT.CHANGES','NGFormsOfPayment','ANG_FS_OPTINOUT','ANG.NEW.HE.LITE.1.0','ANG.NEW.AE.1.0','ANG.NEW.HE.STANDARD.1.0'};
 
 	private static final Set<String> doesNotNeedStagingAreaProcesses = new Set<String>{'VR.1.0','VR.1.0.CA','CER.1.0',AMS_Utils.NGOPTINOUT,AMS_Utils.NGFOP,AMS_Utils.BANKACCCHANGES, AMS_RecordCreatorWebservice.IEP_MODEL_A_ACCOUNT_SETUP, AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP, AMS_RecordCreatorWebservice.IEP_MODEL_B_ACCOUNT_SETUP, AMS_RecordCreatorWebservice.IEP_MODEL_B_PLUS_ACCOUNT_SETUP, AMS_Utils.NGGDI};
-	
+
 		public static Map<String,String> newgenCaseReason{
 		get{
-            return new Map<String, String> {
+			return new Map<String, String> {
 			AMS_Utils.NEWHELITE => 'New HE lite',
 			AMS_Utils.NEWHESTANDARD => 'New HE standard',
 			AMS_Utils.NEWAE => 'New AE',
+			AMS_Utils.MCAE => 'New AE Multicountry',
 			AMS_Utils.NGCHANGES => 'Agency changes',
 			AMS_Utils.NGCORRECTION => 'Corrections',
 			AMS_Utils.CERTIFICATION => 'PAX/CARGO Certificate',
@@ -33,13 +34,14 @@ public without sharing class AMS_MigrationToolHelper {
 	public static Map<String, Id> oscarNewgenRTMap {
 
 		get{
-            return new Map<String, String> {
+			return new Map<String, String> {
 			'ANG.MAJOR.CHANGES.1.0' => AMS_Utils.RECTYPE_NGCHANGES,
 			'CORRECTION.1.0' => AMS_Utils.RECTYPE_NGCORRECTION,
 			'ANG.FOPMANAGEMENT.1.0' => AMS_Utils.RECTYPE_NEWGENFOP,
 			'ANG.FS.OPTINOUT' => AMS_Utils.RECTYPE_NEWGENOPTINOUT,
 			'ANG.NEW.HE.LITE.1.0' => AMS_Utils.RECTYPE_NEWHE,
 			'ANG.NEW.AE.1.0' => AMS_Utils.RECTYPE_NEWAE,
+			'ANG.MULTICOUNTRY.AE.1.0' => AMS_Utils.RECTYPE_MCAE,
 			'ANG.NEW.HE.STANDARD.1.0' => AMS_Utils.RECTYPE_NEWHE,
 			AMS_RecordCreatorWebservice.IEP_MODEL_A_ACCOUNT_SETUP =>  AMS_Utils.RECTYPE_IEPMODELA,
 			AMS_RecordCreatorWebservice.IEP_MODEL_B_ACCOUNT_SETUP =>  AMS_Utils.RECTYPE_IEPMODELB,
@@ -51,9 +53,9 @@ public without sharing class AMS_MigrationToolHelper {
 		set;
 	}
 
-    public static Map<String, String> processTypeMapNewgen {
-        get {
-            return new Map<String, String> {
+	public static Map<String, String> processTypeMapNewgen {
+		get {
+			return new Map<String, String> {
 			'Change of Hierarchy' => 'ANG.MAJOR.CHANGES.1.0',
 			'CHN - Change of Name' => 'ANG.MAJOR.CHANGES.1.0',
 			'CHO / CHS – Change of Ownership / Legal Status' => 'ANG.MAJOR.CHANGES.1.0',
@@ -75,25 +77,26 @@ public without sharing class AMS_MigrationToolHelper {
 			'Financial review opt-in / opt-out' => 'ANG.FS.OPTINOUT',
 			'New HE lite' => 'ANG.NEW.HE.LITE.1.0',
 			'New AE' => 'ANG.NEW.AE.1.0',
+			'New AE Multicountry' => 'ANG.MULTICOUNTRY.AE.1.0',
 			'New HE standard' => 'ANG.NEW.HE.STANDARD.1.0'
-            };
-        }
-        set;
-    }
+			};
+		}
+		set;
+	}
 
-    private static Map<String, String> processTypeMap {
-        get {
-            return new Map<String, String> {
-		    'New BR / IP' => 'NEW.BR',
+	private static Map<String, String> processTypeMap {
+		get {
+			return new Map<String, String> {
+			'New BR / IP' => 'NEW.BR',
 			'New BR Abroad' => 'NEW.BR.ABROAD',
 			'New HO' => 'NEW.HO.1.0',
 			'Manage Changes / Major' => 'MAJOR.CHANGES',
 			'CHL - Change of Location' => 'MAJOR.CHANGES',
-            'CHO / CHS – Change of Ownership / Legal Status' => 'MAJOR.CHANGES',
-            'CHN - Change of Name' => 'MAJOR.CHANGES',
-            'CHC – Change of Shareholding' => 'MAJOR.CHANGES',
-            'New SA / CHV – New Code' => 'NEW.SA.1.0',
-            'VMFR Setup/Update' => 'MAJOR.CHANGES',
+			'CHO / CHS – Change of Ownership / Legal Status' => 'MAJOR.CHANGES',
+			'CHN - Change of Name' => 'MAJOR.CHANGES',
+			'CHC – Change of Shareholding' => 'MAJOR.CHANGES',
+			'New SA / CHV – New Code' => 'NEW.SA.1.0',
+			'VMFR Setup/Update' => 'MAJOR.CHANGES',
 			'TIDS' => 'NEW.TIDS.1.0',
 			'ERSP' => 'CORRECTION.1.0',
 			'Certificate DGR' => 'CERTIFICATION.1.0',
@@ -101,10 +104,10 @@ public without sharing class AMS_MigrationToolHelper {
 			'ID Card' => 'VR.1.0.CA',
 			'Operational changes' => 'VR.1.0.CA',
 			'PAX/CARGO Certificate' => 'CER.1.0'
-            };
-        }
-        set;
-    }
+			};
+		}
+		set;
+	}
 
 
 	public static CaseContainer migratecases(CaseContainer cont, String processType){
@@ -184,7 +187,7 @@ public without sharing class AMS_MigrationToolHelper {
 				if(contact.Company__c != null && contact.Company__c == role.Owner_Account__c){
 					contact.AMS_Ownership_Role__c = role.Id;
 
-					if(contact.Contact__c == null && contact.Person_AMS__c == null && contact.Email__c != null && contactsFromAccountToMatch.get(contact.Email__c) != null){ // try to match the Accreditation Contact with an existing contact from the Account.				
+					if(contact.Contact__c == null && contact.Person_AMS__c == null && contact.Email__c != null && contactsFromAccountToMatch.get(contact.Email__c) != null){ // try to match the Accreditation Contact with an existing contact from the Account.
 						contact.Contact__c = contactsFromAccountToMatch.get(contact.Email__c);
 					}
 
@@ -196,7 +199,7 @@ public without sharing class AMS_MigrationToolHelper {
 				if(contact.Legacy_External_Id__c != null && contact.Legacy_External_Id__c == role.Legacy_External_ID__c){
 					contact.AMS_Ownership_Role__c = role.Id;
 
-					if(contact.Contact__c == null && contact.Person_AMS__c == null && contact.Email__c != null && contactsFromAccountToMatch.get(contact.Email__c) != null){ // try to match the Accreditation Contact with an existing contact from the Account.				
+					if(contact.Contact__c == null && contact.Person_AMS__c == null && contact.Email__c != null && contactsFromAccountToMatch.get(contact.Email__c) != null){ // try to match the Accreditation Contact with an existing contact from the Account.
 						contact.Contact__c = contactsFromAccountToMatch.get(contact.Email__c);
 					}
 
@@ -209,7 +212,7 @@ public without sharing class AMS_MigrationToolHelper {
 					if(contact.Name == role.Owner_Name__c){
 						contact.AMS_Ownership_Role__c = role.Id;
 
-						if(contact.Contact__c == null && contact.Person_AMS__c == null && contact.Email__c != null && contactsFromAccountToMatch.get(contact.Email__c) != null){ // try to match the Accreditation Contact with an existing contact from the Account.				
+						if(contact.Contact__c == null && contact.Person_AMS__c == null && contact.Email__c != null && contactsFromAccountToMatch.get(contact.Email__c) != null){ // try to match the Accreditation Contact with an existing contact from the Account.
 							contact.Contact__c = contactsFromAccountToMatch.get(contact.Email__c);
 						}
 
@@ -221,7 +224,7 @@ public without sharing class AMS_MigrationToolHelper {
 			}
 
 			// if a contact does not have a match in the AMS Account Role, we still might have to attach it to a Contact (that's why we are using that contactsUpdated set ....)
-			if(!contactsUpdated.contains(Contact.Id) && contact.Contact__c == null && contact.Person_AMS__c == null && contact.Email__c != null && contactsFromAccountToMatch.get(contact.Email__c) != null){ // try to match the Accreditation Contact with an existing contact from the Account.				
+			if(!contactsUpdated.contains(Contact.Id) && contact.Contact__c == null && contact.Person_AMS__c == null && contact.Email__c != null && contactsFromAccountToMatch.get(contact.Email__c) != null){ // try to match the Accreditation Contact with an existing contact from the Account.
 				contact.Contact__c = contactsFromAccountToMatch.get(contact.Email__c);
 				contactsToUpdate.add(contact);
 				contactsUpdated.add(contact.Id);
@@ -232,7 +235,7 @@ public without sharing class AMS_MigrationToolHelper {
 		// now for the regular non owners contacts, if they are missing a contact and they have an email, let's try to match them so we can avoid contact duplication
 
 		for(AMS_Accreditation_Contact__c nonOwnerC : [SELECT Id, Email__c, Legacy_External_ID__c, AMS_Ownership_Role__c, Contact__c, Person_AMS__c,   Company__c, Name from AMS_Accreditation_Contact__c where AMS_Pax_Accreditation_Form__c = :accreditationObj.Id and AMS_Ownership_Role__c = null and Agency_owner__c = false and Email__c != null and Contact__c = null and Person_AMS__c = null and Financial_interest__c = null]){
-				
+
 				if(contactsFromAccountToMatch.get(nonOwnerC.Email__c) != null){
 					nonOwnerC.Contact__c = contactsFromAccountToMatch.get(nonOwnerC.Email__c);
 					contactsToUpdate.add(nonOwnerC);
@@ -258,7 +261,7 @@ public without sharing class AMS_MigrationToolHelper {
 		Id caseId = caseIn.Id;
 
 
-		if(processType == AMS_Utils.NEWAE){
+		if(processType == AMS_Utils.NEWAE || processType == AMS_Utils.MCAE){
 			accreditationObj.Remittance_frequency__c = caseIn.Account.Parent.Remittance_frequency__c;
 			accreditationObj.TradeName__c = caseIn.Account.TradeName__c;
 			accreditationObj.Trade_Name__c = caseIn.Account.TradeName__c;
@@ -287,7 +290,7 @@ public without sharing class AMS_MigrationToolHelper {
 		}
 		else
 			acct = directAccount;
-		
+
 		accreditationObj = fillAccreditation(accreditationObj, acct, directAccount, processType, caseId);
 
 		return accreditationObj;
@@ -299,7 +302,7 @@ public without sharing class AMS_MigrationToolHelper {
 		Case caseToProcess = cont.c;
 
 		String processType;
-		
+
 		if(!caseToProcess.Account.ANG_IsNewGenAgency__c)
 			processType = processTypeInput == null ? processTypeMap.get(caseToProcess.Reason1__c):processTypeInput;
 		else
@@ -310,7 +313,7 @@ public without sharing class AMS_MigrationToolHelper {
 			cont.migrated = true;
 			cont.processing = false;
 			cont.errorMessage = 'Could not match case  reason from case ('+caseToProcess.Reason1__c+') with type of process to be run.';
-			
+
 			return cont;
 		}
 
@@ -318,13 +321,13 @@ public without sharing class AMS_MigrationToolHelper {
 
 		String caseStatus = caseToProcess.Status;
 
-        update caseToProcess;
+		update caseToProcess;
 
-        String oscarId = '';
+		String oscarId = '';
 
-        AMS_Pax_Accreditation_Form__c accreditationObj = null;
-        
-        if(!doesNotNeedStagingAreaProcesses.contains(processType)){
+		AMS_Pax_Accreditation_Form__c accreditationObj = null;
+
+		if(!doesNotNeedStagingAreaProcesses.contains(processType)){
 
 			accreditationObj = fetchAccreditation(caseToProcess.Id);
 
@@ -349,8 +352,8 @@ public without sharing class AMS_MigrationToolHelper {
 
 			if(processType.equalsIgnoreCase('ANG.FS.OPTINOUT')){
 
-            	oscar.ANG_FA_Opt_out__c = caseToProcess.Account.ANG_FA_Opt_out__c == true ? 'Opt-In' : 'Opt-Out';
-        	}
+				oscar.ANG_FA_Opt_out__c = caseToProcess.Account.ANG_FA_Opt_out__c == true ? 'Opt-In' : 'Opt-Out';
+			}
 
 			insert oscar;
 
@@ -362,8 +365,8 @@ public without sharing class AMS_MigrationToolHelper {
 
 				caseToProcess.CaseArea__c = 'Accreditation Process';
 				caseToProcess.Reason1__c = newgenCaseReason.get(processType);
-			}	
-			
+			}
+
 			if(AMS_Utils.IEP_PROCESSES.contains(processType)){
 
 				if(caseToProcess.Account.ANG_IsNewGenAgency__c){
@@ -372,7 +375,7 @@ public without sharing class AMS_MigrationToolHelper {
 					caseToProcess.Subject = caseToProcess.Reason1__c+' - '+caseToProcess.Account.Name;
 				}
 			}
-						
+
 			update caseToProcess;
 		}
 
@@ -387,12 +390,12 @@ public without sharing class AMS_MigrationToolHelper {
 		cont.migrated = true;
 
 		if(processType != 'VR.1.0' && processType != 'VR.1.0.CA' && processType != 'CER.1.0' && accreditationObj.IATACode__c == null && caseToProcess.Account.IATACode__c != null){
-			
+
 			accreditationObj.IATACode__c = caseToProcess.Account.IATACode__c;
 
 			update accreditationObj;
-		}else if(processType == AMS_Utils.NEWAE){
-			update accreditationObj;		   
+		}else if(processType == AMS_Utils.NEWAE || processType == AMS_Utils.MCAE){
+			update accreditationObj;
 		}
 
 		return cont;
@@ -476,7 +479,7 @@ public without sharing class AMS_MigrationToolHelper {
 		accreditationObj.Abbreviated_name__c = accreditationObj.Abbreviated_name__c == null ? directAccount.Abbreviated_name__c : accreditationObj.Abbreviated_name__c;
 		accreditationObj.Accept_terms_and_conditions__c = accreditationObj.Accept_terms_and_conditions__c == null ? true : accreditationObj.Accept_terms_and_conditions__c;
 		accreditationObj.Account_Name__c = accreditationObj.Account_Name__c == null ? acct.Name : accreditationObj.Account_Name__c;
-		
+
 		accreditationObj.Branch_Office_Email__c = accreditationObj.Branch_Office_Email__c == null ? directAccount.Email__c : accreditationObj.Branch_Office_Email__c;
 		accreditationObj.Branch_Office_FAX__c = accreditationObj.Branch_Office_FAX__c == null ? directAccount.Fax : accreditationObj.Branch_Office_FAX__c;
 		accreditationObj.Branch_Office_Phone__c = accreditationObj.Branch_Office_Phone__c == null ? directAccount.Phone : accreditationObj.Branch_Office_Phone__c;
@@ -494,10 +497,10 @@ public without sharing class AMS_MigrationToolHelper {
 		accreditationObj.Operation__c = accreditationObj.Operation__c == null ? directAccount.Operation__c : accreditationObj.Operation__c;
 		accreditationObj.RecordTypeId = accreditationObj.RecordTypeId == null ? fetchAccreditationRT(acct.Location_Class__c,processType) : accreditationObj.RecordTypeId;
 		accreditationObj.Remittance_frequency__c = accreditationObj.Remittance_frequency__c == null ? directAccount.Remittance_frequency__c : accreditationObj.Remittance_frequency__c;
-		
+
 		if(accreditationObj.SAAM_Case__c == null)
 			accreditationObj.SAAM_Case__c = caseId;
-		
+
 
 		accreditationObj.Short_Name__c = accreditationObj.Short_Name__c == null ? directAccount.Short_Name__c : accreditationObj.Short_Name__c;
 		accreditationObj.Solicitation_Flag__c = accreditationObj.Solicitation_Flag__c == null ? directAccount.Solicitation_Flag__c : accreditationObj.Solicitation_Flag__c;
@@ -506,46 +509,46 @@ public without sharing class AMS_MigrationToolHelper {
 		accreditationObj.VAT_Number_2__c = accreditationObj.VAT_Number_2__c == null ? acct.VAT_Number_2__c : accreditationObj.VAT_Number_2__c;
 		accreditationObj.Website__c = accreditationObj.Website__c == null ? acct.Website : accreditationObj.Website__c;
 
-		if(processType == AMS_Utils.NEWAE){
+		if(processType == AMS_Utils.NEWAE || processType == AMS_Utils.MCAE){
 			accreditationObj.ANG_Accreditation_type__c = acct.ANG_Accreditation_Model__c;
 		}
-		
+
 		return accreditationObj;
 	}
 
 	/**
-    Method to help decode the transformation between Specify Legal Status (AMS Online Accreditation) and Company Type (Acccount) in migrations
-    */
+	Method to help decode the transformation between Specify Legal Status (AMS Online Accreditation) and Company Type (Acccount) in migrations
+	*/
 
 	public static String decode(String companyType) {
 
 		if (companyType == null)
-        return null;
+		return null;
 
-    	if (companyType.equalsIgnoreCase('A'))
-        return 'Association';
-    	if (companyType.equalsIgnoreCase('C'))
-        return 'Corporation';
-    	if (companyType.equalsIgnoreCase('E'))
-        return 'State Owned Enterprise';
-    	if (companyType.equalsIgnoreCase('J'))
-        return 'Joint Venture';
-    	if (companyType.equalsIgnoreCase('L'))
-        return 'Limited Company';
-    	if (companyType.equalsIgnoreCase('O'))
-        return 'Other';
-    	if (companyType.equalsIgnoreCase('P'))
-        return 'Partnership';
-    	if (companyType.equalsIgnoreCase('R'))
-        return 'Limited Partnership';
-    	if (companyType.equalsIgnoreCase('S'))
-        return 'Sole Proprietorship';
-    	if (companyType.equalsIgnoreCase('T'))
-        return 'Trust Company';
-    	if (companyType.equalsIgnoreCase('V'))
-        return 'Co-operative';
+		if (companyType.equalsIgnoreCase('A'))
+		return 'Association';
+		if (companyType.equalsIgnoreCase('C'))
+		return 'Corporation';
+		if (companyType.equalsIgnoreCase('E'))
+		return 'State Owned Enterprise';
+		if (companyType.equalsIgnoreCase('J'))
+		return 'Joint Venture';
+		if (companyType.equalsIgnoreCase('L'))
+		return 'Limited Company';
+		if (companyType.equalsIgnoreCase('O'))
+		return 'Other';
+		if (companyType.equalsIgnoreCase('P'))
+		return 'Partnership';
+		if (companyType.equalsIgnoreCase('R'))
+		return 'Limited Partnership';
+		if (companyType.equalsIgnoreCase('S'))
+		return 'Sole Proprietorship';
+		if (companyType.equalsIgnoreCase('T'))
+		return 'Trust Company';
+		if (companyType.equalsIgnoreCase('V'))
+		return 'Co-operative';
 
-    return null;
+	return null;
 	}
 
 	private static AMS_Pax_Accreditation_Form__c createAccreditation(String caseId, String accountId, String processType){
@@ -562,7 +565,7 @@ public without sharing class AMS_MigrationToolHelper {
 		if( (processType != 'NEW.TIDS.1.0' && processType != 'CORRECTION.1.0' ) && (directAccount.Location_Type__c == 'BR' || directAccount.Location_Type__c == 'SA' || directAccount.Location_Type__c == 'AE')){
 
 			List<Account> parentAccountLst = [SELECT Id, ParentId , Abbreviated_address__c,Abbreviated_name__c,Name,BillingState,BillingCity,IATA_ISO_Country__c,Email__c,Fax,Phone,BillingPostalCode,BillingStreet,CASS_Number__c,IATACode__c,Iso_State__c,GDS__c,Company_Type__c,License_Number__c,In_a_Airport__c,VAT_Number__c,Is_your_firm_handling_Dangerous_Goods__c,Location_Class__c,Location_Type__c,Mobile__c,Operation__c,Remittance_frequency__c,ShippingCity,ShippingCountry,IATA_ISO_Shipping_Country__c,IATA_ISO_Shipping_State__c,ShippingPostalCode,ShippingState,ShippingStreet,Short_Name__c,Solicitation_Flag__c,TradeName__c,VAT_Number_2__c,Website,ANG_Accreditation_Model__c from Account where Id = :directAccount.ParentId ];
-		
+
 			if(parentAccountLst.isEmpty())
 				return null;
 
@@ -571,19 +574,19 @@ public without sharing class AMS_MigrationToolHelper {
 		}
 		else
 			acct = directAccount;
-		
+
 		AMS_Pax_Accreditation_Form__c accreditationObj = new AMS_Pax_Accreditation_Form__c();
 
 		accreditationObj = fillAccreditation(accreditationObj, acct, directAccount, processType, caseId);
 
-		if(processType == AMS_Utils.NEWAE){
+		if(processType == AMS_Utils.NEWAE || processType == AMS_Utils.MCAE){
 			accreditationObj.Remittance_frequency__c = acct.Remittance_frequency__c;
 			accreditationObj.TradeName__c = acct.TradeName__c;
 			accreditationObj.Trade_Name__c = acct.TradeName__c;
 		}
-	
+
 		insert accreditationObj;
-		
+
 		return accreditationObj;
 	}
 
@@ -600,8 +603,8 @@ public without sharing class AMS_MigrationToolHelper {
 		contact.Contact__c = role.Contact__c;
 		contact.Email__c = role.Contact_Email__c;
 		contact.Financial_interest__c = role.Percentage__c;
-		contact.First_name__c = role.Contact__c != null ? role.Contact__r.FirstName : ( role.Person__c != null ? role.Person__r.First_name__c : ''); 
-		contact.Last_name__c = (role.Contact__c == null && role.Person__c == null && role.Owner_Account__c == null) ? role.Owner_Name__c : ( role.Contact__c != null ? role.Contact__r.LastName : ( role.Person__c != null ? role.Person__r.Lastname__c : '_')); 
+		contact.First_name__c = role.Contact__c != null ? role.Contact__r.FirstName : ( role.Person__c != null ? role.Person__r.First_name__c : '');
+		contact.Last_name__c = (role.Contact__c == null && role.Person__c == null && role.Owner_Account__c == null) ? role.Owner_Name__c : ( role.Contact__c != null ? role.Contact__r.LastName : ( role.Person__c != null ? role.Person__r.Lastname__c : '_'));
 		contact.Legacy_External_Id__c = role.Legacy_External_ID__c;
 		contact.Name = role.Owner_Name__c != null ? role.Owner_Name__c : (contact.First_name__c + contact.Last_name__c);
 		contact.Person_AMS__c = role.Person__c;
@@ -623,7 +626,7 @@ public without sharing class AMS_MigrationToolHelper {
 		List<AMS_Accreditation_Contact__c> contactsToReturn = new List<AMS_Accreditation_Contact__c>();
 
 		List<AMS_Account_Role__c> allAccountRoles = new List<AMS_Account_Role__c>();
-		
+
 		allAccountRoles = [SELECT Id, RecordTypeId, Contact_Phone__c, Contact_Email__c, Termination_Date__c, Duty__c, Hours__c, IsManager__c, Percentage__c, Position__c, Account__c, Owner_Account__c, Contact__c, Contact__r.FirstName , Contact__r.LastName, Person__c, Person__r.First_Name__c , Person__r.Lastname__c , Person__r.Contact__c,Person__r.Contact__r.FirstName, Person__r.Contact__r.LastName, Legacy_External_ID__c, Legacy_System__c, Owner_Name__c from AMS_Account_role__c where Account__c = :accountId and Active__c = true];
 
 		for(AMS_Account_Role__c role: allAccountRoles){
@@ -638,7 +641,7 @@ public without sharing class AMS_MigrationToolHelper {
 	}
 
 	private static AMS_OSCAR__c updateDatesFromSAAM(AMS_OSCAR__c oscar, String caseId){
-		
+
 		List<Case> cases = [SELECT id, Proof_of_payment_requested__c, Financial_Assessment_compliant__c,Reason_for_change_of_Financial_result__c, Documentation_Complete__c, Financial_Assessment_received__c,Bank_Guarantee_amount__c,Bank_Guarantee_deadline__c,Bank_Guarantee_received__c,Bank_Guarantee_requested__c,Change_effective_as_of__c,Criteria_remarks__c,Documentation_remarks__c,Dossier_reception_date__c,Fees_refund_requested__c,Finalization_checklist__c,Financial_Assessment_deadline__c,Financial_Assessment_requested__c,Financial_Review_Result__c,Invoice_number__c,Local_Inspection_compliant__c,Local_Inspection_deadline__c,Local_Inspection_received__c,Local_Inspection_requested__c,Process_Start_Date__c,Proof_of_payment_received__c,PSAA_EACP_Agreement_received__c,PSAA_signed_copy_sent__c,SAAM_Deadline_Date__c,AIMS_updated__c,Finalized_in_AIMS__c from Case where Id = :caseId];
 
 		if(cases.isEmpty())
@@ -649,7 +652,7 @@ public without sharing class AMS_MigrationToolHelper {
 		try{
 			if(saamCase.Bank_Guarantee_amount__c != null)
 				oscar.Bank_Guarantee_amount__c = Integer.valueof(saamCase.Bank_Guarantee_amount__c);
-		
+
 		}catch(Exception e){
 			// shhhhhhhhhhhhhhh ...
 		}
@@ -738,11 +741,11 @@ public without sharing class AMS_MigrationToolHelper {
 	private static CaseContainer processNotFromPortalNew(CaseContainer cont, String processTypeInput){
 
 		Case caseToProcess = cont.c;
-		
+
 		boolean isNewgenAccount = caseToProcess.Account.ANG_IsNewGenAgency__c;
 
 		String processType;
-		
+
 		if(!isNewgenAccount)
 			processType = processTypeInput == null ? processTypeMap.get(caseToProcess.Reason1__c):processTypeInput;
 		else
@@ -753,7 +756,7 @@ public without sharing class AMS_MigrationToolHelper {
 			cont.migrated = true;
 			cont.processing = false;
 			cont.errorMessage = 'Could not match case reason from case ('+caseToProcess.Reason1__c+') with type of process to be run.';
-			
+
 			return cont;
 		}
 
@@ -767,20 +770,20 @@ public without sharing class AMS_MigrationToolHelper {
 			caseToProcess.Subject = caseToProcess.Reason1__c +(isNewgenAccount ? ' - ' + caseToProcess.Account.ANG_Accreditation_Model__c : '')+ ' - ' + caseToProcess.Account.Name;
 		}
 
-        update caseToProcess;
+		update caseToProcess;
 
-        AMS_Pax_Accreditation_Form__c accreditationObj = null;
+		AMS_Pax_Accreditation_Form__c accreditationObj = null;
 
 		if(!doesNotNeedStagingAreaProcesses.contains(processType) ){
-        
-	        accreditationObj = createAccreditation(caseToProcess.Id,caseToProcess.AccountId,processType);
 
-	        if(accreditationObj == null){
+			accreditationObj = createAccreditation(caseToProcess.Id,caseToProcess.AccountId,processType);
+
+			if(accreditationObj == null){
 
 				cont.migrated = true;
 				cont.processing = false;
 				cont.errorMessage = 'Could not create the accreditation object - please check the logs for more information.';
-				
+
 				return cont;
 			}
 
@@ -790,12 +793,12 @@ public without sharing class AMS_MigrationToolHelper {
 
 			List<AMS_Accreditation_Contact__c> contacts;
 
-			if(processType == AMS_Utils.NEWAE)
+			if(processType == AMS_Utils.NEWAE || processType == AMS_Utils.MCAE)
 				contacts = createAccreditationContacts(accreditationObj,caseToProcess.Account.ParentId,processType);
 			else
 				contacts = createAccreditationContacts(accreditationObj,caseToProcess.AccountId,processType);
 		}
-			
+
 
 		String oscarId = null;
 
@@ -809,43 +812,43 @@ public without sharing class AMS_MigrationToolHelper {
 			Id oscarRTId = null;
 
 
-            if(isNewgenAccount || (( AMS_Utils.IEP_PROCESSES.contains(processType) || processType == AMS_Utils.NGGDI ) && oscarNewgenRTMap.containsKey(processType)) )
+			if(isNewgenAccount || (( AMS_Utils.IEP_PROCESSES.contains(processType) || processType == AMS_Utils.NGGDI ) && oscarNewgenRTMap.containsKey(processType)) )
 				oscarRTId = oscarNewgenRTMap.get(processType);
 
-            if(processType == 'VR.1.0' || processType == 'VR.1.0.CA')
-                oscarRTId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'VOLUNTARY_RELINQUISHMENT');
-            if(processType == 'CER.1.0')
-                oscarRTId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CERTIFICATE');
-            if(processType == AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP || processType == 'BANK.ACCOUNT.CHANGES')
-                oscarRTId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'BANK_ACCOUNT_SETUP');
+			if(processType == 'VR.1.0' || processType == 'VR.1.0.CA')
+				oscarRTId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'VOLUNTARY_RELINQUISHMENT');
+			if(processType == 'CER.1.0')
+				oscarRTId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CERTIFICATE');
+			if(processType == AMS_RecordCreatorWebservice.IEP_BANK_ACCOUNT_SETUP || processType == 'BANK.ACCOUNT.CHANGES')
+				oscarRTId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'BANK_ACCOUNT_SETUP');
 
 
 			//  For IEP BANK Acc Setup force flag to false by default ('ISS Portal - Make case invisible' worflow cannot run for this process)
 			if(AMS_Utils.IEP_PROCESSES.contains(processType)){
 				caseToProcess.Visible_on_ISS_Portal__c = true;
 				 //assign to queue
-		         Database.DMLOptions dmo = new Database.DMLOptions();
-		         dmo.assignmentRuleHeader.useDefaultRule = true;
-		         caseToProcess.setOptions(dmo);
+				 Database.DMLOptions dmo = new Database.DMLOptions();
+				 dmo.assignmentRuleHeader.useDefaultRule = true;
+				 caseToProcess.setOptions(dmo);
 			}else if (processType == AMS_Utils.NGGDI){
 				caseToProcess.Visible_on_ISS_Portal__c = false;
 			}
 
-			
+
 			update caseToProcess;
-		
+
 			ID caseOwnerId = [SELECT OwnerId FROM CASE WHERE ID = :caseToProcess.ID].OwnerId;
 
-			AMS_OSCAR__c oscar = new AMS_OSCAR__c( 
-				Process__c = processType, RecordTypeId =oscarRTId, Status__c = caseToProcess.Status, OwnerId = caseOwnerId,		
+			AMS_OSCAR__c oscar = new AMS_OSCAR__c(
+				Process__c = processType, RecordTypeId =oscarRTId, Status__c = caseToProcess.Status, OwnerId = caseOwnerId,
 				Account__c = caseToProcess.AccountId
 			);
 
 			if(processType.equalsIgnoreCase('ANG.FS.OPTINOUT')){
 
-	        	oscar.ANG_FA_Opt_out__c = caseToProcess.Account.ANG_FA_Opt_out__c == true ? 'Opt-In' : 'Opt-Out';
-	    	}
-			
+				oscar.ANG_FA_Opt_out__c = caseToProcess.Account.ANG_FA_Opt_out__c == true ? 'Opt-In' : 'Opt-Out';
+			}
+
 			insert oscar;
 
 			oscarId = oscar.Id;
@@ -868,15 +871,15 @@ public without sharing class AMS_MigrationToolHelper {
 				insert opp;
 			}
 		}
-		
+
 		AMS_OSCAR__c oscarUpdated = postOscarUpdate(oscarId,caseToProcess.CaseNumber, caseToProcess.AccountId, false,caseStatus,caseToProcess);
 
-        if(oscarUpdated == null){
+		if(oscarUpdated == null){
 
 			cont.migrated = true;
 			cont.processing = false;
 			cont.errorMessage = 'Could not update Oscar - please check the logs for more information.';
-			
+
 			return cont;
 		}
 
@@ -903,13 +906,13 @@ public without sharing class AMS_MigrationToolHelper {
 		'MSO Member Sales Office',
 		'GSA General Sales Agent',
 		'GSSA Cargo',
-		'Handling Agent'	
+		'Handling Agent'
 		};
 
 		Account acct = c.Account;
 
 		if(processType == 'MAJOR.CHANGES' && categories.contains(acct.Category__c)){
-			return 'The wizard for Agency changes is not available for TIDS, MSO, GSA, GSSA and AHA Accounts. Please make sure your account is correct or has the correct Category.';			
+			return 'The wizard for Agency changes is not available for TIDS, MSO, GSA, GSSA and AHA Accounts. Please make sure your account is correct or has the correct Category.';
 		}
 
 
@@ -921,7 +924,7 @@ public without sharing class AMS_MigrationToolHelper {
 			return 'The process only starts if the account has the proper process / location class.';
 		if(acct.Category__c == 'Handling Agent' && acct.Location_Class__c != 'X')
 			return 'The process only starts if the account has the proper process / location class.';
-		
+
 
 		if((acct.Location_Type__c == 'BR' || acct.Location_Type__c == 'SA' || acct.Location_Type__c == 'AE') && acct.ParentId == null)
 			return 'The Account does not have a parent Id.';
@@ -929,11 +932,11 @@ public without sharing class AMS_MigrationToolHelper {
 		return null;
 	}
 
-	
+
 	public static AMS_Pax_Accreditation_Form__c fetchAccreditation(Id caseId){
 
 		List<AMS_Pax_Accreditation_Form__c> toReturn = new List<AMS_Pax_Accreditation_Form__c>([SELECT Id , Abbreviated_Address__c,Abbreviated_name__c,Accept_terms_and_conditions__c,Account_Name__c,Billing_State__c,Branch_Office_City__c,Branch_Office_Country__c,Branch_Office_Email__c,Branch_Office_FAX__c,Branch_Office_Phone__c,Branch_Office_Postal_code__c,Branch_Office_Street_name_number__c,CASS_Number__c,IATACode__c,IATA_ISO_State__c,ISSP_AMS_GDS_with_signed_contract__c,ISSP_AMS_Legal_Status__c,ISSP_AMS_License_No__c,ISSP_AMS_Premises_located_at_airport__c,ISSP_AMS_VAT_number__c,Is_your_firm_handling_Dangerous_Goods__c,Location_Class__c,Location_Type__c,Mobile__c,Operation__c,RecordTypeId,Remittance_frequency__c,SAAM_Case__c,Shipping_City__c,Shipping_Country__c,Shipping_ISO_Country__c,Shipping_ISO_State__c,Shipping_Postal_Code__c,Shipping_State__c,Shipping_Street__c,Short_Name__c,Solicitation_Flag__c,Submitted_to_IATA__c,Trade_Name__c,VAT_Number_2__c,Website__c from AMS_Pax_Accreditation_Form__c where SAAM_Case__c = :caseId]);
-	
+
 		if(!toReturn.isEmpty())
 			return toReturn.get(0);
 
@@ -948,8 +951,8 @@ public without sharing class AMS_MigrationToolHelper {
 
 		public Case c				{ get; set; }
 		public Boolean selected		{ get; set; }
-		public Boolean processing	{ get; set; }		
-		public Boolean migrated		{ get; set; }		
+		public Boolean processing	{ get; set; }
+		public Boolean migrated		{ get; set; }
 		public Boolean fromPortal	{ get; set; }
 
 		public String errorMessage	{ get; set; }
@@ -982,135 +985,136 @@ public without sharing class AMS_MigrationToolHelper {
 		}
 
 	}
-	
-	
+
+
 	public void isTestCompliant () {
-        if (Test.isRunningTest()) {
-            AMS_oscar__c os = new AMS_oscar__c();
-            AMS_Pax_Accreditation_Form__c ac = new AMS_Pax_Accreditation_Form__c();
-            os.Assessment_Performed_Date__c = date.today();
-            os.Bank_Guarantee_deadline__c = date.today();
-            os.Bank_Guarantee_received__c = date.today();
-            os.Bank_Guarantee_requested__c = date.today();
-            ac.Accept_terms_and_conditions__c = true;
-            ac.Account_Name__c = 'TestName';
-            ac.Billing_State__c = 'TestState';
-            ac.Branch_Office_City__c = 'TestCity';
-            ac.Branch_Office_Email__c = 'TestEmail';
-            ac.Branch_Office_FAX__c = String.valueOf(12436);
-            ac.Branch_Office_Phone__c = String.valueOf(12436);
-            ac.Branch_Office_Postal_code__c = String.valueOf(12436);
-            ac.Branch_Office_Street_name_number__c = String.valueOf(12436);
-            os.Change_effective_as_of__c = date.today();
-            os.Criteria_remarks__c = String.valueOf(date.today());
-            os.Documentation_remarks__c = String.valueOf(date.today());
-            os.Dossier_Reception_Date__c = date.today();
-            os.Fees_refund_requested__c = date.today();
-            os.Finalization_checklist__c = String.valueOf(date.today());
-            os.Financial_Assessment_deadline__c = date.today();
-            os.Financial_Review_Result__c = String.valueOf(date.today());
-            os.Billing_Document_Number__c = '6781';
-            os.Local_Inspection_compliant__c = 'Yes';
-            os.Local_Inspection_deadline__c = date.today();
-            os.Local_Inspection_received__c = date.today();
-            os.Local_Inspection_requested__c = date.today();
-            os.Process_Start_Date__c = date.today();
-            os.Proof_of_payment_received__c = date.today();
-            os.PSAA_EACP_Agreement_received__c = date.today();
-            os.Welcome_Pack_Sent__c = date.today();
-            os.Sanity_check_deadline__c = date.today();
-            os.Sanity_check_received__c = date.today();
-            os.Update_AIMS_Rejection_Date__c = date.today();
-            os.Update_AIMS_Rejection__c = true;
-            os.Update_AIMS_Approval_Date__c = date.today();
-            os.Update_AIMS_Approval__c = true;
-            
-            
-            ac = new AMS_Pax_Accreditation_Form__c();
-            ac.Abbreviated_Address__c = 'TestAddress';
-            os.Documentation_remarks__c = String.valueOf(date.today());
-            os.Dossier_Reception_Date__c = date.today();
-            os.Fees_refund_requested__c = date.today();
-            os.Finalization_checklist__c = String.valueOf(date.today());
-            os.Financial_Assessment_deadline__c = date.today();
-            os.Financial_Review_Result__c = String.valueOf(date.today());
-            os.Billing_Document_Number__c = '6781';
-            os.Local_Inspection_compliant__c = 'Yes';
-            os.Local_Inspection_deadline__c = date.today();
-            os.Local_Inspection_received__c = date.today();
-            os.Local_Inspection_requested__c = date.today();
-            os.Process_Start_Date__c = date.today();
-            os.Proof_of_payment_received__c = date.today();
-            os.PSAA_EACP_Agreement_received__c = date.today();
-            os.Welcome_Pack_Sent__c = date.today();
-            os.Sanity_check_deadline__c = date.today();
-            os.Sanity_check_received__c = date.today();
-            os.Update_AIMS_Rejection_Date__c = date.today();
-            os.Update_AIMS_Rejection__c = true;
-            os.Update_AIMS_Approval_Date__c = date.today();
-            ac.Abbreviated_name__c = 'TestName';
-            ac.Accept_terms_and_conditions__c = true;
-            ac.Account_Name__c = 'TestName';
-            ac.Billing_State__c = 'TestState';
-            ac.Branch_Office_City__c = 'TestCity';
-            ac.Branch_Office_Email__c = 'TestEmail';
-            ac.Branch_Office_FAX__c = String.valueOf(12436);
-            ac.Branch_Office_Phone__c = String.valueOf(12436);
-            ac.Branch_Office_Postal_code__c = String.valueOf(12436);
-            ac.Branch_Office_Street_name_number__c = String.valueOf(12436);
-            ac.CASS_Number__c = String.valueOf(12436);
-            ac.IATACode__c = 'TestCode';
-            ac.ISSP_AMS_License_No__c = String.valueOf(12436);
-            ac.ISSP_AMS_VAT_number__c = String.valueOf(12436);
-            ac.Is_your_firm_handling_Dangerous_Goods__c = String.valueOf('true');
-            os.Update_AIMS_Approval_Date__c = date.today();
-            ac.Abbreviated_name__c = 'TestName';
-            ac.Accept_terms_and_conditions__c = true;
-            ac.Account_Name__c = 'TestName';
-            ac.Billing_State__c = 'TestState';
-            ac.Branch_Office_City__c = 'TestCity';
-            ac.Branch_Office_Email__c = 'TestEmail';
-            ac.Branch_Office_FAX__c = String.valueOf(12436);
-            ac.Branch_Office_Phone__c = String.valueOf(12436);
-            ac.Branch_Office_Postal_code__c = String.valueOf(12436);
-            ac.Branch_Office_Street_name_number__c = String.valueOf(12436);
-            ac.CASS_Number__c = String.valueOf(12436);
-            ac.IATACode__c = 'TestCode';
-            ac.ISSP_AMS_License_No__c = String.valueOf(12436);
-            ac.ISSP_AMS_VAT_number__c = String.valueOf(12436);
-            ac.Is_your_firm_handling_Dangerous_Goods__c = String.valueOf('true');
-            os.Update_AIMS_Approval_Date__c = date.today();
-            ac.Abbreviated_name__c = 'TestName';
-            ac.Accept_terms_and_conditions__c = true;
-            ac.Account_Name__c = 'TestName';
-            ac.Billing_State__c = 'TestState';
-            ac.Branch_Office_City__c = 'TestCity';
-            ac.Branch_Office_Email__c = 'TestEmail';
-            ac.Branch_Office_FAX__c = String.valueOf(12436);
-            ac.Branch_Office_Phone__c = String.valueOf(12436);
-            ac.Branch_Office_Postal_code__c = String.valueOf(12436);
-            ac.Branch_Office_Street_name_number__c = String.valueOf(12436);
-            ac.CASS_Number__c = String.valueOf(12436);
-            ac.IATACode__c = 'TestCode';
-            ac.ISSP_AMS_License_No__c = String.valueOf(12436);
-            ac.ISSP_AMS_VAT_number__c = String.valueOf(12436);
-            ac.Is_your_firm_handling_Dangerous_Goods__c = String.valueOf('true');
-            os.Update_AIMS_Approval_Date__c = date.today();
-            ac.Abbreviated_name__c = 'TestName';
-            ac.Accept_terms_and_conditions__c = true;
-            ac.Account_Name__c = 'TestName';
-            ac.Billing_State__c = 'TestState';
-            ac.Branch_Office_City__c = 'TestCity';
-            ac.Branch_Office_Email__c = 'TestEmail';
-            ac.Branch_Office_FAX__c = String.valueOf(12436);
-            ac.Branch_Office_Phone__c = String.valueOf(12436);
-            ac.Branch_Office_Postal_code__c = String.valueOf(12436);
-            ac.Branch_Office_Street_name_number__c = String.valueOf(12436);
-            ac.CASS_Number__c = String.valueOf(12436);
-            ac.IATACode__c = 'TestCode';
-            ac.ISSP_AMS_License_No__c = String.valueOf(12436);
-            ac.ISSP_AMS_VAT_number__c = String.valueOf(12436);
-            ac.Is_your_firm_handling_Dangerous_Goods__c = String.valueOf('true');
-        }
-    }
+		if (Test.isRunningTest()) {
+			AMS_oscar__c os = new AMS_oscar__c();
+			AMS_Pax_Accreditation_Form__c ac = new AMS_Pax_Accreditation_Form__c();
+			os.Assessment_Performed_Date__c = date.today();
+			os.Bank_Guarantee_deadline__c = date.today();
+			os.Bank_Guarantee_received__c = date.today();
+			os.Bank_Guarantee_requested__c = date.today();
+			ac.Accept_terms_and_conditions__c = true;
+			ac.Account_Name__c = 'TestName';
+			ac.Billing_State__c = 'TestState';
+			ac.Branch_Office_City__c = 'TestCity';
+			ac.Branch_Office_Email__c = 'TestEmail';
+			ac.Branch_Office_FAX__c = String.valueOf(12436);
+			ac.Branch_Office_Phone__c = String.valueOf(12436);
+			ac.Branch_Office_Postal_code__c = String.valueOf(12436);
+			ac.Branch_Office_Street_name_number__c = String.valueOf(12436);
+			os.Change_effective_as_of__c = date.today();
+			os.Criteria_remarks__c = String.valueOf(date.today());
+			os.Documentation_remarks__c = String.valueOf(date.today());
+			os.Dossier_Reception_Date__c = date.today();
+			os.Fees_refund_requested__c = date.today();
+			os.Finalization_checklist__c = String.valueOf(date.today());
+			os.Financial_Assessment_deadline__c = date.today();
+			os.Financial_Review_Result__c = String.valueOf(date.today());
+			os.Billing_Document_Number__c = '6781';
+			os.Local_Inspection_compliant__c = 'Yes';
+			os.Local_Inspection_deadline__c = date.today();
+			os.Local_Inspection_received__c = date.today();
+			os.Local_Inspection_requested__c = date.today();
+			os.Process_Start_Date__c = date.today();
+			os.Proof_of_payment_received__c = date.today();
+			os.PSAA_EACP_Agreement_received__c = date.today();
+			os.Welcome_Pack_Sent__c = date.today();
+			os.Sanity_check_deadline__c = date.today();
+			os.Sanity_check_received__c = date.today();
+			os.Update_AIMS_Rejection_Date__c = date.today();
+			os.Update_AIMS_Rejection__c = true;
+			os.Update_AIMS_Approval_Date__c = date.today();
+			os.Update_AIMS_Approval__c = true;
+
+
+			ac = new AMS_Pax_Accreditation_Form__c();
+			ac.Abbreviated_Address__c = 'TestAddress';
+			os.Documentation_remarks__c = String.valueOf(date.today());
+			os.Dossier_Reception_Date__c = date.today();
+			os.Fees_refund_requested__c = date.today();
+			os.Finalization_checklist__c = String.valueOf(date.today());
+			os.Financial_Assessment_deadline__c = date.today();
+			os.Financial_Review_Result__c = String.valueOf(date.today());
+			os.Billing_Document_Number__c = '6781';
+			os.Local_Inspection_compliant__c = 'Yes';
+			os.Local_Inspection_deadline__c = date.today();
+			os.Local_Inspection_received__c = date.today();
+			os.Local_Inspection_requested__c = date.today();
+			os.Process_Start_Date__c = date.today();
+			os.Proof_of_payment_received__c = date.today();
+			os.PSAA_EACP_Agreement_received__c = date.today();
+			os.Welcome_Pack_Sent__c = date.today();
+			os.Sanity_check_deadline__c = date.today();
+			os.Sanity_check_received__c = date.today();
+			os.Update_AIMS_Rejection_Date__c = date.today();
+			os.Update_AIMS_Rejection__c = true;
+			os.Update_AIMS_Approval_Date__c = date.today();
+			ac.Abbreviated_name__c = 'TestName';
+			ac.Accept_terms_and_conditions__c = true;
+			ac.Account_Name__c = 'TestName';
+			ac.Billing_State__c = 'TestState';
+			ac.Branch_Office_City__c = 'TestCity';
+			ac.Branch_Office_Email__c = 'TestEmail';
+			ac.Branch_Office_FAX__c = String.valueOf(12436);
+			ac.Branch_Office_Phone__c = String.valueOf(12436);
+			ac.Branch_Office_Postal_code__c = String.valueOf(12436);
+			ac.Branch_Office_Street_name_number__c = String.valueOf(12436);
+			ac.CASS_Number__c = String.valueOf(12436);
+			ac.IATACode__c = 'TestCode';
+			ac.ISSP_AMS_License_No__c = String.valueOf(12436);
+			ac.ISSP_AMS_VAT_number__c = String.valueOf(12436);
+			ac.Is_your_firm_handling_Dangerous_Goods__c = String.valueOf('true');
+			os.Update_AIMS_Approval_Date__c = date.today();
+			ac.Abbreviated_name__c = 'TestName';
+			ac.Accept_terms_and_conditions__c = true;
+			ac.Account_Name__c = 'TestName';
+			ac.Billing_State__c = 'TestState';
+			ac.Branch_Office_City__c = 'TestCity';
+			ac.Branch_Office_Email__c = 'TestEmail';
+			ac.Branch_Office_FAX__c = String.valueOf(12436);
+			ac.Branch_Office_Phone__c = String.valueOf(12436);
+			ac.Branch_Office_Postal_code__c = String.valueOf(12436);
+			ac.Branch_Office_Street_name_number__c = String.valueOf(12436);
+			ac.CASS_Number__c = String.valueOf(12436);
+			ac.IATACode__c = 'TestCode';
+			ac.ISSP_AMS_License_No__c = String.valueOf(12436);
+			ac.ISSP_AMS_VAT_number__c = String.valueOf(12436);
+			ac.Is_your_firm_handling_Dangerous_Goods__c = String.valueOf('true');
+			os.Update_AIMS_Approval_Date__c = date.today();
+			ac.Abbreviated_name__c = 'TestName';
+			ac.Accept_terms_and_conditions__c = true;
+			ac.Account_Name__c = 'TestName';
+			ac.Billing_State__c = 'TestState';
+			ac.Branch_Office_City__c = 'TestCity';
+			ac.Branch_Office_Email__c = 'TestEmail';
+			ac.Branch_Office_FAX__c = String.valueOf(12436);
+			ac.Branch_Office_Phone__c = String.valueOf(12436);
+			ac.Branch_Office_Postal_code__c = String.valueOf(12436);
+			ac.Branch_Office_Street_name_number__c = String.valueOf(12436);
+			ac.CASS_Number__c = String.valueOf(12436);
+			ac.IATACode__c = 'TestCode';
+			ac.ISSP_AMS_License_No__c = String.valueOf(12436);
+			ac.ISSP_AMS_VAT_number__c = String.valueOf(12436);
+			ac.Is_your_firm_handling_Dangerous_Goods__c = String.valueOf('true');
+			os.Update_AIMS_Approval_Date__c = date.today();
+			ac.Abbreviated_name__c = 'TestName';
+			ac.Accept_terms_and_conditions__c = true;
+			ac.Account_Name__c = 'TestName';
+			ac.Billing_State__c = 'TestState';
+			ac.Branch_Office_City__c = 'TestCity';
+			ac.Branch_Office_Email__c = 'TestEmail';
+			ac.Branch_Office_FAX__c = String.valueOf(12436);
+			ac.Branch_Office_Phone__c = String.valueOf(12436);
+			ac.Branch_Office_Postal_code__c = String.valueOf(12436);
+			ac.Branch_Office_Street_name_number__c = String.valueOf(12436);
+			ac.CASS_Number__c = String.valueOf(12436);
+			ac.IATACode__c = 'TestCode';
+			ac.ISSP_AMS_License_No__c = String.valueOf(12436);
+			ac.ISSP_AMS_VAT_number__c = String.valueOf(12436);
+			ac.Is_your_firm_handling_Dangerous_Goods__c = String.valueOf('true');
+		}
+	}
 }
+

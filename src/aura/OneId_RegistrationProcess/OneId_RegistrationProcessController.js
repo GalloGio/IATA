@@ -48,6 +48,10 @@
                 
             }
 
+            if(servName == 'ISSP' || servName == 'CSP'){
+                helper.redirectToCustomerPortal(c, e);
+            }
+
         }
     },
     section1 : function(cmp, evt, hlp) {
@@ -79,5 +83,11 @@
             $A.util.toggleClass(cmp.find("registrationComplete"), "slds-hide");
         }
 
-    }
+    },
+
+    setGadmPowerUser : function(component, event) {
+        let isPowerUser = event.getParam('isPowerUser');
+        component.set('v.isGadmPowerUser', isPowerUser);
+    },
+
 })

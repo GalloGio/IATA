@@ -1,7 +1,7 @@
 /**
-           File: AMS_VouchersCreationBatch_Test.cls
-        Subject: Test Class for AMS_VouchersCreationBatch class.
-        History: amtosantos, 2017-04-18, Initial Release.
+					 File: AMS_VouchersCreationBatch_Test.cls
+				Subject: Test Class for AMS_VouchersCreationBatch class.
+				History: amtosantos, 2017-04-18, Initial Release.
 
 
 */
@@ -21,12 +21,12 @@ private class AMS_VouchersCreationBatch_Test {
 		Test.startTest();
 
 		country  = new IATA_ISO_Country__c(
-              Name = 'Portugal',
-              ISO_Code__c = 'PT',
-              AIMS_Area_Name__c = 'Lisboa',
-			  AMS_Max_Vouchers_Per_Year__c = 1000,
-			  AMS_Vouchers_Benchmark__c = 100.0,
-			  Region__c = 'Test Region'
+							Name = 'Portugal',
+							ISO_Code__c = 'PT',
+							AIMS_Area_Name__c = 'Lisboa',
+				AMS_Max_Vouchers_Per_Year__c = 1000,
+				AMS_Vouchers_Benchmark__c = 100.0,
+				Region__c = 'Test Region'
 		);
 
 		insert country;
@@ -93,7 +93,7 @@ private class AMS_VouchersCreationBatch_Test {
 		);
 
 		batchJob.vouchersPerCountry = new Map<String,Integer>();
-	
+
 		batchJob.start(null);
 		batchJob.execute(null, new List<AMS_Voucher_Information__c> { vInfo });
 

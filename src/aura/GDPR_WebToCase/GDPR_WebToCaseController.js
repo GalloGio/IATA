@@ -141,7 +141,7 @@
                     let fullName = c.get("v.newCaseDPO.Passenger_Name_PXNM__c");
                     let ticketNumber = c.get("v.newCaseDPO.Ticket_Number_TDNR__c");
 
-                    let lName = fullName.split('/')[0].replace(new RegExp('\s+', 'g'), '').toUpperCase();
+                    let lName = fullName.split('/')[0].replace(new RegExp('\\s', 'g'), '').toUpperCase();
                     let lastName = sha256(lName);
                     let tdnr = sha256(ticketNumber);
                     let tacn = sha256(iataCode.substr(0,3));

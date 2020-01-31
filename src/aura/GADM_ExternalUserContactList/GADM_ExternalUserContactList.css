@@ -1,0 +1,129 @@
+.THIS.page_container {
+    min-height:300px;
+}
+
+.THIS tbody tr{
+    height: 46px;
+}
+
+.THIS tbody {
+    font-family: aktiv-grotesk;
+    font-size: 14px;
+    color: #666666;
+}
+
+.THIS table {
+    border-spacing: 0px;
+    border-collapse: separate;
+}
+
+
+.THIS tbody td {
+   padding-left: 10px;
+}
+
+.THIS .right2px {
+    border-right: 2px solid #FFFFFF;
+}
+
+.THIS tbody th {
+   border-right: 2px solid #FFFFFF;
+   padding-left: 10px;
+}
+
+.THIS .evenLine {
+    background-color: #F2F2F2;
+}
+
+.THIS .oddLine {
+    background-color: #FFFFFF;
+}
+
+.THIS thead tr {
+    height: 20px;
+}
+
+.THIS .evenRows {
+    height: 6px;
+    background-color: #F2F2F2;
+}
+
+.THIS thead th {
+    background-color: #FFFFFF;
+    font-family: aktiv-grotesk;
+    font-size: 14px;
+    color: #666666;
+    border-bottom: 6px solid #E6E6E6;
+    position:relative;
+}
+
+.THIS thead th:before {
+    content : "";
+    position: absolute;
+    left    : -2px;
+    bottom  : -6px;
+    height  : 6px;
+    width   : 1px;
+    border-right: 2px solid white;
+}
+
+.THIS .slds-card__footer {
+    font-family:aktiv-grotesk;
+    color: #666666;
+    font-size: 11px;
+}
+
+.THIS p {
+  font-family: aktiv-grotesk, sans-serif;
+  font-size: 15px;
+  line-height: 22px;
+}
+
+.THIS .slds-th__action {
+    padding: 0;
+}
+
+.THIS .sortableField {
+    display:inline;
+}
+
+.THIS .sortableFieldName {
+    float:left;
+    max-width:90%;
+}
+
+.THIS .sortableFieldArrow {
+    float:right;
+}
+
+.THIS .firstColumn {
+    width:50px;
+}
+
+.THIS .secondColumn {
+    width:200px;
+}
+
+.THIS .thirdColumn {
+    width:200px;
+}
+
+.THIS .button_padding {
+    padding-left:10px !important;
+}
+
+.THIS a {
+    color: #666666 !important;
+}
+
+.THIS a:hover{
+    text-decoration: none !important;
+}
+
+.THIS a:focus{
+   text-decoration: none !important;
+}
+
+.THIS .no_pointer {
+    cursor:default;
+}

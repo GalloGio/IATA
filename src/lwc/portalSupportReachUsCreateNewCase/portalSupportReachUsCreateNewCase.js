@@ -9,6 +9,9 @@ import searchContacts from '@salesforce/apex/PortalSupportReachUsCreateNewCaseCt
 import createCase from '@salesforce/apex/PortalSupportReachUsCreateNewCaseCtrl.createCase';
 import getProfile from '@salesforce/apex/PortalSupportReachUsCreateNewCaseCtrl.getProfile';
 import insertCase from '@salesforce/apex/PortalSupportReachUsCreateNewCaseCtrl.insertCase';
+import isUserLevelOne from '@salesforce/apex/PortalSupportReachUsCreateNewCaseCtrl.isUserLevelOne';
+import createCaseTD from '@salesforce/apex/PortalSupportReachUsCreateNewCaseCtrl.createCaseTreasuryDashboard';
+import getUser from '@salesforce/apex/CSP_Utils.getLoggedUser';
 
 // Import custom labels 
 import csp_CreateNewCaseTopSubLabel from '@salesforce/label/c.csp_CreateNewCaseTopSubLabel';
@@ -129,6 +132,9 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
 
     @track relatedContacts;
 
+    //is the user a Level1 user? If he has not completed level 2 registration he is not
+    @track Level1User = false;
+
     //store parameters in globals for later use
     category;
     topic;
@@ -137,6 +143,11 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
     topicLabel;
     @track subtopicLabel;
     countryISO;
+	userContact;
+
+    //for Treasury Dashboard
+    recordTypeId;
+    customTD = false;
 
     //childComponent data
     childComponent;
@@ -152,10 +163,30 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
 
     //Same as doInit() on aura
     connectedCallback() {
+        this.isLevelOneUser();
         this.validateEntryParameters();
         this.getRelatedAccounts();
         this.getRelatedContacts();
+		this.getUser();
 
+    }
+
+    isLevelOneUser(){
+        isUserLevelOne({userId: this.userId}).then(result => {
+            this.Level1User = result;
+        }).catch(error => {
+            //throws error
+            this.error = error;
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: this.label.PKB2_js_error,
+                    message: this.label.ISSP_ANG_GenericError,
+                    variant: 'error'
+                })
+            );
+            // eslint-disable-next-line no-console
+            console.log('Error: ', error);
+        });
     }
 
     //validates the entry parameters coming from the URL. 
@@ -244,6 +275,12 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
                         //get redirected back to the support reach us page
                         this.navigateToSupport();
                     }
+                //custom Treasury Dashboard
+                } else if(pageParams !== null&& 'recordTypeId' in pageParams && pageParams.recordTypeId !== '') {
+                            this.customTD = true;
+                            this.recordTypeId = pageParams.recordTypeId;
+                            this.createCaseTD();
+
                 } else {
                     //get redirected back to the support reach us page
                     this.navigateToSupport();
@@ -272,6 +309,13 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
             .then(createCaseResult => {
                 this.caseInitiated = JSON.parse(JSON.stringify(createCaseResult));
                 console.log(this.caseInitiated);
+            });
+    }
+
+    createCaseTD() {
+        createCaseTD({recordTypeId: this.recordTypeId})
+            .then(result => {
+                this.caseInitiated = JSON.parse(JSON.stringify(result));
             });
     }
 
@@ -306,6 +350,13 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
 					this.setPortalUserIATACode();
             });
     }
+	
+	getUser() {
+        getUser()
+            .then(result => {
+                this.userContact = JSON.parse(JSON.stringify(result.ContactId));
+            });
+    }
 
     setPortalUserIATACode() {
         getContact()
@@ -322,6 +373,7 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
         searchContacts({ searchTerm: null })
             .then(relatedContactsResult => {
                 this.relatedContacts = JSON.parse(JSON.stringify(relatedContactsResult));
+                this.relatedContacts = this.relatedContacts.filter(obj => obj.id !== this.userContact);
                 //deactivate spinner
                 this.loading = false;
             });
@@ -341,6 +393,7 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
     handleContactSearch(event) {
         searchContacts(event.detail)
             .then(results => {
+				results = results.filter(obj => obj.id !== this.userContact);
                 this.template.querySelector('[data-id="emaillookup"]').setSearchResults(results);
                 this.requiredClass = '';
             })
@@ -452,59 +505,74 @@ export default class PortalSupportReachUsCreateNewCase extends LightningElement 
             this.showErrorToast();
         }
         else {
-            this.caseInitiated.Description = '';
-            //Add to the Case Record (created beforehand) and add the required fields for the insert
-            if (this.isConcernCase) {
-                this.caseInitiated.Description += '--' + this.label.csp_Concern_Label + '--\n\n'
-            }
-
-            this.caseInitiated.Description += this.label.csp_Category + ' - '
-                + this.categoryLabel + ' \n'
-                + this.label.csp_Topic + ' - '
-                + this.topicLabel + ' \n'
-                + this.label.csp_Subtopic + ' - '
-                + this.subtopicLabel + ' \n\n'
-                + this.label.csp_caseDescription.fieldApiName + ' - '
-                + this.description;
-            this.caseInitiated.Subject = this.subject;
 
             const record = { 'sobjectType': 'Case' };
+            //only for custom Treasury Dashboard case
+            if(this.customTD) {
 
-            if (this.agentProfile) {
-                record.IATAcode__c = this.childComponent.title;
-            }
-
-            if (this.isEmergencyCase) {
-                record.Priority = 'Emergency';
-            }
-
-            record.IsComplaint__c = this.isConcernCase;
-            if (this.caseInitiated.RecordTypeId !== undefined && this.caseInitiated.RecordTypeId !== '') {
                 record.RecordTypeId = this.caseInitiated.RecordTypeId;
-            }
-            record.BSPCountry__c = this.caseInitiated.BSPCountry__c;
-            record.Region__c = this.caseInitiated.Region__c;
-            record.Country_concerned_by_the_query__c = this.caseInitiated.Country_concerned_by_the_query__c;
-            record.Origin = this.caseInitiated.Origin;
-            record.Status = this.caseInitiated.Status;
-            record.IFAP_Country_ISO__c = this.caseInitiated.IFAP_Country_ISO__c.toUpperCase();
-            record.Subject = this.caseInitiated.Subject;
-            record.Description = this.caseInitiated.Description;
+                record.Origin = this.caseInitiated.Origin;
+                record.Status = this.caseInitiated.Status;
+                record.Description = this.description
+                record.Subject = this.subject
 
-            let topicEn = '';
-            let subtopicEn = '';
-            
-            let pageParams = getParamsFromPage();
-            let metadatatreeAux = JSON.parse(JSON.stringify(this.metadatatree));
-            for(let ii = 0; ii < metadatatreeAux.length; ii++){
-                if(metadatatreeAux[ii].categoryName === pageParams.category && metadatatreeAux[ii].topicName === pageParams.topic ){
-                    topicEn = metadatatreeAux[ii].topicLabelEn;
-                    subtopicEn = metadatatreeAux[ii].childsEn[pageParams.subtopic];
+                this.customTD = false;
+
+            //for all other cases
+            }else{
+
+                this.caseInitiated.Description = '';
+                //Add to the Case Record (created beforehand) and add the required fields for the insert
+                if (this.isConcernCase) {
+                    this.caseInitiated.Description += '--' + this.label.csp_Concern_Label + '--\n\n'
                 }
-            }
 
-            record.Topic__c = topicEn;
-            record.Subtopic__c = subtopicEn;
+                this.caseInitiated.Description += this.label.csp_Category + ' - '
+                    + this.categoryLabel + ' \n'
+                    + this.label.csp_Topic + ' - '
+                    + this.topicLabel + ' \n'
+                    + this.label.csp_Subtopic + ' - '
+                    + this.subtopicLabel + ' \n\n'
+                    + this.label.csp_caseDescription.fieldApiName + ' - '
+                    + this.description;
+                this.caseInitiated.Subject = this.subject;
+
+                if (this.agentProfile) {
+                    record.IATAcode__c = this.childComponent.title;
+                }
+
+                if (this.isEmergencyCase) {
+                    record.Priority = 'Emergency';
+                }
+
+                record.IsComplaint__c = this.isConcernCase;
+                if (this.caseInitiated.RecordTypeId !== undefined && this.caseInitiated.RecordTypeId !== '') {
+                    record.RecordTypeId = this.caseInitiated.RecordTypeId;
+                }
+                record.BSPCountry__c = this.caseInitiated.BSPCountry__c;
+                record.Region__c = this.caseInitiated.Region__c;
+                record.Country_concerned_by_the_query__c = this.caseInitiated.Country_concerned_by_the_query__c;
+                record.Origin = this.caseInitiated.Origin;
+                record.Status = this.caseInitiated.Status;
+                record.IFAP_Country_ISO__c = this.caseInitiated.IFAP_Country_ISO__c.toUpperCase();
+                record.Subject = this.caseInitiated.Subject;
+                record.Description = this.caseInitiated.Description;
+
+                let topicEn = '';
+                let subtopicEn = '';
+
+                let pageParams = getParamsFromPage();
+                let metadatatreeAux = JSON.parse(JSON.stringify(this.metadatatree));
+                for(let ii = 0; ii < metadatatreeAux.length; ii++){
+                    if(metadatatreeAux[ii].categoryName === pageParams.category && metadatatreeAux[ii].topicName === pageParams.topic ){
+                        topicEn = metadatatreeAux[ii].topicLabelEn;
+                        subtopicEn = metadatatreeAux[ii].childsEn[pageParams.subtopic];
+                    }
+                }
+
+                record.Topic__c = topicEn;
+                record.Subtopic__c = subtopicEn;
+            }
 
             this.loading = true;
             let process = event.target.attributes.getNamedItem('data-id').value;

@@ -275,6 +275,14 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Requires_Level2_Registration__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <label>Requires_Level2_Registration</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>SectorExceptions__c</fullName>
         <description>Use this field to exclude account sectors from this data category</description>
         <externalId>false</externalId>

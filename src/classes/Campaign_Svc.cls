@@ -5,7 +5,7 @@ Global class Campaign_Svc{
 		String sentMsg = '';
 		Campaign campaign = Campaign_Sel.getCampaignById(campaignId);
 
-		//Verified if the product 
+		//Verified if the product
 		Map<Id,Id> campaignProductMap = new CampaignProduct_Sel().getLastVersionProductIdById(campaignId);
 
 		Boolean invalidProduct = false;
@@ -25,21 +25,21 @@ Global class Campaign_Svc{
 			if(prdIds.size() > 0 && !invalidProduct){
 				List<PricebookEntry> pricebookEntries = new List<PricebookEntry>();
 				//Set the pricebookEntry
-		        Pricebook2 stdPriceBook = new Pricebook_Sel().getStandardPriceBook();
-		        Map<Id, PricebookEntry> pricebookEntryByProductId = new PricebookEntry_Sel().getPricebookEntryByProductId(stdPriceBook.Id, prdIds);
-		        for(Id productId : prdIds){
-		        	PricebookEntry pbe = pricebookEntryByProductId.get(productId);
-		        	if(pbe == null) {
+				Pricebook2 stdPriceBook = new Pricebook_Sel().getStandardPriceBook();
+				Map<Id, PricebookEntry> pricebookEntryByProductId = new PricebookEntry_Sel().getPricebookEntryByProductId(stdPriceBook.Id, prdIds);
+				for(Id productId : prdIds){
+					PricebookEntry pbe = pricebookEntryByProductId.get(productId);
+					if(pbe == null) {
 						pbe = new PricebookEntry( IsActive = true, Pricebook2Id = stdPriceBook.Id, Product2Id = productId, UnitPrice = 1.00, CurrencyIsoCode = Utility.getDefaultCurrency() );
-	                    pricebookEntries.add(pbe);
+						pricebookEntries.add(pbe);
 					}
-		        }
+				}
 
-		        if(pricebookEntries.size() > 0){ insert pricebookEntries; }
+				if(pricebookEntries.size() > 0){ insert pricebookEntries; }
 			}
 		}
 
-		
+
 		if(invalidProduct){ sentMsg = 'There is some products not available in the Ecommerce portal \n ' + productsNumbers;
 		}else if(campaign.Renewal_notice_generated__c == null && campaign.IsActive && campaign.Generate_Members_Completed_On__c != null){
 			//Call the batch to create the renewal notice
@@ -47,7 +47,7 @@ Global class Campaign_Svc{
 			Database.ExecuteBatch(cm,Utility.getIntegerSetting('Campaign member batch size'));
 			//Show the submitted message to the loggin user
 			sentMsg = Label.Campaign_submitted;
-		}else if(campaign.Renewal_notice_generated__c != null && campaign.IsActive && campaign.Generate_Members_Completed_On__c != null){ 
+		}else if(campaign.Renewal_notice_generated__c != null && campaign.IsActive && campaign.Generate_Members_Completed_On__c != null){
 			//return an error
 			sentMsg = Label.Campaign_already_created;}else{sentMsg = Label.Campaign_creation_error;}
 		return sentMsg;

@@ -199,6 +199,14 @@ PARTIAL MATCH</inlineHelpText>
         </valueSet>
     </fields>
     <fields>
+        <fullName>Send_Email_Notification__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <fieldManageability>SubscriberControlled</fieldManageability>
+        <label>Send Email Notification</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Sub_Categorization_Custom_Label__c</fullName>
         <description>Custom Label of the sub-categorization</description>
         <externalId>false</externalId>

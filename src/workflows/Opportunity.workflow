@@ -125,23 +125,23 @@
             <type>owner</type>
         </recipients>
         <recipients>
-            <recipient>SalesAssistantDirectorAmericas</recipient>
-            <type>role</type>
-        </recipients>
-        <recipients>
-            <recipient>SalesAssistantDirectorAsiaPac</recipient>
-            <type>role</type>
-        </recipients>
-        <recipients>
-            <recipient>SalesAssistantDirectorEurope</recipient>
-            <type>role</type>
-        </recipients>
-        <recipients>
             <recipient>SalesDirector</recipient>
             <type>role</type>
         </recipients>
         <recipients>
-            <recipient>SalesDirectorBIITCO</recipient>
+            <recipient>SalesManagerBIITCO</recipient>
+            <type>role</type>
+        </recipients>
+        <recipients>
+            <recipient>SalesManagersAmericas</recipient>
+            <type>role</type>
+        </recipients>
+        <recipients>
+            <recipient>SalesManagersAsiaPac</recipient>
+            <type>role</type>
+        </recipients>
+        <recipients>
+            <recipient>SalesManagersEurope</recipient>
             <type>role</type>
         </recipients>
         <recipients>
@@ -182,10 +182,6 @@
         </recipients>
         <recipients>
             <recipient>krishnanh@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>legerf@iata.org.prod</recipient>
             <type>user</type>
         </recipients>
         <recipients>

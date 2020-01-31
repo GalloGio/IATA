@@ -1,4 +1,4 @@
-public with sharing class IEC_CreditCard_DTO 
+public with sharing class IEC_CreditCard_DTO
 {
 	public String 	zId { get; set; }
 	public Boolean 	isDefault{get;set;}
@@ -24,18 +24,18 @@ public with sharing class IEC_CreditCard_DTO
 
 	public IEC_CreditCard_DTO() {}
 
-	public IEC_CreditCard_DTO(Zuora.zObject zAccount, Zuora.zObject zCreditCard) 
+	public IEC_CreditCard_DTO(Zuora.zObject zAccount, Zuora.zObject zCreditCard)
 	{
 		zId 					= (String)  zCreditCard.getValue('Id');
 		name 					= (String)  zCreditCard.getValue('Name');
 		creditCardType 			= (String)  zCreditCard.getValue('CreditCardType');
 		creditCardMaskNumber 	= (String)  zCreditCard.getValue('CreditCardMaskNumber');
-		creditCardCVV 			= (String)  zCreditCard.getValue('cardSecurityCode');	
+		creditCardCVV 			= (String)  zCreditCard.getValue('cardSecurityCode');
 		expirationMonth 		= (Integer) zCreditCard.getValue('CreditCardExpirationMonth');
 		expirationYear 			= (Integer) zCreditCard.getValue('CreditCardExpirationYear');
 		holderName 				= (String)  zCreditCard.getValue('CreditCardHolderName');
 		country 				= (String)  zCreditCard.getValue('CreditCardCountry');
-			if (country != null && country.length() != 2)  
+			if (country != null && country.length() != 2)
 				country = IECZuoraHelper.convertCountryNameToCode(country);
 
 		addresLine1 			= (String)	zCreditCard.getValue('CreditCardAddress1');
@@ -49,7 +49,7 @@ public with sharing class IEC_CreditCard_DTO
 		isDefault 				= (zId == (String)zAccount.getValue('DefaultPaymentMethodId'));
 		creditCardDate			= Date.newInstance(expirationYear, expirationMonth, 1);
 		numberOfDays 			= Date.daysInMonth(creditCardDate.year(), creditCardDate.month());
-		isExpired 				= (Date.today() > Date.newInstance(expirationYear, expirationMonth, numberOfDays));	
+		isExpired 				= (Date.today() > Date.newInstance(expirationYear, expirationMonth, numberOfDays));
 	}
 
 	public Zuora.zObject toZObjectForUpdate() {

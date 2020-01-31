@@ -9,7 +9,7 @@ trigger AuthorizedFormsOfPaymentTrigger on Authorized_Forms_Of_Payment__c (after
 
 		if(trigger.isUpdate){
 
-			AuthorizedFormsOfPaymentTriggerHelper.updatesFormOfPaymentsFields(trigger.new, trigger.oldMap);	
+			AuthorizedFormsOfPaymentTriggerHelper.updatesFormOfPaymentsFields(trigger.new, trigger.oldMap);
 		}
 
 	}

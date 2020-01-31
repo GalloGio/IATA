@@ -1,21 +1,21 @@
 public without sharing class OneId_Troubleshooting_Controller {
 
-    @AuraEnabled
-    public static Boolean submit(Case cse){        
-        System.debug('Start submitting - OneId_Troubleshooting_Controller');
-        //Fetching the assignment rules on case
-        List<AssignmentRule> arList = [SELECT Id FROM AssignmentRule WHERE SobjectType = 'Case' AND Active = true limit 1];
-        
-        //Creating the DMLOptions for "Assign using active assignment rules" checkbox
-        Database.DMLOptions dmlOpts = new Database.DMLOptions();
-        if(arList.size() > 0) {
-            dmlOpts.assignmentRuleHeader.assignmentRuleId = arList[0].id;
-        }
-        
-        try{
-            cse.RecordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByName().get('NDC Management').getRecordTypeId();
-            cse.setOptions(dmlOpts);
-            cse.Origin = 'Troubleshooting';
+	@AuraEnabled
+	public static Boolean submit(Case cse){
+		System.debug('Start submitting - OneId_Troubleshooting_Controller');
+		//Fetching the assignment rules on case
+		List<AssignmentRule> arList = [SELECT Id FROM AssignmentRule WHERE SobjectType = 'Case' AND Active = true limit 1];
+
+		//Creating the DMLOptions for "Assign using active assignment rules" checkbox
+		Database.DMLOptions dmlOpts = new Database.DMLOptions();
+		if(arList.size() > 0) {
+			dmlOpts.assignmentRuleHeader.assignmentRuleId = arList[0].id;
+		}
+
+		try{
+			cse.RecordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByName().get('NDC Management').getRecordTypeId();
+			cse.setOptions(dmlOpts);
+			cse.Origin = 'Troubleshooting';
 
 			if(isGuestUser()){
 				System.debug('cse.Case_Creator_Email__c : ' + cse.Case_Creator_Email__c);
@@ -26,12 +26,12 @@ public without sharing class OneId_Troubleshooting_Controller {
 /*					Case cse2 = new Case(
 						Subject = contacts[0].Account.Name + ' : ' + cse.Subject,
 						ContactId = contacts[0].Id,
-		            	Status = 'New',
-		                Description = cse.Description
+						Status = 'New',
+						Description = cse.Description
 					);
-		            cse2.RecordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByName().get('NDC Management').getRecordTypeId();
-		            cse2.setOptions(dmlOpts);
-		            cse2.Origin = 'Troubleshooting';
+					cse2.RecordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByName().get('NDC Management').getRecordTypeId();
+					cse2.setOptions(dmlOpts);
+					cse2.Origin = 'Troubleshooting';
 					System.debug('new case : ' + cse2);
 					insert cse2;
 					return true;*/
@@ -45,15 +45,15 @@ public without sharing class OneId_Troubleshooting_Controller {
 				cse.Subject = cse.Contact.Account.Name + ' : ' + cse.Subject;
 			}
 
-            insert cse;
-            
-            if(isGuestUser()){
-            	Case cse2 = [SELECT Id, ContactId, Contact.Email, Case_Creator_Email__c, CaseNumber, Subject, Case_Thread_Id__c from Case WHERE Id =: cse.Id];
+			insert cse;
+
+			if(isGuestUser()){
+				Case cse2 = [SELECT Id, ContactId, Contact.Email, Case_Creator_Email__c, CaseNumber, Subject, Case_Thread_Id__c from Case WHERE Id =: cse.Id];
 
 				OrgWideEmailAddress address = [SELECT Id FROM OrgWideEmailAddress WHERE Address = 'noreply@iata.org'];
 
 				Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-                mail.setOrgWideEmailAddressId(address.Id);
+				mail.setOrgWideEmailAddressId(address.Id);
 				mail.setToAddresses(new List<String>{cse2.ContactId != null? cse2.Contact.Email : cse2.Case_Creator_Email__c});
 				mail.setSubject('Case ' + cse2.CaseNumber + ' ' + cse2.Subject);
 
@@ -71,46 +71,46 @@ public without sharing class OneId_Troubleshooting_Controller {
 
 				mail.setHtmlBody(htmlBody);
 				Messaging.SendEmailResult [] r = Messaging.sendEmail(new Messaging.SingleEmailMessage[] { mail });
-            }
-            return true;
-        }
-        catch(Exception e){
-            System.debug(e.getMessage());
-            return false;
-        }
-    }
-        
-    @AuraEnabled
-    public static Boolean isGuestUser(){
-        return [SELECT count() FROM User WHERE Name = 'identity Site Guest User' AND Id =: UserInfo.getUserId()] == 1;
-    }
-    
-    @AuraEnabled
-    public static Case loadEmptyCase(){
-        if(isGuestUser()){
-            return new Case(
-            	Status = 'New',
-                Case_Creator_Name__c = '',
-                Case_Creator_Email__c = '',
-                Subject = '',
-                Description = ''
-            );
-        }
-        else{
-            User u = [Select ContactId from User where Id =: UserInfo.getUserId()];
-            Contact c = [select Id, Email, Account.Name from Contact where Id =: u.ContactId];
-            return new Case(
-            	Status = 'New',
-                Subject = '',
-                Description = '',
-                Contact = c
-            );
-        }
-    }
-    
-    
-    
-    
-    
-    
+			}
+			return true;
+		}
+		catch(Exception e){
+			System.debug(e.getMessage());
+			return false;
+		}
+	}
+
+	@AuraEnabled
+	public static Boolean isGuestUser(){
+		return [SELECT count() FROM User WHERE Name = 'identity Site Guest User' AND Id =: UserInfo.getUserId()] == 1;
+	}
+
+	@AuraEnabled
+	public static Case loadEmptyCase(){
+		if(isGuestUser()){
+			return new Case(
+				Status = 'New',
+				Case_Creator_Name__c = '',
+				Case_Creator_Email__c = '',
+				Subject = '',
+				Description = ''
+			);
+		}
+		else{
+			User u = [Select ContactId from User where Id =: UserInfo.getUserId()];
+			Contact c = [select Id, Email, Account.Name from Contact where Id =: u.ContactId];
+			return new Case(
+				Status = 'New',
+				Subject = '',
+				Description = '',
+				Contact = c
+			);
+		}
+	}
+
+
+
+
+
+
 }

@@ -40,7 +40,7 @@
     </values>
     <values>
         <field>Filter_on_Record_Type__c</field>
-        <value xsi:type="xsd:string">IATA_Airline,IATA_Airline_BR</value>
+        <value xsi:type="xsd:string">IATA_Airline,IATA_Airline_BR,Operator</value>
     </values>
     <values>
         <field>Filter_on_Sector__c</field>
@@ -61,6 +61,10 @@
     <values>
         <field>Search_Option__c</field>
         <value xsi:type="xsd:string">User Search</value>
+    </values>
+    <values>
+        <field>Send_Email_Notification__c</field>
+        <value xsi:type="xsd:boolean">false</value>
     </values>
     <values>
         <field>Sub_Categorization_Custom_Label__c</field>

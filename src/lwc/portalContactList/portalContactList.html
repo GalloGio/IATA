@@ -1,10 +1,6 @@
-<!--
- - Created by pvavruska on 6/4/2019.
- -->
-
 <!-- Portal Contact List -->
 <template>
-    <div class="slds-p-vertical_large customBorderlessCardWhite">
+    <div class="slds-p-vertical_large customBorderlessCardWhite" style="overflow-y:auto;">
 
         <!-- OPEN MODAL -->
         <template if:true={openmodel}>
@@ -15,118 +11,255 @@
         <!-- END MODAL -->
 
         <!-- CONTACT LIST -->
-        <template if:true={hasRecords}>
-            <table class="slds-m-vertical_medium profileTable slds-table">
-                <!-- HEADER -->
-                <thead>
-                    <tr>
-                        <th class="tableLefty"></th>
-                        <th class="underLinded">
-                            <!-- arrow spacer -->
-                        </th>
-                        <template for:each={fieldsList.ROWS} for:item="field" for:index="index">
-                            <th class={field.className} key={field.label} onclick={columnSort}
-                                data-name={field.fieldName}>
-                                {field.label}
-                                <lightning-icon class="slds-is-absolute" if:true={field.isAsc}
-                                    icon-name="utility:arrowup" size="xx-small" data-name={field.fieldName}>></lightning-icon>
-                                <lightning-icon class="slds-is-absolute" if:true={field.isDesc}
-                                    icon-name="utility:arrowdown" size="xx-small" data-name={field.fieldName}>></lightning-icon>
-                            </th>
-                        </template>
-                        <th class="tableLefty"></th>
-                    </tr>
-                </thead>
+        <template if:true={loading} class="spinnerContainer">
+            <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+        </template>
 
+        <template if:false={loading}>
 
-                <template for:each={records} for:item="record" for:index="index">
-                    <tbody key={record.Id}>
+            <template if:true={hasRecords}>
+                <table class="slds-m-vertical_medium profileTable slds-table">
+                    <!-- HEADER -->
+                    <thead>
                         <tr>
-                            <td class="tableLefty"></td>
-                            <td class="underLinded chevronColumn" onclick={openRecordDetail} data-item={index}>
-                                <div class="cursorPointer inline-block">
-                                    <lightning-icon class="darkBlueIcon" if:true={record.open}
-                                        icon-name="utility:chevrondown" size="xx-small" data-item={index}>
-                                    </lightning-icon>
-                                    <lightning-icon class="darkBlueIcon" if:false={record.open}
-                                        icon-name="utility:chevronright" size="xx-small" data-item={index}>
-                                    </lightning-icon>
-                                </div>
-                            </td>
-
-                            <template for:each={record.rowValues} for:item="rowValue">
-                                <td key={rowValue.value} class={rowValue.className} onclick={openRecordDetail} data-item={index}>
-                                    <span>{rowValue.value}</span>
-                                    <span if:true={rowValue.emailHasError}>
-                                        <span if:true={rowValue.showIcon}>
-                                            <lightning-helptext icon-name="utility:warning" 
-                                                content={labels.ISSP_ContactList_HoverPopup_Text}
-                                                class="orangeIcon">
-                                            </lightning-helptext>
-                                        </span>
-                                        <span>{rowValue.email}</span>
-                                        <span class={rowValue.emailClass}>{rowValue.domain}</span>
-                                    </span>
-                                </td>
+                            <th class="tableLefty"></th>
+                            <template if:false={isAccount}>
+                                <th class="underLined">
+                                    <lightning-input 
+                                        type="checkbox"  
+                                        name="options"
+                                        checked={allContactsSelected}
+                                        onchange={handleRadioAllOptions}>
+                                    </lightning-input>
+                                </th>
                             </template>
-
-                            <td class="tableLefty"></td>
+                            <th class="underLined">
+                                <!-- arrow spacer -->
+                            </th>
+                            <template for:each={fieldsList.ROWS} for:item="field" for:index="index">
+                                <th class={field.className} key={field.label} onclick={columnSort}
+                                    data-name={field.fieldName}>
+                                    {field.label}
+                                    <lightning-icon class="slds-is-absolute" if:true={field.isAsc}
+                                        icon-name="utility:arrowup" size="xx-small" data-name={field.fieldName}>></lightning-icon>
+                                    <lightning-icon class="slds-is-absolute" if:true={field.isDesc}
+                                        icon-name="utility:arrowdown" size="xx-small" data-name={field.fieldName}>></lightning-icon>
+                                </th>
+                            </template>
+                            <template if:false={isAccount}>
+                                <th class="underLined">
+                                    <!-- three dots icon (contact access) -->
+                                </th>
+                            </template>
+                            <th class="tableLefty"></th>
                         </tr>
+                    </thead>
 
-                        <tr if:true={record.open} class="slds-p-vertical_x-large text-xsmall openTransition"
-                            data-item={index}>
-                            <td class="noPadding" colspan={fieldCount}>
-                                <div class="recordDetail">
-                                    <div class="recordDetailBox">
-                                        <!-- iterate over sections here -->
-
-                                        <template if:true={isAccount}>
-                                            <c-portal-record-form-wrapper section-title="Basics"
-                                                object-name={objectName} record-id={record.Id}
-                                                edit-fields={fieldsList.Basics} fields={fieldsList.Basics}
-                                                show-edit={showEditLocal}
-                                                section-class="slds-p-vertical_xx-large slds-p-horizontal_x-large slds-m-bottom_medium section">
-                                            </c-portal-record-form-wrapper>
-
-                                            <hr class="hr">
-
-                                            <c-portal-record-form-wrapper section-title="Branch Contact"
-                                                object-name={objectName} record-id={record.Id}
-                                                edit-fields={fieldsList.BranchContact} fields={fieldsList.BranchContact}
-                                                show-edit={showEditLocal} edit-basics={showEditLocal}
-                                                section-class="slds-p-vertical_xx-large slds-p-horizontal_x-large slds-m-bottom_medium section">
-                                            </c-portal-record-form-wrapper>
-                                        </template>
-
-                                        <template if:false={isAccount}>
-                                            <c-portal-record-form-wrapper object-name={objectName} record-id={record.Id}
-                                                edit-fields={fieldsList.EDITS} static-fields={record}
-                                                fields={fieldsList.VIEW} show-edit="true" allow-contact-delete="true"
-                                                header-class="slds-float_right" showfunction="true" 
-                                                onrefreshview={refreshview} services={record.services}
-                                                section-class="slds-p-vertical_xx-large slds-p-horizontal_x-large slds-m-bottom_medium section">
-                                            </c-portal-record-form-wrapper>
-                                        </template>
-
+                    <template for:each={pageRecords} for:item="record" for:index="index">
+                        <tbody key={record.Id}>
+                            <tr>
+                                <td class="tableLefty"></td>
+                                <template if:false={isAccount}>
+                                    <td class="underLined">
+                                        <lightning-input 
+                                            type="checkbox" 
+                                            name="options"
+                                            checked={record.selected} 
+                                            data-item={record.Id} 
+                                            onchange={handleRadioOptions}>
+                                        </lightning-input>
+                                    </td>
+                                </template>
+                                <td class="underLined chevronColumn" onclick={openRecordDetail} data-item={index}>
+                                    <div class="cursorPointer inline-block">
+                                        <lightning-icon class="darkBlueIcon" if:true={record.open}
+                                            icon-name="utility:chevrondown" size="xx-small" data-item={index}>
+                                        </lightning-icon>
+                                        <lightning-icon class="darkBlueIcon" if:false={record.open}
+                                            icon-name="utility:chevronright" size="xx-small" data-item={index}>
+                                        </lightning-icon>
                                     </div>
-                                </div>
+                                </td>
 
-                            </td>
+                                <template for:each={record.rowValues} for:item="rowValue">
+                                    <td key={rowValue.value} class={rowValue.className} onclick={openRecordDetail} data-item={index}>
+                                        <span>{rowValue.value}</span>
+                                        <span if:true={rowValue.emailHasError}>
+                                            <span if:true={rowValue.showIcon}>
+                                                <lightning-helptext icon-name="utility:warning" 
+                                                    content={labels.ISSP_ContactList_HoverPopup_Text}
+                                                    class="orangeIcon">
+                                                </lightning-helptext>
+                                            </span>
+                                            <span>{rowValue.email}</span>
+                                            <span class={rowValue.emailClass}>{rowValue.domain}</span>
+                                        </span>
+                                    </td>
+                                </template>
+                                <template if:false={isAccount}>
+                                <td class="underLined">
+                                    <lightning-button-menu
+                                        class="removeArrowFromButtonMenu"        
+                                        variant="container" 
+                                        icon-name="utility:threedots_vertical" 
+                                        menu-alignment="right">
+                                            <lightning-menu-item
+                                                data-item={record.Id}
+                                                data-name="approve"
+                                                class="text-bold"
+                                                label={_labels.ISSP_Activate}
+                                                onclick={grantAccess}>
+                                            </lightning-menu-item>
+                                            <lightning-menu-item
+                                                data-item={record.Id}
+                                                data-name="approveAdmin"
+                                                class="text-bold"
+                                                label={_labels.ISSP_MakeAdmin}
+                                                onclick={grantAccess}>
+                                            </lightning-menu-item>                                            
+                                            <lightning-menu-item
+                                                data-item={record.Id}
+                                                data-name="inactive"
+                                                class="text-bold"
+                                                label={_labels.ISSP_AMS_eBulletin_Disabled}
+                                                onclick={denyAccess}>
+                                            </lightning-menu-item>
+                                    </lightning-button-menu>
+                                </td>
+                                </template>
+                                <td class="tableLefty"></td>
+                            </tr>
 
-                        </tr>
-                    </tbody>
+                            <tr if:true={record.open} class="slds-p-vertical_x-large text-xsmall openTransition"
+                                data-item={index}>
+                                <td class="noPadding" colspan={fieldCount}>
+                                    <div class="recordDetail">
+                                        <div class="recordDetailBox">
+                                            <!-- iterate over sections here -->
+
+                                            <template if:true={isAccount}>
+                                                <c-portal-record-form-wrapper section-title="Basics"
+                                                    object-name={objectName} record-id={record.Id}
+                                                    edit-fields={fieldsList.Basics} fields={fieldsList.Basics}
+                                                    show-edit={showEditLocal}
+                                                    section-class="slds-p-vertical_xx-large slds-p-horizontal_x-large slds-m-bottom_medium section">
+                                                </c-portal-record-form-wrapper>
+
+                                                <hr class="hr">
+
+                                                <c-portal-record-form-wrapper section-title="Branch Contact"
+                                                    object-name={objectName} record-id={record.Id}
+                                                    edit-fields={fieldsList.BranchContact} fields={fieldsList.BranchContact}
+                                                    show-edit={showEditLocal} edit-basics={showEditLocal}
+                                                    section-class="slds-p-vertical_xx-large slds-p-horizontal_x-large slds-m-bottom_medium section">
+                                                </c-portal-record-form-wrapper>
+                                            </template>
+
+                                            <template if:false={isAccount}>
+                                                <c-portal-record-form-wrapper object-name={objectName} record-id={record.Id}
+                                                    edit-fields={fieldsList.EDITS} static-fields={record}
+                                                    fields={fieldsList.VIEW} show-edit="true" allow-contact-delete="true"
+                                                    header-class="slds-float_right" showfunction="true" 
+                                                    onrefreshview={refreshview} services={record.services}
+                                                    section-class="slds-p-vertical_xx-large slds-p-horizontal_x-large slds-m-bottom_medium section">
+                                                </c-portal-record-form-wrapper>
+                                            </template>
+
+                                        </div>
+                                    </div>
+
+                                </td>
+
+                            </tr>
+                        </tbody>
+                    </template>
+
+
+                </table>
+
+                <template if:true={fetching}>
+                    <div class="slds-m-around_xx-large slds-is-relative">
+                        <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                    </div>
                 </template>
 
+                <!-- PAGINATION -->
+                <c-portal-paginator pagination-object-parent={paginationObject} onselectedpage={handleSelectedPage}></c-portal-paginator>
 
-            </table>
-
-            <template if:true={fetching}>
-                <div class="slds-m-around_xx-large slds-is-relative">
-                    <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
-                </div>
             </template>
         </template>
 
+        <!-- INACTIVATION REASONS -->
+        <div if:true={inactiveModal}>
+            <section aria-modal="true" class="slds-modal slds-fade-in-open" style="z-index: 10000;">
+                <div class="modal">
+                    <div class="customPopupInteriorHalfScreenCentered">
+
+                        <!-- Popup Header -->
+                        <div class="slds-p-horizontal_large slds-p-vertical_medium headerTitle">
+                            <span class="modalTitle">{labels.ISSP_ReasonInactivation}</span>
+                            <span class="slds-float_right slds-m-horizontal_x-small close-mark" onclick={closeInactiveModal}>
+                                <lightning-icon icon-name="utility:close" size="x-small" class="cursorPointer" onclick={closeInactiveModal}></lightning-icon>
+                            </span>
+                        </div>
+
+                        <div class="slds-is-relative">
+                            <template if:true={loading}>
+                                <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                            </template> 
+                        
+                            <div class="customWhiteBackground">
+                                <lightning-layout multiple-rows class="slds-p-horizontal_medium" pull-to-boundary="medium" horizontal-align="spread">
+                                    <!-- Error Message -->
+                                    <template if:true={hasError}>
+                                        <lightning-layout-item class="slds-p-around_large" size="12" flexibility="grow">
+                                                <div class="whiteIcon text-xxsmall errorBox">
+
+                                                    <lightning-layout multiple-rows class="slds-p-horizontal_medium" pull-to-boundary="medium" horizontal-align="spread">
+
+                                                        <lightning-layout-item size="1" flexibility="grow">
+                                                            <lightning-icon icon-name="utility:error" alternative-text="Error"
+                                                                variant="error" size="small">
+                                                            </lightning-icon>
+                                                        </lightning-layout-item>
+
+                                                        <lightning-layout-item size="11" flexibility="grow">
+                                                            <lightning-formatted-rich-text value={errorMessage}>
+                                                            </lightning-formatted-rich-text>
+                                                        </lightning-layout-item>
+
+                                                    </lightning-layout>
+
+                                                </div>
+                                        </lightning-layout-item>
+                                    </template>
+
+                                    <!-- Inactive Options -->
+                                    <lightning-layout-item class="slds-p-vertical-medium" size="12" flexibility="grow">
+                                        <div class="slds-p-horizontal_large slds-p-vertical_medium" >
+                                            <lightning-combobox
+                                                placeholder={labels.CSP_selectReason} value="Inactive Reason"
+                                                options={inactiveOptions.data} onchange={handleInactiveReason}
+                                                variant="label-hidden" required>
+                                            </lightning-combobox>
+                                        </div>
+                                    </lightning-layout-item>    
+                                </lightning-layout>
+
+                                <!-- ACTION BUTTON -->
+                                <div class="slds-align_absolute-center slds-p-around_large topLightGrayBorder">
+                                    <lightning-button class="baseButton newContainedButton buttonMinHeightMedium text-xsmall fullWidth" 
+                                        label={labels.ISSP_Confirm} variant="neutral" onclick={processInactive} disabled={noSelected}>
+                                    </lightning-button>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+        </div>      
 
         <!-- NO RECORDS -->
         <template if:false={hasRecords}>
@@ -134,9 +267,9 @@
                 <div class="slds-p-vertical_medium slds-text-align_center">
                         <img src={searchIconNoResultsUrl} />
                         <div class="text-small text-bold text-linkBlue">
-                            {_labels.CSP_Search_NoResults_text1}</div>
-                        <div class="text-xxsmall text-gray">{_labels.CSP_Search_NoResults_text2} <span
-                                class="text-bold text-darkGray">"{_searchKey}"</span></div>
+                            {_labels.CSP_Contacts_NoResults_text1}</div>
+                        <div class="text-xxsmall text-gray">{_labels.CSP_Contacts_NoResults_text2} <span
+                                class="text-bold text-darkGray">"{searchNoResultsString}"</span></div>
                     </div>
             </div>
         </template>

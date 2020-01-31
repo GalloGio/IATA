@@ -1,0 +1,208 @@
+.scrollable-body{
+    height:70vh;
+    overflow:auto;
+}
+
+.slds-has-error input{
+    border-radius: 1px !important;
+    border: solid 2px rgba(240, 70, 50, 0.8) !important;
+    box-shadow: none !important;
+}
+
+.slds-has-error .slds-form-element__help{
+    color: #f04632 !important;
+    font-size: 14px !important;
+}
+
+.slds-has-error .slds-form-element__help div{
+    color: #f04632 !important;
+}
+
+.inputBackgroundGrey{
+    background-color: #f7f8fa !important;
+}
+
+.slds-combobox_container input[role="textbox"]:not(:placeholder-shown) {
+    background-color: #f7f8fa;
+}
+
+.wrap{
+    white-space:unset;
+}
+
+.customPopupInteriorQuarterScreenCentered {
+    background-color: #F7F8FA;
+    width: 25%;
+    margin: auto;
+    box-shadow: 5px 5px 20px #808080;
+    border-radius: 1px;
+    border: solid 1px #e2e2e2;
+}
+
+.link_normal {
+    width: 336px;
+    height: 56px;
+}
+
+.textAlignCenter {
+  text-align: center;
+}
+
+.-Title {
+    width: 304px;
+    height: 24px;
+    font-size: 14px;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.71;
+    letter-spacing: normal;
+    color: #3333ff;
+  }
+
+  .stepText {
+    font-size: 16px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.63;
+    letter-spacing: normal;
+    color: #525252;
+  }
+
+  .sectionTitle {
+    font-size: 22px;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.45;
+    letter-spacing: normal;
+    color: #333333;
+    padding-bottom: 4px;
+  }
+
+  .sectionSubTitle {
+    font-size: 18px;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.78;
+    letter-spacing: normal;
+    color: #333333;
+    padding: 15px 0;
+  }
+
+  .sectionDescription {
+    font-size: 16px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.63;
+    letter-spacing: normal;
+    color: #4a4d61;
+  }
+
+  .dataLabel {
+    font-size: 14px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.43;
+    letter-spacing: normal;
+    color: #999999;
+  }
+
+  .dataValue {
+    font-size: 16px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.63;
+    letter-spacing: normal;
+    color: #525252;
+  }
+
+  .urlValue {
+    width: 328px;
+    height: 26px;
+    font-size: 16px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.63;
+    letter-spacing: normal;
+    color: #1f32fa;
+  }
+
+.backButtonWrapper{
+    display: flex;
+    align-items: center;
+}
+
+.editButtonWrapper{
+  display: flex;
+  justify-content: flex-end;
+}
+
+.containedButton{
+    box-shadow: none !important;
+}
+
+.customBtn .slds-button:disabled{
+    box-shadow: none;
+}
+
+.warningMessage{
+  margin-bottom: 40px;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.warningIcon{
+  margin-right: 10px;
+}
+
+.warningContent{
+  font-size: 16px;
+  text-align: justify;
+}
+
+.buttonsContainer{
+  margin-top: 60px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+.fieldContainer{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.fieldItem{
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 15px;
+}
+
+.fullWidthItem:first-child{
+  width: 100%;
+}
+
+.itemValue{
+  word-wrap: break-word;
+  padding-right: 15px;
+}
+
+.sectionHeaderContainer{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+.sectionHeaderContainer .editButtonWrapper{
+  text-align: right;
+}

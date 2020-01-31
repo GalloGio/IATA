@@ -1,0 +1,62 @@
+<template>
+
+    <div class="background-superLightGray">
+
+        <c-portal-page-container>
+
+            <span slot="componentContent">
+
+                <div class="slds-grid slds-wrap slds-gutters_direct-medium">
+
+                    <template if:false={loading}>
+
+                        <!-- IFRAMES -->
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_4-of-5 slds-p-vertical_x-large" >
+
+                            <c-portal-treasury-dashboard-iframes-container user-id={userId} contact-id={contactId} is-standard-user={isStandardUser} is-premium-user={isPremiumUser} td-premium-service={tdPremiumService} scrollbar-width={scrollbarWidth}></c-portal-treasury-dashboard-iframes-container>
+
+                        </div>
+
+                        <!-- INSIDE LINKS AND CONTACT US -->
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-5 slds-p-vertical_x-large " >
+
+                            <c-portal-treasury-dashboard-link-tiles ></c-portal-treasury-dashboard-link-tiles>
+
+                            <c-portal-treasury-dashboard-contact-us ></c-portal-treasury-dashboard-contact-us>
+
+                        </div>
+
+
+                        <!-- OUTSIDE LINKS -->
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-p-vertical_x-large" >
+
+                            <c-portal-treasury-dashboard-footer ></c-portal-treasury-dashboard-footer>
+
+                        </div>
+
+                    </template>
+
+
+                    <template if:true={loading}>
+
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1">
+
+                            <div class="slds-m-around_xx-large">
+                                <lightning-spinner class="spinnerContainer" alternative-text="Loading" size="medium"></lightning-spinner>
+                            </div>
+
+                        </div>
+
+                    </template>
+
+
+                </div>
+
+            </span>
+
+        </c-portal-page-container>
+
+    </div>
+
+
+</template>

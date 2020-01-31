@@ -1,0 +1,2 @@
+<aura:event type="COMPONENT" description="Data_Submission_Event">
+</aura:event>

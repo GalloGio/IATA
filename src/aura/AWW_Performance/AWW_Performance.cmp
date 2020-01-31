@@ -1,0 +1,42 @@
+<aura:component controller="AWW_PerformanceCtrl">
+    <aura:attribute name="data" type="Object"/>
+    <aura:attribute name="columns" type="List"/>
+    <aura:attribute name="accountId" type="Id"/>
+    <aura:attribute name="canEdit" type="Boolean"/>
+    <aura:attribute name="haveUserAMPIssuesAndPriorities" type="Boolean" default="fasle"/>
+    <aura:attribute name="sortBy" type="String"/>
+    <aura:attribute name="sortDirection" type="String"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler name="refreshTab" event="c:AWW_RefreshTabEvent" action="{!c.refreshTab}"/>
+
+    <div class="slds-p-around_medium">
+        <div class="slds-box slds-p-around_none slds-theme_shade">
+            <lightning:card class="bckColor" title="BMA/RSA/OSA" iconName="custom:custom48">
+                <aura:set attribute="actions">
+                    <aura:if isTrue="{!v.canEdit}">
+                            <lightning:button variant="Neutral" label="New" title="New" onclick="{!c.new}"/>
+                        <aura:set attribute="else">
+                            <aura:if isTrue="{!v.haveUserAMPIssuesAndPriorities}">
+                                    <lightning:button variant="Neutral" label="New" title="New" onclick="{!c.new}"/>
+                            </aura:if> 
+                        </aura:set>
+                    </aura:if> 
+                </aura:set>
+            </lightning:card>
+            <div class="slds-m-around_medium slds-table_bordered slds-border_left slds-border_right">
+                <lightning:datatable
+                    keyField="Id"
+                    data="{!v.data}"
+                    columns="{!v.columns}"
+                    resizeColumnDisabled="true"
+                    onrowaction="{!c.handleRowAction}"
+                    hideCheckboxColumn="true"
+                    sortedBy="{!v.sortBy}"
+                    sortedDirection="{!v.sortDirection}"
+                    onsort="{!c.handleSort}"/>
+            </div>
+        </div>
+    </div>
+    <c:AWW_PerformanceEdit aura:id="manage-record" accountId="{!v.accountId}"/>
+</aura:component>

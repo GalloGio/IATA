@@ -1,0 +1,35 @@
+.THIS.page_container{
+    width:80%;
+    margin:0 auto;
+}
+
+.THIS .secondColumn {
+    width:50px;
+}
+
+
+.THIS .evenRows {
+    height: 6px;
+    background-color: #F2F2F2;
+}
+
+.THIS .line {
+    height:30px;
+}
+
+.THIS .center {
+    text-align:center;
+}
+
+.THIS .red {
+    color: red;
+}
+
+.THIS .small {
+    font-size:12px;
+}
+
+.THIS .slds-form-element__label {
+    color: #666666;
+    font-size:12px;
+}

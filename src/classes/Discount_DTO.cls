@@ -1,19 +1,19 @@
-public class Discount_DTO 
+public class Discount_DTO
 {
 	public enum eDiscount {CUSTOMER_TYPE, REGION, COUNTRY, COUPON, PRESALE}
 
 	public Boolean isPercentageDiscount{get;set;}
-	public Boolean isFreeShipping{get;set;} 
-	public eDiscount discountType{get;set;} 
+	public Boolean isFreeShipping{get;set;}
+	public eDiscount discountType{get;set;}
 	public String discountName{get;set;}
-	public Decimal discountValue{get;set;} 
-	
+	public Decimal discountValue{get;set;}
+
 	public String planId{get;set;} // ZuoraId of the rate plan
 	public String chargeId{get;set;} // ZuoraId of the charge
 
 	public Discount_DTO(){}
-	
-	
+
+
 	public Discount_DTO(zqu__ProductRatePlanChargeTier__c zTier)
 	{
 		isPercentageDiscount 	= zTier.ZCharge_Model__c.contains(ZuoraUtil.ZCHARGE_MODEL_DISCOUNT_PERCENTAGE);
@@ -44,7 +44,7 @@ public class Discount_DTO
 	 	}
 	 	else
 	 	{
-	 		//-- If no Filter then its presale discount 
+	 		//-- If no Filter then its presale discount
 	 		discountType = eDiscount.PRESALE;
 	 		discountName = 'PRESALE';
 	 	}
@@ -53,7 +53,7 @@ public class Discount_DTO
 	public static Order_Item_Charge__c createChargeRecord(Discount_DTO dto)
 	{
 		return new Order_Item_Charge__c(
-			Name = dto.discountName, 
+			Name = dto.discountName,
 			//Discount_Amount__c = (dto.discountType.contains(ZuoraUtil.ZCHARGE_MODEL_DISCOUNT_FIXED_AMOUNT)) ? dto.discountValue : null,
 			//Discount_Percentage__c = (dto.discountType.contains(ZuoraUtil.ZCHARGE_MODEL_DISCOUNT_PERCENTAGE)) ? dto.discountValue : null,
 			//Discount_Type__c = dto.discountType,

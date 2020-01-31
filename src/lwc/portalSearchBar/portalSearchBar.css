@@ -22,18 +22,17 @@
 
 .searchBarBarContainer {
     display: flex;
-    flex: 1 0 auto;
+    flex: auto;
     align-items: center;
     justify-content: center;
 }
 
 .resultsContentDiv {
-    background-color:white;
     position:absolute;
-    width:calc(100% + 20px);
+    width:100%;
     z-index:4001;
     top:33px;
-    margin: 0px -10px 0px -10px;
+    margin: 0;
     padding: 40px 10px 0px 10px;
 }
 
@@ -51,4 +50,8 @@
 
 .slds-backdrop{
     z-index: 4000;
+}
+  
+.marginTop {
+margin-top: 3px;
 }

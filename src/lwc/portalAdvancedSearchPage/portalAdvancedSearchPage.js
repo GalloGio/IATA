@@ -46,6 +46,8 @@ export default class PortalAdvancedSearchPage extends LightningElement {
     backgroundIcon = CSP_PortalPath + 'CSPortal/Images/Backgrounds/AdvancedSearchBackground.jpg';
     @track backgroundStyle;
 
+    @track showCross = false;
+
     connectedCallback(){
 
         this.backgroundStyle = 'background-image: url("' + this.backgroundIcon + '");background-position: center;background-repeat: no-repeat;background-size: cover;height:230px;';
@@ -58,7 +60,8 @@ export default class PortalAdvancedSearchPage extends LightningElement {
         }
         if (this.pageParams.highlight !== undefined && 
                 (this.pageParams.highlight === 'servicesComponent' || this.pageParams.highlight === 'casesComponent' || 
-                 this.pageParams.highlight === 'faqsComponent' || this.pageParams.highlight === 'documentsComponent')) {
+                 this.pageParams.highlight === 'faqsComponent' || this.pageParams.highlight === 'documentsComponent' || 
+                 this.pageParams.highlight === 'profileComponent')) {
             hightlightComponent = this.pageParams.highlight;
         }
 
@@ -99,6 +102,15 @@ export default class PortalAdvancedSearchPage extends LightningElement {
                 documentCategoryFilter : "",
                 documentProductCategoryFilter : "",
                 documentCountryFilter : ""
+            },
+            profileComponent : {
+                show : false,
+                loading : true,
+                highlight : false,
+                nrResults : 0,
+                profileTypeFilter : "",
+                profileCountryFilter : "",
+                profileContactStatusFilter : ""
             }
         };
 
@@ -108,6 +120,7 @@ export default class PortalAdvancedSearchPage extends LightningElement {
             filteringObjectAux.casesComponent.show = true;
             filteringObjectAux.faqsComponent.show = true;
             filteringObjectAux.documentsComponent.show = true;
+            filteringObjectAux.profileComponent.show = true;
         }else{
             filteringObjectAux[hightlightComponent].highlight = true;
 
@@ -123,6 +136,9 @@ export default class PortalAdvancedSearchPage extends LightningElement {
             if(hightlightComponent === 'documentsComponent'){
                 filteringObjectAux.documentsComponent.show = true;
             }
+            if(hightlightComponent === 'profileComponent'){
+                filteringObjectAux.profileComponent.show = true;
+            }
         }
 
         this.filteringObject = filteringObjectAux;
@@ -135,6 +151,11 @@ export default class PortalAdvancedSearchPage extends LightningElement {
         //update temporary search term until times out
         this.searchText = event.target.value;
 
+        if (this.searchText.length > 0) {
+            this.showCross = true;
+        } else {
+            this.showCross = false;
+        }
         // Clear the timeout if it has already been set.
         // This will prevent the previous task from executing
         // if it has been less than <MILLISECONDS>
@@ -195,12 +216,14 @@ export default class PortalAdvancedSearchPage extends LightningElement {
             if(this.searchText.length > 2 &&
                 
                 ((filteringObjectAux.servicesComponent.nrResults === 0 && filteringObjectAux.casesComponent.nrResults === 0 &&
-                filteringObjectAux.faqsComponent.nrResults === 0 && filteringObjectAux.documentsComponent.nrResults === 0) ||
+                filteringObjectAux.faqsComponent.nrResults === 0 && filteringObjectAux.documentsComponent.nrResults === 0 && 
+                filteringObjectAux.profileComponent.nrResults === 0) ||
                 
                 (filteringObjectAux.servicesComponent.nrResults === 0 && filteringObjectAux.servicesComponent.highlight ) ||
                 (filteringObjectAux.casesComponent.nrResults === 0 && filteringObjectAux.casesComponent.highlight ) ||
                 (filteringObjectAux.faqsComponent.nrResults === 0 && filteringObjectAux.faqsComponent.highlight ) ||
-                (filteringObjectAux.documentsComponent.nrResults === 0 && filteringObjectAux.documentsComponent.highlight )
+                (filteringObjectAux.documentsComponent.nrResults === 0 && filteringObjectAux.documentsComponent.highlight )||
+                (filteringObjectAux.profileComponent.nrResults === 0 && filteringObjectAux.profileComponent.highlight )
 
                 )
                 ){
@@ -213,5 +236,11 @@ export default class PortalAdvancedSearchPage extends LightningElement {
                 this.emptySearchStringClass = 'display: none;';
             }
         }
+    }
+
+    removeTextSearch() {
+        this.filteringObject.searchText = '';
+        this.searchText = '';
+        this.showCross = false;
     }
 }

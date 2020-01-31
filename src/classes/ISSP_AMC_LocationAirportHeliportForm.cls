@@ -10,6 +10,6 @@ public with sharing class ISSP_AMC_LocationAirportHeliportForm {
 		}
 	}
 
-    public ISSP_AMC_LocationAirportHeliportForm() { 
-    }
+	public ISSP_AMC_LocationAirportHeliportForm() {
+	}
 }
