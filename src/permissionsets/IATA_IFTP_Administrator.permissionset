@@ -8197,6 +8197,10 @@
         <object>Role_Address__c</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
+	 <recordTypeVisibilities>
+        <recordType>Account.Others</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
     <recordTypeVisibilities>
         <recordType>Account_Contact_Role__c.Master</recordType>
         <visible>true</visible>
