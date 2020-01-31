@@ -265,6 +265,7 @@ public without sharing class AMS_Utils {
 
 	// Case - Origin
 	public static final String CASE_ORIGIN_PORTAL = 'Portal';
+	public static final String CASE_ORIGIN_GDI_PORTAL = 'GDI Portal';
 	public static final String ANG_MASSIVE_FOP = 'Massive FOP Creation';
 	public static final String ANG_FOP_AUTOMATIC_RENEWAL = 'FoP automatic renewal';
 
@@ -395,6 +396,15 @@ public without sharing class AMS_Utils {
 
 	public static final String SAP_PAYMENT_TYPE_PPA = 'PPA';
 
+	
+	public static final String FINANCIAL_SECURITY_STATUS_ACTIVE = 'Active';
+	public static final String FINANCIAL_SECURITY_STATUS_CLOSE_EXPIRY = 'Close to Expiry Date';
+	public static final String FINANCIAL_SECURITY_STATUS_NOT_ACTIVE = 'Not Active yet';
+	public static final String FINANCIAL_SECURITY_TYPE_GDI = 'GDI';
+
+	public static final String OPPORTUNITY_CLOSED_WON = 'Closed Won';
+	public static final String OPPORTUNITY_CLOSED_LOST = 'Closed Lost';
+	
 	public static final Set<String> TOPLOCATIONSNEWGEN = new Set<String>{'HE','GE'};
 
 	public static String ENCRYPTION_KEY {
