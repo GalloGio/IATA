@@ -111091,16 +111091,6 @@ CONTAINS(Name,&quot;Intl&quot;))</errorConditionFormula>
         <errorMessage>Account Name cannot include Ltd or Intl</errorMessage>
     </validationRules>
     <validationRules>
-        <fullName>Address_StandardRecordtype</fullName>
-        <active>false</active>
-        <description>to be deleted, not used anymore</description>
-        <errorConditionFormula>AND(
- RecordType.DeveloperName =&apos;Standard_Account&apos;,
-NOT(ISBLANK( Business_City_Name__c ))
-)</errorConditionFormula>
-        <errorMessage>The bucket needs to be changed before entering an address.</errorMessage>
-    </validationRules>
-    <validationRules>
         <fullName>Agency_Name</fullName>
         <active>true</active>
         <description>prevent users should changing the agencies name</description>
