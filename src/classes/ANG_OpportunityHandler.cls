@@ -10,8 +10,6 @@ public class ANG_OpportunityHandler {
 	private static List<Id> getGdiOpportunitiesAfterSettingOfferId(Map<Id, Opportunity> oldMap, Map<Id, Opportunity> newMap) {
 		List<Id> opportunitiesToProcess = new List<Id>();
 		
-		String gdiRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Opportunity', 'GDI_FinancialSecurity');
-		
 		for (Opportunity op : newMap.values()) {
 			String newValue = op.GDI_Offer_Id__c;
 			String oldValue = op.Id != null && oldMap != null && oldMap.containsKey(op.Id)
@@ -19,7 +17,7 @@ public class ANG_OpportunityHandler {
 				: null;
 			
 			// check GDI type
-			if (op.RecordTypeId == null || op.RecordTypeId != gdiRecordTypeId)
+			if (op.RecordTypeId == null || op.RecordTypeId != AMS_Utils.RECTYPE_GDI_FS)
 				continue;
 			
 			if (String.isNotBlank(newValue) && newValue != oldValue)

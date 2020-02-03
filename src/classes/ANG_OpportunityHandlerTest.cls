@@ -63,8 +63,8 @@ public class ANG_OpportunityHandlerTest {
 		Test.startTest();
 		
 		Opportunity opp = new Opportunity(AccountId = [SELECT Id FROM account LIMIT 1].Id, CloseDate = Date.today(), CurrencyIsoCode = 'USD',
-			Name = 'OPP - ', RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Opportunity', 'GDI_FinancialSecurity'),
-			StageName = 'Pending', Related_Oscar__c = [SELECT Id FROM AMS_OSCAR__c LIMIT 1].Id, GDI_Offer_Id__c = '001');
+			Name = 'OPP - ', RecordTypeId = AMS_Utils.RECTYPE_GDI_FS, StageName = 'Pending',
+			Related_Oscar__c = [SELECT Id FROM AMS_OSCAR__c LIMIT 1].Id, GDI_Offer_Id__c = '001');
 		insert opp;
 		
 		Test.stopTest();
@@ -81,8 +81,8 @@ public class ANG_OpportunityHandlerTest {
 		Test.startTest();
 		
 		Opportunity opp = new Opportunity(AccountId = [SELECT Id FROM account LIMIT 1].Id, CloseDate = Date.today(), CurrencyIsoCode = 'USD',
-			Name = 'OPP - ', RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Opportunity', 'GDI_FinancialSecurity'),
-			StageName = 'Pending', Related_Oscar__c = [SELECT Id FROM AMS_OSCAR__c LIMIT 1].Id);
+			Name = 'OPP - ', RecordTypeId = AMS_Utils.RECTYPE_GDI_FS, StageName = 'Pending',
+			Related_Oscar__c = [SELECT Id FROM AMS_OSCAR__c LIMIT 1].Id);
 		insert opp;
 		
 		AMS_OSCAR__c oscar = [SELECT Id, Endorsement_Requested__c, Endorsement_requested_date__c
@@ -110,8 +110,8 @@ public class ANG_OpportunityHandlerTest {
 		Test.startTest();
 		
 		Opportunity opp = new Opportunity(Related_Oscar__c = [SELECT Id FROM AMS_OSCAR__c LIMIT 1].Id, CloseDate = Date.today(),
-			AccountId = [SELECT Id FROM account LIMIT 1].Id, CurrencyIsoCode = 'USD', Name = 'OPP - ', RecordTypeId = 
-			RecordTypeSingleton.getInstance().getRecordTypeId('Opportunity', 'GDI_FinancialSecurity'), StageName = 'Pending', GDI_Offer_Id__c = '001');
+			AccountId = [SELECT Id FROM account LIMIT 1].Id, CurrencyIsoCode = 'USD', Name = 'OPP - ', RecordTypeId = AMS_Utils.RECTYPE_GDI_FS,
+			StageName = 'Pending', GDI_Offer_Id__c = '001');
 		insert opp;
 		
 		Test.stopTest();
