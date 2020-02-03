@@ -32,7 +32,7 @@ global class ANG_ISSP_MailIEPStatusInProgressToOpen {
 		for(Set<Id> idsPerAccount : accIdToUserIdMapIepAux.values())
 			allUserIds.addAll(idsPerAccount);
 
-		Map<Id,User> accIdToUserIdMapIep = new Map<Id,User>([SELECT Id FROM User WHERE isActive = true AND Contact.IsEmailBounced = false]);
+		Map<Id,User> accIdToUserIdMapIep = new Map<Id,User>([SELECT Id FROM User WHERE Id IN: allUserIds AND isActive = true AND Contact.IsEmailBounced = false]);
 
 		// Send emails
 
