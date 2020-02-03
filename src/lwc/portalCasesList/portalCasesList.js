@@ -26,10 +26,11 @@ import CSP_DateFrom from '@salesforce/label/c.CSP_DateFrom';
 import CSP_DateTo from '@salesforce/label/c.CSP_DateTo';
 import CSP_RemoveAllFilters from '@salesforce/label/c.CSP_RemoveAllFilters';
 import CSP_Apply from '@salesforce/label/c.CSP_Apply';
+import CSP_FAQReachUsBanner_ButtonText from '@salesforce/label/c.CSP_FAQReachUsBanner_ButtonText';
 
 export default class PortalCasesList extends NavigationMixin(LightningElement) {
 
-    label = {
+    @track label = {
         CSP_RecentCases,
         CSP_SeeAll,
         Created_By,
@@ -43,6 +44,7 @@ export default class PortalCasesList extends NavigationMixin(LightningElement) {
         CSP_DateFrom,
         CSP_DateTo,
         CSP_RemoveAllFilters,
+        CSP_FAQReachUsBanner_ButtonText,
         CSP_Apply
     };
 
@@ -61,7 +63,7 @@ export default class PortalCasesList extends NavigationMixin(LightningElement) {
         searchText : "",
         casesComponent : {
             loading : true,
-            nrResults : 0, 
+            nrResults : 0,
             caseTypeFilter : "",
             caseCountryFilter : "",
             caseContactFilter : "",
@@ -81,7 +83,7 @@ export default class PortalCasesList extends NavigationMixin(LightningElement) {
 
     @track viewCasesFiltersModal = false; //toggle for the popup
 
-    @track countryPickOptions = []; 
+    @track countryPickOptions = [];
     @track contactPickOptions = [];
 
     @track normalView = true; //stores if the user is viewing it's own cases
@@ -125,7 +127,7 @@ export default class PortalCasesList extends NavigationMixin(LightningElement) {
             //used to order alphabetically
             auxmyCountryOptions.sort((a, b) => { return (a.label).localeCompare(b.label) });
             myCountryOptions = myCountryOptions.concat(auxmyCountryOptions);
-            
+
             this.countryPickOptions = this.getPickWithAllValue(myCountryOptions);
         });
 
@@ -162,7 +164,7 @@ export default class PortalCasesList extends NavigationMixin(LightningElement) {
 
     searchWithNewFilters() {
         if(this.filteringObject !== undefined) {
-            
+
             //put the component and the results number into loading mode
             let filteringObjectAux = JSON.parse(JSON.stringify(this.filteringObject));
 
@@ -248,7 +250,7 @@ export default class PortalCasesList extends NavigationMixin(LightningElement) {
         }
     }
 
-    handleInputChange(event) {      
+    handleInputChange(event) {
         //update filtering object
         let filteringObjectAux = JSON.parse(JSON.stringify(this.filteringObject));
         filteringObjectAux.searchText = event.target.value;
@@ -316,7 +318,7 @@ export default class PortalCasesList extends NavigationMixin(LightningElement) {
     dateToOnchangeHandler(event) {
         let selectedValue = event.detail.value;
         this.dateToFiltersTemp = selectedValue;
-    }    
+    }
 
     applyFilters(){
         this.filtered = true;
@@ -380,6 +382,15 @@ export default class PortalCasesList extends NavigationMixin(LightningElement) {
         paginationObjectAux.currentPage = requestedPage;
         this.paginationObject = paginationObjectAux;
         this.retrieveResultsFromServer();
+	}
+
+	openReachUs() {
+        this[NavigationMixin.Navigate]({
+            type: "standard__namedPage",
+            attributes: {
+                pageName: "support-reach-us"
+            },
+        });
     }
 
 }

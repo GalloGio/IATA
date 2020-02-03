@@ -1881,6 +1881,10 @@
         <name>CSP_Account_Domain_Created</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_AddOrRemove_Recipients --></label>
+        <name>CSP_AddOrRemove_Recipients</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_Add_All --></label>
         <name>CSP_Add_All</name>
     </customLabels>
@@ -1959,10 +1963,6 @@
     <customLabels>
         <label><!-- CSP_Breadcrump_MyProfile_Title --></label>
         <name>CSP_Breadcrump_MyProfile_Title</name>
-    </customLabels>
-    <customLabels>
-        <label>您和 IATA</label>
-        <name>CSP_Breadcrump_You_IATA</name>
     </customLabels>
     <customLabels>
         <label>网上购物</label>
@@ -2557,7 +2557,7 @@
         <name>CSP_L2_Contact_Support</name>
     </customLabels>
     <customLabels>
-        <label>国家</label>
+        <label>国家/地区</label>
         <name>CSP_L2_Country</name>
     </customLabels>
     <customLabels>
@@ -3177,7 +3177,7 @@
         <name>CSP_Search_AdvancedSearch</name>
     </customLabels>
     <customLabels>
-        <label>国家</label>
+        <label>国家/地区</label>
         <name>CSP_Search_Case_Country</name>
     </customLabels>
     <customLabels>
@@ -3481,16 +3481,8 @@
         <name>CSP_Welcome_Title</name>
     </customLabels>
     <customLabels>
-        <label>您和 IATA</label>
-        <name>CSP_YouAndIATA</name>
-    </customLabels>
-    <customLabels>
         <label>为您精选的重点服务</label>
         <name>CSP_YouIATA_Highlights</name>
-    </customLabels>
-    <customLabels>
-        <label>您可以在这里发现各种 IATA 服务、出版物、产品和航空业的资源。根据您的兴趣和活动历史纪录特别定制。</label>
-        <name>CSP_YouIATA_Highlights_Text</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_You_Dont_Have_Announcements --></label>
@@ -3659,6 +3651,10 @@
     <customLabels>
         <label><!-- Click here --></label>
         <name>Click_here</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Close All Tabs --></label>
+        <name>Close_All_Tabs</name>
     </customLabels>
     <customLabels>
         <label><!-- Company --></label>
@@ -13885,6 +13881,18 @@ and
         <name>ISSP_AP_Form</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AP_New_Change_Bank_Details --></label>
+        <name>ISSP_AP_New_Change_Bank_Details</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_New_Change_Req --></label>
+        <name>ISSP_AP_New_Change_Req</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_New_Joining_App --></label>
+        <name>ISSP_AP_New_Joining_App</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AP_Partnership_Download_PDF --></label>
         <name>ISSP_AP_Partnership_Download_PDF</name>
     </customLabels>
@@ -20118,8 +20126,16 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>OneId_Fred_Select_Type_of_Company</name>
     </customLabels>
     <customLabels>
+        <label><!-- OneId GADM Terms of Use Link --></label>
+        <name>OneId_GADM_Terms_of_Use_Link</name>
+    </customLabels>
+    <customLabels>
         <label><!-- OneId GADM Troubleshooting --></label>
         <name>OneId_GADM_Troubleshooting</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId GADM Troubleshooting Link --></label>
+        <name>OneId_GADM_Troubleshooting_Link</name>
     </customLabels>
     <customLabels>
         <label>如果未找到任何符合您提供的 GSA 代码及国家组合的公司，请确保您输入了正确的信息或查询我们的&lt;a href=&quot;&quot;http://theiatahub.force.com/iatapkb/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US&quot;&quot; target=&quot;&quot;_blank&quot;&quot;&gt;故障排除指南&lt;/a&gt;</label>
@@ -21737,6 +21753,14 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>TSI_USA_Only</name>
     </customLabels>
     <customLabels>
+        <label><!-- Tab_Close --></label>
+        <name>Tab_Close</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Tab_Name --></label>
+        <name>Tab_Name</name>
+    </customLabels>
+    <customLabels>
         <label>任务</label>
         <name>Tasks_Notification</name>
     </customLabels>
@@ -22457,7 +22481,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>csp_SupportReachUs_ConcernTile</name>
     </customLabels>
     <customLabels>
-        <label>国家／地区</label>
+        <label>国家/地区</label>
         <name>csp_SupportReachUs_Country</name>
     </customLabels>
     <customLabels>
@@ -22851,6 +22875,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
     <customTabs>
         <label><!-- Apply RHC Equal to FS --></label>
         <name>Apply_RHC_Equal_to_FS</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- Attachment Manager --></label>
+        <name>AttachmentManager</name>
     </customTabs>
     <customTabs>
         <label>可用服务</label>

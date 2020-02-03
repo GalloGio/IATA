@@ -542,13 +542,12 @@ Values must be Separated by &quot;;&quot;</inlineHelpText>
         <columns>Reason_Code_Description__c</columns>
         <columns>Bulletin_Memo_Text__c</columns>
         <columns>CREATED_DATE</columns>
-        <columns>SETUP_OWNER_NAME</columns>
         <columns>LAST_UPDATE</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Change_Code__c</field>
-            <operation>equals</operation>
-            <value>FPY</value>
+            <operation>contains</operation>
+            <value>CLO</value>
         </filters>
         <label>AMS_debug</label>
         <language>en_US</language>
