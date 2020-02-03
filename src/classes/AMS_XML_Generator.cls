@@ -148,7 +148,7 @@ public with sharing class AMS_XML_Generator {
 
 	//Get XML for Agency SalesOrder to send to AW WS
 	public String getAgencySalesOrder(List<Agency_Applied_Change_code__c> agencies){
-		Set<String> gdiOrGdnChangeCode = new Set<String>{'GDI','GDN'};
+		Set<String> gdiOrGdnChangeCode = new Set<String>{AMS_Utils.GDI_CHANGE_CODE, AMS_Utils.GDN_CHANGE_CODE};
 
 		//Begin of XML tags
 		Dom.Document doc = new Dom.Document();

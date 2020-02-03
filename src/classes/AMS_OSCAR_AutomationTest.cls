@@ -48,15 +48,15 @@ private class AMS_OSCAR_AutomationTest {
 			*/
 			factory = manager.newClassInstance('AMS_OSCAR_Automation.AMS_OSCAR_Step9_succeeded');
 			System.assertEquals(true, factory.processWork(event, oscar));
-			System.assertEquals('Paid', oscar.Invoice_status__c);
+			System.assertEquals(AMS_Utils.INVOICE_STATUS_PAID, oscar.Invoice_status__c);
 
 			factory = manager.newClassInstance('AMS_OSCAR_Automation.AMS_OSCAR_Step9_failed');
 			System.assertEquals(true, factory.processWork(event, oscar));
-			System.assertEquals('Outstanding', oscar.Invoice_status__c);
+			System.assertEquals(AMS_Utils.INVOICE_STATUS_OUTSTANDING, oscar.Invoice_status__c);
 
 			factory = manager.newClassInstance('AMS_OSCAR_Automation.AMS_OSCAR_Step9_notApplicable');
 			System.assertEquals(true, factory.processWork(event, oscar));
-			System.assertEquals('N/A', oscar.Invoice_status__c);
+			System.assertEquals(AMS_Utils.INVOICE_STATUS_NA, oscar.Invoice_status__c);
 
 
 			/*
@@ -459,15 +459,15 @@ private class AMS_OSCAR_AutomationTest {
 			*/
 			factory = manager.newClassInstance('AMS_OSCAR_Automation.AMS_OSCAR_Step48_passed');
 			System.assertEquals(true, factory.processWork(event, oscar));
-			System.assertEquals('Paid', oscar.Invoice_status__c);
+			System.assertEquals(AMS_Utils.INVOICE_STATUS_PAID, oscar.Invoice_status__c);
 
 			factory = manager.newClassInstance('AMS_OSCAR_Automation.AMS_OSCAR_Step48_failed');
 			System.assertEquals(true, factory.processWork(event, oscar));
-			System.assertEquals('Outstanding', oscar.Invoice_status__c);
+			System.assertEquals(AMS_Utils.INVOICE_STATUS_OUTSTANDING, oscar.Invoice_status__c);
 
 		 		factory = manager.newClassInstance('AMS_OSCAR_Automation.AMS_OSCAR_Step48_notApplicable');
 			System.assertEquals(true, factory.processWork(event, oscar));
-			System.assertEquals('N/A', oscar.Invoice_status__c);
+			System.assertEquals(AMS_Utils.INVOICE_STATUS_NA, oscar.Invoice_status__c);
 
 
 			/*
