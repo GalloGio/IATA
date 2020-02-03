@@ -3281,6 +3281,13 @@ Payment required on receipt of this Payment Advice
         <value>Account Domain created</value>
     </labels>
     <labels>
+        <fullName>CSP_AddOrRemove_Recipients</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_AddOrRemove_Recipients</shortDescription>
+        <value>You can manage the people that you want to be informed about this case. Add new recipients or remove existing ones.</value>
+    </labels>
+    <labels>
         <fullName>CSP_Add_All</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -6244,7 +6251,7 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_Supported_File_Extensions</shortDescription>
-        <value>You can upload pdf, jpeg, jpg, png, ppt, pptx, xls,xlsx, tif, tiff, zip files. The size should
+        <value>You can upload pdf, jpeg, jpg, png, ppt, pptx, xls, xlsx, tif, tiff, doc, docx, zip files. The size should
                         be smaller than 50 MB.</value>
     </labels>
     <labels>
@@ -6618,7 +6625,7 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CaseValidation - Area</shortDescription>
-        <value>Accreditation,Airlines GSA/MSO,Airline Management,BSPlink/ASD,Cargo Operations,CASSlink,Customer Portal Enquiry,IATA General Information,iiNet,Invoicing,myIATA,Passenger Operations,Passenger Stock Management,Product Enquiry,Remittance &amp; Settlement,Risk Management,TIESS Support, MITA, Coding, Your VOICE - Annual Survey,IBSPs Migration, TASF, E&amp;F Services,E&amp;F Operations,Easy Pay,NewGen ISS,E&amp;F,SIS,ICH,iiNet,AirportIS,SIS Dispute/Correspondence,SIS e-Invoicing,SIS Fees,SIS File Submission,SIS Invoice Creation,SIS ISPG,SIS Receive invoices/Files,SIS Release Notes,SIS Reports,SIS User Guide,CargoIS,Direct Data Solutions (DDS),GAP,MarketIS,PaxIS,Airline Joining,Airline Leaving,New application - forms, procedures, fees,Agency Risk Management</value>
+        <value>Accreditation,Airlines GSA/MSO,Airline Management,BSPlink/ASD,Cargo Operations,CASSlink,Customer Portal Enquiry,IATA General Information,iiNet,Invoicing,myIATA,Passenger Operations,Passenger Stock Management,Product Enquiry,Remittance &amp; Settlement,Risk Management,TIESS Support, MITA, Coding, Your VOICE - Annual Survey,IBSPs Migration, TASF, E&amp;F Services,E&amp;F Operations,Easy Pay,NewGen ISS,E&amp;F,SIS,ICH,iiNet,AirportIS,SIS Dispute/Correspondence,SIS e-Invoicing,SIS Fees,SIS File Submission,SIS Invoice Creation,SIS ISPG,SIS Receive invoices/Files,SIS Release Notes,SIS Reports,SIS User Guide,CargoIS,Direct Data Solutions (DDS),GAP,MarketIS,PaxIS,Airline Joining,Airline Leaving,New application - forms, procedures, fees,Agency Risk Management,Airline and Location Coding</value>
     </labels>
     <labels>
         <fullName>CaseValidation_Area2</fullName>
@@ -6733,6 +6740,13 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <protected>false</protected>
         <shortDescription>Click here</shortDescription>
         <value>Click here</value>
+    </labels>
+    <labels>
+        <fullName>Close_All_Tabs</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Close All Tabs</shortDescription>
+        <value>Close All Tabs</value>
     </labels>
     <labels>
         <fullName>Company</fullName>
@@ -6908,7 +6922,7 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CurrencyCenter_All_Other_Countries</shortDescription>
-        <value>All Other Countries</value>
+        <value>All Other Countries / Territories</value>
     </labels>
     <labels>
         <fullName>CurrencyCenter_All_Others</fullName>
@@ -7416,7 +7430,7 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CurrencyCenter_Select_Country</shortDescription>
-        <value>Select Country</value>
+        <value>Select Country / Territory</value>
     </labels>
     <labels>
         <fullName>CurrencyCenter_Subject</fullName>
@@ -7493,7 +7507,7 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CurrencyCenter_Watch_List_Countries</shortDescription>
-        <value>Watch List Countries</value>
+        <value>Watch List Countries / Territories</value>
     </labels>
     <labels>
         <fullName>CurrencyCenter_Watch_List_Country</fullName>
@@ -20390,7 +20404,7 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_MSO_GSA_Country</shortDescription>
-        <value>Country</value>
+        <value>Country / Territory</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_MSO_GSA_Date_Appointment_Terminated</fullName>
@@ -24355,7 +24369,7 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_eBulletin_AvailableCountries</shortDescription>
-        <value>Available Countries</value>
+        <value>Available Countries /Territories</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_eBulletin_CASS</fullName>
@@ -24383,14 +24397,14 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_eBulletin_Countries</shortDescription>
-        <value>Countries</value>
+        <value>Countries / Territories</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_eBulletin_CountrySelection</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_eBulletin_CountrySelection</shortDescription>
-        <value>Country Selection</value>
+        <value>Country / Territory Selection</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_eBulletin_Country_SelectAll</fullName>
@@ -24662,7 +24676,7 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_eBulletin_SelectedCountries</shortDescription>
-        <value>Selected Countries</value>
+        <value>Selected Countries / Territories</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_eBulletin_Selection_Criteria</fullName>
@@ -26050,6 +26064,30 @@ Separate legal entities cannot share the same Legal Name.</value>
         <protected>false</protected>
         <shortDescription>ISSP_AP_Form</shortDescription>
         <value>Joining form</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AP_New_Change_Bank_Details</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_New_Change_Bank_Details</shortDescription>
+        <value>New Change of bank details</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AP_New_Change_Req</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_New_Change_Req</shortDescription>
+        <value>New Change Request</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AP_New_Joining_App</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_New_Joining_App</shortDescription>
+        <value>New Joining Application</value>
     </labels>
     <labels>
         <fullName>ISSP_AP_Partnership_Download_PDF</fullName>
@@ -41379,6 +41417,20 @@ title,Title,Name</value>
         <protected>false</protected>
         <shortDescription>TSI USA Only</shortDescription>
         <value>Travel Service Intermediaries-TSI (USA Only)</value>
+    </labels>
+    <labels>
+        <fullName>Tab_Close</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Tab_Close</shortDescription>
+        <value>Click To Close Tab</value>
+    </labels>
+    <labels>
+        <fullName>Tab_Name</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Tab_Name</shortDescription>
+        <value>Tab Name</value>
     </labels>
     <labels>
         <fullName>Tasks_Notification</fullName>
