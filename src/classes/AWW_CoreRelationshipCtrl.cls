@@ -60,7 +60,7 @@ public with sharing class AWW_CoreRelationshipCtrl {
 											WHERE (World_Wide_Account__c = :accountId OR Top_Parent__r.World_Wide_Account__c = :accountId) AND
 												RecordType.DeveloperName = 'IATA_Agency' AND IATACode__c <> null AND
 												Status__c IN ('Approved', 'ARC registered', 'Cash basis/no commission', 'Cash basis/with commission', 'Changes processed', 'Endorsed', 'Listed', 'Review', 'Under review') AND 
-												Location_Type__c IN ('GE', 'HE', 'HO', 'AO', 'AE', 'BR')
+												Location_Type__c IN ('GE', 'HE', 'HO', 'AO', 'AE', 'BR', 'AW', 'SA', 'ST')
 											GROUP BY Location_Type__c, Location_Class__c, RecordType.DeveloperName, Category__c, IATA_ISO_Country__r.ISO_Code__c, CNS_Agency__c];
 
 		List<Row> rows = new List<Row>();
@@ -77,6 +77,7 @@ public with sharing class AWW_CoreRelationshipCtrl {
 			'IATAN Codes' => 0,
 			'CNS Codes' => 0
 		};
+		Set<String>excludeCNSAndTIDSAndIATAN = new Set<String>{'GE', 'HE', 'HO', 'AO', 'AE', 'BR'};
 		Integer countTIDS = 0;
 		for(AggregateResult ar : groupedResults) {
 			String locationType = (String) ar.get('Location_Type__c');
@@ -87,10 +88,10 @@ public with sharing class AWW_CoreRelationshipCtrl {
 			Boolean cnsAgency = (Boolean) ar.get('CNS_Agency__c');
 			Integer totals = (Integer) ar.get('expr0');
 
-			if(rtype == 'IATA_Agency' && country == 'US' && category == 'IATA Passenger Sales Agent') {
+			if(rtype == 'IATA_Agency' && country == 'US' && category == 'IATAN Passenger Sales Agent (USA Only)' && !excludeCNSAndTIDSAndIATAN.contains(locationType)) {
 				Integer totalIATAN = mapLocationTypes.get('IATAN Codes');
 				mapLocationTypes.put('IATAN Codes', totalIATAN + totals);
-			}else if(cnsAgency && rtype == 'IATA_Agency') {
+			}else if(cnsAgency && rtype == 'IATA_Agency' && !excludeCNSAndTIDSAndIATAN.contains(locationType)) {
 				Integer totalCNS= mapLocationTypes.get('CNS Codes');
 				mapLocationTypes.put('CNS Codes', totalCNS + totals);
 			}else{

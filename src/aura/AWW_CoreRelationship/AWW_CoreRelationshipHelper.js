@@ -40,10 +40,14 @@
             var state = response.getState();
             if (component.isValid() && state === "SUCCESS") {                
                 var result = response.getReturnValue();
-                console.log(result);
                 let aux = result.iataRelations;
                 let popped = aux.pop();
                 component.set('v.data1',aux );
+                for(var i = 0; i < result.countries.length; i++){
+                    if(result.countries[i].label.includes(",")){
+                        result.countries[i].label = result.countries[i].label.replace(',', '');
+                    }
+                }
                 component.set('v.data2', result.countries);
                 component.set('v.data3', result.regions);
                 //result.externalRelationsPAX.unshift({label: 'Passenger', value: false});
@@ -68,7 +72,7 @@
         rows.push(['','']);
     },
     handleExport : function(component,rows) {        
-        var csvContent = 'data:text/csv;charset=utf-8,' + rows.map(e => e.join(';')).join('\n');
+        var csvContent = 'data:text/csv;charset=utf-8,' + rows.map(e => e.join(',')).join('\n');
         var encodedUri = encodeURI(csvContent);
         var encodedUri = encodeURI(csvContent);
         var link = document.createElement('a');
@@ -84,7 +88,6 @@
             var state = response.getState();
             if (component.isValid() && state === "SUCCESS") {                
                 var result = response.getReturnValue();
-                console.log(result);
                 component.set('v.haveAMPAgencyManagement',result );
             }   
         });

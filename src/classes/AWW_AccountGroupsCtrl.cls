@@ -164,7 +164,7 @@ public with sharing class AWW_AccountGroupsCtrl {
 			this.rowId = rowId;
 			this.rowId_collapse = 'collapse_' + rowId;
 			this.rowId_expand = 'expand_' + rowId;
-			this.groupName = 'Under ' + groupName;
+			this.groupName = groupName;
 			this.printableGoupName = groupName;
 			this.ownerName = ownerName;
 			this.childrens = new List<LocalGroup>();

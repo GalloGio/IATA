@@ -61,19 +61,19 @@
                                     
                                     <aura:iteration items="{!localGroup.childrens}" var="member">
                                         <tr id="{!localGroup.rowId +'-'+ member.rowId}" class="slds-hide">
-                                            <td >
+                                            <td  class="no-truncate">
                                                 <div style="display: flex; white-space: normal;">
                                                     <lightning:formattedUrl label="{!localGroup.groupName}" value="{!localGroup.groupLink}" target="_blank"/>
                                                 </div>
                                             </td>
                                             <td><c:AMP_LongText text="{!member.accountName}"/></td>
-                                            <td ><lightning:formattedText value="{!localGroup.ownerName}"/></td>
+                                            <td  class="no-truncate"><lightning:formattedText value="{!localGroup.ownerName}"/></td>
                                             <td ><c:AMP_LongText text="{!localGroup.mission}"/></td>
-                                            <td ><lightning:formattedText value="{!member.role}"/></td>
-                                            <td ><lightning:formattedText value="{!member.salutation}"/></td>
-                                            <td ><lightning:formattedText value="{!member.firstName}"/></td>
-                                            <td ><lightning:formattedText value="{!member.lastName}"/></td>
-                                            <td style="white-space: normal;">
+                                            <td class="no-truncate"><lightning:formattedText value="{!member.role}"/></td>
+                                            <td class="no-truncate"><lightning:formattedText value="{!member.salutation}"/></td>
+                                            <td class="no-truncate"><lightning:formattedText value="{!member.firstName}"/></td>
+                                            <td class="no-truncate"><lightning:formattedText value="{!member.lastName}"/></td>
+                                            <td style="white-space: normal;"  class="no-truncate">
                                                 <lightning:formattedText value="{!member.title}"/>
                                                 <aura:if isTrue="{!member.isRepresentative}">
                                                     <lightning:icon class="slds-m-left_xx-small" size="x-small" iconName="utility:info" alternativeText="info" />
