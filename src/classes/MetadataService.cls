@@ -42,51 +42,12 @@ public with sharing class MetadataService {
         private String[] type_att_info = new String[]{'xsi:type'};
         private String[] field_order_type_info = new String[]{'fullName', 'allowMergeFieldsInBody','allowMergeFieldsInHeader','authProvider','certificate','endpoint','generateAuthorizationHeader','label','oauthRefreshToken','oauthScope','oauthToken','password','principalType','protocol','username'};
     }
-
-    public class LogInfo {
-        public String category;
-        public String level;
-        private String[] category_type_info = new String[]{'category',SOAP_M_URI,null,'1','1','false'};
-        private String[] level_type_info = new String[]{'level',SOAP_M_URI,null,'1','1','false'};
-        private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] field_order_type_info = new String[]{'category','level'};
-    }
-
+    
     public class SessionHeader_element {
         public String sessionId;
         private String[] sessionId_type_info = new String[]{'sessionId',SOAP_M_URI,null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
         private String[] field_order_type_info = new String[]{'sessionId'};
-    }
-
-    public class DebuggingInfo_element {
-        public String debugLog;
-        private String[] debugLog_type_info = new String[]{'debugLog',SOAP_M_URI,null,'1','1','false'};
-        private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] field_order_type_info = new String[]{'debugLog'};
-    }
-
-    public class DebuggingHeader_element {
-        public MetadataService.LogInfo[] categories;
-        public String debugLevel;
-        private String[] categories_type_info = new String[]{'categories',SOAP_M_URI,null,'0','-1','false'};
-        private String[] debugLevel_type_info = new String[]{'debugLevel',SOAP_M_URI,null,'1','1','false'};
-        private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] field_order_type_info = new String[]{'categories','debugLevel'};
-    }
-
-    public class CallOptions_element {
-        public String client;
-        private String[] client_type_info = new String[]{'client',SOAP_M_URI,null,'1','1','false'};
-        private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] field_order_type_info = new String[]{'client'};
-    }
-
-    public class AllOrNoneHeader_element {
-        public Boolean allOrNone;
-        private String[] allOrNone_type_info = new String[]{'allOrNone',SOAP_M_URI,null,'1','1','false'};
-        private String[] apex_schema_type_info = new String[]{SOAP_M_URI,'true','false'};
-        private String[] field_order_type_info = new String[]{'allOrNone'};
     }
 
     public class Error {
@@ -170,10 +131,6 @@ public with sharing class MetadataService {
         public String clientCertPasswd_x;
         public Integer timeout_x;
         public MetadataService.SessionHeader_element SessionHeader;
-        public MetadataService.DebuggingInfo_element DebuggingInfo;
-        public MetadataService.DebuggingHeader_element DebuggingHeader;
-        public MetadataService.CallOptions_element CallOptions;
-        public MetadataService.AllOrNoneHeader_element AllOrNoneHeader;
         private String SessionHeader_hns = 'SessionHeader=http://soap.sforce.com/2006/04/metadata';
         private String DebuggingInfo_hns = 'DebuggingInfo=http://soap.sforce.com/2006/04/metadata';
         private String DebuggingHeader_hns = 'DebuggingHeader=http://soap.sforce.com/2006/04/metadata';

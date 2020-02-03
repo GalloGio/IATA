@@ -101,28 +101,13 @@ global class PostCopyScript implements SandboxPostCopy {
         service.SessionHeader.sessionId = UserInfo.getSessionId();
         return service;
 	}
-
-	/**
-	 * This create the service to update the Metadata:
-	*/
-	@TestVisible
-	private static List<MetadataService.SaveResult> updateMetadata(MetadataService.Metadata input){
-    	return createService().updateMetadata(new List<MetadataService.Metadata> { input });
-	}
-
-	/**
-	 * This create the service to delete the Metadata:
-	*/
-	@TestVisible
-	private static List<MetadataService.DeleteResult> deleteMetadata(String type, String fullName){
-    	return createService().deleteMetadata(type, new List<String> { fullName });
-	}
 	
 	/**
 	 * This method updates all the NamedCredentials by adding in the end of the endpoint "/test":
 	*/
 	@TestVisible
 	private void updateNamedCredentials(){
+		List<MetadataService.NamedCredential> namedCredentialList = new List<MetadataService.NamedCredential>();
 		for(NamedCredential  nc: [SELECT Id, MasterLabel,endpoint, DeveloperName,PrincipalType FROM NamedCredential]){
 			MetadataService.NamedCredential namedCredential = new MetadataService.NamedCredential();
 			namedCredential.fullName = nc.DeveloperName;
@@ -130,9 +115,10 @@ global class PostCopyScript implements SandboxPostCopy {
 			namedCredential.endpoint = nc.endpoint + '/test';
 			namedCredential.principalType = nc.PrincipalType;
 			namedCredential.protocol = 'NoAuthentication';
-			
-			updateMetadata(namedCredential);
+
+			namedCredentialList.add(namedCredential);
 		}
+		createService().updateMetadata(namedCredentialList);
 	}
 
 	/**
@@ -140,8 +126,10 @@ global class PostCopyScript implements SandboxPostCopy {
 	*/
 	@TestVisible
 	private void deleteConnectedApps(){
+		List<String> fullNameList = new List<String>();
 		for(ConnectedApplication ca: [SELECT Name FROM ConnectedApplication]){
-			deleteMetadata('ConnectedApp',ca.Name.replace(' ','_')); 
+			fullNameList.add(ca.Name.replace(' ','_'));
 		}
+		createService().deleteMetadata('ConnectedApp', fullNameList);
 	}
 }
