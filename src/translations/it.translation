@@ -1885,6 +1885,10 @@ la seguente procedura per completarlo :
         <name>CSP_Account_Domain_Created</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_AddOrRemove_Recipients --></label>
+        <name>CSP_AddOrRemove_Recipients</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_Add_All --></label>
         <name>CSP_Add_All</name>
     </customLabels>
@@ -3652,6 +3656,10 @@ la seguente procedura per completarlo :
     <customLabels>
         <label><!-- Click here --></label>
         <name>Click_here</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Close All Tabs --></label>
+        <name>Close_All_Tabs</name>
     </customLabels>
     <customLabels>
         <label><!-- Company --></label>
@@ -13881,6 +13889,18 @@ la funzione &quot;Password dimenticata?&quot;</label>
         <name>ISSP_AP_Form</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AP_New_Change_Bank_Details --></label>
+        <name>ISSP_AP_New_Change_Bank_Details</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_New_Change_Req --></label>
+        <name>ISSP_AP_New_Change_Req</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_New_Joining_App --></label>
+        <name>ISSP_AP_New_Joining_App</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AP_Partnership_Download_PDF --></label>
         <name>ISSP_AP_Partnership_Download_PDF</name>
     </customLabels>
@@ -21746,6 +21766,14 @@ Se desideri ripristinare la password, torna alla schermata di accesso e utilizza
     <customLabels>
         <label><!-- TSI USA Only --></label>
         <name>TSI_USA_Only</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Tab_Close --></label>
+        <name>Tab_Close</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Tab_Name --></label>
+        <name>Tab_Name</name>
     </customLabels>
     <customLabels>
         <label>Compiti</label>

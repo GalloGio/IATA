@@ -6,22 +6,22 @@ private class Product_Svc_Test
 	public static final Date DEFAULT_EFFECTIVE_END_DATE = Date.today().addYears(1);
 
 	static void setup() {
-	  List<IATA_ISO_Country__c> countryList = new List<IATA_ISO_Country__c> {
+		List<IATA_ISO_Country__c> countryList = new List<IATA_ISO_Country__c> {
 		new IATA_ISO_Country__c(
-		  Name = 'Test Country 1',
-		  ISO_Code__c = 'T1',
-		  Tax_ID_Mandatory__c = TRUE,
-		  VAT_Validation_Required__c = TRUE
+			Name = 'Test Country 1',
+			ISO_Code__c = 'T1',
+			Tax_ID_Mandatory__c = TRUE,
+			VAT_Validation_Required__c = TRUE
 		),
 		new IATA_ISO_Country__c(
-		  Name = 'Test Country 1',
-		  ISO_Code__c = 'T2',
-		  Tax_ID_Mandatory__c = FALSE,
-		  VAT_Validation_Required__c = FALSE
+			Name = 'Test Country 1',
+			ISO_Code__c = 'T2',
+			Tax_ID_Mandatory__c = FALSE,
+			VAT_Validation_Required__c = FALSE
 		)
-	  };
+		};
 
-	  insert countryList;
+		insert countryList;
 	}
 
 	@isTest(seeAllData=true)
@@ -34,12 +34,12 @@ private class Product_Svc_Test
 		}
 		Product_Information__c oProdInfo;
 		for (Product_Information__c pi : [select Id
-											   , (select Id, Name
-												  from Product_Rate_Plans_Information__r
-												  where Product_Rate_Plan__c in (select zqu__ProductRatePlan__c from zqu__ProductRatePlanCharge__c)
+												 , (select Id, Name
+													from Product_Rate_Plans_Information__r
+													where Product_Rate_Plan__c in (select zqu__ProductRatePlan__c from zqu__ProductRatePlanCharge__c)
 													and Is_Triable__c = false
-												  limit 1)
-										  from Product_Information__c])
+													limit 1)
+											from Product_Information__c])
 			if (pi.Product_Rate_Plans_Information__r.size() > 0)
 			{
 				oProdInfo = pi;
@@ -104,36 +104,6 @@ private class Product_Svc_Test
 		Database.executeBatch(new Product_Batch('ProductStockStatus', products));
 		Test.stopTest();
 	}
-
-	 static void test_processZProductSaveResult()
-	 {
-		 Test.startTest();
-		//processZProductSaveResult(List<Product2> products, List<Zuora.zApi.SaveResult> results)
-		List<Product2> products = TestDataGenerator.generateProducts(2, false);
-		List<Zuora.zObject> zobjects = TestDataGenerator.generateZProducts(2);
-		zobjects[0].setValue('SAP_Material_Number__c',products[0].SAP_Material_Number__c);
-		zobjects[1].setValue('SAP_Material_Number__c',products[1].SAP_Material_Number__c);
-
-		//Inject error
-		zobjects[1].setValue('EffectiveStartDate','');
-
-		List<Zuora.zApi.SaveResult> results = TestDataGenerator.generateSaveResults(zobjects, 'create');
-		results[0].Success = false;
-		results[0].Errors = new List<Zuora.zObject>();
-		Zuora.zObject err = new Zuora.zObject('Error');
-			err.setValue('Message', 'Invalid zObject');
-			err.setValue('Code', 'INVALID_FIELD');
-		results[0].Errors.add(err);
-
-
-		String result = Product_Svc.processZProductSaveResult(products, results);
-
-		System.debug('result::'+result);
-
-		Test.stopTest();
-	 }
-
-
 
 	@isTest(seeAllData=true)
 	static void test_setIsNewVersion()
@@ -233,7 +203,7 @@ private class Product_Svc_Test
 
 			Pricebook2 standardPriceBook =[select id from Pricebook2 where IsStandard=true];
 			List<PricebookEntry> pbe = [SELECT id,Product2Id from PricebookEntry WHERE Pricebook2Id = :standardPriceBook.Id AND Product2Id = :listProd[0].Id];
-		   //system.assertEquals(pbe[0].Product2Id, listProd[0].Id);
+			 //system.assertEquals(pbe[0].Product2Id, listProd[0].Id);
 
 		}
 
@@ -506,12 +476,4 @@ private class Product_Svc_Test
 		}
 
 	} //*** end of "test_Miscellaneous2"
-
-	static void testOthers() {
-		System.assert(Product_Svc.isEqual(null, null));
-		System.assert(Product_Svc.isEqual('', null));
-		System.assert(Product_Svc.isEqual(null, ''));
-		System.assert(! Product_Svc.isEqual('X', ''));
-	}
-
 }
