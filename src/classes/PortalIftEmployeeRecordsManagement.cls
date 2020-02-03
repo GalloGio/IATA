@@ -211,11 +211,6 @@ public without sharing class PortalIftEmployeeRecordsManagement {
 						accContRoleToInsert.Contact__r = contactToInsert;
 					}
 
-					IFTP_History__c ihrec = portalIftpHistoryManagement.createIftpHistoryRecord(portalIftpHistoryManagement.Employee_Start_Working_for_ITP,
-										accContRoleToInsert.Company_Code__c,
-										contactToInsert.FirstName,
-										contactToInsert.LastName);
-					portalIftpHistoryManagement.insertIntoIftpHistory(ihrec);
 
 					rw.result_message = 'Employee added successfully.';
 					rw.succeeded = true;

@@ -155,9 +155,8 @@ public without sharing class portalIftpTrainingRecords {
 																	AND Primary__c = TRUE];
 			Map<Id, String> employeePrimaryStationMap = new Map<Id, String>();
 			for(Role_Address__c rec: employeesWithPrimaryStation){
-				if(rec.Primary__c){
-					String primary = rec.Address__r.Code__c + ' - ' + rec.Address__r.Description__c;
-					employeePrimaryStationMap.put(rec.Account_Contact_Role__c, primary);
+				if(rec.Primary__c){				
+					employeePrimaryStationMap.put(rec.Account_Contact_Role__c, rec.Address__r.Code__c);
 				}
 			}
 

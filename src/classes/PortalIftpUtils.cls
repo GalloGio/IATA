@@ -877,12 +877,7 @@ public without sharing class PortalIftpUtils {
 						} else{
 							contactsToInsert.add(cont);
 							accContRoleToInsert.add(accContRole);
-							isInsert = true;
-							ihrec = portalIftpHistoryManagement.createIftpHistoryRecord(portalIftpHistoryManagement.Employee_Start_Working_for_ITP,
-																		accContRole.Company_Code__c,
-																		cont.FirstName,
-																		cont.LastName);
-							IftpHistoryStartWorkingItp.add(ihrec);
+							isInsert = true;						
 						}
 
 						ImportResultsWrapper irw = new ImportResultsWrapper(
