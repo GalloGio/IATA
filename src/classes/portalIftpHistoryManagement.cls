@@ -23,26 +23,25 @@ public without sharing class portalIftpHistoryManagement {
 	}
 
 
-	public static List<IFTP_History__c>  generateMassIFTPHistoryStartWorkingForITP(set<id> accContRlIdList){
+	public static void  generateMassIFTPHistoryStartWorkingForITP(set<id> accContRlIdList){
 		list<Account_Contact_Role__C> accRoleList = [select id,Account_Role__r.account__r.Name, First_Name__c, Last_Name__c,Company_Code__c from Account_Contact_Role__C where id in :accContRlIdList];
 		List<IFTP_History__c> IftpHistoryRecordsToBeInserted = new List<IFTP_History__c>();
-        for(Account_Contact_role__C acr:accRoleList){
-            
-            IFTP_History__c ihrec = portalIftpHistoryManagement.createIftpHistoryRecord(portalIftpHistoryManagement.Employee_Start_Working_for_ITP,
+		for(Account_Contact_role__C acr:accRoleList){
+			
+			IFTP_History__c ihrec = portalIftpHistoryManagement.createIftpHistoryRecord(portalIftpHistoryManagement.Employee_Start_Working_for_ITP,
 			acr.Company_Code__c,
 			acr.Account_Role__r.account__r.Name,
 			acr.First_Name__C,
-            acr.Last_Name__c);
-            
-            IftpHistoryRecordsToBeInserted.add(ihrec);
-            
-        }
-
-        if(IftpHistoryRecordsToBeInserted.size() > 0){
+			acr.Last_Name__c);
 			
-			list<Database.SaveResult> saveResultList = Database.insert(IftpHistoryRecordsToBeInserted, true);
+			IftpHistoryRecordsToBeInserted.add(ihrec);
+			
 		}
-		return IftpHistoryRecordsToBeInserted;
+
+		if(IftpHistoryRecordsToBeInserted.size() > 0){
+			
+			insert IftpHistoryRecordsToBeInserted;
+		}
 	}
 
 	@AuraEnabled (cacheable=false)
