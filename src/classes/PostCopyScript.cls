@@ -11,7 +11,6 @@ global class PostCopyScript implements SandboxPostCopy {
 		deleteConnectedApps();
 	}
 
-
 	/**
 	 * This method deletes the following custom settings records:
 	 * AMS BSPLink Integration, AMS SAP Settings, IEC SAP Settings, IEC Settings , HPM Setting, ISSP Kavi Setting and Apex Setting
@@ -92,6 +91,9 @@ global class PostCopyScript implements SandboxPostCopy {
 			update lstQueues;
 	}
 
+	/**
+	 * This create a service to connect with MetadataAPI service:
+	*/
 	@TestVisible
 	private static MetadataService.MetadataPort createService(){
         MetadataService.MetadataPort service = new MetadataService.MetadataPort();
@@ -100,16 +102,25 @@ global class PostCopyScript implements SandboxPostCopy {
         return service;
 	}
 
+	/**
+	 * This create the service to update the Metadata:
+	*/
 	@TestVisible
 	private static List<MetadataService.SaveResult> updateMetadata(MetadataService.Metadata input){
     	return createService().updateMetadata(new List<MetadataService.Metadata> { input });
 	}
 
+	/**
+	 * This create the service to delete the Metadata:
+	*/
 	@TestVisible
 	private static List<MetadataService.DeleteResult> deleteMetadata(String type, String fullName){
     	return createService().deleteMetadata(type, new List<String> { fullName });
 	}
 	
+	/**
+	 * This method updates all the NamedCredentials by adding in the end of the endpoint "/test":
+	*/
 	@TestVisible
 	private void updateNamedCredentials(){
 		for(NamedCredential  nc: [SELECT Id, MasterLabel,endpoint, DeveloperName,PrincipalType FROM NamedCredential]){
@@ -124,6 +135,9 @@ global class PostCopyScript implements SandboxPostCopy {
 		}
 	}
 
+	/**
+	 * This method delete all ConnectedApps from the ORG:
+	*/
 	@TestVisible
 	private void deleteConnectedApps(){
 		for(ConnectedApplication ca: [SELECT Name FROM ConnectedApplication]){
