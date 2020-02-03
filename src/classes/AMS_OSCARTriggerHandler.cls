@@ -4922,6 +4922,7 @@ public class AMS_OSCARTriggerHandler {
 			else
 				ANG_RME_Alert_Service.runGDIEndorsementCertificate(key, iataCodes.get(key));
 	}
+	}
 
 	private static Boolean isAgencyInStatus(String targetStatus, Id accountId){
 		List<Account> acctLst = getAccounts(accountId);
