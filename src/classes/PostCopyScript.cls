@@ -7,7 +7,8 @@ global class PostCopyScript implements SandboxPostCopy {
 
 		deleteCustomSettingsRecords();
 		updateQueuesEmail();
-
+		updateNamedCredentials();
+		deleteConnectedApps();
 	}
 
 
@@ -91,4 +92,42 @@ global class PostCopyScript implements SandboxPostCopy {
 			update lstQueues;
 	}
 
+	@TestVisible
+	private static MetadataService.MetadataPort createService(){
+        MetadataService.MetadataPort service = new MetadataService.MetadataPort();
+        service.SessionHeader = new MetadataService.SessionHeader_element();
+        service.SessionHeader.sessionId = UserInfo.getSessionId();
+        return service;
+	}
+
+	@TestVisible
+	private static List<MetadataService.SaveResult> updateMetadata(MetadataService.Metadata input){
+    	return createService().updateMetadata(new List<MetadataService.Metadata> { input });
+	}
+
+	@TestVisible
+	private static List<MetadataService.DeleteResult> deleteMetadata(String type, String fullName){
+    	return createService().deleteMetadata(type, new List<String> { fullName });
+	}
+	
+	@TestVisible
+	private void updateNamedCredentials(){
+		for(NamedCredential  nc: [SELECT Id, MasterLabel,endpoint, DeveloperName,PrincipalType FROM NamedCredential]){
+			MetadataService.NamedCredential namedCredential = new MetadataService.NamedCredential();
+			namedCredential.fullName = nc.DeveloperName;
+			namedCredential.label = nc.MasterLabel;
+			namedCredential.endpoint = nc.endpoint + '/test';
+			namedCredential.principalType = nc.PrincipalType;
+			namedCredential.protocol = 'NoAuthentication';
+			
+			updateMetadata(namedCredential);
+		}
+	}
+
+	@TestVisible
+	private void deleteConnectedApps(){
+		for(ConnectedApplication ca: [SELECT Name FROM ConnectedApplication]){
+			deleteMetadata('ConnectedApp',ca.Name.replace(' ','_')); 
+		}
+	}
 }
