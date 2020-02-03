@@ -312,7 +312,7 @@
         <externalId>false</externalId>
         <label>Logged User</label>
         <length>255</length>
-        <required>true</required>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
