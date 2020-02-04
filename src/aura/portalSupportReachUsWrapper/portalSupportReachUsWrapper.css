@@ -39,7 +39,7 @@
   color: #ffffff;
   min-height: 40px;
   width: 60px;
-  word-break: normal;
+  word-break: break-word;
   border: none;
 }
 
@@ -60,7 +60,7 @@
   color: #ffffff;
   min-height: 40px;
   width: 60px;
-  word-break: normal;
+  word-break: break-word;
   border: none;
 }
 
@@ -80,7 +80,7 @@
   color: #ffffff;
   min-height: 40px;
   width: 60px;
-  word-break: normal;
+  word-break: break-word;
   border: none;
 }
 
@@ -101,7 +101,7 @@
   color: #ffffff;
   min-height: 40px;
   width: 220px;
-  word-break: break-all;
+  word-break: break-word;
   border: none;
 }
 
@@ -119,7 +119,7 @@
   color: #ffffff;
   min-height: 40px;
   width: 220px;
-  word-break: break-all;
+  word-break: break-word;
   border: none;
 }
 
