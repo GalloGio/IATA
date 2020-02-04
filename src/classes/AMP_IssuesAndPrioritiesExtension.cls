@@ -39,7 +39,6 @@ public with sharing class AMP_IssuesAndPrioritiesExtension {
 		canEdit = getCanEdit();
 		lsIssuesAndPriorities = new List<Objective__c>();
 		lsIssuesAndPriorities = getIssuesAndPriorities();
-		System.debug(this.objectiveRecordTypeId);
 	}
 
 	public String getJSONIssuesAndPriorities() {
@@ -149,7 +148,6 @@ public with sharing class AMP_IssuesAndPrioritiesExtension {
 
 	public PageReference filterIssuesAndPriorities() {
 		lsIssuesAndPriorities = getIssuesAndPriorities();
-		System.debug(lsIssuesAndPriorities);
 		return null;
 	}
 
@@ -200,7 +198,6 @@ public with sharing class AMP_IssuesAndPrioritiesExtension {
 		' AND RecordTypeId = \'' + objectiveRecordTypeId+ '\'';
 		// if(!showAllItems) queryString += ' AND Status__c =  \'Active\'';
 		if(sortOrder != null) queryString += ' ORDER BY ' + sortOrder + ' ';
-		System.debug(queryString);
 		List<SObject> lsSObjects = Database.query(queryString);
 		for(SObject s : lsSObjects) {
 			lsIssuesAndPriorities.add((Objective__c) s);
@@ -215,7 +212,6 @@ public with sharing class AMP_IssuesAndPrioritiesExtension {
 			Id objectiveRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Objective__c', 'Account_Issues_and_Priorities');
 			issue.RecordTypeId = objectiveRecordTypeId;
 		}
-		System.debug(issue);
 		upsert issue;
 		return issue;
 	}
@@ -280,7 +276,6 @@ public with sharing class AMP_IssuesAndPrioritiesExtension {
 					delete newLine;
 					lsIssuesAndPriorities = getIssuesAndPriorities();
 					} catch (DMLException e) {
-						System.debug(e);
 						ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,e.getMessage()));
 					}
 				}
@@ -321,7 +316,6 @@ public with sharing class AMP_IssuesAndPrioritiesExtension {
 		}
 		
 		public String getReportTypeDeveloperName(Id accountID) {
-			System.debug('accountID :::'+accountID);
 			return [SELECT Id, RecordType.DeveloperName FROM Account WHERE Id = :accountID].RecordType.DeveloperName;
 		}
 
