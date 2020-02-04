@@ -77,7 +77,6 @@
         <fields>Employee_Last_Name__c</fields>
         <fields>Event_Type__c</fields>
         <fields>ITP_Name__c</fields>
-        <fields>Logged_User__c</fields>
     </miniLayout>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
