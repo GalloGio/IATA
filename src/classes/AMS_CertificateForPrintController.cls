@@ -7,7 +7,7 @@ public class AMS_CertificateForPrintController {
 				List<List<wrapaccount>> allAccounts = new List<List<wrapaccount>>();
 				List<wrapaccount> accounts = new List<wrapaccount>();
 				for(Account acc : [SELECT Id, Name, TradeName__c, Sector__c, Legal_name__c, IATACode__c, CASS_Number__c, Check_Digit__c, Location_Class__c, Region_formula__c, BillingCity, IATA_ISO_Country__r.Name FROM Account WHERE Id IN :accountIds order by iata_iso_country__r.name, Name]){ 
-					wrapaccount newAccount = new wrapaccount(acc, calcTextSize(acc.Name, acc.TradeName__c), calcTopPosition(acc.Name, acc.TradeName__c), calcBottomPosition(acc.Name, acc.TradeName__c), calcTradeNameSize(acc.Name, acc.TradeName__c), calcTopBigNameSmallTradeName(acc.Name, acc.TradeName__c), calcBottomBigNameSmallTradeName(acc.Name, acc.TradeName__c));
+					wrapaccount newAccount = new wrapaccount(acc);
 					accounts.add(newAccount);
 
 					if(accounts.size() == 1000){
@@ -21,94 +21,6 @@ public class AMS_CertificateForPrintController {
 		}
 	}
 
-	public Decimal calcTextSize(String accountName, String tradeName){
-		Integer tradeNameSize =  0;
-		if(!String.isBlank(tradeName)){
-			tradeNameSize =  tradeName.length();
-		}
-		Integer nameSize =  accountName.length();
-		if(nameSize > 32 && nameSize < 65 && tradeNameSize < 59){
-			return 2.0;
-		}else if(nameSize > 64){
-			return (64 * 2.9)/nameSize;	 
-		}else{
-			return 2.9;	 
-		}
-	}
-
-	public Integer calcTopPosition(String accountName, String tradeName){
-		Integer tradeNameSize =  0;
-		if(!String.isBlank(tradeName)){
-			tradeNameSize =  tradeName.length();
-		}
-		Integer nameSize =  accountName.length();
-		if(nameSize > 64 || tradeNameSize > 58 || (nameSize > 32 && nameSize < 65 && tradeNameSize < 59)){
-			return 103;
-		}else if(nameSize > 32 && nameSize < 65){
-			return 73;	 
-		}else{
-			return 103;	 
-		}
-	}
-
-	public Integer calcBottomPosition(String accountName, String tradeName){
-		Integer tradeNameSize =  0;
-		if(!String.isBlank(tradeName)){
-			tradeNameSize =  tradeName.length();
-		}
-		Integer nameSize =  accountName.length();
-
-		if(nameSize > 64 || tradeNameSize > 58 || (nameSize > 32 && nameSize < 65 && tradeNameSize < 59)){
-			return 50;
-		}else if(nameSize > 32 && nameSize < 65){
-			return 80;	 
-		}else{
-			return 50;	 
-		}
-	}
-	public Integer calcTradeNameSize(String accountName, String tradeName){
-		Integer tradeNameSize =  0;
-		if(!String.isBlank(tradeName)){
-			tradeNameSize =  tradeName.length();
-		}
-		Integer nameSize =  accountName.length();
-		if(nameSize > 32 && nameSize < 65 && tradeNameSize < 59){
-			return 25;
-		}else if(nameSize > 64 || tradeNameSize > 58){
-			return 20;	 
-		}else{
-			return 30;	 
-		}
-	}
-
-	public Integer calcTopBigNameSmallTradeName(String accountName, String tradeName){
-		Integer tradeNameSize =  0;
-		if(!String.isBlank(tradeName)){
-			tradeNameSize =  tradeName.length();
-		}
-		Integer nameSize =  accountName.length();
-
-		if(nameSize > 32 && nameSize < 64 && tradeNameSize > 58){
-			return 52; 
-		}else{
-			return 22;	 
-		}
-	}
-
-	public Integer calcBottomBigNameSmallTradeName(String accountName, String tradeName){
-		Integer tradeNameSize =  0;
-		if(!String.isBlank(tradeName)){
-			tradeNameSize =  tradeName.length();
-		}
-		Integer nameSize =  accountName.length();
-
-		if(nameSize > 32 && nameSize < 64 && tradeNameSize > 58){
-			return 10; 
-		}else{
-			return 40;	 
-		}
-	}
-
 	public class wrapaccount{
 		public account accn{get;set;}
 		public String textSize{get;set;}
@@ -118,14 +30,48 @@ public class AMS_CertificateForPrintController {
 		public String bottomBigNameSmallTradeName{get;set;}
 		public String topBigNameSmallTradeName{get;set;}
 		
-		public wrapaccount(account a, Decimal size, Integer topPosition, Integer bottomPosition, Integer tradeNameSize, Integer topBigNameSmallTradeNameAux, Integer bottomBigNameSmallTradeNameAux){
+		public wrapaccount(account a){
 			accn=a;
-			textSize = String.valueOf(size);
-			topSizePosition = String.valueOf(topPosition);
-			bottomtSizePosition = String.valueOf(bottomPosition);
-			tradeNameTextSize = String.valueOf(tradeNameSize);
-			topBigNameSmallTradeName = String.valueOf(topBigNameSmallTradeNameAux);
-			bottomBigNameSmallTradeName = String.valueOf(bottomBigNameSmallTradeNameAux);
+			Integer tradeNameSize =  0;
+			if(!String.isBlank(a.TradeName__c)){
+				tradeNameSize =  a.TradeName__c.length();
+			}
+			Integer nameSize =  a.Name.length();
+
+			if(nameSize > 32 && nameSize < 65 && tradeNameSize < 59){
+				textSize = String.valueOf(2.0);
+			}else if(nameSize > 64){
+				textSize = String.valueOf((64 * 2.9)/nameSize);	 
+			}else{
+				textSize = String.valueOf(2.9);	 
+			}
+
+			if(nameSize > 64 || tradeNameSize > 58 || (nameSize > 32 && nameSize < 65 && tradeNameSize < 59)){
+				topSizePosition = String.valueOf(103);
+				bottomtSizePosition = String.valueOf(50);
+			}else if(nameSize > 32 && nameSize < 65){
+				topSizePosition = String.valueOf(73); 
+				bottomtSizePosition = String.valueOf(80);
+			}else{
+				topSizePosition = String.valueOf(103);
+				bottomtSizePosition = String.valueOf(50);	 
+			}
+
+			if(nameSize > 32 && nameSize < 65 && tradeNameSize < 59){
+				tradeNameTextSize = String.valueOf(25);
+			}else if(nameSize > 64 || tradeNameSize > 58){
+				tradeNameTextSize = String.valueOf(20);	 
+			}else{
+				tradeNameTextSize = String.valueOf(30); 
+			}
+
+			if(nameSize > 32 && nameSize < 64 && tradeNameSize > 58){
+				topBigNameSmallTradeName = String.valueOf(52); 
+				bottomBigNameSmallTradeName = String.valueOf(10);
+			}else{
+				topBigNameSmallTradeName = String.valueOf(22); 
+				bottomBigNameSmallTradeName = String.valueOf(40);
+			}
 		}
 	}
 
