@@ -3281,6 +3281,13 @@ Payment required on receipt of this Payment Advice
         <value>Account Domain created</value>
     </labels>
     <labels>
+        <fullName>CSP_AddOrRemove_Recipients</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_AddOrRemove_Recipients</shortDescription>
+        <value>You can manage the people that you want to be informed about this case. Add new recipients or remove existing ones.</value>
+    </labels>
+    <labels>
         <fullName>CSP_Add_All</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -6244,7 +6251,7 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_Supported_File_Extensions</shortDescription>
-        <value>You can upload pdf, jpeg, jpg, png, ppt, pptx, xls,xlsx, tif, tiff, zip files. The size should
+        <value>You can upload pdf, jpeg, jpg, png, ppt, pptx, xls, xlsx, tif, tiff, doc, docx, zip files. The size should
                         be smaller than 50 MB.</value>
     </labels>
     <labels>
@@ -6735,6 +6742,13 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <value>Click here</value>
     </labels>
     <labels>
+        <fullName>Close_All_Tabs</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Close All Tabs</shortDescription>
+        <value>Close All Tabs</value>
+    </labels>
+    <labels>
         <fullName>Company</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -6908,7 +6922,7 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CurrencyCenter_All_Other_Countries</shortDescription>
-        <value>All Other Countries</value>
+        <value>All Other Countries / Territories</value>
     </labels>
     <labels>
         <fullName>CurrencyCenter_All_Others</fullName>
@@ -7416,7 +7430,7 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CurrencyCenter_Select_Country</shortDescription>
-        <value>Select Country</value>
+        <value>Select Country / Territory</value>
     </labels>
     <labels>
         <fullName>CurrencyCenter_Subject</fullName>
@@ -7493,7 +7507,7 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CurrencyCenter_Watch_List_Countries</shortDescription>
-        <value>Watch List Countries</value>
+        <value>Watch List Countries / Territories</value>
     </labels>
     <labels>
         <fullName>CurrencyCenter_Watch_List_Country</fullName>
@@ -15978,7 +15992,7 @@ period of validity (i.e. 12 months from the date of issue or for an indefinite p
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMC_EXISTING_CASE</shortDescription>
-        <value>Your company has already create a case to request the code. 
+        <value>Your company has already create a case to request the code.
 Click here to view the case number:</value>
     </labels>
     <labels>
@@ -16508,7 +16522,7 @@ which states &quot;XXX airline has granted authority to XXX freight forwarder to
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMC_NO_AIR_OPERATOR_CERTIFICATION</shortDescription>
-        <value>A new airline may be assigned a provisional airline designator code when written notification is received from the relevant Civil Aviation Authority that states an airline is substantially meeting the requirements for the instance of an Air Operating certificate. 
+        <value>A new airline may be assigned a provisional airline designator code when written notification is received from the relevant Civil Aviation Authority that states an airline is substantially meeting the requirements for the instance of an Air Operating certificate.
 A provisional assignment shall be valid for a non-renewable period of six (6) months, and is for internal use only.</value>
     </labels>
     <labels>
@@ -20457,7 +20471,7 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_MSO_GSA_Country</shortDescription>
-        <value>Country</value>
+        <value>Country / Territory</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_MSO_GSA_Date_Appointment_Terminated</fullName>
@@ -24752,7 +24766,7 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_eBulletin_AvailableCountries</shortDescription>
-        <value>Available Countries</value>
+        <value>Available Countries /Territories</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_eBulletin_CASS</fullName>
@@ -24780,14 +24794,14 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_eBulletin_Countries</shortDescription>
-        <value>Countries</value>
+        <value>Countries / Territories</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_eBulletin_CountrySelection</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_eBulletin_CountrySelection</shortDescription>
-        <value>Country Selection</value>
+        <value>Country / Territory Selection</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_eBulletin_Country_SelectAll</fullName>
@@ -25059,7 +25073,7 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_eBulletin_SelectedCountries</shortDescription>
-        <value>Selected Countries</value>
+        <value>Selected Countries / Territories</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_eBulletin_Selection_Criteria</fullName>
@@ -26454,6 +26468,30 @@ Separate legal entities cannot share the same Legal Name.</value>
         <protected>false</protected>
         <shortDescription>ISSP_AP_PASS_Form_Administrators_Recommendation</shortDescription>
         <value>Recommendation:  Each Airline should have one or two Administrators.  The Administrator in each Airline/GSSA is responsible for creating, updating, assigning permissions and deleting Users for the purpose of manaing their activities in PASS. The Administrator also assign the roles and functionality access to their Users in the Airlines.</value>
+	</labels>
+	<labels>
+        <fullName>ISSP_AP_New_Change_Bank_Details</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_New_Change_Bank_Details</shortDescription>
+        <value>New Change of bank details</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AP_New_Change_Req</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_New_Change_Req</shortDescription>
+        <value>New Change Request</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AP_New_Joining_App</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_New_Joining_App</shortDescription>
+        <value>New Joining Application</value>
     </labels>
     <labels>
         <fullName>ISSP_AP_Partnership_Download_PDF</fullName>
@@ -27233,7 +27271,7 @@ Also note that the data contained in ICE is provided to IATA by third parties at
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_CalendarDisclaimer</shortDescription>
-        <value>&quot;Note: The calendar for this market contains local specific dates that are not reflected in this application. 
+        <value>&quot;Note: The calendar for this market contains local specific dates that are not reflected in this application.
 Please make sure you download the full pdf version of the Calendar for your market by clicking on the support tab and then selecting calendars under documents on the right hand side of the page.&quot;</value>
     </labels>
     <labels>
@@ -36346,12 +36384,12 @@ You can choose one or more of the following topics:</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>KPI1RT</shortDescription>
-        <value>CasesMENA 
-CasesAmericas 
-ExternalCasesIDFSglobal 
-Cases_China_North_Asia 
-CasesEurope 
-ComplaintIDFS 
+        <value>CasesMENA
+CasesAmericas
+ExternalCasesIDFSglobal
+Cases_China_North_Asia
+CasesEurope
+ComplaintIDFS
 InternalCasesEuropeSCE</value>
     </labels>
     <labels>
@@ -36359,14 +36397,14 @@ InternalCasesEuropeSCE</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>KPI1Reason</shortDescription>
-        <value>CHC – Change of Shareholding 
-CHO / CHS – Change of Ownership / Legal Status 
-CHN - Change of Name 
-New HO 
-Financial RVW intermediaries 
-New HE lite 
-New HE standard 
-Accreditation Type 
+        <value>CHC – Change of Shareholding
+CHO / CHS – Change of Ownership / Legal Status
+CHN - Change of Name
+New HO
+Financial RVW intermediaries
+New HE lite
+New HE standard
+Accreditation Type
 New EAA - Application process for European Accredited Agent</value>
     </labels>
     <labels>
@@ -36374,16 +36412,16 @@ New EAA - Application process for European Accredited Agent</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>KPI2</shortDescription>
-        <value>New BR / IP 
-CHL - Change of Location 
-New SA / CHV – New Code 
-Direct Debit Setup/Update 
-VMFR Setup/Update 
-CLO - Closure 
-New AE 
-FoP Management 
-New HE lite 
-Accreditation Type 
+        <value>New BR / IP
+CHL - Change of Location
+New SA / CHV – New Code
+Direct Debit Setup/Update
+VMFR Setup/Update
+CLO - Closure
+New AE
+FoP Management
+New HE lite
+Accreditation Type
 CHG – Data Maintenance</value>
     </labels>
     <labels>
@@ -41002,26 +41040,26 @@ Also, the package has changed the setting to prevent the creation of Contacts an
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ProcessEffAge</shortDescription>
-        <value>New HO 
-CHG – Data Maintenance 
-CLO - Closure 
-CHL - Change of Location 
-New BR Abroad 
-Termination 
-CHO / CHS – Change of Ownership / Legal Status 
-CHN - Change of Name 
-New BR / IP 
-CHC – Change of Shareholding 
-New SA / CHV – New Code 
-GSA / MSO / Handling Agent 
-Direct Debit Setup/Update 
-VMFR Setup/Update 
-Reinstatement 
-AIMS Data Entry 
-CAD – Data Maintenance 
-Review 
-Review withdrawal 
-Minor Database Changes 
+        <value>New HO
+CHG – Data Maintenance
+CLO - Closure
+CHL - Change of Location
+New BR Abroad
+Termination
+CHO / CHS – Change of Ownership / Legal Status
+CHN - Change of Name
+New BR / IP
+CHC – Change of Shareholding
+New SA / CHV – New Code
+GSA / MSO / Handling Agent
+Direct Debit Setup/Update
+VMFR Setup/Update
+Reinstatement
+AIMS Data Entry
+CAD – Data Maintenance
+Review
+Review withdrawal
+Minor Database Changes
 Financial RVW intermediaries</value>
     </labels>
     <labels>
@@ -41815,6 +41853,20 @@ title,Title,Name</value>
         <protected>false</protected>
         <shortDescription>TSI USA Only</shortDescription>
         <value>Travel Service Intermediaries-TSI (USA Only)</value>
+    </labels>
+    <labels>
+        <fullName>Tab_Close</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Tab_Close</shortDescription>
+        <value>Click To Close Tab</value>
+    </labels>
+    <labels>
+        <fullName>Tab_Name</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Tab_Name</shortDescription>
+        <value>Tab Name</value>
     </labels>
     <labels>
         <fullName>Tasks_Notification</fullName>
@@ -43039,11 +43091,11 @@ title,Title,Name</value>
         <protected>false</protected>
         <shortDescription>Request New Service</shortDescription>
         <value>Your Agency currently does not have an open IATA EasyPay Account.&lt;br/&gt;&lt;br/&gt;
-        Please contact your Head Office&apos;s Authorized Signatory to request them to open an IATA EasyPay Account. 
-        As a Portal Administrator you can either update your 
+        Please contact your Head Office&apos;s Authorized Signatory to request them to open an IATA EasyPay Account.
+        As a Portal Administrator you can either update your
         {0}
-        to designate yourself as a Legal Authorized Signatory, or assign the correct portal admin from the 
-        {1} 
+        to designate yourself as a Legal Authorized Signatory, or assign the correct portal admin from the
+        {1}
         page and ask them to open your EasyPay account.
         &lt;br/&gt;
         &lt;br/&gt;
