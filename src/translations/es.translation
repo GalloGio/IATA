@@ -1883,6 +1883,10 @@
         <name>CSP_Account_Domain_Created</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_AddOrRemove_Recipients --></label>
+        <name>CSP_AddOrRemove_Recipients</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_Add_All --></label>
         <name>CSP_Add_All</name>
     </customLabels>
@@ -1961,10 +1965,6 @@
     <customLabels>
         <label><!-- CSP_Breadcrump_MyProfile_Title --></label>
         <name>CSP_Breadcrump_MyProfile_Title</name>
-    </customLabels>
-    <customLabels>
-        <label>Usted &amp; IATA</label>
-        <name>CSP_Breadcrump_You_IATA</name>
     </customLabels>
     <customLabels>
         <label>Comprar en línea</label>
@@ -3484,16 +3484,8 @@
         <name>CSP_Welcome_Title</name>
     </customLabels>
     <customLabels>
-        <label>Usted &amp; IATA</label>
-        <name>CSP_YouAndIATA</name>
-    </customLabels>
-    <customLabels>
         <label>Puntos destacados seleccionados para usted</label>
         <name>CSP_YouIATA_Highlights</name>
-    </customLabels>
-    <customLabels>
-        <label>Aquí podrá descubrir una amplia variedad de servicios, publicaciones, productos y recursos de IATA sobre la industria de la aviación. Especialmente adaptados a sus intereses e historial de actividad.</label>
-        <name>CSP_YouIATA_Highlights_Text</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_You_Dont_Have_Announcements --></label>
@@ -3662,6 +3654,10 @@
     <customLabels>
         <label><!-- Click here --></label>
         <name>Click_here</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Close All Tabs --></label>
+        <name>Close_All_Tabs</name>
     </customLabels>
     <customLabels>
         <label><!-- Company --></label>
@@ -13915,6 +13911,18 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AP_Form</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AP_New_Change_Bank_Details --></label>
+        <name>ISSP_AP_New_Change_Bank_Details</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_New_Change_Req --></label>
+        <name>ISSP_AP_New_Change_Req</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_New_Joining_App --></label>
+        <name>ISSP_AP_New_Joining_App</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AP_Partnership_Download_PDF --></label>
         <name>ISSP_AP_Partnership_Download_PDF</name>
     </customLabels>
@@ -20157,8 +20165,16 @@ El Panel de contabilidad de IATA es una herramienta que contiene información di
         <name>OneId_Fred_Select_Type_of_Company</name>
     </customLabels>
     <customLabels>
+        <label><!-- OneId GADM Terms of Use Link --></label>
+        <name>OneId_GADM_Terms_of_Use_Link</name>
+    </customLabels>
+    <customLabels>
         <label><!-- OneId GADM Troubleshooting --></label>
         <name>OneId_GADM_Troubleshooting</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OneId GADM Troubleshooting Link --></label>
+        <name>OneId_GADM_Troubleshooting_Link</name>
     </customLabels>
     <customLabels>
         <label>&quot;En caso de que no se encuentre ninguna empresa para su combinación de código y país GSA, asegúrese de que haya indicado la información correcta o consulte nuestra &lt;a href=&quot;&quot;http://theiatahub.force.com/iatapkb/articles/en_US/How_To/Customer-Portal-Troubleshooting/?l=en_US&quot;&quot; target=&quot;&quot;_blank&quot;&quot;&gt;guía de resolución de problemas&lt;/a&gt;&quot;</label>
@@ -21774,6 +21790,14 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
     <customLabels>
         <label><!-- TSI USA Only --></label>
         <name>TSI_USA_Only</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Tab_Close --></label>
+        <name>Tab_Close</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Tab_Name --></label>
+        <name>Tab_Name</name>
     </customLabels>
     <customLabels>
         <label>Tareas</label>
