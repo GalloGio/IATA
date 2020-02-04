@@ -719,6 +719,15 @@ lightning-datatable .slds-th__action {
     width: 200px;
 }
 
+@media screen and (max-width: 640px) {
+  .containedButton-size,
+  .containedButtonAlt {
+    height: auto;
+    min-height: 56px;
+    width: 100%;
+  }
+}
+
 .filterButton,
 .filterButton button,
 .filterButton button:active {
