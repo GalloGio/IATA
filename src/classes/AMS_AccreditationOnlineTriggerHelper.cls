@@ -253,5 +253,21 @@ public class AMS_AccreditationOnlineTriggerHelper {
 	}
 	/*** AMSU-121 End ***/
 
+	/** AMS Data Quality **/
+	/*
+	 * This method verifies if the Geonames Billing and Shipping lookups were changed, when they are it updates the corresponding text field  
+	 */
+	public static void updateAddressAccordingToLookup(List<AMS_Pax_Accreditation_Form__c> aaots, Set<Id> citiesIds, Map<Id,AMS_Pax_Accreditation_Form__c> oldMap){
+        
+        Map<Id, IATA_ISO_City__c> citiesMap =  new Map<Id, IATA_ISO_City__c>([SELECT Name FROM IATA_ISO_City__c WHERE Id in :citiesIds]);
+    
+        for(AMS_Pax_Accreditation_Form__c a : aaots){
+
+            if(oldMap.get(a.Id).Geoname_Billing_City__c != a.Geoname_Billing_City__c && a.Geoname_Billing_City__c != null) a.Branch_Office_City__c  =  citiesMap.get(a.Geoname_Billing_City__c)!=null?citiesMap.get(a.Geoname_Billing_City__c).Name:null;
+      		if(oldMap.get(a.Id).Geoname_Shipping_City__c != a.Geoname_Shipping_City__c &&  a.Geoname_Shipping_City__c != null )  a.Shipping_City__c = citiesMap.get(a.Geoname_Shipping_City__c)!=null?citiesMap.get(a.Geoname_Shipping_City__c).Name:null;
+      
+        }
+
+    }  
 
 }

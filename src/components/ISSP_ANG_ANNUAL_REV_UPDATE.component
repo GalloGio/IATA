@@ -382,7 +382,7 @@
 
                 <apex:outputLabel value="{!$Label.Billing_address}:"/>
 
-                <apex:selectList id="billingStateList" size="1" value="{!ca.fw.newform.State_Province__c}" style="width:100%; margin-left: 15px;" onchange="copyStateToBillingBox(); copyBillingState(); changeBillingCityList(); ">
+                <apex:selectList id="billingStateList" size="1" value="{!ca.fw.newform.State_Province__c}" style="width:100%; margin-left: 15px;" onchange="copyStateToBillingBox(); copyBillingState(); clearBillingCityId(); changeBillingCityList();">
                     <apex:selectOptions value="{!billingStateList}"/>
                 </apex:selectList>
 
@@ -422,7 +422,7 @@
                     </apex:selectList>
                     <apex:inputText id="shippingStateInput" value="{!ca.fw.newform.Shipping_State__c}" onkeyup="copyStateInputBox();" style="width: 200px; float: left; margin-left: 15px;"/>
                     
-                    <apex:selectList id="ShippingStateList" size="1" value="{!ca.fw.newform.Shipping_State__c}" style="width: 200px; margin-left: 15px; float: left;" onchange="copyStateListSelection(); copyShippingState(); changeShippingCityList();">
+                    <apex:selectList id="ShippingStateList" size="1" value="{!ca.fw.newform.Shipping_State__c}" style="width: 200px; margin-left: 15px; float: left;" onchange="copyStateListSelection(); copyShippingState(); clearShippingCityId(); changeShippingCityList();">
                         <apex:selectOptions value="{!shippingStateList}"/>
                     </apex:selectList>
 
@@ -1314,6 +1314,14 @@
         function clearPostalCode() {
             $('#shipping_postal_code__c > input').val('');            
         }
+        
+        function clearBillingCityId(){
+            $('[id$=cityBillingIdHidden]').val('');
+        }
+
+        function clearShippingCityId(){
+            $('[id$=cityShippingIdHidden]').val('');
+        }
 
         function copyStateInputBox() {
             $('.shipping_state__c').val($('[id$="shippingStateInput"]').val());
@@ -1646,6 +1654,8 @@
 
 <apex:outputPanel id="cityListeners">
     <script type="text/javascript">
+        /** AMS Data Quality **/
+
         var currentFocus = -1;
         var timeout;	
         var typeOfAddressOnChange;	
@@ -1849,6 +1859,8 @@
                 closeAllLists(e.target, 'branch_office_city__c');
                 closeAllLists(e.target, 'shipping_city__c');                                                                    
             });
+            
+            /** AMS Data Quality **/
         </script>
     </apex:outputPanel>
     

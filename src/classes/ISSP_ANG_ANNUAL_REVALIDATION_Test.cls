@@ -287,26 +287,6 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 		ctrl.confirmUpdate();
 
 		ISSP_ANG_ANNUAL_REV_UPDATE upd = new ISSP_ANG_ANNUAL_REV_UPDATE();
-		upd.chsb = true;
-		upd.chss = true;
-		ctrl.currentAccount.account.IATA_ISO_Country__c = country.Id;
-		ctrl.currentAccount.fw.newform.State_Province__c = 'Ontario';
-		ctrl.currentAccount.fw.newform.Shipping_Country__c = country.Name;
-		ctrl.currentAccount.fw.newform.Shipping_State__c = 'Ontario';
-		ctrl.currentAccount.fw.newform.Geoname_Billing_City__c = Id.valueOf(city.Id);
-		ctrl.currentAccount.fw.newform.Geoname_Shipping_City__c = Id.valueOf(city.Id);
-		ctrl.confirmUpdate();	
-		upd.ca = ctrl.currentAccount;
-		String stateListByCountryName = upd.stateListByCountryName;	
-		String geonameBillingCityId = upd.geonameBillingCityId;
-		String geonameShippingCityId = upd.geonameShippingCityId;
-		upd.currentBillingStateCities();
-		upd.currentShippingStateCities();
-		upd.currentShippingCountryStates();
-		
-		String shippingCityName = ISSP_ANG_ANNUAL_REV_UPDATE.shippingCityListNameStr;
-		String cityName = ISSP_ANG_ANNUAL_REV_UPDATE.billingCityListNameStr;
-		
 		upd.ca = ctrl.currentAccount;
 		upd.newAgencyContact();
 		upd.editAgencyContact();
@@ -395,8 +375,9 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 		ctrl.currentAccount.newContact.Financial_interest__c = 10;
 
 		ctrl.createAgencyContact();
-
-		ctrl.contactType = 'Current Owner';
+        
+		Test.startTest();
+        ctrl.contactType = 'Current Owner';
 		ctrl.iatacode = '3421';
 		ctrl.currentAccount.newContact.AddressCountry__c = null;
 		ctrl.currentAccount.newContact.Agencies_prev_worked_for__c = '';
@@ -407,9 +388,6 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 		ctrl.currentAccount.newContact.Agencies_prev_worked_for__c = 'jlfdçskkdklfj';
 
 		ctrl.createAgencyContact();
-
-		Test.startTest();
-
 		ctrl.contactType = 'Person';
 
 		ctrl.createAgencyContact();
@@ -948,6 +926,91 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 		string si = upd.stateInfo;
 
 		Test.stopTest();
+	}
+
+	@isTest static void test9(){
+		IATA_ISO_Country__c country = [SELECT Id, Name, IATA_Contry_KR__c, CASS_Import__c, IATA_COUNTRY_EN__c, IATA_Country_FR__c,
+										IATA_Country_ZH__c, IATA_Country_IT__c, IATA_Country_JP__c, ISO_Code__c, IATA_Country_PT__c,
+										IATA_Country_SP__c, Case_BSP_Country__c, ANG_Enable_NewGen__c
+									FROM IATA_ISO_Country__c
+									WHERE Name = 'test'];
+		
+		AMS_Accreditation_Country_CheckList__c aacc = [SELECT Id, IATA_ISO_Country__c, Operation__c
+													FROM AMS_Accreditation_Country_CheckList__c
+													WHERE Operation__c = 'Travel Agent'];
+		IATA_ISO_State__c  state = new IATA_ISO_State__c(IEC_Valid_SAP__c=true, IATA_ISO_Country__c = country.Id, Name='Ontario', ISO_Code__c='CA-ON');
+
+		insert state;
+
+		IATA_ISO_City__c city = new IATA_ISO_City__c(Name = 'Toronto', IATA_ISO_State__c = state.id, Status__c = 'Verified', GeonameName__c = 'Toronto');
+		insert city;
+
+		Account account;
+		Account child;
+
+		for (Account a:  [SELECT BillingCity, Name, Sector__c, Location_Type__c, RecordTypeId, IATACode__c, Status__c, IATA_ISO_Country__c,
+							Location_Class__c
+						FROM Account
+						WHERE Name = 'test'
+							OR Name = 'test child']) {
+			if (a.Name == 'test')  {
+				account = a;
+			} else if (a.Name == 'test child') {
+				child = a;
+			}
+		}
+
+		AMS_OSCAR__c oscar = [SELECT Id, Account__c, Process__c, RecordTypeId
+							FROM AMS_OSCAR__c
+							WHERE Process__c = 'ANG.ANNUAL.REVALIDATION'];
+
+		Case testcase = [SELECT Id, Account_Concerned__c, AccountId, OSCAR__c, CaseArea__c, Reason1__c, RecordTypeId, Subject, Type,
+							Type_of_customer__c
+						FROM Case
+						WHERE Reason1__c = 'Annual revalidation'];
+
+		Test.setCurrentPageReference(new PageReference('Page.ISSP_ANG_ANNUAL_REVALIDATION'));
+		System.currentPageReference().getParameters().put('caseId', testcase.id);
+
+		ISSP_ANG_ANNUAL_REVALIDATION ctrl = new ISSP_ANG_ANNUAL_REVALIDATION();
+
+
+		String mode = ctrl.mode;
+
+		List<SelectOption> countryNameList = ctrl.countryNameList;
+		AMS_Accreditation_Country_CheckList__c CountryCheckList = ctrl.CountryCheckList;
+
+
+		ctrl.currentIataCode = '87654321';
+		ctrl.loadIataCode();
+
+		ctrl.updateDetails();
+
+		ctrl.saveDraft();
+
+		ISSP_ANG_ANNUAL_REV_UPDATE upd = new ISSP_ANG_ANNUAL_REV_UPDATE();
+
+		upd.chsb = true;
+		upd.chss = true;
+		ctrl.currentAccount.account.IATA_ISO_Country__c = country.Id;
+		ctrl.currentAccount.fw.newform.State_Province__c = 'Ontario';
+		ctrl.currentAccount.fw.newform.Shipping_Country__c = country.Name;
+		ctrl.currentAccount.fw.newform.Shipping_State__c = 'Ontario';
+		ctrl.currentAccount.fw.newform.Geoname_Billing_City__c = Id.valueOf(city.Id);
+		ctrl.currentAccount.fw.newform.Geoname_Shipping_City__c = Id.valueOf(city.Id);
+		ctrl.confirmUpdate();	
+		upd.ca = ctrl.currentAccount;
+		String stateListByCountryName = upd.stateListByCountryName;	
+		String geonameBillingCityId = upd.geonameBillingCityId;
+		String geonameShippingCityId = upd.geonameShippingCityId;
+		upd.currentBillingStateCities();
+		upd.currentShippingStateCities();
+		upd.currentShippingCountryStates();
+		
+		String shippingCityName = ISSP_ANG_ANNUAL_REV_UPDATE.shippingCityListNameStr;
+		String cityName = ISSP_ANG_ANNUAL_REV_UPDATE.billingCityListNameStr;
+
+		
 	}
 
 }

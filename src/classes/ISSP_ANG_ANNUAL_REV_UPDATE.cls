@@ -16,9 +16,9 @@ public with sharing class ISSP_ANG_ANNUAL_REV_UPDATE {
 	public static List<IATA_ISO_City__c> billingCityListName {get;set;}    
 	public static List<IATA_ISO_City__c> shippingCityListName {get;set;}
 
-	public String geonameBillingCityId {get;set{ geonameBillingCityId = value; if(!String.isBlank(geonameBillingCityId)) ca.fw.newForm.Geoname_Billing_City__c = geonameBillingCityId; }}
+	public String geonameBillingCityId {get;set{ geonameBillingCityId = value; if(!String.isBlank(geonameBillingCityId)){ ca.fw.newForm.Geoname_Billing_City__c = geonameBillingCityId; } else {ca.fw.newForm.Geoname_Billing_City__c = null;} }}
 
-	public String geonameShippingCityId {get;set{ geonameShippingCityId = value; if(!String.isBlank(geonameShippingCityId)) ca.fw.newForm.Geoname_Shipping_City__c = geonameShippingCityId; }}
+	public String geonameShippingCityId {get;set{ geonameShippingCityId = value; if(!String.isBlank(geonameShippingCityId)){ ca.fw.newForm.Geoname_Shipping_City__c = geonameShippingCityId;} else {ca.fw.newForm.Geoname_Shipping_City__c = null;} }}
 
 	public static String billingCityListNameStr {
 	get{
@@ -244,6 +244,7 @@ public with sharing class ISSP_ANG_ANNUAL_REV_UPDATE {
 							 ca.fw.newform.shipping_postal_code__c = '';
 							 ca.fw.newform.shipping_state__c = '';
 							 ca.fw.newform.shipping_country__c = '';
+							 ca.fw.newform.Geoname_Shipping_City__c = null;
 						 } else if(ca.Account.ShippingStreet == null &&
 								   ca.Account.ShippingCity == null &&
 								   ca.Account.ShippingPostalCode == null &&
