@@ -285,10 +285,10 @@ public without sharing class ISSP_ChangePassword {
 			String RECTYPE_ITP_AccRole = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Role__c', 'IFTP');
 			// String RECTYPE_Others = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Others');
 
-            User userInfo = [SELECT id, accountId, ContactId, contact.user_portal_status__c FROM USER WHERE id=: UserInfo.getUserId()];
-            
-             //For itp admin, no iftp related records are needed
-             if(userinfo.contact.user_portal_status__c =='Approved Admin') return;
+			User userInfo = [SELECT id, accountId, ContactId, contact.user_portal_status__c FROM USER WHERE id=: UserInfo.getUserId()];
+			
+			 //For itp admin, no iftp related records are needed
+			 if(userinfo.contact.user_portal_status__c =='Approved Admin') return;
 
 			List<Account_Contact_Role__c> accContRoleCheck = [SELECT id FROM Account_Contact_Role__c WHERE Service_Rendered__c = 'IFTP' AND Contact__c = :userInfo.ContactId];
 
