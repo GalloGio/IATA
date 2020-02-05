@@ -14,6 +14,7 @@ public without sharing class Community360Ctrl {
 				);
 			} catch (Exception e) {
 				System.debug(LoggingLevel.FINE, '[cls Community360Ctrl - createCommunity360ReadEntry] exception - ' + e.getStackTraceString());
+				throw e;
 			}
 		}
 	}
