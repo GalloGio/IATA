@@ -234,6 +234,11 @@
 
   <target name="deployLayoutStep">
     <antcall target="deployLayouts" />
+    <antcall target="deployFlowStep" />
+  </target>
+
+  <target name="deployFlowStep">
+    <antcall target="deployFlows" />
   </target>
 
 
@@ -287,6 +292,15 @@
 
     <createDirectories folderList="${layout}" />
     <fecthFiles folderList="${layout}" packageName="layoutPackage" />
+
+    <deployCodeLocal deleteDirectories="true" />
+  </target>
+
+  <target name="deployFlows">
+    <printlist list="${flow}" message="Deploying Flow" />
+
+    <createDirectories folderList="${flow}" />
+    <fecthFiles folderList="${flow}" packageName="flowPackage" />
 
     <deployCodeLocal deleteDirectories="true" />
   </target>
@@ -378,8 +392,8 @@
     </echo>
     <mkdir dir="${basedir}/${sfdc.retrieveTarget}" />
     <sf:retrieve retrieveTarget="${basedir}/${sfdc.retrieveTarget}" username="${sfdc.username}" password="${sfdc.password}" serverurl="${sfdc.serverurl}" unpackaged="src/layoutPackageandStatic.xml" />
-    <copy file="${basedir}/${sfdc.retrieveTarget}/package.xml" tofile="src/layoutPackageandStatic.xml" />
-    <copy file="${basedir}/${sfdc.retrieveTarget}" tofile="src" />
+    <move file="${basedir}/${sfdc.retrieveTarget}/package.xml" tofile="src/layoutPackageandStatic.xml" />
+    <move file="${basedir}/${sfdc.retrieveTarget}" tofile="src" />
   </target>
 
 

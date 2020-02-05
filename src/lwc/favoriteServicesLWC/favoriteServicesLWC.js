@@ -1,7 +1,6 @@
 import { LightningElement, track } from 'lwc';
 
 import getFavoriteServicesList from '@salesforce/apex/PortalServicesCtrl.getFavoriteServicesList';
-import goToOldPortalService from '@salesforce/apex/PortalServicesCtrl.goToOldPortalService';
 import paymentLinkRedirect from '@salesforce/apex/PortalServicesCtrl.paymentLinkRedirect';
 import changeIsFavoriteStatus from '@salesforce/apex/PortalServicesCtrl.changeIsFavoriteStatus';
 import createPortalApplicationRight from '@salesforce/apex/PortalServicesCtrl.createPortalApplicationRight';
@@ -30,6 +29,10 @@ export default class FavoriteServicesLWC extends LightningElement {
     @track maxSize;
     @track showPagination;
     @track sliderIcons;
+    @track myClassMobile = 'withPointerTile smallTile slds-m-vertical_x-small aroundLightGrayBorder';
+    @track favoriteServicesMobile = [];
+    @track sliderWidth = '';
+    @track windowWidth = window.innerWidth;
 
     @track isLoading = true;
 
@@ -89,9 +92,11 @@ export default class FavoriteServicesLWC extends LightningElement {
 
                 //sets the first page
                 this.favoriteServices = this.globaList[0];
+                //this.favoriteServicesMobile = this.auxResult;
 
                 //the maxSize of the List
                 this.maxSize = this.globaList.length;
+                this.sliderWidth = "width:"+(this.windowWidth - 32) * (this.globaList.length) * 0.4 +"px;";
 
                 //show pagination if the number of pages is greater than 1
                 this.showPagination = this.maxSize > 1 ? true : false;
@@ -174,6 +179,7 @@ export default class FavoriteServicesLWC extends LightningElement {
             let lstAux1 = [];
             let lstAux2 = [];
             let lstAux3 = [];
+            let listMobile = [];
 
             pageListAux[0].favoriteDivClass = 'oneRemClass';
 
@@ -307,16 +313,9 @@ export default class FavoriteServicesLWC extends LightningElement {
                     //open new tab with the redirection
 
                     if (myUrl.startsWith('/')) {
-                        goToOldPortalService({ myurl: myUrl })
-                            .then(result => {
-                                //open new tab with the redirection
-                                window.open(result);
-                                this.toggleSpinner();
-                            })
-                            .catch(error => {
-                                //throws error
-                                this.error = error;
-                            });
+
+                        window.open(myUrl);
+                        this.toggleSpinner();                          
 
                     } else {
                         if (recordName.value === 'Payment Link' || recordName.value === 'Paypal') {
@@ -341,20 +340,12 @@ export default class FavoriteServicesLWC extends LightningElement {
                         }
                     }
 
-
                 } else if (myUrl !== '') {
                     //redirects on the same page
                     //method that redirects the user to the old portal maintaing the same loginId
-                    goToOldPortalService({ myurl: myUrl })
-                        .then(result => {
-                            //open new tab with the redirection
-                            window.location.href = result;
-                            this.toggleSpinner();
-                        })
-                        .catch(error => {
-                            //throws error
-                            this.error = error;
-                        });
+                    
+                    window.open(myUrl,"_self");
+                    this.toggleSpinner();
 
                 }
             }

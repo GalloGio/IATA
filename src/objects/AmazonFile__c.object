@@ -1302,10 +1302,9 @@
         <filters>
             <field>Case__c</field>
             <operation>equals</operation>
-            <value>10688738</value>
+            <value>11006720</value>
         </filters>
         <label>files by case</label>
-        <language>en_US</language>
     </listViews>
     <nameField>
         <label>AmazonFile Name</label>
