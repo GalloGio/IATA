@@ -915,6 +915,11 @@ public with sharing class ANG_AccountHierarchySelectionController {
 
 			Savepoint sp = Database.setSavepoint();
 			try {
+				
+				//Flag the oscar in case we are facing a specific scenario for a change of hierarchy
+				//E.g. single standard hierarchy being acquired by a multicountry one
+				oscar.Change_of_Hierarchy_Scenario__c = fetchChangeOfHierarchyScenario();
+				
 				update oscar;
 
 				//must be after save, to pass validations on the details
@@ -1166,6 +1171,19 @@ public with sharing class ANG_AccountHierarchySelectionController {
 		}
 
 		return false;
+
+	}
+
+	private String fetchChangeOfHierarchyScenario(){
+
+		if( oscar.ANG_Type_Of_Change__c != null && tocList.contains(AMS_Utils.ANG_HIERARCHY) &&
+			oscar.Account__r.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_CASH && 
+			newParent.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY)
+		{
+			return AMS_Utils.STANDARD_HIERARCHY_BEING_ACQUIRED_BY_MULTICOUNTRY;
+		}
+
+		return null;
 
 	}
 
