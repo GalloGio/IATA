@@ -392,6 +392,7 @@ public without sharing class AMS_Utils {
 	public static final Set<String> TOPLOCATIONSNEWGEN = new Set<String>{'HE','GE'};
 
 	public static final String STANDARD_HIERARCHY_BEING_ACQUIRED_BY_MULTICOUNTRY = 'STANDARD_ACQUIRED_BY_MULTICOUNTRY';
+	public static final String MULTICOUNTRY_HIERARCHY_SPLIT = 'MULTICOUNTRY_SPLIT';
 
 	public static String ENCRYPTION_KEY {
 		get {

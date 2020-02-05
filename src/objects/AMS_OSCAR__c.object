@@ -1975,6 +1975,11 @@ IF(Bank_Guarantee_received__c - Bank_Guarantee_requested__c =6, TEXT(4), TEXT((B
                     <default>false</default>
                     <label>Standard Hierarchy Acquired by Multicountry</label>
                 </value>
+                <value>
+                    <fullName>MULTICOUNTRY_SPLIT</fullName>
+                    <default>false</default>
+                    <label>Multicountry Hierarchy splits into two multicountry hierarchies</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
@@ -3007,17 +3012,6 @@ IF(Financial_Assessment_received__c - Financial_Assessment_requested__c =6, TEXT
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
-    </fields>
-    <fields>
-        <fullName>Generate_risk_event_MC__c</fullName>
-        <defaultValue>false</defaultValue>
-        <description>Flag which indicates if the last OSCAR of change of hierarchy generated a split on a multicountry hierarchy.</description>
-        <externalId>false</externalId>
-        <label>Split of Multicountry Hierarchy</label>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>HE_per_BSP_Mapping__c</fullName>
@@ -13197,6 +13191,10 @@ if(DGR_Expiry_Date__c - today() &gt; 0,&quot;30&quot;,&quot;0&quot;)))</formula>
             <picklist>Change_of_Hierarchy_Scenario__c</picklist>
             <values>
                 <fullName>STANDARD_ACQUIRED_BY_MULTICOUNTRY</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MULTICOUNTRY_SPLIT</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

@@ -1176,11 +1176,20 @@ public with sharing class ANG_AccountHierarchySelectionController {
 
 	private String fetchChangeOfHierarchyScenario(){
 
-		if( oscar.ANG_Type_Of_Change__c != null && tocList.contains(AMS_Utils.ANG_HIERARCHY) &&
-			oscar.Account__r.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_CASH && 
-			newParent.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY)
-		{
-			return AMS_Utils.STANDARD_HIERARCHY_BEING_ACQUIRED_BY_MULTICOUNTRY;
+		if(oscar.ANG_Type_Of_Change__c != null && tocList.contains(AMS_Utils.ANG_HIERARCHY)){
+
+			if(newParent.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY){
+
+				if(oscar.Account__r.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_CASH){
+					return AMS_Utils.STANDARD_HIERARCHY_BEING_ACQUIRED_BY_MULTICOUNTRY;
+				}
+
+				if(newParentIncluded(newParent.Id)){
+					return AMS_Utils.MULTICOUNTRY_HIERARCHY_SPLIT;
+				}
+
+			}
+
 		}
 
 		return null;

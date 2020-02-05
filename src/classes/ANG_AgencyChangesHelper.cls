@@ -551,7 +551,7 @@ public with sharing class ANG_AgencyChangesHelper {
 					}
 
 					//If it is a multicountry hierarchy split => updates forms of payments (CC, CA, EP)
-					if(isMulticountry && accountIdsInvolvedSet.contains(oscar.New_parent__c)){
+					if(isMulticountry && oscar.Change_of_Hierarchy_Scenario__c == AMS_Utils.MULTICOUNTRY_HIERARCHY_SPLIT){
 						ANG_MulticountryHelper.processAgenciesFormsOfPayment(hierarchyAccs.values(), changesContainer);
 					}
 
@@ -1213,11 +1213,10 @@ public with sharing class ANG_AgencyChangesHelper {
 
 		toReturn.addAccountToCalculateRiskAssessment(oscarToProcess.New_parent__c);
 
-		Boolean isHierarchySplit = accountIdsInvolvedSet.contains(oscarToProcess.New_parent__c);
+		Boolean isHierarchySplit = (oscarToProcess.Change_of_Hierarchy_Scenario__c == AMS_Utils.MULTICOUNTRY_HIERARCHY_SPLIT);
 
 		if(isHierarchySplit){
 
-			oscarToProcess.Generate_risk_event_MC__c = true;
 			AMS_Agencies_Hierarchy__c newHierarchy = new AMS_Agencies_Hierarchy__c();
 			newHierarchy.Hierarchy_Name__c = 'NewGen Hierarchy';
 			newHierarchy.Main_Account__c = oscarToProcess.New_parent__c;
