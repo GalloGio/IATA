@@ -10,6 +10,7 @@ import { getParamsFromPage }    from 'c/navigationUtils';
 import RegistrationUtils                        from 'c/registrationUtils';
 
 import getUserInformationFromEmail              from '@salesforce/apex/PortalRegistrationFirstLevelCtrl.getUserInformationFromEmail';
+import validateFullName				from '@salesforce/apex/PortalRegistrationThirdLevelLMSCtrl.validateFullName';
 
 //custom labels
 import CSP_L2_Account_Selection_Message from '@salesforce/label/c.CSP_L2_Account_Selection_Message';
@@ -47,8 +48,8 @@ import CSP_L3_Email_Validation_LMS from '@salesforce/label/c.CSP_L3_Email_Valida
 import CSP_L3_ProvideWorkEmail_LMS from '@salesforce/label/c.CSP_L3_ProvideWorkEmail_LMS';
 import CSP_Next_LMS from '@salesforce/label/c.CSP_Next_LMS';
 import CSP_Registration_Existing_Work_Message from '@salesforce/label/c.CSP_Registration_Existing_Work_Message';
-
-
+import CSP_Registration_Existing_User_Message_Not_Matching_F4 from '@salesforce/label/c.CSP_Registration_Existing_User_Message_Not_Matching_F4';
+import CSP_Registration_Existing_User_Message_Not_Matching_F6 from '@salesforce/label/c.CSP_Registration_Existing_User_Message_Not_Matching_F6';
 
 
 export default class PortalRegistrationEmailValidationLMS extends LightningElement {
@@ -70,7 +71,10 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 	@track lms;
 	@track existingUsernameVisibility;
 	@track existingPersonalUsernameVisibility;
+	@track existingUsernameNotMatchingF4Visibility;
+	@track existingUsernameNotMatchingF6Visibility;
 	@track validated = false;
+	@track isFullNameMatching = true;
 
 	/* Picklist options */
 	@track isoCountriesPicklistOptions;
@@ -97,9 +101,9 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 			}
 		}else{
 			if(
-				(this.isPersonalEmail === 'no' && this.personalEmailInput !== '') ||
+				(this.isPersonalEmail === 'no' && this.personalEmailInput !== '' && this.isFullNameMatching) ||
 				(this.isPersonalEmail === 'yes' && this.localContactInfo.Account.Is_General_Public_Account__c === true) ||
-				(this.isPersonalEmail === 'yes' && this.localContactInfo.Account.Is_General_Public_Account__c === false && this.workEmailInput !== '')
+				(this.isPersonalEmail === 'yes' && this.localContactInfo.Account.Is_General_Public_Account__c === false && this.workEmailInput !== '' && this.isFullNameMatching)
 			){
 				res = false;
 			}
@@ -168,7 +172,9 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 		CSP_L3_Email_Validation_LMS,
 		CSP_L3_ProvideWorkEmail_LMS,
 		CSP_Next_LMS,
-		CSP_Registration_Existing_Work_Message
+		CSP_Registration_Existing_Work_Message,
+		CSP_Registration_Existing_User_Message_Not_Matching_F4,
+		CSP_Registration_Existing_User_Message_Not_Matching_F6
 	}
 	get labels() {
 		return this._labels;
@@ -237,6 +243,9 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 		this.personalEmailInput = event.target.value;
 		this.existingPersonalUsernameVisibility = false;
 		this.existingUsernameVisibility = false;
+		this.existingUsernameNotMatchingF4Visibility = false;
+		this.existingUsernameNotMatchingF6Visibility = false;
+		this.isFullNameMatching = true;
 		this.validated = false;
 		this.inputModified = true;
 	}
@@ -245,6 +254,9 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 		this.workEmailInput = event.target.value;
 		this.existingPersonalUsernameVisibility = false;
 		this.existingUsernameVisibility = false;
+		this.existingUsernameNotMatchingF4Visibility = false;
+		this.existingUsernameNotMatchingF6Visibility = false;
+		this.isFullNameMatching = true;
 		this.validated = false;
 		this.inputModified = true;
 	}
@@ -304,8 +316,7 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 						}else{
 							let anonymousEmail = 'iata' + auxEmail.substring(auxEmail.indexOf('@'));
 							RegistrationUtilsJs.checkEmailIsDisposable(`${anonymousEmail}`).then(result2=> {
-								if(result2 == 'true'){
-								//todo:disposable email alert!
+								if(result2 === 'true'){
 									this._showEmailValidationError(true, this.labels.CSP_Invalid_Email);
 									this.stopLoading();
 								}else{
@@ -323,7 +334,6 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 										this.userInfo = userInfo;
 
 										if(userInfo.hasExistingContact == true){
-											this.existingUsernameVisibility = true;
 											if(userInfo.hasExistingUser == true){
 
 												if(this.flow === 'flow3'){
@@ -333,17 +343,35 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 													this.flow = 'flow6';
 												}
 
-												this.localContactInfo.existingContactId = userInfo.contactId;
-												this.localContactInfo.existingContactAccount = userInfo.existingContactAccount;
-												this.localContactInfo.hasExistingContact = userInfo.hasExistingContact;
-												this.localContactInfo.hasExistingUser = userInfo.hasExistingUser;
-												this.localContactInfo.hasExistingContact = userInfo.hasExistingContact;
-												this.localContactInfo.existingContactEmail = userInfo.existingContactEmail;
-												this.localContactInfo.existingContactName = userInfo.existingContactName;
-												this.localContactInfo.hasExistingContactPersonalEmail = userInfo.hasExistingContactPersonalEmail;
-												this.localContactInfo.hasExistingUserPersonalEmail = userInfo.hasExistingUserPersonalEmail;
+												//validate the 60% on the name comparison
+												validateFullName({existingContactId: userInfo.existingContactId , firstname : this.localContactInfo.FirstName, lastname : this.localContactInfo.LastName})
+													.then(result4 => {
+														if(result4 === 'not_matching'){
+															this.isFullNameMatching = false;
+															if(this.flow === 'flow4'){
+																this.existingUsernameNotMatchingF4Visibility = true;
+															}else if(this.flow === 'flow6'){
+																this.existingUsernameNotMatchingF6Visibility = true;
+															}
+														}else if(result4 === 'existing_user'){
+															this.isFullNameMatching = true;
+															this.existingUsernameVisibility = true;
+															this.localContactInfo.existingContactId = userInfo.contactId;
+															this.localContactInfo.existingContactAccount = userInfo.existingContactAccount;
+															this.localContactInfo.hasExistingContact = userInfo.hasExistingContact;
+															this.localContactInfo.hasExistingUser = userInfo.hasExistingUser;
+															this.localContactInfo.hasExistingContact = userInfo.hasExistingContact;
+															this.localContactInfo.existingContactEmail = userInfo.existingContactEmail;
+															this.localContactInfo.existingContactName = userInfo.existingContactName;
+															this.localContactInfo.hasExistingContactPersonalEmail = userInfo.hasExistingContactPersonalEmail;
+															this.localContactInfo.hasExistingUserPersonalEmail = userInfo.hasExistingUserPersonalEmail;
+														}
+													})
+													.catch((error) => {
+														this.stopLoading();
+														console.log('Error: ', JSON.parse(JSON.stringify(error)));
+													});
 
-												this._showEmailValidationError(true, this.labels.CSP_Registration_Existing_User_Message);
 												this.stopLoading();
 											}
 										}else{
@@ -355,28 +383,42 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 												this.stopLoading();
 												this.dispatchEvent(new CustomEvent('next'));
 											}else if(userInfo.hasExistingContactPersonalEmail == true){
-												this.existingPersonalUsernameVisibility = true;
 												if(userInfo.hasExistingUserPersonalEmail == true){
 
 													if(this.flow === 'flow5'){
 														this.flow = 'flow7';
 													}
 
-													this.localContactInfo.hasExistingContact = userInfo.hasExistingContact;
-													this.localContactInfo.hasExistingUser = userInfo.hasExistingUser;
-													this.localContactInfo.existingContactAccount = userInfo.existingContactAccount;
-													this.localContactInfo.existingContactEmail = userInfo.existingContactEmail;
-													this.localContactInfo.existingContactId = userInfo.existingContactId;
-													this.localContactInfo.existingContactName = userInfo.existingContactName;
-													this.localContactInfo.hasExistingContactPersonalEmail = userInfo.hasExistingContactPersonalEmail;
-													this.localContactInfo.hasExistingUserPersonalEmail = userInfo.hasExistingUserPersonalEmail;
+													//validate the 60% on the name comparison
+													validateFullName({existingContactId: userInfo.existingContactId , firstname : this.localContactInfo.FirstName, lastname : this.localContactInfo.LastName})
+													.then(result4 => {
+													
+														if(result4 === 'not_matching'){
+															this.isFullNameMatching = false;
+															this.existingUsernameNotMatchingF6Visibility = true;
+															
+														}else if(result4 === 'existing_user'){
+															this.isFullNameMatching = true;
+															this.existingPersonalUsernameVisibility = true;
+															this.localContactInfo.hasExistingContact = userInfo.hasExistingContact;
+															this.localContactInfo.hasExistingUser = userInfo.hasExistingUser;
+															this.localContactInfo.existingContactAccount = userInfo.existingContactAccount;
+															this.localContactInfo.existingContactEmail = userInfo.existingContactEmail;
+															this.localContactInfo.existingContactId = userInfo.existingContactId;
+															this.localContactInfo.existingContactName = userInfo.existingContactName;
+															this.localContactInfo.hasExistingContactPersonalEmail = userInfo.hasExistingContactPersonalEmail;
+															this.localContactInfo.hasExistingUserPersonalEmail = userInfo.hasExistingUserPersonalEmail;
 
-													this.messageFlow7 = CSP_L3_ExistingContact_LMS;									
-													this.messageFlow7 = this.messageFlow7.replace('[Existing_email]',userInfo.existingContactEmail);
-													this.messageFlow7 = this.messageFlow7.replace('[Existing_email]',userInfo.existingContactEmail);
-													this.messageFlow7 = this.messageFlow7.replace('[Email]',this.localContactInfo.Email);
-
-													this._showEmailValidationError(true, this.labels.CSP_Registration_Existing_User_Message);
+															this.messageFlow7 = CSP_L3_ExistingContact_LMS;
+															this.messageFlow7 = this.messageFlow7.replace('[Existing_email]',userInfo.existingContactEmail);
+															this.messageFlow7 = this.messageFlow7.replace('[Existing_email]',userInfo.existingContactEmail);
+															this.messageFlow7 = this.messageFlow7.replace('[Email]',this.localContactInfo.Email);
+														}
+													})
+													.catch((error) => {
+														this.stopLoading();
+														console.log('Error: ', JSON.parse(JSON.stringify(error)));
+													});
 													this.stopLoading();
 												}
 												//Send Verification email
@@ -391,7 +433,7 @@ export default class PortalRegistrationEmailValidationLMS extends LightningEleme
 										this.validated = true;
 									})
 									.catch(error => {
-										console.error('Error: ', error);
+										console.log('Error: ', error);
 										this.isLoading = false;
 									});
 								}

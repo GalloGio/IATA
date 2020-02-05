@@ -193,6 +193,82 @@
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>City_Name__c</fullName>
+        <description>Populated by a workflow rule when the City Reference is changed.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Populated by a workflow rule when the City Reference is changed.</inlineHelpText>
+        <label>City</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>City_Reference__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>City Reference</description>
+        <externalId>false</externalId>
+        <inlineHelpText>City Reference</inlineHelpText>
+        <label>City Reference</label>
+        <referenceTo>IATA_ISO_City__c</referenceTo>
+        <relationshipLabel>TCRD City</relationshipLabel>
+        <relationshipName>TCRD_City</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Country_Reference__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Country Reference</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Country Reference</inlineHelpText>
+        <label>Country Reference</label>
+        <referenceTo>IATA_ISO_Country__c</referenceTo>
+        <relationshipLabel>TCRD Country</relationshipLabel>
+        <relationshipName>TCRD_Country</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Country__c</fullName>
+        <description>Populated by a workflow rule when the Country Reference is changed.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Populated by a workflow rule when the Country Reference is changed.</inlineHelpText>
+        <label>Country</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>PO_Box_Address__c</fullName>
+        <description>PO Box Address</description>
+        <externalId>false</externalId>
+        <inlineHelpText>PO Box Address</inlineHelpText>
+        <label>PO Box</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Postal_Code__c</fullName>
+        <description>Postal Code</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Postal Code</inlineHelpText>
+        <label>Postal Code</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Preferred_Course__c</fullName>
         <description>Training Preferred Course</description>
         <externalId>false</externalId>
@@ -217,6 +293,54 @@
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>State_Name__c</fullName>
+        <description>Populated by a workflow rule when the State Reference is changed.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Populated by a workflow rule when the State Reference is changed.</inlineHelpText>
+        <label>State</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>State_Reference__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>State Reference</description>
+        <externalId>false</externalId>
+        <inlineHelpText>State Reference</inlineHelpText>
+        <label>State Reference</label>
+        <referenceTo>IATA_ISO_State__c</referenceTo>
+        <relationshipLabel>TCRD State</relationshipLabel>
+        <relationshipName>TCRD</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Street2__c</fullName>
+        <externalId>false</externalId>
+        <label>Street 2</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Street__c</fullName>
+        <description>Street</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Street</inlineHelpText>
+        <label>Street</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>UserId__c</fullName>

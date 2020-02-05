@@ -1,20 +1,22 @@
 <template>
 	<lightning-layout multiple-rows vertical-align="stretch">
+		<div  class="IEFixDisplayContainer">
+			<!--lightning-layout-item padding="around-small" size="12">
+			</lightning-layout-item-->
+			<lightning-layout-item class="slds-p-around_medium topLightGrayBorder customWhiteBackground slds-clearfix IEFixDisplay" size="12">
+            </lightning-layout-item>
 
-		<lightning-layout-item padding="around-small" size="12">
-		</lightning-layout-item>
+			<!------------------------------------------      Address Form      -------------------------------------------->
+			<lightning-layout-item size="12">
+				<div class="sectionTitle">{labels.CSP_L2_Business_Address_Information}</div>
+				<div class="sectionDescription">{labels.CSP_L2_Business_Address_Information_Message}</div>
+			</lightning-layout-item>
+			
+			<lightning-layout-item padding="around-small" size="12" class="IEFixDisplay">
+			</lightning-layout-item>
 
-
-		<!------------------------------------------      Address Form      -------------------------------------------->
-		<lightning-layout-item size="12">
-			<div class="sectionTitle">{labels.CSP_L2_Business_Address_Information}</div>
-			<div class="sectionDescription">{labels.CSP_L2_Business_Address_Information_Message}</div>
-		</lightning-layout-item>
-
-		<lightning-layout-item padding="around-small" size="12">
-		</lightning-layout-item>
-
-	</lightning-layout>
+			<lightning-layout-item class="slds-p-around_medium topLightGrayBorder customWhiteBackground slds-clearfix IEFixDisplay" size="12">
+            </lightning-layout-item>
 
 	<c-portal-address-form-l-m-s
 		is-i-e={isIE}
@@ -25,37 +27,35 @@
 		onstoploading={stopLoading}>
 	</c-portal-address-form-l-m-s>
 
-	<lightning-layout multiple-rows vertical-align="stretch">
-		<lightning-layout-item size="12" class="slds-p-around_medium topLightGrayBorder customWhiteBackground slds-clearfix">
-		</lightning-layout-item>
+			
+			<!-- <lightning-layout-item size="4">
+				<span class="link_normal -Title slds-float_left" onclick={toCompanyInformation} >{labels.CSP_L2_Back_to_Company_Information}</span>
+			</lightning-layout-item> -->
 
-		<!--<lightning-layout-item size="4">
-			<span class="link_normal -Title slds-float_left" onclick={toCompanyInformation} >{labels.CSP_L2_Back_to_Company_Information}</span>
-		</lightning-layout-item>-->
+			<lightning-layout-item size="6" class="IEFixDisplay">
+					<lightning-button variant="base"
+						label={labels.CSP_L2_Back_to_Profile_Details}
+						title={labels.CSP_L2_Back_to_Profile_Details}
+						onclick={toCompanyInformation}
+						class="blueCustomButtonLinkSmall"
+						icon-name="utility:back"
+						icon-position="left">
+					</lightning-button>
+			</lightning-layout-item>
 
-		<lightning-layout-item size="6" class="backButtonWrapper">
-			<div class="text-xxsmall">
-				 <lightning-button variant="base"
-					label={labels.CSP_L2_Back_to_Profile_Details}
-					title={labels.CSP_L2_Back_to_Profile_Details}
-					onclick={toCompanyInformation}
-					class="blueCustomButtonLinkSmall"
-					icon-name="utility:back"
-					icon-position="left">
+			
+
+			<lightning-layout-item size="6" class="nextBtn IEFixDisplay">
+				<lightning-button class="slds-float_right containedButton customBtn IEFixDisplay"
+					data-id="nextButton"
+					label={labels.CSP_Next_LMS}
+					disabled={isConfirmationButtonDisabled}
+					variant="brand" onclick={next}>
 				</lightning-button>
-			</div>
-		</lightning-layout-item>
+			</lightning-layout-item>
 
-		<lightning-layout-item size="6">
-			<lightning-button class="slds-float_right containedButton customBtn"
-				data-id="nextButton"
-				label={labels.CSP_Next_LMS}
-				disabled={isConfirmationButtonDisabled}
-				variant="brand" onclick={next}>
-			</lightning-button>
-		</lightning-layout-item>
-
-		<lightning-layout-item padding="around-small" size="12">
-		</lightning-layout-item>
+			<lightning-layout-item padding="around-small" size="12" class="IEFixDisplay">
+			</lightning-layout-item>
+		</div>
 	</lightning-layout>
 </template>

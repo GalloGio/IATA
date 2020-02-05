@@ -27,6 +27,7 @@ public with sharing class PortalProfileCtrl {
 	PRIVATE STATIC FINAL STRING LABEL_ACCESSIBILITY = System.label.csp_Profile_PortalAccessibility;
 	PRIVATE STATIC FINAL STRING LABEL_PROFESSIONAL = System.label.csp_Profile_Professional;
 	PRIVATE STATIC FINAL STRING LABEL_IDCARD = System.label.CSP_Id_Card;
+	PRIVATE STATIC FINAL STRING LABEL_BASICS_TRAINING = System.label.CSP_Training_Section;
 
 	PRIVATE STATIC FINAL STRING LABEL_EN_IDCARD = 'ID Card';
 	PRIVATE STATIC FINAL STRING LABEL_PRIVACYMANAGEMENTTITLE = System.Label.CSP_Profile_PrivacyManagement_Title;
@@ -471,6 +472,7 @@ public static Contact contactInfo = new Contact();
 		List<FieldWrapper> lstfw2 = new List<FieldWrapper>();
 		lstfw2.add(new FieldWrapper('Email',false,true));
 		FieldWrapper fw;
+		lstfw2.add(new FieldWrapper('Additional_Email__c',true,true));
 		fw = new FieldWrapper('Phone',true,true);
 		fw.isRequired = true;
 		lstfw2.add(fw);
@@ -482,6 +484,21 @@ public static Contact contactInfo = new Contact();
 		lstfw3.add(new FieldWrapper('User_Portal_Status__c',false,true));
 		lstfw3.add(new FieldWrapper('Authorization',false,true));
 		lstCardWrapper.add(new CardWrapper(LABEL_ACCESSIBILITY, lstfw3, true));
+
+		//TRAINING DETAILS CARD
+		List<Training_Contact_Role_Details__c> trainingList = [SELECT Id
+					FROM Training_Contact_Role_Details__c
+					WHERE Account_Contact_Role__r.Contact__c = :loggedUser.contactId 
+					AND Account_Contact_Role__r.Contact_Role_Name__c = 'Trainee'];
+
+		//we are only expecting to have a unique account contact role with contact role name equal to trainee
+		if(!trainingList.isEmpty()){
+			List<FieldWrapper> lstfw3_1 = new List<FieldWrapper>();
+			fw = new FieldWrapper('TRAINING',false,true,true);
+			fw.isTrainingInfo = true;
+			lstfw3_1.add(fw);
+			lstCardWrapper.add(new CardWrapper(LABEL_BASICS_TRAINING, lstfw3_1, true));
+		}
 
 		//PROFESSIONAL CARD
 		List<FieldWrapper> lstfw4 = new List<FieldWrapper>();
@@ -559,7 +576,6 @@ public static Contact contactInfo = new Contact();
 		};
 
 	}
-
 
 	public static List<CardWrapper> AccountFields() { return getFieldsByRecordType();}
 
@@ -742,6 +758,9 @@ public static Contact contactInfo = new Contact();
 
 		@AuraEnabled
 		public Boolean isIdCardInfo;
+
+		@AuraEnabled
+		public Boolean isTrainingInfo;
 
 		@AuraEnabled
 		public Boolean isContactServices;

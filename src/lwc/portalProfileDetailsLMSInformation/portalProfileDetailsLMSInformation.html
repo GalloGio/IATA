@@ -1,0 +1,85 @@
+<template>
+	<lightning-record-edit-form record-id={recordId} object-api-name="Training_Contact_Role_Details__c"
+			onsuccess={handleSucess} onsubmit={handleSubmit}
+			onerror={handleError}>
+
+			<template if:true={isSaving}>
+				<div class="modalSpinnerContainer">
+					<lightning-spinner alternative-text="Loading" size="medium">
+					</lightning-spinner>
+				</div>
+			</template>
+		<lightning-layout multiple-rows vertical-align="stretch">
+			
+			<lightning-messages>
+			</lightning-messages>
+
+			<lightning-layout-item padding="around-small" size="12">
+			</lightning-layout-item>
+
+
+			<!------------------------------------------      Address Form      -------------------------------------------->
+			<lightning-layout-item size="12">
+				<div class="sectionTitle">{labels.CSP_L2_Business_Address_Information}</div>
+				<!-- <div class="sectionDescription">{labels.CSP_L2_Business_Address_Information_Message}</div> -->
+			</lightning-layout-item>
+
+			<lightning-layout-item padding="around-small" size="12">
+			</lightning-layout-item>
+
+		</lightning-layout>
+
+		<c-portal-address-form-l-m-s
+			is-i-e={isIE}
+			country-id={countryId}
+			address={localAddress}
+			onsetvalidationstatus={setValidationStatus}
+			onstartloading={startLoading}
+			onstoploading={stopLoading}>
+		</c-portal-address-form-l-m-s>
+
+		<lightning-layout multiple-rows vertical-align="stretch">
+
+			<lightning-layout-item size="12" class="slds-p-around_medium topLightGrayBorder customWhiteBackground slds-clearfix">
+			</lightning-layout-item>
+
+			<!--<lightning-layout-item size="4">
+				<span class="link_normal -Title slds-float_left" onclick={toCompanyInformation} >{labels.CSP_L2_Back_to_Company_Information}</span>
+			</lightning-layout-item>-->
+
+			<!-- <lightning-layout-item size="6" class="backButtonWrapper">
+				<lightning-button class="slds-float_right containedButton customBtn"
+					data-id="cancelButton"
+					label={labels.CSP_Next_LMS}
+					disabled={isConfirmationButtonDisabled}
+					variant="brand" onclick={next}>
+				</lightning-button>
+			</lightning-layout-item>
+
+			<lightning-layout-item size="6">
+				<lightning-button class="slds-float_right containedButton customBtn"
+					data-id="nextButton"
+					label={labels.CSP_Next_LMS}
+					disabled={isConfirmationButtonDisabled}
+					variant="brand" onclick={next}>
+				</lightning-button>
+			</lightning-layout-item> -->
+
+			<lightning-layout-item size="6">
+				<div class="slds-p-vertical_xx-small slds-col slds-size_1-of-1">
+					<lightning-button class="baseButton newLinkButton buttonMinHeightMedium text-xsmall fullWidth" 
+					label={labels.CancelLabel} variant="neutral" onclick={closeModal}></lightning-button>
+				</div>
+			</lightning-layout-item>
+			<lightning-layout-item size="6">
+				<div class="slds-p-vertical_xx-small slds-col slds-size_1-of-1">
+					<lightning-button class="baseButton newContainedButton buttonMinHeightMedium text-xsmall fullWidth" 
+					label={labels.SaveLabel} variant="neutral" type="submit" disabled={isConfirmationButtonDisabled}></lightning-button>
+				</div>
+			</lightning-layout-item>
+			
+			<lightning-layout-item padding="around-small" size="12">
+			</lightning-layout-item>
+		</lightning-layout>
+	</lightning-record-edit-form>
+</template>

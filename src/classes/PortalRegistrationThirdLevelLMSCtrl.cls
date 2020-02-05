@@ -18,9 +18,23 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
     public static Training_Contact_Role_Details__c getLMSContactInfo(String lms) {
         User loggedUser = CSP_Utils.getLoggedUser();
 
+		String RECTYPE_lms = '';
 		String RECTYPE_Trainee_YASContDet = RecordTypeSingleton.getInstance().getRecordTypeId('Training_Contact_Role_Details__c', 'Yardstick_Trainee');
+
+		if(lms == 'yas'){
+			RECTYPE_lms = RECTYPE_Trainee_YASContDet;
+		}
+
+		Training_Contact_Role_Details__c tcrd = new Training_Contact_Role_Details__c();
+
 		
-        List<Training_Contact_Role_Details__c> con = [SELECT Id, Username__c, UserId__c, Preferred_Course__c, RecordTypeId
+        List<Training_Contact_Role_Details__c> con = [SELECT Id, Username__c, UserId__c, Preferred_Course__c, RecordTypeId,
+															City_Name__c, City_Reference__c,
+															State_Name__c, State_Reference__c,
+															State_Reference__r.iso_code__c, PO_Box_Address__c,
+															Country__c, Country_Reference__c, 
+															Street__c, Street2__c,
+															Postal_Code__c
 														FROM Training_Contact_Role_Details__c
 														WHERE Account_Contact_Role__r.Contact__c = :loggedUser.contactId 
 														AND RecordTypeId = :RECTYPE_Trainee_YASContDet
@@ -59,26 +73,80 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 
 		try{
 
-			String sUsername = extraValues[0];
-			String sUserId = extraValues[1];
-			String sCourse = extraValues[2];
-			String sStreet = extraValues[3];
-			String sZipCode = extraValues[4];
-			String sCountryId = extraValues[5];
-			String sStateId = (extraValues[6] != null && extraValues[6] != '') ? extraValues[6] : extraValues[7];
-			String sStateName = extraValues[7];
-			String sCityId = extraValues[8];
-			String sCity = extraValues[9];
-			Boolean isPoBox = Boolean.valueOf(extraValues[10]);
-			String serviceid = extraValues[11];
-			String sStreet2 = extraValues[12];
-			String existingTrainingId = extraValues[13];
+			RegistrationParamsWrapper regParam = new RegistrationParamsWrapper(extraValues);
 
+			String RECTYPE_Master_AccRole = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Role__c', 'Master');
+			String RECTYPE_Master_AccContRole = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'Master');
 			String RECTYPE_Trainee_YASContDet = RecordTypeSingleton.getInstance().getRecordTypeId('Training_Contact_Role_Details__c', 'Yardstick_Trainee');
 
+			//Update Contact
 			update con;
 
-			Account_Contact_Role__c acr = PortalRegistrationFirstLevelCtrl.createOrMigrateContactStructure(con, existingTrainingId, true);
+			//Create Account Role if not existing
+			List<Account_Role__c> listAR = [SELECT Id,Account__c,RecordTypeId 
+											FROM Account_Role__c 
+											WHERE Account__c = :con.AccountId 
+											AND Account_Role_Name__c = 'Training' 
+											AND Functional_Role__c =  'Training' LIMIT 1];
+			Account_Role__c ar = new Account_Role__c();
+
+			if(listAR.size() > 0){
+				ar = listAR[0];
+			}else{
+				ar.Account__c = con.AccountId;
+				ar.RecordTypeId = RECTYPE_Master_AccRole;
+				ar.Account_Role_Name__c =  'Training';
+				ar.Functional_Role__c =  'Training';
+				insert ar;
+			}
+
+			Set<String> contIds = new Set<String>();
+			contIds.add(con.Id);
+			if(regParam.existingTrainingId != ''){
+				contIds.add(regParam.existingTrainingId);
+			}
+
+			//Getting existing Account Contact Role from the new Contact to set it up to on the old contact
+			List<Account_Contact_Role__c> listACR = [SELECT Id,Account_Role__c,Contact__c,Contact_Role_Name__c,RecordTypeId
+													FROM Account_Contact_Role__c
+													WHERE Contact__c in :contIds
+													AND Contact_Role_Name__c = 'Trainee'
+													AND Functional_Role__c =  'Training'];
+			Account_Contact_Role__c acrNew = new Account_Contact_Role__c();
+			Account_Contact_Role__c acrOld = new Account_Contact_Role__c();
+			Account_Contact_Role__c acr = new Account_Contact_Role__c();
+
+			for(Account_Contact_Role__c acrItem : listACR){
+				if(acrItem.Contact__c == con.Id){
+					acrNew = acrItem;
+				}else if(acrItem.Contact__c == regParam.existingTrainingId){
+					acrOld = acrItem;
+				}
+			}
+			if(acrOld != null && acrOld.Id != null){
+				acr = acrOld;
+				acr.Account_Role__c = ar.Id;
+				acr.Contact__c = con.Id;
+
+				update acr;
+
+				delete acrNew;
+			}else if(acrNew != null && acrNew.Id != null){
+				acr = acrNew;
+			}else{
+				acr.Account_Role__c = ar.Id;
+				acr.Contact__c = con.Id;
+				acr.Contact_Role_Name__c = 'Trainee';
+				acr.Functional_Role__c =  'Training';
+				acr.RecordTypeId = RECTYPE_Master_AccContRole;
+				acr.Service_Rendered__c = 'Other';
+
+				insert acr;
+			}
+			if(regParam.existingTrainingId != null && regParam.existingTrainingId != ''){
+				Contact toDeleteContact = new Contact(Id = regParam.existingTrainingId);
+				delete toDeleteContact;
+			}
 
 			//Create Yardstick Contact Role Detail
 			List<Training_Contact_Role_Details__c> listYCD = [SELECT Id,RecordTypeId,Account_Contact_Role__c,Username__c,UserId__c,Preferred_Course__c 
@@ -90,21 +158,49 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 
 			if(listYCD.size() > 0){
 				 ycd = listYCD[0];
-				ycd.Username__c = sUsername;
-				ycd.UserId__c = sUserId;
-				if(sCourse != null && sCourse != ''){
-					ycd.Preferred_Course__c = sCourse;
+				ycd.Username__c = regParam.sUsername;
+				ycd.UserId__c = regParam.sUserId;
+				if(regParam.sCourse != null && regParam.sCourse != ''){
+					ycd.Preferred_Course__c = regParam.sCourse;
 				}
-
-				update ycd;
-
 			}else{
 				ycd.Account_Contact_Role__c = acr.Id;
 				ycd.RecordTypeId = RECTYPE_Trainee_YASContDet;
-				ycd.Username__c = sUsername;
-				ycd.UserId__c = sUserId;
-				ycd.Preferred_Course__c = sCourse;
+				ycd.Username__c = regParam.sUsername;
+				ycd.UserId__c = regParam.sUserId;
+				ycd.Preferred_Course__c = regParam.sCourse;
+			}
 
+			//Check State
+			if(regParam.sStateId != ''){
+				List<IATA_ISO_State__c> listStates = [SELECT Id,ISO_Code__c,Name,Valid_for_Address__c
+										FROM IATA_ISO_State__c
+										WHERE Id = :regParam.sStateId
+										OR ISO_Code__c = :regParam.sStateId LIMIT 1];
+				if(listStates.size() > 0){
+					ycd.State_Reference__c = listStates[0].Id;
+					ycd.State_Name__c = listStates[0].Name;
+				}else{
+					ycd.State_Name__c = regParam.sStateId;
+				}
+			}
+
+			if(regParam.isPoBox){
+				ycd.PO_Box_Address__c = (regParam.sStreet != null) ? regParam.sStreet : '';
+			}else{
+				ycd.Street__c = (regParam.sStreet != null) ? regParam.sStreet : '';
+			}
+			
+			ycd.Street2__c = (regParam.sStreet2 != null) ? regParam.sStreet2 : '';
+			ycd.Postal_Code__c = (regParam.sZipCode != null && regParam.sZipCode != '') ? regParam.sZipCode : '00000';
+			ycd.Country_Reference__c = (regParam.sCountryId != null && regParam.sCountryId != '') ? regParam.sCountryId : null;
+			ycd.City_Reference__c = (regParam.sCityId != null && regParam.sCityId != '') ? regParam.sCityId : null;
+			ycd.City_Name__c = (regParam.sCity != null && regParam.sCity != '') ? regParam.sCity : null;
+			
+
+			if(listYCD.size() > 0){
+				update ycd;
+			}else{
 				insert ycd;
 			}
 
@@ -141,9 +237,7 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 			PermissionSet psYardstick = [SELECT Id FROM PermissionSet WHERE Name = 'Yardstick' LIMIT 1];
 
 			assignPermissionSet(psYardstick.Id, (Id)loggedUserId);
-			
-			
-
+		
 			result.isSuccess = true;
 			result.message = 'Regitration Completed!';
 
@@ -151,6 +245,8 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 		catch(Exception e){
 			result.isSuccess = false;
 			result.message = 'An Error Occurred - '+ e.getStackTraceString() ;
+			System.debug('[PortalRegistrationThirdLevelLMSCtrl] registration : Exception : ' + e);
+			System.debug('[PortalRegistrationThirdLevelLMSCtrl] registration : Exception stack : ' + e.getStackTraceString());
 			Database.rollback(sp);
 			return result;
 		}
@@ -242,9 +338,10 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 				conToInactivate.LastName = conToInactivate.LastName + ' - inactive';
 				conToInactivate.Email = conToInactivate.Email + '.inactive';
 				if(conToInactivate.Additional_Email__c != null && conToInactivate.Additional_Email__c != ''){
-					conToInactivate.Additional_Email__c = conToInactivate.Additional_Email__c + '.inactive';
+					conToInactivate.Additional_Email__c = '';
 				}
 
+				conToInactivate.status__c = 'Inactive';
 				update conToInactivate;
 
 				Contact con = [SELECT Id,AccountId,Email,Additional_Email__c,Phone,OtherPhone,Salutation,Birthdate,Shipping_Address__c
@@ -260,7 +357,7 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 
 				List<String> extraValues = new List<String>();
 				extraValues.add(contactInfo.Username);
-				extraValues.add('');
+				extraValues.add(contactInfo.UserId);
 				extraValues.add(contactInfo.lmsCourse);
 				extraValues.add(contactInfo.street);
 				extraValues.add(contactInfo.zip);
@@ -421,8 +518,8 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 															WHERE Contact__c in :contIds
 															AND Contact_Role_Name__c = 'Trainee'
 															AND Functional_Role__c =  'Training'];
-					Account_Contact_Role__c acrNew;
-					Account_Contact_Role__c acrOld;
+					Account_Contact_Role__c acrNew = new Account_Contact_Role__c();
+					Account_Contact_Role__c acrOld = new Account_Contact_Role__c();
 
 					for(Account_Contact_Role__c acr : listACR){
 						if(acr.Contact__c == con.Id){
@@ -468,9 +565,10 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 					conToInactivate.LastName = conToInactivate.LastName + ' - inactive';
 					conToInactivate.Email = conToInactivate.Email + '.inactive';
 					if(conToInactivate.Additional_Email__c != null && conToInactivate.Additional_Email__c != ''){
-						conToInactivate.Additional_Email__c = conToInactivate.Additional_Email__c + '.inactive';
+						conToInactivate.Additional_Email__c = '';
 					}
 
+					// conToInactivate.status__c = 'Inactive';
 					update conToInactivate;
 
 					Set<String> conIdSet = new Set<String>();
@@ -486,6 +584,8 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 		catch(Exception e){
 			result.isSuccess = false;
 			result.message = 'An Error Occurred - '+ e.getStackTraceString() ;
+			System.debug('[PortalRegistrationThirdLevelLMSCtrl] registration : Exception : ' + e);
+			System.debug('[PortalRegistrationThirdLevelLMSCtrl] registration : Exception stack : ' + e.getStackTraceString());
 			return result;
 		}
 		return result;
@@ -558,6 +658,8 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 			return params;
 
 		}catch(Exception e){
+
+
 			return null;
 		}
 
@@ -703,6 +805,8 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 		}catch(Exception e ){
 			result.isSuccess = false;
 			result.message = 'An Error Occurred - '+ e.getStackTraceString() ;
+			System.debug('[PortalRegistrationThirdLevelLMSCtrl] registration : Exception : ' + e);
+			System.debug('[PortalRegistrationThirdLevelLMSCtrl] registration : Exception stack : ' + e.getStackTraceString());
 			return result;
 		}
 		return result;
@@ -727,7 +831,6 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 				FROM Training_Contact_Role_Details__c
 				WHERE UserId__c = :userId 
 				AND Username__c = :username 
-				AND RecordtypeId = :RECTYPE_Trainee_YASContDet
 				LIMIT 1]);
 
 		if(!existingYadLst.isEmpty() && existingYadLst.size() > 0){
@@ -749,11 +852,52 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 				List<User> existingUserLst = new List<User>(
 					[SELECT Id FROM User WHERE ContactId = :existingTCRD.Account_Contact_Role__r.contact__c LIMIT 1]);
 
-				if(!existingUserLst.isEmpty() && existingUserLst.size() > 0){
+				if(!existingUserLst.isEmpty()){
 					sRes = 'existing_user';
 				}else{
 					sRes = existingTCRD.Account_Contact_Role__r.contact__c;	
 				}
+			}
+
+		}else{
+			sRes = 'not_existing';
+		}
+		return sRes;
+	}
+
+	@AuraEnabled(cacheable=false)
+	public static String validateFullName(String existingContactId, String firstname, String lastname){
+		
+		String sRes = '';
+		String fullName = firstname + lastname;
+		String fullNameReverse = lastname + firstname;
+		fullName = AMS_Utils.cleanSpecialChars(fullName.toUpperCase(), false);
+		fullNameReverse = AMS_Utils.cleanSpecialChars(fullNameReverse.toUpperCase(), false);
+		Double fullNameSize = fullName.length();
+		Double threshold = fullNameSize - ((fullNameSize * 60)/100);
+		Integer roundThreshold = Math.round(threshold);
+
+		List<contact> existingContactLst = new List<contact>(
+			[SELECT Id, FirstName, LastName 
+				FROM contact
+				WHERE Id = :existingContactId 
+				LIMIT 1]);
+
+		if(!existingContactLst.isEmpty()){
+			contact existingContact = existingContactLst[0];
+			String existingFullName = existingContact.FirstName + existingContact.LastName;
+			String existingFullNameReverse = existingContact.LastName + existingContact.FirstName;
+			existingFullName = AMS_Utils.cleanSpecialChars(existingFullName.toUpperCase(), false);
+			existingFullNameReverse = AMS_Utils.cleanSpecialChars(existingFullNameReverse.toUpperCase(), false);
+
+			//check if names are 80% equal, if not returns -1, if equal or above 80% returns the # of diferences 
+			Integer compareResult = fullName.getLevenshteinDistance(existingFullName, roundThreshold);
+			Integer compareResultReverse = fullNameReverse.getLevenshteinDistance(existingFullNameReverse, roundThreshold);
+
+			if(compareResult < 0 && compareResultReverse < 0){
+				sRes = 'not_matching';	
+			}else{
+				sRes = 'existing_user';
 			}
 
 		}else{
@@ -869,5 +1013,40 @@ public without sharing class PortalRegistrationThirdLevelLMSCtrl {
 
 	}
 
+	public class RegistrationParamsWrapper{
+
+		public String sUsername {get;set;}
+		public String sUserId {get;set;}
+		public String sCourse {get;set;}
+		public String sStreet {get;set;}
+		public String sZipCode {get;set;}
+		public String sCountryId {get;set;}
+		public String sStateId {get;set;}
+		public String sStateName {get;set;}
+		public String sCityId {get;set;}
+		public String sCity {get;set;}
+		public Boolean isPoBox {get;set;}
+		public String serviceid {get;set;}
+		public String sStreet2 {get;set;}
+		public String existingTrainingId {get;set;}
+
+		public RegistrationParamsWrapper(List<String> extraValues){
+			this.sUsername = extraValues[0];
+			this.sUserId = extraValues[1];
+			this.sCourse = extraValues[2];
+			this.sStreet = extraValues[3];
+			this.sZipCode = extraValues[4];
+			this.sCountryId = extraValues[5];
+			this.sStateId = (extraValues[6] != null && extraValues[6] != '') ? extraValues[6] : extraValues[7];
+			this.sStateName = extraValues[7];
+			this.sCityId = extraValues[8];
+			this.sCity = extraValues[9];
+			this.isPoBox = Boolean.valueOf(extraValues[10]);
+			this.serviceid = extraValues[11];
+			this.sStreet2 = extraValues[12];
+			this.existingTrainingId = extraValues[13];
+		}
+ 	
+	}
 
 }
