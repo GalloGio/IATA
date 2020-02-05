@@ -51,6 +51,15 @@ export default class PortalMyProfilePage extends LightningElement {
             contact.cardNumber = result.cardNumber !== undefined ? result.cardNumber : undefined;
             contact.cardDate   = result.cardDate   !== undefined ? result.cardDate   : undefined;
             contact.cardStatus = result.cardStatus !== undefined ? result.cardStatus : undefined;
+            contact.trainingUsername = result.trainingUsername !== undefined ? result.trainingUsername : undefined;
+            contact.trainingUserId = result.trainingUserId !== undefined ? result.trainingUserId : undefined;
+            contact.shippingCountry = result.shippingCountry !== undefined ? result.shippingCountry : undefined;
+            contact.shippingState = result.shippingState !== undefined ? result.shippingState : undefined;
+            contact.shippingPostalCode = result.shippingPostalCode !== undefined ? result.shippingPostalCode : undefined;
+            contact.shippingCity = result.shippingCity !== undefined ? result.shippingCity : undefined;
+            contact.shippingStreet1 = result.shippingStreet1 !== undefined ? result.shippingStreet1 : undefined;
+            contact.shippingStreet2 = result.shippingStreet2 !== undefined ? result.shippingStreet2 : undefined;
+            contact.shippingAddressId = result.shippingAddressId !== undefined ? result.shippingAddressId : undefined;
 
             this.contactInfo = contact;
         });
@@ -93,7 +102,7 @@ export default class PortalMyProfilePage extends LightningElement {
                     'showfunction': (sectionMapContactLocal[i].cardTitle === 'Professional'),
                     'isEditable': sectionMapContactLocal[i].isEditable,
                     'isEditIdCard': (sectionMapContactLocal[i].cardTitle === IdCard),
-		    'sectionKeyName': sectionMapContactLocal[i].cardKey,
+		            'sectionKeyName': sectionMapContactLocal[i].cardKey,
                     'idCardRedirectionUrl':sectionMapContactLocal[i].idCardUrl
                 });
             }

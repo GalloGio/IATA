@@ -328,7 +328,6 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     loaded(event) {
         this.isLoading = false;
         let fields = JSON.parse(JSON.stringify(event.detail.objectInfos.Contact.fields));
-
         if(this.sectionTitle === this._labels.IdCard){
             this.template.querySelector('[data-id="sectionId"]').classList.add('grayBackgroundSection');
         }
@@ -746,6 +745,10 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
 
     get hasStaticServices() {
         return this.staticFields !== undefined && this.staticFields.services !== undefined && this.staticFields.services.length > 0;
+    }
+
+    get hasTrainingData() {
+        return (this.staticFields !== undefined && this.staticFields.trainingUserId !== undefined);
     }
 
 
