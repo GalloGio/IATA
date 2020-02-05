@@ -64,8 +64,6 @@ import CSP_L2_VerificationToP2_LMS from '@salesforce/label/c.CSP_L2_Verification
 export default class PortalRegistrationConfirmationLMS extends LightningElement {
 	/* Images */
 	successIcon = CSP_PortalPath + 'CSPortal/Images/Icons/youaresafe.png';
-
-	// TO DO : find an image for error
 	errorIcon = CSP_PortalPath + 'CSPortal/Images/Icons/youaresafe.png';
 
 	@api contactInfo;
@@ -82,13 +80,9 @@ export default class PortalRegistrationConfirmationLMS extends LightningElement 
 
 	createdCityId;
 
-	// selectedAccount;
-	// @track selectedAccountSet = false;
-
 	@track openSuccessModal = false;
 	@track openVerificationMailSuccessModal = false;
 	@track openErrorModal = false;
-	//to be replaced by a custom label
 	successModalTitle = 'Verification Mail';
 	@track successModalMessage = '';
 	errorModalTitle = 'Error';
@@ -203,7 +197,7 @@ export default class PortalRegistrationConfirmationLMS extends LightningElement 
 		.catch((error) => {
 			this.openMessageModalFlowRegister = true;
 			this.message = CSP_L2_RegistrationFailed_LMS + error;
-			console.error('Error: ', JSON.parse(JSON.stringify(error)));
+			console.log('Error: ', JSON.parse(JSON.stringify(error)));
 		});
 
 	}
@@ -219,30 +213,7 @@ export default class PortalRegistrationConfirmationLMS extends LightningElement 
 
 	submit(){
 		this.startLoading();
-
-		// Check first if we need to create a Geoname city
-		// if(this.localAddress.stateId !== '' && this.localAddress.cityId === ''){
-		// 	createIsoCity({name : this.localAddress.cityName, stateId: this.localAddress.stateId, isPoBox: this.localAddress.isPoBox})
-		// 	.then(result => {
-		// 		this.createdCityId = result;
-		// 	})
-		// 	.catch(error => {
-		// 		console.log('Error: ', JSON.parse(JSON.stringify(error)));
-		// 		this.openErrorModal = true;
-		// 		this.errorModalMessage = JSON.parse(JSON.stringify(error));
-		// 		this.stopLoading();
-		// 	})
-		// 	.finally(() => {
-		// 		this.submitRegistration();
-				
-		// 	});
-		// }else{
-			this.submitRegistration();
-		// }
-
-
-
-				// register({ registrationForm : JSON.stringify(this.registrationForm),
+		this.submitRegistration();
 	}
 
 
@@ -298,6 +269,7 @@ export default class PortalRegistrationConfirmationLMS extends LightningElement 
 						this.stopLoading();
 					})
 					.catch(error => {
+						console.log('Error: ', JSON.parse(JSON.stringify(error)));
 						this.openErrorModal = true;
 						this.errorModalMessage = JSON.parse(JSON.stringify(error));
 						this.stopLoading();
@@ -307,6 +279,10 @@ export default class PortalRegistrationConfirmationLMS extends LightningElement 
 		if(this.flow === 'flow3' || this.flow === 'flow4' || this.flow === 'flow5' || this.flow === 'flow6' || this.flow === 'flow7' ){
 
 			this.localContactInfo.flow = this.flow;
+			this.localContactInfo.existingContactId = this.localContactInfo.existingContactId;
+			this.localContactInfo.existingContactName = this.localContactInfo.existingContactName;
+			this.localContactInfo.existingContactEmail = this.localContactInfo.existingContactEmail;
+			this.localContactInfo.existingContactAccount = this.localContactInfo.existingContactAccount;
 
 			let contactName = this.localContactInfo.FirstName + ' ' + this.localContactInfo.LastName;
 
@@ -330,6 +306,7 @@ export default class PortalRegistrationConfirmationLMS extends LightningElement 
 					this.stopLoading();
 				})
 				.catch(error => {
+					console.log('Error: ', JSON.parse(JSON.stringify(error)));
 					this.openErrorModal = true;
 					this.errorModalMessage = JSON.parse(JSON.stringify(error));
 					this.stopLoading();
@@ -386,7 +363,6 @@ export default class PortalRegistrationConfirmationLMS extends LightningElement 
 					}
 					else{
 						this.stopLoading();
-						//fireEvent(this.pageRef, 'fireL3Registration', serviceId);
 						navigateToPage(CSP_PortalPath+'?firstLogin=true&lms=yas');
 
 					}

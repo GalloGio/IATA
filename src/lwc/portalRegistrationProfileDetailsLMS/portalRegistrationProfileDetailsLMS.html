@@ -2,7 +2,7 @@
 <template>
 	<lightning-layout multiple-rows vertical-align="stretch">
 
-		<!-- <div class="IEFixDisplayContainer"> -->
+		<div class="IEFixDisplayContainer"> 
 			<lightning-layout-item padding="around-small" class="IEFixDisplay" size="12">
 				</lightning-layout-item>
 				
@@ -20,7 +20,7 @@
 			<lightning-layout-item padding="around-small" class="IEFixDisplay" size="12">
 			</lightning-layout-item>
 
-			<lightning-layout-item class="slds-p-around_medium topLightGrayBorder customWhiteBackground slds-clearfix"
+			<lightning-layout-item class="slds-p-around_medium topLightGrayBorder customWhiteBackground slds-clearfix IEFixDisplay"
 				size="12">
 			</lightning-layout-item>
 
@@ -60,7 +60,7 @@
 						<div data-id="birthdateDiv" class="slds-form-element">
 							<div class="slds-form-element__control custTextInput custTextInputSmall">
 								<lightning-input date-style="short" type="date" value={localContactInfo.Birthdate}
-									class="birthdateInputClass" placeholder=" " variant="label-hidden"
+									class="birthdateInputClass" placeholder="" variant="label-hidden"
 									onkeyup={changeDateOfBirth} onchange={changeDateOfBirth}>
 								</lightning-input>
 							</div>
@@ -207,17 +207,15 @@
 			<lightning-layout-item size="6" class="IEFixDisplay">
 			</lightning-layout-item>
 
-			<lightning-layout-item size="6" class="nextBtn">
+			<lightning-layout-item size="6" class="nextBtn IEFixDisplay">
 				<lightning-button class="slds-float_right containedButton customBtn" data-id="nextButton"
 					label={labels.CSP_Next_LMS} disabled={isNextDisabled} variant="brand" onclick={next}>
 				</lightning-button>
-				<br/>
 			</lightning-layout-item>
 
-			<lightning-layout-item padding="around-small" size="12">
+			<lightning-layout-item padding="around-small" size="12" class="IEFixDisplay">
 			</lightning-layout-item>
-			<br/><br/>
-		<!-- </div> -->
+		</div>
 	</lightning-layout>
 	
 </template>

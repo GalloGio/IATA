@@ -6,7 +6,6 @@
                     <div class="headerHome">
                         <img src={homeIcon} height="24" width="24" onclick={openSaveAndGoToHomePopup}>
                     </div>
-                    <!-- <div class="headerTitle">{labels.CSP_L2_Banner_Title}</div> -->
                     <div class="headerTitle">{labels.CSP_L3_Header_Title}</div>
                     
                     <div class="headerClose">
@@ -19,29 +18,25 @@
                             <div class="itemIcon">
                                 <template if:true={isProfileInformationStep}>
                                     <img src={step1Active} height="24" width="24">
-                                    <!--<lightning-icon size="x-small" icon-name="utility:check" class="slds-current-color"></lightning-icon>-->
                                 </template>
                                 <template if:false={isProfileInformationStep}>
                                     <img src={stepValid} class="validIcon" height="50" width="50">
-                                    <!--<lightning-icon size="x-small" icon-name="utility:check" class="slds-current-color"></lightning-icon>-->
                                 </template>
                             </div>
-                            <!-- <div class="itemTitle"><span>{labels.CSP_L2_Profile_Details}</span></div> -->
                             <div class="itemTitle"><span>{labels.CSP_L2_Profile_Details}</span></div>
                         </div>
                         <div class="progressItem">
                             <div class="itemIcon">
-                                <template if:true={isProfileInformationStep}>
+                                <template if:true={isStep2Inactive}>
                                     <img src={step2Inactive} height="24" width="24">
                                 </template>
-                                <template if:true={isAccountStep}>
+                                <template if:true={isEmailValidationStep}>
                                     <img src={step2Active} height="24" width="24">
                                 </template>
-                                <template if:true={isConfirmationStep}>
+                                <template if:true={isStep2Valid}>
                                     <img src={stepValid} class="validIcon" height="50" width="50">
                                 </template>
                             </div>
-                            <!-- <div class="itemTitle"><span>{labels.CSP_L2_Account_Selection}</span></div> -->
                             <div class="itemTitle"><span>{labels.OneId_Contact_Association_Validation}</span></div>
                         </div>
                         <div class="progressItem">
@@ -53,11 +48,10 @@
                     </div>
                 </div>
             </div>
-            <div class="customLightShadow customPopup slds-is-relative">
+            <div class="customLightShadow customPopupInterior60PercentScreenCentered slds-is-relative">
                 <span slot="pageBody">
                     <c-portal-custom-card-container>
                         <span slot="cardBody">
-                            <!--div class="scrollable-body"-->
                             <div>
                                 <template if:true={contactFound}>
                                     <template if:true={isProfileInformationStep}>

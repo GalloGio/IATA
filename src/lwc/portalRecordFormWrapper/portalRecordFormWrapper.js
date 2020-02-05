@@ -55,6 +55,15 @@ import See_Bank_Account_Details from '@salesforce/label/c.See_Bank_Account_Detai
 import Credit_Card_Payment_Link from '@salesforce/label/c.Credit_Card_Payment_Link'; //WMO-699 - ACAMBAS
 import Link_To_SIS from '@salesforce/label/c.Link_To_SIS'; //WMO-736 - ACAMBAS
 
+// GCSDI
+import CSP_L2_Business_Address_Information_LMS from '@salesforce/label/c.CSP_L2_Business_Address_Information_LMS'; 
+import CSP_L2_Country from '@salesforce/label/c.CSP_L2_Country'; 
+import CSP_L2_State from '@salesforce/label/c.CSP_L2_State'; 
+import CSP_L2_City from '@salesforce/label/c.CSP_L2_City'; 
+import CSP_L2_Postal_Code from '@salesforce/label/c.CSP_L2_Postal_Code'; 
+import CSP_L2_PO_Box_Number from '@salesforce/label/c.CSP_L2_PO_Box_Number'; 
+import CSP_L2_Street from '@salesforce/label/c.CSP_L2_Street';
+
 
 export default class PortalRecordFormWrapper extends NavigationMixin(LightningElement) {
     
@@ -72,7 +81,7 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     @api objectName;
     @api showEditModal = false;
     @api isLoading;
-    @api staticFields;
+	// @api staticFields;
     @api showarea;
     @api services;
     @api showfunction;
@@ -91,6 +100,7 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     @track selectedValuesFunction = [];
     @track fieldsValid = true;
     @track fieldsLocal;
+	@track staticFieldsLocal;
     @track jobFunctions;
     @track removeContact = false;
     @track idCardErrorPopup = false;
@@ -121,6 +131,15 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     get fields(){ return this.fieldsLocal;}
     set fields(value){ this.fieldsLocal = value;}
 
+	@api
+	get staticFields(){ return this.staticFieldsLocal;}
+	set staticFields(value){
+		this.staticFieldsLocal = value;
+		if(!this.isTrainingPageLoaded){
+			this.connectedCallback();
+		}
+	}
+
     _labels = {
         SaveLabel,
         CancelLabel,
@@ -148,7 +167,14 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
         IdCard,
         IdCardPhotoTitle,
         See_Bank_Account_Details,
-        Credit_Card_Payment_Link
+		Credit_Card_Payment_Link,
+		CSP_L2_Business_Address_Information_LMS,
+		CSP_L2_Country,
+		CSP_L2_State,
+		CSP_L2_City,
+		CSP_L2_Postal_Code,
+		CSP_L2_PO_Box_Number,
+		CSP_L2_Street
     };
 
     @api tabName = '';
@@ -156,6 +182,28 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
 	@track isAirline=false;
 	@track linkToDoChanges='';
     
+	// GCSDI
+	@track isTrainingPageLoaded=false;
+	@track isTrainingInfo=false;
+	@track trainingId
+	@track isPOBox = false;
+	selectedCountryId;
+	address = {
+		'isPoBox':false,
+		'countryId':'',
+		'countryCode':'',
+		'countryName':'',
+		'stateId':'',
+		'stateName':'',
+		'cityId':'',
+		'cityName':'',
+		'street':'',
+		'street2':'',
+		'zip':'',
+		'validationStatus':0,
+		'addressSuggestions':[]
+	};
+
     get labels() { return this._labels; }
     set labels(value) { this._labels = value; }
 
@@ -167,15 +215,15 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
         if (this.isContact) {
             getPickListValues({ sobj: 'Contact', field: 'Area__c' }).then(result => {
                 let options = JSON.parse(JSON.stringify(result));
-                let contact = JSON.parse(JSON.stringify(this.staticFields));
+				let contact1 = JSON.parse(JSON.stringify(this.staticFieldsLocal));
                 let selectedV = JSON.parse(JSON.stringify(this.selectedvalues));
 
-                if (contact.Area__c != null) {
+				if (contact1.Area__c != null) {
 
-                    let values = contact.Area__c.split(";");
+					let values = contact1.Area__c.split(";");
                     values.forEach(function (value) {
                         options.forEach(function (option) {
-                            if (option.label == value) { option.checked = true; selectedV.push(option.value); }
+							if (option.label === value) { option.checked = true; selectedV.push(option.value); }
                         });
                     });
 
@@ -189,13 +237,13 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
             //Get membership function values
             getPickListValues({ sobj: 'Contact', field: 'Membership_Function__c' }).then(result => {
                 let options = JSON.parse(JSON.stringify(result));
-                let contact = JSON.parse(JSON.stringify(this.staticFields));
+				let contact2 = JSON.parse(JSON.stringify(this.staticFieldsLocal));
                 let selectedV = JSON.parse(JSON.stringify(this.selectedValuesFunction));
                 let functions = [];
 
-                if (contact.Membership_Function__c != null) {
+				if (contact2.Membership_Function__c != null) {
 
-                    let values = contact.Membership_Function__c.split(";");
+					let values = contact2.Membership_Function__c.split(";");
                     values.forEach(function (value) {
                         functions.push(value);
                         options.forEach(function (option) {
@@ -211,6 +259,50 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
                 this.jobFunctions = functions;
                 this.functionOptions = options;
             });
+
+			// GCSDI
+			if(this.sectionTitle === 'Training Details'){
+				this.isTrainingInfo = true;
+
+				if(this.staticFieldsLocal !== undefined){
+					this.isTrainingPageLoaded = true;
+					let contact3 = JSON.parse(JSON.stringify(this.staticFieldsLocal));
+					this.trainingId = contact3.trainingId;
+					this.selectedCountryId = contact3.shippingCountryRef;
+					this.address.countryId = contact3.shippingCountryRef;
+					this.address.countryName = contact3.shippingCountry;
+
+					// this.address.stateId = this.contactInfo.Shipping_Address__r.State_Reference__c;
+					if(contact3.shippingStateRef !== null &&
+						contact3.shippingStateRef !== undefined &&
+						contact3.shippingStateRef !== '' &&
+						contact3.shippingStateRef.iso_code__c !== null &&
+						contact3.shippingStateRef.iso_code__c !== undefined &&
+						contact3.shippingStateRef.iso_code__c !== ''){
+
+						this.address.stateId = contact3.shippingStateRef.iso_code__c;
+					}else{
+						this.address.stateId = contact3.shippingState !== undefined? contact3.shippingState : '';
+					}
+
+					this.address.stateName = contact3.shippingState !== undefined? contact3.shippingState : '';
+					this.address.cityId = contact3.shippingCityRef !== undefined? contact3.shippingCityRef : '';
+					this.address.cityName = contact3.shippingCity !== undefined? contact3.shippingCity : '';
+
+					this.address.isPoBox = contact3.shippingPOBoxAddress === undefined || contact3.shippingPOBoxAddress === ''? false : true;
+
+					if(this.address.isPoBox){
+						this.isPOBox = true;
+						this.address.street = contact3.shippingPOBoxAddress !== undefined? contact3.shippingPOBoxAddress : false;
+					}else{
+						this.isPOBox = false;
+						this.address.street = contact3.shippingStreet1 !== undefined? contact3.shippingStreet1 : '';
+					}
+
+					this.address.street2 = contact3.shippingStreet2 !== undefined? contact3.shippingStreet2 : '';
+					this.address.zip = contact3.shippingPostalCode !== undefined? contact3.shippingPostalCode : '';
+				}
+			}
 
         }
         
@@ -324,6 +416,12 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
 
     openModal() { this.showEditModal = true; }
     closeModal() { this.showEditModal = false; }
+
+	closeModalAddress() {
+	
+		this.showEditModal = false;
+		eval("$A.get('e.force:refreshView').fire();");
+	}
 
     loaded(event) {
         this.isLoading = false;
@@ -556,7 +654,7 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
             let fields = event.detail.fields;
             fields.accountId = this.accountId;
 
-            let contact = JSON.parse(JSON.stringify(this.staticFields));
+			let contact = JSON.parse(JSON.stringify(this.staticFieldsLocal));
             if(contact.ID_Card_Holder__c && (fields.FirstName != contact.FirstName || fields.LastName != contact.LastName || (fields.Birthdate != contact.Birthdate && contact.Birthdate))){
                 this.isSaving = false;
                 this.closeModal();
@@ -565,7 +663,7 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
             }
             else if(contact.ID_Card_Holder__c && !contact.Birthdate && fields.Birthdate){
                 contact.Birthdate = fields.Birthdate;
-                this.staticFields = contact;
+				this.staticFieldsLocal = contact;
             }
 
             if (selected.length > 0) {
@@ -648,7 +746,7 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
             if (index > -1) {
                 selectedV.splice(index, 1);
                 options.forEach(function (option) {
-                    if (option.value == selected) { option.checked = false; }
+					if (option.value === selected) { option.checked = false; }
                 });
             }
         }
@@ -732,7 +830,7 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     }
 
     get hasIdCard() {
-        return (this.staticFields !== undefined && this.staticFields.cardNumber !== undefined);
+		return (this.staticFieldsLocal !== undefined && this.staticFieldsLocal.cardNumber !== undefined);
     }
 
     get hasFunction() {
@@ -744,11 +842,11 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     }
 
     get hasStaticServices() {
-        return this.staticFields !== undefined && this.staticFields.services !== undefined && this.staticFields.services.length > 0;
+		return this.staticFieldsLocal !== undefined && this.staticFieldsLocal.services !== undefined && this.staticFieldsLocal.services.length > 0;
     }
 
     get hasTrainingData() {
-        return (this.staticFields !== undefined && this.staticFields.trainingUserId !== undefined);
+		return (this.staticFieldsLocal !== undefined && this.staticFieldsLocal.trainingUserId !== undefined);
     }
 
 
@@ -799,8 +897,8 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     }
 
     openPhotoPopUp() {
-        if(this.staticFields.cardPhoto != ''){
-           getPhotoFromAPI({ photoName : this.staticFields.cardPhoto})
+		if(this.staticFieldsLocal.cardPhoto != ''){
+		   getPhotoFromAPI({ photoName : this.staticFieldsLocal.cardPhoto})
            .then(result => {
               this.photoURL = result;
               this.photoPopUp = true;

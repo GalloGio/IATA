@@ -1,6 +1,8 @@
 import { LightningElement, track, api} from 'lwc';
 
 import getContactInfo               from '@salesforce/apex/PortalRegistrationSecondLevelCtrl.getContactInfo';
+
+import getLMSContactInfo				from '@salesforce/apex/PortalRegistrationThirdLevelLMSCtrl.getLMSContactInfo';
 import getParameters                from '@salesforce/apex/PortalRegistrationThirdLevelLMSCtrl.getParameters';
 import completeRegistration                from '@salesforce/apex/PortalRegistrationThirdLevelLMSCtrl.completeRegistration';
 
@@ -90,6 +92,7 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 	};
 
 	@track contactInfo;
+	@track contactInfoLMS;
 	@track contactFound;
 	@track flow;
 
@@ -130,35 +133,21 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 		this._labels = value;
 	}
 
-	@track isIE = this.checkIE;
-	get checkIE(){
-
-		let ua= navigator.userAgent;
-		let M= ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
-		let ret;
-		if(/trident/i.test(M[1])){
-			ret = true;
-		}else{
-			ret = false;
-		}
-		return ret;
-	}
-
 	scrollToTop(){
 		let scrollobjective = this.template.querySelector('[data-name="top"]');
 		scrollobjective.scrollIntoView({ behavior: 'smooth', block:'start' });
 	}
 
 	connectedCallback() {
-		document.body.setAttribute('style', 'overflow: hidden;');
+		// hide page scrollbar to prevent having 2 scrollbars
+        document.body.style.overflow = 'hidden';
 		
 		let pageParams = getParamsFromPage();
 
 		// Retrieve Contact information
-
 		getContactInfo()
 			.then(result => {
-				this.contactInfo = result;
+				this.contactInfo = JSON.parse(JSON.stringify(result));
 				this.contactFound = this.contactInfo != null;
 
 				if(!this.contactFound){
@@ -178,6 +167,10 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 					this.contactInfo.Title = null;
 				}
 
+				if(this.contactInfo.Birthdate === undefined){
+					this.contactInfo.Birthdate = '';
+				}
+				
 				if(this.contactInfo.Phone === undefined){
 					this.contactInfo.Phone = '';
 				}
@@ -211,22 +204,72 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 				
 				this.contactInfo.serviceid = this.serviceid;
 
-			})
-		.catch((error) => {
-			this.openMessageModalFlowRegister = true;
-			this.message = CSP_L2_RegistrationFailed_LMS + error;
-			console.log('Error: ', JSON.parse(JSON.stringify(error)));
-		})
-		.finally(() => {
-			
-			// FOR LMS L3
+				//Address Info
+				getLMSContactInfo({lms:'yas'})
+				.then(result2 => {
+					if(result2 !== undefined){
+						this.contactInfoLMS = JSON.parse(JSON.stringify(result2));
+
+						this.contactInfo.Username = this.contactInfoLMS.Username__c !== undefined ? this.contactInfoLMS.Username__c : '';
+						this.contactInfo.UserId = this.contactInfoLMS.UserId__c !== undefined ? this.contactInfoLMS.UserId__c : '';
+						
+						if(this.contactInfoLMS.Country_Reference__c != null &&
+							this.contactInfoLMS.Country_Reference__c != undefined &&
+							this.contactInfoLMS.Country_Reference__c !== ''){
+
+								this.address.countryId = this.contactInfoLMS.Country_Reference__c;
+								this.address.countryName = this.contactInfoLMS.Country__c;
+						}else{
+							this.address.countryId = this.contactInfo.Account.IATA_ISO_Country__r.Id;
+							this.address.countryName = this.contactInfo.Account.IATA_ISO_Country__r.Name;
+						}
+						
+						// this.address.stateId = this.contactInfoLMS.State_Reference__c;
+						if(this.contactInfoLMS.State_Reference__c != null &&
+							this.contactInfoLMS.State_Reference__c != undefined &&
+							this.contactInfoLMS.State_Reference__c !== '' &&
+							this.contactInfoLMS.State_Reference__r.iso_code__c != null &&
+							this.contactInfoLMS.State_Reference__r.iso_code__c != undefined &&
+							this.contactInfoLMS.State_Reference__r.iso_code__c !== ''){
+
+							this.address.stateId = this.contactInfoLMS.State_Reference__r.iso_code__c;
+						}else{
+							this.address.stateId = this.contactInfoLMS.State_Name__c !== undefined? this.contactInfoLMS.State_Name__c : '';
+						}
+						this.address.stateName =  this.contactInfoLMS.State_Name__c !== undefined? this.contactInfoLMS.State_Name__c : '';
+						this.address.cityId = this.contactInfoLMS.City_Reference__c !== undefined? this.contactInfoLMS.City_Reference__c : '';
+						this.address.cityName = this.contactInfoLMS.City_Name__c !== undefined? this.contactInfoLMS.City_Name__c : '';
+						
+						this.address.isPoBox =  this.contactInfoLMS.PO_Box__c === undefined || this.contactInfoLMS.PO_Box__c === ''? false : true;
+						this.address.PoBoxAddress =  this.contactInfoLMS.PO_Box_Address__c !== undefined? this.contactInfoLMS.PO_Box_Address__c : false;
+						
+						this.address.street = this.contactInfoLMS.Street__c !== undefined? this.contactInfoLMS.Street__c : '';
+						this.address.street2 = this.contactInfoLMS.Street2__c !== undefined? this.contactInfoLMS.Street2__c : '';
+						this.address.zip = this.contactInfoLMS.Postal_Code__c !== undefined? this.contactInfoLMS.Postal_Code__c : '';
+					
+					}else{
+						this.contactInfo.Username = '';
+						this.contactInfo.UserId = '';
+					}
+
+				})
+				.catch((error) => {
+					this.localContactInfo.Username = '';
+					this.localContactInfo.UserId = '';
+				
+					this.openMessageModalFlowRegister = true;
+					this.message = CSP_L2_RegistrationFailed_LMS + error;
+					console.log('Error: ', JSON.parse(JSON.stringify(error)));
+					console.log('Error2: ', error);
+				});
+				
+				// FOR LMS L3
 			if(pageParams !== undefined && pageParams.lmsflow !== undefined ){
 				if(pageParams.lmsflow.indexOf('flow') > -1){
 					let boldStr = '<b>' + CSP_L3_Note_LMS + '</b>';
 					this.registerData = false;
 
 					this.title=CSP_L3_ProfileUpdate_LMS;
-					// this.message=CSP_L3_UpdatingProfileInitialMessage_LMS; 
 
 					if(pageParams.lmsflow === 'flow3'){
 						this.message=CSP_L3_UpdatingProfileP1_LMS + '<br>' + boldStr + '<br>' + CSP_L3_UpdatingProfileP2_LMS;
@@ -289,6 +332,7 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 									this.message = this.message + '<br><br>' + msgF7;
 								}else{
 									this.message = this.message + '<br><br><b>' + CSP_L2_SucessUpdate_LMS + '</b>';
+									this.message = this.message.replace('[Email]',this.contactInfo.Email);
 								}
 							}
 							else{
@@ -297,7 +341,8 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 							this.isResLoading = false;
 						})
 						.catch(error => {
-							console.log('Error: ', JSON.parse(JSON.stringify(error)));
+							console.log('Error3: ', error);
+							console.log('Error4: ', JSON.parse(JSON.stringify(error)));
 							this.errorModalMessage = JSON.parse(JSON.stringify(error));
 							this.isResLoading = false;
 						});
@@ -305,7 +350,15 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 			
 				}
 			}
-		});
+				
+
+			})
+		.catch((error) => {
+			this.openMessageModalFlowRegister = true;
+			this.message = CSP_L2_RegistrationFailed_LMS + error;
+			console.log('Error1: ', error);
+			console.log('Error2: ', JSON.parse(JSON.stringify(error)));
+		})
 	}
 
 	startLoading(){
@@ -352,7 +405,6 @@ export default class PortalRegistrationThirdLevelLMS extends LightningElement {
 			flow = this.template.querySelector('c-portal-registration-email-validation-l-m-s').getFlow();
 			this.contactInfo = JSON.parse(JSON.stringify(contactInfo));
 			this.flow = flow;
-console.log('getCurrentStepData 3 this.contactInfo: ', this.contactInfo);
 		}
 
 		// Training Information
@@ -361,7 +413,6 @@ console.log('getCurrentStepData 3 this.contactInfo: ', this.contactInfo);
 			flow = this.template.querySelector('c-portal-registration-training-validation-l-m-s').getFlow();
 			this.contactInfo = JSON.parse(JSON.stringify(contactInfo));
 			this.flow = flow;
-console.log('getCurrentStepData 4 this.contactInfo: ', this.contactInfo);			
 		}
 		
 	}
@@ -387,7 +438,7 @@ console.log('getCurrentStepData 4 this.contactInfo: ', this.contactInfo);
 		this.contactInfo = JSON.parse(JSON.stringify(contactInfo));
 
 		// go to next step
-		this.currentStep = 3;
+		this.currentStep = 2;
 	}
 
 	fromAddressInformationToProfileDetails(){
@@ -396,17 +447,14 @@ console.log('getCurrentStepData 4 this.contactInfo: ', this.contactInfo);
 
 	fromAddressInformationToEmailInformation(){
 		// retrieve profile details
-		let contactInfo = this.template.querySelector('c-portal-registration-profile-details-l-m-s').getContactInfo();
 		let addressInformation = this.template.querySelector('c-portal-registration-address-information-l-m-s').getAddressInformation();
-		this.contactInfo = JSON.parse(JSON.stringify(contactInfo));
 		this.address = JSON.parse(JSON.stringify(addressInformation));
-
 		// go to next step
 		this.currentStep = 3;
 	}
 
 	fromEmailInformationToAddressInformation(){
-		this.currentStep = 1;
+		this.currentStep = 2;
 	}
 
 	fromEmailInformationToTrainingInformation(){
@@ -415,7 +463,6 @@ console.log('getCurrentStepData 4 this.contactInfo: ', this.contactInfo);
 		
 		this.contactInfo = JSON.parse(JSON.stringify(contactInfo));
 		this.flow = flow;
-console.log('fromEmailInformationToTrainingInformation this.contactInfo: ', this.contactInfo);
 		this.currentStep = 4;
 	}
 
@@ -426,7 +473,6 @@ console.log('fromEmailInformationToTrainingInformation this.contactInfo: ', this
 	fromTrainingInformationToConfirmation(){
 		var contactInfo = this.template.querySelector('c-portal-registration-training-validation-l-m-s').getContactInfo();
 		this.contactInfo = JSON.parse(JSON.stringify(contactInfo));
-console.log('fromTrainingInformationToConfirmation this.contactInfo: ', this.contactInfo);		
 		this.currentStep = 5;
 	}
 
@@ -459,7 +505,6 @@ console.log('fromTrainingInformationToConfirmation this.contactInfo: ', this.con
 	}
 
 	get isTrainingValidationStep(){
-console.log('isTrainingValidationStep this.contactInfo: ', this.contactInfo);			
 		return this.currentStep === 4;
 	}
 	
@@ -467,6 +512,13 @@ console.log('isTrainingValidationStep this.contactInfo: ', this.contactInfo);
 		return this.currentStep === 5;
 	}
 
+	get isStep2Inactive(){
+		return this.isProfileInformationStep || this.isAddressInformationStep;
+	}
+
+	get isStep2Valid(){
+		return this.isTrainingValidationStep || this.isConfirmationStep;
+	}
 
 	landingPage;
 
@@ -482,8 +534,6 @@ console.log('isTrainingValidationStep this.contactInfo: ', this.contactInfo);
 
 	saveAndClose(){
 		// To do save contact info
-
-
 		this.openMessageModal = false;
 		if(this.landingPage == 'same'){
 			this.dispatchEvent(new CustomEvent('closesecondlevelregistration'));
@@ -510,13 +560,11 @@ console.log('isTrainingValidationStep this.contactInfo: ', this.contactInfo);
 
 		if(/trident/i.test(M[1])){
 			tem=  /\brv[ :]+(\d+)/g.exec(ua) || [];
-			// alert("IE"+'IE '+(tem[1] || ''));
 			return 'IE '+(tem[1] || '');
 		}
 		if(M[1]=== 'Chrome'){
 			tem= ua.match(/\b(OPR|Edge)\/(\d+)/);
 			if(tem!= null) return tem.slice(1).join(' ').replace('OPR', 'Opera');
-			// alert('chrome');
 		}
 		M= M[2]? [M[1], M[2]]: [navigator.appName, navigator.appVersion, '-?'];
 		if((tem= ua.match(/version\/(\d+)/i))!= null) M.splice(1, 1, tem[1]);

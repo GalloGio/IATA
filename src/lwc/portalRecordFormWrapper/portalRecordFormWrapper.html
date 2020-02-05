@@ -340,91 +340,111 @@
                                 </div>
                             </template>
 
-                            <!--TODO GCSDI: REPLACE labels.IdCardPhoto with new label specific for this case and add new labels for each of the hardcoded text below-->
                             <template if:true={field.isTrainingInfo}>
                                 <template if:true={hasTrainingData}>
 
-                                    <div key={labels.IdCardPhoto}
+									<div key={labels.CSP_L2_Business_Address_Information_LMS}
                                          class=" slds-col slds-size_1-of-1 labelValue slds-form-element_stacked slds-m-bottom--small">
                                         <div class="slds-text-title_bold">
-                                            Shipping Address
+											{labels.CSP_L2_Business_Address_Information_LMS}
                                         </div>
                                     </div>
 
-                                    <div key={labels.IdCardPhoto}
+
+									<div key={labels.CSP_L2_Business_Address_Information_LMS} 
                                          class=" slds-col slds-size_1-of-1 slds-medium-size_1-of-2 labelValue slds-form-element_stacked">
                                         <div class="slds-form-element__label">
-                                            Shipping Street Address 1
+											<template if:false={isPOBox}>
+												{labels.CSP_L2_Street} 1
+											</template>
+											<template if:true={isPOBox}>
+												{labels.CSP_L2_PO_Box_Number}
+											</template>
                                         </div>
 
                                         <div class="textValue">
                                             <div class="slds-form-element__static">
-                                                {staticFields.shippingStreet1}
+												<template if:false={isPOBox}>
+													{staticFieldsLocal.shippingStreet1}
+												</template>
+												<template if:true={isPOBox}>
+													{staticFieldsLocal.shippingPOBoxAddress}
+												</template>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div key={labels.IdCardPhoto}
+									<div key={labels.CSP_L2_Business_Address_Information_LMS}
                                          class=" slds-col slds-size_1-of-1 slds-medium-size_1-of-2 labelValue slds-form-element_stacked">
                                         <div class="slds-form-element__label">
-                                            Shipping Street Address 2
+											<template if:false={isPOBox}>
+												{labels.CSP_L2_Street} 2
+											</template>
+											<template if:true={isPOBox}>
+												&nbsp;
+											</template>
                                         </div>
 
                                         <div class="textValue">
                                             <div class="slds-form-element__static">
-                                                {staticFields.shippingStreet2}
+												<template if:false={isPOBox}>
+													{staticFieldsLocal.shippingStreet2}
+												</template>
+												<template if:true={isPOBox}>
+													&nbsp;
+												</template>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div key={labels.IdCardPhoto}
+									<div key={labels.CSP_L2_Business_Address_Information_LMS}
                                          class=" slds-col slds-size_1-of-1 slds-medium-size_1-of-2 labelValue slds-form-element_stacked">
                                         <div class="slds-form-element__label">
-                                            Shipping Postal Code
+											{labels.CSP_L2_Postal_Code}
                                         </div>
 
                                         <div class="textValue">
                                             <div class="slds-form-element__static">
-                                                {staticFields.shippingPostalCode}
+												{staticFieldsLocal.shippingPostalCode}
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div key={labels.IdCardPhoto}
+									<div key={labels.CSP_L2_Business_Address_Information_LMS}
                                          class=" slds-col slds-size_1-of-1 slds-medium-size_1-of-2 labelValue slds-form-element_stacked">
                                         <div class="slds-form-element__label">
-                                            Shipping City
+											{labels.CSP_L2_City}
                                         </div>
 
                                         <div class="textValue">
                                             <div class="slds-form-element__static">
-                                                {staticFields.shippingCity}
+												{staticFieldsLocal.shippingCity}
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div key={labels.IdCardPhoto}
+									<div key={labels.CSP_L2_Business_Address_Information_LMS}
                                          class=" slds-col slds-size_1-of-1 slds-medium-size_1-of-2 labelValue slds-form-element_stacked">
                                         <div class="slds-form-element__label">
-                                            Shipping State
+											{labels.CSP_L2_State}
                                         </div>
 
                                         <div class="textValue">
                                             <div class="slds-form-element__static">
-                                                {staticFields.shippingState}
+												{staticFieldsLocal.shippingState}
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div key={labels.IdCardPhoto}
+									<div key={labels.CSP_L2_Business_Address_Information_LMS}
                                          class=" slds-col slds-size_1-of-1 slds-medium-size_1-of-2 labelValue slds-form-element_stacked">
                                         <div class="slds-form-element__label">
-                                            Shipping Country
+											{labels.CSP_L2_Country}
                                         </div>
 
                                         <div class="textValue">
                                             <div class="slds-form-element__static">
-                                                {staticFields.shippingCountry}
+												{staticFieldsLocal.shippingCountry}
                                             </div>
                                         </div>
                                     </div>
@@ -470,6 +490,36 @@
             <!-- EDIT MODAL -->
             <template if:true={showEditModal}>
 
+				<!--  -->
+				<!-- GCSDI -->
+				<template if:true={isTrainingInfo}>
+					<div class="modal">
+						<div class="customPopupInteriorHalfScreenCenteredShippingAddress">
+							<!-- Popup Header -->
+							<div class="slds-p-horizontal_large slds-p-vertical_medium editIcon">
+								<span>Edit Training Details</span>
+								<span class="slds-float_right slds-m-horizontal_x-small close-mark" onclick={closeModal}>
+									<template if:false={isSaving}>
+										<lightning-icon icon-name="utility:close" size="x-small" class="cursorPointer"
+											onclick={closeModal}></lightning-icon>
+									</template>
+								</span>
+							</div>
+							
+							<div class="slds-p-horizontal_small slds-p-horizontal_large slds-size_4-of-4 customWhiteBackground">
+								<c-portal-profile-details-l-m-s-information
+									record-id={trainingId}
+									address={address}
+									country-id={selectedCountryId}
+									onclosemodal={closeModalAddress}>
+								</c-portal-profile-details-l-m-s-information>
+							</div>
+						</div>
+					</div>
+				</template>
+				<!-- /GCSDI -->
+
+				<template if:false={isTrainingInfo}>
                 <div class="modal">
                     <div class="customPopupInteriorHalfScreenCentered">
                         <!-- Popup Header -->

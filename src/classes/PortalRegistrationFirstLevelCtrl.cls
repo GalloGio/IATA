@@ -405,7 +405,12 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 			userId = userList.get(0).Id;
 		}
 
-		result = sendEmailVF(params.email, params.emailConfirmationTemplate, emailMap, userId);
+        if(params.existingContactName != null && params.existingContactName != ''){
+            result = sendEmailVF(params.email, 'CSP_New_Member_Confirmation_YAS_Email_VF', emailMap, userId);
+        }
+        else{
+        result = sendEmailVF(params.email, 'CSP_New_Member_Confirmation_Email_VF', emailMap, userId);
+        }
 
 		return result;
 	}
@@ -1232,7 +1237,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 		return orderedPicklists;
 	}
 
-	public static Account_Contact_Role__c createOrMigrateContactStructure(Contact con, String existingTrainingId, Boolean deleteOldContact){
+	public static void createOrMigrateContactStructure(Contact con, String existingTrainingId, Boolean deleteOldContact){
 
 		String RECTYPE_Master_AccRole = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Role__c', 'Master');
 		String RECTYPE_Master_AccContRole = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Contact_Role__c', 'Master');
@@ -1302,9 +1307,27 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 			insert acr;
 		}
 
-		if(existingTrainingId != '' && deleteOldContact){
-			Contact toDeleteContact = new Contact(Id = existingTrainingId);
-			delete toDeleteContact;
+        if(existingTrainingId != ''){
+            system.debug('CHECK 6');
+			// Contact toDeleteContact = new Contact(Id = existingTrainingId);
+			// delete toDeleteContact;
+
+			//Inactivate the registering Contact
+			Contact conToInactivate = [SELECT Id,status__c,FirstName,LastName,
+												AccountId,Email,Additional_Email__c,Phone,
+												OtherPhone,Salutation,Birthdate,Shipping_Address__c
+										FROM Contact WHERE Id = :existingTrainingId];
+
+			conToInactivate.FirstName = conToInactivate.FirstName + ' - inactive';
+			conToInactivate.LastName = conToInactivate.LastName + ' - inactive';
+			conToInactivate.Email = conToInactivate.Email + '.inactive';
+			if(conToInactivate.Additional_Email__c != null && conToInactivate.Additional_Email__c != ''){
+				// conToInactivate.Additional_Email__c = conToInactivate.Additional_Email__c + '.inactive';
+				conToInactivate.Additional_Email__c = '';
+			}
+
+			conToInactivate.status__c = 'Inactive';
+			update conToInactivate;
 		}
 
 		//deactivate user
@@ -1318,7 +1341,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 
 		Set<string> IdsToDeactivate;
 
-		public AsyncDeactivateUser(Set<string> IdsToDeactivate){
+		AsyncDeactivateUser(Set<string> IdsToDeactivate){
 			this.IdsToDeactivate = IdsToDeactivate;
 		}
 

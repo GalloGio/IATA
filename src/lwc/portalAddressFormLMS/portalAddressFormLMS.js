@@ -175,7 +175,6 @@ export default class PortalAddressFormLMS extends LightningElement {
 		let fieldname = event.target.dataset.fieldname;
 
 		this.localAddress.inputModified = true;
-		this.setValidationStatus(this.localAddress.validationStatus);
 
 		switch(fieldname){
 			case 'IsPoBox':
@@ -212,6 +211,8 @@ export default class PortalAddressFormLMS extends LightningElement {
 				this.localAddress.zip = value;
 				break;
 		}
+
+		this.setValidationStatus(this.localAddress.validationStatus);
 	}
 
 	/* Handle form changes */
@@ -233,6 +234,7 @@ export default class PortalAddressFormLMS extends LightningElement {
 		if(country === undefined || country.Region_Province_and_Cities_Enabled__c === false ){
 			this.stateOptions = [];
 			this.provinceAndCitiesEnabled = false;
+			
 
 			// maybe we need to reset the state and all other fields
 
@@ -252,7 +254,7 @@ export default class PortalAddressFormLMS extends LightningElement {
 		}
 
 		this.provinceAndCitiesEnabled = true;
-
+		
 		getCountryStates({"country":country.Name}).then(result =>{
 			let states = JSON.parse(JSON.stringify(result.states));
 
@@ -466,8 +468,7 @@ export default class PortalAddressFormLMS extends LightningElement {
 
 		if(rest === 0){
 			return this.localAddress.addressSuggestions.length / this.resultsPerPage;
-		}
-		else{
+		}else{
 			return 1 + (this.localAddress.addressSuggestions.length - rest) / this.resultsPerPage;
 		}
 	}

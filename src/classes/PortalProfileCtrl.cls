@@ -486,7 +486,13 @@ public static Contact contactInfo = new Contact();
 		lstCardWrapper.add(new CardWrapper(LABEL_ACCESSIBILITY, lstfw3, true));
 
 		//TRAINING DETAILS CARD
-		if(true){ //TODO: figure out a way to check if has training without having additional queries in this class
+		List<Training_Contact_Role_Details__c> trainingList = [SELECT Id
+					FROM Training_Contact_Role_Details__c
+					WHERE Account_Contact_Role__r.Contact__c = :loggedUser.contactId 
+					AND Account_Contact_Role__r.Contact_Role_Name__c = 'Trainee'];
+
+		//we are only expecting to have a unique account contact role with contact role name equal to trainee
+		if(!trainingList.isEmpty()){
 			List<FieldWrapper> lstfw3_1 = new List<FieldWrapper>();
 			fw = new FieldWrapper('TRAINING',false,true,true);
 			fw.isTrainingInfo = true;

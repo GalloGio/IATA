@@ -1,30 +1,28 @@
 <template>
 	<lightning-layout multiple-rows vertical-align="stretch">
-		<div class="IEFixDisplayContainer">
+		<div class="IEFixDisplayContainer"> 
+			<lightning-layout-item padding="around-small" size="12" class="IEFixDisplay">
+			</lightning-layout-item>
+			
 			<lightning-layout-item size="12">
 				<span class="text-medium">{labels.CSP_L3_Email_Validation_LMS}</span>
 			</lightning-layout-item>
 
-
 			<lightning-layout-item size="12">
-				<!-- <div class="sectionDescription">{labels.CSP_L2_Account_Selection_Message}</div> -->
 				<div class="sectionDescription">{labels.CSP_L2_EmailValidationDescri_LMS}
 				</div>
 
-				<!--div class="sectionDescription">Your company may have an account in IATA, so please check it first before creating a new one.</div-->
 			</lightning-layout-item>
 
-			<lightning-layout-item padding="around-small" size="12">
+			<lightning-layout-item padding="around-small" size="12" class="IEFixDisplay">
 			</lightning-layout-item>
 
-			<lightning-layout-item class="slds-p-around_small topLightGrayBorder customWhiteBackground slds-clearfix"
+			<lightning-layout-item class="slds-p-around_small topLightGrayBorder customWhiteBackground slds-clearfix IEFixDisplay"
 				size="12">
 			</lightning-layout-item>
 
 			<lightning-layout-item size="12">
-				<!-- <div class="sectionTitle">{labels.CSP_L2_Account_Information}</div> -->
 				<div class="sectionTitle">{labels.CSP_L3_EmailInformation_LMS}</div>
-				<!-- <div class="sectionDescription">{labels.CSP_L2_Account_Information_Message}</div> -->
 				<div class="sectionDescription">{labels.CSP_L3_CompleteInformation_LMS}</div>
 			</lightning-layout-item>
 
@@ -39,7 +37,6 @@
 						<lightning-layout-item size="12">
 							<div class="formLabelContainer">
 								<div class="text-xxsmall">
-									<!-- <abbr class="slds-required" title="required">* </abbr>{item.label} -->
 									{labels.CSP_L3_IsPersonalEmail_LMS}
 								</div>
 							</div>
@@ -63,7 +60,6 @@
 						<lightning-layout-item size="12">
 							<div class="formLabelContainer">
 								<div class="text-xxsmall">
-									<!-- <abbr class="slds-required" title="required">* </abbr>{item.label} -->
 									{labels.CSP_L3_IsReversedEmail_LMS}
 								</div>
 							</div>
@@ -114,7 +110,6 @@
 						<lightning-layout-item size="12">
 							<div class="formLabelContainer">
 								<div class="text-xxsmall">
-									<!-- {labels.CSP_L2_Company_Name} -->
 									{labels.CSP_L_PersonalEmail_LMS}
 								</div>
 							</div>
@@ -140,7 +135,6 @@
 						<lightning-layout-item size="12">
 							<div class="formLabelContainer">
 								<div class="sectionDescription">
-									<!-- {labels.CSP_L2_Company_Name} -->
 									<lightning-formatted-rich-text  value={labels.CSP_Registration_Existing_Work_Message}></lightning-formatted-rich-text>
 								</div>
 							</div>
@@ -149,6 +143,35 @@
 					</div>
 				</template>
 
+				<template if:true={existingUsernameNotMatchingF4Visibility}>
+
+					<div class="infoItemLine">
+
+						<lightning-layout-item size="12">
+							<div class="formLabelContainer">
+								<div class="sectionDescription">
+									<lightning-formatted-rich-text  value={labels.CSP_Registration_Existing_User_Message_Not_Matching_F4}></lightning-formatted-rich-text>
+								</div>
+							</div>
+						</lightning-layout-item>
+						
+					</div>
+				</template>
+
+				<template if:true={existingUsernameNotMatchingF6Visibility}>
+
+					<div class="infoItemLine">
+
+						<lightning-layout-item size="12">
+							<div class="formLabelContainer">
+								<div class="sectionDescription">
+									<lightning-formatted-rich-text  value={labels.CSP_Registration_Existing_User_Message_Not_Matching_F6}></lightning-formatted-rich-text>
+								</div>
+							</div>
+						</lightning-layout-item>
+						
+					</div>
+				</template>
 
 				<template if:true={existingPersonalUsernameVisibility}>
 
@@ -156,7 +179,6 @@
 						<lightning-layout-item size="12">
 							<div class="formLabelContainer">
 								<div class="sectionDescription">
-									<!-- {labels.CSP_L2_Company_Name} -->
 									<lightning-formatted-rich-text  value={messageFlow7}></lightning-formatted-rich-text>
 								</div>
 							</div>
@@ -171,15 +193,11 @@
 						<lightning-layout-item size="12">
 							<div class="formLabelContainer">
 								<div class="sectionDescription">
-									<!-- {labels.CSP_L2_Company_Name} -->
 									<br>{labels.CSP_L3_StillWorkingP1_LMS} {userInfo.existingContactAccount},
 									{labels.CSP_L3_StillWorkingP2_LMS}
 								</div>
 							</div>
 						</lightning-layout-item>
-						<!-- <lightning-button variant="base" label="Login" class="slds-p-right_small blueCustomButtonLinkSmall" onclick={handleNavigateToLogin}></lightning-button> -->
-
-
 					</div>
 				</template>
 
@@ -197,8 +215,10 @@
 					</div>
 				</div>
 			</div>
-
-			<lightning-layout-item size="6" class="backButtonWrapper">
+			<lightning-layout-item padding="around-small" size="12" class="IEFixDisplay">
+			</lightning-layout-item>
+			
+			<lightning-layout-item size="6" class="IEFixDisplay">
 				<template if:false={searchPerformed}>
 					<div class="text-xxsmall">
 						<lightning-button variant="base" label={labels.CSP_L2_Back_to_Profile_Details}
@@ -209,14 +229,14 @@
 				</template>
 			</lightning-layout-item>
 
-			<lightning-layout-item size="6">
+			<lightning-layout-item size="6" class="nextBtn IEFixDisplay">
 				<lightning-button class="slds-float_right containedButton customBtn" data-id="nextButton"
 					label={labels.CSP_Next_LMS} disabled={blockConfirmation} variant="brand" onclick={next}>
 				</lightning-button>
 			</lightning-layout-item>
 
-			<lightning-layout-item padding="around-small" size="12">
+			<lightning-layout-item padding="around-small" size="12" class="IEFixDisplay">
 			</lightning-layout-item>
-		</div>
+		</div> 
 	</lightning-layout>
 </template>
