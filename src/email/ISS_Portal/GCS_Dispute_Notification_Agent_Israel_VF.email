@@ -1,0 +1,58 @@
+<messaging:emailTemplate subject="Dispute {!relatedTo.CaseNumber}: {!relatedTo.Subject}" recipientType="User" relatedToType="Case">
+<messaging:emailHeader name="CaseId">
+    {!relatedTo.Id}
+ </messaging:emailHeader>
+<messaging:htmlEmailBody >
+<div style="margin:auto; width:600px">
+ <span style="font-family:Open Sans,GillSansMT,Lucida Sans Unicode, Lucida Grande, sans-serif;color:#004577;">  
+ <apex:image value="{!if(relatedTo.CNSCase__c, 'https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000004lIxL&oid=00D2000000008TF', 'https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=01520000000ej3A&oid=00D2000000008TF&lastMod=1246550288000')}"/>
+<!--<apex:image value="{!$Label.ISSP_Email_PortalUrl}servlet/servlet.ImageServer?id=0152000000111UE&oid=00D2000000008TF"/>--><BR/>
+<i>{!$Label.ISSP_Email_do_not_reply}</i><p />
+<br/><br/>
+{!relatedTo.Airline__c}
+<br/><br/>
+
+Dear Customer,
+<br/><br/>
+
+Thank you for submitting your dispute to us online. Dispute number {!relatedTo.CaseNumber} has been created with the following information:
+<br/><br/>
+ 
+Contact Name: {!relatedTo.Contact.Name} <br/><br/>
+Name of Agency: {!relatedTo.Account.Name} <br/><br/>
+IATA Code: {!relatedTo.Account_Concerned__r.IATACode__c} <br/><br/>
+Agent Email: {!relatedTo.Contact.Email} <br/><br/>
+Phone: {!relatedTo.Account.Phone} <br/><br/><br/>
+Airline Code: {!relatedTo.Airline_Code__c} <br/><br/>
+Airline Name: {!relatedTo.Airline__c} <br/><br/>
+Airline Email: {!relatedTo.Airline_E_mail__c} <br/><br/><br/>
+
+Remarks: {!relatedTo.Description} <br/><br/>
+Record Type: {!relatedTo.Reason1__c} <br/><br/>
+Document Number: {!relatedTo.Document_number__c} <br/><br/>
+Amount Disputed: USD {!relatedTo.Amount_disputed__c} <br/><br/>
+
+<BR/><BR/> 
+
+
+Please save this deduction notification email for your own records.
+
+<BR/><BR/>  
+
+Best regards,<BR/>
+
+IATA Customer Service Israel
+
+<br />
+
+
+<p>
+<!--The URL of the following image is the one of PROD-->
+<a href="http://www.iata.org/customer-portal/Pages/index.aspx">
+<apex:image value="{!IF(relatedTo.CNSCase__c, '', 'https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000002ZArv&oid=00D2000000008TF&lastMod=1428578119000')}"/>
+</a>
+</p>
+</span>
+</div>
+</messaging:htmlEmailBody>
+</messaging:emailTemplate>
