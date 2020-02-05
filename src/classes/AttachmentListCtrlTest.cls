@@ -106,14 +106,15 @@ private  class AttachmentListCtrlTest {
 		for(wrapperAttach wa: AttachmentListCtrl.getAllAttachmentsByParentIdAndPortal(cse.id, false,false,false)){
 			if(wa.permission.ShowToPortalUsers__c)c++;
 		}
+
 		system.assertEquals(c,2);
 
-		rw=AttachmentListCtrl.makeAllAttachPrivate(cse.id, false, false);
+		list<AttachmentListCtrl.ReturnWrapper> attachlist= AttachmentListCtrl.getAllAttachmentsPortal(cse.id, false,false,false);
+		rw=AttachmentListCtrl.makeAllAttachPrivate(cse.id, false, false);	
 	}
 	static testMethod void testDeleteAttachments() {
 		Case cse = new Case();
 		insert cse;
-
 
 		Attachment att= new Attachment(
 			ParentId = cse.Id,
@@ -255,7 +256,7 @@ private  class AttachmentListCtrlTest {
 			contentlink.Visibility = 'AllUsers';
 			insert contentlink;
 
-			List<WrapperAttach> wra=AttachmentListCtrl.getContentDetails(new list<id>{contentDocList.get(0).id});
+			List<AttachmentListCtrl.ReturnWrapper> wra=AttachmentListCtrl.getContentDetails(new list<id>{contentDocList.get(0).id});
 			system.AssertEquals(wra.size(),1);
 
 

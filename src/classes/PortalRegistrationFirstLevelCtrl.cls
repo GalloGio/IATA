@@ -820,6 +820,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 			u.Date_ToU_accepted__c = system.Now();//TF - Accept Terms
 			u.ToU_accepted__c = true;//TF - Accept Terms
 			u.Portal_Registration_Required__c = registrationRequired;
+			u.UserPermissionsSFContentUser = true;
 			String thisNickname;
 			if (con.lastName.length() > 3)
 				thisNickname = con.lastName.substring(0,3)+Datetime.now().formatLong();

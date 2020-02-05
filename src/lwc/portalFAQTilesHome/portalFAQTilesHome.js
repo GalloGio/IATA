@@ -22,6 +22,8 @@ export default class portalFAQTilesHome extends NavigationMixin(LightningElement
     @track loading = true;
     @track lstTiles = [];
     @track userLanguage = 'en_US';
+    @track windowWidth = window.innerWidth - 32;
+    @track sliderWidth = "width: " + this.windowWidth * 1.3+"px;";
 
     iconsBaseLink = CSP_PortalPath + 'CSPortal/Images/FAQ/';
     iconsExtension = '.svg';
@@ -63,7 +65,8 @@ export default class portalFAQTilesHome extends NavigationMixin(LightningElement
             let resultsAux = JSON.parse(JSON.stringify(results));
 
             for (let i = 0; i < resultsAux.length; i++) {
-                resultsAux[i].class = 'slds-col slds-size_1-of-1 slds-medium-size_1-of-' + resultsAux.length + ' slds-large-size_1-of-' + resultsAux.length + ' slds-p-vertical_xx-small slds-text-align_center';
+                resultsAux[i].class = 'slds-col slds-size_1-of-'+Math.ceil(resultsAux.length / 2)+' slds-medium-size_1-of-' + resultsAux.length + ' slds-large-size_1-of-' + resultsAux.length + ' slds-p-vertical_xx-small slds-text-align_center';
+                this.sliderWidth = "width: " + this.windowWidth * (resultsAux.length / 4) * 1.3 + "px;";
 
                 resultsAux[i].imageURL = this.iconsBaseLink + resultsAux[i].categoryName + this.iconsExtension;
             }
